@@ -68,8 +68,8 @@
     <string name="repair_deck_dialog">Rostdan ham maʼlumotlar bazasini tuzatmoqchimisiz?\n\nUrinishni boshlashdan oldin uni nusxasi “%s” ostjildiga koʻchiriladi.</string>
     <string name="intent_aedict_empty">“default” turkumi boʻsh</string>
     <string name="intent_aedict_category">AnkiDroidʼga kartalar qoʻshish uchun barcha Bloknot turkumlarini olib tashlang yoki \"default\" deb nomlangan turkumni qoʻshing</string>
-    <string name="custom_study_new_extend">Bugungi yangi kartalar cheklovini oshirish/kamaytirish (“-3”)</string>
-    <string name="custom_study_rev_extend">Bugungi takrorlanadigan kartalar cheklovini oshirish/kamaytirish (“-3”)</string>
+    <string name="custom_study_new_extend">Bugungi yangi kartalar limitini oshirish/kamaytirish (“-3”)</string>
+    <string name="custom_study_rev_extend">Bugungi takrorlanadigan kartalar limitini oshirish/kamaytirish (“-3”)</string>
     <string name="custom_study_forgotten">Oʻtgan x kun ichida unutilgan kartalarni takrorlash:</string>
     <string name="custom_study_ahead">X kunga oldin takrorlash:</string>
     <string name="custom_study_preview">Oxirgi x kunda qoʻshilgan yangi kartalarni koʻrib chiqish:</string>

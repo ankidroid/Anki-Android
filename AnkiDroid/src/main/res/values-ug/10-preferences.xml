@@ -116,9 +116,9 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">دەل ئوتتۇرىنى چەك</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">سول ئاستىنى چەك</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">ئوڭ ئاستىنى چەك</string>
-    <string name="gestures_two_finger_tap" maxLength="41">Two-finger tap</string>
-    <string name="gestures_three_finger_tap" maxLength="41">Three-finger tap</string>
-    <string name="gestures_four_finger_tap" maxLength="41">Four-finger tap</string>
+    <string name="gestures_two_finger_tap" maxLength="41">قوش بارماقتا چېكىش</string>
+    <string name="gestures_three_finger_tap" maxLength="41">ئۈچ بارماقتا چېكىش</string>
+    <string name="gestures_four_finger_tap" maxLength="41">تۆت بارماقتا چېكىش</string>
     <string name="gestures_shake" maxLength="41">ئۈسكۈنىنى سىلكى</string>
     <string name="card_browser_enable_external_context_menu" maxLength="41">«%s» تىزىملىكى</string>
     <string name="card_browser_enable_external_context_menu_summary">«%s» مەزمۇن تىزىملىكىنى پۈتكۈل دائىرىدە قوزغىتىدۇ</string>
@@ -384,7 +384,7 @@
     <string name="toolbar_position" maxLength="41">قورال بالداق ئورنى</string>
     <string name="new_study_screen" maxLength="41">يېڭى ئۆگىنىش ئېكرانى</string>
     <string name="new_study_screen_summ"><![CDATA[ياخشىلانغان ئۆگىنىش ئېكرانى ھازىرقىنىڭ ئورنىنى ئالىدۇ. كونا ئېكراندىكى بەزى ئىقتىدارلار ئۆزگەردى ياكى چىقىرىۋېتىلدى. <a href="%1$s">قايتۇرما ئىنكاس</a> ياكى <a href="%2$s">كەمتۈك</a> دوكلاتى يوللاڭ.]]></string>
-    <string name="show_answer_feedback" maxLength="41">Show answer feedback</string>
+    <string name="show_answer_feedback" maxLength="41">جاۋاب قايتۇرما ئىنكاسىنى كۆرسىتىدۇ</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">تەڭشەكنى ئاچ</string>
 </resources>

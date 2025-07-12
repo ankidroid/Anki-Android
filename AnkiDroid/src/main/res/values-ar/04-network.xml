@@ -48,7 +48,7 @@
     <string name="youre_offline">أنت غير متصل بالإنترنت</string>
     <string name="sync_error">خطأ في المزامنة</string>
     <string name="vague_error" comment="Network error dialog title">عُطل</string>
-    <string name="retry">حاوِل مجددًا</string>
+    <string name="retry">إعادة المحاولة</string>
     <string name="menu_get_shared_decks">احصل على رزم مشاركة</string>
     <string name="connection_error_message">حدث خطأ في الشبكة</string>
     <string name="not_logged_in_title">سَجِّل الدخول إلى آنكي ويب</string>

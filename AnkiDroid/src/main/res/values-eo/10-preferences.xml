@@ -116,9 +116,9 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">Frapeti centron</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Frapeti suban maldekstron</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Frapeti suban dekstron</string>
-    <string name="gestures_two_finger_tap" maxLength="41">Two-finger tap</string>
-    <string name="gestures_three_finger_tap" maxLength="41">Three-finger tap</string>
-    <string name="gestures_four_finger_tap" maxLength="41">Four-finger tap</string>
+    <string name="gestures_two_finger_tap" maxLength="41">Du-fingra frapeto</string>
+    <string name="gestures_three_finger_tap" maxLength="41">Tri-fingra frapeto</string>
+    <string name="gestures_four_finger_tap" maxLength="41">Kvar-fingra frapeto</string>
     <string name="gestures_shake" maxLength="41">Skui aparaton</string>
     <string name="card_browser_enable_external_context_menu" maxLength="41">Menuo “%s”</string>
     <string name="card_browser_enable_external_context_menu_summary">Aktivigi la kuntekstan menuon “%s” tutaplikaĵe</string>
@@ -374,8 +374,8 @@ Vi povas restarigi el sekurkopio aŭ elporti vian kolekton per la menuo de listo
     <string name="toolbar_actions" maxLength="41">Agoj de ilarstrio</string>
     <string name="toolbar_position" maxLength="41">Pozicio de ilarstrio</string>
     <string name="new_study_screen" maxLength="41">Nova lernada ekrano</string>
-    <string name="new_study_screen_summ"><![CDATA[Improved study screen that will succeed the current one. Some features of the old screen have been changed or removed. Please report any <a href="%1$s">feedback</a> or <a href="%2$s">bugs</a>.]]></string>
-    <string name="show_answer_feedback" maxLength="41">Show answer feedback</string>
+    <string name="new_study_screen_summ"><![CDATA[Plibonigita lernada ekrano, kiu anstataŭigos la nunan. Kelkaj ebloj de la malnova ekrano estas ŝanĝitaj aŭ forigitaj. Bonvolu sendi <a href="%1$s">rimarkojn</a> aŭ raporti <a href="%2$s">erarojn</a>.]]></string>
+    <string name="show_answer_feedback" maxLength="41">Montri movbildon de respondo</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">Malfermi agordojn</string>
 </resources>
