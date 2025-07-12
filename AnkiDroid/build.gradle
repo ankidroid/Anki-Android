@@ -388,7 +388,10 @@ dependencies {
     implementation libs.kotlinx.serialization.json
     implementation libs.seismic
 
-    debugImplementation libs.androidx.fragment.testing.manifest
+    // This uses implementation instead of debugImplementation to ensure
+    // fragment testing infrastructure is available in all build variants,
+    // not just debug builds, since androidTest on CI runs against both debug and release configurations.
+    implementation libs.androidx.fragment.testing.manifest
 
     // Backend libraries
 
