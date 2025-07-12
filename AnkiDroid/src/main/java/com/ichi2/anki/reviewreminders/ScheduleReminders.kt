@@ -20,14 +20,23 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.edit
 import androidx.core.os.BundleCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.appbar.MaterialToolbar
+import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
 import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.launchCatchingTask
+import com.ichi2.anki.showError
+import com.ichi2.anki.withProgress
+import kotlinx.serialization.InternalSerializationApi
+import kotlinx.serialization.SerializationException
+import kotlinx.serialization.serializer
 import timber.log.Timber
+import kotlin.reflect.KClass
 
 /**
  * Fragment for creating, viewing, editing, and deleting review reminders.
@@ -45,6 +54,7 @@ class ScheduleReminders : Fragment(R.layout.fragment_schedule_reminders) {
         ) ?: ReviewReminderScope.Global
     }
 
+    private lateinit var database: ReviewRemindersDatabase
     private lateinit var toolbar: MaterialToolbar
 
     override fun onViewCreated(
@@ -57,6 +67,17 @@ class ScheduleReminders : Fragment(R.layout.fragment_schedule_reminders) {
         toolbar = view.findViewById(R.id.toolbar)
         reloadToolbarText()
         (requireActivity() as AppCompatActivity).setSupportActionBar(toolbar)
+
+        // Set up database
+        database = ReviewRemindersDatabase()
+
+        // Attempt a database read: for migration demonstration purposes
+        // TODO: delete this once normal RecyclerView usage is pushed for review
+        launchCatchingTask {
+            catchDatabaseExceptions {
+                database.getAllAppWideReminders()
+            }
+        }
     }
 
     private fun reloadToolbarText() {
@@ -71,11 +92,77 @@ class ScheduleReminders : Fragment(R.layout.fragment_schedule_reminders) {
         }
     }
 
+    /**
+     * Handles and tries to recover from possible [SerializationException]s and [IllegalArgumentException]s that
+     * can be thrown by [ReviewRemindersDatabase] methods. Should wrap every call to [ReviewRemindersDatabase] methods.
+     *
+     * To learn more about the schema migration fallback, see [ReviewReminder]. This method will try every possible
+     * old [ReviewReminder] schema in [oldReviewReminderSchemasForMigration] until one succeeds or all fail,
+     * reverting any changes made to review reminder SharedPreferences to their original state after each failure.
+     *
+     * We need to opt into an experimental serialization API feature because we are determining classes to deserialize
+     * dynamically rather than at compile-time. The possible schemas to deserialize from are inputted dynamically so that unit tests are possible.
+     */
+    @OptIn(InternalSerializationApi::class)
+    private suspend fun <T> catchDatabaseExceptions(block: () -> T): T? {
+        val remainingMigrationSchema = oldReviewReminderSchemasForMigration.toMutableList()
+        var nextSchemaToTry: KClass<out OldReviewReminderSchema>? = null
+        val sharedPrefsBackup = database.getAllReviewReminderSharedPrefsAsMap()
+
+        val restoreAndPossiblyTryNextSchema: (String, Exception) -> Boolean = { errorMessage, e ->
+            Timber.d("Json error encountered, reverting review reminder SharedPreferences")
+            database.deleteAllReviewReminderSharedPrefs()
+            AnkiDroidApp.sharedPrefs().edit {
+                sharedPrefsBackup.forEach { (key, value) ->
+                    putString(key, value.toString())
+                }
+            }
+            if (remainingMigrationSchema.isNotEmpty()) {
+                nextSchemaToTry = remainingMigrationSchema.removeAt(remainingMigrationSchema.lastIndex)
+                Timber.d("Attempting ReviewReminder schema migration: $nextSchemaToTry")
+                true
+            } else {
+                Timber.d("No more ReviewReminder migration schemas are available, showing error dialog")
+                showError(requireContext(), "$errorMessage $e")
+                false
+            }
+        }
+
+        while (true) {
+            try {
+                Timber.d("Attempting ReviewRemindersDatabase operation")
+                val result =
+                    withProgress {
+                        nextSchemaToTry?.let { database.attemptSchemaMigration(it.serializer()) }
+                        block()
+                    }
+                return result
+            } catch (e: SerializationException) {
+                if (restoreAndPossiblyTryNextSchema(SERIALIZATION_ERROR_MESSAGE, e)) continue else return null
+            } catch (e: IllegalArgumentException) {
+                if (restoreAndPossiblyTryNextSchema(DATA_TYPE_ERROR_MESSAGE, e)) continue else return null
+            }
+        }
+    }
+
     companion object {
         /**
          * Arguments key for passing the [ReviewReminderScope] to open this fragment with.
          */
         private const val EXTRAS_SCOPE_KEY = "scope"
+
+        private const val SERIALIZATION_ERROR_MESSAGE =
+            "Something went wrong. A serialization error was encountered while working with review reminders."
+        private const val DATA_TYPE_ERROR_MESSAGE =
+            "Something went wrong. An unexpected data type was found while working with review reminders."
+
+        /**
+         * A list of all old [ReviewReminder] schemas that [ScheduleReminders.catchDatabaseExceptions]
+         * will attempt to migrate old review reminders in SharedPreferences from.
+         * @see [ReviewReminder]
+         */
+        @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+        var oldReviewReminderSchemasForMigration: List<KClass<out OldReviewReminderSchema>> = listOf()
 
         /**
          * Creates an intent to start the ScheduleReminders fragment.
