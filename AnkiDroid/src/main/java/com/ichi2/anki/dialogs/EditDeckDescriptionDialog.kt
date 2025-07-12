@@ -16,23 +16,32 @@
 
 package com.ichi2.anki.dialogs
 
+import android.app.Dialog
 import android.os.Bundle
-import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
+import android.widget.ImageButton
+import androidx.activity.OnBackPressedCallback
 import androidx.core.os.bundleOf
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
 import com.ichi2.anki.StudyOptionsFragment
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.DeckId
-import com.ichi2.anki.utils.ext.description
+import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.ui.isCheckedState
+import com.ichi2.anki.ui.textOf
 import com.ichi2.anki.utils.ext.update
-import com.ichi2.themes.Themes
 import com.ichi2.utils.AndroidUiUtils.setFocusAndOpenKeyboard
+import com.ichi2.utils.show
 import timber.log.Timber
 
 /**
@@ -44,44 +53,111 @@ class EditDeckDescriptionDialog : DialogFragment() {
     private val deckId: DeckId
         get() = requireArguments().getLong(ARG_DECK_ID)
 
-    private lateinit var deckDescriptionInput: TextInputEditText
+    private lateinit var dialogView: View
 
-    private var currentDescription
-        get() = deckDescriptionInput.text.toString()
-        set(value) {
-            deckDescriptionInput.setText(value)
-        }
+    private val deckDescriptionInput: TextInputEditText
+        get() = dialogView.findViewById(R.id.deck_description_input)
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View {
-        Themes.setTheme(requireContext())
-        return inflater.inflate(R.layout.dialog_deck_description, null).apply {
-            deckDescriptionInput = this.findViewById(R.id.deck_description_input)
-            launchCatchingTask {
-                currentDescription = getDescription()
+    private val formatAsMarkdownInput: CheckBox
+        get() = dialogView.findViewById(R.id.format_as_markdown)
+
+    private val topAppBar: MaterialToolbar
+        get() = dialogView.findViewById(R.id.topAppBar)
+
+    private val saveMenuItem: MenuItem
+        get() = topAppBar.menu.findItem(R.id.action_save)
+
+    // immutable state
+
+    private lateinit var initialDialogState: DeckDescriptionState
+
+    // state / user inputs
+
+    /** @see [com.ichi2.libanki.Deck.description] */
+    private var description by textOf { deckDescriptionInput }
+
+    /** @see [com.ichi2.libanki.Deck.markdownDescription] */
+    private var formatAsMarkdown by isCheckedState { formatAsMarkdownInput }
+
+    // derived state
+
+    private val currentDialogState: DeckDescriptionState
+        get() =
+            DeckDescriptionState(
+                description = this.description,
+                formatAsMarkdown = this.formatAsMarkdown,
+            )
+
+    private val onUnsavedChangesBackCallback =
+        object : OnBackPressedCallback(enabled = false) {
+            override fun handleOnBackPressed() {
+                showDiscardChangesDialog()
             }
-            findViewById<MaterialToolbar>(R.id.topAppBar)
-                .apply {
-                    setNavigationOnClickListener {
-                        onBack()
-                    }
-
-                    setOnMenuItemClickListener { menuItem ->
-                        if (menuItem.itemId == R.id.action_save) {
-                            saveAndExit()
-                            true
-                        } else {
-                            false
-                        }
-                    }
-                }.also { toolbar ->
-                    launchCatchingTask { toolbar.title = withCol { decks.get(deckId)!!.name } }
-                }
-            setFocusAndOpenKeyboard(deckDescriptionInput) { deckDescriptionInput.setSelection(deckDescriptionInput.text!!.length) }
         }
+
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        this.dialogView = layoutInflater.inflate(R.layout.dialog_deck_description, null)
+        return MaterialAlertDialogBuilder(requireContext())
+            .show {
+                setView(dialogView)
+            }.apply {
+                setupDialogView(dialogView)
+                setCanceledOnTouchOutside(false)
+                setCancelable(false)
+                onBackPressedDispatcher.addCallback(this, onUnsavedChangesBackCallback)
+            }
+    }
+
+    fun setupDialogView(view: View) {
+        // load initial state
+        launchCatchingTask {
+            val dialog = this@EditDeckDescriptionDialog
+            queryDescriptionState().let { state ->
+                initialDialogState = state
+                dialog.description = state.description
+                dialog.formatAsMarkdown = state.formatAsMarkdown
+            }
+
+            deckDescriptionInput.doAfterTextChanged { checkForChanges() }
+            formatAsMarkdownInput.setOnCheckedChangeListener { _, _ -> checkForChanges() }
+            checkForChanges()
+        }
+
+        // setup 'Format as Markdown' help
+        view.findViewById<ImageButton>(R.id.markdown_formatting_help).apply {
+            contentDescription =
+                getString(R.string.help_button_content_description, getString(R.string.format_deck_description_as_markdown))
+            setOnClickListener {
+                MaterialAlertDialogBuilder(requireContext()).show {
+                    setTitle(formatAsMarkdownInput.text)
+                    setIcon(R.drawable.ic_help_black_24dp)
+                    // FIXME: the upstream string unexpectedly contains newlines
+                    setMessage(TR.deckConfigDescriptionNewHandlingHint().replace("\n", " ").replace("  ", " "))
+                }
+            }
+        }
+
+        // setup App Bar
+        topAppBar
+            .apply {
+                setNavigationOnClickListener {
+                    onBack()
+                }
+
+                setOnMenuItemClickListener { menuItem ->
+                    if (menuItem.itemId == R.id.action_save) {
+                        saveAndExit()
+                        true
+                    } else {
+                        false
+                    }
+                }
+            }.also { toolbar ->
+                launchCatchingTask { toolbar.title = withCol { decks.get(deckId)!!.name } }
+            }
+
+        // setup input controls
+        setFocusAndOpenKeyboard(deckDescriptionInput) { deckDescriptionInput.setSelection(deckDescriptionInput.text!!.length) }
     }
 
     override fun onStart() {
@@ -95,35 +171,79 @@ class EditDeckDescriptionDialog : DialogFragment() {
 
     private fun saveAndExit() =
         launchCatchingTask {
-            setDescription(currentDescription)
+            save()
             Timber.i("closing deck description dialog")
             dismiss()
         }
 
     private fun onBack() =
         launchCatchingTask {
-            fun closeWithoutSaving() {
-                Timber.i("Closing dialog without saving")
-                dismiss()
-            }
-
-            if (getDescription() == currentDescription) {
+            if (!hasChanges()) {
                 closeWithoutSaving()
                 return@launchCatchingTask
             }
 
-            Timber.i("asking if user should discard changes")
-            DiscardChangesDialog.showDialog(requireContext()) {
-                closeWithoutSaving()
+            showDiscardChangesDialog()
+        }
+
+    private fun checkForChanges() {
+        val hasChanges = hasChanges()
+        onUnsavedChangesBackCallback.isEnabled = hasChanges
+        saveMenuItem.isEnabled = hasChanges
+    }
+
+    private fun hasChanges(): Boolean {
+        // this can be triggered via the back dispatcher
+        if (!::initialDialogState.isInitialized) return false
+        return initialDialogState != currentDialogState
+    }
+
+    fun closeWithoutSaving() {
+        Timber.i("Closing dialog without saving")
+        dismiss()
+    }
+
+    fun showDiscardChangesDialog() {
+        Timber.i("asking if user should discard changes")
+        DiscardChangesDialog.showDialog(requireContext()) {
+            closeWithoutSaving()
+        }
+    }
+
+    private suspend fun queryDescriptionState() =
+        withCol {
+            decks.get(deckId)!!.let {
+                DeckDescriptionState(
+                    description = it.description,
+                    formatAsMarkdown = it.markdownDescription,
+                )
             }
         }
 
-    private suspend fun getDescription() = withCol { decks.get(deckId)!!.description }
-
-    private suspend fun setDescription(value: String) {
+    private suspend fun save() {
         Timber.i("updating deck description")
-        withCol { decks.update(deckId) { description = value } }
+        val toSave = currentDialogState
+        withCol {
+            decks.update(deckId) {
+                this.description = toSave.description
+                this.markdownDescription = toSave.formatAsMarkdown
+            }
+        }
+        showSnackbar(R.string.deck_description_saved)
     }
+
+    /**
+     * State for [EditDeckDescriptionDialog].
+     *
+     * Simplifies detecting user changes
+     *
+     * @param description see [com.ichi2.libanki.Deck.description]
+     * @param formatAsMarkdown see [com.ichi2.libanki.Deck.markdownDescription]
+     */
+    private data class DeckDescriptionState(
+        val description: String,
+        val formatAsMarkdown: Boolean,
+    )
 
     companion object {
         private const val ARG_DECK_ID = "deckId"
