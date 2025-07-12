@@ -47,6 +47,7 @@
     <!-- Navigation drawer strings -->
     <string name="drawer_open">يان تارتمىنى ئاچ</string>
     <string name="drawer_close">يان تارتمىنى تاقا</string>
+    <string name="note_message">Note saved</string>
     <string name="CardEditorCardDeck">كارتا دەستىسى:</string>
     <string name="CardEditorNoteDeck">دەستە:</string>
     <string name="CardEditorModel">تۈرى:</string>

@@ -47,6 +47,7 @@
     <!-- Navigation drawer strings -->
     <string name="drawer_open">打开侧栏</string>
     <string name="drawer_close">关闭侧栏</string>
+    <string name="note_message">Note saved</string>
     <string name="CardEditorCardDeck">牌组：</string>
     <string name="CardEditorNoteDeck">牌组：</string>
     <string name="CardEditorModel">笔记模板：</string>

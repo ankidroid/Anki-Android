@@ -47,6 +47,7 @@
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Öppna meny</string>
     <string name="drawer_close">Stäng meny</string>
+    <string name="note_message">Note saved</string>
     <string name="CardEditorCardDeck">Kortlek:</string>
     <string name="CardEditorNoteDeck">Kortlek:</string>
     <string name="CardEditorModel">Typ:</string>

@@ -47,6 +47,7 @@
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Άνοιγμα συρταριού</string>
     <string name="drawer_close">Κλείσιμο συρταριού</string>
+    <string name="note_message">Note saved</string>
     <string name="CardEditorCardDeck">Τράπουλα κάρτας:</string>
     <string name="CardEditorNoteDeck">Τράπουλα:</string>
     <string name="CardEditorModel">Τύπος:</string>

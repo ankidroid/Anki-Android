@@ -47,6 +47,7 @@
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Ḍrŏvara ughaḍā</string>
     <string name="drawer_close">Ḍrŏvara banda karā</string>
+    <string name="note_message">Note saved</string>
     <string name="CardEditorCardDeck">Kārḍa ḍēka:</string>
     <string name="CardEditorNoteDeck">Ḍēka:</string>
     <string name="CardEditorModel">Prakāra:</string>

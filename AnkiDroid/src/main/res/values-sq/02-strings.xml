@@ -47,6 +47,7 @@
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Hap sirtarin</string>
     <string name="drawer_close">Mbylleni sirtarin</string>
+    <string name="note_message">Note saved</string>
     <string name="CardEditorCardDeck">Kuverta e kartave:</string>
     <string name="CardEditorNoteDeck">Kuvertë:</string>
     <string name="CardEditorModel">Lloji:</string>

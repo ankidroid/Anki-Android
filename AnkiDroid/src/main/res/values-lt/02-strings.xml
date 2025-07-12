@@ -47,6 +47,7 @@
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Atidaryti meniu</string>
     <string name="drawer_close">Uždaryti meniu</string>
+    <string name="note_message">Note saved</string>
     <string name="CardEditorCardDeck">Kortelių rinkinys:</string>
     <string name="CardEditorNoteDeck">Rinkinys:</string>
     <string name="CardEditorModel">Tipas:</string>

@@ -47,6 +47,7 @@
     <!-- Navigation drawer strings -->
     <string name="drawer_open">அலமாரியைத் திறக்கவும்</string>
     <string name="drawer_close">அலமாரியை மூடு</string>
+    <string name="note_message">Note saved</string>
     <string name="CardEditorCardDeck">அட்டை தளம்:</string>
     <string name="CardEditorNoteDeck">தளம்:</string>
     <string name="CardEditorModel">வகை:</string>

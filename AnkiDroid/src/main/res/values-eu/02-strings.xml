@@ -47,6 +47,7 @@
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Open drawer</string>
     <string name="drawer_close">Itxi Kutxa</string>
+    <string name="note_message">Note saved</string>
     <string name="CardEditorCardDeck">Txartel-sorta:</string>
     <string name="CardEditorNoteDeck">Sorta:</string>
     <string name="CardEditorModel">Mota:</string>

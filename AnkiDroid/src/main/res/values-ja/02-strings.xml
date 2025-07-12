@@ -47,6 +47,7 @@
     <!-- Navigation drawer strings -->
     <string name="drawer_open">ナビゲーションドロワーを開く</string>
     <string name="drawer_close">ナビゲーションドロワーを閉じる</string>
+    <string name="note_message">Note saved</string>
     <string name="CardEditorCardDeck">カードデッキ:</string>
     <string name="CardEditorNoteDeck">デッキ:</string>
     <string name="CardEditorModel">ノートタイプ:</string>

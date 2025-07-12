@@ -47,6 +47,7 @@
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Otvori ladicu</string>
     <string name="drawer_close">Zatvori ladicu</string>
+    <string name="note_message">Note saved</string>
     <string name="CardEditorCardDeck">Špil karata:</string>
     <string name="CardEditorNoteDeck">Špil:</string>
     <string name="CardEditorModel">Tip:</string>

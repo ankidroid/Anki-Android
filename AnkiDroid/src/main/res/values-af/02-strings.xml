@@ -47,6 +47,7 @@
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Maak laai oop</string>
     <string name="drawer_close">Maak laai toe</string>
+    <string name="note_message">Note saved</string>
     <string name="CardEditorCardDeck">Kaartpak:</string>
     <string name="CardEditorNoteDeck">Pak:</string>
     <string name="CardEditorModel">Tipe:</string>

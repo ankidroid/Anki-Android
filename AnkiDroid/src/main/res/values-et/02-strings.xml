@@ -47,6 +47,7 @@
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Ava sahtel</string>
     <string name="drawer_close">Sulge sahtel</string>
+    <string name="note_message">Note saved</string>
     <string name="CardEditorCardDeck">Kaardipakk:</string>
     <string name="CardEditorNoteDeck">Kaardipakk:</string>
     <string name="CardEditorModel">Tüüp:</string>

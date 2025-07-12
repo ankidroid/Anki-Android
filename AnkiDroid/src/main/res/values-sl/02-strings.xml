@@ -47,6 +47,7 @@
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Odpri predal</string>
     <string name="drawer_close">Zapri predal</string>
+    <string name="note_message">Note saved</string>
     <string name="CardEditorCardDeck">Komplet kartic:</string>
     <string name="CardEditorNoteDeck">Komplet:</string>
     <string name="CardEditorModel">Vrsta:</string>

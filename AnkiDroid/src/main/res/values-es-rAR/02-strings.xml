@@ -47,6 +47,7 @@
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Abrir cajón</string>
     <string name="drawer_close">Cerrar cajón</string>
+    <string name="note_message">Note saved</string>
     <string name="CardEditorCardDeck">Mazo de tarjetas:</string>
     <string name="CardEditorNoteDeck">Mazo:</string>
     <string name="CardEditorModel">Tipo:</string>

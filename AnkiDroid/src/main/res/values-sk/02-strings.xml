@@ -47,6 +47,7 @@
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Otvoriť lištu</string>
     <string name="drawer_close">Zavrieť lištu</string>
+    <string name="note_message">Note saved</string>
     <string name="CardEditorCardDeck">Balíček kartičky:</string>
     <string name="CardEditorNoteDeck">Balíček:</string>
     <string name="CardEditorModel">Typ:</string>
