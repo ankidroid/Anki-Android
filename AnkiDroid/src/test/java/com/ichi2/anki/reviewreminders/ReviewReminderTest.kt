@@ -26,7 +26,6 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import kotlin.time.Duration.Companion.minutes
 
 @RunWith(AndroidJUnit4::class)
 class ReviewReminderTest : RobolectricTest() {
@@ -48,7 +47,6 @@ class ReviewReminderTest : RobolectricTest() {
             val reminder =
                 ReviewReminder.createReviewReminder(
                     ReviewReminderTime(12, 30),
-                    ReviewReminderSnoozeAmount.SetAmount(15.minutes, 3),
                     ReviewReminderCardTriggerThreshold(0),
                     ReviewReminderScope.DeckSpecific(5),
                 )
