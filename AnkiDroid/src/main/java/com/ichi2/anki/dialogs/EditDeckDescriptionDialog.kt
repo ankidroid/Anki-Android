@@ -19,7 +19,6 @@ package com.ichi2.anki.dialogs
 import android.app.Dialog
 import android.os.Bundle
 import android.view.View
-import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.ImageButton
 import androidx.activity.OnBackPressedCallback
@@ -178,15 +177,6 @@ class EditDeckDescriptionDialog : DialogFragment() {
         DiscardChangesDialog.showDialog(requireContext()) {
             viewModel.closeWithoutSaving()
         }
-    }
-
-    override fun onStart() {
-        super.onStart()
-
-        dialog!!.window!!.setLayout(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT,
-        )
     }
 
     companion object {
