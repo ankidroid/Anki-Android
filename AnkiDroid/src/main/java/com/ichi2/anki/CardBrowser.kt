@@ -1638,7 +1638,7 @@ open class CardBrowser :
                     } else {
                         subtitleText
                     }
-                showSnackbar(message, Snackbar.LENGTH_INDEFINITE) {
+                showSnackbar(message, Snackbar.LENGTH_SHORT) {
                     setAction(R.string.card_browser_search_all_decks) { searchAllDecks() }
                 }
             }
