@@ -2734,22 +2734,19 @@ class NoteEditorFragment :
     private fun currentNotetypeIsImageOcclusion() = currentlySelectedNotetype?.isImageOcclusion == true
 
     private fun setupImageOcclusionEditor(imagePath: String = "") {
-        val kind: String
-        val id: Long
-        if (addNote) {
-            kind = "add"
-            // if opened from an intent, the selected note type may not be suitable for IO
-            id =
-                if (currentNotetypeIsImageOcclusion()) {
-                    currentlySelectedNotetype!!.id
-                } else {
-                    0
-                }
-        } else {
-            kind = "edit"
-            id = editorNote?.id!!
-        }
-        val intent = ImageOcclusion.getIntent(requireContext(), kind, id, imagePath, deckId)
+        val intent =
+            if (addNote) {
+                // if opened from an intent, the selected note type may not be suitable for IO
+                val id =
+                    if (currentNotetypeIsImageOcclusion()) {
+                        currentlySelectedNotetype!!.id
+                    } else {
+                        0
+                    }
+                ImageOcclusion.getEditIntent(requireContext(), id, imagePath, deckId)
+            } else {
+                ImageOcclusion.getAddIntent(requireContext(), editorNote!!.id, imagePath, deckId)
+            }
         requestIOEditorCloser.launch(intent)
     }
 
