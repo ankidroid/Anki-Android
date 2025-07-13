@@ -37,7 +37,6 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
 
     private val did1 = 12345L
     private val did2 = 67890L
-    private val did3 = 13579L
 
     private val dummyDeckSpecificRemindersForDeckOne =
         mapOf(
@@ -139,64 +138,6 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
         reviewRemindersDatabase.editAllAppWideReminders { dummyAppWideReminders }
         val storedReminders = reviewRemindersDatabase.getAllAppWideReminders()
         assertThat(storedReminders, equalTo(dummyAppWideReminders))
-    }
-
-    @Test
-    fun `editAllDeckSpecificReminders should update all reminders across decks`() {
-        val reminders1Old =
-            mapOf(
-                ReviewReminderId(0) to
-                    ReviewReminder.createReviewReminder(
-                        ReviewReminderTime(9, 0),
-                        ReviewReminderCardTriggerThreshold(5),
-                        ReviewReminderScope.DeckSpecific(did1),
-                    ),
-            )
-        val reminders2Old =
-            mapOf(
-                ReviewReminderId(1) to
-                    ReviewReminder.createReviewReminder(
-                        ReviewReminderTime(10, 30),
-                        ReviewReminderCardTriggerThreshold(10),
-                        ReviewReminderScope.DeckSpecific(did2),
-                    ),
-            )
-        val reminders2New =
-            mapOf(
-                ReviewReminderId(2) to
-                    ReviewReminder.createReviewReminder(
-                        ReviewReminderTime(10, 45),
-                        ReviewReminderCardTriggerThreshold(10),
-                        ReviewReminderScope.DeckSpecific(did2),
-                    ),
-            )
-        val reminders3New =
-            mapOf(
-                ReviewReminderId(3) to
-                    ReviewReminder.createReviewReminder(
-                        ReviewReminderTime(11, 0),
-                        ReviewReminderCardTriggerThreshold(25),
-                        ReviewReminderScope.DeckSpecific(did3),
-                    ),
-            )
-
-        reviewRemindersDatabase.editRemindersForDeck(did1) { reminders1Old }
-        reviewRemindersDatabase.editRemindersForDeck(did2) { reminders2Old }
-
-        reviewRemindersDatabase.editAllDeckSpecificReminders { reminders2New + reminders3New }
-
-        val storedReminders1 = reviewRemindersDatabase.getRemindersForDeck(did1)
-        val storedReminders2 = reviewRemindersDatabase.getRemindersForDeck(did2)
-        val storedReminders3 = reviewRemindersDatabase.getRemindersForDeck(did3)
-        val allStoredReminders = reviewRemindersDatabase.getAllDeckSpecificReminders()
-
-        assertThat(storedReminders1, anEmptyMap())
-        assertThat(storedReminders2, equalTo(reminders2New))
-        assertThat(storedReminders3, equalTo(reminders3New))
-        assertThat(
-            allStoredReminders,
-            equalTo(reminders2New + reminders3New),
-        )
     }
 
     @Test(expected = SerializationException::class)

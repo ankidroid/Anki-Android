@@ -94,28 +94,17 @@ class ReviewRemindersDatabase {
     fun getAllAppWideReminders(): HashMap<ReviewReminderId, ReviewReminder> = getRemindersForKey(APP_WIDE_KEY)
 
     /**
-     * Get all [ReviewReminder]s that are associated with a specific deck, grouped by deck ID.
-     * @throws SerializationException If the reminders maps have not been stored in SharedPreferences as valid JSON strings.
-     * @throws IllegalArgumentException If the decoded reminders maps are not instances of HashMap<[ReviewReminderId], [ReviewReminder]>.
-     */
-    private fun getAllDeckSpecificRemindersGrouped(): Map<DeckId, HashMap<ReviewReminderId, ReviewReminder>> {
-        return AnkiDroidApp
-            .sharedPrefs()
-            .all
-            .filterKeys { it.startsWith(DECK_SPECIFIC_KEY) }
-            .mapNotNull { (key, value) ->
-                val did = key.removePrefix(DECK_SPECIFIC_KEY).toLongOrNull() ?: return@mapNotNull null
-                val reminders = decodeJson(value.toString())
-                did to reminders
-            }.toMap()
-    }
-
-    /**
      * Get all [ReviewReminder]s that are associated with a specific deck, all in a single flattened map.
      * @throws SerializationException If the reminders maps have not been stored in SharedPreferences as valid JSON strings.
      * @throws IllegalArgumentException If the decoded reminders maps are not instances of HashMap<[ReviewReminderId], [ReviewReminder]>.
      */
-    fun getAllDeckSpecificReminders(): HashMap<ReviewReminderId, ReviewReminder> = getAllDeckSpecificRemindersGrouped().flatten()
+    fun getAllDeckSpecificReminders(): HashMap<ReviewReminderId, ReviewReminder> =
+        AnkiDroidApp
+            .sharedPrefs()
+            .all
+            .filterKeys { it.startsWith(DECK_SPECIFIC_KEY) }
+            .flatMap { (_, value) -> decodeJson(value.toString()).entries }
+            .associateTo(hashMapOf()) { it.toPair() }
 
     /**
      * Edit the [ReviewReminder]s for a specific key.
@@ -157,56 +146,6 @@ class ReviewRemindersDatabase {
      */
     fun editAllAppWideReminders(reminderEditor: (HashMap<ReviewReminderId, ReviewReminder>) -> Map<ReviewReminderId, ReviewReminder>) =
         editRemindersForKey(APP_WIDE_KEY, reminderEditor)
-
-    /**
-     * Edit all [ReviewReminder]s that are associated with a specific deck by operating on a single mutable map.
-     * This assumes the resulting map contains only reminders of scope [ReviewReminderScope.DeckSpecific].
-     * @param reminderEditor A lambda that takes the current map and returns the updated map.
-     * @throws SerializationException If the current reminders maps have not been stored in SharedPreferences as valid JSON strings.
-     * @throws IllegalArgumentException If the decoded current reminders maps are not instances of HashMap<[ReviewReminderId], [ReviewReminder]>.
-     */
-    fun editAllDeckSpecificReminders(reminderEditor: (HashMap<ReviewReminderId, ReviewReminder>) -> Map<ReviewReminderId, ReviewReminder>) {
-        val existingRemindersGrouped = getAllDeckSpecificRemindersGrouped()
-        val existingRemindersFlattened = existingRemindersGrouped.flatten()
-
-        val updatedRemindersFlattened = reminderEditor(existingRemindersFlattened)
-        val updatedRemindersGrouped = updatedRemindersFlattened.groupByDeckId()
-
-        val existingKeys = existingRemindersGrouped.keys.map { DECK_SPECIFIC_KEY + it }
-
-        AnkiDroidApp.sharedPrefs().edit {
-            // Clear existing review reminder keys in SharedPreferences
-            existingKeys.forEach { remove(it) }
-            // Add the updated ones back in
-            updatedRemindersGrouped.forEach { (did, reminders) ->
-                putString(DECK_SPECIFIC_KEY + did, encodeJson(reminders))
-            }
-        }
-    }
-
-    /**
-     * Utility function for flattening maps of deck-specific [ReviewReminder]s grouped by deck ID into a single map.
-     */
-    private fun Map<DeckId, HashMap<ReviewReminderId, ReviewReminder>>.flatten(): HashMap<ReviewReminderId, ReviewReminder> =
-        hashMapOf<ReviewReminderId, ReviewReminder>().apply {
-            this@flatten.forEach { (_, reminders) ->
-                putAll(reminders)
-            }
-        }
-
-    /**
-     * Utility function for grouping maps of deck-specific [ReviewReminder]s by deck ID.
-     * Should only be called on deck-specific [ReviewReminder]s and will throw an [IllegalArgumentException] otherwise.
-     */
-    private fun Map<ReviewReminderId, ReviewReminder>.groupByDeckId(): Map<DeckId, HashMap<ReviewReminderId, ReviewReminder>> =
-        hashMapOf<DeckId, HashMap<ReviewReminderId, ReviewReminder>>().apply {
-            this@groupByDeckId.forEach { (id, reminder) ->
-                when (val scope = reminder.scope) {
-                    is ReviewReminderScope.Global -> throw IllegalArgumentException("Global reminders found in deck-specific map")
-                    is ReviewReminderScope.DeckSpecific -> getOrPut(scope.did) { hashMapOf() }[id] = reminder
-                }
-            }
-        }
 
     /**
      * Helper method for getting all SharedPreferences that represent app-wide or deck-specific reminder HashMaps.
