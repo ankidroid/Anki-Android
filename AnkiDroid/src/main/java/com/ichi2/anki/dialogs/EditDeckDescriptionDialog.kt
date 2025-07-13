@@ -18,12 +18,12 @@ package com.ichi2.anki.dialogs
 
 import android.app.Dialog
 import android.os.Bundle
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.ImageButton
 import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.DialogFragment
@@ -39,6 +39,9 @@ import com.ichi2.anki.dialogs.EditDeckDescriptionDialogViewModel.DismissType
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.utils.AndroidUiUtils.setFocusAndOpenKeyboard
+import com.ichi2.utils.create
+import com.ichi2.utils.negativeButton
+import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
@@ -52,6 +55,7 @@ import timber.log.Timber
 class EditDeckDescriptionDialog : DialogFragment() {
     private val viewModel: EditDeckDescriptionDialogViewModel by viewModels()
 
+    private lateinit var alertDialog: AlertDialog
     private lateinit var dialogView: View
 
     private val deckDescriptionInput: TextInputEditText
@@ -63,9 +67,6 @@ class EditDeckDescriptionDialog : DialogFragment() {
     private val toolbar: MaterialToolbar
         get() = dialogView.findViewById(R.id.topAppBar)
 
-    private val saveMenuItem: MenuItem
-        get() = toolbar.menu.findItem(R.id.action_save)
-
     private val onUnsavedChangesBackCallback =
         object : OnBackPressedCallback(enabled = false) {
             override fun handleOnBackPressed() {
@@ -76,13 +77,21 @@ class EditDeckDescriptionDialog : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         this.dialogView = layoutInflater.inflate(R.layout.dialog_deck_description, null)
         return MaterialAlertDialogBuilder(requireContext())
-            .show {
+            .create {
                 setView(dialogView)
+                positiveButton(R.string.save)
+                negativeButton(R.string.close)
             }.apply {
-                setupDialogView(dialogView)
+                alertDialog = this
+                setOnShowListener {
+                    positiveButton.setOnClickListener { viewModel.saveAndExit() }
+                    negativeButton.setOnClickListener { viewModel.onBackRequested() }
+                }
                 setCanceledOnTouchOutside(false)
                 setCancelable(false)
                 onBackPressedDispatcher.addCallback(this, onUnsavedChangesBackCallback)
+                show()
+                setupDialogView(dialogView)
             }
     }
 
@@ -107,23 +116,6 @@ class EditDeckDescriptionDialog : DialogFragment() {
                     setIcon(R.drawable.ic_help_black_24dp)
                     // FIXME: the upstream string unexpectedly contains newlines
                     setMessage(TR.deckConfigDescriptionNewHandlingHint().replace("\n", " ").replace("  ", " "))
-                }
-            }
-        }
-
-        // setup App Bar
-        toolbar.apply {
-            setNavigationOnClickListener {
-                viewModel.onBackRequested()
-            }
-
-            setOnMenuItemClickListener { menuItem ->
-                when (menuItem.itemId) {
-                    R.id.action_save -> {
-                        viewModel.saveAndExit()
-                        true
-                    }
-                    else -> false
                 }
             }
         }
@@ -175,7 +167,7 @@ class EditDeckDescriptionDialog : DialogFragment() {
 
         lifecycleScope.launch {
             viewModel.flowOfHasChanges.collect {
-                saveMenuItem.isEnabled = it
+                alertDialog.positiveButton.isEnabled = it
                 onUnsavedChangesBackCallback.isEnabled = it
             }
         }
