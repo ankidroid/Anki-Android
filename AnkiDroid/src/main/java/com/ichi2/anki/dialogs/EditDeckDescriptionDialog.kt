@@ -21,17 +21,17 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.textfield.TextInputEditText
-import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
 import com.ichi2.anki.StudyOptionsFragment
-import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.DeckId
-import com.ichi2.anki.utils.ext.update
 import com.ichi2.utils.AndroidUiUtils.setFocusAndOpenKeyboard
-import timber.log.Timber
+import kotlinx.coroutines.launch
 
 /**
  * Allows a user to edit the [deck description][com.ichi2.anki.libanki.Deck.description]
@@ -39,16 +39,11 @@ import timber.log.Timber
  * This is visible on [StudyOptionsFragment]
  */
 class EditDeckDescriptionDialog : DialogFragment(R.layout.dialog_deck_description) {
-    private val deckId: DeckId
-        get() = requireArguments().getLong(ARG_DECK_ID)
+    private val viewModel: EditDeckDescriptionDialogViewModel by viewModels()
 
     private lateinit var deckDescriptionInput: TextInputEditText
 
-    private var currentDescription
-        get() = deckDescriptionInput.text.toString()
-        set(value) {
-            deckDescriptionInput.setText(value)
-        }
+    private lateinit var toolbar: MaterialToolbar
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
         super.onCreateDialog(savedInstanceState).also {
@@ -60,35 +55,67 @@ class EditDeckDescriptionDialog : DialogFragment(R.layout.dialog_deck_descriptio
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        deckDescriptionInput = view.findViewById(R.id.deck_description_input)
-
-        // load initial state
-        launchCatchingTask {
-            currentDescription = getDescription()
-        }
-
-        // setup App Bar
-        view
-            .findViewById<MaterialToolbar>(R.id.topAppBar)
-            .apply {
-                setNavigationOnClickListener {
-                    onBack()
+        deckDescriptionInput =
+            view.findViewById<TextInputEditText>(R.id.deck_description_input).apply {
+                doOnTextChanged { text, _, _, _ ->
+                    viewModel.description = text?.toString() ?: ""
                 }
-
-                setOnMenuItemClickListener { menuItem ->
-                    if (menuItem.itemId == R.id.action_save) {
-                        saveAndExit()
-                        true
-                    } else {
-                        false
-                    }
-                }
-            }.also { toolbar ->
-                launchCatchingTask { toolbar.title = withCol { decks.getLegacy(deckId)!!.name } }
             }
 
-        // setup input controls
-        setFocusAndOpenKeyboard(deckDescriptionInput) { deckDescriptionInput.setSelection(deckDescriptionInput.text!!.length) }
+        // setup App Bar
+        toolbar =
+            view
+                .findViewById<MaterialToolbar>(R.id.topAppBar)
+                .apply {
+                    setNavigationOnClickListener {
+                        viewModel.onBackRequested()
+                    }
+
+                    setOnMenuItemClickListener { menuItem ->
+                        when (menuItem.itemId) {
+                            R.id.action_save -> {
+                                viewModel.saveAndExit()
+                                true
+                            }
+                            else -> false
+                        }
+                    }
+                }
+
+        setupFlows()
+    }
+
+    private fun setupFlows() {
+        lifecycleScope.launch {
+            viewModel.flowOfDismissDialog.collect { dismiss ->
+                if (dismiss) {
+                    dismiss()
+                }
+            }
+        }
+
+        lifecycleScope.launch {
+            viewModel.flowOfDescription.collect { desc ->
+                if (desc == deckDescriptionInput.text.toString()) return@collect
+                deckDescriptionInput.setText(desc)
+            }
+        }
+
+        lifecycleScope.launch {
+            viewModel.flowOfInitCompleted.collect {
+                if (!it) return@collect
+                toolbar.title = viewModel.windowTitle
+                setFocusAndOpenKeyboard(deckDescriptionInput) { deckDescriptionInput.setSelection(deckDescriptionInput.text!!.length) }
+            }
+        }
+
+        lifecycleScope.launch {
+            viewModel.flowOfShowDiscardChanges.collect {
+                DiscardChangesDialog.showDialog(requireContext()) {
+                    viewModel.closeWithoutSaving()
+                }
+            }
+        }
     }
 
     override fun onStart() {
@@ -100,46 +127,12 @@ class EditDeckDescriptionDialog : DialogFragment(R.layout.dialog_deck_descriptio
         )
     }
 
-    private fun saveAndExit() =
-        launchCatchingTask {
-            setDescription(currentDescription)
-            Timber.i("closing deck description dialog")
-            dismiss()
-        }
-
-    private fun onBack() =
-        launchCatchingTask {
-            fun closeWithoutSaving() {
-                Timber.i("Closing dialog without saving")
-                dismiss()
-            }
-
-            if (getDescription() == currentDescription) {
-                closeWithoutSaving()
-                return@launchCatchingTask
-            }
-
-            Timber.i("asking if user should discard changes")
-            DiscardChangesDialog.showDialog(requireContext()) {
-                closeWithoutSaving()
-            }
-        }
-
-    private suspend fun getDescription() = withCol { decks.getLegacy(deckId)!!.description }
-
-    private suspend fun setDescription(value: String) {
-        Timber.i("updating deck description")
-        withCol { decks.update(deckId) { description = value } }
-    }
-
     companion object {
-        private const val ARG_DECK_ID = "deckId"
-
         fun newInstance(deckId: DeckId): EditDeckDescriptionDialog =
             EditDeckDescriptionDialog().apply {
                 arguments =
                     bundleOf(
-                        ARG_DECK_ID to deckId,
+                        EditDeckDescriptionDialogViewModel.ARG_DECK_ID to deckId,
                     )
             }
     }
