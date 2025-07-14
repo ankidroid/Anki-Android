@@ -1638,14 +1638,14 @@ open class CardBrowser :
             }
             updateList()
             if (viewModel.hasSelectedAllDecks()) {
-                showSnackbar(subtitleText, Snackbar.LENGTH_SHORT)
+                showSnackbar(numberOfCardsOrNoteShown, Snackbar.LENGTH_SHORT)
             } else {
                 // If we haven't selected all decks, allow the user the option to search all decks.
                 val message =
                     if (viewModel.rowCount == 0) {
                         getString(R.string.card_browser_no_cards_in_deck, selectedDeckNameForUi)
                     } else {
-                        subtitleText
+                        numberOfCardsOrNoteShown
                     }
                 showSnackbar(message, Snackbar.LENGTH_SHORT) {
                     setAction(R.string.card_browser_search_all_decks) { searchAllDecks() }
@@ -1671,10 +1671,13 @@ open class CardBrowser :
         refreshSubtitle()
     }
 
-    /**
-     * @return text to be used in the subtitle of the drop-down deck selector
-     */
     override val subtitleText: String
+        get() = numberOfCardsOrNoteShown
+
+    /**
+     * @return A message stating the number of cards/notes shown by the browser.
+     */
+    val numberOfCardsOrNoteShown: String
         get() {
             val count = viewModel.rowCount
 
