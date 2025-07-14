@@ -33,8 +33,8 @@ class DeckDropDownAdapter(
     val decks: List<DeckNameId>
         get() = deckList.toList()
 
-    interface SubtitleListener {
-        val subtitleText: String
+    interface SubtitleProvider {
+        val deckDropDownSubtitle: String
     }
 
     internal data class DeckDropDownViewHolder(
@@ -85,7 +85,7 @@ class DeckDropDownAdapter(
             val deckName = deck.name
             deckNameView.text = deckName
         }
-        deckCountsView.text = (context as? SubtitleListener)?.subtitleText ?: ""
+        deckCountsView.text = (context as? SubtitleProvider)?.deckDropDownSubtitle ?: ""
         return convertView
     }
 
