@@ -60,10 +60,8 @@ jobs:
               }
             }
 
-            // TODO Refactor to make these dynamic with a low/high bracket only on schedule, not push
-            // For now this is the latest supported API. Previously API 29 was fastest.
-            // #13695: This was reverted to API 30, 31 was unstable. This should be fixed
-            let apiLevel = [30];
+            // TODO Refactor to make these dynamic with a minSdk/max bracket only on schedule, not push
+            let apiLevel = [36];
 
             // These are used for performance tuning what emulator to use.
             // try different architectures, targets, delays etc
