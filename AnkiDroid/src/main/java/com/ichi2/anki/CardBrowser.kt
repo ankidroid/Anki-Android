@@ -116,7 +116,7 @@ import com.ichi2.anki.utils.ext.getCurrentDialogFragment
 import com.ichi2.anki.utils.ext.ifNotZero
 import com.ichi2.anki.utils.ext.setFragmentResultListener
 import com.ichi2.anki.utils.ext.showDialogFragment
-import com.ichi2.anki.widgets.DeckDropDownAdapter.SubtitleListener
+import com.ichi2.anki.widgets.DeckDropDownAdapter
 import com.ichi2.ui.CardBrowserSearchView
 import com.ichi2.utils.LanguageUtil
 import com.ichi2.utils.TagsUtil.getUpdatedTags
@@ -133,7 +133,7 @@ import timber.log.Timber
 @KotlinCleanup("scan through this class and add attributes - in process")
 open class CardBrowser :
     NavigationDrawerActivity(),
-    SubtitleListener,
+    DeckDropDownAdapter.SubtitleProvider,
     DeckSelectionListener,
     TagsDialogListener,
     ChangeManager.Subscriber {
@@ -1671,7 +1671,7 @@ open class CardBrowser :
         refreshSubtitle()
     }
 
-    override val subtitleText: String
+    override val deckDropDownSubtitle: String
         get() = numberOfCardsOrNoteShown
 
     /**
