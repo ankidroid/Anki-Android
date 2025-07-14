@@ -17,6 +17,7 @@ package com.ichi2.utils
 
 import android.annotation.SuppressLint
 import android.app.ActivityManager
+import android.content.ComponentName
 import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
@@ -140,4 +141,40 @@ object AdaptionUtil {
             val manufacturer = Build.MANUFACTURER ?: return false
             return manufacturer.lowercase(Locale.ROOT) == "vivo"
         }
+
+    val isMiui: Boolean by lazy {
+        val ctx: Context = AnkiDroidApp.instance
+
+        // https://stackoverflow.com/questions/47610456/how-to-detect-miui-rom-programmatically-in-android
+        fun isIntentResolved(intent: Intent): Boolean =
+            (ctx.packageManager.resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY) != null)
+
+        return@lazy try {
+            isIntentResolved(
+                Intent("miui.intent.action.OP_AUTO_START").addCategory(Intent.CATEGORY_DEFAULT),
+            ) ||
+                isIntentResolved(
+                    Intent().setComponent(
+                        ComponentName(
+                            "com.miui.securitycenter",
+                            "com.miui.permcenter.autostart.AutoStartManagementActivity",
+                        ),
+                    ),
+                ) ||
+                isIntentResolved(
+                    Intent("miui.intent.action.POWER_HIDE_MODE_APP_LIST").addCategory(Intent.CATEGORY_DEFAULT),
+                ) ||
+                isIntentResolved(
+                    Intent().setComponent(
+                        ComponentName(
+                            "com.miui.securitycenter",
+                            "com.miui.powercenter.PowerSettings",
+                        ),
+                    ),
+                )
+        } catch (e: Exception) {
+            Timber.w(e)
+            false
+        }
+    }
 }

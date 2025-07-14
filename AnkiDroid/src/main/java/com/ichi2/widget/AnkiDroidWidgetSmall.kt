@@ -28,6 +28,7 @@ import android.os.IBinder
 import android.util.TypedValue
 import android.view.View
 import android.widget.RemoteViews
+import androidx.annotation.LayoutRes
 import androidx.core.app.PendingIntentCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.edit
@@ -96,9 +97,16 @@ class AnkiDroidWidgetSmall : AnalyticsWidgetProvider() {
             manager.updateAppWidget(thisWidget, updateViews)
         }
 
+        @get:LayoutRes
+        private val widgetSmallLayout: Int
+            get() {
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) return R.layout.widget_small
+                return if (disableMaterialYouDynamicColor) R.layout.widget_small_unthemed else R.layout.widget_small
+            }
+
         private fun buildUpdate(context: Context): RemoteViews {
             Timber.d("buildUpdate")
-            val updateViews = RemoteViews(context.packageName, R.layout.widget_small)
+            val updateViews = RemoteViews(context.packageName, widgetSmallLayout)
             val mounted = AnkiDroidApp.isSdCardMounted
             if (!mounted) {
                 updateViews.setViewVisibility(R.id.widget_due, View.INVISIBLE)

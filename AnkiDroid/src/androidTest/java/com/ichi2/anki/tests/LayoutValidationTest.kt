@@ -15,6 +15,7 @@
  */
 package com.ichi2.anki.tests
 
+import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import android.view.LayoutInflater
@@ -104,7 +105,12 @@ class LayoutValidationTest : InstrumentedTest() {
                 listOf(
                     com.ichi2.anki.R.layout.activity_manage_space,
                     com.ichi2.anki.R.layout.introduction_activity,
-                )
+                ) +
+                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
+                        listOf(com.ichi2.anki.R.layout.widget_small_unthemed)
+                    } else {
+                        emptyList()
+                    }
 
             return layout::class.java.fields
                 .map { arrayOf(it.getInt(layout), it.name) }
