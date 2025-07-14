@@ -34,7 +34,7 @@ class DeckDropDownAdapter(
         get() = deckList.toList()
 
     interface SubtitleListener {
-        val subtitleText: String?
+        val subtitleText: String
     }
 
     internal data class DeckDropDownViewHolder(
