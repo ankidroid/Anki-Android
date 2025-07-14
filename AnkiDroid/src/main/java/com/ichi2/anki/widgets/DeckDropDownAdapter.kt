@@ -27,13 +27,20 @@ import com.ichi2.anki.libanki.DeckNameId
 
 class DeckDropDownAdapter(
     private val context: Context,
+    private val subtitleProvider: SubtitleProvider?,
     decks: List<DeckNameId>,
 ) : BaseAdapter() {
     private val deckList = decks.toMutableList()
     val decks: List<DeckNameId>
         get() = deckList.toList()
 
+    /**
+     * A class providing this interface must provide a subtitle to display under the deck name when the deck drop-down menu is closed.
+     */
     interface SubtitleProvider {
+        /**
+         * The subtitle to the closed deck drop-down menu.
+         */
         val deckDropDownSubtitle: String
     }
 
@@ -85,7 +92,7 @@ class DeckDropDownAdapter(
             val deckName = deck.name
             deckNameView.text = deckName
         }
-        deckCountsView.text = (context as? SubtitleProvider)?.deckDropDownSubtitle ?: ""
+        deckCountsView.text = subtitleProvider?.deckDropDownSubtitle ?: ""
         return convertView
     }
 
