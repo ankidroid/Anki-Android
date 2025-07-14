@@ -430,6 +430,7 @@ open class CardBrowser :
                 showAllDecks = true,
                 alwaysShowDefault = false,
                 showFilteredDecks = true,
+                subtitleProvider = this,
             )
 
         startLoadingCollection()
