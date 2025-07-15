@@ -804,6 +804,10 @@ open class DeckPicker :
             )
         }
 
+        fun onFocusedDeckChanged(deckId: DeckId?) {
+            scrollDecklistToDeck(deckId)
+        }
+
         fun onError(errorMessage: String) {
             AlertDialog
                 .Builder(this)
@@ -825,6 +829,7 @@ open class DeckPicker :
         viewModel.flowOfCardsDue.launchCollectionInLifecycleScope(::onCardsDueChanged)
         viewModel.flowOfStudyOptionsVisible.launchCollectionInLifecycleScope(::onStudyOptionsVisibilityChanged)
         viewModel.flowOfDeckList.launchCollectionInLifecycleScope(::onDeckListChanged)
+        viewModel.flowOfFocusedDeck.launchCollectionInLifecycleScope(::onFocusedDeckChanged)
     }
 
     private val onReceiveContentListener =
@@ -1630,7 +1635,7 @@ open class DeckPicker :
                     if (event.isShiftPressed) {
                         // Shortcut: Shift + DEL - Delete deck without confirmation dialog
                         Timber.i("Shift+DEL: Deck deck without confirmation")
-                        deleteDeck(viewModel.focusedDeck)
+                        viewModel.focusedDeck?.let { did -> deleteDeck(did) }
                     } else {
                         // Shortcut: DEL
                         Timber.i("Delete Deck from keypress")
@@ -1645,7 +1650,7 @@ open class DeckPicker :
                 // that is, when it appears in the trailing study option fragment
                 if (fragmented) {
                     Timber.i("Rename Deck from keypress")
-                    renameDeckDialog(viewModel.focusedDeck)
+                    viewModel.focusedDeck?.let { did -> renameDeckDialog(did) }
                     return true
                 }
             }
@@ -1693,18 +1698,24 @@ open class DeckPicker :
      */
     private fun showDeleteDeckConfirmationDialog() =
         launchCatchingTask {
+            val focusedDeck =
+                viewModel.focusedDeck ?: run {
+                    Timber.w("no focused deck")
+                    return@launchCatchingTask
+                }
+
             val (deckName, totalCards, isFilteredDeck) =
                 withCol {
                     Triple(
-                        decks.name(viewModel.focusedDeck),
-                        decks.cardCount(viewModel.focusedDeck, includeSubdecks = true),
-                        decks.isFiltered(viewModel.focusedDeck),
+                        decks.name(focusedDeck),
+                        decks.cardCount(focusedDeck, includeSubdecks = true),
+                        decks.isFiltered(focusedDeck),
                     )
                 }
             val confirmDeleteDeckDialog =
                 DeckPickerConfirmDeleteDeckDialog.newInstance(
                     deckName = deckName,
-                    deckId = viewModel.focusedDeck,
+                    deckId = focusedDeck,
                     totalCards = totalCards,
                     isFilteredDeck = isFilteredDeck,
                 )
@@ -2258,8 +2269,8 @@ open class DeckPicker :
      *
      * @param did The deck ID of the deck to select.
      */
-    private fun scrollDecklistToDeck(did: DeckId) {
-        val position = findDeckPosition(did)
+    private fun scrollDecklistToDeck(did: DeckId?) {
+        val position = did?.let { findDeckPosition(it) } ?: 0
         recyclerViewLayoutManager.scrollToPositionWithOffset(position, recyclerView.height / 2)
     }
 
