@@ -38,7 +38,6 @@ import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.utils.ext.findViewById
 import kotlinx.coroutines.runBlocking
 import net.ankiweb.rsdroid.RustCleanup
-import timber.log.Timber
 
 /**
  * A [RecyclerView.Adapter] used to show the list of decks inside [com.ichi2.anki.DeckPicker].
@@ -208,11 +207,9 @@ class DeckAdapter(
             if (node.collapsed) {
                 expander.setImageDrawable(expandImage)
                 expander.contentDescription = expander.context.getString(R.string.expand)
-                Timber.d("Deck Collapsed")
             } else {
                 expander.setImageDrawable(collapseImage)
                 expander.contentDescription = expander.context.getString(R.string.collapse)
-                Timber.d("Deck Expanded")
             }
         } else {
             expander.visibility = View.INVISIBLE
