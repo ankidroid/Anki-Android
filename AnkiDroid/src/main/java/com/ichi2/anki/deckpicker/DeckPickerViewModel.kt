@@ -71,6 +71,18 @@ class DeckPickerViewModel(
     /** User filter of the deck list. Shown as a search in the UI */
     private val flowOfCurrentDeckFilter = MutableStateFlow("")
 
+    val flowOfDeckList =
+        combine(flowOfDeckDueTree, flowOfCurrentDeckFilter) { tree, filter ->
+            if (tree == null) return@combine FlattenedDeckList.empty
+
+            val currentDeckId = withCol { decks.current().getLong("id") }
+
+            FlattenedDeckList(
+                data = tree.filterAndFlattenDisplay(filter, currentDeckId),
+                hasSubDecks = tree.children.any { it.children.any() },
+            )
+        }
+
     /**
      * @see deleteDeck
      * @see DeckDeletionResult
@@ -294,6 +306,16 @@ class DeckPickerViewModel(
         val deckDueTree: DeckNode,
         val collectionHasNoCards: Boolean,
     )
+
+    /** Represents [dueTree] as a list */
+    data class FlattenedDeckList(
+        val data: List<DisplayDeckNode>,
+        val hasSubDecks: Boolean,
+    ) {
+        companion object {
+            val empty = FlattenedDeckList(emptyList(), hasSubDecks = false)
+        }
+    }
 }
 
 /** Result of [DeckPickerViewModel.deleteDeck] */
