@@ -46,6 +46,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -84,8 +85,18 @@ class DeckPickerViewModel(
             flowOfFocusedDeck.value = value
         }
 
+    /**
+     * Used if the Deck Due Tree is mutated
+     */
+    private val flowOfRefreshDeckList = MutableSharedFlow<Unit>()
+
     val flowOfDeckList =
-        combine(flowOfDeckDueTree, flowOfCurrentDeckFilter, flowOfFocusedDeck) { tree, filter, _ ->
+        combine(
+            flowOfDeckDueTree,
+            flowOfCurrentDeckFilter,
+            flowOfFocusedDeck,
+            flowOfRefreshDeckList.onStart { emit(Unit) },
+        ) { tree, filter, _, _ ->
             if (tree == null) return@combine FlattenedDeckList.empty
 
             // TODO: use flowOfFocusedDeck once it's set on all instances
@@ -303,6 +314,17 @@ class DeckPickerViewModel(
         Timber.d("filter: %s", filterText)
         flowOfCurrentDeckFilter.value = filterText
     }
+
+    fun toggleDeckExpand(deckId: DeckId) =
+        viewModelScope.launch {
+            // update DB
+            withCol { decks.collapse(deckId) }
+            // update stored state
+            dueTree?.find(deckId)?.run {
+                collapsed = !collapsed
+            }
+            flowOfRefreshDeckList.emit(Unit)
+        }
 
     /** Represents [dueTree] as a list */
     data class FlattenedDeckList(

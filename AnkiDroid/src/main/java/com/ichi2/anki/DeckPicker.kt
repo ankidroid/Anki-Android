@@ -114,7 +114,6 @@ import com.ichi2.anki.deckpicker.DeckDeletionResult
 import com.ichi2.anki.deckpicker.DeckPickerViewModel
 import com.ichi2.anki.deckpicker.DeckPickerViewModel.FlattenedDeckList
 import com.ichi2.anki.deckpicker.EmptyCardsResult
-import com.ichi2.anki.deckpicker.filterAndFlattenDisplay
 import com.ichi2.anki.dialogs.AsyncDialogFragment
 import com.ichi2.anki.dialogs.BackupPromptDialog
 import com.ichi2.anki.dialogs.ConfirmationDialog
@@ -207,7 +206,6 @@ import net.ankiweb.rsdroid.Translations
 import org.json.JSONException
 import timber.log.Timber
 import java.io.File
-import kotlin.runCatching as runCatchingKotlin
 
 /**
  * The current entry point for AnkiDroid. Displays decks, allowing users to study. Many other functions.
@@ -598,7 +596,10 @@ open class DeckPicker :
                 activityHasBackground = hasDeckPickerBackground,
                 onDeckSelected = { onDeckClick(it, DeckSelectionType.DEFAULT) },
                 onDeckCountsSelected = { onDeckClick(it, DeckSelectionType.SHOW_STUDY_OPTIONS) },
-                onDeckChildrenToggled = { launchCatchingTask { toggleDeckExpand(it) } },
+                onDeckChildrenToggled = { deckId ->
+                    viewModel.toggleDeckExpand(deckId)
+                    dismissAllDialogFragments()
+                },
                 onDeckContextRequested = ::showDeckPickerContextMenu,
             )
         recyclerView.adapter = deckListAdapter
@@ -748,38 +749,24 @@ open class DeckPicker :
                 return
             }
 
-            val translation =
-                TypedValue.applyDimension(
-                    TypedValue.COMPLEX_UNIT_DIP,
-                    8f,
-                    resources.displayMetrics,
-                )
             val decksListShown = deckPickerContent.isVisible
             val placeholderShown = noDecksPlaceholder.isVisible
             if (isInInitialState) {
-                if (decksListShown) {
-                    fadeOut(deckPickerContent, shortAnimDuration, translation)
-                }
-                if (!placeholderShown) {
-                    fadeIn(noDecksPlaceholder, shortAnimDuration, translation).startDelay =
-                        if (decksListShown) {
-                            shortAnimDuration * 2.toLong()
-                        } else {
-                            0.toLong()
-                        }
-                }
+                deckPickerContent.fadeOut(shortAnimDuration)
+                noDecksPlaceholder.fadeIn(shortAnimDuration).startDelay =
+                    if (decksListShown) {
+                        shortAnimDuration * 2L
+                    } else {
+                        0L
+                    }
             } else {
-                if (!decksListShown) {
-                    fadeIn(deckPickerContent, shortAnimDuration, translation).startDelay =
-                        if (placeholderShown) {
-                            shortAnimDuration * 2.toLong()
-                        } else {
-                            0.toLong()
-                        }
-                }
-                if (placeholderShown) {
-                    fadeOut(noDecksPlaceholder, shortAnimDuration, translation)
-                }
+                deckPickerContent.fadeIn(shortAnimDuration).startDelay =
+                    if (placeholderShown) {
+                        shortAnimDuration * 2L
+                    } else {
+                        0L
+                    }
+                noDecksPlaceholder.fadeOut(shortAnimDuration)
             }
         }
 
@@ -1757,18 +1744,6 @@ open class DeckPicker :
         dialogHandler.sendMessage(CollectionLoadingErrorDialog().toMessage())
     }
 
-    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    suspend fun toggleDeckExpand(did: DeckId) {
-        // update DB
-        getColUnsafe.decks.collapse(did)
-        // update stored state
-        dueTree?.find(did)?.run {
-            collapsed = !collapsed
-        }
-        renderPage(getColUnsafe.isEmpty)
-        dismissAllDialogFragments()
-    }
-
     // VisibleForTesting: method is mocked, should be replaced
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     fun addNote(did: DeckId? = null) {
@@ -2308,83 +2283,6 @@ open class DeckPicker :
         return launchCatchingTask {
             withProgress { viewModel.reloadDeckCounts()?.join() }
             hideProgressBar()
-        }
-    }
-
-    private suspend fun renderPage(collectionIsEmpty: Boolean) {
-        val tree = dueTree
-        if (tree == null) {
-            // mDueTree may be set back to null when the activity restart.
-            // We may need to recompute it.
-            Timber.d("renderPage: recomputing dueTree")
-            updateDeckList()
-            return
-        }
-
-        // Check if default deck is the only available and there are no cards
-        val isEmpty = tree.children.size == 1 && tree.children[0].did == 1L && collectionIsEmpty
-        // Hide the background when there are no cards to improve text readability.
-        val backgroundView = findViewById<ImageView>(R.id.background)
-        backgroundView.visibility = if (isEmpty) View.GONE else View.VISIBLE
-        if (animationDisabled()) {
-            deckPickerContent.visibility = if (isEmpty) View.GONE else View.VISIBLE
-            noDecksPlaceholder.visibility = if (isEmpty) View.VISIBLE else View.GONE
-        } else {
-            val decksListShown = deckPickerContent.isVisible
-            val placeholderShown = noDecksPlaceholder.isVisible
-            if (isEmpty) {
-                deckPickerContent.fadeOut(shortAnimDuration)
-                noDecksPlaceholder.fadeIn(shortAnimDuration).startDelay =
-                    if (decksListShown) {
-                        shortAnimDuration * 2L
-                    } else {
-                        0L
-                    }
-            } else {
-                deckPickerContent.fadeIn(shortAnimDuration).startDelay =
-                    if (placeholderShown) {
-                        shortAnimDuration * 2L
-                    } else {
-                        0L
-                    }
-                noDecksPlaceholder.fadeOut(shortAnimDuration)
-            }
-        }
-        val currentFilter = toolbarSearchView?.query
-
-        if (isEmpty) {
-            supportActionBar?.subtitle = null
-            if (toolbarSearchView != null) {
-                deckListAdapter.submit(
-                    data = emptyList(),
-                    hasSubDecks = false,
-                )
-            }
-            Timber.d("Not rendering deck list as there are no cards")
-            // We're done here
-            return
-        }
-        val currentDeckId = withCol { decks.current().getLong("id") }
-        deckListAdapter.submit(
-            data = tree.filterAndFlattenDisplay(currentFilter, currentDeckId),
-            hasSubDecks = tree.children.any { it.children.any() },
-        )
-
-        // Set the "x due" subtitle
-        runCatchingKotlin {
-            val dueCount = tree.newCount + tree.revCount + tree.lrnCount
-            supportActionBar?.apply {
-                subtitle = if (dueCount == 0) null else resources.getQuantityString(R.plurals.widget_cards_due, dueCount, dueCount)
-                val toolbar = findViewById<Toolbar>(R.id.toolbar)
-                TooltipCompat.setTooltipText(toolbar, toolbar.subtitle)
-            }
-        }.onFailure {
-            Timber.w(it, "Failed to set the due count as the subtitle in the toolbar")
-        }
-        val current = withCol { decks.current().id }
-        if (viewModel.focusedDeck != current) {
-            scrollDecklistToDeck(current)
-            viewModel.focusedDeck = current
         }
     }
 
