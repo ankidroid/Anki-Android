@@ -17,6 +17,7 @@
 package com.ichi2.anki.browser
 
 import androidx.core.content.edit
+import androidx.lifecycle.SavedStateHandle
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import app.cash.turbine.TurbineTestContext
 import app.cash.turbine.test
@@ -84,6 +85,7 @@ import org.hamcrest.Matchers.hasSize
 import org.hamcrest.Matchers.lessThan
 import org.hamcrest.Matchers.not
 import org.hamcrest.Matchers.nullValue
+import org.junit.Ignore
 import org.junit.Test
 import org.junit.jupiter.api.assertInstanceOf
 import org.junit.runner.RunWith
@@ -1067,7 +1069,7 @@ class CardBrowserViewModelTest : JvmTest() {
                 assertThat("toggle selection after select all manually", awaitItem(), equalTo(SELECT_NONE))
 
                 // end select mode
-                endMultiSelectMode().join()
+                endMultiSelectMode()
                 assertThat("multiselect after toggle 3", isInMultiSelectMode, equalTo(false))
                 cancelAndIgnoreRemainingEvents()
             }
@@ -1106,6 +1108,40 @@ class CardBrowserViewModelTest : JvmTest() {
         }
     }
 
+    @Test
+    fun `multiselect toggle state is restored`() {
+        val handle = SavedStateHandle()
+        runViewModelTest(savedStateHandle = handle, notes = 1) {
+            assertThat(isInMultiSelectMode, equalTo(false))
+            assertThat("initial multiselect state", handle.get<Boolean>("multiselect"), equalTo(null))
+            selectAll()
+            assertThat("multiselect after select all", handle.get<Boolean>("multiselect"), equalTo(true))
+        }
+
+        runViewModelTest(savedStateHandle = handle) {
+            assertThat("multiselect state restoration", isInMultiSelectMode, equalTo(true))
+            endMultiSelectMode()
+            assertThat("multiselect after 'end multiselect'", handle.get<Boolean>("multiselect"), equalTo(false))
+        }
+    }
+
+    @Test
+    @Ignore("not implemented")
+    fun `multiselect checked state is restored`() {
+        val handle = SavedStateHandle()
+
+        var idOfSelectedRow: CardOrNoteId? = null
+        runViewModelTest(savedStateHandle = handle, notes = 2) {
+            selectRowAtPosition(1)
+            idOfSelectedRow = selectedRows.single()
+        }
+
+        runViewModelTest(savedStateHandle = handle) {
+            assertThat("row is still selected", selectedRows, hasSize(1))
+            assertThat("same row is selected", selectedRows.single(), equalTo(idOfSelectedRow))
+        }
+    }
+
     private fun assertDate(str: String?) {
         // 2025-01-09 @ 18:06
         assertNotNull(str)
@@ -1138,6 +1174,7 @@ class CardBrowserViewModelTest : JvmTest() {
                 preferences = AnkiDroidApp.sharedPreferencesProvider,
                 isFragmented = false,
                 manualInit = manualInit,
+                savedStateHandle = SavedStateHandle(),
             )
         // makes ignoreValuesFromViewModelLaunch work under test
         if (manualInit) {
@@ -1149,6 +1186,7 @@ class CardBrowserViewModelTest : JvmTest() {
     private fun runViewModelTest(
         notes: Int = 0,
         manualInit: Boolean = true,
+        savedStateHandle: SavedStateHandle = SavedStateHandle(),
         testBody: suspend CardBrowserViewModel.() -> Unit,
     ) = runTest {
         for (i in 0 until notes) {
@@ -1163,6 +1201,7 @@ class CardBrowserViewModelTest : JvmTest() {
                 preferences = AnkiDroidApp.sharedPreferencesProvider,
                 isFragmented = false,
                 manualInit = manualInit,
+                savedStateHandle = savedStateHandle,
             )
         // makes ignoreValuesFromViewModelLaunch work under test
         if (manualInit) {
@@ -1197,6 +1236,7 @@ class CardBrowserViewModelTest : JvmTest() {
                 options = intent,
                 isFragmented = false,
                 preferences = AnkiDroidApp.sharedPreferencesProvider,
+                savedStateHandle = SavedStateHandle(),
             ).apply {
                 invokeInitialSearch()
             }
