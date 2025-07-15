@@ -113,7 +113,6 @@ import com.ichi2.anki.deckpicker.BackgroundImage
 import com.ichi2.anki.deckpicker.DeckDeletionResult
 import com.ichi2.anki.deckpicker.DeckPickerViewModel
 import com.ichi2.anki.deckpicker.DeckPickerViewModel.FlattenedDeckList
-import com.ichi2.anki.deckpicker.DeckPickerViewModel.OnDecksLoadedResult
 import com.ichi2.anki.deckpicker.EmptyCardsResult
 import com.ichi2.anki.deckpicker.filterAndFlattenDisplay
 import com.ichi2.anki.dialogs.AsyncDialogFragment
@@ -719,10 +718,6 @@ open class DeckPicker :
             }
         }
 
-        fun onDecksLoadedChanged(result: OnDecksLoadedResult) {
-            onDecksLoaded(result.deckDueTree, result.collectionHasNoCards)
-        }
-
         fun onStudiedTodayChanged(studiedToday: String) {
             reviewSummaryTextView.text = studiedToday
             val fabLinearLayout = findViewById<LinearLayout>(R.id.fabLinearLayout)
@@ -805,7 +800,11 @@ open class DeckPicker :
         }
 
         fun onFocusedDeckChanged(deckId: DeckId?) {
-            scrollDecklistToDeck(deckId)
+            val position = deckId?.let { findDeckPosition(it) } ?: 0
+            // HACK: a small delay is required before scrolling works
+            recyclerView.postDelayed({
+                recyclerViewLayoutManager.scrollToPositionWithOffset(position, recyclerView.height / 2)
+            }, 10)
         }
 
         fun onError(errorMessage: String) {
@@ -823,7 +822,6 @@ open class DeckPicker :
         viewModel.onError.launchCollectionInLifecycleScope(::onError)
         viewModel.flowOfPromptUserToUpdateScheduler.launchCollectionInLifecycleScope(::onPromptUserToUpdateScheduler)
         viewModel.flowOfUndoUpdated.launchCollectionInLifecycleScope(::onUndoUpdated)
-        viewModel.flowOfOnDecksLoaded.launchCollectionInLifecycleScope(::onDecksLoadedChanged)
         viewModel.flowOfStudiedTodayStats.launchCollectionInLifecycleScope(::onStudiedTodayChanged)
         viewModel.flowOfDeckListInInitialState.filterNotNull().launchCollectionInLifecycleScope(::onCollectionStatusChanged)
         viewModel.flowOfCardsDue.launchCollectionInLifecycleScope(::onCardsDueChanged)
@@ -2265,16 +2263,6 @@ open class DeckPicker :
     }
 
     /**
-     * Scroll the deck list so that it is centered on the current deck.
-     *
-     * @param did The deck ID of the deck to select.
-     */
-    private fun scrollDecklistToDeck(did: DeckId?) {
-        val position = did?.let { findDeckPosition(it) } ?: 0
-        recyclerViewLayoutManager.scrollToPositionWithOffset(position, recyclerView.height / 2)
-    }
-
-    /**
      * Return the position of the deck in the deck list. If the deck is a child of a collapsed deck
      * (i.e., not visible in the deck list), then the position of the parent deck is returned instead.
      *
@@ -2313,17 +2301,10 @@ open class DeckPicker :
             performBackupInBackground()
         }
         Timber.d("updateDeckList")
-        return launchCatchingTask { withProgress { viewModel.reloadDeckCounts()?.join() } }
-    }
-
-    private fun onDecksLoaded(
-        result: DeckNode,
-        collectionHasNoCards: Boolean,
-    ) {
-        Timber.i("Updating deck list UI")
-        hideProgressBar()
-        launchCatchingTask { renderPage(collectionHasNoCards) }
-        Timber.d("Startup - Deck List UI Completed")
+        return launchCatchingTask {
+            withProgress { viewModel.reloadDeckCounts()?.join() }
+            hideProgressBar()
+        }
     }
 
     private suspend fun renderPage(collectionIsEmpty: Boolean) {
