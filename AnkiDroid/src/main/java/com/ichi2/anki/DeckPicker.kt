@@ -112,6 +112,7 @@ import com.ichi2.anki.deckpicker.BITMAP_BYTES_PER_PIXEL
 import com.ichi2.anki.deckpicker.BackgroundImage
 import com.ichi2.anki.deckpicker.DeckDeletionResult
 import com.ichi2.anki.deckpicker.DeckPickerViewModel
+import com.ichi2.anki.deckpicker.DeckPickerViewModel.FlattenedDeckList
 import com.ichi2.anki.deckpicker.DeckPickerViewModel.OnDecksLoadedResult
 import com.ichi2.anki.deckpicker.EmptyCardsResult
 import com.ichi2.anki.deckpicker.filterAndFlattenDisplay
@@ -805,6 +806,13 @@ open class DeckPicker :
             studyoptionsFrame?.isVisible = isVisible
         }
 
+        fun onDeckListChanged(deckList: FlattenedDeckList) {
+            deckListAdapter.submit(
+                data = deckList.data,
+                hasSubDecks = deckList.hasSubDecks,
+            )
+        }
+
         fun onError(errorMessage: String) {
             AlertDialog
                 .Builder(this)
@@ -825,6 +833,7 @@ open class DeckPicker :
         viewModel.flowOfDeckListInInitialState.filterNotNull().launchCollectionInLifecycleScope(::onCollectionStatusChanged)
         viewModel.flowOfCardsDue.launchCollectionInLifecycleScope(::onCardsDueChanged)
         viewModel.flowOfStudyOptionsVisible.launchCollectionInLifecycleScope(::onStudyOptionsVisibilityChanged)
+        viewModel.flowOfDeckList.launchCollectionInLifecycleScope(::onDeckListChanged)
     }
 
     private val onReceiveContentListener =
@@ -1176,16 +1185,6 @@ open class DeckPicker :
 
                     override fun onQueryTextChange(newText: String): Boolean {
                         viewModel.updateDeckFilter(newText)
-                        val adapter = recyclerView.adapter as DeckAdapter
-                        launchCatchingTask {
-                            val selectedDeckId = withCol { decks.current().id }
-                            dueTree?.let {
-                                adapter.submit(
-                                    data = it.filterAndFlattenDisplay(newText, selectedDeckId),
-                                    hasSubDecks = it.children.any { deckNode -> deckNode.children.any() },
-                                )
-                            }
-                        }
                         return true
                     }
                 },
