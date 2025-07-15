@@ -1166,6 +1166,7 @@ open class DeckPicker :
                     }
 
                     override fun onQueryTextChange(newText: String): Boolean {
+                        viewModel.updateDeckFilter(newText)
                         val adapter = recyclerView.adapter as DeckAdapter
                         launchCatchingTask {
                             val selectedDeckId = withCol { decks.current().id }
