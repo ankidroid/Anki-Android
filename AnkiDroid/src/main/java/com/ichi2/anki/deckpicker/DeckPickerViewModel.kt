@@ -126,8 +126,6 @@ class DeckPickerViewModel(
 
     val flowOfUndoUpdated = MutableSharedFlow<Unit>()
 
-    val flowOfOnDecksLoaded = MutableSharedFlow<OnDecksLoadedResult>()
-
     val flowOfCollectionHasNoCards = MutableStateFlow(true)
 
     val flowOfDeckListInInitialState =
@@ -144,14 +142,7 @@ class DeckPickerViewModel(
         }
 
     /** "Studied N cards in 0 seconds today */
-    val flowOfStudiedTodayStats =
-        flowOfOnDecksLoaded
-            .map {
-                withCol {
-                    // Backend returns studiedToday() with newlines for HTML formatting,so we replace them with spaces.
-                    sched.studiedToday().replace("\n", " ")
-                }
-            }.stateIn(viewModelScope, SharingStarted.Eagerly, initialValue = "")
+    val flowOfStudiedTodayStats = MutableStateFlow("")
 
     val flowOfStudyOptionsVisible = flowOfCollectionHasNoCards.map { noCards -> fragmented && !noCards }
 
@@ -282,7 +273,9 @@ class DeckPickerViewModel(
 
                 flowOfCollectionHasNoCards.value = collectionHasNoCards
 
-                flowOfOnDecksLoaded.emit(OnDecksLoadedResult(deckDueTree, collectionHasNoCards))
+                // TODO: This is in the wrong place
+                // Backend returns studiedToday() with newlines for HTML formatting,so we replace them with spaces.
+                flowOfStudiedTodayStats.value = withCol { sched.studiedToday().replace("\n", " ") }
 
                 /**
                  * Checks the current scheduler version and prompts the upgrade dialog if using the legacy version.
@@ -310,12 +303,6 @@ class DeckPickerViewModel(
         Timber.d("filter: %s", filterText)
         flowOfCurrentDeckFilter.value = filterText
     }
-
-    // Temp class for refactoring
-    data class OnDecksLoadedResult(
-        val deckDueTree: DeckNode,
-        val collectionHasNoCards: Boolean,
-    )
 
     /** Represents [dueTree] as a list */
     data class FlattenedDeckList(
