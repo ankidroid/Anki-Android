@@ -71,11 +71,26 @@ class DeckPickerViewModel(
     /** User filter of the deck list. Shown as a search in the UI */
     private val flowOfCurrentDeckFilter = MutableStateFlow("")
 
+    /**
+     * Keep track of which deck was last given focus in the deck list. If we find that this value
+     * has changed between deck list refreshes, we need to recenter the deck list to the new current
+     * deck.
+     */
+    val flowOfFocusedDeck = MutableStateFlow<DeckId?>(null)
+
+    var focusedDeck: DeckId?
+        get() = flowOfFocusedDeck.value
+        set(value) {
+            flowOfFocusedDeck.value = value
+        }
+
     val flowOfDeckList =
-        combine(flowOfDeckDueTree, flowOfCurrentDeckFilter) { tree, filter ->
+        combine(flowOfDeckDueTree, flowOfCurrentDeckFilter, flowOfFocusedDeck) { tree, filter, _ ->
             if (tree == null) return@combine FlattenedDeckList.empty
 
+            // TODO: use flowOfFocusedDeck once it's set on all instances
             val currentDeckId = withCol { decks.current().getLong("id") }
+            Timber.i("currentDeckId: %d", currentDeckId)
 
             FlattenedDeckList(
                 data = tree.filterAndFlattenDisplay(filter, currentDeckId),
@@ -97,14 +112,6 @@ class DeckPickerViewModel(
      */
     // TODO: most of the recalculation should be moved inside the ViewModel
     val flowOfDeckCountsChanged = MutableSharedFlow<Unit>()
-
-    /**
-     * Keep track of which deck was last given focus in the deck list. If we find that this value
-     * has changed between deck list refreshes, we need to recenter the deck list to the new current
-     * deck.
-     */
-    // TODO: This should later be handled as a Flow
-    var focusedDeck: DeckId = 0
 
     var loadDeckCounts: Job? = null
         private set
@@ -290,6 +297,9 @@ class DeckPickerViewModel(
                     schedulerUpgradeDialogShownForVersion = currentSchedulerVersion
                 }
 
+                // TODO: This is in the wrong place
+                // current deck may have changed
+                focusedDeck = withCol { decks.current().id }
                 flowOfUndoUpdated.emit(Unit)
             }
         this.loadDeckCounts = loadDeckCounts
