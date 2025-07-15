@@ -413,8 +413,10 @@ open class CardBrowser :
         // must be called once we have an accessible collection
         viewModel = createViewModel(launchOptions, fragmented)
 
-        supportFragmentManager.commit {
-            replace(R.id.card_browser_frame, CardBrowserFragment())
+        if (supportFragmentManager.findFragmentById(R.id.card_browser_frame) == null) {
+            supportFragmentManager.commit {
+                replace(R.id.card_browser_frame, CardBrowserFragment())
+            }
         }
 
         // initialize the lateinit variables
