@@ -43,9 +43,14 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
-/** @see [DeckPicker] */
-class DeckPickerViewModel :
-    ViewModel(),
+/**
+ * ViewModel for the [DeckPicker]
+ *
+ * @param fragmented whether the study options is shown alongside the deck picker
+ */
+class DeckPickerViewModel(
+    val fragmented: Boolean,
+) : ViewModel(),
     OnErrorListener {
     /**
      * @see deleteDeck

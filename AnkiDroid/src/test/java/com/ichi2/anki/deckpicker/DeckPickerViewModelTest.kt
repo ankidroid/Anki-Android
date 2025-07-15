@@ -40,7 +40,7 @@ import timber.log.Timber
 /** Test of [DeckPickerViewModel] */
 @RunWith(AndroidJUnit4::class)
 class DeckPickerViewModelTest : RobolectricTest() {
-    private val viewModel = DeckPickerViewModel()
+    private val viewModel = DeckPickerViewModel(fragmented = false)
 
     @Test
     fun `empty cards - flow`() =
