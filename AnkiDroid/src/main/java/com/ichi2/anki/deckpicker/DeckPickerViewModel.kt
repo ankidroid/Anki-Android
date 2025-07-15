@@ -30,6 +30,7 @@ import com.ichi2.anki.browser.BrowserDestination
 import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.libanki.CardId
 import com.ichi2.anki.libanki.Consts
+import com.ichi2.anki.libanki.Consts.DEFAULT_DECK_ID
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.sched.DeckNode
 import com.ichi2.anki.libanki.utils.extend
@@ -111,7 +112,7 @@ class DeckPickerViewModel(
         combine(flowOfDeckDueTree, flowOfCollectionHasNoCards) { tree, noCards ->
             if (tree == null) return@combine null
             // Check if default deck is the only available and there are no cards
-            tree.children.size == 1 && tree.children[0].did == 1L && noCards
+            tree.onlyHasDefaultDeck() && noCards
         }.stateIn(viewModelScope, SharingStarted.Eagerly, initialValue = null)
 
     val flowOfCardsDue =
@@ -313,3 +314,5 @@ data class EmptyCardsResult(
     @CheckResult
     fun toHumanReadableString() = TR.emptyCardsDeletedCount(cardsDeleted)
 }
+
+fun DeckNode.onlyHasDefaultDeck() = children.singleOrNull()?.did == DEFAULT_DECK_ID
