@@ -29,6 +29,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.res.Configuration
 import android.database.SQLException
 import android.graphics.PixelFormat
 import android.graphics.drawable.Drawable
@@ -71,6 +72,8 @@ import androidx.core.view.doOnLayout
 import androidx.core.view.isVisible
 import androidx.draganddrop.DropHelper
 import androidx.fragment.app.commit
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -246,7 +249,24 @@ open class DeckPicker :
     ApkgImportResultLauncherProvider,
     CsvImportResultLauncherProvider,
     CollectionPermissionScreenLauncher {
-    val viewModel: DeckPickerViewModel by viewModels()
+    val viewModel: DeckPickerViewModel by viewModels {
+        object : ViewModelProvider.Factory {
+            override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                val fragmented =
+                    (
+                        resources.configuration.screenLayout and
+                            Configuration.SCREENLAYOUT_SIZE_MASK
+                    ) ==
+                        Configuration.SCREENLAYOUT_SIZE_XLARGE
+                @Suppress("UNCHECKED_CAST")
+                return DeckPickerViewModel(fragmented) as T
+            }
+        }
+    }
+
+    override var fragmented: Boolean
+        get() = viewModel.fragmented
+        set(_) = throw UnsupportedOperationException()
 
     // Short animation duration from system
     private var shortAnimDuration = 0
@@ -516,10 +536,7 @@ open class DeckPicker :
         handleStartup()
         val mainView = findViewById<View>(android.R.id.content)
 
-        // check, if tablet layout
         studyoptionsFrame = findViewById(R.id.studyoptions_fragment)
-        // set protected variable from NavigationDrawerActivity
-        fragmented = studyoptionsFrame != null && studyoptionsFrame!!.isVisible
 
         // Open StudyOptionsFragment if in fragmented mode
         if (fragmented && !startupError) {
