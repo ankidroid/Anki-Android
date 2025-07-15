@@ -158,7 +158,7 @@ class SyncWorker(
                 withCol { _loadScheduler() } // scheduler version may have changed
                 if (syncMedia) {
                     val syncAuth =
-                        if (response.hasNewEndpoint()) {
+                        if (response.hasNewEndpoint() && response.newEndpoint.isNotEmpty()) {
                             applicationContext.sharedPrefs().edit {
                                 putString(SyncPreferences.CURRENT_SYNC_URI, response.newEndpoint)
                             }
