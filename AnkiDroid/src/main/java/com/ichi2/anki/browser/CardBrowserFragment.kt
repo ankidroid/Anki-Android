@@ -110,11 +110,6 @@ class CardBrowserFragment :
         setupFlows()
     }
 
-    override fun onResume() {
-        super.onResume()
-        autoScrollTo(viewModel.lastSelectedPosition, viewModel.oldCardTopOffset)
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
         if (::cardsListView.isInitialized) {
