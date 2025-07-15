@@ -156,21 +156,20 @@ class SyncWorker(
             // a successful sync returns this value
             SyncCollectionResponse.ChangesRequired.NO_CHANGES -> {
                 withCol { _loadScheduler() } // scheduler version may have changed
-                if (syncMedia) {
-                    val syncAuth =
-                        if (response.hasNewEndpoint() && response.newEndpoint.isNotEmpty()) {
-                            applicationContext.sharedPrefs().edit {
-                                putString(SyncPreferences.CURRENT_SYNC_URI, response.newEndpoint)
-                            }
-                            syncAuth {
-                                hkey = auth.hkey
-                                endpoint = response.newEndpoint
-                            }
-                        } else {
-                            auth
+                if (!syncMedia) return
+                val syncAuth =
+                    if (response.hasNewEndpoint() && response.newEndpoint.isNotEmpty()) {
+                        applicationContext.sharedPrefs().edit {
+                            putString(SyncPreferences.CURRENT_SYNC_URI, response.newEndpoint)
                         }
-                    syncMedia(syncAuth)
-                }
+                        syncAuth {
+                            hkey = auth.hkey
+                            endpoint = response.newEndpoint
+                        }
+                    } else {
+                        auth
+                    }
+                syncMedia(syncAuth)
             }
             SyncCollectionResponse.ChangesRequired.FULL_SYNC,
             SyncCollectionResponse.ChangesRequired.FULL_DOWNLOAD,
