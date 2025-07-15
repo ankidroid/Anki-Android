@@ -305,7 +305,8 @@ open class DeckPicker :
     var optionsMenuState: OptionsMenuState? = null
 
     @VisibleForTesting
-    var dueTree: DeckNode? = null
+    val dueTree: DeckNode?
+        get() = viewModel.dueTree
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     var searchDecksIcon: MenuItem? = null
@@ -2237,7 +2238,6 @@ open class DeckPicker :
             invalidateOptionsMenu()
             studyoptionsFrame!!.visibility = if (collectionHasNoCards) View.GONE else View.VISIBLE
         }
-        dueTree = result
         launchCatchingTask { renderPage(collectionHasNoCards) }
         Timber.d("Startup - Deck List UI Completed")
     }

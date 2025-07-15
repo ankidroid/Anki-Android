@@ -56,6 +56,10 @@ class DeckPickerViewModel(
     val fragmented: Boolean,
 ) : ViewModel(),
     OnErrorListener {
+    /** The root of the tree displaying all decks */
+    var dueTree: DeckNode? = null
+        private set
+
     /**
      * @see deleteDeck
      * @see DeckDeletionResult
@@ -227,6 +231,7 @@ class DeckPickerViewModel(
                     withCol {
                         Pair(sched.deckDueTree(), isEmpty)
                     }
+                dueTree = deckDueTree
                 flowOfOnDecksLoaded.emit(OnDecksLoadedResult(deckDueTree, collectionHasNoCards))
 
                 /**
