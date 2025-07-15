@@ -36,13 +36,11 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Message
 import android.text.util.Linkify
-import android.util.TypedValue
 import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewPropertyAnimator
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
@@ -160,6 +158,8 @@ import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.ResizablePaneManager
+import com.ichi2.anki.ui.animations.fadeIn
+import com.ichi2.anki.ui.animations.fadeOut
 import com.ichi2.anki.utils.Destination
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.anki.utils.ext.setFragmentResultListener
@@ -2284,38 +2284,24 @@ open class DeckPicker :
             deckPickerContent.visibility = if (isEmpty) View.GONE else View.VISIBLE
             noDecksPlaceholder.visibility = if (isEmpty) View.VISIBLE else View.GONE
         } else {
-            val translation =
-                TypedValue.applyDimension(
-                    TypedValue.COMPLEX_UNIT_DIP,
-                    8f,
-                    resources.displayMetrics,
-                )
             val decksListShown = deckPickerContent.isVisible
             val placeholderShown = noDecksPlaceholder.isVisible
             if (isEmpty) {
-                if (decksListShown) {
-                    fadeOut(deckPickerContent, shortAnimDuration, translation)
-                }
-                if (!placeholderShown) {
-                    fadeIn(noDecksPlaceholder, shortAnimDuration, translation).startDelay =
-                        if (decksListShown) {
-                            shortAnimDuration * 2.toLong()
-                        } else {
-                            0.toLong()
-                        }
-                }
+                deckPickerContent.fadeOut(shortAnimDuration)
+                noDecksPlaceholder.fadeIn(shortAnimDuration).startDelay =
+                    if (decksListShown) {
+                        shortAnimDuration * 2L
+                    } else {
+                        0L
+                    }
             } else {
-                if (!decksListShown) {
-                    fadeIn(deckPickerContent, shortAnimDuration, translation).startDelay =
-                        if (placeholderShown) {
-                            shortAnimDuration * 2.toLong()
-                        } else {
-                            0.toLong()
-                        }
-                }
-                if (placeholderShown) {
-                    fadeOut(noDecksPlaceholder, shortAnimDuration, translation)
-                }
+                deckPickerContent.fadeIn(shortAnimDuration).startDelay =
+                    if (placeholderShown) {
+                        shortAnimDuration * 2L
+                    } else {
+                        0L
+                    }
+                noDecksPlaceholder.fadeOut(shortAnimDuration)
             }
         }
         val currentFilter = toolbarSearchView?.query
@@ -2576,42 +2562,6 @@ open class DeckPicker :
 
         private const val PREF_DECK_PICKER_PANE_WEIGHT = "deckPickerPaneWeight"
         private const val PREF_STUDY_OPTIONS_PANE_WEIGHT = "studyOptionsPaneWeight"
-
-        // Animation utility methods used by renderPage() method
-        fun fadeIn(
-            view: View?,
-            duration: Int,
-            translation: Float = 0f,
-            startAction: Runnable? = Runnable { view!!.visibility = View.VISIBLE },
-        ): ViewPropertyAnimator {
-            view!!.alpha = 0f
-            view.translationY = translation
-            return view
-                .animate()
-                .alpha(1f)
-                .translationY(0f)
-                .setDuration(duration.toLong())
-                .withStartAction(startAction)
-        }
-
-        fun fadeOut(
-            view: View?,
-            duration: Int,
-            translation: Float = 0f,
-            endAction: Runnable? =
-                Runnable {
-                    view!!.visibility = View.GONE
-                },
-        ): ViewPropertyAnimator {
-            view!!.alpha = 1f
-            view.translationY = 0f
-            return view
-                .animate()
-                .alpha(0f)
-                .translationY(translation)
-                .setDuration(duration.toLong())
-                .withEndAction(endAction)
-        }
     }
 
     override fun opExecuted(
