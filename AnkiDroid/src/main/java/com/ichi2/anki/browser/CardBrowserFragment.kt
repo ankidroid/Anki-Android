@@ -54,6 +54,9 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import timber.log.Timber
 
+// Minor BUG: 'don't keep activities' and huge selection
+// At some point, starting between 35k and 60k selections, the scroll position is lost on recreation
+// This occurred on a Pixel 9 Pro, Android 15
 class CardBrowserFragment :
     Fragment(R.layout.cardbrowser),
     ChangeManager.Subscriber {
