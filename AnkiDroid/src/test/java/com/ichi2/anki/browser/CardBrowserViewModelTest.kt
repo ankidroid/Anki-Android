@@ -49,6 +49,7 @@ import com.ichi2.anki.browser.CardBrowserColumn.SFLD
 import com.ichi2.anki.browser.CardBrowserColumn.TAGS
 import com.ichi2.anki.browser.CardBrowserLaunchOptions.DeepLink
 import com.ichi2.anki.browser.CardBrowserLaunchOptions.SystemContextMenu
+import com.ichi2.anki.browser.CardBrowserViewModel.Companion.STATE_MULTISELECT_VALUES
 import com.ichi2.anki.browser.CardBrowserViewModel.ToggleSelectionState.SELECT_ALL
 import com.ichi2.anki.browser.CardBrowserViewModel.ToggleSelectionState.SELECT_NONE
 import com.ichi2.anki.browser.RepositionCardsRequest.ContainsNonNewCardsError
@@ -85,7 +86,6 @@ import org.hamcrest.Matchers.hasSize
 import org.hamcrest.Matchers.lessThan
 import org.hamcrest.Matchers.not
 import org.hamcrest.Matchers.nullValue
-import org.junit.Ignore
 import org.junit.Test
 import org.junit.jupiter.api.assertInstanceOf
 import org.junit.runner.RunWith
@@ -1126,17 +1126,17 @@ class CardBrowserViewModelTest : JvmTest() {
     }
 
     @Test
-    @Ignore("not implemented")
     fun `multiselect checked state is restored`() {
         val handle = SavedStateHandle()
-
         var idOfSelectedRow: CardOrNoteId? = null
-        runViewModelTest(savedStateHandle = handle, notes = 2) {
+        runViewModelTest(savedStateHandle = handle, notes = 2, manualInit = false) {
             selectRowAtPosition(1)
             idOfSelectedRow = selectedRows.single()
+            // HACK: easiest way to add it to the bundle. This is called on destruction
+            handle[STATE_MULTISELECT_VALUES] = generateExpensiveSavedState()
         }
 
-        runViewModelTest(savedStateHandle = handle) {
+        runViewModelTest(savedStateHandle = handle, manualInit = false) {
             assertThat("row is still selected", selectedRows, hasSize(1))
             assertThat("same row is selected", selectedRows.single(), equalTo(idOfSelectedRow))
         }
@@ -1208,6 +1208,7 @@ class CardBrowserViewModelTest : JvmTest() {
             viewModel.manualInit()
         }
         testBody(viewModel)
+        Timber.d("end runViewModelTest")
     }
 
     companion object {

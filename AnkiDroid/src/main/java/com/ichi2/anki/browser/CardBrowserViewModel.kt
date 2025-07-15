@@ -16,10 +16,13 @@
 
 package com.ichi2.anki.browser
 
+import android.os.Bundle
 import android.os.Parcel
 import android.os.Parcelable
 import androidx.annotation.CheckResult
 import androidx.core.content.edit
+import androidx.core.os.BundleCompat
+import androidx.core.os.bundleOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.createSavedStateHandle
@@ -409,10 +412,29 @@ class CardBrowserViewModel(
 
             if (!manualInit) {
                 flowOfInitCompleted.update { true }
-                launchSearchForCards()
+                // restore selection state
+                val idsFile =
+                    savedStateHandle.get<Bundle>(STATE_MULTISELECT_VALUES)?.let { bundle ->
+                        BundleCompat.getParcelable(bundle, STATE_MULTISELECT_VALUES, IdsFile::class.java)
+                    }
+                val ids = idsFile?.getIds()?.map { CardOrNoteId(it) } ?: emptyList()
+
+                launchSearchForCards(cardOrNoteIdsToSelect = ids)
             }
         }
+
+        // use setSavedStateProvider as IdsFile writes to disk, so only write when necessary
+        savedStateHandle.setSavedStateProvider(STATE_MULTISELECT_VALUES) {
+            Timber.d("setSavedStateProvider executed")
+            generateExpensiveSavedState()
+        }
     }
+
+    @VisibleForTesting // far too complicated to mock setSavedStateProvider
+    fun generateExpensiveSavedState() =
+        bundleOf(
+            STATE_MULTISELECT_VALUES to IdsFile(cacheDir, selectedRows.map { it.cardOrNoteId }, "multiselect-values"),
+        )
 
     /**
      * Called if `onCreate` is called again, which may be due to the collection being reopened
@@ -591,6 +613,18 @@ class CardBrowserViewModel(
     @VisibleForTesting
     fun selectRowAtPosition(pos: Int) {
         if (_selectedRows.add(cards[pos])) {
+            refreshSelectedRowsFlow()
+        }
+    }
+
+    /** Selects rows by id. The ids are not confirmed to be in [cards] */
+    private fun selectUnvalidatedRowIds(unvalidatedIds: List<CardOrNoteId>) {
+        if (unvalidatedIds.isEmpty()) return
+
+        val validCardOrNoteIds = cards.toSet()
+        val ids = unvalidatedIds.filter { validCardOrNoteIds.contains(it) }
+        Timber.d("selecting %d rows", ids.size)
+        if (_selectedRows.addAll(ids)) {
             refreshSelectedRowsFlow()
         }
     }
@@ -1034,10 +1068,13 @@ class CardBrowserViewModel(
     }
 
     /**
+     * @param cardOrNoteIdsToSelect if the screen is reinitialized after destruction
+     * restore these rows after the search is completed
+     *
      * @see com.ichi2.anki.searchForRows
      */
     @NeedsTest("Invalid searches are handled. For instance: 'and'")
-    fun launchSearchForCards() {
+    fun launchSearchForCards(cardOrNoteIdsToSelect: List<CardOrNoteId> = emptyList()) {
         if (!initCompleted) return
 
         viewModelScope.launch {
@@ -1064,6 +1101,7 @@ class CardBrowserViewModel(
                     ensureActive()
                     this@CardBrowserViewModel.cards.replaceWith(cardsOrNotes, cards)
                     flowOfSearchState.emit(SearchState.Completed)
+                    selectUnvalidatedRowIds(cardOrNoteIdsToSelect)
                 }
         }
     }
@@ -1152,6 +1190,7 @@ class CardBrowserViewModel(
 
     companion object {
         const val STATE_MULTISELECT = "multiselect"
+        const val STATE_MULTISELECT_VALUES = "multiselect_values"
 
         fun createCardSelector(viewModel: CardBrowserViewModel) =
             { cardId: CardId, fragmented: Boolean ->
@@ -1260,7 +1299,7 @@ class IdsFile(
      * @param directory parent directory of the file. Generally it should be the cache directory
      * @param ids ids to store
      */
-    constructor(directory: File, ids: List<Long>) : this(createTempFile("ids", ".tmp", directory).path) {
+    constructor(directory: File, ids: List<Long>, prefix: String = "ids") : this(path = createTempFile(prefix, ".tmp", directory).path) {
         DataOutputStream(FileOutputStream(this)).use { outputStream ->
             outputStream.writeInt(ids.size)
             for (id in ids) {
