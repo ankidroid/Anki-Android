@@ -68,6 +68,9 @@ class DeckPickerViewModel(
             flowOfDeckDueTree.value = value
         }
 
+    /** User filter of the deck list. Shown as a search in the UI */
+    private val flowOfCurrentDeckFilter = MutableStateFlow("")
+
     /**
      * @see deleteDeck
      * @see DeckDeletionResult
@@ -279,6 +282,11 @@ class DeckPickerViewModel(
             }
         this.loadDeckCounts = loadDeckCounts
         return loadDeckCounts
+    }
+
+    fun updateDeckFilter(filterText: String) {
+        Timber.d("filter: %s", filterText)
+        flowOfCurrentDeckFilter.value = filterText
     }
 
     // Temp class for refactoring
