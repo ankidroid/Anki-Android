@@ -199,6 +199,7 @@ import com.ichi2.widget.WidgetStatus
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import net.ankiweb.rsdroid.RustCleanup
@@ -741,6 +742,51 @@ open class DeckPicker :
             }
         }
 
+        fun onCollectionStatusChanged(isInInitialState: Boolean) {
+            // Hide the background when there are no cards to improve text readability.
+            val backgroundView = findViewById<ImageView>(R.id.background)
+            backgroundView.visibility = if (isInInitialState) View.GONE else View.VISIBLE
+            if (animationDisabled()) {
+                deckPickerContent.visibility = if (isInInitialState) View.GONE else View.VISIBLE
+                noDecksPlaceholder.visibility = if (isInInitialState) View.VISIBLE else View.GONE
+                return
+            }
+
+            val translation =
+                TypedValue.applyDimension(
+                    TypedValue.COMPLEX_UNIT_DIP,
+                    8f,
+                    resources.displayMetrics,
+                )
+            val decksListShown = deckPickerContent.isVisible
+            val placeholderShown = noDecksPlaceholder.isVisible
+            if (isInInitialState) {
+                if (decksListShown) {
+                    fadeOut(deckPickerContent, shortAnimDuration, translation)
+                }
+                if (!placeholderShown) {
+                    fadeIn(noDecksPlaceholder, shortAnimDuration, translation).startDelay =
+                        if (decksListShown) {
+                            shortAnimDuration * 2.toLong()
+                        } else {
+                            0.toLong()
+                        }
+                }
+            } else {
+                if (!decksListShown) {
+                    fadeIn(deckPickerContent, shortAnimDuration, translation).startDelay =
+                        if (placeholderShown) {
+                            shortAnimDuration * 2.toLong()
+                        } else {
+                            0.toLong()
+                        }
+                }
+                if (placeholderShown) {
+                    fadeOut(noDecksPlaceholder, shortAnimDuration, translation)
+                }
+            }
+        }
+
         fun onError(errorMessage: String) {
             AlertDialog
                 .Builder(this)
@@ -758,6 +804,7 @@ open class DeckPicker :
         viewModel.flowOfUndoUpdated.launchCollectionInLifecycleScope(::onUndoUpdated)
         viewModel.flowOfOnDecksLoaded.launchCollectionInLifecycleScope(::onDecksLoadedChanged)
         viewModel.flowOfStudiedTodayStats.launchCollectionInLifecycleScope(::onStudiedTodayChanged)
+        viewModel.flowOfDeckListInInitialState.filterNotNull().launchCollectionInLifecycleScope(::onCollectionStatusChanged)
     }
 
     private val onReceiveContentListener =
