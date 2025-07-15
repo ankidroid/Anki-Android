@@ -50,7 +50,6 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.activity.viewModels
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
@@ -246,7 +245,7 @@ open class DeckPicker :
     ApkgImportResultLauncherProvider,
     CsvImportResultLauncherProvider,
     CollectionPermissionScreenLauncher {
-    val viewModel: DeckPickerViewModel by viewModels()
+    lateinit var viewModel: DeckPickerViewModel
 
     // Short animation duration from system
     private var shortAnimDuration = 0
@@ -512,14 +511,17 @@ open class DeckPicker :
         }
 
         setContentView(R.layout.homescreen)
-        enableToolbar()
-        handleStartup()
-        val mainView = findViewById<View>(android.R.id.content)
 
         // check, if tablet layout
         studyoptionsFrame = findViewById(R.id.studyoptions_fragment)
         // set protected variable from NavigationDrawerActivity
         fragmented = studyoptionsFrame != null && studyoptionsFrame!!.isVisible
+
+        viewModel = DeckPickerViewModel(fragmented)
+
+        enableToolbar()
+        handleStartup()
+        val mainView = findViewById<View>(android.R.id.content)
 
         // Open StudyOptionsFragment if in fragmented mode
         if (fragmented && !startupError) {
