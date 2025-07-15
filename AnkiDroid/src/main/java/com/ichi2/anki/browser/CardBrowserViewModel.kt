@@ -20,7 +20,9 @@ import android.os.Parcel
 import android.os.Parcelable
 import androidx.annotation.CheckResult
 import androidx.core.content.edit
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.createSavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
@@ -119,6 +121,7 @@ class CardBrowserViewModel(
     options: CardBrowserLaunchOptions?,
     preferences: SharedPreferencesProvider,
     val isFragmented: Boolean,
+    val savedStateHandle: SavedStateHandle,
     private val manualInit: Boolean = false,
 ) : ViewModel(),
     SharedPreferencesProvider by preferences {
@@ -211,7 +214,14 @@ class CardBrowserViewModel(
     // immutable accessor for _selectedRows
     val selectedRows: Set<CardOrNoteId> get() = _selectedRows
 
-    val flowOfIsInMultiSelectMode = MutableStateFlow(false)
+    val flowOfIsInMultiSelectMode = MutableStateFlow(savedStateHandle[STATE_MULTISELECT] ?: false)
+
+    var isInMultiSelectMode
+        get() = flowOfIsInMultiSelectMode.value
+        set(value) {
+            flowOfIsInMultiSelectMode.value = value
+            savedStateHandle[STATE_MULTISELECT] = value
+        }
 
     private val refreshSelectedRowsFlow = MutableSharedFlow<Unit>()
     val flowOfSelectedRows: Flow<Set<CardOrNoteId>> =
@@ -255,9 +265,6 @@ class CardBrowserViewModel(
     internal suspend fun queryAllCardIds() = cards.queryCardIds()
 
     var lastSelectedId: CardOrNoteId? = null
-
-    val isInMultiSelectMode
-        get() = flowOfIsInMultiSelectMode.value
 
     val lastDeckId: DeckId?
         get() = lastDeckIdRepository.lastDeckId
@@ -627,9 +634,9 @@ class CardBrowserViewModel(
     private fun refreshSelectedRowsFlow(disableMultiSelectIfEmpty: Boolean = true) =
         viewModelScope.launch {
             if (_selectedRows.any()) {
-                flowOfIsInMultiSelectMode.emit(true)
+                isInMultiSelectMode = true
             } else if (disableMultiSelectIfEmpty) {
-                flowOfIsInMultiSelectMode.emit(false)
+                isInMultiSelectMode = false
             }
             refreshSelectedRowsFlow.emit(Unit)
             Timber.d("refreshed selected rows")
@@ -998,11 +1005,10 @@ class CardBrowserViewModel(
     /**
      * Turn off [Multi-Select Mode][isInMultiSelectMode] and return to normal state
      */
-    fun endMultiSelectMode() =
-        viewModelScope.launch {
-            _selectedRows.clear()
-            flowOfIsInMultiSelectMode.emit(false)
-        }
+    fun endMultiSelectMode() {
+        _selectedRows.clear()
+        isInMultiSelectMode = false
+    }
 
     /**
      * @param forceRefresh if `true`, perform a search even if the search query is unchanged
@@ -1145,6 +1151,8 @@ class CardBrowserViewModel(
     }
 
     companion object {
+        const val STATE_MULTISELECT = "multiselect"
+
         fun createCardSelector(viewModel: CardBrowserViewModel) =
             { cardId: CardId, fragmented: Boolean ->
                 viewModel.currentCardId = cardId
@@ -1170,6 +1178,7 @@ class CardBrowserViewModel(
                     options,
                     preferencesProvider ?: AnkiDroidApp.sharedPreferencesProvider,
                     isFragmented,
+                    createSavedStateHandle(),
                 )
             }
         }
