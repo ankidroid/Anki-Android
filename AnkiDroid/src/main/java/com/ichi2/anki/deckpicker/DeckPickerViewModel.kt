@@ -41,6 +41,9 @@ import com.ichi2.anki.reviewreminders.ScheduleRemindersDestination
 import com.ichi2.anki.utils.Destination
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -90,6 +93,16 @@ class DeckPickerViewModel(
     val flowOfUndoUpdated = MutableSharedFlow<Unit>()
 
     val flowOfOnDecksLoaded = MutableSharedFlow<OnDecksLoadedResult>()
+
+    /** "Studied N cards in 0 seconds today */
+    val flowOfStudiedTodayStats =
+        flowOfOnDecksLoaded
+            .map {
+                withCol {
+                    // Backend returns studiedToday() with newlines for HTML formatting,so we replace them with spaces.
+                    sched.studiedToday().replace("\n", " ")
+                }
+            }.stateIn(viewModelScope, SharingStarted.Eagerly, initialValue = "")
 
     /**
      * Deletes the provided deck, child decks. and all cards inside.
