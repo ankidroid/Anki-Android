@@ -26,7 +26,6 @@
 package com.ichi2.anki
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -54,7 +53,6 @@ import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
-import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
@@ -506,9 +504,8 @@ open class DeckPicker :
             startActivity(appIntro)
             finish() // calls onDestroy() immediately
             return
-        } else {
-            Timber.d("Not displaying app intro")
         }
+        Timber.d("Not displaying app intro")
         if (intent.hasExtra(INTENT_SYNC_FROM_LOGIN)) {
             Timber.d("launched from introduction activity login: syncing")
             syncOnResume = true
@@ -895,10 +892,9 @@ open class DeckPicker :
             title(R.string.directory_inaccessible)
             customView(
                 contentView,
-                16.dp.toPx(this@DeckPicker),
-                0,
-                32.dp.toPx(this@DeckPicker),
-                32.dp.toPx(this@DeckPicker),
+                paddingTop = 16.dp.toPx(this@DeckPicker),
+                paddingStart = 32.dp.toPx(this@DeckPicker),
+                paddingEnd = 32.dp.toPx(this@DeckPicker),
             )
             positiveButton(R.string.open_settings) {
                 val settingsIntent = PreferencesActivity.getIntent(this@DeckPicker, AdvancedSettingsFragment::class)
@@ -2039,14 +2035,7 @@ open class DeckPicker :
     }
 
     val fragment: StudyOptionsFragment?
-        get() {
-            val frag = supportFragmentManager.findFragmentById(R.id.studyoptions_fragment)
-            return if (frag is StudyOptionsFragment) {
-                frag
-            } else {
-                null
-            }
-        }
+        get() = supportFragmentManager.findFragmentById(R.id.studyoptions_fragment) as? StudyOptionsFragment
 
     /**
      * Refresh the deck picker when the SD card is inserted.
@@ -2734,16 +2723,6 @@ class OneWaySyncDialog(
     companion object {
         fun fromMessage(message: Message): DialogHandlerMessage = OneWaySyncDialog(message.data.getString("message"))
     }
-}
-
-// This is used to re-show the dialog immediately on activity recreation
-private suspend fun <T> Activity.withImmediatelyShownProgress(
-    @StringRes messageId: Int,
-    block: suspend () -> T,
-) = withProgressDialog(context = this, onCancel = null, delayMillis = 0L) { dialog ->
-    @Suppress("DEPRECATION") // ProgressDialog
-    dialog.setMessage(getString(messageId))
-    block()
 }
 
 /**
