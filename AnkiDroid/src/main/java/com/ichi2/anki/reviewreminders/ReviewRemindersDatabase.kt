@@ -16,6 +16,8 @@
 
 package com.ichi2.anki.reviewreminders
 
+import android.content.Context
+import android.content.SharedPreferences
 import androidx.annotation.VisibleForTesting
 import androidx.core.content.edit
 import com.ichi2.anki.AnkiDroidApp
@@ -38,19 +40,44 @@ import timber.log.Timber
 class ReviewRemindersDatabase {
     companion object {
         /**
+         * Profile ID for the review reminder SharedPreferences file key. Each profile for using AnkiDroid will have its own review reminders stored
+         * in its own SharedPreferences file. This ID is appended onto the end of [SHARED_PREFS_FILE_KEY] to create a unique file name for each profile.
+         *
+         * Currently, this is hard-coded as 0. When multi-profile functionality is added to AnkiDroid, make sure this value is dynamically set
+         * to the current profile ID. Also ensure that the entire review reminders system is updated to work with the multi-profile system.
+         * For example, scheduled notifications may need to be cancelled and rescheduled when the user toggles between profiles.
+         */
+        private const val PROFILE_ID: Int = 0
+
+        /**
+         * SharedPreferences file name key for review reminders. We store the review reminders separately from the default SharedPreferences.
+         */
+        private const val SHARED_PREFS_FILE_KEY = "com.ichi2.anki.REVIEW_REMINDERS_SHARED_PREFS_$PROFILE_ID"
+
+        /**
+         * SharedPreferences file for review reminders. We store the review reminders separately from the default SharedPreferences.
+         */
+        @VisibleForTesting
+        val remindersSharedPrefs: SharedPreferences =
+            AnkiDroidApp.instance.getSharedPreferences(
+                SHARED_PREFS_FILE_KEY,
+                Context.MODE_PRIVATE,
+            )
+
+        /**
          * Key in SharedPreferences for retrieving deck-specific reminders.
-         * Should have deck ID appended to its end, ex. "review_reminders_deck_12345".
+         * Should have deck ID appended to its end, ex. "deck_12345".
          * Its value is a HashMap<[ReviewReminderId], [ReviewReminder]> serialized as a JSON String.
          */
-        @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-        const val DECK_SPECIFIC_KEY = "review_reminders_deck_"
+        @VisibleForTesting
+        const val DECK_SPECIFIC_KEY = "deck_"
 
         /**
          * Key in SharedPreferences for retrieving app-wide reminders.
          * Its value is a HashMap<[ReviewReminderId], [ReviewReminder]> serialized as a JSON String.
          */
-        @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-        const val APP_WIDE_KEY = "review_reminders_app_wide"
+        @VisibleForTesting
+        const val APP_WIDE_KEY = "app_wide"
     }
 
     /**
@@ -75,7 +102,7 @@ class ReviewRemindersDatabase {
      * @throws IllegalArgumentException If the decoded reminders map is not a HashMap<[ReviewReminderId], [ReviewReminder]>.
      */
     private fun getRemindersForKey(key: String): HashMap<ReviewReminderId, ReviewReminder> {
-        val jsonString = AnkiDroidApp.sharedPrefs().getString(key, null) ?: return hashMapOf()
+        val jsonString = remindersSharedPrefs.getString(key, null) ?: return hashMapOf()
         return decodeJson(jsonString)
     }
 
@@ -99,8 +126,7 @@ class ReviewRemindersDatabase {
      * @throws IllegalArgumentException If the decoded reminders maps are not instances of HashMap<[ReviewReminderId], [ReviewReminder]>.
      */
     fun getAllDeckSpecificReminders(): HashMap<ReviewReminderId, ReviewReminder> =
-        AnkiDroidApp
-            .sharedPrefs()
+        remindersSharedPrefs
             .all
             .filterKeys { it.startsWith(DECK_SPECIFIC_KEY) }
             .flatMap { (_, value) -> decodeJson(value.toString()).entries }
@@ -119,7 +145,7 @@ class ReviewRemindersDatabase {
     ) {
         val existingReminders = getRemindersForKey(key)
         val updatedReminders = reminderEditor(existingReminders)
-        AnkiDroidApp.sharedPrefs().edit {
+        remindersSharedPrefs.edit {
             putString(key, encodeJson(updatedReminders))
         }
     }
@@ -152,15 +178,14 @@ class ReviewRemindersDatabase {
      * For example, may be used for constructing a backup of all review reminders pending a potentially-destructive migration operation.
      * Does not return the next-free-ID preference for review reminders used by [ReviewReminderId.getAndIncrementNextFreeReminderId].
      */
-    fun getAllReviewReminderSharedPrefsAsMap(): Map<String, Any?> =
-        AnkiDroidApp.sharedPrefs().all.filter {
-            it.key.startsWith(DECK_SPECIFIC_KEY) ||
-                it.key.startsWith(APP_WIDE_KEY)
-        }
+    fun getAllReviewReminderSharedPrefsAsMap(): Map<String, Any?> = remindersSharedPrefs.all
 
     /**
      * Helper method for deleting all SharedPreferences that represent app-wide or deck-specific reminder HashMaps.
-     * Does not delete the next-free-ID preference for review reminders used by [ReviewReminderId.getAndIncrementNextFreeReminderId].
+     * Note that this will only delete saved ReviewReminder objects, as they are stored in the review reminders SharedPreferences file managed by this class.
+     * This method won't impact any meta information, such as the next free review reminder ID, which is stored in the default
+     * SharedPreferences file and accessed via Prefs.reviewReminderNextFreeId.
+     * such as the next-free-ID preference used by [ReviewReminderId.getAndIncrementNextFreeReminderId].
      *
      * For example, may be used when a potentially-destructive operation, like a failed migration, has been applied to all review reminders.
      * This method can be used to delete all potentially-corrupted review reminder shared preferences so that backed-up
@@ -170,14 +195,19 @@ class ReviewRemindersDatabase {
      * call this when you need to hard-reset the review reminders database.
      */
     fun deleteAllReviewReminderSharedPrefs() {
-        AnkiDroidApp.sharedPrefs().edit {
-            AnkiDroidApp
-                .sharedPrefs()
-                .all
-                .keys
-                .filter { it.startsWith(DECK_SPECIFIC_KEY) || it.startsWith(APP_WIDE_KEY) }
-                .forEach { remove(it) }
-        }
+        remindersSharedPrefs.edit { clear() }
+    }
+
+    /**
+     * Helper method for writing all SharedPreferences that represent app-wide or deck-specific reminder HashMaps.
+     * Only writes preferences that represent reminders themselves, not any auxiliary preferences used by the review reminder system
+     * such as the next-free-ID preference used by [ReviewReminderId.getAndIncrementNextFreeReminderId].
+     *
+     * For example, may be used when a potentially-destructive operation, like a failed migration, has been applied to all review reminders.
+     * This method can be used to restore a backup of old review reminder shared preferences after all existing review reminders have been cleared.
+     */
+    fun writeAllReviewReminderSharedPrefsFromMap(map: Map<String, Any?>) {
+        remindersSharedPrefs.edit { map.forEach { (key, value) -> putString(key, value.toString()) } }
     }
 
     /**
@@ -191,8 +221,8 @@ class ReviewRemindersDatabase {
      */
     fun <T : OldReviewReminderSchema> attemptSchemaMigration(serializer: KSerializer<T>) {
         val mapSerializer = MapSerializer(ReviewReminderId.serializer(), serializer)
-        AnkiDroidApp.sharedPrefs().edit {
-            getAllReviewReminderSharedPrefsAsMap().forEach { (key, value) ->
+        remindersSharedPrefs.edit {
+            remindersSharedPrefs.all.forEach { (key, value) ->
                 val old: Map<ReviewReminderId, T> = Json.decodeFromString(mapSerializer, value.toString())
                 val new =
                     old

@@ -19,7 +19,6 @@ package com.ichi2.anki.reviewreminders
 import androidx.core.content.edit
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
-import com.ichi2.anki.preferences.sharedPrefs
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.After
@@ -32,13 +31,13 @@ class ReviewReminderTest : RobolectricTest() {
     @Before
     override fun setUp() {
         super.setUp()
+        ReviewRemindersDatabase.remindersSharedPrefs.edit { clear() }
     }
 
     @After
     override fun tearDown() {
         super.tearDown()
-        // Reset the database after each test
-        targetContext.sharedPrefs().edit { clear() }
+        ReviewRemindersDatabase.remindersSharedPrefs.edit { clear() }
     }
 
     @Test
