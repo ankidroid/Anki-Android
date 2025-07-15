@@ -778,6 +778,19 @@ open class DeckPicker :
             }
         }
 
+        fun onCardsDueChanged(dueCount: Int?) {
+            if (dueCount == null) {
+                supportActionBar?.subtitle = null
+                return
+            }
+
+            supportActionBar?.apply {
+                subtitle = if (dueCount == 0) null else resources.getQuantityString(R.plurals.widget_cards_due, dueCount, dueCount)
+                val toolbar = findViewById<Toolbar>(R.id.toolbar)
+                TooltipCompat.setTooltipText(toolbar, toolbar.subtitle)
+            }
+        }
+
         fun onError(errorMessage: String) {
             AlertDialog
                 .Builder(this)
@@ -796,6 +809,7 @@ open class DeckPicker :
         viewModel.flowOfOnDecksLoaded.launchCollectionInLifecycleScope(::onDecksLoadedChanged)
         viewModel.flowOfStudiedTodayStats.launchCollectionInLifecycleScope(::onStudiedTodayChanged)
         viewModel.flowOfDeckListInInitialState.filterNotNull().launchCollectionInLifecycleScope(::onCollectionStatusChanged)
+        viewModel.flowOfCardsDue.launchCollectionInLifecycleScope(::onCardsDueChanged)
     }
 
     private val onReceiveContentListener =
