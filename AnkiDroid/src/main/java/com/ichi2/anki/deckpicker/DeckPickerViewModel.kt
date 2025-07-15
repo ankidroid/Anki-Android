@@ -43,6 +43,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -57,9 +58,14 @@ class DeckPickerViewModel(
     val fragmented: Boolean,
 ) : ViewModel(),
     OnErrorListener {
+    private val flowOfDeckDueTree = MutableStateFlow<DeckNode?>(null)
+
     /** The root of the tree displaying all decks */
-    var dueTree: DeckNode? = null
-        private set
+    var dueTree: DeckNode?
+        get() = flowOfDeckDueTree.value
+        private set(value) {
+            flowOfDeckDueTree.value = value
+        }
 
     /**
      * @see deleteDeck
@@ -100,6 +106,12 @@ class DeckPickerViewModel(
     val flowOfOnDecksLoaded = MutableSharedFlow<OnDecksLoadedResult>()
 
     val flowOfDeckListInInitialState = MutableStateFlow<Boolean?>(null)
+
+    val flowOfCardsDue =
+        combine(flowOfDeckDueTree, flowOfDeckListInInitialState) { tree, inInitialState ->
+            if (tree == null || inInitialState != false) return@combine null
+            tree.newCount + tree.revCount + tree.lrnCount
+        }
 
     /** "Studied N cards in 0 seconds today */
     val flowOfStudiedTodayStats =
