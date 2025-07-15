@@ -800,6 +800,11 @@ open class DeckPicker :
             }
         }
 
+        fun onStudyOptionsVisibilityChanged(isVisible: Boolean) {
+            invalidateOptionsMenu()
+            studyoptionsFrame?.isVisible = isVisible
+        }
+
         fun onError(errorMessage: String) {
             AlertDialog
                 .Builder(this)
@@ -819,6 +824,7 @@ open class DeckPicker :
         viewModel.flowOfStudiedTodayStats.launchCollectionInLifecycleScope(::onStudiedTodayChanged)
         viewModel.flowOfDeckListInInitialState.filterNotNull().launchCollectionInLifecycleScope(::onCollectionStatusChanged)
         viewModel.flowOfCardsDue.launchCollectionInLifecycleScope(::onCardsDueChanged)
+        viewModel.flowOfStudyOptionsVisible.launchCollectionInLifecycleScope(::onStudyOptionsVisibilityChanged)
     }
 
     private val onReceiveContentListener =
@@ -2309,11 +2315,6 @@ open class DeckPicker :
     ) {
         Timber.i("Updating deck list UI")
         hideProgressBar()
-        // Make sure the fragment is visible
-        if (fragmented) {
-            invalidateOptionsMenu()
-            studyoptionsFrame!!.visibility = if (collectionHasNoCards) View.GONE else View.VISIBLE
-        }
         launchCatchingTask { renderPage(collectionHasNoCards) }
         Timber.d("Startup - Deck List UI Completed")
     }

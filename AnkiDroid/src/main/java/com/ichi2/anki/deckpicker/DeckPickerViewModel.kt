@@ -105,7 +105,14 @@ class DeckPickerViewModel(
 
     val flowOfOnDecksLoaded = MutableSharedFlow<OnDecksLoadedResult>()
 
-    val flowOfDeckListInInitialState = MutableStateFlow<Boolean?>(null)
+    val flowOfCollectionHasNoCards = MutableStateFlow(true)
+
+    val flowOfDeckListInInitialState =
+        combine(flowOfDeckDueTree, flowOfCollectionHasNoCards) { tree, noCards ->
+            if (tree == null) return@combine null
+            // Check if default deck is the only available and there are no cards
+            tree.children.size == 1 && tree.children[0].did == 1L && noCards
+        }.stateIn(viewModelScope, SharingStarted.Eagerly, initialValue = null)
 
     val flowOfCardsDue =
         combine(flowOfDeckDueTree, flowOfDeckListInInitialState) { tree, inInitialState ->
@@ -122,6 +129,8 @@ class DeckPickerViewModel(
                     sched.studiedToday().replace("\n", " ")
                 }
             }.stateIn(viewModelScope, SharingStarted.Eagerly, initialValue = "")
+
+    val flowOfStudyOptionsVisible = flowOfCollectionHasNoCards.map { noCards -> fragmented && !noCards }
 
     /**
      * Deletes the provided deck, child decks. and all cards inside.
@@ -248,9 +257,7 @@ class DeckPickerViewModel(
                     }
                 dueTree = deckDueTree
 
-                // Check if default deck is the only available and there are no cards
-                val isEmpty = deckDueTree.children.size == 1 && deckDueTree.children[0].did == 1L && collectionHasNoCards
-                flowOfDeckListInInitialState.emit(isEmpty)
+                flowOfCollectionHasNoCards.value = collectionHasNoCards
 
                 flowOfOnDecksLoaded.emit(OnDecksLoadedResult(deckDueTree, collectionHasNoCards))
 
