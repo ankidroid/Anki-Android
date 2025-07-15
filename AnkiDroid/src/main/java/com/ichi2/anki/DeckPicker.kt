@@ -112,6 +112,7 @@ import com.ichi2.anki.deckpicker.BITMAP_BYTES_PER_PIXEL
 import com.ichi2.anki.deckpicker.BackgroundImage
 import com.ichi2.anki.deckpicker.DeckDeletionResult
 import com.ichi2.anki.deckpicker.DeckPickerViewModel
+import com.ichi2.anki.deckpicker.DeckPickerViewModel.OnDecksLoadedResult
 import com.ichi2.anki.deckpicker.EmptyCardsResult
 import com.ichi2.anki.deckpicker.filterAndFlattenDisplay
 import com.ichi2.anki.dialogs.AsyncDialogFragment
@@ -442,7 +443,6 @@ open class DeckPicker :
     // stored for testing purposes
     @VisibleForTesting
     var createMenuJob: Job? = null
-    private var loadDeckCounts: Job? = null
 
     init {
         ChangeManager.subscribe(this)
@@ -478,7 +478,7 @@ open class DeckPicker :
                         sched.haveBuried(),
                     )
                 }
-            updateDeckList() // focus has changed
+            updateDeckList()?.join() // focus has changed
             showDialogFragment(
                 DeckPickerContextMenu.newInstance(
                     id = deckId,
@@ -494,12 +494,6 @@ open class DeckPicker :
         registerForActivityResult(ActivityResultContracts.RequestPermission()) {
             Timber.i("notification permission: %b", it)
         }
-
-    /**
-     * Tracks the scheduler version for which the upgrade dialog was last shown,
-     * to avoid repeatedly prompting the user for the same collection version.
-     */
-    private var schedulerUpgradeDialogShownForVersion: Long? = null
 
     // ----------------------------------------------------------------------------
     // ANDROID ACTIVITY METHODS
@@ -694,6 +688,38 @@ open class DeckPicker :
             startActivity(destination.toIntent(this))
         }
 
+        fun onPromptUserToUpdateScheduler(op: Unit) {
+            SchedulerUpgradeDialog(
+                activity = this,
+                onUpgrade = {
+                    launchCatchingRequiringOneWaySync {
+                        this@DeckPicker.withProgress { withCol { sched.upgradeToV2() } }
+                        showThemedToast(this@DeckPicker, TR.schedulingUpdateDone(), false)
+                    }
+                },
+                onCancel = {
+                    onBackPressedDispatcher.onBackPressed()
+                },
+            ).showDialog()
+        }
+
+        fun onUndoUpdated(a: Unit) {
+            launchCatchingTask {
+                withOpenColOrNull {
+                    optionsMenuState =
+                        optionsMenuState?.copy(
+                            undoLabel = undoLabel(),
+                            undoAvailable = undoAvailable(),
+                        )
+                }
+                invalidateOptionsMenu()
+            }
+        }
+
+        fun onDecksLoadedChanged(result: OnDecksLoadedResult) {
+            onDecksLoaded(result.deckDueTree, result.collectionHasNoCards)
+        }
+
         fun onError(errorMessage: String) {
             AlertDialog
                 .Builder(this)
@@ -707,6 +733,9 @@ open class DeckPicker :
         viewModel.flowOfDeckCountsChanged.launchCollectionInLifecycleScope(::onDeckCountsChanged)
         viewModel.flowOfDestination.launchCollectionInLifecycleScope(::onDestinationChanged)
         viewModel.onError.launchCollectionInLifecycleScope(::onError)
+        viewModel.flowOfPromptUserToUpdateScheduler.launchCollectionInLifecycleScope(::onPromptUserToUpdateScheduler)
+        viewModel.flowOfUndoUpdated.launchCollectionInLifecycleScope(::onUndoUpdated)
+        viewModel.flowOfOnDecksLoaded.launchCollectionInLifecycleScope(::onDecksLoadedChanged)
     }
 
     private val onReceiveContentListener =
@@ -1083,16 +1112,6 @@ open class DeckPicker :
         updateDeckRelatedMenuItems(menu)
     }
 
-    private suspend fun updateUndoMenuState() {
-        withOpenColOrNull {
-            optionsMenuState =
-                optionsMenuState?.copy(
-                    undoLabel = undoLabel(),
-                    undoAvailable = undoAvailable(),
-                )
-        }
-    }
-
     /**
      * Shows/hides deck related menu items based on the collection being empty or not.
      */
@@ -1375,7 +1394,7 @@ open class DeckPicker :
     override fun onPause() {
         activityPaused = true
         // The deck count will be computed on resume. No need to compute it now
-        loadDeckCounts?.cancel()
+        viewModel.loadDeckCounts?.cancel()
         super.onPause()
     }
 
@@ -2105,21 +2124,6 @@ open class DeckPicker :
         }
     }
 
-    private fun promptUserToUpdateScheduler() {
-        SchedulerUpgradeDialog(
-            activity = this,
-            onUpgrade = {
-                launchCatchingRequiringOneWaySync {
-                    this@DeckPicker.withProgress { withCol { sched.upgradeToV2() } }
-                    showThemedToast(this@DeckPicker, TR.schedulingUpdateDone(), false)
-                }
-            },
-            onCancel = {
-                onBackPressedDispatcher.onBackPressed()
-            },
-        ).showDialog()
-    }
-
     @NeedsTest("14608: Ensure that the deck options refer to the selected deck")
     @NeedsTest("18586: handle clicking on an empty filtered deck")
     private suspend fun handleDeckSelection(
@@ -2208,9 +2212,9 @@ open class DeckPicker :
      */
     @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
     @RustCleanup("backup with 5 minute timer, instead of deck list refresh")
-    fun updateDeckList() {
+    fun updateDeckList(): Job? {
         if (!CollectionManager.isOpenUnsafe()) {
-            return
+            return null
         }
         if (Build.FINGERPRINT != "robolectric") {
             // uses user's desktop settings to determine whether a backup
@@ -2218,33 +2222,7 @@ open class DeckPicker :
             performBackupInBackground()
         }
         Timber.d("updateDeckList")
-        loadDeckCounts?.cancel()
-        loadDeckCounts =
-            launchCatchingTask {
-                withProgress {
-                    Timber.d("Refreshing deck list")
-                    val (deckDueTree, collectionHasNoCards) =
-                        withCol {
-                            Pair(sched.deckDueTree(), isEmpty)
-                        }
-                    onDecksLoaded(deckDueTree, collectionHasNoCards)
-
-                    /**
-                     * Checks the current scheduler version and prompts the upgrade dialog if using the legacy version.
-                     * Ensures the dialog is only shown once per collection load, even if [updateDeckList()] is called multiple times.
-                     */
-                    val currentSchedulerVersion = withCol { config.get("schedVer") as? Long ?: 1L }
-
-                    if (currentSchedulerVersion == 1L && schedulerUpgradeDialogShownForVersion != 1L) {
-                        schedulerUpgradeDialogShownForVersion = 1L
-                        promptUserToUpdateScheduler()
-                    } else {
-                        schedulerUpgradeDialogShownForVersion = currentSchedulerVersion
-                    }
-
-                    updateUndoMenuState()
-                }
-            }
+        return launchCatchingTask { withProgress { viewModel.reloadDeckCounts()?.join() } }
     }
 
     private fun onDecksLoaded(
