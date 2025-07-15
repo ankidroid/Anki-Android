@@ -41,6 +41,7 @@ import com.ichi2.anki.reviewreminders.ScheduleRemindersDestination
 import com.ichi2.anki.utils.Destination
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
@@ -97,6 +98,8 @@ class DeckPickerViewModel(
     val flowOfUndoUpdated = MutableSharedFlow<Unit>()
 
     val flowOfOnDecksLoaded = MutableSharedFlow<OnDecksLoadedResult>()
+
+    val flowOfDeckListInInitialState = MutableStateFlow<Boolean?>(null)
 
     /** "Studied N cards in 0 seconds today */
     val flowOfStudiedTodayStats =
@@ -232,6 +235,11 @@ class DeckPickerViewModel(
                         Pair(sched.deckDueTree(), isEmpty)
                     }
                 dueTree = deckDueTree
+
+                // Check if default deck is the only available and there are no cards
+                val isEmpty = deckDueTree.children.size == 1 && deckDueTree.children[0].did == 1L && collectionHasNoCards
+                flowOfDeckListInInitialState.emit(isEmpty)
+
                 flowOfOnDecksLoaded.emit(OnDecksLoadedResult(deckDueTree, collectionHasNoCards))
 
                 /**
