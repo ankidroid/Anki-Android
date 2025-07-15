@@ -31,6 +31,7 @@ import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.libanki.CardId
 import com.ichi2.anki.libanki.Consts
 import com.ichi2.anki.libanki.DeckId
+import com.ichi2.anki.libanki.sched.DeckNode
 import com.ichi2.anki.libanki.utils.extend
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import com.ichi2.anki.notetype.ManageNoteTypesDestination
@@ -74,6 +75,21 @@ class DeckPickerViewModel(
      */
     // TODO: This should later be handled as a Flow
     var focusedDeck: DeckId = 0
+
+    var loadDeckCounts: Job? = null
+        private set
+
+    /**
+     * Tracks the scheduler version for which the upgrade dialog was last shown,
+     * to avoid repeatedly prompting the user for the same collection version.
+     */
+    private var schedulerUpgradeDialogShownForVersion: Long? = null
+
+    val flowOfPromptUserToUpdateScheduler = MutableSharedFlow<Unit>()
+
+    val flowOfUndoUpdated = MutableSharedFlow<Unit>()
+
+    val flowOfOnDecksLoaded = MutableSharedFlow<OnDecksLoadedResult>()
 
     /**
      * Deletes the provided deck, child decks. and all cards inside.
@@ -188,6 +204,42 @@ class DeckPickerViewModel(
         viewModelScope.launch {
             flowOfDestination.emit(ScheduleRemindersDestination(deckId))
         }
+
+    fun reloadDeckCounts(): Job? {
+        loadDeckCounts?.cancel()
+        val loadDeckCounts =
+            viewModelScope.launch {
+                Timber.d("Refreshing deck list")
+                val (deckDueTree, collectionHasNoCards) =
+                    withCol {
+                        Pair(sched.deckDueTree(), isEmpty)
+                    }
+                flowOfOnDecksLoaded.emit(OnDecksLoadedResult(deckDueTree, collectionHasNoCards))
+
+                /**
+                 * Checks the current scheduler version and prompts the upgrade dialog if using the legacy version.
+                 * Ensures the dialog is only shown once per collection load, even if [updateDeckList()] is called multiple times.
+                 */
+                val currentSchedulerVersion = withCol { config.get("schedVer") as? Long ?: 1L }
+
+                if (currentSchedulerVersion == 1L && schedulerUpgradeDialogShownForVersion != 1L) {
+                    schedulerUpgradeDialogShownForVersion = 1L
+                    flowOfPromptUserToUpdateScheduler.emit(Unit)
+                } else {
+                    schedulerUpgradeDialogShownForVersion = currentSchedulerVersion
+                }
+
+                flowOfUndoUpdated.emit(Unit)
+            }
+        this.loadDeckCounts = loadDeckCounts
+        return loadDeckCounts
+    }
+
+    // Temp class for refactoring
+    data class OnDecksLoadedResult(
+        val deckDueTree: DeckNode,
+        val collectionHasNoCards: Boolean,
+    )
 }
 
 /** Result of [DeckPickerViewModel.deleteDeck] */
