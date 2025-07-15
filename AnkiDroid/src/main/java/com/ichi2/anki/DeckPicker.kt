@@ -720,6 +720,17 @@ open class DeckPicker :
             onDecksLoaded(result.deckDueTree, result.collectionHasNoCards)
         }
 
+        fun onStudiedTodayChanged(studiedToday: String) {
+            reviewSummaryTextView.text = studiedToday
+            val fabLinearLayout = findViewById<LinearLayout>(R.id.fabLinearLayout)
+            // Adjust bottom margin of fabLinearLayout based on reviewSummaryTextView height
+            reviewSummaryTextView.doOnLayout {
+                val layoutParams = fabLinearLayout.layoutParams as ViewGroup.MarginLayoutParams
+                layoutParams.setMargins(0, 0, 0, reviewSummaryTextView.height / 2)
+                fabLinearLayout.layoutParams = layoutParams
+            }
+        }
+
         fun onError(errorMessage: String) {
             AlertDialog
                 .Builder(this)
@@ -736,6 +747,7 @@ open class DeckPicker :
         viewModel.flowOfPromptUserToUpdateScheduler.launchCollectionInLifecycleScope(::onPromptUserToUpdateScheduler)
         viewModel.flowOfUndoUpdated.launchCollectionInLifecycleScope(::onUndoUpdated)
         viewModel.flowOfOnDecksLoaded.launchCollectionInLifecycleScope(::onDecksLoadedChanged)
+        viewModel.flowOfStudiedTodayStats.launchCollectionInLifecycleScope(::onStudiedTodayChanged)
     }
 
     private val onReceiveContentListener =
@@ -2238,21 +2250,6 @@ open class DeckPicker :
         }
         dueTree = result
         launchCatchingTask { renderPage(collectionHasNoCards) }
-        // Update the mini statistics bar as well
-        launchCatchingTask {
-            reviewSummaryTextView.text =
-                withCol {
-                    // Backend returns studiedToday() with newlines for HTML formatting,so we replace them with spaces.
-                    sched.studiedToday().replace("\n", " ")
-                }
-            val fabLinearLayout = findViewById<LinearLayout>(R.id.fabLinearLayout)
-            // Adjust bottom margin of fabLinearLayout based on reviewSummaryTextView height
-            reviewSummaryTextView.doOnLayout {
-                val layoutParams = fabLinearLayout.layoutParams as ViewGroup.MarginLayoutParams
-                layoutParams.setMargins(0, 0, 0, reviewSummaryTextView.height / 2)
-                fabLinearLayout.layoutParams = layoutParams
-            }
-        }
         Timber.d("Startup - Deck List UI Completed")
     }
 
