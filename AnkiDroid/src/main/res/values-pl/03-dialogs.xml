@@ -66,7 +66,7 @@
         <item quantity="other">%d kart zresetowano</item>
     </plurals>
     <string name="answering_error_title">Błąd bazy danych</string>
-    <string name="answering_error_message">Wystąpił błąd podczas zapisywania do kolekcji. Powodem może być uszkodzenie bazy danych albo niewystarczająca ilość miejsca na dysku.\n\nJeśli błąd ten występuje często, spróbuj użyć opcji \"sprawdź bazę danych\" oraz naprawić kolekcję lub przywróć ją z kopii zapasowej (by tego dokonać kliknij „opcje”).\n\nRównie dobrze może to być też błąd AnkiDroid; zgłoś go abyśmy mogli to sprawdzić.</string>
+    <string name="answering_error_message">Wystąpił błąd podczas zapisywania do kolekcji. Powodem może być uszkodzenie bazy danych albo niewystarczająca ilość miejsca na dysku.\n\nJeśli błąd ten występuje często, spróbuj użyć opcji „sprawdź bazę danych” oraz naprawić kolekcję lub przywróć ją z kopii zapasowej (by tego dokonać kliknij „opcje”).\n\nRównie dobrze może to być też błąd AnkiDroid; zgłoś go, abyśmy mogli to sprawdzić.</string>
     <string name="answering_error_report">Zgłoś błąd</string>
     <string name="storage_full_message">Nie ma wystarczającej ilości wolnego miejsca, aby otworzyć AnkiDroid. Zwolnij trochę miejsca, aby kontynuować.</string>
     <string name="repair_deck_dialog">Czy na pewno chcesz próbować naprawić bazę danych? \n\nPrzed próbą naprawy zostanie utworzona kopia w katalogu \'%s\'.</string>
@@ -97,7 +97,7 @@
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Utwórz</string>
     <string name="dialog_positive_delete" maxLength="28">Usuń</string>
     <!-- Currently unsued, should be useful in the future -->
-    <string name="dialog_positive_disable" tools:ignore="UnusedResources">Wyłacz</string>
+    <string name="dialog_positive_disable" tools:ignore="UnusedResources">Wyłącz</string>
     <string name="dialog_positive_overwrite">Nadpisz</string>
     <string name="dialog_positive_repair">Napraw</string>
     <string name="dialog_positive_replace">Zastąp</string>

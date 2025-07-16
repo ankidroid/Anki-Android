@@ -47,7 +47,7 @@
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Відкрити шухляду</string>
     <string name="drawer_close">Закрити шухляду</string>
-    <string name="note_message">Note saved</string>
+    <string name="note_message">Нотатка збережена</string>
     <string name="CardEditorCardDeck">Колода карток:</string>
     <string name="CardEditorNoteDeck">Колода:</string>
     <string name="CardEditorModel">Тип:</string>
@@ -68,11 +68,11 @@
     <string name="enable_whiteboard" maxLength="28">Увімкнути дошку</string>
     <string name="disable_whiteboard">Вимкнути дошку</string>
     <string name="show_whiteboard">Показати дошку</string>
-    <string name="enable_eraser" maxLength="28">Enable eraser</string>
-    <string name="disable_eraser" maxLength="28">Disable eraser</string>
+    <string name="enable_eraser" maxLength="28">Увімкнути гумку</string>
+    <string name="disable_eraser" maxLength="28">Вимкнути гумку</string>
     <string name="hide_whiteboard" maxLength="28">Заховати дошку</string>
     <string name="clear_whiteboard" maxLength="28">Очистити дошку</string>
-    <string name="replay_media" maxLength="28">Replay media</string>
+    <string name="replay_media" maxLength="28">Відтворити медіафайл</string>
     <string name="leech_suspend_notification">Картку позначено як набридливу і призупинено</string>
     <string name="leech_notification">Картку позначено як набридливу</string>
     <string name="webview_crash_unknown">Невідома помилка</string>
@@ -111,10 +111,10 @@
     <string name="missing_note_type">Жодного типу записів не знайдено</string>
     <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (порожня)</string>
     <!-- Image cropper -->
-    <string name="image_cropper_action_rotate" maxLength="28" comment="Action in image cropper screen">Rotate</string>
-    <string name="image_cropper_action_flip" maxLength="28" comment="Action in image cropper screen">Flip</string>
-    <string name="image_cropper_action_flip_horizontally" maxLength="28" comment="Submenu action in image cropper screen">Flip horizontally</string>
-    <string name="image_cropper_action_flip_vertically" maxLength="28" comment="Submenu action in image cropper screen">Flip vertically</string>
+    <string name="image_cropper_action_rotate" maxLength="28" comment="Action in image cropper screen">Повернути</string>
+    <string name="image_cropper_action_flip" maxLength="28" comment="Action in image cropper screen">Перевернути</string>
+    <string name="image_cropper_action_flip_horizontally" maxLength="28" comment="Submenu action in image cropper screen">Перевернути по горизонталі</string>
+    <string name="image_cropper_action_flip_vertically" maxLength="28" comment="Submenu action in image cropper screen">Перевернути по вертикалі</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">Досягнуто часу</string>
     <plurals name="timebox_reached">
@@ -210,8 +210,8 @@
     <string name="restore_default" maxLength="28">Відновити «Типове»</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Порожня</string>
     <!-- Whiteboard eraser mode toggle message in Reviewer -->
-    <string name="white_board_eraser_enabled">Eraser mode activated</string>
-    <string name="white_board_eraser_disabled">Eraser mode deactivated</string>
+    <string name="white_board_eraser_enabled">Режим гумки активовано</string>
+    <string name="white_board_eraser_disabled">Режим гумки деактивовано</string>
     <!-- Whiteboard save image message in the Study Screen -->
     <string name="white_board_image_save_failed">Не вдалося зберегти зображення дошки. %s</string>
     <string name="white_board_image_saved">Зображення дошки збережено до %s</string>
@@ -324,7 +324,7 @@
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Картки</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Записи</string>
     <string name="toggle_cards_notes">Перемкнути картки/записи</string>
-    <string name="truncate_content_help">Truncate the height of each row of the Browser to show only first 3 lines of content</string>
+    <string name="truncate_content_help">Обрізати висоту кожного рядка браузера, щоб показувати лише перші 3 рядки вмісту.</string>
     <string name="browser_options_dialog_heading">Параметри переглядача карток</string>
     <string name="audio_saved">Запис аудіо збережено</string>
     <string name="deleting_selected_notes">Видалення вибраних записів</string>
@@ -373,5 +373,5 @@
     <string name="missing_user_action_dialog_message" comment="%s is the user action number">Дію користувача %s не встановлено в цьому типі запису. Будь ласка, налаштуйте її</string>
     <string name="directory_inaccessible_info">Дізнайтесь більше про те, як відновити доступ тут – %s, або перейдіть в налаштування, щоб оновити теку колекцій.</string>
     <!-- Scheduler Upgrade Required Dialog title-->
-    <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">Scheduler upgrade required</string>
+    <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">Потрібне оновлення планувальника</string>
 </resources>

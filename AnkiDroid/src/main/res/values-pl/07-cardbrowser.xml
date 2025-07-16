@@ -64,7 +64,7 @@
         <item quantity="many">Usuń notatki</item>
         <item quantity="other">Usuń notatki</item>
     </plurals>
-    <string name="card_browser_change_deck" maxLength="28">Zmień talie</string>
+    <string name="card_browser_change_deck" maxLength="28">Zmień talię</string>
     <string name="delete_card_title">Usuń notatkę</string>
     <string name="card_browser_show_marked" maxLength="28">Odfiltruj zaznaczone</string>
     <string name="card_browser_show_suspended" maxLength="28">Odfiltruj zawieszone</string>
