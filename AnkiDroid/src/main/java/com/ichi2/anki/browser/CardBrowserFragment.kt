@@ -157,13 +157,6 @@ class CardBrowserFragment :
 
         fun onSelectedRowsChanged(rows: Set<Any>) = cardsAdapter.notifyDataSetChanged()
 
-        fun onSelectedRowUpdated(id: CardOrNoteId?) {
-            if (!viewModel.isInMultiSelectMode || viewModel.lastSelectedId == null) {
-                viewModel.oldCardTopOffset =
-                    calculateTopOffset(viewModel.lastSelectedPosition)
-            }
-        }
-
         fun onCardsMarkedEvent(unit: Unit) {
             cardsAdapter.notifyDataSetChanged()
         }
@@ -218,7 +211,6 @@ class CardBrowserFragment :
         viewModel.flowOfCardsUpdated.launchCollectionInLifecycleScope(::cardsUpdatedChanged)
         viewModel.flowOfMultiSelectModeChanged.launchCollectionInLifecycleScope(::onMultiSelectModeChanged)
         viewModel.flowOfSearchState.launchCollectionInLifecycleScope(::searchStateChanged)
-        viewModel.rowLongPressFocusFlow.launchCollectionInLifecycleScope(::onSelectedRowUpdated)
         viewModel.flowOfColumnHeadings.launchCollectionInLifecycleScope(::onColumnNamesChanged)
         viewModel.flowOfCardStateChanged.launchCollectionInLifecycleScope(::onCardsMarkedEvent)
         viewModel.flowOfToggleSelectionState.launchCollectionInLifecycleScope(::onToggleSelectionStateUpdated)
@@ -272,16 +264,12 @@ class CardBrowserFragment :
             if (viewModel.isInMultiSelectMode) {
                 val wasSelected = viewModel.selectedRows.contains(id)
                 viewModel.toggleRowSelection(id.toRowSelection())
-                viewModel.saveScrollingState(id)
-                viewModel.oldCardTopOffset = calculateTopOffset(viewModel.lastSelectedPosition)
                 // Load NoteEditor on trailing side if card is selected
                 if (wasSelected) {
                     viewModel.currentCardId = id.toCardId(viewModel.cardsOrNotes)
                     requireCardBrowserActivity().loadNoteEditorFragmentIfFragmented()
                 }
             } else {
-                viewModel.lastSelectedPosition = (cardsListView.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
-                viewModel.oldCardTopOffset = calculateTopOffset(viewModel.lastSelectedPosition)
                 val cardId = viewModel.queryDataForCardEdit(id)
                 requireCardBrowserActivity().openNoteEditorForCard(cardId)
             }
