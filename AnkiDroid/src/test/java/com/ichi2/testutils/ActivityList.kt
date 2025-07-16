@@ -33,6 +33,7 @@ import com.ichi2.anki.IntentHandler2
 import com.ichi2.anki.IntroductionActivity
 import com.ichi2.anki.LoginActivity
 import com.ichi2.anki.MyAccount
+import com.ichi2.anki.NoteEditorActivity
 import com.ichi2.anki.NoteTypeFieldEditor
 import com.ichi2.anki.Reviewer
 import com.ichi2.anki.SharedDecksActivity
@@ -71,6 +72,7 @@ object ActivityList {
             get(StudyOptionsActivity::class.java),
             get(CardBrowser::class.java),
             get(NoteTypeFieldEditor::class.java),
+            get(NoteEditorActivity::class.java),
             // Likely has unhandled intents
             get(Reviewer::class.java),
             get(MyAccount::class.java),

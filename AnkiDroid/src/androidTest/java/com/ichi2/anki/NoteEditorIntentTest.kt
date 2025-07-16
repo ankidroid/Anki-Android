@@ -24,7 +24,7 @@ import com.ichi2.anki.NoteEditorFragment.Companion.intentLaunchedWithImage
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import com.ichi2.anki.tests.InstrumentedTest
 import com.ichi2.anki.testutil.GrantStoragePermission
-import com.ichi2.anki.testutil.getEditor
+import com.ichi2.anki.testutil.getNoteEditorFragment
 import com.ichi2.testutils.common.Flaky
 import com.ichi2.testutils.common.OS
 import com.ichi2.utils.AssetHelper.TEXT_PLAIN
@@ -42,7 +42,7 @@ class NoteEditorIntentTest : InstrumentedTest() {
     var runtimePermissionRule: TestRule? = GrantStoragePermission.instance
 
     @get:Rule
-    var activityRuleIntent: ActivityScenarioRule<SingleFragmentActivity>? =
+    var activityRuleIntent: ActivityScenarioRule<NoteEditorActivity>? =
         ActivityScenarioRule(
             noteEditorTextIntent,
         )
@@ -56,7 +56,7 @@ class NoteEditorIntentTest : InstrumentedTest() {
 
         var currentFieldStrings: String? = null
         scenario.onActivity { activity ->
-            val editor = activity.getEditor()
+            val editor = activity.getNoteEditorFragment()
             currentFieldStrings = editor.currentFieldStrings[0]
         }
         MatcherAssert.assertThat(currentFieldStrings!!, Matchers.equalTo("sample text"))

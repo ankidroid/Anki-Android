@@ -207,7 +207,7 @@ class NoteEditorTest : RobolectricTest() {
     fun verifyStartupAndCloseWithNoCollectionDoesNotCrash() {
         enableNullCollection()
         val intent = NoteEditorLauncher.AddNote().toIntent(targetContext)
-        ActivityScenario.launchActivityForResult<SingleFragmentActivity>(intent).use { scenario ->
+        ActivityScenario.launchActivityForResult<NoteEditorActivity>(intent).use { scenario ->
             scenario.onNoteEditor { noteEditor ->
                 noteEditor.requireActivity().onBackPressedDispatcher.onBackPressed()
                 assertThat("Pressing back should finish the activity", noteEditor.requireActivity().isFinishing)
@@ -220,7 +220,7 @@ class NoteEditorTest : RobolectricTest() {
     @Test
     fun testHandleMultimediaActionsDisplaysBottomSheet() {
         val intent = NoteEditorLauncher.AddNote().toIntent(targetContext)
-        ActivityScenario.launchActivityForResult<SingleFragmentActivity>(intent).use { scenario ->
+        ActivityScenario.launchActivityForResult<NoteEditorActivity>(intent).use { scenario ->
             scenario.onNoteEditor { noteEditor ->
                 noteEditor.showMultimediaBottomSheet()
 
@@ -503,7 +503,7 @@ class NoteEditorTest : RobolectricTest() {
         val editorShadow = shadowOf(editor.requireActivity())
         editor.copyNote()
         val intent = editorShadow.peekNextStartedActivityForResult().intent
-        return intent.getBundleExtra(SingleFragmentActivity.FRAGMENT_ARGS_EXTRA)!!
+        return intent.extras ?: Bundle()
     }
 
     private fun Spinner.getItemIndex(toFind: Any): Int? {
@@ -574,19 +574,19 @@ class NoteEditorTest : RobolectricTest() {
     ): NoteEditorFragment {
         val activity =
             startActivityNormallyOpenCollectionWithIntent(
-                SingleFragmentActivity::class.java,
+                NoteEditorActivity::class.java,
                 NoteEditorLauncher.PassArguments(arguments).toIntent(targetContext, action),
             )
-        return activity.getEditor()
+        return activity.getNoteEditorFragment()
     }
 
     @DuplicatedCode("NoteEditor in androidTest")
     @Throws(Throwable::class)
-    fun ActivityScenario<SingleFragmentActivity>.onNoteEditor(block: (NoteEditorFragment) -> Unit) {
+    fun ActivityScenario<NoteEditorActivity>.onNoteEditor(block: (NoteEditorFragment) -> Unit) {
         val wrapped = AtomicReference<Throwable?>(null)
-        this.onActivity { activity: SingleFragmentActivity ->
+        this.onActivity { activity: NoteEditorActivity ->
             try {
-                val editor = activity.getEditor()
+                val editor = activity.getNoteEditorFragment()
                 block(editor)
             } catch (t: Throwable) {
                 wrapped.set(t)
@@ -596,8 +596,8 @@ class NoteEditorTest : RobolectricTest() {
     }
 
     @DuplicatedCode("NoteEditor in androidTest")
-    fun SingleFragmentActivity.getEditor(): NoteEditorFragment =
-        supportFragmentManager.findFragmentById(R.id.fragment_container) as NoteEditorFragment
+    fun NoteEditorActivity.getNoteEditorFragment(): NoteEditorFragment =
+        supportFragmentManager.findFragmentById(R.id.note_editor_fragment_frame) as NoteEditorFragment
 
     private enum class FromScreen {
         DECK_LIST,

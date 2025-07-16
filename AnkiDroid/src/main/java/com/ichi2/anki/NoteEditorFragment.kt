@@ -70,6 +70,7 @@ import androidx.core.os.BundleCompat
 import androidx.core.text.HtmlCompat
 import androidx.core.util.component1
 import androidx.core.util.component2
+import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.core.view.OnReceiveContentListener
 import androidx.core.view.WindowInsetsControllerCompat
@@ -77,6 +78,7 @@ import androidx.core.view.isVisible
 import androidx.draganddrop.DropHelper
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import anki.config.ConfigKey
 import anki.notes.NoteFieldsCheckResponse
@@ -152,7 +154,6 @@ import com.ichi2.anki.ui.setupNoteTypeSpinner
 import com.ichi2.anki.utils.ext.sharedPrefs
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.utils.ext.window
-import com.ichi2.anki.widgets.DeckDropDownAdapter.SubtitleListener
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.compat.setTooltipTextCompat
 import com.ichi2.imagecropper.ImageCropper
@@ -210,7 +211,6 @@ const val CALLER_KEY = "caller"
 class NoteEditorFragment :
     Fragment(R.layout.note_editor_fragment),
     DeckSelectionListener,
-    SubtitleListener,
     TagsDialogListener,
     BaseSnackbarBuilderProvider,
     DispatchKeyEventListener,
@@ -227,7 +227,7 @@ class NoteEditorFragment :
         get() = CollectionManager.getColUnsafe()
 
     private val mainToolbar: androidx.appcompat.widget.Toolbar
-        get() = requireView().findViewById(R.id.toolbar)
+        get() = requireAnkiActivity().findViewById(R.id.toolbar)
 
     /**
      * Flag which forces the calling activity to rebuild it's definition of current card from scratch
@@ -441,9 +441,6 @@ class NoteEditorFragment :
         }
     }
 
-    override val subtitleText: String
-        get() = ""
-
     private enum class AddClozeType {
         SAME_NUMBER,
         INCREMENT_NUMBER,
@@ -579,7 +576,13 @@ class NoteEditorFragment :
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
 
+        // Register this fragment as a menu provider with the activity
         mainToolbar.addMenuProvider(this)
+        (requireActivity() as MenuHost).addMenuProvider(
+            this,
+            viewLifecycleOwner,
+            Lifecycle.State.RESUMED,
+        )
     }
 
     /**
