@@ -233,6 +233,8 @@
     <string name="navigation" maxLength="41">સંશોધક</string>
     <string name="media" maxLength="41">મીડિયા</string>
     <string name="misc" maxLength="41">વિવિધ</string>
+    <!-- Review reminders -->
+    <string name="add_reminder" comment="Label for the add reminder button in the screen for adding and editing review reminders">Add reminder</string>
     <!-- studyoptions -->
     <string name="studyoptions_limit_select_tags">ટૅગ્સ પસંદ કરો</string>
     <!-- Deck configurations -->

@@ -231,6 +231,8 @@
     <string name="navigation" maxLength="41">瀏覽</string>
     <string name="media" maxLength="41">媒體</string>
     <string name="misc" maxLength="41">雜項</string>
+    <!-- Review reminders -->
+    <string name="add_reminder" comment="Label for the add reminder button in the screen for adding and editing review reminders">Add reminder</string>
     <!-- studyoptions -->
     <string name="studyoptions_limit_select_tags">選擇標籤</string>
     <!-- Deck configurations -->
