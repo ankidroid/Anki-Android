@@ -33,7 +33,6 @@ import androidx.core.content.edit
 import androidx.core.net.toUri
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.MutableLiveData
-import androidx.work.Configuration
 import anki.collection.OpChanges
 import com.ichi2.anki.CrashReportService.sendExceptionReport
 import com.ichi2.anki.analytics.UsageAnalytics
@@ -77,7 +76,6 @@ import java.util.Locale
 @KotlinCleanup("IDE Lint")
 open class AnkiDroidApp :
     Application(),
-    Configuration.Provider,
     ChangeManager.Subscriber {
     /** An exception if the WebView subsystem fails to load  */
     private var webViewError: Throwable? = null
@@ -88,9 +86,6 @@ open class AnkiDroidApp :
 
     /** Used to avoid showing extra progress dialogs when one already shown. */
     var progressDialogShown = false
-
-    override val workManagerConfiguration: Configuration
-        get() = Configuration.Builder().build()
 
     @KotlinCleanup("analytics can be moved to attachBaseContext()")
     /**
