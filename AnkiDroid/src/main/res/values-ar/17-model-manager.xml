@@ -88,5 +88,5 @@
     <string name="model_manager_deck_override_added_message">ضبط الرزمة الافتراضية ‘%1$s’ إلى ‘%2$s’</string>
     <string name="model_manager_deck_override_removed_message">أزيلت الرزمة الافتراضية لـ ‘%s’</string>
     <string name="deck_override_explanation">حدد رزمة لوضع بطاقات «%s» الجديدة فيها</string>
-    <string name="deck_picker_dialog_filter_decks" maxLength="28">صفِّ الرِزم</string>
+    <string name="deck_picker_dialog_filter_decks" maxLength="28">بحث</string>
 </resources>

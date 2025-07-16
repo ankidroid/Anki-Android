@@ -73,6 +73,6 @@
     <string name="save_dialog_content">Aktuální velikost obrázku je %s MB. Výchozí limit velikosti obrázku je 1 MB. Chcete jej zkomprimovat?</string>
     <string name="select_image_failed">"Výběr obrázku selhal, zkuste to prosím znovu"</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Obsah pole</string>
-    <string name="crop_image_size_notice">The image is too big to be handled by the crop editor. Please resize it and try again!</string>
+    <string name="crop_image_size_notice">Obrázek je příliš velký na to, aby mohl být zpracován editorem oříznutí. Změňte jeho velikost a zkuste to znovu!</string>
     <string name="reselect" maxLength="28">Znovu vybrat</string>
 </resources>

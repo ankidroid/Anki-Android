@@ -68,8 +68,8 @@
     <string name="enable_whiteboard" maxLength="28">Povolit tabuli</string>
     <string name="disable_whiteboard">Zakázat tabuli</string>
     <string name="show_whiteboard">Zobrazit tabuli</string>
-    <string name="enable_eraser" maxLength="28">Enable eraser</string>
-    <string name="disable_eraser" maxLength="28">Disable eraser</string>
+    <string name="enable_eraser" maxLength="28">Povolit gumování</string>
+    <string name="disable_eraser" maxLength="28">Zakázat gumování</string>
     <string name="hide_whiteboard" maxLength="28">Skrýt tabuli</string>
     <string name="clear_whiteboard" maxLength="28">Smazat tabuli</string>
     <string name="replay_media" maxLength="28">Přehrát multimédia</string>
@@ -111,10 +111,10 @@
     <string name="missing_note_type">Nenalezen žádný typ poznámky</string>
     <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (prázdné)</string>
     <!-- Image cropper -->
-    <string name="image_cropper_action_rotate" maxLength="28" comment="Action in image cropper screen">Rotate</string>
-    <string name="image_cropper_action_flip" maxLength="28" comment="Action in image cropper screen">Flip</string>
-    <string name="image_cropper_action_flip_horizontally" maxLength="28" comment="Submenu action in image cropper screen">Flip horizontally</string>
-    <string name="image_cropper_action_flip_vertically" maxLength="28" comment="Submenu action in image cropper screen">Flip vertically</string>
+    <string name="image_cropper_action_rotate" maxLength="28" comment="Action in image cropper screen">Otočit</string>
+    <string name="image_cropper_action_flip" maxLength="28" comment="Action in image cropper screen">Překlopit</string>
+    <string name="image_cropper_action_flip_horizontally" maxLength="28" comment="Submenu action in image cropper screen">Překlopit vodorovně</string>
+    <string name="image_cropper_action_flip_vertically" maxLength="28" comment="Submenu action in image cropper screen">Překlopit svisle</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">Časové omezení dosaženo</string>
     <plurals name="timebox_reached">
@@ -210,8 +210,8 @@
     <string name="restore_default" maxLength="28">Obnovit výchozí</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Prázdné</string>
     <!-- Whiteboard eraser mode toggle message in Reviewer -->
-    <string name="white_board_eraser_enabled">Eraser mode activated</string>
-    <string name="white_board_eraser_disabled">Eraser mode deactivated</string>
+    <string name="white_board_eraser_enabled">Režim gumování povolen</string>
+    <string name="white_board_eraser_disabled">Režim gumování zakázán</string>
     <!-- Whiteboard save image message in the Study Screen -->
     <string name="white_board_image_save_failed">Nepodařilo se uložit obrázek tabule. %s</string>
     <string name="white_board_image_saved">Obrázek tabule uložen do %s</string>
@@ -373,5 +373,5 @@
     <string name="missing_user_action_dialog_message" comment="%s is the user action number">Akce uživatele %s není v tomto typu poznámky nastavena. Nakonfigurujte ji prosím</string>
     <string name="directory_inaccessible_info">Další informace o tom, jak obnovit přístup zde %s nebo přejděte do nastavení a aktualizujte složku s kolekcí.</string>
     <!-- Scheduler Upgrade Required Dialog title-->
-    <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">Scheduler upgrade required</string>
+    <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">Je vyžadována aktualizace plánovače</string>
 </resources>
