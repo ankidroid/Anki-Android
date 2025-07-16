@@ -598,8 +598,12 @@ class CardBrowserViewModel(
     fun selectNone(): Job? {
         if (_selectedRows.isEmpty()) return null
         Timber.d("selecting none")
+        val removalReason =
+            SingleSelectCause.Other.apply {
+                this.previouslySelectedRowIds = _selectedRows.toSet()
+            }
         _selectedRows.clear()
-        return onRemoveSelectedRows(disableMultiSelectIfEmpty = false, reason = SingleSelectCause.Other)
+        return onRemoveSelectedRows(disableMultiSelectIfEmpty = false, reason = removalReason)
     }
 
     /**
@@ -1075,6 +1079,7 @@ class CardBrowserViewModel(
      * Turn off [Multi-Select Mode][isInMultiSelectMode] and return to normal state
      */
     fun endMultiSelectMode(reason: SingleSelectCause) {
+        reason.previouslySelectedRowIds = _selectedRows.toSet()
         _selectedRows.clear()
         flowOfMultiSelectModeChanged.value = reason
     }
@@ -1286,6 +1291,8 @@ class CardBrowserViewModel(
             data object NavigateBack : SingleSelectCause()
 
             data object Other : SingleSelectCause()
+
+            var previouslySelectedRowIds: Set<CardOrNoteId>? = null
         }
 
         sealed class MultiSelectCause : ChangeMultiSelectMode() {

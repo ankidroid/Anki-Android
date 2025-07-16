@@ -52,6 +52,7 @@ import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.attachFastScroller
+import com.ichi2.anki.utils.ext.visibleItemPositions
 import com.ichi2.utils.HandlerUtils
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
@@ -71,6 +72,10 @@ class CardBrowserFragment :
 
     @VisibleForTesting
     lateinit var cardsListView: RecyclerView
+
+    /** LayoutManager for [cardsListView] */
+    val layoutManager: LinearLayoutManager
+        get() = cardsListView.layoutManager as LinearLayoutManager
 
     @VisibleForTesting
     lateinit var browserColumnHeadings: ViewGroup
@@ -144,9 +149,26 @@ class CardBrowserFragment :
             // update adapter to remove check boxes
             cardsAdapter.notifyDataSetChanged()
             if (modeChange is SingleSelectCause.DeselectRow) {
+                cardsAdapter.notifyDataSetChanged()
                 autoScrollTo(modeChange.selection)
             } else if (modeChange is MultiSelectCause.RowSelected) {
+                cardsAdapter.notifyDataSetChanged()
                 autoScrollTo(modeChange.selection)
+            } else if (modeChange is SingleSelectCause && !modeChange.previouslySelectedRowIds.isNullOrEmpty()) {
+                // if any visible rows are selected, anchor on the first row
+
+                // obtain the offset of the row before we call notifyDataSetChanged
+                val rowPositionAndOffset =
+                    try {
+                        val visibleRowIds = layoutManager.visibleItemPositions.map { viewModel.getRowAtPosition(it) }
+                        val firstVisibleRowId = visibleRowIds.firstOrNull { modeChange.previouslySelectedRowIds!!.contains(it) }
+                        firstVisibleRowId?.let { firstVisibleRowId.toRowSelection() }
+                    } catch (e: Exception) {
+                        Timber.w(e)
+                        null
+                    }
+                cardsAdapter.notifyDataSetChanged()
+                rowPositionAndOffset?.let { autoScrollTo(it) }
             }
         }
 
@@ -276,7 +298,6 @@ class CardBrowserFragment :
         }
 
     private fun calculateTopOffset(cardPosition: Int): Int {
-        val layoutManager = cardsListView.layoutManager as LinearLayoutManager
         val firstVisiblePosition = layoutManager.findFirstVisibleItemPosition()
         val view = cardsListView.getChildAt(cardPosition - firstVisiblePosition)
         return view?.top ?: 0
@@ -284,7 +305,7 @@ class CardBrowserFragment :
 
     private fun autoScrollTo(rowSelection: RowSelection) {
         val newPosition = viewModel.getPositionOfId(rowSelection.rowId) ?: return
-        (cardsListView.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(newPosition, rowSelection.topOffset)
+        layoutManager.scrollToPositionWithOffset(newPosition, rowSelection.topOffset)
     }
 
     private fun CardOrNoteId.toRowSelection() =
