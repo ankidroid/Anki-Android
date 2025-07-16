@@ -234,6 +234,8 @@
     <string name="navigation" maxLength="41">Nabigasyon</string>
     <string name="media" maxLength="41">Media</string>
     <string name="misc" maxLength="41">Iba pa</string>
+    <!-- Review reminders -->
+    <string name="add_reminder" comment="Label for the add reminder button in the screen for adding and editing review reminders">Add reminder</string>
     <!-- studyoptions -->
     <string name="studyoptions_limit_select_tags">Piliin ang mga tag</string>
     <!-- Deck configurations -->

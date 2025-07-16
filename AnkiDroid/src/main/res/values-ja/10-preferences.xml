@@ -231,6 +231,8 @@
     <string name="navigation" maxLength="41">画面移動</string>
     <string name="media" maxLength="41">音声・動画</string>
     <string name="misc" maxLength="41">その他</string>
+    <!-- Review reminders -->
+    <string name="add_reminder" comment="Label for the add reminder button in the screen for adding and editing review reminders">Add reminder</string>
     <!-- studyoptions -->
     <string name="studyoptions_limit_select_tags">タグを選択</string>
     <!-- Deck configurations -->

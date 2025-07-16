@@ -242,6 +242,8 @@
     <string name="navigation" maxLength="41">التنقل</string>
     <string name="media" maxLength="41">الوسائط</string>
     <string name="misc" maxLength="41">منوع</string>
+    <!-- Review reminders -->
+    <string name="add_reminder" comment="Label for the add reminder button in the screen for adding and editing review reminders">Add reminder</string>
     <!-- studyoptions -->
     <string name="studyoptions_limit_select_tags">اختيار وسوم</string>
     <!-- Deck configurations -->
