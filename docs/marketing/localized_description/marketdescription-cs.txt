@@ -1,6 +1,6 @@
 Zapamatujte si cokoliv s AnkiDroid!
 
-AnkiDroid umožňuje velmi efektivní učení kartiček jejich zobrazením těsně předtím, než je zapomenete. It is fully compatible with the spaced repetition software Anki (including synchronization), which is available for Windows, Linux and macOS.
+AnkiDroid umožňuje velmi efektivní učení kartiček jejich zobrazením těsně předtím, než je zapomenete. Je plně kompatibilní se softwarem pro opakování v rozestupech Anki (včetně synchronizace), který je k dispozici pro Windows, Linux a macOS.
 
 Studium mnoha věcí kdekoliv a kdykoliv chcete. Dobré využití volného času během cesty autobusem, ve frontě v obchodě nebo kdykoliv během čekání!
 

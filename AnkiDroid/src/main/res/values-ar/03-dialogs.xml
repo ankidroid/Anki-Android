@@ -139,7 +139,7 @@
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">تم تحديث آنكي درويد</string>
     <string name="integrity_check_startup_content">تم تحديث آنكي درويد. يتضمن هذا التحديث إصلاحًا لأعطال ممكنة في قاعدة البيانات، لذلك ننصح باستخدام ميزة فحص قاعدة البيانات الآن.</string>
-    <string name="integrity_check_continue_anyway">استمرار على أي حال</string>
+    <string name="integrity_check_continue_anyway">استمرار في كل حال</string>
     <string name="integrity_check_insufficient_space">تستخدم ميزة فحص قاعدة البيانات مساحة كبيرة من التخزين المؤقت.\n\nينصح بشدة أن يكون لديك مساحة %s خالية على الأقل في جهازك قبل الاستمرار.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nلديك حاليًا مساحة %s خالية.</string>
     <!-- Card Browser -->
@@ -270,13 +270,13 @@
     <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">من</string>
     <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">إلى</string>
     <!-- Instant Note Editor -->
-    <string name="cloze_note_required">مطلوب نوع ملحوظات خاص بملء الفراغات</string>
+    <string name="cloze_note_required">يلزمك نوع ملحوظات ملء الفراغات</string>
     <string name="cloze_not_found_message">لم يعثر على نوع ملحوظات خاص بملء الفراغات، إفتح محرر الملحوظات أو حاول مجددًا بعد إضافة نوع ملحوظات خاص بملء الفراغات.</string>
-    <string name="open">إفتح</string>
+    <string name="open">فتح</string>
     <string name="change_cloze_number">غير رقم الفراغ</string>
     <string name="cloze_number">رقم الفراغ</string>
-    <string name="change_editor_mode">غير وضع المحرر</string>
-    <string name="open_note_editor">إفتح محرر الملحوظات</string>
+    <string name="change_editor_mode">تغيير وضع المحرر</string>
+    <string name="open_note_editor">فتح محرر الملحوظات</string>
     <string name="change_cloze_mode">غير وضع الفراغات</string>
     <!-- Outdated WebView dialog -->
     <string name="webview_update_message">إصدار ويب فيو لهذا النظام قديم. لن تعمل بعض الميزات بشكل صحيح. حدثه رجاءًا.\n\nالإصدار المنصب: %1$d\nالإصدار الأدنى المطلوب: %2$d</string>
