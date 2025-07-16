@@ -44,9 +44,8 @@
         android:layout_margin="16dp"
         style="?attr/floatingActionButtonPrimaryStyle"
         app:backgroundTint="?attr/fab_normal"
-        android:text="Add reminder"
+        android:text="@string/add_reminder"
         app:icon="@drawable/ic_add_bell"
-        android:contentDescription="Add reminder"
-        tools:ignore="HardcodedText" />
+        android:contentDescription="@string/add_reminder" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
