@@ -42,6 +42,8 @@ import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.DeckSpinnerSelection.Companion.ALL_DECKS_ID
 import com.ichi2.anki.Flag
 import com.ichi2.anki.PreviewerDestination
+import com.ichi2.anki.browser.CardBrowserViewModel.ChangeMultiSelectMode.MultiSelectCause
+import com.ichi2.anki.browser.CardBrowserViewModel.ChangeMultiSelectMode.SingleSelectCause
 import com.ichi2.anki.browser.CardBrowserViewModel.ToggleSelectionState.SELECT_ALL
 import com.ichi2.anki.browser.CardBrowserViewModel.ToggleSelectionState.SELECT_NONE
 import com.ichi2.anki.browser.FindAndReplaceDialogFragment.Companion.ALL_FIELDS_AS_FIELD
@@ -217,21 +219,27 @@ class CardBrowserViewModel(
     // immutable accessor for _selectedRows
     val selectedRows: Set<CardOrNoteId> get() = _selectedRows
 
-    val flowOfIsInMultiSelectMode = MutableStateFlow(savedStateHandle[STATE_MULTISELECT] ?: false)
+    val flowOfMultiSelectModeChanged =
+        MutableStateFlow<ChangeMultiSelectMode>(
+            ChangeMultiSelectMode.fromState(
+                savedStateHandle[STATE_MULTISELECT] ?: false,
+            ),
+        )
 
-    var isInMultiSelectMode
-        get() = flowOfIsInMultiSelectMode.value
-        set(value) {
-            flowOfIsInMultiSelectMode.value = value
-            savedStateHandle[STATE_MULTISELECT] = value
-        }
+    data class RowSelection(
+        val rowId: CardOrNoteId,
+        val topOffset: Int,
+    )
+
+    val isInMultiSelectMode
+        get() = flowOfMultiSelectModeChanged.value.resultedInMultiSelect
 
     private val refreshSelectedRowsFlow = MutableSharedFlow<Unit>()
     val flowOfSelectedRows: Flow<Set<CardOrNoteId>> =
         flowOf(selectedRows)
             .combine(refreshSelectedRowsFlow) { row, _ -> row }
-            .combine(flowOfIsInMultiSelectMode) { rows, multiSelect ->
-                if (!multiSelect) emptySet() else rows
+            .combine(flowOfMultiSelectModeChanged) { rows, multiSelect ->
+                if (!multiSelect.resultedInMultiSelect) emptySet() else rows
             }
 
     val flowOfToggleSelectionState =
@@ -393,6 +401,11 @@ class CardBrowserViewModel(
                 updateActiveColumns(BrowserColumnCollection.load(sharedPrefs(), cardsOrNotes))
             }.launchIn(viewModelScope)
 
+        flowOfMultiSelectModeChanged
+            .onEach {
+                savedStateHandle[STATE_MULTISELECT] = it.resultedInMultiSelect
+            }.launchIn(viewModelScope)
+
         viewModelScope.launch {
             shouldIgnoreAccents = withCol { config.getBool(ConfigKey.Bool.IGNORE_ACCENTS_IN_SEARCH) }
 
@@ -480,21 +493,29 @@ class CardBrowserViewModel(
         Timber.d("manualInit")
     }
 
-    fun handleRowLongPress(id: CardOrNoteId) =
+    fun handleRowLongPress(rowSelection: RowSelection) =
         viewModelScope.launch {
+            val id = rowSelection.rowId
             currentCardId = id.toCardId(cardsOrNotes)
             if (isInMultiSelectMode && lastSelectedId != null) {
                 selectRowsBetween(lastSelectedId!!, id)
             } else {
                 saveScrollingState(id)
-                toggleRowSelection(id)
+                toggleRowSelection(rowSelection)
             }
             focusedRow = id
             rowLongPressFocusFlow.emit(id)
         }
 
-    fun handleCardSelection(cardId: CardId) {
-        createCardSelector(this)(cardId, isFragmented)
+    // on a row tap
+    fun openNoteEditorForCard(cardId: CardId) {
+        currentCardId = cardId
+        if (!isFragmented) {
+            endMultiSelectMode(SingleSelectCause.OpenNoteEditorActivity)
+        }
+        viewModelScope.launch {
+            cardSelectionEventFlow.emit(Unit)
+        }
     }
 
     /** Whether any rows are selected */
@@ -543,7 +564,7 @@ class CardBrowserViewModel(
         return undoableOp { removeNotes(cids = cardIds) }
             .count
             .also {
-                endMultiSelectMode()
+                endMultiSelectMode(SingleSelectCause.Other)
                 refreshSearch()
             }
     }
@@ -578,14 +599,14 @@ class CardBrowserViewModel(
     fun selectAll(): Job? {
         if (!_selectedRows.addAll(cards)) return null
         Timber.d("selecting all: %d item(s)", cards.size)
-        return refreshSelectedRowsFlow()
+        return onAppendSelectedRows(MultiSelectCause.Other)
     }
 
     fun selectNone(): Job? {
         if (_selectedRows.isEmpty()) return null
         Timber.d("selecting none")
         _selectedRows.clear()
-        return refreshSelectedRowsFlow(disableMultiSelectIfEmpty = false)
+        return onRemoveSelectedRows(disableMultiSelectIfEmpty = false, reason = SingleSelectCause.Other)
     }
 
     /**
@@ -599,21 +620,28 @@ class CardBrowserViewModel(
         }
     }
 
-    fun toggleRowSelection(id: CardOrNoteId): Job {
+    fun toggleRowSelection(rowSelection: RowSelection): Job {
+        val id = rowSelection.rowId
+        var result: Job
         if (_selectedRows.contains(id)) {
             _selectedRows.remove(id)
+            result = onRemoveSelectedRows(reason = SingleSelectCause.DeselectRow(rowSelection))
         } else {
             _selectedRows.add(id)
+            result = onAppendSelectedRows(MultiSelectCause.RowSelected(rowSelection))
         }
         Timber.d("toggled selecting id '%s'; %d selected", id, selectedRowCount())
         lastSelectedId = id
-        return refreshSelectedRowsFlow()
+        return result
     }
 
     @VisibleForTesting
-    fun selectRowAtPosition(pos: Int) {
+    fun selectRowAtPosition(
+        pos: Int,
+        rowSelection: RowSelection,
+    ) {
         if (_selectedRows.add(cards[pos])) {
-            refreshSelectedRowsFlow()
+            onAppendSelectedRows(MultiSelectCause.RowSelected(rowSelection))
         }
     }
 
@@ -625,7 +653,7 @@ class CardBrowserViewModel(
         val ids = unvalidatedIds.filter { validCardOrNoteIds.contains(it) }
         Timber.d("selecting %d rows", ids.size)
         if (_selectedRows.addAll(ids)) {
-            refreshSelectedRowsFlow()
+            onAppendSelectedRows(MultiSelectCause.Other)
         }
     }
 
@@ -660,21 +688,30 @@ class CardBrowserViewModel(
         Timber.d("selecting indices between %d and %d", begin, end)
         val cards = (begin..end).map { cards[it] }
         if (_selectedRows.addAll(cards)) {
-            refreshSelectedRowsFlow()
+            onAppendSelectedRows(MultiSelectCause.Other)
         }
     }
 
     /** emits a new value in [flowOfSelectedRows] */
-    private fun refreshSelectedRowsFlow(disableMultiSelectIfEmpty: Boolean = true) =
+    private fun onAppendSelectedRows(reason: MultiSelectCause) =
         viewModelScope.launch {
             if (_selectedRows.any()) {
-                isInMultiSelectMode = true
-            } else if (disableMultiSelectIfEmpty) {
-                isInMultiSelectMode = false
+                flowOfMultiSelectModeChanged.value = reason
             }
             refreshSelectedRowsFlow.emit(Unit)
             Timber.d("refreshed selected rows")
         }
+
+    private fun onRemoveSelectedRows(
+        disableMultiSelectIfEmpty: Boolean = true,
+        reason: SingleSelectCause,
+    ) = viewModelScope.launch {
+        if (!_selectedRows.any() && disableMultiSelectIfEmpty) {
+            flowOfMultiSelectModeChanged.value = reason
+        }
+        refreshSelectedRowsFlow.emit(Unit)
+        Timber.d("refreshed selected rows")
+    }
 
     fun selectedRowCount(): Int = selectedRows.size
 
@@ -890,6 +927,11 @@ class CardBrowserViewModel(
 
     fun getRowAtPosition(position: Int) = cards[position]
 
+    fun getPositionOfId(id: CardOrNoteId) =
+        cards.indexOf(id).let {
+            if (it == -1) null else it
+        }
+
     private suspend fun updateSavedSearches(func: MutableMap<String, String>.() -> Unit): Map<String, String> {
         val filters = savedSearches().toMutableMap()
         func(filters)
@@ -1039,9 +1081,9 @@ class CardBrowserViewModel(
     /**
      * Turn off [Multi-Select Mode][isInMultiSelectMode] and return to normal state
      */
-    fun endMultiSelectMode() {
+    fun endMultiSelectMode(reason: SingleSelectCause) {
         _selectedRows.clear()
-        isInMultiSelectMode = false
+        flowOfMultiSelectModeChanged.value = reason
     }
 
     /**
@@ -1192,17 +1234,6 @@ class CardBrowserViewModel(
         const val STATE_MULTISELECT = "multiselect"
         const val STATE_MULTISELECT_VALUES = "multiselect_values"
 
-        fun createCardSelector(viewModel: CardBrowserViewModel) =
-            { cardId: CardId, fragmented: Boolean ->
-                viewModel.currentCardId = cardId
-                if (!fragmented) {
-                    viewModel.endMultiSelectMode()
-                }
-                viewModel.viewModelScope.launch {
-                    viewModel.cardSelectionEventFlow.emit(Unit)
-                }
-            }
-
         fun factory(
             lastDeckIdRepository: LastDeckIdRepository,
             cacheDir: File,
@@ -1243,6 +1274,43 @@ class CardBrowserViewModel(
         ) : ChangeCardOrder
 
         data object DirectionChange : ChangeCardOrder
+    }
+
+    sealed class ChangeMultiSelectMode {
+        val resultedInMultiSelect: Boolean get() =
+            when (this) {
+                is MultiSelectCause -> true
+                is SingleSelectCause -> false
+            }
+
+        sealed class SingleSelectCause : ChangeMultiSelectMode() {
+            data class DeselectRow(
+                val selection: RowSelection,
+            ) : SingleSelectCause()
+
+            data object OpenNoteEditorActivity : SingleSelectCause()
+
+            data object NavigateBack : SingleSelectCause()
+
+            data object Other : SingleSelectCause()
+        }
+
+        sealed class MultiSelectCause : ChangeMultiSelectMode() {
+            data class RowSelected(
+                val selection: RowSelection,
+            ) : MultiSelectCause()
+
+            data object Other : MultiSelectCause()
+        }
+
+        companion object {
+            fun fromState(inMultiSelectMode: Boolean): ChangeMultiSelectMode =
+                if (inMultiSelectMode) {
+                    MultiSelectCause.Other
+                } else {
+                    SingleSelectCause.Other
+                }
+        }
     }
 
     /** Whether [CardBrowserViewModel] is processing a search */

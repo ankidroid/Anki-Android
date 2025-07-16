@@ -59,6 +59,8 @@ import com.ichi2.anki.browser.BrowserRowCollection
 import com.ichi2.anki.browser.CardBrowserFragment
 import com.ichi2.anki.browser.CardBrowserLaunchOptions
 import com.ichi2.anki.browser.CardBrowserViewModel
+import com.ichi2.anki.browser.CardBrowserViewModel.ChangeMultiSelectMode
+import com.ichi2.anki.browser.CardBrowserViewModel.ChangeMultiSelectMode.SingleSelectCause
 import com.ichi2.anki.browser.CardBrowserViewModel.SearchState
 import com.ichi2.anki.browser.CardBrowserViewModel.SearchState.Initializing
 import com.ichi2.anki.browser.CardBrowserViewModel.SearchState.Searching
@@ -328,7 +330,7 @@ open class CardBrowser :
         object : OnBackPressedCallback(enabled = false) {
             override fun handleOnBackPressed() {
                 Timber.i("back pressed - exiting multiselect")
-                viewModel.endMultiSelectMode()
+                viewModel.endMultiSelectMode(SingleSelectCause.NavigateBack)
             }
         }
 
@@ -564,8 +566,8 @@ open class CardBrowser :
             saveSearchItem?.isVisible = canSave
         }
 
-        fun isInMultiSelectModeChanged(inMultiSelect: Boolean) {
-            if (inMultiSelect) {
+        fun onMultiSelectModeChanged(modeChange: ChangeMultiSelectMode) {
+            if (modeChange.resultedInMultiSelect) {
                 // Turn on Multi-Select Mode so that the user can select multiple cards at once.
                 Timber.d("load multiselect mode")
                 // show title and hide spinner
@@ -617,7 +619,7 @@ open class CardBrowser :
         viewModel.flowOfFilterQuery.launchCollectionInLifecycleScope(::onFilterQueryChanged)
         viewModel.flowOfDeckId.launchCollectionInLifecycleScope(::onDeckIdChanged)
         viewModel.flowOfCanSearch.launchCollectionInLifecycleScope(::onCanSaveChanged)
-        viewModel.flowOfIsInMultiSelectMode.launchCollectionInLifecycleScope(::isInMultiSelectModeChanged)
+        viewModel.flowOfMultiSelectModeChanged.launchCollectionInLifecycleScope(::onMultiSelectModeChanged)
         viewModel.flowOfCardsUpdated.launchCollectionInLifecycleScope(::cardsUpdatedChanged)
         viewModel.flowOfSearchState.launchCollectionInLifecycleScope(::searchStateChanged)
         viewModel.cardSelectionEventFlow.launchCollectionInLifecycleScope(::onSelectedCardUpdated)
@@ -872,7 +874,7 @@ open class CardBrowser :
     @NeedsTest("note edits are saved")
     @NeedsTest("I/O edits are saved")
     fun openNoteEditorForCard(cardId: CardId) {
-        viewModel.handleCardSelection(cardId)
+        viewModel.openNoteEditorForCard(cardId)
     }
 
     /**
@@ -1069,7 +1071,7 @@ open class CardBrowser :
 
     override fun onNavigationPressed() {
         if (viewModel.isInMultiSelectMode) {
-            viewModel.endMultiSelectMode()
+            viewModel.endMultiSelectMode(SingleSelectCause.NavigateBack)
         } else {
             super.onNavigationPressed()
         }
@@ -1206,7 +1208,7 @@ open class CardBrowser :
 
         when (item.itemId) {
             android.R.id.home -> {
-                viewModel.endMultiSelectMode()
+                viewModel.endMultiSelectMode(SingleSelectCause.NavigateBack)
                 return true
             }
             R.id.action_add_note_from_card_browser -> {
@@ -1774,7 +1776,7 @@ open class CardBrowser :
         hideProgressBar()
         // reload whole view
         forceRefreshSearch()
-        viewModel.endMultiSelectMode()
+        viewModel.endMultiSelectMode(SingleSelectCause.Other)
         refreshSubtitle()
         refreshMenuItems()
         invalidateOptionsMenu() // maybe the availability of undo changed

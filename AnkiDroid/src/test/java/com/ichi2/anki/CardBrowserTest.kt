@@ -72,7 +72,9 @@ import com.ichi2.anki.browser.FindAndReplaceDialogFragment.Companion.ARG_SEARCH
 import com.ichi2.anki.browser.FindAndReplaceDialogFragment.Companion.REQUEST_FIND_AND_REPLACE
 import com.ichi2.anki.browser.FindAndReplaceDialogFragment.Companion.TAGS_AS_FIELD
 import com.ichi2.anki.browser.column1
+import com.ichi2.anki.browser.selectRowAtPosition
 import com.ichi2.anki.browser.setColumn
+import com.ichi2.anki.browser.toRowSelection
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.utils.isRunningAsUnitTest
 import com.ichi2.anki.dialogs.DeckSelectionDialog
@@ -1018,23 +1020,6 @@ class CardBrowserTest : RobolectricTest() {
         }
 
     @Test
-    fun checkIfScrollPositionSavedOnLongPress() =
-        runTest {
-            val cardBrowser = getBrowserWithNotes(10)
-            cardBrowser.longClickRowAtPosition(5)
-            assertThat(cardBrowser.viewModel.lastSelectedPosition, equalTo(5))
-        }
-
-    @Test
-    fun checkIfScrollPositionSavedOnTap() =
-        runTest {
-            val cardBrowser = getBrowserWithNotes(10)
-            cardBrowser.longClickRowAtPosition(1)
-            cardBrowser.clickRowAtPosition(5)
-            assertThat(cardBrowser.viewModel.lastSelectedPosition, equalTo(5))
-        }
-
-    @Test
     fun `column spinner positions are set if no preferences exist`() =
         runBlocking {
             // GIVEN: No shared preferences exist for display column selections
@@ -1625,7 +1610,7 @@ fun CardBrowser.selectRowsWithPositions(vararg positions: Int) {
 
 fun CardBrowser.clickRowAtPosition(pos: Int) = cardBrowserFragment.onTap(viewModel.cards[pos])
 
-fun CardBrowser.longClickRowAtPosition(pos: Int) = viewModel.handleRowLongPress(viewModel.cards[pos])
+fun CardBrowser.longClickRowAtPosition(pos: Int) = viewModel.handleRowLongPress(viewModel.cards[pos].toRowSelection())
 
 val CardBrowser.lastDeckId
     get() = viewModel.lastDeckId
