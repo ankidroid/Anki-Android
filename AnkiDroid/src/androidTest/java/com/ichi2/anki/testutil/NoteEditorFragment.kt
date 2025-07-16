@@ -17,9 +17,9 @@
 package com.ichi2.anki.testutil
 
 import androidx.test.core.app.ActivityScenario
+import com.ichi2.anki.NoteEditorActivity
 import com.ichi2.anki.NoteEditorFragment
 import com.ichi2.anki.R
-import com.ichi2.anki.SingleFragmentActivity
 import java.util.concurrent.atomic.AtomicReference
 
 /**
@@ -28,11 +28,11 @@ import java.util.concurrent.atomic.AtomicReference
  * @throws Throwable if any exception is thrown during the execution of the block.
  */
 @Throws(Throwable::class)
-fun ActivityScenario<SingleFragmentActivity>.onNoteEditor(block: (NoteEditorFragment) -> Unit) {
+fun ActivityScenario<NoteEditorActivity>.onNoteEditor(block: (NoteEditorFragment) -> Unit) {
     val wrapped = AtomicReference<Throwable?>(null)
-    this.onActivity { activity: SingleFragmentActivity ->
+    this.onActivity { activity: NoteEditorActivity ->
         try {
-            val editor = activity.getEditor()
+            val editor: NoteEditorFragment = activity.getNoteEditorFragment()
             activity.runOnUiThread {
                 try {
                     block(editor)
@@ -47,8 +47,5 @@ fun ActivityScenario<SingleFragmentActivity>.onNoteEditor(block: (NoteEditorFrag
     wrapped.get()?.let { throw it }
 }
 
-/**
- * Extension function for SingleFragmentActivity to find the NoteEditor fragment
- */
-fun SingleFragmentActivity.getEditor(): NoteEditorFragment =
-    supportFragmentManager.findFragmentById(R.id.fragment_container) as NoteEditorFragment
+fun NoteEditorActivity.getNoteEditorFragment(): NoteEditorFragment =
+    supportFragmentManager.findFragmentById(R.id.note_editor_fragment_frame) as NoteEditorFragment

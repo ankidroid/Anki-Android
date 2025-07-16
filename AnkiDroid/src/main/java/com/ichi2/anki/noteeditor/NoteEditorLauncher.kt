@@ -24,9 +24,9 @@ import android.os.Parcelable
 import androidx.core.os.bundleOf
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.AnkiActivity
+import com.ichi2.anki.NoteEditorActivity
 import com.ichi2.anki.NoteEditorFragment
 import com.ichi2.anki.NoteEditorFragment.Companion.NoteEditorCaller
-import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.browser.CardBrowserViewModel
 import com.ichi2.anki.libanki.CardId
 import com.ichi2.anki.libanki.DeckId
@@ -39,16 +39,19 @@ sealed interface NoteEditorLauncher : Destination {
     override fun toIntent(context: Context): Intent = toIntent(context, action = null)
 
     /**
-     * Generates an intent to open the NoteEditor fragment with the configured parameters.
+     * Generates an intent to open the NoteEditor activity with the configured parameters
      *
      * @param context The context from which the intent is launched.
      * @param action Optional action string for the intent.
-     * @return Intent configured to launch the NoteEditor fragment.
+     * @return Intent configured to launch the NoteEditor  activity.
      */
     fun toIntent(
         context: Context,
         action: String? = null,
-    ) = SingleFragmentActivity.getIntent(context, NoteEditorFragment::class, toBundle(), action)
+    ) = Intent(context, NoteEditorActivity::class.java).apply {
+        putExtras(toBundle())
+        action?.let { this.action = it }
+    }
 
     /**
      * Converts the configuration into a Bundle to pass arguments to the NoteEditor fragment.
@@ -105,16 +108,18 @@ sealed interface NoteEditorLauncher : Destination {
         val inFragmentedActivity: Boolean = false,
     ) : NoteEditorLauncher {
         override fun toBundle(): Bundle {
-            val bundle =
+            val fragmentArgs =
                 bundleOf(
                     NoteEditorFragment.EXTRA_CALLER to NoteEditorCaller.CARDBROWSER_ADD.value,
                     NoteEditorFragment.EXTRA_TEXT_FROM_SEARCH_VIEW to viewModel.searchTerms,
                     NoteEditorFragment.IN_FRAGMENTED_ACTIVITY to inFragmentedActivity,
                 )
             if (viewModel.lastDeckId?.let { id -> id > 0 } == true) {
-                bundle.putLong(NoteEditorFragment.EXTRA_DID, viewModel.lastDeckId!!)
+                fragmentArgs.putLong(NoteEditorFragment.EXTRA_DID, viewModel.lastDeckId!!)
             }
-            return bundle
+            return bundleOf(
+                NoteEditorActivity.FRAGMENT_ARGS_EXTRA to fragmentArgs,
+            )
         }
     }
 
@@ -125,17 +130,23 @@ sealed interface NoteEditorLauncher : Destination {
     data class AddNoteFromReviewer(
         val animation: ActivityTransitionAnimation.Direction? = null,
     ) : NoteEditorLauncher {
-        override fun toBundle(): Bundle =
-            bundleOf(
-                NoteEditorFragment.EXTRA_CALLER to NoteEditorCaller.REVIEWER_ADD.value,
-            ).also { bundle ->
-                animation?.let { animation ->
-                    bundle.putParcelable(
-                        AnkiActivity.FINISH_ANIMATION_EXTRA,
-                        animation as Parcelable,
-                    )
+        override fun toBundle(): Bundle {
+            val fragmentArgs =
+                bundleOf(
+                    NoteEditorFragment.EXTRA_CALLER to NoteEditorCaller.REVIEWER_ADD.value,
+                ).also { bundle ->
+                    animation?.let { animation ->
+                        bundle.putParcelable(
+                            AnkiActivity.FINISH_ANIMATION_EXTRA,
+                            animation as Parcelable,
+                        )
+                    }
                 }
-            }
+
+            return bundleOf(
+                NoteEditorActivity.FRAGMENT_ARGS_EXTRA to fragmentArgs,
+            )
+        }
     }
 
     /**
