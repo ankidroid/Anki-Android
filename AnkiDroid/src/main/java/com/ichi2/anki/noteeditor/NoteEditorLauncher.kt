@@ -24,9 +24,9 @@ import android.os.Parcelable
 import androidx.core.os.bundleOf
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.AnkiActivity
+import com.ichi2.anki.NoteEditor
 import com.ichi2.anki.NoteEditorFragment
 import com.ichi2.anki.NoteEditorFragment.Companion.NoteEditorCaller
-import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.browser.CardBrowserViewModel
 import com.ichi2.anki.libanki.CardId
 import com.ichi2.anki.libanki.DeckId
@@ -39,16 +39,19 @@ sealed interface NoteEditorLauncher : Destination {
     override fun toIntent(context: Context): Intent = toIntent(context, action = null)
 
     /**
-     * Generates an intent to open the NoteEditor fragment with the configured parameters.
+     * Generates an intent to open the NoteEditor activity with the configured parameters
      *
      * @param context The context from which the intent is launched.
      * @param action Optional action string for the intent.
-     * @return Intent configured to launch the NoteEditor fragment.
+     * @return Intent configured to launch the appropriate activity.
      */
     fun toIntent(
         context: Context,
         action: String? = null,
-    ) = SingleFragmentActivity.getIntent(context, NoteEditorFragment::class, toBundle(), action)
+    ) = Intent(context, NoteEditor::class.java).apply {
+        putExtras(toBundle())
+        action?.let { this.action = it }
+    }
 
     /**
      * Converts the configuration into a Bundle to pass arguments to the NoteEditor fragment.
