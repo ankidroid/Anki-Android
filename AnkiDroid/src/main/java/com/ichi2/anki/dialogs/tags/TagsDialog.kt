@@ -73,6 +73,8 @@ class TagsDialog : AnalyticsDialogFragment {
          * Filter notes by tags
          */
         FILTER_BY_TAG,
+
+        CUSTOM_STUDY,
     }
 
     private var type: DialogType? = null
@@ -97,7 +99,17 @@ class TagsDialog : AnalyticsDialogFragment {
             requireNotNull(requireArguments().getStringArrayList(ARG_CHECKED_TAGS)) {
                 "$ARG_CHECKED_TAGS is required"
             }
-        viewModelFactory { initializer { TagsDialogViewModel(noteIds = noteIds, checkedTags = checkedTags) } }
+        val type = BundleCompat.getParcelable(requireArguments(), ARG_DIALOG_TYPE, DialogType::class.java)
+        val isCustomStudying = type != null && type == DialogType.CUSTOM_STUDY
+        viewModelFactory {
+            initializer {
+                TagsDialogViewModel(
+                    noteIds = noteIds,
+                    checkedTags = checkedTags,
+                    isCustomStudying = isCustomStudying,
+                )
+            }
+        }
     }
 
     /**
@@ -177,7 +189,7 @@ class TagsDialog : AnalyticsDialogFragment {
             }
         val optionsGroup =
             view.findViewById<RadioGroup>(R.id.tags_dialog_options_radiogroup).apply {
-                isVisible = type != DialogType.EDIT_TAGS
+                isVisible = type != DialogType.EDIT_TAGS && type != DialogType.CUSTOM_STUDY
                 for (i in 0 until childCount) {
                     getChildAt(i).id = i
                 }
