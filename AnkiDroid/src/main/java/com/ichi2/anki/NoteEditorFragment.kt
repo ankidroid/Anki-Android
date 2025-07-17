@@ -295,7 +295,7 @@ class NoteEditorFragment :
         registerForActivityResult(
             ActivityResultContracts.StartActivityForResult(),
             NoteEditorActivityResultCallback {
-                if (it.resultCode != Activity.RESULT_CANCELED) {
+                if (it.resultCode != RESULT_CANCELED) {
                     changed = true
                 }
             },
@@ -370,7 +370,7 @@ class NoteEditorFragment :
         registerForActivityResult(
             ActivityResultContracts.StartActivityForResult(),
             NoteEditorActivityResultCallback { result ->
-                if (result.resultCode != Activity.RESULT_CANCELED) {
+                if (result.resultCode != RESULT_CANCELED) {
                     changed = true
                     if (!addNote) {
                         reloadRequired = true
@@ -641,7 +641,7 @@ class NoteEditorFragment :
         return try {
             val inputStream = requireContext().contentResolver.openInputStream(uri) ?: return null
 
-            val fileName = ContentResolverUtil.getFileName(requireContext().contentResolver, uri) ?: return null
+            val fileName = ContentResolverUtil.getFileName(requireContext().contentResolver, uri)
             val cacheDir = requireContext().cacheDir
             val destFile = File(cacheDir, fileName)
 
@@ -773,7 +773,7 @@ class NoteEditorFragment :
                             Timber.i("onGalleryClicked")
                             try {
                                 ioEditorLauncher.launch("image/*")
-                            } catch (ex: ActivityNotFoundException) {
+                            } catch (_: ActivityNotFoundException) {
                                 Timber.w("No app found to handle onGalleryClicked request")
                                 activity?.showSnackbar(R.string.activity_start_failed)
                             }
@@ -2278,7 +2278,7 @@ class NoteEditorFragment :
         val pair: Pair<Int, Field>? =
             try {
                 Notetypes.fieldMap(currentlySelectedNotetype!!)[name]
-            } catch (e: Exception) {
+            } catch (_: Exception) {
                 Timber.w("Failed to obtain field '%s'", name)
                 return null
             }
@@ -2618,13 +2618,13 @@ class NoteEditorFragment :
         get() =
             ShortcutGroup(
                 listOf(
-                    shortcut("Ctrl+ENTER", { getString(R.string.save) }),
-                    shortcut("Ctrl+D", { getString(R.string.select_deck) }),
-                    shortcut("Ctrl+L", { getString(R.string.card_template_editor_group) }),
-                    shortcut("Ctrl+N", { getString(R.string.select_note_type) }),
-                    shortcut("Ctrl+Shift+T", { getString(R.string.tag_editor) }),
-                    shortcut("Ctrl+Shift+C", { getString(R.string.multimedia_editor_popup_cloze) }),
-                    shortcut("Ctrl+P", { getString(R.string.card_editor_preview_card) }),
+                    shortcut("Ctrl+ENTER") { getString(R.string.save) },
+                    shortcut("Ctrl+D") { getString(R.string.select_deck) },
+                    shortcut("Ctrl+L") { getString(R.string.card_template_editor_group) },
+                    shortcut("Ctrl+N") { getString(R.string.select_note_type) },
+                    shortcut("Ctrl+Shift+T") { getString(R.string.tag_editor) },
+                    shortcut("Ctrl+Shift+C") { getString(R.string.multimedia_editor_popup_cloze) },
+                    shortcut("Ctrl+P") { getString(R.string.card_editor_preview_card) },
                 ),
                 R.string.note_editor_group,
             )
@@ -2814,7 +2814,7 @@ class NoteEditorFragment :
                 val tmpls =
                     try {
                         newNoteType.templates
-                    } catch (e: Exception) {
+                    } catch (_: Exception) {
                         Timber.w("error in obtaining templates from note type %s", allNoteTypeIds!![pos])
                         return
                     }
@@ -2871,8 +2871,6 @@ class NoteEditorFragment :
         modifyCurrentSelection(TextWrapper(prefix, suffix), textBox)
     }
 
-    private fun hasClozeDeletions(): Boolean = nextClozeIndex > 1
-
     // BUG: This assumes all fields are inserted as: {{cloze:Text}}
     private val nextClozeIndex: Int
         get() {
@@ -2912,7 +2910,7 @@ class NoteEditorFragment :
     }
 
     /**
-     * Whether sticky fields are currently being loaded. In this card, don't consider the text chagned.
+     * Whether sticky fields are currently being loaded. In this card, don't consider the text changed.
      */
     private var loadingStickyFields = false
 
