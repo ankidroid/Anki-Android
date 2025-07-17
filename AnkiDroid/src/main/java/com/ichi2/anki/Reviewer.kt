@@ -52,6 +52,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.view.menu.MenuBuilder
 import androidx.appcompat.widget.ThemeUtils
 import androidx.appcompat.widget.Toolbar
+import androidx.appcompat.widget.TooltipCompat
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.isGone
@@ -864,7 +865,7 @@ open class Reviewer :
                 whiteboard?.reviewerEraserModeIsToggledOn = isEraserMode
 
                 if (getColUnsafe.undoAvailable()) {
-                    //  e.g. Undo Bury, Undo Change Deck, Undo Update Note
+                    // set the undo title to a named action ('Undo Answer Card' etc...)
                     undoIcon.title = getColUnsafe.undoLabel()
                 } else {
                     // In this case, there is no object word for the verb, "Undo",
@@ -874,6 +875,12 @@ open class Reviewer :
                     undoIcon.iconAlpha = Themes.ALPHA_ICON_DISABLED_LIGHT
                 }
             }
+
+            // Set the undo tooltip, only if the icon is shown in the action bar
+            undoIcon.actionView?.let { undoView ->
+                TooltipCompat.setTooltipText(undoView, undoIcon.title)
+            }
+
             menu.findItem(R.id.action_redo)?.apply {
                 if (getColUnsafe.redoAvailable()) {
                     title = getColUnsafe.redoLabel()
