@@ -201,7 +201,7 @@ const val CALLER_KEY = "caller"
  * sides: a question and an answer. Any number of fields can appear on each side. When you add a note to Anki, cards
  * which show that note are generated. Some models generate one card, others generate more than one.
  * Features:
- * - Implements [MainToolbar.OnMenuItemClickListener] to handle toolbar menu item clicks.
+ * - Implements [MenuHost] ([onCreateMenu]/[onPrepareMenu]) to handle toolbar menu item clicks.
  * - Implements [DispatchKeyEventListener] to handle key events.
  *
  * @see [the Anki Desktop manual](https://docs.ankiweb.net/getting-started.html.cards)
@@ -225,9 +225,6 @@ class NoteEditorFragment :
 
     private val getColUnsafe: Collection
         get() = CollectionManager.getColUnsafe()
-
-    private val mainToolbar: androidx.appcompat.widget.Toolbar
-        get() = requireAnkiActivity().findViewById(R.id.toolbar)
 
     /**
      * Flag which forces the calling activity to rebuild it's definition of current card from scratch
@@ -546,11 +543,6 @@ class NoteEditorFragment :
             setIconColor(MaterialColors.getColor(requireContext(), R.attr.toolbarIconColor, 0))
         }
 
-        // Hide mainToolbar since CardBrowser handles the toolbar in fragmented activities.
-        if (inFragmentedActivity) {
-            mainToolbar.visibility = View.GONE
-        }
-
         try {
             setupEditor(getColUnsafe)
         } catch (ex: RuntimeException) {
@@ -569,15 +561,7 @@ class NoteEditorFragment :
         requireActivity().window.navigationBarColor =
             Themes.getColorFromAttr(requireContext(), R.attr.toolbarBackgroundColor)
 
-        // R.id.home is handled in setNavigationOnClickListener
-        // Set a listener for back button clicks in the toolbar
-        mainToolbar.setNavigationOnClickListener {
-            Timber.i("NoteEditor:: Back button on the menu was pressed")
-            requireActivity().onBackPressedDispatcher.onBackPressed()
-        }
-
         // Register this fragment as a menu provider with the activity
-        mainToolbar.addMenuProvider(this)
         (requireActivity() as MenuHost).addMenuProvider(
             this,
             viewLifecycleOwner,
@@ -855,7 +839,7 @@ class NoteEditorFragment :
         setNote(editorNote, FieldChangeType.onActivityCreation(shouldReplaceNewlines()))
         if (addNote) {
             noteTypeSpinner!!.onItemSelectedListener = SetNoteTypeListener()
-            mainToolbar.setTitle(R.string.menu_add)
+            requireAnkiActivity().setToolbarTitle(R.string.menu_add)
             // set information transferred by intent
             var contents: String? = null
             val tags = requireArguments().getStringArray(EXTRA_TAGS)
@@ -898,7 +882,7 @@ class NoteEditorFragment :
             if (caller == NoteEditorCaller.ADD_IMAGE) lifecycleScope.launch { handleImageIntent(intent) }
         } else {
             noteTypeSpinner!!.onItemSelectedListener = EditNoteTypeListener()
-            mainToolbar.setTitle(R.string.cardeditor_title_edit_card)
+            requireAnkiActivity().setTitle(R.string.cardeditor_title_edit_card)
         }
         requireView().findViewById<View>(R.id.CardEditorTagButton).setOnClickListener {
             Timber.i("NoteEditor:: Tags button pressed... opening tags editor")
@@ -2799,7 +2783,7 @@ class NoteEditorFragment :
             // If a new column was selected then change the key used to map from mCards to the column TextView
             // Timber.i("NoteEditor:: onItemSelected() fired on mNoteTypeSpinner");
             // In case the type is changed while adding the card, the menu options need to be invalidated
-            mainToolbar.invalidateMenu()
+            requireActivity().invalidateMenu()
             changeNoteType(allNoteTypeIds!![pos])
         }
 

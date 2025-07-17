@@ -47,6 +47,9 @@ class NoteEditorActivity :
 
     lateinit var noteEditorFragment: NoteEditorFragment
 
+    private val mainToolbar: androidx.appcompat.widget.Toolbar
+        get() = findViewById(R.id.toolbar)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
             return
@@ -116,6 +119,15 @@ class NoteEditorActivity :
             }
         } else {
             noteEditorFragment = existingFragment as NoteEditorFragment
+        }
+
+        enableToolbar()
+
+        // R.id.home is handled in setNavigationOnClickListener
+        // Set a listener for back button clicks in the toolbar
+        mainToolbar.setNavigationOnClickListener {
+            Timber.i("NoteEditor:: Back button on the menu was pressed")
+            onBackPressedDispatcher.onBackPressed()
         }
 
         startLoadingCollection()

@@ -211,6 +211,15 @@ open class AnkiActivity :
         supportActionBar?.title = title
     }
 
+    /**
+     * Sets the title of the toolbar (support action bar) for the activity.
+     *
+     * @param title The new title to be set for the toolbar.
+     */
+    open fun setToolbarTitle(
+        @StringRes titleRes: Int,
+    ) = setToolbarTitle(getString(titleRes))
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
             Timber.i("Home button pressed")
