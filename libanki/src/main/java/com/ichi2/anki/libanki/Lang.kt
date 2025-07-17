@@ -23,3 +23,6 @@ import com.ichi2.anki.libanki.utils.LibAnkiAlias
  */
 @LibAnkiAlias("without_unicode_isolation")
 fun withoutUnicodeIsolation(s: String): String = s.replace("\u2068", "").replace("\u2069", "")
+
+@LibAnkiAlias("with_collapsed_whitespace")
+fun withCollapsedWhitespace(s: String): String = s.replace("\\s+", " ")

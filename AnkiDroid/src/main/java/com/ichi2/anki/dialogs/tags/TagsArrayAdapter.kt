@@ -44,6 +44,7 @@ import java.util.TreeSet
  */
 class TagsArrayAdapter(
     private val tags: TagsList,
+    private val onSelectionUpdate: () -> Unit,
 ) : RecyclerView.Adapter<TagsArrayAdapter.ViewHolder>(),
     Filterable {
     class ViewHolder(
@@ -256,6 +257,7 @@ class TagsArrayAdapter(
                 INDETERMINATE -> tags.setIndeterminate(vh.node.tag)
             }
             vh.node.onCheckStateChanged(tags)
+            onSelectionUpdate()
         }
         // clicking other parts toggles the expansion state, or the checkbox (for leaf)
         vh.itemView.setOnClickListener {
