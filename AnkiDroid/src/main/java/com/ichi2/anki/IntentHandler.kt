@@ -30,6 +30,7 @@ import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.utils.trimToLength
 import com.ichi2.anki.dialogs.DialogHandler.Companion.storeMessage
 import com.ichi2.anki.dialogs.DialogHandlerMessage
+import com.ichi2.anki.dialogs.requireDeckPickerOrShowError
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.servicelayer.ScopedStorageService
@@ -400,18 +401,7 @@ class IntentHandler : AbstractIntentHandler() {
             ) {
             override fun handleAsyncMessage(activity: AnkiActivity) {
                 // we may be called via any AnkiActivity but sync is a DeckPicker thing
-                if (activity !is DeckPicker) {
-                    showError(
-                        activity,
-                        activity.getString(R.string.something_wrong),
-                        ClassCastException(activity.javaClass.simpleName + " is not " + DeckPicker::class.java.simpleName),
-                        true,
-                    )
-                    return
-                }
-                // let's be clear about the type now that we've checked
-                val deckPicker = activity
-
+                val deckPicker = activity.requireDeckPickerOrShowError() ?: return
                 val preferences = deckPicker.sharedPrefs()
                 val res = deckPicker.resources
                 val hkey = preferences.getString("hkey", "")
