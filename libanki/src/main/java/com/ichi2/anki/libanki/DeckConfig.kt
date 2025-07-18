@@ -18,9 +18,13 @@ package com.ichi2.anki.libanki
 
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.common.json.JSONObjectHolder
-import com.ichi2.anki.libanki.utils.set
+import com.ichi2.anki.common.json.jsonArray
+import com.ichi2.anki.common.json.jsonBoolean
+import com.ichi2.anki.common.json.jsonDouble
+import com.ichi2.anki.common.json.jsonInt
+import com.ichi2.anki.common.json.jsonLong
+import com.ichi2.anki.common.json.jsonString
 import org.intellij.lang.annotations.Language
-import org.json.JSONArray
 import org.json.JSONObject
 import timber.log.Timber
 
@@ -30,8 +34,7 @@ import timber.log.Timber
  * The [jsonObject] parameter will be edited. Create a copy first if you need not to modify the parameter.
  *
  */
-@JvmInline
-value class DeckConfig(
+data class DeckConfig(
     @VisibleForTesting
     override val jsonObject: JSONObject,
 ) : JSONObjectHolder {
@@ -39,68 +42,35 @@ value class DeckConfig(
         @Language("JSON") json: String,
     ) : this(JSONObject(json))
 
-    var conf: Long
-        get() = jsonObject.getLong("conf")
-        set(value) {
-            jsonObject.put("conf", value)
-        }
+    var conf by jsonLong("cong")
 
-    var id: DeckConfigId
-        get() = jsonObject.getLong("id")
-        set(value) {
-            jsonObject.put("id", value)
-        }
+    var id: DeckConfigId by jsonLong("id")
 
-    var name: String
-        get() = jsonObject.getString("name")
-        set(value) {
-            jsonObject.put("name", value)
-        }
+    var name by jsonString("name")
 
-    val waitForAudio: Boolean
-        get() = jsonObject.optBoolean("waitForAudio", true)
+    val waitForAudio by jsonBoolean("waitForAudio", defaultValue = true)
 
     @VisibleForTesting(VisibleForTesting.NONE)
     fun removeAnswerAction() {
         jsonObject.remove(ANSWER_ACTION)
     }
 
-    val stopTimerOnAnswer: Boolean
-        get() = jsonObject.getBoolean("stopTimerOnAnswer")
+    val stopTimerOnAnswer by jsonBoolean("stopTimerOnAnswer")
 
-    var secondsToShowQuestion: Double
-        get() = jsonObject.optDouble("secondsToShowQuestion", 0.0)
-        set(value) {
-            jsonObject.set("secondsToShowQuestion", value)
-        }
+    var secondsToShowQuestion by jsonDouble("secondsToShowQuestion", defaultValue = 0.0)
 
-    var secondsToShowAnswer: Double
-        get() = jsonObject.optDouble("secondsToShowAnswer", 0.0)
-        set(value) {
-            jsonObject.set("secondsToShowAnswer", value)
-        }
+    var secondsToShowAnswer by jsonDouble("secondsToShowAnswer", defaultValue = 0.0)
 
     /**
      * Time limit for answering in milliseconds.
      */
-    val maxTaken: Int
-        get() = jsonObject.getInt("maxTaken")
+    val maxTaken by jsonInt("maxTaken")
 
-    var autoplay: Boolean
-        get() = jsonObject.optBoolean("autoplay", true)
+    @set:VisibleForTesting(VisibleForTesting.NONE)
+    var autoplay by jsonBoolean("autoplay", defaultValue = true)
 
-        @VisibleForTesting(VisibleForTesting.NONE)
-        set(value) {
-            jsonObject.put("autoplay", value)
-        }
-
-    var replayq: Boolean
-        get() = jsonObject.getBoolean("replayq")
-
-        @VisibleForTesting(VisibleForTesting.NONE)
-        set(value) {
-            jsonObject.put("replayq", value)
-        }
+    @set:VisibleForTesting(VisibleForTesting.NONE)
+    var replayq by jsonBoolean("replayq")
 
     val timer: Boolean
         get() =
@@ -121,83 +91,48 @@ value class DeckConfig(
     val new: New
         get() = New(jsonObject.getJSONObject("new"))
 
-    @JvmInline
-    value class New(
+    data class New(
         override val jsonObject: JSONObject,
     ) : JSONObjectHolder {
-        var perDay: Int
-            get() = jsonObject.getInt("perDay")
-            set(value) {
-                jsonObject.put("perDay", value)
-            }
+        var perDay by jsonInt("perDay")
 
         @VisibleForTesting
-        var delays: JSONArray
-            get() = jsonObject.getJSONArray("delays")
-            set(value) {
-                jsonObject.put("delays", value)
-            }
+        var delays by jsonArray("delays")
 
         /**
          * Whether sibling of reviewed cards get buried.
          */
         @VisibleForTesting
-        var bury: Boolean
-            get() = jsonObject.getBoolean("bury")
-            set(value) {
-                jsonObject.put("bury", value)
-            }
+        var bury by jsonBoolean("bury")
     }
 
     val lapse: Lapse
         get() = Lapse(jsonObject.getJSONObject("lapse"))
 
-    @JvmInline
-    value class Lapse(
+    data class Lapse(
         override val jsonObject: JSONObject,
     ) : JSONObjectHolder {
         @VisibleForTesting
-        var delays: JSONArray
-            get() = jsonObject.getJSONArray("delays")
-            set(value) {
-                jsonObject.put("delays", value)
-            }
+        var delays by jsonArray("delays")
 
         @VisibleForTesting
-        var leechAction: Int
-            get() = jsonObject.getInt("leechAction")
-            set(value) {
-                jsonObject.put("leechAction", value)
-            }
+        var leechAction by jsonInt("leechAction")
 
         @VisibleForTesting
-        var mult: Double
-            get() = jsonObject.getDouble("mult")
-            set(value) {
-                jsonObject.put("mult", value)
-            }
+        var mult by jsonDouble("mult")
     }
 
     val rev: Rev
         get() = Rev(jsonObject.getJSONObject("rev"))
 
-    @JvmInline
-    value class Rev(
+    data class Rev(
         override val jsonObject: JSONObject,
     ) : JSONObjectHolder {
         @VisibleForTesting
-        var delays: JSONArray
-            get() = jsonObject.getJSONArray("delays")
-            set(value) {
-                jsonObject.put("delays", value)
-            }
+        var delays by jsonArray("delays")
 
         @VisibleForTesting
-        var hardFactor: Int
-            get() = jsonObject.getInt("hardFactor")
-            set(value) {
-                jsonObject.put("hardFactor", value)
-            }
+        var hardFactor: Int by jsonInt("hardFactor")
     }
 
     companion object {

@@ -17,6 +17,8 @@
 package com.ichi2.anki.libanki
 
 import com.ichi2.anki.common.json.JSONObjectHolder
+import com.ichi2.anki.common.json.jsonInt
+import com.ichi2.anki.common.json.jsonString
 import com.ichi2.anki.common.utils.ext.deepClone
 import net.ankiweb.rsdroid.RustCleanup
 import org.json.JSONObject
@@ -55,8 +57,7 @@ import org.json.JSONObject
  * ## Links
  * * [Anki Manual](https://docs.ankiweb.net/templates/intro.html)
  */
-@JvmInline
-value class CardTemplate(
+data class CardTemplate(
     override val jsonObject: JSONObject,
 ) : JSONObjectHolder {
     /**
@@ -64,15 +65,10 @@ value class CardTemplate(
      *
      * By default, Anki uses `Card 1`
      */
-    var name: String
-        get() = jsonObject.getString("name")
-        set(value) {
-            jsonObject.put("name", value)
-        }
+    var name by jsonString("name")
 
     /** The 0-based ordinal of the template */
-    val ord: Int
-        get() = jsonObject.getInt("ord")
+    val ord by jsonInt("ord")
 
     /**
      * Format string for the question when reviewing
@@ -83,11 +79,7 @@ value class CardTemplate(
      * {{Front}}
      * ```
      */
-    var qfmt: String
-        get() = jsonObject.getString("qfmt")
-        set(value) {
-            jsonObject.put("qfmt", value)
-        }
+    var qfmt by jsonString("qfmt")
 
     /**
      * Format string for the answer when reviewing
@@ -101,29 +93,17 @@ value class CardTemplate(
      * {{Back}}
      * ```
      */
-    var afmt: String
-        get() = jsonObject.getString("afmt")
-        set(value) {
-            jsonObject.put("afmt", value)
-        }
+    var afmt by jsonString("afmt")
 
     /**
      * Format string for the question of the card **when displayed in Browse**
      */
-    var bqfmt: String
-        get() = jsonObject.getString("bqfmt")
-        set(value) {
-            jsonObject.put("bqfmt", value)
-        }
+    var bqfmt by jsonString("bqfmt")
 
     /**
      * Format string for the answer of the card **when displayed in Browse**
      */
-    var bafmt: String
-        get() = jsonObject.getString("bafmt")
-        set(value) {
-            jsonObject.put("bafmt", value)
-        }
+    var bafmt by jsonString("bafmt")
 
     /** @see ord */
     @RustCleanup("Check JSONObject.NULL")
