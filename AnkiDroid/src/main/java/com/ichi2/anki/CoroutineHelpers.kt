@@ -32,12 +32,17 @@ import androidx.lifecycle.viewModelScope
 import anki.collection.Progress
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.CrashReportData.Companion.throwIfDialogUnusable
+import com.ichi2.anki.CrashReportData.Companion.toCrashReportData
+import com.ichi2.anki.common.annotations.UseContextParameter
 import com.ichi2.anki.exception.StorageAccessException
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.utils.create
 import com.ichi2.utils.message
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
+import com.ichi2.utils.setupEnterKeyHandler
 import com.ichi2.utils.show
 import com.ichi2.utils.title
 import kotlinx.coroutines.CancellableContinuation
@@ -161,7 +166,7 @@ suspend fun <T> FragmentActivity.runCatching(
     } catch (exc: Exception) {
         if (skipCrashReport?.invoke(exc) == true) {
             Timber.i("Showing error dialog but not sending a crash report.")
-            showError(this, exc.localizedMessage!!, exc, false, enableEnterKeyHandler = true)
+            showError(exc.localizedMessage!!, exc.toCrashReportData(this, reportException = false))
             return null
         }
         when (exc) {
@@ -175,17 +180,17 @@ suspend fun <T> FragmentActivity.runCatching(
             is BackendNetworkException, is BackendSyncException, is StorageAccessException -> {
                 // these exceptions do not generate worthwhile crash reports
                 Timber.i("Showing error dialog but not sending a crash report.")
-                showError(this, exc.localizedMessage!!, exc, false, enableEnterKeyHandler = true)
+                showError(exc.localizedMessage!!, exc.toCrashReportData(this, reportException = false))
             }
             is BackendException -> {
                 Timber.e(exc, errorMessage)
                 if (callerTrace != null) Timber.e(callerTrace)
-                showError(this, exc.localizedMessage!!, exc)
+                showError(exc.localizedMessage!!, exc.toCrashReportData(this))
             }
             else -> {
                 Timber.e(exc, errorMessage)
                 if (callerTrace != null) Timber.e(callerTrace)
-                showError(this, exc.toString(), exc)
+                showError(exc)
             }
         }
     }
@@ -215,11 +220,11 @@ fun getCoroutineExceptionHandler(
         }
         is BackendException -> {
             Timber.e(throwable, errorMessage)
-            showError(activity, throwable.localizedMessage!!, throwable)
+            activity.showError(throwable.localizedMessage!!, throwable.toCrashReportData(activity))
         }
         else -> {
             Timber.e(throwable, errorMessage)
-            showError(activity, throwable.toString(), throwable)
+            activity.showError(throwable)
         }
     }
 }
@@ -262,57 +267,40 @@ fun Fragment.launchCatchingTask(
         requireActivity().runCatching(errorMessage, skipCrashReport = skipCrashReport) { block() }
     }
 
-fun showError(
-    context: Context,
-    msg: String,
+/**
+ * Displays an error dialog with title 'Error' and provided [message].
+ * May report the error when the dialog is dismissed
+ *
+ * @param message Message to display to user
+ * @param crashReportData Crash report data which may be reported when the dialog is dismissed.
+ */
+fun Context.showError(
+    message: String,
+    crashReportData: CrashReportData?,
 ) {
-    if (throwOnShowError) throw IllegalStateException("throwOnShowError: $msg")
-    Timber.i("Error dialog displayed")
-    try {
-        AlertDialog.Builder(context).show {
-            title(R.string.vague_error)
-            message(text = msg)
-            positiveButton(R.string.dialog_ok)
-        }
-    } catch (ex: BadTokenException) {
-        // issue 12718: activity provided by `context` was not running
-        Timber.w(ex, "unable to display error dialog")
-    }
-}
+    crashReportData.throwIfDialogUnusable(message)
 
-fun showError(
-    context: Context,
-    msg: String,
-    exception: Throwable,
-    crashReport: Boolean = true,
-    enableEnterKeyHandler: Boolean = false,
-) {
-    if (throwOnShowError) throw IllegalStateException("throwOnShowError: $msg", exception)
     Timber.i("Error dialog displayed")
+
     try {
-        AlertDialog.Builder(context).show(enableEnterKeyHandler = enableEnterKeyHandler) {
-            title(R.string.vague_error)
-            message(text = msg)
-            positiveButton(R.string.dialog_ok)
-            if (crashReport) {
-                Timber.w("sending crash report on close")
-                setOnDismissListener {
-                    CrashReportService.sendExceptionReport(
-                        exception,
-                        origin = context::class.java.simpleName,
-                    )
+        AlertDialog
+            .Builder(this)
+            .create {
+                title(R.string.vague_error)
+                message(text = message)
+                positiveButton(R.string.dialog_ok)
+                if (crashReportData?.reportException == true) {
+                    Timber.w("sending crash report on close")
+                    setOnDismissListener { crashReportData.sendCrashReport() }
                 }
+            }.apply {
+                setupEnterKeyHandler()
+                show()
             }
-        }
     } catch (ex: BadTokenException) {
         // issue 12718: activity provided by `context` was not running
         Timber.w(ex, "unable to display error dialog")
-        if (crashReport) {
-            CrashReportService.sendExceptionReport(
-                exception,
-                origin = context::class.java.simpleName,
-            )
-        }
+        crashReportData?.sendCrashReport()
     }
 }
 
@@ -592,4 +580,58 @@ suspend fun AnkiActivity.userAcceptsSchemaChange(): Boolean {
 fun <T> CancellableContinuation<T>.ensureActive() {
     // we can't use .isActive here, or the exception would take precedence over a resumed exception
     if (isCancelled) throw CancellationException()
+}
+
+/**
+ * Displays an error dialog with title 'Error' and [throwable] data.
+ * May report the error when the dialog is dismissed
+ *
+ * @param throwable The exception to display to the user
+ * @param reportException If `true`, report the exception when the dialog is dismissed
+ */
+private fun Activity.showError(
+    throwable: Throwable,
+    reportException: Boolean = true,
+) = showError(throwable.toString(), throwable.toCrashReportData(context = this, reportException))
+
+data class CrashReportData(
+    val exception: Throwable,
+    val origin: String,
+    val reportException: Boolean,
+) {
+    fun sendCrashReport() {
+        if (!reportException) return
+        CrashReportService.sendExceptionReport(exception, origin)
+    }
+
+    companion object {
+        @UseContextParameter("context")
+        fun Throwable.toCrashReportData(
+            context: Context,
+            reportException: Boolean = true,
+        ) = CrashReportData(
+            exception = this,
+            // Appears as 'ManageNotetypes'
+            origin = context::class.java.simpleName,
+            reportException = reportException,
+        )
+
+        /**
+         * If [throwOnShowError] is set, throws the exception from the crash report data
+         *
+         * So unit tests can fail if an unexpected exception is thrown
+         *
+         * Note: this occurs regardless of the status of [reportException]
+         *
+         * @param message The message of the thrown [IllegalStateException]
+         * @throws IllegalStateException with [exception] as an innerException if the receiver
+         *  is non-null
+         */
+        fun CrashReportData?.throwIfDialogUnusable(message: String) {
+            if (!throwOnShowError) return
+            val message = "throwOnShowError: $message"
+            if (this == null) throw IllegalStateException(message)
+            throw IllegalStateException(message, exception)
+        }
+    }
 }
