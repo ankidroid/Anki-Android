@@ -22,6 +22,11 @@ import anki.notetypes.StockNotetype.OriginalStockKind.ORIGINAL_STOCK_KIND_IMAGE_
 import anki.notetypes.StockNotetype.OriginalStockKind.ORIGINAL_STOCK_KIND_UNKNOWN_VALUE
 import com.ichi2.anki.common.json.JSONObjectHolder
 import com.ichi2.anki.common.json.NamedObject
+import com.ichi2.anki.common.json.jsonArray
+import com.ichi2.anki.common.json.jsonBoolean
+import com.ichi2.anki.common.json.jsonInt
+import com.ichi2.anki.common.json.jsonLong
+import com.ichi2.anki.common.json.jsonString
 import com.ichi2.anki.common.utils.ext.deepClone
 import com.ichi2.anki.common.utils.ext.toStringList
 import com.ichi2.anki.libanki.Consts.DEFAULT_DECK_ID
@@ -38,8 +43,7 @@ import org.json.JSONObject
  * `Models.save(this, true)` should be called. However, you should do the change in batch and change only when all are d
  * one, because recomputing the list of card is an expensive operation.
  */
-@JvmInline
-value class NotetypeJson(
+data class NotetypeJson(
     @VisibleForTesting
     override val jsonObject: JSONObject,
 ) : JSONObjectHolder,
@@ -87,11 +91,7 @@ value class NotetypeJson(
     /**
      * The css in common of all card types of this note type.
      */
-    var css: String
-        get() = jsonObject.getString("css")
-        set(value) {
-            jsonObject.put("css", value)
-        }
+    var css by jsonString("css")
 
     /**
      * The preamble for the LaTeX code used in this note type.
@@ -100,21 +100,13 @@ value class NotetypeJson(
      * after each change of this value all LaTeX content must be recompiled,
      * which requires a desktop with LaTeX installed.
      */
-    var latexPre: String
-        get() = jsonObject.getString("latexPre")
-        set(value) {
-            jsonObject.put("latexPre", value)
-        }
+    var latexPre by jsonString("latexPre")
 
     /**
      * The trailer of the LaTeX code used in this note type.
      * @see latexPre to understand context.
      */
-    var latexPost: String
-        get() = jsonObject.getString("latexPost")
-        set(value) {
-            jsonObject.put("latexPost", value)
-        }
+    var latexPost by jsonString("latexPost")
 
     /**
      * @param sfld Fields of a note of this note type
@@ -165,20 +157,12 @@ value class NotetypeJson(
      * That is, if you import cards using a note type with the same id, it's almost certainly
      * originally the same note type, even if potentially modified since.
      */
-    var id: NoteTypeId
-        get() = jsonObject.getLong("id")
-        set(value) {
-            jsonObject.put("id", value)
-        }
+    var id: NoteTypeId by jsonLong("id")
 
     /**
      * The name of the note type.
      */
-    override var name: String
-        get() = jsonObject.getString("name")
-        set(value) {
-            jsonObject.put("name", value)
-        }
+    override var name by jsonString("name")
 
     /**
      * One of [anki.notetypes.StockNotetype.OriginalStockKind].
@@ -188,8 +172,7 @@ value class NotetypeJson(
      * Can be used to check whether a note type is a image occlusion, or
      * to reset the note type to its default value.
      */
-    val originalStockKind: Int
-        get() = jsonObject.optInt("originalStockKind", ORIGINAL_STOCK_KIND_UNKNOWN_VALUE)
+    val originalStockKind by jsonInt("originalStockKind", defaultValue = ORIGINAL_STOCK_KIND_UNKNOWN_VALUE)
 
     val isImageOcclusion: Boolean
         get() =
@@ -201,11 +184,7 @@ value class NotetypeJson(
 
     /**
      * In the card browser, the field noted as "sort field" is the [sortf]-th field. 0-based. */
-    var sortf: Int
-        get() = jsonObject.getInt("sortf")
-        set(value) {
-            jsonObject.put("sortf", value)
-        }
+    var sortf by jsonInt("sortf")
 
     /**
      * The type of the note type. Can be normal, cloze, or unknown.
@@ -221,22 +200,14 @@ value class NotetypeJson(
      * sed to decide whether syncing the note type is needed and
      * to resolve conflict when the note type was modified locally and remotely.
      */
-    var mod: Long
-        get() = jsonObject.getLong("mod")
-        set(value) {
-            jsonObject.put("mod", value)
-        }
+    var mod by jsonLong("mod")
 
     /**
      * -1 if the note type was modified locally since last sync.
      * Otherwise the "usn" value provided by the remote server.
      * Used to know whether this value need to be synced.
      */
-    var usn: Int
-        get() = jsonObject.getInt("usn")
-        set(value) {
-            jsonObject.put("usn", value)
-        }
+    var usn by jsonInt("usn")
 
     /**
      * Whether latex must be generated as SVG. If false, it's first generated as PDF.
@@ -245,8 +216,7 @@ value class NotetypeJson(
      * It can't be edited in AnkiDroid because that would require recompiling all LaTeX values
      * which can only be done on a computer with LaTeX installed.
      */
-    val latexsvg: Boolean
-        get() = jsonObject.optBoolean("latexsvg", false)
+    val latexsvg by jsonBoolean("latexsvg", defaultValue = false)
 
     /**
      * Defines the requirements for generating cards (for [standard note types][Consts.MODEL_STD])
@@ -282,11 +252,7 @@ value class NotetypeJson(
         "req is no longer used. Exists for backwards compatibility:" +
             "https://forums.ankiweb.net/t/is-req-still-used-or-present/9977",
     )
-    var req: JSONArray
-        get() = jsonObject.getJSONArray("req")
-        set(value) {
-            jsonObject.put("req", value)
-        }
+    var req: JSONArray by jsonArray("req")
 
     override fun toString(): String = jsonObject.toString()
 }
