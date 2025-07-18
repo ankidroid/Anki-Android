@@ -21,6 +21,7 @@ import android.os.Message
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.CollectionLoadingErrorDialog
+import com.ichi2.anki.CrashReportData.Companion.toCrashReportData
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.IntentHandler
 import com.ichi2.anki.OneWaySyncDialog
@@ -158,9 +159,11 @@ fun AnkiActivity.requireDeckPickerOrShowError(): DeckPicker? {
     if (this is DeckPicker) return this
 
     showError(
-        this,
-        getString(R.string.something_wrong),
-        ClassCastException(this.javaClass.simpleName + " is not " + DeckPicker::class.java.simpleName),
+        message = getString(R.string.something_wrong),
+        crashReportData =
+            ClassCastException(
+                this.javaClass.simpleName + " is not " + DeckPicker::class.java.simpleName,
+            ).toCrashReportData(this),
     )
     return null
 }

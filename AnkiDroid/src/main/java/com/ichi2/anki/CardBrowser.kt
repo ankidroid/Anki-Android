@@ -599,7 +599,7 @@ open class CardBrowser :
                 }
                 SearchState.Completed -> redrawAfterSearch()
                 is SearchState.Error -> {
-                    showError(this, searchState.error)
+                    showError(searchState.error, crashReportData = null)
                 }
             }
         }
