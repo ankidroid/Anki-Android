@@ -19,6 +19,7 @@ package com.ichi2.anki.libanki
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.common.json.JSONObjectHolder
 import com.ichi2.anki.libanki.utils.set
+import org.intellij.lang.annotations.Language
 import org.json.JSONArray
 import org.json.JSONObject
 import timber.log.Timber
@@ -34,9 +35,9 @@ value class DeckConfig(
     @VisibleForTesting
     override val jsonObject: JSONObject,
 ) : JSONObjectHolder {
-    constructor(s: String) : this(
-        JSONObject(s),
-    )
+    constructor(
+        @Language("JSON") json: String,
+    ) : this(JSONObject(json))
 
     var conf: Long
         get() = jsonObject.getLong("conf")

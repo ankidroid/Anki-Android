@@ -25,6 +25,7 @@ import com.ichi2.anki.common.json.NamedObject
 import com.ichi2.anki.common.utils.ext.deepClone
 import com.ichi2.anki.common.utils.ext.toStringList
 import com.ichi2.anki.libanki.Consts.DEFAULT_DECK_ID
+import org.intellij.lang.annotations.Language
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
@@ -46,7 +47,9 @@ value class NotetypeJson(
     /**
      * Creates a model object from json string
      */
-    constructor(json: String) : this(JSONObject(json))
+    constructor(
+        @Language("JSON") json: String,
+    ) : this(JSONObject(json))
 
     @CheckResult
     fun deepClone() = NotetypeJson(jsonObject.deepClone())
