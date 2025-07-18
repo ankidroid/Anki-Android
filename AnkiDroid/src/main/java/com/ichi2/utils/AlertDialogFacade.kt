@@ -382,6 +382,8 @@ val AlertDialog.positiveButton: Button
     get() = getButton(DialogInterface.BUTTON_POSITIVE)
 val AlertDialog.negativeButton: Button
     get() = getButton(DialogInterface.BUTTON_NEGATIVE)
+val AlertDialog.neutralButton: Button?
+    get() = getButton(DialogInterface.BUTTON_NEUTRAL)
 
 /**
  * Extension function for AlertDialog.Builder to set a list of items.

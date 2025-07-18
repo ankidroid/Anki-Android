@@ -20,10 +20,12 @@ import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.content.DialogInterface
+import android.net.Uri
 import android.view.WindowManager
 import android.view.WindowManager.BadTokenException
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModel
@@ -38,9 +40,11 @@ import com.ichi2.anki.common.annotations.UseContextParameter
 import com.ichi2.anki.exception.StorageAccessException
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.utils.openUrl
 import com.ichi2.utils.create
 import com.ichi2.utils.message
 import com.ichi2.utils.negativeButton
+import com.ichi2.utils.neutralButton
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.setupEnterKeyHandler
 import com.ichi2.utils.show
@@ -289,11 +293,18 @@ fun Context.showError(
                 title(R.string.vague_error)
                 message(text = message)
                 positiveButton(R.string.dialog_ok)
+                if (crashReportData?.helpLink != null) {
+                    neutralButton(R.string.help)
+                }
                 if (crashReportData?.reportException == true) {
                     Timber.w("sending crash report on close")
                     setOnDismissListener { crashReportData.sendCrashReport() }
                 }
             }.apply {
+                // setup the help link. Link is non-null if neutralButton exists.
+                setOnShowListener {
+                    neutralButton?.setOnClickListener { openUrl(crashReportData!!.helpLink!!) }
+                }
                 setupEnterKeyHandler()
                 show()
             }
@@ -599,6 +610,22 @@ data class CrashReportData(
     val origin: String,
     val reportException: Boolean,
 ) {
+    /**
+     * Optional link to a help page regarding the error
+     *
+     * For example: https://docs.ankiweb.net/templates/errors.html#no-cloze-filter-on-cloze-notetype
+     */
+    val helpLink: Uri?
+        get() =
+            try {
+                (exception as? BackendException)
+                    ?.getDesktopHelpPageLink(CollectionManager.getBackend())
+                    ?.toUri()
+            } catch (e: Exception) {
+                Timber.w(e)
+                null
+            }
+
     fun sendCrashReport() {
         if (!reportException) return
         CrashReportService.sendExceptionReport(exception, origin)
