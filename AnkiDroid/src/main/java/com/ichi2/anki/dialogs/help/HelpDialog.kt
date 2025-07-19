@@ -38,6 +38,7 @@ import com.ichi2.anki.dialogs.help.HelpItem.Action.OpenUrl
 import com.ichi2.anki.dialogs.help.HelpItem.Action.OpenUrlResource
 import com.ichi2.anki.dialogs.help.HelpItem.Action.Rate
 import com.ichi2.anki.dialogs.help.HelpItem.Action.SendReport
+import com.ichi2.anki.utils.ext.setCompoundDrawablesRelativeWithIntrinsicBoundsKt
 import com.ichi2.utils.createAndApply
 import com.ichi2.utils.customView
 import com.ichi2.utils.dp
@@ -200,12 +201,7 @@ class HelpPageFragment : Fragment(R.layout.fragment_help_page) {
                 ) as TextView
             contentRow.apply {
                 setText(menuItem.titleResId)
-                setCompoundDrawablesRelativeWithIntrinsicBounds(
-                    menuItem.iconResId,
-                    0,
-                    0,
-                    0,
-                )
+                setCompoundDrawablesRelativeWithIntrinsicBoundsKt(start = menuItem.iconResId)
                 compoundDrawablePadding = 16.dp.toPx(requireContext())
                 setOnClickListener {
                     UsageAnalytics.sendAnalyticsEvent(Category.LINK_CLICKED, menuItem.analyticsId)

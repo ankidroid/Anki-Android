@@ -86,6 +86,7 @@ import com.ichi2.anki.dialogs.DeckSelectionDialog.Companion.newInstance
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
 import com.ichi2.anki.dialogs.DiscardChangesDialog
+import com.ichi2.anki.dialogs.GradeNowDialog
 import com.ichi2.anki.dialogs.SimpleMessageDialog
 import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory
@@ -720,6 +721,13 @@ open class CardBrowser :
                     return true
                 }
             }
+            KeyEvent.KEYCODE_G -> {
+                if (event.isCtrlPressed && event.isShiftPressed) {
+                    Timber.i("Ctrl+Shift+G - Grade Now")
+                    openGradeNow()
+                    return true
+                }
+            }
             KeyEvent.KEYCODE_FORWARD_DEL, KeyEvent.KEYCODE_DEL -> {
                 if (searchView?.isIconified == false) {
                     Timber.i("Delete pressed - Search active, deleting character")
@@ -1023,6 +1031,9 @@ open class CardBrowser :
         actionBarMenu?.findItem(R.id.action_reschedule_cards)?.title =
             TR.actionsSetDueDate().toSentenceCase(this, R.string.sentence_set_due_date)
 
+        actionBarMenu?.findItem(R.id.action_grade_now)?.title =
+            TR.actionsGradeNow().toSentenceCase(this, R.string.sentence_grade_now)
+
         val isFindReplaceEnabled = sharedPrefs().getBoolean(getString(R.string.pref_browser_find_replace), false)
         menu.findItem(R.id.action_find_replace)?.apply {
             isVisible = isFindReplaceEnabled
@@ -1110,6 +1121,7 @@ open class CardBrowser :
         }
         actionBarMenu.findItem(R.id.action_change_deck).isVisible = viewModel.hasSelectedAnyRows()
         actionBarMenu.findItem(R.id.action_reposition_cards).isVisible = viewModel.hasSelectedAnyRows()
+        actionBarMenu.findItem(R.id.action_grade_now).isVisible = viewModel.hasSelectedAnyRows()
         actionBarMenu.findItem(R.id.action_reschedule_cards).isVisible = viewModel.hasSelectedAnyRows()
         actionBarMenu.findItem(R.id.action_edit_tags).isVisible = viewModel.hasSelectedAnyRows()
         actionBarMenu.findItem(R.id.action_reset_cards_progress).isVisible = viewModel.hasSelectedAnyRows()
@@ -1276,6 +1288,11 @@ open class CardBrowser :
                 onResetProgress()
                 return true
             }
+            R.id.action_grade_now -> {
+                Timber.i("CardBrowser:: Grade now button pressed")
+                openGradeNow()
+                return true
+            }
             R.id.action_reschedule_cards -> {
                 Timber.i("CardBrowser:: Reschedule button pressed")
                 rescheduleSelectedCards()
@@ -1395,6 +1412,12 @@ open class CardBrowser :
             ),
         )
     }
+
+    fun openGradeNow() =
+        launchCatchingTask {
+            val cardIds = viewModel.queryAllSelectedCardIds()
+            GradeNowDialog.showDialog(this@CardBrowser, cardIds)
+        }
 
     private fun repositionSelectedCards(): Boolean {
         Timber.i("CardBrowser:: Reposition button pressed")
@@ -1883,6 +1906,7 @@ open class CardBrowser :
                     shortcut("Ctrl+Alt+S", R.string.card_browser_list_my_searches),
                     shortcut("Ctrl+S", R.string.card_browser_list_my_searches_save),
                     shortcut("Alt+S", R.string.card_browser_show_suspended),
+                    shortcut("Ctrl+Shift+G", Translations::actionsGradeNow),
                     shortcut("Ctrl+Shift+J", Translations::browsingToggleBury),
                     shortcut("Ctrl+J", Translations::browsingToggleSuspend),
                     shortcut("Ctrl+Shift+I", Translations::actionsCardInfo),

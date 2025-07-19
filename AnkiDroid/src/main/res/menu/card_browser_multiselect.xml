@@ -66,6 +66,10 @@
         android:title="@string/menu_edit_tags"/>
 
     <item
+        android:id="@+id/action_grade_now"
+        tools:title="Grade now" />
+
+    <item
         android:id="@+id/action_reset_cards_progress"
         android:title="@string/card_editor_reset_card"/>
 
