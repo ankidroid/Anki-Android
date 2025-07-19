@@ -4,6 +4,7 @@ package com.ichi2.anki.libanki
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.libanki.template.MathJax
+import com.ichi2.anki.libanki.testutils.clozeClass
 import com.ichi2.testutils.JvmTest
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.containsString
