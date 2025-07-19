@@ -21,6 +21,7 @@ import com.ichi2.anki.AnkiActivity.Companion.FINISH_ANIMATION_EXTRA
 import com.ichi2.anki.NoteEditorFragment.Companion.NoteEditorCaller
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.ViewerCommand
+import com.ichi2.anki.libanki.newNote
 import com.ichi2.anki.libanki.sched.Ease
 import com.ichi2.anki.libanki.testutils.ext.addNote
 import com.ichi2.anki.observability.undoableOp

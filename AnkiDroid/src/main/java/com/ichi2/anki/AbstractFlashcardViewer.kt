@@ -822,7 +822,7 @@ abstract class AbstractFlashcardViewer :
             val noteCount =
                 withProgress {
                     undoableOp {
-                        removeNotes(cids = listOf(cardId))
+                        removeNotes(cardIds = listOf(cardId))
                     }.count
                 }
             val deletedMessage =

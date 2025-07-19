@@ -35,6 +35,8 @@ import anki.collection.OpChangesWithCount
 import anki.config.ConfigKey
 import anki.config.Preferences
 import anki.config.copy
+import anki.image_occlusion.GetImageForOcclusionResponse
+import anki.image_occlusion.GetImageOcclusionNoteResponse
 import anki.import_export.CsvMetadata
 import anki.import_export.ExportAnkiPackageOptions
 import anki.import_export.ExportLimit
@@ -42,6 +44,7 @@ import anki.import_export.ImportAnkiPackageOptions
 import anki.import_export.ImportCsvRequest
 import anki.import_export.ImportResponse
 import anki.import_export.csvMetadataRequest
+import anki.notes.AddNoteRequest
 import anki.search.BrowserColumns
 import anki.search.BrowserRow
 import anki.search.SearchNode
@@ -478,43 +481,212 @@ class Collection(
         backend.exportDataset(minEntries = minEntries, targetPath = targetPath)
     }
 
-    /**
-     * Object creation helpers **************************************************
-     * *********************************************
+    /*
+     * Image Occlusion
+     * ***********************************************************
      */
+
+    @CheckResult
+    @LibAnkiAlias("get_image_for_occlusion")
+    @RustCleanup("path should be nullable")
+    fun getImageForOcclusion(path: String): GetImageForOcclusionResponse = backend.getImageForOcclusion(path = path)
+
+    /** Add notetype if missing. */
+    @LibAnkiAlias("add_image_occlusion_notetype")
+    fun addImageOcclusionNoteType() {
+        backend.addImageOcclusionNotetype()
+    }
+
+    @CheckResult
+    @LibAnkiAlias("add_image_occlusion_note")
+    fun addImageOcclusionNote(
+        noteTypeId: NoteTypeId,
+        imagePath: String,
+        occlusions: String,
+        header: String,
+        backExtra: String,
+        tags: List<String>,
+    ): OpChanges =
+        backend.addImageOcclusionNote(
+            notetypeId = noteTypeId,
+            imagePath = imagePath,
+            occlusions = occlusions,
+            header = header,
+            backExtra = backExtra,
+            tags = tags,
+        )
+
+    @CheckResult
+    @LibAnkiAlias("get_image_occlusion_note")
+    fun getImageOcclusionNote(noteId: NoteId): GetImageOcclusionNoteResponse = backend.getImageOcclusionNote(noteId = noteId)
+
+    @CheckResult
+    @LibAnkiAlias("update_image_occlusion_note")
+    @RustCleanup("parameters should all be nullable")
+    fun updateImageOcclusionNote(
+        noteId: NoteId,
+        occlusions: String,
+        header: String,
+        backExtra: String,
+        tags: List<String>,
+    ): OpChanges =
+        backend.updateImageOcclusionNote(
+            noteId = noteId,
+            occlusions = occlusions,
+            header = header,
+            backExtra = backExtra,
+            tags = tags,
+        )
+
+    /*
+     * Object helpers
+     * ***********************************************************
+     */
+
+    @CheckResult
+    @LibAnkiAlias("get_card")
     fun getCard(id: CardId): Card = Card(this, id)
 
+    /** Save card changes to database. */
+    @LibAnkiAlias("update_cards")
     fun updateCards(
         cards: Iterable<Card>,
         skipUndoEntry: Boolean = false,
     ): OpChanges = backend.updateCards(cards.map { it.toBackendCard() }, skipUndoEntry)
 
+    /** Save card changes to database. */
+    @LibAnkiAlias("update_card")
     fun updateCard(
         card: Card,
         skipUndoEntry: Boolean = false,
     ): OpChanges = updateCards(listOf(card), skipUndoEntry)
 
+    @CheckResult
+    @LibAnkiAlias("get_note")
     fun getNote(id: NoteId): Note = Note(this, id)
 
-    /**
-     * Notes ******************************************************************** ***************************
-     */
-    fun noteCount(): Int = db.queryScalar("SELECT count() FROM notes")
+    /** Save note changes to database. */
+    @CheckResult
+    @LibAnkiAlias("update_notes")
+    fun updateNotes(
+        notes: Iterable<Note>,
+        skipUndoEntry: Boolean = false,
+    ): OpChanges =
+        backend.updateNotes(
+            notes = notes.map { it.toBackendNote() },
+            skipUndoEntry = skipUndoEntry,
+        )
 
     /**
-     * Return a new note with the model derived from the deck or the configuration
-     * @param forDeck When true it uses the model specified in the deck (mid), otherwise it uses the model specified in
-     * the configuration (curModel)
-     * @return The new note
+     * Save note changes to database.
      */
-    fun newNote(forDeck: Boolean = true): Note = newNote(notetypes.current(forDeck))
+    @CheckResult
+    @LibAnkiAlias("update_note")
+    fun updateNote(
+        note: Note,
+        skipUndoEntry: Boolean = false,
+    ): OpChanges = backend.updateNotes(notes = listOf(note.toBackendNote()), skipUndoEntry = skipUndoEntry)
+
+    /*
+     * Utils
+     * ***********************************************************
+     */
+
+    @CheckResult
+    @LibAnkiAlias("nextID")
+    @RustCleanup("Python returns 'Any' - may fail for Double?")
+    @Deprecated("not implemented", level = DeprecationLevel.HIDDEN)
+    fun nextId(
+        type: String,
+        inc: Boolean = true,
+    ): Long = TODO()
+
+    /*
+     * Notes
+     * ***********************************************************
+     */
 
     /**
      * Return a new note with a specific model
      * @param notetype The model to use for the new note
      * @return The new note
      */
+    @LibAnkiAlias("new_note")
     fun newNote(notetype: NotetypeJson): Note = Note.fromNotetypeId(this, notetype.id)
+
+    @LibAnkiAlias("add_note")
+    fun addNote(
+        note: Note,
+        deckId: DeckId,
+    ): OpChanges {
+        val out = backend.addNote(note.toBackendNote(), deckId)
+        note.id = out.noteId
+        return out.changes
+    }
+
+    @LibAnkiAlias("add_notes")
+    @RustCleanup("Implement")
+    @Deprecated("Needs implementation", level = DeprecationLevel.HIDDEN)
+    fun addNotes(requests: List<AddNoteRequest>): OpChanges? = TODO()
+//    {
+//        val out = backend.addNotes(requests = requests)
+//        for ((idx, request) in requests.withIndex()) {
+//            request.note!!.id = out.getNids(idx)
+//        }
+//        return out.changes
+//    }
+
+    @LibAnkiAlias("remove_notes")
+    @RustCleanup("remove cids and pass in []")
+    fun removeNotes(
+        noteIds: Iterable<NoteId> = listOf(),
+        cardIds: Iterable<CardId> = listOf(),
+    ): OpChangesWithCount =
+        backend.removeNotes(noteIds = noteIds, cardIds = cardIds).also {
+            Timber.d("removeNotes: %d changes", it.count)
+        }
+
+    @LibAnkiAlias("remove_notes_by_card")
+    fun removeNotesByCard(cardIds: Iterable<CardId>) {
+        backend.removeNotes(noteIds = emptyList(), cardIds = cardIds)
+    }
+
+    @CheckResult
+    @LibAnkiAlias("card_ids_of_note")
+    fun cardIdsOfNote(nid: NoteId): List<CardId> = backend.cardsOfNote(nid = nid)
+
+    /**
+     * Get starting deck and notetype for add screen.
+     * An option in the preferences controls whether this will be based on the current deck
+     * or current notetype.
+     */
+    @CheckResult
+    @LibAnkiAlias("defaults_for_adding")
+    fun defaultsForAdding(currentReviewCard: Card? = null): anki.notes.DeckAndNotetype {
+        val homeDeck = currentReviewCard?.currentDeckId() ?: 0L
+        return backend.defaultsForAdding(homeDeckOfCurrentReviewCard = homeDeck)
+    }
+
+    /**
+     * If 'change deck depending on notetype' is enabled in the preferences,
+     * return the last deck used with the provided notetype, if any..
+     */
+    @CheckResult
+    @LibAnkiAlias("default_deck_for_notetype")
+    @RustCleanup("check if the == 0L logic is necessary")
+    fun defaultDeckForNoteType(noteTypeId: NoteTypeId): DeckId? {
+        if (config.getBool(ConfigKey.Bool.ADDING_DEFAULTS_TO_CURRENT_DECK)) {
+            return null
+        }
+
+        val result = backend.defaultDeckForNotetype(ntid = noteTypeId)
+        if (result == 0L) return null
+        return result
+    }
+
+    @CheckResult
+    @LibAnkiAlias("note_count")
+    fun noteCount(): Int = db.queryScalar("SELECT count() FROM notes")
 
     /**
      * Cards ******************************************************************** ***************************
@@ -750,28 +922,11 @@ class Collection(
 
     fun redoAvailable(): Boolean = undoStatus().redo != null
 
-    fun removeNotes(
-        nids: Iterable<NoteId> = listOf(),
-        cids: Iterable<CardId> = listOf(),
-    ): OpChangesWithCount =
-        backend.removeNotes(noteIds = nids, cardIds = cids).also {
-            Timber.d("removeNotes: %d changes", it.count)
-        }
-
     /**
      * @return the number of deleted cards. **Note:** if an invalid/duplicate [CardId] is provided,
      * the output count may be less than the input.
      */
     fun removeCardsAndOrphanedNotes(cardIds: Iterable<CardId>) = backend.removeCards(cardIds)
-
-    fun addNote(
-        note: Note,
-        deckId: DeckId,
-    ): OpChanges {
-        val resp = backend.addNote(note.toBackendNote(), deckId)
-        note.id = resp.noteId
-        return resp.changes
-    }
 
     lateinit var notetypes: Notetypes
         protected set
@@ -786,13 +941,6 @@ class Collection(
         cids: Iterable<CardId>,
         did: DeckId,
     ): OpChangesWithCount = backend.setDeck(cardIds = cids, deckId = did)
-
-    /** Save (flush) the note to the DB. Unlike note.flush(), this is undoable. This should
-     * not be used for adding new notes. */
-    @CheckResult
-    fun updateNote(note: Note): OpChanges = backend.updateNotes(notes = listOf(note.toBackendNote()), skipUndoEntry = false)
-
-    fun updateNotes(notes: Iterable<Note>): OpChanges = backend.updateNotes(notes = notes.map { it.toBackendNote() }, skipUndoEntry = false)
 
     /** Fixes and optimizes the database. If any errors are encountered, a list of
      * problems is returned. Throws if DB is unreadable. */
@@ -815,8 +963,6 @@ class Collection(
 
     // Python code has a cardsOfNote, but not vice-versa yet
     fun notesOfCards(cids: Iterable<CardId>): List<NoteId> = db.queryLongList("select distinct nid from cards where id in ${ids2str(cids)}")
-
-    fun cardIdsOfNote(nid: NoteId): List<CardId> = backend.cardsOfNote(nid = nid)
 
     /**
      * returns the list of cloze ordinals in a note
@@ -875,11 +1021,6 @@ class Collection(
         ordinal: Int,
     ): String = backend.extractClozeForTyping(text = text, ordinal = ordinal)
 
-    fun defaultsForAdding(currentReviewCard: Card? = null): anki.notes.DeckAndNotetype {
-        val homeDeck = currentReviewCard?.currentDeckId() ?: 0L
-        return backend.defaultsForAdding(homeDeckOfCurrentReviewCard = homeDeck)
-    }
-
     fun getPreferences(): Preferences = backend.getPreferences()
 
     fun setPreferences(preferences: Preferences): OpChanges = backend.setPreferences(preferences)
@@ -887,3 +1028,13 @@ class Collection(
 
 @NotInLibAnki
 fun EmptyCardsReport.emptyCids(): List<CardId> = notesList.flatMap { it.cardIdsList }
+
+/**
+ * Return a new note with the model derived from the deck or the configuration
+ * @param forDeck When true it uses the model specified in the deck (mid), otherwise it uses the model specified in
+ * the configuration (curModel)
+ * @return The new note
+ */
+@NotInLibAnki
+@RustCleanup("1 dev only use, remove")
+fun Collection.newNote(forDeck: Boolean = true): Note = newNote(notetypes.current(forDeck))
