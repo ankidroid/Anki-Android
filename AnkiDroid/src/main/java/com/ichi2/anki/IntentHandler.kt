@@ -31,6 +31,7 @@ import com.ichi2.anki.common.utils.trimToLength
 import com.ichi2.anki.dialogs.DialogHandler.Companion.storeMessage
 import com.ichi2.anki.dialogs.DialogHandlerMessage
 import com.ichi2.anki.libanki.DeckId
+import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.anki.services.ReminderService
@@ -92,6 +93,11 @@ class IntentHandler : AbstractIntentHandler() {
             LaunchType.IMAGE_IMPORT ->
                 runIfStoragePermissions {
                     handleImageImport(intent)
+                    finish()
+                }
+            LaunchType.SHARED_TEXT ->
+                runIfStoragePermissions {
+                    handleSharedText(intent)
                     finish()
                 }
             LaunchType.SYNC -> runIfStoragePermissions { handleSyncIntent(reloadIntent, action) }
@@ -261,6 +267,19 @@ class IntentHandler : AbstractIntentHandler() {
             .startActivities()
     }
 
+    private fun handleSharedText(data: Intent) {
+        Timber.i("Handling shared text content for note creation")
+        val noteEditorIntent =
+            if (data.extras != null) {
+                NoteEditorLauncher.PassArguments(data.extras!!).toIntent(this, data.action)
+            } else {
+                // Fallback if no extras, though this shouldn't happen for ACTION_SEND
+                NoteEditorLauncher.AddNote().toIntent(this)
+            }
+        noteEditorIntent.setDataAndType(data.data, data.type)
+        startActivity(noteEditorIntent)
+    }
+
     private fun deleteDownloadedDeck(sharedDeckUri: Uri?) {
         if (sharedDeckUri == null) {
             Timber.i("onCreate: downloaded a shared deck but uri was null when trying to delete its file")
@@ -303,6 +322,9 @@ class IntentHandler : AbstractIntentHandler() {
 
         /** image */
         IMAGE_IMPORT,
+
+        /** shared text content */
+        SHARED_TEXT,
 
         SYNC,
         REVIEW,
@@ -349,6 +371,9 @@ class IntentHandler : AbstractIntentHandler() {
                 val mimeType = intent.resolveMimeType()
                 when {
                     mimeType?.startsWith("image/") == true -> LaunchType.IMAGE_IMPORT
+                    action == Intent.ACTION_SEND &&
+                        intent.hasExtra(Intent.EXTRA_TEXT) &&
+                        !intent.hasExtra(Intent.EXTRA_STREAM) -> LaunchType.SHARED_TEXT
                     textMimeTypes.contains(mimeType) -> LaunchType.TEXT_IMPORT
                     else -> LaunchType.FILE_IMPORT
                 }
@@ -389,6 +414,7 @@ class IntentHandler : AbstractIntentHandler() {
                 LaunchType.FILE_IMPORT,
                 LaunchType.TEXT_IMPORT,
                 LaunchType.IMAGE_IMPORT,
+                LaunchType.SHARED_TEXT,
                 -> true
                 LaunchType.COPY_DEBUG_INFO -> false
             }
