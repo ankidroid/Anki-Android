@@ -65,7 +65,7 @@ class Whiteboard(
     inverted: Boolean,
 ) : View(activity, null) {
     private val paint: Paint
-    private val undo = UndoList()
+    val undo = UndoList()
     private lateinit var bitmap: Bitmap
     private lateinit var canvas: Canvas
     private val path: Path
@@ -79,6 +79,8 @@ class Whiteboard(
     private var secondFingerY = 0f
     private var secondFingerPointerId = 0
     private var secondFingerWithinTapTolerance = false
+    private var wasPreviousUndoListEmpty = true
+    private var wasPreviousUndoEraseAction = false
 
     var reviewerEraserModeIsToggledOn = false
     var toggleStylus = false
@@ -200,13 +202,11 @@ class Whiteboard(
      *  or by using the digital eraser)
      */
     private fun eraseTouchedStroke(event: MotionEvent) {
-        if (!undoEmpty()) {
+        if (!strokeEmpty()) {
             val didErase = undo.erase(event.x.toInt(), event.y.toInt())
             if (didErase) {
                 undo.apply()
-                if (undoEmpty()) {
-                    ankiActivity.invalidateOptionsMenu()
-                }
+                refreshActionBarOnlyIfNecessary()
             }
         }
     }
@@ -225,16 +225,31 @@ class Whiteboard(
      * Undo the last stroke
      */
     fun undo() {
-        undo.pop()
-        undo.apply()
-        if (undoEmpty()) {
-            ankiActivity.invalidateOptionsMenu()
+        if (undo.size() > 0) {
+            val lastAction = undo.pop() // Execute undo.pop() and return value
+            if (lastAction is EraseAction) {
+                // Restore each erased stroke back into the undo list at its original position.
+                lastAction.erasedActions.reversed().forEach { erasedAction ->
+                    val index = erasedAction.originalIndex ?: undo.list.size
+                    undo.list.add(index, erasedAction)
+                }
+            }
+            undo.apply()
+            refreshActionBarOnlyIfNecessary()
         }
     }
 
-    /** @return Whether there are strokes to undo
+    /** @return Whether there are actions (stroke or erase actions) to undo
      */
     fun undoEmpty(): Boolean = undo.empty()
+
+    /** @return Whether there are strokes to undo
+     */
+    fun strokeEmpty(): Boolean = undo.strokeEmpty()
+
+    /** @return Whether the next undoable action (= the last action in the undo list) is erasing touched stroke action
+     */
+    fun isNextUndoEraseAction(): Boolean = undo.list.lastOrNull() is EraseAction
 
     private fun createBitmap(
         w: Int,
@@ -308,9 +323,7 @@ class Whiteboard(
         undo.add(action)
         // kill the path so we don't double draw
         path.reset()
-        if (undo.size() == 1) {
-            ankiActivity.invalidateOptionsMenu()
-        }
+        refreshActionBarOnlyIfNecessary()
     }
 
     private fun drawAbort() {
@@ -445,8 +458,9 @@ class Whiteboard(
      * Keep a list of all points and paths so that the last stroke can be undone
      * pop() removes the last stroke from the list, and apply() redraws it to whiteboard.
      */
-    private inner class UndoList {
-        private val list: MutableList<WhiteboardAction> = ArrayList()
+
+    inner class UndoList {
+        internal val list: MutableList<WhiteboardAction> = ArrayList()
 
         fun add(action: WhiteboardAction) {
             list.add(action)
@@ -454,18 +468,26 @@ class Whiteboard(
 
         fun clear() {
             list.clear()
+            wasPreviousUndoListEmpty = true
+            wasPreviousUndoEraseAction = false
         }
 
         fun size(): Int = list.size
 
-        fun pop() {
-            list.removeAt(list.size - 1)
-        }
+        fun pop(): WhiteboardAction? =
+            if (list.isNotEmpty()) {
+                val action = list.removeAt(list.size - 1)
+                action
+            } else {
+                null
+            }
 
         fun apply() {
             bitmap.eraseColor(0)
             for (action in list) {
-                action.apply(canvas)
+                if (action !is EraseAction) {
+                    action.apply(canvas)
+                }
             }
             invalidate()
         }
@@ -476,6 +498,7 @@ class Whiteboard(
             y: Int,
         ): Boolean {
             var didErase = false
+            val erasedActions = mutableListOf<WhiteboardAction>()
             val clip = Region(0, 0, displayDimensions.x, displayDimensions.y)
             val eraserPath = Path()
             eraserPath.addRect((x - 10).toFloat(), (y - 10).toFloat(), (x + 10).toFloat(), (y + 10).toFloat(), Path.Direction.CW)
@@ -491,7 +514,8 @@ class Whiteboard(
             while (iterator.hasNext()) {
                 val action = iterator.next()
                 val path = action.path
-                if (path != null) { // → line
+                val point = action.point
+                if (path != null) {
                     val lineRegionSuccess = lineRegion.setPath(path, clip)
                     if (!lineRegionSuccess) {
                         // Small lines can be perfectly vertical/horizontal,
@@ -508,32 +532,41 @@ class Whiteboard(
                                 ),
                             )
                     }
-                } else { // → point
-                    val p = action.point
-                    lineRegion = Region(p!!.x, p.y, p.x + 1, p.y + 1)
+                } else if (point != null) { // → point
+                    lineRegion = Region(point.x, point.y, point.x + 1, point.y + 1)
                 }
                 if (!lineRegion.quickReject(eraserRegion) && lineRegion.op(eraserRegion, Region.Op.INTERSECT)) {
+                    action.originalIndex = undo.list.indexOf(action)
+                    erasedActions.add(action)
                     iterator.remove()
                     didErase = true
                 }
+            }
+
+            if (didErase) {
+                undo.add(EraseAction(erasedActions))
             }
             return didErase
         }
 
         fun empty(): Boolean = list.isEmpty()
+
+        fun strokeEmpty(): Boolean = list.none { it !is EraseAction }
     }
 
-    private interface WhiteboardAction {
+    interface WhiteboardAction {
         fun apply(canvas: Canvas)
 
         val path: Path?
         val point: Point?
+        var originalIndex: Int?
     }
 
     private class DrawPoint(
         private val x: Float,
         private val y: Float,
         private val paint: Paint,
+        override var originalIndex: Int? = null,
     ) : WhiteboardAction {
         override fun apply(canvas: Canvas) {
             canvas.drawPoint(x, y, paint)
@@ -549,6 +582,7 @@ class Whiteboard(
     private class DrawPath(
         override val path: Path,
         private val paint: Paint,
+        override var originalIndex: Int? = null,
     ) : WhiteboardAction {
         override fun apply(canvas: Canvas) {
             canvas.drawPath(path, paint)
@@ -556,6 +590,22 @@ class Whiteboard(
 
         override val point: Point?
             get() = null
+    }
+
+    private class EraseAction(
+        val erasedActions: List<WhiteboardAction>,
+    ) : WhiteboardAction {
+        override fun apply(canvas: Canvas) {
+            // Nothing to do
+        }
+
+        override val path: Path?
+            get() = null // EraseAction has no paths
+
+        override val point: Point?
+            get() = null // EraseAction has no points
+
+        override var originalIndex: Int? = null
     }
 
     @Throws(FileNotFoundException::class)
@@ -574,6 +624,26 @@ class Whiteboard(
 
     fun interface OnPaintColorChangeListener {
         fun onPaintColorChange(color: Int?)
+    }
+
+    /**
+     *  Refresh the action bar only if either of the following changes occurs:
+     *  - whether the Undo list is empty/non-empty (Need to show/hide the whiteboard-undo option and the eraser option)
+     *  - whether the last action is stroke/erase-stroke (Need to switch the undo option's title)
+     *  - By erasing strokes, no stroke is left (Need to toggle the eraser option off)
+     *
+     *   [Refreshing the action bar is accompanied by flickering of the activated eraser button's ripple.
+     *   This function aims to make the flicker less conspicuous by reducing its frequency.]
+     */
+    private fun refreshActionBarOnlyIfNecessary() {
+        if (undo.list.isEmpty() != wasPreviousUndoListEmpty || isNextUndoEraseAction() != wasPreviousUndoEraseAction || strokeEmpty()) {
+            // Save the current states as the previous states, for the next time of using this function
+            wasPreviousUndoListEmpty = undo.list.isEmpty()
+            wasPreviousUndoEraseAction = isNextUndoEraseAction()
+
+            // Refresh the action bar
+            ankiActivity.invalidateOptionsMenu()
+        }
     }
 
     companion object {
