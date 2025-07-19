@@ -16,15 +16,19 @@
 
 package com.ichi2.anki.libanki
 
-/*
- * We can't use private typealiases until
- * https://youtrack.jetbrains.com/issue/KT-24700 is fixed
- */
-
+/** Identifier of a [Deck] */
 typealias DeckId = Long
+
+/** Identifier of a [Card] */
 typealias CardId = Long
+
+/** Identifier of a [DeckConfig] */
 typealias DeckConfigId = Long
+
+/** Identifier of a [Note] */
 typealias NoteId = Long
+
+/** Identifier of a [Note Type][NotetypeJson] */
 typealias NoteTypeId = Long
 
 /**
