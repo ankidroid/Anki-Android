@@ -2674,28 +2674,3 @@ class OneWaySyncDialog(
         fun fromMessage(message: Message): DialogHandlerMessage = OneWaySyncDialog(message.data.getString("message"))
     }
 }
-
-/**
- * [launchCatchingTask], showing a one-way sync dialog: [R.string.full_sync_confirmation]
- */
-private fun AnkiActivity.launchCatchingRequiringOneWaySync(block: suspend () -> Unit) =
-    launchCatchingTask {
-        try {
-            block()
-        } catch (e: ConfirmModSchemaException) {
-            e.log()
-
-            // .also is used to ensure the activity is used as context
-            val confirmModSchemaDialog =
-                ConfirmationDialog().also { dialog ->
-                    dialog.setArgs(message = getString(R.string.full_sync_confirmation))
-                    dialog.setConfirm {
-                        launchCatchingTask {
-                            withCol { modSchemaNoCheck() }
-                            block()
-                        }
-                    }
-                }
-            showDialogFragment(confirmModSchemaDialog)
-        }
-    }

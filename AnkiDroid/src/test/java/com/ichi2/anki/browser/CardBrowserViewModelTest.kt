@@ -49,6 +49,7 @@ import com.ichi2.anki.browser.CardBrowserColumn.SFLD
 import com.ichi2.anki.browser.CardBrowserColumn.TAGS
 import com.ichi2.anki.browser.CardBrowserLaunchOptions.DeepLink
 import com.ichi2.anki.browser.CardBrowserLaunchOptions.SystemContextMenu
+import com.ichi2.anki.browser.CardBrowserViewModel.ChangeNoteTypeResponse
 import com.ichi2.anki.browser.CardBrowserViewModel.Companion.STATE_MULTISELECT_VALUES
 import com.ichi2.anki.browser.CardBrowserViewModel.ToggleSelectionState.SELECT_ALL
 import com.ichi2.anki.browser.CardBrowserViewModel.ToggleSelectionState.SELECT_NONE
@@ -83,6 +84,7 @@ import org.hamcrest.Matchers.contains
 import org.hamcrest.Matchers.containsInAnyOrder
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.hasSize
+import org.hamcrest.Matchers.instanceOf
 import org.hamcrest.Matchers.lessThan
 import org.hamcrest.Matchers.not
 import org.hamcrest.Matchers.nullValue
@@ -1141,6 +1143,66 @@ class CardBrowserViewModelTest : JvmTest() {
             assertThat("same row is selected", selectedRows.single(), equalTo(idOfSelectedRow))
         }
     }
+
+    @Test
+    fun `change note type - no selection`() =
+        runViewModelTest {
+            flowOfChangeNoteType.test {
+                requestChangeNoteType().join()
+                assertThat("no selection", expectMostRecentItem(), instanceOf(ChangeNoteTypeResponse.NoSelection::class.java))
+            }
+        }
+
+    @Test
+    fun `change note type - mixed selection`() {
+        addBasicNote()
+        addClozeNote("{{c1::test}}")
+        runViewModelTest {
+            selectAll()
+            flowOfChangeNoteType.test {
+                requestChangeNoteType().join()
+                assertThat(
+                    "mixed note type selection",
+                    expectMostRecentItem(),
+                    instanceOf(ChangeNoteTypeResponse.MixedSelection::class.java),
+                )
+            }
+        }
+    }
+
+    @Test
+    fun `change note type - single valid selection`() =
+        runViewModelTest(notes = 1) {
+            val noteIds = this.cards.queryNoteIds()
+            assertThat(noteIds, hasSize(1))
+
+            flowOfChangeNoteType.test {
+                selectAll()
+                requestChangeNoteType().join()
+
+                val item = expectMostRecentItem()
+                assertThat("single valid selection", item, instanceOf(ChangeNoteTypeResponse.ChangeNoteType::class.java))
+                val selection = item as ChangeNoteTypeResponse.ChangeNoteType
+                assertThat(selection.nodeIds, equalTo(noteIds))
+            }
+        }
+
+    @Test
+    fun `change note type - valid multiselect`() =
+        runViewModelTest(notes = 2) {
+            val noteIds = this.cards.queryNoteIds()
+            assertThat(noteIds, hasSize(2))
+
+            flowOfChangeNoteType.test {
+                selectAll()
+                requestChangeNoteType().join()
+
+                val item = expectMostRecentItem()
+                assertThat("multi valid selection", item, instanceOf(ChangeNoteTypeResponse.ChangeNoteType::class.java))
+                val selection = item as ChangeNoteTypeResponse.ChangeNoteType
+                assertThat(selection.nodeIds, equalTo(noteIds))
+            }
+        }
 
     private fun assertDate(str: String?) {
         // 2025-01-09 @ 18:06
