@@ -216,6 +216,13 @@ object Prefs {
 
     var reviewerPort by intPref(R.string.reviewer_port_pref_key, defaultValue = 0)
 
+    // ************************************* Switch Profiles option ********************************** //
+
+    /**
+     * Whether the switch profiles feature is enabled.
+     */
+    var switchProfileEnabled by booleanPref(R.string.pref_enable_switch_profile_key, false)
+
     // ************************************* Developer options ********************************** //
 
     /**

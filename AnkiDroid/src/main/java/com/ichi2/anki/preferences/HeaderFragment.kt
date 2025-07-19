@@ -28,6 +28,7 @@ import com.ichi2.anki.BuildConfig
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
 import com.ichi2.anki.preferences.reviewer.ReviewerMenuSettingsFragment
+import com.ichi2.anki.preferences.switchProfiles.SwitchProfilesSettingsFragment
 import com.ichi2.anki.reviewreminders.ReviewReminderScope
 import com.ichi2.anki.reviewreminders.ScheduleReminders
 import com.ichi2.anki.settings.Prefs
@@ -73,6 +74,9 @@ class HeaderFragment : SettingsFragment() {
         requirePreference<HeaderPreference>(R.string.pref_review_reminders_screen_key).isVisible = Prefs.newReviewRemindersEnabled
         requirePreference<HeaderPreference>(R.string.pref_notifications_screen_key).isVisible = !Prefs.newReviewRemindersEnabled
 
+        // switch profile
+        updateSwitchProfileVisibility()
+
         configureSearchBar(
             requireActivity() as AppCompatActivity,
             requirePreference<SearchPreference>(R.string.search_preference_key).searchConfiguration,
@@ -87,6 +91,21 @@ class HeaderFragment : SettingsFragment() {
         view.findViewById<MaterialToolbar>(R.id.toolbar).setNavigationOnClickListener {
             requireActivity().finish()
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Timber.d("onResume")
+        updateSwitchProfileVisibility()
+    }
+
+    /**
+     * Handles the visibility of switch profiles option in the Settings fragment
+     */
+    private fun updateSwitchProfileVisibility() {
+        requirePreference<HeaderPreference>(R.string.pref_switch_screen_key)
+            .isVisible = Prefs.switchProfileEnabled
+        Timber.d("Switch Profiles header visibility updated: ${Prefs.switchProfileEnabled}")
     }
 
     fun highlightPreference(
@@ -242,6 +261,7 @@ class HeaderFragment : SettingsFragment() {
                 is ReviewerOptionsFragment, is ReviewerMenuSettingsFragment -> R.string.new_reviewer_options_key
                 is DevOptionsFragment -> R.string.pref_dev_options_screen_key
                 is AboutFragment -> R.string.about_screen_key
+                is SwitchProfilesSettingsFragment -> R.string.pref_switch_screen_key
                 else -> null
             }
     }
