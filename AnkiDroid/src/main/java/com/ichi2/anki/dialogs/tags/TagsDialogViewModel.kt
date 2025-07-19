@@ -26,11 +26,14 @@ import kotlinx.coroutines.flow.asStateFlow
 /**
  * @param noteIds IDs of notes whose tags should bfe retrieved and marked as "checked"
  * @param checkedTags additional list of checked tags.
+ * @param isCustomStudying true if all inputs are to be handled as unchecked tags, false otherwise(
+ * this is a temporary parameter until custom study by tags is modified)
  *  They are joined with the tags retrieved from noteIds
  */
 class TagsDialogViewModel(
     noteIds: Collection<NoteId> = emptyList(),
     checkedTags: Collection<String> = emptyList(),
+    isCustomStudying: Boolean = false,
 ) : ViewModel() {
     val tags: Deferred<TagsList>
 
@@ -51,11 +54,19 @@ class TagsDialogViewModel(
                         }
                 _initProgress.emit(InitProgress.Processing)
                 val uncheckedTags = allTags - allCheckedTags
-                TagsList(
-                    allTags = allTags,
-                    checkedTags = allCheckedTags,
-                    uncheckedTags = uncheckedTags,
-                ).also {
+                if (isCustomStudying) {
+                    TagsList(
+                        allTags = allCheckedTags,
+                        checkedTags = emptyList(),
+                        uncheckedTags = allCheckedTags,
+                    )
+                } else {
+                    TagsList(
+                        allTags = allTags,
+                        checkedTags = allCheckedTags,
+                        uncheckedTags = uncheckedTags,
+                    )
+                }.also {
                     _initProgress.emit(InitProgress.Finished)
                 }
             }

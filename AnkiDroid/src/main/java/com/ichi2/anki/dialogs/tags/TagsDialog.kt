@@ -30,6 +30,7 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.OnContextAndLongClickListener
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
@@ -37,6 +38,7 @@ import com.ichi2.anki.browser.IdsFile
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.NoteId
+import com.ichi2.anki.libanki.withCollapsedWhitespace
 import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.ui.AccessibleSearchView
@@ -73,6 +75,8 @@ class TagsDialog : AnalyticsDialogFragment {
          * Filter notes by tags
          */
         FILTER_BY_TAG,
+
+        CUSTOM_STUDY,
     }
 
     private var type: DialogType? = null
@@ -97,7 +101,17 @@ class TagsDialog : AnalyticsDialogFragment {
             requireNotNull(requireArguments().getStringArrayList(ARG_CHECKED_TAGS)) {
                 "$ARG_CHECKED_TAGS is required"
             }
-        viewModelFactory { initializer { TagsDialogViewModel(noteIds = noteIds, checkedTags = checkedTags) } }
+        val type = BundleCompat.getParcelable(requireArguments(), ARG_DIALOG_TYPE, DialogType::class.java)
+        val isCustomStudying = type != null && type == DialogType.CUSTOM_STUDY
+        viewModelFactory {
+            initializer {
+                TagsDialogViewModel(
+                    noteIds = noteIds,
+                    checkedTags = checkedTags,
+                    isCustomStudying = isCustomStudying,
+                )
+            }
+        }
     }
 
     /**
@@ -177,7 +191,7 @@ class TagsDialog : AnalyticsDialogFragment {
             }
         val optionsGroup =
             view.findViewById<RadioGroup>(R.id.tags_dialog_options_radiogroup).apply {
-                isVisible = type != DialogType.EDIT_TAGS
+                isVisible = type != DialogType.EDIT_TAGS && type != DialogType.CUSTOM_STUDY
                 for (i in 0 until childCount) {
                     getChildAt(i).id = i
                 }
@@ -225,7 +239,7 @@ class TagsDialog : AnalyticsDialogFragment {
 
             val tags = viewModel.tags.await()
 
-            tagsArrayAdapter = TagsArrayAdapter(tags)
+            tagsArrayAdapter = TagsArrayAdapter(tags) { view.showMaxTagSelectedNotice(tags) }
             tagsListRecyclerView.adapter = tagsArrayAdapter
             noTagsTextView = view.findViewById(R.id.tags_dialog_no_tags_textview)
             if (tags.isEmpty) {
@@ -250,6 +264,24 @@ class TagsDialog : AnalyticsDialogFragment {
         }
 
         return dialog
+    }
+
+    private fun View.showMaxTagSelectedNotice(tags: TagsList) {
+        if (type == DialogType.CUSTOM_STUDY && tags.copyOfCheckedTagList().size > 100) {
+            // the backend text is long and is more like an explanation and doesn't fit into
+            // a snackbar so cut just for the first sentence:
+            //  "A maximum of 100 tags can be selected."
+            val backendText = withCollapsedWhitespace(TR.errors100TagsMax())
+            val firstPointIndex = backendText.indexOf(".")
+            val userFacingText =
+                if (firstPointIndex < 0) {
+                    // backend text was changed so just return the full text
+                    backendText
+                } else {
+                    backendText.substring(0..firstPointIndex)
+                }
+            this.showSnackbar(userFacingText)
+        }
     }
 
     private fun onPositiveButton() {
@@ -325,6 +357,7 @@ class TagsDialog : AnalyticsDialogFragment {
                 val didChange = tags.toggleAllCheckedStatuses()
                 if (didChange) {
                     tagsArrayAdapter?.notifyDataSetChanged()
+                    view?.showMaxTagSelectedNotice(tags)
                 }
             }
             true
