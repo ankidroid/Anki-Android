@@ -99,11 +99,42 @@ class IntentHandlerTest {
         testIntentType("content://valid", "text/csv", LaunchType.TEXT_IMPORT)
         testIntentType("content://valid", "text/tsv", LaunchType.TEXT_IMPORT)
 
-        // Test for ACTION_SEND
-        testIntentType("content://valid", "text/tab-separated-values", LaunchType.TEXT_IMPORT, Intent.ACTION_SEND)
-        testIntentType("content://valid", "text/comma-separated-values", LaunchType.TEXT_IMPORT, Intent.ACTION_SEND)
-        testIntentType("content://valid", "text/csv", LaunchType.TEXT_IMPORT, Intent.ACTION_SEND)
-        testIntentType("content://valid", "text/tsv", LaunchType.TEXT_IMPORT, Intent.ACTION_SEND)
+        // Test for ACTION_SEND with file streams (should still be TEXT_IMPORT)
+        testIntentTypeWithStream("content://valid", "text/tab-separated-values", LaunchType.TEXT_IMPORT)
+        testIntentTypeWithStream("content://valid", "text/comma-separated-values", LaunchType.TEXT_IMPORT)
+        testIntentTypeWithStream("content://valid", "text/csv", LaunchType.TEXT_IMPORT)
+        testIntentTypeWithStream("content://valid", "text/tsv", LaunchType.TEXT_IMPORT)
+    }
+
+    @Test
+    fun sharedTextIntentStartsApp() {
+        // Test that sharing plain text content (not files) opens the note editor
+        // instead of attempting CSV import
+        val intent =
+            Intent(Intent.ACTION_SEND).apply {
+                type = "text/plain"
+                putExtra(Intent.EXTRA_TEXT, "Some shared text content")
+            }
+
+        val expected = getLaunchType(intent)
+
+        assertThat(expected, equalTo(LaunchType.SHARED_TEXT))
+    }
+
+    @Test
+    fun sharePlainTextDoesNotTriggerCsvImport() {
+        val intent =
+            Intent(Intent.ACTION_SEND).apply {
+                type = "text/plain"
+                putExtra(Intent.EXTRA_TEXT, "This is some shared text that should create a note")
+                // No EXTRA_STREAM means this is shared text content, not a file
+            }
+
+        val launchType = getLaunchType(intent)
+
+        // Should NOT be TEXT_IMPORT (which would trigger CSV import and fail)
+        // Should be SHARED_TEXT (which launches note editor directly)
+        assertThat(launchType, equalTo(LaunchType.SHARED_TEXT))
     }
 
     private fun testIntentType(
@@ -127,5 +158,19 @@ class IntentHandlerTest {
         val expected = getLaunchType(intent)
 
         assertThat(expected, equalTo(LaunchType.DEFAULT_START_APP_IF_NEW))
+    }
+
+    private fun testIntentTypeWithStream(
+        data: String,
+        type: String,
+        expected: LaunchType,
+    ) {
+        val intent =
+            Intent(Intent.ACTION_SEND).apply {
+                putExtra(Intent.EXTRA_STREAM, data.toUri())
+                this.type = type
+            }
+        val actual = getLaunchType(intent)
+        assertThat(actual, equalTo(expected))
     }
 }
