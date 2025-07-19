@@ -77,11 +77,8 @@ class Notetypes(
     #############################################################
      */
 
-    /**
-     * Associating a note type id to its note type.
-     */
-    @LibAnkiAlias("_cache")
-    private val cache = HashMap<NoteTypeId, NotetypeJson>()
+    @Suppress("ktlint:standard:backing-property-naming")
+    private val _cache = HashMap<NoteTypeId, NotetypeJson>()
 
     /** Save changes made to provided note type. */
     fun save(notetype: NotetypeJson) {
@@ -104,20 +101,20 @@ class Notetypes(
 
     @LibAnkiAlias("_update_cache")
     private fun updateCache(nt: NotetypeJson) {
-        cache[nt.id] = nt
+        _cache[nt.id] = nt
     }
 
     @LibAnkiAlias("_remove_from_cache")
     internal fun removeFromCache(ntid: NoteTypeId) {
-        cache.remove(ntid)
+        _cache.remove(ntid)
     }
 
     @LibAnkiAlias("_get_cached")
-    private fun getCached(ntid: NoteTypeId): NotetypeJson? = cache[ntid]
+    private fun getCached(ntid: NoteTypeId): NotetypeJson? = _cache[ntid]
 
     @NeedsTest("14827: styles are updated after syncing style changes")
     @LibAnkiAlias("_clear_cache")
-    fun clearCache() = cache.clear()
+    fun clearCache() = _cache.clear()
 
     /*
     # Listing note types

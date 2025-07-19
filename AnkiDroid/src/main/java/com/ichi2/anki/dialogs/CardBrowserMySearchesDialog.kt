@@ -40,9 +40,9 @@ class CardBrowserMySearchesDialog : AnalyticsDialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         super.onCreate(savedInstanceState)
         val dialog = AlertDialog.Builder(requireActivity())
-        val type = requireArguments().getInt("type")
-        if (type == CARD_BROWSER_MY_SEARCHES_TYPE_LIST) {
-            savedFilters = requireArguments().getSerializableCompat("savedFilters")
+        val type = requireArguments().getSerializableCompat<SavedSearchesType>(SAVED_TYPE_KEY)
+        if (type == SavedSearchesType.List) {
+            savedFilters = requireArguments().getSerializableCompat(SAVED_FILTER_KEY)
 
             savedFilters?.let {
                 savedFilterKeys = ArrayList(it.keys)
@@ -66,8 +66,8 @@ class CardBrowserMySearchesDialog : AnalyticsDialogFragment() {
                         .title(text = resources.getString(R.string.card_browser_list_my_searches_title))
                         .customListAdapterWithDecoration(this, requireActivity())
                 }
-        } else if (type == CARD_BROWSER_MY_SEARCHES_TYPE_SAVE) {
-            val currentSearchTerms = requireArguments().getString("currentSearchTerms")
+        } else if (type == SavedSearchesType.Save) {
+            val currentSearchTerms = requireArguments().getString(SAVED_CURRENT_SEARCH_TERMS_KEY)
             return dialog
                 .show {
                     title(text = getString(R.string.card_browser_list_my_searches_save))
@@ -107,23 +107,36 @@ class CardBrowserMySearchesDialog : AnalyticsDialogFragment() {
         }
     }
 
+    enum class SavedSearchesType(
+        val code: Int,
+    ) {
+        List(0),
+        Save(1),
+        ;
+
+        companion object {
+            fun fromCode(c: Int) = SavedSearchesType.entries.first { it.code == c }
+        }
+    }
+
     companion object {
-        const val CARD_BROWSER_MY_SEARCHES_TYPE_LIST = 0 // list searches dialog
-        const val CARD_BROWSER_MY_SEARCHES_TYPE_SAVE = 1 // save searches dialog
+        const val SAVED_FILTER_KEY = "savedFilters"
+        const val SAVED_TYPE_KEY = "type"
+        const val SAVED_CURRENT_SEARCH_TERMS_KEY = "currentSearchTerms"
         private var mySearchesDialogListener: MySearchesDialogListener? = null
 
         fun newInstance(
             savedFilters: Map<String, String>?,
             mySearchesDialogListener: MySearchesDialogListener?,
             currentSearchTerms: String?,
-            type: Int,
+            type: SavedSearchesType,
         ): CardBrowserMySearchesDialog {
             this.mySearchesDialogListener = mySearchesDialogListener
             val cardBrowserMySearchesDialog = CardBrowserMySearchesDialog()
             val args = Bundle()
-            args.putSerializable("savedFilters", savedFilters?.let(::HashMap))
-            args.putInt("type", type)
-            args.putString("currentSearchTerms", currentSearchTerms)
+            args.putSerializable(SAVED_FILTER_KEY, savedFilters?.let(::HashMap))
+            args.putSerializable(SAVED_TYPE_KEY, type)
+            args.putString(SAVED_CURRENT_SEARCH_TERMS_KEY, currentSearchTerms)
             cardBrowserMySearchesDialog.arguments = args
             return cardBrowserMySearchesDialog
         }
