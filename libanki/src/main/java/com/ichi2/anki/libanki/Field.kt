@@ -17,6 +17,9 @@
 package com.ichi2.anki.libanki
 
 import com.ichi2.anki.common.json.JSONObjectHolder
+import com.ichi2.anki.common.json.jsonBoolean
+import com.ichi2.anki.common.json.jsonInt
+import com.ichi2.anki.common.json.jsonString
 import com.ichi2.anki.common.utils.ext.getStringOrNull
 import net.ankiweb.rsdroid.RustCleanup
 import org.json.JSONObject
@@ -51,8 +54,7 @@ import org.json.JSONObject
  * [Anki manual - fields](https://docs.ankiweb.net/templates/fields.html)
  * [Anki manual - customizing fields](https://docs.ankiweb.net/editing.html#customizing-fields)
  */
-@JvmInline
-value class Field(
+data class Field(
     override val jsonObject: JSONObject,
 ) : JSONObjectHolder {
     /**
@@ -60,48 +62,31 @@ value class Field(
      *
      * Card template substitutions use the name (`{{Front}}`, where [name] = `Front`)
      */
-    var name: String
-        get() = jsonObject.getString("name")
-        set(value) {
-            jsonObject.put("name", value)
-        }
+    var name by jsonString("name")
 
     /** The 0-based ordinal of the field */
-    val ord: Int
-        get() = jsonObject.getInt("ord")
+    val ord by jsonInt("ord")
 
     /**
      * If `false`, the note editor erases the content of this field after a note is created
      *
      * Usage: 'pin/freeze' a field, so a user does not need to type in duplicate values
      */
-    var sticky: Boolean
-        get() = jsonObject.getBoolean("sticky")
-        set(value) {
-            jsonObject.put("sticky", value)
-        }
+    var sticky by jsonBoolean("sticky")
 
     /**
      * The font used in the note editor when editing the note
      *
      * ⚠️: AnkiDroid also uses this for 'type the answer'
      */
-    var font: String
-        get() = jsonObject.getString("font")
-        set(value) {
-            jsonObject.put("font", value)
-        }
+    var font by jsonString("font")
 
     /**
      * The font size used in the note editor when editing the note
      *
      * ⚠️: AnkiDroid also uses this for 'type the answer'
      */
-    var fontSize: Int
-        get() = jsonObject.getInt("size")
-        set(value) {
-            jsonObject.put("size", value)
-        }
+    var fontSize by jsonInt("size")
 
     /**
      * @see [anki.notetypes.ImageOcclusionField]

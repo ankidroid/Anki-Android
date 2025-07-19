@@ -16,15 +16,6 @@
 package com.ichi2.anki.libanki
 
 import androidx.test.espresso.matcher.ViewMatchers.assertThat
-import com.ichi2.anki.libanki.DeckConfig.Companion.ANSWER_ACTION
-import com.ichi2.anki.libanki.DeckConfig.Companion.LAPSE
-import com.ichi2.anki.libanki.DeckConfig.Companion.MAX_TAKEN
-import com.ichi2.anki.libanki.DeckConfig.Companion.NEW
-import com.ichi2.anki.libanki.DeckConfig.Companion.QUESTION_ACTION
-import com.ichi2.anki.libanki.DeckConfig.Companion.REV
-import com.ichi2.anki.libanki.DeckConfig.Companion.STOP_TIME_ON_ANSWER
-import com.ichi2.anki.libanki.DeckConfig.Companion.TIMER
-import com.ichi2.anki.libanki.DeckConfig.Companion.WAIT_FOR_AUDIO
 import com.ichi2.anki.libanki.DeckConfig.New
 import com.ichi2.anki.reviewer.AutomaticAnswerAction
 import com.ichi2.anki.reviewer.AutomaticAnswerAction.Companion.answerAction
@@ -57,30 +48,30 @@ class DeckConfigTest : JvmTest() {
     @Test
     fun testWaitForAudio() {
         assertTrue(dc.waitForAudio)
-        val dc = DeckConfig("""{"$WAIT_FOR_AUDIO": false}""")
+        val dc = DeckConfig("""{"waitForAudio": false}""")
         assertFalse(dc.waitForAudio)
     }
 
     @Test
     fun testAnswerAction() {
-        val dc = DeckConfig("""{"$ANSWER_ACTION": ${AutomaticAnswerAction.ANSWER_AGAIN.configValue}}""")
+        val dc = DeckConfig("""{"answerAction": ${AutomaticAnswerAction.ANSWER_AGAIN.configValue}}""")
         assertEquals(AutomaticAnswerAction.ANSWER_AGAIN, dc.answerAction)
         dc.removeAnswerAction()
         assertEquals(AutomaticAnswerAction.BURY_CARD, dc.answerAction)
-        val dcError = DeckConfig("""{"$ANSWER_ACTION": 42}""")
+        val dcError = DeckConfig("""{"answerAction": 42}""")
         assertEquals(AutomaticAnswerAction.BURY_CARD, dcError.answerAction)
     }
 
     @Test
     fun testStopTimeOnAnswer() {
-        val dc = DeckConfig("""{"$STOP_TIME_ON_ANSWER": true}""")
+        val dc = DeckConfig("""{"stopTimerOnAnswer": true}""")
         assertTrue(dc.stopTimerOnAnswer)
     }
 
     @Test
     fun testQuestionAction() {
         assertEquals(QuestionAction.SHOW_ANSWER, dc.questionAction)
-        val dc = DeckConfig(""" {"$QUESTION_ACTION": 1} """)
+        val dc = DeckConfig(""" {"questionAction": 1} """)
         assertEquals(QuestionAction.SHOW_REMINDER, dc.questionAction)
     }
 
@@ -100,7 +91,7 @@ class DeckConfigTest : JvmTest() {
 
     @Test
     fun testMaxTaken() {
-        val dc = DeckConfig(""" {"$MAX_TAKEN": 42} """)
+        val dc = DeckConfig(""" {"maxTaken": 42} """)
         assertEquals(42, dc.maxTaken)
     }
 
@@ -123,13 +114,13 @@ class DeckConfigTest : JvmTest() {
 
     @Test
     fun testTimer() {
-        var dc = DeckConfig("""{"$TIMER": true}""")
+        var dc = DeckConfig("""{"timer": true}""")
         assertTrue(dc.timer)
-        dc = DeckConfig("""{"$TIMER": 1}""")
+        dc = DeckConfig("""{"timer": 1}""")
         assertTrue(dc.timer)
-        dc = DeckConfig("""{"$TIMER": false}""")
+        dc = DeckConfig("""{"timer": false}""")
         assertTrue(!dc.timer)
-        dc = DeckConfig("""{"$TIMER": 0}""")
+        dc = DeckConfig("""{"timer": 0}""")
         assertTrue(!dc.timer)
     }
 
@@ -158,7 +149,7 @@ class DeckConfigTest : JvmTest() {
 
     @Test
     fun testNew() {
-        val dc = DeckConfig("""{"$NEW": {}}""")
+        val dc = DeckConfig("""{"new": {}}""")
         assertThat(dc.new, isJsonHolderEqual("{}"))
     }
 
@@ -166,7 +157,7 @@ class DeckConfigTest : JvmTest() {
 
     @Test
     fun testLapse() {
-        val dc = DeckConfig("""{"$LAPSE": {}}""")
+        val dc = DeckConfig("""{"lapse": {}}""")
         assertThat(dc.lapse, isJsonHolderEqual("{}"))
     }
 
@@ -193,7 +184,7 @@ class DeckConfigTest : JvmTest() {
 
     @Test
     fun testRev() {
-        val dc = DeckConfig("""{"$REV": {}}""")
+        val dc = DeckConfig("""{"rev": {}}""")
         assertThat(dc.rev, isJsonHolderEqual("{}"))
     }
 
