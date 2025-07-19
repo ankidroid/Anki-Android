@@ -31,12 +31,10 @@ import androidx.fragment.app.FragmentContainerView
 import androidx.fragment.app.commit
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.tabs.TabLayout
-import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.NoteEditorFragment.Companion.shouldReplaceNewlines
 import com.ichi2.anki.android.input.ShortcutGroup
 import com.ichi2.anki.android.input.ShortcutGroupProvider
 import com.ichi2.anki.libanki.Collection
-import com.ichi2.anki.libanki.Note
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import com.ichi2.anki.previewer.TemplatePreviewerArguments
 import com.ichi2.anki.previewer.TemplatePreviewerFragment
@@ -46,6 +44,7 @@ import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.ui.ResizablePaneManager
+import com.ichi2.anki.utils.ClozeUtils.extractClozeNumbers
 import com.ichi2.anki.utils.postDelayed
 import com.ichi2.themes.Themes
 import kotlinx.coroutines.launch
@@ -209,18 +208,18 @@ class NoteEditorActivity :
             return
         }
 
+        val fields = prepareNoteFields()
+        val tags = noteEditorFragment.selectedTags ?: mutableListOf()
+        val ord = determineCardOrdinal(fields)
+
+        val previewerFragment = createPreviewerFragment(fields, tags, ord)
+
+        // Use commit and post to ensure proper fragment transaction ordering
+        supportFragmentManager.commit {
+            replace(R.id.previewer_frame, previewerFragment)
+        }
+
         launchCatchingTask {
-            val fields = prepareNoteFields()
-            val tags = noteEditorFragment.selectedTags ?: mutableListOf()
-            val ord = determineCardOrdinal(fields)
-
-            val previewerFragment = createPreviewerFragment(fields, tags, ord)
-
-            // Use commit and post to ensure proper fragment transaction ordering
-            supportFragmentManager.commit {
-                replace(R.id.previewer_frame, previewerFragment)
-            }
-
             // Configure the tab layout for the previewer
             configurePreviewerTabs(previewerFragment)
         }
@@ -248,12 +247,10 @@ class NoteEditorActivity :
      * @param fields The processed note fields
      * @return The ordinal (position) of the card template to display
      */
-    private suspend fun determineCardOrdinal(fields: MutableList<String>): Int {
+    private fun determineCardOrdinal(fields: MutableList<String>): Int {
         val ord =
             if (noteEditorFragment.editorNote!!.notetype.isCloze) {
-                val tempNote = withCol { Note.fromNotetypeId(this@withCol, noteEditorFragment.editorNote!!.notetype.id) }
-                tempNote.fields = fields // makes possible to get the cloze numbers from the fields
-                val clozeNumbers = withCol { clozeNumbersInNote(tempNote) }
+                val clozeNumbers = extractClozeNumbers(fields)
                 if (clozeNumbers.isNotEmpty()) {
                     clozeNumbers.first() - 1
                 } else {
