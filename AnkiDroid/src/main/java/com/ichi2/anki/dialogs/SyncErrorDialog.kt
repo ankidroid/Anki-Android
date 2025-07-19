@@ -25,7 +25,6 @@ import androidx.core.net.toUri
 import androidx.core.os.bundleOf
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.ConflictResolution
-import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
 import com.ichi2.anki.dialogs.SyncErrorDialog.Type.DIALOG_CONNECTION_ERROR
 import com.ichi2.anki.dialogs.SyncErrorDialog.Type.DIALOG_MEDIA_SYNC_ERROR
@@ -39,7 +38,6 @@ import com.ichi2.anki.dialogs.SyncErrorDialog.Type.DIALOG_SYNC_SANITY_ERROR_CONF
 import com.ichi2.anki.dialogs.SyncErrorDialog.Type.DIALOG_SYNC_SANITY_ERROR_CONFIRM_KEEP_REMOTE
 import com.ichi2.anki.dialogs.SyncErrorDialog.Type.DIALOG_USER_NOT_LOGGED_IN_SYNC
 import com.ichi2.anki.joinSyncMessages
-import com.ichi2.anki.showError
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 
 class SyncErrorDialog : AsyncDialogFragment() {
@@ -317,16 +315,9 @@ class SyncErrorDialog : AsyncDialogFragment() {
     ) : DialogHandlerMessage(WhichDialogHandler.MSG_SHOW_SYNC_ERROR_DIALOG, "SyncErrorDialog") {
         override fun handleAsyncMessage(activity: AnkiActivity) {
             // we may be called via any AnkiActivity but media check is a DeckPicker thing
-            if (activity !is DeckPicker) {
-                showError(
-                    activity,
-                    activity.getString(R.string.something_wrong),
-                    ClassCastException(activity.javaClass.simpleName + " is not " + DeckPicker::class.java.simpleName),
-                    true,
-                )
-                return
-            }
-            activity.showSyncErrorDialog(dialogType, dialogMessage)
+            activity
+                .requireDeckPickerOrShowError()
+                ?.showSyncErrorDialog(dialogType, dialogMessage)
         }
 
         override fun toMessage(): Message =

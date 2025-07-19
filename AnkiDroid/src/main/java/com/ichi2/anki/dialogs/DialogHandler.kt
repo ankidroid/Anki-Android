@@ -21,10 +21,14 @@ import android.os.Message
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.CollectionLoadingErrorDialog
+import com.ichi2.anki.CrashReportData.Companion.toCrashReportData
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.IntentHandler
 import com.ichi2.anki.OneWaySyncDialog
+import com.ichi2.anki.R
 import com.ichi2.anki.analytics.UsageAnalytics
+import com.ichi2.anki.dialogs.DialogHandler.Companion.storeMessage
+import com.ichi2.anki.showError
 import com.ichi2.utils.HandlerUtils.getDefaultLooper
 import com.ichi2.utils.ImportUtils
 import timber.log.Timber
@@ -145,4 +149,21 @@ abstract class DialogHandlerMessage protected constructor(
             fun fromInt(value: Int) = entries.first { it.what == value }
         }
     }
+}
+
+/**
+ * If the receiver is a [DeckPicker], return it.
+ * Otherwise, show an error and return `null`
+ */
+fun AnkiActivity.requireDeckPickerOrShowError(): DeckPicker? {
+    if (this is DeckPicker) return this
+
+    showError(
+        message = getString(R.string.something_wrong),
+        crashReportData =
+            ClassCastException(
+                this.javaClass.simpleName + " is not " + DeckPicker::class.java.simpleName,
+            ).toCrashReportData(this),
+    )
+    return null
 }
