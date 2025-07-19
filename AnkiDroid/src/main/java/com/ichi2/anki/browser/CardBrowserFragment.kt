@@ -37,6 +37,10 @@ import anki.collection.OpChanges
 import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.R
+import com.ichi2.anki.browser.CardBrowserViewModel.ChangeMultiSelectMode
+import com.ichi2.anki.browser.CardBrowserViewModel.ChangeMultiSelectMode.MultiSelectCause
+import com.ichi2.anki.browser.CardBrowserViewModel.ChangeMultiSelectMode.SingleSelectCause
+import com.ichi2.anki.browser.CardBrowserViewModel.RowSelection
 import com.ichi2.anki.browser.CardBrowserViewModel.SearchState
 import com.ichi2.anki.browser.CardBrowserViewModel.SearchState.Initializing
 import com.ichi2.anki.browser.CardBrowserViewModel.SearchState.Searching
@@ -48,6 +52,7 @@ import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.attachFastScroller
+import com.ichi2.anki.utils.ext.visibleItemPositions
 import com.ichi2.utils.HandlerUtils
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
@@ -67,6 +72,10 @@ class CardBrowserFragment :
 
     @VisibleForTesting
     lateinit var cardsListView: RecyclerView
+
+    /** LayoutManager for [cardsListView] */
+    val layoutManager: LinearLayoutManager
+        get() = cardsListView.layoutManager as LinearLayoutManager
 
     @VisibleForTesting
     lateinit var browserColumnHeadings: ViewGroup
@@ -94,7 +103,9 @@ class CardBrowserFragment :
                 requireContext(),
                 viewModel,
                 onTap = ::onTap,
-                onLongPress = viewModel::handleRowLongPress,
+                onLongPress = { rowId ->
+                    viewModel.handleRowLongPress(rowId.toRowSelection())
+                },
             )
         cardsListView.adapter = cardsAdapter
         cardsAdapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
@@ -131,12 +142,34 @@ class CardBrowserFragment :
             cardsAdapter.notifyDataSetChanged()
         }
 
-        fun isInMultiSelectModeChanged(inMultiSelect: Boolean) {
+        fun onMultiSelectModeChanged(modeChange: ChangeMultiSelectMode) {
+            val inMultiSelect = modeChange.resultedInMultiSelect
             toggleRowSelections.isVisible = inMultiSelect
 
             // update adapter to remove check boxes
             cardsAdapter.notifyDataSetChanged()
-            autoScrollTo(viewModel.lastSelectedPosition, viewModel.oldCardTopOffset)
+            if (modeChange is SingleSelectCause.DeselectRow) {
+                cardsAdapter.notifyDataSetChanged()
+                autoScrollTo(modeChange.selection)
+            } else if (modeChange is MultiSelectCause.RowSelected) {
+                cardsAdapter.notifyDataSetChanged()
+                autoScrollTo(modeChange.selection)
+            } else if (modeChange is SingleSelectCause && !modeChange.previouslySelectedRowIds.isNullOrEmpty()) {
+                // if any visible rows are selected, anchor on the first row
+
+                // obtain the offset of the row before we call notifyDataSetChanged
+                val rowPositionAndOffset =
+                    try {
+                        val visibleRowIds = layoutManager.visibleItemPositions.map { viewModel.getRowAtPosition(it) }
+                        val firstVisibleRowId = visibleRowIds.firstOrNull { modeChange.previouslySelectedRowIds!!.contains(it) }
+                        firstVisibleRowId?.let { firstVisibleRowId.toRowSelection() }
+                    } catch (e: Exception) {
+                        Timber.w(e)
+                        null
+                    }
+                cardsAdapter.notifyDataSetChanged()
+                rowPositionAndOffset?.let { autoScrollTo(it) }
+            }
         }
 
         fun searchStateChanged(searchState: SearchState) {
@@ -145,13 +178,6 @@ class CardBrowserFragment :
         }
 
         fun onSelectedRowsChanged(rows: Set<Any>) = cardsAdapter.notifyDataSetChanged()
-
-        fun onSelectedRowUpdated(id: CardOrNoteId?) {
-            if (!viewModel.isInMultiSelectMode || viewModel.lastSelectedId == null) {
-                viewModel.oldCardTopOffset =
-                    calculateTopOffset(viewModel.lastSelectedPosition)
-            }
-        }
 
         fun onCardsMarkedEvent(unit: Unit) {
             cardsAdapter.notifyDataSetChanged()
@@ -205,9 +231,8 @@ class CardBrowserFragment :
         viewModel.flowOfSelectedRows.launchCollectionInLifecycleScope(::onSelectedRowsChanged)
         viewModel.flowOfActiveColumns.launchCollectionInLifecycleScope(::onColumnsChanged)
         viewModel.flowOfCardsUpdated.launchCollectionInLifecycleScope(::cardsUpdatedChanged)
-        viewModel.flowOfIsInMultiSelectMode.launchCollectionInLifecycleScope(::isInMultiSelectModeChanged)
+        viewModel.flowOfMultiSelectModeChanged.launchCollectionInLifecycleScope(::onMultiSelectModeChanged)
         viewModel.flowOfSearchState.launchCollectionInLifecycleScope(::searchStateChanged)
-        viewModel.rowLongPressFocusFlow.launchCollectionInLifecycleScope(::onSelectedRowUpdated)
         viewModel.flowOfColumnHeadings.launchCollectionInLifecycleScope(::onColumnNamesChanged)
         viewModel.flowOfCardStateChanged.launchCollectionInLifecycleScope(::onCardsMarkedEvent)
         viewModel.flowOfToggleSelectionState.launchCollectionInLifecycleScope(::onToggleSelectionStateUpdated)
@@ -260,35 +285,31 @@ class CardBrowserFragment :
             viewModel.focusedRow = id
             if (viewModel.isInMultiSelectMode) {
                 val wasSelected = viewModel.selectedRows.contains(id)
-                viewModel.toggleRowSelection(id)
-                viewModel.saveScrollingState(id)
-                viewModel.oldCardTopOffset = calculateTopOffset(viewModel.lastSelectedPosition)
+                viewModel.toggleRowSelection(id.toRowSelection())
                 // Load NoteEditor on trailing side if card is selected
                 if (wasSelected) {
                     viewModel.currentCardId = id.toCardId(viewModel.cardsOrNotes)
                     requireCardBrowserActivity().loadNoteEditorFragmentIfFragmented()
                 }
             } else {
-                viewModel.lastSelectedPosition = (cardsListView.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
-                viewModel.oldCardTopOffset = calculateTopOffset(viewModel.lastSelectedPosition)
                 val cardId = viewModel.queryDataForCardEdit(id)
                 requireCardBrowserActivity().openNoteEditorForCard(cardId)
             }
         }
 
     private fun calculateTopOffset(cardPosition: Int): Int {
-        val layoutManager = cardsListView.layoutManager as LinearLayoutManager
         val firstVisiblePosition = layoutManager.findFirstVisibleItemPosition()
         val view = cardsListView.getChildAt(cardPosition - firstVisiblePosition)
         return view?.top ?: 0
     }
 
-    private fun autoScrollTo(
-        newPosition: Int,
-        offset: Int,
-    ) {
-        (cardsListView.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(newPosition, offset)
+    private fun autoScrollTo(rowSelection: RowSelection) {
+        val newPosition = viewModel.getPositionOfId(rowSelection.rowId) ?: return
+        layoutManager.scrollToPositionWithOffset(newPosition, rowSelection.topOffset)
     }
+
+    private fun CardOrNoteId.toRowSelection() =
+        RowSelection(rowId = this, topOffset = calculateTopOffset(viewModel.getPositionOfId(this)!!))
 
     private fun requireCardBrowserActivity(): CardBrowser = requireActivity() as CardBrowser
 

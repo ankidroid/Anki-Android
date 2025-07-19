@@ -49,7 +49,9 @@ import com.ichi2.anki.browser.CardBrowserColumn.SFLD
 import com.ichi2.anki.browser.CardBrowserColumn.TAGS
 import com.ichi2.anki.browser.CardBrowserLaunchOptions.DeepLink
 import com.ichi2.anki.browser.CardBrowserLaunchOptions.SystemContextMenu
+import com.ichi2.anki.browser.CardBrowserViewModel.ChangeMultiSelectMode.SingleSelectCause
 import com.ichi2.anki.browser.CardBrowserViewModel.Companion.STATE_MULTISELECT_VALUES
+import com.ichi2.anki.browser.CardBrowserViewModel.RowSelection
 import com.ichi2.anki.browser.CardBrowserViewModel.ToggleSelectionState.SELECT_ALL
 import com.ichi2.anki.browser.CardBrowserViewModel.ToggleSelectionState.SELECT_NONE
 import com.ichi2.anki.browser.RepositionCardsRequest.ContainsNonNewCardsError
@@ -1069,7 +1071,7 @@ class CardBrowserViewModelTest : JvmTest() {
                 assertThat("toggle selection after select all manually", awaitItem(), equalTo(SELECT_NONE))
 
                 // end select mode
-                endMultiSelectMode()
+                endMultiSelectMode(SingleSelectCause.NavigateBack)
                 assertThat("multiselect after toggle 3", isInMultiSelectMode, equalTo(false))
                 cancelAndIgnoreRemainingEvents()
             }
@@ -1102,9 +1104,9 @@ class CardBrowserViewModelTest : JvmTest() {
             this.toggleRowSelectionAtPosition(0)
             this.toggleRowSelectionAtPosition(0)
             this.toggleRowSelectionAtPosition(1)
-            assertThat("selection -> in multiselect", flowOfIsInMultiSelectMode.value, equalTo(true))
+            assertThat("selection -> in multiselect", isInMultiSelectMode, equalTo(true))
             this.toggleRowSelectionAtPosition(2)
-            assertThat("tap last row -> disable multiselect", flowOfIsInMultiSelectMode.value, equalTo(false))
+            assertThat("tap last row -> disable multiselect", isInMultiSelectMode, equalTo(false))
         }
     }
 
@@ -1113,14 +1115,14 @@ class CardBrowserViewModelTest : JvmTest() {
         val handle = SavedStateHandle()
         runViewModelTest(savedStateHandle = handle, notes = 1) {
             assertThat(isInMultiSelectMode, equalTo(false))
-            assertThat("initial multiselect state", handle.get<Boolean>("multiselect"), equalTo(null))
+            assertThat("initial multiselect state", handle.get<Boolean>("multiselect"), equalTo(false))
             selectAll()
             assertThat("multiselect after select all", handle.get<Boolean>("multiselect"), equalTo(true))
         }
 
         runViewModelTest(savedStateHandle = handle) {
             assertThat("multiselect state restoration", isInMultiSelectMode, equalTo(true))
-            endMultiSelectMode()
+            endMultiSelectMode(SingleSelectCause.NavigateBack)
             assertThat("multiselect after 'end multiselect'", handle.get<Boolean>("multiselect"), equalTo(false))
         }
     }
@@ -1345,4 +1347,11 @@ fun CardBrowserViewModel.setColumn(
 val Pair<List<ColumnWithSample>, List<ColumnWithSample>>.allColumns
     get() = this.first + this.second
 
-private fun CardBrowserViewModel.toggleRowSelectionAtPosition(position: Int) = toggleRowSelection(cards[position])
+private fun CardBrowserViewModel.toggleRowSelectionAtPosition(position: Int) = toggleRowSelection(cards[position].toRowSelection())
+
+fun CardBrowserViewModel.selectRowAtPosition(position: Int) {
+    val rowId = this.getRowAtPosition(position)
+    this.selectRowAtPosition(position, rowId.toRowSelection())
+}
+
+fun CardOrNoteId.toRowSelection() = RowSelection(rowId = this, topOffset = 0)
