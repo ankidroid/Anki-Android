@@ -17,6 +17,7 @@
 package com.ichi2.testutils
 
 import android.annotation.SuppressLint
+import anki.notetypes.copy
 import com.ichi2.anki.libanki.Card
 import com.ichi2.anki.libanki.CardType
 import com.ichi2.anki.libanki.Collection
@@ -24,10 +25,13 @@ import com.ichi2.anki.libanki.Consts
 import com.ichi2.anki.libanki.DeckConfig
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.Note
+import com.ichi2.anki.libanki.NoteTypeId
 import com.ichi2.anki.libanki.NotetypeJson
 import com.ichi2.anki.libanki.Notetypes
 import com.ichi2.anki.libanki.QueueType
+import com.ichi2.anki.libanki.addNotetype
 import com.ichi2.anki.libanki.exception.ConfirmModSchemaException
+import com.ichi2.anki.libanki.getNotetype
 import com.ichi2.anki.libanki.testutils.TestCollectionManager
 import com.ichi2.anki.libanki.testutils.ext.addNote
 import kotlinx.coroutines.Dispatchers
@@ -119,20 +123,32 @@ interface TestClass {
         fields: Array<String>,
         qfmt: String,
         afmt: String,
+        templateCount: Int = 1,
     ): String {
         val noteType = col.notetypes.new(name)
         for (field in fields) {
             col.notetypes.addFieldLegacy(noteType, col.notetypes.newField(field))
         }
-        val t =
-            Notetypes.newTemplate("Card 1").also { tmpl ->
-                tmpl.qfmt = qfmt
-                tmpl.afmt = afmt
-            }
-        col.notetypes.addTemplate(noteType, t)
+        repeat(templateCount) { idx ->
+            val t =
+                Notetypes.newTemplate("Card ${idx + 1}").also { tmpl ->
+                    tmpl.qfmt = qfmt
+                    tmpl.afmt = afmt
+                }
+            col.notetypes.addTemplate(noteType, t)
+        }
         col.notetypes.add(noteType)
         return name
     }
+
+    fun addClozeNoteType(name: String = "Cloze2"): NoteTypeId =
+        col
+            .addNotetype(
+                col.getNotetype(col.notetypes.byName("Cloze")!!.id).copy {
+                    id = 0
+                    this.name = name
+                },
+            ).id
 
     /** Adds a note with Text to Speech functionality */
     fun addTextToSpeechNote(
@@ -199,7 +215,10 @@ interface TestClass {
     }
 
     /** Adds [count] notes in the same deck with the same front & back */
-    fun addNotes(count: Int): List<Note> = List(count) { addBasicNote() }
+    fun addNotes(
+        count: Int,
+        front: String = "Front",
+    ): List<Note> = List(count) { addBasicNote(front = front) }
 
     fun Note.moveToDeck(
         deckName: String,

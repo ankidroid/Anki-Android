@@ -55,6 +55,7 @@ import com.ichi2.anki.libanki.CardId
 import com.ichi2.anki.libanki.CardType
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.DeckNameId
+import com.ichi2.anki.libanki.NoteId
 import com.ichi2.anki.libanki.QueueType
 import com.ichi2.anki.libanki.QueueType.ManuallyBuried
 import com.ichi2.anki.libanki.QueueType.SiblingBuried
@@ -254,6 +255,8 @@ class CardBrowserViewModel(
      */
     val flowOfCardStateChanged = MutableSharedFlow<Unit>()
 
+    val flowOfChangeNoteType = MutableSharedFlow<ChangeNoteTypeResponse>()
+
     var focusedRow: CardOrNoteId? = null
         set(value) {
             if (!isFragmented) return
@@ -263,6 +266,19 @@ class CardBrowserViewModel(
     suspend fun queryAllSelectedCardIds() = selectedRows.queryCardIds(this.cardsOrNotes)
 
     suspend fun queryAllSelectedNoteIds() = selectedRows.queryNoteIds(this.cardsOrNotes)
+
+    fun requestChangeNoteType() =
+        viewModelScope.launch {
+            Timber.i("launchChangeNoteType")
+            val noteIds = queryAllSelectedNoteIds()
+            flowOfChangeNoteType.emit(
+                when {
+                    noteIds.isEmpty() -> ChangeNoteTypeResponse.NoSelection
+                    !noteIds.allOfSameNoteType() -> ChangeNoteTypeResponse.MixedSelection
+                    else -> ChangeNoteTypeResponse.ChangeNoteType.from(noteIds)
+                },
+            )
+        }
 
     @VisibleForTesting
     internal suspend fun queryAllCardIds() = cards.queryCardIds()
@@ -1228,6 +1244,25 @@ class CardBrowserViewModel(
         SELECT_NONE,
     }
 
+    sealed class ChangeNoteTypeResponse {
+        data object NoSelection : ChangeNoteTypeResponse()
+
+        data object MixedSelection : ChangeNoteTypeResponse()
+
+        @ConsistentCopyVisibility
+        data class ChangeNoteType private constructor(
+            val nodeIds: List<NoteId>,
+        ) : ChangeNoteTypeResponse() {
+            companion object {
+                @CheckResult
+                fun from(ids: List<NoteId>): ChangeNoteType {
+                    require(ids.isNotEmpty()) { "a non-empty list must be provided" }
+                    return ChangeNoteType(ids.distinct())
+                }
+            }
+        }
+    }
+
     /**
      * @param wasBuried `true` if all cards were buried, `false` if unburied
      * @param count the number of affected cards
@@ -1369,6 +1404,19 @@ sealed class RepositionCardsRequest {
 }
 
 fun BrowserColumns.Column.getLabel(cardsOrNotes: CardsOrNotes): String = if (cardsOrNotes == CARDS) cardsModeLabel else notesModeLabel
+
+/**
+ * Whether the provided notes all have the same the same [note type][com.ichi2.anki.libanki.NoteTypeId]
+ */
+private suspend fun List<NoteId>.allOfSameNoteType(): Boolean {
+    if (isEmpty()) {
+        return false
+    }
+    val noteIds = this
+    return withCol { notetypes.nids(getNote(noteIds.first()).noteTypeId) }.toSet().let { set ->
+        noteIds.all { set.contains(it) }
+    }
+}
 
 @Parcelize
 data class ColumnHeading(
