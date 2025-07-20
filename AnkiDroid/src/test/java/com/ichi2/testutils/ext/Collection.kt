@@ -19,13 +19,7 @@ package com.ichi2.testutils.ext
 import androidx.appcompat.app.AppCompatDelegate
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.libanki.Collection
-import com.ichi2.anki.libanki.Note
 import com.ichi2.utils.LanguageUtil
-
-fun Collection.addNote(note: Note): Int {
-    addNote(note, note.notetype.did)
-    return note.numberOfCards(this)
-}
 
 /**
  * Closes and reopens the backend using the provided [language], typically for

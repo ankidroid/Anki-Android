@@ -69,26 +69,16 @@
         android:id="@+id/action_reset_cards_progress"
         android:title="@string/card_editor_reset_card"/>
 
+    <!-- TODO: ankidroid:showAsAction="ifRoom" once 'no hamburger' padding issues are resolved -->
     <item
         android:id="@+id/action_preview"
-        android:title="@string/card_editor_preview_card"/>
+        android:title="@string/card_editor_preview_card"
+        android:icon="@drawable/ic_remove_red_eye_white"
+    />
 
     <item
         android:id="@+id/action_export_selected"
         tools:title="Export cards"/>
-
-    <item
-        ankidroid:showAsAction="ifRoom"
-        android:id="@+id/action_select_all"
-        android:title="@string/card_browser_select_all"
-        android:icon="@drawable/ic_select_all_white"/>
-
-    <!-- For now: don't display 'select none' as action as we don't have an icon -->
-    <item
-        ankidroid:showAsAction="never"
-        android:id="@+id/action_select_none"
-        android:title="@string/card_browser_select_none"
-        android:icon="@drawable/ic_select_all_white"/>
 
     <item
         ankidroid:showAsAction="ifRoom"

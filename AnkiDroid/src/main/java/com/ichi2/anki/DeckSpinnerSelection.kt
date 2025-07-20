@@ -65,6 +65,7 @@ class DeckSpinnerSelection(
     private val showAllDecks: Boolean,
     private val alwaysShowDefault: Boolean,
     private val showFilteredDecks: Boolean,
+    private val subtitleProvider: DeckDropDownAdapter.SubtitleProvider? = null,
     private val fragmentManagerSupplier: FragmentManagerSupplier = context.asFragmentManagerSupplier(),
 ) {
     private var deckDropDownAdapter: DeckDropDownAdapter? = null
@@ -83,7 +84,7 @@ class DeckSpinnerSelection(
         // Add drop-down menu to select deck to action bar.
         computeDropDownDecks(col, includeFiltered = showFilteredDecks).toMutableList().let {
             dropDownDecks = it
-            deckDropDownAdapter = DeckDropDownAdapter(context, it)
+            deckDropDownAdapter = DeckDropDownAdapter(context, subtitleProvider, it)
             spinner.adapter = deckDropDownAdapter
             setSpinnerListener()
         }

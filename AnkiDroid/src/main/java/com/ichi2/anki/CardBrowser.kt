@@ -116,7 +116,7 @@ import com.ichi2.anki.utils.ext.getCurrentDialogFragment
 import com.ichi2.anki.utils.ext.ifNotZero
 import com.ichi2.anki.utils.ext.setFragmentResultListener
 import com.ichi2.anki.utils.ext.showDialogFragment
-import com.ichi2.anki.widgets.DeckDropDownAdapter.SubtitleListener
+import com.ichi2.anki.widgets.DeckDropDownAdapter
 import com.ichi2.ui.CardBrowserSearchView
 import com.ichi2.utils.LanguageUtil
 import com.ichi2.utils.TagsUtil.getUpdatedTags
@@ -133,7 +133,7 @@ import timber.log.Timber
 @KotlinCleanup("scan through this class and add attributes - in process")
 open class CardBrowser :
     NavigationDrawerActivity(),
-    SubtitleListener,
+    DeckDropDownAdapter.SubtitleProvider,
     DeckSelectionListener,
     TagsDialogListener,
     ChangeManager.Subscriber {
@@ -413,8 +413,10 @@ open class CardBrowser :
         // must be called once we have an accessible collection
         viewModel = createViewModel(launchOptions, fragmented)
 
-        supportFragmentManager.commit {
-            replace(R.id.card_browser_frame, CardBrowserFragment())
+        if (supportFragmentManager.findFragmentById(R.id.card_browser_frame) == null) {
+            supportFragmentManager.commit {
+                replace(R.id.card_browser_frame, CardBrowserFragment())
+            }
         }
 
         // initialize the lateinit variables
@@ -428,6 +430,7 @@ open class CardBrowser :
                 showAllDecks = true,
                 alwaysShowDefault = false,
                 showFilteredDecks = true,
+                subtitleProvider = this,
             )
 
         startLoadingCollection()
@@ -1012,12 +1015,6 @@ open class CardBrowser :
         if (fragmented && viewModel.rowCount != 0) {
             fragment?.onCreateMenu(menu, menuInflater)
         }
-        actionBarMenu?.findItem(R.id.action_select_all)?.run {
-            isVisible = !hasSelectedAllCards()
-        }
-        actionBarMenu?.findItem(R.id.action_select_none)?.run {
-            isVisible = viewModel.hasSelectedAnyRows()
-        }
         actionBarMenu?.findItem(R.id.action_undo)?.run {
             isVisible = getColUnsafe.undoAvailable()
             title = getColUnsafe.undoLabel()
@@ -1033,7 +1030,7 @@ open class CardBrowser :
         }
         previewItem = menu.findItem(R.id.action_preview)
         onSelectionChanged()
-        updatePreviewMenuItem()
+        refreshMenuItems()
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -1079,8 +1076,11 @@ open class CardBrowser :
         }
     }
 
-    private fun updatePreviewMenuItem() {
+    private fun refreshMenuItems() {
         previewItem?.isVisible = !fragmented && viewModel.rowCount > 0
+        actionBarMenu?.findItem(R.id.action_select_all)?.isVisible =
+            viewModel.rowCount > 0 &&
+            viewModel.selectedRowCount() < viewModel.rowCount
     }
 
     private fun updateMultiselectMenu() {
@@ -1091,20 +1091,29 @@ open class CardBrowser :
         }
         // set the number of selected rows (only in multiselect)
         actionBarTitle.text = String.format(LanguageUtil.getLocaleCompat(resources), "%d", viewModel.selectedRowCount())
-        if (viewModel.hasSelectedAnyRows()) {
-            actionBarMenu.findItem(R.id.action_suspend_card).apply {
-                title = TR.browsingToggleSuspend().toSentenceCase(this@CardBrowser, R.string.sentence_toggle_suspend)
-                // TODO: I don't think this icon is necessary
-                setIcon(R.drawable.ic_suspend)
-            }
-            actionBarMenu.findItem(R.id.action_toggle_bury).apply {
-                title = TR.browsingToggleBury().toSentenceCase(this@CardBrowser, R.string.sentence_toggle_bury)
-            }
-            actionBarMenu.findItem(R.id.action_mark_card).apply {
-                title = TR.browsingToggleMark()
-                setIcon(R.drawable.ic_star_border_white)
-            }
+
+        actionBarMenu.findItem(R.id.action_flag).isVisible = viewModel.hasSelectedAnyRows()
+        actionBarMenu.findItem(R.id.action_suspend_card).apply {
+            title = TR.browsingToggleSuspend().toSentenceCase(this@CardBrowser, R.string.sentence_toggle_suspend)
+            // TODO: I don't think this icon is necessary
+            setIcon(R.drawable.ic_suspend)
+            isVisible = viewModel.hasSelectedAnyRows()
         }
+        actionBarMenu.findItem(R.id.action_toggle_bury).apply {
+            title = TR.browsingToggleBury().toSentenceCase(this@CardBrowser, R.string.sentence_toggle_bury)
+            isVisible = viewModel.hasSelectedAnyRows()
+        }
+        actionBarMenu.findItem(R.id.action_mark_card).apply {
+            title = TR.browsingToggleMark()
+            setIcon(R.drawable.ic_star_border_white)
+            isVisible = viewModel.hasSelectedAnyRows()
+        }
+        actionBarMenu.findItem(R.id.action_change_deck).isVisible = viewModel.hasSelectedAnyRows()
+        actionBarMenu.findItem(R.id.action_reposition_cards).isVisible = viewModel.hasSelectedAnyRows()
+        actionBarMenu.findItem(R.id.action_reschedule_cards).isVisible = viewModel.hasSelectedAnyRows()
+        actionBarMenu.findItem(R.id.action_edit_tags).isVisible = viewModel.hasSelectedAnyRows()
+        actionBarMenu.findItem(R.id.action_reset_cards_progress).isVisible = viewModel.hasSelectedAnyRows()
+
         actionBarMenu.findItem(R.id.action_export_selected).apply {
             this.title =
                 if (viewModel.cardsOrNotes == CARDS) {
@@ -1118,9 +1127,19 @@ open class CardBrowser :
                         viewModel.selectedRowCount(),
                     )
                 }
+            isVisible = viewModel.hasSelectedAnyRows()
         }
-        launchCatchingTask {
+
+        actionBarMenu.findItem(R.id.action_edit_note).isVisible = !fragmented && canPerformMultiSelectEditNote()
+        actionBarMenu.findItem(R.id.action_view_card_info).isVisible = canPerformCardInfo()
+
+        val deleteNoteItem =
             actionBarMenu.findItem(R.id.action_delete_card).apply {
+                isVisible = viewModel.hasSelectedAnyRows()
+            }
+
+        launchCatchingTask {
+            deleteNoteItem.apply {
                 this.title =
                     resources.getQuantityString(
                         R.plurals.card_browser_delete_notes,
@@ -1128,16 +1147,7 @@ open class CardBrowser :
                     )
             }
         }
-
-        actionBarMenu.findItem(R.id.action_select_all).isVisible = !hasSelectedAllCards()
-        // Note: Theoretically should not happen, as this should kick us back to the menu
-        actionBarMenu.findItem(R.id.action_select_none).isVisible =
-            viewModel.hasSelectedAnyRows()
-        actionBarMenu.findItem(R.id.action_edit_note).isVisible = !fragmented && canPerformMultiSelectEditNote()
-        actionBarMenu.findItem(R.id.action_view_card_info).isVisible = canPerformCardInfo()
     }
-
-    private fun hasSelectedAllCards(): Boolean = viewModel.selectedRowCount() >= viewModel.rowCount // must handle 0.
 
     private fun updateFlagForSelectedRows(flag: Flag) =
         launchCatchingTask {
@@ -1253,10 +1263,6 @@ open class CardBrowser :
                 onUndo()
                 return true
             }
-            R.id.action_select_none -> {
-                viewModel.selectNone()
-                return true
-            }
             R.id.action_select_all -> {
                 viewModel.selectAll()
                 return true
@@ -1320,9 +1326,13 @@ open class CardBrowser :
     private fun showCreateFilteredDeckDialog() {
         val dialog = CreateDeckDialog(this, R.string.new_deck, CreateDeckDialog.DeckDialogType.FILTERED_DECK, null)
         dialog.onNewDeckCreated = {
-            val intent = Intent(this, FilteredDeckOptions::class.java)
-            intent.putExtra("search", viewModel.searchTerms)
-            startActivity(intent)
+            startActivity(
+                FilteredDeckOptions.getIntent(
+                    this,
+                    deckId = null,
+                    searchTerms = viewModel.searchTerms,
+                ),
+            )
         }
         launchCatchingTask {
             withProgress {
@@ -1629,20 +1639,20 @@ open class CardBrowser :
             }
             updateList()
             if (viewModel.hasSelectedAllDecks()) {
-                showSnackbar(subtitleText, Snackbar.LENGTH_SHORT)
+                showSnackbar(numberOfCardsOrNoteShown, Snackbar.LENGTH_SHORT)
             } else {
                 // If we haven't selected all decks, allow the user the option to search all decks.
                 val message =
                     if (viewModel.rowCount == 0) {
                         getString(R.string.card_browser_no_cards_in_deck, selectedDeckNameForUi)
                     } else {
-                        subtitleText
+                        numberOfCardsOrNoteShown
                     }
                 showSnackbar(message, Snackbar.LENGTH_SHORT) {
                     setAction(R.string.card_browser_search_all_decks) { searchAllDecks() }
                 }
             }
-            updatePreviewMenuItem()
+            refreshMenuItems()
         }
     }
 
@@ -1652,22 +1662,23 @@ open class CardBrowser :
         Timber.d("updateList")
         deckSpinnerSelection.notifyDataSetChanged()
         onSelectionChanged()
-        updatePreviewMenuItem()
+        refreshMenuItems()
     }
 
     @NeedsTest("select 1, check title, select 2, check title")
     private fun onSelectionChanged() {
         Timber.d("onSelectionChanged")
         updateMultiselectMenu()
-        actionBarMenu?.findItem(R.id.action_select_all)?.isVisible = !hasSelectedAllCards()
-        actionBarMenu?.findItem(R.id.action_select_none)?.isVisible = viewModel.hasSelectedAnyRows()
         refreshSubtitle()
     }
 
+    override val deckDropDownSubtitle: String
+        get() = numberOfCardsOrNoteShown
+
     /**
-     * @return text to be used in the subtitle of the drop-down deck selector
+     * @return A message stating the number of cards/notes shown by the browser.
      */
-    override val subtitleText: String
+    val numberOfCardsOrNoteShown: String
         get() {
             val count = viewModel.rowCount
 
@@ -1769,7 +1780,7 @@ open class CardBrowser :
         forceRefreshSearch()
         viewModel.endMultiSelectMode()
         refreshSubtitle()
-        updatePreviewMenuItem()
+        refreshMenuItems()
         invalidateOptionsMenu() // maybe the availability of undo changed
     }
 

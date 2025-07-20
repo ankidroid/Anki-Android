@@ -233,6 +233,8 @@
     <string name="navigation" maxLength="41">ᱱᱮᱵᱤᱜᱮᱥᱚᱱ</string>
     <string name="media" maxLength="41">ᱢᱤᱰᱤᱭᱟ</string>
     <string name="misc" maxLength="41">ᱢᱤᱥᱠ</string>
+    <!-- Review reminders -->
+    <string name="add_reminder" comment="Label for the add reminder button in the screen for adding and editing review reminders">Add reminder</string>
     <!-- studyoptions -->
     <string name="studyoptions_limit_select_tags">Select tags</string>
     <!-- Deck configurations -->

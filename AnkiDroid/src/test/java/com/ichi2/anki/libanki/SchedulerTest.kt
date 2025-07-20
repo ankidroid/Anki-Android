@@ -27,8 +27,8 @@ import com.ichi2.anki.libanki.Consts.STARTING_FACTOR
 import com.ichi2.anki.libanki.exception.ConfirmModSchemaException
 import com.ichi2.anki.libanki.sched.Counts
 import com.ichi2.anki.libanki.sched.Ease
+import com.ichi2.anki.libanki.testutils.ext.addNote
 import com.ichi2.testutils.JvmTest
-import com.ichi2.testutils.ext.addNote
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers
@@ -128,7 +128,7 @@ open class SchedulerTest : JvmTest() {
         }
         // give the child deck a different configuration
         val c2 = col.decks.addConfigReturningId("new conf")
-        col.decks.setConfigIdForDeckDict(col.decks.get(deck2)!!, c2)
+        col.decks.setConfigIdForDeckDict(col.decks.getLegacy(deck2)!!, c2)
         // both confs have defaulted to a limit of 20
         Assert.assertEquals(20, col.sched.newCount().toLong())
         // first card we get comes from parent
@@ -851,7 +851,7 @@ open class SchedulerTest : JvmTest() {
         col.addNote(note2)
         // cram deck
         val did = addDynamicDeck("Cram")
-        val cram = col.decks.get(did)!!
+        val cram = col.decks.getLegacy(did)!!
         cram.put("resched", false)
         col.decks.save(cram)
         col.sched.rebuildDyn(did)
@@ -1331,7 +1331,7 @@ open class SchedulerTest : JvmTest() {
         val sched = col.sched
         addBasicNote("foo", "bar")
         val did = addDynamicDeck("test")
-        val deck = decks.get(did)!!
+        val deck = decks.getLegacy(did)!!
         deck.put("resched", false)
         sched.rebuildDyn(did)
         var card: Card?

@@ -469,7 +469,7 @@ class DeckPickerTest : RobolectricTest() {
                 val didDynamicA = addDynamicDeck("Deck Dynamic 1")
 
                 val noteEditor = selectContextMenuOptionForActivity(DeckPickerContextMenuOption.ADD_CARD, didA)
-                assertEquals("com.ichi2.anki.SingleFragmentActivity", noteEditor.component!!.className)
+                assertEquals("com.ichi2.anki.NoteEditorActivity", noteEditor.component!!.className)
                 onBackPressedDispatcher.onBackPressed()
 
                 val browser = selectContextMenuOptionForActivity(DeckPickerContextMenuOption.BROWSE_CARDS, didA)

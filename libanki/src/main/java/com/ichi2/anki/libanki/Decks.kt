@@ -33,7 +33,6 @@ import anki.collection.opChangesWithId
 import anki.deck_config.DeckConfigsForUpdate
 import anki.deck_config.UpdateDeckConfigsRequest
 import anki.decks.DeckTreeNode
-import anki.decks.FilteredDeckForUpdate
 import anki.decks.SetDeckCollapsedRequest
 import anki.decks.copy
 import com.ichi2.anki.common.annotations.NeedsTest
@@ -166,8 +165,7 @@ class Decks(
         }
 
     @LibAnkiAlias("get_legacy")
-    @RustCleanup("rename once we've removed this")
-    fun get(did: DeckId): Deck? =
+    fun getLegacy(did: DeckId): Deck? =
         try {
             Deck(BackendUtils.fromJsonBytes(col.backend.getDeckLegacy(did)))
         } catch (ex: BackendNotFoundException) {
@@ -175,7 +173,7 @@ class Decks(
         }
 
     @Suppress("unused")
-    fun have(id: DeckId): Boolean = get(id) != null
+    fun have(id: DeckId): Boolean = getLegacy(id) != null
 
     @RustCleanup("implement and make public")
     @LibAnkiAlias("get_all_legacy")
@@ -186,11 +184,9 @@ class Decks(
 
     /** Return a new normal deck. It must be added with [addDeck] after a name assigned. */
     @LibAnkiAlias("new_deck")
-    @Suppress("unused")
     fun newDeck(): anki.decks.Deck = col.backend.newDeck()
 
     @LibAnkiAlias("add_deck")
-    @Suppress("unused")
     fun addDeck(deck: anki.decks.Deck): OpChangesWithId = col.backend.addDeck(input = deck)
 
     @LibAnkiAlias("new_deck_legacy")
@@ -252,7 +248,7 @@ class Decks(
     }
 
     fun collapse(did: DeckId) {
-        val deck = this.get(did) ?: return
+        val deck = this.getLegacy(did) ?: return
         deck.collapsed = !deck.collapsed
         this.save(deck)
     }
@@ -298,7 +294,7 @@ class Decks(
     fun byName(name: String): Deck? {
         val id = this.idForName(name)
         if (id != null) {
-            return get(id)
+            return getLegacy(id)
         }
         return null
     }
@@ -378,7 +374,7 @@ class Decks(
     /** Falls back on default config if deck or config missing */
     @LibAnkiAlias("config_dict_for_deck_id")
     fun configDictForDeckId(did: DeckId): DeckConfig {
-        val conf = get(did)?.conf ?: 1
+        val conf = getLegacy(did)?.conf ?: 1
         return DeckConfig(BackendUtils.fromJsonBytes(col.backend.getDeckConfigLegacy(conf)))
     }
 
@@ -446,7 +442,7 @@ class Decks(
      *************************************************************
      */
 
-    fun name(did: DeckId): String = get(did)?.name ?: col.backend.tr.decksNoDeck()
+    fun name(did: DeckId): String = getLegacy(did)?.name ?: col.backend.tr.decksNoDeck()
 
     @RustCleanup("implement and make public")
     @LibAnkiAlias("name_if_exists")
@@ -484,7 +480,7 @@ class Decks(
     @LibAnkiAlias("get_current_id")
     fun getCurrentId(): DeckId = col.backend.getCurrentDeck().id
 
-    fun current(): Deck = this.get(this.selected()) ?: this.get(1)!!
+    fun current(): Deck = this.getLegacy(this.selected()) ?: this.getLegacy(1)!!
 
     /** The currently active dids. */
     @RustCleanup("Probably better as a queue")
@@ -549,7 +545,7 @@ class Decks(
     ): List<Deck> {
         // get parent and grandparent names
         val parentsNames = mutableListOf<String>()
-        for (part in immediateParentPath(get(did)!!.name)) {
+        for (part in immediateParentPath(getLegacy(did)!!.name)) {
             if (parentsNames.isEmpty()) {
                 parentsNames.add(part)
             } else {
@@ -563,7 +559,7 @@ class Decks(
                 if (nameMap != null) {
                     nameMap[parentName]
                 } else {
-                    get(id(parentName))
+                    getLegacy(id(parentName))
                 }!!
             parents.add(deck)
         }
@@ -606,7 +602,7 @@ class Decks(
     }
 
     @LibAnkiAlias("is_filtered")
-    fun isFiltered(did: DeckId): Boolean = this.get(did)?.isFiltered == true
+    fun isFiltered(did: DeckId): Boolean = this.getLegacy(did)?.isFiltered == true
 
     /*
      * Not in libAnki
@@ -626,7 +622,7 @@ class Decks(
         if (newName.isEmpty()) {
             return null
         }
-        val deck = get(did) ?: return null
+        val deck = getLegacy(did) ?: return null
         return deck.getString("name") + DECK_SEPARATOR + subdeckName
     }
 
@@ -674,9 +670,3 @@ class Decks(
 
 // These take and return bytes that the frontend TypeScript code will encode/decode.
 fun Collection.getDeckNamesRaw(input: ByteArray): ByteArray = backend.getDeckNamesRaw(input)
-
-/**
- * Gets the filtered deck with given [did]
- * or creates a new one if [did] = 0
- */
-fun Collection.getOrCreateFilteredDeck(did: DeckId): FilteredDeckForUpdate = backend.getOrCreateFilteredDeck(did = did)

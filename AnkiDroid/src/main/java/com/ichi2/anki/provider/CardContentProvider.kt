@@ -972,7 +972,7 @@ class CardContentProvider : ContentProvider() {
                 } catch (filteredSubdeck: BackendDeckIsFilteredException) {
                     throw IllegalArgumentException(filteredSubdeck.message)
                 }
-                val deck: Deck = col.decks.get(did)!!
+                val deck: Deck = col.decks.getLegacy(did)!!
                 @KotlinCleanup("remove the null check if deck is found to be not null in DeckManager.get(Long)")
                 @Suppress("SENSELESS_COMPARISON")
                 if (deck != null) {
@@ -1250,7 +1250,7 @@ class CardContentProvider : ContentProvider() {
         col: Collection,
         did: DeckId,
     ): Boolean =
-        if (col.decks.get(did) != null) {
+        if (col.decks.getLegacy(did) != null) {
             col.decks.select(did)
             true
         } else {

@@ -21,9 +21,8 @@ import android.net.Uri
 import androidx.fragment.app.FragmentActivity
 import anki.collection.OpChangesOnly
 import anki.import_export.ImportAnkiPackageRequest
+import anki.search.SearchNode
 import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.anki.libanki.buildSearchString
-import com.ichi2.anki.libanki.importAnkiPackage
 import com.ichi2.anki.libanki.importCsvRaw
 import com.ichi2.anki.observability.undoableOp
 import kotlinx.coroutines.Dispatchers
@@ -72,7 +71,7 @@ val hideShowButtonCss =
  * input. This method will always return the received input.
  */
 suspend fun FragmentActivity.searchInBrowser(input: ByteArray): ByteArray {
-    val searchString = withCol { buildSearchString(input) }
+    val searchString = withCol { buildSearchString(SearchNode.parseFrom(input)) }
     val starterIntent =
         Intent(this, CardBrowser::class.java).apply {
             putExtra("search_query", searchString)

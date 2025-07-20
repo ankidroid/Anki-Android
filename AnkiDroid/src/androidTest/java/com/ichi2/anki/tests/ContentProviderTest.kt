@@ -930,7 +930,7 @@ class ContentProviderTest : InstrumentedTest() {
                     it.getLong(it.getColumnIndex(FlashCardsContract.Deck.DECK_ID))
                 val deckName =
                     it.getString(it.getColumnIndex(FlashCardsContract.Deck.DECK_NAME))
-                val deck = decks.get(deckID)!!
+                val deck = decks.getLegacy(deckID)!!
                 assertNotNull("Check that the deck we received actually exists", deck)
                 assertEquals(
                     "Check that the received deck has the correct name",
@@ -960,7 +960,7 @@ class ContentProviderTest : InstrumentedTest() {
                     decksCursor.getLong(decksCursor.getColumnIndex(FlashCardsContract.Deck.DECK_ID))
                 val returnedDeckName =
                     decksCursor.getString(decksCursor.getColumnIndex(FlashCardsContract.Deck.DECK_NAME))
-                val realDeck = col.decks.get(deckId)!!
+                val realDeck = col.decks.getLegacy(deckId)!!
                 assertEquals(
                     "Check that received deck ID equals real deck ID",
                     deckId,

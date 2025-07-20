@@ -17,9 +17,9 @@ package com.ichi2.anki.libanki
 
 import android.annotation.SuppressLint
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.libanki.testutils.ext.addNote
 import com.ichi2.anki.utils.ext.CardExt.setFlag
 import com.ichi2.testutils.JvmTest
-import com.ichi2.testutils.ext.addNote
 import org.junit.Test
 import org.junit.runner.RunWith
 import kotlin.test.assertEquals

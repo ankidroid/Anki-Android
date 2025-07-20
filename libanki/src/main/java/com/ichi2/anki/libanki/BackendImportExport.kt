@@ -17,45 +17,8 @@
 package com.ichi2.anki.libanki
 
 import anki.import_export.ExportLimit
-import anki.import_export.ImportAnkiPackageOptions
-import anki.import_export.ImportResponse
 import anki.import_export.exportAnkiPackageOptions
-import anki.search.SearchNode
 import net.ankiweb.rsdroid.Backend
-
-/**
- * (Maybe) create a colpkg backup, while keeping the collection open. If the
- * configured backup interval has not elapsed, and force=false, no backup will be created,
- * and this routine will return false.
- *
- * There must not be an active transaction.
- *
- * If `waitForCompletion` is true, block until the backup completes. Otherwise this routine
- * returns quickly, and the backup can be awaited on a background thread with awaitBackupCompletion()
- * to check for success.
- *
- * Backups are automatically expired according to the user's settings.
- *
- */
-fun Collection.createBackup(
-    backupFolder: String,
-    force: Boolean,
-    waitForCompletion: Boolean,
-): Boolean =
-    backend.createBackup(
-        backupFolder = backupFolder,
-        force = force,
-        waitForCompletion = waitForCompletion,
-    )
-
-/**
- * If a backup is running, block until it completes, throwing if it fails, or already
- * failed, and the status has not yet been checked. On failure, an error is only returned
- * once; subsequent calls are a no-op until another backup is run.
- */
-fun Collection.awaitBackupCompletion() {
-    backend.awaitBackupCompletion()
-}
 
 /**
  * Replace the collection file with the one in the provided .colpkg file.
@@ -73,13 +36,6 @@ fun importCollectionPackage(
         mediaDb = colPath.mediaDb.absolutePath,
     )
 }
-
-fun Collection.importAnkiPackage(
-    packagePath: String,
-    options: ImportAnkiPackageOptions,
-): ImportResponse = backend.importAnkiPackage(packagePath, options)
-
-fun Collection.importAnkiPackageRaw(input: ByteArray): ByteArray = backend.importAnkiPackageRaw(input)
 
 fun Collection.getImportAnkiPackagePresetsRaw(input: ByteArray): ByteArray = backend.getImportAnkiPackagePresetsRaw(input)
 
@@ -129,5 +85,3 @@ fun Collection.exportCardsCsv(
 fun Collection.getCsvMetadataRaw(input: ByteArray): ByteArray = backend.getCsvMetadataRaw(input)
 
 fun Collection.importCsvRaw(input: ByteArray): ByteArray = backend.importCsvRaw(input)
-
-fun Collection.buildSearchString(input: ByteArray): String = backend.buildSearchString(SearchNode.parseFrom(input))

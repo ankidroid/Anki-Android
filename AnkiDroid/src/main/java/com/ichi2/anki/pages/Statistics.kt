@@ -80,7 +80,7 @@ class Statistics :
         if (savedInstanceState == null) {
             requireActivity().launchCatchingTask {
                 deckSpinnerSelection.initializeStatsBarDeckSpinner()
-                val selectedDeck = withCol { decks.get(decks.selected()) }
+                val selectedDeck = withCol { decks.getLegacy(decks.selected()) }
                 if (selectedDeck == null) return@launchCatchingTask
                 select(selectedDeck.id)
                 changeDeck(selectedDeck.name)

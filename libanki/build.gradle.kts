@@ -74,6 +74,8 @@ dependencies {
     testImplementation(libs.junit.jupiter)
     testImplementation(libs.json)
 
+    testImplementation(project(":libanki:testutils"))
+
     // project lint checks
     // PERF: some rules do not need to be applied... but the full run was 3s
     lintChecks(project(":lint-rules"))

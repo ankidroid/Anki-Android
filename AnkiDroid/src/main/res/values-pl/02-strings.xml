@@ -47,7 +47,7 @@
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Otwórz menu boczne</string>
     <string name="drawer_close">Zamknij menu boczne</string>
-    <string name="note_message">Note saved</string>
+    <string name="note_message">Zapisano notatkę</string>
     <string name="CardEditorCardDeck">Talia kart:</string>
     <string name="CardEditorNoteDeck">Talia:</string>
     <string name="CardEditorModel">Typ:</string>
@@ -68,8 +68,8 @@
     <string name="enable_whiteboard" maxLength="28">Włącz tablicę</string>
     <string name="disable_whiteboard">Wyłącz tablicę</string>
     <string name="show_whiteboard">Pokaż tablicę</string>
-    <string name="enable_eraser" maxLength="28">Enable eraser</string>
-    <string name="disable_eraser" maxLength="28">Disable eraser</string>
+    <string name="enable_eraser" maxLength="28">Włącz gumkę</string>
+    <string name="disable_eraser" maxLength="28">Wyłącz gumkę</string>
     <string name="hide_whiteboard" maxLength="28">Ukryj tablicę</string>
     <string name="clear_whiteboard" maxLength="28">Wyczyść tablicę</string>
     <string name="replay_media" maxLength="28">Odtwórz multimedia</string>
@@ -111,10 +111,10 @@
     <string name="missing_note_type">Nie znaleziono typu notatki</string>
     <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (puste)</string>
     <!-- Image cropper -->
-    <string name="image_cropper_action_rotate" maxLength="28" comment="Action in image cropper screen">Rotate</string>
-    <string name="image_cropper_action_flip" maxLength="28" comment="Action in image cropper screen">Flip</string>
-    <string name="image_cropper_action_flip_horizontally" maxLength="28" comment="Submenu action in image cropper screen">Flip horizontally</string>
-    <string name="image_cropper_action_flip_vertically" maxLength="28" comment="Submenu action in image cropper screen">Flip vertically</string>
+    <string name="image_cropper_action_rotate" maxLength="28" comment="Action in image cropper screen">Obróć</string>
+    <string name="image_cropper_action_flip" maxLength="28" comment="Action in image cropper screen">Odwróć</string>
+    <string name="image_cropper_action_flip_horizontally" maxLength="28" comment="Submenu action in image cropper screen">Odwróć w poziomie</string>
+    <string name="image_cropper_action_flip_vertically" maxLength="28" comment="Submenu action in image cropper screen">Odwróć w pionie</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">Osiągnięto limit czasu</string>
     <plurals name="timebox_reached">
@@ -210,8 +210,8 @@
     <string name="restore_default" maxLength="28">Przywróć domyślne</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Pusto</string>
     <!-- Whiteboard eraser mode toggle message in Reviewer -->
-    <string name="white_board_eraser_enabled">Eraser mode activated</string>
-    <string name="white_board_eraser_disabled">Eraser mode deactivated</string>
+    <string name="white_board_eraser_enabled">Tryb gumkowania aktywowany</string>
+    <string name="white_board_eraser_disabled">Tryb gumkowania zdezaktywowany</string>
     <!-- Whiteboard save image message in the Study Screen -->
     <string name="white_board_image_save_failed">Nie udało się zapisać obrazu tablicy. %s</string>
     <string name="white_board_image_saved">Obraz tablicy zapisany w %s</string>

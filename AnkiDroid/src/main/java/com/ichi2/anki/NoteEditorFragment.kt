@@ -70,6 +70,7 @@ import androidx.core.os.BundleCompat
 import androidx.core.text.HtmlCompat
 import androidx.core.util.component1
 import androidx.core.util.component2
+import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.core.view.OnReceiveContentListener
 import androidx.core.view.WindowInsetsControllerCompat
@@ -77,6 +78,7 @@ import androidx.core.view.isVisible
 import androidx.draganddrop.DropHelper
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import anki.config.ConfigKey
 import anki.notes.NoteFieldsCheckResponse
@@ -152,7 +154,6 @@ import com.ichi2.anki.ui.setupNoteTypeSpinner
 import com.ichi2.anki.utils.ext.sharedPrefs
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.utils.ext.window
-import com.ichi2.anki.widgets.DeckDropDownAdapter.SubtitleListener
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.compat.setTooltipTextCompat
 import com.ichi2.imagecropper.ImageCropper
@@ -200,7 +201,7 @@ const val CALLER_KEY = "caller"
  * sides: a question and an answer. Any number of fields can appear on each side. When you add a note to Anki, cards
  * which show that note are generated. Some models generate one card, others generate more than one.
  * Features:
- * - Implements [MainToolbar.OnMenuItemClickListener] to handle toolbar menu item clicks.
+ * - Implements [MenuHost] ([onCreateMenu]/[onPrepareMenu]) to handle toolbar menu item clicks.
  * - Implements [DispatchKeyEventListener] to handle key events.
  *
  * @see [the Anki Desktop manual](https://docs.ankiweb.net/getting-started.html.cards)
@@ -208,9 +209,8 @@ const val CALLER_KEY = "caller"
 @KotlinCleanup("Go through the class and select elements to fix")
 @KotlinCleanup("see if we can lateinit")
 class NoteEditorFragment :
-    Fragment(R.layout.note_editor),
+    Fragment(R.layout.note_editor_fragment),
     DeckSelectionListener,
-    SubtitleListener,
     TagsDialogListener,
     BaseSnackbarBuilderProvider,
     DispatchKeyEventListener,
@@ -225,9 +225,6 @@ class NoteEditorFragment :
 
     private val getColUnsafe: Collection
         get() = CollectionManager.getColUnsafe()
-
-    private val mainToolbar: androidx.appcompat.widget.Toolbar
-        get() = requireView().findViewById(R.id.toolbar)
 
     /**
      * Flag which forces the calling activity to rebuild it's definition of current card from scratch
@@ -298,7 +295,7 @@ class NoteEditorFragment :
         registerForActivityResult(
             ActivityResultContracts.StartActivityForResult(),
             NoteEditorActivityResultCallback {
-                if (it.resultCode != Activity.RESULT_CANCELED) {
+                if (it.resultCode != RESULT_CANCELED) {
                     changed = true
                 }
             },
@@ -373,7 +370,7 @@ class NoteEditorFragment :
         registerForActivityResult(
             ActivityResultContracts.StartActivityForResult(),
             NoteEditorActivityResultCallback { result ->
-                if (result.resultCode != Activity.RESULT_CANCELED) {
+                if (result.resultCode != RESULT_CANCELED) {
                     changed = true
                     if (!addNote) {
                         reloadRequired = true
@@ -440,9 +437,6 @@ class NoteEditorFragment :
             deckSpinnerSelection!!.selectDeckById(deckId, false)
         }
     }
-
-    override val subtitleText: String
-        get() = ""
 
     private enum class AddClozeType {
         SAME_NUMBER,
@@ -549,11 +543,6 @@ class NoteEditorFragment :
             setIconColor(MaterialColors.getColor(requireContext(), R.attr.toolbarIconColor, 0))
         }
 
-        // Hide mainToolbar since CardBrowser handles the toolbar in fragmented activities.
-        if (inFragmentedActivity) {
-            mainToolbar.visibility = View.GONE
-        }
-
         try {
             setupEditor(getColUnsafe)
         } catch (ex: RuntimeException) {
@@ -572,14 +561,12 @@ class NoteEditorFragment :
         requireActivity().window.navigationBarColor =
             Themes.getColorFromAttr(requireContext(), R.attr.toolbarBackgroundColor)
 
-        // R.id.home is handled in setNavigationOnClickListener
-        // Set a listener for back button clicks in the toolbar
-        mainToolbar.setNavigationOnClickListener {
-            Timber.i("NoteEditor:: Back button on the menu was pressed")
-            requireActivity().onBackPressedDispatcher.onBackPressed()
-        }
-
-        mainToolbar.addMenuProvider(this)
+        // Register this fragment as a menu provider with the activity
+        (requireActivity() as MenuHost).addMenuProvider(
+            this,
+            viewLifecycleOwner,
+            Lifecycle.State.RESUMED,
+        )
     }
 
     /**
@@ -654,7 +641,7 @@ class NoteEditorFragment :
         return try {
             val inputStream = requireContext().contentResolver.openInputStream(uri) ?: return null
 
-            val fileName = ContentResolverUtil.getFileName(requireContext().contentResolver, uri) ?: return null
+            val fileName = ContentResolverUtil.getFileName(requireContext().contentResolver, uri)
             val cacheDir = requireContext().cacheDir
             val destFile = File(cacheDir, fileName)
 
@@ -786,7 +773,7 @@ class NoteEditorFragment :
                             Timber.i("onGalleryClicked")
                             try {
                                 ioEditorLauncher.launch("image/*")
-                            } catch (ex: ActivityNotFoundException) {
+                            } catch (_: ActivityNotFoundException) {
                                 Timber.w("No app found to handle onGalleryClicked request")
                                 activity?.showSnackbar(R.string.activity_start_failed)
                             }
@@ -852,7 +839,7 @@ class NoteEditorFragment :
         setNote(editorNote, FieldChangeType.onActivityCreation(shouldReplaceNewlines()))
         if (addNote) {
             noteTypeSpinner!!.onItemSelectedListener = SetNoteTypeListener()
-            mainToolbar.setTitle(R.string.menu_add)
+            requireAnkiActivity().setToolbarTitle(R.string.menu_add)
             // set information transferred by intent
             var contents: String? = null
             val tags = requireArguments().getStringArray(EXTRA_TAGS)
@@ -895,7 +882,7 @@ class NoteEditorFragment :
             if (caller == NoteEditorCaller.ADD_IMAGE) lifecycleScope.launch { handleImageIntent(intent) }
         } else {
             noteTypeSpinner!!.onItemSelectedListener = EditNoteTypeListener()
-            mainToolbar.setTitle(R.string.cardeditor_title_edit_card)
+            requireAnkiActivity().setTitle(R.string.cardeditor_title_edit_card)
         }
         requireView().findViewById<View>(R.id.CardEditorTagButton).setOnClickListener {
             Timber.i("NoteEditor:: Tags button pressed... opening tags editor")
@@ -2291,7 +2278,7 @@ class NoteEditorFragment :
         val pair: Pair<Int, Field>? =
             try {
                 Notetypes.fieldMap(currentlySelectedNotetype!!)[name]
-            } catch (e: Exception) {
+            } catch (_: Exception) {
                 Timber.w("Failed to obtain field '%s'", name)
                 return null
             }
@@ -2631,13 +2618,13 @@ class NoteEditorFragment :
         get() =
             ShortcutGroup(
                 listOf(
-                    shortcut("Ctrl+ENTER", { getString(R.string.save) }),
-                    shortcut("Ctrl+D", { getString(R.string.select_deck) }),
-                    shortcut("Ctrl+L", { getString(R.string.card_template_editor_group) }),
-                    shortcut("Ctrl+N", { getString(R.string.select_note_type) }),
-                    shortcut("Ctrl+Shift+T", { getString(R.string.tag_editor) }),
-                    shortcut("Ctrl+Shift+C", { getString(R.string.multimedia_editor_popup_cloze) }),
-                    shortcut("Ctrl+P", { getString(R.string.card_editor_preview_card) }),
+                    shortcut("Ctrl+ENTER") { getString(R.string.save) },
+                    shortcut("Ctrl+D") { getString(R.string.select_deck) },
+                    shortcut("Ctrl+L") { getString(R.string.card_template_editor_group) },
+                    shortcut("Ctrl+N") { getString(R.string.select_note_type) },
+                    shortcut("Ctrl+Shift+T") { getString(R.string.tag_editor) },
+                    shortcut("Ctrl+Shift+C") { getString(R.string.multimedia_editor_popup_cloze) },
+                    shortcut("Ctrl+P") { getString(R.string.card_editor_preview_card) },
                 ),
                 R.string.note_editor_group,
             )
@@ -2796,7 +2783,7 @@ class NoteEditorFragment :
             // If a new column was selected then change the key used to map from mCards to the column TextView
             // Timber.i("NoteEditor:: onItemSelected() fired on mNoteTypeSpinner");
             // In case the type is changed while adding the card, the menu options need to be invalidated
-            mainToolbar.invalidateMenu()
+            requireActivity().invalidateMenu()
             changeNoteType(allNoteTypeIds!![pos])
         }
 
@@ -2827,7 +2814,7 @@ class NoteEditorFragment :
                 val tmpls =
                     try {
                         newNoteType.templates
-                    } catch (e: Exception) {
+                    } catch (_: Exception) {
                         Timber.w("error in obtaining templates from note type %s", allNoteTypeIds!![pos])
                         return
                     }
@@ -2884,8 +2871,6 @@ class NoteEditorFragment :
         modifyCurrentSelection(TextWrapper(prefix, suffix), textBox)
     }
 
-    private fun hasClozeDeletions(): Boolean = nextClozeIndex > 1
-
     // BUG: This assumes all fields are inserted as: {{cloze:Text}}
     private val nextClozeIndex: Int
         get() {
@@ -2925,7 +2910,7 @@ class NoteEditorFragment :
     }
 
     /**
-     * Whether sticky fields are currently being loaded. In this card, don't consider the text chagned.
+     * Whether sticky fields are currently being loaded. In this card, don't consider the text changed.
      */
     private var loadingStickyFields = false
 

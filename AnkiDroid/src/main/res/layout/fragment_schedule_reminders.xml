@@ -2,11 +2,13 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/root_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <LinearLayout
+        android:id="@+id/root_linear_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -16,17 +18,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:navigationContentDescription="@string/abc_action_bar_up_description"
-            app:navigationIcon="?attr/homeAsUpIndicator" />
-
-        <LinearLayout
-            android:id="@+id/schedule_reminders_column_headings"
             android:background="@drawable/browser_heading_bottom_divider"
-            android:orientation="horizontal"
-            android:paddingVertical="2dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-        </LinearLayout>
+            app:navigationIcon="?attr/homeAsUpIndicator" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/schedule_reminders_recycler_view"
@@ -37,8 +30,22 @@
             android:clipToPadding="false"
             android:drawSelectorOnTop="true"
             android:scrollbars="vertical"
-            />
+            android:contentDescription="List of scheduled review reminders"
+            tools:listitem="@layout/schedule_reminders_list_item"
+            tools:ignore="HardcodedText" />
 
     </LinearLayout>
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/schedule_reminders_add_reminder_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        style="?attr/floatingActionButtonPrimaryStyle"
+        app:backgroundTint="?attr/fab_normal"
+        android:text="@string/add_reminder"
+        app:icon="@drawable/ic_add_bell"
+        android:contentDescription="@string/add_reminder" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

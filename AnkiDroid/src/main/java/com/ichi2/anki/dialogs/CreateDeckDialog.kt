@@ -30,7 +30,6 @@ import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.Decks
-import com.ichi2.anki.libanki.getOrCreateFilteredDeck
 import com.ichi2.anki.showThemedToast
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.utils.getInputField
@@ -76,7 +75,7 @@ class CreateDeckDialog(
         Timber.i("CreateDeckDialog::showFilteredDeckDialog")
         initialDeckName =
             withCol {
-                getOrCreateFilteredDeck(did = 0).name
+                sched.getOrCreateFilteredDeck(did = 0).name
             }
         showDialog()
     }
@@ -267,7 +266,7 @@ class CreateDeckDialog(
             try {
                 val decks = getColUnsafe.decks
                 val deckId = decks.id(previousDeckName!!)
-                decks.rename(decks.get(deckId)!!, newDeckName)
+                decks.rename(decks.getLegacy(deckId)!!, newDeckName)
                 onNewDeckCreated(deckId)
                 // 11668: Display feedback if a deck is renamed
                 displayFeedback(context.getString(R.string.deck_renamed))

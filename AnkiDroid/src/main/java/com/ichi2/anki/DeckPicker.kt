@@ -26,7 +26,6 @@
 package com.ichi2.anki
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -37,13 +36,11 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Message
 import android.text.util.Linkify
-import android.util.TypedValue
 import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewPropertyAnimator
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
@@ -54,7 +51,6 @@ import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
-import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
@@ -162,6 +158,8 @@ import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.ResizablePaneManager
+import com.ichi2.anki.ui.animations.fadeIn
+import com.ichi2.anki.ui.animations.fadeOut
 import com.ichi2.anki.utils.Destination
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.anki.utils.ext.setFragmentResultListener
@@ -506,9 +504,8 @@ open class DeckPicker :
             startActivity(appIntro)
             finish() // calls onDestroy() immediately
             return
-        } else {
-            Timber.d("Not displaying app intro")
         }
+        Timber.d("Not displaying app intro")
         if (intent.hasExtra(INTENT_SYNC_FROM_LOGIN)) {
             Timber.d("launched from introduction activity login: syncing")
             syncOnResume = true
@@ -895,10 +892,9 @@ open class DeckPicker :
             title(R.string.directory_inaccessible)
             customView(
                 contentView,
-                16.dp.toPx(this@DeckPicker),
-                0,
-                32.dp.toPx(this@DeckPicker),
-                32.dp.toPx(this@DeckPicker),
+                paddingTop = 16.dp.toPx(this@DeckPicker),
+                paddingStart = 32.dp.toPx(this@DeckPicker),
+                paddingEnd = 32.dp.toPx(this@DeckPicker),
             )
             positiveButton(R.string.open_settings) {
                 val settingsIntent = PreferencesActivity.getIntent(this@DeckPicker, AdvancedSettingsFragment::class)
@@ -2039,14 +2035,7 @@ open class DeckPicker :
     }
 
     val fragment: StudyOptionsFragment?
-        get() {
-            val frag = supportFragmentManager.findFragmentById(R.id.studyoptions_fragment)
-            return if (frag is StudyOptionsFragment) {
-                frag
-            } else {
-                null
-            }
-        }
+        get() = supportFragmentManager.findFragmentById(R.id.studyoptions_fragment) as? StudyOptionsFragment
 
     /**
      * Refresh the deck picker when the SD card is inserted.
@@ -2295,38 +2284,24 @@ open class DeckPicker :
             deckPickerContent.visibility = if (isEmpty) View.GONE else View.VISIBLE
             noDecksPlaceholder.visibility = if (isEmpty) View.VISIBLE else View.GONE
         } else {
-            val translation =
-                TypedValue.applyDimension(
-                    TypedValue.COMPLEX_UNIT_DIP,
-                    8f,
-                    resources.displayMetrics,
-                )
             val decksListShown = deckPickerContent.isVisible
             val placeholderShown = noDecksPlaceholder.isVisible
             if (isEmpty) {
-                if (decksListShown) {
-                    fadeOut(deckPickerContent, shortAnimDuration, translation)
-                }
-                if (!placeholderShown) {
-                    fadeIn(noDecksPlaceholder, shortAnimDuration, translation).startDelay =
-                        if (decksListShown) {
-                            shortAnimDuration * 2.toLong()
-                        } else {
-                            0.toLong()
-                        }
-                }
+                deckPickerContent.fadeOut(shortAnimDuration)
+                noDecksPlaceholder.fadeIn(shortAnimDuration).startDelay =
+                    if (decksListShown) {
+                        shortAnimDuration * 2L
+                    } else {
+                        0L
+                    }
             } else {
-                if (!decksListShown) {
-                    fadeIn(deckPickerContent, shortAnimDuration, translation).startDelay =
-                        if (placeholderShown) {
-                            shortAnimDuration * 2.toLong()
-                        } else {
-                            0.toLong()
-                        }
-                }
-                if (placeholderShown) {
-                    fadeOut(noDecksPlaceholder, shortAnimDuration, translation)
-                }
+                deckPickerContent.fadeIn(shortAnimDuration).startDelay =
+                    if (placeholderShown) {
+                        shortAnimDuration * 2L
+                    } else {
+                        0L
+                    }
+                noDecksPlaceholder.fadeOut(shortAnimDuration)
             }
         }
         val currentFilter = toolbarSearchView?.query
@@ -2587,42 +2562,6 @@ open class DeckPicker :
 
         private const val PREF_DECK_PICKER_PANE_WEIGHT = "deckPickerPaneWeight"
         private const val PREF_STUDY_OPTIONS_PANE_WEIGHT = "studyOptionsPaneWeight"
-
-        // Animation utility methods used by renderPage() method
-        fun fadeIn(
-            view: View?,
-            duration: Int,
-            translation: Float = 0f,
-            startAction: Runnable? = Runnable { view!!.visibility = View.VISIBLE },
-        ): ViewPropertyAnimator {
-            view!!.alpha = 0f
-            view.translationY = translation
-            return view
-                .animate()
-                .alpha(1f)
-                .translationY(0f)
-                .setDuration(duration.toLong())
-                .withStartAction(startAction)
-        }
-
-        fun fadeOut(
-            view: View?,
-            duration: Int,
-            translation: Float = 0f,
-            endAction: Runnable? =
-                Runnable {
-                    view!!.visibility = View.GONE
-                },
-        ): ViewPropertyAnimator {
-            view!!.alpha = 1f
-            view.translationY = 0f
-            return view
-                .animate()
-                .alpha(0f)
-                .translationY(translation)
-                .setDuration(duration.toLong())
-                .withEndAction(endAction)
-        }
     }
 
     override fun opExecuted(
@@ -2734,16 +2673,6 @@ class OneWaySyncDialog(
     companion object {
         fun fromMessage(message: Message): DialogHandlerMessage = OneWaySyncDialog(message.data.getString("message"))
     }
-}
-
-// This is used to re-show the dialog immediately on activity recreation
-private suspend fun <T> Activity.withImmediatelyShownProgress(
-    @StringRes messageId: Int,
-    block: suspend () -> T,
-) = withProgressDialog(context = this, onCancel = null, delayMillis = 0L) { dialog ->
-    @Suppress("DEPRECATION") // ProgressDialog
-    dialog.setMessage(getString(messageId))
-    block()
 }
 
 /**

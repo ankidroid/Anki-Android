@@ -31,7 +31,6 @@ import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.dialogs.SyncErrorDialog
-import com.ichi2.anki.libanki.createBackup
 import com.ichi2.anki.libanki.fullUploadOrDownload
 import com.ichi2.anki.libanki.syncCollection
 import com.ichi2.anki.libanki.syncLogin

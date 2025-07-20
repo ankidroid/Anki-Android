@@ -35,6 +35,13 @@ import anki.collection.OpChangesWithCount
 import anki.config.ConfigKey
 import anki.config.Preferences
 import anki.config.copy
+import anki.import_export.CsvMetadata
+import anki.import_export.ExportAnkiPackageOptions
+import anki.import_export.ExportLimit
+import anki.import_export.ImportAnkiPackageOptions
+import anki.import_export.ImportCsvRequest
+import anki.import_export.ImportResponse
+import anki.import_export.csvMetadataRequest
 import anki.search.BrowserColumns
 import anki.search.BrowserRow
 import anki.search.SearchNode
@@ -52,9 +59,12 @@ import com.ichi2.anki.libanki.sched.Scheduler
 import com.ichi2.anki.libanki.utils.LibAnkiAlias
 import com.ichi2.anki.libanki.utils.NotInLibAnki
 import net.ankiweb.rsdroid.Backend
+import net.ankiweb.rsdroid.RustCleanup
 import net.ankiweb.rsdroid.exceptions.BackendInvalidInputException
 import timber.log.Timber
 import java.io.File
+
+typealias ImportLogWithChanges = anki.import_export.ImportResponse
 
 // Anki maintains a cache of used tags so it can quickly present a list of tags
 // for autocomplete and in the browser. For efficiency, deletions are not
@@ -62,6 +72,7 @@ import java.io.File
 //
 // This module manages the tag cache and tags for notes.
 @KotlinCleanup("inline function in init { } so we don't need to init `crt` etc... at the definition")
+@RustCleanup("combine with BackendImportExport")
 @WorkerThread
 class Collection(
     /**
@@ -123,19 +134,8 @@ class Collection(
     private var startTime: Long
     private var startReps: Int
 
-    val mod: Long
-        get() = db.queryLongScalar("select mod from col")
-
-    val crt: Long
-        get() = db.queryLongScalar("select crt from col")
-
-    val scm: Long
-        get() = db.queryLongScalar("select scm from col")
-
     private val lastSync: Long
         get() = db.queryLongScalar("select ls from col")
-
-    fun usn(): Int = -1
 
     var ls: Long = 0
     // END: SQL table columns
@@ -156,20 +156,31 @@ class Collection(
 
     fun name() = collectionFiles.collectionName
 
-    /**
+    /*
      * Scheduler
      * ***********************************************************
      */
+
+    /**
+     * For backwards compatibility, the v3 scheduler currently returns 2.
+     * Use the separate [v3Scheduler] method to check if it is active.
+     */
+    @LibAnkiAlias("sched_ver")
     fun schedVer(): Int {
-        // schedVer was not set on legacy v1 collections
+        @RustCleanup("move outside this method")
+        @LibAnkiAlias("_supported_scheduler_versions")
+        val supportedSchedulerVersions = listOf(1, 2)
+
+        // for backwards compatibility, v3 is represented as 2
         val ver = config.get("schedVer") ?: 1
-        return if (listOf(1, 2).contains(ver)) {
-            ver
+        if (ver in supportedSchedulerVersions) {
+            return ver
         } else {
             throw RuntimeException("Unsupported scheduler version")
         }
     }
 
+    @RustCleanup("doesn't match upstream")
     fun _loadScheduler() {
         val ver = schedVer()
         if (ver == 1) {
@@ -189,12 +200,46 @@ class Collection(
         }
     }
 
+    @LibAnkiAlias("v3_scheduler")
+    fun v3Scheduler(): Boolean = schedVer() == 2 && backend.getConfigBool(ConfigKey.Bool.SCHED_2021)
+
+    /**
+     * @throws RuntimeException [enabled] requested, but not using the [schedVer][v2 scheduler]
+     */
+    @LibAnkiAlias("set_v3_scheduler")
+    fun setV3Scheduler(enabled: Boolean) {
+        if (this.v3Scheduler() != enabled) {
+            if (enabled && schedVer() != 2) {
+                throw RuntimeException("must upgrade to v2 scheduler first")
+            }
+            config.setBool(ConfigKey.Bool.SCHED_2021, enabled)
+            _loadScheduler()
+        }
+    }
+
+    /*
+     * DB-related
+     * ***********************************************************
+     */
+
+    // legacy properties; these will likely go away in the future
+
+    val mod: Long
+        get() = db.queryLongScalar("select mod from col")
+
+    @RustCleanup("remove")
+    @NotInLibAnki
+    val scm: Long
+        get() = db.queryLongScalar("select scm from col")
+
     /**
      * Disconnect from DB.
      * Python implementation has a save argument for legacy reasons;
      * AnkiDroid always saves as changes are made.
      */
     @Synchronized
+    @LibAnkiAlias("close")
+    @RustCleanup("doesn't match upstream")
     fun close(
         downgrade: Boolean = false,
         forFullSync: Boolean = false,
@@ -208,7 +253,23 @@ class Collection(
         }
     }
 
+    @LibAnkiAlias("close_for_full_sync")
+    fun closeForFullSync() {
+        // save and cleanup, but backend will take care of collection close
+        if (dbInternal != null) {
+            clearCaches()
+            dbInternal = null
+        }
+    }
+
+    @LibAnkiAlias("_clear_caches")
+    private fun clearCaches() {
+        notetypes.clearCache()
+    }
+
     /** True if DB was created */
+    @RustCleanup("doesn't match upstream")
+    @LibAnkiAlias("reopen")
     fun reopen(
         afterFullSync: Boolean = false,
         databaseBuilder: (Backend) -> DB,
@@ -233,6 +294,8 @@ class Collection(
         }
     }
 
+    @NotInLibAnki
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     fun load() {
         notetypes = Notetypes(this)
         decks = Decks(this)
@@ -261,7 +324,7 @@ class Collection(
      *
      * @throws ConfirmModSchemaException
      */
-    @Throws(ConfirmModSchemaException::class)
+    @LibAnkiAlias("mod_schema")
     fun modSchema() {
         if (!schemaChanged()) {
             /* In Android we can't show a dialog which blocks the main UI thread
@@ -273,8 +336,147 @@ class Collection(
         modSchemaNoCheck()
     }
 
-    /** True if schema changed since last sync.  */
+    /** `true` if schema changed since last sync. */
+    @LibAnkiAlias("schema_changed")
+    @RustCleanup("doesn't match upstream")
     fun schemaChanged(): Boolean = scm > lastSync
+
+    @LibAnkiAlias("usn")
+    fun usn(): Int = -1
+
+    /*
+     * Import/export
+     * ***********************************************************
+     */
+
+    /**
+     * (Maybe) create a colpkg backup, while keeping the collection open. If the
+     * configured backup interval has not elapsed, and force=false, no backup will be created,
+     * and this routine will return false.
+     *
+     * There must not be an active transaction.
+     *
+     * If `waitForCompletion` is true, block until the backup completes. Otherwise this routine
+     * returns quickly, and the backup can be awaited on a background thread with awaitBackupCompletion()
+     * to check for success.
+     *
+     * Backups are automatically expired according to the user's settings.
+     */
+    @LibAnkiAlias("create_backup")
+    fun createBackup(
+        backupFolder: String,
+        force: Boolean,
+        waitForCompletion: Boolean,
+    ): Boolean {
+        // ensure any pending transaction from legacy code/add-ons has been committed
+        val created =
+            backend.createBackup(
+                backupFolder = backupFolder,
+                force = force,
+                waitForCompletion = waitForCompletion,
+            )
+        return created
+    }
+
+    /**
+     * If a backup is running, block until it completes, throwing if it fails, or already
+     * failed, and the status has not yet been checked. On failure, an error is only returned
+     * once; subsequent calls are a no-op until another backup is run.
+     *
+     * @throws Exception if backup creation failed, no-op after first throw
+     */
+    @LibAnkiAlias("await_backup_completion")
+    fun awaitBackupCompletion() {
+        backend.awaitBackupCompletion()
+    }
+
+    // export_collection_package is in AnkiDroid: BackendExporting.kt
+
+    @LibAnkiAlias("import_anki_package")
+    @RustCleanup("different input parameters - OK?")
+    fun importAnkiPackage(
+        packagePath: String,
+        options: ImportAnkiPackageOptions,
+    ): ImportResponse = backend.importAnkiPackage(packagePath, options)
+
+    @LibAnkiAlias("export_anki_package")
+    fun exportAnkiPackage(
+        outPath: String,
+        options: ExportAnkiPackageOptions,
+        limit: ExportLimit,
+    ): Int =
+        backend.exportAnkiPackage(
+            outPath = outPath,
+            options = options,
+            limit = limit,
+        )
+
+    @LibAnkiAlias("get_csv_metadata")
+    fun getCsvMetadata(
+        path: String,
+        delimiter: CsvMetadata.Delimiter?,
+    ): CsvMetadata {
+        val request =
+            csvMetadataRequest {
+                this.path = path
+                delimiter?.let { this.delimiter = delimiter }
+            }
+        return backend.getCsvMetadata(request)
+    }
+
+    @LibAnkiAlias("import_csv")
+    @RustCleanup("not quite the same")
+    fun importCsv(request: ImportCsvRequest): ImportLogWithChanges =
+        backend.importCsv(
+            path = request.path,
+            metadata = request.metadata,
+        )
+
+    @LibAnkiAlias("export_note_csv")
+    fun exportNoteCsv(
+        outPath: String,
+        limit: ExportLimit,
+        withHtml: Boolean,
+        withTags: Boolean,
+        withDeck: Boolean,
+        withNotetype: Boolean,
+        withGuid: Boolean,
+    ): Int =
+        backend.exportNoteCsv(
+            outPath = outPath,
+            withHtml = withHtml,
+            withTags = withTags,
+            withDeck = withDeck,
+            withNotetype = withNotetype,
+            withGuid = withGuid,
+            limit = limit,
+        )
+
+    @LibAnkiAlias("export_card_csv")
+    fun exportCardCsv(
+        outPath: String,
+        limit: ExportLimit,
+        withHtml: Boolean,
+    ): Int =
+        backend.exportCardCsv(
+            outPath = outPath,
+            withHtml = withHtml,
+            limit = limit,
+        )
+
+    @LibAnkiAlias("import_json_file")
+    fun importJsonFile(path: String): ImportLogWithChanges = backend.importJsonFile(path)
+
+    @LibAnkiAlias("import_json_string")
+    fun importJsonString(json: String): ImportLogWithChanges = backend.importJsonString(json)
+
+    @LibAnkiAlias("export_dataset_for_research")
+    fun exportDatasetForResearch(
+        targetPath: String,
+        minEntries: Int = 0,
+    ) {
+        backend.exportDataset(minEntries = minEntries, targetPath = targetPath)
+    }
 
     /**
      * Object creation helpers **************************************************

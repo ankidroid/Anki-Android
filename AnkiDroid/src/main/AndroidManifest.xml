@@ -453,6 +453,12 @@
             android:configChanges="orientation|screenSize"
             />
         <activity
+            android:name="com.ichi2.anki.NoteEditorActivity"
+            android:exported="false"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:windowSoftInputMode="adjustResize"
+            />
+        <activity
             android:name="com.ichi2.anki.previewer.CardViewerActivity"
             android:exported="false"
             android:configChanges="orientation|screenSize"
@@ -689,16 +695,6 @@
             tools:ignore="ExportedContentProvider"
             >
             <meta-data android:name="com.ichi2.anki.provider.spec" android:value="2" />
-        </provider>
-        <provider
-            android:name="androidx.startup.InitializationProvider"
-            android:authorities="${applicationId}.androidx-startup"
-            android:exported="false"
-            tools:node="remove">
-            <meta-data
-                android:name="androidx.work.WorkManagerInitializer"
-                android:value="androidx.startup"
-                tools:node="remove" />
         </provider>
         <provider
             android:name="androidx.core.content.FileProvider"

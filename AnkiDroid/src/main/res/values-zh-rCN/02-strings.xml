@@ -47,7 +47,7 @@
     <!-- Navigation drawer strings -->
     <string name="drawer_open">打开侧栏</string>
     <string name="drawer_close">关闭侧栏</string>
-    <string name="note_message">Note saved</string>
+    <string name="note_message">已保存附注</string>
     <string name="CardEditorCardDeck">牌组：</string>
     <string name="CardEditorNoteDeck">牌组：</string>
     <string name="CardEditorModel">笔记模板：</string>
@@ -108,10 +108,10 @@
     <string name="missing_note_type">找不到笔记类型</string>
     <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (空)</string>
     <!-- Image cropper -->
-    <string name="image_cropper_action_rotate" maxLength="28" comment="Action in image cropper screen">Rotate</string>
-    <string name="image_cropper_action_flip" maxLength="28" comment="Action in image cropper screen">Flip</string>
-    <string name="image_cropper_action_flip_horizontally" maxLength="28" comment="Submenu action in image cropper screen">Flip horizontally</string>
-    <string name="image_cropper_action_flip_vertically" maxLength="28" comment="Submenu action in image cropper screen">Flip vertically</string>
+    <string name="image_cropper_action_rotate" maxLength="28" comment="Action in image cropper screen">旋转</string>
+    <string name="image_cropper_action_flip" maxLength="28" comment="Action in image cropper screen">翻转</string>
+    <string name="image_cropper_action_flip_horizontally" maxLength="28" comment="Submenu action in image cropper screen">水平翻转</string>
+    <string name="image_cropper_action_flip_vertically" maxLength="28" comment="Submenu action in image cropper screen">垂直翻转</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">已到达指定时间</string>
     <plurals name="timebox_reached">

@@ -16,11 +16,16 @@
 
 package com.ichi2.anki.browser
 
+import android.os.Bundle
 import android.os.Parcel
 import android.os.Parcelable
 import androidx.annotation.CheckResult
 import androidx.core.content.edit
+import androidx.core.os.BundleCompat
+import androidx.core.os.bundleOf
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.createSavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
@@ -37,6 +42,8 @@ import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.DeckSpinnerSelection.Companion.ALL_DECKS_ID
 import com.ichi2.anki.Flag
 import com.ichi2.anki.PreviewerDestination
+import com.ichi2.anki.browser.CardBrowserViewModel.ToggleSelectionState.SELECT_ALL
+import com.ichi2.anki.browser.CardBrowserViewModel.ToggleSelectionState.SELECT_NONE
 import com.ichi2.anki.browser.FindAndReplaceDialogFragment.Companion.ALL_FIELDS_AS_FIELD
 import com.ichi2.anki.browser.FindAndReplaceDialogFragment.Companion.TAGS_AS_FIELD
 import com.ichi2.anki.browser.RepositionCardsRequest.RepositionData
@@ -98,6 +105,8 @@ import kotlin.math.min
 // TODO: move the tag computation to ViewModel
 
 /**
+ * ViewModel for [com.ichi2.anki.CardBrowser]
+ *
  * @param lastDeckIdRepository returns the last selected ID. See [LastDeckIdRepository]
  * @param cacheDir Temporary location to store data too large to pass via intent
  * @param options Options passed to CardBrowser on startup
@@ -115,6 +124,7 @@ class CardBrowserViewModel(
     options: CardBrowserLaunchOptions?,
     preferences: SharedPreferencesProvider,
     val isFragmented: Boolean,
+    val savedStateHandle: SavedStateHandle,
     private val manualInit: Boolean = false,
 ) : ViewModel(),
     SharedPreferencesProvider by preferences {
@@ -207,9 +217,33 @@ class CardBrowserViewModel(
     // immutable accessor for _selectedRows
     val selectedRows: Set<CardOrNoteId> get() = _selectedRows
 
+    val flowOfIsInMultiSelectMode = MutableStateFlow(savedStateHandle[STATE_MULTISELECT] ?: false)
+
+    var isInMultiSelectMode
+        get() = flowOfIsInMultiSelectMode.value
+        set(value) {
+            flowOfIsInMultiSelectMode.value = value
+            savedStateHandle[STATE_MULTISELECT] = value
+        }
+
     private val refreshSelectedRowsFlow = MutableSharedFlow<Unit>()
     val flowOfSelectedRows: Flow<Set<CardOrNoteId>> =
-        flowOf(selectedRows).combine(refreshSelectedRowsFlow) { row, _ -> row }
+        flowOf(selectedRows)
+            .combine(refreshSelectedRowsFlow) { row, _ -> row }
+            .combine(flowOfIsInMultiSelectMode) { rows, multiSelect ->
+                if (!multiSelect) emptySet() else rows
+            }
+
+    val flowOfToggleSelectionState =
+        flowOfSelectedRows
+            .map { selectedRows ->
+                // if all rows are selected: 'SELECT_NONE', otherwise: 'SELECT_ALL'
+                return@map if (selectedRows.size >= rowCount) SELECT_NONE else SELECT_ALL
+            }.stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.Lazily,
+                initialValue = SELECT_NONE,
+            )
 
     val rowLongPressFocusFlow = MutableStateFlow<CardOrNoteId?>(null)
 
@@ -234,14 +268,6 @@ class CardBrowserViewModel(
     internal suspend fun queryAllCardIds() = cards.queryCardIds()
 
     var lastSelectedId: CardOrNoteId? = null
-
-    val flowOfIsInMultiSelectMode =
-        flowOfSelectedRows
-            .map { it.isNotEmpty() }
-            .stateIn(viewModelScope, SharingStarted.Eagerly, initialValue = false)
-
-    val isInMultiSelectMode
-        get() = flowOfIsInMultiSelectMode.value
 
     val lastDeckId: DeckId?
         get() = lastDeckIdRepository.lastDeckId
@@ -279,7 +305,7 @@ class CardBrowserViewModel(
         }
 
         // If a valid value for last deck exists then use it, otherwise use libanki selected deck
-        return if (lastDeckId != null && withCol { decks.get(lastDeckId) != null }) {
+        return if (lastDeckId != null && withCol { decks.getLegacy(lastDeckId) != null }) {
             lastDeckId
         } else {
             withCol { decks.selected() }
@@ -386,10 +412,29 @@ class CardBrowserViewModel(
 
             if (!manualInit) {
                 flowOfInitCompleted.update { true }
-                launchSearchForCards()
+                // restore selection state
+                val idsFile =
+                    savedStateHandle.get<Bundle>(STATE_MULTISELECT_VALUES)?.let { bundle ->
+                        BundleCompat.getParcelable(bundle, STATE_MULTISELECT_VALUES, IdsFile::class.java)
+                    }
+                val ids = idsFile?.getIds()?.map { CardOrNoteId(it) } ?: emptyList()
+
+                launchSearchForCards(cardOrNoteIdsToSelect = ids)
             }
         }
+
+        // use setSavedStateProvider as IdsFile writes to disk, so only write when necessary
+        savedStateHandle.setSavedStateProvider(STATE_MULTISELECT_VALUES) {
+            Timber.d("setSavedStateProvider executed")
+            generateExpensiveSavedState()
+        }
     }
+
+    @VisibleForTesting // far too complicated to mock setSavedStateProvider
+    fun generateExpensiveSavedState() =
+        bundleOf(
+            STATE_MULTISELECT_VALUES to IdsFile(cacheDir, selectedRows.map { it.cardOrNoteId }, "multiselect-values"),
+        )
 
     /**
      * Called if `onCreate` is called again, which may be due to the collection being reopened
@@ -530,24 +575,31 @@ class CardBrowserViewModel(
         }
     }
 
-    fun selectAll() {
-        if (_selectedRows.addAll(cards)) {
-            Timber.d("selecting all: %d item(s)", cards.size)
-            refreshSelectedRowsFlow()
+    fun selectAll(): Job? {
+        if (!_selectedRows.addAll(cards)) return null
+        Timber.d("selecting all: %d item(s)", cards.size)
+        return refreshSelectedRowsFlow()
+    }
+
+    fun selectNone(): Job? {
+        if (_selectedRows.isEmpty()) return null
+        Timber.d("selecting none")
+        _selectedRows.clear()
+        return refreshSelectedRowsFlow(disableMultiSelectIfEmpty = false)
+    }
+
+    /**
+     * If all rows are selected, select none, otherwise select all
+     */
+    fun toggleSelectAllOrNone(): Job? {
+        Timber.i("Toggle select all / none")
+        return when (flowOfToggleSelectionState.value) {
+            SELECT_ALL -> selectAll()
+            SELECT_NONE -> selectNone()
         }
     }
 
-    fun selectNone() {
-        if (_selectedRows.isEmpty()) return
-        Timber.d("selecting none")
-        _selectedRows.clear()
-        refreshSelectedRowsFlow()
-    }
-
-    @VisibleForTesting
-    fun toggleRowSelectionAtPosition(position: Int) = toggleRowSelection(cards[position])
-
-    fun toggleRowSelection(id: CardOrNoteId) {
+    fun toggleRowSelection(id: CardOrNoteId): Job {
         if (_selectedRows.contains(id)) {
             _selectedRows.remove(id)
         } else {
@@ -555,12 +607,24 @@ class CardBrowserViewModel(
         }
         Timber.d("toggled selecting id '%s'; %d selected", id, selectedRowCount())
         lastSelectedId = id
-        refreshSelectedRowsFlow()
+        return refreshSelectedRowsFlow()
     }
 
     @VisibleForTesting
     fun selectRowAtPosition(pos: Int) {
         if (_selectedRows.add(cards[pos])) {
+            refreshSelectedRowsFlow()
+        }
+    }
+
+    /** Selects rows by id. The ids are not confirmed to be in [cards] */
+    private fun selectUnvalidatedRowIds(unvalidatedIds: List<CardOrNoteId>) {
+        if (unvalidatedIds.isEmpty()) return
+
+        val validCardOrNoteIds = cards.toSet()
+        val ids = unvalidatedIds.filter { validCardOrNoteIds.contains(it) }
+        Timber.d("selecting %d rows", ids.size)
+        if (_selectedRows.addAll(ids)) {
             refreshSelectedRowsFlow()
         }
     }
@@ -601,8 +665,13 @@ class CardBrowserViewModel(
     }
 
     /** emits a new value in [flowOfSelectedRows] */
-    private fun refreshSelectedRowsFlow() =
+    private fun refreshSelectedRowsFlow(disableMultiSelectIfEmpty: Boolean = true) =
         viewModelScope.launch {
+            if (_selectedRows.any()) {
+                isInMultiSelectMode = true
+            } else if (disableMultiSelectIfEmpty) {
+                isInMultiSelectMode = false
+            }
             refreshSelectedRowsFlow.emit(Unit)
             Timber.d("refreshed selected rows")
         }
@@ -970,7 +1039,10 @@ class CardBrowserViewModel(
     /**
      * Turn off [Multi-Select Mode][isInMultiSelectMode] and return to normal state
      */
-    fun endMultiSelectMode() = selectNone()
+    fun endMultiSelectMode() {
+        _selectedRows.clear()
+        isInMultiSelectMode = false
+    }
 
     /**
      * @param forceRefresh if `true`, perform a search even if the search query is unchanged
@@ -996,10 +1068,13 @@ class CardBrowserViewModel(
     }
 
     /**
+     * @param cardOrNoteIdsToSelect if the screen is reinitialized after destruction
+     * restore these rows after the search is completed
+     *
      * @see com.ichi2.anki.searchForRows
      */
     @NeedsTest("Invalid searches are handled. For instance: 'and'")
-    fun launchSearchForCards() {
+    fun launchSearchForCards(cardOrNoteIdsToSelect: List<CardOrNoteId> = emptyList()) {
         if (!initCompleted) return
 
         viewModelScope.launch {
@@ -1026,6 +1101,7 @@ class CardBrowserViewModel(
                     ensureActive()
                     this@CardBrowserViewModel.cards.replaceWith(cardsOrNotes, cards)
                     flowOfSearchState.emit(SearchState.Completed)
+                    selectUnvalidatedRowIds(cardOrNoteIdsToSelect)
                 }
         }
     }
@@ -1113,6 +1189,9 @@ class CardBrowserViewModel(
     }
 
     companion object {
+        const val STATE_MULTISELECT = "multiselect"
+        const val STATE_MULTISELECT_VALUES = "multiselect_values"
+
         fun createCardSelector(viewModel: CardBrowserViewModel) =
             { cardId: CardId, fragmented: Boolean ->
                 viewModel.currentCardId = cardId
@@ -1138,9 +1217,15 @@ class CardBrowserViewModel(
                     options,
                     preferencesProvider ?: AnkiDroidApp.sharedPreferencesProvider,
                     isFragmented,
+                    createSavedStateHandle(),
                 )
             }
         }
+    }
+
+    enum class ToggleSelectionState {
+        SELECT_ALL,
+        SELECT_NONE,
     }
 
     /**
@@ -1214,7 +1299,7 @@ class IdsFile(
      * @param directory parent directory of the file. Generally it should be the cache directory
      * @param ids ids to store
      */
-    constructor(directory: File, ids: List<Long>) : this(createTempFile("ids", ".tmp", directory).path) {
+    constructor(directory: File, ids: List<Long>, prefix: String = "ids") : this(path = createTempFile(prefix, ".tmp", directory).path) {
         DataOutputStream(FileOutputStream(this)).use { outputStream ->
             outputStream.writeInt(ids.size)
             for (id in ids) {
