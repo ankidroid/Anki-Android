@@ -17,12 +17,7 @@
 
 package com.ichi2.utils
 
-import anki.notetypes.StockNotetype
-import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.NotetypeJson
-import com.ichi2.anki.libanki.addNotetypeLegacy
-import com.ichi2.anki.libanki.backend.BackendUtils
-import com.ichi2.anki.libanki.getStockNotetype
 import com.ichi2.anki.utils.ext.getAllClozeTextFields
 import junit.framework.TestCase.assertEquals
 import org.json.JSONObject
@@ -91,37 +86,4 @@ class NoteTypeTest {
         val expectedAfmt = "{{cloze:Text}}<br>\n{{Back Extra}}"
         assertEquals(expectedAfmt, notetypeJson.templates[0].afmt)
     }
-}
-
-const val BASIC_NOTE_TYPE_NAME = "Basic"
-
-/**
- * Creates a basic model.
- *
- * Note: changes to this model will propagate to [createBasicTypingNoteType] as that model is built on
- * top of the model returned by this function.
- *
- * @param name name of the new model
- * @return the new model
- */
-fun Collection.createBasicNoteType(name: String = BASIC_NOTE_TYPE_NAME): NotetypeJson {
-    val noteType =
-        getStockNotetype(StockNotetype.Kind.KIND_BASIC).apply { this.name = name }
-    addNotetypeLegacy(BackendUtils.toJsonBytes(noteType))
-    return notetypes.byName(name)!!
-}
-
-/**
- * Creates a basic typing model.
- *
- * @see createBasicNoteType
- */
-fun Collection.createBasicTypingNoteType(name: String): NotetypeJson {
-    val noteType = createBasicNoteType(name)
-    noteType.templates[0].apply {
-        qfmt = "{{Front}}\n\n{{type:Back}}"
-        afmt = "{{Front}}\n\n<hr id=answer>\n\n{{type:Back}}"
-    }
-    notetypes.save(noteType)
-    return noteType
 }
