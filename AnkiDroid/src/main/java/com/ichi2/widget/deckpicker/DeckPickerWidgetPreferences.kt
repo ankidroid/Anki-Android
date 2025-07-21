@@ -18,6 +18,7 @@ package com.ichi2.widget.deckpicker
 
 import android.content.Context
 import androidx.core.content.edit
+import com.ichi2.widget.AppWidgetId
 
 class DeckPickerWidgetPreferences(
     context: Context,
@@ -34,7 +35,7 @@ class DeckPickerWidgetPreferences(
     /**
      * Deletes the selected deck IDs from the shared preferences for the given widget ID.
      */
-    fun deleteDeckData(appWidgetId: Int) {
+    fun deleteDeckData(appWidgetId: AppWidgetId) {
         deckPickerSharedPreferences.edit {
             remove(getDeckPickerWidgetKey(appWidgetId))
         }
@@ -44,7 +45,7 @@ class DeckPickerWidgetPreferences(
      * Retrieves the selected deck IDs from the shared preferences for the given widget ID.
      * Note: There's no guarantee that these IDs still represent decks that exist at the time of execution.
      */
-    fun getSelectedDeckIdsFromPreferences(appWidgetId: Int): LongArray {
+    fun getSelectedDeckIdsFromPreferences(appWidgetId: AppWidgetId): LongArray {
         val selectedDecksString = deckPickerSharedPreferences.getString(getDeckPickerWidgetKey(appWidgetId), "")
         return if (!selectedDecksString.isNullOrEmpty()) {
             selectedDecksString.split(",").map { it.toLong() }.toLongArray()
@@ -57,7 +58,7 @@ class DeckPickerWidgetPreferences(
      * Saves the selected deck IDs to the shared preferences for the given widget ID.
      */
     fun saveSelectedDecks(
-        appWidgetId: Int,
+        appWidgetId: AppWidgetId,
         selectedDecks: List<String>,
     ) {
         deckPickerSharedPreferences.edit {
@@ -69,4 +70,4 @@ class DeckPickerWidgetPreferences(
 /**
  * Generates the key for the shared preferences for the given widget ID.
  */
-private fun getDeckPickerWidgetKey(appWidgetId: Int): String = "deck_picker_widget_selected_decks_$appWidgetId"
+private fun getDeckPickerWidgetKey(appWidgetId: AppWidgetId): String = "deck_picker_widget_selected_decks_$appWidgetId"

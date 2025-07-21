@@ -37,7 +37,7 @@ class ReviewerMenuSettingsTouchHelperCallback(
         recyclerView: RecyclerView,
         viewHolder: RecyclerView.ViewHolder,
     ): Int =
-        if (viewHolder.itemViewType == ReviewerMenuSettingsRecyclerItem.DISPLAY_TYPE_VIEW_TYPE) {
+        if (viewHolder.itemViewType == ReviewerMenuSettingsType.DisplayType.code) {
             0
         } else {
             movementFlags

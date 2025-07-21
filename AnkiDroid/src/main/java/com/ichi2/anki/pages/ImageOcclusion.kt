@@ -91,17 +91,20 @@ class ImageOcclusion : PageFragment(R.layout.image_occlusion) {
             ) {
                 super.onPageFinished(view, url)
 
-                val kind = requireArguments().getString(ARG_KEY_KIND)
-                val noteOrNotetypeId = requireArguments().getLong(ARG_KEY_ID)
+                val isNewCard = requireArguments().containsKey(NOTE_TYPE_ID_KEY)
                 val imagePath = requireArguments().getString(ARG_KEY_PATH)
 
+                // The options required by the image occlusion svelte library from anki backend.
                 val options = JSONObject()
-                options.put("kind", kind)
-                if (kind == "add") {
-                    options.put("imagePath", imagePath)
-                    options.put("notetypeId", noteOrNotetypeId)
+                if (isNewCard) {
+                    options.put("kind", "add")
+                    val notetypeId = requireArguments().getLong(NOTE_TYPE_ID_KEY)
+                    options.put(ARG_KEY_PATH, imagePath)
+                    options.put(NOTE_TYPE_ID_KEY, notetypeId)
                 } else {
-                    options.put("noteId", noteOrNotetypeId)
+                    options.put("kind", "edit")
+                    val noteId = requireArguments().getLong(NOTE_ID_KEY)
+                    options.put(NOTE_ID_KEY, noteId)
                 }
 
                 view?.evaluateJavascript("globalThis.anki.imageOcclusion.mode = $options") {
@@ -111,31 +114,45 @@ class ImageOcclusion : PageFragment(R.layout.image_occlusion) {
         }
 
     companion object {
-        private const val ARG_KEY_KIND = "kind"
-        private const val ARG_KEY_ID = "id"
+        private const val NOTE_ID_KEY = "noteId"
+        private const val NOTE_TYPE_ID_KEY = "notetypeId"
         private const val ARG_KEY_PATH = "imagePath"
         private const val ARG_KEY_EDITOR_DECK_ID = "arg_key_editor_deck_id"
 
         /**
+         * An intent to open Image occlusion for an existing card to edit.
          * @param editorWorkingDeckId the current deck id that [com.ichi2.anki.NoteEditorFragment] is using
          */
-        fun getIntent(
+        fun getEditIntent(
             context: Context,
-            kind: String,
-            noteOrNotetypeId: Long,
+            noteId: Long,
             imagePath: String?,
             editorWorkingDeckId: DeckId,
         ): Intent {
-            val suffix =
-                if (kind == "edit") {
-                    noteOrNotetypeId
-                } else {
-                    Uri.encode(imagePath)
-                }
             val arguments =
                 bundleOf(
-                    ARG_KEY_KIND to kind,
-                    ARG_KEY_ID to noteOrNotetypeId,
+                    NOTE_ID_KEY to noteId,
+                    ARG_KEY_PATH to imagePath,
+                    PATH_ARG_KEY to "image-occlusion/$noteId",
+                    ARG_KEY_EDITOR_DECK_ID to editorWorkingDeckId,
+                )
+            return SingleFragmentActivity.getIntent(context, ImageOcclusion::class, arguments)
+        }
+
+        /**
+         * An intent to open Image occlusion for a new card.
+         * @param editorWorkingDeckId the current deck id that [com.ichi2.anki.NoteEditorFragment] is using
+         */
+        fun getAddIntent(
+            context: Context,
+            noteTypeId: Long,
+            imagePath: String?,
+            editorWorkingDeckId: DeckId,
+        ): Intent {
+            val suffix = Uri.encode(imagePath)
+            val arguments =
+                bundleOf(
+                    NOTE_TYPE_ID_KEY to noteTypeId,
                     ARG_KEY_PATH to imagePath,
                     PATH_ARG_KEY to "image-occlusion/$suffix",
                     ARG_KEY_EDITOR_DECK_ID to editorWorkingDeckId,
