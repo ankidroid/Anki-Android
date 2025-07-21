@@ -29,7 +29,11 @@ fun DeckPicker.handleDatabaseCheck() {
                             text = it.stage
                             amount =
                                 if (it.stageTotal > 0) {
-                                    Pair(it.stageCurrent, it.stageTotal)
+                                    ProgressContext.Amount(
+                                        it.stageCurrent,
+                                        it.stageTotal,
+                                        ProgressContext.Amount.AmountType.Scalar,
+                                    )
                                 } else {
                                     null
                                 }

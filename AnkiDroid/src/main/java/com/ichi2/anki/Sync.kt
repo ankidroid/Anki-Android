@@ -296,7 +296,10 @@ private fun fullDownloadProgress(title: String): ProgressContext.() -> Unit =
     {
         if (progress.hasFullSync()) {
             text = title
-            amount = progress.fullSync.run { Pair(transferred, total) }
+            amount =
+                progress.fullSync.run {
+                    ProgressContext.Amount(transferred, total, ProgressContext.Amount.AmountType.Bytes)
+                }
         }
     }
 
