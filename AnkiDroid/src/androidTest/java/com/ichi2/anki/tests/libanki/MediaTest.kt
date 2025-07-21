@@ -20,7 +20,6 @@ import com.ichi2.anki.BackupManager
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.Media
 import com.ichi2.anki.libanki.exception.EmptyMediaException
-import com.ichi2.anki.libanki.newNote
 import com.ichi2.anki.tests.InstrumentedTest
 import com.ichi2.anki.testutil.GrantStoragePermission
 import com.ichi2.anki.testutil.addNote
@@ -110,12 +109,12 @@ class MediaTest : InstrumentedTest() {
         val file = createNonEmptyFile("fake.png")
         testCol!!.media.addFile(file)
         // add a note which references it
-        var f = testCol!!.newNote()
+        var f = testCol!!.newNote(testCol!!.notetypes.current())
         f.setField(0, "one")
         f.setField(1, "<img src='fake.png'>")
         testCol!!.addNote(f)
         // and one which references a non-existent file
-        f = testCol!!.newNote()
+        f = testCol!!.newNote(testCol!!.notetypes.current())
         f.setField(0, "one")
         f.setField(1, "<img src='fake2.png'>")
         testCol!!.addNote(f)

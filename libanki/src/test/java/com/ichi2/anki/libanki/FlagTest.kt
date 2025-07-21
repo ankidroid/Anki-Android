@@ -18,6 +18,7 @@ package com.ichi2.anki.libanki
 import android.annotation.SuppressLint
 import com.ichi2.anki.libanki.testutils.InMemoryAnkiTest
 import com.ichi2.anki.libanki.testutils.ext.addNote
+import com.ichi2.anki.libanki.testutils.ext.newNote
 import com.ichi2.anki.libanki.testutils.ext.setFlag
 import org.junit.Test
 import kotlin.test.assertEquals
