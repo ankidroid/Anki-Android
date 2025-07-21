@@ -22,6 +22,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CrashReportService.sendExceptionReport
 import com.ichi2.anki.dialogs.DatabaseErrorDialog
+import com.ichi2.anki.libanki.DB
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.database.AnkiSupportSQLiteDatabase
 import timber.log.Timber
@@ -34,7 +35,7 @@ import java.io.File
 fun createDatabaseUsingAndroidFramework(
     context: Context,
     path: File,
-): AnkiDroidDB {
+): DB {
     val db =
         AnkiSupportSQLiteDatabase.withFramework(
             context,
@@ -43,7 +44,7 @@ fun createDatabaseUsingAndroidFramework(
         )
     db.disableWriteAheadLogging()
     db.query("PRAGMA synchronous = 2")
-    return AnkiDroidDB(db)
+    return DB(db)
 }
 
 /**
@@ -51,7 +52,7 @@ fun createDatabaseUsingAndroidFramework(
  * Caller is responsible for opening&closing the database.
  */
 @CheckResult
-fun createDatabaseUsingRustBackend(backend: Backend): AnkiDroidDB = AnkiDroidDB(AnkiSupportSQLiteDatabase.withRustBackend(backend))
+fun createDatabaseUsingRustBackend(backend: Backend): DB = DB(AnkiSupportSQLiteDatabase.withRustBackend(backend))
 
 /**
  * The default AnkiDroid SQLite database callback.
