@@ -167,9 +167,7 @@ class Collection(
         }
     }
 
-    fun name() = collectionFiles.collectionName
-
-    /*
+    /**
      * Scheduler
      * ***********************************************************
      */
@@ -1176,3 +1174,17 @@ fun EmptyCardsReport.emptyCids(): List<CardId> = notesList.flatMap { it.cardIdsL
 @NotInLibAnki
 @RustCleanup("1 dev only use, remove")
 fun Collection.newNote(forDeck: Boolean = true): Note = newNote(notetypes.current(forDeck))
+
+/**
+ * @return [File] referencing the media folder (`collection.media`)
+ *
+ * @throws UnsupportedOperationException if the collection is in-memory
+ */
+fun Collection.requireMediaFolder() = collectionFiles.requireMediaFolder()
+
+/**
+ * [File] referencing the media folder (`collection.media`)
+ *
+ * (testing) `null` if the collection is in-memory
+ */
+val Collection.mediaFolder: File? get() = collectionFiles.mediaFolder

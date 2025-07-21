@@ -26,6 +26,13 @@ class CollectionFiles(
     val collectionName: String = "collection",
 ) {
     val colDb = File(folderPath, "$collectionName.anki2")
-    val mediaFolder = File(folderPath, "$collectionName.media")
+    val mediaFolder: File? = File(folderPath, "$collectionName.media")
     val mediaDb = File(folderPath, "$collectionName.media.db")
+
+    /**
+     * @return Path to the media folder (`collection.media`)
+     *
+     * @throws UnsupportedOperationException if the collection is in-memory
+     */
+    fun requireMediaFolder(): File = mediaFolder!!
 }
