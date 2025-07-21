@@ -20,10 +20,21 @@ import android.annotation.SuppressLint
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.WorkerThread
 import anki.backend.backendError
+import com.ichi2.anki.CollectionManager.discardBackend
+import com.ichi2.anki.CollectionManager.ensureBackend
+import com.ichi2.anki.CollectionManager.ensureClosed
+import com.ichi2.anki.CollectionManager.ensureClosedInner
+import com.ichi2.anki.CollectionManager.ensureOpen
+import com.ichi2.anki.CollectionManager.ensureOpenInner
+import com.ichi2.anki.CollectionManager.getColUnsafe
+import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.CollectionManager.withOpenColOrNull
+import com.ichi2.anki.CollectionManager.withQueue
 import com.ichi2.anki.backend.createDatabaseUsingRustBackend
 import com.ichi2.anki.common.utils.android.isRobolectric
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.CollectionFiles
+import com.ichi2.anki.libanki.LibAnki
 import com.ichi2.anki.libanki.Storage.collection
 import com.ichi2.anki.libanki.importCollectionPackage
 import com.ichi2.utils.Threads
@@ -47,7 +58,13 @@ object CollectionManager {
      * languages or changing schema versions. A closed backend cannot be reused, and a new one
      * must be created.
      */
-    private var backend: Backend? = null
+    @Suppress("DEPRECATION") // deprecation is used to limit access
+    @get:JvmName("backend")
+    private var backend: Backend?
+        get() = LibAnki.backend
+        set(value) {
+            LibAnki.backend = value
+        }
 
     /**
      * The current collection, which is opened on demand via [withCol]. If you need to
@@ -55,7 +72,12 @@ object CollectionManager {
      * calls [withQueue], and then executes [ensureClosedInner] and [ensureOpenInner] inside it.
      * A closed collection can be detected via [withOpenColOrNull] or by checking [Collection.dbClosed].
      */
-    private var collection: Collection? = null
+    @Suppress("DEPRECATION") // deprecation is used to limit access
+    private var collection: Collection?
+        get() = LibAnki.collection
+        set(value) {
+            LibAnki.collection = value
+        }
 
     private var queue: CoroutineDispatcher = Dispatchers.IO.limitedParallelism(1)
 
