@@ -328,6 +328,9 @@
     <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">Failed to open text to speech settings</string>
     <string name="shared_decks_login_required">மேலும் தளங்களைப் பதிவிறக்க உள்நுழையவும்</string>
     <string name="deck_description_field_hint">விளக்கம்</string>
+    <string name="deck_description_saved">Description updated</string>
+    <string name="format_deck_description_as_markdown">Format as Markdown</string>
+    <string name="help_button_content_description">Open help for ‘%s’</string>
     <string name="failed_to_copy">நகலெடுக்க முடியவில்லை</string>
     <string name="card_browser_unavailable_when_notes_mode">\'குறிப்புகள்\' பயன்முறையில் கிடைக்கவில்லை</string>
     <plurals name="unbury_cards_feedback">
