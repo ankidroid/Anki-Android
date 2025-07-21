@@ -296,7 +296,7 @@ object CollectionManager {
     fun collectionPathInValidFolder(): CollectionFiles {
         val dir = getCollectionDirectory()
         CollectionHelper.initializeAnkiDroidDirectory(dir)
-        return CollectionFiles(dir)
+        return CollectionFiles.FolderBasedCollection(dir)
     }
 
     /**
