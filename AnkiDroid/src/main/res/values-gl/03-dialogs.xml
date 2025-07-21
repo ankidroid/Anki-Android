@@ -62,7 +62,7 @@
         <item quantity="other">%d tarxetas esquecidas</item>
     </plurals>
     <string name="answering_error_title">Erro na base de datos</string>
-    <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
+    <string name="answering_error_message">Fallou a escritura na colección. A base de datos podería estar corrupta ou pode que non haxa suficiente espazo libre no disco.\n\nSe isto ocorre con frecuencia, tenta comprobar a base de datos, reparar a colección ou restaurala dende unha copia de seguranza. Preme en \"opcións\" para facelo.\n\nTamén pode ser un erro de AnkiDroid, reportao para que o poidamos revisar.</string>
     <string name="answering_error_report">Informar de erros</string>
     <string name="storage_full_message">Non hai espazo de almacenamento abondo para abrir AnkiDroid. Libera espazo para continuar.</string>
     <string name="repair_deck_dialog">Tes a certeza de querer tentar reparar a base de datos?\n\nAntes de comezar, crearase unha copia no cartafol \"%s\".</string>
@@ -98,12 +98,12 @@
     <string name="dialog_positive_repair">Reparar</string>
     <string name="dialog_positive_replace">Substituír</string>
     <string name="dialog_collection_path_not_dir">A ruta especificada non é un cartafol válido</string>
-    <string name="dialog_invalid_custom_certificate">The provided text does not resolve to a valid PEM-encoded X509 certificate</string>
+    <string name="dialog_invalid_custom_certificate">O texto proporcionado non corresponde a un certificado X509 codificado nun formato PEM válido</string>
     <string name="dialog_invalid_custom_certificate_title">Erro na análise do certificado</string>
     <string name="dialog_updated_custom_certificate">Certificado actualizado</string>
     <!-- Media checking -->
     <string name="check_media_title">Comprobar multimedia?</string>
-    <string name="check_media_warning">Isto pode levar moito tempo con coleccións grandes de multimedia</string>
+    <string name="check_media_warning">Isto pode levar moito tempo con coleccións grandes</string>
     <string name="check_media_message">Verificando multimedia&#8230;</string>
     <string name="check_media_adding_missing_tag">Engadindo etiquetas&#8230;</string>
     <string name="check_media_tags_added">Etiquetas engadidas</string>
@@ -126,9 +126,9 @@
     <string name="multimedia_editor_audio_permission_denied">Denegouse o permiso para gravar audio</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid actualizado</string>
-    <string name="integrity_check_startup_content">AnkiDroid has been upgraded. This upgrade includes fixes for possible database problems, and we advise you to run check database now.</string>
+    <string name="integrity_check_startup_content">AnkiDroid foi actualizado. Esta actualización inclúe correccións para posíbeis problemas na base de datos, polo que recomendamos que comprobes a base de datos agora.</string>
     <string name="integrity_check_continue_anyway">Continuar igualmente</string>
-    <string name="integrity_check_insufficient_space">Check Database uses a large amount of temporary storage.\n\nIt is strongly recommended that you have at least %s free space on your device before continuing.</string>
+    <string name="integrity_check_insufficient_space">Comprobar a base de datos usa unha gran cantidade de espazo temporal.\n\nRecoméndase que teñas polo menos %s de espazo libre no teu dispositivo antes de continuar.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nActualmente tes %s libre.</string>
     <!-- Card Browser -->
     <!-- AbstractFlashCardViewer -->
@@ -138,7 +138,7 @@
     <string name="database_locked_title">Base de datos bloqueada</string>
     <string name="database_locked_summary">Outra aplicación está utilizando a base de datos do AnkiDroid. Pecha a outra aplicación e reabre o AnkiDroid</string>
     <string name="incompatible_database_version_title">Versión da base de datos incompatíbel</string>
-    <string name="incompatible_database_version_summary">The database is a more advanced version than this version of AnkiDroid can work with. Upgrade AnkiDroid or downgrade the database to open it\n\nSupported version: %1$d\nDatabase version: %2$d\n\nThe following restore options will overwrite your current collection, possibly with a compatible database version:</string>
+    <string name="incompatible_database_version_summary">A base de datos é dunha versión máis avanzada da que esta versión do AnkiDroid pode manexar. Actualiza o AnkiDroid ou reverte a versión da base de datos para abrila.\n\nVersión compatíbel: %1$d\nVersión da base de datos: %2$d\n\nAs seguintes opcións de restauración sobrescribirán a túa colección actual, posibelmente cunha versión compatible da base de datos:</string>
     <!-- Deck Picker Background-->
     <string name="background_image_applied">Aplicouse a imaxe do fondo</string>
     <string name="background_image_removed">Retirouse a imaxe do fondo</string>
@@ -146,18 +146,18 @@
     <string name="error_selecting_image">Erro ao eliminar a imaxe. Consulta o manual. %s</string>
     <string name="error_deleting_image">Erro ao eliminar a imaxe</string>
     <string name="failed_to_apply_background_image">Erro ao aplicar a imaxe do fondo %s</string>
-    <string name="background_image_too_large">Deck Picker background too large</string>
-    <string name="image_max_size_allowed" comment="Consider keeping the unbreakable space after the digit">Maximum image size %d MB allowed</string>
+    <string name="background_image_too_large">A imaxe de fondo do selector de barallas é demasiado grande</string>
+    <string name="image_max_size_allowed" comment="Consider keeping the unbreakable space after the digit">O tamaño máximo de imaxe permitido é de %d MB</string>
     <string name="image_dimensions_too_large">As dimensións da imaxe son demasiado grandes (%1$d × %2$d)</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
-    <string name="intent_handler_failed_no_storage_permission">Missing required storage permission. Please grant storage permission then retry your action.</string>
+    <string name="intent_handler_failed_no_storage_permission">Faltan permisos de almacenamento necesarios. Concede o permiso de almacenamento e téntao de novo.</string>
     <!-- Boot Service -->
     <string name="boot_service_failed_to_schedule_notifications">Erro ao programar recordatorios</string>
     <string name="boot_service_too_many_notifications">Demasiados recordatorios programados. Algúns non aparecerán</string>
     <!-- Locale Selection Dialog -->
     <string name="locale_selection_dialog_title_new">Establecer Idioma</string>
-    <string name="locale_selection_dialog_summary">Some multilingual keyboards, such as GBoard support changing language when editing text\n\nPlease request the “setImeHintLocales” feature from your keyboard manufacturer if your keyboard does not change language.</string>
+    <string name="locale_selection_dialog_summary">Algúns teclados multilingües, como GBoard, permiten cambiar o idioma mentres se edita o texto.\n\nSe o teu teclado non cambia o idioma, solicita a función \"setImeHintLocales\" ao fabricante.</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">Empregar o AnkiDroid</string>
     <string name="help_item_ankidroid_manual">Manual do AnkiDroid</string>
@@ -197,7 +197,7 @@
     <!-- This description is valid fos
     sched V2. For V1, it was counting the number of repetitions of cards in learning. This approximation is acceptable
     for the sake of simplicity and because V1 will leave.-->
-    <string name="deck_picker_counts">Open the deck overview page containing the number of cards to see today.</string>
+    <string name="deck_picker_counts">Abre a páxina de resumo da baralla que contén o número de tarxetas para estudar hoxe.</string>
     <string name="import_deck_package">Baralla (.apkg)</string>
     <string name="import_collection_package">Colección (.colpkg)</string>
     <string name="import_csv">Ficheiro de texto (.txt, .csv)</string>
@@ -205,14 +205,14 @@
     <string name="cannot_create_subdeck_for_all_decks">Non podes crear unha subbaralla para todas as barallas</string>
     <!-- scoped storage -->
     <string name="backup_your_collection">Copia de seguranza da colección</string>
-    <string name="backup_collection_message">You haven\'t backed up your collection in a while. You should do this now to prevent data loss</string>
+    <string name="backup_collection_message">Hai tempo que non se fai unha copia de seguranza da colección. Deberías facela agora para evitar perdas de datos</string>
     <string name="button_backup" maxLength="41">Copia de seguranza</string>
     <string name="button_disable_reminder">Desactivar recordatorio</string>
     <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Máis tarde</string>
     <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Non mostrar de novo</string>
     <string name="dismiss_backup_warning_title">Aviso de perda de datos</string>
-    <string name="dismiss_backup_warning_new_user">Due to Android privacy changes, your data and automated backups will be deleted from your phone if the app is uninstalled</string>
-    <string name="dismiss_backup_warning_upgrade">Due to Android privacy changes, your data and automated backups will be inaccessible if the app is uninstalled</string>
+    <string name="dismiss_backup_warning_new_user">Debido aos cambios de privacidade do Android, eliminaranse do teu teléfono os teus datos e as copias de seguranza automáticas se desinstalas a aplicación</string>
+    <string name="dismiss_backup_warning_upgrade">Debido aos cambios de privacidade do Android, perderás o acceso aos teus datos e as copias de seguranza automáticas se desinstalas a aplicación</string>
     <string name="deck_already_exists">A baralla xa existe</string>
     <string name="empty_deck_name">O nome da baralla non pode estar baleiro</string>
     <string name="create_deck_numeric_hint">Se tes problemas ao arranxar a baralla (por exemplo, \'10\' aparece antes que \'2\'), substitúe \'2\' por \'02\'</string>
@@ -239,7 +239,7 @@
     <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">Ata</string>
     <!-- Instant Note Editor -->
     <string name="cloze_note_required">Requírese a nota de tipo Ocos</string>
-    <string name="cloze_not_found_message">No Cloze type note found, open the Note Editor or try again after adding a Cloze type note.</string>
+    <string name="cloze_not_found_message">Non se atopou ningunha nota do tipo pregunta aniñada. Abre o editor de notas ou téntao de novo tras engadir unha nota deste tipo</string>
     <string name="open">Abrir</string>
     <string name="change_cloze_number">Cambiar número de ocos</string>
     <string name="cloze_number">Números de ocos:</string>
@@ -247,7 +247,7 @@
     <string name="open_note_editor">Abrir editor de notas</string>
     <string name="change_cloze_mode">Cambiar modo oclusión</string>
     <!-- Outdated WebView dialog -->
-    <string name="webview_update_message">The system WebView is outdated. Some features won’t work correctly. Please update it.\n\nInstalled version: %1$d\nMinimum required version: %2$d</string>
+    <string name="webview_update_message">O WebView do sistema está desactualizado. Algunhas funcións non funcionarán correctamente. Por favor, actualízao.\n\nVersión instalada: %1$d\nVersión mínima requirida: %2$d</string>
     <string name="compress">Comprimir</string>
     <!-- Tts playback error dialog -->
     <string name="tts_error_dialog_title">Lingua non compatíbel</string>

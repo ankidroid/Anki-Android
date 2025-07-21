@@ -232,7 +232,7 @@
     <string name="media" maxLength="41">多媒体</string>
     <string name="misc" maxLength="41">杂项</string>
     <!-- Review reminders -->
-    <string name="add_reminder" comment="Label for the add reminder button in the screen for adding and editing review reminders">Add reminder</string>
+    <string name="add_reminder" comment="Label for the add reminder button in the screen for adding and editing review reminders">添加提醒</string>
     <!-- studyoptions -->
     <string name="studyoptions_limit_select_tags">选择标签</string>
     <!-- Deck configurations -->

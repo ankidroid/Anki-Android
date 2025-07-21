@@ -230,7 +230,7 @@
     <string name="media" maxLength="41">Aŭdvidaĵo</string>
     <string name="misc" maxLength="41">Aliaj</string>
     <!-- Review reminders -->
-    <string name="add_reminder" comment="Label for the add reminder button in the screen for adding and editing review reminders">Add reminder</string>
+    <string name="add_reminder" comment="Label for the add reminder button in the screen for adding and editing review reminders">Aldoni memorigon</string>
     <!-- studyoptions -->
     <string name="studyoptions_limit_select_tags">Elekti etikedojn</string>
     <!-- Deck configurations -->

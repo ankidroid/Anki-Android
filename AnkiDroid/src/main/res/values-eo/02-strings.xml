@@ -47,7 +47,7 @@
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Malfermi la tirmenuon</string>
     <string name="drawer_close">Fermi la tirmenuon</string>
-    <string name="note_message">Note saved</string>
+    <string name="note_message">Noto konservita</string>
     <string name="CardEditorCardDeck">Kartaro:</string>
     <string name="CardEditorNoteDeck">Kartaro:</string>
     <string name="CardEditorModel">Tipo:</string>
@@ -109,10 +109,10 @@
     <string name="missing_note_type">Ne trovis not-tipon</string>
     <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (malplena)</string>
     <!-- Image cropper -->
-    <string name="image_cropper_action_rotate" maxLength="28" comment="Action in image cropper screen">Rotate</string>
-    <string name="image_cropper_action_flip" maxLength="28" comment="Action in image cropper screen">Flip</string>
-    <string name="image_cropper_action_flip_horizontally" maxLength="28" comment="Submenu action in image cropper screen">Flip horizontally</string>
-    <string name="image_cropper_action_flip_vertically" maxLength="28" comment="Submenu action in image cropper screen">Flip vertically</string>
+    <string name="image_cropper_action_rotate" maxLength="28" comment="Action in image cropper screen">Turni</string>
+    <string name="image_cropper_action_flip" maxLength="28" comment="Action in image cropper screen">Inversigi</string>
+    <string name="image_cropper_action_flip_horizontally" maxLength="28" comment="Submenu action in image cropper screen">Inversigi horizontale</string>
+    <string name="image_cropper_action_flip_vertically" maxLength="28" comment="Submenu action in image cropper screen">Inversigi vertikale</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">Limigo de lernada tempo atingita</string>
     <plurals name="timebox_reached">

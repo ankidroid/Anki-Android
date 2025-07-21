@@ -66,13 +66,13 @@
     <!-- Message when recording fails -->
     <string name="multimedia_editor_audio_view_recording_failed">A gravación fallou</string>
     <string name="multimedia_editor_audio_view_playing_failed">A reprodución fallou</string>
-    <string name="multimedia_editor_audio_view_create_failed">Unable to create recorder tool bar</string>
+    <string name="multimedia_editor_audio_view_create_failed">Non se puido crear a barra de ferramentas de gravación</string>
     <!-- Crop function-->
     <string name="crop_image">Queres recortar esta imaxe?</string>
     <string name="crop_button" maxLength="28">Recortar imaxe</string>
-    <string name="save_dialog_content">Current image size is %sMB. Default image size limit is 1MB. Do you want to compress it?</string>
+    <string name="save_dialog_content">O tamaño da imaxe é %sMB. O límite por defecto é 1 MB. Queres comprimila?</string>
     <string name="select_image_failed">"Non se puido seleccionar a imaxe. Téntao de novo"</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Contido do campo</string>
-    <string name="crop_image_size_notice">The image is too big to be handled by the crop editor. Please resize it and try again!</string>
+    <string name="crop_image_size_notice">A imaxe é demasiado grande para ser manexada polo editor de recortes. Redimensiónaa e téntao de novo!</string>
     <string name="reselect" maxLength="28">Seleccionar de novo</string>
 </resources>

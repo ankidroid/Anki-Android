@@ -277,14 +277,14 @@
     <string name="cloze_number">رقم الفراغ</string>
     <string name="change_editor_mode">تغيير وضع المحرر</string>
     <string name="open_note_editor">فتح محرر الملحوظات</string>
-    <string name="change_cloze_mode">غير وضع الفراغات</string>
+    <string name="change_cloze_mode">تغيير وضع الفراغات</string>
     <!-- Outdated WebView dialog -->
     <string name="webview_update_message">إصدار ويب فيو لهذا النظام قديم. لن تعمل بعض الميزات بشكل صحيح. حدثه رجاءًا.\n\nالإصدار المنصب: %1$d\nالإصدار الأدنى المطلوب: %2$d</string>
-    <string name="compress">إضغط</string>
+    <string name="compress">ضغط</string>
     <!-- Tts playback error dialog -->
     <string name="tts_error_dialog_title">اللغة غير مدعومة</string>
     <string name="tts_error_dialog_reason_text">لا يدعم محرك تحويل النص إلى كلام <b>%1$s</b> اللغة التالية:
 <b>%2$s</b></string>
-    <string name="tts_error_dialog_change_button_text">غير المحرك</string>
+    <string name="tts_error_dialog_change_button_text">تغيير المحرك</string>
     <string name="tts_error_dialog_supported_voices_button_text">خيارات الصوت</string>
 </resources>

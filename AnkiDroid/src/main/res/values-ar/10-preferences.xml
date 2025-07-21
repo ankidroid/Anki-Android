@@ -102,7 +102,7 @@
     <string name="gestures_summ">تعيين إيماءات إلى إجراءات مثل إجابة البطاقات وتحريرها.</string>
     <string name="gestures_corner_touch" maxLength="41">٩ مواضع للنقر</string>
     <string name="gestures_corner_touch_summary">السماح بإيماءات النقر في زوايا الشاشة</string>
-    <string name="show_keyboard_shortcuts" maxLength="41">أظهر إختصارات لوحة المفاتيح</string>
+    <string name="show_keyboard_shortcuts" maxLength="41">إظهار اختصارات لوحة المفاتيح</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">قائمة التجول في كامل الشاشة</string>
     <string name="gestures_fullscreen_nav_drawer_summary">فتح قائمة التجول عند السحب لليسار من أي مكان في الشاشة</string>
     <string name="gestures_none" maxLength="41" comment="No gestures">لا شَيْء</string>
@@ -243,7 +243,7 @@
     <string name="media" maxLength="41">الوسائط</string>
     <string name="misc" maxLength="41">منوع</string>
     <!-- Review reminders -->
-    <string name="add_reminder" comment="Label for the add reminder button in the screen for adding and editing review reminders">Add reminder</string>
+    <string name="add_reminder" comment="Label for the add reminder button in the screen for adding and editing review reminders">إضافة تنبيه</string>
     <!-- studyoptions -->
     <string name="studyoptions_limit_select_tags">اختيار وسوم</string>
     <!-- Deck configurations -->

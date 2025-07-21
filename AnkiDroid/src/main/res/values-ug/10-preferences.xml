@@ -235,7 +235,7 @@
     <string name="media" maxLength="41">ۋاسىتە</string>
     <string name="misc" maxLength="41">ئارىلاش</string>
     <!-- Review reminders -->
-    <string name="add_reminder" comment="Label for the add reminder button in the screen for adding and editing review reminders">Add reminder</string>
+    <string name="add_reminder" comment="Label for the add reminder button in the screen for adding and editing review reminders">ئەسكەرتىش قوش</string>
     <!-- studyoptions -->
     <string name="studyoptions_limit_select_tags">بەلگە تاللىنىدۇ</string>
     <!-- Deck configurations -->

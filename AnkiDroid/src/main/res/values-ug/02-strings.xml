@@ -47,7 +47,7 @@
     <!-- Navigation drawer strings -->
     <string name="drawer_open">يان تارتمىنى ئاچ</string>
     <string name="drawer_close">يان تارتمىنى تاقا</string>
-    <string name="note_message">Note saved</string>
+    <string name="note_message">خاتىرە ساقلاندى</string>
     <string name="CardEditorCardDeck">كارتا دەستىسى:</string>
     <string name="CardEditorNoteDeck">دەستە:</string>
     <string name="CardEditorModel">تۈرى:</string>
@@ -109,10 +109,10 @@
     <string name="missing_note_type">ھېچقانداق خاتىرە تۈرى تېپىلمىدى</string>
     <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (بوش)</string>
     <!-- Image cropper -->
-    <string name="image_cropper_action_rotate" maxLength="28" comment="Action in image cropper screen">Rotate</string>
-    <string name="image_cropper_action_flip" maxLength="28" comment="Action in image cropper screen">Flip</string>
-    <string name="image_cropper_action_flip_horizontally" maxLength="28" comment="Submenu action in image cropper screen">Flip horizontally</string>
-    <string name="image_cropper_action_flip_vertically" maxLength="28" comment="Submenu action in image cropper screen">Flip vertically</string>
+    <string name="image_cropper_action_rotate" maxLength="28" comment="Action in image cropper screen">ئايلاندۇر</string>
+    <string name="image_cropper_action_flip" maxLength="28" comment="Action in image cropper screen">ئۆرۈ</string>
+    <string name="image_cropper_action_flip_horizontally" maxLength="28" comment="Submenu action in image cropper screen">توغرىسىغا ئۆرۈ</string>
+    <string name="image_cropper_action_flip_vertically" maxLength="28" comment="Submenu action in image cropper screen">بويىغا ئايلاندۇر</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">مۆھلەتكە يەتتى</string>
     <plurals name="timebox_reached">
