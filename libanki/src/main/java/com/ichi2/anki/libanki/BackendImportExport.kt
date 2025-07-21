@@ -33,7 +33,7 @@ fun importCollectionPackage(
     backend.importCollectionPackage(
         colPath = col.colDb.absolutePath,
         backupPath = colpkgPath,
-        mediaFolder = col.requireMediaFolder().absolutePath,
+        mediaFolder = col.mediaFolder.absolutePath,
         mediaDb = col.mediaDb.absolutePath,
     )
 }

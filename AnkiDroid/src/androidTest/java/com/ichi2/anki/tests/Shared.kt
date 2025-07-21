@@ -48,7 +48,7 @@ object Shared {
         val name = path.substringAfterLast("/").removeSuffix(".anki2")
         assertTrue(f.delete())
         return Storage.collection(
-            collectionFiles = CollectionFiles(folderPath = File(folder), collectionName = name),
+            collectionFiles = CollectionFiles.FolderBasedCollection(folderPath = File(folder), collectionName = name),
             databaseBuilder = { backend -> createDatabaseUsingRustBackend(backend) },
         )
     }

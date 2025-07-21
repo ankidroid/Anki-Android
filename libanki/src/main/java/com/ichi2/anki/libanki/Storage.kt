@@ -23,9 +23,6 @@ import net.ankiweb.rsdroid.BackendFactory
 import java.io.File
 
 object Storage {
-    var isInMemory = false
-        private set
-
     /**
      *  Open a new or existing collection.
      *
@@ -49,17 +46,16 @@ object Storage {
      * Called as part of [Collection] initialization. Don't call directly.
      */
     internal fun openDB(
-        path: File,
+        args: OpenDbArgs,
         backend: Backend,
         afterFullSync: Boolean,
         buildDatabase: (Backend) -> DB,
     ): Pair<DB, Boolean> {
-        val dbFile = path
-        var create = !dbFile.exists()
+        var create = args.isNewDatabase()
         if (afterFullSync) {
             create = false
         } else {
-            backend.openCollection(if (isInMemory) ":memory:" else path.absolutePath)
+            backend.openCollection(collectionPath = args.collectionPath)
         }
         val db = buildDatabase(backend)
 
@@ -78,7 +74,24 @@ object Storage {
         db.execute("update col set crt = ?", getDayStart(time) / 1000)
     }
 
-    fun setUseInMemory(useInMemoryDatabase: Boolean) {
-        isInMemory = useInMemoryDatabase
+    sealed class OpenDbArgs {
+        data class Path(
+            val path: File,
+        ) : OpenDbArgs()
+
+        data object InMemory : OpenDbArgs()
+
+        fun isNewDatabase(): Boolean =
+            when (this) {
+                is InMemory -> true
+                is Path -> !path.exists()
+            }
+
+        val collectionPath: String
+            get() =
+                when (this) {
+                    is InMemory -> ":memory:"
+                    is Path -> path.absolutePath
+                }
     }
 }

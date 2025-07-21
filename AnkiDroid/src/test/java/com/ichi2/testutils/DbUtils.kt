@@ -19,7 +19,6 @@ import android.content.Context
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.backend.createDatabaseUsingAndroidFramework
 import com.ichi2.anki.libanki.DB
-import com.ichi2.anki.libanki.Storage
 
 object DbUtils {
     /** performs a query on an unopened collection  */
@@ -27,7 +26,6 @@ object DbUtils {
         context: Context,
         query: String,
     ) {
-        check(!Storage.isInMemory) { "cannot use performQuery in memory" }
         var db: DB? = null
         try {
             db = createDatabaseUsingAndroidFramework(context, CollectionHelper.getCollectionPath(context))

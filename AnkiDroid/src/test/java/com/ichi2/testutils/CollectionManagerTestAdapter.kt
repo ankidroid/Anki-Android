@@ -28,6 +28,8 @@ object CollectionManagerTestAdapter : TestCollectionManager {
         CollectionManager.discardBackend()
     }
 
+    override fun getColUnsafe() = CollectionManager.getColUnsafe()
+
     /** @see CollectionManager.setTestDispatcher */
     fun setTestDispatcher(dispatcher: CoroutineDispatcher) {
         CollectionManager.setTestDispatcher(dispatcher)

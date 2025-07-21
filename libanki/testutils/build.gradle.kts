@@ -66,4 +66,6 @@ dependencies {
     implementation(libs.jakewharton.timber)
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.test)
+
+    implementation(libs.androidx.sqlite.framework)
 }

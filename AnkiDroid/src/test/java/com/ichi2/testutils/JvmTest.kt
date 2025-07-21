@@ -23,14 +23,13 @@ import com.ichi2.anki.common.time.MockTime
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.ioDispatcher
 import com.ichi2.anki.libanki.Collection
-import com.ichi2.anki.libanki.Storage
 import com.ichi2.anki.libanki.testutils.AnkiTest
+import com.ichi2.anki.libanki.testutils.InMemoryCollectionManager
+import com.ichi2.anki.libanki.testutils.TestCollectionManager
 import com.ichi2.anki.observability.ChangeManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.TestDispatcher
-import kotlinx.coroutines.test.TestScope
-import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import net.ankiweb.rsdroid.BackendException
 import net.ankiweb.rsdroid.testing.RustBackendLoader
@@ -55,13 +54,12 @@ open class JvmTest : AnkiTest {
         RustBackendLoader.ensureSetup()
     }
 
-    override val collectionManager: CollectionManagerTestAdapter
-        get() = CollectionManagerTestAdapter
+    override val collectionManager: TestCollectionManager = InMemoryCollectionManager
 
     override val col: Collection
         get() {
             if (_col == null) {
-                _col = CollectionManager.getColUnsafe()
+                _col = collectionManager.getColUnsafe()
             }
             return _col!!
         }
@@ -97,8 +95,6 @@ open class JvmTest : AnkiTest {
         ChangeManager.clearSubscribers()
 
         maybeSetupBackend()
-
-        Storage.setUseInMemory(true)
     }
 
     @After
@@ -133,10 +129,5 @@ open class JvmTest : AnkiTest {
         matcher: Matcher<T>?,
     ) {
         Assume.assumeThat(actual, matcher)
-    }
-
-    override suspend fun TestScope.runTestInner(testBody: suspend TestScope.() -> Unit) {
-        collectionManager.setTestDispatcher(UnconfinedTestDispatcher(testScheduler))
-        testBody()
     }
 }
