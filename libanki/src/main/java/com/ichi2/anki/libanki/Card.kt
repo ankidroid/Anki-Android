@@ -87,7 +87,8 @@ open class Card : Cloneable {
     var oDue: Int = 0
     var oDid: DeckId = 0
     var originalPosition: Int? = null
-    private var customData: String = ""
+    var customData: String = ""
+        private set
 
     @VisibleForTesting
     var flags = 0

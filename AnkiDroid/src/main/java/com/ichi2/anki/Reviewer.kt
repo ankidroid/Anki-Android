@@ -1607,7 +1607,7 @@ open class Reviewer :
                     .mergeCurrent(
                         state.states.current
                             .toBuilder()
-                            .setCustomData(state.topCard.toBackendCard().customData)
+                            .setCustomData(state.topCard.customData)
                             .build(),
                     ).build(),
             ).build()
