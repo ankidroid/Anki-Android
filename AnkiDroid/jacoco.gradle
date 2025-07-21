@@ -149,9 +149,25 @@ tasks.register('jacocoUnitTestReport', JacocoReport) {report ->
 
     for (module in modulesToUnitTest) {
         includeUnitTestCoverage(report, project(module), moduleClassDir)
-        dependsOn("${module}:test")
+        dependsOn("${module}:testDebugUnitTest")
     }
 }
+
+gradle.projectsEvaluated {
+    // ensure test results aren't cached
+    tasks.named('testPlayDebugUnitTest') {task ->
+        task.outputs.upToDateWhen { false }
+        task.outputs.cacheIf { false }
+    }
+    for (module in modulesToUnitTest) {
+        project(module).tasks.named('testDebugUnitTest')?.configure {task ->
+            task.outputs.upToDateWhen { false }
+            task.outputs.cacheIf { false }
+        }
+    }
+}
+
+
 
 ext.includeUnitTestCoverage = { JacocoReport report, Project project, String classDir ->
     report.sourceDirectories.from.add(files("${project.projectDir}/src/main/java"))
