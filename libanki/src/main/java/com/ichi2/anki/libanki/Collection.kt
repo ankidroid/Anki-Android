@@ -102,7 +102,8 @@ class Collection(
     val backend: Backend,
     databaseBuilder: (Backend) -> DB,
 ) {
-    val colDb = collectionFiles.colDb
+    val colDb: File
+        get() = collectionFiles.requireDiskBasedCollection().colDb
 
     /** Access backend translations */
     val tr = backend.tr
