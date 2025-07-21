@@ -17,6 +17,7 @@ package com.ichi2.anki.previewer
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.NotetypeFile
+import com.ichi2.anki.libanki.testutils.AnkiTest
 import com.ichi2.testutils.JvmTest
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
@@ -25,7 +26,6 @@ import org.junit.Test
 import org.junit.rules.TemporaryFolder
 import org.junit.runner.RunWith
 import org.mockito.kotlin.mock
-import kotlin.test.assertNotEquals
 
 @RunWith(AndroidJUnit4::class)
 class TemplatePreviewerViewModelTest : JvmTest() {
@@ -47,17 +47,6 @@ class TemplatePreviewerViewModelTest : JvmTest() {
         }
 
     @Test
-    fun `card ords are changed`() {
-        runClozeTest(fields = mutableListOf("{{c1::one}} {{c2::bar}}")) {
-            onPageFinished(false)
-            val ord1 = currentCard.await().ord
-            onTabSelected(1)
-            val ord2 = currentCard.await().ord
-            assertNotEquals(ord1, ord2)
-        }
-    }
-
-    @Test
     fun `empty front field detected correctly for tab badge`() =
         runOptionalReversedTest(
             fields =
@@ -76,18 +65,7 @@ class TemplatePreviewerViewModelTest : JvmTest() {
         ord: Int = 0,
         fields: MutableList<String>? = null,
         block: suspend TemplatePreviewerViewModel.() -> Unit,
-    ) = runTest {
-        val notetype = col.notetypes.byName("Cloze")!!
-        val arguments =
-            TemplatePreviewerArguments(
-                notetypeFile = NotetypeFile(tempDirectory.root, notetype),
-                fields = fields ?: mutableListOf("{{c1::foo}} {{c2::bar}}", "anki"),
-                tags = mutableListOf(),
-                ord = ord,
-            )
-        val viewModel = TemplatePreviewerViewModel(arguments, mock())
-        block(viewModel)
-    }
+    ) = runClozeTest(ord, tempDirectory, fields, block)
 
     private fun runOptionalReversedTest(
         ord: Int = 0,
@@ -105,4 +83,22 @@ class TemplatePreviewerViewModelTest : JvmTest() {
         val viewModel = TemplatePreviewerViewModel(arguments, mock())
         block(viewModel)
     }
+}
+
+fun AnkiTest.runClozeTest(
+    ord: Int = 0,
+    tempDirectory: TemporaryFolder,
+    fields: MutableList<String>? = null,
+    block: suspend TemplatePreviewerViewModel.() -> Unit,
+) = runTest {
+    val notetype = col.notetypes.byName("Cloze")!!
+    val arguments =
+        TemplatePreviewerArguments(
+            notetypeFile = NotetypeFile(tempDirectory.root, notetype),
+            fields = fields ?: mutableListOf("{{c1::foo}} {{c2::bar}}", "anki"),
+            tags = mutableListOf(),
+            ord = ord,
+        )
+    val viewModel = TemplatePreviewerViewModel(arguments, mock())
+    block(viewModel)
 }
