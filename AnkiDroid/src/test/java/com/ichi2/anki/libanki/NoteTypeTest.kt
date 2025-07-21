@@ -22,6 +22,7 @@ import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.libanki.exception.ConfirmModSchemaException
 import com.ichi2.anki.libanki.testutils.clozeClass
 import com.ichi2.anki.libanki.testutils.ext.addNote
+import com.ichi2.anki.libanki.testutils.ext.newNote
 import com.ichi2.testutils.JvmTest
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.containsString

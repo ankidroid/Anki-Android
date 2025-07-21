@@ -43,10 +43,10 @@ import com.ichi2.anki.libanki.NotetypeJson
 import com.ichi2.anki.libanki.Notetypes
 import com.ichi2.anki.libanki.QueueType
 import com.ichi2.anki.libanki.exception.ConfirmModSchemaException
-import com.ichi2.anki.libanki.newNote
 import com.ichi2.anki.libanki.sched.Ease
 import com.ichi2.anki.libanki.testutils.ext.BASIC_NOTE_TYPE_NAME
 import com.ichi2.anki.libanki.testutils.ext.addNote
+import com.ichi2.anki.libanki.testutils.ext.newNote
 import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.preferences.PreferenceTestUtils

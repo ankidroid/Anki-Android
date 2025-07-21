@@ -17,6 +17,7 @@
 package com.ichi2.anki.libanki
 
 import com.ichi2.anki.libanki.testutils.InMemoryAnkiTest
+import com.ichi2.anki.libanki.testutils.ext.newNote
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test

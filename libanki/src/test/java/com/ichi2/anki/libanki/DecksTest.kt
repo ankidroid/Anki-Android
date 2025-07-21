@@ -19,6 +19,7 @@ import android.annotation.SuppressLint
 import com.ichi2.anki.libanki.Decks.Companion.CURRENT_DECK
 import com.ichi2.anki.libanki.testutils.InMemoryAnkiTest
 import com.ichi2.anki.libanki.testutils.ext.addNote
+import com.ichi2.anki.libanki.testutils.ext.newNote
 import net.ankiweb.rsdroid.exceptions.BackendDeckIsFilteredException
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
