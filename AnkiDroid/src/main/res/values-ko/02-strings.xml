@@ -326,6 +326,9 @@ Context | Request Context    [1]</string>
     <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">TTS 설정 열기 실패</string>
     <string name="shared_decks_login_required">카드 덱을 더 다운로드하려면 로그인해 주세요</string>
     <string name="deck_description_field_hint">설명</string>
+    <string name="deck_description_saved">Description updated</string>
+    <string name="format_deck_description_as_markdown">Format as Markdown</string>
+    <string name="help_button_content_description">Open help for ‘%s’</string>
     <string name="failed_to_copy">복사 실패</string>
     <string name="card_browser_unavailable_when_notes_mode">\'메모\' 모드에서는 사용할 수 없습니다</string>
     <plurals name="unbury_cards_feedback">
