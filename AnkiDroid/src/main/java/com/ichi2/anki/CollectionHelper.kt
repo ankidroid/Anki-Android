@@ -267,7 +267,8 @@ object CollectionHelper {
 
     fun getCollectionPaths(context: Context): CollectionFiles = CollectionFiles(getCurrentAnkiDroidDirectory(context))
 
-    fun getMediaDirectory(context: Context) = getCollectionPaths(context).mediaFolder
+    // TODO: Duplicates collection.mediaFolder
+    fun getMediaDirectory(context: Context) = getCollectionPaths(context).requireMediaFolder()
 
     /**
      * An accessor which makes [Context] optional in the case that [PREF_COLLECTION_PATH] is set

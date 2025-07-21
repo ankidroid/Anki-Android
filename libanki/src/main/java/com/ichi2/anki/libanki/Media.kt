@@ -35,14 +35,18 @@ import java.io.File
 open class Media(
     private val col: Collection,
 ) {
-    val dir = col.collectionFiles.mediaFolder
+    // Test may not have a media folder. This `lazy` enables initialization of the class under
+    // this circumstance
+    val dir: File by lazy {
+        col.requireMediaFolder().also { mediaDir ->
+            if (!mediaDir.exists()) {
+                mediaDir.mkdirs()
+            }
+        }
+    }
 
     init {
-        Timber.v("dir %s", dir)
-        val file = dir
-        if (!file.exists()) {
-            file.mkdirs()
-        }
+        Timber.v("dir %s", col.mediaFolder)
     }
 
     /*
