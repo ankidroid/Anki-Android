@@ -23,7 +23,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 /**
  * Adapts [CollectionManager] to [TestCollectionManager]
  */
-object CollectionManagerTestAdapter : TestCollectionManager {
+object ProductionCollectionManager : TestCollectionManager {
     override fun getColUnsafe() = CollectionManager.getColUnsafe()
 
     override suspend fun discardBackend() {
