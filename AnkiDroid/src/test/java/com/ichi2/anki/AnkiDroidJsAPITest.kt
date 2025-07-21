@@ -24,7 +24,7 @@ import com.ichi2.anki.AnkiDroidJsAPI.Companion.VALUE_KEY
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.libanki.CardType
 import com.ichi2.anki.libanki.testutils.ext.BASIC_NOTE_TYPE_NAME
-import com.ichi2.anki.utils.ext.CardExt.setFlag
+import com.ichi2.anki.libanki.testutils.ext.setFlag
 import net.ankiweb.rsdroid.withoutUnicodeIsolation
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
