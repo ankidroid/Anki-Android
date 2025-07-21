@@ -85,7 +85,7 @@ androidTestJunit = "1.2.1"
 # https://github.com/junit-team/junit5/releases/
 junitJupiter = "5.13.4"
 # https://github.com/junit-team/junit5/releases/ - version numbers differ; changelogs in bundle
-junitPlatformLauncher = "1.13.3"
+junitPlatformLauncher = "1.13.4"
 # https://github.com/JetBrains/kotlin/releases/
 kotlin = '2.2.0'
 # https://github.com/Kotlin/kotlinx.serialization/releases
