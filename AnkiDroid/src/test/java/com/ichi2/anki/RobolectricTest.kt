@@ -57,7 +57,7 @@ import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.compat.customtabs.CustomTabActivityHelper
 import com.ichi2.testutils.AndroidTest
-import com.ichi2.testutils.CollectionManagerTestAdapter
+import com.ichi2.testutils.ProductionCollectionManager
 import com.ichi2.testutils.TaskSchedulerRule
 import com.ichi2.testutils.common.FailOnUnhandledExceptionRule
 import com.ichi2.testutils.common.IgnoreFlakyTestsInCIRule
@@ -126,7 +126,7 @@ open class RobolectricTest :
 
     override val collectionManager: TestCollectionManager by lazy {
         when (getCollectionStorageMode()) {
-            ON_DISK -> CollectionManagerTestAdapter as TestCollectionManager
+            ON_DISK -> ProductionCollectionManager as TestCollectionManager
             // tempFolder.newFolder() requires `lazy { }`
             IN_MEMORY_WITH_MEDIA -> InMemoryCollectionManagerWithMediaFolder(tempFolder.newFolder())
             IN_MEMORY_NO_FOLDERS -> InMemoryCollectionManager()
@@ -555,7 +555,7 @@ open class RobolectricTest :
     }
 
     override suspend fun TestScope.runTestInner(testBody: suspend TestScope.() -> Unit) {
-        (collectionManager as? CollectionManagerTestAdapter)
+        (collectionManager as? ProductionCollectionManager)
             ?.setTestDispatcher(UnconfinedTestDispatcher(testScheduler))
         testBody()
     }
