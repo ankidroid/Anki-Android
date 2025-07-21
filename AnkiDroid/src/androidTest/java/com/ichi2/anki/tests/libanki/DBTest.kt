@@ -21,7 +21,7 @@ import android.database.sqlite.SQLiteDatabaseCorruptException
 import androidx.sqlite.db.SupportSQLiteDatabase
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CollectionHelper
-import com.ichi2.anki.backend.AnkiDroidDB
+import com.ichi2.anki.libanki.DB
 import com.ichi2.anki.tests.InstrumentedTest
 import com.ichi2.anki.testutil.GrantStoragePermission
 import net.ankiweb.rsdroid.database.AnkiSupportSQLiteDatabase
@@ -49,7 +49,7 @@ class DBTest : InstrumentedTest() {
         Assert.assertFalse("database exists already", illFatedDBFile.exists())
         val callback = TestCallback(1)
         val illFatedDB =
-            AnkiDroidDB(
+            DB(
                 AnkiSupportSQLiteDatabase.withFramework(
                     testContext,
                     illFatedDBFile.canonicalPath,

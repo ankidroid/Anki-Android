@@ -22,99 +22,142 @@ package com.ichi2.anki.libanki
 import android.content.ContentValues
 import android.database.Cursor
 import android.database.SQLException
-import androidx.annotation.WorkerThread
+import android.database.sqlite.SQLiteDatabase
+import androidx.sqlite.db.SupportSQLiteDatabase
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
+import timber.log.Timber
 
 /**
- * Database accessor for AnkiDroid, providing convenience methods (e.g. [queryStringList])
+ * Database layer for AnkiDroid. Wraps a [SupportSQLiteDatabase], and provides some helpers on top.
+ *
+ * @param database the SQLite database containing the collection data.
  */
-// TODO: see if we can turn query methods into extensions
-//  probably hard due to the casting of varargs Any to Array<out Any?>
-@KotlinCleanup("Improve documentation")
-@WorkerThread
-interface DB {
-    /**
-     * Closes a previously opened database connection.
-     */
-    fun close()
+class DB(
+    val database: SupportSQLiteDatabase,
+) {
+    var mod = false
 
+    fun close() {
+        try {
+            database.close()
+            Timber.d("Database %s closed = %s", database.path, !database.isOpen)
+        } catch (e: Exception) {
+            // The pre-framework requery API ate this exception, but the framework API exposes it.
+            // We may want to propagate it in the future, but for now maintain the old API and log.
+            Timber.e(e, "Failed to close database %s", database.path)
+        }
+    }
+
+    // Allows to avoid using new Object[]
     fun query(
         query: String,
         vararg selectionArgs: Any,
-    ): Cursor
+    ): Cursor = database.query(query, selectionArgs)
 
-    fun execute(
-        sql: String,
-        vararg `object`: Any?,
-    )
-
-    /**
-     * WARNING: This is a convenience method that splits SQL scripts into separate queries with semicolons (;)
-     * as the delimiter. Only use this method on internal functions where we can guarantee that the script does
-     * not contain any non-statement-terminating semicolons.
-     */
-    fun executeScript(sql: String)
-
-    /**
-     * Convenience method for querying the database for a single integer result.
-     *
-     * @param query The raw SQL query to use.
-     * @return The integer result of the query.
-     */
     fun queryScalar(
         query: String,
         vararg selectionArgs: Any,
-    ): Int
+    ): Int {
+        val scalar: Int
+        database.query(query, selectionArgs).use { cursor ->
+            if (!cursor.moveToNext()) {
+                return 0
+            }
+            scalar = cursor.getInt(0)
+        }
+        return scalar
+    }
 
-    @Throws(SQLException::class)
     fun queryString(
         query: String,
         vararg bindArgs: Any,
-    ): String
+    ): String {
+        database.query(query, bindArgs).use { cursor ->
+            if (!cursor.moveToNext()) {
+                throw SQLException("No result for query: $query")
+            }
+            return cursor.getString(0)
+        }
+    }
 
     fun queryLongScalar(
         query: String,
         vararg bindArgs: Any,
-    ): Long
+    ): Long {
+        var scalar: Long
+        database.query(query, bindArgs).use { cursor ->
+            if (!cursor.moveToNext()) {
+                return 0
+            }
+            scalar = cursor.getLong(0)
+        }
+        return scalar
+    }
 
-    /**
-     * Convenience method for querying the database for an entire column of long.
-     *
-     * @param query The SQL query statement.
-     * @return An ArrayList with the contents of the specified column.
-     */
     fun queryLongList(
         query: String,
         vararg bindArgs: Any,
-    ): ArrayList<Long>
+    ): ArrayList<Long> {
+        val results = ArrayList<Long>()
+        database.query(query, bindArgs).use { cursor ->
+            while (cursor.moveToNext()) {
+                results.add(cursor.getLong(0))
+            }
+        }
+        return results
+    }
 
-    /**
-     * Convenience method for querying the database for an entire column of String.
-     *
-     * @param query The SQL query statement.
-     * @return An ArrayList with the contents of the specified column.
-     */
     fun queryStringList(
         query: String,
         vararg bindArgs: Any,
-    ): ArrayList<String>
+    ): ArrayList<String> {
+        val results = ArrayList<String>()
+        database.query(query, bindArgs).use { cursor ->
+            while (cursor.moveToNext()) {
+                results.add(cursor.getString(0))
+            }
+        }
+        return results
+    }
 
-    /** update must always be called via DB in order to mark the db as changed  */
+    fun execute(
+        sql: String,
+        vararg `object`: Any?,
+    ) {
+        val s = sql.trim().lowercase()
+        // mark modified?
+        for (mo in MOD_SQL_STATEMENTS) {
+            if (s.startsWith(mo)) {
+                break
+            }
+        }
+        database.execSQL(sql, `object`)
+    }
+
+    @KotlinCleanup("""Use Kotlin string. Change split so that there is no empty string after last ";".""")
+    fun executeScript(sql: String) {
+        val queries = java.lang.String(sql).split(";")
+        for (query in queries) {
+            database.execSQL(query)
+        }
+    }
+
     fun update(
         table: String,
         values: ContentValues,
-        whereClause: String? = null,
-        whereArgs: Array<String>? = null,
-    ): Int
+        whereClause: String?,
+        whereArgs: Array<String>?,
+    ): Int = database.update(table, SQLiteDatabase.CONFLICT_NONE, values, whereClause, whereArgs)
 
-    /** insert must always be called via DB in order to mark the db as changed  */
     fun insert(
         table: String,
         values: ContentValues,
-    ): Long
+    ): Long = database.insert(table, SQLiteDatabase.CONFLICT_NONE, values)
 
-    /**
-     * @return The full path to this database file.
-     */
     val path: String
+        get() = database.path ?: ":memory:"
+
+    companion object {
+        private val MOD_SQL_STATEMENTS = arrayOf("insert", "update", "delete")
+    }
 }
