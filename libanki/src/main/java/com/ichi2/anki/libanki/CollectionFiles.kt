@@ -30,6 +30,13 @@ class CollectionFiles(
     val mediaDb = File(folderPath, "$collectionName.media.db")
 
     /**
+     * Returns the paths for a disk-based collection
+     *
+     * @throws UnsupportedOperationException if the collection is in-memory
+     */
+    fun requireDiskBasedCollection() = this
+
+    /**
      * @return Path to the media folder (`collection.media`)
      *
      * @throws UnsupportedOperationException if the collection is in-memory

@@ -251,10 +251,11 @@ object CollectionHelper {
     fun getAppSpecificInternalAnkiDroidDirectory(context: Context): String = context.filesDir.absolutePath
 
     /**
-     *
      * @return the path to the actual [Collection] file
+     *
+     * @throws UnsupportedOperationException if the collection is in-memory
      */
-    fun getCollectionPath(context: Context) = getCollectionPaths(context).colDb
+    fun getCollectionPath(context: Context) = getCollectionPaths(context).requireDiskBasedCollection().colDb
 
     /** A temporary override for [getCurrentAnkiDroidDirectory] */
     var ankiDroidDirectoryOverride: File? = null

@@ -26,14 +26,15 @@ import net.ankiweb.rsdroid.Backend
  * */
 fun importCollectionPackage(
     backend: Backend,
-    colPath: CollectionFiles,
+    collectionFiles: CollectionFiles,
     colpkgPath: String,
 ) {
+    val col = collectionFiles.requireDiskBasedCollection()
     backend.importCollectionPackage(
-        colPath = colPath.colDb.absolutePath,
+        colPath = col.colDb.absolutePath,
         backupPath = colpkgPath,
-        mediaFolder = colPath.requireMediaFolder().absolutePath,
-        mediaDb = colPath.mediaDb.absolutePath,
+        mediaFolder = col.requireMediaFolder().absolutePath,
+        mediaDb = col.mediaDb.absolutePath,
     )
 }
 
