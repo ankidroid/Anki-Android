@@ -32,6 +32,7 @@ import com.ichi2.testutils.assertFalse
 import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers
 import org.json.JSONObject
+import org.junit.Assume.assumeThat
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Robolectric

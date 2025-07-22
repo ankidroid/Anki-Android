@@ -63,6 +63,7 @@ import org.hamcrest.Matchers.empty
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.not
 import org.json.JSONArray
+import org.junit.Assume.assumeTrue
 import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
