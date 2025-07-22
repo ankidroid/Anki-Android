@@ -72,7 +72,7 @@ class DeckPickerOnDiskTest : RobolectricTest() {
                     DeckPickerEx::class.java,
                     Intent(),
                 )
-            waitForAsyncTasksToComplete()
+            advanceRobolectricLooper()
             assertThat(
                 "Collection should now be open",
                 CollectionManager.isOpenUnsafe(),
@@ -107,7 +107,7 @@ class DeckPickerOnDiskTest : RobolectricTest() {
                     DeckPickerEx::class.java,
                     Intent(),
                 )
-            waitForAsyncTasksToComplete()
+            advanceRobolectricLooper()
             assertThat(
                 "Collection should not be open",
                 !CollectionManager.isOpenUnsafe(),
@@ -132,7 +132,7 @@ class DeckPickerOnDiskTest : RobolectricTest() {
                     DeckPickerEx::class.java,
                     Intent(),
                 )
-            waitForAsyncTasksToComplete()
+            advanceRobolectricLooper()
             assertThat(
                 "Collection should not be open",
                 !CollectionManager.isOpenUnsafe(),

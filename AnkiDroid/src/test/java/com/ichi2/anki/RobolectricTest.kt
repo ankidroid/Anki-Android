@@ -38,8 +38,6 @@ import com.ichi2.anki.CollectionManager.CollectionOpenFailure
 import com.ichi2.anki.RobolectricTest.CollectionStorageMode.IN_MEMORY_NO_FOLDERS
 import com.ichi2.anki.RobolectricTest.CollectionStorageMode.IN_MEMORY_WITH_MEDIA
 import com.ichi2.anki.RobolectricTest.CollectionStorageMode.ON_DISK
-import com.ichi2.anki.RobolectricTest.Companion.advanceRobolectricLooper
-import com.ichi2.anki.RobolectricTest.Companion.advanceRobolectricLooperWithSleep
 import com.ichi2.anki.common.annotations.UseContextParameter
 import com.ichi2.anki.common.time.MockTime
 import com.ichi2.anki.common.time.TimeManager
@@ -273,45 +271,10 @@ open class RobolectricTest :
         return messageViewWithinDialog?.text?.toString()
     }
 
-    // Robolectric needs a manual advance with the new PAUSED looper mode
     companion object {
-        // Robolectric needs a manual advance with the new PAUSED looper mode
+        // Robolectric needs a manual advance in PAUSED looper mode
         fun advanceRobolectricLooper() {
             Shadows.shadowOf(Looper.getMainLooper()).runToEndOfTasks()
-            Shadows.shadowOf(Looper.getMainLooper()).idle()
-            Shadows.shadowOf(Looper.getMainLooper()).runToEndOfTasks()
-        }
-
-        /**
-         * * Causes all of the [Runnable]s that have been scheduled to run while advancing the clock to the start time of the last scheduled Runnable.
-         * * Executes all posted tasks scheduled before or at the current time
-         *
-         * Supersedes and will eventually replace [advanceRobolectricLooper] and [advanceRobolectricLooperWithSleep]
-         */
-        fun advanceRobolectricUiLooper() {
-            Shadows.shadowOf(Looper.getMainLooper()).apply {
-                runToEndOfTasks()
-                idle()
-                // CardBrowserTest:browserIsInMultiSelectModeWhenSelectingAll failed on Windows CI
-                // This line was added and may or may not make a difference
-                runToEndOfTasks()
-            }
-        }
-
-        // Robolectric needs some help sometimes in form of a manual kick, then a wait, to stabilize UI activity
-        fun advanceRobolectricLooperWithSleep() {
-            advanceRobolectricLooper()
-            try {
-                Thread.sleep(500)
-            } catch (e: Exception) {
-                Timber.e(e)
-            }
-            advanceRobolectricLooper()
-        }
-
-        /** This can probably be implemented in a better manner  */
-        internal fun waitForAsyncTasksToComplete() {
-            advanceRobolectricLooperWithSleep()
         }
 
         @JvmStatic // Using protected members which are not @JvmStatic in the superclass companion is unsupported yet
@@ -334,7 +297,7 @@ open class RobolectricTest :
                     .start()
                     .resume()
                     .visible()
-            advanceRobolectricLooperWithSleep()
+            advanceRobolectricLooper()
             testClass.saveControllerForCleanup(controller)
             return controller.get()
         }

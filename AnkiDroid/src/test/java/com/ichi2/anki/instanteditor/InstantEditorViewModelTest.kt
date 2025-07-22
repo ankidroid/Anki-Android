@@ -46,7 +46,7 @@ class InstantEditorViewModelTest : RobolectricTest() {
                 col.backend.removeNotetype(note.id)
             }
 
-            waitForAsyncTasksToComplete()
+            advanceRobolectricLooper()
 
             // Reinitialize the viewModel
             runViewModelTest({ InstantEditorViewModel() }) {

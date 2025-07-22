@@ -149,12 +149,12 @@ class ReviewerNoParamTest : RobolectricTest() {
         val reviewer = startReviewerFullScreen()
 
         reviewer.displayCardAnswer()
-        advanceRobolectricLooperWithSleep()
+        advanceRobolectricLooper()
 
         val hideCount = reviewer.delayedHideCount
 
         reviewer.answerCard(Ease.AGAIN)
-        advanceRobolectricLooperWithSleep()
+        advanceRobolectricLooper()
 
         assertThat("Hide should be called after answering a card", reviewer.delayedHideCount, greaterThan(hideCount))
     }
@@ -167,15 +167,15 @@ class ReviewerNoParamTest : RobolectricTest() {
             val reviewer = startReviewerFullScreen()
 
             reviewer.displayCardAnswer()
-            advanceRobolectricLooperWithSleep()
+            advanceRobolectricLooper()
             reviewer.answerCard(Ease.AGAIN)
-            advanceRobolectricLooperWithSleep()
+            advanceRobolectricLooper()
 
             val hideCount = reviewer.delayedHideCount
 
             reviewer.undo()
 
-            advanceRobolectricLooperWithSleep()
+            advanceRobolectricLooper()
 
             assertThat("Hide should be called after answering a card", reviewer.delayedHideCount, greaterThan(hideCount))
         }
