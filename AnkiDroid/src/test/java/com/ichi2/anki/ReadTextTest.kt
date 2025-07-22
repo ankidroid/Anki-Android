@@ -100,7 +100,7 @@ class ReadTextTest : RobolectricTest() {
         french: String,
     ) {
         MetaDB.storeLanguage(targetContext, i.toLong(), 1, CardSide.QUESTION, french)
-        advanceRobolectricLooperWithSleep()
-        advanceRobolectricLooperWithSleep()
+        advanceRobolectricLooper()
+        advanceRobolectricLooper()
     }
 }

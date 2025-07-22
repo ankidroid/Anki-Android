@@ -209,11 +209,11 @@ class ReviewerTest : RobolectricTest() {
             val time = collectionTime
             new.delays = JSONArray(intArrayOf(1, 10, 60, 120))
 
-            waitForAsyncTasksToComplete()
+            advanceRobolectricLooper()
 
             val reviewer = startReviewer()
 
-            waitForAsyncTasksToComplete()
+            advanceRobolectricLooper()
 
             assertCounts(reviewer, 3, 0, 0)
             answerCardOrdinalAsGood(reviewer, 1) // card 1 is shown
@@ -245,31 +245,31 @@ class ReviewerTest : RobolectricTest() {
                     addBasicNote("2", "bar").firstCard(),
                     addBasicNote("3", "bar").firstCard(),
                 )
-            waitForAsyncTasksToComplete()
+            advanceRobolectricLooper()
 
             val reviewer = startReviewer()
 
-            waitForAsyncTasksToComplete()
+            advanceRobolectricLooper()
 
             equalFirstField(cards[0], reviewer.currentCard!!)
             reviewer.answerCard(Ease.AGAIN)
-            waitForAsyncTasksToComplete()
+            advanceRobolectricLooper()
 
             equalFirstField(cards[1], reviewer.currentCard!!)
             reviewer.answerCard(Ease.AGAIN)
-            waitForAsyncTasksToComplete()
+            advanceRobolectricLooper()
 
             undo(reviewer)
-            waitForAsyncTasksToComplete()
+            advanceRobolectricLooper()
 
             equalFirstField(cards[1], reviewer.currentCard!!)
             reviewer.answerCard(Ease.GOOD)
-            waitForAsyncTasksToComplete()
+            advanceRobolectricLooper()
 
             equalFirstField(cards[2], reviewer.currentCard!!)
             time.addM(2)
             reviewer.answerCard(Ease.GOOD)
-            advanceRobolectricLooperWithSleep()
+            advanceRobolectricLooper()
             equalFirstField(
                 cards[0],
                 reviewer.currentCard!!,
@@ -289,7 +289,7 @@ class ReviewerTest : RobolectricTest() {
             val reviewer = startReviewer()
             val jsApi = reviewer.jsApi
 
-            waitForAsyncTasksToComplete()
+            advanceRobolectricLooper()
             assertThat(
                 jsApi
                     .handleJsApiRequest("deckName", jsApiContract(), false)
@@ -305,7 +305,7 @@ class ReviewerTest : RobolectricTest() {
         runTest {
             val reviewer = startReviewer()
 
-            waitForAsyncTasksToComplete()
+            advanceRobolectricLooper()
 
             // #6587
             addBasicNote("Hello", "World")
@@ -375,7 +375,7 @@ class ReviewerTest : RobolectricTest() {
 
         assumeTrue("Whiteboard should now be enabled", reviewer.prefWhiteboard)
 
-        advanceRobolectricLooperWithSleep()
+        advanceRobolectricLooper()
     }
 
     private fun disableAllReviewerAppBarButtons() {
@@ -394,7 +394,7 @@ class ReviewerTest : RobolectricTest() {
         r: Reviewer,
         @Suppress("SameParameterValue") i: Int,
     ) {
-        waitForAsyncTasksToComplete()
+        advanceRobolectricLooper()
         val ord = r.currentCard!!.ord
 
         assertThat("Unexpected card ord", ord + 1, not(equalTo(i)))
@@ -438,14 +438,14 @@ class ReviewerTest : RobolectricTest() {
 
         r.answerCard(Ease.GOOD)
 
-        waitForAsyncTasksToComplete()
+        advanceRobolectricLooper()
     }
 
     private fun assertCurrentOrdIs(
         r: Reviewer,
         i: Int,
     ) {
-        waitForAsyncTasksToComplete()
+        advanceRobolectricLooper()
         val ord = r.currentCard!!.ord
 
         assertThat("Unexpected card ord", ord + 1, equalTo(i))
