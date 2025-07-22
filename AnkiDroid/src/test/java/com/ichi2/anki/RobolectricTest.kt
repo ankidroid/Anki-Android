@@ -58,7 +58,6 @@ import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.compat.customtabs.CustomTabActivityHelper
 import com.ichi2.testutils.AndroidTest
 import com.ichi2.testutils.ProductionCollectionManager
-import com.ichi2.testutils.TaskSchedulerRule
 import com.ichi2.testutils.common.FailOnUnhandledExceptionRule
 import com.ichi2.testutils.common.IgnoreFlakyTestsInCIRule
 import com.ichi2.testutils.filter
@@ -104,9 +103,6 @@ open class RobolectricTest :
     protected fun saveControllerForCleanup(controller: ActivityController<*>) {
         controllersForCleanup.add(controller)
     }
-
-    @get:Rule
-    val taskScheduler = TaskSchedulerRule()
 
     /** Allows [com.ichi2.testutils.Flaky] to annotate tests in subclasses */
     @get:Rule
@@ -279,13 +275,8 @@ open class RobolectricTest :
 
     // Robolectric needs a manual advance with the new PAUSED looper mode
     companion object {
-        private var mBackground = true
-
         // Robolectric needs a manual advance with the new PAUSED looper mode
         fun advanceRobolectricLooper() {
-            if (!mBackground) {
-                return
-            }
             Shadows.shadowOf(Looper.getMainLooper()).runToEndOfTasks()
             Shadows.shadowOf(Looper.getMainLooper()).idle()
             Shadows.shadowOf(Looper.getMainLooper()).runToEndOfTasks()
@@ -309,9 +300,6 @@ open class RobolectricTest :
 
         // Robolectric needs some help sometimes in form of a manual kick, then a wait, to stabilize UI activity
         fun advanceRobolectricLooperWithSleep() {
-            if (!mBackground) {
-                return
-            }
             advanceRobolectricLooper()
             try {
                 Thread.sleep(500)

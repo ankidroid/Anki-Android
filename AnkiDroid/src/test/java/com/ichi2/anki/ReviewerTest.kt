@@ -76,7 +76,6 @@ class ReviewerTest : RobolectricTest() {
 
     @Ignore("flaky")
     @Test
-    @RunInBackground
     fun verifyNormalStartup() {
         ActivityScenario.launch(Reviewer::class.java).use { scenario ->
             scenario.onActivity { reviewer: Reviewer ->
