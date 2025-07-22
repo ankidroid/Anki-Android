@@ -50,13 +50,13 @@ object ReadText {
     var textToSpeak: String? = null
         private set
     private lateinit var flashCardViewer: WeakReference<Context>
-    private var mDid: DeckId = 0
-    private var mOrd = 0
+    private var did: DeckId = 0
+    private var ord = 0
     var questionAnswer: CardSide? = null
         private set
     private const val NO_TTS = "0"
-    private val mTtsParams = Bundle()
-    private var mCompletionListener: ReadTextListener? = null
+    private val ttsParams = Bundle()
+    private var completionListener: ReadTextListener? = null
 
     private fun speak(
         text: String?,
@@ -78,7 +78,7 @@ object ReadText {
                 stopTts()
             }
             Timber.d("tts text '%s' to be played for locale (%s)", text, loc)
-            textToSpeech!!.speak(textToSpeak, queueMode, mTtsParams, "stringId")
+            textToSpeech!!.speak(textToSpeak, queueMode, ttsParams, "stringId")
         }
     }
 
@@ -107,8 +107,8 @@ object ReadText {
         // TODO: Consolidate with ReadText.readCardSide
         textToSpeak = text
         questionAnswer = qa
-        mDid = did
-        mOrd = ord
+        ReadText.did = did
+        ReadText.ord = ord
         val res = flashCardViewer.get()!!.resources
         val dialog = AlertDialog.Builder(flashCardViewer.get()!!)
         if (availableLocales().isEmpty()) {
@@ -133,11 +133,17 @@ object ReadText {
                 .setItems(localeMappings.map { it.second }.toTypedArray()) { _, index ->
                     val locale = localeMappings[index].first
                     Timber.d("ReadText.selectTts() user chose locale '%s'", locale)
-                    MetaDB.storeLanguage(flashCardViewer.get()!!, mDid, mOrd, questionAnswer!!, locale)
+                    MetaDB.storeLanguage(
+                        flashCardViewer.get()!!,
+                        ReadText.did,
+                        ReadText.ord,
+                        questionAnswer!!,
+                        locale,
+                    )
                     if (locale != NO_TTS) {
                         speak(textToSpeak, locale, TextToSpeech.QUEUE_FLUSH)
                     } else {
-                        mCompletionListener!!.onDone(qa)
+                        completionListener!!.onDone(qa)
                     }
                 }
         }
@@ -190,7 +196,7 @@ object ReadText {
         }
         // if we didn't play a sound, call the completion listener
         if (!playedSound) {
-            mCompletionListener!!.onDone(cardSide)
+            completionListener!!.onDone(cardSide)
         }
     }
 
@@ -223,8 +229,8 @@ object ReadText {
     ): Boolean {
         textToSpeak = tag.fieldText
         questionAnswer = qa
-        mDid = did
-        mOrd = ord
+        ReadText.did = did
+        ReadText.ord = ord
         Timber.d("ReadText.textToSpeech() method started for string '%s', locale '%s'", tag.fieldText, tag.lang)
         var localeCode = tag.lang
         val originalLocaleCode = localeCode
@@ -235,7 +241,7 @@ object ReadText {
         }
         if (localeCode.isEmpty()) {
             // get the user's existing language preference
-            localeCode = getLanguage(mDid, mOrd, questionAnswer!!)
+            localeCode = getLanguage(ReadText.did, ReadText.ord, questionAnswer!!)
             Timber.d("ReadText.textToSpeech() method found language choice '%s'", localeCode)
         }
         if (localeCode == NO_TTS) {
@@ -258,7 +264,7 @@ object ReadText {
                 false,
             )
         }
-        selectTts(textToSpeak, mDid, mOrd, questionAnswer)
+        selectTts(textToSpeak, ReadText.did, ReadText.ord, questionAnswer)
         return true
     }
 
@@ -276,7 +282,7 @@ object ReadText {
     ) {
         // Store weak reference to Activity to prevent memory leak
         flashCardViewer = WeakReference(context)
-        mCompletionListener = listener
+        completionListener = listener
         val ankiActivityContext = context as? AnkiActivity
         // Create new TTS object and setup its onInit Listener
         textToSpeech =
