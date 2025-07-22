@@ -21,7 +21,6 @@ import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
 import timber.log.Timber
-import java.lang.Exception
 
 @RunWith(AndroidJUnit4::class)
 class AbstractFlashcardViewerKeyboardInputTest : RobolectricTest() {
@@ -35,7 +34,6 @@ class AbstractFlashcardViewerKeyboardInputTest : RobolectricTest() {
     }
 
     @Test
-    @RunInBackground
     fun enterShowsAnswer() {
         val underTest = KeyboardInputTestCardViewer.create()
 

@@ -259,8 +259,7 @@ class DeckPickerTest : RobolectricTest() {
     }
 
     @Test
-    @RunInBackground
-    @Ignore("Flaky. Try to unflak when AsyncTask is entirely removed.")
+    @Ignore("Flaky. Try to unflake now we're using coroutines")
     fun databaseLockedNoPermissionIntegrationTest() {
         // no permissions -> grant permissions -> db locked
         try {
@@ -313,7 +312,6 @@ class DeckPickerTest : RobolectricTest() {
     }
 
     @Test
-    @RunInBackground
     fun doNotShowOptionsMenuWhenCollectionInaccessible() =
         runTest {
             try {
@@ -356,7 +354,6 @@ class DeckPickerTest : RobolectricTest() {
         }
 
     @Test
-    @RunInBackground
     fun onResumeLoadCollectionFailureWithInaccessibleCollection() {
         try {
             revokeWritePermissions()

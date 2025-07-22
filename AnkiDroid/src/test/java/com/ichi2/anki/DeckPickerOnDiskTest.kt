@@ -62,7 +62,6 @@ class DeckPickerOnDiskTest : RobolectricTest() {
     }
 
     @Test
-    @RunInBackground
     @Flaky(OS.WINDOWS)
     fun version16CollectionOpens() {
         try {
