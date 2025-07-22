@@ -26,6 +26,7 @@ import com.ichi2.utils.ExceptionUtil.getFullStackTrace
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Assert
+import org.junit.Assume.assumeThat
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith

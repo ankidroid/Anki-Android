@@ -68,13 +68,11 @@ import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import net.ankiweb.rsdroid.BackendException
 import net.ankiweb.rsdroid.testing.RustBackendLoader
-import org.hamcrest.Matcher
 import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers
 import org.json.JSONException
 import org.junit.After
 import org.junit.Assert
-import org.junit.Assume
 import org.junit.Before
 import org.junit.Rule
 import org.junit.rules.TemporaryFolder
@@ -362,69 +360,6 @@ open class RobolectricTest :
 
     internal inline fun <reified T : AnkiActivity?> startRegularActivity(i: Intent? = null): T =
         startActivityNormallyOpenCollectionWithIntent(T::class.java, i)
-
-    /**
-     * Call to assume that <code>actual</code> satisfies the condition specified by <code>matcher</code>.
-     * If not, the test halts and is ignored.
-     * Example:
-     * ```kotlin
-     *   assumeThat(1, is(1));  // passes
-     *   foo();                 // will execute
-     *   assumeThat(0, is(1));  // assumption failure! test halts
-     *   int x = 1 / 0;         // will never execute
-     * ```
-     *
-     * @param <T> the static type accepted by the matcher (this can flag obvious compile-time problems such as `assumeThat(1, equalTo("a"))`)
-     * @param actual the computed value being compared
-     * @param matcher an expression, built from [Matchers][Matcher], specifying allowed values
-     * @see org.hamcrest.CoreMatchers
-     * @see org.junit.matchers.JUnitMatchers
-     */
-    fun <T> assumeThat(
-        actual: T,
-        matcher: Matcher<T>?,
-    ) {
-        Assume.assumeThat(actual, matcher)
-    }
-
-    /**
-     * Call to assume that `actual` satisfies the condition specified by <code>matcher</code>.
-     * If not, the test halts and is ignored.
-     * Example:
-     * ```kotlin
-     *   assumeThat("alwaysPasses", 1, equalTo(1)); // passes
-     *   foo();                                     // will execute
-     *   assumeThat("alwaysFails", 0, equalTo(1));  // assumption failure! test halts
-     *   int x = 1 / 0;                             // will never execute
-     * ```
-     *
-     * @param <T> the static type accepted by the matcher (this can flag obvious compile-time problems such as `assumeThat(1, equalTo("a"))`
-     * @param actual the computed value being compared
-     * @param matcher an expression, built from [Matchers][Matcher], specifying allowed values
-     * @see org.hamcrest.CoreMatchers
-     * @see org.junit.matchers.JUnitMatchers
-     */
-    fun <T> assumeThat(
-        message: String?,
-        actual: T,
-        matcher: Matcher<T>?,
-    ) {
-        Assume.assumeThat(message, actual, matcher)
-    }
-
-    /**
-     * If called with an expression evaluating to `false`, the test will halt and be ignored.
-     *
-     * @param b If `false`, the method will attempt to stop the test and ignore it by
-     * throwing [AssumptionViolatedException]
-     * @param message A message to pass to [AssumptionViolatedException]
-     */
-    fun assumeTrue(
-        message: String?,
-        b: Boolean,
-    ) {
-        Assume.assumeTrue(message, b)
-    }
 
     fun equalFirstField(
         expected: Card,
