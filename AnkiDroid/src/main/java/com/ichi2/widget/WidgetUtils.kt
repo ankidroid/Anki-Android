@@ -18,7 +18,6 @@ package com.ichi2.widget
 
 import android.appwidget.AppWidgetManager
 import android.content.Context
-import com.ichi2.utils.AdaptionUtil
 
 /**
  * @return An [AppWidgetManager] for the provided context, or `null`
@@ -34,7 +33,4 @@ fun getAppWidgetManager(context: Context): AppWidgetManager? {
 
 /** Whether 'Material You' dynamic color should be used for widgets */
 val disableMaterialYouDynamicColor: Boolean
-    // #18869: MIUI 14 (Android 13) doesn't support Material You well - the color is
-    // based on the system background color, with no means to disable it.
-    // unconfirmed if this is fixed in future MIUI versions
-    get() = AdaptionUtil.isMiui
+    get() = true
