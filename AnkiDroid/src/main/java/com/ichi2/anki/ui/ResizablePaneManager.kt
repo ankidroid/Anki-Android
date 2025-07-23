@@ -18,6 +18,7 @@ package com.ichi2.anki.ui
 
 import android.content.SharedPreferences
 import android.view.MotionEvent
+import android.view.PointerIcon
 import android.view.View
 import android.widget.LinearLayout
 import androidx.core.content.edit
@@ -51,6 +52,24 @@ class ResizablePaneManager(
         var initialTouchX = 0f
         var initialLeftWeight = 0f
         var initialRightWeight = 0f
+
+        divider.setOnHoverListener { _, event ->
+            when (event.action) {
+                MotionEvent.ACTION_HOVER_ENTER -> {
+                    divider.pointerIcon =
+                        PointerIcon.getSystemIcon(
+                            divider.context,
+                            PointerIcon.TYPE_HORIZONTAL_DOUBLE_ARROW,
+                        )
+                    true
+                }
+                MotionEvent.ACTION_HOVER_EXIT -> {
+                    divider.pointerIcon = null
+                    true
+                }
+                else -> false
+            }
+        }
 
         divider.setOnTouchListener { v, event ->
             val leftParams = leftPane.layoutParams as LinearLayout.LayoutParams
