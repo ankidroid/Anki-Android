@@ -25,6 +25,7 @@ import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.services.BootService.Companion.scheduleNotification
+import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.utils.CollectionPreferences
 import com.ichi2.preferences.NumberRangePreferenceCompat
 import com.ichi2.preferences.SliderPreference
@@ -85,6 +86,6 @@ suspend fun setDayOffset(
     undoableOp {
         setPreferences(newPrefs)
     }
-    scheduleNotification(TimeManager.time, context)
+    if (!Prefs.newReviewRemindersEnabled) scheduleNotification(TimeManager.time, context)
     Timber.i("set day offset: '%d'", hours)
 }
