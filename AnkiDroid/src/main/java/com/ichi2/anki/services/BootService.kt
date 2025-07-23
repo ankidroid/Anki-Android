@@ -1,4 +1,20 @@
-//noinspection MissingCopyrightHeader #8659
+/*
+ *  Copyright (c) 2016 Siarhei Krukau <siarhei.krukau@gmail.com>
+ *  Copyright (c) 2025 Eric Li <ericli3690@gmail.com>
+ *
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 3 of the License, or (at your option) any later
+ *  version.
+ *
+ *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
+ *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.ichi2.anki.services
 
 import android.app.AlarmManager
@@ -9,29 +25,36 @@ import androidx.core.app.PendingIntentCompat
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.IntentHandler.Companion.grantedStoragePermissions
 import com.ichi2.anki.R
+import com.ichi2.anki.common.annotations.LegacyNotifications
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.time.Time
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.preferences.PENDING_NOTIFICATIONS_ONLY
 import com.ichi2.anki.preferences.sharedPrefs
+import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.showThemedToast
 import timber.log.Timber
 import java.util.Calendar
 
+/**
+ * BroadcastReceiver which listens to the Android system-level intent that fires when the device starts up.
+ * Schedules notifications for review reminders.
+ */
 @NeedsTest("Check on various Android versions that this can execute")
 class BootService : BroadcastReceiver() {
+    @LegacyNotifications("Notifications will be scheduled rather than instantly shown on boot or app launch")
     private var failedToShowNotifications = false
 
     override fun onReceive(
         context: Context,
         intent: Intent,
     ) {
-        if (!intent.action.equals("android.intent.action.BOOT_COMPLETED")) {
+        if (!intent.action.equals(Intent.ACTION_BOOT_COMPLETED)) {
             Timber.w("BootService - unexpected action received, ignoring: %s", intent.action)
             return
         }
-        if (sWasRun) {
+        if (wasRun) {
             Timber.d("BootService - Already run")
             return
         }
@@ -39,18 +62,24 @@ class BootService : BroadcastReceiver() {
             Timber.w("Boot Service did not execute - no permissions")
             return
         }
-        // There are cases where the app is installed, and we have access, but nothing exist yet
-        val col = getColSafe()
-        if (col == null) {
-            Timber.w("Boot Service did not execute - error loading collection")
-            return
+        if (Prefs.newReviewRemindersEnabled) {
+            Timber.i("Executing Boot Service - Review reminders")
+            // TODO: GSoC 2025: Run schedule all notifications method
+        } else {
+            // There are cases where the app is installed, and we have access, but nothing exist yet
+            val col = getColSafe()
+            if (col == null) {
+                Timber.w("Boot Service did not execute - error loading collection")
+                return
+            }
+            Timber.i("Executing Boot Service")
+            catchAlarmManagerErrors(context) { scheduleNotification(TimeManager.time, context) }
+            failedToShowNotifications = false
         }
-        Timber.i("Executing Boot Service")
-        catchAlarmManagerErrors(context) { scheduleNotification(TimeManager.time, context) }
-        failedToShowNotifications = false
-        sWasRun = true
+        wasRun = true
     }
 
+    @LegacyNotifications("Will be moved to AlarmManagerService")
     private fun catchAlarmManagerErrors(
         context: Context,
         runnable: Runnable,
@@ -75,6 +104,7 @@ class BootService : BroadcastReceiver() {
         }
     }
 
+    @LegacyNotifications("Can use withCol instead")
     private fun getColSafe(): Collection? {
         // #6239 - previously would crash if ejecting, we don't want a report if this happens so don't use
         // getInstance().getColSafe
@@ -94,8 +124,9 @@ class BootService : BroadcastReceiver() {
          * This service is also run when the app is started (from [com.ichi2.anki.AnkiDroidApp],
          * so we need to make sure that it isn't run twice.
          */
-        private var sWasRun = false
+        private var wasRun = false
 
+        @LegacyNotifications("Replaced by new review reminder scheduling logic")
         fun scheduleNotification(
             time: Time,
             context: Context,
@@ -137,6 +168,7 @@ class BootService : BroadcastReceiver() {
         }
 
         /** Returns the hour of day when rollover to the next day occurs  */
+        @LegacyNotifications("Notifications will be sent at customizable times rather than the beginning of every day")
         private fun getRolloverHourOfDay(context: Context): Int {
             // TODO; We might want to use the BootService retry code here when called from preferences.
             val defValue = 4
