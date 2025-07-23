@@ -37,6 +37,7 @@ import anki.collection.OpChanges
 import com.ichi2.anki.CrashReportService.sendExceptionReport
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.browser.SharedPreferencesLastDeckIdRepository
+import com.ichi2.anki.common.annotations.LegacyNotifications
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.common.utils.isRunningAsUnitTest
@@ -52,8 +53,8 @@ import com.ichi2.anki.preferences.SharedPreferencesProvider
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.servicelayer.DebugInfoService
 import com.ichi2.anki.servicelayer.ThrowableFilterService
-import com.ichi2.anki.services.BootService
 import com.ichi2.anki.services.NotificationService
+import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.ui.dialogs.ActivityAgnosticDialogs
 import com.ichi2.compat.CompatHelper
 import com.ichi2.utils.AdaptionUtil
@@ -79,6 +80,8 @@ open class AnkiDroidApp :
     ChangeManager.Subscriber {
     /** An exception if the WebView subsystem fails to load  */
     private var webViewError: Throwable? = null
+
+    @LegacyNotifications("The widget triggers notifications by posting null to this, but we plan to stop relying on the widget")
     private val notifications = MutableLiveData<Void?>()
 
     lateinit var activityAgnosticDialogs: ActivityAgnosticDialogs
@@ -202,11 +205,15 @@ open class AnkiDroidApp :
                 }
             }
         }
-        Timber.i("AnkiDroidApp: Starting Services")
-        BootService().onReceive(this, Intent(this, BootService::class.java))
 
-        // Register for notifications
-        notifications.observeForever { NotificationService.triggerNotificationFor(this) }
+        if (Prefs.newReviewRemindersEnabled) {
+            Timber.i("Setting review reminder notifications if they have not already been set")
+            // TODO: GSoC 2025
+        } else {
+            // Register for notifications
+            Timber.i("AnkiDroidApp: Starting Services")
+            notifications.observeForever { NotificationService.triggerNotificationFor(this) }
+        }
 
         // listen for day rollover: time + timezone changes
         DayRolloverHandler.listenForRolloverEvents(this)
@@ -276,6 +283,7 @@ open class AnkiDroidApp :
         )
     }
 
+    @LegacyNotifications("Only used by the widget to trigger notifications, we plan to stop relying on the widget")
     fun scheduleNotification() {
         notifications.postValue(null)
     }
