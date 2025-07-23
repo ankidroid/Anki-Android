@@ -21,6 +21,7 @@ import com.ichi2.anki.MetaDB
 import com.ichi2.anki.R
 import com.ichi2.anki.libanki.sched.Counts
 import com.ichi2.anki.preferences.sharedPrefs
+import com.ichi2.anki.settings.Prefs
 import com.ichi2.widget.AnkiDroidWidgetSmall.UpdateService
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
@@ -50,16 +51,26 @@ object WidgetStatus {
     fun updateInBackground(context: Context) {
         val preferences = context.sharedPrefs()
         enabled = preferences.getBoolean("widgetSmallEnabled", false)
-        val notificationEnabled =
-            preferences
-                .getString(context.getString(R.string.pref_notifications_minimum_cards_due_key), "1000001")!!
-                .toInt() < 1000000
         val canExecuteTask = updateJob == null || updateJob?.isActive == false
-        if ((enabled || notificationEnabled) && canExecuteTask) {
-            Timber.d("WidgetStatus.update(): updating")
-            updateJob = launchUpdateJob(context)
+
+        if (Prefs.newReviewRemindersEnabled) {
+            if (enabled && canExecuteTask) {
+                Timber.d("WidgetStatus.update(): updating")
+                updateJob = launchUpdateJob(context)
+            } else {
+                Timber.d("WidgetStatus.update(): already running or not enabled")
+            }
         } else {
-            Timber.d("WidgetStatus.update(): already running or not enabled")
+            val notificationEnabled =
+                preferences
+                    .getString(context.getString(R.string.pref_notifications_minimum_cards_due_key), "1000001")!!
+                    .toInt() < 1000000
+            if ((enabled || notificationEnabled) && canExecuteTask) {
+                Timber.d("WidgetStatus.update(): updating")
+                updateJob = launchUpdateJob(context)
+            } else {
+                Timber.d("WidgetStatus.update(): already running or not enabled")
+            }
         }
     }
 
@@ -82,7 +93,9 @@ object WidgetStatus {
         if (enabled) {
             UpdateService().doUpdate(context)
         }
-        (context.applicationContext as AnkiDroidApp).scheduleNotification()
+        if (!Prefs.newReviewRemindersEnabled) {
+            (context.applicationContext as AnkiDroidApp).scheduleNotification()
+        }
     }
 
     /** Returns the status of each of the decks.  */
