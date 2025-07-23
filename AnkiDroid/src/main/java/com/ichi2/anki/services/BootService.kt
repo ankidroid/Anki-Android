@@ -40,6 +40,9 @@ import java.util.Calendar
 /**
  * BroadcastReceiver which listens to the Android system-level intent that fires when the device starts up.
  * Schedules notifications for review reminders.
+ *
+ * Note that Android battery optimizations may potentially block us from receiving the [Intent.ACTION_BOOT_COMPLETED]
+ * intent, which could cause review reminders to not be scheduled.
  */
 @NeedsTest("Check on various Android versions that this can execute")
 class BootService : BroadcastReceiver() {
