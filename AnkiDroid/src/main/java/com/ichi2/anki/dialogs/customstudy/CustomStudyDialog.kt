@@ -308,7 +308,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
                     android.R.layout.simple_spinner_item,
                     CustomStudyCardState.entries.map { it.labelProducer() },
                 ).apply {
-                    setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                    setDropDownViewResource(R.layout.multiline_spinner_item)
                 }
         }
         val editText =

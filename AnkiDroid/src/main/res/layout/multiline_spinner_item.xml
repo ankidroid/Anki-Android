@@ -19,6 +19,7 @@
     style="?android:attr/spinnerDropDownItemStyle"
     android:singleLine="false"
     android:maxLines="5"
+    android:paddingVertical="14dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:minHeight="?attr/dropdownListPreferredItemHeight"
