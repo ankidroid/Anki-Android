@@ -47,7 +47,7 @@
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Ouvrir la barre de navigation</string>
     <string name="drawer_close">Fermer la barre de navigation</string>
-    <string name="note_message">Note saved</string>
+    <string name="note_message">Note sauvegardée</string>
     <string name="CardEditorCardDeck">Paquet de cartes :</string>
     <string name="CardEditorNoteDeck">Paquet :</string>
     <string name="CardEditorModel">Type :</string>
@@ -68,8 +68,8 @@
     <string name="enable_whiteboard" maxLength="28">Activer le tableau blanc</string>
     <string name="disable_whiteboard">Désactiver le tableau blanc</string>
     <string name="show_whiteboard">Afficher le tableau blanc</string>
-    <string name="enable_eraser" maxLength="28">Enable eraser</string>
-    <string name="disable_eraser" maxLength="28">Disable eraser</string>
+    <string name="enable_eraser" maxLength="28">Activer l\'efface</string>
+    <string name="disable_eraser" maxLength="28">Désactiver l\'efface</string>
     <string name="hide_whiteboard" maxLength="28">Masquer le tableau blanc</string>
     <string name="clear_whiteboard" maxLength="28">Effacer le tableau blanc</string>
     <string name="replay_media" maxLength="28">Replay media</string>
@@ -109,10 +109,10 @@
     <string name="missing_note_type">Aucun type de note trouvé</string>
     <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (vide)</string>
     <!-- Image cropper -->
-    <string name="image_cropper_action_rotate" maxLength="28" comment="Action in image cropper screen">Rotate</string>
-    <string name="image_cropper_action_flip" maxLength="28" comment="Action in image cropper screen">Flip</string>
-    <string name="image_cropper_action_flip_horizontally" maxLength="28" comment="Submenu action in image cropper screen">Flip horizontally</string>
-    <string name="image_cropper_action_flip_vertically" maxLength="28" comment="Submenu action in image cropper screen">Flip vertically</string>
+    <string name="image_cropper_action_rotate" maxLength="28" comment="Action in image cropper screen">Tourner</string>
+    <string name="image_cropper_action_flip" maxLength="28" comment="Action in image cropper screen">Retourner</string>
+    <string name="image_cropper_action_flip_horizontally" maxLength="28" comment="Submenu action in image cropper screen">Retourner horizontalement</string>
+    <string name="image_cropper_action_flip_vertically" maxLength="28" comment="Submenu action in image cropper screen">Retourner verticalement</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">Le temps imparti est écoulé</string>
     <plurals name="timebox_reached">
@@ -202,8 +202,8 @@
     <string name="restore_default" maxLength="28">Rétablir par défaut</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Vide</string>
     <!-- Whiteboard eraser mode toggle message in Reviewer -->
-    <string name="white_board_eraser_enabled">Eraser mode activated</string>
-    <string name="white_board_eraser_disabled">Eraser mode deactivated</string>
+    <string name="white_board_eraser_enabled">Mode efface activé</string>
+    <string name="white_board_eraser_disabled">Mode efface désactivé</string>
     <!-- Whiteboard save image message in the Study Screen -->
     <string name="white_board_image_save_failed">Impossible d\'enregistrer l\'image du tableau blanc. %s</string>
     <string name="white_board_image_saved">Image du tableau blanc enregistrée dans %s</string>
@@ -328,9 +328,9 @@
     <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">Impossible d\'ouvrir les paramètres de la synthèse vocale</string>
     <string name="shared_decks_login_required">Veuillez vous connecter pour télécharger plus de decks</string>
     <string name="deck_description_field_hint">Description</string>
-    <string name="deck_description_saved">Description updated</string>
-    <string name="format_deck_description_as_markdown">Format as Markdown</string>
-    <string name="help_button_content_description">Open help for ‘%s’</string>
+    <string name="deck_description_saved">Description mise à jour</string>
+    <string name="format_deck_description_as_markdown">Formater en tant que Markdown</string>
+    <string name="help_button_content_description">Ouvrir l\'aide pour \'%s\'</string>
     <string name="failed_to_copy">Échec de la copie</string>
     <string name="card_browser_unavailable_when_notes_mode">Non disponible en mode \"Notes\"</string>
     <plurals name="unbury_cards_feedback">

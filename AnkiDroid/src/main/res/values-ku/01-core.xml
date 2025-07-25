@@ -66,15 +66,15 @@
     <!-- Reviewer -->
     <plurals name="reviewer_window_title" comment="Header of the reviewer, telling the users how many minutes remains before they have seen all cards.">
         <item quantity="one">١ خولەک ماوە</item>
-        <item quantity="other">%d minutes left</item>
+        <item quantity="other">%d خولەک ماوە</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new" comment="Header of the reviewer, telling the users how many minutes remains before they have seen all cards. The second parameter is the number of minutes.">
-        <item quantity="one">%1$d hour %2$d left</item>
-        <item quantity="other">%1$d hours %2$d left</item>
+        <item quantity="one">%1$d کاتژمێر و%2$d خولەک ماوە</item>
+        <item quantity="other">%1$d کاتژمێر و %2$dخولەک ماوە</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new" comment="Header of the reviewer, telling the users how many minutes remains before they have seen all cards. The second parameter is the number of hours.">
         <item quantity="one">%1$d day %2$dh left</item>
-        <item quantity="other">%1$d days %2$dh left</item>
+        <item quantity="other">%1$d رۆژ و %2$dکاتژمێر ماوە</item>
     </plurals>
     <string name="type_answer_hint" comment="In the reviewer. When the user use note type with hint. It\'s the default content of the text field in which the user is invited to type their answer. It disappears as soon as the user start to type.">Bersivê binivîse</string>
     <string name="show_answer" maxLength="41" comment="When displaying the question side of a card. This is the label of a button that display the answer side.">Bersivê nîşan bide</string>
@@ -83,7 +83,7 @@
     <string name="ease_button_hard" maxLength="41" comment="In the reviewer, in the answer side. Label of the button that used by the user to state finding the correct answer was hard.">دژوار</string>
     <string name="ease_button_good" maxLength="41" comment="In the reviewer, in the answer side. Label of the button that used by the user to state their answer was good.">باش</string>
     <string name="ease_button_easy" maxLength="41" comment="In the reviewer, in the answer side. Label of the button that used by the user to state that finding the answer to the question was easy.">ئاسان</string>
-    <string name="show_answer_hint_long_press" comment="In the reviewer, hint is shown when touching the show answer button and the user has the long-press accessibility setting enabled">\'%s\' is enabled</string>
+    <string name="show_answer_hint_long_press" comment="In the reviewer, hint is shown when touching the show answer button and the user has the long-press accessibility setting enabled">%s فعال کراوە</string>
     <!-- General -->
     <string name="undo" maxLength="28" comment="When tapping on this text, the last action is undone.">Paşve bîne</string>
     <string name="redo" maxLength="28" comment="Menu entry that allows to redo action that was just undone.">دووبارە بیکەرەوە</string>
@@ -145,9 +145,9 @@
     <string name="syncing_media">Syncing media</string>
     <string name="export_deck" maxLength="28">Export deck</string>
     <string name="export_collection">Export collection</string>
-    <string name="nothing">Nothing</string>
+    <string name="nothing">هیچ</string>
     <!-- Card template editor -->
-    <string name="title_activity_template_editor">Card types</string>
+    <string name="title_activity_template_editor">جۆرەکانی کارت</string>
     <string name="card_template_editor_front">Front template</string>
     <string name="card_template_editor_back">Back template</string>
     <string name="card_template_editor_styling" maxLength="28">Styling</string>
