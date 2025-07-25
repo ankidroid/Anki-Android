@@ -39,6 +39,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.AnkiActivityProvider
 import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.CollectionManager.TR
+import com.ichi2.anki.FilteredDeckOptions
 import com.ichi2.anki.R
 import com.ichi2.anki.android.input.ShortcutGroup
 import com.ichi2.anki.android.input.shortcut
@@ -59,6 +60,7 @@ import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.utils.android.isRobolectric
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.dialogs.BrowserOptionsDialog
+import com.ichi2.anki.dialogs.CreateDeckDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog.Companion.newInstance
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
@@ -80,8 +82,6 @@ import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.utils.ext.visibleItemPositions
 import com.ichi2.anki.withProgress
 import com.ichi2.utils.HandlerUtils
-import com.ichi2.utils.dp
-import com.ichi2.utils.updatePaddingRelative
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
@@ -468,6 +468,24 @@ class CardBrowserFragment :
         dialog.show(parentFragmentManager, "browserOptionsDialog")
     }
 
+    fun showCreateFilteredDeckDialog() {
+        val dialog = CreateDeckDialog(ankiActivity, R.string.new_deck, CreateDeckDialog.DeckDialogType.FILTERED_DECK, null)
+        dialog.onNewDeckCreated = {
+            startActivity(
+                FilteredDeckOptions.getIntent(
+                    context = requireContext(),
+                    deckId = null,
+                    searchTerms = viewModel.searchTerms,
+                ),
+            )
+        }
+        launchCatchingTask {
+            withProgress {
+                dialog.showFilteredDeckDialog()
+            }
+        }
+    }
+
     @KotlinCleanup("DeckSelectionListener is almost certainly a bug - deck!!")
     @VisibleForTesting
     internal fun getChangeDeckDialog(selectableDecks: List<SelectableDeck>?): DeckSelectionDialog {
@@ -615,3 +633,5 @@ fun CardBrowser.onResetProgress() = cardBrowserFragment.onResetProgress()
 fun CardBrowser.exportSelected() = cardBrowserFragment.exportSelected()
 
 fun CardBrowser.showOptionsDialog() = cardBrowserFragment.showOptionsDialog()
+
+fun CardBrowser.showCreateFilteredDeckDialog() = cardBrowserFragment.showCreateFilteredDeckDialog()
