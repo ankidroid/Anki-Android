@@ -79,10 +79,10 @@
     <string name="html_size_code_x_large">x-كبير</string>
     <string name="html_size_code_xx_large">xx-كبير</string>
     <!-- gestures_labels -->
-    <string name="answer_again" maxLength="41">أجب ب«مجددًا»</string>
-    <string name="answer_hard" maxLength="41">أجب ب«صعب»</string>
-    <string name="answer_good" maxLength="41">أجب ب«جيد»</string>
-    <string name="answer_easy" maxLength="41">أجب ب«سهل»</string>
+    <string name="answer_again" maxLength="41">أجب بـ «مجددًا»</string>
+    <string name="answer_hard" maxLength="41">أجب بـ «صعب»</string>
+    <string name="answer_good" maxLength="41">أجب بـ «جيد»</string>
+    <string name="answer_easy" maxLength="41">أجب بـ «سهل»</string>
     <string name="gesture_abort_learning" maxLength="41">أغلق شاشة الدراسة</string>
     <string name="gesture_flag_red" maxLength="41">بدل العلم الأحمر</string>
     <string name="gesture_flag_orange" maxLength="41">بدل العلم البرتقالي</string>

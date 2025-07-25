@@ -127,7 +127,7 @@
     <string name="rebuild_filtered_deck">Reconstruíndo baralla filtrada&#8230;</string>
     <string name="rebuild_cram_label" maxLength="28">Reconstruír</string>
     <string name="empty_cram_label" maxLength="28">Baleirar</string>
-    <string name="create_subdeck">Crear subbaralla</string>
+    <string name="create_subdeck">Crear baralla secundaria</string>
     <string name="empty_filtered_deck">Baleirando baralla filtrada&#8230;</string>
     <string name="search_deck" comment="Deck search for selecting it">Buscar baralla</string>
     <string name="empty_deck">Esta baralla está baleira</string>

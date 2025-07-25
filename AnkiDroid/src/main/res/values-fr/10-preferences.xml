@@ -116,9 +116,9 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">Toucher au milieu au centre</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Toucher en bas à gauche</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Toucher en bas à droite</string>
-    <string name="gestures_two_finger_tap" maxLength="41">Two-finger tap</string>
-    <string name="gestures_three_finger_tap" maxLength="41">Three-finger tap</string>
-    <string name="gestures_four_finger_tap" maxLength="41">Four-finger tap</string>
+    <string name="gestures_two_finger_tap" maxLength="41">Tape à deux doigts</string>
+    <string name="gestures_three_finger_tap" maxLength="41">Tape à trois doigts</string>
+    <string name="gestures_four_finger_tap" maxLength="41">Tape à quatre doigts</string>
     <string name="gestures_shake" maxLength="41">Secouer l\'appareil</string>
     <string name="card_browser_enable_external_context_menu" maxLength="41">Menu « %s »</string>
     <string name="card_browser_enable_external_context_menu_summary">Active le menu contextuel « %s » globalement</string>
@@ -151,7 +151,7 @@
     <string name="notification_pref_title" maxLength="41">Notifier lorsque</string>
     <string name="never_notify">Ne jamais afficher de notification</string>
     <string name="notify_when_pending">Messages en attente disponibles</string>
-    <string name="notification_minimum_cards_due" comment="Consider keeping the unbreakable space after the digit">More than %d cards due</string>
+    <string name="notification_minimum_cards_due" comment="Consider keeping the unbreakable space after the digit">Plus de %d cartes dues</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Vibrer</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Lumière de notification</string>
     <string name="select_locale_title">Sélectionnez la langue</string>
@@ -171,7 +171,7 @@
     <string name="show_estimates" maxLength="41">Afficher le temps</string>
     <string name="show_estimates_summ">Afficher le temps avant la prochaine révision sur les boutons de réponse</string>
     <string name="show_large_answer_buttons" maxLength="41">Afficher de gros boutons de réponse</string>
-    <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
+    <string name="show_large_answer_buttons_summ">Montrer le bouton de réponse en deux lignes</string>
     <string name="show_top_bar" maxLength="41">Afficher la barre supérieure</string>
     <string name="show_top_bar_summary">Afficher le nombre de cartes, le chronomètre, la balise et la marque dans la barre supérieure</string>
     <string name="show_progress" maxLength="41">Afficher le nombre restant de révision</string>
@@ -183,8 +183,8 @@
     <string name="time_limit" maxLength="41">Limite de temps</string>
     <string name="day_offset_with_description" maxLength="41">Début du jour suivant (0 est minuit, 23 est 23 h)</string>
     <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
-        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">%d hour past midnight</item>
-        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">%d hours past midnight</item>
+        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">%d heure après minuit</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">%d heures après minuit</item>
     </plurals>
     <string name="pref_keep_screen_on" maxLength="41">Garder l’écran allumé</string>
     <string name="pref_keep_screen_on_summ">Désactiver l’extinction automatique de l’écran</string>
@@ -204,13 +204,13 @@
     <string name="pref_controls_previews_tab" maxLength="41" comment="Name of the tab to configure controls for the previews screen">Aperçus</string>
     <string name="toggle_backside_only" maxLength="41" comment="Control setting that toggles \'Backside only\' in the previews screen">Activer uniquement le verso</string>
     <!-- Appearance settings -->
-    <string name="pref_cat_reviewer" maxLength="41">Study Screen</string>
+    <string name="pref_cat_reviewer" maxLength="41">Écran de révision</string>
     <string name="show_deck_title" maxLength="41">Afficher le titre du deck</string>
     <string name="accessibility" maxLength="41">Accessibilité</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Coller les images du pressepapiers en PNG</string>
     <string name="exit_via_double_tap_back" maxLength="41">Appuis double sur retour pour quitter</string>
-    <string name="exit_via_double_tap_back_summ">To avoid accidentally leaving the study screen or the app</string>
+    <string name="exit_via_double_tap_back_summ">Pour éviter de quitter accidentellement l\'écran de révision ou l\'application</string>
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">Autoriser l\'importation de tous fichiers</string>
     <string name="media_import_allow_all_files_summ">Si android ne reconnait pas un fichier comme média</string>
@@ -234,7 +234,7 @@
     <string name="media" maxLength="41">Média</string>
     <string name="misc" maxLength="41">Divers</string>
     <!-- Review reminders -->
-    <string name="add_reminder" comment="Label for the add reminder button in the screen for adding and editing review reminders">Add reminder</string>
+    <string name="add_reminder" comment="Label for the add reminder button in the screen for adding and editing review reminders">Ajouter un rappel</string>
     <!-- studyoptions -->
     <string name="studyoptions_limit_select_tags">Sélectionner les étiquettes</string>
     <!-- Deck configurations -->
@@ -274,7 +274,7 @@
     <string name="binding_add_axis">Ajouter un joystick/contrôleur de mouvement</string>
     <string name="axis_picker_move_joystick">Déplacer un joystick/contrôleur de mouvement</string>
     <string name="user_actions" maxLength="41">Actions utilisateur</string>
-    <string name="user_actions_summary" maxLength="41">Trigger JavaScript from the study screen</string>
+    <string name="user_actions_summary" maxLength="41">Activer JavaScript depuis l\'écran de révision</string>
     <string name="user_action_1" maxLength="28">Action utilisateur 1</string>
     <string name="user_action_2" maxLength="28">Action utilisateur 2</string>
     <string name="user_action_3" maxLength="28">Action utilisateur 3</string>
@@ -378,15 +378,15 @@ Elles ne sont pas destinées à la plupart des utilisateurs et restent en anglai
     <string name="reviewer_frame_style" maxLength="41">Style de cadre</string>
     <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Study Screen">Carte</string>
     <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Study Screen">Boîte</string>
-    <string name="reviewer_toolbar_top" maxLength="41" comment="Setting to put the toolbar on the top of the study screen">Top</string>
-    <string name="reviewer_toolbar_bottom" maxLength="41" comment="Setting to put the toolbar on the bottom of the study screen">Bottom</string>
-    <string name="reviewer_toolbar_none" maxLength="41" comment="Setting to remove the toolbar from the study screen">None</string>
-    <string name="toolbar" maxLength="41">Toolbar</string>
-    <string name="toolbar_actions" maxLength="41">Toolbar actions</string>
-    <string name="toolbar_position" maxLength="41">Toolbar position</string>
-    <string name="new_study_screen" maxLength="41">New study screen</string>
+    <string name="reviewer_toolbar_top" maxLength="41" comment="Setting to put the toolbar on the top of the study screen">Haut</string>
+    <string name="reviewer_toolbar_bottom" maxLength="41" comment="Setting to put the toolbar on the bottom of the study screen">Bas</string>
+    <string name="reviewer_toolbar_none" maxLength="41" comment="Setting to remove the toolbar from the study screen">Aucun</string>
+    <string name="toolbar" maxLength="41">Barre à outils</string>
+    <string name="toolbar_actions" maxLength="41">Actions de la barre à outils</string>
+    <string name="toolbar_position" maxLength="41">Position de la barre à outil</string>
+    <string name="new_study_screen" maxLength="41">Nouvel écran de révision</string>
     <string name="new_study_screen_summ"><![CDATA[Improved study screen that will succeed the current one. Some features of the old screen have been changed or removed. Please report any <a href="%1$s">feedback</a> or <a href="%2$s">bugs</a>.]]></string>
-    <string name="show_answer_feedback" maxLength="41">Show answer feedback</string>
+    <string name="show_answer_feedback" maxLength="41">Montrer la réaction de réponse</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">Aller aux paramètres</string>
 </resources>

@@ -147,7 +147,7 @@
     <string name="error_deleting_image">Erreur lors de la suppression de l\'image</string>
     <string name="failed_to_apply_background_image">Impossible d\'appliquer l\'image d\'arrière-plan %s</string>
     <string name="background_image_too_large">L\'arrière-plan du sélecteur de paquets est trop grand</string>
-    <string name="image_max_size_allowed" comment="Consider keeping the unbreakable space after the digit">Maximum image size %d MB allowed</string>
+    <string name="image_max_size_allowed" comment="Consider keeping the unbreakable space after the digit">Taille maximum de l\'image acceptée de %d MB</string>
     <string name="image_dimensions_too_large">Les dimensions de l\'image sont trop grandes (%1$d × %2$d)</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
@@ -187,8 +187,8 @@
     <string name="help_dialog_exception_report_sent">Le rapport a été envoyé !</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
-        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">An automatic sync may be triggered in %d second</item>
-        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">An automatic sync may be triggered in %d seconds</item>
+        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">Une synchronisation automatique peut être déclenchée dans %d second</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">Une synchronisation automatique peut être déclenchée dans %d seconds</item>
     </plurals>
     <string name="metered_sync_data_warning">Votre fournisseur d\'accès Internet peut vous facturer pour l\'utilisation des données</string>
     <string name="deck_picker_new">Nombre de nouvelles cartes à voir aujourd\'hui dans ce paquet.</string>
@@ -231,8 +231,8 @@
         <item quantity="other">jours</item>
     </plurals>
     <plurals name="set_due_date_current_interval">
-        <item quantity="one">Current interval: %d day</item>
-        <item quantity="other">Current interval: %d days</item>
+        <item quantity="one">Intervalle actuel : %d jour</item>
+        <item quantity="other">Intervalle actuel : %d jours</item>
     </plurals>
     <string name="range_delimiter" comment="Placed between two input boxes to denote a range">–</string>
     <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">Début</string>

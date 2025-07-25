@@ -90,8 +90,8 @@
         <item>Par difficulté</item>
         <item>Par nom de paquet</item>
     </string-array>
-    <string name="chane_browser_column">Change column</string>
-    <string name="no_columns_available">No columns available</string>
+    <string name="chane_browser_column">Changer de colonne</string>
+    <string name="no_columns_available">Aucune colonne disponible</string>
     <string name="card_browser_select_all" maxLength="28">Tout sélectionner</string>
     <string name="card_browser_select_none" maxLength="28">Ne rien sélectionner</string>
     <string name="card_browser_no_cards_in_deck">Aucune carte trouvée dans le paquet « %s »</string>
@@ -121,6 +121,6 @@
     <string name="user_potential_columns">Disponible</string>
     <string name="include_column">Inclure la colonne</string>
     <string name="exclude_column">Exclure la colonne</string>
-    <string name="save_changes_message">Please save your changes first</string>
+    <string name="save_changes_message">Enregistrez vos changements en premier SVP</string>
     <string name="browser_find_replace_loading_fields">Récupération des noms des champs&#8230;</string>
 </resources>

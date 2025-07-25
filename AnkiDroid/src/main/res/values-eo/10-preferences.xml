@@ -79,7 +79,7 @@
     <string name="reset_confirmation">Restarigi ĉiujn alĝustigojn</string>
     <string name="card_zoom" maxLength="41">Grando de karto</string>
     <string name="image_zoom" maxLength="41">Grando de bildo</string>
-    <string name="button_size" maxLength="41">Grando de responda butono</string>
+    <string name="button_size" maxLength="41">Grando de respondobutono</string>
     <string name="card_browser_font_size" maxLength="41">Grando de tiparo de kart-foliumilo</string>
     <string name="card_browser_hide_media" maxLength="41">Vidigi dosiernomojn en kart‑foliumilo</string>
     <string name="card_browser_hide_media_summary">Vidigi dosiernomojn de aŭdvidaĵoj en la kampoj “demando”/“respondo” de la kart‑foliumilo</string>
@@ -87,8 +87,8 @@
     <string name="fullscreen_review" maxLength="41">Plenekrana reĝimo</string>
     <string name="full_screen_off">Malaktiva</string>
     <string name="full_screen_system">Kaŝi striojn de operaciumo</string>
-    <string name="full_screen_complete">Kaŝi striojn de operaciumo kaj respondajn butonojn</string>
-    <string name="answer_buttons_position" maxLength="41">Pozicio de respondaj butonoj</string>
+    <string name="full_screen_complete">Kaŝi striojn de operaciumo kaj respondobutonojn</string>
+    <string name="answer_buttons_position" maxLength="41">Pozicio de respondobutonoj</string>
     <string-array name="answer_buttons_position_labels">
         <item>Supre</item>
         <item>Sube</item>
@@ -165,13 +165,13 @@
     <string name="vertical_centering" maxLength="41">Centrigi vertikale</string>
     <string name="vertical_centering_summ">Centrigi enhavon de kartoj vertikale</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Ignori duan frapeton antaŭ ol</string>
-    <string name="pref_double_tap_time_interval_summary">La dua frapeto sur la butonoj de respondoj estos ignorita, se ĝi okazos antaŭ la agordita tempo Tio ĉi preventas de fari neatenditajn duoblaj frapetojn</string>
+    <string name="pref_double_tap_time_interval_summary">La dua frapeto al la respondobutono estos ignorita, se ĝi okazos antaŭ la agordita tempo Tio ĉi preventas de fari neatenditajn duoblaj frapetojn</string>
     <string name="pref_show_answer_long_press_time" maxLength="41">Montri respondon post frapetadi</string>
     <string name="pref_show_answer_long_press_time_summary">Minimuma tempo de frapetado post kiu la butono “Montri respondon” registras frapeton.</string>
     <string name="show_estimates" maxLength="41">Montri tempon ĉe butono</string>
     <string name="show_estimates_summ">Montri tempon de sekva ripeto ĉe butonoj de respondoj</string>
-    <string name="show_large_answer_buttons" maxLength="41">Grandaj butonoj de respondo</string>
-    <string name="show_large_answer_buttons_summ">Montri butonojn de respondo en 2 vicoj</string>
+    <string name="show_large_answer_buttons" maxLength="41">Grandaj respondobutonoj</string>
+    <string name="show_large_answer_buttons_summ">Montri respondobutonojn en 2 vicoj</string>
     <string name="show_top_bar" maxLength="41">Montri supran strion</string>
     <string name="show_top_bar_summary">Montri nombron da kartoj, tempon de respondo, flagon kaj markon sur la supra strio</string>
     <string name="show_progress" maxLength="41">Montri pliajn kartojn</string>
@@ -223,7 +223,7 @@
     <!-- Key Bindings -->
     <string name="keyboard">Klavaro</string>
     <string name="bluetooth">Bludento</string>
-    <string name="answer_buttons" maxLength="41">Butonoj de respondo</string>
+    <string name="answer_buttons" maxLength="41">Respondobutonoj</string>
     <string name="card" maxLength="41" comment="Generic term to refer to a card">Karto</string>
     <string name="note" maxLength="41">Noto</string>
     <string name="navigation" maxLength="41">Navigi</string>
@@ -364,7 +364,7 @@ Vi povas restarigi el sekurkopio aŭ elporti vian kolekton per la menuo de listo
     <string name="hide_system_bars_navigation_bar" comment="Setting option to hide the system navigation bar (the bottom one that can go back, to home, etc)">Naviga strio</string>
     <string name="hide_system_bars_all_bars" comment="Setting option to hide all the system bars">Ĉiuj</string>
     <string name="ignore_display_cutout" maxLength="41">Ignori eltondaĵojn en la ekrano</string>
-    <string name="hide_answer_buttons" maxLength="41">Kaŝi respondajn butonojn</string>
+    <string name="hide_answer_buttons" maxLength="41">Kaŝi respondobutonojn</string>
     <string name="hide_hard_and_easy" maxLength="41">Kaŝi butonojn “malfacila” kaj “facila”</string>
     <string name="reviewer_frame_style" maxLength="41">Stilo de kadro</string>
     <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Study Screen">karta</string>

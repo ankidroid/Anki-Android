@@ -45,7 +45,7 @@
 -->
 <resources>
     <string name="backup_deck_no_storage_left">La sauvegarde n\'a pas été effectuée. Il n\'y a pas assez d\'espace libre. Faites une sauvegarde moins profonde ou supprimez des fichiers.</string>
-    <string name="storage_warning" comment="Consider keeping the unbreakable space after the digit">Less than %d MB space on your storage left.\nFree some space to avoid data loss.</string>
+    <string name="storage_warning" comment="Consider keeping the unbreakable space after the digit">Moins de %dMB d\'espace de stockage restant.\nLiberez de l\'espace pour éviter la perte de données.</string>
     <string name="backup_restore" maxLength="28">Restaurer à partir d’une sauvegarde</string>
     <string name="backup_new_collection">Nouvelle collection</string>
     <string name="backup_del_collection">Supprimer la collection, en créer une autre</string>

@@ -49,7 +49,7 @@
     <string name="model_browser_template">Modifier les cartes</string>
     <!--Rename-->
     <string name="rename_model">Renommer le type de note</string>
-    <string name="rename_card_type">Rename card type</string>
+    <string name="rename_card_type">Renommer le type de carte</string>
     <!--Language Hint-->
     <string name="model_field_editor_language_hint_dialog_success_result">Suggestion de langue définie sur %s</string>
     <!--Field Editing-->
