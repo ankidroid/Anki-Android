@@ -66,7 +66,7 @@ import java.io.Closeable
  * This class combines the above concerns behind an "adapter" interface in order to simplify complexity.
  *
  * **Public interface**
- * * [playAll]
+ * * [playAllForSide]
  * * [replayAll]
  * * [playOne]
  * * [stop]
@@ -75,7 +75,7 @@ import java.io.Closeable
  * @see AvTag
  *
  * [setOnMediaGroupCompletedListener] can be used to call
- * something when [playAll] or [replayAll] completes
+ * something when [playAllForSide] or [replayAll] completes
  *
  * **Out of scope**
  * [com.ichi2.anki.ReadText]: AnkiDroid has a legacy "tts" setting, before Anki Desktop TTS.
@@ -325,15 +325,6 @@ class CardMediaPlayer : Closeable {
 
     /** Whether the provided side has available media */
     fun hasMedia(displayAnswer: Boolean): Boolean = if (displayAnswer) answerAvTags.any() else questionAvTags.any()
-
-    /**
-     * Plays all sounds for the current side, calling [onMediaGroupCompleted] when completed
-     */
-    fun playAll(side: SingleCardSide) =
-        when (side) {
-            SingleCardSide.FRONT -> playAllForSide(CardSide.QUESTION)
-            SingleCardSide.BACK -> playAllForSide(CardSide.ANSWER)
-        }
 
     /**
      * Replays all sounds for [side], calling [onMediaGroupCompleted] when completed

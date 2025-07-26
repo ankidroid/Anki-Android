@@ -1481,7 +1481,7 @@ abstract class AbstractFlashcardViewer :
                 val side = if (displayAnswer) SingleCardSide.BACK else SingleCardSide.FRONT
                 when (doMediaReplay) {
                     true -> cardMediaPlayer.replayAll(side)
-                    false -> cardMediaPlayer.playAll(side)
+                    false -> cardMediaPlayer.playAllForSide(side.toCardSide())
                 }
             }
             return
