@@ -50,7 +50,6 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.activity.viewModels
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
@@ -109,8 +108,8 @@ import com.ichi2.anki.deckpicker.BITMAP_BYTES_PER_PIXEL
 import com.ichi2.anki.deckpicker.BackgroundImage
 import com.ichi2.anki.deckpicker.DeckDeletionResult
 import com.ichi2.anki.deckpicker.DeckPickerViewModel
+import com.ichi2.anki.deckpicker.DeckPickerViewModel.FlattenedDeckList
 import com.ichi2.anki.deckpicker.EmptyCardsResult
-import com.ichi2.anki.deckpicker.filterAndFlattenDisplay
 import com.ichi2.anki.dialogs.AsyncDialogFragment
 import com.ichi2.anki.dialogs.BackupPromptDialog
 import com.ichi2.anki.dialogs.ConfirmationDialog
@@ -195,6 +194,7 @@ import com.ichi2.widget.WidgetStatus
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import net.ankiweb.rsdroid.RustCleanup
@@ -202,7 +202,6 @@ import net.ankiweb.rsdroid.Translations
 import org.json.JSONException
 import timber.log.Timber
 import java.io.File
-import kotlin.runCatching as runCatchingKotlin
 
 /**
  * The current entry point for AnkiDroid. Displays decks, allowing users to study. Many other functions.
@@ -246,7 +245,7 @@ open class DeckPicker :
     ApkgImportResultLauncherProvider,
     CsvImportResultLauncherProvider,
     CollectionPermissionScreenLauncher {
-    val viewModel: DeckPickerViewModel by viewModels()
+    lateinit var viewModel: DeckPickerViewModel
 
     // Short animation duration from system
     private var shortAnimDuration = 0
@@ -305,7 +304,8 @@ open class DeckPicker :
     var optionsMenuState: OptionsMenuState? = null
 
     @VisibleForTesting
-    var dueTree: DeckNode? = null
+    val dueTree: DeckNode?
+        get() = viewModel.dueTree
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     var searchDecksIcon: MenuItem? = null
@@ -423,7 +423,6 @@ open class DeckPicker :
     // stored for testing purposes
     @VisibleForTesting
     var createMenuJob: Job? = null
-    private var loadDeckCounts: Job? = null
 
     init {
         ChangeManager.subscribe(this)
@@ -459,7 +458,7 @@ open class DeckPicker :
                         sched.haveBuried(),
                     )
                 }
-            updateDeckList() // focus has changed
+            updateDeckList()?.join() // focus has changed
             showDialogFragment(
                 DeckPickerContextMenu.newInstance(
                     id = deckId,
@@ -475,12 +474,6 @@ open class DeckPicker :
         registerForActivityResult(ActivityResultContracts.RequestPermission()) {
             Timber.i("notification permission: %b", it)
         }
-
-    /**
-     * Tracks the scheduler version for which the upgrade dialog was last shown,
-     * to avoid repeatedly prompting the user for the same collection version.
-     */
-    private var schedulerUpgradeDialogShownForVersion: Long? = null
 
     // ----------------------------------------------------------------------------
     // ANDROID ACTIVITY METHODS
@@ -512,14 +505,17 @@ open class DeckPicker :
         }
 
         setContentView(R.layout.homescreen)
-        enableToolbar()
-        handleStartup()
-        val mainView = findViewById<View>(android.R.id.content)
 
         // check, if tablet layout
         studyoptionsFrame = findViewById(R.id.studyoptions_fragment)
         // set protected variable from NavigationDrawerActivity
         fragmented = studyoptionsFrame != null && studyoptionsFrame!!.isVisible
+
+        viewModel = DeckPickerViewModel(fragmented)
+
+        enableToolbar()
+        handleStartup()
+        val mainView = findViewById<View>(android.R.id.content)
 
         // Open StudyOptionsFragment if in fragmented mode
         if (fragmented && !startupError) {
@@ -585,7 +581,10 @@ open class DeckPicker :
                 activityHasBackground = hasDeckPickerBackground,
                 onDeckSelected = { onDeckClick(it, DeckSelectionType.DEFAULT) },
                 onDeckCountsSelected = { onDeckClick(it, DeckSelectionType.SHOW_STUDY_OPTIONS) },
-                onDeckChildrenToggled = { launchCatchingTask { toggleDeckExpand(it) } },
+                onDeckChildrenToggled = { deckId ->
+                    viewModel.toggleDeckExpand(deckId)
+                    dismissAllDialogFragments()
+                },
                 onDeckContextRequested = ::showDeckPickerContextMenu,
             )
         recyclerView.adapter = deckListAdapter
@@ -686,6 +685,109 @@ open class DeckPicker :
             startActivity(destination.toIntent(this))
         }
 
+        fun onPromptUserToUpdateScheduler(op: Unit) {
+            SchedulerUpgradeDialog(
+                activity = this,
+                onUpgrade = {
+                    launchCatchingRequiringOneWaySync {
+                        this@DeckPicker.withProgress { withCol { sched.upgradeToV2() } }
+                        showThemedToast(this@DeckPicker, TR.schedulingUpdateDone(), false)
+                    }
+                },
+                onCancel = {
+                    onBackPressedDispatcher.onBackPressed()
+                },
+            ).showDialog()
+        }
+
+        fun onUndoUpdated(a: Unit) {
+            launchCatchingTask {
+                withOpenColOrNull {
+                    optionsMenuState =
+                        optionsMenuState?.copy(
+                            undoLabel = undoLabel(),
+                            undoAvailable = undoAvailable(),
+                        )
+                }
+                invalidateOptionsMenu()
+            }
+        }
+
+        fun onStudiedTodayChanged(studiedToday: String) {
+            reviewSummaryTextView.text = studiedToday
+            val fabLinearLayout = findViewById<LinearLayout>(R.id.fabLinearLayout)
+            // Adjust bottom margin of fabLinearLayout based on reviewSummaryTextView height
+            reviewSummaryTextView.doOnLayout {
+                val layoutParams = fabLinearLayout.layoutParams as ViewGroup.MarginLayoutParams
+                layoutParams.setMargins(0, 0, 0, reviewSummaryTextView.height / 2)
+                fabLinearLayout.layoutParams = layoutParams
+            }
+        }
+
+        fun onCollectionStatusChanged(isInInitialState: Boolean) {
+            // Hide the background when there are no cards to improve text readability.
+            val backgroundView = findViewById<ImageView>(R.id.background)
+            backgroundView.visibility = if (isInInitialState) View.GONE else View.VISIBLE
+            if (animationDisabled()) {
+                deckPickerContent.visibility = if (isInInitialState) View.GONE else View.VISIBLE
+                noDecksPlaceholder.visibility = if (isInInitialState) View.VISIBLE else View.GONE
+                return
+            }
+
+            val decksListShown = deckPickerContent.isVisible
+            val placeholderShown = noDecksPlaceholder.isVisible
+            if (isInInitialState) {
+                deckPickerContent.fadeOut(shortAnimDuration)
+                noDecksPlaceholder.fadeIn(shortAnimDuration).startDelay =
+                    if (decksListShown) {
+                        shortAnimDuration * 2L
+                    } else {
+                        0L
+                    }
+            } else {
+                deckPickerContent.fadeIn(shortAnimDuration).startDelay =
+                    if (placeholderShown) {
+                        shortAnimDuration * 2L
+                    } else {
+                        0L
+                    }
+                noDecksPlaceholder.fadeOut(shortAnimDuration)
+            }
+        }
+
+        fun onCardsDueChanged(dueCount: Int?) {
+            if (dueCount == null) {
+                supportActionBar?.subtitle = null
+                return
+            }
+
+            supportActionBar?.apply {
+                subtitle = if (dueCount == 0) null else resources.getQuantityString(R.plurals.widget_cards_due, dueCount, dueCount)
+                val toolbar = findViewById<Toolbar>(R.id.toolbar)
+                TooltipCompat.setTooltipText(toolbar, toolbar.subtitle)
+            }
+        }
+
+        fun onStudyOptionsVisibilityChanged(isVisible: Boolean) {
+            invalidateOptionsMenu()
+            studyoptionsFrame?.isVisible = isVisible
+        }
+
+        fun onDeckListChanged(deckList: FlattenedDeckList) {
+            deckListAdapter.submit(
+                data = deckList.data,
+                hasSubDecks = deckList.hasSubDecks,
+            )
+        }
+
+        fun onFocusedDeckChanged(deckId: DeckId?) {
+            val position = deckId?.let { findDeckPosition(it) } ?: 0
+            // HACK: a small delay is required before scrolling works
+            recyclerView.postDelayed({
+                recyclerViewLayoutManager.scrollToPositionWithOffset(position, recyclerView.height / 2)
+            }, 10)
+        }
+
         fun onError(errorMessage: String) {
             AlertDialog
                 .Builder(this)
@@ -699,6 +801,14 @@ open class DeckPicker :
         viewModel.flowOfDeckCountsChanged.launchCollectionInLifecycleScope(::onDeckCountsChanged)
         viewModel.flowOfDestination.launchCollectionInLifecycleScope(::onDestinationChanged)
         viewModel.onError.launchCollectionInLifecycleScope(::onError)
+        viewModel.flowOfPromptUserToUpdateScheduler.launchCollectionInLifecycleScope(::onPromptUserToUpdateScheduler)
+        viewModel.flowOfUndoUpdated.launchCollectionInLifecycleScope(::onUndoUpdated)
+        viewModel.flowOfStudiedTodayStats.launchCollectionInLifecycleScope(::onStudiedTodayChanged)
+        viewModel.flowOfDeckListInInitialState.filterNotNull().launchCollectionInLifecycleScope(::onCollectionStatusChanged)
+        viewModel.flowOfCardsDue.launchCollectionInLifecycleScope(::onCardsDueChanged)
+        viewModel.flowOfStudyOptionsVisible.launchCollectionInLifecycleScope(::onStudyOptionsVisibilityChanged)
+        viewModel.flowOfDeckList.launchCollectionInLifecycleScope(::onDeckListChanged)
+        viewModel.flowOfFocusedDeck.launchCollectionInLifecycleScope(::onFocusedDeckChanged)
     }
 
     private val onReceiveContentListener =
@@ -1049,16 +1159,7 @@ open class DeckPicker :
                     }
 
                     override fun onQueryTextChange(newText: String): Boolean {
-                        val adapter = recyclerView.adapter as DeckAdapter
-                        launchCatchingTask {
-                            val selectedDeckId = withCol { decks.current().id }
-                            dueTree?.let {
-                                adapter.submit(
-                                    data = it.filterAndFlattenDisplay(newText, selectedDeckId),
-                                    hasSubDecks = it.children.any { deckNode -> deckNode.children.any() },
-                                )
-                            }
-                        }
+                        viewModel.updateDeckFilter(newText)
                         return true
                     }
                 },
@@ -1073,16 +1174,6 @@ open class DeckPicker :
             updateSyncIconFromState(menu.findItem(R.id.action_sync), this)
         }
         updateDeckRelatedMenuItems(menu)
-    }
-
-    private suspend fun updateUndoMenuState() {
-        withOpenColOrNull {
-            optionsMenuState =
-                optionsMenuState?.copy(
-                    undoLabel = undoLabel(),
-                    undoAvailable = undoAvailable(),
-                )
-        }
     }
 
     /**
@@ -1352,7 +1443,7 @@ open class DeckPicker :
     override fun onPause() {
         activityPaused = true
         // The deck count will be computed on resume. No need to compute it now
-        loadDeckCounts?.cancel()
+        viewModel.loadDeckCounts?.cancel()
         super.onPause()
     }
 
@@ -1511,7 +1602,7 @@ open class DeckPicker :
                     if (event.isShiftPressed) {
                         // Shortcut: Shift + DEL - Delete deck without confirmation dialog
                         Timber.i("Shift+DEL: Deck deck without confirmation")
-                        deleteDeck(viewModel.focusedDeck)
+                        viewModel.focusedDeck?.let { did -> deleteDeck(did) }
                     } else {
                         // Shortcut: DEL
                         Timber.i("Delete Deck from keypress")
@@ -1526,7 +1617,7 @@ open class DeckPicker :
                 // that is, when it appears in the trailing study option fragment
                 if (fragmented) {
                     Timber.i("Rename Deck from keypress")
-                    renameDeckDialog(viewModel.focusedDeck)
+                    viewModel.focusedDeck?.let { did -> renameDeckDialog(did) }
                     return true
                 }
             }
@@ -1574,18 +1665,24 @@ open class DeckPicker :
      */
     private fun showDeleteDeckConfirmationDialog() =
         launchCatchingTask {
+            val focusedDeck =
+                viewModel.focusedDeck ?: run {
+                    Timber.w("no focused deck")
+                    return@launchCatchingTask
+                }
+
             val (deckName, totalCards, isFilteredDeck) =
                 withCol {
                     Triple(
-                        decks.name(viewModel.focusedDeck),
-                        decks.cardCount(viewModel.focusedDeck, includeSubdecks = true),
-                        decks.isFiltered(viewModel.focusedDeck),
+                        decks.name(focusedDeck),
+                        decks.cardCount(focusedDeck, includeSubdecks = true),
+                        decks.isFiltered(focusedDeck),
                     )
                 }
             val confirmDeleteDeckDialog =
                 DeckPickerConfirmDeleteDeckDialog.newInstance(
                     deckName = deckName,
-                    deckId = viewModel.focusedDeck,
+                    deckId = focusedDeck,
                     totalCards = totalCards,
                     isFilteredDeck = isFilteredDeck,
                 )
@@ -1630,18 +1727,6 @@ open class DeckPicker :
 
     private fun showCollectionErrorDialog() {
         dialogHandler.sendMessage(CollectionLoadingErrorDialog().toMessage())
-    }
-
-    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    suspend fun toggleDeckExpand(did: DeckId) {
-        // update DB
-        getColUnsafe.decks.collapse(did)
-        // update stored state
-        dueTree?.find(did)?.run {
-            collapsed = !collapsed
-        }
-        renderPage(getColUnsafe.isEmpty)
-        dismissAllDialogFragments()
     }
 
     // VisibleForTesting: method is mocked, should be replaced
@@ -2092,21 +2177,6 @@ open class DeckPicker :
         }
     }
 
-    private fun promptUserToUpdateScheduler() {
-        SchedulerUpgradeDialog(
-            activity = this,
-            onUpgrade = {
-                launchCatchingRequiringOneWaySync {
-                    this@DeckPicker.withProgress { withCol { sched.upgradeToV2() } }
-                    showThemedToast(this@DeckPicker, TR.schedulingUpdateDone(), false)
-                }
-            },
-            onCancel = {
-                onBackPressedDispatcher.onBackPressed()
-            },
-        ).showDialog()
-    }
-
     @NeedsTest("14608: Ensure that the deck options refer to the selected deck")
     @NeedsTest("18586: handle clicking on an empty filtered deck")
     private suspend fun handleDeckSelection(
@@ -2157,16 +2227,6 @@ open class DeckPicker :
     }
 
     /**
-     * Scroll the deck list so that it is centered on the current deck.
-     *
-     * @param did The deck ID of the deck to select.
-     */
-    private fun scrollDecklistToDeck(did: DeckId) {
-        val position = findDeckPosition(did)
-        recyclerViewLayoutManager.scrollToPositionWithOffset(position, recyclerView.height / 2)
-    }
-
-    /**
      * Return the position of the deck in the deck list. If the deck is a child of a collapsed deck
      * (i.e., not visible in the deck list), then the position of the parent deck is returned instead.
      *
@@ -2195,9 +2255,9 @@ open class DeckPicker :
      */
     @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
     @RustCleanup("backup with 5 minute timer, instead of deck list refresh")
-    fun updateDeckList() {
+    fun updateDeckList(): Job? {
         if (!CollectionManager.isOpenUnsafe()) {
-            return
+            return null
         }
         if (Build.FINGERPRINT != "robolectric") {
             // uses user's desktop settings to determine whether a backup
@@ -2205,140 +2265,9 @@ open class DeckPicker :
             performBackupInBackground()
         }
         Timber.d("updateDeckList")
-        loadDeckCounts?.cancel()
-        loadDeckCounts =
-            launchCatchingTask {
-                withProgress {
-                    Timber.d("Refreshing deck list")
-                    val (deckDueTree, collectionHasNoCards) =
-                        withCol {
-                            Pair(sched.deckDueTree(), isEmpty)
-                        }
-                    onDecksLoaded(deckDueTree, collectionHasNoCards)
-
-                    /**
-                     * Checks the current scheduler version and prompts the upgrade dialog if using the legacy version.
-                     * Ensures the dialog is only shown once per collection load, even if [updateDeckList()] is called multiple times.
-                     */
-                    val currentSchedulerVersion = withCol { config.get("schedVer") as? Long ?: 1L }
-
-                    if (currentSchedulerVersion == 1L && schedulerUpgradeDialogShownForVersion != 1L) {
-                        schedulerUpgradeDialogShownForVersion = 1L
-                        promptUserToUpdateScheduler()
-                    } else {
-                        schedulerUpgradeDialogShownForVersion = currentSchedulerVersion
-                    }
-
-                    updateUndoMenuState()
-                }
-            }
-    }
-
-    private fun onDecksLoaded(
-        result: DeckNode,
-        collectionHasNoCards: Boolean,
-    ) {
-        Timber.i("Updating deck list UI")
-        hideProgressBar()
-        // Make sure the fragment is visible
-        if (fragmented) {
-            invalidateOptionsMenu()
-            studyoptionsFrame!!.visibility = if (collectionHasNoCards) View.GONE else View.VISIBLE
-        }
-        dueTree = result
-        launchCatchingTask { renderPage(collectionHasNoCards) }
-        // Update the mini statistics bar as well
-        launchCatchingTask {
-            reviewSummaryTextView.text =
-                withCol {
-                    // Backend returns studiedToday() with newlines for HTML formatting,so we replace them with spaces.
-                    sched.studiedToday().replace("\n", " ")
-                }
-            val fabLinearLayout = findViewById<LinearLayout>(R.id.fabLinearLayout)
-            // Adjust bottom margin of fabLinearLayout based on reviewSummaryTextView height
-            reviewSummaryTextView.doOnLayout {
-                val layoutParams = fabLinearLayout.layoutParams as ViewGroup.MarginLayoutParams
-                layoutParams.setMargins(0, 0, 0, reviewSummaryTextView.height / 2)
-                fabLinearLayout.layoutParams = layoutParams
-            }
-        }
-        Timber.d("Startup - Deck List UI Completed")
-    }
-
-    private suspend fun renderPage(collectionIsEmpty: Boolean) {
-        val tree = dueTree
-        if (tree == null) {
-            // mDueTree may be set back to null when the activity restart.
-            // We may need to recompute it.
-            Timber.d("renderPage: recomputing dueTree")
-            updateDeckList()
-            return
-        }
-
-        // Check if default deck is the only available and there are no cards
-        val isEmpty = tree.children.size == 1 && tree.children[0].did == 1L && collectionIsEmpty
-        // Hide the background when there are no cards to improve text readability.
-        val backgroundView = findViewById<ImageView>(R.id.background)
-        backgroundView.visibility = if (isEmpty) View.GONE else View.VISIBLE
-        if (animationDisabled()) {
-            deckPickerContent.visibility = if (isEmpty) View.GONE else View.VISIBLE
-            noDecksPlaceholder.visibility = if (isEmpty) View.VISIBLE else View.GONE
-        } else {
-            val decksListShown = deckPickerContent.isVisible
-            val placeholderShown = noDecksPlaceholder.isVisible
-            if (isEmpty) {
-                deckPickerContent.fadeOut(shortAnimDuration)
-                noDecksPlaceholder.fadeIn(shortAnimDuration).startDelay =
-                    if (decksListShown) {
-                        shortAnimDuration * 2L
-                    } else {
-                        0L
-                    }
-            } else {
-                deckPickerContent.fadeIn(shortAnimDuration).startDelay =
-                    if (placeholderShown) {
-                        shortAnimDuration * 2L
-                    } else {
-                        0L
-                    }
-                noDecksPlaceholder.fadeOut(shortAnimDuration)
-            }
-        }
-        val currentFilter = toolbarSearchView?.query
-
-        if (isEmpty) {
-            supportActionBar?.subtitle = null
-            if (toolbarSearchView != null) {
-                deckListAdapter.submit(
-                    data = emptyList(),
-                    hasSubDecks = false,
-                )
-            }
-            Timber.d("Not rendering deck list as there are no cards")
-            // We're done here
-            return
-        }
-        val currentDeckId = withCol { decks.current().getLong("id") }
-        deckListAdapter.submit(
-            data = tree.filterAndFlattenDisplay(currentFilter, currentDeckId),
-            hasSubDecks = tree.children.any { it.children.any() },
-        )
-
-        // Set the "x due" subtitle
-        runCatchingKotlin {
-            val dueCount = tree.newCount + tree.revCount + tree.lrnCount
-            supportActionBar?.apply {
-                subtitle = if (dueCount == 0) null else resources.getQuantityString(R.plurals.widget_cards_due, dueCount, dueCount)
-                val toolbar = findViewById<Toolbar>(R.id.toolbar)
-                TooltipCompat.setTooltipText(toolbar, toolbar.subtitle)
-            }
-        }.onFailure {
-            Timber.w(it, "Failed to set the due count as the subtitle in the toolbar")
-        }
-        val current = withCol { decks.current().id }
-        if (viewModel.focusedDeck != current) {
-            scrollDecklistToDeck(current)
-            viewModel.focusedDeck = current
+        return launchCatchingTask {
+            withProgress { viewModel.reloadDeckCounts()?.join() }
+            hideProgressBar()
         }
     }
 
