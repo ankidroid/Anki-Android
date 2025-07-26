@@ -364,7 +364,7 @@ class CardMediaPlayer : Closeable {
     }
 
     companion object {
-        const val TTS_PLAYER_TIMEOUT_MS = 2_500L
+        private const val TTS_PLAYER_TIMEOUT_MS = 2_500L
     }
 }
 
