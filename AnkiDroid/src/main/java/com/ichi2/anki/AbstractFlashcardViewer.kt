@@ -30,6 +30,7 @@ import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.hardware.SensorManager
+import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -71,12 +72,14 @@ import androidx.annotation.IdRes
 import androidx.annotation.RequiresApi
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
+import androidx.core.net.toFile
 import androidx.core.net.toUri
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.children
 import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle.State.RESUMED
+import androidx.lifecycle.lifecycleScope
 import anki.collection.OpChanges
 import anki.scheduler.CardAnswer.Rating
 import com.drakeet.drawer.FullDraggableContainer
@@ -93,18 +96,25 @@ import com.ichi2.anki.cardviewer.CardMediaPlayer
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.GestureProcessor
 import com.ichi2.anki.cardviewer.JavascriptEvaluator
+import com.ichi2.anki.cardviewer.MediaErrorBehavior
+import com.ichi2.anki.cardviewer.MediaErrorBehavior.CONTINUE_MEDIA
+import com.ichi2.anki.cardviewer.MediaErrorBehavior.RETRY_MEDIA
 import com.ichi2.anki.cardviewer.MediaErrorHandler
+import com.ichi2.anki.cardviewer.MediaErrorListener
 import com.ichi2.anki.cardviewer.OnRenderProcessGoneDelegate
 import com.ichi2.anki.cardviewer.RenderedCard
 import com.ichi2.anki.cardviewer.SingleCardSide
+import com.ichi2.anki.cardviewer.SoundTagPlayer
 import com.ichi2.anki.cardviewer.TTS
 import com.ichi2.anki.cardviewer.TypeAnswer
 import com.ichi2.anki.cardviewer.TypeAnswer.Companion.createInstance
+import com.ichi2.anki.cardviewer.VideoPlayer
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.cardviewer.ViewerRefresh
 import com.ichi2.anki.cardviewer.handledGamepadKeyDown
 import com.ichi2.anki.cardviewer.handledGamepadKeyUp
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.dialogs.TtsPlaybackErrorDialog
 import com.ichi2.anki.dialogs.TtsVoicesDialogFragment
 import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory
@@ -116,6 +126,7 @@ import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.Decks
 import com.ichi2.anki.libanki.SoundOrVideoTag
 import com.ichi2.anki.libanki.TTSTag
+import com.ichi2.anki.libanki.TtsPlayer
 import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.multimedia.getAvTag
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
@@ -162,7 +173,9 @@ import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
 import com.ichi2.utils.title
 import com.squareup.seismic.ShakeDetector
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 import timber.log.Timber
 import java.io.File
@@ -588,7 +601,7 @@ abstract class AbstractFlashcardViewer :
     public override fun onCollectionLoaded(col: Collection) {
         super.onCollectionLoaded(col)
         val mediaDir = col.media.dir
-        cardMediaPlayer = CardMediaPlayer.newInstance(this, getMediaBaseUrl(mediaDir))
+        cardMediaPlayer = getCardMediaPlayerInstance(this, getMediaBaseUrl(mediaDir))
         registerReceiver()
         restoreCollectionPreferences(col)
         initLayout()
@@ -2769,6 +2782,77 @@ abstract class AbstractFlashcardViewer :
                 return "$mediaDirUri/"
             }
             return ""
+        }
+
+        fun getCardMediaPlayerInstance(
+            viewer: AbstractFlashcardViewer,
+            mediaUriBase: String,
+        ): CardMediaPlayer {
+            val scope = viewer.lifecycleScope
+            val soundErrorListener = viewer.createMediaErrorListener()
+            // tts can take a long time to init, this defers the operation until it's needed
+            val tts = scope.async(Dispatchers.IO) { AndroidTtsPlayer.createInstance(viewer.lifecycleScope) }
+
+            val soundPlayer = SoundTagPlayer(mediaUriBase, VideoPlayer { viewer.webViewClient!! })
+
+            return CardMediaPlayer(
+                soundTagPlayer = soundPlayer,
+                ttsPlayer = tts,
+                mediaErrorListener = soundErrorListener,
+            ).apply {
+                setOnMediaGroupCompletedListener(viewer::onMediaGroupCompleted)
+            }
+        }
+
+        fun AbstractFlashcardViewer.createMediaErrorListener(): MediaErrorListener {
+            val activity = this
+            return object : MediaErrorListener {
+                override fun onMediaPlayerError(
+                    mp: MediaPlayer?,
+                    which: Int,
+                    extra: Int,
+                    uri: Uri,
+                ): MediaErrorBehavior {
+                    Timber.w("Media Error: (%d, %d)", which, extra)
+                    return onError(uri)
+                }
+
+                override fun onTtsError(
+                    error: TtsPlayer.TtsError,
+                    isAutomaticPlayback: Boolean,
+                ) {
+                    AbstractFlashcardViewer.mediaErrorHandler.processTtsFailure(error, isAutomaticPlayback) {
+                        when (error) {
+                            is AndroidTtsError.MissingVoiceError ->
+                                TtsPlaybackErrorDialog.ttsPlaybackErrorDialog(activity, supportFragmentManager, error.tag)
+                            is AndroidTtsError.InvalidVoiceError ->
+                                activity.showSnackbar(getString(R.string.voice_not_supported))
+                            else -> activity.showSnackbar(error.localizedErrorMessage(activity))
+                        }
+                    }
+                }
+
+                override fun onError(uri: Uri): MediaErrorBehavior {
+                    if (uri.scheme != "file") {
+                        return CONTINUE_MEDIA
+                    }
+
+                    try {
+                        val file = uri.toFile()
+                        // There is a multitude of transient issues with the MediaPlayer. (1, -1001) for example
+                        // Retrying fixes most of these
+                        if (file.exists()) return RETRY_MEDIA
+                        // just doesn't exist - process the error
+                        AbstractFlashcardViewer.mediaErrorHandler.processMissingMedia(
+                            file,
+                        ) { filename: String? -> displayCouldNotFindMediaSnackbar(filename) }
+                        return CONTINUE_MEDIA
+                    } catch (e: Exception) {
+                        Timber.w(e)
+                        return CONTINUE_MEDIA
+                    }
+                }
+            }
         }
     }
 }
