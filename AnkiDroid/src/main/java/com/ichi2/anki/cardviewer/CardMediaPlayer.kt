@@ -25,7 +25,6 @@ import com.ichi2.anki.AndroidTtsPlayer
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CollectionHelper.getMediaDirectory
 import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.anki.ReadText
 import com.ichi2.anki.cardviewer.MediaErrorBehavior.CONTINUE_MEDIA
 import com.ichi2.anki.cardviewer.MediaErrorBehavior.RETRY_MEDIA
 import com.ichi2.anki.cardviewer.MediaErrorBehavior.STOP_MEDIA
@@ -76,11 +75,6 @@ import java.io.Closeable
  *
  * [setOnMediaGroupCompletedListener] can be used to call
  * something when [playAllForSide] or [replayAll] completes
- *
- * **Out of scope**
- * [com.ichi2.anki.ReadText]: AnkiDroid has a legacy "tts" setting, before Anki Desktop TTS.
- * This uses [com.ichi2.anki.MetaDB], and may either read `<tts>` or all text on a card
- *
  */
 @NeedsTest("Integration test: A video is autoplayed if it's the first media on a card")
 @NeedsTest("A sound is played after a video finishes")
@@ -221,7 +215,6 @@ class CardMediaPlayer : Closeable {
     suspend fun stop() {
         if (isPlaying) Timber.i("stopping playing all AV tags")
         cancelPlayAvTagsJob(playAvTagsJob)
-        ReadText.stopTts() // TODO: Reconsider design
     }
 
     override fun close() {

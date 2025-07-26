@@ -619,6 +619,7 @@ abstract class AbstractFlashcardViewer :
         gestureDetectorImpl.stopShakeDetector()
         if (this::cardMediaPlayer.isInitialized) {
             cardMediaPlayer.isEnabled = false
+            ReadText.stopTts()
         }
         // Prevent loss of data in Cookies
         CookieManager.getInstance().flush()
@@ -821,7 +822,7 @@ abstract class AbstractFlashcardViewer :
                     "AbstractFlashcardViewer:: OK button pressed to delete note %d",
                     currentCard!!.nid,
                 )
-                launchCatchingTask { cardMediaPlayer.stop() }
+                launchCatchingTask { stopCardMediaPlayer() }
                 deleteNoteWithoutConfirmation()
             }
             negativeButton(R.string.dialog_cancel)
@@ -863,7 +864,7 @@ abstract class AbstractFlashcardViewer :
                 }
                 // Temporarily sets the answer indicator dots appearing below the toolbar
                 previousAnswerIndicator?.displayAnswerIndicator(rating)
-                cardMediaPlayer.stop()
+                stopCardMediaPlayer()
                 currentEase = rating
 
                 answerCardInner(rating)
@@ -1589,7 +1590,7 @@ abstract class AbstractFlashcardViewer :
                     sched.buryCards(listOf(currentCard!!.id))
                 }
             }
-            cardMediaPlayer.stop()
+            stopCardMediaPlayer()
             showSnackbar(R.string.card_buried, Reviewer.ACTION_SNACKBAR_TIME)
         }
         return true
@@ -1603,7 +1604,7 @@ abstract class AbstractFlashcardViewer :
                     sched.suspendCards(listOf(currentCard!!.id))
                 }
             }
-            cardMediaPlayer.stop()
+            stopCardMediaPlayer()
             showSnackbar(TR.studyingCardSuspended(), Reviewer.ACTION_SNACKBAR_TIME)
         }
         return true
@@ -1620,7 +1621,7 @@ abstract class AbstractFlashcardViewer :
                 }
             val count = changed.count
             val noteSuspended = resources.getQuantityString(R.plurals.note_suspended, count, count)
-            cardMediaPlayer.stop()
+            stopCardMediaPlayer()
             showSnackbar(noteSuspended, Reviewer.ACTION_SNACKBAR_TIME)
         }
         return true
@@ -1635,10 +1636,15 @@ abstract class AbstractFlashcardViewer :
                         sched.buryNotes(listOf(currentCard!!.nid))
                     }
                 }
-            cardMediaPlayer.stop()
+            stopCardMediaPlayer()
             showSnackbar(TR.studyingCardsBuried(changed.count), Reviewer.ACTION_SNACKBAR_TIME)
         }
         return true
+    }
+
+    private suspend fun stopCardMediaPlayer() {
+        cardMediaPlayer.stop()
+        ReadText.stopTts()
     }
 
     override fun executeCommand(
