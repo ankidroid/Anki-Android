@@ -37,6 +37,7 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import androidx.core.widget.doOnTextChanged
+import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -475,6 +476,22 @@ fun AlertDialog.dismissSafely() {
             dismiss()
         } catch (e: IllegalArgumentException) {
             if (window == null || !isShowing) {
+                Timber.d(e, "Dialog not attached to window manager")
+                return@executeOnMainThread
+            }
+            Timber.w(e, "Dialog not attached to window manager")
+        }
+    }
+}
+
+fun DialogFragment.dismissSafely() {
+    // The exception will be uncaught if not run on the main thread.
+    executeOnMainThread {
+        try {
+            // safer to catch the exception to be sure dismiss() was called
+            dismiss()
+        } catch (e: IllegalArgumentException) {
+            if (dialog?.window == null || dialog?.isShowing == false) {
                 Timber.d(e, "Dialog not attached to window manager")
                 return@executeOnMainThread
             }

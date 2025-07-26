@@ -388,7 +388,13 @@ dependencies {
     implementation libs.kotlinx.serialization.json
     implementation libs.seismic
 
-    debugImplementation libs.androidx.fragment.testing.manifest
+    // Fragment testing infrastructure has to be available during testing,
+    // and we test release builds sometimes - include in main APK if so
+    if (rootProject.testReleaseBuild) {
+        implementation libs.androidx.fragment.testing.manifest
+    } else {
+        debugImplementation libs.androidx.fragment.testing.manifest
+    }
 
     // Backend libraries
 
