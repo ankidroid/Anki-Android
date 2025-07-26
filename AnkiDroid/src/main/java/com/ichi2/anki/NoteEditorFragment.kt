@@ -245,15 +245,18 @@ class NoteEditorFragment :
     private var pasteOcclusionImageButton: Button? = null
 
     // non-null after onCollectionLoaded
-    private var editorNote: Note? = null
+    var editorNote: Note? = null
+        private set
 
     private val multimediaViewModel: MultimediaViewModel by activityViewModels()
 
     private var currentImageOccPath: String? = null
 
     // Null if adding a new card. Presently NonNull if editing an existing note - but this is subject to change
-    private var currentEditedCard: Card? = null
-    private var selectedTags: MutableList<String>? = null
+    var currentEditedCard: Card? = null
+        private set
+    var selectedTags: MutableList<String>? = null
+        private set
 
     @get:VisibleForTesting
     var deckId: DeckId = 0
@@ -271,7 +274,8 @@ class NoteEditorFragment :
 
     // indicates which activity called Note Editor
     private var caller = NoteEditorCaller.NO_CALLER
-    private var editFields: LinkedList<FieldEditText>? = null
+    var editFields: LinkedList<FieldEditText>? = null
+        private set
     private var sourceText: Array<String?>? = null
     private val fieldState = FieldState.fromEditor(this)
     private lateinit var toolbar: Toolbar
@@ -283,6 +287,17 @@ class NoteEditorFragment :
     private var toggleStickyText: HashMap<Int, String?> = HashMap()
 
     var clipboard: ClipboardManager? = null
+
+    private val inNoteEditorActivity: Boolean
+        get() = requireAnkiActivity() is NoteEditorActivity
+
+    private val noteEditorActivity
+        get() =
+            if (inNoteEditorActivity) {
+                requireAnkiActivity() as NoteEditorActivity
+            } else {
+                null
+            }
 
     /**
      * Whether this is displayed in a fragment view.
@@ -926,6 +941,12 @@ class NoteEditorFragment :
                 Timber.w("Image uri is null")
             }
         }
+
+        if (inNoteEditorActivity) {
+            requireView().post {
+                noteEditorActivity!!.loadNoteEditorPreviewer()
+            }
+        }
     }
 
     private val cameraLauncher =
@@ -1046,7 +1067,7 @@ class NoteEditorFragment :
             KeyEvent.KEYCODE_NUMPAD_ENTER, KeyEvent.KEYCODE_ENTER ->
                 if (event.isCtrlPressed) {
                     // disable it in case of image occlusion
-                    if (allowSaveAndPreview()) {
+                    if (allowSave()) {
                         launchCatchingTask { saveNote() }
                         return true
                     }
@@ -1084,7 +1105,7 @@ class NoteEditorFragment :
             KeyEvent.KEYCODE_P -> {
                 if (event.isCtrlPressed) {
                     Timber.i("Ctrl+P: Preview Pressed")
-                    if (allowSaveAndPreview()) {
+                    if (allowPreview()) {
                         launchCatchingTask { performPreview() }
                         return true
                     }
@@ -1270,6 +1291,9 @@ class NoteEditorFragment :
         // update UI based on the result, noOfAddedCards
         onNoteAdded()
         updateFieldsFromStickyText()
+        if (inNoteEditorActivity) {
+            noteEditorActivity!!.loadNoteEditorPreviewer()
+        }
     }
 
     @VisibleForTesting
@@ -1384,6 +1408,9 @@ class NoteEditorFragment :
             closeNoteEditor()
             return
         }
+        if (inNoteEditorActivity) {
+            noteEditorActivity!!.loadNoteEditorPreviewer()
+        }
     }
 
     /**
@@ -1425,13 +1452,13 @@ class NoteEditorFragment :
     override fun onPrepareMenu(menu: Menu) {
         if (addNote) {
             menu.findItem(R.id.action_copy_note).isVisible = false
-            val iconVisible = allowSaveAndPreview()
-            menu.findItem(R.id.action_save).isVisible = iconVisible
-            menu.findItem(R.id.action_preview).isVisible = iconVisible
+            menu.findItem(R.id.action_save).isVisible = allowSave()
+            menu.findItem(R.id.action_preview).isVisible = allowPreview()
         } else {
             // Hide add note item if fragment is in fragmented activity
             // because this item is already present in CardBrowser
             menu.findItem(R.id.action_add_note_from_note_editor).isVisible = !inFragmentedActivity
+            menu.findItem(R.id.action_preview).isVisible = allowPreview() && !inFragmentedActivity
         }
         if (editFields != null) {
             for (i in editFields!!.indices) {
@@ -1457,8 +1484,15 @@ class NoteEditorFragment :
      * option to save/preview the card as it has a built in option and the user is notified
      * when the card is saved successfully
      */
-    private fun allowSaveAndPreview(): Boolean =
+    private fun allowSave(): Boolean =
         when {
+            addNote && currentNotetypeIsImageOcclusion() -> false
+            else -> true
+        }
+
+    private fun allowPreview(): Boolean =
+        when {
+            inNoteEditorActivity && noteEditorActivity?.fragmented == true -> false
             addNote && currentNotetypeIsImageOcclusion() -> false
             else -> true
         }
@@ -1467,14 +1501,14 @@ class NoteEditorFragment :
         when (item.itemId) {
             R.id.action_preview -> {
                 Timber.i("NoteEditor:: Preview button pressed")
-                if (allowSaveAndPreview()) {
+                if (allowPreview()) {
                     launchCatchingTask { performPreview() }
                 }
                 return true
             }
             R.id.action_save -> {
                 Timber.i("NoteEditor:: Save note button pressed")
-                if (allowSaveAndPreview()) {
+                if (allowSave()) {
                     launchCatchingTask { saveNote() }
                 }
                 return true
@@ -2230,6 +2264,12 @@ class NoteEditorFragment :
         index: Int,
         enabled: Boolean,
     ) {
+        if (inNoteEditorActivity) {
+            noteEditorActivity!!.noteEditorWatcher.let { watcher ->
+                editText!!.addTextChangedListener(watcher)
+            }
+        }
+
         // Listen for changes in the first field so we can re-check duplicate status.
         editText!!.addTextChangedListener(EditFieldTextWatcher(index))
         if (index == 0) {
@@ -2785,6 +2825,10 @@ class NoteEditorFragment :
             // In case the type is changed while adding the card, the menu options need to be invalidated
             requireActivity().invalidateMenu()
             changeNoteType(allNoteTypeIds!![pos])
+
+            if (inNoteEditorActivity) {
+                noteEditorActivity!!.loadNoteEditorPreviewer()
+            }
         }
 
         override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -3011,7 +3055,7 @@ class NoteEditorFragment :
                 this.arguments = launcher.toBundle()
             }
 
-        private fun shouldReplaceNewlines(): Boolean =
+        fun shouldReplaceNewlines(): Boolean =
             AnkiDroidApp.instance
                 .sharedPrefs()
                 .getBoolean(PREF_NOTE_EDITOR_NEWLINE_REPLACE, true)
