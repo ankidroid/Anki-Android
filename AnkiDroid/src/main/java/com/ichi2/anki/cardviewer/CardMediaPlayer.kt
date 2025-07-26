@@ -169,10 +169,14 @@ class CardMediaPlayer : Closeable {
 
     fun playAllForSide(cardSide: CardSide) {
         if (!isEnabled) return
-        playAvTagsJob {
-            Timber.i("playing sounds for %s", cardSide)
-            playAllAvTagsInternal(cardSide, isAutomaticPlayback = true)
-        }
+        val oldJob = playAvTagsJob
+        this.playAvTagsJob =
+            scope.launch {
+                Timber.i("playing sounds for %s", cardSide)
+                cancelPlayAvTagsJob(oldJob)
+                playAllAvTagsInternal(cardSide, isAutomaticPlayback = true)
+                playAvTagsJob = null
+            }
     }
 
     suspend fun playOne(tag: AvTag) {
@@ -338,17 +342,6 @@ class CardMediaPlayer : Closeable {
             mediaErrorListener?.onTtsError(error, isAutomaticPlayback)
         }
         return player
-    }
-
-    /** Ensures that only one [playAvTagsJob] is running at once */
-    private fun playAvTagsJob(block: suspend CoroutineScope.() -> Unit) {
-        val oldJob = playAvTagsJob
-        this.playAvTagsJob =
-            scope.launch {
-                cancelPlayAvTagsJob(oldJob)
-                block()
-                playAvTagsJob = null
-            }
     }
 
     @NeedsTest("finish moves to next sound")
