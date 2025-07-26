@@ -211,7 +211,7 @@ class CardMediaPlayerTest : JvmTest() {
     }
 
     private suspend fun CardMediaPlayer.playAllAndWait(side: SingleCardSide = SingleCardSide.FRONT) {
-        this.playAll(side)?.join()
+        this.playAllForSide(side.toCardSide())?.join()
     }
 
     private suspend fun CardMediaPlayer.replayAllAndWait(side: SingleCardSide) {
