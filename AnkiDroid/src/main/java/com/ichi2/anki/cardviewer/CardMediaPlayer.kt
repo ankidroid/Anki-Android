@@ -19,30 +19,23 @@ package com.ichi2.anki.cardviewer
 import android.media.MediaPlayer
 import android.net.Uri
 import androidx.annotation.CheckResult
-import androidx.core.net.toFile
-import androidx.lifecycle.lifecycleScope
-import com.ichi2.anki.AbstractFlashcardViewer
 import com.ichi2.anki.AbstractFlashcardViewer.Companion.getMediaBaseUrl
 import com.ichi2.anki.AndroidTtsError
 import com.ichi2.anki.AndroidTtsPlayer
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CollectionHelper.getMediaDirectory
 import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.anki.R
 import com.ichi2.anki.ReadText
 import com.ichi2.anki.cardviewer.MediaErrorBehavior.CONTINUE_MEDIA
 import com.ichi2.anki.cardviewer.MediaErrorBehavior.RETRY_MEDIA
 import com.ichi2.anki.cardviewer.MediaErrorBehavior.STOP_MEDIA
 import com.ichi2.anki.common.annotations.NeedsTest
-import com.ichi2.anki.dialogs.TtsPlaybackErrorDialog
 import com.ichi2.anki.libanki.AvTag
 import com.ichi2.anki.libanki.Card
 import com.ichi2.anki.libanki.SoundOrVideoTag
 import com.ichi2.anki.libanki.TTSTag
 import com.ichi2.anki.libanki.TtsPlayer
-import com.ichi2.anki.localizedErrorMessage
 import com.ichi2.anki.reviewer.CardSide
-import com.ichi2.anki.snackbar.showSnackbar
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Deferred
@@ -388,30 +381,6 @@ class CardMediaPlayer : Closeable {
 
     companion object {
         const val TTS_PLAYER_TIMEOUT_MS = 2_500L
-
-        /**
-         * @param mediaUriBase The base path to the media directory as a `file://` URI
-         */
-        @NeedsTest("ensure the lifecycle is subscribed to in a Reviewer")
-        fun newInstance(
-            viewer: AbstractFlashcardViewer,
-            mediaUriBase: String,
-        ): CardMediaPlayer {
-            val scope = viewer.lifecycleScope
-            val soundErrorListener = viewer.createMediaErrorListener()
-            // tts can take a long time to init, this defers the operation until it's needed
-            val tts = scope.async(Dispatchers.IO) { AndroidTtsPlayer.createInstance(viewer.lifecycleScope) }
-
-            val soundPlayer = SoundTagPlayer(mediaUriBase, VideoPlayer { viewer.webViewClient!! })
-
-            return CardMediaPlayer(
-                soundTagPlayer = soundPlayer,
-                ttsPlayer = tts,
-                mediaErrorListener = soundErrorListener,
-            ).apply {
-                setOnMediaGroupCompletedListener(viewer::onMediaGroupCompleted)
-            }
-        }
     }
 }
 
@@ -442,57 +411,6 @@ enum class MediaErrorBehavior {
 
     /** Retry the current media */
     RETRY_MEDIA,
-}
-
-fun AbstractFlashcardViewer.createMediaErrorListener(): MediaErrorListener {
-    val activity = this
-    return object : MediaErrorListener {
-        override fun onMediaPlayerError(
-            mp: MediaPlayer?,
-            which: Int,
-            extra: Int,
-            uri: Uri,
-        ): MediaErrorBehavior {
-            Timber.w("Media Error: (%d, %d)", which, extra)
-            return onError(uri)
-        }
-
-        override fun onTtsError(
-            error: TtsPlayer.TtsError,
-            isAutomaticPlayback: Boolean,
-        ) {
-            AbstractFlashcardViewer.mediaErrorHandler.processTtsFailure(error, isAutomaticPlayback) {
-                when (error) {
-                    is AndroidTtsError.MissingVoiceError ->
-                        TtsPlaybackErrorDialog.ttsPlaybackErrorDialog(activity, supportFragmentManager, error.tag)
-                    is AndroidTtsError.InvalidVoiceError ->
-                        activity.showSnackbar(getString(R.string.voice_not_supported))
-                    else -> activity.showSnackbar(error.localizedErrorMessage(activity))
-                }
-            }
-        }
-
-        override fun onError(uri: Uri): MediaErrorBehavior {
-            if (uri.scheme != "file") {
-                return CONTINUE_MEDIA
-            }
-
-            try {
-                val file = uri.toFile()
-                // There is a multitude of transient issues with the MediaPlayer. (1, -1001) for example
-                // Retrying fixes most of these
-                if (file.exists()) return RETRY_MEDIA
-                // just doesn't exist - process the error
-                AbstractFlashcardViewer.mediaErrorHandler.processMissingMedia(
-                    file,
-                ) { filename: String? -> displayCouldNotFindMediaSnackbar(filename) }
-                return CONTINUE_MEDIA
-            } catch (e: Exception) {
-                Timber.w(e)
-                return CONTINUE_MEDIA
-            }
-        }
-    }
 }
 
 /** An exception thrown when playing a sound, and how to continue playing sounds */
