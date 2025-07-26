@@ -161,13 +161,13 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
 
             assertThat(viewer.correctTypedAnswer, equalTo("World"))
 
-            waitForAsyncTasksToComplete()
+            advanceRobolectricLooper()
 
             val note = viewer.currentCard!!.note()
             note.setField(1, "David")
             undoableOp { updateNote(note) }
 
-            waitForAsyncTasksToComplete()
+            advanceRobolectricLooper()
 
             assertThat(viewer.correctTypedAnswer, equalTo("David"))
         }
@@ -186,13 +186,13 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
 
             assertThat(viewer.cardContent, containsString("World"))
 
-            waitForAsyncTasksToComplete()
+            advanceRobolectricLooper()
 
             val note = viewer.currentCard!!.note()
             note.setField(1, "David")
             undoableOp { updateNote(note) }
 
-            waitForAsyncTasksToComplete()
+            advanceRobolectricLooper()
 
             assertThat(viewer.correctTypedAnswer, equalTo("David"))
             assertThat(viewer.cardContent, not(containsString("World")))
@@ -389,8 +389,8 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
         viewer.loadInitialCard()
         // Without this, AbstractFlashcardViewer.mCard is still null, and RobolectricTest.tearDown executes before
         // AsyncTasks spawned by by loading the viewer finish. Is there a way to synchronize these things while under test?
-        advanceRobolectricLooperWithSleep()
-        advanceRobolectricLooperWithSleep()
+        advanceRobolectricLooper()
+        advanceRobolectricLooper()
         return multimediaController
     }
 

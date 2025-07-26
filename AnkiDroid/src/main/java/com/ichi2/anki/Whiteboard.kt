@@ -347,8 +347,8 @@ class Whiteboard(
     private fun trySecondFingerClick(event: MotionEvent): Boolean {
         if (secondFingerPointerId == event.getPointerId(event.actionIndex)) {
             updateSecondFinger(event)
-            if (secondFingerWithinTapTolerance && mWhiteboardMultiTouchMethods != null) {
-                mWhiteboardMultiTouchMethods!!.tapOnCurrentCard(secondFingerX.toInt(), secondFingerY.toInt())
+            if (secondFingerWithinTapTolerance && whiteboardMultiTouchMethods != null) {
+                whiteboardMultiTouchMethods!!.tapOnCurrentCard(secondFingerX.toInt(), secondFingerY.toInt())
                 return true
             }
         }
@@ -360,8 +360,8 @@ class Whiteboard(
     private fun trySecondFingerScroll(event: MotionEvent): Boolean {
         if (updateSecondFinger(event) && !secondFingerWithinTapTolerance) {
             val dy = (secondFingerY0 - secondFingerY).toInt()
-            if (dy != 0 && mWhiteboardMultiTouchMethods != null) {
-                mWhiteboardMultiTouchMethods!!.scrollCurrentCardBy(dy)
+            if (dy != 0 && whiteboardMultiTouchMethods != null) {
+                whiteboardMultiTouchMethods!!.scrollCurrentCardBy(dy)
                 secondFingerX0 = secondFingerX
                 secondFingerY0 = secondFingerY
             }
@@ -578,7 +578,7 @@ class Whiteboard(
 
     companion object {
         private const val TOUCH_TOLERANCE = 4f
-        private var mWhiteboardMultiTouchMethods: WhiteboardMultiTouchMethods? = null
+        private var whiteboardMultiTouchMethods: WhiteboardMultiTouchMethods? = null
 
         fun createInstance(
             context: AnkiActivity,
@@ -586,7 +586,7 @@ class Whiteboard(
             whiteboardMultiTouchMethods: WhiteboardMultiTouchMethods?,
         ): Whiteboard {
             val whiteboard = Whiteboard(context, handleMultiTouch, currentTheme.isNightMode)
-            mWhiteboardMultiTouchMethods = whiteboardMultiTouchMethods
+            Companion.whiteboardMultiTouchMethods = whiteboardMultiTouchMethods
             val lp2 =
                 FrameLayout.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT,

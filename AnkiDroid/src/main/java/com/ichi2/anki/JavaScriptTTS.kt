@@ -40,7 +40,7 @@ class JavaScriptTTS internal constructor() : OnInitListener {
     override fun onInit(
         @ErrorOrSuccess status: Int,
     ) {
-        mTtsOk = status == TextToSpeech.SUCCESS
+        ttsOk = status == TextToSpeech.SUCCESS
     }
 
     /**
@@ -53,7 +53,7 @@ class JavaScriptTTS internal constructor() : OnInitListener {
     fun speak(
         text: String?,
         @QueueMode queueMode: Int,
-    ): Int = mTts.speak(text, queueMode, mTtsParams, "stringId")
+    ): Int = tts.speak(text, queueMode, ttsParams, "stringId")
 
     /**
      * If only a string is given, set QUEUE_FLUSH to the default behavior.
@@ -61,7 +61,7 @@ class JavaScriptTTS internal constructor() : OnInitListener {
      * @return ERROR(-1) SUCCESS(0)
      */
     @ErrorOrSuccess
-    fun speak(text: String?): Int = mTts.speak(text, TextToSpeech.QUEUE_FLUSH, mTtsParams, "stringId")
+    fun speak(text: String?): Int = tts.speak(text, TextToSpeech.QUEUE_FLUSH, ttsParams, "stringId")
 
     /**
      * Sets the text-to-speech language.
@@ -77,7 +77,7 @@ class JavaScriptTTS internal constructor() : OnInitListener {
     fun setLanguage(loc: String): Int {
         // The Int values will be returned
         // Code indicating the support status for the locale. See LANG_AVAILABLE, LANG_COUNTRY_AVAILABLE, LANG_COUNTRY_VAR_AVAILABLE, LANG_MISSING_DATA and LANG_NOT_SUPPORTED.
-        return mTts.setLanguage(LanguageUtils.localeFromStringIgnoringScriptAndExtensions(loc))
+        return tts.setLanguage(LanguageUtils.localeFromStringIgnoringScriptAndExtensions(loc))
     }
 
     /**
@@ -89,7 +89,7 @@ class JavaScriptTTS internal constructor() : OnInitListener {
     fun setPitch(pitch: Float): Int {
         // The following Int values will be returned
         // ERROR(-1) SUCCESS(0)
-        return mTts.setPitch(pitch)
+        return tts.setPitch(pitch)
     }
 
     /**
@@ -101,7 +101,7 @@ class JavaScriptTTS internal constructor() : OnInitListener {
     fun setSpeechRate(speechRate: Float): Int {
         // The following Int values will be returned
         // ERROR(-1) SUCCESS(0)
-        return mTts.setSpeechRate(speechRate)
+        return tts.setSpeechRate(speechRate)
     }
 
     /**
@@ -111,14 +111,14 @@ class JavaScriptTTS internal constructor() : OnInitListener {
      *
      */
     val isSpeaking: Boolean
-        get() = mTts.isSpeaking
+        get() = tts.isSpeaking
 
     /**
      * Interrupts the current utterance (whether played or rendered to file) and discards other utterances in the queue.
      * @return ERROR(-1) SUCCESS(0)
      */
     @ErrorOrSuccess
-    fun stop(): Int = mTts.stop()
+    fun stop(): Int = tts.stop()
 
     companion object {
         private const val TTS_SUCCESS = TextToSpeech.SUCCESS
@@ -130,13 +130,13 @@ class JavaScriptTTS internal constructor() : OnInitListener {
         private const val TTS_LANG_COUNTRY_VAR_AVAILABLE = TextToSpeech.LANG_COUNTRY_VAR_AVAILABLE
         private const val TTS_LANG_MISSING_DATA = TextToSpeech.LANG_MISSING_DATA
         private const val TTS_LANG_NOT_SUPPORTED = TextToSpeech.LANG_NOT_SUPPORTED
-        private lateinit var mTts: TextToSpeech
-        private var mTtsOk = false
-        private val mTtsParams = Bundle()
+        private lateinit var tts: TextToSpeech
+        private var ttsOk = false
+        private val ttsParams = Bundle()
     }
 
     init {
         val context = AnkiDroidApp.instance.applicationContext
-        mTts = TextToSpeech(context, this)
+        tts = TextToSpeech(context, this)
     }
 }

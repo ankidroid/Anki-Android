@@ -52,7 +52,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
 
             reviewer.displayCardAnswer()
 
-            waitForAsyncTasksToComplete()
+            advanceRobolectricLooper()
 
             assertThat(
                 getDataFromRequest("nextTime1", jsapi).withoutUnicodeIsolation(),
@@ -84,7 +84,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
             val jsapi = reviewer.jsApi
             reviewer.displayCardAnswer()
 
-            waitForAsyncTasksToComplete()
+            advanceRobolectricLooper()
 
             val currentCard = reviewer.currentCard!!
 
@@ -193,7 +193,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
             val reviewer: Reviewer = startReviewer()
             val jsapi = reviewer.jsApi
 
-            waitForAsyncTasksToComplete()
+            advanceRobolectricLooper()
 
             // Displaying question
             assertThat(
@@ -235,7 +235,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
             val reviewer: Reviewer = startReviewer()
             val jsapi = reviewer.jsApi
 
-            waitForAsyncTasksToComplete()
+            advanceRobolectricLooper()
 
             // ---------------
             // Card mark test
@@ -362,7 +362,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
             addBasicNote("baz", "bak")
 
             val reviewer: Reviewer = startReviewer()
-            waitForAsyncTasksToComplete()
+            advanceRobolectricLooper()
 
             val jsapi = reviewer.jsApi
             // get card id for testing due
@@ -372,7 +372,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
 
             // test that card rescheduled for 15 days interval and returned true
             assertThat(getDataFromRequest("setCardDue", jsapi, "15"), equalTo(formatApiResult(true)))
-            waitForAsyncTasksToComplete()
+            advanceRobolectricLooper()
 
             // verify that it did get rescheduled
             // --------------------------------
@@ -399,13 +399,13 @@ class AnkiDroidJsAPITest : RobolectricTest() {
             assertEquals(CardType.Rev, c.type, "Card type before reset")
 
             val reviewer: Reviewer = startReviewer()
-            waitForAsyncTasksToComplete()
+            advanceRobolectricLooper()
 
             val jsapi = reviewer.jsApi
 
             // test that card reset
             assertThat(getDataFromRequest("resetProgress", jsapi), equalTo(formatApiResult(true)))
-            waitForAsyncTasksToComplete()
+            advanceRobolectricLooper()
 
             // verify that card progress reset
             // --------------------------------
@@ -424,7 +424,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
                 }
 
             val reviewer: Reviewer = startReviewer()
-            waitForAsyncTasksToComplete()
+            advanceRobolectricLooper()
 
             val jsapi = reviewer.jsApi
 

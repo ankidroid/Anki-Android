@@ -274,7 +274,7 @@ class NoteEditorTest : RobolectricTest() {
             assertThat(editor.currentFieldStrings.toList(), contains(newFirstField, initSecondField))
 
             editor.saveNote()
-            waitForAsyncTasksToComplete()
+            advanceRobolectricLooper()
             val actual = editor.currentFieldStrings.toList()
 
             assertThat("newlines should be preserved, second field should be blanked", actual, contains(newFirstField, ""))

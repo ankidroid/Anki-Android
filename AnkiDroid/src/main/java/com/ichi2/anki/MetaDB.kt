@@ -36,13 +36,13 @@ object MetaDB {
     private const val DATABASE_VERSION = 8
 
     /** The database object used by the meta-db.  */
-    private var mMetaDb: SQLiteDatabase? = null
+    private var metaDb: SQLiteDatabase? = null
 
     /** Open the meta-db  */
     @KotlinCleanup("scope function or lateinit db")
     private fun openDB(context: Context) {
         try {
-            mMetaDb =
+            metaDb =
                 context.openOrCreateDatabase(DATABASE_NAME, 0, null).let {
                     if (it.needUpgrade(DATABASE_VERSION)) {
                         upgradeDB(it, DATABASE_VERSION)
@@ -165,8 +165,8 @@ object MetaDB {
     /** Close the meta-db.  */
     fun closeDB() {
         if (isDBOpen()) {
-            mMetaDb!!.close()
-            mMetaDb = null
+            metaDb!!.close()
+            metaDb = null
             Timber.d("Closing MetaDB")
         }
     }
@@ -175,7 +175,7 @@ object MetaDB {
     fun resetDB(context: Context): Boolean {
         openDBIfClosed(context)
         try {
-            mMetaDb!!.run {
+            metaDb!!.run {
                 execSQL("DROP TABLE IF EXISTS languages;")
                 Timber.i("MetaDB:: Resetting all language assignment")
                 execSQL("DROP TABLE IF EXISTS whiteboardState;")
@@ -202,7 +202,7 @@ object MetaDB {
         openDBIfClosed(context)
         try {
             Timber.i("MetaDB:: Resetting all language assignments")
-            mMetaDb!!.run {
+            metaDb!!.run {
                 execSQL("DROP TABLE IF EXISTS languages;")
                 upgradeDB(this, DATABASE_VERSION)
             }
@@ -218,7 +218,7 @@ object MetaDB {
         openDBIfClosed(context)
         try {
             Timber.i("MetaDB:: Resetting widget status")
-            mMetaDb!!.run {
+            metaDb!!.run {
                 execSQL("DROP TABLE IF EXISTS widgetStatus;")
                 execSQL("DROP TABLE IF EXISTS smallWidgetStatus;")
                 upgradeDB(this, DATABASE_VERSION)
@@ -247,7 +247,7 @@ object MetaDB {
         openDBIfClosed(context)
         try {
             if ("" == getLanguage(context, did, ord, qa)) {
-                mMetaDb!!.execSQL(
+                metaDb!!.execSQL(
                     "INSERT INTO languages (did, ord, qa, language)  VALUES (?, ?, ?, ?);",
                     arrayOf<Any>(
                         did,
@@ -258,7 +258,7 @@ object MetaDB {
                 )
                 Timber.v("Store language for deck %d", did)
             } else {
-                mMetaDb!!.execSQL(
+                metaDb!!.execSQL(
                     "UPDATE languages SET language = ? WHERE did = ? AND ord = ? AND qa = ?;",
                     arrayOf<Any>(
                         language,
@@ -291,7 +291,7 @@ object MetaDB {
         var language = ""
         val query = "SELECT language FROM languages WHERE did = ? AND ord = ? AND qa = ? LIMIT 1"
         try {
-            mMetaDb!!
+            metaDb!!
                 .rawQuery(
                     query,
                     arrayOf(
@@ -322,7 +322,7 @@ object MetaDB {
     ): Boolean {
         openDBIfClosed(context)
         try {
-            mMetaDb!!
+            metaDb!!
                 .rawQuery(
                     "SELECT state FROM whiteboardState  WHERE did = ?",
                     arrayOf(did.toString()),
@@ -347,7 +347,7 @@ object MetaDB {
         val state = if (whiteboardState) 1 else 0
         openDBIfClosed(context)
         try {
-            val metaDb = mMetaDb!!
+            val metaDb = metaDb!!
             metaDb
                 .rawQuery(
                     "SELECT _id FROM whiteboardState WHERE did = ?",
@@ -383,7 +383,7 @@ object MetaDB {
     ): Boolean {
         openDBIfClosed(context)
         try {
-            mMetaDb!!
+            metaDb!!
                 .rawQuery(
                     "SELECT stylus FROM whiteboardState WHERE did = ?",
                     arrayOf(did.toString()),
@@ -408,7 +408,7 @@ object MetaDB {
         val state = if (whiteboardStylusState) 1 else 0
         openDBIfClosed(context)
         try {
-            val metaDb = mMetaDb!!
+            val metaDb = metaDb!!
             metaDb
                 .rawQuery(
                     "SELECT _id FROM whiteboardState WHERE did = ?",
@@ -444,7 +444,7 @@ object MetaDB {
     ): Boolean {
         openDBIfClosed(context)
         try {
-            mMetaDb!!
+            metaDb!!
                 .rawQuery(
                     "SELECT visible FROM whiteboardState WHERE did = ?",
                     arrayOf(did.toString()),
@@ -469,7 +469,7 @@ object MetaDB {
         val isVisibleState = if (isVisible) 1 else 0
         openDBIfClosed(context)
         try {
-            val metaDb = mMetaDb!!
+            val metaDb = metaDb!!
             metaDb
                 .rawQuery(
                     "SELECT _id FROM whiteboardState WHERE did  = ?",
@@ -503,7 +503,7 @@ object MetaDB {
     ): WhiteboardPenColor {
         openDBIfClosed(context)
         try {
-            mMetaDb!!
+            metaDb!!
                 .rawQuery(
                     "SELECT lightpencolor, darkpencolor FROM whiteboardState WHERE did = ?",
                     arrayOf(did.toString()),
@@ -535,7 +535,7 @@ object MetaDB {
         openDBIfClosed(context)
         val columnName = if (isLight) "lightpencolor" else "darkpencolor"
         try {
-            val metaDb = mMetaDb!!
+            val metaDb = metaDb!!
             metaDb
                 .rawQuery(
                     "SELECT _id FROM whiteboardState WHERE did  = ?",
@@ -568,7 +568,7 @@ object MetaDB {
     ): Boolean {
         openDBIfClosed(context)
         try {
-            mMetaDb!!
+            metaDb!!
                 .rawQuery(
                     "SELECT state FROM micToolbarState  WHERE did = ?",
                     arrayOf(did.toString()),
@@ -593,7 +593,7 @@ object MetaDB {
         val state = if (isEnabled) 1 else 0
         openDBIfClosed(context)
         try {
-            val metaDb = mMetaDb!!
+            val metaDb = metaDb!!
             metaDb
                 .rawQuery(
                     "SELECT _id FROM micToolbarState WHERE did = ?",
@@ -625,7 +625,7 @@ object MetaDB {
     fun getWidgetSmallStatus(context: Context): IntArray {
         openDBIfClosed(context)
         try {
-            mMetaDb!!
+            metaDb!!
                 .query(
                     "smallWidgetStatus",
                     arrayOf("due", "eta"),
@@ -649,7 +649,7 @@ object MetaDB {
         openDBIfClosed(context)
         val due = 0
         try {
-            mMetaDb!!.query("smallWidgetStatus", arrayOf("due"), null, null, null, null, null).use { cursor ->
+            metaDb!!.query("smallWidgetStatus", arrayOf("due"), null, null, null, null, null).use { cursor ->
                 if (cursor.moveToFirst()) {
                     return cursor.getInt(0)
                 }
@@ -666,7 +666,7 @@ object MetaDB {
     ) {
         openDBIfClosed(context)
         try {
-            val metaDb = mMetaDb!!
+            val metaDb = metaDb!!
             metaDb.transaction {
                 // First clear all the existing content.
                 metaDb.execSQL("DELETE FROM smallWidgetStatus")
@@ -685,7 +685,7 @@ object MetaDB {
     }
 
     fun close() {
-        mMetaDb?.run {
+        metaDb?.run {
             try {
                 close()
             } catch (e: Exception) {
@@ -716,5 +716,5 @@ object MetaDB {
         ): Int? = if (cur.isNull(columnIndex)) null else cur.getInt(columnIndex)
     }
 
-    private fun isDBOpen() = mMetaDb?.isOpen == true
+    private fun isDBOpen() = metaDb?.isOpen == true
 }

@@ -79,13 +79,13 @@ class NoteTypeFieldEditorTest(
         val fieldName = forbidden + "field"
 
         // build dialog for field name input
-        advanceRobolectricLooperWithSleep()
+        advanceRobolectricLooper()
         val dialog = buildAddEditFieldDialog(fieldNameInput, fieldOperationType)
 
         // set field name to forbidden string and click confirm
         fieldNameInput.setText(fieldName)
         dialog.getButton(DialogInterface.BUTTON_POSITIVE).performClick()
-        advanceRobolectricLooperWithSleep()
+        advanceRobolectricLooper()
         return fieldName
     }
 

@@ -149,12 +149,12 @@ class ReviewerNoParamTest : RobolectricTest() {
         val reviewer = startReviewerFullScreen()
 
         reviewer.displayCardAnswer()
-        advanceRobolectricLooperWithSleep()
+        advanceRobolectricLooper()
 
         val hideCount = reviewer.delayedHideCount
 
         reviewer.answerCard(Ease.AGAIN)
-        advanceRobolectricLooperWithSleep()
+        advanceRobolectricLooper()
 
         assertThat("Hide should be called after answering a card", reviewer.delayedHideCount, greaterThan(hideCount))
     }
@@ -167,22 +167,21 @@ class ReviewerNoParamTest : RobolectricTest() {
             val reviewer = startReviewerFullScreen()
 
             reviewer.displayCardAnswer()
-            advanceRobolectricLooperWithSleep()
+            advanceRobolectricLooper()
             reviewer.answerCard(Ease.AGAIN)
-            advanceRobolectricLooperWithSleep()
+            advanceRobolectricLooper()
 
             val hideCount = reviewer.delayedHideCount
 
             reviewer.undo()
 
-            advanceRobolectricLooperWithSleep()
+            advanceRobolectricLooper()
 
             assertThat("Hide should be called after answering a card", reviewer.delayedHideCount, greaterThan(hideCount))
         }
 
     @Test
     @Flaky(OS.ALL, "hasDrawerSwipeConflicts was false")
-    @RunInBackground
     fun defaultDrawerConflictIsTrueIfGesturesEnabled() {
         enableGestureSetting()
         enableGesture(SWIPE_RIGHT)
@@ -225,7 +224,6 @@ class ReviewerNoParamTest : RobolectricTest() {
     }
 
     @Test
-    @RunInBackground
     @Flaky(os = OS.ALL, "final assertion is false")
     fun drawerConflictsIfUp() {
         enableGestureSetting()
@@ -237,7 +235,6 @@ class ReviewerNoParamTest : RobolectricTest() {
     }
 
     @Test
-    @RunInBackground
     @Flaky(os = OS.ALL, "final assertion is false")
     fun drawerConflictsIfDown() {
         enableGestureSetting()
@@ -249,7 +246,6 @@ class ReviewerNoParamTest : RobolectricTest() {
     }
 
     @Test
-    @RunInBackground
     @Flaky(os = OS.ALL, "final assertion is false")
     fun drawerConflictsIfRight() {
         enableGestureSetting()

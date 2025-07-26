@@ -45,6 +45,7 @@ import org.hamcrest.Matchers.not
 import org.hamcrest.Matchers.notNullValue
 import org.hamcrest.Matchers.nullValue
 import org.junit.Assert.assertEquals
+import org.junit.Assume.assumeTrue
 import org.junit.Before
 import org.junit.Ignore
 import org.junit.Test
@@ -259,8 +260,7 @@ class DeckPickerTest : RobolectricTest() {
     }
 
     @Test
-    @RunInBackground
-    @Ignore("Flaky. Try to unflak when AsyncTask is entirely removed.")
+    @Ignore("Flaky. Try to unflake now we're using coroutines")
     fun databaseLockedNoPermissionIntegrationTest() {
         // no permissions -> grant permissions -> db locked
         try {
@@ -313,7 +313,6 @@ class DeckPickerTest : RobolectricTest() {
     }
 
     @Test
-    @RunInBackground
     fun doNotShowOptionsMenuWhenCollectionInaccessible() =
         runTest {
             try {
@@ -356,7 +355,6 @@ class DeckPickerTest : RobolectricTest() {
         }
 
     @Test
-    @RunInBackground
     fun onResumeLoadCollectionFailureWithInaccessibleCollection() {
         try {
             revokeWritePermissions()
