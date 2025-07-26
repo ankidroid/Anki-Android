@@ -73,8 +73,8 @@ class SyncMediaWorker(
 
             // The collection must be open, but we should not block collection operations while
             // `syncMedia` is executing, the app should be usable during a background media sync
-            CollectionManager.getColUnsafe().backend.syncMedia(auth)
-            val backend = CollectionManager.getBackend()
+            val backend = CollectionManager.getColUnsafe().backend
+            backend.syncMedia(input = auth)
 
             delay(1000) // avoid notifications if sync occurs too quickly
             if (backend.mediaSyncStatus().active) {

@@ -54,7 +54,7 @@ enum class SyncStatus {
                 // Use CollectionManager to ensure that this doesn't block 'deck count' tasks
                 // throws if a .colpkg import or similar occurs just before this call
                 val output = withContext(Dispatchers.IO) { CollectionManager.getBackend().syncStatus(auth) }
-                if (output.hasNewEndpoint()) {
+                if (output.hasNewEndpoint() && output.newEndpoint.isNotEmpty()) {
                     context.sharedPrefs().edit {
                         putString(SyncPreferences.CURRENT_SYNC_URI, output.newEndpoint)
                     }
