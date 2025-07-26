@@ -474,7 +474,7 @@ class ReviewerViewModel(
     private suspend fun loadAndPlayMedia(side: CardSide) {
         Timber.v("ReviewerViewModel::loadAndPlaySounds")
         cardMediaPlayer.loadCardAvTags(currentCard.await())
-        cardMediaPlayer.playAllForSide(side)
+        cardMediaPlayer.autoplayAllForSide(side)
     }
 
     private suspend fun updateMarkIcon() {
