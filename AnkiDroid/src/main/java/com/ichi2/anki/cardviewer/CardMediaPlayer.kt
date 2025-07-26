@@ -19,6 +19,7 @@ package com.ichi2.anki.cardviewer
 import android.media.MediaPlayer
 import android.net.Uri
 import androidx.annotation.CheckResult
+import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.AbstractFlashcardViewer.Companion.getMediaBaseUrl
 import com.ichi2.anki.AndroidTtsError
 import com.ichi2.anki.AndroidTtsPlayer
@@ -115,7 +116,8 @@ class CardMediaPlayer : Closeable {
             field = value
         }
 
-    private var playAvTagsJob: Job? = null
+    @VisibleForTesting
+    var playAvTagsJob: Job? = null
     val isPlaying get() = playAvTagsJob != null
 
     private var onMediaGroupCompleted: (() -> Unit)? = null
@@ -159,24 +161,22 @@ class CardMediaPlayer : Closeable {
         }
     }
 
-    fun autoplayAllForSide(cardSide: CardSide): Job? {
+    fun autoplayAllForSide(cardSide: CardSide) {
         if (config.autoplay) {
-            return playAllForSide(cardSide)
+            playAllForSide(cardSide)
         }
-        return null
     }
 
-    fun playAllForSide(cardSide: CardSide): Job? {
-        if (!isEnabled) return null
+    fun playAllForSide(cardSide: CardSide) {
+        if (!isEnabled) return
         playAvTagsJob {
             Timber.i("playing sounds for %s", cardSide)
             playAllAvTagsInternal(cardSide, isAutomaticPlayback = true)
         }
-        return this.playAvTagsJob
     }
 
-    suspend fun playOne(tag: AvTag): Job? {
-        if (!isEnabled) return null
+    suspend fun playOne(tag: AvTag) {
+        if (!isEnabled) return
         cancelPlayAvTagsJob()
         Timber.i("playing one AV Tag")
 
@@ -209,7 +209,6 @@ class CardMediaPlayer : Closeable {
                 Timber.v("completed playing one AV Tag")
                 playAvTagsJob = null
             }
-        return playAvTagsJob
     }
 
     suspend fun stop() {
