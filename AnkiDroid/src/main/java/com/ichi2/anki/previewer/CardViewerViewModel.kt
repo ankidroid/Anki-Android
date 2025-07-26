@@ -60,6 +60,7 @@ abstract class CardViewerViewModel(
         cardMediaPlayer.apply {
             setMediaErrorListener(createSoundErrorListener())
             javascriptEvaluator = { JavascriptEvaluator { launchCatchingIO { eval.emit(it) } } }
+            addCloseable(this)
         }
     abstract var currentCard: Deferred<Card>
 
@@ -67,7 +68,6 @@ abstract class CardViewerViewModel(
 
     @CallSuper
     override fun onCleared() {
-        cardMediaPlayer.close()
         server.stop()
         super.onCleared()
     }
