@@ -161,19 +161,18 @@ class CardMediaPlayer : Closeable {
         }
     }
 
-    fun autoplayAllForSide(cardSide: CardSide) {
+    suspend fun autoplayAllForSide(cardSide: CardSide) {
         if (config.autoplay) {
             playAllForSide(cardSide)
         }
     }
 
-    fun playAllForSide(cardSide: CardSide) {
+    suspend fun playAllForSide(cardSide: CardSide) {
         if (!isEnabled) return
-        val oldJob = playAvTagsJob
+        playAvTagsJob?.cancelAndJoin()
         this.playAvTagsJob =
             scope.launch {
                 Timber.i("playing sounds for %s", cardSide)
-                cancelPlayAvTagsJob(oldJob)
                 playAllAvTagsInternal(cardSide, isAutomaticPlayback = true)
                 playAvTagsJob = null
             }
@@ -181,7 +180,7 @@ class CardMediaPlayer : Closeable {
 
     suspend fun playOne(tag: AvTag) {
         if (!isEnabled) return
-        cancelPlayAvTagsJob()
+        playAvTagsJob?.cancelAndJoin()
         Timber.i("playing one AV Tag")
 
         suspend fun play(tag: AvTag) = play(tag, isAutomaticPlayback = false)
@@ -217,7 +216,7 @@ class CardMediaPlayer : Closeable {
 
     suspend fun stop() {
         if (isPlaying) Timber.i("stopping playing all AV tags")
-        cancelPlayAvTagsJob(playAvTagsJob)
+        playAvTagsJob?.cancelAndJoin()
     }
 
     override fun close() {
@@ -228,18 +227,6 @@ class CardMediaPlayer : Closeable {
             Timber.i(e, "ttsPlayer close()")
         }
         scope.cancel()
-    }
-
-    private suspend fun cancelPlayAvTagsJob(job: Job? = playAvTagsJob) {
-        if (job == null) return
-        Timber.i("cancelling job")
-        withContext(Dispatchers.IO) {
-            job.cancelAndJoin()
-        }
-        // This stops multiple calls logging, while allowing an 'old' value in as the parameter
-        if (job == playAvTagsJob) {
-            playAvTagsJob = null
-        }
     }
 
     /**
@@ -325,7 +312,7 @@ class CardMediaPlayer : Closeable {
     /**
      * Replays all sounds for [side], calling [onMediaGroupCompleted] when completed
      */
-    fun replayAll(side: SingleCardSide) =
+    suspend fun replayAll(side: SingleCardSide) =
         when (side) {
             SingleCardSide.BACK -> if (config.replayQuestion) playAllForSide(CardSide.BOTH) else playAllForSide(CardSide.ANSWER)
             SingleCardSide.FRONT -> playAllForSide(CardSide.QUESTION)
