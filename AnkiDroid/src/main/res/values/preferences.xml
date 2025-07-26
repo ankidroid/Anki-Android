@@ -29,6 +29,9 @@
     <string name="pref_backup_limits_screen_key">backupLimitsScreen</string>
     <!-- Editing -->
     <string name="paste_png_key">pastePNG</string>
+    <!-- Switch Profile -->
+    <string name="pref_switch_profile_screen_key">switchProfileScreen</string>
+    <string name="pref_enable_switch_profile_key">enableSwitchProfile</string>
     <!-- Appearance -->
     <string name="pref_appearance_screen_key">appearance_preference_group</string>
     <string name="app_theme_key">appTheme</string>
