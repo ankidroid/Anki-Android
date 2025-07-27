@@ -37,7 +37,6 @@ import com.ichi2.anki.dialogs.SyncErrorDialog.Type.DIALOG_SYNC_SANITY_ERROR
 import com.ichi2.anki.dialogs.SyncErrorDialog.Type.DIALOG_SYNC_SANITY_ERROR_CONFIRM_KEEP_LOCAL
 import com.ichi2.anki.dialogs.SyncErrorDialog.Type.DIALOG_SYNC_SANITY_ERROR_CONFIRM_KEEP_REMOTE
 import com.ichi2.anki.dialogs.SyncErrorDialog.Type.DIALOG_USER_NOT_LOGGED_IN_SYNC
-import com.ichi2.anki.joinSyncMessages
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 
 class SyncErrorDialog : AsyncDialogFragment() {
@@ -229,6 +228,24 @@ class SyncErrorDialog : AsyncDialogFragment() {
                 }
                 else -> requireArguments().getString(DIALOG_MESSAGE_KEY)
             }
+
+    private fun joinSyncMessages(
+        dialogMessage: String?,
+        syncMessage: String?,
+    ): String? {
+        // If both strings have text, separate them by a new line, otherwise return whichever has text
+        return if (!dialogMessage.isNullOrEmpty() && !syncMessage.isNullOrEmpty()) {
+            """
+            $dialogMessage
+            
+            $syncMessage
+            """.trimIndent()
+        } else if (!dialogMessage.isNullOrEmpty()) {
+            dialogMessage
+        } else {
+            syncMessage
+        }
+    }
 
     /**
      * Get the message which is shown in notification bar when dialog fragment can't be shown
