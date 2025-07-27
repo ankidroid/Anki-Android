@@ -21,7 +21,6 @@ import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
-import com.ichi2.anki.customSyncBase
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.showSnackbar
@@ -85,5 +84,10 @@ class SyncSettingsFragment : SettingsFragment() {
         updateSyncAccountSummary()
         updateOneWaySyncEnabledState()
         super.onResume()
+    }
+
+    private fun customSyncBase(): String? {
+        if (!Prefs.isCustomSyncEnabled) return null
+        return Prefs.customSyncUri?.ifEmpty { null }
     }
 }
