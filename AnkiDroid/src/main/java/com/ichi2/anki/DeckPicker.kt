@@ -1390,9 +1390,8 @@ open class DeckPicker :
         }
 
         fun syncIntervalPassed(): Boolean {
-            val lastSyncTime = sharedPrefs().getLong("lastSyncTime", 0)
             val automaticSyncIntervalInMS = AUTOMATIC_SYNC_MINIMAL_INTERVAL_IN_MINUTES * 60 * 1000
-            return TimeManager.time.intTimeMS() - lastSyncTime > automaticSyncIntervalInMS
+            return TimeManager.time.intTimeMS() - Prefs.lastSyncTime > automaticSyncIntervalInMS
         }
 
         val isBlockedByMeteredConnection =

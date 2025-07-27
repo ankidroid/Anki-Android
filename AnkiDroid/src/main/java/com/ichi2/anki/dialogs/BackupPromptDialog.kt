@@ -256,8 +256,7 @@ class BackupPromptDialog private constructor(
         // But we want them to sync regularly as a backup
         if (isLoggedIn()) {
             // Show dialog to sync if user hasn't synced in a while
-            val preferences = windowContext.sharedPrefs()
-            return millisecondsSinceLastSync(preferences) >= ONE_DAY_IN_MS * 7
+            return millisecondsSinceLastSync() >= ONE_DAY_IN_MS * 7
         }
 
         // Android proposes the user deletes non-legacy locations on uninstall

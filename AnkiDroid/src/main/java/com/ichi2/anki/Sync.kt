@@ -17,7 +17,6 @@
 package com.ichi2.anki
 
 import android.content.Context
-import android.content.SharedPreferences
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.edit
@@ -110,7 +109,7 @@ suspend fun syncLogout(context: Context) {
  */
 fun isLoggedIn(): Boolean = !Prefs.hkey.isNullOrEmpty()
 
-fun millisecondsSinceLastSync(preferences: SharedPreferences) = TimeManager.time.intTimeMS() - preferences.getLong("lastSyncTime", 0)
+fun millisecondsSinceLastSync() = TimeManager.time.intTimeMS() - Prefs.lastSyncTime
 
 fun DeckPicker.handleNewSync(
     conflict: ConflictResolution?,
@@ -384,8 +383,6 @@ fun DeckPicker.showSyncLogMessage(
     }
 }
 
-fun Context.setLastSyncTimeToNow() {
-    sharedPrefs().edit {
-        putLong("lastSyncTime", TimeManager.time.intTimeMS())
-    }
+fun setLastSyncTimeToNow() {
+    Prefs.lastSyncTime = TimeManager.time.intTimeMS()
 }
