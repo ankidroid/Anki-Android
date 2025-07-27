@@ -171,6 +171,12 @@ object Prefs {
     var username by stringPref(R.string.username_key)
     var hkey by stringPref(R.string.hkey_key)
 
+    //region Custom sync server
+
+    val customSyncCertificate by stringPref(R.string.custom_sync_certificate_key)
+
+    //endregion
+
     // ************************************** Review Reminders ********************************** //
 
     /**
