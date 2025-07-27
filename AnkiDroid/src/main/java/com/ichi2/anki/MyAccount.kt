@@ -153,7 +153,12 @@ open class MyAccount : AnkiActivity() {
 
     private fun logout() {
         launchCatchingTask {
-            syncLogout(baseContext)
+            Prefs.hkey = null
+            Prefs.username = null
+            Prefs.currentSyncUri = null
+            withCol {
+                media.forceResync()
+            }
             switchToState(STATE_LOG_IN)
         }
     }
