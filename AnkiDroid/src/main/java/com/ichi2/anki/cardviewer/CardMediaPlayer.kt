@@ -108,13 +108,14 @@ class CardMediaPlayer : Closeable {
     private lateinit var answerAvTags: List<AvTag>
 
     lateinit var config: CardSoundConfig
-    var isEnabled = true
-        set(value) {
-            if (!value) {
-                scope.launch { stop() }
-            }
-            field = value
-        }
+
+    var isEnabled: Boolean = true
+        private set
+
+    suspend fun setEnabled(enabled: Boolean) {
+        if (!enabled) stop()
+        this.isEnabled = enabled
+    }
 
     @VisibleForTesting
     var playAvTagsJob: Job? = null

@@ -86,7 +86,9 @@ abstract class CardViewerViewModel(
     fun baseUrl(): String = server.baseUrl()
 
     fun setSoundPlayerEnabled(isEnabled: Boolean) {
-        cardMediaPlayer.isEnabled = isEnabled
+        viewModelScope.launch {
+            cardMediaPlayer.setEnabled(isEnabled)
+        }
     }
 
     fun playSoundFromUrl(url: String) {
