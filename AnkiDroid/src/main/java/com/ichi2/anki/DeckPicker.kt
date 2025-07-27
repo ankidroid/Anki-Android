@@ -1160,9 +1160,10 @@ open class DeckPicker :
     }
 
     private suspend fun fetchSyncStatus(): SyncIconState {
+        if (!Prefs.displaySyncStatus) return SyncIconState.Normal
         val auth = syncAuth()
         return when (SyncStatus.getSyncStatus(auth)) {
-            SyncStatus.BADGE_DISABLED, SyncStatus.NO_CHANGES, SyncStatus.ERROR -> SyncIconState.Normal
+            SyncStatus.NO_CHANGES, SyncStatus.ERROR -> SyncIconState.Normal
             SyncStatus.HAS_CHANGES -> SyncIconState.PendingChanges
             SyncStatus.NO_ACCOUNT -> SyncIconState.NotLoggedIn
             SyncStatus.ONE_WAY -> SyncIconState.OneWay
