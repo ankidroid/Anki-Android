@@ -130,6 +130,7 @@ object PreferenceUpgradeService {
                     yield(RemoveLastExportedAtTime())
                     yield(RemoveLongTouchGesture())
                     yield(UpgradeDoubleTapTimeout())
+                    yield(RemoveHostNum())
                 }
 
             /** Returns a list of preference upgrade classes which have not been applied */
@@ -714,6 +715,14 @@ object PreferenceUpgradeService {
                 preferences.edit {
                     remove(oldPrefKey)
                     putInt("doubleTapTimeout", newValue)
+                }
+            }
+        }
+
+        internal class RemoveHostNum : PreferenceUpgrade(23) {
+            override fun upgrade(preferences: SharedPreferences) {
+                preferences.edit {
+                    remove("hostNum")
                 }
             }
         }
