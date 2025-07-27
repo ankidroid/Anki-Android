@@ -26,6 +26,7 @@
     <string name="hkey_key">hkey</string>
     <string name="username_key">username</string>
     <string name="last_sync_time_key">lastSyncTime</string>
+    <string name="current_sync_uri_key">currentSyncUri</string>
     <!-- Backup -->
     <string name="pref_backup_limits_screen_key">backupLimitsScreen</string>
     <!-- Editing -->

@@ -175,9 +175,7 @@ private suspend fun handleNormalSync(
 
     if (output.hasNewEndpoint() && output.newEndpoint.isNotEmpty()) {
         Timber.i("sync endpoint updated")
-        deckPicker.sharedPrefs().edit {
-            putString(SyncPreferences.CURRENT_SYNC_URI, output.newEndpoint)
-        }
+        Prefs.currentSyncUri = output.newEndpoint
         auth2 =
             syncAuth {
                 this.hkey = auth.hkey
