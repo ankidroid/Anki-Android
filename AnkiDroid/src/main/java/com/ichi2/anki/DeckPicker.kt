@@ -1407,7 +1407,7 @@ open class DeckPicker :
             !isLoggedIn() -> Timber.d("autoSync: not logged in")
             !areThereChangesToSync() -> {
                 Timber.d("autoSync: no collection changes to sync. Syncing media if set")
-                if (shouldFetchMedia(sharedPrefs())) {
+                if (shouldFetchMedia()) {
                     val auth = syncAuth() ?: return false
                     SyncMediaWorker.start(this, auth)
                 }
@@ -1417,7 +1417,7 @@ open class DeckPicker :
                 if (runInBackground) {
                     Timber.i("autoSync: starting background")
                     val auth = syncAuth() ?: return false
-                    SyncWorker.start(this, auth, shouldFetchMedia(sharedPrefs()))
+                    SyncWorker.start(this, auth, shouldFetchMedia())
                 } else {
                     Timber.i("autoSync: starting foreground")
                     sync()
@@ -1970,7 +1970,7 @@ open class DeckPicker :
         /** Nested function that makes the connection to
          * the sync server and starts syncing the data */
         fun doSync() {
-            handleNewSync(conflict, shouldFetchMedia(preferences))
+            handleNewSync(conflict, shouldFetchMedia())
         }
         // Warn the user in case the connection is metered
         val meteredSyncIsAllowed =
