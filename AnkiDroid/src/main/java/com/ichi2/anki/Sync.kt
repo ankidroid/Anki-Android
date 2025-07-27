@@ -16,10 +16,8 @@
 
 package com.ichi2.anki
 
-import android.content.Context
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
-import androidx.core.content.edit
 import anki.sync.SyncAuth
 import anki.sync.SyncCollectionResponse
 import anki.sync.syncAuth
@@ -31,7 +29,6 @@ import com.ichi2.anki.dialogs.SyncErrorDialog
 import com.ichi2.anki.libanki.fullUploadOrDownload
 import com.ichi2.anki.libanki.syncCollection
 import com.ichi2.anki.observability.ChangeManager.notifySubscribersAllValuesChanged
-import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.settings.enums.ShouldFetchMedia
 import com.ichi2.anki.snackbar.showSnackbar
@@ -88,18 +85,6 @@ fun getEndpoint(): String? {
             null
         }
     return currentEndpoint ?: customEndpoint
-}
-
-suspend fun syncLogout(context: Context) {
-    val preferences = context.sharedPrefs()
-    preferences.edit {
-        remove("hkey")
-        remove("username")
-        remove(SyncPreferences.CURRENT_SYNC_URI)
-    }
-    withCol {
-        media.forceResync()
-    }
 }
 
 /**
