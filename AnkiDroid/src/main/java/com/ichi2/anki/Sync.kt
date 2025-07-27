@@ -92,13 +92,10 @@ fun DeckPicker.syncAuth(): SyncAuth? {
 
 fun getEndpoint(context: Context): String? {
     val preferences = context.sharedPrefs()
-    val currentEndpoint =
-        preferences.getString(SyncPreferences.CURRENT_SYNC_URI, null)?.ifEmpty {
-            null
-        }
+    val currentEndpoint = Prefs.customSyncUri?.ifEmpty { null }
     val customEndpoint =
         if (preferences.getBoolean(SyncPreferences.CUSTOM_SYNC_ENABLED, false)) {
-            preferences.getString(SyncPreferences.CUSTOM_SYNC_URI, null)
+            Prefs.customSyncUri
         } else {
             null
         }
@@ -107,7 +104,7 @@ fun getEndpoint(context: Context): String? {
 
 fun customSyncBase(preferences: SharedPreferences): String? =
     if (preferences.getBoolean(SyncPreferences.CUSTOM_SYNC_ENABLED, false)) {
-        val uri = preferences.getString(SyncPreferences.CUSTOM_SYNC_URI, null)
+        val uri = Prefs.customSyncUri
         if (uri.isNullOrEmpty()) {
             null
         } else {
