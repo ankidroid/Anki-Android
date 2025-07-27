@@ -331,7 +331,7 @@ open class MyAccount : AnkiActivity() {
         password: String,
         resultLauncher: ActivityResultLauncher<String>,
     ) {
-        val endpoint = getEndpoint(this)
+        val endpoint = getEndpoint()
         launchCatchingTask {
             val auth =
                 try {
