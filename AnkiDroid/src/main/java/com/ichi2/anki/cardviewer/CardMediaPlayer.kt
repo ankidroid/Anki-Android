@@ -47,6 +47,8 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeoutOrNull
 import timber.log.Timber
@@ -103,6 +105,9 @@ class CardMediaPlayer : Closeable {
     }
 
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+
+    /** Serializes playbacks to avoid overloading the thread pool and a potential deadlock */
+    private val playbackMutex = Mutex()
 
     private lateinit var questionAvTags: List<AvTag>
     private lateinit var answerAvTags: List<AvTag>
@@ -166,19 +171,19 @@ class CardMediaPlayer : Closeable {
 
     suspend fun playAllForSide(cardSide: CardSide) {
         if (!isEnabled) return
-        playAvTagsJob?.cancelAndJoin()
-        this.playAvTagsJob =
-            scope.launch {
-                Timber.i("playing sounds for %s", cardSide)
-                playAllAvTagsInternal(cardSide, isAutomaticPlayback = true)
-                playAvTagsJob = null
+        playAvTagsJob =
+            playbackMutex.withLock {
+                playAvTagsJob?.cancelAndJoin()
+                scope.launch {
+                    Timber.i("playing sounds for %s", cardSide)
+                    playAllAvTagsInternal(cardSide, isAutomaticPlayback = true)
+                    playAvTagsJob = null
+                }
             }
     }
 
     suspend fun playOne(tag: AvTag) {
         if (!isEnabled) return
-        playAvTagsJob?.cancelAndJoin()
-        Timber.i("playing one AV Tag")
 
         suspend fun play(tag: AvTag) = play(tag, isAutomaticPlayback = false)
 
@@ -193,21 +198,26 @@ class CardMediaPlayer : Closeable {
         }
 
         playAvTagsJob =
-            scope.launch {
-                try {
-                    play(tag)
-                } catch (e: MediaException) {
-                    when (e.continuationBehavior) {
-                        RETRY_MEDIA -> retry()
-                        CONTINUE_MEDIA, STOP_MEDIA -> { }
+            playbackMutex.withLock {
+                playAvTagsJob?.cancelAndJoin()
+                Timber.i("playing one AV Tag")
+
+                scope.launch {
+                    try {
+                        play(tag)
+                    } catch (e: MediaException) {
+                        when (e.continuationBehavior) {
+                            RETRY_MEDIA -> retry()
+                            CONTINUE_MEDIA, STOP_MEDIA -> { }
+                        }
+                    } catch (e: CancellationException) {
+                        throw e
+                    } catch (e: Exception) {
+                        Timber.w(e, "Exception playing AV Tag")
                     }
-                } catch (e: CancellationException) {
-                    throw e
-                } catch (e: Exception) {
-                    Timber.w(e, "Exception playing AV Tag")
+                    Timber.v("completed playing one AV Tag")
+                    playAvTagsJob = null
                 }
-                Timber.v("completed playing one AV Tag")
-                playAvTagsJob = null
             }
     }
 
