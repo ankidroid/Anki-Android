@@ -435,7 +435,7 @@ class IntentHandler : AbstractIntentHandler() {
                 val preferences = deckPicker.sharedPrefs()
                 val res = deckPicker.resources
                 val hkey = preferences.getString("hkey", "")
-                val millisecondsSinceLastSync = millisecondsSinceLastSync(preferences)
+                val millisecondsSinceLastSync = millisecondsSinceLastSync()
                 val limited = millisecondsSinceLastSync < INTENT_SYNC_MIN_INTERVAL
                 if (!limited && hkey!!.isNotEmpty() && NetworkUtils.isOnline) {
                     deckPicker.sync()
