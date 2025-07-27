@@ -36,7 +36,7 @@
         <item name="expandRef">@drawable/ic_chevron_right_white</item>
         <item name="collapseRef">@drawable/ic_expand_more_white</item>
         <!-- Count colors -->
-        <item name="newCountColor">@color/material_blue_700</item>
+        <item name="newCountColor">@color/material_blue_600</item>
         <item name="learnCountColor">@color/material_red_400</item>
         <item name="reviewCountColor">@color/material_green_400</item>
         <item name="buryCountColor">@color/disabled_gray_dark</item>
