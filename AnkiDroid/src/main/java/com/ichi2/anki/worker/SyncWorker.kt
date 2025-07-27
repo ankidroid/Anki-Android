@@ -118,7 +118,7 @@ class SyncWorker(
         notificationManager?.cancel(NotificationId.SYNC)
 
         Timber.d("SyncWorker: success")
-        applicationContext.setLastSyncTimeToNow()
+        setLastSyncTimeToNow()
         return Result.success()
     }
 
