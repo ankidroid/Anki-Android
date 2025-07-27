@@ -21,7 +21,6 @@ import android.content.pm.ServiceInfo
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import androidx.core.content.edit
 import androidx.work.Constraints
 import androidx.work.CoroutineWorker
 import androidx.work.Data
@@ -41,12 +40,11 @@ import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
-import com.ichi2.anki.SyncPreferences
 import com.ichi2.anki.cancelSync
 import com.ichi2.anki.libanki.syncCollection
 import com.ichi2.anki.notifications.NotificationId
-import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.setLastSyncTimeToNow
+import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.utils.ext.trySetForeground
 import com.ichi2.utils.Permissions
 import kotlinx.coroutines.CoroutineScope
@@ -159,9 +157,7 @@ class SyncWorker(
                 if (!syncMedia) return
                 val syncAuth =
                     if (response.hasNewEndpoint() && response.newEndpoint.isNotEmpty()) {
-                        applicationContext.sharedPrefs().edit {
-                            putString(SyncPreferences.CURRENT_SYNC_URI, response.newEndpoint)
-                        }
+                        Prefs.currentSyncUri = response.newEndpoint
                         syncAuth {
                             hkey = auth.hkey
                             endpoint = response.newEndpoint
