@@ -389,21 +389,3 @@ fun Context.setLastSyncTimeToNow() {
         putLong("lastSyncTime", TimeManager.time.intTimeMS())
     }
 }
-
-fun joinSyncMessages(
-    dialogMessage: String?,
-    syncMessage: String?,
-): String? {
-    // If both strings have text, separate them by a new line, otherwise return whichever has text
-    return if (!dialogMessage.isNullOrEmpty() && !syncMessage.isNullOrEmpty()) {
-        """
-        $dialogMessage
-        
-        $syncMessage
-        """.trimIndent()
-    } else if (!dialogMessage.isNullOrEmpty()) {
-        dialogMessage
-    } else {
-        syncMessage
-    }
-}
