@@ -16,10 +16,8 @@
 
 package com.ichi2.anki
 
-import android.app.Activity.RESULT_OK
 import android.content.Context
 import android.content.SharedPreferences
-import androidx.activity.result.ActivityResultLauncher
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.edit
@@ -33,7 +31,6 @@ import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.dialogs.SyncErrorDialog
 import com.ichi2.anki.libanki.fullUploadOrDownload
 import com.ichi2.anki.libanki.syncCollection
-import com.ichi2.anki.libanki.syncLogin
 import com.ichi2.anki.observability.ChangeManager.notifySubscribersAllValuesChanged
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.settings.Prefs
@@ -155,38 +152,7 @@ fun DeckPicker.handleNewSync(
     }
 }
 
-fun MyAccount.handleNewLogin(
-    username: String,
-    password: String,
-    resultLauncher: ActivityResultLauncher<String>,
-) {
-    val endpoint = getEndpoint(this)
-    launchCatchingTask {
-        val auth =
-            try {
-                withProgress(
-                    extractProgress = {
-                        text = getString(R.string.sign_in)
-                    },
-                    onCancel = ::cancelSync,
-                ) {
-                    withCol {
-                        syncLogin(username, password, endpoint)
-                    }
-                }
-            } catch (exc: BackendSyncException.BackendSyncAuthFailedException) {
-                // auth failed; clear out login details
-                updateLogin("", "")
-                throw exc
-            }
-        updateLogin(username, auth.hkey)
-        setResult(RESULT_OK)
-        MyAccount.checkNotificationPermission(this@handleNewLogin, resultLauncher)
-        finish()
-    }
-}
-
-private fun updateLogin(
+fun updateLogin(
     username: String,
     hkey: String,
 ) {
