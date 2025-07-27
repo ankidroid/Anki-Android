@@ -53,7 +53,7 @@
         <!-- Count colors -->
         <item name="newCountColor">@color/material_indigo_700</item>
         <item name="learnCountColor">@color/material_red_700</item>
-        <item name="reviewCountColor">@color/material_green_700</item>
+        <item name="reviewCountColor">@color/material_green_800</item>
         <item name="buryCountColor">@color/disabled_gray_light</item>
         <item name="zeroCountColor">#1f000000</item>
         <!-- Study Screen colors -->
