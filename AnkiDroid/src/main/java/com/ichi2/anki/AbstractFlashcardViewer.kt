@@ -618,7 +618,9 @@ abstract class AbstractFlashcardViewer :
         super.onPause()
         gestureDetectorImpl.stopShakeDetector()
         if (this::cardMediaPlayer.isInitialized) {
-            cardMediaPlayer.isEnabled = false
+            launchCatchingTask {
+                cardMediaPlayer.setEnabled(false)
+            }
             ReadText.stopTts()
         }
         // Prevent loss of data in Cookies
@@ -629,7 +631,9 @@ abstract class AbstractFlashcardViewer :
         super.onResume()
         gestureDetectorImpl.startShakeDetector()
         if (this::cardMediaPlayer.isInitialized) {
-            cardMediaPlayer.isEnabled = true
+            launchCatchingTask {
+                cardMediaPlayer.setEnabled(true)
+            }
         }
         // Reset the activity title
         updateActionBar()
