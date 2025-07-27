@@ -168,6 +168,7 @@
     <!-- Custom sync server -->
     <string name="pref_custom_sync_server_screen_key">customSyncServerScreen</string>
     <string name="custom_sync_server_collection_url_key">syncBaseUrl</string>
+    <string name="custom_sync_server_enabled_key">syncBaseUrl_switch</string>
     <string name="custom_sync_certificate_key">customSyncCertificate</string>
     <!-- Advanced -->
     <string name="pref_advanced_screen_key">pref_screen_advanced</string>

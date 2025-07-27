@@ -64,12 +64,12 @@ enum class ConflictResolution {
     FULL_UPLOAD,
 }
 
-fun DeckPicker.syncAuth(): SyncAuth? {
+fun syncAuth(): SyncAuth? {
     // Grab custom sync certificate from preferences (default is the empty string) and set it in CollectionManager
     val currentSyncCertificate = Prefs.customSyncCertificate ?: ""
     CollectionManager.updateCustomCertificate(currentSyncCertificate)
 
-    val resolvedEndpoint = getEndpoint(this)
+    val resolvedEndpoint = getEndpoint()
     return Prefs.hkey?.let {
         syncAuth {
             this.hkey = it
@@ -80,11 +80,10 @@ fun DeckPicker.syncAuth(): SyncAuth? {
     }
 }
 
-fun getEndpoint(context: Context): String? {
-    val preferences = context.sharedPrefs()
+fun getEndpoint(): String? {
     val currentEndpoint = Prefs.customSyncUri?.ifEmpty { null }
     val customEndpoint =
-        if (preferences.getBoolean(SyncPreferences.CUSTOM_SYNC_ENABLED, false)) {
+        if (Prefs.isCustomSyncEnabled) {
             Prefs.customSyncUri
         } else {
             null
@@ -92,8 +91,8 @@ fun getEndpoint(context: Context): String? {
     return currentEndpoint ?: customEndpoint
 }
 
-fun customSyncBase(preferences: SharedPreferences): String? =
-    if (preferences.getBoolean(SyncPreferences.CUSTOM_SYNC_ENABLED, false)) {
+fun customSyncBase(): String? =
+    if (Prefs.isCustomSyncEnabled) {
         val uri = Prefs.customSyncUri
         if (uri.isNullOrEmpty()) {
             null
@@ -129,7 +128,7 @@ fun DeckPicker.handleNewSync(
     conflict: ConflictResolution?,
     syncMedia: Boolean,
 ) {
-    val auth = this.syncAuth() ?: return
+    val auth = syncAuth() ?: return
     val deckPicker = this
     launchCatchingTask {
         try {
