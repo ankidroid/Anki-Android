@@ -83,21 +83,21 @@ import java.io.Closeable
 class CardMediaPlayer : Closeable {
     private val soundTagPlayer: SoundTagPlayer
     private val ttsPlayer: Deferred<TtsPlayer>
-    private var mediaErrorListener: MediaErrorListener? = null
-    var javascriptEvaluator: () -> JavascriptEvaluator? = { null }
+    private val mediaErrorListener: MediaErrorListener
 
+    @VisibleForTesting
     constructor(soundTagPlayer: SoundTagPlayer, ttsPlayer: Deferred<TtsPlayer>, mediaErrorListener: MediaErrorListener) {
         this.soundTagPlayer = soundTagPlayer
         this.ttsPlayer = ttsPlayer
         this.mediaErrorListener = mediaErrorListener
     }
 
-    constructor() {
-        // javascriptEvaluator is wrapped in a lambda so the value in this class propagates down
+    constructor(javascriptEvaluator: JavascriptEvaluator, mediaErrorListener: MediaErrorListener) {
+        this.mediaErrorListener = mediaErrorListener
         this.soundTagPlayer =
             SoundTagPlayer(
                 soundUriBase = getMediaBaseUrl(getMediaDirectory(AnkiDroidApp.instance)),
-                videoPlayer = VideoPlayer { javascriptEvaluator() },
+                videoPlayer = VideoPlayer(javascriptEvaluator),
             )
         this.ttsPlayer = scope.async { AndroidTtsPlayer.createInstance(scope) }
     }
@@ -125,10 +125,6 @@ class CardMediaPlayer : Closeable {
 
     fun setOnMediaGroupCompletedListener(listener: (() -> Unit)?) {
         onMediaGroupCompleted = listener
-    }
-
-    fun setMediaErrorListener(mediaErrorListener: MediaErrorListener) {
-        this.mediaErrorListener = mediaErrorListener
     }
 
     suspend fun loadCardAvTags(card: Card) {
@@ -274,7 +270,7 @@ class CardMediaPlayer : Closeable {
                     is SoundOrVideoTag -> soundTagPlayer.play(tag, mediaErrorListener)
                     is TTSTag -> {
                         awaitTtsPlayer(isAutomaticPlayback)?.play(tag)?.error?.let {
-                            mediaErrorListener?.onTtsError(it, isAutomaticPlayback)
+                            mediaErrorListener.onTtsError(it, isAutomaticPlayback)
                         }
                     }
                 }
@@ -327,7 +323,7 @@ class CardMediaPlayer : Closeable {
         if (player == null) {
             Timber.v("timeout waiting for TTS Player")
             val error = AndroidTtsError.InitTimeout
-            mediaErrorListener?.onTtsError(error, isAutomaticPlayback)
+            mediaErrorListener.onTtsError(error, isAutomaticPlayback)
         }
         return player
     }

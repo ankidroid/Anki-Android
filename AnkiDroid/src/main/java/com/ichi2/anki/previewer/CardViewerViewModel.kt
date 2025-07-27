@@ -24,7 +24,6 @@ import androidx.lifecycle.viewModelScope
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.OnErrorListener
 import com.ichi2.anki.cardviewer.CardMediaPlayer
-import com.ichi2.anki.cardviewer.JavascriptEvaluator
 import com.ichi2.anki.cardviewer.MediaErrorBehavior
 import com.ichi2.anki.cardviewer.MediaErrorHandler
 import com.ichi2.anki.cardviewer.MediaErrorListener
@@ -56,10 +55,11 @@ abstract class CardViewerViewModel :
     open val showingAnswer = MutableStateFlow(false)
 
     protected val cardMediaPlayer =
-        CardMediaPlayer().apply {
-            setMediaErrorListener(createSoundErrorListener())
-            javascriptEvaluator = { JavascriptEvaluator { launchCatchingIO { eval.emit(it) } } }
-            addCloseable(this)
+        CardMediaPlayer(
+            javascriptEvaluator = { launchCatchingIO { eval.emit(it) } },
+            mediaErrorListener = createSoundErrorListener(),
+        ).also {
+            addCloseable(it)
         }
     abstract var currentCard: Deferred<Card>
 

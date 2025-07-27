@@ -79,7 +79,6 @@ import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.children
 import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle.State.RESUMED
-import androidx.lifecycle.lifecycleScope
 import anki.collection.OpChanges
 import anki.scheduler.CardAnswer.Rating
 import com.drakeet.drawer.FullDraggableContainer
@@ -104,11 +103,9 @@ import com.ichi2.anki.cardviewer.MediaErrorListener
 import com.ichi2.anki.cardviewer.OnRenderProcessGoneDelegate
 import com.ichi2.anki.cardviewer.RenderedCard
 import com.ichi2.anki.cardviewer.SingleCardSide
-import com.ichi2.anki.cardviewer.SoundTagPlayer
 import com.ichi2.anki.cardviewer.TTS
 import com.ichi2.anki.cardviewer.TypeAnswer
 import com.ichi2.anki.cardviewer.TypeAnswer.Companion.createInstance
-import com.ichi2.anki.cardviewer.VideoPlayer
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.cardviewer.ViewerRefresh
 import com.ichi2.anki.cardviewer.handledGamepadKeyDown
@@ -173,9 +170,7 @@ import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
 import com.ichi2.utils.title
 import com.squareup.seismic.ShakeDetector
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 import timber.log.Timber
 import java.io.File
@@ -600,8 +595,7 @@ abstract class AbstractFlashcardViewer :
     // Finish initializing the activity after the collection has been correctly loaded
     public override fun onCollectionLoaded(col: Collection) {
         super.onCollectionLoaded(col)
-        val mediaDir = col.media.dir
-        cardMediaPlayer = getCardMediaPlayerInstance(this, getMediaBaseUrl(mediaDir))
+        cardMediaPlayer = getCardMediaPlayerInstance(this)
         registerReceiver()
         restoreCollectionPreferences(col)
         initLayout()
@@ -2796,20 +2790,11 @@ abstract class AbstractFlashcardViewer :
             return ""
         }
 
-        fun getCardMediaPlayerInstance(
-            viewer: AbstractFlashcardViewer,
-            mediaUriBase: String,
-        ): CardMediaPlayer {
-            val scope = viewer.lifecycleScope
+        fun getCardMediaPlayerInstance(viewer: AbstractFlashcardViewer): CardMediaPlayer {
             val soundErrorListener = viewer.createMediaErrorListener()
-            // tts can take a long time to init, this defers the operation until it's needed
-            val tts = scope.async(Dispatchers.IO) { AndroidTtsPlayer.createInstance(viewer.lifecycleScope) }
-
-            val soundPlayer = SoundTagPlayer(mediaUriBase, VideoPlayer { viewer.webViewClient!! })
 
             return CardMediaPlayer(
-                soundTagPlayer = soundPlayer,
-                ttsPlayer = tts,
+                javascriptEvaluator = { viewer.webViewClient?.eval(it) },
                 mediaErrorListener = soundErrorListener,
             ).apply {
                 setOnMediaGroupCompletedListener(viewer::onMediaGroupCompleted)
