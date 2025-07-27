@@ -42,9 +42,8 @@ import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
 import timber.log.Timber
 
-abstract class CardViewerViewModel(
-    cardMediaPlayer: CardMediaPlayer,
-) : ViewModel(),
+abstract class CardViewerViewModel :
+    ViewModel(),
     OnErrorListener,
     PostRequestHandler {
     override val onError = MutableSharedFlow<String>()
@@ -57,7 +56,7 @@ abstract class CardViewerViewModel(
     open val showingAnswer = MutableStateFlow(false)
 
     protected val cardMediaPlayer =
-        cardMediaPlayer.apply {
+        CardMediaPlayer().apply {
             setMediaErrorListener(createSoundErrorListener())
             javascriptEvaluator = { JavascriptEvaluator { launchCatchingIO { eval.emit(it) } } }
             addCloseable(this)

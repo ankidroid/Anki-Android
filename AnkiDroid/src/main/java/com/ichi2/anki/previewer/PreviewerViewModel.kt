@@ -22,7 +22,6 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.Flag
 import com.ichi2.anki.asyncIO
 import com.ichi2.anki.browser.IdsFile
-import com.ichi2.anki.cardviewer.CardMediaPlayer
 import com.ichi2.anki.cardviewer.SingleCardSide
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.launchCatchingIO
@@ -47,7 +46,7 @@ import timber.log.Timber
 
 class PreviewerViewModel(
     stateHandle: SavedStateHandle,
-) : CardViewerViewModel(CardMediaPlayer()),
+) : CardViewerViewModel(),
     ChangeManager.Subscriber {
     val currentIndex = MutableStateFlow<Int>(stateHandle.require(PreviewerFragment.CURRENT_INDEX_ARG))
     val backSideOnly = MutableStateFlow(false)
