@@ -102,6 +102,12 @@ class PreferencesFragment :
     ): Boolean {
         val className = pref.fragment ?: return false
         val fragmentClass = FragmentFactory.loadFragmentClass(requireActivity().classLoader, className)
+
+        // #18963: Remove any subscreens after opening a new primary screen
+        if (settingsIsSplit && caller is HeaderFragment) {
+            childFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+        }
+
         childFragmentManager.commit {
             setReorderingAllowed(true)
             replace(R.id.settings_container, fragmentClass, null)
