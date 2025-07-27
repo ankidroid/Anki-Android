@@ -25,6 +25,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.settings.enums.FrameStyle
 import com.ichi2.anki.settings.enums.HideSystemBars
 import com.ichi2.anki.settings.enums.PrefEnum
+import com.ichi2.anki.settings.enums.ShouldFetchMedia
 import com.ichi2.anki.settings.enums.ToolbarPosition
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
@@ -169,6 +170,8 @@ object Prefs {
     val isAutoSyncEnabled by booleanPref(R.string.automatic_sync_choice_key, false)
     var username by stringPref(R.string.username_key)
     var hkey by stringPref(R.string.hkey_key)
+    val shouldFetchMedia: ShouldFetchMedia
+        get() = getEnum(R.string.sync_fetch_media_key, ShouldFetchMedia.ALWAYS)
 
     //region Custom sync server
 
