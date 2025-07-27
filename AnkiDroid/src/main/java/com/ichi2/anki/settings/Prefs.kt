@@ -174,6 +174,7 @@ object Prefs {
     //region Custom sync server
 
     val customSyncCertificate by stringPref(R.string.custom_sync_certificate_key)
+    val customSyncUri by stringPref(R.string.custom_sync_server_collection_url_key)
 
     //endregion
 
