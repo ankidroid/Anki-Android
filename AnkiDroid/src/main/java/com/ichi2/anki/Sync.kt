@@ -91,18 +91,6 @@ fun getEndpoint(): String? {
     return currentEndpoint ?: customEndpoint
 }
 
-fun customSyncBase(): String? =
-    if (Prefs.isCustomSyncEnabled) {
-        val uri = Prefs.customSyncUri
-        if (uri.isNullOrEmpty()) {
-            null
-        } else {
-            uri
-        }
-    } else {
-        null
-    }
-
 suspend fun syncLogout(context: Context) {
     val preferences = context.sharedPrefs()
     preferences.edit {
