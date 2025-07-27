@@ -1956,8 +1956,8 @@ open class DeckPicker :
     override fun sync(conflict: ConflictResolution?) {
         val preferences = baseContext.sharedPrefs()
 
-        val hkey = preferences.getString("hkey", "")
-        if (hkey!!.isEmpty()) {
+        val hkey = Prefs.hkey
+        if (hkey.isNullOrEmpty()) {
             Timber.w("User not logged in")
             pullToSyncWrapper.isRefreshing = false
             showSyncErrorDialog(SyncErrorDialog.Type.DIALOG_USER_NOT_LOGGED_IN_SYNC)
