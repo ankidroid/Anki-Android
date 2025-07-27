@@ -1409,9 +1409,7 @@ open class DeckPicker :
             return TimeManager.time.intTimeMS() - Prefs.lastSyncTime > automaticSyncIntervalInMS
         }
 
-        val isBlockedByMeteredConnection =
-            !sharedPrefs().getBoolean(getString(R.string.metered_sync_key), false) &&
-                isActiveNetworkMetered()
+        val isBlockedByMeteredConnection = !Prefs.allowSyncOnMeteredConnections && isActiveNetworkMetered()
 
         when {
             !Prefs.isAutoSyncEnabled -> Timber.d("autoSync: not enabled")
@@ -1987,20 +1985,13 @@ open class DeckPicker :
             handleNewSync(conflict, shouldFetchMedia())
         }
         // Warn the user in case the connection is metered
-        val meteredSyncIsAllowed =
-            preferences.getBoolean(getString(R.string.metered_sync_key), false)
-        if (!meteredSyncIsAllowed && isActiveNetworkMetered()) {
+        if (!Prefs.allowSyncOnMeteredConnections && isActiveNetworkMetered()) {
             AlertDialog.Builder(this).show {
                 message(R.string.metered_sync_data_warning)
                 positiveButton(R.string.dialog_continue) { doSync() }
                 negativeButton(R.string.dialog_cancel)
                 checkBoxPrompt(R.string.button_do_not_show_again) { isCheckboxChecked ->
-                    preferences.edit {
-                        putBoolean(
-                            getString(R.string.metered_sync_key),
-                            isCheckboxChecked,
-                        )
-                    }
+                    Prefs.allowSyncOnMeteredConnections = isCheckboxChecked
                 }
             }
         } else {
