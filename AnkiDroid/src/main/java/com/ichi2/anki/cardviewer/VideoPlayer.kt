@@ -36,7 +36,7 @@ import kotlin.coroutines.resumeWithException
  * @see com.ichi2.anki.libanki.Sound.expandSounds
  */
 class VideoPlayer(
-    private val jsEval: () -> JavascriptEvaluator?,
+    private val jsEval: JavascriptEvaluator,
 ) {
     private var continuation: CancellableContinuation<Unit>? = null
 
@@ -51,7 +51,7 @@ class VideoPlayer(
 
         // BUG: We don't have the index of the tag in the list
         // so the wrong video would be played if contained twice in the card content
-        jsEval()?.evaluateAfterDOMContentLoaded(
+        jsEval.evaluateAfterDOMContentLoaded(
             """
                     var videos = document.getElementsByTagName("video")
             
