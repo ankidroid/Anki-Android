@@ -73,6 +73,7 @@ class ReviewerMenuSettingsFragment :
             }
 
         view.findViewById<RecyclerView>(R.id.recycler_view).apply {
+            setHasFixedSize(true)
             layoutManager = LinearLayoutManager(requireContext())
             this.adapter = adapter
             itemTouchHelper.attachToRecyclerView(this)
