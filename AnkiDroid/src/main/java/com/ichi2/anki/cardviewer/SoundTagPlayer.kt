@@ -75,7 +75,7 @@ class SoundTagPlayer(
         mediaErrorListener: MediaErrorListener?,
     ) {
         val tagType = tag.getType()
-        return suspendCancellableCoroutine { continuation ->
+        suspendCancellableCoroutine { continuation ->
             Timber.d("Playing SoundOrVideoTag")
             when (tagType) {
                 SoundOrVideoTag.Type.AUDIO -> playSound(continuation, tag, mediaErrorListener)
