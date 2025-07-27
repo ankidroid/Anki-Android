@@ -25,7 +25,6 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TemporaryFolder
 import org.junit.runner.RunWith
-import org.mockito.kotlin.mock
 
 @RunWith(AndroidJUnit4::class)
 class TemplatePreviewerViewModelTest : JvmTest() {
@@ -80,7 +79,7 @@ class TemplatePreviewerViewModelTest : JvmTest() {
                 tags = mutableListOf(),
                 ord = ord,
             )
-        val viewModel = TemplatePreviewerViewModel(arguments, mock())
+        val viewModel = TemplatePreviewerViewModel(arguments)
         block(viewModel)
     }
 }
@@ -99,6 +98,6 @@ fun AnkiTest.runClozeTest(
             tags = mutableListOf(),
             ord = ord,
         )
-    val viewModel = TemplatePreviewerViewModel(arguments, mock())
+    val viewModel = TemplatePreviewerViewModel(arguments)
     block(viewModel)
 }

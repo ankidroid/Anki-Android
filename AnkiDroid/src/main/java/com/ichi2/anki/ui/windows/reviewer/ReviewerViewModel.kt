@@ -15,9 +15,6 @@
  */
 package com.ichi2.anki.ui.windows.reviewer
 
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewmodel.initializer
-import androidx.lifecycle.viewmodel.viewModelFactory
 import anki.collection.OpChanges
 import anki.collection.OpChangesAfterUndo
 import anki.frontend.SetSchedulingStatesRequest
@@ -29,7 +26,6 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.Flag
 import com.ichi2.anki.Reviewer
 import com.ichi2.anki.asyncIO
-import com.ichi2.anki.cardviewer.CardMediaPlayer
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.libanki.Card
@@ -70,9 +66,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import org.intellij.lang.annotations.Language
 import timber.log.Timber
 
-class ReviewerViewModel(
-    cardMediaPlayer: CardMediaPlayer,
-) : CardViewerViewModel(cardMediaPlayer),
+class ReviewerViewModel :
+    CardViewerViewModel(),
     ChangeManager.Subscriber,
     BindingProcessor<ReviewerBinding, ViewerAction> {
     private var queueState: Deferred<CurrentQueueState?> =
@@ -707,14 +702,5 @@ class ReviewerViewModel(
                 }
             }
         }
-    }
-
-    companion object {
-        fun factory(soundPlayer: CardMediaPlayer): ViewModelProvider.Factory =
-            viewModelFactory {
-                initializer {
-                    ReviewerViewModel(soundPlayer)
-                }
-            }
     }
 }

@@ -64,7 +64,6 @@ import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.DispatchKeyEventListener
 import com.ichi2.anki.Flag
 import com.ichi2.anki.R
-import com.ichi2.anki.cardviewer.CardMediaPlayer
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.TapGestureMode
 import com.ichi2.anki.common.utils.android.isRobolectric
@@ -124,9 +123,7 @@ class ReviewerFragment :
     DispatchKeyEventListener,
     TagsDialogListener,
     ShakeDetector.Listener {
-    override val viewModel: ReviewerViewModel by viewModels {
-        ReviewerViewModel.factory(CardMediaPlayer())
-    }
+    override val viewModel: ReviewerViewModel by viewModels()
 
     override val webView: WebView get() = requireView().findViewById(R.id.webview)
     private val timer: AnswerTimer? get() = view?.findViewById(R.id.timer)
