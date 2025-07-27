@@ -178,7 +178,6 @@ import com.ichi2.utils.ImportUtils
 import com.ichi2.utils.ImportUtils.ImportResult
 import com.ichi2.utils.NetworkUtils
 import com.ichi2.utils.NetworkUtils.isActiveNetworkMetered
-import com.ichi2.utils.SyncStatus
 import com.ichi2.utils.VersionUtils
 import com.ichi2.utils.cancelable
 import com.ichi2.utils.checkBoxPrompt
@@ -199,6 +198,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import net.ankiweb.rsdroid.RustCleanup
 import net.ankiweb.rsdroid.Translations
+import net.ankiweb.rsdroid.exceptions.BackendNetworkException
 import org.json.JSONException
 import timber.log.Timber
 import java.io.File
@@ -221,7 +221,7 @@ import kotlin.runCatching as runCatchingKotlin
  *   * Filtering decks (if more than 10) [toolbarSearchView]
  * * Controlling syncs
  *   * A user may [pull down][pullToSyncWrapper] on the 'tree view' to sync
- *   * A [button][updateSyncIconFromState] which relies on [SyncStatus] to display whether a sync is needed
+ *   * A [button][updateSyncIconFromState] which relies on [SyncIconState] to display whether a sync is needed
  *   * Blocks the UI and displays sync progress when syncing
  * * Displaying 'General' AnkiDroid options: backups, import, 'check media' etc...
  *   * General handler for error/global dialogs (search for 'as DeckPicker')
@@ -1154,19 +1154,33 @@ open class DeckPicker :
                 // the sync status is calculated in the next call so "Normal" is used as a placeholder
                 OptionsMenuState(searchIcon, undoLabel, SyncIconState.Normal, undoAvailable, isColEmpty)
             }?.let { (searchIcon, undoLabel, _, undoAvailable, isColEmpty) ->
-                val syncIcon = fetchSyncStatus()
+                val syncIcon = fetchSyncIconState()
                 OptionsMenuState(searchIcon, undoLabel, syncIcon, undoAvailable, isColEmpty)
             }
     }
 
-    private suspend fun fetchSyncStatus(): SyncIconState {
+    private suspend fun fetchSyncIconState(): SyncIconState {
         if (!Prefs.displaySyncStatus) return SyncIconState.Normal
         val auth = syncAuth()
-        return when (SyncStatus.getSyncStatus(auth)) {
-            SyncStatus.NO_CHANGES, SyncStatus.ERROR -> SyncIconState.Normal
-            SyncStatus.HAS_CHANGES -> SyncIconState.PendingChanges
-            SyncStatus.NO_ACCOUNT -> SyncIconState.NotLoggedIn
-            SyncStatus.ONE_WAY -> SyncIconState.OneWay
+        if (auth == null) return SyncIconState.NotLoggedIn
+        return try {
+            // Use CollectionManager to ensure that this doesn't block 'deck count' tasks
+            // throws if a .colpkg import or similar occurs just before this call
+            val output = withContext(Dispatchers.IO) { CollectionManager.getBackend().syncStatus(auth) }
+            if (output.hasNewEndpoint() && output.newEndpoint.isNotEmpty()) {
+                Prefs.currentSyncUri = output.newEndpoint
+            }
+            when (output.required) {
+                SyncStatusResponse.Required.NO_CHANGES -> SyncIconState.Normal
+                SyncStatusResponse.Required.NORMAL_SYNC -> SyncIconState.PendingChanges
+                SyncStatusResponse.Required.FULL_SYNC -> SyncIconState.OneWay
+                SyncStatusResponse.Required.UNRECOGNIZED, null -> TODO("unexpected required response")
+            }
+        } catch (_: BackendNetworkException) {
+            SyncIconState.Normal
+        } catch (e: Exception) {
+            Timber.d(e, "error obtaining sync status: collection likely closed")
+            SyncIconState.Normal
         }
     }
 
