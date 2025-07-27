@@ -34,7 +34,6 @@ import com.ichi2.anki.dialogs.DialogHandlerMessage
 import com.ichi2.anki.dialogs.requireDeckPickerOrShowError
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
-import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.anki.services.ReminderService
 import com.ichi2.anki.settings.Prefs
@@ -432,12 +431,11 @@ class IntentHandler : AbstractIntentHandler() {
             override fun handleAsyncMessage(activity: AnkiActivity) {
                 // we may be called via any AnkiActivity but sync is a DeckPicker thing
                 val deckPicker = activity.requireDeckPickerOrShowError() ?: return
-                val preferences = deckPicker.sharedPrefs()
                 val res = deckPicker.resources
-                val hkey = preferences.getString("hkey", "")
+                val hkey = Prefs.hkey
                 val millisecondsSinceLastSync = millisecondsSinceLastSync()
                 val limited = millisecondsSinceLastSync < INTENT_SYNC_MIN_INTERVAL
-                if (!limited && hkey!!.isNotEmpty() && NetworkUtils.isOnline) {
+                if (!limited && !hkey.isNullOrEmpty() && NetworkUtils.isOnline) {
                     deckPicker.sync()
                 } else {
                     val err = res.getString(R.string.sync_error)
