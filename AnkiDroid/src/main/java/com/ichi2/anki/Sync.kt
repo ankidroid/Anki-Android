@@ -66,14 +66,6 @@ enum class ConflictResolution {
     FULL_UPLOAD,
 }
 
-data class SyncCompletion(
-    val isSuccess: Boolean,
-)
-
-interface SyncCompletionListener {
-    fun onMediaSyncCompleted(data: SyncCompletion)
-}
-
 fun DeckPicker.syncAuth(): SyncAuth? {
     // Grab custom sync certificate from preferences (default is the empty string) and set it in CollectionManager
     val currentSyncCertificate = Prefs.customSyncCertificate ?: ""
