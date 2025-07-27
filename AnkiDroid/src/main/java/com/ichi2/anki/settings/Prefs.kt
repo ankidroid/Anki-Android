@@ -198,6 +198,8 @@ object Prefs {
     // ****************************************** Sync ****************************************** //
 
     val isAutoSyncEnabled by booleanPref(R.string.automatic_sync_choice_key, false)
+    val displaySyncStatus by booleanPref(R.string.sync_status_badge_key, defaultValue = true)
+
     var username by stringPref(R.string.username_key)
     var hkey by stringPref(R.string.hkey_key)
     var currentSyncUri by stringPref(R.string.current_sync_uri_key)

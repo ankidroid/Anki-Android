@@ -18,30 +18,23 @@ package com.ichi2.utils
 
 import anki.sync.SyncAuth
 import anki.sync.SyncStatusResponse
-import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CollectionManager
-import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.settings.Prefs
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import net.ankiweb.rsdroid.exceptions.BackendNetworkException
 import timber.log.Timber
 
-// TODO Remove BADGE_DISABLED from this enum, it doesn't belong here
 enum class SyncStatus {
     NO_ACCOUNT,
     NO_CHANGES,
     HAS_CHANGES,
     ONE_WAY,
-    BADGE_DISABLED,
     ERROR,
     ;
 
     companion object {
         suspend fun getSyncStatus(auth: SyncAuth?): SyncStatus {
-            if (isDisabled) {
-                return BADGE_DISABLED
-            }
             if (auth == null) {
                 return NO_ACCOUNT
             }
@@ -67,12 +60,6 @@ enum class SyncStatus {
                 SyncStatusResponse.Required.NORMAL_SYNC -> HAS_CHANGES
                 SyncStatusResponse.Required.FULL_SYNC -> ONE_WAY
                 SyncStatusResponse.Required.UNRECOGNIZED, null -> TODO("unexpected required response")
-            }
-
-        private val isDisabled: Boolean
-            get() {
-                val preferences = AnkiDroidApp.sharedPrefs()
-                return !preferences.getBoolean("showSyncStatusBadge", true)
             }
     }
 }
