@@ -84,6 +84,16 @@ object Prefs {
         value: Int,
     ) = sharedPrefs.edit { putInt(key(keyResId), value) }
 
+    private fun getLong(
+        @StringRes keyResId: Int,
+        defValue: Long,
+    ): Long = sharedPrefs.getLong(key(keyResId), defValue)
+
+    private fun putLong(
+        @StringRes keyResId: Int,
+        value: Long,
+    ) = sharedPrefs.edit { putLong(key(keyResId), value) }
+
     @VisibleForTesting
     fun <E> getEnum(
         @StringRes keyResId: Int,
@@ -155,6 +165,26 @@ object Prefs {
                 value: Int,
             ) {
                 putInt(keyResId, value)
+            }
+        }
+
+    @VisibleForTesting
+    fun longPref(
+        @StringRes keyResId: Int,
+        defaultValue: Long,
+    ): ReadWriteProperty<Any, Long> =
+        object : ReadWriteProperty<Any?, Long> {
+            override fun getValue(
+                thisRef: Any?,
+                property: KProperty<*>,
+            ): Long = getLong(keyResId, defaultValue)
+
+            override fun setValue(
+                thisRef: Any?,
+                property: KProperty<*>,
+                value: Long,
+            ) {
+                putLong(keyResId, value)
             }
         }
 
