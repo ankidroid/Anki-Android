@@ -240,7 +240,6 @@ open class DeckPicker :
     ImportDialogListener,
     OnRequestPermissionsResultCallback,
     ChangeManager.Subscriber,
-    SyncCompletionListener,
     ImportColpkgListener,
     BaseSnackbarBuilderProvider,
     ApkgImportResultLauncherProvider,
@@ -2579,10 +2578,6 @@ open class DeckPicker :
             updateDeckList()
             importColpkgListener?.onImportColpkg(colpkgPath)
         }
-    }
-
-    override fun onMediaSyncCompleted(data: SyncCompletion) {
-        Timber.i("Media sync completed. Success: %b", data.isSuccess)
     }
 
     /**
