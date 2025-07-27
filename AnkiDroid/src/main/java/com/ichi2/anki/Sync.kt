@@ -60,9 +60,6 @@ object SyncPreferences {
     const val CUSTOM_SYNC_URI = "syncBaseUrl"
     const val CUSTOM_SYNC_ENABLED = CUSTOM_SYNC_URI + VersatileTextWithASwitchPreference.SWITCH_SUFFIX
     const val CUSTOM_SYNC_CERTIFICATE = "customSyncCertificate"
-
-    // Used in the legacy schema path
-    const val HOSTNUM = "hostNum"
 }
 
 enum class ConflictResolution {
@@ -129,7 +126,6 @@ suspend fun syncLogout(context: Context) {
         remove("hkey")
         remove("username")
         remove(SyncPreferences.CURRENT_SYNC_URI)
-        remove(SyncPreferences.HOSTNUM)
     }
     withCol {
         media.forceResync()
