@@ -59,7 +59,6 @@ object SyncPreferences {
     const val CURRENT_SYNC_URI = "currentSyncUri"
     const val CUSTOM_SYNC_URI = "syncBaseUrl"
     const val CUSTOM_SYNC_ENABLED = CUSTOM_SYNC_URI + VersatileTextWithASwitchPreference.SWITCH_SUFFIX
-    const val CUSTOM_SYNC_CERTIFICATE = "customSyncCertificate"
 }
 
 enum class ConflictResolution {
@@ -76,10 +75,8 @@ interface SyncCompletionListener {
 }
 
 fun DeckPicker.syncAuth(): SyncAuth? {
-    val preferences = this.sharedPrefs()
-
     // Grab custom sync certificate from preferences (default is the empty string) and set it in CollectionManager
-    val currentSyncCertificate = preferences.getString(SyncPreferences.CUSTOM_SYNC_CERTIFICATE, "") ?: ""
+    val currentSyncCertificate = Prefs.customSyncCertificate ?: ""
     CollectionManager.updateCustomCertificate(currentSyncCertificate)
 
     val resolvedEndpoint = getEndpoint(this)
