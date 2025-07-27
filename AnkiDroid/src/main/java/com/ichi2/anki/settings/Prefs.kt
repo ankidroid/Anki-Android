@@ -201,6 +201,7 @@ object Prefs {
     val isAutoSyncEnabled by booleanPref(R.string.automatic_sync_choice_key, false)
     var username by stringPref(R.string.username_key)
     var hkey by stringPref(R.string.hkey_key)
+    var currentSyncUri by stringPref(R.string.current_sync_uri_key)
 
     var lastSyncTime by longPref(R.string.last_sync_time_key, defaultValue = 0L)
 

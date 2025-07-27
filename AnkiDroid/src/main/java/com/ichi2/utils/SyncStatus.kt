@@ -16,14 +16,12 @@
 
 package com.ichi2.utils
 
-import android.content.Context
-import androidx.core.content.edit
 import anki.sync.SyncAuth
 import anki.sync.SyncStatusResponse
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CollectionManager
-import com.ichi2.anki.SyncPreferences
 import com.ichi2.anki.preferences.sharedPrefs
+import com.ichi2.anki.settings.Prefs
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import net.ankiweb.rsdroid.exceptions.BackendNetworkException
@@ -40,10 +38,7 @@ enum class SyncStatus {
     ;
 
     companion object {
-        suspend fun getSyncStatus(
-            context: Context,
-            auth: SyncAuth?,
-        ): SyncStatus {
+        suspend fun getSyncStatus(auth: SyncAuth?): SyncStatus {
             if (isDisabled) {
                 return BADGE_DISABLED
             }
@@ -55,9 +50,7 @@ enum class SyncStatus {
                 // throws if a .colpkg import or similar occurs just before this call
                 val output = withContext(Dispatchers.IO) { CollectionManager.getBackend().syncStatus(auth) }
                 if (output.hasNewEndpoint() && output.newEndpoint.isNotEmpty()) {
-                    context.sharedPrefs().edit {
-                        putString(SyncPreferences.CURRENT_SYNC_URI, output.newEndpoint)
-                    }
+                    Prefs.currentSyncUri = output.newEndpoint
                 }
                 syncStatusFromRequired(output.required)
             } catch (_: BackendNetworkException) {
