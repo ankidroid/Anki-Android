@@ -1020,9 +1020,10 @@ open class CardBrowser :
             showBackIcon()
             increaseHorizontalPaddingOfOverflowMenuIcons(menu)
         }
-        // Append note editor menu to card browser menu if fragmented and deck is not empty
-        if (fragmented && viewModel.rowCount != 0) {
-            fragment?.onCreateMenu(menu, menuInflater)
+        // Remove save note and preview note options if there are no notes
+        if (fragmented && viewModel.rowCount == 0) {
+            menu.removeItem(R.id.action_save)
+            menu.removeItem(R.id.action_preview)
         }
         actionBarMenu?.findItem(R.id.action_undo)?.run {
             isVisible = getColUnsafe.undoAvailable()
