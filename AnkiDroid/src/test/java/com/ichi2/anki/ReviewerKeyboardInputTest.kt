@@ -33,16 +33,12 @@ import android.view.KeyEvent.KEYCODE_SPACE
 import android.view.KeyEvent.KEYCODE_Z
 import androidx.annotation.CheckResult
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import anki.scheduler.CardAnswer.Rating
 import com.ibm.icu.impl.Assert
 import com.ichi2.anki.AnkiDroidApp.Companion.sharedPrefs
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.libanki.Card
-import com.ichi2.anki.libanki.sched.Ease
-import com.ichi2.anki.libanki.sched.Ease.AGAIN
-import com.ichi2.anki.libanki.sched.Ease.EASY
-import com.ichi2.anki.libanki.sched.Ease.GOOD
-import com.ichi2.anki.libanki.sched.Ease.HARD
 import com.ichi2.anki.reviewer.Binding.Companion.keyCode
 import com.ichi2.anki.reviewer.Binding.ModifierKeys
 import com.ichi2.anki.reviewer.BindingMap
@@ -73,28 +69,28 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
     fun whenDisplayingAnswerTyping1AnswersFarLeftButton() {
         val underTest = KeyboardInputTestReviewer.displayingAnswer()
         underTest.handleAndroidKeyPress(KEYCODE_1)
-        assertThat(underTest.processedAnswer(), equalTo(AGAIN))
+        assertThat(underTest.processedAnswer(), equalTo(Rating.AGAIN))
     }
 
     @Test
     fun whenDisplayingAnswerTyping2AnswersSecondButton() {
         val underTest = KeyboardInputTestReviewer.displayingAnswer()
         underTest.handleAndroidKeyPress(KEYCODE_2)
-        assertThat(underTest.processedAnswer(), equalTo(HARD))
+        assertThat(underTest.processedAnswer(), equalTo(Rating.HARD))
     }
 
     @Test
     fun whenDisplayingAnswerTyping3AnswersThirdButton() {
         val underTest = KeyboardInputTestReviewer.displayingAnswer()
         underTest.handleAndroidKeyPress(KEYCODE_3)
-        assertThat(underTest.processedAnswer(), equalTo(GOOD))
+        assertThat(underTest.processedAnswer(), equalTo(Rating.GOOD))
     }
 
     @Test
     fun whenDisplayingAnswerTyping4AnswersFarRightButton() {
         val underTest = KeyboardInputTestReviewer.displayingAnswer()
         underTest.handleAndroidKeyPress(KEYCODE_4)
-        assertThat(underTest.processedAnswer(), equalTo(EASY))
+        assertThat(underTest.processedAnswer(), equalTo(Rating.EASY))
     }
 
     /** START: DEFAULT IS "GOOD"  */
@@ -102,28 +98,28 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
     fun spaceAnswersThirdButtonWhenFourButtonsShowing() {
         val underTest = KeyboardInputTestReviewer.displayingAnswer().withButtons(4)
         underTest.handleSpacebar()
-        assertThat(underTest.processedAnswer(), equalTo(GOOD))
+        assertThat(underTest.processedAnswer(), equalTo(Rating.GOOD))
     }
 
     /** END: DEFAULT IS "GOOD"  */
     @Test
     fun gamepadAAnswerFourthButtonOrShowsAnswer() {
-        assertGamepadButtonAnswers(KEYCODE_BUTTON_A, EASY)
+        assertGamepadButtonAnswers(KEYCODE_BUTTON_A, Rating.EASY)
     }
 
     @Test
     fun gamepadBAnswersThirdButtonOrShowsAnswer() {
-        assertGamepadButtonAnswers(KEYCODE_BUTTON_B, GOOD)
+        assertGamepadButtonAnswers(KEYCODE_BUTTON_B, Rating.GOOD)
     }
 
     @Test
     fun gamepadXAnswersSecondButtonOrShowsAnswer() {
-        assertGamepadButtonAnswers(KEYCODE_BUTTON_X, HARD)
+        assertGamepadButtonAnswers(KEYCODE_BUTTON_X, Rating.HARD)
     }
 
     @Test
     fun gamepadYAnswersFirstButtonOrShowsAnswer() {
-        assertGamepadButtonAnswers(KEYCODE_BUTTON_Y, AGAIN)
+        assertGamepadButtonAnswers(KEYCODE_BUTTON_Y, Rating.AGAIN)
     }
 
     @Test
@@ -229,7 +225,7 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
 
     private fun assertGamepadButtonAnswers(
         keycodeButton: Int,
-        ease: Ease,
+        rating: Rating,
     ) {
         val underTest = KeyboardInputTestReviewer.displayingQuestion()
         assertThat("Assume: Initially should not display answer", !underTest.didDisplayAnswer())
@@ -237,12 +233,12 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
         assertThat("Initial button should display answer", underTest.didDisplayAnswer())
         underTest.displayAnswerForTest()
         underTest.handleGamepadPress(keycodeButton)
-        assertThat(underTest.processedAnswer(), equalTo(ease))
+        assertThat(underTest.processedAnswer(), equalTo(rating))
     }
 
     internal class KeyboardInputTestReviewer : Reviewer() {
         private var focusTextField = false
-        private var answered: Ease? = null
+        private var answered: Rating? = null
         private var answerButtonCount = 4
         var editCardCalled = false
             private set
@@ -276,7 +272,7 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
             displayAnswer = false
         }
 
-        override fun flipOrAnswerCard(cardOrdinal: Ease) {
+        override fun flipOrAnswerCard(cardOrdinal: Rating) {
             if (displayAnswer) {
                 answerCard(cardOrdinal)
                 displayCardQuestion()
@@ -372,12 +368,12 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
             return this
         }
 
-        override fun answerCard(ease: Ease) {
-            super.answerCard(ease)
-            answered = ease
+        override fun answerCard(rating: Rating) {
+            super.answerCard(rating)
+            answered = rating
         }
 
-        fun processedAnswer(): Ease {
+        fun processedAnswer(): Rating {
             if (answered == null) {
                 Assert.fail("No card was answered")
             }
@@ -444,8 +440,8 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
 
         fun hasBeenAnswered(): Boolean = answered != null
 
-        override fun performClickWithVisualFeedback(ease: Ease) {
-            answerCard(ease)
+        override fun performClickWithVisualFeedback(rating: Rating) {
+            answerCard(rating)
         }
 
         companion object {

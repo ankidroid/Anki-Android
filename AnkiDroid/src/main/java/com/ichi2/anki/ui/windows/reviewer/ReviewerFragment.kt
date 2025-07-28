@@ -54,6 +54,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import anki.scheduler.CardAnswer.Rating
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.shape.ShapeAppearanceModel
@@ -71,7 +72,6 @@ import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
 import com.ichi2.anki.libanki.sched.Counts
-import com.ichi2.anki.libanki.sched.Ease
 import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.preferences.reviewer.ReviewerMenuView
 import com.ichi2.anki.preferences.reviewer.ViewerAction
@@ -252,16 +252,16 @@ class ReviewerFragment :
 
         if (Prefs.showAnswerFeedback) {
             viewModel.answerFeedbackFlow.collectIn(lifecycleScope) { ease ->
-                if (ease == Ease.AGAIN) {
+                if (ease == Rating.AGAIN) {
                     view.findViewById<AnswerFeedbackView>(R.id.wrong_answer_feedback).toggle()
                     return@collectIn
                 }
                 val drawableId =
                     when (ease) {
-                        Ease.HARD -> R.drawable.ic_ease_hard
-                        Ease.GOOD -> R.drawable.ic_ease_good
-                        Ease.EASY -> R.drawable.ic_ease_easy
-                        Ease.AGAIN -> throw IllegalArgumentException("Shouldn't try to get the 'Again' drawable ID")
+                        Rating.HARD -> R.drawable.ic_ease_hard
+                        Rating.GOOD -> R.drawable.ic_ease_good
+                        Rating.EASY -> R.drawable.ic_ease_easy
+                        Rating.AGAIN, Rating.UNRECOGNIZED -> throw IllegalArgumentException("Invalid rating")
                     }
                 view.findViewById<AnswerFeedbackView>(R.id.correct_answer_feedback).apply {
                     setImageResource(drawableId)
@@ -396,19 +396,19 @@ class ReviewerFragment :
 
         val againButton =
             view.findViewById<AnswerButton>(R.id.again_button).apply {
-                setOnClickListener { viewModel.answerCard(Ease.AGAIN) }
+                setOnClickListener { viewModel.answerCard(Rating.AGAIN) }
             }
         val hardButton =
             view.findViewById<AnswerButton>(R.id.hard_button).apply {
-                setOnClickListener { viewModel.answerCard(Ease.HARD) }
+                setOnClickListener { viewModel.answerCard(Rating.HARD) }
             }
         val goodButton =
             view.findViewById<AnswerButton>(R.id.good_button).apply {
-                setOnClickListener { viewModel.answerCard(Ease.GOOD) }
+                setOnClickListener { viewModel.answerCard(Rating.GOOD) }
             }
         val easyButton =
             view.findViewById<AnswerButton>(R.id.easy_button).apply {
-                setOnClickListener { viewModel.answerCard(Ease.EASY) }
+                setOnClickListener { viewModel.answerCard(Rating.EASY) }
             }
 
         viewModel.answerButtonsNextTimeFlow

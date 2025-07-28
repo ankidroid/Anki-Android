@@ -15,9 +15,9 @@
  */
 package com.ichi2.anki.libanki
 
+import anki.scheduler.CardAnswer.Rating
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.libanki.QueueType.Suspended
-import com.ichi2.anki.libanki.sched.Ease
 import com.ichi2.anki.libanki.sched.Scheduler
 import com.ichi2.anki.libanki.testutils.InMemoryAnkiTest
 import com.ichi2.anki.libanki.testutils.ext.addNote
@@ -78,7 +78,7 @@ class FinderTest : InMemoryAnkiTest() {
         sched: Scheduler,
         toManuallyBury: Card,
     ): Card {
-        sched.answerCard(toManuallyBury, Ease.AGAIN)
+        sched.answerCard(toManuallyBury, Rating.AGAIN)
         val siblingBuried = Note(col, toManuallyBury.nid).cards()[1]
         assertThat(siblingBuried.queue, equalTo(QueueType.SiblingBuried))
         return siblingBuried
@@ -333,11 +333,11 @@ class FinderTest : InMemoryAnkiTest() {
             assertEquals(0, col.findCards("rated:1:1").size)
             assertEquals(0, col.findCards("rated:1:2").size)
             c = col.sched.card!!
-            col.sched.answerCard(c, Ease.HARD)
+            col.sched.answerCard(c, Rating.HARD)
             assertEquals(0, col.findCards("rated:1:1").size)
             assertEquals(1, col.findCards("rated:1:2").size)
             c = col.sched.card!!
-            col.sched.answerCard(c, Ease.AGAIN)
+            col.sched.answerCard(c, Rating.AGAIN)
             assertEquals(1, col.findCards("rated:1:1").size)
             assertEquals(1, col.findCards("rated:1:2").size)
             assertEquals(2, col.findCards("rated:1").size)

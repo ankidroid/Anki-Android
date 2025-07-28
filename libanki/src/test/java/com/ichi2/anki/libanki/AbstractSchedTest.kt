@@ -15,8 +15,8 @@
  */
 package com.ichi2.anki.libanki
 
+import anki.scheduler.CardAnswer.Rating
 import com.ichi2.anki.libanki.sched.Counts
-import com.ichi2.anki.libanki.sched.Ease
 import com.ichi2.anki.libanki.testutils.InMemoryAnkiTest
 import com.ichi2.anki.libanki.testutils.ext.addNote
 import com.ichi2.anki.libanki.testutils.ext.newNote
@@ -46,7 +46,7 @@ class AbstractSchedTest : InMemoryAnkiTest() {
         val card = sched.card
         assertThat(sched.newCount(), equalTo(10))
         assertThat(sched.counts().new, equalTo(10))
-        sched.answerCard(card!!, Ease.GOOD)
+        sched.answerCard(card!!, Rating.GOOD)
         sched.card
         col.undo()
         assertThat(sched.newCount(), equalTo(10))
@@ -66,7 +66,7 @@ class AbstractSchedTest : InMemoryAnkiTest() {
         assertNotNull(card)
         assertEquals(Counts(1, 0, 0), sched.counts())
 
-        sched.answerCard(card, Ease.GOOD)
+        sched.answerCard(card, Rating.GOOD)
 
         card = sched.card
         assertNotNull(card)
@@ -75,7 +75,7 @@ class AbstractSchedTest : InMemoryAnkiTest() {
             sched.counts(),
         )
 
-        sched.answerCard(card, Ease.GOOD)
+        sched.answerCard(card, Rating.GOOD)
 
         card = sched.card
         assertNotNull(card)
@@ -92,7 +92,7 @@ class AbstractSchedTest : InMemoryAnkiTest() {
         )
 
         card = sched.card!!
-        sched.answerCard(card, Ease.GOOD)
+        sched.answerCard(card, Rating.GOOD)
         card = sched.card
         assertNotNull(card)
         assertEquals(

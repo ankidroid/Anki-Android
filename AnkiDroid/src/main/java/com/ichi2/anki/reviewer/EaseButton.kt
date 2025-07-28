@@ -23,9 +23,9 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.StringRes
 import androidx.core.view.isVisible
+import anki.scheduler.CardAnswer.Rating
 import com.ichi2.anki.AbstractFlashcardViewer
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
-import com.ichi2.anki.libanki.sched.Ease
 
 /**
  * The UI of an ease button
@@ -35,7 +35,7 @@ import com.ichi2.anki.libanki.sched.Ease
  * * [canPerformClick] is used to determine if the answer is being shown and the button isn't blocked
  */
 class EaseButton(
-    private val ease: Ease,
+    private val rating: Rating,
     private val layout: LinearLayout,
     private val easeTextView: TextView,
     private val easeTimeView: TextView,
@@ -105,8 +105,8 @@ class EaseButton(
      * @param currentEase The current ease of the card
      */
     @KotlinCleanup("Make the type non nullable.")
-    fun unblockBasedOnEase(currentEase: Ease?) {
-        if (this.ease == currentEase) {
+    fun unblockBasedOnEase(currentEase: Rating?) {
+        if (this.rating == currentEase) {
             layout.isClickable = true
         } else {
             layout.isEnabled = true
@@ -118,8 +118,8 @@ class EaseButton(
      *
      * @param currentEase The current ease of the card
      */
-    fun blockBasedOnEase(currentEase: Ease) {
-        if (this.ease == currentEase) {
+    fun blockBasedOnEase(currentEase: Rating) {
+        if (this.rating == currentEase) {
             layout.isClickable = false
         } else {
             layout.isEnabled = false

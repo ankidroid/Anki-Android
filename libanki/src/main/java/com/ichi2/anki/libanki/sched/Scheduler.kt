@@ -30,6 +30,7 @@ import anki.frontend.SchedulingStatesWithContext
 import anki.i18n.FormatTimespanRequest
 import anki.scheduler.BuryOrSuspendCardsRequest
 import anki.scheduler.CardAnswer
+import anki.scheduler.CardAnswer.Rating
 import anki.scheduler.CongratsInfoResponse
 import anki.scheduler.CustomStudyDefaultsResponse
 import anki.scheduler.CustomStudyRequest
@@ -140,19 +141,19 @@ open class Scheduler(
 
     open fun answerCard(
         info: CurrentQueueState,
-        ease: Ease,
+        rating: Rating,
     ): OpChanges =
-        col.backend.answerCard(buildAnswer(info.topCard, info.states, ease)).also {
+        col.backend.answerCard(buildAnswer(info.topCard, info.states, rating)).also {
             numberOfAnswersRecorded += 1
         }
 
     /** Legacy path, used by tests. */
     open fun answerCard(
         card: Card,
-        ease: Ease,
+        rating: Rating,
     ) {
         val top = queuedCards.cardsList.first()
-        val answer = buildAnswer(card, top.states, ease)
+        val answer = buildAnswer(card, top.states, rating)
         col.backend.answerCard(answer)
         numberOfAnswersRecorded += 1
         // tests assume the card was mutated
@@ -166,13 +167,13 @@ open class Scheduler(
     fun buildAnswer(
         card: Card,
         states: SchedulingStates,
-        ease: Ease,
+        rating: Rating,
     ): CardAnswer =
         cardAnswer {
             cardId = card.id
             currentState = states.current
-            newState = stateFromEase(states, ease)
-            rating = ratingFromEase(ease)
+            newState = stateFromEase(states, rating)
+            this.rating = rating
             answeredAtMillis = time.intTimeMS()
             millisecondsTaken = card.timeTaken(col)
         }
@@ -180,14 +181,6 @@ open class Scheduler(
     /** Update card to provided state, and remove it from queue. */
     @LibAnkiAlias("answer_card")
     fun answerCard(input: CardAnswer): OpChanges = col.backend.answerCard(input)
-
-    private fun ratingFromEase(ease: Ease): CardAnswer.Rating =
-        when (ease) {
-            Ease.AGAIN -> CardAnswer.Rating.AGAIN
-            Ease.HARD -> CardAnswer.Rating.HARD
-            Ease.GOOD -> CardAnswer.Rating.GOOD
-            Ease.EASY -> CardAnswer.Rating.EASY
-        }
 
     /**
      * @return Number of new, rev and lrn card to review in selected deck. Sum of elements of counts.
@@ -223,10 +216,10 @@ open class Scheduler(
     /** Only provided for legacy unit tests. */
     fun nextIvl(
         card: Card,
-        ease: Ease,
+        rating: Rating,
     ): Long {
         val states = col.backend.getSchedulingStates(card.id)
-        val state = stateFromEase(states, ease)
+        val state = stateFromEase(states, rating)
         return intervalForState(state)
     }
 
@@ -674,14 +667,14 @@ open class Scheduler(
      *
      * @param context The app context, used for localization
      * @param card The card being reviewed
-     * @param ease The button number (easy, good etc.)
+     * @param rating The button number (easy, good etc.)
      * @return A string like “1 min” or “1.7 mo”
      */
     open fun nextIvlStr(
         card: Card,
-        ease: Ease,
+        rating: Rating,
     ): String {
-        val secs = nextIvl(card, ease)
+        val secs = nextIvl(card, rating)
         return col.backend.formatTimespan(secs.toFloat(), FormatTimespanRequest.Context.ANSWER_BUTTONS)
     }
 
@@ -694,13 +687,14 @@ const val REPORT_LIMIT = 99999
 
 private fun stateFromEase(
     states: SchedulingStates,
-    ease: Ease,
+    rating: Rating,
 ): SchedulingState =
-    when (ease) {
-        Ease.AGAIN -> states.again
-        Ease.HARD -> states.hard
-        Ease.GOOD -> states.good
-        Ease.EASY -> states.easy
+    when (rating) {
+        Rating.AGAIN -> states.again
+        Rating.HARD -> states.hard
+        Rating.GOOD -> states.good
+        Rating.EASY -> states.easy
+        Rating.UNRECOGNIZED -> TODO("invalid ease")
     }
 
 private fun intervalForState(state: SchedulingState): Long =

@@ -78,6 +78,7 @@ import androidx.core.view.children
 import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle.State.RESUMED
 import anki.collection.OpChanges
+import anki.scheduler.CardAnswer.Rating
 import com.drakeet.drawer.FullDraggableContainer
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation
@@ -115,7 +116,6 @@ import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.Decks
 import com.ichi2.anki.libanki.SoundOrVideoTag
 import com.ichi2.anki.libanki.TTSTag
-import com.ichi2.anki.libanki.sched.Ease
 import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.multimedia.getAvTag
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
@@ -247,7 +247,7 @@ abstract class AbstractFlashcardViewer :
     protected var topBarLayout: RelativeLayout? = null
     private var previousAnswerIndicator: PreviousAnswerIndicator? = null
 
-    private var currentEase: Ease? = null
+    private var currentEase: Rating? = null
     private var initialFlipCardHeight = 0
     private var buttonHeightSet = false
 
@@ -417,22 +417,22 @@ abstract class AbstractFlashcardViewer :
                     when (view.id) {
                         R.id.flashcard_layout_ease1 -> {
                             Timber.i("AbstractFlashcardViewer:: Ease_1 pressed")
-                            answerCard(Ease.AGAIN)
+                            answerCard(Rating.AGAIN)
                         }
 
                         R.id.flashcard_layout_ease2 -> {
                             Timber.i("AbstractFlashcardViewer:: Ease_2 pressed")
-                            answerCard(Ease.HARD)
+                            answerCard(Rating.HARD)
                         }
 
                         R.id.flashcard_layout_ease3 -> {
                             Timber.i("AbstractFlashcardViewer:: Ease_3 pressed")
-                            answerCard(Ease.GOOD)
+                            answerCard(Rating.GOOD)
                         }
 
                         R.id.flashcard_layout_ease4 -> {
                             Timber.i("AbstractFlashcardViewer:: Ease_4 pressed")
-                            answerCard(Ease.EASY)
+                            answerCard(Rating.EASY)
                         }
 
                         else -> currentEase = null
@@ -837,7 +837,7 @@ abstract class AbstractFlashcardViewer :
         }
     }
 
-    open fun answerCard(ease: Ease) =
+    open fun answerCard(rating: Rating) =
         preventSimultaneousExecutions(ANSWER_CARD) {
             launchCatchingTask {
                 if (inAnswer) {
@@ -849,19 +849,19 @@ abstract class AbstractFlashcardViewer :
                     return@launchCatchingTask
                 }
                 // Temporarily sets the answer indicator dots appearing below the toolbar
-                previousAnswerIndicator?.displayAnswerIndicator(ease)
+                previousAnswerIndicator?.displayAnswerIndicator(rating)
                 cardMediaPlayer.stop()
-                currentEase = ease
+                currentEase = rating
 
-                answerCardInner(ease)
+                answerCardInner(rating)
                 updateCardAndRedraw()
             }
         }
 
-    open suspend fun answerCardInner(ease: Ease) {
+    open suspend fun answerCardInner(rating: Rating) {
         // Legacy tests assume they can call answerCard() even outside of Reviewer
         withCol {
-            sched.answerCard(currentCard!!, ease)
+            sched.answerCard(currentCard!!, rating)
         }
     }
 
@@ -879,28 +879,28 @@ abstract class AbstractFlashcardViewer :
         easeButtonsLayout = findViewById(R.id.ease_buttons)
         easeButton1 =
             EaseButton(
-                Ease.AGAIN,
+                Rating.AGAIN,
                 findViewById(R.id.flashcard_layout_ease1),
                 findViewById(R.id.ease1),
                 findViewById(R.id.nextTime1),
             ).apply { setListeners(easeHandler) }
         easeButton2 =
             EaseButton(
-                Ease.HARD,
+                Rating.HARD,
                 findViewById(R.id.flashcard_layout_ease2),
                 findViewById(R.id.ease2),
                 findViewById(R.id.nextTime2),
             ).apply { setListeners(easeHandler) }
         easeButton3 =
             EaseButton(
-                Ease.GOOD,
+                Rating.GOOD,
                 findViewById(R.id.flashcard_layout_ease3),
                 findViewById(R.id.ease3),
                 findViewById(R.id.nextTime3),
             ).apply { setListeners(easeHandler) }
         easeButton4 =
             EaseButton(
-                Ease.EASY,
+                Rating.EASY,
                 findViewById(R.id.flashcard_layout_ease4),
                 findViewById(R.id.ease4),
                 findViewById(R.id.nextTime4),
@@ -1056,7 +1056,7 @@ abstract class AbstractFlashcardViewer :
     }
 
     /** If a card is displaying the question, flip it, otherwise answer it  */
-    internal open fun flipOrAnswerCard(cardOrdinal: Ease) {
+    internal open fun flipOrAnswerCard(cardOrdinal: Rating) {
         if (!displayAnswer) {
             displayCardAnswer()
             return
@@ -1642,22 +1642,22 @@ abstract class AbstractFlashcardViewer :
             }
 
             ViewerCommand.FLIP_OR_ANSWER_EASE1 -> {
-                flipOrAnswerCard(Ease.AGAIN)
+                flipOrAnswerCard(Rating.AGAIN)
                 true
             }
 
             ViewerCommand.FLIP_OR_ANSWER_EASE2 -> {
-                flipOrAnswerCard(Ease.HARD)
+                flipOrAnswerCard(Rating.HARD)
                 true
             }
 
             ViewerCommand.FLIP_OR_ANSWER_EASE3 -> {
-                flipOrAnswerCard(Ease.GOOD)
+                flipOrAnswerCard(Rating.GOOD)
                 true
             }
 
             ViewerCommand.FLIP_OR_ANSWER_EASE4 -> {
-                flipOrAnswerCard(Ease.EASY)
+                flipOrAnswerCard(Rating.EASY)
                 true
             }
 
@@ -1831,13 +1831,14 @@ abstract class AbstractFlashcardViewer :
         }
     }
 
-    protected open fun performClickWithVisualFeedback(ease: Ease) {
+    protected open fun performClickWithVisualFeedback(rating: Rating) {
         // Delay could potentially be lower - testing with 20 left a visible "click"
-        when (ease) {
-            Ease.AGAIN -> easeButton1!!.performClickWithVisualFeedback()
-            Ease.HARD -> easeButton2!!.performClickWithVisualFeedback()
-            Ease.GOOD -> easeButton3!!.performClickWithVisualFeedback()
-            Ease.EASY -> easeButton4!!.performClickWithVisualFeedback()
+        when (rating) {
+            Rating.AGAIN -> easeButton1!!.performClickWithVisualFeedback()
+            Rating.HARD -> easeButton2!!.performClickWithVisualFeedback()
+            Rating.GOOD -> easeButton3!!.performClickWithVisualFeedback()
+            Rating.EASY -> easeButton4!!.performClickWithVisualFeedback()
+            Rating.UNRECOGNIZED -> {}
         }
     }
 
@@ -2496,22 +2497,22 @@ abstract class AbstractFlashcardViewer :
                 }
 
                 Signal.ANSWER_ORDINAL_1 -> {
-                    flipOrAnswerCard(Ease.AGAIN)
+                    flipOrAnswerCard(Rating.AGAIN)
                     return true
                 }
 
                 Signal.ANSWER_ORDINAL_2 -> {
-                    flipOrAnswerCard(Ease.HARD)
+                    flipOrAnswerCard(Rating.HARD)
                     return true
                 }
 
                 Signal.ANSWER_ORDINAL_3 -> {
-                    flipOrAnswerCard(Ease.GOOD)
+                    flipOrAnswerCard(Rating.GOOD)
                     return true
                 }
 
                 Signal.ANSWER_ORDINAL_4 -> {
-                    flipOrAnswerCard(Ease.EASY)
+                    flipOrAnswerCard(Rating.EASY)
                     return true
                 }
             }

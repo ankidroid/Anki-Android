@@ -58,6 +58,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isGone
 import androidx.lifecycle.lifecycleScope
 import anki.frontend.SetSchedulingStatesRequest
+import anki.scheduler.CardAnswer.Rating
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation.getInverseTransition
@@ -75,7 +76,6 @@ import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.QueueType
 import com.ichi2.anki.libanki.sched.Counts
 import com.ichi2.anki.libanki.sched.CurrentQueueState
-import com.ichi2.anki.libanki.sched.Ease
 import com.ichi2.anki.multimedia.audio.AudioRecordingController
 import com.ichi2.anki.multimedia.audio.AudioRecordingController.Companion.generateTempAudioFile
 import com.ichi2.anki.multimedia.audio.AudioRecordingController.Companion.isAudioRecordingSaved
@@ -1183,16 +1183,16 @@ open class Reviewer :
         queueState = state
     }
 
-    override suspend fun answerCardInner(ease: Ease) {
+    override suspend fun answerCardInner(rating: Rating) {
         val state = queueState!!
-        Timber.d("answerCardInner: ${currentCard!!.id} $ease")
+        Timber.d("answerCardInner: ${currentCard!!.id} $rating")
         var wasLeech = false
         undoableOp(this) {
-            sched.answerCard(state, ease).also {
+            sched.answerCard(state, rating).also {
                 wasLeech = sched.stateIsLeech(state.states.again)
             }
         }.also {
-            if (ease == Ease.AGAIN && wasLeech) {
+            if (rating == Rating.AGAIN && wasLeech) {
                 state.topCard.load(getColUnsafe)
                 val leechMessage: String =
                     if (state.topCard.queue.buriedOrSuspended()) {

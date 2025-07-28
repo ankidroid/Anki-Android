@@ -17,8 +17,8 @@
 package com.ichi2.anki.reviewer
 
 import android.widget.TextView
+import anki.scheduler.CardAnswer.Rating
 import com.ichi2.anki.R
-import com.ichi2.anki.libanki.sched.Ease
 import com.ichi2.utils.HandlerUtils.newHandler
 
 /**
@@ -46,26 +46,27 @@ class PreviousAnswerIndicator(
      * Note that the ordinal does not define the color on its own:
      * in SchedV1, button 2 could be hard or good
      *
-     * @param ease The ordinal of the button answered
+     * @param rating The ordinal of the button answered
      */
-    fun displayAnswerIndicator(ease: Ease) {
-        when (ease) {
-            Ease.AGAIN -> {
+    fun displayAnswerIndicator(rating: Rating) {
+        when (rating) {
+            Rating.AGAIN -> {
                 chosenAnswerText.text = "\u2022"
                 chosenAnswerText.setTextColor(getColor(R.color.material_red_500))
             }
-            Ease.HARD -> {
+            Rating.HARD -> {
                 chosenAnswerText.text = "\u2022\u2022"
                 chosenAnswerText.setTextColor(getColor(R.color.material_blue_grey_600))
             }
-            Ease.GOOD -> {
+            Rating.GOOD -> {
                 chosenAnswerText.text = "\u2022\u2022\u2022"
                 chosenAnswerText.setTextColor(getColor(R.color.material_green_500))
             }
-            Ease.EASY -> {
+            Rating.EASY -> {
                 chosenAnswerText.text = "\u2022\u2022\u2022\u2022"
                 chosenAnswerText.setTextColor(getColor(R.color.material_light_blue_500))
             }
+            Rating.UNRECOGNIZED -> {}
         }
 
         // remove chosen answer hint after a while

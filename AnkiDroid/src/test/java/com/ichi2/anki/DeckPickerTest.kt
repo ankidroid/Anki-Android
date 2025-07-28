@@ -14,6 +14,7 @@ import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.view.children
 import androidx.fragment.app.FragmentManager
 import androidx.test.core.app.ActivityScenario
+import anki.scheduler.CardAnswer.Rating
 import app.cash.turbine.test
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.time.TimeManager
@@ -24,7 +25,6 @@ import com.ichi2.anki.dialogs.DeckPickerContextMenu
 import com.ichi2.anki.dialogs.DeckPickerContextMenu.DeckPickerContextMenuOption
 import com.ichi2.anki.dialogs.utils.title
 import com.ichi2.anki.libanki.DeckId
-import com.ichi2.anki.libanki.sched.Ease
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.utils.Destination
@@ -630,7 +630,7 @@ class DeckPickerTest : RobolectricTest() {
         // Answer 'Easy' for one of the cards, burying the other
         col.decks.select(deckWithCards)
         col.sched.deckDueTree() // ? if not called, decks.select(toSelect) un-buries a card
-        col.sched.answerCard(col.sched.card!!, Ease.EASY)
+        col.sched.answerCard(col.sched.card!!, Rating.EASY)
         assertThat("the other card is buried", col.sched.card, nullValue())
 
         // select a deck with no cards

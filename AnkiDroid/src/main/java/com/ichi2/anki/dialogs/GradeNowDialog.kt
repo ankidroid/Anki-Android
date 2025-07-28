@@ -24,7 +24,7 @@ import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AppCompatActivity
-import anki.scheduler.CardAnswer
+import anki.scheduler.CardAnswer.Rating
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
@@ -114,12 +114,12 @@ private class GradeNowListAdapter(
 }
 
 private enum class Grade(
-    val rating: CardAnswer.Rating,
+    val rating: Rating,
     @DrawableRes val iconRes: Int,
     val getLabel: () -> String,
 ) {
-    Again(CardAnswer.Rating.AGAIN, R.drawable.ic_ease_again, { TR.studyingAgain() }),
-    Hard(CardAnswer.Rating.HARD, R.drawable.ic_ease_hard, { TR.studyingHard() }),
-    Good(CardAnswer.Rating.GOOD, R.drawable.ic_ease_good, { TR.studyingGood() }),
-    Easy(CardAnswer.Rating.EASY, R.drawable.ic_ease_easy, { TR.studyingEasy() }),
+    Again(Rating.AGAIN, R.drawable.ic_ease_again, { TR.studyingAgain() }),
+    Hard(Rating.HARD, R.drawable.ic_ease_hard, { TR.studyingHard() }),
+    Good(Rating.GOOD, R.drawable.ic_ease_good, { TR.studyingGood() }),
+    Easy(Rating.EASY, R.drawable.ic_ease_easy, { TR.studyingEasy() }),
 }

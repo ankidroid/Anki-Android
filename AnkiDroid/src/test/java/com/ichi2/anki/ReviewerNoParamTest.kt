@@ -20,6 +20,7 @@ import android.graphics.Color
 import androidx.annotation.CheckResult
 import androidx.core.content.edit
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import anki.scheduler.CardAnswer.Rating
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.Gesture.SWIPE_DOWN
 import com.ichi2.anki.cardviewer.Gesture.SWIPE_RIGHT
@@ -28,7 +29,6 @@ import com.ichi2.anki.cardviewer.GestureProcessor
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.libanki.Consts
 import com.ichi2.anki.libanki.DeckId
-import com.ichi2.anki.libanki.sched.Ease
 import com.ichi2.anki.model.WhiteboardPenColor
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.reviewer.Binding
@@ -153,7 +153,7 @@ class ReviewerNoParamTest : RobolectricTest() {
 
         val hideCount = reviewer.delayedHideCount
 
-        reviewer.answerCard(Ease.AGAIN)
+        reviewer.answerCard(Rating.AGAIN)
         advanceRobolectricLooper()
 
         assertThat("Hide should be called after answering a card", reviewer.delayedHideCount, greaterThan(hideCount))
@@ -168,7 +168,7 @@ class ReviewerNoParamTest : RobolectricTest() {
 
             reviewer.displayCardAnswer()
             advanceRobolectricLooper()
-            reviewer.answerCard(Ease.AGAIN)
+            reviewer.answerCard(Rating.AGAIN)
             advanceRobolectricLooper()
 
             val hideCount = reviewer.delayedHideCount

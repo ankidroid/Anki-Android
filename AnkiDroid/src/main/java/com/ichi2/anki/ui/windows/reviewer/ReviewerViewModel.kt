@@ -21,6 +21,7 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import anki.collection.OpChanges
 import anki.collection.OpChangesAfterUndo
 import anki.frontend.SetSchedulingStatesRequest
+import anki.scheduler.CardAnswer.Rating
 import com.ichi2.anki.AbstractFlashcardViewer
 import com.ichi2.anki.AbstractFlashcardViewer.Companion.RESULT_NO_MORE_CARDS
 import com.ichi2.anki.CollectionManager
@@ -37,7 +38,6 @@ import com.ichi2.anki.libanki.NoteId
 import com.ichi2.anki.libanki.redo
 import com.ichi2.anki.libanki.sched.Counts
 import com.ichi2.anki.libanki.sched.CurrentQueueState
-import com.ichi2.anki.libanki.sched.Ease
 import com.ichi2.anki.libanki.undo
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import com.ichi2.anki.observability.ChangeManager
@@ -99,7 +99,7 @@ class ReviewerViewModel(
     val editNoteTagsFlow = MutableSharedFlow<NoteId>()
     val setDueDateFlow = MutableSharedFlow<CardId>()
     val answerTimerStatusFlow = MutableStateFlow<AnswerTimerStatus?>(null)
-    val answerFeedbackFlow = MutableSharedFlow<Ease>()
+    val answerFeedbackFlow = MutableSharedFlow<Rating>()
 
     override val server: AnkiServer = AnkiServer(this, StudyScreenRepository.getServerPort()).also { it.start() }
     private val stateMutationKey = TimeManager.time.intTimeMS().toString()
@@ -433,7 +433,7 @@ class ReviewerViewModel(
         return ByteArray(0)
     }
 
-    fun answerCard(ease: Ease) {
+    fun answerCard(rating: Rating) {
         Timber.v("ReviewerViewModel::answerCard")
         launchCatchingIO {
             val state = queueState.await() ?: return@launchCatchingIO
@@ -443,12 +443,12 @@ class ReviewerViewModel(
                     sched.buildAnswer(
                         card = card,
                         states = state.states,
-                        ease,
+                        rating,
                     )
                 }
 
             undoableOp { sched.answerCard(answer) }
-            answerFeedbackFlow.emit(ease)
+            answerFeedbackFlow.emit(rating)
 
             val wasLeech = withCol { sched.stateIsLeech(answer.newState) }
             if (wasLeech) {
@@ -563,10 +563,10 @@ class ReviewerViewModel(
         answerButtonsNextTimeFlow.emit(nextTimes)
     }
 
-    private fun flipOrAnswer(ease: Ease) {
+    private fun flipOrAnswer(rating: Rating) {
         Timber.v("ReviewerViewModel::flipOrAnswer")
         if (showingAnswer.value) {
-            answerCard(ease)
+            answerCard(rating)
         } else {
             onShowAnswer()
         }
@@ -644,10 +644,10 @@ class ReviewerViewModel(
                 ViewerAction.TOGGLE_FLAG_TURQUOISE -> toggleFlag(Flag.TURQUOISE)
                 ViewerAction.TOGGLE_FLAG_PURPLE -> toggleFlag(Flag.PURPLE)
                 ViewerAction.SHOW_ANSWER -> if (!showingAnswer.value) onShowAnswer()
-                ViewerAction.FLIP_OR_ANSWER_EASE1 -> flipOrAnswer(Ease.AGAIN)
-                ViewerAction.FLIP_OR_ANSWER_EASE2 -> flipOrAnswer(Ease.HARD)
-                ViewerAction.FLIP_OR_ANSWER_EASE3 -> flipOrAnswer(Ease.GOOD)
-                ViewerAction.FLIP_OR_ANSWER_EASE4 -> flipOrAnswer(Ease.EASY)
+                ViewerAction.FLIP_OR_ANSWER_EASE1 -> flipOrAnswer(Rating.AGAIN)
+                ViewerAction.FLIP_OR_ANSWER_EASE2 -> flipOrAnswer(Rating.HARD)
+                ViewerAction.FLIP_OR_ANSWER_EASE3 -> flipOrAnswer(Rating.GOOD)
+                ViewerAction.FLIP_OR_ANSWER_EASE4 -> flipOrAnswer(Rating.EASY)
                 ViewerAction.SHOW_HINT -> eval.emit("ankidroid.showHint()")
                 ViewerAction.SHOW_ALL_HINTS -> eval.emit("ankidroid.showAllHints()")
                 ViewerAction.EXIT -> finishResultFlow.emit(AbstractFlashcardViewer.RESULT_DEFAULT)
