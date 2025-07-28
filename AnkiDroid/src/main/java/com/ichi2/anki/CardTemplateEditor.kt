@@ -222,19 +222,17 @@ open class CardTemplateEditor :
         if (fragmented) {
             val parentLayout = findViewById<LinearLayout>(R.id.card_template_editor_xl_view)
             val divider = findViewById<View>(R.id.card_template_editor_resizing_divider)
-            val leftPane = findViewById<View>(R.id.template_editor)
-            val rightPane = findViewById<View>(R.id.fragment_container)
-            if (parentLayout != null && divider != null && leftPane != null && rightPane != null) {
-                ResizablePaneManager(
-                    parentLayout = parentLayout,
-                    divider = divider,
-                    leftPane = leftPane,
-                    rightPane = rightPane,
-                    sharedPrefs = Prefs.getUiConfig(this),
-                    leftPaneWeightKey = PREF_TEMPLATE_EDITOR_PANE_WEIGHT,
-                    rightPaneWeightKey = PREF_TEMPLATE_PREVIEWER_PANE_WEIGHT,
-                )
-            }
+            val cardTemplateEditorPane = findViewById<View>(R.id.template_editor)
+            val templatePreviewerPane = findViewById<View>(R.id.fragment_container)
+            ResizablePaneManager(
+                parentLayout = parentLayout,
+                divider = divider,
+                leftPane = cardTemplateEditorPane,
+                rightPane = templatePreviewerPane,
+                sharedPrefs = Prefs.getUiConfig(this),
+                leftPaneWeightKey = PREF_TEMPLATE_EDITOR_PANE_WEIGHT,
+                rightPaneWeightKey = PREF_TEMPLATE_PREVIEWER_PANE_WEIGHT,
+            )
         }
 
         // Open TemplatePreviewerFragment if in fragmented mode
