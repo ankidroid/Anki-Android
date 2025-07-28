@@ -23,6 +23,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.core.net.toUri
 import androidx.lifecycle.lifecycleScope
+import anki.scheduler.CardAnswer.Rating
 import com.github.zafarkhaja.semver.Version
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.AnkiDroidJsAPIConstants.ANKI_JS_ERROR_CODE_BURT_NOTE
@@ -43,7 +44,6 @@ import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.Decks
 import com.ichi2.anki.libanki.Note
 import com.ichi2.anki.libanki.SortOrder
-import com.ichi2.anki.libanki.sched.Ease
 import com.ichi2.anki.model.CardsOrNotes
 import com.ichi2.anki.servicelayer.rescheduleCards
 import com.ichi2.anki.servicelayer.resetCards
@@ -351,19 +351,19 @@ open class AnkiDroidJsAPI(
                 convertToByteArray(apiContract, true)
             }
             "answerEase1" -> {
-                activity.flipOrAnswerCard(Ease.AGAIN)
+                activity.flipOrAnswerCard(Rating.AGAIN)
                 convertToByteArray(apiContract, true)
             }
             "answerEase2" -> {
-                activity.flipOrAnswerCard(Ease.HARD)
+                activity.flipOrAnswerCard(Rating.HARD)
                 convertToByteArray(apiContract, true)
             }
             "answerEase3" -> {
-                activity.flipOrAnswerCard(Ease.GOOD)
+                activity.flipOrAnswerCard(Rating.GOOD)
                 convertToByteArray(apiContract, true)
             }
             "answerEase4" -> {
-                activity.flipOrAnswerCard(Ease.EASY)
+                activity.flipOrAnswerCard(Rating.EASY)
                 convertToByteArray(apiContract, true)
             }
 

@@ -18,6 +18,7 @@
 
 package com.ichi2.anki.libanki.sched
 
+import anki.scheduler.CardAnswer.Rating
 import com.ichi2.anki.libanki.Card
 import com.ichi2.anki.libanki.Collection
 
@@ -28,6 +29,6 @@ class DummyScheduler(
 
     override fun answerCard(
         card: Card,
-        ease: Ease,
+        rating: Rating,
     ): Unit = throw Exception("v1/v2 scheduler not supported")
 }

@@ -30,6 +30,7 @@ import android.database.sqlite.SQLiteQueryBuilder
 import android.net.Uri
 import android.webkit.MimeTypeMap
 import androidx.core.net.toUri
+import anki.scheduler.CardAnswer
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.BuildConfig
 import com.ichi2.anki.CollectionManager
@@ -358,7 +359,7 @@ class CardContentProvider : ContentProvider() {
                     val buttonTexts = JSONArray()
                     var i = 0
                     while (i < buttonCount) {
-                        buttonTexts.put(col.sched.nextIvlStr(currentCard, Ease.fromValue(i + 1)))
+                        buttonTexts.put(col.sched.nextIvlStr(currentCard, CardAnswer.Rating.forNumber(i)))
                         i++
                     }
                     addReviewInfoToCursor(currentCard, buttonTexts, buttonCount, rv, col, columns)
@@ -1157,7 +1158,7 @@ class CardContentProvider : ContentProvider() {
                 if (timeTaken != -1L) {
                     cardToAnswer.timerStarted = TimeManager.time.intTimeMS() - timeTaken
                 }
-                col.sched.answerCard(cardToAnswer, ease)
+                col.sched.answerCard(cardToAnswer, CardAnswer.Rating.forNumber(ease.value - 1))
             }
         } catch (e: RuntimeException) {
             Timber.e(e, "answerCard - RuntimeException on answering card")

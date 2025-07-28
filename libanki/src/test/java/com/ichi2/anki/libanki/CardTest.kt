@@ -16,8 +16,8 @@
 package com.ichi2.anki.libanki
 
 import android.annotation.SuppressLint
+import anki.scheduler.CardAnswer.Rating
 import com.ichi2.anki.libanki.exception.ConfirmModSchemaException
-import com.ichi2.anki.libanki.sched.Ease
 import com.ichi2.anki.libanki.testutils.InMemoryAnkiTest
 import com.ichi2.anki.libanki.testutils.ext.addNote
 import com.ichi2.anki.libanki.testutils.ext.newNote
@@ -54,7 +54,7 @@ class CardTest : InMemoryAnkiTest() {
         note.setItem("Back", "2")
         col.addNote(note)
         val cid = note.cards()[0].id
-        col.sched.answerCard(col.sched.card!!, Ease.HARD)
+        col.sched.answerCard(col.sched.card!!, Rating.HARD)
         col.removeCardsAndOrphanedNotes(listOf(cid))
         assertEquals(0, col.cardCount())
         assertEquals(0, col.noteCount())

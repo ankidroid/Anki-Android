@@ -15,11 +15,11 @@
  */
 package com.ichi2.anki.ui.windows.reviewer.autoadvance
 
+import anki.scheduler.CardAnswer.Rating
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.asyncIO
 import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.libanki.Card
-import com.ichi2.anki.libanki.sched.Ease
 import com.ichi2.anki.reviewer.AutomaticAnswerAction
 import com.ichi2.anki.ui.windows.reviewer.ReviewerViewModel
 import kotlinx.coroutines.Job
@@ -100,9 +100,9 @@ class AutoAdvance(
                 delay(durationToShowAnswerFor())
                 when (answerAction()) {
                     AutomaticAnswerAction.BURY_CARD -> viewModel.buryCard()
-                    AutomaticAnswerAction.ANSWER_AGAIN -> viewModel.answerCard(Ease.AGAIN)
-                    AutomaticAnswerAction.ANSWER_HARD -> viewModel.answerCard(Ease.HARD)
-                    AutomaticAnswerAction.ANSWER_GOOD -> viewModel.answerCard(Ease.GOOD)
+                    AutomaticAnswerAction.ANSWER_AGAIN -> viewModel.answerCard(Rating.AGAIN)
+                    AutomaticAnswerAction.ANSWER_HARD -> viewModel.answerCard(Rating.HARD)
+                    AutomaticAnswerAction.ANSWER_GOOD -> viewModel.answerCard(Rating.GOOD)
                     AutomaticAnswerAction.SHOW_REMINDER -> showReminder(TR.studyingAnswerTimeElapsed())
                 }
             }

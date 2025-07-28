@@ -12,6 +12,7 @@ import androidx.core.os.bundleOf
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SdkSuppress
 import anki.config.ConfigKey
+import anki.scheduler.CardAnswer.Rating
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anim.ActivityTransitionAnimation.Direction
 import com.ichi2.anki.AbstractFlashcardViewer.Companion.toAnimationTransition
@@ -21,7 +22,6 @@ import com.ichi2.anki.AnkiActivity.Companion.FINISH_ANIMATION_EXTRA
 import com.ichi2.anki.NoteEditorFragment.Companion.NoteEditorCaller
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.ViewerCommand
-import com.ichi2.anki.libanki.sched.Ease
 import com.ichi2.anki.libanki.testutils.ext.addNote
 import com.ichi2.anki.libanki.testutils.ext.createBasicTypingNoteType
 import com.ichi2.anki.libanki.testutils.ext.newNote
@@ -60,7 +60,7 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
     override fun getCollectionStorageMode() = CollectionStorageMode.IN_MEMORY_WITH_MEDIA
 
     class NonAbstractFlashcardViewer : AbstractFlashcardViewer() {
-        var answered: Ease? = null
+        var answered: Rating? = null
         private var lastTime = 0
 
         override fun performReload() {
@@ -69,9 +69,9 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
 
         val typedInput get() = typedInputText
 
-        override fun answerCard(ease: Ease) {
-            super.answerCard(ease)
-            answered = ease
+        override fun answerCard(rating: Rating) {
+            super.answerCard(rating)
+            answered = rating
         }
 
         override val elapsedRealTime: Long
