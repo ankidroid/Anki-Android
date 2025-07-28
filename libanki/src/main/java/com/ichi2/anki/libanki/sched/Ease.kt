@@ -22,6 +22,7 @@ package com.ichi2.anki.libanki.sched
  * @param value The so called value of the button. For the sake of consistency with upstream and our API
  * the buttons are numbered from 1 to 4.
  */
+@Deprecated("use CardAnswer.Rating")
 enum class Ease(
     val value: Int,
 ) {
