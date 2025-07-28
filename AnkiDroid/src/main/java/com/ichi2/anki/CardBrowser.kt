@@ -398,19 +398,18 @@ open class CardBrowser :
         if (fragmented) {
             val parentLayout = findViewById<LinearLayout>(R.id.card_browser_xl_view)
             val divider = findViewById<View>(R.id.card_browser_resizing_divider)
-            val leftPane = findViewById<View>(R.id.card_browser_frame)
-            val rightPane = findViewById<View>(R.id.note_editor_frame)
-            if (parentLayout != null && divider != null && leftPane != null && rightPane != null) {
-                ResizablePaneManager(
-                    parentLayout = parentLayout,
-                    divider = divider,
-                    leftPane = leftPane,
-                    rightPane = rightPane,
-                    sharedPrefs = Prefs.getUiConfig(this),
-                    leftPaneWeightKey = PREF_CARD_BROWSER_PANE_WEIGHT,
-                    rightPaneWeightKey = PREF_NOTE_EDITOR_PANE_WEIGHT,
-                )
-            }
+            val cardBrowserPane = findViewById<View>(R.id.card_browser_frame)
+            val noteEditorPane = findViewById<View>(R.id.note_editor_frame)
+
+            ResizablePaneManager(
+                parentLayout = parentLayout,
+                divider = divider,
+                leftPane = cardBrowserPane,
+                rightPane = noteEditorPane,
+                sharedPrefs = Prefs.getUiConfig(this),
+                leftPaneWeightKey = PREF_CARD_BROWSER_PANE_WEIGHT,
+                rightPaneWeightKey = PREF_NOTE_EDITOR_PANE_WEIGHT,
+            )
         }
 
         // must be called once we have an accessible collection

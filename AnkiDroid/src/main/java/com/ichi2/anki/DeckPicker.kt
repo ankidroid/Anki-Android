@@ -527,25 +527,17 @@ open class DeckPicker :
 
             val resizingDivider = findViewById<View>(R.id.homescreen_resizing_divider)
             val parentLayout = findViewById<LinearLayout>(R.id.deckpicker_xl_view)
-
-            // Get references to the panes
             val deckPickerPane = findViewById<View>(R.id.deck_picker_pane)
             val studyOptionsPane = findViewById<View>(R.id.studyoptions_fragment)
-
-            if (deckPickerPane == null || studyOptionsPane == null) {
-                Timber.w("DeckPicker or StudyOptions pane not found. Resizing divider will not function.")
-            } else {
-                // Initialize the ResizablePaneManager
-                ResizablePaneManager(
-                    parentLayout = parentLayout,
-                    divider = resizingDivider,
-                    leftPane = deckPickerPane,
-                    rightPane = studyOptionsPane,
-                    sharedPrefs = Prefs.getUiConfig(this),
-                    leftPaneWeightKey = PREF_DECK_PICKER_PANE_WEIGHT,
-                    rightPaneWeightKey = PREF_STUDY_OPTIONS_PANE_WEIGHT,
-                )
-            }
+            ResizablePaneManager(
+                parentLayout = parentLayout,
+                divider = resizingDivider,
+                leftPane = deckPickerPane,
+                rightPane = studyOptionsPane,
+                sharedPrefs = Prefs.getUiConfig(this),
+                leftPaneWeightKey = PREF_DECK_PICKER_PANE_WEIGHT,
+                rightPaneWeightKey = PREF_STUDY_OPTIONS_PANE_WEIGHT,
+            )
         }
         registerReceiver()
 
