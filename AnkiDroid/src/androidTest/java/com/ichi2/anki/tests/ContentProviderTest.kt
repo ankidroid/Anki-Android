@@ -30,7 +30,6 @@ import com.ichi2.anki.FlashCardsContract
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.common.utils.emptyStringArray
 import com.ichi2.anki.libanki.Card
-import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.Decks
 import com.ichi2.anki.libanki.Note
@@ -43,7 +42,6 @@ import com.ichi2.anki.libanki.addNotetypeLegacy
 import com.ichi2.anki.libanki.backend.BackendUtils
 import com.ichi2.anki.libanki.exception.ConfirmModSchemaException
 import com.ichi2.anki.libanki.getStockNotetype
-import com.ichi2.anki.libanki.sched.Ease
 import com.ichi2.anki.libanki.sched.Scheduler
 import com.ichi2.anki.provider.pureAnswer
 import com.ichi2.anki.testutil.DatabaseUtils.cursorFillWindow
@@ -1112,7 +1110,9 @@ class ContentProviderTest : InstrumentedTest() {
         val reviewInfoUri = FlashCardsContract.ReviewInfo.CONTENT_URI
         val noteId = card.nid
         val cardOrd = card.ord
-        val earlyGraduatingEase = Ease.EASY
+
+        @Suppress("DEPRECATION")
+        val earlyGraduatingEase = com.ichi2.anki.libanki.sched.Ease.EASY
         val values =
             ContentValues().apply {
                 val timeTaken: Long = 5000 // 5 seconds
