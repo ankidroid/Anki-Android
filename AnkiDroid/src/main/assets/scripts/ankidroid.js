@@ -42,6 +42,7 @@ globalThis.ankidroid.doubleTapTimeout = 200;
 
 (() => {
     const SCHEME = "gesture";
+    const MULTI_TOUCH_TIMEOUT = 300;
 
     let startX = 0,
         startY = 0,
@@ -77,11 +78,10 @@ globalThis.ankidroid.doubleTapTimeout = 200;
 
             // Multi-finger detection. Takes priority over double taps
             if (touchCount > 1) {
-                const params = new URLSearchParams({
-                    touchCount: touchCount,
-                    deltaTime: new Date().getTime() - touchStartTime,
-                });
-                window.location.href = `${SCHEME}://multiFingerTap/?${params.toString()}`;
+                if ((Date.now() - touchStartTime) > MULTI_TOUCH_TIMEOUT) {
+                    return;
+                }
+                window.location.href = `${SCHEME}://multiFingerTap/?touchCount=${touchCount}`;
                 return;
             }
 

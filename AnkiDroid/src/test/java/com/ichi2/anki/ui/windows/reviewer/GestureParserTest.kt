@@ -33,7 +33,6 @@ class GestureParserTest {
         y: Int? = 100,
         deltaX: Int? = 0,
         deltaY: Int? = 0,
-        deltaTime: Int? = 10,
         touchCount: Int? = 1,
         scrollDirection: String? = null,
     ): Uri =
@@ -43,7 +42,6 @@ class GestureParserTest {
             every { getQueryParameter(GestureParser.PARAM_Y) } returns y?.toString()
             every { getQueryParameter(GestureParser.PARAM_DELTA_X) } returns deltaX?.toString()
             every { getQueryParameter(GestureParser.PARAM_DELTA_Y) } returns deltaY?.toString()
-            every { getQueryParameter(GestureParser.PARAM_DELTA_TIME) } returns deltaTime?.toString()
             every { getQueryParameter(GestureParser.PARAM_TOUCH_COUNT) } returns touchCount?.toString()
             every { getQueryParameter(GestureParser.PARAM_SCROLL_DIRECTION) } returns scrollDirection
         }
