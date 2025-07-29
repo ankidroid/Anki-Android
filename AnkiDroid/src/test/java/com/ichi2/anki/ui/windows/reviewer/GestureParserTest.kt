@@ -57,7 +57,7 @@ class GestureParserTest {
         swipeSensitivity: Float = 1F,
         gestureMode: TapGestureMode = TapGestureMode.NINE_POINT,
     ): Gesture? =
-        GestureParser.parse(
+        GestureParser().parse(
             uri = uri,
             isScrolling = isScrolling,
             scale = scale,

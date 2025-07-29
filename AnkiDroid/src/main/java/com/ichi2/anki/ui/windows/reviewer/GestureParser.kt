@@ -29,15 +29,7 @@ import kotlin.math.abs
  *
  * @see parse
  */
-object GestureParser {
-    private const val SWIPE_THRESHOLD_BASE = 100
-    private val gestureGrid =
-        listOf(
-            listOf(Gesture.TAP_TOP_LEFT, Gesture.TAP_TOP, Gesture.TAP_TOP_RIGHT),
-            listOf(Gesture.TAP_LEFT, Gesture.TAP_CENTER, Gesture.TAP_RIGHT),
-            listOf(Gesture.TAP_BOTTOM_LEFT, Gesture.TAP_BOTTOM, Gesture.TAP_BOTTOM_RIGHT),
-        )
-
+class GestureParser {
     /**
      * Analyzes the given [Uri] and returns the corresponding [Gesture].
      *
@@ -269,27 +261,37 @@ object GestureParser {
         }
     }
 
-    @VisibleForTesting
-    const val PARAM_X = "x"
+    companion object {
+        private const val SWIPE_THRESHOLD_BASE = 100
+        private val gestureGrid =
+            listOf(
+                listOf(Gesture.TAP_TOP_LEFT, Gesture.TAP_TOP, Gesture.TAP_TOP_RIGHT),
+                listOf(Gesture.TAP_LEFT, Gesture.TAP_CENTER, Gesture.TAP_RIGHT),
+                listOf(Gesture.TAP_BOTTOM_LEFT, Gesture.TAP_BOTTOM, Gesture.TAP_BOTTOM_RIGHT),
+            )
 
-    @VisibleForTesting
-    const val PARAM_Y = "y"
+        @VisibleForTesting
+        const val PARAM_X = "x"
 
-    @VisibleForTesting
-    const val PARAM_DELTA_X = "deltaX"
+        @VisibleForTesting
+        const val PARAM_Y = "y"
 
-    @VisibleForTesting
-    const val PARAM_DELTA_Y = "deltaY"
+        @VisibleForTesting
+        const val PARAM_DELTA_X = "deltaX"
 
-    @VisibleForTesting
-    const val PARAM_SCROLL_DIRECTION = "scrollDirection"
+        @VisibleForTesting
+        const val PARAM_DELTA_Y = "deltaY"
 
-    @VisibleForTesting
-    const val PARAM_TOUCH_COUNT = "touchCount"
+        @VisibleForTesting
+        const val PARAM_SCROLL_DIRECTION = "scrollDirection"
 
-    @VisibleForTesting
-    const val DOUBLE_TAP_HOST = "doubleTap"
+        @VisibleForTesting
+        const val PARAM_TOUCH_COUNT = "touchCount"
 
-    @VisibleForTesting
-    const val MULTI_FINGER_HOST = "multiFingerTap"
+        @VisibleForTesting
+        const val DOUBLE_TAP_HOST = "doubleTap"
+
+        @VisibleForTesting
+        const val MULTI_FINGER_HOST = "multiFingerTap"
+    }
 }
