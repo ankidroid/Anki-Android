@@ -166,8 +166,8 @@
     <string name="locale_selection_dialog_summary">Niektoré multimediálne klávesnice, akými sú GBoard podporujú zmenu jazyka pri úprave textu\n\nProsím, vyžiadajte si od svojho výrobcu klávesnice prvok “setImeHintLocales”, ak vaša klávesnica nemení jazyk.</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">Používanie AnkiDroid-u</string>
-    <string name="help_item_ankidroid_manual">AnkiDroid Manual</string>
-    <string name="help_item_anki_manual">Anki Manual</string>
+    <string name="help_item_ankidroid_manual">AnkiDroid manual</string>
+    <string name="help_item_anki_manual">Anki manual</string>
     <string name="help_item_ankidroid_faq">AnkiDroid FAQ</string>
     <string name="help_title_get_help">Vyhľadať pomoc</string>
     <string name="help_item_mailing_list">Zoznam adries</string>
@@ -186,7 +186,7 @@
     <string name="help_item_twitter">Twitter</string>
     <string name="help_title_privacy">Súkromie</string>
     <string name="help_item_ankidroid_privacy_policy">Zásady ochrany osobných údajov AnkiDroid</string>
-    <string name="help_item_ankiweb_privacy_policy">Zásady ochrany osobných údajov Ankiweb</string>
+    <string name="help_item_ankiweb_privacy_policy">Zásady ochrany osobných údajov AnkiWeb</string>
     <string name="help_item_ankiweb_terms_and_conditions">Podmienky AnkiWeb</string>
     <string name="help_title_send_exception">Odoslať správu o riešení problémov</string>
     <string name="help_dialog_exception_report_debounce">Správa bola odoslaná</string>

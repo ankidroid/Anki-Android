@@ -160,13 +160,13 @@
     <string name="locale_selection_dialog_summary">Algunos teclados multilingües, tales como el soporte de GBoard para cambiar el idioma cuando se edite el texto\n\nSolicite la función \"setImeHintLocales\" de su fabricante de teclado si su teclado no cambia el idioma.</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">Usando AnkiDroid</string>
-    <string name="help_item_ankidroid_manual">Manual de AnkiDroid</string>
-    <string name="help_item_anki_manual">Manual de Anki</string>
+    <string name="help_item_ankidroid_manual">AnkiDroid manual</string>
+    <string name="help_item_anki_manual">Anki manual</string>
     <string name="help_item_ankidroid_faq">Preguntas frecuentes de AnkiDroid</string>
-    <string name="help_title_get_help">Obtener Ayuda</string>
-    <string name="help_item_mailing_list">Listas de Correo</string>
+    <string name="help_title_get_help">Get help</string>
+    <string name="help_item_mailing_list">Mailing list</string>
     <string name="help_item_reddit">Reddit</string>
-    <string name="help_item_report_bug">Reportar un error</string>
+    <string name="help_item_report_bug">Report a bug</string>
     <string name="help_title_support_ankidroid" maxLength="28">Apoya AnkiDroid</string>
     <string name="help_item_support_opencollective_donate">Donar</string>
     <string name="help_item_support_develop_ankidroid">Desarrollar</string>
@@ -174,14 +174,14 @@
     <string name="help_item_support_other_ankidroid">Otros</string>
     <string name="multimedia_editor_trans_translate">Traducir</string>
     <string name="help_title_community">Comunidad</string>
-    <string name="help_item_anki_forums">Foro de Anki</string>
+    <string name="help_item_anki_forums">Anki forums</string>
     <string name="help_item_discord">Discord</string>
     <string name="help_item_facebook">Facebook</string>
     <string name="help_item_twitter">Twitter</string>
     <string name="help_title_privacy">Privacy</string>
-    <string name="help_item_ankidroid_privacy_policy">AnkiDroid Privacy Policy</string>
-    <string name="help_item_ankiweb_privacy_policy">AnkiWeb Privacy Policy</string>
-    <string name="help_item_ankiweb_terms_and_conditions">AnkiWeb Terms and Conditions</string>
+    <string name="help_item_ankidroid_privacy_policy">AnkiDroid privacy policy</string>
+    <string name="help_item_ankiweb_privacy_policy">AnkiWeb privacy policy</string>
+    <string name="help_item_ankiweb_terms_and_conditions">AnkiWeb terms and conditions</string>
     <string name="help_title_send_exception">Enviar informe de resolución de problemas</string>
     <string name="help_dialog_exception_report_debounce">El informe ya ha sido enviado</string>
     <string name="help_dialog_exception_report_sent">¡Informe enviado!</string>

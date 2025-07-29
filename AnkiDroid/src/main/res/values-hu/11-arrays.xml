@@ -85,13 +85,13 @@
     <string name="answer_easy" maxLength="41">Válasz: könnyű</string>
     <string name="gesture_abort_learning" maxLength="41">Close study screen</string>
     <string name="gesture_flag_red" maxLength="41">Piros jelölő bekapcsolása</string>
-    <string name="gesture_flag_orange" maxLength="41">Narancs Jelölő Bekapcsolása</string>
-    <string name="gesture_flag_green" maxLength="41">Zöld Jelölő Bekapcsolása</string>
-    <string name="gesture_flag_blue" maxLength="41">Kék Jelölő Bekapcsolása</string>
+    <string name="gesture_flag_orange" maxLength="41">Toggle orange flag</string>
+    <string name="gesture_flag_green" maxLength="41">Toggle green flag</string>
+    <string name="gesture_flag_blue" maxLength="41">Toggle blue flag</string>
     <string name="gesture_flag_pink" maxLength="41">Rózsaszín jelölő bekapcsolás</string>
     <string name="gesture_flag_turquoise" maxLength="41">Türkiz jelölő bekapcsolás</string>
     <string name="gesture_flag_purple" maxLength="41">Lila jelölő bekapcsolása</string>
-    <string name="gesture_flag_remove" maxLength="41">Jelölő Törlése</string>
+    <string name="gesture_flag_remove" maxLength="41">Remove flag</string>
     <string name="gesture_page_up" maxLength="41">Felfele</string>
     <string name="gesture_page_down" maxLength="41">Lefele</string>
     <string name="gesture_toggle_whiteboard" maxLength="41">Tábla engedélyezése</string>

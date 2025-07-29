@@ -84,21 +84,21 @@
     <string name="answer_good" maxLength="41">સરસ જવાબ આપો</string>
     <string name="answer_easy" maxLength="41">Answer easy</string>
     <string name="gesture_abort_learning" maxLength="41">Close study screen</string>
-    <string name="gesture_flag_red" maxLength="41">લાલ ધ્વજને ટૉગલ કરો</string>
-    <string name="gesture_flag_orange" maxLength="41">નારંગી ધ્વજને ટૉગલ કરો</string>
-    <string name="gesture_flag_green" maxLength="41">લીલો ધ્વજ ટૉગલ કરો</string>
-    <string name="gesture_flag_blue" maxLength="41">વાદળી ધ્વજ ટૉગલ કરો</string>
-    <string name="gesture_flag_pink" maxLength="41">ગુલાબી ધ્વજને ટૉગલ કરો</string>
-    <string name="gesture_flag_turquoise" maxLength="41">પીરોજ ધ્વજને ટૉગલ કરો</string>
-    <string name="gesture_flag_purple" maxLength="41">જાંબલી ધ્વજને ટૉગલ કરો</string>
-    <string name="gesture_flag_remove" maxLength="41">ધ્વજ દૂર કરો</string>
-    <string name="gesture_page_up" maxLength="41">પાનું ઉપર</string>
-    <string name="gesture_page_down" maxLength="41">Page Down</string>
-    <string name="gesture_toggle_whiteboard" maxLength="41">વ્હાઇટબોર્ડ ટૉગલ કરો</string>
+    <string name="gesture_flag_red" maxLength="41">Toggle red flag</string>
+    <string name="gesture_flag_orange" maxLength="41">Toggle orange flag</string>
+    <string name="gesture_flag_green" maxLength="41">Toggle green flag</string>
+    <string name="gesture_flag_blue" maxLength="41">Toggle blue flag</string>
+    <string name="gesture_flag_pink" maxLength="41">Toggle pink flag</string>
+    <string name="gesture_flag_turquoise" maxLength="41">Toggle turquoise flag</string>
+    <string name="gesture_flag_purple" maxLength="41">Toggle purple flag</string>
+    <string name="gesture_flag_remove" maxLength="41">Remove flag</string>
+    <string name="gesture_page_up" maxLength="41">Page up</string>
+    <string name="gesture_page_down" maxLength="41">Page down</string>
+    <string name="gesture_toggle_whiteboard" maxLength="41">Toggle whiteboard</string>
     <string name="gesture_toggle_eraser" maxLength="41">Toggle eraser</string>
-    <string name="gesture_show_hint" maxLength="41">સંકેત બતાવો</string>
-    <string name="gesture_show_all_hints" maxLength="41">બધા સંકેતો બતાવો</string>
-    <string name="record_voice" maxLength="41">અવાજ રેકોર્ડ કરો</string>
-    <string name="replay_voice" maxLength="41">અવાજ ફરી ચલાવો</string>
-    <string name="save_voice" maxLength="41">રેકોર્ડિંગ સાચવો</string>
+    <string name="gesture_show_hint" maxLength="41">Show hint</string>
+    <string name="gesture_show_all_hints" maxLength="41">Show all hints</string>
+    <string name="record_voice" maxLength="41">Record voice</string>
+    <string name="replay_voice" maxLength="41">Replay voice</string>
+    <string name="save_voice" maxLength="41">Save recording</string>
 </resources>

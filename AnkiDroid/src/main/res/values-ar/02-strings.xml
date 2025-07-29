@@ -98,7 +98,7 @@
     <string name="studyoptions_total_new_label">مجموع البطاقات الجديدة</string>
     <string name="studyoptions_total_label">مجموع البطاقات</string>
     <!-- Card editor -->
-    <string name="cardeditor_title_edit_card" maxLength="28">حرر الملحوظة</string>
+    <string name="cardeditor_title_edit_card" maxLength="28">تحرير الملحوظة</string>
     <string name="discard">تجاهل</string>
     <string name="note_editor_no_cards_created">لم تُنشَأ أي بطاقات. الرجاء تعبئة مزيد من الحقول</string>
     <string name="note_editor_no_cards_created_all_fields">لا يولِّد نوع الملحوظة الحالية أي بطاقات.\nالرجاء اختيار نوع آخر، أو الضغط على «بطاقات» وإضافة بديل حقل</string>
@@ -376,7 +376,7 @@
     <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">مُخيِّر الرِزم</string>
     <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">إحذف الرزم بلا تأكيد</string>
     <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">محرر الملحوظات</string>
-    <string name="select_deck" comment="Description of the shortcut that opens the deck selection dialog">اختر رزمة</string>
+    <string name="select_deck" comment="Description of the shortcut that opens the deck selection dialog">اختيار رِزمة</string>
     <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">إختر نوع الملحوظة</string>
     <string name="tag_editor" comment="Description of the shortcut that opens the tags dialog">محرر الوسوم</string>
     <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">محرر قوالب البطاقات</string>

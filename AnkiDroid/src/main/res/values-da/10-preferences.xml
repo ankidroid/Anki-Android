@@ -260,7 +260,7 @@
     <string name="type_in_answer_focus" maxLength="41">Focus ‘type in answer’</string>
     <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the study screen</string>
     <!-- About -->
-    <string name="open_changelog">Open Changelog</string>
+    <string name="open_changelog">Open changelog</string>
     <string name="pref_cat_about_title" maxLength="41">Om</string>
     <string name="contributors_title">Contributors</string>
     <string name="about_contributors_description"><![CDATA[Disse er vores fantastiske <a href=\"%1$s\">bidragsydere</a>. Du kan også hjælpe AnkiDroid ved at programmere, oversætte, donere og <a href=\"%2$s\">mere</a>!]]></string>

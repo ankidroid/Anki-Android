@@ -160,8 +160,8 @@
     <string name="locale_selection_dialog_summary">Vissa flerspråkiga tangentbord, till exempel GBoard har stöd för att ändra språk vid redigering av text\n\nVänligen begär funktionen ”setImeHintLocales” från din tangentbordstillverkare om ditt tangentbord inte ändrar språk.</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">Hur man använder AnkiDroid</string>
-    <string name="help_item_ankidroid_manual">AnkiDroid Manual</string>
-    <string name="help_item_anki_manual">Anki Manual</string>
+    <string name="help_item_ankidroid_manual">AnkiDroid manual</string>
+    <string name="help_item_anki_manual">Anki manual</string>
     <string name="help_item_ankidroid_faq">AnkiDroid FAQ</string>
     <string name="help_title_get_help">Få hjälp</string>
     <string name="help_item_mailing_list">E-postlista</string>
@@ -181,7 +181,7 @@
     <string name="help_title_privacy">Sekretess</string>
     <string name="help_item_ankidroid_privacy_policy">AnkiDroid Sekretesspolicy</string>
     <string name="help_item_ankiweb_privacy_policy">AnkiWeb Sekretesspolicy</string>
-    <string name="help_item_ankiweb_terms_and_conditions">AnikWeb Användarvillkor</string>
+    <string name="help_item_ankiweb_terms_and_conditions">AnkiWeb terms and conditions</string>
     <string name="help_title_send_exception">Skicka felsökningsrapport</string>
     <string name="help_dialog_exception_report_debounce">Rapporten har redan skickats</string>
     <string name="help_dialog_exception_report_sent">Rapporten har skickats!</string>

@@ -163,7 +163,7 @@
     <string name="help_item_ankidroid_manual">Manuali AnkiDroid</string>
     <string name="help_item_anki_manual">Manuali Anki</string>
     <string name="help_item_ankidroid_faq">AnkiDroid FAQ</string>
-    <string name="help_title_get_help">Kerko Ndihme</string>
+    <string name="help_title_get_help">Get help</string>
     <string name="help_item_mailing_list">Lista e postimeve</string>
     <string name="help_item_reddit">Reddit</string>
     <string name="help_item_report_bug">Raporto nje gabim</string>
@@ -181,7 +181,7 @@
     <string name="help_title_privacy">Privatësia</string>
     <string name="help_item_ankidroid_privacy_policy">Politika e privatësisë së AnkiDroid</string>
     <string name="help_item_ankiweb_privacy_policy">Politika e privatësisë së AnkiWeb</string>
-    <string name="help_item_ankiweb_terms_and_conditions">Termat dhe Kushtet e AnkiWeb</string>
+    <string name="help_item_ankiweb_terms_and_conditions">AnkiWeb terms and conditions</string>
     <string name="help_title_send_exception">Dërgo raportin e zgjidhjes së problemeve</string>
     <string name="help_dialog_exception_report_debounce">Raporti i dorëzuar tashmë</string>
     <string name="help_dialog_exception_report_sent">Raporti u dërgua!</string>

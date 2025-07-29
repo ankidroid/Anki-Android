@@ -260,7 +260,7 @@
     <string name="type_in_answer_focus" maxLength="41">Tampulan ang \'i-type ang sagot\'</string>
     <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the study screen</string>
     <!-- About -->
-    <string name="open_changelog">Buksan Ang Changelog</string>
+    <string name="open_changelog">Open changelog</string>
     <string name="pref_cat_about_title" maxLength="41">Tungkol sa Amin</string>
     <string name="contributors_title">Mga Nag-Ambag</string>
     <string name="about_contributors_description"><![CDATA[Ito ang mga astig naming mga <a href=\"%1$s\">nag-ambag</a>. Maaari ka ring tumulong sa AnkiDroid sa pag-program, pagsalin, paghandog <a href=\"%2$s\">at iba pa</a>!]]></string>

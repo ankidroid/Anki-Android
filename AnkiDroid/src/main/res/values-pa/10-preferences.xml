@@ -259,7 +259,7 @@
     <string name="type_in_answer_focus" maxLength="41">ਫੋਕਸ \'ਜਵਾਬ ਟਾਈਪ ਕਰੋ\'</string>
     <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the study screen</string>
     <!-- About -->
-    <string name="open_changelog">ਚੇਂਜਲੌਗ ਖੋਲ੍ਹੋ</string>
+    <string name="open_changelog">Open changelog</string>
     <string name="pref_cat_about_title" maxLength="41">ਬਾਰੇ</string>
     <string name="contributors_title">ਯੋਗਦਾਨ ਪਾਉਣ ਵਾਲੇ</string>
     <string name="about_contributors_description"><![CDATA[ਇਹ ਸਾਡੇ ਸ਼ਾਨਦਾਰ <a href=\"%1$s\">ਯੋਗਦਾਨ</a> ਹਨ। ਤੁਸੀਂ ਪ੍ਰੋਗਰਾਮਿੰਗ, ਅਨੁਵਾਦ, ਦਾਨ ਅਤੇ <a href=\"%2$s\">ਹੋਰ</a> ਦੁਆਰਾ AnkiDroid ਦੀ ਮਦਦ ਵੀ ਕਰ ਸਕਦੇ ਹੋ!]]></string>

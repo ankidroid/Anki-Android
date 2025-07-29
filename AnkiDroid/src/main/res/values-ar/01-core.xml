@@ -101,7 +101,7 @@
     <string name="redo" maxLength="28" comment="Menu entry that allows to redo action that was just undone.">إعادة إجراء</string>
     <!-- flashcard_portrait.xml -->
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in the Study Screen. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)" maxLength="28">تراجع خط</string>
-    <string name="move_all_to_deck">انقُلها كلَّها إلى رِزمة</string>
+    <string name="move_all_to_deck">نقل الكل إلى الرزمة</string>
     <string name="unbury" maxLength="28">نكش</string>
     <string name="rename_deck" maxLength="28">تغيير اسم الرِزمة</string>
     <string name="create_shortcut">إنشاء اختصار</string>
@@ -111,11 +111,11 @@
     <string name="menu_add_note" maxLength="28">إضافة ملحوظة</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">مزامنة الحساب</string>
     <string name="menu_dismiss_note" maxLength="41">إخفاء / حذف</string>
-    <string name="menu_bury_card" maxLength="28">ادفن البطاقة</string>
+    <string name="menu_bury_card" maxLength="28">دفن البطاقة</string>
     <string name="menu_bury_note" maxLength="28">دفن الملحوظة</string>
     <string name="menu_suspend_card" maxLength="28">تعليق البطاقة</string>
     <string name="menu_suspend_note" maxLength="28">تعليق الملحوظة</string>
-    <string name="menu_bury" maxLength="28">ادفن</string>
+    <string name="menu_bury" maxLength="28">دفن</string>
     <string name="menu_suspend" maxLength="28">تعليق</string>
     <string name="menu_delete_note" maxLength="28">حذف الملحوظة</string>
     <string name="menu_flag" maxLength="41">العَلَم</string>

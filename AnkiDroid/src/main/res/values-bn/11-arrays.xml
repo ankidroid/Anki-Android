@@ -93,7 +93,7 @@
     <string name="gesture_flag_purple" maxLength="41">বেগুনি পতাকা টগল করুন</string>
     <string name="gesture_flag_remove" maxLength="41">পতাকা সরান</string>
     <string name="gesture_page_up" maxLength="41">পৃষ্ঠা আপ</string>
-    <string name="gesture_page_down" maxLength="41">Page Down</string>
+    <string name="gesture_page_down" maxLength="41">Page down</string>
     <string name="gesture_toggle_whiteboard" maxLength="41">হোয়াইটবোর্ড টগল করুন</string>
     <string name="gesture_toggle_eraser" maxLength="41">Toggle eraser</string>
     <string name="gesture_show_hint" maxLength="41">ইঙ্গিত দেখান</string>
