@@ -80,8 +80,8 @@ object Prefs {
     @VisibleForTesting
     fun putInt(
         @StringRes keyResId: Int,
-        defValue: Int,
-    ) = sharedPrefs.edit { putInt(key(keyResId), defValue) }
+        value: Int,
+    ) = sharedPrefs.edit { putInt(key(keyResId), value) }
 
     @VisibleForTesting
     fun <E> getEnum(
