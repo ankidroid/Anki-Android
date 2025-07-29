@@ -16,8 +16,6 @@
 package com.ichi2.anki.ui.windows.reviewer
 
 import android.net.Uri
-import android.os.Build
-import android.view.ViewConfiguration
 import android.webkit.WebView
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.cardviewer.Gesture
@@ -33,13 +31,6 @@ import kotlin.math.abs
  */
 object GestureParser {
     private const val SWIPE_THRESHOLD_BASE = 100
-    private val multiPressTimeout =
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            ViewConfiguration.getMultiPressTimeout()
-        } else {
-            // https://cs.android.com/android/platform/superproject/+/android-latest-release:frameworks/base/core/java/android/view/ViewConfiguration.java;l=89;drc=36c4f0306d7e9b9eff645a667148a5f2c5e9d17d
-            300
-        }
     private val gestureGrid =
         listOf(
             listOf(Gesture.TAP_TOP_LEFT, Gesture.TAP_TOP, Gesture.TAP_TOP_RIGHT),
@@ -74,8 +65,6 @@ object GestureParser {
         when (uri.host) {
             DOUBLE_TAP_HOST -> return Gesture.DOUBLE_TAP
             MULTI_FINGER_HOST -> {
-                val deltaTime = uri.getIntQuery(PARAM_DELTA_TIME) ?: return null
-                if (deltaTime > multiPressTimeout) return null
                 val touchCount = uri.getIntQuery(PARAM_TOUCH_COUNT) ?: return null
                 return when (touchCount) {
                     2 -> Gesture.TWO_FINGER_TAP
@@ -289,9 +278,6 @@ object GestureParser {
 
     @VisibleForTesting
     const val PARAM_DELTA_Y = "deltaY"
-
-    @VisibleForTesting
-    const val PARAM_DELTA_TIME = "deltaTime"
 
     @VisibleForTesting
     const val PARAM_SCROLL_DIRECTION = "scrollDirection"
