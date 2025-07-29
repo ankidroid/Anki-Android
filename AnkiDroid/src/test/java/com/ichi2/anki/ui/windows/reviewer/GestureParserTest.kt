@@ -56,8 +56,13 @@ class GestureParserTest {
         measuredHeight: Int = 1500,
         swipeSensitivity: Float = 1F,
         gestureMode: TapGestureMode = TapGestureMode.NINE_POINT,
-    ): Gesture? =
-        GestureParser().parse(
+    ): Gesture? {
+        val gestureParser =
+            GestureParser(
+                swipeSensitivity = swipeSensitivity,
+                gestureMode = gestureMode,
+            )
+        return gestureParser.parse(
             uri = uri,
             isScrolling = isScrolling,
             scale = scale,
@@ -65,9 +70,8 @@ class GestureParserTest {
             scrollY = scrollY,
             measuredWidth = measuredWidth,
             measuredHeight = measuredHeight,
-            swipeSensitivity = swipeSensitivity,
-            gestureMode = gestureMode,
         )
+    }
 
     @Test
     fun `parse returns null when isScrolling is true`() {
