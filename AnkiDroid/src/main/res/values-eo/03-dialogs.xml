@@ -238,8 +238,8 @@
     <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">ekde</string>
     <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">Ĝis</string>
     <!-- Instant Note Editor -->
-    <string name="cloze_note_required">La not-tipo “truteksto” estas postulata</string>
-    <string name="cloze_not_found_message">Ne trovis la not-tipon “truteksto”, malfermu la not-redaktilon kaj reprovu post aldoni la not-tipon “truteksto”.</string>
+    <string name="cloze_note_required">La nototipo “truteksto” estas postulata</string>
+    <string name="cloze_not_found_message">Ne trovis la nototipon “truteksto”, malfermu la not-redaktilon kaj reprovu post aldoni la nototipon “truteksto”.</string>
     <string name="open">Malfermi</string>
     <string name="change_cloze_number">Ŝanĝi numeron de truteksto</string>
     <string name="cloze_number">Numero de truteksto:</string>
