@@ -20,6 +20,7 @@ import android.webkit.WebView
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.TapGestureMode
+import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.utils.ext.clamp
 import timber.log.Timber
 import kotlin.math.abs
@@ -29,7 +30,10 @@ import kotlin.math.abs
  *
  * @see parse
  */
-class GestureParser {
+class GestureParser(
+    private val swipeSensitivity: Float = Prefs.swipeSensitivity,
+    private val gestureMode: TapGestureMode = Prefs.tapGestureMode,
+) {
     /**
      * Analyzes the given [Uri] and returns the corresponding [Gesture].
      *
@@ -50,8 +54,6 @@ class GestureParser {
         scrollY: Int,
         measuredWidth: Int,
         measuredHeight: Int,
-        swipeSensitivity: Float,
-        gestureMode: TapGestureMode,
     ): Gesture? {
         if (isScrolling) return null
         when (uri.host) {
@@ -93,8 +95,6 @@ class GestureParser {
         isScrolling: Boolean,
         scale: Float,
         webView: WebView,
-        swipeSensitivity: Float,
-        gestureMode: TapGestureMode,
     ): Gesture? =
         parse(
             uri = uri,
@@ -104,8 +104,6 @@ class GestureParser {
             scrollY = webView.scrollY,
             measuredWidth = webView.measuredWidth,
             measuredHeight = webView.measuredHeight,
-            swipeSensitivity = swipeSensitivity,
-            gestureMode = gestureMode,
         )
 
     /**

@@ -612,9 +612,6 @@ class ReviewerFragment :
         private var scale: Float = if (!isRobolectric) webView.scale else 1F
         private var isScrolling: Boolean = false
         private var isScrollingJob: Job? = null
-        private val gestureMode = Prefs.tapGestureMode
-        private val swipeSensitivity = Prefs.swipeSensitivity
-
         private val gestureParser = GestureParser()
 
         init {
@@ -632,7 +629,7 @@ class ReviewerFragment :
         override fun handleUrl(url: Uri): Boolean {
             return when (url.scheme) {
                 "gesture" -> {
-                    val gesture = gestureParser.parse(url, isScrolling, scale, webView, swipeSensitivity, gestureMode) ?: return true
+                    val gesture = gestureParser.parse(url, isScrolling, scale, webView) ?: return true
                     Timber.v("ReviewerFragment::onGesture %s", gesture)
                     bindingMap.onGesture(gesture)
                     true
