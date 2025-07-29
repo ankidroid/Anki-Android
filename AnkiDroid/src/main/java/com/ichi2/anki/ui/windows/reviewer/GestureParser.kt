@@ -31,9 +31,11 @@ import kotlin.math.abs
  * @see parse
  */
 class GestureParser(
-    private val swipeSensitivity: Float = Prefs.swipeSensitivity,
     private val gestureMode: TapGestureMode = Prefs.tapGestureMode,
+    swipeSensitivity: Float = Prefs.swipeSensitivity,
 ) {
+    private val swipeThresholdBase = 100 / swipeSensitivity
+
     /**
      * Analyzes the given [Uri] and returns the corresponding [Gesture].
      *
@@ -68,7 +70,7 @@ class GestureParser(
         val absDeltaX = abs(deltaX)
         val absDeltaY = abs(deltaY)
 
-        val swipeThreshold = (SWIPE_THRESHOLD_BASE / swipeSensitivity) / scale
+        val swipeThreshold = swipeThresholdBase / scale
         if (absDeltaX > swipeThreshold || absDeltaY > swipeThreshold) {
             val scrollDirection = uri.getQueryParameter("scrollDirection")
             return determineSwipeGesture(deltaX, deltaY, absDeltaX, absDeltaY, scrollDirection)
@@ -260,7 +262,6 @@ class GestureParser(
     }
 
     companion object {
-        private const val SWIPE_THRESHOLD_BASE = 100
         private val gestureGrid =
             listOf(
                 listOf(Gesture.TAP_TOP_LEFT, Gesture.TAP_TOP, Gesture.TAP_TOP_RIGHT),
