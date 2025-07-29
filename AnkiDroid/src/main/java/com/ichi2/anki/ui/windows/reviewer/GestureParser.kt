@@ -64,18 +64,7 @@ object GestureParser {
         if (isScrolling) return null
         when (uri.host) {
             DOUBLE_TAP_HOST -> return Gesture.DOUBLE_TAP
-            MULTI_FINGER_HOST -> {
-                val touchCount = uri.getIntQuery(PARAM_TOUCH_COUNT) ?: return null
-                return when (touchCount) {
-                    2 -> Gesture.TWO_FINGER_TAP
-                    3 -> Gesture.THREE_FINGER_TAP
-                    4 -> Gesture.FOUR_FINGER_TAP
-                    else -> {
-                        Timber.w("Invalid multi-finger tap count %d", touchCount)
-                        null
-                    }
-                }
-            }
+            MULTI_FINGER_HOST -> return getMultiTouchGesture(uri)
         }
 
         val pageX = uri.getIntQuery(PARAM_X) ?: return null
@@ -266,6 +255,19 @@ object GestureParser {
     }
 
     private fun Uri.getIntQuery(key: String) = getQueryParameter(key)?.toIntOrNull()
+
+    private fun getMultiTouchGesture(uri: Uri): Gesture? {
+        val touchCount = uri.getIntQuery(PARAM_TOUCH_COUNT) ?: return null
+        return when (touchCount) {
+            2 -> Gesture.TWO_FINGER_TAP
+            3 -> Gesture.THREE_FINGER_TAP
+            4 -> Gesture.FOUR_FINGER_TAP
+            else -> {
+                Timber.w("Invalid multi-finger tap count %d", touchCount)
+                null
+            }
+        }
+    }
 
     @VisibleForTesting
     const val PARAM_X = "x"
