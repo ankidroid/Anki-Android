@@ -56,7 +56,7 @@ class TranslationTypoTest {
     fun `plurals - javascript fails`() {
         val invalidLowerCase = """<resources>
            <plurals name="pl">
-               <item quantity="other">>javascript</item>
+               <item quantity="other">javascript</item>
            </plurals>
         </resources>"""
 
@@ -72,6 +72,33 @@ class TranslationTypoTest {
         </resources>"""
 
         TranslationTypo.ISSUE.assertXmlStringsHasError(invalidLowerCase, "should be 'JavaScript'")
+    }
+
+    @Test
+    fun `quoted text gives error`() {
+        val withQuotes = """<resources>
+           <string name="ankiweb">'ankiweb'</string>
+        </resources>"""
+
+        TranslationTypo.ISSUE.assertXmlStringsHasError(withQuotes, "should be 'AnkiWeb'")
+    }
+
+    @Test
+    fun `rtl text produces error`() {
+        val rtl = """<resources>
+            <string name="sample">فایل ankidroid فایل</string>
+        </resources>"""
+
+        TranslationTypo.ISSUE.assertXmlStringsHasError(rtl, "should be 'AnkiDroid'")
+    }
+
+    @Test
+    fun `ankiweb url is not detected`() {
+        val url = """<resources>
+           <string name="url">https://faqs.ankiweb.net/example_for_testing</string>
+        </resources>"""
+
+        TranslationTypo.ISSUE.assertXmlStringsNoIssues(url)
     }
 
     @Test
