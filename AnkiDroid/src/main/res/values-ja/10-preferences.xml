@@ -115,9 +115,9 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">中央をタップ</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">左下をタップ</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">右下をタップ</string>
-    <string name="gestures_two_finger_tap" maxLength="41">Two-finger tap</string>
-    <string name="gestures_three_finger_tap" maxLength="41">Three-finger tap</string>
-    <string name="gestures_four_finger_tap" maxLength="41">Four-finger tap</string>
+    <string name="gestures_two_finger_tap" maxLength="41">2点同時タップ</string>
+    <string name="gestures_three_finger_tap" maxLength="41">3点同時タップ</string>
+    <string name="gestures_four_finger_tap" maxLength="41">4点同時タップ</string>
     <string name="gestures_shake" maxLength="41">デバイスを振る</string>
     <string name="card_browser_enable_external_context_menu" maxLength="41">「%s」メニュー</string>
     <string name="card_browser_enable_external_context_menu_summary">AnkiDroidおよび他のアプリ（ウェブブラウザなど）で、文字列を選択した際に表示されるコンテキストメニューに「%s」という項目を追加します</string>
@@ -232,7 +232,7 @@
     <string name="media" maxLength="41">音声・動画</string>
     <string name="misc" maxLength="41">その他</string>
     <!-- Review reminders -->
-    <string name="add_reminder" comment="Label for the add reminder button in the screen for adding and editing review reminders">Add reminder</string>
+    <string name="add_reminder" comment="Label for the add reminder button in the screen for adding and editing review reminders">リマインダーを追加</string>
     <!-- studyoptions -->
     <string name="studyoptions_limit_select_tags">タグを選択</string>
     <!-- Deck configurations -->
