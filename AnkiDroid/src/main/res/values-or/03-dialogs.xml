@@ -160,8 +160,8 @@
     <string name="locale_selection_dialog_summary">କିଛି ବହୁଭାଷୀ କୀବୋର୍ଡ୍, ଯେପରିକି GBoard ପାଠ୍ୟ ସମ୍ପାଦନ କରିବା ସମୟରେ ଭାଷା ପରିବର୍ତ୍ତନକୁ ସମର୍ଥନ କରେ\n\nଦୟାକରି ଆପଣଙ୍କର କୀବୋର୍ଡ୍ ନିର୍ମାତାଙ୍କ ଠାରୁ “setImeHintLocales” ବୈଶିଷ୍ଟ୍ୟ ଅନୁରୋଧ କରନ୍ତୁ ଯଦି ଆପଣଙ୍କର କୀବୋର୍ଡ୍ ଭାଷା ପରିବର୍ତ୍ତନ ନକରେ।</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">AnkiDroid ବ୍ୟବହାର କରିବାରେ</string>
-    <string name="help_item_ankidroid_manual">AnkiDroid Manual</string>
-    <string name="help_item_anki_manual">Anki Manual</string>
+    <string name="help_item_ankidroid_manual">AnkiDroid manual</string>
+    <string name="help_item_anki_manual">Anki manual</string>
     <string name="help_item_ankidroid_faq">AnkiDroid ପ୍ରଶ୍ନଉତ୍ତରୀ</string>
     <string name="help_title_get_help">ସହାୟତା ପାଆନ୍ତୁ</string>
     <string name="help_item_mailing_list">ମେଲିଂ ତାଲିକା</string>

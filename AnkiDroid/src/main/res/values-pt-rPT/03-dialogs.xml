@@ -163,10 +163,10 @@
     <string name="help_item_ankidroid_manual">Manual do AnkiDroid</string>
     <string name="help_item_anki_manual">Manual do Anki</string>
     <string name="help_item_ankidroid_faq">FAQ do AnkiDroid</string>
-    <string name="help_title_get_help">Obter Ajuda</string>
-    <string name="help_item_mailing_list">Lista de Distribuição (\"Mailing\")</string>
+    <string name="help_title_get_help">Get help</string>
+    <string name="help_item_mailing_list">Mailing list</string>
     <string name="help_item_reddit">Reddit</string>
-    <string name="help_item_report_bug">Reportar um Erro</string>
+    <string name="help_item_report_bug">Report a bug</string>
     <string name="help_title_support_ankidroid" maxLength="28">Apoiar o AnkiDroid</string>
     <string name="help_item_support_opencollective_donate">Doar</string>
     <string name="help_item_support_develop_ankidroid">Desenvolver</string>
@@ -179,9 +179,9 @@
     <string name="help_item_facebook">Facebook</string>
     <string name="help_item_twitter">Twitter</string>
     <string name="help_title_privacy">Privacidade</string>
-    <string name="help_item_ankidroid_privacy_policy">Política de Privacidade do AnkiDroid</string>
-    <string name="help_item_ankiweb_privacy_policy">Política de Privacidade AnkiWeb</string>
-    <string name="help_item_ankiweb_terms_and_conditions">Termos e Condições do AnkiWeb</string>
+    <string name="help_item_ankidroid_privacy_policy">AnkiDroid privacy policy</string>
+    <string name="help_item_ankiweb_privacy_policy">AnkiWeb privacy policy</string>
+    <string name="help_item_ankiweb_terms_and_conditions">AnkiWeb terms and conditions</string>
     <string name="help_title_send_exception">Enviar relatório para resolução de problemas</string>
     <string name="help_dialog_exception_report_debounce">Relatório já submetido</string>
     <string name="help_dialog_exception_report_sent">O relatório foi enviado!</string>

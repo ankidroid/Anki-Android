@@ -258,7 +258,7 @@
     <string name="type_in_answer_focus" maxLength="41">लक्ष द्या ‘उत्तर टाइप करा’</string>
     <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the study screen</string>
     <!-- About -->
-    <string name="open_changelog">चेंजलॉग उघडा</string>
+    <string name="open_changelog">Open changelog</string>
     <string name="pref_cat_about_title" maxLength="41">बद्दल</string>
     <string name="contributors_title">योगदानकर्ते</string>
     <string name="about_contributors_description"><![CDATA[हे आमचे उत्कृष्ट <a href=\"%1$s\">योगदानकर्ते</a> आहेत. तुम्ही प्रोग्रामिंग, भाषांतर, देणगी आणि <a href=\"%2$s\">अधिक</a> करून देखील AnkiDroid ला मदत करू शकता!]]></string>

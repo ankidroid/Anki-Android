@@ -40,7 +40,7 @@
 -->
 <resources>
     <!-- Main editor popup menu items -->
-    <string name="multimedia_editor_popup_image">أضف صورة</string>
+    <string name="multimedia_editor_popup_image">إضافة صورة</string>
     <string name="multimedia_editor_popup_audio_clip">إضافة مقطع صوتي</string>
     <string name="multimedia_editor_popup_video_clip">أضف تسجيلًا صوتيًا</string>
     <string name="multimedia_editor_popup_audio">تسجيل الصوت</string>
