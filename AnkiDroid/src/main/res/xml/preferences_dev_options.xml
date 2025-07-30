@@ -45,7 +45,11 @@
         android:summary="Touch here to lock the database (all threads block in-process, exception if using second process)"
         android:key="@string/pref_lock_database_key"/>
     <Preference
-        android:title="Set database to pre-scoped storage default"
+        android:title="Corrupt FSRS parameters"
+        android:summary="Corrupts the FSRS parameters of the default deck. Fixed by resetting/optimization"
+        android:key="@string/pref_corrupt_fsrs_params"/>
+    <Preference
+        android:title="Set Database to pre-Scoped Storage default"
         android:summary="Touch here to set the database path to /storage/emulated/0/AnkiDroid"
         android:key="@string/pref_set_database_path_debug_key"/>
     <SwitchPreferenceCompat
