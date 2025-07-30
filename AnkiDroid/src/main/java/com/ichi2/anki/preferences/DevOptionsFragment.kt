@@ -36,6 +36,7 @@ import com.ichi2.preferences.IncrementerNumberRangePreferenceCompat
 import com.ichi2.utils.show
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import org.json.JSONArray
 import timber.log.Timber
 import java.io.File
 
@@ -90,6 +91,26 @@ class DevOptionsFragment : SettingsFragment() {
             launchCatchingTask { withCol { Thread.sleep(1000 * 86400) } }
             false
         }
+        // Apply invalid FSRS Parameters (DeckConfigId 1)
+        requirePreference<Preference>(R.string.pref_corrupt_fsrs_params).setOnPreferenceClickListener {
+            Timber.w("Corrupting FSRS parameters for default deck config")
+            launchCatchingTask {
+                withCol {
+                    val defaultConfig = decks.getConfig(1)
+                    val invalidFsrsConfig =
+                        JSONArray().apply {
+                            put(0.4197)
+                        }
+                    defaultConfig.jsonObject.put("fsrsWeights", invalidFsrsConfig)
+                    defaultConfig.jsonObject.put("fsrsParams5", invalidFsrsConfig)
+                    defaultConfig.jsonObject.put("fsrsParams6", invalidFsrsConfig)
+                    decks.save(defaultConfig)
+                }
+                showThemedToast(requireContext(), "Parameters corrupted. Optimize to fix", false)
+            }
+            false
+        }
+
         // Make it possible to test crash reporting
         requirePreference<Preference>(R.string.pref_set_database_path_debug_key).setOnPreferenceClickListener {
             AlertDialog.Builder(requireContext()).show {
