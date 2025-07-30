@@ -150,7 +150,7 @@
     <string name="import_error_handle_exception">ورود این فایل ناموفق بود\n\n%s</string>
     <string name="import_error_not_apkg_extension">فایل \"%s\" فاقد پسوند .apkg یا .colpkg است</string>
     <string name="import_error_load_imported_database">جایگزین پایگاه داده آنکی (.anki2) هنوز پشتیبانی نشده است. لطفاً برای راهنمایی در مورد جایگزینی راهنما را بخوانید.</string>
-    <string name="import_error_content_provider">فایل انتخاب شده به صورت خودکار توسط ankidroid نمی تواند وارد شود. لطفا راهنمای کاربر را ببینید که چگونه به صورت دستی بتوان فایل anki را وارد کرد:\n%s</string>
+    <string name="import_error_content_provider">فایل انتخاب شده به صورت خودکار توسط AnkiDroid نمی تواند وارد شود. لطفا راهنمای کاربر را ببینید که چگونه به صورت دستی بتوان فایل anki را وارد کرد:\n%s</string>
     <string name="import_error_copy_to_cache">کش کردن فایل ناموفق بود (احتمالا به دلیل کمبود حافظه)</string>
     <string name="import_interrupted">در فرایند ورود اختلال ایجاد شد: AnkiDroid بسته بود</string>
     <string name="export_ready_title">خروجی آماده است</string>
@@ -213,7 +213,7 @@
     <string name="api_version_developer_contact">این کارت از امکانات پشتیبانی نشده AnkiDroid استفاده میکند. با توسعه دهنده %1$s ارتباط برقرار کنید، یا این wiki را ببینید. %2$s</string>
     <string name="invalid_json_data">کارت اطلاعات نامعتبر ارائه کرد. %s</string>
     <string name="valid_js_api_version">نسخه رابط های برنامه نویسی کاربردی جاوا اسکریپت AnkiDroid نامعتبر است. با توسعه دهنده %s ارتباط برقرار کنید، یا wiki را ببینید.</string>
-    <string name="update_js_api_version">به روز رسانی رابط های برنامه نویسی کاربردی جاوا اسکریپت AnkiDRoid در دسترس است. با توسعه دهنده %s ارتباط برقرار کنید، یا wiki را ببینید</string>
+    <string name="update_js_api_version">به روز رسانی رابط های برنامه نویسی کاربردی جاوا اسکریپت AnkiDroid در دسترس است. با توسعه دهنده %s ارتباط برقرار کنید، یا wiki را ببینید</string>
     <string name="reviewer_invalid_api_version_visit_documentation">نما</string>
     <string name="anki_js_error_code">(شماره خطا: %d)</string>
     <!-- About AnkiDroid screen -->

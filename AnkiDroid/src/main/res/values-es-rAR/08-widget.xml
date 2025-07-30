@@ -59,7 +59,7 @@
         <item quantity="one">%d minuto restante</item>
         <item quantity="other">%d minutos restantes</item>
     </plurals>
-    <string name="widget_add_note_button">Añadir nueva nota de Ankidroid</string>
+    <string name="widget_add_note_button">Añadir nueva nota de AnkiDroid</string>
     <string name="deck_picker_widget_description" comment="Title of the Deck Picker Widget. Displayed to the user in Android\'s Widget Selection menu">Selector de Mazos</string>
     <string name="card_analysis_extra_widget_description">Análisis de Tarjetas</string>
     <!-- Strings to explain usage in Deck Picker and Card Analysis Widget Configuration screen -->

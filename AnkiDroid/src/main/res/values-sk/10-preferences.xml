@@ -204,7 +204,7 @@
     <string name="reset_settings_to_default">Obnoviť pôvodné nastavenia</string>
     <string name="reset">Obnoviť</string>
     <string name="thirdparty_apps_title" maxLength="41">Aplikácie API od tretích strán</string>
-    <string name="thirdparty_apps_summary">Pozrite si zoznam aplikácií, ktoré využívajú Ankidroid API ako sú slovníky, služby.</string>
+    <string name="thirdparty_apps_summary">Pozrite si zoznam aplikácií, ktoré využívajú AnkiDroid API ako sú slovníky, služby.</string>
     <string name="pref_controls_reviews_tab" maxLength="41" comment="Name of the tab to configure controls for the reviews screen">Reviews</string>
     <string name="pref_controls_previews_tab" maxLength="41" comment="Name of the tab to configure controls for the previews screen">Previews</string>
     <string name="toggle_backside_only" maxLength="41" comment="Control setting that toggles \'Backside only\' in the previews screen">Toggle backside only</string>

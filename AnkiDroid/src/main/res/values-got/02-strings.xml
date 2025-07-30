@@ -83,7 +83,7 @@
     <string name="webview_crash_fatal">Fatal Error: WebView renderer crashed. Cause: %s</string>
     <string name="webview_crash_loop_dialog_title">System WebView Rendering Failure</string>
     <string name="webview_crash_loop_dialog_content">System WebView failed to render card \'%1$s\'.\n %2$s</string>
-    <string name="filter_by_flags" maxLength="41">Flags</string>
+    <string name="filter_by_flags" maxLength="41">Fanans</string>
     <!-- Custom study options -->
     <string name="custom_study_loading_tags">Building list of tags&#8230;</string>
     <!-- Study options -->
@@ -91,8 +91,8 @@
         <item quantity="one">+%d buried</item>
         <item quantity="other">+%d buried</item>
     </plurals>
-    <string name="studyoptions_total_new_label">Total new cards</string>
-    <string name="studyoptions_total_label">Total cards</string>
+    <string name="studyoptions_total_new_label">Allos kartos niujos</string>
+    <string name="studyoptions_total_label">Allos kartos</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card" maxLength="28">Inmaidei melein</string>
     <string name="discard">Discard</string>
@@ -110,7 +110,7 @@
     <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (empty)</string>
     <!-- Image cropper -->
     <string name="image_cropper_action_rotate" maxLength="28" comment="Action in image cropper screen">Rotate</string>
-    <string name="image_cropper_action_flip" maxLength="28" comment="Action in image cropper screen">Flip</string>
+    <string name="image_cropper_action_flip" maxLength="28" comment="Action in image cropper screen">Wandjan</string>
     <string name="image_cropper_action_flip_horizontally" maxLength="28" comment="Submenu action in image cropper screen">Flip horizontally</string>
     <string name="image_cropper_action_flip_vertically" maxLength="28" comment="Submenu action in image cropper screen">Flip vertically</string>
     <!-- Timebox -->
@@ -131,7 +131,7 @@
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card" maxLength="28">Reschedule</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)" maxLength="28">Faurasaihv</string>
     <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown" maxLength="28">Copy as Markdown</string>
-    <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d of %2$d</string>
+    <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d fram %2$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed." maxLength="28">Gif niujata namo</string>
     <string name="checks_action" maxLength="28">Check</string>
     <string name="check_db" maxLength="28">Check database</string>
@@ -146,8 +146,8 @@
     <string name="import_message_replace_confirm">This will delete your existing collection and replace it with the data of file %s</string>
     <string name="import_dialog_message_add">Add “%s” to collection? This may take a long time</string>
     <string name="import_log_no_apkg">This isn’t a valid Anki package file</string>
-    <string name="import_title_error" comment="Title of error dialog">Error</string>
-    <string name="import_error_handle_exception">Failed to import file\n\n%s</string>
+    <string name="import_title_error" comment="Title of error dialog">Airzei</string>
+    <string name="import_error_handle_exception">Ni mahta innatbairan fajl\n\n%s</string>
     <string name="import_error_not_apkg_extension">Filename “%s” doesn’t have .apkg or .colpkg extension</string>
     <string name="import_error_load_imported_database">Anki Database (.anki2) replacements are not yet supported. Please see the manual for replacement instructions.</string>
     <string name="import_error_content_provider">The selected file couldn’t be imported automatically by AnkiDroid. Please see the user manual for how to manually import anki files: \n%s</string>
@@ -166,11 +166,11 @@
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
-    <string name="export_choice_share">Share</string>
-    <string name="export_choice_save_to">Save to</string>
-    <string name="export_saving_exported_collection">Saving exported file&#8230;</string>
-    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="28">Options</string>
-    <string name="menu__deck_options" maxLength="28">Deck options</string>
+    <string name="export_choice_share">Dailjan</string>
+    <string name="export_choice_save_to">Gafastai du</string>
+    <string name="export_saving_exported_collection">Gafastada utbauran fajl&#8230;</string>
+    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="28">Mahteis</string>
+    <string name="menu__deck_options" maxLength="28">Mahteis huzdis karto</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>
     <string name="select_tts" maxLength="28">Satei bokos-du-stibnai razda</string>
     <string name="custom_study" maxLength="28">Anþara laiseins</string>
@@ -195,7 +195,7 @@
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
     <string name="background_image_title" maxLength="41">Background</string>
-    <string name="choose_an_image" maxLength="41">Select image</string>
+    <string name="choose_an_image" maxLength="41">Frisaht waljan</string>
     <string name="remove_wallpaper_image" maxLength="41">Remove background</string>
     <string name="remove_background_image">Remove background?</string>
     <!-- Card Template Browser Appearance -->
@@ -214,7 +214,7 @@
     <string name="invalid_json_data">Card provided invalid data. %s</string>
     <string name="valid_js_api_version">Invalid AnkiDroid JS API version. Contact developer %s, or view wiki</string>
     <string name="update_js_api_version">AnkiDroid JS API update available. Contact developer %s, or view wiki</string>
-    <string name="reviewer_invalid_api_version_visit_documentation">View</string>
+    <string name="reviewer_invalid_api_version_visit_documentation">Bandwjan</string>
     <string name="anki_js_error_code">(Error Code: %d)</string>
     <!-- About AnkiDroid screen -->
     <string name="about_ankidroid_successfully_copied_debug_info">Copied to clipboard</string>
@@ -226,7 +226,7 @@
     <string name="ankidroid_init_failed_webview_title">Fatal Error</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid relies on the System WebView which is unavailable. This can happen if the system is installing updates. Please try again in a few minutes.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
-    <string name="menu_font_size" maxLength="28">Font size</string>
+    <string name="menu_font_size" maxLength="28">Mikilei fauntis</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Show toolbar</string>
     <string name="format_insert_bold">Format as Bold</string>
     <string name="format_insert_italic">Format as Italic</string>
@@ -255,22 +255,22 @@
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
     <!-- Used for credential empty warning message -->
-    <string name="invalid_email">Enter a valid email</string>
+    <string name="invalid_email">Melei e-mel raiht</string>
     <string name="password_empty">Password is required</string>
     <string name="back_pressed_once">Press back again to exit</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
     <string name="download_deck">Download deck</string>
     <string name="open_in_browser" comment="Label of a button inviting to open ankiweb\'s shared deck page if automated download failed">Open in browser</string>
-    <string name="try_again">Try Again</string>
+    <string name="try_again">Sokei aftra</string>
     <string name="cancel_download">Cancel download</string>
     <string name="cancel_download_question_title">Cancel download?</string>
     <string name="downloading_file">Downloading %s</string>
-    <string name="import_deck">Import Deck</string>
+    <string name="import_deck">Innatbair huzd karto</string>
     <string name="something_wrong">Something went wrong, please try again</string>
     <string name="download_failed">Download failed</string>
-    <string name="deck_download_progress_message">You can use other apps while the download is running</string>
-    <string name="check_network">Please check your network connection</string>
+    <string name="deck_download_progress_message">Magt anþaraize appe brukjan miþþanei atdragada</string>
+    <string name="check_network">Bidjam þuk, sai gawiss natjawaurkis þeinis</string>
     <string name="search_using_deck_name">Search using deck name</string>
     <string name="external_storage_unavailable">Download aborted, the external storage is not available</string>
     <string name="home" maxLength="28">Home</string>
@@ -297,7 +297,7 @@
     <string name="field_editor_model_not_available">Failed to access collection. Please try again!</string>
     <string name="cd_manage_notetypes_add">Add a new note type</string>
     <!-- App Intro -->
-    <string name="intro_ankidroid_tagline_one">Study less</string>
+    <string name="intro_ankidroid_tagline_one">Laisei þuk minnizo</string>
     <string name="intro_ankidroid_tagline_two">Remember more</string>
     <string name="intro_short_ankidroid_explanation">Anki\'s card scheduler saves time by strengthening your weakest memories and preserving your strongest</string>
     <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Get Started</string>
@@ -306,12 +306,12 @@
     <string name="app_not_initialized_new">AnkiDroid is not initialized yet. Please open AnkiDroid and try again</string>
     <string name="already_logged_in">Already logged in</string>
     <!-- Deck Creation -->
-    <string name="deck_created">Deck created</string>
-    <string name="deck_renamed">Deck renamed</string>
+    <string name="deck_created">Huzd karto gaskapan</string>
+    <string name="deck_renamed">Huzd karto aftrahaitan</string>
     <!-- Deck Deletion -->
-    <string name="deck_shortcut_doesnt_exist">Deck deleted. Please remove the shortcut</string>
+    <string name="deck_shortcut_doesnt_exist">Huzda karto usqistiþ. Bidjam þuk, usnim maurguwig</string>
     <!-- Browser Options Dialog -->
-    <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Cards</string>
+    <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Kartos</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Notes</string>
     <string name="toggle_cards_notes">Toggle Cards/Notes</string>
     <string name="truncate_content_help">Truncate the height of each row of the Browser to show only first 3 lines of content</string>
@@ -320,17 +320,17 @@
     <string name="deleting_selected_notes">Deleting selected notes</string>
     <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">Tap a voice to listen</string>
     <string name="tts_voices_selected_voice_should_be_installed" comment="If a voice has been tapped, is installable but not installed, we want to inform the user that they should install it for the best experience There will also be an option to use it without downloading">Voice should be installed before use</string>
-    <string name="tts_voices_use_selected_voice_without_install" comment="A user has been informed that a voice should be installed before use. This is text on a snackbar button which allows them to use the voice without installing it">Use anyway</string>
-    <string name="tts_voices_playback_error_new" comment="an error occurred when playing a text to speech voice. The parameter is a technical error code such as \'ERROR_NOT_INSTALLED_YET\' or \'ERROR_NETWORK_TIMEOUT\'">Text to speech error (%s)</string>
+    <string name="tts_voices_use_selected_voice_without_install" comment="A user has been informed that a voice should be installed before use. This is text on a snackbar button which allows them to use the voice without installing it">Ju brukjan</string>
+    <string name="tts_voices_playback_error_new" comment="an error occurred when playing a text to speech voice. The parameter is a technical error code such as \'ERROR_NOT_INSTALLED_YET\' or \'ERROR_NETWORK_TIMEOUT\'">Bokos du stibnai airzei (%s)</string>
     <!-- Chips should probably be in a separate file, due to the additional length req -->
-    <string name="tts_voices_chip_filter_to_internet" comment="     Filters a list of text to speech voices, to enable/disable voices which require the internet to     function.     This is on a chip control, so keep the text short, ideally one word">Internet</string>
+    <string name="tts_voices_chip_filter_to_internet" comment="     Filters a list of text to speech voices, to enable/disable voices which require the internet to     function.     This is on a chip control, so keep the text short, ideally one word">Ganati</string>
     <string name="tts_voices_chip_filter_to_installable_audio" comment="     Displays a list of Text to Speech voices which should be downloaded/installed before use     This is on a chip control, so keep the text short, ideally one word">Install</string>
     <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">Failed to open text to speech settings</string>
     <string name="shared_decks_login_required">Please log in to download more decks</string>
     <string name="deck_description_field_hint">Description</string>
     <string name="deck_description_saved">Description updated</string>
     <string name="format_deck_description_as_markdown">Format as Markdown</string>
-    <string name="help_button_content_description">Open help for ‘%s’</string>
+    <string name="help_button_content_description">Usluk hilpa faur \'%s\'</string>
     <string name="failed_to_copy">Failed to copy</string>
     <string name="card_browser_unavailable_when_notes_mode">Unavailable in ‘Notes’ mode</string>
     <plurals name="unbury_cards_feedback">
@@ -338,12 +338,12 @@
         <item quantity="other">%d cards unburied</item>
     </plurals>
     <string name="card_template_reposition_template" comment="move a card template to a new position" maxLength="28">Reposition</string>
-    <string name="previewer_next" comment="Name of the next button in the previewer" maxLength="28">Next</string>
-    <string name="previewer_back" comment="Name of the back button in the previewer" maxLength="28">Back</string>
-    <string name="start_recording">Record</string>
-    <string name="stop_recording">Stop</string>
-    <string name="play_recording">Play</string>
-    <string name="next_recording" comment="Description of a button to go to the next recording">Next</string>
+    <string name="previewer_next" comment="Name of the next button in the previewer" maxLength="28">Iftum</string>
+    <string name="previewer_back" comment="Name of the back button in the previewer" maxLength="28">Ibuk</string>
+    <string name="start_recording">Gafastai</string>
+    <string name="stop_recording">Sweib</string>
+    <string name="play_recording">Spillo</string>
+    <string name="next_recording" comment="Description of a button to go to the next recording">Iftum</string>
     <!--  AlertDialog in the deleteCardTemplate  -->
     <string name="orphan_note_title">Cannot Delete Card Type</string>
     <string name="orphan_note_message">Deleting this card type will leave some notes without any cards.</string>
@@ -358,7 +358,7 @@
     <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">Card Template Editor</string>
     <string name="edit_front_template" comment="Description of the shortcut that shows the question side of the card template">Edit front template</string>
     <string name="edit_back_template" comment="Description of the shortcut that shows the answer side of the card template">Edit back template</string>
-    <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">Edit styling</string>
+    <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">Steila inmaidjan</string>
     <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">Copy template as markdown</string>
     <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">Edit browser appearance</string>
     <string name="missing_user_action_dialog_message" comment="%s is the user action number">User action %s is not set in this notetype. Please configure it</string>

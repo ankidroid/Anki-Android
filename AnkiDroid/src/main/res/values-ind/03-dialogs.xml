@@ -157,9 +157,9 @@
     <string name="locale_selection_dialog_summary">Beberapa papan tik multibahasa, seperti GBoard mendukung pergantian bahasa saat mengedit teks\n\nHarap meminta fitur “setImeHintLocales” dari pembuat papan tikmu jika tidak dapat mengganti bahasa</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">Menggunakan AnkiDroid</string>
-    <string name="help_item_ankidroid_manual">Manual Ankidroid</string>
+    <string name="help_item_ankidroid_manual">Manual AnkiDroid</string>
     <string name="help_item_anki_manual">Manual Anki</string>
-    <string name="help_item_ankidroid_faq">FAQ Ankidroid</string>
+    <string name="help_item_ankidroid_faq">FAQ AnkiDroid</string>
     <string name="help_title_get_help">Cari bantuan</string>
     <string name="help_item_mailing_list">Daftar pengiriman surat</string>
     <string name="help_item_reddit">Reddit</string>

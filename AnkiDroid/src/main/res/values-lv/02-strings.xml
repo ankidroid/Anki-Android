@@ -164,7 +164,7 @@
     <string name="export_email_subject">AnkiDroid izgūtās zibkartītes: %s</string>
     <string name="export_email_text"><![CDATA[        Sveiciens!
         <br/><br/>
-        Šī ir Anki zibkartīšu kava, kas nosūtīta no ankiDroid[1].
+        Šī ir Anki zibkartīšu kava, kas nosūtīta no AnkiDroid[1].
         Mēģini to atvērt ar vienu no pieejamajām Anki lietotnēm[2] un izbaudīt vieglu un iedarbīgu mācīšanos!<br/><br/>
         [1] %1$s<br/>
         [2] %2$s

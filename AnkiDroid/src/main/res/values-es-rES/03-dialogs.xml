@@ -125,7 +125,7 @@
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Permiso de grabación de audio denegado</string>
     <!-- Database Integrity Check -->
-    <string name="integrity_check_startup_title">Ankidroid actualizado</string>
+    <string name="integrity_check_startup_title">AnkiDroid actualizado</string>
     <string name="integrity_check_startup_content">AnkiDroid ha sido actualizado. Esta actualización incluye correcciones para posibles problemas de base de datos, y le aconsejamos que comprueba la base de datos ahora.</string>
     <string name="integrity_check_continue_anyway">Continuar igualmente</string>
     <string name="integrity_check_insufficient_space">Compruebar de la base de datos utiliza una gran cantidad de almacenamiento temporal.\n\nEs altamente recomendable que tenga al menos %s espacio libre en su dispositivo antes de continuar.</string>

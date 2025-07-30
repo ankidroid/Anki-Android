@@ -68,7 +68,7 @@
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">Možnosti pre XXX</string>
     <string name="sync_title">Synchronizácia</string>
-    <string name="sync_log_uploading_message">Úplná synchronizácia z AnkiDroid na server Ankiweb</string>
+    <string name="sync_log_uploading_message">Úplná synchronizácia z AnkiDroid na server AnkiWeb</string>
     <string name="sync_database_acknowledge">Kolekcia synchronizovaná</string>
     <string name="col_synced_media_in_background">Collection synced. Media is being synced in the background.</string>
     <string name="sync_corrupt_database">Vaša databáza je poškodená. Prosím opravte ju pred opätovným pokusom o synchronizáciu.\n\nPozrite si %s pre informácie o oprave databázy.</string>

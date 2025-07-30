@@ -242,7 +242,7 @@
     <string name="note_editor_video_too_large">影片太大，無法貼上，請手動插入</string>
     <string name="note_editor_audio_too_large">此音訊檔太大，無法貼上，請手動插入</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">Android backup in progress. Please try again</string>
-    <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">你可能需要使用 iManager 以允許 Ankidroid 新增捷徑</string>
+    <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">你可能需要使用 iManager 以允許 AnkiDroid 新增捷徑</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">您的主畫面不允許 AnkiDroid 新增捷徑</string>
     <string name="create_shortcut_error">新增捷徑時發生錯誤：%s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">大寫句子</string>
