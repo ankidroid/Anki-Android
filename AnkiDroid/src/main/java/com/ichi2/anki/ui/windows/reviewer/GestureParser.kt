@@ -22,6 +22,10 @@ import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.TapGestureMode
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.utils.ext.clamp
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import kotlin.math.abs
 
@@ -31,31 +35,36 @@ import kotlin.math.abs
  * @see parse
  */
 class GestureParser(
+    private val scope: CoroutineScope,
+    private val isDoubleTapEnabled: Boolean,
     private val gestureMode: TapGestureMode = Prefs.tapGestureMode,
+    private val doubleTapTimeout: Long = Prefs.doubleTapInterval.toLong(),
     swipeSensitivity: Float = Prefs.swipeSensitivity,
 ) {
     private val swipeThresholdBase = 100 / swipeSensitivity
+    private var lastTapTime = 0L
+    private var singleTapJob: Job? = null
 
-    /**
-     * Analyzes the given [Uri] and returns the corresponding [Gesture]
-     */
     @VisibleForTesting
     fun parseInternal(
         uri: Uri,
         webViewState: WebViewState,
-    ): Gesture? {
-        when (uri.host) {
-            DOUBLE_TAP_HOST -> return Gesture.DOUBLE_TAP
-            MULTI_FINGER_HOST -> return getMultiTouchGesture(uri)
-        }
-        val data = GestureData.fromUri(uri) ?: return null
-
-        val swipeThreshold = swipeThresholdBase / webViewState.scale
-        if (abs(data.deltaX) > swipeThreshold || abs(data.deltaY) > swipeThreshold) {
-            return determineSwipeGesture(data)
-        }
-
-        return getTap(data, webViewState)
+        block: (Gesture?) -> Unit,
+    ) {
+        val gesture =
+            if (uri.host == MULTI_FINGER_HOST) {
+                getMultiTouchGesture(uri)
+            } else {
+                val data = GestureData.fromUri(uri) ?: return
+                val swipeThreshold = swipeThresholdBase / webViewState.scale
+                if (abs(data.deltaX) > swipeThreshold || abs(data.deltaY) > swipeThreshold) {
+                    determineSwipeGesture(data)
+                } else {
+                    handleTap(data, webViewState, block)
+                    return
+                }
+            }
+        block(gesture)
     }
 
     /**
@@ -70,7 +79,8 @@ class GestureParser(
         uri: Uri,
         scale: Float,
         webView: WebView,
-    ): Gesture? {
+        block: (Gesture?) -> Unit,
+    ) {
         val webViewState =
             WebViewState(
                 scale = scale,
@@ -79,7 +89,36 @@ class GestureParser(
                 width = webView.measuredWidth,
                 height = webView.measuredHeight,
             )
-        return parseInternal(uri, webViewState)
+        parseInternal(uri, webViewState, block)
+    }
+
+    private fun handleTap(
+        data: GestureData,
+        webViewState: WebViewState,
+        block: (Gesture?) -> Unit,
+    ) {
+        val isPotentialDoubleTap = data.time - lastTapTime < doubleTapTimeout
+        lastTapTime = data.time
+        if (isDoubleTapEnabled) {
+            if (isPotentialDoubleTap) {
+                // Confirmed double tap. Cancel any pending single tap and fire double tap.
+                singleTapJob?.cancel()
+                singleTapJob = null
+                lastTapTime = 0 // avoid retriggering double tap if a new quick tap comes
+                block(Gesture.DOUBLE_TAP)
+            } else {
+                // Potential single tap. Schedule it to run after a delay.
+                singleTapJob =
+                    scope.launch {
+                        delay(doubleTapTimeout)
+                        block(getTap(data, webViewState))
+                    }
+            }
+        } else {
+            if (!isPotentialDoubleTap) {
+                block(getTap(data, webViewState))
+            } // Otherwise, ignore the double tap.
+        }
     }
 
     /**
@@ -191,6 +230,7 @@ class GestureParser(
         val y: Int,
         val deltaX: Int,
         val deltaY: Int,
+        val time: Long,
         val scrollDirection: String?,
     ) {
         companion object {
@@ -201,6 +241,7 @@ class GestureParser(
                         y = uri.getIntQuery(PARAM_Y) ?: return@run null,
                         deltaX = uri.getIntQuery(PARAM_DELTA_X) ?: return@run null,
                         deltaY = uri.getIntQuery(PARAM_DELTA_Y) ?: return@run null,
+                        time = uri.getQueryParameter(PARAM_TIME)?.toLongOrNull() ?: return@run null,
                         scrollDirection = uri.getQueryParameter(PARAM_SCROLL_DIRECTION),
                     )
                 }
@@ -271,13 +312,13 @@ class GestureParser(
         const val PARAM_DELTA_Y = "deltaY"
 
         @VisibleForTesting
+        const val PARAM_TIME = "time"
+
+        @VisibleForTesting
         const val PARAM_SCROLL_DIRECTION = "scrollDirection"
 
         @VisibleForTesting
         const val PARAM_TOUCH_COUNT = "touchCount"
-
-        @VisibleForTesting
-        const val DOUBLE_TAP_HOST = "doubleTap"
 
         @VisibleForTesting
         const val MULTI_FINGER_HOST = "multiFingerTap"

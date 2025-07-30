@@ -20,6 +20,7 @@ import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.TapGestureMode
 import io.mockk.every
 import io.mockk.mockk
+import kotlinx.coroutines.test.TestScope
 import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
@@ -33,6 +34,7 @@ class GestureParserTest {
         y: Int? = 100,
         deltaX: Int? = 0,
         deltaY: Int? = 0,
+        time: Int? = 10000,
         touchCount: Int? = 1,
         scrollDirection: String? = null,
     ): Uri =
@@ -42,6 +44,7 @@ class GestureParserTest {
             every { getQueryParameter(GestureParser.PARAM_Y) } returns y?.toString()
             every { getQueryParameter(GestureParser.PARAM_DELTA_X) } returns deltaX?.toString()
             every { getQueryParameter(GestureParser.PARAM_DELTA_Y) } returns deltaY?.toString()
+            every { getQueryParameter(GestureParser.PARAM_TIME) } returns time?.toString()
             every { getQueryParameter(GestureParser.PARAM_TOUCH_COUNT) } returns touchCount?.toString()
             every { getQueryParameter(GestureParser.PARAM_SCROLL_DIRECTION) } returns scrollDirection
         }
@@ -58,21 +61,21 @@ class GestureParserTest {
     ): Gesture? {
         val gestureParser =
             GestureParser(
+                scope = TestScope(),
                 swipeSensitivity = swipeSensitivity,
                 gestureMode = gestureMode,
+                doubleTapTimeout = 200,
+                isDoubleTapEnabled = false,
             )
         val webViewState = GestureParser.WebViewState(scale, scrollX, scrollY, measuredWidth, measuredHeight)
-        return gestureParser.parseInternal(
+        var gesture: Gesture? = null
+        gestureParser.parseInternal(
             uri = uri,
             webViewState = webViewState,
-        )
-    }
-
-    @Test
-    fun `parse returns DOUBLE_TAP for doubleTap host`() {
-        val uri = createMockUri(host = GestureParser.DOUBLE_TAP_HOST)
-        val gesture = parseGesture(uri = uri)
-        assertEquals(Gesture.DOUBLE_TAP, gesture)
+        ) {
+            gesture = it
+        }
+        return gesture
     }
 
     @Test

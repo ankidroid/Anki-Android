@@ -711,7 +711,12 @@ class ReviewerFragment :
         private var scale: Float = if (!isRobolectric) webView.scale else 1F
         private var isScrolling: Boolean = false
         private var isScrollingJob: Job? = null
-        private val gestureParser = GestureParser()
+        private val gestureParser by lazy {
+            GestureParser(
+                scope = lifecycleScope,
+                isDoubleTapEnabled = bindingMap.isBound(Gesture.DOUBLE_TAP),
+            )
+        }
 
         init {
             webView.setOnScrollChangeListener { _, _, _, _, _ ->
@@ -729,9 +734,11 @@ class ReviewerFragment :
             return when (url.scheme) {
                 "gesture" -> {
                     if (isScrolling) return true
-                    val gesture = gestureParser.parse(url, scale, webView) ?: return true
-                    Timber.v("ReviewerFragment::onGesture %s", gesture)
-                    bindingMap.onGesture(gesture)
+                    gestureParser.parse(url, scale, webView) { gesture ->
+                        if (gesture == null) return@parse
+                        Timber.v("ReviewerFragment::onGesture %s", gesture)
+                        bindingMap.onGesture(gesture)
+                    }
                     true
                 }
                 "ankidroid" -> {
