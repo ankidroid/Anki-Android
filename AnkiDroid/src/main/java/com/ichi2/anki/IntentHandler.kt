@@ -26,6 +26,7 @@ import androidx.annotation.VisibleForTesting
 import androidx.core.app.TaskStackBuilder
 import androidx.core.content.FileProvider
 import androidx.core.content.IntentCompat
+import androidx.work.WorkManager
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.utils.trimToLength
 import com.ichi2.anki.dialogs.DialogHandler.Companion.storeMessage
@@ -78,7 +79,10 @@ class IntentHandler : AbstractIntentHandler() {
         val launchType = getLaunchType(intent)
         // TODO block the UI with some kind of ProgressDialog instead of cancelling the sync work
         if (requiresCollectionAccess(launchType)) {
-            SyncWorker.cancel(this)
+            // # 18899
+            if (WorkManager.isInitialized()) {
+                SyncWorker.cancel(this)
+            }
         }
         when (launchType) {
             LaunchType.FILE_IMPORT ->
