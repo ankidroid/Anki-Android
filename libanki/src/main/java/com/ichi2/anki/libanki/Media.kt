@@ -35,18 +35,25 @@ import java.io.File
 open class Media(
     private val col: Collection,
 ) {
-    // Test may not have a media folder. This `lazy` enables initialization of the class under
-    // this circumstance
+    /**
+     * The on-disk `collection.media` folder
+     *
+     * @throws UnsupportedOperationException The collection is in-memory
+     */
     val dir: File by lazy {
-        col.requireMediaFolder().also { mediaDir ->
-            if (!mediaDir.exists()) {
-                mediaDir.mkdirs()
-            }
-        }
+        // Tests are in-memory with no disk access by default
+        // `lazy` enables initialization of the class, failing when the media folder is required
+        col.requireMediaFolder()
     }
 
     init {
         Timber.v("dir %s", col.mediaFolder)
+        col.mediaFolder?.let {
+            if (!it.exists()) {
+                Timber.i("Creating collection.media")
+                it.mkdirs()
+            }
+        }
     }
 
     /*
