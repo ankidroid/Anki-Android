@@ -48,7 +48,6 @@ class GestureParserTest {
 
     private fun parseGesture(
         uri: Uri,
-        isScrolling: Boolean = false,
         scale: Float = 1.0f,
         scrollX: Int = 0,
         scrollY: Int = 0,
@@ -62,22 +61,11 @@ class GestureParserTest {
                 swipeSensitivity = swipeSensitivity,
                 gestureMode = gestureMode,
             )
-        return gestureParser.parse(
+        val webViewState = GestureParser.WebViewState(scale, scrollX, scrollY, measuredWidth, measuredHeight)
+        return gestureParser.parseInternal(
             uri = uri,
-            isScrolling = isScrolling,
-            scale = scale,
-            scrollX = scrollX,
-            scrollY = scrollY,
-            measuredWidth = measuredWidth,
-            measuredHeight = measuredHeight,
+            webViewState = webViewState,
         )
-    }
-
-    @Test
-    fun `parse returns null when isScrolling is true`() {
-        val uri = createMockUri()
-        val gesture = parseGesture(uri = uri, isScrolling = true)
-        assertNull(gesture, "Gesture should be null if scrolling")
     }
 
     @Test

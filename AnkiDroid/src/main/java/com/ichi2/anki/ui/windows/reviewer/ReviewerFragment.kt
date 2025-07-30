@@ -728,7 +728,8 @@ class ReviewerFragment :
         override fun handleUrl(url: Uri): Boolean {
             return when (url.scheme) {
                 "gesture" -> {
-                    val gesture = gestureParser.parse(url, isScrolling, scale, webView) ?: return true
+                    if (isScrolling) return true
+                    val gesture = gestureParser.parse(url, scale, webView) ?: return true
                     Timber.v("ReviewerFragment::onGesture %s", gesture)
                     bindingMap.onGesture(gesture)
                     true
