@@ -36,9 +36,13 @@ import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.CrashReportData.Companion.throwIfDialogUnusable
 import com.ichi2.anki.CrashReportData.Companion.toCrashReportData
+import com.ichi2.anki.CrashReportData.HelpAction
+import com.ichi2.anki.CrashReportData.HelpAction.AnkiBackendLink
+import com.ichi2.anki.CrashReportData.HelpAction.OpenDeckOptions
 import com.ichi2.anki.common.annotations.UseContextParameter
 import com.ichi2.anki.exception.StorageAccessException
 import com.ichi2.anki.libanki.Collection
+import com.ichi2.anki.pages.DeckOptionsDestination
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.openUrl
 import com.ichi2.utils.create
@@ -260,17 +264,24 @@ fun Context.showError(
                 title(R.string.vague_error)
                 message(text = message)
                 positiveButton(R.string.dialog_ok)
-                if (crashReportData?.helpLink != null) {
+                if (crashReportData?.helpAction != null) {
                     neutralButton(R.string.help)
                 }
-                if (crashReportData?.reportException == true) {
+                if (crashReportData?.reportableException == true) {
                     Timber.w("sending crash report on close")
                     setOnDismissListener { crashReportData.sendCrashReport() }
                 }
             }.apply {
                 // setup the help link. Link is non-null if neutralButton exists.
                 setOnShowListener {
-                    neutralButton?.setOnClickListener { openUrl(crashReportData!!.helpLink!!) }
+                    neutralButton?.setOnClickListener {
+                        lifecycle.coroutineScope.launch {
+                            val shouldDismiss = crashReportData!!.helpAction!!.execute(context = context)
+                            if (shouldDismiss) {
+                                dismiss()
+                            }
+                        }
+                    }
                 }
                 setupEnterKeyHandler()
                 show()
@@ -279,6 +290,26 @@ fun Context.showError(
         // issue 12718: activity provided by `context` was not running
         Timber.w(ex, "unable to display error dialog")
         crashReportData?.sendCrashReport()
+    }
+}
+
+/**
+ * @return Whether the dialog should be dismissed
+ */
+suspend fun HelpAction.execute(context: Context): Boolean {
+    when (this) {
+        is AnkiBackendLink -> {
+            context.openUrl(this.link)
+            return false
+        }
+        OpenDeckOptions -> {
+            // if we're in the error dialog, we have no context of the deck which caused the exception
+            // assume it's the current deck
+            val openCurrentDeckOptions = DeckOptionsDestination.fromCurrentDeck()
+            context.startActivity(openCurrentDeckOptions.toIntent(context))
+            // dismiss the dialog - the user should have resolved the issue
+            return true
+        }
     }
 }
 
@@ -575,27 +606,64 @@ private fun Activity.showError(
 data class CrashReportData(
     val exception: Throwable,
     val origin: String,
-    val reportException: Boolean,
+    val reportableException: Boolean,
 ) {
     /**
      * Optional link to a help page regarding the error
      *
      * For example: https://docs.ankiweb.net/templates/errors.html#no-cloze-filter-on-cloze-notetype
+     * Or opening the deck options
      */
-    val helpLink: Uri?
-        get() =
-            try {
-                (exception as? BackendException)
-                    ?.getDesktopHelpPageLink(CollectionManager.getBackend())
-                    ?.toUri()
-            } catch (e: Exception) {
-                Timber.w(e)
-                null
-            }
+    val helpAction: HelpAction?
+        get() = HelpAction.from(exception)
+
+    fun shouldReportException(): Boolean {
+        if (!reportableException) return false
+        if (exception.isInvalidFsrsParametersException()) return false
+        return true
+    }
 
     fun sendCrashReport() {
-        if (!reportException) return
+        if (!shouldReportException()) {
+            Timber.i("skipped crash report due to further validation")
+            return
+        }
         CrashReportService.sendExceptionReport(exception, origin)
+    }
+
+    /**
+     * Optional action to provide more information about an error
+     *
+     * Examples:
+     * - Open https://docs.ankiweb.net/templates/errors.html#no-cloze-filter-on-cloze-notetype
+     * - Open the deck options
+     */
+    sealed class HelpAction {
+        data class AnkiBackendLink(
+            val link: Uri,
+        ) : HelpAction()
+
+        /** Open the deck options for the current deck */
+        data object OpenDeckOptions : HelpAction()
+
+        companion object {
+            fun from(e: Throwable): HelpAction? {
+                val link =
+                    try {
+                        (e as? BackendException)
+                            ?.getDesktopHelpPageLink(CollectionManager.getBackend())
+                            ?.toUri()
+                    } catch (e: Exception) {
+                        Timber.w(e)
+                        null
+                    }
+
+                if (link != null) return AnkiBackendLink(link)
+                if (e.isInvalidFsrsParametersException()) return OpenDeckOptions
+
+                return null
+            }
+        }
     }
 
     companion object {
@@ -607,7 +675,7 @@ data class CrashReportData(
             exception = this,
             // Appears as 'ManageNotetypes'
             origin = context::class.java.simpleName,
-            reportException = reportException,
+            reportableException = reportException,
         )
 
         /**
@@ -615,7 +683,7 @@ data class CrashReportData(
          *
          * So unit tests can fail if an unexpected exception is thrown
          *
-         * Note: this occurs regardless of the status of [reportException]
+         * Note: this occurs regardless of the status of [reportableException]
          *
          * @param message The message of the thrown [IllegalStateException]
          * @throws IllegalStateException with [exception] as an innerException if the receiver
@@ -627,5 +695,13 @@ data class CrashReportData(
             if (this == null) throw IllegalStateException(message)
             throw IllegalStateException(message, exception)
         }
+
+        private fun Throwable.isInvalidFsrsParametersException(): Boolean =
+            try {
+                // `TR` may fail in an error-reporting context
+                message == TR.deckConfigInvalidParameters()
+            } catch (_: Throwable) {
+                false
+            }
     }
 }
