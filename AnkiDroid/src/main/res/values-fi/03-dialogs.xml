@@ -125,7 +125,7 @@
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Äänen tallentamisen käyttöoikeus evättiin</string>
     <!-- Database Integrity Check -->
-    <string name="integrity_check_startup_title">Ankidroid on päivitetty</string>
+    <string name="integrity_check_startup_title">AnkiDroid on päivitetty</string>
     <string name="integrity_check_startup_content">AnkiDroid on päivitetty. Tämä päivitys sisältää korjauksia mahdollisiin tietokantaongelmiin, ja suosittelemme, että tarkistat tietokannan nyt.</string>
     <string name="integrity_check_continue_anyway">Jatka silti</string>
     <string name="integrity_check_insufficient_space">Tarkista tietokanta -toiminto käyttää paljon väliaikaista tallennustilaa.\n\nOn erittäin suositeltavaa, että laitteessasi on vähintään %s vapaata tilaa, ennen kuin jatkat.</string>

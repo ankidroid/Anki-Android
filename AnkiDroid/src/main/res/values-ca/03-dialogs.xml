@@ -125,7 +125,7 @@
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">S\'ha denegat el permís de gravació d\'àudio</string>
     <!-- Database Integrity Check -->
-    <string name="integrity_check_startup_title">S\'ha actualitzat l\'Ankidroid</string>
+    <string name="integrity_check_startup_title">S\'ha actualitzat l\'AnkiDroid</string>
     <string name="integrity_check_startup_content">AnkiDroid s\'ha actualitzat. Aquesta actualització inclou solucions per a possibles problemes de bases de dades i us recomanem que executeu ara la comprovació de la base de dades.</string>
     <string name="integrity_check_continue_anyway">Continua igualment</string>
     <string name="integrity_check_insufficient_space">La comprovació de la base de dades utilitza una gran quantitat d\'emmagatzematge temporal.\n\nEs recomana tenir almenys %s d\'espai lliure al dispositiu abans de continuar.</string>

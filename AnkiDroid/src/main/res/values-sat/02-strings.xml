@@ -224,7 +224,7 @@
     <!-- Deck Picker -->
     <string name="search_decks" maxLength="28">ᱰᱮᱠ ᱠᱚ ᱥᱮᱸᱫᱽᱨᱟ</string>
     <string name="ankidroid_init_failed_webview_title">ᱯᱩᱨᱟᱹ ᱵᱷᱩᱞ</string>
-    <string name="ankidroid_init_failed_webview">Ankidroid ᱫᱚ ᱥᱭᱥᱴᱮᱢ ᱣᱮᱵᱼᱵᱷᱤᱭᱩ ᱪᱮᱛᱟᱱ ᱨᱮ ᱱᱤᱨᱵᱷᱚᱨᱚᱜ ᱠᱟᱱᱟᱭ ᱚᱠᱟ ᱫᱚ ᱱᱤᱛᱚᱜ ᱵᱟᱹᱱᱩᱜᱼᱟ ᱾ ᱱᱚᱶᱟ ᱫᱚ ᱛᱮᱵᱮ ᱦᱩᱭᱩᱜᱼᱟ ᱚᱠᱟ ᱡᱷᱚᱜ ᱥᱭᱥᱴᱟᱹᱢ ᱟᱹᱯᱰᱮᱴ ᱠᱚ ᱠᱚ ᱵᱚᱦᱟᱞ ᱮᱪᱟᱭ ᱾ ᱫᱚᱭᱟᱠᱟᱛᱮ ᱱᱟᱥᱮ ᱴᱤᱯᱤᱡ ᱜᱦᱟᱹᱬᱤᱡ ᱛᱟᱭᱚᱢ ᱫᱩᱦᱲᱟᱹ ᱪᱮᱥᱴᱟᱭ ᱢᱮ ᱾ \n\n%s</string>
+    <string name="ankidroid_init_failed_webview">AnkiDroid ᱫᱚ ᱥᱭᱥᱴᱮᱢ ᱣᱮᱵᱼᱵᱷᱤᱭᱩ ᱪᱮᱛᱟᱱ ᱨᱮ ᱱᱤᱨᱵᱷᱚᱨᱚᱜ ᱠᱟᱱᱟᱭ ᱚᱠᱟ ᱫᱚ ᱱᱤᱛᱚᱜ ᱵᱟᱹᱱᱩᱜᱼᱟ ᱾ ᱱᱚᱶᱟ ᱫᱚ ᱛᱮᱵᱮ ᱦᱩᱭᱩᱜᱼᱟ ᱚᱠᱟ ᱡᱷᱚᱜ ᱥᱭᱥᱴᱟᱹᱢ ᱟᱹᱯᱰᱮᱴ ᱠᱚ ᱠᱚ ᱵᱚᱦᱟᱞ ᱮᱪᱟᱭ ᱾ ᱫᱚᱭᱟᱠᱟᱛᱮ ᱱᱟᱥᱮ ᱴᱤᱯᱤᱡ ᱜᱦᱟᱹᱬᱤᱡ ᱛᱟᱭᱚᱢ ᱫᱩᱦᱲᱟᱹ ᱪᱮᱥᱴᱟᱭ ᱢᱮ ᱾ \n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">ᱪᱤᱠᱤ ᱢᱟᱯ</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">ᱴᱩᱞᱵᱟᱨ ᱫᱮᱠᱷᱟᱣᱢᱮ</string>

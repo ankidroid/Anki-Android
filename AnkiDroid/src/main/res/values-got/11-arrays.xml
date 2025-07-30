@@ -65,25 +65,25 @@
     <!-- theme labels -->
     <string name="theme_follow_system">Follow system</string>
     <!-- day_theme_labels -->
-    <string name="day_theme_light">Light</string>
+    <string name="day_theme_light">Liuht</string>
     <string name="day_theme_plain">Plain</string>
     <!-- night_theme_labels -->
-    <string name="night_theme_black">Black</string>
-    <string name="night_theme_dark">Dark</string>
+    <string name="night_theme_black">Swart</string>
+    <string name="night_theme_dark">Riqizein</string>
     <!-- html_size_code_labels -->
-    <string name="html_size_code_xx_small">xx-small</string>
-    <string name="html_size_code_x_small">x-small</string>
-    <string name="html_size_code_small">small</string>
-    <string name="html_size_code_medium">medium</string>
-    <string name="html_size_code_large">large</string>
-    <string name="html_size_code_x_large">x-large</string>
-    <string name="html_size_code_xx_large">xx-large</string>
+    <string name="html_size_code_xx_small">xx-leitil</string>
+    <string name="html_size_code_x_small">x-leitil</string>
+    <string name="html_size_code_small">leitil</string>
+    <string name="html_size_code_medium">midjis</string>
+    <string name="html_size_code_large">mikil</string>
+    <string name="html_size_code_x_large">x-mikil</string>
+    <string name="html_size_code_xx_large">xx-mikil</string>
     <!-- gestures_labels -->
-    <string name="answer_again" maxLength="41">Answer again</string>
-    <string name="answer_hard" maxLength="41">Answer hard</string>
-    <string name="answer_good" maxLength="41">Answer good</string>
-    <string name="answer_easy" maxLength="41">Answer easy</string>
-    <string name="gesture_abort_learning" maxLength="41">Close study screen</string>
+    <string name="answer_again" maxLength="41">Andhafjan aftra</string>
+    <string name="answer_hard" maxLength="41">Andhafjan unazetaba</string>
+    <string name="answer_good" maxLength="41">Andhafjan waila</string>
+    <string name="answer_easy" maxLength="41">Andhafjan Azetaba</string>
+    <string name="gesture_abort_learning" maxLength="41">Luk skairm laiseinais</string>
     <string name="gesture_flag_red" maxLength="41">Toggle red flag</string>
     <string name="gesture_flag_orange" maxLength="41">Toggle orange flag</string>
     <string name="gesture_flag_green" maxLength="41">Toggle green flag</string>
@@ -92,13 +92,13 @@
     <string name="gesture_flag_turquoise" maxLength="41">Toggle turquoise flag</string>
     <string name="gesture_flag_purple" maxLength="41">Toggle purple flag</string>
     <string name="gesture_flag_remove" maxLength="41">Remove flag</string>
-    <string name="gesture_page_up" maxLength="41">Page up</string>
-    <string name="gesture_page_down" maxLength="41">Page down</string>
+    <string name="gesture_page_up" maxLength="41">Laufs iup</string>
+    <string name="gesture_page_down" maxLength="41">Laufs dalaþ</string>
     <string name="gesture_toggle_whiteboard" maxLength="41">Toggle whiteboard</string>
     <string name="gesture_toggle_eraser" maxLength="41">Toggle eraser</string>
     <string name="gesture_show_hint" maxLength="41">Show hint</string>
     <string name="gesture_show_all_hints" maxLength="41">Show all hints</string>
     <string name="record_voice" maxLength="41">Record voice</string>
-    <string name="replay_voice" maxLength="41">Replay voice</string>
+    <string name="replay_voice" maxLength="41">Aftraspillo stibna</string>
     <string name="save_voice" maxLength="41">Save recording</string>
 </resources>

@@ -123,7 +123,7 @@
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
-    <string name="startup_no_storage_permission">ᱫᱚᱭᱟᱠᱟᱛᱮ Ankidroid ᱞᱮᱛᱟᱲ ᱞᱟᱹᱜᱤᱫ \'ᱫᱚᱦᱚ ᱡᱟᱭᱜᱟ\' ᱮᱢᱚᱜᱽᱢᱮ</string>
+    <string name="startup_no_storage_permission">ᱫᱚᱭᱟᱠᱟᱛᱮ AnkiDroid ᱞᱮᱛᱟᱲ ᱞᱟᱹᱜᱤᱫ \'ᱫᱚᱦᱚ ᱡᱟᱭᱜᱟ\' ᱮᱢᱚᱜᱽᱢᱮ</string>
     <string name="rebuild_filtered_deck">ᱯᱷᱤᱞᱴᱚᱨ ᱰᱮᱠ ᱫᱩᱦᱲᱟᱹ ᱛᱮᱭᱟ&#8230;</string>
     <string name="rebuild_cram_label" maxLength="28">ᱯᱩᱱᱚᱨᱼᱛᱮᱭᱟᱨ</string>
     <string name="empty_cram_label" maxLength="28">ᱵᱟ.ᱱᱩᱜᱼᱟ</string>

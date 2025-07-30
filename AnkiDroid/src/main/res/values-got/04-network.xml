@@ -63,8 +63,8 @@
     <string name="logged_as">Atgaggans swe</string>
     <string name="log_out">Galeiþ</string>
     <string name="reset_password">Aftrasatei gamotawaurd</string>
-    <string name="lost_mail_instructions">Forgot Email?</string>
-    <string name="sign_in">Signing in</string>
+    <string name="lost_mail_instructions">Ufarmunnodes E-mela?</string>
+    <string name="sign_in">Atgaggando</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">Mahteis faur XXX</string>
     <string name="sync_title">Synchronization</string>

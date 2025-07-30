@@ -197,7 +197,7 @@
     <string name="reset_settings_to_default">기본값으로 초기화하기</string>
     <string name="reset">초기화하기</string>
     <string name="thirdparty_apps_title" maxLength="41">타사 API 앱</string>
-    <string name="thirdparty_apps_summary">Ankidroid API를 사용하는 어플 목록 보기 (사전, 편집기 등)</string>
+    <string name="thirdparty_apps_summary">AnkiDroid API를 사용하는 어플 목록 보기 (사전, 편집기 등)</string>
     <string name="pref_controls_reviews_tab" maxLength="41" comment="Name of the tab to configure controls for the reviews screen">Reviews</string>
     <string name="pref_controls_previews_tab" maxLength="41" comment="Name of the tab to configure controls for the previews screen">Previews</string>
     <string name="toggle_backside_only" maxLength="41" comment="Control setting that toggles \'Backside only\' in the previews screen">Toggle backside only</string>

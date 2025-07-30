@@ -265,7 +265,7 @@
     <string name="open_changelog">Atvērt izmaiņu žurnālu</string>
     <string name="pref_cat_about_title" maxLength="41">Par</string>
     <string name="contributors_title">Līdzdalībnieki</string>
-    <string name="about_contributors_description"><![CDATA[Šie ir mūsu lieliskie <a href=\"%1$s\">līdzdalībnieki</a>. Tu arī vari palīdzēt Ankidroid ar programmēšanu, tulkošanu, ziedojumiem un <a href=\"%2$s\">vēl</a>.]]></string>
+    <string name="about_contributors_description"><![CDATA[Šie ir mūsu lieliskie <a href=\"%1$s\">līdzdalībnieki</a>. Tu arī vari palīdzēt AnkiDroid ar programmēšanu, tulkošanu, ziedojumiem un <a href=\"%2$s\">vēl</a>.]]></string>
     <string name="license">Licence</string>
     <string name="license_description"><![CDATA[AnkiDroid ir laista klajā ar <a href=\"%1$s\">GPL-3.0</a> un <a href=\"%2$s\">AGPL-3.0</a> licencēm, un pirmkods ir pieejams <a href=\"%3$s\">GitHub</a>]]></string>
     <string name="other_licenses"><![CDATA[AnkiDroid izmanto arī trešo pušu bibliotēkas un ikonas, kas ir licencētas ar dažādām atvērtā pirmkoda <a href=\"%1$s\">licencēm</a>]]></string>

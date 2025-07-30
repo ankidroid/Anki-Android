@@ -150,7 +150,7 @@
     <string name="import_error_handle_exception">Non se puido importar o ficheiro\n\n%s</string>
     <string name="import_error_not_apkg_extension">O ficheiro \"%s\" non ten extensión .apkg ou .colpkg</string>
     <string name="import_error_load_imported_database">As substitucións da base de datos Anki (.anki2) aínda non son compatíbeis. Consulta o manual para obter instrucións de substitución.</string>
-    <string name="import_error_content_provider">O ficheiro seleccionado non se puido importar automaticamente. Consulta o manual do usuario para ver como importar manualmente ficheiros anki: \n%s</string>
+    <string name="import_error_content_provider">O ficheiro seleccionado non se puido importar automaticamente. Consulta o manual do usuario para ver como importar manualmente ficheiros Anki: \n%s</string>
     <string name="import_error_copy_to_cache">Non se puido gardar o ficheiro na caché (posibelmente falta espazo)</string>
     <string name="import_interrupted">Importación interrompida: pechouse AnkiDroid</string>
     <string name="export_ready_title">Listo para exportar</string>

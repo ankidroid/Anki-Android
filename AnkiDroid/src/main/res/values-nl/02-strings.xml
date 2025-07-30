@@ -124,7 +124,7 @@
         <item quantity="one">%1$d minuut</item>
         <item quantity="other">%1$d minuten</item>
     </plurals>
-    <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">Ankidroid kaart</string>
+    <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid kaart</string>
     <string name="note_editor_copy_note" maxLength="28">Memo kopiëren</string>
     <string name="card_editor_reposition_card" comment="reposition a card in the new queue" maxLength="28">Verplaatsen</string>
     <string name="card_editor_reset_card" maxLength="28">Vooruitgang resetten</string>
