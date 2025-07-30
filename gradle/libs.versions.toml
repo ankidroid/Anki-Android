@@ -66,7 +66,7 @@ colorpicker = "1.2.0"
 # https://commons.apache.org/proper/commons-collections/changes.html
 commonsCollections4 = "4.5.0"
 # https://commons.apache.org/proper/commons-compress/changes-report.html
-commonsCompress = "1.27.1"
+commonsCompress = "1.28.0"
 # https://commons.apache.org/proper/commons-io/changes.html
 commonsIo = "2.20.0"
 coroutines = '1.10.2'
