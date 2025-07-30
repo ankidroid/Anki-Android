@@ -52,7 +52,6 @@ import com.ichi2.utils.title
 import kotlinx.coroutines.CancellableContinuation
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
@@ -199,38 +198,6 @@ suspend fun <T> FragmentActivity.runCatching(
         }
     }
     return null
-}
-
-/**
- * Returns CoroutineExceptionHandler which catches any uncaught exceptions and reports it to user
- * Errors from the backend contain localized text that is often suitable to show to the user as-is.
- * Other errors should ideally be handled in the block.
- *
- * Typically you'll want to use [launchCatchingTask] instead; this routine is mainly useful for
- * launching tasks in an activity that is not a lifecycleOwner.
- *
- * @return [CoroutineExceptionHandler]
- * @see [FragmentActivity.launchCatchingTask]
- */
-fun getCoroutineExceptionHandler(
-    activity: Activity,
-    errorMessage: String? = null,
-) = CoroutineExceptionHandler { _, throwable ->
-    // No need to check for cancellation-exception, it does not gets caught by CoroutineExceptionHandler
-    when (throwable) {
-        is BackendInterruptedException -> {
-            Timber.e(throwable, errorMessage)
-            throwable.localizedMessage?.let { activity.showSnackbar(it) }
-        }
-        is BackendException -> {
-            Timber.e(throwable, errorMessage)
-            activity.showError(throwable.localizedMessage!!, throwable.toCrashReportData(activity))
-        }
-        else -> {
-            Timber.e(throwable, errorMessage)
-            activity.showError(throwable)
-        }
-    }
 }
 
 /**
