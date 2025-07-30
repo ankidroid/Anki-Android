@@ -135,6 +135,8 @@ data class DeckConfig(
         var hardFactor: Int by jsonInt("hardFactor")
     }
 
+    override fun toString() = jsonObject.toString()
+
     companion object {
         const val QUESTION_ACTION = "questionAction"
         const val ANSWER_ACTION = "answerAction"
