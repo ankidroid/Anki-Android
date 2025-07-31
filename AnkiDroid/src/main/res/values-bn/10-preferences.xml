@@ -83,7 +83,7 @@
     <string name="button_size" maxLength="41">উত্তর বাটান আকার</string>
     <string name="card_browser_font_size" maxLength="41">কার্ড ব্রাউজারের ফন্ট আকার</string>
     <string name="card_browser_hide_media" maxLength="41">ব্রাউজারে ফাইলের নাম দেখান</string>
-    <string name="card_browser_hide_media_summary">Display media filenames in the card browser question/answer fields</string>
+    <string name="card_browser_hide_media_summary">Display audio filenames in the card browser question/answer fields</string>
     <string name="col_path" maxLength="41">AnkiDroid ডিরেক্টরি</string>
     <string name="fullscreen_review" maxLength="41">ফুলস্ক্রিন মোড</string>
     <string name="full_screen_off">বন্ধ</string>

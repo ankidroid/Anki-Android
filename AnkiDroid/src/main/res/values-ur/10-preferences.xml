@@ -82,7 +82,7 @@
     <string name="button_size" maxLength="41">جواب بٹن کا سائز</string>
     <string name="card_browser_font_size" maxLength="41">کارڈ براؤزر فونٹ اسکیلنگ</string>
     <string name="card_browser_hide_media" maxLength="41">کارڈ براؤزر میں فائل کے نام ڈسپلے کریں۔</string>
-    <string name="card_browser_hide_media_summary">کارڈ براؤزر کے سوال/جواب والے فیلڈز میں میڈیا فائل نام ڈسپلے کریں</string>
+    <string name="card_browser_hide_media_summary">Display audio filenames in the card browser question/answer fields</string>
     <string name="col_path" maxLength="41">AnkiDroid ڈائریکٹری</string>
     <string name="fullscreen_review" maxLength="41">فل سکرین موڈ</string>
     <string name="full_screen_off">بند</string>

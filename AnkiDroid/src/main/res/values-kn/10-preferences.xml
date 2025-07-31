@@ -82,7 +82,7 @@
     <string name="button_size" maxLength="41">ಉತ್ತರ ಬಟನ್ ಗಾತ್ರ</string>
     <string name="card_browser_font_size" maxLength="41">ಕಾರ್ಡ್ ಬ್ರೌಸರ್ ಫಾಂಟ್ ಸ್ಕೇಲಿಂಗ್</string>
     <string name="card_browser_hide_media" maxLength="41">ಕಾರ್ಡ್ ಬ್ರೌಸರ್‌ನಲ್ಲಿ ಫೈಲ್ ಹೆಸರುಗಳನ್ನು ಪ್ರದರ್ಶಿಸಿ</string>
-    <string name="card_browser_hide_media_summary">ಕಾರ್ಡ್ ಬ್ರೌಸರ್ ಪ್ರಶ್ನೆ/ಉತ್ತರ ಕ್ಷೇತ್ರಗಳಲ್ಲಿ ಮಾಧ್ಯಮ ಫೈಲ್ ಹೆಸರುಗಳನ್ನು ಪ್ರದರ್ಶಿಸಿ</string>
+    <string name="card_browser_hide_media_summary">Display audio filenames in the card browser question/answer fields</string>
     <string name="col_path" maxLength="41">ಅಂಕಿಡ್ರಾಯ್ಡ್ ಡೈರೆಕ್ಟರಿ</string>
     <string name="fullscreen_review" maxLength="41">ಪೂರ್ಣಪರದೆ ಮೋಡ್</string>
     <string name="full_screen_off">ಆಫ್</string>

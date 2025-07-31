@@ -84,7 +84,7 @@
     <string name="button_size" maxLength="41">Velikost gumba za odgovor</string>
     <string name="card_browser_font_size" maxLength="41">Umer. pisave brs. kartic</string>
     <string name="card_browser_hide_media" maxLength="41">Display filenames in card browser</string>
-    <string name="card_browser_hide_media_summary">Display media filenames in the card browser question/answer fields</string>
+    <string name="card_browser_hide_media_summary">Display audio filenames in the card browser question/answer fields</string>
     <string name="col_path" maxLength="41">Mapa AnkiDroid</string>
     <string name="fullscreen_review" maxLength="41">Celozaslonski način</string>
     <string name="full_screen_off">Izklopljen</string>

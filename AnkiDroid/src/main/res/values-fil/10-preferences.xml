@@ -82,7 +82,7 @@
     <string name="button_size" maxLength="41">Sukat ng pindutan ng sagot</string>
     <string name="card_browser_font_size" maxLength="41">Pagsusulat ng font ng browser ng card</string>
     <string name="card_browser_hide_media" maxLength="41">Ipakita ang filename sa card browser</string>
-    <string name="card_browser_hide_media_summary">Ipakita ang filename ng mga media sa patlang ng tanong/sagot sa card browser</string>
+    <string name="card_browser_hide_media_summary">Display audio filenames in the card browser question/answer fields</string>
     <string name="col_path" maxLength="41">AnkiDroid directory</string>
     <string name="fullscreen_review" maxLength="41">Fullscreen mode</string>
     <string name="full_screen_off">Off</string>

@@ -82,7 +82,7 @@
     <string name="button_size" maxLength="41">Grootte antwoordknop</string>
     <string name="card_browser_font_size" maxLength="41">Lettertypegrootte van de kaartenbrowser</string>
     <string name="card_browser_hide_media" maxLength="41">Bestandsnamen in kaartenbrowser weergeven</string>
-    <string name="card_browser_hide_media_summary">Bestandsnamen van de media weergeven in de velden voor vraag/antwoord van de kaartenbrowser</string>
+    <string name="card_browser_hide_media_summary">Display audio filenames in the card browser question/answer fields</string>
     <string name="col_path" maxLength="41">AnkiDroid directory</string>
     <string name="fullscreen_review" maxLength="41">Volledig schermmodus</string>
     <string name="full_screen_off">Uit</string>

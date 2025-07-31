@@ -82,7 +82,7 @@
     <string name="button_size" maxLength="41">Válasz gombok mérete</string>
     <string name="card_browser_font_size" maxLength="41">Kártya böngésző betűméretezése</string>
     <string name="card_browser_hide_media" maxLength="41">Fájlnevek megjelenítése a kártya böngészőben.</string>
-    <string name="card_browser_hide_media_summary">A média fájlneveinek megjelenítése a kártya böngésző kérdés/válasz mezőjében</string>
+    <string name="card_browser_hide_media_summary">Display audio filenames in the card browser question/answer fields</string>
     <string name="col_path" maxLength="41">AnkiDroid könyvtár</string>
     <string name="fullscreen_review" maxLength="41">Teljes képernyős mód</string>
     <string name="full_screen_off">Kikapcsol</string>

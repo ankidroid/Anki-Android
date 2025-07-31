@@ -82,7 +82,7 @@
     <string name="button_size" maxLength="41">Javob tugmasini oʻlchami</string>
     <string name="card_browser_font_size" maxLength="41">Karta brauzeri shrift masshtabi</string>
     <string name="card_browser_hide_media" maxLength="41">Karta brauzerda fayl nomlarini koʻrsatish</string>
-    <string name="card_browser_hide_media_summary">Media fayllar nomlarini karta brauzeri savol/javob maydonlarida koʻrsatish</string>
+    <string name="card_browser_hide_media_summary">Display audio filenames in the card browser question/answer fields</string>
     <string name="col_path" maxLength="41">AnkiDroid katalogi</string>
     <string name="fullscreen_review" maxLength="41">Butun ekran rejimi</string>
     <string name="full_screen_off">Oʻchiq</string>

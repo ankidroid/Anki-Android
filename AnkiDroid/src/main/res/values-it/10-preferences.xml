@@ -82,7 +82,7 @@
     <string name="button_size" maxLength="41">Dimensione pulsante di risposta</string>
     <string name="card_browser_font_size" maxLength="41">Ridimensionamento carattere nel browser</string>
     <string name="card_browser_hide_media" maxLength="41">Mostra i nomi dei file nel browser delle carte</string>
-    <string name="card_browser_hide_media_summary">Mostra i nomi dei file multimediali nei campi domanda/risposta del browser delle carte</string>
+    <string name="card_browser_hide_media_summary">Display audio filenames in the card browser question/answer fields</string>
     <string name="col_path" maxLength="41">Cartella AnkiDroid</string>
     <string name="fullscreen_review" maxLength="41">Modalità a schermo intero</string>
     <string name="full_screen_off">Disabilitato</string>

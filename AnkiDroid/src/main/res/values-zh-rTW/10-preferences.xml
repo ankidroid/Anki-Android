@@ -81,7 +81,7 @@
     <string name="button_size" maxLength="41">答案按鈕尺寸</string>
     <string name="card_browser_font_size" maxLength="41">卡片瀏覽器字型縮放</string>
     <string name="card_browser_hide_media" maxLength="41">在卡片瀏覽器展示檔案名</string>
-    <string name="card_browser_hide_media_summary">在卡片瀏覽器問題/答案區域展示媒體檔案名</string>
+    <string name="card_browser_hide_media_summary">Display audio filenames in the card browser question/answer fields</string>
     <string name="col_path" maxLength="41">AnkiDroid 路徑</string>
     <string name="fullscreen_review" maxLength="41">全螢幕模式</string>
     <string name="full_screen_off">關閉</string>

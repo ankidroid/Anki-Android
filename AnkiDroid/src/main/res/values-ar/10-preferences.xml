@@ -86,7 +86,7 @@
     <string name="button_size" maxLength="41">حجم زر الإجابة</string>
     <string name="card_browser_font_size" maxLength="41">نسبة تضخيم حجم خط متصفح البطاقات</string>
     <string name="card_browser_hide_media" maxLength="41">عرض أسماء الملفات في متصفح البطاقات</string>
-    <string name="card_browser_hide_media_summary">عرض أسماء ملفات الوسائط في حقول السؤال/الجواب في متصفح البطاقات</string>
+    <string name="card_browser_hide_media_summary">Display audio filenames in the card browser question/answer fields</string>
     <string name="col_path" maxLength="41">مجلد آنكي درويد</string>
     <string name="fullscreen_review" maxLength="41">وضع ملء الشاشة</string>
     <string name="full_screen_off">غير مفعل</string>

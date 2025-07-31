@@ -82,7 +82,7 @@
     <string name="button_size" maxLength="41">Mannària de su butone de risposta</string>
     <string name="card_browser_font_size" maxLength="41">Dimensionamentu de sos caràteres de su navigadore de cartas</string>
     <string name="card_browser_hide_media" maxLength="41">Ammustra sos nùmenes de sos documentos in su navigadore de cartas</string>
-    <string name="card_browser_hide_media_summary">Ammustra sos nùmenes de sos documentos multimediales in sos campos pregunta/risposta de su navigadore de cartas</string>
+    <string name="card_browser_hide_media_summary">Display audio filenames in the card browser question/answer fields</string>
     <string name="col_path" maxLength="41">Cartella de AnkiDroid</string>
     <string name="fullscreen_review" maxLength="41">Modalidade a ischermu intreu</string>
     <string name="full_screen_off">Istudadu</string>

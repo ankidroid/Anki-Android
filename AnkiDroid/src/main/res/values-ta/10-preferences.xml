@@ -82,7 +82,7 @@
     <string name="button_size" maxLength="41">பதில் பொத்தான் அளவு</string>
     <string name="card_browser_font_size" maxLength="41">அட்டை உலாவி எழுத்துரு அளவிடுதல்</string>
     <string name="card_browser_hide_media" maxLength="41">அட்டை உலாவியில் கோப்புப் பெயர்களைக் காண்பி</string>
-    <string name="card_browser_hide_media_summary">கார்டு உலாவி கேள்வி/பதில் புலங்களில் மீடியா கோப்பு பெயர்களைக் காண்பி</string>
+    <string name="card_browser_hide_media_summary">Display audio filenames in the card browser question/answer fields</string>
     <string name="col_path" maxLength="41">AnkiDroid அடைவு</string>
     <string name="fullscreen_review" maxLength="41">முழு திரை பயன்முறை</string>
     <string name="full_screen_off">ஆஃப்</string>

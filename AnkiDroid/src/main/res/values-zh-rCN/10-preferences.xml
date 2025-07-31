@@ -81,7 +81,7 @@
     <string name="button_size" maxLength="41">「显示答案」按钮大小</string>
     <string name="card_browser_font_size" maxLength="41">卡片浏览器字体缩放</string>
     <string name="card_browser_hide_media" maxLength="41">在卡牌浏览器中显示文件名</string>
-    <string name="card_browser_hide_media_summary">在卡牌浏览器问题/回答字段中显示媒体文件名</string>
+    <string name="card_browser_hide_media_summary">Display audio filenames in the card browser question/answer fields</string>
     <string name="col_path" maxLength="41">AnkiDroid 路径</string>
     <string name="fullscreen_review" maxLength="41">全屏显示</string>
     <string name="full_screen_off">关闭</string>

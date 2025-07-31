@@ -82,7 +82,7 @@
     <string name="button_size" maxLength="41">उत्तर बटणाचा आकार</string>
     <string name="card_browser_font_size" maxLength="41">कार्ड ब्राउझर फॉन्ट स्केलिंग</string>
     <string name="card_browser_hide_media" maxLength="41">कार्ड ब्राउझरमध्ये फाइलनावे प्रदर्शित करा</string>
-    <string name="card_browser_hide_media_summary">कार्ड ब्राउझर प्रश्न / उत्तर फील्डमध्ये मीडिया फाइलनावे प्रदर्शित करा</string>
+    <string name="card_browser_hide_media_summary">Display audio filenames in the card browser question/answer fields</string>
     <string name="col_path" maxLength="41">AnkiDroid निर्देशिका</string>
     <string name="fullscreen_review" maxLength="41">पूर्णस्क्रीन मोड</string>
     <string name="full_screen_off">बंद</string>
