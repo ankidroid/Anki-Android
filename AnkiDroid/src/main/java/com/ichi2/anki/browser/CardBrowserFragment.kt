@@ -987,11 +987,3 @@ class CardBrowserFragment :
         private const val CHANGE_DECK_KEY = "CHANGE_DECK"
     }
 }
-
-fun CardBrowser.deleteSelectedNotes() = cardBrowserFragment.deleteSelectedNotes()
-
-fun CardBrowser.showOptionsDialog() = cardBrowserFragment.showOptionsDialog()
-
-fun CardBrowser.updateFlagForSelectedRows(flag: Flag) = cardBrowserFragment.updateFlagForSelectedRows(flag)
-
-fun CardBrowser.showFindAndReplaceDialog() = cardBrowserFragment.showFindAndReplaceDialog()

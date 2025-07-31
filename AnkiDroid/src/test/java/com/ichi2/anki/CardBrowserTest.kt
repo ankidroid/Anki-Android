@@ -73,9 +73,7 @@ import com.ichi2.anki.browser.FindAndReplaceDialogFragment.Companion.TAGS_AS_FIE
 import com.ichi2.anki.browser.column1
 import com.ichi2.anki.browser.selectRowAtPosition
 import com.ichi2.anki.browser.setColumn
-import com.ichi2.anki.browser.showFindAndReplaceDialog
 import com.ichi2.anki.browser.toRowSelection
-import com.ichi2.anki.browser.updateFlagForSelectedRows
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.utils.isRunningAsUnitTest
 import com.ichi2.anki.dialogs.DeckSelectionDialog
@@ -385,7 +383,7 @@ class CardBrowserTest : RobolectricTest() {
             )
 
             // flag the selected card
-            cardBrowser.updateFlagForSelectedRows(Flag.RED)
+            cardBrowser.cardBrowserFragment.updateFlagForSelectedRows(Flag.RED)
             // check if card is red
             assertThat(
                 "Card should be flagged",
@@ -394,7 +392,7 @@ class CardBrowserTest : RobolectricTest() {
             )
 
             // unflag the selected card
-            cardBrowser.updateFlagForSelectedRows(Flag.NONE)
+            cardBrowser.cardBrowserFragment.updateFlagForSelectedRows(Flag.NONE)
             // check if card flag is removed
             assertThat(
                 "Card flag should be removed",
@@ -406,7 +404,7 @@ class CardBrowserTest : RobolectricTest() {
             cardBrowser.viewModel.selectNone()
             cardBrowser.viewModel.selectAll()
             // flag all the cards as Green
-            cardBrowser.updateFlagForSelectedRows(Flag.GREEN)
+            cardBrowser.cardBrowserFragment.updateFlagForSelectedRows(Flag.GREEN)
             // check if all card flags turned green
             assertThat(
                 "All cards should be flagged",
@@ -1688,3 +1686,5 @@ fun CardBrowser.searchCards(search: String? = null) {
     }
     runBlocking { viewModel.searchJob?.join() }
 }
+
+fun CardBrowser.showFindAndReplaceDialog() = cardBrowserFragment.showFindAndReplaceDialog()
