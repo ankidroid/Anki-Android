@@ -36,11 +36,14 @@ class TtsVoicesTest : InstrumentedTest() {
             assertThat(normalized.toLanguageTag(), equalTo(str))
         }
 
-        assertEqual(Locale("en", "GB"), "en-GB")
-        assertEqual(Locale("es", "MX"), "es-MX")
-        assertEqual(Locale("spa", "MEX"), "es-MX")
-        assertEqual(Locale("fil", "PH"), "fil-PH")
+        assertEqual(Locale.forLanguageTag("en" + '-' + "GB"), "en-GB")
+        assertEqual(Locale.forLanguageTag("es" + '-' + "MX"), "es-MX")
+        // "spa" is an invalid language and historically was remapped from that very old ISO code
+        // to "es" by the deprecated Locale constructor. It is discarded in modern times, but
+        // the country still comes back as the "language" for us for display
+        assertEqual(Locale.forLanguageTag("spa" + '-' + "MEX"), "mex")
+        assertEqual(Locale.forLanguageTag("fil" + '-' + "PH"), "fil-PH")
         // TBC
-        assertEqual(Locale("ar", ""), "ar")
+        assertEqual(Locale.forLanguageTag("ar" + '-' + ""), "ar")
     }
 }

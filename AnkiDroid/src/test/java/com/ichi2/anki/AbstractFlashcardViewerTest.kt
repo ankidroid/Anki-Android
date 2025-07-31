@@ -259,7 +259,7 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
             val normal = col.createBasicTypingNoteType("b")
             val typedField = 1 // BACK
 
-            LanguageHintService.setLanguageHintForField(col.notetypes, withLanguage, typedField, Locale("ja"))
+            LanguageHintService.setLanguageHintForField(col.notetypes, withLanguage, typedField, Locale.JAPANESE)
 
             addNoteUsingNoteTypeName(withLanguage.name, "ichi", "ni")
             addNoteUsingNoteTypeName(normal.name, "one", "two")

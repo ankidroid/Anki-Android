@@ -32,10 +32,10 @@ object LanguageUtils {
         val localeCode = stripScriptAndExtensions(localeCodeStr)
         val fields = localeCode.split("_".toRegex()).toTypedArray()
         return when (fields.size) {
-            1 -> Locale(fields[0])
-            2 -> Locale(fields[0], fields[1])
-            3 -> Locale(fields[0], fields[1], fields[2])
-            else -> Locale("")
+            1 -> Locale.forLanguageTag(fields[0])
+            2 -> Locale.forLanguageTag(fields[0] + '-' + fields[1])
+            3 -> Locale.forLanguageTag(fields[0] + '-' + fields[1] + '-' + fields[2])
+            else -> Locale.forLanguageTag("")
         }
     }
 
