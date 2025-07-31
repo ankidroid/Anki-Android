@@ -7,5 +7,8 @@
 -keep class kotlin.test.** { *; }
 -keep class **.R$layout { <init> (...); <fields>; }
 
+# Used by some test classes, not important for us
+-dontwarn androidx.concurrent.futures.SuspendToFutureAdapter
+
 # Ignore unused packages
 -dontwarn com.google.protobuf.GeneratedMessageLite$*
