@@ -1,5 +1,5 @@
 [versions]
-compileSdk = "35"
+compileSdk = "36"
 
 # Changing minSdk means newer AnkiDroid versions will not support older devices.
 # However the Play Store will keep old AnkiDroid versions available for older
