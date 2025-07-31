@@ -60,4 +60,4 @@ class WidgetSettingsFragment : SettingsFragment() {
             return prefs.getBoolean(context.getString(R.string.widget_dynamic_theming_key), true)
         }
     }
-} 
+}
