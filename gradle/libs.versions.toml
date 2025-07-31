@@ -50,7 +50,7 @@ androidxSqlite = "2.5.2"
 # https://developer.android.com/jetpack/androidx/releases/swiperefreshlayout
 androidxSwipeRefreshLayout = "1.1.0"
 # https://developer.android.com/jetpack/androidx/releases/test
-androidxTest = "1.6.1"
+androidxTest = "1.7.0"
 # https://developer.android.com/jetpack/androidx/releases/test-uiautomator
 androidxTestUiAutomator = "2.3.0"
 # https://developer.android.com/jetpack/androidx/releases/viewpager2
