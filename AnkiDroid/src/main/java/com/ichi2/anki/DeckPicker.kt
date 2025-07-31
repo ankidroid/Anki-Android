@@ -1441,6 +1441,12 @@ open class DeckPicker :
         if (navDrawerIsReady() && hasCollectionStoragePermissions()) {
             refreshState()
         }
+
+        if (!Permissions.canAccessInternet(this) && !SessionPermissionTracker.hasShownInternetInfo) {
+            SessionPermissionTracker.hasShownInternetInfo = true
+            this.startActivity(PermissionsActivity.getIntent(this, PermissionSet.INTERNET_BLOCKED_INFO))
+            Timber.d("Internet not accessible")
+        }
         message?.let { dialogHandler.sendStoredMessage(it) }
     }
 
