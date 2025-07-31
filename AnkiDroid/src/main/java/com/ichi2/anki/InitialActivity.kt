@@ -213,6 +213,11 @@ enum class PermissionSet(
     EXTERNAL_MANAGER(listOf(Permissions.MANAGE_EXTERNAL_STORAGE), PermissionsStartingAt30Fragment::class.java),
 
     APP_PRIVATE(emptyList(), null),
+
+    INTERNET_BLOCKED_INFO(
+        permissions = emptyList(),
+        permissionsFragment = InternetInfoFragment::class.java,
+    ),
 }
 
 /**
