@@ -23,7 +23,6 @@ import android.os.Bundle
 import android.text.SpannableString
 import android.text.style.UnderlineSpan
 import android.view.KeyEvent
-import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup.MarginLayoutParams
@@ -33,7 +32,6 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.FrameLayout
 import android.widget.LinearLayout
-import androidx.appcompat.view.menu.SubMenuBuilder
 import androidx.appcompat.widget.ActionMenuView
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.appcompat.widget.AppCompatImageView
@@ -59,7 +57,6 @@ import com.google.android.material.card.MaterialCardView
 import com.google.android.material.shape.ShapeAppearanceModel
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textview.MaterialTextView
-import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.DispatchKeyEventListener
 import com.ichi2.anki.Flag
 import com.ichi2.anki.R
@@ -75,16 +72,6 @@ import com.ichi2.anki.libanki.sched.Ease
 import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.preferences.reviewer.ReviewerMenuView
 import com.ichi2.anki.preferences.reviewer.ViewerAction
-import com.ichi2.anki.preferences.reviewer.ViewerAction.BURY_CARD
-import com.ichi2.anki.preferences.reviewer.ViewerAction.BURY_MENU
-import com.ichi2.anki.preferences.reviewer.ViewerAction.BURY_NOTE
-import com.ichi2.anki.preferences.reviewer.ViewerAction.FLAG_MENU
-import com.ichi2.anki.preferences.reviewer.ViewerAction.MARK
-import com.ichi2.anki.preferences.reviewer.ViewerAction.REDO
-import com.ichi2.anki.preferences.reviewer.ViewerAction.SUSPEND_CARD
-import com.ichi2.anki.preferences.reviewer.ViewerAction.SUSPEND_MENU
-import com.ichi2.anki.preferences.reviewer.ViewerAction.SUSPEND_NOTE
-import com.ichi2.anki.preferences.reviewer.ViewerAction.UNDO
 import com.ichi2.anki.previewer.CardViewerActivity
 import com.ichi2.anki.previewer.CardViewerFragment
 import com.ichi2.anki.previewer.stdHtml
@@ -101,15 +88,12 @@ import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.CollectionPreferences
 import com.ichi2.anki.utils.ext.collectIn
 import com.ichi2.anki.utils.ext.collectLatestIn
-import com.ichi2.anki.utils.ext.menu
-import com.ichi2.anki.utils.ext.removeSubMenu
 import com.ichi2.anki.utils.ext.sharedPrefs
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.utils.ext.window
 import com.ichi2.anki.utils.isWindowCompact
 import com.ichi2.themes.Themes
 import com.ichi2.utils.dp
-import com.ichi2.utils.setPaddedIcon
 import com.squareup.seismic.ShakeDetector
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -483,91 +467,11 @@ class ReviewerFragment :
         }
     }
 
-    private fun setupBury(menu: ReviewerMenuView) {
-        val menuItem = menu.findItem(BURY_MENU.menuId) ?: return
-        val flow = viewModel.canBuryNoteFlow.flowWithLifecycle(lifecycle)
-        flow.collectLatestIn(lifecycleScope) { canBuryNote ->
-            if (canBuryNote) {
-                if (menuItem.hasSubMenu()) return@collectLatestIn
-                menuItem.setTitle(BURY_MENU.titleRes)
-                val submenu =
-                    SubMenuBuilder(menu.context, menuItem.menu, menuItem).apply {
-                        add(Menu.NONE, BURY_NOTE.menuId, Menu.NONE, BURY_NOTE.titleRes)
-                        add(Menu.NONE, BURY_CARD.menuId, Menu.NONE, BURY_CARD.titleRes)
-                    }
-                menuItem.setSubMenu(submenu)
-            } else {
-                menuItem.removeSubMenu()
-                menuItem.setTitle(BURY_CARD.titleRes)
-            }
-        }
-    }
-
-    private fun setupSuspend(menu: ReviewerMenuView) {
-        val menuItem = menu.findItem(SUSPEND_MENU.menuId) ?: return
-        val flow = viewModel.canSuspendNoteFlow.flowWithLifecycle(lifecycle)
-        flow.collectLatestIn(lifecycleScope) { canSuspendNote ->
-            if (canSuspendNote) {
-                if (menuItem.hasSubMenu()) return@collectLatestIn
-                menuItem.setTitle(SUSPEND_MENU.titleRes)
-                val submenu =
-                    SubMenuBuilder(menu.context, menuItem.menu, menuItem).apply {
-                        add(Menu.NONE, SUSPEND_NOTE.menuId, Menu.NONE, SUSPEND_NOTE.titleRes)
-                        add(Menu.NONE, SUSPEND_CARD.menuId, Menu.NONE, SUSPEND_CARD.titleRes)
-                    }
-                menuItem.setSubMenu(submenu)
-            } else {
-                menuItem.removeSubMenu()
-                menuItem.setTitle(SUSPEND_CARD.titleRes)
-            }
-        }
-    }
-
     private fun setupMenu(view: View) {
-        val menu = view.findViewById<ReviewerMenuView>(R.id.reviewer_menu_view)
-        if (menu.isEmpty()) {
-            menu.isVisible = false
-            return
+        view.findViewById<ReviewerMenuView>(R.id.reviewer_menu_view).apply {
+            setup(lifecycle, viewModel)
+            setOnMenuItemClickListener(this@ReviewerFragment)
         }
-        menu.setOnMenuItemClickListener(this)
-
-        setupBury(menu)
-        setupSuspend(menu)
-
-        viewModel.flagFlow
-            .flowWithLifecycle(lifecycle)
-            .collectLatestIn(lifecycleScope) { flagCode ->
-                menu.findItem(FLAG_MENU.menuId)?.setPaddedIcon(requireContext(), flagCode.drawableRes)
-            }
-
-        val markItem = menu.findItem(MARK.menuId)
-        viewModel.isMarkedFlow
-            .flowWithLifecycle(lifecycle)
-            .collectLatestIn(lifecycleScope) { isMarked ->
-                if (isMarked) {
-                    markItem?.setPaddedIcon(requireContext(), R.drawable.ic_star)
-                    markItem?.setTitle(R.string.menu_unmark_note)
-                } else {
-                    markItem?.setPaddedIcon(requireContext(), R.drawable.ic_star_border_white)
-                    markItem?.setTitle(R.string.menu_mark_note)
-                }
-            }
-
-        val undoItem = menu.findItem(UNDO.menuId)
-        viewModel.undoLabelFlow
-            .flowWithLifecycle(lifecycle)
-            .collectLatestIn(lifecycleScope) { label ->
-                undoItem?.title = label ?: CollectionManager.TR.undoUndo()
-                undoItem?.isEnabled = label != null
-            }
-
-        val redoItem = menu.findItem(REDO.menuId)
-        viewModel.redoLabelFlow
-            .flowWithLifecycle(lifecycle)
-            .collectLatestIn(lifecycleScope) { label ->
-                redoItem?.title = label ?: CollectionManager.TR.undoRedo()
-                redoItem?.isEnabled = label != null
-            }
     }
 
     private fun setupImmersiveMode(view: View) {
