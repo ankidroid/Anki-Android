@@ -149,5 +149,9 @@
     <color name="idle_divider_color">#C7C7C7</color>
     <color name="drag_divider_color">#1A90FF</color>
     <color name="divider_handle_color">#4D4D4D</color>
+
+    <!-- Widget background colors -->
+    <color name="widget_bg_light">#FFFFFF</color>
+    <color name="widget_bg_dark">#232323</color>
 </resources>
 

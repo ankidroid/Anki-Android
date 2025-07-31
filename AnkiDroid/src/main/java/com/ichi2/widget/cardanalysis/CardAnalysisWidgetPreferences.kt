@@ -60,9 +60,49 @@ class CardAnalysisWidgetPreferences(
             putLong(getCardAnalysisExtraWidgetKey(appWidgetId), selectedDeck ?: NOT_FOUND_DECK_ID)
         }
     }
+
+    /**
+     * Gets the dynamic theming preference for the given widget ID.
+     * @param appWidgetId The widget ID
+     * @return true if dynamic theming is enabled, false otherwise
+     */
+    fun getDynamicThemingPreference(appWidgetId: Int): Boolean =
+        cardAnalysisWidgetSharedPreferences.getBoolean(
+            getDynamicThemingKey(appWidgetId),
+            false,
+        )
+
+    /**
+     * Saves the dynamic theming preference for the given widget ID.
+     * @param appWidgetId The widget ID
+     * @param enabled true to enable dynamic theming, false to disable
+     */
+    fun saveDynamicThemingPreference(
+        appWidgetId: Int,
+        enabled: Boolean,
+    ) {
+        cardAnalysisWidgetSharedPreferences.edit {
+            putBoolean(getDynamicThemingKey(appWidgetId), enabled)
+        }
+    }
+
+    /**
+     * Deletes the dynamic theming preference for the given widget ID.
+     * @param appWidgetId The widget ID
+     */
+    fun deleteDynamicThemingPreference(appWidgetId: Int) {
+        cardAnalysisWidgetSharedPreferences.edit {
+            remove(getDynamicThemingKey(appWidgetId))
+        }
+    }
 }
 
 /**
  * Generates the key for the shared preferences for the given widget ID.
  */
 private fun getCardAnalysisExtraWidgetKey(appWidgetId: AppWidgetId): String = "card_analysis_extra_widget_selected_deck_$appWidgetId"
+
+/**
+ * Generates the key for the dynamic theming preference for the given widget ID.
+ */
+private fun getDynamicThemingKey(appWidgetId: Int): String = "card_analysis_extra_widget_dynamic_theming_$appWidgetId"
