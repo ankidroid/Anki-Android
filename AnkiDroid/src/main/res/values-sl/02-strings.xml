@@ -156,7 +156,7 @@
     <string name="import_error_handle_exception">Napaka pri uvažanju datoteke\n\n%s</string>
     <string name="import_error_not_apkg_extension">Datoteka %s nima končnice .apkg ali .colpkg</string>
     <string name="import_error_load_imported_database">Anki Database (.anki2) replacements are not yet supported. Please see the manual for replacement instructions.</string>
-    <string name="import_error_content_provider">Izbrane datoteke AnkiDroid ni mogel samodejno uvoziti. Oglejte si uporabniški priročnik o načinu ročnega uvoza datotek anki: \n%s</string>
+    <string name="import_error_content_provider">Izbrane datoteke AnkiDroid ni mogel samodejno uvoziti. Oglejte si uporabniški priročnik o načinu ročnega uvoza datotek Anki: \n%s</string>
     <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
     <string name="import_interrupted">Import interrupted: AnkiDroid was closed</string>
     <string name="export_ready_title">Export ready</string>

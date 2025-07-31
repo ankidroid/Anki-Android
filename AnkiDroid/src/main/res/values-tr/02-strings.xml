@@ -150,7 +150,7 @@
     <string name="import_error_handle_exception">Dosya içeri aktarılamadı\n\n%s</string>
     <string name="import_error_not_apkg_extension">\"%s\" adlı dosyanın uzantısı .apkg veya .colpkg değil</string>
     <string name="import_error_load_imported_database">Anki Veritabanı (.anki2) değiştirmeleri henüz desteklenmiyor. Lütfen değiştirme yönergeleri için kılavuza bakın.</string>
-    <string name="import_error_content_provider">Seçilen dosya AnkiDroid tarafından otomatik olarak içeri aktarılamadı. Lütfen anki dosyalarının nasıl elle içeri aktarıldığı hakkında kullanıcı kılavuzuna bakın:\n %s</string>
+    <string name="import_error_content_provider">Seçilen dosya AnkiDroid tarafından otomatik olarak içeri aktarılamadı. Lütfen Anki dosyalarının nasıl elle içeri aktarıldığı hakkında kullanıcı kılavuzuna bakın:\n %s</string>
     <string name="import_error_copy_to_cache">Dosya belleğe alınamadı (depolama alanı bitmiş olabilir)</string>
     <string name="import_interrupted">Aktarım yarıda kesildi: AnkiDroid kapatıldı</string>
     <string name="export_ready_title">Dışa aktarım hazır</string>

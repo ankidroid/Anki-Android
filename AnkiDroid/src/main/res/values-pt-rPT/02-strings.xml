@@ -150,7 +150,7 @@
     <string name="import_error_handle_exception">Falha ao importar ficheiro\n\n%s</string>
     <string name="import_error_not_apkg_extension">Ficheiro \"%s\" não tem nenhuma das extensões .apkg, nem .colpkg</string>
     <string name="import_error_load_imported_database">Substitutos para a Base de Dados Anki (.anki2) ainda não são suportados. Por favor, consulte o manual para seguir as instruções relativas à substituição.</string>
-    <string name="import_error_content_provider">Não foi possível importar automaticamente o ficheiro selecionado com AnkiDroid. Por favor, consulte o manual do utilizador para saber como importar manualmente os ficheiros anki: \n%s</string>
+    <string name="import_error_content_provider">Não foi possível importar automaticamente o ficheiro selecionado com AnkiDroid. Por favor, consulte o manual do utilizador para saber como importar manualmente os ficheiros Anki: \n%s</string>
     <string name="import_error_copy_to_cache">Falhou ao armazenar um ficheiro de \"cache\" (possivelmente está sem espaço)</string>
     <string name="import_interrupted">Importação interrompida: o AnkiDroid foi fechado</string>
     <string name="export_ready_title">Exportação pronta</string>

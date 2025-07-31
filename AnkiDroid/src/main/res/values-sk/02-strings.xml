@@ -156,7 +156,7 @@
     <string name="import_error_handle_exception">Nepodarilo sa importovať balík\n\n%s</string>
     <string name="import_error_not_apkg_extension">Názov súboru “%s” nemá príponu .apkg alebo .colpkg</string>
     <string name="import_error_load_imported_database">Náhrady Anki databázy (.anki2) ešte nie sú podporované. Pozrite si, prosím, manuál pre náhrady.</string>
-    <string name="import_error_content_provider">Zvolený súbor nemohol byť importovaný automaticky AnkiDroidom. Pozrite si, prosím, používateľský manuál ako manuálne importovať anki súbory: \n%s</string>
+    <string name="import_error_content_provider">Zvolený súbor nemohol byť importovaný automaticky AnkiDroidom. Pozrite si, prosím, používateľský manuál ako manuálne importovať Anki súbory: \n%s</string>
     <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
     <string name="import_interrupted">Import prerušený</string>
     <string name="export_ready_title">Pripravené na export</string>

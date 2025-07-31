@@ -156,7 +156,7 @@
     <string name="import_error_handle_exception">Nie udało się zaimportować pliku \n\n%s</string>
     <string name="import_error_not_apkg_extension">Nazwa pliku \"%s\" nie ma rozszerzenia .apkg lub .colpkg</string>
     <string name="import_error_load_imported_database">Pliki bazy danych Anki (.anki2) nie są jeszcze obsługiwane. W podręczniku możesz przeczytać o alternatywnych możliwościach importu</string>
-    <string name="import_error_content_provider">Wybrany plik nie mógł zostać automatycznie zaimportowany przez AnkiDroid. Zapoznaj się z podręcznikiem użytkownika na temat ręcznego importowania plików anki: \n%s</string>
+    <string name="import_error_content_provider">Wybrany plik nie mógł zostać automatycznie zaimportowany przez AnkiDroid. Zapoznaj się z podręcznikiem użytkownika na temat ręcznego importowania plików Anki: \n%s</string>
     <string name="import_error_copy_to_cache">Błąd copyFileToCache() (prawdopodobnie brak miejsca)</string>
     <string name="import_interrupted">Import przerwany</string>
     <string name="export_ready_title">Eksportowanie zakończone</string>

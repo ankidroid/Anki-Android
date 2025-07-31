@@ -150,7 +150,7 @@
     <string name="import_error_handle_exception">फ़ाइल आयात करने में विफल\n\n%s</string>
     <string name="import_error_not_apkg_extension">फ़ाइल नाम \"%s\" में .apkg या .colpkg एक्सटेंशन नहीं है</string>
     <string name="import_error_load_imported_database">अन्कि डाटाबेस (.anki2) प्रतिस्थापन अभीतक सहारा नहीं दिया जाता हैं । कृपया पुस्तिका प्रतिस्थापन के शिक्षण के लिये देखिये ।</string>
-    <string name="import_error_content_provider">चयनित फ़ाइल AnkiDroid द्वारा स्वचालित रूप से आयात नहीं की जा सकी । कृपया अंकि फ़ाइलों को मैंयुअल रूप से आयात करने के लिए उपयोगकर्ता मैंयुअल देखें: \n%s</string>
+    <string name="import_error_content_provider">The selected file couldn’t be imported automatically by AnkiDroid. Please see the user manual for how to manually import Anki files: \n%s</string>
     <string name="import_error_copy_to_cache">फ़ाइल कैश करने में विफल (संभवतः भंडारण स्थान से बाहर)</string>
     <string name="import_interrupted">आयात बाधित हुआ</string>
     <string name="export_ready_title">एक्सपोर्ट तैयार  है</string>

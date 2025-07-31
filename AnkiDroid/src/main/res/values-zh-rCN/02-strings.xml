@@ -147,7 +147,7 @@
     <string name="import_error_handle_exception">导入文件\n\n%s 失败</string>
     <string name="import_error_not_apkg_extension">「%s」并不是具有 .apkg 或 .colpkg 扩展名的文件</string>
     <string name="import_error_load_imported_database">尚不支持替换 Anki 数据库（.anki2）。请参阅手册以获取替换说明。</string>
-    <string name="import_error_content_provider">AnkiDroid 不能导入所选择的文件。请参阅用户手册以查看如何导入 anki 文件：\n%s</string>
+    <string name="import_error_content_provider">所选文件无法由 AnkiDroid 自动导入。请查看用户手册了解如何手动导入 Anki 文件：\n%s</string>
     <string name="import_error_copy_to_cache">缓存文件失败（可能超出存储空间）</string>
     <string name="import_interrupted">导入中断</string>
     <string name="export_ready_title">已准备好导出</string>

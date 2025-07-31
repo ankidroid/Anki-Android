@@ -147,7 +147,7 @@
     <string name="import_error_handle_exception">無法匯入檔案\n\n%s</string>
     <string name="import_error_not_apkg_extension">檔案名“%s”不包含 .apkg 或 .colpkg 副檔名</string>
     <string name="import_error_load_imported_database">Anki 資料庫 (.anki2) 替換還不受支援。請見用戶手冊以查找替換指引。</string>
-    <string name="import_error_content_provider">所選的檔案無法被 AnkiDroid 自動匯入。請參考用戶手冊瞭解如何手動匯入 anki 檔案：\n%s</string>
+    <string name="import_error_content_provider">所選的檔案無法被 AnkiDroid 自動匯入。請參考用戶手冊瞭解如何手動匯入 Anki 檔案：\n%s</string>
     <string name="import_error_copy_to_cache">無法快取檔案 (可能是儲存空間不夠)</string>
     <string name="import_interrupted">匯入中斷</string>
     <string name="export_ready_title">已準備好要匯出</string>

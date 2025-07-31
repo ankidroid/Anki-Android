@@ -150,7 +150,7 @@
     <string name="import_error_handle_exception">Kon nie lêer invoer nie\n\n%s</string>
     <string name="import_error_not_apkg_extension">Lêernaam “%s” het nie .apkg of .colpkg uitbreiding nie</string>
     <string name="import_error_load_imported_database">Anki-databasis (.anki2) vervangings word nog nie ondersteun nie. Raadpleeg asseblief die handleiding vir vervangingsinstruksies.</string>
-    <string name="import_error_content_provider">Die geselekteerde lêer kon nie outomaties deur AnkiDroid ingevoer word nie. Raadpleeg asseblief die gebruikershandleiding vir hoe om anki-lêers handmatig in te voer: \n%s</string>
+    <string name="import_error_content_provider">Die geselekteerde lêer kon nie outomaties deur AnkiDroid ingevoer word nie. Raadpleeg asseblief die gebruikershandleiding vir hoe om Anki-lêers handmatig in te voer: \n%s</string>
     <string name="import_error_copy_to_cache">Kon nie lêer kas nie (moontlik uit stoorplek)</string>
     <string name="import_interrupted">Invoer onderbreek: AnkiDroid is gesluit</string>
     <string name="export_ready_title">Gereed vir uitvoer</string>

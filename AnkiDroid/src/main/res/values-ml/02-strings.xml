@@ -150,7 +150,7 @@
     <string name="import_error_handle_exception">ഫയൽ ഇറക്കുമതി ചെയ്യുന്നതിൽ പരാജയപ്പെട്ടു\n\n%s</string>
     <string name="import_error_not_apkg_extension">“%s” എന്ന ഫയലിന്റെ പേരിന് .apkg അല്ലെങ്കിൽ .colpkg വിപുലീകരണം ഇല്ല</string>
     <string name="import_error_load_imported_database">അങ്കി ഡാറ്റാബേസ് (.anki2) മാറ്റിസ്ഥാപിക്കൽ ഇതുവരെ പിന്തുണയ്‌ക്കുന്നില്ല. മാറ്റിസ്ഥാപിക്കാനുള്ള നിർദ്ദേശങ്ങൾക്കായി മാനുവൽ കാണുക.</string>
-    <string name="import_error_content_provider">തിരഞ്ഞെടുത്ത ഫയൽ AnkiDroid സ്വപ്രേരിതമായി ഇറക്കുമതി ചെയ്യാൻ കഴിയില്ല. അങ്കി ഫയലുകൾ എങ്ങനെ സ്വമേധയാ ഇറക്കുമതി ചെയ്യാമെന്നതിനുള്ള ഉപയോക്തൃ മാനുവൽ കാണുക: \n%s</string>
+    <string name="import_error_content_provider">The selected file couldn’t be imported automatically by AnkiDroid. Please see the user manual for how to manually import Anki files: \n%s</string>
     <string name="import_error_copy_to_cache">ഫയൽ കാഷെ ചെയ്യുന്നതിൽ പരാജയപ്പെട്ടു (ഒരുപക്ഷേ സ്റ്റോറേജ് ഇടം തീർന്നിരിക്കാം)</string>
     <string name="import_interrupted">ഇറക്കുമതി തടസ്സപ്പെട്ടു: അങ്കിഡ്രോയിഡ് അടച്ചു</string>
     <string name="export_ready_title">കയറ്റുമതി തയ്യാറാണ്</string>

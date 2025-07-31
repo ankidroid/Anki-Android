@@ -147,7 +147,7 @@
     <string name="import_error_handle_exception">Gagal mengimport fail\n\n%s</string>
     <string name="import_error_not_apkg_extension">Nama fail “%s” tiada sambungan .apkg atau .colpkg</string>
     <string name="import_error_load_imported_database">Penggantian pangkalan data Anki (.anki2) belum disokong lagi. Sila lihat panduan bagi langkah penggantian.</string>
-    <string name="import_error_content_provider">AnkiDroid tidak boleh mengimport fail pilihan secara automatik. Sila lihat manual pengguna bagi cara import fail anki secara manual: \n%s</string>
+    <string name="import_error_content_provider">AnkiDroid tidak boleh mengimport fail pilihan secara automatik. Sila lihat manual pengguna bagi cara import fail Anki secara manual: \n%s</string>
     <string name="import_error_copy_to_cache">Gagal memcachekan fail (kemungkinan kehabisan ruang storan)</string>
     <string name="import_interrupted">Import tergendala: AnkiDroid telah ditutup</string>
     <string name="export_ready_title">Eksport sedia</string>
