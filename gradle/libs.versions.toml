@@ -81,7 +81,7 @@ javaSemver = "0.10.2"
 jetbrainsAnnotations = "26.0.2"
 json = "20250517"
 jsoup = "1.21.1"
-androidTestJunit = "1.2.1"
+androidTestJunit = "1.3.0"
 # https://github.com/junit-team/junit5/releases/
 junitJupiter = "5.13.4"
 # https://github.com/junit-team/junit5/releases/ - version numbers differ; changelogs in bundle
