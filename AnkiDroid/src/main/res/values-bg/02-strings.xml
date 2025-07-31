@@ -150,7 +150,7 @@
     <string name="import_error_handle_exception">Неуспешно внасяне на файл\n\n%s</string>
     <string name="import_error_not_apkg_extension">Файлът „%s“ няма разширение .apkg или .colpkg</string>
     <string name="import_error_load_imported_database">Замената на базата данни Anki (.anki2) все още не се поддържат. Моля, вижте инструкцията за замена.</string>
-    <string name="import_error_content_provider">Избраният файл не можа да бъде импортиран автоматично от AnkiDroid. Моля, вижте ръководството на потребителя за как да ръчно да импортирате anki файлове: \n%s</string>
+    <string name="import_error_content_provider">Избраният файл не можа да бъде импортиран автоматично от AnkiDroid. Моля, вижте ръководството на потребителя за как да ръчно да импортирате Anki файлове: \n%s</string>
     <string name="import_error_copy_to_cache">Пропадна кеширането на файла (възможна е липса на място за съхранение)</string>
     <string name="import_interrupted">Import interrupted: AnkiDroid was closed</string>
     <string name="export_ready_title">Export ready</string>

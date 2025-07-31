@@ -150,7 +150,7 @@
     <string name="import_error_handle_exception">ಫೈಲ್\n\n%s ಆಮದು ಮಾಡಲು ವಿಫಲವಾಗಿದೆ</string>
     <string name="import_error_not_apkg_extension">“%s” ಫೈಲ್ ಹೆಸರು .apkg ಅಥವಾ .colpkg ವಿಸ್ತರಣೆಯನ್ನು ಹೊಂದಿಲ್ಲ</string>
     <string name="import_error_load_imported_database">ಅಂಕಿ ಡೇಟಾಬೇಸ್ (.anki2) ಬದಲಿಗಳನ್ನು ಇನ್ನೂ ಬೆಂಬಲಿಸುವುದಿಲ್ಲ. ಬದಲಿ ಸೂಚನೆಗಳಿಗಾಗಿ ದಯವಿಟ್ಟು ಕೈಪಿಡಿಯನ್ನು ನೋಡಿ.</string>
-    <string name="import_error_content_provider">ಆಯ್ದ ಫೈಲ್ ಅನ್ನು ಆಂಕಿಡ್ರಾಯ್ಡ್ ಸ್ವಯಂಚಾಲಿತವಾಗಿ ಆಮದು ಮಾಡಲಾಗುವುದಿಲ್ಲ. ಆಂಕಿ ಫೈಲ್‌ಗಳನ್ನು ಹಸ್ತಚಾಲಿತವಾಗಿ ಆಮದು ಮಾಡುವುದು ಹೇಗೆ ಎಂದು ದಯವಿಟ್ಟು ಬಳಕೆದಾರರ ಕೈಪಿಡಿಯನ್ನು ನೋಡಿ: \n%s</string>
+    <string name="import_error_content_provider">The selected file couldn’t be imported automatically by AnkiDroid. Please see the user manual for how to manually import Anki files: \n%s</string>
     <string name="import_error_copy_to_cache">ಫೈಲ್ ಸಂಗ್ರಹಿಸಲು ವಿಫಲವಾಗಿದೆ (ಬಹುಶಃ ಶೇಖರಣಾ ಸ್ಥಳವಿಲ್ಲ)</string>
     <string name="import_interrupted">ಆಮದು ಅಡ್ಡಿಪಡಿಸಲಾಗಿದೆ: ಆಂಕಿಡ್ರಾಯ್ಡ್ ಅನ್ನು ಮುಚ್ಚಲಾಗಿದೆ</string>
     <string name="export_ready_title">ರಫ್ತು ಸಿದ್ಧವಾಗಿದೆ</string>

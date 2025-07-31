@@ -150,7 +150,7 @@
     <string name="import_error_handle_exception">கோப்பை இறக்குமதி செய்ய முடியவில்லை\n\n%s</string>
     <string name="import_error_not_apkg_extension">கோப்புப் பெயரில் \"%s\" .apkg அல்லது .colpkg நீட்டிப்பைக் கொண்டிருக்கவில்லை</string>
     <string name="import_error_load_imported_database">Anki தரவுத்தள (.anki2) மாற்றீடுகள் இன்னும் ஆதரிக்கப்படவில்லை. மாற்று வழிமுறைகளுக்குக் கையேட்டைப் பார்க்கவும்.</string>
-    <string name="import_error_content_provider">தேர்ந்தெடுக்கப்பட்ட கோப்பை AnkiDroid மூலம் தானாக இறக்குமதி செய்ய முடியவில்லை. Anki கோப்புகளைக் கைமுறையாக எப்படி இறக்குமதி செய்வது என்பதை அறிய, பயனர் கையேட்டைப் பார்க்கவும்: \n%s</string>
+    <string name="import_error_content_provider">The selected file couldn’t be imported automatically by AnkiDroid. Please see the user manual for how to manually import Anki files: \n%s</string>
     <string name="import_error_copy_to_cache">கோப்பை தேக்ககப்படுத்துவதில் தோல்வி (சேமிப்பிடம் இல்லாமல் இருக்கலாம்)</string>
     <string name="import_interrupted">இறக்குமதி தடைபட்டது: AnkiDroid மூடப்பட்டது</string>
     <string name="export_ready_title">ஏற்றுமதி தயார்</string>

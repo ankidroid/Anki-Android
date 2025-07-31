@@ -156,7 +156,7 @@
     <string name="import_error_handle_exception">ייבוא הקובץ נכשל\n\n%s</string>
     <string name="import_error_not_apkg_extension">לשם הקובץ „%s” אין סיומת ‎.apkg או ‎.colpkg</string>
     <string name="import_error_load_imported_database">עדיין אין תמיכה בהחלפות של Anki Database (.anki2). אנא עיין במדריך להוראות החלפה.</string>
-    <string name="import_error_content_provider">הקובץ שנבחר לא יובא בהצלחה על ידי אנקידרוייד. נא עיין במדריך למשתמש לקבלת הסבר על יבוא ידיני של קבצי אנקי: \n%s</string>
+    <string name="import_error_content_provider">The selected file couldn’t be imported automatically by AnkiDroid. Please see the user manual for how to manually import Anki files: \n%s</string>
     <string name="import_error_copy_to_cache">לא הצליח לשמור את הקובץ במטמון (ייתכן ששטח האחסון נגמר)</string>
     <string name="import_interrupted">הייבוא נפסק: AnkiDroid נסגר</string>
     <string name="export_ready_title">הייצוא מוכן</string>

@@ -147,7 +147,7 @@
     <string name="import_error_handle_exception">Gagal mengimpor file\n\n%s</string>
     <string name="import_error_not_apkg_extension">Berkas bernama “%s” tidak memiliki ekstensi .apkg atau .colpkg</string>
     <string name="import_error_load_imported_database">Pengganti basisdata Anki (.anki2) belum didukung. Harap lihat panduan untuk langkah penggantian</string>
-    <string name="import_error_content_provider">Berkas yang dipilih tidak dapat diimpor secara otomatis oleh AnkiDroid. Silakan lihat panduan pengguna tentang cara mengimpor berkas anki secara manual: \n%s</string>
+    <string name="import_error_content_provider">Berkas yang dipilih tidak dapat diimpor secara otomatis oleh AnkiDroid. Silakan lihat panduan pengguna tentang cara mengimpor berkas Anki secara manual: \n%s</string>
     <string name="import_error_copy_to_cache">Gagal cache file (mungkin kehabisan ruang penyimpanan)</string>
     <string name="import_interrupted">Impor terganggu</string>
     <string name="export_ready_title">Ekspor siap</string>

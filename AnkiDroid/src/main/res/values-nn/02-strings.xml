@@ -150,7 +150,7 @@
     <string name="import_error_handle_exception">Klarte ikkje å importere fil\n\n%s</string>
     <string name="import_error_not_apkg_extension">Filename “%s” doesn’t have .apkg or .colpkg extension</string>
     <string name="import_error_load_imported_database">Anki Database (.anki2) replacements are not yet supported. Please see the manual for replacement instructions.</string>
-    <string name="import_error_content_provider">Den valgte filen kunne ikke importeres automatisk av AnkiDroid. Vennligst referer til brukermanualen for å finne ut hvordan man importerer anki-filer manuelt: \n%s</string>
+    <string name="import_error_content_provider">Den valgte filen kunne ikke importeres automatisk av AnkiDroid. Vennligst referer til brukermanualen for å finne ut hvordan man importerer Anki-filer manuelt: \n%s</string>
     <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
     <string name="import_interrupted">Import interrupted: AnkiDroid was closed</string>
     <string name="export_ready_title">Export ready</string>
