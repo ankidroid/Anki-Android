@@ -22,6 +22,7 @@ import androidx.core.content.edit
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.BuildConfig
 import com.ichi2.anki.R
+import com.ichi2.anki.cardviewer.TapGestureMode
 import com.ichi2.anki.settings.enums.FrameStyle
 import com.ichi2.anki.settings.enums.HideSystemBars
 import com.ichi2.anki.settings.enums.PrefEnum
@@ -204,6 +205,17 @@ object Prefs {
     val toolbarPosition: ToolbarPosition
         get() = getEnum(R.string.reviewer_toolbar_position_key, ToolbarPosition.TOP)
 
+    // **************************************** Controls **************************************** //
+    //region Controls
+
+    val tapGestureMode: TapGestureMode
+        get() =
+            when (getBoolean(R.string.gestures_corner_touch_preference, false)) {
+                true -> TapGestureMode.NINE_POINT
+                false -> TapGestureMode.FOUR_POINT
+            }
+
+    //endregion
     // ************************************** Accessibility ************************************* //
 
     val answerButtonsSize: Int by intPref(R.string.answer_button_size_preference, 100)

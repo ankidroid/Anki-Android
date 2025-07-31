@@ -65,7 +65,6 @@ import com.ichi2.anki.Flag
 import com.ichi2.anki.R
 import com.ichi2.anki.cardviewer.CardMediaPlayer
 import com.ichi2.anki.cardviewer.Gesture
-import com.ichi2.anki.cardviewer.TapGestureMode
 import com.ichi2.anki.common.utils.android.isRobolectric
 import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory
@@ -712,7 +711,7 @@ class ReviewerFragment :
         private var scale: Float = if (!isRobolectric) webView.scale else 1F
         private var isScrolling: Boolean = false
         private var isScrollingJob: Job? = null
-        private val gestureMode = TapGestureMode.fromPreference(sharedPrefs())
+        private val gestureMode = Prefs.tapGestureMode
         private val swipeSensitivity = Prefs.swipeSensitivity
 
         private val gestureParser = GestureParser()
