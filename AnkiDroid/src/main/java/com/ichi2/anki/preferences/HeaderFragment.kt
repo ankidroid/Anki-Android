@@ -242,6 +242,7 @@ class HeaderFragment : SettingsFragment() {
                 is ReviewerOptionsFragment, is ReviewerMenuSettingsFragment -> R.string.new_reviewer_options_key
                 is DevOptionsFragment -> R.string.pref_dev_options_screen_key
                 is AboutFragment -> R.string.about_screen_key
+                is WidgetSettingsFragment -> R.string.pref_widget_screen_key
                 else -> null
             }
     }
