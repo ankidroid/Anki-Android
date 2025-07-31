@@ -65,11 +65,8 @@ import com.ichi2.anki.browser.CardOrNoteId
 import com.ichi2.anki.browser.IdsFile
 import com.ichi2.anki.browser.SaveSearchResult
 import com.ichi2.anki.browser.SharedPreferencesLastDeckIdRepository
-import com.ichi2.anki.browser.deleteSelectedNotes
 import com.ichi2.anki.browser.registerFindReplaceHandler
-import com.ichi2.anki.browser.showOptionsDialog
 import com.ichi2.anki.browser.toCardBrowserLaunchOptions
-import com.ichi2.anki.browser.updateFlagForSelectedRows
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.dialogs.CardBrowserMySearchesDialog
@@ -650,7 +647,7 @@ open class CardBrowser :
                     return false
                 } else {
                     Timber.i("Delete pressed - Delete Selected Note")
-                    deleteSelectedNotes()
+                    cardBrowserFragment.deleteSelectedNotes()
                     return true
                 }
             }
@@ -716,7 +713,7 @@ open class CardBrowser :
                 KeyEvent.KEYCODE_7 -> Flag.PURPLE
                 else -> return
             }
-        updateFlagForSelectedRows(flag)
+        cardBrowserFragment.updateFlagForSelectedRows(flag)
     }
 
     /** Opens the note editor for a card.
@@ -1020,7 +1017,7 @@ open class CardBrowser :
     fun warnUserIfInNotesOnlyMode(): Boolean {
         if (viewModel.cardsOrNotes != NOTES) return false
         showSnackbar(R.string.card_browser_unavailable_when_notes_mode) {
-            setAction(R.string.error_handling_options) { showOptionsDialog() }
+            setAction(R.string.error_handling_options) { cardBrowserFragment.showOptionsDialog() }
         }
         return true
     }
@@ -1034,7 +1031,7 @@ open class CardBrowser :
         Flag.entries.find { it.ordinal == item.itemId }?.let { flag ->
             when (item.groupId) {
                 Mode.SINGLE_SELECT.value -> filterByFlag(flag)
-                Mode.MULTI_SELECT.value -> updateFlagForSelectedRows(flag)
+                Mode.MULTI_SELECT.value -> cardBrowserFragment.updateFlagForSelectedRows(flag)
                 else -> return@let
             }
             return true
