@@ -247,7 +247,7 @@
     <!-- Widget -->
     <string name="pref_widget_screen_key">widgetScreen</string>
     <string name="widget_dynamic_theming_key">widgetDynamicTheming</string>
-    <string name="widget_dynamic_theming_title">Enable dynamic theming for widgets</string>
+    <string name="widget_dynamic_theming_title" maxLength="41">Enable dynamic theming for widgets</string>
     <string name="widget_dynamic_theming_summary">If enabled, widgets will use wallpaper-based colors. If disabled, widgets will use default colors for light/dark mode.</string>
 
 </resources>
