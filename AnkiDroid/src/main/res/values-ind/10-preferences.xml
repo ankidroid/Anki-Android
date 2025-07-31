@@ -81,7 +81,7 @@
     <string name="button_size" maxLength="41">Ukuran tombol jawaban</string>
     <string name="card_browser_font_size" maxLength="41">Skala fon penelusur kartu</string>
     <string name="card_browser_hide_media" maxLength="41">Tampilkan nama berkas di penelusur kartu</string>
-    <string name="card_browser_hide_media_summary">Tampilkan nama berkas media di kolom tanya/jawab penelusur kartu</string>
+    <string name="card_browser_hide_media_summary">Display audio filenames in the card browser question/answer fields</string>
     <string name="col_path" maxLength="41">Direktori AnkiDroid</string>
     <string name="fullscreen_review" maxLength="41">Mode layar penuh</string>
     <string name="full_screen_off">Mati</string>

@@ -84,7 +84,7 @@
     <string name="button_size" maxLength="41">Atsakymo mygtuko dydis</string>
     <string name="card_browser_font_size" maxLength="41">Kortelių naršyklės šrifto dydis</string>
     <string name="card_browser_hide_media" maxLength="41">Rodyti failų pavadinimus kortelių naršyklėje</string>
-    <string name="card_browser_hide_media_summary">Medijos failų pavadinimų rodymas kortelių naršyklės klausimų/atsakymų laukuose</string>
+    <string name="card_browser_hide_media_summary">Display audio filenames in the card browser question/answer fields</string>
     <string name="col_path" maxLength="41">„AnkiDroid“ katalogas</string>
     <string name="fullscreen_review" maxLength="41">Viso ekrano režimas</string>
     <string name="full_screen_off">Išjungta</string>

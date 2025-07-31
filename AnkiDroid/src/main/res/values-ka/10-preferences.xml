@@ -82,7 +82,7 @@
     <string name="button_size" maxLength="41">პასუხის ღილაკის ზომა</string>
     <string name="card_browser_font_size" maxLength="41">შრიფტის ზომა ბარათების საძიებოში</string>
     <string name="card_browser_hide_media" maxLength="41">ფაილის სახელების ჩვენება ბარათების საძიებოში</string>
-    <string name="card_browser_hide_media_summary">მედიაფაილების სახელების ჩვენება ბარათების საძიებოს კითხვა/პასუხის ველებში</string>
+    <string name="card_browser_hide_media_summary">Display audio filenames in the card browser question/answer fields</string>
     <string name="col_path" maxLength="41">AnkiDroid-ის საქაღალდე</string>
     <string name="fullscreen_review" maxLength="41">სრულეკრანიანი რეჟიმი</string>
     <string name="full_screen_off">გამორთულია</string>

@@ -83,7 +83,7 @@
     <string name="button_size" maxLength="41">Atbilžu pogu lielums</string>
     <string name="card_browser_font_size" maxLength="41">Kartīšu pārlūka fonta mērogošana</string>
     <string name="card_browser_hide_media" maxLength="41">Kartīšu pārlūkā attēlot datņu nosaukumus</string>
-    <string name="card_browser_hide_media_summary">Kartīšu pārlūkā attēlot informācijas nesēju datņu nosaukumus jautājumu/atbilžu laukos</string>
+    <string name="card_browser_hide_media_summary">Display audio filenames in the card browser question/answer fields</string>
     <string name="col_path" maxLength="41">AnkiDroid mape</string>
     <string name="fullscreen_review" maxLength="41">Pilnekrāna skats</string>
     <string name="full_screen_off">Izslēgts</string>

@@ -82,7 +82,7 @@
     <string name="button_size" maxLength="41">جاۋاب توپچە چوڭلۇقى</string>
     <string name="card_browser_font_size" maxLength="41">كارتا كۆرگۈچ خەت ئۆلچىمى</string>
     <string name="card_browser_hide_media" maxLength="41">كارتا كۆرگۈچتە ھۆججەت ئاتىنى كۆرسىتىدۇ</string>
-    <string name="card_browser_hide_media_summary">كارتا كۆرگۈچتىكى سوئال/جاۋاب بۆلىكىدە ۋاسىتە ھۆججەت ئاتىنى كۆرسىتىدۇ</string>
+    <string name="card_browser_hide_media_summary">Display audio filenames in the card browser question/answer fields</string>
     <string name="col_path" maxLength="41">AnkiDroid مۇندەرىجىسى</string>
     <string name="fullscreen_review" maxLength="41">پۈتۈن ئېكران ھالىتى</string>
     <string name="full_screen_off">تاقاق</string>

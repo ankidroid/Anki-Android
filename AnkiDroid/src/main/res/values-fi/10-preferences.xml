@@ -82,7 +82,7 @@
     <string name="button_size" maxLength="41">Vastauspainikkeen koko</string>
     <string name="card_browser_font_size" maxLength="41">Korttiselaimen kirjasimien skaalaus</string>
     <string name="card_browser_hide_media" maxLength="41">Näytä tiedostonimet korttiselaimessa</string>
-    <string name="card_browser_hide_media_summary">Näytä median tiedostonimet korttiselaimen kysymys-/vastaus-kentissä</string>
+    <string name="card_browser_hide_media_summary">Display audio filenames in the card browser question/answer fields</string>
     <string name="col_path" maxLength="41">AnkiDroid-hakemisto</string>
     <string name="fullscreen_review" maxLength="41">Koko näytön tila</string>
     <string name="full_screen_off">Pois päältä</string>

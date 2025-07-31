@@ -82,7 +82,7 @@
     <string name="button_size" maxLength="41">Answer button size</string>
     <string name="card_browser_font_size" maxLength="41">Card browser font scaling</string>
     <string name="card_browser_hide_media" maxLength="41">Display filenames in card browser</string>
-    <string name="card_browser_hide_media_summary">Display media filenames in the card browser question/answer fields</string>
+    <string name="card_browser_hide_media_summary">Display audio filenames in the card browser question/answer fields</string>
     <string name="col_path" maxLength="41">AnkiDroid directory</string>
     <string name="fullscreen_review" maxLength="41">Fullscreen mode</string>
     <string name="full_screen_off">Off</string>

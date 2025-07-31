@@ -81,7 +81,7 @@
     <string name="button_size" maxLength="41">Kích thước nút trả lời</string>
     <string name="card_browser_font_size" maxLength="41">Thẻ trình duyệt font rộng</string>
     <string name="card_browser_hide_media" maxLength="41">Hiển thị tên tệp trong trình duyệt thẻ</string>
-    <string name="card_browser_hide_media_summary">Hiển thị tên tệp phương tiện trong các trường câu hỏi / câu trả lời của trình duyệt thẻ</string>
+    <string name="card_browser_hide_media_summary">Display audio filenames in the card browser question/answer fields</string>
     <string name="col_path" maxLength="41">Thư mục AnkiDroid</string>
     <string name="fullscreen_review" maxLength="41">Chế độ toàn màn hình</string>
     <string name="full_screen_off">Tắt</string>

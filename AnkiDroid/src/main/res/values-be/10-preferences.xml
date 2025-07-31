@@ -84,7 +84,7 @@
     <string name="button_size" maxLength="41">Памер кнопкі адказу</string>
     <string name="card_browser_font_size" maxLength="41">Маштаб шрыфту аглядальніка картак</string>
     <string name="card_browser_hide_media" maxLength="41">Адлюстроўваць назвы файлаў</string>
-    <string name="card_browser_hide_media_summary">Адлюстроўваць назвы медыяфайлаў у аглядальніку картак (палі пытанні/адказы)</string>
+    <string name="card_browser_hide_media_summary">Display audio filenames in the card browser question/answer fields</string>
     <string name="col_path" maxLength="41">Каталог AnkiDroid</string>
     <string name="fullscreen_review" maxLength="41">Поўнаэкранны рэжым</string>
     <string name="full_screen_off">Выключаны</string>

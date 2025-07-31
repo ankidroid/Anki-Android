@@ -84,6 +84,6 @@
         <item quantity="many">You can select up to %d decks.</item>
         <item quantity="other" comment="Consider keeping the unbreakable space after the digit">You can select up to %d decks.</item>
     </plurals>
-    <string name="empty_widget_state" comment="To denote the widget is empty">Missing deck. Tap to reconfigure.</string>
-    <string name="empty_collection_state_in_widget" comment="To denote the collection is empty">Collection is empty, use app to add decks then reconfigure</string>
+    <string name="empty_widget_state" comment="To denote the widget is empty">Paca ar iarraidh. Tapáil chun athchumrú.</string>
+    <string name="empty_collection_state_in_widget" comment="To denote the collection is empty">Tá an bailiúchán folamh, bain úsáid as an aip chun deiceanna a chur leis agus ansin athchumraigh</string>
 </resources>

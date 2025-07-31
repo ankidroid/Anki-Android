@@ -82,7 +82,7 @@
     <string name="button_size" maxLength="41">ଉତ୍ତର ବଟନ ଆକାର</string>
     <string name="card_browser_font_size" maxLength="41">ପତ୍ର ବ୍ରାଉଜର୍ ଫଣ୍ଟ ସ୍କେଲିଂ</string>
     <string name="card_browser_hide_media" maxLength="41">ପତ୍ର ବ୍ରାଉଜର୍‌ରେ ଫାଇଲ୍‌ନାମ ସବୁ ଦର୍ଶାଇବା</string>
-    <string name="card_browser_hide_media_summary">ପତ୍ର ବ୍ରାଉଜର୍‌ର ପ୍ରଶ୍ନ/ଉତ୍ତର କ୍ଷେତ୍ରରେ ମିଡ଼ିଆ ଫାଇଲ୍‌ନାମ ସବୁ ଦର୍ଶାଇବା</string>
+    <string name="card_browser_hide_media_summary">Display audio filenames in the card browser question/answer fields</string>
     <string name="col_path" maxLength="41">AnkiDroid directory</string>
     <string name="fullscreen_review" maxLength="41">ପୂର୍ଣ୍ଣସ୍କ୍ରୀନ୍ ମୋଡ୍</string>
     <string name="full_screen_off">ବନ୍ଦ</string>

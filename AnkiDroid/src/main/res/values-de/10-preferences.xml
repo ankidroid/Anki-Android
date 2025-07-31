@@ -82,7 +82,7 @@
     <string name="button_size" maxLength="41">Größe der Antwortschaltflächen</string>
     <string name="card_browser_font_size" maxLength="41">Schriftskalierung in der Kartenübersicht</string>
     <string name="card_browser_hide_media" maxLength="41">Dateinamen in der Kartenübersicht anzeigen</string>
-    <string name="card_browser_hide_media_summary">Mediendateinamen anzeigen in den Frage-/Antwortfeldern der Kartenübersicht</string>
+    <string name="card_browser_hide_media_summary">Display audio filenames in the card browser question/answer fields</string>
     <string name="col_path" maxLength="41">AnkiDroid-Verzeichnis</string>
     <string name="fullscreen_review" maxLength="41">Vollbildmodus</string>
     <string name="full_screen_off">Aus</string>

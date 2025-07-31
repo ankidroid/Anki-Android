@@ -82,7 +82,7 @@
     <string name="button_size" maxLength="41">ᱛᱮᱞᱟ ᱵᱚᱴᱚᱱ ᱢᱟᱯ</string>
     <string name="card_browser_font_size" maxLength="41">ᱠᱟᱰ ᱵᱨᱟᱣᱡᱚᱨ ᱪᱤᱠᱤ ᱢᱟᱯ</string>
     <string name="card_browser_hide_media" maxLength="41">ᱠᱟᱰ ᱵᱨᱟᱣᱡᱚᱨ ᱨᱮ ᱨᱮᱫᱼᱧᱩᱛᱩᱢ ᱫᱮᱠᱷᱟᱣᱢᱮ</string>
-    <string name="card_browser_hide_media_summary">ᱠᱟᱰ ᱵᱨᱟᱣᱡᱚᱨ ᱠᱩᱞᱤ ᱨᱮ ᱢᱮᱰᱤᱭᱟ ᱨᱮᱫᱼᱧᱩᱛᱩᱢ ᱫᱮᱠᱷᱟᱣᱢᱮ/ᱛᱮᱞᱟ ᱡᱟᱭᱜᱟ</string>
+    <string name="card_browser_hide_media_summary">Display audio filenames in the card browser question/answer fields</string>
     <string name="col_path" maxLength="41">AnkiDroid ᱩᱫᱩᱜ ᱯᱩᱛᱷᱤ</string>
     <string name="fullscreen_review" maxLength="41">ᱯᱩᱨᱟᱹᱥᱠᱨᱤᱱ ᱢᱚᱰ</string>
     <string name="full_screen_off">ᱵᱚᱸᱫ</string>

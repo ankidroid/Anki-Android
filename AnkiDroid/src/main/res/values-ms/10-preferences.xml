@@ -81,7 +81,7 @@
     <string name="button_size" maxLength="41">Saiz butang jawapan</string>
     <string name="card_browser_font_size" maxLength="41">Skala fon pencari kad</string>
     <string name="card_browser_hide_media" maxLength="41">Papar nama fail dalam pencari kad</string>
-    <string name="card_browser_hide_media_summary">Papar nama fail meia dalam medan soalan/jawapan pencari kad</string>
+    <string name="card_browser_hide_media_summary">Display audio filenames in the card browser question/answer fields</string>
     <string name="col_path" maxLength="41">Direktori AnkiDroid</string>
     <string name="fullscreen_review" maxLength="41">Mod skrin penuh</string>
     <string name="full_screen_off">Matikan</string>

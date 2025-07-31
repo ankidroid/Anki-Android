@@ -82,7 +82,7 @@
     <string name="button_size" maxLength="41">اندازه دکمه پاسخ</string>
     <string name="card_browser_font_size" maxLength="41">تغییر اندازه فونت مرورگر کارت</string>
     <string name="card_browser_hide_media" maxLength="41">نمایش نام فایل‌ها در مرورگر کارت</string>
-    <string name="card_browser_hide_media_summary">نمایش نام فایل‌های رسانه در فیلد سوال/پاسخ در مرورگر کارت</string>
+    <string name="card_browser_hide_media_summary">Display audio filenames in the card browser question/answer fields</string>
     <string name="col_path" maxLength="41">مسیر قرارگیری AnkiDroid</string>
     <string name="fullscreen_review" maxLength="41">حالت تمام‌صفحه</string>
     <string name="full_screen_off">خاموش</string>

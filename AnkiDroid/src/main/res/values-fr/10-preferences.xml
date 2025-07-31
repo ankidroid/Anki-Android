@@ -82,7 +82,7 @@
     <string name="button_size" maxLength="41">Taille des boutons de réponse</string>
     <string name="card_browser_font_size" maxLength="41">Échelle de la police de l’explorateur</string>
     <string name="card_browser_hide_media" maxLength="41">Afficher les noms de fichiers dans le navigateur de cartes</string>
-    <string name="card_browser_hide_media_summary">Afficher les noms de fichiers dans les champs question/réponse du navigateur de cartes</string>
+    <string name="card_browser_hide_media_summary">Display audio filenames in the card browser question/answer fields</string>
     <string name="col_path" maxLength="41">Répertoire de AnkiDroid</string>
     <string name="fullscreen_review" maxLength="41">Mode plein écran</string>
     <string name="full_screen_off">Inactif</string>

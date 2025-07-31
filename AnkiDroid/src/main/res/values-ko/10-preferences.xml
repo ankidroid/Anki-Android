@@ -81,7 +81,7 @@
     <string name="button_size" maxLength="41">정답 버튼 크기</string>
     <string name="card_browser_font_size" maxLength="41">카드 탐색기 글꼴 크기 조정</string>
     <string name="card_browser_hide_media" maxLength="41">카드 탐색기에서 파일명 보기</string>
-    <string name="card_browser_hide_media_summary">카드 탐색기의 질문/답변 필드에 미디어 파일 이름을 표시합니다.</string>
+    <string name="card_browser_hide_media_summary">Display audio filenames in the card browser question/answer fields</string>
     <string name="col_path" maxLength="41">AnkiDroid 디렉토리</string>
     <string name="fullscreen_review" maxLength="41">전체 화면 모드</string>
     <string name="full_screen_off">끔</string>

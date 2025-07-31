@@ -84,7 +84,7 @@
     <string name="button_size" maxLength="41">גודל כפתורי התשובה</string>
     <string name="card_browser_font_size" maxLength="41">קנה מידה להגדלת גופן הקלפים</string>
     <string name="card_browser_hide_media" maxLength="41">הצגת שמות הקבצים בדפדפן הכרטיסים</string>
-    <string name="card_browser_hide_media_summary">הצג שמות קבצים של מדיה בשדות השאלה / תשובה של דפדפן הכרטיס</string>
+    <string name="card_browser_hide_media_summary">Display audio filenames in the card browser question/answer fields</string>
     <string name="col_path" maxLength="41">ספריית AnkiDroid</string>
     <string name="fullscreen_review" maxLength="41">מצב מסך מלא</string>
     <string name="full_screen_off">כבוי</string>

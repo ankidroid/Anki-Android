@@ -82,7 +82,7 @@
     <string name="button_size" maxLength="41">Cevap düğmesi büyüklüğü</string>
     <string name="card_browser_font_size" maxLength="41">Kart tarayıcısı font ölçeği</string>
     <string name="card_browser_hide_media" maxLength="41">Kart gözatıcısında dosya isimlerini göster</string>
-    <string name="card_browser_hide_media_summary">Kart gözatıcısı soru/cevap alanlarında medya dosyası isimlerini göster</string>
+    <string name="card_browser_hide_media_summary">Display audio filenames in the card browser question/answer fields</string>
     <string name="col_path" maxLength="41">AnkiDroid dizini</string>
     <string name="fullscreen_review" maxLength="41">Tam ekran modu</string>
     <string name="full_screen_off">Kapalı</string>

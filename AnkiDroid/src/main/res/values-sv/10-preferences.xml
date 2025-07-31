@@ -82,7 +82,7 @@
     <string name="button_size" maxLength="41">Storlek på svarsknapp</string>
     <string name="card_browser_font_size" maxLength="41">Typsnittsstorlek i kortbläddrare</string>
     <string name="card_browser_hide_media" maxLength="41">Visa filnamn i kortbläddraren</string>
-    <string name="card_browser_hide_media_summary">Visa mediefilnamn i kortläsarens fråga/svarsfält</string>
+    <string name="card_browser_hide_media_summary">Display audio filenames in the card browser question/answer fields</string>
     <string name="col_path" maxLength="41">AnkiDroid sökväg</string>
     <string name="fullscreen_review" maxLength="41">Fullskärmsläge</string>
     <string name="full_screen_off">Av</string>
