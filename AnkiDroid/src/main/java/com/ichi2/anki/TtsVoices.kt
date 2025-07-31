@@ -272,7 +272,7 @@ class AndroidTtsVoice(
         // on Samsung phones, the variant (f001/DEFAULT) looks awful in the UI
         // normalise: "en-GBR" is "English (GBR)". "en-GB" is "English (United Kingdom)"
         // then remove the variant: We want English (United Kingdom), not (United Kingdom,DEFAULT)
-        get() = normalize(voice.locale).let { Locale(it.language, it.country) }
+        get() = normalize(voice.locale).let { Locale.forLanguageTag(it.language + '-' + it.country) }
 
     val isNetworkConnectionRequired
         get() = voice.isNetworkConnectionRequired
@@ -312,7 +312,7 @@ class AndroidTtsVoice(
             }
             return try {
                 val uLocale = ULocale(locale.language, locale.country, locale.variant)
-                Locale(uLocale.language, uLocale.country, uLocale.variant)
+                Locale.forLanguageTag(uLocale.language + '-' + uLocale.country + '-' + uLocale.variant)
             } catch (e: Exception) {
                 Timber.w(e, "Failed to normalize locale %s", locale)
                 locale

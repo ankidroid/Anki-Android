@@ -29,7 +29,7 @@ import java.util.Locale
 // TODO switch to standalone functions and properties and remove Utils container
 object Utils {
     // Used to format doubles with English's decimal separator system
-    val ENGLISH_LOCALE = Locale("en_US")
+    val ENGLISH_LOCALE: Locale = Locale.US
 
     /*
      * IDs
