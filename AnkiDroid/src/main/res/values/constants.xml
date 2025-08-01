@@ -70,17 +70,6 @@
         <item>@string/error_reporting_choice_never_report</item>
         <item>@string/error_reporting_choice_ask_user</item>
     </string-array>
-    <string-array name="cram_deck_conf_order_labels">
-        <item>@string/cram_deck_conf_order_oldest_seen_first</item>
-        <item>@string/cram_deck_conf_order_random</item>
-        <item>@string/cram_deck_conf_order_increasing_intervals</item>
-        <item>@string/cram_deck_conf_order_decreasing_intervals</item>
-        <item>@string/cram_deck_conf_order_most_lapsed</item>
-        <item>@string/cram_deck_conf_order_order_added</item>
-        <item>@string/cram_deck_conf_order_order_due</item>
-        <item>@string/cram_deck_conf_order_latest_added_first</item>
-        <item>@string/cram_deck_conf_order_relative_overdueness</item>
-    </string-array>
     <string-array name="add_to_cur_labels">
         <item>@string/add_to_deck_use_current_deck</item>
         <item>@string/add_to_deck_decide_by_note_type</item>
@@ -161,17 +150,6 @@
     <string name="link_help_forget_cards">https://docs.ankiweb.net/studying.html#editing-and-more</string>
     <string name="link_scheduler_upgrade_faq">https://faqs.ankiweb.net/the-anki-2.1-scheduler.html#updating-to-v2-from-v1</string>
 
-    <string-array name="cram_deck_conf_order_values">
-        <item>0</item>
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
-        <item>5</item>
-        <item>6</item>
-        <item>7</item>
-        <item>8</item>
-    </string-array>
     <string-array name="add_to_cur_values">
         <item>0</item>
         <item>1</item>
