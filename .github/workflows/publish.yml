@@ -23,7 +23,7 @@ jobs:
     timeout-minutes: 120
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - uses: actions/cache@v4
         name: Gradle Cache
@@ -32,7 +32,7 @@ jobs:
           key: gradle-${{ hashFiles('**/*.gradle*') }}-v1
 
       - name: Configure JDK
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           distribution: "temurin"
           java-version: "21"
