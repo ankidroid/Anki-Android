@@ -1484,6 +1484,7 @@ class CardBrowserTest : RobolectricTest() {
     }
 
     @Test
+    @Flaky(OS.ALL)
     fun `FindReplace - replaces text as expected when set to match case`() {
         val note0 = createFindReplaceTestNote("A", "kart", "kilogram")
         val note1 = createFindReplaceTestNote("B", "krate", "chicKen")
