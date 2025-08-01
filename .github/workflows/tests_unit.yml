@@ -125,12 +125,12 @@ jobs:
           maximum-size: 12GB
           disk-root: "C:"
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           fetch-depth: 50
 
       - name: Configure JDK
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           distribution: "temurin"
           java-version: "21"  # also change jitpack.yml

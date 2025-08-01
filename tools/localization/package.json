@@ -21,16 +21,16 @@
         "axios": "^1.11.0",
         "dotenv": "^17.2.1",
         "extract-zip": "^2.0.1",
-        "typescript": "^5.8.3"
+        "typescript": "^5.9.2"
     },
     "devDependencies": {
         "@eslint/eslintrc": "^3.3.1",
-        "@eslint/js": "^9.32.0",
+        "@eslint/js": "^9.34.0",
         "@types/jest": "^30.0.0",
-        "@types/node": "^24.1.0",
-        "@typescript-eslint/eslint-plugin": "^8.38.0",
-        "@typescript-eslint/parser": "^8.38.0",
-        "eslint": "^9.32.0",
+        "@types/node": "^24.3.0",
+        "@typescript-eslint/eslint-plugin": "^8.41.0",
+        "@typescript-eslint/parser": "^8.41.0",
+        "eslint": "^9.34.0",
         "eslint-config-prettier": "^10.1.8",
         "eslint-config-standard": "^17.1.0",
         "eslint-plugin-import": "^2.32.0",
@@ -39,7 +39,7 @@
         "globals": "^16.3.0",
         "jest": "^30.0.5",
         "prettier": "^3.6.2",
-        "ts-jest": "^29.4.0",
+        "ts-jest": "^29.4.1",
         "ts-node": "^10.9.2"
     },
     "packageManager": "yarn@4.9.2"
