@@ -693,6 +693,12 @@ open class CardBrowser :
                 } else if (searchView?.isIconified == true) {
                     Timber.i("E: Edit note")
                     // search box is not available so treat the event as a shortcut
+                    // Disable 'E' edit shortcut in split mode as the integrated NoteEditor
+                    // is already available in the split view, making the shortcut redundant
+                    if (fragmented) {
+                        Timber.i("E: Ignored in split mode")
+                        return true
+                    }
                     openNoteEditorForCurrentlySelectedNote()
                     return true
                 } else {
