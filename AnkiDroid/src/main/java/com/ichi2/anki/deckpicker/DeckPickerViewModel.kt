@@ -30,7 +30,9 @@ import com.ichi2.anki.browser.BrowserDestination
 import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.libanki.CardId
 import com.ichi2.anki.libanki.Consts
+import com.ichi2.anki.libanki.Consts.DEFAULT_DECK_ID
 import com.ichi2.anki.libanki.DeckId
+import com.ichi2.anki.libanki.sched.DeckNode
 import com.ichi2.anki.libanki.utils.extend
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import com.ichi2.anki.notetype.ManageNoteTypesDestination
@@ -40,13 +42,73 @@ import com.ichi2.anki.reviewreminders.ScheduleRemindersDestination
 import com.ichi2.anki.utils.Destination
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
-/** @see [DeckPicker] */
-class DeckPickerViewModel :
-    ViewModel(),
+/**
+ * ViewModel for the [DeckPicker]
+ *
+ * @param fragmented whether the study options is shown alongside the deck picker
+ */
+class DeckPickerViewModel(
+    val fragmented: Boolean,
+) : ViewModel(),
     OnErrorListener {
+    private val flowOfDeckDueTree = MutableStateFlow<DeckNode?>(null)
+
+    /** The root of the tree displaying all decks */
+    var dueTree: DeckNode?
+        get() = flowOfDeckDueTree.value
+        private set(value) {
+            flowOfDeckDueTree.value = value
+        }
+
+    /** User filter of the deck list. Shown as a search in the UI */
+    private val flowOfCurrentDeckFilter = MutableStateFlow("")
+
+    /**
+     * Keep track of which deck was last given focus in the deck list. If we find that this value
+     * has changed between deck list refreshes, we need to recenter the deck list to the new current
+     * deck.
+     */
+    val flowOfFocusedDeck = MutableStateFlow<DeckId?>(null)
+
+    var focusedDeck: DeckId?
+        get() = flowOfFocusedDeck.value
+        set(value) {
+            flowOfFocusedDeck.value = value
+        }
+
+    /**
+     * Used if the Deck Due Tree is mutated
+     */
+    private val flowOfRefreshDeckList = MutableSharedFlow<Unit>()
+
+    val flowOfDeckList =
+        combine(
+            flowOfDeckDueTree,
+            flowOfCurrentDeckFilter,
+            flowOfFocusedDeck,
+            flowOfRefreshDeckList.onStart { emit(Unit) },
+        ) { tree, filter, _, _ ->
+            if (tree == null) return@combine FlattenedDeckList.empty
+
+            // TODO: use flowOfFocusedDeck once it's set on all instances
+            val currentDeckId = withCol { decks.current().getLong("id") }
+            Timber.i("currentDeckId: %d", currentDeckId)
+
+            FlattenedDeckList(
+                data = tree.filterAndFlattenDisplay(filter, currentDeckId),
+                hasSubDecks = tree.children.any { it.children.any() },
+            )
+        }
+
     /**
      * @see deleteDeck
      * @see DeckDeletionResult
@@ -62,13 +124,38 @@ class DeckPickerViewModel :
     // TODO: most of the recalculation should be moved inside the ViewModel
     val flowOfDeckCountsChanged = MutableSharedFlow<Unit>()
 
+    var loadDeckCounts: Job? = null
+        private set
+
     /**
-     * Keep track of which deck was last given focus in the deck list. If we find that this value
-     * has changed between deck list refreshes, we need to recenter the deck list to the new current
-     * deck.
+     * Tracks the scheduler version for which the upgrade dialog was last shown,
+     * to avoid repeatedly prompting the user for the same collection version.
      */
-    // TODO: This should later be handled as a Flow
-    var focusedDeck: DeckId = 0
+    private var schedulerUpgradeDialogShownForVersion: Long? = null
+
+    val flowOfPromptUserToUpdateScheduler = MutableSharedFlow<Unit>()
+
+    val flowOfUndoUpdated = MutableSharedFlow<Unit>()
+
+    val flowOfCollectionHasNoCards = MutableStateFlow(true)
+
+    val flowOfDeckListInInitialState =
+        combine(flowOfDeckDueTree, flowOfCollectionHasNoCards) { tree, noCards ->
+            if (tree == null) return@combine null
+            // Check if default deck is the only available and there are no cards
+            tree.onlyHasDefaultDeck() && noCards
+        }.stateIn(viewModelScope, SharingStarted.Eagerly, initialValue = null)
+
+    val flowOfCardsDue =
+        combine(flowOfDeckDueTree, flowOfDeckListInInitialState) { tree, inInitialState ->
+            if (tree == null || inInitialState != false) return@combine null
+            tree.newCount + tree.revCount + tree.lrnCount
+        }
+
+    /** "Studied N cards in 0 seconds today */
+    val flowOfStudiedTodayStats = MutableStateFlow("")
+
+    val flowOfStudyOptionsVisible = flowOfCollectionHasNoCards.map { noCards -> fragmented && !noCards }
 
     /**
      * Deletes the provided deck, child decks. and all cards inside.
@@ -183,6 +270,71 @@ class DeckPickerViewModel :
         viewModelScope.launch {
             flowOfDestination.emit(ScheduleRemindersDestination(deckId))
         }
+
+    fun reloadDeckCounts(): Job? {
+        loadDeckCounts?.cancel()
+        val loadDeckCounts =
+            viewModelScope.launch {
+                Timber.d("Refreshing deck list")
+                val (deckDueTree, collectionHasNoCards) =
+                    withCol {
+                        Pair(sched.deckDueTree(), isEmpty)
+                    }
+                dueTree = deckDueTree
+
+                flowOfCollectionHasNoCards.value = collectionHasNoCards
+
+                // TODO: This is in the wrong place
+                // Backend returns studiedToday() with newlines for HTML formatting,so we replace them with spaces.
+                flowOfStudiedTodayStats.value = withCol { sched.studiedToday().replace("\n", " ") }
+
+                /**
+                 * Checks the current scheduler version and prompts the upgrade dialog if using the legacy version.
+                 * Ensures the dialog is only shown once per collection load, even if [updateDeckList()] is called multiple times.
+                 */
+                val currentSchedulerVersion = withCol { config.get("schedVer") as? Long ?: 1L }
+
+                if (currentSchedulerVersion == 1L && schedulerUpgradeDialogShownForVersion != 1L) {
+                    schedulerUpgradeDialogShownForVersion = 1L
+                    flowOfPromptUserToUpdateScheduler.emit(Unit)
+                } else {
+                    schedulerUpgradeDialogShownForVersion = currentSchedulerVersion
+                }
+
+                // TODO: This is in the wrong place
+                // current deck may have changed
+                focusedDeck = withCol { decks.current().id }
+                flowOfUndoUpdated.emit(Unit)
+            }
+        this.loadDeckCounts = loadDeckCounts
+        return loadDeckCounts
+    }
+
+    fun updateDeckFilter(filterText: String) {
+        Timber.d("filter: %s", filterText)
+        flowOfCurrentDeckFilter.value = filterText
+    }
+
+    fun toggleDeckExpand(deckId: DeckId) =
+        viewModelScope.launch {
+            // update DB
+            withCol { decks.collapse(deckId) }
+            // update stored state
+            dueTree?.find(deckId)?.run {
+                collapsed = !collapsed
+            }
+            flowOfRefreshDeckList.emit(Unit)
+        }
+
+    /** Represents [dueTree] as a list */
+    data class FlattenedDeckList(
+        val data: List<DisplayDeckNode>,
+        val hasSubDecks: Boolean,
+    ) {
+        companion object {
+            val empty = FlattenedDeckList(emptyList(), hasSubDecks = false)
+        }
+    }
 }
 
 /** Result of [DeckPickerViewModel.deleteDeck] */
@@ -211,3 +363,5 @@ data class EmptyCardsResult(
     @CheckResult
     fun toHumanReadableString() = TR.emptyCardsDeletedCount(cardsDeleted)
 }
+
+fun DeckNode.onlyHasDefaultDeck() = children.singleOrNull()?.did == DEFAULT_DECK_ID
