@@ -24,6 +24,7 @@ import android.content.Context
 import android.content.Intent
 import android.view.View
 import android.widget.RemoteViews
+import androidx.core.content.ContextCompat
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.IntentHandler.Companion.intentToReviewDeckFromShortcuts
@@ -33,6 +34,7 @@ import com.ichi2.anki.isCollectionEmpty
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.Decks.Companion.NOT_FOUND_DECK_ID
 import com.ichi2.anki.pages.DeckOptionsDestination
+import com.ichi2.anki.preferences.WidgetSettingsFragment
 import com.ichi2.widget.ACTION_UPDATE_WIDGET
 import com.ichi2.widget.AnalyticsWidgetProvider
 import com.ichi2.widget.cancelRecurringAlarm
@@ -72,6 +74,29 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
         ) {
             val deckId = getDeckIdForWidget(context, appWidgetId)
             val remoteViews = RemoteViews(context.packageName, R.layout.widget_card_analysis)
+
+            // Apply dynamic theming or default background colors
+            val dynamicTheming = WidgetSettingsFragment.isGlobalDynamicThemingEnabled(context)
+            if (!dynamicTheming) {
+                val isNight =
+                    (context.resources.configuration.uiMode and android.content.res.Configuration.UI_MODE_NIGHT_MASK) ==
+                        android.content.res.Configuration.UI_MODE_NIGHT_YES
+                val bgColor =
+                    if (isNight) {
+                        ContextCompat.getColor(context, R.color.widget_bg_dark)
+                    } else {
+                        ContextCompat.getColor(context, R.color.widget_bg_light)
+                    }
+                remoteViews.setInt(R.id.widget_deck_picker, "setBackgroundColor", bgColor)
+                remoteViews.setInt(R.id.cardAnalysisDataHolder, "setBackgroundColor", bgColor)
+            } else {
+                remoteViews.setInt(R.id.widget_deck_picker, "setBackgroundResource", R.drawable.widget_card_analysis_rounded_background)
+                remoteViews.setInt(
+                    R.id.cardAnalysisDataHolder,
+                    "setBackgroundResource",
+                    R.drawable.widget_card_analysis_rounded_inner_background,
+                )
+            }
 
             if (deckId == NOT_FOUND_DECK_ID) {
                 // If deckId is null, it means no deck was selected or the selected deck was deleted.
