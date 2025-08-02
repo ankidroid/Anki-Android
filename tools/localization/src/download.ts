@@ -28,12 +28,6 @@ const { translationsApi } = new crowdin(credentialsConst);
  */
 export async function buildAndDownload() {
     try {
-        // temporary logging to obtain the project language ids
-        const project = await translationsApi.getProject(PROJECT_ID);
-        for (const entry of project.data.targetLanguages) {
-            console.log("(Language : " + entry.name + "): " + entry.id);
-        }
-        console.log("Project target languages: " + project.data.targetLanguageIds);
         // build
         console.log("Sending project build request...");
         const buildId = await translationsApi.buildProject(PROJECT_ID);
