@@ -20,19 +20,29 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.BundleCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResult
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.ichi2.anki.R
 import com.ichi2.anki.SingleFragmentActivity
+import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.launchCatchingTask
+import com.ichi2.anki.libanki.DeckId
 import timber.log.Timber
 
 /**
  * Fragment for creating, viewing, editing, and deleting review reminders.
  */
-class ScheduleReminders : Fragment(R.layout.fragment_schedule_reminders) {
+class ScheduleReminders :
+    Fragment(R.layout.fragment_schedule_reminders),
+    DeckSelectionDialog.DeckSelectionListener {
     /**
      * Whether this fragment has been opened to edit all review reminders or just a specific deck's reminders.
      * @see ReviewReminderScope
@@ -45,7 +55,24 @@ class ScheduleReminders : Fragment(R.layout.fragment_schedule_reminders) {
         ) ?: ReviewReminderScope.Global
     }
 
+    private lateinit var database: ReviewRemindersDatabase
     private lateinit var toolbar: MaterialToolbar
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var adapter: ScheduleRemindersAdapter
+
+    /**
+     * The reminders currently being displayed in the UI. To make changes to this list show up on screen,
+     * use [triggerUIUpdate]. Note that editing this map does not also automatically write to the database.
+     * Writing to the database must be done separately.
+     */
+    private lateinit var reminders: HashMap<ReviewReminderId, ReviewReminder>
+
+    /**
+     * Retrieving deck names for a given deck ID in [setDeckNameFromScopeForView] requires a call to the collection.
+     * However, most reminders in the RecyclerView will often be from the same deck (and are guaranteed to be if
+     * this fragment is opened in [ReviewReminderScope.DeckSpecific] mode). Hence, we cache deck names.
+     */
+    private val cachedDeckNames: HashMap<DeckId, String> = hashMapOf()
 
     override fun onViewCreated(
         view: View,
@@ -57,6 +84,31 @@ class ScheduleReminders : Fragment(R.layout.fragment_schedule_reminders) {
         toolbar = view.findViewById(R.id.toolbar)
         reloadToolbarText()
         (requireActivity() as AppCompatActivity).setSupportActionBar(toolbar)
+
+        // Set up add button
+        val addButton = view.findViewById<ExtendedFloatingActionButton>(R.id.schedule_reminders_add_reminder_fab)
+        addButton.setOnClickListener { addReminder() }
+
+        // Set up recycler view
+        recyclerView = view.findViewById(R.id.schedule_reminders_recycler_view)
+        val layoutManager = LinearLayoutManager(requireContext())
+        recyclerView.layoutManager = layoutManager
+        recyclerView.addItemDecoration(DividerItemDecoration(requireContext(), layoutManager.orientation))
+
+        // Set up database
+        database = ReviewRemindersDatabase()
+
+        // Set up adapter, pass functionality to it
+        adapter =
+            ScheduleRemindersAdapter(
+                ::setDeckNameFromScopeForView,
+                ::toggleReminderEnabled,
+                ::editReminder,
+            )
+        recyclerView.adapter = adapter
+
+        // Retrieve reminders based on the editing scope
+        launchCatchingTask { loadDatabaseRemindersIntoUI() }
     }
 
     private fun reloadToolbarText() {
@@ -71,11 +123,138 @@ class ScheduleReminders : Fragment(R.layout.fragment_schedule_reminders) {
         }
     }
 
+    /**
+     * Fetch all reminders from the database and put them into the RecyclerView.
+     */
+    private suspend fun loadDatabaseRemindersIntoUI() {
+        Timber.d("Loading review reminders from database")
+        reminders =
+            when (val scope = scheduleRemindersScope) {
+                is ReviewReminderScope.Global -> {
+                    HashMap(database.getAllAppWideReminders() + database.getAllDeckSpecificReminders())
+                }
+                is ReviewReminderScope.DeckSpecific -> database.getRemindersForDeck(scope.did)
+            }
+        triggerUIUpdate()
+        Timber.d("Database review reminders successfully loaded")
+    }
+
+    /**
+     * Sets a TextView's text based on a [ReviewReminderScope].
+     * The text is either the scope's associated deck's name, or "All Decks" if the scope is global.
+     * For example, this is used to display the [ScheduleRemindersAdapter]'s deck name column.
+     */
+    private fun setDeckNameFromScopeForView(
+        scope: ReviewReminderScope,
+        view: TextView,
+    ) {
+        when (scope) {
+            is ReviewReminderScope.Global -> view.text = "All Decks"
+            is ReviewReminderScope.DeckSpecific -> {
+                launchCatchingTask {
+                    val deckName = cachedDeckNames.getOrPut(scope.did) { scope.getDeckName() }
+                    view.text = deckName
+                }
+            }
+        }
+    }
+
+    /**
+     * Toggles whether a review reminder is enabled, i.e. whether its notifications will fire.
+     * Saves this information immediately to the database and then updates the UI.
+     */
+    private fun toggleReminderEnabled(
+        id: ReviewReminderId,
+        scope: ReviewReminderScope,
+    ) {
+        Timber.d("Toggling reminder enabled state: %s", id)
+        val newState = !(reminders[id]?.enabled ?: false)
+
+        val performToggle:
+            (HashMap<ReviewReminderId, ReviewReminder>) -> Map<ReviewReminderId, ReviewReminder> =
+            { reminders ->
+                reminders[id]?.enabled = newState
+                reminders
+            }
+
+        when (scope) {
+            is ReviewReminderScope.Global -> database.editAllAppWideReminders(performToggle)
+            is ReviewReminderScope.DeckSpecific -> database.editRemindersForDeck(scope.did, performToggle)
+        }
+
+        reminders[id]?.enabled = newState
+        triggerUIUpdate()
+    }
+
+    /**
+     * The method that runs when the "+" icon is pressed, allowing the user to create a new review reminder.
+     * Opens [AddEditReminderDialog] in [AddEditReminderDialog.DialogMode.Add] mode.
+     */
+    private fun addReminder() {
+        Timber.d("Adding new review reminder")
+    }
+
+    /**
+     * The method that runs when an existing reminder is tapped, allowing the user to change its fields.
+     * Opens [AddEditReminderDialog] in [AddEditReminderDialog.DialogMode.Edit] mode.
+     */
+    private fun editReminder(reminder: ReviewReminder) {
+        Timber.d("Editing review reminder: %s", reminder.id)
+    }
+
+    /**
+     * [AddEditReminderDialog] requires a [DeckSelectionDialog.DeckSelectionListener] to catch changes to
+     * the [com.ichi2.anki.DeckSpinnerSelection]. However, [AddEditReminderDialog] is removed from the
+     * fragment stack when the [DeckSelectionDialog] appears, so we set [ScheduleReminders] as the listener
+     * and forward data to [AddEditReminderDialog] when a deck is selected.
+     */
+    override fun onDeckSelected(deck: DeckSelectionDialog.SelectableDeck?) {
+        Timber.d("Deck selected in deck spinner: %s", deck)
+        setFragmentResult(
+            DECK_SELECTION_RESULT_REQUEST_KEY,
+            Bundle().apply {
+                putParcelable(DECK_SELECTION_RESULT_REQUEST_KEY, deck)
+            },
+        )
+    }
+
+    /**
+     * Trigger a RecyclerView UI update for ScheduleReminders.
+     */
+    private fun triggerUIUpdate() {
+        adapter.submitList(
+            reminders
+                .values
+                .sortedBy { it.time.toSecondsFromMidnight() }
+                .toList(),
+        )
+    }
+
     companion object {
         /**
          * Arguments key for passing the [ReviewReminderScope] to open this fragment with.
          */
         private const val EXTRAS_SCOPE_KEY = "scope"
+
+        /**
+         * Arguments key for storing the current or latest [AddEditReminderDialog] instance.
+         * We save this so we can pass [onDeckSelected] onward to the dialog
+         * and so we can determine what reminder has been recently edited.
+         */
+        private const val ACTIVE_DIALOG_MODE_ARGUMENTS_KEY = "active_dialog_mode"
+
+        /**
+         * Fragment result key for receiving the result of [AddEditReminderDialog].
+         * Public so [AddEditReminderDialog] can access it, too.
+         */
+        const val ADD_EDIT_DIALOG_RESULT_REQUEST_KEY = "add_edit_reminder_dialog_result_request_key"
+
+        /**
+         * Fragment result key for sending [AddEditReminderDialog] the result of the deck spinner selection event.
+         * Public so [AddEditReminderDialog] can access it, too.
+         * @see onDeckSelected
+         */
+        const val DECK_SELECTION_RESULT_REQUEST_KEY = "reminder_deck_selection_result_request_key"
 
         /**
          * Creates an intent to start the ScheduleReminders fragment.
@@ -95,7 +274,7 @@ class ScheduleReminders : Fragment(R.layout.fragment_schedule_reminders) {
                         putParcelable(EXTRAS_SCOPE_KEY, scope)
                     },
                 ).apply {
-                    Timber.i("launching ScheduleReminders for $scope scope")
+                    Timber.i("launching ScheduleReminders for %s scope", scope)
                 }
     }
 }
