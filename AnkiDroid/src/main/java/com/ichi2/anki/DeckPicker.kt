@@ -160,6 +160,7 @@ import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.ResizablePaneManager
 import com.ichi2.anki.ui.animations.fadeIn
 import com.ichi2.anki.ui.animations.fadeOut
+import com.ichi2.anki.ui.windows.permissions.PermissionsActivity
 import com.ichi2.anki.utils.Destination
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.anki.utils.ext.setFragmentResultListener
@@ -178,6 +179,7 @@ import com.ichi2.utils.ImportUtils
 import com.ichi2.utils.ImportUtils.ImportResult
 import com.ichi2.utils.NetworkUtils
 import com.ichi2.utils.NetworkUtils.isActiveNetworkMetered
+import com.ichi2.utils.Permissions
 import com.ichi2.utils.SyncStatus
 import com.ichi2.utils.VersionUtils
 import com.ichi2.utils.cancelable
@@ -1299,6 +1301,12 @@ open class DeckPicker :
         super.onResume()
         if (navDrawerIsReady() && hasCollectionStoragePermissions()) {
             refreshState()
+        }
+
+        if (!Permissions.canAccessInternet(this) && !SessionPermissionTracker.hasShownInternetInfo) {
+            SessionPermissionTracker.hasShownInternetInfo = true
+            this.startActivity(PermissionsActivity.getIntent(this, PermissionSet.INTERNET_BLOCKED_INFO))
+            Timber.d("Internet not accessible")
         }
         message?.let { dialogHandler.sendStoredMessage(it) }
     }
@@ -2691,3 +2699,8 @@ private fun AnkiActivity.launchCatchingRequiringOneWaySync(block: suspend () -> 
             showDialogFragment(confirmModSchemaDialog)
         }
     }
+
+/** Tracks if the Internet info screen has been shown during the current app session. */
+object SessionPermissionTracker {
+    var hasShownInternetInfo = false
+}

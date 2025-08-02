@@ -184,6 +184,10 @@ object Permissions {
     fun canPostNotifications(context: Context): Boolean =
         Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU ||
             ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED
+
+    /** Returns true if the app has INTERNET permission granted. */
+    fun canAccessInternet(context: Context): Boolean =
+        ContextCompat.checkSelfPermission(context, Manifest.permission.INTERNET) == PackageManager.PERMISSION_GRANTED
 }
 
 fun Fragment.hasAnyOfPermissionsBeenDenied(permissions: Collection<String>): Boolean {
