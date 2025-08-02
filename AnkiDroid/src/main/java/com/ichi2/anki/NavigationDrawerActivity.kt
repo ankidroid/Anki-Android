@@ -275,6 +275,10 @@ abstract class NavigationDrawerActivity :
                 REQUEST_PREFERENCES_UPDATE,
                 result.resultCode,
             )
+
+            // We trigger a notifications channel set-up since the user may have changed the locale set
+            // from within the app, which should cause the notification channel names to be reloaded to
+            // match the new locale
             setupNotificationChannels(applicationContext)
             // Restart the activity on preference change
             // collection path hasn't been changed so just restart the current activity
