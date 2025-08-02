@@ -218,6 +218,9 @@
     <string name="navigation" maxLength="41">Navigation</string>
     <string name="media" maxLength="41">Media</string>
     <string name="misc" maxLength="41">Misc</string>
+    <!-- General permissions strings -->
+    <string name="manually_grant_permissions" comment="Pop-up message that is shown to the user when they want to grant an app permission that must be granted via the OS settings screen.">This permission must be manually granted from Settings</string>
+    <string name="revoke_permissions" comment="Pop-up message that is shown to the user when they are revoking an app permission.">This permission must be manually revoked from Settings</string>
 
     <!-- Review reminders -->
     <string name="add_reminder" comment="Label for the add reminder button in the screen for adding and editing review reminders">Add reminder</string>
