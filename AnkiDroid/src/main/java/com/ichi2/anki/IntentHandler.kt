@@ -480,7 +480,7 @@ class IntentHandler : AbstractIntentHandler() {
          * legacy or the new reviewer based on the "newReviewer" preference.
          * It is expected to be used from widget, shortcut, reminders but not from ankidroid directly because of the CLEAR_TOP flag.
          */
-        fun intentToReviewDeckFromShorcuts(
+        fun intentToReviewDeckFromShortcuts(
             context: Context,
             deckId: DeckId,
         ) = Intent(context, IntentHandler::class.java).apply {

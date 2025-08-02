@@ -96,7 +96,7 @@ import com.ichi2.anki.InitialActivity.StartupFailure.DiskFull
 import com.ichi2.anki.InitialActivity.StartupFailure.FutureAnkidroidVersion
 import com.ichi2.anki.InitialActivity.StartupFailure.SDCardNotMounted
 import com.ichi2.anki.InitialActivity.StartupFailure.WebviewFailed
-import com.ichi2.anki.IntentHandler.Companion.intentToReviewDeckFromShorcuts
+import com.ichi2.anki.IntentHandler.Companion.intentToReviewDeckFromShortcuts
 import com.ichi2.anki.StudyOptionsFragment.StudyOptionsListener
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.android.back.exitViaDoubleTapBackCallback
@@ -2352,7 +2352,7 @@ open class DeckPicker :
             ShortcutInfoCompat
                 .Builder(this, did.toString())
                 .setIntent(
-                    intentToReviewDeckFromShorcuts(context, did),
+                    intentToReviewDeckFromShortcuts(context, did),
                 ).setIcon(IconCompat.createWithResource(context, R.mipmap.ic_launcher))
                 .setShortLabel(Decks.basename(getColUnsafe.decks.name(did)))
                 .setLongLabel(getColUnsafe.decks.name(did))
