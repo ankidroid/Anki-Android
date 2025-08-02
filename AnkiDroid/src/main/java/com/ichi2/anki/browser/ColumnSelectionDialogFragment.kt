@@ -121,7 +121,7 @@ class ColumnSelectionDialogFragment : DialogFragment() {
 
         return AlertDialog
             .Builder(requireActivity())
-            .setTitle(getString(R.string.chane_browser_column))
+            .setTitle(getString(R.string.manage_browser_column))
             .setView(container)
             .setNegativeButton(android.R.string.cancel) { _, _ -> dismissAllowingStateLoss() }
             .create()
