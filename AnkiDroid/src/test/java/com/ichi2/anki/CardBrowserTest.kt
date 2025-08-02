@@ -57,7 +57,6 @@ import com.ichi2.anki.browser.CardBrowserColumn.DECK
 import com.ichi2.anki.browser.CardBrowserColumn.QUESTION
 import com.ichi2.anki.browser.CardBrowserColumn.SFLD
 import com.ichi2.anki.browser.CardBrowserColumn.TAGS
-import com.ichi2.anki.browser.CardBrowserFragment
 import com.ichi2.anki.browser.CardBrowserViewModel
 import com.ichi2.anki.browser.CardBrowserViewModelTest
 import com.ichi2.anki.browser.CardOrNoteId
@@ -327,7 +326,7 @@ class CardBrowserTest : RobolectricTest() {
             }
 
             // act
-            assertDoesNotThrow { b.moveSelectedCardsToDeck(deckIdToChangeTo) }
+            assertDoesNotThrow { b.cardBrowserFragment.moveSelectedCardsToDeck(deckIdToChangeTo) }
 
             // assert
             for (cardId in cardIds) {
@@ -347,7 +346,7 @@ class CardBrowserTest : RobolectricTest() {
 
             val cardIds = b.viewModel.queryAllSelectedCardIds()
 
-            b.moveSelectedCardsToDeck(dynId).join()
+            b.cardBrowserFragment.moveSelectedCardsToDeck(dynId).join()
 
             for (cardId in cardIds) {
                 assertThat("Deck should not be changed", col.getCard(cardId).did, not(dynId))
@@ -386,7 +385,7 @@ class CardBrowserTest : RobolectricTest() {
             )
 
             // flag the selected card
-            cardBrowser.updateSelectedCardsFlag(Flag.RED)
+            cardBrowser.cardBrowserFragment.updateFlagForSelectedRows(Flag.RED)
             // check if card is red
             assertThat(
                 "Card should be flagged",
@@ -395,7 +394,7 @@ class CardBrowserTest : RobolectricTest() {
             )
 
             // unflag the selected card
-            cardBrowser.updateSelectedCardsFlag(Flag.NONE)
+            cardBrowser.cardBrowserFragment.updateFlagForSelectedRows(Flag.NONE)
             // check if card flag is removed
             assertThat(
                 "Card flag should be removed",
@@ -407,7 +406,7 @@ class CardBrowserTest : RobolectricTest() {
             cardBrowser.viewModel.selectNone()
             cardBrowser.viewModel.selectAll()
             // flag all the cards as Green
-            cardBrowser.updateSelectedCardsFlag(Flag.GREEN)
+            cardBrowser.cardBrowserFragment.updateFlagForSelectedRows(Flag.GREEN)
             // check if all card flags turned green
             assertThat(
                 "All cards should be flagged",
@@ -710,7 +709,12 @@ class CardBrowserTest : RobolectricTest() {
                 equalTo("1"),
             )
 
-            b.repositionCardsNoValidation(2, 1, shuffle = false, shift = false)
+            b.cardBrowserFragment.repositionCardsNoValidation(
+                2,
+                1,
+                shuffle = false,
+                shift = false,
+            )
 
             assertThat(
                 "Position of checked card after reposition",
@@ -731,7 +735,7 @@ class CardBrowserTest : RobolectricTest() {
     fun change_deck_dialog_is_dismissed_on_activity_recreation() {
         val cardBrowser = browserWithNoNewCards
 
-        val dialog = cardBrowser.getChangeDeckDialog(listOf())
+        val dialog = cardBrowser.cardBrowserFragment.getChangeDeckDialog(listOf())
         cardBrowser.showDialogFragment(dialog)
 
         val shownDialog: Fragment? = cardBrowser.getCurrentDialogFragment()
@@ -1165,7 +1169,7 @@ class CardBrowserTest : RobolectricTest() {
             val secondDeckId = requireNotNull(col.decks.idForName("Second"))
 
             browserWithNoNewCards.apply {
-                selectDeckAndSave(secondDeckId)
+                viewModel.setDeckId(secondDeckId)
                 assertThat(viewModel.deckId, equalTo(secondDeckId))
                 finish()
             }
@@ -1627,7 +1631,7 @@ suspend fun CardBrowser.searchCardsSync(query: String) {
 }
 
 suspend fun CardBrowser.filterByTagSync(vararg tags: String) {
-    filterByTag(*tags)
+    cardBrowserFragment.filterByTag(*tags)
     viewModel.searchJob?.join()
 }
 
@@ -1686,5 +1690,4 @@ fun CardBrowser.searchCards(search: String? = null) {
     runBlocking { viewModel.searchJob?.join() }
 }
 
-val CardBrowser.cardBrowserFragment: CardBrowserFragment
-    get() = supportFragmentManager.findFragmentById(R.id.card_browser_frame) as CardBrowserFragment
+fun CardBrowser.showFindAndReplaceDialog() = cardBrowserFragment.showFindAndReplaceDialog()
