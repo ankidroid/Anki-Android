@@ -21,7 +21,7 @@ import { PROJECT_ID, credentialsConst } from "./constants";
 import extract from "extract-zip";
 
 // initialization of crowdin client
-const { translationsApi, projectsGroups } = new crowdin(credentialsConst);
+const { translationsApi } = new crowdin(credentialsConst);
 
 /**
  * Build ankidroid.zip file on Crowdin server and download it
@@ -29,7 +29,7 @@ const { translationsApi, projectsGroups } = new crowdin(credentialsConst);
 export async function buildAndDownload() {
     try {
         // temporary logging to obtain the project language ids
-        const project = await projectsGroups.getProject(PROJECT_ID);
+        const project = await translationsApi.getProject(PROJECT_ID);
         for (const entry of project.data.targetLanguages) {
             console.log("(Language : " + entry.name + "): " + entry.id);
         }
