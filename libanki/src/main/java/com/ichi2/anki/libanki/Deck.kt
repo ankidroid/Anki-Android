@@ -16,7 +16,9 @@
 
 package com.ichi2.anki.libanki
 
+import anki.decks.Deck.Filtered.SearchTerm.Order
 import com.ichi2.anki.common.utils.ext.deepClonedInto
+import net.ankiweb.rsdroid.Translations
 import org.json.JSONObject
 
 class Deck : JSONObject {
@@ -101,3 +103,25 @@ class Deck : JSONObject {
             put("md", value)
         }
 }
+
+/**
+ * Converts a Sort Order for a filtered deck to a display string
+ *
+ * `Order.OLDEST_REVIEWED_FIRST` -> "Oldest seen first"
+ *
+ * @throws IllegalArgumentException if [Order.UNRECOGNIZED] is provided
+ */
+fun Order.toDisplayString(translations: Translations) =
+    when (this) {
+        Order.OLDEST_REVIEWED_FIRST -> translations.decksOldestSeenFirst()
+        Order.RANDOM -> translations.decksRandom()
+        Order.INTERVALS_ASCENDING -> translations.decksIncreasingIntervals()
+        Order.INTERVALS_DESCENDING -> translations.decksDecreasingIntervals()
+        Order.LAPSES -> translations.decksMostLapses()
+        Order.ADDED -> translations.decksOrderAdded()
+        Order.DUE -> translations.decksOrderDue()
+        Order.REVERSE_ADDED -> translations.decksLatestAddedFirst()
+        Order.RETRIEVABILITY_ASCENDING -> translations.deckConfigSortOrderRetrievabilityAscending()
+        Order.RETRIEVABILITY_DESCENDING -> translations.deckConfigSortOrderRetrievabilityDescending()
+        Order.UNRECOGNIZED -> throw IllegalArgumentException("Can't display an unknown enum value.")
+    }
