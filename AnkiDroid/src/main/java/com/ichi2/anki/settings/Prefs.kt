@@ -25,6 +25,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.settings.enums.FrameStyle
 import com.ichi2.anki.settings.enums.HideSystemBars
 import com.ichi2.anki.settings.enums.PrefEnum
+import com.ichi2.anki.settings.enums.ShouldFetchMedia
 import com.ichi2.anki.settings.enums.ToolbarPosition
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
@@ -81,6 +82,16 @@ object Prefs {
         @StringRes keyResId: Int,
         defValue: Int,
     ) = sharedPrefs.edit { putInt(key(keyResId), defValue) }
+
+    private fun getLong(
+        @StringRes keyResId: Int,
+        defValue: Long,
+    ): Long = sharedPrefs.getLong(key(keyResId), defValue)
+
+    private fun putLong(
+        @StringRes keyResId: Int,
+        value: Long,
+    ) = sharedPrefs.edit { putLong(key(keyResId), value) }
 
     @VisibleForTesting
     fun <E> getEnum(
@@ -156,6 +167,26 @@ object Prefs {
             }
         }
 
+    @VisibleForTesting
+    fun longPref(
+        @StringRes keyResId: Int,
+        defaultValue: Long,
+    ): ReadWriteProperty<Any, Long> =
+        object : ReadWriteProperty<Any?, Long> {
+            override fun getValue(
+                thisRef: Any?,
+                property: KProperty<*>,
+            ): Long = getLong(keyResId, defaultValue)
+
+            override fun setValue(
+                thisRef: Any?,
+                property: KProperty<*>,
+                value: Long,
+            ) {
+                putLong(keyResId, value)
+            }
+        }
+
     // ****************************************************************************************** //
     // **************************************** Settings **************************************** //
     // ****************************************************************************************** //
@@ -167,8 +198,25 @@ object Prefs {
     // ****************************************** Sync ****************************************** //
 
     val isAutoSyncEnabled by booleanPref(R.string.automatic_sync_choice_key, false)
+    val displaySyncStatus by booleanPref(R.string.sync_status_badge_key, defaultValue = true)
+    var allowSyncOnMeteredConnections by booleanPref(R.string.metered_sync_key, defaultValue = false)
+
     var username by stringPref(R.string.username_key)
     var hkey by stringPref(R.string.hkey_key)
+    var currentSyncUri by stringPref(R.string.current_sync_uri_key)
+
+    var lastSyncTime by longPref(R.string.last_sync_time_key, defaultValue = 0L)
+
+    val shouldFetchMedia: ShouldFetchMedia
+        get() = getEnum(R.string.sync_fetch_media_key, ShouldFetchMedia.ALWAYS)
+
+    //region Custom sync server
+
+    val customSyncCertificate by stringPref(R.string.custom_sync_certificate_key)
+    val customSyncUri by stringPref(R.string.custom_sync_server_collection_url_key)
+    val isCustomSyncEnabled by booleanPref(R.string.custom_sync_server_switch_key, defaultValue = false)
+
+    //endregion
 
     // ************************************** Review Reminders ********************************** //
 

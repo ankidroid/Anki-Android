@@ -178,7 +178,6 @@ import com.ichi2.utils.ImportUtils
 import com.ichi2.utils.ImportUtils.ImportResult
 import com.ichi2.utils.NetworkUtils
 import com.ichi2.utils.NetworkUtils.isActiveNetworkMetered
-import com.ichi2.utils.SyncStatus
 import com.ichi2.utils.VersionUtils
 import com.ichi2.utils.cancelable
 import com.ichi2.utils.checkBoxPrompt
@@ -199,6 +198,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import net.ankiweb.rsdroid.RustCleanup
 import net.ankiweb.rsdroid.Translations
+import net.ankiweb.rsdroid.exceptions.BackendNetworkException
 import org.json.JSONException
 import timber.log.Timber
 import java.io.File
@@ -221,7 +221,7 @@ import kotlin.runCatching as runCatchingKotlin
  *   * Filtering decks (if more than 10) [toolbarSearchView]
  * * Controlling syncs
  *   * A user may [pull down][pullToSyncWrapper] on the 'tree view' to sync
- *   * A [button][updateSyncIconFromState] which relies on [SyncStatus] to display whether a sync is needed
+ *   * A [button][updateSyncIconFromState] which relies on [SyncIconState] to display whether a sync is needed
  *   * Blocks the UI and displays sync progress when syncing
  * * Displaying 'General' AnkiDroid options: backups, import, 'check media' etc...
  *   * General handler for error/global dialogs (search for 'as DeckPicker')
@@ -240,7 +240,6 @@ open class DeckPicker :
     ImportDialogListener,
     OnRequestPermissionsResultCallback,
     ChangeManager.Subscriber,
-    SyncCompletionListener,
     ImportColpkgListener,
     BaseSnackbarBuilderProvider,
     ApkgImportResultLauncherProvider,
@@ -1155,18 +1154,33 @@ open class DeckPicker :
                 // the sync status is calculated in the next call so "Normal" is used as a placeholder
                 OptionsMenuState(searchIcon, undoLabel, SyncIconState.Normal, undoAvailable, isColEmpty)
             }?.let { (searchIcon, undoLabel, _, undoAvailable, isColEmpty) ->
-                val syncIcon = fetchSyncStatus()
+                val syncIcon = fetchSyncIconState()
                 OptionsMenuState(searchIcon, undoLabel, syncIcon, undoAvailable, isColEmpty)
             }
     }
 
-    private suspend fun fetchSyncStatus(): SyncIconState {
+    private suspend fun fetchSyncIconState(): SyncIconState {
+        if (!Prefs.displaySyncStatus) return SyncIconState.Normal
         val auth = syncAuth()
-        return when (SyncStatus.getSyncStatus(this, auth)) {
-            SyncStatus.BADGE_DISABLED, SyncStatus.NO_CHANGES, SyncStatus.ERROR -> SyncIconState.Normal
-            SyncStatus.HAS_CHANGES -> SyncIconState.PendingChanges
-            SyncStatus.NO_ACCOUNT -> SyncIconState.NotLoggedIn
-            SyncStatus.ONE_WAY -> SyncIconState.OneWay
+        if (auth == null) return SyncIconState.NotLoggedIn
+        return try {
+            // Use CollectionManager to ensure that this doesn't block 'deck count' tasks
+            // throws if a .colpkg import or similar occurs just before this call
+            val output = withContext(Dispatchers.IO) { CollectionManager.getBackend().syncStatus(auth) }
+            if (output.hasNewEndpoint() && output.newEndpoint.isNotEmpty()) {
+                Prefs.currentSyncUri = output.newEndpoint
+            }
+            when (output.required) {
+                SyncStatusResponse.Required.NO_CHANGES -> SyncIconState.Normal
+                SyncStatusResponse.Required.NORMAL_SYNC -> SyncIconState.PendingChanges
+                SyncStatusResponse.Required.FULL_SYNC -> SyncIconState.OneWay
+                SyncStatusResponse.Required.UNRECOGNIZED, null -> TODO("unexpected required response")
+            }
+        } catch (_: BackendNetworkException) {
+            SyncIconState.Normal
+        } catch (e: Exception) {
+            Timber.d(e, "error obtaining sync status: collection likely closed")
+            SyncIconState.Normal
         }
     }
 
@@ -1391,14 +1405,11 @@ open class DeckPicker :
         }
 
         fun syncIntervalPassed(): Boolean {
-            val lastSyncTime = sharedPrefs().getLong("lastSyncTime", 0)
             val automaticSyncIntervalInMS = AUTOMATIC_SYNC_MINIMAL_INTERVAL_IN_MINUTES * 60 * 1000
-            return TimeManager.time.intTimeMS() - lastSyncTime > automaticSyncIntervalInMS
+            return TimeManager.time.intTimeMS() - Prefs.lastSyncTime > automaticSyncIntervalInMS
         }
 
-        val isBlockedByMeteredConnection =
-            !sharedPrefs().getBoolean(getString(R.string.metered_sync_key), false) &&
-                isActiveNetworkMetered()
+        val isBlockedByMeteredConnection = !Prefs.allowSyncOnMeteredConnections && isActiveNetworkMetered()
 
         when {
             !Prefs.isAutoSyncEnabled -> Timber.d("autoSync: not enabled")
@@ -1408,7 +1419,7 @@ open class DeckPicker :
             !isLoggedIn() -> Timber.d("autoSync: not logged in")
             !areThereChangesToSync() -> {
                 Timber.d("autoSync: no collection changes to sync. Syncing media if set")
-                if (shouldFetchMedia(sharedPrefs())) {
+                if (shouldFetchMedia()) {
                     val auth = syncAuth() ?: return false
                     SyncMediaWorker.start(this, auth)
                 }
@@ -1418,7 +1429,7 @@ open class DeckPicker :
                 if (runInBackground) {
                     Timber.i("autoSync: starting background")
                     val auth = syncAuth() ?: return false
-                    SyncWorker.start(this, auth, shouldFetchMedia(sharedPrefs()))
+                    SyncWorker.start(this, auth, shouldFetchMedia())
                 } else {
                     Timber.i("autoSync: starting foreground")
                     sync()
@@ -1958,8 +1969,8 @@ open class DeckPicker :
     override fun sync(conflict: ConflictResolution?) {
         val preferences = baseContext.sharedPrefs()
 
-        val hkey = preferences.getString("hkey", "")
-        if (hkey!!.isEmpty()) {
+        val hkey = Prefs.hkey
+        if (hkey.isNullOrEmpty()) {
             Timber.w("User not logged in")
             pullToSyncWrapper.isRefreshing = false
             showSyncErrorDialog(SyncErrorDialog.Type.DIALOG_USER_NOT_LOGGED_IN_SYNC)
@@ -1971,23 +1982,16 @@ open class DeckPicker :
         /** Nested function that makes the connection to
          * the sync server and starts syncing the data */
         fun doSync() {
-            handleNewSync(conflict, shouldFetchMedia(preferences))
+            handleNewSync(conflict, shouldFetchMedia())
         }
         // Warn the user in case the connection is metered
-        val meteredSyncIsAllowed =
-            preferences.getBoolean(getString(R.string.metered_sync_key), false)
-        if (!meteredSyncIsAllowed && isActiveNetworkMetered()) {
+        if (!Prefs.allowSyncOnMeteredConnections && isActiveNetworkMetered()) {
             AlertDialog.Builder(this).show {
                 message(R.string.metered_sync_data_warning)
                 positiveButton(R.string.dialog_continue) { doSync() }
                 negativeButton(R.string.dialog_cancel)
                 checkBoxPrompt(R.string.button_do_not_show_again) { isCheckboxChecked ->
-                    preferences.edit {
-                        putBoolean(
-                            getString(R.string.metered_sync_key),
-                            isCheckboxChecked,
-                        )
-                    }
+                    Prefs.allowSyncOnMeteredConnections = isCheckboxChecked
                 }
             }
         } else {
@@ -2579,10 +2583,6 @@ open class DeckPicker :
             updateDeckList()
             importColpkgListener?.onImportColpkg(colpkgPath)
         }
-    }
-
-    override fun onMediaSyncCompleted(data: SyncCompletion) {
-        Timber.i("Media sync completed. Success: %b", data.isSuccess)
     }
 
     /**

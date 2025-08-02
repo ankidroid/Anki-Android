@@ -16,13 +16,8 @@
 
 package com.ichi2.anki
 
-import android.app.Activity.RESULT_OK
-import android.content.Context
-import android.content.SharedPreferences
-import androidx.activity.result.ActivityResultLauncher
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
-import androidx.core.content.edit
 import anki.sync.SyncAuth
 import anki.sync.SyncCollectionResponse
 import anki.sync.syncAuth
@@ -33,10 +28,9 @@ import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.dialogs.SyncErrorDialog
 import com.ichi2.anki.libanki.fullUploadOrDownload
 import com.ichi2.anki.libanki.syncCollection
-import com.ichi2.anki.libanki.syncLogin
 import com.ichi2.anki.observability.ChangeManager.notifySubscribersAllValuesChanged
-import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.settings.Prefs
+import com.ichi2.anki.settings.enums.ShouldFetchMedia
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.internationalization.toSentenceCase
 import com.ichi2.anki.worker.SyncMediaWorker
@@ -59,10 +53,6 @@ object SyncPreferences {
     const val CURRENT_SYNC_URI = "currentSyncUri"
     const val CUSTOM_SYNC_URI = "syncBaseUrl"
     const val CUSTOM_SYNC_ENABLED = CUSTOM_SYNC_URI + VersatileTextWithASwitchPreference.SWITCH_SUFFIX
-    const val CUSTOM_SYNC_CERTIFICATE = "customSyncCertificate"
-
-    // Used in the legacy schema path
-    const val HOSTNUM = "hostNum"
 }
 
 enum class ConflictResolution {
@@ -70,22 +60,12 @@ enum class ConflictResolution {
     FULL_UPLOAD,
 }
 
-data class SyncCompletion(
-    val isSuccess: Boolean,
-)
-
-interface SyncCompletionListener {
-    fun onMediaSyncCompleted(data: SyncCompletion)
-}
-
-fun DeckPicker.syncAuth(): SyncAuth? {
-    val preferences = this.sharedPrefs()
-
+fun syncAuth(): SyncAuth? {
     // Grab custom sync certificate from preferences (default is the empty string) and set it in CollectionManager
-    val currentSyncCertificate = preferences.getString(SyncPreferences.CUSTOM_SYNC_CERTIFICATE, "") ?: ""
+    val currentSyncCertificate = Prefs.customSyncCertificate ?: ""
     CollectionManager.updateCustomCertificate(currentSyncCertificate)
 
-    val resolvedEndpoint = getEndpoint(this)
+    val resolvedEndpoint = getEndpoint()
     return Prefs.hkey?.let {
         syncAuth {
             this.hkey = it
@@ -96,44 +76,15 @@ fun DeckPicker.syncAuth(): SyncAuth? {
     }
 }
 
-fun getEndpoint(context: Context): String? {
-    val preferences = context.sharedPrefs()
-    val currentEndpoint =
-        preferences.getString(SyncPreferences.CURRENT_SYNC_URI, null)?.ifEmpty {
-            null
-        }
+fun getEndpoint(): String? {
+    val currentEndpoint = Prefs.customSyncUri?.ifEmpty { null }
     val customEndpoint =
-        if (preferences.getBoolean(SyncPreferences.CUSTOM_SYNC_ENABLED, false)) {
-            preferences.getString(SyncPreferences.CUSTOM_SYNC_URI, null)
+        if (Prefs.isCustomSyncEnabled) {
+            Prefs.customSyncUri
         } else {
             null
         }
     return currentEndpoint ?: customEndpoint
-}
-
-fun customSyncBase(preferences: SharedPreferences): String? =
-    if (preferences.getBoolean(SyncPreferences.CUSTOM_SYNC_ENABLED, false)) {
-        val uri = preferences.getString(SyncPreferences.CUSTOM_SYNC_URI, null)
-        if (uri.isNullOrEmpty()) {
-            null
-        } else {
-            uri
-        }
-    } else {
-        null
-    }
-
-suspend fun syncLogout(context: Context) {
-    val preferences = context.sharedPrefs()
-    preferences.edit {
-        remove("hkey")
-        remove("username")
-        remove(SyncPreferences.CURRENT_SYNC_URI)
-        remove(SyncPreferences.HOSTNUM)
-    }
-    withCol {
-        media.forceResync()
-    }
 }
 
 /**
@@ -143,13 +94,13 @@ suspend fun syncLogout(context: Context) {
  */
 fun isLoggedIn(): Boolean = !Prefs.hkey.isNullOrEmpty()
 
-fun millisecondsSinceLastSync(preferences: SharedPreferences) = TimeManager.time.intTimeMS() - preferences.getLong("lastSyncTime", 0)
+fun millisecondsSinceLastSync() = TimeManager.time.intTimeMS() - Prefs.lastSyncTime
 
 fun DeckPicker.handleNewSync(
     conflict: ConflictResolution?,
     syncMedia: Boolean,
 ) {
-    val auth = this.syncAuth() ?: return
+    val auth = syncAuth() ?: return
     val deckPicker = this
     launchCatchingTask {
         try {
@@ -172,38 +123,7 @@ fun DeckPicker.handleNewSync(
     }
 }
 
-fun MyAccount.handleNewLogin(
-    username: String,
-    password: String,
-    resultLauncher: ActivityResultLauncher<String>,
-) {
-    val endpoint = getEndpoint(this)
-    launchCatchingTask {
-        val auth =
-            try {
-                withProgress(
-                    extractProgress = {
-                        text = getString(R.string.sign_in)
-                    },
-                    onCancel = ::cancelSync,
-                ) {
-                    withCol {
-                        syncLogin(username, password, endpoint)
-                    }
-                }
-            } catch (exc: BackendSyncException.BackendSyncAuthFailedException) {
-                // auth failed; clear out login details
-                updateLogin("", "")
-                throw exc
-            }
-        updateLogin(username, auth.hkey)
-        setResult(RESULT_OK)
-        MyAccount.checkNotificationPermission(this@handleNewLogin, resultLauncher)
-        finish()
-    }
-}
-
-private fun updateLogin(
+fun updateLogin(
     username: String,
     hkey: String,
 ) {
@@ -240,9 +160,7 @@ private suspend fun handleNormalSync(
 
     if (output.hasNewEndpoint() && output.newEndpoint.isNotEmpty()) {
         Timber.i("sync endpoint updated")
-        deckPicker.sharedPrefs().edit {
-            putString(SyncPreferences.CURRENT_SYNC_URI, output.newEndpoint)
-        }
+        Prefs.currentSyncUri = output.newEndpoint
         auth2 =
             syncAuth {
                 this.hkey = auth.hkey
@@ -371,12 +289,10 @@ fun cancelMediaSync(backend: Backend) {
  * * Only if unmetered
  * * Never
  */
-fun DeckPicker.shouldFetchMedia(preferences: SharedPreferences): Boolean {
-    val always = getString(R.string.sync_media_always_value)
-    val onlyIfUnmetered = getString(R.string.sync_media_only_unmetered_value)
-    val shouldFetchMedia = preferences.getString(getString(R.string.sync_fetch_media_key), always)
-    return shouldFetchMedia == always ||
-        (shouldFetchMedia == onlyIfUnmetered && !NetworkUtils.isActiveNetworkMetered())
+fun shouldFetchMedia(): Boolean {
+    val shouldFetchMedia = Prefs.shouldFetchMedia
+    return shouldFetchMedia == ShouldFetchMedia.ALWAYS ||
+        (shouldFetchMedia == ShouldFetchMedia.ONLY_UNMETERED && !NetworkUtils.isActiveNetworkMetered())
 }
 
 suspend fun monitorMediaSync(deckPicker: DeckPicker) {
@@ -450,26 +366,6 @@ fun DeckPicker.showSyncLogMessage(
     }
 }
 
-fun Context.setLastSyncTimeToNow() {
-    sharedPrefs().edit {
-        putLong("lastSyncTime", TimeManager.time.intTimeMS())
-    }
-}
-
-fun joinSyncMessages(
-    dialogMessage: String?,
-    syncMessage: String?,
-): String? {
-    // If both strings have text, separate them by a new line, otherwise return whichever has text
-    return if (!dialogMessage.isNullOrEmpty() && !syncMessage.isNullOrEmpty()) {
-        """
-        $dialogMessage
-        
-        $syncMessage
-        """.trimIndent()
-    } else if (!dialogMessage.isNullOrEmpty()) {
-        dialogMessage
-    } else {
-        syncMessage
-    }
+fun setLastSyncTimeToNow() {
+    Prefs.lastSyncTime = TimeManager.time.intTimeMS()
 }

@@ -25,6 +25,8 @@
     <string name="custom_sync_server_key">custom_sync_server_link</string>
     <string name="hkey_key">hkey</string>
     <string name="username_key">username</string>
+    <string name="last_sync_time_key">lastSyncTime</string>
+    <string name="current_sync_uri_key">currentSyncUri</string>
     <!-- Backup -->
     <string name="pref_backup_limits_screen_key">backupLimitsScreen</string>
     <!-- Editing -->
@@ -168,6 +170,7 @@
     <!-- Custom sync server -->
     <string name="pref_custom_sync_server_screen_key">customSyncServerScreen</string>
     <string name="custom_sync_server_collection_url_key">syncBaseUrl</string>
+    <string name="custom_sync_server_switch_key">syncBaseUrl_switch</string>
     <string name="custom_sync_certificate_key">customSyncCertificate</string>
     <!-- Advanced -->
     <string name="pref_advanced_screen_key">pref_screen_advanced</string>
