@@ -25,6 +25,7 @@ import androidx.fragment.app.commit
 import com.ichi2.anki.android.input.ShortcutGroup
 import com.ichi2.anki.android.input.ShortcutGroupProvider
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyAction
+import com.ichi2.anki.ui.windows.managespace.ManageSpaceActivity
 import com.ichi2.anki.utils.ext.setFragmentResultListener
 import com.ichi2.themes.setTransparentStatusBar
 import com.ichi2.utils.FragmentFactoryUtils
@@ -59,10 +60,16 @@ open class SingleFragmentActivity : AnkiActivity() {
         if (savedInstanceState != null) {
             return
         }
-
+        val assignedFragment = intent.getStringExtra(FRAGMENT_NAME_EXTRA)
+        // One of the activities inheriting this activity is ManageSpaceActivity which is started
+        // only by the system. When we encounter this activity we need to assign it here the fragment
+        // it expects, which is ManageSpaceFragment
         val fragmentClassName =
-            requireNotNull(intent.getStringExtra(FRAGMENT_NAME_EXTRA)) {
-                "'$FRAGMENT_NAME_EXTRA' extra should be provided"
+            if (assignedFragment == null && this is ManageSpaceActivity) {
+                // the IDE updates this when moving ManageSpaceFragment
+                "com.ichi2.anki.ui.windows.managespace.ManageSpaceFragment"
+            } else {
+                requireNotNull(assignedFragment) { "'$FRAGMENT_NAME_EXTRA' extra should be provided" }
             }
 
         Timber.d("Creating fragment %s", fragmentClassName)

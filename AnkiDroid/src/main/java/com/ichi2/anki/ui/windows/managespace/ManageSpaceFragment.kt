@@ -19,7 +19,9 @@ package com.ichi2.anki.ui.windows.managespace
 
 import android.app.ActivityManager
 import android.app.Application
+import android.os.Bundle
 import android.text.format.Formatter
+import android.view.View
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.viewModels
@@ -27,6 +29,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import androidx.preference.Preference
+import com.google.android.material.appbar.MaterialToolbar
 import com.ichi2.anki.BackupManager
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.withCol
@@ -232,6 +235,16 @@ class ManageSpaceFragment : SettingsFragment() {
             viewModel.flowOfDeleteBackupsSize to deleteBackupsPreference,
         ).forEach { (flowOfSize, preference) ->
             lifecycleScope.launch { flowOfSize.collect { size -> preference.setWidgetTextBy(size) } }
+        }
+    }
+
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
+        super.onViewCreated(view, savedInstanceState)
+        view.findViewById<MaterialToolbar>(R.id.toolbar).apply {
+            title = getString(R.string.pref__manage_space__screen_title)
         }
     }
 
