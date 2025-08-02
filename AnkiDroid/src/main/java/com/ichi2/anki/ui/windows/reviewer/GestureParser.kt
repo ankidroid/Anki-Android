@@ -16,13 +16,16 @@
 package com.ichi2.anki.ui.windows.reviewer
 
 import android.net.Uri
-import android.os.Build
-import android.view.ViewConfiguration
 import android.webkit.WebView
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.TapGestureMode
+import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.utils.ext.clamp
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import kotlin.math.abs
 
@@ -31,117 +34,97 @@ import kotlin.math.abs
  *
  * @see parse
  */
-object GestureParser {
-    private const val SWIPE_THRESHOLD_BASE = 100
-    private val multiPressTimeout =
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            ViewConfiguration.getMultiPressTimeout()
-        } else {
-            // https://cs.android.com/android/platform/superproject/+/android-latest-release:frameworks/base/core/java/android/view/ViewConfiguration.java;l=89;drc=36c4f0306d7e9b9eff645a667148a5f2c5e9d17d
-            300
-        }
-    private val gestureGrid =
-        listOf(
-            listOf(Gesture.TAP_TOP_LEFT, Gesture.TAP_TOP, Gesture.TAP_TOP_RIGHT),
-            listOf(Gesture.TAP_LEFT, Gesture.TAP_CENTER, Gesture.TAP_RIGHT),
-            listOf(Gesture.TAP_BOTTOM_LEFT, Gesture.TAP_BOTTOM, Gesture.TAP_BOTTOM_RIGHT),
-        )
+class GestureParser(
+    private val scope: CoroutineScope,
+    private val isDoubleTapEnabled: Boolean,
+    private val gestureMode: TapGestureMode = Prefs.tapGestureMode,
+    private val doubleTapTimeout: Long = Prefs.doubleTapInterval.toLong(),
+    swipeSensitivity: Float = Prefs.swipeSensitivity,
+) {
+    private val swipeThresholdBase = 100 / swipeSensitivity
+    private var lastTapTime = 0L
+    private var singleTapJob: Job? = null
 
-    /**
-     * Analyzes the given [Uri] and returns the corresponding [Gesture].
-     *
-     * @param uri The [Uri] containing gesture data.
-     * @param isScrolling whether the WebView is being scrolled.
-     * @param scale The current scale of the WebView.
-     * @param scrollX The horizontal scroll offset of the WebView.
-     * @param scrollY The vertical scroll offset of the WebView.
-     * @param measuredWidth The measured width of the WebView.
-     * @param measuredHeight The measured height of the WebView.
-     * @return The parsed [Gesture], or `null` if invalid or should be ignored.
-     */
-    fun parse(
+    @VisibleForTesting
+    fun parseInternal(
         uri: Uri,
-        isScrolling: Boolean,
-        scale: Float,
-        scrollX: Int,
-        scrollY: Int,
-        measuredWidth: Int,
-        measuredHeight: Int,
-        swipeSensitivity: Float,
-        gestureMode: TapGestureMode,
-    ): Gesture? {
-        if (isScrolling) return null
-        when (uri.host) {
-            DOUBLE_TAP_HOST -> return Gesture.DOUBLE_TAP
-            MULTI_FINGER_HOST -> {
-                val deltaTime = uri.getIntQuery(PARAM_DELTA_TIME) ?: return null
-                if (deltaTime > multiPressTimeout) return null
-                val touchCount = uri.getIntQuery(PARAM_TOUCH_COUNT) ?: return null
-                return when (touchCount) {
-                    2 -> Gesture.TWO_FINGER_TAP
-                    3 -> Gesture.THREE_FINGER_TAP
-                    4 -> Gesture.FOUR_FINGER_TAP
-                    else -> {
-                        Timber.w("Invalid multi-finger tap count %d", touchCount)
-                        null
-                    }
+        webViewState: WebViewState,
+        block: (Gesture?) -> Unit,
+    ) {
+        val gesture =
+            if (uri.host == MULTI_FINGER_HOST) {
+                getMultiTouchGesture(uri)
+            } else {
+                val data = GestureData.fromUri(uri) ?: return
+                val swipeThreshold = swipeThresholdBase / webViewState.scale
+                if (abs(data.deltaX) > swipeThreshold || abs(data.deltaY) > swipeThreshold) {
+                    determineSwipeGesture(data)
+                } else {
+                    handleTap(data, webViewState, block)
+                    return
                 }
             }
-        }
-
-        val pageX = uri.getIntQuery(PARAM_X) ?: return null
-        val pageY = uri.getIntQuery(PARAM_Y) ?: return null
-        val deltaX = uri.getIntQuery(PARAM_DELTA_X) ?: return null
-        val deltaY = uri.getIntQuery(PARAM_DELTA_Y) ?: return null
-        val absDeltaX = abs(deltaX)
-        val absDeltaY = abs(deltaY)
-
-        val swipeThreshold = (SWIPE_THRESHOLD_BASE / swipeSensitivity) / scale
-        if (absDeltaX > swipeThreshold || absDeltaY > swipeThreshold) {
-            val scrollDirection = uri.getQueryParameter("scrollDirection")
-            return determineSwipeGesture(deltaX, deltaY, absDeltaX, absDeltaY, scrollDirection)
-        }
-
-        return if (gestureMode == TapGestureMode.FOUR_POINT) {
-            getFourPointsTap(pageX, pageY, scrollX, scrollY, measuredWidth, measuredHeight, scale)
-        } else {
-            getNinePointsTap(pageX, pageY, scrollX, scrollY, measuredWidth, measuredHeight, scale)
-        }
+        block(gesture)
     }
 
     /**
      * Analyzes the given [Uri] and returns the corresponding [Gesture].
      *
      * @param uri The [Uri] containing gesture data.
-     * @param isScrolling whether the WebView is being scrolled.
      * @param scale The current scale of the WebView.
      * @param webView The source WebView, used to access its current scroll and size properties.
      * @return The parsed [Gesture], or `null` if the gesture is invalid or should be ignored.
      */
     fun parse(
         uri: Uri,
-        isScrolling: Boolean,
         scale: Float,
         webView: WebView,
-        swipeSensitivity: Float,
-        gestureMode: TapGestureMode,
-    ): Gesture? =
-        parse(
-            uri = uri,
-            isScrolling = isScrolling,
-            scale = scale,
-            scrollX = webView.scrollX,
-            scrollY = webView.scrollY,
-            measuredWidth = webView.measuredWidth,
-            measuredHeight = webView.measuredHeight,
-            swipeSensitivity = swipeSensitivity,
-            gestureMode = gestureMode,
-        )
+        block: (Gesture?) -> Unit,
+    ) {
+        val webViewState =
+            WebViewState(
+                scale = scale,
+                scrollX = webView.scrollX,
+                scrollY = webView.scrollY,
+                width = webView.measuredWidth,
+                height = webView.measuredHeight,
+            )
+        parseInternal(uri, webViewState, block)
+    }
+
+    private fun handleTap(
+        data: GestureData,
+        webViewState: WebViewState,
+        block: (Gesture?) -> Unit,
+    ) {
+        val isPotentialDoubleTap = data.time - lastTapTime < doubleTapTimeout
+        lastTapTime = data.time
+        if (isDoubleTapEnabled) {
+            if (isPotentialDoubleTap) {
+                // Confirmed double tap. Cancel any pending single tap and fire double tap.
+                singleTapJob?.cancel()
+                singleTapJob = null
+                lastTapTime = 0 // avoid retriggering double tap if a new quick tap comes
+                block(Gesture.DOUBLE_TAP)
+            } else {
+                // Potential single tap. Schedule it to run after a delay.
+                singleTapJob =
+                    scope.launch {
+                        delay(doubleTapTimeout)
+                        block(getTap(data, webViewState))
+                    }
+            }
+        } else {
+            if (!isPotentialDoubleTap) {
+                block(getTap(data, webViewState))
+            } // Otherwise, ignore the double tap.
+        }
+    }
 
     /**
      * Determines the swipe gesture based on deltas and scroll direction.
      *
-     * @param scrollDirection Indicates whether the underlying web content at the gesture's origin
+     * [GestureData.scrollDirection]: Indicates whether the underlying web content at the gesture's origin
      * is scrollable. This value is determined by the `getScrollDirection`
      * function in `ankidroid.js` and is used to prevent custom swipe gestures
      * from overriding the browser's native scrolling behavior. It can contain:
@@ -152,87 +135,44 @@ object GestureParser {
      * @return The swipe [Gesture], or `null` if the swipe is in a direction that is scrollable
      * by the underlying web content.
      */
-    private fun determineSwipeGesture(
-        deltaX: Int,
-        deltaY: Int,
-        absDeltaX: Int,
-        absDeltaY: Int,
-        scrollDirection: String?,
-    ): Gesture? =
-        if (absDeltaX > absDeltaY) { // horizontal
+    private fun determineSwipeGesture(data: GestureData): Gesture? =
+        if (abs(data.deltaX) > abs(data.deltaY)) { // Horizontal swipe
             when {
-                scrollDirection?.contains('h') == true -> null
-                deltaX > 0 -> Gesture.SWIPE_RIGHT
+                data.scrollDirection?.contains('h') == true -> null
+                data.deltaX > 0 -> Gesture.SWIPE_RIGHT
                 else -> Gesture.SWIPE_LEFT
             }
-        } else { // vertical
+        } else { // Vertical swipe
             when {
-                scrollDirection?.contains('v') == true -> null
-                deltaY > 0 -> Gesture.SWIPE_DOWN
+                data.scrollDirection?.contains('v') == true -> null
+                data.deltaY > 0 -> Gesture.SWIPE_DOWN
                 else -> Gesture.SWIPE_UP
             }
         }
 
-    private fun getAdjustedTapPosition(
-        tapPosition: Int,
-        scrolledDistance: Int,
-        scale: Float,
-    ): Float {
-        val scaledTap = tapPosition * scale
-        return scaledTap - scrolledDistance
-    }
-
-    /**
-     * Calculates the grid index (row or column) for a tap coordinate.
-     *
-     * This function translates a raw screen tap coordinate into an index (0, 1, or 2) for one
-     * dimension of the 3x3 gesture grid. It accounts for the WebView's current scroll position
-     * and zoom level.
-     *
-     * @param tapPosition The raw client coordinate (X or Y) of the tap.
-     * @param scrolledDistance The distance the WebView is scrolled along that axis.
-     * @param dimensionSize The measured size (width or height) of the WebView.
-     * @return The calculated grid index, constrained to be between 0 and 2.
-     */
-    private fun getGridIndex(
-        tapPosition: Int,
-        scrolledDistance: Int,
-        dimensionSize: Int,
-        scale: Float,
-    ): Int {
-        if (dimensionSize == 0) return 0 // avoids dividing by 0
-        val adjustedTapPosition = getAdjustedTapPosition(tapPosition, scrolledDistance, scale)
-        val relativePosition = (adjustedTapPosition / (dimensionSize / 3))
-        val index = relativePosition.toInt()
-        return index.clamp(minimumValue = 0, maximumValue = 2)
-    }
+    /** Determines the tap gesture based on the configured [TapGestureMode]. */
+    private fun getTap(
+        data: GestureData,
+        state: WebViewState,
+    ): Gesture =
+        when (gestureMode) {
+            TapGestureMode.FOUR_POINT -> getFourPointsTap(data, state)
+            TapGestureMode.NINE_POINT -> getNinePointsTap(data, state)
+        }
 
     /**
      * Determines the tap area by dividing the view into four triangular regions
      * using its main and anti-diagonals.
-     *
-     * @param tapX The raw x-coordinate of the tap event.
-     * @param tapY The raw y-coordinate of the tap event.
-     * @param scrollX The current horizontal scroll offset of the view.
-     * @param scrollY The current vertical scroll offset of the view.
-     * @param measuredWidth The measured width of the underlying view.
-     * @param measuredHeight The measured height of the underlying view.
-     * @param scale The current zoom scale of the view.
      * @return The [Gesture] corresponding to the tapped area (TAP_TOP, TAP_BOTTOM, TAP_LEFT, or TAP_RIGHT).
      */
     private fun getFourPointsTap(
-        tapX: Int,
-        tapY: Int,
-        scrollX: Int,
-        scrollY: Int,
-        measuredWidth: Int,
-        measuredHeight: Int,
-        scale: Float,
+        data: GestureData,
+        state: WebViewState,
     ): Gesture {
-        val adjustedX = getAdjustedTapPosition(tapX, scrollX, scale)
-        val adjustedY = getAdjustedTapPosition(tapY, scrollY, scale)
-        val normalizedX = adjustedX / measuredWidth
-        val normalizedY = adjustedY / measuredHeight
+        val adjustedX = state.getAdjustedTapPosition(data.x, state.scrollX)
+        val adjustedY = state.getAdjustedTapPosition(data.y, state.scrollY)
+        val normalizedX = adjustedX / state.width
+        val normalizedY = adjustedY / state.height
 
         /*
          * The "main" diagonal runs from top-left (0,0) to bottom-right (width,height).
@@ -263,45 +203,124 @@ object GestureParser {
     }
 
     private fun getNinePointsTap(
-        tapX: Int,
-        tapY: Int,
-        scrollX: Int,
-        scrollY: Int,
-        measuredWidth: Int,
-        measuredHeight: Int,
-        scale: Float,
+        data: GestureData,
+        state: WebViewState,
     ): Gesture {
-        val row = getGridIndex(tapY, scrollY, measuredHeight, scale)
-        val column = getGridIndex(tapX, scrollX, measuredWidth, scale)
+        val row = state.getGridRow(data)
+        val column = state.getGridColumn(data)
         return gestureGrid[row][column]
     }
 
-    private fun Uri.getIntQuery(key: String) = getQueryParameter(key)?.toIntOrNull()
+    private fun getMultiTouchGesture(uri: Uri): Gesture? {
+        val touchCount = uri.getIntQuery(PARAM_TOUCH_COUNT) ?: return null
+        return when (touchCount) {
+            2 -> Gesture.TWO_FINGER_TAP
+            3 -> Gesture.THREE_FINGER_TAP
+            4 -> Gesture.FOUR_FINGER_TAP
+            else -> {
+                Timber.w("Invalid multi-finger tap count %d", touchCount)
+                null
+            }
+        }
+    }
 
-    @VisibleForTesting
-    const val PARAM_X = "x"
+    /** Raw gesture data extracted from the URI. */
+    data class GestureData(
+        val x: Int,
+        val y: Int,
+        val deltaX: Int,
+        val deltaY: Int,
+        val time: Long,
+        val scrollDirection: String?,
+    ) {
+        companion object {
+            fun fromUri(uri: Uri): GestureData? =
+                run {
+                    GestureData(
+                        x = uri.getIntQuery(PARAM_X) ?: return@run null,
+                        y = uri.getIntQuery(PARAM_Y) ?: return@run null,
+                        deltaX = uri.getIntQuery(PARAM_DELTA_X) ?: return@run null,
+                        deltaY = uri.getIntQuery(PARAM_DELTA_Y) ?: return@run null,
+                        time = uri.getQueryParameter(PARAM_TIME)?.toLongOrNull() ?: return@run null,
+                        scrollDirection = uri.getQueryParameter(PARAM_SCROLL_DIRECTION),
+                    )
+                }
+        }
+    }
 
-    @VisibleForTesting
-    const val PARAM_Y = "y"
+    /** Encapsulates the state of the WebView relevant for gesture parsing. */
+    data class WebViewState(
+        val scale: Float,
+        val scrollX: Int,
+        val scrollY: Int,
+        val width: Int,
+        val height: Int,
+    ) {
+        fun getAdjustedTapPosition(
+            tapPosition: Int,
+            scrolledDistance: Int,
+        ): Float = (tapPosition * scale) - scrolledDistance
 
-    @VisibleForTesting
-    const val PARAM_DELTA_X = "deltaX"
+        fun getGridRow(data: GestureData) = getGridIndex(data.y, scrollY, height)
 
-    @VisibleForTesting
-    const val PARAM_DELTA_Y = "deltaY"
+        fun getGridColumn(data: GestureData) = getGridIndex(data.x, scrollX, width)
 
-    @VisibleForTesting
-    const val PARAM_DELTA_TIME = "deltaTime"
+        /**
+         * Calculates the grid index (row or column) for a tap coordinate.
+         *
+         * This function translates a raw screen tap coordinate into an index (0, 1, or 2) for one
+         * dimension of the 3x3 gesture grid. It accounts for the WebView's current scroll position
+         * and zoom level.
+         *
+         * @param tapPosition The raw client coordinate (X or Y) of the tap.
+         * @param scrolledDistance The distance the WebView is scrolled along that axis.
+         * @param dimensionSize The measured size (width or height) of the WebView.
+         * @return The calculated grid index, constrained to be between 0 and 2.
+         */
+        private fun getGridIndex(
+            tapPosition: Int,
+            scrolledDistance: Int,
+            dimensionSize: Int,
+        ): Int {
+            if (dimensionSize == 0) return 0 // Avoid division by zero
+            val adjustedTap = getAdjustedTapPosition(tapPosition, scrolledDistance)
+            val index = (adjustedTap / (dimensionSize / 3)).toInt()
+            return index.clamp(0, 2)
+        }
+    }
 
-    @VisibleForTesting
-    const val PARAM_SCROLL_DIRECTION = "scrollDirection"
+    companion object {
+        private fun Uri.getIntQuery(key: String) = getQueryParameter(key)?.toIntOrNull()
 
-    @VisibleForTesting
-    const val PARAM_TOUCH_COUNT = "touchCount"
+        private val gestureGrid =
+            listOf(
+                listOf(Gesture.TAP_TOP_LEFT, Gesture.TAP_TOP, Gesture.TAP_TOP_RIGHT),
+                listOf(Gesture.TAP_LEFT, Gesture.TAP_CENTER, Gesture.TAP_RIGHT),
+                listOf(Gesture.TAP_BOTTOM_LEFT, Gesture.TAP_BOTTOM, Gesture.TAP_BOTTOM_RIGHT),
+            )
 
-    @VisibleForTesting
-    const val DOUBLE_TAP_HOST = "doubleTap"
+        @VisibleForTesting
+        const val PARAM_X = "x"
 
-    @VisibleForTesting
-    const val MULTI_FINGER_HOST = "multiFingerTap"
+        @VisibleForTesting
+        const val PARAM_Y = "y"
+
+        @VisibleForTesting
+        const val PARAM_DELTA_X = "deltaX"
+
+        @VisibleForTesting
+        const val PARAM_DELTA_Y = "deltaY"
+
+        @VisibleForTesting
+        const val PARAM_TIME = "time"
+
+        @VisibleForTesting
+        const val PARAM_SCROLL_DIRECTION = "scrollDirection"
+
+        @VisibleForTesting
+        const val PARAM_TOUCH_COUNT = "touchCount"
+
+        @VisibleForTesting
+        const val MULTI_FINGER_HOST = "multiFingerTap"
+    }
 }

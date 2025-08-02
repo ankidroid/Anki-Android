@@ -66,7 +66,6 @@ import com.ichi2.anki.Flag
 import com.ichi2.anki.R
 import com.ichi2.anki.cardviewer.CardMediaPlayer
 import com.ichi2.anki.cardviewer.Gesture
-import com.ichi2.anki.cardviewer.TapGestureMode
 import com.ichi2.anki.common.utils.android.isRobolectric
 import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory
@@ -712,8 +711,12 @@ class ReviewerFragment :
         private var scale: Float = if (!isRobolectric) webView.scale else 1F
         private var isScrolling: Boolean = false
         private var isScrollingJob: Job? = null
-        private val gestureMode = TapGestureMode.fromPreference(sharedPrefs())
-        private val swipeSensitivity = Prefs.swipeSensitivity
+        private val gestureParser by lazy {
+            GestureParser(
+                scope = lifecycleScope,
+                isDoubleTapEnabled = bindingMap.isBound(Gesture.DOUBLE_TAP),
+            )
+        }
 
         init {
             webView.setOnScrollChangeListener { _, _, _, _, _ ->
@@ -730,9 +733,12 @@ class ReviewerFragment :
         override fun handleUrl(url: Uri): Boolean {
             return when (url.scheme) {
                 "gesture" -> {
-                    val gesture = GestureParser.parse(url, isScrolling, scale, webView, swipeSensitivity, gestureMode) ?: return true
-                    Timber.v("ReviewerFragment::onGesture %s", gesture)
-                    bindingMap.onGesture(gesture)
+                    if (isScrolling) return true
+                    gestureParser.parse(url, scale, webView) { gesture ->
+                        if (gesture == null) return@parse
+                        Timber.v("ReviewerFragment::onGesture %s", gesture)
+                        bindingMap.onGesture(gesture)
+                    }
                     true
                 }
                 "ankidroid" -> {

@@ -101,6 +101,7 @@ enum class TapGestureMode {
     ;
 
     companion object {
+        // TODO replace with `Prefs.tapGestureMode`
         fun fromPreference(preferences: SharedPreferences): TapGestureMode =
             when (preferences.getBoolean("gestureCornerTouch", false)) {
                 true -> NINE_POINT
