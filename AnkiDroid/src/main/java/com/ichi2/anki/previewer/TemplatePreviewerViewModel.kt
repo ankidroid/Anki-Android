@@ -24,7 +24,6 @@ import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.NotetypeFile
 import com.ichi2.anki.asyncIO
-import com.ichi2.anki.cardviewer.CardMediaPlayer
 import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.libanki.Card
 import com.ichi2.anki.libanki.Consts.DEFAULT_DECK_ID
@@ -44,8 +43,7 @@ import org.jetbrains.annotations.VisibleForTesting
 
 class TemplatePreviewerViewModel(
     arguments: TemplatePreviewerArguments,
-    cardMediaPlayer: CardMediaPlayer,
-) : CardViewerViewModel(cardMediaPlayer) {
+) : CardViewerViewModel() {
     private val notetype = arguments.notetype
     private val fillEmpty = arguments.fillEmpty
     private val isCloze = notetype.isCloze
@@ -230,13 +228,10 @@ class TemplatePreviewerViewModel(
         @Language("HTML")
         private const val EMPTY_FRONT_LINK = """<a href='https://docs.ankiweb.net/templates/errors.html#front-of-card-is-blank'>"""
 
-        fun factory(
-            arguments: TemplatePreviewerArguments,
-            cardMediaPlayer: CardMediaPlayer,
-        ): ViewModelProvider.Factory =
+        fun factory(arguments: TemplatePreviewerArguments): ViewModelProvider.Factory =
             viewModelFactory {
                 initializer {
-                    TemplatePreviewerViewModel(arguments, cardMediaPlayer)
+                    TemplatePreviewerViewModel(arguments)
                 }
             }
     }

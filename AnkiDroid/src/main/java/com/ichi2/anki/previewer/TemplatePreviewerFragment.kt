@@ -25,7 +25,6 @@ import androidx.lifecycle.lifecycleScope
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
 import com.ichi2.anki.R
-import com.ichi2.anki.cardviewer.CardMediaPlayer
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.utils.ext.sharedPrefs
@@ -38,7 +37,7 @@ class TemplatePreviewerFragment :
     BaseSnackbarBuilderProvider {
     override val viewModel: TemplatePreviewerViewModel by viewModels {
         val arguments = BundleCompat.getParcelable(requireArguments(), ARGS_KEY, TemplatePreviewerArguments::class.java)!!
-        TemplatePreviewerViewModel.factory(arguments, CardMediaPlayer())
+        TemplatePreviewerViewModel.factory(arguments)
     }
     override val webView: WebView
         get() = requireView().findViewById(R.id.webview)

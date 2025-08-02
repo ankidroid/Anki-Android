@@ -24,7 +24,6 @@ import androidx.lifecycle.viewModelScope
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.OnErrorListener
 import com.ichi2.anki.cardviewer.CardMediaPlayer
-import com.ichi2.anki.cardviewer.JavascriptEvaluator
 import com.ichi2.anki.cardviewer.MediaErrorBehavior
 import com.ichi2.anki.cardviewer.MediaErrorHandler
 import com.ichi2.anki.cardviewer.MediaErrorListener
@@ -42,9 +41,8 @@ import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
 import timber.log.Timber
 
-abstract class CardViewerViewModel(
-    cardMediaPlayer: CardMediaPlayer,
-) : ViewModel(),
+abstract class CardViewerViewModel :
+    ViewModel(),
     OnErrorListener,
     PostRequestHandler {
     override val onError = MutableSharedFlow<String>()
@@ -57,9 +55,11 @@ abstract class CardViewerViewModel(
     open val showingAnswer = MutableStateFlow(false)
 
     protected val cardMediaPlayer =
-        cardMediaPlayer.apply {
-            setMediaErrorListener(createSoundErrorListener())
-            javascriptEvaluator = { JavascriptEvaluator { launchCatchingIO { eval.emit(it) } } }
+        CardMediaPlayer(
+            javascriptEvaluator = { launchCatchingIO { eval.emit(it) } },
+            mediaErrorListener = createSoundErrorListener(),
+        ).also {
+            addCloseable(it)
         }
     abstract var currentCard: Deferred<Card>
 
@@ -67,7 +67,6 @@ abstract class CardViewerViewModel(
 
     @CallSuper
     override fun onCleared() {
-        cardMediaPlayer.close()
         server.stop()
         super.onCleared()
     }
@@ -86,7 +85,9 @@ abstract class CardViewerViewModel(
     fun baseUrl(): String = server.baseUrl()
 
     fun setSoundPlayerEnabled(isEnabled: Boolean) {
-        cardMediaPlayer.isEnabled = isEnabled
+        viewModelScope.launch {
+            cardMediaPlayer.setEnabled(isEnabled)
+        }
     }
 
     fun playSoundFromUrl(url: String) {

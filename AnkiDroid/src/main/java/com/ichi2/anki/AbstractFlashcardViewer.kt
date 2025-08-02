@@ -30,6 +30,7 @@ import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.hardware.SensorManager
+import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -71,6 +72,7 @@ import androidx.annotation.IdRes
 import androidx.annotation.RequiresApi
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
+import androidx.core.net.toFile
 import androidx.core.net.toUri
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
@@ -93,7 +95,11 @@ import com.ichi2.anki.cardviewer.CardMediaPlayer
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.GestureProcessor
 import com.ichi2.anki.cardviewer.JavascriptEvaluator
+import com.ichi2.anki.cardviewer.MediaErrorBehavior
+import com.ichi2.anki.cardviewer.MediaErrorBehavior.CONTINUE_MEDIA
+import com.ichi2.anki.cardviewer.MediaErrorBehavior.RETRY_MEDIA
 import com.ichi2.anki.cardviewer.MediaErrorHandler
+import com.ichi2.anki.cardviewer.MediaErrorListener
 import com.ichi2.anki.cardviewer.OnRenderProcessGoneDelegate
 import com.ichi2.anki.cardviewer.RenderedCard
 import com.ichi2.anki.cardviewer.SingleCardSide
@@ -105,6 +111,7 @@ import com.ichi2.anki.cardviewer.ViewerRefresh
 import com.ichi2.anki.cardviewer.handledGamepadKeyDown
 import com.ichi2.anki.cardviewer.handledGamepadKeyUp
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.dialogs.TtsPlaybackErrorDialog
 import com.ichi2.anki.dialogs.TtsVoicesDialogFragment
 import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory
@@ -116,6 +123,7 @@ import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.Decks
 import com.ichi2.anki.libanki.SoundOrVideoTag
 import com.ichi2.anki.libanki.TTSTag
+import com.ichi2.anki.libanki.TtsPlayer
 import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.multimedia.getAvTag
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
@@ -587,8 +595,7 @@ abstract class AbstractFlashcardViewer :
     // Finish initializing the activity after the collection has been correctly loaded
     public override fun onCollectionLoaded(col: Collection) {
         super.onCollectionLoaded(col)
-        val mediaDir = col.media.dir
-        cardMediaPlayer = CardMediaPlayer.newInstance(this, getMediaBaseUrl(mediaDir))
+        cardMediaPlayer = getCardMediaPlayerInstance(this)
         registerReceiver()
         restoreCollectionPreferences(col)
         initLayout()
@@ -605,7 +612,10 @@ abstract class AbstractFlashcardViewer :
         super.onPause()
         gestureDetectorImpl.stopShakeDetector()
         if (this::cardMediaPlayer.isInitialized) {
-            cardMediaPlayer.isEnabled = false
+            launchCatchingTask {
+                cardMediaPlayer.setEnabled(false)
+            }
+            ReadText.stopTts()
         }
         // Prevent loss of data in Cookies
         CookieManager.getInstance().flush()
@@ -615,7 +625,9 @@ abstract class AbstractFlashcardViewer :
         super.onResume()
         gestureDetectorImpl.startShakeDetector()
         if (this::cardMediaPlayer.isInitialized) {
-            cardMediaPlayer.isEnabled = true
+            launchCatchingTask {
+                cardMediaPlayer.setEnabled(true)
+            }
         }
         // Reset the activity title
         updateActionBar()
@@ -808,7 +820,7 @@ abstract class AbstractFlashcardViewer :
                     "AbstractFlashcardViewer:: OK button pressed to delete note %d",
                     currentCard!!.nid,
                 )
-                launchCatchingTask { cardMediaPlayer.stop() }
+                launchCatchingTask { stopCardMediaPlayer() }
                 deleteNoteWithoutConfirmation()
             }
             negativeButton(R.string.dialog_cancel)
@@ -850,7 +862,7 @@ abstract class AbstractFlashcardViewer :
                 }
                 // Temporarily sets the answer indicator dots appearing below the toolbar
                 previousAnswerIndicator?.displayAnswerIndicator(rating)
-                cardMediaPlayer.stop()
+                stopCardMediaPlayer()
                 currentEase = rating
 
                 answerCardInner(rating)
@@ -1468,7 +1480,7 @@ abstract class AbstractFlashcardViewer :
                 val side = if (displayAnswer) SingleCardSide.BACK else SingleCardSide.FRONT
                 when (doMediaReplay) {
                     true -> cardMediaPlayer.replayAll(side)
-                    false -> cardMediaPlayer.playAll(side)
+                    false -> cardMediaPlayer.playAllForSide(side.toCardSide())
                 }
             }
             return
@@ -1576,7 +1588,7 @@ abstract class AbstractFlashcardViewer :
                     sched.buryCards(listOf(currentCard!!.id))
                 }
             }
-            cardMediaPlayer.stop()
+            stopCardMediaPlayer()
             showSnackbar(R.string.card_buried, Reviewer.ACTION_SNACKBAR_TIME)
         }
         return true
@@ -1590,7 +1602,7 @@ abstract class AbstractFlashcardViewer :
                     sched.suspendCards(listOf(currentCard!!.id))
                 }
             }
-            cardMediaPlayer.stop()
+            stopCardMediaPlayer()
             showSnackbar(TR.studyingCardSuspended(), Reviewer.ACTION_SNACKBAR_TIME)
         }
         return true
@@ -1607,7 +1619,7 @@ abstract class AbstractFlashcardViewer :
                 }
             val count = changed.count
             val noteSuspended = resources.getQuantityString(R.plurals.note_suspended, count, count)
-            cardMediaPlayer.stop()
+            stopCardMediaPlayer()
             showSnackbar(noteSuspended, Reviewer.ACTION_SNACKBAR_TIME)
         }
         return true
@@ -1622,10 +1634,15 @@ abstract class AbstractFlashcardViewer :
                         sched.buryNotes(listOf(currentCard!!.nid))
                     }
                 }
-            cardMediaPlayer.stop()
+            stopCardMediaPlayer()
             showSnackbar(TR.studyingCardsBuried(changed.count), Reviewer.ACTION_SNACKBAR_TIME)
         }
         return true
+    }
+
+    private suspend fun stopCardMediaPlayer() {
+        cardMediaPlayer.stop()
+        ReadText.stopTts()
     }
 
     override fun executeCommand(
@@ -2771,6 +2788,68 @@ abstract class AbstractFlashcardViewer :
                 return "$mediaDirUri/"
             }
             return ""
+        }
+
+        fun getCardMediaPlayerInstance(viewer: AbstractFlashcardViewer): CardMediaPlayer {
+            val soundErrorListener = viewer.createMediaErrorListener()
+
+            return CardMediaPlayer(
+                javascriptEvaluator = { viewer.webViewClient?.eval(it) },
+                mediaErrorListener = soundErrorListener,
+            ).apply {
+                setOnMediaGroupCompletedListener(viewer::onMediaGroupCompleted)
+            }
+        }
+
+        fun AbstractFlashcardViewer.createMediaErrorListener(): MediaErrorListener {
+            val activity = this
+            return object : MediaErrorListener {
+                override fun onMediaPlayerError(
+                    mp: MediaPlayer?,
+                    which: Int,
+                    extra: Int,
+                    uri: Uri,
+                ): MediaErrorBehavior {
+                    Timber.w("Media Error: (%d, %d)", which, extra)
+                    return onError(uri)
+                }
+
+                override fun onTtsError(
+                    error: TtsPlayer.TtsError,
+                    isAutomaticPlayback: Boolean,
+                ) {
+                    AbstractFlashcardViewer.mediaErrorHandler.processTtsFailure(error, isAutomaticPlayback) {
+                        when (error) {
+                            is AndroidTtsError.MissingVoiceError ->
+                                TtsPlaybackErrorDialog.ttsPlaybackErrorDialog(activity, supportFragmentManager, error.tag)
+                            is AndroidTtsError.InvalidVoiceError ->
+                                activity.showSnackbar(getString(R.string.voice_not_supported))
+                            else -> activity.showSnackbar(error.localizedErrorMessage(activity))
+                        }
+                    }
+                }
+
+                override fun onError(uri: Uri): MediaErrorBehavior {
+                    if (uri.scheme != "file") {
+                        return CONTINUE_MEDIA
+                    }
+
+                    try {
+                        val file = uri.toFile()
+                        // There is a multitude of transient issues with the MediaPlayer. (1, -1001) for example
+                        // Retrying fixes most of these
+                        if (file.exists()) return RETRY_MEDIA
+                        // just doesn't exist - process the error
+                        AbstractFlashcardViewer.mediaErrorHandler.processMissingMedia(
+                            file,
+                        ) { filename: String? -> displayCouldNotFindMediaSnackbar(filename) }
+                        return CONTINUE_MEDIA
+                    } catch (e: Exception) {
+                        Timber.w(e)
+                        return CONTINUE_MEDIA
+                    }
+                }
+            }
         }
     }
 }

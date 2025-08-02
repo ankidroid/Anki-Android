@@ -211,15 +211,18 @@ class CardMediaPlayerTest : JvmTest() {
     }
 
     private suspend fun CardMediaPlayer.playAllAndWait(side: SingleCardSide = SingleCardSide.FRONT) {
-        this.playAll(side)?.join()
+        this.playAllForSide(side.toCardSide())
+        playAvTagsJob?.join()
     }
 
     private suspend fun CardMediaPlayer.replayAllAndWait(side: SingleCardSide) {
-        this.replayAll(side)?.join()
+        this.replayAll(side)
+        playAvTagsJob?.join()
     }
 
     private suspend fun CardMediaPlayer.playOneAndWait(tag: AvTag) {
-        playOne(tag)?.join()
+        playOne(tag)
+        playAvTagsJob?.join()
     }
 
     suspend fun CardMediaPlayer.setup(
