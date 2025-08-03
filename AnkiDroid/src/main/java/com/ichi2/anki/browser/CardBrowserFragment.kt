@@ -177,6 +177,9 @@ class CardBrowserFragment :
                 onLongPress = { rowId ->
                     activityViewModel.handleRowLongPress(rowId.toRowSelection())
                 },
+                onRightClick = { rowId ->
+                    activityViewModel.handleRightClick(rowId.toRowSelection())
+                },
             )
         cardsListView.adapter = cardsAdapter
         cardsAdapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY

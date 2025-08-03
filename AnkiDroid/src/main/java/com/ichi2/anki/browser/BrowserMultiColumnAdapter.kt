@@ -23,6 +23,7 @@ import android.graphics.drawable.RippleDrawable
 import android.text.TextUtils
 import android.util.TypedValue
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
@@ -62,6 +63,7 @@ class BrowserMultiColumnAdapter(
     private val viewModel: CardBrowserViewModel,
     private val onLongPress: (CardOrNoteId) -> Unit,
     private val onTap: (CardOrNoteId) -> Unit,
+    private val onRightClick: (CardOrNoteId) -> Unit = onLongPress,
 ) : RecyclerView.Adapter<BrowserMultiColumnAdapter.MultiColumnViewHolder>() {
     val fontSizeScalePercent =
         sharedPrefs().getInt("relativeCardBrowserFontSize", DEFAULT_FONT_SIZE_RATIO)
@@ -121,6 +123,14 @@ class BrowserMultiColumnAdapter(
                 return@setOnLongClickListener true
             }
 
+            this.itemView.setOnTouchListener { _, event ->
+                if (event.action == MotionEvent.ACTION_DOWN &&
+                    event.buttonState and MotionEvent.BUTTON_SECONDARY != 0
+                ) {
+                    return@setOnTouchListener onRightClick()
+                }
+                return@setOnTouchListener false
+            }
             checkBoxView.setOnClickListener {
                 id?.let { id ->
                     Timber.d("Tapped on checkbox: %s", id)
@@ -128,6 +138,17 @@ class BrowserMultiColumnAdapter(
                 }
             }
         }
+
+        /**
+         * Handle right-click event by delegating to onRightClick handler from constructor
+         * @return true if the event was handled, false otherwise
+         */
+        private fun onRightClick(): Boolean =
+            id?.let {
+                Timber.d("Right Click: %s", it)
+                onRightClick(it)
+                true
+            } ?: false
 
         fun setInMultiSelect(inMultiSelect: Boolean) {
             checkBoxView.isVisible = inMultiSelect
