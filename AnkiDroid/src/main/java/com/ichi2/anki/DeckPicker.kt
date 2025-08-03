@@ -480,7 +480,7 @@ open class DeckPicker :
                         sched.haveBuried(),
                     )
                 }
-            updateDeckList()?.join() // focus has changed
+            updateDeckList()
             showDialogFragment(
                 DeckPickerContextMenu.newInstance(
                     id = deckId,
@@ -2274,9 +2274,9 @@ open class DeckPicker :
      */
     @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
     @RustCleanup("backup with 5 minute timer, instead of deck list refresh")
-    fun updateDeckList(): Job? {
+    fun updateDeckList() {
         if (!CollectionManager.isOpenUnsafe()) {
-            return null
+            return
         }
         if (Build.FINGERPRINT != "robolectric") {
             // uses user's desktop settings to determine whether a backup
@@ -2284,7 +2284,7 @@ open class DeckPicker :
             performBackupInBackground()
         }
         Timber.d("updateDeckList")
-        return launchCatchingTask {
+        launchCatchingTask {
             withProgress { viewModel.reloadDeckCounts()?.join() }
             hideProgressBar()
         }
