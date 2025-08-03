@@ -26,6 +26,9 @@ import androidx.fragment.app.commit
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.PermissionSet
 import com.ichi2.anki.R
+import com.ichi2.anki.ui.windows.permissions.PermissionsFragment.Companion.HAS_ALL_PERMISSIONS_KEY
+import com.ichi2.anki.ui.windows.permissions.PermissionsFragment.Companion.PERMISSIONS_FRAGMENT_RESULT_KEY
+import com.ichi2.anki.utils.ext.setFragmentResultListener
 import com.ichi2.themes.Themes
 import com.ichi2.themes.setTransparentStatusBar
 
@@ -63,6 +66,10 @@ class PermissionsActivity : AnkiActivity() {
             requireNotNull(permissionSet.permissionsFragment?.getDeclaredConstructor()?.newInstance()) {
                 "invalid permissionsFragment"
             }
+        setFragmentResultListener(PERMISSIONS_FRAGMENT_RESULT_KEY) { _, bundle ->
+            val hasAllPermissions = bundle.getBoolean(HAS_ALL_PERMISSIONS_KEY)
+            setContinueButtonEnabled(hasAllPermissions)
+        }
 
         supportFragmentManager.commit {
             replace(R.id.fragment_container, permissionsFragment)
