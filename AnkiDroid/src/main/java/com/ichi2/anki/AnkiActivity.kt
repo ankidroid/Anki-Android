@@ -62,6 +62,7 @@ import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.android.input.ShortcutGroup
 import com.ichi2.anki.android.input.ShortcutGroupProvider
 import com.ichi2.anki.android.input.shortcut
+import com.ichi2.anki.ankiActivity
 import com.ichi2.anki.common.utils.android.isRobolectric
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.dialogs.AsyncDialogFragment
@@ -462,7 +463,9 @@ open class AnkiActivity :
         }
     }
 
-    internal fun mayOpenUrl(@StringRes  url: Int) {
+    internal fun mayOpenUrl(
+        @StringRes url: Int,
+    ) {
         val success = customTabActivityHelper.mayLaunchUrl(getString(url).toUri(), null, null)
         if (!success) {
             Timber.w("Couldn't preload url: %s", url.toString())
@@ -925,8 +928,11 @@ open class AnkiActivity :
 }
 
 fun Fragment.requireAnkiActivity(): AnkiActivity =
-    requireActivity() as? AnkiActivity?
+    ankiActivity
         ?: throw java.lang.IllegalStateException("Fragment $this not attached to an AnkiActivity.")
+
+val Fragment.ankiActivity: AnkiActivity?
+    get() = this.requireActivity() as? AnkiActivity?
 
 interface AnkiActivityProvider {
     val ankiActivity: AnkiActivity
