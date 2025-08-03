@@ -15,6 +15,9 @@
  */
 package com.ichi2.anki.settings.enums
 
+import androidx.annotation.StringRes
+
 interface PrefEnum {
-    val entryValue: String
+    @get:StringRes
+    val entryResId: Int
 }
