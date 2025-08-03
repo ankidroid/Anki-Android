@@ -14,7 +14,7 @@ Install `arm64-v8a` from the **Assets** section below. If it fails to install, u
 The builds with `full`, `play` and `amazon` are useful for testing our builds for different app stores:
 
 - **`full`**: F-Droid & GitHub `Parallel` apks
-- **`play`**: Google Play - does not have `MANAGE_EXTERNAL_STORAGE` permission as it is forbidden by Google, so app data is deleted on uninstall
+- **`play`**: Google Play - does not have `MANAGE_EXTERNAL_STORAGE` permission as it is forbidden by Google, on uninstall the user is invited to delete data.
 - **`amazon`**: Amazon - currently same as full, historically removed `CAMERA` permission
 
 
