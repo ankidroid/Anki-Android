@@ -46,19 +46,6 @@
     <string name="error_reporting_choice_always_report">Να στέλνεται πάντα αναφορά</string>
     <string name="error_reporting_choice_never_report">Να μη στέλνεται ποτέ αναφορά</string>
     <string name="error_reporting_choice_ask_user">Ρωτήστε με</string>
-    <!-- leech_action_labels -->
-    <!-- 01-core:menu_suspend_card -->
-    <!-- new_order_labels -->
-    <!-- cram_deck_conf_order_labels -->
-    <string name="cram_deck_conf_order_oldest_seen_first">Πρώτα οι παλαιότερα ειδωμένες</string>
-    <string name="cram_deck_conf_order_random">Τυχαία</string>
-    <string name="cram_deck_conf_order_increasing_intervals">Κατά αυξανόμενα διαστήματα</string>
-    <string name="cram_deck_conf_order_decreasing_intervals">Κατά φθίνοντα διαστήματα</string>
-    <string name="cram_deck_conf_order_most_lapsed">Οι πιο εσφαλμένες</string>
-    <string name="cram_deck_conf_order_order_added">Κατά σειρά προσθήκης</string>
-    <string name="cram_deck_conf_order_order_due">Κατά σειρά οφειλής</string>
-    <string name="cram_deck_conf_order_latest_added_first">Κατά σειρά πρόσφατης προσθήκης</string>
-    <string name="cram_deck_conf_order_relative_overdueness">Σχετική καθυστέρηση</string>
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">Χρήση προσωρινής τράπουλας</string>
     <string name="add_to_deck_decide_by_note_type">Απόφαση κατά τύπο σημείωσης</string>

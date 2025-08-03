@@ -46,19 +46,6 @@
     <string name="error_reporting_choice_always_report">எப்போதும் புகாரளிக்கவும்</string>
     <string name="error_reporting_choice_never_report">ஒருபோதும் தெரிவிக்கவில்லை</string>
     <string name="error_reporting_choice_ask_user">என்னிடம் கேள்</string>
-    <!-- leech_action_labels -->
-    <!-- 01-core:menu_suspend_card -->
-    <!-- new_order_labels -->
-    <!-- cram_deck_conf_order_labels -->
-    <string name="cram_deck_conf_order_oldest_seen_first">முதலில் பார்த்தது பழமையானது</string>
-    <string name="cram_deck_conf_order_random">சீரற்ற</string>
-    <string name="cram_deck_conf_order_increasing_intervals">அதிகரிக்கும் இடைவெளிகள்</string>
-    <string name="cram_deck_conf_order_decreasing_intervals">இடைவெளிகளைக் குறைத்தல்</string>
-    <string name="cram_deck_conf_order_most_lapsed">மிகவும் தவறிவிட்டது</string>
-    <string name="cram_deck_conf_order_order_added">ஆர்டர் சேர்க்கப்பட்டது</string>
-    <string name="cram_deck_conf_order_order_due">ஆர்டர் நிலுவையில் உள்ளது</string>
-    <string name="cram_deck_conf_order_latest_added_first">சமீபத்தியது முதலில் சேர்க்கப்பட்டது</string>
-    <string name="cram_deck_conf_order_relative_overdueness">ஒப்பீட்டளவில் தாமதம்</string>
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">தற்போதைய தளத்தைப் பயன்படுத்தவும்</string>
     <string name="add_to_deck_decide_by_note_type">குறிப்பு வகைமூலம் முடிவு செய்யுங்கள்</string>

@@ -46,19 +46,6 @@
     <string name="error_reporting_choice_always_report">Luôn thông báo lỗi</string>
     <string name="error_reporting_choice_never_report">Không bao giờ thông báo lỗi</string>
     <string name="error_reporting_choice_ask_user">Hỏi tôi</string>
-    <!-- leech_action_labels -->
-    <!-- 01-core:menu_suspend_card -->
-    <!-- new_order_labels -->
-    <!-- cram_deck_conf_order_labels -->
-    <string name="cram_deck_conf_order_oldest_seen_first">Cũ nhất nhìn thấy đầu tiên</string>
-    <string name="cram_deck_conf_order_random">Ngẫu nhiên</string>
-    <string name="cram_deck_conf_order_increasing_intervals">Tăng khoảng thời gian</string>
-    <string name="cram_deck_conf_order_decreasing_intervals">Giảm khoảng thời gian</string>
-    <string name="cram_deck_conf_order_most_lapsed">Vòng lặp nhiều nhất</string>
-    <string name="cram_deck_conf_order_order_added">Thứ tự đã thêm</string>
-    <string name="cram_deck_conf_order_order_due">Thứ tự đến hạn</string>
-    <string name="cram_deck_conf_order_latest_added_first">Mới nhất được thêm trước</string>
-    <string name="cram_deck_conf_order_relative_overdueness">Quá hạn tương đối</string>
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">Sử dụng xấp thẻ hiện tại</string>
     <string name="add_to_deck_decide_by_note_type">Quyết định theo kiểu ghi chú</string>

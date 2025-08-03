@@ -46,19 +46,6 @@
     <string name="error_reporting_choice_always_report">Vienmēr ziņot</string>
     <string name="error_reporting_choice_never_report">Nekad neziņot</string>
     <string name="error_reporting_choice_ask_user">Vaicāt man</string>
-    <!-- leech_action_labels -->
-    <!-- 01-core:menu_suspend_card -->
-    <!-- new_order_labels -->
-    <!-- cram_deck_conf_order_labels -->
-    <string name="cram_deck_conf_order_oldest_seen_first">Vispirms vissenāk redzētās</string>
-    <string name="cram_deck_conf_order_random">Nejauši</string>
-    <string name="cram_deck_conf_order_increasing_intervals">Starplaiku palielināšanās</string>
-    <string name="cram_deck_conf_order_decreasing_intervals">Starplaiku samazināšanās</string>
-    <string name="cram_deck_conf_order_most_lapsed">Visvairāk atmestās</string>
-    <string name="cram_deck_conf_order_order_added">Pievienošanas secības</string>
-    <string name="cram_deck_conf_order_order_due">Laika pienākšanas secības</string>
-    <string name="cram_deck_conf_order_latest_added_first">Vispirms pēdējās pievienotās</string>
-    <string name="cram_deck_conf_order_relative_overdueness">Cik daudz laika ir pagājis kopš laika pienākšanas</string>
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">Izmantot pašreizējo kavu</string>
     <string name="add_to_deck_decide_by_note_type">Izlemt pēc piezīmes veida</string>

@@ -46,19 +46,6 @@
     <string name="error_reporting_choice_always_report">ᱜᱷᱤᱲᱜᱮ ᱨᱤᱯᱚᱴ ᱢᱮ</string>
     <string name="error_reporting_choice_never_report">ᱟᱞᱚ ᱨᱤᱯᱚᱴ ᱟᱢ</string>
     <string name="error_reporting_choice_ask_user">ᱠᱩᱞᱤᱧ ᱢᱮ</string>
-    <!-- leech_action_labels -->
-    <!-- 01-core:menu_suspend_card -->
-    <!-- new_order_labels -->
-    <!-- cram_deck_conf_order_labels -->
-    <string name="cram_deck_conf_order_oldest_seen_first">ᱢᱟᱨᱮ ᱧᱮᱞ ᱢᱟᱲᱟᱝ</string>
-    <string name="cram_deck_conf_order_random">ᱨᱮᱱᱰᱚᱢ</string>
-    <string name="cram_deck_conf_order_increasing_intervals">ᱚᱠᱛᱚ ᱛᱟᱞᱟ ᱰᱷᱮᱨᱚᱜ ᱠᱟᱱᱟ</string>
-    <string name="cram_deck_conf_order_decreasing_intervals">ᱚᱠᱛᱚ ᱛᱟᱞᱟ ᱠᱚᱢᱚᱜ ᱠᱟᱱᱟ</string>
-    <string name="cram_deck_conf_order_most_lapsed">ᱡᱟᱥᱛᱤ ᱫᱚᱱᱟᱜ</string>
-    <string name="cram_deck_conf_order_order_added">ᱛᱷᱟᱨ ᱥᱮᱞᱮᱫ ᱮᱱᱟ</string>
-    <string name="cram_deck_conf_order_order_due">ᱮᱢᱚᱜ ᱥᱚᱢᱚᱭ ᱛᱷᱟᱨ ᱢᱮ</string>
-    <string name="cram_deck_conf_order_latest_added_first">ᱱᱮᱛᱟᱨᱟᱜ ᱥᱮᱞᱮᱫᱟᱜ ᱢᱟᱲᱟᱝ</string>
-    <string name="cram_deck_conf_order_relative_overdueness">ᱥᱟᱯᱮᱠᱷᱤᱠ ᱜᱷᱟᱹᱲᱤᱡ</string>
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">ᱱᱤᱛᱚᱜᱟᱜ ᱰᱮᱠ ᱵᱮᱵᱷᱟᱨ ᱢᱮ</string>
     <string name="add_to_deck_decide_by_note_type">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱯᱨᱚᱠᱟᱨ ᱧᱮᱞᱠᱟᱛᱮ ᱪᱤᱱᱛᱟᱭ ᱢᱮ</string>

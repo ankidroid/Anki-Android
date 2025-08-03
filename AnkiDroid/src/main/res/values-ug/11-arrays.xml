@@ -46,19 +46,6 @@
     <string name="error_reporting_choice_always_report">ھەمىشە دوكلات قىل</string>
     <string name="error_reporting_choice_never_report">ھەرگىز دوكلات قىلما</string>
     <string name="error_reporting_choice_ask_user">مەندىن سورا</string>
-    <!-- leech_action_labels -->
-    <!-- 01-core:menu_suspend_card -->
-    <!-- new_order_labels -->
-    <!-- cram_deck_conf_order_labels -->
-    <string name="cram_deck_conf_order_oldest_seen_first">باشقا كۆرگىنى ئالدىدا</string>
-    <string name="cram_deck_conf_order_random">خالىغانچە</string>
-    <string name="cram_deck_conf_order_increasing_intervals">ئۆسكۈچى مەزگىل</string>
-    <string name="cram_deck_conf_order_decreasing_intervals">كېمەيگۈچى مەزگىل</string>
-    <string name="cram_deck_conf_order_most_lapsed">كۆپ ئۇنتۇلىدىغان</string>
-    <string name="cram_deck_conf_order_order_added">قوشۇلغان تەرتىپتە</string>
-    <string name="cram_deck_conf_order_order_due">مۆھلەت تەرتىپىدە</string>
-    <string name="cram_deck_conf_order_latest_added_first">ئاخىرىدا قوشۇلغىنى ئالدىدا</string>
-    <string name="cram_deck_conf_order_relative_overdueness">نىسپىي ۋاقىت ھالقىشچانلىقى بويىچە</string>
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">نۆۋەتتىكى دەستىنى ئىشلەت</string>
     <string name="add_to_deck_decide_by_note_type">خاتىرە تۈرى بەلگىلەيدۇ</string>

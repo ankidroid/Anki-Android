@@ -46,19 +46,6 @@
     <string name="error_reporting_choice_always_report">ہمیشہ رپورٹ کریں</string>
     <string name="error_reporting_choice_never_report">کبھی رپورٹ نہ کریں</string>
     <string name="error_reporting_choice_ask_user">مجھ سے پوچھیں</string>
-    <!-- leech_action_labels -->
-    <!-- 01-core:menu_suspend_card -->
-    <!-- new_order_labels -->
-    <!-- cram_deck_conf_order_labels -->
-    <string name="cram_deck_conf_order_oldest_seen_first">سب سے پرانا پہلے دیکھا گیا۔</string>
-    <string name="cram_deck_conf_order_random">بے ترتیب</string>
-    <string name="cram_deck_conf_order_increasing_intervals">وقفوں میں اضافہ</string>
-    <string name="cram_deck_conf_order_decreasing_intervals">وقفوں کو کم کرنا</string>
-    <string name="cram_deck_conf_order_most_lapsed">زیادہ تر لیپس</string>
-    <string name="cram_deck_conf_order_order_added">آرڈر شامل کیا گیا۔</string>
-    <string name="cram_deck_conf_order_order_due">آرڈر واجب الادا</string>
-    <string name="cram_deck_conf_order_latest_added_first">تازہ ترین پہلے شامل کیا گیا</string>
-    <string name="cram_deck_conf_order_relative_overdueness">نسبتاً زائد المیعاد</string>
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">موجودہ ڈیک استعمال کریں</string>
     <string name="add_to_deck_decide_by_note_type">نوٹ کی قسم کے مطابق فیصلہ کریں</string>

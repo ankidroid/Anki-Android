@@ -46,19 +46,6 @@
     <string name="error_reporting_choice_always_report">Заўсёды паведамляць</string>
     <string name="error_reporting_choice_never_report">Ніколі не паведамляць</string>
     <string name="error_reporting_choice_ask_user">Спытаць мяне</string>
-    <!-- leech_action_labels -->
-    <!-- 01-core:menu_suspend_card -->
-    <!-- new_order_labels -->
-    <!-- cram_deck_conf_order_labels -->
-    <string name="cram_deck_conf_order_oldest_seen_first">Першымі старыя</string>
-    <string name="cram_deck_conf_order_random">Выпадкова</string>
-    <string name="cram_deck_conf_order_increasing_intervals">Па павелічэнні інтэрвалаў</string>
-    <string name="cram_deck_conf_order_decreasing_intervals">Па змяншэнні інтэрвалаў</string>
-    <string name="cram_deck_conf_order_most_lapsed">Самыя складаныя</string>
-    <string name="cram_deck_conf_order_order_added">У парадку дадання</string>
-    <string name="cram_deck_conf_order_order_due">У парадку прагляду</string>
-    <string name="cram_deck_conf_order_latest_added_first">Апошнія даданыя першымі</string>
-    <string name="cram_deck_conf_order_relative_overdueness">Адносна затрымкі</string>
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">Выкарыстоўваць бягучую калоду</string>
     <string name="add_to_deck_decide_by_note_type">Вырашаць па тыпе нататкі</string>

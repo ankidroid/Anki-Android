@@ -90,7 +90,7 @@
         <item>Por fallas</item>
         <item>Por nome da baralla</item>
     </string-array>
-    <string name="chane_browser_column">Cambiar columna</string>
+    <string name="manage_browser_column">Manage column</string>
     <string name="no_columns_available">Non hai columnas dispoñíbeis</string>
     <string name="card_browser_select_all" maxLength="28">Seleccionar todos</string>
     <string name="card_browser_select_none" maxLength="28">Deseleccionar todos</string>

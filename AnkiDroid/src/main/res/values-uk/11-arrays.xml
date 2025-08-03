@@ -46,19 +46,6 @@
     <string name="error_reporting_choice_always_report">Завжди звітувати</string>
     <string name="error_reporting_choice_never_report">Ніколи не звітувати</string>
     <string name="error_reporting_choice_ask_user">Запитувати мене</string>
-    <!-- leech_action_labels -->
-    <!-- 01-core:menu_suspend_card -->
-    <!-- new_order_labels -->
-    <!-- cram_deck_conf_order_labels -->
-    <string name="cram_deck_conf_order_oldest_seen_first">Найстарші спочатку</string>
-    <string name="cram_deck_conf_order_random">Випадковий порядок</string>
-    <string name="cram_deck_conf_order_increasing_intervals">Зростаючими інтервалами</string>
-    <string name="cram_deck_conf_order_decreasing_intervals">Спадаючими інтервалами</string>
-    <string name="cram_deck_conf_order_most_lapsed">Найбільше помилок</string>
-    <string name="cram_deck_conf_order_order_added">В порядку додавання</string>
-    <string name="cram_deck_conf_order_order_due">В порядку черги</string>
-    <string name="cram_deck_conf_order_latest_added_first">Остання додана йде першою</string>
-    <string name="cram_deck_conf_order_relative_overdueness">Відносно затримки</string>
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">Використовувати поточну колоду</string>
     <string name="add_to_deck_decide_by_note_type">Вирішувати за типом записів</string>

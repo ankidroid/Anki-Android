@@ -90,7 +90,7 @@
         <item>Κατά αστοχίες</item>
         <item>Κατά όνομα τράπουλας</item>
     </string-array>
-    <string name="chane_browser_column">Αλλαγή στήλης</string>
+    <string name="manage_browser_column">Manage column</string>
     <string name="no_columns_available">Δεν υπάρχουν διαθέσιμες στήλες</string>
     <string name="card_browser_select_all" maxLength="28">Επιλογή όλων</string>
     <string name="card_browser_select_none" maxLength="28">Επιλογή κανενός</string>

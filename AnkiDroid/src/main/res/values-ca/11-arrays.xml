@@ -46,19 +46,6 @@
     <string name="error_reporting_choice_always_report">Envia-ho sempre</string>
     <string name="error_reporting_choice_never_report">No ho enviïs mai</string>
     <string name="error_reporting_choice_ask_user">Pregunta-ho</string>
-    <!-- leech_action_labels -->
-    <!-- 01-core:menu_suspend_card -->
-    <!-- new_order_labels -->
-    <!-- cram_deck_conf_order_labels -->
-    <string name="cram_deck_conf_order_oldest_seen_first">Primer les que fa més temps que no heu vist</string>
-    <string name="cram_deck_conf_order_random">A l\'atzar</string>
-    <string name="cram_deck_conf_order_increasing_intervals">A intervals creixents</string>
-    <string name="cram_deck_conf_order_decreasing_intervals">A intervals decreixents</string>
-    <string name="cram_deck_conf_order_most_lapsed">Més espaiades</string>
-    <string name="cram_deck_conf_order_order_added">Ordre en que s\'han afegit</string>
-    <string name="cram_deck_conf_order_order_due">Per ordre de venciment</string>
-    <string name="cram_deck_conf_order_latest_added_first">Primera les darrers que s\'ahn afegit</string>
-    <string name="cram_deck_conf_order_relative_overdueness">Retràs d\'entrega relatiu</string>
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">Utilitza aquest paquet</string>
     <string name="add_to_deck_decide_by_note_type">Dedueix pel tipus de nota</string>

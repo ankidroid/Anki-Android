@@ -46,19 +46,6 @@
     <string name="error_reporting_choice_always_report">總是發送報告</string>
     <string name="error_reporting_choice_never_report">從不發送報告</string>
     <string name="error_reporting_choice_ask_user">詢問我</string>
-    <!-- leech_action_labels -->
-    <!-- 01-core:menu_suspend_card -->
-    <!-- new_order_labels -->
-    <!-- cram_deck_conf_order_labels -->
-    <string name="cram_deck_conf_order_oldest_seen_first">優先顯示舊卡片</string>
-    <string name="cram_deck_conf_order_random">隨機</string>
-    <string name="cram_deck_conf_order_increasing_intervals">間隔由小至大排列</string>
-    <string name="cram_deck_conf_order_decreasing_intervals">間隔由大至小排列</string>
-    <string name="cram_deck_conf_order_most_lapsed">最常忘記</string>
-    <string name="cram_deck_conf_order_order_added">依新增順序</string>
-    <string name="cram_deck_conf_order_order_due">依到期順序</string>
-    <string name="cram_deck_conf_order_latest_added_first">最後加入的先</string>
-    <string name="cram_deck_conf_order_relative_overdueness">相對逾期</string>
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">使用當前牌組</string>
     <string name="add_to_deck_decide_by_note_type">由筆記種類決定</string>

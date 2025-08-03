@@ -46,19 +46,6 @@
     <string name="error_reporting_choice_always_report">Informar sempre</string>
     <string name="error_reporting_choice_never_report">Non informar nunca</string>
     <string name="error_reporting_choice_ask_user">Preguntarme</string>
-    <!-- leech_action_labels -->
-    <!-- 01-core:menu_suspend_card -->
-    <!-- new_order_labels -->
-    <!-- cram_deck_conf_order_labels -->
-    <string name="cram_deck_conf_order_oldest_seen_first">Máis antigas primeiro</string>
-    <string name="cram_deck_conf_order_random">Ao chou</string>
-    <string name="cram_deck_conf_order_increasing_intervals">Intervalos crecentes</string>
-    <string name="cram_deck_conf_order_decreasing_intervals">Intervalos decrecentes</string>
-    <string name="cram_deck_conf_order_most_lapsed">Máis atrasadas</string>
-    <string name="cram_deck_conf_order_order_added">Orde de adición</string>
-    <string name="cram_deck_conf_order_order_due">Orde de revisión</string>
-    <string name="cram_deck_conf_order_latest_added_first">Última engadida primeiro</string>
-    <string name="cram_deck_conf_order_relative_overdueness">Atrasos relativos</string>
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">Empregar baralla actual</string>
     <string name="add_to_deck_decide_by_note_type">Decidir polo tipo de nota</string>

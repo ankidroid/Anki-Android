@@ -46,19 +46,6 @@
     <string name="error_reporting_choice_always_report">هميشه گزارش بده</string>
     <string name="error_reporting_choice_never_report">هرگز گزارش نده</string>
     <string name="error_reporting_choice_ask_user">از من بپرس</string>
-    <!-- leech_action_labels -->
-    <!-- 01-core:menu_suspend_card -->
-    <!-- new_order_labels -->
-    <!-- cram_deck_conf_order_labels -->
-    <string name="cram_deck_conf_order_oldest_seen_first">اول قدیمی ترین مشاهده شده ها</string>
-    <string name="cram_deck_conf_order_random">تصادفي</string>
-    <string name="cram_deck_conf_order_increasing_intervals">افزايش فواصل</string>
-    <string name="cram_deck_conf_order_decreasing_intervals">كاهش فواصل</string>
-    <string name="cram_deck_conf_order_most_lapsed">بيشترين فاصله زماني</string>
-    <string name="cram_deck_conf_order_order_added">به ترتيب اضافه شدن</string>
-    <string name="cram_deck_conf_order_order_due">به ترتيب موعد</string>
-    <string name="cram_deck_conf_order_latest_added_first">اولين اضافه شده هاي اخير</string>
-    <string name="cram_deck_conf_order_relative_overdueness">موارد سررسید شده</string>
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">استفاده از دسته فعلی</string>
     <string name="add_to_deck_decide_by_note_type">تصمیم گیری براساس نوع یادداشت</string>

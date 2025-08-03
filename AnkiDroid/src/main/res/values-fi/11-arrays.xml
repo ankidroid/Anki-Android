@@ -46,19 +46,6 @@
     <string name="error_reporting_choice_always_report">Raportoi aina</string>
     <string name="error_reporting_choice_never_report">Älä koskaan raportoi</string>
     <string name="error_reporting_choice_ask_user">Kysy joka kerta</string>
-    <!-- leech_action_labels -->
-    <!-- 01-core:menu_suspend_card -->
-    <!-- new_order_labels -->
-    <!-- cram_deck_conf_order_labels -->
-    <string name="cram_deck_conf_order_oldest_seen_first">Oppimispäivämäärän mukaan, vanhin ensin</string>
-    <string name="cram_deck_conf_order_random">Satunnainen</string>
-    <string name="cram_deck_conf_order_increasing_intervals">Kertausvälien mukaan kasvavassa järjestyksessä</string>
-    <string name="cram_deck_conf_order_decreasing_intervals">Kertausvälien mukaan laskevassa järjestyksessä</string>
-    <string name="cram_deck_conf_order_most_lapsed">Eniten virheitä</string>
-    <string name="cram_deck_conf_order_order_added">Lisäysjärjestyksen mukaan</string>
-    <string name="cram_deck_conf_order_order_due">Erääntymisjärjestyksen mukaan</string>
-    <string name="cram_deck_conf_order_latest_added_first">Lisäyspäivämäärän mukaan, uusin ensin</string>
-    <string name="cram_deck_conf_order_relative_overdueness">Suhteellinen erääntyneisyys</string>
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">Käytä tätä pakkaa</string>
     <string name="add_to_deck_decide_by_note_type">Päätä muistiinpanotyypin perusteella</string>

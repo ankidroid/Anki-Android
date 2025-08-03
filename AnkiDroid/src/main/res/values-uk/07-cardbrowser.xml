@@ -96,7 +96,7 @@
         <item>За кількістю забувань</item>
         <item>За назвою колоди</item>
     </string-array>
-    <string name="chane_browser_column">Змінити стовпець</string>
+    <string name="manage_browser_column">Manage column</string>
     <string name="no_columns_available">Немає доступних стовпців</string>
     <string name="card_browser_select_all" maxLength="28">Обрати все</string>
     <string name="card_browser_select_none" maxLength="28">Зняти виділення</string>

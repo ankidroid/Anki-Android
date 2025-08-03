@@ -46,19 +46,6 @@
     <string name="error_reporting_choice_always_report">ସର୍ଵଦା ରିପୋର୍ଟ କର</string>
     <string name="error_reporting_choice_never_report">କେବେ ବି ରିପୋର୍ଟ କରନ୍ତୁନି</string>
     <string name="error_reporting_choice_ask_user">ମୋତେ ପଚାରନ୍ତୁ</string>
-    <!-- leech_action_labels -->
-    <!-- 01-core:menu_suspend_card -->
-    <!-- new_order_labels -->
-    <!-- cram_deck_conf_order_labels -->
-    <string name="cram_deck_conf_order_oldest_seen_first">ପ୍ରଥମେ ସର୍ବପୁରାତନ</string>
-    <string name="cram_deck_conf_order_random">ଅନିୟମିତ</string>
-    <string name="cram_deck_conf_order_increasing_intervals">ବଢ଼ୁଥିବା ଅନ୍ତରାଳ</string>
-    <string name="cram_deck_conf_order_decreasing_intervals">କମୁଥିବା ଅନ୍ତରାଳ</string>
-    <string name="cram_deck_conf_order_most_lapsed">ସବୁଠୁ ଅଧିକ ଲାପ୍ସ ହୋଇଥିବା</string>
-    <string name="cram_deck_conf_order_order_added">ଯୋଡ଼ାଯିବା କ୍ରମାନୁସାରେ</string>
-    <string name="cram_deck_conf_order_order_due">ଧାର୍ଯ୍ୟ କ୍ରମାନୁସାରେ</string>
-    <string name="cram_deck_conf_order_latest_added_first">ପ୍ରଥମେ ସର୍ବଶେଷରେ ଯୋଡ଼ା ଯାଇଥିବା</string>
-    <string name="cram_deck_conf_order_relative_overdueness">ଆପେକ୍ଷିକ ଅତିଦେୟତା</string>
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">ଚଳିତ କେରୀ ବ୍ୟବହାର କରିବା</string>
     <string name="add_to_deck_decide_by_note_type">ନୋଟ୍ ପ୍ରକାର ଅନୁଯାୟୀ ନିଷ୍ପତ୍ତି ନିଅନ୍ତୁ</string>

@@ -46,19 +46,6 @@
     <string name="error_reporting_choice_always_report">Zawsze</string>
     <string name="error_reporting_choice_never_report">Nigdy</string>
     <string name="error_reporting_choice_ask_user">Zapytaj mnie</string>
-    <!-- leech_action_labels -->
-    <!-- 01-core:menu_suspend_card -->
-    <!-- new_order_labels -->
-    <!-- cram_deck_conf_order_labels -->
-    <string name="cram_deck_conf_order_oldest_seen_first">Najstarszy jako pierwszy</string>
-    <string name="cram_deck_conf_order_random">Losowo</string>
-    <string name="cram_deck_conf_order_increasing_intervals">Zwiększane interwały</string>
-    <string name="cram_deck_conf_order_decreasing_intervals">Zmniejszane interwały</string>
-    <string name="cram_deck_conf_order_most_lapsed">Najczęściej zapominane</string>
-    <string name="cram_deck_conf_order_order_added">W kolejności dodania</string>
-    <string name="cram_deck_conf_order_order_due">W kolejności do przejrzenia</string>
-    <string name="cram_deck_conf_order_latest_added_first">Ostatnio dodane na początku</string>
-    <string name="cram_deck_conf_order_relative_overdueness">Względne zaległości</string>
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">Użyj obecnej talii</string>
     <string name="add_to_deck_decide_by_note_type">Wybór na podstawie typu notatki</string>

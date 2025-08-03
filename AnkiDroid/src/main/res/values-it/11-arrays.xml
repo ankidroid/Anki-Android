@@ -46,19 +46,6 @@
     <string name="error_reporting_choice_always_report">Segnala sempre</string>
     <string name="error_reporting_choice_never_report">Non segnalare mai</string>
     <string name="error_reporting_choice_ask_user">Chiedimelo</string>
-    <!-- leech_action_labels -->
-    <!-- 01-core:menu_suspend_card -->
-    <!-- new_order_labels -->
-    <!-- cram_deck_conf_order_labels -->
-    <string name="cram_deck_conf_order_oldest_seen_first">Più vecchie visualizzate per prime</string>
-    <string name="cram_deck_conf_order_random">Casuale</string>
-    <string name="cram_deck_conf_order_increasing_intervals">Intervalli crescenti</string>
-    <string name="cram_deck_conf_order_decreasing_intervals">Intervalli decrescenti</string>
-    <string name="cram_deck_conf_order_most_lapsed">Maggior numero di errori</string>
-    <string name="cram_deck_conf_order_order_added">Ordine di aggiunta</string>
-    <string name="cram_deck_conf_order_order_due">Ordine di scadenza</string>
-    <string name="cram_deck_conf_order_latest_added_first">Dapprima aggiunte più recentemente</string>
-    <string name="cram_deck_conf_order_relative_overdueness">Ritardo relativo</string>
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">Utilizza il mazzo attuale</string>
     <string name="add_to_deck_decide_by_note_type">Decidi per tipo di nota</string>

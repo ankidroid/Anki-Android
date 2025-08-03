@@ -46,19 +46,6 @@
     <string name="error_reporting_choice_always_report">नेहमी नोंदवा</string>
     <string name="error_reporting_choice_never_report">कधीही रिपोर्ट करू नका</string>
     <string name="error_reporting_choice_ask_user">मला विचार</string>
-    <!-- leech_action_labels -->
-    <!-- 01-core:menu_suspend_card -->
-    <!-- new_order_labels -->
-    <!-- cram_deck_conf_order_labels -->
-    <string name="cram_deck_conf_order_oldest_seen_first">सर्वात पहिले पाहिलेले</string>
-    <string name="cram_deck_conf_order_random">यादृच्छिक</string>
-    <string name="cram_deck_conf_order_increasing_intervals">वाढती मध्यांतर</string>
-    <string name="cram_deck_conf_order_decreasing_intervals">मध्यांतर कमी होत आहे</string>
-    <string name="cram_deck_conf_order_most_lapsed">बहुतेक संपले</string>
-    <string name="cram_deck_conf_order_order_added">ऑर्डर जोडली</string>
-    <string name="cram_deck_conf_order_order_due">ऑर्डर देय</string>
-    <string name="cram_deck_conf_order_latest_added_first">प्रथम नवीन जोडले</string>
-    <string name="cram_deck_conf_order_relative_overdueness">सापेक्ष प्रमाणाबाहेरपणा</string>
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">वर्तमान डेक वापरा</string>
     <string name="add_to_deck_decide_by_note_type">नोट प्रकाराद्वारे निर्णय घ्या</string>

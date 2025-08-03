@@ -93,7 +93,7 @@
         <item>Pēc atmešanu skaita</item>
         <item>Pēc kavas nosaukuma</item>
     </string-array>
-    <string name="chane_browser_column">Mainīg sleju</string>
+    <string name="manage_browser_column">Manage column</string>
     <string name="no_columns_available">Nav pieejama neviena sleja</string>
     <string name="card_browser_select_all" maxLength="28">Atlasīt visu</string>
     <string name="card_browser_select_none" maxLength="28">Neatlasīt neko</string>

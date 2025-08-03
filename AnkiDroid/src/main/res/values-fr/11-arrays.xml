@@ -46,19 +46,6 @@
     <string name="error_reporting_choice_always_report">Toujours envoyer un rapport d\'erreur</string>
     <string name="error_reporting_choice_never_report">Ne jamais envoyer de rapport d’erreur</string>
     <string name="error_reporting_choice_ask_user">Me demander</string>
-    <!-- leech_action_labels -->
-    <!-- 01-core:menu_suspend_card -->
-    <!-- new_order_labels -->
-    <!-- cram_deck_conf_order_labels -->
-    <string name="cram_deck_conf_order_oldest_seen_first">Les plus anciennes en premier</string>
-    <string name="cram_deck_conf_order_random">Au hasard</string>
-    <string name="cram_deck_conf_order_increasing_intervals">Intervalles croissants</string>
-    <string name="cram_deck_conf_order_decreasing_intervals">Intervalles décroissants</string>
-    <string name="cram_deck_conf_order_most_lapsed">Les plus échouées</string>
-    <string name="cram_deck_conf_order_order_added">L’ordre d’ajout</string>
-    <string name="cram_deck_conf_order_order_due">Les plus urgentes d’abord</string>
-    <string name="cram_deck_conf_order_latest_added_first">Les dernières ajoutées d’abord</string>
-    <string name="cram_deck_conf_order_relative_overdueness">Retard relatif</string>
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">Utilisez le paquet courant</string>
     <string name="add_to_deck_decide_by_note_type">Décider par type de note</string>

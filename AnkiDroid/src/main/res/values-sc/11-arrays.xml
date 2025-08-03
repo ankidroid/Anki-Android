@@ -46,19 +46,6 @@
     <string name="error_reporting_choice_always_report">Pedi·mi·lu</string>
     <string name="error_reporting_choice_never_report">Non sinnales mai</string>
     <string name="error_reporting_choice_ask_user">Sinnala semper</string>
-    <!-- leech_action_labels -->
-    <!-- 01-core:menu_suspend_card -->
-    <!-- new_order_labels -->
-    <!-- cram_deck_conf_order_labels -->
-    <string name="cram_deck_conf_order_oldest_seen_first">A primu sos prus betzos</string>
-    <string name="cram_deck_conf_order_random">Casuale</string>
-    <string name="cram_deck_conf_order_increasing_intervals">Intervallos chi creschent</string>
-    <string name="cram_deck_conf_order_decreasing_intervals">A primas sas ùrtimas annànghidas</string>
-    <string name="cram_deck_conf_order_most_lapsed">Ritardu relativu</string>
-    <string name="cram_deck_conf_order_order_added">Òrdine de annanghidura</string>
-    <string name="cram_deck_conf_order_order_due">Òrdine de iscadèntzia</string>
-    <string name="cram_deck_conf_order_latest_added_first">Intervallos chi mìnimant</string>
-    <string name="cram_deck_conf_order_relative_overdueness">Cun prus faddinas</string>
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">Imprea su matzu atuale</string>
     <string name="add_to_deck_decide_by_note_type">Detzide pro casta de nota</string>

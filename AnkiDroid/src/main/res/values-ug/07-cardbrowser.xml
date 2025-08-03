@@ -90,7 +90,7 @@
         <item>ئۇنتۇلۇشى بويىچە</item>
         <item>دەستە ئىسمى بويىچە</item>
     </string-array>
-    <string name="chane_browser_column">رەت ئۆزگەرت</string>
+    <string name="manage_browser_column">Manage column</string>
     <string name="no_columns_available">ھېچقانداق رەت يوق</string>
     <string name="card_browser_select_all" maxLength="28">ھەممىنى تاللا</string>
     <string name="card_browser_select_none" maxLength="28">ھەممىنى تاللىما</string>
