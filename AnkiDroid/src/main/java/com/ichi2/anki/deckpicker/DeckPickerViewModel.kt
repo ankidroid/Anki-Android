@@ -16,12 +16,14 @@
 
 package com.ichi2.anki.deckpicker
 
+import android.os.Build
 import androidx.annotation.CheckResult
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import anki.card_rendering.EmptyCardsReport
 import anki.collection.OpChanges
 import anki.i18n.GeneratedTranslations
+import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.DeckPicker
@@ -38,6 +40,7 @@ import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import com.ichi2.anki.notetype.ManageNoteTypesDestination
 import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.pages.DeckOptionsDestination
+import com.ichi2.anki.performBackupInBackground
 import com.ichi2.anki.reviewreminders.ScheduleRemindersDestination
 import com.ichi2.anki.utils.Destination
 import kotlinx.coroutines.Job
@@ -49,6 +52,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import net.ankiweb.rsdroid.RustCleanup
 import timber.log.Timber
 
 /**
@@ -280,6 +284,27 @@ class DeckPickerViewModel(
         viewModelScope.launch {
             flowOfDestination.emit(ScheduleRemindersDestination(deckId))
         }
+
+    /**
+     * Launch an asynchronous task to rebuild the deck list and recalculate the deck counts. Use this
+     * after any change to a deck (e.g., rename, importing, add/delete) that needs to be reflected
+     * in the deck list.
+     *
+     * This method also triggers an update for the widget to reflect the newly calculated counts.
+     */
+    @RustCleanup("backup with 5 minute timer, instead of deck list refresh")
+    fun updateDeckList(): Job? {
+        if (!CollectionManager.isOpenUnsafe()) {
+            return null
+        }
+        if (Build.FINGERPRINT != "robolectric") {
+            // uses user's desktop settings to determine whether a backup
+            // actually happens
+            launchCatchingIO { performBackupInBackground() }
+        }
+        Timber.d("updateDeckList")
+        return reloadDeckCounts()
+    }
 
     fun reloadDeckCounts(): Job? {
         loadDeckCounts?.cancel()
