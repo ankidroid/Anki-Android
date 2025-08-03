@@ -38,6 +38,7 @@ import com.ichi2.anki.DatabaseRestorationListener
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.LocalizedUnambiguousBackupTimeFormatter
 import com.ichi2.anki.R
+import com.ichi2.anki.ankiActivity
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType.DIALOG_CONFIRM_DATABASE_CHECK
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType.DIALOG_CONFIRM_RESTORE_BACKUP
@@ -246,7 +247,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     alertDialog
                         .title(R.string.backup_restore_select_title)
                         .positiveButton(R.string.restore_backup_choose_another) {
-                            (activity as? AnkiActivity)?.let {
+                            ankiActivity?.let {
                                 ImportFileSelectionFragment.openImportFilePicker(it, ImportFileSelectionFragment.ImportFileType.APKG)
                             }
                         }.negativeButton(R.string.dialog_cancel)
