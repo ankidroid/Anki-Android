@@ -38,7 +38,6 @@ import anki.import_export.ExportLimit
 import anki.import_export.exportLimit
 import anki.notes.noteIds
 import com.google.android.material.progressindicator.CircularProgressIndicator
-import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.DeckSpinnerSelection
@@ -52,6 +51,7 @@ import com.ichi2.anki.exportSelectedCards
 import com.ichi2.anki.exportSelectedNotes
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.DeckNameId
+import com.ichi2.anki.requireAnkiActivity
 import com.ichi2.anki.ui.BasicItemSelectedListener
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.utils.negativeButton
@@ -315,7 +315,7 @@ class ExportDialogFragment : DialogFragment() {
                 getExportRootFile(),
                 "${CollectionManager.TR.exportingCollection()}-${getTimestamp(TimeManager.time)}.colpkg",
             ).path
-        (requireActivity() as AnkiActivity).exportCollectionPackage(exportPath, includeMedia, legacy)
+        requireAnkiActivity().exportCollectionPackage(exportPath, includeMedia, legacy)
     }
 
     private fun handleAnkiPackageExport() {
@@ -332,7 +332,7 @@ class ExportDialogFragment : DialogFragment() {
                 getExportRootFile(),
                 "$packagePrefix-${getTimestamp(TimeManager.time)}.apkg",
             ).path
-        (requireActivity() as AnkiActivity).exportApkgPackage(
+        requireAnkiActivity().exportApkgPackage(
             exportPath = exportPath,
             withScheduling = includeSchedule,
             withDeckConfigs = includeDeckConfigs,
@@ -365,7 +365,7 @@ class ExportDialogFragment : DialogFragment() {
                 getExportRootFile(),
                 "${getNonCollectionNamePrefix()}-${getTimestamp(TimeManager.time)}.txt",
             ).path
-        (requireActivity() as AnkiActivity).exportSelectedNotes(
+        requireAnkiActivity().exportSelectedNotes(
             exportPath = exportPath,
             withHtml = includeHtml,
             withTags = includeTags,
@@ -384,7 +384,7 @@ class ExportDialogFragment : DialogFragment() {
                 getExportRootFile(),
                 "${getNonCollectionNamePrefix()}-${getTimestamp(TimeManager.time)}.txt",
             ).path
-        (requireActivity() as AnkiActivity).exportSelectedCards(
+        requireAnkiActivity().exportSelectedCards(
             exportPath = exportPath,
             withHtml = includeHtml,
             limit = exportLimit,

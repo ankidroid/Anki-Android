@@ -149,7 +149,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 // to the previous dialog
                 val options = ArrayList<String>(7)
                 val values = ArrayList<ErrorHandlingEntries>(7)
-                if (!(activity as AnkiActivity).colIsOpenUnsafe()) {
+                if (!requireAnkiActivity().colIsOpenUnsafe()) {
                     // retry
                     options.add(res.getString(R.string.backup_retry_opening))
                     values.add(ErrorHandlingEntries.RETRY)
@@ -540,7 +540,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
     }
 
     private fun closeCollectionAndFinish() {
-        (requireActivity() as AnkiActivity).closeCollectionAndFinish()
+        requireAnkiActivity().closeCollectionAndFinish()
     } // Generic message shown when a libanki task failed
 
     // The sqlite database has been corrupted (DatabaseErrorHandler.onCorrupt() was called)

@@ -1162,7 +1162,7 @@ open class CardTemplateEditor :
 
         fun displayDeckOverrideDialog(tempModel: CardTemplateNotetype) =
             launchCatchingTask {
-                val activity = requireActivity() as AnkiActivity
+                val activity = requireAnkiActivity()
                 if (tempModel.notetype.isCloze) {
                     showSnackbar(getString(R.string.multimedia_editor_something_wrong), Snackbar.LENGTH_SHORT)
                     return@launchCatchingTask
