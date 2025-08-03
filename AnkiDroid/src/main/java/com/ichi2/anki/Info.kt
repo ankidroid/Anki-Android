@@ -72,7 +72,7 @@ class Info :
         enableToolbar(mainView)
         findViewById<MaterialButton>(
             R.id.info_donate,
-        ).setOnClickListener { openUrl(getString(R.string.link_opencollective_donate).toUri()) }
+        ).setOnClickListener { openUrl(R.string.link_opencollective_donate) }
         title = "$appName v$pkgVersionName"
         webView = findViewById(R.id.info)
         webView.webChromeClient =

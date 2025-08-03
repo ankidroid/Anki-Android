@@ -45,7 +45,7 @@ object TtsPlaybackErrorDialog {
                     activity.getString(R.string.tts_error_dialog_supported_voices_button_text),
                 ) { _, _ -> showVoicesDialog(fragmentManager) }
                 setNeutralButton(context.getString(R.string.help)) { _, _ ->
-                    activity.openUrl(context.getString(R.string.link_faq_tts).toUri())
+                    activity.openUrl(R.string.link_faq_tts)
                 }
             }
         }

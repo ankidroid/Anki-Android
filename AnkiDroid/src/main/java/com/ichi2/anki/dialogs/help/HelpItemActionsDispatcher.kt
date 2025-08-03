@@ -43,11 +43,11 @@ class AnkiActivityHelpActionsDispatcher(
     private val ankiActivity: AnkiActivity,
 ) : HelpItemActionsDispatcher {
     override fun onOpenUrl(url: String) {
-        ankiActivity.openUrl(url.toUri())
+        ankiActivity.openUrl(url)
     }
 
-    override fun onOpenUrlResource(url: Int) {
-        ankiActivity.openUrl(ankiActivity.getString(url).toUri())
+    override fun onOpenUrlResource(@StringRes url: Int) {
+        ankiActivity.openUrl(url)
     }
 
     override fun onRate() {

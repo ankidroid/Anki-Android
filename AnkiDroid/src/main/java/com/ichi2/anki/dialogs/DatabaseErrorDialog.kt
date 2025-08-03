@@ -450,16 +450,14 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
             R.string.install_non_play_store_ankidroid_recommended,
             dismissesDialog = false,
             {
-                val restoreUi = it.getString(R.string.link_install_non_play_store_install).toUri()
-                it.openUrl(restoreUi)
+                it.openUrl(R.string.link_install_non_play_store_install)
             },
         ),
         INSTALL_NON_PLAY_APP_NORMAL(
             R.string.install_non_play_store_ankidroid,
             dismissesDialog = false,
             {
-                val restoreUi = it.getString(R.string.link_install_non_play_store_install).toUri()
-                it.openUrl(restoreUi)
+                it.openUrl(R.string.link_install_non_play_store_install)
             },
         ),
         RESTORE_FROM_BACKUP(
@@ -489,7 +487,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
             R.string.help_title_get_help,
             dismissesDialog = false,
             {
-                it.openUrl(it.getString(R.string.link_forum).toUri())
+                it.openUrl(R.string.link_forum)
             },
         ),
         RECREATE_COLLECTION(

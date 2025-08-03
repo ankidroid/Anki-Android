@@ -117,7 +117,7 @@ class ForgetCardsDialog : DialogFragment() {
             // title(text = TR.actionsForgetCard().toSentenceCase(R.string.sentence_forget_cards))
             // "Reset card progress" is less explicit on the singular/plural dimension
             titleWithHelpIcon(stringRes = R.string.reset_card_dialog_title) {
-                requireActivity().openUrl(getString(R.string.link_help_forget_cards).toUri())
+                requireContext().openUrl(R.string.link_help_forget_cards)
             }
             positiveButton(R.string.dialog_ok) {
                 sharedPrefs.edit {
