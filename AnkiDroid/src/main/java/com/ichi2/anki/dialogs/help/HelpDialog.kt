@@ -28,12 +28,12 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
-import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.analytics.UsageAnalytics.Actions
 import com.ichi2.anki.analytics.UsageAnalytics.Category
+import com.ichi2.anki.ankiActivity
 import com.ichi2.anki.dialogs.help.HelpItem.Action.OpenUrl
 import com.ichi2.anki.dialogs.help.HelpItem.Action.OpenUrlResource
 import com.ichi2.anki.dialogs.help.HelpItem.Action.Rate
@@ -53,8 +53,7 @@ class HelpDialog : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val customView = requireActivity().layoutInflater.inflate(R.layout.dialog_help, null)
-        val ankiActivity = requireActivity() as? AnkiActivity
-        if (ankiActivity != null) {
+        ankiActivity?.let { ankiActivity ->
             actionsDispatcher = AnkiActivityHelpActionsDispatcher(ankiActivity)
         }
         childFragmentManager.setFragmentResultListener(

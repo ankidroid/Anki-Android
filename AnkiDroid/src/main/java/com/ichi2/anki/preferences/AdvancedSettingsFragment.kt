@@ -30,7 +30,6 @@ import com.ichi2.anki.R
 import com.ichi2.anki.exception.StorageAccessException
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.provider.CardContentProvider
-import com.ichi2.anki.requireAnkiActivity
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.openUrl
@@ -115,7 +114,7 @@ class AdvancedSettingsFragment : SettingsFragment() {
 
         // Third party apps
         requirePreference<Preference>(R.string.thirdparty_apps_key).setOnPreferenceClickListener {
-            requireAnkiActivity().openUrl(R.string.link_third_party_api_apps)
+            requireContext().openUrl(R.string.link_third_party_api_apps)
             false
         }
 
