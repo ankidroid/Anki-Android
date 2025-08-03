@@ -56,7 +56,7 @@ class PermissionsActivityTest : RobolectricTest() {
                 activity.supportFragmentManager.commitNow {
                     replace(R.id.fragment_container, fragment)
                 }
-                val allPermissions = fragment.permissionItems.flatMap { it.permissions }
+                val allPermissions = fragment.permissionsItems.flatMap { it.permissions }
 
                 assertThat(permissionSet.permissions, containsInAnyOrder(allPermissions))
             }
