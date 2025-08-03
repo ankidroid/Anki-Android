@@ -22,7 +22,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.preference.EditTextPreference
 import androidx.preference.Preference
 import androidx.preference.SwitchPreferenceCompat
-import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.DeckPicker
@@ -33,6 +32,7 @@ import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.provider.CardContentProvider
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.utils.openUrl
 import com.ichi2.compat.CompatHelper
 import com.ichi2.utils.show
 import timber.log.Timber
@@ -84,7 +84,7 @@ class AdvancedSettingsFragment : SettingsFragment() {
                 setNegativeButton(R.string.dialog_cancel) { _, _ -> ttsPref.isChecked = false }
                 setNeutralButton(R.string.scoped_storage_learn_more) { _, _ ->
                     ttsPref.isChecked = false
-                    (requireActivity() as AnkiActivity).openUrl(R.string.link_tts)
+                    requireContext().openUrl(R.string.link_tts)
                 }
                 setPositiveButton(R.string.dialog_ok) { _, _ -> }
                 setOnCancelListener { ttsPref.isChecked = false }
@@ -114,7 +114,7 @@ class AdvancedSettingsFragment : SettingsFragment() {
 
         // Third party apps
         requirePreference<Preference>(R.string.thirdparty_apps_key).setOnPreferenceClickListener {
-            (requireActivity() as AnkiActivity).openUrl(R.string.link_third_party_api_apps)
+            requireContext().openUrl(R.string.link_third_party_api_apps)
             false
         }
 

@@ -26,7 +26,6 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.activity.OnBackPressedCallback
-import androidx.core.net.toUri
 import com.google.android.material.button.MaterialButton
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
@@ -72,7 +71,7 @@ class Info :
         enableToolbar(mainView)
         findViewById<MaterialButton>(
             R.id.info_donate,
-        ).setOnClickListener { openUrl(getString(R.string.link_opencollective_donate).toUri()) }
+        ).setOnClickListener { openUrl(R.string.link_opencollective_donate) }
         title = "$appName v$pkgVersionName"
         webView = findViewById(R.id.info)
         webView.webChromeClient =

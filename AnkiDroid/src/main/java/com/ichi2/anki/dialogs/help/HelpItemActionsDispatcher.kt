@@ -14,7 +14,6 @@
 package com.ichi2.anki.dialogs.help
 
 import androidx.annotation.StringRes
-import androidx.core.net.toUri
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CrashReportService
@@ -43,11 +42,13 @@ class AnkiActivityHelpActionsDispatcher(
     private val ankiActivity: AnkiActivity,
 ) : HelpItemActionsDispatcher {
     override fun onOpenUrl(url: String) {
-        ankiActivity.openUrl(url.toUri())
+        ankiActivity.openUrl(url)
     }
 
-    override fun onOpenUrlResource(url: Int) {
-        ankiActivity.openUrl(ankiActivity.getString(url).toUri())
+    override fun onOpenUrlResource(
+        @StringRes url: Int,
+    ) {
+        ankiActivity.openUrl(url)
     }
 
     override fun onRate() {

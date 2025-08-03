@@ -21,6 +21,7 @@ import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.webkit.WebView
 import androidx.annotation.MainThread
+import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.pm.PackageInfoCompat
@@ -44,10 +45,10 @@ fun checkWebviewVersion(activity: AnkiActivity) {
     // TODO modify the alert dialog text to handle the usage of developer builds for system WebView
     if (legacyWebViewPackageInfo != null) {
         Timber.w("WebView is outdated. %s: %s", legacyWebViewPackageInfo.packageName, legacyWebViewPackageInfo.versionName)
-        showOutdatedWebViewDialog(activity, userVisibleCode, activity.getString(R.string.link_legacy_webview_update))
+        showOutdatedWebViewDialog(activity, userVisibleCode, R.string.link_legacy_webview_update)
     } else {
         Timber.w("WebView is outdated. %s: %s", webviewPackageInfo?.packageName, webviewPackageInfo?.versionName)
-        showOutdatedWebViewDialog(activity, userVisibleCode, activity.getString(R.string.link_webview_update))
+        showOutdatedWebViewDialog(activity, userVisibleCode, R.string.link_webview_update)
     }
 }
 
@@ -116,7 +117,7 @@ fun checkWebViewVersionComponents(
 private fun showOutdatedWebViewDialog(
     activity: AnkiActivity,
     installedVersion: Int,
-    learnMoreUrl: String,
+    @StringRes learnMoreUrl: Int,
 ) {
     AlertDialog.Builder(activity).show {
         setMessage(activity.getString(R.string.webview_update_message, installedVersion, OLDEST_WORKING_WEBVIEW_VERSION))

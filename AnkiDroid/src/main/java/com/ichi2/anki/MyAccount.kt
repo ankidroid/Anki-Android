@@ -31,7 +31,6 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
-import androidx.core.net.toUri
 import androidx.core.view.isVisible
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
@@ -113,7 +112,7 @@ open class MyAccount : AnkiActivity() {
             finish()
             return
         }
-        mayOpenUrl(resources.getString(R.string.register_url).toUri())
+        mayOpenUrl(R.string.register_url)
         initAllContentViews()
         if (isLoggedIn()) {
             switchToState(STATE_LOGGED_IN)
@@ -189,7 +188,7 @@ open class MyAccount : AnkiActivity() {
     }
 
     private fun resetPassword() {
-        super.openUrl(resources.getString(R.string.resetpw_url).toUri())
+        super.openUrl(R.string.resetpw_url)
     }
 
     private fun initAllContentViews() {
@@ -273,12 +272,12 @@ open class MyAccount : AnkiActivity() {
         val resetPWButton = loginToMyAccountView.findViewById<Button>(R.id.reset_password_button)
         resetPWButton.setOnClickListener { resetPassword() }
         val signUpButton = loginToMyAccountView.findViewById<Button>(R.id.sign_up_button)
-        val url = resources.getString(R.string.register_url).toUri()
+        val url = R.string.register_url
         signUpButton.setOnClickListener { openUrl(url) }
 
         // Add button to link to instructions on how to find AnkiWeb email
         val lostEmail = loginToMyAccountView.findViewById<Button>(R.id.lost_mail_instructions)
-        val lostMailUrl = resources.getString(R.string.link_ankiweb_lost_email_instructions).toUri()
+        val lostMailUrl = R.string.link_ankiweb_lost_email_instructions
         lostEmail.setOnClickListener { openUrl(lostMailUrl) }
         loggedIntoMyAccountView =
             layoutInflater.inflate(R.layout.my_account_logged_in, null).apply {
