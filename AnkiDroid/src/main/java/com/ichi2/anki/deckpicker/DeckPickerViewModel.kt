@@ -163,6 +163,10 @@ class DeckPickerViewModel(
             !(isInInitialState == true || hasNoCards)
         }
 
+    // HACK: dismiss a legacy progress bar
+    // TODO: Replace with better progress handling for first load/corrupt collections
+    val flowOfDecksReloaded = MutableSharedFlow<Unit>()
+
     /**
      * Deletes the provided deck, child decks. and all cards inside.
      *
@@ -311,6 +315,8 @@ class DeckPickerViewModel(
                 // current deck may have changed
                 focusedDeck = withCol { decks.current().id }
                 flowOfUndoUpdated.emit(Unit)
+
+                flowOfDecksReloaded.emit(Unit)
             }
         this.loadDeckCounts = loadDeckCounts
         return loadDeckCounts
