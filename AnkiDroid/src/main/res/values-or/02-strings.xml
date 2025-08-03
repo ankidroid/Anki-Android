@@ -48,8 +48,8 @@
     <string name="drawer_open">ଡ୍ରର୍ ଖୋଲନ୍ତୁ</string>
     <string name="drawer_close">ଡ୍ରର୍ ବନ୍ଦ କରନ୍ତୁ</string>
     <string name="note_message">Note saved</string>
-    <string name="CardEditorCardDeck">ପତ୍ର ତାସଖଣ୍ଡ:</string>
-    <string name="CardEditorNoteDeck">ତାସଖଣ୍ଡ:</string>
+    <string name="CardEditorCardDeck">ପତ୍ର କେରୀ:</string>
+    <string name="CardEditorNoteDeck">କେରୀ:</string>
     <string name="CardEditorModel">ପ୍ରକାର:</string>
     <string name="CardEditorTags">ଟ୍ୟାଗ୍: %1$s</string>
     <string name="CardEditorCards">ପତ୍ର: %1$s</string>
@@ -91,8 +91,8 @@
         <item quantity="one">+%dଟିଏ ସ୍ଥଗିତ କରାଗଲା</item>
         <item quantity="other">+%dଟି ସ୍ଥଗିତ କରାଗଲା</item>
     </plurals>
-    <string name="studyoptions_total_new_label">Total new cards</string>
-    <string name="studyoptions_total_label">Total cards</string>
+    <string name="studyoptions_total_new_label">ମୋଟ ନୂଆ ପତ୍ର</string>
+    <string name="studyoptions_total_label">ମୋଟ ପତ୍ର</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card" maxLength="28">ନୋଟ୍ ସମ୍ପାଦନା</string>
     <string name="discard">ପରିତ୍ୟାଗ କରିବା</string>
@@ -107,7 +107,7 @@
     <string name="field_remapping">%1$s (“%2$s” ରୁ)</string>
     <string name="confirm_map_cards_to_nothing">କୌଣସି ଜିନିଷକୁ ମ୍ୟାପ୍ ନହୋଇ ଥିବା ପତ୍ରସବୁ ବିଲୋପ ହେବ। ଯଦି କୌଣସି ନୋଟ୍ ର ଅବଶିଷ୍ଟ ପତ୍ର ନଥାଏ, ତେବେ ଏହା ନଷ୍ଟ ହୋଇଯିବ। ଆପଣ ଜାରି ରଖିବାକୁ ଚାହୁଁଛନ୍ତି କି?</string>
     <string name="missing_note_type">କୌଣସି ନୋଟ୍ ପ୍ରକାର ମିଳିଲା ନାହିଁ</string>
-    <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (empty)</string>
+    <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (ଖାଲି)</string>
     <!-- Image cropper -->
     <string name="image_cropper_action_rotate" maxLength="28" comment="Action in image cropper screen">Rotate</string>
     <string name="image_cropper_action_flip" maxLength="28" comment="Action in image cropper screen">Flip</string>
@@ -132,13 +132,13 @@
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)" maxLength="28">ପୂର୍ଵାଵଲୋକନ</string>
     <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown" maxLength="28">Copy as Markdown</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%2$d ର %1$d</string>
-    <string name="rename" comment="Confirm that the renaming action should be processed." maxLength="28">ନାମ ବଦଳାନ୍ତୁ</string>
+    <string name="rename" comment="Confirm that the renaming action should be processed." maxLength="28">ନାମ ବଦଳାଇବା</string>
     <string name="checks_action" maxLength="28">ଯାଞ୍ଚ କରିବା</string>
     <string name="check_db" maxLength="28">ଡାଟାବେସ୍ ଯାଞ୍ଚ</string>
     <string name="check_media" maxLength="28">ମିଡ଼ିଆ ଯାଞ୍ଚ</string>
     <string name="empty_cards" maxLength="28">ଖାଲି ପତ୍ର</string>
     <string name="unknown_type_field_warning">ଉତ୍ତର ଟାଇପ୍ କରନ୍ତୁ: ଅଜ୍ଞାତ କ୍ଷେତ୍ର %s</string>
-    <string name="delete_deck" comment="Message on a progress bar starting a deck is being deleted.">ତାସଖଣ୍ଡ ଵିଲୋପ ହେଉଛି&#8230;</string>
+    <string name="delete_deck" comment="Message on a progress bar starting a deck is being deleted.">କେରୀ ଵିଲୋପ ଚାଲିଛି&#8230;</string>
     <string name="info_rate">AnkiDroid କୁ ମୂଲ୍ୟାଙ୍କନ କରନ୍ତୁ</string>
     <string name="import_title">ଆମଦାନି ଚାଲିଛି</string>
     <string name="import_preparing_file">Preparing file for import&#8230;</string>
@@ -161,7 +161,7 @@
     <string name="export_email_subject">AnkiDroid ଫ୍ଲାସକାର୍ଡ ରପ୍ତାନି କଲା: %s</string>
     <string name="export_email_text"><![CDATA[        ନମସ୍କାର!
         <br/><br/>
-        ଏହା AnkiDroid[1] ରୁ ପଠାଯାଇଥିବା ଏକ Anki flashcards ଡେକ୍।
+        ଏହା AnkiDroid[1] ରୁ ପଠାଯାଇଥିବା ଏକ Anki ଝଲକ-ପତ୍ର କେରୀ।
         ଉପଲବ୍ଧ Anki distributions[2] ମଧ୍ୟରୁ ଗୋଟିଏ ବ୍ୟବହାର କରି ଏହାକୁ ଖୋଲିବାକୁ ଚେଷ୍ଟା କରନ୍ତୁ ଏବଂ ସହଜ ଓ ଦକ୍ଷ ଶିକ୍ଷା ଉପଭୋଗ କରନ୍ତୁ!<br/><br/>
         [1] %1$s<br/>
         [2] %2$s
@@ -170,11 +170,11 @@
     <string name="export_choice_save_to">ଏଠାରେ ସଞ୍ଚୟ କରିବା</string>
     <string name="export_saving_exported_collection">Saving exported file&#8230;</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="28">ଵିକଳ୍ପ</string>
-    <string name="menu__deck_options" maxLength="28">ତାସଖଣ୍ଡ ଵିକଳ୍ପ</string>
+    <string name="menu__deck_options" maxLength="28">କେରୀ ଵିକଳ୍ପ</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">ଅଧ୍ୟୟନ ଵିକଳ୍ପ</string>
     <string name="select_tts" maxLength="28">TTS ଭାଷା ସେଟ୍ କରନ୍ତୁ</string>
     <string name="custom_study" maxLength="28">କଷ୍ଟମ୍ ଅଧ୍ୟୟନ</string>
-    <string name="dyn_deck_desc">ସାଧାରଣ କାର୍ଯ୍ୟସୂଚୀ ବାହାରେ ଅଧ୍ୟୟନ ପାଇଁ ଏହା ଏକ ସ୍ୱତନ୍ତ୍ର ତାସଖଣ୍ଡ। ଆପଣ ସମୀକ୍ଷା କରିବା ପରେ ପତ୍ରଗୁଡ଼ିକ ଆପେ ସେଗୁଡ଼ିକର ମୂଳ ତାସଖଣ୍ଡକୁ ଫେରି ଆସିବେ। ତାସଖଣ୍ଡ  ତାଲିକାରୁ ଏହି ତାସଖଣ୍ଡ ବିଲୋପ କରିବା ସମସ୍ତ ଅବଶିଷ୍ଟ ପତ୍ରଗୁଡ଼ିକୁ ସେମାନଙ୍କର ମୂଳ ତାସଖଣ୍ଡକୁ ଫେରାଇବ।</string>
+    <string name="dyn_deck_desc">ସାଧାରଣ କାର୍ଯ୍ୟସୂଚୀ ବାହାରେ ଅଧ୍ୟୟନ ପାଇଁ ଏହା ଏକ ସ୍ୱତନ୍ତ୍ର କେରୀ। ଆପଣ ସମୀକ୍ଷା କରିବା ପରେ ପତ୍ରଗୁଡ଼ିକ ଆପେ ସେଗୁଡ଼ିକର ମୂଳ କେରୀକୁ ଫେରି ଆସିବେ। କେରୀ ତାଲିକାରୁ ଏହି କେରୀ ବିଲୋପ କରିବା ସମସ୍ତ ଅବଶିଷ୍ଟ ପତ୍ରଗୁଡ଼ିକୁ ସେମାନଙ୍କର ମୂଳ କେରୀକୁ ଫେରାଇବ।</string>
     <string name="steps_error">ପାହୁଣ୍ଡଟି ୦ ଠାରୁ ବଡ଼ ସଂଖ୍ୟା ହେବା ଜରୁରୀ</string>
     <string name="steps_min_error">ଅତି କମରେ ୧ଟିଏ ପାହୁଣ୍ଡ ଆଵଶ୍ୟକ</string>
     <string name="tag_editor_add_feedback">“%1$s” କୁ ଯୋଡ଼ିବା ପାଇଁ “%2$s” ଦବାନ୍ତୁ</string>
@@ -222,7 +222,7 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">ପତ୍ର ବିଷୟବସ୍ତୁ ତ୍ରୁଟି: ‘%s’ ଲୋଡ୍ କରିବାରେ ବିଫଳ ହେଲା</string>
     <!-- Deck Picker -->
-    <string name="search_decks" maxLength="28">ତାସଖଣ୍ଡ ଖୋଜନ୍ତୁ</string>
+    <string name="search_decks" maxLength="28">କେରୀ ସନ୍ଧାନ କରିବା</string>
     <string name="ankidroid_init_failed_webview_title">ସାଂଘାତିକ ତ୍ରୁଟି</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid ସିଷ୍ଟମ୍ ୱେବ୍‌ଵ୍ୟୁ ଉପରେ ନିର୍ଭର କରେ ଯାହା ଅନୁପଲବ୍ଧ ଅଟେ। ଯଦି ସିଷ୍ଟମ୍ ଅପଡେଟ୍ ଅଧିସ୍ଥାପନ କରୁଥାଏ ତେବେ ଏହା ଘଟିପାରେ। ଦୟାକରି କିଛି ମିନିଟ୍‌ରେ ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ।\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
@@ -260,18 +260,18 @@
     <string name="back_pressed_once">ପ୍ରସ୍ଥାନ କରିବା ପାଇଁ ପୁଣି ବ୍ୟାକ୍ ଦବାନ୍ତୁ</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
-    <string name="download_deck">ତାସଖଣ୍ଡ ଡାଉନଲୋଡ୍ କରନ୍ତୁ</string>
-    <string name="open_in_browser" comment="Label of a button inviting to open ankiweb\'s shared deck page if automated download failed">Open in browser</string>
+    <string name="download_deck">କେରୀ ଡାଉନଲୋଡ୍ କରିବା</string>
+    <string name="open_in_browser" comment="Label of a button inviting to open ankiweb\'s shared deck page if automated download failed">ବ୍ରାଉଜର୍‌ରେ ଖୋଲିବା</string>
     <string name="try_again">ପୁଣିଥରେ ଚେଷ୍ଟା କରନ୍ତୁ</string>
     <string name="cancel_download">ଡାଉନଲୋଡ୍ ବାତିଲ୍ କରନ୍ତୁ</string>
     <string name="cancel_download_question_title">ଡାଉନଲୋଡ୍ ବାତିଲ୍ କରିବେ କି?</string>
     <string name="downloading_file">%s ଡାଉନଲୋଡ୍ ହେଉଛି</string>
-    <string name="import_deck">ତାସଖଣ୍ଡ ଆମଦାନୀ କରନ୍ତୁ</string>
+    <string name="import_deck">କେରୀ ଆମଦାନୀ କରିବା</string>
     <string name="something_wrong">କିଛି ଗଡ଼ବଡ଼ ଦେଖାଯାଇଛି, ଦୟାକରି ପୁଣିଥରେ ଚେଷ୍ଟା କରନ୍ତୁ</string>
     <string name="download_failed">ଡାଉନଲୋଡ୍ ଵିଫଳ ହେଲା</string>
     <string name="deck_download_progress_message">ଡାଉନଲୋଡ୍ ଚାଲୁଥିବା ସମୟରେ ଆପଣ ଅନ୍ୟ ଆପସ୍ ବ୍ୟବହାର କରିପାରିବେ</string>
     <string name="check_network">ଦୟାକରି ଆପଣଙ୍କ ନେଟୱର୍କ ସଂଯୋଜନା ଯାଞ୍ଚ କରନ୍ତୁ</string>
-    <string name="search_using_deck_name">ତାସଖଣ୍ଡ ନାମ ବ୍ୟବହାର କରି ସନ୍ଧାନ କରନ୍ତୁ</string>
+    <string name="search_using_deck_name">କେରୀ ନାମ ବ୍ୟବହାର କରି ସନ୍ଧାନ କରିବା</string>
     <string name="external_storage_unavailable">ଡାଉନଲୋଡ୍ ପରିତ୍ୟାଗ ହୋଇଛି, ବହିଃ-ଷ୍ଟୋରେଜ୍ ଉପଲବ୍ଧ ନାହିଁ</string>
     <string name="home" maxLength="28">ଗୃହ</string>
     <!-- Study Screen actions
@@ -306,10 +306,10 @@
     <string name="app_not_initialized_new">AnkiDroid is not initialized yet. Please open AnkiDroid and try again</string>
     <string name="already_logged_in">ଆଗରୁ ଲଗ୍ ଇନ୍ କରିସାରିଛନ୍ତି</string>
     <!-- Deck Creation -->
-    <string name="deck_created">ତାସଖଣ୍ଡ ସୃଷ୍ଟି କରାଗଲା</string>
-    <string name="deck_renamed">ତାସଖଣ୍ଡ ନାମ ବଦଳାଗଲା</string>
+    <string name="deck_created">କେରୀ ସୃଷ୍ଟି କରାଗଲା</string>
+    <string name="deck_renamed">କେରୀ ନାମ ବଦଳାଗଲା</string>
     <!-- Deck Deletion -->
-    <string name="deck_shortcut_doesnt_exist">ତାସଖଣ୍ଡ ଵିଲୋପ ହୋଇଛି। ଦୟାକରି ସର୍ଟ୍‌କଟ୍‌ଟି ଅପସାରଣ କରନ୍ତୁ</string>
+    <string name="deck_shortcut_doesnt_exist">କେରୀ ଵିଲୋପ ହୋଇଛି। ଦୟାକରି ସର୍ଟ୍‌କଟ୍‌ଟି ଅପସାରଣ କରନ୍ତୁ</string>
     <!-- Browser Options Dialog -->
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">ପତ୍ର</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">ନୋଟ୍</string>
@@ -320,17 +320,17 @@
     <string name="deleting_selected_notes">ବଚ୍ଛିତ ନୋଟଗୁଡ଼ିକ ବିଲୋପ କରାଯାଉଛି</string>
     <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">Tap a voice to listen</string>
     <string name="tts_voices_selected_voice_should_be_installed" comment="If a voice has been tapped, is installable but not installed, we want to inform the user that they should install it for the best experience There will also be an option to use it without downloading">Voice should be installed before use</string>
-    <string name="tts_voices_use_selected_voice_without_install" comment="A user has been informed that a voice should be installed before use. This is text on a snackbar button which allows them to use the voice without installing it">Use anyway</string>
+    <string name="tts_voices_use_selected_voice_without_install" comment="A user has been informed that a voice should be installed before use. This is text on a snackbar button which allows them to use the voice without installing it">ଯେକୌଣସି ମତେ ବ୍ୟବହାର କରିବା</string>
     <string name="tts_voices_playback_error_new" comment="an error occurred when playing a text to speech voice. The parameter is a technical error code such as \'ERROR_NOT_INSTALLED_YET\' or \'ERROR_NETWORK_TIMEOUT\'">ପାଠ୍ୟ-ରୁ-କଥନ ତ୍ରୁଟି (%s)</string>
     <!-- Chips should probably be in a separate file, due to the additional length req -->
     <string name="tts_voices_chip_filter_to_internet" comment="     Filters a list of text to speech voices, to enable/disable voices which require the internet to     function.     This is on a chip control, so keep the text short, ideally one word">Internet</string>
     <string name="tts_voices_chip_filter_to_installable_audio" comment="     Displays a list of Text to Speech voices which should be downloaded/installed before use     This is on a chip control, so keep the text short, ideally one word">Install</string>
     <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">Failed to open text to speech settings</string>
-    <string name="shared_decks_login_required">ଆହୁରି ତାସଖଣ୍ଡ ଡାଉନଲୋଡ୍ କରିବାକୁ ଦୟାକରି ଲଗ୍ ଇନ୍ କରନ୍ତୁ</string>
+    <string name="shared_decks_login_required">ଆହୁରି କେରୀ ଡାଉନଲୋଡ୍ କରିବାକୁ ଦୟାକରି ଲଗ୍ ଇନ୍ କରନ୍ତୁ</string>
     <string name="deck_description_field_hint">ବର୍ଣ୍ଣନା</string>
-    <string name="deck_description_saved">Description updated</string>
+    <string name="deck_description_saved">ବର୍ଣ୍ଣନା ଅଦ୍ୟତନ କରାଗଲା</string>
     <string name="format_deck_description_as_markdown">Format as Markdown</string>
-    <string name="help_button_content_description">Open help for ‘%s’</string>
+    <string name="help_button_content_description">‘%s’ ପାଇଁ ସହାୟତା ଖୋଲିବା</string>
     <string name="failed_to_copy">Failed to copy</string>
     <string name="card_browser_unavailable_when_notes_mode">‘ନୋଟ୍’ ମୋଡ୍ ରେ ଉପଲବ୍ଧ ନାହିଁ</string>
     <plurals name="unbury_cards_feedback">
@@ -350,11 +350,11 @@
     <string name="voice_not_supported">Voice not supported. Try another or install a voice engine.</string>
     <!--Keyboard shortcuts dialog-->
     <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">Deck Picker</string>
-    <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">Delete deck without confirmation</string>
-    <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">Note Editor</string>
-    <string name="select_deck" comment="Description of the shortcut that opens the deck selection dialog">Select deck</string>
+    <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">ବିନା ନିଶ୍ଚିତୀକରଣରେ କେରୀକୁ ବିଲୋପ କରିବା</string>
+    <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">ନୋଟ୍ ସମ୍ପାଦକ</string>
+    <string name="select_deck" comment="Description of the shortcut that opens the deck selection dialog">କେରୀ ଚୟନ କରିବା</string>
     <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">Select note type</string>
-    <string name="tag_editor" comment="Description of the shortcut that opens the tags dialog">Tag editor</string>
+    <string name="tag_editor" comment="Description of the shortcut that opens the tags dialog">ଟ୍ୟାଗ୍ ସମ୍ପାଦକ</string>
     <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">Card Template Editor</string>
     <string name="edit_front_template" comment="Description of the shortcut that shows the question side of the card template">Edit front template</string>
     <string name="edit_back_template" comment="Description of the shortcut that shows the answer side of the card template">Edit back template</string>

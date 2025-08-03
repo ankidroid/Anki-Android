@@ -82,7 +82,7 @@
     <string name="button_size" maxLength="41">Cevap düğmesi büyüklüğü</string>
     <string name="card_browser_font_size" maxLength="41">Kart tarayıcısı font ölçeği</string>
     <string name="card_browser_hide_media" maxLength="41">Kart gözatıcısında dosya isimlerini göster</string>
-    <string name="card_browser_hide_media_summary">Display audio filenames in the card browser question/answer fields</string>
+    <string name="card_browser_hide_media_summary">Kart gözatıcısı soru/cevap alanlarında ses dosyası isimlerini göster</string>
     <string name="col_path" maxLength="41">AnkiDroid dizini</string>
     <string name="fullscreen_review" maxLength="41">Tam ekran modu</string>
     <string name="full_screen_off">Kapalı</string>
@@ -259,7 +259,7 @@
     <string name="type_in_answer_focus" maxLength="41">\"Cevabı yaz\"a odaklan</string>
     <string name="type_in_answer_focus_summ">Çalışma ekranında otomatik olarak \"cevabı yaz\" alanını odakla</string>
     <!-- About -->
-    <string name="open_changelog">Open changelog</string>
+    <string name="open_changelog">Değişiklikler listesini aç</string>
     <string name="pref_cat_about_title" maxLength="41">Hakkında</string>
     <string name="contributors_title">Katkıda Bulunanlar</string>
     <string name="about_contributors_description"><![CDATA[İşte uygulamamıza katkıda bulunan müthiş <a href=\"%1$s\">insanlar</a>. Siz de AnkiDroid\'e programlayarak, çevirerek, bağış yaparak ve <a href=\"%2$s\">daha fazla yolla</a> yardım edebilirsiniz!]]></string>

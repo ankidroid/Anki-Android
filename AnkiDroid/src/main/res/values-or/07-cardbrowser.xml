@@ -53,12 +53,12 @@
         <item quantity="one">%dଟିଏ ନୋଟ୍ ଦର୍ଶାଯାଉଛି</item>
         <item quantity="other">%dଟି ନୋଟ୍ ଦର୍ଶାଯାଉଛି</item>
     </plurals>
-    <string name="card_browser_all_decks">ସମସ୍ତ ତାସଖଣ୍ଡ</string>
+    <string name="card_browser_all_decks">ସମସ୍ତ କେରୀ</string>
     <plurals name="card_browser_delete_notes">
         <item quantity="one">ନୋଟ୍ ବିଲୋପ କରିବା</item>
         <item quantity="other">ନୋଟଗୁଡ଼ିକୁ ବିଲୋପ କରିବା</item>
     </plurals>
-    <string name="card_browser_change_deck" maxLength="28">ତାସଖଣ୍ଡ ବଦଳାନ୍ତୁ</string>
+    <string name="card_browser_change_deck" maxLength="28">କେରୀ ବଦଳାଇବା</string>
     <string name="delete_card_title">ନୋଟ୍ ଵିଲୋପ କରିବେ ତ?</string>
     <string name="card_browser_show_marked" maxLength="28">ଚିହ୍ନିତ (ପତ୍ର) ଶୋଧନ କରନ୍ତୁ</string>
     <string name="card_browser_show_suspended" maxLength="28">ନିଲମ୍ବିତ (ପତ୍ର) ଶୋଧନ କରନ୍ତୁ</string>
@@ -79,23 +79,23 @@
     <string name="card_details_tags">ଟ୍ୟାଗ୍</string>
     <string-array name="card_browser_order_labels">
         <item>କୌଣସି ସଜାଣି ନାହିଁ (ଦ୍ରୁତ)</item>
-        <item>ସଜାଇବା କ୍ଷେତ୍ର ଅନୁସାରେ</item>
-        <item>ସୃଷ୍ଟି ସମୟ ଅନୁସାରେ</item>
-        <item>ନୋଟ୍ ସଂଶୋଧନ ସମୟ ଅନୁସାରେ</item>
-        <item>ପତ୍ର ସଂଶୋଧନ ସମୟ ଅନୁସାରେ</item>
-        <item>ଦେୟ ସମୟ ଅନୁସାରେ</item>
-        <item>ଅନ୍ତରାଳ ଅନୁସାରେ</item>
-        <item>ସହଜତା ଅନୁସାରେ</item>
-        <item>ସମୀକ୍ଷା ଅନୁସାରେ</item>
-        <item>ଲାପ୍ସ ଅନୁସାରେ</item>
-        <item>By deck name</item>
+        <item>ସଜାଇବା କ୍ଷେତ୍ର ଅନୁଯାୟୀ</item>
+        <item>ସୃଷ୍ଟି ସମୟ ଅନୁଯାୟୀ</item>
+        <item>ନୋଟ୍ ସଂଶୋଧନ ସମୟ ଅନୁଯାୟୀ</item>
+        <item>ପତ୍ର ସଂଶୋଧନ ସମୟ ଅନୁଯାୟୀ</item>
+        <item>ଦେୟ ସମୟ ଅନୁଯାୟୀ</item>
+        <item>ଅନ୍ତରାଳ ଅନୁଯାୟୀ</item>
+        <item>ସହଜତା ଅନୁଯାୟୀ</item>
+        <item>ସମୀକ୍ଷା ଅନୁଯାୟୀ</item>
+        <item>ଲାପ୍ସ ଅନୁଯାୟୀ</item>
+        <item>କେରୀ ନାମ ଅନୁଯାୟୀ</item>
     </string-array>
     <string name="chane_browser_column">Change column</string>
     <string name="no_columns_available">No columns available</string>
     <string name="card_browser_select_all" maxLength="28">ସବୁ ଚୟନ କରନ୍ତୁ</string>
     <string name="card_browser_select_none" maxLength="28">କିଛି ଚୟନ କରନ୍ତୁନି</string>
-    <string name="card_browser_no_cards_in_deck">ତାସଖଣ୍ଡ ‘%s’ ରେ କୌଣସି ପତ୍ର ମିଳିଲା ନାହିଁ</string>
-    <string name="card_browser_search_all_decks">ସମସ୍ତ ତାସଖଣ୍ଡରେ ଖୋଜନ୍ତୁ</string>
+    <string name="card_browser_no_cards_in_deck">କେରୀ ‘%s’ରେ କୌଣସି ପତ୍ର ମିଳିଲା ନାହିଁ</string>
+    <string name="card_browser_search_all_decks">ସମସ୍ତ କେରୀରେ ଖୋଜିବା</string>
     <string name="card_browser_unknown_deck_name">ଅଜ୍ଞାତ</string>
     <string name="card_browser_truncate" comment="allows users to show less of a field value">ବିଷୟବସ୍ତୁ ସଂକ୍ଷେପରେ ଦେଖାଇବା</string>
     <string name="set_due_date_hintText" comment="plural set_due_date_label_suffix is used for parameters, parameter 1 is the plural for 0, parameter 2 is the plural for 1">Today is ‘0 %1$s’, tomorrow is ‘1 %2$s’, etc&#8230;</string>

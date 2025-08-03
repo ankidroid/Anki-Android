@@ -45,18 +45,18 @@
     </plurals>
     <!--Browser-->
     <string name="model_browser_delete">ନୋଟ୍ ପ୍ରକାର ବିଲୋପ କରନ୍ତୁ</string>
-    <string name="model_browser_rename" comment="Rename a note type">ନାମ ବଦଳାନ୍ତୁ</string>
+    <string name="model_browser_rename" comment="Rename a note type">ନାମ ବଦଳାଇବା</string>
     <string name="model_browser_template">ପତ୍ରଗୁଡ଼ିକୁ ସମ୍ପାଦନ କରନ୍ତୁ</string>
     <!--Rename-->
-    <string name="rename_model">ନୋଟ୍ ପ୍ରକାରର ନାମ ବଦଳାନ୍ତୁ</string>
-    <string name="rename_card_type">Rename card type</string>
+    <string name="rename_model">ନୋଟ୍ ପ୍ରକାରର ନାମ ବଦଳାଇବା</string>
+    <string name="rename_card_type">ପତ୍ର ପ୍ରକାରର ନାମ ବଦଳାଇବା</string>
     <!--Language Hint-->
     <string name="model_field_editor_language_hint_dialog_success_result">ଭାଷା ସୂଚକ କୁ %s ସେଟ୍ କରନ୍ତୁ</string>
     <!--Field Editing-->
     <string name="model_field_editor_title">କ୍ଷେତ୍ରଗୁଡ଼ିକୁ ସମ୍ପାଦନ କରନ୍ତୁ</string>
     <string name="model_field_editor_add" maxLength="28">କ୍ଷେତ୍ର ଯୋଡ଼ନ୍ତୁ</string>
     <string name="model_field_editor_delete">କ୍ଷେତ୍ରଟି ଵିଲୋପ କରିବା</string>
-    <string name="model_field_editor_rename">କ୍ଷେତ୍ରଟିର ନାମ ବଦଳାନ୍ତୁ</string>
+    <string name="model_field_editor_rename">କ୍ଷେତ୍ରଟିର ନାମ ବଦଳାଇବା</string>
     <string name="model_field_editor_language_hint">କୀବୋର୍ଡର ସୂଚକ ଭାଷା ସେଟ୍ କରନ୍ତୁ</string>
     <string name="model_field_editor_reposition_menu">କ୍ଷେତ୍ରଟିକୁ ପୁନଃଅଵସ୍ଥିତ କରିବା</string>
     <string name="model_field_editor_changing">କ୍ଷେତ୍ରଗୁଡ଼ିକ ଅଦ୍ୟତିତ ହେଉଛି</string>
@@ -75,10 +75,10 @@
     <string name="card_template_browser_appearance_restore_default_dialog">ଡିଫଲ୍ଟ ମୂଲ୍ୟଗୁଡିକ ପୁନରୁଦ୍ଧାର କରିବେ?</string>
     <string name="card_template_browser_appearance_saving_note">ପତ୍ର ଟେମ୍ପଲେଟ୍ ସଂରକ୍ଷଣ ହେବା ପରେ ଏହି ପରିବର୍ତ୍ତନଗୁଡ଼ିକ ପ୍ରୟୋଗ କରାଯାଏ</string>
     <!-- Deck Override -->
-    <string name="card_template_editor_deck_override_on">ତାସଖଣ୍ଡ ନବଳେଖନ (ଚାଲୁ)</string>
-    <string name="card_template_editor_deck_override_off">ତାସଖଣ୍ଡ ନବଳେଖନ (ବନ୍ଦ)</string>
-    <string name="model_manager_deck_override_added_message">‘%1$s’ ଡିଫଲ୍ଟ ତାସଖଣ୍ଡ କୁ ‘%2$s’ ରେ ସେଟ୍ କରାଗଲା</string>
-    <string name="model_manager_deck_override_removed_message">‘%s’ ପାଇଁ ଡିଫଲ୍ଟ ତାସଖଣ୍ଡ ଅପସାରଣ କରାଗଲା</string>
-    <string name="deck_override_explanation">ନୂତନ ‘%s’ ପତ୍ରଗୁଡ଼ିକୁ ରଖିବା ପାଇଁ ତାସଖଣ୍ଡ ଚୟନ କରନ୍ତୁ</string>
-    <string name="deck_picker_dialog_filter_decks" maxLength="28">ତାସଖଣ୍ଡ ଶୋଧନ</string>
+    <string name="card_template_editor_deck_override_on">କେରୀ ନବଳେଖନ (ଚାଲୁ)</string>
+    <string name="card_template_editor_deck_override_off">କେରୀ ନବଳେଖନ (ବନ୍ଦ)</string>
+    <string name="model_manager_deck_override_added_message">‘%1$s’ର ଡିଫଲ୍ଟ କେରୀ ଭାବେ ‘%2$s’କୁ ସ୍ଥିର କରାଗଲା</string>
+    <string name="model_manager_deck_override_removed_message">‘%s’ ପାଇଁ ଡିଫଲ୍ଟ କେରୀ ଅପସାରଣ କରାଗଲା</string>
+    <string name="deck_override_explanation">ନୂତନ ‘%s’ ପତ୍ରଗୁଡ଼ିକୁ ରଖିବା ପାଇଁ କେରୀ ଚୟନ କରନ୍ତୁ</string>
+    <string name="deck_picker_dialog_filter_decks" maxLength="28">କେରୀ ଶୋଧନ</string>
 </resources>

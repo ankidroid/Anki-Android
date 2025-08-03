@@ -255,13 +255,13 @@
     <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">Do</string>
     <!-- Instant Note Editor -->
     <string name="cloze_note_required">Je vyžadována poznámka typu doplňovačka</string>
-    <string name="cloze_not_found_message">No Cloze type note found, open the Note Editor or try again after adding a Cloze type note.</string>
+    <string name="cloze_not_found_message">Nebyla nalezena žádná poznámka typu Cloze, otevřete editor poznámek nebo to zkuste znovu po přidání poznámky typu Cloz.</string>
     <string name="open">Otevřít</string>
-    <string name="change_cloze_number">Change cloze number</string>
-    <string name="cloze_number">Cloze number:</string>
-    <string name="change_editor_mode">Change editor mode</string>
+    <string name="change_cloze_number">Změnit číslo cloze</string>
+    <string name="cloze_number">Číslo cloze</string>
+    <string name="change_editor_mode">Změnit režim editoru</string>
     <string name="open_note_editor">Otevřít editor poznámek</string>
-    <string name="change_cloze_mode">Change cloze mode</string>
+    <string name="change_cloze_mode">Změnit režim cloze</string>
     <!-- Outdated WebView dialog -->
     <string name="webview_update_message">Systémový WebView je zastaralý. Některé funkce nebudou fungovat správně. Aktualizujte jej prosím.\n\nNainstalovaná verze: %1$d\nMinimální požadovaná verze: %2$d</string>
     <string name="compress">Komprimovat</string>

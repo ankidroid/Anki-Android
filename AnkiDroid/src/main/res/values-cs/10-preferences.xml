@@ -84,7 +84,7 @@
     <string name="button_size" maxLength="41">Velikost tlačítka pro odpověď</string>
     <string name="card_browser_font_size" maxLength="41">Velikost písma v prohlížení</string>
     <string name="card_browser_hide_media" maxLength="41">Zobrazit názvy souborů v prohlížeči karet</string>
-    <string name="card_browser_hide_media_summary">Display audio filenames in the card browser question/answer fields</string>
+    <string name="card_browser_hide_media_summary">Zobrazit názvy audio souborů v polích otázka/odpověď v prohlížeči karet</string>
     <string name="col_path" maxLength="41">Adresář AnkiDroid</string>
     <string name="fullscreen_review" maxLength="41">Celoobrazovkový režim</string>
     <string name="full_screen_off">Vypnout</string>

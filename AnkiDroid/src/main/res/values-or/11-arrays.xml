@@ -60,7 +60,7 @@
     <string name="cram_deck_conf_order_latest_added_first">ପ୍ରଥମେ ସର୍ବଶେଷରେ ଯୋଡ଼ା ଯାଇଥିବା</string>
     <string name="cram_deck_conf_order_relative_overdueness">ଆପେକ୍ଷିକ ଅତିଦେୟତା</string>
     <!-- add_to_cur_labels -->
-    <string name="add_to_deck_use_current_deck">ଚଳିତ ତାସଖଣ୍ଡ ବ୍ୟବହାର କରନ୍ତୁ</string>
+    <string name="add_to_deck_use_current_deck">ଚଳିତ କେରୀ ବ୍ୟବହାର କରିବା</string>
     <string name="add_to_deck_decide_by_note_type">ନୋଟ୍ ପ୍ରକାର ଅନୁଯାୟୀ ନିଷ୍ପତ୍ତି ନିଅନ୍ତୁ</string>
     <!-- theme labels -->
     <string name="theme_follow_system">ସିଷ୍ଟମ୍‌କୁ ଅନୁସରଣ କରିବା</string>

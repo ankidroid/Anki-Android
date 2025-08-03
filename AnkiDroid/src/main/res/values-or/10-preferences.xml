@@ -74,7 +74,7 @@
     <string name="use_input_tag" maxLength="41">ପତ୍ରରେ ଉତ୍ତର ଟାଇପ୍ କରନ୍ତୁ</string>
     <string name="use_input_tag_summ">ଉତ୍ତର ଟାଇପ୍ କରିବାକୁ ପତ୍ର ଭିତରେ ଏକ ପାଠ୍ୟ ଇନପୁଟ୍ ବାକ୍ସ ବ୍ୟବହାର କରନ୍ତୁ</string>
     <string name="reset_languages" maxLength="41">ଭାଷା reset କରନ୍ତୁ</string>
-    <string name="reset_languages_summ">ସମସ୍ତ ତାସଖଣ୍ଡ ପାଇଁ ଭାଷା ସ୍ଵତ୍ଵପର୍ଣ (ପାଠ୍ୟ ରୁ କଥନ ଏବଂ ଅଭିଧାନ ପାଇଁ) ପୁନଃସେଟ୍ କରନ୍ତୁ</string>
+    <string name="reset_languages_summ">ସମସ୍ତ କେରୀ ପାଇଁ ଭାଷା ନିୟୋଜନ (ପାଠ୍ୟ ରୁ କଥନ ଏବଂ ଅଭିଧାନ ସକାଶେ) ପୁନଃସ୍ଥିର କରିବା</string>
     <string name="reset_languages_question">ସମସ୍ତ ଭାଷା ସ୍ୱତ୍ୱପୁର୍ଣ ପୁନଃସେଟ କରନ୍ତୁ ?</string>
     <string name="reset_confirmation">ସମସ୍ତ ସ୍ଥିତି ପୁନଃସେଟ୍ କରାହେଲା</string>
     <string name="card_zoom" maxLength="41">ପତ୍ର ଜୁମ୍</string>
@@ -171,20 +171,20 @@
     <string name="show_estimates" maxLength="41">ବଟନ୍ ସମୟ ଦେଖାଇବା</string>
     <string name="show_estimates_summ">ଉତ୍ତର ବଟନ୍‌ଗୁଡ଼ିକରେ ପରଵର୍ତ୍ତୀ ସମୀକ୍ଷା ସମୟ ଦର୍ଶାଇବା</string>
     <string name="show_large_answer_buttons" maxLength="41">ବଡ଼ ଉତ୍ତର ବଟନ୍ ଦେଖାଇବା</string>
-    <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
+    <string name="show_large_answer_buttons_summ">୨ ଧାଡ଼ିଆ ଉତ୍ତର ବଟନ୍ ଦେଖାଇବା</string>
     <string name="show_top_bar" maxLength="41">ଶୀର୍ଷ ଦଣ୍ଡିକା ଦେଖାଇବା</string>
     <string name="show_top_bar_summary">Show card counts, answer timer, flag and mark in top bar</string>
     <string name="show_progress" maxLength="41">ବାକିତକ ଦେଖାଇବା</string>
     <string name="show_progress_summ">ଅଵଶିଷ୍ଟ ପତ୍ର ଗଣନା ଦେଖାଇବା</string>
     <string name="show_eta" maxLength="41">ଆଗମନର ଆନୁମାନିକ ସମୟ ଦେଖାଅ</string>
     <string name="show_eta_summ">ବଳକା ସମୟ ଦେଖାଇବା</string>
-    <string name="use_current" maxLength="41">ନୂଆ ପତ୍ର ପାଇଁ ତାସଖଣ୍ଡ</string>
+    <string name="use_current" maxLength="41">ନୂଆ ପତ୍ର ପାଇଁ କେରୀ</string>
     <string name="learn_cutoff" maxLength="41">ଆଗୁଆ ଶିଖିବା ସମୟସୀମା</string>
     <string name="time_limit" maxLength="41">ଟାଇମ୍ ବକ୍ସ ସମୟ ସୀମା</string>
     <string name="day_offset_with_description" maxLength="41">ପରଵର୍ତ୍ତୀ ଦିନର ଆରମ୍ଭ</string>
     <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
-        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">%d hour past midnight</item>
-        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">%d hours past midnight</item>
+        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">ମଧ୍ୟରାତ୍ରିରୁ %d ଘଣ୍ଟା ପରେ</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">ମଧ୍ୟରାତ୍ରିରୁ %d ଘଣ୍ଟା ପରେ</item>
     </plurals>
     <string name="pref_keep_screen_on" maxLength="41">ସ୍କ୍ରୀନ୍ ସଚଳ ରଖିବା</string>
     <string name="pref_keep_screen_on_summ">ସ୍କ୍ରୀନ୍ ସମୟ-ସମାପ୍ତି ଅକ୍ଷମ କରନ୍ତୁ</string>
@@ -204,8 +204,8 @@
     <string name="pref_controls_previews_tab" maxLength="41" comment="Name of the tab to configure controls for the previews screen">Previews</string>
     <string name="toggle_backside_only" maxLength="41" comment="Control setting that toggles \'Backside only\' in the previews screen">Toggle backside only</string>
     <!-- Appearance settings -->
-    <string name="pref_cat_reviewer" maxLength="41">Study Screen</string>
-    <string name="show_deck_title" maxLength="41">ତାସଖଣ୍ଡ ଆଖ୍ୟା ଦେଖାଇବା</string>
+    <string name="pref_cat_reviewer" maxLength="41">ଅଧ୍ୟୟନ ପରଦା</string>
+    <string name="show_deck_title" maxLength="41">କେରୀ ଆଖ୍ୟା ଦେଖାଇବା</string>
     <string name="accessibility" maxLength="41">ଅଭିଗମ୍ୟତା</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">କ୍ଲିପବୋର୍ଡ ପ୍ରତିଛବିଗୁଡ଼ିକୁ PNG ଭାବରେ ଲେପନ</string>
@@ -245,7 +245,7 @@
     <string name="deck_conf_cram_limit" maxLength="41">ଏତିକିରେ ସୀମିତ କର</string>
     <string name="deck_conf_cram_order" maxLength="41">Cards selected by</string>
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">ପୁନଃନିର୍ଦ୍ଧାରଣ</string>
-    <string name="deck_conf_cram_reschedule_summ">ଏହି ତାସଖଣ୍ଡରେ ମୋର ଉତ୍ତର ଉପରେ ଆଧାର କରି ପତ୍ର ପୁନଃନିର୍ଦ୍ଧାରଣ କରନ୍ତୁ</string>
+    <string name="deck_conf_cram_reschedule_summ">ଏହି କେରୀରେ ମୋର ଉତ୍ତର ଉପରେ ଆଧାର କରି ପତ୍ର ପୁନଃନିର୍ଦ୍ଧାରଣ କରନ୍ତୁ</string>
     <string name="deck_conf_cram_filter_2_check">ଦ୍ୱିତୀୟ ଶୋଧକ ସକ୍ଷମ କରନ୍ତୁ</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">କଷ୍ଟମ୍ ପାହୁଣ୍ଡ ନିର୍ଦ୍ଧାରଣ କରନ୍ତୁ</string>
     <string name="deck_conf_cram_preview_delays" maxLength="41">Preview delays</string>
@@ -254,7 +254,7 @@
     <string name="analytics_dialog_title">AnkiDroid କୁ ଉନ୍ନତ କରିବାରେ ସାହାଯ୍ୟ କରନ୍ତୁ!</string>
     <string name="analytics_title" maxLength="41">ବୈଶିଷ୍ଟ୍ୟ ବ୍ୟବହାର ଅଂଶୀଦାର କରନ୍ତୁ</string>
     <string name="analytics_summ">ଲୋକମାନେ କେଉଁ ବୈଶିଷ୍ଟ୍ୟ ବ୍ୟବହାର କରନ୍ତି ତାହା ଦେଖିବାରେ ଉନ୍ନୟନ ଦଳକୁ ସାହାଯ୍ୟ କରି ଆପଣ AnkiDroidରେ ଯୋଗଦାନ କରିପାରିବେ</string>
-    <string name="note_editor_replace_newlines" maxLength="41">HTML ସହିତ ନୂତନ ଲାଇନ୍ ବଦଳାନ୍ତୁ</string>
+    <string name="note_editor_replace_newlines" maxLength="41">HTML ସହିତ ନୂତନ ଲାଇନ୍ ବଦଳାଇବା</string>
     <string name="note_editor_replace_newlines_summ">ନୋଟ୍ ସମ୍ପାଦକରେ, ଏକ ପତ୍ର ସମ୍ପାଦନ କଲାବେଳେ ଯେଉଁଠି ବି &lt;br&gt; ଦେଖାଯାଏ ଏଇଟାକୁ ନୂଆ ଧାଡ଼ିରେ ପରିଣତ କରନ୍ତୁ।</string>
     <string name="type_in_answer_focus" maxLength="41">‘ଉତ୍ତର ଟାଇପ୍ କର’ ଉପରେ ଧ୍ୟାନ ଦିଅନ୍ତୁ</string>
     <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the study screen</string>
@@ -317,7 +317,7 @@
         ସୁରକ୍ଷିତ ରହିବାକୁ, ଦୟାକରି ପର୍ଯ୍ୟାୟକ୍ରମେ ଆପଣଙ୍କ ସଂଗ୍ରହ ସୀଙ୍କ୍ରୋନାଇଜ୍ କରୁଥାନ୍ତୁ,
         କିମ୍ୱା ସଂଗ୍ରହର ରପ୍ତାନି କରି ବ୍ୟାକଅପ୍ ରଖନ୍ତୁ।
         <br><br>
-        ଆପଣ ଗୋଟେ ବ୍ୟାକଅପ୍ ରୁ ପୁନରୁଦ୍ଧାର କରିପାରିବେ ଏଵଂ ଡେକ୍ ତାଲିକା ମେନୁରେ ଆପଣଙ୍କ ସଂଗ୍ରହକୁ ରପ୍ତାନି କରିପାରିବେ।
+        ଆପଣ ଗୋଟେ ବ୍ୟାକଅପ୍ ରୁ ପୁନରୁଦ୍ଧାର କରିପାରିବେ ଏଵଂ କେରୀ ତାଲିକା ମେନୁରେ ଆପଣଙ୍କ ସଂଗ୍ରହକୁ ରପ୍ତାନି କରିପାରିବେ।
     ]]></string>
     <string name="pref__minutes_between_automatic_backups__title" maxLength="41">ସ୍ୱଚାଳିତ ବ୍ୟାକଅପ୍ ମଧ୍ୟରେ କେତେ ମିନିଟର ଅନ୍ତର</string>
     <string name="pref__daily_backups_to_keep__title" maxLength="41">କେତୋଟି ଦୈନିକ ବ୍ୟାକଅପ୍ ରଖିବେ</string>
@@ -378,13 +378,13 @@
     <string name="reviewer_frame_style" maxLength="41">Frame style</string>
     <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Study Screen">ପତ୍ର</string>
     <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Study Screen">ବାକ୍ସ</string>
-    <string name="reviewer_toolbar_top" maxLength="41" comment="Setting to put the toolbar on the top of the study screen">Top</string>
-    <string name="reviewer_toolbar_bottom" maxLength="41" comment="Setting to put the toolbar on the bottom of the study screen">Bottom</string>
+    <string name="reviewer_toolbar_top" maxLength="41" comment="Setting to put the toolbar on the top of the study screen">ଉପର</string>
+    <string name="reviewer_toolbar_bottom" maxLength="41" comment="Setting to put the toolbar on the bottom of the study screen">ତଳ</string>
     <string name="reviewer_toolbar_none" maxLength="41" comment="Setting to remove the toolbar from the study screen">None</string>
-    <string name="toolbar" maxLength="41">Toolbar</string>
-    <string name="toolbar_actions" maxLength="41">Toolbar actions</string>
-    <string name="toolbar_position" maxLength="41">Toolbar position</string>
-    <string name="new_study_screen" maxLength="41">New study screen</string>
+    <string name="toolbar" maxLength="41">ଉପକରଣ-ଦଣ୍ଡିକା</string>
+    <string name="toolbar_actions" maxLength="41">ଉପକରଣ-ଦଣ୍ଡିକା କୃତ୍ୟ</string>
+    <string name="toolbar_position" maxLength="41">ଉପକରଣ-ଦଣ୍ଡିକାର ଅଵସ୍ଥିତି</string>
+    <string name="new_study_screen" maxLength="41">ନୂଆ ଅଧ୍ୟୟନ ପରଦା</string>
     <string name="new_study_screen_summ"><![CDATA[Improved study screen that will succeed the current one. Some features of the old screen have been changed or removed. Please report any <a href="%1$s">feedback</a> or <a href="%2$s">bugs</a>.]]></string>
     <string name="show_answer_feedback" maxLength="41">Show answer feedback</string>
     <!--Keyboard shortcuts dialog-->

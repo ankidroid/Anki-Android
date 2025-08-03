@@ -52,12 +52,12 @@
         <item quantity="other">%d ملحوظة</item>
     </plurals>
     <!--Browser-->
-    <string name="model_browser_delete">إحذف نوع الملحوظات</string>
+    <string name="model_browser_delete">حذف نوع الملحوظات</string>
     <string name="model_browser_rename" comment="Rename a note type">إعادة التسمية</string>
     <string name="model_browser_template">تحرير البطاقات</string>
     <!--Rename-->
-    <string name="rename_model">أعد تسمية نوع الملحوظات</string>
-    <string name="rename_card_type">أعد تسمية نوع البطاقة</string>
+    <string name="rename_model">تغيير اسم نوع الملحوظة</string>
+    <string name="rename_card_type">تغيير اسم نوع البطاقة</string>
     <!--Language Hint-->
     <string name="model_field_editor_language_hint_dialog_success_result">تعيين تلميح اللغة إلى %s</string>
     <!--Field Editing-->
@@ -73,9 +73,9 @@
     <string name="model_delete_warning">أواثق أنك ترغب بحذف نوع الملحوظات هذا؟</string>
     <string name="field_delete_warning">ءأنت واثق أنك ترغب بحذف هذا الحقل؟</string>
     <!--Model Add Suffixes-->
-    <string name="model_browser_add_add">أضف: %1$s</string>
+    <string name="model_browser_add_add">إضافة: %1$s</string>
     <!--This prefix is used for standard note types-->
-    <string name="model_browser_add_clone">إنسخ: %1$s</string>
+    <string name="model_browser_add_clone">نسخ: %1$s</string>
     <!--Browser Appearance-->
     <string name="card_template_browser_appearance_summary">أدخل القالب الذي سيستخدمه متصفح البطاقات لعرض بطاقاتك. استخدم هذا لعرض جواب مختصر.\n\nيمكن اختصار قالب أمامي يحتوي على «عاصمة {{Country}} هي:»\nفي متصفح البطاقات بـ «عاصمة: {{Country}}»</string>
     <string name="card_template_browser_appearance_question_format">صيغة السؤال</string>

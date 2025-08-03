@@ -160,13 +160,13 @@
     <string name="locale_selection_dialog_summary">GBoard gibi bazı çok dilli klavyeler, metin düzenlerken dil değiştirmeyi destekler\n\nKlavyeniz dili değiştirmiyorsa lütfen klavye üreticinizden “setImeHintLocales” özelliğini isteyin.</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">AnkiDroid kullanımı</string>
-    <string name="help_item_ankidroid_manual">AnkiDroid manual</string>
-    <string name="help_item_anki_manual">Anki manual</string>
+    <string name="help_item_ankidroid_manual">AnkiDroid kullanım kılavuzu</string>
+    <string name="help_item_anki_manual">Anki kullanım kılavuzu</string>
     <string name="help_item_ankidroid_faq">AnkiDroid SSS</string>
     <string name="help_title_get_help">Yardım al</string>
-    <string name="help_item_mailing_list">Mailing list</string>
+    <string name="help_item_mailing_list">Posta listesi</string>
     <string name="help_item_reddit">Reddit</string>
-    <string name="help_item_report_bug">Report a bug</string>
+    <string name="help_item_report_bug">Bug bildir</string>
     <string name="help_title_support_ankidroid" maxLength="28">AnkiDroid\'i destekle</string>
     <string name="help_item_support_opencollective_donate">Bağış</string>
     <string name="help_item_support_develop_ankidroid">Geliştirme</string>
@@ -174,14 +174,14 @@
     <string name="help_item_support_other_ankidroid">Diğer</string>
     <string name="multimedia_editor_trans_translate">Çevir</string>
     <string name="help_title_community">Topluluk</string>
-    <string name="help_item_anki_forums">Anki forums</string>
+    <string name="help_item_anki_forums">Anki forumları</string>
     <string name="help_item_discord">Discord</string>
     <string name="help_item_facebook">Facebook</string>
     <string name="help_item_twitter">Twitter</string>
     <string name="help_title_privacy">Gizlilik</string>
-    <string name="help_item_ankidroid_privacy_policy">AnkiDroid privacy policy</string>
-    <string name="help_item_ankiweb_privacy_policy">AnkiWeb privacy policy</string>
-    <string name="help_item_ankiweb_terms_and_conditions">AnkiWeb terms and conditions</string>
+    <string name="help_item_ankidroid_privacy_policy">AnkiDroid gizlilik poliçesi</string>
+    <string name="help_item_ankiweb_privacy_policy">AnkiWeb gizlilik poliçesi</string>
+    <string name="help_item_ankiweb_terms_and_conditions">AnkiWeb kullanım koşulları</string>
     <string name="help_title_send_exception">Sorun giderme raporu gönder</string>
     <string name="help_dialog_exception_report_debounce">Rapor zaten gönderildi</string>
     <string name="help_dialog_exception_report_sent">Rapor gönderildi!</string>
