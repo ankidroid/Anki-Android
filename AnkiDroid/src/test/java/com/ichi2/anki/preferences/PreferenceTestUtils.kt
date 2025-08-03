@@ -109,6 +109,11 @@ object PreferenceTestUtils {
             value
         }
 
+    fun attrToStringArray(
+        value: String,
+        context: Context,
+    ): Array<String> = context.resources.getStringArray(value.substring(1).toInt())
+
     fun getKeysFromXml(
         context: Context,
         @XmlRes xml: Int,
