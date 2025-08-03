@@ -18,7 +18,6 @@ package com.ichi2.anki.dialogs
 import android.view.KeyEvent
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.net.toUri
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
@@ -74,7 +73,7 @@ class SchedulerUpgradeDialog(
             }
 
             dialog.getButton(AlertDialog.BUTTON_NEUTRAL)?.setOnClickListener {
-                activity.openUrl(activity.getString(R.string.link_scheduler_upgrade_faq).toUri())
+                activity.openUrl(R.string.link_scheduler_upgrade_faq)
             }
 
             dialog.setOnKeyListener { _, keyCode, event ->

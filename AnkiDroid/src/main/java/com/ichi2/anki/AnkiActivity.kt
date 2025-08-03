@@ -463,7 +463,10 @@ open class AnkiActivity :
         }
     }
 
-    internal fun mayOpenUrl(url: Uri) {
+    internal fun mayOpenUrl(
+        @StringRes url: Int,
+    ) {
+        val url = getString(url).toUri()
         val success = customTabActivityHelper.mayLaunchUrl(url, null, null)
         if (!success) {
             Timber.w("Couldn't preload url: %s", url.toString())

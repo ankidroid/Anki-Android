@@ -62,6 +62,16 @@ inline fun <T> withWakeLock(
     }
 }
 
+fun Context.openUrl(
+    @StringRes url: Int,
+) {
+    openUrl(getString(url))
+}
+
+fun Context.openUrl(url: String) {
+    openUrl(url.toUri())
+}
+
 fun Context.openUrl(uri: Uri) {
     if (!AdaptionUtil.hasWebBrowser(this)) {
         val noBrowserMessage = getString(R.string.no_browser_msg, uri.toString())

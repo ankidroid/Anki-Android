@@ -17,14 +17,13 @@ package com.ichi2.anki
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.net.Uri
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
 import android.speech.tts.UtteranceProgressListener
 import android.view.WindowManager.BadTokenException
+import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
-import androidx.core.net.toUri
 import com.ichi2.anki.cardviewer.SingleCardSide
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.libanki.Card
@@ -34,6 +33,7 @@ import com.ichi2.anki.libanki.TTSTag
 import com.ichi2.anki.provider.pureAnswer
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.utils.openUrl
 import com.ichi2.utils.HandlerUtils.postDelayedOnNewHandler
 import com.ichi2.utils.message
 import com.ichi2.utils.positiveButton
@@ -312,7 +312,7 @@ object ReadText {
                                     errorToDeveloperString(errorCode),
                                     errorCode,
                                 )
-                                val helpUrl = context.getString(R.string.link_faq_tts).toUri()
+                                @StringRes val helpUrl = R.string.link_faq_tts
                                 val ankiActivity = context as AnkiActivity
                                 ankiActivity.mayOpenUrl(helpUrl)
                                 // TODO: We can do better in this UI now we have a reason for failure
@@ -353,9 +353,10 @@ object ReadText {
             else -> "Unhandled Error [$errorCode]"
         }
 
-    fun openTtsHelpUrl(helpUrl: Uri) {
-        val activity = flashCardViewer.get() as AnkiActivity?
-        activity!!.openUrl(helpUrl)
+    fun openTtsHelpUrl(
+        @StringRes helpUrl: Int,
+    ) {
+        flashCardViewer.get()!!.openUrl(helpUrl)
     }
 
     /**

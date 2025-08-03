@@ -21,7 +21,6 @@ package com.ichi2.anki
 
 import android.content.Context
 import android.content.Intent
-import androidx.core.net.toUri
 import androidx.lifecycle.lifecycleScope
 import anki.scheduler.CardAnswer.Rating
 import com.github.zafarkhaja.semver.Version
@@ -149,7 +148,7 @@ open class AnkiDroidJsAPI(
         activity.showSnackbar(snackbarMsg, Snackbar.LENGTH_INDEFINITE) {
             setMaxLines(3)
             setAction(R.string.reviewer_invalid_api_version_visit_documentation) {
-                activity.openUrl("https://github.com/ankidroid/Anki-Android/wiki".toUri())
+                activity.openUrl("https://github.com/ankidroid/Anki-Android/wiki")
             }
         }
     }

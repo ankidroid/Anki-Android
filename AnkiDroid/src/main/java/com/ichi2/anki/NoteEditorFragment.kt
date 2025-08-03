@@ -65,7 +65,6 @@ import androidx.core.content.FileProvider
 import androidx.core.content.IntentCompat
 import androidx.core.content.edit
 import androidx.core.content.res.ResourcesCompat
-import androidx.core.net.toUri
 import androidx.core.os.BundleCompat
 import androidx.core.text.HtmlCompat
 import androidx.core.util.component1
@@ -155,6 +154,7 @@ import com.ichi2.anki.ui.setupNoteTypeSpinner
 import com.ichi2.anki.utils.ext.sharedPrefs
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.utils.ext.window
+import com.ichi2.anki.utils.openUrl
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.compat.setTooltipTextCompat
 import com.ichi2.imagecropper.ImageCropper
@@ -2563,7 +2563,7 @@ class NoteEditorFragment :
             AlertDialog
                 .Builder(requireContext())
                 .neutralButton(R.string.help) {
-                    requireAnkiActivity().openUrl(getString(R.string.link_manual_note_format_toolbar).toUri())
+                    requireContext().openUrl(R.string.link_manual_note_format_toolbar)
                 }.negativeButton(R.string.dialog_cancel)
 
     private fun displayAddToolbarDialog() {
