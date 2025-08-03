@@ -99,9 +99,10 @@ object Prefs {
         defaultValue: E,
     ): E where E : Enum<E>, E : PrefEnum {
         val enumClass = defaultValue.javaClass
-        val stringValue = getString(keyResId, defaultValue.entryValue)
+        val fallback = resources.getString(defaultValue.entryResId)
+        val stringValue = getString(keyResId, fallback)
         return enumClass.enumConstants?.firstOrNull {
-            it.entryValue == stringValue
+            resources.getString(it.entryResId) == stringValue
         } ?: defaultValue
     }
 

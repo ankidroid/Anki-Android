@@ -133,17 +133,19 @@ class PrefsRobolectricTest : RobolectricTest() {
     @Suppress("UNCHECKED_CAST")
     @Test
     fun `PrefEnum values match their preference entries`() {
+        // Prefs property name (String) -> Key (String)
         val allPropertiesAndKeys = getPropertyNamesAndKeys()
         val enumProperties =
             Prefs::class.memberProperties.filter {
                 it.returnType.isSubtypeOf(PrefEnum::class.createType())
             }
+        // Key (String) -> Prefs property
         val enumPropertiesMap = enumProperties.associateBy { allPropertiesAndKeys.getValue(it.name) }
-
+        // Key (String) -> PrefEnum entryValues (List<String>)
         val prefsEnumKeysAndValues = mutableMapOf<String, List<String>>()
         for ((key, property) in enumPropertiesMap.entries) {
             val enumConstants = ((property.returnType.classifier as KClass<*>).java.enumConstants) as Array<PrefEnum>
-            prefsEnumKeysAndValues[key] = enumConstants.map { it.entryValue }
+            prefsEnumKeysAndValues[key] = enumConstants.map { targetContext.resources.getString(it.entryResId) }
         }
 
         val listPreferences =

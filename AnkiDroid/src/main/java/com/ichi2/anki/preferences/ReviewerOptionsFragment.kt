@@ -40,7 +40,7 @@ class ReviewerOptionsFragment :
         val hideSystemBars =
             requirePreference<ListPreference>(R.string.hide_system_bars_key).apply {
                 setOnPreferenceChangeListener { value ->
-                    ignoreDisplayCutout.isEnabled = value != HideSystemBars.NONE.entryValue
+                    ignoreDisplayCutout.isEnabled = value != getString(HideSystemBars.NONE.entryResId)
                 }
             }
         val newReviewerPref = requirePreference<SwitchPreferenceCompat>(R.string.new_reviewer_options_key)
@@ -50,7 +50,7 @@ class ReviewerOptionsFragment :
             for (pref in prefs) {
                 if (pref is HtmlHelpPreference) continue
                 if (pref.key == ignoreDisplayCutout.key && newValue) {
-                    ignoreDisplayCutout.isEnabled = hideSystemBars.value != HideSystemBars.NONE.entryValue
+                    ignoreDisplayCutout.isEnabled = hideSystemBars.value != getString(HideSystemBars.NONE.entryResId)
                     continue
                 }
                 pref.isEnabled = newValue
