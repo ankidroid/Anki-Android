@@ -17,6 +17,7 @@ package com.ichi2.anki.preferences
 
 import android.content.Context
 import android.util.AttributeSet
+import androidx.annotation.StringRes
 import androidx.core.net.toUri
 import androidx.core.view.isVisible
 import androidx.preference.PreferenceCategory
@@ -38,12 +39,12 @@ class ExtendedPreferenceCategory
         defStyleAttr: Int = androidx.preference.R.attr.preferenceCategoryStyle,
         defStyleRes: Int = androidx.preference.R.style.Preference_Category,
     ) : PreferenceCategory(context, attrs, defStyleAttr, defStyleRes) {
-        private val helpLink: String?
+        @StringRes private val helpLink: Int?
 
         init {
             layoutResource = R.layout.extended_category
             context.usingStyledAttributes(attrs, R.styleable.ExtendedPreferenceCategory) {
-                helpLink = getString(R.styleable.ExtendedPreferenceCategory_helpLink)
+                helpLink = R.styleable.ExtendedPreferenceCategory_helpLink
             }
         }
 
@@ -51,11 +52,10 @@ class ExtendedPreferenceCategory
             super.onBindViewHolder(holder)
 
             helpLink?.let { helpLink ->
-                val uri = helpLink.toUri()
                 val helpIcon = holder.findViewById(R.id.help_icon)
                 helpIcon.isVisible = true
                 helpIcon.setOnClickListener {
-                    context.openUrl(uri)
+                    context.openUrl(helpLink)
                 }
             }
         }

@@ -2667,7 +2667,7 @@ abstract class AbstractFlashcardViewer :
 
     internal fun displayCouldNotFindMediaSnackbar(filename: String?) {
         showSnackbar(getString(R.string.card_viewer_could_not_find_image, filename)) {
-            setAction(R.string.help) { openUrl(getString(R.string.link_faq_missing_media).toUri()) }
+            setAction(R.string.help) { openUrl(R.string.link_faq_missing_media) }
         }
     }
 

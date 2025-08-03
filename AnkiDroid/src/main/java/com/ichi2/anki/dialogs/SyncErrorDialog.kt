@@ -38,7 +38,9 @@ import com.ichi2.anki.dialogs.SyncErrorDialog.Type.DIALOG_SYNC_SANITY_ERROR_CONF
 import com.ichi2.anki.dialogs.SyncErrorDialog.Type.DIALOG_SYNC_SANITY_ERROR_CONFIRM_KEEP_REMOTE
 import com.ichi2.anki.dialogs.SyncErrorDialog.Type.DIALOG_USER_NOT_LOGGED_IN_SYNC
 import com.ichi2.anki.joinSyncMessages
+import com.ichi2.anki.requireAnkiActivity
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
+import com.ichi2.anki.utils.openUrl
 
 class SyncErrorDialog : AsyncDialogFragment() {
     interface SyncErrorDialogListener {
@@ -159,7 +161,7 @@ class SyncErrorDialog : AsyncDialogFragment() {
                 dialog
                     .setPositiveButton(R.string.dialog_ok) { _, _ -> }
                     .setNegativeButton(R.string.help) { _, _ ->
-                        (requireActivity() as AnkiActivity).openUrl(getString(R.string.repair_deck).toUri())
+                        requireContext().openUrl(R.string.repair_deck)
                     }.setCancelable(false)
                     .create()
             }

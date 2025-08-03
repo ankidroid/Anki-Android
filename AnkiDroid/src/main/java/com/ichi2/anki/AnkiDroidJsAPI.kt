@@ -149,7 +149,7 @@ open class AnkiDroidJsAPI(
         activity.showSnackbar(snackbarMsg, Snackbar.LENGTH_INDEFINITE) {
             setMaxLines(3)
             setAction(R.string.reviewer_invalid_api_version_visit_documentation) {
-                activity.openUrl("https://github.com/ankidroid/Anki-Android/wiki".toUri())
+                activity.openUrl("https://github.com/ankidroid/Anki-Android/wiki")
             }
         }
     }

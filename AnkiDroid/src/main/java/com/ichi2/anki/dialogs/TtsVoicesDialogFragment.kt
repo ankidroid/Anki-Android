@@ -41,13 +41,13 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.chip.Chip
 import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.ichi2.anki.AndroidTtsVoice
-import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.R
 import com.ichi2.anki.dialogs.viewmodel.TtsVoicesViewModel
 import com.ichi2.anki.libanki.TtsVoice
 import com.ichi2.anki.localizedErrorMessage
 import com.ichi2.anki.showThemedToast
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.utils.openUrl
 import com.ichi2.themes.Themes
 import com.ichi2.utils.UiUtil.makeFullscreen
 import kotlinx.coroutines.flow.Flow
@@ -195,7 +195,7 @@ class TtsVoicesDialogFragment : DialogFragment() {
             dialog?.window?.decorView?.showSnackbar(string) {
                 setAction(R.string.help) {
                     // TODO: Should do this in ViewModel, but we need an Activity
-                    (requireActivity() as AnkiActivity).openUrl(R.string.link_faq_tts)
+                    requireContext().openUrl(R.string.link_faq_tts)
                 }
             }
         }
