@@ -99,6 +99,13 @@ class PermissionsItem(
                 switch.isChecked = !switch.isChecked
             }
         }
+
+        switch.setOnClickListener {
+            if (!areGranted) {
+                Timber.i("permission switch pressed")
+                listener?.invoke()
+            }
+        }
         updateSwitchCheckedStatus()
     }
 
@@ -118,11 +125,5 @@ class PermissionsItem(
      * */
     fun setOnSwitchClickListener(listener: () -> Unit) {
         this.listener = listener
-        switch.setOnClickListener {
-            if (!areGranted) {
-                Timber.i("permission switch pressed")
-                listener.invoke()
-            }
-        }
     }
 }
