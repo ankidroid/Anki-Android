@@ -79,23 +79,23 @@
     <string name="html_size_code_x_large">x-كبير</string>
     <string name="html_size_code_xx_large">xx-كبير</string>
     <!-- gestures_labels -->
-    <string name="answer_again" maxLength="41">أجب بـ «مجددًا»</string>
-    <string name="answer_hard" maxLength="41">أجب بـ «صعب»</string>
-    <string name="answer_good" maxLength="41">أجب بـ «جيد»</string>
-    <string name="answer_easy" maxLength="41">أجب بـ «سهل»</string>
-    <string name="gesture_abort_learning" maxLength="41">أغلق شاشة الدراسة</string>
-    <string name="gesture_flag_red" maxLength="41">بدل العلم الأحمر</string>
-    <string name="gesture_flag_orange" maxLength="41">بدل العلم البرتقالي</string>
-    <string name="gesture_flag_green" maxLength="41">بدل العلم الأخضر</string>
-    <string name="gesture_flag_blue" maxLength="41">بدل العلم الأزرق</string>
-    <string name="gesture_flag_pink" maxLength="41">بدل العلم الوردي</string>
-    <string name="gesture_flag_turquoise" maxLength="41">بدل العلم الفيرزوي</string>
-    <string name="gesture_flag_purple" maxLength="41">بدل العلم البنفسجي</string>
+    <string name="answer_again" maxLength="41">الإجابة بمجددًا</string>
+    <string name="answer_hard" maxLength="41">الإجابة بصعب</string>
+    <string name="answer_good" maxLength="41">الإجابة بجيد</string>
+    <string name="answer_easy" maxLength="41">الإجابة بسهل</string>
+    <string name="gesture_abort_learning" maxLength="41">إغلاق شاشة الدراسة</string>
+    <string name="gesture_flag_red" maxLength="41">تبديل بالعلم الأحمر</string>
+    <string name="gesture_flag_orange" maxLength="41">تبديل بالعلم البرتقالي</string>
+    <string name="gesture_flag_green" maxLength="41">تبديل بالعلم الأخضر</string>
+    <string name="gesture_flag_blue" maxLength="41">تبديل بالعلم الأزرق</string>
+    <string name="gesture_flag_pink" maxLength="41">تبديل بالعلم الوردي</string>
+    <string name="gesture_flag_turquoise" maxLength="41">تبديل بالعلم الفيروزي</string>
+    <string name="gesture_flag_purple" maxLength="41">تبديل بالعلم البنفسجي</string>
     <string name="gesture_flag_remove" maxLength="41">أزل العلم</string>
     <string name="gesture_page_up" maxLength="41">مر صفحة إلى الأعلى</string>
     <string name="gesture_page_down" maxLength="41">مر صفحة إلى الأسفل</string>
-    <string name="gesture_toggle_whiteboard" maxLength="41">بدل السبورة</string>
-    <string name="gesture_toggle_eraser" maxLength="41">بدل الممحاة</string>
+    <string name="gesture_toggle_whiteboard" maxLength="41">تفعيل أو تعطيل السَّبُّورَة</string>
+    <string name="gesture_toggle_eraser" maxLength="41">تفعيل أو تعطيل الممحاة</string>
     <string name="gesture_show_hint" maxLength="41">أظهر التلميح</string>
     <string name="gesture_show_all_hints" maxLength="41">أظهر كل التلميحات</string>
     <string name="record_voice" maxLength="41">سَجل الصوت</string>

@@ -84,21 +84,21 @@
     <string name="answer_good" maxLength="41">İyi cevapla</string>
     <string name="answer_easy" maxLength="41">Kolay cevapla</string>
     <string name="gesture_abort_learning" maxLength="41">Çalışma ekranını kapat</string>
-    <string name="gesture_flag_red" maxLength="41">Toggle red flag</string>
-    <string name="gesture_flag_orange" maxLength="41">Toggle orange flag</string>
-    <string name="gesture_flag_green" maxLength="41">Toggle green flag</string>
-    <string name="gesture_flag_blue" maxLength="41">Toggle blue flag</string>
-    <string name="gesture_flag_pink" maxLength="41">Toggle pink flag</string>
-    <string name="gesture_flag_turquoise" maxLength="41">Toggle turquoise flag</string>
-    <string name="gesture_flag_purple" maxLength="41">Toggle purple flag</string>
-    <string name="gesture_flag_remove" maxLength="41">Remove flag</string>
+    <string name="gesture_flag_red" maxLength="41">Kırmızı bayrağı aç/kapat</string>
+    <string name="gesture_flag_orange" maxLength="41">Turuncu bayrağı aç/kapat</string>
+    <string name="gesture_flag_green" maxLength="41">Yeşil bayrağı aç/kapat</string>
+    <string name="gesture_flag_blue" maxLength="41">Mavi bayrağı aç/kapat</string>
+    <string name="gesture_flag_pink" maxLength="41">Pembe bayrağı aç/kapat</string>
+    <string name="gesture_flag_turquoise" maxLength="41">Turkuaz bayrağı aç/kapat</string>
+    <string name="gesture_flag_purple" maxLength="41">Mor bayrağı aç/kapat</string>
+    <string name="gesture_flag_remove" maxLength="41">Bayrağı kaldır</string>
     <string name="gesture_page_up" maxLength="41">Yukarı</string>
     <string name="gesture_page_down" maxLength="41">Aşağı</string>
-    <string name="gesture_toggle_whiteboard" maxLength="41">Toggle whiteboard</string>
+    <string name="gesture_toggle_whiteboard" maxLength="41">Yazı tahtasını aç/kapat</string>
     <string name="gesture_toggle_eraser" maxLength="41">Silgiyi aç/kapat</string>
-    <string name="gesture_show_hint" maxLength="41">Show hint</string>
-    <string name="gesture_show_all_hints" maxLength="41">Show all hints</string>
+    <string name="gesture_show_hint" maxLength="41">İpucu göster</string>
+    <string name="gesture_show_all_hints" maxLength="41">Bütün ipuçlarını göster</string>
     <string name="record_voice" maxLength="41">Ses kaydet</string>
     <string name="replay_voice" maxLength="41">Sesi tekrar oynat</string>
-    <string name="save_voice" maxLength="41">Save recording</string>
+    <string name="save_voice" maxLength="41">Ses kaydını kaydet</string>
 </resources>

@@ -47,7 +47,7 @@
     <string name="check_db_title">ଡାଟାବେସ୍ ଯାଞ୍ଚ କରିବେ କି?</string>
     <string name="check_db_warning">ଏହା ବହୁତ ସମୟ ନେଇପାରେ</string>
     <string name="contextmenu_deckpicker_delete_deck" maxLength="28">ତାସଖଣ୍ଡ ଵିଲୋପ କରିବା</string>
-    <string name="delete_deck_title">ତାସଖଣ୍ଡ ଵିଲୋପ କରିବେ ତ?</string>
+    <string name="delete_deck_title">କେରୀ ଵିଲୋପ କରିବେ ତ?</string>
     <plurals name="delete_deck_message">
         <item quantity="one">Delete all cards in %1$s? It contains %2$d card</item>
         <item quantity="other">Delete all cards in %1$s? It contains %2$d cards</item>
@@ -73,7 +73,7 @@
     <string name="custom_study_forgotten">ଗତ x ଦିନରେ ଭୁଲିଯାଇଥିବା ପତ୍ରର ସମୀକ୍ଷା କରନ୍ତୁ:</string>
     <string name="custom_study_ahead">x ଦିନ ପୂର୍ବରୁ ସମୀକ୍ଷା କରନ୍ତୁ:</string>
     <string name="custom_study_preview">ଗତ x ଦିନରେ ଯୋଡ଼ାଯାଇଥିବା ନୂଆ ପତ୍ରଗୁଡ଼ିକର ପୂର୍ଵାଵଲୋକନ କରିବା:</string>
-    <string name="custom_study_tags">Select x cards from the deck:</string>
+    <string name="custom_study_tags">କେରୀରୁ x ଟି ପତ୍ର ଚୟନ କରିବା:</string>
     <string name="storage_full_title">ଷ୍ଟୋରେଜ୍ ଭର୍ତ୍ତି ହେଲାଣି</string>
     <string name="storage_almost_full_title">ଷ୍ଟୋରେଜ୍ ପ୍ରାୟ ଭର୍ତ୍ତି ହେବାକୁ ବସିଲାଣି</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">ଜାଗା ନାହିଁ</string>
@@ -156,7 +156,7 @@
     <string name="boot_service_failed_to_schedule_notifications">ସ୍ମାରକଗୁଡ଼ିକୁ ନିର୍ଦ୍ଧାରଣ କରିବାରେ ବିଫଳ ହୋଇଛି</string>
     <string name="boot_service_too_many_notifications">ଅତ୍ୟଧିକ ସ୍ମାରକ ନିର୍ଦ୍ଧାରିତ ହୋଇଛି। କିଛିଟା ଦେଖାଯିବ ନାହିଁ</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title_new">Set Language</string>
+    <string name="locale_selection_dialog_title_new">ଭାଷା ସ୍ଥିର କରିବା</string>
     <string name="locale_selection_dialog_summary">କିଛି ବହୁଭାଷୀ କୀବୋର୍ଡ୍, ଯେପରିକି GBoard ପାଠ୍ୟ ସମ୍ପାଦନ କରିବା ସମୟରେ ଭାଷା ପରିବର୍ତ୍ତନକୁ ସମର୍ଥନ କରେ\n\nଦୟାକରି ଆପଣଙ୍କର କୀବୋର୍ଡ୍ ନିର୍ମାତାଙ୍କ ଠାରୁ “setImeHintLocales” ବୈଶିଷ୍ଟ୍ୟ ଅନୁରୋଧ କରନ୍ତୁ ଯଦି ଆପଣଙ୍କର କୀବୋର୍ଡ୍ ଭାଷା ପରିବର୍ତ୍ତନ ନକରେ।</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">AnkiDroid ବ୍ୟବହାର କରିବାରେ</string>
@@ -191,18 +191,18 @@
         <item quantity="other" comment="Consider keeping the unbreakable space after the digit">An automatic sync may be triggered in %d seconds</item>
     </plurals>
     <string name="metered_sync_data_warning">ଆପଣଙ୍କ ଇଣ୍ଟରନେଟ୍ ପ୍ରଦାତା ଡାଟା ବ୍ୟବହାର ପାଇଁ ଟଙ୍କା ଆଦାୟ କରିପାରନ୍ତି</string>
-    <string name="deck_picker_new">ଏହି ତାସଖଣ୍ଡରେ ଆଜି ଦେଖିବାକୁ ଥିବା ନୂତନ ପତ୍ରର ସଂଖ୍ୟା।</string>
-    <string name="deck_picker_rev">ଏହି ତାସଖଣ୍ଡରେ ଆଜି ପାଇଁ ଧାର୍ଯ୍ୟ ଥିବା ନୂତନ ପତ୍ରର ସଂଖ୍ୟା।</string>
-    <string name="deck_picker_lrn">ଏହି ତାସଖଣ୍ଡରେ ଶିକ୍ଷାଧିନ ପତ୍ରର ସଂଖ୍ୟା।</string>
+    <string name="deck_picker_new">ଏହି କେରୀରେ ଆଜିର ଅଧ୍ୟୟନ ନିମିତ୍ତ ଥିବା ନୂତନ ପତ୍ରର ସଂଖ୍ୟା।</string>
+    <string name="deck_picker_rev">ଏହି କେରୀରେ ଆଜିର ଧାର୍ଯ୍ୟ ଥିବା ନୂତନ ପତ୍ରର ସଂଖ୍ୟା।</string>
+    <string name="deck_picker_lrn">ଏହି କେରୀରେ ଶିକ୍ଷାଧିନ ପତ୍ରର ସଂଖ୍ୟା।</string>
     <!-- This description is valid fos
     sched V2. For V1, it was counting the number of repetitions of cards in learning. This approximation is acceptable
     for the sake of simplicity and because V1 will leave.-->
-    <string name="deck_picker_counts">ଆଜି ଦେଖିବାକୁ ଥିବା ପତ୍ରର ସଂଖ୍ୟା ଧାରଣ କରିଥିବା ଡେକ୍ ବର୍ଣ୍ଣନା ପୃଷ୍ଠା ଖୋଲନ୍ତୁ।</string>
-    <string name="import_deck_package">ତାସଖଣ୍ଡ ପ୍ୟାକେଜ୍ (.apkg)</string>
+    <string name="deck_picker_counts">ଆଜି ଅଧ୍ୟୟନ ନିମିତ୍ତ ଥିବା ପତ୍ରର ସଂଖ୍ୟା ଧାରଣ କରିଥିବା କେରୀ ବର୍ଣ୍ଣନା ପୃଷ୍ଠା ଖୋଲନ୍ତୁ।</string>
+    <string name="import_deck_package">କେରୀ ପ୍ୟାକେଜ୍ (.apkg)</string>
     <string name="import_collection_package">ସଂଗ୍ରହ ପ୍ୟାକେଜ୍ (.colpkg)</string>
     <string name="import_csv">ପାଠ୍ୟ ଫାଇଲ୍ (.txt, .csv)</string>
     <!-- Deck selection dialog -->
-    <string name="cannot_create_subdeck_for_all_decks">ଆପଣ ସବୁ ତାସଖଣ୍ଡ ପାଇଁ ଗୋଟେ ଉପତାସଖଣ୍ଡ ସୃଷ୍ଟି କରିପାରିବେ ନାହିଁ</string>
+    <string name="cannot_create_subdeck_for_all_decks">ଆପଣ ସବୁ କେରୀ ପାଇଁ ଗୋଟେ ଉପ-କେରୀ ସୃଷ୍ଟି କରିପାରିବେ ନାହିଁ</string>
     <!-- scoped storage -->
     <string name="backup_your_collection">ଆପଣଙ୍କ ସଂଗ୍ରହର ବ୍ୟାକଅପ୍ ନେବା</string>
     <string name="backup_collection_message">ଆପଣ କିଛି ଦିନ ହେବ ଆପଣଙ୍କ ସଂଗ୍ରହର ବ୍ୟାକଅପ୍ ନେଇନାହାଁନ୍ତି। ଡାଟା ହାନିକୁ ରୋକିବା ପାଇଁ ଆପଣ ଵର୍ତ୍ତମାନ ଏହା କରିନେବା ଉଚିତ୍</string>
@@ -213,8 +213,8 @@
     <string name="dismiss_backup_warning_title">ଡାଟା କ୍ଷତି ଚେତାଵନୀ</string>
     <string name="dismiss_backup_warning_new_user">Due to Android privacy changes, your data and automated backups will be deleted from your phone if the app is uninstalled</string>
     <string name="dismiss_backup_warning_upgrade">Due to Android privacy changes, your data and automated backups will be inaccessible if the app is uninstalled</string>
-    <string name="deck_already_exists">Deck already exists</string>
-    <string name="empty_deck_name">ତାସଖଣ୍ଡ ନାମ ଖାଲି ଛଡ଼ାଯାଇପାରିବ ନାହିଁ</string>
+    <string name="deck_already_exists">କେରୀଟି ଆଗରୁ ଵିଦ୍ୟମାନ ଅଛି</string>
+    <string name="empty_deck_name">କେରୀ ନାମ ଖାଲି ଛଡ଼ାଯାଇପାରିବ ନାହିଁ</string>
     <string name="create_deck_numeric_hint">If you have deck ordering issues (e.g. ‘10’ appears before ‘2’), replace ‘2’ with ‘02’</string>
     <!-- Set Due Date -->
     <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Set interval to same value</string>
@@ -231,12 +231,12 @@
         <item quantity="other">ଦିନ</item>
     </plurals>
     <plurals name="set_due_date_current_interval">
-        <item quantity="one">Current interval: %d day</item>
-        <item quantity="other">Current interval: %d days</item>
+        <item quantity="one">ଚଳିତ ଅନ୍ତରାଳ: %d ଦିନ</item>
+        <item quantity="other">ଚଳିତ ଅନ୍ତରାଳ: %d ଦିନ</item>
     </plurals>
     <string name="range_delimiter" comment="Placed between two input boxes to denote a range">–</string>
-    <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">From</string>
-    <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">To</string>
+    <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">ଠାରୁ</string>
+    <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">ପର୍ଯ୍ୟନ୍ତ</string>
     <!-- Instant Note Editor -->
     <string name="cloze_note_required">Cloze Type Note Required</string>
     <string name="cloze_not_found_message">No Cloze type note found, open the Note Editor or try again after adding a Cloze type note.</string>
@@ -250,7 +250,7 @@
     <string name="webview_update_message">The system WebView is outdated. Some features won’t work correctly. Please update it.\n\nInstalled version: %1$d\nMinimum required version: %2$d</string>
     <string name="compress">Compress</string>
     <!-- Tts playback error dialog -->
-    <string name="tts_error_dialog_title">Language not supported</string>
+    <string name="tts_error_dialog_title">ଭାଷା ସମର୍ଥିତ ନୁହେଁ</string>
     <string name="tts_error_dialog_reason_text">The text to speech engine <b>%1$s</b> does not support the following language: <b>%2$s</b></string>
     <string name="tts_error_dialog_change_button_text">Change engine</string>
     <string name="tts_error_dialog_supported_voices_button_text">Voice options</string>

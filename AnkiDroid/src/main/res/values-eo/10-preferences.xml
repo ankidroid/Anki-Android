@@ -82,7 +82,7 @@
     <string name="button_size" maxLength="41">Grando de respondobutono</string>
     <string name="card_browser_font_size" maxLength="41">Grando de tiparo de kart-foliumilo</string>
     <string name="card_browser_hide_media" maxLength="41">Vidigi dosiernomojn en kart‑foliumilo</string>
-    <string name="card_browser_hide_media_summary">Display audio filenames in the card browser question/answer fields</string>
+    <string name="card_browser_hide_media_summary">Vidigi dosiernomojn de sonoj en la kampoj “demando”/“respondo” de la kart‑foliumilo</string>
     <string name="col_path" maxLength="41">Dosierujo de AnkiDroid</string>
     <string name="fullscreen_review" maxLength="41">Plenekrana reĝimo</string>
     <string name="full_screen_off">Malaktiva</string>

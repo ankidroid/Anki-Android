@@ -125,7 +125,7 @@
     </plurals>
     <!--Keyboard shortcuts dialog-->
     <string name="edit_tags_dialog" comment="Description of the shortcut that opens the edit tags dialog">Dialog úprav štítků</string>
-    <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">Show order dialog</string>
+    <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">Zobrazit dialog pořadí</string>
     <!-- Manage columns dialog -->
     <string name="browse_manage_columns_main_heading">Sloupce</string>
     <string name="browse_manage_columns">Spravovat sloupce</string>
