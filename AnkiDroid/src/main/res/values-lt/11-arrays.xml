@@ -46,19 +46,6 @@
     <string name="error_reporting_choice_always_report">Visada pranešti</string>
     <string name="error_reporting_choice_never_report">Niekada nepranešti</string>
     <string name="error_reporting_choice_ask_user">Paklausti</string>
-    <!-- leech_action_labels -->
-    <!-- 01-core:menu_suspend_card -->
-    <!-- new_order_labels -->
-    <!-- cram_deck_conf_order_labels -->
-    <string name="cram_deck_conf_order_oldest_seen_first">Pirmiau rodyti senesnes</string>
-    <string name="cram_deck_conf_order_random">Atsitiktine tvarka</string>
-    <string name="cram_deck_conf_order_increasing_intervals">Didėjančiais intervalais</string>
-    <string name="cram_deck_conf_order_decreasing_intervals">Mažėjančiais intervalais</string>
-    <string name="cram_deck_conf_order_most_lapsed">Dažniausiai užmirštamos</string>
-    <string name="cram_deck_conf_order_order_added">Pagal pridėjimo eiliškumą</string>
-    <string name="cram_deck_conf_order_order_due">Pagal numatytų eiliškumą</string>
-    <string name="cram_deck_conf_order_latest_added_first">Pirmiau rodyti vėliausiai pridėtas</string>
-    <string name="cram_deck_conf_order_relative_overdueness">Labiausiai pradelstos</string>
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">Naudoti dabartinį rinkinį</string>
     <string name="add_to_deck_decide_by_note_type">Spręsti pagal užrašo tipą</string>

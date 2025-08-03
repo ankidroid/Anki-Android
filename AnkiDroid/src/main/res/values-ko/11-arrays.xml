@@ -46,19 +46,6 @@
     <string name="error_reporting_choice_always_report">항상 보고하기</string>
     <string name="error_reporting_choice_never_report">보고하지 않기</string>
     <string name="error_reporting_choice_ask_user">오류 보고 전 묻기</string>
-    <!-- leech_action_labels -->
-    <!-- 01-core:menu_suspend_card -->
-    <!-- new_order_labels -->
-    <!-- cram_deck_conf_order_labels -->
-    <string name="cram_deck_conf_order_oldest_seen_first">오래된 순서</string>
-    <string name="cram_deck_conf_order_random">무작위</string>
-    <string name="cram_deck_conf_order_increasing_intervals">학습 간격 늘리기</string>
-    <string name="cram_deck_conf_order_decreasing_intervals">학습 간격 줄이기</string>
-    <string name="cram_deck_conf_order_most_lapsed">오답 빈도가 높은 순서</string>
-    <string name="cram_deck_conf_order_order_added">추가된 순서</string>
-    <string name="cram_deck_conf_order_order_due">기한 순서</string>
-    <string name="cram_deck_conf_order_latest_added_first">최근 추가된 순서</string>
-    <string name="cram_deck_conf_order_relative_overdueness">상대적 지연</string>
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">현재 덱 사용하기</string>
     <string name="add_to_deck_decide_by_note_type">노트 형식에 따라 결정</string>

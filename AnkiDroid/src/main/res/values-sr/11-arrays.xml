@@ -46,19 +46,6 @@
     <string name="error_reporting_choice_always_report">Увек пријављуј</string>
     <string name="error_reporting_choice_never_report">Никада не пријављуј</string>
     <string name="error_reporting_choice_ask_user">Питај ме</string>
-    <!-- leech_action_labels -->
-    <!-- 01-core:menu_suspend_card -->
-    <!-- new_order_labels -->
-    <!-- cram_deck_conf_order_labels -->
-    <string name="cram_deck_conf_order_oldest_seen_first">Најстарије виђене прво</string>
-    <string name="cram_deck_conf_order_random">Насумице</string>
-    <string name="cram_deck_conf_order_increasing_intervals">По увећању размака</string>
-    <string name="cram_deck_conf_order_decreasing_intervals">По умањењу размака</string>
-    <string name="cram_deck_conf_order_most_lapsed">Највеће истеклих</string>
-    <string name="cram_deck_conf_order_order_added">Додат редослед прегледа</string>
-    <string name="cram_deck_conf_order_order_due">У редоследу додавања</string>
-    <string name="cram_deck_conf_order_latest_added_first">Прво последње додате</string>
-    <string name="cram_deck_conf_order_relative_overdueness">Relative overdueness</string>
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">Користи текући шпил</string>
     <string name="add_to_deck_decide_by_note_type">Одлучи по типу белешке</string>

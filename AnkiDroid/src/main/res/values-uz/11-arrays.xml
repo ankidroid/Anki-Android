@@ -46,19 +46,6 @@
     <string name="error_reporting_choice_always_report">Har doim xabar berilsin</string>
     <string name="error_reporting_choice_never_report">Hech qachon xabar berilmasin</string>
     <string name="error_reporting_choice_ask_user">Mendan soʻralsin</string>
-    <!-- leech_action_labels -->
-    <!-- 01-core:menu_suspend_card -->
-    <!-- new_order_labels -->
-    <!-- cram_deck_conf_order_labels -->
-    <string name="cram_deck_conf_order_oldest_seen_first">Avval allaqachon koʻrilmaganlar</string>
-    <string name="cram_deck_conf_order_random">Tasodifiy</string>
-    <string name="cram_deck_conf_order_increasing_intervals">Avval eng kam oraliqli</string>
-    <string name="cram_deck_conf_order_decreasing_intervals">Avval eng koʻp oraliqli</string>
-    <string name="cram_deck_conf_order_most_lapsed">Eng koʻp unutilgan</string>
-    <string name="cram_deck_conf_order_order_added">Qoʻshilgan tartib boʻyicha</string>
-    <string name="cram_deck_conf_order_order_due">Muddati boʻyicha</string>
-    <string name="cram_deck_conf_order_latest_added_first">Avval oxirgi qoʻshilganlar</string>
-    <string name="cram_deck_conf_order_relative_overdueness">Nisbiy muddati oʻtganligi boʻyicha</string>
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">Joriy dastani ishlatish</string>
     <string name="add_to_deck_decide_by_note_type">Qayd turi boʻyicha qaror qilish</string>

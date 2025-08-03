@@ -46,19 +46,6 @@
     <string name="error_reporting_choice_always_report">Beti eman erroreen berri</string>
     <string name="error_reporting_choice_never_report">Erroreen berri ez eman</string>
     <string name="error_reporting_choice_ask_user">Galdetu iezadazu</string>
-    <!-- leech_action_labels -->
-    <!-- 01-core:menu_suspend_card -->
-    <!-- new_order_labels -->
-    <!-- cram_deck_conf_order_labels -->
-    <string name="cram_deck_conf_order_oldest_seen_first">Oldest seen first</string>
-    <string name="cram_deck_conf_order_random">Ausazkoa</string>
-    <string name="cram_deck_conf_order_increasing_intervals">Tarteak handitzen</string>
-    <string name="cram_deck_conf_order_decreasing_intervals">Tarteak gutxiagotzen</string>
-    <string name="cram_deck_conf_order_most_lapsed">Huts gehien</string>
-    <string name="cram_deck_conf_order_order_added">Order added</string>
-    <string name="cram_deck_conf_order_order_due">Order due</string>
-    <string name="cram_deck_conf_order_latest_added_first">Gehitu diren azkenengoak lehenago</string>
-    <string name="cram_deck_conf_order_relative_overdueness">Relative overdueness</string>
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">Use current deck</string>
     <string name="add_to_deck_decide_by_note_type">Erabaki nota-tipoaren arabera</string>

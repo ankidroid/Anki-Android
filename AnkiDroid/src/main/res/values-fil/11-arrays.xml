@@ -46,19 +46,6 @@
     <string name="error_reporting_choice_always_report">Laging iulat</string>
     <string name="error_reporting_choice_never_report">Huwag kailanman mag-ulat</string>
     <string name="error_reporting_choice_ask_user">Tanungin mo ako</string>
-    <!-- leech_action_labels -->
-    <!-- 01-core:menu_suspend_card -->
-    <!-- new_order_labels -->
-    <!-- cram_deck_conf_order_labels -->
-    <string name="cram_deck_conf_order_oldest_seen_first">Pinakalumang nakita muna</string>
-    <string name="cram_deck_conf_order_random">Pinakalumang nakita muna</string>
-    <string name="cram_deck_conf_order_increasing_intervals">Ang pagpapataas ng agwat</string>
-    <string name="cram_deck_conf_order_decreasing_intervals">Pagpapababa ng mga agwat</string>
-    <string name="cram_deck_conf_order_most_lapsed">Karamihan ay natapos na</string>
-    <string name="cram_deck_conf_order_order_added">Idinagdag ang order</string>
-    <string name="cram_deck_conf_order_order_due">Nakatakdang order</string>
-    <string name="cram_deck_conf_order_latest_added_first">Pinakabagong inaidagdag muna</string>
-    <string name="cram_deck_conf_order_relative_overdueness">Kaukulang kadukado</string>
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">Gumamit ng kasalukuyang deck</string>
     <string name="add_to_deck_decide_by_note_type">Magpasya ayon sa uri ng tala</string>

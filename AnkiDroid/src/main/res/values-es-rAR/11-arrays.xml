@@ -46,19 +46,6 @@
     <string name="error_reporting_choice_always_report">Reportar siempre</string>
     <string name="error_reporting_choice_never_report">No reportar nunca</string>
     <string name="error_reporting_choice_ask_user">Pregúnteme</string>
-    <!-- leech_action_labels -->
-    <!-- 01-core:menu_suspend_card -->
-    <!-- new_order_labels -->
-    <!-- cram_deck_conf_order_labels -->
-    <string name="cram_deck_conf_order_oldest_seen_first">Ver primero las más antiguas</string>
-    <string name="cram_deck_conf_order_random">Al azar</string>
-    <string name="cram_deck_conf_order_increasing_intervals">Incrementando intervalos</string>
-    <string name="cram_deck_conf_order_decreasing_intervals">Reduciendo intervalos</string>
-    <string name="cram_deck_conf_order_most_lapsed">Más caducado</string>
-    <string name="cram_deck_conf_order_order_added">Orden añadido</string>
-    <string name="cram_deck_conf_order_order_due">Orden de tarjetas programadas</string>
-    <string name="cram_deck_conf_order_latest_added_first">Primero las añadidas más recientemente</string>
-    <string name="cram_deck_conf_order_relative_overdueness">Sobreprogramación relativa</string>
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">Utilizar el mazo actual</string>
     <string name="add_to_deck_decide_by_note_type">Decidir por tipo de nota</string>

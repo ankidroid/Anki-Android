@@ -46,19 +46,6 @@
     <string name="error_reporting_choice_always_report">Immer melden</string>
     <string name="error_reporting_choice_never_report">Niemals melden</string>
     <string name="error_reporting_choice_ask_user">Nachfragen</string>
-    <!-- leech_action_labels -->
-    <!-- 01-core:menu_suspend_card -->
-    <!-- new_order_labels -->
-    <!-- cram_deck_conf_order_labels -->
-    <string name="cram_deck_conf_order_oldest_seen_first">Datum der letzten Wiederholung (älteste zuerst)</string>
-    <string name="cram_deck_conf_order_random">Zufall</string>
-    <string name="cram_deck_conf_order_increasing_intervals">Intervall (aufsteigend)</string>
-    <string name="cram_deck_conf_order_decreasing_intervals">Intervall (absteigend)</string>
-    <string name="cram_deck_conf_order_most_lapsed">Fehlversuche (häufigste zuerst)</string>
-    <string name="cram_deck_conf_order_order_added">Erstelldatum (älteste zuerst)</string>
-    <string name="cram_deck_conf_order_order_due">Fälligkeitsdatum (älteste zuerst)</string>
-    <string name="cram_deck_conf_order_latest_added_first">Erstelldatum (neueste zuerst)</string>
-    <string name="cram_deck_conf_order_relative_overdueness">Abrufbarkeit (aufsteigend)</string>
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">Aktuellen Stapel verwenden</string>
     <string name="add_to_deck_decide_by_note_type">Nach Notiztyp entscheiden</string>

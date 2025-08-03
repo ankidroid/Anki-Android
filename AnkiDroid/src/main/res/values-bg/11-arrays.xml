@@ -46,19 +46,6 @@
     <string name="error_reporting_choice_always_report">Винаги докладвай</string>
     <string name="error_reporting_choice_never_report">Никога не докладвай</string>
     <string name="error_reporting_choice_ask_user">Попитай ме</string>
-    <!-- leech_action_labels -->
-    <!-- 01-core:menu_suspend_card -->
-    <!-- new_order_labels -->
-    <!-- cram_deck_conf_order_labels -->
-    <string name="cram_deck_conf_order_oldest_seen_first">Първо - по-старите</string>
-    <string name="cram_deck_conf_order_random">Случайно</string>
-    <string name="cram_deck_conf_order_increasing_intervals">Увеличаване на интервалите</string>
-    <string name="cram_deck_conf_order_decreasing_intervals">намаляване на интервалите</string>
-    <string name="cram_deck_conf_order_most_lapsed">Най-много пропуски</string>
-    <string name="cram_deck_conf_order_order_added">Ред на добавяне</string>
-    <string name="cram_deck_conf_order_order_due">По ред на разглеждане</string>
-    <string name="cram_deck_conf_order_latest_added_first">Първо - последно добавени</string>
-    <string name="cram_deck_conf_order_relative_overdueness">Относителна закъснение</string>
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">Използвайте текущото тесте</string>
     <string name="add_to_deck_decide_by_note_type">Избор по тип на бележката</string>

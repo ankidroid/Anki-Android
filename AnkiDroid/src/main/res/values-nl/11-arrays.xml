@@ -46,19 +46,6 @@
     <string name="error_reporting_choice_always_report">Altijd rapporteren</string>
     <string name="error_reporting_choice_never_report">Nooit rapporteren</string>
     <string name="error_reporting_choice_ask_user">Mij vragen</string>
-    <!-- leech_action_labels -->
-    <!-- 01-core:menu_suspend_card -->
-    <!-- new_order_labels -->
-    <!-- cram_deck_conf_order_labels -->
-    <string name="cram_deck_conf_order_oldest_seen_first">Oudste eerst zien</string>
-    <string name="cram_deck_conf_order_random">Willekeurig</string>
-    <string name="cram_deck_conf_order_increasing_intervals">Toenemende intervallen</string>
-    <string name="cram_deck_conf_order_decreasing_intervals">Afnemende intervallen</string>
-    <string name="cram_deck_conf_order_most_lapsed">Meeste vergissingen</string>
-    <string name="cram_deck_conf_order_order_added">Volgorde van toevoegen</string>
-    <string name="cram_deck_conf_order_order_due">Volgorde van \'te doen\' kaarten</string>
-    <string name="cram_deck_conf_order_latest_added_first">Laatste eerst toevoegen</string>
-    <string name="cram_deck_conf_order_relative_overdueness">Relatieve achterstalligheid</string>
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">Gebruik huidige set</string>
     <string name="add_to_deck_decide_by_note_type">Beslissen per memotype</string>

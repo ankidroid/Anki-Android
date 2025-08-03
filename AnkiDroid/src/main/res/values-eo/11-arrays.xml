@@ -46,19 +46,6 @@
     <string name="error_reporting_choice_always_report">Ĉiam</string>
     <string name="error_reporting_choice_never_report">Neniam</string>
     <string name="error_reporting_choice_ask_user">Demandi</string>
-    <!-- leech_action_labels -->
-    <!-- 01-core:menu_suspend_card -->
-    <!-- new_order_labels -->
-    <!-- cram_deck_conf_order_labels -->
-    <string name="cram_deck_conf_order_oldest_seen_first">Plej malnovaj unue</string>
-    <string name="cram_deck_conf_order_random">Hazarde</string>
-    <string name="cram_deck_conf_order_increasing_intervals">De plej mallonga intertempo</string>
-    <string name="cram_deck_conf_order_decreasing_intervals">De plej longa intertempo</string>
-    <string name="cram_deck_conf_order_most_lapsed">De plej ofte forgesataj</string>
-    <string name="cram_deck_conf_order_order_added">Laŭ tempo de aldono</string>
-    <string name="cram_deck_conf_order_order_due">Laŭ ordo de ripeto</string>
-    <string name="cram_deck_conf_order_latest_added_first">Plej novaj unue</string>
-    <string name="cram_deck_conf_order_relative_overdueness">Relativa malfruo</string>
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">Uzi nunan kartaron</string>
     <string name="add_to_deck_decide_by_note_type">Elekti laŭ nototipo</string>

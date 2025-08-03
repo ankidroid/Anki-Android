@@ -46,19 +46,6 @@
     <string name="error_reporting_choice_always_report">Всегда</string>
     <string name="error_reporting_choice_never_report">Никогда</string>
     <string name="error_reporting_choice_ask_user">Спрашивать</string>
-    <!-- leech_action_labels -->
-    <!-- 01-core:menu_suspend_card -->
-    <!-- new_order_labels -->
-    <!-- cram_deck_conf_order_labels -->
-    <string name="cram_deck_conf_order_oldest_seen_first">Давно не повторяемые</string>
-    <string name="cram_deck_conf_order_random">Случайные</string>
-    <string name="cram_deck_conf_order_increasing_intervals">По возрастанию интервалов</string>
-    <string name="cram_deck_conf_order_decreasing_intervals">По убыванию интервалов</string>
-    <string name="cram_deck_conf_order_most_lapsed">Самые забываемые</string>
-    <string name="cram_deck_conf_order_order_added">По порядку добавления</string>
-    <string name="cram_deck_conf_order_order_due">По сроку</string>
-    <string name="cram_deck_conf_order_latest_added_first">Последние добавленные</string>
-    <string name="cram_deck_conf_order_relative_overdueness">По относительной просрочке</string>
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">Использовать текущую</string>
     <string name="add_to_deck_decide_by_note_type">Выбрать по типу записи</string>

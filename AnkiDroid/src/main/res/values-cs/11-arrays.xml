@@ -46,19 +46,6 @@
     <string name="error_reporting_choice_always_report">Vždy hlásit</string>
     <string name="error_reporting_choice_never_report">Nikdy nehlásit</string>
     <string name="error_reporting_choice_ask_user">Zeptat se mě</string>
-    <!-- leech_action_labels -->
-    <!-- 01-core:menu_suspend_card -->
-    <!-- new_order_labels -->
-    <!-- cram_deck_conf_order_labels -->
-    <string name="cram_deck_conf_order_oldest_seen_first">Nejstarší nejdříve</string>
-    <string name="cram_deck_conf_order_random">Náhodně</string>
-    <string name="cram_deck_conf_order_increasing_intervals">Rostoucí intervaly</string>
-    <string name="cram_deck_conf_order_decreasing_intervals">Klesající intervaly</string>
-    <string name="cram_deck_conf_order_most_lapsed">Nejvíce zapomínané</string>
-    <string name="cram_deck_conf_order_order_added">V pořadí přidání</string>
-    <string name="cram_deck_conf_order_order_due">V pořadí ke zkoušení</string>
-    <string name="cram_deck_conf_order_latest_added_first">Naposledy přidané první</string>
-    <string name="cram_deck_conf_order_relative_overdueness">Relativní zpožděnost</string>
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">Použít aktuální balíček</string>
     <string name="add_to_deck_decide_by_note_type">Rozhodnout podle typu poznámky</string>

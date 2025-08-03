@@ -90,7 +90,7 @@
         <item>Laŭ misrespondoj</item>
         <item>Laŭ nomo de kartaro</item>
     </string-array>
-    <string name="chane_browser_column">Alĝustigi kolumnojn</string>
+    <string name="manage_browser_column">Manage column</string>
     <string name="no_columns_available">Neniu disponebla kolumno</string>
     <string name="card_browser_select_all" maxLength="28">Elekti ĉiujn</string>
     <string name="card_browser_select_none" maxLength="28">Elekti neniujn</string>

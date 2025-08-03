@@ -46,19 +46,6 @@
     <string name="error_reporting_choice_always_report">Selalu laporkan</string>
     <string name="error_reporting_choice_never_report">Jangan laporkan</string>
     <string name="error_reporting_choice_ask_user">Tanya saya</string>
-    <!-- leech_action_labels -->
-    <!-- 01-core:menu_suspend_card -->
-    <!-- new_order_labels -->
-    <!-- cram_deck_conf_order_labels -->
-    <string name="cram_deck_conf_order_oldest_seen_first">Lihat tertua terdahulu</string>
-    <string name="cram_deck_conf_order_random">Rawak</string>
-    <string name="cram_deck_conf_order_increasing_intervals">Selang menaik</string>
-    <string name="cram_deck_conf_order_decreasing_intervals">Selang menurun</string>
-    <string name="cram_deck_conf_order_most_lapsed">Paling cuai</string>
-    <string name="cram_deck_conf_order_order_added">Susunan ditambah</string>
-    <string name="cram_deck_conf_order_order_due">Susunan tunggakan</string>
-    <string name="cram_deck_conf_order_latest_added_first">Tambahan terkini terdahulu</string>
-    <string name="cram_deck_conf_order_relative_overdueness">Terlebih tunggak secara relatif</string>
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">Guna dek kini</string>
     <string name="add_to_deck_decide_by_note_type">Tentukan melalui jenis nota</string>

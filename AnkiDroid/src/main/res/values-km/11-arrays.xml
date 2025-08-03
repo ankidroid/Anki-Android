@@ -46,19 +46,6 @@
     <string name="error_reporting_choice_always_report">រាយការណ៍ជានិច្ច</string>
     <string name="error_reporting_choice_never_report">កុំរាយការណ៍</string>
     <string name="error_reporting_choice_ask_user">សួរខ្ញុំ</string>
-    <!-- leech_action_labels -->
-    <!-- 01-core:menu_suspend_card -->
-    <!-- new_order_labels -->
-    <!-- cram_deck_conf_order_labels -->
-    <string name="cram_deck_conf_order_oldest_seen_first">ឃើញអ្វីដែលចាស់បំផុតមុន</string>
-    <string name="cram_deck_conf_order_random">Random</string>
-    <string name="cram_deck_conf_order_increasing_intervals">បង្កើនចន្លោះពេលវេលា</string>
-    <string name="cram_deck_conf_order_decreasing_intervals">បន្ថយចន្លោះពេលវេលា</string>
-    <string name="cram_deck_conf_order_most_lapsed">Most lapsed</string>
-    <string name="cram_deck_conf_order_order_added">Order added</string>
-    <string name="cram_deck_conf_order_order_due">Order due</string>
-    <string name="cram_deck_conf_order_latest_added_first">Latest added first</string>
-    <string name="cram_deck_conf_order_relative_overdueness">Relative overdueness</string>
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">ប្រើជាន់បច្ចុប្បន្ន</string>
     <string name="add_to_deck_decide_by_note_type">សម្រេចដោយប្រភេទរបស់កំណត់ត្រា</string>

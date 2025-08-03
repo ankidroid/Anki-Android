@@ -46,19 +46,6 @@
     <string name="error_reporting_choice_always_report">Vedno prijavi</string>
     <string name="error_reporting_choice_never_report">Nikoli ne prijavi</string>
     <string name="error_reporting_choice_ask_user">Vprašaj me</string>
-    <!-- leech_action_labels -->
-    <!-- 01-core:menu_suspend_card -->
-    <!-- new_order_labels -->
-    <!-- cram_deck_conf_order_labels -->
-    <string name="cram_deck_conf_order_oldest_seen_first">Najprej videna najprej</string>
-    <string name="cram_deck_conf_order_random">Nakjučno</string>
-    <string name="cram_deck_conf_order_increasing_intervals">Naraščajoči razmiki</string>
-    <string name="cram_deck_conf_order_decreasing_intervals">Padajoči razmiki</string>
-    <string name="cram_deck_conf_order_most_lapsed">Z največ spodrsljaji</string>
-    <string name="cram_deck_conf_order_order_added">Vrs. red dodajanja</string>
-    <string name="cram_deck_conf_order_order_due">Vrs. red zapad.</string>
-    <string name="cram_deck_conf_order_latest_added_first">Nazadnje dodana najprej</string>
-    <string name="cram_deck_conf_order_relative_overdueness">Relativna zapadlost</string>
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">Uporabi trenutni komplet</string>
     <string name="add_to_deck_decide_by_note_type">Odloči se po vrsti zapiska</string>

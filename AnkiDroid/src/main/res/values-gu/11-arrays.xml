@@ -46,19 +46,6 @@
     <string name="error_reporting_choice_always_report">હંમેશા જાણ કરો</string>
     <string name="error_reporting_choice_never_report">ક્યારેય જાણ કરશો નહીં</string>
     <string name="error_reporting_choice_ask_user">મને પૂછો</string>
-    <!-- leech_action_labels -->
-    <!-- 01-core:menu_suspend_card -->
-    <!-- new_order_labels -->
-    <!-- cram_deck_conf_order_labels -->
-    <string name="cram_deck_conf_order_oldest_seen_first">સૌથી જૂનું પ્રથમ જોયું</string>
-    <string name="cram_deck_conf_order_random">રેન્ડમ</string>
-    <string name="cram_deck_conf_order_increasing_intervals">અંતરાલો વધારો</string>
-    <string name="cram_deck_conf_order_decreasing_intervals">ઘટતા અંતરાલ</string>
-    <string name="cram_deck_conf_order_most_lapsed">મોટા ભાગના લેપ્સ</string>
-    <string name="cram_deck_conf_order_order_added">ઓર્ડર ઉમેર્યો</string>
-    <string name="cram_deck_conf_order_order_due">Order due</string>
-    <string name="cram_deck_conf_order_latest_added_first">સૌથી નવું પ્રથમ ઉમેર્યું</string>
-    <string name="cram_deck_conf_order_relative_overdueness">Relative overdueness</string>
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">વર્તમાન ડેકનો ઉપયોગ કરો</string>
     <string name="add_to_deck_decide_by_note_type">નોંધ પ્રકાર દ્વારા નક્કી કરો</string>
