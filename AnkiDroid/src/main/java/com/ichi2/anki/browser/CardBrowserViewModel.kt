@@ -500,6 +500,22 @@ class CardBrowserViewModel(
             focusedRow = id
         }
 
+    /**
+     * Handles right-click on a row, by default delegating to onLongPress
+     */
+    fun handleRightClick(rowSelection: RowSelection) {
+        viewModelScope.launch {
+            val id = rowSelection.rowId
+            currentCardId = id.toCardId(cardsOrNotes)
+            if (isInMultiSelectMode && lastSelectedId != null) {
+                selectRowsBetween(lastSelectedId!!, id)
+            } else {
+                toggleRowSelection(rowSelection)
+            }
+            focusedRow = id
+        }
+    }
+
     // on a row tap
     fun openNoteEditorForCard(cardId: CardId) {
         currentCardId = cardId
