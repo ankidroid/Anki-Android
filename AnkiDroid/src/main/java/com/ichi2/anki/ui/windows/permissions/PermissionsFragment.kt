@@ -23,8 +23,10 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.annotation.LayoutRes
 import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
+import androidx.core.os.bundleOf
 import androidx.core.view.allViews
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResult
 import com.ichi2.anki.showThemedToast
 import timber.log.Timber
 
@@ -48,9 +50,7 @@ abstract class PermissionsFragment(
     override fun onResume() {
         super.onResume()
         permissionItems.forEach { it.updateSwitchCheckedStatus() }
-        (activity as? PermissionsActivity)?.setContinueButtonEnabled(
-            hasAllPermissions(),
-        )
+        setFragmentResult(PERMISSIONS_FRAGMENT_RESULT_KEY, bundleOf(HAS_ALL_PERMISSIONS_KEY to hasAllPermissions()))
     }
 
     /**
@@ -92,5 +92,10 @@ abstract class PermissionsFragment(
         } else {
             openAppSettingsScreen()
         }
+    }
+
+    companion object {
+        const val PERMISSIONS_FRAGMENT_RESULT_KEY = "PERMISSION_FRAGMENT_RESULT"
+        const val HAS_ALL_PERMISSIONS_KEY = "HAS_ALL_PERMISSIONS"
     }
 }
