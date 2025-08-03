@@ -20,12 +20,16 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Parcelable
 import androidx.activity.addCallback
+import androidx.annotation.VisibleForTesting
 import androidx.appcompat.widget.AppCompatButton
 import androidx.core.content.IntentCompat
 import androidx.fragment.app.commit
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.PermissionSet
 import com.ichi2.anki.R
+import com.ichi2.anki.ui.windows.permissions.PermissionsFragment.Companion.HAS_ALL_PERMISSION_KEY
+import com.ichi2.anki.ui.windows.permissions.PermissionsFragment.Companion.PERMISSIONS_FRAGMENT_RESULT_KEY
+import com.ichi2.anki.utils.ext.setFragmentResultListener
 import com.ichi2.themes.Themes
 import com.ichi2.themes.setTransparentStatusBar
 
@@ -41,7 +45,8 @@ import com.ichi2.themes.setTransparentStatusBar
  *     Nor needs to add callbacks after the permissions are granted
  * * TODO Show which permissions are mandatory and which are optional
  */
-class PermissionsActivity : AnkiActivity() {
+class PermissionsActivity :
+    AnkiActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
             return
@@ -63,6 +68,11 @@ class PermissionsActivity : AnkiActivity() {
             requireNotNull(permissionSet.permissionsFragment?.getDeclaredConstructor()?.newInstance()) {
                 "invalid permissionsFragment"
             }
+        setFragmentResultListener(PERMISSIONS_FRAGMENT_RESULT_KEY) {
+            requestKey, bundle ->
+            val hasAllPermissions = bundle.getBoolean(HAS_ALL_PERMISSION_KEY)
+            setContinueButtonEnabled(hasAllPermissions)
+        }
 
         supportFragmentManager.commit {
             replace(R.id.fragment_container, permissionsFragment)
@@ -71,6 +81,7 @@ class PermissionsActivity : AnkiActivity() {
         onBackPressedDispatcher.addCallback {}
     }
 
+    @VisibleForTesting
     fun setContinueButtonEnabled(isEnabled: Boolean) {
         findViewById<AppCompatButton>(R.id.continue_button).isEnabled = isEnabled
     }
