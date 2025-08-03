@@ -202,7 +202,6 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import net.ankiweb.rsdroid.RustCleanup
 import net.ankiweb.rsdroid.Translations
 import net.ankiweb.rsdroid.exceptions.BackendNetworkException
 import org.json.JSONException
@@ -2270,26 +2269,12 @@ open class DeckPicker :
     }
 
     /**
-     * Launch an asynchronous task to rebuild the deck list and recalculate the deck counts. Use this
-     * after any change to a deck (e.g., rename, importing, add/delete) that needs to be reflected
-     * in the deck list.
-     *
-     * This method also triggers an update for the widget to reflect the newly calculated counts.
+     * @see DeckPickerViewModel.updateDeckList
      */
     @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
-    @RustCleanup("backup with 5 minute timer, instead of deck list refresh")
     fun updateDeckList() {
-        if (!CollectionManager.isOpenUnsafe()) {
-            return
-        }
-        if (Build.FINGERPRINT != "robolectric") {
-            // uses user's desktop settings to determine whether a backup
-            // actually happens
-            performBackupInBackground()
-        }
-        Timber.d("updateDeckList")
         launchCatchingTask {
-            withProgress { viewModel.reloadDeckCounts()?.join() }
+            withProgress { viewModel.updateDeckList()?.join() }
         }
     }
 
