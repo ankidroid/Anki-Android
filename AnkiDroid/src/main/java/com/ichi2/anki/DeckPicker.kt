@@ -801,6 +801,10 @@ open class DeckPicker :
             }, 10)
         }
 
+        fun onDecksReloaded(param: Unit) {
+            hideProgressBar()
+        }
+
         fun onError(errorMessage: String) {
             AlertDialog
                 .Builder(this)
@@ -823,6 +827,7 @@ open class DeckPicker :
         viewModel.flowOfDeckList.launchCollectionInLifecycleScope(::onDeckListChanged)
         viewModel.flowOfFocusedDeck.launchCollectionInLifecycleScope(::onFocusedDeckChanged)
         viewModel.flowOfResizingDividerVisible.launchCollectionInLifecycleScope(::onResizingDividerVisibilityChanged)
+        viewModel.flowOfDecksReloaded.launchCollectionInLifecycleScope(::onDecksReloaded)
     }
 
     private val onReceiveContentListener =
@@ -2286,7 +2291,6 @@ open class DeckPicker :
         Timber.d("updateDeckList")
         launchCatchingTask {
             withProgress { viewModel.reloadDeckCounts()?.join() }
-            hideProgressBar()
         }
     }
 
