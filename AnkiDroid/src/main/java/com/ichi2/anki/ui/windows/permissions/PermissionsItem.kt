@@ -31,7 +31,11 @@ import com.ichi2.utils.Permissions
 import timber.log.Timber
 
 /**
- * Layout item that can be used to get a permission from the user.
+ * Layout item that can be used to request permissions from the user.
+ *
+ * Multiple related permissions can be requested together.
+ * E.g. READ_EXTERNAL_STORAGE and WRITE_EXTERNAL_STORAGE.
+ *
  *
  * XML attributes:
  * * app:permissionTitle ([R.styleable.PermissionItem_permissionTitle]):
@@ -46,24 +50,28 @@ import timber.log.Timber
  * * app:permissions ([R.styleable.PermissionItem_permissions]):
  *     Array of permission strings to be asked. Overrides app:permission if set
  *
- * @see R.layout.permission_item
+ * @see R.layout.permissions_item
  */
-class PermissionItem(
+class PermissionsItem(
     context: Context,
     attrs: AttributeSet,
 ) : FrameLayout(context, attrs) {
     private val switch: SwitchCompat
+
+    /**
+     * The value of either app:permissions or app:permission.
+     */
     val permissions: List<String>
-    val isGranted get() = Permissions.hasAllPermissions(context, permissions)
+    val areGranted get() = Permissions.hasAllPermissions(context, permissions)
 
     init {
-        LayoutInflater.from(context).inflate(R.layout.permission_item, this, true)
+        LayoutInflater.from(context).inflate(R.layout.permissions_item, this, true)
 
         switch =
             findViewById<SwitchCompat>(R.id.switch_widget).apply {
                 isEnabled = true
                 setOnCheckedChangeListener { button, _ ->
-                    button.isChecked = isGranted
+                    button.isChecked = areGranted
                 }
             }
 
@@ -80,7 +88,7 @@ class PermissionItem(
 
             val icon = getDrawable(R.styleable.PermissionItem_permissionIcon)
             icon?.let {
-                val color = MaterialColors.getColor(this@PermissionItem, android.R.attr.colorControlNormal)
+                val color = MaterialColors.getColor(this@PermissionsItem, android.R.attr.colorControlNormal)
                 findViewById<ImageView>(R.id.icon).apply {
                     setImageDrawable(it)
                     imageTintList = ColorStateList.valueOf(color)
@@ -88,7 +96,7 @@ class PermissionItem(
             }
         }
         setOnClickListener {
-            if (!isGranted) {
+            if (!areGranted) {
                 Timber.i("Permission item clicked, requesting permission")
                 listener?.invoke()
             } else {
@@ -101,21 +109,21 @@ class PermissionItem(
     private var listener: (() -> Unit)? = null
 
     /**
-     * Checks the switch if the permission is granted,
+     * Checks the switch if the permissions are granted,
      * or uncheck if not
      */
     fun updateSwitchCheckedStatus() {
-        switch.isChecked = isGranted
+        switch.isChecked = areGranted
     }
 
     /**
-     * It should be use to request the permission.
-     * The listener isn't invoked if the permission is already granted
+     * It should be use to request the permissions.
+     * The listener isn't invoked if the permissions are already granted
      * */
     fun setOnSwitchClickListener(listener: () -> Unit) {
         this.listener = listener
         switch.setOnClickListener {
-            if (!isGranted) {
+            if (!areGranted) {
                 Timber.i("permission switch pressed")
                 listener.invoke()
             }
