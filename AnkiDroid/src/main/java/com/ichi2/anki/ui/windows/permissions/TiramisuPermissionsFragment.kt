@@ -49,7 +49,7 @@ class TiramisuPermissionsFragment : PermissionsFragment(R.layout.permissions_tir
         view: View,
         savedInstanceState: Bundle?,
     ) {
-        view.findViewById<PermissionsItem>(R.id.all_files_permission).setOnSwitchClickListener {
+        view.findViewById<PermissionsItem>(R.id.all_files_permission).setOnPermissionRequested {
             accessAllFilesLauncher.showManageAllFilesScreen()
         }
     }
