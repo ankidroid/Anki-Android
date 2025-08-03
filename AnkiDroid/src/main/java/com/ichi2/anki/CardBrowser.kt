@@ -1949,8 +1949,8 @@ open class CardBrowser :
         @VisibleForTesting
         fun createAddNoteLauncher(
             viewModel: CardBrowserViewModel,
-            inFragmentedActivity: Boolean = false,
-        ): NoteEditorLauncher = NoteEditorLauncher.AddNoteFromCardBrowser(viewModel, inFragmentedActivity)
+            inCardBrowserActivity: Boolean = false,
+        ): NoteEditorLauncher = NoteEditorLauncher.AddNoteFromCardBrowser(viewModel, inCardBrowserActivity)
     }
 }
 
