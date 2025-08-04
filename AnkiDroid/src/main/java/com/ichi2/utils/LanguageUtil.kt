@@ -106,14 +106,10 @@ object LanguageUtil {
             "Hայերեն (Հայաստան)" to "hy-AM",
             // Indonesian
             "Indonesia" to "ind",
-            // Icelandic
-            "íslenska" to "is",
             // Italian
             "Italiano" to "it",
             // Japanese
             "日本語" to "ja",
-            // Javanese
-            "Jawa" to "jv",
             // Georgian
             "ქართული" to "ka",
             // Kazakh
@@ -176,18 +172,12 @@ object LanguageUtil {
             "Shqip" to "sq",
             // Serbian
             "Српски" to "sr",
-            // Swati
-            "Swati" to "ss",
             // Swedish (Sweden)
             "Svenska (Sverige)" to "sv-SE",
-            // Swahili
-            "Kiswahili" to "sw",
             // Tamil
             "தமிழ்" to "ta",
             // Telugu
             "తెలుగు" to "te",
-            // Tajik
-            "Тоҷикӣ" to "tg",
             // Tagalog
             "Tagalog" to "tgl",
             // Thai
@@ -195,11 +185,7 @@ object LanguageUtil {
             // Tigrinya
             "ትግርኛ" to "ti",
             // Tswana
-            "Tswana" to "tn",
-            // Turkish
             "Türkçe" to "tr",
-            // Tsonga
-            "Tsonga" to "ts",
             // Tatar (Russia)
             "Татар (Россия)" to "tt-RU",
             // Uyghur
@@ -210,22 +196,12 @@ object LanguageUtil {
             "اردو (پاکستان)" to "ur-PK",
             // Uzbek
             "Oʻzbekcha" to "uz",
-            // Venda
-            "Venda" to "ve",
             // Vietnamese
             "Tiếng Việt" to "vi",
-            // Wolof
-            "Wolof" to "wo",
-            // Xhosa
-            "isiXhosa" to "xh",
-            // Cantonese
-            "粵語" to "yue",
             // Chinese (China)
             "中文 (中国)" to "zh-CN",
             // Chinese (Taiwan)
             "中文 (台灣)" to "zh-TW",
-            // Zulu
-            "isiZulu" to "zu",
         )
 
     /** Backend languages; may not include recently added ones.
@@ -371,7 +347,6 @@ object LanguageUtil {
             "ind" -> "id"
             "tgl" -> "tl"
             "hi" -> "hi-IN"
-            "yue" -> "zh-HK"
             else -> languageTag
         }
 
