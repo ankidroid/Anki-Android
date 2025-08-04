@@ -173,10 +173,6 @@ export async function updateI18nFiles() {
 
         // Also update mappings for CrowdinLanguageTag in Crowdin.kt.
         switch (language) {
-            case "yu":
-                androidLanguages = ["yue"];
-                break;
-
             case "he":
                 // some Android phones use values-heb, some use values-iw - issue 9451
                 // the only way for Hebrew to work on all devices is to copy into both possible locations
