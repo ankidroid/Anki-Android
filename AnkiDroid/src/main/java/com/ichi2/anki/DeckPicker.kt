@@ -112,7 +112,9 @@ import com.ichi2.anki.deckpicker.BITMAP_BYTES_PER_PIXEL
 import com.ichi2.anki.deckpicker.BackgroundImage
 import com.ichi2.anki.deckpicker.DeckDeletionResult
 import com.ichi2.anki.deckpicker.DeckPickerViewModel
+import com.ichi2.anki.deckpicker.DeckPickerViewModel.AnkiDroidEnvironment
 import com.ichi2.anki.deckpicker.DeckPickerViewModel.FlattenedDeckList
+import com.ichi2.anki.deckpicker.DeckPickerViewModel.StartupResponse
 import com.ichi2.anki.deckpicker.EmptyCardsResult
 import com.ichi2.anki.dialogs.AsyncDialogFragment
 import com.ichi2.anki.dialogs.BackupPromptDialog
@@ -165,6 +167,7 @@ import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.ResizablePaneManager
 import com.ichi2.anki.ui.animations.fadeIn
 import com.ichi2.anki.ui.animations.fadeOut
+import com.ichi2.anki.ui.windows.permissions.PermissionsActivity
 import com.ichi2.anki.utils.Destination
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.anki.utils.ext.setFragmentResultListener
@@ -315,9 +318,6 @@ open class DeckPicker :
     // flag keeping track of when the app has been paused
     var activityPaused = false
         private set
-
-    // Flag to keep track of startup error
-    private var startupError = false
 
     /** See [OptionsMenuState]. */
     @VisibleForTesting
@@ -526,29 +526,14 @@ open class DeckPicker :
 
         setContentView(R.layout.homescreen)
         enableToolbar()
+        // TODO This method is run on every activity recreation, which can happen often.
+        //  It seems that the original idea was for for this to only run once, on app start.
+        //  This method triggers backups, sync, and may re-show dialogs
+        //  that may have been dismissed. Make this run only once?
         handleStartup()
         val mainView = findViewById<View>(android.R.id.content)
 
         studyoptionsFrame = findViewById(R.id.studyoptions_fragment)
-
-        // Open StudyOptionsFragment if in fragmented mode
-        if (fragmented && !startupError) {
-            loadStudyOptionsFragment(false)
-
-            val resizingDivider = findViewById<View>(R.id.homescreen_resizing_divider)
-            val parentLayout = findViewById<LinearLayout>(R.id.deckpicker_xl_view)
-            val deckPickerPane = findViewById<View>(R.id.deck_picker_pane)
-            val studyOptionsPane = findViewById<View>(R.id.studyoptions_fragment)
-            ResizablePaneManager(
-                parentLayout = parentLayout,
-                divider = resizingDivider,
-                leftPane = deckPickerPane,
-                rightPane = studyOptionsPane,
-                sharedPrefs = Prefs.getUiConfig(this),
-                leftPaneWeightKey = PREF_DECK_PICKER_PANE_WEIGHT,
-                rightPaneWeightKey = PREF_STUDY_OPTIONS_PANE_WEIGHT,
-            )
-        }
         registerReceiver()
 
         // create inherited navigation drawer layout here so that it can be used by parent class
@@ -803,6 +788,40 @@ open class DeckPicker :
             hideProgressBar()
         }
 
+        fun onStartupResponse(response: StartupResponse) {
+            Timber.d("onStartupResponse: %s", response)
+            when (response) {
+                is StartupResponse.RequestPermissions ->
+                    permissionScreenLauncher.launch(
+                        PermissionsActivity.getIntent(this, response.requiredPermissions),
+                    )
+
+                is StartupResponse.Success -> {
+                    showStartupScreensAndDialogs(sharedPrefs(), 0)
+
+                    // Open StudyOptionsFragment if in fragmented mode
+                    if (fragmented) {
+                        loadStudyOptionsFragment(false)
+
+                        val resizingDivider = findViewById<View>(R.id.homescreen_resizing_divider)
+                        val parentLayout = findViewById<LinearLayout>(R.id.deckpicker_xl_view)
+                        val deckPickerPane = findViewById<View>(R.id.deck_picker_pane)
+                        val studyOptionsPane = findViewById<View>(R.id.studyoptions_fragment)
+                        ResizablePaneManager(
+                            parentLayout = parentLayout,
+                            divider = resizingDivider,
+                            leftPane = deckPickerPane,
+                            rightPane = studyOptionsPane,
+                            sharedPrefs = Prefs.getUiConfig(this),
+                            leftPaneWeightKey = PREF_DECK_PICKER_PANE_WEIGHT,
+                            rightPaneWeightKey = PREF_STUDY_OPTIONS_PANE_WEIGHT,
+                        )
+                    }
+                }
+                is StartupResponse.FatalError -> handleStartupFailure(response.failure)
+            }
+        }
+
         fun onError(errorMessage: String) {
             AlertDialog
                 .Builder(this)
@@ -826,6 +845,7 @@ open class DeckPicker :
         viewModel.flowOfFocusedDeck.launchCollectionInLifecycleScope(::onFocusedDeckChanged)
         viewModel.flowOfResizingDividerVisible.launchCollectionInLifecycleScope(::onResizingDividerVisibilityChanged)
         viewModel.flowOfDecksReloaded.launchCollectionInLifecycleScope(::onDecksReloaded)
+        viewModel.flowOfStartupResponse.filterNotNull().launchCollectionInLifecycleScope(::onStartupResponse)
     }
 
     private val onReceiveContentListener =
@@ -933,32 +953,24 @@ open class DeckPicker :
     }
 
     /**
-     * The first call in showing dialogs for startup - error or success.
-     * Attempts startup if storage permission has been acquired, else, it requests the permission
-     *
-     * TODO This method is run on every activity recreation, which can happen often.
-     *   It seems that the original idea was for for this to only run once, on app start.
-     *   This method triggers backups, sync, and may re-show dialogs
-     *   that may have been dismissed. Make this run only once?
+     * @see DeckPickerViewModel.handleStartup
      */
     private fun handleStartup() {
-        if (collectionPermissionScreenWasOpened()) {
-            return
-        }
+        val context = AnkiDroidApp.instance
 
-        Timber.d("handleStartup: Continuing after permission granted")
-        val failure = InitialActivity.getStartupFailureType(this)
-        startupError =
-            if (failure == null) {
-                // Show any necessary dialogs (e.g. changelog, special messages, etc)
-                val sharedPrefs = this.sharedPrefs()
-                showStartupScreensAndDialogs(sharedPrefs, 0)
-                false
-            } else {
-                // Show error dialogs
-                handleStartupFailure(failure)
-                true
+        val environment: AnkiDroidEnvironment =
+            object : AnkiDroidEnvironment {
+                private val folder = selectAnkiDroidFolder(context)
+
+                override fun hasRequiredPermissions(): Boolean = folder.hasRequiredPermissions(context)
+
+                override val requiredPermissions: PermissionSet
+                    get() = folder.permissionSet
+
+                override fun initializeAnkiDroidFolder(): Boolean = CollectionHelper.isCurrentAnkiDroidDirAccessible(context)
             }
+
+        viewModel.handleStartup(environment = environment)
     }
 
     @VisibleForTesting
