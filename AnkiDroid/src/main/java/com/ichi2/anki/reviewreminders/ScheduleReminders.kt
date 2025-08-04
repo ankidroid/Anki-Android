@@ -30,11 +30,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+import com.ichi2.anki.CrashReportData.Companion.toCrashReportData
 import com.ichi2.anki.R
 import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.DeckId
+import com.ichi2.anki.showError
+import com.ichi2.anki.withProgress
+import kotlinx.serialization.SerializationException
 import timber.log.Timber
 
 /**
@@ -129,12 +133,14 @@ class ScheduleReminders :
     private suspend fun loadDatabaseRemindersIntoUI() {
         Timber.d("Loading review reminders from database")
         reminders =
-            when (val scope = scheduleRemindersScope) {
-                is ReviewReminderScope.Global -> {
-                    HashMap(database.getAllAppWideReminders() + database.getAllDeckSpecificReminders())
+            catchDatabaseExceptions {
+                when (val scope = scheduleRemindersScope) {
+                    is ReviewReminderScope.Global -> {
+                        HashMap(database.getAllAppWideReminders() + database.getAllDeckSpecificReminders())
+                    }
+                    is ReviewReminderScope.DeckSpecific -> database.getRemindersForDeck(scope.did)
                 }
-                is ReviewReminderScope.DeckSpecific -> database.getRemindersForDeck(scope.did)
-            }
+            } ?: hashMapOf()
         triggerUIUpdate()
         Timber.d("Database review reminders successfully loaded")
     }
@@ -177,9 +183,13 @@ class ScheduleReminders :
                 reminders
             }
 
-        when (scope) {
-            is ReviewReminderScope.Global -> database.editAllAppWideReminders(performToggle)
-            is ReviewReminderScope.DeckSpecific -> database.editRemindersForDeck(scope.did, performToggle)
+        launchCatchingTask {
+            catchDatabaseExceptions {
+                when (scope) {
+                    is ReviewReminderScope.Global -> database.editAllAppWideReminders(performToggle)
+                    is ReviewReminderScope.DeckSpecific -> database.editRemindersForDeck(scope.did, performToggle)
+                }
+            }
         }
 
         reminders[id]?.enabled = newState
@@ -255,6 +265,30 @@ class ScheduleReminders :
          * @see onDeckSelected
          */
         const val DECK_SELECTION_RESULT_REQUEST_KEY = "reminder_deck_selection_result_request_key"
+
+        private const val SERIALIZATION_ERROR_MESSAGE =
+            "Something went wrong. A serialization error was encountered while working with review reminders."
+        private const val DATA_TYPE_ERROR_MESSAGE =
+            "Something went wrong. An unexpected data type was found while working with review reminders."
+
+        /**
+         * Wrapper for database access.
+         * Shows an error dialog if [SerializationException]s or [IllegalArgumentException]s are thrown.
+         * Shows a progress dialog if database access takes a long time.
+         */
+        private suspend fun <T> Fragment.catchDatabaseExceptions(block: () -> T): T? =
+            try {
+                Timber.d("Attempting ReviewRemindersDatabase operation")
+                withProgress { block() }
+            } catch (e: SerializationException) {
+                Timber.e("JSON Serialization error occurred")
+                requireContext().showError("$SERIALIZATION_ERROR_MESSAGE: $e", e.toCrashReportData(requireContext()))
+                null
+            } catch (e: IllegalArgumentException) {
+                Timber.e("JSON Illegal argument exception occurred")
+                requireContext().showError("$DATA_TYPE_ERROR_MESSAGE: $e", e.toCrashReportData(requireContext()))
+                null
+            }
 
         /**
          * Creates an intent to start the ScheduleReminders fragment.
