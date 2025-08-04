@@ -31,6 +31,7 @@ import com.ichi2.anki.InitialActivity
 import com.ichi2.anki.OnErrorListener
 import com.ichi2.anki.PermissionSet
 import com.ichi2.anki.browser.BrowserDestination
+import com.ichi2.anki.configureRenderingMode
 import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.libanki.CardId
 import com.ichi2.anki.libanki.Consts
@@ -399,8 +400,16 @@ class DeckPickerViewModel(
 
         Timber.d("handleStartup: Continuing after permission granted")
         val failure = InitialActivity.getStartupFailureType(environment::initializeAnkiDroidFolder)
-        flowOfStartupResponse.value =
-            if (failure == null) StartupResponse.Success else StartupResponse.FatalError(failure)
+        if (failure != null) {
+            flowOfStartupResponse.value = StartupResponse.FatalError(failure)
+            return
+        }
+
+        // successful startup
+
+        configureRenderingMode()
+
+        flowOfStartupResponse.value = StartupResponse.Success
     }
 
     interface AnkiDroidEnvironment {
