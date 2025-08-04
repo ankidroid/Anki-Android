@@ -33,7 +33,6 @@ import android.content.res.Configuration
 import android.database.SQLException
 import android.graphics.PixelFormat
 import android.graphics.drawable.Drawable
-import android.os.Build
 import android.os.Bundle
 import android.os.Message
 import android.text.util.Linkify
@@ -177,7 +176,6 @@ import com.ichi2.anki.worker.SyncMediaWorker
 import com.ichi2.anki.worker.SyncWorker
 import com.ichi2.anki.worker.UniqueWorkNames
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
-import com.ichi2.compat.CompatHelper.Companion.sdkVersion
 import com.ichi2.ui.AccessibleSearchView
 import com.ichi2.ui.BadgeDrawableBuilder
 import com.ichi2.utils.AdaptionUtil
@@ -1781,17 +1779,6 @@ open class DeckPicker :
         preferences: SharedPreferences,
         skip: Int,
     ) {
-        // For Android 8/8.1 we want to use software rendering by default or the Reviewer UI is broken #7369
-        if (sdkVersion == Build.VERSION_CODES.O ||
-            sdkVersion == Build.VERSION_CODES.O_MR1
-        ) {
-            if (!preferences.contains("softwareRender")) {
-                Timber.i("Android 8/8.1 detected with no render preference. Turning on software render.")
-                preferences.edit { putBoolean("softwareRender", true) }
-            } else {
-                Timber.i("Android 8/8.1 detected, software render preference already exists.")
-            }
-        }
         if (!BackupManager.enoughDiscSpace(CollectionHelper.getCurrentAnkiDroidDirectory(this))) {
             Timber.i("Not enough space to do backup")
             showDialogFragment(DeckPickerNoSpaceLeftDialog.newInstance())
