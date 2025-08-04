@@ -38,13 +38,16 @@ import com.ichi2.utils.VersionUtils.pkgVersionName
 import kotlinx.parcelize.Parcelize
 import net.ankiweb.rsdroid.BackendException
 import timber.log.Timber
-import java.lang.Exception
 
 /** Utilities for launching the first activity (currently the DeckPicker)  */
 object InitialActivity {
+    @CheckResult
+    fun getStartupFailureType(context: Context): StartupFailure? =
+        getStartupFailureType { CollectionHelper.isCurrentAnkiDroidDirAccessible(context) }
+
     /** Returns null on success  */
     @CheckResult
-    fun getStartupFailureType(context: Context): StartupFailure? {
+    fun getStartupFailureType(initializeAnkiDroidDirectory: () -> Boolean): StartupFailure? {
         // A WebView failure means that we skip `AnkiDroidApp`, and therefore haven't loaded the collection
         if (AnkiDroidApp.webViewFailedToLoad()) {
             return StartupFailure.WebviewFailed
@@ -76,7 +79,7 @@ object InitialActivity {
 
         if (!AnkiDroidApp.isSdCardMounted) {
             return StartupFailure.SDCardNotMounted
-        } else if (!CollectionHelper.isCurrentAnkiDroidDirAccessible(context)) {
+        } else if (!initializeAnkiDroidDirectory()) {
             return StartupFailure.DirectoryNotAccessible
         }
 

@@ -27,7 +27,9 @@ import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.DeckPicker
+import com.ichi2.anki.InitialActivity
 import com.ichi2.anki.OnErrorListener
+import com.ichi2.anki.PermissionSet
 import com.ichi2.anki.browser.BrowserDestination
 import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.libanki.CardId
@@ -64,6 +66,8 @@ class DeckPickerViewModel(
     val fragmented: Boolean,
 ) : ViewModel(),
     OnErrorListener {
+    val flowOfStartupResponse = MutableStateFlow<StartupResponse?>(null)
+
     private val flowOfDeckDueTree = MutableStateFlow<DeckNode?>(null)
 
     /** The root of the tree displaying all decks */
@@ -362,6 +366,50 @@ class DeckPickerViewModel(
             }
             flowOfRefreshDeckList.emit(Unit)
         }
+
+    sealed class StartupResponse {
+        data class RequestPermissions(
+            val requiredPermissions: PermissionSet,
+        ) : StartupResponse()
+
+        /**
+         * The app failed to start and is probably unusable (e.g. No disk space/DB corrupt)
+         *
+         * @see InitialActivity.StartupFailure
+         */
+        data class FatalError(
+            val failure: InitialActivity.StartupFailure,
+        ) : StartupResponse()
+
+        data object Success : StartupResponse()
+    }
+
+    /**
+     * The first call in showing dialogs for startup - error or success.
+     * Attempts startup if storage permission has been acquired, else, it requests the permission
+     *
+     * @see flowOfStartupResponse
+     */
+    fun handleStartup(environment: AnkiDroidEnvironment) {
+        if (!environment.hasRequiredPermissions()) {
+            Timber.i("${this.javaClass.simpleName}: postponing startup code - permission screen shown")
+            flowOfStartupResponse.value = StartupResponse.RequestPermissions(environment.requiredPermissions)
+            return
+        }
+
+        Timber.d("handleStartup: Continuing after permission granted")
+        val failure = InitialActivity.getStartupFailureType(environment::initializeAnkiDroidFolder)
+        flowOfStartupResponse.value =
+            if (failure == null) StartupResponse.Success else StartupResponse.FatalError(failure)
+    }
+
+    interface AnkiDroidEnvironment {
+        fun hasRequiredPermissions(): Boolean
+
+        val requiredPermissions: PermissionSet
+
+        fun initializeAnkiDroidFolder(): Boolean
+    }
 
     /** Represents [dueTree] as a list */
     data class FlattenedDeckList(
