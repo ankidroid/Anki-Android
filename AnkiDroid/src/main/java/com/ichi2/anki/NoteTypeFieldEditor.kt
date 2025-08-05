@@ -16,14 +16,19 @@
  ****************************************************************************************/
 package com.ichi2.anki
 
+import android.content.Context
 import android.os.Bundle
 import android.text.InputType
+import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.ListView
+import android.widget.TextView
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.core.os.BundleCompat
@@ -45,6 +50,7 @@ import com.ichi2.anki.libanki.exception.ConfirmModSchemaException
 import com.ichi2.anki.servicelayer.LanguageHintService.setLanguageHintForField
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
+import com.ichi2.anki.utils.ext.setCompoundDrawablesRelativeWithIntrinsicBoundsKt
 import com.ichi2.anki.utils.ext.setFragmentResultListener
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.ui.FixedEditText
@@ -151,7 +157,7 @@ class NoteTypeFieldEditor : AnkiActivity() {
         notetype = collectionModel
         noteFields = notetype.fields
         fieldsLabels = notetype.fieldsNames
-        fieldsListView.adapter = ArrayAdapter(this, R.layout.note_type_field_editor_list_item, fieldsLabels)
+        fieldsListView.adapter = NoteFieldAdapter(this, fieldNamesWithKind())
         fieldsListView.onItemClickListener =
             AdapterView.OnItemClickListener { _, _, position: Int, _ ->
                 showDialogFragment(newInstance(fieldsLabels[position]))
@@ -554,5 +560,53 @@ class NoteTypeFieldEditor : AnkiActivity() {
     fun renameField(fieldNameInput: EditText?) {
         this.fieldNameInput = fieldNameInput
         renameField()
+    }
+
+    /*
+     * Returns a list of field names with their kind
+     * So far the only kind is SORT, which defines the field upon which notes could be sorted
+     */
+    private fun fieldNamesWithKind(): List<Pair<String, NodetypeKind>> =
+        fieldsLabels.mapIndexed { index, fieldName ->
+            Pair(
+                fieldName,
+                if (index == notetype.sortf) NodetypeKind.SORT else NodetypeKind.UNDEFINED,
+            )
+        }
+}
+
+enum class NodetypeKind {
+    SORT,
+    UNDEFINED,
+}
+
+internal class NoteFieldAdapter(
+    private val context: Context,
+    labels: List<Pair<String, NodetypeKind>>,
+) : ArrayAdapter<Pair<String, NodetypeKind>>(context, 0, labels) {
+    override fun getView(
+        position: Int,
+        convertView: View?,
+        parent: ViewGroup,
+    ): View {
+        val view =
+            convertView ?: LayoutInflater
+                .from(context)
+                .inflate(R.layout.note_type_field_editor_list_item, parent, false)
+
+        val nameTextView: TextView = view.findViewById(R.id.model_editor_list_display)
+
+        getItem(position)?.let {
+            val (name, kind) = it
+            nameTextView.text = name
+            nameTextView.setCompoundDrawablesRelativeWithIntrinsicBoundsKt(
+                end =
+                    when (kind) {
+                        NodetypeKind.SORT -> R.drawable.ic_sort
+                        NodetypeKind.UNDEFINED -> 0
+                    },
+            )
+        }
+        return view
     }
 }
