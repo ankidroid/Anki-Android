@@ -62,6 +62,7 @@ import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.android.input.ShortcutGroup
 import com.ichi2.anki.android.input.ShortcutGroupProvider
 import com.ichi2.anki.android.input.shortcut
+import com.ichi2.anki.common.annotations.LegacyNotifications
 import com.ichi2.anki.common.utils.android.isRobolectric
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.dialogs.AsyncDialogFragment
@@ -74,9 +75,9 @@ import com.ichi2.anki.dialogs.ExportReadyDialog.Companion.REQUEST_EXPORT_SAVE
 import com.ichi2.anki.dialogs.ExportReadyDialog.Companion.REQUEST_EXPORT_SHARE
 import com.ichi2.anki.dialogs.SimpleMessageDialog
 import com.ichi2.anki.libanki.Collection
-import com.ichi2.anki.preferences.PENDING_NOTIFICATIONS_ONLY
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.receiver.SdCardReceiver
+import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.workarounds.AppLoadedFromBackupWorkaround.showedActivityFailedScreen
@@ -586,54 +587,56 @@ open class AnkiActivity :
         message: String?,
         channel: Channel,
     ) {
-        val prefs = this.sharedPrefs()
-        // Show a notification unless all notifications have been totally disabled
-        if (prefs
-                .getString(getString(R.string.pref_notifications_minimum_cards_due_key), "0")!!
-                .toInt() <= PENDING_NOTIFICATIONS_ONLY
-        ) {
-            // Use the title as the ticker unless the title is simply "AnkiDroid"
-            val ticker: String? =
-                if (title == resources.getString(R.string.app_name)) {
-                    message
-                } else {
-                    title
-                }
-            // Build basic notification
-            val builder =
-                NotificationCompat
-                    .Builder(
-                        this,
-                        channel.id,
-                    ).setSmallIcon(R.drawable.ic_star_notify)
-                    .setContentTitle(title)
-                    .setContentText(message)
-                    .setColor(this.getColor(R.color.material_light_blue_500))
-                    .setStyle(NotificationCompat.BigTextStyle().bigText(message))
-                    .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-                    .setTicker(ticker)
+        // Use the title as the ticker unless the title is simply "AnkiDroid"
+        val ticker: String? =
+            if (title == resources.getString(R.string.app_name)) {
+                message
+            } else {
+                title
+            }
+        // Build basic notification
+        val builder =
+            NotificationCompat
+                .Builder(
+                    this,
+                    channel.id,
+                ).setSmallIcon(R.drawable.ic_star_notify)
+                .setContentTitle(title)
+                .setContentText(message)
+                .setColor(getColor(R.color.material_light_blue_500))
+                .setStyle(NotificationCompat.BigTextStyle().bigText(message))
+                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+                .setTicker(ticker)
+        configureLegacyNotificationSettings(builder)
+        // Creates an explicit intent for an Activity in your app
+        val resultIntent = Intent(this, DeckPicker::class.java)
+        resultIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        val resultPendingIntent =
+            PendingIntentCompat.getActivity(
+                this,
+                0,
+                resultIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT,
+                false,
+            )
+        builder.setContentIntent(resultPendingIntent)
+        val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+        // mId allows you to update the notification later on.
+        notificationManager.notify(SIMPLE_NOTIFICATION_ID, builder.build())
+    }
+
+    @LegacyNotifications("Delete once review reminders are stable, these are configurable from OS settings")
+    private fun configureLegacyNotificationSettings(builder: NotificationCompat.Builder) {
+        if (!Prefs.newReviewRemindersEnabled) {
             // Enable vibrate and blink if set in preferences
+            // In the new review reminders system, the user sets these by going to the OS settings themselves
+            val prefs = this.sharedPrefs()
             if (prefs.getBoolean("widgetVibrate", false)) {
                 builder.setVibrate(longArrayOf(1000, 1000, 1000))
             }
             if (prefs.getBoolean("widgetBlink", false)) {
                 builder.setLights(Color.BLUE, 1000, 1000)
             }
-            // Creates an explicit intent for an Activity in your app
-            val resultIntent = Intent(this, DeckPicker::class.java)
-            resultIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            val resultPendingIntent =
-                PendingIntentCompat.getActivity(
-                    this,
-                    0,
-                    resultIntent,
-                    PendingIntent.FLAG_UPDATE_CURRENT,
-                    false,
-                )
-            builder.setContentIntent(resultPendingIntent)
-            val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
-            // mId allows you to update the notification later on.
-            notificationManager.notify(SIMPLE_NOTIFICATION_ID, builder.build())
         }
     }
 
