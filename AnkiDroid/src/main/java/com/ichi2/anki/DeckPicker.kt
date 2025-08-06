@@ -522,6 +522,11 @@ open class DeckPicker :
             syncOnResume = true
         }
 
+        if (!Permissions.canAccessInternet(this)) {
+            this.startActivity(PermissionsActivity.getIntent(this, PermissionSet.APP_PRIVATE))
+            Timber.d("Internet not accessible")
+        }
+
         setContentView(R.layout.homescreen)
         enableToolbar()
         // TODO This method is run on every activity recreation, which can happen often.
@@ -1440,12 +1445,6 @@ open class DeckPicker :
         super.onResume()
         if (navDrawerIsReady() && hasCollectionStoragePermissions()) {
             refreshState()
-        }
-
-        if (!Permissions.canAccessInternet(this) && !SessionPermissionTracker.hasShownInternetInfo) {
-            SessionPermissionTracker.hasShownInternetInfo = true
-            this.startActivity(PermissionsActivity.getIntent(this, PermissionSet.INTERNET_BLOCKED_INFO))
-            Timber.d("Internet not accessible")
         }
         message?.let { dialogHandler.sendStoredMessage(it) }
     }
