@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.windows.permissions.InternetInfoFragment">
+    tools:context=".ui.windows.permissions.InternetPermissionFragment">
 
     <com.ichi2.anki.ui.windows.permissions.PermissionItem
         android:id="@+id/internet_permission"

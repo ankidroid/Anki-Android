@@ -538,6 +538,11 @@ open class DeckPicker :
         }
 
         setViewBinding(binding)
+        if (!Permissions.canAccessInternet(this)) {
+            this.startActivity(PermissionsActivity.getIntent(this, PermissionSet.APP_PRIVATE))
+            Timber.d("Internet not accessible")
+        }
+
         enableToolbar()
         // TODO This method is run on every activity recreation, which can happen often.
         //  It seems that the original idea was for for this to only run once, on app start.
@@ -1439,12 +1444,6 @@ open class DeckPicker :
         super.onResume()
         if (navDrawerIsReady() && hasCollectionStoragePermissions()) {
             refreshState()
-        }
-
-        if (!Permissions.canAccessInternet(this) && !SessionPermissionTracker.hasShownInternetInfo) {
-            SessionPermissionTracker.hasShownInternetInfo = true
-            this.startActivity(PermissionsActivity.getIntent(this, PermissionSet.INTERNET_BLOCKED_INFO))
-            Timber.d("Internet not accessible")
         }
         message?.let { dialogHandler.sendStoredMessage(it) }
     }
