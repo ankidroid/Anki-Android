@@ -43,7 +43,10 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import anki.collection.OpChanges
+import com.google.android.material.chip.Chip
 import com.google.android.material.progressindicator.LinearProgressIndicator
+import com.google.android.material.search.SearchBar
+import com.google.android.material.search.SearchView
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.AnkiActivityProvider
 import com.ichi2.anki.CardBrowser
@@ -151,6 +154,11 @@ class CardBrowserFragment :
     private val useSearchView: Boolean
         get() = requireCardBrowserActivity().useSearchView
 
+    // only usable if 'useSearchView' is set
+    private var searchBar: SearchBar? = null
+    private var searchView: SearchView? = null
+    private var deckChip: Chip? = null
+
     @get:LayoutRes
     private val layout: Int
         get() = if (useSearchView) R.layout.cardbrowser_searchview else R.layout.cardbrowser
@@ -209,6 +217,10 @@ class CardBrowserFragment :
             }
 
         progressIndicator = view.findViewById(R.id.browser_progress)
+
+        deckChip = view.findViewById<Chip>(R.id.chip_decks)
+        searchBar = view.findViewById<SearchBar>(R.id.search_bar)
+        searchView = view.findViewById<SearchView>(R.id.search_view)
 
         setupFlows()
 
