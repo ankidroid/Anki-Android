@@ -145,8 +145,10 @@ class CardBrowserViewModel(
 
     val flowOfSearchState = MutableSharedFlow<SearchState>()
 
-    var searchTerms = ""
-        private set
+    val flowOfSearchTerms = MutableStateFlow("")
+
+    val searchTerms: String
+        get() = flowOfSearchTerms.value
 
     @VisibleForTesting
     var restrictOnDeck: String = ""
@@ -371,14 +373,14 @@ class CardBrowserViewModel(
         var selectAllDecks = false
         when (options) {
             is CardBrowserLaunchOptions.SystemContextMenu -> {
-                searchTerms = options.search.toString()
+                flowOfSearchTerms.value = options.search.toString()
             }
             is CardBrowserLaunchOptions.SearchQueryJs -> {
-                searchTerms = options.search
+                flowOfSearchTerms.value = options.search
                 selectAllDecks = options.allDecks
             }
             is CardBrowserLaunchOptions.DeepLink -> {
-                searchTerms = options.search
+                flowOfSearchTerms.value = options.search
             }
             null -> {}
         }
@@ -1121,7 +1123,7 @@ class CardBrowserViewModel(
             Timber.d("skipping duplicate search: forceRefresh is false")
             return
         }
-        searchTerms =
+        flowOfSearchTerms.value =
             if (shouldIgnoreAccents) {
                 searchQuery.normalizeForSearch()
             } else {
