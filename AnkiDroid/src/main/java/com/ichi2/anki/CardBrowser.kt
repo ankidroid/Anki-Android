@@ -153,7 +153,9 @@ open class CardBrowser :
      */
     private var noteEditorFrame: FragmentContainerView? = null
 
-    private lateinit var deckSpinnerSelection: DeckSpinnerSelection
+    private var deckSpinnerSelection: DeckSpinnerSelection? = null
+
+    private var actionBarTitle: TextView? = null
 
     private var searchView: CardBrowserSearchView? = null
 
@@ -239,7 +241,6 @@ open class CardBrowser :
             }
             invalidateOptionsMenu() // maybe the availability of undo changed
         }
-    private lateinit var actionBarTitle: TextView
 
     // TODO: Remove this and use `opChanges`
     private var reloadRequired = false
@@ -269,7 +270,7 @@ open class CardBrowser :
                 launchCatchingTask {
                     val updatedFilters = viewModel.removeSavedSearch(searchName)
                     if (updatedFilters.isEmpty()) {
-                        mySearchesItem!!.isVisible = false
+                        mySearchesItem?.isVisible = false
                     }
                 }
             }
@@ -296,8 +297,8 @@ open class CardBrowser :
                                 Snackbar.LENGTH_SHORT,
                             )
                         SaveSearchResult.SUCCESS -> {
-                            searchView!!.setQuery("", false)
-                            mySearchesItem!!.isVisible = true
+                            searchView?.setQuery("", false)
+                            mySearchesItem?.isVisible = true
                         }
                     }
                 }
@@ -316,8 +317,8 @@ open class CardBrowser :
     @NeedsTest("search bar is set after selecting a saved search as first action")
     private fun searchForQuery(query: String) {
         // setQuery before expand does not set the view's value
-        searchItem!!.expandActionView()
-        searchView!!.setQuery(query, submit = true)
+        searchItem?.expandActionView()
+        searchView?.setQuery(query, submit = true)
     }
 
     private fun canPerformCardInfo(): Boolean = viewModel.selectedRowCount() == 1
@@ -389,19 +390,21 @@ open class CardBrowser :
                 }
             }
 
-        // initialize the lateinit variables
-        // Load reference to action bar title
-        actionBarTitle = findViewById(R.id.toolbar_title)
+        if (!useSearchView) {
+            // initialize the lateinit variables
+            // Load reference to action bar title
+            actionBarTitle = findViewById(R.id.toolbar_title)
 
-        deckSpinnerSelection =
-            DeckSpinnerSelection(
-                this,
-                findViewById(R.id.toolbar_spinner),
-                showAllDecks = true,
-                alwaysShowDefault = false,
-                showFilteredDecks = true,
-                subtitleProvider = this,
-            )
+            deckSpinnerSelection =
+                DeckSpinnerSelection(
+                    this,
+                    findViewById(R.id.toolbar_spinner),
+                    showAllDecks = true,
+                    alwaysShowDefault = false,
+                    showFilteredDecks = true,
+                    subtitleProvider = this,
+                )
+        }
 
         startLoadingCollection()
 
@@ -504,14 +507,14 @@ open class CardBrowser :
 
         fun onFilterQueryChanged(filterQuery: String) {
             // setQuery before expand does not set the view's value
-            searchItem!!.expandActionView()
-            searchView!!.setQuery(filterQuery, submit = false)
+            searchItem?.expandActionView()
+            searchView?.setQuery(filterQuery, submit = false)
         }
 
         suspend fun onDeckIdChanged(deckId: DeckId?) {
             if (deckId == null) return
             // this handles ALL_DECKS_ID
-            deckSpinnerSelection.selectDeckById(deckId, false)
+            deckSpinnerSelection?.selectDeckById(deckId, false)
         }
 
         fun onCanSaveChanged(canSave: Boolean) {
@@ -523,14 +526,14 @@ open class CardBrowser :
                 // Turn on Multi-Select Mode so that the user can select multiple cards at once.
                 Timber.d("load multiselect mode")
                 // show title and hide spinner
-                actionBarTitle.visibility = View.VISIBLE
-                deckSpinnerSelection.setSpinnerVisibility(View.GONE)
+                actionBarTitle?.visibility = View.VISIBLE
+                deckSpinnerSelection?.setSpinnerVisibility(View.GONE)
                 multiSelectOnBackPressedCallback.isEnabled = true
             } else {
                 Timber.d("end multiselect mode")
                 refreshSubtitle()
-                deckSpinnerSelection.setSpinnerVisibility(View.VISIBLE)
-                actionBarTitle.visibility = View.GONE
+                deckSpinnerSelection?.setSpinnerVisibility(View.VISIBLE)
+                actionBarTitle?.visibility = View.GONE
                 multiSelectOnBackPressedCallback.isEnabled = false
             }
             // reload the actionbar using the multi-select mode actionbar
@@ -611,7 +614,7 @@ open class CardBrowser :
         registerReceiver()
 
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
-        deckSpinnerSelection.apply {
+        deckSpinnerSelection?.apply {
             initializeActionBarDeckSpinner(col, supportActionBar!!)
             launchCatchingTask {
                 selectDeckById(
@@ -966,7 +969,7 @@ open class CardBrowser :
             return
         }
         // set the number of selected rows (only in multiselect)
-        actionBarTitle.text = String.format(LanguageUtil.getLocaleCompat(resources), "%d", viewModel.selectedRowCount())
+        actionBarTitle?.text = String.format(LanguageUtil.getLocaleCompat(resources), "%d", viewModel.selectedRowCount())
 
         actionBarMenu.findItem(R.id.action_flag).isVisible = viewModel.hasSelectedAnyRows()
         actionBarMenu.findItem(R.id.action_suspend_card).apply {
@@ -1231,7 +1234,7 @@ open class CardBrowser :
     private fun updateList() {
         if (!colIsOpenUnsafe()) return
         Timber.d("updateList")
-        deckSpinnerSelection.notifyDataSetChanged()
+        deckSpinnerSelection?.notifyDataSetChanged()
         onSelectionChanged()
         refreshMenuItems()
     }
