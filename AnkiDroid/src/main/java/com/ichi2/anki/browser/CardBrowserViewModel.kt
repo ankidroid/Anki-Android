@@ -56,7 +56,6 @@ import com.ichi2.anki.libanki.Card
 import com.ichi2.anki.libanki.CardId
 import com.ichi2.anki.libanki.CardType
 import com.ichi2.anki.libanki.DeckId
-import com.ichi2.anki.libanki.DeckNameId
 import com.ichi2.anki.libanki.QueueType
 import com.ichi2.anki.libanki.QueueType.ManuallyBuried
 import com.ichi2.anki.libanki.QueueType.SiblingBuried
@@ -65,6 +64,7 @@ import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.model.CardsOrNotes
 import com.ichi2.anki.model.CardsOrNotes.CARDS
 import com.ichi2.anki.model.CardsOrNotes.NOTES
+import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.anki.model.SortType
 import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.observability.undoableOp
@@ -1256,6 +1256,19 @@ class CardBrowserViewModel(
         launchSearchForCards()
     }
 
+    /** Opens the UI to save the current [tempSearchQuery] as a saved search */
+    fun saveCurrentSearch() =
+        viewModelScope.launch {
+            val query = tempSearchQuery
+            if (query.isNullOrEmpty()) {
+                Timber.d("not prompting to saving search: no query")
+                return@launch
+            }
+            flowOfSaveSearchNamePrompt.emit(query)
+        }
+
+    suspend fun getAvailableDecks(): List<SelectableDeck.Deck> = SelectableDeck.fromCollection(includeFiltered = false)
+
     companion object {
         const val STATE_MULTISELECT = "multiselect"
         const val STATE_MULTISELECT_VALUES = "multiselect_values"
@@ -1364,22 +1377,6 @@ class CardBrowserViewModel(
             val error: String,
         ) : SearchState
     }
-
-    /**
-     * Returns the decks which are suitable for [moveSelectedCardsToDeck]
-     */
-    suspend fun getAvailableDecks(): List<DeckNameId> = withCol { decks.allNamesAndIds(includeFiltered = false) }
-
-    /** Opens the UI to save the current [tempSearchQuery] as a saved search */
-    fun saveCurrentSearch() =
-        viewModelScope.launch {
-            val query = tempSearchQuery
-            if (query.isNullOrEmpty()) {
-                Timber.d("not prompting to saving search: no query")
-                return@launch
-            }
-            flowOfSaveSearchNamePrompt.emit(query)
-        }
 }
 
 enum class SaveSearchResult {
