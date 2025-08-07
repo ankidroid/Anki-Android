@@ -53,7 +53,6 @@ import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation.Direction
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.anki.DeckSpinnerSelection.Companion.ALL_DECKS_ID
 import com.ichi2.anki.browser.BrowserRowCollection
 import com.ichi2.anki.browser.CardBrowserFragment
 import com.ichi2.anki.browser.CardBrowserLaunchOptions
@@ -136,11 +135,7 @@ open class CardBrowser :
             }
 
     override fun onDeckSelected(deck: SelectableDeck?) {
-        when (deck) {
-            is SelectableDeck.AllDecks -> launchCatchingTask { viewModel.setDeckId(ALL_DECKS_ID) }
-            is SelectableDeck.Deck -> launchCatchingTask { viewModel.setDeckId(deck.deckId) }
-            null -> {}
-        }
+        deck?.let { deck -> launchCatchingTask { viewModel.setSelectedDeck(deck) } }
     }
 
     override var fragmented: Boolean
@@ -1297,7 +1292,7 @@ open class CardBrowser :
     fun searchAllDecks() =
         launchCatchingTask {
             // all we need to do is select all decks
-            viewModel.setDeckId(DeckSpinnerSelection.ALL_DECKS_ID)
+            viewModel.setSelectedDeck(SelectableDeck.AllDecks)
         }
 
     /**

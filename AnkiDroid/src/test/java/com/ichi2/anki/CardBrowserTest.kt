@@ -520,7 +520,7 @@ class CardBrowserTest : RobolectricTest() {
                 not(equalTo(targetDid)),
             )
 
-            b.viewModel.setDeckId(targetDid)
+            b.viewModel.setSelectedDeck(targetDid)
 
             assertThat("The target deck should be selected", b.lastDeckId, equalTo(targetDid))
 
@@ -1169,7 +1169,7 @@ class CardBrowserTest : RobolectricTest() {
             val secondDeckId = requireNotNull(col.decks.idForName("Second"))
 
             browserWithNoNewCards.apply {
-                viewModel.setDeckId(secondDeckId)
+                viewModel.setSelectedDeck(secondDeckId)
                 assertThat(viewModel.deckId, equalTo(secondDeckId))
                 finish()
             }
