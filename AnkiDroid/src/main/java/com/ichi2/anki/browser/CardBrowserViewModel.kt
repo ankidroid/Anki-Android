@@ -307,8 +307,18 @@ class CardBrowserViewModel(
         flowOfDeckId.update { deckId }
     }
 
+    // TODO: replace with flowOfDeckSelection
     val flowOfDeckId = MutableStateFlow(lastDeckId)
     val deckId get() = flowOfDeckId.value
+
+    val flowOfDeckSelection =
+        flowOfDeckId.map { did ->
+            when (did) {
+                ALL_DECKS_ID -> return@map SelectableDeck.AllDecks
+                null -> return@map null
+                else -> return@map SelectableDeck.Deck.fromId(did)
+            }
+        }
 
     suspend fun queryCardInfoDestination(): CardInfoDestination? {
         val firstSelectedCard = selectedRows.firstOrNull()?.toCardId(cardsOrNotes) ?: return null
