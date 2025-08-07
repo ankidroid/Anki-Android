@@ -23,7 +23,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
-import com.ichi2.anki.dialogs.DeckSelectionDialog
+import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.widget.cardanalysis.CardAnalysisWidgetConfig
 import com.ichi2.widget.cardanalysis.CardAnalysisWidgetPreferences
 import kotlinx.coroutines.runBlocking
@@ -69,7 +69,7 @@ class CardAnalysisWidgetConfigTest : RobolectricTest() {
     @Test
     fun testSaveSelectedDecksToPreferences() {
         // Add decks to adapter
-        val deck1 = DeckSelectionDialog.SelectableDeck(1, "Deck 1")
+        val deck1 = SelectableDeck.Deck(1, "Deck 1")
         activity.deckAdapter.addDeck(deck1)
 
         // Save selected decks
@@ -121,7 +121,7 @@ class CardAnalysisWidgetConfigTest : RobolectricTest() {
         assertThat(widgetConfigContainer.visibility, equalTo(View.GONE))
 
         // Add a deck and update view visibility
-        val deck = DeckSelectionDialog.SelectableDeck(1, "Deck 1")
+        val deck = SelectableDeck.Deck(1, "Deck 1")
         activity.deckAdapter.addDeck(deck)
         activity.updateViewVisibility()
 

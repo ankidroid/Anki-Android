@@ -24,9 +24,9 @@ import android.widget.EditText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CardTemplateEditor.CardTemplateFragment.CardTemplate
 import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
 import com.ichi2.anki.libanki.NotetypeJson
 import com.ichi2.anki.libanki.testutils.ext.addNote
+import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.anki.previewer.CardViewerActivity
 import com.ichi2.testutils.assertFalse
 import org.hamcrest.MatcherAssert
@@ -672,7 +672,7 @@ class CardTemplateEditorTest : RobolectricTest() {
         val template = editor.tempNoteType?.getTemplate(0)
         MatcherAssert.assertThat("Deck ID element should exist", template?.jsonObject?.has("did"), Matchers.equalTo(true))
         MatcherAssert.assertThat("Deck ID element should be null", template?.jsonObject?.get("did"), Matchers.equalTo(JSONObject.NULL))
-        editor.onDeckSelected(SelectableDeck(1, "hello"))
+        editor.onDeckSelected(SelectableDeck.Deck(1, "hello"))
         MatcherAssert.assertThat("Deck ID element should be changed", template?.jsonObject?.get("did"), Matchers.equalTo(1L))
         editor.onDeckSelected(null)
         MatcherAssert.assertThat("Deck ID element should exist", template!!.jsonObject.has("did"), Matchers.equalTo(true))

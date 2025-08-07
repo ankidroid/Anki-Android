@@ -78,7 +78,6 @@ import com.ichi2.anki.dialogs.CreateDeckDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog.Companion.newInstance
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
-import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
 import com.ichi2.anki.dialogs.SimpleMessageDialog
 import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory
@@ -87,6 +86,7 @@ import com.ichi2.anki.export.ExportDialogFragment
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.model.CardStateFilter
+import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.anki.model.SortType
 import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.observability.undoableOp
@@ -645,7 +645,6 @@ class CardBrowserFragment :
             val selectableDecks =
                 activityViewModel
                     .getAvailableDecks()
-                    .map { d -> SelectableDeck(d) }
             val dialog = getChangeDeckDialog(selectableDecks)
             showDialogFragment(dialog)
         }
@@ -857,7 +856,13 @@ class CardBrowserFragment :
         // Add change deck argument so the dialog can be dismissed
         // after activity recreation, since the selected cards will be gone with it
         dialog.requireArguments().putBoolean(CHANGE_DECK_KEY, true)
-        dialog.deckSelectionListener = DeckSelectionListener { deck: SelectableDeck? -> moveSelectedCardsToDeck(deck!!.deckId) }
+        dialog.deckSelectionListener =
+            DeckSelectionListener { deck: SelectableDeck? ->
+                {
+                    require(deck is SelectableDeck.Deck) { "Expected non-null deck" }
+                    moveSelectedCardsToDeck(deck.deckId)
+                }
+            }
         return dialog
     }
 

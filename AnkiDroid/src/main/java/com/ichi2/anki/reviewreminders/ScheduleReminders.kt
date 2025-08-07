@@ -36,6 +36,7 @@ import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.DeckId
+import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.anki.showError
 import com.ichi2.anki.withProgress
 import kotlinx.serialization.SerializationException
@@ -217,7 +218,7 @@ class ScheduleReminders :
      * fragment stack when the [DeckSelectionDialog] appears, so we set [ScheduleReminders] as the listener
      * and forward data to [AddEditReminderDialog] when a deck is selected.
      */
-    override fun onDeckSelected(deck: DeckSelectionDialog.SelectableDeck?) {
+    override fun onDeckSelected(deck: SelectableDeck?) {
         Timber.d("Deck selected in deck spinner: %s", deck)
         setFragmentResult(
             DECK_SELECTION_RESULT_REQUEST_KEY,
