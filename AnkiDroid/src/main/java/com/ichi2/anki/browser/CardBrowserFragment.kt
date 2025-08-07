@@ -91,6 +91,7 @@ import com.ichi2.anki.model.SortType
 import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.requireAnkiActivity
+import com.ichi2.anki.requireNavigationDrawerActivity
 import com.ichi2.anki.scheduling.ForgetCardsDialog
 import com.ichi2.anki.scheduling.SetDueDateDialog
 import com.ichi2.anki.snackbar.showSnackbar
@@ -219,7 +220,12 @@ class CardBrowserFragment :
         progressIndicator = view.findViewById(R.id.browser_progress)
 
         deckChip = view.findViewById<Chip>(R.id.chip_decks)
-        searchBar = view.findViewById<SearchBar>(R.id.search_bar)
+        searchBar =
+            view.findViewById<SearchBar>(R.id.search_bar)?.apply {
+                setNavigationOnClickListener {
+                    requireNavigationDrawerActivity().onNavigationPressed()
+                }
+            }
         searchView = view.findViewById<SearchView>(R.id.search_view)
 
         setupFlows()
