@@ -761,6 +761,11 @@ open class DeckPicker :
             }
         }
 
+        fun onResizingDividerVisibilityChanged(isVisible: Boolean) {
+            val resizingDivider = findViewById<View>(R.id.homescreen_resizing_divider)
+            resizingDivider?.visibility = if (isVisible) View.VISIBLE else View.GONE
+        }
+
         fun onCardsDueChanged(dueCount: Int?) {
             if (dueCount == null) {
                 supportActionBar?.subtitle = null
@@ -815,6 +820,7 @@ open class DeckPicker :
         viewModel.flowOfStudyOptionsVisible.launchCollectionInLifecycleScope(::onStudyOptionsVisibilityChanged)
         viewModel.flowOfDeckList.launchCollectionInLifecycleScope(::onDeckListChanged)
         viewModel.flowOfFocusedDeck.launchCollectionInLifecycleScope(::onFocusedDeckChanged)
+        viewModel.flowOfResizingDividerVisible.launchCollectionInLifecycleScope(::onResizingDividerVisibilityChanged)
     }
 
     private val onReceiveContentListener =
