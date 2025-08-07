@@ -41,6 +41,7 @@ import androidx.core.view.get
 import androidx.core.view.size
 import androidx.drawerlayout.widget.ClosableDrawerLayout
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.Fragment
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.navigation.NavigationView
 import com.ichi2.anki.NoteEditorFragment.Companion.NoteEditorCaller
@@ -513,3 +514,5 @@ abstract class NavigationDrawerActivity :
         }
     }
 }
+
+fun Fragment.requireNavigationDrawerActivity() = (requireActivity() as NavigationDrawerActivity)
