@@ -121,11 +121,6 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
         val adapter = DecksArrayAdapter(decks)
         recyclerView.adapter = adapter
         adjustToolbar(dialogView, adapter)
-        val args = requireArguments()
-        if (args.containsKey("currentDeckId")) {
-            val did = args.getLong("currentDeckId")
-            recyclerView.scrollToPosition(getPositionOfDeck(did, adapter.getCurrentlyDisplayedDecks()))
-        }
         dialog =
             AlertDialog.Builder(requireActivity()).create {
                 negativeButton(R.string.dialog_cancel)
@@ -145,11 +140,6 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
             WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM,
         )
     }
-
-    private fun getPositionOfDeck(
-        did: DeckId,
-        decks: List<SelectableDeck>,
-    ) = decks.indexOfFirst { it.deckId == did }
 
     private fun getSummaryMessage(arguments: Bundle): String? = arguments.getString(SUMMARY_MESSAGE)
 
@@ -406,8 +396,6 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
         override fun getItemCount(): Int = currentlyDisplayedDecks.size
 
         override fun getFilter(): Filter = DecksFilter()
-
-        fun getCurrentlyDisplayedDecks(): List<SelectableDeck> = currentlyDisplayedDecks.map { SelectableDeck(it.did, it.fullDeckName) }
 
         private inner class DecksFilter : TypedFilter<DeckNode>(allDecksList) {
             override fun filterResults(
