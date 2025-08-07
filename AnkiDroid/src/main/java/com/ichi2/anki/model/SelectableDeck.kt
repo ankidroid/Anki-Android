@@ -19,6 +19,7 @@ package com.ichi2.anki.model
 import android.content.Context
 import android.os.Parcelable
 import com.ichi2.anki.CollectionManager
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.DeckNameId
@@ -37,6 +38,10 @@ sealed class SelectableDeck : Parcelable {
         val name: String,
     ) : SelectableDeck() {
         constructor(d: DeckNameId) : this(d.id, d.name)
+
+        companion object {
+            suspend fun fromId(id: DeckId): Deck = Deck(deckId = id, name = withCol { decks.name(id) })
+        }
     }
 
     /**

@@ -76,7 +76,6 @@ import com.ichi2.anki.dialogs.BrowserOptionsDialog
 import com.ichi2.anki.dialogs.CardBrowserOrderDialog
 import com.ichi2.anki.dialogs.CreateDeckDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog
-import com.ichi2.anki.dialogs.DeckSelectionDialog.Companion.newInstance
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
 import com.ichi2.anki.dialogs.SimpleMessageDialog
 import com.ichi2.anki.dialogs.tags.TagsDialog
@@ -102,6 +101,7 @@ import com.ichi2.anki.utils.ext.ifNotZero
 import com.ichi2.anki.utils.ext.setFragmentResultListener
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.utils.ext.visibleItemPositions
+import com.ichi2.anki.utils.showDialogFragmentImpl
 import com.ichi2.anki.withProgress
 import com.ichi2.utils.HandlerUtils
 import com.ichi2.utils.TagsUtil.getUpdatedTags
@@ -219,7 +219,10 @@ class CardBrowserFragment :
 
         progressIndicator = view.findViewById(R.id.browser_progress)
 
-        deckChip = view.findViewById<Chip>(R.id.chip_decks)
+        deckChip =
+            view.findViewById<Chip>(R.id.chip_decks)?.apply {
+                setOnClickListener { viewModel.openDeckSelectionDialog() }
+            }
         searchBar =
             view.findViewById<SearchBar>(R.id.search_bar)?.apply {
                 setNavigationOnClickListener {
@@ -436,6 +439,21 @@ class CardBrowserFragment :
                 )
         }
 
+        fun onSearchForDecks(decks: List<SelectableDeck>) {
+            val dialog =
+                DeckSelectionDialog.newInstance(
+                    title = getString(R.string.search_deck),
+                    summaryMessage = null,
+                    keepRestoreDefaultButton = false,
+                    decks = decks,
+                )
+            showDialogFragmentImpl(childFragmentManager, dialog)
+        }
+
+        fun onDeckChanged(deck: SelectableDeck?) {
+            deckChip?.text = deck?.getDisplayName(requireContext())
+        }
+
         activityViewModel.flowOfIsTruncated.launchCollectionInLifecycleScope(::onIsTruncatedChanged)
         activityViewModel.flowOfSelectedRows.launchCollectionInLifecycleScope(::onSelectedRowsChanged)
         activityViewModel.flowOfActiveColumns.launchCollectionInLifecycleScope(::onColumnsChanged)
@@ -445,6 +463,8 @@ class CardBrowserFragment :
         activityViewModel.flowOfColumnHeadings.launchCollectionInLifecycleScope(::onColumnNamesChanged)
         activityViewModel.flowOfCardStateChanged.launchCollectionInLifecycleScope(::onCardsMarkedEvent)
         activityViewModel.flowOfToggleSelectionState.launchCollectionInLifecycleScope(::onToggleSelectionStateUpdated)
+        viewModel.flowOfSearchForDecks.launchCollectionInLifecycleScope(::onSearchForDecks)
+        activityViewModel.flowOfDeckSelection.launchCollectionInLifecycleScope(::onDeckChanged)
     }
 
     private fun setupFragmentResultListeners() {
@@ -847,7 +867,7 @@ class CardBrowserFragment :
     @VisibleForTesting
     internal fun getChangeDeckDialog(selectableDecks: List<SelectableDeck>?): DeckSelectionDialog {
         val dialog =
-            newInstance(
+            DeckSelectionDialog.newInstance(
                 getString(R.string.move_all_to_deck),
                 null,
                 false,
