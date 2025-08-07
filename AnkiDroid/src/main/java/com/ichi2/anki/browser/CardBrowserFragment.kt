@@ -27,6 +27,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
+import androidx.annotation.LayoutRes
 import androidx.annotation.VisibleForTesting
 import androidx.core.content.ContextCompat
 import androidx.core.view.MenuHost
@@ -111,7 +112,7 @@ import timber.log.Timber
 // At some point, starting between 35k and 60k selections, the scroll position is lost on recreation
 // This occurred on a Pixel 9 Pro, Android 15
 class CardBrowserFragment :
-    Fragment(R.layout.cardbrowser),
+    Fragment(),
     AnkiActivityProvider,
     ChangeManager.Subscriber,
     TagsDialogListener {
@@ -145,6 +146,20 @@ class CardBrowserFragment :
         get() = ankiActivity.tagsDialogFactory
 
     private var undoSnackbar: Snackbar? = null
+
+    // Dev option for Issue 18709
+    private val useSearchView: Boolean
+        get() = requireCardBrowserActivity().useSearchView
+
+    @get:LayoutRes
+    private val layout: Int
+        get() = if (useSearchView) R.layout.cardbrowser_searchview else R.layout.cardbrowser
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View? = inflater.inflate(layout, container, false)
 
     override fun onViewCreated(
         view: View,
