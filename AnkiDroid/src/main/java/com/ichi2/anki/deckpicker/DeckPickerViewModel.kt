@@ -157,6 +157,12 @@ class DeckPickerViewModel(
 
     val flowOfStudyOptionsVisible = flowOfCollectionHasNoCards.map { noCards -> fragmented && !noCards }
 
+    /** Flow that determines when the resizing divider should be visible */
+    val flowOfResizingDividerVisible =
+        combine(flowOfDeckListInInitialState, flowOfCollectionHasNoCards) { isInInitialState, hasNoCards ->
+            !(isInInitialState == true || hasNoCards)
+        }
+
     /**
      * Deletes the provided deck, child decks. and all cards inside.
      *
