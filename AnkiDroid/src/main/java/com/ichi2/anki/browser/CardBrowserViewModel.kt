@@ -285,7 +285,14 @@ class CardBrowserViewModel(
     val lastDeckId: DeckId?
         get() = lastDeckIdRepository.lastDeckId
 
-    suspend fun setDeckId(deckId: DeckId) {
+    suspend fun setSelectedDeck(deck: SelectableDeck) =
+        when (deck) {
+            is SelectableDeck.AllDecks -> setSelectedDeck(ALL_DECKS_ID)
+            is SelectableDeck.Deck -> setSelectedDeck(deck.deckId)
+        }
+
+    // TODO: Replace with setSelectedDeck(selectableDeck)
+    suspend fun setSelectedDeck(deckId: DeckId) {
         Timber.i("setting deck: %d", deckId)
         lastDeckIdRepository.lastDeckId = deckId
         restrictOnDeck =
@@ -310,19 +317,22 @@ class CardBrowserViewModel(
 
     suspend fun queryDataForCardEdit(id: CardOrNoteId): CardId = id.toCardId(cardsOrNotes)
 
-    private suspend fun getInitialDeck(): DeckId {
+    private suspend fun getInitialDeck(): SelectableDeck {
         // TODO: Handle the launch intent
         val lastDeckId = lastDeckId
         if (lastDeckId == ALL_DECKS_ID) {
-            return ALL_DECKS_ID
+            return SelectableDeck.AllDecks
         }
 
         // If a valid value for last deck exists then use it, otherwise use libanki selected deck
-        return if (lastDeckId != null && withCol { decks.getLegacy(lastDeckId) != null }) {
-            lastDeckId
-        } else {
-            withCol { decks.selected() }
-        }
+        val idToUse =
+            if (lastDeckId != null && withCol { decks.getLegacy(lastDeckId) != null }) {
+                lastDeckId
+            } else {
+                withCol { decks.selected() }
+            }
+
+        return SelectableDeck.Deck(deckId = idToUse, name = withCol { decks.name(idToUse) })
     }
 
     val flowOfInitCompleted = MutableStateFlow(false)
@@ -414,9 +424,9 @@ class CardBrowserViewModel(
         viewModelScope.launch {
             shouldIgnoreAccents = withCol { config.getBool(ConfigKey.Bool.IGNORE_ACCENTS_IN_SEARCH) }
 
-            val initialDeckId = if (selectAllDecks) ALL_DECKS_ID else getInitialDeck()
+            val initialDeckId = if (selectAllDecks) SelectableDeck.AllDecks else getInitialDeck()
             // PERF: slightly inefficient if the source was lastDeckId
-            setDeckId(initialDeckId)
+            setSelectedDeck(initialDeckId)
             refreshBackendColumns()
 
             val cardsOrNotes = withCol { CardsOrNotes.fromCollection(this@withCol) }
