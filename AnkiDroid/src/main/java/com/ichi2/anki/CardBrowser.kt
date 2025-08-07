@@ -36,6 +36,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.annotation.CheckResult
+import androidx.annotation.LayoutRes
 import androidx.annotation.MainThread
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.widget.SearchView
@@ -170,6 +171,14 @@ open class CardBrowser :
         set(value) {
             viewModel.currentCardId = value
         }
+
+    // Dev option for Issue 18709
+    val useSearchView: Boolean
+        get() = Prefs.devUsingCardBrowserSearchView
+
+    @get:LayoutRes
+    private val layout: Int
+        get() = if (useSearchView) R.layout.card_browser_searchview else R.layout.card_browser
 
     private var onEditCardActivityResult =
         registerForActivityResult(StartActivityForResult()) { result: ActivityResult ->
@@ -308,7 +317,7 @@ open class CardBrowser :
 
         val launchOptions = intent?.toCardBrowserLaunchOptions() // must be called after super.onCreate()
 
-        setContentView(R.layout.card_browser)
+        setContentView(layout)
         initNavigationDrawer(findViewById(android.R.id.content))
 
         noteEditorFrame = findViewById(R.id.note_editor_frame)
@@ -321,6 +330,7 @@ open class CardBrowser :
         // TODO: Consider refactoring by storing noteEditorFrame and similar views in a sealed class (e.g., FragmentAccessor).
         val fragmented =
             Prefs.devIsCardBrowserFragmented &&
+                !useSearchView &&
                 noteEditorFrame?.visibility == View.VISIBLE
         Timber.i("Using split Browser: %b", fragmented)
 
