@@ -16,7 +16,8 @@
 
 package com.ichi2.anki.dialogs
 
-import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
+import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.model.SelectableDeck
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertNotNull
 import org.hamcrest.MatcherAssert.assertThat
@@ -26,21 +27,21 @@ import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 
 @RunWith(RobolectricTestRunner::class)
-class DeckSelectionDialogTest {
+class DeckSelectionDialogTest : RobolectricTest() {
     @Test
     fun verifyDeckDisplayName() {
         val input = "deck::sub-deck::sub-deck2::sub-deck3"
         val expected = "sub-deck3"
 
-        val deck = SelectableDeck(1234, input)
-        val actual: String = deck.displayName
+        val deck = SelectableDeck.Deck(1234, input)
+        val actual: String = deck.getDisplayName(targetContext)
 
         assertThat(actual, Matchers.equalTo(expected))
     }
 
     @Test
     fun testDialogCreation() {
-        val decks: List<SelectableDeck> = listOf(SelectableDeck(5L, "deck"))
+        val decks: List<SelectableDeck> = listOf(SelectableDeck.Deck(5L, "deck"))
         val dialogTitle = "Select Deck"
         val summaryMessage = "Choose a deck from the list"
         val keepRestoreDefaultButton = true

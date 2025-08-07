@@ -37,12 +37,12 @@ import com.ichi2.anki.NoteEditorTest.FromScreen.DECK_LIST
 import com.ichi2.anki.NoteEditorTest.FromScreen.REVIEWER
 import com.ichi2.anki.api.AddContentApi.Companion.DEFAULT_DECK_ID
 import com.ichi2.anki.common.annotations.DuplicatedCode
-import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
 import com.ichi2.anki.libanki.Consts
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.Decks.Companion.CURRENT_DECK
 import com.ichi2.anki.libanki.Note
 import com.ichi2.anki.libanki.NotetypeJson
+import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import com.ichi2.testutils.getString
 import kotlinx.coroutines.runBlocking
@@ -446,7 +446,7 @@ class NoteEditorTest : RobolectricTest() {
             assertThat("setup: deckId", col.notetypes.byName("Basic")!!.did, equalTo(1))
 
             getNoteEditorAdding(NoteType.BASIC).build().also { editor ->
-                editor.onDeckSelected(SelectableDeck(reversedDeckId, "Reversed"))
+                editor.onDeckSelected(SelectableDeck.Deck(reversedDeckId, "Reversed"))
                 editor.setField(0, "Hello")
                 editor.saveNote()
             }

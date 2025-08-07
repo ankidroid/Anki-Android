@@ -36,6 +36,7 @@ import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.DeckNameId
+import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.anki.requireAnkiActivity
 import com.ichi2.utils.BundleUtils.getNullableLong
 
@@ -110,8 +111,9 @@ class Statistics :
         )
     }
 
-    override fun onDeckSelected(deck: DeckSelectionDialog.SelectableDeck?) {
+    override fun onDeckSelected(deck: SelectableDeck?) {
         if (deck == null) return
+        require(deck is SelectableDeck.Deck)
         select(deck.deckId)
         changeDeck(deck.name)
     }
