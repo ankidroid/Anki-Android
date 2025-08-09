@@ -19,6 +19,7 @@ package com.ichi2.widget
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
+import android.content.Intent
 import androidx.annotation.CallSuper
 import com.ichi2.anki.IntentHandler
 import com.ichi2.anki.analytics.UsageAnalytics
@@ -61,6 +62,15 @@ abstract class AnalyticsWidgetProvider : AppWidgetProvider() {
         super.onDisabled(context)
         Timber.d("${this.javaClass.name}: Widget disabled")
         UsageAnalytics.sendAnalyticsEvent(this.javaClass.simpleName, "disabled")
+    }
+
+    @CallSuper
+    override fun onReceive(
+        context: Context,
+        intent: Intent,
+    ) {
+        super.onReceive(context, intent)
+        Timber.v("${this.javaClass.name}: onReceive: %s", intent.action)
     }
 
     /**

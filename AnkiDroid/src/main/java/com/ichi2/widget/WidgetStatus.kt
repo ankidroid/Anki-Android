@@ -21,25 +21,27 @@ import com.ichi2.anki.MetaDB
 import com.ichi2.anki.R
 import com.ichi2.anki.libanki.sched.Counts
 import com.ichi2.anki.preferences.sharedPrefs
-import com.ichi2.widget.AnkiDroidWidgetSmall.UpdateService
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
+/**
+ * @param dueCardsCount The number of due cards (new + lrn + rev)
+ * @param eta The estimated time to review
+ */
 data class SmallWidgetStatus(
-    var due: Int,
-    var eta: Int,
+    val dueCardsCount: Int,
+    val eta: Int,
 )
 
 /**
  * The status of the widget.
  */
 object WidgetStatus {
-    private var enabled = false
-    private var status = SmallWidgetStatus(0, 0)
-    private var updateJob: Job? = null
+    private var smallWidgetEnabled = false
+    private var smallWidgetUpdateJob: Job? = null
 
     /**
      * Request the widget to update its status.
@@ -49,60 +51,62 @@ object WidgetStatus {
      */
     fun updateInBackground(context: Context) {
         val preferences = context.sharedPrefs()
-        enabled = preferences.getBoolean("widgetSmallEnabled", false)
+        smallWidgetEnabled = preferences.getBoolean("widgetSmallEnabled", false)
         val notificationEnabled =
             preferences
                 .getString(context.getString(R.string.pref_notifications_minimum_cards_due_key), "1000001")!!
                 .toInt() < 1000000
-        val canExecuteTask = updateJob == null || updateJob?.isActive == false
-        if ((enabled || notificationEnabled) && canExecuteTask) {
+        val canExecuteTask = smallWidgetUpdateJob == null || smallWidgetUpdateJob?.isActive == false
+        if ((smallWidgetEnabled || notificationEnabled) && canExecuteTask) {
             Timber.d("WidgetStatus.update(): updating")
-            updateJob = launchUpdateJob(context)
+            smallWidgetUpdateJob = launchSmallWidgetUpdateJob(context)
         } else {
-            Timber.d("WidgetStatus.update(): already running or not enabled")
+            Timber.d("WidgetStatus.update(): already running or not enabled; enabled: %b", smallWidgetEnabled)
         }
     }
 
     @OptIn(DelicateCoroutinesApi::class)
-    private fun launchUpdateJob(context: Context): Job =
+    private fun launchSmallWidgetUpdateJob(context: Context): Job =
         GlobalScope.launch {
             try {
-                updateStatus(context)
+                updateSmallWidgetStatus(context)
+                Timber.v("launchUpdateJob completed")
             } catch (exc: java.lang.Exception) {
                 Timber.w(exc, "failure in widget update")
             }
         }
 
-    suspend fun updateStatus(context: Context) {
+    suspend fun updateSmallWidgetStatus(context: Context) {
         if (!AnkiDroidApp.isSdCardMounted) {
+            Timber.w("updateStatus failed: no SD Card")
             return
         }
-        updateCounts()
+        val status = querySmallWidgetStatus()
         MetaDB.storeSmallWidgetStatus(context, status)
-        if (enabled) {
-            UpdateService().doUpdate(context)
+        if (smallWidgetEnabled) {
+            Timber.i("triggering small widget UI update")
+            AnkiDroidWidgetSmall.UpdateService().doUpdate(context)
         }
         (context.applicationContext as AnkiDroidApp).scheduleNotification()
     }
 
     /** Returns the status of each of the decks.  */
-    fun fetchSmall(context: Context): IntArray = MetaDB.getWidgetSmallStatus(context)
+    fun fetchSmall(context: Context): SmallWidgetStatus = MetaDB.getWidgetSmallStatus(context)
 
     fun fetchDue(context: Context): Int = MetaDB.getNotificationStatus(context)
 
-    private suspend fun updateCounts() {
+    private suspend fun querySmallWidgetStatus(): SmallWidgetStatus {
         val total = Counts()
-        status =
-            CollectionManager.withCol {
-                // Only count the top-level decks in the total
-                val nodes = sched.deckDueTree().children
-                for (node in nodes) {
-                    total.addNew(node.newCount)
-                    total.addLrn(node.lrnCount)
-                    total.addRev(node.revCount)
-                }
-                val eta = sched.eta(total, false)
-                SmallWidgetStatus(total.count(), eta)
+        return CollectionManager.withCol {
+            // Only count the top-level decks in the total
+            val nodes = sched.deckDueTree().children
+            for (node in nodes) {
+                total.addNew(node.newCount)
+                total.addLrn(node.lrnCount)
+                total.addRev(node.revCount)
             }
+            val eta = sched.eta(total, false)
+            SmallWidgetStatus(total.count(), eta)
+        }
     }
 }

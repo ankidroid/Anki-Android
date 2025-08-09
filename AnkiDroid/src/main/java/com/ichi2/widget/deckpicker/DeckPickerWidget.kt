@@ -267,13 +267,9 @@ class DeckPickerWidget : AnalyticsWidgetProvider() {
     }
 
     override fun onReceive(
-        context: Context?,
-        intent: Intent?,
+        context: Context,
+        intent: Intent,
     ) {
-        if (context == null || intent == null) {
-            Timber.e("Context or intent is null in onReceive")
-            return
-        }
         super.onReceive(context, intent)
 
         val widgetPreferences = DeckPickerWidgetPreferences(context)

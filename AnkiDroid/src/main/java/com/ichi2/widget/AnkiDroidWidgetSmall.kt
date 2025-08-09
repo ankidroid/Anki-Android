@@ -80,12 +80,15 @@ class AnkiDroidWidgetSmall : AnalyticsWidgetProvider() {
     }
 
     class UpdateService : Service() {
-        /** The cached number of total due cards.  */
-        private var dueCardsCount = 0
-
+        /**
+         * Updates the UI of [AnkiDroidWidgetSmall]
+         *
+         * Externals callers should use [WidgetStatus.updateInBackground]
+         */
         fun doUpdate(context: Context) {
             val appWidgetManager = getAppWidgetManager(context) ?: return
-            appWidgetManager.updateAppWidget(ComponentName(context, AnkiDroidWidgetSmall::class.java), buildUpdate(context))
+            val remoteViews = buildUpdate(context)
+            appWidgetManager.updateAppWidget(ComponentName(context, AnkiDroidWidgetSmall::class.java), remoteViews)
         }
 
         @Deprecated("Implement onStartCommand(Intent, int, int) instead.") // TODO
@@ -105,7 +108,7 @@ class AnkiDroidWidgetSmall : AnalyticsWidgetProvider() {
             }
 
         private fun buildUpdate(context: Context): RemoteViews {
-            Timber.d("buildUpdate")
+            Timber.d("updating small widget UI")
             val updateViews = RemoteViews(context.packageName, widgetSmallLayout)
             val mounted = AnkiDroidApp.isSdCardMounted
             if (!mounted) {
@@ -123,7 +126,7 @@ class AnkiDroidWidgetSmall : AnalyticsWidgetProvider() {
                                 // context may not have the locale override from AnkiDroidApp
                                 val action = intent.action
                                 if (action != null && action == Intent.ACTION_MEDIA_MOUNTED) {
-                                    Timber.d("mMountReceiver - Action = Media Mounted")
+                                    Timber.d("mountReceiver - Action = Media Mounted")
                                     if (remounted) {
                                         WidgetStatus.updateInBackground(AnkiDroidApp.instance)
                                         remounted = false
@@ -143,37 +146,10 @@ class AnkiDroidWidgetSmall : AnalyticsWidgetProvider() {
                 }
             } else {
                 // Compute the total number of cards due.
-                val counts = WidgetStatus.fetchSmall(context)
-                dueCardsCount = counts[0]
-                // The cached estimated reviewing time.
-                val eta = counts[1]
-                val etaIcon: String = "⏱"
-                if (dueCardsCount <= 0) {
-                    if (dueCardsCount == 0) {
-                        updateViews.setViewVisibility(R.id.ankidroid_widget_small_finish_layout, View.VISIBLE)
-                    } else {
-                        updateViews.setViewVisibility(R.id.ankidroid_widget_small_finish_layout, View.INVISIBLE)
-                        updateViews.setViewVisibility(R.id.widget_due, View.VISIBLE)
-                        updateViews.setTextViewText(R.id.widget_due, dueCardsCount.toString())
-                        updateViews.setContentDescription(
-                            R.id.widget_due,
-                            context.resources.getQuantityString(R.plurals.widget_cards_due, dueCardsCount, dueCardsCount),
-                        )
-                    }
-                    if (eta <= 0 || dueCardsCount <= 0) {
-                        updateViews.setViewVisibility(R.id.widget_eta, View.INVISIBLE)
-                    } else {
-                        updateViews.setViewVisibility(R.id.widget_eta, View.VISIBLE)
-                        if (Build.VERSION.SDK_INT >= 31) {
-                            updateViews.setTextViewText(R.id.widget_eta, "$etaIcon$eta")
-                        } else {
-                            updateViews.setTextViewText(R.id.widget_eta, "$eta")
-                        }
-                        updateViews.setContentDescription(
-                            R.id.widget_eta,
-                            context.resources.getQuantityString(R.plurals.widget_eta, eta, eta),
-                        )
-                    }
+                val (dueCardsCount, eta) = WidgetStatus.fetchSmall(context)
+                if (dueCardsCount == 0) {
+                    updateViews.setViewVisibility(R.id.ankidroid_widget_small_finish_layout, View.VISIBLE)
+                    updateViews.setViewVisibility(R.id.widget_eta, View.INVISIBLE)
                     updateViews.setViewVisibility(R.id.widget_due, View.INVISIBLE)
                 } else {
                     updateViews.setViewVisibility(R.id.ankidroid_widget_small_finish_layout, View.INVISIBLE)
@@ -183,16 +159,18 @@ class AnkiDroidWidgetSmall : AnalyticsWidgetProvider() {
                         R.id.widget_due,
                         context.resources.getQuantityString(R.plurals.widget_cards_due, dueCardsCount, dueCardsCount),
                     )
-                }
-                if (eta <= 0 || dueCardsCount <= 0) {
-                    updateViews.setViewVisibility(R.id.widget_eta, View.INVISIBLE)
-                } else {
-                    updateViews.setViewVisibility(R.id.widget_eta, View.VISIBLE)
-                    updateViews.setTextViewText(R.id.widget_eta, "$etaIcon$eta")
-                    updateViews.setContentDescription(
-                        R.id.widget_eta,
-                        context.resources.getQuantityString(R.plurals.widget_eta, eta, eta),
-                    )
+
+                    if (eta <= 0) {
+                        updateViews.setViewVisibility(R.id.widget_eta, View.INVISIBLE)
+                    } else {
+                        updateViews.setViewVisibility(R.id.widget_eta, View.VISIBLE)
+                        val etaText = if (Build.VERSION.SDK_INT >= 31) "⏱$eta" else "$eta"
+                        updateViews.setTextViewText(R.id.widget_eta, etaText)
+                        updateViews.setContentDescription(
+                            R.id.widget_eta,
+                            context.resources.getQuantityString(R.plurals.widget_eta, eta, eta),
+                        )
+                    }
                 }
             }
 
