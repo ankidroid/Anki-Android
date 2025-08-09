@@ -158,13 +158,6 @@ abstract class CardViewerFragment(
             request: WebResourceRequest,
         ): Boolean = handleUrl(request.url)
 
-        @Suppress("DEPRECATION") // necessary in API 23
-        @Deprecated("Deprecated in Java")
-        override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
-            if (view == null || url == null) return super.shouldOverrideUrlLoading(view, url)
-            return handleUrl(url.toUri())
-        }
-
         protected open fun handleUrl(url: Uri): Boolean {
             when (url.scheme) {
                 "playsound" -> viewModel.playSoundFromUrl(url.toString())
