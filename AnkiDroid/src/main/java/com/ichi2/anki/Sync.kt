@@ -26,8 +26,6 @@ import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.dialogs.SyncErrorDialog
-import com.ichi2.anki.libanki.fullUploadOrDownload
-import com.ichi2.anki.libanki.syncCollection
 import com.ichi2.anki.observability.ChangeManager.notifySubscribersAllValuesChanged
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.settings.enums.ShouldFetchMedia
@@ -154,7 +152,7 @@ private suspend fun handleNormalSync(
             manualCancelButton = R.string.dialog_cancel,
         ) {
             withCol {
-                syncCollection(auth2, media = false) // media is synced by SyncMediaWorker
+                syncCollection(auth2, syncMedia = false) // media is synced by SyncMediaWorker
             }
         }
 

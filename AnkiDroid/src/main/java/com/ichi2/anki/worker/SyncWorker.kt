@@ -41,7 +41,6 @@ import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
 import com.ichi2.anki.cancelSync
-import com.ichi2.anki.libanki.syncCollection
 import com.ichi2.anki.notifications.NotificationId
 import com.ichi2.anki.setLastSyncTimeToNow
 import com.ichi2.anki.settings.Prefs
@@ -143,7 +142,7 @@ class SyncWorker(
         val response =
             try {
                 withCol {
-                    syncCollection(auth, media = false)
+                    syncCollection(auth, syncMedia = false)
                 }
             } finally {
                 Timber.d("Collection sync completed. Cancelling monitor...")

@@ -614,6 +614,7 @@ class StudyOptionsFragment :
                 } else {
                     val deck = col.decks.current()
                     if (deck.descriptionAsMarkdown) {
+                        @Suppress("DEPRECATION") // renderMarkdown is fine here.
                         col.renderMarkdown(deck.description, sanitize = true)
                     } else {
                         deck.description
