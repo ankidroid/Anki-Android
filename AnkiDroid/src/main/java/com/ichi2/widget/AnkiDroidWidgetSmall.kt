@@ -142,18 +142,8 @@ class AnkiDroidWidgetSmall : AnalyticsWidgetProvider() {
                 // Compute the total number of cards due.
                 val (dueCardsCount, eta) = WidgetStatus.fetchSmall(context)
                 val etaIcon: String = "⏱"
-                if (dueCardsCount <= 0) {
-                    if (dueCardsCount == 0) {
-                        updateViews.setViewVisibility(R.id.ankidroid_widget_small_finish_layout, View.VISIBLE)
-                    } else {
-                        updateViews.setViewVisibility(R.id.ankidroid_widget_small_finish_layout, View.INVISIBLE)
-                        updateViews.setViewVisibility(R.id.widget_due, View.VISIBLE)
-                        updateViews.setTextViewText(R.id.widget_due, dueCardsCount.toString())
-                        updateViews.setContentDescription(
-                            R.id.widget_due,
-                            context.resources.getQuantityString(R.plurals.widget_cards_due, dueCardsCount, dueCardsCount),
-                        )
-                    }
+                if (dueCardsCount == 0) {
+                    updateViews.setViewVisibility(R.id.ankidroid_widget_small_finish_layout, View.VISIBLE)
                     updateViews.setViewVisibility(R.id.widget_eta, View.INVISIBLE)
                     updateViews.setViewVisibility(R.id.widget_due, View.INVISIBLE)
                 } else {
@@ -165,7 +155,7 @@ class AnkiDroidWidgetSmall : AnalyticsWidgetProvider() {
                         context.resources.getQuantityString(R.plurals.widget_cards_due, dueCardsCount, dueCardsCount),
                     )
                 }
-                if (eta <= 0 || dueCardsCount <= 0) {
+                if (eta <= 0 || dueCardsCount == 0) {
                     updateViews.setViewVisibility(R.id.widget_eta, View.INVISIBLE)
                 } else {
                     updateViews.setViewVisibility(R.id.widget_eta, View.VISIBLE)
