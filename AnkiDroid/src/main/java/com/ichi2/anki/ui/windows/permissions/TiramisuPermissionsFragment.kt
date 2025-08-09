@@ -32,7 +32,23 @@ import com.ichi2.utils.Permissions.canManageExternalStorage
  * 1. All files access: [Permissions.MANAGE_EXTERNAL_STORAGE].
  *   Used for saving the collection in a public directory
  *   which isn't deleted when the app is uninstalled
- * 2. TODO notifications permission
+ *
+ * Note: Even though explicit user permission is required to send notifications on API 33+, we do not
+ * request it on this screen. This is because:
+ * 1. The permission is not strictly necessary for app functionality. It is used for syncing to view
+ *   active media sync progress / cancel active media syncs, but tapping on the sync icon in DeckPicker
+ *   also provides the ability to cancel active media syncs, so providing a notification is not mandatory.
+ *   It is used for review reminders, but the notification permissions can be requested when the user first
+ *   creates a review reminder rather than when the app is first installed.
+ * 2. The "manage all files" permission is only grantable for apps not installed via the Play store, and thus
+ *   putting an optional notifications permission onto this screen would mean that only users not installing
+ *   via the Play store would ever see it.
+ * 3. If, however, we choose to show this fragment to every user who installs AnkiDroid, even those from the Play store,
+ *   then the "manage all files" permission will not be visible and they will only see a single optional tile
+ *   for enabling notifications, which is awkward and adds unnecessary extra steps to the first-time-launch
+ *   experience. It makes more sense to request permission to send notifications when the permission is
+ *   immediately required, ex. when the user triggers a sync or creates a review reminder, rather than
+ *   during the app onboarding process.
  */
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 class TiramisuPermissionsFragment : PermissionsFragment(R.layout.permissions_tiramisu) {
@@ -42,6 +58,8 @@ class TiramisuPermissionsFragment : PermissionsFragment(R.layout.permissions_tir
         ) {
             if (hasAllPermissions()) {
                 requireActivity().finish()
+            } else {
+                showToastAndOpenAppSettingsScreen(R.string.manually_grant_permissions)
             }
         }
 
@@ -49,8 +67,8 @@ class TiramisuPermissionsFragment : PermissionsFragment(R.layout.permissions_tir
         view: View,
         savedInstanceState: Bundle?,
     ) {
-        view.findViewById<PermissionItem>(R.id.all_files_permission).setOnSwitchClickListener {
-            accessAllFilesLauncher.showManageAllFilesScreen()
-        }
+        view
+            .findViewById<PermissionItem>(R.id.all_files_permission)
+            .requestExternalStorageOnClick(accessAllFilesLauncher)
     }
 }
