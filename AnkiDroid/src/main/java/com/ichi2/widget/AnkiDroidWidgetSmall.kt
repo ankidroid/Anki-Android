@@ -120,7 +120,7 @@ class AnkiDroidWidgetSmall : AnalyticsWidgetProvider() {
                                 // context may not have the locale override from AnkiDroidApp
                                 val action = intent.action
                                 if (action != null && action == Intent.ACTION_MEDIA_MOUNTED) {
-                                    Timber.d("mMountReceiver - Action = Media Mounted")
+                                    Timber.d("mountReceiver - Action = Media Mounted")
                                     if (remounted) {
                                         WidgetStatus.updateInBackground(AnkiDroidApp.instance)
                                         remounted = false
