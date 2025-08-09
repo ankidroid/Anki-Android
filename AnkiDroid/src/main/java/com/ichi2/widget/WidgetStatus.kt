@@ -28,9 +28,13 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
+/**
+ * @param dueCardsCount The number of due cards (new + lrn + rev)
+ * @param eta The estimated time to review
+ */
 data class SmallWidgetStatus(
-    var due: Int,
-    var eta: Int,
+    val dueCardsCount: Int,
+    val eta: Int,
 )
 
 /**
@@ -86,7 +90,7 @@ object WidgetStatus {
     }
 
     /** Returns the status of each of the decks.  */
-    fun fetchSmall(context: Context): IntArray = MetaDB.getWidgetSmallStatus(context)
+    fun fetchSmall(context: Context): SmallWidgetStatus = MetaDB.getWidgetSmallStatus(context)
 
     fun fetchDue(context: Context): Int = MetaDB.getNotificationStatus(context)
 

@@ -620,9 +620,9 @@ object MetaDB {
     /**
      * Return the current status of the widget.
      *
-     * @return [due, eta]
+     * @return [due, eta] ([SmallWidgetStatus])
      */
-    fun getWidgetSmallStatus(context: Context): IntArray {
+    fun getWidgetSmallStatus(context: Context): SmallWidgetStatus {
         openDBIfClosed(context)
         try {
             metaDb!!
@@ -636,13 +636,16 @@ object MetaDB {
                     null,
                 ).use { cursor ->
                     if (cursor.moveToNext()) {
-                        return intArrayOf(cursor.getInt(0), cursor.getInt(1))
+                        return SmallWidgetStatus(
+                            dueCardsCount = cursor.getInt(0),
+                            eta = cursor.getInt(1),
+                        )
                     }
                 }
         } catch (e: SQLiteException) {
             Timber.e(e, "Error while querying widgetStatus")
         }
-        return intArrayOf(0, 0)
+        return SmallWidgetStatus(dueCardsCount = 0, eta = 0)
     }
 
     fun getNotificationStatus(context: Context): Int {
@@ -672,7 +675,7 @@ object MetaDB {
                 metaDb.execSQL("DELETE FROM smallWidgetStatus")
                 metaDb.execSQL(
                     "INSERT INTO smallWidgetStatus(due, eta) VALUES (?, ?)",
-                    arrayOf<Any>(status.due, status.eta),
+                    arrayOf<Any>(status.dueCardsCount, status.eta),
                 )
             }
         } catch (e: IllegalStateException) {
