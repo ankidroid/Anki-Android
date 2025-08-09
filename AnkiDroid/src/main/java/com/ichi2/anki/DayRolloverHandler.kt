@@ -95,9 +95,15 @@ object DayRolloverHandler : BroadcastReceiver() {
         Timber.i("day cutoff changed %d -> %d", lastCutoff, currentCutoff)
         // we do not want to send a "study queues changes" message initially
         if (lastCutoff != null) {
-            Timber.i("updating study queues")
-            ChangeManager.notifySubscribers(opChanges { studyQueues = true }, initiator = null)
+            handleDayRollover()
         }
         this.lastCutoff = currentCutoff
+    }
+
+    private fun handleDayRollover() {
+        Timber.i("day rollover occurred")
+
+        Timber.i("updating study queues")
+        ChangeManager.notifySubscribers(opChanges { studyQueues = true }, initiator = null)
     }
 }
