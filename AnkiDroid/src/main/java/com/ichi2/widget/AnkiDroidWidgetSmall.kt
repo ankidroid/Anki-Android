@@ -154,16 +154,17 @@ class AnkiDroidWidgetSmall : AnalyticsWidgetProvider() {
                         R.id.widget_due,
                         context.resources.getQuantityString(R.plurals.widget_cards_due, dueCardsCount, dueCardsCount),
                     )
-                }
-                if (eta <= 0 || dueCardsCount == 0) {
-                    updateViews.setViewVisibility(R.id.widget_eta, View.INVISIBLE)
-                } else {
-                    updateViews.setViewVisibility(R.id.widget_eta, View.VISIBLE)
-                    updateViews.setTextViewText(R.id.widget_eta, "$etaIcon$eta")
-                    updateViews.setContentDescription(
-                        R.id.widget_eta,
-                        context.resources.getQuantityString(R.plurals.widget_eta, eta, eta),
-                    )
+
+                    if (eta <= 0) {
+                        updateViews.setViewVisibility(R.id.widget_eta, View.INVISIBLE)
+                    } else {
+                        updateViews.setViewVisibility(R.id.widget_eta, View.VISIBLE)
+                        updateViews.setTextViewText(R.id.widget_eta, "$etaIcon$eta")
+                        updateViews.setContentDescription(
+                            R.id.widget_eta,
+                            context.resources.getQuantityString(R.plurals.widget_eta, eta, eta),
+                        )
+                    }
                 }
             }
 
