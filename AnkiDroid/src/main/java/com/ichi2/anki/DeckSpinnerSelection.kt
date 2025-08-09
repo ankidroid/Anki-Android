@@ -29,11 +29,11 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckCreationListener
-import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
-import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck.Companion.fromCollection
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.DeckNameId
+import com.ichi2.anki.model.SelectableDeck
+import com.ichi2.anki.model.SelectableDeck.Companion.fromCollection
 import com.ichi2.anki.utils.showDialogFragmentImpl
 import com.ichi2.anki.widgets.DeckDropDownAdapter
 import com.ichi2.utils.FragmentManagerSupplier
@@ -290,9 +290,9 @@ class DeckSpinnerSelection(
      * Displays a [DeckSelectionDialog]
      */
     suspend fun displayDeckSelectionDialog() {
-        val decks = fromCollection(includeFiltered = showFilteredDecks).toMutableList()
+        val decks: MutableList<SelectableDeck> = fromCollection(includeFiltered = showFilteredDecks).toMutableList()
         if (showAllDecks) {
-            decks.add(SelectableDeck(ALL_DECKS_ID, context.resources.getString(R.string.card_browser_all_decks)))
+            decks.add(SelectableDeck.AllDecks)
         }
         val dialog = DeckSelectionDialog.newInstance(context.getString(R.string.search_deck), null, false, decks)
         // TODO: retain state after onDestroy

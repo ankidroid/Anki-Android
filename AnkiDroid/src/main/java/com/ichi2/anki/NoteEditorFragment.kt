@@ -97,7 +97,6 @@ import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.dialogs.ConfirmationDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
-import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
 import com.ichi2.anki.dialogs.DiscardChangesDialog
 import com.ichi2.anki.dialogs.IntegerDialog
 import com.ichi2.anki.dialogs.tags.TagsDialog
@@ -117,6 +116,7 @@ import com.ichi2.anki.libanki.Notetypes
 import com.ichi2.anki.libanki.Notetypes.Companion.NOT_FOUND_NOTE_TYPE
 import com.ichi2.anki.libanki.Utils
 import com.ichi2.anki.model.CardStateFilter
+import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.anki.multimedia.AudioRecordingFragment
 import com.ichi2.anki.multimedia.AudioVideoFragment
 import com.ichi2.anki.multimedia.MultimediaActivity.Companion.MULTIMEDIA_RESULT
@@ -430,6 +430,7 @@ class NoteEditorFragment :
         if (deck == null) {
             return
         }
+        require(deck is SelectableDeck.Deck)
         deckId = deck.deckId
         // this is called because DeckSpinnerSelection.onDeckAdded doesn't update the list
         deckSpinnerSelection!!.initializeNoteEditorDeckSpinner(getColUnsafe)

@@ -36,6 +36,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.annotation.CheckResult
+import androidx.annotation.LayoutRes
 import androidx.annotation.MainThread
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.widget.SearchView
@@ -73,7 +74,6 @@ import com.ichi2.anki.dialogs.CardBrowserMySearchesDialog
 import com.ichi2.anki.dialogs.CardBrowserMySearchesDialog.Companion.newInstance
 import com.ichi2.anki.dialogs.CardBrowserMySearchesDialog.MySearchesDialogListener
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
-import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
 import com.ichi2.anki.dialogs.DiscardChangesDialog
 import com.ichi2.anki.dialogs.GradeNowDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory
@@ -88,6 +88,7 @@ import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.model.CardsOrNotes
 import com.ichi2.anki.model.CardsOrNotes.CARDS
 import com.ichi2.anki.model.CardsOrNotes.NOTES
+import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.preferences.sharedPrefs
@@ -133,9 +134,7 @@ open class CardBrowser :
             }
 
     override fun onDeckSelected(deck: SelectableDeck?) {
-        deck?.let {
-            launchCatchingTask { viewModel.setDeckId(deck.deckId) }
-        }
+        deck?.let { deck -> launchCatchingTask { viewModel.setSelectedDeck(deck) } }
     }
 
     override var fragmented: Boolean
@@ -153,7 +152,9 @@ open class CardBrowser :
      */
     private var noteEditorFrame: FragmentContainerView? = null
 
-    private lateinit var deckSpinnerSelection: DeckSpinnerSelection
+    private var deckSpinnerSelection: DeckSpinnerSelection? = null
+
+    private var actionBarTitle: TextView? = null
 
     private var searchView: CardBrowserSearchView? = null
 
@@ -169,6 +170,14 @@ open class CardBrowser :
         set(value) {
             viewModel.currentCardId = value
         }
+
+    // Dev option for Issue 18709
+    val useSearchView: Boolean
+        get() = Prefs.devUsingCardBrowserSearchView
+
+    @get:LayoutRes
+    private val layout: Int
+        get() = if (useSearchView) R.layout.card_browser_searchview else R.layout.card_browser
 
     private var onEditCardActivityResult =
         registerForActivityResult(StartActivityForResult()) { result: ActivityResult ->
@@ -231,7 +240,6 @@ open class CardBrowser :
             }
             invalidateOptionsMenu() // maybe the availability of undo changed
         }
-    private lateinit var actionBarTitle: TextView
 
     // TODO: Remove this and use `opChanges`
     private var reloadRequired = false
@@ -337,7 +345,7 @@ open class CardBrowser :
 
         val launchOptions = intent?.toCardBrowserLaunchOptions() // must be called after super.onCreate()
 
-        setContentView(R.layout.card_browser)
+        setContentView(layout)
         initNavigationDrawer(findViewById(android.R.id.content))
 
         noteEditorFrame = findViewById(R.id.note_editor_frame)
@@ -350,6 +358,7 @@ open class CardBrowser :
         // TODO: Consider refactoring by storing noteEditorFrame and similar views in a sealed class (e.g., FragmentAccessor).
         val fragmented =
             Prefs.devIsCardBrowserFragmented &&
+                !useSearchView &&
                 noteEditorFrame?.visibility == View.VISIBLE
         Timber.i("Using split Browser: %b", fragmented)
 
@@ -380,19 +389,21 @@ open class CardBrowser :
                 }
             }
 
-        // initialize the lateinit variables
-        // Load reference to action bar title
-        actionBarTitle = findViewById(R.id.toolbar_title)
+        if (!useSearchView) {
+            // initialize the lateinit variables
+            // Load reference to action bar title
+            actionBarTitle = findViewById(R.id.toolbar_title)
 
-        deckSpinnerSelection =
-            DeckSpinnerSelection(
-                this,
-                findViewById(R.id.toolbar_spinner),
-                showAllDecks = true,
-                alwaysShowDefault = false,
-                showFilteredDecks = true,
-                subtitleProvider = this,
-            )
+            deckSpinnerSelection =
+                DeckSpinnerSelection(
+                    this,
+                    findViewById(R.id.toolbar_spinner),
+                    showAllDecks = true,
+                    alwaysShowDefault = false,
+                    showFilteredDecks = true,
+                    subtitleProvider = this,
+                )
+        }
 
         startLoadingCollection()
 
@@ -502,7 +513,7 @@ open class CardBrowser :
         suspend fun onDeckIdChanged(deckId: DeckId?) {
             if (deckId == null) return
             // this handles ALL_DECKS_ID
-            deckSpinnerSelection.selectDeckById(deckId, false)
+            deckSpinnerSelection?.selectDeckById(deckId, false)
         }
 
         fun onCanSaveChanged(canSave: Boolean) {
@@ -514,14 +525,14 @@ open class CardBrowser :
                 // Turn on Multi-Select Mode so that the user can select multiple cards at once.
                 Timber.d("load multiselect mode")
                 // show title and hide spinner
-                actionBarTitle.visibility = View.VISIBLE
-                deckSpinnerSelection.setSpinnerVisibility(View.GONE)
+                actionBarTitle?.visibility = View.VISIBLE
+                deckSpinnerSelection?.setSpinnerVisibility(View.GONE)
                 multiSelectOnBackPressedCallback.isEnabled = true
             } else {
                 Timber.d("end multiselect mode")
                 refreshSubtitle()
-                deckSpinnerSelection.setSpinnerVisibility(View.VISIBLE)
-                actionBarTitle.visibility = View.GONE
+                deckSpinnerSelection?.setSpinnerVisibility(View.VISIBLE)
+                actionBarTitle?.visibility = View.GONE
                 multiSelectOnBackPressedCallback.isEnabled = false
             }
             // reload the actionbar using the multi-select mode actionbar
@@ -589,7 +600,7 @@ open class CardBrowser :
         registerReceiver()
 
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
-        deckSpinnerSelection.apply {
+        deckSpinnerSelection?.apply {
             initializeActionBarDeckSpinner(col, supportActionBar!!)
             launchCatchingTask {
                 selectDeckById(
@@ -944,7 +955,7 @@ open class CardBrowser :
             return
         }
         // set the number of selected rows (only in multiselect)
-        actionBarTitle.text = String.format(LanguageUtil.getLocaleCompat(resources), "%d", viewModel.selectedRowCount())
+        actionBarTitle?.text = String.format(LanguageUtil.getLocaleCompat(resources), "%d", viewModel.selectedRowCount())
 
         actionBarMenu.findItem(R.id.action_flag).isVisible = viewModel.hasSelectedAnyRows()
         actionBarMenu.findItem(R.id.action_suspend_card).apply {
@@ -1221,7 +1232,7 @@ open class CardBrowser :
     private fun updateList() {
         if (!colIsOpenUnsafe()) return
         Timber.d("updateList")
-        deckSpinnerSelection.notifyDataSetChanged()
+        deckSpinnerSelection?.notifyDataSetChanged()
         onSelectionChanged()
         refreshMenuItems()
     }
@@ -1288,7 +1299,7 @@ open class CardBrowser :
     fun searchAllDecks() =
         launchCatchingTask {
             // all we need to do is select all decks
-            viewModel.setDeckId(DeckSpinnerSelection.ALL_DECKS_ID)
+            viewModel.setSelectedDeck(SelectableDeck.AllDecks)
         }
 
     /**
