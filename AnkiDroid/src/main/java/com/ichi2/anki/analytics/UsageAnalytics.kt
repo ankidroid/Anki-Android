@@ -567,6 +567,8 @@ object UsageAnalytics {
             R.string.user_action_7_key,
             R.string.user_action_8_key,
             R.string.user_action_9_key,
+            // ******************************** Widget *********************************************
+            R.string.widget_dynamic_theming_key, // Widget dynamic theming
             // ******************************** Accessibility ******************************************
             R.string.card_zoom_preference,
             R.string.image_zoom_preference,
