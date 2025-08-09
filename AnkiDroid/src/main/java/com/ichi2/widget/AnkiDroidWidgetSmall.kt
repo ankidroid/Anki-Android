@@ -80,9 +80,6 @@ class AnkiDroidWidgetSmall : AnalyticsWidgetProvider() {
     }
 
     class UpdateService : Service() {
-        /** The cached number of total due cards.  */
-        private var dueCardsCount = 0
-
         fun doUpdate(context: Context) {
             val appWidgetManager = getAppWidgetManager(context) ?: return
             appWidgetManager.updateAppWidget(ComponentName(context, AnkiDroidWidgetSmall::class.java), buildUpdate(context))
@@ -143,10 +140,7 @@ class AnkiDroidWidgetSmall : AnalyticsWidgetProvider() {
                 }
             } else {
                 // Compute the total number of cards due.
-                val counts = WidgetStatus.fetchSmall(context)
-                dueCardsCount = counts[0]
-                // The cached estimated reviewing time.
-                val eta = counts[1]
+                val (dueCardsCount, eta) = WidgetStatus.fetchSmall(context)
                 val etaIcon: String = "⏱"
                 if (dueCardsCount <= 0) {
                     if (dueCardsCount == 0) {
@@ -160,20 +154,7 @@ class AnkiDroidWidgetSmall : AnalyticsWidgetProvider() {
                             context.resources.getQuantityString(R.plurals.widget_cards_due, dueCardsCount, dueCardsCount),
                         )
                     }
-                    if (eta <= 0 || dueCardsCount <= 0) {
-                        updateViews.setViewVisibility(R.id.widget_eta, View.INVISIBLE)
-                    } else {
-                        updateViews.setViewVisibility(R.id.widget_eta, View.VISIBLE)
-                        if (Build.VERSION.SDK_INT >= 31) {
-                            updateViews.setTextViewText(R.id.widget_eta, "$etaIcon$eta")
-                        } else {
-                            updateViews.setTextViewText(R.id.widget_eta, "$eta")
-                        }
-                        updateViews.setContentDescription(
-                            R.id.widget_eta,
-                            context.resources.getQuantityString(R.plurals.widget_eta, eta, eta),
-                        )
-                    }
+                    updateViews.setViewVisibility(R.id.widget_eta, View.INVISIBLE)
                     updateViews.setViewVisibility(R.id.widget_due, View.INVISIBLE)
                 } else {
                     updateViews.setViewVisibility(R.id.ankidroid_widget_small_finish_layout, View.INVISIBLE)
