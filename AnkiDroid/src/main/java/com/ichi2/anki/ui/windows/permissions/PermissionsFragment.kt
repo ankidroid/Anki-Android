@@ -37,17 +37,17 @@ abstract class PermissionsFragment(
     @LayoutRes contentLayoutId: Int,
 ) : Fragment(contentLayoutId) {
     /**
-     * All the [PermissionItem]s in the fragment.
+     * All the [PermissionsItem]s in the fragment.
      * Must be called ONLY AFTER [onCreateView]
      */
-    val permissionItems: List<PermissionItem>
-        by lazy { view?.allViews?.filterIsInstance<PermissionItem>()?.toList() ?: emptyList() }
+    val mPermissionItems: List<PermissionsItem>
+        by lazy { view?.allViews?.filterIsInstance<PermissionsItem>()?.toList() ?: emptyList() }
 
-    protected fun hasAllPermissions() = permissionItems.all { it.isGranted }
+    protected fun hasAllPermissions() = mPermissionItems.all { it.areGranted }
 
     override fun onResume() {
         super.onResume()
-        permissionItems.forEach { it.updateSwitchCheckedStatus() }
+        mPermissionItems.forEach { it.updateSwitchCheckedStatus() }
         (activity as? PermissionsActivity)?.setContinueButtonEnabled(
             hasAllPermissions(),
         )
