@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025 Brayan Oliveira <69634269+brayandso@users.noreply.github.con>
+ * Copyright (c) 2025 Brayan Oliveira <69634269+brayandso@users.noreply.github.com>
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
