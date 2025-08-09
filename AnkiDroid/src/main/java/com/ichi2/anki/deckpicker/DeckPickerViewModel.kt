@@ -16,17 +16,22 @@
 
 package com.ichi2.anki.deckpicker
 
+import android.os.Build
 import androidx.annotation.CheckResult
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import anki.card_rendering.EmptyCardsReport
 import anki.collection.OpChanges
 import anki.i18n.GeneratedTranslations
+import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.DeckPicker
+import com.ichi2.anki.InitialActivity
 import com.ichi2.anki.OnErrorListener
+import com.ichi2.anki.PermissionSet
 import com.ichi2.anki.browser.BrowserDestination
+import com.ichi2.anki.configureRenderingMode
 import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.libanki.CardId
 import com.ichi2.anki.libanki.Consts
@@ -38,6 +43,7 @@ import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import com.ichi2.anki.notetype.ManageNoteTypesDestination
 import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.pages.DeckOptionsDestination
+import com.ichi2.anki.performBackupInBackground
 import com.ichi2.anki.reviewreminders.ScheduleRemindersDestination
 import com.ichi2.anki.utils.Destination
 import kotlinx.coroutines.Job
@@ -49,6 +55,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import net.ankiweb.rsdroid.RustCleanup
 import timber.log.Timber
 
 /**
@@ -60,6 +67,8 @@ class DeckPickerViewModel(
     val fragmented: Boolean,
 ) : ViewModel(),
     OnErrorListener {
+    val flowOfStartupResponse = MutableStateFlow<StartupResponse?>(null)
+
     private val flowOfDeckDueTree = MutableStateFlow<DeckNode?>(null)
 
     /** The root of the tree displaying all decks */
@@ -162,6 +171,10 @@ class DeckPickerViewModel(
         combine(flowOfDeckListInInitialState, flowOfCollectionHasNoCards) { isInInitialState, hasNoCards ->
             !(isInInitialState == true || hasNoCards)
         }
+
+    // HACK: dismiss a legacy progress bar
+    // TODO: Replace with better progress handling for first load/corrupt collections
+    val flowOfDecksReloaded = MutableSharedFlow<Unit>()
 
     /**
      * Deletes the provided deck, child decks. and all cards inside.
@@ -277,6 +290,27 @@ class DeckPickerViewModel(
             flowOfDestination.emit(ScheduleRemindersDestination(deckId))
         }
 
+    /**
+     * Launch an asynchronous task to rebuild the deck list and recalculate the deck counts. Use this
+     * after any change to a deck (e.g., rename, importing, add/delete) that needs to be reflected
+     * in the deck list.
+     *
+     * This method also triggers an update for the widget to reflect the newly calculated counts.
+     */
+    @RustCleanup("backup with 5 minute timer, instead of deck list refresh")
+    fun updateDeckList(): Job? {
+        if (!CollectionManager.isOpenUnsafe()) {
+            return null
+        }
+        if (Build.FINGERPRINT != "robolectric") {
+            // uses user's desktop settings to determine whether a backup
+            // actually happens
+            launchCatchingIO { performBackupInBackground() }
+        }
+        Timber.d("updateDeckList")
+        return reloadDeckCounts()
+    }
+
     fun reloadDeckCounts(): Job? {
         loadDeckCounts?.cancel()
         val loadDeckCounts =
@@ -311,6 +345,8 @@ class DeckPickerViewModel(
                 // current deck may have changed
                 focusedDeck = withCol { decks.current().id }
                 flowOfUndoUpdated.emit(Unit)
+
+                flowOfDecksReloaded.emit(Unit)
             }
         this.loadDeckCounts = loadDeckCounts
         return loadDeckCounts
@@ -331,6 +367,58 @@ class DeckPickerViewModel(
             }
             flowOfRefreshDeckList.emit(Unit)
         }
+
+    sealed class StartupResponse {
+        data class RequestPermissions(
+            val requiredPermissions: PermissionSet,
+        ) : StartupResponse()
+
+        /**
+         * The app failed to start and is probably unusable (e.g. No disk space/DB corrupt)
+         *
+         * @see InitialActivity.StartupFailure
+         */
+        data class FatalError(
+            val failure: InitialActivity.StartupFailure,
+        ) : StartupResponse()
+
+        data object Success : StartupResponse()
+    }
+
+    /**
+     * The first call in showing dialogs for startup - error or success.
+     * Attempts startup if storage permission has been acquired, else, it requests the permission
+     *
+     * @see flowOfStartupResponse
+     */
+    fun handleStartup(environment: AnkiDroidEnvironment) {
+        if (!environment.hasRequiredPermissions()) {
+            Timber.i("${this.javaClass.simpleName}: postponing startup code - permission screen shown")
+            flowOfStartupResponse.value = StartupResponse.RequestPermissions(environment.requiredPermissions)
+            return
+        }
+
+        Timber.d("handleStartup: Continuing after permission granted")
+        val failure = InitialActivity.getStartupFailureType(environment::initializeAnkiDroidFolder)
+        if (failure != null) {
+            flowOfStartupResponse.value = StartupResponse.FatalError(failure)
+            return
+        }
+
+        // successful startup
+
+        configureRenderingMode()
+
+        flowOfStartupResponse.value = StartupResponse.Success
+    }
+
+    interface AnkiDroidEnvironment {
+        fun hasRequiredPermissions(): Boolean
+
+        val requiredPermissions: PermissionSet
+
+        fun initializeAnkiDroidFolder(): Boolean
+    }
 
     /** Represents [dueTree] as a list */
     data class FlattenedDeckList(

@@ -33,7 +33,6 @@ import android.content.res.Configuration
 import android.database.SQLException
 import android.graphics.PixelFormat
 import android.graphics.drawable.Drawable
-import android.os.Build
 import android.os.Bundle
 import android.os.Message
 import android.text.util.Linkify
@@ -112,7 +111,9 @@ import com.ichi2.anki.deckpicker.BITMAP_BYTES_PER_PIXEL
 import com.ichi2.anki.deckpicker.BackgroundImage
 import com.ichi2.anki.deckpicker.DeckDeletionResult
 import com.ichi2.anki.deckpicker.DeckPickerViewModel
+import com.ichi2.anki.deckpicker.DeckPickerViewModel.AnkiDroidEnvironment
 import com.ichi2.anki.deckpicker.DeckPickerViewModel.FlattenedDeckList
+import com.ichi2.anki.deckpicker.DeckPickerViewModel.StartupResponse
 import com.ichi2.anki.deckpicker.EmptyCardsResult
 import com.ichi2.anki.dialogs.AsyncDialogFragment
 import com.ichi2.anki.dialogs.BackupPromptDialog
@@ -165,6 +166,7 @@ import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.ResizablePaneManager
 import com.ichi2.anki.ui.animations.fadeIn
 import com.ichi2.anki.ui.animations.fadeOut
+import com.ichi2.anki.ui.windows.permissions.PermissionsActivity
 import com.ichi2.anki.utils.Destination
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.anki.utils.ext.setFragmentResultListener
@@ -174,7 +176,6 @@ import com.ichi2.anki.worker.SyncMediaWorker
 import com.ichi2.anki.worker.SyncWorker
 import com.ichi2.anki.worker.UniqueWorkNames
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
-import com.ichi2.compat.CompatHelper.Companion.sdkVersion
 import com.ichi2.ui.AccessibleSearchView
 import com.ichi2.ui.BadgeDrawableBuilder
 import com.ichi2.utils.AdaptionUtil
@@ -202,7 +203,6 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import net.ankiweb.rsdroid.RustCleanup
 import net.ankiweb.rsdroid.Translations
 import net.ankiweb.rsdroid.exceptions.BackendNetworkException
 import org.json.JSONException
@@ -317,9 +317,6 @@ open class DeckPicker :
     // flag keeping track of when the app has been paused
     var activityPaused = false
         private set
-
-    // Flag to keep track of startup error
-    private var startupError = false
 
     /** See [OptionsMenuState]. */
     @VisibleForTesting
@@ -480,7 +477,7 @@ open class DeckPicker :
                         sched.haveBuried(),
                     )
                 }
-            updateDeckList()?.join() // focus has changed
+            updateDeckList()
             showDialogFragment(
                 DeckPickerContextMenu.newInstance(
                     id = deckId,
@@ -528,29 +525,14 @@ open class DeckPicker :
 
         setContentView(R.layout.homescreen)
         enableToolbar()
+        // TODO This method is run on every activity recreation, which can happen often.
+        //  It seems that the original idea was for for this to only run once, on app start.
+        //  This method triggers backups, sync, and may re-show dialogs
+        //  that may have been dismissed. Make this run only once?
         handleStartup()
         val mainView = findViewById<View>(android.R.id.content)
 
         studyoptionsFrame = findViewById(R.id.studyoptions_fragment)
-
-        // Open StudyOptionsFragment if in fragmented mode
-        if (fragmented && !startupError) {
-            loadStudyOptionsFragment(false)
-
-            val resizingDivider = findViewById<View>(R.id.homescreen_resizing_divider)
-            val parentLayout = findViewById<LinearLayout>(R.id.deckpicker_xl_view)
-            val deckPickerPane = findViewById<View>(R.id.deck_picker_pane)
-            val studyOptionsPane = findViewById<View>(R.id.studyoptions_fragment)
-            ResizablePaneManager(
-                parentLayout = parentLayout,
-                divider = resizingDivider,
-                leftPane = deckPickerPane,
-                rightPane = studyOptionsPane,
-                sharedPrefs = Prefs.getUiConfig(this),
-                leftPaneWeightKey = PREF_DECK_PICKER_PANE_WEIGHT,
-                rightPaneWeightKey = PREF_STUDY_OPTIONS_PANE_WEIGHT,
-            )
-        }
         registerReceiver()
 
         // create inherited navigation drawer layout here so that it can be used by parent class
@@ -801,6 +783,44 @@ open class DeckPicker :
             }, 10)
         }
 
+        fun onDecksReloaded(param: Unit) {
+            hideProgressBar()
+        }
+
+        fun onStartupResponse(response: StartupResponse) {
+            Timber.d("onStartupResponse: %s", response)
+            when (response) {
+                is StartupResponse.RequestPermissions ->
+                    permissionScreenLauncher.launch(
+                        PermissionsActivity.getIntent(this, response.requiredPermissions),
+                    )
+
+                is StartupResponse.Success -> {
+                    showStartupScreensAndDialogs(sharedPrefs(), 0)
+
+                    // Open StudyOptionsFragment if in fragmented mode
+                    if (fragmented) {
+                        loadStudyOptionsFragment(false)
+
+                        val resizingDivider = findViewById<View>(R.id.homescreen_resizing_divider)
+                        val parentLayout = findViewById<LinearLayout>(R.id.deckpicker_xl_view)
+                        val deckPickerPane = findViewById<View>(R.id.deck_picker_pane)
+                        val studyOptionsPane = findViewById<View>(R.id.studyoptions_fragment)
+                        ResizablePaneManager(
+                            parentLayout = parentLayout,
+                            divider = resizingDivider,
+                            leftPane = deckPickerPane,
+                            rightPane = studyOptionsPane,
+                            sharedPrefs = Prefs.getUiConfig(this),
+                            leftPaneWeightKey = PREF_DECK_PICKER_PANE_WEIGHT,
+                            rightPaneWeightKey = PREF_STUDY_OPTIONS_PANE_WEIGHT,
+                        )
+                    }
+                }
+                is StartupResponse.FatalError -> handleStartupFailure(response.failure)
+            }
+        }
+
         fun onError(errorMessage: String) {
             AlertDialog
                 .Builder(this)
@@ -823,6 +843,8 @@ open class DeckPicker :
         viewModel.flowOfDeckList.launchCollectionInLifecycleScope(::onDeckListChanged)
         viewModel.flowOfFocusedDeck.launchCollectionInLifecycleScope(::onFocusedDeckChanged)
         viewModel.flowOfResizingDividerVisible.launchCollectionInLifecycleScope(::onResizingDividerVisibilityChanged)
+        viewModel.flowOfDecksReloaded.launchCollectionInLifecycleScope(::onDecksReloaded)
+        viewModel.flowOfStartupResponse.filterNotNull().launchCollectionInLifecycleScope(::onStartupResponse)
     }
 
     private val onReceiveContentListener =
@@ -930,32 +952,24 @@ open class DeckPicker :
     }
 
     /**
-     * The first call in showing dialogs for startup - error or success.
-     * Attempts startup if storage permission has been acquired, else, it requests the permission
-     *
-     * TODO This method is run on every activity recreation, which can happen often.
-     *   It seems that the original idea was for for this to only run once, on app start.
-     *   This method triggers backups, sync, and may re-show dialogs
-     *   that may have been dismissed. Make this run only once?
+     * @see DeckPickerViewModel.handleStartup
      */
     private fun handleStartup() {
-        if (collectionPermissionScreenWasOpened()) {
-            return
-        }
+        val context = AnkiDroidApp.instance
 
-        Timber.d("handleStartup: Continuing after permission granted")
-        val failure = InitialActivity.getStartupFailureType(this)
-        startupError =
-            if (failure == null) {
-                // Show any necessary dialogs (e.g. changelog, special messages, etc)
-                val sharedPrefs = this.sharedPrefs()
-                showStartupScreensAndDialogs(sharedPrefs, 0)
-                false
-            } else {
-                // Show error dialogs
-                handleStartupFailure(failure)
-                true
+        val environment: AnkiDroidEnvironment =
+            object : AnkiDroidEnvironment {
+                private val folder = selectAnkiDroidFolder(context)
+
+                override fun hasRequiredPermissions(): Boolean = folder.hasRequiredPermissions(context)
+
+                override val requiredPermissions: PermissionSet
+                    get() = folder.permissionSet
+
+                override fun initializeAnkiDroidFolder(): Boolean = CollectionHelper.isCurrentAnkiDroidDirAccessible(context)
             }
+
+        viewModel.handleStartup(environment = environment)
     }
 
     @VisibleForTesting
@@ -1765,17 +1779,6 @@ open class DeckPicker :
         preferences: SharedPreferences,
         skip: Int,
     ) {
-        // For Android 8/8.1 we want to use software rendering by default or the Reviewer UI is broken #7369
-        if (sdkVersion == Build.VERSION_CODES.O ||
-            sdkVersion == Build.VERSION_CODES.O_MR1
-        ) {
-            if (!preferences.contains("softwareRender")) {
-                Timber.i("Android 8/8.1 detected with no render preference. Turning on software render.")
-                preferences.edit { putBoolean("softwareRender", true) }
-            } else {
-                Timber.i("Android 8/8.1 detected, software render preference already exists.")
-            }
-        }
         if (!BackupManager.enoughDiscSpace(CollectionHelper.getCurrentAnkiDroidDirectory(this))) {
             Timber.i("Not enough space to do backup")
             showDialogFragment(DeckPickerNoSpaceLeftDialog.newInstance())
@@ -2266,27 +2269,12 @@ open class DeckPicker :
     }
 
     /**
-     * Launch an asynchronous task to rebuild the deck list and recalculate the deck counts. Use this
-     * after any change to a deck (e.g., rename, importing, add/delete) that needs to be reflected
-     * in the deck list.
-     *
-     * This method also triggers an update for the widget to reflect the newly calculated counts.
+     * @see DeckPickerViewModel.updateDeckList
      */
     @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
-    @RustCleanup("backup with 5 minute timer, instead of deck list refresh")
-    fun updateDeckList(): Job? {
-        if (!CollectionManager.isOpenUnsafe()) {
-            return null
-        }
-        if (Build.FINGERPRINT != "robolectric") {
-            // uses user's desktop settings to determine whether a backup
-            // actually happens
-            performBackupInBackground()
-        }
-        Timber.d("updateDeckList")
-        return launchCatchingTask {
-            withProgress { viewModel.reloadDeckCounts()?.join() }
-            hideProgressBar()
+    fun updateDeckList() {
+        launchCatchingTask {
+            withProgress { viewModel.updateDeckList()?.join() }
         }
     }
 

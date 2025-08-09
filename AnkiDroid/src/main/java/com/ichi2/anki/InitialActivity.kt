@@ -33,18 +33,22 @@ import com.ichi2.anki.ui.windows.permissions.Full30and31PermissionsFragment
 import com.ichi2.anki.ui.windows.permissions.PermissionsFragment
 import com.ichi2.anki.ui.windows.permissions.PermissionsUntil29Fragment
 import com.ichi2.anki.ui.windows.permissions.TiramisuPermissionsFragment
+import com.ichi2.compat.CompatHelper.Companion.sdkVersion
 import com.ichi2.utils.Permissions
 import com.ichi2.utils.VersionUtils.pkgVersionName
 import kotlinx.parcelize.Parcelize
 import net.ankiweb.rsdroid.BackendException
 import timber.log.Timber
-import java.lang.Exception
 
 /** Utilities for launching the first activity (currently the DeckPicker)  */
 object InitialActivity {
+    @CheckResult
+    fun getStartupFailureType(context: Context): StartupFailure? =
+        getStartupFailureType { CollectionHelper.isCurrentAnkiDroidDirAccessible(context) }
+
     /** Returns null on success  */
     @CheckResult
-    fun getStartupFailureType(context: Context): StartupFailure? {
+    fun getStartupFailureType(initializeAnkiDroidDirectory: () -> Boolean): StartupFailure? {
         // A WebView failure means that we skip `AnkiDroidApp`, and therefore haven't loaded the collection
         if (AnkiDroidApp.webViewFailedToLoad()) {
             return StartupFailure.WebviewFailed
@@ -76,7 +80,7 @@ object InitialActivity {
 
         if (!AnkiDroidApp.isSdCardMounted) {
             return StartupFailure.SDCardNotMounted
-        } else if (!CollectionHelper.isCurrentAnkiDroidDirAccessible(context)) {
+        } else if (!initializeAnkiDroidDirectory()) {
             return StartupFailure.DirectoryNotAccessible
         }
 
@@ -235,4 +239,19 @@ fun selectAnkiDroidFolder(context: Context): AnkiDroidFolder {
         canManageExternalStorage = Permissions.canManageExternalStorage(context),
         currentFolderIsAccessibleAndLegacy = currentFolderIsAccessibleAndLegacy,
     )
+}
+
+/**
+ * Configures either hardware or software rendering
+ */
+fun configureRenderingMode() {
+    val preferences = AnkiDroidApp.sharedPrefs()
+    // For Android 8/8.1 we want to use software rendering by default or the Reviewer UI is broken #7369
+    if (sdkVersion != Build.VERSION_CODES.O && sdkVersion != Build.VERSION_CODES.O_MR1) return
+    if (!preferences.contains("softwareRender")) {
+        Timber.i("Android 8/8.1 detected with no render preference. Turning on software render.")
+        preferences.edit { putBoolean("softwareRender", true) }
+    } else {
+        Timber.i("Android 8/8.1 detected, software render preference already exists.")
+    }
 }

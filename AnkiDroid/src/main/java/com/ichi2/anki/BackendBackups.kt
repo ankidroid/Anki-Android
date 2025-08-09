@@ -21,13 +21,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 
-fun DeckPicker.performBackupInBackground() {
-    launchCatchingTask {
-        // Wait a second to allow the deck list to finish loading first, or it
-        // will hang until the first stage of the backup completes.
-        delay(1000)
-        createBackup(force = false)
-    }
+suspend fun performBackupInBackground() {
+    // Wait a second to allow the deck list to finish loading first, or it
+    // will hang until the first stage of the backup completes.
+    delay(1000)
+    createBackup(force = false)
 }
 
 fun <Activity> Activity.importColpkg(colpkgPath: String) where Activity : AnkiActivity, Activity : ImportColpkgListener {
