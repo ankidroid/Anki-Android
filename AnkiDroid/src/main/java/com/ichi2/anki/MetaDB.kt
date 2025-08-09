@@ -678,6 +678,7 @@ object MetaDB {
                     arrayOf<Any>(status.dueCardsCount, status.eta),
                 )
             }
+            Timber.d("MetaDB:: Cached small widget status")
         } catch (e: IllegalStateException) {
             Timber.e(e, "MetaDB.storeSmallWidgetStatus: failed")
         } catch (e: SQLiteException) {
