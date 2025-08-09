@@ -254,4 +254,9 @@
     <style name="ThemeOverlay.App.BottomSheetDialog" parent="ThemeOverlay.Material3.BottomSheetDialog">
         <item name="android:navigationBarColor" tools:ignore="NewApi">@android:color/transparent</item>
     </style>
+
+    <style name="TimePickerStyle" parent="ThemeOverlay.Material3.MaterialTimePicker">
+        <item name="android:headerBackground">@android:color/transparent</item>
+        <item name="android:numbersSelectorColor">?attr/colorPrimary</item>
+    </style>
 </resources>
