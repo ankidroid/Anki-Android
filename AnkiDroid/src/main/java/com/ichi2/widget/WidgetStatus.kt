@@ -21,7 +21,6 @@ import com.ichi2.anki.MetaDB
 import com.ichi2.anki.R
 import com.ichi2.anki.libanki.sched.Counts
 import com.ichi2.anki.preferences.sharedPrefs
-import com.ichi2.widget.AnkiDroidWidgetSmall.UpdateService
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
@@ -41,8 +40,8 @@ data class SmallWidgetStatus(
  * The status of the widget.
  */
 object WidgetStatus {
-    private var enabled = false
-    private var updateJob: Job? = null
+    private var smallWidgetEnabled = false
+    private var smallWidgetUpdateJob: Job? = null
 
     /**
      * Request the widget to update its status.
@@ -52,38 +51,41 @@ object WidgetStatus {
      */
     fun updateInBackground(context: Context) {
         val preferences = context.sharedPrefs()
-        enabled = preferences.getBoolean("widgetSmallEnabled", false)
+        smallWidgetEnabled = preferences.getBoolean("widgetSmallEnabled", false)
         val notificationEnabled =
             preferences
                 .getString(context.getString(R.string.pref_notifications_minimum_cards_due_key), "1000001")!!
                 .toInt() < 1000000
-        val canExecuteTask = updateJob == null || updateJob?.isActive == false
-        if ((enabled || notificationEnabled) && canExecuteTask) {
+        val canExecuteTask = smallWidgetUpdateJob == null || smallWidgetUpdateJob?.isActive == false
+        if ((smallWidgetEnabled || notificationEnabled) && canExecuteTask) {
             Timber.d("WidgetStatus.update(): updating")
-            updateJob = launchUpdateJob(context)
+            smallWidgetUpdateJob = launchSmallWidgetUpdateJob(context)
         } else {
-            Timber.d("WidgetStatus.update(): already running or not enabled")
+            Timber.d("WidgetStatus.update(): already running or not enabled; enabled: %b", smallWidgetEnabled)
         }
     }
 
     @OptIn(DelicateCoroutinesApi::class)
-    private fun launchUpdateJob(context: Context): Job =
+    private fun launchSmallWidgetUpdateJob(context: Context): Job =
         GlobalScope.launch {
             try {
-                updateStatus(context)
+                updateSmallWidgetStatus(context)
+                Timber.v("launchUpdateJob completed")
             } catch (exc: java.lang.Exception) {
                 Timber.w(exc, "failure in widget update")
             }
         }
 
-    suspend fun updateStatus(context: Context) {
+    suspend fun updateSmallWidgetStatus(context: Context) {
         if (!AnkiDroidApp.isSdCardMounted) {
+            Timber.w("updateStatus failed: no SD Card")
             return
         }
         val status = querySmallWidgetStatus()
         MetaDB.storeSmallWidgetStatus(context, status)
-        if (enabled) {
-            UpdateService().doUpdate(context)
+        if (smallWidgetEnabled) {
+            Timber.i("triggering small widget UI update")
+            AnkiDroidWidgetSmall.UpdateService().doUpdate(context)
         }
         (context.applicationContext as AnkiDroidApp).scheduleNotification()
     }

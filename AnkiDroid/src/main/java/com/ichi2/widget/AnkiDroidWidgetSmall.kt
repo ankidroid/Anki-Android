@@ -80,9 +80,15 @@ class AnkiDroidWidgetSmall : AnalyticsWidgetProvider() {
     }
 
     class UpdateService : Service() {
+        /**
+         * Updates the UI of [AnkiDroidWidgetSmall]
+         *
+         * Externals callers should use [WidgetStatus.updateInBackground]
+         */
         fun doUpdate(context: Context) {
             val appWidgetManager = getAppWidgetManager(context) ?: return
-            appWidgetManager.updateAppWidget(ComponentName(context, AnkiDroidWidgetSmall::class.java), buildUpdate(context))
+            val remoteViews = buildUpdate(context)
+            appWidgetManager.updateAppWidget(ComponentName(context, AnkiDroidWidgetSmall::class.java), remoteViews)
         }
 
         @Deprecated("Implement onStartCommand(Intent, int, int) instead.") // TODO
@@ -102,7 +108,7 @@ class AnkiDroidWidgetSmall : AnalyticsWidgetProvider() {
             }
 
         private fun buildUpdate(context: Context): RemoteViews {
-            Timber.d("buildUpdate")
+            Timber.d("updating small widget UI")
             val updateViews = RemoteViews(context.packageName, widgetSmallLayout)
             val mounted = AnkiDroidApp.isSdCardMounted
             if (!mounted) {
