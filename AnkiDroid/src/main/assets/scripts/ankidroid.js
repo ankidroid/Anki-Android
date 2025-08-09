@@ -38,8 +38,6 @@ document.addEventListener("focusout", event => {
     window.location.href = `ankidroid://focusout`;
 });
 
-globalThis.ankidroid.doubleTapTimeout = 200;
-
 (() => {
     const SCHEME = "gesture";
     const MULTI_TOUCH_TIMEOUT = 300;
@@ -57,7 +55,7 @@ globalThis.ankidroid.doubleTapTimeout = 200;
             startY = event.touches[0].pageY;
             // start counting from the first finger touch
             if (touchCount == 1) {
-                touchStartTime = new Date().getTime();
+                touchStartTime = Date.now();
             }
         },
         { passive: true },
