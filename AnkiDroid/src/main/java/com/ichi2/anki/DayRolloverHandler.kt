@@ -38,6 +38,7 @@ import com.ichi2.anki.CollectionManager.withOpenColOrNull
 import com.ichi2.anki.libanki.EpochSeconds
 import com.ichi2.anki.libanki.sched.Scheduler
 import com.ichi2.anki.observability.ChangeManager
+import com.ichi2.widget.WidgetStatus
 import kotlinx.coroutines.Dispatchers
 import timber.log.Timber
 
@@ -105,5 +106,12 @@ object DayRolloverHandler : BroadcastReceiver() {
 
         Timber.i("updating study queues")
         ChangeManager.notifySubscribers(opChanges { studyQueues = true }, initiator = null)
+
+        Timber.i("day rollover: updating widgets")
+        try {
+            WidgetStatus.updateInBackground(AnkiDroidApp.instance)
+        } catch (e: Exception) {
+            Timber.w(e, "failed to update widgets")
+        }
     }
 }
