@@ -42,7 +42,6 @@ data class SmallWidgetStatus(
  */
 object WidgetStatus {
     private var enabled = false
-    private var status = SmallWidgetStatus(0, 0)
     private var updateJob: Job? = null
 
     /**
@@ -81,7 +80,7 @@ object WidgetStatus {
         if (!AnkiDroidApp.isSdCardMounted) {
             return
         }
-        updateCounts()
+        val status = querySmallWidgetStatus()
         MetaDB.storeSmallWidgetStatus(context, status)
         if (enabled) {
             UpdateService().doUpdate(context)
@@ -94,19 +93,18 @@ object WidgetStatus {
 
     fun fetchDue(context: Context): Int = MetaDB.getNotificationStatus(context)
 
-    private suspend fun updateCounts() {
+    private suspend fun querySmallWidgetStatus(): SmallWidgetStatus {
         val total = Counts()
-        status =
-            CollectionManager.withCol {
-                // Only count the top-level decks in the total
-                val nodes = sched.deckDueTree().children
-                for (node in nodes) {
-                    total.addNew(node.newCount)
-                    total.addLrn(node.lrnCount)
-                    total.addRev(node.revCount)
-                }
-                val eta = sched.eta(total, false)
-                SmallWidgetStatus(total.count(), eta)
+        return CollectionManager.withCol {
+            // Only count the top-level decks in the total
+            val nodes = sched.deckDueTree().children
+            for (node in nodes) {
+                total.addNew(node.newCount)
+                total.addLrn(node.lrnCount)
+                total.addRev(node.revCount)
             }
+            val eta = sched.eta(total, false)
+            SmallWidgetStatus(total.count(), eta)
+        }
     }
 }
