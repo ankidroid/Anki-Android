@@ -1144,6 +1144,31 @@ class CardBrowserViewModelTest : JvmTest() {
         }
     }
 
+    @Test
+    fun `saving a blank query does nothing`() =
+        runViewModelTest {
+            flowOfSaveSearchNamePrompt.test {
+                updateQueryText("AAA")
+                updateQueryText("")
+
+                saveCurrentSearch()
+
+                expectNoEvents()
+            }
+        }
+
+    @Test
+    fun `saving a search opens the 'name' dialog`() =
+        runViewModelTest {
+            flowOfSaveSearchNamePrompt.test {
+                updateQueryText("AAA")
+
+                saveCurrentSearch()
+
+                assertThat("save search is opened", expectMostRecentItem(), equalTo("AAA"))
+            }
+        }
+
     private fun assertDate(str: String?) {
         // 2025-01-09 @ 18:06
         assertNotNull(str)

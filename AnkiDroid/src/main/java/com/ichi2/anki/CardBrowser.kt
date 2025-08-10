@@ -70,7 +70,6 @@ import com.ichi2.anki.browser.toCardBrowserLaunchOptions
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.dialogs.CardBrowserMySearchesDialog
-import com.ichi2.anki.dialogs.CardBrowserMySearchesDialog.Companion.newInstance
 import com.ichi2.anki.dialogs.CardBrowserMySearchesDialog.MySearchesDialogListener
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
@@ -557,6 +556,18 @@ open class CardBrowser :
             }
         }
 
+        fun onSaveSearchNamePrompt(searchTerms: String) {
+            Timber.i("opening 'save search' name input dialog")
+            val dialog =
+                CardBrowserMySearchesDialog.newInstance(
+                    savedFilters = null,
+                    mySearchesDialogListener = mySearchesDialogListener,
+                    currentSearchTerms = searchTerms,
+                    type = CardBrowserMySearchesDialog.CARD_BROWSER_MY_SEARCHES_TYPE_SAVE,
+                )
+            showDialogFragment(dialog)
+        }
+
         viewModel.flowOfSearchQueryExpanded.launchCollectionInLifecycleScope(::onSearchQueryExpanded)
         viewModel.flowOfSelectedRows.launchCollectionInLifecycleScope(::onSelectedRowsChanged)
         viewModel.flowOfFilterQuery.launchCollectionInLifecycleScope(::onFilterQueryChanged)
@@ -566,6 +577,7 @@ open class CardBrowser :
         viewModel.flowOfCardsUpdated.launchCollectionInLifecycleScope(::cardsUpdatedChanged)
         viewModel.flowOfSearchState.launchCollectionInLifecycleScope(::searchStateChanged)
         viewModel.cardSelectionEventFlow.launchCollectionInLifecycleScope(::onSelectedCardUpdated)
+        viewModel.flowOfSaveSearchNamePrompt.launchCollectionInLifecycleScope(::onSaveSearchNamePrompt)
     }
 
     fun isKeyboardVisible(view: View?): Boolean =
@@ -674,7 +686,7 @@ open class CardBrowser :
                     return true
                 } else if (event.isCtrlPressed) {
                     Timber.i("Ctrl+S: Save search")
-                    openSaveSearchView()
+                    viewModel.saveCurrentSearch()
                     return true
                 }
             }
@@ -1046,7 +1058,7 @@ open class CardBrowser :
                 return true
             }
             R.id.action_save_search -> {
-                openSaveSearchView()
+                viewModel.saveCurrentSearch()
                 return true
             }
             R.id.action_list_my_searches -> {
@@ -1086,7 +1098,7 @@ open class CardBrowser :
         launchCatchingTask {
             val savedFilters = viewModel.savedSearches()
             showDialogFragment(
-                newInstance(
+                CardBrowserMySearchesDialog.newInstance(
                     savedFilters,
                     mySearchesDialogListener,
                     "",
@@ -1094,18 +1106,6 @@ open class CardBrowser :
                 ),
             )
         }
-    }
-
-    private fun openSaveSearchView() {
-        val searchTerms = searchView!!.query.toString()
-        showDialogFragment(
-            newInstance(
-                null,
-                mySearchesDialogListener,
-                searchTerms,
-                CardBrowserMySearchesDialog.CARD_BROWSER_MY_SEARCHES_TYPE_SAVE,
-            ),
-        )
     }
 
     fun openGradeNow() =
