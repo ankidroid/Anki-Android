@@ -175,7 +175,7 @@ class AudioRecordView : ConstraintLayout {
 
                     override fun onLongPress(e: MotionEvent) {
                         if (!Permissions.canRecordAudio(context)) return
-                        CompatHelper.compat.vibrate(context, 20.milliseconds)
+                        CompatHelper.compat.vibrate(context, 50.milliseconds)
                         showCancelAndLockSliders()
                         firstX = e.rawX
                         firstY = e.rawY

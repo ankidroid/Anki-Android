@@ -39,6 +39,7 @@
     <item type="id" name="action_suspend_card"/>
     <item type="id" name="action_suspend_note"/>
     <item type="id" name="action_toggle_auto_advance"/>
+    <item type="id" name="action_record_voice"/>
     <item type="id" name="action_set_due_date"/>
 
     <item type="id" name="user_action_1"/>
