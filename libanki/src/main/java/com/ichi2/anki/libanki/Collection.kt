@@ -96,6 +96,7 @@ data class ComputedMemoryState(
     val desiredRetention: Float,
     val stability: Float? = null,
     val difficulty: Float? = null,
+    val decay: Float? = null,
 )
 
 // Anki maintains a cache of used tags so it can quickly present a list of tags
@@ -1275,9 +1276,13 @@ class Collection(
                 desiredRetention = resp.desiredRetention,
                 stability = resp.state.stability,
                 difficulty = resp.state.difficulty,
+                decay = resp.decay,
             )
         }
-        return ComputedMemoryState(desiredRetention = resp.desiredRetention)
+        return ComputedMemoryState(
+            desiredRetention = resp.desiredRetention,
+            decay = resp.decay,
+        )
     }
 
     /** The delta days of fuzz applied if reviewing the card in v3. */
