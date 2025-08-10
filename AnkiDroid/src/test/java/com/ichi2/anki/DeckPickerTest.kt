@@ -58,6 +58,7 @@ import org.mockito.kotlin.whenever
 import org.robolectric.ParameterizedRobolectricTestRunner
 import org.robolectric.Robolectric
 import org.robolectric.RuntimeEnvironment
+import org.robolectric.Shadows
 import org.robolectric.shadows.ShadowDialog
 import org.robolectric.shadows.ShadowLooper
 import timber.log.Timber
@@ -82,9 +83,7 @@ class DeckPickerTest : RobolectricTest() {
     @Before
     fun before() {
         RuntimeEnvironment.setQualifiers(mQualifiers)
-        getPreferences().edit {
-            putBoolean(IntroductionActivity.INTRODUCTION_SLIDES_SHOWN, true)
-        }
+        setIntroductionSlidesShown(true)
     }
 
     @Test
@@ -678,6 +677,36 @@ class DeckPickerTest : RobolectricTest() {
             }
         }
 
+    @Test
+    fun `On a new startup, the App Intro is displayed`() {
+        setIntroductionSlidesShown(false)
+
+        deckPicker {
+            val nextIntent = Shadows.shadowOf(this).nextStartedActivity
+
+            assertThat(
+                "App Intro should be started on a new startup",
+                nextIntent.component?.className,
+                equalTo(IntroductionActivity::class.java.name),
+            )
+        }
+    }
+
+    @Test
+    fun `On not a new startup, the App Intro is not displayed`() {
+        setIntroductionSlidesShown(true)
+
+        deckPicker {
+            val nextIntent = Shadows.shadowOf(this).nextStartedActivity
+
+            assertThat(
+                "No other activity should be started when not a new startup",
+                nextIntent,
+                equalTo(null),
+            )
+        }
+    }
+
     private fun deckPicker(function: suspend DeckPicker.() -> Unit) =
         runTest {
             val deckPicker =
@@ -687,6 +716,12 @@ class DeckPickerTest : RobolectricTest() {
                 )
             function(deckPicker)
         }
+
+    private fun setIntroductionSlidesShown(shown: Boolean) {
+        getPreferences().edit {
+            putBoolean(IntroductionActivity.INTRODUCTION_SLIDES_SHOWN, shown)
+        }
+    }
 
     enum class CollectionType(
         val assetFile: String,
