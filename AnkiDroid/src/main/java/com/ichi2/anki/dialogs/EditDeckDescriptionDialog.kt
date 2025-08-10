@@ -97,6 +97,8 @@ class EditDeckDescriptionDialog : DialogFragment() {
         launchCatchingTask {
             setDescription(currentDescription)
             Timber.i("closing deck description dialog")
+            // Refresh the host activity's menu to update the Undo label
+            requireActivity().invalidateOptionsMenu()
             dismiss()
         }
 
