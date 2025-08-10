@@ -99,6 +99,8 @@ class ReviewerViewModel :
     val setDueDateFlow = MutableSharedFlow<CardId>()
     val answerTimerStatusFlow = MutableStateFlow<AnswerTimerStatus?>(null)
     val answerFeedbackFlow = MutableSharedFlow<Rating>()
+    val voiceRecorderEnabledFlow = MutableStateFlow(false)
+    val replayVoiceFlow = MutableSharedFlow<Unit>()
     val timeBoxReachedFlow = MutableSharedFlow<Collection.TimeboxReached>()
 
     override val server: AnkiServer = AnkiServer(this, StudyScreenRepository.getServerPort()).also { it.start() }
@@ -656,6 +658,8 @@ class ReviewerViewModel :
                 ViewerAction.FLIP_OR_ANSWER_EASE4 -> flipOrAnswer(Rating.EASY)
                 ViewerAction.SHOW_HINT -> eval.emit("ankidroid.showHint()")
                 ViewerAction.SHOW_ALL_HINTS -> eval.emit("ankidroid.showAllHints()")
+                ViewerAction.RECORD_VOICE -> voiceRecorderEnabledFlow.emit(!voiceRecorderEnabledFlow.value)
+                ViewerAction.REPLAY_VOICE -> replayVoiceFlow.emit(Unit)
                 ViewerAction.EXIT -> finishResultFlow.emit(AbstractFlashcardViewer.RESULT_DEFAULT)
                 ViewerAction.USER_ACTION_1 -> userAction(1)
                 ViewerAction.USER_ACTION_2 -> userAction(2)

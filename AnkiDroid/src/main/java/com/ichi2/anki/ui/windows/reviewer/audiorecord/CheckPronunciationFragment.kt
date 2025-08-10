@@ -29,14 +29,17 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.ichi2.anki.R
+import com.ichi2.anki.ui.windows.reviewer.ReviewerViewModel
 import com.ichi2.anki.utils.ext.collectIn
 import com.ichi2.utils.show
+import kotlinx.coroutines.launch
 
 /**
  * Integrates [AudioRecordView] with [AudioPlayView] to play the recorded audios.
  */
 class CheckPronunciationFragment : Fragment(R.layout.check_pronunciation_fragment) {
     private val viewModel: CheckPronunciationViewModel by viewModels()
+    private val studyScreenViewModel: ReviewerViewModel by viewModels({ requireParentFragment() })
 
     private lateinit var playView: AudioPlayView
     private lateinit var recordView: AudioRecordView
@@ -68,6 +71,7 @@ class CheckPronunciationFragment : Fragment(R.layout.check_pronunciation_fragmen
 
         setupViewListeners()
         observeViewModel()
+        observeStudyScreenViewModel()
     }
 
     override fun onPause() {
@@ -116,6 +120,7 @@ class CheckPronunciationFragment : Fragment(R.layout.check_pronunciation_fragmen
     private fun observeViewModel() {
         viewModel.isPlaybackVisibleFlow.flowWithLifecycle(lifecycle).collectIn(lifecycleScope) { isVisible ->
             playView.isVisible = isVisible
+            recordView.setRecordDisplayVisibility(!isVisible)
         }
         viewModel.playbackProgressFlow
             .flowWithLifecycle(lifecycle)
@@ -132,6 +137,27 @@ class CheckPronunciationFragment : Fragment(R.layout.check_pronunciation_fragmen
         }
         viewModel.replayFlow.flowWithLifecycle(lifecycle).collectIn(lifecycleScope) {
             playView.rotateReplayIcon()
+        }
+    }
+
+    private fun observeStudyScreenViewModel() {
+        studyScreenViewModel.voiceRecorderEnabledFlow
+            .flowWithLifecycle(lifecycle)
+            .collectIn(lifecycleScope) { isEnabled ->
+                if (!isEnabled) {
+                    viewModel.resetAll()
+                    recordView.forceReset()
+                }
+            }
+        studyScreenViewModel.replayVoiceFlow
+            .flowWithLifecycle(lifecycle)
+            .collectIn(lifecycleScope) {
+                viewModel.onPlayOrReplay()
+            }
+        studyScreenViewModel.onShowQuestionFlow.flowWithLifecycle(lifecycle).collectIn(lifecycleScope) { showingAnswer ->
+            playView.isVisible = false
+            viewModel.onCancelPlayback()
+            recordView.setRecordDisplayVisibility(true)
         }
     }
 }
