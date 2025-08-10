@@ -1,7 +1,7 @@
 לזכור הכל עם AnkiDroid!
 
 AnkiDroid מאפשר למידה יעילה במיוחד באמצעות שינון רגע לפני השכחה.
- It is fully compatible with the spaced repetition software Anki (including synchronization), which is available for Windows, Linux and macOS.
+ זה תואם לחלוטין לתוכנת החזרות המרווחות Anki (כולל סנכרון), הזמינה עבור Windows, Linux ו-macOS.
 
 למד כל דבר בכל מקום ובכל זמן שתרצה. נצל זמן מבוזבז בנסיעות אוטובוס, בתור למכולת ובכל מצב המתנה!
 

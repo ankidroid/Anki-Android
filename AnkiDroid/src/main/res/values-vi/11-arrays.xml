@@ -75,9 +75,9 @@
     <string name="gesture_flag_orange" maxLength="41">Chuyển đổi cờ màu cam</string>
     <string name="gesture_flag_green" maxLength="41">Chuyển đổi cờ xanh</string>
     <string name="gesture_flag_blue" maxLength="41">Chuyển đổi cờ xanh dương</string>
-    <string name="gesture_flag_pink" maxLength="41">Toggle pink flag</string>
-    <string name="gesture_flag_turquoise" maxLength="41">Toggle turquoise flag</string>
-    <string name="gesture_flag_purple" maxLength="41">Toggle purple flag</string>
+    <string name="gesture_flag_pink" maxLength="41">Chuyển đổi cờ hồng</string>
+    <string name="gesture_flag_turquoise" maxLength="41">Chuyển đổi cờ ngọc lam</string>
+    <string name="gesture_flag_purple" maxLength="41">Chuyển đổi cờ tím</string>
     <string name="gesture_flag_remove" maxLength="41">Xoá cờ</string>
     <string name="gesture_page_up" maxLength="41">Trang lên</string>
     <string name="gesture_page_down" maxLength="41">Trang dưới</string>

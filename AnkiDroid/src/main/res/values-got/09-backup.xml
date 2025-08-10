@@ -48,8 +48,8 @@
     <string name="storage_warning" comment="Consider keeping the unbreakable space after the digit">Less than %d MB space on your storage left.\nFree some space to avoid data loss.</string>
     <string name="backup_restore" maxLength="28">Ganasei fram baikup</string>
     <string name="backup_new_collection">Niuja galisa</string>
-    <string name="backup_del_collection">Usnim galisa jah skapei niuja</string>
-    <string name="backup_del_collection_question">Usnim galisa jah skapei niuja? Þata fraliusiþ laiseinaframgaht þeina jah usnimiþ allos kartos!</string>
+    <string name="backup_del_collection">Huzda usqistjan jah niwi skapjan</string>
+    <string name="backup_del_collection_question">Huzda usqistjan jah niwi skapjan? Þanuh þan fraliusada laiseiniframgahtai þeinai jah usqistjanda allaim kartom.</string>
     <string name="backup_one_way_sync_from_server">One-way sync from server</string>
     <string name="backup_full_sync_from_server_question">Overwrite your collection with the one from AnkiWeb? This will drop all your learning progress and added information since your last sync.</string>
     <string name="error_handling_title">Error handling</string>

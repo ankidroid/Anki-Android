@@ -1,4 +1,4 @@
-Memorize anything with AnkiDroid!
+Gamunno ƕarjammeh miþ AnkiDroid!
 
 AnkiDroid lets you learn flashcards very efficiently by showing them just before you will forget. It is fully compatible with the spaced repetition software Anki (including synchronization), which is available for Windows, Linux and macOS.
 
@@ -13,24 +13,24 @@ Add material through the desktop application Anki or directly through AnkiDroid.
 • spaced repetition (AI-optimized FSRS algorithm)
 • text-to-speech integration
 • more than 10,000 premade decks
-• progress widget
+• Widjait framgahtais
 • detailed statistics
-• syncing with AnkiWeb
-• open source
+• gagaleikon miþ AnkiWabja
+• uslukans brunna
 
 ★ Additional features:
-• write answers (optional)
-• whiteboard
+• andahaftins meljan (mahteig)
+• ƕeitabaurd
 • card editor/adder
 • card browser
 • tablet layout
-• import existing collection files (via Anki Desktop)
-• add cards by intent from other applications like dictionaries
+• innatbair wisandona fajla huzdis (þairh Anki Daisktaup)
+• Kartos fram applikatsjonam anþaraim biaukan bi wiljin swe waurdabokos
 • custom font support
 • full backup system
 • navigation by swipe, tap
 • customisable
 • dynamic deck handling
-• night mode
+• nahtsmodus
 • 27 localisations
 • All previous AnkiDroid versions can be downloaded from the website

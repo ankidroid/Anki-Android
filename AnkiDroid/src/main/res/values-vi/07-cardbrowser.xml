@@ -111,7 +111,7 @@
     <!-- Manage columns dialog -->
     <string name="browse_manage_columns_main_heading">Các mục</string>
     <string name="browse_manage_columns">Quản lí các mục</string>
-    <string name="user_active_columns">Active</string>
+    <string name="user_active_columns">Hoạt động</string>
     <string name="user_potential_columns">Có sẵn</string>
     <string name="include_column">Chèn thêm mục</string>
     <string name="exclude_column">Loại bỏ mục</string>

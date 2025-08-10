@@ -47,18 +47,18 @@
     <!-- CardBrowser -->
     <plurals name="card_browser_subtitle">
         <item quantity="one">%d karta bandwida</item>
-        <item quantity="other">%d cards shown</item>
+        <item quantity="other">%d kartos bandwida</item>
     </plurals>
     <plurals name="card_browser_subtitle_notes_mode">
-        <item quantity="one">%d note shown</item>
-        <item quantity="other">%d notes shown</item>
+        <item quantity="one">%d melein bandwida</item>
+        <item quantity="other">%d meleinins bandwida</item>
     </plurals>
-    <string name="card_browser_all_decks">All decks</string>
+    <string name="card_browser_all_decks">Alla kartahuzda</string>
     <plurals name="card_browser_delete_notes">
-        <item quantity="one">Delete note</item>
-        <item quantity="other">Delete notes</item>
+        <item quantity="one">Meleinai usqistjan</item>
+        <item quantity="other">Meleinim usqistjan</item>
     </plurals>
-    <string name="card_browser_change_deck" maxLength="28">Change deck</string>
+    <string name="card_browser_change_deck" maxLength="28">Kartahuzd inmaidjan</string>
     <string name="delete_card_title">Usnim melein?</string>
     <string name="card_browser_show_marked" maxLength="28">Filter marked</string>
     <string name="card_browser_show_suspended" maxLength="28">Filter suspended</string>
@@ -66,9 +66,9 @@
     <string name="card_browser_search_by_flag" maxLength="28">Filter by flag</string>
     <string name="card_browser_list_my_searches" maxLength="28">Sokeinos meinos</string>
     <string name="card_browser_list_my_searches_save" maxLength="28">Gafastai sokein</string>
-    <string name="card_browser_list_my_searches_title">Walei sokein gafastana</string>
-    <string name="card_browser_list_my_searches_new_name">Namo sokeinai andwairþai</string>
-    <string name="card_browser_list_my_searches_new_search_error_empty_name">Ni magt gafastan sokein inuh namo</string>
+    <string name="card_browser_list_my_searches_title">Walei sokn gafastana</string>
+    <string name="card_browser_list_my_searches_new_name">Namo soknai andwairþai</string>
+    <string name="card_browser_list_my_searches_new_search_error_empty_name">Ni magt gafastan sokn inuh namo</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">Namo ist</string>
     <string name="no_note_to_edit">No note to edit</string>
     <string name="card_browser_list_my_searches_remove_content">Usqistei \"%1$s\"?</string>
@@ -88,39 +88,39 @@
         <item>Bi azeti</item>
         <item>Bi domeinos</item>
         <item>Bi waurþanos ƕeilos</item>
-        <item>By deck name</item>
+        <item>Bi namin kartahuzdis</item>
     </string-array>
     <string name="manage_browser_column">Manage column</string>
-    <string name="no_columns_available">No columns available</string>
+    <string name="no_columns_available">Ni sind sauleis</string>
     <string name="card_browser_select_all" maxLength="28">Walei all</string>
-    <string name="card_browser_select_none" maxLength="28">Select none</string>
+    <string name="card_browser_select_none" maxLength="28">Ni waiht waljan</string>
     <string name="card_browser_no_cards_in_deck">Ni kartos bigitanos in huzda karto \'%s\'</string>
     <string name="card_browser_search_all_decks">Sokei alla huzda karto</string>
     <string name="card_browser_unknown_deck_name">Unkunþ</string>
     <string name="card_browser_truncate" comment="allows users to show less of a field value">Truncate content</string>
-    <string name="set_due_date_hintText" comment="plural set_due_date_label_suffix is used for parameters, parameter 1 is the plural for 0, parameter 2 is the plural for 1">Today is ‘0 %1$s’, tomorrow is ‘1 %2$s’, etc&#8230;</string>
+    <string name="set_due_date_hintText" comment="plural set_due_date_label_suffix is used for parameters, parameter 1 is the plural for 0, parameter 2 is the plural for 1">Himma daga ist \'0 %1$s\', du maurgina ist \'1 %2$s\', jah swe framwigis&#8230;</string>
     <plurals name="card_browser_export_cards">
-        <item quantity="one">Export card</item>
-        <item quantity="other">Export cards</item>
+        <item quantity="one">Karta utbairan</item>
+        <item quantity="other">Kartos utbairan</item>
     </plurals>
     <plurals name="card_browser_export_notes">
-        <item quantity="one">Export note</item>
-        <item quantity="other">Export notes</item>
+        <item quantity="one">Melein utbairan</item>
+        <item quantity="other">Meleinins utbairan</item>
     </plurals>
     <plurals name="card_browser_cards_deleted">
-        <item quantity="one">%d card deleted</item>
-        <item quantity="other">%d cards deleted</item>
+        <item quantity="one">%d kartai usqistida</item>
+        <item quantity="other">%d kartom usqistida</item>
     </plurals>
     <!--Keyboard shortcuts dialog-->
     <string name="edit_tags_dialog" comment="Description of the shortcut that opens the edit tags dialog">Edit tags dialog</string>
     <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">Show order dialog</string>
     <!-- Manage columns dialog -->
-    <string name="browse_manage_columns_main_heading">Columns</string>
-    <string name="browse_manage_columns">Manage columns</string>
-    <string name="user_active_columns">Active</string>
+    <string name="browse_manage_columns_main_heading">Sauleis</string>
+    <string name="browse_manage_columns">Saulins atgaraihtjan</string>
+    <string name="user_active_columns">Waurkeiþ</string>
     <string name="user_potential_columns">Wisandeins</string>
     <string name="include_column">Saul biaukan</string>
-    <string name="exclude_column">Exclude column</string>
+    <string name="exclude_column">Sauilins usniman</string>
     <string name="save_changes_message">Bidjam þuk, gafastai inmaideinos þeinos bi frumistin</string>
     <string name="browser_find_replace_loading_fields">Retrieving fields names&#8230;</string>
 </resources>

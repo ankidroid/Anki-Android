@@ -47,13 +47,13 @@
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Åpne navigasjonspanelet</string>
     <string name="drawer_close">Lukk navigasjonspanelet</string>
-    <string name="note_message">Note saved</string>
+    <string name="note_message">Notat lagret</string>
     <string name="CardEditorCardDeck">Kortleik:</string>
     <string name="CardEditorNoteDeck">Kortleik:</string>
     <string name="CardEditorModel">Slag:</string>
     <string name="CardEditorTags">Etiketter: %1$s</string>
     <string name="CardEditorCards">Kort: %1$s</string>
-    <string name="edit_occlusions">Edit Occlusions</string>
+    <string name="edit_occlusions">Rediger okklusjon</string>
     <string name="tag_name">Etikettnavn</string>
     <string name="add_new_filter_tags">Legg til/filtrer etiketter</string>
     <string name="add_tag" maxLength="28">Legg til etikett</string>
@@ -199,11 +199,11 @@
     <string name="remove_wallpaper_image" maxLength="41">Fjern bakgrunn</string>
     <string name="remove_background_image">Fjern bakgrunn?</string>
     <!-- Card Template Browser Appearance -->
-    <string name="restore_default" maxLength="28">Restore Default</string>
+    <string name="restore_default" maxLength="28">Gjennopprett standarden</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Tom</string>
     <!-- Whiteboard eraser mode toggle message in Reviewer -->
-    <string name="white_board_eraser_enabled">Eraser mode activated</string>
-    <string name="white_board_eraser_disabled">Eraser mode deactivated</string>
+    <string name="white_board_eraser_enabled">Viskelærmodus aktivert</string>
+    <string name="white_board_eraser_disabled">Viskelærmodus deaktivert</string>
     <!-- Whiteboard save image message in the Study Screen -->
     <string name="white_board_image_save_failed">Kunne ikke lagre tavle. %s</string>
     <string name="white_board_image_saved">Tavle lagret som %s</string>
@@ -211,7 +211,7 @@
     <string name="user_is_a_robot">Detected automated test. If you are a human, contact AnkiDroid support</string>
     <!-- JS api -->
     <string name="api_version_developer_contact">This card uses unsupported AnkiDroid features. Contact developer %1$s, or view the wiki. %2$s</string>
-    <string name="invalid_json_data">Card provided invalid data. %s</string>
+    <string name="invalid_json_data">Kortet inneholder invalid data. %s</string>
     <string name="valid_js_api_version">Invalid AnkiDroid JS API version. Contact developer %s, or view wiki</string>
     <string name="update_js_api_version">AnkiDroid JS API update available. Contact developer %s, or view wiki</string>
     <string name="reviewer_invalid_api_version_visit_documentation">Vis</string>

@@ -26,6 +26,6 @@
  
 <resources>
     <!--Fields-->
-    <string name="front_field_name" maxLength="28">Front</string>
-    <string name="back_field_name" maxLength="28" comment="Name of the back field of a card">Back</string>
+    <string name="front_field_name" maxLength="28">Faura</string>
+    <string name="back_field_name" maxLength="28" comment="Name of the back field of a card">Hindar</string>
 </resources>

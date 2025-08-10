@@ -47,7 +47,7 @@
     <!-- Navigation drawer strings -->
     <string name="drawer_open">פתיחת תפריט</string>
     <string name="drawer_close">סגירת תפריט</string>
-    <string name="note_message">Note saved</string>
+    <string name="note_message">הערה נשמרה</string>
     <string name="CardEditorCardDeck">חפיסת כרטיסים:‏</string>
     <string name="CardEditorNoteDeck">חפיסה:‏</string>
     <string name="CardEditorModel">סוג:</string>
@@ -68,11 +68,11 @@
     <string name="enable_whiteboard" maxLength="28">לאפשר ציור</string>
     <string name="disable_whiteboard">בטל הציור</string>
     <string name="show_whiteboard">הצג לוח ציור</string>
-    <string name="enable_eraser" maxLength="28">Enable eraser</string>
-    <string name="disable_eraser" maxLength="28">Disable eraser</string>
+    <string name="enable_eraser" maxLength="28">הפעל מחק</string>
+    <string name="disable_eraser" maxLength="28">כבה מחק</string>
     <string name="hide_whiteboard" maxLength="28">הסתר לוח ציור</string>
     <string name="clear_whiteboard" maxLength="28">נקה לוח ציור</string>
-    <string name="replay_media" maxLength="28">Replay media</string>
+    <string name="replay_media" maxLength="28">נכון שמע שוב</string>
     <string name="leech_suspend_notification">כרטיס מסומן כעלוקה ומושעה</string>
     <string name="leech_notification">כרטיס מסומן כעלוקה</string>
     <string name="webview_crash_unknown">שגיאה לא מוכרת</string>
@@ -111,10 +111,10 @@
     <string name="missing_note_type">לא נמצא סוג פתק</string>
     <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (ריק)</string>
     <!-- Image cropper -->
-    <string name="image_cropper_action_rotate" maxLength="28" comment="Action in image cropper screen">Rotate</string>
-    <string name="image_cropper_action_flip" maxLength="28" comment="Action in image cropper screen">Flip</string>
-    <string name="image_cropper_action_flip_horizontally" maxLength="28" comment="Submenu action in image cropper screen">Flip horizontally</string>
-    <string name="image_cropper_action_flip_vertically" maxLength="28" comment="Submenu action in image cropper screen">Flip vertically</string>
+    <string name="image_cropper_action_rotate" maxLength="28" comment="Action in image cropper screen">סבב</string>
+    <string name="image_cropper_action_flip" maxLength="28" comment="Action in image cropper screen">הפוך</string>
+    <string name="image_cropper_action_flip_horizontally" maxLength="28" comment="Submenu action in image cropper screen">היפוך אופקי</string>
+    <string name="image_cropper_action_flip_vertically" maxLength="28" comment="Submenu action in image cropper screen">הפוך אנכית</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">קופסת הזמן הגיעה</string>
     <plurals name="timebox_reached">
@@ -156,7 +156,7 @@
     <string name="import_error_handle_exception">ייבוא הקובץ נכשל\n\n%s</string>
     <string name="import_error_not_apkg_extension">לשם הקובץ „%s” אין סיומת ‎.apkg או ‎.colpkg</string>
     <string name="import_error_load_imported_database">עדיין אין תמיכה בהחלפות של Anki Database (.anki2). אנא עיין במדריך להוראות החלפה.</string>
-    <string name="import_error_content_provider">The selected file couldn’t be imported automatically by AnkiDroid. Please see the user manual for how to manually import Anki files: \n%s</string>
+    <string name="import_error_content_provider">לא ניתן היה לייבא את הקובץ שנבחר באופן אוטומטי על ידי AnkiDroid. אנא עיין במדריך למשתמש כיצד לייבא קבצי Anki באופן ידני: \n%s</string>
     <string name="import_error_copy_to_cache">לא הצליח לשמור את הקובץ במטמון (ייתכן ששטח האחסון נגמר)</string>
     <string name="import_interrupted">הייבוא נפסק: AnkiDroid נסגר</string>
     <string name="export_ready_title">הייצוא מוכן</string>
@@ -210,8 +210,8 @@
     <string name="restore_default" maxLength="28">שחזור בררת המחדל</string>
     <string name="reviewer_tts_cloze_spoken_replacement">ריק</string>
     <!-- Whiteboard eraser mode toggle message in Reviewer -->
-    <string name="white_board_eraser_enabled">Eraser mode activated</string>
-    <string name="white_board_eraser_disabled">Eraser mode deactivated</string>
+    <string name="white_board_eraser_enabled">מצב מחק הופעל</string>
+    <string name="white_board_eraser_disabled">מצב מחק מושבת</string>
     <!-- Whiteboard save image message in the Study Screen -->
     <string name="white_board_image_save_failed">נכשל לשמור תמונת לוח. %s</string>
     <string name="white_board_image_saved">תמונת לוח נשמרה ל %s</string>
@@ -324,7 +324,7 @@
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">כרטיסים</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">פתקים</string>
     <string name="toggle_cards_notes">החלף כרטיסים/פתקים</string>
-    <string name="truncate_content_help">Truncate the height of each row of the Browser to show only first 3 lines of content</string>
+    <string name="truncate_content_help">חתוך את הגובה של כל שורה בדפדפן כדי להציג רק את 3 השורות הראשונות של התוכן</string>
     <string name="browser_options_dialog_heading">אפשרויות דפדפן</string>
     <string name="audio_saved">ההקלטה נשמרה</string>
     <string name="deleting_selected_notes">מחיקת הערות שנבחרו</string>
@@ -338,9 +338,9 @@
     <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">פתיחת הגדרות טקסט-לדיבור נכשלה</string>
     <string name="shared_decks_login_required">אנא התחבר כדי להוריד חפיסות נוספות</string>
     <string name="deck_description_field_hint">תיאור</string>
-    <string name="deck_description_saved">Description updated</string>
-    <string name="format_deck_description_as_markdown">Format as Markdown</string>
-    <string name="help_button_content_description">Open help for ‘%s’</string>
+    <string name="deck_description_saved">התיאור עודכן</string>
+    <string name="format_deck_description_as_markdown">עיצוב כ-Markdown</string>
+    <string name="help_button_content_description">פתח עזרה עבור \'%s\'</string>
     <string name="failed_to_copy">ההעתקה נכשלה</string>
     <string name="card_browser_unavailable_when_notes_mode">לא זמין במצב \'פתקים\'</string>
     <plurals name="unbury_cards_feedback">
@@ -376,5 +376,5 @@
     <string name="missing_user_action_dialog_message" comment="%s is the user action number">פעולת המשתמש %s לא מוגדרת בסוג הערה זה. אנא הגדר אותו</string>
     <string name="directory_inaccessible_info">למד עוד על איך לשחזר גישה כאן %s או עבור להגדרות כדי לעדכן את תיקיית האוסף.</string>
     <!-- Scheduler Upgrade Required Dialog title-->
-    <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">Scheduler upgrade required</string>
+    <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">נדרש שדרוג של מתזמן</string>
 </resources>
