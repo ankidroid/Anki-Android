@@ -45,9 +45,9 @@ Thêm tài liệu thông qua ứng dụng Anki trên máy tính để bàn hoặ
 
 ★ Các tính năng chính:
 • nội dung flashcard được hỗ trợ: văn bản, hình ảnh, âm thanh, LaTeX
-• spaced repetition (AI-optimized FSRS algorithm)
+• lặp lại ngắt quãng (thuật toán FSRS tối ưu bởi AI)
 • tích hợp văn bản thành giọng nói
-• more than 10,000 premade decks
+• hơn 10.000 bộ thẻ được tạo sẵn
 • widget tiến trình
 • thống kê chi tiết
 • đồng bộ hóa với AnkiWeb

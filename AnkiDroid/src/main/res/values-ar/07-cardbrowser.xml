@@ -102,7 +102,7 @@
         <item>حسب السقطات</item>
         <item>حسب اسم الرزمة</item>
     </string-array>
-    <string name="manage_browser_column">Manage column</string>
+    <string name="manage_browser_column">إدارة العمود</string>
     <string name="no_columns_available">لا يوجد عمود متوفر</string>
     <string name="card_browser_select_all" maxLength="28">تحديد الكل</string>
     <string name="card_browser_select_none" maxLength="28">إلغاء التحديد</string>

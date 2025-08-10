@@ -43,14 +43,14 @@
     <!-- 11-arrays.xml used to contain arrays. This caused problems when changing the ordering.
     Now arrays are defined in constants.xml, and the strings are here -->
     <!-- error_reporting_choice_labels -->
-    <string name="error_reporting_choice_always_report">Always report</string>
-    <string name="error_reporting_choice_never_report">Never report</string>
-    <string name="error_reporting_choice_ask_user">Ask me</string>
+    <string name="error_reporting_choice_always_report">Merei sinteino</string>
+    <string name="error_reporting_choice_never_report">Ni merei aiw</string>
+    <string name="error_reporting_choice_ask_user">Fraihn mik</string>
     <!-- add_to_cur_labels -->
-    <string name="add_to_deck_use_current_deck">Use current deck</string>
+    <string name="add_to_deck_use_current_deck">Andwairþis kartahuzdis brukjan</string>
     <string name="add_to_deck_decide_by_note_type">Decide by note type</string>
     <!-- theme labels -->
-    <string name="theme_follow_system">Follow system</string>
+    <string name="theme_follow_system">Swstemai laistjan</string>
     <!-- day_theme_labels -->
     <string name="day_theme_light">Liuht</string>
     <string name="day_theme_plain">Plain</string>
@@ -71,21 +71,21 @@
     <string name="answer_good" maxLength="41">Andhafjan waila</string>
     <string name="answer_easy" maxLength="41">Andhafjan Azetaba</string>
     <string name="gesture_abort_learning" maxLength="41">Luk skairm laiseinais</string>
-    <string name="gesture_flag_red" maxLength="41">Toggle red flag</string>
-    <string name="gesture_flag_orange" maxLength="41">Toggle orange flag</string>
-    <string name="gesture_flag_green" maxLength="41">Toggle green flag</string>
-    <string name="gesture_flag_blue" maxLength="41">Toggle blue flag</string>
-    <string name="gesture_flag_pink" maxLength="41">Toggle pink flag</string>
-    <string name="gesture_flag_turquoise" maxLength="41">Toggle turquoise flag</string>
-    <string name="gesture_flag_purple" maxLength="41">Toggle purple flag</string>
-    <string name="gesture_flag_remove" maxLength="41">Remove flag</string>
+    <string name="gesture_flag_red" maxLength="41">Raudana fanan inmaidjan</string>
+    <string name="gesture_flag_orange" maxLength="41">Gilwaraudana fanan inmaidjan</string>
+    <string name="gesture_flag_green" maxLength="41">Gronjana fanan inmaidjan</string>
+    <string name="gesture_flag_blue" maxLength="41">Blewana fanan inmaidjan</string>
+    <string name="gesture_flag_pink" maxLength="41">Blaikaraudana fanan inmaidjan</string>
+    <string name="gesture_flag_turquoise" maxLength="41">Blewagronjana fanan inmaidjan</string>
+    <string name="gesture_flag_purple" maxLength="41">Paurpurodis fanan inmaidjan</string>
+    <string name="gesture_flag_remove" maxLength="41">Usnim fanan</string>
     <string name="gesture_page_up" maxLength="41">Laufs iup</string>
     <string name="gesture_page_down" maxLength="41">Laufs dalaþ</string>
-    <string name="gesture_toggle_whiteboard" maxLength="41">Toggle whiteboard</string>
-    <string name="gesture_toggle_eraser" maxLength="41">Toggle eraser</string>
-    <string name="gesture_show_hint" maxLength="41">Show hint</string>
-    <string name="gesture_show_all_hints" maxLength="41">Show all hints</string>
-    <string name="record_voice" maxLength="41">Record voice</string>
+    <string name="gesture_toggle_whiteboard" maxLength="41">Inmaidei ƕeitabaurd</string>
+    <string name="gesture_toggle_eraser" maxLength="41">Inmaidei afhrainjan</string>
+    <string name="gesture_show_hint" maxLength="41">Bandwei hilpawaurd</string>
+    <string name="gesture_show_all_hints" maxLength="41">Bandwei alla hilpawaurda</string>
+    <string name="record_voice" maxLength="41">Gafastai stibna</string>
     <string name="replay_voice" maxLength="41">Aftraspillo stibna</string>
-    <string name="save_voice" maxLength="41">Save recording</string>
+    <string name="save_voice" maxLength="41">Gafastai gafastain stibnos</string>
 </resources>

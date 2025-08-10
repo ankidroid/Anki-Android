@@ -83,7 +83,7 @@
     <string name="ease_button_hard" maxLength="41" comment="In the reviewer, in the answer side. Label of the button that used by the user to state finding the correct answer was hard.">Tungt</string>
     <string name="ease_button_good" maxLength="41" comment="In the reviewer, in the answer side. Label of the button that used by the user to state their answer was good.">Greitt</string>
     <string name="ease_button_easy" maxLength="41" comment="In the reviewer, in the answer side. Label of the button that used by the user to state that finding the answer to the question was easy.">Lett</string>
-    <string name="show_answer_hint_long_press" comment="In the reviewer, hint is shown when touching the show answer button and the user has the long-press accessibility setting enabled">\'%s\' is enabled</string>
+    <string name="show_answer_hint_long_press" comment="In the reviewer, hint is shown when touching the show answer button and the user has the long-press accessibility setting enabled">%s er aktivert</string>
     <!-- General -->
     <string name="undo" maxLength="28" comment="When tapping on this text, the last action is undone.">Angre</string>
     <string name="redo" maxLength="28" comment="Menu entry that allows to redo action that was just undone.">Gjør om igjen</string>
@@ -133,10 +133,10 @@
     <string name="empty_deck">Denne kortleiken er tom</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">Finn kortstokk</string>
     <string name="invalid_deck_name">Ugildt namn på kortleik</string>
-    <string name="studyoptions_congrats_finished">Congratulations! You have finished for today.</string>
+    <string name="studyoptions_congrats_finished">Gratulerer! Du er ferdig for i dag.</string>
     <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Kortstokk ferdig for øyeblikket! %s</string>
     <string name="studyoptions_no_cards_due">Ingen kort forfaller ennå</string>
-    <string name="sd_card_not_mounted">Device storage not mounted</string>
+    <string name="sd_card_not_mounted">Enhet lagring er ikke montert</string>
     <string name="button_sync" comment="Text of the sync button" maxLength="28">Synkroniser</string>
     <string name="cancel_sync_confirm" tools:ignore="UnusedResources">Vil du avbryte synkroniseringa?</string>
     <string name="continue_sync" tools:ignore="UnusedResources">Fortsett synkronisering</string>
@@ -151,7 +151,7 @@
     <string name="card_template_editor_front">Framsidemal</string>
     <string name="card_template_editor_back">Baksidemal</string>
     <string name="card_template_editor_styling" maxLength="28">Formgivning</string>
-    <string name="card_template_editor_menu_card_browser_appearance" maxLength="28">Card Browser Appearance</string>
+    <string name="card_template_editor_menu_card_browser_appearance" maxLength="28">Kortleser utseende</string>
     <string name="card_template_editor_deck_override" maxLength="28">Overstyr kortstokk</string>
     <string name="card_template_editor_insert_field" maxLength="28">Legg til felt</string>
     <string name="card_template_editor_select_field">Velg felt</string>
@@ -164,14 +164,14 @@
         <item quantity="one">Slette korttypen \"%2$s\" og dens %1$d kort?</item>
         <item quantity="other">Slette korttypen \"%2$s\" og dens %1$d kort?</item>
     </plurals>
-    <string name="card_template_editor_save_error">Unable to save card template changes: %s</string>
-    <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
+    <string name="card_template_editor_save_error">Ute av stand til å lagre kortmal endringer: %s</string>
+    <string name="template_for_current_card_deleted">Korttypen for nåværende kort var slettet</string>
     <!-- Card Browser Appearance -->
-    <string name="card_template_browser_appearance_title">Browser appearance</string>
+    <string name="card_template_browser_appearance_title">Nettleser utseende</string>
     <!-- card Info -->
     <string name="card_info_title" maxLength="28">Informasjon om kort</string>
     <!-- Permissions -->
-    <string name="read_write_permission_label">Read and write to the AnkiDroid database</string>
+    <string name="read_write_permission_label">Les og skriv til AnkiDroid databasen.</string>
     <string name="read_write_permission_description">tilgang til eksisterende notater, kort, notattyper og dekker, i tillegg til å opprette nye</string>
     <!-- Context Menu -->
     <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Kortoversikt</string>
@@ -185,10 +185,10 @@
     <string name="sync_conflict_title_new">Velg samling å beholde</string>
     <string name="sync_conflict_replace_title">Byt ut samlinga</string>
     <!-- Generic errors -->
-    <string name="error__etc__cannot_write_to_or_create_file">Cannot write to or create file %s</string>
+    <string name="error__etc__cannot_write_to_or_create_file">Kan ikke skrive til eller lage fil %s</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Utilgjengelig sett</string>
-    <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">We are unable to access your collection after AnkiDroid is uninstalled due to a change in Play Store Policy\n\nYour data is safe and can be restored. It is located at\n%s\n\nSelect an option below to restore:</string>
-    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android has removed AnkiDroid\'s %1$s permission due to app inactivity.\n\nYour data is safe and can be restored. It is located at\n%2$s\n\nSelect an option below to restore:</string>
+    <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Vi klarer ikke å hente din kolleksjon etter at AnkiDroid har avinstallert pågrunn av endringer i Play Store Policy\n\n Din data er trygg og kan gjenopprettes. Den er plassert i \n%s\n\n Velg en alternativ nedenfor for å gjenopprette:</string>
+    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android har fjernet AnkiDroid sitt %1$s tillatelse pågrunn av app inaktivetet.\n\n Din data er trygg og kan gjenopprettes. Den er plassert i \n%2$s\n\n Velg en alternativ nedenfor for å gjenopprette:</string>
     <string name="restore_data_from_ankiweb">Gjenopprett fra AnkiWeb (anbefalt)</string>
     <string name="install_non_play_store_ankidroid_recommended">Gjenopprett mappetilgang (anbefalt)</string>
     <string name="install_non_play_store_ankidroid">Gjenopprett mappetilgang (avansert)</string>
@@ -196,12 +196,12 @@
     <string name="create_new_collection">Opprett et nytt sett</string>
     <string name="new_unsafe_collection">Det nye settet vil bli slettet fra telefonen hvis du avinstallerer AnkiDroid</string>
     <!-- Permissions screen -->
-    <string name="permissions_screen_headline">AnkiDroid needs some permissions to work</string>
+    <string name="permissions_screen_headline">AnkiDroid trenger tillatelse for å fungere</string>
     <string name="storage_access_title">Lagringstilgang</string>
-    <string name="storage_access_summary">Saves your collection in a safe place that will not be deleted if the app is uninstalled</string>
-    <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after. See [android.permission.MANAGE_EXTERNAL_STORAGE] on https://developer.android.com/training/data-storage/manage-all-files for context.">All files access</string>
-    <string name="image_occlusion">Image Occlusion</string>
+    <string name="storage_access_summary">Lagrer din kolleksjon i et trygg sted som kommer ikke til å bli slettet selv om appen avinstalleres</string>
+    <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after. See [android.permission.MANAGE_EXTERNAL_STORAGE] on https://developer.android.com/training/data-storage/manage-all-files for context.">Tilgang til alle filer</string>
+    <string name="image_occlusion">Bilde okklusjon</string>
     <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Slett konto</string>
     <!-- Instant Note Editor -->
-    <string name="instant_card" comment="Used in the Android system context menu/share dialog to quickly create a note. This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. ">Instant card</string>
+    <string name="instant_card" comment="Used in the Android system context menu/share dialog to quickly create a note. This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. ">Hurtig kort</string>
 </resources>

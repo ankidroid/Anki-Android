@@ -96,7 +96,7 @@
         <item>לפי חזרות</item>
         <item>לפי שם חפיסה</item>
     </string-array>
-    <string name="manage_browser_column">Manage column</string>
+    <string name="manage_browser_column">ניהול עמודות</string>
     <string name="no_columns_available">אין עמודות זמינות</string>
     <string name="card_browser_select_all" maxLength="28">בחר הכל</string>
     <string name="card_browser_select_none" maxLength="28">ביטול בחירה</string>
@@ -133,6 +133,6 @@
     <string name="user_potential_columns">זמין</string>
     <string name="include_column">כלול עמודה</string>
     <string name="exclude_column">אל תכלול עמודה</string>
-    <string name="save_changes_message">Please save your changes first</string>
+    <string name="save_changes_message">אנא שמור תחילה את השינויים שלך</string>
     <string name="browser_find_replace_loading_fields">מאחזר שמות שדות&#8230;</string>
 </resources>

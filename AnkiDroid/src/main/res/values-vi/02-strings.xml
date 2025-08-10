@@ -309,7 +309,7 @@
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Các thẻ</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Ghi chú</string>
     <string name="toggle_cards_notes">Chuyển đổi thẻ/ghi chú</string>
-    <string name="truncate_content_help">Truncate the height of each row of the Browser to show only first 3 lines of content</string>
+    <string name="truncate_content_help">Cắt bớt chiều cao của mỗi hàng của Trình duyệt để chỉ hiển thị 3 dòng nội dung đầu tiên</string>
     <string name="browser_options_dialog_heading">Tuỳ chọn trình duyệt</string>
     <string name="audio_saved">Đã lưu bản ghi âm</string>
     <string name="deleting_selected_notes">Xoá ghi chú đã chọn</string>
@@ -320,12 +320,12 @@
     <!-- Chips should probably be in a separate file, due to the additional length req -->
     <string name="tts_voices_chip_filter_to_internet" comment="     Filters a list of text to speech voices, to enable/disable voices which require the internet to     function.     This is on a chip control, so keep the text short, ideally one word">Internet</string>
     <string name="tts_voices_chip_filter_to_installable_audio" comment="     Displays a list of Text to Speech voices which should be downloaded/installed before use     This is on a chip control, so keep the text short, ideally one word">Cài đặt</string>
-    <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">Failed to open text to speech settings</string>
+    <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">Không thể mở cài đặt chuyển văn bản thành giọng nói</string>
     <string name="shared_decks_login_required">Vui lòng đăng nhập để tải thêm các bộ thẻ</string>
     <string name="deck_description_field_hint">Mô tả</string>
-    <string name="deck_description_saved">Description updated</string>
-    <string name="format_deck_description_as_markdown">Format as Markdown</string>
-    <string name="help_button_content_description">Open help for ‘%s’</string>
+    <string name="deck_description_saved">Mô tả đã được cập nhật</string>
+    <string name="format_deck_description_as_markdown">Định dạng dưới dạng Markdown</string>
+    <string name="help_button_content_description">Mở trợ giúp cho ‘%s’</string>
     <string name="failed_to_copy">Không sao chép được</string>
     <string name="card_browser_unavailable_when_notes_mode">Không khả dụng ở chế độ ‘Ghi chú’</string>
     <plurals name="unbury_cards_feedback">
@@ -344,7 +344,7 @@
     <string name="voice_not_supported">Giọng nói không được hỗ trợ. Hãy thử cái khác hoặc cài đặt một công cụ giọng nói.</string>
     <!--Keyboard shortcuts dialog-->
     <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">Trình chọn bộ thẻ</string>
-    <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">Delete deck without confirmation</string>
+    <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">Xoá bộ thẻ mà không cần xác nhận</string>
     <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">Trình ghi chú</string>
     <string name="select_deck" comment="Description of the shortcut that opens the deck selection dialog">Chọn bộ thẻ</string>
     <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">Chọn loại ghi chú</string>
@@ -355,8 +355,8 @@
     <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">Edit styling</string>
     <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">Sao chép mẫu dưới dạng markdown</string>
     <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">Chỉnh sửa giao diện trình duyệt</string>
-    <string name="missing_user_action_dialog_message" comment="%s is the user action number">User action %s is not set in this notetype. Please configure it</string>
-    <string name="directory_inaccessible_info">Learn more about how to restore access here %s or go to settings to update collection folder.</string>
+    <string name="missing_user_action_dialog_message" comment="%s is the user action number">Hành động người dùng %s chưa được thiết lập trong loại ghi chú này. Vui lòng cấu hình.</string>
+    <string name="directory_inaccessible_info">Tìm hiểu thêm về cách khôi phục quyền truy cập tại %s hoặc vào cài đặt để cập nhật thư mục bộ sưu tập.</string>
     <!-- Scheduler Upgrade Required Dialog title-->
-    <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">Scheduler upgrade required</string>
+    <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">Yêu cầu nâng cấp bộ lập lịch</string>
 </resources>

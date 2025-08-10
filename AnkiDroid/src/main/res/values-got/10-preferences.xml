@@ -55,25 +55,25 @@
     <string name="pref_search_no_results">Ni toja</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">Gamain</string>
-    <string name="pref_cat_studying" maxLength="41">Studying</string>
+    <string name="pref_cat_studying" maxLength="41">Laiseins</string>
     <string name="pref_cat_system_wide" maxLength="41">System-wide</string>
     <string name="pref_cat_reviewing" maxLength="41">Reviewing</string>
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sync</string>
     <string name="pref_cat_scheduling" maxLength="41">Scheduling</string>
-    <string name="pref_cat_whiteboard" maxLength="41">Whiteboard</string>
-    <string name="pref_cat_appearance" maxLength="41">Appearance</string>
+    <string name="pref_cat_whiteboard" maxLength="41">ƕeitabaurd</string>
+    <string name="pref_cat_appearance" maxLength="41">Wlits</string>
     <string name="pref_cat_themes" maxLength="41">Themes</string>
     <string name="pref_cat_gestures" maxLength="41">Taikneis</string>
     <string name="pref_cat_controls" maxLength="41">Controls</string>
     <string name="pref_cat_advanced" maxLength="41">Advanced</string>
     <string name="pref_cat_workarounds" maxLength="41">Workarounds</string>
     <string name="pref_cat_plugins" maxLength="41">Plugins</string>
-    <string name="pref_cat_editing" maxLength="41">Inmaidjan</string>
+    <string name="pref_cat_editing" maxLength="41">Inmaidjan 𐌹𐌽𐌼𐌰𐌹𐌳𐌾𐌰𐌽</string>
     <!-- preferences.xml entries-->
-    <string name="whiteboard_stroke_width" maxLength="41">Stroke width</string>
-    <string name="use_input_tag" maxLength="41">Type answer into the card</string>
+    <string name="whiteboard_stroke_width" maxLength="41">Braidei strikis</string>
+    <string name="use_input_tag" maxLength="41">Andahaft in kartai meljan</string>
     <string name="use_input_tag_summ">Use a text input box inside the card to type in the answer</string>
-    <string name="reset_languages" maxLength="41">Reset languages</string>
+    <string name="reset_languages" maxLength="41">Razdos aftralagjan</string>
     <string name="reset_languages_summ">Reset language assignments (for text to speech and dictionaries) for all decks</string>
     <string name="reset_languages_question">Reset all language assignments?</string>
     <string name="reset_confirmation">All states reset</string>
@@ -84,7 +84,7 @@
     <string name="card_browser_hide_media" maxLength="41">Display filenames in card browser</string>
     <string name="card_browser_hide_media_summary">Display audio filenames in the card browser question/answer fields</string>
     <string name="col_path" maxLength="41">AnkiDroid directory</string>
-    <string name="fullscreen_review" maxLength="41">Fullscreen mode</string>
+    <string name="fullscreen_review" maxLength="41">Fullaskairmis modus</string>
     <string name="full_screen_off">Ut</string>
     <string name="full_screen_system">Hide the system bars</string>
     <string name="full_screen_complete">Hide the system bars and answer buttons</string>
@@ -94,11 +94,11 @@
         <item>Þata hnaiwisto</item>
         <item>Ni</item>
     </string-array>
-    <string name="gestures" maxLength="41">Enable gestures</string>
+    <string name="gestures" maxLength="41">Taiknins galagjan</string>
     <string name="gestures_summ">Assign gestures to actions such as answering and editing cards.</string>
     <string name="gestures_corner_touch" maxLength="41">9-point touch</string>
-    <string name="gestures_corner_touch_summary">Allow touch gestures in screen corners</string>
-    <string name="show_keyboard_shortcuts" maxLength="41">Show keyboard shortcuts</string>
+    <string name="gestures_corner_touch_summary">Tekataiknins in waihstam skairmis andletan</string>
+    <string name="show_keyboard_shortcuts" maxLength="41">Bokabaurdis maurguwigans bandwjan</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Full screen navigation drawer</string>
     <string name="gestures_fullscreen_nav_drawer_summary">Open navigation drawer when swiped right from anywhere on the screen</string>
     <string name="gestures_none" maxLength="41" comment="No gestures">Ni</string>
@@ -106,16 +106,16 @@
     <string name="gestures_swipe_down" maxLength="41">Swipe down</string>
     <string name="gestures_swipe_left" maxLength="41">Swipe left</string>
     <string name="gestures_swipe_right" maxLength="41">Swipe right</string>
-    <string name="gestures_double_tap" maxLength="41">Double touch</string>
-    <string name="gestures_tap_top" maxLength="41">Touch top</string>
-    <string name="gestures_tap_left" maxLength="41">Touch left</string>
-    <string name="gestures_tap_right" maxLength="41">Touch right</string>
-    <string name="gestures_tap_bottom" maxLength="41">Touch bottom</string>
-    <string name="gestures_corner_tap_top_left" maxLength="41">Touch top left</string>
-    <string name="gestures_corner_tap_top_right" maxLength="41">Touch top right</string>
-    <string name="gestures_corner_tap_middle_center" maxLength="41">Touch middle center</string>
-    <string name="gestures_corner_tap_bottom_left" maxLength="41">Touch bottom left</string>
-    <string name="gestures_corner_tap_bottom_right" maxLength="41">Touch bottom right</string>
+    <string name="gestures_double_tap" maxLength="41">Attek twaim sinþam</string>
+    <string name="gestures_tap_top" maxLength="41">Attek ufar</string>
+    <string name="gestures_tap_left" maxLength="41">Attek af hleidumein</string>
+    <string name="gestures_tap_right" maxLength="41">Attek af taihswon</string>
+    <string name="gestures_tap_bottom" maxLength="41">Attek uf</string>
+    <string name="gestures_corner_tap_top_left" maxLength="41">Attek ufar af hleidumein</string>
+    <string name="gestures_corner_tap_top_right" maxLength="41">Attek ufar af taihswon</string>
+    <string name="gestures_corner_tap_middle_center" maxLength="41">Attek midjamma midumai</string>
+    <string name="gestures_corner_tap_bottom_left" maxLength="41">Attek uf af hleidumein</string>
+    <string name="gestures_corner_tap_bottom_right" maxLength="41">Attek uf af taihswon</string>
     <string name="gestures_two_finger_tap" maxLength="41">Two-finger tap</string>
     <string name="gestures_three_finger_tap" maxLength="41">Three-finger tap</string>
     <string name="gestures_four_finger_tap" maxLength="41">Four-finger tap</string>
@@ -142,11 +142,11 @@
     <string name="metered_sync_title" maxLength="41">Allow sync on metered connections</string>
     <string name="metered_sync_summary">If disabled, you will be warned if you try to sync on a metered connection</string>
     <string name="backup_limits_frequency">Frequency</string>
-    <string name="backup_limits_lifetime">Lifetime</string>
+    <string name="backup_limits_lifetime">Libainiþeihs</string>
     <string name="app_theme" maxLength="41">Theme</string>
     <string name="day_theme" maxLength="41">Day theme</string>
     <string name="night_theme" maxLength="41">Night theme</string>
-    <string name="language" maxLength="41">Language</string>
+    <string name="language" maxLength="41">Razda</string>
     <string name="language_system">Razda swstemos</string>
     <string name="notification_pref" maxLength="41">Notifications</string>
     <string name="notification_pref_title" maxLength="41">Notify when</string>
@@ -154,7 +154,7 @@
     <string name="notify_when_pending">Pending messages available</string>
     <string name="notification_minimum_cards_due" comment="Consider keeping the unbreakable space after the digit">More than %d cards due</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Inreiran</string>
-    <string name="notification_minimum_cards_due_blink" maxLength="41">Blink light</string>
+    <string name="notification_minimum_cards_due_blink" maxLength="41">Glitmunjando liuhaþ</string>
     <string name="select_locale_title">Walei razda</string>
     <string name="software_render" maxLength="41">Disable card hardware render</string>
     <string name="software_render_summ">Hardware render is faster but may have problems, specifically on Android 8/8.1. If you cannot see parts of the card review user interface, try this setting.</string>
@@ -171,18 +171,18 @@
     <string name="pref_show_answer_long_press_time_summary">Minimum pressing time before the show answer button registers a touch.</string>
     <string name="show_estimates" maxLength="41">Show button time</string>
     <string name="show_estimates_summ">Show next review time on answer buttons</string>
-    <string name="show_large_answer_buttons" maxLength="41">Show large answer buttons</string>
-    <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
+    <string name="show_large_answer_buttons" maxLength="41">Mikilos haubidilons andahafte bandwjan</string>
+    <string name="show_large_answer_buttons_summ">Haubidilons andahafte in twaim wikom bandwjan</string>
     <string name="show_top_bar" maxLength="41">Show top bar</string>
     <string name="show_top_bar_summary">Show card counts, answer timer, flag and mark in top bar</string>
     <string name="show_progress" maxLength="41">Show remaining</string>
     <string name="show_progress_summ">Show remaining card count</string>
-    <string name="show_eta" maxLength="41">Show ETA</string>
-    <string name="show_eta_summ">Show remaining time</string>
-    <string name="use_current" maxLength="41">Deck for new cards</string>
-    <string name="learn_cutoff" maxLength="41">Learn ahead limit</string>
+    <string name="show_eta" maxLength="41">ETA bandwjan</string>
+    <string name="show_eta_summ">Bileibando mel bandwjan</string>
+    <string name="use_current" maxLength="41">Kartahuzd kartom niujaim</string>
+    <string name="learn_cutoff" maxLength="41">Marka fauralaiseinais</string>
     <string name="time_limit" maxLength="41">Timebox time limit</string>
-    <string name="day_offset_with_description" maxLength="41">Start of next day</string>
+    <string name="day_offset_with_description" maxLength="41">Anastodeins iftumins dagis</string>
     <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
         <item quantity="one" comment="Consider keeping the unbreakable space after the digit">%d hour past midnight</item>
         <item quantity="other" comment="Consider keeping the unbreakable space after the digit">%d hours past midnight</item>
@@ -202,19 +202,19 @@
     <string name="thirdparty_apps_title" maxLength="41">Third-party API apps</string>
     <string name="thirdparty_apps_summary">See a list of applications which make use of the AnkiDroid API such as dictionaries, utilities.</string>
     <string name="pref_controls_reviews_tab" maxLength="41" comment="Name of the tab to configure controls for the reviews screen">Reviews</string>
-    <string name="pref_controls_previews_tab" maxLength="41" comment="Name of the tab to configure controls for the previews screen">Previews</string>
+    <string name="pref_controls_previews_tab" maxLength="41" comment="Name of the tab to configure controls for the previews screen">Faurasiuneis</string>
     <string name="toggle_backside_only" maxLength="41" comment="Control setting that toggles \'Backside only\' in the previews screen">Toggle backside only</string>
     <!-- Appearance settings -->
-    <string name="pref_cat_reviewer" maxLength="41">Study Screen</string>
-    <string name="show_deck_title" maxLength="41">Show deck title</string>
+    <string name="pref_cat_reviewer" maxLength="41">Skairms Laiseinais</string>
+    <string name="show_deck_title" maxLength="41">Kartahuzdis ufarmeli bandwjan</string>
     <string name="accessibility" maxLength="41">Accessibility</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Paste clipboard images as PNG</string>
     <string name="exit_via_double_tap_back" maxLength="41">Press back twice to go back/exit</string>
-    <string name="exit_via_double_tap_back_summ">To avoid accidentally leaving the study screen or the app</string>
+    <string name="exit_via_double_tap_back_summ">Ei ni afleiþais skairm laiseinais þau app inuh þatei þata wileis</string>
     <!-- Allow all files in media imports -->
-    <string name="media_import_allow_all_files" maxLength="41">Allow all files in media imports</string>
-    <string name="media_import_allow_all_files_summ">If Android doesn’t recognize a media file</string>
+    <string name="media_import_allow_all_files" maxLength="41">Alla fajla in innatbauram maidje andletan</string>
+    <string name="media_import_allow_all_files_summ">Jabai Andraujd ni wait ƕileik ist maidjafajl</string>
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Custom sync server</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Ni bruht</string>
@@ -230,21 +230,21 @@
     <string name="bluetooth">Blewatunþus</string>
     <string name="answer_buttons" maxLength="41">Haubidilons andahafte</string>
     <string name="card" maxLength="41" comment="Generic term to refer to a card">Karta</string>
-    <string name="note" maxLength="41">Note</string>
+    <string name="note" maxLength="41">Meleins</string>
     <string name="navigation" maxLength="41">Navigation</string>
     <string name="media" maxLength="41">Maidja</string>
-    <string name="misc" maxLength="41">Misc</string>
+    <string name="misc" maxLength="41">Anþar</string>
     <!-- Review reminders -->
-    <string name="add_reminder" comment="Label for the add reminder button in the screen for adding and editing review reminders">Add reminder</string>
+    <string name="add_reminder" comment="Label for the add reminder button in the screen for adding and editing review reminders">Biaiauk gamund</string>
     <!-- studyoptions -->
-    <string name="studyoptions_limit_select_tags">Select tags</string>
+    <string name="studyoptions_limit_select_tags">Sokniwaurda waljan</string>
     <!-- Deck configurations -->
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">Gamain</string>
     <string name="deck_conf_reminders" maxLength="41">Gamaudjans</string>
     <string name="deck_conf_cram_filter" maxLength="41">Filter</string>
-    <string name="deck_conf_cram_search" maxLength="41" comment="Label of a text field that contains a search query.">Search</string>
-    <string name="deck_conf_cram_limit" maxLength="41">Limit to</string>
-    <string name="deck_conf_cram_order" maxLength="41">Cards selected by</string>
+    <string name="deck_conf_cram_search" maxLength="41" comment="Label of a text field that contains a search query.">Sokns</string>
+    <string name="deck_conf_cram_limit" maxLength="41">Marka du</string>
+    <string name="deck_conf_cram_order" maxLength="41">Kartos gawalidos fram</string>
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Reschedule</string>
     <string name="deck_conf_cram_reschedule_summ">Reschedule cards based on my answers in this deck</string>
     <string name="deck_conf_cram_filter_2_check">Enable second filter</string>
@@ -260,9 +260,9 @@
     <string name="type_in_answer_focus" maxLength="41">Focus ‘type in answer’</string>
     <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the study screen</string>
     <!-- About -->
-    <string name="open_changelog">Open changelog</string>
+    <string name="open_changelog">Usluk laug inmaideino</string>
     <string name="pref_cat_about_title" maxLength="41">Bi</string>
-    <string name="contributors_title">Contributors</string>
+    <string name="contributors_title">Hilpandans</string>
     <string name="about_contributors_description"><![CDATA[These are our awesome <a href=\"%1$s\">contributors</a>. You can help AnkiDroid too by programming, translating, donating and <a href=\"%2$s\">more</a>!]]></string>
     <string name="license">License</string>
     <string name="license_description"><![CDATA[AnkiDroid is released under the <a href=\"%1$s\">GPL-3.0</a> and <a href=\"%2$s\">AGPL-3.0</a> licenses, with the source code available <a href=\"%3$s\">on GitHub</a>]]></string>
@@ -271,31 +271,31 @@
     <!-- Controls -->
     <string name="binding_add_gesture">Add gesture</string>
     <string name="binding_add_key">Biaiauk boka</string>
-    <string name="key_picker_default_press_key">Press a key</string>
+    <string name="key_picker_default_press_key">Attek boka</string>
     <string name="binding_add_axis">Add joystick/motion controller</string>
     <string name="axis_picker_move_joystick">Move a joystick/motion controller</string>
     <string name="user_actions" maxLength="41">Toja brukjins</string>
     <string name="user_actions_summary" maxLength="41">Trigger JavaScript from the study screen</string>
-    <string name="user_action_1" maxLength="28">User action 1</string>
-    <string name="user_action_2" maxLength="28">User action 2</string>
-    <string name="user_action_3" maxLength="28">User action 3</string>
-    <string name="user_action_4" maxLength="28">User action 4</string>
-    <string name="user_action_5" maxLength="28">User action 5</string>
-    <string name="user_action_6" maxLength="28">User action 6</string>
-    <string name="user_action_7" maxLength="28">User action 7</string>
-    <string name="user_action_8" maxLength="28">User action 8</string>
-    <string name="user_action_9" maxLength="28">User action 9</string>
+    <string name="user_action_1" maxLength="28">Taui brukjins 1</string>
+    <string name="user_action_2" maxLength="28">Taui brukjins 2</string>
+    <string name="user_action_3" maxLength="28">Taui brukjins 3</string>
+    <string name="user_action_4" maxLength="28">Taui brukjins 4</string>
+    <string name="user_action_5" maxLength="28">Taui brukjins 5</string>
+    <string name="user_action_6" maxLength="28">Taui brukjins 6</string>
+    <string name="user_action_7" maxLength="28">Taui brukings 7</string>
+    <string name="user_action_8" maxLength="28">Taui brukjins 8</string>
+    <string name="user_action_9" maxLength="28">Taui brukjins 9</string>
     <string name="toggle_auto_advance" maxLength="28">Toggle auto advance</string>
     <!-- Select card side -->
-    <string name="card_side_selection_title">Select card side</string>
+    <string name="card_side_selection_title">Fera kartos waljan</string>
     <string name="card_side_question">Sokns</string>
     <string name="card_side_answer">Andahafts</string>
-    <string name="card_side_both" maxLength="28">Question &amp; Answer</string>
-    <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">Q: %s</string>
+    <string name="card_side_both" maxLength="28">Bida &amp; Andahafts</string>
+    <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">B: %s</string>
     <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">A: %s</string>
     <!-- Binding Preference -->
-    <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Remove ‘%s’</string>
-    <string name="bindings_already_bound">Already bound to ‘%s’</string>
+    <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">’%s’ usniman</string>
+    <string name="bindings_already_bound">Du ’%s’ ju bundan ist</string>
     <!-- Advanced -->
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Experimental</string>
     <string name="readtext_deprecation_warn">AnkiDroid has introduced a better TTS mechanism which is compatible with other Anki clients and includes more voices and improvements to language playback!\n\nPlease upgrade as soon as possible, as this setting will be removed soon</string>
@@ -303,7 +303,7 @@
     <string name="pref_fixed_port_title" maxLength="41">localStorage in Study Screen</string>
     <string name="pref_fixed_port_summary">Enables JavaScript localStorage by using a fixed server port in the Study Screen</string>
     <!-- Developer options -->
-    <string name="pref_cat_dev_options" maxLength="41">Developer options</string>
+    <string name="pref_cat_dev_options" maxLength="41">Mahteis andwaibjandis</string>
     <string name="dev_options_enabled_pref" maxLength="41">Enable developer options</string>
     <string name="disable_dev_options">Disable developer options</string>
     <string name="dev_options_warning">Please be sure before enabling developer options. These options are dangerous and could break the app or corrupt your collection.\n\nNote that these options are not suited for most users and therefore are not translated, so they are in English.</string>
@@ -320,60 +320,60 @@
         You can restore from a backup and export your collection in the deck list menu.
     ]]></string>
     <string name="pref__minutes_between_automatic_backups__title" maxLength="41">Minutes between automatic backups</string>
-    <string name="pref__daily_backups_to_keep__title" maxLength="41">Daily backups to keep</string>
-    <string name="pref__weekly_backups_to_keep__title" maxLength="41">Weekly backups to keep</string>
-    <string name="pref__monthly_backups_to_keep__title" maxLength="41">Monthly backups to keep</string>
+    <string name="pref__daily_backups_to_keep__title" maxLength="41">Sinteina baikapa du gafastan</string>
+    <string name="pref__weekly_backups_to_keep__title" maxLength="41">Baikapa in wikom du gafastan</string>
+    <string name="pref__monthly_backups_to_keep__title" maxLength="41">Baikapa in menoþum du gafastan</string>
     <!-- #######################################################################################
          ################################# Manage space activity ###############################
          ####################################################################################### -->
-    <string name="pref__manage_space__screen_title">Manage space</string>
+    <string name="pref__manage_space__screen_title">Rum atgaraihtjan</string>
     <!-- TextWidgetPreference widget text -->
-    <string name="pref__widget_text__error" comment="Text in a small box on the end of a preference, indicating a generic error.         Must be VERY short. Can be one or two lines.">Error</string>
-    <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">Calcu-\nlating&#8230;</string>
+    <string name="pref__widget_text__error" comment="Text in a small box on the end of a preference, indicating a generic error.         Must be VERY short. Can be one or two lines.">Airzei</string>
+    <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">Rahn-\njada&#8230;</string>
     <plurals name="pref__widget_text__n_files_n_bytes" comment="Text in a small box on the end of a preference,         showing some statistics about a folder on disk if a form of “12 files\n26 MB”.         Must be VERY short. Can be one or two lines.">
         <item quantity="one">%1$d fajl\n%2$s</item>
-        <item quantity="other">%1$d files\n%2$s</item>
+        <item quantity="other">%1$d fajla\n%2$s</item>
     </plurals>
     <!-- Delete unused media -->
-    <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">Delete unused media files</string>
-    <string name="pref__delete_unused_media_files__summary">Delete images and other media that are not prefixed with _ and are not referenced by any notes</string>
-    <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">Delete unused media files</string>
+    <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">Unbruhtaim maidjafajlam usqistjan</string>
+    <string name="pref__delete_unused_media_files__summary">Frisahtim jah anþaraim maidjam usqistjan inuh fauralagein miþ _ jah ni taiknjanda fram meleinim</string>
+    <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">Unbruhtaim maidjafajlam usqistjan</string>
     <!-- Delete backups -->
-    <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">Delete backups</string>
-    <string name="dialog__delete_backups__title" comment="Title for a dialog where you can choose backups to delete">Delete backups</string>
-    <string name="progress__deleting_backups">Deleting backups&#8230;</string>
+    <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">Baikapam usqistjan</string>
+    <string name="dialog__delete_backups__title" comment="Title for a dialog where you can choose backups to delete">Baikapam usqistjan</string>
+    <string name="progress__deleting_backups">Baikapam usqistjanda&#8230;</string>
     <!-- Delete collection -->
-    <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">Delete collection</string>
-    <string name="pref__delete_collection__summary">Delete collection, media, and backups. App settings are not deleted</string>
+    <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">Huzda usqistjan</string>
+    <string name="pref__delete_collection__summary">Huzda, maidjam jah baikapam usqistjan. Appis lageinim ni usqistjanda</string>
     <string name="dialog__delete_collection__title" comment="Confirmation dialog title">Usqistei huzda</string>
     <string name="dialog__delete_collection__message" comment="“Close the window” here refers to the activity that the user is currently seeing.        When the collection is deleted, we exit the process, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete your collection, media, and backups?\n\nNote: this action will close the window.</string>
-    <string name="progress__deleting_collection">Deleting collection&#8230;</string>
+    <string name="progress__deleting_collection">Huzda usqistjada&#8230;</string>
     <!-- Delete everything -->
-    <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">Delete everything</string>
+    <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">Allamma usqistjan</string>
     <string name="pref__delete_everything__summary">Delete collection, media, backups, and settings</string>
-    <string name="dialog__delete_everything__title" comment="Confirmation dialog title">Delete everything</string>
-    <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete all data? This includes your collection, media, backups and preferences.\n\nNote: this action will close the window.</string>
+    <string name="dialog__delete_everything__title" comment="Confirmation dialog title">Allamma usqistjan</string>
+    <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Bi sunjai wileizu allaim þaim datam usqistjan? Þata ist, huzdam, maidjam, baikaps jah liubostaim waihtim.\n\nMeleins: þata taui lukiþ augadauron.</string>
     <!-- Delete app data -->
-    <string name="pref__delete_app_data__title" maxLength="41" comment="Preference title">Delete app data</string>
-    <string name="pref__delete_app_data__summary">Delete settings and other app data</string>
-    <string name="dialog__delete_app_data__title" comment="Confirmation dialog title">Delete app data</string>
-    <string name="dialog__delete_app_data__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete app data? This includes settings and other app data.\n\nNote: this action will close the window.</string>
+    <string name="pref__delete_app_data__title" maxLength="41" comment="Preference title">Appis datai usqistjan</string>
+    <string name="pref__delete_app_data__summary">Lageinim jah anþaraim datam appis usqistjan</string>
+    <string name="dialog__delete_app_data__title" comment="Confirmation dialog title">Datam appis usqistjan</string>
+    <string name="dialog__delete_app_data__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Bi sunjai wileizu appis datam usqistjan? Þata ist lageinos jah anþara data appis.\n\nSai: þata taui lukiþ þata augadauron.</string>
     <!-- #######################################################################################
          ##### Generic preference summaries & snackbars that are shown on preference click #####
          ####################################################################################### -->
     <string name="pref__etc__summary__fetching" comment="Generic preference summary to be shown when the value is being fetched">&#8230;</string>
-    <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">No collection</string>
-    <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">Error</string>
-    <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">Fetching&#8230;</string>
-    <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">Calculating&#8230;</string>
-    <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">Collection does not exist</string>
-    <string name="hide_system_bars" maxLength="41" comment="Title of a setting that allows to hide the system bars">Hide system bars</string>
+    <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">Ni huzd</string>
+    <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">Airzei</string>
+    <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">Nimada&#8230;</string>
+    <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">Rahnjada&#8230;</string>
+    <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">Huzd nist</string>
+    <string name="hide_system_bars" maxLength="41" comment="Title of a setting that allows to hide the system bars">Affilh ansans swstems</string>
     <string name="hide_system_bars_none" comment="Setting option to not hide any of the system bars">Ni</string>
     <string name="hide_system_bars_status_bar" comment="Setting option to hide the system status bar (the top one with clock, battery status, etc)">Status bar</string>
     <string name="hide_system_bars_navigation_bar" comment="Setting option to hide the system navigation bar (the bottom one that can go back, to home, etc)">Navigation bar</string>
     <string name="hide_system_bars_all_bars" comment="Setting option to hide all the system bars">All</string>
     <string name="ignore_display_cutout" maxLength="41">Ignore display cutout</string>
-    <string name="hide_answer_buttons" maxLength="41">Hide answer buttons</string>
+    <string name="hide_answer_buttons" maxLength="41">Affilh haubidilons andahafte</string>
     <string name="hide_hard_and_easy" maxLength="41">Hide ‘Hard’ and ‘Easy’ buttons</string>
     <string name="reviewer_frame_style" maxLength="41">Frame style</string>
     <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Study Screen">Karta</string>
@@ -384,7 +384,7 @@
     <string name="toolbar" maxLength="41">Tola-ans</string>
     <string name="toolbar_actions" maxLength="41">Toolbar actions</string>
     <string name="toolbar_position" maxLength="41">Toolbar position</string>
-    <string name="new_study_screen" maxLength="41">New study screen</string>
+    <string name="new_study_screen" maxLength="41">Skairms niujis laiseinais</string>
     <string name="new_study_screen_summ"><![CDATA[Improved study screen that will succeed the current one. Some features of the old screen have been changed or removed. Please report any <a href="%1$s">feedback</a> or <a href="%2$s">bugs</a>.]]></string>
     <string name="show_answer_feedback" maxLength="41">Show answer feedback</string>
     <!--Keyboard shortcuts dialog-->

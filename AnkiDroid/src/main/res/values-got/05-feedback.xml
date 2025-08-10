@@ -55,5 +55,5 @@
     <string name="feedback_copy_debug">Copy debug info</string>
     <string name="feedback_report">Mereins</string>
     <string name="feedback_report_automatically">Send error reports automatically</string>
-    <string name="feedback_no_suitable_app_found">No suitable app found</string>
+    <string name="feedback_no_suitable_app_found">Ni bigat gatil app</string>
 </resources>
