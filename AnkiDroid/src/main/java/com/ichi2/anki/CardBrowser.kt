@@ -75,6 +75,8 @@ import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
 import com.ichi2.anki.dialogs.DiscardChangesDialog
 import com.ichi2.anki.dialogs.GradeNowDialog
+import com.ichi2.anki.dialogs.SaveBrowserSearchDialogFragment
+import com.ichi2.anki.dialogs.registerSaveSearchHandler
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
 import com.ichi2.anki.libanki.CardId
@@ -264,36 +266,26 @@ open class CardBrowser :
                     }
                 }
             }
+        }
 
-            override fun onSaveSearch(
-                searchName: String,
-                searchTerms: String?,
-            ) {
-                if (searchTerms == null) {
-                    return
-                }
-                if (searchName.isEmpty()) {
-                    showSnackbar(
-                        R.string.card_browser_list_my_searches_new_search_error_empty_name,
-                        Snackbar.LENGTH_SHORT,
-                    )
-                    return
-                }
-                launchCatchingTask {
-                    when (viewModel.saveSearch(searchName, searchTerms)) {
-                        SaveSearchResult.ALREADY_EXISTS ->
-                            showSnackbar(
-                                R.string.card_browser_list_my_searches_new_search_error_dup,
-                                Snackbar.LENGTH_SHORT,
-                            )
-                        SaveSearchResult.SUCCESS -> {
-                            searchView!!.setQuery("", false)
-                            mySearchesItem!!.isVisible = true
-                        }
-                    }
-                }
+    /**
+     * Updates the browser's ui after a user search was saved based on the result of the operation.
+     * @param saveSearchResult the result of the save search operation
+     * @see [CardBrowser.registerSaveSearchHandler]
+     */
+    fun updateAfterUserSearchIsSaved(saveSearchResult: SaveSearchResult) {
+        when (saveSearchResult) {
+            SaveSearchResult.ALREADY_EXISTS ->
+                showSnackbar(
+                    R.string.card_browser_list_my_searches_new_search_error_dup,
+                    Snackbar.LENGTH_SHORT,
+                )
+            SaveSearchResult.SUCCESS -> {
+                searchView!!.setQuery("", false)
+                mySearchesItem!!.isVisible = true
             }
         }
+    }
 
     private val multiSelectOnBackPressedCallback =
         object : OnBackPressedCallback(enabled = false) {
@@ -397,6 +389,7 @@ open class CardBrowser :
 
         setupFlows()
         registerOnForgetHandler { viewModel.queryAllSelectedCardIds() }
+        registerSaveSearchHandler()
 
         registerFindReplaceHandler { result ->
             launchCatchingTask {
@@ -559,12 +552,7 @@ open class CardBrowser :
         fun onSaveSearchNamePrompt(searchTerms: String) {
             Timber.i("opening 'save search' name input dialog")
             val dialog =
-                CardBrowserMySearchesDialog.newInstance(
-                    savedFilters = null,
-                    mySearchesDialogListener = mySearchesDialogListener,
-                    currentSearchTerms = searchTerms,
-                    type = CardBrowserMySearchesDialog.CARD_BROWSER_MY_SEARCHES_TYPE_SAVE,
-                )
+                SaveBrowserSearchDialogFragment.newInstance(searchQuery = searchTerms)
             showDialogFragment(dialog)
         }
 

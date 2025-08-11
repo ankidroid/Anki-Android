@@ -10,15 +10,12 @@ import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.ui.ButtonItemAdapter
 import com.ichi2.utils.customListAdapterWithDecoration
-import com.ichi2.utils.input
 import com.ichi2.utils.message
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
 import com.ichi2.utils.title
 import timber.log.Timber
-
-// TODO: Add different classes for the two different dialogs
 
 class CardBrowserMySearchesDialog : AnalyticsDialogFragment() {
     private var buttonItemAdapter: ButtonItemAdapter? = null
@@ -29,11 +26,6 @@ class CardBrowserMySearchesDialog : AnalyticsDialogFragment() {
         fun onSelection(searchName: String)
 
         fun onRemoveSearch(searchName: String)
-
-        fun onSaveSearch(
-            searchName: String,
-            searchTerms: String?,
-        )
     }
 
     @SuppressLint("CheckResult")
@@ -66,26 +58,6 @@ class CardBrowserMySearchesDialog : AnalyticsDialogFragment() {
                         .title(text = resources.getString(R.string.card_browser_list_my_searches_title))
                         .customListAdapterWithDecoration(this, requireActivity())
                 }
-        } else if (type == CARD_BROWSER_MY_SEARCHES_TYPE_SAVE) {
-            val currentSearchTerms = requireArguments().getString("currentSearchTerms")
-            return dialog
-                .show {
-                    title(text = getString(R.string.card_browser_list_my_searches_save))
-                    positiveButton(android.R.string.ok)
-                    negativeButton(R.string.dialog_cancel)
-                    setView(R.layout.dialog_generic_text_input)
-                }.apply {
-                    input(
-                        hint = getString(R.string.card_browser_list_my_searches_new_name),
-                        allowEmpty = false,
-                        displayKeyboard = true,
-                        waitForPositiveButton = true,
-                    ) { dialog, text ->
-                        Timber.d("Saving search with title/terms: %s/%s", text, currentSearchTerms)
-                        mySearchesDialogListener?.onSaveSearch(text.toString(), currentSearchTerms)
-                        dialog.dismiss()
-                    }
-                }
         }
         return dialog.create()
     }
@@ -109,7 +81,6 @@ class CardBrowserMySearchesDialog : AnalyticsDialogFragment() {
 
     companion object {
         const val CARD_BROWSER_MY_SEARCHES_TYPE_LIST = 0 // list searches dialog
-        const val CARD_BROWSER_MY_SEARCHES_TYPE_SAVE = 1 // save searches dialog
         private var mySearchesDialogListener: MySearchesDialogListener? = null
 
         fun newInstance(
