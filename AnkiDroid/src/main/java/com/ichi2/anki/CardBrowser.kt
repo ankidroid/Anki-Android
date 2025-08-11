@@ -283,6 +283,10 @@ open class CardBrowser :
             SaveSearchResult.SUCCESS -> {
                 searchView!!.setQuery("", false)
                 mySearchesItem!!.isVisible = true
+                showSnackbar(
+                    R.string.card_browser_list_my_searches_successful_save,
+                    Snackbar.LENGTH_SHORT,
+                )
             }
         }
     }
