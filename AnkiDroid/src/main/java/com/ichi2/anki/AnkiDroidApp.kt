@@ -19,10 +19,8 @@ package com.ichi2.anki
 
 import android.app.Activity
 import android.app.Application
-import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
 import android.content.SharedPreferences
 import android.content.res.Resources
 import android.os.Build
@@ -117,10 +115,6 @@ open class AnkiDroidApp :
             }
         }
         instance = this
-
-        // Register for configuration changes to update widgets when theme changes
-        val filter = IntentFilter(Intent.ACTION_CONFIGURATION_CHANGED)
-        registerReceiver(configurationChangeReceiver, filter)
 
         // Get preferences
         val preferences = this.sharedPrefs()
@@ -265,26 +259,6 @@ open class AnkiDroidApp :
         TtsVoices.launchBuildLocalesJob()
         // enable {{tts-voices:}} field filter
         TtsVoicesFieldFilter.ensureApplied()
-    }
-
-    private val configurationChangeReceiver =
-        object : BroadcastReceiver() {
-            override fun onReceive(
-                context: Context?,
-                intent: Intent?,
-            ) {
-                if (intent?.action == Intent.ACTION_CONFIGURATION_CHANGED) {
-                    Timber.d("Configuration changed, updating widgets for theme change")
-                    updateWidgetsForThemeChange()
-                }
-            }
-        }
-
-    /**
-     * Updates all CardAnalysisWidget instances when theme changes
-     */
-    fun updateWidgetsForThemeChange() {
-        CardAnalysisWidget.updateCardAnalysisWidgets(this)
     }
 
     /**

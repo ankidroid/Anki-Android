@@ -106,13 +106,7 @@
         app:summaryEntries="@array/backup_limits_summary_entries"
         tools:title="Backups"/>
 
-    <!-- Widget Preferences -->
-    <com.ichi2.preferences.HeaderPreference
-        android:fragment="com.ichi2.anki.preferences.WidgetSettingsFragment"
-        android:key="@string/pref_widget_screen_key"
-        android:title="Widget"
-        android:icon="@drawable/ic_widgets"
-        app:summaryEntries="@array/widget_summary_entries"/>
+
 
     <!-- Advanced Preferences -->
     <com.ichi2.preferences.HeaderPreference
