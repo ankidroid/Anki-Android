@@ -34,7 +34,6 @@ import com.ichi2.anki.isCollectionEmpty
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.Decks.Companion.NOT_FOUND_DECK_ID
 import com.ichi2.anki.pages.DeckOptionsDestination
-import com.ichi2.anki.preferences.WidgetSettingsFragment
 import com.ichi2.widget.ACTION_UPDATE_WIDGET
 import com.ichi2.widget.AnalyticsWidgetProvider
 import com.ichi2.widget.cancelRecurringAlarm
@@ -75,28 +74,8 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
             val deckId = getDeckIdForWidget(context, appWidgetId)
             val remoteViews = RemoteViews(context.packageName, R.layout.widget_card_analysis)
 
-            // Apply dynamic theming or default background colors
-            val dynamicTheming = WidgetSettingsFragment.isGlobalDynamicThemingEnabled(context)
-            if (!dynamicTheming) {
-                val isNight =
-                    (context.resources.configuration.uiMode and android.content.res.Configuration.UI_MODE_NIGHT_MASK) ==
-                        android.content.res.Configuration.UI_MODE_NIGHT_YES
-                val bgColor =
-                    if (isNight) {
-                        ContextCompat.getColor(context, R.color.widget_bg_dark)
-                    } else {
-                        ContextCompat.getColor(context, R.color.widget_bg_light)
-                    }
-                remoteViews.setInt(R.id.widget_deck_picker, "setBackgroundColor", bgColor)
-                remoteViews.setInt(R.id.cardAnalysisDataHolder, "setBackgroundColor", bgColor)
-            } else {
-                remoteViews.setInt(R.id.widget_deck_picker, "setBackgroundResource", R.drawable.widget_card_analysis_rounded_background)
-                remoteViews.setInt(
-                    R.id.cardAnalysisDataHolder,
-                    "setBackgroundResource",
-                    R.drawable.widget_card_analysis_rounded_inner_background,
-                )
-            }
+            // Apply theming immediately
+            applyThemeToWidget(context, appWidgetId, remoteViews)
 
             if (deckId == NOT_FOUND_DECK_ID) {
                 // If deckId is null, it means no deck was selected or the selected deck was deleted.
@@ -106,6 +85,9 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
                 showMissingDeck(context, appWidgetManager, appWidgetId, remoteViews)
                 return
             }
+
+            // Update widget immediately with theme applied
+            appWidgetManager.updateAppWidget(appWidgetId, remoteViews)
 
             AnkiDroidApp.applicationScope.launch {
                 val isCollectionEmpty = isCollectionEmpty()
@@ -123,6 +105,50 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
                     return@launch
                 }
                 showDeck(context, appWidgetManager, appWidgetId, remoteViews, deckData)
+            }
+        }
+
+        /**
+         * Applies theme to widget based on user preference.
+         * Dynamic mode uses rounded backgrounds that adapt to system theme.
+         * AnkiDroid mode uses solid colors that match the app's current theme.
+         */
+        private fun applyThemeToWidget(
+            context: Context,
+            appWidgetId: Int,
+            remoteViews: RemoteViews,
+        ) {
+            val widgetPreferences = CardAnalysisWidgetPreferences(context)
+            val dynamicTheming = widgetPreferences.getDynamicThemingPreference(appWidgetId)
+
+            if (dynamicTheming) {
+                // Dynamic theming: use rounded background resources that adapt to system theme
+                remoteViews.setInt(R.id.widget_deck_picker, "setBackgroundResource", R.drawable.widget_card_analysis_rounded_background)
+                remoteViews.setInt(
+                    R.id.cardAnalysisDataHolder,
+                    "setBackgroundResource",
+                    R.drawable.widget_card_analysis_rounded_inner_background,
+                )
+            } else {
+                // AnkiDroid theming: follow app's current theme with solid colors
+                val isAppInNightMode = com.ichi2.themes.Themes.currentTheme.isNightMode
+                val bgColor =
+                    if (isAppInNightMode) {
+                        ContextCompat.getColor(context, R.color.widget_bg_dark)
+                    } else {
+                        ContextCompat.getColor(context, R.color.widget_bg_light)
+                    }
+                val textColor =
+                    if (isAppInNightMode) {
+                        ContextCompat.getColor(context, R.color.white)
+                    } else {
+                        ContextCompat.getColor(context, R.color.black)
+                    }
+                remoteViews.setInt(R.id.widget_deck_picker, "setBackgroundColor", bgColor)
+                remoteViews.setInt(R.id.cardAnalysisDataHolder, "setBackgroundColor", bgColor)
+
+                // Ensure deck name text is visible on solid background
+                remoteViews.setInt(R.id.deckNameCardAnalysis, "setTextColor", textColor)
             }
         }
 
@@ -332,6 +358,7 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
                     Timber.d("Deleting widget with ID: $appWidgetId")
                     cancelRecurringAlarm(context, appWidgetId, CardAnalysisWidget::class.java)
                     widgetPreferences.deleteDeckData(appWidgetId)
+                    widgetPreferences.deleteDynamicThemingPreference(appWidgetId)
                 } else {
                     Timber.e("Invalid widget ID received in ACTION_APPWIDGET_DELETED")
                 }
@@ -368,6 +395,7 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
         appWidgetIds?.forEach { widgetId ->
             cancelRecurringAlarm(context, widgetId, CardAnalysisWidget::class.java)
             widgetPreferences.deleteDeckData(widgetId)
+            widgetPreferences.deleteDynamicThemingPreference(widgetId)
         }
     }
 }

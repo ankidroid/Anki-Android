@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:theme="@style/Theme.Material3.DynamicColors.DayNight">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible">
+
+        <LinearLayout
+            android:id="@+id/no_decks_placeholder"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:visibility="visible"
+            android:background="?attr/colorSurface">
+
+            <com.ichi2.ui.FixedTextView
+                style="@style/TextAppearance.AppCompat.Medium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginStart="7dp"
+                android:gravity="center"
+                android:padding="30dp"
+                android:text="@string/card_analysis_no_selected_deck_placeholder_title" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/widgetConfigContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="?attr/colorSurface"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/buttonBackgroundLayer"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_alignParentBottom="true">
+
+            <Button
+                android:id="@+id/save_button"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textSize="@dimen/abc_text_size_button_material"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:singleLine="true"
+                android:padding="3dp"
+                android:layout_gravity="center"
+                android:text="@string/save" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <!-- FAB Background Layout for dimming -->
+    <View
+        android:id="@+id/fab_bg_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#80000000"
+        android:visibility="gone"
+        android:clickable="true"
+        android:focusable="true" />
+
+    <!-- FAB Container -->
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:layout_gravity="bottom|end">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:orientation="vertical"
+            android:padding="12dp"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/add_deck_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:layout_gravity="bottom|end"
+                android:visibility="gone"
+                android:alpha="0"
+                android:translationY="300px">
+
+                <TextView
+                    android:layout_width="120dp"
+                    android:background="@color/material_grey_600"
+                    android:id="@+id/add_deck_label"
+                    android:paddingBottom="5dp"
+                    android:paddingTop="5dp"
+                    android:paddingEnd="10dp"
+                    android:paddingStart="10dp"
+                    android:textColor="@color/white"
+                    android:layout_marginEnd="5dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/fab_add_deck_description" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                     android:id="@+id/add_deck_action"
+                     android:layout_width="wrap_content"
+                     style="?attr/floatingActionButtonSmallStyle"
+                     android:layout_height="wrap_content"
+                     android:layout_margin="10dp"
+                     app:backgroundTint="?attr/fab_normal"
+                     android:src="@drawable/ic_add_white"
+                     android:contentDescription="@string/fab_add_deck_description" />
+
+            </LinearLayout>
+             <LinearLayout
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:gravity="center_vertical"
+                 android:orientation="horizontal"
+                 android:layout_gravity="bottom|end">
+
+                 <TextView
+                     android:layout_width="120dp"
+                     android:background="@color/material_grey_600"
+                     android:id="@+id/theming_label"
+                     android:paddingBottom="5dp"
+                     android:paddingTop="5dp"
+                     android:paddingEnd="10dp"
+                     android:paddingStart="10dp"
+                     android:textColor="@color/white"
+                     android:layout_marginEnd="5dp"
+                     android:layout_height="wrap_content"
+                     android:gravity="center"
+                     android:text="@string/fab_theming_description"
+                     android:visibility="gone"
+                     android:alpha="0"
+                     android:translationX="50px" />
+
+                 <com.google.android.material.floatingactionbutton.FloatingActionButton
+                     android:id="@+id/fab_main"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:layout_marginEnd="10dp"
+                     android:layout_marginStart="10dp"
+                     android:layout_marginBottom="17dp"
+                     android:layout_marginTop="10dp"
+                     app:srcCompat="@drawable/ic_settings_black"
+                     app:tint="@color/white"
+                     app:backgroundTint="?attr/fab_normal"
+                     app:fabSize="normal" />
+
+             </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
