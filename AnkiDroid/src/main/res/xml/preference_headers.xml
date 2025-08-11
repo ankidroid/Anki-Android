@@ -106,8 +106,6 @@
         app:summaryEntries="@array/backup_limits_summary_entries"
         tools:title="Backups"/>
 
-
-
     <!-- Advanced Preferences -->
     <com.ichi2.preferences.HeaderPreference
         android:fragment="com.ichi2.anki.preferences.AdvancedSettingsFragment"
