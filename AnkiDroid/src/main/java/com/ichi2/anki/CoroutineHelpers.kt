@@ -697,9 +697,14 @@ data class CrashReportData(
         }
 
         private fun Throwable.isInvalidFsrsParametersException(): Boolean =
+            // `TR` may fail in an error-reporting context
             try {
-                // `TR` may fail in an error-reporting context
-                message == TR.deckConfigInvalidParameters()
+                when (message) {
+                    // https://github.com/ankitects/anki/blob/f3b4284afbb38b894164cd4de3e7b690f2bc62a5/rslib/src/scheduler/fsrs/error.rs#L18
+                    "invalid params provided" -> true
+                    TR.deckConfigInvalidParameters() -> true
+                    else -> false
+                }
             } catch (_: Throwable) {
                 false
             }
