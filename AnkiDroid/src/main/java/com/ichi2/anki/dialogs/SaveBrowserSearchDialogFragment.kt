@@ -40,7 +40,7 @@ import timber.log.Timber
  * easy access.
  *
  * @see CardBrowser
- * @see CardBrowserMySearchesDialog
+ * @see SavedBrowserSearchesDialogFragment
  */
 class SaveBrowserSearchDialogFragment : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {

@@ -69,14 +69,14 @@ import com.ichi2.anki.browser.registerFindReplaceHandler
 import com.ichi2.anki.browser.toCardBrowserLaunchOptions
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
-import com.ichi2.anki.dialogs.CardBrowserMySearchesDialog
-import com.ichi2.anki.dialogs.CardBrowserMySearchesDialog.MySearchesDialogListener
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
 import com.ichi2.anki.dialogs.DiscardChangesDialog
 import com.ichi2.anki.dialogs.GradeNowDialog
 import com.ichi2.anki.dialogs.SaveBrowserSearchDialogFragment
+import com.ichi2.anki.dialogs.SavedBrowserSearchesDialogFragment
 import com.ichi2.anki.dialogs.registerSaveSearchHandler
+import com.ichi2.anki.dialogs.registerSavedSearchActionHandler
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
 import com.ichi2.anki.libanki.CardId
@@ -244,30 +244,6 @@ open class CardBrowser :
         ChangeManager.subscribe(this)
     }
 
-    @VisibleForTesting
-    internal val mySearchesDialogListener: MySearchesDialogListener =
-        object : MySearchesDialogListener {
-            override fun onSelection(searchName: String) {
-                Timber.d("OnSelection using search named: %s", searchName)
-                launchCatchingTask {
-                    viewModel.savedSearches()[searchName]?.also { savedSearch ->
-                        Timber.d("OnSelection using search terms: %s", savedSearch)
-                        searchForQuery(savedSearch)
-                    }
-                }
-            }
-
-            override fun onRemoveSearch(searchName: String) {
-                Timber.d("OnRemoveSelection using search named: %s", searchName)
-                launchCatchingTask {
-                    val updatedFilters = viewModel.removeSavedSearch(searchName)
-                    if (updatedFilters.isEmpty()) {
-                        mySearchesItem!!.isVisible = false
-                    }
-                }
-            }
-        }
-
     /**
      * Updates the browser's ui after a user search was saved based on the result of the operation.
      * @param saveSearchResult the result of the save search operation
@@ -404,6 +380,30 @@ open class CardBrowser :
                         }.await()
                     showSnackbar(TR.browsingNotesUpdated(count))
                 }
+            }
+        }
+        registerSavedSearchActionHandler { type, searchName ->
+            if (searchName == null) return@registerSavedSearchActionHandler
+            when (type) {
+                SavedBrowserSearchesDialogFragment.TYPE_SEARCH_SELECTED -> {
+                    Timber.d("Selecting saved search selection named: %s", searchName)
+                    launchCatchingTask {
+                        viewModel.savedSearches()[searchName]?.also { savedSearch ->
+                            Timber.d("OnSelection using search terms: %s", savedSearch)
+                            searchForQuery(savedSearch)
+                        }
+                    }
+                }
+                SavedBrowserSearchesDialogFragment.TYPE_SEARCH_REMOVED -> {
+                    Timber.d("Removing saved search named: %s", searchName)
+                    launchCatchingTask {
+                        val updatedFilters = viewModel.removeSavedSearch(searchName)
+                        if (updatedFilters.isEmpty()) {
+                            mySearchesItem!!.isVisible = false
+                        }
+                    }
+                }
+                else -> error("Unexpected saved search action: $type")
             }
         }
     }
@@ -1088,15 +1088,11 @@ open class CardBrowser :
 
     private fun showSavedSearches() {
         launchCatchingTask {
-            val savedFilters = viewModel.savedSearches()
-            showDialogFragment(
-                CardBrowserMySearchesDialog.newInstance(
-                    savedFilters,
-                    mySearchesDialogListener,
-                    "",
-                    CardBrowserMySearchesDialog.CARD_BROWSER_MY_SEARCHES_TYPE_LIST,
-                ),
-            )
+            val dialog =
+                SavedBrowserSearchesDialogFragment.newInstance(
+                    viewModel.savedSearches(),
+                )
+            showDialogFragment(dialog)
         }
     }
 
