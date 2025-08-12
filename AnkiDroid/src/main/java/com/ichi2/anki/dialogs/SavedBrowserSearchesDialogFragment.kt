@@ -15,16 +15,19 @@
  ****************************************************************************************/
 package com.ichi2.anki.dialogs
 
-import android.annotation.SuppressLint
 import android.app.Dialog
 import android.os.Bundle
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageButton
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
+import androidx.recyclerview.widget.RecyclerView
 import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
-import com.ichi2.ui.ButtonItemAdapter
 import com.ichi2.utils.customListAdapterWithDecoration
 import com.ichi2.utils.message
 import com.ichi2.utils.negativeButton
@@ -36,26 +39,19 @@ import timber.log.Timber
 /**
  * Dialog that displays the user's saved browser searches.
  */
+// TODO modify the adapter to allow the user to delete multiple entries without dismissing the
+//  dialog(or maybe even add an option to remove all entries directly)
 class SavedBrowserSearchesDialogFragment : AnalyticsDialogFragment() {
-    private var buttonItemAdapter: ButtonItemAdapter? = null
-    private var savedFilters: HashMap<String, String>? = null
-    private var savedFilterKeys: ArrayList<String>? = null
-
-    @SuppressLint("CheckResult")
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         super.onCreate(savedInstanceState)
-        val dialog = AlertDialog.Builder(requireActivity())
-        savedFilters = requireArguments().getSerializableCompat(ARG_SAVED_FILTERS)
-
-        savedFilters?.let {
-            savedFilterKeys = ArrayList(it.keys)
-        }
-
-        buttonItemAdapter =
-            ButtonItemAdapter(
-                savedFilterKeys!!,
-                itemCallback = { searchName ->
-                    Timber.d("item clicked: %s", searchName)
+        val savedFilters: HashMap<String, String>? =
+            requireArguments().getSerializableCompat(ARG_SAVED_FILTERS)
+        val savedSearches = savedFilters?.keys?.toList() ?: emptyList()
+        val adapter =
+            SavedSearchesAdapter(
+                savedSearches.sortedWith { obj: String, str: String -> obj.compareTo(str, ignoreCase = true) },
+                onSelection = { searchName ->
+                    Timber.d("Saved search clicked: %s", searchName)
                     parentFragmentManager.setFragmentResult(
                         REQUEST_SAVED_SEARCH_ACTION,
                         bundleOf(
@@ -65,17 +61,17 @@ class SavedBrowserSearchesDialogFragment : AnalyticsDialogFragment() {
                     )
                     dismiss()
                 },
-                buttonCallback = { searchName ->
-                    Timber.d("button clicked: %s", searchName)
+                onRemoval = { searchName ->
+                    Timber.d("Saved search delete button clicked: %s", searchName)
                     removeSearch(searchName)
                 },
-            ).apply {
-                notifyAdapterDataSetChanged() // so the values are sorted.
-                dialog
-                    .title(text = resources.getString(R.string.card_browser_list_my_searches_title))
-                    .customListAdapterWithDecoration(this, requireActivity())
-            }
-        return dialog.create()
+            )
+        return AlertDialog
+            .Builder(requireContext())
+            .title(text = resources.getString(R.string.card_browser_list_my_searches_title))
+            .negativeButton(R.string.dialog_cancel)
+            .apply { customListAdapterWithDecoration(adapter, requireContext()) }
+            .create()
     }
 
     private fun removeSearch(searchName: String) {
@@ -89,16 +85,43 @@ class SavedBrowserSearchesDialogFragment : AnalyticsDialogFragment() {
                         ARG_SAVED_SEARCH to searchName,
                     ),
                 )
-                savedFilters!!.remove(searchName)
-                savedFilterKeys!!.remove(searchName)
-                buttonItemAdapter!!.apply {
-                    remove(searchName)
-                    notifyAdapterDataSetChanged()
-                }
                 dialog?.dismiss() // Dismiss the root dialog
             }
             negativeButton(R.string.dialog_cancel)
         }
+    }
+
+    private inner class SavedSearchesAdapter(
+        private val entries: List<String>,
+        private val onSelection: (String) -> Unit,
+        private val onRemoval: (String) -> Unit,
+    ) : RecyclerView.Adapter<SavedSearchesViewHolder>() {
+        override fun onCreateViewHolder(
+            parent: ViewGroup,
+            viewType: Int,
+        ): SavedSearchesViewHolder {
+            val rowView = layoutInflater.inflate(R.layout.card_browser_item_my_searches_dialog, parent, false)
+            return SavedSearchesViewHolder(rowView)
+        }
+
+        override fun onBindViewHolder(
+            holder: SavedSearchesViewHolder,
+            position: Int,
+        ) {
+            val entry = entries[position]
+            holder.name.text = entry
+            holder.name.setOnClickListener { onSelection(entry) }
+            holder.deleteBtn.setOnClickListener { onRemoval(entry) }
+        }
+
+        override fun getItemCount(): Int = entries.size
+    }
+
+    private class SavedSearchesViewHolder(
+        rowView: View,
+    ) : RecyclerView.ViewHolder(rowView) {
+        val name: TextView = rowView.findViewById(R.id.card_browser_my_search_name_textview)
+        val deleteBtn: ImageButton = rowView.findViewById(R.id.card_browser_my_search_remove_button)
     }
 
     companion object {
