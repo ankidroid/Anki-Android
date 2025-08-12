@@ -28,7 +28,7 @@ import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
-import com.ichi2.utils.customListAdapterWithDecoration
+import com.ichi2.utils.customListAdapter
 import com.ichi2.utils.message
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
@@ -46,10 +46,15 @@ class SavedBrowserSearchesDialogFragment : AnalyticsDialogFragment() {
         super.onCreate(savedInstanceState)
         val savedFilters: HashMap<String, String>? =
             requireArguments().getSerializableCompat(ARG_SAVED_FILTERS)
-        val savedSearches = savedFilters?.keys?.toList() ?: emptyList()
+        val data =
+            savedFilters
+                ?.toList()
+                ?.sortedWith { str1: Pair<String, String>, str2: Pair<String, String> ->
+                    str1.first.compareTo(str2.first, ignoreCase = true)
+                } ?: emptyList()
         val adapter =
             SavedSearchesAdapter(
-                savedSearches.sortedWith { obj: String, str: String -> obj.compareTo(str, ignoreCase = true) },
+                data,
                 onSelection = { searchName ->
                     Timber.d("Saved search clicked: %s", searchName)
                     parentFragmentManager.setFragmentResult(
@@ -70,7 +75,7 @@ class SavedBrowserSearchesDialogFragment : AnalyticsDialogFragment() {
             .Builder(requireContext())
             .title(text = resources.getString(R.string.card_browser_list_my_searches_title))
             .negativeButton(R.string.dialog_cancel)
-            .apply { customListAdapterWithDecoration(adapter, requireContext()) }
+            .apply { customListAdapter(adapter) }
             .create()
     }
 
@@ -92,7 +97,7 @@ class SavedBrowserSearchesDialogFragment : AnalyticsDialogFragment() {
     }
 
     private inner class SavedSearchesAdapter(
-        private val entries: List<String>,
+        private val entries: List<Pair<String, String>>,
         private val onSelection: (String) -> Unit,
         private val onRemoval: (String) -> Unit,
     ) : RecyclerView.Adapter<SavedSearchesViewHolder>() {
@@ -109,9 +114,10 @@ class SavedBrowserSearchesDialogFragment : AnalyticsDialogFragment() {
             position: Int,
         ) {
             val entry = entries[position]
-            holder.name.text = entry
-            holder.name.setOnClickListener { onSelection(entry) }
-            holder.deleteBtn.setOnClickListener { onRemoval(entry) }
+            holder.name.text = entry.first
+            holder.query.text = entry.second
+            holder.itemView.setOnClickListener { onSelection(entry.first) }
+            holder.deleteBtn.setOnClickListener { onRemoval(entry.first) }
         }
 
         override fun getItemCount(): Int = entries.size
@@ -121,6 +127,7 @@ class SavedBrowserSearchesDialogFragment : AnalyticsDialogFragment() {
         rowView: View,
     ) : RecyclerView.ViewHolder(rowView) {
         val name: TextView = rowView.findViewById(R.id.card_browser_my_search_name_textview)
+        val query: TextView = rowView.findViewById(R.id.card_browser_my_search_query_textview)
         val deleteBtn: ImageButton = rowView.findViewById(R.id.card_browser_my_search_remove_button)
     }
 
