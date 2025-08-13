@@ -30,6 +30,7 @@ import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.libanki.Card
 import com.ichi2.anki.libanki.CardId
+import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.NoteId
 import com.ichi2.anki.libanki.redoAvailable
 import com.ichi2.anki.libanki.redoLabel
@@ -98,6 +99,7 @@ class ReviewerViewModel :
     val setDueDateFlow = MutableSharedFlow<CardId>()
     val answerTimerStatusFlow = MutableStateFlow<AnswerTimerStatus?>(null)
     val answerFeedbackFlow = MutableSharedFlow<Rating>()
+    val timeBoxReachedFlow = MutableSharedFlow<Collection.TimeboxReached>()
 
     override val server: AnkiServer = AnkiServer(this, StudyScreenRepository.getServerPort()).also { it.start() }
     private val stateMutationKey = TimeManager.time.intTimeMS().toString()
@@ -131,6 +133,7 @@ class ReviewerViewModel :
     init {
         ChangeManager.subscribe(this)
         launchCatchingIO {
+            withCol { startTimebox() }
             updateUndoAndRedoLabels()
             // The height of the answer buttons may increase if `Show button time` is enabled.
             // To ensure consistent height, load the times to match the height of the `Show answer`
@@ -499,6 +502,10 @@ class ReviewerViewModel :
         val state = queueState.await()
         if (state == null) {
             finishResultFlow.emit(RESULT_NO_MORE_CARDS)
+            return
+        }
+        state.timeboxReached?.let {
+            timeBoxReachedFlow.emit(it)
             return
         }
 
