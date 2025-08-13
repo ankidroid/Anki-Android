@@ -52,6 +52,7 @@ import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.dialogs.DiscardChangesDialog
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.NotetypeJson
+import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.anki.showThemedToast
@@ -553,10 +554,11 @@ class InstantNoteEditorActivity :
         }
     }
 
-    override fun onDeckSelected(deck: DeckSelectionDialog.SelectableDeck?) {
+    override fun onDeckSelected(deck: SelectableDeck?) {
         if (deck == null) {
             return
         }
+        require(deck is SelectableDeck.Deck)
         viewModel.deckId = deck.deckId
         // this is called because DeckSpinnerSelection.onDeckAdded doesn't update the list
         deckSpinnerSelection!!.initializeNoteEditorDeckSpinner(getColUnsafe, android.R.layout.simple_spinner_item)
