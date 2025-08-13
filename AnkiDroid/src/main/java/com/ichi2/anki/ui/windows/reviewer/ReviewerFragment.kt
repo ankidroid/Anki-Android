@@ -32,6 +32,7 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.FrameLayout
 import android.widget.LinearLayout
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.ActionMenuView
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.appcompat.widget.AppCompatImageView
@@ -58,6 +59,7 @@ import com.google.android.material.card.MaterialCardView
 import com.google.android.material.shape.ShapeAppearanceModel
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textview.MaterialTextView
+import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.DispatchKeyEventListener
 import com.ichi2.anki.Flag
 import com.ichi2.anki.R
@@ -92,12 +94,14 @@ import com.ichi2.anki.utils.ext.window
 import com.ichi2.anki.utils.isWindowCompact
 import com.ichi2.themes.Themes
 import com.ichi2.utils.dp
+import com.ichi2.utils.show
 import com.squareup.seismic.ShakeDetector
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.lang.IllegalArgumentException
+import kotlin.math.roundToInt
 
 class ReviewerFragment :
     CardViewerFragment(R.layout.reviewer2),
@@ -184,6 +188,7 @@ class ReviewerFragment :
         setupToolbarPosition(view)
         setupAnswerTimer(view)
         setupMargins(view)
+        setupTimebox()
 
         viewModel.actionFeedbackFlow
             .flowWithLifecycle(lifecycle)
@@ -590,6 +595,31 @@ class ReviewerFragment :
                 null -> {
                     timer.isVisible = false
                 }
+            }
+        }
+    }
+
+    private fun setupTimebox() {
+        viewModel.timeBoxReachedFlow.flowWithLifecycle(lifecycle).collectIn(lifecycleScope) { timebox ->
+            Timber.i("ReviewerFragment: Timebox reached (reps %d - secs %d)", timebox.reps, timebox.secs)
+
+            viewModel.stopAutoAdvance()
+
+            val minutes = (timebox.secs / 60f).roundToInt()
+            val message = CollectionManager.TR.studyingCardStudiedIn(timebox.reps) + " " + CollectionManager.TR.studyingMinute(minutes)
+
+            AlertDialog.Builder(requireContext()).show {
+                setTitle(R.string.timebox_reached_title)
+                setMessage(message)
+                setPositiveButton(CollectionManager.TR.studyingContinue()) { _, _ ->
+                    Timber.i("ReviewerFragment: Timebox 'Continue'")
+                    viewModel.onPageFinished(false)
+                }
+                setNegativeButton(CollectionManager.TR.studyingFinish()) { _, _ ->
+                    Timber.i("ReviewerFragment: Timebox 'Finish'")
+                    requireActivity().finish()
+                }
+                setCancelable(false)
             }
         }
     }
