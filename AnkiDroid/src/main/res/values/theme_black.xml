@@ -70,6 +70,7 @@
         <item name="hardButtonRippleRef">@drawable/footer_button_all_black_ripple</item>
         <item name="goodButtonRippleRef">@drawable/footer_button_all_black_ripple</item>
         <item name="easyButtonRippleRef">@drawable/footer_button_all_black_ripple</item>
+        <item name="answerButtonRipple">#11777777</item>
         <!-- Card Browser Colors -->
         <item name="cardBrowserDivider">@color/white</item>
         <!-- Browser colors -->

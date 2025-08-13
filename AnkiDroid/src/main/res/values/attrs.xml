@@ -115,6 +115,7 @@
     <attr name="hardButtonRef" format="reference"/>
     <attr name="goodButtonRef" format="reference"/>
     <attr name="easyButtonRef" format="reference"/>
+    <attr name="answerButtonRipple" format="color"/>
     <!-- Same thing but with ripples -->
     <attr name="againButtonRippleRef" format="reference"/>
     <attr name="hardButtonRippleRef" format="reference"/>

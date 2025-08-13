@@ -34,6 +34,7 @@
         <item name="cornerRadius">@dimen/answer_button_corner_radius</item>
         <item name="android:textSize">@dimen/reviewer_answer_button_textSize</item>
         <item name="elevation">@dimen/study_screen_elevation</item>
+        <item name="rippleColor">?attr/answerButtonRipple</item>
     </style>
 
     <!--  Material Design-style persistent footer button -->
