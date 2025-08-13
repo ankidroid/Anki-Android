@@ -58,6 +58,7 @@ import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.ui.windows.reviewer.autoadvance.AutoAdvance
 import com.ichi2.anki.utils.CollectionPreferences
 import com.ichi2.anki.utils.Destination
+import com.ichi2.anki.utils.ext.answerCard
 import com.ichi2.anki.utils.ext.flag
 import com.ichi2.anki.utils.ext.setUserFlagForCards
 import kotlinx.coroutines.CompletableDeferred
@@ -437,7 +438,7 @@ class ReviewerViewModel :
             val card = currentCard.await()
             val answer =
                 withCol {
-                    sched.buildAnswer(
+                    sched.answerCard(
                         card = card,
                         states = state.states,
                         rating,
