@@ -88,17 +88,17 @@ class PermissionItem(
             }
         }
         setOnClickListener {
-            if (!isGranted) {
-                Timber.i("Permission item clicked, requesting permission")
-                listener?.invoke()
-            } else {
-                switch.isChecked = !switch.isChecked
-            }
+            Timber.i("Permission item clicked, triggering listener: $isGranted")
+            listener?.invoke(isGranted)
         }
         updateSwitchCheckedStatus()
     }
 
-    private var listener: (() -> Unit)? = null
+    /**
+     * Listener to be called when the switch is clicked.
+     * Provides the current state of the permission as a boolean. Set by [setOnSwitchClickListener].
+     */
+    private var listener: ((Boolean) -> Unit)? = null
 
     /**
      * Checks the switch if the permission is granted,
@@ -109,16 +109,14 @@ class PermissionItem(
     }
 
     /**
-     * It should be use to request the permission.
-     * The listener isn't invoked if the permission is already granted
+     * Should be used to request the permission.
+     * Whether the permission has already been granted is provided as an argument to the listener.
      * */
-    fun setOnSwitchClickListener(listener: () -> Unit) {
+    fun setOnSwitchClickListener(listener: (Boolean) -> Unit) {
         this.listener = listener
         switch.setOnClickListener {
-            if (!isGranted) {
-                Timber.i("permission switch pressed")
-                listener.invoke()
-            }
+            Timber.i("Permission switch clicked, triggering listener")
+            listener(isGranted)
         }
     }
 }

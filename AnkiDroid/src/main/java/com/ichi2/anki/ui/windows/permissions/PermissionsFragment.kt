@@ -93,4 +93,15 @@ abstract class PermissionsFragment(
             openAppSettingsScreen()
         }
     }
+
+    /**
+     * Set this PermissionItem so that when it is clicked, the app requests external file management permissions
+     * from the user.
+     */
+    @RequiresApi(Build.VERSION_CODES.R)
+    protected fun PermissionItem.requestExternalStorageOnClick(launcher: ActivityResultLauncher<Intent>) {
+        setOnSwitchClickListener { isGranted ->
+            if (!isGranted) launcher.showManageAllFilesScreen()
+        }
+    }
 }

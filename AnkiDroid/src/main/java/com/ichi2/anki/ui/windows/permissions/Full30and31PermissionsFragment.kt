@@ -41,6 +41,8 @@ class Full30and31PermissionsFragment : PermissionsFragment(R.layout.permissions_
         ) {
             if (hasAllPermissions()) {
                 requireActivity().finish()
+            } else {
+                showToastAndOpenAppSettingsScreen(R.string.manually_grant_permissions)
             }
         }
 
@@ -48,8 +50,8 @@ class Full30and31PermissionsFragment : PermissionsFragment(R.layout.permissions_
         view: View,
         savedInstanceState: Bundle?,
     ) {
-        view.findViewById<PermissionItem>(R.id.all_files_permission).setOnSwitchClickListener {
-            accessAllFilesLauncher.showManageAllFilesScreen()
-        }
+        view
+            .findViewById<PermissionItem>(R.id.all_files_permission)
+            .requestExternalStorageOnClick(accessAllFilesLauncher)
     }
 }
