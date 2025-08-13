@@ -63,4 +63,22 @@ class AnswerButton : MaterialButton {
                 easeName
             }
     }
+
+    companion object {
+        private const val CLICK_DELAY_MS = 100L
+
+        /**
+         * Register a callback to be called with a delay after this button is clicked.
+         */
+        fun MaterialButton.setOnClickDelayedListener(listener: OnClickListener) {
+            val delayedListener =
+                OnClickListener {
+                    postDelayed(
+                        { listener.onClick(this) },
+                        CLICK_DELAY_MS,
+                    )
+                }
+            setOnClickListener(delayedListener)
+        }
+    }
 }
