@@ -40,6 +40,7 @@ import org.hamcrest.Matchers.not
 import org.hamcrest.Matchers.notNullValue
 import org.hamcrest.Matchers.nullValue
 import org.junit.Assert.assertEquals
+import org.junit.Before
 import org.junit.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.params.ParameterizedTest
@@ -48,6 +49,8 @@ import org.junit.jupiter.params.provider.MethodSource
 import org.junit.runner.RunWith
 import org.mockito.Mockito.mock
 import org.robolectric.Robolectric
+import org.robolectric.RuntimeEnvironment
+import org.robolectric.Shadows
 import org.robolectric.android.controller.ActivityController
 import timber.log.Timber
 import java.util.Locale
@@ -99,6 +102,12 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
          * This is fine in real life, as we have media to play
          */
         private var mediaGroupCompleted = false
+
+        @Before
+        fun before() {
+            val shadowApp = Shadows.shadowOf(RuntimeEnvironment.getApplication())
+            shadowApp.grantPermissions(android.Manifest.permission.INTERNET)
+        }
 
         override fun onMediaGroupCompleted() {
             super.onMediaGroupCompleted()

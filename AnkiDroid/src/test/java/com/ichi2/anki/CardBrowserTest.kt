@@ -117,11 +117,14 @@ import org.hamcrest.Matchers.nullValue
 import org.hamcrest.Matchers.startsWith
 import org.junit.Assume.assumeThat
 import org.junit.Assume.assumeTrue
+import org.junit.Before
 import org.junit.Ignore
 import org.junit.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.runner.RunWith
 import org.robolectric.Robolectric
+import org.robolectric.RuntimeEnvironment
+import org.robolectric.Shadows
 import org.robolectric.Shadows.shadowOf
 import org.robolectric.annotation.Config
 import timber.log.Timber
@@ -137,6 +140,12 @@ import kotlin.test.fail
 
 @RunWith(AndroidJUnit4::class)
 class CardBrowserTest : RobolectricTest() {
+    @Before
+    fun before() {
+        val shadowApp = Shadows.shadowOf(RuntimeEnvironment.getApplication())
+        shadowApp.grantPermissions(android.Manifest.permission.INTERNET)
+    }
+
     @Test
     fun browserIsNotInitiallyInMultiSelectModeWithNoCards() =
         runTest {
