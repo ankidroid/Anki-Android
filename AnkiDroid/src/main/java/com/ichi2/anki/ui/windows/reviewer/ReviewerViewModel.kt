@@ -445,7 +445,7 @@ class ReviewerViewModel :
                     )
                 }
 
-            undoableOp { sched.answerCard(answer) }
+            undoableOp(handler = this) { sched.answerCard(answer) }
             answerFeedbackFlow.emit(rating)
 
             val wasLeech = withCol { sched.stateIsLeech(answer.newState) }
