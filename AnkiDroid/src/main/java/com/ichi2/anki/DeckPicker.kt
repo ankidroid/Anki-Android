@@ -184,6 +184,7 @@ import com.ichi2.utils.ImportUtils
 import com.ichi2.utils.ImportUtils.ImportResult
 import com.ichi2.utils.NetworkUtils
 import com.ichi2.utils.NetworkUtils.isActiveNetworkMetered
+import com.ichi2.utils.Permissions
 import com.ichi2.utils.VersionUtils
 import com.ichi2.utils.cancelable
 import com.ichi2.utils.checkBoxPrompt

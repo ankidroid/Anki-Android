@@ -31,10 +31,10 @@ class InternetPermissionFragment : PermissionsFragment(R.layout.permission_inter
         super.onViewCreated(view, savedInstanceState)
 
         val internetPermissionItem =
-            view.findViewById< PermissionsItem >(R.id.internet_permission)
+            view.findViewById<PermissionsItem>(R.id.internet_permission)
 
         internetPermissionItem.setOnPermissionsRequested { isAlreadyGranted ->
-            if (!isAlreadyGranted){
+            if (!isAlreadyGranted) {
                 openAppSettings()
             }
         }
