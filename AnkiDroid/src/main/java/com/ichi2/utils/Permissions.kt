@@ -42,6 +42,9 @@ object Permissions {
             Manifest.permission.READ_MEDIA_VIDEO,
         )
 
+    /**
+     * The name of the "post notification" permission on API where it's defined.
+     */
     val postNotification =
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             Manifest.permission.POST_NOTIFICATIONS
@@ -60,6 +63,11 @@ object Permissions {
 
     fun canRecordAudio(context: Context): Boolean = hasPermission(context, Manifest.permission.RECORD_AUDIO)
 
+    /**
+     * Whether the app is granted [permission]
+     *
+     * Same as [androidx.core.content.ContextCompat.checkSelfPermission] except it corrects a bug related to [MANAGE_EXTERNAL_STORAGE].
+     */
     fun hasPermission(
         context: Context,
         permission: String,
@@ -72,6 +80,9 @@ object Permissions {
         return ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED
     }
 
+    /**
+     * Whether the app is granted all permission of [permissions]
+     */
     fun hasAllPermissions(
         context: Context,
         permissions: Collection<String>,
@@ -172,6 +183,9 @@ object Permissions {
     fun Context.arePermissionsDefinedInAnkiDroidManifest(vararg permissions: String) =
         this.arePermissionsDefinedInManifest(this.packageName, *permissions)
 
+    /**
+     * Whether it would be possible to manager external storage (potentially after requesting permission).
+     */
     fun canManageExternalStorage(context: Context): Boolean {
         // TODO: See if we can move this to a testing manifest
         if (isRobolectric) {
