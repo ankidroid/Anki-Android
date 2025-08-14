@@ -92,15 +92,6 @@
             android:key="@string/show_estimates_preference"
             android:summary="@string/show_estimates_summ"
             android:title="@string/show_estimates" />
-
-        <com.ichi2.preferences.SliderPreference
-            android:title="@string/button_size"
-            android:key="@string/answer_button_size_pref_key"
-            android:defaultValue="100"
-            android:valueFrom="100"
-            android:valueTo="200"
-            android:stepSize="10"
-            app:displayFormat="@string/percentage"/>
     </PreferenceCategory>
 
     <PreferenceCategory
