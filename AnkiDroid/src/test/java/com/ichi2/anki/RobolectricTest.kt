@@ -201,6 +201,11 @@ open class RobolectricTest :
         }
         controllersForCleanup.clear()
 
+        if (AnkiDroidApp.sharedPreferencesTestingOverride != null) {
+            Timber.w("AnkiDroidApp SharedPrefs test override was not reset to null! Setting it to null.")
+            AnkiDroidApp.sharedPreferencesTestingOverride = null
+        }
+
         try {
             if (CollectionManager.isOpenUnsafe()) {
                 CollectionManager.getColUnsafe().debugEnsureNoOpenPointers()

@@ -78,6 +78,7 @@ class PrefsRobolectricTest : RobolectricTest() {
             property.getter.call(Prefs)
         }
         unmockkObject(Prefs)
+        AnkiDroidApp.sharedPreferencesTestingOverride = null
         return keysAndDefaultValues
     }
 
@@ -127,6 +128,7 @@ class PrefsRobolectricTest : RobolectricTest() {
             propertyNamesAndKeys[property.name] = keys.last()
         }
         unmockkObject(Prefs)
+        AnkiDroidApp.sharedPreferencesTestingOverride = null
         return propertyNamesAndKeys
     }
 
