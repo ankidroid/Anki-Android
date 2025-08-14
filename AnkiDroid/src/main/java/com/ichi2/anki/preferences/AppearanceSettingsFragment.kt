@@ -22,12 +22,14 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.preference.ListPreference
 import androidx.preference.Preference
+import androidx.preference.PreferenceCategory
 import androidx.preference.SwitchPreferenceCompat
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.R
 import com.ichi2.anki.deckpicker.BackgroundImage
 import com.ichi2.anki.deckpicker.BackgroundImage.FileSizeResult
 import com.ichi2.anki.launchCatchingTask
+import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.showThemedToast
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.CollectionPreferences
@@ -149,6 +151,8 @@ class AppearanceSettingsFragment : SettingsFragment() {
                 launchCatchingTask { CollectionPreferences.setHideAudioPlayButtons(!newValue) }
             }
         }
+
+        setupNewStudyScreenSettings()
     }
 
     private fun updateRemoveBackgroundVisibility() {
@@ -206,4 +210,9 @@ class AppearanceSettingsFragment : SettingsFragment() {
                 showSnackbar(getString(R.string.error_selecting_image, e.localizedMessage))
             }
         }
+
+    private fun setupNewStudyScreenSettings() {
+        if (!Prefs.isNewStudyScreenEnabled) return
+        requirePreference<PreferenceCategory>(R.string.study_screen_category_key).isVisible = false
+    }
 }
