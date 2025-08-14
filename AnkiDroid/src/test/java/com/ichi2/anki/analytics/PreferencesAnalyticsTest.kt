@@ -62,6 +62,7 @@ class PreferencesAnalyticsTest : RobolectricTest() {
             R.string.pref_backup_limits_screen_key, // backupLimitsScreen
             R.string.about_screen_key, // aboutScreen
             // Categories: don't have a value
+            R.string.study_screen_category_key, // studyScreenAppearance
             R.string.pref_appearance_screen_key, // appearance_preference_group
             R.string.pref_cat_plugins_key, // category_plugins
             R.string.pref_cat_workarounds_key, // category_workarounds
