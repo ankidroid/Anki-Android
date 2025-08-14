@@ -295,7 +295,7 @@
 
     <string-array name="appearance_summary_entries">
         <item>@string/pref_cat_themes</item>
-        <item>@string/pref_cat_reviewer</item>
+        <item>@string/background_image_title</item>
     </string-array>
 
     <string-array name="accessibility_summary_entries">
