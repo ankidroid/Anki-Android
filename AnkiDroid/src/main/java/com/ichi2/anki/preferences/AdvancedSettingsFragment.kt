@@ -31,6 +31,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.exception.StorageAccessException
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.provider.CardContentProvider
+import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.compat.CompatHelper
 import com.ichi2.utils.show
@@ -130,6 +131,8 @@ class AdvancedSettingsFragment : SettingsFragment() {
                 }
             requireActivity().packageManager.setComponentEnabledSetting(providerName, state, PackageManager.DONT_KILL_APP)
         }
+
+        setupNewStudyScreenSettings()
     }
 
     private fun removeUnnecessaryAdvancedPrefs() {
@@ -141,6 +144,20 @@ class AdvancedSettingsFragment : SettingsFragment() {
             if (doubleScrolling != null) {
                 preferenceScreen.removePreference(doubleScrolling)
             }
+        }
+    }
+
+    private fun setupNewStudyScreenSettings() {
+        if (!Prefs.isNewStudyScreenEnabled) return
+
+        val legacyStudyScreenSettings =
+            listOf(
+                R.string.pref_reset_languages_key,
+                R.string.double_scrolling_gap_key,
+                R.string.tts_key,
+            )
+        for (key in legacyStudyScreenSettings) {
+            requirePreference<Preference>(key).isVisible = false
         }
     }
 }
