@@ -22,7 +22,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.preference.ListPreference
 import androidx.preference.Preference
-import androidx.preference.PreferenceCategory
 import androidx.preference.SwitchPreferenceCompat
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.R
@@ -213,6 +212,24 @@ class AppearanceSettingsFragment : SettingsFragment() {
 
     private fun setupNewStudyScreenSettings() {
         if (!Prefs.isNewStudyScreenEnabled) return
-        requirePreference<PreferenceCategory>(R.string.study_screen_category_key).isVisible = false
+        for (key in legacyStudyScreenSettings) {
+            requirePreference<Preference>(key).isVisible = false
+        }
+    }
+
+    companion object {
+        val legacyStudyScreenSettings =
+            listOf(
+                R.string.study_screen_category_key,
+                R.string.custom_buttons_link_preference,
+                R.string.fullscreen_mode_preference,
+                R.string.center_vertically_preference,
+                R.string.show_estimates_preference,
+                R.string.answer_buttons_position_preference,
+                R.string.show_topbar_preference,
+                R.string.show_eta_preference,
+                R.string.show_audio_play_buttons_key,
+                R.string.show_deck_title_key,
+            )
     }
 }

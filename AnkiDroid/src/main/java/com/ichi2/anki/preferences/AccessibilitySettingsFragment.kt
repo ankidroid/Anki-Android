@@ -37,6 +37,12 @@ class AccessibilitySettingsFragment : SettingsFragment() {
 
         requirePreference<Preference>(R.string.answer_button_size_pref_key).isVisible = true
 
+        for (key in legacyStudyScreenSettings) {
+            requirePreference<Preference>(key).isVisible = false
+        }
+    }
+
+    companion object {
         val legacyStudyScreenSettings =
             listOf(
                 R.string.image_zoom_preference,
@@ -44,8 +50,5 @@ class AccessibilitySettingsFragment : SettingsFragment() {
                 R.string.pref_card_minimal_click_time,
                 R.string.answer_button_size_preference,
             )
-        for (key in legacyStudyScreenSettings) {
-            requirePreference<Preference>(key).isVisible = false
-        }
     }
 }

@@ -127,8 +127,10 @@ class HeaderFragment : SettingsFragment() {
                 }
 
                 index(R.xml.preferences_appearance)
-                index(R.xml.preferences_custom_buttons)
-                    .addBreadcrumb(R.string.pref_cat_appearance)
+                if (!Prefs.isNewStudyScreenEnabled) {
+                    index(R.xml.preferences_custom_buttons)
+                        .addBreadcrumb(R.string.pref_cat_appearance)
+                }
                 index(R.xml.preferences_controls)
                 index(R.xml.preferences_accessibility)
                 index(R.xml.preferences_backup_limits)
@@ -172,13 +174,15 @@ class HeaderFragment : SettingsFragment() {
                     .addBreadcrumb(activity.getString(R.string.pref_cat_general))
                     .addBreadcrumb(activity.getString(R.string.pref_cat_system_wide))
 
-                indexItem()
-                    .withKey(activity.getString(R.string.show_audio_play_buttons_key))
-                    .withTitle(
-                        TR.preferencesShowPlayButtonsOnCardsWith(),
-                    ).withResId(R.xml.preferences_appearance)
-                    .addBreadcrumb(activity.getString(R.string.pref_cat_appearance))
-                    .addBreadcrumb(activity.getString(R.string.pref_cat_reviewer))
+                if (!Prefs.isNewStudyScreenEnabled) {
+                    indexItem()
+                        .withKey(activity.getString(R.string.show_audio_play_buttons_key))
+                        .withTitle(
+                            TR.preferencesShowPlayButtonsOnCardsWith(),
+                        ).withResId(R.xml.preferences_appearance)
+                        .addBreadcrumb(activity.getString(R.string.pref_cat_appearance))
+                        .addBreadcrumb(activity.getString(R.string.pref_cat_reviewer))
+                }
 
                 indexItem()
                     .withKey(activity.getString(R.string.one_way_sync_key))
@@ -219,6 +223,17 @@ class HeaderFragment : SettingsFragment() {
             }
 
             searchConfiguration.ignorePreference(activity.getString(R.string.user_actions_controls_category_key))
+
+            if (Prefs.isNewStudyScreenEnabled) {
+                searchConfiguration.index(R.xml.preferences_reviewer)
+                val legacySettings =
+                    AdvancedSettingsFragment.legacyStudyScreenSettings + AccessibilitySettingsFragment.legacyStudyScreenSettings +
+                        AppearanceSettingsFragment.legacyStudyScreenSettings
+                for (key in legacySettings) {
+                    val keyString = activity.getString(key)
+                    searchConfiguration.ignorePreference(keyString)
+                }
+            }
         }
 
         /**
