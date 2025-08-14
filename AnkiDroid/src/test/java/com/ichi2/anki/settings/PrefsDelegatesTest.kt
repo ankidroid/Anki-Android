@@ -66,6 +66,7 @@ class PrefsDelegatesTest {
         @JvmStatic
         fun after() {
             unmockkObject(Prefs)
+            AnkiDroidApp.sharedPreferencesTestingOverride = null
         }
     }
 }
