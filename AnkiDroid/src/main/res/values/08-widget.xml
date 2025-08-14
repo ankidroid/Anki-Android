@@ -45,6 +45,7 @@
     <string name="select_decks_title" comment="Title for Deck Selection Dialog">Select decks</string>
     <string name="select_deck_title" comment="Title for Deck Selection Dialog">Select a deck</string>
     <string name="no_selected_deck_placeholder_title" comment="Placeholder title when no decks are selected">Select decks to display in the widget. Select decks with the + icon.</string>
+    <string name="card_analysis_no_selected_deck_placeholder_title" comment="Placeholder title when no decks are selected in Card Analysis Widget">Tap the gear icon to add decks and configure widget settings.</string>
     <string name="deck_removed_from_widget" comment="Snackbar when deck is removed from widget">Deck removed</string>
     <string name="deck_already_selected_message" comment="Snackbar when user try to select the same deck again">This deck is already selected</string>
     <plurals name="deck_limit_reached">
@@ -52,6 +53,10 @@
         <item quantity="other" comment="Consider keeping the unbreakable space after the digit">You can select up to %d&#160;decks.</item>
     </plurals>
     <string name="empty_widget_state" comment="To denote the widget is empty">Missing deck. Tap to reconfigure.</string>
-    <string name="empty_collection_state_in_widget" comment="To denote the collection is empty">Collection is empty, use app to add decks then reconfigure</string>"
+    <string name="empty_collection_state_in_widget" comment="To denote the collection is empty">Collection is empty, use app to add decks then reconfigure</string>
+    <string name="fab_add_deck_description" comment="Description for add deck FAB action">Add deck</string>
+    <string name="fab_theming_description" comment="Description for theming FAB action">Widget theme</string>
+    <string name="widget_theming_dynamic_enabled" comment="Snackbar when dynamic theming is enabled">Dynamic theming enabled</string>
+    <string name="widget_theming_static_enabled" comment="Snackbar when static theming is enabled">Static theming enabled</string>
 
 </resources>
