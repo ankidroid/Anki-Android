@@ -94,5 +94,8 @@ class ReviewerOptionsFragment :
 
         requirePreference<PreferenceCategory>(R.string.addons_category_key).title =
             CollectionManager.TR.qtMiscAddons()
+
+        requirePreference<PreferenceCategory>(R.string.pref_review_category_key).title =
+            CollectionManager.TR.preferencesReview()
     }
 }

@@ -21,45 +21,56 @@
         android:defaultValue="true"
         />
 
-    <ListPreference
-        android:defaultValue="@string/reviewer_frame_style_card_value"
-        android:entries="@array/reviewer_frame_style_entries"
-        android:entryValues="@array/reviewer_frame_style_values"
-        android:key="@string/reviewer_frame_style_key"
-        android:title="@string/reviewer_frame_style"
-        app:useSimpleSummaryProvider="true"/>
+    <PreferenceCategory android:title="@string/screen">
 
-    <ListPreference
-        android:defaultValue="@string/hide_system_bars_none_value"
-        android:entries="@array/hide_system_bars_entries"
-        android:entryValues="@array/hide_system_bars_values"
-        android:key="@string/hide_system_bars_key"
-        android:title="@string/hide_system_bars"
-        app:useSimpleSummaryProvider="true"/>
+        <ListPreference
+            android:defaultValue="@string/reviewer_frame_style_card_value"
+            android:entries="@array/reviewer_frame_style_entries"
+            android:entryValues="@array/reviewer_frame_style_values"
+            android:key="@string/reviewer_frame_style_key"
+            android:title="@string/reviewer_frame_style"
+            app:useSimpleSummaryProvider="true"/>
 
-    <SwitchPreferenceCompat
-        android:defaultValue="false"
-        android:key="@string/ignore_display_cutout_key"
-        android:title="@string/ignore_display_cutout"
-        />
+        <ListPreference
+            android:defaultValue="@string/hide_system_bars_none_value"
+            android:entries="@array/hide_system_bars_entries"
+            android:entryValues="@array/hide_system_bars_values"
+            android:key="@string/hide_system_bars_key"
+            android:title="@string/hide_system_bars"
+            app:useSimpleSummaryProvider="true"/>
 
-    <SwitchPreferenceCompat
-        android:key="@string/show_answer_feedback_key"
-        android:title="@string/show_answer_feedback"
-        android:defaultValue="true"
-        />
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="@string/ignore_display_cutout_key"
+            android:title="@string/ignore_display_cutout"
+            />
 
-    <SwitchPreferenceCompat
-        android:key="@string/show_progress_preference"
-        tools:title="Show remaining card count"
-        android:defaultValue="true"
-        />
+    </PreferenceCategory>
 
-    <SwitchPreferenceCompat
-        android:key="@string/show_audio_play_buttons_key"
-        android:defaultValue="true"
-        tools:title="Show play buttons on cards with audio"
-        />
+    <PreferenceCategory
+        android:key="@string/pref_review_category_key"
+        tools:title="Review"
+        >
+
+        <SwitchPreferenceCompat
+            android:key="@string/show_answer_feedback_key"
+            android:title="@string/show_answer_feedback"
+            android:defaultValue="true"
+            />
+
+        <SwitchPreferenceCompat
+            android:key="@string/show_progress_preference"
+            tools:title="Show remaining card count"
+            android:defaultValue="true"
+            />
+
+        <SwitchPreferenceCompat
+            android:key="@string/show_audio_play_buttons_key"
+            android:defaultValue="true"
+            tools:title="Show play buttons on cards with audio"
+            />
+
+    </PreferenceCategory>
 
     <PreferenceCategory
         android:title="@string/toolbar">
