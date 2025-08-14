@@ -2,23 +2,27 @@
 <androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:search="http://schemas.android.com/apk/com.bytehamster.lib.preferencesearch"
     android:title="@string/new_study_screen"
     >
 
     <com.ichi2.preferences.HtmlHelpPreference
         android:summary="The new study screen is still a WIP developer option with features under development, so please don't create reports about it. The message below requesting feedback only exists at the moment for it to get translated."
+        search:ignore="true"
         />
 
     <com.ichi2.preferences.HtmlHelpPreference
         android:summary="@string/new_study_screen_summ"
         app:substitution1="@string/link_anki_forum_ankidroid"
         app:substitution2="@string/link_help"
+        search:ignore="true"
         />
 
     <SwitchPreferenceCompat
         android:key="@string/new_reviewer_options_key"
         android:title="@string/new_study_screen"
         android:defaultValue="true"
+        search:ignore="true"
         />
 
     <PreferenceCategory android:title="@string/screen">

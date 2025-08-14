@@ -149,15 +149,17 @@ class AdvancedSettingsFragment : SettingsFragment() {
 
     private fun setupNewStudyScreenSettings() {
         if (!Prefs.isNewStudyScreenEnabled) return
+        for (key in legacyStudyScreenSettings) {
+            requirePreference<Preference>(key).isVisible = false
+        }
+    }
 
+    companion object {
         val legacyStudyScreenSettings =
             listOf(
                 R.string.pref_reset_languages_key,
                 R.string.double_scrolling_gap_key,
                 R.string.tts_key,
             )
-        for (key in legacyStudyScreenSettings) {
-            requirePreference<Preference>(key).isVisible = false
-        }
     }
 }
