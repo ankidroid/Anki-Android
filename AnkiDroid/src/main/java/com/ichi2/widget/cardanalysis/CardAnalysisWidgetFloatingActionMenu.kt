@@ -30,9 +30,9 @@ class CardAnalysisWidgetFloatingActionMenu(
     private val listener: CardAnalysisWidgetFloatingActionMenuListener,
 ) {
     private val fabMain: FloatingActionButton = rootView.findViewById(R.id.fab_main)
-    private val addDeckLayout: LinearLayout = rootView.findViewById(R.id.add_deck_layout)
-    private val addDeckAction: FloatingActionButton = rootView.findViewById(R.id.add_deck_action)
-    private val themingLabel: View = rootView.findViewById(R.id.theming_label)
+    private val themeLayout: LinearLayout = rootView.findViewById(R.id.theme_layout)
+    private val themeAction: FloatingActionButton = rootView.findViewById(R.id.theme_action)
+    private val addDeckLabel: View = rootView.findViewById(R.id.add_deck_label)
     private val fabBackground: View = rootView.findViewById(R.id.fab_bg_layout)
 
     private var isMenuExpanded = false
@@ -44,15 +44,15 @@ class CardAnalysisWidgetFloatingActionMenu(
     private fun setupClickListeners() {
         fabMain.setOnClickListener {
             if (isMenuExpanded) {
-                listener.onThemingClicked()
+                listener.onAddDeckClicked()
                 collapseMenu()
             } else {
                 expandMenu()
             }
         }
 
-        addDeckAction.setOnClickListener {
-            listener.onAddDeckClicked()
+        themeAction.setOnClickListener {
+            listener.onThemingClicked()
             collapseMenu()
         }
 
@@ -63,6 +63,7 @@ class CardAnalysisWidgetFloatingActionMenu(
 
     private fun expandMenu() {
         isMenuExpanded = true
+        fabMain.setImageResource(R.drawable.ic_add_white)
 
         // Show background overlay
         fabBackground.visibility = View.VISIBLE
@@ -72,18 +73,18 @@ class CardAnalysisWidgetFloatingActionMenu(
             .setDuration(200)
             .start()
 
-        // Animate add deck layout
-        addDeckLayout.visibility = View.VISIBLE
-        addDeckLayout
+        // Animate theme layout (top button)
+        themeLayout.visibility = View.VISIBLE
+        themeLayout
             .animate()
             .translationY(0f)
             .alpha(1f)
             .setDuration(200)
             .start()
 
-        // Animate theming label
-        themingLabel.visibility = View.VISIBLE
-        themingLabel
+        // Animate add deck label
+        addDeckLabel.visibility = View.VISIBLE
+        addDeckLabel
             .animate()
             .translationX(0f)
             .alpha(1f)
@@ -93,6 +94,7 @@ class CardAnalysisWidgetFloatingActionMenu(
 
     private fun collapseMenu() {
         isMenuExpanded = false
+        fabMain.setImageResource(R.drawable.ic_settings_black)
 
         fabBackground
             .animate()
@@ -102,22 +104,22 @@ class CardAnalysisWidgetFloatingActionMenu(
                 fabBackground.visibility = View.GONE
             }.start()
 
-        addDeckLayout
+        themeLayout
             .animate()
             .translationY(300f)
             .alpha(0f)
             .setDuration(200)
             .withEndAction {
-                addDeckLayout.visibility = View.GONE
+                themeLayout.visibility = View.GONE
             }.start()
 
-        themingLabel
+        addDeckLabel
             .animate()
             .translationX(50f)
             .alpha(0f)
             .setDuration(200)
             .withEndAction {
-                themingLabel.visibility = View.GONE
+                addDeckLabel.visibility = View.GONE
             }.start()
     }
 

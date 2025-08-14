@@ -92,7 +92,7 @@
             android:layout_height="wrap_content">
 
             <LinearLayout
-                android:id="@+id/add_deck_layout"
+                android:id="@+id/theme_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:clipToPadding="false"
@@ -106,6 +106,40 @@
                 <TextView
                     android:layout_width="120dp"
                     android:background="@color/material_grey_600"
+                    android:id="@+id/theme_label"
+                    android:paddingBottom="5dp"
+                    android:paddingTop="5dp"
+                    android:paddingEnd="10dp"
+                    android:paddingStart="10dp"
+                    android:textColor="@color/white"
+                    android:layout_marginEnd="5dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/fab_theming_description" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                     android:id="@+id/theme_action"
+                     android:layout_width="wrap_content"
+                     style="?attr/floatingActionButtonSmallStyle"
+                     android:layout_height="wrap_content"
+                     android:layout_margin="10dp"
+                     app:backgroundTint="?attr/fab_normal"
+                     android:src="@drawable/ic_palette"
+                     android:contentDescription="@string/fab_theming_description" />
+
+            </LinearLayout>
+
+            <!-- Main FAB -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:layout_gravity="bottom|end">
+
+                <TextView
+                    android:layout_width="120dp"
+                    android:background="@color/material_grey_600"
                     android:id="@+id/add_deck_label"
                     android:paddingBottom="5dp"
                     android:paddingTop="5dp"
@@ -115,57 +149,25 @@
                     android:layout_marginEnd="5dp"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="@string/fab_add_deck_description" />
+                    android:text="@string/fab_add_deck_description"
+                    android:visibility="gone"
+                    android:alpha="0"
+                    android:translationX="50px" />
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
-                     android:id="@+id/add_deck_action"
-                     android:layout_width="wrap_content"
-                     style="?attr/floatingActionButtonSmallStyle"
-                     android:layout_height="wrap_content"
-                     android:layout_margin="10dp"
-                     app:backgroundTint="?attr/fab_normal"
-                     android:src="@drawable/ic_add_white"
-                     android:contentDescription="@string/fab_add_deck_description" />
+                    android:id="@+id/fab_main"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginBottom="17dp"
+                    android:layout_marginTop="10dp"
+                    app:srcCompat="@drawable/ic_settings_black"
+                    app:tint="@color/white"
+                    app:backgroundTint="?attr/fab_normal"
+                    app:fabSize="normal" />
 
             </LinearLayout>
-             <LinearLayout
-                 android:layout_width="wrap_content"
-                 android:layout_height="wrap_content"
-                 android:gravity="center_vertical"
-                 android:orientation="horizontal"
-                 android:layout_gravity="bottom|end">
-
-                 <TextView
-                     android:layout_width="120dp"
-                     android:background="@color/material_grey_600"
-                     android:id="@+id/theming_label"
-                     android:paddingBottom="5dp"
-                     android:paddingTop="5dp"
-                     android:paddingEnd="10dp"
-                     android:paddingStart="10dp"
-                     android:textColor="@color/white"
-                     android:layout_marginEnd="5dp"
-                     android:layout_height="wrap_content"
-                     android:gravity="center"
-                     android:text="@string/fab_theming_description"
-                     android:visibility="gone"
-                     android:alpha="0"
-                     android:translationX="50px" />
-
-                 <com.google.android.material.floatingactionbutton.FloatingActionButton
-                     android:id="@+id/fab_main"
-                     android:layout_width="wrap_content"
-                     android:layout_height="wrap_content"
-                     android:layout_marginEnd="10dp"
-                     android:layout_marginStart="10dp"
-                     android:layout_marginBottom="17dp"
-                     android:layout_marginTop="10dp"
-                     app:srcCompat="@drawable/ic_settings_black"
-                     app:tint="@color/white"
-                     app:backgroundTint="?attr/fab_normal"
-                     app:fabSize="normal" />
-
-             </LinearLayout>
 
         </LinearLayout>
     </ScrollView>
