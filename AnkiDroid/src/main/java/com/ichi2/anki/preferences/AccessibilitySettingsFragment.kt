@@ -15,7 +15,9 @@
  */
 package com.ichi2.anki.preferences
 
+import androidx.preference.Preference
 import com.ichi2.anki.R
+import com.ichi2.anki.settings.Prefs
 
 /**
  * Fragment with preferences related to notifications
@@ -27,5 +29,23 @@ class AccessibilitySettingsFragment : SettingsFragment() {
         get() = "prefs.accessibility"
 
     override fun initSubscreen() {
+        setupNewStudyScreenSettings()
+    }
+
+    private fun setupNewStudyScreenSettings() {
+        if (!Prefs.isNewStudyScreenEnabled) return
+
+        requirePreference<Preference>(R.string.answer_button_size_pref_key).isVisible = true
+
+        val legacyStudyScreenSettings =
+            listOf(
+                R.string.image_zoom_preference,
+                R.string.show_large_answer_buttons_preference,
+                R.string.pref_card_minimal_click_time,
+                R.string.answer_button_size_preference,
+            )
+        for (key in legacyStudyScreenSettings) {
+            requirePreference<Preference>(key).isVisible = false
+        }
     }
 }
