@@ -56,18 +56,21 @@
             android:key="@string/show_answer_feedback_key"
             android:title="@string/show_answer_feedback"
             android:defaultValue="true"
+            android:icon="@drawable/ic_done"
             />
 
         <SwitchPreferenceCompat
             android:key="@string/show_progress_preference"
             tools:title="Show remaining card count"
             android:defaultValue="true"
+            android:icon="@drawable/ic_numbers"
             />
 
         <SwitchPreferenceCompat
             android:key="@string/show_audio_play_buttons_key"
             android:defaultValue="true"
             tools:title="Show play buttons on cards with audio"
+            android:icon="@drawable/ic_play_circle_white"
             />
 
     </PreferenceCategory>
