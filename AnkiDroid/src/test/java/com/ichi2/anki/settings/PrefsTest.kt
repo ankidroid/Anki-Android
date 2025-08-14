@@ -59,5 +59,6 @@ class PrefsTest {
             assertThat("The getter and setter of '${property.name}' use the same key", getterKey, equalTo(setterKey))
         }
         unmockkObject(Prefs)
+        AnkiDroidApp.sharedPreferencesTestingOverride = null
     }
 }
