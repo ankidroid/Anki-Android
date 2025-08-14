@@ -90,8 +90,7 @@
 
         <SwitchPreferenceCompat
             android:key="@string/show_estimates_preference"
-            android:summary="@string/show_estimates_summ"
-            android:title="@string/show_estimates" />
+            tools:title="Show next review time above answer buttons"/>
     </PreferenceCategory>
 
     <PreferenceCategory
