@@ -30,7 +30,7 @@ androidxBrowser = "1.9.0"
 # https://developer.android.com/jetpack/androidx/releases/constraintlayout
 androidxConstraintlayout = "2.2.1"
 # https://developer.android.com/jetpack/androidx/releases/core
-androidxCoreKtx = "1.16.0"
+androidxCoreKtx = "1.17.0"
 # https://developer.android.com/jetpack/androidx/releases/draganddrop
 androidxDragAndDrop = "1.0.0"
 # https://developer.android.com/jetpack/androidx/releases/exifinterface
