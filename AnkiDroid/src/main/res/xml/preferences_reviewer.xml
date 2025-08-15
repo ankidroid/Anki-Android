@@ -104,10 +104,12 @@
             android:defaultValue="true"
             android:key="@string/show_answer_buttons_key"
             android:title="@string/show_answer_buttons"
+            android:icon="@drawable/ic_shelf_auto_hide"
             />
 
         <SwitchPreferenceCompat
             android:key="@string/show_estimates_preference"
+            android:icon="@drawable/ic_running_clock"
             tools:title="Show next review time above answer buttons"/>
     </PreferenceCategory>
 
