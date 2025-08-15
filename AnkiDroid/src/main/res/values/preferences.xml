@@ -243,7 +243,7 @@
     <!-- Study Screen options -->
     <string name="hide_system_bars_key">hideSystemBars</string>
     <string name="ignore_display_cutout_key">ignoreDisplayCutout</string>
-    <string name="hide_answer_buttons_key">hideAnswerButtons</string>
+    <string name="show_answer_buttons_key">showAnswerButtons</string>
     <string name="hide_hard_and_easy_key">hideHardAndEasy</string>
     <string name="reviewer_menu_settings_key">reviewerMenuSettings</string>
     <string name="reviewer_frame_style_key">reviewerFrameStyle</string>
