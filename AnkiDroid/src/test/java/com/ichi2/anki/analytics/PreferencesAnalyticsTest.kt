@@ -93,7 +93,7 @@ class PreferencesAnalyticsTest : RobolectricTest() {
             R.string.custom_sync_certificate_key, // customSyncCertificate
             // Experimental settings
             R.string.reviewer_menu_settings_key, // reviewerMenuSettings
-            R.string.hide_answer_buttons_key, // hideAnswerButtons
+            R.string.show_answer_buttons_key, // showAnswerButtons
             R.string.hide_hard_and_easy_key, // hideHardAndEasy
             R.string.reviewer_frame_style_key, // reviewerFrameStyle
             R.string.hide_system_bars_key, // hideSystemBars
