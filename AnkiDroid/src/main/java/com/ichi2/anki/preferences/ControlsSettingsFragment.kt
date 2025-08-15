@@ -28,6 +28,7 @@ import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.previewer.PreviewerAction
 import com.ichi2.anki.reviewer.MappableAction
 import com.ichi2.anki.reviewer.MappableBinding.Companion.toPreferenceString
+import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.ui.internationalization.toSentenceCase
 import com.ichi2.anki.utils.ext.sharedPrefs
 import com.ichi2.preferences.ControlPreference
@@ -56,6 +57,7 @@ class ControlsSettingsFragment :
         }
         setControlPreferencesDefaultValues(initialScreen)
         setDynamicTitle()
+        setupNewStudyScreenSettings()
     }
 
     private fun setControlPreferencesDefaultValues(screen: ControlPreferenceScreen) {
@@ -74,6 +76,7 @@ class ControlsSettingsFragment :
         addPreferencesFromResource(screen.xmlRes)
         setControlPreferencesDefaultValues(screen)
         setDynamicTitle()
+        setupNewStudyScreenSettings()
     }
 
     @NeedsTest("Only the tab elements are removed")
@@ -125,6 +128,24 @@ class ControlsSettingsFragment :
     private fun String.toSentenceCase(
         @StringRes resId: Int,
     ): String = this.toSentenceCase(this@ControlsSettingsFragment, resId)
+
+    private fun setupNewStudyScreenSettings() {
+        if (!Prefs.isNewStudyScreenEnabled) return
+        for (keyRes in legacyStudyScreenSettings) {
+            val key = getString(keyRes)
+            findPreference<Preference>(key)?.isVisible = false
+        }
+    }
+
+    companion object {
+        val legacyStudyScreenSettings =
+            listOf(
+                R.string.save_voice_command_key,
+                R.string.toggle_eraser_command_key,
+                R.string.clear_whiteboard_command_key,
+                R.string.change_whiteboard_pen_color_command_key,
+            )
+    }
 }
 
 enum class ControlPreferenceScreen(
