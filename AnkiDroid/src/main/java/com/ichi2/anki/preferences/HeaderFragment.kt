@@ -228,7 +228,7 @@ class HeaderFragment : SettingsFragment() {
                 searchConfiguration.index(R.xml.preferences_reviewer)
                 val legacySettings =
                     AdvancedSettingsFragment.legacyStudyScreenSettings + AccessibilitySettingsFragment.legacyStudyScreenSettings +
-                        AppearanceSettingsFragment.legacyStudyScreenSettings
+                        AppearanceSettingsFragment.legacyStudyScreenSettings + ControlsSettingsFragment.legacyStudyScreenSettings
                 for (key in legacySettings) {
                     val keyString = activity.getString(key)
                     searchConfiguration.ignorePreference(keyString)
