@@ -47,6 +47,7 @@ import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
 import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.FragmentContainerView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
@@ -184,6 +185,7 @@ class ReviewerFragment :
         setupToolbarPosition(view)
         setupAnswerTimer(view)
         setupMargins(view)
+        setupCheckPronunciation(view)
 
         viewModel.actionFeedbackFlow
             .flowWithLifecycle(lifecycle)
@@ -591,6 +593,13 @@ class ReviewerFragment :
                     timer.isVisible = false
                 }
             }
+        }
+    }
+
+    private fun setupCheckPronunciation(view: View) {
+        val container = view.findViewById<FragmentContainerView>(R.id.check_pronunciation_container)
+        viewModel.voiceRecorderEnabledFlow.flowWithLifecycle(lifecycle).collectIn(lifecycleScope) { isEnabled ->
+            container.isVisible = isEnabled
         }
     }
 

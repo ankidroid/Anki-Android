@@ -70,6 +70,7 @@ enum class ViewerAction(
     TAG(R.id.action_edit_tags, R.drawable.ic_tag, R.string.menu_edit_tags, DISABLED),
     RESCHEDULE_NOTE(R.id.action_set_due_date, R.drawable.ic_reschedule, titleRes = R.string.empty_string, DISABLED),
     TOGGLE_AUTO_ADVANCE(R.id.action_toggle_auto_advance, R.drawable.ic_fast_forward, R.string.toggle_auto_advance, DISABLED),
+    RECORD_VOICE(R.id.action_record_voice, R.drawable.ic_action_mic, R.string.record_voice, DISABLED),
     USER_ACTION_1(R.id.user_action_1, R.drawable.user_action_1, R.string.user_action_1, DISABLED),
     USER_ACTION_2(R.id.user_action_2, R.drawable.user_action_2, R.string.user_action_2, DISABLED),
     USER_ACTION_3(R.id.user_action_3, R.drawable.user_action_3, R.string.user_action_3, DISABLED),
@@ -109,6 +110,7 @@ enum class ViewerAction(
     TOGGLE_FLAG_PURPLE,
     SHOW_HINT,
     SHOW_ALL_HINTS,
+    REPLAY_VOICE,
     EXIT,
     ;
 
@@ -133,6 +135,8 @@ enum class ViewerAction(
             TOGGLE_AUTO_ADVANCE -> listOf(keycode(KeyEvent.KEYCODE_A, shift()))
             SHOW_HINT -> listOf(keycode(KeyEvent.KEYCODE_H))
             SHOW_ALL_HINTS -> listOf(keycode(KeyEvent.KEYCODE_G))
+            RECORD_VOICE -> listOf(keycode(KeyEvent.KEYCODE_V, shift()))
+            REPLAY_VOICE -> listOf(keycode(KeyEvent.KEYCODE_V))
             TOGGLE_FLAG_RED ->
                 listOf(
                     keycode(KeyEvent.KEYCODE_1, ctrl()),

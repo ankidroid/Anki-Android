@@ -254,4 +254,16 @@
     <style name="ThemeOverlay.App.BottomSheetDialog" parent="ThemeOverlay.Material3.BottomSheetDialog">
         <item name="android:navigationBarColor" tools:ignore="NewApi">@android:color/transparent</item>
     </style>
+
+    <style name="Widget.AnkiDroid.CardView.Recording" parent="CardView">
+        <item name="cardElevation">@dimen/study_screen_elevation</item>
+        <item name="cardPreventCornerOverlap">false</item>
+        <item name="contentPadding">0dp</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:elevation">@dimen/study_screen_elevation</item>
+        <item name="cardCornerRadius">16dp</item>
+        <item name="cardUseCompatPadding">false</item>
+        <item name="cardBackgroundColor">?popupBackgroundColor</item>
+    </style>
 </resources>
