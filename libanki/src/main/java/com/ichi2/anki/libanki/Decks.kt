@@ -38,6 +38,7 @@ import anki.decks.SetDeckCollapsedRequest
 import anki.decks.copy
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.utils.ext.jsonObjectIterable
+import com.ichi2.anki.libanki.Consts.DEFAULT_DECK_ID
 import com.ichi2.anki.libanki.backend.BackendUtils
 import com.ichi2.anki.libanki.backend.BackendUtils.fromJsonBytes
 import com.ichi2.anki.libanki.backend.BackendUtils.toJsonBytes
@@ -177,7 +178,7 @@ class Decks(
     fun getLegacy(did: DeckId): Deck? =
         try {
             Deck(BackendUtils.fromJsonBytes(col.backend.getDeckLegacy(did)))
-        } catch (ex: BackendNotFoundException) {
+        } catch (_: BackendNotFoundException) {
             null
         }
 
@@ -289,19 +290,27 @@ class Decks(
         return col.db.queryScalar("select count() from cards where did in $strIds or odid in $strIds")
     }
 
-    @RustCleanup("implement and make public")
     @LibAnkiAlias("get")
     @Suppress("unused", "unused_parameter")
     @CheckResult
-    private fun get(
+    fun get(
         did: DeckId,
         default: Boolean = true,
-    ): Deck? =
-        try {
-            Deck(BackendUtils.fromJsonBytes(col.backend.getDeckLegacy(did)))
-        } catch (ex: BackendNotFoundException) {
-            null
+    ): Deck? {
+        if (did == 0L) {
+            return if (default) {
+                getLegacy(DEFAULT_DECK_ID)
+            } else {
+                null
+            }
         }
+        val deck = getLegacy(did)
+        return when {
+            deck != null -> deck
+            default -> getLegacy(DEFAULT_DECK_ID)
+            else -> null
+        }
+    }
 
     /** Get deck with NAME, ignoring case. */
     @LibAnkiAlias("by_name")
