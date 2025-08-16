@@ -110,6 +110,7 @@
         <SwitchPreferenceCompat
             android:key="@string/show_estimates_preference"
             android:icon="@drawable/ic_running_clock"
+            android:dependency="@string/show_answer_buttons_key"
             tools:title="Show next review time above answer buttons"/>
     </PreferenceCategory>
 
