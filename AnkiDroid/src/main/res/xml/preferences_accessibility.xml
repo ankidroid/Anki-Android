@@ -42,6 +42,16 @@
         android:valueTo="200"
         android:stepSize="10"
         app:displayFormat="@string/percentage"/>
+    <com.ichi2.preferences.SliderPreference
+        android:title="@string/button_size"
+        android:key="@string/answer_button_size_pref_key"
+        android:defaultValue="100"
+        android:valueFrom="100"
+        android:valueTo="200"
+        android:stepSize="10"
+        app:displayFormat="@string/percentage"
+        app:isPreferenceVisible="false"
+        />
     <SwitchPreferenceCompat
         android:key="@string/show_large_answer_buttons_preference"
         android:defaultValue="false"

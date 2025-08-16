@@ -237,7 +237,7 @@ object Prefs {
     val ignoreDisplayCutout by booleanPref(R.string.ignore_display_cutout_key, false)
     val autoFocusTypeAnswer by booleanPref(R.string.type_in_answer_focus_key, true)
     val showAnswerFeedback by booleanPref(R.string.show_answer_feedback_key, defaultValue = true)
-    val hideAnswerButtons by booleanPref(R.string.hide_answer_buttons_key, false)
+    val showAnswerButtons by booleanPref(R.string.show_answer_buttons_key, true)
 
     val doubleTapInterval by intPref(R.string.double_tap_timeout_pref_key, defaultValue = 200)
     val newStudyScreenAnswerButtonSize by intPref(R.string.answer_button_size_pref_key, defaultValue = 100)
