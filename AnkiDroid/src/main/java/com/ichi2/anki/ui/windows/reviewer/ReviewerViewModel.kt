@@ -21,7 +21,7 @@ import anki.frontend.SetSchedulingStatesRequest
 import anki.scheduler.CardAnswer.Rating
 import com.ichi2.anki.AbstractFlashcardViewer
 import com.ichi2.anki.AbstractFlashcardViewer.Companion.RESULT_NO_MORE_CARDS
-import com.ichi2.anki.CollectionManager
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.Flag
 import com.ichi2.anki.Reviewer
@@ -258,7 +258,7 @@ class ReviewerViewModel :
             undoableOp {
                 removeNotes(cardIds = listOf(cardId))
             }.count
-        actionFeedbackFlow.emit(CollectionManager.TR.browsingCardsDeleted(noteCount))
+        actionFeedbackFlow.emit(TR.browsingCardsDeleted(noteCount))
         updateCurrentCard()
     }
 
@@ -268,7 +268,7 @@ class ReviewerViewModel :
             undoableOp {
                 sched.buryCards(cids = listOf(cardId))
             }.count
-        actionFeedbackFlow.emit(CollectionManager.TR.studyingCardsBuried(noteCount))
+        actionFeedbackFlow.emit(TR.studyingCardsBuried(noteCount))
         updateCurrentCard()
     }
 
@@ -278,7 +278,7 @@ class ReviewerViewModel :
             undoableOp {
                 sched.buryNotes(nids = listOf(noteId))
             }.count
-        actionFeedbackFlow.emit(CollectionManager.TR.studyingCardsBuried(noteCount))
+        actionFeedbackFlow.emit(TR.studyingCardsBuried(noteCount))
         updateCurrentCard()
     }
 
@@ -287,7 +287,7 @@ class ReviewerViewModel :
         undoableOp {
             sched.suspendCards(ids = listOf(cardId))
         }.count
-        actionFeedbackFlow.emit(CollectionManager.TR.studyingCardSuspended())
+        actionFeedbackFlow.emit(TR.studyingCardSuspended())
         updateCurrentCard()
     }
 
@@ -296,7 +296,7 @@ class ReviewerViewModel :
         undoableOp {
             sched.suspendNotes(ids = listOf(noteId))
         }
-        actionFeedbackFlow.emit(CollectionManager.TR.studyingNoteSuspended())
+        actionFeedbackFlow.emit(TR.studyingNoteSuspended())
         updateCurrentCard()
     }
 
@@ -312,9 +312,9 @@ class ReviewerViewModel :
             }
         val message =
             if (changes.operation.isEmpty()) {
-                CollectionManager.TR.actionsNothingToUndo()
+                TR.actionsNothingToUndo()
             } else {
-                CollectionManager.TR.undoActionUndone(changes.operation)
+                TR.undoActionUndone(changes.operation)
             }
         actionFeedbackFlow.emit(message)
     }
@@ -331,9 +331,9 @@ class ReviewerViewModel :
             }
         val message =
             if (changes.operation.isEmpty()) {
-                CollectionManager.TR.actionsNothingToRedo()
+                TR.actionsNothingToRedo()
             } else {
-                CollectionManager.TR.undoRedoAction(changes.operation)
+                TR.undoRedoAction(changes.operation)
             }
         actionFeedbackFlow.emit(message)
     }
@@ -354,9 +354,9 @@ class ReviewerViewModel :
         autoAdvance.isEnabled = !autoAdvance.isEnabled
         val message =
             if (autoAdvance.isEnabled) {
-                CollectionManager.TR.actionsAutoAdvanceActivated()
+                TR.actionsAutoAdvanceActivated()
             } else {
-                CollectionManager.TR.actionsAutoAdvanceDeactivated()
+                TR.actionsAutoAdvanceDeactivated()
             }
         actionFeedbackFlow.emit(message)
 
@@ -464,10 +464,10 @@ class ReviewerViewModel :
     // https://github.com/ankitects/anki/blob/da907053460e2b78c31199f97bbea3cf3600f0c2/qt/aqt/reviewer.py#L954
     private suspend fun onLeech(isSuspended: Boolean) {
         Timber.i("ReviewerViewModel::onLeech (isSuspended = %b)", isSuspended)
-        val message = StringBuilder(CollectionManager.TR.studyingCardWasALeech())
+        val message = StringBuilder(TR.studyingCardWasALeech())
         if (isSuspended) {
             message.append(" ")
-            message.append(CollectionManager.TR.studyingItHasBeenSuspended())
+            message.append(TR.studyingItHasBeenSuspended())
         }
         actionFeedbackFlow.emit(message.toString())
     }
@@ -542,6 +542,7 @@ class ReviewerViewModel :
         text: String,
         typeAnswer: TypeAnswer,
     ): String {
+        @Suppress("XmlDeprecatedElement") // upstream uses `<center>`
         @Language("HTML")
         val repl =
             """
