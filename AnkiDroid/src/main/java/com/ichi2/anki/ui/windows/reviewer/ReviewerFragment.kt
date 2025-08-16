@@ -83,6 +83,7 @@ import com.ichi2.anki.settings.enums.ToolbarPosition
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.ui.windows.reviewer.AnswerButton.Companion.setOnClickDelayedListener
 import com.ichi2.anki.utils.CollectionPreferences
 import com.ichi2.anki.utils.ext.collectIn
 import com.ichi2.anki.utils.ext.collectLatestIn
@@ -376,19 +377,19 @@ class ReviewerFragment :
 
         val againButton =
             view.findViewById<AnswerButton>(R.id.again_button).apply {
-                setOnClickListener { viewModel.answerCard(Rating.AGAIN) }
+                setOnClickDelayedListener { viewModel.answerCard(Rating.AGAIN) }
             }
         val hardButton =
             view.findViewById<AnswerButton>(R.id.hard_button).apply {
-                setOnClickListener { viewModel.answerCard(Rating.HARD) }
+                setOnClickDelayedListener { viewModel.answerCard(Rating.HARD) }
             }
         val goodButton =
             view.findViewById<AnswerButton>(R.id.good_button).apply {
-                setOnClickListener { viewModel.answerCard(Rating.GOOD) }
+                setOnClickDelayedListener { viewModel.answerCard(Rating.GOOD) }
             }
         val easyButton =
             view.findViewById<AnswerButton>(R.id.easy_button).apply {
-                setOnClickListener { viewModel.answerCard(Rating.EASY) }
+                setOnClickDelayedListener { viewModel.answerCard(Rating.EASY) }
             }
 
         viewModel.answerButtonsNextTimeFlow
@@ -402,7 +403,7 @@ class ReviewerFragment :
 
         val showAnswerButton =
             view.findViewById<MaterialButton>(R.id.show_answer).apply {
-                setOnClickListener { viewModel.onShowAnswer() }
+                setOnClickDelayedListener { viewModel.onShowAnswer() }
             }
         val answerButtonsLayout = view.findViewById<LinearLayout>(R.id.answer_buttons)
 
