@@ -51,16 +51,12 @@ class AnswerButton : MaterialButton {
 
     fun setNextTime(nextTime: String?) {
         text =
-            if (nextTime != null) {
-                buildSpannedString {
-                    inSpans(RelativeSizeSpan(0.8F)) {
-                        append(nextTime)
-                    }
+            buildSpannedString {
+                if (nextTime != null) {
+                    inSpans(RelativeSizeSpan(0.8f)) { append(nextTime) }
                     append("\n")
-                    append(easeName)
                 }
-            } else {
-                easeName
+                append(easeName)
             }
     }
 
