@@ -77,6 +77,12 @@ class ResizablePaneManager(
 
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
+                    /*
+                        Request parent to not intercept touch events so that the divider does not get intercepted by
+                        the parent layout, when Full screen navigation drawer setting is enabled
+                     */
+                    v.parent.requestDisallowInterceptTouchEvent(true)
+
                     v.setBackgroundColor(dragColor)
                     initialTouchX = event.rawX
                     initialLeftWeight = leftParams.weight
@@ -84,6 +90,8 @@ class ResizablePaneManager(
                     true
                 }
                 MotionEvent.ACTION_MOVE -> {
+                    v.parent.requestDisallowInterceptTouchEvent(true)
+
                     val deltaX = event.rawX - initialTouchX
                     val totalParentWidth = parentLayout.width.toFloat()
 
