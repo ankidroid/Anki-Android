@@ -112,17 +112,13 @@
             android:icon="@drawable/ic_running_clock"
             android:dependency="@string/show_answer_buttons_key"
             tools:title="Show next review time above answer buttons"/>
-    </PreferenceCategory>
-
-    <PreferenceCategory
-        android:key="@string/addons_category_key"
-        tools:title="Add-ons">
 
         <SwitchPreferenceCompat
             android:defaultValue="false"
             android:key="@string/hide_hard_and_easy_key"
             android:title="@string/hide_hard_and_easy"
+            android:dependency="@string/show_answer_buttons_key"
             />
-
     </PreferenceCategory>
+
 </androidx.preference.PreferenceScreen>
