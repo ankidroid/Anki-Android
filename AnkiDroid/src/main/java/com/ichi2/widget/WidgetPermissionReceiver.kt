@@ -34,7 +34,7 @@ class WidgetPermissionReceiver : BroadcastReceiver() {
     ) {
         if (IntentHandler.grantedStoragePermissions(context, showToast = false)) {
             val appWidgetManager = getAppWidgetManager(context) ?: return
-            val widgetIds = AppWidgetIds.of(appWidgetManager.getAppWidgetIds(ComponentName(context, AddNoteWidget::class.java)))
+            val widgetIds = AppWidgetIds(appWidgetManager.getAppWidgetIds(ComponentName(context, AddNoteWidget::class.java)))
             AddNoteWidget.updateWidgets(context, appWidgetManager, widgetIds)
         }
     }

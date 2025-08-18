@@ -19,9 +19,11 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.Parcelable
 import android.view.View
 import android.webkit.WebView
 import androidx.activity.addCallback
+import androidx.core.os.BundleCompat
 import androidx.core.os.bundleOf
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.appbar.MaterialToolbar
@@ -31,11 +33,52 @@ import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.dialogs.DiscardChangesDialog
 import com.ichi2.anki.libanki.DeckId
+import com.ichi2.anki.libanki.NoteId
+import com.ichi2.anki.libanki.NoteTypeId
 import kotlinx.coroutines.launch
+import kotlinx.parcelize.Parcelize
 import org.json.JSONObject
 import timber.log.Timber
 
 class ImageOcclusion : PageFragment(R.layout.image_occlusion) {
+    /**
+     * Options to decide how to start the image occlusion.
+     */
+    @Parcelize
+    sealed class Options(
+        val kind: String,
+    ) : Parcelable {
+        /**
+         * Returns JSON that can be set to imageOcclusion.mode
+         */
+        open fun json() =
+            JSONObject().apply {
+                put("kind", kind)
+            }
+
+        @Parcelize
+        data class NewOcclusionNote(
+            val id: NoteTypeId,
+            val imagePath: String?,
+        ) : Options("add") {
+            override fun json() =
+                super.json().apply {
+                    put("imagePath", imagePath)
+                    put("notetypeId", id)
+                }
+        }
+
+        @Parcelize
+        data class EditOcclusionNote(
+            val id: NoteId,
+        ) : Options("edit") {
+            override fun json() =
+                super.json().apply {
+                    put("noteId", id)
+                }
+        }
+    }
+
     override fun onViewCreated(
         view: View,
         savedInstanceState: Bundle?,
@@ -91,52 +134,54 @@ class ImageOcclusion : PageFragment(R.layout.image_occlusion) {
             ) {
                 super.onPageFinished(view, url)
 
-                val kind = requireArguments().getString(ARG_KEY_KIND)
-                val noteOrNotetypeId = requireArguments().getLong(NOTE_ID_ID)
-                val imagePath = requireArguments().getString(ARG_KEY_PATH)
+                val options = BundleCompat.getParcelable(requireArguments(), ARG_OPTIONS, Options::class.java)!!
 
-                val options = JSONObject()
-                options.put("kind", kind)
-                if (kind == "add") {
-                    options.put("imagePath", imagePath)
-                    options.put("notetypeId", noteOrNotetypeId)
-                } else {
-                    options.put("noteId", noteOrNotetypeId)
-                }
-
-                view?.evaluateJavascript("globalThis.anki.imageOcclusion.mode = $options") {
+                view?.evaluateJavascript("globalThis.anki.imageOcclusion.mode = ${options.json()}") {
                     super.onPageFinished(view, url)
                 }
             }
         }
 
     companion object {
-        private const val ARG_KEY_KIND = "kind"
-        private const val NOTE_ID_ID = "id"
-        private const val ARG_KEY_PATH = "imagePath"
+        private const val NOTE_ID_KEY = "noteId"
         private const val ARG_KEY_EDITOR_DECK_ID = "arg_key_editor_deck_id"
+        private const val ARG_OPTIONS = "arg_options"
 
         /**
+         * An intent to open Image occlusion for an existing card to edit.
          * @param editorWorkingDeckId the current deck id that [com.ichi2.anki.NoteEditorFragment] is using
          */
-        fun getIntent(
+        fun getEditIntent(
             context: Context,
-            kind: String,
-            noteOrNotetypeId: Long,
+            noteId: Long,
+            editorWorkingDeckId: DeckId,
+        ): Intent {
+            val options = Options.EditOcclusionNote(noteId)
+            val arguments =
+                bundleOf(
+                    ARG_OPTIONS to options,
+                    NOTE_ID_KEY to noteId,
+                    PATH_ARG_KEY to "image-occlusion/$noteId",
+                    ARG_KEY_EDITOR_DECK_ID to editorWorkingDeckId,
+                )
+            return SingleFragmentActivity.getIntent(context, ImageOcclusion::class, arguments)
+        }
+
+        /**
+         * An intent to open Image occlusion for a new card.
+         * @param editorWorkingDeckId the current deck id that [com.ichi2.anki.NoteEditorFragment] is using
+         */
+        fun getAddIntent(
+            context: Context,
+            noteTypeId: Long,
             imagePath: String?,
             editorWorkingDeckId: DeckId,
         ): Intent {
-            val suffix =
-                if (kind == "edit") {
-                    noteOrNotetypeId
-                } else {
-                    Uri.encode(imagePath)
-                }
+            val suffix = Uri.encode(imagePath)
+            val options = Options.NewOcclusionNote(noteTypeId, imagePath)
             val arguments =
                 bundleOf(
-                    ARG_KEY_KIND to kind,
-                    NOTE_ID_ID to noteOrNotetypeId,
-                    ARG_KEY_PATH to imagePath,
+                    ARG_OPTIONS to options,
                     PATH_ARG_KEY to "image-occlusion/$suffix",
                     ARG_KEY_EDITOR_DECK_ID to editorWorkingDeckId,
                 )

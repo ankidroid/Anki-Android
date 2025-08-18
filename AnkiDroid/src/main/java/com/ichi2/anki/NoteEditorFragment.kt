@@ -362,7 +362,7 @@ class NoteEditorFragment :
         ) { uri ->
             if (uri != null) {
                 ImportUtils.getFileCachedCopy(requireContext(), uri)?.let { path ->
-                    setupImageOcclusionEditor(path)
+                    launchAddImageOcclusion(path)
                 }
             }
         }
@@ -798,7 +798,7 @@ class NoteEditorFragment :
                             clipData = ClipData.newUri(requireActivity().contentResolver, uri.toString(), uri)
                         }
                     ImportUtils.getFileCachedCopy(requireContext(), i)?.let { path ->
-                        setupImageOcclusionEditor(path)
+                        launchAddImageOcclusion(path)
                     }
                 } else {
                     showSnackbar(TR.editingNoImageFoundOnClipboard())
@@ -810,7 +810,7 @@ class NoteEditorFragment :
             editOcclusionsButton?.visibility = View.VISIBLE
             editOcclusionsButton?.text = resources.getString(R.string.edit_occlusions)
             editOcclusionsButton?.setOnClickListener {
-                setupImageOcclusionEditor()
+                launchAddImageOcclusion()
             }
         }
 
@@ -921,7 +921,7 @@ class NoteEditorFragment :
             val saveImageUri = BundleCompat.getParcelable(requireArguments(), EXTRA_IMG_OCCLUSION, Uri::class.java)
             if (saveImageUri != null) {
                 ImportUtils.getFileCachedCopy(requireContext(), saveImageUri)?.let { path ->
-                    setupImageOcclusionEditor(path)
+                    launchAddImageOcclusion(path)
                 }
             } else {
                 Timber.w("Image uri is null")
@@ -962,7 +962,7 @@ class NoteEditorFragment :
                             )
                         Timber.d("Cropped image data: $cropResultData")
                         if (cropResultData?.uriPath == null) return@registerForActivityResult
-                        setupImageOcclusionEditor(cropResultData.uriPath)
+                        launchAddImageOcclusion(cropResultData.uriPath)
                     }
                 }
 
@@ -2723,23 +2723,20 @@ class NoteEditorFragment :
 
     private fun currentNotetypeIsImageOcclusion() = currentlySelectedNotetype?.isImageOcclusion == true
 
-    private fun setupImageOcclusionEditor(imagePath: String = "") {
-        val kind: String
-        val id: Long
-        if (addNote) {
-            kind = "add"
-            // if opened from an intent, the selected note type may not be suitable for IO
-            id =
-                if (currentNotetypeIsImageOcclusion()) {
-                    currentlySelectedNotetype!!.id
-                } else {
-                    0
-                }
-        } else {
-            kind = "edit"
-            id = editorNote?.id!!
-        }
-        val intent = ImageOcclusion.getIntent(requireContext(), kind, id, imagePath, deckId)
+    private fun launchAddImageOcclusion(imagePath: String) {
+        val intent = ImageOcclusion.getAddIntent(requireContext(), editorNote!!.id, imagePath, deckId)
+        requestIOEditorCloser.launch(intent)
+    }
+
+    private fun launchAddImageOcclusion() {
+        // if opened from an intent, the selected note type may not be suitable for IO
+        val noteTypeId =
+            if (currentNotetypeIsImageOcclusion()) {
+                currentlySelectedNotetype!!.id
+            } else {
+                0
+            }
+        val intent = ImageOcclusion.getEditIntent(requireContext(), noteTypeId, deckId)
         requestIOEditorCloser.launch(intent)
     }
 
