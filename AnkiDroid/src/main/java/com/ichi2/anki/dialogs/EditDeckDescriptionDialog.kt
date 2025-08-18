@@ -172,29 +172,10 @@ class EditDeckDescriptionDialog : DialogFragment() {
         }
     }
 
-<<<<<<< HEAD
     fun showDiscardChangesDialog() {
         Timber.i("asking if user should discard changes")
         DiscardChangesDialog.showDialog(requireContext()) {
             viewModel.closeWithoutSaving()
-=======
-    override fun onStart() {
-        super.onStart()
-
-        dialog!!.window!!.setLayout(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT,
-        )
-    }
-
-    private fun saveAndExit() =
-        launchCatchingTask {
-            setDescription(currentDescription)
-            Timber.i("closing deck description dialog")
-            // Refresh the host activity's menu to update the Undo label
-            requireActivity().invalidateOptionsMenu()
-            dismiss()
->>>>>>> 189a74ce94 (git commit -am "Fix: Refresh Undo menu label after saving deck description (#19073)")
         }
     }
 
