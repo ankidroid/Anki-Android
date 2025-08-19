@@ -266,4 +266,11 @@
         <item name="cardUseCompatPadding">false</item>
         <item name="cardBackgroundColor">?popupBackgroundColor</item>
     </style>
+
+    <style name="TimePickerStyle" parent="ThemeOverlay.Material3.MaterialTimePicker">
+        <item name="elevationOverlayEnabled">false</item>
+        <item name="colorTertiaryContainer">?colorPrimary</item>
+        <item name="colorOnTertiaryContainer">?colorOnPrimary</item>
+        <item name="colorPrimaryContainer">?colorPrimary</item>
+    </style>
 </resources>
