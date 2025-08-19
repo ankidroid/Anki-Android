@@ -174,7 +174,8 @@ class ScheduleReminders :
         scope: ReviewReminderScope,
     ) {
         Timber.d("Toggling reminder enabled state: %s", id)
-        val newState = !(reminders[id]?.enabled ?: false)
+        val reminder = reminders[id] ?: return
+        val newState = !reminder.enabled
 
         val performToggle:
             (HashMap<ReviewReminderId, ReviewReminder>) -> Map<ReviewReminderId, ReviewReminder> =
@@ -183,6 +184,7 @@ class ScheduleReminders :
                 reminders
             }
 
+        // Update database
         launchCatchingTask {
             catchDatabaseExceptions {
                 when (scope) {
@@ -192,7 +194,8 @@ class ScheduleReminders :
             }
         }
 
-        reminders[id]?.enabled = newState
+        // Update UI
+        reminder.enabled = newState
         triggerUIUpdate()
     }
 
