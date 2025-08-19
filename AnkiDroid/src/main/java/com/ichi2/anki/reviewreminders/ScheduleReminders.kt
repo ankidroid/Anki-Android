@@ -25,6 +25,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.BundleCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
+import androidx.fragment.app.setFragmentResultListener
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -37,6 +38,8 @@ import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.showError
+import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.withProgress
 import kotlinx.serialization.SerializationException
 import timber.log.Timber
@@ -113,6 +116,23 @@ class ScheduleReminders :
 
         // Retrieve reminders based on the editing scope
         launchCatchingTask { loadDatabaseRemindersIntoUI() }
+
+        // If the user creates or edits a review reminder, the dialog for doing so opens
+        // Once their changes are complete, the dialog closes and this fragment is reloaded
+        // Hence, we check for any fragment results here and update the database accordingly
+        setFragmentResultListener(ADD_EDIT_DIALOG_RESULT_REQUEST_KEY) { _, bundle ->
+            val modeOfFinishedDialog =
+                BundleCompat.getParcelable(
+                    requireArguments(),
+                    ACTIVE_DIALOG_MODE_ARGUMENTS_KEY,
+                    AddEditReminderDialog.DialogMode::class.java,
+                )
+            val newOrModifiedReminder = BundleCompat.getParcelable(bundle, ADD_EDIT_DIALOG_RESULT_REQUEST_KEY, ReviewReminder::class.java)
+
+            Timber.d("Dialog result received with recent dialog mode: %s", modeOfFinishedDialog)
+            if (modeOfFinishedDialog == null) return@setFragmentResultListener
+            handleAddEditDialogResult(newOrModifiedReminder, modeOfFinishedDialog)
+        }
     }
 
     private fun reloadToolbarText() {
@@ -143,6 +163,86 @@ class ScheduleReminders :
             } ?: hashMapOf()
         triggerUIUpdate()
         Timber.d("Database review reminders successfully loaded")
+    }
+
+    /**
+     * When a [AddEditReminderDialog] instance finishes, we handle the result of the dialog fragment via this method.
+     */
+    private fun handleAddEditDialogResult(
+        newOrModifiedReminder: ReviewReminder?,
+        modeOfFinishedDialog: AddEditReminderDialog.DialogMode,
+    ) {
+        Timber.d("Handling add/edit dialog result: mode=%s reminder=%s", modeOfFinishedDialog, newOrModifiedReminder)
+        // Modify database
+        launchCatchingTask {
+            catchDatabaseExceptions {
+                if (modeOfFinishedDialog is AddEditReminderDialog.DialogMode.Edit) {
+                    // Delete the existing reminder if we're in edit mode
+                    // This action must be separated from writing the modified reminder because the user may have updated the reminder's deck,
+                    // meaning we need to delete the old reminder in the old deck, then add a new reminder to the new deck
+                    val reminderToDelete = modeOfFinishedDialog.reminderToBeEdited
+                    Timber.d("Deleting old reminder from database")
+                    val deleteReminderWithId: (
+                        HashMap<ReviewReminderId, ReviewReminder>,
+                    ) -> Map<ReviewReminderId, ReviewReminder> = { reminders ->
+                        reminders.remove(reminderToDelete.id)
+                        reminders
+                    }
+                    when (reminderToDelete.scope) {
+                        is ReviewReminderScope.Global -> database.editAllAppWideReminders(deleteReminderWithId)
+                        is ReviewReminderScope.DeckSpecific ->
+                            database.editRemindersForDeck(
+                                reminderToDelete.scope.did,
+                                deleteReminderWithId,
+                            )
+                    }
+                }
+
+                newOrModifiedReminder?.let {
+                    Timber.d("Writing new or modified reminder to database")
+                    // There is a new / updated reminder that must be written to the database
+                    val writeNewOrModifiedReminder: (
+                        HashMap<ReviewReminderId, ReviewReminder>,
+                    ) -> Map<ReviewReminderId, ReviewReminder> = { reminders ->
+                        reminders[it.id] = it
+                        reminders
+                    }
+                    when (it.scope) {
+                        is ReviewReminderScope.Global -> database.editAllAppWideReminders(writeNewOrModifiedReminder)
+                        is ReviewReminderScope.DeckSpecific ->
+                            database.editRemindersForDeck(
+                                it.scope.did,
+                                writeNewOrModifiedReminder,
+                            )
+                    }
+                }
+            }
+        }
+
+        // Modify UI
+        if (modeOfFinishedDialog is AddEditReminderDialog.DialogMode.Edit) {
+            Timber.d("Deleting old reminder from UI")
+            reminders.remove(modeOfFinishedDialog.reminderToBeEdited.id)
+        }
+        newOrModifiedReminder?.let {
+            if (scheduleRemindersScope == ReviewReminderScope.Global || scheduleRemindersScope == it.scope) {
+                Timber.d("Adding new reminder to UI")
+                reminders[it.id] = it
+            }
+        }
+        triggerUIUpdate()
+
+        showSnackbar(
+            when (modeOfFinishedDialog) {
+                is AddEditReminderDialog.DialogMode.Add -> "Successfully added new review reminder"
+                is AddEditReminderDialog.DialogMode.Edit -> {
+                    when (newOrModifiedReminder) {
+                        null -> "Successfully deleted review reminder"
+                        else -> "Successfully edited review reminder"
+                    }
+                }
+            },
+        )
     }
 
     /**
@@ -202,6 +302,11 @@ class ScheduleReminders :
      */
     private fun addReminder() {
         Timber.d("Adding new review reminder")
+        val dialogMode = AddEditReminderDialog.DialogMode.Add(scheduleRemindersScope)
+        val dialog = AddEditReminderDialog.getInstance(dialogMode)
+        // Save the dialog mode so that we refer back to it once the dialog closes
+        requireArguments().putParcelable(ACTIVE_DIALOG_MODE_ARGUMENTS_KEY, dialogMode)
+        showDialogFragment(dialog)
     }
 
     /**
@@ -210,6 +315,11 @@ class ScheduleReminders :
      */
     private fun editReminder(reminder: ReviewReminder) {
         Timber.d("Editing review reminder: %s", reminder.id)
+        val dialogMode = AddEditReminderDialog.DialogMode.Edit(reminder)
+        val dialog = AddEditReminderDialog.getInstance(dialogMode)
+        // Save the dialog mode so that we refer back to it once the dialog closes
+        requireArguments().putParcelable(ACTIVE_DIALOG_MODE_ARGUMENTS_KEY, dialogMode)
+        showDialogFragment(dialog)
     }
 
     /**
