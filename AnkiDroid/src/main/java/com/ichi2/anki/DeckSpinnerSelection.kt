@@ -159,7 +159,8 @@ class DeckSpinnerSelection(
             decks.allNamesAndIds(includeFiltered = showFilteredDecks, skipEmptyDefault = true)
         }.toMutableList().let { decks ->
             dropDownDecks = decks
-            val deckNames = decks.map { it.name }
+            val deckNames = decks.map { it.name }.toMutableList()
+            if (showAllDecks) deckNames.add(0, context.getString(R.string.card_browser_all_decks))
             val noteDeckAdapter: ArrayAdapter<String?> =
                 object :
                     ArrayAdapter<String?>(context, R.layout.multiline_spinner_item, deckNames as List<String?>) {
