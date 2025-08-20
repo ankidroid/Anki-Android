@@ -107,6 +107,8 @@ import com.ichi2.anki.android.input.shortcut
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
+import com.ichi2.anki.contextmenu.DeckPickerMenuContentProvider
+import com.ichi2.anki.contextmenu.MouseContextMenuHandler
 import com.ichi2.anki.deckpicker.BITMAP_BYTES_PER_PIXEL
 import com.ichi2.anki.deckpicker.BackgroundImage
 import com.ichi2.anki.deckpicker.DeckDeletionResult
@@ -284,6 +286,9 @@ open class DeckPicker :
     private lateinit var deckListAdapter: DeckAdapter
     private lateinit var noDecksPlaceholder: LinearLayout
     private lateinit var pullToSyncWrapper: SwipeRefreshLayout
+
+    // Right-click context menu handler using decoupled menu system
+    private lateinit var mouseContextMenuHandler: MouseContextMenuHandler
 
     private lateinit var reviewSummaryTextView: TextView
 
@@ -488,6 +493,27 @@ open class DeckPicker :
         }
     }
 
+    private fun showDeckPickerRightClickContextMenu(
+        deckId: DeckId,
+        x: Float,
+        y: Float,
+    ) {
+        launchCatchingTask {
+            val (isDynamic, hasBuriedInDeck) =
+                withCol {
+                    decks.select(deckId)
+                    Pair(
+                        decks.isFiltered(deckId),
+                        sched.haveBuried(),
+                    )
+                }
+            updateDeckList()
+            val menuContentProvider = DeckPickerMenuContentProvider(deckId, isDynamic, hasBuriedInDeck, this@DeckPicker)
+            mouseContextMenuHandler = MouseContextMenuHandler(deckPickerContent, menuContentProvider)
+            mouseContextMenuHandler.showContextMenu(recyclerView, x, y)
+        }
+    }
+
     private val notificationPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) {
             Timber.i("notification permission: %b", it)
@@ -575,6 +601,10 @@ open class DeckPicker :
                     dismissAllDialogFragments()
                 },
                 onDeckContextRequested = ::showDeckPickerContextMenu,
+                onDeckRightClick = { deckId, x, y ->
+                    showDeckPickerRightClickContextMenu(deckId, x, y)
+                    Timber.d("Right Click on deck recorded!! %d, %f %f", deckId, x, y)
+                },
             )
         recyclerView.adapter = deckListAdapter
 
@@ -627,6 +657,14 @@ open class DeckPicker :
                 bundle.getSerializableCompat<DeckPickerContextMenuOption>(DeckPickerContextMenu.CONTEXT_MENU_DECK_OPTION)
                     ?: error("Unable to retrieve selected context menu option"),
                 bundle.getLong(DeckPickerContextMenu.CONTEXT_MENU_DECK_ID, -1),
+            )
+        }
+
+        setFragmentResultListener(DeckPickerMenuContentProvider.REQUEST_KEY_CONTEXT_MENU) { _, bundle ->
+            handleContextMenuSelection(
+                bundle.getSerializableCompat<DeckPickerContextMenuOption>(DeckPickerMenuContentProvider.CONTEXT_MENU_DECK_OPTION)
+                    ?: error("Unable to retrieve selected context menu option"),
+                bundle.getLong(DeckPickerMenuContentProvider.CONTEXT_MENU_DECK_ID, -1),
             )
         }
 

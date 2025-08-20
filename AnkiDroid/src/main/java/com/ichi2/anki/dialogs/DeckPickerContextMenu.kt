@@ -23,8 +23,8 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
+import com.ichi2.anki.contextmenu.DeckPickerMenuContentProvider
 import com.ichi2.anki.libanki.DeckId
-import com.ichi2.anki.settings.Prefs
 import com.ichi2.utils.title
 
 class DeckPickerContextMenu : AnalyticsDialogFragment() {
@@ -52,35 +52,10 @@ class DeckPickerContextMenu : AnalyticsDialogFragment() {
     }
 
     private fun createOptionsList(): List<DeckPickerContextMenuOption> =
-        mutableListOf<DeckPickerContextMenuOption>().apply {
-            val dyn = requireArguments().getBoolean(ARG_DECK_IS_DYN)
-            add(DeckPickerContextMenuOption.ADD_CARD)
-            add(DeckPickerContextMenuOption.BROWSE_CARDS)
-            if (dyn) {
-                add(DeckPickerContextMenuOption.CUSTOM_STUDY_REBUILD)
-                add(DeckPickerContextMenuOption.CUSTOM_STUDY_EMPTY)
-            }
-            add(DeckPickerContextMenuOption.RENAME_DECK)
-            if (!dyn) {
-                add(DeckPickerContextMenuOption.CREATE_SUBDECK)
-            }
-            add(DeckPickerContextMenuOption.DECK_OPTIONS)
-            if (!dyn) {
-                add(DeckPickerContextMenuOption.CUSTOM_STUDY)
-            }
-            add(DeckPickerContextMenuOption.EXPORT_DECK)
-            if (requireArguments().getBoolean(ARG_DECK_HAS_BURIED_IN_DECK)) {
-                add(DeckPickerContextMenuOption.UNBURY)
-            }
-            add(DeckPickerContextMenuOption.CREATE_SHORTCUT)
-            if (!dyn) {
-                add(DeckPickerContextMenuOption.EDIT_DESCRIPTION)
-            }
-            if (Prefs.newReviewRemindersEnabled) {
-                add(DeckPickerContextMenuOption.SCHEDULE_REMINDERS)
-            }
-            add(DeckPickerContextMenuOption.DELETE_DECK)
-        }
+        DeckPickerMenuContentProvider.createOptionsList(
+            requireArguments().getBoolean(ARG_DECK_IS_DYN),
+            requireArguments().getBoolean(ARG_DECK_HAS_BURIED_IN_DECK),
+        )
 
     enum class DeckPickerContextMenuOption(
         @StringRes val optionName: Int,
