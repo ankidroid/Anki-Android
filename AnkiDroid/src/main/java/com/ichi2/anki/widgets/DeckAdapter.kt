@@ -30,7 +30,6 @@ import androidx.core.content.withStyledAttributes
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.ichi2.anki.OnContextAndLongClickListener.Companion.setOnContextAndLongClickListener
 import com.ichi2.anki.R
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.deckpicker.DisplayDeckNode
@@ -50,6 +49,7 @@ import net.ankiweb.rsdroid.RustCleanup
  * children to show/hide the children. Only for decks that have children.
  * @param onDeckContextRequested callback triggered when the user requested to see extra actions for
  * a deck. This consists in a context menu brought in by either a long touch or a right click.
+ * @param onDeckRightClick callback triggered when the user right-clicks on a deck with a mouse
  */
 @RustCleanup("Differs from legacy backend: Create deck 'One', create deck 'One::two'. 'One::two' was not expanded")
 class DeckAdapter(
@@ -59,6 +59,7 @@ class DeckAdapter(
     private val onDeckCountsSelected: (DeckId) -> Unit,
     private val onDeckChildrenToggled: (DeckId) -> Unit,
     private val onDeckContextRequested: (DeckId) -> Unit,
+    private val onDeckRightClick: (DeckId, Float, Float) -> Unit,
 ) : ListAdapter<DisplayDeckNode, DeckAdapter.ViewHolder>(deckNodeDiffCallback) {
     private val layoutInflater = LayoutInflater.from(context)
     private val zeroCountColor: Int
@@ -189,11 +190,23 @@ class DeckAdapter(
         holder.deckRev.setTextColor(if (node.revCount == 0) zeroCountColor else reviewCountColor)
 
         holder.deckLayout.setOnClickListener { onDeckSelected(node.did) }
-        holder.deckLayout.setOnContextAndLongClickListener {
+        holder.deckLayout.setOnLongClickListener {
             onDeckContextRequested(node.did)
             true
         }
         holder.countsLayout.setOnClickListener { onDeckCountsSelected(node.did) }
+
+        // Right click listener for right click context menus
+        holder.deckLayout.setOnGenericMotionListener { _, motionEvent ->
+            if (motionEvent.action == android.view.MotionEvent.ACTION_BUTTON_PRESS &&
+                motionEvent.buttonState and android.view.MotionEvent.BUTTON_SECONDARY != 0
+            ) {
+                onDeckRightClick(node.did, motionEvent.x, motionEvent.y)
+                true
+            } else {
+                false
+            }
+        }
     }
 
     private fun setDeckExpander(
