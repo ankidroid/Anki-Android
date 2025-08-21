@@ -20,8 +20,8 @@ import android.content.Intent
 import androidx.core.net.toUri
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.IntentHandler.Companion.getLaunchType
+import com.ichi2.anki.IntentHandler.Companion.getReviewDeckIntent
 import com.ichi2.anki.IntentHandler.LaunchType
-import com.ichi2.anki.services.ReminderService.Companion.getReviewDeckIntent
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Test
