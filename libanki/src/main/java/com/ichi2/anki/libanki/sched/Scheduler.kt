@@ -192,6 +192,21 @@ open class Scheduler(
             Counts(it.newCount, it.learningCount, it.reviewCount)
         }
 
+    /**
+     * @return Number of new, rev and lrn card to review in all decks.
+     */
+    fun allDecksCounts(): Counts {
+        val total = Counts()
+        // Only count the top-level decks in the total
+        val nodes = deckDueTree().children
+        for (node in nodes) {
+            total.addNew(node.newCount)
+            total.addLrn(node.lrnCount)
+            total.addRev(node.revCount)
+        }
+        return total
+    }
+
     // only used by tests
     fun newCount(): Int = counts().new
 
