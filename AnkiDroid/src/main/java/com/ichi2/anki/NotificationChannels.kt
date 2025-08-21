@@ -47,11 +47,15 @@ fun setupNotificationChannels(context: Context) {
         val importance = NotificationManagerCompat.IMPORTANCE_DEFAULT
         Timber.i("Creating notification channel with id/name: %s/%s", id, name)
 
+        // Vibration is enabled by default, but the user can turn it off from the system settings
+        // Vibration will also not occur if the phone has been set to silent
         val notificationChannel =
             NotificationChannelCompat
                 .Builder(id, importance)
                 .setName(name)
                 .setShowBadge(true)
+                .setVibrationPattern(longArrayOf(0, 500))
+                .setVibrationEnabled(true)
                 .build()
 
         manager.createNotificationChannel(notificationChannel)
@@ -70,11 +74,7 @@ enum class Channel(
 ) {
     GENERAL("General Notifications", R.string.app_name),
     SYNC("Synchronization", R.string.sync_title),
-    GLOBAL_REMINDERS(
-        "Global Reminders",
-        R.string.widget_minimum_cards_due_notification_ticker_title,
-    ),
-    DECK_REMINDERS("Deck Reminders", R.string.deck_conf_reminders),
+    REVIEW_REMINDERS("Review Reminders", R.string.review_reminders_do_not_translate),
     ;
 
     fun getName(res: Resources) = res.getString(nameId)
