@@ -17,8 +17,7 @@
 package com.ichi2.anki.common.time
 
 import android.annotation.SuppressLint
-import androidx.annotation.VisibleForTesting
-import java.util.Stack
+import com.ichi2.anki.common.utils.ObjectForTest
 
 /** Singleton providing an instance of [Time].
  * Used for tests to mock the time provider
@@ -26,22 +25,10 @@ import java.util.Stack
  *
  * For later: move this into a DI container
  */
+// Only used to add the property [time]
 @SuppressLint("DirectSystemTimeInstantiation")
-object TimeManager {
-    @VisibleForTesting
-    fun reset() {
-        mockInstances.clear()
-    }
-
-    @VisibleForTesting
-    fun resetWith(mockTime: Time) {
-        reset()
-        mockInstances.push(mockTime)
-    }
-
-    private var mockInstances: Stack<Time> = Stack()
-
-    var time: Time = SystemTime()
-        get() = if (mockInstances.any()) mockInstances.peek() else field
-        private set
+class TimeManagerClass : ObjectForTest<Time>(SystemTime()) {
+    val time = value
 }
+
+val TimeManager = TimeManagerClass()
