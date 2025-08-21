@@ -37,6 +37,7 @@ import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.DeckId
+import com.ichi2.anki.services.AlarmManagerService
 import com.ichi2.anki.showError
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.ext.showDialogFragment
@@ -62,7 +63,6 @@ class ScheduleReminders :
         ) ?: ReviewReminderScope.Global
     }
 
-    private lateinit var database: ReviewRemindersDatabase
     private lateinit var toolbar: MaterialToolbar
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: ScheduleRemindersAdapter
@@ -101,9 +101,6 @@ class ScheduleReminders :
         val layoutManager = LinearLayoutManager(requireContext())
         recyclerView.layoutManager = layoutManager
         recyclerView.addItemDecoration(DividerItemDecoration(requireContext(), layoutManager.orientation))
-
-        // Set up database
-        database = ReviewRemindersDatabase()
 
         // Set up adapter, pass functionality to it
         adapter =
@@ -156,9 +153,9 @@ class ScheduleReminders :
             catchDatabaseExceptions {
                 when (val scope = scheduleRemindersScope) {
                     is ReviewReminderScope.Global -> {
-                        HashMap(database.getAllAppWideReminders() + database.getAllDeckSpecificReminders())
+                        HashMap(ReviewRemindersDatabase.getAllAppWideReminders() + ReviewRemindersDatabase.getAllDeckSpecificReminders())
                     }
-                    is ReviewReminderScope.DeckSpecific -> database.getRemindersForDeck(scope.did)
+                    is ReviewReminderScope.DeckSpecific -> ReviewRemindersDatabase.getRemindersForDeck(scope.did)
                 }
             } ?: hashMapOf()
         triggerUIUpdate()
@@ -189,9 +186,9 @@ class ScheduleReminders :
                         reminders
                     }
                     when (reminderToDelete.scope) {
-                        is ReviewReminderScope.Global -> database.editAllAppWideReminders(deleteReminderWithId)
+                        is ReviewReminderScope.Global -> ReviewRemindersDatabase.editAllAppWideReminders(deleteReminderWithId)
                         is ReviewReminderScope.DeckSpecific ->
-                            database.editRemindersForDeck(
+                            ReviewRemindersDatabase.editRemindersForDeck(
                                 reminderToDelete.scope.did,
                                 deleteReminderWithId,
                             )
@@ -208,9 +205,9 @@ class ScheduleReminders :
                         reminders
                     }
                     when (it.scope) {
-                        is ReviewReminderScope.Global -> database.editAllAppWideReminders(writeNewOrModifiedReminder)
+                        is ReviewReminderScope.Global -> ReviewRemindersDatabase.editAllAppWideReminders(writeNewOrModifiedReminder)
                         is ReviewReminderScope.DeckSpecific ->
-                            database.editRemindersForDeck(
+                            ReviewRemindersDatabase.editRemindersForDeck(
                                 it.scope.did,
                                 writeNewOrModifiedReminder,
                             )
@@ -231,6 +228,20 @@ class ScheduleReminders :
             }
         }
         triggerUIUpdate()
+
+        // Modify scheduled AlarmManager notifications
+        if (modeOfFinishedDialog is AddEditReminderDialog.DialogMode.Edit) {
+            AlarmManagerService.unscheduleReviewReminderNotifications(
+                requireContext(),
+                modeOfFinishedDialog.reminderToBeEdited,
+            )
+        }
+        newOrModifiedReminder?.let {
+            AlarmManagerService.scheduleReviewReminderNotification(
+                requireContext(),
+                it,
+            )
+        }
 
         showSnackbar(
             when (modeOfFinishedDialog) {
@@ -288,8 +299,8 @@ class ScheduleReminders :
         launchCatchingTask {
             catchDatabaseExceptions {
                 when (scope) {
-                    is ReviewReminderScope.Global -> database.editAllAppWideReminders(performToggle)
-                    is ReviewReminderScope.DeckSpecific -> database.editRemindersForDeck(scope.did, performToggle)
+                    is ReviewReminderScope.Global -> ReviewRemindersDatabase.editAllAppWideReminders(performToggle)
+                    is ReviewReminderScope.DeckSpecific -> ReviewRemindersDatabase.editRemindersForDeck(scope.did, performToggle)
                 }
             }
         }
@@ -297,6 +308,12 @@ class ScheduleReminders :
         // Update UI
         reminder.enabled = newState
         triggerUIUpdate()
+
+        // Update scheduled AlarmManager notifications
+        when (newState) {
+            true -> AlarmManagerService.scheduleReviewReminderNotification(requireContext(), reminder)
+            false -> AlarmManagerService.unscheduleReviewReminderNotifications(requireContext(), reminder)
+        }
     }
 
     /**
@@ -389,7 +406,7 @@ class ScheduleReminders :
          * Shows an error dialog if [SerializationException]s or [IllegalArgumentException]s are thrown.
          * Shows a progress dialog if database access takes a long time.
          */
-        private suspend fun <T> Fragment.catchDatabaseExceptions(block: () -> T): T? =
+        private suspend fun <T> Fragment.catchDatabaseExceptions(block: suspend () -> T): T? =
             try {
                 Timber.d("Attempting ReviewRemindersDatabase operation")
                 withProgress { block() }
