@@ -29,6 +29,7 @@ import com.ichi2.anki.DrawingActivity
 import com.ichi2.anki.FilteredDeckOptions
 import com.ichi2.anki.Info
 import com.ichi2.anki.IntentHandler
+import com.ichi2.anki.IntentHandler.Companion.getReviewDeckIntent
 import com.ichi2.anki.IntentHandler2
 import com.ichi2.anki.IntroductionActivity
 import com.ichi2.anki.LoginActivity
@@ -44,7 +45,6 @@ import com.ichi2.anki.multimedia.MultimediaActivity
 import com.ichi2.anki.notetype.ManageNotetypes
 import com.ichi2.anki.preferences.PreferencesActivity
 import com.ichi2.anki.previewer.CardViewerActivity
-import com.ichi2.anki.services.ReminderService.Companion.getReviewDeckIntent
 import com.ichi2.anki.ui.windows.managespace.ManageSpaceActivity
 import com.ichi2.anki.ui.windows.permissions.PermissionsActivity
 import com.ichi2.testutils.ActivityList.ActivityLaunchParam.Companion.get
