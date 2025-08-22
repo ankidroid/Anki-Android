@@ -47,7 +47,7 @@
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Apri barra di navigazione</string>
     <string name="drawer_close">Chiudi barra di navigazione</string>
-    <string name="note_message">Note saved</string>
+    <string name="note_message">Nota salvata</string>
     <string name="CardEditorCardDeck">Mazzo:</string>
     <string name="CardEditorNoteDeck">Mazzo:</string>
     <string name="CardEditorModel">Tipo:</string>
@@ -109,10 +109,10 @@
     <string name="missing_note_type">Nessun tipo di nota trovato</string>
     <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (vuoto)</string>
     <!-- Image cropper -->
-    <string name="image_cropper_action_rotate" maxLength="28" comment="Action in image cropper screen">Rotate</string>
-    <string name="image_cropper_action_flip" maxLength="28" comment="Action in image cropper screen">Flip</string>
-    <string name="image_cropper_action_flip_horizontally" maxLength="28" comment="Submenu action in image cropper screen">Flip horizontally</string>
-    <string name="image_cropper_action_flip_vertically" maxLength="28" comment="Submenu action in image cropper screen">Flip vertically</string>
+    <string name="image_cropper_action_rotate" maxLength="28" comment="Action in image cropper screen">Ruota</string>
+    <string name="image_cropper_action_flip" maxLength="28" comment="Action in image cropper screen">Inverti</string>
+    <string name="image_cropper_action_flip_horizontally" maxLength="28" comment="Submenu action in image cropper screen">Inverti orizzontalmente</string>
+    <string name="image_cropper_action_flip_vertically" maxLength="28" comment="Submenu action in image cropper screen">Inverti verticalmente</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">Limite di tempo raggiunto</string>
     <plurals name="timebox_reached">
@@ -328,9 +328,9 @@
     <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">Non è stato possibile aprire le impostazioni della voce</string>
     <string name="shared_decks_login_required">Accedi per scaricare altri mazzi</string>
     <string name="deck_description_field_hint">Descrizione</string>
-    <string name="deck_description_saved">Description updated</string>
-    <string name="format_deck_description_as_markdown">Format as Markdown</string>
-    <string name="help_button_content_description">Open help for ‘%s’</string>
+    <string name="deck_description_saved">Descrizione aggiornata</string>
+    <string name="format_deck_description_as_markdown">Formatta come Markdown</string>
+    <string name="help_button_content_description">Apri aiuti per \'%s\'</string>
     <string name="failed_to_copy">Copia non riuscita</string>
     <string name="card_browser_unavailable_when_notes_mode">Non disponibile in modalità \"Note\"</string>
     <plurals name="unbury_cards_feedback">
@@ -356,10 +356,10 @@
     <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">Seleziona tipo di nota</string>
     <string name="tag_editor" comment="Description of the shortcut that opens the tags dialog">Editor dei tag</string>
     <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">Editor template carte</string>
-    <string name="edit_front_template" comment="Description of the shortcut that shows the question side of the card template">Edit front template</string>
-    <string name="edit_back_template" comment="Description of the shortcut that shows the answer side of the card template">Edit back template</string>
+    <string name="edit_front_template" comment="Description of the shortcut that shows the question side of the card template">Modifica il modello frontale</string>
+    <string name="edit_back_template" comment="Description of the shortcut that shows the answer side of the card template">Modifica il modello posteriore</string>
     <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">Modifica stile</string>
-    <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">Copy template as markdown</string>
+    <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">Copia il modello come Markdown</string>
     <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">Modifica l\'aspetto del browser</string>
     <string name="missing_user_action_dialog_message" comment="%s is the user action number">L\'azione utente %s non è impostata in questo tipo di nota. Si prega di configurarla</string>
     <string name="directory_inaccessible_info">Scopri di più su come ripristinare l\'accesso qui %s o vai alle impostazioni per aggiornare la cartella di raccolta.</string>

@@ -64,7 +64,7 @@
     <!-- Reviewer.kt (Study Screen) -->
     <string name="save_whiteboard" maxLength="28">Gafastai ƕeitabaurd</string>
     <string name="enable_stylus" maxLength="28">Enable stylus writing</string>
-    <string name="disable_stylus">Disable stylus writing</string>
+    <string name="disable_stylus">Melein stwlaus blauþjan</string>
     <string name="enable_whiteboard" maxLength="28">Brukei ƕeitabaurd</string>
     <string name="disable_whiteboard">Unsatei ƕeitabaurd</string>
     <string name="show_whiteboard">Bandwei ƕeitabaurd</string>
@@ -247,7 +247,7 @@
     <string name="note_editor_audio_too_large">The audio file is too large, please insert the audio manually</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">Android baik-ap in framgahtai. Bidjam þuk, sokei aftra.</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">You may need to use iManager to allow AnkiDroid to add shortcuts</string>
-    <string name="create_shortcut_failed" comment="home screen == launcher">Your home screen does not allow AnkiDroid to add shortcuts</string>
+    <string name="create_shortcut_failed" comment="home screen == launcher">Gardiskairms þeins ni andletiþ AnkiDroid biaukan maurguwigans</string>
     <string name="create_shortcut_error">Airzei warþ biaukan maurguwig: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">Capitalize sentences</string>
     <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll" maxLength="28">Scroll toolbar</string>
@@ -324,8 +324,8 @@
     <string name="tts_voices_playback_error_new" comment="an error occurred when playing a text to speech voice. The parameter is a technical error code such as \'ERROR_NOT_INSTALLED_YET\' or \'ERROR_NETWORK_TIMEOUT\'">Bokos du stibnai airzei (%s)</string>
     <!-- Chips should probably be in a separate file, due to the additional length req -->
     <string name="tts_voices_chip_filter_to_internet" comment="     Filters a list of text to speech voices, to enable/disable voices which require the internet to     function.     This is on a chip control, so keep the text short, ideally one word">Ganati</string>
-    <string name="tts_voices_chip_filter_to_installable_audio" comment="     Displays a list of Text to Speech voices which should be downloaded/installed before use     This is on a chip control, so keep the text short, ideally one word">Install</string>
-    <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">Failed to open text to speech settings</string>
+    <string name="tts_voices_chip_filter_to_installable_audio" comment="     Displays a list of Text to Speech voices which should be downloaded/installed before use     This is on a chip control, so keep the text short, ideally one word">Gasuljan</string>
+    <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">Ni mahta boko-du-stibnai lageinins uslukan</string>
     <string name="shared_decks_login_required">Bidjam þuk, atgagg du atdragan kartahuzda managizona</string>
     <string name="deck_description_field_hint">Gaskeireins</string>
     <string name="deck_description_saved">Description updated</string>

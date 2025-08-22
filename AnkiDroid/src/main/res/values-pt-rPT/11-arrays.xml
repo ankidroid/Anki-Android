@@ -78,14 +78,14 @@
     <string name="gesture_flag_pink" maxLength="41">Toggle pink flag</string>
     <string name="gesture_flag_turquoise" maxLength="41">Toggle turquoise flag</string>
     <string name="gesture_flag_purple" maxLength="41">Toggle purple flag</string>
-    <string name="gesture_flag_remove" maxLength="41">Remove flag</string>
+    <string name="gesture_flag_remove" maxLength="41">Remover bandeira</string>
     <string name="gesture_page_up" maxLength="41">Page up</string>
     <string name="gesture_page_down" maxLength="41">Page down</string>
     <string name="gesture_toggle_whiteboard" maxLength="41">Activar/Desactivar quadro de escrita</string>
     <string name="gesture_toggle_eraser" maxLength="41">Toggle eraser</string>
-    <string name="gesture_show_hint" maxLength="41">Show hint</string>
-    <string name="gesture_show_all_hints" maxLength="41">Show all hints</string>
-    <string name="record_voice" maxLength="41">Record voice</string>
-    <string name="replay_voice" maxLength="41">Replay voice</string>
+    <string name="gesture_show_hint" maxLength="41">Revelar dica</string>
+    <string name="gesture_show_all_hints" maxLength="41">Revelar todas as dicas</string>
+    <string name="record_voice" maxLength="41">Gravar voz</string>
+    <string name="replay_voice" maxLength="41">Reproduzir voz</string>
     <string name="save_voice" maxLength="41">Guardar gravação</string>
 </resources>

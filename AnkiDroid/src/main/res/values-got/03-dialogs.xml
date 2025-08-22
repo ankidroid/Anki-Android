@@ -65,7 +65,7 @@
     <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
     <string name="answering_error_report">Merei airzein</string>
     <string name="storage_full_message">Nist ganoh rumis in stada du uslukan AnkiDroid. Ufarþeihai rum du þairhwisan.</string>
-    <string name="repair_deck_dialog">Do you really want to try to repair the database?\n\nBefore starting the attempt, a copy will be created in subfolder “%s”.</string>
+    <string name="repair_deck_dialog">Wileizu bi sunjai datahuzd gabotjan?\n\nFaurþizei duginnais sokn, gagaleikoþ in ufstada  “%s”.</string>
     <string name="intent_aedict_empty">Category “default” is empty</string>
     <string name="intent_aedict_category">To add cards to AnkiDroid remove all Notepad categories or add one named “default”</string>
     <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>

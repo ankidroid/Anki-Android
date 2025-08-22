@@ -90,8 +90,8 @@
         <item>Efter antal felsvar</item>
         <item>By deck name</item>
     </string-array>
-    <string name="manage_browser_column">Manage column</string>
-    <string name="no_columns_available">No columns available</string>
+    <string name="manage_browser_column">Hantera kolumn</string>
+    <string name="no_columns_available">Inga kolumner tillgängliga</string>
     <string name="card_browser_select_all" maxLength="28">Markera alla</string>
     <string name="card_browser_select_none" maxLength="28">Avmarkera alla</string>
     <string name="card_browser_no_cards_in_deck">Inga kort hittades i kortleken ”%s”</string>
@@ -115,12 +115,12 @@
     <string name="edit_tags_dialog" comment="Description of the shortcut that opens the edit tags dialog">Ändra tagg dialogruta</string>
     <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">Visa ordnings dialogruta</string>
     <!-- Manage columns dialog -->
-    <string name="browse_manage_columns_main_heading">Columns</string>
-    <string name="browse_manage_columns">Manage columns</string>
-    <string name="user_active_columns">Active</string>
-    <string name="user_potential_columns">Available</string>
-    <string name="include_column">Include column</string>
-    <string name="exclude_column">Exclude column</string>
+    <string name="browse_manage_columns_main_heading">Kolumner</string>
+    <string name="browse_manage_columns">Hantera kolumner</string>
+    <string name="user_active_columns">Aktiv</string>
+    <string name="user_potential_columns">Tillgänglig</string>
+    <string name="include_column">Inkludera kolumn</string>
+    <string name="exclude_column">Exkludera kolumn</string>
     <string name="save_changes_message">Please save your changes first</string>
     <string name="browser_find_replace_loading_fields">Retrieving fields names&#8230;</string>
 </resources>

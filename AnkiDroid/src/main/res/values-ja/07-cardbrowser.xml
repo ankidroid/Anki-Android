@@ -87,7 +87,7 @@
         <item>復習での忘却回数順</item>
         <item>デッキ名順</item>
     </string-array>
-    <string name="manage_browser_column">Manage column</string>
+    <string name="manage_browser_column">リストの列を管理</string>
     <string name="no_columns_available">利用可能な列がありません</string>
     <string name="card_browser_select_all" maxLength="28">すべて選択</string>
     <string name="card_browser_select_none" maxLength="28">選択をすべて解除</string>

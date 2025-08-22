@@ -141,7 +141,7 @@
     <string name="sync_status_badge_summ">Change the sync icon when changes can be uploaded</string>
     <string name="metered_sync_title" maxLength="41">Allow sync on metered connections</string>
     <string name="metered_sync_summary">If disabled, you will be warned if you try to sync on a metered connection</string>
-    <string name="backup_limits_frequency">Frequency</string>
+    <string name="backup_limits_frequency">ƕan filu</string>
     <string name="backup_limits_lifetime">Libainiþeihs</string>
     <string name="app_theme" maxLength="41">Theme</string>
     <string name="day_theme" maxLength="41">Day theme</string>
@@ -157,7 +157,7 @@
     <string name="notification_minimum_cards_due_blink" maxLength="41">Glitmunjando liuhaþ</string>
     <string name="select_locale_title">Walei razda</string>
     <string name="software_render" maxLength="41">Disable card hardware render</string>
-    <string name="software_render_summ">Hardware render is faster but may have problems, specifically on Android 8/8.1. If you cannot see parts of the card review user interface, try this setting.</string>
+    <string name="software_render_summ">Harduwaros ataugja sprautiza ist iþ mag unraihtaba waurkjan, þishun ana Android 8/8.1. Jabai ni magt dailins saiƕan intairfakios brukjane aftrasiunais karto, sokei þo lagein.</string>
     <string name="safe_display" maxLength="41">Safe display mode</string>
     <string name="safe_display_summ">Disable all animations and use safer method for drawing cards. E-ink devices may require this.</string>
     <string name="disable_extended_text_ui" maxLength="41">Disable Single-Field Edit Mode</string>
@@ -263,11 +263,11 @@
     <string name="open_changelog">Usluk laug inmaideino</string>
     <string name="pref_cat_about_title" maxLength="41">Bi</string>
     <string name="contributors_title">Hilpandans</string>
-    <string name="about_contributors_description"><![CDATA[These are our awesome <a href=\"%1$s\">contributors</a>. You can help AnkiDroid too by programming, translating, donating and <a href=\"%2$s\">more</a>!]]></string>
-    <string name="license">License</string>
-    <string name="license_description"><![CDATA[AnkiDroid is released under the <a href=\"%1$s\">GPL-3.0</a> and <a href=\"%2$s\">AGPL-3.0</a> licenses, with the source code available <a href=\"%3$s\">on GitHub</a>]]></string>
-    <string name="other_licenses"><![CDATA[AnkiDroid also uses third-party libraries and icons, which are licensed under various open source <a href=\"%1$s\">licenses</a>]]></string>
-    <string name="donate_description"><![CDATA[You can support AnkiDroid\'s development by <a href=\"%1$s\">donating</a>. Any amount is deeply appreciated.]]></string>
+    <string name="about_contributors_description"><![CDATA[Þai sind <a href=\"%1$s\">hilpandans</a> godai filu unsarai. Jah þu magt hilpan AnkiDroids faurameleinai, skeireinai, andstaldan jah <a href=\"%2$s\">mais</a>! ]]></string>
+    <string name="license">Andlet</string>
+    <string name="license_description"><![CDATA[AnkiDroid usmeriþ ist uf <a href=\"%1$s\">GPL-3.0</a> jah <a href=\"%2$s\">AGPL-3.0</a> andletam, miþ kodau brunnins wisandin <a href=\"%3$s\">at GitHab</a>]]></string>
+    <string name="other_licenses"><![CDATA[AnkiDroid jah brukeiþ bokahuzde jah leitilataikne anþaraize, wisandona uf brunnins uslukis <a href=\"%1$s\">andletam</a> missaleikaim]]></string>
+    <string name="donate_description"><![CDATA[Magt stodjan wahstu AnkiDroid jabai <a href=\"%1$s\">andstaldis unsis</a>. Þishvazuh þatei gibis leikaiþ unsis.]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">Add gesture</string>
     <string name="binding_add_key">Biaiauk boka</string>
@@ -386,7 +386,7 @@
     <string name="toolbar_position" maxLength="41">Toolbar position</string>
     <string name="new_study_screen" maxLength="41">Skairms niujis laiseinais</string>
     <string name="new_study_screen_summ"><![CDATA[Improved study screen that will succeed the current one. Some features of the old screen have been changed or removed. Please report any <a href="%1$s">feedback</a> or <a href="%2$s">bugs</a>.]]></string>
-    <string name="show_answer_feedback" maxLength="41">Show answer feedback</string>
+    <string name="show_answer_feedback" maxLength="41">Andahaftais hilpa bandwjan</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">Usluk lageino</string>
 </resources>

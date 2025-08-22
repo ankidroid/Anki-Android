@@ -47,7 +47,7 @@
     <string name="model_browser_template">編輯卡片</string>
     <!--Rename-->
     <string name="rename_model">重新命名筆記類型</string>
-    <string name="rename_card_type">Rename card type</string>
+    <string name="rename_card_type">重命名卡片種類</string>
     <!--Language Hint-->
     <string name="model_field_editor_language_hint_dialog_success_result">將語言提示設為%s</string>
     <!--Field Editing-->
@@ -63,9 +63,9 @@
     <string name="model_delete_warning">是否希望刪除此筆記類型？</string>
     <string name="field_delete_warning">你確定要刪除此欄位嗎？</string>
     <!--Model Add Suffixes-->
-    <string name="model_browser_add_add">Add: %1$s</string>
+    <string name="model_browser_add_add">添加：%1$s</string>
     <!--This prefix is used for standard note types-->
-    <string name="model_browser_add_clone">Clone: %1$s</string>
+    <string name="model_browser_add_clone">拷貝：%1$s</string>
     <!--Browser Appearance-->
     <string name="card_template_browser_appearance_summary">輸入卡片瀏覽器將用於展示你的卡片的模板。以此顯示更簡潔的答案。\n\n一種正面模板\n“{{國家}}的首都是：”\n會被卡片瀏覽器壓縮為\n“首都：{{國家}}”</string>
     <string name="card_template_browser_appearance_question_format">問題格式</string>
