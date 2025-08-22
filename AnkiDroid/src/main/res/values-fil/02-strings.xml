@@ -180,11 +180,6 @@
     <string name="tag_editor_add_feedback">Pindutin ang \"%2$s\" para kumpirmahin ang pagdaragdag ng \"%1$s\"</string>
     <string name="tag_editor_add_feedback_existing">Napili ang umiiral na tag na \"%1$s\"</string>
     <!-- Time spans -->
-    <string name="reminder_title">Huwag kaligtaang mag-aral ngayon!</string>
-    <plurals name="reminder_text">
-        <item quantity="one">%2$d card ang dapat repasuhin sa %1$s</item>
-        <item quantity="other">%2$d na mga card ang dapat repasuhin sa %1$s</item>
-    </plurals>
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Mali sa pagbabahagi ng apkg file</string>
     <!-- Import and export v2 feedback -->

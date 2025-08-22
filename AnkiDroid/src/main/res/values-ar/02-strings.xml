@@ -192,15 +192,6 @@
     <string name="tag_editor_add_feedback">انقر «%2$s» لتُأكِّد إضافة «%1$s»</string>
     <string name="tag_editor_add_feedback_existing">تم تحديد الوسم الموجود «%1$s»</string>
     <!-- Time spans -->
-    <string name="reminder_title">لا تنسَ أن تدرس اليوم!</string>
-    <plurals name="reminder_text">
-        <item quantity="zero">%2$d بطاقة بانتظار المراجعة في %1$s</item>
-        <item quantity="one">%2$d بطاقة بانتظار المراجعة في %1$s</item>
-        <item quantity="two">%2$d بطاقة بانتظار المراجعة في %1$s</item>
-        <item quantity="few">%2$d بطاقات بانتظار المراجعة في %1$s</item>
-        <item quantity="many">%2$d بطاقة بانتظار المراجعة في %1$s</item>
-        <item quantity="other">%2$d بطاقة بانتظار المراجعة في %1$s</item>
-    </plurals>
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">حدث خطأ أثناء مشاركة ملف «apkg»</string>
     <!-- Import and export v2 feedback -->

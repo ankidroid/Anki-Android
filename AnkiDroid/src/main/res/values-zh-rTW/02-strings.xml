@@ -177,10 +177,6 @@
     <string name="tag_editor_add_feedback">輕觸 \"%2$s\" 確認新增 \"%1$s\"</string>
     <string name="tag_editor_add_feedback_existing">現有標籤 \"%1$s\" 已選擇</string>
     <!-- Time spans -->
-    <string name="reminder_title">不要忘記今天去學習 ！</string>
-    <plurals name="reminder_text">
-        <item quantity="other">%2$d 卡片在 %1$s 內待複習</item>
-    </plurals>
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">分享 Apkg 檔案時出錯</string>
     <!-- Import and export v2 feedback -->

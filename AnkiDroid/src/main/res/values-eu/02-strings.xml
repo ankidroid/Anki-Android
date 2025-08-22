@@ -180,11 +180,6 @@
     <string name="tag_editor_add_feedback">\"%2$s\" ukitu \"%1$s\" gehiatzea baieztatzeko</string>
     <string name="tag_editor_add_feedback_existing">\"%1$s\" etiketa hautatua</string>
     <!-- Time spans -->
-    <string name="reminder_title">Ez ahaztu gaur ikasteaz!</string>
-    <plurals name="reminder_text">
-        <item quantity="one">%2$d card to review in %1$s</item>
-        <item quantity="other">%2$d cards to review in %1$s</item>
-    </plurals>
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Errorea apkg fitxategia partekatzerakoan</string>
     <!-- Import and export v2 feedback -->

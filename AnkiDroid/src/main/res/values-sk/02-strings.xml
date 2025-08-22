@@ -186,13 +186,6 @@
     <string name="tag_editor_add_feedback">Ťuknite “%2$s” pre potvrdenie pridania “%1$s”</string>
     <string name="tag_editor_add_feedback_existing">Existujúci štítok “%1$s” zvolený</string>
     <!-- Time spans -->
-    <string name="reminder_title">Nezabudnite dnes študovať!</string>
-    <plurals name="reminder_text">
-        <item quantity="one">%2$d kartička na zopakovanie v %1$s</item>
-        <item quantity="few">%2$d kartička na zopakovanie v %1$s</item>
-        <item quantity="many">%2$d kartičiek na zopakovanie v %1$s</item>
-        <item quantity="other">%2$d kartičiek na zopakovanie v %1$s</item>
-    </plurals>
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Chyba pri zdieľaní apkg súboru</string>
     <!-- Import and export v2 feedback -->

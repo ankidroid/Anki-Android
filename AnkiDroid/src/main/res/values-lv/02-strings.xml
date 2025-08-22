@@ -183,12 +183,6 @@
     <string name="tag_editor_add_feedback">Pieskarties \"%2$s\", lai apstiprinātu \"%1$s\" pievienošanu</string>
     <string name="tag_editor_add_feedback_existing">Atlasīta esoša birka \"%1$s\"</string>
     <!-- Time spans -->
-    <string name="reminder_title">Neaizmirsti šodien mācīties!</string>
-    <plurals name="reminder_text">
-        <item quantity="zero">%2$d izskatāmu kartīšu kavā \"%1$s\"</item>
-        <item quantity="one">%2$d izskatāma kartīte kavā \"%1$s\"</item>
-        <item quantity="other">%2$d izskatāmas kartītes kavā \"%1$s\"</item>
-    </plurals>
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Kļūda .apkg datnes kopīgošanas laikā</string>
     <!-- Import and export v2 feedback -->

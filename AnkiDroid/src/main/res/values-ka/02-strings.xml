@@ -180,11 +180,6 @@
     <string name="tag_editor_add_feedback">„%1$s-ის“ დამატების დასადასტურებლად შეეხეთ „%2$s-ს“</string>
     <string name="tag_editor_add_feedback_existing">მოინიშნა არსებული იარლიყი „%1$s“</string>
     <!-- Time spans -->
-    <string name="reminder_title">დღესაც ვიმეცადინოთ!</string>
-    <plurals name="reminder_text">
-        <item quantity="one">%2$d ბარათია გადასახედი %1$s-ში</item>
-        <item quantity="other">%2$d ბარათია გადასახედი %1$s-ში</item>
-    </plurals>
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">შეცდომა APKG ფაილის გაზიარებისას</string>
     <!-- Import and export v2 feedback -->

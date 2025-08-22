@@ -180,11 +180,6 @@
     <string name="tag_editor_add_feedback">Αγγίξτε το “%2$s” για να επιβεβαιώσετε την προσθήκη “%1$s”</string>
     <string name="tag_editor_add_feedback_existing">Επιλέχθηκε η υπάρχουσα ετικέτα “%1$s”</string>
     <!-- Time spans -->
-    <string name="reminder_title">Μην ξεχάσετε να μελετήσετε σήμερα!</string>
-    <plurals name="reminder_text">
-        <item quantity="one">%2$d κάρτα προς επανάληψη σε %1$s</item>
-        <item quantity="other">%2$d κάρτες προς επανάληψη σε %1$s</item>
-    </plurals>
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Σφάλμα κοινής χρήσης αρχείου apkg</string>
     <!-- Import and export v2 feedback -->

@@ -180,11 +180,6 @@
     <string name="tag_editor_add_feedback">\"%1$s\" ઉમેરવાની પુષ્ટિ કરવા માટે \"%2$s\" ને ટચ કરો</string>
     <string name="tag_editor_add_feedback_existing">હાલનું ટૅગ “%1$s” પસંદ કર્યું</string>
     <!-- Time spans -->
-    <string name="reminder_title">આજે અભ્યાસ કરવાનું ભૂલશો નહીં!</string>
-    <plurals name="reminder_text">
-        <item quantity="one">%1$s માં સમીક્ષા કરવા માટે %2$d કાર્ડ</item>
-        <item quantity="other">%1$s માં સમીક્ષા કરવા માટે %2$d કાર્ડ</item>
-    </plurals>
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">apkg ફાઇલ શેર કરવામાં ભૂલ</string>
     <!-- Import and export v2 feedback -->

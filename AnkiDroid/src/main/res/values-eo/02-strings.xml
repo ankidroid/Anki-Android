@@ -180,11 +180,6 @@
     <string name="tag_editor_add_feedback">Frapetu “%2$s” por konfirmi aldoni “%1$s”</string>
     <string name="tag_editor_add_feedback_existing">Elektis ekzistan etikedon “%1$s”</string>
     <!-- Time spans -->
-    <string name="reminder_title">Ne forgesu lerni hodiaŭ!</string>
-    <plurals name="reminder_text">
-        <item quantity="one">%2$d karto por ripeti en %1$s</item>
-        <item quantity="other">%2$d karto por ripeti en %1$s</item>
-    </plurals>
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Eraro dum kunhavigado de apkg-dosiero</string>
     <!-- Import and export v2 feedback -->

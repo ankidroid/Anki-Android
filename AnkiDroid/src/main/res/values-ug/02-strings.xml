@@ -180,11 +180,6 @@
     <string name="tag_editor_add_feedback">«%2$s» نى چېكىپ «%1$s» نى قوشۇش  جەزملىنىدۇ</string>
     <string name="tag_editor_add_feedback_existing">مەۋجۇت «%1$s» بەلگە تاللاندى</string>
     <!-- Time spans -->
-    <string name="reminder_title">بۈگۈن ئۆگىنىشنى ئۇنتۇماڭ!</string>
-    <plurals name="reminder_text">
-        <item quantity="one">%1$s دىكى %2$d كارتا تەكرارلىنىدۇ</item>
-        <item quantity="other">%1$s دىكى %2$d كارتا تەكرارلىنىدۇ</item>
-    </plurals>
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">apkg ھۆججەتنى ھەمبەھىرلەش خاتالىقى</string>
     <!-- Import and export v2 feedback -->

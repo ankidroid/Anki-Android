@@ -177,10 +177,6 @@
     <string name="tag_editor_add_feedback">「%1$s」の追加を確定するには「%2$s」をタップしてください</string>
     <string name="tag_editor_add_feedback_existing">既存のタグ「%1$s」を選択しました</string>
     <!-- Time spans -->
-    <string name="reminder_title">今日も学習しましょう！</string>
-    <plurals name="reminder_text">
-        <item quantity="other">課題: %2$d枚 （%1$s）</item>
-    </plurals>
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Ankiファイル（*.apkg）の共有中にエラーが発生しました</string>
     <!-- Import and export v2 feedback -->
