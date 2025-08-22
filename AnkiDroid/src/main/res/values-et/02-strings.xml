@@ -180,11 +180,6 @@
     <string name="tag_editor_add_feedback">Touch “%2$s” to confirm adding “%1$s”</string>
     <string name="tag_editor_add_feedback_existing">Existing tag “%1$s” selected</string>
     <!-- Time spans -->
-    <string name="reminder_title">Ära unusta täna õppimast!</string>
-    <plurals name="reminder_text">
-        <item quantity="one">%2$d kaart korrata %1$s jooksul</item>
-        <item quantity="other">%2$d kaarti korrata %1$s jooksul</item>
-    </plurals>
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Viga apkg faili jagamisel</string>
     <!-- Import and export v2 feedback -->

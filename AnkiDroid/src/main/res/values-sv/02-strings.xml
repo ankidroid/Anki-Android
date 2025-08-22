@@ -180,11 +180,6 @@
     <string name="tag_editor_add_feedback">Tryck på “%2$s” för att bekräfta att lägga till “%1$s”</string>
     <string name="tag_editor_add_feedback_existing">Befintlig etikett “%1$s” vald</string>
     <!-- Time spans -->
-    <string name="reminder_title">Glöm inte att studera idag!</string>
-    <plurals name="reminder_text">
-        <item quantity="one">%2$d kort att repetera i %1$s</item>
-        <item quantity="other">%2$d kort att repetera i %1$s</item>
-    </plurals>
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Fel vid delning av apkg-fil</string>
     <!-- Import and export v2 feedback -->

@@ -177,10 +177,6 @@
     <string name="tag_editor_add_feedback">点击「%2$s」以确认添加「%1$s」</string>
     <string name="tag_editor_add_feedback_existing">已选中 %1$s</string>
     <!-- Time spans -->
-    <string name="reminder_title">不要忘记今天去学习 ！</string>
-    <plurals name="reminder_text">
-        <item quantity="other">%2$d 张卡片在 %1$s 中待复习</item>
-    </plurals>
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">共享 apkg 文件时出错</string>
     <!-- Import and export v2 feedback -->

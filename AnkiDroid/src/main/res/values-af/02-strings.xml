@@ -180,11 +180,6 @@
     <string name="tag_editor_add_feedback">Raak \"%2$s\" aan om \"%1$s\" by te voeg</string>
     <string name="tag_editor_add_feedback_existing">Bestaande etiket “%1$s” gekies</string>
     <!-- Time spans -->
-    <string name="reminder_title">Moet nie vergeet om vandag te studeer nie!</string>
-    <plurals name="reminder_text">
-        <item quantity="one">%2$d Kaart Om Te Hersien In %1$s</item>
-        <item quantity="other">%2$d kaarte om te hersien in %1$s</item>
-    </plurals>
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Fout met die deel van apkg-lêer</string>
     <!-- Import and export v2 feedback -->

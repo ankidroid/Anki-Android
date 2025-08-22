@@ -180,11 +180,6 @@
     <string name="tag_editor_add_feedback">Tocar \"%2$s\" para confirmar la adición de \"%1$s\"</string>
     <string name="tag_editor_add_feedback_existing">Etiqueta existente \"%1$s\" seleccionada</string>
     <!-- Time spans -->
-    <string name="reminder_title">¡No te olvides de estudiar hoy!</string>
-    <plurals name="reminder_text">
-        <item quantity="one">%2$d tarjeta para revisar en %1$s</item>
-        <item quantity="other">%2$d tarjetas para revisar en %1$s</item>
-    </plurals>
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Error al compartir el archivo apkg</string>
     <!-- Import and export v2 feedback -->

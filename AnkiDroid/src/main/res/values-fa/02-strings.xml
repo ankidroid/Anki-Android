@@ -180,11 +180,6 @@
     <string name="tag_editor_add_feedback">برای تایید افزودن \"%1$s\" روی \"%2$s\" ضربه بزنید</string>
     <string name="tag_editor_add_feedback_existing">برچسب موجود \"%1$s\" انتخاب شده است</string>
     <!-- Time spans -->
-    <string name="reminder_title">فراموش نکنید که امروز مطالعه کنید!</string>
-    <plurals name="reminder_text">
-        <item quantity="one">%2$d کارت برای مرور در %1$s</item>
-        <item quantity="other">%2$d کارت برای مرور در %1$s</item>
-    </plurals>
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">اشتراک گذاری فایل apkg با خطا مواجه شد</string>
     <!-- Import and export v2 feedback -->

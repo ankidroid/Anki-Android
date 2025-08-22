@@ -186,13 +186,6 @@
     <string name="tag_editor_add_feedback">Націсніце “%2$s”, каб пацвердзіць даданне “%1$s”</string>
     <string name="tag_editor_add_feedback_existing">Выбрана існуючая метка \"%1$s\"</string>
     <!-- Time spans -->
-    <string name="reminder_title">Не забудзьцеся пра сённяшняе навучанне!</string>
-    <plurals name="reminder_text">
-        <item quantity="one">%2$d картка для паўтарэння ў %1$s</item>
-        <item quantity="few">%2$d карткі для паўтарэння ў %1$s</item>
-        <item quantity="many">%2$d картак для паўтарэння ў %1$s</item>
-        <item quantity="other">%2$d картак для паўтарэння ў %1$s</item>
-    </plurals>
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Памылка агульнага доступу да файла apkg</string>
     <!-- Import and export v2 feedback -->

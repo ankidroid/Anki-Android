@@ -180,11 +180,6 @@
     <string name="tag_editor_add_feedback">“%1$s”ஐச் சேர்ப்பதை உறுதிசெய்ய “%2$s”ஐத் தொடவும்</string>
     <string name="tag_editor_add_feedback_existing">ஏற்கனவே உள்ள \"%1$s\" குறி தேர்ந்தெடுக்கப்பட்டது</string>
     <!-- Time spans -->
-    <string name="reminder_title">இன்று படிக்க மறக்காதீர்கள்!</string>
-    <plurals name="reminder_text">
-        <item quantity="one">%1$s இல் மதிப்பாய்வு செய்ய %2$d கார்டு</item>
-        <item quantity="other">%1$s இல் மதிப்பாய்வு செய்ய %2$d கார்டுகள்</item>
-    </plurals>
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">apkg கோப்பைப் பகிர்வதில் பிழை</string>
     <!-- Import and export v2 feedback -->

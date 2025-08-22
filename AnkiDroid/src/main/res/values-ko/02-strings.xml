@@ -180,10 +180,6 @@ Context | Request Context    [1]</string>
     <string name="tag_editor_add_feedback">\"%1$s\" 추가를 확인하려면 \"%2$s\" 누르세요</string>
     <string name="tag_editor_add_feedback_existing">기존 태그 \"%1$s\" 선택됨</string>
     <!-- Time spans -->
-    <string name="reminder_title">오늘의 학습 잊지 마세요!</string>
-    <plurals name="reminder_text">
-        <item quantity="other">%1$s에서 복습할 카드 %2$d장</item>
-    </plurals>
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Apkg 파일 공유 오류</string>
     <!-- Import and export v2 feedback -->

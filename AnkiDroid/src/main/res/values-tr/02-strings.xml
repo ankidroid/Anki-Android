@@ -180,11 +180,6 @@
     <string name="tag_editor_add_feedback">\"%1$s\" eklemek için buna dokunun: \"%2$s\"</string>
     <string name="tag_editor_add_feedback_existing">Varolan bir etiketi seçtiniz: \"%1$s\"</string>
     <!-- Time spans -->
-    <string name="reminder_title">Bugün çalışmayı unutmayın!</string>
-    <plurals name="reminder_text">
-        <item quantity="one">%1$s içinde çalışmak için %2$d kart</item>
-        <item quantity="other">%1$s içinde çalışmak için %2$d kart</item>
-    </plurals>
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Apkg dosyasını paylaşırken hata</string>
     <!-- Import and export v2 feedback -->

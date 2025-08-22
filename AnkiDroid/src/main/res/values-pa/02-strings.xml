@@ -180,11 +180,6 @@
     <string name="tag_editor_add_feedback">\"%1$s\" ਨੂੰ ਜੋੜਨ ਦੀ ਪੁਸ਼ਟੀ ਕਰਨ ਲਈ \"%2$s\" ਨੂੰ ਛੋਹਵੋ।</string>
     <string name="tag_editor_add_feedback_existing">ਮੌਜੂਦਾ ਟੈਗ “%1$s” ਚੁਣਿਆ ਗਿਆ</string>
     <!-- Time spans -->
-    <string name="reminder_title">ਅੱਜ ਦਾ ਅਧਿਐਨ ਕਰਨਾ ਨਾ ਭੁੱਲੋ!</string>
-    <plurals name="reminder_text">
-        <item quantity="one">%1$s ਵਿੱਚ ਸਮੀਖਿਆ ਕਰਨ ਲਈ %2$d ਕਾਰਡ</item>
-        <item quantity="other">%1$s ਵਿੱਚ ਸਮੀਖਿਆ ਕਰਨ ਲਈ %2$d ਕਾਰਡ</item>
-    </plurals>
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">apkk ਫਾਈਲ ਨੂੰ ਸਾਂਝਾ ਕਰਨ ਵਿੱਚ ਤਰੁੱਟੀ</string>
     <!-- Import and export v2 feedback -->
