@@ -35,7 +35,6 @@ import com.ichi2.anki.dialogs.requireDeckPickerOrShowError
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import com.ichi2.anki.servicelayer.ScopedStorageService
-import com.ichi2.anki.services.ReminderService
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.ui.windows.reviewer.ReviewerFragment
 import com.ichi2.anki.utils.MimeTypeUtils
@@ -162,7 +161,7 @@ class IntentHandler : AbstractIntentHandler() {
         reloadIntent: Intent,
         reviewerIntent: Intent,
     ) {
-        val deckId = intent.getLongExtra(ReminderService.EXTRA_DECK_ID, 0)
+        val deckId = intent.getLongExtra(REVIEW_DECK_INTENT_EXTRA_DECK_ID, 0)
         Timber.i("Handling intent to review deck '%d'", deckId)
 
         val reviewIntent =
@@ -336,6 +335,7 @@ class IntentHandler : AbstractIntentHandler() {
     }
 
     companion object {
+        const val REVIEW_DECK_INTENT_EXTRA_DECK_ID = "EXTRA_DECK_ID"
         private const val CLIPBOARD_INTENT = "com.ichi2.anki.COPY_DEBUG_INFO"
         private const val CLIPBOARD_INTENT_EXTRA_DATA = "clip_data"
 
@@ -383,7 +383,7 @@ class IntentHandler : AbstractIntentHandler() {
                 }
             } else if ("com.ichi2.anki.DO_SYNC" == action) {
                 LaunchType.SYNC
-            } else if (intent.hasExtra(ReminderService.EXTRA_DECK_ID)) {
+            } else if (intent.hasExtra(REVIEW_DECK_INTENT_EXTRA_DECK_ID)) {
                 LaunchType.REVIEW
             } else if (action == CLIPBOARD_INTENT) {
                 LaunchType.COPY_DEBUG_INFO
@@ -474,6 +474,17 @@ class IntentHandler : AbstractIntentHandler() {
 
         /**
          * Returns an intent to review a specific deck.
+         *
+         * @param context
+         * @param deckId the deck ID of the deck to review
+         */
+        fun getReviewDeckIntent(
+            context: Context,
+            deckId: DeckId,
+        ): Intent = Intent(context, IntentHandler::class.java).putExtra(REVIEW_DECK_INTENT_EXTRA_DECK_ID, deckId)
+
+        /**
+         * Returns an intent to review a specific deck.
          * This does not states which reviewer to use, instead IntentHandler will choose whether to use the
          * legacy or the new reviewer based on the "newReviewer" preference.
          * It is expected to be used from widget, shortcut, reminders but not from ankidroid directly because of the CLEAR_TOP flag.
@@ -483,7 +494,7 @@ class IntentHandler : AbstractIntentHandler() {
             deckId: DeckId,
         ) = Intent(context, IntentHandler::class.java).apply {
             setAction(Intent.ACTION_VIEW)
-            putExtra(ReminderService.EXTRA_DECK_ID, deckId)
+            putExtra(REVIEW_DECK_INTENT_EXTRA_DECK_ID, deckId)
         }
     }
 }

@@ -58,14 +58,18 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kotlinx.coroutines.withTimeout
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.BackendException
 import net.ankiweb.rsdroid.exceptions.BackendInterruptedException
@@ -602,6 +606,28 @@ private fun Activity.showError(
     throwable: Throwable,
     reportException: Boolean = true,
 ) = showError(throwable.toString(), throwable.toCrashReportData(context = this, reportException))
+
+/**
+ * Launches a coroutine which is guaranteed to terminate within [timeoutMs] milliseconds, which means
+ * it is safe to call on the global coroutine scope. An opt-in is required because it is easy to create memory
+ * leaks if a globally-scoped coroutine is not cancelled. However, we handle the global scope carefully here.
+ */
+@OptIn(DelicateCoroutinesApi::class)
+fun runGloballyWithTimeout(
+    timeoutMs: Long,
+    block: suspend () -> Unit,
+) {
+    GlobalScope.launch {
+        try {
+            withTimeout(timeoutMs) {
+                block()
+            }
+        } catch (e: TimeoutCancellationException) {
+            Timber.e(e, "runGloballyWithTimeout timed out after $timeoutMs ms")
+            CrashReportService.sendExceptionReport(e, "runGloballyWithTimeout")
+        }
+    }
+}
 
 data class CrashReportData(
     val exception: Throwable,

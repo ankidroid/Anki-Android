@@ -625,7 +625,7 @@
             android:exported="false"
             />
         <receiver
-            android:name=".services.ReminderService"
+            android:name=".services.AlarmManagerService"
             android:enabled="true"
             android:exported="false"
             />

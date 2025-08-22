@@ -32,6 +32,8 @@ import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.preferences.PENDING_NOTIFICATIONS_ONLY
 import com.ichi2.anki.preferences.sharedPrefs
+import com.ichi2.anki.runGloballyWithTimeout
+import com.ichi2.anki.services.AlarmManagerService.Companion.scheduleAllEnabledReviewReminderNotifications
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.showThemedToast
 import timber.log.Timber
@@ -67,7 +69,13 @@ class BootService : BroadcastReceiver() {
         }
         if (Prefs.newReviewRemindersEnabled) {
             Timber.i("Executing Boot Service - Review reminders")
-            // TODO: GSoC 2025: Run schedule all notifications method
+            runGloballyWithTimeout(SET_NOTIFICATION_TIMEOUT) {
+                // We run this on the global scope for simplicity's sake, as BroadcastReceivers do not have CoroutineScopes.
+                // Theoretically we could also use an expedited Worker, but AnkiDroid is only allotted a fixed number
+                // of expedited Worker calls per day, and these expedited calls are also used by the sync service,
+                // so it's best to conserve them.
+                scheduleAllEnabledReviewReminderNotifications(context)
+            }
         } else {
             // There are cases where the app is installed, and we have access, but nothing exist yet
             val col = getColSafe()
@@ -128,6 +136,11 @@ class BootService : BroadcastReceiver() {
          * so we need to make sure that it isn't run twice.
          */
         private var wasRun = false
+
+        /**
+         * Timeout for the process of setting all stored review reminders' notifications in milliseconds.
+         */
+        private const val SET_NOTIFICATION_TIMEOUT = 10000L
 
         @LegacyNotifications("Replaced by new review reminder scheduling logic")
         fun scheduleNotification(
