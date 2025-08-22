@@ -72,7 +72,7 @@
     <string name="disable_eraser" maxLength="28">Disable eraser</string>
     <string name="hide_whiteboard" maxLength="28">Itago ang puting pisara</string>
     <string name="clear_whiteboard" maxLength="28">Burahin ang puting pisara</string>
-    <string name="replay_media" maxLength="28">Replay media</string>
+    <string name="replay_media" maxLength="28">I-replay ang media</string>
     <string name="leech_suspend_notification">Ang card ay minarkahan bilang linta at sinuspinde</string>
     <string name="leech_notification">Ang card ay minarkahan bilang linta</string>
     <string name="webview_crash_unknown">Hindi matukoy na kamalian</string>
@@ -85,7 +85,7 @@
     <string name="webview_crash_loop_dialog_content">Bigo ang Pansistemang Webview sa pag-render sa card na \'%1$s\'.\n %2$s</string>
     <string name="filter_by_flags" maxLength="41">Mga Watawat</string>
     <!-- Custom study options -->
-    <string name="custom_study_loading_tags">Building list of tags&#8230;</string>
+    <string name="custom_study_loading_tags">Gumagawa nang listahan nang tags&#8230;</string>
     <!-- Study options -->
     <plurals name="studyoptions_buried_count">
         <item quantity="one">+%d buried</item>
@@ -109,7 +109,7 @@
     <string name="missing_note_type">Walang mahanap na uri ng tala</string>
     <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (empty)</string>
     <!-- Image cropper -->
-    <string name="image_cropper_action_rotate" maxLength="28" comment="Action in image cropper screen">Rotate</string>
+    <string name="image_cropper_action_rotate" maxLength="28" comment="Action in image cropper screen">Ikot</string>
     <string name="image_cropper_action_flip" maxLength="28" comment="Action in image cropper screen">Flip</string>
     <string name="image_cropper_action_flip_horizontally" maxLength="28" comment="Submenu action in image cropper screen">Flip horizontally</string>
     <string name="image_cropper_action_flip_vertically" maxLength="28" comment="Submenu action in image cropper screen">Flip vertically</string>
@@ -242,9 +242,9 @@
     <string name="edit_toolbar_item">Baguhin ang Toolbar Item</string>
     <string name="toolbar_item_explain_edit_or_remove">Magtala ng HTML na ilalagay bago at pagkatapos ng piniling teksto\n\nIdiin ang toolbar item upang baguhin o tanggalin ito</string>
     <string name="remove_toolbar_item">Tanggalin ang Toolbar Item?</string>
-    <string name="note_editor_image_too_large">The image is too large, please insert the image manually</string>
-    <string name="note_editor_video_too_large">The video file is too large, please insert the video manually</string>
-    <string name="note_editor_audio_too_large">The audio file is too large, please insert the audio manually</string>
+    <string name="note_editor_image_too_large">Ang larawan ay masyadong malaki, pakilagay ang larawan nang mano-mano</string>
+    <string name="note_editor_video_too_large">Ang video file ay masyadong malaki, pakilagay ang video nang mano-mano</string>
+    <string name="note_editor_audio_too_large">Ang audio file ay masyadong malaki, pakilagay ang audio nang mano-mano</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">Android backup in progress. Please try again</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Maaring kailangang gumamit ng iManager upang payagan ang AnkiDroid na magdagdag ng mga gitis.</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">Hindi pinpayagan ang AnkiDroid na maglagay ng gitis sa iyong home screen.</string>
@@ -345,7 +345,7 @@
     <string name="play_recording">I-play</string>
     <string name="next_recording" comment="Description of a button to go to the next recording">Sunod</string>
     <!--  AlertDialog in the deleteCardTemplate  -->
-    <string name="orphan_note_title">Cannot Delete Card Type</string>
+    <string name="orphan_note_title">Hindi madelete ang card type</string>
     <string name="orphan_note_message">Deleting this card type will leave some notes without any cards.</string>
     <string name="voice_not_supported">Voice not supported. Try another or install a voice engine.</string>
     <!--Keyboard shortcuts dialog-->
@@ -356,10 +356,10 @@
     <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">Pumili ng uri ng tala</string>
     <string name="tag_editor" comment="Description of the shortcut that opens the tags dialog">Tag editor</string>
     <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">Card Template Editor</string>
-    <string name="edit_front_template" comment="Description of the shortcut that shows the question side of the card template">Edit front template</string>
-    <string name="edit_back_template" comment="Description of the shortcut that shows the answer side of the card template">Edit back template</string>
+    <string name="edit_front_template" comment="Description of the shortcut that shows the question side of the card template">I-edit ang harapan nang template</string>
+    <string name="edit_back_template" comment="Description of the shortcut that shows the answer side of the card template">I-edit ang likuran nang template</string>
     <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">Edit styling</string>
-    <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">Copy template as markdown</string>
+    <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">Kopyahin ang template bilang markdown</string>
     <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">Baguhin ang anyo ng browser</string>
     <string name="missing_user_action_dialog_message" comment="%s is the user action number">User action %s is not set in this notetype. Please configure it</string>
     <string name="directory_inaccessible_info">Learn more about how to restore access here %s or go to settings to update collection folder.</string>

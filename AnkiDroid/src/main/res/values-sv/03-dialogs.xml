@@ -105,7 +105,7 @@
     <string name="check_media_title">Kontrollera media?</string>
     <string name="check_media_warning">Det här kan ta lång tid för stora mediasamlingar</string>
     <string name="check_media_message">Kontrollerar media&#8230;</string>
-    <string name="check_media_adding_missing_tag">Adding tags&#8230;</string>
+    <string name="check_media_adding_missing_tag">Lägger till taggar&#8230;</string>
     <string name="check_media_tags_added">Tags added</string>
     <string name="delete_media_message">Tar bort media&#8230;</string>
     <string name="delete_media_result_title">Raderingsresultat</string>

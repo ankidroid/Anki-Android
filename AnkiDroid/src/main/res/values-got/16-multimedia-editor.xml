@@ -71,7 +71,7 @@
     <string name="crop_image">Do you want to crop this image?</string>
     <string name="crop_button" maxLength="28">Crop image</string>
     <string name="save_dialog_content">Current image size is %sMB. Default image size limit is 1MB. Do you want to compress it?</string>
-    <string name="select_image_failed">"Select image failed, Please retry"</string>
+    <string name="select_image_failed">"Ni mahta frisaht waljan, bidjam þuk sokei aftra"</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Wairþis Bokos</string>
     <string name="crop_image_size_notice">The image is too big to be handled by the crop editor. Please resize it and try again!</string>
     <string name="reselect" maxLength="28">Aftrawaljan</string>

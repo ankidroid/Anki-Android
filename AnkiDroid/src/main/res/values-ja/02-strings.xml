@@ -147,7 +147,7 @@
     <string name="import_error_handle_exception">ファイル\n\n%s\n\nのインポートに失敗しました</string>
     <string name="import_error_not_apkg_extension">ファイル名 \"%s\" は拡張子が .apkg か .colpkg ではありません。</string>
     <string name="import_error_load_imported_database">Anki Database (.anki2) の置換はまだサポートされていません。マニュアルを参照してください。</string>
-    <string name="import_error_content_provider">The selected file couldn’t be imported automatically by AnkiDroid. Please see the user manual for how to manually import Anki files: \n%s</string>
+    <string name="import_error_content_provider">選択したファイルを自動インポートできませんでした。手動でインポートする方法については、ユーザーマニュアルを参照してください。\n%s</string>
     <string name="import_error_copy_to_cache">一時ファイルの作成に失敗しました（ストレージの空き容量が不足している可能性があります）</string>
     <string name="import_interrupted">インポートが中断されました: AnkiDroidが閉じられました</string>
     <string name="export_ready_title">エクスポートの準備完了</string>
