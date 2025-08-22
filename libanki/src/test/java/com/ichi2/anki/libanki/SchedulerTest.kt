@@ -129,7 +129,7 @@ open class SchedulerTest : InMemoryAnkiTest() {
         }
         // give the child deck a different configuration
         val c2 = col.decks.addConfigReturningId("new conf")
-        col.decks.setConfigIdForDeckDict(col.decks.getLegacy(deck2)!!, c2)
+        col.decks.setConfigIdForDeckDict(col.decks.getLegacy(deck2)!! as RegularDeck, c2)
         // both confs have defaulted to a limit of 20
         Assert.assertEquals(20, col.sched.newCount().toLong())
         // first card we get comes from parent
@@ -853,7 +853,7 @@ open class SchedulerTest : InMemoryAnkiTest() {
         // cram deck
         val did = addDynamicDeck("Cram")
         val cram = col.decks.getLegacy(did)!!
-        cram.put("resched", false)
+        cram.resched = false
         col.decks.save(cram)
         col.sched.rebuildDyn(did)
         // grab the first card
@@ -1333,7 +1333,7 @@ open class SchedulerTest : InMemoryAnkiTest() {
         addBasicNote("foo", "bar")
         val did = addDynamicDeck("test")
         val deck = decks.getLegacy(did)!!
-        deck.put("resched", false)
+        deck.resched = false
         sched.rebuildDyn(did)
         var card: Card?
         for (i in 0..2) {

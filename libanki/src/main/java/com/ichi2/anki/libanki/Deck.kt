@@ -16,61 +16,129 @@
 
 package com.ichi2.anki.libanki
 
+import androidx.annotation.VisibleForTesting
 import anki.decks.Deck.Filtered.SearchTerm.Order
-import com.ichi2.anki.common.utils.ext.deepClonedInto
+import com.ichi2.anki.common.json.JSONObjectHolder
 import net.ankiweb.rsdroid.Translations
+import org.json.JSONArray
 import org.json.JSONObject
+import org.json.JSONObject.NULL
 
-class Deck : JSONObject {
-    /**
-     * Creates a copy from [JSONObject] and use it as a string
-     *
-     * This function will perform deepCopy on the passed object
-     *
-     * If you want to create a Deck without deepCopy
-     * @see Deck.from
-     */
-    constructor(json: JSONObject) : super() {
-        json.deepClonedInto(this)
+/**
+ * Represents a deck. Use [factory] in order to create either a [FilteredDeck] or a [RegularDeck].
+ */
+interface Deck : JSONObjectHolder {
+    companion object {
+        fun isFiltered(jsonObject: JSONObject) = jsonObject.getInt("dyn") != 0
+
+        /**
+         * Those two factories returns either a [FilteredDeck] or a [RegularDeck] encapsulating the input, depending on the value of [isFiltered].
+         */
+        fun factory(jsonObject: JSONObject): Deck = if (isFiltered(jsonObject)) FilteredDeck(
+            jsonObject
+        ) else RegularDeck(jsonObject)
+
+        fun factory(jsonObject: String) = factory(JSONObject(jsonObject))
     }
 
     /**
-     * Creates a deck object form a json string
+     * Whether this deck is a filtered deck.
      */
-    constructor(json: String) : super(json)
+    var isFiltered: Boolean
+        get() = jsonObject.getInt("dyn") != 0
 
-    val isFiltered: Boolean
-        get() = getInt("dyn") != 0
+        @VisibleForTesting
+        set(value) {
+            jsonObject.put("dyn", if (value) 1 else 0)
+        }
 
-    val isNormal: Boolean
+    /**
+     * Whether this deck is a normal deck. That is, not a filtered deck.
+     */
+    var isRegular: Boolean
         get() = !isFiltered
 
+        @VisibleForTesting
+        set(value) {
+            isFiltered = !value
+        }
+
+    /**
+     * The name of the deck. Mutable. If you want a way to persistently represents this deck, use [id] instead.
+     */
     var name: String
-        get() = getString("name")
+        get() = jsonObject.getString("name")
         set(value) {
-            put("name", value)
+            jsonObject.put("name", value)
         }
 
+    /**
+     * If this deck as subdecks, whether those subdecks should be collapsed in the desktop card browser.
+     * Not used in ankidroid at the moment.
+     */
+    var browserCollapsed: Boolean
+        get() = jsonObject.getBoolean("browserCollapsed")
+        set(value) {
+            jsonObject.put("browserCollapsed", value)
+        }
+
+    /**
+     * If this deck as subdecks, whether those subdecks should be collapsed in the deck picker.
+     */
     var collapsed: Boolean
-        get() = getBoolean("collapsed")
+        get() = jsonObject.getBoolean("collapsed")
         set(value) {
-            put("collapsed", value)
+            jsonObject.put("collapsed", value)
         }
 
+    /**
+     * The id of the deck. Should be globally unique
+     * (created as a timestamp, very small chance of collision between two different decks from different users)
+     */
     var id: DeckId
-        get() = getLong("id")
+        get() = jsonObject.getLong("id")
         set(value) {
-            put("id", value)
+            jsonObject.put("id", value)
         }
 
-    var conf: Long
-        get() {
-            val value = optLong("conf")
-            return if (value > 0) value else 1
-        }
+    var resched: Boolean
+        get() = jsonObject.getBoolean("resched")
         set(value) {
-            put("conf", value)
+            jsonObject.put("resched", value)
         }
+
+    var previewAgainSecs: Int
+        get() = jsonObject.getInt("previewAgainSecs")
+        set(value) {
+            jsonObject.put("previewAgainSecs", value)
+        }
+    var previewHardSecs: Int
+        get() = jsonObject.getInt("previewHardSecs")
+        set(value) {
+            jsonObject.put("previewHardSecs", value)
+        }
+
+    var previewGoodSecs: Int
+        get() = jsonObject.getInt("previewGoodSecs")
+        set(value) {
+            jsonObject.put("previewGoodSecs", value)
+        }
+
+    /**
+     * An array of string. The i-th string correspond to the number of second/minute/hour or day for the i-th learning steps.
+     * See https://docs.ankiweb.net/deck-options.html#learning-steps
+     */
+    var delays: JSONArray?
+        get() = jsonObject.optJSONArray("delays")
+        set(value) {
+            jsonObject.put("delays", value ?: NULL)
+        }
+
+    fun removeEmpty() {
+        jsonObject.remove("empty")
+    }
+
+    fun hasEmpty() = jsonObject.has("empty")
 
     /**
      * The description, shown on the deck overview and optionally the congratulations screen.
@@ -78,9 +146,9 @@ class Deck : JSONObject {
      * May be HTML or Markdown, depending on [descriptionAsMarkdown].
      */
     var description: String
-        get() = optString("desc", "")
+        get() = jsonObject.optString("desc", "")
         set(value) {
-            put("desc", value)
+            jsonObject.put("desc", value)
         }
 
     /**
@@ -98,9 +166,9 @@ class Deck : JSONObject {
      * @see anki.i18n.GeneratedTranslations.deckConfigDescriptionNewHandlingHint
      */
     var descriptionAsMarkdown: Boolean
-        get() = optBoolean("md", false)
+        get() = jsonObject.optBoolean("md", false)
         set(value) {
-            put("md", value)
+            jsonObject.put("md", value)
         }
 }
 

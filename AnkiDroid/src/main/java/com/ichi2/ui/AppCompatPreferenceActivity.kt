@@ -36,6 +36,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.window.OnBackInvokedDispatcher.PRIORITY_OVERLAY
 import androidx.annotation.LayoutRes
+import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDelegate
@@ -81,8 +82,19 @@ abstract class AppCompatPreferenceActivity<PreferenceHack : AppCompatPreferenceA
     private lateinit var unmountReceiver: BroadcastReceiver
     protected lateinit var col: Collection
         private set
-    protected lateinit var pref: PreferenceHack
-    protected lateinit var deck: Deck
+
+    @VisibleForTesting
+    internal lateinit var pref: PreferenceHack
+
+    // value class can't be lateinit.
+    // Instead we use a backing field.
+    // We can't use `_deck` as this is only allowed for public properties.
+    private var deckBackupField: Deck? = null
+    protected open var deck: Deck
+        get() = deckBackupField!!
+        set(value) {
+            deckBackupField = value
+        }
 
     abstract inner class AbstractPreferenceHack : SharedPreferences {
         val values: MutableMap<String, String> = HashUtil.hashMapInit(30) // At most as many as in cacheValues
