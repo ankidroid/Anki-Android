@@ -437,7 +437,7 @@ class DeckPickerWidgetConfig :
                 action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
                 putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, intArrayOf(appWidgetId.id))
 
-                putExtra("deck_picker_widget_selected_deck_ids", selectedDecks.toList().toLongArray())
+                putExtra(DeckPickerWidget.EXTRA_SELECTED_DECK_IDS, selectedDecks.toList().toLongArray())
             }
 
         sendBroadcast(updateIntent)
