@@ -320,12 +320,8 @@ class ReviewerFragment :
                 }
             }
         }
-        lifecycleScope.launch {
-            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.clearTypeAnswerFlow.collect {
-                    typeAnswerEditText.text = null
-                }
-            }
+        viewModel.onShowQuestionFlow.flowWithLifecycle(lifecycle).collectIn(lifecycleScope) {
+            typeAnswerEditText.text = null
         }
     }
 
