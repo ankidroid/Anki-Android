@@ -82,7 +82,7 @@
     <string name="button_size" maxLength="41">اندازه دکمه پاسخ</string>
     <string name="card_browser_font_size" maxLength="41">تغییر اندازه فونت مرورگر کارت</string>
     <string name="card_browser_hide_media" maxLength="41">نمایش نام فایل‌ها در مرورگر کارت</string>
-    <string name="card_browser_hide_media_summary">Display audio filenames in the card browser question/answer fields</string>
+    <string name="card_browser_hide_media_summary">نمایش نام فایل‌های صوتی در کادر‌های پرسش/پاسخ مرورگر کارت</string>
     <string name="col_path" maxLength="41">مسیر قرارگیری AnkiDroid</string>
     <string name="fullscreen_review" maxLength="41">حالت تمام‌صفحه</string>
     <string name="full_screen_off">خاموش</string>
@@ -116,7 +116,7 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">لمس بالای وسط</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">لمس پایین سمت چپ</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">لمس پایین سمت راست</string>
-    <string name="gestures_two_finger_tap" maxLength="41">Two-finger tap</string>
+    <string name="gestures_two_finger_tap" maxLength="41">لمس با دو انگشت</string>
     <string name="gestures_three_finger_tap" maxLength="41">Three-finger tap</string>
     <string name="gestures_four_finger_tap" maxLength="41">Four-finger tap</string>
     <string name="gestures_shake" maxLength="41">لرزش دستگاه</string>

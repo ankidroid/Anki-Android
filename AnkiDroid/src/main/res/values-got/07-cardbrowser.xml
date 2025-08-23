@@ -60,10 +60,10 @@
     </plurals>
     <string name="card_browser_change_deck" maxLength="28">Kartahuzd inmaidjan</string>
     <string name="delete_card_title">Usnim melein?</string>
-    <string name="card_browser_show_marked" maxLength="28">Filter marked</string>
+    <string name="card_browser_show_marked" maxLength="28">Filtr gatarhviþ</string>
     <string name="card_browser_show_suspended" maxLength="28">Filter suspended</string>
-    <string name="card_browser_search_by_tag" maxLength="28">Filter by tag</string>
-    <string name="card_browser_search_by_flag" maxLength="28">Filter by flag</string>
+    <string name="card_browser_search_by_tag" maxLength="28">Filtr bi sokniwaurda</string>
+    <string name="card_browser_search_by_flag" maxLength="28">Filtr bi fanin</string>
     <string name="card_browser_list_my_searches" maxLength="28">Sokeinos meinos</string>
     <string name="card_browser_list_my_searches_save" maxLength="28">Gafastai sokein</string>
     <string name="card_browser_list_my_searches_title">Walei sokn gafastana</string>

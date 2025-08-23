@@ -88,10 +88,10 @@
         <item>بر اساس سهولت</item>
         <item>بر اساس مرورها</item>
         <item>بر اساس فاصله زمانی</item>
-        <item>By deck name</item>
+        <item>بر اساس نام دسته</item>
     </string-array>
-    <string name="manage_browser_column">Manage column</string>
-    <string name="no_columns_available">No columns available</string>
+    <string name="manage_browser_column">مدیریت ستون</string>
+    <string name="no_columns_available">ستونی موجود نیست</string>
     <string name="card_browser_select_all" maxLength="28">انتخاب همه</string>
     <string name="card_browser_select_none" maxLength="28">انتخاب هیچکدام</string>
     <string name="card_browser_no_cards_in_deck">در دستۀ «%s» هیچ کارتی یافت نشد</string>
@@ -121,6 +121,6 @@
     <string name="user_potential_columns">در دسترس</string>
     <string name="include_column">در نظر گرفتن ستون ها</string>
     <string name="exclude_column">در نظر نگرفتن ستون ها</string>
-    <string name="save_changes_message">Please save your changes first</string>
+    <string name="save_changes_message">ابتدا تغییرات خود را ذخیره کنید</string>
     <string name="browser_find_replace_loading_fields">بازیابی اسامی فیلد ها&#8230;</string>
 </resources>

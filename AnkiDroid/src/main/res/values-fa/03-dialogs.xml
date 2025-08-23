@@ -147,7 +147,7 @@
     <string name="error_deleting_image">خطا در حذف تصویر</string>
     <string name="failed_to_apply_background_image">اعمال تصویر پس‌زمینه با خطا مواجه شد %s</string>
     <string name="background_image_too_large">حجم تصویر پس‌زمینه بیشتر از حد پشتیبانی است</string>
-    <string name="image_max_size_allowed" comment="Consider keeping the unbreakable space after the digit">Maximum image size %d MB allowed</string>
+    <string name="image_max_size_allowed" comment="Consider keeping the unbreakable space after the digit">حداکثر حجم تصویر مجاز %d مگابایت است</string>
     <string name="image_dimensions_too_large">ابعاد تصویر بسیار بزرگ است (%1$d × %2$d)</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
@@ -187,8 +187,8 @@
     <string name="help_dialog_exception_report_sent">گزارش ارسال شد!</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
-        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">An automatic sync may be triggered in %d second</item>
-        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">An automatic sync may be triggered in %d seconds</item>
+        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">ممکن است یک همگام‌سازی خودکار در %d ثانیه دیگر آغاز شود</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">ممکن است یک همگام‌سازی خودکار در %d ثانیه دیگر آغاز شود</item>
     </plurals>
     <string name="metered_sync_data_warning">ارائه‌دهنده اینترنت شما ممکن است برای استفاده از داده هزینه دریافت کند</string>
     <string name="deck_picker_new">تعداد کارت های جدیدی که امروز در این دسته خواهید دید.</string>
@@ -231,8 +231,8 @@
         <item quantity="other">روزها</item>
     </plurals>
     <plurals name="set_due_date_current_interval">
-        <item quantity="one">Current interval: %d day</item>
-        <item quantity="other">Current interval: %d days</item>
+        <item quantity="one">بازهٔ فعلی: %d روز</item>
+        <item quantity="other">بازهٔ فعلی: %d روز</item>
     </plurals>
     <string name="range_delimiter" comment="Placed between two input boxes to denote a range">-</string>
     <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">از</string>

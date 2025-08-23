@@ -184,24 +184,24 @@
     <string name="apk_share_error">Airzei warþ dailjan apkg fajl</string>
     <!-- Import and export v2 feedback -->
     <string name="activity_start_failed">The system does not have an app installed that can perform this action.</string>
-    <string name="multimedia_editor_image_compression_failed"><![CDATA[Camera images may be large. You may wish to compress & resize images in the media directory]]></string>
+    <string name="multimedia_editor_image_compression_failed"><![CDATA[Frisahteis kamairos magun mikilos wisan. Magt gaþrukjan jah aftramikiljan frisahtins in stada maidje]]></string>
     <string name="no_browser_msg">Ni bigat brawsair du uslukan gawiss: %s</string>
     <string name="web_page_error">Airzei warþ atbairan lauf: %s</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
-    <string name="background_image_title" maxLength="41">Background</string>
+    <string name="background_image_title" maxLength="41">Hindargrundus</string>
     <string name="choose_an_image" maxLength="41">Frisaht waljan</string>
-    <string name="remove_wallpaper_image" maxLength="41">Remove background</string>
-    <string name="remove_background_image">Remove background?</string>
+    <string name="remove_wallpaper_image" maxLength="41">Hindargrundu usniman</string>
+    <string name="remove_background_image">Hindargrundu usniman?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default" maxLength="28">Biuht nasjan</string>
-    <string name="reviewer_tts_cloze_spoken_replacement">Blank</string>
+    <string name="reviewer_tts_cloze_spoken_replacement">Blagk</string>
     <!-- Whiteboard eraser mode toggle message in Reviewer -->
-    <string name="white_board_eraser_enabled">Eraser mode activated</string>
-    <string name="white_board_eraser_disabled">Eraser mode deactivated</string>
+    <string name="white_board_eraser_enabled">Afhvairbandis modus inlagiþs</string>
+    <string name="white_board_eraser_disabled">Afhvairbandis modus unlagiþs</string>
     <!-- Whiteboard save image message in the Study Screen -->
-    <string name="white_board_image_save_failed">Failed to save whiteboard image. %s</string>
-    <string name="white_board_image_saved">Whiteboard image saved to %s</string>
+    <string name="white_board_image_save_failed">Ni mahta gafastan frisaht hveitabaurdis. %s</string>
+    <string name="white_board_image_saved">Frisahts hveitabaurdis gafastana du %s</string>
     <string name="title_whiteboard_editor" maxLength="28">Inmaidja ƕeitabaurdis</string>
     <string name="user_is_a_robot">Detected automated test. If you are a human, contact AnkiDroid support</string>
     <!-- JS api -->
@@ -349,7 +349,7 @@
     <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">Inmaidja Meleino</string>
     <string name="select_deck" comment="Description of the shortcut that opens the deck selection dialog">Kartahuzd Waljan</string>
     <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">Select note type</string>
-    <string name="tag_editor" comment="Description of the shortcut that opens the tags dialog">Tag editor</string>
+    <string name="tag_editor" comment="Description of the shortcut that opens the tags dialog">Inmaidja sokniwaurde</string>
     <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">Karto faurameleino Inmaidja</string>
     <string name="edit_front_template" comment="Description of the shortcut that shows the question side of the card template">Edit front template</string>
     <string name="edit_back_template" comment="Description of the shortcut that shows the answer side of the card template">Edit back template</string>

@@ -47,7 +47,7 @@
     <!-- Navigation drawer strings -->
     <string name="drawer_open">باز کردن منوی جانبی</string>
     <string name="drawer_close">بستن منوی جانبی</string>
-    <string name="note_message">Note saved</string>
+    <string name="note_message">یادداشت ذخیره شد</string>
     <string name="CardEditorCardDeck">دسته کارت:</string>
     <string name="CardEditorNoteDeck">دسته:</string>
     <string name="CardEditorModel">نوع:</string>
@@ -68,11 +68,11 @@
     <string name="enable_whiteboard" maxLength="28">فعال سازی تخته سفید</string>
     <string name="disable_whiteboard">غیر فعال کردن تخته سفید</string>
     <string name="show_whiteboard">نمایش تخته سفید</string>
-    <string name="enable_eraser" maxLength="28">Enable eraser</string>
-    <string name="disable_eraser" maxLength="28">Disable eraser</string>
+    <string name="enable_eraser" maxLength="28">فعال‌کردن پاک‌کن</string>
+    <string name="disable_eraser" maxLength="28">غیرفعال‌کردن پاک‌کن</string>
     <string name="hide_whiteboard" maxLength="28">پنهان کردن تخته سفید</string>
     <string name="clear_whiteboard" maxLength="28">پاک کردن تخته سفید</string>
-    <string name="replay_media" maxLength="28">Replay media</string>
+    <string name="replay_media" maxLength="28">بازپخش رسانه</string>
     <string name="leech_suspend_notification">کارت به عنوان مزاحم مشخص و تعلیق شده است</string>
     <string name="leech_notification">کارت به عنوان مزاحم مشخص شده است</string>
     <string name="webview_crash_unknown">خطای ناشناخته</string>
@@ -109,10 +109,10 @@
     <string name="missing_note_type">نوع یادداشتی یافت نشد</string>
     <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (خالی)</string>
     <!-- Image cropper -->
-    <string name="image_cropper_action_rotate" maxLength="28" comment="Action in image cropper screen">Rotate</string>
-    <string name="image_cropper_action_flip" maxLength="28" comment="Action in image cropper screen">Flip</string>
-    <string name="image_cropper_action_flip_horizontally" maxLength="28" comment="Submenu action in image cropper screen">Flip horizontally</string>
-    <string name="image_cropper_action_flip_vertically" maxLength="28" comment="Submenu action in image cropper screen">Flip vertically</string>
+    <string name="image_cropper_action_rotate" maxLength="28" comment="Action in image cropper screen">چرخش</string>
+    <string name="image_cropper_action_flip" maxLength="28" comment="Action in image cropper screen">وارونه‌کردن</string>
+    <string name="image_cropper_action_flip_horizontally" maxLength="28" comment="Submenu action in image cropper screen">وارونه‌کردن افقی</string>
+    <string name="image_cropper_action_flip_vertically" maxLength="28" comment="Submenu action in image cropper screen">وارونه‌کردن عمودی</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">جعبه زمان رسیده</string>
     <plurals name="timebox_reached">
@@ -197,8 +197,8 @@
     <string name="restore_default" maxLength="28">بازنشانی پیش‌فرض</string>
     <string name="reviewer_tts_cloze_spoken_replacement">خالی</string>
     <!-- Whiteboard eraser mode toggle message in Reviewer -->
-    <string name="white_board_eraser_enabled">Eraser mode activated</string>
-    <string name="white_board_eraser_disabled">Eraser mode deactivated</string>
+    <string name="white_board_eraser_enabled">پاک‌کن فعال شد</string>
+    <string name="white_board_eraser_disabled">پاک‌کن غیرفعال شد</string>
     <!-- Whiteboard save image message in the Study Screen -->
     <string name="white_board_image_save_failed">ذخیرۀ تصویر تخته سفید با مشکل مواجه شد. %s</string>
     <string name="white_board_image_saved">تصویر تخته سفید در %s ذخیره شد</string>
@@ -309,7 +309,7 @@
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">کارتها</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">یادداشت‌ها</string>
     <string name="toggle_cards_notes">تغییر کارت‌ها/یادداشت‌ها</string>
-    <string name="truncate_content_help">Truncate the height of each row of the Browser to show only first 3 lines of content</string>
+    <string name="truncate_content_help">ارتفاع هر ردیف از مرورگر را کوتاه کنید تا فقط ۳ خط اول محتوا نشان داده شود</string>
     <string name="browser_options_dialog_heading">تنظیمات مرورگر</string>
     <string name="audio_saved">مورد ضبط شده ذخیره شد</string>
     <string name="deleting_selected_notes">در حال حذف یادداشت های انتخاب شده</string>
@@ -323,9 +323,9 @@
     <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">باز کردن تنظیمات متن به گفتار ناموفق بود</string>
     <string name="shared_decks_login_required">لطفا وارد حساب کاربری خود شوید که دسته های بیشتری را دانلود کنید</string>
     <string name="deck_description_field_hint">توضیحات</string>
-    <string name="deck_description_saved">Description updated</string>
-    <string name="format_deck_description_as_markdown">Format as Markdown</string>
-    <string name="help_button_content_description">Open help for ‘%s’</string>
+    <string name="deck_description_saved">توضیح به‌روز شد</string>
+    <string name="format_deck_description_as_markdown">به فرمت مارک‌داون درآور</string>
+    <string name="help_button_content_description">راهنمای «%s» را باز کن</string>
     <string name="failed_to_copy">کپی کردن ناموفق بود</string>
     <string name="card_browser_unavailable_when_notes_mode">در حالت \'یادداشت‌ها\' در دسترس نیست</string>
     <plurals name="unbury_cards_feedback">
@@ -359,5 +359,5 @@
     <string name="missing_user_action_dialog_message" comment="%s is the user action number">عمل کاربر %s در این نوع کارت تنظیم نشده است. لطفاً آن را پیکربندی کنید.</string>
     <string name="directory_inaccessible_info">برای کسب اطلاعات بیشتر در مورد نحوه بازیابی دسترسی اینجا %s را ببینید یا به تنظیمات بروید تا پوشه مجموعه را به‌روزرسانی کنید.</string>
     <!-- Scheduler Upgrade Required Dialog title-->
-    <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">Scheduler upgrade required</string>
+    <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">ارتقای زمان‌بند لازم است</string>
 </resources>
