@@ -367,7 +367,7 @@
     <string name="hide_system_bars_navigation_bar" comment="Setting option to hide the system navigation bar (the bottom one that can go back, to home, etc)">내비게이션 바</string>
     <string name="hide_system_bars_all_bars" comment="Setting option to hide all the system bars">전부</string>
     <string name="ignore_display_cutout" maxLength="41">디스플레이 컷아웃 무시</string>
-    <string name="hide_answer_buttons" maxLength="41">정답 버튼 숨기기</string>
+    <string name="show_answer_buttons" maxLength="41">Show answer buttons</string>
     <string name="hide_hard_and_easy" maxLength="41">\'어려움\', \'쉬움\' 버튼 숨기기</string>
     <string name="reviewer_frame_style" maxLength="41">프레임 스타일</string>
     <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Study Screen">카드</string>
@@ -381,6 +381,7 @@
     <string name="new_study_screen" maxLength="41">New study screen</string>
     <string name="new_study_screen_summ"><![CDATA[Improved study screen that will succeed the current one. Some features of the old screen have been changed or removed. Please report any <a href="%1$s">feedback</a> or <a href="%2$s">bugs</a>.]]></string>
     <string name="show_answer_feedback" maxLength="41">Show answer feedback</string>
+    <string name="screen" maxLength="41">Screen</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">설정 열기</string>
 </resources>
