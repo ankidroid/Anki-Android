@@ -1082,6 +1082,11 @@ open class CardBrowser :
                 displayCardInfo()
                 return true
             }
+            R.id.action_grade_now -> {
+                Timber.i("CardBrowser:: Grade now button pressed")
+                openGradeNow()
+                return true
+            }
         }
 
         // TODO: make better use of MenuProvider
