@@ -96,7 +96,7 @@
     <string name="dialog_positive_disable" tools:ignore="UnusedResources">Disable</string>
     <string name="dialog_positive_overwrite">Ufarmeljan</string>
     <string name="dialog_positive_repair">Nasei</string>
-    <string name="dialog_positive_replace">Replace</string>
+    <string name="dialog_positive_replace">Miþsatjan</string>
     <string name="dialog_collection_path_not_dir">The path specified wasn’t a valid directory</string>
     <string name="dialog_invalid_custom_certificate">The provided text does not resolve to a valid PEM-encoded X509 certificate</string>
     <string name="dialog_invalid_custom_certificate_title">Error parsing certificate</string>
@@ -170,7 +170,7 @@
     <string name="help_title_support_ankidroid" maxLength="28">AnkiDroid Stodjan</string>
     <string name="help_item_support_opencollective_donate">Andstaldan</string>
     <string name="help_item_support_develop_ankidroid">Andwaibei</string>
-    <string name="help_item_support_rate_ankidroid">Rate</string>
+    <string name="help_item_support_rate_ankidroid">Wairþon</string>
     <string name="help_item_support_other_ankidroid">Anþar</string>
     <string name="multimedia_editor_trans_translate">Gaskeirjan</string>
     <string name="help_title_community">Gamainduþs</string>
