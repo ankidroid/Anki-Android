@@ -373,7 +373,7 @@ Elles ne sont pas destinées à la plupart des utilisateurs et restent en anglai
     <string name="hide_system_bars_navigation_bar" comment="Setting option to hide the system navigation bar (the bottom one that can go back, to home, etc)">Barre de navigation</string>
     <string name="hide_system_bars_all_bars" comment="Setting option to hide all the system bars">Tout</string>
     <string name="ignore_display_cutout" maxLength="41">Ignorer la découpe d\'affichage</string>
-    <string name="hide_answer_buttons" maxLength="41">Masquer les boutons de réponse</string>
+    <string name="show_answer_buttons" maxLength="41">Show answer buttons</string>
     <string name="hide_hard_and_easy" maxLength="41">Masquer les boutons « dur» et « facile»</string>
     <string name="reviewer_frame_style" maxLength="41">Style de cadre</string>
     <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Study Screen">Carte</string>
@@ -387,6 +387,7 @@ Elles ne sont pas destinées à la plupart des utilisateurs et restent en anglai
     <string name="new_study_screen" maxLength="41">Nouvel écran de révision</string>
     <string name="new_study_screen_summ"><![CDATA[Improved study screen that will succeed the current one. Some features of the old screen have been changed or removed. Please report any <a href="%1$s">feedback</a> or <a href="%2$s">bugs</a>.]]></string>
     <string name="show_answer_feedback" maxLength="41">Montrer la réaction de réponse</string>
+    <string name="screen" maxLength="41">Screen</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">Aller aux paramètres</string>
 </resources>

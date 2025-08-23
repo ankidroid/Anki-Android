@@ -372,7 +372,7 @@
     <string name="hide_system_bars_navigation_bar" comment="Setting option to hide the system navigation bar (the bottom one that can go back, to home, etc)">Navigasyon çubuğu</string>
     <string name="hide_system_bars_all_bars" comment="Setting option to hide all the system bars">Hepsi</string>
     <string name="ignore_display_cutout" maxLength="41">Ekran kesintisini yok say</string>
-    <string name="hide_answer_buttons" maxLength="41">Cevap düğmelerini gizle</string>
+    <string name="show_answer_buttons" maxLength="41">Show answer buttons</string>
     <string name="hide_hard_and_easy" maxLength="41">\"Zor\" ve \"Kolay\" düğmelerini gizle</string>
     <string name="reviewer_frame_style" maxLength="41">Çerçeve tarzı</string>
     <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Study Screen">Kart</string>
@@ -386,6 +386,7 @@
     <string name="new_study_screen" maxLength="41">Yeni çalışma ekranı</string>
     <string name="new_study_screen_summ"><![CDATA[Şu anda varolan çalışma ekranının yerine geçecek olan ekran. Eski ekranın belirli özellikleri değiştirilmiş veya silinmiş bulunuyor. Lütfen herhangi bir <a href="%1$s">geri bildiriminizi</a> veya <a href="%2$s">bulduğunuz hataları</a> bildirin.]]></string>
     <string name="show_answer_feedback" maxLength="41">Cevap geribildirimini göster</string>
+    <string name="screen" maxLength="41">Screen</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">Ayarları aç</string>
 </resources>
