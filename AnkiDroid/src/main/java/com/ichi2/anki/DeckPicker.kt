@@ -71,8 +71,6 @@ import androidx.core.view.doOnLayout
 import androidx.core.view.isVisible
 import androidx.draganddrop.DropHelper
 import androidx.fragment.app.commit
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -251,23 +249,12 @@ open class DeckPicker :
     ApkgImportResultLauncherProvider,
     CsvImportResultLauncherProvider,
     CollectionPermissionScreenLauncher {
-    val viewModel: DeckPickerViewModel by viewModels {
-        object : ViewModelProvider.Factory {
-            override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                val fragmented =
-                    (
-                        resources.configuration.screenLayout and
-                            Configuration.SCREENLAYOUT_SIZE_MASK
-                    ) ==
-                        Configuration.SCREENLAYOUT_SIZE_XLARGE
-                @Suppress("UNCHECKED_CAST")
-                return DeckPickerViewModel(fragmented) as T
-            }
-        }
-    }
+    val viewModel: DeckPickerViewModel by viewModels()
 
     override var fragmented: Boolean
-        get() = viewModel.fragmented
+        get() =
+            resources.configuration.screenLayout and Configuration.SCREENLAYOUT_SIZE_MASK ==
+                Configuration.SCREENLAYOUT_SIZE_XLARGE
         set(_) = throw UnsupportedOperationException()
 
     // Short animation duration from system
@@ -800,9 +787,9 @@ open class DeckPicker :
             }
         }
 
-        fun onStudyOptionsVisibilityChanged(isVisible: Boolean) {
+        fun onStudyOptionsVisibilityChanged(collectionHasNoCards: Boolean) {
             invalidateOptionsMenu()
-            studyoptionsFrame?.isVisible = isVisible
+            studyoptionsFrame?.isVisible = fragmented && !collectionHasNoCards
         }
 
         fun onDeckListChanged(deckList: FlattenedDeckList) {
@@ -876,7 +863,7 @@ open class DeckPicker :
         viewModel.flowOfStudiedTodayStats.launchCollectionInLifecycleScope(::onStudiedTodayChanged)
         viewModel.flowOfDeckListInInitialState.filterNotNull().launchCollectionInLifecycleScope(::onCollectionStatusChanged)
         viewModel.flowOfCardsDue.launchCollectionInLifecycleScope(::onCardsDueChanged)
-        viewModel.flowOfStudyOptionsVisible.launchCollectionInLifecycleScope(::onStudyOptionsVisibilityChanged)
+        viewModel.flowOfCollectionHasNoCards.launchCollectionInLifecycleScope(::onStudyOptionsVisibilityChanged)
         viewModel.flowOfDeckList.launchCollectionInLifecycleScope(::onDeckListChanged)
         viewModel.flowOfFocusedDeck.launchCollectionInLifecycleScope(::onFocusedDeckChanged)
         viewModel.flowOfResizingDividerVisible.launchCollectionInLifecycleScope(::onResizingDividerVisibilityChanged)

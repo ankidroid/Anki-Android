@@ -51,7 +51,6 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -60,12 +59,9 @@ import timber.log.Timber
 
 /**
  * ViewModel for the [DeckPicker]
- *
- * @param fragmented whether the study options is shown alongside the deck picker
  */
-class DeckPickerViewModel(
-    val fragmented: Boolean,
-) : ViewModel(),
+class DeckPickerViewModel :
+    ViewModel(),
     OnErrorListener {
     val flowOfStartupResponse = MutableStateFlow<StartupResponse?>(null)
 
@@ -163,8 +159,6 @@ class DeckPickerViewModel(
 
     /** "Studied N cards in 0 seconds today */
     val flowOfStudiedTodayStats = MutableStateFlow("")
-
-    val flowOfStudyOptionsVisible = flowOfCollectionHasNoCards.map { noCards -> fragmented && !noCards }
 
     /** Flow that determines when the resizing divider should be visible */
     val flowOfResizingDividerVisible =
