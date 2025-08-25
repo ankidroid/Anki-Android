@@ -31,6 +31,7 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.VisibleForTesting
 import androidx.constraintlayout.widget.Group
+import androidx.core.os.bundleOf
 import androidx.core.text.HtmlCompat
 import androidx.core.view.MenuProvider
 import androidx.core.view.isVisible
@@ -48,7 +49,6 @@ import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.reviewreminders.ReviewReminderScope
 import com.ichi2.anki.reviewreminders.ScheduleReminders
 import com.ichi2.anki.settings.Prefs
-import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.internationalization.toSentenceCase
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.utils.HtmlUtils.convertNewlinesToHtml
@@ -70,10 +70,6 @@ class StudyOptionsFragment :
     /** Alerts to inform the user about different situations  */
     @Suppress("Deprecation")
     private var progressDialog: android.app.ProgressDialog? = null
-
-    /** Whether we are closing in order to go to the reviewer. If it's the case, UPDATE_VALUES_FROM_DECK should not be
-     * cancelled as the counts will be used in review.  */
-    private var toReviewer = false
 
     /**
      * UI elements for "Study Options" view
@@ -109,7 +105,10 @@ class StudyOptionsFragment :
             if (v.id == R.id.studyoptions_start) {
                 Timber.i("StudyOptionsFragment:: start study button pressed")
                 if (currentContentView != CONTENT_CONGRATS) {
-                    openReviewer()
+                    parentFragmentManager.setFragmentResult(
+                        REQUEST_STUDY_OPTIONS_STUDY,
+                        bundleOf(),
+                    )
                 } else {
                     showCustomStudyContextMenu()
                 }
@@ -203,22 +202,6 @@ class StudyOptionsFragment :
             // getActivity() can return null if reference to fragment lingers after parent activity has been closed,
             // which is particularly relevant when using AsyncTasks.
             Timber.e("closeStudyOptions() failed due to getActivity() returning null")
-        }
-    }
-
-    private fun openReviewer() {
-        Timber.i("openReviewer()")
-        val reviewer = Reviewer.getIntent(requireContext())
-        if (fragmented) {
-            toReviewer = true
-            Timber.i("openReviewer() fragmented mode")
-            onRequestReviewActivityResult.launch(reviewer)
-            // TODO #8913 should we finish the activity here? when it comes back from review it's dead and mToolbar is null and it crashes
-        } else {
-            // Go to DeckPicker after studying when not tablet
-            reviewer.flags = Intent.FLAG_ACTIVITY_FORWARD_RESULT
-            startActivity(reviewer)
-            requireActivity().finish()
         }
     }
 
@@ -386,31 +369,6 @@ class StudyOptionsFragment :
         }
     }
 
-    private var onRequestReviewActivityResult =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
-            Timber.i("StudyOptionsFragment::mOnRequestReviewActivityResult")
-
-            if (!isAdded) {
-                Timber.d("Fragment not added to the activity")
-                CrashReportService.sendExceptionReport("Fragment is not added to activity", "StudyOptionsFragment")
-                return@registerForActivityResult
-            }
-
-            Timber.d("Handling onActivityResult for StudyOptionsFragment (openReview, resultCode = %d)", result.resultCode)
-            configureToolbar()
-            if (result.resultCode == DeckPicker.RESULT_DB_ERROR || result.resultCode == DeckPicker.RESULT_MEDIA_EJECTED) {
-                closeStudyOptions(result.resultCode)
-                return@registerForActivityResult
-            }
-            if (result.resultCode == AbstractFlashcardViewer.RESULT_NO_MORE_CARDS) {
-                // If no more cards getting returned while counts > 0 (due to learn ahead limit) then show a snackbar
-                if (col!!.sched.totalCount() > 0 && studyOptionsView != null) {
-                    studyOptionsView!!
-                        .findViewById<View>(R.id.studyoptions_main)
-                        .showSnackbar(R.string.studyoptions_no_cards_due)
-                }
-            }
-        }
     private var onDeckOptionsActivityResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
             Timber.i("StudyOptionsFragment::mOnDeckOptionsActivityResult")
@@ -523,11 +481,7 @@ class StudyOptionsFragment :
 
     override fun onPause() {
         super.onPause()
-        if (!toReviewer) {
-            // In the reviewer, we need the count. So don't cancel it. Otherwise, (e.g. go to browser, selecting another
-            // deck) cancel counts.
-            updateValuesFromDeckJob?.cancel()
-        }
+        updateValuesFromDeckJob?.cancel()
     }
 
     /**
@@ -692,6 +646,12 @@ class StudyOptionsFragment :
     }
 
     companion object {
+        /**
+         * Identifier for a fragment result request to study(open the reviewer). Activities using
+         * this fragment need to handle this request and initialize the study screen as they seem fit.
+         */
+        const val REQUEST_STUDY_OPTIONS_STUDY = "request_study_option_study"
+
         /**
          * Available options performed by other activities
          */
