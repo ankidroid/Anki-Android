@@ -655,6 +655,11 @@ open class DeckPicker :
             )
         }
 
+        setFragmentResultListener(StudyOptionsFragment.REQUEST_STUDY_OPTIONS_STUDY) { _, _ ->
+            Timber.d("Opening study screen from DeckPicker's study options panel")
+            openReviewer()
+        }
+
         pullToSyncWrapper.configureView(
             this,
             IMPORT_MIME_TYPES,
@@ -1453,6 +1458,9 @@ open class DeckPicker :
     private fun processReviewResults(resultCode: Int) {
         if (resultCode == AbstractFlashcardViewer.RESULT_NO_MORE_CARDS) {
             CongratsPage.onReviewsCompleted(this, getColUnsafe.sched.totalCount() == 0)
+            if (fragmented) {
+                fragment?.refreshInterface()
+            }
         }
     }
 
