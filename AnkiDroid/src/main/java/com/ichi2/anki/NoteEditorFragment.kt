@@ -135,6 +135,7 @@ import com.ichi2.anki.multimediacard.impl.MultimediaEditableNote
 import com.ichi2.anki.noteeditor.CustomToolbarButton
 import com.ichi2.anki.noteeditor.FieldState
 import com.ichi2.anki.noteeditor.FieldState.FieldChangeType
+import com.ichi2.anki.noteeditor.NoteEditorFragmentDelegate
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import com.ichi2.anki.noteeditor.Toolbar
 import com.ichi2.anki.noteeditor.Toolbar.TextFormatListener
@@ -248,15 +249,18 @@ class NoteEditorFragment :
     private var pasteOcclusionImageButton: Button? = null
 
     // non-null after onCollectionLoaded
-    private var editorNote: Note? = null
+    var editorNote: Note? = null
+        private set
 
     private val multimediaViewModel: MultimediaViewModel by activityViewModels()
 
     private var currentImageOccPath: String? = null
 
     // Null if adding a new card. Presently NonNull if editing an existing note - but this is subject to change
-    private var currentEditedCard: Card? = null
-    private var selectedTags: MutableList<String>? = null
+    var currentEditedCard: Card? = null
+        private set
+    var selectedTags: MutableList<String>? = null
+        private set
 
     @get:VisibleForTesting
     var deckId: DeckId = 0
@@ -274,7 +278,8 @@ class NoteEditorFragment :
 
     // indicates which activity called Note Editor
     private var caller = NoteEditorCaller.NO_CALLER
-    private var editFields: LinkedList<FieldEditText>? = null
+    var editFields: LinkedList<FieldEditText>? = null
+        private set
     private var sourceText: Array<String?>? = null
     private val fieldState = FieldState.fromEditor(this)
     private lateinit var toolbar: Toolbar
@@ -286,6 +291,13 @@ class NoteEditorFragment :
     private var toggleStickyText: HashMap<Int, String?> = HashMap()
 
     var clipboard: ClipboardManager? = null
+
+    private var delegate: NoteEditorFragmentDelegate? = null
+    private val inNoteEditorActivity: Boolean
+        get() = requireAnkiActivity() is NoteEditorActivity
+
+    private val noteEditorActivity
+        get() = requireAnkiActivity() as? NoteEditorActivity
 
     /**
      * Whether this is displayed in a fragment view.
@@ -467,6 +479,12 @@ class NoteEditorFragment :
             }
             negativeButton(R.string.dialog_cancel)
         }
+    }
+
+    // Sets the delegate to receive callbacks when note editor events occur (ready, saved, changed, etc.)
+    // This allows the hosting activity to respond to fragment state changes
+    fun setDelegate(delegate: NoteEditorFragmentDelegate) {
+        this.delegate = delegate
     }
 
     @VisibleForTesting
@@ -942,6 +960,10 @@ class NoteEditorFragment :
                 Timber.w("Image uri is null")
             }
         }
+
+        requireView().post {
+            delegate?.onNoteEditorReady()
+        }
     }
 
     private val cameraLauncher =
@@ -1055,7 +1077,7 @@ class NoteEditorFragment :
             KeyEvent.KEYCODE_NUMPAD_ENTER, KeyEvent.KEYCODE_ENTER ->
                 if (event.isCtrlPressed) {
                     // disable it in case of image occlusion
-                    if (allowSaveAndPreview()) {
+                    if (allowSaveAction()) {
                         launchCatchingTask { saveNote() }
                         return true
                     }
@@ -1093,7 +1115,7 @@ class NoteEditorFragment :
             KeyEvent.KEYCODE_P -> {
                 if (event.isCtrlPressed) {
                     Timber.i("Ctrl+P: Preview Pressed")
-                    if (allowSaveAndPreview()) {
+                    if (allowPreviewAction()) {
                         launchCatchingTask { performPreview() }
                         return true
                     }
@@ -1281,6 +1303,7 @@ class NoteEditorFragment :
         // update UI based on the result, noOfAddedCards
         onNoteAdded(changes.count)
         updateFieldsFromStickyText()
+        delegate?.onNoteSaved()
     }
 
     @VisibleForTesting
@@ -1392,6 +1415,7 @@ class NoteEditorFragment :
             closeNoteEditor()
             return
         }
+        delegate?.onNoteSaved()
     }
 
     /**
@@ -1433,9 +1457,8 @@ class NoteEditorFragment :
     override fun onPrepareMenu(menu: Menu) {
         if (addNote) {
             menu.findItem(R.id.action_copy_note).isVisible = false
-            val iconVisible = allowSaveAndPreview()
-            menu.findItem(R.id.action_save).isVisible = iconVisible
-            menu.findItem(R.id.action_preview).isVisible = iconVisible
+            menu.findItem(R.id.action_save).isVisible = allowSaveAction()
+            menu.findItem(R.id.action_preview).isVisible = allowPreviewAction()
         } else {
             // Hide add note item if fragment is in fragmented activity
             // because this item is already present in CardBrowser
@@ -1475,8 +1498,23 @@ class NoteEditorFragment :
      * option to save/preview the card as it has a built in option and the user is notified
      * when the card is saved successfully
      */
-    private fun allowSaveAndPreview(): Boolean =
+    private fun allowSaveAction(): Boolean =
         when {
+            addNote && currentNotetypeIsImageOcclusion() -> false
+            else -> true
+        }
+
+    /**
+     * Determines whether the preview action should be available to the user.
+     *
+     * Preview action is disabled in the following scenarios:
+     * - When running in a fragmented note editor (previewer is already visible in a side panel)
+     * - When adding a new image occlusion note (uses built-in preview functionality)
+     */
+    // TODO: Move this logic to a [NoteEditorActivity.kt]
+    private fun allowPreviewAction(): Boolean =
+        when {
+            inNoteEditorActivity && noteEditorActivity?.fragmented == true -> false
             addNote && currentNotetypeIsImageOcclusion() -> false
             else -> true
         }
@@ -1486,14 +1524,14 @@ class NoteEditorFragment :
         when (item.itemId) {
             R.id.action_preview -> {
                 Timber.i("NoteEditor:: Preview button pressed")
-                if (allowSaveAndPreview()) {
+                if (allowPreviewAction()) {
                     launchCatchingTask { performPreview() }
                 }
                 return true
             }
             R.id.action_save -> {
                 Timber.i("NoteEditor:: Save note button pressed")
-                if (allowSaveAndPreview()) {
+                if (allowSaveAction()) {
                     launchCatchingTask { saveNote() }
                 }
                 return true
@@ -2845,6 +2883,8 @@ class NoteEditorFragment :
             // In case the type is changed while adding the card, the menu options need to be invalidated
             requireActivity().invalidateMenu()
             changeNoteType(allNoteTypeIds!![pos])
+
+            delegate?.onNoteTypeChanged()
         }
 
         override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -2977,6 +3017,8 @@ class NoteEditorFragment :
         private val index: Int,
     ) : TextWatcher {
         override fun afterTextChanged(arg0: Editable) {
+            delegate?.onNoteTextChanged()
+
             if (!loadingStickyFields) {
                 isFieldEdited = true
             }
@@ -3070,7 +3112,7 @@ class NoteEditorFragment :
                 this.arguments = launcher.toBundle()
             }
 
-        private fun shouldReplaceNewlines(): Boolean =
+        fun shouldReplaceNewlines(): Boolean =
             AnkiDroidApp.instance
                 .sharedPrefs()
                 .getBoolean(PREF_NOTE_EDITOR_NEWLINE_REPLACE, true)
