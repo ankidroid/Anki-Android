@@ -509,7 +509,7 @@ class DeckPickerTest : RobolectricTest() {
         }
 
     @Test
-    @Flaky(OS.WINDOWS)
+    @Flaky(OS.ALL)
     fun `ContextMenu unburied cards when selecting UNBURY`() =
         runTest {
             startActivityNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent()).run {

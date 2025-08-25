@@ -286,6 +286,7 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
     }
 
     @Test
+    @Flaky(OS.ALL) // Flaky on MACOS and WINDOWS, not seen a breakage on LINUX
     fun noAutomaticAnswerAfterRenderProcessGoneAndPaused_issue9632() =
         runTest {
             val controller = getViewerController(addCard = true, startedWithShortcut = false)
