@@ -54,7 +54,7 @@ class TagsDialogViewModel(
                     }
                 val allCheckedTags =
                     allCheckedTagsList.toSet()
-                val allUncheckedTags =
+                val uncheckedTags =
                     allCheckedTagsList
                         .groupingBy { it }
                         .eachCount()
@@ -63,7 +63,6 @@ class TagsDialogViewModel(
                             kv.key
                         }
                 _initProgress.emit(InitProgress.Processing)
-                val uncheckedTags = allTags - allCheckedTags
                 if (isCustomStudying) {
                     TagsList(
                         allTags = allCheckedTags,
@@ -74,7 +73,7 @@ class TagsDialogViewModel(
                     TagsList(
                         allTags = allTags,
                         checkedTags = allCheckedTags,
-                        uncheckedTags = allUncheckedTags,
+                        uncheckedTags = uncheckedTags,
                     )
                 }.also {
                     _initProgress.emit(InitProgress.Finished)
