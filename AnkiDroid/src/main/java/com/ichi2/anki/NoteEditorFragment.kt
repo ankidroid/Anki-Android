@@ -1604,12 +1604,47 @@ class NoteEditorFragment :
     @NeedsTest("cards with a cloze notetype but no cloze in fields are previewed as empty card")
     @NeedsTest("clozes that don't start at '1' are correctly displayed")
     suspend fun performPreview() {
+        val fields = prepareNoteFields()
+        val tags = selectedTags ?: mutableListOf()
+
+        val ord = determineCardOrdinal(fields)
+
+        val args =
+            TemplatePreviewerArguments(
+                notetypeFile = NotetypeFile(requireContext(), editorNote!!.notetype),
+                fields = fields,
+                tags = tags,
+                id = editorNote!!.id,
+                ord = ord,
+                fillEmpty = false,
+            )
+        val intent = TemplatePreviewerPage.getIntent(requireContext(), args)
+        startActivity(intent)
+    }
+
+    /**
+     * Prepares the note fields for the previewer by converting them to the appropriate format.
+     *
+     * @return A list of field values properly formatted for display
+     */
+    fun prepareNoteFields(): MutableList<String> {
         val convertNewlines = shouldReplaceNewlines()
 
         fun String?.toFieldText(): String = NoteService.convertToHtmlNewline(this.toString(), convertNewlines)
-        val fields = editFields?.mapTo(mutableListOf()) { it.fieldText.toFieldText() } ?: mutableListOf()
-        val tags = selectedTags ?: mutableListOf()
 
+        return editFields?.mapTo(mutableListOf()) { it.fieldText.toFieldText() } ?: mutableListOf()
+    }
+
+    /**
+     * Determines the appropriate card ordinal (template position) to display in the previewer
+     *
+     * For cloze notes, it identifies the first cloze number present in the fields.
+     * For standard notes, it uses the currently edited card ordinal if available.
+     *
+     * @param fields The processed note fields
+     * @return The ordinal (position) of the card template to display
+     */
+    suspend fun determineCardOrdinal(fields: MutableList<String>): Int {
         val ord =
             if (editorNote!!.notetype.isCloze) {
                 val tempNote = withCol { Note.fromNotetypeId(this@withCol, editorNote!!.notetype.id) }
@@ -1623,18 +1658,7 @@ class NoteEditorFragment :
             } else {
                 currentEditedCard?.ord ?: 0
             }
-
-        val args =
-            TemplatePreviewerArguments(
-                notetypeFile = NotetypeFile(requireContext(), editorNote!!.notetype),
-                fields = fields,
-                tags = tags,
-                id = editorNote!!.id,
-                ord = ord,
-                fillEmpty = false,
-            )
-        val intent = TemplatePreviewerPage.getIntent(requireContext(), args)
-        startActivity(intent)
+        return ord
     }
 
     private fun setTags(tags: Array<String>) {
