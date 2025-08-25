@@ -246,7 +246,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
                             option.checkAvailability(deferredDefaults.getCompleted()),
                     )
                 }.forEach { (menuItem, isItemEnabled) ->
-                    (layoutInflater.inflate(android.R.layout.simple_list_item_1, container, false) as TextView)
+                    (layoutInflater.inflate(R.layout.item_custom_study, container, false) as TextView)
                         .apply {
                             text = menuItem.getTitle(requireContext().resources)
                             isEnabled = isItemEnabled
