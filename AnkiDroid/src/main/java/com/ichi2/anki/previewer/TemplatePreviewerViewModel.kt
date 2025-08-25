@@ -203,6 +203,39 @@ class TemplatePreviewerViewModel(
             ordFlow.value
         }
 
+    suspend fun getSafeClozeOrd(): Int = ordFlow.value.coerceIn(0, clozeOrds!!.await().size - 1)
+
+    fun updateContent(
+        fields: List<String>,
+        tags: List<String>,
+    ) {
+        launchCatchingIO {
+            // Update note fields and tags
+            val note = note.await()
+            note.fields = fields.toMutableList()
+            note.tags = tags.toMutableList()
+
+            currentCard =
+                asyncIO {
+                    withCol {
+                        note.ephemeralCard(
+                            col = this,
+                            ord = ordFlow.value,
+                            customNoteType = notetype,
+                            fillEmpty = fillEmpty,
+                        )
+                    }
+                }
+            if (showingAnswer.value) {
+                showAnswer()
+                loadAndPlaySounds(CardSide.ANSWER)
+            } else {
+                showQuestion()
+                loadAndPlaySounds(CardSide.QUESTION)
+            }
+        }
+    }
+
     /* *********************************************************************************************
      *************************************** Internal methods ***************************************
      ********************************************************************************************* */
