@@ -30,6 +30,7 @@ import com.ichi2.anki.servicelayer.PreferenceUpgradeService
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService.setPreferencesUpToDate
 import com.ichi2.anki.servicelayer.ScopedStorageService.isLegacyStorage
 import com.ichi2.anki.ui.windows.permissions.Full30and31PermissionsFragment
+import com.ichi2.anki.ui.windows.permissions.InternetPermissionFragment
 import com.ichi2.anki.ui.windows.permissions.PermissionsFragment
 import com.ichi2.anki.ui.windows.permissions.PermissionsUntil29Fragment
 import com.ichi2.anki.ui.windows.permissions.TiramisuPermissionsFragment
@@ -198,7 +199,7 @@ enum class PermissionSet(
         permissionsFragment = TiramisuPermissionsFragment::class.java,
     ),
 
-    APP_PRIVATE(emptyList(), null),
+    APP_PRIVATE(listOf(android.Manifest.permission.INTERNET), InternetPermissionFragment::class.java),
 }
 
 /**

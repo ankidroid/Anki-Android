@@ -184,6 +184,7 @@ import com.ichi2.utils.ImportUtils
 import com.ichi2.utils.ImportUtils.ImportResult
 import com.ichi2.utils.NetworkUtils
 import com.ichi2.utils.NetworkUtils.isActiveNetworkMetered
+import com.ichi2.utils.Permissions
 import com.ichi2.utils.VersionUtils
 import com.ichi2.utils.cancelable
 import com.ichi2.utils.checkBoxPrompt
@@ -533,6 +534,11 @@ open class DeckPicker :
         if (intent.hasExtra(INTENT_SYNC_FROM_LOGIN)) {
             Timber.d("launched from introduction activity login: syncing")
             syncOnResume = true
+        }
+
+        if (!Permissions.canAccessInternet(this)) {
+            this.startActivity(PermissionsActivity.getIntent(this, PermissionSet.APP_PRIVATE))
+            Timber.d("Internet not accessible")
         }
 
         setContentView(R.layout.homescreen)
