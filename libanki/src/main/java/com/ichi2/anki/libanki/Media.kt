@@ -152,7 +152,8 @@ open class Media(
 
     /** Move provided files to the trash. */
     @LibAnkiAlias("trash_files")
-    fun trashFiles(fnames: Iterable<String>) {
+    fun trashFiles(fnames: List<String>) {
+        Timber.i("Deleting %d file(s) from %s", fnames.size, dir)
         col.backend.trashMediaFiles(fnames = fnames)
     }
 
