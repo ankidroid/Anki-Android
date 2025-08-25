@@ -285,8 +285,8 @@ class CardContentProvider : ContentProvider() {
                 val columns = projection ?: FlashCardsContract.CardTemplate.DEFAULT_PROJECTION
                 val rv = MatrixCursor(columns, 1)
                 try {
-                    for ((idx, template) in currentNoteType!!.templates.withIndex()) {
-                        addTemplateToCursor(template, currentNoteType, idx + 1, col.notetypes, rv, columns)
+                    for ((ord, template) in currentNoteType!!.templates.withIndex()) {
+                        addTemplateToCursor(template, currentNoteType, ord + 1, col.notetypes, rv, columns)
                     }
                 } catch (e: JSONException) {
                     throw IllegalArgumentException("Note type is malformed", e)
@@ -1191,10 +1191,13 @@ class CardContentProvider : ContentProvider() {
         }
     }
 
+    /**
+     * @param [idx] The index of the template in the note type. First template is number 1.
+     */
     private fun addTemplateToCursor(
         tmpl: CardTemplate,
         notetype: NotetypeJson?,
-        id: Int,
+        idx: Int,
         notetypes: Notetypes,
         rv: MatrixCursor,
         columns: Array<String>,
@@ -1203,7 +1206,7 @@ class CardContentProvider : ContentProvider() {
             val rb = rv.newRow()
             for (column in columns) {
                 when (column) {
-                    FlashCardsContract.CardTemplate._ID -> rb.add(id)
+                    FlashCardsContract.CardTemplate._ID -> rb.add(idx)
                     FlashCardsContract.CardTemplate.MODEL_ID -> rb.add(notetype!!.id)
                     FlashCardsContract.CardTemplate.ORD -> rb.add(tmpl.ord)
                     FlashCardsContract.CardTemplate.NAME -> rb.add(tmpl.name)

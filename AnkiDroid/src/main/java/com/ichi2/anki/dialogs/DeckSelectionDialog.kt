@@ -48,6 +48,7 @@ import com.ichi2.anki.dialogs.DeckSelectionDialog.DecksArrayAdapter.DecksFilter
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.DeckNameId
+import com.ichi2.anki.libanki.Decks.Companion.NOT_FOUND_DECK_ID
 import com.ichi2.anki.libanki.sched.DeckNode
 import com.ichi2.anki.showThemedToast
 import com.ichi2.ui.AccessibleSearchView
@@ -289,7 +290,7 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
             deckHolder: View,
         ) : RecyclerView.ViewHolder(deckHolder) {
             var deckName: String = ""
-            private var deckID: Long = -1L
+            private var deckID: DeckId = NOT_FOUND_DECK_ID
 
             private val deckTextView: TextView = deckHolder.findViewById(R.id.deckpicker_name)
             val expander: ImageButton = deckHolder.findViewById(R.id.deckpicker_expander)

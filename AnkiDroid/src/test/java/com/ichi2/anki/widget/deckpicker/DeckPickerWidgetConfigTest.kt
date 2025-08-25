@@ -24,6 +24,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.dialogs.DeckSelectionDialog
+import com.ichi2.widget.AppWidgetId
 import com.ichi2.widget.deckpicker.DeckPickerWidgetConfig
 import com.ichi2.widget.deckpicker.DeckPickerWidgetPreferences
 import kotlinx.coroutines.runBlocking
@@ -32,6 +33,8 @@ import org.hamcrest.Matchers.equalTo
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+
+val testWidgetId = AppWidgetId(1)
 
 @RunWith(AndroidJUnit4::class)
 class DeckPickerWidgetConfigTest : RobolectricTest() {
@@ -76,7 +79,7 @@ class DeckPickerWidgetConfigTest : RobolectricTest() {
         activity.saveSelectedDecksToPreferencesDeckPickerWidget()
 
         // Verify saved decks
-        val selectedDeckIds = widgetPreferences.getSelectedDeckIdsFromPreferences(1).toList()
+        val selectedDeckIds = widgetPreferences.getSelectedDeckIdsFromPreferences(testWidgetId).toList()
         assertThat(selectedDeckIds.contains(deck1.deckId), equalTo(true))
     }
 
@@ -91,7 +94,7 @@ class DeckPickerWidgetConfigTest : RobolectricTest() {
         runTest {
             // Save decks to preferences
             val deckIds = listOf(1L)
-            widgetPreferences.saveSelectedDecks(1, deckIds.map { it.toString() })
+            widgetPreferences.saveSelectedDecks(testWidgetId, deckIds.map { it.toString() })
 
             // Load preferences
             activity.updateViewWithSavedPreferences()

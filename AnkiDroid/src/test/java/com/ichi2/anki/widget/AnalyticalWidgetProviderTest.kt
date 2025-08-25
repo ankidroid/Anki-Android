@@ -20,6 +20,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.widget.AnalyticsWidgetProvider
+import com.ichi2.widget.AppWidgetIds
 import io.mockk.every
 import io.mockk.mockkObject
 import io.mockk.unmockkObject
@@ -57,7 +58,7 @@ class AnalyticalWidgetProviderTest : RobolectricTest() {
         override fun performUpdate(
             context: android.content.Context,
             appWidgetManager: AppWidgetManager,
-            appWidgetIds: IntArray,
+            appWidgetIds: AppWidgetIds,
             usageAnalytics: UsageAnalytics,
         ) {
             // Do nothing
