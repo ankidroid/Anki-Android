@@ -44,13 +44,23 @@ class TagsDialogViewModel(
         tags =
             asyncIO {
                 val allTags = withCol { tags.all() }.toSet()
+                val allCheckedTagsList = mutableListOf<String>()
+                noteIds
+                    .flatMapIndexedTo(allCheckedTagsList) { index, nid ->
+                        _initProgress.emit(InitProgress.FetchingNoteTags(index + 1, noteIds.size))
+                        withCol { getNote(nid) }.tags
+                    }.apply {
+                        addAll(checkedTags)
+                    }
                 val allCheckedTags =
-                    noteIds
-                        .flatMapIndexedTo(mutableSetOf()) { index, nid ->
-                            _initProgress.emit(InitProgress.FetchingNoteTags(index + 1, noteIds.size))
-                            withCol { getNote(nid) }.tags
-                        }.apply {
-                            addAll(checkedTags)
+                    allCheckedTagsList.toSet()
+                val allUncheckedTags =
+                    allCheckedTagsList
+                        .groupingBy { it }
+                        .eachCount()
+                        .filter { it.value != noteIds.size }
+                        .mapTo(mutableSetOf<String>()) { kv ->
+                            kv.key
                         }
                 _initProgress.emit(InitProgress.Processing)
                 val uncheckedTags = allTags - allCheckedTags
@@ -64,7 +74,7 @@ class TagsDialogViewModel(
                     TagsList(
                         allTags = allTags,
                         checkedTags = allCheckedTags,
-                        uncheckedTags = uncheckedTags,
+                        uncheckedTags = allUncheckedTags,
                     )
                 }.also {
                     _initProgress.emit(InitProgress.Finished)
