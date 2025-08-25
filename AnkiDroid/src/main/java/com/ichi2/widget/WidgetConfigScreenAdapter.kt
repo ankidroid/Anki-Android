@@ -24,8 +24,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
-import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
 import com.ichi2.anki.libanki.DeckId
+import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.anki.utils.ext.findViewById
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -39,9 +39,9 @@ import kotlinx.coroutines.withContext
  * @property onDeleteDeck a function to call when a deck is removed
  */
 class WidgetConfigScreenAdapter(
-    private val onDeleteDeck: (SelectableDeck, Int) -> Unit,
+    private val onDeleteDeck: (SelectableDeck.Deck, Int) -> Unit,
 ) : RecyclerView.Adapter<WidgetConfigScreenAdapter.DeckViewHolder>() {
-    private val decks: MutableList<SelectableDeck> = mutableListOf()
+    private val decks: MutableList<SelectableDeck.Deck> = mutableListOf()
     private val coroutineScope = CoroutineScope(Dispatchers.Main)
 
     // Property to get the list of deck IDs
@@ -90,7 +90,7 @@ class WidgetConfigScreenAdapter(
 
     override fun getItemCount(): Int = decks.size
 
-    fun addDeck(deck: SelectableDeck) {
+    fun addDeck(deck: SelectableDeck.Deck) {
         decks.add(deck)
         notifyItemInserted(decks.size - 1)
     }

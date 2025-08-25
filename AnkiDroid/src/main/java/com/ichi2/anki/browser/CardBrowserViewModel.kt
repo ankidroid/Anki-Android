@@ -56,7 +56,6 @@ import com.ichi2.anki.libanki.Card
 import com.ichi2.anki.libanki.CardId
 import com.ichi2.anki.libanki.CardType
 import com.ichi2.anki.libanki.DeckId
-import com.ichi2.anki.libanki.DeckNameId
 import com.ichi2.anki.libanki.QueueType
 import com.ichi2.anki.libanki.QueueType.ManuallyBuried
 import com.ichi2.anki.libanki.QueueType.SiblingBuried
@@ -65,6 +64,7 @@ import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.model.CardsOrNotes
 import com.ichi2.anki.model.CardsOrNotes.CARDS
 import com.ichi2.anki.model.CardsOrNotes.NOTES
+import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.anki.model.SortType
 import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.observability.undoableOp
@@ -145,8 +145,10 @@ class CardBrowserViewModel(
 
     val flowOfSearchState = MutableSharedFlow<SearchState>()
 
-    var searchTerms = ""
-        private set
+    val flowOfSearchTerms = MutableStateFlow("")
+
+    val searchTerms: String
+        get() = flowOfSearchTerms.value
 
     @VisibleForTesting
     var restrictOnDeck: String = ""
@@ -283,7 +285,14 @@ class CardBrowserViewModel(
     val lastDeckId: DeckId?
         get() = lastDeckIdRepository.lastDeckId
 
-    suspend fun setDeckId(deckId: DeckId) {
+    suspend fun setSelectedDeck(deck: SelectableDeck) =
+        when (deck) {
+            is SelectableDeck.AllDecks -> setSelectedDeck(ALL_DECKS_ID)
+            is SelectableDeck.Deck -> setSelectedDeck(deck.deckId)
+        }
+
+    // TODO: Replace with setSelectedDeck(selectableDeck)
+    suspend fun setSelectedDeck(deckId: DeckId) {
         Timber.i("setting deck: %d", deckId)
         lastDeckIdRepository.lastDeckId = deckId
         restrictOnDeck =
@@ -298,8 +307,18 @@ class CardBrowserViewModel(
         flowOfDeckId.update { deckId }
     }
 
+    // TODO: replace with flowOfDeckSelection
     val flowOfDeckId = MutableStateFlow(lastDeckId)
     val deckId get() = flowOfDeckId.value
+
+    val flowOfDeckSelection =
+        flowOfDeckId.map { did ->
+            when (did) {
+                ALL_DECKS_ID -> return@map SelectableDeck.AllDecks
+                null -> return@map null
+                else -> return@map SelectableDeck.Deck.fromId(did)
+            }
+        }
 
     suspend fun queryCardInfoDestination(): CardInfoDestination? {
         val firstSelectedCard = selectedRows.firstOrNull()?.toCardId(cardsOrNotes) ?: return null
@@ -308,19 +327,22 @@ class CardBrowserViewModel(
 
     suspend fun queryDataForCardEdit(id: CardOrNoteId): CardId = id.toCardId(cardsOrNotes)
 
-    private suspend fun getInitialDeck(): DeckId {
+    private suspend fun getInitialDeck(): SelectableDeck {
         // TODO: Handle the launch intent
         val lastDeckId = lastDeckId
         if (lastDeckId == ALL_DECKS_ID) {
-            return ALL_DECKS_ID
+            return SelectableDeck.AllDecks
         }
 
         // If a valid value for last deck exists then use it, otherwise use libanki selected deck
-        return if (lastDeckId != null && withCol { decks.getLegacy(lastDeckId) != null }) {
-            lastDeckId
-        } else {
-            withCol { decks.selected() }
-        }
+        val idToUse =
+            if (lastDeckId != null && withCol { decks.getLegacy(lastDeckId) != null }) {
+                lastDeckId
+            } else {
+                withCol { decks.selected() }
+            }
+
+        return SelectableDeck.Deck(deckId = idToUse, name = withCol { decks.name(idToUse) })
     }
 
     val flowOfInitCompleted = MutableStateFlow(false)
@@ -371,14 +393,14 @@ class CardBrowserViewModel(
         var selectAllDecks = false
         when (options) {
             is CardBrowserLaunchOptions.SystemContextMenu -> {
-                searchTerms = options.search.toString()
+                flowOfSearchTerms.value = options.search.toString()
             }
             is CardBrowserLaunchOptions.SearchQueryJs -> {
-                searchTerms = options.search
+                flowOfSearchTerms.value = options.search
                 selectAllDecks = options.allDecks
             }
             is CardBrowserLaunchOptions.DeepLink -> {
-                searchTerms = options.search
+                flowOfSearchTerms.value = options.search
             }
             null -> {}
         }
@@ -412,9 +434,9 @@ class CardBrowserViewModel(
         viewModelScope.launch {
             shouldIgnoreAccents = withCol { config.getBool(ConfigKey.Bool.IGNORE_ACCENTS_IN_SEARCH) }
 
-            val initialDeckId = if (selectAllDecks) ALL_DECKS_ID else getInitialDeck()
+            val initialDeckId = if (selectAllDecks) SelectableDeck.AllDecks else getInitialDeck()
             // PERF: slightly inefficient if the source was lastDeckId
-            setDeckId(initialDeckId)
+            setSelectedDeck(initialDeckId)
             refreshBackendColumns()
 
             val cardsOrNotes = withCol { CardsOrNotes.fromCollection(this@withCol) }
@@ -1121,7 +1143,7 @@ class CardBrowserViewModel(
             Timber.d("skipping duplicate search: forceRefresh is false")
             return
         }
-        searchTerms =
+        flowOfSearchTerms.value =
             if (shouldIgnoreAccents) {
                 searchQuery.normalizeForSearch()
             } else {
@@ -1254,6 +1276,19 @@ class CardBrowserViewModel(
         launchSearchForCards()
     }
 
+    /** Opens the UI to save the current [tempSearchQuery] as a saved search */
+    fun saveCurrentSearch() =
+        viewModelScope.launch {
+            val query = tempSearchQuery
+            if (query.isNullOrEmpty()) {
+                Timber.d("not prompting to saving search: no query")
+                return@launch
+            }
+            flowOfSaveSearchNamePrompt.emit(query)
+        }
+
+    suspend fun getAvailableDecks(): List<SelectableDeck.Deck> = SelectableDeck.fromCollection(includeFiltered = false)
+
     companion object {
         const val STATE_MULTISELECT = "multiselect"
         const val STATE_MULTISELECT_VALUES = "multiselect_values"
@@ -1362,22 +1397,6 @@ class CardBrowserViewModel(
             val error: String,
         ) : SearchState
     }
-
-    /**
-     * Returns the decks which are suitable for [moveSelectedCardsToDeck]
-     */
-    suspend fun getAvailableDecks(): List<DeckNameId> = withCol { decks.allNamesAndIds(includeFiltered = false) }
-
-    /** Opens the UI to save the current [tempSearchQuery] as a saved search */
-    fun saveCurrentSearch() =
-        viewModelScope.launch {
-            val query = tempSearchQuery
-            if (query.isNullOrEmpty()) {
-                Timber.d("not prompting to saving search: no query")
-                return@launch
-            }
-            flowOfSaveSearchNamePrompt.emit(query)
-        }
 }
 
 enum class SaveSearchResult {

@@ -38,10 +38,10 @@ import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.R
 import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
-import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
 import com.ichi2.anki.dialogs.DiscardChangesDialog
 import com.ichi2.anki.isCollectionEmpty
 import com.ichi2.anki.isDefaultDeckEmpty
+import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.anki.showThemedToast
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
@@ -310,7 +310,7 @@ class DeckPickerWidgetConfig :
     }
 
     /** Returns the list of standard deck. */
-    private suspend fun fetchDecks(): List<SelectableDeck> =
+    private suspend fun fetchDecks(): List<SelectableDeck.Deck> =
         withContext(Dispatchers.IO) {
             SelectableDeck.fromCollection(includeFiltered = true)
         }
@@ -332,6 +332,7 @@ class DeckPickerWidgetConfig :
         if (deck == null) {
             return
         }
+        require(deck is SelectableDeck.Deck)
 
         val isDeckAlreadySelected = deckAdapter.deckIds.contains(deck.deckId)
 
