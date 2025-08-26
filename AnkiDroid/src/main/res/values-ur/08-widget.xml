@@ -45,7 +45,6 @@
 -->
 <resources>
     <!-- Widget -->
-    <string name="widget_minimum_cards_due_notification_ticker_title">کارڈز واجب الادا</string>
     <plurals name="widget_minimum_cards_due_notification_ticker_text">
         <item quantity="one">%d AnkiDroid کارڈ باقی ہے۔</item>
         <item quantity="other">%d AnkiDroid کارڈز باقی ہیں۔</item>

@@ -45,7 +45,6 @@
 -->
 <resources>
     <!-- Widget -->
-    <string name="widget_minimum_cards_due_notification_ticker_title">Λήξη καρτών</string>
     <plurals name="widget_minimum_cards_due_notification_ticker_text">
         <item quantity="one">Λήγει %d κάρτα AnkiDroid</item>
         <item quantity="other">Λήγουν %d κάρτες AnkiDroid</item>

@@ -248,7 +248,6 @@
     <string name="studyoptions_limit_select_tags">اختيار وسوم</string>
     <!-- Deck configurations -->
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">عام</string>
-    <string name="deck_conf_reminders" maxLength="41">تذكيرات</string>
     <string name="deck_conf_cram_filter" maxLength="41">الفرز</string>
     <string name="deck_conf_cram_search" maxLength="41" comment="Label of a text field that contains a search query.">البحث</string>
     <string name="deck_conf_cram_limit" maxLength="41">الحد إلى</string>

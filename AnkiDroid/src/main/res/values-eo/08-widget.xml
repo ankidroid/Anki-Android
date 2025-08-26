@@ -45,7 +45,6 @@
 -->
 <resources>
     <!-- Widget -->
-    <string name="widget_minimum_cards_due_notification_ticker_title">Lernendaj kartoj</string>
     <plurals name="widget_minimum_cards_due_notification_ticker_text">
         <item quantity="one">%d lernenda AnkiDroid-karto</item>
         <item quantity="other">%d lernendaj AnkiDroid-kartoj</item>

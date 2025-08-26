@@ -45,7 +45,6 @@
 -->
 <resources>
     <!-- Widget -->
-    <string name="widget_minimum_cards_due_notification_ticker_title">卡片待複習</string>
     <plurals name="widget_minimum_cards_due_notification_ticker_text">
         <item quantity="other">%d AnkiDroid 卡片待複習</item>
     </plurals>

@@ -45,7 +45,6 @@
 -->
 <resources>
     <!-- Widget -->
-    <string name="widget_minimum_cards_due_notification_ticker_title">Tarxetas pendentes</string>
     <plurals name="widget_minimum_cards_due_notification_ticker_text">
         <item quantity="one">Tes %d tarxeta AnkiDroid pendente</item>
         <item quantity="other">Tes %d tarxetas AnkiDroid pendentes</item>

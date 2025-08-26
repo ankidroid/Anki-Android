@@ -238,7 +238,6 @@
     <string name="studyoptions_limit_select_tags">ಟ್ಯಾಗ್‌ಗಳನ್ನು ಆಯ್ಕೆಮಾಡಿ</string>
     <!-- Deck configurations -->
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">ಸಾಮಾನ್ಯ</string>
-    <string name="deck_conf_reminders" maxLength="41">ಜ್ಞಾಪನೆಗಳು</string>
     <string name="deck_conf_cram_filter" maxLength="41">ಫಿಲ್ಟರ್</string>
     <string name="deck_conf_cram_search" maxLength="41" comment="Label of a text field that contains a search query.">ಇದಕ್ಕಾಗಿ ಹುಡುಕು</string>
     <string name="deck_conf_cram_limit" maxLength="41">ಗೆ ಮಿತಿ</string>

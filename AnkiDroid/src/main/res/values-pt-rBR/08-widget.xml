@@ -45,7 +45,6 @@
 -->
 <resources>
     <!-- Widget -->
-    <string name="widget_minimum_cards_due_notification_ticker_title">Cartões pendentes</string>
     <plurals name="widget_minimum_cards_due_notification_ticker_text">
         <item quantity="one">%d Cartão pendente no AnkiDroid</item>
         <item quantity="other">Ainda faltam %d cartões</item>

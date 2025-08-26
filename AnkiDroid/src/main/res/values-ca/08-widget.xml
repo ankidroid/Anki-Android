@@ -45,7 +45,6 @@
 -->
 <resources>
     <!-- Widget -->
-    <string name="widget_minimum_cards_due_notification_ticker_title">Fitxes pendents</string>
     <plurals name="widget_minimum_cards_due_notification_ticker_text">
         <item quantity="one">%d carta AnkiDroid pendent</item>
         <item quantity="other">%d cartes AnkiDroid pendents</item>

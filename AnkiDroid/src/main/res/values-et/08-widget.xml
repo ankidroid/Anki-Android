@@ -45,7 +45,6 @@
 -->
 <resources>
     <!-- Widget -->
-    <string name="widget_minimum_cards_due_notification_ticker_title">Kaardid tõttu</string>
     <plurals name="widget_minimum_cards_due_notification_ticker_text">
         <item quantity="one">%d AnkiDroid kaardi tõttu</item>
         <item quantity="other">%d AnkiDroid kaardi tõttu</item>

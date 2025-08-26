@@ -45,7 +45,6 @@
 -->
 <resources>
     <!-- Widget -->
-    <string name="widget_minimum_cards_due_notification_ticker_title">البطاقات مستحقة</string>
     <plurals name="widget_minimum_cards_due_notification_ticker_text">
         <item quantity="zero">%d بطاقة آنكي درويد مستحقة</item>
         <item quantity="one">%d بطاقة آنكي درويد مستحقة</item>

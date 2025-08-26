@@ -45,7 +45,6 @@
 -->
 <resources>
     <!-- Widget -->
-    <string name="widget_minimum_cards_due_notification_ticker_title">Carte scadute</string>
     <plurals name="widget_minimum_cards_due_notification_ticker_text">
         <item quantity="one">%d Carta AnkiDroid scaduta</item>
         <item quantity="other">%d Carte AnkiDroid scadute</item>

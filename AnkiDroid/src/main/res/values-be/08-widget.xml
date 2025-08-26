@@ -45,7 +45,6 @@
 -->
 <resources>
     <!-- Widget -->
-    <string name="widget_minimum_cards_due_notification_ticker_title">Картак для паўтарэння</string>
     <plurals name="widget_minimum_cards_due_notification_ticker_text">
         <item quantity="one">%d картка AnkiDroid для прагляду</item>
         <item quantity="few">%d карткі AnkiDroid для прагляду</item>

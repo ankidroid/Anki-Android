@@ -239,7 +239,6 @@
     <string name="studyoptions_limit_select_tags">Seletziona sas etichetas</string>
     <!-- Deck configurations -->
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">Generale</string>
-    <string name="deck_conf_reminders" maxLength="41">Avisos</string>
     <string name="deck_conf_cram_filter" maxLength="41">Filtru</string>
     <string name="deck_conf_cram_search" maxLength="41" comment="Label of a text field that contains a search query.">Chirca</string>
     <string name="deck_conf_cram_limit" maxLength="41">Lìmita a</string>
