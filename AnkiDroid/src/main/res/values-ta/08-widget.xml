@@ -45,7 +45,6 @@
 -->
 <resources>
     <!-- Widget -->
-    <string name="widget_minimum_cards_due_notification_ticker_title">அட்டைகள் சிறந்தவை</string>
     <plurals name="widget_minimum_cards_due_notification_ticker_text">
         <item quantity="one">%d AnkiDroid கார்டு நிலுவையில் உள்ளது</item>
         <item quantity="other">%d AnkiDroid கார்டு நிலுவையில் உள்ளது</item>

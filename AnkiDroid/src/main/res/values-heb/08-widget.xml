@@ -45,7 +45,6 @@
 -->
 <resources>
     <!-- Widget -->
-    <string name="widget_minimum_cards_due_notification_ticker_title">קלפים שנותרו</string>
     <plurals name="widget_minimum_cards_due_notification_ticker_text">
         <item quantity="one">נותר כרטיס AnkiDroid %d</item>
         <item quantity="two">נותרו %d כרטיסי AnkiDroid</item>

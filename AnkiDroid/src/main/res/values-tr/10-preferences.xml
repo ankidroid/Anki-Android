@@ -239,7 +239,6 @@
     <string name="studyoptions_limit_select_tags">Etiketleri Seçin</string>
     <!-- Deck configurations -->
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">Genel</string>
-    <string name="deck_conf_reminders" maxLength="41">Hatırlatmalar</string>
     <string name="deck_conf_cram_filter" maxLength="41">Filtre</string>
     <string name="deck_conf_cram_search" maxLength="41" comment="Label of a text field that contains a search query.">Arama</string>
     <string name="deck_conf_cram_limit" maxLength="41">Sınırla</string>

@@ -242,7 +242,6 @@
     <string name="studyoptions_limit_select_tags">Atlasīt birkas</string>
     <!-- Deck configurations -->
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">Vispārīgi</string>
-    <string name="deck_conf_reminders" maxLength="41">Atgādinājumi</string>
     <string name="deck_conf_cram_filter" maxLength="41">Atsijāt</string>
     <string name="deck_conf_cram_search" maxLength="41" comment="Label of a text field that contains a search query.">Meklēt</string>
     <string name="deck_conf_cram_limit" maxLength="41">Ierobežot līdz</string>

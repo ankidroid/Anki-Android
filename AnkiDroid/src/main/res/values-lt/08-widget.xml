@@ -45,7 +45,6 @@
 -->
 <resources>
     <!-- Widget -->
-    <string name="widget_minimum_cards_due_notification_ticker_title">Numatytos kortelės</string>
     <plurals name="widget_minimum_cards_due_notification_ticker_text">
         <item quantity="one">Laukia %d „AnkiDroid“ kortelė</item>
         <item quantity="few">Laukia %d „AnkiDroid“ kortelės</item>

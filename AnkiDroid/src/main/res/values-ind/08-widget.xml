@@ -45,7 +45,6 @@
 -->
 <resources>
     <!-- Widget -->
-    <string name="widget_minimum_cards_due_notification_ticker_title">Kartu jatuh tempo</string>
     <plurals name="widget_minimum_cards_due_notification_ticker_text">
         <item quantity="other">%d kartu AnkiDroid jatuh tempo</item>
     </plurals>

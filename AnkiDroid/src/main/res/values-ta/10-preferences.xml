@@ -239,7 +239,6 @@
     <string name="studyoptions_limit_select_tags">குறிச்சொற்களைத் தேர்ந்தெடுக்கவும்</string>
     <!-- Deck configurations -->
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">பொது</string>
-    <string name="deck_conf_reminders" maxLength="41">நினைவூட்டல்கள்</string>
     <string name="deck_conf_cram_filter" maxLength="41">வடிகட்டி</string>
     <string name="deck_conf_cram_search" maxLength="41" comment="Label of a text field that contains a search query.">தேடு</string>
     <string name="deck_conf_cram_limit" maxLength="41">வரம்பு</string>

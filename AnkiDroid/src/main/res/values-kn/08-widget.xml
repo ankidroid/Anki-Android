@@ -45,7 +45,6 @@
 -->
 <resources>
     <!-- Widget -->
-    <string name="widget_minimum_cards_due_notification_ticker_title">ಕಾರ್ಡ್‌ಗಳು ಬಾಕಿ ಉಳಿದಿವೆ</string>
     <plurals name="widget_minimum_cards_due_notification_ticker_text">
         <item quantity="one">%d AnkiDroid ಕಾರ್ಡ್ ಬಾಕಿಯಿದೆ</item>
         <item quantity="other">%d AnkiDroid ಕಾರ್ಡ್‌ಗಳ ಬಾಕಿಯಿದೆ</item>
