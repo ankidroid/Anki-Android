@@ -60,12 +60,14 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kotlinx.coroutines.withTimeout
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.BackendException
 import net.ankiweb.rsdroid.exceptions.BackendInterruptedException
@@ -77,6 +79,7 @@ import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
+import kotlin.time.Duration
 
 /** Overridable reference to [Dispatchers.IO]. Useful if tests can't use it */
 // COULD_BE_BETTER: this shouldn't be necessary, but TestClass::runWith needs it
@@ -602,6 +605,26 @@ private fun Activity.showError(
     throwable: Throwable,
     reportException: Boolean = true,
 ) = showError(throwable.toString(), throwable.toCrashReportData(context = this, reportException))
+
+/**
+ * Launches a coroutine which is guaranteed to terminate within the [timeout] duration, which means
+ * it is safe to call on the global coroutine scope. We handle the global scope carefully here to ensure
+ * that the coroutine eventually terminates and does not cause a memory leak.
+ */
+fun runGloballyWithTimeout(
+    timeout: Duration,
+    block: suspend () -> Unit,
+) {
+    AnkiDroidApp.applicationScope.launch {
+        try {
+            withTimeout(timeout) {
+                block()
+            }
+        } catch (e: TimeoutCancellationException) {
+            Timber.w(e, "runGloballyWithTimeout timed out after $timeout")
+        }
+    }
+}
 
 data class CrashReportData(
     val exception: Throwable,
