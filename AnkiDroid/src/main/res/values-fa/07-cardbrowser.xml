@@ -97,7 +97,7 @@
     <string name="card_browser_no_cards_in_deck">در دستۀ «%s» هیچ کارتی یافت نشد</string>
     <string name="card_browser_search_all_decks">جستجو در تمام دسته‌ها</string>
     <string name="card_browser_unknown_deck_name">ناشناخته</string>
-    <string name="card_browser_truncate" comment="allows users to show less of a field value">محتوا را کوتاه کن</string>
+    <string name="card_browser_truncate" comment="allows users to show less of a field value">کوتاه‌کردن محتوا</string>
     <string name="set_due_date_hintText" comment="plural set_due_date_label_suffix is used for parameters, parameter 1 is the plural for 0, parameter 2 is the plural for 1">امروز ‘0 %1$s’ است، فردا ‘1 %2$s’ است، و غیره&#8230;</string>
     <plurals name="card_browser_export_cards">
         <item quantity="one">خروجی گرفتن کارت</item>

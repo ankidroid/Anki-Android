@@ -238,7 +238,7 @@
     <string name="media" maxLength="41">Multimedia</string>
     <string name="misc" maxLength="41">Pozostałe</string>
     <!-- Review reminders -->
-    <string name="add_reminder" comment="Label for the add reminder button in the screen for adding and editing review reminders">Add reminder</string>
+    <string name="add_reminder" comment="Label for the add reminder button in the screen for adding and editing review reminders">Dodaj przypomnienie</string>
     <!-- studyoptions -->
     <string name="studyoptions_limit_select_tags">Wybierz etykiety</string>
     <!-- Deck configurations -->
@@ -378,7 +378,7 @@
     <string name="hide_system_bars_navigation_bar" comment="Setting option to hide the system navigation bar (the bottom one that can go back, to home, etc)">Pasek nawigacyjny</string>
     <string name="hide_system_bars_all_bars" comment="Setting option to hide all the system bars">Wszystkie</string>
     <string name="ignore_display_cutout" maxLength="41">Ignoruj wycinanie ekranu</string>
-    <string name="show_answer_buttons" maxLength="41">Show answer buttons</string>
+    <string name="show_answer_buttons" maxLength="41">Pokaż przyciski odpowiedzi</string>
     <string name="hide_hard_and_easy" maxLength="41">Ukryj przyciski „Trudna” i „Łatwa”</string>
     <string name="reviewer_frame_style" maxLength="41">Styl ramki</string>
     <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Study Screen">Karta</string>
