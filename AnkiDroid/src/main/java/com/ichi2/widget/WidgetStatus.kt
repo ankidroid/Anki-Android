@@ -16,12 +16,12 @@ package com.ichi2.widget
 
 import android.content.Context
 import com.ichi2.anki.AnkiDroidApp
-import com.ichi2.anki.CollectionManager
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.MetaDB
 import com.ichi2.anki.R
-import com.ichi2.anki.libanki.sched.Counts
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.settings.Prefs
+import com.ichi2.anki.utils.ext.allDecksCounts
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
@@ -108,18 +108,10 @@ object WidgetStatus {
 
     fun fetchDue(context: Context): Int = MetaDB.getNotificationStatus(context)
 
-    private suspend fun querySmallWidgetStatus(): SmallWidgetStatus {
-        val total = Counts()
-        return CollectionManager.withCol {
-            // Only count the top-level decks in the total
-            val nodes = sched.deckDueTree().children
-            for (node in nodes) {
-                total.addNew(node.newCount)
-                total.addLrn(node.lrnCount)
-                total.addRev(node.revCount)
-            }
+    private suspend fun querySmallWidgetStatus(): SmallWidgetStatus =
+        withCol {
+            val total = sched.allDecksCounts()
             val eta = sched.eta(total, false)
             SmallWidgetStatus(total.count(), eta)
         }
-    }
 }
