@@ -18,6 +18,7 @@ package com.ichi2.anki.reviewreminders
 
 import androidx.core.content.edit
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.libanki.DeckId
 import kotlinx.serialization.Serializable
@@ -29,6 +30,8 @@ import org.hamcrest.Matcher
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.anEmptyMap
 import org.hamcrest.Matchers.equalTo
+import org.hamcrest.Matchers.hasItem
+import org.hamcrest.Matchers.not
 import org.hamcrest.TypeSafeMatcher
 import org.junit.After
 import org.junit.Before
@@ -114,58 +117,63 @@ object TestingReviewReminderMigrationSettings {
  */
 @RunWith(AndroidJUnit4::class)
 class ReviewRemindersDatabaseTest : RobolectricTest() {
-    private val did1 = 12345L
-    private val did2 = 67890L
+    private var did1: Long = -1L
+    private var did2: Long = -1L
 
-    private val dummyDeckSpecificRemindersForDeckOne =
-        mapOf(
-            ReviewReminderId(0) to
-                ReviewReminder.createReviewReminder(
-                    ReviewReminderTime(9, 0),
-                    ReviewReminderCardTriggerThreshold(5),
-                    ReviewReminderScope.DeckSpecific(did1),
-                    false,
-                ),
-            ReviewReminderId(1) to
-                ReviewReminder.createReviewReminder(
-                    ReviewReminderTime(10, 30),
-                    ReviewReminderCardTriggerThreshold(10),
-                    ReviewReminderScope.DeckSpecific(did1),
-                ),
-        )
-    private val dummyDeckSpecificRemindersForDeckTwo =
-        mapOf(
-            ReviewReminderId(2) to
-                ReviewReminder.createReviewReminder(
-                    ReviewReminderTime(10, 30),
-                    ReviewReminderCardTriggerThreshold(10),
-                    ReviewReminderScope.DeckSpecific(did2),
-                    true,
-                ),
-            ReviewReminderId(3) to
-                ReviewReminder.createReviewReminder(
-                    ReviewReminderTime(12, 30),
-                    ReviewReminderCardTriggerThreshold(20),
-                    ReviewReminderScope.DeckSpecific(did2),
-                ),
-        )
-    private val dummyAppWideReminders =
-        mapOf(
-            ReviewReminderId(4) to
-                ReviewReminder.createReviewReminder(
-                    ReviewReminderTime(9, 0),
-                    ReviewReminderCardTriggerThreshold(5),
-                ),
-            ReviewReminderId(5) to
-                ReviewReminder.createReviewReminder(
-                    ReviewReminderTime(10, 30),
-                    ReviewReminderCardTriggerThreshold(10),
-                ),
-        )
+    private lateinit var dummyDeckSpecificRemindersForDeckOne: Map<ReviewReminderId, ReviewReminder>
+    private lateinit var dummyDeckSpecificRemindersForDeckTwo: Map<ReviewReminderId, ReviewReminder>
+    private lateinit var dummyAppWideReminders: Map<ReviewReminderId, ReviewReminder>
 
     @Before
     override fun setUp() {
         super.setUp()
+        did1 = addDeck("DeckOne")
+        did2 = addDeck("DeckTwo")
+        dummyDeckSpecificRemindersForDeckOne =
+            mapOf(
+                ReviewReminderId(0) to
+                    ReviewReminder.createReviewReminder(
+                        ReviewReminderTime(9, 0),
+                        ReviewReminderCardTriggerThreshold(5),
+                        ReviewReminderScope.DeckSpecific(did1),
+                        false,
+                    ),
+                ReviewReminderId(1) to
+                    ReviewReminder.createReviewReminder(
+                        ReviewReminderTime(10, 30),
+                        ReviewReminderCardTriggerThreshold(10),
+                        ReviewReminderScope.DeckSpecific(did1),
+                    ),
+            )
+        dummyDeckSpecificRemindersForDeckTwo =
+            mapOf(
+                ReviewReminderId(2) to
+                    ReviewReminder.createReviewReminder(
+                        ReviewReminderTime(10, 30),
+                        ReviewReminderCardTriggerThreshold(10),
+                        ReviewReminderScope.DeckSpecific(did2),
+                        true,
+                    ),
+                ReviewReminderId(3) to
+                    ReviewReminder.createReviewReminder(
+                        ReviewReminderTime(12, 30),
+                        ReviewReminderCardTriggerThreshold(20),
+                        ReviewReminderScope.DeckSpecific(did2),
+                    ),
+            )
+        dummyAppWideReminders =
+            mapOf(
+                ReviewReminderId(4) to
+                    ReviewReminder.createReviewReminder(
+                        ReviewReminderTime(9, 0),
+                        ReviewReminderCardTriggerThreshold(5),
+                    ),
+                ReviewReminderId(5) to
+                    ReviewReminder.createReviewReminder(
+                        ReviewReminderTime(10, 30),
+                        ReviewReminderCardTriggerThreshold(10),
+                    ),
+            )
         ReviewRemindersDatabase.remindersSharedPrefs.edit { clear() }
     }
 
@@ -176,34 +184,38 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
     }
 
     @Test
-    fun `getRemindersForDeck should return empty map when no reminders exist`() {
-        val reminders = ReviewRemindersDatabase.getRemindersForDeck(did1)
-        assertThat(reminders, anEmptyMap())
-    }
+    fun `getRemindersForDeck should return empty map when no reminders exist`() =
+        runTest {
+            val reminders = ReviewRemindersDatabase.getRemindersForDeck(did1)
+            assertThat(reminders, anEmptyMap())
+        }
 
     @Test
-    fun `editRemindersForDeck and getRemindersForDeck should read and write reminders correctly`() {
-        ReviewRemindersDatabase.editRemindersForDeck(did1) { dummyDeckSpecificRemindersForDeckOne }
-        val storedReminders = ReviewRemindersDatabase.getRemindersForDeck(did1)
-        assertThat(storedReminders, equalTo(dummyDeckSpecificRemindersForDeckOne))
-    }
+    fun `editRemindersForDeck and getRemindersForDeck should read and write reminders correctly`() =
+        runTest {
+            ReviewRemindersDatabase.editRemindersForDeck(did1) { dummyDeckSpecificRemindersForDeckOne }
+            val storedReminders = ReviewRemindersDatabase.getRemindersForDeck(did1)
+            assertThat(storedReminders, equalTo(dummyDeckSpecificRemindersForDeckOne))
+        }
 
     @Test
-    fun `getAllDeckSpecificReminders should return empty map when no reminders exist`() {
-        val reminders = ReviewRemindersDatabase.getAllDeckSpecificReminders()
-        assertThat(reminders, anEmptyMap())
-    }
+    fun `getAllDeckSpecificReminders should return empty map when no reminders exist`() =
+        runTest {
+            val reminders = ReviewRemindersDatabase.getAllDeckSpecificReminders()
+            assertThat(reminders, anEmptyMap())
+        }
 
     @Test
-    fun `getAllDeckSpecificReminders should return all reminders across decks`() {
-        ReviewRemindersDatabase.editRemindersForDeck(did1) { dummyDeckSpecificRemindersForDeckOne }
-        ReviewRemindersDatabase.editRemindersForDeck(did2) { dummyDeckSpecificRemindersForDeckTwo }
-        val allReminders = ReviewRemindersDatabase.getAllDeckSpecificReminders()
-        assertThat(
-            allReminders,
-            equalTo(dummyDeckSpecificRemindersForDeckOne + dummyDeckSpecificRemindersForDeckTwo),
-        )
-    }
+    fun `getAllDeckSpecificReminders should return all reminders across decks`() =
+        runTest {
+            ReviewRemindersDatabase.editRemindersForDeck(did1) { dummyDeckSpecificRemindersForDeckOne }
+            ReviewRemindersDatabase.editRemindersForDeck(did2) { dummyDeckSpecificRemindersForDeckTwo }
+            val allReminders = ReviewRemindersDatabase.getAllDeckSpecificReminders()
+            assertThat(
+                allReminders,
+                equalTo(dummyDeckSpecificRemindersForDeckOne + dummyDeckSpecificRemindersForDeckTwo),
+            )
+        }
 
     @Test
     fun `getAllAppWideReminders should return empty map when no reminders exist`() {
@@ -219,34 +231,37 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
     }
 
     @Test(expected = SerializationException::class)
-    fun `getRemindersForDeck should throw SerializationException if JSON string for StoredReviewReminder is corrupted`() {
-        ReviewRemindersDatabase.remindersSharedPrefs.edit {
-            putString(ReviewRemindersDatabase.DECK_SPECIFIC_KEY + did1, "corrupted_and_invalid_json_string")
+    fun `getRemindersForDeck should throw SerializationException if JSON string for StoredReviewReminder is corrupted`() =
+        runTest {
+            ReviewRemindersDatabase.remindersSharedPrefs.edit {
+                putString(ReviewRemindersDatabase.DECK_SPECIFIC_KEY + did1, "corrupted_and_invalid_json_string")
+            }
+            ReviewRemindersDatabase.getRemindersForDeck(did1)
         }
-        ReviewRemindersDatabase.getRemindersForDeck(did1)
-    }
 
     @Test(expected = IllegalArgumentException::class)
-    fun `getRemindersForDeck should throw IllegalArgumentException if JSON string is not a StoredReviewReminder`() {
-        val randomObject = Pair("not a map of", "review reminders")
-        ReviewRemindersDatabase.remindersSharedPrefs.edit {
-            putString(ReviewRemindersDatabase.DECK_SPECIFIC_KEY + did1, Json.encodeToString(randomObject))
+    fun `getRemindersForDeck should throw IllegalArgumentException if JSON string is not a StoredReviewReminder`() =
+        runTest {
+            val randomObject = Pair("not a map of", "review reminders")
+            ReviewRemindersDatabase.remindersSharedPrefs.edit {
+                putString(ReviewRemindersDatabase.DECK_SPECIFIC_KEY + did1, Json.encodeToString(randomObject))
+            }
+            ReviewRemindersDatabase.getRemindersForDeck(did1)
         }
-        ReviewRemindersDatabase.getRemindersForDeck(did1)
-    }
 
     @Test(expected = SerializationException::class)
-    fun `getRemindersForDeck should throw SerializationException if JSON string for review reminder is corrupted`() {
-        val corruptedStoredReviewReminder =
-            ReviewRemindersDatabase.StoredReviewRemindersMap(
-                ReviewRemindersDatabase.schemaVersion,
-                "corrupted_and_invalid_json_string",
-            )
-        ReviewRemindersDatabase.remindersSharedPrefs.edit {
-            putString(ReviewRemindersDatabase.DECK_SPECIFIC_KEY + did1, Json.encodeToString(corruptedStoredReviewReminder))
+    fun `getRemindersForDeck should throw SerializationException if JSON string for review reminder is corrupted`() =
+        runTest {
+            val corruptedStoredReviewReminder =
+                ReviewRemindersDatabase.StoredReviewRemindersMap(
+                    ReviewRemindersDatabase.schemaVersion,
+                    "corrupted_and_invalid_json_string",
+                )
+            ReviewRemindersDatabase.remindersSharedPrefs.edit {
+                putString(ReviewRemindersDatabase.DECK_SPECIFIC_KEY + did1, Json.encodeToString(corruptedStoredReviewReminder))
+            }
+            ReviewRemindersDatabase.getRemindersForDeck(did1)
         }
-        ReviewRemindersDatabase.getRemindersForDeck(did1)
-    }
 
     @Test(expected = SerializationException::class)
     fun `getAllAppWideReminders should throw SerializationException if JSON string for StoredReviewReminder is corrupted`() {
@@ -279,34 +294,98 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
     }
 
     @Test(expected = SerializationException::class)
-    fun `getAllDeckSpecificReminders should throw SerializationException if JSON string for StoredReviewReminder is corrupted`() {
-        ReviewRemindersDatabase.remindersSharedPrefs.edit {
-            putString(ReviewRemindersDatabase.DECK_SPECIFIC_KEY + did1, "corrupted_and_invalid_json_string")
+    fun `getAllDeckSpecificReminders should throw SerializationException if JSON string for StoredReviewReminder is corrupted`() =
+        runTest {
+            ReviewRemindersDatabase.remindersSharedPrefs.edit {
+                putString(ReviewRemindersDatabase.DECK_SPECIFIC_KEY + did1, "corrupted_and_invalid_json_string")
+            }
+            ReviewRemindersDatabase.getAllDeckSpecificReminders()
         }
-        ReviewRemindersDatabase.getAllDeckSpecificReminders()
-    }
 
     @Test(expected = IllegalArgumentException::class)
-    fun `getAllDeckSpecificReminders should throw IllegalArgumentException if JSON string is not a StoredReviewReminder`() {
-        val randomObject = Pair("not a map of", "review reminders")
-        ReviewRemindersDatabase.remindersSharedPrefs.edit {
-            putString(ReviewRemindersDatabase.DECK_SPECIFIC_KEY + did1, Json.encodeToString(randomObject))
+    fun `getAllDeckSpecificReminders should throw IllegalArgumentException if JSON string is not a StoredReviewReminder`() =
+        runTest {
+            val randomObject = Pair("not a map of", "review reminders")
+            ReviewRemindersDatabase.remindersSharedPrefs.edit {
+                putString(ReviewRemindersDatabase.DECK_SPECIFIC_KEY + did1, Json.encodeToString(randomObject))
+            }
+            ReviewRemindersDatabase.getAllDeckSpecificReminders()
         }
-        ReviewRemindersDatabase.getAllDeckSpecificReminders()
-    }
 
     @Test(expected = SerializationException::class)
-    fun `getAllDeckSpecificReminders should throw SerializationException if JSON string for review reminder is corrupted`() {
-        val corruptedStoredReviewReminder =
-            ReviewRemindersDatabase.StoredReviewRemindersMap(
-                ReviewRemindersDatabase.schemaVersion,
-                "corrupted_and_invalid_json_string",
-            )
-        ReviewRemindersDatabase.remindersSharedPrefs.edit {
-            putString(ReviewRemindersDatabase.DECK_SPECIFIC_KEY + did1, Json.encodeToString(corruptedStoredReviewReminder))
+    fun `getAllDeckSpecificReminders should throw SerializationException if JSON string for review reminder is corrupted`() =
+        runTest {
+            val corruptedStoredReviewReminder =
+                ReviewRemindersDatabase.StoredReviewRemindersMap(
+                    ReviewRemindersDatabase.schemaVersion,
+                    "corrupted_and_invalid_json_string",
+                )
+            ReviewRemindersDatabase.remindersSharedPrefs.edit {
+                putString(ReviewRemindersDatabase.DECK_SPECIFIC_KEY + did1, Json.encodeToString(corruptedStoredReviewReminder))
+            }
+            ReviewRemindersDatabase.getAllDeckSpecificReminders()
         }
-        ReviewRemindersDatabase.getAllDeckSpecificReminders()
-    }
+
+    @Test
+    fun `deleteAllRemindersForDeck should remove SharedPreferences key`() =
+        runTest {
+            ReviewRemindersDatabase.editRemindersForDeck(did1) { dummyDeckSpecificRemindersForDeckOne }
+            ReviewRemindersDatabase.deleteAllRemindersForDeck(did1)
+            val attemptedRetrieval = ReviewRemindersDatabase.getRemindersForDeck(did1)
+            assertThat(attemptedRetrieval, anEmptyMap())
+            assertThat(
+                ReviewRemindersDatabase.remindersSharedPrefs.all.keys,
+                not(hasItem(ReviewRemindersDatabase.DECK_SPECIFIC_KEY + did1)),
+            )
+        }
+
+    @Test
+    fun `deleteAllRemindersForDeck with nonexistent deck ID should not throw`() =
+        runTest {
+            withCol { decks.remove(listOf(did1)) }
+            ReviewRemindersDatabase.deleteAllRemindersForDeck(did1)
+        }
+
+    @Test
+    fun `getRemindersForDeck should delete SharedPreferences key if deck does not exist`() =
+        runTest {
+            ReviewRemindersDatabase.editRemindersForDeck(did1) { dummyDeckSpecificRemindersForDeckOne }
+            withCol { decks.remove(listOf(did1)) }
+            val attemptedRetrieval = ReviewRemindersDatabase.getRemindersForDeck(did1)
+            assertThat(attemptedRetrieval, anEmptyMap())
+            assertThat(
+                ReviewRemindersDatabase.remindersSharedPrefs.all.keys,
+                not(hasItem(ReviewRemindersDatabase.DECK_SPECIFIC_KEY + did1)),
+            )
+        }
+
+    @Test
+    fun `getAllDeckSpecificReminders should delete SharedPreferences key if deck does not exist`() =
+        runTest {
+            ReviewRemindersDatabase.editRemindersForDeck(did1) { dummyDeckSpecificRemindersForDeckOne }
+            ReviewRemindersDatabase.editRemindersForDeck(did2) { dummyDeckSpecificRemindersForDeckTwo }
+            withCol { decks.remove(listOf(did1)) }
+            val attemptedRetrieval = ReviewRemindersDatabase.getAllDeckSpecificReminders()
+            assertThat(attemptedRetrieval, equalTo(dummyDeckSpecificRemindersForDeckTwo))
+            assertThat(
+                ReviewRemindersDatabase.remindersSharedPrefs.all.keys,
+                not(hasItem(ReviewRemindersDatabase.DECK_SPECIFIC_KEY + did1)),
+            )
+            assertThat(ReviewRemindersDatabase.remindersSharedPrefs.all.keys, hasItem(ReviewRemindersDatabase.DECK_SPECIFIC_KEY + did2))
+        }
+
+    @Test
+    fun `editRemindersForDeck should delete SharedPreferences key if deck does not exist`() =
+        runTest {
+            ReviewRemindersDatabase.editRemindersForDeck(did1) { dummyDeckSpecificRemindersForDeckOne }
+            withCol { decks.remove(listOf(did1)) }
+            val attemptedRetrieval = ReviewRemindersDatabase.getRemindersForDeck(did1)
+            assertThat(attemptedRetrieval, anEmptyMap())
+            assertThat(
+                ReviewRemindersDatabase.remindersSharedPrefs.all.keys,
+                not(hasItem(ReviewRemindersDatabase.DECK_SPECIFIC_KEY + did1)),
+            )
+        }
 
     /**
      * When review reminders are migrated to the new schema, the reminders' IDs will be recreated from scratch.
@@ -367,136 +446,137 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
     }
 
     @Test
-    fun `review reminder schema migration works`() {
-        // Save existing mocks
-        val savedOldReviewReminderSchemasForMigration = ReviewRemindersDatabase.oldReviewReminderSchemasForMigration
-        val savedSchemaVersion = ReviewRemindersDatabase.schemaVersion
-        // Inject mocks
-        ReviewRemindersDatabase.schemaVersion = ReviewReminderSchemaVersion(3)
-        ReviewRemindersDatabase.oldReviewReminderSchemasForMigration =
-            mapOf(
-                ReviewReminderSchemaVersion(1) to TestingReviewReminderMigrationSettings.ReviewReminderSchemaVersionOne::class,
-                ReviewReminderSchemaVersion(2) to TestingReviewReminderMigrationSettings.ReviewReminderSchemaVersionTwo::class,
-                ReviewReminderSchemaVersion(3) to ReviewReminder::class,
+    fun `review reminder schema migration works`() =
+        runTest {
+            // Save existing mocks
+            val savedOldReviewReminderSchemasForMigration = ReviewRemindersDatabase.oldReviewReminderSchemasForMigration
+            val savedSchemaVersion = ReviewRemindersDatabase.schemaVersion
+            // Inject mocks
+            ReviewRemindersDatabase.schemaVersion = ReviewReminderSchemaVersion(3)
+            ReviewRemindersDatabase.oldReviewReminderSchemasForMigration =
+                mapOf(
+                    ReviewReminderSchemaVersion(1) to TestingReviewReminderMigrationSettings.ReviewReminderSchemaVersionOne::class,
+                    ReviewReminderSchemaVersion(2) to TestingReviewReminderMigrationSettings.ReviewReminderSchemaVersionTwo::class,
+                    ReviewReminderSchemaVersion(3) to ReviewReminder::class,
+                )
+            // To spice things up, some will be version one...
+            val versionOneDummyDeckSpecificRemindersForDeckOne =
+                mapOf(
+                    ReviewReminderId(0) to
+                        TestingReviewReminderMigrationSettings.ReviewReminderSchemaVersionOne(
+                            ReviewReminderId(0),
+                            9,
+                            0,
+                            5,
+                            did1,
+                            false,
+                        ),
+                    ReviewReminderId(1) to
+                        TestingReviewReminderMigrationSettings.ReviewReminderSchemaVersionOne(
+                            ReviewReminderId(1),
+                            10,
+                            30,
+                            10,
+                            did1,
+                        ),
+                )
+            // ...and some will be version two
+            val versionTwoDummyDeckSpecificRemindersForDeckTwo =
+                mapOf(
+                    ReviewReminderId(2) to
+                        TestingReviewReminderMigrationSettings.ReviewReminderSchemaVersionTwo(
+                            ReviewReminderId(2),
+                            TestingReviewReminderMigrationSettings.VersionTwoDataClasses.ReviewReminderTime(10, 30),
+                            1,
+                            10,
+                            did2,
+                        ),
+                    ReviewReminderId(3) to
+                        TestingReviewReminderMigrationSettings.ReviewReminderSchemaVersionTwo(
+                            ReviewReminderId(3),
+                            TestingReviewReminderMigrationSettings.VersionTwoDataClasses.ReviewReminderTime(12, 30),
+                            1,
+                            20,
+                            did2,
+                        ),
+                )
+            val versionOneDummyAppWideReminders =
+                mapOf(
+                    ReviewReminderId(4) to
+                        TestingReviewReminderMigrationSettings.ReviewReminderSchemaVersionOne(
+                            ReviewReminderId(4),
+                            9,
+                            0,
+                            5,
+                            -1L,
+                        ),
+                    ReviewReminderId(5) to
+                        TestingReviewReminderMigrationSettings.ReviewReminderSchemaVersionOne(
+                            ReviewReminderId(5),
+                            10,
+                            30,
+                            10,
+                            -1L,
+                        ),
+                )
+
+            val packagedDeckOneReminders =
+                ReviewRemindersDatabase.StoredReviewRemindersMap(
+                    ReviewReminderSchemaVersion(1),
+                    Json.encodeToString(versionOneDummyDeckSpecificRemindersForDeckOne),
+                )
+            val packagedDeckTwoReminders =
+                ReviewRemindersDatabase.StoredReviewRemindersMap(
+                    ReviewReminderSchemaVersion(2),
+                    Json.encodeToString(versionTwoDummyDeckSpecificRemindersForDeckTwo),
+                )
+            val packagedGlobalReminders =
+                ReviewRemindersDatabase.StoredReviewRemindersMap(
+                    ReviewReminderSchemaVersion(1),
+                    Json.encodeToString(versionOneDummyAppWideReminders),
+                )
+
+            ReviewRemindersDatabase.remindersSharedPrefs.edit(commit = true) {
+                putString(ReviewRemindersDatabase.DECK_SPECIFIC_KEY + did1, Json.encodeToString(packagedDeckOneReminders))
+                putString(ReviewRemindersDatabase.DECK_SPECIFIC_KEY + did2, Json.encodeToString(packagedDeckTwoReminders))
+                putString(ReviewRemindersDatabase.APP_WIDE_KEY, Json.encodeToString(packagedGlobalReminders))
+            }
+
+            val retrievedDeckOneReminders = ReviewRemindersDatabase.getRemindersForDeck(did1)
+            val retrievedDeckTwoReminders = ReviewRemindersDatabase.getRemindersForDeck(did2)
+            val retrievedGlobalReminders = ReviewRemindersDatabase.getAllAppWideReminders()
+
+            retrievedDeckOneReminders.forEach { (id, reminder) ->
+                assertThat(id, equalTo(reminder.id))
+            }
+            retrievedDeckTwoReminders.forEach { (id, reminder) ->
+                assertThat(id, equalTo(reminder.id))
+            }
+            retrievedGlobalReminders.forEach { (id, reminder) ->
+                assertThat(id, equalTo(reminder.id))
+            }
+
+            // We ignore ID because the migration process will generate new review reminders from scratch during the migration; ID is a private, inaccessible property
+            assertThat(
+                retrievedDeckOneReminders.values,
+                containsEqualReviewRemindersInAnyOrderIgnoringId(dummyDeckSpecificRemindersForDeckOne.values),
             )
-        // To spice things up, some will be version one...
-        val versionOneDummyDeckSpecificRemindersForDeckOne =
-            mapOf(
-                ReviewReminderId(0) to
-                    TestingReviewReminderMigrationSettings.ReviewReminderSchemaVersionOne(
-                        ReviewReminderId(0),
-                        9,
-                        0,
-                        5,
-                        did1,
-                        false,
-                    ),
-                ReviewReminderId(1) to
-                    TestingReviewReminderMigrationSettings.ReviewReminderSchemaVersionOne(
-                        ReviewReminderId(1),
-                        10,
-                        30,
-                        10,
-                        did1,
-                    ),
+            assertThat(
+                retrievedDeckTwoReminders.values,
+                containsEqualReviewRemindersInAnyOrderIgnoringId(dummyDeckSpecificRemindersForDeckTwo.values),
             )
-        // ...and some will be version two
-        val versionTwoDummyDeckSpecificRemindersForDeckTwo =
-            mapOf(
-                ReviewReminderId(2) to
-                    TestingReviewReminderMigrationSettings.ReviewReminderSchemaVersionTwo(
-                        ReviewReminderId(2),
-                        TestingReviewReminderMigrationSettings.VersionTwoDataClasses.ReviewReminderTime(10, 30),
-                        1,
-                        10,
-                        did2,
-                    ),
-                ReviewReminderId(3) to
-                    TestingReviewReminderMigrationSettings.ReviewReminderSchemaVersionTwo(
-                        ReviewReminderId(3),
-                        TestingReviewReminderMigrationSettings.VersionTwoDataClasses.ReviewReminderTime(12, 30),
-                        1,
-                        20,
-                        did2,
-                    ),
-            )
-        val versionOneDummyAppWideReminders =
-            mapOf(
-                ReviewReminderId(4) to
-                    TestingReviewReminderMigrationSettings.ReviewReminderSchemaVersionOne(
-                        ReviewReminderId(4),
-                        9,
-                        0,
-                        5,
-                        -1L,
-                    ),
-                ReviewReminderId(5) to
-                    TestingReviewReminderMigrationSettings.ReviewReminderSchemaVersionOne(
-                        ReviewReminderId(5),
-                        10,
-                        30,
-                        10,
-                        -1L,
-                    ),
+            assertThat(
+                retrievedGlobalReminders.values,
+                containsEqualReviewRemindersInAnyOrderIgnoringId(dummyAppWideReminders.values),
             )
 
-        val packagedDeckOneReminders =
-            ReviewRemindersDatabase.StoredReviewRemindersMap(
-                ReviewReminderSchemaVersion(1),
-                Json.encodeToString(versionOneDummyDeckSpecificRemindersForDeckOne),
-            )
-        val packagedDeckTwoReminders =
-            ReviewRemindersDatabase.StoredReviewRemindersMap(
-                ReviewReminderSchemaVersion(2),
-                Json.encodeToString(versionTwoDummyDeckSpecificRemindersForDeckTwo),
-            )
-        val packagedGlobalReminders =
-            ReviewRemindersDatabase.StoredReviewRemindersMap(
-                ReviewReminderSchemaVersion(1),
-                Json.encodeToString(versionOneDummyAppWideReminders),
-            )
+            // Shared Preferences should not contain any random corrupted keys after or due to the migration process
+            // There should be three: two for the specific decks, one for app-wide
+            val sharedPrefsSize = ReviewRemindersDatabase.remindersSharedPrefs.all.size
+            assertThat(sharedPrefsSize, CoreMatchers.equalTo(3))
 
-        ReviewRemindersDatabase.remindersSharedPrefs.edit(commit = true) {
-            putString(ReviewRemindersDatabase.DECK_SPECIFIC_KEY + did1, Json.encodeToString(packagedDeckOneReminders))
-            putString(ReviewRemindersDatabase.DECK_SPECIFIC_KEY + did2, Json.encodeToString(packagedDeckTwoReminders))
-            putString(ReviewRemindersDatabase.APP_WIDE_KEY, Json.encodeToString(packagedGlobalReminders))
+            // Reset mocks
+            ReviewRemindersDatabase.schemaVersion = savedSchemaVersion
+            ReviewRemindersDatabase.oldReviewReminderSchemasForMigration = savedOldReviewReminderSchemasForMigration
         }
-
-        val retrievedDeckOneReminders = ReviewRemindersDatabase.getRemindersForDeck(did1)
-        val retrievedDeckTwoReminders = ReviewRemindersDatabase.getRemindersForDeck(did2)
-        val retrievedGlobalReminders = ReviewRemindersDatabase.getAllAppWideReminders()
-
-        retrievedDeckOneReminders.forEach { (id, reminder) ->
-            assertThat(id, equalTo(reminder.id))
-        }
-        retrievedDeckTwoReminders.forEach { (id, reminder) ->
-            assertThat(id, equalTo(reminder.id))
-        }
-        retrievedGlobalReminders.forEach { (id, reminder) ->
-            assertThat(id, equalTo(reminder.id))
-        }
-
-        // We ignore ID because the migration process will generate new review reminders from scratch during the migration; ID is a private, inaccessible property
-        assertThat(
-            retrievedDeckOneReminders.values,
-            containsEqualReviewRemindersInAnyOrderIgnoringId(dummyDeckSpecificRemindersForDeckOne.values),
-        )
-        assertThat(
-            retrievedDeckTwoReminders.values,
-            containsEqualReviewRemindersInAnyOrderIgnoringId(dummyDeckSpecificRemindersForDeckTwo.values),
-        )
-        assertThat(
-            retrievedGlobalReminders.values,
-            containsEqualReviewRemindersInAnyOrderIgnoringId(dummyAppWideReminders.values),
-        )
-
-        // Shared Preferences should not contain any random corrupted keys after or due to the migration process
-        // There should be three: two for the specific decks, one for app-wide
-        val sharedPrefsSize = ReviewRemindersDatabase.remindersSharedPrefs.all.size
-        assertThat(sharedPrefsSize, CoreMatchers.equalTo(3))
-
-        // Reset mocks
-        ReviewRemindersDatabase.schemaVersion = savedSchemaVersion
-        ReviewRemindersDatabase.oldReviewReminderSchemasForMigration = savedOldReviewReminderSchemasForMigration
-    }
 }

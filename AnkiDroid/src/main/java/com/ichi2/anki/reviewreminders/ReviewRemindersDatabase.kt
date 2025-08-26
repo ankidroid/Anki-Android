@@ -21,6 +21,7 @@ import android.content.SharedPreferences
 import androidx.annotation.VisibleForTesting
 import androidx.core.content.edit
 import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.reviewreminders.ReviewRemindersDatabase.StoredReviewRemindersMap
 import kotlinx.serialization.InternalSerializationApi
@@ -239,11 +240,19 @@ object ReviewRemindersDatabase {
     }
 
     /**
-     * Get the [ReviewReminder]s for a specific deck.
+     * Get the [ReviewReminder]s for a specific deck. Deletes the review reminders for this deck if the deck does not exist.
      * @throws SerializationException If the reminders map has not been stored in SharedPreferences as a valid JSON string.
      * @throws IllegalArgumentException If the decoded reminders map is not a HashMap<[ReviewReminderId], [ReviewReminder]>.
      */
-    fun getRemindersForDeck(did: DeckId): HashMap<ReviewReminderId, ReviewReminder> = getRemindersForKey(DECK_SPECIFIC_KEY + did)
+    suspend fun getRemindersForDeck(did: DeckId): HashMap<ReviewReminderId, ReviewReminder> {
+        val doesDeckExist = withCol { decks.have(did) }
+        return if (doesDeckExist) {
+            getRemindersForKey(DECK_SPECIFIC_KEY + did)
+        } else {
+            deleteAllRemindersForDeck(did)
+            hashMapOf()
+        }
+    }
 
     /**
      * Get the app-wide [ReviewReminder]s.
@@ -254,15 +263,43 @@ object ReviewRemindersDatabase {
 
     /**
      * Get all [ReviewReminder]s that are associated with a specific deck, all in a single flattened map.
+     * For each deck, deletes the deck's review reminders if the deck does not exist.
      * @throws SerializationException If the reminders maps have not been stored in SharedPreferences as valid JSON strings.
      * @throws IllegalArgumentException If the decoded reminders maps are not instances of HashMap<[ReviewReminderId], [ReviewReminder]>.
      */
-    fun getAllDeckSpecificReminders(): HashMap<ReviewReminderId, ReviewReminder> =
-        remindersSharedPrefs
-            .all
-            .filterKeys { it.startsWith(DECK_SPECIFIC_KEY) }
-            .flatMap { (key, value) -> decodeJson(value.toString(), deckKeyForMigrationPurposes = key).entries }
-            .associateTo(hashMapOf()) { it.toPair() }
+    suspend fun getAllDeckSpecificReminders(): HashMap<ReviewReminderId, ReviewReminder> {
+        // Get all deck-specific reminders
+        val deckSpecificRemindersMap =
+            remindersSharedPrefs
+                .all
+                .filterKeys { it.startsWith(DECK_SPECIFIC_KEY) }
+                .toMutableMap()
+        // Delete deck-specific reminders for decks that do not exist
+        // Opens a SharedPreferences transaction and the collection only once
+        remindersSharedPrefs.edit {
+            withCol {
+                deckSpecificRemindersMap.entries.removeIf { (key, _) ->
+                    val did = key.removePrefix(DECK_SPECIFIC_KEY).toLong()
+                    val doesDeckExist = decks.have(did)
+                    if (doesDeckExist) {
+                        false // Keep this group of review reminders
+                    } else {
+                        Timber.d("Deleting review reminders for deck $did")
+                        remove(key) // Remove from SharedPreferences
+                        true // Remove from deckSpecificRemindersMap
+                    }
+                }
+            }
+        }
+        // Decode the remaining deck-specific reminders and return
+        return deckSpecificRemindersMap
+            .flatMap { (key, value) ->
+                decodeJson(
+                    value.toString(),
+                    deckKeyForMigrationPurposes = key,
+                ).entries
+            }.associateTo(hashMapOf()) { it.toPair() }
+    }
 
     /**
      * Edit the [ReviewReminder]s for a specific key.
@@ -283,17 +320,24 @@ object ReviewRemindersDatabase {
     }
 
     /**
-     * Edit the [ReviewReminder]s for a specific deck.
+     * Edit the [ReviewReminder]s for a specific deck. Deletes the review reminders for this deck if the deck does not exist.
      * This assumes the resulting map contains only reminders of scope [ReviewReminderScope.DeckSpecific].
      * @param did
      * @param reminderEditor A lambda that takes the current map and returns the updated map.
      * @throws SerializationException If the current reminders map has not been stored in SharedPreferences as a valid JSON string.
      * @throws IllegalArgumentException If the decoded current reminders map is not a HashMap<[ReviewReminderId], [ReviewReminder]>.
      */
-    fun editRemindersForDeck(
+    suspend fun editRemindersForDeck(
         did: DeckId,
         reminderEditor: (HashMap<ReviewReminderId, ReviewReminder>) -> Map<ReviewReminderId, ReviewReminder>,
-    ) = editRemindersForKey(DECK_SPECIFIC_KEY + did, reminderEditor)
+    ) {
+        val doesDeckExist = withCol { decks.have(did) }
+        if (doesDeckExist) {
+            editRemindersForKey(DECK_SPECIFIC_KEY + did, reminderEditor)
+        } else {
+            deleteAllRemindersForDeck(did)
+        }
+    }
 
     /**
      * Edit the app-wide [ReviewReminder]s.
@@ -304,6 +348,23 @@ object ReviewRemindersDatabase {
      */
     fun editAllAppWideReminders(reminderEditor: (HashMap<ReviewReminderId, ReviewReminder>) -> Map<ReviewReminderId, ReviewReminder>) =
         editRemindersForKey(APP_WIDE_KEY, reminderEditor)
+
+    /**
+     * Delete all [ReviewReminder]s for a specific deck.
+     * Fully removes the stored JSON string representing the stored review reminders from SharedPreferences.
+     * Does nothing if no review reminders for this deck have been stored.
+     *
+     * Public so that if a notification is being fired for a deck that has been deleted, the notification can be
+     * cancelled and the review reminders deleted. In general, deleting review reminders when a deck has been deleted
+     * is handled lazily: i.e., we do not immediately delete reminders for a deck when it is deleted but rather
+     * wait until the reminders are requested for display or for notification to check if a deletion should be performed.
+     */
+    fun deleteAllRemindersForDeck(did: DeckId) {
+        Timber.d("Deleting review reminders for deck $did")
+        remindersSharedPrefs.edit {
+            remove(DECK_SPECIFIC_KEY + did)
+        }
+    }
 }
 
 /**
