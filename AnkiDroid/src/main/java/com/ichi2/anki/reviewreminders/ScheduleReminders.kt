@@ -59,7 +59,6 @@ class ScheduleReminders :
         ) ?: ReviewReminderScope.Global
     }
 
-    private lateinit var database: ReviewRemindersDatabase
     private lateinit var toolbar: MaterialToolbar
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: ScheduleRemindersAdapter
@@ -99,9 +98,6 @@ class ScheduleReminders :
         recyclerView.layoutManager = layoutManager
         recyclerView.addItemDecoration(DividerItemDecoration(requireContext(), layoutManager.orientation))
 
-        // Set up database
-        database = ReviewRemindersDatabase()
-
         // Set up adapter, pass functionality to it
         adapter =
             ScheduleRemindersAdapter(
@@ -136,9 +132,9 @@ class ScheduleReminders :
             catchDatabaseExceptions {
                 when (val scope = scheduleRemindersScope) {
                     is ReviewReminderScope.Global -> {
-                        HashMap(database.getAllAppWideReminders() + database.getAllDeckSpecificReminders())
+                        HashMap(ReviewRemindersDatabase.getAllAppWideReminders() + ReviewRemindersDatabase.getAllDeckSpecificReminders())
                     }
-                    is ReviewReminderScope.DeckSpecific -> database.getRemindersForDeck(scope.did)
+                    is ReviewReminderScope.DeckSpecific -> ReviewRemindersDatabase.getRemindersForDeck(scope.did)
                 }
             } ?: hashMapOf()
         triggerUIUpdate()
@@ -188,8 +184,8 @@ class ScheduleReminders :
         launchCatchingTask {
             catchDatabaseExceptions {
                 when (scope) {
-                    is ReviewReminderScope.Global -> database.editAllAppWideReminders(performToggle)
-                    is ReviewReminderScope.DeckSpecific -> database.editRemindersForDeck(scope.did, performToggle)
+                    is ReviewReminderScope.Global -> ReviewRemindersDatabase.editAllAppWideReminders(performToggle)
+                    is ReviewReminderScope.DeckSpecific -> ReviewRemindersDatabase.editRemindersForDeck(scope.did, performToggle)
                 }
             }
         }

@@ -151,14 +151,16 @@ sealed class ReviewReminderScope : Parcelable {
  * stored review reminders on user devices will no longer be able to be read, as decoding them to the new
  * [ReviewReminder] schema will cause a serialization exception.
  * You must specify a schema migration mapping for users who already have review reminders set on their devices
- * so that [ReviewRemindersDatabase.attemptSchemaMigration] can migrate their reminders to the new schema.
- * Use an [OldReviewReminderSchema] to store the old schema and to define a method for migrating to the new schema.
- * Your method will be called from [ScheduleReminders.catchDatabaseExceptions]. To inform [ScheduleReminders.catchDatabaseExceptions]
- * that some users may have review reminders in the form of your old schema, add your [OldReviewReminderSchema]
- * to [ScheduleReminders.oldReviewReminderSchemasForMigration]. We store a list of old schemas since there may be
- * multiple old schemas, and users do not always update their app from
- * version A -> B -> C but may sometimes jump from A -> C.
- * [ScheduleReminders.catchDatabaseExceptions] will attempt to migrate from all old schemas present in the list.
+ * so that [ReviewRemindersDatabase.performSchemaMigration] can migrate their reminders to the new schema.
+ * Use a [ReviewReminderSchema] to store the old schema and to define a method for migrating to the new schema.
+ * Your method will be called from [ReviewRemindersDatabase.performSchemaMigration]. To inform [ReviewRemindersDatabase.performSchemaMigration]
+ * that some users may have review reminders in the form of your old schema, add your [ReviewReminderSchema]
+ * to [ReviewRemindersDatabase.oldReviewReminderSchemasForMigration] and update [ReviewRemindersDatabase.schemaVersion].
+ * [ReviewRemindersDatabase.oldReviewReminderSchemasForMigration] should contain a chain of versions, from 1 -> 2 -> 3 -> ...,
+ * and when a migration begins, it will happen step by step via the [ReviewReminderSchema.migrate] method, going from version 1 to version 2,
+ * from version 2 to version 3, and so on, until [ReviewRemindersDatabase.schemaVersion] is reached.
+ * Preferably, also add some unit tests to ensure your migration works properly on all user devices once your update is rolled out.
+ * See ReviewRemindersDatabaseTest for examples on how to do this.
  *
  * TODO: add remaining fields planned for GSoC 2025.
  *
@@ -172,12 +174,13 @@ sealed class ReviewReminderScope : Parcelable {
 @Parcelize
 @ConsistentCopyVisibility
 data class ReviewReminder private constructor(
-    val id: ReviewReminderId,
+    override val id: ReviewReminderId,
     val time: ReviewReminderTime,
     val cardTriggerThreshold: ReviewReminderCardTriggerThreshold,
     val scope: ReviewReminderScope,
     var enabled: Boolean,
-) : Parcelable {
+) : Parcelable,
+    ReviewReminderSchema {
     companion object {
         /**
          * Create a new review reminder. This will allocate a new ID for the reminder.
@@ -197,4 +200,9 @@ data class ReviewReminder private constructor(
             enabled,
         )
     }
+
+    /**
+     * This is the up-to-date schema, we cannot migrate to a newer version.
+     */
+    override fun migrate(): ReviewReminder = this
 }
