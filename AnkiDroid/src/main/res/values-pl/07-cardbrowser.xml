@@ -96,7 +96,7 @@
         <item>Wg pomyłek</item>
         <item>Według nazwy talii</item>
     </string-array>
-    <string name="manage_browser_column">Manage column</string>
+    <string name="manage_browser_column">Zarządzaj kolumną</string>
     <string name="no_columns_available">Brak dostępnych kolumn</string>
     <string name="card_browser_select_all" maxLength="28">Zaznacz wszystko</string>
     <string name="card_browser_select_none" maxLength="28">Anuluj wybór</string>
