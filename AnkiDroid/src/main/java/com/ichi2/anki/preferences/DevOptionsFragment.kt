@@ -192,6 +192,11 @@ class DevOptionsFragment : SettingsFragment() {
             true
         }
 
+        requirePreference<Preference>(R.string.pref_enable_switch_profile_key).setOnPreferenceChangeListener { _, _ ->
+            ActivityCompat.recreate(requireActivity())
+            true
+        }
+
         setupWebDebugPreference()
     }
 

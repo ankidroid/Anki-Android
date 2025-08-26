@@ -299,6 +299,13 @@ object Prefs {
     val isWebDebugEnabled: Boolean
         get() = (getBoolean(R.string.html_javascript_debugging_key, false) || BuildConfig.DEBUG) && !isRunningAsUnitTest
 
+    // ************************************* Switch Profile option ********************************** //
+
+    /**
+     * Whether the switch profile feature is enabled.
+     */
+    val switchProfileEnabled by booleanPref(R.string.pref_enable_switch_profile_key, false)
+
     // **************************************** UI Config *************************************** //
 
     private const val UI_CONFIG_PREFERENCES_NAME = "ui-config"
