@@ -132,6 +132,10 @@ class EditDeckDescriptionDialog : DialogFragment() {
                         DismissType.Saved -> {
                             dismiss()
                             showSnackbar(R.string.deck_description_saved)
+                            // notify DeckPicker to invalidate its toolbar menu, otherwise the undo
+                            // action to revert the description change is not going to be visible
+                            // when there are no other undo actions
+                            requireActivity().invalidateOptionsMenu()
                         }
                     }
                 }
