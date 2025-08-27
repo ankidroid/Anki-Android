@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.windows.permissions.Full30and31PermissionsFragment">
+    tools:context=".ui.windows.permissions.PermissionsStartingAt30Fragment">
 
     <com.ichi2.anki.ui.windows.permissions.PermissionsItem
         android:id="@+id/all_files_permission"
