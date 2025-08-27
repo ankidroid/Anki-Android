@@ -25,17 +25,16 @@ import com.ichi2.utils.Permissions
 import com.ichi2.utils.Permissions.canManageExternalStorage
 
 /**
- * Permissions screen for requesting permissions in API 33+,
+ * Permissions screen for requesting permissions at and above API 30,
  * if the user [canManageExternalStorage], which isn't possible in the play store.
  *
  * Requested permissions:
  * 1. All files access: [Permissions.MANAGE_EXTERNAL_STORAGE].
  *   Used for saving the collection in a public directory
  *   which isn't deleted when the app is uninstalled
- * 2. TODO notifications permission
  */
-@RequiresApi(Build.VERSION_CODES.TIRAMISU)
-class TiramisuPermissionsFragment : PermissionsFragment(R.layout.permissions_tiramisu) {
+@RequiresApi(Build.VERSION_CODES.R)
+class PermissionsStartingAt30Fragment : PermissionsFragment(R.layout.permissions_starting_at_30) {
     private val accessAllFilesLauncher =
         registerForActivityResult(
             ActivityResultContracts.StartActivityForResult(),
