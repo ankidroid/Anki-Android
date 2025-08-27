@@ -22,7 +22,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.R
 import com.ichi2.utils.Permissions
-import com.ichi2.utils.hasAnyOfPermissionsBeenDenied
 
 /**
  * Permissions screen for requesting permissions until API 29.
@@ -36,7 +35,14 @@ class PermissionsUntil29Fragment : PermissionsFragment(R.layout.permissions_unti
     private val storageLauncher =
         registerForActivityResult(
             ActivityResultContracts.RequestMultiplePermissions(),
-        ) {}
+        ) { requestedPermissions ->
+            if (!requestedPermissions.all { it.value }) {
+                // The permission dialog did not show up of the user denied the permission.
+                // Offers to open the OS settings section for AnkiDroid. In this section, the user can
+                // manually grant the permission.
+                showToastAndOpenAppSettingsScreen(R.string.startup_no_storage_permission)
+            }
+        }
 
     override fun onViewCreated(
         view: View,
@@ -45,12 +51,10 @@ class PermissionsUntil29Fragment : PermissionsFragment(R.layout.permissions_unti
         val storagePermission = view.findViewById<PermissionsItem>(R.id.storage_permission)
         storagePermission.setOnPermissionsRequested { areAlreadyGranted ->
             if (areAlreadyGranted) return@setOnPermissionsRequested
-            if (!userCanGrantWriteExternalStorage()) {
-                AndroidPermanentlyRevokedPermissionsDialog.show(requireActivity() as AnkiActivity)
-            } else if (!hasAnyOfPermissionsBeenDenied(storagePermission.permissions)) {
+            if (userCanGrantWriteExternalStorage()) {
                 storageLauncher.launch(storagePermission.permissions.toTypedArray())
             } else {
-                showToastAndOpenAppSettingsScreen(R.string.startup_no_storage_permission)
+                AndroidPermanentlyRevokedPermissionsDialog.show(requireActivity() as AnkiActivity)
             }
         }
     }
