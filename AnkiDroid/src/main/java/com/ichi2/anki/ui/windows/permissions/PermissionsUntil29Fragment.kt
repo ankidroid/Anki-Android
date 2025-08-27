@@ -43,7 +43,8 @@ class PermissionsUntil29Fragment : PermissionsFragment(R.layout.permissions_unti
         savedInstanceState: Bundle?,
     ) {
         val storagePermission = view.findViewById<PermissionsItem>(R.id.storage_permission)
-        storagePermission.setOnPermissionRequested {
+        storagePermission.setOnPermissionsRequested { areAlreadyGranted ->
+            if (areAlreadyGranted) return@setOnPermissionsRequested
             if (!userCanGrantWriteExternalStorage()) {
                 AndroidPermanentlyRevokedPermissionsDialog.show(requireActivity() as AnkiActivity)
             } else if (!hasAnyOfPermissionsBeenDenied(storagePermission.permissions)) {
