@@ -48,8 +48,8 @@ class PermissionsStartingAt30Fragment : PermissionsFragment(R.layout.permissions
         view: View,
         savedInstanceState: Bundle?,
     ) {
-        view.findViewById<PermissionsItem>(R.id.all_files_permission).setOnPermissionsRequested {
-            accessAllFilesLauncher.showManageAllFilesScreen()
-        }
+        view
+            .findViewById<PermissionsItem>(R.id.all_files_permission)
+            .requestExternalStorageOnClick(accessAllFilesLauncher)
     }
 }

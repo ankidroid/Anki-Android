@@ -32,6 +32,10 @@
          but this means preserveLegacyExternalStorage is inactive, and users do not have access to
          the ~/AnkiDroid public directory
     -->
+
+    <!-- Permissions used by AnkiDroid
+         If you add any new ones that require explicit user permission, please update the
+         AllPermissionsExplanation fragment (see ui.windows.permissions) -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" tools:ignore="ScopedStorage"/>
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -343,6 +347,21 @@
             android:exported="false"
             android:configChanges="keyboardHidden|orientation|screenSize"
             />
+
+        <!-- The activity that shows up when the user selects a more-info button in the OS permission settings for AnkiDroid
+             The more-info button only shows up in the OS settings at or above API 31
+             See https://developer.android.com/training/permissions/explaining-access#privacy-dashboard -->
+        <activity
+            android:name=".ui.windows.permissions.AllPermissionsExplanationActivity"
+            android:permission="android.permission.START_VIEW_PERMISSION_USAGE"
+            android:exported="true"
+            tools:targetApi="31">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW_PERMISSION_USAGE" />
+                <action android:name="android.intent.action.VIEW_PERMISSION_USAGE_FOR_PERIOD" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".ui.windows.permissions.PermissionsActivity"
             android:exported="false"
