@@ -27,6 +27,7 @@ import androidx.core.os.bundleOf
 import androidx.core.view.allViews
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
+import com.ichi2.anki.R
 import com.ichi2.anki.showThemedToast
 import timber.log.Timber
 
@@ -91,6 +92,38 @@ abstract class PermissionsFragment(
             launch(intent)
         } else {
             openAppSettingsScreen()
+        }
+    }
+
+    /**
+     * Set this PermissionItem so that when it is clicked, the app requests external file management permissions
+     * from the user.
+     */
+    @RequiresApi(Build.VERSION_CODES.R)
+    protected fun PermissionsItem.requestExternalStorageOnClick(launcher: ActivityResultLauncher<Intent>) {
+        setOnPermissionsRequested { areAlreadyGranted ->
+            if (!areAlreadyGranted) launcher.showManageAllFilesScreen()
+        }
+    }
+
+    /**
+     * If these permissions are already granted, open the OS settings to allow the user to disable them, as
+     * it is impossible to programmatically revoke a permission. If the permissions have not been granted,
+     * use [permissionRequestLauncher] to try and grant them. Note that [permissionRequestLauncher] also falls back
+     * to opening the OS settings if the dialog fails to show up. This may happen if the user has previously
+     * denied the permissions multiple times, selected "don't ask again" on the permissions dialog, etc.
+     */
+    protected fun PermissionsItem.offerToGrantOrRevokeOnClick(
+        permissionRequestLauncher: ActivityResultLauncher<Array<String>>,
+        permissions: Array<String>,
+    ) {
+        setOnPermissionsRequested { areAlreadyGranted ->
+            if (areAlreadyGranted) {
+                // Offer the ability to revoke the permission
+                showToastAndOpenAppSettingsScreen(R.string.revoke_permissions)
+            } else {
+                permissionRequestLauncher.launch(permissions)
+            }
         }
     }
 
