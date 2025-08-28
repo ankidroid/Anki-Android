@@ -29,6 +29,7 @@ import com.ichi2.anki.asyncIO
 import com.ichi2.anki.browser.BrowserDestination
 import com.ichi2.anki.cardviewer.SingleCardSide
 import com.ichi2.anki.common.time.TimeManager
+import com.ichi2.anki.jsapi.Endpoint
 import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.libanki.Card
 import com.ichi2.anki.libanki.CardId
@@ -77,6 +78,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.withTimeoutOrNull
 import org.intellij.lang.annotations.Language
+import org.json.JSONObject
 import timber.log.Timber
 
 class ReviewerViewModel(
@@ -84,10 +86,11 @@ class ReviewerViewModel(
 ) : CardViewerViewModel(),
     ChangeManager.Subscriber,
     BindingProcessor<ReviewerBinding, ViewerAction> {
-    private var queueState: Deferred<CurrentQueueState?> =
+    var queueState: Deferred<CurrentQueueState?> =
         asyncIO {
             withCol { sched.currentQueueState() }
         }
+        private set
     override var currentCard =
         asyncIO {
             queueState.await()?.topCard
@@ -253,10 +256,10 @@ class ReviewerViewModel(
         statesMutated = true
     }
 
-    private suspend fun emitEditNoteDestination() {
-        val cardId = currentCard.await().id
-        val destination = NoteEditorLauncher.EditNoteFromPreviewer(cardId)
-        Timber.i("Opening 'edit note' for card %d", cardId)
+    suspend fun emitEditNoteDestination(cardId: CardId? = null) {
+        val id = cardId ?: currentCard.await().id
+        val destination = NoteEditorLauncher.EditNoteFromPreviewer(id)
+        Timber.i("Opening 'edit note' for card %d", id)
         destinationFlow.emit(destination)
     }
 
@@ -265,10 +268,10 @@ class ReviewerViewModel(
         destinationFlow.emit(NoteEditorLauncher.AddNoteFromReviewer())
     }
 
-    private suspend fun emitCardInfoDestination() {
-        val cardId = currentCard.await().id
-        val destination = CardInfoDestination(cardId, TR.currentCardStudy())
-        Timber.i("Launching 'card info' for card %d", cardId)
+    suspend fun emitCardInfoDestination(cardId: CardId? = null) {
+        val id = cardId ?: currentCard.await().id
+        val destination = CardInfoDestination(id, TR.currentCardStudy())
+        Timber.i("Launching 'card info' for card %d", id)
         destinationFlow.emit(destination)
     }
 
@@ -300,7 +303,7 @@ class ReviewerViewModel(
         destinationFlow.emit(destination)
     }
 
-    private suspend fun deleteNote() {
+    suspend fun deleteNote() {
         val cardId = currentCard.await().id
         val noteCount =
             undoableOp {
@@ -348,7 +351,7 @@ class ReviewerViewModel(
         updateCurrentCard()
     }
 
-    private suspend fun undo() {
+    suspend fun undo() {
         Timber.v("ReviewerViewModel::undo")
         actionFeedbackFlow.emit(tryUndo())
     }
@@ -397,6 +400,16 @@ class ReviewerViewModel(
             "getSchedulingStatesWithContext" -> getSchedulingStatesWithContext()
             "setSchedulingStates" -> setSchedulingStates(bytes)
             else -> super.handlePostRequest(uri, bytes)
+        }
+
+    override suspend fun handleJsEndpoint(
+        endpoint: Endpoint,
+        data: JSONObject?,
+    ): ByteArray =
+        if (endpoint is Endpoint.StudyScreen) {
+            handleStudyScreenEndpoint(endpoint, data)
+        } else {
+            super.handleJsEndpoint(endpoint, data)
         }
 
     override suspend fun showQuestion() {

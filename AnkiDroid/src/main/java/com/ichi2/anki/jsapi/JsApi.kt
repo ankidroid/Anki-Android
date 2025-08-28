@@ -183,6 +183,30 @@ object JsApi {
                 undoableOp { setUserFlagForCards(listOf(card.id), newFlag) }
                 success()
             }
+            Endpoint.Card.GET_REVIEW_LOGS -> {
+                val reviewLogs =
+                    withCol { getReviewLogs(card.id) }.map { log ->
+                        JSONObject().apply {
+                            put("time", log.time)
+                            put("reviewKind", log.reviewKindValue)
+                            put("buttonChosen", log.buttonChosen)
+                            put("interval", log.interval)
+                            put("ease", log.ease)
+                            put("takenSecs", log.takenSecs)
+                            val memoryState =
+                                if (log.hasMemoryState()) {
+                                    JSONObject().apply {
+                                        put("stability", log.memoryState.stability)
+                                        put("difficulty", log.memoryState.difficulty)
+                                    }
+                                } else {
+                                    null
+                                }
+                            put("memoryState", memoryState)
+                        }
+                    }
+                success(reviewLogs)
+            }
         }
     }
 
