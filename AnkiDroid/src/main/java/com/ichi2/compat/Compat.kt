@@ -81,6 +81,7 @@ interface Compat {
     fun vibrate(
         context: Context,
         duration: Duration,
+        @VibrationUsage usage: Int,
     )
 
     fun getMediaRecorder(context: Context): MediaRecorder

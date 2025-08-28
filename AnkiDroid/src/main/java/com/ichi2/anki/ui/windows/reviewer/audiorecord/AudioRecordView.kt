@@ -39,6 +39,7 @@ import androidx.core.util.TypedValueCompat
 import androidx.core.view.isVisible
 import com.ichi2.anki.R
 import com.ichi2.compat.CompatHelper
+import com.ichi2.compat.USAGE_TOUCH
 import com.ichi2.utils.Permissions
 import kotlin.math.abs
 import kotlin.math.max
@@ -175,7 +176,7 @@ class AudioRecordView : ConstraintLayout {
 
                     override fun onLongPress(e: MotionEvent) {
                         if (!Permissions.canRecordAudio(context)) return
-                        CompatHelper.compat.vibrate(context, 50.milliseconds)
+                        CompatHelper.compat.vibrate(context, 50.milliseconds, USAGE_TOUCH)
                         showCancelAndLockSliders()
                         firstX = e.rawX
                         firstY = e.rawY

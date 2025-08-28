@@ -43,7 +43,11 @@ open class CompatV26 : CompatV24() {
     }
 
     @Suppress("DEPRECATION") // VIBRATOR_SERVICE => VIBRATOR_MANAGER_SERVICE handled in CompatV31
-    override fun vibrate(context: Context, duration: Duration) {
+    override fun vibrate(
+        context: Context,
+        duration: Duration,
+        @VibrationUsage usage: Int,
+    ) {
         val vibratorManager = context.getSystemService(Context.VIBRATOR_SERVICE) as? Vibrator
         if (vibratorManager != null) {
             val effect = VibrationEffect.createOneShot(duration.inWholeMilliseconds, VibrationEffect.DEFAULT_AMPLITUDE)

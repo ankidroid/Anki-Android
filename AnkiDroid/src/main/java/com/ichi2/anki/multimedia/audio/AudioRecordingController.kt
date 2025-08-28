@@ -52,6 +52,7 @@ import com.ichi2.anki.ui.setOnHoldListener
 import com.ichi2.anki.utils.elapsed
 import com.ichi2.compat.Compat
 import com.ichi2.compat.CompatHelper.Companion.compat
+import com.ichi2.compat.USAGE_TOUCH
 import com.ichi2.ui.FixedTextView
 import com.ichi2.utils.Permissions.canRecordAudio
 import com.ichi2.utils.UiUtil
@@ -726,7 +727,7 @@ class AudioRecordingController(
     /**
      * @see Compat.vibrate
      */
-    private fun vibrate(duration: Duration) = compat.vibrate(context, duration)
+    private fun vibrate(duration: Duration) = compat.vibrate(context, duration, USAGE_TOUCH)
 
     companion object {
         var isRecording = false
