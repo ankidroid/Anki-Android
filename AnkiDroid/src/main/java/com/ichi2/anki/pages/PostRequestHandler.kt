@@ -27,6 +27,7 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.NoteEditorFragment
 import com.ichi2.anki.importAnkiPackageUndoable
 import com.ichi2.anki.importCsvRaw
+import com.ichi2.anki.jsapi.JsApi
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.completeTagRaw
@@ -73,8 +74,8 @@ value class PostRequestUri(
 
     val jsApiMethodName: String?
         get() =
-            if (uri.startsWith(AnkiServer.ANKIDROID_JS_PREFIX)) {
-                uri.substring(AnkiServer.ANKIDROID_JS_PREFIX.length)
+            if (uri.startsWith(JsApi.REQUEST_PREFIX)) {
+                uri.substring(JsApi.REQUEST_PREFIX.length)
             } else {
                 null
             }
