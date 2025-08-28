@@ -56,6 +56,7 @@ open class BaseCompat : Compat {
     override fun vibrate(
         context: Context,
         duration: Duration,
+        @VibrationUsage usage: Int,
     ) {
         val vibratorManager = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator?
         vibratorManager?.vibrate(duration.inWholeMilliseconds)
