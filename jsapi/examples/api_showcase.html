@@ -1,0 +1,434 @@
+<!--
+  Copyright 2025 Brayan Oliveira
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+{{Front}}
+
+<hr id="answer">
+
+<div class="api-container">
+    <!-- Android API Section -->
+    <div class="api-section">
+        <h2>Android API</h2>
+        <div class="getters">
+            <button onclick="api.android.showSnackbar('Hello from the API!', -1)">Show Snackbar</button>
+            <p><strong>System in Dark Mode:</strong> <span id="dark-mode-status">...</span></p>
+            <p><strong>Network Metered:</strong> <span id="network-metered">...</span></p>
+        </div>
+    </div>
+
+    <!-- Card API Section -->
+    <div class="api-section">
+        <h2>Card API</h2>
+        <div class="actions">
+            <button onclick="api.card.bury()">Bury</button>
+            <button onclick="api.card.suspend()">Suspend</button>
+            <button onclick="api.card.resetProgress()">Reset Progress</button>
+            <br>
+            <button onclick="api.card.toggleFlag(1)">Flag Red</button>
+            <button onclick="api.card.toggleFlag(2)">Flag Orange</button>
+            <button onclick="api.card.toggleFlag(3)">Flag Green</button>
+            <button onclick="api.card.toggleFlag(4)">Flag Blue</button>
+            <button onclick="api.card.toggleFlag(5)">Flag Turquoise</button>
+            <button onclick="api.card.toggleFlag(6)">Flag Pink</button>
+            <button onclick="api.card.toggleFlag(7)">Flag Purple</button>
+        </div>
+        <div class="getters">
+            <p><strong>ID:</strong> <span id="card-id">...</span></p>
+            <p><strong>Note ID:</strong> <span id="card-nid">...</span></p>
+            <p><strong>Deck ID:</strong> <span id="card-did">...</span></p>
+            <p><strong>Is Marked:</strong> <span id="card-is-marked">...</span></p>
+            <p><strong>Flag:</strong> <span id="card-flag">...</span></p>
+            <p><strong>Reps:</strong> <span id="card-reps">...</span></p>
+            <p><strong>Interval:</strong> <span id="card-interval">...</span></p>
+            <p><strong>Factor:</strong> <span id="card-factor">...</span></p>
+            <p><strong>Mod:</strong> <span id="card-mod">...</span></p>
+            <p><strong>Type:</strong> <span id="card-type">...</span></p>
+            <p><strong>Queue:</strong> <span id="card-queue">...</span></p>
+            <p><strong>Due:</strong> <span id="card-due">...</span></p>
+            <p><strong>Lapses:</strong> <span id="card-lapses">...</span></p>
+            <p><strong>Left:</strong> <span id="card-left">...</span></p>
+            <p><strong>Original Deck ID:</strong> <span id="card-odid">...</span></p>
+            <p><strong>Original Due:</strong> <span id="card-odue">...</span></p>
+        </div>
+    </div>
+
+    <!-- Collection API section -->
+    <div class="api-section">
+        <h2>Collection API</h2>
+        <div class="actions">
+            <button onclick="api.collection.undo()">Undo</button>
+            <button onclick="api.collection.redo()">Redo</button>
+            <input type="text" id="col-search-input" placeholder="Search query..." value="deck:current">
+            <button onclick="findCards()">Find Cards</button>
+            <button onclick="findNotes()">Find Notes</button>
+        </div>
+        <div class="getters">
+            <p><strong>Undo Available:</strong> <span id="undo-available">...</span></p>
+            <p><strong>Redo Available:</strong> <span id="redo-available">...</span></p>
+            <p><strong>Found Card IDs:</strong> <span id="found-cards">...</span></p>
+            <p><strong>Found Note IDs:</strong> <span id="found-notes">...</span></p>
+        </div>
+    </div>
+
+    <!-- Note API Section -->
+    <div class="api-section">
+        <h2>Note API</h2>
+        <div class="actions">
+            <button onclick="api.note.toggleMark()">Toggle Mark</button>
+            <button onclick="api.note.bury()">Bury</button>
+            <button onclick="api.note.suspend()">Suspend</button>
+            <div class="tag-manager">
+                <input type="text" id="tag-input" placeholder="Enter tags...">
+                <button onclick="setNoteTags()">Set Tags</button>
+            </div>
+        </div>
+        <div class="getters">
+            <p><strong>ID:</strong> <span id="note-id">...</span></p>
+            <p><strong>Tags:</strong> <span id="note-tags">...</span></p>
+        </div>
+    </div>
+
+    <!-- Deck API Section -->
+    <div class="api-section">
+        <h2>Deck API</h2>
+        <div class="getters">
+            <p><strong>ID:</strong> <span id="deck-id">...</span></p>
+            <p><strong>Name:</strong> <span id="deck-name">...</span></p>
+            <p><strong>Is Filtered:</strong> <span id="deck-is-filtered">...</span></p>
+        </div>
+    </div>
+
+    <!-- Note Type API Section -->
+    <div class="api-section">
+        <h2>Note Type API</h2>
+        <div class="getters">
+            <p><strong>ID:</strong> <span id="note-type-id">...</span></p>
+            <p><strong>Name:</strong> <span id="note-type-name">...</span></p>
+            <p><strong>Is Cloze:</strong> <span id="is-cloze">...</span></p>
+            <p><strong>Is Image Occlusion:</strong> <span id="is-image-occlusion">...</span></p>
+            <p><strong>Field Names:</strong> <span id="field-names">...</span></p>
+        </div>
+    </div>
+
+    <!-- StudyScreen API Section -->
+    <div class="api-section">
+        <h2>StudyScreen API</h2>
+        <div class="actions">
+            <button onclick="api.studyScreen.showAnswer()">Show Answer</button>
+            <button onclick="api.studyScreen.answer(3)">Answer "Good"</button>
+            <button onclick="api.studyScreen.deleteNote()">Delete note</button>
+            <button onclick="api.studyScreen.setBackgroundColor('#FF00FF')">Set BG Magenta</button>
+            <button onclick="openCardInfo()">Card Info</button>
+            <button onclick="openNoteEditor()">Edit Note</button>
+        </div>
+        <div class="getters">
+            <p><strong>Is Showing Answer:</strong> <span id="is-showing-answer">...</span></p>
+            <p><strong>Next Time (Again):</strong> <span id="next-time-again">...</span></p>
+            <p><strong>Next Time (Hard):</strong> <span id="next-time-hard">...</span></p>
+            <p><strong>Next Time (Good):</strong> <span id="next-time-good">...</span></p>
+            <p><strong>Next Time (Easy):</strong> <span id="next-time-easy">...</span></p>
+            <p><strong>New Count:</strong> <span id="new-count">...</span></p>
+            <p><strong>Learn Count:</strong> <span id="lrn-count">...</span></p>
+            <p><strong>Review Count:</strong> <span id="rev-count">...</span></p>
+        </div>
+    </div>
+
+    <!-- TTS API Section -->
+    <div class="api-section">
+        <h2>TTS API</h2>
+        <div class="actions">
+            <input type="text" id="tts-input" placeholder="Text to speak..." value="Hello from AnkiDroid">
+            <button onclick="speakText()">Speak</button>
+            <button onclick="api.tts.stop()">Stop</button>
+            <br>
+            <input type="text" id="tts-lang" placeholder="Language (e.g., en-US)" value="en-US">
+            <button onclick="setTtsLanguage()">Set Language</button>
+            <br>
+            <label>Pitch: <input type="range" id="tts-pitch" min="0.1" max="2.0" step="0.1" value="1.0"></label>
+            <button onclick="setTtsPitch()">Set Pitch</button>
+            <br>
+            <label>Rate: <input type="range" id="tts-rate" min="0.1" max="2.0" step="0.1" value="1.0"></label>
+            <button onclick="setTtsRate()">Set Rate</button>
+        </div>
+        <div class="getters">
+            <p><strong>Is Speaking:</strong> <span id="tts-is-speaking">...</span></p>
+        </div>
+    </div>
+
+    <div class="api-section">
+        <h2>Errors test</h2>
+        <button onclick="invalidContactTest()">Invalid contact</button>
+        <button onclick="invalidVersionTest()">Invalid version</button>
+        <button onclick="outdatedVersionTest()">Outdated version</button>
+    </div>
+</div>
+
+
+<style>
+    :root {
+        --bg-color: #FFFFFF;
+        --text-color: #212121;
+        --section-bg-color: #FAFAFA;
+        --section-border-color: #E0E0E0;
+        --button-bg-color: #F5F5F5;
+        --button-hover-bg-color: #E0E0E0;
+        --input-bg-color: #FFFFFF;
+        --input-border-color: #BDBDBD;
+        --span-color: #0D47A1;
+    }
+
+    .nightMode {
+        --bg-color: #212121;
+        --text-color: #E0E0E0;
+        --section-bg-color: #303030;
+        --section-border-color: #424242;
+        --button-bg-color: #424242;
+        --button-hover-bg-color: #616161;
+        --input-bg-color: #424242;
+        --input-border-color: #757575;
+        --span-color: #90CAF9;
+    }
+
+    .api-container {
+        font-family: sans-serif;
+        max-width: 600px;
+        margin: auto;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+    }
+    .api-section {
+        background-color: var(--section-bg-color);
+        border: 1px solid var(--section-border-color);
+        border-radius: 8px;
+        padding: 12px;
+        margin-bottom: 16px;
+    }
+    h2 {
+        margin-top: 0;
+        border-bottom: 1px solid var(--section-border-color);
+        padding-bottom: 8px;
+    }
+    button {
+        padding: 8px 12px;
+        margin: 4px;
+        border: 1px solid var(--section-border-color);
+        border-radius: 4px;
+        background-color: var(--button-bg-color);
+        color: var(--text-color);
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: var(--button-hover-bg-color);
+    }
+    .actions, .getters {
+        margin-top: 8px;
+    }
+    .getters p {
+        margin: 6px 0;
+        display: flex;
+        justify-content: space-between;
+    }
+    .getters span {
+        font-weight: bold;
+        color: var(--span-color);
+        text-align: right;
+    }
+    input[type="text"] {
+        padding: 6px;
+        border-radius: 4px;
+        border: 1px solid var(--input-border-color);
+        background-color: var(--input-bg-color);
+        color: var(--text-color);
+        margin: 4px;
+    }
+</style>
+
+
+<script>
+    var contract;
+    var api;
+
+    if (typeof contract === 'undefined') {
+        contract = {"version": "1.0.0", "developer": "https://github.com/ankidroid/Anki-Android"};
+    }
+    if (typeof api === 'undefined') {
+        api = new AnkiDroidJs.Api(contract);
+    }
+
+    function updateText(id, text) {
+        const el = document.getElementById(id);
+        if (el) el.innerText = text;
+    }
+
+    async function populateCardData() {
+        try {
+            document.querySelectorAll('.getters span').forEach(el => el.textContent = '...');
+
+            const dataMap = {
+                // StudyScreen
+                'is-showing-answer': api.studyScreen.isShowingAnswer(),
+                'next-time-again': api.studyScreen.getNextTime(1),
+                'next-time-hard': api.studyScreen.getNextTime(2),
+                'next-time-good': api.studyScreen.getNextTime(3),
+                'next-time-easy': api.studyScreen.getNextTime(4),
+                'new-count': api.studyScreen.getNewCount(),
+                'lrn-count': api.studyScreen.getLearningCount(),
+                'rev-count': api.studyScreen.getToReviewCount(),
+                // Card
+                'card-id': api.card.getId(), 'card-nid': api.card.getNid(), 'card-did': api.card.getDid(),
+                'card-is-marked': api.card.isMarked(), 'card-flag': api.card.getFlag(), 'card-reps': api.card.getReps(),
+                'card-interval': api.card.getInterval(), 'card-factor': api.card.getFactor(), 'card-mod': api.card.getMod(),
+                'card-type': api.card.getType(), 'card-queue': api.card.getQueue(), 'card-due': api.card.getDue(),
+                'card-lapses': api.card.getLapses(), 'card-left': api.card.getLeft(), 'card-odid': api.card.getODid(),
+                'card-odue': api.card.getODue(),
+                // Collection
+                'undo-available': api.collection.isUndoAvailable(), 'redo-available': api.collection.isRedoAvailable(),
+                // Note
+                'note-id': api.note.getId(), 'note-tags': api.note.getTags(),
+                // Note type
+                'note-type-id': api.noteType.getId(), 'note-type-name': api.noteType.getName(), 'is-cloze': api.noteType.isCloze(),
+                'is-image-occlusion': api.noteType.isImageOcclusion(), 'field-names': api.noteType.getFieldNames(),
+                // Deck
+                'deck-id': api.deck.getId(), 'deck-name': api.deck.getName(), 'deck-is-filtered': api.deck.isFiltered(),
+                // Android
+                'dark-mode-status': api.android.isSystemInDarkMode(), 'network-metered': api.android.isNetworkMetered(),
+                // TTS
+                'tts-is-speaking': api.tts.isSpeaking(),
+            };
+
+            const promises = Object.values(dataMap);
+            const results = await Promise.allSettled(promises);
+            const keys = Object.keys(dataMap);
+
+            results.forEach((result, index) => {
+                const key = keys[index];
+                if (result.status === 'fulfilled' && result.value.success) {
+                    const value = result.value.value;
+                    updateText(key, value !== undefined ? value : '(none)');
+                } else {
+                    const reason = result.status === 'rejected' ? result.reason : (result.value ? result.value.error : 'Request failed');
+                    console.error(`Failed to fetch ${key}:`, reason);
+                    updateText(key, 'Error');
+                }
+            });
+
+        } catch (e) {
+            console.error("A critical error occurred while loading card info:", e);
+        }
+    }
+
+    populateCardData();
+
+    async function setNoteTags() {
+        const input = document.getElementById('tag-input');
+        if (input.value) {
+            await api.note.setTags(input.value);
+            const tagsResult = await api.note.getTags();
+            if (tagsResult.success) {
+                updateText('note-tags', tagsResult.value);
+            }
+            api.android.showSnackbar('Tags updated', -1);
+            input.value = "";
+        }
+    }
+
+    async function findCards() {
+        const input = document.getElementById('col-search-input');
+        if (input.value) {
+            const result = await api.collection.findCards(input.value);
+            if (result.success) {
+                updateText('found-cards', result.value.join(', '));
+            }
+        }
+    }
+
+    async function findNotes() {
+        const input = document.getElementById('col-search-input');
+        if (input.value) {
+            const result = await api.collection.findNotes(input.value);
+            if (result.success) {
+                updateText('found-notes', result.value.join(', '));
+            }
+        }
+    }
+
+    async function speakText() {
+        const input = document.getElementById('tts-input');
+        if (input.value) {
+            await api.tts.speak(input.value, 0);
+        }
+    }
+
+    async function setTtsLanguage() {
+        const input = document.getElementById('tts-lang');
+        if (input.value) {
+            await api.tts.setLanguage(input.value);
+            api.android.showSnackbar(`TTS language set to ${input.value}`, -1);
+        }
+    }
+
+    async function setTtsPitch() {
+        const input = document.getElementById('tts-pitch');
+        await api.tts.setPitch(parseFloat(input.value));
+        api.android.showSnackbar(`TTS pitch set to ${input.value}`, -1);
+    }
+
+    async function setTtsRate() {
+        const input = document.getElementById('tts-rate');
+        await api.tts.setSpeechRate(parseFloat(input.value));
+        api.android.showSnackbar(`TTS speech rate set to ${input.value}`, -1);
+    }
+
+    async function openCardInfo() {
+        try {
+            const cardIdResult = await api.card.getId();
+            if (cardIdResult.success) {
+                await api.studyScreen.openCardInfo(cardIdResult.value);
+            }
+        } catch (e) {
+            console.error("Failed to open card info:", e);
+        }
+    }
+
+    async function openNoteEditor() {
+        try {
+            const cardIdResult = await api.card.getId();
+            if (cardIdResult.success) {
+                await api.studyScreen.openNoteEditor(cardIdResult.value);
+            }
+        } catch (e) {
+            console.error("Failed to open note editor:", e);
+        }
+    }
+
+    function invalidContactTest() {
+        const contract = {"version": "1.0.0", "developer": " "};
+        const api = new AnkiDroidJs.Api(contract);
+        api.deck.getName();
+    }
+
+    function invalidVersionTest() {
+        const contract = {"version": "foo", "developer": "someone@example.com"};
+        const api = new AnkiDroidJs.Api(contract);
+        api.deck.getName();
+    }
+
+    function outdatedVersionTest() {
+        const contract = {"version": "0.0.1", "developer": "someone@example.com"};
+        const api = new AnkiDroidJs.Api(contract);
+        api.deck.getName();
+    }
+</script>
