@@ -121,6 +121,8 @@
     <string name="multimedia_editor_failed">Gagal membuka Editor Multimedia</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Izin merekam audio ditolak</string>
+    <string name="permission_denied">Permission denied</string>
+    <string name="recording_permission_denied_message">Microphone permission is necessary for the “Record voice” feature. Please grant it in the app settings.</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid Diperbarui</string>
     <string name="integrity_check_startup_content">AnkiDroid Diperbarui. Pembaruan ini meliputi perbaikan masalah basisdata, dan kami sarankan untuk memeriksa basisdata sekarang</string>

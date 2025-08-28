@@ -83,6 +83,7 @@
     <string name="webview_crash_fatal">Erreur Fatale : Plantage du moteur de rendu Webview. Cause : %s</string>
     <string name="webview_crash_loop_dialog_title">Échec de rendu du système WebView</string>
     <string name="webview_crash_loop_dialog_content">Le système WebView n\'a pas réussi à afficher la carte « %1$s ».\n %2$s</string>
+    <string name="slide_to_cancel" comment="Message shown when pressing the record button">Slide to cancel</string>
     <string name="filter_by_flags" maxLength="41">Marqueurs</string>
     <!-- Custom study options -->
     <string name="custom_study_loading_tags">Création de la liste des labels en cours&#8230;</string>

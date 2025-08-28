@@ -124,6 +124,8 @@
     <string name="multimedia_editor_failed">باز کردن ویرایشگر رسانه انجام نشد</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">دسترسی به ضبط صدا به آنکی‌دروید داده نشد</string>
+    <string name="permission_denied">Permission denied</string>
+    <string name="recording_permission_denied_message">Microphone permission is necessary for the “Record voice” feature. Please grant it in the app settings.</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">آنکی‌دروید به روز‌رسانی شد</string>
     <string name="integrity_check_startup_content">آنکی دروید به‌روزرسانی شده است. این نسخۀ شامل تعمیراتی برای مشکلات محتمل دیتابیس است، بنابراین ما به شما پیشنهاد می‌کنیم که اکنون از گزینۀ بررسی دیتابیس استفاده کنید.</string>

@@ -83,6 +83,7 @@
     <string name="webview_crash_fatal">Nenovēršama kļūda: WebView atveidotājs avarēja. Cēlonis: %s</string>
     <string name="webview_crash_loop_dialog_title">Sistēmas WebView atveidotāja atteice</string>
     <string name="webview_crash_loop_dialog_content">Sistēmas WebView neizdevās attēlot kartīti \"%1$s\".\n %2$s</string>
+    <string name="slide_to_cancel" comment="Message shown when pressing the record button">Slide to cancel</string>
     <string name="filter_by_flags" maxLength="41">Karogi</string>
     <!-- Custom study options -->
     <string name="custom_study_loading_tags">Veido birku sarakstu&#8230;</string>

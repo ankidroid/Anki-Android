@@ -124,6 +124,8 @@
     <string name="multimedia_editor_failed">Bigong buksan ang Multimedia Editor</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Hindi binigyang permiso na mag-record ng audio</string>
+    <string name="permission_denied">Permission denied</string>
+    <string name="recording_permission_denied_message">Microphone permission is necessary for the “Record voice” feature. Please grant it in the app settings.</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">Na-upgrade ang AnkiDroid</string>
     <string name="integrity_check_startup_content">Na-upgrade na ang AnkiDroid. Ang upgrade na ito ay naglalaman ng pag-aayos sa mga posibleng problema sa database, at pinapayuhan ka namin na suriin ang database ngayon.</string>

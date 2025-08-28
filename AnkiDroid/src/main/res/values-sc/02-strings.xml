@@ -84,6 +84,7 @@
     <string name="webview_crash_loop_dialog_title">Fallimentu de sa renderizatzione WebView de sistema</string>
     <string name="webview_crash_loop_dialog_content">Su renderizadore WebView de sistema no est resèssidu a renderizare sa carta \'%1$s\'.\n
    %2$s</string>
+    <string name="slide_to_cancel" comment="Message shown when pressing the record button">Slide to cancel</string>
     <string name="filter_by_flags" maxLength="41">Banderas</string>
     <!-- Custom study options -->
     <string name="custom_study_loading_tags">Building list of tags&#8230;</string>

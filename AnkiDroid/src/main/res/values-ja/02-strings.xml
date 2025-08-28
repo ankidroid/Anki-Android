@@ -83,6 +83,7 @@
     <string name="webview_crash_fatal">重大なエラー: WebViewレンダラーがクラッシュしました。原因: %s</string>
     <string name="webview_crash_loop_dialog_title">システムのWebViewのレンダリング失敗</string>
     <string name="webview_crash_loop_dialog_content">AndroidシステムのWebViewがカード \'%1$s\' のレンダリングに失敗しました。\n %2$s</string>
+    <string name="slide_to_cancel" comment="Message shown when pressing the record button">Slide to cancel</string>
     <string name="filter_by_flags" maxLength="41">フラグ</string>
     <!-- Custom study options -->
     <string name="custom_study_loading_tags">タグのリストを作成しています&#8230;</string>

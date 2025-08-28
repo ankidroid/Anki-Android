@@ -83,6 +83,7 @@
     <string name="webview_crash_fatal">خلل فادح: تَعطَّل معالج الويب فيو. المسبب: %s</string>
     <string name="webview_crash_loop_dialog_title">فَشَلٌ في معالجة الويب فيو الخاص بالنظام</string>
     <string name="webview_crash_loop_dialog_content">فَشِلَ ويب فيو الخاص بالنظام في عرض البطاقة %1$s.\n %2$s</string>
+    <string name="slide_to_cancel" comment="Message shown when pressing the record button">Slide to cancel</string>
     <string name="filter_by_flags" maxLength="41">الأعلام</string>
     <!-- Custom study options -->
     <string name="custom_study_loading_tags">يتم بناء مجموعة الوسوم&#8230;</string>

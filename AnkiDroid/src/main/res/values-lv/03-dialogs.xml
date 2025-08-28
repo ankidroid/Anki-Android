@@ -127,6 +127,8 @@
     <string name="multimedia_editor_failed">Neizdevās atvērt multimediju redaktoru</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Noraidīta skaņas ierakstīšanas atļauja</string>
+    <string name="permission_denied">Permission denied</string>
+    <string name="recording_permission_denied_message">Microphone permission is necessary for the “Record voice” feature. Please grant it in the app settings.</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid uzlabota</string>
     <string name="integrity_check_startup_content">AnkiDroid tika uzlaboti. Šajā uzlabojumā ir iekļauti labojumi iespējamām ar datubāzi saistītām nebūšanām, un mēs iesakām tagad veikt datubāzes pārbaudi.</string>

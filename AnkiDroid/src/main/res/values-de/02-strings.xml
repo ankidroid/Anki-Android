@@ -83,6 +83,7 @@
     <string name="webview_crash_fatal">Schwerer Fehler: WebView-Renderer ist abgestürzt. Grund: %s</string>
     <string name="webview_crash_loop_dialog_title">Fehler beim System-WebView-Rendering</string>
     <string name="webview_crash_loop_dialog_content">System-WebView konnte die Karte »%1$s« nicht rendern.\n %2$s</string>
+    <string name="slide_to_cancel" comment="Message shown when pressing the record button">Slide to cancel</string>
     <string name="filter_by_flags" maxLength="41">Flaggen</string>
     <!-- Custom study options -->
     <string name="custom_study_loading_tags">Erstelle Schlagwortliste&#8230;</string>

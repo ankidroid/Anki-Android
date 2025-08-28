@@ -124,6 +124,8 @@
     <string name="multimedia_editor_failed">Error al abrir el Editor Multimedia</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Permiso de grabación de audio denegado</string>
+    <string name="permission_denied">Permission denied</string>
+    <string name="recording_permission_denied_message">Microphone permission is necessary for the “Record voice” feature. Please grant it in the app settings.</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid actualizado</string>
     <string name="integrity_check_startup_content">AnkiDroid ha sido actualizado. Esta actualización incluye correcciones para posibles problemas de base de datos, y le aconsejamos que comprueba la base de datos ahora.</string>

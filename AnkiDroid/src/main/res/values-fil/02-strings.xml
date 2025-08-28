@@ -83,6 +83,7 @@
     <string name="webview_crash_fatal">Malubhang Kamalian: Nawask ang renderer ng WebView. Dahilan: %s</string>
     <string name="webview_crash_loop_dialog_title">Bigo ang Pag-Render ng Pansistemang WebView</string>
     <string name="webview_crash_loop_dialog_content">Bigo ang Pansistemang Webview sa pag-render sa card na \'%1$s\'.\n %2$s</string>
+    <string name="slide_to_cancel" comment="Message shown when pressing the record button">Slide to cancel</string>
     <string name="filter_by_flags" maxLength="41">Mga Watawat</string>
     <!-- Custom study options -->
     <string name="custom_study_loading_tags">Gumagawa nang listahan nang tags&#8230;</string>

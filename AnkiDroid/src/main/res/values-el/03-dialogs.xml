@@ -124,6 +124,8 @@
     <string name="multimedia_editor_failed">Αποτυχία ανοίγματος του επεξεργαστή πολυμέσων</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Απόρριψη άδειας ηχογράφησης</string>
+    <string name="permission_denied">Permission denied</string>
+    <string name="recording_permission_denied_message">Microphone permission is necessary for the “Record voice” feature. Please grant it in the app settings.</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">Το AnkiDroid αναβαθμίστηκε</string>
     <string name="integrity_check_startup_content">Το AnkiDroid έχει αναβαθμιστεί. Αυτή η αναβάθμιση περιλαμβάνει διορθώσεις για πιθανά προβλήματα της βάσης δεδομένων και σας συμβουλεύουμε να εκτελέσετε τώρα έναν έλεγχο βάσης δεδομένων.</string>

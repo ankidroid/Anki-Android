@@ -83,6 +83,7 @@
     <string name="webview_crash_fatal">致命錯誤：WebView 渲染器已崩潰。原因：%s</string>
     <string name="webview_crash_loop_dialog_title">系統 WebView 渲染失敗</string>
     <string name="webview_crash_loop_dialog_content">系統 WebView 渲染卡片 ‘%1$s’ 失敗。\n %2$s</string>
+    <string name="slide_to_cancel" comment="Message shown when pressing the record button">Slide to cancel</string>
     <string name="filter_by_flags" maxLength="41">標籤</string>
     <!-- Custom study options -->
     <string name="custom_study_loading_tags">正在建立標籤列&#8230;</string>

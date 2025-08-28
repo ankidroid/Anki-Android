@@ -124,6 +124,8 @@
     <string name="multimedia_editor_failed">Det gick inte att öppna Multimedia Editor</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Behörighet för ljudinspelning nekad</string>
+    <string name="permission_denied">Permission denied</string>
+    <string name="recording_permission_denied_message">Microphone permission is necessary for the “Record voice” feature. Please grant it in the app settings.</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid uppgraderat</string>
     <string name="integrity_check_startup_content">AnkiDroid har uppgraderats. Denna uppgradering innehåller rättelser för eventuella databasproblem, och vi rekommenderar dig att köra databaskontrollen nu.</string>

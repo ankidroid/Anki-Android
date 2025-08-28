@@ -83,6 +83,7 @@
     <string name="webview_crash_fatal">ସାଂଘାତିକ ତ୍ରୁଟି: WebView ପ୍ରସ୍ତୁତକର୍ତ୍ତା ଦୁର୍ଘଟଣାଗ୍ରସ୍ତ ହୋଇଛି। କାରଣ: %s</string>
     <string name="webview_crash_loop_dialog_title">ସିଷ୍ଟମର WebView ପ୍ରସ୍ତୁତକର୍ତ୍ତାରେ ବିଫଳତା</string>
     <string name="webview_crash_loop_dialog_content">ସିଷ୍ଟମ୍ WebView \'%1$s\' ପତ୍ର କୁ ପ୍ରସ୍ତୁତ କଲାନାହିଁ।\n %2$s</string>
+    <string name="slide_to_cancel" comment="Message shown when pressing the record button">Slide to cancel</string>
     <string name="filter_by_flags" maxLength="41">ପତାକା</string>
     <!-- Custom study options -->
     <string name="custom_study_loading_tags">Building list of tags&#8230;</string>

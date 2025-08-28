@@ -83,6 +83,7 @@
     <string name="webview_crash_fatal">அபாயகரமான பிழை: WebView ரெண்டரர் செயலிழந்தது. காரணம்: %s</string>
     <string name="webview_crash_loop_dialog_title">கணினி WebView ரெண்டரிங் தோல்வி</string>
     <string name="webview_crash_loop_dialog_content">சிஸ்டம் வெப்வியூ கார்டை \'%1$s\' ரெண்டர் செய்வதில் தோல்வியடைந்தது.\n %2$s</string>
+    <string name="slide_to_cancel" comment="Message shown when pressing the record button">Slide to cancel</string>
     <string name="filter_by_flags" maxLength="41">கொடிகள்</string>
     <!-- Custom study options -->
     <string name="custom_study_loading_tags">Building list of tags&#8230;</string>
