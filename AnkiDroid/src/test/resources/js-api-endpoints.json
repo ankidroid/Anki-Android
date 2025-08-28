@@ -1,0 +1,317 @@
+{
+    "version": "1.0.0",
+    "endpoints": {
+        "android": {
+            "show-snackbar": {
+                "params": {
+                    "text": "string",
+                    "duration": "number"
+                },
+                "return": "void"
+            },
+            "is-system-in-dark-mode": {
+                "params": {},
+                "return": "boolean"
+            },
+            "is-network-metered": {
+                "params": {},
+                "return": "boolean"
+            }
+        },
+        "card": {
+            "get-id": {
+                "params": {},
+                "return": "number"
+            },
+            "get-flag": {
+                "params": {},
+                "return": "number"
+            },
+            "get-reps": {
+                "params": {},
+                "return": "number"
+            },
+            "get-interval": {
+                "params": {},
+                "return": "number"
+            },
+            "get-factor": {
+                "params": {},
+                "return": "number"
+            },
+            "get-mod": {
+                "params": {},
+                "return": "number"
+            },
+            "get-nid": {
+                "params": {},
+                "return": "number"
+            },
+            "get-type": {
+                "params": {},
+                "return": "number"
+            },
+            "get-did": {
+                "params": {},
+                "return": "number"
+            },
+            "get-left": {
+                "params": {},
+                "return": "number"
+            },
+            "get-o-did": {
+                "params": {},
+                "return": "number"
+            },
+            "get-o-due": {
+                "params": {},
+                "return": "number"
+            },
+            "get-queue": {
+                "params": {},
+                "return": "number"
+            },
+            "get-lapses": {
+                "params": {},
+                "return": "number"
+            },
+            "get-question": {
+                "params": {},
+                "return": "string"
+            },
+            "get-answer": {
+                "params": {},
+                "return": "string"
+            },
+            "get-due": {
+                "params": {},
+                "return": "number"
+            },
+            "is-marked": {
+                "params": {},
+                "return": "boolean"
+            },
+            "bury": {
+                "params": {},
+                "return": "number"
+            },
+            "suspend": {
+                "params": {},
+                "return": "number"
+            },
+            "unbury": {
+                "params": {},
+                "return": "void"
+            },
+            "unsuspend": {
+                "params": {},
+                "return": "void"
+            },
+            "reset-progress": {
+                "params": {},
+                "return": "void"
+            },
+            "toggle-flag": {
+                "params": {
+                    "flag": "number"
+                },
+                "return": "void"
+            },
+            "get-review-logs": {
+                "params": {},
+                "return": "ReviewLog[]"
+            }
+        },
+        "collection": {
+            "undo": {
+                "params": {},
+                "return": "string"
+            },
+            "redo": {
+                "params": {},
+                "return": "string"
+            },
+            "is-undo-available": {
+                "params": {},
+                "return": "boolean"
+            },
+            "is-redo-available": {
+                "params": {},
+                "return": "boolean"
+            },
+            "find-cards": {
+                "params": {
+                    "search": "string"
+                },
+                "return": "number[]"
+            },
+            "find-notes": {
+                "params": {
+                    "search": "string"
+                },
+                "return": "number[]"
+            }
+        },
+        "deck": {
+            "get-id": {
+                "params": {},
+                "return": "number"
+            },
+            "get-name": {
+                "params": {},
+                "return": "string"
+            },
+            "is-filtered": {
+                "params": {},
+                "return": "boolean"
+            }
+        },
+        "note-type": {
+            "get-id": {
+                "params": {},
+                "return": "number"
+            },
+            "get-name": {
+                "params": {},
+                "return": "string"
+            },
+            "is-image-occlusion": {
+                "params": {},
+                "return": "boolean"
+            },
+            "is-cloze": {
+                "params": {},
+                "return": "boolean"
+            },
+            "get-field-names": {
+                "params": {},
+                "return": "string[]"
+            }
+        },
+        "note": {
+            "get-id": {
+                "params": {},
+                "return": "number"
+            },
+            "get-note-type-id": {
+                "params": {},
+                "return": "number"
+            },
+            "get-card-ids": {
+                "params": {},
+                "return": "number[]"
+            },
+            "bury": {
+                "params": {},
+                "return": "number"
+            },
+            "suspend": {
+                "params": {},
+                "return": "number"
+            },
+            "get-tags": {
+                "params": {},
+                "return": "string"
+            },
+            "set-tags": {
+                "params": {
+                    "tags": "string"
+                },
+                "return": "void"
+            },
+            "toggle-mark": {
+                "params": {},
+                "return": "void"
+            }
+        },
+        "study-screen": {
+            "get-new-count": {
+                "params": {},
+                "return": "number"
+            },
+            "get-learning-count": {
+                "params": {},
+                "return": "number"
+            },
+            "get-to-review-count": {
+                "params": {},
+                "return": "number"
+            },
+            "show-answer": {
+                "params": {},
+                "return": "void"
+            },
+            "is-showing-answer": {
+                "params": {},
+                "return": "boolean"
+            },
+            "get-next-time": {
+                "params": {
+                    "rating": "number"
+                },
+                "return": "string"
+            },
+            "get-next-times": {
+                "params": {},
+                "return": "string[]"
+            },
+            "open-card-info": {
+                "params": {
+                    "cardId": "number"
+                },
+                "return": "void"
+            },
+            "open-note-editor": {
+                "params": {
+                    "cardId": "number"
+                },
+                "return": "void"
+            },
+            "answer": {
+                "params": {
+                    "rating": "number"
+                },
+                "return": "void"
+            },
+            "delete-note": {
+                "params": {},
+                "return": "void"
+            }
+        },
+        "tts": {
+            "speak": {
+                "params": {
+                    "text": "string",
+                    "queueMode": "number"
+                },
+                "return": "void"
+            },
+            "set-language": {
+                "params": {
+                    "locale": "string"
+                },
+                "return": "number"
+            },
+            "set-pitch": {
+                "params": {
+                    "pitch": "number"
+                },
+                "return": "void"
+            },
+            "set-speech-rate": {
+                "params": {
+                    "speechRate": "number"
+                },
+                "return": "void"
+            },
+            "is-speaking": {
+                "params": {},
+                "return": "boolean"
+            },
+            "stop": {
+                "params": {},
+                "return": "void"
+            }
+        }
+    }
+}
