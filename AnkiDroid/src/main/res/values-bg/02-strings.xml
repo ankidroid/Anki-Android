@@ -83,6 +83,7 @@
     <string name="webview_crash_fatal">Фатална грешка: WebView визуализаторът се срина. Причина: %s</string>
     <string name="webview_crash_loop_dialog_title">Неуспех при системно WebView визуализиране</string>
     <string name="webview_crash_loop_dialog_content">На системното WebView не се получи да покаже картата \'%1$s\'.\n%2$s</string>
+    <string name="slide_to_cancel" comment="Message shown when pressing the record button">Slide to cancel</string>
     <string name="filter_by_flags" maxLength="41">Флагове</string>
     <!-- Custom study options -->
     <string name="custom_study_loading_tags">Изграждане на списък с тагове&#8230;</string>

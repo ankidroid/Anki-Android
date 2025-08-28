@@ -83,6 +83,7 @@
     <string name="webview_crash_fatal">മാരകമായ പിശക്: വെബ്‌വ്യൂ റെൻഡറർ തകർന്നു. കാരണം:%s</string>
     <string name="webview_crash_loop_dialog_title">സിസ്റ്റം വെബ്‌വ്യൂ റെൻഡറിംഗ് പരാജയം</string>
     <string name="webview_crash_loop_dialog_content">\'%1$s\' കാർഡ് റെൻഡർ ചെയ്യുന്നതിൽ സിസ്റ്റം വെബ്‌വ്യൂ പരാജയപ്പെട്ടു. \n%2$s</string>
+    <string name="slide_to_cancel" comment="Message shown when pressing the record button">Slide to cancel</string>
     <string name="filter_by_flags" maxLength="41">പതാകകൾ</string>
     <!-- Custom study options -->
     <string name="custom_study_loading_tags">Building list of tags&#8230;</string>

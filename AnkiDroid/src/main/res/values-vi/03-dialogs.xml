@@ -121,6 +121,8 @@
     <string name="multimedia_editor_failed">Không mở được Trình chỉnh sửa Đa phương tiện</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Quyền ghi âm bị từ chối</string>
+    <string name="permission_denied">Permission denied</string>
+    <string name="recording_permission_denied_message">Microphone permission is necessary for the “Record voice” feature. Please grant it in the app settings.</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid đã cập nhật</string>
     <string name="integrity_check_startup_content">AnkiDroid đã được nâng cấp. Bản nâng cấp này bao gồm các bản sửa lỗi cho các sự cố cơ sở dữ liệu có thể xảy ra và chúng tôi khuyên bạn nên chạy kiểm tra cơ sở dữ liệu ngay bây giờ.</string>

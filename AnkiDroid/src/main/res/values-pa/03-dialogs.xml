@@ -124,6 +124,8 @@
     <string name="multimedia_editor_failed">ਮਲਟੀਮੀਡੀਆ ਸੰਪਾਦਕ ਨੂੰ ਖੋਲ੍ਹਣ ਵਿੱਚ ਅਸਫਲ</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">ਆਡੀਓ ਰਿਕਾਰਡਿੰਗ ਦੀ ਇਜਾਜ਼ਤ ਅਸਵੀਕਾਰ ਕੀਤੀ ਗਈ</string>
+    <string name="permission_denied">Permission denied</string>
+    <string name="recording_permission_denied_message">Microphone permission is necessary for the “Record voice” feature. Please grant it in the app settings.</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid ਅੱਪਗਰੇਡ ਕੀਤਾ ਗਿਆ</string>
     <string name="integrity_check_startup_content">AnkiDroid ਨੂੰ ਅੱਪਗ੍ਰੇਡ ਕੀਤਾ ਗਿਆ ਹੈ। ਇਸ ਅੱਪਗਰੇਡ ਵਿੱਚ ਸੰਭਾਵਿਤ ਡਾਟਾਬੇਸ ਸਮੱਸਿਆਵਾਂ ਲਈ ਫਿਕਸ ਸ਼ਾਮਲ ਹਨ, ਅਤੇ ਅਸੀਂ ਸਿਫ਼ਾਰਿਸ਼ ਕਰਦੇ ਹਾਂ ਕਿ ਤੁਸੀਂ ਹੁਣੇ ਡਾਟਾਬੇਸ ਦੀ ਜਾਂਚ ਕਰੋ।</string>

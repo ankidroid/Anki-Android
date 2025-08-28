@@ -83,6 +83,7 @@
     <string name="webview_crash_fatal">Neriparebla eraro pri WebView. Kaŭzo: %s</string>
     <string name="webview_crash_loop_dialog_title">Eraro bildigi per operaciuma WebView</string>
     <string name="webview_crash_loop_dialog_content">La operciuma komponanto WebView malsukcesis bildigi la karton “%1$s”.\n%2$s</string>
+    <string name="slide_to_cancel" comment="Message shown when pressing the record button">Slide to cancel</string>
     <string name="filter_by_flags" maxLength="41">Flagoj</string>
     <!-- Custom study options -->
     <string name="custom_study_loading_tags">Kreado de listo de etikedoj&#8230;</string>

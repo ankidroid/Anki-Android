@@ -83,6 +83,7 @@
     <string name="webview_crash_fatal">Błąd krytyczny: awaria renderowania WebView. Przyczyna: %s</string>
     <string name="webview_crash_loop_dialog_title">Błąd renderowania WebView systemu</string>
     <string name="webview_crash_loop_dialog_content">System WebView nie potrafił wyrenderować karty \'%1$s\'.\n %2$s</string>
+    <string name="slide_to_cancel" comment="Message shown when pressing the record button">Slide to cancel</string>
     <string name="filter_by_flags" maxLength="41">Flagi</string>
     <!-- Custom study options -->
     <string name="custom_study_loading_tags">Tworzenie listy tagów&#8230;</string>

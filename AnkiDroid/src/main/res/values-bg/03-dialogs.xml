@@ -124,6 +124,8 @@
     <string name="multimedia_editor_failed">Не може да отвори редактор на мультимедия</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Разрешението за аудиозапис е отменено</string>
+    <string name="permission_denied">Permission denied</string>
+    <string name="recording_permission_denied_message">Microphone permission is necessary for the “Record voice” feature. Please grant it in the app settings.</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid е обновен</string>
     <string name="integrity_check_startup_content">AnkiDroid се надгради. Това надграждане включва поправки за възможни проблеми с базата данни и ви съветваме да започнете проверка на базата данни сега.</string>
