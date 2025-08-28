@@ -34,7 +34,7 @@ class EndpointsTest {
     @Test
     fun `CURRENT_VERSION matches API version`() {
         val apiVersion = endpointsJson.getString("version")
-        assertEquals(apiVersion, "1.0.0")
+        assertEquals(apiVersion, JsApi.CURRENT_VERSION)
     }
 
     @Test
