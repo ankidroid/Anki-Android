@@ -70,7 +70,7 @@
     <string name="pref_cat_advanced" maxLength="41">Расширенные</string>
     <string name="pref_cat_workarounds" maxLength="41">Костыли и велосипеды</string>
     <string name="pref_cat_plugins" maxLength="41">Плагины</string>
-    <string name="pref_cat_editing" maxLength="41">Editing</string>
+    <string name="pref_cat_editing" maxLength="41">Редактирование</string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width" maxLength="41">Толщина линии</string>
     <string name="use_input_tag" maxLength="41">Ввод ответа на карточке</string>
@@ -118,9 +118,9 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">Касание в центре экрана</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Касание внизу в левом углу</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Касание внизу в правом углу</string>
-    <string name="gestures_two_finger_tap" maxLength="41">Two-finger tap</string>
-    <string name="gestures_three_finger_tap" maxLength="41">Three-finger tap</string>
-    <string name="gestures_four_finger_tap" maxLength="41">Four-finger tap</string>
+    <string name="gestures_two_finger_tap" maxLength="41">Касание двумя пальцами</string>
+    <string name="gestures_three_finger_tap" maxLength="41">Касание тремя пальцами</string>
+    <string name="gestures_four_finger_tap" maxLength="41">Касание четырьмя пальцами</string>
     <string name="gestures_shake" maxLength="41">Потрясти устройство</string>
     <string name="card_browser_enable_external_context_menu" maxLength="41">Пункт «%s» в меню</string>
     <string name="card_browser_enable_external_context_menu_summary">Добавляет пункт «%s» в контекстное меню системы</string>
@@ -173,7 +173,7 @@
     <string name="show_estimates" maxLength="41">Показывать время на кнопках</string>
     <string name="show_estimates_summ">Показывает время следующего повторения над кнопками ответа</string>
     <string name="show_large_answer_buttons" maxLength="41">Большие кнопки ответа</string>
-    <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
+    <string name="show_large_answer_buttons_summ">Показать кнопку ответа в 2 строки</string>
     <string name="show_top_bar" maxLength="41">Показывать верхнюю панель</string>
     <string name="show_top_bar_summary">Показать счетчик карт, время ответа, флаг и отметку в верхней строке</string>
     <string name="show_progress" maxLength="41">Показать оставшиеся</string>
@@ -185,10 +185,10 @@
     <string name="time_limit" maxLength="41">Лимит учебного блока</string>
     <string name="day_offset_with_description" maxLength="41">Начало нового дня</string>
     <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
-        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">%d hour past midnight</item>
-        <item quantity="few">%d hours past midnight</item>
-        <item quantity="many">%d hours past midnight</item>
-        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">%d hours past midnight</item>
+        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">%d час после полуночи</item>
+        <item quantity="few">%d часа после полуночи</item>
+        <item quantity="many">%d часов после полуночи</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">%d часов после полуночи</item>
     </plurals>
     <string name="pref_keep_screen_on" maxLength="41">Не выключать экран</string>
     <string name="pref_keep_screen_on_summ">Отключает спящий режим экрана</string>
@@ -204,17 +204,17 @@
     <string name="reset">Сброс</string>
     <string name="thirdparty_apps_title" maxLength="41">Сторонние приложения</string>
     <string name="thirdparty_apps_summary">Покажет список приложений, которые используют API AnkiDroid, например, словари</string>
-    <string name="pref_controls_reviews_tab" maxLength="41" comment="Name of the tab to configure controls for the reviews screen">Reviews</string>
+    <string name="pref_controls_reviews_tab" maxLength="41" comment="Name of the tab to configure controls for the reviews screen">Просмотр</string>
     <string name="pref_controls_previews_tab" maxLength="41" comment="Name of the tab to configure controls for the previews screen">Предпросмотр</string>
-    <string name="toggle_backside_only" maxLength="41" comment="Control setting that toggles \'Backside only\' in the previews screen">Toggle backside only</string>
+    <string name="toggle_backside_only" maxLength="41" comment="Control setting that toggles \'Backside only\' in the previews screen">Включить только заднюю сторону</string>
     <!-- Appearance settings -->
-    <string name="pref_cat_reviewer" maxLength="41">Study Screen</string>
+    <string name="pref_cat_reviewer" maxLength="41">Экран обучения</string>
     <string name="show_deck_title" maxLength="41">Показывать название колоды</string>
     <string name="accessibility" maxLength="41">Специальные возможности</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Вставлять изображения буфера как PNG</string>
     <string name="exit_via_double_tap_back" maxLength="41">Нажмите «Назад» дважды, чтобы выйти</string>
-    <string name="exit_via_double_tap_back_summ">To avoid accidentally leaving the study screen or the app</string>
+    <string name="exit_via_double_tap_back_summ">Предотвращать случайный выход с экрана обучения или приложения</string>
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">Разрешить все медиафайлы при импорте</string>
     <string name="media_import_allow_all_files_summ">Используйте, если Android не распознаёт файлы</string>
@@ -237,7 +237,7 @@
     <string name="media" maxLength="41">Медиа</string>
     <string name="misc" maxLength="41">Разное</string>
     <!-- Review reminders -->
-    <string name="add_reminder" comment="Label for the add reminder button in the screen for adding and editing review reminders">Add reminder</string>
+    <string name="add_reminder" comment="Label for the add reminder button in the screen for adding and editing review reminders">Добавить напоминание</string>
     <!-- studyoptions -->
     <string name="studyoptions_limit_select_tags">Выберите метки</string>
     <!-- Deck configurations -->

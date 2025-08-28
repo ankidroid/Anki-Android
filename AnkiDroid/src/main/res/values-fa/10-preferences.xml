@@ -60,7 +60,7 @@
     <string name="pref_cat_reviewing" maxLength="41">مرور</string>
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">همگام سازی</string>
     <string name="pref_cat_scheduling" maxLength="41">زمان‌بندی</string>
-    <string name="pref_cat_whiteboard" maxLength="41">تخته سفید</string>
+    <string name="pref_cat_whiteboard" maxLength="41">وایت بورد</string>
     <string name="pref_cat_appearance" maxLength="41">ظاهر</string>
     <string name="pref_cat_themes" maxLength="41">تِم ها</string>
     <string name="pref_cat_gestures" maxLength="41">حرکات دست</string>
@@ -117,8 +117,8 @@
     <string name="gestures_corner_tap_bottom_left" maxLength="41">لمس پایین سمت چپ</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">لمس پایین سمت راست</string>
     <string name="gestures_two_finger_tap" maxLength="41">لمس با دو انگشت</string>
-    <string name="gestures_three_finger_tap" maxLength="41">Three-finger tap</string>
-    <string name="gestures_four_finger_tap" maxLength="41">Four-finger tap</string>
+    <string name="gestures_three_finger_tap" maxLength="41">لمس سه انگشتی</string>
+    <string name="gestures_four_finger_tap" maxLength="41">لمس چهار انگشتی</string>
     <string name="gestures_shake" maxLength="41">لرزش دستگاه</string>
     <string name="card_browser_enable_external_context_menu" maxLength="41">منوی \'%s\'</string>
     <string name="card_browser_enable_external_context_menu_summary">\'%s\' را در لیست به صورت عمومی فعال می‌کند</string>
@@ -171,7 +171,7 @@
     <string name="show_estimates" maxLength="41">نمایش  دکمه زمان</string>
     <string name="show_estimates_summ">نمایش زمان مرور بعدی در بالای دکمه پاسخ</string>
     <string name="show_large_answer_buttons" maxLength="41">دکمه های بزرگ جواب نشان بده</string>
-    <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
+    <string name="show_large_answer_buttons_summ">نمایش دکمه پاسخ در ۲ ردیف</string>
     <string name="show_top_bar" maxLength="41">نمایش نوار بالا</string>
     <string name="show_top_bar_summary">نمایش تعداد کارت ها، ساعت شمار پاسخ، پرچم و علامت در نوار بالا</string>
     <string name="show_progress" maxLength="41">نمایش باقیمانده</string>
@@ -204,7 +204,7 @@
     <string name="pref_controls_previews_tab" maxLength="41" comment="Name of the tab to configure controls for the previews screen">پیش نمایش</string>
     <string name="toggle_backside_only" maxLength="41" comment="Control setting that toggles \'Backside only\' in the previews screen">Toggle backside only</string>
     <!-- Appearance settings -->
-    <string name="pref_cat_reviewer" maxLength="41">Study Screen</string>
+    <string name="pref_cat_reviewer" maxLength="41">صفحه مطالعه</string>
     <string name="show_deck_title" maxLength="41">نمایش عنوان دسته کارت</string>
     <string name="accessibility" maxLength="41">قابلیت دسترسی</string>
     <!-- Paste clipboard image as png option -->
