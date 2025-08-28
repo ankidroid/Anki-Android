@@ -109,12 +109,12 @@
     <string name="field_remapping">%1$s (из «%2$s»)</string>
     <string name="confirm_map_cards_to_nothing">Несопоставленные карты будут удалены. Записи, оставшиеся без карт, будут утеряны. Продолжить?</string>
     <string name="missing_note_type">Такого типа заметок не найдено</string>
-    <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (empty)</string>
+    <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (пусто)</string>
     <!-- Image cropper -->
-    <string name="image_cropper_action_rotate" maxLength="28" comment="Action in image cropper screen">Rotate</string>
-    <string name="image_cropper_action_flip" maxLength="28" comment="Action in image cropper screen">Flip</string>
-    <string name="image_cropper_action_flip_horizontally" maxLength="28" comment="Submenu action in image cropper screen">Flip horizontally</string>
-    <string name="image_cropper_action_flip_vertically" maxLength="28" comment="Submenu action in image cropper screen">Flip vertically</string>
+    <string name="image_cropper_action_rotate" maxLength="28" comment="Action in image cropper screen">Повернуть</string>
+    <string name="image_cropper_action_flip" maxLength="28" comment="Action in image cropper screen">Перевернуть</string>
+    <string name="image_cropper_action_flip_horizontally" maxLength="28" comment="Submenu action in image cropper screen">Отразить горизонтально</string>
+    <string name="image_cropper_action_flip_vertically" maxLength="28" comment="Submenu action in image cropper screen">Отразить вертикально</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">Достигнут лимит учебного блока</string>
     <plurals name="timebox_reached">
@@ -203,8 +203,8 @@
     <string name="restore_default" maxLength="28">Сбросить настройки</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Пусто</string>
     <!-- Whiteboard eraser mode toggle message in Reviewer -->
-    <string name="white_board_eraser_enabled">Eraser mode activated</string>
-    <string name="white_board_eraser_disabled">Eraser mode deactivated</string>
+    <string name="white_board_eraser_enabled">Режим ластика включен</string>
+    <string name="white_board_eraser_disabled">Режим ластика выключен</string>
     <!-- Whiteboard save image message in the Study Screen -->
     <string name="white_board_image_save_failed">Не удалось сохранить изображение доски. %s</string>
     <string name="white_board_image_saved">Изображение доски сохранено в %s</string>
@@ -317,7 +317,7 @@
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Карточки</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Записи</string>
     <string name="toggle_cards_notes">Карточки — записи</string>
-    <string name="truncate_content_help">Truncate the height of each row of the Browser to show only first 3 lines of content</string>
+    <string name="truncate_content_help">Показывать только 3 строки в каждом ряду</string>
     <string name="browser_options_dialog_heading">Параметры списка карточек</string>
     <string name="audio_saved">Запись сохранена</string>
     <string name="deleting_selected_notes">Выбранные записи удаляются</string>
@@ -328,12 +328,12 @@
     <!-- Chips should probably be in a separate file, due to the additional length req -->
     <string name="tts_voices_chip_filter_to_internet" comment="     Filters a list of text to speech voices, to enable/disable voices which require the internet to     function.     This is on a chip control, so keep the text short, ideally one word">Сеть</string>
     <string name="tts_voices_chip_filter_to_installable_audio" comment="     Displays a list of Text to Speech voices which should be downloaded/installed before use     This is on a chip control, so keep the text short, ideally one word">Загрузить</string>
-    <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">Failed to open text to speech settings</string>
+    <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">Не удалось открыть настройки синтеза речи</string>
     <string name="shared_decks_login_required">Пожалуйста, войдите, чтобы скачать больше колод</string>
     <string name="deck_description_field_hint">Описание</string>
-    <string name="deck_description_saved">Description updated</string>
-    <string name="format_deck_description_as_markdown">Format as Markdown</string>
-    <string name="help_button_content_description">Open help for ‘%s’</string>
+    <string name="deck_description_saved">Описание обновлено</string>
+    <string name="format_deck_description_as_markdown">Форматировать как Markdown</string>
+    <string name="help_button_content_description">Открыть справку для ‘%s’</string>
     <string name="failed_to_copy">Не удалось скопировать</string>
     <string name="card_browser_unavailable_when_notes_mode">Недоступно в режиме записей</string>
     <plurals name="unbury_cards_feedback">
@@ -369,5 +369,5 @@
     <string name="missing_user_action_dialog_message" comment="%s is the user action number">В этом блокноте не задано действие пользователя %s. Пожалуйста, настройте его</string>
     <string name="directory_inaccessible_info">Узнайте больше о том, как восстановить доступ здесь %s или перейдите к настройкам для обновления папки коллекции.</string>
     <!-- Scheduler Upgrade Required Dialog title-->
-    <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">Scheduler upgrade required</string>
+    <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">Требуется обновление расписания</string>
 </resources>
