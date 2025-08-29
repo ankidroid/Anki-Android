@@ -18,7 +18,7 @@ ktlint = '1.5.0'
 #
 # Old changelogs - See 'Table of Contents' in sidebar
 # https://developer.android.com/build/releases/past-releases
-androidGradlePlugin = "8.12.1"
+androidGradlePlugin = "8.12.2"
 # https://developer.android.com/jetpack/androidx/releases/activity
 androidxActivity = "1.10.1"
 # https://developer.android.com/jetpack/androidx/releases/annotation
