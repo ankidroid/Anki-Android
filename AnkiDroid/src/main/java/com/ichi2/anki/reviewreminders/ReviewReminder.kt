@@ -35,7 +35,7 @@ import kotlin.time.Duration.Companion.minutes
 @Serializable
 @Parcelize
 value class ReviewReminderId(
-    val id: Int,
+    val value: Int,
 ) : Parcelable {
     companion object {
         /**
