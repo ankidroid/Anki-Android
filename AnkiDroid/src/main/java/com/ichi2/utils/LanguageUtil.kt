@@ -103,7 +103,7 @@ object LanguageUtil {
             // Hungarian
             "Magyar" to "hu",
             // Armenian (Armenia)
-            "Hայերեն (Հայաստան)" to "hy-AM",
+            "Հայերեն (Հայաստան)" to "hy-AM",
             // Indonesian
             "Indonesia" to "ind",
             // Italian
