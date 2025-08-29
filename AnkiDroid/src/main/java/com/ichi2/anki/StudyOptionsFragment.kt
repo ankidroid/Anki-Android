@@ -91,8 +91,6 @@ class StudyOptionsFragment :
 
     private var retryMenuRefreshJob: Job? = null
 
-    // Flag to indicate if the fragment should load the deck options immediately after it loads
-    private var loadWithDeckOptions = false
     private var fragmented = false
     private var fullNewCountThread: Thread? = null
 
@@ -126,14 +124,6 @@ class StudyOptionsFragment :
         i.putExtra("defaultConfig", defaultConfig)
         Timber.i("openFilteredDeckOptions()")
         onDeckOptionsActivityResult.launch(i)
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        // If we're being restored, don't launch deck options again.
-        if (savedInstanceState == null && arguments != null) {
-            loadWithDeckOptions = requireArguments().getBoolean("withDeckOptions")
-        }
     }
 
     override fun onCreateView(
@@ -372,16 +362,6 @@ class StudyOptionsFragment :
                 closeStudyOptions(result.resultCode)
                 return@registerForActivityResult
             }
-            if (loadWithDeckOptions) {
-                loadWithDeckOptions = false
-                val deck = col!!.decks.current()
-                if (deck.isFiltered && deck.has("empty")) {
-                    deck.remove("empty")
-                }
-                launchCatchingTask { rebuildCram() }
-            } else {
-                refreshInterface()
-            }
         }
 
     private fun dismissProgressDialog() {
@@ -439,17 +419,6 @@ class StudyOptionsFragment :
         val numberOfCardsInDeck: Int,
     )
 
-    /** Open cram deck option if deck is opened for the first time
-     * @return Whether we opened the deck options */
-    private fun tryOpenCramDeckOptions(): Boolean {
-        if (!loadWithDeckOptions) {
-            return false
-        }
-        openFilteredDeckOptions(true)
-        loadWithDeckOptions = false
-        return true
-    }
-
     private val col: Collection?
         get() {
             try {
@@ -481,7 +450,6 @@ class StudyOptionsFragment :
 
             // #5506 If we have no view, short circuit all UI logic
             if (studyOptionsView == null) {
-                tryOpenCramDeckOptions()
                 return
             }
 
@@ -510,9 +478,6 @@ class StudyOptionsFragment :
                 nameBuilder.append("\n").append(name[name.size - 1])
             }
             textDeckName.text = nameBuilder.toString()
-            if (tryOpenCramDeckOptions()) {
-                return
-            }
 
             // Switch between the empty view, the ordinary view, and the "congratulations" view
             val isDynamic = deck.isFiltered
@@ -642,19 +607,7 @@ class StudyOptionsFragment :
         private const val CONTENT_CONGRATS = 1
         private const val CONTENT_EMPTY = 2
 
-        /**
-         * Get a new instance of the fragment.
-         * @param withDeckOptions If true, the fragment will load a new activity on top of itself
-         * which shows the current deck's options. Set to true when programmatically
-         * opening a new filtered deck for the first time.
-         */
-        fun newInstance(withDeckOptions: Boolean): StudyOptionsFragment {
-            val f = StudyOptionsFragment()
-            val args = Bundle()
-            args.putBoolean("withDeckOptions", withDeckOptions)
-            f.arguments = args
-            return f
-        }
+        fun newInstance(): StudyOptionsFragment = StudyOptionsFragment()
 
         @VisibleForTesting
         fun formatDescription(

@@ -71,11 +71,7 @@ class StudyOptionsActivity :
     }
 
     private fun loadStudyOptionsFragment() {
-        var withDeckOptions = false
-        if (intent.extras != null) {
-            withDeckOptions = intent.extras!!.getBoolean("withDeckOptions")
-        }
-        val currentFragment = StudyOptionsFragment.newInstance(withDeckOptions)
+        val currentFragment = StudyOptionsFragment.newInstance()
         supportFragmentManager.commit {
             replace(R.id.studyoptions_frame, currentFragment)
         }
