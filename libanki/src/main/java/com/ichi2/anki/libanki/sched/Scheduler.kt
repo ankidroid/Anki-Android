@@ -464,22 +464,6 @@ open class Scheduler(
     @LibAnkiAlias("filtered_deck_order_labels")
     fun filteredDeckOrderLabels() = col.backend.filteredDeckOrderLabels()
 
-    /** Rebuild a dynamic deck.
-     * @param did The deck to rebuild. 0 means current deck.
-     */
-    open fun rebuildDyn(did: DeckId) {
-        col.backend.rebuildFilteredDeck(did)
-    }
-
-    fun rebuildDyn() {
-        rebuildDyn(col.decks.selected())
-    }
-
-    /** Remove all cards from a dynamic deck
-     * @param did The deck to empty. 0 means current deck.
-     */
-    open fun emptyDyn(did: DeckId) = col.backend.emptyFilteredDeck(did)
-
     fun deckDueTree(): DeckNode = deckTree(true)
 
     /**

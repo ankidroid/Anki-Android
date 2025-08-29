@@ -2405,7 +2405,7 @@ open class DeckPicker :
                 withCol {
                     Timber.d("rebuildFiltered: doInBackground - RebuildCram")
                     decks.select(did)
-                    sched.rebuildDyn(decks.selected())
+                    sched.rebuildFilteredDeck(decks.selected())
                 }
             }
             updateDeckList()
