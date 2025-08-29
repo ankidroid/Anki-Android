@@ -33,6 +33,9 @@ class AddEditReminderDialogViewModel(
     initialDeckSelected: DeckId,
     initialCardTriggerThreshold: Int,
     initialAdvancedSettingsOpen: Boolean,
+    initialCountNew: Boolean,
+    initialCountLrn: Boolean,
+    initialCountRev: Boolean,
 ) : ViewModel() {
     private val _time = MutableLiveData(initialTime)
     val time: LiveData<ReviewReminderTime> = _time
@@ -47,6 +50,15 @@ class AddEditReminderDialogViewModel(
 
     private val _cardTriggerThreshold = MutableLiveData(initialCardTriggerThreshold)
     val cardTriggerThreshold: LiveData<Int> = _cardTriggerThreshold
+
+    private val _countNew = MutableLiveData(initialCountNew)
+    val countNew: LiveData<Boolean> = _countNew
+
+    private val _countLrn = MutableLiveData(initialCountLrn)
+    val countLrn: LiveData<Boolean> = _countLrn
+
+    private val _countRev = MutableLiveData(initialCountRev)
+    val countRev: LiveData<Boolean> = _countRev
 
     private val _advancedSettingsOpen = MutableLiveData(initialAdvancedSettingsOpen)
     val advancedSettingsOpen: LiveData<Boolean> = _advancedSettingsOpen
@@ -64,6 +76,21 @@ class AddEditReminderDialogViewModel(
     fun setCardTriggerThreshold(threshold: Int) {
         Timber.d("Updated card trigger threshold to %s", threshold)
         _cardTriggerThreshold.value = threshold
+    }
+
+    fun toggleCountNew() {
+        Timber.d("Toggled count new from %s", _countNew.value)
+        _countNew.value = !(_countNew.value ?: false)
+    }
+
+    fun toggleCountLrn() {
+        Timber.d("Toggled count lrn from %s", _countLrn.value)
+        _countLrn.value = !(_countLrn.value ?: false)
+    }
+
+    fun toggleCountRev() {
+        Timber.d("Toggled count rev from %s", _countRev.value)
+        _countRev.value = !(_countRev.value ?: false)
     }
 
     fun toggleAdvancedSettingsOpen() {

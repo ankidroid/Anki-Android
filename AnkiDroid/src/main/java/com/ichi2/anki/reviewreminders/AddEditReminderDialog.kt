@@ -36,9 +36,11 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.checkbox.MaterialCheckBox
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import com.ichi2.anki.DeckSpinnerSelection
@@ -98,6 +100,9 @@ class AddEditReminderDialog : DialogFragment() {
                                     is ReviewReminderScope.DeckSpecific -> mode.schedulerScope.did
                                 },
                             initialCardTriggerThreshold = INITIAL_CARD_THRESHOLD,
+                            initialCountNew = INITIAL_COUNT_NEW,
+                            initialCountLrn = INITIAL_COUNT_LRN,
+                            initialCountRev = INITIAL_COUNT_REV,
                             initialAdvancedSettingsOpen = INITIAL_ADVANCED_SETTINGS_OPEN,
                         )
                     is DialogMode.Edit ->
@@ -109,6 +114,9 @@ class AddEditReminderDialog : DialogFragment() {
                                     is ReviewReminderScope.DeckSpecific -> mode.reminderToBeEdited.scope.did
                                 },
                             initialCardTriggerThreshold = mode.reminderToBeEdited.cardTriggerThreshold.threshold,
+                            initialCountNew = mode.reminderToBeEdited.countNew,
+                            initialCountLrn = mode.reminderToBeEdited.countLrn,
+                            initialCountRev = mode.reminderToBeEdited.countRev,
                             initialAdvancedSettingsOpen = INITIAL_ADVANCED_SETTINGS_OPEN,
                         )
                 }
@@ -164,6 +172,7 @@ class AddEditReminderDialog : DialogFragment() {
         setUpDeckSpinner()
         setUpAdvancedDropdown()
         setUpCardThresholdInput()
+        setUpCountCheckboxes()
 
         // For getting the result of the deck selection sub-dialog from ScheduleReminders
         // See ScheduleReminders.onDeckSelected for more information
@@ -251,6 +260,54 @@ class AddEditReminderDialog : DialogFragment() {
     }
 
     /**
+     * Convenience data class for setting up the checkboxes for whether to count new, learning, and review cards
+     * when considering the card trigger threshold.
+     * @see setUpCountCheckboxes
+     */
+    private data class CountViewsAndActions(
+        val section: LinearLayout,
+        val checkbox: MaterialCheckBox,
+        val actionOnClick: () -> Unit,
+        val state: LiveData<Boolean>,
+    )
+
+    /**
+     * Sets up the checkboxes for whether to count new, learning, and review cards when considering the card trigger threshold.
+     * @see CountViewsAndActions
+     */
+    private fun setUpCountCheckboxes() {
+        val countViewsAndActionsItems =
+            listOf(
+                CountViewsAndActions(
+                    section = contentView.findViewById(R.id.add_edit_reminder_count_new_section),
+                    checkbox = contentView.findViewById(R.id.add_edit_reminder_count_new_checkbox),
+                    actionOnClick = viewModel::toggleCountNew,
+                    state = viewModel.countNew,
+                ),
+                CountViewsAndActions(
+                    section = contentView.findViewById(R.id.add_edit_reminder_count_lrn_section),
+                    checkbox = contentView.findViewById(R.id.add_edit_reminder_count_lrn_checkbox),
+                    actionOnClick = viewModel::toggleCountLrn,
+                    state = viewModel.countLrn,
+                ),
+                CountViewsAndActions(
+                    section = contentView.findViewById(R.id.add_edit_reminder_count_rev_section),
+                    checkbox = contentView.findViewById(R.id.add_edit_reminder_count_rev_checkbox),
+                    actionOnClick = viewModel::toggleCountRev,
+                    state = viewModel.countRev,
+                ),
+            )
+
+        countViewsAndActionsItems.forEach { item ->
+            item.section.setOnClickListener { item.actionOnClick() }
+            item.checkbox.setOnClickListener { item.actionOnClick() }
+            item.state.observe(this) { value ->
+                item.checkbox.isChecked = value
+            }
+        }
+    }
+
+    /**
      * Show the time picker dialog for selecting a time with a given hour and minute.
      * Does not automatically dismiss the old dialog.
      */
@@ -327,6 +384,9 @@ class AddEditReminderDialog : DialogFragment() {
                         is DialogMode.Add -> true
                         is DialogMode.Edit -> mode.reminderToBeEdited.enabled
                     },
+                countNew = viewModel.countNew.value ?: INITIAL_COUNT_NEW,
+                countLrn = viewModel.countLrn.value ?: INITIAL_COUNT_LRN,
+                countRev = viewModel.countRev.value ?: INITIAL_COUNT_REV,
             )
 
         Timber.d("Reminder to be returned: %s", reminderToBeReturned)
@@ -390,6 +450,27 @@ class AddEditReminderDialog : DialogFragment() {
          * This is an Int because that is what the EditText's inputType is.
          */
         private const val INITIAL_CARD_THRESHOLD: Int = 1
+
+        /**
+         * The default setting for whether new cards are counted when checking the card trigger threshold.
+         * Defaults to true, as removing some card types from card trigger threshold consideration is a form
+         * of advanced review reminder customization.
+         */
+        private const val INITIAL_COUNT_NEW = true
+
+        /**
+         * The default setting for whether cards in learning are counted when checking the card trigger threshold.
+         * Defaults to true, as removing some card types from card trigger threshold consideration is a form
+         * of advanced review reminder customization.
+         */
+        private const val INITIAL_COUNT_LRN = true
+
+        /**
+         * The default setting for whether cards in review are counted when checking the card trigger threshold.
+         * Defaults to true, as removing some card types from card trigger threshold consideration is a form
+         * of advanced review reminder customization.
+         */
+        private const val INITIAL_COUNT_REV = true
 
         /**
          * Whether the advanced settings dropdown is initially open.
