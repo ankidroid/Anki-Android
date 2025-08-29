@@ -31,6 +31,7 @@ import com.ichi2.anki.IntentHandler
 import com.ichi2.anki.R
 import com.ichi2.anki.common.annotations.LegacyNotifications
 import com.ichi2.anki.libanki.Decks
+import com.ichi2.anki.libanki.EpochSeconds
 import com.ichi2.anki.preferences.PENDING_NOTIFICATIONS_ONLY
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.reviewreminders.ReviewReminder
@@ -43,6 +44,7 @@ import com.ichi2.anki.utils.remainingTime
 import com.ichi2.widget.WidgetStatus
 import timber.log.Timber
 import kotlin.time.Duration
+import kotlin.time.Duration.Companion.days
 import kotlin.time.Duration.Companion.minutes
 import kotlin.time.Duration.Companion.seconds
 
@@ -96,6 +98,12 @@ class NotificationService : BroadcastReceiver() {
                     ReviewRemindersDatabase.deleteAllRemindersForDeck(reviewReminder.scope.did)
                     return
                 }
+            }
+
+            // Cancel if the user wants notifications to only fire if no reviews have been done today AND there has been a review today
+            if (reviewReminder.onlyNotifyIfNoReviews && wasScopeReviewedToday(reviewReminder.scope)) {
+                Timber.d("Aborting notification due to onlyNotifyIfNoReviews")
+                return
             }
 
             val dueCardsCount =
@@ -215,6 +223,34 @@ class NotificationService : BroadcastReceiver() {
                 PendingIntent.FLAG_UPDATE_CURRENT,
                 false,
             )
+        }
+
+        /**
+         * Checks if a deck, or any decks, have been reviewed since the latest day cutoff, accomplished by joining the
+         * cards and revlog tables of the collection database. Used for the "only notify me if no reviews have
+         * been done today" review reminder feature. Checks for existence rather than counting to increase efficiency.
+         */
+        private suspend fun wasScopeReviewedToday(scope: ReviewReminderScope): Boolean {
+            val extraWhereClause =
+                when (scope) {
+                    is ReviewReminderScope.Global -> ""
+                    is ReviewReminderScope.DeckSpecific -> "AND cards.did = ${scope.did}"
+                }
+            val queryResult =
+                withCol {
+                    val startOfToday: EpochSeconds = sched.dayCutoff - 1.days.inWholeSeconds
+                    val query = """
+                        SELECT EXISTS (
+                            SELECT 1
+                            FROM cards
+                            JOIN revlog ON revlog.cid = cards.id
+                            WHERE revlog.id > $startOfToday
+                            $extraWhereClause
+                        )
+                    """
+                    db.queryScalar(query)
+                }
+            return (queryResult == 1)
         }
 
         /** The id of the notification for due cards.  */

@@ -134,8 +134,7 @@
                             android:id="@+id/add_edit_reminder_card_threshold_section"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            tools:ignore="UselessParent">
+                            android:orientation="horizontal">
 
                             <LinearLayout
                                 android:id="@+id/add_edit_reminder_card_threshold_label_container"
@@ -172,6 +171,27 @@
                                 android:layout_gravity="bottom"
                                 android:layout_marginStart="24dp"
                                 android:inputType="number" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/add_edit_reminder_only_notify_if_no_reviews_section"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <com.google.android.material.checkbox.MaterialCheckBox
+                                android:id="@+id/add_edit_reminder_only_notify_if_no_reviews_checkbox"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                            <TextView
+                                android:id="@+id/add_edit_reminder_only_notify_if_no_reviews_label"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Only notify me if no reviews have been done today"
+                                tools:ignore="HardcodedText" />
 
                         </LinearLayout>
 

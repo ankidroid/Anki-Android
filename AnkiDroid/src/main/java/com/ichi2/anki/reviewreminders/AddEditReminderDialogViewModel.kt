@@ -32,6 +32,7 @@ class AddEditReminderDialogViewModel(
     initialTime: ReviewReminderTime,
     initialDeckSelected: DeckId,
     initialCardTriggerThreshold: Int,
+    initialOnlyNotifyIfNoReviews: Boolean,
     initialAdvancedSettingsOpen: Boolean,
 ) : ViewModel() {
     private val _time = MutableLiveData(initialTime)
@@ -47,6 +48,9 @@ class AddEditReminderDialogViewModel(
 
     private val _cardTriggerThreshold = MutableLiveData(initialCardTriggerThreshold)
     val cardTriggerThreshold: LiveData<Int> = _cardTriggerThreshold
+
+    private val _onlyNotifyIfNoReviews = MutableLiveData(initialOnlyNotifyIfNoReviews)
+    val onlyNotifyIfNoReviews: LiveData<Boolean> = _onlyNotifyIfNoReviews
 
     private val _advancedSettingsOpen = MutableLiveData(initialAdvancedSettingsOpen)
     val advancedSettingsOpen: LiveData<Boolean> = _advancedSettingsOpen
@@ -64,6 +68,11 @@ class AddEditReminderDialogViewModel(
     fun setCardTriggerThreshold(threshold: Int) {
         Timber.d("Updated card trigger threshold to %s", threshold)
         _cardTriggerThreshold.value = threshold
+    }
+
+    fun toggleOnlyNotifyIfNoReviews() {
+        Timber.d("Toggled onlyNotifyIfNoReviews from %s", _onlyNotifyIfNoReviews.value)
+        _onlyNotifyIfNoReviews.value = !(_onlyNotifyIfNoReviews.value ?: false)
     }
 
     fun toggleAdvancedSettingsOpen() {

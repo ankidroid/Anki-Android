@@ -22,6 +22,7 @@ import android.content.Context
 import androidx.core.content.edit
 import androidx.test.core.app.ApplicationProvider.getApplicationContext
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import anki.scheduler.CardAnswer
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.reviewreminders.ReviewReminder
@@ -109,6 +110,106 @@ class NotificationServiceTest : RobolectricTest() {
 
             NotificationService.sendReviewReminderNotification(context, reviewReminder)
             verify(exactly = 0) { notificationManager.notify(any(), any(), any()) }
+        }
+
+    @Test
+    fun `onReceive with reviews today and onlyNotifyIfNoReviews is true should not fire notification`() =
+        runTest {
+            val did1 = addDeck("Deck")
+            addNotes(1).forEach {
+                it.firstCard().update { did = did1 }
+            }
+            withCol {
+                decks.select(did1)
+                sched.answerCard(sched.card!!, CardAnswer.Rating.GOOD)
+            }
+            val reviewReminderDeckSpecific =
+                ReviewReminder.createReviewReminder(
+                    ReviewReminderTime(9, 0),
+                    ReviewReminderCardTriggerThreshold(1),
+                    ReviewReminderScope.DeckSpecific(did1),
+                    onlyNotifyIfNoReviews = true,
+                )
+            val reviewReminderAppWide =
+                ReviewReminder.createReviewReminder(
+                    ReviewReminderTime(9, 0),
+                    ReviewReminderCardTriggerThreshold(1),
+                    ReviewReminderScope.Global,
+                    onlyNotifyIfNoReviews = true,
+                )
+            ReviewRemindersDatabase.editRemindersForDeck(did1) { mapOf(ReviewReminderId(0) to reviewReminderDeckSpecific) }
+            ReviewRemindersDatabase.editAllAppWideReminders { mapOf(ReviewReminderId(1) to reviewReminderAppWide) }
+
+            NotificationService.sendReviewReminderNotification(context, reviewReminderDeckSpecific)
+            NotificationService.sendReviewReminderNotification(context, reviewReminderAppWide)
+            verify(exactly = 0) { notificationManager.notify(any(), any(), any()) }
+        }
+
+    @Test
+    fun `onReceive with no reviews today and onlyNotifyIfNoReviews is true should fire notification`() =
+        runTest {
+            val did1 = addDeck("Deck")
+            addNotes(1).forEach {
+                it.firstCard().update { did = did1 }
+            }
+            val reviewReminderDeckSpecific =
+                ReviewReminder.createReviewReminder(
+                    ReviewReminderTime(9, 0),
+                    ReviewReminderCardTriggerThreshold(1),
+                    ReviewReminderScope.DeckSpecific(did1),
+                    onlyNotifyIfNoReviews = true,
+                )
+            val reviewReminderAppWide =
+                ReviewReminder.createReviewReminder(
+                    ReviewReminderTime(9, 0),
+                    ReviewReminderCardTriggerThreshold(1),
+                    ReviewReminderScope.Global,
+                    onlyNotifyIfNoReviews = true,
+                )
+            ReviewRemindersDatabase.editRemindersForDeck(did1) { mapOf(ReviewReminderId(0) to reviewReminderDeckSpecific) }
+            ReviewRemindersDatabase.editAllAppWideReminders { mapOf(ReviewReminderId(1) to reviewReminderAppWide) }
+
+            NotificationService.sendReviewReminderNotification(context, reviewReminderDeckSpecific)
+            NotificationService.sendReviewReminderNotification(context, reviewReminderAppWide)
+            verify(
+                exactly = 1,
+            ) {
+                notificationManager.notify(
+                    NotificationService.REVIEW_REMINDER_NOTIFICATION_TAG,
+                    reviewReminderDeckSpecific.id.value,
+                    any(),
+                )
+            }
+            verify(
+                exactly = 1,
+            ) { notificationManager.notify(NotificationService.REVIEW_REMINDER_NOTIFICATION_TAG, reviewReminderAppWide.id.value, any()) }
+        }
+
+    @Test
+    fun `onReceive with onlyNotifyIfNoReviews is false should always fire notification`() =
+        runTest {
+            val did1 = addDeck("Deck")
+            addNotes(1).forEach {
+                it.firstCard().update { did = did1 }
+            }
+            val reviewReminder =
+                ReviewReminder.createReviewReminder(
+                    ReviewReminderTime(9, 0),
+                    ReviewReminderCardTriggerThreshold(1),
+                    ReviewReminderScope.DeckSpecific(did1),
+                    onlyNotifyIfNoReviews = false,
+                )
+            ReviewRemindersDatabase.editRemindersForDeck(did1) { mapOf(ReviewReminderId(0) to reviewReminder) }
+
+            NotificationService.sendReviewReminderNotification(context, reviewReminder)
+            withCol {
+                decks.select(did1)
+                sched.answerCard(sched.card!!, CardAnswer.Rating.GOOD)
+            }
+            NotificationService.sendReviewReminderNotification(context, reviewReminder)
+            verify(
+                exactly = 2,
+            ) { notificationManager.notify(NotificationService.REVIEW_REMINDER_NOTIFICATION_TAG, reviewReminder.id.value, any()) }
         }
 
     @Test

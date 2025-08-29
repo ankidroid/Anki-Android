@@ -162,13 +162,13 @@ sealed class ReviewReminderScope : Parcelable {
  * Preferably, also add some unit tests to ensure your migration works properly on all user devices once your update is rolled out.
  * See ReviewRemindersDatabaseTest for examples on how to do this.
  *
- * TODO: add remaining fields planned for GSoC 2025.
- *
  * @param id Unique, auto-incremented ID of the review reminder.
  * @param time See [ReviewReminderTime].
  * @param cardTriggerThreshold See [ReviewReminderCardTriggerThreshold].
  * @param scope See [ReviewReminderScope].
  * @param enabled Whether the review reminder's notifications are active or disabled.
+ * @param onlyNotifyIfNoReviews If true, the reminder will not trigger a notification if the deck the review reminder is for has
+ * already been reviewed at least once today.
  */
 @Serializable
 @Parcelize
@@ -179,6 +179,7 @@ data class ReviewReminder private constructor(
     val cardTriggerThreshold: ReviewReminderCardTriggerThreshold,
     val scope: ReviewReminderScope,
     var enabled: Boolean,
+    val onlyNotifyIfNoReviews: Boolean,
 ) : Parcelable,
     ReviewReminderSchema {
     companion object {
@@ -192,12 +193,14 @@ data class ReviewReminder private constructor(
             cardTriggerThreshold: ReviewReminderCardTriggerThreshold,
             scope: ReviewReminderScope = ReviewReminderScope.Global,
             enabled: Boolean = true,
+            onlyNotifyIfNoReviews: Boolean = false,
         ) = ReviewReminder(
             id = ReviewReminderId.getAndIncrementNextFreeReminderId(),
             time,
             cardTriggerThreshold,
             scope,
             enabled,
+            onlyNotifyIfNoReviews,
         )
     }
 
