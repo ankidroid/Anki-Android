@@ -439,11 +439,30 @@ open class Scheduler(
     }
 
     /**
-     * Gets the filtered deck with given [did]
-     * or creates a new one if [did] = 0
+     * Rebuilds a filtered deck.
+     * @param did id of deck to rebuild. 0 means current deck.
+     */
+    @LibAnkiAlias("rebuild_filtered_deck")
+    fun rebuildFilteredDeck(did: DeckId) = col.backend.rebuildFilteredDeck(did)
+
+    /**
+     * Removes all cards from a filtered deck.
+     * @param did id of deck to empty. 0 means current deck.
+     */
+    @LibAnkiAlias("empty_filtered_deck")
+    fun emptyFilteredDeck(did: DeckId) = col.backend.emptyFilteredDeck(did)
+
+    /**
+     * Gets the filtered deck with given [did] or creates a new one if [did] = 0.
      */
     @LibAnkiAlias("get_or_create_filtered_deck")
     fun getOrCreateFilteredDeck(did: DeckId): FilteredDeckForUpdate = col.backend.getOrCreateFilteredDeck(did = did)
+
+    @LibAnkiAlias("add_or_update_filtered_deck")
+    fun addOrUpdateFilteredDeck(input: FilteredDeckForUpdate) = col.backend.addOrUpdateFilteredDeck(input)
+
+    @LibAnkiAlias("filtered_deck_order_labels")
+    fun filteredDeckOrderLabels() = col.backend.filteredDeckOrderLabels()
 
     /** Rebuild a dynamic deck.
      * @param did The deck to rebuild. 0 means current deck.
