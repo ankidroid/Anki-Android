@@ -181,7 +181,7 @@ interface AnkiTest {
                 val deck = col.decks.getLegacy(did)!!
                 deck.getJSONArray("terms").getJSONArray(0).put(0, search)
                 col.decks.save(deck)
-                col.sched.rebuildDyn(did)
+                col.sched.rebuildFilteredDeck(did)
             }
         } catch (filteredAncestor: BackendDeckIsFilteredException) {
             throw RuntimeException(filteredAncestor)

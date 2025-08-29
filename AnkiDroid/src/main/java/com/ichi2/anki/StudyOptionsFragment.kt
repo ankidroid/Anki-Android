@@ -319,7 +319,7 @@ class StudyOptionsFragment :
             requireActivity().withProgress(resources.getString(R.string.rebuild_filtered_deck)) {
                 withCol {
                     Timber.d("doInBackground - RebuildCram")
-                    sched.rebuildDyn(decks.selected())
+                    sched.rebuildFilteredDeck(decks.selected())
                     fetchStudyOptionsData()
                 }
             }
@@ -332,7 +332,7 @@ class StudyOptionsFragment :
             requireActivity().withProgress(resources.getString(R.string.empty_filtered_deck)) {
                 withCol {
                     Timber.d("doInBackgroundEmptyCram")
-                    sched.emptyDyn(decks.selected())
+                    sched.emptyFilteredDeck(decks.selected())
                     fetchStudyOptionsData()
                 }
             }
