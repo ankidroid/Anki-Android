@@ -37,6 +37,7 @@ import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.DeckId
+import com.ichi2.anki.services.AlarmManagerService
 import com.ichi2.anki.showError
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
@@ -181,6 +182,7 @@ class ScheduleReminders :
         Timber.d("Handling add/edit dialog result: mode=%s reminder=%s", modeOfFinishedDialog, newOrModifiedReminder)
         updateDatabaseForAddEditDialog(newOrModifiedReminder, modeOfFinishedDialog)
         updateUIForAddEditDialog(newOrModifiedReminder, modeOfFinishedDialog)
+        updateAlarmsForAddEditDialog(newOrModifiedReminder, modeOfFinishedDialog)
         // Feedback
         showSnackbar(
             when (modeOfFinishedDialog) {
@@ -278,6 +280,28 @@ class ScheduleReminders :
     }
 
     /**
+     * Update the AlarmManager notifications for the new or modified reminder.
+     * @see handleAddEditDialogResult
+     */
+    private fun updateAlarmsForAddEditDialog(
+        newOrModifiedReminder: ReviewReminder?,
+        modeOfFinishedDialog: AddEditReminderDialog.DialogMode,
+    ) {
+        if (modeOfFinishedDialog is AddEditReminderDialog.DialogMode.Edit) {
+            AlarmManagerService.unscheduleReviewReminderNotifications(
+                requireContext(),
+                modeOfFinishedDialog.reminderToBeEdited,
+            )
+        }
+        newOrModifiedReminder?.let {
+            AlarmManagerService.scheduleReviewReminderNotification(
+                requireContext(),
+                it,
+            )
+        }
+    }
+
+    /**
      * Sets a TextView's text based on a [ReviewReminderScope].
      * The text is either the scope's associated deck's name, or "All Decks" if the scope is global.
      * For example, this is used to display the [ScheduleRemindersAdapter]'s deck name column.
@@ -329,6 +353,12 @@ class ScheduleReminders :
         // Update UI
         reminder.enabled = newState
         triggerUIUpdate()
+
+        // Update scheduled AlarmManager notifications
+        when (newState) {
+            true -> AlarmManagerService.scheduleReviewReminderNotification(requireContext(), reminder)
+            false -> AlarmManagerService.unscheduleReviewReminderNotifications(requireContext(), reminder)
+        }
     }
 
     /**
