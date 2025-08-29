@@ -51,7 +51,7 @@ class AnkiDroidWidgetSmall : AnalyticsWidgetProvider() {
     override fun performUpdate(
         context: Context,
         appWidgetManager: AppWidgetManager,
-        appWidgetIds: IntArray,
+        appWidgetIds: AppWidgetIds,
         usageAnalytics: UsageAnalytics,
     ) {
         WidgetStatus.updateInBackground(context)

@@ -18,7 +18,6 @@ package com.ichi2.anki.browser
 
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.libanki.CardId
-import com.ichi2.anki.libanki.NoteId
 import com.ichi2.anki.model.CardsOrNotes
 
 /**
