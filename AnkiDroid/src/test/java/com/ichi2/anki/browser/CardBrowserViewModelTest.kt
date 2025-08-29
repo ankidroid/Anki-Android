@@ -24,7 +24,6 @@ import app.cash.turbine.test
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.CollectionManager
-import com.ichi2.anki.DeckSpinnerSelection
 import com.ichi2.anki.Flag
 import com.ichi2.anki.NoteEditorActivity
 import com.ichi2.anki.NoteEditorFragment
@@ -66,6 +65,7 @@ import com.ichi2.anki.libanki.QueueType.ManuallyBuried
 import com.ichi2.anki.libanki.QueueType.New
 import com.ichi2.anki.libanki.testutils.AnkiTest
 import com.ichi2.anki.model.CardsOrNotes
+import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.anki.model.SortType
 import com.ichi2.anki.model.SortType.NO_SORTING
 import com.ichi2.anki.model.SortType.SORT_FIELD
@@ -161,7 +161,7 @@ class CardBrowserViewModelTest : JvmTest() {
 
             assertThat("All decks should not be selected", !hasSelectedAllDecks())
 
-            setDeckId(DeckSpinnerSelection.ALL_DECKS_ID)
+            setSelectedDeck(SelectableDeck.AllDecks)
 
             assertThat("All decks should be selected", hasSelectedAllDecks())
 
@@ -1022,7 +1022,7 @@ class CardBrowserViewModelTest : JvmTest() {
     fun `deck name with quotes is properly escaped in search query`() =
         runViewModelTest {
             val deckWithQuotes = addDeck("Test\"Quotes\"In\"Deck")
-            setDeckId(deckWithQuotes)
+            setSelectedDeck(deckWithQuotes)
 
             assertThat(
                 "Quotes in deck name should be escaped with backslashes",
