@@ -1,0 +1,28 @@
+{
+  "name": "ankidroid-js-api",
+  "private": false,
+  "version": "1.0.0",
+  "type": "commonjs",
+  "license": "Apache-2.0",
+  "scripts": {
+    "build": "vite build",
+    "docs": "typedoc",
+    "format": "prettier --write \"src/**/*.ts\" \"scripts/**/*.ts\"",
+    "lint": "eslint \"src/**/*.ts\"",
+    "lint:fix": "eslint \"src/**/*.ts\" --fix",
+    "export:endpoints": "tsx scripts/export-endpoints.ts"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^8.39.1",
+    "@typescript-eslint/parser": "^8.39.1",
+    "eslint": "^9.33.0",
+    "eslint-plugin-headers": "^1.3.3",
+    "prettier": "^3.6.2",
+    "ts-morph": "^26.0.0",
+    "tsx": "^4.20.4",
+    "typedoc": "^0.28.11",
+    "typescript": "~5.8.3",
+    "typescript-eslint": "^8.39.1",
+    "vite": "^7.1.2"
+  }
+}
