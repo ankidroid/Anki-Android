@@ -24,41 +24,57 @@ import com.google.android.material.button.MaterialButton
 import com.ichi2.anki.R
 import com.ichi2.anki.utils.ext.usingStyledAttributes
 
-class AnswerButton
-    @JvmOverloads
+class AnswerButton : MaterialButton {
+    private val easeName: String
+    constructor(context: Context) : this(context, null)
     constructor(
         context: Context,
-        attrs: AttributeSet? = null,
-        defStyleAttr: Int = com.google.android.material.R.attr.materialButtonStyle,
-    ) : MaterialButton(context, attrs, defStyleAttr) {
-        private val easeName: String =
+        attrs: AttributeSet?,
+    ) : this(context, attrs, com.google.android.material.R.attr.materialButtonStyle)
+    constructor(
+        context: Context,
+        attrs: AttributeSet?,
+        defStyleAttr: Int,
+    ) : super(context, attrs, defStyleAttr) {
+        easeName =
             context.usingStyledAttributes(attrs, R.styleable.AnswerButton) {
                 requireNotNull(getString(R.styleable.AnswerButton_easeName)) {
                     "app:easeName value not set"
                 }
             }
+        val nextTime =
+            context.usingStyledAttributes(attrs, R.styleable.AnswerButton) {
+                getString(R.styleable.AnswerButton_nextTime)
+            }
+        setNextTime(nextTime)
+    }
 
-        init {
-            val nextTime =
-                context.usingStyledAttributes(attrs, R.styleable.AnswerButton) {
-                    getString(R.styleable.AnswerButton_nextTime)
-                }
-
-            setNextTime(nextTime)
-        }
-
-        fun setNextTime(nextTime: String?) {
-            text =
+    fun setNextTime(nextTime: String?) {
+        text =
+            buildSpannedString {
                 if (nextTime != null) {
-                    buildSpannedString {
-                        inSpans(RelativeSizeSpan(0.8F)) {
-                            append(nextTime)
-                        }
-                        append("\n")
-                        append(easeName)
-                    }
-                } else {
-                    easeName
+                    inSpans(RelativeSizeSpan(0.8f)) { append(nextTime) }
+                    append("\n")
                 }
+                append(easeName)
+            }
+    }
+
+    companion object {
+        private const val CLICK_DELAY_MS = 100L
+
+        /**
+         * Register a callback to be called with a delay after this button is clicked.
+         */
+        fun MaterialButton.setOnClickDelayedListener(listener: OnClickListener) {
+            val delayedListener =
+                OnClickListener {
+                    postDelayed(
+                        { listener.onClick(this) },
+                        CLICK_DELAY_MS,
+                    )
+                }
+            setOnClickListener(delayedListener)
         }
     }
+}
