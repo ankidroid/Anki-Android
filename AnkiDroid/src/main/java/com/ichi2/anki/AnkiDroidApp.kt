@@ -53,6 +53,7 @@ import com.ichi2.anki.preferences.SharedPreferencesProvider
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.servicelayer.DebugInfoService
 import com.ichi2.anki.servicelayer.ThrowableFilterService
+import com.ichi2.anki.services.AlarmManagerService
 import com.ichi2.anki.services.NotificationService
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.ui.dialogs.ActivityAgnosticDialogs
@@ -208,7 +209,9 @@ open class AnkiDroidApp :
 
         if (Prefs.newReviewRemindersEnabled) {
             Timber.i("Setting review reminder notifications if they have not already been set")
-            // TODO: GSoC 2025
+            applicationScope.launch {
+                AlarmManagerService.scheduleAllEnabledReviewReminderNotifications(applicationContext)
+            }
         } else {
             // Register for notifications
             Timber.i("AnkiDroidApp: Starting Services")
