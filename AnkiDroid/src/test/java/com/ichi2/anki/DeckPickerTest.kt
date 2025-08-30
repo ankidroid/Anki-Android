@@ -539,7 +539,7 @@ class DeckPickerTest : RobolectricTest() {
                         .map { addBasicNote("$it", "").firstCard().id }
                 assertTrue(allCardsInSameDeck(cardIds, 1))
                 val deckId = addDynamicDeck("Deck 1")
-                getColUnsafe.sched.rebuildDyn(deckId)
+                getColUnsafe.sched.rebuildFilteredDeck(deckId)
                 assertTrue(allCardsInSameDeck(cardIds, deckId))
                 updateDeckList()
                 assertEquals(1, visibleDeckCount)

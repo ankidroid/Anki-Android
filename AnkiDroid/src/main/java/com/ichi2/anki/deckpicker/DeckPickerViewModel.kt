@@ -234,7 +234,7 @@ class DeckPickerViewModel :
         viewModelScope.launch {
             Timber.i("empty filtered deck %s", deckId)
             withCol { decks.select(deckId) }
-            undoableOp { sched.emptyDyn(decks.selected()) }
+            undoableOp { sched.emptyFilteredDeck(decks.selected()) }
             flowOfDeckCountsChanged.emit(Unit)
         }
 

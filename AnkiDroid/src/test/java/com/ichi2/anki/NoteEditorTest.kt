@@ -485,7 +485,7 @@ class NoteEditorTest : RobolectricTest() {
     private fun moveToDynamicDeck(note: Note): DeckId {
         val dyn = addDynamicDeck("All")
         col.decks.select(dyn)
-        col.sched.rebuildDyn()
+        col.sched.rebuildFilteredDeck(dyn)
         assertThat("card is in dynamic deck", note.firstCard().did, equalTo(dyn))
         return dyn
     }
