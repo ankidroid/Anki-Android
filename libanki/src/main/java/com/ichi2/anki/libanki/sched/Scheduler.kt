@@ -497,6 +497,9 @@ open class Scheduler(
     @CheckResult
     fun repositionDefaults(): RepositionDefaultsResponse = col.backend.repositionDefaults()
 
+    @LibAnkiAlias("active_decks")
+    fun activeDecks(): List<DeckId> = col.db.queryLongList("SELECT id FROM active_decks")
+
     /**
      * @return Number of new card in current deck and its descendants. Capped at [REPORT_LIMIT]
      */
