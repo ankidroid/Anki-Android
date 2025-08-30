@@ -482,14 +482,15 @@ class Decks(
 
     fun current(): Deck = this.getLegacy(this.selected()) ?: this.getLegacy(1)!!
 
-    /** The currently active dids. */
+    /** The currently active dids. Returned list is never empty. */
     @RustCleanup("Probably better as a queue")
-    @RustCleanup("should not return an empty list")
     fun active(): LinkedList<DeckId> {
-        val activeDecks = col.config.get<List<DeckId>>(ACTIVE_DECKS) ?: listOf()
-        val result = LinkedList<Long>()
-        result.addAll(activeDecks.asIterable())
-        return result
+        val active = col.sched.activeDecks()
+        return if (active.isNotEmpty()) {
+            LinkedList<DeckId>().apply { addAll(active.asIterable()) }
+        } else {
+            LinkedList<DeckId>().apply { add(1L) }
+        }
     }
 
     /** Select a new branch. */
