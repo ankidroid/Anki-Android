@@ -76,6 +76,7 @@
     <string name="card_browser_list_my_searches_new_name">Názov aktuálneho hľadania</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">Nemôžete uložiť vyhľadávanie bez názvu</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">Názov existuje</string>
+    <string name="card_browser_list_my_searches_successful_save">Search was saved</string>
     <string name="no_note_to_edit">No note to edit</string>
     <string name="card_browser_list_my_searches_remove_content">Vymazať “%1$s”?</string>
     <string name="card_browser_change_display_order" maxLength="28">Zmeniť poradie zobrazenia</string>

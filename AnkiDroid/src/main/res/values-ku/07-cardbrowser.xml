@@ -70,6 +70,7 @@
     <string name="card_browser_list_my_searches_new_name">Navê bo lêgerîna niha</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">Hûn nikarin lêgerîneke bênas tomar bikin</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">!Ev nav heye</string>
+    <string name="card_browser_list_my_searches_successful_save">Search was saved</string>
     <string name="no_note_to_edit">No note to edit</string>
     <string name="card_browser_list_my_searches_remove_content">\?Bila \"%s$s\" bê jêbirin</string>
     <string name="card_browser_change_display_order" maxLength="28">Change display order</string>

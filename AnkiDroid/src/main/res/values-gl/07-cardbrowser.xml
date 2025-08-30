@@ -70,6 +70,7 @@
     <string name="card_browser_list_my_searches_new_name">Nome para a busca actual</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">Non podes gardar unha busca sen poñerlle un nome</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">O nome xa existe</string>
+    <string name="card_browser_list_my_searches_successful_save">Search was saved</string>
     <string name="no_note_to_edit">Ningunha nota para editar</string>
     <string name="card_browser_list_my_searches_remove_content">Eliminar “%1$s”?</string>
     <string name="card_browser_change_display_order" maxLength="28">Cambiar orde de presentación</string>

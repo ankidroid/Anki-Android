@@ -70,6 +70,7 @@
     <string name="card_browser_list_my_searches_new_name">વર્તમાન શોધ માટે નામ</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">તમે નામ વગર શોધ સાચવી શકતા નથી</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">નામ અસ્તિત્વમાં છે</string>
+    <string name="card_browser_list_my_searches_successful_save">Search was saved</string>
     <string name="no_note_to_edit">No note to edit</string>
     <string name="card_browser_list_my_searches_remove_content">“%1$s” કાઢી નાખીએ?</string>
     <string name="card_browser_change_display_order" maxLength="28">ડિસ્પ્લે ઓર્ડર બદલો</string>

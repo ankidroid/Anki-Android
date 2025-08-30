@@ -70,6 +70,7 @@
     <string name="card_browser_list_my_searches_new_name">Nimi nykyiselle haulle</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">Hakua ei voi tallentaa ilman nimeä.</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">Nimi on jo olemassa</string>
+    <string name="card_browser_list_my_searches_successful_save">Search was saved</string>
     <string name="no_note_to_edit">Ei muokattavaa muistiinpanoa</string>
     <string name="card_browser_list_my_searches_remove_content">Poistetaanko ”%1$s”?</string>
     <string name="card_browser_change_display_order" maxLength="28">Muuta esitysjärjestystä</string>

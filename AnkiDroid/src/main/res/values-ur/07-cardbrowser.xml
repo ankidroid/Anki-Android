@@ -70,6 +70,7 @@
     <string name="card_browser_list_my_searches_new_name">موجودہ تلاش کا نام</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">آپ نام کے بغیر تلاش کو محفوظ نہیں کرسکتے ہیں</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">نام موجود ہے</string>
+    <string name="card_browser_list_my_searches_successful_save">Search was saved</string>
     <string name="no_note_to_edit">No note to edit</string>
     <string name="card_browser_list_my_searches_remove_content">\"%1$s\" کو حذف کریں؟</string>
     <string name="card_browser_change_display_order" maxLength="28">ڈسپلے آرڈر کو تبدیل کریں</string>

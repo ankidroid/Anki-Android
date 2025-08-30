@@ -67,6 +67,7 @@
     <string name="card_browser_list_my_searches_new_name">目前搜尋的名稱</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">你不能儲存沒有名稱的搜尋</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">名稱已存在</string>
+    <string name="card_browser_list_my_searches_successful_save">Search was saved</string>
     <string name="no_note_to_edit">沒有可編輯的筆記</string>
     <string name="card_browser_list_my_searches_remove_content">刪除「%1$s」嗎？</string>
     <string name="card_browser_change_display_order" maxLength="28">更改顯示順序</string>

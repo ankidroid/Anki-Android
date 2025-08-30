@@ -76,6 +76,7 @@
     <string name="card_browser_list_my_searches_new_name">Название запроса</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">Нельзя сохранить запрос без названия</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">Такое название уже существует</string>
+    <string name="card_browser_list_my_searches_successful_save">Search was saved</string>
     <string name="no_note_to_edit">Нет записей для правки</string>
     <string name="card_browser_list_my_searches_remove_content">Удалить «%1$s»?</string>
     <string name="card_browser_change_display_order" maxLength="28">Изменить сортировку</string>
