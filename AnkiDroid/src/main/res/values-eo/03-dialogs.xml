@@ -124,8 +124,8 @@
     <string name="multimedia_editor_failed">Fiaskis malfermi redaktilon de plurmedioj</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Permeso al registri sonon rifuzita</string>
-    <string name="permission_denied">Permission denied</string>
-    <string name="recording_permission_denied_message">Microphone permission is necessary for the “Record voice” feature. Please grant it in the app settings.</string>
+    <string name="permission_denied">Pemeso rifuzita</string>
+    <string name="recording_permission_denied_message">La permeso por aliri mikrofonon estas necesa por la eblo “Registri voĉon”. Donu la permeson en agordoj pri la aplikaĵo.</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid aktualigita</string>
     <string name="integrity_check_startup_content">AnkiDroid estis aktualigita. Tiu ĉi aktualigo liveras riparojn al eblaj problemoj pri datumbazo, estas konsilinde kontroli la datumbazon nun.</string>

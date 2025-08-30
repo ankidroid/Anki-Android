@@ -124,8 +124,8 @@
     <string name="multimedia_editor_failed">Multimedya Düzenleyiciyi açma başarısız oldu</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Ses kayıt izni reddedildi</string>
-    <string name="permission_denied">Permission denied</string>
-    <string name="recording_permission_denied_message">Microphone permission is necessary for the “Record voice” feature. Please grant it in the app settings.</string>
+    <string name="permission_denied">İzin reddedildi</string>
+    <string name="recording_permission_denied_message">\"Ses kaydetme\" özelliği için mikrofon izni gereklidir. Lütfen uygulama ayarlarından erişim izni verin.</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid Güncellendi</string>
     <string name="integrity_check_startup_content">AnkiDroid yükseltildi. Bu yükseltme, olası veritabanı sorunları için düzeltmeleri içerir ve veritabanını şimdi kontrol etmenizi öneririz.</string>

@@ -67,6 +67,7 @@
     <string name="card_browser_list_my_searches_new_name">현재 검색어 이름</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">이름 없이 검색어를 저장할 수 없습니다.</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">이름이 이미 존재합니다!</string>
+    <string name="card_browser_list_my_searches_successful_save">Search was saved</string>
     <string name="no_note_to_edit">수정할 노트 없음</string>
     <string name="card_browser_list_my_searches_remove_content">\"%1$s\"을/를 삭제할까요?</string>
     <string name="card_browser_change_display_order" maxLength="28">표시 순서 변경</string>

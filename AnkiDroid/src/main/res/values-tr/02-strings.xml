@@ -83,7 +83,7 @@
     <string name="webview_crash_fatal">Kritik Hata: WebView oluşturucusu çöktü. Neden: %s</string>
     <string name="webview_crash_loop_dialog_title">Sistem WebView Oluşturma Hatası</string>
     <string name="webview_crash_loop_dialog_content">Sistem WebView bu kartı işleyemedi: \'%1$s\'.\n %2$s</string>
-    <string name="slide_to_cancel" comment="Message shown when pressing the record button">Slide to cancel</string>
+    <string name="slide_to_cancel" comment="Message shown when pressing the record button">İptal etmek için kaydır</string>
     <string name="filter_by_flags" maxLength="41">Bayraklar</string>
     <!-- Custom study options -->
     <string name="custom_study_loading_tags">Etiket listesi oluşturuluyor&#8230;</string>
