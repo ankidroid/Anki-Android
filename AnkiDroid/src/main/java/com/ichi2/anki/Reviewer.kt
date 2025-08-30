@@ -839,8 +839,8 @@ open class Reviewer :
         // Undo button
         @DrawableRes val undoIconId: Int
         val undoEnabled: Boolean
-        val whiteboardIsShownAndHasStrokes = showWhiteboard && whiteboard?.undoEmpty() == false
-        if (whiteboardIsShownAndHasStrokes) {
+        val whiteboardIsShownAndHasUndoableAction = showWhiteboard && whiteboard?.undoEmpty() == false
+        if (whiteboardIsShownAndHasUndoableAction) {
             undoIconId = R.drawable.ic_arrow_u_left_top
             undoEnabled = true
         } else {
@@ -855,13 +855,25 @@ open class Reviewer :
         undoIcon.actionView!!.isEnabled = undoEnabled
         val toggleEraserIcon = menu.findItem((R.id.action_toggle_eraser))
         if (colIsOpenUnsafe()) { // Required mostly because there are tests where `col` is null
-            if (whiteboardIsShownAndHasStrokes) {
-                // Make Undo action title to whiteboard Undo specific one
-                undoIcon.title = resources.getString(R.string.undo_action_whiteboard_last_stroke)
+            // Make Undo action title to whiteboard Undo specific ones
+            if (whiteboardIsShownAndHasUndoableAction) {
+                if (whiteboard?.isNextUndoEraseAction() == true) {
+                    undoIcon.title =
+                        resources.getString(R.string.undo_action_whiteboard_last_erasing)
+                } else {
+                    undoIcon.title =
+                        resources.getString(R.string.undo_action_whiteboard_last_stroke)
+                }
 
                 // Show whiteboard Eraser action button
                 if (!actionButtons.status.toggleEraserIsDisabled()) {
                     toggleEraserIcon.isVisible = true
+                }
+
+                // Disable whiteboard eraser button if no strokes exist
+                if (whiteboard?.strokeEmpty() == true) {
+                    isEraserMode = false
+                    whiteboard?.reviewerEraserModeIsToggledOn = false
                 }
             } else {
                 // Disable whiteboard eraser action button
