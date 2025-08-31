@@ -75,7 +75,7 @@ fun syncAuth(): SyncAuth? {
 }
 
 fun getEndpoint(): String? {
-    val currentEndpoint = Prefs.customSyncUri?.ifEmpty { null }
+    val currentEndpoint = Prefs.currentSyncUri?.ifEmpty { null }
     val customEndpoint =
         if (Prefs.isCustomSyncEnabled) {
             Prefs.customSyncUri
