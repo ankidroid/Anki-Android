@@ -451,7 +451,7 @@ class CardBrowserFragment :
         }
 
         fun onDeckChanged(deck: SelectableDeck?) {
-            deckChip?.text = deck?.getDisplayName(requireContext())
+            deckChip?.text = deck?.getFullDisplayName(requireContext())
         }
 
         activityViewModel.flowOfIsTruncated.launchCollectionInLifecycleScope(::onIsTruncatedChanged)

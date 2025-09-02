@@ -55,6 +55,15 @@ sealed class SelectableDeck : Parcelable {
             is AllDecks -> context.getString(R.string.card_browser_all_decks)
         }
 
+    /**
+     * The full name of the deck
+     */
+    fun getFullDisplayName(context: Context) =
+        when (this) {
+            is Deck -> name
+            is AllDecks -> context.getString(R.string.card_browser_all_decks)
+        }
+
     override fun toString() =
         when (this) {
             is Deck -> name
