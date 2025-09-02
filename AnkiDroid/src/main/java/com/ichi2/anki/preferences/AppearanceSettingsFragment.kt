@@ -213,7 +213,8 @@ class AppearanceSettingsFragment : SettingsFragment() {
     private fun setupNewStudyScreenSettings() {
         if (!Prefs.isNewStudyScreenEnabled) return
         for (key in legacyStudyScreenSettings) {
-            requirePreference<Preference>(key).isVisible = false
+            val keyString = getString(key)
+            findPreference<Preference>(keyString)?.isVisible = false
         }
     }
 
