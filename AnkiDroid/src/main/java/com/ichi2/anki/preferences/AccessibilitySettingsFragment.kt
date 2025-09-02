@@ -38,7 +38,8 @@ class AccessibilitySettingsFragment : SettingsFragment() {
         requirePreference<Preference>(R.string.answer_button_size_pref_key).isVisible = true
 
         for (key in legacyStudyScreenSettings) {
-            requirePreference<Preference>(key).isVisible = false
+            val keyString = getString(key)
+            findPreference<Preference>(keyString)?.isVisible = false
         }
     }
 
