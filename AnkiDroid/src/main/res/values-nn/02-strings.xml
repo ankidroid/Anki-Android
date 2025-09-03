@@ -110,7 +110,7 @@
     <string name="missing_note_type">No note type found</string>
     <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (empty)</string>
     <!-- Image cropper -->
-    <string name="image_cropper_action_rotate" maxLength="28" comment="Action in image cropper screen">Rotate</string>
+    <string name="image_cropper_action_rotate" maxLength="28" comment="Action in image cropper screen">Roter</string>
     <string name="image_cropper_action_flip" maxLength="28" comment="Action in image cropper screen">Flip</string>
     <string name="image_cropper_action_flip_horizontally" maxLength="28" comment="Submenu action in image cropper screen">Flip horizontally</string>
     <string name="image_cropper_action_flip_vertically" maxLength="28" comment="Submenu action in image cropper screen">Flip vertically</string>
@@ -154,7 +154,7 @@
     <string name="import_error_content_provider">Den valgte filen kunne ikke importeres automatisk av AnkiDroid. Vennligst referer til brukermanualen for å finne ut hvordan man importerer Anki-filer manuelt: \n%s</string>
     <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
     <string name="import_interrupted">Import interrupted: AnkiDroid was closed</string>
-    <string name="export_ready_title">Export ready</string>
+    <string name="export_ready_title">Eksport klar</string>
     <string name="export_send_no_handlers">No applications available to handle apkg. Saving&#8230;</string>
     <string name="export_save_apkg_successful">Successfully saved Anki package</string>
     <string name="export_save_apkg_unsuccessful">Save Anki package failed</string>

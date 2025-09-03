@@ -154,7 +154,7 @@
     <string name="card_template_editor_menu_card_browser_appearance" maxLength="28">Kortleser utseende</string>
     <string name="card_template_editor_deck_override" maxLength="28">Overstyr kortstokk</string>
     <string name="card_template_editor_insert_field" maxLength="28">Legg til felt</string>
-    <string name="card_template_editor_select_field">Velg felt</string>
+    <string name="card_template_editor_select_field">Vel felt</string>
     <string name="card_template_editor_cant_delete">Minst én korttype kreves.</string>
     <plurals name="card_template_editor_confirm_add">
         <item quantity="one">Dette vil lage %1$d kort. Fortsett?</item>
@@ -193,7 +193,7 @@
     <string name="install_non_play_store_ankidroid_recommended">Gjenopprett mappetilgang (anbefalt)</string>
     <string name="install_non_play_store_ankidroid">Gjenopprett mappetilgang (avansert)</string>
     <string name="restore_data_from_backup">Gjenopprett fra .colpkg sikkerhetskopi (avansert)</string>
-    <string name="create_new_collection">Opprett et nytt sett</string>
+    <string name="create_new_collection">Lag ei ny samling</string>
     <string name="new_unsafe_collection">Det nye settet vil bli slettet fra telefonen hvis du avinstallerer AnkiDroid</string>
     <!-- Permissions screen -->
     <string name="permissions_screen_headline">AnkiDroid trenger tillatelse for å fungere</string>

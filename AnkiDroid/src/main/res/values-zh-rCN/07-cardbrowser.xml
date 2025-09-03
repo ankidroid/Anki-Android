@@ -67,7 +67,7 @@
     <string name="card_browser_list_my_searches_new_name">当前搜索的名称</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">没有输入名称时不能保存搜索结果</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">名称已存在</string>
-    <string name="card_browser_list_my_searches_successful_save">Search was saved</string>
+    <string name="card_browser_list_my_searches_successful_save">搜索已保存</string>
     <string name="no_note_to_edit">没有可编辑的附注</string>
     <string name="card_browser_list_my_searches_remove_content">确认删除「%1$s」？</string>
     <string name="card_browser_change_display_order" maxLength="28">改变排序方式</string>

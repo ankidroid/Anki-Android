@@ -65,7 +65,7 @@
     <string name="pref_cat_themes" maxLength="41">Themes</string>
     <string name="pref_cat_gestures" maxLength="41">Taikneis</string>
     <string name="pref_cat_controls" maxLength="41">Controls</string>
-    <string name="pref_cat_advanced" maxLength="41">Advanced</string>
+    <string name="pref_cat_advanced" maxLength="41">Framgaht</string>
     <string name="pref_cat_workarounds" maxLength="41">Workarounds</string>
     <string name="pref_cat_plugins" maxLength="41">Plugins</string>
     <string name="pref_cat_editing" maxLength="41">Inmaidjan 𐌹𐌽𐌼𐌰𐌹𐌳𐌾𐌰𐌽</string>
@@ -74,8 +74,8 @@
     <string name="use_input_tag" maxLength="41">Andahaft in kartai meljan</string>
     <string name="use_input_tag_summ">Use a text input box inside the card to type in the answer</string>
     <string name="reset_languages" maxLength="41">Razdos aftralagjan</string>
-    <string name="reset_languages_summ">Reset language assignments (for text to speech and dictionaries) for all decks</string>
-    <string name="reset_languages_question">Reset all language assignments?</string>
+    <string name="reset_languages_summ">Razdausþroþeinins aftralagjan (boko-du-stibnai jah waurdabokom) allaim kartahuzdam</string>
+    <string name="reset_languages_question">Allos razdausþroþeinins aftralagjan?</string>
     <string name="reset_confirmation">All states reset</string>
     <string name="card_zoom" maxLength="41">Card zoom</string>
     <string name="image_zoom" maxLength="41">Image zoom</string>
@@ -152,7 +152,7 @@
     <string name="notification_pref_title" maxLength="41">Notify when</string>
     <string name="never_notify">Never notify</string>
     <string name="notify_when_pending">Pending messages available</string>
-    <string name="notification_minimum_cards_due" comment="Consider keeping the unbreakable space after the digit">More than %d cards due</string>
+    <string name="notification_minimum_cards_due" comment="Consider keeping the unbreakable space after the digit">Nauh mais þau %dtaujan</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Inreiran</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Glitmunjando liuhaþ</string>
     <string name="select_locale_title">Walei razda</string>
@@ -184,8 +184,8 @@
     <string name="time_limit" maxLength="41">Timebox time limit</string>
     <string name="day_offset_with_description" maxLength="41">Anastodeins iftumins dagis</string>
     <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
-        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">%d hour past midnight</item>
-        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">%d hours past midnight</item>
+        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">%d ƕeila afar midjanaht</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">%d ƕeilos afar midjanaht</item>
     </plurals>
     <string name="pref_keep_screen_on" maxLength="41">Þairhwis miþ skairma skeinandin</string>
     <string name="pref_keep_screen_on_summ">Disable screen timeout</string>

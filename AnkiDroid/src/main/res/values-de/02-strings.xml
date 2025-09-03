@@ -47,7 +47,7 @@
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Navigationsleiste öffnen</string>
     <string name="drawer_close">Navigationsleiste schließen</string>
-    <string name="note_message">Note saved</string>
+    <string name="note_message">Notiz gespeichert</string>
     <string name="CardEditorCardDeck">Kartenstapel:</string>
     <string name="CardEditorNoteDeck">Stapel:</string>
     <string name="CardEditorModel">Typ:</string>
@@ -68,11 +68,11 @@
     <string name="enable_whiteboard" maxLength="28">Whiteboard aktivieren</string>
     <string name="disable_whiteboard">Whiteboard ausschalten</string>
     <string name="show_whiteboard">Whiteboard anzeigen</string>
-    <string name="enable_eraser" maxLength="28">Enable eraser</string>
-    <string name="disable_eraser" maxLength="28">Disable eraser</string>
+    <string name="enable_eraser" maxLength="28">Radierer aktivieren</string>
+    <string name="disable_eraser" maxLength="28">Radierer deaktivieren</string>
     <string name="hide_whiteboard" maxLength="28">Whiteboard ausblenden</string>
     <string name="clear_whiteboard" maxLength="28">Whiteboard säubern</string>
-    <string name="replay_media" maxLength="28">Replay media</string>
+    <string name="replay_media" maxLength="28">Medien erneut abspielen</string>
     <string name="leech_suspend_notification">Karte als Lernbremse markiert und ausgeschlossen</string>
     <string name="leech_notification">Karte als Lernbremse markiert</string>
     <string name="webview_crash_unknown">Unbekannter Fehler</string>
@@ -83,7 +83,7 @@
     <string name="webview_crash_fatal">Schwerer Fehler: WebView-Renderer ist abgestürzt. Grund: %s</string>
     <string name="webview_crash_loop_dialog_title">Fehler beim System-WebView-Rendering</string>
     <string name="webview_crash_loop_dialog_content">System-WebView konnte die Karte »%1$s« nicht rendern.\n %2$s</string>
-    <string name="slide_to_cancel" comment="Message shown when pressing the record button">Slide to cancel</string>
+    <string name="slide_to_cancel" comment="Message shown when pressing the record button">Wischen zum Abbrechen</string>
     <string name="filter_by_flags" maxLength="41">Flaggen</string>
     <!-- Custom study options -->
     <string name="custom_study_loading_tags">Erstelle Schlagwortliste&#8230;</string>
@@ -110,10 +110,10 @@
     <string name="missing_note_type">Kein Notiztyp gefunden</string>
     <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (leer)</string>
     <!-- Image cropper -->
-    <string name="image_cropper_action_rotate" maxLength="28" comment="Action in image cropper screen">Rotate</string>
-    <string name="image_cropper_action_flip" maxLength="28" comment="Action in image cropper screen">Flip</string>
-    <string name="image_cropper_action_flip_horizontally" maxLength="28" comment="Submenu action in image cropper screen">Flip horizontally</string>
-    <string name="image_cropper_action_flip_vertically" maxLength="28" comment="Submenu action in image cropper screen">Flip vertically</string>
+    <string name="image_cropper_action_rotate" maxLength="28" comment="Action in image cropper screen">Drehen</string>
+    <string name="image_cropper_action_flip" maxLength="28" comment="Action in image cropper screen">Spiegeln</string>
+    <string name="image_cropper_action_flip_horizontally" maxLength="28" comment="Submenu action in image cropper screen">Horizontal spiegeln</string>
+    <string name="image_cropper_action_flip_vertically" maxLength="28" comment="Submenu action in image cropper screen">Vertikal spiegeln</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">Zeitlimit erreicht</string>
     <plurals name="timebox_reached">
@@ -198,8 +198,8 @@
     <string name="restore_default" maxLength="28">Standard wiederherstellen</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Auslassung</string>
     <!-- Whiteboard eraser mode toggle message in Reviewer -->
-    <string name="white_board_eraser_enabled">Eraser mode activated</string>
-    <string name="white_board_eraser_disabled">Eraser mode deactivated</string>
+    <string name="white_board_eraser_enabled">Radier-Modus aktiviert</string>
+    <string name="white_board_eraser_disabled">Radier-Modus deaktiviert</string>
     <!-- Whiteboard save image message in the Study Screen -->
     <string name="white_board_image_save_failed">Whiteboardbild konnte nicht gespeichert werden. %s</string>
     <string name="white_board_image_saved">Whiteboardbild in %s gespeichert</string>
@@ -310,7 +310,7 @@
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Karten</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Notizen</string>
     <string name="toggle_cards_notes">Karten/Notizen umschalten</string>
-    <string name="truncate_content_help">Truncate the height of each row of the Browser to show only first 3 lines of content</string>
+    <string name="truncate_content_help">Die Höhe jeder Zeile der Kartenübersicht anpassen, sodass nur die ersten 3 Zeilen des Inhalts zu sehen sind.</string>
     <string name="browser_options_dialog_heading">Browser Einstellungen</string>
     <string name="audio_saved">Aufnahme gespeichert</string>
     <string name="deleting_selected_notes">Lösche ausgewählte Notizen</string>
@@ -324,9 +324,9 @@
     <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">Die Text-zu-Sprache Einstellungen konnten nicht geöffnet werden</string>
     <string name="shared_decks_login_required">Bitte melde dich an, um weitere Stapel herunterzuladen</string>
     <string name="deck_description_field_hint">Beschreibung</string>
-    <string name="deck_description_saved">Description updated</string>
-    <string name="format_deck_description_as_markdown">Format as Markdown</string>
-    <string name="help_button_content_description">Open help for ‘%s’</string>
+    <string name="deck_description_saved">Beschreibung aktualisiert</string>
+    <string name="format_deck_description_as_markdown">Als Markdown formatieren</string>
+    <string name="help_button_content_description">Hilfe für ‘%s ’ öffnen</string>
     <string name="failed_to_copy">Kopieren fehlgeschlagen</string>
     <string name="card_browser_unavailable_when_notes_mode">Nicht verfügbar im \"Notiz\"-Modus</string>
     <plurals name="unbury_cards_feedback">
@@ -360,5 +360,5 @@
     <string name="missing_user_action_dialog_message" comment="%s is the user action number">Benutzeraktion %s ist in diesem notiztyp nicht festgelegt. Bitte konfigurieren Sie es</string>
     <string name="directory_inaccessible_info">Erfahren Sie hier %s mehr darüber, wie Sie den Zugriff wiederherstellen können, oder gehen Sie zu den Einstellungen, um den Sammlungsordner zu aktualisieren.</string>
     <!-- Scheduler Upgrade Required Dialog title-->
-    <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">Scheduler upgrade required</string>
+    <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">Zeitplaner-Upgrade erforderlich</string>
 </resources>

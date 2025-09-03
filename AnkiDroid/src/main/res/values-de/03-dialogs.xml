@@ -124,8 +124,8 @@
     <string name="multimedia_editor_failed">Multimedia-Editor konnte nicht geöffnet werden</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Berechtigung für Audioaufnahme verweigert</string>
-    <string name="permission_denied">Permission denied</string>
-    <string name="recording_permission_denied_message">Microphone permission is necessary for the “Record voice” feature. Please grant it in the app settings.</string>
+    <string name="permission_denied">Zugriff verweigert</string>
+    <string name="recording_permission_denied_message">Mikrofon-Berechtigung ist für die Funktion „Stimme aufnehmen“ notwendig. Bitte erteilen Sie diese in den App-Einstellungen.</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid aktualisiert</string>
     <string name="integrity_check_startup_content">AnkiDroid wurde aktualisiert. Dieses Upgrade enthält Korrekturen für mögliche Datenbankprobleme und wir empfehlen Ihnen, die Datenbank jetzt zu überprüfen.</string>
@@ -233,8 +233,8 @@
         <item quantity="other">Tage</item>
     </plurals>
     <plurals name="set_due_date_current_interval">
-        <item quantity="one">Current interval: %d day</item>
-        <item quantity="other">Current interval: %d days</item>
+        <item quantity="one">Aktuelles Intervall: %d Tag</item>
+        <item quantity="other">Aktuelles Intervall: %d Tage</item>
     </plurals>
     <string name="range_delimiter" comment="Placed between two input boxes to denote a range">–</string>
     <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">Von</string>

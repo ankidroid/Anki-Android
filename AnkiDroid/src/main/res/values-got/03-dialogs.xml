@@ -124,7 +124,7 @@
     <string name="multimedia_editor_failed">Ni mahta Inmaidjan Managmaidje uslukan</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Audio recording permission denied</string>
-    <string name="permission_denied">Permission denied</string>
+    <string name="permission_denied">Andlet giban nist</string>
     <string name="recording_permission_denied_message">Microphone permission is necessary for the “Record voice” feature. Please grant it in the app settings.</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid aftraananiujida</string>
@@ -200,8 +200,8 @@
     sched V2. For V1, it was counting the number of repetitions of cards in learning. This approximation is acceptable
     for the sake of simplicity and because V1 will leave.-->
     <string name="deck_picker_counts">Open the deck overview page containing the number of cards to see today.</string>
-    <string name="import_deck_package">Deck package (.apkg)</string>
-    <string name="import_collection_package">Collection package (.colpkg)</string>
+    <string name="import_deck_package">Sakkus kartahuzdis (.apkg)</string>
+    <string name="import_collection_package">Huzd kartahuzdis (.colpkg)</string>
     <string name="import_csv">Boko fajl (.txt, .csv)</string>
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">Ni magt ufkartahuzd kartahuzde allaize skapjan</string>
@@ -219,7 +219,7 @@
     <string name="empty_deck_name">Namo kartahuzdis ni mag wisan laus</string>
     <string name="create_deck_numeric_hint">If you have deck ordering issues (e.g. ‘10’ appears before ‘2’), replace ‘2’ with ‘02’</string>
     <!-- Set Due Date -->
-    <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Set interval to same value</string>
+    <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Miþrum lagjan du samin wairþa</string>
     <plurals name="set_due_date_single_day_label" comment="a date control is provided afterwards">
         <item quantity="one">Bandwei karta in</item>
         <item quantity="other">Bandwei kartos in</item>
@@ -250,7 +250,7 @@
     <string name="change_cloze_mode">Change cloze mode</string>
     <!-- Outdated WebView dialog -->
     <string name="webview_update_message">The system WebView is outdated. Some features won’t work correctly. Please update it.\n\nInstalled version: %1$d\nMinimum required version: %2$d</string>
-    <string name="compress">Compress</string>
+    <string name="compress">Gaþrukjan</string>
     <!-- Tts playback error dialog -->
     <string name="tts_error_dialog_title">Razda stodida nist</string>
     <string name="tts_error_dialog_reason_text">The text to speech engine <b>%1$s</b> does not support the following language: <b>%2$s</b></string>
