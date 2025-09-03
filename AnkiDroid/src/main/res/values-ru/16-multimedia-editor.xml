@@ -60,7 +60,7 @@
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">Что-то пошло не так</string>
     <string name="multimedia_editor_png_paste_error">Ошибка преобразования изображения в PNG: %s</string>
-    <string name="multimedia_editor_attach_tooltip" comment="Appear when holding the finger  on the paperclip icon">Attach multimedia content</string>
+    <string name="multimedia_editor_attach_tooltip" comment="Appear when holding the finger  on the paperclip icon">Прикрепить медиафайл</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">Прикрепить медиафайл к полю %1$s</string>
     <!-- Audio view -->
     <!-- Message when recording fails -->
@@ -73,6 +73,6 @@
     <string name="save_dialog_content">Размер изображения — %sМБ. По умолчанию ограничение размера 1МБ. Сжать его?</string>
     <string name="select_image_failed">"Не удалось выбрать изображение. Попробуйте снова"</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Содержимое поля</string>
-    <string name="crop_image_size_notice">The image is too big to be handled by the crop editor. Please resize it and try again!</string>
+    <string name="crop_image_size_notice">Изображение слишком большое для редактора. Измените его размер и попробуйте заново!</string>
     <string name="reselect" maxLength="28">Выбрать заново</string>
 </resources>

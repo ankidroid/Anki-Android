@@ -136,8 +136,8 @@
     <string name="multimedia_editor_failed">تعذر فتح محرر الوسائط المتعددة</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">رُفِض إذن تسجيل الصوت</string>
-    <string name="permission_denied">Permission denied</string>
-    <string name="recording_permission_denied_message">Microphone permission is necessary for the “Record voice” feature. Please grant it in the app settings.</string>
+    <string name="permission_denied">رُفِضَ الإذن</string>
+    <string name="recording_permission_denied_message">إذن الميكروفون ضروري لميزة «تسجيل الصوت». امنحه من إعدادات التطبيق رجاءًا.</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">تم تحديث آنكي درويد</string>
     <string name="integrity_check_startup_content">تم تحديث آنكي درويد. يتضمن هذا التحديث إصلاحًا لأعطال ممكنة في قاعدة البيانات، لذلك ننصح باستخدام ميزة فحص قاعدة البيانات الآن.</string>

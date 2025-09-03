@@ -45,23 +45,23 @@
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer items-->
-    <string name="decks" maxLength="28" comment="Open the Deck Picker">Kartahuzda</string>
-    <string name="card_browser" maxLength="28" comment="Title of the Card Browser, and button to open it.">Sokja faur kartos</string>
-    <string name="statistics" maxLength="28" comment="Title of the Statistics page and button to open it.">Raþjons</string>
-    <string name="settings" maxLength="28" comment="Title of the Settings page, and button to open it.">Lageinos</string>
-    <string name="help" maxLength="28" comment="Title of the help menu and button to open it.">Hilpa</string>
+    <string name="decks" maxLength="28" comment="Open the Deck Picker">Kartahuzda 𐌺𐌰𐍂𐍄𐌰𐌷𐌿𐌶𐌳𐌰</string>
+    <string name="card_browser" maxLength="28" comment="Title of the Card Browser, and button to open it.">Kartos sokjan 𐌺𐌰𐍂𐍄𐍉𐍃 𐍃𐍉𐌺𐌾𐌰𐌽</string>
+    <string name="statistics" maxLength="28" comment="Title of the Statistics page and button to open it.">Raþjons 𐍂𐌰𐌸𐌾𐍉𐌽𐍃</string>
+    <string name="settings" maxLength="28" comment="Title of the Settings page, and button to open it.">Lageinos 𐌻𐌰𐌲𐌴𐌹𐌽𐍉𐍃</string>
+    <string name="help" maxLength="28" comment="Title of the help menu and button to open it.">Hilpa 𐌷𐌹𐌻𐍀𐌰</string>
     <!-- The last entry "Support ankidroid" is in 03-dialogs.-->
     <!-- Entries of the "attach" in the "add card" view. -->
-    <string name="drawing" comment="Menu entry to create a drawing to attach to a card. Also a title.">Frisahts</string>
+    <string name="drawing" comment="Menu entry to create a drawing to attach to a card. Also a title.">Frisahts 𐍆𐍂𐌹𐍃𐌰𐌷𐍄𐍃</string>
     <!-- Entries of the Support ankidroid menu. -->
-    <string name="send_feedback" comment="Menu entry in the \'Help&gt;Support ankidroid\' menu, that opens the web page explaining how to send feedback.">Garaginon</string>
+    <string name="send_feedback" comment="Menu entry in the \'Help&gt;Support ankidroid\' menu, that opens the web page explaining how to send feedback.">Garaginon 𐌲𐌰𐍂𐌰𐌲𐌹𐌽𐍉𐌽</string>
     <!-- Study Options-->
-    <string name="studyoptions_start" comment="Title of the Reviewer activity. Also the button to open it.">Laiseins</string>
+    <string name="studyoptions_start" comment="Title of the Reviewer activity. Also the button to open it.">Laisjan þuk 𐌻𐌰𐌹𐍃𐌾𐌰𐌽 𐌸𐌿𐌺</string>
     <!-- DeckPicker.kt -->
-    <string name="expand" comment="In the deck picker: accessibility label of the buttons that display the subdecks of a deck.">Ufarþeihan</string>
-    <string name="collapse" comment="In the deck picker: accessibility label of the buttons that hide the subdecks of a deck.">Affilhan</string>
-    <string name="menu_import" comment="Title of the import page and the button to open it." maxLength="28">Innatbair</string>
-    <string name="no_cards_placeholder_title" comment="Text shown the first time AnkiDroid is opened, to explain to the user why they can\'t yet review.">Huzd ist laus</string>
+    <string name="expand" comment="In the deck picker: accessibility label of the buttons that display the subdecks of a deck.">Ufarþeihan 𐌿𐍆𐌰𐍂𐌸𐌴𐌹𐌷𐌰𐌽</string>
+    <string name="collapse" comment="In the deck picker: accessibility label of the buttons that hide the subdecks of a deck.">Affilhan 𐌰𐍆𐍆𐌹𐌻𐌷𐌰𐌽</string>
+    <string name="menu_import" comment="Title of the import page and the button to open it." maxLength="28">Innatbairan 𐌹𐌽𐌽𐌰𐍄𐌱𐌰𐌹𐍂𐌰𐌽</string>
+    <string name="no_cards_placeholder_title" comment="Text shown the first time AnkiDroid is opened, to explain to the user why they can\'t yet review.">Huzd ist laus 𐌷𐌿𐌶𐌳 𐌹𐍃𐍄 𐌻𐌰𐌿𐍃</string>
     <string name="no_cards_placeholder_description" comment="Text shown the first time AnkiDroid is opened, to explain what should be their first action.">Dustodei biaukan kartos\nbrukjan + taiknais.</string>
     <!-- Reviewer -->
     <plurals name="reviewer_window_title" comment="Header of the reviewer, telling the users how many minutes remains before they have seen all cards.">
@@ -79,7 +79,7 @@
     <string name="type_answer_hint" comment="In the reviewer. When the user use note type with hint. It\'s the default content of the text field in which the user is invited to type their answer. It disappears as soon as the user start to type.">Andahaft meljan</string>
     <string name="show_answer" maxLength="41" comment="When displaying the question side of a card. This is the label of a button that display the answer side.">Andahaft bandwjan</string>
     <string name="hide_answer" comment="In the previewer, when the answer side is displayed. This is the label of the button that sends back to the question side.">Andahaft affilhan</string>
-    <string name="ease_button_again" maxLength="41" comment="In the reviewer, in the answer side. Label of the button that request the card to be shown again soon.">Aftra</string>
+    <string name="ease_button_again" maxLength="41" comment="In the reviewer, in the answer side. Label of the button that request the card to be shown again soon.">Aftra 𐌰𐍆𐍄𐍂𐌰</string>
     <string name="ease_button_hard" maxLength="41" comment="In the reviewer, in the answer side. Label of the button that used by the user to state finding the correct answer was hard.">Unazet</string>
     <string name="ease_button_good" maxLength="41" comment="In the reviewer, in the answer side. Label of the button that used by the user to state their answer was good.">Waila</string>
     <string name="ease_button_easy" maxLength="41" comment="In the reviewer, in the answer side. Label of the button that used by the user to state that finding the answer to the question was easy.">Azet</string>

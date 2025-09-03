@@ -83,7 +83,7 @@
     <string name="ease_button_hard" maxLength="41" comment="In the reviewer, in the answer side. Label of the button that used by the user to state finding the correct answer was hard.">Schwer</string>
     <string name="ease_button_good" maxLength="41" comment="In the reviewer, in the answer side. Label of the button that used by the user to state their answer was good.">Gut</string>
     <string name="ease_button_easy" maxLength="41" comment="In the reviewer, in the answer side. Label of the button that used by the user to state that finding the answer to the question was easy.">Einfach</string>
-    <string name="show_answer_hint_long_press" comment="In the reviewer, hint is shown when touching the show answer button and the user has the long-press accessibility setting enabled">\'%s\' is enabled</string>
+    <string name="show_answer_hint_long_press" comment="In the reviewer, hint is shown when touching the show answer button and the user has the long-press accessibility setting enabled">\'%s\' ist aktiviert</string>
     <!-- General -->
     <string name="undo" maxLength="28" comment="When tapping on this text, the last action is undone.">Rückgängig</string>
     <string name="redo" maxLength="28" comment="Menu entry that allows to redo action that was just undone.">Wiederherstellen</string>
@@ -187,12 +187,12 @@
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">Die Datei %s kann nicht erstellt oder überschrieben werden</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Unzugängliche Sammlung</string>
-    <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Wir können, aufgrund einer Änderung der Play Store-Richtlinie, nachdem AnkiDroid deinstalliert wurde, auf Ihre Sammlung nicht zugreifen.\n\nIhre Daten sind sicher und können wiederhergestellt werden. Es befindet sich unter\n%s\n\nWählen Sie unten eine Wiederherstellungsmöglichkeit aus:</string>
-    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android hat den Zugriff auf %1$s entfernt wegen App-Aktivität. \n\nDeine Daten sind sicher und können wiederhergestellt werden. Die befinden sich bei \n%2$s\n\nWähle unten eine Möglichkeit aus, um sie wiederherzustellen.</string>
-    <string name="restore_data_from_ankiweb">von AnkiWeb wiederherstellen (empfohlen)</string>
+    <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Wir können nicht auf ihre Sammlung zugreifen, da eine PlayStore-Richtlinie geändert wurde, nachdem AnkiDroid deinstalliert wurde.\n\nIhre Daten sind sicher und können wiederhergestellt werden. Sie befinden sich hier: \n%s\n\nWähle unten eine Wiederherstellungsmöglichkeit aus:</string>
+    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android hat aufgrund von App-Inaktivität den Zugriff von AnkiDroid auf %1$s entfernt \n\nDeine Daten sind sicher und können wiederhergestellt werden. Sie befinden sich hier: \n%2$s\n\nWähle unten eine Möglichkeit aus, um sie wiederherzustellen:</string>
+    <string name="restore_data_from_ankiweb">Von AnkiWeb wiederherstellen (empfohlen)</string>
     <string name="install_non_play_store_ankidroid_recommended">Ordnerzugriff wiederherstellen (empfohlen)</string>
-    <string name="install_non_play_store_ankidroid">Ordnerzugriff wiederherstellen (erfahren)</string>
-    <string name="restore_data_from_backup">aus .colpkg-Backup wiederherstellen (erfahren)</string>
+    <string name="install_non_play_store_ankidroid">Ordnerzugriff wiederherstellen (erweitert)</string>
+    <string name="restore_data_from_backup">aus .colpkg-Backup wiederherstellen (erweitert)</string>
     <string name="create_new_collection">Neue Sammlung erstellen</string>
     <string name="new_unsafe_collection">Die neue Sammlung wird von deinem Telefon gelöscht, wenn du AnkiDroid deinstallierst.</string>
     <!-- Permissions screen -->
