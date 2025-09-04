@@ -252,6 +252,8 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
                             isEnabled = isItemEnabled
                             setBackgroundResource(ta.resourceId)
                             setTextAppearance(android.R.style.TextAppearance_Material_Body1)
+                            setSingleLine(false)
+                            setLineSpacing(0f, 1.0f)
                             setOnClickListener {
                                 launchCatchingTask { onMenuItemSelected(menuItem) }
                             }
