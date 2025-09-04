@@ -97,7 +97,6 @@ import com.ichi2.anki.InitialActivity.StartupFailure.FutureAnkidroidVersion
 import com.ichi2.anki.InitialActivity.StartupFailure.SDCardNotMounted
 import com.ichi2.anki.InitialActivity.StartupFailure.WebviewFailed
 import com.ichi2.anki.IntentHandler.Companion.intentToReviewDeckFromShortcuts
-import com.ichi2.anki.StudyOptionsFragment.StudyOptionsListener
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.android.back.exitViaDoubleTapBackCallback
 import com.ichi2.anki.android.input.ShortcutGroup
@@ -239,7 +238,6 @@ import java.io.File
 @NeedsTest("If the user selects 'Sync Profile' in the app intro, a sync starts immediately")
 open class DeckPicker :
     NavigationDrawerActivity(),
-    StudyOptionsListener,
     SyncErrorDialogListener,
     ImportDialogListener,
     OnRequestPermissionsResultCallback,
@@ -2415,10 +2413,6 @@ open class DeckPicker :
             val window = window
             window.setFormat(PixelFormat.RGBA_8888)
         }
-    }
-
-    override fun onRequireDeckListUpdate() {
-        updateDeckList()
     }
 
     private fun openReviewer() {
