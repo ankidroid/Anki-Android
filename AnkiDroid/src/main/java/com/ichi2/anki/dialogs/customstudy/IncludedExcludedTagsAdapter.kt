@@ -72,7 +72,7 @@ class IncludedExcludedTagsAdapter(
     init {
         val ta =
             context.obtainStyledAttributes(
-                intArrayOf(android.R.attr.selectableItemBackground, com.google.android.material.R.attr.colorPrimary),
+                intArrayOf(android.R.attr.selectableItemBackground, androidx.appcompat.R.attr.colorPrimary),
             )
         selectableItemBackground = ta.getResourceId(0, 0)
         selectedItemBackground = ta.getColor(1, Color.BLUE)
