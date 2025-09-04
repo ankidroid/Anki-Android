@@ -24,7 +24,6 @@ import androidx.fragment.app.commit
 import androidx.lifecycle.lifecycleScope
 import anki.collection.OpChanges
 import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.anki.StudyOptionsFragment.StudyOptionsListener
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyAction
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyAction.Companion.REQUEST_KEY
 import com.ichi2.anki.libanki.undoAvailable
@@ -38,7 +37,6 @@ import timber.log.Timber
 
 class StudyOptionsActivity :
     AnkiActivity(),
-    StudyOptionsListener,
     ChangeManager.Subscriber {
     private var undoState = UndoState()
 
@@ -131,15 +129,12 @@ class StudyOptionsActivity :
         }
     }
 
-    override fun onRequireDeckListUpdate() {
-        currentFragment!!.refreshInterface()
-    }
-
     override fun opExecuted(
         changes: OpChanges,
         handler: Any?,
     ) {
         refreshUndoState()
+        currentFragment?.refreshInterface()
     }
 
     private fun refreshUndoState() {
