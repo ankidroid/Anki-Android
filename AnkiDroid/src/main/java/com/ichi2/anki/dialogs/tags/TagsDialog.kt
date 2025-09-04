@@ -334,7 +334,7 @@ class TagsDialog : AnalyticsDialogFragment {
         toolbarSearchItem = toolbar.menu.findItem(R.id.tags_dialog_action_filter)
         val toolbarSearchItem: MenuItem? = toolbarSearchItem
         toolbarSearchView = toolbarSearchItem?.actionView as AccessibleSearchView
-        val queryET = toolbarSearchView!!.findViewById<EditText>(com.google.android.material.R.id.search_src_text)
+        val queryET = toolbarSearchView!!.findViewById<EditText>(androidx.appcompat.R.id.search_src_text)
         queryET.filters = arrayOf(addTagFilter)
         toolbarSearchView!!.queryHint = getString(R.string.filter_tags)
         toolbarSearchView!!.setOnQueryTextListener(
