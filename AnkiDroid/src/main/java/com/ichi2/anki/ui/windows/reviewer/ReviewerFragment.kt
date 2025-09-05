@@ -49,6 +49,7 @@ import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.FragmentContainerView
+import androidx.fragment.app.commit
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
@@ -86,6 +87,7 @@ import com.ichi2.anki.settings.enums.ToolbarPosition
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.ui.windows.reviewer.whiteboard.WhiteboardFragment
 import com.ichi2.anki.utils.CollectionPreferences
 import com.ichi2.anki.utils.ext.collectIn
 import com.ichi2.anki.utils.ext.collectLatestIn
@@ -103,6 +105,7 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.lang.IllegalArgumentException
 import kotlin.math.roundToInt
+import kotlin.reflect.jvm.jvmName
 
 class ReviewerFragment :
     CardViewerFragment(R.layout.reviewer2),
@@ -190,6 +193,7 @@ class ReviewerFragment :
         setupAnswerTimer(view)
         setupMargins(view)
         setupCheckPronunciation(view)
+        setupWhiteboard()
         setupTimebox()
 
         viewModel.actionFeedbackFlow
@@ -601,6 +605,24 @@ class ReviewerFragment :
         val container = view.findViewById<FragmentContainerView>(R.id.check_pronunciation_container)
         viewModel.voiceRecorderEnabledFlow.flowWithLifecycle(lifecycle).collectIn(lifecycleScope) { isEnabled ->
             container.isVisible = isEnabled
+        }
+    }
+
+    private fun setupWhiteboard() {
+        viewModel.whiteboardEnabledFlow.flowWithLifecycle(lifecycle).collectIn(lifecycleScope) { isEnabled ->
+            childFragmentManager.commit {
+                val whiteboardFragment = childFragmentManager.findFragmentByTag(WhiteboardFragment::class.jvmName)
+                if (isEnabled) {
+                    if (whiteboardFragment != null) return@commit
+                    add(R.id.webview_container, WhiteboardFragment::class.java, null, WhiteboardFragment::class.jvmName)
+                } else {
+                    whiteboardFragment?.let { remove(it) }
+                }
+            }
+        }
+        viewModel.onShowQuestionFlow.collectIn(lifecycleScope) {
+            val whiteboardFragment = childFragmentManager.findFragmentByTag(WhiteboardFragment::class.jvmName)
+            (whiteboardFragment as? WhiteboardFragment)?.resetCanvas()
         }
     }
 

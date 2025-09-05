@@ -42,6 +42,7 @@ import androidx.lifecycle.lifecycleScope
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.button.MaterialButtonToggleGroup
 import com.google.android.material.slider.Slider
+import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.compat.setTooltipTextCompat
@@ -62,7 +63,7 @@ class WhiteboardFragment :
     Fragment(R.layout.fragment_whiteboard),
     PopupMenu.OnMenuItemClickListener {
     private val viewModel: WhiteboardViewModel by viewModels {
-        WhiteboardViewModel.factory(sharedPrefs())
+        WhiteboardViewModel.factory(AnkiDroidApp.sharedPrefs())
     }
     private lateinit var brushToolbarContainerHorizontal: LinearLayout
     private lateinit var brushToolbarContainerVertical: LinearLayout

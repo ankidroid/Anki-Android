@@ -62,6 +62,7 @@ enum class ViewerAction(
     BURY_MENU(R.id.action_bury, R.drawable.ic_flip_to_back_white, R.string.menu_bury, MENU_ONLY),
     SUSPEND_MENU(R.id.action_suspend, R.drawable.ic_suspend, R.string.menu_suspend, MENU_ONLY),
     DELETE(R.id.action_delete, R.drawable.ic_delete_white, R.string.menu_delete_note, MENU_ONLY),
+    TOGGLE_WHITEBOARD(R.id.action_toggle_whiteboard, R.drawable.ic_enable_whiteboard, R.string.gesture_toggle_whiteboard, MENU_ONLY),
 
     // Disabled
     BROWSE(R.id.action_browse, R.drawable.ic_flashcard_black, R.string.empty_string, DISABLED),
@@ -211,6 +212,7 @@ enum class ViewerAction(
             TAG,
             EXIT,
             RESCHEDULE_NOTE,
+            TOGGLE_WHITEBOARD,
             USER_ACTION_1,
             USER_ACTION_2,
             USER_ACTION_3,
