@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_toggle_stylus"
+        android:title="@string/stylus_mode"
+        android:checkable="true"
+        android:icon="@drawable/ic_mode_edit_white"
+        app:showAsAction="never"
+        />
+    <item
+        android:id="@+id/action_align"
+        android:title="@string/toolbar_position"
+        android:icon="@drawable/ic_align"
+        app:showAsAction="never">
+        <menu>
+            <item
+                android:id="@+id/action_align_left"
+                android:icon="@drawable/ic_align_left"
+                android:title="@string/whiteboard_align_left"/>
+            <item
+                android:id="@+id/action_align_bottom"
+                android:icon="@drawable/ic_align_bottom"
+                android:title="@string/whiteboard_align_bottom"/>
+            <item
+                android:id="@+id/action_align_right"
+                android:icon="@drawable/ic_align_right"
+                android:title="@string/whiteboard_align_right"/>
+        </menu>
+    </item>
+</menu>
