@@ -32,7 +32,6 @@ import com.ichi2.anki.R
 import com.ichi2.anki.ui.windows.reviewer.ReviewerViewModel
 import com.ichi2.anki.utils.ext.collectIn
 import com.ichi2.utils.show
-import kotlinx.coroutines.launch
 
 /**
  * Integrates [AudioRecordView] with [AudioPlayView] to play the recorded audios.
@@ -154,7 +153,7 @@ class CheckPronunciationFragment : Fragment(R.layout.check_pronunciation_fragmen
             .collectIn(lifecycleScope) {
                 viewModel.onPlayOrReplay()
             }
-        studyScreenViewModel.onShowQuestionFlow.flowWithLifecycle(lifecycle).collectIn(lifecycleScope) { showingAnswer ->
+        studyScreenViewModel.onCardUpdatedFlow.flowWithLifecycle(lifecycle).collectIn(lifecycleScope) { showingAnswer ->
             playView.isVisible = false
             viewModel.onCancelPlayback()
             recordView.setRecordDisplayVisibility(true)
