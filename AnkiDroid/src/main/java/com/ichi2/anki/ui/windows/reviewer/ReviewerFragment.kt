@@ -331,7 +331,7 @@ class ReviewerFragment :
                 }
             }
         }
-        viewModel.onShowQuestionFlow.flowWithLifecycle(lifecycle).collectIn(lifecycleScope) {
+        viewModel.onCardUpdated.flowWithLifecycle(lifecycle).collectIn(lifecycleScope) {
             typeAnswerEditText.text = null
         }
     }
@@ -620,7 +620,7 @@ class ReviewerFragment :
                 }
             }
         }
-        viewModel.onShowQuestionFlow.collectIn(lifecycleScope) {
+        viewModel.onCardUpdated.collectIn(lifecycleScope) {
             val whiteboardFragment = childFragmentManager.findFragmentByTag(WhiteboardFragment::class.jvmName)
             (whiteboardFragment as? WhiteboardFragment)?.resetCanvas()
         }
