@@ -102,6 +102,7 @@ class ReviewerViewModel :
     val answerTimerStatusFlow = MutableStateFlow<AnswerTimerStatus?>(null)
     val answerFeedbackFlow = MutableSharedFlow<Rating>()
     val voiceRecorderEnabledFlow = MutableStateFlow(false)
+    val whiteboardEnabledFlow = MutableStateFlow(false)
     val replayVoiceFlow = MutableSharedFlow<Unit>()
     val timeBoxReachedFlow = MutableSharedFlow<Collection.TimeboxReached>()
 
@@ -667,6 +668,7 @@ class ReviewerViewModel :
                 ViewerAction.FLIP_OR_ANSWER_EASE4 -> flipOrAnswer(Rating.EASY)
                 ViewerAction.SHOW_HINT -> eval.emit("ankidroid.showHint()")
                 ViewerAction.SHOW_ALL_HINTS -> eval.emit("ankidroid.showAllHints()")
+                ViewerAction.TOGGLE_WHITEBOARD -> whiteboardEnabledFlow.emit(!whiteboardEnabledFlow.value)
                 ViewerAction.RECORD_VOICE -> voiceRecorderEnabledFlow.emit(!voiceRecorderEnabledFlow.value)
                 ViewerAction.REPLAY_VOICE -> replayVoiceFlow.emit(Unit)
                 ViewerAction.EXIT -> finishResultFlow.emit(AbstractFlashcardViewer.RESULT_DEFAULT)
