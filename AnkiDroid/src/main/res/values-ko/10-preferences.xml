@@ -115,9 +115,9 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">가운데 중앙 터치</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">왼쪽 하단 터치</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">오른쪽 하단 터치</string>
-    <string name="gestures_two_finger_tap" maxLength="41">Two-finger tap</string>
-    <string name="gestures_three_finger_tap" maxLength="41">Three-finger tap</string>
-    <string name="gestures_four_finger_tap" maxLength="41">Four-finger tap</string>
+    <string name="gestures_two_finger_tap" maxLength="41">두 손가락으로 탭</string>
+    <string name="gestures_three_finger_tap" maxLength="41">세 손가락으로 탭</string>
+    <string name="gestures_four_finger_tap" maxLength="41">네 손가락으로 탭</string>
     <string name="gestures_shake" maxLength="41">기기 흔들기</string>
     <string name="card_browser_enable_external_context_menu" maxLength="41">\"%s\" 메뉴</string>
     <string name="card_browser_enable_external_context_menu_summary">시스템 전역에서 글자를 길게 눌렀을 때 \'%s\' 컨텍스트 메뉴를 보입니다.</string>
@@ -371,9 +371,9 @@
     <string name="reviewer_frame_style" maxLength="41">프레임 스타일</string>
     <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Study Screen">카드</string>
     <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Study Screen">상자</string>
-    <string name="reviewer_toolbar_top" maxLength="41" comment="Setting to put the toolbar on the top of the study screen">Top</string>
-    <string name="reviewer_toolbar_bottom" maxLength="41" comment="Setting to put the toolbar on the bottom of the study screen">Bottom</string>
-    <string name="reviewer_toolbar_none" maxLength="41" comment="Setting to remove the toolbar from the study screen">None</string>
+    <string name="reviewer_toolbar_top" maxLength="41" comment="Setting to put the toolbar on the top of the study screen">상단</string>
+    <string name="reviewer_toolbar_bottom" maxLength="41" comment="Setting to put the toolbar on the bottom of the study screen">하단</string>
+    <string name="reviewer_toolbar_none" maxLength="41" comment="Setting to remove the toolbar from the study screen">숨기기</string>
     <string name="toolbar" maxLength="41">Toolbar</string>
     <string name="toolbar_actions" maxLength="41">Toolbar actions</string>
     <string name="toolbar_position" maxLength="41">Toolbar position</string>

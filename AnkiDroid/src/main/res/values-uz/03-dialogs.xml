@@ -203,8 +203,6 @@
     <string name="import_deck_package">Dasta paketi (.apkg)</string>
     <string name="import_collection_package">Toʻplam paketi (.colpkg)</string>
     <string name="import_csv">Matn fayl (.txt, .csv)</string>
-    <!-- Deck selection dialog -->
-    <string name="cannot_create_subdeck_for_all_decks">Barcha dastalar uchun ostdastani yarata olmaysiz</string>
     <!-- scoped storage -->
     <string name="backup_your_collection">Toʻplamingizni zaxiralang</string>
     <string name="backup_collection_message">Toʻplamingizni uzoq vaqt zaxiralamadingiz. Maʼlumotlar yoʻqolishini oldini olish uchun buni hozir qilishingiz kerak.</string>

@@ -203,8 +203,6 @@
     <string name="import_deck_package">Kartaro (.apkg)</string>
     <string name="import_collection_package">Kolekto (.colpkg)</string>
     <string name="import_csv">Teksta dosiero (.txt, .csv)</string>
-    <!-- Deck selection dialog -->
-    <string name="cannot_create_subdeck_for_all_decks">Vi ne povas krei subkartaron por ĉiuj kartaroj</string>
     <!-- scoped storage -->
     <string name="backup_your_collection">Sekurkopiu vian kolekton</string>
     <string name="backup_collection_message">Dum kelka tempo vi ne faris sekurkopion de via kolekto. Vi devas fari tion ĉi nun por ne perdi viajn datumojn</string>

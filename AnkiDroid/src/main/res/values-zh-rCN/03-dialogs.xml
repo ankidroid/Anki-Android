@@ -199,8 +199,6 @@
     <string name="import_deck_package">牌组包（.apkg）</string>
     <string name="import_collection_package">集合文件（.colpkg）</string>
     <string name="import_csv">文本文件(.txt, .csv)</string>
-    <!-- Deck selection dialog -->
-    <string name="cannot_create_subdeck_for_all_decks">您不能为所有牌组创建子牌组</string>
     <!-- scoped storage -->
     <string name="backup_your_collection">备份你的集合</string>
     <string name="backup_collection_message">您有一段时间没有备份您的集合了。您应该立即备份以防止数据丢失。</string>

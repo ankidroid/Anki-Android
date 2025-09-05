@@ -203,8 +203,6 @@
     <string name="import_deck_package">دەستە بولىقى (.apkg)</string>
     <string name="import_collection_package">توپلام بولىقى (.colpkg)</string>
     <string name="import_csv">تېكىست ھۆججەت (.txt, .csv)</string>
-    <!-- Deck selection dialog -->
-    <string name="cannot_create_subdeck_for_all_decks">ھەممە دەستىگە تارماق دەستە قۇرالمايسىز</string>
     <!-- scoped storage -->
     <string name="backup_your_collection">توپلىمىڭىزنى زاپاسلاڭ</string>
     <string name="backup_collection_message">توپلىمىڭىزنى زاپاسلىمىغىلى خېلى ئۇزۇن بولدى. سانلىق مەلۇماتلارنىڭ يوقاپ كېتىشىنىڭ ئالدىنى ئېلىش ئۈچۈن ھازىر بۇنى قىلىشىڭىز كېرەك</string>

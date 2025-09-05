@@ -203,8 +203,6 @@
     <string name="import_deck_package">بسته ی دسته کارت (.apkg)</string>
     <string name="import_collection_package">بسته ی مجموعه (.colpkg)</string>
     <string name="import_csv">فایل‌ متنی (.txt, .csv)</string>
-    <!-- Deck selection dialog -->
-    <string name="cannot_create_subdeck_for_all_decks">شما نمیتوانید برای همه دسته ها یک زیردسته درست کنید</string>
     <!-- scoped storage -->
     <string name="backup_your_collection">پشتیبان گرفتن از مجموعه</string>
     <string name="backup_collection_message">شما مدتی است که از مجموعه خود پشتیبانی نگرفته‌اید. بهتر است برای از دست ندادن داده‌ها، این کار را انجام دهید</string>
