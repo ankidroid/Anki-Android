@@ -207,8 +207,6 @@
     <string name="import_deck_package">Kavas pakotne (.apkg)</string>
     <string name="import_collection_package">Krājuma pakotne (.colpkg)</string>
     <string name="import_csv">Teksta datne (.txt, .csv)</string>
-    <!-- Deck selection dialog -->
-    <string name="cannot_create_subdeck_for_all_decks">Visām kavām nevar izveidot apakškavas</string>
     <!-- scoped storage -->
     <string name="backup_your_collection">Izveidot sava krājuma rezerves kopiju</string>
     <string name="backup_collection_message">Krājumam kādu laiku nav veidotas rezerves kopijas. To tagad vajadzētu izdarīt, lai novērstu datu zudumu</string>

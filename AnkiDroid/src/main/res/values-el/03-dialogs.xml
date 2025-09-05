@@ -203,8 +203,6 @@
     <string name="import_deck_package">Πακέτο τράπουλας (.apkg)</string>
     <string name="import_collection_package">Πακέτο συλλογής (.colpkg)</string>
     <string name="import_csv">Αρχείο κειμένου (.txt, .csv)</string>
-    <!-- Deck selection dialog -->
-    <string name="cannot_create_subdeck_for_all_decks">Δεν μπορείτε να δημιουργήσετε μια υποτράπουλα για όλες τις τράπουλες</string>
     <!-- scoped storage -->
     <string name="backup_your_collection">Αντίγραφο ασφαλείας της συλλογής σας</string>
     <string name="backup_collection_message">Δεν έχετε δημιουργήσει αντίγραφα ασφαλείας της συλλογής σας εδώ και καιρό. Θα πρέπει να το κάνετε τώρα για να αποτρέψετε απώλεια δεδομένων</string>

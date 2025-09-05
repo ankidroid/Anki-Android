@@ -130,8 +130,8 @@
     <string name="multimedia_editor_failed">Nepodařilo se otevřít multimediální editor</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Oprávnění k nahrávání zvuku bylo odepřeno</string>
-    <string name="permission_denied">Permission denied</string>
-    <string name="recording_permission_denied_message">Microphone permission is necessary for the “Record voice” feature. Please grant it in the app settings.</string>
+    <string name="permission_denied">Oprávnění zamítnuto</string>
+    <string name="recording_permission_denied_message">Oprávnění k mikrofonu je nezbytné pro funkci „Nahrávat hlas“. Prosím, povolte jej v nastavení aplikace.</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid aktualizován</string>
     <string name="integrity_check_startup_content">AnkiDroid byl aktualizován. Tato aktualizace obsahuje opravy možných problémů databáze, a doporučuje se nyní spustit kontrolu databáze.</string>
@@ -211,8 +211,6 @@
     <string name="import_deck_package">Balíček (.apkg)</string>
     <string name="import_collection_package">Kolekce (.colpkg)</string>
     <string name="import_csv">Textový soubor (.txt, .csv)</string>
-    <!-- Deck selection dialog -->
-    <string name="cannot_create_subdeck_for_all_decks">Nemůžete vytvořit podřízený balíček pro všechny balíčky</string>
     <!-- scoped storage -->
     <string name="backup_your_collection">Zálohovat vaši kolekci</string>
     <string name="backup_collection_message">Nějakou dobu jste nezálohovali svou kolekci. Měli byste to udělat teď, abyste zabránili ztrátě dat</string>
@@ -257,13 +255,13 @@
     <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">Do</string>
     <!-- Instant Note Editor -->
     <string name="cloze_note_required">Je vyžadována poznámka typu doplňovačka</string>
-    <string name="cloze_not_found_message">Nebyla nalezena žádná poznámka typu Cloze, otevřete editor poznámek nebo to zkuste znovu po přidání poznámky typu Cloz.</string>
+    <string name="cloze_not_found_message">Nebyla nalezena žádná poznámka typu doplňovačka, otevřete editor poznámek nebo to zkuste znovu po přidání poznámky typu doplňovačka.</string>
     <string name="open">Otevřít</string>
-    <string name="change_cloze_number">Změnit číslo cloze</string>
-    <string name="cloze_number">Číslo cloze</string>
+    <string name="change_cloze_number">Změnit číslo doplňovačky</string>
+    <string name="cloze_number">Číslo doplňovačky</string>
     <string name="change_editor_mode">Změnit režim editoru</string>
     <string name="open_note_editor">Otevřít editor poznámek</string>
-    <string name="change_cloze_mode">Změnit režim cloze</string>
+    <string name="change_cloze_mode">Změnit režim doplňovačky</string>
     <!-- Outdated WebView dialog -->
     <string name="webview_update_message">Systémový WebView je zastaralý. Některé funkce nebudou fungovat správně. Aktualizujte jej prosím.\n\nNainstalovaná verze: %1$d\nMinimální požadovaná verze: %2$d</string>
     <string name="compress">Komprimovat</string>

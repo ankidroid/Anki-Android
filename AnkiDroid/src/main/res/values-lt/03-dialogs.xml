@@ -211,8 +211,6 @@
     <string name="import_deck_package">Kortelių rinkinio paketas (.apkg)</string>
     <string name="import_collection_package">Kolekcijos paketas (.colpkg)</string>
     <string name="import_csv">Tekstinis failas (.txt, .csv)</string>
-    <!-- Deck selection dialog -->
-    <string name="cannot_create_subdeck_for_all_decks">Negalite sukurti poėmio visų kortelių rinkinių</string>
     <!-- scoped storage -->
     <string name="backup_your_collection">Kurkite atsarginę kolekcijos kopiją</string>
     <string name="backup_collection_message">Jau kurį laiką nesukūrėte atsarginės kolekcijos kopijos. Turėtumėte tai padaryti dabar, kad išvengtumėte duomenų praradimo.</string>

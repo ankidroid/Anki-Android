@@ -203,8 +203,6 @@
     <string name="import_deck_package">డెక్ ప్యాకేజీ (.apkg)</string>
     <string name="import_collection_package">సేకరణ ప్యాకేజీ (.colpkg)</string>
     <string name="import_csv">టెక్స్ట్ ఫైల్ (.txt, .csv)</string>
-    <!-- Deck selection dialog -->
-    <string name="cannot_create_subdeck_for_all_decks">మీరు అన్ని డెక్‌ల కోసం సబ్‌డెక్‌ని సృష్టించలేరు</string>
     <!-- scoped storage -->
     <string name="backup_your_collection">మీ సేకరణను బ్యాకప్ చేయండి</string>
     <string name="backup_collection_message">మీరు కొంతకాలంగా మీ సేకరణను బ్యాకప్ చేయలేదు. డేటా నష్టాన్ని నివారించడానికి మీరు ఇప్పుడే దీన్ని చేయాలి</string>

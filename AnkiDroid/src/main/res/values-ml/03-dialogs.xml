@@ -203,8 +203,6 @@
     <string name="import_deck_package">ഡെക്ക് പാക്കേജ് (.apkg)</string>
     <string name="import_collection_package">ശേഖരണ പാക്കേജ് (.colpkg)</string>
     <string name="import_csv">ടെക്സ്റ്റ് ഫയൽ (.txt, .csv)</string>
-    <!-- Deck selection dialog -->
-    <string name="cannot_create_subdeck_for_all_decks">ഓരോ ഡെക്കിനും നിങ്ങൾക്ക് ഒരു സബ്ഡെക്ക് സൃഷ്ടിക്കാൻ കഴിയില്ല</string>
     <!-- scoped storage -->
     <string name="backup_your_collection">നിങ്ങളുടെ ശേഖരം ബാക്കപ്പ് ചെയ്യുക</string>
     <string name="backup_collection_message">കുറച്ച് കാലമായി നിങ്ങളുടെ ശേഖരം ബാക്കപ്പ് ചെയ്തിട്ടില്ല. ഡാറ്റ നഷ്‌ടപ്പെടുന്നത് തടയാൻ നിങ്ങൾ ഇപ്പോൾ ഇത് ചെയ്യണം</string>
