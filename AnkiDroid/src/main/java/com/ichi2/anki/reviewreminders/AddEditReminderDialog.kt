@@ -39,6 +39,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.checkbox.MaterialCheckBox
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import com.ichi2.anki.DeckSpinnerSelection
@@ -99,6 +100,7 @@ class AddEditReminderDialog : DialogFragment() {
                                     is ReviewReminderScope.DeckSpecific -> mode.schedulerScope.did
                                 },
                             initialCardTriggerThreshold = INITIAL_CARD_THRESHOLD,
+                            initialOnlyNotifyIfNoReviews = INITIAL_ONLY_NOTIFY_IF_NO_REVIEWS,
                             initialAdvancedSettingsOpen = INITIAL_ADVANCED_SETTINGS_OPEN,
                         )
                     is DialogMode.Edit ->
@@ -110,6 +112,7 @@ class AddEditReminderDialog : DialogFragment() {
                                     is ReviewReminderScope.DeckSpecific -> mode.reminderToBeEdited.scope.did
                                 },
                             initialCardTriggerThreshold = mode.reminderToBeEdited.cardTriggerThreshold.threshold,
+                            initialOnlyNotifyIfNoReviews = mode.reminderToBeEdited.onlyNotifyIfNoReviews,
                             initialAdvancedSettingsOpen = INITIAL_ADVANCED_SETTINGS_OPEN,
                         )
                 }
@@ -165,6 +168,7 @@ class AddEditReminderDialog : DialogFragment() {
         setUpDeckSpinner()
         setUpAdvancedDropdown()
         setUpCardThresholdInput()
+        setUpOnlyNotifyIfNoReviewsCheckbox()
 
         // For getting the result of the deck selection sub-dialog from ScheduleReminders
         // See ScheduleReminders.onDeckSelected for more information
@@ -257,6 +261,20 @@ class AddEditReminderDialog : DialogFragment() {
         }
     }
 
+    private fun setUpOnlyNotifyIfNoReviewsCheckbox() {
+        val contentSection = contentView.findViewById<LinearLayout>(R.id.add_edit_reminder_only_notify_if_no_reviews_section)
+        val checkbox = contentView.findViewById<MaterialCheckBox>(R.id.add_edit_reminder_only_notify_if_no_reviews_checkbox)
+        contentSection.setOnClickListener {
+            viewModel.toggleOnlyNotifyIfNoReviews()
+        }
+        checkbox.setOnClickListener {
+            viewModel.toggleOnlyNotifyIfNoReviews()
+        }
+        viewModel.onlyNotifyIfNoReviews.observe(this) { onlyNotifyIfNoReviews ->
+            checkbox.isChecked = onlyNotifyIfNoReviews
+        }
+    }
+
     /**
      * Show the time picker dialog for selecting a time with a given hour and minute.
      * Does not automatically dismiss the old dialog.
@@ -334,6 +352,7 @@ class AddEditReminderDialog : DialogFragment() {
                         is DialogMode.Add -> true
                         is DialogMode.Edit -> mode.reminderToBeEdited.enabled
                     },
+                onlyNotifyIfNoReviews = viewModel.onlyNotifyIfNoReviews.value ?: INITIAL_ONLY_NOTIFY_IF_NO_REVIEWS,
             )
 
         Timber.d("Reminder to be returned: %s", reminderToBeReturned)
@@ -397,6 +416,13 @@ class AddEditReminderDialog : DialogFragment() {
          * This is an Int because that is what the EditText's inputType is.
          */
         private const val INITIAL_CARD_THRESHOLD: Int = 1
+
+        /**
+         * The default value for whether a notification should only be fired if no reviews have been done today
+         * for the corresponding deck / all decks. Since this is set to false, the default behaviour is that
+         * notifications will always be sent, regardless of whether reviews have been done today.
+         */
+        private const val INITIAL_ONLY_NOTIFY_IF_NO_REVIEWS = false
 
         /**
          * Whether the advanced settings dropdown is initially open.
