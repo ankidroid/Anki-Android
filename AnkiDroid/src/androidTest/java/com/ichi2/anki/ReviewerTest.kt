@@ -217,7 +217,7 @@ class ReviewerTest : InstrumentedTest() {
     }
 
     private fun disableNewReviewer() {
-        val newReviewerPrefKey = testContext.getString(R.string.new_reviewer_pref_key)
+        val newReviewerPrefKey = testContext.getString(R.string.new_reviewer_options_key)
         val prefs = testContext.sharedPrefs()
         val isUsingNewReviewer = prefs.getBoolean(newReviewerPrefKey, false)
         if (!isUsingNewReviewer) return
