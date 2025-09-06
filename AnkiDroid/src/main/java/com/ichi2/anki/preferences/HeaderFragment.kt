@@ -32,7 +32,6 @@ import com.ichi2.anki.reviewreminders.ReviewReminderScope
 import com.ichi2.anki.reviewreminders.ScheduleReminders
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.ui.internationalization.toSentenceCase
-import com.ichi2.anki.utils.ext.sharedPrefs
 import com.ichi2.compat.CompatHelper
 import com.ichi2.preferences.HeaderPreference
 import com.ichi2.utils.AdaptionUtil
@@ -58,9 +57,6 @@ class HeaderFragment : SettingsFragment() {
 
         requirePreference<Preference>(R.string.pref_dev_options_screen_key)
             .isVisible = Prefs.isDevOptionsEnabled
-
-        requirePreference<HeaderPreference>(R.string.new_reviewer_options_key)
-            .isVisible = sharedPrefs().getBoolean(getString(R.string.new_reviewer_pref_key), false)
 
         requirePreference<HeaderPreference>(R.string.pref_review_reminders_screen_key)
             .setOnPreferenceClickListener {

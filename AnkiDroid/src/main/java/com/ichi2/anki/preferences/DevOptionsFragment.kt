@@ -190,13 +190,6 @@ class DevOptionsFragment : SettingsFragment() {
             ActivityCompat.recreate(requireActivity())
             true
         }
-
-        requirePreference<Preference>(R.string.new_reviewer_pref_key).setOnPreferenceChangeListener { pref, newValue ->
-            val boolValue = newValue as? Boolean ?: return@setOnPreferenceChangeListener false
-            pref.sharedPreferences?.edit { putBoolean("newReviewerOptions", boolValue) }
-            ActivityCompat.recreate(requireActivity())
-            true
-        }
     }
 
     /**

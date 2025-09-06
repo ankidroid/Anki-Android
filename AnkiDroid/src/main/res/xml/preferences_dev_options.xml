@@ -100,10 +100,6 @@
         android:summary="Only for testing. Not suited for use. Don't create reports about them">
 
         <SwitchPreferenceCompat
-            android:title="@string/new_study_screen"
-            android:key="@string/new_reviewer_pref_key"
-            android:defaultValue="false"/>
-        <SwitchPreferenceCompat
             android:title="[Tablet] Side-by-side browser and editor"
             android:key="@string/dev_card_browser_fragmented"
             android:defaultValue="false"/>
