@@ -172,7 +172,6 @@ class Decks(
             null
         }
 
-    @Suppress("unused")
     fun have(id: DeckId): Boolean = getLegacy(id) != null
 
     @RustCleanup("implement and make public")
