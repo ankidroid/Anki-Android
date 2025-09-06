@@ -122,6 +122,7 @@
     <string name="remove_flag_command_key">binding_UNSET_FLAG</string>
     <string name="page_up_command_key">binding_PAGE_UP</string>
     <string name="page_down_command_key">binding_PAGE_DOWN</string>
+    <string name="statistics_command_key">binding_STATISTICS</string>
     <string name="tag_command_key">binding_TAG</string>
     <string name="card_info_command_key">binding_CARD_INFO</string>
     <string name="record_voice_command_key">binding_RECORD_VOICE</string>
