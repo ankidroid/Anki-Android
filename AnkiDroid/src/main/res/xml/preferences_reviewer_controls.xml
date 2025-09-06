@@ -149,6 +149,12 @@
             android:icon="@drawable/ic_double_arrow_down"
             />
         <com.ichi2.preferences.ReviewerControlPreference
+            android:key="@string/browse_command_key"
+            android:icon="@drawable/ic_flashcard_black"
+            app:isPreferenceVisible="false"
+            tools:title="Browse"
+            />
+        <com.ichi2.preferences.ReviewerControlPreference
             android:key="@string/statistics_command_key"
             android:icon="@drawable/ic_bar_chart_black"
             app:isPreferenceVisible="false"
