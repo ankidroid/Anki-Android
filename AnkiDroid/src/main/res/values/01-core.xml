@@ -196,6 +196,7 @@
 
     <!-- Permissions screen -->
     <string name="permissions_screen_headline">AnkiDroid needs some permissions to work</string>
+    <string name="permissions_bottom_sheet_headline" comment="The title of the permissions bottom sheet, explaining that there are optional permissions that can be granted to AnkiDroid.">AnkiDroid works best with these permissions</string>
     <string name="storage_access_title">Storage access</string>
     <string name="storage_access_summary">Saves your collection in a safe place that will not be deleted if the app is uninstalled</string>
     <string name="all_files_access_title"
