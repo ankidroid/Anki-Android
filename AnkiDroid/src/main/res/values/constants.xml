@@ -341,5 +341,7 @@
         <item>android.permission.READ_EXTERNAL_STORAGE</item>
         <item>android.permission.WRITE_EXTERNAL_STORAGE</item>
     </string-array>
+    <string name="post_notification_permission">android.permission.POST_NOTIFICATIONS</string>
+    <string name="record_audio_permission">android.permission.RECORD_AUDIO</string>
 
 </resources>
