@@ -136,6 +136,13 @@ class ControlsSettingsFragment :
             val key = getString(keyRes)
             findPreference<Preference>(key)?.isVisible = false
         }
+        requirePreference<ControlPreference>(R.string.browse_command_key).apply {
+            title = TR.qtMiscBrowse()
+            isVisible = true
+            if (value == null) {
+                value = ViewerAction.BROWSE.getBindings(sharedPrefs()).toPreferenceString()
+            }
+        }
         requirePreference<ControlPreference>(R.string.statistics_command_key).apply {
             title = TR.statisticsTitle()
             isVisible = true
