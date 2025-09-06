@@ -220,6 +220,15 @@ object Prefs {
 
     //endregion
 
+    /**
+     * Whether the sync process has requested notification permissions before.
+     * We only want to request notification permissions for the sync feature if the dialog has never been shown
+     * for this reason before.
+     *
+     * @see reminderNotifsRequestShown
+     */
+    var syncNotifsRequestShown by booleanPref(R.string.sync_notifs_request_shown_key, defaultValue = false)
+
     // ************************************** Review Reminders ********************************** //
 
     /**
@@ -231,6 +240,15 @@ object Prefs {
      * Review reminder IDs are unique, starting at 0 and climbing upwards by one each time a new one is created.
      */
     var reviewReminderNextFreeId by intPref(R.string.review_reminders_next_free_id, defaultValue = 0)
+
+    /**
+     * Whether the review reminder feature has requested notification permissions before.
+     * We only want to request notification permissions for the review reminder feature if the dialog has never been
+     * shown for this reason before.
+     *
+     * @see syncNotifsRequestShown
+     */
+    var reminderNotifsRequestShown by booleanPref(R.string.reminder_notifs_request_shown_key, defaultValue = false)
 
     // **************************************** Reviewer **************************************** //
 
