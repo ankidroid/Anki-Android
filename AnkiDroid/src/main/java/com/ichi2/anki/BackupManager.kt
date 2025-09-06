@@ -34,7 +34,7 @@ import java.util.Locale
 open class BackupManager {
     companion object {
         private const val MIN_FREE_SPACE = 10
-        private const val BACKUP_SUFFIX = "backup"
+        private const val BACKUP_SUFFIX = "backups"
         const val BROKEN_COLLECTIONS_SUFFIX = "broken"
         private val backupNameRegex: Regex by lazy {
             Regex("(?:collection|backup)-((\\d{4})-(\\d{2})-(\\d{2})-(\\d{2})[.-](\\d{2}))(?:\\.\\d{2})?.colpkg")
@@ -93,8 +93,8 @@ open class BackupManager {
                     return false
                 }
                 if (!moveDatabaseToBrokenDirectory(colFile, false, time)) {
-                    Timber.e("repairCollection - could not move corrupt file to broken directory")
                     return false
+                    Timber.e("repairCollection - could not move corrupt file to broken directory")
                 }
                 Timber.i("repairCollection - moved corrupt file to broken directory")
                 val repairedFile = File("$colPath.tmp")
