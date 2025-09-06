@@ -97,7 +97,7 @@ class CardAnalysisWidgetConfigTest : RobolectricTest() {
             activity.updateViewWithSavedPreferences()
 
             // Get the RecyclerView and its adapter
-            val recyclerView = activity.findViewById<RecyclerView>(R.id.recyclerViewSelectedDecks)
+            val recyclerView = activity.findViewById<RecyclerView>(R.id.recycler_view)
             val adapter = recyclerView.adapter
 
             // Verify the adapter has the correct item count
