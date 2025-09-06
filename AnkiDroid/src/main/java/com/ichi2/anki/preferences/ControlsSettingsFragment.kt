@@ -25,6 +25,7 @@ import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.preferences.reviewer.ViewerAction
 import com.ichi2.anki.previewer.PreviewerAction
 import com.ichi2.anki.reviewer.MappableAction
 import com.ichi2.anki.reviewer.MappableBinding.Companion.toPreferenceString
@@ -134,6 +135,13 @@ class ControlsSettingsFragment :
         for (keyRes in legacyStudyScreenSettings) {
             val key = getString(keyRes)
             findPreference<Preference>(key)?.isVisible = false
+        }
+        requirePreference<ControlPreference>(R.string.statistics_command_key).apply {
+            title = TR.statisticsTitle()
+            isVisible = true
+            if (value == null) {
+                value = ViewerAction.STATISTICS.getBindings(sharedPrefs()).toPreferenceString()
+            }
         }
     }
 

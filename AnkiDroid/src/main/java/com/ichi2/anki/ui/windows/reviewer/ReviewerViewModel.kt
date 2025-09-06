@@ -44,6 +44,7 @@ import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.pages.AnkiServer
 import com.ichi2.anki.pages.CardInfoDestination
 import com.ichi2.anki.pages.DeckOptionsDestination
+import com.ichi2.anki.pages.StatisticsDestination
 import com.ichi2.anki.preferences.reviewer.ViewerAction
 import com.ichi2.anki.previewer.CardViewerViewModel
 import com.ichi2.anki.previewer.TypeAnswer
@@ -672,6 +673,7 @@ class ReviewerViewModel :
                 ViewerAction.USER_ACTION_9 -> userAction(9)
                 ViewerAction.SUSPEND_MENU -> suspendCard()
                 ViewerAction.BURY_MENU -> buryCard()
+                ViewerAction.STATISTICS -> destinationFlow.emit(StatisticsDestination())
                 ViewerAction.FLAG_MENU -> {}
             }
         }
