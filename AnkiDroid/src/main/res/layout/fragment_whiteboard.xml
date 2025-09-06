@@ -14,7 +14,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/controls_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -24,8 +24,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constrainedWidth="true"
-        app:cardElevation="@dimen/study_screen_elevation"
-        app:cardCornerRadius="16dp"
+        style="@style/CardView.ViewerStyle"
         android:clickable="true"
         android:focusable="true"
         app:rippleColor="@android:color/transparent">
@@ -122,5 +121,5 @@
             </FrameLayout>
         </LinearLayout>
 
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 </androidx.constraintlayout.widget.ConstraintLayout>
