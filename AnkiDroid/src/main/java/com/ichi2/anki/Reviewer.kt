@@ -70,6 +70,7 @@ import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.time.TimeManager
+import com.ichi2.anki.jsapi.JsApi
 import com.ichi2.anki.libanki.Card
 import com.ichi2.anki.libanki.CardId
 import com.ichi2.anki.libanki.Collection
@@ -89,7 +90,6 @@ import com.ichi2.anki.multimedia.audio.AudioRecordingController.Companion.tempAu
 import com.ichi2.anki.multimedia.audio.AudioRecordingController.RecordingState
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import com.ichi2.anki.observability.undoableOp
-import com.ichi2.anki.pages.AnkiServer.Companion.ANKIDROID_JS_PREFIX
 import com.ichi2.anki.pages.AnkiServer.Companion.ANKI_PREFIX
 import com.ichi2.anki.pages.CardInfoDestination
 import com.ichi2.anki.preferences.sharedPrefs
@@ -1590,9 +1590,9 @@ open class Reviewer :
                 "i18nResources" -> withCol { i18nResourcesRaw(bytes) }
                 else -> throw IllegalArgumentException("unhandled request: $methodName")
             }
-        } else if (uri.startsWith(ANKIDROID_JS_PREFIX)) {
+        } else if (uri.startsWith(JsApi.REQUEST_PREFIX)) {
             jsApi.handleJsApiRequest(
-                uri.substring(ANKIDROID_JS_PREFIX.length),
+                uri.substring(JsApi.REQUEST_PREFIX.length),
                 bytes,
                 returnDefaultValues = false,
             )
