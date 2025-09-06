@@ -13,6 +13,7 @@
  */
 package com.ichi2.anki.common.utils
 
+import androidx.annotation.VisibleForTesting
 import timber.log.Timber
 
 /** make default HTML / JS debugging true for debug build and disable for unit/android tests
@@ -31,3 +32,24 @@ val isRunningAsUnitTest: Boolean
         Timber.d("isRunningAsUnitTest: %b", true)
         return true
     }
+
+/**
+ * A class that provide a default value that can be changed in test.
+ */
+open class ObjectForTest<T>(
+    val defaultValue: T,
+) {
+    @VisibleForTesting
+    fun reset() {
+        mockInstance = null
+    }
+
+    @VisibleForTesting
+    fun resetWith(mock: T) {
+        mockInstance = mock
+    }
+
+    private var mockInstance: T? = null
+
+    val value: T = mockInstance ?: defaultValue
+}
