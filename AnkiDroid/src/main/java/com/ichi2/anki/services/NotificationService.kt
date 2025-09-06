@@ -31,6 +31,7 @@ import com.ichi2.anki.IntentHandler
 import com.ichi2.anki.R
 import com.ichi2.anki.common.annotations.LegacyNotifications
 import com.ichi2.anki.libanki.Decks
+import com.ichi2.anki.libanki.sched.Counts
 import com.ichi2.anki.preferences.PENDING_NOTIFICATIONS_ONLY
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.reviewreminders.ReviewReminder
@@ -108,8 +109,16 @@ class NotificationService : BroadcastReceiver() {
                         }
                 }
             val dueCardsTotal = dueCardsCount.count()
-            if (dueCardsTotal < reviewReminder.cardTriggerThreshold.threshold) {
-                Timber.d("Aborting notification due to threshold: $dueCardsTotal < ${reviewReminder.cardTriggerThreshold.threshold}")
+            val consideredCardsCount =
+                Counts().apply {
+                    if (reviewReminder.countNew) addNew(dueCardsCount.new)
+                    if (reviewReminder.countLrn) addLrn(dueCardsCount.lrn)
+                    if (reviewReminder.countRev) addRev(dueCardsCount.rev)
+                }
+            val consideredCardsTotal = consideredCardsCount.count()
+            Timber.d("Due cards count: $dueCardsCount, Considered cards count: $consideredCardsCount")
+            if (consideredCardsTotal < reviewReminder.cardTriggerThreshold.threshold) {
+                Timber.d("Aborting notification due to threshold: $consideredCardsTotal < ${reviewReminder.cardTriggerThreshold.threshold}")
                 return
             }
 
