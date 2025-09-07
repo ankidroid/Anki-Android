@@ -96,6 +96,7 @@ val collectionMethods =
         "getImageOcclusionFields" to { bytes -> getImageOcclusionFieldsRaw(bytes) },
         "getIgnoredBeforeCount" to { bytes -> getIgnoredBeforeCountRaw(bytes) },
         "getRetentionWorkload" to { bytes -> getRetentionWorkloadRaw(bytes) },
+        "simulateFsrsWorkload" to { bytes -> simulateFsrsWorkloadRaw(bytes) },
     )
 
 suspend fun handleCollectionPostRequest(
