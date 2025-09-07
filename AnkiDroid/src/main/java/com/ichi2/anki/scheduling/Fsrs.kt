@@ -43,6 +43,7 @@ value class FsrsVersion(
         when (libraryVersion) {
             "0.6.4" -> "FSRS 4.5"
             "4.1.1" -> "FSRS 6"
+            "5.1.0" -> "FSRS 6"
             else -> null
         }
 }

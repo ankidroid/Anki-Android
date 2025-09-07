@@ -651,7 +651,7 @@ class Collection(
     fun addNote(
         note: Note,
         deckId: DeckId,
-    ): OpChanges {
+    ): OpChangesWithCount {
         val out = backend.addNote(note.toBackendNote(), deckId)
         note.id = out.noteId
         return out.changes
@@ -1386,6 +1386,8 @@ class Collection(
 
     @NotInLibAnki
     fun getRetentionWorkloadRaw(input: ByteArray): ByteArray = backend.getRetentionWorkloadRaw(input = input)
+
+    fun simulateFsrsWorkloadRaw(input: ByteArray): ByteArray = backend.simulateFsrsWorkloadRaw(input = input)
 
     @NotInLibAnki
     fun evaluateParamsLegacyRaw(input: ByteArray): ByteArray = backend.evaluateParamsLegacyRaw(input = input)

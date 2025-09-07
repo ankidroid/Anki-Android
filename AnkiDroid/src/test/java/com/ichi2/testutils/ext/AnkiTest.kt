@@ -16,7 +16,7 @@
 
 package com.ichi2.testutils.ext
 
-import anki.collection.OpChanges
+import anki.collection.OpChangesWithCount
 import com.ichi2.anki.libanki.Consts
 import com.ichi2.anki.libanki.Note
 import com.ichi2.anki.libanki.NotetypeJson
@@ -31,5 +31,5 @@ suspend fun AnkiTest.addBasicNoteWithOp(
         for ((i, field) in fields.withIndex()) {
             note.setField(i, field)
         }
-        undoableOp<OpChanges> { col.addNote(note, Consts.DEFAULT_DECK_ID) }
+        undoableOp<OpChangesWithCount> { col.addNote(note, Consts.DEFAULT_DECK_ID) }
     }
