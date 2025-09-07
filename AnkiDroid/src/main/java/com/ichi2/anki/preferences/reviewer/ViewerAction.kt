@@ -64,6 +64,8 @@ enum class ViewerAction(
     DELETE(R.id.action_delete, R.drawable.ic_delete_white, R.string.menu_delete_note, MENU_ONLY),
 
     // Disabled
+    BROWSE(R.id.action_browse, R.drawable.ic_flashcard_black, R.string.empty_string, DISABLED),
+    STATISTICS(R.id.action_statistics, R.drawable.ic_bar_chart_black, R.string.empty_string, DISABLED),
     DECK_OPTIONS(R.id.action_deck_options, R.drawable.ic_tune_white, R.string.menu__deck_options, DISABLED),
     CARD_INFO(R.id.action_card_info, R.drawable.ic_dialog_info, R.string.card_info_title, DISABLED),
     ADD_NOTE(R.id.action_add_note, R.drawable.ic_add, R.string.menu_add_note, DISABLED),
@@ -137,6 +139,8 @@ enum class ViewerAction(
             SHOW_ALL_HINTS -> listOf(keycode(KeyEvent.KEYCODE_G))
             RECORD_VOICE -> listOf(keycode(KeyEvent.KEYCODE_V, shift()))
             REPLAY_VOICE -> listOf(keycode(KeyEvent.KEYCODE_V))
+            BROWSE -> listOf(keycode(KeyEvent.KEYCODE_B))
+            STATISTICS -> listOf(keycode(KeyEvent.KEYCODE_T))
             TOGGLE_FLAG_RED ->
                 listOf(
                     keycode(KeyEvent.KEYCODE_1, ctrl()),
@@ -237,6 +241,8 @@ enum class ViewerAction(
 
     fun title(context: Context): String =
         when (this) {
+            BROWSE -> TR.qtMiscBrowse()
+            STATISTICS -> TR.statisticsTitle()
             RESCHEDULE_NOTE -> TR.actionsSetDueDate().toSentenceCase(context, R.string.sentence_set_due_date)
             else -> context.getString(titleRes)
         }
