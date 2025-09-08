@@ -355,11 +355,11 @@ class Decks(
     @Suppress("unused")
     fun getDeckConfigsForUpdate(deckId: DeckId): DeckConfigsForUpdate = col.backend.getDeckConfigsForUpdate(deckId)
 
-    @RustCleanup("implement and make public")
     @LibAnkiAlias("update_deck_configs")
-    @Suppress("unused", "unused_parameter")
-    private fun updateDeckConfigs(input: UpdateDeckConfigs): DeckConfigsForUpdate {
-        TODO()
+    @Suppress("unused")
+    fun updateDeckConfigs(input: UpdateDeckConfigs): OpChanges {
+        val opBytes = col.backend.updateDeckConfigsRaw(input.toByteArray())
+        return OpChanges.parseFrom(opBytes)!!
     }
 
     /** A list of all deck config. */
