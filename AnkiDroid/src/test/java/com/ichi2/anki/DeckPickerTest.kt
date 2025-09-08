@@ -27,6 +27,7 @@ import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.utils.Destination
+import com.ichi2.anki.utils.ext.defaultConfig
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.testutils.BackendEmulatingOpenConflict
 import com.ichi2.testutils.BackupManagerTestUtilities
@@ -181,7 +182,7 @@ class DeckPickerTest : RobolectricTest() {
     @Test
     fun limitAppliedAfterReview() {
         val sched = col.sched
-        val dconf = col.decks.getConfig(1)
+        val dconf = col.decks.defaultConfig
         assertNotNull(dconf)
         dconf.new.perDay = 10
         col.decks.save(dconf)

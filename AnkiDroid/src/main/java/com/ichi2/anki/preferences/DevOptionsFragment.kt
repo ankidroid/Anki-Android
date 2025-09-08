@@ -31,6 +31,7 @@ import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.showThemedToast
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.utils.ext.defaultConfig
 import com.ichi2.anki.withProgress
 import com.ichi2.preferences.IncrementerNumberRangePreferenceCompat
 import com.ichi2.utils.setWebContentsDebuggingEnabled
@@ -97,7 +98,7 @@ class DevOptionsFragment : SettingsFragment() {
             Timber.w("Corrupting FSRS parameters for default deck config")
             launchCatchingTask {
                 withCol {
-                    val defaultConfig = decks.getConfig(1)
+                    val defaultConfig = decks.defaultConfig
                     val invalidFsrsConfig =
                         JSONArray().apply {
                             put(0.4197)
