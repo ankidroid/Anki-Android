@@ -37,6 +37,7 @@ import anki.decks.SetDeckCollapsedRequest
 import anki.decks.copy
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.utils.ext.jsonObjectIterable
+import com.ichi2.anki.libanki.Consts.DEFAULT_DECK_ID
 import com.ichi2.anki.libanki.backend.BackendUtils
 import com.ichi2.anki.libanki.backend.BackendUtils.fromJsonBytes
 import com.ichi2.anki.libanki.backend.BackendUtils.toJsonBytes
@@ -278,18 +279,28 @@ class Decks(
         return col.db.queryScalar("select count() from cards where did in $strIds or odid in $strIds")
     }
 
-    @RustCleanup("implement and make public")
     @LibAnkiAlias("get")
-    @Suppress("unused", "unused_parameter")
-    private fun get(
-        did: DeckId,
+    @Suppress("unused", "unused_parameter", "LiftReturnOrAssignment", "RedundantElseInIf")
+    fun get(
+        did: DeckId?,
         default: Boolean = true,
-    ): Deck? =
-        try {
-            Deck(BackendUtils.fromJsonBytes(col.backend.getDeckLegacy(did)))
-        } catch (ex: BackendNotFoundException) {
-            null
+    ): Deck? {
+        if (did == null) {
+            if (default) {
+                return getLegacy(DEFAULT_DECK_ID)
+            } else {
+                return null
+            }
         }
+        val deck = getLegacy(did)
+        if (deck != null) {
+            return deck
+        } else if (default) {
+            return getLegacy(DEFAULT_DECK_ID)
+        } else {
+            return null
+        }
+    }
 
     /** Get deck with NAME, ignoring case. */
     @LibAnkiAlias("by_name")
@@ -470,14 +481,14 @@ class Decks(
      *************************************************************
      */
 
-    fun name(did: DeckId): String = getLegacy(did)?.name ?: col.backend.tr.decksNoDeck()
+    /** Returns the [deck name][Deck.name], or 'no deck' if not found */
+    @LibAnkiAlias("name")
+    fun name(did: DeckId): String = get(did)?.name ?: col.backend.tr.decksNoDeck()
 
-    @RustCleanup("implement and make public")
+    /** Returns the [deck name][Deck.name], or `null` if not found */
     @LibAnkiAlias("name_if_exists")
-    @Suppress("unused", "unused_parameter")
-    private fun nameIfExists(did: DeckId): String? {
-        TODO()
-    }
+    @Suppress("unused")
+    fun nameIfExists(did: DeckId): String? = get(did)?.name
 
     @RustCleanup("implement and make public")
     @Suppress("unused", "unused_parameter")
