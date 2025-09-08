@@ -796,7 +796,7 @@ open class Reviewer :
             return
         }
         Timber.i("opening card info")
-        val intent = CardInfoDestination(currentCard!!.id).toIntent(this)
+        val intent = CardInfoDestination(currentCard!!.id, TR.cardStatsCurrentCard(TR.decksStudy())).toIntent(this)
         val animation = getAnimationTransitionFromGesture(fromGesture)
         intent.putExtra(FINISH_ANIMATION_EXTRA, getInverseTransition(animation) as Parcelable)
         startActivityWithAnimation(intent, animation)
