@@ -210,12 +210,9 @@ class Decks(
         )
     }
 
-    @RustCleanup("implement and make public")
     @LibAnkiAlias("deck_tree")
     @Suppress("unused")
-    private fun deckTree(): DeckTreeNode {
-        TODO()
-    }
+    fun deckTree(): DeckTreeNode = col.backend.deckTree(now = 0)
 
     @LibAnkiAlias("find_deck_in_tree")
     fun findDeckInTree(
