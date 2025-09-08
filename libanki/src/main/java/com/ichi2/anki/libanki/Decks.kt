@@ -378,9 +378,13 @@ class Decks(
         return DeckConfig(BackendUtils.fromJsonBytes(col.backend.getDeckConfigLegacy(conf)))
     }
 
-    // Reverts to default if provided id missing
     @LibAnkiAlias("get_config")
-    fun getConfig(confId: DeckConfigId): DeckConfig = DeckConfig(BackendUtils.fromJsonBytes(col.backend.getDeckConfigLegacy(confId)))
+    fun getConfig(confId: DeckConfigId): DeckConfig? =
+        try {
+            DeckConfig(BackendUtils.fromJsonBytes(col.backend.getDeckConfigLegacy(confId)))
+        } catch (e: BackendNotFoundException) {
+            null
+        }
 
     @RustCleanup("implement and make public")
     @LibAnkiAlias("update_config")
