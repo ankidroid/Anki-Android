@@ -18,7 +18,9 @@ package com.ichi2.anki.libanki.utils
 
 import com.ichi2.anki.common.json.JSONContainer
 import com.ichi2.anki.common.json.JSONObjectHolder
+import com.ichi2.anki.common.utils.ext.deepClone
 import com.ichi2.anki.common.utils.ext.jsonObjectIterable
+import com.ichi2.anki.libanki.DeckConfig
 import org.json.JSONArray
 import org.json.JSONObject
 import java.util.Optional
@@ -145,3 +147,6 @@ fun <T : JSONObjectHolder> JSONContainer<T>.insert(
 ) = jsonArray.insert(idx, template.jsonObject)
 
 fun <T : JSONObjectHolder> len(templates: JSONContainer<T>) = templates.jsonArray.length()
+
+// Changed signature from `copy.deepcopy(clone_from)`
+fun DeckConfig.deepClone() = this.copy(this.jsonObject.deepClone())

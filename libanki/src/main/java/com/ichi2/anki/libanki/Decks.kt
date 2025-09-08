@@ -42,6 +42,7 @@ import com.ichi2.anki.libanki.backend.BackendUtils.toJsonBytes
 import com.ichi2.anki.libanki.utils.LibAnkiAlias
 import com.ichi2.anki.libanki.utils.NotInLibAnki
 import com.ichi2.anki.libanki.utils.append
+import com.ichi2.anki.libanki.utils.deepClone
 import com.ichi2.anki.libanki.utils.len
 import net.ankiweb.rsdroid.RustCleanup
 import net.ankiweb.rsdroid.exceptions.BackendDeckIsFilteredException
@@ -404,15 +405,27 @@ class Decks(
     }
 
     @LibAnkiAlias("add_config")
-    private fun addConfig(name: String): DeckConfig {
-        val conf = newDeckConfigLegacy()
+    private fun addConfig(
+        name: String,
+        cloneFrom: DeckConfig? = null,
+    ): DeckConfig {
+        val conf: DeckConfig
+        if (cloneFrom != null) {
+            conf = cloneFrom.deepClone().also { it.id = 0 }
+        } else {
+            conf = newDeckConfigLegacy()
+        }
+
         conf.name = name
         this.save(conf)
         return conf
     }
 
     @LibAnkiAlias("add_config_returning_id")
-    fun addConfigReturningId(name: String): Long = addConfig(name).id
+    fun addConfigReturningId(
+        name: String,
+        cloneFrom: DeckConfig? = null,
+    ): Long = addConfig(name, cloneFrom).id
 
     @RustCleanup("implement and make public")
     @LibAnkiAlias("remove_config")
