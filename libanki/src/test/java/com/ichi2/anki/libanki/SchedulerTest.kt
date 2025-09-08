@@ -450,7 +450,7 @@ open class SchedulerTest : InMemoryAnkiTest() {
         Assert.assertEquals(2650, c.factor)
         // leech handling
         // //////////////////////////////////////////////////////////////////////////////////////////////////
-        val conf = col.decks.getConfig(1)
+        val conf = col.decks.getConfig(1)!!
         conf.lapse.leechAction = LEECH_SUSPEND
         col.decks.save(conf)
         cardcopy.clone().update { lapses = 7 }
