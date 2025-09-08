@@ -469,14 +469,14 @@ class Decks(
      *************************************************************
      */
 
+    /** Returns the [deck name][Deck.name], or 'no deck' if not found */
+    @LibAnkiAlias("name")
     fun name(did: DeckId): String = getLegacy(did)?.name ?: col.backend.tr.decksNoDeck()
 
-    @RustCleanup("implement and make public")
+    /** Returns the [deck name][Deck.name], or `null` if not found */
     @LibAnkiAlias("name_if_exists")
-    @Suppress("unused", "unused_parameter")
-    private fun nameIfExists(did: DeckId): String? {
-        TODO()
-    }
+    @Suppress("unused")
+    fun nameIfExists(did: DeckId): String? = getLegacy(did)?.name
 
     @RustCleanup("implement and make public")
     @Suppress("unused", "unused_parameter")
