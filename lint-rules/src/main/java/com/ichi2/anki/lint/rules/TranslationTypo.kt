@@ -85,11 +85,11 @@ class TranslationTypo :
         // CrowdIn strings+ additional string XML which are not translated
         val STRING_XML_FILES = I18N_FILES + listOf("constants.xml", "sentence-case.xml")
 
-        val javascriptCasingCheck = CheckStringCase.create("JavaScript")
-        val ankiWebCasingCheck = CheckStringCase.create("AnkiWeb")
-        val ankiDroidCasingCheck = CheckStringCase.create("AnkiDroid")
-        val ankiCasingCheck = CheckStringCase.create("Anki")
-        val ankiMobileCasingCheck = CheckStringCase.create("AnkiMobile")
+        val javascriptCasingCheck = create("JavaScript")
+        val ankiWebCasingCheck = create("AnkiWeb")
+        val ankiDroidCasingCheck = create("AnkiDroid")
+        val ankiCasingCheck = create("Anki")
+        val ankiMobileCasingCheck = create("AnkiMobile")
     }
 
     override fun getApplicableElements(): Collection<String>? = ALL
