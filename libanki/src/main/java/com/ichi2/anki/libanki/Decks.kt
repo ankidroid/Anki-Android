@@ -386,14 +386,21 @@ class Decks(
             null
         }
 
-    @RustCleanup("implement and make public")
+    /**
+     * @param config Config to update
+     * @param preserveUsn ignored
+     */
     @LibAnkiAlias("update_config")
-    @Suppress("unused", "unused_parameter")
+    @Suppress("unused")
     private fun updateConfig(
         config: DeckConfig,
+        @Suppress("unused_parameter")
         preserveUsn: Boolean = false,
     ) {
-        TODO()
+        config.id =
+            col.backend.addOrUpdateDeckConfigLegacy(
+                json = toJsonBytes(config),
+            )
     }
 
     @LibAnkiAlias("add_config")
