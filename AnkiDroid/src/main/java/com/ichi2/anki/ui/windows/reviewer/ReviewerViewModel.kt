@@ -245,7 +245,7 @@ class ReviewerViewModel :
 
     private suspend fun emitCardInfoDestination() {
         val cardId = currentCard.await().id
-        val destination = CardInfoDestination(cardId)
+        val destination = CardInfoDestination(cardId, TR.cardStatsCurrentCard(TR.decksStudy()))
         Timber.i("Launching 'card info' for card %d", cardId)
         destinationFlow.emit(destination)
     }

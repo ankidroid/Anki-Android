@@ -17,15 +17,12 @@ package com.ichi2.anki.pages
 
 import android.content.Context
 import android.content.Intent
-import com.ichi2.anki.R
 import com.ichi2.anki.libanki.CardId
 import com.ichi2.anki.utils.Destination
 
 data class CardInfoDestination(
     val cardId: CardId,
+    val title: String,
 ) : Destination {
-    override fun toIntent(context: Context): Intent {
-        val title = context.getString(R.string.card_info_title)
-        return PageFragment.getIntent(context, "card-info/$cardId", title)
-    }
+    override fun toIntent(context: Context): Intent = PageFragment.getIntent(context, "card-info/$cardId", title)
 }
