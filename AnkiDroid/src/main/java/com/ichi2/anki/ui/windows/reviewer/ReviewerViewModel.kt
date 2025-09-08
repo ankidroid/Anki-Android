@@ -27,6 +27,7 @@ import com.ichi2.anki.Flag
 import com.ichi2.anki.Reviewer
 import com.ichi2.anki.asyncIO
 import com.ichi2.anki.browser.BrowserDestination
+import com.ichi2.anki.cardviewer.SingleCardSide
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.libanki.Card
@@ -626,6 +627,11 @@ class ReviewerViewModel :
         answerTimerStatusFlow.emit(AnswerTimerStatus.Running(limitInMillis))
     }
 
+    private suspend fun replayMedia() {
+        val side = if (showingAnswer.value) SingleCardSide.BACK else SingleCardSide.FRONT
+        cardMediaPlayer.replayAll(side)
+    }
+
     fun executeAction(action: ViewerAction) {
         Timber.v("ReviewerViewModel::executeAction %s", action.name)
         launchCatchingIO {
@@ -683,6 +689,7 @@ class ReviewerViewModel :
                 ViewerAction.BURY_MENU -> buryCard()
                 ViewerAction.STATISTICS -> destinationFlow.emit(StatisticsDestination())
                 ViewerAction.BROWSE -> emitBrowseDestination()
+                ViewerAction.PLAY_MEDIA -> replayMedia()
                 ViewerAction.FLAG_MENU -> {}
             }
         }
