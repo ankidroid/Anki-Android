@@ -174,12 +174,14 @@ class Decks(
 
     fun have(id: DeckId): Boolean = getLegacy(id) != null
 
-    @RustCleanup("implement and make public")
     @LibAnkiAlias("get_all_legacy")
     @Suppress("unused")
-    private fun getAllLegacy(): List<Deck> {
-        TODO()
-    }
+    fun getAllLegacy(): List<Deck> =
+        BackendUtils
+            .fromJsonBytes(col.backend.getAllDecksLegacy())
+            .jsonObjectIterable()
+            .map { Deck(it) }
+            .toList()
 
     /** Return a new normal deck. It must be added with [addDeck] after a name assigned. */
     @LibAnkiAlias("new_deck")
@@ -228,12 +230,10 @@ class Decks(
         return null
     }
 
-    @RustCleanup("implement and make public")
-    @Suppress("unused")
     /** "All decks. Expensive; prefer [allNamesAndIds] */
-    private fun all(): List<Deck> {
-        TODO()
-    }
+    @Deprecated("Expensive, prefer [allNamesAndIds]", replaceWith = ReplaceWith("allNamesAndIds"))
+    @LibAnkiAlias("all")
+    fun all(): List<Deck> = getAllLegacy()
 
     @LibAnkiAlias("set_collapsed")
     fun setCollapsed(
