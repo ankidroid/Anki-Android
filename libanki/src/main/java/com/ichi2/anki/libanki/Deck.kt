@@ -18,6 +18,7 @@ package com.ichi2.anki.libanki
 
 import anki.decks.Deck.Filtered.SearchTerm.Order
 import com.ichi2.anki.common.utils.ext.deepClonedInto
+import com.ichi2.anki.libanki.utils.NotInLibAnki
 import net.ankiweb.rsdroid.Translations
 import org.json.JSONObject
 
@@ -74,7 +75,7 @@ class Deck : JSONObject {
             put("id", value)
         }
 
-    var conf: Long
+    var conf: DeckConfigId
         get() {
             val value = optLong("conf")
             return if (value > 0) value else 1
@@ -135,4 +136,13 @@ fun Order.toDisplayString(translations: Translations) =
         Order.RETRIEVABILITY_ASCENDING -> translations.deckConfigSortOrderRetrievabilityAscending()
         Order.RETRIEVABILITY_DESCENDING -> translations.deckConfigSortOrderRetrievabilityDescending()
         Order.UNRECOGNIZED -> throw IllegalArgumentException("Can't display an unknown enum value.")
+    }
+
+@NotInLibAnki
+internal fun Deck.confOrNull(): DeckConfigId? =
+    try {
+        val value = getLong("conf")
+        if (value > 0) value else null
+    } catch (e: Exception) {
+        null
     }
