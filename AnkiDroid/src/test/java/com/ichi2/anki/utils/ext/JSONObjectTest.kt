@@ -17,16 +17,23 @@
 package com.ichi2.anki.utils.ext
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.common.utils.ext.getStringOrNull
+import com.ichi2.anki.common.utils.ext.jsonObjectIterable
 import com.ichi2.testutils.AndroidTest
 import com.ichi2.testutils.EmptyApplication
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.empty
+import org.hamcrest.Matchers.equalTo
+import org.hamcrest.Matchers.hasSize
+import org.intellij.lang.annotations.Language
+import org.json.JSONException
 import org.json.JSONObject
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
+import kotlin.test.assertFailsWith
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 
-// TODO: move this to the common module
 @RunWith(AndroidJUnit4::class) // This is necessary, android and JVM differ on JSONObject.NULL
 @Config(application = EmptyApplication::class)
 class JSONObjectTest : AndroidTest {
@@ -42,5 +49,21 @@ class JSONObjectTest : AndroidTest {
         assertNotNull(test(JSONObject()), message = "test: { }")
         assertNotNull(test("null"), message = """{ test: "null" }""")
         assertNotNull(test("1"), message = """{ test: "1" }""")
+    }
+
+    @Test
+    fun `test jsonObjectIterable`() {
+        fun jsonObjectIterable(
+            @Language("JSON") json: String,
+        ) = JSONObject(json).jsonObjectIterable().toList()
+
+        assertThat(jsonObjectIterable("{}"), empty())
+
+        with(jsonObjectIterable("""{"1": {"name":  "hello"}}""")) {
+            assertThat(this, hasSize(1))
+            assertThat(this[0].getString("name"), equalTo("hello"))
+        }
+
+        assertFailsWith<JSONException> { jsonObjectIterable("") }
     }
 }
