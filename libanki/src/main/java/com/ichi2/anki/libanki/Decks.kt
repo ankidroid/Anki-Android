@@ -237,7 +237,12 @@ class Decks(
         deckId: DeckId,
         collapsed: Boolean,
         scope: SetDeckCollapsedRequest.Scope,
-    ): OpChanges = col.backend.setDeckCollapsed(deckId, collapsed, scope)
+    ): OpChanges =
+        col.backend.setDeckCollapsed(
+            deckId = deckId,
+            collapsed = collapsed,
+            scope = scope,
+        )
 
     @LibAnkiAlias("collapse")
     fun collapse(did: DeckId) {
