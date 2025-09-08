@@ -38,6 +38,7 @@ import anki.decks.copy
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.utils.ext.jsonObjectIterable
 import com.ichi2.anki.libanki.backend.BackendUtils
+import com.ichi2.anki.libanki.backend.BackendUtils.fromJsonBytes
 import com.ichi2.anki.libanki.backend.BackendUtils.toJsonBytes
 import com.ichi2.anki.libanki.utils.LibAnkiAlias
 import com.ichi2.anki.libanki.utils.NotInLibAnki
@@ -413,7 +414,7 @@ class Decks(
         if (cloneFrom != null) {
             conf = cloneFrom.deepClone().also { it.id = 0 }
         } else {
-            conf = newDeckConfigLegacy()
+            conf = DeckConfig(fromJsonBytes(col.backend.newDeckConfigLegacy()))
         }
 
         conf.name = name
@@ -443,15 +444,18 @@ class Decks(
         this.save(grp)
     }
 
-    @NotInLibAnki
-    @RustCleanup("inline")
-    private fun newDeckConfigLegacy(): DeckConfig = DeckConfig(BackendUtils.fromJsonBytes(col.backend.newDeckConfigLegacy()))
-
-    @RustCleanup("implement and make public")
     @LibAnkiAlias("decks_using_config")
-    @Suppress("unused", "unused_parameter")
-    private fun decksUsingConfig(config: DeckConfig): List<DeckId> {
-        TODO()
+    @Suppress("unused")
+    @NeedsTest("ensure that this matches upstream for dconf = 1 on corrupt decks")
+    fun decksUsingConfig(config: DeckConfig): List<DeckId> {
+        val dids = mutableListOf<DeckId>()
+        @Suppress("DEPRECATION") // all()
+        for (deck in all()) {
+            if (deck.confOrNull() == config.id) {
+                dids.append(deck.id)
+            }
+        }
+        return dids
     }
 
     @RustCleanup("implement and make public")
