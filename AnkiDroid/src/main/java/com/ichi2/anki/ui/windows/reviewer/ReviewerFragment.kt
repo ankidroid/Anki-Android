@@ -306,7 +306,6 @@ class ReviewerFragment :
             }
 
         lifecycleScope.launch {
-            if (Prefs.isHtmlTypeAnswerEnabled) return@launch
             val autoFocusTypeAnswer = Prefs.autoFocusTypeAnswer
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.typeAnswerFlow.collect { typeInAnswer ->
@@ -314,6 +313,13 @@ class ReviewerFragment :
                         typeAnswerContainer.isVisible = false
                         return@collect
                     }
+
+                    if (Prefs.isHtmlTypeAnswerEnabled) {
+                        webView.requestFocus()
+                        webView.evaluateJavascript("document.getElementById('typeans').focus();", null)
+                        return@collect
+                    }
+
                     typeAnswerContainer.isVisible = true
                     typeAnswerEditText.apply {
                         if (imeHintLocales != typeInAnswer.imeHintLocales) {
