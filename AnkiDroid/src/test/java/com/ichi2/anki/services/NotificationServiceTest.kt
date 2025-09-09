@@ -24,6 +24,7 @@ import androidx.test.core.app.ApplicationProvider.getApplicationContext
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.libanki.QueueType
 import com.ichi2.anki.reviewreminders.ReviewReminder
 import com.ichi2.anki.reviewreminders.ReviewReminderCardTriggerThreshold
 import com.ichi2.anki.reviewreminders.ReviewReminderId
@@ -149,6 +150,172 @@ class NotificationServiceTest : RobolectricTest() {
                     ReviewReminderTime(9, 0),
                     ReviewReminderCardTriggerThreshold(3),
                     ReviewReminderScope.DeckSpecific(did1),
+                )
+            ReviewRemindersDatabase.editRemindersForDeck(did1) { mapOf(ReviewReminderId(0) to reviewReminder) }
+
+            NotificationService.sendReviewReminderNotification(context, reviewReminder)
+            verify(exactly = 0) { notificationManager.notify(any(), any(), any()) }
+        }
+
+    @Test
+    fun `onReceive with rev cards not counted and only rev cards present should not fire notification`() =
+        runTest {
+            val did1 = addDeck("Deck")
+            addNotes(2).forEach {
+                it.firstCard().update {
+                    did = did1
+                    queue = QueueType.Rev
+                }
+            }
+            val reviewReminder =
+                ReviewReminder.createReviewReminder(
+                    ReviewReminderTime(9, 0),
+                    ReviewReminderCardTriggerThreshold(1),
+                    ReviewReminderScope.DeckSpecific(did1),
+                    countRev = false,
+                )
+            ReviewRemindersDatabase.editRemindersForDeck(did1) { mapOf(ReviewReminderId(0) to reviewReminder) }
+
+            NotificationService.sendReviewReminderNotification(context, reviewReminder)
+            verify(exactly = 0) { notificationManager.notify(any(), any(), any()) }
+        }
+
+    @Test
+    fun `onReceive with new cards not counted and only new cards present should not fire notification`() =
+        runTest {
+            val did1 = addDeck("Deck")
+            addNotes(2).forEach {
+                it.firstCard().update {
+                    did = did1
+                    queue = QueueType.New
+                }
+            }
+            val reviewReminder =
+                ReviewReminder.createReviewReminder(
+                    ReviewReminderTime(9, 0),
+                    ReviewReminderCardTriggerThreshold(1),
+                    ReviewReminderScope.DeckSpecific(did1),
+                    countNew = false,
+                )
+            ReviewRemindersDatabase.editRemindersForDeck(did1) { mapOf(ReviewReminderId(0) to reviewReminder) }
+
+            NotificationService.sendReviewReminderNotification(context, reviewReminder)
+            verify(exactly = 0) { notificationManager.notify(any(), any(), any()) }
+        }
+
+    @Test
+    fun `onReceive with lrn cards not counted and only lrn cards present should not fire notification`() =
+        runTest {
+            val did1 = addDeck("Deck")
+            addNotes(2).forEach {
+                it.firstCard().update {
+                    did = did1
+                    queue = QueueType.Lrn
+                }
+            }
+            val reviewReminder =
+                ReviewReminder.createReviewReminder(
+                    ReviewReminderTime(9, 0),
+                    ReviewReminderCardTriggerThreshold(1),
+                    ReviewReminderScope.DeckSpecific(did1),
+                    countLrn = false,
+                )
+            ReviewRemindersDatabase.editRemindersForDeck(did1) { mapOf(ReviewReminderId(0) to reviewReminder) }
+
+            NotificationService.sendReviewReminderNotification(context, reviewReminder)
+            verify(exactly = 0) { notificationManager.notify(any(), any(), any()) }
+        }
+
+    @Test
+    fun `onReceive with all cards not counted and many cards present should not fire notification`() =
+        runTest {
+            val did1 = addDeck("Deck")
+            addNotes(1).forEach {
+                it.firstCard().update {
+                    did = did1
+                    queue = QueueType.New
+                }
+            }
+            addNotes(1).forEach {
+                it.firstCard().update {
+                    did = did1
+                    queue = QueueType.Lrn
+                }
+            }
+            addNotes(1).forEach {
+                it.firstCard().update {
+                    did = did1
+                    queue = QueueType.Rev
+                }
+            }
+            val reviewReminder =
+                ReviewReminder.createReviewReminder(
+                    ReviewReminderTime(9, 0),
+                    ReviewReminderCardTriggerThreshold(1),
+                    ReviewReminderScope.DeckSpecific(did1),
+                    countNew = false,
+                    countLrn = false,
+                    countRev = false,
+                )
+            ReviewRemindersDatabase.editRemindersForDeck(did1) { mapOf(ReviewReminderId(0) to reviewReminder) }
+
+            NotificationService.sendReviewReminderNotification(context, reviewReminder)
+            verify(exactly = 0) { notificationManager.notify(any(), any(), any()) }
+        }
+
+    @Test
+    fun `onReceive with new cards not counted but other kinds present should fire notification`() =
+        runTest {
+            val did1 = addDeck("Deck")
+            addNotes(1).forEach {
+                it.firstCard().update {
+                    did = did1
+                    queue = QueueType.New
+                }
+            }
+            addNotes(1).forEach {
+                it.firstCard().update {
+                    did = did1
+                    queue = QueueType.Lrn
+                }
+            }
+            val reviewReminder =
+                ReviewReminder.createReviewReminder(
+                    ReviewReminderTime(9, 0),
+                    ReviewReminderCardTriggerThreshold(1),
+                    ReviewReminderScope.DeckSpecific(did1),
+                    countNew = false,
+                )
+            ReviewRemindersDatabase.editRemindersForDeck(did1) { mapOf(ReviewReminderId(0) to reviewReminder) }
+
+            NotificationService.sendReviewReminderNotification(context, reviewReminder)
+            verify(
+                exactly = 1,
+            ) { notificationManager.notify(NotificationService.REVIEW_REMINDER_NOTIFICATION_TAG, reviewReminder.id.value, any()) }
+        }
+
+    @Test
+    fun `onReceive with new cards not counted and not enough non new cards to trigger threshold should not fire notification`() =
+        runTest {
+            val did1 = addDeck("Deck")
+            addNotes(1).forEach {
+                it.firstCard().update {
+                    did = did1
+                    queue = QueueType.Lrn
+                }
+            }
+            addNotes(1).forEach {
+                it.firstCard().update {
+                    did = did1
+                    queue = QueueType.New
+                }
+            }
+            val reviewReminder =
+                ReviewReminder.createReviewReminder(
+                    ReviewReminderTime(9, 0),
+                    ReviewReminderCardTriggerThreshold(2),
+                    ReviewReminderScope.DeckSpecific(did1),
+                    countNew = false,
                 )
             ReviewRemindersDatabase.editRemindersForDeck(did1) { mapOf(ReviewReminderId(0) to reviewReminder) }
 
