@@ -381,7 +381,7 @@
     <string name="reviewer_toolbar_none" maxLength="41" comment="Setting to remove the toolbar from the study screen">Hiçbiri</string>
     <string name="toolbar" maxLength="41">Araç çubuğu</string>
     <string name="toolbar_actions" maxLength="41">Araç çubuğu eylemleri</string>
-    <string name="toolbar_position" maxLength="41">Araç çubuğu konumu</string>
+    <string name="toolbar_position" maxLength="28">Araç çubuğu konumu</string>
     <string name="new_study_screen" maxLength="41">Yeni çalışma ekranı</string>
     <string name="new_study_screen_summ"><![CDATA[Şu anda varolan çalışma ekranının yerine geçecek olan ekran. Eski ekranın belirli özellikleri değiştirilmiş veya silinmiş bulunuyor. Lütfen herhangi bir <a href="%1$s">geri bildiriminizi</a> veya <a href="%2$s">bulduğunuz hataları</a> bildirin.]]></string>
     <string name="show_answer_feedback" maxLength="41">Cevap geribildirimini göster</string>

@@ -378,7 +378,7 @@
     <string name="reviewer_toolbar_none" maxLength="41" comment="Setting to remove the toolbar from the study screen">表示しない</string>
     <string name="toolbar" maxLength="41">ツールバー</string>
     <string name="toolbar_actions" maxLength="41">ツールバーのアクション</string>
-    <string name="toolbar_position" maxLength="41">ツールバーの位置</string>
+    <string name="toolbar_position" maxLength="28">ツールバーの位置</string>
     <string name="new_study_screen" maxLength="41">新しい学習画面</string>
     <string name="new_study_screen_summ"><![CDATA[現行の学習画面の後継となる、改良された学習画面。現行画面のいくつかの機能は変更または削除されました。ぜひ<a href="%1$s">ご意見・ご感想</a>をお寄せください。<a href="%2$s">不具合</a>がある場合もお知らせいただければ幸いです。]]></string>
     <string name="show_answer_feedback" maxLength="41">回答選択時にフィードバック（目印）を表示</string>

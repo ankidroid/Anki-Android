@@ -382,7 +382,7 @@
     <string name="reviewer_toolbar_none" maxLength="41" comment="Setting to remove the toolbar from the study screen">يوق</string>
     <string name="toolbar" maxLength="41">قورال بالداق</string>
     <string name="toolbar_actions" maxLength="41">قورال بالداق مەشغۇلاتى</string>
-    <string name="toolbar_position" maxLength="41">قورال بالداق ئورنى</string>
+    <string name="toolbar_position" maxLength="28">قورال بالداق ئورنى</string>
     <string name="new_study_screen" maxLength="41">يېڭى ئۆگىنىش ئېكرانى</string>
     <string name="new_study_screen_summ"><![CDATA[ياخشىلانغان ئۆگىنىش ئېكرانى ھازىرقىنىڭ ئورنىنى ئالىدۇ. كونا ئېكراندىكى بەزى ئىقتىدارلار ئۆزگەردى ياكى چىقىرىۋېتىلدى. <a href="%1$s">قايتۇرما ئىنكاس</a> ياكى <a href="%2$s">كەمتۈك</a> دوكلاتى يوللاڭ.]]></string>
     <string name="show_answer_feedback" maxLength="41">جاۋاب قايتۇرما ئىنكاسىنى كۆرسىتىدۇ</string>

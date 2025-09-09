@@ -46,82 +46,82 @@
 <resources>
     <!-- CardBrowser -->
     <plurals name="card_browser_subtitle">
-        <item quantity="one">%d karta bandwida</item>
-        <item quantity="other">%d kartos bandwida</item>
+        <item quantity="one">%d 𐌺𐌰𐍂𐍄𐌰 𐌱𐌰𐌽𐌳𐍅𐌹𐌳𐌰</item>
+        <item quantity="other">%d 𐌺𐌰𐍂𐍄𐍉𐍃 𐌱𐌰𐌽𐌳𐍅𐌹𐌳𐌰</item>
     </plurals>
     <plurals name="card_browser_subtitle_notes_mode">
-        <item quantity="one">%d melein bandwida</item>
-        <item quantity="other">%d meleinins bandwida</item>
+        <item quantity="one">%d 𐌼𐌴𐌻𐌴𐌹𐌽 𐌱𐌰𐌽𐌳𐍅𐌹𐌳𐌰</item>
+        <item quantity="other">%d 𐌼𐌴𐌻𐌴𐌹𐌽𐌹𐌽𐍃 𐌱𐌰𐌽𐌳𐍅𐌹𐌳𐌰</item>
     </plurals>
-    <string name="card_browser_all_decks">Alla kartahuzda</string>
+    <string name="card_browser_all_decks">𐌰𐌻𐌻𐌰 𐌺𐌰𐍂𐍄𐌰𐌷𐌿𐌶𐌳𐌰</string>
     <plurals name="card_browser_delete_notes">
-        <item quantity="one">Meleinai usqistjan</item>
-        <item quantity="other">Meleinim usqistjan</item>
+        <item quantity="one">𐌼𐌴𐌻𐌴𐌹𐌽𐌰𐌹 𐌿𐍃𐌵𐌹𐍃𐍄𐌾𐌰𐌽</item>
+        <item quantity="other">𐌼𐌴𐌻𐌴𐌹𐌽𐌹𐌼 𐌿𐍃𐌵𐌹𐍃𐍄𐌾𐌰𐌽</item>
     </plurals>
-    <string name="card_browser_change_deck" maxLength="28">Kartahuzd inmaidjan</string>
-    <string name="delete_card_title">Usnim melein?</string>
-    <string name="card_browser_show_marked" maxLength="28">Filtr gatarhviþ</string>
-    <string name="card_browser_show_suspended" maxLength="28">Filter suspended</string>
-    <string name="card_browser_search_by_tag" maxLength="28">Filtr bi sokniwaurda</string>
-    <string name="card_browser_search_by_flag" maxLength="28">Filtr bi fanin</string>
-    <string name="card_browser_list_my_searches" maxLength="28">Sokeinos meinos</string>
-    <string name="card_browser_list_my_searches_save" maxLength="28">Gafastai sokein</string>
-    <string name="card_browser_list_my_searches_title">Walei sokn gafastana</string>
-    <string name="card_browser_list_my_searches_new_name">Namo soknai andwairþai</string>
-    <string name="card_browser_list_my_searches_new_search_error_empty_name">Ni magt gafastan sokn inuh namo</string>
-    <string name="card_browser_list_my_searches_new_search_error_dup">Namo ist</string>
-    <string name="card_browser_list_my_searches_successful_save">Search was saved</string>
-    <string name="no_note_to_edit">No note to edit</string>
-    <string name="card_browser_list_my_searches_remove_content">Usqistei \"%1$s\"?</string>
-    <string name="card_browser_change_display_order" maxLength="28">Inmaidei ataugjando wikon</string>
-    <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">Sokei</string>
-    <string name="card_browser_cram_search" maxLength="28" comment="Menu entry to start a search.">Sokei</string>
-    <string name="card_browser_change_display_order_title">Walei ataugjando wikon</string>
-    <string name="card_details_tags">Tags</string>
+    <string name="card_browser_change_deck" maxLength="28">𐌺𐌰𐍂𐍄𐌰𐌷𐌿𐌶𐌳 𐌹𐌽𐌼𐌰𐌹𐌳𐌾𐌰𐌽</string>
+    <string name="delete_card_title">𐌼𐌴𐌻𐌴𐌹𐌽 𐌿𐍃𐌽𐌹𐌼𐌰𐌽?</string>
+    <string name="card_browser_show_marked" maxLength="28">𐍆𐌹𐌻𐍄𐍂 𐌲𐌰𐍄𐌰𐍂𐍈𐌹𐌸</string>
+    <string name="card_browser_show_suspended" maxLength="28">𐍆𐌹𐌻𐍄𐍂 𐌷𐌰𐌷𐌰𐌽</string>
+    <string name="card_browser_search_by_tag" maxLength="28">𐍆𐌹𐌻𐍄𐍂 𐌱𐌹 𐍃𐍉𐌺𐌽𐌹𐍅𐌰𐌿𐍂𐌳𐌰</string>
+    <string name="card_browser_search_by_flag" maxLength="28">𐍆𐌹𐌻𐍄𐍂 𐌱𐌹 𐍆𐌰𐌽𐌹𐌽</string>
+    <string name="card_browser_list_my_searches" maxLength="28">𐍃𐍉𐌺𐌴𐌹𐌽𐍉𐍃 𐌼𐌴𐌹𐌽𐍉𐍃</string>
+    <string name="card_browser_list_my_searches_save" maxLength="28">𐍃𐍉𐌺𐌴𐌹𐌽 𐌲𐌰𐍆𐌰𐍃𐍄𐌰𐌽</string>
+    <string name="card_browser_list_my_searches_title">𐍃𐍉𐌺𐌽 𐌲𐌰𐍆𐌰𐍃𐍄𐌰𐌽𐌰 𐍅𐌰𐌻𐌾𐌰𐌽</string>
+    <string name="card_browser_list_my_searches_new_name">𐌽𐌰𐌼𐍉 𐍃𐍉𐌺𐌽𐌰𐌹 𐌰𐌽𐌳𐍅𐌰𐌹𐍂𐌸𐌰𐌹</string>
+    <string name="card_browser_list_my_searches_new_search_error_empty_name">𐌽𐌹 𐌼𐌰𐌲𐍄 𐌲𐌰𐍆𐌰𐍃𐍄𐌰𐌽 𐍃𐍉𐌺𐌽 𐌹𐌽𐌿𐌷 𐌽𐌰𐌼𐍉</string>
+    <string name="card_browser_list_my_searches_new_search_error_dup">𐌽𐌰𐌼𐍉 𐌹𐍃𐍄</string>
+    <string name="card_browser_list_my_searches_successful_save">𐍃𐍉𐌺𐌽 𐌲𐌰𐍆𐌰𐍃𐍄𐌰𐌽𐌰</string>
+    <string name="no_note_to_edit">𐌽𐌹𐍃𐍄 𐌼𐌴𐌻𐌴𐌹𐌽𐍃 𐌳𐌿 𐌹𐌽𐌼𐌰𐌹𐌳𐌾𐌰𐌽</string>
+    <string name="card_browser_list_my_searches_remove_content">\"%1$s\" 𐌿𐍃𐌵𐌹𐍃𐍄𐌾𐌰𐌽?</string>
+    <string name="card_browser_change_display_order" maxLength="28">𐌰𐍄𐌰𐌿𐌲𐌾𐌰𐌽𐌳𐍉 𐍅𐌹𐌺𐍉𐌽𐍃 𐌹𐌽𐌼𐌰𐌹𐌳𐌾𐌰𐌽</string>
+    <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">𐍃𐍉𐌺𐌾𐌰𐌽</string>
+    <string name="card_browser_cram_search" maxLength="28" comment="Menu entry to start a search.">𐍃𐍉𐌺𐌾𐌰𐌽</string>
+    <string name="card_browser_change_display_order_title">𐍄𐌴𐍅𐌰 𐌰𐍄𐌰𐌿𐌲𐌾𐌰𐌽𐌳𐌹𐌽𐍃 𐍅𐌰𐌻𐌾𐌰𐌽</string>
+    <string name="card_details_tags">𐍃𐍉𐌺𐌽𐌹𐍅𐌰𐌿𐍂𐌳𐌰</string>
     <string-array name="card_browser_order_labels">
-        <item>Ni wiko (adriza)</item>
+        <item>𐌽𐌹 𐍅𐌹𐌺𐍉 (𐍃𐍀𐍂𐌰𐌿𐍄𐌹𐌶𐍉)</item>
         <item>By sort field</item>
-        <item>Bi skapida ƕeila</item>
+        <item>𐌱𐌹 𐍃𐌺𐌰𐍀𐌰𐌽𐌰𐌹 𐍈𐌴𐌹𐌻𐌰𐌹</item>
         <item>By note modification time</item>
         <item>By card modification time</item>
         <item>By due time</item>
-        <item>Bi ƕeila</item>
-        <item>Bi azeti</item>
-        <item>Bi domeinos</item>
-        <item>Bi waurþanos ƕeilos</item>
-        <item>Bi namin kartahuzdis</item>
+        <item>𐌱𐌹 𐍈𐌴𐌹𐌻𐌰</item>
+        <item>𐌱𐌹 𐌰𐌶𐌴𐍄𐌹</item>
+        <item>𐌱𐌹 𐌳𐍉𐌼𐌴𐌹𐌽𐌹𐌽𐍃</item>
+        <item>𐌱𐌹 𐍅𐌰𐌿𐍂𐌸𐌰𐌽𐍉𐍃 𐍈𐌴𐌹𐌻𐍉𐍃</item>
+        <item>𐌱𐌹 𐌽𐌰𐌼𐌹𐌽 𐌺𐌰𐍂𐍄𐌰𐌷𐌿𐌶𐌳𐌹𐍃</item>
     </string-array>
-    <string name="manage_browser_column">Manage column</string>
-    <string name="no_columns_available">Ni sind sauleis</string>
-    <string name="card_browser_select_all" maxLength="28">Walei all</string>
-    <string name="card_browser_select_none" maxLength="28">Ni waiht waljan</string>
-    <string name="card_browser_no_cards_in_deck">Ni kartos bigitanos in huzda karto \'%s\'</string>
-    <string name="card_browser_search_all_decks">Sokei alla huzda karto</string>
-    <string name="card_browser_unknown_deck_name">Unkunþ</string>
+    <string name="manage_browser_column">𐍃𐌰𐌿𐌻 𐌰𐍄𐌲𐌰𐍂𐌰𐌹𐌷𐍄𐌾𐌰𐌽</string>
+    <string name="no_columns_available">𐌽𐌹 𐍃𐌹𐌽𐌳 𐍃𐌰𐌿𐌻𐌴𐌹𐍃</string>
+    <string name="card_browser_select_all" maxLength="28">𐌰𐌻𐌻 𐍅𐌰𐌻𐌾𐌰𐌽</string>
+    <string name="card_browser_select_none" maxLength="28">𐌽𐌹 𐍅𐌰𐌹𐌷𐍄 𐍅𐌰𐌻𐌾𐌰𐌽</string>
+    <string name="card_browser_no_cards_in_deck">𐌽𐌹 𐌺𐌰𐍂𐍄𐍉𐍃 𐌱𐌹𐌲𐌹𐍄𐌰𐌽𐍉𐍃 𐌹𐌽 𐌷𐌿𐌶𐌳𐌰 𐌺𐌰𐍂𐍄𐍉 \'%s\'</string>
+    <string name="card_browser_search_all_decks">𐌰𐌻𐌻𐌰 𐌷𐌿𐌶𐌳𐌰 𐌺𐌰𐍂𐍄𐍉 𐍃𐍉𐌺𐌾𐌰𐌽</string>
+    <string name="card_browser_unknown_deck_name">𐌿𐌽𐌺𐌿𐌽𐌸</string>
     <string name="card_browser_truncate" comment="allows users to show less of a field value">Truncate content</string>
-    <string name="set_due_date_hintText" comment="plural set_due_date_label_suffix is used for parameters, parameter 1 is the plural for 0, parameter 2 is the plural for 1">Himma daga ist \'0 %1$s\', du maurgina ist \'1 %2$s\', jah swe framwigis&#8230;</string>
+    <string name="set_due_date_hintText" comment="plural set_due_date_label_suffix is used for parameters, parameter 1 is the plural for 0, parameter 2 is the plural for 1">𐌷𐌹𐌼𐌼𐌰 𐌳𐌰𐌲𐌰 𐌹𐍃𐍄 \'0 %1$s\', 𐌳𐌿 𐌼𐌰𐌿𐍂𐌲𐌹𐌽𐌰 𐌹𐍃𐍄 \'1 %2$s\', 𐌾𐌰𐌷 𐍃𐍅𐌴 𐍆𐍂𐌰𐌼𐍅𐌹𐌲𐌹𐍃&#8230;</string>
     <plurals name="card_browser_export_cards">
-        <item quantity="one">Karta utbairan</item>
-        <item quantity="other">Kartos utbairan</item>
+        <item quantity="one">𐌺𐌰𐍂𐍄𐌰 𐌿𐍄𐌱𐌰𐌹𐍂𐌰𐌽</item>
+        <item quantity="other">𐌺𐌰𐍂𐍄𐍉𐍃 𐌿𐍄𐌱𐌰𐌹𐍂𐌰𐌽</item>
     </plurals>
     <plurals name="card_browser_export_notes">
-        <item quantity="one">Melein utbairan</item>
-        <item quantity="other">Meleinins utbairan</item>
+        <item quantity="one">𐌼𐌴𐌻𐌴𐌹𐌽 𐌿𐍄𐌱𐌰𐌹𐍂𐌰𐌽</item>
+        <item quantity="other">𐌼𐌴𐌻𐌴𐌹𐌽𐌹𐌽𐍃 𐌿𐍄𐌱𐌰𐌹𐍂𐌰𐌽</item>
     </plurals>
     <plurals name="card_browser_cards_deleted">
-        <item quantity="one">%d kartai usqistida</item>
-        <item quantity="other">%d kartom usqistida</item>
+        <item quantity="one">%d 𐌺𐌰𐍂𐍄𐌰𐌹 𐌿𐍃𐌵𐌹𐍃𐍄𐌹𐌳𐌰</item>
+        <item quantity="other">%d 𐌺𐌰𐍂𐍄𐍉𐌼 𐌿𐍃𐌵𐌹𐍃𐍄𐌹𐌳𐌰</item>
     </plurals>
     <!--Keyboard shortcuts dialog-->
     <string name="edit_tags_dialog" comment="Description of the shortcut that opens the edit tags dialog">Edit tags dialog</string>
     <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">Show order dialog</string>
     <!-- Manage columns dialog -->
-    <string name="browse_manage_columns_main_heading">Sauleis</string>
-    <string name="browse_manage_columns">Saulins atgaraihtjan</string>
-    <string name="user_active_columns">Waurkeiþ</string>
-    <string name="user_potential_columns">Wisandeins</string>
-    <string name="include_column">Saul biaukan</string>
-    <string name="exclude_column">Sauilins usniman</string>
-    <string name="save_changes_message">Bidjam þuk, gafastai inmaideinos þeinos bi frumistin</string>
+    <string name="browse_manage_columns_main_heading">𐍃𐌰𐌿𐌻𐌴𐌹𐍃</string>
+    <string name="browse_manage_columns">𐍃𐌰𐌿𐌻𐌹𐌽𐍃 𐌰𐍄𐌲𐌰𐍂𐌰𐌹𐌷𐍄𐌾𐌰𐌽</string>
+    <string name="user_active_columns">𐍅𐌰𐌿𐍂𐌺𐌴𐌹𐌸</string>
+    <string name="user_potential_columns">𐍅𐌹𐍃𐌰𐌽𐌳𐌴𐌹𐌽𐍃</string>
+    <string name="include_column">𐍃𐌰𐌿𐌻 𐌱𐌹𐌰𐌿𐌺𐌰𐌽</string>
+    <string name="exclude_column">𐍃𐌰𐌿𐌻𐌹𐌽𐍃 𐌿𐍃𐌽𐌹𐌼𐌰𐌽</string>
+    <string name="save_changes_message">𐌱𐌹𐌳𐌾𐌰𐌼 𐌸𐌿𐌺, 𐌲𐌰𐍆𐌰𐍃𐍄𐌰𐌹 𐍆𐍂𐌿𐌼𐌹𐍃𐍄 𐌹𐌽𐌼𐌰𐌹𐌳𐌴𐌹𐌽𐍉𐍃 𐌸𐌴𐌹𐌽𐍉𐍃</string>
     <string name="browser_find_replace_loading_fields">Retrieving fields names&#8230;</string>
 </resources>

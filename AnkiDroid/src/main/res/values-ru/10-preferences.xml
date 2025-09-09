@@ -385,7 +385,7 @@
     <string name="reviewer_toolbar_none" maxLength="41" comment="Setting to remove the toolbar from the study screen">Удалить</string>
     <string name="toolbar" maxLength="41">Панель инструментов</string>
     <string name="toolbar_actions" maxLength="41">Действия на панели</string>
-    <string name="toolbar_position" maxLength="41">Расположение панели</string>
+    <string name="toolbar_position" maxLength="28">Расположение панели</string>
     <string name="new_study_screen" maxLength="41">Новый экран обучения</string>
     <string name="new_study_screen_summ"><![CDATA[Improved study screen that will succeed the current one. Some features of the old screen have been changed or removed. Please report any <a href="%1$s">feedback</a> or <a href="%2$s">bugs</a>.]]></string>
     <string name="show_answer_feedback" maxLength="41">Показать обратную связь по ответу</string>

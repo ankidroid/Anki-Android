@@ -46,14 +46,14 @@
 <resources>
     <!-- Feedback.java -->
     <string name="empty_string"></string>
-    <string name="error_reporting_choice" maxLength="41">Error reporting mode</string>
+    <string name="error_reporting_choice" maxLength="41">𐌰𐌹𐍂𐌶𐌴𐌹𐌽𐍃 𐌼𐌴𐍂𐌹𐌸𐍉𐍃 𐌼𐍉𐌳𐌿𐍃</string>
     <string name="feedback_disclaimer">Disclaimer: We don’t collect any personal information such as your email address, phone number, or your phone IMEI. We do collect some information about your device such as the manufacturer, model and version of Android, as well as the nature of reported errors themselves and the steps which led up to them occurring.</string>
     <string name="feedback_title">AnkiDroid Feedback</string>
     <string name="feedback_default_text">Enter your feedback or information about the nature of any errors you’re reporting.</string>
-    <string name="feedback_auto_toast_text">AnkiDroid bigat aglon; bokos bi airzeins insandidos sind du andwaibjandam&#8230;</string>
-    <string name="feedback_for_manual_toast_text">An error report is being prepared for the developers&#8230;</string>
+    <string name="feedback_auto_toast_text">𐌰𐌽𐌺𐌴𐌹𐌳𐍂𐌰𐌿𐌳 𐌱𐌹𐌲𐌰𐍄 𐌰𐌹𐍂𐌶𐌴𐌹𐌽: 𐌱𐍉𐌺𐍉𐍃 𐌱𐌹 𐌰𐌹𐍂𐌶𐌴𐌹𐌽𐍃 𐌹𐌽𐍃𐌰𐌽𐌳𐌹𐌳𐍉𐍃 𐍃𐌹𐌽𐌳 𐌳𐌿 𐌰𐌽𐌳𐍅𐌰𐌹𐌱𐌾𐌰𐌽𐌳𐌰𐌼&#8230;</string>
+    <string name="feedback_for_manual_toast_text">𐌰𐌹𐍂𐌶𐌴𐌹𐌽𐍃 𐌼𐌴𐍂𐌹𐌸𐌰 𐌼𐌰𐌽𐍅𐌾𐌰𐌳𐌰 𐌰𐌽𐌳𐍅𐌰𐌹𐌱𐌾𐌰𐌽𐌳𐌰𐌼&#8230;</string>
     <string name="feedback_copy_debug">Copy debug info</string>
-    <string name="feedback_report">Mereins</string>
-    <string name="feedback_report_automatically">Send error reports automatically</string>
-    <string name="feedback_no_suitable_app_found">Ni bigat gatil app</string>
+    <string name="feedback_report">𐌼𐌴𐍂𐌴𐌹𐌽𐍃</string>
+    <string name="feedback_report_automatically">𐌰𐌹𐍂𐌶𐌴𐌹𐌽𐍃 𐌼𐌴𐍂𐌹𐌸𐍉𐍃 𐍃𐌹𐌻𐌱𐌰𐍄𐌰𐌿𐌾𐌰𐌽𐌳𐌹𐌽 𐌷𐌰𐌹𐌳𐌰𐌿 𐌹𐌽𐍃𐌰𐌽𐌳𐌾𐌰𐌽</string>
+    <string name="feedback_no_suitable_app_found">𐌽𐌹 𐌱𐌹𐌲𐌰𐍄 𐌲𐌰𐍄𐌹𐌻 𐌰𐍀𐍀</string>
 </resources>

@@ -45,41 +45,41 @@
 
 -->
 <resources>
-    <string name="youre_offline">Ni is ana ganatja</string>
-    <string name="sync_error">Airzei gagaleikon</string>
-    <string name="vague_error" comment="Network error dialog title">Airzei</string>
-    <string name="retry">Aftra sokei</string>
-    <string name="menu_get_shared_decks">Ganim kartahuzda gadailida</string>
-    <string name="connection_error_message">Natjawaurk airzei warþ.</string>
-    <string name="not_logged_in_title">Atgagg du AnkiNati</string>
-    <string name="login_create_account_message">Atgaggais ana akawnta þridjis hiuhmins brukjan skalkinassaus milhmins gagaleikon. Magt skapjan sum in iftumai gridai.</string>
+    <string name="youre_offline">𐌽𐌹 𐌹𐍃 𐌰𐌽𐌰𐌲𐌰𐌽𐌰𐍄𐌾𐌰</string>
+    <string name="sync_error">𐌰𐌹𐍂𐌶𐌴𐌹 𐌲𐌰𐌲𐌰𐌻𐌴𐌹𐌺𐍉𐌽</string>
+    <string name="vague_error" comment="Network error dialog title">𐌰𐌹𐍂𐌶𐌴𐌹</string>
+    <string name="retry">𐌰𐍆𐍄𐍂𐌰 𐍃𐍉𐌺𐌾𐌰𐌽</string>
+    <string name="menu_get_shared_decks">𐌺𐌰𐍂𐍄𐌰𐌷𐌿𐌶𐌳𐌰 𐌲𐌰𐌳𐌰𐌹𐌻𐌹𐌳𐌰 𐌽𐌹𐌼𐌰𐌽</string>
+    <string name="connection_error_message">𐌽𐌰𐍄𐌾𐌰𐍅𐌰𐌿𐍂𐌺𐌹𐍃 𐌰𐌹𐍂𐌶𐌴𐌹 𐍅𐌰𐍂𐌸</string>
+    <string name="not_logged_in_title">𐌰𐍄𐌲𐌰𐌲𐌲 𐌳𐌿 𐌰𐌽𐌺𐌴𐌹𐍅𐌰𐌱𐌾𐌰</string>
+    <string name="login_create_account_message">𐌰𐍄𐌲𐌰𐌲𐌲𐌰𐌹𐍃 𐌰𐌽𐌰 𐍂𐌰𐌷𐌽𐌴𐌹𐌽𐌰𐌹 𐌸𐍂𐌹𐌳𐌾𐌹𐍃 𐌷𐌹𐌿𐌷𐌼𐌹𐌽𐍃 𐌱𐍂𐌿𐌺𐌾𐌰𐌽 𐍃𐌺𐌰𐌻𐌺𐌹𐌽𐌰𐍃𐍃𐌰𐌿𐍃 𐌼𐌹𐌻𐌷𐌼𐌹𐌽𐍃 𐌳𐌿 𐌲𐌰𐌲𐌰𐌻𐌴𐌹𐌺𐍉𐌽. 𐌼𐌰𐌲𐍄 𐍃𐌺𐌰𐍀𐌾𐌰𐌽 𐍃𐌿𐌼 𐌹𐌽 𐌹𐍆𐍄𐌿𐌼𐍉𐌽 𐌲𐍂𐌹𐌳𐌰𐌹.</string>
     <!-- MyAccount.kt -->
-    <string name="username">E-mel</string>
-    <string name="password">Runawaurd</string>
-    <string name="log_in">Atgagg</string>
-    <string name="sign_up_description">Ni habaizu AnkiNati kawtsjon? Arwjo ist!</string>
+    <string name="username">𐌴-𐌼𐌴𐌻</string>
+    <string name="password">𐍂𐌿𐌽𐌰𐍅𐌰𐌿𐍂𐌳</string>
+    <string name="log_in">𐌰𐍄𐌲𐌰𐌲𐌲𐌰𐌽</string>
+    <string name="sign_up_description">𐌽𐌹 𐌷𐌰𐌱𐌰𐌹𐌶𐌿 𐌰𐌽𐌺𐌹𐌽𐌰𐍄𐌹 𐍂𐌰𐌷𐌽𐌴𐌹𐌽? 𐌰𐍂𐍅𐌾𐍉 𐌹𐍃𐍄!</string>
     <string name="sign_up_not_affiliated">Note: AnkiWeb is not affiliated with AnkiDroid</string>
-    <string name="sign_up">Anamelei</string>
-    <string name="logged_as">Atgaggans swe</string>
-    <string name="log_out">Galeiþ</string>
-    <string name="reset_password">Aftrasatei gamotawaurd</string>
-    <string name="lost_mail_instructions">Ufarmunnodes E-mela?</string>
-    <string name="sign_in">Atgaggando</string>
+    <string name="sign_up">𐌰𐌽𐌰𐌼𐌴𐌻𐌾𐌰𐌽</string>
+    <string name="logged_as">𐌰𐍄𐌲𐌰𐌲𐌲𐌰𐌽 𐍃𐍅𐌴</string>
+    <string name="log_out">𐌰𐍆𐌻𐌴𐌹𐌸𐌰𐌽</string>
+    <string name="reset_password">𐍂𐌿𐌽𐌰𐍅𐌰𐌿𐍂𐌳 𐌰𐍆𐍄𐍂𐌰𐌻𐌰𐌲𐌾𐌰𐌽</string>
+    <string name="lost_mail_instructions">𐌿𐍆𐌰𐍂𐌼𐌿𐌽𐌽𐍉𐌳𐌴𐍃 𐌴-𐌼𐌴𐌻𐌰?</string>
+    <string name="sign_in">𐌰𐍄𐌲𐌰𐌲𐌲𐌰𐌽𐌳𐍉</string>
     <!-- AndroidManifest.xml -->
-    <string name="deckpreferences_title">Mahteis faur XXX</string>
+    <string name="deckpreferences_title">𐌼𐌰𐌷𐍄𐌴𐌹𐍃 𐍆𐌰𐌿𐍂 XXX</string>
     <string name="sync_title">Synchronization</string>
     <string name="sync_log_uploading_message">Full sync from local</string>
-    <string name="sync_database_acknowledge">Galisa galeikona</string>
+    <string name="sync_database_acknowledge">𐌲𐌰𐌻𐌹𐍃𐌰 𐌲𐌰𐌻𐌴𐌹𐌺𐍉𐌽𐌰 𐌹𐍃𐍄</string>
     <string name="col_synced_media_in_background">Collection synced. Media is being synced in the background.</string>
-    <string name="sync_corrupt_database">Datahuzd þein brikan ist. Bidjam þuk, nasei faurþizei sokjais aftra gagaleikon.\n\nSai %s maizin kunþja bi nasein datahuzdis þeinis.</string>
+    <string name="sync_corrupt_database">𐌳𐌰𐍄𐌰𐌷𐌿𐌶𐌳 𐌸𐌴𐌹𐌽 𐌱𐍂𐌹𐌺𐌰𐌽 𐌹𐍃𐍄. 𐌱𐌹𐌳𐌾𐌰𐌼 𐌸𐌿𐌺, 𐌽𐌰𐍃𐌴𐌹 𐍆𐌰𐌿𐍂𐌸𐌹𐌶𐌴𐌹 𐌺𐌹𐌿𐍃𐌰𐌹𐍃 𐌰𐍆𐍄𐍂𐌰 𐌲𐌰𐌲𐌰𐌻𐌴𐌹𐌺𐍉𐌽.\n\n𐍃𐌰𐌹𐍈 %s 𐌼𐌰𐌹𐌶𐌹𐌽 𐌺𐌿𐌽𐌸𐌾𐌰 𐌱𐌹 𐌽𐌰𐍃𐌴𐌹𐌽 𐌳𐌰𐍄𐌰𐌷𐌿𐌶𐌳𐌹𐍃 𐌸𐌴𐌹𐌽𐌹𐍃.</string>
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">Local</string>
-    <string name="sync_sanity_remote">Fairra</string>
+    <string name="sync_sanity_remote">𐍆𐌰𐌹𐍂𐍂𐌰</string>
     <string name="one_way_sync_title" maxLength="41">One-way sync</string>
     <string name="one_way_sync_confirmation">One way sync requested</string>
     <string name="full_sync_confirmation">The requested change will require a full upload of the database when you next synchronize your collection. If you have reviews or other changes waiting on another device that haven’t been synchronized here yet, they will be lost. Continue?</string>
     <string name="full_sync_confirmation_upgrade">Due to a bug in the previously installed version of AnkiDroid, it’s recommended to force a full sync.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title_one_way_sync">Gagaleikon (aina-wigs)</string>
-    <string name="sync_menu_title_no_account">Gagaleikei (atgagg)</string>
+    <string name="sync_menu_title_one_way_sync">𐌲𐌰𐌲𐌰𐌻𐌴𐌹𐌺𐍉𐌽 (𐌰𐌹𐌽𐌰-𐍅𐌹𐌲𐍃)</string>
+    <string name="sync_menu_title_no_account">𐌲𐌰𐌲𐌰𐌻𐌴𐌹𐌺𐌴𐌹 (𐌰𐍄𐌲𐌰𐌲𐌲)</string>
 </resources>

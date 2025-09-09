@@ -387,7 +387,7 @@
     <string name="reviewer_toolbar_none" maxLength="41" comment="Setting to remove the toolbar from the study screen">ללא</string>
     <string name="toolbar" maxLength="41">סרגל כלים</string>
     <string name="toolbar_actions" maxLength="41">פעולות בסרגל הכלים</string>
-    <string name="toolbar_position" maxLength="41">מיקום סרגל כלים</string>
+    <string name="toolbar_position" maxLength="28">מיקום סרגל כלים</string>
     <string name="new_study_screen" maxLength="41">מסך לימוד חדש</string>
     <string name="new_study_screen_summ"><![CDATA[מסך לימוד משופר שיחליף את המסך הנוכחי. חלק מהתכונות של המסך הישן שונו או הוסרו. אנא דווחו על כל <a href="%1$s">משוב</a> או <a href="%2$s">באג</a>.]]></string>
     <string name="show_answer_feedback" maxLength="41">הצג משוב על התשובה</string>

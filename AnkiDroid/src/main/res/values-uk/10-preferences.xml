@@ -388,7 +388,7 @@
     <string name="reviewer_toolbar_none" maxLength="41" comment="Setting to remove the toolbar from the study screen">Сховати</string>
     <string name="toolbar" maxLength="41">Панель інструментів</string>
     <string name="toolbar_actions" maxLength="41">Функції панелі інструментів</string>
-    <string name="toolbar_position" maxLength="41">Позиція панелі інструментів</string>
+    <string name="toolbar_position" maxLength="28">Позиція панелі інструментів</string>
     <string name="new_study_screen" maxLength="41">Новий екран навчання</string>
     <string name="new_study_screen_summ"><![CDATA[Покращений екран навчання, який замінить теперішній. Деякі функції старого екрану були змінені або видалені. Будь ласка, надсилайте нам будь-які <a href="%1$s">відгуки</a> або <a href="%2$s">помилки</a>.]]></string>
     <string name="show_answer_feedback" maxLength="41">Показувати фідбек відповіді</string>

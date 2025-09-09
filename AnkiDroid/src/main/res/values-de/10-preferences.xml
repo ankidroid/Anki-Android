@@ -381,7 +381,7 @@
     <string name="reviewer_toolbar_none" maxLength="41" comment="Setting to remove the toolbar from the study screen">Nichts</string>
     <string name="toolbar" maxLength="41">Symbolleiste</string>
     <string name="toolbar_actions" maxLength="41">Symbolleisten-Aktionen</string>
-    <string name="toolbar_position" maxLength="41">Symbolleisten-Position</string>
+    <string name="toolbar_position" maxLength="28">Symbolleisten-Position</string>
     <string name="new_study_screen" maxLength="41">Neuer Lernbildschirm</string>
     <string name="new_study_screen_summ"><![CDATA[Verbesserter Lernbildschirm, der den aktuellen Bildschirm ersetzen wird. Einige Funktionen des alten Bildschirms wurden geändert oder entfernt. Bitte melden Sie <a href="%1$s">Feedback</a> oder <a href="%2$s">Fehler</a>.]]></string>
     <string name="show_answer_feedback" maxLength="41">Antwort-Feedback anzeigen</string>
