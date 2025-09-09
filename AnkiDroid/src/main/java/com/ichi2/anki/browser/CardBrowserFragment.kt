@@ -162,7 +162,7 @@ class CardBrowserFragment :
 
     @get:LayoutRes
     private val layout: Int
-        get() = if (useSearchView) R.layout.cardbrowser_searchview else R.layout.cardbrowser
+        get() = if (useSearchView) R.layout.card_browser_searchview_fragment else R.layout.card_browser_fragment
 
     override fun onCreateView(
         inflater: LayoutInflater,
