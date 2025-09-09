@@ -18,6 +18,7 @@ package com.ichi2.anki.reviewreminders
 
 import android.os.Parcelable
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.settings.Prefs
 import kotlinx.parcelize.IgnoredOnParcel
@@ -27,6 +28,7 @@ import timber.log.Timber
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
+import java.util.Calendar
 import java.util.Locale
 import kotlin.time.Duration.Companion.hours
 import kotlin.time.Duration.Companion.minutes
@@ -76,6 +78,19 @@ data class ReviewReminderTime(
             )
 
     fun toSecondsFromMidnight(): Long = (hour.hours + minute.minutes).inWholeSeconds
+
+    companion object {
+        /**
+         * Returns the current time as a [ReviewReminderTime].
+         * Used as the default displayed time when creating a review reminder.
+         */
+        fun getCurrentTime(): ReviewReminderTime {
+            val calendarInstance = TimeManager.time.calendar()
+            val currentHour = calendarInstance.get(Calendar.HOUR_OF_DAY)
+            val currentMinute = calendarInstance.get(Calendar.MINUTE)
+            return ReviewReminderTime(currentHour, currentMinute)
+        }
+    }
 }
 
 /**
