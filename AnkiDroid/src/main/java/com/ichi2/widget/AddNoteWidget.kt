@@ -26,7 +26,7 @@ class AddNoteWidget : AnalyticsWidgetProvider() {
     override fun performUpdate(
         context: Context,
         appWidgetManager: AppWidgetManager,
-        appWidgetIds: IntArray,
+        appWidgetIds: AppWidgetIds,
         usageAnalytics: UsageAnalytics,
     ) {
         updateWidgets(context, appWidgetManager, appWidgetIds)
@@ -44,7 +44,7 @@ class AddNoteWidget : AnalyticsWidgetProvider() {
         fun updateWidgets(
             context: Context,
             appWidgetManager: AppWidgetManager,
-            appWidgetIds: IntArray,
+            appWidgetIds: AppWidgetIds,
         ) {
             val remoteViews = RemoteViews(context.packageName, R.layout.widget_add_note)
             val intent = NoteEditorLauncher.AddNote().toIntent(context)

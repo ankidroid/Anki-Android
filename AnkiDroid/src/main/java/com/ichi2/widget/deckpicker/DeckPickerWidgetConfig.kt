@@ -26,6 +26,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import androidx.activity.OnBackPressedCallback
+import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
@@ -46,6 +47,9 @@ import com.ichi2.anki.showThemedToast
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.widget.AppWidgetId.Companion.INVALID_APPWIDGET_ID
+import com.ichi2.widget.AppWidgetId.Companion.getAppWidgetId
+import com.ichi2.widget.AppWidgetId.Companion.updateWidget
 import com.ichi2.widget.WidgetConfigScreenAdapter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -63,7 +67,7 @@ class DeckPickerWidgetConfig :
     AnkiActivity(),
     DeckSelectionListener,
     BaseSnackbarBuilderProvider {
-    private var appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID
+    private var appWidgetId = INVALID_APPWIDGET_ID
     lateinit var deckAdapter: WidgetConfigScreenAdapter
     private lateinit var deckPickerWidgetPreferences: DeckPickerWidgetPreferences
 
@@ -90,12 +94,9 @@ class DeckPickerWidgetConfig :
 
         deckPickerWidgetPreferences = DeckPickerWidgetPreferences(this)
 
-        appWidgetId = intent.extras?.getInt(
-            AppWidgetManager.EXTRA_APPWIDGET_ID,
-            AppWidgetManager.INVALID_APPWIDGET_ID,
-        ) ?: AppWidgetManager.INVALID_APPWIDGET_ID
+        appWidgetId = intent.getAppWidgetId()
 
-        if (appWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID) {
+        if (appWidgetId == INVALID_APPWIDGET_ID) {
             Timber.v("Invalid App Widget ID")
             finish()
             return
@@ -126,7 +127,9 @@ class DeckPickerWidgetConfig :
         )
     }
 
-    fun showSnackbar(messageResId: Int) {
+    fun showSnackbar(
+        @StringRes messageResId: Int,
+    ) {
         showSnackbar(getString(messageResId))
     }
 
@@ -240,7 +243,7 @@ class DeckPickerWidgetConfig :
             val appWidgetManager = AppWidgetManager.getInstance(this)
             DeckPickerWidget.updateWidget(this, appWidgetManager, appWidgetId, selectedDeckIds)
 
-            val resultValue = Intent().putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
+            val resultValue = Intent().updateWidget(appWidgetId)
             setResult(RESULT_OK, resultValue)
             finish()
         }
@@ -432,7 +435,7 @@ class DeckPickerWidgetConfig :
         val updateIntent =
             Intent(this, DeckPickerWidget::class.java).apply {
                 action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
-                putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, intArrayOf(appWidgetId))
+                putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, intArrayOf(appWidgetId.id))
 
                 putExtra("deck_picker_widget_selected_deck_ids", selectedDecks.toList().toLongArray())
             }
@@ -451,8 +454,8 @@ class DeckPickerWidgetConfig :
                     return
                 }
 
-                val appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID)
-                if (appWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID) {
+                val appWidgetId = intent.getAppWidgetId()
+                if (appWidgetId == INVALID_APPWIDGET_ID) {
                     return
                 }
 
