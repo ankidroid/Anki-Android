@@ -57,6 +57,11 @@ class Deck : JSONObject {
             put("collapsed", value)
         }
 
+    /**
+     * Unique identifier of the deck
+     *
+     * @see DeckId
+     */
     var id: DeckId
         get() = getLong("id")
         set(value) {
