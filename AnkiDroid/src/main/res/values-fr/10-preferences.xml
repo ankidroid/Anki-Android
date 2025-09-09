@@ -382,7 +382,7 @@ Elles ne sont pas destinées à la plupart des utilisateurs et restent en anglai
     <string name="reviewer_toolbar_none" maxLength="41" comment="Setting to remove the toolbar from the study screen">Aucun</string>
     <string name="toolbar" maxLength="41">Barre à outils</string>
     <string name="toolbar_actions" maxLength="41">Actions de la barre à outils</string>
-    <string name="toolbar_position" maxLength="41">Position de la barre à outil</string>
+    <string name="toolbar_position" maxLength="28">Position de la barre à outil</string>
     <string name="new_study_screen" maxLength="41">Nouvel écran de révision</string>
     <string name="new_study_screen_summ"><![CDATA[L\'écran de révision amélioré qui succédera à l\'actuel. Quelques caractéristiques de l\'ancien écran ont été modifiées ou retirées. Merci de nous signaler tout <a href="%1$s">feedback</a> ou <a href="%2$s">bugs</a>.]]></string>
     <string name="show_answer_feedback" maxLength="41">Montrer la réaction de réponse</string>

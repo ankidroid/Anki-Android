@@ -382,7 +382,7 @@
     <string name="reviewer_toolbar_none" maxLength="41" comment="Setting to remove the toolbar from the study screen">None</string>
     <string name="toolbar" maxLength="41">ଉପକରଣ-ଦଣ୍ଡିକା</string>
     <string name="toolbar_actions" maxLength="41">ଉପକରଣ-ଦଣ୍ଡିକା କୃତ୍ୟ</string>
-    <string name="toolbar_position" maxLength="41">ଉପକରଣ-ଦଣ୍ଡିକାର ଅଵସ୍ଥିତି</string>
+    <string name="toolbar_position" maxLength="28">ଉପକରଣ-ଦଣ୍ଡିକାର ଅଵସ୍ଥିତି</string>
     <string name="new_study_screen" maxLength="41">ନୂଆ ଅଧ୍ୟୟନ ପରଦା</string>
     <string name="new_study_screen_summ"><![CDATA[Improved study screen that will succeed the current one. Some features of the old screen have been changed or removed. Please report any <a href="%1$s">feedback</a> or <a href="%2$s">bugs</a>.]]></string>
     <string name="show_answer_feedback" maxLength="41">Show answer feedback</string>

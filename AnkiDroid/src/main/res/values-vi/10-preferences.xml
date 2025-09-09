@@ -377,7 +377,7 @@
     <string name="reviewer_toolbar_none" maxLength="41" comment="Setting to remove the toolbar from the study screen">None</string>
     <string name="toolbar" maxLength="41">Thanh công cụ</string>
     <string name="toolbar_actions" maxLength="41">Các hành động trên thanh công cụ</string>
-    <string name="toolbar_position" maxLength="41">Vị trí thanh công cụ</string>
+    <string name="toolbar_position" maxLength="28">Vị trí thanh công cụ</string>
     <string name="new_study_screen" maxLength="41">Màn hình học tập mới</string>
     <string name="new_study_screen_summ"><![CDATA[Màn hình học tập đã được cải tiến sẽ thay thế màn hình hiện tại. Một số tính năng của màn hình cũ đã được thay đổi hoặc loại bỏ. Vui lòng gửi <a href="%1$s">phản hồi</a> hoặc <a href="%2$s">báo lỗi</a> nếu có.]]></string>
     <string name="show_answer_feedback" maxLength="41">Show answer feedback</string>

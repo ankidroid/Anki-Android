@@ -44,8 +44,8 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="backup_deck_no_storage_left">저장공간 부족으로 백업 저장에 실패했습니다. 백업 양을 줄이거나 저장공간을 확보하세요.</string>
-    <string name="storage_warning" comment="Consider keeping the unbreakable space after the digit">Less than %d MB space on your storage left.\nFree some space to avoid data loss.</string>
+    <string name="backup_deck_no_storage_left">저장 공간 부족으로 백업 저장에 실패했습니다. 백업 양을 줄이거나 저장 공간을 확보하세요.</string>
+    <string name="storage_warning" comment="Consider keeping the unbreakable space after the digit">저장 공간이 %dMB 미만 남아 있습니다.\n데이터 손실을 방지하려면 공간을 확보하세요.</string>
     <string name="backup_restore" maxLength="28">백업 파일 복원하기</string>
     <string name="backup_new_collection">새 컬렉션</string>
     <string name="backup_del_collection">컬렉션 삭제하고 새 컬렉션 만들기</string>
@@ -62,7 +62,7 @@
     <string name="backup_restore_select_title">복원할 백업 파일 선택하기</string>
     <string name="backup_restore_no_backups">이 장치에는 사용 가능한 백업 파일이 없습니다. 데스크탑 컴퓨터에 백업 파일이 있다면 AnkiDroid 폴더로 복사하세요.</string>
     <string name="open_collection_failed_title">컬렉션 열리지 않음</string>
-    <string name="corrupt_db_message">안타깝게도 컬렉션이 손상되었습니다.\n\n옵션을 눌러 백업 파일을 복원하세요. 만약 불가능하다면, 수동으로 데이터베이스를 복구하는 방법을 다음에서 알아보세요:\n%1$s</string>
+    <string name="corrupt_db_message">컬렉션이 손상되었습니다.\n\n옵션을 눌러 백업 파일을 복원하세요. 만약 불가능하다면, 수동으로 데이터베이스를 복구하는 방법을 확인해보세요:\n%1$s</string>
     <string name="access_collection_failed_message">컬렉션 접근 중 오류가 발생했습니다. 사소한 버그일 수도 문제가 있을 수도 있습니다.\n\n데이터베이스 검토를 시도해보거나 옵션 버튼을 눌러 백업 파일을 복원하세요. 이 메세지가 계속 나타난다면 오류 보고를 전송하세요:\n%1$s</string>
     <string name="deck_repair_error">컬렉션을 복구할 수 없습니다</string>
 </resources>

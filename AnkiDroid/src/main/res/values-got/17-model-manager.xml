@@ -27,58 +27,58 @@
 <!-- This file contains strings related to the note types. Note type used to be called "model", hence the name of the file. -->
 <resources>
     <!--Menu Labels-->
-    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly." maxLength="28">Haiduns meleino atgaraihtjan</string>
-    <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">Wairþa atgaraihtjan</string>
+    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly." maxLength="28">𐌺𐌹𐌽𐌸𐌹𐌽𐍃 𐌼𐌴𐌻𐌴𐌹𐌽𐍉 𐌰𐍄𐌲𐌰𐍂𐌰𐌹𐌷𐍄𐌾𐌰𐌽</string>
+    <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">𐍅𐌰𐌹𐍂𐌸𐌰 𐌰𐍄𐌲𐌰𐍂𐌰𐌹𐌷𐍄𐌾𐌰𐌽</string>
     <!--Toasts-->
-    <string name="toast_last_model">Ni magt þamma spedistin haidau meleino usqistjan</string>
+    <string name="toast_last_model">𐌽𐌹 𐌼𐌰𐌲𐍄 𐌸𐌹𐌶𐌰𐌹 𐍃𐍀𐌴𐌳𐌹𐍃𐍄𐍉𐌽 𐌺𐌹𐌽𐌸𐌰𐌹 𐌼𐌴𐌻𐌴𐌹𐌽𐍉 𐌿𐍃𐌵𐌹𐍃𐍄𐌾𐌰𐌽</string>
     <string name="toast_last_field">Note types must have at least one field</string>
-    <string name="toast_empty_name">Melei namo þein</string>
-    <string name="toast_duplicate_field">Wairþis namo ju bruht ist</string>
+    <string name="toast_empty_name">𐌼𐌴𐌻𐌴𐌹 𐌽𐌰𐌼𐍉 𐌸𐌴𐌹𐌽</string>
+    <string name="toast_duplicate_field">𐍅𐌰𐌹𐍂𐌸𐌹𐍃 𐌽𐌰𐌼𐍉 𐌾𐌿 𐌱𐍂𐌿𐌷𐍄 𐌹𐍃𐍄</string>
     <!--Plurals-->
     <plurals name="model_browser_types_available">
-        <item quantity="one">%d meleinais haidus ist</item>
-        <item quantity="other">%d meleinais haidjus sind</item>
+        <item quantity="one">%d 𐌼𐌴𐌻𐌴𐌹𐌽𐌰𐌹𐍃 𐌺𐌹𐌽𐌸𐍃 𐌹𐍃𐍄</item>
+        <item quantity="other">%d 𐌼𐌴𐌻𐌴𐌹𐌽𐌰𐌹𐍃 𐌺𐌹𐌽𐌸𐌴𐌹𐍃 𐍃𐌹𐌽𐌳</item>
     </plurals>
     <plurals name="model_browser_of_type">
-        <item quantity="one">%d meleins</item>
-        <item quantity="other">%d meleinos</item>
+        <item quantity="one">%d 𐌼𐌴𐌻𐌴𐌹𐌽𐍃</item>
+        <item quantity="other">%d 𐌼𐌴𐌻𐌴𐌹𐌽𐍉𐍃</item>
     </plurals>
     <!--Browser-->
-    <string name="model_browser_delete">Meleinais haidau usqistjan</string>
-    <string name="model_browser_rename" comment="Rename a note type">Aftrahaitan</string>
-    <string name="model_browser_template">Inmaidei kartos</string>
+    <string name="model_browser_delete">𐌼𐌴𐌻𐌴𐌹𐌽𐌰𐌹𐍃 𐌺𐌹𐌽𐌸𐌰𐌹 𐌿𐍃𐌵𐌹𐍃𐍄𐌾𐌰𐌽</string>
+    <string name="model_browser_rename" comment="Rename a note type">𐌰𐍆𐍄𐍂𐌰𐌷𐌰𐌹𐍄𐌰𐌽</string>
+    <string name="model_browser_template">𐌺𐌰𐍂𐍄𐍉𐍃 𐌹𐌽𐌼𐌰𐌹𐌳𐌾𐌰𐌽</string>
     <!--Rename-->
-    <string name="rename_model">Meleinais haidu aftrahaitan</string>
-    <string name="rename_card_type">Aftrahait kuni kartos</string>
+    <string name="rename_model">𐌼𐌴𐌻𐌴𐌹𐌽𐌰𐌹𐍃 𐌺𐌹𐌽𐌸 𐌰𐍆𐍄𐍂𐌰𐌷𐌰𐌹𐍄𐌰𐌽</string>
+    <string name="rename_card_type">𐌺𐌹𐌽𐌸 𐌺𐌰𐍂𐍄𐍉𐍃 𐌰𐍆𐍄𐍂𐌰𐌷𐌰𐌹𐍄𐌰𐌽</string>
     <!--Language Hint-->
-    <string name="model_field_editor_language_hint_dialog_success_result">Lagei hilpa razdos du %s</string>
+    <string name="model_field_editor_language_hint_dialog_success_result">𐌷𐌹𐌻𐍀𐌰 𐍂𐌰𐌶𐌳𐍉𐍃 𐌻𐌰𐌲𐌾𐌰𐌽 𐌳𐌿 %s</string>
     <!--Field Editing-->
-    <string name="model_field_editor_title">Wairþa inmaidjan</string>
-    <string name="model_field_editor_add" maxLength="28">Biaiauk wairþ</string>
-    <string name="model_field_editor_delete">Wairþa usqistjan</string>
-    <string name="model_field_editor_rename">Wairþ aftrahaitan</string>
-    <string name="model_field_editor_language_hint">Bokabaurdis hilpa razdo lagjan</string>
+    <string name="model_field_editor_title">𐍅𐌰𐌹𐍂𐌸𐌰 𐌹𐌽𐌼𐌰𐌹𐌳𐌾𐌰𐌽</string>
+    <string name="model_field_editor_add" maxLength="28">𐍅𐌰𐌹𐍂𐌸 𐌱𐌹𐌰𐌿𐌺𐌰𐌽</string>
+    <string name="model_field_editor_delete">𐍅𐌰𐌹𐍂𐌸𐌰 𐌿𐍃𐌵𐌹𐍃𐍄𐌾𐌰𐌽</string>
+    <string name="model_field_editor_rename">𐍅𐌰𐌹𐍂𐌸 𐌰𐍆𐍄𐍂𐌰𐌷𐌰𐌹𐍄𐌰𐌽</string>
+    <string name="model_field_editor_language_hint">𐌱𐍉𐌺𐌰𐌱𐌰𐌿𐍂𐌳𐌹𐍃 𐌷𐌹𐌻𐍀𐌰 𐍂𐌰𐌶𐌳𐍉 𐌻𐌰𐌲𐌾𐌰𐌽</string>
     <string name="model_field_editor_reposition_menu">Reposition field</string>
-    <string name="model_field_editor_changing">Aftraananiujanda wairþa</string>
+    <string name="model_field_editor_changing">𐌰𐍆𐍄𐍂𐌰𐌰𐌽𐌰𐌽𐌹𐌿𐌾𐌰𐌽𐌳𐌰 𐍅𐌰𐌹𐍂𐌸𐌰</string>
     <string name="model_field_editor_sort_field">Sort by this field</string>
     <!--Warnings-->
-    <string name="model_delete_warning">Bi sunjai wileizu þamma haidau meleino usqistjan?</string>
-    <string name="field_delete_warning">Bi sunjai wileizu þamma wairþa usqistjan?</string>
+    <string name="model_delete_warning">𐌱𐌹 𐍃𐌿𐌽𐌾𐌰𐌹 𐍅𐌹𐌻𐌴𐌹𐌶𐌿 𐌸𐌹𐌶𐌰𐌹 𐌺𐌹𐌽𐌸𐌰𐌹 𐌼𐌴𐌻𐌴𐌹𐌽𐍉 𐌿𐍃𐌵𐌹𐍃𐍄𐌾𐌰𐌽?</string>
+    <string name="field_delete_warning">𐌱𐌹 𐍃𐌿𐌽𐌾𐌰𐌹 𐍅𐌹𐌻𐌴𐌹𐌶𐌿 𐌸𐌰𐌼𐌼𐌰 𐍅𐌰𐌹𐍂𐌸𐌰 𐌿𐍃𐌵𐌹𐍃𐍄𐌾𐌰𐌽?</string>
     <!--Model Add Suffixes-->
-    <string name="model_browser_add_add">Biaiauk: %1$s</string>
+    <string name="model_browser_add_add">𐌱𐌹𐌰𐌿𐌺𐌰𐌽: %1$s</string>
     <!--This prefix is used for standard note types-->
     <string name="model_browser_add_clone">Clone: %1$s</string>
     <!--Browser Appearance-->
     <string name="card_template_browser_appearance_summary">Enter the template that the card browser will use to display your cards. Use this to display a more concise answer.\n\nA front template of\n“The capital of {{Country}} is:”\ncould be compressed in the card browser to\n“Capital: {{Country}}”</string>
-    <string name="card_template_browser_appearance_question_format">Haidus soknais</string>
-    <string name="card_template_browser_appearance_answer_format">Haidus andahaftais</string>
-    <string name="card_template_browser_appearance_restore_default_dialog">Biuhta wairþa naisjan?</string>
-    <string name="card_template_browser_appearance_saving_note">Þos inmaideinos galagjanda jabai gafastanda faurameleinins karto</string>
+    <string name="card_template_browser_appearance_question_format">𐌷𐌰𐌹𐌳𐌿𐍃 𐍃𐍉𐌺𐌽𐌰𐌹𐍃</string>
+    <string name="card_template_browser_appearance_answer_format">𐌷𐌰𐌹𐌳𐌿𐍃 𐌰𐌽𐌳𐌰𐌷𐌰𐍆𐍄𐌰𐌹𐍃</string>
+    <string name="card_template_browser_appearance_restore_default_dialog">𐌱𐌹𐌿𐌷𐍄𐌰 𐍅𐌰𐌹𐍂𐌸𐌰 𐌽𐌰𐍃𐌾𐌰𐌽?</string>
+    <string name="card_template_browser_appearance_saving_note">𐌸𐍉𐍃 𐌹𐌽𐌼𐌰𐌹𐌳𐌴𐌹𐌽𐍉𐍃 𐌲𐌰𐌻𐌰𐌲𐌾𐌰𐌽𐌳𐌰 𐌾𐌰𐌱𐌰𐌹 𐌲𐌰𐍆𐌰𐍃𐍄𐌰𐌳𐌰 𐍆𐌰𐌿𐍂𐌰𐌼𐌴𐌻𐌴𐌹𐌽𐍃 𐌺𐌰𐍂𐍄𐍉</string>
     <!-- Deck Override -->
-    <string name="card_template_editor_deck_override_on">Ufarmeleins kartahuzdis (ana)</string>
-    <string name="card_template_editor_deck_override_off">Ufarmeleins kartahuzdis (ut)</string>
-    <string name="model_manager_deck_override_added_message">Lagei ‘%1$s’ biuht kartahuzd du ‘%2$s’</string>
-    <string name="model_manager_deck_override_removed_message">Usnam biuht kartahuzd faur ‘%s’</string>
-    <string name="deck_override_explanation">Kartahuzd waljan du lagjan niujos ‘%s’ kartos in</string>
-    <string name="deck_picker_dialog_filter_decks" maxLength="28">Filter decks</string>
+    <string name="card_template_editor_deck_override_on">𐌿𐍆𐌰𐍂𐌼𐌴𐌻𐌴𐌹𐌽𐍃 𐌺𐌰𐍂𐍄𐌰𐌷𐌿𐌶𐌳𐌹𐍃 (𐌰𐌽𐌰)</string>
+    <string name="card_template_editor_deck_override_off">𐌿𐍆𐌰𐍂𐌼𐌴𐌻𐌴𐌹𐌽𐍃 𐌺𐌰𐍂𐍄𐌰𐌷𐌿𐌶𐌳𐌹𐍃 (𐌿𐍄)</string>
+    <string name="model_manager_deck_override_added_message">𐌻𐌰𐌲𐌴𐌹 ‘%1$s’ 𐌱𐌹𐌿𐌷𐍄 𐌺𐌰𐍂𐍄𐌰𐌷𐌿𐌶𐌳 𐌳𐌿 ‘%2$s’</string>
+    <string name="model_manager_deck_override_removed_message">𐌿𐍃𐌽𐌰𐌼 𐌱𐌹𐌿𐌷𐍄 𐌺𐌰𐍂𐍄𐌰𐌷𐌿𐌶𐌳 𐍆𐌰𐌿𐍂 ‘%s’</string>
+    <string name="deck_override_explanation">𐌺𐌰𐍂𐍄𐌰𐌷𐌿𐌶𐌳 𐍅𐌰𐌻𐌾𐌰𐌽 𐌳𐌿 𐌻𐌰𐌲𐌾𐌰𐌽 𐌽𐌹𐌿𐌾𐍉𐍃  ‘%s’ 𐌺𐌰𐍂𐍄𐍉𐍃 𐌹𐌽</string>
+    <string name="deck_picker_dialog_filter_decks" maxLength="28">𐍃𐌴𐌹𐍈𐌰𐌽 𐌺𐌰𐍂𐍄𐌰𐌷𐌿𐌶𐌳𐌰</string>
 </resources>

@@ -381,7 +381,7 @@
     <string name="reviewer_toolbar_none" maxLength="41" comment="Setting to remove the toolbar from the study screen">Nenhum</string>
     <string name="toolbar" maxLength="41">Barra de ferramentas</string>
     <string name="toolbar_actions" maxLength="41">Ações da Barra de tarefas</string>
-    <string name="toolbar_position" maxLength="41">Posição da Barra de tarefas</string>
+    <string name="toolbar_position" maxLength="28">Posição da Barra de tarefas</string>
     <string name="new_study_screen" maxLength="41">Nova tela de estudo</string>
     <string name="new_study_screen_summ"><![CDATA[Nova tela de estudo aprimorada que substituirá a atual. Alguns recursos da tela antiga foram alterados ou removidos. Por favor, envie qualquer <a href="%1$s">sugestão</a> ou <a href="%2$s">relato de erro</a>.]]></string>
     <string name="show_answer_feedback" maxLength="41">Mostre feedback da resposta</string>

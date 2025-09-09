@@ -394,7 +394,7 @@
     <string name="reviewer_toolbar_none" maxLength="41" comment="Setting to remove the toolbar from the study screen">لا خِيار</string>
     <string name="toolbar" maxLength="41">شريط الأدوات</string>
     <string name="toolbar_actions" maxLength="41">إجراءات شريط الأدوات</string>
-    <string name="toolbar_position" maxLength="41">مكان شريط الأدوات</string>
+    <string name="toolbar_position" maxLength="28">مكان شريط الأدوات</string>
     <string name="new_study_screen" maxLength="41">شاشة الدراسة الجديدة</string>
     <string name="new_study_screen_summ"><![CDATA[شاشة الدراسة المحسنة التي ستُستبدل بالشاشة الحالية. تم تغيير أو حذف بعض ميزات الشاشة القديمة. نرجو أن تُبَلِّغنا <a href="%1$s">برأيك</a> أو عن أي <a href="%2$s">خلل</a> تجده.]]></string>
     <string name="show_answer_feedback" maxLength="41">إظهار توكيد الإجابة</string>

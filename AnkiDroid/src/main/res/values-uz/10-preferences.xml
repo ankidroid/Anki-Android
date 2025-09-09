@@ -380,7 +380,7 @@
     <string name="reviewer_toolbar_none" maxLength="41" comment="Setting to remove the toolbar from the study screen">Hech qaysi</string>
     <string name="toolbar" maxLength="41">Asboblar paneli</string>
     <string name="toolbar_actions" maxLength="41">Asboblar paneli amallari</string>
-    <string name="toolbar_position" maxLength="41">Asboblar paneli joylashuvi</string>
+    <string name="toolbar_position" maxLength="28">Asboblar paneli joylashuvi</string>
     <string name="new_study_screen" maxLength="41">Yangi oʻrganish ekrani</string>
     <string name="new_study_screen_summ"><![CDATA[Oʻrganish ekrani takomillashtirildi va joriy ekranni almashtiradi. Eski ekranning baʼzi xususiyatlari oʻzgartirildi yoki oʻchirildi. Iltimos, <a href="%1$s">fikr-mulohazalaringiz</a> yoki <a href="%2$s">baglar</a> haqida xabar bering.]]></string>
     <string name="show_answer_feedback" maxLength="41">Show answer feedback</string>

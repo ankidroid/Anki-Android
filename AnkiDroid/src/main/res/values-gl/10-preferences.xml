@@ -381,7 +381,7 @@
     <string name="reviewer_toolbar_none" maxLength="41" comment="Setting to remove the toolbar from the study screen">Sen barra</string>
     <string name="toolbar" maxLength="41">Barra de ferramentas</string>
     <string name="toolbar_actions" maxLength="41">Accións da barra de ferramentas</string>
-    <string name="toolbar_position" maxLength="41">Posición da barra de ferramentas</string>
+    <string name="toolbar_position" maxLength="28">Posición da barra de ferramentas</string>
     <string name="new_study_screen" maxLength="41">Nova pantalla de estudo</string>
     <string name="new_study_screen_summ"><![CDATA[Esta pantalla de estudo mellorada substituirá a actual. Algunhas funcións da versión anterior foron cambiadas ou eliminadas. Por favor, informa de calquera <a href="%1$s">suxestión</a> ou <a href="%2$s">erro</a>]]></string>
     <string name="show_answer_feedback" maxLength="41">Amosar explicación da resposta</string>

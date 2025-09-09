@@ -46,10 +46,10 @@
 <resources>
     <!-- CardBrowser -->
     <plurals name="card_browser_subtitle">
-        <item quantity="other">%d 카드 표시됨</item>
+        <item quantity="other">%d개 카드 표시됨</item>
     </plurals>
     <plurals name="card_browser_subtitle_notes_mode">
-        <item quantity="other">%d 카드 표시됨</item>
+        <item quantity="other">%d개 노트 표시됨</item>
     </plurals>
     <string name="card_browser_all_decks">모든 카드 덱</string>
     <plurals name="card_browser_delete_notes">
@@ -88,11 +88,11 @@
         <item>오답 횟수</item>
         <item>덱 이름으로</item>
     </string-array>
-    <string name="manage_browser_column">Manage column</string>
-    <string name="no_columns_available">No columns available</string>
+    <string name="manage_browser_column">열 관리</string>
+    <string name="no_columns_available">사용 가능한 열이 없습니다.</string>
     <string name="card_browser_select_all" maxLength="28">모두 선택하기</string>
     <string name="card_browser_select_none" maxLength="28">모두 선택하지 않기</string>
-    <string name="card_browser_no_cards_in_deck">덱 \'%s\'에 카드 없음</string>
+    <string name="card_browser_no_cards_in_deck">\'%s\' 덱에 카드가 없습니다</string>
     <string name="card_browser_search_all_decks">모든 덱 검색하기</string>
     <string name="card_browser_unknown_deck_name">알 수 없음</string>
     <string name="card_browser_truncate" comment="allows users to show less of a field value">내용 간략히 보기</string>
@@ -116,6 +116,6 @@
     <string name="user_potential_columns">사용가능</string>
     <string name="include_column">열 포함하기</string>
     <string name="exclude_column">열 제외하기</string>
-    <string name="save_changes_message">Please save your changes first</string>
+    <string name="save_changes_message">변경사항을 먼저 저장하세요</string>
     <string name="browser_find_replace_loading_fields">필드 이름 검색 중&#8230;</string>
 </resources>
