@@ -125,7 +125,7 @@ abstract class NavigationDrawerActivity :
 
     // Navigation drawer initialisation
     @Suppress("deprecation", "API35 properly handle edge-to-edge")
-    protected fun initNavigationDrawer(mainView: View) {
+    protected fun initNavigationDrawer(mainView: View = findViewById(android.R.id.content)) {
         // Create inherited navigation drawer layout here so that it can be used by parent class
         drawerLayout = mainView.findViewById(R.id.drawer_layout)
         // set a custom shadow that overlays the main content when the drawer opens

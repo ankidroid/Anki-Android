@@ -317,7 +317,7 @@ open class CardBrowser :
         val launchOptions = intent?.toCardBrowserLaunchOptions() // must be called after super.onCreate()
 
         setContentView(layout)
-        initNavigationDrawer(findViewById(android.R.id.content))
+        initNavigationDrawer()
 
         noteEditorFrame = findViewById(R.id.note_editor_frame)
 

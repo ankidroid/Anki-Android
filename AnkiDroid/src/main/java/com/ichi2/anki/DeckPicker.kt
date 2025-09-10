@@ -542,13 +542,12 @@ open class DeckPicker :
         //  This method triggers backups, sync, and may re-show dialogs
         //  that may have been dismissed. Make this run only once?
         handleStartup()
-        val mainView = findViewById<View>(android.R.id.content)
 
         studyoptionsFrame = findViewById(R.id.studyoptions_fragment)
         registerReceiver()
 
         // create inherited navigation drawer layout here so that it can be used by parent class
-        initNavigationDrawer(mainView)
+        initNavigationDrawer()
         title = resources.getString(R.string.app_name)
 
         deckPickerContent = findViewById(R.id.deck_picker_content)
