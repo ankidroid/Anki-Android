@@ -498,7 +498,7 @@ class CardTemplateEditorTest : RobolectricTest() {
 
             // Delete two pre-existing templates for real now - but still without saving it out, should work fine
             advanceRobolectricLooper()
-            testEditor.viewPager.currentItem = 0
+            testEditor.mainBinding.cardTemplateEditorPager.currentItem = 0
             assertTrue("Unable to click?", shadowTestEditor.clickMenuItem(R.id.action_delete))
             advanceRobolectricLooper()
             assertEquals(
@@ -509,7 +509,7 @@ class CardTemplateEditorTest : RobolectricTest() {
             clickAlertDialogButton(DialogInterface.BUTTON_POSITIVE, true)
             advanceRobolectricLooper()
             advanceRobolectricLooper()
-            testEditor.viewPager.currentItem = 0
+            testEditor.mainBinding.cardTemplateEditorPager.currentItem = 0
             assertTrue("Unable to click?", shadowTestEditor.clickMenuItem(R.id.action_delete))
             advanceRobolectricLooper()
             assertEquals(
@@ -600,7 +600,7 @@ class CardTemplateEditorTest : RobolectricTest() {
 
             // Delete ord 1 / 'Card 2' and check the message
             val shadowTestEditor = shadowOf(testEditor)
-            testEditor.viewPager.currentItem = 1
+            testEditor.mainBinding.cardTemplateEditorPager.currentItem = 1
             assertTrue("Unable to click?", shadowTestEditor.clickMenuItem(R.id.action_delete))
             advanceRobolectricLooper()
             assertEquals(
@@ -634,7 +634,7 @@ class CardTemplateEditorTest : RobolectricTest() {
             assertEquals("Note type should have 2 templates", 2, testEditor.tempNoteType?.templateCount)
 
             // Delete ord 1 / 'Card 2' again and check the message - it's in the same spot as the pre-existing template but there are no cards actually associated
-            testEditor.viewPager.currentItem = 1
+            testEditor.mainBinding.cardTemplateEditorPager.currentItem = 1
             assertTrue("Unable to click?", shadowTestEditor.clickMenuItem(R.id.action_delete))
             advanceRobolectricLooper()
             assertEquals(
@@ -758,7 +758,7 @@ class CardTemplateEditorTest : RobolectricTest() {
     ) {
         assertTrue("Unable to click?", shadowTestEditor.clickMenuItem(R.id.action_add))
         advanceRobolectricLooper()
-        val ordinal = testEditor.viewPager.currentItem
+        val ordinal = testEditor.mainBinding.cardTemplateEditorPager.currentItem
         val numAffectedCards =
             if (!testEditor.tempNoteType.isOrdinalPendingAdd(ordinal)) {
                 col.notetypes.tmplUseCount(testEditor.tempNoteType!!.notetype, ordinal)
