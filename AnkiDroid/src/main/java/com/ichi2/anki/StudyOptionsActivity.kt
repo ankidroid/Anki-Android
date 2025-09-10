@@ -36,7 +36,7 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 
 class StudyOptionsActivity :
-    AnkiActivity(),
+    AnkiActivity(R.layout.studyoptions),
     ChangeManager.Subscriber {
     private var undoState = UndoState()
 
@@ -45,7 +45,6 @@ class StudyOptionsActivity :
             return
         }
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.studyoptions)
         enableToolbar().apply { title = "" }
         if (savedInstanceState == null) {
             loadStudyOptionsFragment()
