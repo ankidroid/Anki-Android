@@ -566,8 +566,8 @@ abstract class AbstractFlashcardViewer :
         server = AnkiServer(this, port).also { it.start() }
         // Make ACTION_PROCESS_TEXT for in-app searching possible on > Android 4.0
         delegate.isHandleNativeActionModesEnabled = true
-        val mainView = findViewById<View>(android.R.id.content)
-        initNavigationDrawer(mainView)
+
+        initNavigationDrawer()
         previousAnswerIndicator = PreviousAnswerIndicator(findViewById(R.id.chosen_answer))
         shortAnimDuration = resources.getInteger(android.R.integer.config_shortAnimTime)
         gestureDetectorImpl = LinkDetectingGestureDetector()
