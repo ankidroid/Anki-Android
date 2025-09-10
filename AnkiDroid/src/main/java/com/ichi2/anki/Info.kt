@@ -26,7 +26,7 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.activity.OnBackPressedCallback
-import com.google.android.material.button.MaterialButton
+import com.ichi2.anki.databinding.InfoBinding
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
@@ -47,10 +47,10 @@ private const val CHANGE_LOG_URL = "https://docs.ankidroid.org/changelog.html"
 class Info :
     AnkiActivity(),
     BaseSnackbarBuilderProvider {
-    private lateinit var webView: WebView
+    private lateinit var binding: InfoBinding
 
     override val baseSnackbarBuilder: SnackbarBuilder = {
-        anchorView = findViewById(R.id.info_buttons)
+        anchorView = binding.buttons
     }
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -59,6 +59,7 @@ class Info :
             return
         }
         super.onCreate(savedInstanceState)
+        binding = InfoBinding.inflate(layoutInflater)
         val res = resources
         val type = intent.getIntExtra(TYPE_EXTRA, TYPE_NEW_VERSION)
         // If the page crashes, we do not want to display it again (#7135 maybe)
@@ -66,15 +67,12 @@ class Info :
             val prefs = this.baseContext.sharedPrefs()
             InitialActivity.setUpgradedToLatestVersion(prefs)
         }
-        setContentView(R.layout.info)
+        setViewBinding(binding)
         val mainView = findViewById<View>(android.R.id.content)
         enableToolbar(mainView)
-        findViewById<MaterialButton>(
-            R.id.info_donate,
-        ).setOnClickListener { openUrl(R.string.link_opencollective_donate) }
+        binding.donate.setOnClickListener { openUrl(R.string.link_opencollective_donate) }
         title = "$appName v$pkgVersionName"
-        webView = findViewById(R.id.info)
-        webView.webChromeClient =
+        binding.webView.webChromeClient =
             object : WebChromeClient() {
                 override fun onProgressChanged(
                     view: WebView,
@@ -86,7 +84,7 @@ class Info :
                     }
                 }
             }
-        findViewById<MaterialButton>(R.id.left_button).run {
+        binding.leftButton.run {
             if (canOpenMarketUri()) {
                 setText(R.string.info_rate)
                 setOnClickListener {
@@ -102,7 +100,7 @@ class Info :
         val onBackPressedCallback =
             object : OnBackPressedCallback(false) {
                 override fun handleOnBackPressed() {
-                    if (webView.canGoBack()) webView.goBack()
+                    if (binding.webView.canGoBack()) binding.webView.goBack()
                 }
             }
         // Apply Theme colors
@@ -113,20 +111,20 @@ class Info :
         val anchorTextThemeColor = Themes.getColorFromAttr(this, android.R.attr.colorAccent)
         val anchorTextColor = anchorTextThemeColor.toRGBHex()
 
-        webView.setBackgroundColor(backgroundColor)
-        webView.settings.allowFileAccess = true
-        webView.settings.allowContentAccess = true
+        binding.webView.setBackgroundColor(backgroundColor)
+        binding.webView.settings.allowFileAccess = true
+        binding.webView.settings.allowContentAccess = true
         setRenderWorkaround(this)
         when (type) {
             TYPE_NEW_VERSION -> {
-                findViewById<MaterialButton>(R.id.right_button).run {
+                binding.rightButton.run {
                     text = res.getString(R.string.dialog_continue)
                     setOnClickListener { close() }
                 }
                 val background = backgroundColor.toRGBHex()
-                webView.loadUrl("/android_asset/changelog.html")
-                webView.settings.javaScriptEnabled = true
-                webView.webViewClient =
+                binding.webView.loadUrl("/android_asset/changelog.html")
+                binding.webView.settings.javaScriptEnabled = true
+                binding.webView.webViewClient =
                     object : WebViewClient() {
                         override fun onPageFinished(
                             view: WebView,
@@ -136,7 +134,7 @@ class Info :
                          *  or else it will break in any one mode.
                          */
                             @Suppress("ktlint:standard:max-line-length")
-                            webView.loadUrl(
+                            binding.webView.loadUrl(
                                 """javascript:document.body.style.setProperty("color", "$textColor");
                                     x=document.getElementsByTagName("a");
                                     for(i=0; i<x.length; i++){
