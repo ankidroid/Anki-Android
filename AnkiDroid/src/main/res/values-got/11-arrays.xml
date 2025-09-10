@@ -53,7 +53,7 @@
     <string name="theme_follow_system">𐍃𐍅𐍃𐍄𐌴𐌼𐌰𐌹 𐌻𐌰𐌹𐍃𐍄𐌾𐌰𐌽</string>
     <!-- day_theme_labels -->
     <string name="day_theme_light">𐌻𐌹𐌿𐌷𐍄</string>
-    <string name="day_theme_plain">Plain</string>
+    <string name="day_theme_plain">𐌰𐍆𐌰𐍂 𐌱𐌹𐌿𐌷𐍄𐌾𐌰</string>
     <!-- night_theme_labels -->
     <string name="night_theme_black">𐍃𐍅𐌰𐍂𐍄</string>
     <string name="night_theme_dark">𐍂𐌹𐌵𐌹𐌶𐌴𐌹𐌽</string>

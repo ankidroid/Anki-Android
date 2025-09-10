@@ -93,11 +93,11 @@
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">𐍃𐌺𐌰𐍀𐌾𐌰𐌽</string>
     <string name="dialog_positive_delete" maxLength="28">𐌿𐍃𐌵𐌹𐍃𐍄𐌾𐌰𐌽</string>
     <!-- Currently unsued, should be useful in the future -->
-    <string name="dialog_positive_disable" tools:ignore="UnusedResources">Disable</string>
+    <string name="dialog_positive_disable" tools:ignore="UnusedResources">𐌿𐌽𐌲𐌰𐍄𐌰𐌿𐌾𐌰𐌽</string>
     <string name="dialog_positive_overwrite">𐌿𐍆𐌰𐍂𐌼𐌴𐌻𐌾𐌰𐌽</string>
     <string name="dialog_positive_repair">𐌲𐌰𐌱𐍉𐍄𐌾𐌰𐌽</string>
     <string name="dialog_positive_replace">𐌼𐌹𐌸𐍃𐌰𐍄𐌾𐌰𐌽</string>
-    <string name="dialog_collection_path_not_dir">The path specified wasn’t a valid directory</string>
+    <string name="dialog_collection_path_not_dir">𐌻𐌰𐌹𐌳𐌰 𐍃𐌴𐌹 𐌲𐌰𐍂𐌰𐌹𐌷𐍄𐌹𐌳𐌰 𐌽𐌹 𐍅𐌰𐍃 𐌳𐌹𐍂𐌰𐌹𐌺𐍄𐌰𐌿𐍂𐌹 𐍂𐌰𐌹𐌷𐍄</string>
     <string name="dialog_invalid_custom_certificate">The provided text does not resolve to a valid PEM-encoded X509 certificate</string>
     <string name="dialog_invalid_custom_certificate_title">Error parsing certificate</string>
     <string name="dialog_updated_custom_certificate">Certificate updated</string>
@@ -116,14 +116,14 @@
     <!-- Tags Dialog Options -->
     <string name="tags_dialog_option_all_cards">𐌰𐌻𐌻𐍉𐍃 𐌺𐌰𐍂𐍄𐍉𐍃</string>
     <string name="tags_dialog_option_new_cards">𐌽𐌹𐍅𐌹</string>
-    <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">Due</string>
+    <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">𐌽𐌰𐌿𐌷</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">𐌱𐌹𐌲𐌹𐍄𐌰𐌽𐌳𐌰 𐌻𐌰𐌿𐍃𐍉𐍃 𐌺𐌰𐍂𐍄𐍉𐍃&#8230;</string>
     <!-- Multimedia - Edit Field Activity -->
     <string name="multimedia_editor_audio_permission_refused">𐌰𐍄𐌲𐌰𐌲𐌲 𐌳𐌿 𐌼𐌴𐌹𐌺𐍂𐍉𐍆𐍉𐌽 𐌽𐌹 𐍅𐌰𐍃 𐌼𐌰𐌷𐍄𐌴𐌹𐌲.</string>
     <string name="multimedia_editor_failed">𐌽𐌹 𐌼𐌰𐌷𐍄𐌰 𐌹𐌽𐌼𐌰𐌹𐌳𐌾𐍉 𐌼𐌰𐌽𐌰𐌲𐌼𐌰𐌹𐌳𐌾𐌴 𐌿𐍃𐌻𐌿𐌺𐌰𐌽</string>
     <!-- Multimedia - Audio View -->
-    <string name="multimedia_editor_audio_permission_denied">Audio recording permission denied</string>
+    <string name="multimedia_editor_audio_permission_denied">𐌰𐌽𐌳𐌻𐌴𐍄 𐌲𐌰𐌼𐌰𐌿𐌳𐌴𐌹𐌽𐌰𐌹𐍃 𐌰𐍅𐌳𐌾𐍉𐌽𐍃 𐌲𐌹𐌱𐌰𐌽 𐌽𐌹𐍃𐍄</string>
     <string name="permission_denied">𐌰𐌽𐌳𐌻𐌴𐍄 𐌲𐌹𐌱𐌰𐌽 𐌽𐌹𐍃𐍄</string>
     <string name="recording_permission_denied_message">Microphone permission is necessary for the “Record voice” feature. Please grant it in the app settings.</string>
     <!-- Database Integrity Check -->
@@ -149,14 +149,14 @@
     <string name="error_deleting_image">𐌰𐌹𐍂𐌶𐌴𐌹 𐍅𐌰𐍂𐌸 𐌿𐍃𐌵𐌹𐍃𐍄𐌾𐌰𐌽 𐍆𐍂𐌹𐍃𐌰𐌷𐍄𐌰𐌹</string>
     <string name="failed_to_apply_background_image">Failed to apply background image %s</string>
     <string name="background_image_too_large">Deck Picker background too large</string>
-    <string name="image_max_size_allowed" comment="Consider keeping the unbreakable space after the digit">Maximum image size %d MB allowed</string>
+    <string name="image_max_size_allowed" comment="Consider keeping the unbreakable space after the digit">𐍃𐍉 𐌼𐌰𐌹𐍃𐍄𐍉 𐌼𐌹𐌺𐌹𐌻𐌴𐌹 𐍆𐍂𐌹𐍃𐌰𐌷𐍄𐌰𐌹𐍃 %d 𐌼𐌱 𐌰𐌽𐌳𐌻𐌴𐍄𐌰𐌳𐌰</string>
     <string name="image_dimensions_too_large">Image dimensions are too large (%1$d × %2$d)</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
     <string name="intent_handler_failed_no_storage_permission">Missing required storage permission. Please grant storage permission then retry your action.</string>
     <!-- Boot Service -->
     <string name="boot_service_failed_to_schedule_notifications">Failed to schedule reminders</string>
-    <string name="boot_service_too_many_notifications">Too many reminders scheduled. Some will not appear</string>
+    <string name="boot_service_too_many_notifications">𐌿𐍆𐌰𐍂𐍆𐌹𐌻𐌿 𐌲𐌰𐌼𐌰𐌿𐌳𐌾𐌰𐌽𐌳𐌰𐌽𐍃 𐌹𐌽 𐌲𐌰𐍂𐌴𐌷𐍃𐌽𐌰𐌹. 𐍃𐌿𐌼𐌰𐌹 𐌽𐌹 𐌲𐌰𐌱𐌰𐌹𐍂𐌷𐍄𐌾𐌰𐌽𐌳 𐍃𐌹𐌺</string>
     <!-- Locale Selection Dialog -->
     <string name="locale_selection_dialog_title_new">𐍂𐌰𐌶𐌳𐌰 𐌻𐌰𐌲𐌾𐌰𐌽</string>
     <string name="locale_selection_dialog_summary">Some multilingual keyboards, such as GBoard support changing language when editing text\n\nPlease request the “setImeHintLocales” feature from your keyboard manufacturer if your keyboard does not change language.</string>
@@ -194,7 +194,7 @@
     </plurals>
     <string name="metered_sync_data_warning">𐌼𐌰𐌷𐍄𐌴𐌹𐌲 𐌹𐍃𐍄 𐌸𐌰𐍄𐌴𐌹 𐌲𐌹𐌱𐌰𐌽𐌳𐍃 𐌲𐌰𐌽𐌰𐍄𐌾𐌹𐍃 𐌸𐌴𐌹𐌽𐍃 𐌽𐌹𐌼𐌹𐌸 𐌰𐍆 𐌸𐌿𐍃 𐍃𐌺𐌰𐍄𐍄𐌰𐌽𐍃 𐌱𐍂𐌿𐌺𐌴𐌹𐌽𐌰𐌹 𐌳𐌰𐍄𐍉𐍃</string>
     <string name="deck_picker_new">𐍂𐌰𐌸𐌾𐍉 𐌺𐌰𐍂𐍄𐍉 𐌽𐌹𐌿𐌾𐌰𐌹𐌶𐍉 𐍃𐌰𐌹𐍈𐌰𐌽 𐌹𐌽 𐌸𐌰𐌼𐌼𐌰 𐌺𐌰𐍂𐍄𐌰𐌷𐌿𐌶𐌳𐌰 𐌷𐌹𐌼𐌼𐌰 𐌳𐌰𐌲𐌰.</string>
-    <string name="deck_picker_rev">Number of cards due today in this deck.</string>
+    <string name="deck_picker_rev">𐍂𐌰𐌸𐌾𐍉 𐌺𐌰𐍂𐍄𐍉 𐌸𐍉𐌶𐌴𐌹 𐍃𐌺𐌰𐌻𐍄 𐍄𐌰𐌿𐌾𐌰𐌽 𐌹𐌽 𐌺𐌰𐍂𐍄𐌰𐌷𐌿𐌶𐌳𐌰 𐌷𐌹𐌼𐌼𐌰 𐌳𐌰𐌲𐌰.</string>
     <string name="deck_picker_lrn">𐍂𐌰𐌸𐌾𐍉 𐌺𐌰𐍂𐍄𐍉 𐌹𐌽 𐌻𐌰𐌹𐍃𐌴𐌹𐌽𐌰𐌹 𐌸𐌹𐍃 𐌺𐌰𐍂𐍄𐌰𐌷𐌿𐌶𐌳𐌹𐍃.</string>
     <!-- This description is valid fos
     sched V2. For V1, it was counting the number of repetitions of cards in learning. This approximation is acceptable
@@ -252,6 +252,6 @@
     <!-- Tts playback error dialog -->
     <string name="tts_error_dialog_title">𐍂𐌰𐌶𐌳𐌰 𐍃𐍄𐍉𐌳𐌹𐌳𐌰 𐌽𐌹𐍃𐍄</string>
     <string name="tts_error_dialog_reason_text">The text to speech engine <b>%1$s</b> does not support the following language: <b>%2$s</b></string>
-    <string name="tts_error_dialog_change_button_text">Change engine</string>
+    <string name="tts_error_dialog_change_button_text">𐌹𐌽𐌲𐌰𐌹𐌽 𐌹𐌽𐌼𐌰𐌹𐌳𐌾𐌰𐌽</string>
     <string name="tts_error_dialog_supported_voices_button_text">𐌼𐌰𐌷𐍄𐌴𐌹𐍃 𐍃𐍄𐌹𐌱𐌽𐍉𐍃</string>
 </resources>

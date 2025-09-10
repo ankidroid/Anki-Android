@@ -56,13 +56,13 @@
     <!-- preferences.xml categories-->
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">𐌲𐌰𐌼𐌰𐌹𐌽</string>
     <string name="pref_cat_studying" maxLength="41">𐌻𐌰𐌹𐍃𐌴𐌹𐌽𐍃</string>
-    <string name="pref_cat_system_wide" maxLength="41">System-wide</string>
+    <string name="pref_cat_system_wide" maxLength="41">𐌰𐌻𐌻𐌰𐌹 𐍃𐍅𐍃𐍄𐌴𐌼𐌰𐌹</string>
     <string name="pref_cat_reviewing" maxLength="41">𐌰𐍆𐍄𐍂𐌰𐍃𐌹𐌿𐌽𐍃</string>
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">𐌲𐌰𐌻𐌴𐌹𐌺</string>
     <string name="pref_cat_scheduling" maxLength="41">𐌲𐌰𐍂𐌴𐌷𐍃𐌽𐍃</string>
     <string name="pref_cat_whiteboard" maxLength="41">𐍈𐌴𐌹𐍄𐌰𐌱𐌰𐌿𐍂𐌳</string>
     <string name="pref_cat_appearance" maxLength="41">𐍅𐌻𐌹𐍄𐍃</string>
-    <string name="pref_cat_themes" maxLength="41">Themes</string>
+    <string name="pref_cat_themes" maxLength="41">𐌸𐌰𐌹𐌼𐍉𐍃</string>
     <string name="pref_cat_gestures" maxLength="41">𐍄𐌰𐌹𐌺𐌽𐌴𐌹𐍃</string>
     <string name="pref_cat_controls" maxLength="41">𐍃𐍄𐌹𐌿𐍂𐌹</string>
     <string name="pref_cat_advanced" maxLength="41">𐍆𐍂𐌰𐌼𐌲𐌰𐌷𐍄</string>
@@ -72,18 +72,18 @@
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width" maxLength="41">𐍃𐍄𐍂𐌹𐌺𐌹𐍃 𐌱𐍂𐌰𐌹𐌳𐌴𐌹</string>
     <string name="use_input_tag" maxLength="41">𐌰𐌽𐌳𐌰𐌷𐌰𐍆𐍄 𐌹𐌽 𐌺𐌰𐍂𐍄𐌰𐌹 𐌼𐌴𐌻𐌾𐌰𐌽</string>
-    <string name="use_input_tag_summ">Use a text input box inside the card to type in the answer</string>
+    <string name="use_input_tag_summ">𐌱𐍉𐌺𐍉 𐌹𐌽𐌼𐌴𐌻𐌴𐌹𐌽𐌰𐌹𐍃 𐌰𐍂𐌺𐌹𐌽𐍃 𐌹𐌽 𐌺𐌰𐍂𐍄𐌰𐌹 𐌱𐍂𐌿𐌺𐌾𐌰𐌽 𐌳𐌿 𐌼𐌴𐌻𐌾𐌰𐌽 𐌰𐌽𐌳𐌰𐌷𐌰𐍆𐍄</string>
     <string name="reset_languages" maxLength="41">𐍂𐌰𐌶𐌳𐍉𐍃 𐌰𐍆𐍄𐍂𐌰𐌻𐌰𐌲𐌾𐌰𐌽</string>
     <string name="reset_languages_summ">𐍂𐌰𐌶𐌳𐌰𐌿𐍃𐌸𐍂𐍉𐌸𐌴𐌹𐌽𐍃 𐌰𐍆𐍄𐍂𐌰𐌻𐌰𐌲𐌾𐌰𐌽 (𐌱𐍉𐌺𐍉-𐌳𐌿-𐍃𐍄𐌹𐌱𐌽𐌰𐌹 𐌾𐌰𐌷 𐍅𐌰𐌿𐍂𐌳𐌰𐌱𐍉𐌺𐍉𐌼) 𐌰𐌻𐌻𐌰𐌹𐌼 𐌺𐌰𐍂𐍄𐌰𐌷𐌿𐌶𐌳𐌰𐌼</string>
     <string name="reset_languages_question">𐌰𐌻𐌻𐍉𐍃 𐍂𐌰𐌶𐌳𐌰𐌿𐍃𐌸𐍂𐍉𐌸𐌴𐌹𐌽𐌹𐌽𐍃 𐌰𐍆𐍄𐍂𐌰𐌻𐌰𐌲𐌾𐌰𐌽?</string>
-    <string name="reset_confirmation">All states reset</string>
+    <string name="reset_confirmation">𐌰𐌻𐌻𐍉𐍃 𐍃𐍄𐌰𐍃𐍃𐌹𐌽𐍃 𐌰𐍆𐍄𐍂𐌰𐌻𐌰𐌲𐌾𐌰𐌽</string>
     <string name="card_zoom" maxLength="41">Card zoom</string>
     <string name="image_zoom" maxLength="41">Image zoom</string>
-    <string name="button_size" maxLength="41">Answer button size</string>
+    <string name="button_size" maxLength="41">𐌰𐌽𐌳𐌰𐌷𐌰𐍆𐍄𐌰𐌹𐍃 𐌷𐌰𐌿𐌱𐌹𐌳𐌹𐌻𐍉𐌽𐍃 𐌼𐌹𐌺𐌹𐌻𐌴𐌹</string>
     <string name="card_browser_font_size" maxLength="41">Card browser font scaling</string>
     <string name="card_browser_hide_media" maxLength="41">Display filenames in card browser</string>
     <string name="card_browser_hide_media_summary">Display audio filenames in the card browser question/answer fields</string>
-    <string name="col_path" maxLength="41">AnkiDroid directory</string>
+    <string name="col_path" maxLength="41">𐌰𐌽𐌺𐌴𐌹𐌳𐍂𐌰𐌿𐌳 𐌳𐌹𐍂𐌰𐌹𐌺𐍄𐌰𐌿𐍂𐌹</string>
     <string name="fullscreen_review" maxLength="41">𐍆𐌿𐌻𐌻𐌰𐍃𐌺𐌰𐌹𐍂𐌼𐌹𐍃 𐌼𐍉𐌳𐌿𐍃</string>
     <string name="full_screen_off">𐌿𐍄</string>
     <string name="full_screen_system">Hide the system bars</string>
@@ -143,22 +143,22 @@
     <string name="metered_sync_summary">If disabled, you will be warned if you try to sync on a metered connection</string>
     <string name="backup_limits_frequency">𐍈𐌰𐌽 𐍆𐌹𐌻𐌿</string>
     <string name="backup_limits_lifetime">𐌻𐌹𐌱𐌰𐌹𐌽𐌹𐌸𐌴𐌹𐌷𐍃</string>
-    <string name="app_theme" maxLength="41">Theme</string>
-    <string name="day_theme" maxLength="41">Day theme</string>
-    <string name="night_theme" maxLength="41">Night theme</string>
+    <string name="app_theme" maxLength="41">𐌸𐌰𐌹𐌼𐌰</string>
+    <string name="day_theme" maxLength="41">𐌳𐌰𐌲𐌰𐌸𐌰𐌹𐌼𐌰</string>
+    <string name="night_theme" maxLength="41">𐌽𐌰𐌷𐍄𐌰𐌸𐌰𐌹𐌼𐌰</string>
     <string name="language" maxLength="41">𐍂𐌰𐌶𐌳𐌰</string>
     <string name="language_system">𐍂𐌰𐌶𐌳𐌰 𐍃𐍅𐍃𐍄𐌴𐌼𐍉𐍃</string>
     <string name="notification_pref" maxLength="41">Notifications</string>
     <string name="notification_pref_title" maxLength="41">Notify when</string>
     <string name="never_notify">Never notify</string>
-    <string name="notify_when_pending">Pending messages available</string>
+    <string name="notify_when_pending">𐌷𐌰𐌷𐌰𐌽𐌳𐍉𐌽𐌰 𐍅𐌰𐌿𐍂𐌳𐌰 𐍃𐌹𐌽𐌳</string>
     <string name="notification_minimum_cards_due" comment="Consider keeping the unbreakable space after the digit">𐌽𐌰𐌿𐌷 𐌼𐌰𐌹𐍃 𐌸𐌰𐌿 %d 𐍄𐌰𐌿𐌾𐌰𐌽</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">𐌹𐌽𐍂𐌴𐌹𐍂𐌰𐌽</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">𐌲𐌻𐌹𐍄𐌼𐌿𐌽𐌾𐌰𐌽𐌳𐍉 𐌻𐌹𐌿𐌷𐌰𐌸</string>
     <string name="select_locale_title">𐍂𐌰𐌶𐌳𐌰 𐍅𐌰𐌻𐌾𐌰𐌽</string>
     <string name="software_render" maxLength="41">Disable card hardware render</string>
     <string name="software_render_summ">𐌷𐌰𐍂𐌳𐌿𐍅𐌰𐍂𐍉𐍃 𐌰𐍄𐌰𐌿𐌲𐌾𐌰 𐍃𐍀𐍂𐌰𐌿𐍄𐌹𐌶𐌰 𐌹𐍃𐍄 𐌹𐌸 𐌼𐌰𐌲 𐌿𐌽𐍂𐌰𐌹𐌷𐍄𐌰𐌱𐌰 𐍅𐌰𐌿𐍂𐌺𐌾𐌰𐌽, 𐌸𐌹𐍃𐌷𐌿𐌽 𐌰𐌽𐌰 𐌰𐌽𐌳𐍂𐌰𐌿𐌳 8/8.1. 𐌾𐌰𐌱𐌰𐌹 𐌽𐌹 𐌼𐌰𐌲𐍄 𐌳𐌰𐌹𐌻𐌹𐌽𐍃 𐍃𐌰𐌹𐍈𐌰𐌽 𐌹𐌽𐍄𐌰𐌹𐍂𐍆𐌰𐌺𐌹𐍉𐍃 𐌱𐍂𐌿𐌺𐌾𐌰𐌽𐌴 𐌰𐍆𐍄𐍂𐌰𐍃𐌹𐌿𐌽𐌰𐌹𐍃 𐌺𐌰𐍂𐍄𐍉, 𐌺𐌹𐌿𐍃𐌰𐌹 𐌸𐍉 𐌻𐌰𐌲𐌴𐌹𐌽.</string>
-    <string name="safe_display" maxLength="41">Safe display mode</string>
+    <string name="safe_display" maxLength="41">𐌼𐍉𐌳𐌿𐍃 𐌱𐌰𐌽𐌳𐍅𐌴𐌹𐌽𐌰𐌹𐍃 𐌸𐍅𐌰𐍃𐍄𐌹𐌸𐍉𐍃</string>
     <string name="safe_display_summ">Disable all animations and use safer method for drawing cards. E-ink devices may require this.</string>
     <string name="disable_extended_text_ui" maxLength="41">Disable Single-Field Edit Mode</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
@@ -173,7 +173,7 @@
     <string name="show_estimates_summ">Show next review time on answer buttons</string>
     <string name="show_large_answer_buttons" maxLength="41">𐌼𐌹𐌺𐌹𐌻𐍉𐍃 𐌷𐌰𐌿𐌱𐌹𐌳𐌹𐌻𐍉𐌽𐍃 𐌰𐌽𐌳𐌰𐌷𐌰𐍆𐍄𐌴 𐌱𐌰𐌽𐌳𐍅𐌾𐌰𐌽</string>
     <string name="show_large_answer_buttons_summ">𐌷𐌰𐌿𐌱𐌹𐌳𐌹𐌻𐍉𐌽𐍃 𐌰𐌽𐌳𐌰𐌷𐌰𐍆𐍄𐌴 𐌹𐌽 𐍄𐍅𐌰𐌹𐌼 𐍅𐌹𐌺𐍉𐌼 𐌱𐌰𐌽𐌳𐍅𐌾𐌰𐌽</string>
-    <string name="show_top_bar" maxLength="41">Show top bar</string>
+    <string name="show_top_bar" maxLength="41">𐌰𐌽𐍃 𐌰𐌿𐌷𐌿𐌼𐌹𐍃𐍄𐌰𐌽𐌰 𐌱𐌰𐌽𐌳𐍅𐌾𐌰𐌽</string>
     <string name="show_top_bar_summary">𐌺𐌰𐍂𐍄𐍉 𐍂𐌰𐌸𐌾𐍉𐌽𐍃, 𐌰𐌽𐌳𐌰𐌷𐌰𐍆𐍄𐌰𐌹𐍃 𐌸𐌴𐌹𐌷𐍃, 𐍆𐌰𐌽𐌰𐌽 𐌾𐌰𐌷 𐌱𐌰𐌽𐌳𐍅𐍉𐌽 𐌹𐌽 𐌰𐌽𐍃𐌰 𐌰𐌿𐌷𐌿𐌼𐌹𐍃𐍄𐌰𐌽𐌰 𐌱𐌰𐌽𐌳𐍅𐌾𐌰𐌽</string>
     <string name="show_progress" maxLength="41">𐌱𐌹𐌻𐌴𐌹𐌱𐌰𐌽𐌳𐍉𐌽𐌰 𐌱𐌰𐌽𐌳𐍅𐌾𐌰𐌽</string>
     <string name="show_progress_summ">𐌱𐌹𐌻𐌴𐌹𐌱𐌰𐌽𐌳𐌴𐌹 𐍂𐌰𐌸𐌾𐍉 𐌺𐌰𐍂𐍄𐍉 𐌱𐌰𐌽𐌳𐍅𐌾𐌰𐌽</string>
@@ -189,7 +189,7 @@
     </plurals>
     <string name="pref_keep_screen_on" maxLength="41">𐌼𐌹𐌸 𐍃𐌺𐌰𐌹𐍂𐌼𐌰 𐍃𐌺𐌴𐌹𐌽𐌰𐌽𐌳𐌹𐌽 𐌸𐌰𐌹𐍂𐌷𐍅𐌹𐍃𐌰𐌽</string>
     <string name="pref_keep_screen_on_summ">Disable screen timeout</string>
-    <string name="enable_api_title" maxLength="41">Enable AnkiDroid API</string>
+    <string name="enable_api_title" maxLength="41">𐌰𐌽𐌺𐌴𐌹𐌳𐍂𐌰𐌿𐌳 𐌰𐍀𐌹 𐌲𐌰𐍅𐌰𐌿𐍂𐌺𐌾𐌰𐌽</string>
     <string name="enable_api_summary">Let other apps connect to AnkiDroid and read / write data without your intervention</string>
     <string name="custom_buttons" maxLength="41">App bar buttons</string>
     <string name="custom_buttons_summary">Customize which actions appear in the app bar</string>
@@ -207,7 +207,7 @@
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">𐍃𐌺𐌰𐌹𐍂𐌼𐍃 𐌻𐌰𐌹𐍃𐌴𐌹𐌽𐌰𐌹𐍃</string>
     <string name="show_deck_title" maxLength="41">𐌺𐌰𐍂𐍄𐌰𐌷𐌿𐌶𐌳𐌹𐍃 𐌿𐍆𐌰𐍂𐌼𐌴𐌻𐌹 𐌱𐌰𐌽𐌳𐍅𐌾𐌰𐌽</string>
-    <string name="accessibility" maxLength="41">Accessibility</string>
+    <string name="accessibility" maxLength="41">𐌼𐌰𐌷𐍄𐍃 𐌳𐌿 𐌰𐍄𐌲𐌰𐌲𐌲𐌰𐌽</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Paste clipboard images as PNG</string>
     <string name="exit_via_double_tap_back" maxLength="41">𐌸𐍂𐌿𐌺𐌴𐌹 𐌲𐌰𐍅𐌰𐌽𐌳𐌾𐌰𐌽 𐌸𐌿𐌺 𐍄𐍅𐌰𐌹𐌼 𐍃𐌹𐌽𐌸𐌰𐌼 𐌳𐌿 𐌲𐌰𐍅𐌰𐌽𐌳𐌾𐌰𐌽 𐌸𐌿𐌺/𐌰𐍆𐌻𐌴𐌹𐌸𐌰𐌽</string>
@@ -231,7 +231,7 @@
     <string name="answer_buttons" maxLength="41">𐌷𐌰𐌿𐌱𐌹𐌳𐌹𐌻𐍉𐌽𐍃 𐌰𐌽𐌳𐌰𐌷𐌰𐍆𐍄𐌴</string>
     <string name="card" maxLength="41" comment="Generic term to refer to a card">𐌺𐌰𐍂𐍄𐌰</string>
     <string name="note" maxLength="41">𐌼𐌴𐌻𐌴𐌹𐌽𐍃</string>
-    <string name="navigation" maxLength="41">Navigation</string>
+    <string name="navigation" maxLength="41">𐌽𐌰𐌱𐌹𐌲𐌰𐍄𐍃𐌾𐍉</string>
     <string name="media" maxLength="41">𐌼𐌰𐌹𐌳𐌾𐌰</string>
     <string name="misc" maxLength="41">𐌰𐌽𐌸𐌰𐍂</string>
     <!-- Review reminders -->
@@ -254,7 +254,7 @@
     <string name="analytics_dialog_title">𐌷𐌹𐌻𐍀 𐌰𐌽𐌺𐌴𐌹𐌳𐍂𐌰𐌿𐌳𐍃 𐌲𐌰𐌱𐍉𐍄𐌾𐌰𐌽!</string>
     <string name="analytics_title" maxLength="41">Share feature usage</string>
     <string name="analytics_summ">You can contribute to AnkiDroid by helping the development team see which features people use</string>
-    <string name="note_editor_replace_newlines" maxLength="41">Replace newlines with HTML</string>
+    <string name="note_editor_replace_newlines" maxLength="41">𐌽𐌹𐌿𐌾𐌰𐍃𐍄𐍂𐌹𐌺𐌰𐌽𐍃 𐌼𐌹𐌸𐍃𐌰𐍄𐌾𐌰𐌽 𐌼𐌹𐌸 𐌷𐍄𐌼𐌻</string>
     <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
     <string name="type_in_answer_focus" maxLength="41">Focus ‘type in answer’</string>
     <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the study screen</string>
@@ -275,7 +275,7 @@
     <string name="binding_add_axis">Add joystick/motion controller</string>
     <string name="axis_picker_move_joystick">Move a joystick/motion controller</string>
     <string name="user_actions" maxLength="41">𐍄𐍉𐌾𐌰 𐌱𐍂𐌿𐌺𐌾𐌹𐌽𐍃</string>
-    <string name="user_actions_summary" maxLength="41">Trigger JavaScript from the study screen</string>
+    <string name="user_actions_summary" maxLength="41">𐌱𐌰𐌹𐍂𐌷𐍄𐌾𐌰𐌽 𐌾𐌰𐌱𐌰𐍃𐌺𐍂𐌹𐍀𐍄 𐍃𐌺𐌰𐌹𐍂𐌼𐌹𐍃 𐌻𐌰𐌹𐍃𐌴𐌹𐌽𐌰𐌹𐍃</string>
     <string name="user_action_1" maxLength="28">𐍄𐌰𐌿𐌹 𐌱𐍂𐌿𐌺𐌾𐌹𐌽𐍃 1</string>
     <string name="user_action_2" maxLength="28">𐍄𐌰𐌿𐌹 𐌱𐍂𐌿𐌺𐌾𐌹𐌽𐍃 2</string>
     <string name="user_action_3" maxLength="28">𐍄𐌰𐌿𐌹 𐌱𐍂𐌿𐌺𐌾𐌹𐌽𐍃 3</string>
@@ -304,8 +304,8 @@
     <string name="pref_fixed_port_summary">Enables JavaScript localStorage by using a fixed server port in the Study Screen</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">𐌼𐌰𐌷𐍄𐌴𐌹𐍃 𐌰𐌽𐌳𐍅𐌰𐌹𐌱𐌾𐌰𐌽𐌳𐌹𐍃</string>
-    <string name="dev_options_enabled_pref" maxLength="41">Enable developer options</string>
-    <string name="disable_dev_options">Disable developer options</string>
+    <string name="dev_options_enabled_pref" maxLength="41">𐌰𐌽𐌳𐍅𐌰𐌹𐌱𐌾𐌰𐌽𐌳𐌹𐍃 𐌼𐌰𐌷𐍄𐌹𐌽𐍃 𐌲𐌰𐍄𐌰𐌿𐌾𐌰𐌽</string>
+    <string name="disable_dev_options">𐌰𐌽𐌳𐍅𐌰𐌹𐌱𐌾𐌰𐌽𐌳𐌹𐍃 𐌼𐌰𐌷𐍄𐌹𐌽𐍃 𐌿𐌽𐌲𐌰𐍄𐌰𐌿𐌾𐌰𐌽</string>
     <string name="dev_options_warning">Please be sure before enabling developer options. These options are dangerous and could break the app or corrupt your collection.\n\nNote that these options are not suited for most users and therefore are not translated, so they are in English.</string>
     <!-- #######################################################################################
          #################################### Backup options ###################################
@@ -319,7 +319,7 @@
         <br><br>
         You can restore from a backup and export your collection in the deck list menu.
     ]]></string>
-    <string name="pref__minutes_between_automatic_backups__title" maxLength="41">Minutes between automatic backups</string>
+    <string name="pref__minutes_between_automatic_backups__title" maxLength="41">𐌼𐌹𐌽𐌿𐍄𐌾𐌿𐍃 𐌼𐌹𐌸 𐍃𐌹𐌻𐌱𐌰𐍄𐍉𐌾𐌰𐌽𐌳𐌰𐌼 𐌱𐌰𐌹𐌺-𐌰𐍀𐌰𐌼</string>
     <string name="pref__daily_backups_to_keep__title" maxLength="41">𐍃𐌹𐌽𐍄𐌴𐌹𐌽𐍉𐍃 𐌱𐌰𐌹𐌺𐌰𐍀𐍃 𐌳𐌿 𐌲𐌰𐍆𐌰𐍃𐍄𐌰𐌽</string>
     <string name="pref__weekly_backups_to_keep__title" maxLength="41">𐌱𐌰𐌹𐌺𐌰𐍀𐍃 𐌹𐌽 𐍅𐌹𐌺𐍉𐌼 𐌳𐌿 𐌲𐌰𐍆𐌰𐍃𐍄𐌰𐌽</string>
     <string name="pref__monthly_backups_to_keep__title" maxLength="41">𐌱𐌰𐌹𐌺𐌰𐍀𐍃 𐌹𐌽 𐌼𐌴𐌽𐍉𐌸𐌿𐌼 𐌳𐌿 𐌲𐌰𐍆𐌰𐍃𐍄𐌰𐌽</string>
@@ -369,12 +369,12 @@
     <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">𐌷𐌿𐌶𐌳 𐌽𐌹𐍃𐍄</string>
     <string name="hide_system_bars" maxLength="41" comment="Title of a setting that allows to hide the system bars">𐌰𐌽𐍃𐌰𐌽𐍃 𐍃𐍅𐍃𐍄𐌴𐌼𐍃 𐌰𐍆𐍆𐌹𐌻𐌷𐌰𐌽</string>
     <string name="hide_system_bars_none" comment="Setting option to not hide any of the system bars">𐌽𐌹</string>
-    <string name="hide_system_bars_status_bar" comment="Setting option to hide the system status bar (the top one with clock, battery status, etc)">Status bar</string>
-    <string name="hide_system_bars_navigation_bar" comment="Setting option to hide the system navigation bar (the bottom one that can go back, to home, etc)">Navigation bar</string>
+    <string name="hide_system_bars_status_bar" comment="Setting option to hide the system status bar (the top one with clock, battery status, etc)">𐌰𐌽𐍃 𐍃𐍄𐌰𐍃𐍃𐌰𐌹𐍃</string>
+    <string name="hide_system_bars_navigation_bar" comment="Setting option to hide the system navigation bar (the bottom one that can go back, to home, etc)">𐌰𐌽𐍃 𐌽𐌰𐌱𐌹𐌲𐌰𐍄𐍃𐌾𐍉𐌽𐍃</string>
     <string name="hide_system_bars_all_bars" comment="Setting option to hide all the system bars">𐌰𐌻𐌻</string>
     <string name="ignore_display_cutout" maxLength="41">Ignore display cutout</string>
     <string name="show_answer_buttons" maxLength="41">Show answer buttons</string>
-    <string name="hide_hard_and_easy" maxLength="41">Hide ‘Hard’ and ‘Easy’ buttons</string>
+    <string name="hide_hard_and_easy" maxLength="41">\'𐌿𐌽𐌰𐌶𐌴𐍄\' 𐌾𐌰𐌷 \'𐌰𐌶𐌴𐍄\' 𐌷𐌰𐌿𐌱𐌹𐌳𐌹𐌻𐍉𐌽𐍃 𐌰𐍆𐍆𐌹𐌻𐌷𐌰𐌽</string>
     <string name="reviewer_frame_style" maxLength="41">Frame style</string>
     <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Study Screen">𐌺𐌰𐍂𐍄𐌰</string>
     <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Study Screen">𐌰𐍂𐌺𐌰</string>
@@ -382,8 +382,8 @@
     <string name="reviewer_toolbar_bottom" maxLength="41" comment="Setting to put the toolbar on the bottom of the study screen">𐌸𐌰𐍄𐌰 𐌷𐌽𐌰𐌹𐍅𐌹𐍃𐍄𐍉</string>
     <string name="reviewer_toolbar_none" maxLength="41" comment="Setting to remove the toolbar from the study screen">𐌽𐌹</string>
     <string name="toolbar" maxLength="41">𐍄𐍉𐌻𐌰-𐌰𐌽𐍃</string>
-    <string name="toolbar_actions" maxLength="41">Toolbar actions</string>
-    <string name="toolbar_position" maxLength="28">Toolbar position</string>
+    <string name="toolbar_actions" maxLength="41">𐍄𐍉𐌾𐌰 𐍄𐍉𐌻𐌰-𐌰𐌽𐍃𐌹𐍃</string>
+    <string name="toolbar_position" maxLength="28">𐌻𐍉𐌲 𐍄𐍉𐌻𐌰-𐌰𐌽𐍃𐌹𐍃</string>
     <string name="new_study_screen" maxLength="41">𐍃𐌺𐌰𐌹𐍂𐌼𐍃 𐌽𐌹𐌿𐌾𐌹𐍃 𐌻𐌰𐌹𐍃𐌴𐌹𐌽𐌰𐌹𐍃</string>
     <string name="new_study_screen_summ"><![CDATA[Improved study screen that will succeed the current one. Some features of the old screen have been changed or removed. Please report any <a href="%1$s">feedback</a> or <a href="%2$s">bugs</a>.]]></string>
     <string name="show_answer_feedback" maxLength="41">𐌰𐌽𐌳𐌰𐌷𐌰𐍆𐍄𐌰𐌹𐍃 𐌷𐌹𐌻𐍀𐌰 𐌱𐌰𐌽𐌳𐍅𐌾𐌰𐌽</string>
