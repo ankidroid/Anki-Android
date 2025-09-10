@@ -8,11 +8,11 @@
     tools:context=".DrawingActivity">
 
     <include layout="@layout/toolbar"
-        android:id="@id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         />
     <include
+        android:id="@+id/whiteboard_editor"
         layout="@layout/reviewer_whiteboard_editor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
