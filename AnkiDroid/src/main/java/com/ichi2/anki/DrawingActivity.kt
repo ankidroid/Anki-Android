@@ -22,13 +22,14 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.MotionEvent
 import android.view.View
-import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.core.view.MenuItemCompat
-import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import com.ichi2.anki.common.time.TimeManager
+import com.ichi2.anki.databinding.ActivityDrawingBinding
 import com.ichi2.themes.Themes
 import com.ichi2.utils.iconAlpha
+import dev.androidbroadcast.vbpd.viewBinding
 import timber.log.Timber
 import java.io.FileNotFoundException
 
@@ -39,8 +40,8 @@ import java.io.FileNotFoundException
  *
  * To access this screen: Add/Edit Note - Attachment - Add Image - Drawing
  */
-class DrawingActivity : AnkiActivity() {
-    private lateinit var colorPalette: LinearLayout
+class DrawingActivity : AnkiActivity(R.layout.activity_drawing) {
+    private val binding by viewBinding(ActivityDrawingBinding::bind)
     private lateinit var whiteboard: Whiteboard
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,9 +50,7 @@ class DrawingActivity : AnkiActivity() {
         }
         super.onCreate(savedInstanceState)
         setTitle(R.string.drawing)
-        setContentView(R.layout.activity_drawing)
         enableToolbar()
-        colorPalette = findViewById(R.id.whiteboard_editor)
         whiteboard = Whiteboard.createInstance(this, true, null)
         whiteboard.setOnTouchListener { _: View?, event: MotionEvent? -> whiteboard.handleTouchEvent(event!!) }
     }
@@ -83,12 +82,8 @@ class DrawingActivity : AnkiActivity() {
                 finishWithSuccess()
             }
             R.id.action_whiteboard_edit -> {
-                Timber.i("Drawing:: Pen Color button pressed")
-                if (colorPalette.isGone) {
-                    colorPalette.visibility = View.VISIBLE
-                } else {
-                    colorPalette.visibility = View.GONE
-                }
+                Timber.i("Drawing:: Toggle whiteboard editor button pressed")
+                binding.whiteboardEditor.root.isVisible = !binding.whiteboardEditor.root.isVisible
             }
             R.id.action_undo -> {
                 Timber.i("Drawing:: Undo button pressed")
