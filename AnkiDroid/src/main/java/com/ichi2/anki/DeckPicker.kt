@@ -41,9 +41,6 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResult
@@ -70,17 +67,16 @@ import androidx.core.view.OnReceiveContentListener
 import androidx.core.view.doOnLayout
 import androidx.core.view.isVisible
 import androidx.draganddrop.DropHelper
+import androidx.fragment.app.FragmentContainerView
 import androidx.fragment.app.commit
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
 import anki.collection.OpChanges
 import anki.sync.SyncStatusResponse
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
@@ -107,6 +103,9 @@ import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.contextmenu.DeckPickerMenuContentProvider
 import com.ichi2.anki.contextmenu.MouseContextMenuHandler
+import com.ichi2.anki.databinding.DeckPickerBinding
+import com.ichi2.anki.databinding.FloatingAddButtonBinding
+import com.ichi2.anki.databinding.HomescreenBinding
 import com.ichi2.anki.deckpicker.BITMAP_BYTES_PER_PIXEL
 import com.ichi2.anki.deckpicker.BackgroundImage
 import com.ichi2.anki.deckpicker.DeckDeletionResult
@@ -250,6 +249,14 @@ open class DeckPicker :
     CollectionPermissionScreenLauncher {
     val viewModel: DeckPickerViewModel by viewModels()
 
+    private lateinit var binding: HomescreenBinding
+
+    @VisibleForTesting
+    internal val deckPickerBinding: DeckPickerBinding
+        get() = binding.deckPickerPane
+    private val floatingActionButtonBinding: FloatingAddButtonBinding
+        get() = deckPickerBinding.floatingActionButton
+
     override var fragmented: Boolean
         get() =
             resources.configuration.screenLayout and Configuration.SCREENLAYOUT_SIZE_MASK ==
@@ -258,21 +265,13 @@ open class DeckPicker :
 
     // Short animation duration from system
     private var shortAnimDuration = 0
-    private lateinit var deckPickerContent: RelativeLayout
 
-    private var studyoptionsFrame: View? = null // not lateInit - can be null
-
-    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    lateinit var recyclerView: RecyclerView
-    private lateinit var recyclerViewLayoutManager: LinearLayoutManager
+    private lateinit var decksLayoutManager: LinearLayoutManager
     private lateinit var deckListAdapter: DeckAdapter
-    private lateinit var noDecksPlaceholder: LinearLayout
     private lateinit var pullToSyncWrapper: SwipeRefreshLayout
 
     // Right-click context menu handler using decoupled menu system
     private lateinit var mouseContextMenuHandler: MouseContextMenuHandler
-
-    private lateinit var reviewSummaryTextView: TextView
 
     private lateinit var floatingActionMenu: DeckPickerFloatingActionMenu
 
@@ -294,7 +293,7 @@ open class DeckPicker :
             }
         }
     override val baseSnackbarBuilder: SnackbarBuilder = {
-        anchorView = findViewById<FloatingActionButton>(R.id.fab_main)
+        anchorView = floatingActionButtonBinding.fabMain
         addCallback(activeSnackbarCallback)
     }
 
@@ -492,8 +491,8 @@ open class DeckPicker :
                 }
             updateDeckList()
             val menuContentProvider = DeckPickerMenuContentProvider(deckId, isDynamic, hasBuriedInDeck, this@DeckPicker)
-            mouseContextMenuHandler = MouseContextMenuHandler(deckPickerContent, menuContentProvider)
-            mouseContextMenuHandler.showContextMenu(recyclerView, x, y)
+            mouseContextMenuHandler = MouseContextMenuHandler(deckPickerBinding.deckPickerContent, menuContentProvider)
+            mouseContextMenuHandler.showContextMenu(deckPickerBinding.decks, x, y)
         }
     }
 
@@ -516,6 +515,8 @@ open class DeckPicker :
         // Then set theme and content view
         super.onCreate(savedInstanceState)
 
+        binding = HomescreenBinding.inflate(layoutInflater)
+
         // handle the first load: display the app introduction
         if (!hasShownAppIntro()) {
             Timber.i("Displaying app intro")
@@ -531,7 +532,7 @@ open class DeckPicker :
             syncOnResume = true
         }
 
-        setContentView(R.layout.homescreen)
+        setViewBinding(binding)
         enableToolbar()
         // TODO This method is run on every activity recreation, which can happen often.
         //  It seems that the original idea was for for this to only run once, on app start.
@@ -539,26 +540,21 @@ open class DeckPicker :
         //  that may have been dismissed. Make this run only once?
         handleStartup()
 
-        studyoptionsFrame = findViewById(R.id.studyoptions_fragment)
         registerReceiver()
 
         // create inherited navigation drawer layout here so that it can be used by parent class
         initNavigationDrawer()
         title = resources.getString(R.string.app_name)
 
-        deckPickerContent = findViewById(R.id.deck_picker_content)
-        recyclerView = findViewById(R.id.decks)
-        noDecksPlaceholder = findViewById(R.id.no_decks_placeholder)
-
-        deckPickerContent.visibility = View.GONE
-        noDecksPlaceholder.visibility = View.GONE
+        deckPickerBinding.deckPickerContent.visibility = View.GONE
+        deckPickerBinding.noDecksPlaceholder.visibility = View.GONE
 
         // specify a LinearLayoutManager for the RecyclerView
-        recyclerViewLayoutManager = LinearLayoutManager(this)
-        recyclerView.layoutManager = recyclerViewLayoutManager
+        decksLayoutManager = LinearLayoutManager(this)
+        deckPickerBinding.decks.layoutManager = decksLayoutManager
 
         // Add background to Deckpicker activity
-        val view = if (fragmented) findViewById(R.id.deckpicker_xl_view) else findViewById<View>(R.id.root_layout)
+        val view = binding.deckpickerXlView ?: binding.rootLayout
 
         var hasDeckPickerBackground = false
         try {
@@ -588,10 +584,10 @@ open class DeckPicker :
                     Timber.d("Right Click on deck recorded!! %d, %f %f", deckId, x, y)
                 },
             )
-        recyclerView.adapter = deckListAdapter
+        deckPickerBinding.decks.adapter = deckListAdapter
 
         pullToSyncWrapper =
-            findViewById<SwipeRefreshLayout>(R.id.pull_to_sync_wrapper).apply {
+            deckPickerBinding.pullToSyncWrapper.apply {
                 setDistanceToTriggerSync(SWIPE_TO_SYNC_TRIGGER_DISTANCE)
                 setOnRefreshListener {
                     Timber.i("Pull to Sync: Syncing")
@@ -599,7 +595,7 @@ open class DeckPicker :
                     sync()
                 }
                 viewTreeObserver.addOnScrollChangedListener {
-                    pullToSyncWrapper.isEnabled = recyclerViewLayoutManager.findFirstCompletelyVisibleItemPosition() == 0
+                    pullToSyncWrapper.isEnabled = decksLayoutManager.findFirstCompletelyVisibleItemPosition() == 0
                 }
             }
         // Setup the FloatingActionButtons
@@ -610,8 +606,6 @@ open class DeckPicker :
                         closeFloatingActionBarBackPressCallback.isEnabled = isOpening
                     }
             }
-
-        reviewSummaryTextView = findViewById(R.id.today_stats_text_view)
 
         shortAnimDuration = resources.getInteger(android.R.integer.config_shortAnimTime)
 
@@ -728,50 +722,47 @@ open class DeckPicker :
         }
 
         fun onStudiedTodayChanged(studiedToday: String) {
-            reviewSummaryTextView.text = studiedToday
-            val fabLinearLayout = findViewById<LinearLayout>(R.id.fabLinearLayout)
+            deckPickerBinding.reviewSummaryTextView.text = studiedToday
             // Adjust bottom margin of fabLinearLayout based on reviewSummaryTextView height
-            reviewSummaryTextView.doOnLayout {
-                val layoutParams = fabLinearLayout.layoutParams as ViewGroup.MarginLayoutParams
-                layoutParams.setMargins(0, 0, 0, reviewSummaryTextView.height / 2)
-                fabLinearLayout.layoutParams = layoutParams
+            deckPickerBinding.reviewSummaryTextView.doOnLayout { view ->
+                val layoutParams = floatingActionButtonBinding.fabLinearLayout.layoutParams as ViewGroup.MarginLayoutParams
+                layoutParams.setMargins(0, 0, 0, view.height / 2)
+                floatingActionButtonBinding.fabLinearLayout.layoutParams = layoutParams
             }
         }
 
         fun onCollectionStatusChanged(isInInitialState: Boolean) {
             // Hide the background when there are no cards to improve text readability.
-            val backgroundView = findViewById<ImageView>(R.id.background)
-            backgroundView.visibility = if (isInInitialState) View.GONE else View.VISIBLE
+            deckPickerBinding.background.isVisible = !isInInitialState
             if (animationDisabled()) {
-                deckPickerContent.visibility = if (isInInitialState) View.GONE else View.VISIBLE
-                noDecksPlaceholder.visibility = if (isInInitialState) View.VISIBLE else View.GONE
+                deckPickerBinding.deckPickerContent.isVisible = !isInInitialState
+                deckPickerBinding.noDecksPlaceholder.isVisible = isInInitialState
                 return
             }
 
-            val decksListShown = deckPickerContent.isVisible
-            val placeholderShown = noDecksPlaceholder.isVisible
+            val decksListShown = deckPickerBinding.deckPickerContent.isVisible
+            val placeholderShown = deckPickerBinding.noDecksPlaceholder.isVisible
             if (isInInitialState) {
-                deckPickerContent.fadeOut(shortAnimDuration)
-                noDecksPlaceholder.fadeIn(shortAnimDuration).startDelay =
+                deckPickerBinding.deckPickerContent.fadeOut(shortAnimDuration)
+                deckPickerBinding.noDecksPlaceholder.fadeIn(shortAnimDuration).startDelay =
                     if (decksListShown) {
                         shortAnimDuration * 2L
                     } else {
                         0L
                     }
             } else {
-                deckPickerContent.fadeIn(shortAnimDuration).startDelay =
+                deckPickerBinding.deckPickerContent.fadeIn(shortAnimDuration).startDelay =
                     if (placeholderShown) {
                         shortAnimDuration * 2L
                     } else {
                         0L
                     }
-                noDecksPlaceholder.fadeOut(shortAnimDuration)
+                deckPickerBinding.noDecksPlaceholder.fadeOut(shortAnimDuration)
             }
         }
 
         fun onResizingDividerVisibilityChanged(isVisible: Boolean) {
-            val resizingDivider = findViewById<View>(R.id.homescreen_resizing_divider)
-            resizingDivider?.visibility = if (isVisible) View.VISIBLE else View.GONE
+            binding.resizingDivider?.isVisible = isVisible
         }
 
         fun onCardsDueChanged(dueCount: Int?) {
@@ -789,7 +780,7 @@ open class DeckPicker :
 
         fun onStudyOptionsVisibilityChanged(collectionHasNoCards: Boolean) {
             invalidateOptionsMenu()
-            studyoptionsFrame?.isVisible = fragmented && !collectionHasNoCards
+            binding.studyoptionsFrame?.isVisible = fragmented && !collectionHasNoCards
         }
 
         fun onDeckListChanged(deckList: FlattenedDeckList) {
@@ -802,8 +793,8 @@ open class DeckPicker :
         fun onFocusedDeckChanged(deckId: DeckId?) {
             val position = deckId?.let { findDeckPosition(it) } ?: 0
             // HACK: a small delay is required before scrolling works
-            recyclerView.postDelayed({
-                recyclerViewLayoutManager.scrollToPositionWithOffset(position, recyclerView.height / 2)
+            deckPickerBinding.decks.postDelayed({
+                decksLayoutManager.scrollToPositionWithOffset(position, deckPickerBinding.decks.height / 2)
             }, 10)
         }
 
@@ -828,15 +819,11 @@ open class DeckPicker :
                     if (fragmented) {
                         loadStudyOptionsFragment()
 
-                        val resizingDivider = findViewById<View>(R.id.homescreen_resizing_divider)
-                        val parentLayout = findViewById<LinearLayout>(R.id.deckpicker_xl_view)
-                        val deckPickerPane = findViewById<View>(R.id.deck_picker_pane)
-                        val studyOptionsPane = findViewById<View>(R.id.studyoptions_fragment)
                         ResizablePaneManager(
-                            parentLayout = parentLayout,
-                            divider = resizingDivider,
-                            leftPane = deckPickerPane,
-                            rightPane = studyOptionsPane,
+                            parentLayout = requireNotNull(binding.deckpickerXlView),
+                            divider = requireNotNull(binding.resizingDivider),
+                            leftPane = deckPickerBinding.root,
+                            rightPane = requireNotNull(binding.studyoptionsFragment),
                             sharedPrefs = Prefs.getUiConfig(this),
                             leftPaneWeightKey = PREF_DECK_PICKER_PANE_WEIGHT,
                             rightPaneWeightKey = PREF_STUDY_OPTIONS_PANE_WEIGHT,
@@ -1080,18 +1067,17 @@ open class DeckPicker :
     // throws doesn't seem to be checked by the compiler - consider it to be documentation
     @Throws(OutOfMemoryError::class)
     private fun applyDeckPickerBackground(): Boolean {
-        val backgroundView = findViewById<ImageView>(R.id.background)
         // Allow the user to clear data and get back to a good state if they provide an invalid background.
         if (!this.sharedPrefs().getBoolean("deckPickerBackground", false)) {
             Timber.d("No DeckPicker background preference")
-            backgroundView.setBackgroundResource(0)
+            deckPickerBinding.background.setBackgroundResource(0)
             return false
         }
         val currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(this)
         val imgFile = File(currentAnkiDroidDirectory, "DeckPickerBackground.png")
         if (!imgFile.exists()) {
             Timber.d("No DeckPicker background image")
-            backgroundView.setBackgroundResource(0)
+            deckPickerBinding.background.setBackgroundResource(0)
             return false
         }
 
@@ -1101,13 +1087,13 @@ open class DeckPicker :
         val size = BackgroundImage.getBackgroundImageDimensions(this)
         if (size.width * size.height * BITMAP_BYTES_PER_PIXEL > BackgroundImage.MAX_BITMAP_SIZE) {
             Timber.w("DeckPicker background image dimensions too large")
-            backgroundView.setBackgroundResource(0)
+            deckPickerBinding.background.setBackgroundResource(0)
             return false
         }
 
         Timber.i("Applying background")
         val drawable = Drawable.createFromPath(imgFile.absolutePath)
-        backgroundView.setImageDrawable(drawable)
+        deckPickerBinding.background.setImageDrawable(drawable)
         return true
     }
 
@@ -1934,14 +1920,7 @@ open class DeckPicker :
         text: CharSequence,
         duration: Int = Snackbar.LENGTH_LONG,
     ) {
-        val view: View? = findViewById(R.id.root_layout)
-        if (view != null) {
-            view.post {
-                showSnackbar(text, duration)
-            }
-        } else {
-            showSnackbar(text, duration)
-        }
+        binding.rootLayout.post { showSnackbar(text, duration) }
     }
 
     @VisibleForTesting
@@ -2436,7 +2415,7 @@ open class DeckPicker :
     /**
      * Check if at least one deck is being displayed.
      */
-    fun hasAtLeastOneDeckBeingDisplayed(): Boolean = deckListAdapter.itemCount > 0 && recyclerViewLayoutManager.getChildAt(0) != null
+    fun hasAtLeastOneDeckBeingDisplayed(): Boolean = deckListAdapter.itemCount > 0 && decksLayoutManager.getChildAt(0) != null
 
     private enum class DeckSelectionType {
         /** Show study options if fragmented, otherwise, review  */
@@ -2639,3 +2618,6 @@ private fun AnkiActivity.launchCatchingRequiringOneWaySync(block: suspend () -> 
             showDialogFragment(confirmModSchemaDialog)
         }
     }
+
+val HomescreenBinding.studyoptionsFrame: FragmentContainerView?
+    get() = studyoptionsFragment
