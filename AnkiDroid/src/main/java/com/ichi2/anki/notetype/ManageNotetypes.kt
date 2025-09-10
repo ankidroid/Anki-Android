@@ -26,15 +26,14 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
-import androidx.recyclerview.widget.RecyclerView
 import anki.notetypes.copy
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.CardTemplateEditor
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.NoteTypeFieldEditor
 import com.ichi2.anki.R
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.databinding.ActivityManageNoteTypesBinding
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.getNotetype
 import com.ichi2.anki.libanki.getNotetypeNameIdUseCount
@@ -56,8 +55,9 @@ import com.ichi2.utils.title
 import net.ankiweb.rsdroid.BackendException
 
 class ManageNotetypes : AnkiActivity() {
+    private lateinit var binding: ActivityManageNoteTypesBinding
+
     private lateinit var actionBar: ActionBar
-    private lateinit var noteTypesList: RecyclerView
 
     private var currentNotetypes: List<ManageNoteTypeUiModel> = emptyList()
 
@@ -93,14 +93,12 @@ class ManageNotetypes : AnkiActivity() {
         }
 
         super.onCreate(savedInstanceState)
+        binding = ActivityManageNoteTypesBinding.inflate(layoutInflater)
         setTitle(R.string.model_browser_label)
-        setContentView(R.layout.activity_manage_note_types)
+        setViewBinding(binding)
         actionBar = enableToolbar()
-        noteTypesList =
-            findViewById<RecyclerView>(R.id.note_types_list).apply {
-                adapter = notetypesAdapter
-            }
-        findViewById<FloatingActionButton>(R.id.note_type_add).setOnClickListener {
+        binding.noteTypesList.adapter = notetypesAdapter
+        binding.floatingActionButton.setOnClickListener {
             val addNewNotesType = AddNewNotesType(this)
             launchCatchingTask { addNewNotesType.showAddNewNotetypeDialog() }
         }
