@@ -27,15 +27,14 @@ import androidx.annotation.StringRes
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
-import androidx.recyclerview.widget.RecyclerView
 import anki.notetypes.copy
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.CardTemplateEditor
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.NoteTypeFieldEditor
 import com.ichi2.anki.R
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.databinding.ActivityManageNoteTypesBinding
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.getNotetype
 import com.ichi2.anki.libanki.getNotetypeNameIdUseCount
@@ -54,11 +53,13 @@ import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
 import com.ichi2.utils.title
+import dev.androidbroadcast.vbpd.viewBinding
 import net.ankiweb.rsdroid.BackendException
 
-class ManageNotetypes : AnkiActivity() {
+class ManageNotetypes : AnkiActivity(R.layout.activity_manage_note_types) {
+    private val binding by viewBinding(ActivityManageNoteTypesBinding::bind)
+
     private lateinit var actionBar: ActionBar
-    private lateinit var noteTypesList: RecyclerView
 
     private var currentNotetypes: List<ManageNoteTypeUiModel> = emptyList()
 
@@ -95,13 +96,9 @@ class ManageNotetypes : AnkiActivity() {
 
         super.onCreate(savedInstanceState)
         setTitle(R.string.model_browser_label)
-        setContentView(R.layout.activity_manage_note_types)
         actionBar = enableToolbar()
-        noteTypesList =
-            findViewById<RecyclerView>(R.id.note_types_list).apply {
-                adapter = notetypesAdapter
-            }
-        findViewById<FloatingActionButton>(R.id.note_type_add).setOnClickListener {
+        binding.noteTypesList.adapter = notetypesAdapter
+        binding.floatingActionButton.setOnClickListener {
             val addNewNotesType = AddNewNotesType(this)
             launchCatchingTask { addNewNotesType.showAddNewNotetypeDialog() }
         }
