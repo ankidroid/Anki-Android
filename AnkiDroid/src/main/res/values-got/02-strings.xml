@@ -58,14 +58,14 @@
     <string name="add_new_filter_tags">𐍃𐍉𐌺𐌽𐌹𐍅𐌰𐌿𐍂𐌳𐌰 𐌰𐌽𐌰𐌰𐌿𐌺𐌰𐌽/𐍃𐌴𐌹𐍈𐌰𐌽</string>
     <string name="add_tag" maxLength="28">𐍃𐍉𐌺𐌽𐌹𐍅𐌰𐌿𐍂𐌳 𐌱𐌹𐌰𐌿𐌺𐌰𐌽</string>
     <string name="check_all_tags" maxLength="28">Check/uncheck all tags</string>
-    <string name="filter_tags" maxLength="28">Filter tags</string>
+    <string name="filter_tags" maxLength="28">𐍃𐍉𐌺𐌽𐌹𐍅𐌰𐌿𐍂𐌳𐌰 𐍃𐌴𐌹𐍈𐌰𐌽</string>
     <string name="no_tags">𐌽𐌹 𐌽𐌰𐌿𐌷 𐌱𐌹𐌰𐌹𐌰𐌿𐌺𐍄 𐍃𐍉𐌺𐌽𐌹𐍅𐌰𐌿𐍂𐌳</string>
     <string name="updated_version">𐌰𐌽𐌰𐌽𐌹𐌿𐌾𐌹𐌸 𐌳𐌿 𐌿𐍃𐌼𐌴𐍂𐌴𐌹𐌽𐌰𐌹 %s</string>
     <!-- Reviewer.kt (Study Screen) -->
     <string name="save_whiteboard" maxLength="28">𐍈𐌴𐌹𐍄𐌰𐌱𐌰𐌿𐍂𐌳 𐌲𐌰𐍆𐌰𐍃𐍄𐌰𐌽</string>
-    <string name="enable_stylus" maxLength="28">Enable stylus writing</string>
+    <string name="enable_stylus" maxLength="28">𐌼𐌴𐌻𐌴𐌹𐌽 𐍃𐍄𐍅𐌻𐌰𐌿𐍃 𐌲𐌰𐍅𐌰𐌿𐍂𐌺𐌾𐌰𐌽</string>
     <string name="disable_stylus">𐌼𐌴𐌻𐌴𐌹𐌽 𐍃𐍄𐍅𐌻𐌰𐌿𐍃 𐌱𐌻𐌰𐌿𐌸𐌾𐌰𐌽</string>
-    <string name="eraser" maxLength="28">Eraser</string>
+    <string name="eraser" maxLength="28">𐌰𐍆𐍈𐍂𐌰𐌹𐌽𐌾𐌰</string>
     <string name="add_brush" maxLength="28">𐌱𐍂𐌿𐍃𐌺 𐌱𐌹𐌰𐌿𐌺𐌰𐌽</string>
     <string name="whiteboard_align_left" comment="Option to align the whiteboard toolbar on the left" maxLength="28">𐌰𐍆 𐌷𐌻𐌴𐌹𐌳𐌿𐌼𐌴𐌹𐌽</string>
     <string name="whiteboard_align_bottom" comment="Option to align the whiteboard toolbar on the bottom" maxLength="28">𐌸𐌰𐍄𐌰 𐌷𐌽𐌰𐌹𐍅𐌹𐍃𐍄𐍉</string>
@@ -225,8 +225,8 @@
     <string name="reviewer_invalid_api_version_visit_documentation">𐍃𐌰𐌹𐍈𐌰𐌽</string>
     <string name="anki_js_error_code">(𐌺𐍉𐌳𐌿𐍃 𐌰𐌹𐍂𐌶𐌴𐌹𐌽𐍃: %d)</string>
     <!-- About AnkiDroid screen -->
-    <string name="about_ankidroid_successfully_copied_debug_info">Copied to clipboard</string>
-    <string name="about_ankidroid_error_copy_debug_info">Error copying debug information to clipboard</string>
+    <string name="about_ankidroid_successfully_copied_debug_info">𐌲𐌰𐌲𐌰𐌻𐌴𐌹𐌺𐍉𐌳𐌰 𐌳𐌿 𐌺𐍂𐌰𐌼𐍀𐌰𐌱𐌰𐌿𐍂𐌳𐌰</string>
+    <string name="about_ankidroid_error_copy_debug_info">𐌰𐌹𐍂𐌶𐌴𐌹 𐍅𐌰𐍂𐌸 𐌲𐌰𐌲𐌰𐌻𐌴𐌹𐌺𐍉𐌽𐌳𐍉 𐌹𐌽𐍆𐌰𐌿𐍂𐌼𐌰𐍄𐍃𐌾𐍉𐌽 𐌱𐍉𐍄𐌴𐌹𐌽𐌰𐌹𐍃 𐌳𐌿 𐌺𐍂𐌰𐌼𐍀𐌰𐌱𐌰𐌿𐍂𐌳𐌰</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Card Content Error: Failed to load ‘%s’</string>
     <!-- Deck Picker -->
@@ -339,7 +339,7 @@
     <string name="deck_description_saved">Description updated</string>
     <string name="format_deck_description_as_markdown">Format as Markdown</string>
     <string name="help_button_content_description">𐌷𐌹𐌻𐍀𐌰 𐍆𐌰𐌿𐍂 \'%s\' 𐌿𐍃𐌻𐌿𐌺𐌰𐌽</string>
-    <string name="failed_to_copy">Failed to copy</string>
+    <string name="failed_to_copy">𐌽𐌹 𐌼𐌰𐌷𐍄𐌰 𐌲𐌰𐌲𐌰𐌻𐌴𐌹𐌺𐍉𐌽</string>
     <string name="card_browser_unavailable_when_notes_mode">𐌽𐌹𐍃𐍄 𐌹𐌽 \'𐌲𐌰𐌼𐌴𐌻𐌴𐌹𐌽𐍉𐍃\' 𐌼𐍉𐌳𐌰𐌿</string>
     <plurals name="unbury_cards_feedback">
         <item quantity="one">%d 𐌺𐌰𐍂𐍄𐌰 𐌿𐌽𐌽𐌰𐍅𐌹𐍃𐍄𐍂𐍉𐌳𐌰</item>

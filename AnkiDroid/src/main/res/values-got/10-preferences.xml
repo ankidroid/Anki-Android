@@ -45,7 +45,7 @@
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
-    <string name="disabled">Disabled</string>
+    <string name="disabled">𐌿𐌽𐌲𐌰𐍄𐌰𐍅𐌹𐌸</string>
     <plurals name="pref_summ_minutes">
         <item quantity="one">%d 𐌼𐌹𐌽</item>
         <item quantity="other">%d 𐌼𐌹𐌽𐍃</item>
@@ -200,7 +200,7 @@
     <string name="reset_settings_to_default">Reset settings to default</string>
     <string name="reset">𐌰𐍆𐍄𐍂𐌰𐌻𐌰𐌲𐌾𐌰𐌽</string>
     <string name="thirdparty_apps_title" maxLength="41">Third-party API apps</string>
-    <string name="thirdparty_apps_summary">See a list of applications which make use of the AnkiDroid API such as dictionaries, utilities.</string>
+    <string name="thirdparty_apps_summary">𐍃𐌰𐌹 𐍅𐌹𐌺𐍉𐌽 𐌰𐍀𐍀𐌻𐌴𐌹𐌺𐌰𐍄𐍃𐌾𐍉𐌽𐍉 𐌱𐍂𐌿𐌺𐌾𐌰𐌽𐌳𐌴𐌹𐌽𐍉 𐌰𐌽𐌺𐌴𐌹𐌳𐍂𐌰𐌿𐌳𐍃 𐌰𐍀𐌹 𐍃𐍅𐌴 𐍅𐌰𐌿𐍂𐌳𐌰𐌱𐍉𐌺𐍉𐌼, 𐌱𐍂𐌿𐌺𐌴𐌹𐌽𐌹𐌼.</string>
     <string name="pref_controls_reviews_tab" maxLength="41" comment="Name of the tab to configure controls for the reviews screen">𐌰𐍆𐍄𐍂𐌰𐍃𐌹𐌿𐌽𐌴𐌹𐍃</string>
     <string name="pref_controls_previews_tab" maxLength="41" comment="Name of the tab to configure controls for the previews screen">𐍆𐌰𐌿𐍂𐌰𐍃𐌹𐌿𐌽𐌴𐌹𐍃</string>
     <string name="toggle_backside_only" maxLength="41" comment="Control setting that toggles \'Backside only\' in the previews screen">𐌸𐌰𐍄𐌰𐌹𐌽𐌴𐌹 𐌷𐌹𐌽𐌳𐌰𐍂𐍆𐌴𐍂𐌰 𐌹𐌽𐌼𐌰𐌹𐌳𐌾𐌰𐌽</string>
@@ -373,7 +373,7 @@
     <string name="hide_system_bars_navigation_bar" comment="Setting option to hide the system navigation bar (the bottom one that can go back, to home, etc)">𐌰𐌽𐍃 𐌽𐌰𐌱𐌹𐌲𐌰𐍄𐍃𐌾𐍉𐌽𐍃</string>
     <string name="hide_system_bars_all_bars" comment="Setting option to hide all the system bars">𐌰𐌻𐌻</string>
     <string name="ignore_display_cutout" maxLength="41">Ignore display cutout</string>
-    <string name="show_answer_buttons" maxLength="41">Show answer buttons</string>
+    <string name="show_answer_buttons" maxLength="41">𐌰𐌽𐌳𐌰𐌷𐌰𐍆𐍄𐌰𐌹𐍃 𐌷𐌰𐌿𐌱𐌹𐌳𐌹𐌻𐍉𐌽𐍃 𐌱𐌰𐌽𐌳𐍅𐌾𐌰𐌽</string>
     <string name="hide_hard_and_easy" maxLength="41">\'𐌿𐌽𐌰𐌶𐌴𐍄\' 𐌾𐌰𐌷 \'𐌰𐌶𐌴𐍄\' 𐌷𐌰𐌿𐌱𐌹𐌳𐌹𐌻𐍉𐌽𐍃 𐌰𐍆𐍆𐌹𐌻𐌷𐌰𐌽</string>
     <string name="reviewer_frame_style" maxLength="41">Frame style</string>
     <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Study Screen">𐌺𐌰𐍂𐍄𐌰</string>
