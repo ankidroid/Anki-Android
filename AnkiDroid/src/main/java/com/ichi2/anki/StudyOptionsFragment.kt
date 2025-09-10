@@ -25,12 +25,10 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.TextView
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.VisibleForTesting
-import androidx.constraintlayout.widget.Group
 import androidx.core.os.bundleOf
 import androidx.core.text.HtmlCompat
 import androidx.core.view.MenuProvider
@@ -42,6 +40,7 @@ import anki.collection.OpChanges
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.backend.stripHTMLScriptAndStyleTags
+import com.ichi2.anki.databinding.StudyoptionsFragmentBinding
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.Decks
@@ -62,6 +61,11 @@ class StudyOptionsFragment :
     Fragment(),
     ChangeManager.Subscriber,
     MenuProvider {
+    // binding pattern to handle onCreateView/onDestroyView
+    private var fragmentBinding: StudyoptionsFragmentBinding? = null
+    private val binding: StudyoptionsFragmentBinding
+        get() = fragmentBinding!!
+
     /**
      * Preferences
      */
@@ -70,24 +74,6 @@ class StudyOptionsFragment :
     /** Alerts to inform the user about different situations  */
     @Suppress("Deprecation")
     private var progressDialog: android.app.ProgressDialog? = null
-
-    /**
-     * UI elements for "Study Options" view
-     */
-    private var studyOptionsView: View? = null
-    private lateinit var deckInfoLayout: Group
-    private lateinit var buttonStart: Button
-    private lateinit var textDeckName: TextView
-    private lateinit var textDeckDescription: TextView
-    private lateinit var buryInfoLabel: TextView
-    private lateinit var newCountText: TextView
-    private lateinit var newBuryText: TextView
-    private lateinit var learningCountText: TextView
-    private lateinit var learningBuryText: TextView
-    private lateinit var reviewCountText: TextView
-    private lateinit var reviewBuryText: TextView
-    private lateinit var totalNewCardsCount: TextView
-    private lateinit var totalCardsCount: TextView
 
     private var retryMenuRefreshJob: Job? = null
 
@@ -156,14 +142,13 @@ class StudyOptionsFragment :
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
+        fragmentBinding = StudyoptionsFragmentBinding.inflate(layoutInflater)
         Timber.i("onCreateView()")
-        val studyOptionsView = inflater.inflate(R.layout.studyoptions_fragment, container, false)
-        this.studyOptionsView = studyOptionsView
         fragmented = requireActivity().javaClass != StudyOptionsActivity::class.java
-        initAllContentViews(studyOptionsView)
+        initAllContentViews(binding)
         refreshInterface()
         ChangeManager.subscribe(this)
-        return studyOptionsView
+        return binding.root
     }
 
     override fun onViewCreated(
@@ -179,6 +164,11 @@ class StudyOptionsFragment :
         menuInflater: MenuInflater,
     ) {
         menuInflater.inflate(R.menu.study_options_fragment, menu)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        fragmentBinding = null
     }
 
     override fun onDestroy() {
@@ -205,35 +195,20 @@ class StudyOptionsFragment :
         }
     }
 
-    private fun initAllContentViews(studyOptionsView: View) {
-        studyOptionsView.findViewById<View>(R.id.studyoptions_gradient).visibility =
-            if (fragmented) View.VISIBLE else View.GONE
-        deckInfoLayout = studyOptionsView.findViewById(R.id.group_counts)
-        textDeckName = studyOptionsView.findViewById(R.id.studyoptions_deck_name)
-        textDeckDescription = studyOptionsView.findViewById(R.id.studyoptions_deck_description)
+    private fun initAllContentViews(binding: StudyoptionsFragmentBinding) {
+        binding.studyoptionsGradient.isVisible = fragmented
+        val studyOptionsView = binding.root
         // make links clickable
-        textDeckDescription.movementMethod = LinkMovementMethod.getInstance()
-        buryInfoLabel =
-            studyOptionsView.findViewById<TextView>(R.id.studyoptions_bury_counts_label).apply {
-                // TODO see if we could further improve the display and discoverability of buried cards here
-                text = TR.studyingCountsDiffer()
-            }
+        binding.studyoptionsDeckDescription.movementMethod = LinkMovementMethod.getInstance()
+        binding.studyoptionsBuryCountsLabel.apply {
+            // TODO see if we could further improve the display and discoverability of buried cards here
+            text = TR.studyingCountsDiffer()
+        }
         // Code common to both fragmented and non-fragmented view
-        newCountText = studyOptionsView.findViewById(R.id.studyoptions_new_count)
-        studyOptionsView.findViewById<TextView>(R.id.studyoptions_new_count_label).text = TR.actionsNew()
-        newBuryText = studyOptionsView.findViewById(R.id.studyoptions_new_bury)
-        learningCountText = studyOptionsView.findViewById(R.id.studyoptions_learning_count)
-        studyOptionsView.findViewById<TextView>(R.id.studyoptions_learning_count_label).text = TR.schedulingLearning()
-        learningBuryText = studyOptionsView.findViewById(R.id.studyoptions_learning_bury)
-        reviewCountText = studyOptionsView.findViewById(R.id.studyoptions_review_count)
-        studyOptionsView.findViewById<TextView>(R.id.studyoptions_review_count_label).text = TR.studyingToReview()
-        reviewBuryText = studyOptionsView.findViewById(R.id.studyoptions_review_bury)
-        buttonStart =
-            studyOptionsView.findViewById<Button>(R.id.studyoptions_start).apply {
-                setOnClickListener(buttonClickListener)
-            }
-        totalNewCardsCount = studyOptionsView.findViewById(R.id.studyoptions_total_new_count)
-        totalCardsCount = studyOptionsView.findViewById(R.id.studyoptions_total_count)
+        binding.studyoptionsNewCountLabel.text = TR.actionsNew()
+        binding.studyoptionsLearningCountLabel.text = TR.schedulingLearning()
+        binding.studyoptionsReviewCountLabel.text = TR.studyingToReview()
+        binding.studyoptionsStart.setOnClickListener(buttonClickListener)
     }
 
     /**
@@ -401,9 +376,7 @@ class StudyOptionsFragment :
         }
 
     private fun dismissProgressDialog() {
-        if (studyOptionsView != null && studyOptionsView!!.findViewById<View?>(R.id.progress_bar) != null) {
-            studyOptionsView!!.findViewById<View>(R.id.progress_bar).visibility = View.GONE
-        }
+        fragmentBinding?.root?.findViewById<View>(R.id.progress_bar)?.isVisible = false
         // for rebuilding cram decks
         if (progressDialog != null && progressDialog!!.isShowing) {
             try {
@@ -504,7 +477,7 @@ class StudyOptionsFragment :
             }
 
             // #5506 If we have no view, short circuit all UI logic
-            if (studyOptionsView == null) {
+            if (fragmentBinding == null) {
                 tryOpenCramDeckOptions()
                 return
             }
@@ -514,7 +487,7 @@ class StudyOptionsFragment :
                     ?: throw NullPointerException("StudyOptionsFragment:: Collection is null while rebuilding Ui")
 
             // Reinitialize controls in case changed to filtered deck
-            initAllContentViews(studyOptionsView!!)
+            initAllContentViews(binding)
             // Set the deck name
             val deck = col.decks.current()
             // Main deck name
@@ -533,7 +506,7 @@ class StudyOptionsFragment :
             if (name.size > 2) {
                 nameBuilder.append("\n").append(name[name.size - 1])
             }
-            textDeckName.text = nameBuilder.toString()
+            binding.studyoptionsDeckName.text = nameBuilder.toString()
             if (tryOpenCramDeckOptions()) {
                 return
             }
@@ -542,22 +515,22 @@ class StudyOptionsFragment :
             val isDynamic = deck.isFiltered
             if (result.numberOfCardsInDeck == 0 && !isDynamic) {
                 currentContentView = CONTENT_EMPTY
-                deckInfoLayout.visibility = View.VISIBLE
-                buttonStart.visibility = View.GONE
+                binding.groupCounts.visibility = View.VISIBLE
+                binding.studyoptionsStart.visibility = View.GONE
             } else if (result.newCardsToday + result.lrnCardsToday + result.revCardsToday == 0) {
                 currentContentView = CONTENT_CONGRATS
                 if (!isDynamic) {
-                    deckInfoLayout.visibility = View.GONE
-                    buttonStart.visibility = View.VISIBLE
-                    buttonStart.text = TR.actionsCustomStudy().toSentenceCase(this, R.string.sentence_custom_study)
+                    binding.groupCounts.visibility = View.GONE
+                    binding.studyoptionsStart.visibility = View.VISIBLE
+                    binding.studyoptionsStart.text = TR.actionsCustomStudy().toSentenceCase(this, R.string.sentence_custom_study)
                 } else {
-                    buttonStart.visibility = View.GONE
+                    binding.studyoptionsStart.visibility = View.GONE
                 }
             } else {
                 currentContentView = CONTENT_STUDY_OPTIONS
-                deckInfoLayout.visibility = View.VISIBLE
-                buttonStart.visibility = View.VISIBLE
-                buttonStart.setText(R.string.studyoptions_start)
+                binding.groupCounts.visibility = View.VISIBLE
+                binding.studyoptionsStart.visibility = View.VISIBLE
+                binding.studyoptionsStart.setText(R.string.studyoptions_start)
             }
 
             // Set deck description
@@ -575,19 +548,19 @@ class StudyOptionsFragment :
                     }
                 }
             if (desc.isNotEmpty()) {
-                textDeckDescription.text = formatDescription(desc)
-                textDeckDescription.visibility = View.VISIBLE
+                binding.studyoptionsDeckDescription.text = formatDescription(desc)
+                binding.studyoptionsDeckDescription.visibility = View.VISIBLE
             } else {
-                textDeckDescription.visibility = View.GONE
+                binding.studyoptionsDeckDescription.visibility = View.GONE
             }
 
             // Set new/learn/review card counts
-            newCountText.text = result.newCardsToday.toString()
-            learningCountText.text = result.lrnCardsToday.toString()
-            reviewCountText.text = result.revCardsToday.toString()
+            binding.studyoptionsNewCount.text = result.newCardsToday.toString()
+            binding.studyoptionsLearningCount.text = result.lrnCardsToday.toString()
+            binding.studyoptionsReviewCount.text = result.revCardsToday.toString()
 
             // set bury numbers
-            buryInfoLabel.isVisible = result.buriedNew > 0 || result.buriedLearning > 0 || result.buriedReview > 0
+            binding.studyoptionsBuryCountsLabel.isVisible = result.buriedNew > 0 || result.buriedLearning > 0 || result.buriedReview > 0
 
             fun TextView.updateBuryText(count: Int) {
                 this.isVisible = count > 0
@@ -603,11 +576,11 @@ class StudyOptionsFragment :
                         else -> ""
                     }
             }
-            newBuryText.updateBuryText(result.buriedNew)
-            learningBuryText.updateBuryText(result.buriedLearning)
-            reviewBuryText.updateBuryText(result.buriedReview)
-            totalNewCardsCount.text = result.totalNewCards.toString()
-            totalCardsCount.text = result.numberOfCardsInDeck.toString()
+            binding.studyoptionsNewBury.updateBuryText(result.buriedNew)
+            binding.studyoptionsLearningBury.updateBuryText(result.buriedLearning)
+            binding.studyoptionsReviewBury.updateBuryText(result.buriedReview)
+            binding.studyoptionsTotalNewCount.text = result.totalNewCards.toString()
+            binding.studyoptionsTotalCount.text = result.numberOfCardsInDeck.toString()
             // Rebuild the options menu
             configureToolbar()
         }
