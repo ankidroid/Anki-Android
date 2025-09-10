@@ -23,7 +23,7 @@
                 android:layout_height="match_parent"/>
 
             <com.ichi2.anki.ui.ResizingDivider
-                android:id="@+id/homescreen_resizing_divider"
+                android:id="@+id/resizing_divider"
                 android:layout_width="8dp"
                 android:layout_height="match_parent" />
 
