@@ -24,7 +24,6 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
@@ -32,10 +31,10 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.R
+import com.ichi2.anki.databinding.WidgetDeckPickerConfigBinding
 import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
 import com.ichi2.anki.dialogs.DiscardChangesDialog
@@ -58,6 +57,9 @@ class CardAnalysisWidgetConfig :
     AnkiActivity(),
     DeckSelectionListener,
     BaseSnackbarBuilderProvider {
+    // TODO: The binding is unexpected
+    private lateinit var binding: WidgetDeckPickerConfigBinding
+
     private var appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID
     lateinit var deckAdapter: WidgetConfigScreenAdapter
     private lateinit var cardAnalysisWidgetPreferences: CardAnalysisWidgetPreferences
@@ -80,8 +82,8 @@ class CardAnalysisWidgetConfig :
         if (!ensureStoragePermissions()) {
             return
         }
-
-        setContentView(R.layout.widget_deck_picker_config)
+        binding = WidgetDeckPickerConfigBinding.inflate(layoutInflater)
+        setViewBinding(binding)
 
         cardAnalysisWidgetPreferences = CardAnalysisWidgetPreferences(this)
 
@@ -143,20 +145,19 @@ class CardAnalysisWidgetConfig :
                 setUnsavedChanges(true)
             }
 
-        findViewById<RecyclerView>(R.id.recyclerViewSelectedDecks).apply {
+        binding.recyclerViewSelectedDecks.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = this@CardAnalysisWidgetConfig.deckAdapter
         }
 
         // Find and update the submit button text based on the initial deck selection state
-        val submitButton = findViewById<Button>(R.id.submit_button)
         updateSubmitButtonText()
 
-        submitButton.setOnClickListener {
+        binding.submitButton.setOnClickListener {
             finish() // Close the configuration screen when the button is clicked
         }
 
-        findViewById<FloatingActionButton>(R.id.fabWidgetDeckPicker).setOnClickListener {
+        binding.fabWidgetDeckPicker.setOnClickListener {
             showDeckSelectionDialog()
         }
 
@@ -192,12 +193,11 @@ class CardAnalysisWidgetConfig :
 
     /** Updates the text of the submit button based on the selected deck count. */
     private fun updateSubmitButtonText() {
-        val submitButton = findViewById<Button>(R.id.submit_button)
         if (deckAdapter.itemCount > 0) {
-            submitButton.text = getString(R.string.dialog_cancel)
-            submitButton.visibility = View.VISIBLE
+            binding.submitButton.text = getString(R.string.dialog_cancel)
+            binding.submitButton.visibility = View.VISIBLE
         } else {
-            submitButton.visibility = View.GONE
+            binding.submitButton.visibility = View.GONE
         }
     }
 
@@ -228,19 +228,13 @@ class CardAnalysisWidgetConfig :
     }
 
     override val baseSnackbarBuilder: SnackbarBuilder = {
-        anchorView = findViewById<FloatingActionButton>(R.id.fabWidgetDeckPicker)
+        anchorView = binding.fabWidgetDeckPicker
     }
 
     /** Updates the visibility of the FloatingActionButton based on the number of selected decks */
     private fun updateFabVisibility() {
-        // Directly check if there's exactly one deck selected
-        val selectedDeckCount = deckAdapter.itemCount
-
-        // Find the FloatingActionButton by its ID
-        val fab = findViewById<FloatingActionButton>(R.id.fabWidgetDeckPicker)
-
         // Make the FAB visible only if no deck is selected (allow adding one deck)
-        fab.isVisible = selectedDeckCount == 0
+        binding.fabWidgetDeckPicker.isVisible = deckAdapter.itemCount == 0
     }
 
     /** Updates the view according to the saved preference for appWidgetId.*/
@@ -322,11 +316,8 @@ class CardAnalysisWidgetConfig :
 
     /** Updates the visibility of the "no decks" placeholder and the widget configuration container */
     fun updateViewVisibility() {
-        val noDecksPlaceholder = findViewById<View>(R.id.no_decks_placeholder)
-        val widgetConfigContainer = findViewById<View>(R.id.widgetConfigContainer)
-
-        noDecksPlaceholder.isVisible = deckAdapter.itemCount == 0
-        widgetConfigContainer.isVisible = deckAdapter.itemCount > 0
+        binding.noDecksPlaceholder.isVisible = deckAdapter.itemCount == 0
+        binding.widgetConfigContainer.isVisible = deckAdapter.itemCount > 0
     }
 
     fun saveSelectedDecksToPreferencesCardAnalysisWidget() {
