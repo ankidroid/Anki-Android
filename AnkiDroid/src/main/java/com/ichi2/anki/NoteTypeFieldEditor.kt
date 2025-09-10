@@ -25,17 +25,16 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.EditText
-import android.widget.ListView
 import android.widget.TextView
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.core.os.BundleCompat
 import androidx.fragment.app.FragmentManager
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.databinding.NoteTypeFieldEditorBinding
 import com.ichi2.anki.dialogs.ConfirmationDialog
 import com.ichi2.anki.dialogs.LocaleSelectionDialog
 import com.ichi2.anki.dialogs.LocaleSelectionDialog.Companion.KEY_SELECTED_LOCALE
@@ -61,16 +60,18 @@ import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
 import com.ichi2.utils.title
 import com.ichi2.widget.WidgetStatus
+import dev.androidbroadcast.vbpd.viewBinding
 import org.json.JSONArray
 import org.json.JSONException
 import timber.log.Timber
 import java.util.Locale
 
 @NeedsTest("perform one action, then another")
-class NoteTypeFieldEditor : AnkiActivity() {
+class NoteTypeFieldEditor : AnkiActivity(R.layout.note_type_field_editor) {
+    private val binding by viewBinding(NoteTypeFieldEditorBinding::bind)
+
     // Position of the current field selected
     private var currentPos = 0
-    private lateinit var fieldsListView: ListView
     private var fieldNameInput: EditText? = null
 
     // Backing field for [notetype]. Not with _ because it's only allowed for public field.
@@ -95,9 +96,8 @@ class NoteTypeFieldEditor : AnkiActivity() {
         }
         super.onCreate(savedInstanceState)
         setContentView(R.layout.note_type_field_editor)
-        fieldsListView = findViewById(R.id.fields)
         enableToolbar()
-        findViewById<TextView>(R.id.notetype_name).text = intent.getStringExtra("title")
+        binding.notetypeName.text = intent.getStringExtra("title")
         startLoadingCollection()
         setFragmentResultListener(REQUEST_HINT_LOCALE_SELECTION) { _, bundle ->
             val selectedLocale =
@@ -148,13 +148,13 @@ class NoteTypeFieldEditor : AnkiActivity() {
         notetype = collectionModel
         noteFields = notetype.fields
         fieldsLabels = notetype.fieldsNames
-        fieldsListView.adapter = NoteFieldAdapter(this, fieldNamesWithKind())
-        fieldsListView.onItemClickListener =
+        binding.fields.adapter = NoteFieldAdapter(this, fieldNamesWithKind())
+        binding.fields.onItemClickListener =
             AdapterView.OnItemClickListener { _, _, position: Int, _ ->
                 showDialogFragment(newInstance(fieldsLabels[position]))
                 currentPos = position
             }
-        findViewById<FloatingActionButton>(R.id.btn_add).setOnClickListener { addFieldDialog() }
+        binding.btnAdd.setOnClickListener { addFieldDialog() }
     }
     // ----------------------------------------------------------------------------
     // CONTEXT MENU DIALOGUES
