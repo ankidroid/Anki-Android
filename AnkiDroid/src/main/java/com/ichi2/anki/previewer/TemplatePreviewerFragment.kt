@@ -21,14 +21,14 @@ import androidx.core.os.BundleCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.google.android.material.button.MaterialButton
-import com.google.android.material.card.MaterialCardView
 import com.ichi2.anki.R
+import com.ichi2.anki.databinding.TemplatePreviewerBinding
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.utils.ext.sharedPrefs
 import com.ichi2.anki.workarounds.SafeWebViewLayout
 import com.ichi2.utils.BundleUtils.getNullableInt
+import dev.androidbroadcast.vbpd.viewBinding
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
@@ -39,10 +39,13 @@ class TemplatePreviewerFragment :
         val arguments = BundleCompat.getParcelable(requireArguments(), ARGS_KEY, TemplatePreviewerArguments::class.java)!!
         TemplatePreviewerViewModel.factory(arguments)
     }
-    override val webViewLayout: SafeWebViewLayout get() = requireView().findViewById(R.id.webview_layout)
+
+    val binding by viewBinding(TemplatePreviewerBinding::bind)
+
+    override val webViewLayout: SafeWebViewLayout get() = binding.webViewLayout
 
     override val baseSnackbarBuilder: SnackbarBuilder
-        get() = { anchorView = this@TemplatePreviewerFragment.view?.findViewById(R.id.show_answer) }
+        get() = { anchorView = binding.showAnswer }
 
     override fun onViewCreated(
         view: View,
@@ -50,13 +53,10 @@ class TemplatePreviewerFragment :
     ) {
         super.onViewCreated(view, savedInstanceState)
 
-        val showAnswerButton =
-            view.findViewById<MaterialButton>(R.id.show_answer).apply {
-                setOnClickListener { viewModel.toggleShowAnswer() }
-            }
+        binding.showAnswer.setOnClickListener { viewModel.toggleShowAnswer() }
         viewModel.showingAnswer
             .onEach { showingAnswer ->
-                showAnswerButton.text =
+                binding.showAnswer.text =
                     if (showingAnswer) {
                         getString(R.string.hide_answer)
                     } else {
@@ -65,7 +65,7 @@ class TemplatePreviewerFragment :
             }.launchIn(lifecycleScope)
 
         if (sharedPrefs().getBoolean("safeDisplay", false)) {
-            view.findViewById<MaterialCardView>(R.id.webview_container).elevation = 0F
+            binding.webViewContainer.elevation = 0F
         }
 
         arguments?.getNullableInt(ARG_BACKGROUND_OVERRIDE_COLOR)?.let { color ->
