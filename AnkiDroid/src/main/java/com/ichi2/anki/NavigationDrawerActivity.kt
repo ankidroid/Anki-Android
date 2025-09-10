@@ -42,6 +42,7 @@ import androidx.core.view.size
 import androidx.drawerlayout.widget.ClosableDrawerLayout
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import androidx.viewbinding.ViewBinding
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.navigation.NavigationView
 import com.ichi2.anki.NoteEditorFragment.Companion.NoteEditorCaller
@@ -83,6 +84,31 @@ abstract class NavigationDrawerActivity :
                 closeDrawer()
             }
         }
+
+    override fun setViewBinding(binding: ViewBinding) {
+        val preferences = baseContext.sharedPrefs()
+
+        // Using ClosableDrawerLayout as a parent view.
+        val closableDrawerLayout =
+            LayoutInflater.from(this).inflate(
+                navigationDrawerLayout,
+                null,
+                false,
+            ) as ClosableDrawerLayout
+
+        val coordinatorLayout = binding.root
+        if (preferences.getBoolean(FULL_SCREEN_NAVIGATION_DRAWER, false)) {
+            // If full screen navigation drawer is needed, then add FullDraggableContainer as a child view of closableDrawerLayout.
+            // Then add coordinatorLayout as a child view of fullDraggableContainer.
+            val fullDraggableContainer = FullDraggableContainerFix(this)
+            fullDraggableContainer.addView(coordinatorLayout)
+            closableDrawerLayout.addView(fullDraggableContainer, 0)
+        } else {
+            // If full screen navigation drawer is not needed, then directly add coordinatorLayout as the child view.
+            closableDrawerLayout.addView(coordinatorLayout, 0)
+        }
+        setContentView(closableDrawerLayout)
+    }
 
     override fun setContentView(
         @LayoutRes layoutResID: Int,
