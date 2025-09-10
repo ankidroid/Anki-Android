@@ -30,13 +30,14 @@ import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.activity.OnBackPressedCallback
-import androidx.appcompat.widget.Toolbar
 import androidx.core.os.bundleOf
 import androidx.fragment.app.commit
 import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_INDEFINITE
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.databinding.ActivitySharedDecksBinding
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.utils.FileNameAndExtension
+import dev.androidbroadcast.vbpd.viewBinding
 import timber.log.Timber
 import java.io.Serializable
 import kotlin.random.Random
@@ -46,8 +47,8 @@ import kotlin.random.Random
  *
  * @see SharedDecksDownloadFragment
  */
-class SharedDecksActivity : AnkiActivity() {
-    private lateinit var webView: WebView
+class SharedDecksActivity : AnkiActivity(R.layout.activity_shared_decks) {
+    private val binding by viewBinding(ActivitySharedDecksBinding::bind)
     lateinit var downloadManager: DownloadManager
 
     private var shouldHistoryBeCleared = false
@@ -56,7 +57,7 @@ class SharedDecksActivity : AnkiActivity() {
     private val onBackPressedCallback =
         object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                if (webView.canGoBack()) webView.goBack()
+                if (binding.webView.canGoBack()) binding.webView.goBack()
             }
         }
 
@@ -77,7 +78,7 @@ class SharedDecksActivity : AnkiActivity() {
                 isReload: Boolean,
             ) {
                 super.doUpdateVisitedHistory(view, url, isReload)
-                onBackPressedCallback.isEnabled = webView.canGoBack()
+                onBackPressedCallback.isEnabled = binding.webView.canGoBack()
             }
 
             override fun onPageFinished(
@@ -86,7 +87,7 @@ class SharedDecksActivity : AnkiActivity() {
             ) {
                 // Clear history if mShouldHistoryBeCleared is true and set it to false
                 if (shouldHistoryBeCleared) {
-                    webView.clearHistory()
+                    binding.webView.clearHistory()
                     shouldHistoryBeCleared = false
                 }
                 super.onPageFinished(view, url)
@@ -181,7 +182,7 @@ class SharedDecksActivity : AnkiActivity() {
                     // If a user is not logged in inside AnkiDroid, assume they have no AnkiWeb account
                     // and give them the option to sign up
                     setAction(R.string.sign_up) {
-                        webView.loadUrl(getString(R.string.shared_decks_sign_up_url))
+                        binding.webView.loadUrl(getString(R.string.shared_decks_sign_up_url))
                     }
                 }
 
@@ -192,7 +193,7 @@ class SharedDecksActivity : AnkiActivity() {
                 if (redirectTimes++ < 3) {
                     val url = getString(R.string.shared_decks_login_url)
                     Timber.i("HTTP 429, redirecting to login: '$url'")
-                    webView.loadUrl(url)
+                    binding.webView.loadUrl(url)
                 } else {
                     // Ensure that we do not have an infinite redirect
                     Timber.w("HTTP 429 redirect limit exceeded, only displaying message")
@@ -213,25 +214,20 @@ class SharedDecksActivity : AnkiActivity() {
         }
 
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_shared_decks)
         setTitle(R.string.download_deck)
 
-        val webviewToolbar: Toolbar = findViewById(R.id.webview_toolbar)
-        webviewToolbar.setTitleTextColor(getColor(R.color.white))
-
-        setSupportActionBar(webviewToolbar)
+        binding.webviewToolbar.setTitleTextColor(getColor(R.color.white))
+        setSupportActionBar(binding.webviewToolbar)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
-        webView = findViewById(R.id.media_check_webview)
-
         downloadManager = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
 
-        webView.settings.javaScriptEnabled = true
-        webView.loadUrl(resources.getString(R.string.shared_decks_url))
-        webView.webViewClient = WebViewClient()
-        webView.setDownloadListener { url, userAgent, contentDisposition, mimetype, _ ->
+        binding.webView.settings.javaScriptEnabled = true
+        binding.webView.loadUrl(resources.getString(R.string.shared_decks_url))
+        binding.webView.webViewClient = WebViewClient()
+        binding.webView.setDownloadListener { url, userAgent, contentDisposition, mimetype, _ ->
             // If the activity/fragment lifecycle has already begun teardown process,
             // avoid handling the download, as FragmentManager.commit will throw
             if (!supportFragmentManager.isStateSaved) {
@@ -250,7 +246,7 @@ class SharedDecksActivity : AnkiActivity() {
             }
         }
 
-        webView.webViewClient = webViewClient
+        binding.webView.webViewClient = webViewClient
         onBackPressedDispatcher.addCallback(onBackPressedCallback)
     }
 
@@ -263,7 +259,7 @@ class SharedDecksActivity : AnkiActivity() {
         if (item.itemId == R.id.home) {
             // R.id.home refers to a custom 'home' menu item defined in your app resources (res/menu/...).
             shouldHistoryBeCleared = true
-            webView.loadUrl(resources.getString(R.string.shared_decks_url))
+            binding.webView.loadUrl(resources.getString(R.string.shared_decks_url))
         } else if (item.itemId == android.R.id.home) {
             // android.R.id.home refers to the system-provided "up" button in the app toolbar
             onBackPressedCallback.isEnabled = false
