@@ -6,7 +6,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <include layout="@layout/toolbar" />
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar" />
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/note_editor_fragment_frame"
             android:layout_width="match_parent"

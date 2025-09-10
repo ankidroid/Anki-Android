@@ -21,8 +21,12 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
+import com.ichi2.anki.NoteEditorActivity.Companion.FRAGMENT_ARGS_EXTRA
+import com.ichi2.anki.NoteEditorActivity.Companion.FRAGMENT_NAME_EXTRA
 import com.ichi2.anki.android.input.ShortcutGroup
 import com.ichi2.anki.android.input.ShortcutGroupProvider
+import com.ichi2.anki.databinding.NoteEditorBinding
+import com.ichi2.anki.databinding.ToolbarBinding
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
@@ -43,12 +47,13 @@ class NoteEditorActivity :
     BaseSnackbarBuilderProvider,
     DispatchKeyEventListener,
     ShortcutGroupProvider {
+    private lateinit var binding: NoteEditorBinding
+    private val toolbarBinding: ToolbarBinding
+        get() = binding.toolbar
+
     override val baseSnackbarBuilder: SnackbarBuilder = { }
 
     lateinit var noteEditorFragment: NoteEditorFragment
-
-    private val mainToolbar: androidx.appcompat.widget.Toolbar
-        get() = findViewById(R.id.toolbar)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
@@ -58,8 +63,8 @@ class NoteEditorActivity :
         if (!ensureStoragePermissions()) {
             return
         }
-
-        setContentView(R.layout.note_editor)
+        binding = NoteEditorBinding.inflate(layoutInflater)
+        setViewBinding(binding)
 
         /**
          * The [NoteEditorActivity] activity supports multiple note editing workflows using fragments.
@@ -125,7 +130,7 @@ class NoteEditorActivity :
 
         // R.id.home is handled in setNavigationOnClickListener
         // Set a listener for back button clicks in the toolbar
-        mainToolbar.setNavigationOnClickListener {
+        toolbarBinding.toolbar.setNavigationOnClickListener {
             Timber.i("NoteEditor:: Back button on the menu was pressed")
             onBackPressedDispatcher.onBackPressed()
         }
