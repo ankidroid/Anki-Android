@@ -114,7 +114,7 @@
     </plurals>
     <!--Keyboard shortcuts dialog-->
     <string name="edit_tags_dialog" comment="Description of the shortcut that opens the edit tags dialog">Edit tags dialog</string>
-    <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">Show order dialog</string>
+    <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">𐍄𐌴𐍅𐌰 𐌲𐌰𐍅𐌰𐌿𐍂𐌳𐌾𐌹𐍃 𐌱𐌰𐌽𐌳𐍅𐌾𐌰𐌽</string>
     <!-- Manage columns dialog -->
     <string name="browse_manage_columns_main_heading">𐍃𐌰𐌿𐌻𐌴𐌹𐍃</string>
     <string name="browse_manage_columns">𐍃𐌰𐌿𐌻𐌹𐌽𐍃 𐌰𐍄𐌲𐌰𐍂𐌰𐌹𐌷𐍄𐌾𐌰𐌽</string>
@@ -123,5 +123,5 @@
     <string name="include_column">𐍃𐌰𐌿𐌻 𐌱𐌹𐌰𐌿𐌺𐌰𐌽</string>
     <string name="exclude_column">𐍃𐌰𐌿𐌻𐌹𐌽𐍃 𐌿𐍃𐌽𐌹𐌼𐌰𐌽</string>
     <string name="save_changes_message">𐌱𐌹𐌳𐌾𐌰𐌼 𐌸𐌿𐌺, 𐌲𐌰𐍆𐌰𐍃𐍄𐌰𐌹 𐍆𐍂𐌿𐌼𐌹𐍃𐍄 𐌹𐌽𐌼𐌰𐌹𐌳𐌴𐌹𐌽𐍉𐍃 𐌸𐌴𐌹𐌽𐍉𐍃</string>
-    <string name="browser_find_replace_loading_fields">Retrieving fields names&#8230;</string>
+    <string name="browser_find_replace_loading_fields">𐍅𐌰𐌹𐍂𐌸𐌴 𐌽𐌰𐌼𐌽𐌰 𐌽𐌹𐌼𐌰𐌽𐌳𐌰&#8230;</string>
 </resources>

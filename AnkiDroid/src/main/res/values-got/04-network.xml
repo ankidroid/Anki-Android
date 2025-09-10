@@ -67,7 +67,7 @@
     <string name="sign_in">𐌰𐍄𐌲𐌰𐌲𐌲𐌰𐌽𐌳𐍉</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">𐌼𐌰𐌷𐍄𐌴𐌹𐍃 𐍆𐌰𐌿𐍂 XXX</string>
-    <string name="sync_title">Synchronization</string>
+    <string name="sync_title">𐌲𐌰𐌲𐌰𐌻𐌴𐌹𐌺𐍉𐌽𐍃</string>
     <string name="sync_log_uploading_message">Full sync from local</string>
     <string name="sync_database_acknowledge">𐌲𐌰𐌻𐌹𐍃𐌰 𐌲𐌰𐌻𐌴𐌹𐌺𐍉𐌽𐌰 𐌹𐍃𐍄</string>
     <string name="col_synced_media_in_background">Collection synced. Media is being synced in the background.</string>
