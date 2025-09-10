@@ -64,14 +64,13 @@ class AnkiDroidCrashReportDialog :
      * Build the custom view used by the dialog
      */
     override fun buildCustomView(savedInstanceState: Bundle?): View {
-        val preferences = this.sharedPrefs()
         val inflater = layoutInflater
 
         @SuppressLint("InflateParams")
         val rootView = // when you inflate into an alert dialog, you have no parent view
             inflater.inflate(R.layout.feedback, null)
         alwaysReportCheckBox = rootView.findViewById(R.id.alwaysReportCheckbox)
-        alwaysReportCheckBox?.isChecked = preferences.getBoolean("autoreportCheckboxValue", true)
+        alwaysReportCheckBox?.isChecked = sharedPrefs().getBoolean("autoreportCheckboxValue", true)
         userComment = rootView.findViewById(R.id.etFeedbackText)
         // Set user comment if reloading after the activity has been stopped
         savedInstanceState?.getString(STATE_COMMENT)?.let { savedComment ->
