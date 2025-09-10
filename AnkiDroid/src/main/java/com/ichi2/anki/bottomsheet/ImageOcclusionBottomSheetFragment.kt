@@ -20,10 +20,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.ichi2.anki.R
+import com.ichi2.anki.databinding.ImageOcclusionOptionsLayoutBinding
 
 class ImageOcclusionBottomSheetFragment : BottomSheetDialogFragment() {
     var listener: ImagePickerListener? = null
@@ -39,18 +38,18 @@ class ImageOcclusionBottomSheetFragment : BottomSheetDialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        val view = inflater.inflate(R.layout.image_occlusion_options_layout, container, false)
+        val binding = ImageOcclusionOptionsLayoutBinding.inflate(inflater, container, false)
 
-        view.findViewById<LinearLayout>(R.id.occlusion_action_camera).setOnClickListener {
+        binding.occlusionActionCamera.setOnClickListener {
             listener?.onCameraClicked()
             dismiss()
         }
-        view.findViewById<LinearLayout>(R.id.occlusion_action_gallery).setOnClickListener {
+        binding.occlusionActionGallery.setOnClickListener {
             listener?.onGalleryClicked()
             dismiss()
         }
 
-        return view
+        return binding.root
     }
 
     override fun onStart() {
