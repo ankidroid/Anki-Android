@@ -29,7 +29,6 @@ import android.view.View
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.BaseAdapter
-import android.widget.LinearLayout
 import android.widget.Spinner
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
@@ -44,7 +43,6 @@ import androidx.appcompat.widget.ThemeUtils
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
-import androidx.fragment.app.FragmentContainerView
 import androidx.fragment.app.commit
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -70,6 +68,7 @@ import com.ichi2.anki.browser.registerFindReplaceHandler
 import com.ichi2.anki.browser.toCardBrowserLaunchOptions
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
+import com.ichi2.anki.databinding.CardBrowserBinding
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
 import com.ichi2.anki.dialogs.DiscardChangesDialog
 import com.ichi2.anki.dialogs.GradeNowDialog
@@ -146,12 +145,9 @@ open class CardBrowser :
 
     lateinit var viewModel: CardBrowserViewModel
 
-    lateinit var cardBrowserFragment: CardBrowserFragment
+    private lateinit var binding: CardBrowserBinding
 
-    /**
-     * The frame containing the NoteEditor. Non null only in layout x-large.
-     */
-    private var noteEditorFrame: FragmentContainerView? = null
+    lateinit var cardBrowserFragment: CardBrowserFragment
 
     private var deckSpinnerSelection: DeckSpinnerSelection? = null
 
@@ -301,6 +297,7 @@ open class CardBrowser :
         }
         tagsDialogFactory = TagsDialogFactory(this).attachToActivity<TagsDialogFactory>(this)
         super.onCreate(savedInstanceState)
+        binding = CardBrowserBinding.inflate(layoutInflater)
         if (!ensureStoragePermissions()) {
             return
         }
@@ -316,10 +313,8 @@ open class CardBrowser :
 
         val launchOptions = intent?.toCardBrowserLaunchOptions() // must be called after super.onCreate()
 
-        setContentView(layout)
+        setViewBinding(binding)
         initNavigationDrawer(findViewById(android.R.id.content))
-
-        noteEditorFrame = findViewById(R.id.note_editor_frame)
 
         /**
          * Check if noteEditorFrame is not null and if its visibility is set to VISIBLE.
@@ -330,20 +325,15 @@ open class CardBrowser :
         val fragmented =
             Prefs.devIsCardBrowserFragmented &&
                 !useSearchView &&
-                noteEditorFrame?.visibility == View.VISIBLE
+                binding.noteEditorFrame?.visibility == View.VISIBLE
         Timber.i("Using split Browser: %b", fragmented)
 
         if (fragmented) {
-            val parentLayout = findViewById<LinearLayout>(R.id.card_browser_xl_view)
-            val divider = findViewById<View>(R.id.card_browser_resizing_divider)
-            val cardBrowserPane = findViewById<View>(R.id.card_browser_frame)
-            val noteEditorPane = findViewById<View>(R.id.note_editor_frame)
-
             ResizablePaneManager(
-                parentLayout = parentLayout,
-                divider = divider,
-                leftPane = cardBrowserPane,
-                rightPane = noteEditorPane,
+                parentLayout = requireNotNull(binding.cardBrowserXlView),
+                divider = requireNotNull(binding.cardBrowserResizingDivider),
+                leftPane = requireNotNull(binding.cardBrowserFrame),
+                rightPane = requireNotNull(binding.noteEditorFrame),
                 sharedPrefs = Prefs.getUiConfig(this),
                 leftPaneWeightKey = PREF_CARD_BROWSER_PANE_WEIGHT,
                 rightPaneWeightKey = PREF_NOTE_EDITOR_PANE_WEIGHT,
@@ -469,7 +459,7 @@ open class CardBrowser :
             return
         }
         // Show note editor frame
-        noteEditorFrame!!.isVisible = true
+        binding.noteEditorFrame!!.isVisible = true
 
         // If there are unsaved changes in NoteEditor then show dialog for confirmation
         if (fragment?.hasUnsavedChanges() == true) {
@@ -1189,7 +1179,7 @@ open class CardBrowser :
             // Check whether deck is empty or not
             val isDeckEmpty = viewModel.rowCount == 0
             // Hide note editor frame if deck is empty and fragmented
-            noteEditorFrame?.visibility =
+            binding.noteEditorFrame?.visibility =
                 if (fragmented && !isDeckEmpty) {
                     viewModel.currentCardId = (viewModel.focusedRow ?: viewModel.cards[0]).toCardId(viewModel.cardsOrNotes)
                     loadNoteEditorFragmentIfFragmented()
