@@ -27,7 +27,6 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.EditText
-import android.widget.ListView
 import android.widget.TextView
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
@@ -37,6 +36,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.databinding.NoteTypeFieldEditorBinding
 import com.ichi2.anki.dialogs.ConfirmationDialog
 import com.ichi2.anki.dialogs.LocaleSelectionDialog
 import com.ichi2.anki.dialogs.LocaleSelectionDialog.Companion.KEY_SELECTED_LOCALE
@@ -69,9 +69,10 @@ import java.util.Locale
 
 @NeedsTest("perform one action, then another")
 class NoteTypeFieldEditor : AnkiActivity() {
+    private lateinit var binding: NoteTypeFieldEditorBinding
+
     // Position of the current field selected
     private var currentPos = 0
-    private lateinit var fieldsListView: ListView
     private var fieldNameInput: EditText? = null
 
     // Backing field for [notetype]. Not with _ because it's only allowed for public field.
@@ -95,8 +96,8 @@ class NoteTypeFieldEditor : AnkiActivity() {
             return
         }
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.note_type_field_editor)
-        fieldsListView = findViewById(R.id.note_type_editor_fields)
+        binding = NoteTypeFieldEditorBinding.inflate(layoutInflater)
+        setViewBinding(binding)
         enableToolbar().apply {
             setTitle(R.string.model_field_editor_title)
             subtitle = intent.getStringExtra("title")
@@ -157,8 +158,8 @@ class NoteTypeFieldEditor : AnkiActivity() {
         notetype = collectionModel
         noteFields = notetype.fields
         fieldsLabels = notetype.fieldsNames
-        fieldsListView.adapter = NoteFieldAdapter(this, fieldNamesWithKind())
-        fieldsListView.onItemClickListener =
+        binding.noteTypeEditorFields.adapter = NoteFieldAdapter(this, fieldNamesWithKind())
+        binding.noteTypeEditorFields.onItemClickListener =
             AdapterView.OnItemClickListener { _, _, position: Int, _ ->
                 showDialogFragment(newInstance(fieldsLabels[position]))
                 currentPos = position
