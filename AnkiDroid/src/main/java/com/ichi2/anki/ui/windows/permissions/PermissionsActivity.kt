@@ -20,17 +20,18 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Parcelable
 import androidx.activity.addCallback
-import androidx.appcompat.widget.AppCompatButton
 import androidx.core.content.IntentCompat
 import androidx.fragment.app.commit
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.PermissionSet
 import com.ichi2.anki.R
+import com.ichi2.anki.databinding.ActivityPermissionsBinding
 import com.ichi2.anki.ui.windows.permissions.PermissionsFragment.Companion.HAS_ALL_PERMISSIONS_KEY
 import com.ichi2.anki.ui.windows.permissions.PermissionsFragment.Companion.PERMISSIONS_FRAGMENT_RESULT_KEY
 import com.ichi2.anki.utils.ext.setFragmentResultListener
 import com.ichi2.themes.Themes
 import com.ichi2.themes.setTransparentStatusBar
+import dev.androidbroadcast.vbpd.viewBinding
 
 /**
  * Screen responsible for getting permissions from the user.
@@ -45,19 +46,19 @@ import com.ichi2.themes.setTransparentStatusBar
  *
  * To request optional permissions from the user, prefer [PermissionsBottomSheet].
  */
-class PermissionsActivity : AnkiActivity() {
+class PermissionsActivity : AnkiActivity(R.layout.activity_permissions) {
+    private val binding by viewBinding(ActivityPermissionsBinding::bind)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
             return
         }
         super.onCreate(savedInstanceState)
+        setViewBinding(binding)
         Themes.setTheme(this)
-        setContentView(R.layout.permissions_activity)
         setTransparentStatusBar()
 
-        findViewById<AppCompatButton>(R.id.continue_button).setOnClickListener {
-            finish()
-        }
+        binding.continueButton.setOnClickListener { finish() }
 
         val permissionSet =
             requireNotNull(IntentCompat.getParcelableExtra(intent, PERMISSIONS_SET_EXTRA, PermissionSet::class.java)) {
@@ -80,7 +81,7 @@ class PermissionsActivity : AnkiActivity() {
     }
 
     fun setContinueButtonEnabled(isEnabled: Boolean) {
-        findViewById<AppCompatButton>(R.id.continue_button).isEnabled = isEnabled
+        binding.continueButton.isEnabled = isEnabled
     }
 
     companion object {
