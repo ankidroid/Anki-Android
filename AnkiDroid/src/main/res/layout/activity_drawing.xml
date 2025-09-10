@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         />
     <include
+        android:id="@+id/editor"
         layout="@layout/reviewer_whiteboard_editor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
