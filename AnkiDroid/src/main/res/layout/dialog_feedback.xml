@@ -16,7 +16,7 @@
 
         <!-- We are using EditText as FixedEditText fails here (#8380) -->
         <EditText
-            android:id="@+id/etFeedbackText"
+            android:id="@+id/user_comment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="top"
@@ -26,7 +26,7 @@
     </ScrollView>
 
     <CheckBox
-        android:id="@+id/alwaysReportCheckbox"
+        android:id="@+id/always_report"
         android:text="@string/feedback_report_automatically"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
