@@ -24,8 +24,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.widget.doOnTextChanged
@@ -38,10 +36,9 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
-import com.google.android.material.chip.Chip
-import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.ichi2.anki.AndroidTtsVoice
 import com.ichi2.anki.R
+import com.ichi2.anki.databinding.DialogTtsVoicesBinding
 import com.ichi2.anki.dialogs.viewmodel.TtsVoicesViewModel
 import com.ichi2.anki.libanki.TtsVoice
 import com.ichi2.anki.localizedErrorMessage
@@ -75,11 +72,10 @@ import timber.log.Timber
 class TtsVoicesDialogFragment : DialogFragment() {
     private val viewModel: TtsVoicesViewModel by this.viewModels()
 
-    private lateinit var progressBar: LinearProgressIndicator
-    private lateinit var layout: View
-    private lateinit var spokenTextEditText: EditText
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var internetRequiredChip: Chip
+    // binding pattern to handle onCreateView/onDestroyView
+    private var fragmentBinding: DialogTtsVoicesBinding? = null
+    private val binding: DialogTtsVoicesBinding
+        get() = fragmentBinding!!
 
     private lateinit var voicesAdapter: TtsVoiceAdapter
 
@@ -91,42 +87,31 @@ class TtsVoicesDialogFragment : DialogFragment() {
         voicesAdapter = TtsVoiceAdapter()
         Themes.setTheme(requireContext()) // (re)-enable selectableItemBackground on theme change
 
-        layout =
-            inflater.inflate(R.layout.dialog_tts_voices, null).apply {
-                recyclerView =
-                    findViewById<RecyclerView>(R.id.files).apply {
-                        this.adapter = voicesAdapter
-                    }
-                spokenTextEditText =
-                    findViewById<EditText>(R.id.spoken_text).apply {
-                        // setup the initial value from the UI
-                        viewModel.setSpokenText(text.toString())
-                        doOnTextChanged { text, _, _, _ -> viewModel.setSpokenText(text.toString()) }
-                    }
-                findViewById<MaterialButton>(R.id.back_button).apply {
-                    setOnClickListener {
-                        this@TtsVoicesDialogFragment.dismiss()
-                    }
+        fragmentBinding =
+            DialogTtsVoicesBinding.inflate(inflater).also { binding ->
+                binding.files.adapter = voicesAdapter
+                binding.spokenTextEditText.apply {
+                    // setup the initial value from the UI
+                    viewModel.setSpokenText(text.toString())
+                    doOnTextChanged { text, _, _, _ -> viewModel.setSpokenText(text.toString()) }
                 }
-                findViewById<Button>(R.id.options_buttons).apply {
-                    setOnClickListener { openTtsSettings() }
-                }
-                internetRequiredChip =
-                    findViewById<Chip>(R.id.toggle_internet_required).apply {
-                        setOnCheckedChangeListener { _, value ->
-                            viewModel.showInternetEnabled.value = value
-                            chipBackgroundColor =
-                                if (value) {
-                                    // TODO: This should be RMaterial.attr.colorSecondaryContainer
-                                    // but this shows as Purple after Themes.setTheme
-                                    ColorStateList.valueOf(requireContext().getColor(R.color.text_input_background))
-                                } else {
-                                    ColorStateList.valueOf(Color.TRANSPARENT)
-                                }
-                        }
-                        viewModel.showInternetEnabled.value = this.isChecked
+                binding.backButton.setOnClickListener { dismiss() }
+                binding.optionsButtons.setOnClickListener { openTtsSettings() }
+                binding.toggleInternetRequired.apply {
+                    setOnCheckedChangeListener { _, value ->
+                        viewModel.showInternetEnabled.value = value
+                        chipBackgroundColor =
+                            if (value) {
+                                // TODO: This should be RMaterial.attr.colorSecondaryContainer
+                                // but this shows as Purple after Themes.setTheme
+                                ColorStateList.valueOf(requireContext().getColor(R.color.text_input_background))
+                            } else {
+                                ColorStateList.valueOf(Color.TRANSPARENT)
+                            }
                     }
-                findViewById<Chip>(R.id.only_show_uninstalled).apply {
+                    viewModel.showInternetEnabled.value = this.isChecked
+                }
+                binding.onlyShowUninstalled.apply {
                     setOnCheckedChangeListener { _, value ->
                         viewModel.showNotInstalled.value = value
                         chipBackgroundColor =
@@ -138,10 +123,14 @@ class TtsVoicesDialogFragment : DialogFragment() {
                     }
                     viewModel.showNotInstalled.value = this.isChecked
                 }
-                progressBar = findViewById(R.id.progress)
             }
 
-        return layout
+        return binding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        fragmentBinding = null
     }
 
     fun openTtsSettings() {
@@ -164,7 +153,7 @@ class TtsVoicesDialogFragment : DialogFragment() {
 
         viewModel.availableVoicesFlow.observe {
             if (it is TtsVoicesViewModel.VoiceLoadingState.Failure) {
-                progressBar.visibility = View.VISIBLE
+                binding.progress.visibility = View.VISIBLE
                 AlertDialog
                     .Builder(requireContext())
                     .setMessage(it.exception.localizedMessage)
@@ -175,13 +164,13 @@ class TtsVoicesDialogFragment : DialogFragment() {
             if (it is TtsVoicesViewModel.VoiceLoadingState.Success) {
                 Timber.v("loaded new voice collection")
                 voicesAdapter.submitList(it.voices)
-                progressBar.visibility = View.GONE
+                binding.progress.visibility = View.GONE
             }
         }
 
         viewModel.showNotInstalled.observe { showInstalled ->
             // if the user is showing installed, it shows ALL uninstalled voices
-            internetRequiredChip.isEnabled = !showInstalled
+            binding.toggleInternetRequired.isEnabled = !showInstalled
         }
 
         viewModel.uninstalledVoicePlayed.observe { voice ->
