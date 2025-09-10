@@ -46,6 +46,7 @@ import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.isVisible
 import androidx.core.view.size
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -156,7 +157,7 @@ open class CardTemplateEditor :
 
     /**
      * If true, the view is split in two. The template editor appears on the leading side and the previewer on the trailing side.
-     * This occurs when the view is big enough.
+     * This occurs when the screen size is large
      */
     private var fragmented = false
     val displayDiscardChangesCallback =
@@ -203,12 +204,8 @@ open class CardTemplateEditor :
         }
 
         templatePreviewerFrame = findViewById(R.id.fragment_container)
-        /**
-         * Check if templatePreviewerFrame is not null and if its visibility is set to VISIBLE.
-         * If both conditions are true, assign true to the variable [fragmented], otherwise assign false.
-         * [fragmented] will be true if the screen size is large otherwise false
-         */
-        fragmented = templatePreviewerFrame != null && templatePreviewerFrame?.visibility == View.VISIBLE
+
+        fragmented = templatePreviewerFrame?.isVisible == true
 
         slidingTabLayout = findViewById(R.id.sliding_tabs)
         viewPager = findViewById(R.id.card_template_editor_pager)
@@ -664,12 +661,7 @@ open class CardTemplateEditor :
             /* When keyboard is visible, hide the bottom navigation bar to allow viewing
             of all template text when resize happens */
             ViewCompat.setOnApplyWindowInsetsListener(mainView) { _, insets ->
-                val imeIsVisible = insets.isVisible(WindowInsetsCompat.Type.ime())
-                if (imeIsVisible) {
-                    bottomNavigation.visibility = View.GONE
-                } else {
-                    bottomNavigation.visibility = View.VISIBLE
-                }
+                bottomNavigation.isVisible = !insets.isVisible(WindowInsetsCompat.Type.ime())
                 insets
             }
 
