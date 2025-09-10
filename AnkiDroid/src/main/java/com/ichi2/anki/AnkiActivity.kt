@@ -52,6 +52,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.viewbinding.ViewBinding
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation
@@ -201,6 +202,10 @@ open class AnkiActivity :
         )
         // Show any pending dialogs which were stored persistently
         dialogHandler.executeMessage()
+    }
+
+    open fun setViewBinding(binding: ViewBinding) {
+        setContentView(binding.root)
     }
 
     /**
