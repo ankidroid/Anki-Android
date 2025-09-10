@@ -25,6 +25,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.annotation.CheckResult
 import androidx.appcompat.app.AlertDialog
 import androidx.core.widget.doAfterTextChanged
+import com.ichi2.anki.databinding.CardBrowserAppearanceBinding
 import com.ichi2.anki.dialogs.DiscardChangesDialog
 import com.ichi2.anki.libanki.CardTemplate
 import com.ichi2.utils.message
@@ -40,8 +41,7 @@ import timber.log.Timber
  * We do not allow the user to change the font size as this can be done in the Appearance settings.
  */
 class CardTemplateBrowserAppearanceEditor : AnkiActivity() {
-    private lateinit var questionEditText: EditText
-    private lateinit var answerEditText: EditText
+    private lateinit var binding: CardBrowserAppearanceBinding
 
     // start with the callback disabled as there aren't any changes yet
     private val discardChangesCallback =
@@ -62,14 +62,16 @@ class CardTemplateBrowserAppearanceEditor : AnkiActivity() {
             finish()
             return
         }
+        binding = CardBrowserAppearanceBinding.inflate(layoutInflater)
+        setViewBinding(binding)
         initializeUiFromBundle(bundle)
         // default result, only changed to RESULT_OK if actually saving changes
         setResult(RESULT_CANCELED)
         onBackPressedDispatcher.addCallback(discardChangesCallback)
-        questionEditText.doAfterTextChanged { _ ->
+        binding.questionFormat.doAfterTextChanged { _ ->
             discardChangesCallback.isEnabled = hasChanges()
         }
-        answerEditText.doAfterTextChanged { _ ->
+        binding.answerFormat.doAfterTextChanged { _ ->
             discardChangesCallback.isEnabled = hasChanges()
         }
     }
@@ -129,13 +131,8 @@ class CardTemplateBrowserAppearanceEditor : AnkiActivity() {
     }
 
     private fun initializeUiFromBundle(bundle: Bundle) {
-        setContentView(R.layout.card_browser_appearance)
-
-        questionEditText = findViewById(R.id.question_format)
-        questionEditText.setText(bundle.getString(INTENT_QUESTION_FORMAT))
-
-        answerEditText = findViewById(R.id.answer_format)
-        answerEditText.setText(bundle.getString(INTENT_ANSWER_FORMAT))
+        binding.questionFormat.setText(bundle.getString(INTENT_QUESTION_FORMAT))
+        binding.answerFormat.setText(bundle.getString(INTENT_ANSWER_FORMAT))
 
         discardChangesCallback.isEnabled = hasChanges()
 
@@ -148,16 +145,16 @@ class CardTemplateBrowserAppearanceEditor : AnkiActivity() {
     private fun questionHasChanged(intent: Intent): Boolean = intent.getStringExtra(INTENT_QUESTION_FORMAT) != questionFormat
 
     private val questionFormat: String
-        get() = getTextValue(questionEditText)
+        get() = getTextValue(binding.questionFormat)
     private val answerFormat: String
-        get() = getTextValue(answerEditText)
+        get() = getTextValue(binding.answerFormat)
 
     private fun getTextValue(editText: EditText): String = editText.text.toString()
 
     private fun restoreDefaultAndClose() {
         Timber.i("Restoring Default and Closing")
-        questionEditText.setText(VALUE_USE_DEFAULT)
-        answerEditText.setText(VALUE_USE_DEFAULT)
+        binding.questionFormat.setText(VALUE_USE_DEFAULT)
+        binding.answerFormat.setText(VALUE_USE_DEFAULT)
         saveAndExit()
     }
 
