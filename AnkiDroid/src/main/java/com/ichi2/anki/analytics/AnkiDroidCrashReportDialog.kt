@@ -74,12 +74,10 @@ class AnkiDroidCrashReportDialog :
         alwaysReportCheckBox?.isChecked = preferences.getBoolean("autoreportCheckboxValue", true)
         userComment = rootView.findViewById(R.id.etFeedbackText)
         // Set user comment if reloading after the activity has been stopped
-        if (savedInstanceState != null) {
-            val savedValue = savedInstanceState.getString(STATE_COMMENT)
-            if (savedValue != null) {
-                userComment?.setText(savedValue)
-            }
+        savedInstanceState?.getString(STATE_COMMENT)?.let { savedComment ->
+            userComment?.setText(savedComment)
         }
+
         return rootView
     }
 
