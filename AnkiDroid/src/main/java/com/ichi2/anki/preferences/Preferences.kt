@@ -22,7 +22,9 @@ package com.ichi2.anki.preferences
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.XmlRes
 import androidx.core.os.bundleOf
@@ -42,6 +44,7 @@ import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.google.android.material.appbar.MaterialToolbar
 import com.ichi2.anki.R
 import com.ichi2.anki.SingleFragmentActivity
+import com.ichi2.anki.databinding.PreferencesBinding
 import com.ichi2.anki.preferences.HeaderFragment.Companion.getHeaderKeyForFragment
 import com.ichi2.anki.reviewreminders.ReviewReminderScope
 import com.ichi2.anki.reviewreminders.ScheduleReminders
@@ -57,6 +60,11 @@ class PreferencesFragment :
     Fragment(R.layout.preferences),
     PreferenceFragmentCompat.OnPreferenceStartFragmentCallback,
     SearchPreferenceResultListener {
+    // binding pattern to handle onCreateView/onDestroyView
+    private var fragmentBinding: PreferencesBinding? = null
+    private val binding: PreferencesBinding
+        get() = fragmentBinding!!
+
     /**
      * Whether the Settings view is split in two.
      * If so, the left side contains the list of all preference categories, and the right side contains the category currently opened.
@@ -77,6 +85,16 @@ class PreferencesFragment :
             childFragmentOnBackPressedCallback.isEnabled = childFragmentManager.backStackEntryCount > 0
         }
 
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View? =
+        PreferencesBinding.inflate(layoutInflater).let { binding ->
+            fragmentBinding = binding
+            return@let binding.root
+        }
+
     override fun onViewCreated(
         view: View,
         savedInstanceState: Bundle?,
@@ -94,6 +112,7 @@ class PreferencesFragment :
     override fun onDestroyView() {
         super.onDestroyView()
         childFragmentManager.removeOnBackStackChangedListener(childBackStackListener)
+        fragmentBinding = null
     }
 
     override fun onPreferenceStartFragment(
