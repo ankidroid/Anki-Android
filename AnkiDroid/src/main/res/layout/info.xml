@@ -37,7 +37,7 @@
             android:fadingEdge="vertical"
             android:gravity="center">
             <WebView
-                android:id="@+id/info"
+                android:id="@+id/web_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical" />
@@ -61,7 +61,7 @@
             android:layout_height="wrap_content"/>
 
         <LinearLayout
-            android:id="@+id/info_buttons"
+            android:id="@+id/buttons"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="12dp"
@@ -82,7 +82,7 @@
         </LinearLayout>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/info_donate"
+            android:id="@+id/donate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="12dp"
