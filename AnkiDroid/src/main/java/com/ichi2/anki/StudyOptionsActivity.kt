@@ -25,6 +25,7 @@ import androidx.lifecycle.lifecycleScope
 import anki.collection.OpChanges
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.StudyOptionsFragment.StudyOptionsListener
+import com.ichi2.anki.databinding.StudyoptionsBinding
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyAction
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyAction.Companion.REQUEST_KEY
 import com.ichi2.anki.libanki.undoAvailable
@@ -40,6 +41,7 @@ class StudyOptionsActivity :
     AnkiActivity(),
     StudyOptionsListener,
     ChangeManager.Subscriber {
+    private lateinit var binding: StudyoptionsBinding
     private var undoState = UndoState()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,7 +49,8 @@ class StudyOptionsActivity :
             return
         }
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.studyoptions)
+        binding = StudyoptionsBinding.inflate(layoutInflater)
+        setViewBinding(binding)
         enableToolbar().apply { title = "" }
         if (savedInstanceState == null) {
             loadStudyOptionsFragment()
