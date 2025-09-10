@@ -43,7 +43,7 @@ import timber.log.Timber
  */
 // TODO: Background of introduction_layout does not display on API 25 emulator: https://github.com/ankidroid/Anki-Android/pull/12033#issuecomment-1228429130
 @NeedsTest("Ensure that we can get here on first run without an exception dialog shown")
-class IntroductionActivity : AnkiActivity() {
+class IntroductionActivity : AnkiActivity(R.layout.introduction_activity) {
     @NeedsTest("ensure this is called when the activity ends")
     private val onLoginResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
@@ -60,7 +60,6 @@ class IntroductionActivity : AnkiActivity() {
             return
         }
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.introduction_activity)
 
         setFragmentResultListener(FRAGMENT_KEY) { _, bundle ->
             val option =
