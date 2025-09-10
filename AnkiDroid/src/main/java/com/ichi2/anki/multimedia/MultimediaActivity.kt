@@ -27,6 +27,7 @@ import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.button.MaterialButton
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.R
+import com.ichi2.anki.databinding.ActivityMultimediaBinding
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote
 import com.ichi2.anki.multimediacard.fields.IField
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
@@ -62,6 +63,8 @@ data class MultimediaActivityExtra(
 class MultimediaActivity :
     AnkiActivity(),
     BaseSnackbarBuilderProvider {
+    private lateinit var binding: ActivityMultimediaBinding
+
     private val Intent.multimediaArgsExtra: MultimediaActivityExtra?
         get() = extras?.getSerializableCompat(MULTIMEDIA_ARGS_EXTRA)
 
@@ -73,6 +76,8 @@ class MultimediaActivity :
             return
         }
         super.onCreate(savedInstanceState)
+        binding = ActivityMultimediaBinding.inflate(layoutInflater)
+        setViewBinding(binding)
         setContentView(R.layout.activity_multimedia)
         setTransparentStatusBar()
 
