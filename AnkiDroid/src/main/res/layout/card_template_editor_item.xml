@@ -11,7 +11,7 @@
 
     <!-- Editor -->
     <ScrollView
-        android:id="@+id/card_template_editor_scroll_view"
+        android:id="@+id/scroll_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -23,7 +23,7 @@
             android:gravity="center"
             android:orientation="vertical" >
             <com.ichi2.ui.FixedEditText
-                android:id="@+id/editor_editText"
+                android:id="@+id/edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="5dp"
@@ -36,7 +36,7 @@
     </ScrollView>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/card_template_editor_bottom_navigation"
+        android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"

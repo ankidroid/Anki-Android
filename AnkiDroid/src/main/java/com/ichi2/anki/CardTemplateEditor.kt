@@ -27,14 +27,12 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.ActionMode
 import android.view.KeyEvent
-import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import android.widget.ScrollView
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -50,16 +48,13 @@ import androidx.core.view.isVisible
 import androidx.core.view.size
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
-import androidx.fragment.app.FragmentContainerView
 import androidx.fragment.app.commitNow
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import androidx.viewpager2.widget.ViewPager2
 import anki.notetypes.StockNotetype
 import anki.notetypes.StockNotetype.OriginalStockKind.ORIGINAL_STOCK_KIND_UNKNOWN_VALUE
 import anki.notetypes.notetypeId
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.snackbar.Snackbar
@@ -71,6 +66,10 @@ import com.ichi2.anki.android.input.ShortcutGroup
 import com.ichi2.anki.android.input.shortcut
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
+import com.ichi2.anki.databinding.CardTemplateEditorBinding
+import com.ichi2.anki.databinding.CardTemplateEditorItemBinding
+import com.ichi2.anki.databinding.CardTemplateEditorMainBinding
+import com.ichi2.anki.databinding.CardTemplateEditorTopBinding
 import com.ichi2.anki.dialogs.ConfirmationDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
@@ -103,11 +102,11 @@ import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.utils.postDelayed
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.themes.Themes
-import com.ichi2.ui.FixedEditText
 import com.ichi2.utils.copyToClipboard
 import com.ichi2.utils.dp
 import com.ichi2.utils.listItems
 import com.ichi2.utils.show
+import dev.androidbroadcast.vbpd.viewBinding
 import kotlinx.coroutines.launch
 import net.ankiweb.rsdroid.Translations
 import org.json.JSONArray
@@ -126,11 +125,16 @@ private typealias BackendCardTemplate = com.ichi2.anki.libanki.CardTemplate
  */
 @KotlinCleanup("lateinit wherever possible")
 open class CardTemplateEditor :
-    AnkiActivity(),
+    AnkiActivity(R.layout.card_template_editor),
     DeckSelectionListener {
+    private val binding by viewBinding(CardTemplateEditorBinding::bind)
+    private val topBinding: CardTemplateEditorTopBinding
+        get() = binding.templateEditorTop
+
     @VisibleForTesting
-    lateinit var viewPager: ViewPager2
-    private var slidingTabLayout: TabLayout? = null
+    internal val mainBinding: CardTemplateEditorMainBinding
+        get() = binding.templateEditor
+
     var tempNoteType: CardTemplateNotetype? = null
         private set
     private var fieldNames: List<String>? = null
@@ -148,11 +152,6 @@ open class CardTemplateEditor :
     // the current editor view among front/style/back
     private var tabToViewId: HashMap<Int, Int?> = HashMap()
     private var startingOrdId = 0
-
-    /**
-     * The frame containing the template previewer. Non null only in layout x-large.
-     */
-    private var templatePreviewerFrame: FragmentContainerView? = null
 
     /**
      * If true, the view is split in two. The template editor appears on the leading side and the previewer on the trailing side.
@@ -177,7 +176,6 @@ open class CardTemplateEditor :
             return
         }
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.card_template_editor)
         // Load the args either from the intent or savedInstanceState bundle
         if (savedInstanceState == null) {
             // get note type id
@@ -202,12 +200,8 @@ open class CardTemplateEditor :
             tempNoteType = CardTemplateNotetype.fromBundle(savedInstanceState)
         }
 
-        templatePreviewerFrame = findViewById(R.id.fragment_container)
+        fragmented = binding.fragmentContainer?.isVisible == true
 
-        fragmented = templatePreviewerFrame?.isVisible == true
-
-        slidingTabLayout = findViewById(R.id.sliding_tabs)
-        viewPager = findViewById(R.id.card_template_editor_pager)
         setNavigationBarColor(R.attr.alternativeBackgroundColor)
 
         // Disable the home icon
@@ -215,15 +209,11 @@ open class CardTemplateEditor :
         startLoadingCollection()
 
         if (fragmented) {
-            val parentLayout = findViewById<LinearLayout>(R.id.card_template_editor_xl_view)
-            val divider = findViewById<View>(R.id.card_template_editor_resizing_divider)
-            val cardTemplateEditorPane = findViewById<View>(R.id.template_editor)
-            val templatePreviewerPane = findViewById<View>(R.id.fragment_container)
             ResizablePaneManager(
-                parentLayout = parentLayout,
-                divider = divider,
-                leftPane = cardTemplateEditorPane,
-                rightPane = templatePreviewerPane,
+                parentLayout = requireNotNull(binding.cardTemplateEditorXlView),
+                divider = requireNotNull(binding.cardTemplateEditorResizingDivider),
+                leftPane = requireNotNull(binding.templateEditor.root),
+                rightPane = requireNotNull(binding.fragmentContainer),
                 sharedPrefs = Prefs.getUiConfig(this),
                 leftPaneWeightKey = PREF_TEMPLATE_EDITOR_PANE_WEIGHT,
                 rightPaneWeightKey = PREF_TEMPLATE_PREVIEWER_PANE_WEIGHT,
@@ -245,7 +235,7 @@ open class CardTemplateEditor :
         launchCatchingTask {
             val notetype = tempNoteType!!.notetype
             val notetypeFile = NotetypeFile(this@CardTemplateEditor, notetype)
-            val ord = viewPager.currentItem
+            val ord = mainBinding.cardTemplateEditorPager.currentItem
             val note = withCol { currentFragment?.getNote(this) ?: Note.fromNotetypeId(this@withCol, notetype.id) }
             val args =
                 TemplatePreviewerArguments(
@@ -320,8 +310,11 @@ open class CardTemplateEditor :
         }
         fieldNames = tempNoteType!!.notetype.fieldsNames
         // Set up the ViewPager with the sections adapter.
-        viewPager.adapter = TemplatePagerAdapter(this@CardTemplateEditor)
-        TabLayoutMediator(slidingTabLayout!!, viewPager) { tab: TabLayout.Tab, position: Int ->
+        mainBinding.cardTemplateEditorPager.adapter = TemplatePagerAdapter(this@CardTemplateEditor)
+        TabLayoutMediator(
+            topBinding.slidingTabs,
+            mainBinding.cardTemplateEditorPager,
+        ) { tab: TabLayout.Tab, position: Int ->
             tab.text = tempNoteType!!.getTemplate(position).name
         }.apply { attach() }
 
@@ -336,7 +329,7 @@ open class CardTemplateEditor :
         // Set the tab to the current template if an ord id was provided
         Timber.d("Setting starting tab to %d", startingOrdId)
         if (startingOrdId != -1) {
-            viewPager.setCurrentItem(startingOrdId, animationDisabled())
+            mainBinding.cardTemplateEditorPager.setCurrentItem(startingOrdId, animationDisabled())
         }
     }
 
@@ -363,7 +356,7 @@ open class CardTemplateEditor :
             return
         }
 
-        val ordinal = viewPager.currentItem
+        val ordinal = mainBinding.cardTemplateEditorPager.currentItem
         val template = tempNoteType!!.getTemplate(ordinal)
         val templateName = template.name
 
@@ -405,15 +398,15 @@ open class CardTemplateEditor :
             }
             KeyEvent.KEYCODE_1 -> {
                 Timber.i("Ctrl+1: Edit front template from keypress")
-                currentFragment.bottomNavigation.selectedItemId = R.id.front_edit
+                currentFragment.binding.bottomNavigation.selectedItemId = R.id.front_edit
             }
             KeyEvent.KEYCODE_2 -> {
                 Timber.i("Ctrl+2: Edit back template from keypress")
-                currentFragment.bottomNavigation.selectedItemId = R.id.back_edit
+                currentFragment.binding.bottomNavigation.selectedItemId = R.id.back_edit
             }
             KeyEvent.KEYCODE_3 -> {
                 Timber.i("Ctrl+3: Edit styling from keypress")
-                currentFragment.bottomNavigation.selectedItemId = R.id.styling_edit
+                currentFragment.binding.bottomNavigation.selectedItemId = R.id.styling_edit
             }
             KeyEvent.KEYCODE_S -> {
                 Timber.i("Ctrl+S: Save note from keypress")
@@ -459,7 +452,7 @@ open class CardTemplateEditor :
     val currentFragment: CardTemplateFragment?
         get() =
             try {
-                supportFragmentManager.findFragmentByTag("f" + viewPager.currentItem) as CardTemplateFragment?
+                supportFragmentManager.findFragmentByTag("f" + mainBinding.cardTemplateEditorPager.currentItem) as CardTemplateFragment?
             } catch (e: Exception) {
                 Timber.w("Failed to get current fragment")
                 null
@@ -517,9 +510,11 @@ open class CardTemplateEditor :
                 R.string.card_template_editor_group,
             )
 
-    class CardTemplateFragment : Fragment() {
+    class CardTemplateFragment : Fragment(R.layout.card_template_editor_item) {
+        @VisibleForTesting
+        internal val binding by viewBinding(CardTemplateEditorItemBinding::bind)
+
         private val refreshFragmentHandler = Handler(Looper.getMainLooper())
-        private lateinit var editorEditText: FixedEditText
 
         // Index of this card template fragment in ViewPager
         private val cardIndex
@@ -532,16 +527,13 @@ open class CardTemplateEditor :
 
         private lateinit var templateEditor: CardTemplateEditor
         lateinit var tempModel: CardTemplateNotetype
-        lateinit var bottomNavigation: BottomNavigationView
 
-        override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
+        override fun onViewCreated(
+            view: View,
             savedInstanceState: Bundle?,
-        ): View? {
+        ) {
             // Storing a reference to the templateEditor allows us to use member variables
             templateEditor = activity as CardTemplateEditor
-            val mainView = inflater.inflate(R.layout.card_template_editor_item, container, false)
             tempModel = templateEditor.tempNoteType!!
             // Load template
             val template: BackendCardTemplate =
@@ -549,27 +541,26 @@ open class CardTemplateEditor :
                     tempModel.getTemplate(cardIndex)
                 } catch (e: JSONException) {
                     Timber.d(e, "Exception loading template in CardTemplateFragment. Probably stale fragment.")
-                    return mainView
+                    return
                 }
             // initializing the hash map which stores the cursor position for each editor window
             if (templateEditor.tabToCursorPositions[cardIndex] == null) {
                 templateEditor.tabToCursorPositions[cardIndex] = hashMapOf()
             }
 
-            editorEditText = mainView.findViewById(R.id.editor_editText)
-
-            editorEditText.customInsertionActionModeCallback = ActionModeCallback()
-
-            bottomNavigation = mainView.findViewById(R.id.card_template_editor_bottom_navigation)
+            binding.editText.customInsertionActionModeCallback = ActionModeCallback()
 
             // If in fragmented mode, wrap the edit area in a MaterialCardView
             if (templateEditor.fragmented) {
-                val mainLayout = mainView.findViewById<LinearLayout>(R.id.main_layout)
-
                 // Set the background color of the main layout to match the previewer
-                mainLayout.setBackgroundColor(Themes.getColorFromAttr(requireContext(), R.attr.alternativeBackgroundColor))
+                binding.mainLayout.setBackgroundColor(
+                    Themes.getColorFromAttr(
+                        requireContext(),
+                        R.attr.alternativeBackgroundColor,
+                    ),
+                )
 
-                // Create a MaterialCardView to wrap the editorEditText
+                // Create a MaterialCardView to wrap the editText
                 val cardView =
                     MaterialCardView(requireContext()).apply {
                         layoutParams =
@@ -585,26 +576,37 @@ open class CardTemplateEditor :
                     }
 
                 // Remove the ScrollView from the main layout and add it to the cardView
-                val editScrollView = mainLayout.findViewById<ScrollView>(R.id.card_template_editor_scroll_view)
-                mainLayout.removeViewInLayout(editScrollView)
+                binding.mainLayout.removeViewInLayout(binding.scrollView)
 
                 cardView.addView(
-                    editScrollView,
+                    binding.scrollView,
                     ViewGroup.LayoutParams(
                         ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.MATCH_PARENT,
                     ),
                 )
 
-                mainLayout.addView(cardView, 0)
+                binding.mainLayout.addView(cardView, 0)
             }
 
-            bottomNavigation.setOnItemSelectedListener { item: MenuItem ->
+            binding.bottomNavigation.setOnItemSelectedListener { item: MenuItem ->
                 val currentSelectedId = item.itemId
                 templateEditor.tabToViewId[cardIndex] = currentSelectedId
                 when (currentSelectedId) {
-                    R.id.styling_edit -> setCurrentEditorView(currentSelectedId, cardIndex, tempModel.css)
-                    R.id.back_edit -> setCurrentEditorView(currentSelectedId, cardIndex, template.afmt)
+                    R.id.styling_edit ->
+                        setCurrentEditorView(
+                            currentSelectedId,
+                            cardIndex,
+                            tempModel.css,
+                        )
+
+                    R.id.back_edit ->
+                        setCurrentEditorView(
+                            currentSelectedId,
+                            cardIndex,
+                            template.afmt,
+                        )
+
                     else -> setCurrentEditorView(currentSelectedId, cardIndex, template.qfmt)
                 }
                 // contents of menu have changed and menu should be redrawn
@@ -612,7 +614,7 @@ open class CardTemplateEditor :
                 true
             }
             // set saved or default view
-            bottomNavigation.selectedItemId =
+            binding.bottomNavigation.selectedItemId =
                 templateEditor.tabToViewId[cardIndex] ?: requireArguments().getInt(EDITOR_VIEW_ID_KEY)
 
             // Set text change listeners
@@ -629,9 +631,9 @@ open class CardTemplateEditor :
                         refreshFragmentRunnable?.let { refreshFragmentHandler.removeCallbacks(it) }
 
                         when (currentEditorViewId) {
-                            R.id.styling_edit -> tempModel.css = editorEditText.text.toString()
-                            R.id.back_edit -> template.afmt = editorEditText.text.toString()
-                            else -> template.qfmt = editorEditText.text.toString()
+                            R.id.styling_edit -> tempModel.css = binding.editText.text.toString()
+                            R.id.back_edit -> template.afmt = binding.editText.text.toString()
+                            else -> template.qfmt = binding.editText.text.toString()
                         }
                         templateEditor.tempNoteType!!.updateTemplate(cardIndex, template)
                         val updateRunnable =
@@ -661,12 +663,12 @@ open class CardTemplateEditor :
                         // do nothing
                     }
                 }
-            editorEditText.addTextChangedListener(templateEditorWatcher)
+            binding.editText.addTextChangedListener(templateEditorWatcher)
 
             /* When keyboard is visible, hide the bottom navigation bar to allow viewing
             of all template text when resize happens */
-            ViewCompat.setOnApplyWindowInsetsListener(mainView) { _, insets ->
-                bottomNavigation.isVisible = !insets.isVisible(WindowInsetsCompat.Type.ime())
+            ViewCompat.setOnApplyWindowInsetsListener(binding.root) { _, insets ->
+                binding.bottomNavigation.isVisible = !insets.isVisible(WindowInsetsCompat.Type.ime())
                 insets
             }
 
@@ -675,10 +677,29 @@ open class CardTemplateEditor :
              * show the keyboard. This is intentional - the keyboard should only appear
              * when the user taps on the edit field, not every time the fragment loads.
              */
-            editorEditText.post {
-                editorEditText.requestFocus()
+            binding.editText.post {
+                binding.editText.requestFocus()
             }
-            return mainView
+
+            templateEditor.topBinding.slidingTabs.addOnTabSelectedListener(
+                object : TabLayout.OnTabSelectedListener {
+                    override fun onTabSelected(p0: TabLayout.Tab?) {
+                        templateEditor.loadTemplatePreviewerFragmentIfFragmented()
+                    }
+
+                    override fun onTabUnselected(p0: TabLayout.Tab?) {
+                    }
+
+                    override fun onTabReselected(p0: TabLayout.Tab?) {
+                    }
+                },
+            )
+
+            parentFragmentManager.setFragmentResultListener(insertFieldRequestKey, viewLifecycleOwner) { key, bundle ->
+                // this is guaranteed to be non null, as we put a non null value on the other side
+                insertField(bundle.getString(InsertFieldDialog.KEY_INSERTED_FIELD)!!)
+            }
+            setupMenu()
         }
 
         /**
@@ -748,7 +769,7 @@ open class CardTemplateEditor :
                 Timber.w("attempted to rename a dynamic note type")
                 return
             }
-            val ordinal = templateEditor.viewPager.currentItem
+            val ordinal = templateEditor.mainBinding.cardTemplateEditorPager.currentItem
             val template = templateEditor.tempNoteType!!.getTemplate(ordinal)
 
             RenameCardTemplateDialog.showInstance(
@@ -760,15 +781,20 @@ open class CardTemplateEditor :
                 Timber.d("updated name of template %d to '%s'", ordinal, newName)
 
                 // update the tab
-                templateEditor.viewPager.adapter!!.notifyDataSetChanged()
+                templateEditor.mainBinding.cardTemplateEditorPager.adapter!!
+                    .notifyDataSetChanged()
                 // Update the tab name in previewer
                 templateEditor.loadTemplatePreviewerFragmentIfFragmented()
             }
         }
 
         private fun showRepositionDialog() {
-            RepositionCardTemplateDialog.showInstance(requireContext(), templateEditor.viewPager.adapter!!.itemCount) { newPosition ->
-                val currentPosition = templateEditor.viewPager.currentItem
+            RepositionCardTemplateDialog.showInstance(
+                requireContext(),
+                templateEditor.mainBinding.cardTemplateEditorPager.adapter!!
+                    .itemCount,
+            ) { newPosition ->
+                val currentPosition = templateEditor.mainBinding.cardTemplateEditorPager.currentItem
                 Timber.w("moving card template %d to %d", currentPosition, newPosition)
                 TODO("CardTemplateNotetype is a complex class and requires significant testing")
             }
@@ -776,11 +802,11 @@ open class CardTemplateEditor :
 
         @Suppress("unused")
         private fun insertField(fieldName: String) {
-            val start = max(editorEditText.selectionStart, 0)
-            val end = max(editorEditText.selectionEnd, 0)
+            val start = max(binding.editText.selectionStart, 0)
+            val end = max(binding.editText.selectionEnd, 0)
             // add string to editText
             val updatedString = "{{$fieldName}}"
-            editorEditText.text!!.replace(min(start, end), max(start, end), updatedString, 0, updatedString.length)
+            binding.editText.text!!.replace(min(start, end), max(start, end), updatedString, 0, updatedString.length)
         }
 
         fun setCurrentEditorView(
@@ -791,37 +817,16 @@ open class CardTemplateEditor :
             // saving the cursor position before changing the editor view
             templateEditor.tabToCursorPositions[cardId]?.set(
                 currentEditorViewId,
-                editorEditText.selectionStart,
+                binding.editText.selectionStart,
             )
             currentEditorViewId = viewId
-            editorEditText.setText(editorContent)
-            editorEditText.requestFocus()
-            editorEditText.setSelection(templateEditor.tabToCursorPositions[cardId]?.get(currentEditorViewId) ?: 0)
-        }
-
-        override fun onViewCreated(
-            view: View,
-            savedInstanceState: Bundle?,
-        ) {
-            templateEditor.slidingTabLayout?.addOnTabSelectedListener(
-                object : TabLayout.OnTabSelectedListener {
-                    override fun onTabSelected(p0: TabLayout.Tab?) {
-                        templateEditor.loadTemplatePreviewerFragmentIfFragmented()
-                    }
-
-                    override fun onTabUnselected(p0: TabLayout.Tab?) {
-                    }
-
-                    override fun onTabReselected(p0: TabLayout.Tab?) {
-                    }
-                },
+            binding.editText.setText(editorContent)
+            binding.editText.requestFocus()
+            binding.editText.setSelection(
+                templateEditor.tabToCursorPositions[cardId]?.get(
+                    currentEditorViewId,
+                ) ?: 0,
             )
-
-            parentFragmentManager.setFragmentResultListener(insertFieldRequestKey, viewLifecycleOwner) { key, bundle ->
-                // this is guaranteed to be non null, as we put a non null value on the other side
-                insertField(bundle.getString(InsertFieldDialog.KEY_INSERTED_FIELD)!!)
-            }
-            setupMenu()
         }
 
         /**
@@ -857,7 +862,7 @@ open class CardTemplateEditor :
         fun deleteCardTemplate() {
             templateEditor.lifecycleScope.launch {
                 val tempModel = templateEditor.tempNoteType
-                val ordinal = templateEditor.viewPager.currentItem
+                val ordinal = templateEditor.mainBinding.cardTemplateEditorPager.currentItem
                 val template = tempModel!!.getTemplate(ordinal)
                 // Don't do anything if only one template
                 if (tempModel.templateCount < 2) {
@@ -908,7 +913,7 @@ open class CardTemplateEditor :
                 return
             }
             // Show confirmation dialog
-            val ordinal = templateEditor.viewPager.currentItem
+            val ordinal = templateEditor.mainBinding.cardTemplateEditorPager.currentItem
             // isOrdinalPendingAdd method will check if there are any new card types added or not,
             // if TempModel has new card type then numAffectedCards will be 0 by default.
             val numAffectedCards =
@@ -1098,7 +1103,10 @@ open class CardTemplateEditor :
             get() =
                 try {
                     val tempModel = templateEditor.tempNoteType
-                    val template: BackendCardTemplate = tempModel!!.getTemplate(templateEditor.viewPager.currentItem)
+                    val template: BackendCardTemplate =
+                        tempModel!!.getTemplate(
+                            templateEditor.mainBinding.cardTemplateEditorPager.currentItem,
+                        )
                     CardTemplate(
                         front = template.qfmt,
                         back = template.afmt,
@@ -1141,7 +1149,7 @@ open class CardTemplateEditor :
             launchCatchingTask {
                 val notetype = templateEditor.tempNoteType!!.notetype
                 val notetypeFile = NotetypeFile(requireContext(), notetype)
-                val ord = templateEditor.viewPager.currentItem
+                val ord = templateEditor.mainBinding.cardTemplateEditorPager.currentItem
                 val note = withCol { getNote(this) ?: Note.fromNotetypeId(this@withCol, notetype.id) }
                 val args =
                     TemplatePreviewerArguments(
@@ -1176,7 +1184,7 @@ open class CardTemplateEditor :
 
         private fun getCurrentTemplateName(tempModel: CardTemplateNotetype): String =
             try {
-                val ordinal = templateEditor.viewPager.currentItem
+                val ordinal = templateEditor.mainBinding.cardTemplateEditorPager.currentItem
                 val template = tempModel.getTemplate(ordinal)
                 template.name
             } catch (e: Exception) {
@@ -1246,8 +1254,9 @@ open class CardTemplateEditor :
                 }
                 CardTemplateNotetype.clearTempNoteTypeFiles()
                 // Make sure the fragments reinitialize, otherwise there is staleness on return
-                (templateEditor.viewPager.adapter as TemplatePagerAdapter).ordinalShift()
-                templateEditor.viewPager.adapter!!.notifyDataSetChanged()
+                (templateEditor.mainBinding.cardTemplateEditorPager.adapter as TemplatePagerAdapter).ordinalShift()
+                templateEditor.mainBinding.cardTemplateEditorPager.adapter!!
+                    .notifyDataSetChanged()
             }
 
         private fun onCardBrowserAppearanceResult(data: Intent?) {
@@ -1376,9 +1385,13 @@ open class CardTemplateEditor :
             notetype.templates = newTemplates
             Notetypes._updateTemplOrds(notetype)
             // Make sure the fragments reinitialize, otherwise the reused ordinal causes staleness
-            (templateEditor.viewPager.adapter as TemplatePagerAdapter).ordinalShift()
-            templateEditor.viewPager.adapter!!.notifyDataSetChanged()
-            templateEditor.viewPager.setCurrentItem(newTemplates.length() - 1, templateEditor.animationDisabled())
+            (templateEditor.mainBinding.cardTemplateEditorPager.adapter as TemplatePagerAdapter).ordinalShift()
+            templateEditor.mainBinding.cardTemplateEditorPager.adapter!!
+                .notifyDataSetChanged()
+            templateEditor.mainBinding.cardTemplateEditorPager.setCurrentItem(
+                newTemplates.length() - 1,
+                templateEditor.animationDisabled(),
+            )
         }
 
         /**
@@ -1403,8 +1416,12 @@ open class CardTemplateEditor :
             newTemplate.setOrd(lastExistingOrd + 1)
             templates.append(newTemplate)
             templateEditor.tempNoteType!!.addNewTemplate(newTemplate)
-            templateEditor.viewPager.adapter!!.notifyDataSetChanged()
-            templateEditor.viewPager.setCurrentItem(templates.length() - 1, templateEditor.animationDisabled())
+            templateEditor.mainBinding.cardTemplateEditorPager.adapter!!
+                .notifyDataSetChanged()
+            templateEditor.mainBinding.cardTemplateEditorPager.setCurrentItem(
+                templates.length() - 1,
+                templateEditor.animationDisabled(),
+            )
         }
 
         /**
