@@ -8,7 +8,7 @@
     android:theme="@style/Theme.Material3.DynamicColors.DayNight">
 
     <TextView
-        android:id="@+id/deck_name"
+        android:id="@+id/deck_name_text_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -18,7 +18,7 @@
         android:textSize="18sp" />
 
     <ImageButton
-        android:id="@+id/action_button_remove_deck"
+        android:id="@+id/remove_deck_button"
         android:layout_width="48dp"
         android:layout_height="wrap_content"
         android:layout_gravity="end"

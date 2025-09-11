@@ -17,16 +17,12 @@
 package com.ichi2.widget
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.anki.R
+import com.ichi2.anki.databinding.WidgetItemDeckConfigBinding
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.model.SelectableDeck
-import com.ichi2.anki.utils.ext.findViewById
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -48,11 +44,8 @@ class WidgetConfigScreenAdapter(
     val deckIds: List<Long> get() = decks.map { it.deckId }
 
     class DeckViewHolder(
-        itemView: View,
-    ) : RecyclerView.ViewHolder(itemView) {
-        val deckNameTextView: TextView = findViewById(R.id.deck_name)
-        val removeButton: ImageButton = findViewById(R.id.action_button_remove_deck)
-    }
+        val binding: WidgetItemDeckConfigBinding,
+    ) : RecyclerView.ViewHolder(binding.root)
 
     /** Creates and inflates the view for each item in the RecyclerView
      * @param parent the parent ViewGroup
@@ -62,11 +55,8 @@ class WidgetConfigScreenAdapter(
         parent: ViewGroup,
         viewType: Int,
     ): DeckViewHolder {
-        val view =
-            LayoutInflater
-                .from(parent.context)
-                .inflate(R.layout.widget_item_deck_config, parent, false)
-        return DeckViewHolder(view)
+        val layoutInflater = LayoutInflater.from(parent.context)
+        return DeckViewHolder(WidgetItemDeckConfigBinding.inflate(layoutInflater, parent, false))
     }
 
     override fun onBindViewHolder(
@@ -80,10 +70,10 @@ class WidgetConfigScreenAdapter(
                 withContext(Dispatchers.IO) {
                     withCol { decks.getLegacy(deck.deckId)!!.name }
                 }
-            holder.deckNameTextView.text = deckName
+            holder.binding.deckNameTextView.text = deckName
         }
 
-        holder.removeButton.setOnClickListener {
+        holder.binding.removeDeckButton.setOnClickListener {
             onDeleteDeck(deck, position)
         }
     }
