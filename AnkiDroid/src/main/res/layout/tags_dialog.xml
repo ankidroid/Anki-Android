@@ -6,17 +6,17 @@
     android:layout_height="match_parent">
 
     <include layout="@layout/tags_dialog_title"
-        android:id="@+id/tags_dialog_toolbar"/>
-    <com.ichi2.ui.FixedTextView android:id="@+id/tags_dialog_no_tags_textview"
+        android:id="@+id/toolbar"/>
+    <com.ichi2.ui.FixedTextView android:id="@+id/no_tags_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_below="@id/tags_dialog_toolbar"
+        android:layout_below="@id/toolbar"
         android:text="@string/no_tags"
         android:visibility="gone"/>
 
 
-    <RadioGroup android:id="@+id/tags_dialog_options_radiogroup"
+    <RadioGroup android:id="@+id/options_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
@@ -64,12 +64,12 @@
     </LinearLayout>
 
 
-    <androidx.recyclerview.widget.RecyclerView android:id="@+id/tags_dialog_tags_list"
+    <androidx.recyclerview.widget.RecyclerView android:id="@+id/tags_list"
         android:scrollbars="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@id/tags_dialog_options_radiogroup"
-        android:layout_below="@id/tags_dialog_toolbar"
+        android:layout_above="@id/options_group"
+        android:layout_below="@id/toolbar"
         tools:listitem="@layout/tags_item_list_dialog" />
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
