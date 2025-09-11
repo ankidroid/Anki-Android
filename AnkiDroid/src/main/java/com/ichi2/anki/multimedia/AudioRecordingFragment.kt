@@ -25,19 +25,22 @@ import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import com.google.android.material.button.MaterialButton
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.databinding.FragmentAudioRecordingBinding
 import com.ichi2.anki.multimedia.MultimediaActivity.Companion.MULTIMEDIA_RESULT
 import com.ichi2.anki.multimedia.MultimediaActivity.Companion.MULTIMEDIA_RESULT_FIELD_INDEX
 import com.ichi2.anki.multimedia.audio.AudioRecordingController
 import com.ichi2.utils.FileUtil
 import com.ichi2.utils.Permissions
+import dev.androidbroadcast.vbpd.viewBinding
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
 class AudioRecordingFragment : MultimediaFragment(R.layout.fragment_audio_recording) {
+    private val binding by viewBinding(FragmentAudioRecordingBinding::bind)
+
     override val title: String
         get() = resources.getString(R.string.multimedia_editor_field_editing_audio)
 
@@ -94,10 +97,10 @@ class AudioRecordingFragment : MultimediaFragment(R.layout.fragment_audio_record
     private fun setupDoneButton() {
         lifecycleScope.launch {
             viewModel.currentMultimediaPath.collect { path ->
-                view?.findViewById<MaterialButton>(R.id.action_done)?.isEnabled = path != null
+                binding.actionDone.isEnabled = path != null
             }
         }
-        view?.findViewById<MaterialButton>(R.id.action_done)?.setOnClickListener {
+        binding.actionDone.setOnClickListener {
             Timber.d("AudioRecordingFragment:: Done button pressed")
             if (viewModel.selectedMediaFileSize == 0L) {
                 Timber.d("Audio length not valid")
@@ -125,7 +128,7 @@ class AudioRecordingFragment : MultimediaFragment(R.layout.fragment_audio_record
             audioRecordingController =
                 AudioRecordingController(
                     context = requireActivity(),
-                    linearLayout = view?.findViewById(R.id.audio_recorder_layout)!!,
+                    linearLayout = binding.audioRecorderLayout,
                     viewModel = viewModel,
                     note = note,
                 )
