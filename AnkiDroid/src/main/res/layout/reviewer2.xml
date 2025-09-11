@@ -43,7 +43,7 @@
                 android:id="@+id/counts_flow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:constraint_referenced_ids="new_count,lrn_count,rev_count,timer"
+                app:constraint_referenced_ids="new_count,@+id/learn_count,@+id/review_count,timer"
                 app:flow_wrapMode="chain"
                 app:flow_verticalStyle="packed"
                 app:flow_horizontalStyle="packed"
@@ -66,7 +66,7 @@
                 tools:text="127" />
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/lrn_count"
+                android:id="@+id/learn_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="4dp"
@@ -74,7 +74,7 @@
                 tools:text="381" />
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/rev_count"
+                android:id="@+id/review_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingStart="4dp"
@@ -104,7 +104,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/webview_container"
+            android:id="@+id/web_view_container"
             style="@style/CardView.ViewerStyle"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -113,7 +113,7 @@
             android:layout_marginHorizontal="@dimen/reviewer_side_margin">
 
             <WebView
-                android:id="@+id/webview"
+                android:id="@+id/web_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 tools:backgroundTint="@color/white" />
@@ -212,7 +212,7 @@
             tools:visibility="visible">
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/show_answer"
+                android:id="@+id/show_answer_button"
                 style="@style/AnswerButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -225,7 +225,7 @@
                 />
 
             <LinearLayout
-                android:id="@+id/answer_buttons"
+                android:id="@+id/answer_buttons_layout"
                 android:layout_height="match_parent"
                 android:layout_width="match_parent"
                 android:minHeight="?minTouchTargetSize"
