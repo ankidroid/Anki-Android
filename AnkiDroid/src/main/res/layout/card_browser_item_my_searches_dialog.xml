@@ -10,7 +10,7 @@
     >
 
     <ImageButton
-        android:id="@+id/card_browser_my_search_remove_button"
+        android:id="@+id/delete_search_button"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_alignParentEnd="true"
@@ -22,21 +22,21 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.ichi2.ui.FixedTextView
-        android:id="@+id/card_browser_my_search_name_textview"
+        android:id="@+id/search_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="8dp"
         android:textAppearance="?textAppearanceListItem"
-        app:layout_constraintBottom_toTopOf="@id/card_browser_my_search_query_textview"
-        app:layout_constraintEnd_toStartOf="@+id/card_browser_my_search_remove_button"
+        app:layout_constraintBottom_toTopOf="@id/search_query"
+        app:layout_constraintEnd_toStartOf="@id/delete_search_button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Custom saved search"
         />
 
     <com.ichi2.ui.FixedTextView
-        android:id="@+id/card_browser_my_search_query_textview"
+        android:id="@+id/search_query"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -46,9 +46,9 @@
         android:ellipsize="end"
         android:textAppearance="?textAppearanceListItemSecondary"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/card_browser_my_search_remove_button"
+        app:layout_constraintEnd_toStartOf="@id/delete_search_button"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/card_browser_my_search_name_textview"
+        app:layout_constraintTop_toBottomOf="@id/search_name"
         tools:text="flag:5"
         />
 
