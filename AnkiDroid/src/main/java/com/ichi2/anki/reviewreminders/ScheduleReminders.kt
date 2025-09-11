@@ -20,7 +20,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.BundleCompat
 import androidx.core.view.isVisible
@@ -29,14 +28,12 @@ import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.setFragmentResultListener
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.appbar.MaterialToolbar
-import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.CrashReportData.Companion.toCrashReportData
 import com.ichi2.anki.R
 import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.canUserAccessDeck
+import com.ichi2.anki.databinding.FragmentScheduleRemindersBinding
 import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.DeckId
@@ -48,6 +45,7 @@ import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.withProgress
+import dev.androidbroadcast.vbpd.viewBinding
 import kotlinx.serialization.SerializationException
 import timber.log.Timber
 
@@ -70,12 +68,12 @@ class ScheduleReminders :
         ) ?: ReviewReminderScope.Global
     }
 
-    private lateinit var toolbar: MaterialToolbar
-    private lateinit var recyclerView: RecyclerView
+    private val binding by viewBinding(FragmentScheduleRemindersBinding::bind)
+
     private lateinit var adapter: ScheduleRemindersAdapter
 
     override val baseSnackbarBuilder: SnackbarBuilder = {
-        anchorView = requireView().findViewById<ExtendedFloatingActionButton>(R.id.schedule_reminders_add_reminder_fab)
+        anchorView = binding.floatingActionButtonAdd
     }
 
     /**
@@ -99,19 +97,21 @@ class ScheduleReminders :
         super.onViewCreated(view, savedInstanceState)
 
         // Set up toolbar
-        toolbar = view.findViewById(R.id.toolbar)
         reloadToolbarText()
-        (requireActivity() as AppCompatActivity).setSupportActionBar(toolbar)
+        (requireActivity() as AppCompatActivity).setSupportActionBar(binding.toolbar)
 
         // Set up add button
-        val addButton = view.findViewById<ExtendedFloatingActionButton>(R.id.schedule_reminders_add_reminder_fab)
-        addButton.setOnClickListener { addReminder() }
+        binding.floatingActionButtonAdd.setOnClickListener { addReminder() }
 
         // Set up recycler view
-        recyclerView = view.findViewById(R.id.schedule_reminders_recycler_view)
         val layoutManager = LinearLayoutManager(requireContext())
-        recyclerView.layoutManager = layoutManager
-        recyclerView.addItemDecoration(DividerItemDecoration(requireContext(), layoutManager.orientation))
+        binding.recyclerView.layoutManager = layoutManager
+        binding.recyclerView.addItemDecoration(
+            DividerItemDecoration(
+                requireContext(),
+                layoutManager.orientation,
+            ),
+        )
 
         // Set up adapter, pass functionality to it
         adapter =
@@ -121,7 +121,7 @@ class ScheduleReminders :
                 ::toggleReminderEnabled,
                 ::editReminder,
             )
-        recyclerView.adapter = adapter
+        binding.recyclerView.adapter = adapter
 
         // Retrieve reminders based on the editing scope
         launchCatchingTask { loadDatabaseRemindersIntoUI() }
@@ -149,12 +149,12 @@ class ScheduleReminders :
 
     private fun reloadToolbarText() {
         Timber.d("Reloading toolbar text")
-        toolbar.title = getString(R.string.schedule_reminders_do_not_translate)
+        binding.toolbar.title = getString(R.string.schedule_reminders_do_not_translate)
         when (val scope = scheduleRemindersScope) {
             is ReviewReminderScope.Global -> {}
             is ReviewReminderScope.DeckSpecific ->
                 launchCatchingTask {
-                    toolbar.subtitle = scope.getDeckName()
+                    binding.toolbar.subtitle = scope.getDeckName()
                 }
         }
     }
@@ -429,7 +429,7 @@ class ScheduleReminders :
                 .sortedBy { it.time.toSecondsFromMidnight() }
                 .toList()
         adapter.submitList(listToDisplay)
-        view?.findViewById<LinearLayout>(R.id.no_reminders_placeholder)?.isVisible = listToDisplay.isEmpty()
+        binding.noRemindersPlaceholder.isVisible = listToDisplay.isEmpty()
     }
 
     companion object {
