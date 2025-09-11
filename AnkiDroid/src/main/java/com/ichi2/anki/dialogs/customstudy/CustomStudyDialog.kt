@@ -354,7 +354,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
 
                 // Get the value selected by user
                 val n =
-                    binding.detailsEditText2.textAsIntOrNull() ?: run {
+                    userInputValue ?: run {
                         Timber.w("Non-numeric user input was provided")
                         Timber.d("value: %s", binding.detailsEditText2.text.toString())
                         allowSubmit = true
@@ -389,7 +389,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
         }
 
         binding.detailsEditText2.doAfterTextChanged {
-            dialog.positiveButton.isEnabled = binding.detailsEditText2.textAsIntOrNull() != null
+            dialog.positiveButton.isEnabled = userInputValue != null
         }
 
         // Show soft keyboard
