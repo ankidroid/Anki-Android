@@ -17,14 +17,11 @@ package com.ichi2.anki.preferences.reviewer
 
 import android.view.LayoutInflater
 import android.view.MotionEvent
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.textview.MaterialTextView
 import com.ichi2.anki.R
-import com.ichi2.anki.utils.ext.findViewById
+import com.ichi2.anki.databinding.ReviewerMenuDisplayTypeBinding
+import com.ichi2.anki.databinding.ReviewerMenuItemBinding
 
 class ReviewerMenuSettingsAdapter(
     private val items: List<ReviewerMenuSettingsRecyclerItem>,
@@ -36,12 +33,12 @@ class ReviewerMenuSettingsAdapter(
         val inflater = LayoutInflater.from(parent.context)
         return when (viewType) {
             ReviewerMenuSettingsRecyclerItem.ACTION_VIEW_TYPE -> {
-                val itemView = inflater.inflate(R.layout.reviewer_menu_item, parent, false)
-                ActionViewHolder(itemView)
+                val binding = ReviewerMenuItemBinding.inflate(inflater, parent, false)
+                ActionViewHolder(binding)
             }
             ReviewerMenuSettingsRecyclerItem.DISPLAY_TYPE_VIEW_TYPE -> {
-                val itemView = inflater.inflate(R.layout.reviewer_menu_display_type, parent, false)
-                DisplayTypeViewHolder(itemView)
+                val binding = ReviewerMenuDisplayTypeBinding.inflate(inflater, parent, false)
+                DisplayTypeViewHolder(binding)
             }
             else -> throw IllegalArgumentException("Unexpected viewType")
         }
@@ -70,13 +67,13 @@ class ReviewerMenuSettingsAdapter(
 
     /** @see [R.layout.reviewer_menu_item] */
     private inner class ActionViewHolder(
-        itemView: View,
-    ) : RecyclerView.ViewHolder(itemView) {
+        private val binding: ReviewerMenuItemBinding,
+    ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(action: ViewerAction) {
-            findViewById<TextView>(R.id.title).text = action.title(itemView.context)
-            action.drawableRes?.let { findViewById<AppCompatImageView>(R.id.icon).setBackgroundResource(it) }
+            binding.title.text = action.title(itemView.context)
+            action.drawableRes?.let { binding.icon.setBackgroundResource(it) }
 
-            findViewById<AppCompatImageView>(R.id.drag_handle).setOnTouchListener { _, event ->
+            binding.dragHandle.setOnTouchListener { _, event ->
                 if (event.action == MotionEvent.ACTION_DOWN) {
                     onDragHandleTouchedListener?.invoke(this)
                 }
@@ -87,10 +84,10 @@ class ReviewerMenuSettingsAdapter(
 
     /** @see [R.layout.reviewer_menu_display_type] */
     private class DisplayTypeViewHolder(
-        itemView: View,
-    ) : RecyclerView.ViewHolder(itemView) {
+        private val binding: ReviewerMenuDisplayTypeBinding,
+    ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(displayCategory: MenuDisplayType) {
-            findViewById<MaterialTextView>(R.id.title).setText(displayCategory.title)
+            binding.title.setText(displayCategory.title)
         }
     }
 }
