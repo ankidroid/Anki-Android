@@ -18,20 +18,16 @@ package com.ichi2.anki.ui.windows.reviewer.audiorecord
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.view.View
 import android.view.animation.DecelerateInterpolator
-import android.widget.ImageView
 import androidx.annotation.DrawableRes
 import androidx.constraintlayout.widget.ConstraintLayout
-import com.google.android.material.progressindicator.LinearProgressIndicator
-import com.ichi2.anki.R
+import com.ichi2.anki.databinding.AudioPlayViewBinding
 
 /**
  * Simple player with a progress bar, a play button and a cancel button
  */
 class AudioPlayView : ConstraintLayout {
-    private val progressBar: LinearProgressIndicator
-    private val playIconView: ImageView
+    private val binding = AudioPlayViewBinding.inflate(LayoutInflater.from(context), this, true)
 
     constructor(context: Context) : this(context, null, 0, 0)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0, 0)
@@ -42,13 +38,10 @@ class AudioPlayView : ConstraintLayout {
         defStyleAttr: Int,
         defStyleRes: Int,
     ) : super(context, attrs, defStyleAttr, defStyleRes) {
-        LayoutInflater.from(context).inflate(R.layout.audio_play_view, this, true)
-        progressBar = findViewById(R.id.progress_indicator)
-        playIconView = findViewById(R.id.play_icon)
-        findViewById<View>(R.id.play_button).setOnClickListener {
+        binding.playButton.setOnClickListener {
             buttonPressListener?.onPlayButtonPressed()
         }
-        findViewById<View>(R.id.cancel_button).setOnClickListener {
+        binding.cancelButton.setOnClickListener {
             buttonPressListener?.onCancelButtonPressed()
         }
     }
@@ -69,8 +62,8 @@ class AudioPlayView : ConstraintLayout {
      * Rotates the play icon 360º
      */
     fun rotateReplayIcon() {
-        playIconView.rotation = 0F
-        playIconView
+        binding.playIconView.rotation = 0F
+        binding.playIconView
             .animate()
             .rotation(-360F)
             .setDuration(400)
@@ -85,13 +78,13 @@ class AudioPlayView : ConstraintLayout {
     fun changePlayIcon(
         @DrawableRes iconRes: Int,
     ) {
-        playIconView
+        binding.playIconView
             .animate()
             .alpha(0f)
             .setDuration(100)
             .withEndAction {
-                playIconView.setImageResource(iconRes)
-                playIconView
+                binding.playIconView.setImageResource(iconRes)
+                binding.playIconView
                     .animate()
                     .alpha(1f)
                     .setDuration(300)
@@ -101,13 +94,13 @@ class AudioPlayView : ConstraintLayout {
 
     fun setPlaybackProgress(progress: Int) {
         if (progress == 0) {
-            progressBar.progress = 0 // `animate = false` wasn't working for some reason
+            binding.progressBar.progress = 0 // `animate = false` wasn't working for some reason
         } else {
-            progressBar.setProgress(progress, true)
+            binding.progressBar.setProgress(progress, true)
         }
     }
 
     fun setPlaybackProgressBarMax(max: Int) {
-        progressBar.max = max
+        binding.progressBar.max = max
     }
 }
