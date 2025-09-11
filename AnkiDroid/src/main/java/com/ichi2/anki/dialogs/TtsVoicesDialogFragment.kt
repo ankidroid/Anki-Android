@@ -250,9 +250,8 @@ class TtsVoicesDialogFragment : DialogFragment() {
                     actionButton.setOnClickListener { openTtsSettings() }
                     actionButton.setIconResource(R.drawable.ic_file_download_white)
                 } else {
-                    actionButton.setIconResource(R.drawable.baseline_content_copy_24)
                     actionButton.setOnClickListener { viewModel.copyToClipboard(voice) }
-                    voiceView.setOnClickListener { viewModel.playVoice(voice) }
+                    actionButton.setIconResource(R.drawable.baseline_content_copy_24)
                 }
 
                 voiceView.setOnClickListener { viewModel.playVoice(voice) }
