@@ -9,7 +9,7 @@
     tools:layout_height="wrap_content">
 
     <com.ichi2.ui.FixedTextView
-        android:id="@+id/dropdown_deck_name"
+        android:id="@+id/deck_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:singleLine="true"
@@ -20,7 +20,7 @@
         tools:text="@string/card_browser_all_decks" />
 
     <com.ichi2.ui.FixedTextView
-        android:id="@+id/dropdown_deck_counts"
+        android:id="@+id/deck_counts"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/action_bar_subtitle_top_margin"
