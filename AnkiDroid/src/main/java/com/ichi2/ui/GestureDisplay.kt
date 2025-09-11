@@ -74,7 +74,7 @@ class GestureDisplay
         private var swipeView: ImageView
 
         init {
-            val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+            val inflater = LayoutInflater.from(context)
             inflater.inflate(R.layout.gesture_display, this)
 
             val listener = OnGestureListener.createInstance(this, this::setGesture)
