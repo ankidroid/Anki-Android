@@ -19,16 +19,14 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.recyclerview.widget.RecyclerView
 import anki.scheduler.CustomStudyDefaultsResponse
-import com.ichi2.anki.R
+import com.ichi2.anki.databinding.ItemRequireExcludeTagBinding
 import com.ichi2.anki.dialogs.customstudy.IncludedExcludedTagsAdapter.TagsSelectionMode.Exclude
 import com.ichi2.anki.dialogs.customstudy.IncludedExcludedTagsAdapter.TagsSelectionMode.Include
-import com.ichi2.anki.utils.ext.findViewById
 
 /**
  * Shows a simple list of tags from which the user can select for a custom study session. For
@@ -84,11 +82,7 @@ class IncludedExcludedTagsAdapter(
         viewType: Int,
     ): RequireExcludeTagsViewHolder =
         RequireExcludeTagsViewHolder(
-            inflater.inflate(
-                R.layout.item_require_exclude_tag,
-                parent,
-                false,
-            ),
+            binding = ItemRequireExcludeTagBinding.inflate(inflater, parent, false),
         )
 
     override fun getItemCount(): Int = tags.size
@@ -121,9 +115,9 @@ class IncludedExcludedTagsAdapter(
     }
 
     inner class RequireExcludeTagsViewHolder(
-        rowView: View,
-    ) : RecyclerView.ViewHolder(rowView) {
-        val tagView: TextView = findViewById(R.id.tag)
+        binding: ItemRequireExcludeTagBinding,
+    ) : RecyclerView.ViewHolder(binding.root) {
+        val tagView: TextView = binding.tagView
     }
 
     enum class TagsSelectionMode {
