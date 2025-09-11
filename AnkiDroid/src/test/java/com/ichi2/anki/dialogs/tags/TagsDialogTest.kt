@@ -605,3 +605,6 @@ class TagsDialogTest : RobolectricTest() {
         }
     }
 }
+
+val TagsArrayAdapter.ViewHolder.checkBoxView: CheckBoxTriStates
+    get() = this.binding.checkBoxView

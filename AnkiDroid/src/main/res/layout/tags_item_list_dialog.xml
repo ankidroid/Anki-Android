@@ -17,14 +17,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ImageButton
-        android:id="@+id/id_expand_button"
+        android:id="@+id/expand_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/ic_chevron_right_black"
         android:clickable="false" />
 
     <TextView
-        android:id="@+id/tags_dialog_tag_item_text"
+        android:id="@+id/text_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -33,7 +33,7 @@
         tools:text="Example Tag" />
 
     <com.ichi2.ui.CheckBoxTriStates
-        android:id="@+id/tags_dialog_tag_item_checkbox"
+        android:id="@+id/check_box_view"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:clickable="false"
