@@ -26,10 +26,12 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Parcelable
+import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.BundleCompat
 import androidx.core.view.MenuProvider
@@ -38,8 +40,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.canhub.cropper.CropImageView
 import com.ichi2.anki.R
+import com.ichi2.anki.databinding.FragmentImageCropperBinding
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.withProgress
+import com.ichi2.imagecropper.ImageCropper.Companion.DECODED_IMAGE_LIMIT
 import com.ichi2.utils.ContentResolverUtil
 import kotlinx.coroutines.launch
 import kotlinx.parcelize.Parcelize
@@ -57,7 +61,18 @@ import timber.log.Timber
 class ImageCropper :
     Fragment(R.layout.fragment_image_cropper),
     MenuProvider {
-    private lateinit var cropImageView: CropImageView
+    private var fragmentBinding: FragmentImageCropperBinding? = null
+    private val binding get() = fragmentBinding!!
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ) = FragmentImageCropperBinding
+        .inflate(inflater, container, false)
+        .apply {
+            fragmentBinding = this
+        }.root
 
     override fun onViewCreated(
         view: View,
@@ -65,27 +80,26 @@ class ImageCropper :
     ) {
         super.onViewCreated(view, savedInstanceState)
         (activity as? AppCompatActivity)?.apply {
-            setSupportActionBar(view.findViewById(R.id.toolbar))
+            setSupportActionBar(binding.toolbar)
             // there's no need for a title anyway and if we don't set it we end up with "AnkiDroid"
             // as the title which is useless
             supportActionBar?.title = ""
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
         }
-        cropImageView =
-            view.findViewById<CropImageView>(R.id.cropImageView).apply {
-                setOnSetImageUriCompleteListener(::onSetImageUriComplete)
-                setOnCropImageCompleteListener(::onCropImageComplete)
-                cropRect = Rect(100, 300, 500, 1200)
-            }
+        binding.cropImageView.apply {
+            setOnSetImageUriCompleteListener(::onSetImageUriComplete)
+            setOnCropImageCompleteListener(::onCropImageComplete)
+            cropRect = Rect(100, 300, 500, 1200)
+        }
         val originalImageUri =
             BundleCompat.getParcelable(requireArguments(), CROP_IMAGE_URI, Uri::class.java)
                 ?: error("No image identifier was provided for cropping")
         viewLifecycleOwner.lifecycleScope.launch {
             withProgress {
                 if (isImageTooBig(originalImageUri)) {
-                    view.findViewById<View>(R.id.crop_image_size_notice).isVisible = true
+                    binding.cropImageSizeNotice.isVisible = true
                 } else {
-                    cropImageView.setImageUriAsync(originalImageUri)
+                    binding.cropImageView.setImageUriAsync(originalImageUri)
                 }
             }
         }
@@ -126,10 +140,10 @@ class ImageCropper :
         when (menuItem.itemId) {
             R.id.action_done -> {
                 Timber.d("Done clicked")
-                val imageFormat = cropImageView.imageUri?.let { getImageCompressFormat(it) }
+                val imageFormat = binding.cropImageView.imageUri?.let { getImageCompressFormat(it) }
                 Timber.d("Compress format: $imageFormat")
                 if (imageFormat != null) {
-                    cropImageView.croppedImageAsync(
+                    binding.cropImageView.croppedImageAsync(
                         saveCompressFormat = imageFormat,
                     )
                 }
@@ -138,19 +152,19 @@ class ImageCropper :
 
             R.id.action_rotate -> {
                 Timber.d("Rotate clicked")
-                cropImageView.rotateImage(90)
+                binding.cropImageView.rotateImage(90)
                 true
             }
 
             R.id.action_flip_horizontally -> {
                 Timber.d("Flip horizontally clicked")
-                cropImageView.flipImageHorizontally()
+                binding.cropImageView.flipImageHorizontally()
                 true
             }
 
             R.id.action_flip_vertically -> {
                 Timber.d("Flip vertically clicked")
-                cropImageView.flipImageVertically()
+                binding.cropImageView.flipImageVertically()
                 true
             }
 
@@ -219,8 +233,9 @@ class ImageCropper :
 
     override fun onDestroyView() {
         super.onDestroyView()
-        cropImageView.setOnSetImageUriCompleteListener(null)
-        cropImageView.setOnCropImageCompleteListener(null)
+        fragmentBinding = null
+        binding.cropImageView.setOnSetImageUriCompleteListener(null)
+        binding.cropImageView.setOnCropImageCompleteListener(null)
     }
 
     companion object {
