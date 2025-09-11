@@ -17,10 +17,12 @@ package com.ichi2.anki.ui.windows.permissions
 
 import android.os.Build
 import android.os.Bundle
-import android.view.View
+import android.view.LayoutInflater
+import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import com.ichi2.anki.R
+import com.ichi2.anki.databinding.PermissionsStartingAt30Binding
 import com.ichi2.utils.Permissions
 import com.ichi2.utils.Permissions.canManageExternalStorage
 
@@ -44,12 +46,15 @@ class PermissionsStartingAt30Fragment : PermissionsFragment(R.layout.permissions
             }
         }
 
-    override fun onViewCreated(
-        view: View,
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ) {
-        view.findViewById<PermissionsItem>(R.id.all_files_permission).setOnPermissionsRequested {
-            accessAllFilesLauncher.showManageAllFilesScreen()
-        }
-    }
+    ) = PermissionsStartingAt30Binding
+        .inflate(inflater, container, false)
+        .apply {
+            allFilesPermission.setOnPermissionsRequested {
+                accessAllFilesLauncher.showManageAllFilesScreen()
+            }
+        }.root
 }
