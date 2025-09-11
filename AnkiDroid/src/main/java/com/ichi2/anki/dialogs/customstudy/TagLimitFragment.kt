@@ -18,20 +18,16 @@ package com.ichi2.anki.dialogs.customstudy
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
-import android.widget.CheckBox
-import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
-import androidx.constraintlayout.widget.Group
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.setFragmentResult
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.RecyclerView
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
+import com.ichi2.anki.databinding.FragmentTagLimitBinding
 import com.ichi2.anki.dialogs.customstudy.IncludedExcludedTagsAdapter.TagsSelectionMode.Exclude
 import com.ichi2.anki.dialogs.customstudy.IncludedExcludedTagsAdapter.TagsSelectionMode.Include
 import com.ichi2.anki.libanki.DeckId
@@ -54,10 +50,8 @@ import kotlinx.coroutines.launch
  * @see CustomStudyDialog
  */
 class TagLimitFragment : DialogFragment() {
-    private val loadingViews: Group?
-        get() = dialog?.findViewById(R.id.loading_views_group)
-    private val contentViews: LinearLayout?
-        get() = dialog?.findViewById(R.id.content_views)
+    private lateinit var binding: FragmentTagLimitBinding
+
     private val deckId
         get() = requireArguments().getLong(ARG_DECK_ID)
     private lateinit var tagsIncludedAdapter: IncludedExcludedTagsAdapter
@@ -70,17 +64,18 @@ class TagLimitFragment : DialogFragment() {
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val dialogView = layoutInflater.inflate(R.layout.fragment_tag_limit, null)
-        dialogView.findViewById<RecyclerView>(R.id.tags_included)?.adapter = tagsIncludedAdapter
-        dialogView.findViewById<RecyclerView>(R.id.tags_excluded)?.adapter = tagsExcludedAdapter
+        binding = FragmentTagLimitBinding.inflate(layoutInflater)
+        binding.tagsIncluded.adapter = tagsIncludedAdapter
+        binding.tagsExcluded.adapter = tagsExcludedAdapter
+
         val includeCheck =
-            dialogView.findViewById<CheckBox>(R.id.tag_selection_require_check).apply {
+            binding.requireOneOrMoreCheckBox.apply {
                 text = TR.customStudyRequireOneOrMoreOfThese()
                 setOnCheckedChangeListener { _, isChecked ->
                     tagsIncludedAdapter.isEnabled = isChecked
                 }
             }
-        dialogView.findViewById<TextView>(R.id.tag_selection_exclude_label).text =
+        binding.excludeLabel.text =
             TR.customStudySelectTagsToExclude()
         val title =
             TR
@@ -90,7 +85,7 @@ class TagLimitFragment : DialogFragment() {
             AlertDialog
                 .Builder(requireContext())
                 .title(text = title)
-                .customView(dialogView)
+                .customView(binding.root)
                 .negativeButton(R.string.dialog_cancel)
                 .positiveButton(R.string.dialog_ok, null)
                 .create()
@@ -137,10 +132,10 @@ class TagLimitFragment : DialogFragment() {
     override fun onStart() {
         super.onStart()
         lifecycleScope.launch {
-            loadingViews?.isVisible = true
-            contentViews?.isVisible = false
+            binding.loadingViews?.isVisible = true
+            binding.contentViews?.isVisible = false
             val customStudyDefaults = withCol { sched.customStudyDefaults(deckId) }
-            dialog?.findViewById<CheckBox>(R.id.tag_selection_require_check)?.isChecked =
+            binding.requireOneOrMoreCheckBox.isChecked =
                 customStudyDefaults.tagsList.any { tag -> tag.include }
             val tags =
                 customStudyDefaults.tagsList.map { backendTag ->
@@ -148,8 +143,8 @@ class TagLimitFragment : DialogFragment() {
                 }
             tagsIncludedAdapter.tags = tags.toMutableList() // make a copy
             tagsExcludedAdapter.tags = tags.toMutableList() // make a copy
-            loadingViews?.isVisible = false
-            contentViews?.isVisible = true
+            binding.loadingViews?.isVisible = false
+            binding.contentViews?.isVisible = true
         }
     }
 
