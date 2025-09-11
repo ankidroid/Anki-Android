@@ -28,7 +28,7 @@
         android:orientation="vertical">
 
         <CheckBox
-            android:id="@+id/tag_selection_require_check"
+            android:id="@+id/require_one_or_more_check_box"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:checked="false"
@@ -48,7 +48,7 @@
             tools:listitem="@layout/item_require_exclude_tag"/>
 
         <TextView
-            android:id="@+id/tag_selection_exclude_label"
+            android:id="@+id/exclude_label"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="48dp"
@@ -96,7 +96,7 @@
         android:text="@string/custom_study_loading_tags"/>
 
     <androidx.constraintlayout.widget.Group
-        android:id="@+id/loading_views_group"
+        android:id="@+id/loading_views"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:constraint_referenced_ids="loading_indicator,loading_label"/>
