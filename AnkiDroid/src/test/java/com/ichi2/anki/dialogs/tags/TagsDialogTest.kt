@@ -56,7 +56,7 @@ class TagsDialogTest : RobolectricTest() {
             val dialog = f.dialog as AlertDialog?
             assertThat(dialog, IsNull.notNullValue())
 
-            val recycler: RecyclerView = dialog!!.findViewById(R.id.tags_dialog_tags_list)!!
+            val recycler: RecyclerView = dialog!!.findViewById(R.id.tags_list)!!
             val tag = "zzzz"
             f.addTag(tag)
 
@@ -90,7 +90,7 @@ class TagsDialogTest : RobolectricTest() {
             val dialog = f.dialog as AlertDialog?
             assertThat(dialog, IsNull.notNullValue())
 
-            val recycler: RecyclerView = dialog!!.findViewById(R.id.tags_dialog_tags_list)!!
+            val recycler: RecyclerView = dialog!!.findViewById(R.id.tags_list)!!
             val tag = "e"
             f.addTag(tag)
 
@@ -126,7 +126,7 @@ class TagsDialogTest : RobolectricTest() {
             val dialog = f.dialog as AlertDialog?
             assertThat(dialog, IsNull.notNullValue())
 
-            val recycler: RecyclerView = dialog!!.findViewById(R.id.tags_dialog_tags_list)!!
+            val recycler: RecyclerView = dialog!!.findViewById(R.id.tags_list)!!
 
             // workaround robolectric recyclerView issue
             // update recycler
@@ -181,7 +181,7 @@ class TagsDialogTest : RobolectricTest() {
             val dialog = f.dialog as AlertDialog?
             assertThat(dialog, IsNull.notNullValue())
 
-            val recycler: RecyclerView = dialog!!.findViewById(R.id.tags_dialog_tags_list)!!
+            val recycler: RecyclerView = dialog!!.findViewById(R.id.tags_list)!!
 
             fun getItem(index: Int): TagsArrayAdapter.ViewHolder = RecyclerViewUtils.viewHolderAt(recycler, index)
 
@@ -226,7 +226,7 @@ class TagsDialogTest : RobolectricTest() {
             val dialog = f.dialog as AlertDialog?
             assertThat(dialog, IsNull.notNullValue())
 
-            val recycler: RecyclerView = dialog!!.findViewById(R.id.tags_dialog_tags_list)!!
+            val recycler: RecyclerView = dialog!!.findViewById(R.id.tags_list)!!
             val tag = "common::sport::football::small"
             f.addTag(tag)
 
@@ -279,7 +279,7 @@ class TagsDialogTest : RobolectricTest() {
             val dialog = f.dialog as AlertDialog?
             assertThat(dialog, IsNull.notNullValue())
 
-            val recycler: RecyclerView = dialog!!.findViewById(R.id.tags_dialog_tags_list)!!
+            val recycler: RecyclerView = dialog!!.findViewById(R.id.tags_list)!!
             val tag = "common::::careless"
             f.addTag(tag)
 
@@ -328,7 +328,7 @@ class TagsDialogTest : RobolectricTest() {
             val dialog = f.dialog as AlertDialog?
             assertThat(dialog, IsNull.notNullValue())
 
-            val recycler: RecyclerView = dialog!!.findViewById(R.id.tags_dialog_tags_list)!!
+            val recycler: RecyclerView = dialog!!.findViewById(R.id.tags_list)!!
             val adapter = recycler.adapter!! as TagsArrayAdapter
             adapter.filter.filter("tennis")
 
@@ -368,7 +368,7 @@ class TagsDialogTest : RobolectricTest() {
             val dialog = f.dialog as AlertDialog?
             assertThat(dialog, IsNull.notNullValue())
 
-            val recycler: RecyclerView = dialog!!.findViewById(R.id.tags_dialog_tags_list)!!
+            val recycler: RecyclerView = dialog!!.findViewById(R.id.tags_list)!!
 
             fun updateLayout() {
                 recycler.measure(0, 0)
@@ -415,7 +415,7 @@ class TagsDialogTest : RobolectricTest() {
             val dialog = f.dialog as AlertDialog?
             assertThat(dialog, IsNull.notNullValue())
 
-            val recycler: RecyclerView = dialog!!.findViewById(R.id.tags_dialog_tags_list)!!
+            val recycler: RecyclerView = dialog!!.findViewById(R.id.tags_list)!!
 
             fun getItem(index: Int): TagsArrayAdapter.ViewHolder = RecyclerViewUtils.viewHolderAt(recycler, index)
 
