@@ -7,44 +7,44 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <com.ichi2.ui.FixedTextView
-        android:id="@+id/id_label"
+        android:id="@+id/label"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:freezesText="true"
         android:layout_alignParentStart="true"
-        app:layout_constraintBottom_toTopOf="@+id/id_note_editText"
-        app:layout_constraintEnd_toStartOf="@id/id_media_button"
+        app:layout_constraintBottom_toTopOf="@+id/edit_text"
+        app:layout_constraintEnd_toStartOf="@id/media_button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Front\nNewline" />
 
     <ImageButton
-        android:id="@+id/id_toggle_sticky_button"
-        android:nextFocusForward="@id/id_media_button"
+        android:id="@+id/toggle_sticky"
+        android:nextFocusForward="@id/media_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="end|center_vertical"
         android:background="@drawable/ic_baseline_push_pin_24"
         android:layout_marginEnd="16dp"
-        app:layout_constraintEnd_toStartOf="@id/id_media_button"
+        app:layout_constraintEnd_toStartOf="@id/media_button"
         app:layout_constraintTop_toTopOf="parent"/>
 
 
     <ImageButton
-        android:id="@+id/id_media_button"
-        android:nextFocusForward="@id/id_expand_button"
+        android:id="@+id/media_button"
+        android:nextFocusForward="@id/expand_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="end|center_vertical"
         android:background="@drawable/ic_attachment"
         android:tooltipText="@string/multimedia_editor_attach_tooltip"
         android:layout_marginEnd="16dp"
-        app:layout_constraintEnd_toStartOf="@id/id_expand_button"
+        app:layout_constraintEnd_toStartOf="@id/expand_button"
         app:layout_constraintTop_toTopOf="parent"/>
 
     <ImageButton
-        android:id="@+id/id_expand_button"
-        android:nextFocusForward="@id/id_note_editText"
+        android:id="@+id/expand_button"
+        android:nextFocusForward="@id/edit_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="end|center_vertical"
@@ -57,10 +57,10 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:barrierDirection="bottom"
-        app:constraint_referenced_ids="id_label, id_media_button, id_expand_button" />
+        app:constraint_referenced_ids="label, media_button, expand_button" />
 
     <com.ichi2.anki.FieldEditText
-        android:id="@+id/id_note_editText"
+        android:id="@+id/edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
