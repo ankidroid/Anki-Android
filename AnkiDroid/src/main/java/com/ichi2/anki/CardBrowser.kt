@@ -99,7 +99,6 @@ import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.ResizablePaneManager
 import com.ichi2.anki.ui.internationalization.toSentenceCase
 import com.ichi2.anki.utils.ext.showDialogFragment
-import com.ichi2.anki.widgets.DeckDropDownAdapter
 import com.ichi2.ui.CardBrowserSearchView
 import com.ichi2.utils.AndroidUiUtils.hideKeyboard
 import com.ichi2.utils.LanguageUtil
@@ -113,7 +112,6 @@ import timber.log.Timber
 @KotlinCleanup("scan through this class and add attributes - in process")
 open class CardBrowser :
     NavigationDrawerActivity(),
-    DeckDropDownAdapter.SubtitleProvider,
     DeckSelectionListener,
     TagsDialogListener,
     ChangeManager.Subscriber {
@@ -1204,9 +1202,6 @@ open class CardBrowser :
         refreshSubtitle()
     }
 
-    override val deckDropDownSubtitle: String
-        get() = numberOfCardsOrNoteShown
-
     /**
      * @return A message stating the number of cards/notes shown by the browser.
      */
@@ -1332,12 +1327,11 @@ open class CardBrowser :
         get() = cardBrowserFragment.shortcuts
 
     /**
-     * Sets the selected deck name and current selection count based on [deckDropDownSubtitle] in
-     * the topbar.
+     * Sets the selected deck name and current selection count based on [numberOfCardsOrNoteShown]
      */
     private fun updateAppBarInfo(deckId: DeckId?) {
         if (deckId == null || useSearchView) return
-        findViewById<TextView>(R.id.subtitle)?.text = deckDropDownSubtitle
+        findViewById<TextView>(R.id.subtitle)?.text = numberOfCardsOrNoteShown
         launchCatchingTask {
             val deckName =
                 when (deckId) {
