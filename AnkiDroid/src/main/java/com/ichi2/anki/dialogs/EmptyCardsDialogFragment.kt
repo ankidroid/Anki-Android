@@ -35,7 +35,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowInsets.Type.displayCutout
 import android.view.WindowInsets.Type.navigationBars
-import android.widget.CheckBox
 import android.widget.ScrollView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
@@ -51,6 +50,7 @@ import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
+import com.ichi2.anki.databinding.DialogEmptyCardsBinding
 import com.ichi2.anki.dialogs.EmptyCardsUiState.EmptyCardsSearchFailure
 import com.ichi2.anki.dialogs.EmptyCardsUiState.EmptyCardsSearchResult
 import com.ichi2.anki.dialogs.EmptyCardsUiState.SearchingForEmptyCards
@@ -73,28 +73,15 @@ import timber.log.Timber
  */
 class EmptyCardsDialogFragment : DialogFragment() {
     private val viewModel by viewModels<EmptyCardsViewModel>()
-    private val loadingContainer: View?
-        get() = dialog?.findViewById(R.id.loading_container)
-    private val loadingMessage: TextView?
-        get() = dialog?.findViewById(R.id.text)
-    private val emptyCardsResultsContainer: View?
-        get() = dialog?.findViewById(R.id.empty_cards_results_container)
-    private val emptyReportMessage: TextView?
-        get() = dialog?.findViewById(R.id.empty_report_label)
-    private val keepNotesWithNoValidCards: CheckBox?
-        get() = dialog?.findViewById(R.id.preserve_notes)
-    private val reportScrollView: ScrollView?
-        get() = dialog?.findViewById(R.id.reportScrollView)
-    private val reportView: TextView?
-        get() = dialog?.findViewById(R.id.report)
+
+    private lateinit var binding: DialogEmptyCardsBinding
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         bindToState()
         viewModel.searchForEmptyCards()
-        val dialogView = layoutInflater.inflate(R.layout.dialog_empty_cards, null)
-        dialogView.findViewById<CheckBox>(R.id.preserve_notes)?.text =
-            TR.emptyCardsPreserveNotesCheckbox()
-        dialogView.findViewById<TextView>(R.id.report).movementMethod = LinkMovementMethod.getInstance()
+        val binding = DialogEmptyCardsBinding.inflate(layoutInflater)
+        binding.keepNotesWithNoValidCards.text = TR.emptyCardsPreserveNotesCheckbox()
+        binding.report.movementMethod = LinkMovementMethod.getInstance()
 
         return AlertDialog
             .Builder(requireContext())
@@ -113,14 +100,14 @@ class EmptyCardsDialogFragment : DialogFragment() {
                         if (state.emptyCardsReport.emptyCids().isEmpty()) return@setPositiveButton
                         (requireActivity() as DeckPicker).startDeletingEmptyCards(
                             state.emptyCardsReport,
-                            keepNotesWithNoValidCards?.isChecked ?: true,
+                            binding.keepNotesWithNoValidCards.isChecked,
                         )
                     }
                 }
                 setNegativeButton(R.string.dialog_cancel) { _, _ ->
                     Timber.i("Empty cards dialog cancelled")
                 }
-                setView(dialogView)
+                setView(binding.root)
             }.also {
                 // the initial start state is a loading state as we are looking for the empty cards,
                 // so there's no "action" for ok just yet
@@ -134,9 +121,9 @@ class EmptyCardsDialogFragment : DialogFragment() {
                 viewModel.uiState.collect { state ->
                     when (state) {
                         is SearchingForEmptyCards -> {
-                            loadingMessage?.text = getString(R.string.emtpy_cards_finding)
-                            loadingContainer?.isVisible = true
-                            emptyCardsResultsContainer?.isVisible = false
+                            binding.loadingMessage.text = getString(R.string.emtpy_cards_finding)
+                            binding.loadingContainer.isVisible = true
+                            binding.emptyCardsResultsContainer.isVisible = false
                             (dialog as? AlertDialog)?.positiveButton?.apply {
                                 isEnabled = false
                                 text = getString(R.string.dialog_ok)
@@ -144,27 +131,27 @@ class EmptyCardsDialogFragment : DialogFragment() {
                         }
 
                         is EmptyCardsSearchResult -> {
-                            loadingContainer?.isVisible = false
+                            binding.loadingContainer.isVisible = false
                             val emptyCards = state.emptyCardsReport.emptyCids()
                             if (emptyCards.isEmpty()) {
-                                emptyReportMessage?.text = TR.emptyCardsNotFound()
-                                emptyReportMessage?.isVisible = true
+                                binding.emptyReportMessage.text = TR.emptyCardsNotFound()
+                                binding.emptyReportMessage.isVisible = true
                                 // nothing to delete so also hide the preserve notes check box
-                                keepNotesWithNoValidCards?.isVisible = false
+                                binding.keepNotesWithNoValidCards.isVisible = false
                                 (dialog as? AlertDialog)?.positiveButton?.text =
                                     getString(R.string.dialog_ok)
                                 (dialog as? AlertDialog)?.negativeButton?.visibility = View.GONE
                             } else {
-                                reportScrollView?.updateViewHeight()
-                                reportView?.setText(
+                                binding.reportScrollView.updateViewHeight()
+                                binding.report.setText(
                                     state.emptyCardsReport.asActionableReport(),
                                     TextView.BufferType.SPANNABLE,
                                 )
-                                keepNotesWithNoValidCards?.isVisible = true
-                                emptyReportMessage?.isVisible = false
+                                binding.keepNotesWithNoValidCards.isVisible = true
+                                binding.emptyReportMessage.isVisible = false
                                 (dialog as? AlertDialog)?.positiveButton?.text =
                                     getString(R.string.dialog_positive_delete)
-                                emptyCardsResultsContainer?.isVisible = true
+                                binding.emptyCardsResultsContainer.isVisible = true
                             }
                             (dialog as? AlertDialog)?.positiveButton?.isEnabled = true
                         }
@@ -313,7 +300,7 @@ class EmptyCardsDialogFragment : DialogFragment() {
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
-        reportScrollView?.updateViewHeight()
+        binding.reportScrollView.updateViewHeight()
     }
 
     companion object {
