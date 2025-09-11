@@ -17,10 +17,12 @@ package com.ichi2.anki.ui.windows.permissions
 
 import android.os.Build
 import android.os.Bundle
-import android.view.View
+import android.view.LayoutInflater
+import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.R
+import com.ichi2.anki.databinding.FragmentPermissionsUntil29Binding
 import com.ichi2.utils.Permissions
 import com.ichi2.utils.Permissions.showToastAndOpenAppSettingsScreen
 
@@ -32,7 +34,7 @@ import com.ichi2.utils.Permissions.showToastAndOpenAppSettingsScreen
  *   Used for saving the collection in a public directory
  *   which isn't deleted when the app is uninstalled
  */
-class PermissionsUntil29Fragment : PermissionsFragment(R.layout.permissions_until_29) {
+class PermissionsUntil29Fragment : PermissionsFragment(R.layout.fragment_permissions_until_29) {
     private val storageLauncher =
         registerForActivityResult(
             ActivityResultContracts.RequestMultiplePermissions(),
@@ -45,20 +47,22 @@ class PermissionsUntil29Fragment : PermissionsFragment(R.layout.permissions_unti
             }
         }
 
-    override fun onViewCreated(
-        view: View,
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ) {
-        val storagePermission = view.findViewById<PermissionsItem>(R.id.storage_permission)
-        storagePermission.setOnPermissionsRequested { areAlreadyGranted ->
-            if (areAlreadyGranted) return@setOnPermissionsRequested
-            if (userCanGrantWriteExternalStorage()) {
-                storageLauncher.launch(storagePermission.permissions.toTypedArray())
-            } else {
-                AndroidPermanentlyRevokedPermissionsDialog.show(requireActivity() as AnkiActivity)
+    ) = FragmentPermissionsUntil29Binding
+        .inflate(inflater, container, false)
+        .apply {
+            storagePermission.setOnPermissionsRequested { areAlreadyGranted ->
+                if (areAlreadyGranted) return@setOnPermissionsRequested
+                if (userCanGrantWriteExternalStorage()) {
+                    storageLauncher.launch(storagePermission.permissions.toTypedArray())
+                } else {
+                    AndroidPermanentlyRevokedPermissionsDialog.show(requireActivity() as AnkiActivity)
+                }
             }
-        }
-    }
+        }.root
 
     // On SDK 33 (TIRAMISU), `WRITE_EXTERNAL_STORAGE` cannot be set [after AnkiDroid 2.15]
     // https://github.com/ankidroid/Anki-Android/issues/14423#issuecomment-1777504376
