@@ -249,7 +249,7 @@ class CustomStudyDialogTest : RobolectricTest() {
         )
 
     private fun onSubscreenEditText() =
-        onView(withId(R.id.custom_study_details_edittext2))
+        onView(withId(R.id.`@+id/details_edit_text_2`))
             .inRoot(isDialog())
 
     private fun CustomStudyDialog.submitSubscreenData() =

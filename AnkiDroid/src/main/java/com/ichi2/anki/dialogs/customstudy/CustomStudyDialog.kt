@@ -17,7 +17,6 @@
 
 package com.ichi2.anki.dialogs.customstudy
 
-import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.res.Resources
 import android.os.Bundle
@@ -27,11 +26,9 @@ import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.ScrollView
-import android.widget.Spinner
 import android.widget.TextView
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
@@ -54,6 +51,7 @@ import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.anki.asyncIO
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
+import com.ichi2.anki.databinding.StyledCustomStudyDetailsDialogBinding
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption.EXTEND_NEW
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption.EXTEND_REV
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption.STUDY_AHEAD
@@ -125,6 +123,8 @@ import timber.log.Timber
 @KotlinCleanup("remove 'runBlocking' call'")
 @NeedsTest("deferredDefaults")
 class CustomStudyDialog : AnalyticsDialogFragment() {
+    private lateinit var binding: StyledCustomStudyDetailsDialogBinding
+
     /** ID of the [Deck] which this dialog was created for */
     private val dialogDeckId: DeckId
         get() = requireArguments().getLong(ARG_DID)
@@ -137,15 +137,9 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
         get() = requireArguments().getNullableInt(ARG_SUB_DIALOG_ID)?.let { ContextMenuOption.entries[it] }
 
     private val selectedStatePosition: Int
-        get() =
-            dialog
-                ?.findViewById<Spinner>(R.id.cards_state_selector)
-                ?.selectedItemPosition ?: AdapterView.INVALID_POSITION
+        get() = binding.cardsStateSelector.selectedItemPosition
     private val userInputValue: Int?
-        get() =
-            dialog
-                ?.findViewById<EditText>(R.id.custom_study_details_edittext2)
-                ?.textAsIntOrNull()
+        get() = binding.detailsEditText2.textAsIntOrNull()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -297,15 +291,12 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
          */
         // Input dialogs
         // Show input dialog for an individual custom study dialog
-        @SuppressLint("InflateParams")
-        val v = requireActivity().layoutInflater.inflate(R.layout.styled_custom_study_details_dialog, null)
-        v.findViewById<TextView>(R.id.custom_study_details_text1).apply {
-            text = text1
-        }
-        v.findViewById<TextView>(R.id.custom_study_details_text2).apply {
-            text = text2
-        }
-        v.findViewById<Spinner>(R.id.cards_state_selector).apply {
+        binding = StyledCustomStudyDetailsDialogBinding.inflate(requireActivity().layoutInflater)
+
+        binding.detailsText1.text = text1
+        binding.detailsText2.text = text2
+
+        binding.cardsStateSelector.apply {
             isVisible = contextMenuOption == STUDY_TAGS
             adapter =
                 ArrayAdapter(
@@ -316,17 +307,16 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
                     setDropDownViewResource(R.layout.multiline_spinner_item)
                 }
         }
-        val editText =
-            v.findViewById<EditText>(R.id.custom_study_details_edittext2).apply {
-                setText(defaultValue)
-                // Give EditText focus and show keyboard
-                setSelectAllOnFocus(true)
-                requestFocus()
-                // a user may enter a negative value when extending limits
-                if (contextMenuOption == EXTEND_NEW || contextMenuOption == EXTEND_REV) {
-                    inputType = EditorInfo.TYPE_CLASS_NUMBER or EditorInfo.TYPE_NUMBER_FLAG_SIGNED
-                }
+        binding.detailsEditText2.apply {
+            setText(defaultValue)
+            // Give EditText focus and show keyboard
+            setSelectAllOnFocus(true)
+            requestFocus()
+            // a user may enter a negative value when extending limits
+            if (contextMenuOption == EXTEND_NEW || contextMenuOption == EXTEND_REV) {
+                inputType = EditorInfo.TYPE_CLASS_NUMBER or EditorInfo.TYPE_NUMBER_FLAG_SIGNED
             }
+        }
         val positiveBtnLabel =
             if (contextMenuOption == STUDY_TAGS) {
                 TR.customStudyChooseTags().toSentenceCase(requireContext(), R.string.sentence_choose_tags)
@@ -342,7 +332,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
             AlertDialog
                 .Builder(requireActivity())
                 .customView(
-                    view = v,
+                    view = binding.root,
                     paddingStart = horizontalPadding,
                     paddingEnd = horizontalPadding,
                     paddingTop = verticalPadding,
@@ -364,9 +354,9 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
 
                 // Get the value selected by user
                 val n =
-                    editText.textAsIntOrNull() ?: run {
+                    binding.detailsEditText2.textAsIntOrNull() ?: run {
                         Timber.w("Non-numeric user input was provided")
-                        Timber.d("value: %s", editText.text.toString())
+                        Timber.d("value: %s", binding.detailsEditText2.text.toString())
                         allowSubmit = true
                         return@setOnClickListener
                     }
@@ -398,8 +388,8 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
             }
         }
 
-        editText.doAfterTextChanged {
-            dialog.positiveButton.isEnabled = editText.textAsIntOrNull() != null
+        binding.detailsEditText2.doAfterTextChanged {
+            dialog.positiveButton.isEnabled = binding.detailsEditText2.textAsIntOrNull() != null
         }
 
         // Show soft keyboard
