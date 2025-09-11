@@ -37,7 +37,7 @@
         app:layout_constraintTop_toBottomOf="@id/downloading_title" />
     
     <com.ichi2.ui.FixedTextView
-        android:id="@+id/download_percentage"
+        android:id="@+id/download_percentage_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20sp"
@@ -48,7 +48,7 @@
         tools:text="100 %" />
 
     <ProgressBar
-        android:id="@+id/download_progress"
+        android:id="@+id/download_progress_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -57,7 +57,7 @@
         android:scaleY="4"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/download_percentage"
+        app:layout_constraintTop_toBottomOf="@id/download_percentage_text"
         style="@style/Widget.AppCompat.ProgressBar.Horizontal" />
 
     <com.ichi2.ui.FixedTextView
@@ -73,11 +73,11 @@
         android:gravity="center"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/download_progress"
+        app:layout_constraintTop_toBottomOf="@id/download_progress_bar"
         android:visibility="gone" />
 
     <android.widget.Button
-        android:id="@+id/download_shared_deck_from_browser"
+        android:id="@+id/open_in_web_browser_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/open_in_browser"
@@ -89,11 +89,11 @@
         android:layout_marginEnd="24dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/try_again_deck_download"
+        app:layout_constraintBottom_toTopOf="@id/try_download_again_button"
         android:visibility="gone" />
 
     <android.widget.Button
-        android:id="@+id/cancel_shared_decks_download"
+        android:id="@+id/cancel_download_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/cancel_download"
@@ -108,7 +108,7 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <android.widget.Button
-        android:id="@+id/try_again_deck_download"
+        android:id="@+id/try_download_again_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/try_again"
