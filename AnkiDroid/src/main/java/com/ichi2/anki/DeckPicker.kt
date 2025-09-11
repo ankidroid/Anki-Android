@@ -554,9 +554,6 @@ open class DeckPicker :
         decksLayoutManager = LinearLayoutManager(this)
         deckPickerBinding.decks.layoutManager = decksLayoutManager
 
-        // Add background to Deckpicker activity
-        val view = binding.deckpickerXlView ?: binding.rootLayout
-
         deckListAdapter =
             DeckAdapter(
                 this,
@@ -590,7 +587,7 @@ open class DeckPicker :
             }
         // Setup the FloatingActionButtons
         floatingActionMenu =
-            DeckPickerFloatingActionMenu(this, view, this).apply {
+            DeckPickerFloatingActionMenu(this, binding, this).apply {
                 toggleListener =
                     FloatingActionBarToggleListener { isOpening ->
                         closeFloatingActionBarBackPressCallback.isEnabled = isOpening

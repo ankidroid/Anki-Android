@@ -22,31 +22,28 @@ import android.view.KeyEvent
 import android.view.MotionEvent
 import android.view.View
 import android.widget.LinearLayout
-import android.widget.TextView
 import com.google.android.material.color.MaterialColors
-import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.ichi2.anki.databinding.ActivityHomescreenBinding
+import com.ichi2.anki.databinding.FloatingAddButtonBinding
 import com.ichi2.anki.ui.DoubleTapListener
 import com.ichi2.anki.utils.AnimationUtils.areSystemAnimationsEnabled
 import timber.log.Timber
 
 class DeckPickerFloatingActionMenu(
     private val context: Context,
-    view: View,
+    homescreenBinding: ActivityHomescreenBinding,
     private val deckPicker: DeckPicker,
 ) {
-    private val fabMain: FloatingActionButton = view.findViewById(R.id.fab_main)
-    private val addSharedLayout: LinearLayout = view.findViewById(R.id.add_shared_layout)
-    private val addDeckLayout: LinearLayout = view.findViewById(R.id.add_deck_layout)
-    private val addFilteredDeckLayout: LinearLayout = view.findViewById(R.id.add_filtered_deck_layout)
-    private val fabBGLayout: View = view.findViewById(R.id.fabBGLayout)
-    private val linearLayout: LinearLayout =
-        view.findViewById(R.id.deckpicker_view) // Layout deck_picker.xml is attached here
-    private val studyOptionsFrame: View? = view.findViewById(R.id.studyoptions_fragment)
-    private val addNoteLabel: TextView = view.findViewById(R.id.add_note_label)
+    // TODO: refactor this to decouple with Homescreen & DeckPicker
+    private val binding: FloatingAddButtonBinding = homescreenBinding.deckPickerPane.floatingActionButton
+
+    /** Layout deck_picker.xml is attached here */
+    private val linearLayout: LinearLayout = homescreenBinding.deckPickerPane.deckpickerView
+    private val studyOptionsFrame: View? = homescreenBinding.studyoptionsFrame
 
     // Colors values obtained from attributes
-    private val fabNormalColor = MaterialColors.getColor(fabMain, R.attr.fab_normal)
-    private val fabPressedColor = MaterialColors.getColor(fabMain, R.attr.fab_pressed)
+    private val fabNormalColor = MaterialColors.getColor(binding.fabMain, R.attr.fab_normal)
+    private val fabPressedColor = MaterialColors.getColor(binding.fabMain, R.attr.fab_pressed)
 
     // Add Note Drawable Icon
     private val addNoteIcon: Int = R.drawable.ic_add_note
@@ -70,20 +67,20 @@ class DeckPickerFloatingActionMenu(
         isFABOpen = true
         if (deckPicker.animationEnabled()) {
             // Show with animation
-            addSharedLayout.visibility = View.VISIBLE
-            addDeckLayout.visibility = View.VISIBLE
-            addFilteredDeckLayout.visibility = View.VISIBLE
-            fabBGLayout.visibility = View.VISIBLE
-            addNoteLabel.visibility = View.VISIBLE
-            fabMain.animate().apply {
+            binding.addSharedLayout.visibility = View.VISIBLE
+            binding.addDeckLayout.visibility = View.VISIBLE
+            binding.addFilteredDeckLayout.visibility = View.VISIBLE
+            binding.fabBGLayout.visibility = View.VISIBLE
+            binding.addNoteLabel.visibility = View.VISIBLE
+            binding.fabMain.animate().apply {
                 /*
                  * If system animations are true changes the FAB color otherwise it remains the same
                  */
                 if (areSystemAnimationsEnabled(context)) {
-                    fabMain.backgroundTintList = ColorStateList.valueOf(fabPressedColor)
+                    binding.fabMain.backgroundTintList = ColorStateList.valueOf(fabPressedColor)
                 } else {
                     // Changes the background color of FAB
-                    fabMain.backgroundTintList = ColorStateList.valueOf(fabNormalColor)
+                    binding.fabMain.backgroundTintList = ColorStateList.valueOf(fabNormalColor)
                 }
                 duration = 90
                 // Rise FAB animation
@@ -91,9 +88,9 @@ class DeckPickerFloatingActionMenu(
                 scaleY(1.3f)
                 withEndAction {
                     // At the end the Image is changed to Add Note Icon
-                    fabMain.setImageResource(addNoteIcon)
+                    binding.fabMain.setImageResource(addNoteIcon)
                     // Shrink back FAB
-                    fabMain
+                    binding.fabMain
                         .animate()
                         .setDuration(70)
                         .scaleX(1f)
@@ -102,32 +99,34 @@ class DeckPickerFloatingActionMenu(
                 }.start()
             }
 
-            addNoteLabel.animate().translationX(0f).duration = 70
-            addSharedLayout.animate().translationY(0f).duration = 100
-            addDeckLayout.animate().translationY(0f).duration = 70
-            addFilteredDeckLayout.animate().translationY(0f).duration = 100
-            addNoteLabel.animate().alpha(1f).duration = 70
-            addSharedLayout.animate().alpha(1f).duration = 100
-            addDeckLayout.animate().alpha(1f).duration = 70
-            addFilteredDeckLayout.animate().alpha(1f).duration = 100
+            with(binding) {
+                addNoteLabel.animate().translationX(0f).duration = 70
+                addSharedLayout.animate().translationY(0f).duration = 100
+                addDeckLayout.animate().translationY(0f).duration = 70
+                addFilteredDeckLayout.animate().translationY(0f).duration = 100
+                addNoteLabel.animate().alpha(1f).duration = 70
+                addSharedLayout.animate().alpha(1f).duration = 100
+                addDeckLayout.animate().alpha(1f).duration = 70
+                addFilteredDeckLayout.animate().alpha(1f).duration = 100
+            }
         } else {
             // Show without animation
-            addSharedLayout.visibility = View.VISIBLE
-            addDeckLayout.visibility = View.VISIBLE
-            addFilteredDeckLayout.visibility = View.VISIBLE
-            fabBGLayout.visibility = View.VISIBLE
-            addNoteLabel.visibility = View.VISIBLE
-            addSharedLayout.alpha = 1f
-            addDeckLayout.alpha = 1f
-            addFilteredDeckLayout.alpha = 1f
-            addNoteLabel.alpha = 1f
-            addSharedLayout.translationY = 0f
-            addDeckLayout.translationY = 0f
-            addFilteredDeckLayout.translationY = 0f
-            addNoteLabel.translationX = 0f
+            binding.addSharedLayout.visibility = View.VISIBLE
+            binding.addDeckLayout.visibility = View.VISIBLE
+            binding.addFilteredDeckLayout.visibility = View.VISIBLE
+            binding.fabBGLayout.visibility = View.VISIBLE
+            binding.addNoteLabel.visibility = View.VISIBLE
+            binding.addSharedLayout.alpha = 1f
+            binding.addDeckLayout.alpha = 1f
+            binding.addFilteredDeckLayout.alpha = 1f
+            binding.addNoteLabel.alpha = 1f
+            binding.addSharedLayout.translationY = 0f
+            binding.addDeckLayout.translationY = 0f
+            binding.addFilteredDeckLayout.translationY = 0f
+            binding.addNoteLabel.translationX = 0f
 
             // During without animation maintain the original color of FAB
-            fabMain.apply {
+            binding.fabMain.apply {
                 backgroundTintList = ColorStateList.valueOf(fabNormalColor)
                 setImageResource(addNoteIcon)
             }
@@ -150,22 +149,22 @@ class DeckPickerFloatingActionMenu(
             linearLayout.alpha = 1f
             studyOptionsFrame?.let { it.alpha = 1f }
             isFABOpen = false
-            fabBGLayout.visibility = View.GONE
-            addNoteLabel.visibility = View.GONE
+            binding.fabBGLayout.visibility = View.GONE
+            binding.addNoteLabel.visibility = View.GONE
             if (deckPicker.animationEnabled()) {
                 // Changes the background color of FAB to default
-                fabMain.backgroundTintList = ColorStateList.valueOf(fabNormalColor)
+                binding.fabMain.backgroundTintList = ColorStateList.valueOf(fabNormalColor)
                 // Close with animation
-                fabMain.animate().apply {
+                binding.fabMain.animate().apply {
                     duration = 90
                     // Rise FAB animation
                     scaleX(1.3f)
                     scaleY(1.3f)
                     withEndAction {
                         // At the end the image is changed to Add White Icon
-                        fabMain.setImageResource(addWhiteIcon)
+                        binding.fabMain.setImageResource(addWhiteIcon)
                         // Shrink back FAB
-                        fabMain
+                        binding.fabMain
                             .animate()
                             .setDuration(60)
                             .scaleX(1f)
@@ -174,156 +173,160 @@ class DeckPickerFloatingActionMenu(
                     }.start()
                 }
 
-                addSharedLayout.animate().alpha(0f).duration = 50
-                addNoteLabel.animate().alpha(0f).duration = 70
-                addDeckLayout.animate().alpha(0f).duration = 100
-                addFilteredDeckLayout.animate().alpha(0f).duration = 100
-                addSharedLayout.animate().translationY(400f).duration = 100
-                addNoteLabel.animate().translationX(180f).duration = 70
-                addDeckLayout
-                    .animate()
-                    .translationY(300f)
-                    .setDuration(50)
-                    .setListener(
-                        object : Animator.AnimatorListener {
-                            override fun onAnimationStart(animator: Animator) {}
+                with(binding) {
+                    addSharedLayout.animate().alpha(0f).duration = 50
+                    addNoteLabel.animate().alpha(0f).duration = 70
+                    addDeckLayout.animate().alpha(0f).duration = 100
+                    addFilteredDeckLayout.animate().alpha(0f).duration = 100
+                    addSharedLayout.animate().translationY(400f).duration = 100
+                    addNoteLabel.animate().translationX(180f).duration = 70
+                    addDeckLayout
+                        .animate()
+                        .translationY(300f)
+                        .setDuration(50)
+                        .setListener(
+                            object : Animator.AnimatorListener {
+                                override fun onAnimationStart(animator: Animator) {}
 
-                            override fun onAnimationEnd(animator: Animator) {
-                                if (!isFABOpen) {
-                                    addSharedLayout.visibility = View.GONE
-                                    addDeckLayout.visibility = View.GONE
-                                    addFilteredDeckLayout.visibility = View.GONE
-                                    addNoteLabel.visibility = View.GONE
+                                override fun onAnimationEnd(animator: Animator) {
+                                    if (!isFABOpen) {
+                                        addSharedLayout.visibility = View.GONE
+                                        addDeckLayout.visibility = View.GONE
+                                        addFilteredDeckLayout.visibility = View.GONE
+                                        addNoteLabel.visibility = View.GONE
+                                    }
                                 }
-                            }
 
-                            override fun onAnimationCancel(animator: Animator) {}
+                                override fun onAnimationCancel(animator: Animator) {}
 
-                            override fun onAnimationRepeat(animator: Animator) {}
-                        },
-                    )
-                addFilteredDeckLayout
-                    .animate()
-                    .translationY(400f)
-                    .setDuration(100)
-                    .setListener(
-                        object : Animator.AnimatorListener {
-                            override fun onAnimationStart(animator: Animator) {}
+                                override fun onAnimationRepeat(animator: Animator) {}
+                            },
+                        )
+                    addFilteredDeckLayout
+                        .animate()
+                        .translationY(400f)
+                        .setDuration(100)
+                        .setListener(
+                            object : Animator.AnimatorListener {
+                                override fun onAnimationStart(animator: Animator) {}
 
-                            override fun onAnimationEnd(animator: Animator) {
-                                if (!isFABOpen) {
-                                    addSharedLayout.visibility = View.GONE
-                                    addDeckLayout.visibility = View.GONE
-                                    addFilteredDeckLayout.visibility = View.GONE
-                                    addNoteLabel.visibility = View.GONE
+                                override fun onAnimationEnd(animator: Animator) {
+                                    if (!isFABOpen) {
+                                        addSharedLayout.visibility = View.GONE
+                                        addDeckLayout.visibility = View.GONE
+                                        addFilteredDeckLayout.visibility = View.GONE
+                                        addNoteLabel.visibility = View.GONE
+                                    }
                                 }
-                            }
 
-                            override fun onAnimationCancel(animator: Animator) {}
+                                override fun onAnimationCancel(animator: Animator) {}
 
-                            override fun onAnimationRepeat(animator: Animator) {}
-                        },
-                    )
+                                override fun onAnimationRepeat(animator: Animator) {}
+                            },
+                        )
+                }
             } else {
                 // Close without animation
-                addSharedLayout.visibility = View.GONE
-                addDeckLayout.visibility = View.GONE
-                addFilteredDeckLayout.visibility = View.GONE
-                addNoteLabel.visibility = View.GONE
+                binding.addSharedLayout.visibility = View.GONE
+                binding.addDeckLayout.visibility = View.GONE
+                binding.addFilteredDeckLayout.visibility = View.GONE
+                binding.addNoteLabel.visibility = View.GONE
 
-                fabMain.setImageResource(addWhiteIcon)
+                binding.fabMain.setImageResource(addWhiteIcon)
             }
         } else {
             linearLayout.alpha = 1f
             studyOptionsFrame?.let { it.alpha = 1f }
             isFABOpen = false
-            fabBGLayout.visibility = View.GONE
-            addNoteLabel.visibility = View.GONE
+            binding.fabBGLayout.visibility = View.GONE
+            binding.addNoteLabel.visibility = View.GONE
             if (deckPicker.animationEnabled()) {
                 // Changes the background color of FAB to default
-                fabMain.backgroundTintList = ColorStateList.valueOf(fabNormalColor)
+                binding.fabMain.backgroundTintList = ColorStateList.valueOf(fabNormalColor)
                 // Close with animation
-                fabMain.animate().apply {
+                binding.fabMain.animate().apply {
                     duration = 90
                     withEndAction {
                         // At the end the image is changed to Add White Icon
-                        fabMain.setImageResource(addWhiteIcon)
+                        binding.fabMain.setImageResource(addWhiteIcon)
                     }.start()
                 }
 
-                addSharedLayout.animate().alpha(0f).duration = 70
-                addDeckLayout.animate().alpha(0f).duration = 50
-                addFilteredDeckLayout.animate().alpha(0f).duration = 50
-                addNoteLabel.animate().alpha(0f).duration = 50
-                addNoteLabel.animate().translationX(180f).duration = 70
-                addSharedLayout.animate().translationY(600f).duration = 100
-                addDeckLayout
-                    .animate()
-                    .translationY(400f)
-                    .setDuration(50)
-                    .setListener(
-                        object : Animator.AnimatorListener {
-                            override fun onAnimationStart(animator: Animator) {}
+                with(binding) {
+                    addSharedLayout.animate().alpha(0f).duration = 70
+                    addDeckLayout.animate().alpha(0f).duration = 50
+                    addFilteredDeckLayout.animate().alpha(0f).duration = 50
+                    addNoteLabel.animate().alpha(0f).duration = 50
+                    addNoteLabel.animate().translationX(180f).duration = 70
+                    addSharedLayout.animate().translationY(600f).duration = 100
+                    addDeckLayout
+                        .animate()
+                        .translationY(400f)
+                        .setDuration(50)
+                        .setListener(
+                            object : Animator.AnimatorListener {
+                                override fun onAnimationStart(animator: Animator) {}
 
-                            override fun onAnimationEnd(animator: Animator) {
-                                if (!isFABOpen) {
-                                    addSharedLayout.visibility = View.GONE
-                                    addDeckLayout.visibility = View.GONE
-                                    addFilteredDeckLayout.visibility = View.GONE
-                                    addNoteLabel.visibility = View.GONE
+                                override fun onAnimationEnd(animator: Animator) {
+                                    if (!isFABOpen) {
+                                        addSharedLayout.visibility = View.GONE
+                                        addDeckLayout.visibility = View.GONE
+                                        addFilteredDeckLayout.visibility = View.GONE
+                                        addNoteLabel.visibility = View.GONE
+                                    }
                                 }
-                            }
 
-                            override fun onAnimationCancel(animator: Animator) {}
+                                override fun onAnimationCancel(animator: Animator) {}
 
-                            override fun onAnimationRepeat(animator: Animator) {}
-                        },
-                    )
-                addFilteredDeckLayout
-                    .animate()
-                    .translationY(600f)
-                    .setDuration(100)
-                    .setListener(
-                        object : Animator.AnimatorListener {
-                            override fun onAnimationStart(animator: Animator) {}
+                                override fun onAnimationRepeat(animator: Animator) {}
+                            },
+                        )
+                    addFilteredDeckLayout
+                        .animate()
+                        .translationY(600f)
+                        .setDuration(100)
+                        .setListener(
+                            object : Animator.AnimatorListener {
+                                override fun onAnimationStart(animator: Animator) {}
 
-                            override fun onAnimationEnd(animator: Animator) {
-                                if (!isFABOpen) {
-                                    addSharedLayout.visibility = View.GONE
-                                    addDeckLayout.visibility = View.GONE
-                                    addFilteredDeckLayout.visibility = View.GONE
-                                    addNoteLabel.visibility = View.GONE
+                                override fun onAnimationEnd(animator: Animator) {
+                                    if (!isFABOpen) {
+                                        addSharedLayout.visibility = View.GONE
+                                        addDeckLayout.visibility = View.GONE
+                                        addFilteredDeckLayout.visibility = View.GONE
+                                        addNoteLabel.visibility = View.GONE
+                                    }
                                 }
-                            }
 
-                            override fun onAnimationCancel(animator: Animator) {}
+                                override fun onAnimationCancel(animator: Animator) {}
 
-                            override fun onAnimationRepeat(animator: Animator) {}
-                        },
-                    )
+                                override fun onAnimationRepeat(animator: Animator) {}
+                            },
+                        )
+                }
             } else {
                 // Close without animation
-                addSharedLayout.visibility = View.GONE
-                addDeckLayout.visibility = View.GONE
-                addFilteredDeckLayout.visibility = View.GONE
-                addNoteLabel.visibility = View.GONE
+                binding.addSharedLayout.visibility = View.GONE
+                binding.addDeckLayout.visibility = View.GONE
+                binding.addFilteredDeckLayout.visibility = View.GONE
+                binding.addNoteLabel.visibility = View.GONE
 
-                fabMain.setImageResource(addWhiteIcon)
+                binding.fabMain.setImageResource(addWhiteIcon)
             }
         }
     }
 
     fun showFloatingActionButton() {
-        if (!fabMain.isShown) {
+        if (!binding.fabMain.isShown) {
             Timber.i("DeckPicker:: showFloatingActionButton()")
-            fabMain.visibility = View.VISIBLE
+            binding.fabMain.visibility = View.VISIBLE
         }
     }
 
     fun hideFloatingActionButton() {
-        if (fabMain.isShown) {
+        if (binding.fabMain.isShown) {
             Timber.i("DeckPicker:: hideFloatingActionButton()")
-            fabMain.visibility = View.GONE
+            binding.fabMain.visibility = View.GONE
         }
     }
 
@@ -343,14 +346,7 @@ class DeckPickerFloatingActionMenu(
         }
 
     init {
-        val addSharedButton: FloatingActionButton = view.findViewById(R.id.add_shared_button)
-        val addDeckButton: FloatingActionButton = view.findViewById(R.id.add_deck_button)
-        val addFilteredDeckButton: FloatingActionButton = view.findViewById(R.id.add_filtered_deck_button)
-        val addSharedLabel: TextView = view.findViewById(R.id.add_shared_label)
-        val addDeckLabel: TextView = view.findViewById(R.id.add_deck_label)
-        val addFilteredDeckLabel: TextView = view.findViewById(R.id.add_filtered_deck_label)
-        val addNote: TextView = view.findViewById(R.id.add_note_label)
-        fabMain.setOnTouchListener(
+        binding.fabMain.setOnTouchListener(
             object : DoubleTapListener(context) {
                 override fun onDoubleTap(e: MotionEvent?) {
                     addNote()
@@ -369,7 +365,7 @@ class DeckPickerFloatingActionMenu(
         )
 
         // Enable keyboard activation for Enter/DPAD_CENTER/ESC keys
-        fabMain.setOnKeyListener { _, keyCode, event ->
+        binding.fabMain.setOnKeyListener { _, keyCode, event ->
             if (event.action == KeyEvent.ACTION_DOWN) {
                 when (keyCode) {
                     KeyEvent.KEYCODE_ENTER, KeyEvent.KEYCODE_DPAD_CENTER -> {
@@ -393,7 +389,7 @@ class DeckPickerFloatingActionMenu(
             false
         }
 
-        fabBGLayout.setOnClickListener { closeFloatingActionMenu(applyRiseAndShrinkAnimation = true) }
+        binding.fabBGLayout.setOnClickListener { closeFloatingActionMenu(applyRiseAndShrinkAnimation = true) }
         val addDeckListener =
             View.OnClickListener {
                 if (isFABOpen) {
@@ -401,8 +397,8 @@ class DeckPickerFloatingActionMenu(
                     deckPicker.showCreateDeckDialog()
                 }
             }
-        addDeckButton.setOnClickListener(addDeckListener)
-        addDeckLabel.setOnClickListener(addDeckListener)
+        binding.addDeckButton.setOnClickListener(addDeckListener)
+        binding.addDeckLabel.setOnClickListener(addDeckListener)
 
         // Enable keyboard activation for Enter/DPAD_CENTER keys
         val addDeckKeyListener =
@@ -412,8 +408,8 @@ class DeckPickerFloatingActionMenu(
                     deckPicker.showCreateDeckDialog()
                 }
             }
-        addDeckButton.setOnKeyListener(addDeckKeyListener)
-        addDeckLabel.setOnKeyListener(addDeckKeyListener)
+        binding.addDeckButton.setOnKeyListener(addDeckKeyListener)
+        binding.addDeckLabel.setOnKeyListener(addDeckKeyListener)
         val addFilteredDeckListener =
             View.OnClickListener {
                 if (isFABOpen) {
@@ -421,8 +417,8 @@ class DeckPickerFloatingActionMenu(
                     deckPicker.showCreateFilteredDeckDialog()
                 }
             }
-        addFilteredDeckButton.setOnClickListener(addFilteredDeckListener)
-        addFilteredDeckLabel.setOnClickListener(addFilteredDeckListener)
+        binding.addFilteredDeckButton.setOnClickListener(addFilteredDeckListener)
+        binding.addFilteredDeckLabel.setOnClickListener(addFilteredDeckListener)
 
         // Enable keyboard activation for Enter/DPAD_CENTER keys
         val addFilteredDeckKeyListener =
@@ -432,8 +428,8 @@ class DeckPickerFloatingActionMenu(
                     deckPicker.showCreateFilteredDeckDialog()
                 }
             }
-        addFilteredDeckButton.setOnKeyListener(addFilteredDeckKeyListener)
-        addFilteredDeckLabel.setOnKeyListener(addFilteredDeckKeyListener)
+        binding.addFilteredDeckButton.setOnKeyListener(addFilteredDeckKeyListener)
+        binding.addFilteredDeckLabel.setOnKeyListener(addFilteredDeckKeyListener)
         val addSharedListener =
             View.OnClickListener {
                 if (isFABOpen) {
@@ -442,8 +438,8 @@ class DeckPickerFloatingActionMenu(
                     deckPicker.openAnkiWebSharedDecks()
                 }
             }
-        addSharedButton.setOnClickListener(addSharedListener)
-        addSharedLabel.setOnClickListener(addSharedListener)
+        binding.addSharedButton.setOnClickListener(addSharedListener)
+        binding.addSharedLabel.setOnClickListener(addSharedListener)
 
         // Enable keyboard activation for Enter/DPAD_CENTER keys
         val addSharedKeyListener =
@@ -453,8 +449,8 @@ class DeckPickerFloatingActionMenu(
                     deckPicker.openAnkiWebSharedDecks()
                 }
             }
-        addSharedButton.setOnKeyListener(addSharedKeyListener)
-        addSharedLabel.setOnKeyListener(addSharedKeyListener)
+        binding.addSharedButton.setOnKeyListener(addSharedKeyListener)
+        binding.addSharedLabel.setOnKeyListener(addSharedKeyListener)
         val addNoteLabelListener =
             View.OnClickListener {
                 if (isFABOpen) {
@@ -463,10 +459,10 @@ class DeckPickerFloatingActionMenu(
                     addNote()
                 }
             }
-        addNote.setOnClickListener(addNoteLabelListener)
+        binding.addNoteLabel.setOnClickListener(addNoteLabelListener)
 
         // Enable keyboard activation for Enter/DPAD_CENTER keys
-        addNote.setOnKeyListener(
+        binding.addNoteLabel.setOnKeyListener(
             createActivationKeyListener("Add Note label: ENTER key pressed") {
                 if (isFABOpen) {
                     closeFloatingActionMenu(applyRiseAndShrinkAnimation = false)
