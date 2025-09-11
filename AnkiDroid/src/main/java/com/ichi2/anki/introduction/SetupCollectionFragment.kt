@@ -35,12 +35,13 @@ package com.ichi2.anki.introduction
 
 import android.os.Bundle
 import android.os.Parcelable
-import android.view.View
-import android.widget.Button
+import android.view.LayoutInflater
+import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
 import com.ichi2.anki.R
+import com.ichi2.anki.databinding.IntroductionLayoutBinding
 import com.ichi2.anki.introduction.SetupCollectionFragment.CollectionSetupOption.DeckPickerWithNewCollection
 import com.ichi2.anki.introduction.SetupCollectionFragment.CollectionSetupOption.SyncFromExistingAccount
 import kotlinx.parcelize.Parcelize
@@ -58,19 +59,16 @@ import kotlinx.parcelize.Parcelize
  * if the app is uninstalled.
  */
 class SetupCollectionFragment : Fragment(R.layout.introduction_layout) {
-    override fun onViewCreated(
-        view: View,
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ) {
-        super.onViewCreated(view, savedInstanceState)
-
-        view.findViewById<Button>(R.id.get_started).apply {
-            setOnClickListener { setResult(DeckPickerWithNewCollection) }
-        }
-        view.findViewById<Button>(R.id.sync_profile).apply {
-            setOnClickListener { setResult(SyncFromExistingAccount) }
-        }
-    }
+    ) = IntroductionLayoutBinding
+        .inflate(inflater, container, false)
+        .apply {
+            getStarted.setOnClickListener { setResult(DeckPickerWithNewCollection) }
+            syncProfile.setOnClickListener { setResult(SyncFromExistingAccount) }
+        }.root
 
     private fun setResult(option: CollectionSetupOption) {
         setFragmentResult(FRAGMENT_KEY, bundleOf(RESULT_KEY to option))
