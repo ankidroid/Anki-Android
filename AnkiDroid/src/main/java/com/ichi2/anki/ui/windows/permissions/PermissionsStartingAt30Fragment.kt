@@ -17,10 +17,12 @@ package com.ichi2.anki.ui.windows.permissions
 
 import android.os.Build
 import android.os.Bundle
-import android.view.View
+import android.view.LayoutInflater
+import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import com.ichi2.anki.R
+import com.ichi2.anki.databinding.FragmentPermissionsStartingAt30Binding
 import com.ichi2.utils.Permissions
 import com.ichi2.utils.Permissions.canManageExternalStorage
 
@@ -34,7 +36,7 @@ import com.ichi2.utils.Permissions.canManageExternalStorage
  *   which isn't deleted when the app is uninstalled
  */
 @RequiresApi(Build.VERSION_CODES.R)
-class PermissionsStartingAt30Fragment : PermissionsFragment(R.layout.permissions_starting_at_30) {
+class PermissionsStartingAt30Fragment : PermissionsFragment(R.layout.fragment_permissions_starting_at_30) {
     private val accessAllFilesLauncher =
         registerForActivityResult(
             ActivityResultContracts.StartActivityForResult(),
@@ -44,12 +46,14 @@ class PermissionsStartingAt30Fragment : PermissionsFragment(R.layout.permissions
             }
         }
 
-    override fun onViewCreated(
-        view: View,
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ) {
-        view
-            .findViewById<PermissionsItem>(R.id.all_files_permission)
-            .requestExternalStorageOnClick(accessAllFilesLauncher)
-    }
+    ) = FragmentPermissionsStartingAt30Binding
+        .inflate(inflater, container, false)
+        .apply {
+            allFilesPermission
+                .requestExternalStorageOnClick(accessAllFilesLauncher)
+        }.root
 }
