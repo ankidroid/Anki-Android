@@ -22,9 +22,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
-import android.widget.LinearLayout
-import android.widget.RelativeLayout
-import android.widget.TextView
 import androidx.core.content.res.getDrawableOrThrow
 import androidx.core.content.withStyledAttributes
 import androidx.recyclerview.widget.DiffUtil
@@ -32,9 +29,9 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.ichi2.anki.R
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.databinding.DeckItemBinding
 import com.ichi2.anki.deckpicker.DisplayDeckNode
 import com.ichi2.anki.libanki.DeckId
-import com.ichi2.anki.utils.ext.findViewById
 import kotlinx.coroutines.runBlocking
 import net.ankiweb.rsdroid.RustCleanup
 
@@ -92,17 +89,8 @@ class DeckAdapter(
         }
 
     class ViewHolder(
-        v: View,
-    ) : RecyclerView.ViewHolder(v) {
-        val deckLayout: RelativeLayout = findViewById(R.id.DeckPickerHoriz)
-        val countsLayout: LinearLayout = findViewById(R.id.counts_layout)
-        val deckExpander: ImageButton = findViewById(R.id.deckpicker_expander)
-        val indentView: ImageButton = findViewById(R.id.deckpicker_indent)
-        val deckName: TextView = findViewById(R.id.deckpicker_name)
-        val deckNew: TextView = findViewById(R.id.deckpicker_new)
-        val deckLearn: TextView = findViewById(R.id.deckpicker_lrn)
-        val deckRev: TextView = findViewById(R.id.deckpicker_rev)
-    }
+        val binding: DeckItemBinding,
+    ) : RecyclerView.ViewHolder(binding.root)
 
     /**
      * Set new data in the adapter. This should be used instead of [submitList] (which is called
@@ -134,67 +122,69 @@ class DeckAdapter(
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
-    ): ViewHolder = ViewHolder(layoutInflater.inflate(R.layout.deck_item, parent, false))
+    ): ViewHolder = ViewHolder(DeckItemBinding.inflate(layoutInflater, parent, false))
 
     override fun onBindViewHolder(
         holder: ViewHolder,
         position: Int,
     ) {
+        val binding = holder.binding
         val node = getItem(position)
         // Set the expander icon and padding according to whether or not there are any subdecks
-        val deckLayout = holder.deckLayout
         if (hasSubdecks) {
-            deckLayout.setPaddingRelative(startPaddingSmall, 0, endPadding, 0)
-            holder.deckExpander.visibility = View.VISIBLE
+            binding.deckLayout.setPaddingRelative(startPaddingSmall, 0, endPadding, 0)
+            binding.deckExpander.visibility = View.VISIBLE
             // Create the correct expander for this deck
-            runBlocking { setDeckExpander(holder.deckExpander, holder.indentView, node) }
+            runBlocking { setDeckExpander(binding.deckExpander, holder.binding.indentView, node) }
         } else {
-            holder.deckExpander.visibility = View.GONE
-            holder.indentView.minimumWidth = 0
-            deckLayout.setPaddingRelative(startPadding, 0, endPadding, 0)
+            binding.deckExpander.visibility = View.GONE
+            binding.indentView.minimumWidth = 0
+            binding.deckLayout.setPaddingRelative(startPadding, 0, endPadding, 0)
         }
         if (node.canCollapse) {
-            holder.deckExpander.setOnClickListener {
+            binding.deckExpander.setOnClickListener {
                 onDeckChildrenToggled(node.did)
                 notifyItemChanged(position) // Ensure UI updates
             }
         } else {
-            holder.deckExpander.isClickable = false
-            holder.deckExpander.setOnClickListener(null)
+            binding.deckExpander.isClickable = false
+            binding.deckExpander.setOnClickListener(null)
         }
-        holder.deckLayout.setBackgroundResource(rowCurrentDrawable)
+        holder.binding.deckLayout.setBackgroundResource(rowCurrentDrawable)
         // set a different background color for the current selected deck
         if (node.isSelected) {
-            holder.deckLayout.setBackgroundResource(rowCurrentDrawable)
+            holder.binding.deckLayout.setBackgroundResource(rowCurrentDrawable)
             if (activityHasBackground) {
-                val background = holder.deckLayout.background.mutate()
+                val background =
+                    holder.binding.deckLayout.background
+                        .mutate()
                 background.alpha = (255 * SELECTED_DECK_ALPHA_AGAINST_BACKGROUND).toInt()
-                holder.deckLayout.background = background
+                holder.binding.deckLayout.background = background
             }
         } else {
-            holder.deckLayout.setBackgroundResource(selectableItemBackground)
+            holder.binding.deckLayout.setBackgroundResource(selectableItemBackground)
         }
         // Set deck name and colour. Filtered decks have their own colour
-        holder.deckName.text = node.lastDeckNameComponent
-        holder.deckName.setTextColor(if (node.filtered) deckNameDynColor else deckNameDefaultColor)
+        binding.deckName.text = node.lastDeckNameComponent
+        binding.deckName.setTextColor(if (node.filtered) deckNameDynColor else deckNameDefaultColor)
 
         // Set the card counts and their colors
-        holder.deckNew.text = node.newCount.toString()
-        holder.deckNew.setTextColor(if (node.newCount == 0) zeroCountColor else newCountColor)
-        holder.deckLearn.text = node.lrnCount.toString()
-        holder.deckLearn.setTextColor(if (node.lrnCount == 0) zeroCountColor else learnCountColor)
-        holder.deckRev.text = node.revCount.toString()
-        holder.deckRev.setTextColor(if (node.revCount == 0) zeroCountColor else reviewCountColor)
+        binding.deckNew.text = node.newCount.toString()
+        binding.deckNew.setTextColor(if (node.newCount == 0) zeroCountColor else newCountColor)
+        binding.deckLearn.text = node.lrnCount.toString()
+        binding.deckLearn.setTextColor(if (node.lrnCount == 0) zeroCountColor else learnCountColor)
+        binding.deckReview.text = node.revCount.toString()
+        binding.deckReview.setTextColor(if (node.revCount == 0) zeroCountColor else reviewCountColor)
 
-        holder.deckLayout.setOnClickListener { onDeckSelected(node.did) }
-        holder.deckLayout.setOnLongClickListener {
+        holder.binding.deckLayout.setOnClickListener { onDeckSelected(node.did) }
+        holder.binding.deckLayout.setOnLongClickListener {
             onDeckContextRequested(node.did)
             true
         }
-        holder.countsLayout.setOnClickListener { onDeckCountsSelected(node.did) }
+        binding.countsLayout.setOnClickListener { onDeckCountsSelected(node.did) }
 
         // Right click listener for right click context menus
-        holder.deckLayout.setOnGenericMotionListener { _, motionEvent ->
+        holder.binding.deckLayout.setOnGenericMotionListener { _, motionEvent ->
             if (motionEvent.action == android.view.MotionEvent.ACTION_BUTTON_PRESS &&
                 motionEvent.buttonState and android.view.MotionEvent.BUTTON_SECONDARY != 0
             ) {
