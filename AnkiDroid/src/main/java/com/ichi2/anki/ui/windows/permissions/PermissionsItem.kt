@@ -20,13 +20,12 @@ import android.content.res.ColorStateList
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.FrameLayout
-import android.widget.ImageView
 import androidx.appcompat.widget.SwitchCompat
 import androidx.core.content.withStyledAttributes
 import com.google.android.material.color.MaterialColors
 import com.ichi2.anki.R
+import com.ichi2.anki.databinding.PermissionsItemBinding
 import com.ichi2.anki.utils.ext.usingStyledAttributes
-import com.ichi2.ui.FixedTextView
 import com.ichi2.utils.Permissions
 import timber.log.Timber
 
@@ -65,10 +64,10 @@ class PermissionsItem(
     val areGranted get() = Permissions.hasAllPermissions(context, permissions)
 
     init {
-        LayoutInflater.from(context).inflate(R.layout.permissions_item, this, true)
+        val binding = PermissionsItemBinding.inflate(LayoutInflater.from(context), this, true)
 
         switch =
-            findViewById<SwitchCompat>(R.id.switch_widget).apply {
+            binding.switchWidget.apply {
                 isEnabled = true
                 setOnCheckedChangeListener { button, _ ->
                     button.isChecked = areGranted
@@ -83,13 +82,13 @@ class PermissionsItem(
             }
 
         context.withStyledAttributes(attrs, R.styleable.PermissionItem) {
-            findViewById<FixedTextView>(R.id.title).text = getText(R.styleable.PermissionItem_permissionTitle)
-            findViewById<FixedTextView>(R.id.summary).text = getText(R.styleable.PermissionItem_permissionSummary)
+            binding.title.text = getText(R.styleable.PermissionItem_permissionTitle)
+            binding.summary.text = getText(R.styleable.PermissionItem_permissionSummary)
 
             val icon = getDrawable(R.styleable.PermissionItem_permissionIcon)
             icon?.let {
                 val color = MaterialColors.getColor(this@PermissionsItem, android.R.attr.colorControlNormal)
-                findViewById<ImageView>(R.id.icon).apply {
+                binding.icon.apply {
                     setImageDrawable(it)
                     imageTintList = ColorStateList.valueOf(color)
                 }
