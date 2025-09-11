@@ -9,7 +9,7 @@
     >
 
     <com.ichi2.anki.ui.windows.reviewer.audiorecord.AudioPlayView
-        android:id="@+id/audio_play_view"
+        android:id="@+id/play_view"
         android:layout_width="0dp"
         android:layout_height="48dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -30,7 +30,7 @@
         />
 
     <com.ichi2.anki.ui.windows.reviewer.audiorecord.AudioRecordView
-        android:id="@+id/audio_record_view"
+        android:id="@+id/record_view"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         app:layout_constraintTop_toTopOf="parent"

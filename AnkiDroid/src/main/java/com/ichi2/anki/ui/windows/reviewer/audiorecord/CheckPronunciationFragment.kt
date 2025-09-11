@@ -20,7 +20,9 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
@@ -29,6 +31,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.ichi2.anki.R
+import com.ichi2.anki.databinding.CheckPronunciationFragmentBinding
 import com.ichi2.anki.ui.windows.reviewer.ReviewerViewModel
 import com.ichi2.anki.utils.ext.collectIn
 import com.ichi2.utils.show
@@ -36,12 +39,13 @@ import com.ichi2.utils.show
 /**
  * Integrates [AudioRecordView] with [AudioPlayView] to play the recorded audios.
  */
-class CheckPronunciationFragment : Fragment(R.layout.check_pronunciation_fragment) {
+class CheckPronunciationFragment : Fragment() {
     private val viewModel: CheckPronunciationViewModel by viewModels()
     private val studyScreenViewModel: ReviewerViewModel by viewModels({ requireParentFragment() })
 
-    private lateinit var playView: AudioPlayView
-    private lateinit var recordView: AudioRecordView
+    // binding pattern to handle onCreateView/onDestroyView
+    private var fragmentBinding: CheckPronunciationFragmentBinding? = null
+    private val binding: CheckPronunciationFragmentBinding get() = fragmentBinding!!
 
     private val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
@@ -60,13 +64,21 @@ class CheckPronunciationFragment : Fragment(R.layout.check_pronunciation_fragmen
             }
         }
 
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ) = CheckPronunciationFragmentBinding
+        .inflate(inflater, container, false)
+        .apply {
+            fragmentBinding = this
+        }.root
+
     override fun onViewCreated(
         view: View,
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        playView = view.findViewById(R.id.audio_play_view)
-        recordView = view.findViewById(R.id.audio_record_view)
 
         setupViewListeners()
         observeViewModel()
@@ -79,11 +91,16 @@ class CheckPronunciationFragment : Fragment(R.layout.check_pronunciation_fragmen
             return
         }
         viewModel.resetAll()
-        recordView.forceReset()
+        binding.recordView.forceReset()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        fragmentBinding = null
     }
 
     private fun setupViewListeners() {
-        playView.setButtonPressListener(
+        binding.playView.setButtonPressListener(
             object : AudioPlayView.ButtonPressListener {
                 override fun onPlayButtonPressed() {
                     viewModel.onPlayOrReplay()
@@ -95,7 +112,7 @@ class CheckPronunciationFragment : Fragment(R.layout.check_pronunciation_fragmen
             },
         )
 
-        recordView.setRecordingListener(
+        binding.recordView.setRecordingListener(
             object : AudioRecordView.RecordingListener {
                 override fun onRecordingPermissionRequired() {
                     requestPermissionLauncher.launch(Manifest.permission.RECORD_AUDIO)
@@ -118,24 +135,24 @@ class CheckPronunciationFragment : Fragment(R.layout.check_pronunciation_fragmen
 
     private fun observeViewModel() {
         viewModel.isPlaybackVisibleFlow.flowWithLifecycle(lifecycle).collectIn(lifecycleScope) { isVisible ->
-            playView.isVisible = isVisible
-            recordView.setRecordDisplayVisibility(!isVisible)
+            binding.playView.isVisible = isVisible
+            binding.recordView.setRecordDisplayVisibility(!isVisible)
         }
         viewModel.playbackProgressFlow
             .flowWithLifecycle(lifecycle)
             .collectIn(lifecycleScope) { progress ->
-                playView.setPlaybackProgress(progress)
+                binding.playView.setPlaybackProgress(progress)
             }
         viewModel.playbackProgressBarMaxFlow
             .flowWithLifecycle(lifecycle)
             .collectIn(lifecycleScope) { max ->
-                playView.setPlaybackProgressBarMax(max)
+                binding.playView.setPlaybackProgressBarMax(max)
             }
         viewModel.playIconFlow.flowWithLifecycle(lifecycle).collectIn(lifecycleScope) { iconRes ->
-            playView.changePlayIcon(iconRes)
+            binding.playView.changePlayIcon(iconRes)
         }
         viewModel.replayFlow.flowWithLifecycle(lifecycle).collectIn(lifecycleScope) {
-            playView.rotateReplayIcon()
+            binding.playView.rotateReplayIcon()
         }
     }
 
@@ -145,7 +162,7 @@ class CheckPronunciationFragment : Fragment(R.layout.check_pronunciation_fragmen
             .collectIn(lifecycleScope) { isEnabled ->
                 if (!isEnabled) {
                     viewModel.resetAll()
-                    recordView.forceReset()
+                    binding.recordView.forceReset()
                 }
             }
         studyScreenViewModel.replayVoiceFlow
@@ -154,9 +171,9 @@ class CheckPronunciationFragment : Fragment(R.layout.check_pronunciation_fragmen
                 viewModel.onPlayOrReplay()
             }
         studyScreenViewModel.onCardUpdatedFlow.flowWithLifecycle(lifecycle).collectIn(lifecycleScope) { showingAnswer ->
-            playView.isVisible = false
+            binding.playView.isVisible = false
             viewModel.onCancelPlayback()
-            recordView.setRecordDisplayVisibility(true)
+            binding.recordView.setRecordDisplayVisibility(true)
         }
     }
 }
