@@ -1824,7 +1824,7 @@ class NoteEditorFragment :
         for (i in editLines.indices) {
             val editLineView = editLines[i]
             customViewIds.add(editLineView.id)
-            val newEditText = editLineView.editText
+            val newEditText = editLineView.binding.editText
             lifecycleScope.launch {
                 val pasteAsPng = shouldPasteAsPng()
                 newEditText.setPasteListener { editText: EditText?, uri: Uri?, description: ClipDescription? ->
@@ -1868,8 +1868,8 @@ class NoteEditorFragment :
                 newEditText.textSize = prefs.getInt(PREF_NOTE_EDITOR_FONT_SIZE, -1).toFloat()
             }
             newEditText.setCapitalize(prefs.getBoolean(PREF_NOTE_EDITOR_CAPITALIZE, true))
-            val mediaButton = editLineView.mediaButton
-            val toggleStickyButton = editLineView.toggleSticky
+            val mediaButton = editLineView.binding.mediaButton
+            val toggleStickyButton = editLineView.binding.toggleSticky
             // Make the icon change between media icon and switch field icon depending on whether editing note type
             if (editNoteTypeMode && allowFieldRemapping()) {
                 // Allow remapping if originally more than two fields
