@@ -177,7 +177,7 @@ class ReviewerFragmentTest : InstrumentedTest() {
     }
 
     private fun clickShowAnswer() {
-        onView(withId(R.id.show_answer)).perform(click())
+        onView(withId(R.id.show_answer_button)).perform(click())
     }
 
     private fun ensureKeyboardIsDisplayed() {
