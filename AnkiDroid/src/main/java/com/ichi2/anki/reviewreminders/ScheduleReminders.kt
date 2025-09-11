@@ -19,7 +19,9 @@ package com.ichi2.anki.reviewreminders
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.BundleCompat
@@ -27,12 +29,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.appbar.MaterialToolbar
-import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.ichi2.anki.CrashReportData.Companion.toCrashReportData
 import com.ichi2.anki.R
 import com.ichi2.anki.SingleFragmentActivity
+import com.ichi2.anki.databinding.FragmentScheduleRemindersBinding
 import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.DeckId
@@ -46,7 +46,7 @@ import timber.log.Timber
  * Fragment for creating, viewing, editing, and deleting review reminders.
  */
 class ScheduleReminders :
-    Fragment(R.layout.fragment_schedule_reminders),
+    Fragment(),
     DeckSelectionDialog.DeckSelectionListener {
     /**
      * Whether this fragment has been opened to edit all review reminders or just a specific deck's reminders.
@@ -60,8 +60,10 @@ class ScheduleReminders :
         ) ?: ReviewReminderScope.Global
     }
 
-    private lateinit var toolbar: MaterialToolbar
-    private lateinit var recyclerView: RecyclerView
+    // binding pattern to handle onCreateView/onDestroyView
+    private var fragmentBinding: FragmentScheduleRemindersBinding? = null
+    private val binding get() = fragmentBinding!!
+
     private lateinit var adapter: ScheduleRemindersAdapter
 
     /**
@@ -78,6 +80,16 @@ class ScheduleReminders :
      */
     private val cachedDeckNames: HashMap<DeckId, String> = hashMapOf()
 
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ) = FragmentScheduleRemindersBinding
+        .inflate(inflater, container, false)
+        .apply {
+            fragmentBinding = this
+        }.root
+
     override fun onViewCreated(
         view: View,
         savedInstanceState: Bundle?,
@@ -85,19 +97,21 @@ class ScheduleReminders :
         super.onViewCreated(view, savedInstanceState)
 
         // Set up toolbar
-        toolbar = view.findViewById(R.id.toolbar)
         reloadToolbarText()
-        (requireActivity() as AppCompatActivity).setSupportActionBar(toolbar)
+        (requireActivity() as AppCompatActivity).setSupportActionBar(binding.toolbar)
 
         // Set up add button
-        val addButton = view.findViewById<ExtendedFloatingActionButton>(R.id.schedule_reminders_add_reminder_fab)
-        addButton.setOnClickListener { addReminder() }
+        binding.floatingActionButtonAdd.setOnClickListener { addReminder() }
 
         // Set up recycler view
-        recyclerView = view.findViewById(R.id.schedule_reminders_recycler_view)
         val layoutManager = LinearLayoutManager(requireContext())
-        recyclerView.layoutManager = layoutManager
-        recyclerView.addItemDecoration(DividerItemDecoration(requireContext(), layoutManager.orientation))
+        binding.recyclerView.layoutManager = layoutManager
+        binding.recyclerView.addItemDecoration(
+            DividerItemDecoration(
+                requireContext(),
+                layoutManager.orientation,
+            ),
+        )
 
         // Set up adapter, pass functionality to it
         adapter =
@@ -106,20 +120,25 @@ class ScheduleReminders :
                 ::toggleReminderEnabled,
                 ::editReminder,
             )
-        recyclerView.adapter = adapter
+        binding.recyclerView.adapter = adapter
 
         // Retrieve reminders based on the editing scope
         launchCatchingTask { loadDatabaseRemindersIntoUI() }
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        fragmentBinding = null
+    }
+
     private fun reloadToolbarText() {
         Timber.d("Reloading toolbar text")
-        toolbar.title = getString(R.string.schedule_reminders_do_not_translate)
+        binding.toolbar.title = getString(R.string.schedule_reminders_do_not_translate)
         when (val scope = scheduleRemindersScope) {
             is ReviewReminderScope.Global -> {}
             is ReviewReminderScope.DeckSpecific ->
                 launchCatchingTask {
-                    toolbar.subtitle = scope.getDeckName()
+                    binding.toolbar.subtitle = scope.getDeckName()
                 }
         }
     }
