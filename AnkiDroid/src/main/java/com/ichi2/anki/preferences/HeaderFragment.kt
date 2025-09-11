@@ -23,7 +23,6 @@ import androidx.fragment.app.Fragment
 import androidx.preference.Preference
 import com.bytehamster.lib.preferencesearch.SearchConfiguration
 import com.bytehamster.lib.preferencesearch.SearchPreference
-import com.google.android.material.appbar.MaterialToolbar
 import com.ichi2.anki.BuildConfig
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
@@ -82,7 +81,7 @@ class HeaderFragment : SettingsFragment() {
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        view.findViewById<MaterialToolbar>(R.id.toolbar).setNavigationOnClickListener {
+        binding.toolbar.setNavigationOnClickListener {
             requireActivity().finish()
         }
     }
