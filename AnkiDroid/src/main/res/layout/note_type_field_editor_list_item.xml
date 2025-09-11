@@ -1,6 +1,6 @@
 <com.ichi2.ui.FixedTextView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/model_editor_list_display"
+        android:id="@+id/text_view"
         android:layout_width="match_parent"
         android:gravity="start|center_vertical"
         android:drawableTint="?android:textColorPrimary"

@@ -27,7 +27,6 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.EditText
-import android.widget.TextView
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.core.os.BundleCompat
@@ -37,6 +36,7 @@ import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.databinding.NoteTypeFieldEditorBinding
+import com.ichi2.anki.databinding.NoteTypeFieldEditorListItemBinding
 import com.ichi2.anki.dialogs.ConfirmationDialog
 import com.ichi2.anki.dialogs.LocaleSelectionDialog
 import com.ichi2.anki.dialogs.LocaleSelectionDialog.Companion.KEY_SELECTED_LOCALE
@@ -590,17 +590,17 @@ internal class NoteFieldAdapter(
         convertView: View?,
         parent: ViewGroup,
     ): View {
-        val view =
-            convertView ?: LayoutInflater
-                .from(context)
-                .inflate(R.layout.note_type_field_editor_list_item, parent, false)
-
-        val nameTextView: TextView = view.findViewById(R.id.model_editor_list_display)
+        val binding =
+            if (convertView != null) {
+                NoteTypeFieldEditorListItemBinding.bind(convertView)
+            } else {
+                NoteTypeFieldEditorListItemBinding.inflate(LayoutInflater.from(context), parent, false)
+            }
 
         getItem(position)?.let {
             val (name, kind) = it
-            nameTextView.text = name
-            nameTextView.setCompoundDrawablesRelativeWithIntrinsicBoundsKt(
+            binding.textView.text = name
+            binding.textView.setCompoundDrawablesRelativeWithIntrinsicBoundsKt(
                 end =
                     when (kind) {
                         NodetypeKind.SORT -> R.drawable.ic_sort
@@ -608,6 +608,6 @@ internal class NoteFieldAdapter(
                     },
             )
         }
-        return view
+        return binding.root
     }
 }
