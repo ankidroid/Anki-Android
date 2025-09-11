@@ -24,7 +24,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.DialogFragment
@@ -35,10 +34,10 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.button.MaterialButton
 import com.ichi2.anki.AndroidTtsVoice
 import com.ichi2.anki.R
 import com.ichi2.anki.databinding.DialogTtsVoicesBinding
+import com.ichi2.anki.databinding.DialogTtsVoicesVoiceBinding
 import com.ichi2.anki.dialogs.viewmodel.TtsVoicesViewModel
 import com.ichi2.anki.libanki.TtsVoice
 import com.ichi2.anki.localizedErrorMessage
@@ -221,30 +220,25 @@ class TtsVoicesDialogFragment : DialogFragment() {
     // inner allows access to viewModel/openTtsSettings
     inner class TtsVoiceAdapter : ListAdapter<AndroidTtsVoice, TtsVoiceAdapter.TtsViewHolder>(TtsVoiceDiffCallback()) {
         inner class TtsViewHolder(
-            private val voiceView: View,
-        ) : RecyclerView.ViewHolder(voiceView) {
-            private val textViewTop = voiceView.findViewById<TextView>(R.id.mtrl_list_item_secondary_text)
-            private val textViewBottom = voiceView.findViewById<TextView>(R.id.mtrl_list_item_text)
-            private val actionButton = voiceView.findViewById<MaterialButton>(R.id.action_button)
-            private val localOrOffline = voiceView.findViewById<MaterialButton>(R.id.local_or_network)
-
+            private val binding: DialogTtsVoicesVoiceBinding,
+        ) : RecyclerView.ViewHolder(binding.root) {
             fun bind(voice: AndroidTtsVoice) {
-                textViewTop.text = voice.normalizedLocale.displayName
-                textViewBottom.text = voice.tryDisplayLocalizedName()
+                binding.textViewTop.text = voice.normalizedLocale.displayName
+                binding.textViewBottom.text = voice.tryDisplayLocalizedName()
 
-                localOrOffline.setIconResource(
+                binding.localOrNetwork.setIconResource(
                     if (voice.isNetworkConnectionRequired) R.drawable.baseline_wifi_24 else R.drawable.baseline_offline_pin_24,
                 )
                 if (voice.unavailable()) {
-                    actionButton.setOnClickListener { openTtsSettings() }
-                    actionButton.setIconResource(R.drawable.ic_file_download_white)
+                    binding.actionButton.setOnClickListener { openTtsSettings() }
+                    binding.actionButton.setIconResource(R.drawable.ic_file_download_white)
                 } else {
-                    actionButton.setIconResource(R.drawable.baseline_content_copy_24)
-                    actionButton.setOnClickListener { viewModel.copyToClipboard(voice) }
-                    voiceView.setOnClickListener { viewModel.playVoice(voice) }
+                    binding.actionButton.setIconResource(R.drawable.baseline_content_copy_24)
+                    binding.actionButton.setOnClickListener { viewModel.copyToClipboard(voice) }
+                    binding.root.setOnClickListener { viewModel.playVoice(voice) }
                 }
 
-                voiceView.setOnClickListener { viewModel.playVoice(voice) }
+                binding.root.setOnClickListener { viewModel.playVoice(voice) }
             }
         }
 
@@ -252,8 +246,9 @@ class TtsVoicesDialogFragment : DialogFragment() {
             parent: ViewGroup,
             viewType: Int,
         ): TtsViewHolder {
-            val v = LayoutInflater.from(parent.context).inflate(R.layout.dialog_tts_voices_voice, parent, false)
-            return TtsViewHolder(v)
+            val layoutInflater = LayoutInflater.from(parent.context)
+            val binding = DialogTtsVoicesVoiceBinding.inflate(layoutInflater, parent, false)
+            return TtsViewHolder(binding)
         }
 
         override fun onBindViewHolder(
