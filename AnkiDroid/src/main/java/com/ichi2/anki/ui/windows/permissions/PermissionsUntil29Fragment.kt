@@ -33,7 +33,7 @@ import com.ichi2.utils.Permissions
  *   Used for saving the collection in a public directory
  *   which isn't deleted when the app is uninstalled
  */
-class PermissionsUntil29Fragment : PermissionsFragment(R.layout.permissions_until_29) {
+class PermissionsUntil29Fragment : PermissionsFragment() {
     private val storageLauncher =
         registerForActivityResult(
             ActivityResultContracts.RequestMultiplePermissions(),

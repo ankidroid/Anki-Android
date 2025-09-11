@@ -20,7 +20,6 @@ import android.net.Uri
 import android.os.Build
 import android.provider.Settings
 import androidx.activity.result.ActivityResultLauncher
-import androidx.annotation.LayoutRes
 import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
 import androidx.core.os.bundleOf
@@ -35,9 +34,7 @@ import timber.log.Timber
  *
  * @see PermissionsActivity
  */
-abstract class PermissionsFragment(
-    @LayoutRes contentLayoutId: Int,
-) : Fragment(contentLayoutId) {
+abstract class PermissionsFragment : Fragment() {
     /**
      * All the [PermissionsItem]s in the fragment.
      * Must be called ONLY AFTER [onCreateView]
