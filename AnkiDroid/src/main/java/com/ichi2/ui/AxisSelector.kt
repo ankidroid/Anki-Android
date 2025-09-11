@@ -60,7 +60,7 @@ class AxisSelector : LinearLayout {
     private var onExtremitySelectedListener: ((Binding.AxisButtonBinding) -> Unit)? = null
 
     init {
-        val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val inflater = LayoutInflater.from(context)
         inflater.inflate(R.layout.axis_display, this, true)
         name = findViewById(R.id.axis_name)
         minButton = findViewById(R.id.select_min_extremity)
