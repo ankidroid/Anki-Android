@@ -28,14 +28,14 @@
         android:orientation="vertical">
 
         <CheckBox
-            android:id="@+id/export_extras_collection_media"
+            android:id="@+id/collection_include_media"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="true"
             tools:text="Include media" />
 
         <CheckBox
-            android:id="@+id/export_legacy_checkbox_collection"
+            android:id="@+id/collection_export_legacy"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:checked="false"
@@ -55,25 +55,25 @@
             android:orientation="vertical">
 
             <CheckBox
-                android:id="@+id/export_apkg_schedule"
+                android:id="@+id/apkg_include_schedule"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:checked="true" />
 
             <CheckBox
-                android:id="@+id/export_apkg_deck_configs"
+                android:id="@+id/apkg_include_deck_configs"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:checked="false" />
 
             <CheckBox
-                android:id="@+id/export_apkg_media"
+                android:id="@+id/apkg_include_media"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:checked="true" />
 
             <CheckBox
-                android:id="@+id/export_legacy_checkbox_apkg"
+                android:id="@+id/apkg_export_legacy"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:checked="false"
@@ -178,7 +178,7 @@
         android:minHeight="?listPreferredItemHeight">
 
         <Spinner
-            android:id="@+id/decks_selector"
+            android:id="@+id/deck_selector"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="48dp"
