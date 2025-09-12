@@ -39,7 +39,7 @@ class AllPermissionsExplanationActivity : AnkiActivity() {
             return
         }
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.all_permissions_explanation_activity)
+        setContentView(R.layout.activity_all_permissions_explanation)
         setTransparentStatusBar()
 
         supportFragmentManager.commit {
