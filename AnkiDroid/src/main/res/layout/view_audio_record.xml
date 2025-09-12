@@ -24,7 +24,7 @@
     >
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/recording_status_icon"
+        android:id="@+id/recording_display_icon"
         android:layout_width="16dp"
         android:layout_height="16dp"
         android:layout_marginStart="4dp"
@@ -40,7 +40,7 @@
         android:id="@+id/chronometer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@id/recording_status_icon"
+        app:layout_constraintStart_toEndOf="@id/recording_display_icon"
         app:layout_constraintTop_toTopOf="@id/recordButton"
         app:layout_constraintBottom_toBottomOf="parent"
         android:elevation="2dp"
