@@ -28,14 +28,14 @@
         android:layout_height="0dp"
         android:layoutDirection="ltr"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/spinner_gesture"
+        app:layout_constraintBottom_toTopOf="@id/gesture_spinner"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintDimensionRatio="1:1"
         tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout"/>
 
     <Spinner
-        android:id="@+id/spinner_gesture"
+        android:id="@+id/gesture_spinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:dropDownWidth="wrap_content"
