@@ -7,7 +7,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <CheckBox
-        android:id="@+id/card_checkbox"
+        android:id="@+id/row_selected_check_box"
         android:focusable="false"
         android:focusableInTouchMode="false"
         android:layout_width="wrap_content"
