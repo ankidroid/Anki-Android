@@ -734,7 +734,7 @@ class ReviewerFragment :
             Prefs.cardZoom.let {
                 if (it == 100) return@let
                 val scale = it / 100.0
-                val script = """document.getElementById("qa").style.transform = `scale($scale)`;"""
+                val script = """document.body.style.zoom = `$scale`;"""
                 view?.evaluateJavascript(script, null)
             }
         }
