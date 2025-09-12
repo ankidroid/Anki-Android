@@ -26,7 +26,6 @@ import android.view.WindowManager
 import android.widget.Filter
 import android.widget.Filterable
 import android.widget.ImageButton
-import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
@@ -43,6 +42,8 @@ import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
+import com.ichi2.anki.databinding.DeckPickerDialogListItemBinding
+import com.ichi2.anki.databinding.DialogDeckPickerBinding
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DecksArrayAdapter.DecksFilter
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.DeckId
@@ -74,6 +75,7 @@ import java.util.Locale
 @NeedsTest("test the ordering of decks in search page in the dialog")
 @NeedsTest("test syncing the status of collapsing deck with teh deckPicker")
 open class DeckSelectionDialog : AnalyticsDialogFragment() {
+    private lateinit var binding: DialogDeckPickerBinding
     private var dialog: AlertDialog? = null
     private lateinit var expandImage: Drawable
     private lateinit var collapseImage: Drawable
@@ -96,11 +98,8 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val dialogView =
-            LayoutInflater
-                .from(activity)
-                .inflate(R.layout.deck_picker_dialog, null, false)
-        val summary = dialogView.findViewById<TextView>(R.id.deck_picker_dialog_summary)
+        binding = DialogDeckPickerBinding.inflate(LayoutInflater.from(context))
+        val summary = binding.summary
         val arguments = requireArguments()
         if (getSummaryMessage(arguments) == null) {
             summary.visibility = View.GONE
@@ -108,20 +107,19 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
             summary.visibility = View.VISIBLE
             summary.text = getSummaryMessage(arguments)
         }
-        val recyclerView: RecyclerView = dialogView.findViewById(R.id.deck_picker_dialog_list)
-        recyclerView.requestFocus()
+        binding.list.requestFocus()
         val deckLayoutManager: RecyclerView.LayoutManager = LinearLayoutManager(requireActivity())
-        recyclerView.layoutManager = deckLayoutManager
-        val dividerItemDecoration = DividerItemDecoration(recyclerView.context, DividerItemDecoration.VERTICAL)
-        recyclerView.addItemDecoration(dividerItemDecoration)
+        binding.list.layoutManager = deckLayoutManager
+        val dividerItemDecoration = DividerItemDecoration(binding.list.context, DividerItemDecoration.VERTICAL)
+        binding.list.addItemDecoration(dividerItemDecoration)
         val decks: List<SelectableDeck> = getDeckNames(arguments)
         val adapter = DecksArrayAdapter(decks)
-        recyclerView.adapter = adapter
-        adjustToolbar(dialogView, adapter)
+        binding.list.adapter = adapter
+        adjustToolbar(binding.root, adapter)
         dialog =
             AlertDialog.Builder(requireActivity()).create {
                 negativeButton(R.string.dialog_cancel)
-                customView(view = dialogView)
+                customView(view = binding.root)
                 if (arguments.getBoolean(KEEP_RESTORE_DEFAULT_BUTTON)) {
                     positiveButton(R.string.restore_default) {
                         onDeckSelected(null)
@@ -150,7 +148,7 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
         dialogView: View,
         adapter: DecksArrayAdapter,
     ) {
-        val toolbar: Toolbar = dialogView.findViewById(R.id.deck_picker_dialog_toolbar)
+        val toolbar: Toolbar = binding.toolbar
         toolbar.title = title
         toolbar.inflateMenu(R.menu.deck_picker_dialog_menu)
         val searchItem = toolbar.menu.findItem(R.id.deck_picker_dialog_action_filter)
@@ -259,27 +257,26 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
     ) : RecyclerView.Adapter<DecksArrayAdapter.ViewHolder>(),
         Filterable {
         inner class ViewHolder(
-            deckHolder: View,
-        ) : RecyclerView.ViewHolder(deckHolder) {
+            private val binding: DeckPickerDialogListItemBinding,
+        ) : RecyclerView.ViewHolder(binding.root) {
             private var currentDeck: SelectableDeck? = null
 
-            private val deckTextView: TextView = deckHolder.findViewById(R.id.deckpicker_name)
-            val expander: ImageButton = deckHolder.findViewById(R.id.deckpicker_expander)
-            val indentView: ImageButton = deckHolder.findViewById(R.id.deckpicker_indent)
+            val expander: ImageButton = binding.expander
+            val indentView: ImageButton = binding.indent
 
             fun setDeck(deck: SelectableDeck) {
-                deckTextView.text = deck.getDisplayName(requireContext())
+                binding.deckTextView.text = deck.getDisplayName(requireContext())
                 currentDeck = deck
             }
 
             init {
-                deckHolder.setOnClickListener {
+                binding.root.setOnClickListener {
                     currentDeck?.let { selectDeckAndClose(it) }
                 }
                 expander.setOnClickListener {
                     currentDeck?.let { toggleExpansion(it) }
                 }
-                deckHolder.setOnContextAndLongClickListener {
+                binding.root.setOnContextAndLongClickListener {
                     // creating sub deck with parent deck path
                     currentDeck?.let { deck ->
                         if (deck is SelectableDeck.Deck) {
@@ -318,11 +315,9 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
             parent: ViewGroup,
             viewType: Int,
         ): ViewHolder {
-            val v =
-                LayoutInflater
-                    .from(parent.context)
-                    .inflate(R.layout.deck_picker_dialog_list_item, parent, false)
-            return ViewHolder(v)
+            val layoutInflater = LayoutInflater.from(context)
+            val binding = DeckPickerDialogListItemBinding.inflate(layoutInflater, parent, false)
+            return ViewHolder(binding)
         }
 
         override fun onBindViewHolder(
