@@ -53,7 +53,7 @@
                 android:paddingHorizontal="12dp">
 
                 <ImageView
-                    android:id="@+id/about_app_logo"
+                    android:id="@+id/app_logo"
                     android:layout_width="96dp"
                     android:layout_height="96dp"
                     app:srcCompat="@drawable/ankidroid_logo" />
@@ -66,7 +66,7 @@
                     app:tint="?android:attr/textColor" />
 
                 <TextView
-                    android:id="@+id/about_version"
+                    android:id="@+id/version"
                     style="?android:textAppearanceSmall"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -74,21 +74,21 @@
                     tools:text="2.x" />
 
                 <TextView
-                    android:id="@+id/about_build_date"
+                    android:id="@+id/build_date"
                     style="?android:textAppearanceSmall"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     tools:text="13 Apr 2023" />
 
                 <TextView
-                    android:id="@+id/about_backend"
+                    android:id="@+id/backend_version"
                     style="?android:textAppearanceSmall"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     tools:text="(anki 23.10.1 / be74babb0)" />
 
                 <TextView
-                    android:id="@+id/about_fsrs"
+                    android:id="@+id/fsrs_version"
                     style="?android:textAppearanceSmall"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -104,7 +104,7 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/about_contributors_description"
+                    android:id="@+id/contributors_description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="4dp"
@@ -122,7 +122,7 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/about_license_description"
+                    android:id="@+id/license_description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="4dp"
@@ -139,7 +139,7 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/about_donate_description"
+                    android:id="@+id/donate_description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="4dp"
@@ -153,21 +153,21 @@
                     android:orientation="vertical"
                     android:gravity="center">
                     <com.google.android.material.button.MaterialButton
-                        android:id="@+id/about_rate"
+                        android:id="@+id/rate_anki_droid"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/info_rate"
                         style="@style/Widget.Material3.Button.TextButton"
                         android:textColor="?attr/colorAccent" />
                     <com.google.android.material.button.MaterialButton
-                        android:id="@+id/about_open_changelog"
+                        android:id="@+id/open_changelog"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/open_changelog"
                         style="@style/Widget.Material3.Button.TextButton"
                         android:textColor="?attr/colorAccent"/>
                     <com.google.android.material.button.MaterialButton
-                        android:id="@+id/about_copy_debug"
+                        android:id="@+id/copy_debug_info"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/feedback_copy_debug"
