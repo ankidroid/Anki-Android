@@ -25,7 +25,7 @@
 
     <!--Dialog Message-->
     <com.ichi2.ui.FixedTextView
-        android:id="@+id/dialog_message"
+        android:id="@+id/message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingStart="@dimen/side_margin"
@@ -36,7 +36,7 @@
 
     <!--Dialog ListItem-->
     <ListView
-        android:id="@+id/dialog_list_view"
+        android:id="@+id/list_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clipToPadding="false"
