@@ -29,7 +29,6 @@ import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.TextView
 import androidx.annotation.ColorInt
-import androidx.annotation.IdRes
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.widget.ThemeUtils
 import androidx.core.graphics.drawable.toDrawable
@@ -40,6 +39,8 @@ import com.ichi2.anki.AnkiDroidApp.Companion.sharedPrefs
 import com.ichi2.anki.Flag
 import com.ichi2.anki.R
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.common.utils.ext.replaceWith
+import com.ichi2.anki.databinding.BrowserColumnCellBinding
 import com.ichi2.anki.databinding.CardItemBrowserBinding
 import com.ichi2.anki.utils.android.darkenColor
 import com.ichi2.anki.utils.android.lightenColorAbsolute
@@ -86,23 +87,15 @@ class BrowserMultiColumnAdapter(
                 field = value
                 // remove the past set of columns
                 binding.root.removeChildren { it !is CheckBox }
-                columnViews.clear()
 
                 val layoutInflater = LayoutInflater.from(context)
 
-                // inflates and returns the inflated view
-                fun inflate(
-                    @IdRes id: Int,
-                ) = layoutInflater.inflate(id, binding.root, false).apply {
-                    binding.root.addView(this)
-                }
-
                 // recreate the columns and the dividers
-                (1..value).map { index ->
-                    inflate(R.layout.browser_column_cell).apply {
-                        columnViews.add(this as TextView)
-                    }
-                }
+                columnViews.replaceWith(
+                    (1..value).map { index ->
+                        BrowserColumnCellBinding.inflate(layoutInflater, binding.root, true).root
+                    },
+                )
 
                 columnViews.forEach { it.setupTextSize() }
             }
