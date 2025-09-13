@@ -34,6 +34,7 @@ data class CardInfoDestination(
             listOf(
                 simplifiedTitle.toSentenceCase(context, R.string.sentence_card_stats_current_card_study),
                 simplifiedTitle.toSentenceCase(context, R.string.sentence_card_stats_current_card_browse),
+                simplifiedTitle.toSentenceCase(context, R.string.sentence_card_stats_previous_card_study),
             )
         return PageFragment.getIntent(
             context,
