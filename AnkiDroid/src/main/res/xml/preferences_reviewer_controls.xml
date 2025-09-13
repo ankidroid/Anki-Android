@@ -95,6 +95,11 @@
         <com.ichi2.preferences.ReviewerControlPreference
             android:key="@string/card_info_command_key"
             android:title="@string/card_info_title"
+            android:icon="@drawable/ic_dialog_info"
+            />
+        <com.ichi2.preferences.ReviewerControlPreference
+            android:key="@string/previous_card_info_command_key"
+            android:title="@string/previous_card_info_title"
             android:icon="@drawable/ic_outline_info_24"
             />
     </PreferenceCategory>

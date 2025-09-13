@@ -1776,6 +1776,7 @@ abstract class AbstractFlashcardViewer :
             ViewerCommand.TOGGLE_FLAG_PURPLE,
             ViewerCommand.UNSET_FLAG,
             ViewerCommand.CARD_INFO,
+            ViewerCommand.PREVIOUS_CARD_INFO,
             ViewerCommand.ADD_NOTE,
             ViewerCommand.RESCHEDULE_NOTE,
             ViewerCommand.TOGGLE_AUTO_ADVANCE,
