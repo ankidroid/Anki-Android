@@ -878,10 +878,8 @@ class CardBrowserFragment :
         dialog.requireArguments().putBoolean(CHANGE_DECK_KEY, true)
         dialog.deckSelectionListener =
             DeckSelectionListener { deck: SelectableDeck? ->
-                {
-                    require(deck is SelectableDeck.Deck) { "Expected non-null deck" }
-                    moveSelectedCardsToDeck(deck.deckId)
-                }
+                require(deck is SelectableDeck.Deck) { "Expected non-null deck" }
+                moveSelectedCardsToDeck(deck.deckId)
             }
         return dialog
     }
