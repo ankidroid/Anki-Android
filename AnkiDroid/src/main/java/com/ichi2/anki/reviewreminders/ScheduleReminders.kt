@@ -276,7 +276,7 @@ class ScheduleReminders :
          * Shows an error dialog if [SerializationException]s or [IllegalArgumentException]s are thrown.
          * Shows a progress dialog if database access takes a long time.
          */
-        private suspend fun <T> Fragment.catchDatabaseExceptions(block: () -> T): T? =
+        private suspend fun <T> Fragment.catchDatabaseExceptions(block: suspend () -> T): T? =
             try {
                 Timber.d("Attempting ReviewRemindersDatabase operation")
                 withProgress { block() }
