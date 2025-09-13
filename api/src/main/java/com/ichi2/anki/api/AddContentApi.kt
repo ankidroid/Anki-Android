@@ -298,13 +298,6 @@ public class AddContentApi(
         return numRowsUpdated > 0
     }
 
-    /**
-     * Get the html that would be generated for the specified note type and field list
-     * @param flds array of field values for the note. Length must be the same as num. fields in mid.
-     * @param mid id for the note type to be used
-     * @return list of front &amp; back pairs for each card which contain the card HTML, or null if there was a problem
-     * @throws SecurityException if READ_WRITE_PERMISSION not granted (e.g. due to install order bug)
-     */
     public fun previewNewNote(
         mid: Long,
         flds: Array<String>,
