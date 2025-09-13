@@ -69,6 +69,7 @@ enum class ViewerAction(
     STATISTICS(R.id.action_statistics, R.drawable.ic_bar_chart_black, R.string.empty_string, DISABLED),
     DECK_OPTIONS(R.id.action_deck_options, R.drawable.ic_tune_white, R.string.menu__deck_options, DISABLED),
     CARD_INFO(R.id.action_card_info, R.drawable.ic_dialog_info, R.string.card_info_title, DISABLED),
+    PREVIOUS_CARD_INFO(R.id.action_previous_card_info, R.drawable.ic_outline_info_24, R.string.empty_string, DISABLED),
     ADD_NOTE(R.id.action_add_note, R.drawable.ic_add, R.string.menu_add_note, DISABLED),
     TAG(R.id.action_edit_tags, R.drawable.ic_tag, R.string.menu_edit_tags, DISABLED),
     RESCHEDULE_NOTE(R.id.action_set_due_date, R.drawable.ic_reschedule, titleRes = R.string.empty_string, DISABLED),
@@ -144,6 +145,7 @@ enum class ViewerAction(
             BROWSE -> listOf(keycode(KeyEvent.KEYCODE_B))
             STATISTICS -> listOf(keycode(KeyEvent.KEYCODE_T))
             PLAY_MEDIA -> listOf(keycode(KeyEvent.KEYCODE_R))
+            PREVIOUS_CARD_INFO -> listOf(keycode(KeyEvent.KEYCODE_I, ModifierKeys(shift = false, ctrl = true, alt = true)))
             TOGGLE_FLAG_RED ->
                 listOf(
                     keycode(KeyEvent.KEYCODE_1, ctrl()),
@@ -248,6 +250,7 @@ enum class ViewerAction(
             BROWSE -> TR.qtMiscBrowse()
             STATISTICS -> TR.statisticsTitle()
             RESCHEDULE_NOTE -> TR.actionsSetDueDate().toSentenceCase(context, R.string.sentence_set_due_date)
+            PREVIOUS_CARD_INFO -> TR.actionsPreviousCardInfo().toSentenceCase(context, R.string.sentence_actions_previous_card_info)
             else -> context.getString(titleRes)
         }
 
