@@ -51,7 +51,7 @@ class AnkiDroidWidgetSmall : AnalyticsWidgetProvider() {
     override fun performUpdate(
         context: Context,
         appWidgetManager: AppWidgetManager,
-        appWidgetIds: IntArray,
+        appWidgetIds: AppWidgetIds,
         usageAnalytics: UsageAnalytics,
     ) {
         WidgetStatus.updateInBackground(context)
@@ -208,7 +208,7 @@ class AnkiDroidWidgetSmall : AnalyticsWidgetProvider() {
             cls: Class<*>,
         ) {
             val manager = getAppWidgetManager(context) ?: return
-            val ids = manager.getAppWidgetIds(ComponentName(context, cls))
+            val ids = manager.getAppWidgetIdsEx(ComponentName(context, cls))
             for (id in ids) {
                 val scale = context.resources.displayMetrics.density
                 val options = manager.getAppWidgetOptions(id)

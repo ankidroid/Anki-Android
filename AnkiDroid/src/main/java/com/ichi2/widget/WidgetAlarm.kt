@@ -22,7 +22,6 @@ import android.appwidget.AppWidgetManager
 import android.content.Context
 import android.content.Intent
 import android.os.SystemClock
-import com.ichi2.widget.deckpicker.AppWidgetId
 import timber.log.Timber
 import kotlin.time.Duration.Companion.minutes
 
@@ -58,11 +57,11 @@ private fun getPendingIntent(
     val intent =
         Intent(context, widgetClass).apply {
             action = ACTION_UPDATE_WIDGET
-            putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
+            putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId.id)
         }
     return PendingIntent.getBroadcast(
         context,
-        appWidgetId,
+        appWidgetId.id,
         intent,
         if (create) {
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
