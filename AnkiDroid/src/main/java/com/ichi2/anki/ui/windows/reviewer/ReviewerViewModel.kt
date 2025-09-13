@@ -15,6 +15,7 @@
  */
 package com.ichi2.anki.ui.windows.reviewer
 
+import androidx.lifecycle.SavedStateHandle
 import anki.collection.OpChanges
 import anki.collection.OpChangesAfterUndo
 import anki.frontend.SetSchedulingStatesRequest
@@ -63,6 +64,7 @@ import com.ichi2.anki.ui.windows.reviewer.autoadvance.AutoAdvance
 import com.ichi2.anki.utils.CollectionPreferences
 import com.ichi2.anki.utils.Destination
 import com.ichi2.anki.utils.ext.answerCard
+import com.ichi2.anki.utils.ext.cardStatsNoCardClean
 import com.ichi2.anki.utils.ext.flag
 import com.ichi2.anki.utils.ext.getLongOrNull
 import com.ichi2.anki.utils.ext.setUserFlagForCards
@@ -74,8 +76,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import org.intellij.lang.annotations.Language
 import timber.log.Timber
 
-class ReviewerViewModel :
-    CardViewerViewModel(),
+class ReviewerViewModel(
+    val savedStateHandle: SavedStateHandle,
+) : CardViewerViewModel(),
     ChangeManager.Subscriber,
     BindingProcessor<ReviewerBinding, ViewerAction> {
     private var queueState: Deferred<CurrentQueueState?> =
@@ -248,6 +251,18 @@ class ReviewerViewModel :
         val cardId = currentCard.await().id
         val destination = CardInfoDestination(cardId, TR.cardStatsCurrentCard(TR.decksStudy()))
         Timber.i("Launching 'card info' for card %d", cardId)
+        destinationFlow.emit(destination)
+    }
+
+    private suspend fun emitPreviousCardInfoDestination() {
+        val previousCardId: CardId? = savedStateHandle.getLongOrNull(KEY_PREVIOUS_CARD_ID)
+        if (previousCardId == null) {
+            Timber.i("No previous answered card found, ignoring request for 'previous card info'")
+            actionFeedbackFlow.emit(TR.cardStatsNoCardClean())
+            return
+        }
+        val destination = CardInfoDestination(previousCardId, TR.cardStatsPreviousCard(TR.decksStudy()))
+        Timber.i("Launching 'previous card info' for card %d", previousCardId)
         destinationFlow.emit(destination)
     }
 
@@ -464,6 +479,7 @@ class ReviewerViewModel :
 
             undoableOp(handler = this) { sched.answerCard(answer) }
             answerFeedbackFlow.emit(rating)
+            savedStateHandle[KEY_PREVIOUS_CARD_ID] = card.id
 
             val wasLeech = withCol { sched.stateIsLeech(answer.newState) }
             if (wasLeech) {
@@ -640,6 +656,7 @@ class ReviewerViewModel :
             when (action) {
                 ViewerAction.ADD_NOTE -> emitAddNoteDestination()
                 ViewerAction.CARD_INFO -> emitCardInfoDestination()
+                ViewerAction.PREVIOUS_CARD_INFO -> emitPreviousCardInfoDestination()
                 ViewerAction.DECK_OPTIONS -> emitDeckOptionsDestination()
                 ViewerAction.EDIT -> emitEditNoteDestination()
                 ViewerAction.TAG -> editNoteTags()
@@ -739,5 +756,9 @@ class ReviewerViewModel :
                 }
             }
         }
+    }
+
+    companion object {
+        private const val KEY_PREVIOUS_CARD_ID = "key_previous_card_id"
     }
 }
