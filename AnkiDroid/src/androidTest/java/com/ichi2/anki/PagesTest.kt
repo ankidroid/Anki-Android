@@ -88,13 +88,13 @@ fun PagesTest.getStatistics(context: Context): Intent = Statistics.getIntent(con
 fun PagesTest.getCardInfo(context: Context): Intent =
     addNoteUsingBasicNoteType().firstCard(col).let { card ->
         this.card = card
-        CardInfoDestination(card.id).toIntent(context)
+        CardInfoDestination(card.id, "Unused").toIntent(context)
     }
 
 fun PagesTest.getCongratsPage(context: Context): Intent =
     addNoteUsingBasicNoteType().firstCard(col).let { card ->
         this.card = card
-        CardInfoDestination(card.id).toIntent(context)
+        CardInfoDestination(card.id, "Unused").toIntent(context)
     }
 
 fun PagesTest.getDeckOptions(context: Context): Intent =

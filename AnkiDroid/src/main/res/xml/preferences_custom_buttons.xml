@@ -97,6 +97,13 @@ TODO: Add a unit test
             android:title="@string/card_info_title"
             app:useSimpleSummaryProvider="true"/>
         <ListPreference
+            android:defaultValue="3"
+            android:entries="@array/custom_button_labels"
+            android:entryValues="@array/custom_button_values"
+            android:key="@string/custom_button_previous_card_info_key"
+            android:title="@string/previous_card_info_title"
+            app:useSimpleSummaryProvider="true"/>
+        <ListPreference
             android:defaultValue="0"
             android:entries="@array/custom_button_labels"
             android:entryValues="@array/custom_button_values"

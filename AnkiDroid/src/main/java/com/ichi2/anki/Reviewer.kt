@@ -157,6 +157,7 @@ open class Reviewer :
     private lateinit var colorPalette: LinearLayout
     private var toggleStylus = false
     private var isEraserMode = false
+    private var previousCardId: CardId? = null
 
     // A flag that determines if the SchedulingStates in CurrentQueueState are
     // safe to persist in the database when answering a card. This is used to
@@ -248,6 +249,9 @@ open class Reviewer :
         }
         startLoadingCollection()
         registerOnForgetHandler { listOf(currentCardId!!) }
+        if (savedInstanceState != null && savedInstanceState.containsKey(KEY_PREVIOUS_CARD_ID)) {
+            previousCardId = savedInstanceState.getLong(KEY_PREVIOUS_CARD_ID)
+        }
     }
 
     override fun onPause() {
@@ -264,6 +268,11 @@ open class Reviewer :
         if (typeAnswer?.autoFocusEditText() == true) {
             answerField?.focusWithKeyboard()
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        previousCardId?.let { outState.putLong(KEY_PREVIOUS_CARD_ID, it) }
     }
 
     protected val flagToDisplay: Flag
@@ -531,6 +540,10 @@ open class Reviewer :
                 Timber.i("Card Viewer:: Card Info")
                 openCardInfo()
             }
+            R.id.action_previous_card_info -> {
+                Timber.i("Card Viewer:: Previous Card Info")
+                openPreviousCardInfo()
+            }
             R.id.user_action_1 -> userAction(1)
             R.id.user_action_2 -> userAction(2)
             R.id.user_action_3 -> userAction(3)
@@ -796,7 +809,21 @@ open class Reviewer :
             return
         }
         Timber.i("opening card info")
-        val intent = CardInfoDestination(currentCard!!.id).toIntent(this)
+        val intent = CardInfoDestination(currentCard!!.id, TR.cardStatsCurrentCard(TR.decksStudy())).toIntent(this)
+        val animation = getAnimationTransitionFromGesture(fromGesture)
+        intent.putExtra(FINISH_ANIMATION_EXTRA, getInverseTransition(animation) as Parcelable)
+        startActivityWithAnimation(intent, animation)
+    }
+
+    @NeedsTest("Starting animation from swipe is inverse to the finishing one")
+    protected fun openPreviousCardInfo(fromGesture: Gesture? = null) {
+        if (previousCardId == null) {
+            val message = TR.cardStatsNoCard().replace(Regex("[().]"), "")
+            showSnackbar(message, Snackbar.LENGTH_SHORT)
+            return
+        }
+        Timber.i("opening previous card info")
+        val intent = CardInfoDestination(previousCardId!!, TR.cardStatsPreviousCard(TR.decksStudy())).toIntent(this)
         val animation = getAnimationTransitionFromGesture(fromGesture)
         intent.putExtra(FINISH_ANIMATION_EXTRA, getInverseTransition(animation) as Parcelable)
         startActivityWithAnimation(intent, animation)
@@ -1189,13 +1216,15 @@ open class Reviewer :
 
     override suspend fun answerCardInner(rating: Rating) {
         val state = queueState!!
-        Timber.d("answerCardInner: ${currentCard!!.id} $rating")
+        val cardId = currentCard!!.id
+        Timber.d("answerCardInner: $cardId $rating")
         var wasLeech = false
         undoableOp(this) {
             sched.answerCard(state, rating).also {
                 wasLeech = sched.stateIsLeech(state.states.again)
             }
         }.also {
+            previousCardId = cardId
             if (rating == Rating.AGAIN && wasLeech) {
                 state.topCard.load(getColUnsafe)
                 val leechMessage: String =
@@ -1380,6 +1409,10 @@ open class Reviewer :
             }
             ViewerCommand.CARD_INFO -> {
                 openCardInfo(fromGesture)
+                return true
+            }
+            ViewerCommand.PREVIOUS_CARD_INFO -> {
+                openPreviousCardInfo(fromGesture)
                 return true
             }
             ViewerCommand.RESCHEDULE_NOTE -> {
@@ -1768,6 +1801,8 @@ open class Reviewer :
          * Bundle key for the deck id to review.
          */
         const val EXTRA_DECK_ID = "deckId"
+
+        private const val KEY_PREVIOUS_CARD_ID = "key_previous_card_id"
 
         private const val REQUEST_AUDIO_PERMISSION = 0
         private const val ANIMATION_DURATION = 200

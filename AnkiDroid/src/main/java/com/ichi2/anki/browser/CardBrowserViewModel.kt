@@ -322,7 +322,7 @@ class CardBrowserViewModel(
 
     suspend fun queryCardInfoDestination(): CardInfoDestination? {
         val firstSelectedCard = selectedRows.firstOrNull()?.toCardId(cardsOrNotes) ?: return null
-        return CardInfoDestination(firstSelectedCard)
+        return CardInfoDestination(firstSelectedCard, TR.cardStatsCurrentCard(TR.qtMiscBrowse()))
     }
 
     suspend fun queryDataForCardEdit(id: CardOrNoteId): CardId = id.toCardId(cardsOrNotes)
