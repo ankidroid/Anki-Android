@@ -242,6 +242,27 @@ class RecyclerFastScroller
                 },
             )
 
+            bar.setOnTouchListener { _, event ->
+                val recyclerView = recyclerView ?: return@setOnTouchListener false
+                val adapter = recyclerView.adapter ?: return@setOnTouchListener false
+
+                if (event.actionMasked == MotionEvent.ACTION_DOWN) {
+                    val barHeight = bar.height
+                    val touchY = event.y.coerceIn(0f, barHeight.toFloat())
+
+                    val scrollProportion = touchY / barHeight
+                    val targetPosition =
+                        (scrollProportion * adapter.itemCount)
+                            .toInt()
+                            .coerceIn(0, adapter.itemCount - 1)
+
+                    recyclerView.scrollToPosition(targetPosition)
+                    return@setOnTouchListener true
+                }
+
+                false
+            }
+
             translationX = hiddenTranslationX.toFloat()
         }
 
