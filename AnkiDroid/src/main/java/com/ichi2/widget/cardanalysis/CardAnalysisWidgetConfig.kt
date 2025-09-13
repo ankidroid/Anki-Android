@@ -57,7 +57,8 @@ import timber.log.Timber
 class CardAnalysisWidgetConfig :
     AnkiActivity(),
     DeckSelectionListener,
-    BaseSnackbarBuilderProvider {
+    BaseSnackbarBuilderProvider,
+    CardAnalysisWidgetFloatingActionMenu.CardAnalysisWidgetFloatingActionMenuListener {
     private var appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID
     lateinit var deckAdapter: WidgetConfigScreenAdapter
     private lateinit var cardAnalysisWidgetPreferences: CardAnalysisWidgetPreferences
@@ -81,7 +82,7 @@ class CardAnalysisWidgetConfig :
             return
         }
 
-        setContentView(R.layout.widget_deck_picker_config)
+        setContentView(R.layout.widget_card_analysis_config)
 
         cardAnalysisWidgetPreferences = CardAnalysisWidgetPreferences(this)
 
@@ -111,11 +112,7 @@ class CardAnalysisWidgetConfig :
                 }
 
                 initializeUIComponents()
-                // Show the Deck selection dialog only when there are no decks selected while opening the configuration screen.
-                val selectedDeckId = cardAnalysisWidgetPreferences.getSelectedDeckIdFromPreferences(appWidgetId)
-                if (selectedDeckId == null) {
-                    showDeckSelectionDialog()
-                }
+                // Don't automatically show deck selection dialog - let user choose when to add decks
             }
     }
 
@@ -138,27 +135,20 @@ class CardAnalysisWidgetConfig :
                 deckAdapter.removeDeck(deck.deckId)
                 showSnackbar(R.string.deck_removed_from_widget)
                 updateViewVisibility()
-                updateFabVisibility()
                 updateSubmitButtonText()
                 setUnsavedChanges(true)
             }
 
-        findViewById<RecyclerView>(R.id.recyclerViewSelectedDecks).apply {
+        findViewById<RecyclerView>(R.id.recycler_view).apply {
             layoutManager = LinearLayoutManager(context)
             adapter = this@CardAnalysisWidgetConfig.deckAdapter
         }
 
-        // Find and update the submit button text based on the initial deck selection state
-        val submitButton = findViewById<Button>(R.id.submit_button)
-        updateSubmitButtonText()
+        setupSaveButton()
 
-        submitButton.setOnClickListener {
-            finish() // Close the configuration screen when the button is clicked
-        }
-
-        findViewById<FloatingActionButton>(R.id.fabWidgetDeckPicker).setOnClickListener {
-            showDeckSelectionDialog()
-        }
+        // Initialize floating action menu for deck selection and theming options
+        // The menu is automatically set up and handles its own lifecycle
+        CardAnalysisWidgetFloatingActionMenu(findViewById(android.R.id.content), this)
 
         lifecycleScope.launch { updateViewWithSavedPreferences() }
 
@@ -183,6 +173,7 @@ class CardAnalysisWidgetConfig :
             deckAdapter.registerAdapterDataObserver(
                 object : RecyclerView.AdapterDataObserver() {
                     override fun onChanged() {
+                        updateSubmitButtonText()
                     }
                 },
             )
@@ -190,15 +181,40 @@ class CardAnalysisWidgetConfig :
         }
     }
 
+    /**
+     * Configures the "Save" button based on the number of selected decks.
+     *
+     * If no decks are selected: The button is hidden.
+     * If decks are selected: The button is visible with the text "Save".
+     * When clicked, the selected deck is saved, the widget is updated,
+     * and the activity is finished.
+     */
+    private fun setupSaveButton() {
+        val saveButton = findViewById<Button>(R.id.save_button)
+        val saveText = getString(R.string.save).uppercase()
+
+        saveButton.text = saveText
+        saveButton.setOnClickListener {
+            saveSelectedDecksToPreferencesCardAnalysisWidget()
+            hasUnsavedChanges = false
+            setUnsavedChanges(false)
+
+            val appWidgetManager = AppWidgetManager.getInstance(this)
+            CardAnalysisWidget.updateWidget(this, appWidgetManager, appWidgetId)
+
+            val resultValue = Intent().putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
+            setResult(RESULT_OK, resultValue)
+            finish()
+        }
+
+        // Initially set the visibility based on the number of selected decks
+        updateSubmitButtonText()
+    }
+
     /** Updates the text of the submit button based on the selected deck count. */
     private fun updateSubmitButtonText() {
-        val submitButton = findViewById<Button>(R.id.submit_button)
-        if (deckAdapter.itemCount > 0) {
-            submitButton.text = getString(R.string.dialog_cancel)
-            submitButton.visibility = View.VISIBLE
-        } else {
-            submitButton.visibility = View.GONE
-        }
+        val saveButton = findViewById<Button>(R.id.save_button)
+        saveButton.isVisible = deckAdapter.itemCount != 0
     }
 
     private fun showDiscardChangesDialog() {
@@ -228,19 +244,7 @@ class CardAnalysisWidgetConfig :
     }
 
     override val baseSnackbarBuilder: SnackbarBuilder = {
-        anchorView = findViewById<FloatingActionButton>(R.id.fabWidgetDeckPicker)
-    }
-
-    /** Updates the visibility of the FloatingActionButton based on the number of selected decks */
-    private fun updateFabVisibility() {
-        // Directly check if there's exactly one deck selected
-        val selectedDeckCount = deckAdapter.itemCount
-
-        // Find the FloatingActionButton by its ID
-        val fab = findViewById<FloatingActionButton>(R.id.fabWidgetDeckPicker)
-
-        // Make the FAB visible only if no deck is selected (allow adding one deck)
-        fab.isVisible = selectedDeckCount == 0
+        anchorView = findViewById<FloatingActionButton>(R.id.fab_main)
     }
 
     /** Updates the view according to the saved preference for appWidgetId.*/
@@ -251,7 +255,6 @@ class CardAnalysisWidgetConfig :
         val selectedDecks = decks.filter { it.deckId == selectedDeckId }
         selectedDecks.forEach { deckAdapter.addDeck(it) }
         updateViewVisibility()
-        updateFabVisibility()
         updateSubmitButtonText()
     }
 
@@ -295,29 +298,31 @@ class CardAnalysisWidgetConfig :
         }
         require(deck is SelectableDeck.Deck)
 
+        // Check if the deck is already selected
+        val isDeckAlreadySelected = deckAdapter.deckIds.contains(deck.deckId)
+        if (isDeckAlreadySelected) {
+            showSnackbar(getString(R.string.deck_already_selected_message))
+            return
+        }
+
         // Check if the deck is being added to a fully occupied selection
         if (deckAdapter.itemCount >= MAX_DECKS_ALLOWED) {
+            showSnackbar(resources.getQuantityString(R.plurals.deck_limit_reached, MAX_DECKS_ALLOWED, MAX_DECKS_ALLOWED))
             return
-        } else {
-            // Add the deck and update views
-            deckAdapter.addDeck(deck)
-            updateViewVisibility()
-            updateFabVisibility()
-            setUnsavedChanges(true)
-
-            // Save the selected deck immediately
-            saveSelectedDecksToPreferencesCardAnalysisWidget()
-            setUnsavedChanges(false)
-
-            // Update the widget with the new selected deck ID
-            cardAnalysisWidgetPreferences.getSelectedDeckIdFromPreferences(appWidgetId)
-            val appWidgetManager = AppWidgetManager.getInstance(this)
-            CardAnalysisWidget.updateWidget(this, appWidgetManager, appWidgetId)
-
-            val resultValue = Intent().putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
-            setResult(RESULT_OK, resultValue)
-            finish()
         }
+        // Add the deck and update views
+        deckAdapter.addDeck(deck)
+        updateViewVisibility()
+        updateSubmitButtonText()
+        setUnsavedChanges(true)
+
+        // Save the selected deck immediately
+        saveSelectedDecksToPreferencesCardAnalysisWidget()
+        setUnsavedChanges(false)
+
+        // Update the widget with the new selected deck ID
+        val appWidgetManager = AppWidgetManager.getInstance(this)
+        CardAnalysisWidget.updateWidget(this, appWidgetManager, appWidgetId)
     }
 
     /** Updates the visibility of the "no decks" placeholder and the widget configuration container */
@@ -325,8 +330,52 @@ class CardAnalysisWidgetConfig :
         val noDecksPlaceholder = findViewById<View>(R.id.no_decks_placeholder)
         val widgetConfigContainer = findViewById<View>(R.id.widgetConfigContainer)
 
-        noDecksPlaceholder.isVisible = deckAdapter.itemCount == 0
-        widgetConfigContainer.isVisible = deckAdapter.itemCount > 0
+        if (deckAdapter.itemCount > 0) {
+            noDecksPlaceholder.visibility = View.GONE
+            widgetConfigContainer.visibility = View.VISIBLE
+        } else {
+            noDecksPlaceholder.visibility = View.VISIBLE
+            widgetConfigContainer.visibility = View.GONE
+        }
+    }
+
+    /**
+     * Shows the theming dialog with single choice options.
+     */
+    fun showThemingDialog() {
+        val currentTheming = cardAnalysisWidgetPreferences.getDynamicThemingPreference(appWidgetId)
+        val currentIndex = if (currentTheming) 0 else 1
+
+        androidx.appcompat.app.AlertDialog
+            .Builder(this)
+            .setTitle(R.string.fab_theming_description)
+            .setSingleChoiceItems(
+                arrayOf("Dynamic", "AnkiDroid"),
+                currentIndex,
+            ) { dialog, which ->
+                val isDynamic = which == 0
+                cardAnalysisWidgetPreferences.saveDynamicThemingPreference(appWidgetId, isDynamic)
+
+                val message =
+                    if (isDynamic) {
+                        R.string.widget_theming_dynamic_enabled
+                    } else {
+                        R.string.widget_theming_static_enabled
+                    }
+                showSnackbar(message)
+
+                // Update widget with new theming
+                updateWidgetWithNewTheming()
+                dialog.dismiss()
+            }.show()
+    }
+
+    /**
+     * Updates the widget with new theming settings.
+     */
+    private fun updateWidgetWithNewTheming() {
+        val appWidgetManager = AppWidgetManager.getInstance(this)
+        CardAnalysisWidget.updateWidget(this, appWidgetManager, appWidgetId)
     }
 
     fun saveSelectedDecksToPreferencesCardAnalysisWidget() {
@@ -360,6 +409,7 @@ class CardAnalysisWidgetConfig :
                 }
 
                 cardAnalysisWidgetPreferences.deleteDeckData(appWidgetId)
+                cardAnalysisWidgetPreferences.deleteDynamicThemingPreference(appWidgetId)
             }
         }
 
@@ -369,6 +419,14 @@ class CardAnalysisWidgetConfig :
          */
         private const val MAX_DECKS_ALLOWED = 1
         private const val EXTRA_SELECTED_DECK_IDS = "card_analysis_widget_selected_deck_ids"
+    }
+
+    override fun onAddDeckClicked() {
+        showDeckSelectionDialog()
+    }
+
+    override fun onThemingClicked() {
+        showThemingDialog()
     }
 }
 

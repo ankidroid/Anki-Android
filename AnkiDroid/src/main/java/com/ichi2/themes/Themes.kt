@@ -2,6 +2,7 @@
  Copyright (c) 2011 Norbert Nagold <norbert.nagold@gmail.com>
  Copyright (c) 2015 Timothy Rae <perceptualchaos2@gmail.com>
  Copyright (c) 2021 Akshay Jadhav <jadhavakshay0701@gmail.com>
+ Copyright (c) 2025 Snowiee <xenonnn4w@gmail.com>
 
  This program is free software; you can redistribute it and/or modify it under
  the terms of the GNU General Public License as published by the Free Software
@@ -33,6 +34,7 @@ import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.ui.AppCompatPreferenceActivity
+import com.ichi2.widget.cardanalysis.CardAnalysisWidget
 import timber.log.Timber
 
 /**
@@ -76,6 +78,7 @@ object Themes {
                 context.sharedPrefs()
             }
 
+        val previousTheme = currentTheme
         currentTheme =
             if (themeFollowsSystem(prefs)) {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
@@ -90,6 +93,11 @@ object Themes {
                     AppCompatDelegate.setDefaultNightMode(mode)
                 }
             }
+
+        // Update widgets if theme changed
+        if (previousTheme != currentTheme) {
+            CardAnalysisWidget.updateCardAnalysisWidgets(context)
+        }
     }
 
     /**
