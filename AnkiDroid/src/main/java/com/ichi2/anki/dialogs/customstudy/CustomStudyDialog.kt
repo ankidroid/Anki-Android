@@ -38,6 +38,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.edit
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
+import androidx.core.view.updatePadding
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.setFragmentResult
 import androidx.lifecycle.lifecycleScope
@@ -248,6 +249,10 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
                 }.forEach { (menuItem, isItemEnabled) ->
                     (layoutInflater.inflate(android.R.layout.simple_list_item_1, container, false) as TextView)
                         .apply {
+                            updatePadding(
+                                top = 12.dp.toPx(requireContext()),
+                                bottom = 12.dp.toPx(requireContext()),
+                            )
                             text = menuItem.getTitle(requireContext().resources)
                             isEnabled = isItemEnabled
                             setBackgroundResource(ta.resourceId)

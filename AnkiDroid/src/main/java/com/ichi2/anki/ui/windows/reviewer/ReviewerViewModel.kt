@@ -26,6 +26,7 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.Flag
 import com.ichi2.anki.Reviewer
 import com.ichi2.anki.asyncIO
+import com.ichi2.anki.browser.BrowserDestination
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.libanki.Card
@@ -44,6 +45,7 @@ import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.pages.AnkiServer
 import com.ichi2.anki.pages.CardInfoDestination
 import com.ichi2.anki.pages.DeckOptionsDestination
+import com.ichi2.anki.pages.StatisticsDestination
 import com.ichi2.anki.preferences.reviewer.ViewerAction
 import com.ichi2.anki.previewer.CardViewerViewModel
 import com.ichi2.anki.previewer.TypeAnswer
@@ -251,6 +253,13 @@ class ReviewerViewModel :
         val isFiltered = withCol { decks.isFiltered(deckId) }
         val destination = DeckOptionsDestination(deckId, isFiltered)
         Timber.i("Launching 'deck options' for deck %d", deckId)
+        destinationFlow.emit(destination)
+    }
+
+    private suspend fun emitBrowseDestination() {
+        val deckId = withCol { decks.getCurrentId() }
+        val destination = BrowserDestination(deckId)
+        Timber.i("Launching 'browse options' for deck %d", deckId)
         destinationFlow.emit(destination)
     }
 
@@ -672,6 +681,8 @@ class ReviewerViewModel :
                 ViewerAction.USER_ACTION_9 -> userAction(9)
                 ViewerAction.SUSPEND_MENU -> suspendCard()
                 ViewerAction.BURY_MENU -> buryCard()
+                ViewerAction.STATISTICS -> destinationFlow.emit(StatisticsDestination())
+                ViewerAction.BROWSE -> emitBrowseDestination()
                 ViewerAction.FLAG_MENU -> {}
             }
         }
