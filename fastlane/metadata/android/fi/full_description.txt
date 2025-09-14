@@ -1,5 +1,3 @@
-Muista mitä tahansa AnkiDroidilla!
-
 AnkiDroid mahdollistaa muistikorttien oppimisen erittäin tehokkaasti näyttäen ne juuri ennen kuin ehdit unohtaa ne. It is fully compatible with the spaced repetition software Anki (including synchronization), which is available for Windows, Linux and macOS.
 
 Opiskele kaikenlaisia asioita missä ja milloin haluat. Käytä hyväksesi toimettomuus bussimatkalla, ruokakaupan jonossa tai muussa odotustilanteessa!

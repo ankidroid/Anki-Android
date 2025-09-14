@@ -1,5 +1,3 @@
-Zapamiętasz cokolwiek zechcesz z AnkiDroidem!
-
 AnkiDroid pomaga efektywnie zapamiętywać fiszki wyświetlając je tuż przed ich zapomnieniem. It is fully compatible with the spaced repetition software Anki (including synchronization), which is available for Windows, Linux and macOS.
 
 Ucz się czegokolwiek zechcesz, gdziekolwiek zechcesz. Wykorzystaj wolny czas w czasie dojazdów autobusem, w kolejce sklepowej lub kiedykolwiek musisz na coś czekać!

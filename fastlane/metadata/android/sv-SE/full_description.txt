@@ -1,5 +1,3 @@
-Lär dig vad som helst med AnkiDroid!
-
 AnkiDroid lär dig flashkort effektivt genom att visa dig korten precis innan du glömmer bort dem. It is fully compatible with the spaced repetition software Anki (including synchronization), which is available for Windows, Linux and macOS.
 
 Studera allt möjligt var och när du vill. Utnyttja inaktiv tid på bussen, i kön på affären eller när du väntar på något annat!

@@ -1,5 +1,3 @@
-በ አንኪድሮይድ ማንኛውንም ነገር ያስታውሱ!
-
 አንኪድሮይድ ከመርሳትዎ በፊት ፍላሽ ካርዶችን በማሳየት በብቃት ለመማር ያስችልዎታል። It is fully compatible with the spaced repetition software Anki (including synchronization), which is available for Windows, Linux and macOS.
 
 በፈለጉት ቦታ እና ጊዜ ሁሉንም ይነት ነገሮች ያጥኑ። በአውቶቡስ ጉዞዎት፣ በሱፐርማርኬት ወረፋ ወይም በማንኛውም ሌላ የሚያቆይ ሰልፍ ሁኔታ ያሉ ጊዜዎ አግባብ ባለው ሁኔታ ይጠቀሙ!

@@ -1,5 +1,3 @@
-Memorează orice cu AnkiDroid! 
- 
  AnkiDroid îți permite să înveți foarte eficient cu ajutorul cardurilor, prin afișarea lor chiar înainte de a uita informația conținută pe ele. Este perfect compatibil cu programul de repetiție spațiată Anki (incluzând sincronizarea), fiind disponibil pentru Windows, Linux și MacOS. 
  
  Învață și reține tot felul de lucruri, oriunde și oricând vrei. Fructifică timpul mort din călătoriile cu autobuzul, trenul, statul la coadă în supermarket-uri, bănci sau în orice altă situație asemănătoare! 

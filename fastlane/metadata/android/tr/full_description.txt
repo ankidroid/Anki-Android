@@ -1,5 +1,3 @@
-AnkiDroid'le istediğiniz şeyi ezberleyin!
-
 AnkiDroid bilgi kartlarını siz unutmadan hemen önce göstererek çok etkili bir biçimde öğrenmenizi sağlar. Windows, Linux ve MacOS için varolan aralıklı tekrarlama yazılımı Anki ile tamamen uyumludur (senkronizasyon dahil).
 
 Her türlü şeyi istediğiniz yerde, istediğiniz zaman çalışın. Otobüs yolculuklarında, market kuyruklarında veya başka herhangi bir bekleme durumunda boş zamanınızı iyi değerlendirin!

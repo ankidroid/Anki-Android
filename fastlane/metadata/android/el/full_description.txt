@@ -1,5 +1,3 @@
-Απομνημονεύστε οτιδήποτε με το AnkiDroid!
-
 Το AnkiDroid σάς επιτρέπει να απομνημονεύετε κάρτες πολύ αποτελεσματικά εμφανίζοντάς τες ακριβώς πριν να τις ξεχάσετε. It is fully compatible with the spaced repetition software Anki (including synchronization), which is available for Windows, Linux and macOS.
 
 Μελετήστε οτιδήποτε, οπουδήποτε και οποτεδήποτε επιθυμείτε. Αξιοποιήστε τον κενό χρόνο στο λεωφορείο, στην ουρά στο σούπερ μάρκετ ή σε οποιαδήποτε άλλη κατάσταση αναμονής!

@@ -1,5 +1,3 @@
-Memorizálj bármit az AnkiDroiddal!
-
 Az AnkiDroid segítségével hatékonyan tanulhatsz szókártyákat, mert akkor szedi elő újra őket, mielőtt elfelejtenéd. It is fully compatible with the spaced repetition software Anki (including synchronization), which is available for Windows, Linux and macOS.
 
 Tanulj meg akármit, bármikor, bárhol, ha rád tör a tanulhatnék! Használd ki jól a buszozás, sorban állás, vagy másféle várakozás miatt kieső időt!

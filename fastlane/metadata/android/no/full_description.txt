@@ -1,5 +1,3 @@
-Husk hva som helst med AnkiDroid!
-
 AnkiDroid lærer deg innholdet i spørrekort veldig effektivt ved å vise kortene rett før du holder på å glemme innholdet. It is fully compatible with the spaced repetition software Anki (including synchronization), which is available for Windows, Linux and macOS.
 
 Studer hva du vil når og hvor du vil. Utnytt dødtid når du pendler, står i kø på butikken, eller er i andre situasjoner hvor du må vente!

@@ -1,5 +1,3 @@
-Запомнете всичко с AnkiDroid!
-
 AnkiDroid ви позволява да научавате флашкарти много ефективно, като ги показва точно преди да ги забравите. It is fully compatible with the spaced repetition software Anki (including synchronization), which is available for Windows, Linux and macOS.
 
 Изучаване на всякакви неща, където и когато искате. Използвай времето за чакане по опашки, спирки и др!

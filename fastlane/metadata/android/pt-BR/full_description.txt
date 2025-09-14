@@ -1,5 +1,3 @@
-Memorize qualquer coisa com AnkiDroid!
-
 AnkiDroid permite que aprenda flashcards de forma muito eficiente, mostrando-os antes que você os esqueça. É totalmente compatível com o software de repetição espaçada Anki (incluindo sincronização), que está disponível para Windows, Linux e macOS.
 
 Estude qualquer tipo de coisa, onde e quando quiser. Aproveite bem os tempos ociosos em viagens de ônibus, em filas de supermercado ou em qualquer outra situação de espera!

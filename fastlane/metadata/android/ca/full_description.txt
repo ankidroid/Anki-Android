@@ -1,5 +1,3 @@
-Memoritzeu qualsevol cosa amb AnkiDroid!
-
 AnkiDroid us permet aprendre conceptes de forma molt eficient, mostrant la fitxa just abans que l'oblideu. It is fully compatible with the spaced repetition software Anki (including synchronization), which is available for Windows, Linux and macOS.
 
 Estudieu tot tipus de temes on i quan vulgueu. Aprofiteu els temps morts en el viatge d'autobús, a la cua del supermercats o en qualsevol altra situació d'espera!

@@ -1,5 +1,3 @@
-Parkerigu ion ajn per AnkiDroid!
-
 AnkiDroid ebligas al vi efike memorigi lernkartojn (fulmokartojn) per montri ilin tuj antaŭ forgeso. Ĝi estas plene kongrua kun la komputila programo Anki (inkluzive samtempigon), kiu estas disponebla por operaciumoj Windows, Linukso kaj macOS.
 
 Memorigu kion ajn kaj kie ajn vi volas. Efike uzu liberan tempetojn dum vojaĝi aŭtobuse, en superbazara vico kaj ĉiam, kiam vi perdas tempon atendante!

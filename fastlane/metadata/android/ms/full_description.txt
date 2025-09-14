@@ -1,5 +1,3 @@
-Ingat apa-apa jua dengan AnkiDroid!
-
 AnkiDroid membolehkan anda belajara kad imbasan dengan cekap dengan menyemak kad tersebut sebelum anda lupa. It is fully compatible with the spaced repetition software Anki (including synchronization), which is available for Windows, Linux and macOS.
 
 Belajar pelbagai perkara bila-bila dan di mana jua anda mahu. Manfaatkan masa terbiar semasa perjalanan bas, dalam barisan pasar raya atau mana-mana suasana menunggu!

@@ -1,5 +1,3 @@
-Zapamtite sve u AnkiDroid!
-
 AnkiDroid Vam omogućuje efikasno učenje flash kartica prikazujući ih prije nego što zaboravite. It is fully compatible with the spaced repetition software Anki (including synchronization), which is available for Windows, Linux and macOS.
 
 Učite razne stvari bilo gdje i bilo kada. Iskoristite vrijeme kada nemate što raditi tijekom putovanja autobusom, u redovima u trgovinama ili bilo kojoj drugoj situaciji kada čekate!

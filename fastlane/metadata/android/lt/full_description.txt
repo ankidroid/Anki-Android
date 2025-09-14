@@ -1,5 +1,3 @@
-Naudokite „AnkiDroid“ ir viską atsiminkite!
-
 „AnkiDroid“ programa suteikia galimybę veiksmingai mokytis, parodydama korteles dar prieš spėjant jas pamiršti. It is fully compatible with the spaced repetition software Anki (including synchronization), which is available for Windows, Linux and macOS.
 
 Mokykitės įvairių dalykų bet kada ir bet kur. Išnaudokite laisvą laiką keliaudami autobusu, stovėdami prekybos centro eilėje ar neturėdami ką veikti!

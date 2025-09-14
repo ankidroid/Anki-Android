@@ -1,5 +1,3 @@
-Ghi nhớ bất cứ điều gì với AnkiDroid!
-AnkiDroid phép bạn tìm hiểu Flashcards rất hiệu quả bằng cách nhắc lại chúng trước khi bạn quên mất. Nó hoàn toàn tương thích với các phần mềm khác của Anki (bao gồm cả đồng bộ hóa), trong đó có sẵn cho Windows, Linux và MacOS.
 
 Học tập với tất cả các dạng/loại bất cứ nơi nào và bất cứ khi nào bạn muốn. Hãy sử dụng tốt thời gian nhàn rỗi trên chuyến xe buýt, xếp hàng siêu thị hay bất kỳ tình huống khác chờ đợi!
 

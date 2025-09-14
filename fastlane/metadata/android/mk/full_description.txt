@@ -1,5 +1,3 @@
-Запомни нешто со AnkiDroid!
-
 AnkiDroid те овозможува да ги научиш флеш картичките многу ефикасно и прикажувајќи ги пред да заборавите. It is fully compatible with the spaced repetition software Anki (including synchronization), which is available for Windows, Linux and macOS.
 
 Проучи ги сите видови на работи каде и кога сакаш. Направете добра употреба на мирни времиња на автобуски патувања, во редици во супермаркет или во каква било друга ситуација на чекање!

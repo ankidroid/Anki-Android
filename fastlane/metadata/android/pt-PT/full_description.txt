@@ -1,5 +1,3 @@
-Memorize qualquer coisa com AnkiDroid!
-
 AnkiDroid permite-lhe memorizar fichas de pergunta/resposta eficientemente ao mostrá-las antes que as esqueça. It is fully compatible with the spaced repetition software Anki (including synchronization), which is available for Windows, Linux and macOS.
 
 Estude todo o tipo de coisas, onde e quando quiser. Faça bom uso do seu tempo livre em viagens de autocarro, em filas de supermercado ou em qualquer outra situação!

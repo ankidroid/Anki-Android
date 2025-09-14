@@ -1,5 +1,3 @@
-Запамінайце любую інфармацыю з AnkiDroid!
-
 AnkiDroid прапануе эфектыўны спосаб завучвання інфармацыі, паказваючы навучальныя карткі для запамінання да таго, як вы іх забудзецеся. It is fully compatible with the spaced repetition software Anki (including synchronization), which is available for Windows, Linux and macOS.
 
 Вучыце тое, што вам неабходна ў любым месцы і ў любы час. Эфектыўна выкарыстоўвайце час, калі вы знаходзіцеся ў транспарце, у чэргах і ў іншых месцах, калі ў вас ёсць свабодная хвілінка!

@@ -1,5 +1,3 @@
-Lernen Sie mit AnkiDroid alles, was Sie sich merken möchten!
-
 Mit AnkiDroid lassen sich Karteikarten sehr effizient auswendig lernen, indem sie kurz vor dem Vergessen wiederholt werden. Voll kompatibel mit der Spaced-Repetition-Software Anki (inklusive Synchronisation). Anki gibt es für Windows, Linux und macOS.
 
 Lernen Sie alle möglichen Dinge, wo und wann Sie wollen. Nutzen Sie freie Zeit sinnvoll, sei es im Bus, in der Schlange vor der Supermarktkasse oder wo immer Sie sonst warten müssen.

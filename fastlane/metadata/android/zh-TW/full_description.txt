@@ -1,5 +1,3 @@
-用 AnkiDroid 記住任何東西!
-
 AnkiDroid 會在你快要忘記之前讓單字卡再次出現以實現高效學習。 It is fully compatible with the spaced repetition software Anki (including synchronization), which is available for Windows, Linux and macOS.
 
 無論何時何地，只要你想要，就可以學習各樣的知識。 可以好好利用閒置時間，像是搭乘巴士、在超市排隊、或其他需要等候的狀況!

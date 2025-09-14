@@ -1,5 +1,3 @@
-Հիշե՜ք ամեն ինչ` AnkiDroid-ի օգնությամբ։
-
 AnkiDroid-ի միջոցով կարող եք արդյունավետ սովորել ֆլեշ քարտեր, քանի որ այն ցույց է տալիս քարտերը` նրանց մոռանալու պահից քիչ առաջ։ It is fully compatible with the spaced repetition software Anki (including synchronization), which is available for Windows, Linux and macOS.
 
 Սովորեք որևէ բան` երբ և որտեղ ուզում եք։ Ճիշտ օգտագործեք ավտոբուսում կամ խանութի հերթում սպասելու ժամանակը։
