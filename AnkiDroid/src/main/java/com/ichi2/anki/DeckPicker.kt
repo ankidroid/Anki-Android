@@ -2537,8 +2537,11 @@ open class DeckPicker :
         changes: OpChanges,
         handler: Any?,
     ) {
-        // undo state may have changed
-        invalidateOptionsMenu()
+        lifecycleScope.launch {
+            updateMenuState()
+            // undo state may have changed
+            invalidateOptionsMenu()
+        }
         if (changes.studyQueues && handler !== this && handler !== viewModel) {
             if (!activityPaused) {
                 // No need to update while the activity is paused, because `onResume` calls `refreshState` that calls `updateDeckList`.
