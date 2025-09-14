@@ -236,7 +236,6 @@ class Decks(
         TODO()
     }
 
-    @RustCleanup("implement and make public")
     @LibAnkiAlias("set_collapsed")
     fun setCollapsed(
         deckId: DeckId,
@@ -250,11 +249,13 @@ class Decks(
         this.save(deck)
     }
 
-    @RustCleanup("implement and make public")
     @LibAnkiAlias("collapse_browser")
-    @Suppress("unused", "unused_parameter")
-    private fun collapseBrowser(deckId: DeckId) {
-        TODO()
+    @Suppress("unused")
+    fun collapseBrowser(deckId: DeckId) {
+        val deck = this.getLegacy(deckId) ?: return
+        val collapsed = deck.browserCollapsed
+        deck.browserCollapsed = !collapsed
+        this.save(deck)
     }
 
     fun count(): Int = len(this.allNamesAndIds())
