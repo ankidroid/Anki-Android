@@ -169,6 +169,8 @@ sealed class ReviewReminderScope : Parcelable {
  * @param cardTriggerThreshold See [ReviewReminderCardTriggerThreshold].
  * @param scope See [ReviewReminderScope].
  * @param enabled Whether the review reminder's notifications are active or disabled.
+ * @param profileID ID representing the profile which created this review reminder, as review reminders for
+ * multiple profiles might be active simultaneously.
  */
 @Serializable
 @Parcelize
@@ -179,6 +181,7 @@ data class ReviewReminder private constructor(
     val cardTriggerThreshold: ReviewReminderCardTriggerThreshold,
     val scope: ReviewReminderScope,
     var enabled: Boolean,
+    val profileID: String,
 ) : Parcelable,
     ReviewReminderSchema {
     companion object {
@@ -192,12 +195,14 @@ data class ReviewReminder private constructor(
             cardTriggerThreshold: ReviewReminderCardTriggerThreshold,
             scope: ReviewReminderScope = ReviewReminderScope.Global,
             enabled: Boolean = true,
+            profileID: String = "",
         ) = ReviewReminder(
             id = ReviewReminderId.getAndIncrementNextFreeReminderId(),
             time,
             cardTriggerThreshold,
             scope,
             enabled,
+            profileID,
         )
     }
 
