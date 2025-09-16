@@ -298,6 +298,14 @@ class Whiteboard(
         }
     }
 
+    private fun finishDrawAndSetColor(color: Int) {
+        if (isCurrentlyDrawing) {
+            drawFinish()
+            invalidate()
+        }
+        penColor = color
+    }
+
     private fun drawFinish() {
         isCurrentlyDrawing = false
         val pm = PathMeasure(path, false)
@@ -373,26 +381,26 @@ class Whiteboard(
     fun onClick(view: View) {
         when (view.id) {
             R.id.pen_color_white -> {
-                penColor = Color.WHITE
+                finishDrawAndSetColor(Color.WHITE)
             }
             R.id.pen_color_black -> {
-                penColor = Color.BLACK
+                finishDrawAndSetColor(Color.BLACK)
             }
             R.id.pen_color_red -> {
                 val redPenColor = context.getColor(R.color.material_red_500)
-                penColor = redPenColor
+                finishDrawAndSetColor(redPenColor)
             }
             R.id.pen_color_green -> {
                 val greenPenColor = context.getColor(R.color.material_green_500)
-                penColor = greenPenColor
+                finishDrawAndSetColor(greenPenColor)
             }
             R.id.pen_color_blue -> {
                 val bluePenColor = context.getColor(R.color.material_blue_500)
-                penColor = bluePenColor
+                finishDrawAndSetColor(bluePenColor)
             }
             R.id.pen_color_yellow -> {
                 val yellowPenColor = context.getColor(R.color.material_yellow_500)
-                penColor = yellowPenColor
+                finishDrawAndSetColor(yellowPenColor)
             }
             R.id.pen_color_custom -> {
                 ColorPickerPopUp(context).run {
@@ -401,12 +409,10 @@ class Whiteboard(
                     setOnPickColorListener(
                         object : ColorPickerPopUp.OnPickColorListener {
                             override fun onColorPicked(color: Int) {
-                                penColor = color
+                                finishDrawAndSetColor(color)
                             }
 
-                            override fun onCancel() {
-                                // unused
-                            }
+                            override fun onCancel() {}
                         },
                     )
                     show()
