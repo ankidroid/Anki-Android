@@ -186,7 +186,30 @@ class InstantNoteEditorActivity :
     }
 
     /** Gets the shared text received through an Intent. **/
-    private fun getSharedIntentText(receivedIntent: Intent): String? = receivedIntent.getStringExtra(Intent.EXTRA_TEXT)
+    private fun getSharedIntentText(receivedIntent: Intent): String? {
+        val rawText = receivedIntent.getStringExtra(Intent.EXTRA_TEXT) ?: return null
+        val cleaned = cleanSharedText(rawText)
+        return cleaned
+    }
+
+    private fun cleanSharedText(text: String): String {
+        var cleanedText = text
+        // Remove surrounding quotes if present
+        cleanedText = cleanedText.trim()
+        if (cleanedText.startsWith("\"") && cleanedText.contains("\" http")) {
+            // Extract text between quotes, stopping at the quote before the URL
+            val quoteEndIndex = cleanedText.indexOf("\" http")
+            if (quoteEndIndex > 0) {
+                cleanedText = cleanedText.substring(1, quoteEndIndex)
+            }
+        }
+
+        cleanedText = cleanedText.replace(Regex("\\s+https?://[^\\s]*#:~:text=[^\\s]*"), "")
+
+        cleanedText = cleanedText.trim('"')
+
+        return cleanedText.trim()
+    }
 
     private fun openNoteEditor() {
         val sharedText = clozeEditTextField.text.toString()
