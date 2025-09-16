@@ -37,6 +37,7 @@ import com.ichi2.anki.libanki.CardId
 import com.ichi2.anki.libanki.Consts
 import com.ichi2.anki.libanki.Consts.DEFAULT_DECK_ID
 import com.ichi2.anki.libanki.DeckId
+import com.ichi2.anki.libanki.Decks
 import com.ichi2.anki.libanki.sched.DeckNode
 import com.ichi2.anki.libanki.utils.extend
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
@@ -121,6 +122,10 @@ class DeckPickerViewModel :
     val deckDeletedNotification = MutableSharedFlow<DeckDeletionResult>()
     val emptyCardsNotification = MutableSharedFlow<EmptyCardsResult>()
     val flowOfDestination = MutableSharedFlow<Destination>()
+    val flowOfSubDeckCreated = MutableSharedFlow<Unit>()
+    val flowOfExportDeck = MutableSharedFlow<DeckId>()
+    val flowOfCreateShortcut = MutableSharedFlow<ShortcutData>()
+    val flowOfDisableShortcuts = MutableSharedFlow<List<String>>()
     override val onError = MutableSharedFlow<String>()
 
     /**
@@ -362,6 +367,105 @@ class DeckPickerViewModel :
             flowOfRefreshDeckList.emit(Unit)
         }
 
+    /**
+     * Gets the current name of a deck
+     */
+    suspend fun getDeckName(deckId: DeckId): String = withCol { decks.name(deckId) }
+
+    /**
+     * Notifies that a subdeck has been created and UI should be refreshed
+     */
+    fun onSubDeckCreated() =
+        viewModelScope.launch {
+            flowOfSubDeckCreated.emit(Unit)
+            flowOfDeckCountsChanged.emit(Unit)
+        }
+
+    /**
+     * Rebuilds a filtered deck with its current filter settings
+     */
+    @CheckResult
+    fun rebuildFilteredDeck(deckId: DeckId): Job =
+        viewModelScope.launch {
+            withCol {
+                Timber.d("rebuildFiltered: doInBackground - RebuildCram")
+                decks.select(deckId)
+                sched.rebuildFilteredDeck(decks.selected())
+            }
+            flowOfDeckCountsChanged.emit(Unit)
+        }
+
+    /**
+     * Requests export for the specified deck
+     */
+    fun exportDeck(deckId: DeckId) =
+        launchCatchingIO {
+            flowOfExportDeck.emit(deckId)
+        }
+
+    /**
+     * Find the position of a deck in the flattened deck list.
+     * If the deck is a child of a collapsed deck, returns the position of the parent deck.
+     * Returns 0 if the deck is not found.
+     */
+    fun findDeckPosition(
+        deckId: DeckId,
+        deckList: List<DisplayDeckNode>,
+    ): Int {
+        deckList.forEachIndexed { index, treeNode ->
+            if (treeNode.did == deckId) {
+                return index
+            }
+        }
+
+        // If the deck is not in our list, search using the immediate parent
+        val collapsedDeck = dueTree?.find(deckId) ?: return 0
+        val parent = collapsedDeck.parent?.get() ?: return 0
+        return findDeckPosition(parent.did, deckList)
+    }
+
+    /**
+     * Prepares data for creating a deck shortcut
+     */
+    fun createIcon(deckId: DeckId) =
+        launchCatchingIO {
+            val (shortLabel, longLabel) =
+                withCol {
+                    val fullName = decks.name(deckId)
+                    Pair(
+                        Decks.basename(fullName),
+                        fullName,
+                    )
+                }
+            flowOfCreateShortcut.emit(
+                ShortcutData(
+                    deckId = deckId,
+                    shortLabel = shortLabel,
+                    longLabel = longLabel,
+                ),
+            )
+        }
+
+    /**
+     * Gets deck IDs for disabling shortcuts (deck and all children)
+     */
+    fun disableDeckAndChildrenShortcuts(deckId: DeckId) =
+        launchCatchingIO {
+            val deckTreeDids = dueTree?.find(deckId)?.map { it.did.toString() } ?: emptyList()
+            flowOfDisableShortcuts.emit(deckTreeDids)
+        }
+
+    /**
+     * Returns if the deck and its subdecks are all empty.
+     * @param deckId The id of a deck with no pending cards to review
+     */
+    suspend fun isDeckAndSubdeckEmpty(deckId: DeckId): Boolean {
+        val node = dueTree?.find(deckId) ?: return true
+        return withCol {
+            node.all { decks.isEmpty(it.did) }
+        }
+    }
+
     sealed class StartupResponse {
         data class RequestPermissions(
             val requiredPermissions: PermissionSet,
@@ -453,3 +557,10 @@ data class EmptyCardsResult(
 }
 
 fun DeckNode.onlyHasDefaultDeck() = children.singleOrNull()?.did == DEFAULT_DECK_ID
+
+/** Data for creating a deck shortcut */
+data class ShortcutData(
+    val deckId: DeckId,
+    val shortLabel: String,
+    val longLabel: String,
+)
