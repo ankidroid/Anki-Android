@@ -189,7 +189,7 @@
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Collezione inaccessibile</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Non è possibile accedere alla tua collezione dopo che AnkiDroid è stato disinstallato a causa di un cambiamento della politica del Google Play Store\n\nI tuoi dati sono al sicuro e possono essere ripristinati. Si trovano \n%s\n\nSelezione un\'opzione tra quelle qui sotto per ripristinare:</string>
     <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android ha rimosso i permessi %1$s di AnkiDroid a causa dell\'inattività dell\'app.\n\nI dati sono al sicuro e possono essere ripristinati; si trovano al percorso\n%2$s\n\nSelezionare un\'opzione qui sotto per effettuare il ripristino:</string>
-    <string name="restore_data_from_ankiweb">Ripristina da AnkiWeb (consigliato)</string>
+    <string name="restore_data_from_ankiweb">Ripristinare da AnkiWeb (consigliato)</string>
     <string name="install_non_play_store_ankidroid_recommended">Ripristina l\'accesso alla cartella (raccomandato)</string>
     <string name="install_non_play_store_ankidroid">Ripristina l\'accesso alla cartella (avanzato)</string>
     <string name="restore_data_from_backup">Ripristina da backup .colpkg (avanzato)</string>
@@ -208,7 +208,7 @@
     <string name="heading_required_permissions" comment="Heading for the section of required permissions that the app needs to function, shown in the permissions explanation screen.">Required</string>
     <string name="heading_optional_permissions" comment="Heading for the section of optional permissions that the app needs to function, shown in the permissions explanation screen.">Optional</string>
     <string name="manually_grant_permissions" comment="Pop-up message that is shown to the user when they want to grant an app permission that must be granted via the OS settings screen.">This permission must be manually granted from Settings</string>
-    <string name="revoke_permissions" comment="Pop-up message that is shown to the user when they are revoking an app permission.">This permission must be manually revoked from Settings</string>
+    <string name="revoke_permissions" comment="Pop-up message that is shown to the user when they are revoking an app permission.">Questa autorizzazione deve essere revocata manualmente dalle impostazioni</string>
     <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Rimuovi account</string>
     <!-- Instant Note Editor -->
     <string name="instant_card" comment="Used in the Android system context menu/share dialog to quickly create a note. This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. ">Carta istantanea</string>

@@ -363,12 +363,12 @@
     <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">計算中&#8230;</string>
     <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">コレクションが存在しません</string>
     <string name="hide_system_bars" maxLength="41" comment="Title of a setting that allows to hide the system bars">システムバーを隠す</string>
-    <string name="hide_system_bars_none" comment="Setting option to not hide any of the system bars">なし（すべて表示）</string>
-    <string name="hide_system_bars_status_bar" comment="Setting option to hide the system status bar (the top one with clock, battery status, etc)">ステータスバー（通知バー）</string>
-    <string name="hide_system_bars_navigation_bar" comment="Setting option to hide the system navigation bar (the bottom one that can go back, to home, etc)">ナビゲーションバー</string>
-    <string name="hide_system_bars_all_bars" comment="Setting option to hide all the system bars">すべて</string>
+    <string name="hide_system_bars_none" comment="Setting option to not hide any of the system bars">なし（どちらも表示）</string>
+    <string name="hide_system_bars_status_bar" comment="Setting option to hide the system status bar (the top one with clock, battery status, etc)">ステータスバー（通知バー）を隠す</string>
+    <string name="hide_system_bars_navigation_bar" comment="Setting option to hide the system navigation bar (the bottom one that can go back, to home, etc)">ナビゲーションバーを隠す</string>
+    <string name="hide_system_bars_all_bars" comment="Setting option to hide all the system bars">どちらも隠す</string>
     <string name="ignore_display_cutout" maxLength="41">ノッチ（ディスプレイ上部のくぼみ）を無視</string>
-    <string name="show_answer_buttons" maxLength="41">Show answer buttons</string>
+    <string name="show_answer_buttons" maxLength="41">解答表示ボタン・回答ボタンを表示</string>
     <string name="hide_hard_and_easy" maxLength="41">「難しい」ボタンと「簡単」ボタンを隠す</string>
     <string name="reviewer_frame_style" maxLength="41">カードの輪郭のスタイル</string>
     <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Study Screen">カード（角丸四角形）</string>
@@ -382,7 +382,7 @@
     <string name="new_study_screen" maxLength="41">新しい学習画面</string>
     <string name="new_study_screen_summ"><![CDATA[現行の学習画面の後継となる、改良された学習画面。現行画面のいくつかの機能は変更または削除されました。ぜひ<a href="%1$s">ご意見・ご感想</a>をお寄せください。<a href="%2$s">不具合</a>がある場合もお知らせいただければ幸いです。]]></string>
     <string name="show_answer_feedback" maxLength="41">回答選択時にフィードバック（目印）を表示</string>
-    <string name="screen" maxLength="41">Screen</string>
+    <string name="screen" maxLength="41">画面枠</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">設定画面を開く</string>
 </resources>

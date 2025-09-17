@@ -74,7 +74,7 @@
     <string name="whiteboard_more_options" comment="Tooltip of the whiteboard \'More\' button" maxLength="28">مزيد من الخيارات</string>
     <string name="whiteboard_remove_brush_message">أواثق أنك تود إزالة هذه الفرشة من لوحة الألوان خاصتك؟</string>
     <string name="whiteboard_ink_eraser" comment="Title of the whiteboard Ink eraser">حبر</string>
-    <string name="whiteboard_stroke_eraser" comment="Title of the whiteboard Stroke eraser">الخط</string>
+    <string name="whiteboard_stroke_eraser" comment="Title of the whiteboard Stroke eraser">خط</string>
     <string name="stylus_mode" comment="Title of the menu item that toggles the whiteboard stylus mode" maxLength="28">وضع القلم</string>
     <string name="cannot_remove_last_brush_message">لا يمكن إزالة آخر فرشة</string>
     <string name="enable_whiteboard" maxLength="28">تفعيل السبورة</string>
