@@ -15,6 +15,7 @@
  */
 package com.ichi2.utils
 
+import androidx.core.text.HtmlCompat
 import com.ichi2.anki.common.utils.htmlEncode
 
 object HtmlUtils {
@@ -30,3 +31,6 @@ object HtmlUtils {
 
     fun escape(html: String): String = html.htmlEncode()
 }
+
+/** Removes HTML tags from a string */
+fun stripHtml(html: String): String = HtmlCompat.fromHtml(html, HtmlCompat.FROM_HTML_MODE_LEGACY).toString()

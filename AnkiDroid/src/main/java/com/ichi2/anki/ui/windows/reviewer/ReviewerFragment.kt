@@ -20,6 +20,7 @@ import android.content.Intent
 import android.hardware.SensorManager
 import android.net.Uri
 import android.os.Bundle
+import android.text.InputType
 import android.text.SpannableString
 import android.text.style.UnderlineSpan
 import android.view.KeyEvent
@@ -76,6 +77,7 @@ import com.ichi2.anki.preferences.reviewer.ReviewerMenuView
 import com.ichi2.anki.preferences.reviewer.ViewerAction
 import com.ichi2.anki.previewer.CardViewerActivity
 import com.ichi2.anki.previewer.CardViewerFragment
+import com.ichi2.anki.previewer.TypeAnswer
 import com.ichi2.anki.previewer.stdHtml
 import com.ichi2.anki.reviewer.BindingMap
 import com.ichi2.anki.reviewer.ReviewerBinding
@@ -98,12 +100,13 @@ import com.ichi2.anki.utils.isWindowCompact
 import com.ichi2.themes.Themes
 import com.ichi2.utils.dp
 import com.ichi2.utils.show
+import com.ichi2.utils.stripHtml
 import com.squareup.seismic.ShakeDetector
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import org.jetbrains.annotations.VisibleForTesting
 import timber.log.Timber
-import java.lang.IllegalArgumentException
 import kotlin.math.roundToInt
 import kotlin.reflect.jvm.jvmName
 
@@ -322,6 +325,8 @@ class ReviewerFragment :
 
                     typeAnswerContainer.isVisible = true
                     typeAnswerEditText.apply {
+                        inputType = chooseInputType(typeInAnswer)
+
                         if (imeHintLocales != typeInAnswer.imeHintLocales) {
                             imeHintLocales = typeInAnswer.imeHintLocales
                             context?.getSystemService<InputMethodManager>()?.restartInput(this)
@@ -337,6 +342,15 @@ class ReviewerFragment :
             typeAnswerEditText.text = null
         }
     }
+
+    /** Chooses the input type based on whether the expected answer is a number or text */
+    @VisibleForTesting
+    fun chooseInputType(typeAnswer: TypeAnswer): Int =
+        if (stripHtml(typeAnswer.expectedAnswer).matches(Regex("^-?\\d+([.,]\\d*)?$"))) {
+            InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL or InputType.TYPE_NUMBER_FLAG_SIGNED
+        } else {
+            InputType.TYPE_CLASS_TEXT
+        }
 
     private fun resetZoom() {
         webView.settings.loadWithOverviewMode = false
