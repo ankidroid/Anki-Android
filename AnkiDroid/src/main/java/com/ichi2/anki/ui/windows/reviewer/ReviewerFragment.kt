@@ -309,7 +309,7 @@ class ReviewerFragment :
                 addTextChangedListener { editable ->
                     viewModel.typedAnswer = editable?.toString() ?: ""
 
-                    // Check if input is numeric and contains a decimal separator
+                    // Check if ',' needs to be replaced with '.' or vice versa
                     val inputTypeNumber =
                         InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL or InputType.TYPE_NUMBER_FLAG_SIGNED
                     val expectedAnswer = viewModel.typeAnswerFlow.value?.expectedAnswer
