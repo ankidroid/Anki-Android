@@ -20,6 +20,7 @@ import android.content.Intent
 import android.hardware.SensorManager
 import android.net.Uri
 import android.os.Bundle
+import android.text.InputType
 import android.text.SpannableString
 import android.text.style.UnderlineSpan
 import android.view.KeyEvent
@@ -41,6 +42,7 @@ import androidx.constraintlayout.widget.ConstraintSet
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
+import androidx.core.text.HtmlCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
@@ -306,6 +308,18 @@ class ReviewerFragment :
                 }
                 addTextChangedListener { editable ->
                     viewModel.typedAnswer = editable?.toString() ?: ""
+
+                    // Check if input is numeric and contains a decimal separator
+                    val inputTypeNumber =
+                        InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL or InputType.TYPE_NUMBER_FLAG_SIGNED
+                    val expectedAnswer = viewModel.typeAnswerFlow.value?.expectedAnswer
+
+                    if (inputType == inputTypeNumber) {
+                        when {
+                            expectedAnswer?.contains(',') == true -> viewModel.typedAnswer = viewModel.typedAnswer.replace('.', ',')
+                            expectedAnswer?.contains('.') == true -> viewModel.typedAnswer = viewModel.typedAnswer.replace(',', '.')
+                        }
+                    }
                 }
             }
 
@@ -326,6 +340,14 @@ class ReviewerFragment :
 
                     typeAnswerContainer.isVisible = true
                     typeAnswerEditText.apply {
+                        // bring up numeric keyboard, if answer is a number
+                        inputType =
+                            if (stripHtml(typeInAnswer.expectedAnswer).matches(Regex("^-?\\d+([.,]\\d*)?$"))) {
+                                InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL or InputType.TYPE_NUMBER_FLAG_SIGNED
+                            } else {
+                                InputType.TYPE_CLASS_TEXT
+                            }
+
                         if (imeHintLocales != typeInAnswer.imeHintLocales) {
                             imeHintLocales = typeInAnswer.imeHintLocales
                             context?.getSystemService<InputMethodManager>()?.restartInput(this)
@@ -341,6 +363,9 @@ class ReviewerFragment :
             typeAnswerEditText.text = null
         }
     }
+
+    /** Removes HTML tags from a string */
+    fun stripHtml(html: String): String = HtmlCompat.fromHtml(html, HtmlCompat.FROM_HTML_MODE_LEGACY).toString()
 
     private fun resetZoom() {
         webView.settings.loadWithOverviewMode = false
