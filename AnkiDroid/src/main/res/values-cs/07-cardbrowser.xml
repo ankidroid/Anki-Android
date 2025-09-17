@@ -97,7 +97,7 @@
         <item>Podle zapomínání</item>
         <item>Podle názvu balíčku</item>
     </string-array>
-    <string name="manage_browser_column">Manage column</string>
+    <string name="manage_browser_column">Spravovat sloupec</string>
     <string name="no_columns_available">Nejsou k dispozici žádné sloupce</string>
     <string name="card_browser_select_all" maxLength="28">Vybrat vše</string>
     <string name="card_browser_select_none" maxLength="28">Zrušit výběr</string>

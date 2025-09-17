@@ -70,7 +70,7 @@
     <string name="card_browser_list_my_searches_new_name">نۆۋەتتىكى ئىزدەشنىڭ ئاتى</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">ئىسىمسىز ئىزدەشنى ساقلىيالمايسىز</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">ئات مەۋجۇت</string>
-    <string name="card_browser_list_my_searches_successful_save">Search was saved</string>
+    <string name="card_browser_list_my_searches_successful_save">ئىزدەش ساقلانغان</string>
     <string name="no_note_to_edit">تەھرىرلەيدىغان خاتىرە يوق</string>
     <string name="card_browser_list_my_searches_remove_content">«%1$s» نى ئۆچۈرەمدۇ؟</string>
     <string name="card_browser_change_display_order" maxLength="28">كۆرسىتىش تەرتىپىنى ئۆزگەرتىدۇ</string>

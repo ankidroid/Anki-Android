@@ -68,7 +68,7 @@
     <string name="eraser" maxLength="28">Eraser</string>
     <string name="add_brush" maxLength="28">Add brush</string>
     <string name="whiteboard_align_left" comment="Option to align the whiteboard toolbar on the left" maxLength="28">Left</string>
-    <string name="whiteboard_align_bottom" comment="Option to align the whiteboard toolbar on the bottom" maxLength="28">Bottom</string>
+    <string name="whiteboard_align_bottom" comment="Option to align the whiteboard toolbar on the bottom" maxLength="28">In basso</string>
     <string name="whiteboard_align_right" comment="Option to align the whiteboard toolbar on the right" maxLength="28">Right</string>
     <string name="whiteboard_clear" comment="Button text to clear the whiteboard" maxLength="28">Clear</string>
     <string name="whiteboard_more_options" comment="Tooltip of the whiteboard \'More\' button" maxLength="28">More options</string>
@@ -92,7 +92,7 @@
     <string name="webview_crash_oom">Memoria insufficiente</string>
     <string name="webview_crash_oom_details">La WebView è stata terminata dal sistema. Questo accade tipicamente quando l\'applicazione si esaurisce di memoria, spesso a causa di caratteri o supporti di grandi dimensioni.</string>
     <string name="webview_crash_nonfatal">Il renderer WebView si è bloccato. Causa: %s</string>
-    <string name="webview_crash_fatal">Errore fatale: il renderer WebView si è blocatto. Causa: %s</string>
+    <string name="webview_crash_fatal">Errore fatale: il renderer WebView si è bloccato. Causa: %s</string>
     <string name="webview_crash_loop_dialog_title">Errore di restituzione grafica del sistema WebView</string>
     <string name="webview_crash_loop_dialog_content">La WebView sistema non è riuscita a rendere la carta «%1$s».\n %2$s</string>
     <string name="slide_to_cancel" comment="Message shown when pressing the record button">Slide to cancel</string>
