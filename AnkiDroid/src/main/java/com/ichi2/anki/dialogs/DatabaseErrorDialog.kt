@@ -549,16 +549,8 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
     private val message: String?
         get() =
             when (requireDialogType()) {
-                DIALOG_LOAD_FAILED ->
-                    if (databaseCorruptFlag) {
-                        // The sqlite database has been corrupted (DatabaseErrorHandler.onCorrupt() was called)
-                        // Show a specific message appropriate for the situation
-                        res().getString(R.string.corrupt_db_message, res().getString(R.string.repair_deck))
-                    } else {
-                        // Generic message shown when a libanki task failed
-                        res().getString(R.string.access_collection_failed_message, res().getString(R.string.link_help))
-                    }
-                DIALOG_DB_ERROR -> res().getString(R.string.answering_error_message)
+                DIALOG_LOAD_FAILED -> res().getString(R.string.load_failed_fallback_message)    // show a short localized fallback message in
+                DIALOG_DB_ERROR -> res().getString(R.string.answering_error_message)  
                 DIALOG_DISK_FULL -> res().getString(R.string.storage_full_message)
                 DIALOG_REPAIR_COLLECTION -> res().getString(R.string.repair_deck_dialog, BackupManager.BROKEN_COLLECTIONS_SUFFIX)
                 DIALOG_RESTORE_BACKUP -> res().getString(R.string.backup_restore_no_backups)
