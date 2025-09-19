@@ -18,6 +18,7 @@ package com.ichi2.anki.reviewreminders
 
 import android.os.Parcelable
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.settings.Prefs
 import kotlinx.parcelize.IgnoredOnParcel
@@ -27,6 +28,7 @@ import timber.log.Timber
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
+import java.util.Calendar
 import java.util.Locale
 import kotlin.time.Duration.Companion.hours
 import kotlin.time.Duration.Companion.minutes
@@ -35,7 +37,7 @@ import kotlin.time.Duration.Companion.minutes
 @Serializable
 @Parcelize
 value class ReviewReminderId(
-    val id: Int,
+    val value: Int,
 ) : Parcelable {
     companion object {
         /**
@@ -76,6 +78,19 @@ data class ReviewReminderTime(
             )
 
     fun toSecondsFromMidnight(): Long = (hour.hours + minute.minutes).inWholeSeconds
+
+    companion object {
+        /**
+         * Returns the current time as a [ReviewReminderTime].
+         * Used as the default displayed time when creating a review reminder.
+         */
+        fun getCurrentTime(): ReviewReminderTime {
+            val calendarInstance = TimeManager.time.calendar()
+            val currentHour = calendarInstance.get(Calendar.HOUR_OF_DAY)
+            val currentMinute = calendarInstance.get(Calendar.MINUTE)
+            return ReviewReminderTime(currentHour, currentMinute)
+        }
+    }
 }
 
 /**
@@ -162,13 +177,14 @@ sealed class ReviewReminderScope : Parcelable {
  * Preferably, also add some unit tests to ensure your migration works properly on all user devices once your update is rolled out.
  * See ReviewRemindersDatabaseTest for examples on how to do this.
  *
- * TODO: add remaining fields planned for GSoC 2025.
- *
  * @param id Unique, auto-incremented ID of the review reminder.
  * @param time See [ReviewReminderTime].
  * @param cardTriggerThreshold See [ReviewReminderCardTriggerThreshold].
  * @param scope See [ReviewReminderScope].
  * @param enabled Whether the review reminder's notifications are active or disabled.
+ * @param countNew Whether new cards are counted when checking the [cardTriggerThreshold].
+ * @param countLrn Whether learning cards are counted when checking the [cardTriggerThreshold].
+ * @param countRev Whether review cards are counted when checking the [cardTriggerThreshold].
  */
 @Serializable
 @Parcelize
@@ -179,6 +195,9 @@ data class ReviewReminder private constructor(
     val cardTriggerThreshold: ReviewReminderCardTriggerThreshold,
     val scope: ReviewReminderScope,
     var enabled: Boolean,
+    val countNew: Boolean,
+    val countLrn: Boolean,
+    val countRev: Boolean,
 ) : Parcelable,
     ReviewReminderSchema {
     companion object {
@@ -192,12 +211,18 @@ data class ReviewReminder private constructor(
             cardTriggerThreshold: ReviewReminderCardTriggerThreshold,
             scope: ReviewReminderScope = ReviewReminderScope.Global,
             enabled: Boolean = true,
+            countNew: Boolean = true,
+            countLrn: Boolean = true,
+            countRev: Boolean = true,
         ) = ReviewReminder(
             id = ReviewReminderId.getAndIncrementNextFreeReminderId(),
             time,
             cardTriggerThreshold,
             scope,
             enabled,
+            countNew,
+            countLrn,
+            countRev,
         )
     }
 
