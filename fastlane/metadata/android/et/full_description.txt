@@ -14,7 +14,7 @@ Add material through the desktop application Anki or directly through AnkiDroid.
 • progress widget
 • detailed statistics
 • syncing with AnkiWeb
-• open source
+• avatud lähtekoodiga
 
 ★ Additional features:
 • write answers (optional)
