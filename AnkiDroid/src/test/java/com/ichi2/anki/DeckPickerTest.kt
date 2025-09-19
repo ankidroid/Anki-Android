@@ -500,7 +500,12 @@ class DeckPickerTest : RobolectricTest() {
         runTest {
             startActivityNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent()).run {
                 val didA = addDeck("Deck 1")
-                supportFragmentManager.selectContextMenuOption(DeckPickerContextMenuOption.CREATE_SHORTCUT, didA)
+                viewModel.flowOfCreateShortcut.test(1.seconds) {
+                    supportFragmentManager.selectContextMenuOption(DeckPickerContextMenuOption.CREATE_SHORTCUT, didA)
+                    awaitItem()
+                }
+                // Wait for the shortcut creation to complete
+                ShadowLooper.runUiThreadTasksIncludingDelayedTasks()
                 assertEquals(
                     "Deck 1",
                     ShortcutManagerCompat.getShortcuts(this, ShortcutManagerCompat.FLAG_MATCH_PINNED).first().shortLabel,
