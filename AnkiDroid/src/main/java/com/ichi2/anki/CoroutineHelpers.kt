@@ -44,6 +44,7 @@ import com.ichi2.anki.exception.StorageAccessException
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.pages.DeckOptionsDestination
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.dialogs.CircularProgressDialog
 import com.ichi2.anki.utils.openUrl
 import com.ichi2.utils.create
 import com.ichi2.utils.message
@@ -387,8 +388,7 @@ suspend fun <T> Activity.withProgress(
         context = this@withProgress,
         onCancel = null,
     ) { dialog ->
-        @Suppress("Deprecation") // ProgressDialog deprecation
-        dialog.setMessage(message)
+        dialog.setTitle(message)
         op()
     }
 
@@ -410,8 +410,80 @@ suspend fun <T> Fragment.withProgress(
     block: suspend () -> T,
 ): T = requireActivity().withProgress(messageId, block)
 
-@Suppress("Deprecation") // ProgressDialog deprecation
+/**
+ * Shows a circular progress dialog with percentage-based progress instead of raw numbers.
+ * This replaces the deprecated ProgressDialog with a modern Material Design circular progress indicator.
+ */
 suspend fun <T> withProgressDialog(
+    context: Activity,
+    onCancel: (() -> Unit)?,
+    delayMillis: Long = 600,
+    @StringRes manualCancelButton: Int? = null,
+    op: suspend (CircularProgressDialog) -> T,
+): T =
+    coroutineScope {
+        val dialog = CircularProgressDialog.create(
+            context = context,
+            cancelable = onCancel != null,
+            onCancelListener = if (onCancel != null) {
+                DialogInterface.OnCancelListener {
+                    Timber.i("Circular progress dialog cancelled via cancel listener")
+                    onCancel()
+                }
+            } else null
+        )
+
+        // Add manual cancel button if specified
+        if (manualCancelButton != null) {
+            dialog.setCancelable(false)
+            dialog.setButton(DialogInterface.BUTTON_NEGATIVE, context.getString(manualCancelButton)) { _, _ ->
+                Timber.i("Circular progress dialog cancelled via cancel button")
+                onCancel?.let { it() }
+            }
+        }
+
+        // disable taps immediately
+        context.window.setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+        // reveal the dialog after 600ms
+        var dialogIsOurs = false
+        val dialogJob =
+            launch {
+                delay(delayMillis)
+                if (!AnkiDroidApp.instance.progressDialogShown) {
+                    Timber.i(
+                        """Displaying circular progress dialog: ${delayMillis}ms elapsed; 
+                |cancellable: ${onCancel != null}; 
+                |manualCancel: ${manualCancelButton != null}
+                |
+                        """.trimMargin(),
+                    )
+                    dialog.show()
+                    AnkiDroidApp.instance.progressDialogShown = true
+                    dialogIsOurs = true
+                } else {
+                    Timber.w(
+                        """A circular progress dialog is already displayed, not displaying progress dialog: 
+                |cancellable: ${onCancel != null}; 
+                |manualCancel: ${manualCancelButton != null}
+                |
+                        """.trimMargin(),
+                    )
+                }
+            }
+        try {
+            op(dialog)
+        } finally {
+            dialogJob.cancel()
+            dismissDialogIfShowing(dialog)
+            context.window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+            if (dialogIsOurs) {
+                AnkiDroidApp.instance.progressDialogShown = false
+            }
+        }
+    }
+
+@Suppress("Deprecation") // ProgressDialog deprecation - keeping for backward compatibility
+suspend fun <T> withProgressDialogLegacy(
     context: Activity,
     onCancel: (() -> Unit)?,
     delayMillis: Long = 600,
@@ -523,8 +595,22 @@ data class ProgressContext(
     var amount: Pair<Int, Int>? = null,
 )
 
-@Suppress("Deprecation") // ProgressDialog deprecation
-private fun ProgressContext.updateDialog(dialog: android.app.ProgressDialog) {
+/**
+ * Updates the circular progress dialog with current progress information.
+ * Shows percentage-based progress instead of raw numbers for better UX.
+ */
+private fun ProgressContext.updateDialog(dialog: CircularProgressDialog) {
+    // Set the title/message
+    dialog.setTitle(text)
+    
+    // Update progress based on amount if available
+    amount?.let { (current, total) ->
+        dialog.setProgress(current.toLong(), total.toLong())
+    }
+}
+
+@Suppress("Deprecation") // ProgressDialog deprecation - keeping for backward compatibility
+private fun ProgressContext.updateDialogLegacy(dialog: android.app.ProgressDialog) {
     // ideally this would show a progress bar, but MaterialDialog does not support
     // setting progress after starting with indeterminate progress, so we just use
     // this for now

@@ -69,6 +69,10 @@
     <string name="dialog_remove">Remove</string>
     <string name="dialog_continue">Continue</string>
     <string name="dialog_processing">Processing…</string>
+    
+    <!-- Progress dialog strings -->
+    <string name="percentage_format">%d%%</string>
+    <string name="progress_format">%d/%d</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Create</string>
     <string name="dialog_positive_delete" maxLength="28">Delete</string>
     <!-- Currently unsued, should be useful in the future -->
