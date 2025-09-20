@@ -78,6 +78,13 @@ inline fun <reified T : Preference> PreferenceFragmentCompat.requirePreference(
     return requirePreference(key)
 }
 
+inline fun <reified T : Preference> PreferenceFragmentCompat.findPreference(
+    @StringRes resId: Int,
+): T? {
+    val key = getString(resId)
+    return findPreference(key)
+}
+
 /** shorthand method to get the default [SharedPreferences] instance */
 fun Context.sharedPrefs(): SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
 
