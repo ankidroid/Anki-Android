@@ -35,10 +35,16 @@ import com.ichi2.anki.libanki.Decks.Companion.NOT_FOUND_DECK_ID
 import com.ichi2.anki.pages.DeckOptionsDestination
 import com.ichi2.widget.ACTION_UPDATE_WIDGET
 import com.ichi2.widget.AnalyticsWidgetProvider
+import com.ichi2.widget.AppWidgetId
+import com.ichi2.widget.AppWidgetId.Companion.INVALID_APPWIDGET_ID
+import com.ichi2.widget.AppWidgetId.Companion.getAppWidgetId
+import com.ichi2.widget.AppWidgetIds
 import com.ichi2.widget.cancelRecurringAlarm
 import com.ichi2.widget.deckpicker.DeckWidgetData
 import com.ichi2.widget.deckpicker.getDeckNameAndStats
+import com.ichi2.widget.getAppWidgetIdsEx
 import com.ichi2.widget.setRecurringAlarm
+import com.ichi2.widget.updateAppWidget
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -68,7 +74,7 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
         fun updateWidget(
             context: Context,
             appWidgetManager: AppWidgetManager,
-            appWidgetId: Int,
+            appWidgetId: AppWidgetId,
         ) {
             val deckId = getDeckIdForWidget(context, appWidgetId)
             val remoteViews = RemoteViews(context.packageName, R.layout.widget_card_analysis)
@@ -103,7 +109,7 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
 
         private fun getDeckIdForWidget(
             context: Context,
-            appWidgetId: Int,
+            appWidgetId: AppWidgetId,
         ): DeckId {
             val widgetPreferences = CardAnalysisWidgetPreferences(context)
             return widgetPreferences.getSelectedDeckIdFromPreferences(appWidgetId) ?: NOT_FOUND_DECK_ID
@@ -112,7 +118,7 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
         private fun showCollectionDeck(
             context: Context,
             appWidgetManager: AppWidgetManager,
-            appWidgetId: Int,
+            appWidgetId: AppWidgetId,
             remoteViews: RemoteViews,
         ) {
             remoteViews.setTextViewText(R.id.empty_widget, context.getString(R.string.empty_collection_state_in_widget))
@@ -122,13 +128,13 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
 
             val configIntent =
                 Intent(context, CardAnalysisWidgetConfig::class.java).apply {
-                    putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
+                    putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId.id)
                     flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 }
             val configPendingIntent =
                 PendingIntent.getActivity(
                     context,
-                    appWidgetId,
+                    appWidgetId.id,
                     configIntent,
                     PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
                 )
@@ -140,7 +146,7 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
         private fun showMissingDeck(
             context: Context,
             appWidgetManager: AppWidgetManager,
-            appWidgetId: Int,
+            appWidgetId: AppWidgetId,
             remoteViews: RemoteViews,
         ) {
             // Show empty_widget and set click listener to open configuration
@@ -151,13 +157,13 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
 
             val configIntent =
                 Intent(context, CardAnalysisWidgetConfig::class.java).apply {
-                    putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
+                    putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId.id)
                     flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 }
             val configPendingIntent =
                 PendingIntent.getActivity(
                     context,
-                    appWidgetId,
+                    appWidgetId.id,
                     configIntent,
                     PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
                 )
@@ -169,7 +175,7 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
         private suspend fun showDeck(
             context: Context,
             appWidgetManager: AppWidgetManager,
-            appWidgetId: Int,
+            appWidgetId: AppWidgetId,
             remoteViews: RemoteViews,
             deckData: DeckWidgetData,
         ) {
@@ -213,7 +219,7 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
             val provider = ComponentName(context, CardAnalysisWidget::class.java)
             Timber.d("Fetching appWidgetIds for provider: ${provider.shortClassName}")
 
-            val appWidgetIds = appWidgetManager.getAppWidgetIds(provider)
+            val appWidgetIds = appWidgetManager.getAppWidgetIdsEx(provider)
             Timber.d("AppWidgetIds to update: ${appWidgetIds.joinToString(", ")}")
 
             for (appWidgetId in appWidgetIds) {
@@ -226,7 +232,7 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
     override fun performUpdate(
         context: Context,
         appWidgetManager: AppWidgetManager,
-        appWidgetIds: IntArray,
+        appWidgetIds: AppWidgetIds,
         usageAnalytics: UsageAnalytics,
     ) {
         Timber.d("Performing widget update for appWidgetIds: %s", appWidgetIds)
@@ -269,12 +275,12 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
                 val appWidgetManager = AppWidgetManager.getInstance(context)
 
                 // Retrieve the widget ID from the intent
-                val appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID)
+                val appWidgetId = intent.getAppWidgetId()
                 val selectedDeckId = intent.getLongExtra(EXTRA_SELECTED_DECK_ID, -1L)
 
                 Timber.d("Received ACTION_APPWIDGET_UPDATE with widget ID: $appWidgetId and selectedDeckId: $selectedDeckId")
 
-                if (appWidgetId != AppWidgetManager.INVALID_APPWIDGET_ID) {
+                if (appWidgetId != INVALID_APPWIDGET_ID) {
                     Timber.d("Updating widget with ID: $appWidgetId")
 
                     // Update the widget using the internally fetched deck ID
@@ -285,8 +291,8 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
             }
             // Custom action to update a specific widget, triggered by the setRecurringAlarm method
             ACTION_UPDATE_WIDGET -> {
-                val appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID)
-                if (appWidgetId != AppWidgetManager.INVALID_APPWIDGET_ID) {
+                val appWidgetId = intent.getAppWidgetId()
+                if (appWidgetId != INVALID_APPWIDGET_ID) {
                     Timber.d("Received ACTION_UPDATE_WIDGET for widget ID: $appWidgetId")
 
                     // Update the widget using the internally fetched deck ID
@@ -298,8 +304,8 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
             }
             AppWidgetManager.ACTION_APPWIDGET_DELETED -> {
                 Timber.d("ACTION_APPWIDGET_DELETED received")
-                val appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID)
-                if (appWidgetId != AppWidgetManager.INVALID_APPWIDGET_ID) {
+                val appWidgetId = intent.getAppWidgetId()
+                if (appWidgetId != INVALID_APPWIDGET_ID) {
                     Timber.d("Deleting widget with ID: $appWidgetId")
                     cancelRecurringAlarm(context, appWidgetId, CardAnalysisWidget::class.java)
                     widgetPreferences.deleteDeckData(appWidgetId)
@@ -336,9 +342,9 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
 
         val widgetPreferences = CardAnalysisWidgetPreferences(context)
 
-        appWidgetIds?.forEach { widgetId ->
-            cancelRecurringAlarm(context, widgetId, CardAnalysisWidget::class.java)
-            widgetPreferences.deleteDeckData(widgetId)
+        AppWidgetIds.of(appWidgetIds)?.forEach { appWidgetId ->
+            cancelRecurringAlarm(context, appWidgetId, CardAnalysisWidget::class.java)
+            widgetPreferences.deleteDeckData(appWidgetId)
         }
     }
 }

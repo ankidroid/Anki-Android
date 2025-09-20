@@ -267,7 +267,7 @@ class EmptyCardsDialogFragment : DialogFragment() {
      */
     private class BrowserSearchByNidSpan(
         val context: Context,
-        val nid: Long,
+        val nid: NoteId,
     ) : ClickableSpan() {
         override fun onClick(widget: View) {
             val browserSearchIntent = Intent(context, CardBrowser::class.java)

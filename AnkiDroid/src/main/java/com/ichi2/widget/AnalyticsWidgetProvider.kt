@@ -92,7 +92,7 @@ abstract class AnalyticsWidgetProvider : AppWidgetProvider() {
         }
         // Pass usageAnalytics to performUpdate
         Timber.d("${this.javaClass.name}: performUpdate")
-        performUpdate(context, appWidgetManager, appWidgetIds, UsageAnalytics)
+        performUpdate(context, appWidgetManager, AppWidgetIds(appWidgetIds), UsageAnalytics)
     }
 
     /**
@@ -111,7 +111,7 @@ abstract class AnalyticsWidgetProvider : AppWidgetProvider() {
     abstract fun performUpdate(
         context: Context,
         appWidgetManager: AppWidgetManager,
-        appWidgetIds: IntArray,
+        appWidgetIds: AppWidgetIds,
         usageAnalytics: UsageAnalytics,
     )
 }
