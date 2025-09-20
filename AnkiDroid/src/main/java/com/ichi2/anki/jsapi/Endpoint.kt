@@ -63,6 +63,7 @@ sealed interface Endpoint {
         UNSUSPEND("unsuspend"),
         RESET_PROGRESS("reset-progress"),
         TOGGLE_FLAG("toggle-flag"),
+        GET_REVIEW_LOGS("get-review-logs"),
         ;
 
         override val base = "card"

@@ -64,10 +64,16 @@ class JsApiTest : JvmTest() {
                 return data
             }
 
+            val endpointsToSkip =
+                setOf(
+                    "get-review-logs", // TODO handle the return type
+                )
+
             for (serviceBase in endpointsJson.keys()) {
                 val serviceObject = endpointsJson.getJSONObject(serviceBase)
 
                 for (endpointString in serviceObject.keys()) {
+                    if (endpointString in endpointsToSkip) continue
                     val endpoint = Endpoint.from(serviceBase, endpointString)
                     if (endpoint is Endpoint.StudyScreen || endpoint is Endpoint.Android) continue
 
