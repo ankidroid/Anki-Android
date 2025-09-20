@@ -131,7 +131,11 @@ class ControlsSettingsFragment :
     ): String = this.toSentenceCase(this@ControlsSettingsFragment, resId)
 
     private fun setupNewStudyScreenSettings() {
-        if (!Prefs.isNewStudyScreenEnabled) return
+        if (!Prefs.isNewStudyScreenEnabled) {
+            findPreference<Preference>(R.string.gestures_corner_touch_preference)?.dependency = getString(R.string.gestures_preference)
+            findPreference<Preference>(R.string.pref_swipe_sensitivity_key)?.dependency = getString(R.string.gestures_preference)
+            return
+        }
         for (keyRes in legacyStudyScreenSettings) {
             val key = getString(keyRes)
             findPreference<Preference>(key)?.isVisible = false
@@ -159,6 +163,7 @@ class ControlsSettingsFragment :
                 R.string.toggle_eraser_command_key,
                 R.string.clear_whiteboard_command_key,
                 R.string.change_whiteboard_pen_color_command_key,
+                R.string.gestures_preference,
             )
     }
 }
