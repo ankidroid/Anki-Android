@@ -151,6 +151,7 @@ class WhiteboardFragment :
             viewModel.brushColor,
             viewModel.activeStrokeWidth,
         ) { color, width ->
+            whiteboardView.onBrushChanged()
             whiteboardView.setCurrentBrush(color, width)
         }.launchIn(lifecycleScope)
 

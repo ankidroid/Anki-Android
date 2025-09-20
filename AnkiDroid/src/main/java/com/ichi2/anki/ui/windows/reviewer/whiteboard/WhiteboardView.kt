@@ -37,7 +37,7 @@ class WhiteboardView : View {
     constructor(context: Context) : this(context, null)
 
     // Callbacks for user actions
-    var onNewPath: ((Path) -> Unit)? = null
+    var onNewPath: ((Path, Paint) -> Unit)? = null
     var onEraseGestureStart: (() -> Unit)? = null
     var onEraseGestureMove: ((Float, Float) -> Unit)? = null
     var onEraseGestureEnd: (() -> Unit)? = null
@@ -67,6 +67,11 @@ class WhiteboardView : View {
     private val canvasPaint = Paint(Paint.DITHER_FLAG)
 
     private var hasMoved = false
+    private var lastX = 0f
+    private var lastY = 0f
+
+    // Add this property to your WhiteboardView class
+    private var activePointerId = MotionEvent.INVALID_POINTER_ID
 
     /**
      * Recreates the drawing buffer when the view size changes.
@@ -103,52 +108,105 @@ class WhiteboardView : View {
     }
 
     /**
+     * Finalizes the current drawing stroke, if one is in progress.
+     * This should be called from your UI (e.g., a color button's click listener)
+     * to end a stroke before its natural completion.
+     */
+    fun finalizeCurrentStroke() {
+        if (currentPath.isEmpty) {
+            return
+        }
+
+        if (!hasMoved) {
+            currentPath.lineTo(lastX + 0.2f, lastY + 0.2f)
+        }
+
+        onNewPath?.invoke(Path(currentPath), currentPaint)
+
+        currentPath.reset()
+        invalidate()
+    }
+
+    /**
+     * Notifies the view that a brush property (like color) has changed externally.
+     * If a stroke is currently being drawn by a different pointer, this will
+     * finalize that stroke immediately.
+     */
+    fun onBrushChanged() {
+        // Check if a drawing gesture is active (activePointerId is valid)
+        if (activePointerId != MotionEvent.INVALID_POINTER_ID) {
+            // A stroke is in progress, so finalize it now.
+            finalizeCurrentStroke()
+            // Invalidate the pointer to stop further drawing in this gesture.
+            activePointerId = MotionEvent.INVALID_POINTER_ID
+        }
+    }
+
+    /**
      * Handles user touch input for drawing and erasing.
      * Ignores finger input if stylus-only mode is enabled.
      */
     override fun onTouchEvent(event: MotionEvent): Boolean {
-        if (isStylusOnlyMode && event.getToolType(0) != MotionEvent.TOOL_TYPE_STYLUS) {
+        if (isStylusOnlyMode && event.getToolType(event.actionIndex) != MotionEvent.TOOL_TYPE_STYLUS) {
             return false
         }
 
-        val touchX = event.x
-        val touchY = event.y
-        val isPathEraser = isEraserActive && eraserMode == EraserMode.STROKE
-
-        when (event.action) {
+        when (event.actionMasked) {
             MotionEvent.ACTION_DOWN -> {
+                activePointerId = event.getPointerId(0)
+                val touchX = event.x
+                val touchY = event.y
+
                 hasMoved = false
                 currentPath.moveTo(touchX, touchY)
-                if (isPathEraser) {
-                    onEraseGestureStart?.invoke()
-                    onEraseGestureMove?.invoke(touchX, touchY)
-                }
+                lastX = touchX
+                lastY = touchY
                 invalidate()
             }
+
+            MotionEvent.ACTION_POINTER_DOWN -> {
+                // A second finger touch finalizes the current stroke.
+                if (activePointerId != MotionEvent.INVALID_POINTER_ID) {
+                    finalizeCurrentStroke()
+                }
+                // Invalidate the pointer to stop further drawing.
+                activePointerId = MotionEvent.INVALID_POINTER_ID
+            }
+
             MotionEvent.ACTION_MOVE -> {
-                hasMoved = true
-                currentPath.lineTo(touchX, touchY)
-                if (isPathEraser) {
-                    onEraseGestureMove?.invoke(touchX, touchY)
+                val pointerIndex = event.findPointerIndex(activePointerId)
+                // Proceed only if the move event is for our active drawing finger.
+                if (pointerIndex != -1) {
+                    val touchX = event.getX(pointerIndex)
+                    val touchY = event.getY(pointerIndex)
+
+                    hasMoved = true
+                    val midX = (touchX + lastX) / 2
+                    val midY = (touchY + lastY) / 2
+                    currentPath.quadTo(lastX, lastY, midX, midY)
+                    lastX = touchX
+                    lastY = touchY
+                    invalidate()
                 }
-                invalidate()
             }
-            MotionEvent.ACTION_UP -> {
-                if (isPathEraser) {
-                    onEraseGestureEnd?.invoke()
-                } else {
-                    if (!hasMoved) {
-                        // A single tap. Add a tiny line segment to ensure it has a non-zero length,
-                        // which makes it more robust for path operations.
-                        currentPath.lineTo(touchX + 0.2f, touchY + 0.2f)
-                    }
-                    onNewPath?.invoke(Path(currentPath))
+
+            MotionEvent.ACTION_UP, MotionEvent.ACTION_POINTER_UP -> {
+                val liftedPointerId = event.getPointerId(event.actionIndex)
+                // Finalize the stroke only if the finger that was lifted is the one that was drawing.
+                if (liftedPointerId == activePointerId) {
+                    finalizeCurrentStroke()
                 }
-                // Reset the path for the next gesture
+                // If the last finger is up, reset the pointer.
+                if (event.actionMasked == MotionEvent.ACTION_UP) {
+                    activePointerId = MotionEvent.INVALID_POINTER_ID
+                }
+            }
+
+            MotionEvent.ACTION_CANCEL -> {
                 currentPath.reset()
+                activePointerId = MotionEvent.INVALID_POINTER_ID
                 invalidate()
             }
-            else -> return false
         }
         return true
     }
