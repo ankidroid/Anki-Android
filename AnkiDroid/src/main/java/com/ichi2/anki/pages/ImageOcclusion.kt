@@ -21,21 +21,36 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.webkit.WebView
+import android.widget.Spinner
 import androidx.activity.addCallback
 import androidx.core.os.bundleOf
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.appbar.MaterialToolbar
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.DeckSpinnerSelection
 import com.ichi2.anki.R
 import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.dialogs.DiscardChangesDialog
+import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.DeckId
+import com.ichi2.anki.libanki.DeckNameId
+import com.ichi2.anki.model.SelectableDeck
+import com.ichi2.anki.pages.viewmodel.ImageOcclusionArgs
+import com.ichi2.anki.pages.viewmodel.ImageOcclusionViewModel
+import com.ichi2.anki.requireAnkiActivity
 import kotlinx.coroutines.launch
-import org.json.JSONObject
 import timber.log.Timber
 
-class ImageOcclusion : PageFragment(R.layout.image_occlusion) {
+class ImageOcclusion :
+    PageFragment(R.layout.image_occlusion),
+    DeckSelectionDialog.DeckSelectionListener {
+    private val viewModel: ImageOcclusionViewModel by viewModels()
+    private lateinit var deckSpinnerSelection: DeckSpinnerSelection
+    private lateinit var spinner: Spinner
+
     override fun onViewCreated(
         view: View,
         savedInstanceState: Bundle?,
@@ -49,33 +64,34 @@ class ImageOcclusion : PageFragment(R.layout.image_occlusion) {
             }
         }
 
+        spinner = view.findViewById(R.id.deck_selector)
+        deckSpinnerSelection =
+            DeckSpinnerSelection(
+                requireAnkiActivity(),
+                spinner,
+                showAllDecks = false,
+                alwaysShowDefault = false,
+                showFilteredDecks = false,
+            )
+
+        requireAnkiActivity().launchCatchingTask {
+            deckSpinnerSelection.initializeStatsBarDeckSpinner()
+            val selectedDeck = withCol { decks.getLegacy(decks.selected()) }
+            if (selectedDeck == null) return@launchCatchingTask
+            select(selectedDeck.id)
+        }
+
         @NeedsTest("#17393 verify that the added image occlusion cards are put in the correct deck")
         view.findViewById<MaterialToolbar>(R.id.toolbar).setOnMenuItemClickListener {
-            val editorWorkingDeckId = requireArguments().getLong(ARG_KEY_EDITOR_DECK_ID)
             if (it.itemId == R.id.action_save) {
                 Timber.i("save item selected")
-                // TODO desktop code doesn't allow a deck change from the reviewer, if we would do
-                //  the same then NoteEditor could simply set the deck as selected and this hack
-                //  could be removed
-                // because NoteEditor doesn't update the selected deck in Collection.decks when
-                // there's a deck change and keeps its own deckId reference, we need to use that
-                // deck id reference as the target deck in this fragment(backend code simply uses
-                // the current selected deck it sees as the target deck for adding)
-                lifecycleScope.launch {
-                    val previousDeckId =
-                        withCol {
-                            val current = backend.getCurrentDeck().id
-                            backend.setCurrentDeck(editorWorkingDeckId)
-                            current
-                        }
-                    webView.evaluateJavascript("anki.imageOcclusion.save()") {
-                        // reset to the previous deck that the backend "saw" as selected, this
-                        // avoids other screens unexpectedly having their working decks modified(
-                        // most important being the Reviewer where the user would find itself
-                        // studying another deck after editing a note with changing the deck)
-                        lifecycleScope.launch {
-                            withCol { backend.setCurrentDeck(previousDeckId) }
-                        }
+                webView.evaluateJavascript("anki.imageOcclusion.save()") {
+                    // reset to the previous deck that the backend "saw" as selected, this
+                    // avoids other screens unexpectedly having their working decks modified(
+                    // most important being the Reviewer where the user would find itself
+                    // studying another deck after editing a note with changing the deck)
+                    viewLifecycleOwner.lifecycleScope.launch {
+                        viewModel.onSaveOperationCompleted()
                     }
                 }
             }
@@ -90,31 +106,45 @@ class ImageOcclusion : PageFragment(R.layout.image_occlusion) {
                 url: String?,
             ) {
                 super.onPageFinished(view, url)
-
-                val kind = requireArguments().getString(ARG_KEY_KIND)
-                val noteOrNotetypeId = requireArguments().getLong(ARG_KEY_ID)
-                val imagePath = requireArguments().getString(ARG_KEY_PATH)
-
-                val options = JSONObject()
-                options.put("kind", kind)
-                if (kind == "add") {
-                    options.put("imagePath", imagePath)
-                    options.put("notetypeId", noteOrNotetypeId)
-                } else {
-                    options.put("noteId", noteOrNotetypeId)
-                }
-
-                view?.evaluateJavascript("globalThis.anki.imageOcclusion.mode = $options") {
-                    super.onPageFinished(view, url)
+                viewModel.webViewOptions.let { options ->
+                    view?.evaluateJavascript("globalThis.anki.imageOcclusion.mode = $options") {
+                        super.onPageFinished(view, url)
+                    }
                 }
             }
         }
 
+    override fun onDeckSelected(deck: SelectableDeck?) {
+        if (deck == null) return
+        require(deck is SelectableDeck.Deck)
+
+        val deckDidChange = viewModel.handleDeckSelection(deck.deckId)
+        if (deckDidChange) {
+            viewLifecycleOwner.lifecycleScope.launch {
+                select(deck.deckId)
+                deckSpinnerSelection.selectDeckById(viewModel.selectedDeckId, true)
+            }
+        }
+    }
+
+    private val decksAdapterSequence
+        get() =
+            sequence {
+                for (i in 0 until spinner.adapter.count) {
+                    yield(spinner.adapter.getItem(i) as DeckNameId)
+                }
+            }
+
+    /**
+     * Given the [deckId] look in the decks adapter for its position and select it if found.
+     */
+    private fun select(deckId: DeckId) {
+        val itemToSelect = decksAdapterSequence.withIndex().firstOrNull { it.value.id == deckId } ?: return
+        spinner.setSelection(itemToSelect.index)
+    }
+
     companion object {
-        private const val ARG_KEY_KIND = "kind"
-        private const val ARG_KEY_ID = "id"
-        private const val ARG_KEY_PATH = "imagePath"
-        private const val ARG_KEY_EDITOR_DECK_ID = "arg_key_editor_deck_id"
+        const val IO_ARGS_KEY = "IMAGE_OCCLUSION_ARGS"
 
         /**
          * @param editorWorkingDeckId the current deck id that [com.ichi2.anki.NoteEditorFragment] is using
@@ -126,20 +156,22 @@ class ImageOcclusion : PageFragment(R.layout.image_occlusion) {
             imagePath: String?,
             editorWorkingDeckId: DeckId,
         ): Intent {
-            val suffix =
-                if (kind == "edit") {
-                    noteOrNotetypeId
-                } else {
-                    Uri.encode(imagePath)
-                }
+            val suffix = if (kind == "edit") noteOrNotetypeId else Uri.encode(imagePath)
+
+            val args =
+                ImageOcclusionArgs(
+                    kind = kind,
+                    id = noteOrNotetypeId,
+                    imagePath = imagePath,
+                    editorDeckId = editorWorkingDeckId,
+                )
+
             val arguments =
                 bundleOf(
-                    ARG_KEY_KIND to kind,
-                    ARG_KEY_ID to noteOrNotetypeId,
-                    ARG_KEY_PATH to imagePath,
+                    IO_ARGS_KEY to args,
                     PATH_ARG_KEY to "image-occlusion/$suffix",
-                    ARG_KEY_EDITOR_DECK_ID to editorWorkingDeckId,
                 )
+
             return SingleFragmentActivity.getIntent(context, ImageOcclusion::class, arguments)
         }
     }

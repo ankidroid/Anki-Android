@@ -35,8 +35,15 @@
             android:layout_height="wrap_content"
             app:navigationContentDescription="@string/abc_action_bar_up_description"
             app:navigationIcon="?attr/homeAsUpIndicator"
-            app:menu="@menu/image_occlusion"/>
+            app:menu="@menu/image_occlusion">
 
+                <Spinner
+                    android:id="@+id/deck_selector"
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:dropDownWidth="wrap_content"/>
+        </com.google.android.material.appbar.MaterialToolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
     <WebView
