@@ -367,7 +367,7 @@
     <string name="hide_system_bars_status_bar" comment="Setting option to hide the system status bar (the top one with clock, battery status, etc)">ステータスバー（通知バー）を隠す</string>
     <string name="hide_system_bars_navigation_bar" comment="Setting option to hide the system navigation bar (the bottom one that can go back, to home, etc)">ナビゲーションバーを隠す</string>
     <string name="hide_system_bars_all_bars" comment="Setting option to hide all the system bars">どちらも隠す</string>
-    <string name="ignore_display_cutout" maxLength="41">ノッチ（ディスプレイ上部のくぼみ）を無視</string>
+    <string name="ignore_display_cutout" maxLength="41">ディスプレイカットアウト（ディスプレイ上部の穴やくぼみ）を無視</string>
     <string name="show_answer_buttons" maxLength="41">解答表示ボタン・回答ボタンを表示</string>
     <string name="hide_hard_and_easy" maxLength="41">「難しい」ボタンと「簡単」ボタンを隠す</string>
     <string name="reviewer_frame_style" maxLength="41">カードの輪郭のスタイル</string>
