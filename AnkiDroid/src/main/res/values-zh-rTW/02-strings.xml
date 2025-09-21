@@ -65,18 +65,18 @@
     <string name="save_whiteboard" maxLength="28">儲存白板</string>
     <string name="enable_stylus" maxLength="28">啟用手寫筆模式</string>
     <string name="disable_stylus">關閉手寫筆模式</string>
-    <string name="eraser" maxLength="28">Eraser</string>
-    <string name="add_brush" maxLength="28">Add brush</string>
-    <string name="whiteboard_align_left" comment="Option to align the whiteboard toolbar on the left" maxLength="28">Left</string>
-    <string name="whiteboard_align_bottom" comment="Option to align the whiteboard toolbar on the bottom" maxLength="28">Bottom</string>
-    <string name="whiteboard_align_right" comment="Option to align the whiteboard toolbar on the right" maxLength="28">Right</string>
-    <string name="whiteboard_clear" comment="Button text to clear the whiteboard" maxLength="28">Clear</string>
-    <string name="whiteboard_more_options" comment="Tooltip of the whiteboard \'More\' button" maxLength="28">More options</string>
-    <string name="whiteboard_remove_brush_message">Are you sure you want to remove this brush from your palette?</string>
-    <string name="whiteboard_ink_eraser" comment="Title of the whiteboard Ink eraser">Ink</string>
-    <string name="whiteboard_stroke_eraser" comment="Title of the whiteboard Stroke eraser">Stroke</string>
-    <string name="stylus_mode" comment="Title of the menu item that toggles the whiteboard stylus mode" maxLength="28">Stylus mode</string>
-    <string name="cannot_remove_last_brush_message">The last brush may not be removed</string>
+    <string name="eraser" maxLength="28">橡皮擦</string>
+    <string name="add_brush" maxLength="28">增加筆刷</string>
+    <string name="whiteboard_align_left" comment="Option to align the whiteboard toolbar on the left" maxLength="28">靠左</string>
+    <string name="whiteboard_align_bottom" comment="Option to align the whiteboard toolbar on the bottom" maxLength="28">底部</string>
+    <string name="whiteboard_align_right" comment="Option to align the whiteboard toolbar on the right" maxLength="28">右</string>
+    <string name="whiteboard_clear" comment="Button text to clear the whiteboard" maxLength="28">清除</string>
+    <string name="whiteboard_more_options" comment="Tooltip of the whiteboard \'More\' button" maxLength="28">更多選項</string>
+    <string name="whiteboard_remove_brush_message">你確定要從你的調色盤中移除此筆刷嗎？</string>
+    <string name="whiteboard_ink_eraser" comment="Title of the whiteboard Ink eraser">墨</string>
+    <string name="whiteboard_stroke_eraser" comment="Title of the whiteboard Stroke eraser">筆劃</string>
+    <string name="stylus_mode" comment="Title of the menu item that toggles the whiteboard stylus mode" maxLength="28">手寫筆模式</string>
+    <string name="cannot_remove_last_brush_message">無法刪除上一個筆刷</string>
     <string name="enable_whiteboard" maxLength="28">開啟白板</string>
     <string name="disable_whiteboard">關閉白板</string>
     <string name="show_whiteboard">顯示白板</string>
@@ -95,16 +95,16 @@
     <string name="webview_crash_fatal">致命錯誤：WebView 渲染器已崩潰。原因：%s</string>
     <string name="webview_crash_loop_dialog_title">系統 WebView 渲染失敗</string>
     <string name="webview_crash_loop_dialog_content">系統 WebView 渲染卡片 ‘%1$s’ 失敗。\n %2$s</string>
-    <string name="slide_to_cancel" comment="Message shown when pressing the record button">Slide to cancel</string>
+    <string name="slide_to_cancel" comment="Message shown when pressing the record button">滑動取消</string>
     <string name="filter_by_flags" maxLength="41">標籤</string>
     <!-- Custom study options -->
     <string name="custom_study_loading_tags">正在建立標籤列&#8230;</string>
     <!-- Study options -->
     <plurals name="studyoptions_buried_count">
-        <item quantity="other">+%d buried</item>
+        <item quantity="other">暫時隱藏%d</item>
     </plurals>
-    <string name="studyoptions_total_new_label">Total new cards</string>
-    <string name="studyoptions_total_label">Total cards</string>
+    <string name="studyoptions_total_new_label">新卡總數</string>
+    <string name="studyoptions_total_label">卡片總數</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card" maxLength="28">編輯筆記</string>
     <string name="discard">捨棄</string>
@@ -119,7 +119,7 @@
     <string name="field_remapping">%1$s (來自「%2$s」)</string>
     <string name="confirm_map_cards_to_nothing">空白卡片會被刪除，而筆記如果沒有在卡片上也會遺失。你確定要繼續嗎？</string>
     <string name="missing_note_type">未找到筆記類型</string>
-    <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (empty)</string>
+    <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s（空白）</string>
     <!-- Image cropper -->
     <string name="image_cropper_action_rotate" maxLength="28" comment="Action in image cropper screen">旋轉</string>
     <string name="image_cropper_action_flip" maxLength="28" comment="Action in image cropper screen">翻轉</string>
@@ -207,8 +207,8 @@
     <string name="restore_default" maxLength="28">恢復預設值</string>
     <string name="reviewer_tts_cloze_spoken_replacement">空白</string>
     <!-- Whiteboard eraser mode toggle message in Reviewer -->
-    <string name="white_board_eraser_enabled">Eraser mode activated</string>
-    <string name="white_board_eraser_disabled">Eraser mode deactivated</string>
+    <string name="white_board_eraser_enabled">消除模式開啟</string>
+    <string name="white_board_eraser_disabled">消除模式關閉</string>
     <!-- Whiteboard save image message in the Study Screen -->
     <string name="white_board_image_save_failed">儲存白板圖像失敗。%s</string>
     <string name="white_board_image_saved">白板圖像儲存至%s</string>
@@ -324,7 +324,7 @@
     <string name="deleting_selected_notes">刪除選取的筆記</string>
     <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">按任意聲線以選擇</string>
     <string name="tts_voices_selected_voice_should_be_installed" comment="If a voice has been tapped, is installable but not installed, we want to inform the user that they should install it for the best experience There will also be an option to use it without downloading">聲線使用前需先下載</string>
-    <string name="tts_voices_use_selected_voice_without_install" comment="A user has been informed that a voice should be installed before use. This is text on a snackbar button which allows them to use the voice without installing it">Use anyway</string>
+    <string name="tts_voices_use_selected_voice_without_install" comment="A user has been informed that a voice should be installed before use. This is text on a snackbar button which allows them to use the voice without installing it">繼續使用</string>
     <string name="tts_voices_playback_error_new" comment="an error occurred when playing a text to speech voice. The parameter is a technical error code such as \'ERROR_NOT_INSTALLED_YET\' or \'ERROR_NETWORK_TIMEOUT\'">文字轉語音錯誤 (%s)</string>
     <!-- Chips should probably be in a separate file, due to the additional length req -->
     <string name="tts_voices_chip_filter_to_internet" comment="     Filters a list of text to speech voices, to enable/disable voices which require the internet to     function.     This is on a chip control, so keep the text short, ideally one word">互聯網</string>
@@ -355,13 +355,13 @@
     <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">Deck Picker</string>
     <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">Delete deck without confirmation</string>
     <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">Note Editor</string>
-    <string name="select_deck" comment="Description of the shortcut that opens the deck selection dialog">Select deck</string>
-    <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">Select note type</string>
-    <string name="tag_editor" comment="Description of the shortcut that opens the tags dialog">Tag editor</string>
+    <string name="select_deck" comment="Description of the shortcut that opens the deck selection dialog">選擇牌組</string>
+    <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">選擇筆記類型</string>
+    <string name="tag_editor" comment="Description of the shortcut that opens the tags dialog">標籤編輯器</string>
     <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">Card Template Editor</string>
-    <string name="edit_front_template" comment="Description of the shortcut that shows the question side of the card template">Edit front template</string>
-    <string name="edit_back_template" comment="Description of the shortcut that shows the answer side of the card template">Edit back template</string>
-    <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">Edit styling</string>
+    <string name="edit_front_template" comment="Description of the shortcut that shows the question side of the card template">編輯正面模板</string>
+    <string name="edit_back_template" comment="Description of the shortcut that shows the answer side of the card template">編輯背面模板</string>
+    <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">編輯造型</string>
     <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">Copy template as markdown</string>
     <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">Edit browser appearance</string>
     <string name="missing_user_action_dialog_message" comment="%s is the user action number">User action %s is not set in this notetype. Please configure it</string>

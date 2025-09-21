@@ -65,18 +65,18 @@
     <string name="save_whiteboard" maxLength="28">ホワイトボードの内容を保存</string>
     <string name="enable_stylus" maxLength="28">スタイラスモードをオン</string>
     <string name="disable_stylus">スタイラスモードをオフ</string>
-    <string name="eraser" maxLength="28">Eraser</string>
-    <string name="add_brush" maxLength="28">Add brush</string>
-    <string name="whiteboard_align_left" comment="Option to align the whiteboard toolbar on the left" maxLength="28">Left</string>
-    <string name="whiteboard_align_bottom" comment="Option to align the whiteboard toolbar on the bottom" maxLength="28">Bottom</string>
-    <string name="whiteboard_align_right" comment="Option to align the whiteboard toolbar on the right" maxLength="28">Right</string>
-    <string name="whiteboard_clear" comment="Button text to clear the whiteboard" maxLength="28">Clear</string>
-    <string name="whiteboard_more_options" comment="Tooltip of the whiteboard \'More\' button" maxLength="28">More options</string>
-    <string name="whiteboard_remove_brush_message">Are you sure you want to remove this brush from your palette?</string>
-    <string name="whiteboard_ink_eraser" comment="Title of the whiteboard Ink eraser">Ink</string>
-    <string name="whiteboard_stroke_eraser" comment="Title of the whiteboard Stroke eraser">Stroke</string>
-    <string name="stylus_mode" comment="Title of the menu item that toggles the whiteboard stylus mode" maxLength="28">Stylus mode</string>
-    <string name="cannot_remove_last_brush_message">The last brush may not be removed</string>
+    <string name="eraser" maxLength="28">描線を消す</string>
+    <string name="add_brush" maxLength="28">ブラシを追加</string>
+    <string name="whiteboard_align_left" comment="Option to align the whiteboard toolbar on the left" maxLength="28">左</string>
+    <string name="whiteboard_align_bottom" comment="Option to align the whiteboard toolbar on the bottom" maxLength="28">下</string>
+    <string name="whiteboard_align_right" comment="Option to align the whiteboard toolbar on the right" maxLength="28">右</string>
+    <string name="whiteboard_clear" comment="Button text to clear the whiteboard" maxLength="28">全体</string>
+    <string name="whiteboard_more_options" comment="Tooltip of the whiteboard \'More\' button" maxLength="28">その他のオプション</string>
+    <string name="whiteboard_remove_brush_message">このブラシをパレットから削除してもよろしいですか？</string>
+    <string name="whiteboard_ink_eraser" comment="Title of the whiteboard Ink eraser">部分</string>
+    <string name="whiteboard_stroke_eraser" comment="Title of the whiteboard Stroke eraser">線</string>
+    <string name="stylus_mode" comment="Title of the menu item that toggles the whiteboard stylus mode" maxLength="28">スタイラス モード</string>
+    <string name="cannot_remove_last_brush_message">最後のブラシは削除できません</string>
     <string name="enable_whiteboard" maxLength="28">ホワイトボード機能をオン</string>
     <string name="disable_whiteboard">ホワイトボード機能をオフ</string>
     <string name="show_whiteboard">ホワイトボードを表示</string>

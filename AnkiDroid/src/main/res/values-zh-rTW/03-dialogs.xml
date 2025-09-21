@@ -121,8 +121,8 @@
     <string name="multimedia_editor_failed">無法開啟多媒體編輯器</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">音訊錄製權限被拒絕</string>
-    <string name="permission_denied">Permission denied</string>
-    <string name="recording_permission_denied_message">Microphone permission is necessary for the “Record voice” feature. Please grant it in the app settings.</string>
+    <string name="permission_denied">權限被拒</string>
+    <string name="recording_permission_denied_message">“錄音”功能需開啟麥克風，請在程式設定裏批准權限。</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid 已更新</string>
     <string name="integrity_check_startup_content">AnkiDroid 已更新，此更新包含修復潛在的資料庫問題，而我們建議您現在執行檢查資料庫。</string>
@@ -224,7 +224,7 @@
         <item quantity="other">天</item>
     </plurals>
     <plurals name="set_due_date_current_interval">
-        <item quantity="other">Current interval: %d days</item>
+        <item quantity="other">當前間隔天數：%d天</item>
     </plurals>
     <string name="range_delimiter" comment="Placed between two input boxes to denote a range">–</string>
     <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">從</string>
