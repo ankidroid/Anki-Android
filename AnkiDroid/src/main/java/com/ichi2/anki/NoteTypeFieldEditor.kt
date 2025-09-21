@@ -61,7 +61,6 @@ import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
 import com.ichi2.utils.title
-import com.ichi2.widget.WidgetStatus
 import org.json.JSONArray
 import org.json.JSONException
 import timber.log.Timber
@@ -113,13 +112,6 @@ class NoteTypeFieldEditor : AnkiActivity() {
                 addFieldLocaleHint(selectedLocale)
             }
             dismissAllDialogFragments()
-        }
-    }
-
-    override fun onStop() {
-        super.onStop()
-        if (!isFinishing) {
-            WidgetStatus.updateInBackground(this)
         }
     }
 
