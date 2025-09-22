@@ -28,8 +28,6 @@ import android.view.MotionEvent
 import android.view.View
 import androidx.core.graphics.createBitmap
 import com.ichi2.anki.R
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 
 /**
  * A custom view for the whiteboard that handles drawing and touch events.
