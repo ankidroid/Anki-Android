@@ -16,7 +16,6 @@
 package com.ichi2.anki.ui.windows.reviewer.whiteboard
 import android.content.SharedPreferences
 import android.graphics.Color
-import android.graphics.Paint
 import android.graphics.Path
 import android.graphics.PathMeasure
 import androidx.annotation.CheckResult
@@ -131,16 +130,13 @@ class WhiteboardViewModel(
     /**
      * Adds a new completed path to the drawing history.
      */
-    fun addPath(
-        path: Path,
-        paint: Paint,
-    ) {
+    fun addPath(path: Path) {
         val isPixelEraser = isEraserActive.value && eraserMode.value == EraserMode.INK
         val newAction =
             DrawingAction(
                 path,
-                paint.color,
-                paint.strokeWidth,
+                brushColor.value,
+                activeStrokeWidth.value,
                 isPixelEraser,
             )
         paths.update { it + newAction }
