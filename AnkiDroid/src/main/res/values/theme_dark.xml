@@ -11,19 +11,10 @@
 
     <style name="Base.Theme.Dark" parent="@style/Theme.Material3.Dark.NoActionBar">
         <!-- Android colors -->
-        <item name="colorPrimary">@color/material_blue_400</item>
-        <item name="colorOnPrimary">@color/white</item>
-        <item name="colorPrimaryDark">@color/theme_dark_primary_dark</item>
-        <item name="colorSurface">?android:colorBackground</item>
         <item name="colorAccent">@color/material_blue_400</item>
-        <item name="colorOnSurface">@color/white</item>
-        <item name="colorPrimaryContainer">@color/white</item> <!-- Switch thumb color when disabled and being pressed -->
-        <item name="colorOnPrimaryContainer">@color/white</item> <!-- FAB icons -->
 
         <item name="android:textColor">@color/text_color_dark</item>
         <item name="android:textColorSecondary">@color/text_color_secondary_dark</item>
-        <item name="android:colorBackground">@color/material_theme_grey</item>
-        <item name="android:windowBackground">@color/material_theme_grey</item>
 
         <item name="colorSurfaceContainerHighest">?attr/colorSurfaceContainer</item>
         <item name="colorSurfaceContainerHigh">?android:attr/colorBackground</item>
@@ -122,17 +113,14 @@
         <item name="android:listPreferredItemHeight">56dip</item>
         <item name="textAllCaps">false</item>
         <!--Custom Tabs colors-->
-        <item name="customTabNavBarColor">@color/material_grey_800</item>
-        <item name="popupBackgroundColor">@color/popup_background_theme_dark</item>
+        <item name="popupBackgroundColor">?attr/colorSurface</item>
         <item name="editTextDisabled">@color/material_grey_500</item>
-        <item name="overflowAndPopupMenuIconColor">#9effffff</item>
-        <!-- StatusBar -->
-        <item name="android:statusBarColor">@color/theme_dark_primary</item>
+        <item name="overflowAndPopupMenuIconColor">?attr/colorOnSurfaceVariant</item>
+        <!-- StatusBar and Navbar for Edge-to-Edge -->
+        <item name="android:statusBarColor" tools:targetApi="l">@android:color/transparent</item>
         <item name="android:windowLightStatusBar">false</item>
-        <!-- Navbar -->
-        <item name="android:navigationBarColor">@color/material_theme_grey</item>
+        <item name="android:navigationBarColor" tools:targetApi="l">@android:color/transparent</item>
         <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">false</item>
-        <item name="android:navigationBarColor">@color/black</item>
 
         <!-- Snackbar. Attributes snackbarStyle, snackbarTextViewStyle and snackbarButtonStyle
              must be *all* present in a theme (or its parent) in order for the snackbar

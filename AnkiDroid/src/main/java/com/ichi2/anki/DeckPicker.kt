@@ -59,6 +59,8 @@ import androidx.appcompat.widget.TooltipCompat
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityCompat.OnRequestPermissionsResultCallback
 import androidx.core.content.edit
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat
@@ -536,6 +538,12 @@ open class DeckPicker :
         }
 
         setContentView(R.layout.homescreen)
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.root_layout)) { view, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            view.setPadding(systemBars.left, systemBars.top, systemBars.right, view.paddingBottom)
+            findViewById<RecyclerView>(R.id.decks).setPadding(0, 0, 0, systemBars.bottom)
+            insets
+        }
         enableToolbar()
         // TODO This method is run on every activity recreation, which can happen often.
         //  It seems that the original idea was for for this to only run once, on app start.

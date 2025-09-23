@@ -8,13 +8,9 @@
 
     <style name="Base.Theme.Dark.Black" parent="Theme_Dark">
         <!-- Android colors -->
-        <item name="colorPrimary">@color/material_blue_400</item>
-        <item name="colorPrimaryDark">@color/black</item>
         <item name="colorAccent">@color/material_blue_500</item>
         <item name="android:textColor">@color/text_color_dark</item>
         <item name="android:textColorSecondary">@color/text_color_secondary_dark</item>
-        <item name="android:colorBackground">@color/theme_black_primary</item>
-        <item name="android:windowBackground">@color/theme_black_primary</item>
         <item name="preferenceCategoryTitleTextColor">?attr/colorAccent</item>
         <!-- Action bar styles -->
         <item name="appBarColor">@color/theme_black_primary</item>
@@ -96,12 +92,12 @@
         <item name="android:listPreferredItemHeight">56dip</item>
         <item name="alertDialogTheme">@style/ThemeOverlay.AnkiDroid.AlertDialog.Black</item>
         <!--Custom Tabs colors-->
-        <item name="customTabNavBarColor">#000000</item>
-        <item name="popupBackgroundColor">@color/popup_background_theme_black</item>
-        <item name="android:statusBarColor">@color/black</item>
+        <item name="popupBackgroundColor">?attr/colorSurface</item>
+        <!-- StatusBar and Navbar for Edge-to-Edge -->
+        <item name="android:statusBarColor" tools:targetApi="l">@android:color/transparent</item>
+        <item name="android:navigationBarColor" tools:targetApi="l">@android:color/transparent</item>
 
         <item name="editTextDisabled">@color/material_grey_700</item>
-        <item name="android:navigationBarColor">@color/black</item>
 
         <!-- Snackbar -->
         <item name="snackbarTextViewStyle">@style/SnackbarTextStyleBlack</item>
