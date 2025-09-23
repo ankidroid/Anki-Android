@@ -143,6 +143,8 @@ import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyAction
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyAction.Companion.REQUEST_KEY
 import com.ichi2.anki.export.ExportDialogFragment
+import com.ichi2.anki.ui.compose.LoadingIndicator
+import com.ichi2.anki.ui.compose.NoDecks
 import com.ichi2.anki.introduction.CollectionPermissionScreenLauncher
 import com.ichi2.anki.introduction.hasCollectionStoragePermissions
 import com.ichi2.anki.libanki.DeckId
@@ -273,7 +275,8 @@ open class DeckPicker :
     lateinit var recyclerView: RecyclerView
     private lateinit var recyclerViewLayoutManager: LinearLayoutManager
     private lateinit var deckListAdapter: DeckAdapter
-    private lateinit var noDecksPlaceholder: LinearLayout
+    private lateinit var noDecksPlaceholder: androidx.compose.ui.platform.ComposeView
+    private lateinit var progressIndicatorView: androidx.compose.ui.platform.ComposeView
     private lateinit var pullToSyncWrapper: SwipeRefreshLayout
 
     // Right-click context menu handler using decoupled menu system
@@ -375,7 +378,7 @@ open class DeckPicker :
             DeckPickerActivityResultCallback {
                 if (it.resultCode == RESULT_OK) {
                     lifecycleScope.launch {
-                        withProgress(message = getString(R.string.import_preparing_file)) {
+                        withComposeProgress {
                             withContext(Dispatchers.IO) {
                                 onSelectedPackageToImport(it.data!!)
                             }
@@ -561,6 +564,13 @@ open class DeckPicker :
         deckPickerContent = findViewById(R.id.deck_picker_content)
         recyclerView = findViewById(R.id.decks)
         noDecksPlaceholder = findViewById(R.id.no_decks_placeholder)
+        noDecksPlaceholder.setContent {
+            NoDecks()
+        }
+        progressIndicatorView = findViewById(R.id.progress_indicator_view)
+        progressIndicatorView.setContent {
+            LoadingIndicator()
+        }
 
         deckPickerContent.visibility = View.GONE
         noDecksPlaceholder.visibility = View.GONE
@@ -716,7 +726,7 @@ open class DeckPicker :
                 activity = this,
                 onUpgrade = {
                     launchCatchingRequiringOneWaySync {
-                        this@DeckPicker.withProgress { withCol { sched.upgradeToV2() } }
+                        this@DeckPicker.withComposeProgress { withCol { sched.upgradeToV2() } }
                         showThemedToast(this@DeckPicker, TR.schedulingUpdateDone(), false)
                     }
                 },
@@ -2315,7 +2325,7 @@ open class DeckPicker :
     @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
     fun updateDeckList() {
         launchCatchingTask {
-            withProgress { viewModel.updateDeckList()?.join() }
+                withComposeProgress { viewModel.updateDeckList()?.join() }
         }
     }
 
@@ -2402,7 +2412,7 @@ open class DeckPicker :
      */
     fun deleteDeck(did: DeckId) =
         launchCatchingTask {
-            withProgress(resources.getString(R.string.delete_deck)) {
+            withComposeProgress {
                 viewModel.deleteDeck(did).join()
             }
         }
@@ -2410,7 +2420,7 @@ open class DeckPicker :
     @NeedsTest("14285: regression test to ensure UI is updated after this call")
     fun rebuildFiltered(did: DeckId) {
         launchCatchingTask {
-            withProgress(resources.getString(R.string.rebuild_filtered_deck)) {
+            withComposeProgress {
                 withCol {
                     Timber.d("rebuildFiltered: doInBackground - RebuildCram")
                     decks.select(did)
@@ -2424,7 +2434,7 @@ open class DeckPicker :
 
     private fun emptyFiltered(did: DeckId) {
         launchCatchingTask {
-            withProgress {
+            withComposeProgress {
                 viewModel.emptyFilteredDeck(did).join()
             }
         }
@@ -2581,6 +2591,15 @@ open class DeckPicker :
     override fun getApkgFileImportResultLauncher(): ActivityResultLauncher<Intent> = apkgFileImportResultLauncher
 
     override fun getCsvFileImportResultLauncher(): ActivityResultLauncher<Intent> = csvImportResultLauncher
+
+    private suspend fun <T> withComposeProgress(op: suspend () -> T): T {
+        progressIndicatorView.visibility = View.VISIBLE
+        try {
+            return op()
+        } finally {
+            progressIndicatorView.visibility = View.GONE
+        }
+    }
 }
 
 /** Android's onCreateOptionsMenu does not play well with coroutines, as
