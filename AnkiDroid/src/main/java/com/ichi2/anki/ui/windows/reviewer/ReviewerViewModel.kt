@@ -723,6 +723,7 @@ class ReviewerViewModel :
                 changes.noteText -> {
                     val card = currentCard.await()
                     withCol { card.load(this) }
+                    cardMediaPlayer.loadCardAvTags(card)
                     updateMarkIcon()
                     if (showingAnswer.value) {
                         showAnswer()
