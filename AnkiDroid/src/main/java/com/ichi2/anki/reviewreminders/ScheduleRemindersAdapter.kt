@@ -17,6 +17,7 @@
 package com.ichi2.anki.reviewreminders
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,6 +37,7 @@ class ScheduleRemindersAdapter(
         holder: View,
     ) : RecyclerView.ViewHolder(holder) {
         var reminder: ReviewReminder? = null
+        val context: Context = holder.context
         val deckTextView: TextView = holder.findViewById(R.id.reminders_list_deck_text)
         val timeTextView: TextView = holder.findViewById(R.id.reminders_list_time_text)
         val switchView: MaterialSwitch = holder.findViewById(R.id.reminders_list_switch)
@@ -61,7 +63,7 @@ class ScheduleRemindersAdapter(
         holder.reminder = reminder
 
         setDeckNameFromScopeForView(reminder.scope, holder.deckTextView)
-        holder.timeTextView.text = reminder.time.toString()
+        holder.timeTextView.text = reminder.time.toFormattedString(holder.context)
 
         holder.itemView.setOnClickListener { editReminder(reminder) }
 
