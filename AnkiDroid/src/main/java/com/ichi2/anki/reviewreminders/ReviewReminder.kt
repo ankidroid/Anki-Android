@@ -16,18 +16,18 @@
 
 package com.ichi2.anki.reviewreminders
 
+import android.content.Context
 import android.os.Parcelable
+import android.text.format.DateFormat
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.settings.Prefs
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.Serializable
 import timber.log.Timber
-import java.time.LocalTime
-import java.time.format.DateTimeFormatter
-import java.time.format.FormatStyle
-import java.util.Locale
+import java.util.Calendar
 import kotlin.time.Duration.Companion.hours
 import kotlin.time.Duration.Companion.minutes
 
@@ -66,14 +66,17 @@ data class ReviewReminderTime(
         require(minute in 0..59) { "Minute must be between 0 and 59" }
     }
 
-    override fun toString(): String =
-        LocalTime
-            .of(hour, minute)
-            .format(
-                DateTimeFormatter
-                    .ofLocalizedTime(FormatStyle.SHORT)
-                    .withLocale(Locale.getDefault()),
-            )
+    /**
+     * Formats the time as a string in the user's locale and 12/24-hour preference.
+     */
+    fun toFormattedString(context: Context): String {
+        val calendarInstance =
+            TimeManager.time.calendar().apply {
+                set(Calendar.HOUR_OF_DAY, hour)
+                set(Calendar.MINUTE, minute)
+            }
+        return DateFormat.getTimeFormat(context).format(calendarInstance.time)
+    }
 
     fun toSecondsFromMidnight(): Long = (hour.hours + minute.minutes).inWholeSeconds
 }
