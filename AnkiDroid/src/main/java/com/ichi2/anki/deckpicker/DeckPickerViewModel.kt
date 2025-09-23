@@ -23,6 +23,7 @@ import androidx.lifecycle.viewModelScope
 import anki.card_rendering.EmptyCardsReport
 import anki.collection.OpChanges
 import anki.i18n.GeneratedTranslations
+import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
@@ -45,6 +46,7 @@ import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.pages.DeckOptionsDestination
 import com.ichi2.anki.performBackupInBackground
 import com.ichi2.anki.reviewreminders.ScheduleRemindersDestination
+import com.ichi2.anki.DeckSelectionType
 import com.ichi2.anki.utils.Destination
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -169,6 +171,26 @@ class DeckPickerViewModel :
     // HACK: dismiss a legacy progress bar
     // TODO: Replace with better progress handling for first load/corrupt collections
     val flowOfDecksReloaded = MutableSharedFlow<Unit>()
+    val deckSelectionResult = MutableSharedFlow<DeckSelectionResult>()
+
+    fun onDeckSelected(deckId: DeckId, selectionType: DeckSelectionType) = viewModelScope.launch {
+        withCol {
+            decks.select(deckId)
+            CardBrowser.clearLastDeckId()
+            focusedDeck = deckId
+            val deck = dueTree?.find(deckId)
+            if (deck != null && deck.hasCardsReadyToStudy()) {
+                deckSelectionResult.emit(DeckSelectionResult.HasCardsToStudy(selectionType))
+            } else {
+                val isEmpty = deck?.all { decks.isEmpty(it.did) } ?: true
+                if (isEmpty) {
+                    deckSelectionResult.emit(DeckSelectionResult.Empty(deckId))
+                } else {
+                    deckSelectionResult.emit(DeckSelectionResult.NoCardsToStudy)
+                }
+            }
+        }
+    }
 
     /**
      * Deletes the provided deck, child decks. and all cards inside.
@@ -453,3 +475,24 @@ data class EmptyCardsResult(
 }
 
 fun DeckNode.onlyHasDefaultDeck() = children.singleOrNull()?.did == DEFAULT_DECK_ID
+
+enum class DeckSelectionType {
+    /** Show study options if fragmented, otherwise, review  */
+    DEFAULT,
+
+    /** Always show study options (if the deck counts are clicked)  */
+    SHOW_STUDY_OPTIONS,
+
+    /** Always open reviewer (keyboard shortcut)  */
+    SKIP_STUDY_OPTIONS,
+}
+
+sealed class DeckSelectionResult {
+    data class HasCardsToStudy(val selectionType: DeckSelectionType) : DeckSelectionResult()
+    data class Empty(val deckId: DeckId) : DeckSelectionResult()
+    object NoCardsToStudy : DeckSelectionResult()
+}
+
+fun DeckNode.hasCardsReadyToStudy(): Boolean {
+    return newCount > 0 || lrnCount > 0 || revCount > 0
+}

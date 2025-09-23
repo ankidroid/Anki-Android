@@ -62,6 +62,7 @@ androidxWork = "2.10.3"
 ankiBackend = '0.1.61-anki25.09'
 autoService = "1.1.1"
 autoServiceAnnotations = "1.1.1"
+coil = "2.4.0"
 colorpicker = "1.2.0"
 # https://commons.apache.org/proper/commons-collections/changes.html
 commonsCollections4 = "4.5.0"
@@ -146,6 +147,7 @@ androidx-sqlite-framework = { module = "androidx.sqlite:sqlite-framework", versi
 androidx-recyclerview = { module = "androidx.recyclerview:recyclerview", version.ref = "androidxRecyclerview" }
 auto-service = { module = "com.google.auto.service:auto-service", version.ref = "autoService" }
 auto-service-annotations = { module = "com.google.auto.service:auto-service-annotations", version.ref = "autoServiceAnnotations" }
+coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
 jetbrains-annotations = { module = "org.jetbrains:annotations", version.ref = "jetbrainsAnnotations" }
 colorpicker = { module = "com.github.mrudultora:Colorpicker", version.ref = "colorpicker" }
 commons-io = { module = "commons-io:commons-io", version.ref = "commonsIo" }
