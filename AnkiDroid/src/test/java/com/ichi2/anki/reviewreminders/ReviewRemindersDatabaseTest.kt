@@ -29,6 +29,8 @@ import org.hamcrest.Matcher
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.anEmptyMap
 import org.hamcrest.Matchers.equalTo
+import org.hamcrest.Matchers.hasItem
+import org.hamcrest.Matchers.not
 import org.hamcrest.TypeSafeMatcher
 import org.junit.After
 import org.junit.Before
@@ -306,6 +308,30 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
             putString(ReviewRemindersDatabase.DECK_SPECIFIC_KEY + did1, Json.encodeToString(corruptedStoredReviewReminder))
         }
         ReviewRemindersDatabase.getAllDeckSpecificReminders()
+    }
+
+    @Test
+    fun `editRemindersForDeck should delete SharedPreferences key if no reminders are returned`() {
+        ReviewRemindersDatabase.editRemindersForDeck(did1) { dummyDeckSpecificRemindersForDeckOne }
+        ReviewRemindersDatabase.editRemindersForDeck(did1) { emptyMap() }
+        val attemptedRetrieval = ReviewRemindersDatabase.getRemindersForDeck(did1)
+        assertThat(attemptedRetrieval, anEmptyMap())
+        assertThat(
+            ReviewRemindersDatabase.remindersSharedPrefs.all.keys,
+            not(hasItem(ReviewRemindersDatabase.DECK_SPECIFIC_KEY + did1)),
+        )
+    }
+
+    @Test
+    fun `editAllAppWideReminders should delete SharedPreferences key if no reminders are returned`() {
+        ReviewRemindersDatabase.editAllAppWideReminders { dummyAppWideReminders }
+        ReviewRemindersDatabase.editAllAppWideReminders { emptyMap() }
+        val attemptedRetrieval = ReviewRemindersDatabase.getAllAppWideReminders()
+        assertThat(attemptedRetrieval, anEmptyMap())
+        assertThat(
+            ReviewRemindersDatabase.remindersSharedPrefs.all.keys,
+            not(hasItem(ReviewRemindersDatabase.APP_WIDE_KEY)),
+        )
     }
 
     /**
