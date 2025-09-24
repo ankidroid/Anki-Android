@@ -29,6 +29,7 @@
             android:overScrollFooter="@color/transparent"
             android:clipToPadding="false"
             android:drawSelectorOnTop="true"
+            android:paddingBottom="84dp"
             android:scrollbars="vertical"
             android:contentDescription="List of scheduled review reminders"
             tools:listitem="@layout/schedule_reminders_list_item"
