@@ -47,6 +47,17 @@ private fun Collection.isDeckEmpty(
 suspend fun isDefaultDeckEmpty(): Boolean = withCol { isDeckEmpty(Consts.DEFAULT_DECK_ID) }
 
 /**
+ * Checks if the deck with the specified ID is accessible to the user. For most decks, a deck is viewable
+ * and editable by the user simply if it exists. However, the default deck (ID=1) is always present in the collection
+ * but is hidden from the user when it is empty. Therefore, for the default deck, we check if it is empty.
+ */
+suspend fun canUserAccessDeck(did: DeckId): Boolean =
+    when (did) {
+        Consts.DEFAULT_DECK_ID -> !isDefaultDeckEmpty()
+        else -> withCol { decks.have(did) }
+    }
+
+/**
  * Returns whether the deck picker displays any deck.
  * Technically, it means that there is a non-default deck, or that the default deck is non-empty.
  *
