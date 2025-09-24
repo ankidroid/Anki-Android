@@ -24,7 +24,10 @@ import android.os.Build
 import android.os.Environment
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.FragmentManager
+import com.ichi2.anki.PermissionSet
 import com.ichi2.anki.common.utils.android.isRobolectric
+import com.ichi2.anki.ui.windows.permissions.PermissionsBottomSheet
 import com.ichi2.compat.CompatHelper.Companion.getPackageInfoCompat
 import com.ichi2.compat.PackageInfoFlagsCompat
 import com.ichi2.utils.Permissions.MANAGE_EXTERNAL_STORAGE
@@ -51,6 +54,36 @@ object Permissions {
         } else {
             null
         }
+
+    /**
+     * Returns whether AnkiDroid should request notification permissions from the user.
+     */
+    private fun shouldRequestNotificationPermissions(context: Context): Boolean {
+        val permission = postNotification ?: return false // Null if below API 33
+        val grantedStatus = ContextCompat.checkSelfPermission(context, permission)
+        return (grantedStatus != PackageManager.PERMISSION_GRANTED)
+    }
+
+    /**
+     * Shows the [com.ichi2.anki.ui.windows.permissions.NotificationsPermissionFragment] in the [PermissionsBottomSheet]
+     * if notification permissions have not been granted. Does nothing if the permission does not need to
+     * be requested (i.e. API < 33) or if the permission has already been granted.
+     *
+     * @param context Used for checking whether notification permissions have been granted.
+     * @param fragmentManager Used for launching the BottomSheet, if necessary.
+     * @param callback Executed only if the BottomSheet is actually shown.
+     */
+    fun requestNotificationsPermissionIfNeeded(
+        context: Context,
+        fragmentManager: FragmentManager,
+        callback: () -> Unit,
+    ) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU && shouldRequestNotificationPermissions(context)) {
+            Timber.i("Showing notifications bottom sheet")
+            PermissionsBottomSheet.launch(fragmentManager, PermissionSet.NOTIFICATIONS)
+            callback()
+        }
+    }
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     val tiramisuAudioPermission = Manifest.permission.READ_MEDIA_AUDIO
