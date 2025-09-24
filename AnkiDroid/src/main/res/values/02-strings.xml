@@ -440,5 +440,17 @@ opening the system text to speech settings fails">Failed to open text to speech 
 
     <!-- Scheduler Upgrade Required Dialog title-->
     <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">Scheduler upgrade required</string>
+
+    <!-- Manage Note Types -->
+    <plurals name="manage_notetypes_note_count">
+        <item quantity="one">%d note</item>
+        <item quantity="other">%d notes</item>
+    </plurals>
+    <string name="more_options">More options</string>
+    <string name="fields">Fields</string>
+    <string name="cards">Cards</string>
+
+    <!-- Browser Options -->
+    <string name="ignore_accents_in_search">Ignore accents in search</string>
 </resources>
 

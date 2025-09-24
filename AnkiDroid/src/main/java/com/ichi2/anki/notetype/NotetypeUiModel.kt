@@ -23,7 +23,7 @@ import com.ichi2.anki.libanki.NoteTypeId
  * Data holder class which contains the data to display a single note type in [ManageNotetypes]'s
  * list of notetypes.
  */
-internal data class ManageNoteTypeUiModel(
+data class ManageNoteTypeUiModel(
     val id: NoteTypeId,
     val name: String,
     /**
@@ -32,13 +32,13 @@ internal data class ManageNoteTypeUiModel(
     val useCount: Int,
 )
 
-internal fun NotetypeNameIdUseCount.toUiModel(): ManageNoteTypeUiModel = ManageNoteTypeUiModel(id, name, useCount)
+fun NotetypeNameIdUseCount.toUiModel(): ManageNoteTypeUiModel = ManageNoteTypeUiModel(id, name, useCount)
 
 /**
  * Data holder class which contains the data to display a single note type in [AddNewNotesType]'s
  * list of notetypes.
  */
-internal data class AddNotetypeUiModel(
+data class AddNotetypeUiModel(
     val id: NoteTypeId,
     val name: String,
     /**
@@ -51,4 +51,4 @@ internal data class AddNotetypeUiModel(
 /**
  * A note type from current collection as a [AddNotetypeUiModel].
  */
-internal fun NotetypeNameId.toUiModel(): AddNotetypeUiModel = AddNotetypeUiModel(id, name, false)
+fun NotetypeNameId.toUiModel(): AddNotetypeUiModel = AddNotetypeUiModel(id, name, false)

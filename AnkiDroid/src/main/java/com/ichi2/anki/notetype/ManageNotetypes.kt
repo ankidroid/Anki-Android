@@ -1,18 +1,3 @@
-/****************************************************************************************
- * Copyright (c) 2022 lukstbit <52494258+lukstbit@users.noreply.github.com>             *
- *                                                                                      *
- * This program is free software; you can redistribute it and/or modify it under        *
- * the terms of the GNU General Public License as published by the Free Software        *
- * Foundation; either version 3 of the License, or (at your option) any later           *
- * version.                                                                             *
- *                                                                                      *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY      *
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A      *
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.             *
- *                                                                                      *
- * You should have received a copy of the GNU General Public License along with         *
- * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
- ****************************************************************************************/
 package com.ichi2.anki.notetype
 
 import android.annotation.SuppressLint
@@ -21,15 +6,14 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
+import androidx.activity.compose.setContent
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.StringRes
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
-import androidx.recyclerview.widget.RecyclerView
 import anki.notetypes.copy
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.CardTemplateEditor
 import com.ichi2.anki.CollectionManager.withCol
@@ -43,6 +27,7 @@ import com.ichi2.anki.libanki.getNotetypeNames
 import com.ichi2.anki.libanki.removeNotetype
 import com.ichi2.anki.libanki.updateNotetype
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.theme.AnkiDroidTheme
 import com.ichi2.anki.userAcceptsSchemaChange
 import com.ichi2.anki.utils.Destination
 import com.ichi2.anki.withProgress
@@ -58,29 +43,12 @@ import net.ankiweb.rsdroid.BackendException
 
 class ManageNotetypes : AnkiActivity() {
     private lateinit var actionBar: ActionBar
-    private lateinit var noteTypesList: RecyclerView
 
     private var currentNotetypes: List<ManageNoteTypeUiModel> = emptyList()
 
     // Store search query
     private var searchQuery: String = ""
 
-    private val notetypesAdapter: NotetypesAdapter by lazy {
-        NotetypesAdapter(
-            this@ManageNotetypes,
-            onShowFields = {
-                launchForChanges<NoteTypeFieldEditor>(
-                    mapOf(
-                        "title" to it.name,
-                        "noteTypeID" to it.id,
-                    ),
-                )
-            },
-            onEditCards = { launchForChanges<CardTemplateEditor>(mapOf("noteTypeId" to it.id)) },
-            onRename = ::renameNotetype,
-            onDelete = ::deleteNotetype,
-        )
-    }
     private val outsideChangesLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
             if (result.resultCode == RESULT_OK) {
@@ -95,15 +63,28 @@ class ManageNotetypes : AnkiActivity() {
 
         super.onCreate(savedInstanceState)
         setTitle(R.string.model_browser_label)
-        setContentView(R.layout.activity_manage_note_types)
         actionBar = enableToolbar()
-        noteTypesList =
-            findViewById<RecyclerView>(R.id.note_types_list).apply {
-                adapter = notetypesAdapter
+        setContent {
+            AnkiDroidTheme {
+                ManageNoteTypesScreen(
+                    noteTypes = currentNotetypes,
+                    onAddNoteType = {
+                        val addNewNotesType = AddNewNotesType(this)
+                        launchCatchingTask { addNewNotesType.showAddNewNotetypeDialog() }
+                    },
+                    onShowFields = {
+                        launchForChanges<NoteTypeFieldEditor>(
+                            mapOf(
+                                "title" to it.name,
+                                "noteTypeID" to it.id,
+                            ),
+                        )
+                    },
+                    onEditCards = { launchForChanges<CardTemplateEditor>(mapOf("noteTypeId" to it.id)) },
+                    onRename = ::renameNotetype,
+                    onDelete = ::deleteNotetype,
+                )
             }
-        findViewById<FloatingActionButton>(R.id.note_type_add).setOnClickListener {
-            val addNewNotesType = AddNewNotesType(this)
-            launchCatchingTask { addNewNotesType.showAddNewNotetypeDialog() }
         }
         launchCatchingTask { runAndRefreshAfter() } // shows the initial note types list
     }
@@ -137,7 +118,7 @@ class ManageNotetypes : AnkiActivity() {
      */
     @NeedsTest("verify note types list still filtered by search query after rename or delete")
     private fun filterNoteTypes(query: String) {
-        val filteredList =
+        currentNotetypes =
             if (query.isEmpty()) {
                 currentNotetypes
             } else {
@@ -145,7 +126,6 @@ class ManageNotetypes : AnkiActivity() {
                     it.name.lowercase().contains(query.lowercase())
                 }
             }
-        notetypesAdapter.submitList(filteredList)
     }
 
     @SuppressLint("CheckResult")

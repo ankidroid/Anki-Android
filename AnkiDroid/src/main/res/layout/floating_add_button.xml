@@ -37,19 +37,22 @@
                 android:alpha="0"
                 android:translationY="300px"
                 >
-                <TextView
+                <com.google.android.material.card.MaterialCardView
                     android:layout_width="wrap_content"
-                    android:background="@color/material_grey_600"
-                    android:id="@+id/add_shared_label"
-                    android:paddingBottom="5dp"
-                    android:paddingTop="5dp"
-                    android:paddingEnd="10dp"
-                    android:paddingStart="10dp"
-                    android:textColor="@color/white"
-                    android:layout_marginEnd="5dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/menu_get_shared_decks"
-                    />
+                    android:layout_marginEnd="5dp"
+                    app:cardElevation="2dp">
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/add_shared_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="5dp"
+                        android:paddingTop="5dp"
+                        android:paddingEnd="10dp"
+                        android:paddingStart="10dp"
+                        android:text="@string/menu_get_shared_decks"
+                        />
+                </com.google.android.material.card.MaterialCardView>
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/add_shared_action"
                     style="?attr/floatingActionButtonSmallStyle"
@@ -74,19 +77,22 @@
                 android:alpha="0"
                 android:translationY="400px"
                 >
-                <TextView
+                <com.google.android.material.card.MaterialCardView
                     android:layout_width="wrap_content"
-                    android:background="@color/material_grey_600"
-                    android:id="@+id/add_filtered_deck_label"
-                    android:paddingBottom="5dp"
-                    android:paddingTop="5dp"
-                    android:paddingEnd="10dp"
-                    android:paddingStart="10dp"
-                    android:textColor="@color/white"
-                    android:layout_marginEnd="5dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/new_dynamic_deck"
-                    />
+                    android:layout_marginEnd="5dp"
+                    app:cardElevation="2dp">
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/add_filtered_deck_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="5dp"
+                        android:paddingTop="5dp"
+                        android:paddingEnd="10dp"
+                        android:paddingStart="10dp"
+                        android:text="@string/new_dynamic_deck"
+                        />
+                </com.google.android.material.card.MaterialCardView>
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/add_filtered_deck_action"
                     android:layout_width="wrap_content"
@@ -111,19 +117,22 @@
                 android:alpha="0"
                 android:translationY="400px"
                 >
-                <TextView
+                <com.google.android.material.card.MaterialCardView
                     android:layout_width="wrap_content"
-                    android:background="@color/material_grey_600"
-                    android:id="@+id/add_deck_label"
-                    android:paddingBottom="5dp"
-                    android:paddingTop="5dp"
-                    android:paddingEnd="10dp"
-                    android:paddingStart="10dp"
-                    android:textColor="@color/white"
-                    android:layout_marginEnd="5dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/new_deck"
-                    />
+                    android:layout_marginEnd="5dp"
+                    app:cardElevation="2dp">
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/add_deck_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="5dp"
+                        android:paddingTop="5dp"
+                        android:paddingEnd="10dp"
+                        android:paddingStart="10dp"
+                        android:text="@string/new_deck"
+                        />
+                </com.google.android.material.card.MaterialCardView>
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/add_deck_action"
                     android:layout_width="wrap_content"
@@ -143,21 +152,24 @@
                 android:orientation="horizontal"
                 android:layout_gravity="bottom|end"
                 >
-                <TextView
+                <com.google.android.material.card.MaterialCardView
                     android:layout_width="wrap_content"
-                    android:background="@color/material_grey_600"
-                    android:id="@+id/add_note_label"
-                    android:paddingBottom="5dp"
-                    android:paddingTop="5dp"
-                    android:paddingEnd="10dp"
-                    android:paddingStart="10dp"
-                    android:textColor="@color/white"
-                    android:layout_marginEnd="5dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/menu_add"
+                    android:layout_marginEnd="5dp"
+                    app:cardElevation="2dp"
                     android:visibility="gone"
-                    android:translationX="180px"
-                    />
+                    android:translationX="180px">
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/add_note_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="5dp"
+                        android:paddingTop="5dp"
+                        android:paddingEnd="10dp"
+                        android:paddingStart="10dp"
+                        android:text="@string/menu_add"
+                        />
+                </com.google.android.material.card.MaterialCardView>
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/fab_main"
                     android:layout_width="wrap_content"
@@ -166,7 +178,7 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginBottom="17dp"
                     android:layout_marginTop="10dp"
-                    app:srcCompat="@drawable/ic_add_white"
+                    app:srcCompat="@drawable/ic_add"
                     app:backgroundTint="?attr/fab_normal"
                     app:fabSize="normal"
                     />

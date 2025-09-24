@@ -43,7 +43,7 @@
                         android:layout_above="@id/today_stats_text_view"
                         android:scrollbars="vertical" />
 
-                    <com.ichi2.ui.FixedTextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/today_stats_text_view"
                         android:layout_width="match_parent"
                         android:layout_marginLeft="8dp"
