@@ -25,7 +25,6 @@
 
 package com.ichi2.anki
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -115,6 +114,8 @@ import com.ichi2.anki.deckpicker.DeckPickerViewModel.AnkiDroidEnvironment
 import com.ichi2.anki.deckpicker.DeckPickerViewModel.FlattenedDeckList
 import com.ichi2.anki.deckpicker.DeckPickerViewModel.StartupResponse
 import com.ichi2.anki.deckpicker.EmptyCardsResult
+import com.ichi2.anki.deckpicker.OptionsMenuState
+import com.ichi2.anki.deckpicker.SyncIconState
 import com.ichi2.anki.dialogs.AsyncDialogFragment
 import com.ichi2.anki.dialogs.BackupPromptDialog
 import com.ichi2.anki.dialogs.ConfirmationDialog
@@ -204,7 +205,6 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import net.ankiweb.rsdroid.Translations
-import net.ankiweb.rsdroid.exceptions.BackendNetworkException
 import org.json.JSONException
 import timber.log.Timber
 import java.io.File
@@ -1295,45 +1295,7 @@ open class DeckPicker :
 
     @VisibleForTesting
     suspend fun updateMenuState() {
-        optionsMenuState =
-            withOpenColOrNull {
-                val searchIcon = decks.count() >= 10
-                val undoLabel = undoLabel()
-                val undoAvailable = undoAvailable()
-                // besides checking for cards being available also consider if we have empty decks
-                val isColEmpty = isEmpty && decks.count() == 1
-                // the correct sync status is fetched in the next call so "Normal" is used as a placeholder
-                // the sync status is calculated in the next call so "Normal" is used as a placeholder
-                OptionsMenuState(searchIcon, undoLabel, SyncIconState.Normal, undoAvailable, isColEmpty)
-            }?.let { (searchIcon, undoLabel, _, undoAvailable, isColEmpty) ->
-                val syncIcon = fetchSyncIconState()
-                OptionsMenuState(searchIcon, undoLabel, syncIcon, undoAvailable, isColEmpty)
-            }
-    }
-
-    private suspend fun fetchSyncIconState(): SyncIconState {
-        if (!Prefs.displaySyncStatus) return SyncIconState.Normal
-        val auth = syncAuth()
-        if (auth == null) return SyncIconState.NotLoggedIn
-        return try {
-            // Use CollectionManager to ensure that this doesn't block 'deck count' tasks
-            // throws if a .colpkg import or similar occurs just before this call
-            val output = withContext(Dispatchers.IO) { CollectionManager.getBackend().syncStatus(auth) }
-            if (output.hasNewEndpoint() && output.newEndpoint.isNotEmpty()) {
-                Prefs.currentSyncUri = output.newEndpoint
-            }
-            when (output.required) {
-                SyncStatusResponse.Required.NO_CHANGES -> SyncIconState.Normal
-                SyncStatusResponse.Required.NORMAL_SYNC -> SyncIconState.PendingChanges
-                SyncStatusResponse.Required.FULL_SYNC -> SyncIconState.OneWay
-                SyncStatusResponse.Required.UNRECOGNIZED, null -> TODO("unexpected required response")
-            }
-        } catch (_: BackendNetworkException) {
-            SyncIconState.Normal
-        } catch (e: Exception) {
-            Timber.d(e, "error obtaining sync status: collection likely closed")
-            SyncIconState.Normal
-        }
+        optionsMenuState = viewModel.updateMenuState()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -1822,14 +1784,14 @@ open class DeckPicker :
             val current = VersionUtils.pkgVersionCode
             Timber.i("Current AnkiDroid version: %s", current)
             val previous: Long =
-                if (preferences.contains(UPGRADE_VERSION_KEY)) {
+                if (preferences.contains(DeckPickerViewModel.UPGRADE_VERSION_KEY)) {
                     // Upgrading currently installed app
-                    getPreviousVersion(preferences, current)
+                    viewModel.getPreviousVersion(preferences, current)
                 } else {
                     // Fresh install
                     current
                 }
-            preferences.edit { putLong(UPGRADE_VERSION_KEY, current) }
+            preferences.edit { putLong(DeckPickerViewModel.UPGRADE_VERSION_KEY, current) }
             // Delete the media database made by any version before 2.3 beta due to upgrade errors.
             // It is rebuilt on the next sync or media check
             if (previous < 20300200) {
@@ -1947,40 +1909,6 @@ open class DeckPicker :
     @VisibleForTesting
     protected open fun displayAnalyticsOptInDialog() {
         showDialogFragment(DeckPickerAnalyticsOptInDialog.newInstance())
-    }
-
-    @SuppressLint("UseKtx") // keep SharedPreferences.edit() instead of edit {} fot tests
-    fun getPreviousVersion(
-        preferences: SharedPreferences,
-        current: Long,
-    ): Long {
-        var previous: Long
-        try {
-            previous = preferences.getLong(UPGRADE_VERSION_KEY, current)
-        } catch (e: ClassCastException) {
-            Timber.w(e)
-            previous =
-                try {
-                    // set 20900203 to default value, as it's the latest version that stores integer in shared prefs
-                    preferences.getInt(UPGRADE_VERSION_KEY, 20900203).toLong()
-                } catch (cce: ClassCastException) {
-                    Timber.w(cce)
-                    // Previous versions stored this as a string.
-                    val s = preferences.getString(UPGRADE_VERSION_KEY, "")
-                    // The last version of AnkiDroid that stored this as a string was 2.0.2.
-                    // We manually set the version here, but anything older will force a DB check.
-                    if ("2.0.2" == s) {
-                        40
-                    } else {
-                        0
-                    }
-                }
-            Timber.d("Updating shared preferences stored key %s type to long", UPGRADE_VERSION_KEY)
-            // Expected Editor.putLong to be called later to update the value in shared prefs
-            preferences.edit().remove(UPGRADE_VERSION_KEY).apply()
-        }
-        Timber.i("Previous AnkiDroid version: %s", previous)
-        return previous
     }
 
     private fun undo() {
@@ -2480,7 +2408,6 @@ open class DeckPicker :
          */
         const val RESULT_MEDIA_EJECTED = 202
         const val RESULT_DB_ERROR = 203
-        const val UPGRADE_VERSION_KEY = "lastUpgradeVersion"
 
         /**
          * If passed into the intent, the user should have been logged in and DeckPicker
@@ -2556,21 +2483,6 @@ open class DeckPicker :
  * configured a moment later when the coroutine runs. To work around this,
  * the current state is stored in the deck picker so that we can redraw the
  * menu immediately. */
-data class OptionsMenuState(
-    val searchIcon: Boolean,
-    /** If undo is available, a string describing the action. */
-    val undoLabel: String?,
-    val syncIcon: SyncIconState,
-    val undoAvailable: Boolean,
-    val isColEmpty: Boolean,
-)
-
-enum class SyncIconState {
-    Normal,
-    PendingChanges,
-    OneWay,
-    NotLoggedIn,
-}
 
 class CollectionLoadingErrorDialog :
     DialogHandlerMessage(
