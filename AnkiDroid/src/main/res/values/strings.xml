@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AnkiDroid</string>
+    <string name="navigation_drawer_open">navigation drawer open</string>
+    <string name="rebuild">Rebuild</string>
+    <string name="empty_cards_action">Empty</string>
+    <string name="deck_options">Deck options</string>
+    <string name="add_note">Add Note</string>
+    <string name="get_shared">Get Shared</string>
+    <string name="search_decks">Search decks</string>
+    <string name="close">Close</string>
+    <string name="more_options">More options</string>
+    <string name="custom_study">Custom Study</string>
+    <string name="unbury">Unbury</string>
+    <string name="new_deck">New Deck</string>
+    <string name="new_dynamic_deck">New Dynamic Deck</string>
+    <string name="add">Add</string>
+</resources>

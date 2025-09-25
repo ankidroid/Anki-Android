@@ -137,7 +137,7 @@ class ManageNotetypes : AnkiActivity() {
             )
             val dialog = AlertDialog.Builder(this@ManageNotetypes).show {
                     title(R.string.rename_model)
-                    positiveButton(R.string.rename) {
+                    positiveButton(R.string.rename) { it ->
                         launchCatchingTask(
                             // TODO: Change to CardTypeException: https://github.com/ankidroid/Anki-Android-Backend/issues/537
                             // Card template 1 in note type 'character' has a problem.

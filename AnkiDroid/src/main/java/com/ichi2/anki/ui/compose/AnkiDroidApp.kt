@@ -5,7 +5,16 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.filled.Undo
+import androidx.compose.material.icons.outlined.DeleteOutline
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -74,7 +83,7 @@ fun AnkiDroidApp(
                     title = { if (!isSearchOpen) Text(stringResource(R.string.app_name)) },
                     navigationIcon = {
                         IconButton(onClick = onNavigationIconClick) {
-                            Icon(Icons.Default.Menu, contentDescription = stringResource(R.string.navigation_drawer_open))
+                            Icon(Icons.Filled.Menu, contentDescription = stringResource(R.string.navigation_drawer_open))
                         }
                     },
                     actions = {
@@ -89,18 +98,18 @@ fun AnkiDroidApp(
                                         onSearchQueryChanged("")
                                         isSearchOpen = false
                                     }) {
-                                        Icon(Icons.Default.Close, contentDescription = stringResource(R.string.close))
+                                        Icon(Icons.Filled.Close, contentDescription = stringResource(R.string.close))
                                     }
                                 },
                             )
                         } else {
                             IconButton(onClick = { isSearchOpen = true }) {
-                                Icon(Icons.Default.Search, contentDescription = stringResource(R.string.search_decks))
+                                Icon(Icons.Filled.Search, contentDescription = stringResource(R.string.search_decks))
                             }
                         }
                         if (studyOptionsData != null) {
                             IconButton(onClick = { isStudyOptionsMenuOpen = true }) {
-                                Icon(Icons.Default.MoreVert, contentDescription = stringResource(R.string.more_options))
+                                Icon(Icons.Filled.MoreVert, contentDescription = stringResource(R.string.more_options))
                             }
                             DropdownMenu(
                                 expanded = isStudyOptionsMenuOpen,
@@ -113,7 +122,7 @@ fun AnkiDroidApp(
                                             onRebuildDeck(studyOptionsData.deckId)
                                             isStudyOptionsMenuOpen = false
                                         },
-                                        leadingIcon = { Icon(Icons.Default.Refresh, contentDescription = null) },
+                                        leadingIcon = { Icon(Icons.Filled.Refresh, contentDescription = null) },
                                     )
                                     DropdownMenuItem(
                                         text = { Text(stringResource(R.string.empty_cards_action)) },
@@ -121,7 +130,7 @@ fun AnkiDroidApp(
                                             onEmptyDeck(studyOptionsData.deckId)
                                             isStudyOptionsMenuOpen = false
                                         },
-                                        leadingIcon = { Icon(Icons.Default.DeleteOutline, contentDescription = null) },
+                                        leadingIcon = { Icon(Icons.Outlined.DeleteOutline, contentDescription = null) },
                                     )
                                 } else {
                                     DropdownMenuItem(
@@ -130,7 +139,7 @@ fun AnkiDroidApp(
                                             onCustomStudy(studyOptionsData.deckId)
                                             isStudyOptionsMenuOpen = false
                                         },
-                                        leadingIcon = { Icon(Icons.Default.Star, contentDescription = null) },
+                                        leadingIcon = { Icon(Icons.Filled.Star, contentDescription = null) },
                                     )
                                 }
                                 DropdownMenuItem(
@@ -139,7 +148,7 @@ fun AnkiDroidApp(
                                         onDeckOptionsItemSelected(studyOptionsData.deckId)
                                         isStudyOptionsMenuOpen = false
                                     },
-                                    leadingIcon = { Icon(Icons.Default.Settings, contentDescription = null) },
+                                    leadingIcon = { Icon(Icons.Filled.Settings, contentDescription = null) },
                                 )
                                 if (studyOptionsData.haveBuried) {
                                     DropdownMenuItem(
@@ -148,7 +157,7 @@ fun AnkiDroidApp(
                                             onUnbury(studyOptionsData.deckId)
                                             isStudyOptionsMenuOpen = false
                                         },
-                                        leadingIcon = { Icon(Icons.Default.Undo, contentDescription = null) },
+                                        leadingIcon = { Icon(Icons.Filled.Undo, contentDescription = null) },
                                     )
                                 }
                             }
