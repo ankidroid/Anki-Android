@@ -27,6 +27,4 @@ sealed class DeckSelectionResult {
     object NoCardsToStudy : DeckSelectionResult()
 }
 
-fun DeckNode.hasCardsReadyToStudy(): Boolean = newCount > 0 || lrnCount > 0 || revCount > 0
-
 fun DeckNode.onlyHasDefaultDeck() = children.singleOrNull()?.did == Consts.DEFAULT_DECK_ID

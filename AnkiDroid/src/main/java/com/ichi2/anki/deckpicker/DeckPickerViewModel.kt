@@ -482,14 +482,3 @@ data class EmptyCardsResult(
     @CheckResult
     fun toHumanReadableString() = TR.emptyCardsDeletedCount(cardsDeleted)
 }
-
-sealed class DeckSelectionResult {
-    data class HasCardsToStudy(val selectionType: DeckSelectionType) : DeckSelectionResult()
-    data class Empty(val deckId: DeckId) : DeckSelectionResult()
-    object NoCardsToStudy : DeckSelectionResult()
-}
-
-sealed class DeckSelectionType {
-    object Review : DeckSelectionType()
-    object Add : DeckSelectionType()
-}
