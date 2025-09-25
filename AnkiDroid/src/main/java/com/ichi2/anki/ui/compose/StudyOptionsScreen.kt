@@ -2,6 +2,7 @@ package com.ichi2.anki.ui.compose
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -40,7 +41,7 @@ fun StudyOptionsScreen(
     if (studyOptionsData == null) {
         // Show a loading indicator or an empty state
         Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-            Text(text = stringResource(id = R.string.loading))
+            CircularProgressIndicator()
         }
         return
     }
@@ -89,15 +90,15 @@ fun StudyOptionsView(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceAround,
         ) {
-            CountPill(stringResource(R.string.new_cards), studyOptionsData.newCount, MaterialTheme.colorScheme.primary)
-            CountPill(stringResource(R.string.learning), studyOptionsData.lrnCount, MaterialTheme.colorScheme.error)
-            CountPill(stringResource(R.string.to_review), studyOptionsData.revCount, Color(0xFF4CAF50))
+            CountPill("New", studyOptionsData.newCount, MaterialTheme.colorScheme.primary) // TODO: Use string resource
+            CountPill("Learning", studyOptionsData.lrnCount, MaterialTheme.colorScheme.error) // TODO: Use string resource
+            CountPill("Review", studyOptionsData.revCount, Color(0xFF4CAF50)) // TODO: Use string resource
         }
 
         if (studyOptionsData.haveBuried) {
             Spacer(modifier = Modifier.height(16.dp))
             Text(
-                text = stringResource(R.string.studying_counts_differ),
+                text = "Buried cards are not included in counts above.", // TODO: Use string resource
                 style = MaterialTheme.typography.bodySmall,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.fillMaxWidth(),
@@ -107,12 +108,12 @@ fun StudyOptionsView(
                 horizontalArrangement = Arrangement.SpaceAround,
             ) {
                 CountPill(
-                    stringResource(R.string.new_cards),
+                    "New", // TODO: Use string resource
                     studyOptionsData.buriedNew,
                     MaterialTheme.colorScheme.primary.copy(alpha = 0.5f),
                 )
-                CountPill(stringResource(R.string.learning), studyOptionsData.buriedLrn, MaterialTheme.colorScheme.error.copy(alpha = 0.5f))
-                CountPill(stringResource(R.string.to_review), studyOptionsData.buriedRev, Color(0xFF4CAF50).copy(alpha = 0.5f))
+                CountPill("Learning", studyOptionsData.buriedLrn, MaterialTheme.colorScheme.error.copy(alpha = 0.5f)) // TODO: Use string resource
+                CountPill("Review", studyOptionsData.buriedRev, Color(0xFF4CAF50).copy(alpha = 0.5f)) // TODO: Use string resource
             }
         }
 
@@ -123,11 +124,11 @@ fun StudyOptionsView(
             horizontalArrangement = Arrangement.SpaceEvenly,
         ) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Text(text = stringResource(R.string.studyoptions_total_new_cards))
+                Text(text = "Total New") // TODO: Use string resource
                 Text(text = studyOptionsData.totalNewCards.toString(), style = MaterialTheme.typography.bodyLarge)
             }
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Text(text = stringResource(R.string.studyoptions_total_cards))
+                Text(text = "Total Cards") // TODO: Use string resource
                 Text(text = studyOptionsData.totalCards.toString(), style = MaterialTheme.typography.bodyLarge)
             }
         }
@@ -138,7 +139,7 @@ fun StudyOptionsView(
             onClick = onStartStudy,
             modifier = Modifier.fillMaxWidth(),
         ) {
-            Text(text = stringResource(R.string.study_now))
+            Text(text = stringResource(R.string.studyoptions_start))
         }
     }
 }
@@ -164,7 +165,7 @@ fun EmptyDeckView(
         )
         Spacer(modifier = Modifier.height(16.dp))
         Text(
-            text = stringResource(R.string.deck_is_empty),
+            text = stringResource(R.string.empty_deck),
             style = MaterialTheme.typography.bodyLarge,
             textAlign = TextAlign.Center,
         )
@@ -186,7 +187,7 @@ fun CongratsView(
         verticalArrangement = Arrangement.Center,
     ) {
         Text(
-            text = stringResource(R.string.studyoptions_congrats),
+            text = stringResource(R.string.studyoptions_congrats_finished),
             style = MaterialTheme.typography.headlineMedium,
             textAlign = TextAlign.Center,
             modifier = Modifier.fillMaxWidth(),
@@ -194,7 +195,7 @@ fun CongratsView(
         if (!studyOptionsData.isFiltered) {
             Spacer(modifier = Modifier.height(16.dp))
             Button(onClick = { onCustomStudy(studyOptionsData.deckId) }) {
-                Text(text = stringResource(R.string.custom_study))
+                Text(text = "Custom Study") // TODO: Use string resource
             }
         }
     }

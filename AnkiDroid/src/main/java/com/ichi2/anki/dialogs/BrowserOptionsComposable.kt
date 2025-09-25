@@ -1,9 +1,18 @@
 package com.ichi2.anki.dialogs
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.*
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.DividerDefaults
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.RadioButton
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -31,20 +40,18 @@ fun BrowserOptions(
     val ignoreAccentsChecked = remember { mutableStateOf(initialIgnoreAccents) }
 
     Column(
-        modifier =
-            Modifier
-                .padding(16.dp)
-                .verticalScroll(rememberScrollState()),
+        modifier = Modifier
+            .padding(16.dp)
+            .verticalScroll(rememberScrollState()),
     ) {
         Text(
             text = stringResource(id = R.string.toggle_cards_notes),
             style = MaterialTheme.typography.titleMedium,
         )
         Row(
-            modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .padding(top = 8.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 8.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             RadioButton(
@@ -60,10 +67,9 @@ fun BrowserOptions(
             )
         }
         Row(
-            modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .padding(top = 8.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 8.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             RadioButton(
@@ -78,16 +84,19 @@ fun BrowserOptions(
                 modifier = Modifier.padding(start = 8.dp),
             )
         }
-        Divider(modifier = Modifier.padding(vertical = 8.dp))
+        HorizontalDivider(
+            modifier = Modifier.padding(vertical = 8.dp),
+            thickness = DividerDefaults.Thickness,
+            color = DividerDefaults.color
+        )
         Text(
             text = stringResource(id = R.string.card_browser_truncate),
             style = MaterialTheme.typography.titleMedium,
         )
         Row(
-            modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .padding(top = 8.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 8.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Checkbox(
@@ -107,16 +116,19 @@ fun BrowserOptions(
             style = MaterialTheme.typography.bodySmall,
             modifier = Modifier.padding(start = 16.dp, top = 4.dp),
         )
-        Divider(modifier = Modifier.padding(vertical = 8.dp))
+        HorizontalDivider(
+            modifier = Modifier.padding(vertical = 8.dp),
+            thickness = DividerDefaults.Thickness,
+            color = DividerDefaults.color
+        )
         Text(
             text = stringResource(id = R.string.pref_cat_studying),
             style = MaterialTheme.typography.titleMedium,
         )
         Row(
-            modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .padding(top = 8.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 8.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Checkbox(
@@ -131,7 +143,11 @@ fun BrowserOptions(
                 modifier = Modifier.padding(start = 8.dp),
             )
         }
-        Divider(modifier = Modifier.padding(vertical = 8.dp))
+        HorizontalDivider(
+            modifier = Modifier.padding(vertical = 8.dp),
+            thickness = DividerDefaults.Thickness,
+            color = DividerDefaults.color
+        )
         Text(
             text = stringResource(id = R.string.browse_manage_columns_main_heading),
             style = MaterialTheme.typography.titleMedium,
@@ -139,7 +155,11 @@ fun BrowserOptions(
         TextButton(onClick = onManageColumnsClicked) {
             Text(text = stringResource(id = R.string.browse_manage_columns))
         }
-        Divider(modifier = Modifier.padding(vertical = 8.dp))
+        HorizontalDivider(
+            modifier = Modifier.padding(vertical = 8.dp),
+            thickness = DividerDefaults.Thickness,
+            color = DividerDefaults.color
+        )
         Text(
             text = stringResource(id = R.string.menu_flag),
             style = MaterialTheme.typography.titleMedium,

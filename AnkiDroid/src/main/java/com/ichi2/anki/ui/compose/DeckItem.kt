@@ -5,15 +5,13 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ExpandLess
-import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.ichi2.anki.R
@@ -47,7 +45,7 @@ fun DeckItem(
     ) {
         if (deck.canCollapse) {
             Icon(
-                imageVector = if (deck.collapsed) Icons.Default.ExpandMore else Icons.Default.ExpandLess,
+                painter = painterResource(if (deck.collapsed) R.drawable.ic_expand_more_black_24dp else R.drawable.ic_expand_less_black_24dp),
                 contentDescription = if (deck.collapsed) stringResource(R.string.expand) else stringResource(R.string.collapse),
                 modifier =
                     Modifier.pointerInput(Unit) {
@@ -82,14 +80,14 @@ fun DeckItem(
         ) {
             if (deck.filtered) {
                 DropdownMenuItem(
-                    text = { Text(stringResource(R.string.rebuild)) },
+                    text = { Text(stringResource(R.string.rebuild_cram_label)) },
                     onClick = {
                         onRebuild()
                         isContextMenuOpen = false
                     },
                 )
                 DropdownMenuItem(
-                    text = { Text(stringResource(R.string.empty_cards_action)) },
+                    text = { Text(stringResource(R.string.empty_cram_label)) },
                     onClick = {
                         onEmpty()
                         isContextMenuOpen = false
@@ -104,7 +102,7 @@ fun DeckItem(
                     },
                 )
                 DropdownMenuItem(
-                    text = { Text(stringResource(R.string.export)) },
+                    text = { Text(stringResource(R.string.export_deck)) },
                     onClick = {
                         onExport()
                         isContextMenuOpen = false
@@ -112,14 +110,14 @@ fun DeckItem(
                 )
             }
             DropdownMenuItem(
-                text = { Text(stringResource(R.string.deck_options)) },
+                text = { Text("Options") }, // TODO: Replace with R.string.deck_options
                 onClick = {
                     onDeckOptions()
                     isContextMenuOpen = false
                 },
             )
             DropdownMenuItem(
-                text = { Text(stringResource(R.string.delete_deck)) },
+                text = { Text("Delete") }, // TODO: Replace with R.string.delete_deck
                 onClick = {
                     onDelete()
                     isContextMenuOpen = false
