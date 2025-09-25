@@ -49,7 +49,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.widget.TooltipCompat
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.runtime.Composable
@@ -96,13 +95,11 @@ import com.ichi2.anki.InitialActivity.StartupFailure.SDCardNotMounted
 import com.ichi2.anki.InitialActivity.StartupFailure.WebviewFailed
 import com.ichi2.anki.IntentHandler.Companion.intentToReviewDeckFromShortcuts
 import com.ichi2.anki.analytics.UsageAnalytics
-import com.ichi2.anki.android.back.exitViaDoubleTapBackCallback
 import com.ichi2.anki.android.input.ShortcutGroup
 import com.ichi2.anki.android.input.shortcut
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
-import com.ichi2.anki.deckpicker.BITMAP_BYTES_PER_PIXEL
 import com.ichi2.anki.deckpicker.BackgroundImage
 import com.ichi2.anki.deckpicker.DeckPickerViewModel
 import com.ichi2.anki.deckpicker.DeckPickerViewModel.AnkiDroidEnvironment
@@ -184,7 +181,6 @@ import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
 import com.ichi2.utils.title
 import com.ichi2.widget.WidgetStatus
-import java.io.File
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
@@ -195,6 +191,7 @@ import net.ankiweb.rsdroid.Translations
 import net.ankiweb.rsdroid.exceptions.BackendNetworkException
 import org.json.JSONException
 import timber.log.Timber
+import java.io.File
 
 @Composable
 private fun DeckPicker.deckPickerPainter(): Painter? {
@@ -460,7 +457,7 @@ open class DeckPicker :
             val snackbarHostState = remember { SnackbarHostState() }
             val coroutineScope = rememberCoroutineScope()
             val deckList by viewModel.flowOfDeckList.collectAsState(
-                initial = FlattenedDeckList(emptyList(), false)
+                initial = FlattenedDeckList(emptyList(), false),
             )
             val isRefreshing by viewModel.isSyncing.collectAsState(initial = false)
             var searchQuery by remember { mutableStateOf("") }
@@ -1483,8 +1480,7 @@ open class DeckPicker :
                     ${res.getString(R.string.full_sync_confirmation_upgrade)}
                     
                     ${res.getString(R.string.full_sync_confirmation)}
-                    """
-                    .trimIndent()
+                    """.trimIndent()
 
                 dialogHandler.sendMessage(OneWaySyncDialog(message).toMessage())
             }
@@ -2155,12 +2151,6 @@ open class DeckPicker :
             importColpkgListener?.onImportColpkg(colpkgPath)
         }
     }
-
-    /**
-     * Returns if the deck and its subdecks are all empty.
-     *
-     * @param did The id of a deck with no pending cards to review
-     */
 
     override fun getApkgFileImportResultLauncher(): ActivityResultLauncher<Intent> = apkgFileImportResultLauncher
 
