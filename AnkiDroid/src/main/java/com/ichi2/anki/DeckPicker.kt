@@ -49,9 +49,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.widget.Toolbar
 import androidx.appcompat.widget.TooltipCompat
-import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.runtime.Composable
@@ -72,7 +70,6 @@ import androidx.core.graphics.drawable.IconCompat
 import androidx.core.os.bundleOf
 import androidx.core.util.component1
 import androidx.core.util.component2
-import androidx.core.view.GravityCompat
 import androidx.core.view.MenuItemCompat
 import androidx.core.view.OnReceiveContentListener
 import androidx.core.view.ViewCompat
@@ -84,7 +81,6 @@ import androidx.work.WorkManager
 import anki.collection.OpChanges
 import anki.sync.SyncStatusResponse
 import coil.compose.rememberAsyncImagePainter
-import coil.compose.rememberImagePainter
 import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.CollectionManager.TR
@@ -188,6 +184,7 @@ import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
 import com.ichi2.utils.title
 import com.ichi2.widget.WidgetStatus
+import java.io.File
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
@@ -198,7 +195,6 @@ import net.ankiweb.rsdroid.Translations
 import net.ankiweb.rsdroid.exceptions.BackendNetworkException
 import org.json.JSONException
 import timber.log.Timber
-import java.io.File
 
 @Composable
 private fun DeckPicker.deckPickerPainter(): Painter? {
@@ -256,7 +252,7 @@ private fun DeckPicker.deckPickerPainter(): Painter? {
 @NeedsTest("If the collection has been created, the app intro is not displayed")
 @NeedsTest("If the user selects 'Sync Profile' in the app intro, a sync starts immediately")
 open class DeckPicker :
-    NavigationDrawerActivity(),
+    AnkiActivity(),
     SyncErrorDialogListener,
     ImportDialogListener,
     OnRequestPermissionsResultCallback,
@@ -269,9 +265,9 @@ open class DeckPicker :
     override val baseSnackbarBuilder: SnackbarBuilder = {}
     val viewModel: DeckPickerViewModel by viewModels()
 
-    override var fragmented: Boolean
+    var fragmented: Boolean
         get() = resources.configuration.screenLayout and Configuration.SCREENLAYOUT_SIZE_MASK == Configuration.SCREENLAYOUT_SIZE_XLARGE
-        set(_) = throw UnsupportedOperationException()
+        private set(_) = throw UnsupportedOperationException()
 
     // flag asking user to do a full sync which is used in upgrade path
     private var recommendOneWaySync = false
@@ -434,7 +430,6 @@ open class DeckPicker :
             syncOnResume = true
         }
 
-        enableToolbar()
         // TODO This method is run on every activity recreation, which can happen often.
         //  It seems that the original idea was for for this to only run once, on app start.
         //  This method triggers backups, sync, and may re-show dialogs
@@ -442,10 +437,6 @@ open class DeckPicker :
         handleStartup()
 
         registerReceiver()
-
-        // create inherited navigation drawer layout here so that it can be used by parent class
-        initNavigationDrawer()
-        title = resources.getString(R.string.app_name)
 
         checkWebviewVersion(this)
 
@@ -554,9 +545,7 @@ open class DeckPicker :
                 onDelete = { deck -> deleteDeck(deck.did) },
                 onRebuild = { deck -> rebuildFiltered(deck.did) },
                 onEmpty = { deck -> emptyFiltered(deck.did) },
-                onNavigationIconClick = {
-                    drawerLayout.openDrawer(GravityCompat.START)
-                },
+                onNavigationIconClick = { /* TODO: Implement Compose navigation drawer */ },
                 studyOptionsData = studyOptionsData,
                 onStartStudy = { openReviewer() },
                 onRebuildDeck = { deckId -> rebuildFiltered(deckId) },
@@ -640,12 +629,6 @@ open class DeckPicker :
         }
     }
 
-    override fun setupBackPressedCallbacks() {
-        onBackPressedDispatcher.addCallback(this, exitAndSyncBackCallback)
-        onBackPressedDispatcher.addCallback(this, exitViaDoubleTapBackCallback())
-        super.setupBackPressedCallbacks()
-    }
-
     @Suppress("UNUSED_PARAMETER")
     private fun setupFlows() {
         fun onDeckCountsChanged(unit: Unit) {
@@ -690,25 +673,7 @@ open class DeckPicker :
         }
 
         fun onCardsDueChanged(dueCount: Int?) {
-            if (dueCount == null) {
-                supportActionBar?.subtitle = null
-                return
-            }
-
-            supportActionBar?.apply {
-                subtitle =
-                    if (dueCount == 0) {
-                        null
-                    } else {
-                        resources.getQuantityString(
-                            R.plurals.widget_cards_due,
-                            dueCount,
-                            dueCount,
-                        )
-                    }
-                val toolbar = findViewById<Toolbar>(R.id.toolbar)
-                TooltipCompat.setTooltipText(toolbar, toolbar.subtitle)
-            }
+            // TODO: The subtitle that shows the number of due cards needs to be migrated to the Compose TopAppBar.
         }
 
         fun onDeckListChanged(deckList: FlattenedDeckList) {
@@ -1063,7 +1028,7 @@ open class DeckPicker :
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (drawerToggle.onOptionsItemSelected(item)) {
+        if (super.onOptionsItemSelected(item)) {
             return true
         }
         when (item.itemId) {
@@ -1210,7 +1175,7 @@ open class DeckPicker :
         // As `loadDeckCounts` is cancelled in `migrate()`
         val message = dialogHandler.popMessage()
         super.onResume()
-        if (navDrawerIsReady() && hasCollectionStoragePermissions()) {
+        if (hasCollectionStoragePermissions()) {
             refreshState()
         }
         message?.let { dialogHandler.sendStoredMessage(it) }
@@ -1223,9 +1188,7 @@ open class DeckPicker :
             sync()
             syncOnResume = false
         } else {
-            selectNavigationItem(R.id.nav_decks)
             updateDeckList()
-            title = resources.getString(R.string.app_name)
         }
         // Update sync status (if we've come back from a screen)
         invalidateOptionsMenu()
@@ -1278,9 +1241,8 @@ open class DeckPicker :
         suspend fun areThereChangesToSync(): Boolean {
             val auth = syncAuth() ?: return false
             val status =
-                withContext(Dispatchers.IO) {
-                    CollectionManager.getBackend().syncStatus(auth)
-                }.required
+                withContext(Dispatchers.IO) { CollectionManager.getBackend().syncStatus(auth) }
+                    .required
 
             return when (status) {
                 SyncStatusResponse.Required.NO_CHANGES,
@@ -1351,7 +1313,7 @@ open class DeckPicker :
                 } else {
                     // Shortcut: B
                     Timber.i("Open Browser from keypress")
-                    openCardBrowser()
+                    startActivity(Intent(this, CardBrowser::class.java))
                 }
                 return true
             }
@@ -1381,7 +1343,8 @@ open class DeckPicker :
 
             KeyEvent.KEYCODE_T -> {
                 Timber.i("Open Statistics from keypress")
-                openStatistics()
+                Timber.i("Open Browser from keypress")
+                startActivity(Intent(this, CardBrowser::class.java))
                 return true
             }
 
@@ -1435,7 +1398,7 @@ open class DeckPicker :
 
             KeyEvent.KEYCODE_P -> {
                 Timber.i("Open Settings from keypress")
-                openSettings()
+                startActivity(Intent(this, PreferencesActivity::class.java))
                 return true
             }
 
@@ -1529,7 +1492,8 @@ open class DeckPicker :
                     ${res.getString(R.string.full_sync_confirmation_upgrade)}
                     
                     ${res.getString(R.string.full_sync_confirmation)}
-                    """.trimIndent()
+                    """
+                    .trimIndent()
 
                 dialogHandler.sendMessage(OneWaySyncDialog(message).toMessage())
             }
@@ -2106,11 +2070,11 @@ open class DeckPicker :
             ShortcutGroup(
                 listOfNotNull(
                     shortcut("A", R.string.menu_add_note),
-                    shortcut("B", R.string.card_browser_context_menu),
+                    shortcut("B", R.string.card_browser),
                     shortcut("Y", R.string.pref_cat_sync),
                     shortcut("/", R.string.deck_conf_cram_search),
                     shortcut("S", Translations::decksStudyDeck),
-                    shortcut("T", R.string.open_statistics),
+                    shortcut("T", R.string.statistics),
                     shortcut("C", R.string.check_db),
                     shortcut("D", R.string.new_deck),
                     shortcut("F", R.string.new_dynamic_deck),
