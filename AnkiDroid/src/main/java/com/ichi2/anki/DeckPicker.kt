@@ -210,15 +210,6 @@ private fun DeckPicker.deckPickerPainter(): Painter? {
         return null
     }
 
-    // TODO: Temporary fix to stop a crash on startup [15450], it can be removed either:
-    // * by moving this check to an upgrade path
-    // * once enough time has passed
-    val size = BackgroundImage.getBackgroundImageDimensions(this)
-    if (size.width * size.height * BITMAP_BYTES_PER_PIXEL > BackgroundImage.MAX_BITMAP_SIZE) {
-        Timber.w("DeckPicker background image dimensions too large")
-        return null
-    }
-
     Timber.i("Applying background")
     return rememberAsyncImagePainter(model = imgFile)
 }
@@ -1568,6 +1559,11 @@ open class DeckPicker :
             if (previous < 20301208) {
                 Timber.i("Recommend the user to do a full-sync")
                 recommendOneWaySync = true
+            }
+
+            if (previous < 21700000 && BackgroundImage.isTooLarge(this)) {
+                BackgroundImage.enabled = false
+                postSnackbar(getString(R.string.background_image_disabled_too_large))
             }
 
             // Fix "font-family" definition in templates created by AnkiDroid before 2.6alpha23
