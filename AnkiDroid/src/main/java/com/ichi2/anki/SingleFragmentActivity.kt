@@ -130,7 +130,7 @@ open class SingleFragmentActivity : AnkiActivity() {
     // TODO - refactor https://github.com/ankidroid/Anki-Android/pull/17508#pullrequestreview-2465561993
     private fun openStudyOptionsAndFinish() {
         val intent =
-            Intent(this, StudyOptionsActivity::class.java).apply {
+            Intent(this, StudyOptionsComposeActivity::class.java).apply {
                 putExtra("withDeckOptions", false)
             }
         startActivity(intent, null)

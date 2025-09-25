@@ -32,7 +32,6 @@ import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.database.SQLException
 import android.graphics.PixelFormat
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.Message
 import android.text.util.Linkify
@@ -40,12 +39,9 @@ import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.compose.setContent
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.ActivityResultLauncher
@@ -53,43 +49,46 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.appcompat.widget.TooltipCompat
+import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityCompat.OnRequestPermissionsResultCallback
 import androidx.core.content.edit
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat
 import androidx.core.os.bundleOf
 import androidx.core.util.component1
 import androidx.core.util.component2
+import androidx.core.view.GravityCompat
 import androidx.core.view.MenuItemCompat
 import androidx.core.view.OnReceiveContentListener
-import androidx.core.view.doOnLayout
+import androidx.core.view.ViewCompat
 import androidx.core.view.isVisible
-import androidx.draganddrop.DropHelper
-import androidx.fragment.app.commit
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
 import anki.collection.OpChanges
 import anki.sync.SyncStatusResponse
-import com.google.android.material.floatingactionbutton.FloatingActionButton
+import coil.compose.rememberImagePainter
 import com.google.android.material.progressindicator.LinearProgressIndicator
-import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.CollectionManager.withOpenColOrNull
-import com.ichi2.anki.DeckPickerFloatingActionMenu.FloatingActionBarToggleListener
 import com.ichi2.anki.InitialActivity.StartupFailure
 import com.ichi2.anki.InitialActivity.StartupFailure.DBError
 import com.ichi2.anki.InitialActivity.StartupFailure.DatabaseLocked
@@ -99,7 +98,6 @@ import com.ichi2.anki.InitialActivity.StartupFailure.FutureAnkidroidVersion
 import com.ichi2.anki.InitialActivity.StartupFailure.SDCardNotMounted
 import com.ichi2.anki.InitialActivity.StartupFailure.WebviewFailed
 import com.ichi2.anki.IntentHandler.Companion.intentToReviewDeckFromShortcuts
-import com.ichi2.anki.StudyOptionsFragment.StudyOptionsListener
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.android.back.exitViaDoubleTapBackCallback
 import com.ichi2.anki.android.input.ShortcutGroup
@@ -107,52 +105,15 @@ import com.ichi2.anki.android.input.shortcut
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
-import com.ichi2.anki.contextmenu.DeckPickerMenuContentProvider
-import com.ichi2.anki.contextmenu.MouseContextMenuHandler
 import com.ichi2.anki.deckpicker.BITMAP_BYTES_PER_PIXEL
 import com.ichi2.anki.deckpicker.BackgroundImage
-import com.ichi2.anki.deckpicker.DeckDeletionResult
 import com.ichi2.anki.deckpicker.DeckPickerViewModel
-import androidx.activity.compose.setContent
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.SnackbarResult
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
-import androidx.compose.runtime.Composable
-import coil.compose.rememberImagePainter
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TopAppBar
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
-import androidx.core.view.GravityCompat
 import com.ichi2.anki.deckpicker.DeckPickerViewModel.AnkiDroidEnvironment
 import com.ichi2.anki.deckpicker.DeckPickerViewModel.FlattenedDeckList
 import com.ichi2.anki.deckpicker.DeckPickerViewModel.StartupResponse
-import com.ichi2.anki.ui.compose.AnkiDroidApp
 import com.ichi2.anki.deckpicker.DeckSelectionResult
 import com.ichi2.anki.deckpicker.DeckSelectionType
-import com.ichi2.anki.deckpicker.EmptyCardsResult
 import com.ichi2.anki.dialogs.AsyncDialogFragment
-import com.ichi2.anki.ui.compose.DeckPickerScreen
 import com.ichi2.anki.dialogs.BackupPromptDialog
 import com.ichi2.anki.dialogs.ConfirmationDialog
 import com.ichi2.anki.dialogs.CreateDeckDialog
@@ -161,11 +122,8 @@ import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType
 import com.ichi2.anki.dialogs.DeckPickerAnalyticsOptInDialog
 import com.ichi2.anki.dialogs.DeckPickerBackupNoSpaceLeftDialog
 import com.ichi2.anki.dialogs.DeckPickerConfirmDeleteDeckDialog
-import com.ichi2.anki.dialogs.DeckPickerContextMenu
-import com.ichi2.anki.dialogs.DeckPickerContextMenu.DeckPickerContextMenuOption
 import com.ichi2.anki.dialogs.DeckPickerNoSpaceLeftDialog
 import com.ichi2.anki.dialogs.DialogHandlerMessage
-import com.ichi2.anki.dialogs.EditDeckDescriptionDialog
 import com.ichi2.anki.dialogs.EmptyCardsDialogFragment
 import com.ichi2.anki.dialogs.ImportDialog.ImportDialogListener
 import com.ichi2.anki.dialogs.ImportFileSelectionFragment.ApkgImportResultLauncherProvider
@@ -178,8 +136,6 @@ import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyAction
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyAction.Companion.REQUEST_KEY
 import com.ichi2.anki.export.ExportDialogFragment
-import com.ichi2.anki.ui.compose.LoadingIndicator
-import com.ichi2.anki.ui.compose.NoDecks
 import com.ichi2.anki.introduction.CollectionPermissionScreenLauncher
 import com.ichi2.anki.introduction.hasCollectionStoragePermissions
 import com.ichi2.anki.libanki.DeckId
@@ -202,20 +158,16 @@ import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
-import com.ichi2.anki.ui.ResizablePaneManager
-import com.ichi2.anki.ui.animations.fadeIn
-import com.ichi2.anki.ui.animations.fadeOut
+import com.ichi2.anki.ui.compose.AnkiDroidApp
 import com.ichi2.anki.ui.windows.permissions.PermissionsActivity
 import com.ichi2.anki.utils.Destination
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.anki.utils.ext.setFragmentResultListener
 import com.ichi2.anki.utils.ext.showDialogFragment
-import com.ichi2.anki.widgets.DeckAdapter
 import com.ichi2.anki.worker.SyncMediaWorker
 import com.ichi2.anki.worker.SyncWorker
 import com.ichi2.anki.worker.UniqueWorkNames
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
-import com.ichi2.ui.AccessibleSearchView
 import com.ichi2.ui.BadgeDrawableBuilder
 import com.ichi2.utils.AdaptionUtil
 import com.ichi2.utils.ClipboardUtil.IMPORT_MIME_TYPES
@@ -227,7 +179,6 @@ import com.ichi2.utils.VersionUtils
 import com.ichi2.utils.cancelable
 import com.ichi2.utils.checkBoxPrompt
 import com.ichi2.utils.checkWebviewVersion
-import com.ichi2.utils.configureView
 import com.ichi2.utils.customView
 import com.ichi2.utils.dp
 import com.ichi2.utils.message
@@ -247,7 +198,6 @@ import net.ankiweb.rsdroid.exceptions.BackendNetworkException
 import org.json.JSONException
 import timber.log.Timber
 import java.io.File
-import androidx.compose.ui.graphics.painter.Painter
 
 @Composable
 private fun DeckPicker.deckPickerPainter(): Painter? {
@@ -315,6 +265,7 @@ open class DeckPicker :
     ApkgImportResultLauncherProvider,
     CsvImportResultLauncherProvider,
     CollectionPermissionScreenLauncher {
+    override val baseSnackbarBuilder: SnackbarBuilder = {}
     val viewModel: DeckPickerViewModel by viewModels()
 
     override var fragmented: Boolean
@@ -325,7 +276,6 @@ open class DeckPicker :
 
     // flag asking user to do a full sync which is used in upgrade path
     private var recommendOneWaySync = false
-
 
     private var syncMediaProgressJob: Job? = null
 
@@ -341,14 +291,12 @@ open class DeckPicker :
     val dueTree: DeckNode?
         get() = viewModel.dueTree
 
-
     /**
      * Flag to indicate whether the activity will perform a sync in its onResume.
      * Since syncing closes the database, this flag allows us to avoid doing any
      * work in onResume that might use the database and go straight to syncing.
      */
     private var syncOnResume = false
-
 
     override val permissionScreenLauncher = recreateActivityResultLauncher()
 
@@ -393,10 +341,8 @@ open class DeckPicker :
             DeckPickerActivityResultCallback {
                 if (it.resultCode == RESULT_OK) {
                     lifecycleScope.launch {
-                        withComposeProgress {
-                            withContext(Dispatchers.IO) {
-                                onSelectedPackageToImport(it.data!!)
-                            }
+                        withContext(Dispatchers.IO) {
+                            onSelectedPackageToImport(it.data!!)
                         }
                     }
                 }
@@ -428,7 +374,6 @@ open class DeckPicker :
             }
         }
 
-
     private inner class DeckPickerActivityResultCallback(
         private val callback: (result: ActivityResult) -> Unit,
     ) : ActivityResultCallback<ActivityResult> {
@@ -455,7 +400,6 @@ open class DeckPicker :
     // ----------------------------------------------------------------------------
     // LISTENERS
     // ----------------------------------------------------------------------------
-
 
     private val notificationPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) {
@@ -525,7 +469,7 @@ open class DeckPicker :
         ViewCompat.setOnReceiveContentListener(
             window.decorView,
             IMPORT_MIME_TYPES,
-            onReceiveContentListener
+            onReceiveContentListener,
         )
 
         setupFlows()
@@ -541,38 +485,40 @@ open class DeckPicker :
             var studyOptionsData by remember { mutableStateOf<com.ichi2.anki.ui.compose.StudyOptionsData?>(null) }
 
             LaunchedEffect(focusedDeckId) {
-                if (focusedDeckId != null) {
-                    studyOptionsData = withContext(Dispatchers.IO) {
-                        withCol {
-                            decks.select(focusedDeckId)
-                            val deck = decks.current()
-                            val counts = sched.counts()
-                            var buriedNew = 0
-                            var buriedLearning = 0
-                            var buriedReview = 0
-                            val tree = sched.deckDueTree(focusedDeckId)
-                            if (tree != null) {
-                                buriedNew = tree.newCount - counts.new
-                                buriedLearning = tree.learnCount - counts.lrn
-                                buriedReview = tree.reviewCount - counts.rev
+                val currentFocusedDeck = focusedDeckId
+                if (currentFocusedDeck != null) {
+                    studyOptionsData =
+                        withContext(Dispatchers.IO) {
+                            withCol {
+                                decks.select(currentFocusedDeck)
+                                val deck = decks.current()
+                                val counts = sched.counts()
+                                var buriedNew = 0
+                                var buriedLearning = 0
+                                var buriedReview = 0
+                                val tree = sched.deckDueTree(currentFocusedDeck)
+                                if (tree != null) {
+                                    buriedNew = tree.newCount - counts.new
+                                    buriedLearning = tree.learnCount - counts.lrn
+                                    buriedReview = tree.reviewCount - counts.rev
+                                }
+                                com.ichi2.anki.ui.compose.StudyOptionsData(
+                                    deckId = currentFocusedDeck,
+                                    deckName = deck.getString("name"),
+                                    deckDescription = deck.description,
+                                    newCount = counts.new,
+                                    lrnCount = counts.lrn,
+                                    revCount = counts.rev,
+                                    buriedNew = buriedNew,
+                                    buriedLrn = buriedLearning,
+                                    buriedRev = buriedReview,
+                                    totalNewCards = sched.totalNewForCurrentDeck(),
+                                    totalCards = decks.cardCount(currentFocusedDeck, true),
+                                    isFiltered = deck.isFiltered,
+                                    haveBuried = sched.haveBuried(),
+                                )
                             }
-                            com.ichi2.anki.ui.compose.StudyOptionsData(
-                                deckId = focusedDeckId,
-                                deckName = deck.getString("name"),
-                                deckDescription = deck.description,
-                                newCount = counts.new,
-                                lrnCount = counts.lrn,
-                                revCount = counts.rev,
-                                buriedNew = buriedNew,
-                                buriedLrn = buriedLearning,
-                                buriedRev = buriedReview,
-                                totalNewCards = sched.totalNewForCurrentDeck(),
-                                totalCards = decks.cardCount(focusedDeckId, true),
-                                isFiltered = deck.isFiltered,
-                                haveBuried = sched.haveBuried()
-                            )
                         }
-                    }
                 } else {
                     studyOptionsData = null
                 }
@@ -613,15 +559,16 @@ open class DeckPicker :
                 onUnbury = { deckId -> viewModel.unburyDeck(deckId) },
                 requestSearchFocus = requestSearchFocus,
                 onSearchFocusRequested = { requestSearchFocus = false },
-                snackbarHostState = snackbarHostState
+                snackbarHostState = snackbarHostState,
             )
 
             LaunchedEffect(Unit) {
                 viewModel.deckDeletedNotification.flowWithLifecycle(lifecycle).collect {
-                    val snackbarResult = snackbarHostState.showSnackbar(
-                        message = it.toHumanReadableString(),
-                        actionLabel = getString(R.string.undo)
-                    )
+                    val snackbarResult =
+                        snackbarHostState.showSnackbar(
+                            message = it.toHumanReadableString(),
+                            actionLabel = getString(R.string.undo),
+                        )
                     if (snackbarResult == SnackbarResult.ActionPerformed) {
                         undo()
                     }
@@ -630,10 +577,11 @@ open class DeckPicker :
 
             LaunchedEffect(Unit) {
                 viewModel.emptyCardsNotification.flowWithLifecycle(lifecycle).collect {
-                    val snackbarResult = snackbarHostState.showSnackbar(
-                        message = it.toHumanReadableString(),
-                        actionLabel = getString(R.string.undo)
-                    )
+                    val snackbarResult =
+                        snackbarHostState.showSnackbar(
+                            message = it.toHumanReadableString(),
+                            actionLabel = getString(R.string.undo),
+                        )
                     if (snackbarResult == SnackbarResult.ActionPerformed) {
                         undo()
                     }
@@ -662,10 +610,11 @@ open class DeckPicker :
                         }
                         is DeckSelectionResult.Empty -> {
                             coroutineScope.launch {
-                                val snackbarResult = snackbarHostState.showSnackbar(
-                                    message = getString(R.string.empty_deck),
-                                    actionLabel = getString(R.string.menu_add)
-                                )
+                                val snackbarResult =
+                                    snackbarHostState.showSnackbar(
+                                        message = getString(R.string.empty_deck),
+                                        actionLabel = getString(R.string.menu_add),
+                                    )
                                 if (snackbarResult == SnackbarResult.ActionPerformed) {
                                     viewModel.addNote(result.deckId, true)
                                 }
@@ -688,7 +637,6 @@ open class DeckPicker :
 
     @Suppress("UNUSED_PARAMETER")
     private fun setupFlows() {
-
         fun onDeckCountsChanged(unit: Unit) {
             updateDeckList()
         }
@@ -702,7 +650,7 @@ open class DeckPicker :
                 activity = this,
                 onUpgrade = {
                     launchCatchingRequiringOneWaySync {
-                        this@DeckPicker.withComposeProgress { withCol { sched.upgradeToV2() } }
+                        withCol { sched.upgradeToV2() }
                         showThemedToast(this@DeckPicker, TR.schedulingUpdateDone(), false)
                     }
                 },
@@ -780,12 +728,8 @@ open class DeckPicker :
         viewModel.onError.launchCollectionInLifecycleScope(::onError)
         viewModel.flowOfPromptUserToUpdateScheduler.launchCollectionInLifecycleScope(::onPromptUserToUpdateScheduler)
         viewModel.flowOfUndoUpdated.launchCollectionInLifecycleScope(::onUndoUpdated)
-        viewModel.flowOfStudiedTodayStats.launchCollectionInLifecycleScope(::onStudiedTodayChanged)
-        viewModel.flowOfDeckListInInitialState.filterNotNull().launchCollectionInLifecycleScope(::onCollectionStatusChanged)
         viewModel.flowOfCardsDue.launchCollectionInLifecycleScope(::onCardsDueChanged)
-        viewModel.flowOfCollectionHasNoCards.launchCollectionInLifecycleScope(::onStudyOptionsVisibilityChanged)
         viewModel.flowOfDeckList.launchCollectionInLifecycleScope(::onDeckListChanged)
-        viewModel.flowOfFocusedDeck.launchCollectionInLifecycleScope(::onFocusedDeckChanged)
         viewModel.flowOfResizingDividerVisible.launchCollectionInLifecycleScope(::onResizingDividerVisibilityChanged)
         viewModel.flowOfDecksReloaded.launchCollectionInLifecycleScope(::onDecksReloaded)
         viewModel.flowOfStartupResponse.filterNotNull().launchCollectionInLifecycleScope(::onStartupResponse)
@@ -814,7 +758,6 @@ open class DeckPicker :
 
             return@OnReceiveContentListener remaining
         }
-
 
     /**
      * @see DeckPickerViewModel.handleStartup
@@ -916,7 +859,6 @@ open class DeckPicker :
         showDatabaseErrorDialog(DatabaseErrorDialogType.DIALOG_DISK_FULL)
     }
 
-
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         Timber.d("onCreateOptionsMenu()")
         // TODO: Refactor menu handling logic to the activity
@@ -981,7 +923,6 @@ open class DeckPicker :
             }
     }
 
-
     fun updateMenuFromState(menu: Menu) {
         optionsMenuState?.run {
             updateUndoLabelFromState(menu.findItem(R.id.action_undo), undoLabel, undoAvailable)
@@ -1001,7 +942,6 @@ open class DeckPicker :
             menu.findItem(R.id.action_deck_or_study_options)?.isVisible = !isColEmpty
         }
     }
-
 
     private fun updateUndoLabelFromState(
         menuItem: MenuItem,
@@ -1371,13 +1311,13 @@ open class DeckPicker :
             }
             KeyEvent.KEYCODE_SLASH -> {
                 Timber.d("Search from keypress")
-                requestSearchFocus = true
+                // requestSearchFocus = true
                 return true
             }
             KeyEvent.KEYCODE_S -> {
                 Timber.i("Study from keypress")
                 launchCatchingTask {
-                    handleDeckSelection(withCol { decks.selected() }, DeckSelectionType.SKIP_STUDY_OPTIONS)
+                    viewModel.onDeckSelected(withCol { decks.selected() }, DeckSelectionType.SKIP_STUDY_OPTIONS)
                 }
                 return true
             }
@@ -1851,7 +1791,7 @@ open class DeckPicker :
         val hkey = Prefs.hkey
         if (hkey.isNullOrEmpty()) {
             Timber.w("User not logged in")
-            pullToSyncWrapper.isRefreshing = false
+            viewModel.isSyncing.value = false
             showSyncErrorDialog(SyncErrorDialog.Type.DIALOG_USER_NOT_LOGGED_IN_SYNC)
             return
         }
@@ -1929,15 +1869,13 @@ open class DeckPicker :
         reviewLauncher.launch(intent)
     }
 
-
-
     /**
      * @see DeckPickerViewModel.updateDeckList
      */
     @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
     fun updateDeckList() {
         launchCatchingTask {
-                withComposeProgress { viewModel.updateDeckList()?.join() }
+            viewModel.updateDeckList()?.join()
         }
     }
 
@@ -2015,7 +1953,7 @@ open class DeckPicker :
      */
     fun deleteDeck(did: DeckId) =
         launchCatchingTask {
-            withComposeProgress {
+            withProgress {
                 viewModel.deleteDeck(did).join()
             }
         }
@@ -2023,7 +1961,7 @@ open class DeckPicker :
     @NeedsTest("14285: regression test to ensure UI is updated after this call")
     fun rebuildFiltered(did: DeckId) {
         launchCatchingTask {
-            withComposeProgress {
+            withProgress {
                 withCol {
                     Timber.d("rebuildFiltered: doInBackground - RebuildCram")
                     decks.select(did)
@@ -2036,7 +1974,7 @@ open class DeckPicker :
 
     private fun emptyFiltered(did: DeckId) {
         launchCatchingTask {
-            withComposeProgress {
+            withProgress {
                 viewModel.emptyFilteredDeck(did).join()
             }
         }
@@ -2048,7 +1986,6 @@ open class DeckPicker :
             window.setFormat(PixelFormat.RGBA_8888)
         }
     }
-
 
     private fun openReviewer() {
         val intent = Reviewer.getIntent(this)
@@ -2128,7 +2065,7 @@ open class DeckPicker :
     ) {
         // undo state may have changed
         invalidateOptionsMenu()
-        if (changes.studyQueues && handler !== this && handler !== viewModel) {
+        if (changes.studyQueues && handler != this && handler != viewModel) {
             if (!activityPaused) {
                 // No need to update while the activity is paused, because `onResume` calls `refreshState` that calls `updateDeckList`.
                 updateDeckList()

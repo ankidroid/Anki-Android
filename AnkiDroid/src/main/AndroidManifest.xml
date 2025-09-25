@@ -223,7 +223,7 @@
                 <data
                     android:host="*"
                     android:mimeType="*/*"
-                    android:pathPattern=".*\\.csv"
+                    android.pathPattern=".*\\.csv"
                     android:scheme="content"
                     />
                 <data

@@ -45,7 +45,7 @@
             android:minWidth="48dp"
             android:padding="12dp"
             android:background="?attr/selectableItemBackgroundBorderless"
-            tools:src="@drawable/ic_expand_more_black"
+            tools:src="@drawable/ic_expand_more_black_24dp"
             />
 
         <com.ichi2.ui.FixedTextView

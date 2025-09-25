@@ -417,7 +417,7 @@ class TagsArrayAdapter(
         // More custom display related to the node can be added here.
         // For example, display some icon if the node is a leaf? (assets required)
         when (node.isExpanded) {
-            true -> button.setBackgroundResource(R.drawable.ic_expand_more_black_24dp_xml)
+            true -> button.setBackgroundResource(R.drawable.ic_expand_more_black_24dp)
             false -> button.setBackgroundResource(R.drawable.ic_baseline_chevron_right_24)
         }
     }

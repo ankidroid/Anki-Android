@@ -109,7 +109,7 @@ class FieldEditLine : FrameLayout {
 
     private fun setExpanderBackgroundImage() {
         when (expansionState) {
-            ExpansionState.COLLAPSED -> expandButton.background = getBackgroundImage(R.drawable.ic_expand_more_black_24dp_xml)
+            ExpansionState.COLLAPSED -> expandButton.background = getBackgroundImage(R.drawable.ic_expand_more_black_24dp)
             ExpansionState.EXPANDED -> expandButton.background = getBackgroundImage(R.drawable.ic_expand_less_black_24dp)
         }
     }

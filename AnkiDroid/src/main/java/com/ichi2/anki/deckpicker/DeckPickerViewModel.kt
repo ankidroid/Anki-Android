@@ -28,6 +28,7 @@ import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.DeckPicker
+import com.ichi2.anki.DeckSelectionType
 import com.ichi2.anki.InitialActivity
 import com.ichi2.anki.OnErrorListener
 import com.ichi2.anki.PermissionSet
@@ -46,7 +47,6 @@ import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.pages.DeckOptionsDestination
 import com.ichi2.anki.performBackupInBackground
 import com.ichi2.anki.reviewreminders.ScheduleRemindersDestination
-import com.ichi2.anki.DeckSelectionType
 import com.ichi2.anki.utils.Destination
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -65,6 +65,7 @@ import timber.log.Timber
 class DeckPickerViewModel :
     ViewModel(),
     OnErrorListener {
+    val isSyncing = MutableStateFlow(false)
     val flowOfStartupResponse = MutableStateFlow<StartupResponse?>(null)
 
     private val flowOfDeckDueTree = MutableStateFlow<DeckNode?>(null)
@@ -173,7 +174,10 @@ class DeckPickerViewModel :
     val flowOfDecksReloaded = MutableSharedFlow<Unit>()
     val deckSelectionResult = MutableSharedFlow<DeckSelectionResult>()
 
-    fun onDeckSelected(deckId: DeckId, selectionType: DeckSelectionType) = viewModelScope.launch {
+    fun onDeckSelected(
+        deckId: DeckId,
+        selectionType: DeckSelectionType,
+    ) = viewModelScope.launch {
         withCol {
             decks.select(deckId)
             CardBrowser.clearLastDeckId()
@@ -342,7 +346,7 @@ class DeckPickerViewModel :
 
                 // TODO: This is in the wrong place
                 // Backend returns studiedToday() with newlines for HTML formatting,so we replace them with spaces.
-                flowOfStudiedTodayStats.value = withCol { sched.studiedToday().replace("\n", " ") }
+                flowOfStudiedTodayStats.value = withCol { sched.studiedToday().replace("\\n", " ") }
 
                 /**
                  * Checks the current scheduler version and prompts the upgrade dialog if using the legacy version.
@@ -409,7 +413,7 @@ class DeckPickerViewModel :
      */
     fun handleStartup(environment: AnkiDroidEnvironment) {
         if (!environment.hasRequiredPermissions()) {
-            Timber.i("${this.javaClass.simpleName}: postponing startup code - permission screen shown")
+            Timber.i("$\{this.javaClass.simpleName}: postponing startup code - permission screen shown")
             flowOfStartupResponse.value = StartupResponse.RequestPermissions(environment.requiredPermissions)
             return
         }
@@ -488,11 +492,15 @@ enum class DeckSelectionType {
 }
 
 sealed class DeckSelectionResult {
-    data class HasCardsToStudy(val selectionType: DeckSelectionType) : DeckSelectionResult()
-    data class Empty(val deckId: DeckId) : DeckSelectionResult()
+    data class HasCardsToStudy(
+        val selectionType: DeckSelectionType,
+    ) : DeckSelectionResult()
+
+    data class Empty(
+        val deckId: DeckId,
+    ) : DeckSelectionResult()
+
     object NoCardsToStudy : DeckSelectionResult()
 }
 
-fun DeckNode.hasCardsReadyToStudy(): Boolean {
-    return newCount > 0 || lrnCount > 0 || revCount > 0
-}
+fun DeckNode.hasCardsReadyToStudy(): Boolean = newCount > 0 || lrnCount > 0 || revCount > 0
