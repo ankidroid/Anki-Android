@@ -21,7 +21,6 @@ import androidx.annotation.CheckResult
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import anki.card_rendering.EmptyCardsReport
-import anki.collection.OpChanges
 import anki.i18n.GeneratedTranslations
 import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.CollectionManager
@@ -163,7 +162,10 @@ class DeckPickerViewModel :
 
     /** Flow that determines when the resizing divider should be visible */
     val flowOfResizingDividerVisible =
-        combine(flowOfDeckListInInitialState, flowOfCollectionHasNoCards) { isInInitialState, hasNoCards ->
+        combine(
+            flowOfDeckListInInitialState,
+            flowOfCollectionHasNoCards
+        ) { isInInitialState, hasNoCards ->
             !(isInInitialState == true || hasNoCards)
         }
 
@@ -176,22 +178,23 @@ class DeckPickerViewModel :
         deckId: DeckId,
         selectionType: DeckSelectionType,
     ) = viewModelScope.launch {
-        withCol {
+        val result = withCol {
             decks.select(deckId)
             CardBrowser.clearLastDeckId()
             focusedDeck = deckId
             val deck = dueTree?.find(deckId)
             if (deck != null && deck.hasCardsReadyToStudy()) {
-                deckSelectionResult.emit(DeckSelectionResult.HasCardsToStudy(selectionType))
+                DeckSelectionResult.HasCardsToStudy(selectionType)
             } else {
                 val isEmpty = deck?.all { decks.isEmpty(it.did) } ?: true
                 if (isEmpty) {
-                    deckSelectionResult.emit(DeckSelectionResult.Empty(deckId))
+                    DeckSelectionResult.Empty(deckId)
                 } else {
-                    deckSelectionResult.emit(DeckSelectionResult.NoCardsToStudy)
+                    DeckSelectionResult.NoCardsToStudy
                 }
             }
         }
+        deckSelectionResult.emit(result)
     }
 
     /**
@@ -204,11 +207,8 @@ class DeckPickerViewModel :
     @CheckResult // This is a slow operation and should be inside `withProgress`
     fun deleteDeck(did: DeckId) =
         viewModelScope.launch {
-            val (deckName, changes) = withCol {
-                val name = decks.getLegacy(did)!!.name
-                val opChanges = undoableOp { decks.remove(listOf(did)) }
-                Pair(name, opChanges)
-            }
+            val deckName = withCol { decks.getLegacy(did)!!.name }
+            val changes = undoableOp { decks.remove(listOf(did)) }
             // After deletion: decks.current() reverts to Default, necessitating `focusedDeck`
             // to match and avoid unnecessary scrolls in `renderPage()`.
             focusedDeck = Consts.DEFAULT_DECK_ID
@@ -252,9 +252,7 @@ class DeckPickerViewModel :
                 toDelete.extend(note.cardIdsList)
             }
         }
-        val result = withCol {
-            undoableOp { removeCardsAndOrphanedNotes(toDelete) }
-        }
+        val result = undoableOp { removeCardsAndOrphanedNotes(toDelete) }
         emptyCardsNotification.emit(EmptyCardsResult(cardsDeleted = result.count))
     }
 
@@ -264,8 +262,8 @@ class DeckPickerViewModel :
             Timber.i("empty filtered deck %s", deckId)
             withCol {
                 decks.select(deckId)
-                undoableOp { sched.emptyFilteredDeck(decks.selected()) }
             }
+            undoableOp { sched.emptyFilteredDeck(decks.selected()) }
             flowOfDeckCountsChanged.emit(Unit)
         }
 
@@ -288,7 +286,8 @@ class DeckPickerViewModel :
     /**
      * Opens the Manage Note Types screen.
      */
-    fun openManageNoteTypes() = launchCatchingIO { flowOfDestination.emit(ManageNoteTypesDestination()) }
+    fun openManageNoteTypes() =
+        launchCatchingIO { flowOfDestination.emit(ManageNoteTypesDestination()) }
 
     /**
      * Opens study options for the provided deck
@@ -307,7 +306,7 @@ class DeckPickerViewModel :
 
     fun unburyDeck(deckId: DeckId) =
         launchCatchingIO {
-            withCol { undoableOp<OpChanges> { sched.unburyDeck(deckId) } }
+            undoableOp { sched.unburyDeck(deckId) }
         }
 
     fun scheduleReviewReminders(deckId: DeckId) =
@@ -418,8 +417,9 @@ class DeckPickerViewModel :
      */
     fun handleStartup(environment: AnkiDroidEnvironment) {
         if (!environment.hasRequiredPermissions()) {
-            Timber.i("$\{this.javaClass.simpleName}: postponing startup code - permission screen shown")
-            flowOfStartupResponse.value = StartupResponse.RequestPermissions(environment.requiredPermissions)
+            Timber.i("${this.javaClass.simpleName}: postponing startup code - permission screen shown")
+            flowOfStartupResponse.value =
+                StartupResponse.RequestPermissions(environment.requiredPermissions)
             return
         }
 
@@ -481,4 +481,15 @@ data class EmptyCardsResult(
      * @see GeneratedTranslations.emptyCardsDeletedCount */
     @CheckResult
     fun toHumanReadableString() = TR.emptyCardsDeletedCount(cardsDeleted)
+}
+
+sealed class DeckSelectionResult {
+    data class HasCardsToStudy(val selectionType: DeckSelectionType) : DeckSelectionResult()
+    data class Empty(val deckId: DeckId) : DeckSelectionResult()
+    object NoCardsToStudy : DeckSelectionResult()
+}
+
+sealed class DeckSelectionType {
+    object Review : DeckSelectionType()
+    object Add : DeckSelectionType()
 }
