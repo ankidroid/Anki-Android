@@ -140,8 +140,26 @@ object BackgroundImage {
         return imgFile.delete()
     }
 
+    /**
+     * @return `true` if the background image file exists and is too large to be safely rendered.
+     * This is an efficient check that does not involve loading the bitmap into memory.
+     */
+    fun isTooLarge(context: Context): Boolean {
+        val imageFile = getImageFile(context) ?: return false
+
+        val options = BitmapFactory.Options().apply {
+            inJustDecodeBounds = true
+        }
+        BitmapFactory.decodeFile(imageFile.absolutePath, options)
+
+        val width = options.outWidth
+        val height = options.outHeight
+
+        return width * height * BITMAP_BYTES_PER_PIXEL > MAX_BITMAP_SIZE
+    }
+
     /** @return a [File] referencing the image, or `null` if the file does not exist */
-    private fun getImageFile(context: Context): File? {
+    internal fun getImageFile(context: Context): File? {
         val currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(context)
         val imgFile = File(currentAnkiDroidDirectory, "DeckPickerBackground.png")
         if (!imgFile.exists()) {

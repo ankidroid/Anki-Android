@@ -1,37 +1,15 @@
-/*
- *  Copyright (c) 2022 Akshit Sinha <akshitsinha3@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
-
 package com.ichi2.anki.dialogs
 
 import android.app.Dialog
-import android.content.DialogInterface
 import android.os.Bundle
-import android.view.View
-import android.widget.Button
-import android.widget.CheckBox
-import android.widget.LinearLayout
-import android.widget.RadioButton
-import android.widget.RadioGroup
-import android.widget.TextView
-import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatDialogFragment
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.ComposeView
 import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
 import com.ichi2.anki.browser.BrowserColumnSelectionFragment
 import com.ichi2.anki.browser.CardBrowserViewModel
@@ -39,101 +17,52 @@ import com.ichi2.anki.model.CardsOrNotes
 import timber.log.Timber
 
 class BrowserOptionsDialog : AppCompatDialogFragment() {
-    private lateinit var dialogView: View
-
     private val viewModel: CardBrowserViewModel by activityViewModels()
 
-    /** The unsaved value of [CardsOrNotes] */
-    private val dialogCardsOrNotes: CardsOrNotes
-        get() {
-            @IdRes val selectedButtonId =
-                dialogView.findViewById<RadioGroup>(R.id.select_browser_mode).checkedRadioButtonId
-            return when (selectedButtonId) {
-                R.id.select_cards_mode -> CardsOrNotes.CARDS
-                else -> CardsOrNotes.NOTES
-            }
-        }
-
-    private val positiveButtonClick = { _: DialogInterface, _: Int ->
-        if (cardsOrNotes != dialogCardsOrNotes) {
-            viewModel.setCardsOrNotes(dialogCardsOrNotes)
-        }
-        val newTruncate = dialogView.findViewById<CheckBox>(R.id.truncate_checkbox).isChecked
-
-        if (newTruncate != isTruncated) {
-            viewModel.setTruncated(newTruncate)
-        }
-
-        val newIgnoreAccent = dialogView.findViewById<CheckBox>(R.id.ignore_accents_checkbox).isChecked
-        if (newIgnoreAccent != viewModel.shouldIgnoreAccents) {
-            viewModel.setIgnoreAccents(newIgnoreAccent)
-        }
-    }
-
-    private val cardsOrNotes by lazy {
-        when (arguments?.getBoolean(CARDS_OR_NOTES_KEY)) {
-            true -> CardsOrNotes.CARDS
-            false -> CardsOrNotes.NOTES
-            null -> {
-                // Default case, and what we'll do if there were no arguments supplied
-                Timber.w("BrowserOptionsDialog instantiated without configuration.")
-                CardsOrNotes.CARDS
-            }
-        }
-    }
-
-    private val isTruncated by lazy {
-        arguments?.getBoolean(IS_TRUNCATED_KEY) ?: run {
-            Timber.w("BrowserOptionsDialog instantiated without configuration.")
-            false
-        }
-    }
+    private var cardsOrNotes: CardsOrNotes by mutableStateOf(CardsOrNotes.CARDS)
+    private var isTruncated: Boolean by mutableStateOf(false)
+    private var shouldIgnoreAccents: Boolean by mutableStateOf(false)
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val layoutInflater = requireActivity().layoutInflater
-        dialogView = layoutInflater.inflate(R.layout.browser_options_dialog, null)
-
-        if (cardsOrNotes == CardsOrNotes.CARDS) {
-            dialogView.findViewById<RadioButton>(R.id.select_cards_mode).isChecked = true
-        } else {
-            dialogView.findViewById<RadioButton>(R.id.select_notes_mode).isChecked = true
-        }
-
-        dialogView.findViewById<CheckBox>(R.id.truncate_checkbox).isChecked = isTruncated
-
-        dialogView.findViewById<LinearLayout>(R.id.action_rename_flag).setOnClickListener {
-            Timber.d("Rename flag clicked")
-            val flagRenameDialog = FlagRenameDialog()
-            flagRenameDialog.show(parentFragmentManager, "FlagRenameDialog")
-            dismiss()
-        }
-
-        dialogView.findViewById<Button>(R.id.manage_columns_button).setOnClickListener {
-            openColumnManager()
-        }
-
-        dialogView.findViewById<CheckBox>(R.id.ignore_accents_checkbox).apply {
-            text = TR.preferencesIgnoreAccentsInSearch()
-            isChecked = viewModel.shouldIgnoreAccents
-        }
-
-        dialogView.findViewById<TextView>(R.id.browsing_text_view).text = TR.preferencesBrowsing()
-
-        return MaterialAlertDialogBuilder(requireContext()).run {
-            this.setView(dialogView)
-            this.setTitle(getString(R.string.browser_options_dialog_heading))
-            this.setNegativeButton(getString(R.string.dialog_cancel)) { _: DialogInterface, _: Int ->
-                dismiss()
+        cardsOrNotes =
+            when (requireArguments().getBoolean(CARDS_OR_NOTES_KEY)) {
+                true -> CardsOrNotes.CARDS
+                else -> CardsOrNotes.NOTES
             }
-            this.setPositiveButton(getString(R.string.dialog_ok), DialogInterface.OnClickListener(function = positiveButtonClick))
-            this.create()
-        }
-    }
+        isTruncated = requireArguments().getBoolean(IS_TRUNCATED_KEY)
+        shouldIgnoreAccents = viewModel.shouldIgnoreAccents
 
-    /** Opens [BrowserColumnSelectionFragment] for the current selection of [CardsOrNotes] */
-    private fun openColumnManager() {
-        val dialog = BrowserColumnSelectionFragment.createInstance(viewModel.cardsOrNotes)
-        dialog.show(requireActivity().supportFragmentManager, null)
+        return MaterialAlertDialogBuilder(requireActivity())
+            .setTitle(R.string.browser_options_dialog_heading)
+            .setNegativeButton(R.string.dialog_cancel, null)
+            .setPositiveButton(R.string.dialog_ok) { _, _ ->
+                viewModel.setCardsOrNotes(cardsOrNotes)
+                viewModel.setTruncated(isTruncated)
+                viewModel.setIgnoreAccents(shouldIgnoreAccents)
+            }.setView(
+                ComposeView(requireActivity()).apply {
+                    setContent {
+                        BrowserOptions(
+                            onCardsModeSelected = { cardsOrNotes = CardsOrNotes.CARDS },
+                            onNotesModeSelected = { cardsOrNotes = CardsOrNotes.NOTES },
+                            initialMode = if (cardsOrNotes == CardsOrNotes.CARDS) 0 else 1,
+                            onTruncateChanged = { isTruncated = it },
+                            initialTruncate = isTruncated,
+                            onIgnoreAccentsChanged = { shouldIgnoreAccents = it },
+                            initialIgnoreAccents = shouldIgnoreAccents,
+                            onManageColumnsClicked = {
+                                val dialog = BrowserColumnSelectionFragment.createInstance(viewModel.cardsOrNotes)
+                                dialog.show(requireActivity().supportFragmentManager, null)
+                            },
+                            onRenameFlagClicked = {
+                                val flagRenameDialog = FlagRenameDialog()
+                                flagRenameDialog.show(parentFragmentManager, "FlagRenameDialog")
+                                dismiss()
+                            },
+                        )
+                    }
+                },
+            ).create()
     }
 
     companion object {

@@ -36,7 +36,7 @@ import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.FilteredDeckOptions
 import com.ichi2.anki.OnErrorListener
 import com.ichi2.anki.R
-import com.ichi2.anki.StudyOptionsActivity
+import com.ichi2.anki.StudyOptionsComposeActivity
 import com.ichi2.anki.common.time.SECONDS_PER_DAY
 import com.ichi2.anki.common.time.TIME_HOUR
 import com.ichi2.anki.common.time.TIME_MINUTE
@@ -161,7 +161,7 @@ class CongratsPage :
 
     private fun openStudyOptionsAndFinish() {
         val intent =
-            Intent(requireContext(), StudyOptionsActivity::class.java).apply {
+            Intent(requireContext(), StudyOptionsComposeActivity::class.java).apply {
                 putExtra("withDeckOptions", false)
             }
         startActivity(intent, null)

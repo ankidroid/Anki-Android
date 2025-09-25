@@ -21,8 +21,8 @@ import androidx.annotation.CheckResult
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import anki.card_rendering.EmptyCardsReport
-import anki.collection.OpChanges
 import anki.i18n.GeneratedTranslations
+import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
@@ -35,7 +35,6 @@ import com.ichi2.anki.configureRenderingMode
 import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.libanki.CardId
 import com.ichi2.anki.libanki.Consts
-import com.ichi2.anki.libanki.Consts.DEFAULT_DECK_ID
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.sched.DeckNode
 import com.ichi2.anki.libanki.utils.extend
@@ -63,6 +62,7 @@ import timber.log.Timber
 class DeckPickerViewModel :
     ViewModel(),
     OnErrorListener {
+    val isSyncing = MutableStateFlow(false)
     val flowOfStartupResponse = MutableStateFlow<StartupResponse?>(null)
 
     private val flowOfDeckDueTree = MutableStateFlow<DeckNode?>(null)
@@ -162,13 +162,40 @@ class DeckPickerViewModel :
 
     /** Flow that determines when the resizing divider should be visible */
     val flowOfResizingDividerVisible =
-        combine(flowOfDeckListInInitialState, flowOfCollectionHasNoCards) { isInInitialState, hasNoCards ->
+        combine(
+            flowOfDeckListInInitialState,
+            flowOfCollectionHasNoCards
+        ) { isInInitialState, hasNoCards ->
             !(isInInitialState == true || hasNoCards)
         }
 
     // HACK: dismiss a legacy progress bar
     // TODO: Replace with better progress handling for first load/corrupt collections
     val flowOfDecksReloaded = MutableSharedFlow<Unit>()
+    val deckSelectionResult = MutableSharedFlow<DeckSelectionResult>()
+
+    fun onDeckSelected(
+        deckId: DeckId,
+        selectionType: DeckSelectionType,
+    ) = viewModelScope.launch {
+        val result = withCol {
+            decks.select(deckId)
+            CardBrowser.clearLastDeckId()
+            focusedDeck = deckId
+            val deck = dueTree?.find(deckId)
+            if (deck != null && deck.hasCardsReadyToStudy()) {
+                DeckSelectionResult.HasCardsToStudy(selectionType)
+            } else {
+                val isEmpty = deck?.all { decks.isEmpty(it.did) } ?: true
+                if (isEmpty) {
+                    DeckSelectionResult.Empty(deckId)
+                } else {
+                    DeckSelectionResult.NoCardsToStudy
+                }
+            }
+        }
+        deckSelectionResult.emit(result)
+    }
 
     /**
      * Deletes the provided deck, child decks. and all cards inside.
@@ -233,7 +260,9 @@ class DeckPickerViewModel :
     fun emptyFilteredDeck(deckId: DeckId): Job =
         viewModelScope.launch {
             Timber.i("empty filtered deck %s", deckId)
-            withCol { decks.select(deckId) }
+            withCol {
+                decks.select(deckId)
+            }
             undoableOp { sched.emptyFilteredDeck(decks.selected()) }
             flowOfDeckCountsChanged.emit(Unit)
         }
@@ -257,7 +286,8 @@ class DeckPickerViewModel :
     /**
      * Opens the Manage Note Types screen.
      */
-    fun openManageNoteTypes() = launchCatchingIO { flowOfDestination.emit(ManageNoteTypesDestination()) }
+    fun openManageNoteTypes() =
+        launchCatchingIO { flowOfDestination.emit(ManageNoteTypesDestination()) }
 
     /**
      * Opens study options for the provided deck
@@ -276,7 +306,7 @@ class DeckPickerViewModel :
 
     fun unburyDeck(deckId: DeckId) =
         launchCatchingIO {
-            undoableOp<OpChanges> { sched.unburyDeck(deckId) }
+            undoableOp { sched.unburyDeck(deckId) }
         }
 
     fun scheduleReviewReminders(deckId: DeckId) =
@@ -388,7 +418,8 @@ class DeckPickerViewModel :
     fun handleStartup(environment: AnkiDroidEnvironment) {
         if (!environment.hasRequiredPermissions()) {
             Timber.i("${this.javaClass.simpleName}: postponing startup code - permission screen shown")
-            flowOfStartupResponse.value = StartupResponse.RequestPermissions(environment.requiredPermissions)
+            flowOfStartupResponse.value =
+                StartupResponse.RequestPermissions(environment.requiredPermissions)
             return
         }
 
@@ -451,5 +482,3 @@ data class EmptyCardsResult(
     @CheckResult
     fun toHumanReadableString() = TR.emptyCardsDeletedCount(cardsDeleted)
 }
-
-fun DeckNode.onlyHasDefaultDeck() = children.singleOrNull()?.did == DEFAULT_DECK_ID

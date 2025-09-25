@@ -1,4 +1,5 @@
 [versions]
+activityCompose = "1.9.0"
 compileSdk = "36"
 
 # Changing minSdk means newer AnkiDroid versions will not support older devices.
@@ -62,6 +63,7 @@ androidxWork = "2.10.3"
 ankiBackend = '0.1.61-anki25.09'
 autoService = "1.1.1"
 autoServiceAnnotations = "1.1.1"
+coil = "2.4.0"
 colorpicker = "1.2.0"
 # https://commons.apache.org/proper/commons-collections/changes.html
 commonsCollections4 = "4.5.0"
@@ -94,6 +96,7 @@ ktlintGradlePlugin = "13.1.0"
 leakcanaryAndroid = "2.14"
 lint = '31.12.2'
 material = "1.12.0"
+material3 = "1.2.1"
 materialTapTargetPrompt = "3.3.2"
 
 # Only needed until mockito kotlin updates this transitive itself
@@ -124,6 +127,11 @@ acra-toast = { module = "ch.acra:acra-toast", version.ref = "acra" }
 acra-dialog = { module = "ch.acra:acra-dialog", version.ref = "acra" }
 acra-http = { module = "ch.acra:acra-http", version.ref = "acra" }
 android-image-cropper = { module = "com.vanniktech:android-image-cropper", version.ref = "imageCropper" }
+androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activityCompose" }
+androidx-compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
+androidx-compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
+androidx-compose-ui = { module = "androidx.compose.ui:ui" }
+androidx-compose-foundation = { module = "androidx.compose.foundation:foundation" }
 androidx-constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "androidxConstraintlayout" }
 androidx-fragment-ktx = { module = "androidx.fragment:fragment-ktx", version.ref = "androidxFragmentKtx" }
 androidx-exifinterface = { module = "androidx.exifinterface:exifinterface", version.ref = "androidxExifinterface" }
@@ -133,6 +141,8 @@ androidx-browser = { module = "androidx.browser:browser", version.ref = "android
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidxAppCompat" }
 androidx-annotation = { module = "androidx.annotation:annotation", version.ref = "androidxAnnotation" }
 androidx-activity = { module = "androidx.activity:activity", version.ref = "androidxActivity" }
+androidx-material = { module = "androidx.compose.material:material" }
+androidx-material3 = { module = "androidx.compose.material3:material3", version.ref = "material3" }
 androidx-media3-ui = { module = "androidx.media3:media3-ui", version.ref = "androidxMedia3" }
 androidx-media3-exoplayer-dash = { module = "androidx.media3:media3-exoplayer-dash", version.ref = "androidxMedia3" }
 androidx-media3-exoplayer = { module = "androidx.media3:media3-exoplayer", version.ref = "androidxMedia3" }
@@ -146,6 +156,7 @@ androidx-sqlite-framework = { module = "androidx.sqlite:sqlite-framework", versi
 androidx-recyclerview = { module = "androidx.recyclerview:recyclerview", version.ref = "androidxRecyclerview" }
 auto-service = { module = "com.google.auto.service:auto-service", version.ref = "autoService" }
 auto-service-annotations = { module = "com.google.auto.service:auto-service-annotations", version.ref = "autoServiceAnnotations" }
+coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
 jetbrains-annotations = { module = "org.jetbrains:annotations", version.ref = "jetbrainsAnnotations" }
 colorpicker = { module = "com.github.mrudultora:Colorpicker", version.ref = "colorpicker" }
 commons-io = { module = "commons-io:commons-io", version.ref = "commonsIo" }
@@ -219,6 +230,7 @@ kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 
 
 ktlint-gradle-plugin = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlintGradlePlugin" }

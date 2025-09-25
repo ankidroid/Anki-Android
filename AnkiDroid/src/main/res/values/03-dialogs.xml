@@ -268,4 +268,18 @@ also changes the interval of the card"
     <string name="tts_error_dialog_reason_text">The text to speech engine <b>%1$s</b> does not support the following language: <b>%2$s</b></string>
     <string name="tts_error_dialog_change_button_text">Change engine</string>
     <string name="tts_error_dialog_supported_voices_button_text">Voice options</string>
+
+    <!-- Export Dialog -->
+    <string name="exporting_export_format">Export format</string>
+    <string name="exporting_include">Include</string>
+    <string name="exporting_selected_notes">Selected notes</string>
+    <string name="exporting_include_media">Include media</string>
+    <string name="exporting_support_older_anki_versions">Support older Anki versions</string>
+    <string name="exporting_include_scheduling_information">Include scheduling information</string>
+    <string name="exporting_include_deck_configs">Include deck configs</string>
+    <string name="exporting_include_html_and_media_references">Include HTML and media references</string>
+    <string name="exporting_include_tags">Include tags</string>
+    <string name="exporting_include_deck">Include deck name</string>
+    <string name="exporting_include_notetype">Include notetype name</string>
+    <string name="exporting_include_guid">Include GUID</string>
 </resources>

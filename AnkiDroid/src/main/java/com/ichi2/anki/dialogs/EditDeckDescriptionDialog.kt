@@ -33,7 +33,6 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
-import com.ichi2.anki.StudyOptionsFragment
 import com.ichi2.anki.dialogs.EditDeckDescriptionDialogViewModel.DismissType
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.snackbar.showSnackbar

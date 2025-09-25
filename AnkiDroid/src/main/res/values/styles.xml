@@ -29,10 +29,15 @@
         <item name="android:popupBackground">@drawable/bg_popup</item>
     </style>
 
+    <style name="ShapeAppearance.Anki.ExpressiveButton" parent="ShapeAppearance.Material3.SmallComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">24dp</item>
+    </style>
+
     <style name="AnswerButton" parent="Widget.Material3.Button.ElevatedButton">
         <item name="android:padding">0dp</item>
-        <item name="cornerRadius">@dimen/answer_button_corner_radius</item>
-        <item name="android:textSize">@dimen/reviewer_answer_button_textSize</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.Anki.ExpressiveButton</item>
+        <item name="android:textAppearance">?attr/textAppearanceLabelLarge</item>
         <item name="elevation">@dimen/study_screen_elevation</item>
     </style>
 
@@ -239,8 +244,14 @@
         <item name="android:textColor">?attr/progressDialogButtonTextColor</item>
     </style>
 
+    <style name="ShapeAppearance.Anki.ExpressiveCard" parent="ShapeAppearance.Material3.MediumComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">16dp</item>
+    </style>
+
     <style name="CardView.ViewerStyle" parent="Widget.Material3.CardView.Elevated">
         <item name="android:elevation">@dimen/study_screen_elevation</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.Anki.ExpressiveCard</item>
     </style>
 
     <style name="Theme.AppCompat.Transparent.NoActionBar" parent="Theme.AppCompat.Light.DarkActionBar">

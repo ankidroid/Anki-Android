@@ -43,7 +43,7 @@
                         android:layout_above="@id/today_stats_text_view"
                         android:scrollbars="vertical" />
 
-                    <com.ichi2.ui.FixedTextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/today_stats_text_view"
                         android:layout_width="match_parent"
                         android:layout_marginLeft="8dp"
@@ -57,41 +57,20 @@
 
                 </RelativeLayout>
 
-                <LinearLayout
+                <androidx.compose.ui.platform.ComposeView
                     android:id="@+id/no_decks_placeholder"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="24dp"
-                        android:layout_gravity="center_horizontal"
-                        app:srcCompat="@drawable/anki_box" />
-
-                    <com.ichi2.ui.FixedTextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
-                        android:gravity="center"
-                        android:text="@string/no_cards_placeholder_title"
-                        style="@style/TextAppearance.AppCompat.Medium" />
-
-                    <com.ichi2.ui.FixedTextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:textAlignment="center"
-                        android:text="@string/no_cards_placeholder_description"
-                        style="@style/TextAppearance.AppCompat.Body1" />
-                </LinearLayout>
+                    android:layout_height="match_parent" />
 
             </FrameLayout>
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
     </LinearLayout>
 
     <include layout="@layout/anki_progress"/>
+    <androidx.compose.ui.platform.ComposeView
+        android:id="@+id/progress_indicator_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
     <include layout="@layout/floating_add_button"/>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
