@@ -477,21 +477,13 @@ open class DeckPicker :
             val snackbarHostState = remember { SnackbarHostState() }
             val coroutineScope = rememberCoroutineScope()
             val deckList by viewModel.flowOfDeckList.collectAsState(
-                initial =
-                    FlattenedDeckList(
-                        emptyList(),
-                        false,
-                    ),
+                initial = FlattenedDeckList(emptyList(), false)
             )
             val isRefreshing by viewModel.isSyncing.collectAsState(initial = false)
             var searchQuery by remember { mutableStateOf("") }
             var requestSearchFocus by remember { mutableStateOf(false) }
             val focusedDeckId by viewModel.flowOfFocusedDeck.collectAsState()
-            var studyOptionsData by remember {
-                mutableStateOf<com.ichi2.anki.ui.compose.StudyOptionsData?>(
-                    null,
-                )
-            }
+            var studyOptionsData by remember { mutableStateOf<com.ichi2.anki.ui.compose.StudyOptionsData?>(null) }
 
             LaunchedEffect(focusedDeckId) {
                 val currentFocusedDeck = focusedDeckId
@@ -522,7 +514,7 @@ open class DeckPicker :
                                     buriedLrn = buriedLearning,
                                     buriedRev = buriedReview,
                                     totalNewCards = sched.totalNewForCurrentDeck(),
-                                    totalCards = decks.cardCount(currentFocusedDeck, true),
+                                    totalCards = decks.cardCount(currentFocusedDeck, includeSubdecks = true),
                                     isFiltered = deck.isFiltered,
                                     haveBuried = sched.haveBuried(),
                                 )
