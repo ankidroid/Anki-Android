@@ -1142,9 +1142,7 @@ open class DeckPicker :
                 updateMenuState()
                 updateSearchVisibilityFromState(menu)
                 updateDeckRelatedMenuItems(menu)
-                if (!fragmented) {
-                    updateMenuFromState(menu)
-                }
+                updateMenuFromState(menu)
             }
         return super.onCreateOptionsMenu(menu)
     }
