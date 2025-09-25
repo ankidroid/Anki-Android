@@ -14,7 +14,6 @@ import com.ichi2.anki.R
 import com.ichi2.anki.browser.BrowserColumnSelectionFragment
 import com.ichi2.anki.browser.CardBrowserViewModel
 import com.ichi2.anki.model.CardsOrNotes
-import com.ichi2.anki.theme.AnkiDroidTheme
 import timber.log.Timber
 
 class BrowserOptionsDialog : AppCompatDialogFragment() {
@@ -43,26 +42,24 @@ class BrowserOptionsDialog : AppCompatDialogFragment() {
             }.setView(
                 ComposeView(requireActivity()).apply {
                     setContent {
-                        AnkiDroidTheme {
-                            BrowserOptions(
-                                onCardsModeSelected = { cardsOrNotes = CardsOrNotes.CARDS },
-                                onNotesModeSelected = { cardsOrNotes = CardsOrNotes.NOTES },
-                                initialMode = if (cardsOrNotes == CardsOrNotes.CARDS) 0 else 1,
-                                onTruncateChanged = { isTruncated = it },
-                                initialTruncate = isTruncated,
-                                onIgnoreAccentsChanged = { shouldIgnoreAccents = it },
-                                initialIgnoreAccents = shouldIgnoreAccents,
-                                onManageColumnsClicked = {
-                                    val dialog = BrowserColumnSelectionFragment.createInstance(viewModel.cardsOrNotes)
-                                    dialog.show(requireActivity().supportFragmentManager, null)
-                                },
-                                onRenameFlagClicked = {
-                                    val flagRenameDialog = FlagRenameDialog()
-                                    flagRenameDialog.show(parentFragmentManager, "FlagRenameDialog")
-                                    dismiss()
-                                },
-                            )
-                        }
+                        BrowserOptions(
+                            onCardsModeSelected = { cardsOrNotes = CardsOrNotes.CARDS },
+                            onNotesModeSelected = { cardsOrNotes = CardsOrNotes.NOTES },
+                            initialMode = if (cardsOrNotes == CardsOrNotes.CARDS) 0 else 1,
+                            onTruncateChanged = { isTruncated = it },
+                            initialTruncate = isTruncated,
+                            onIgnoreAccentsChanged = { shouldIgnoreAccents = it },
+                            initialIgnoreAccents = shouldIgnoreAccents,
+                            onManageColumnsClicked = {
+                                val dialog = BrowserColumnSelectionFragment.createInstance(viewModel.cardsOrNotes)
+                                dialog.show(requireActivity().supportFragmentManager, null)
+                            },
+                            onRenameFlagClicked = {
+                                val flagRenameDialog = FlagRenameDialog()
+                                flagRenameDialog.show(parentFragmentManager, "FlagRenameDialog")
+                                dismiss()
+                            },
+                        )
                     }
                 },
             ).create()

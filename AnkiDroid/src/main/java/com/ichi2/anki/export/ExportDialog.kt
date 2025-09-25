@@ -13,7 +13,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ichi2.anki.R
 import com.ichi2.anki.libanki.DeckNameId
-import com.ichi2.anki.theme.AnkiDroidTheme
 
 // State holder classes for checkbox groups
 data class CollectionExportState(
@@ -293,7 +292,7 @@ fun ExportDialogPreview() {
     var notesState by remember { mutableStateOf(NotesExportState()) }
     var cardsState by remember { mutableStateOf(CardsExportState()) }
 
-    AnkiDroidTheme {
+
         ExportDialog(
             exportFormats = exportFormats,
             selectedFormat = selectedFormat,
@@ -313,5 +312,5 @@ fun ExportDialogPreview() {
             cardsState = cardsState,
             onCardsStateChanged = { cardsState = it },
         )
-    }
+
 }
