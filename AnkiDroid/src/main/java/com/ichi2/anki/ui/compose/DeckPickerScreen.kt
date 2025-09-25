@@ -40,7 +40,7 @@ fun DeckPickerContent(
     onExport: (DisplayDeckNode) -> Unit,
     onDelete: (DisplayDeckNode) -> Unit,
     onRebuild: (DisplayDeckNode) -> Unit,
-    onEmpty: (DisplayDeckNode) -> Unit
+    onEmpty: (DisplayDeckNode) -> Unit,
 ) {
     val pullRefreshState = rememberPullRefreshState(refreshing = isRefreshing, onRefresh = onRefresh)
 
@@ -50,7 +50,7 @@ fun DeckPickerContent(
                 painter = backgroundImage,
                 contentDescription = null,
                 modifier = Modifier.fillMaxSize(),
-                contentScale = ContentScale.Crop
+                contentScale = ContentScale.Crop,
             )
         }
         Box(modifier = Modifier.fillMaxSize().pullRefresh(pullRefreshState)) {
@@ -65,14 +65,14 @@ fun DeckPickerContent(
                         onExport = { onExport(deck) },
                         onDelete = { onDelete(deck) },
                         onRebuild = { onRebuild(deck) },
-                        onEmpty = { onEmpty(deck) }
+                        onEmpty = { onEmpty(deck) },
                     )
                 }
             }
             PullRefreshIndicator(
                 refreshing = isRefreshing,
                 state = pullRefreshState,
-                modifier = Modifier.align(Alignment.TopCenter)
+                modifier = Modifier.align(Alignment.TopCenter),
             )
         }
     }
@@ -101,8 +101,10 @@ fun DeckPickerScreen(
     onRebuild: (DisplayDeckNode) -> Unit,
     onEmpty: (DisplayDeckNode) -> Unit,
     onNavigationIconClick: () -> Unit,
-    searchFocusRequester: androidx.compose.ui.focus.FocusRequester = androidx.compose.ui.focus.FocusRequester(),
-    snackbarHostState: SnackbarHostState = remember { SnackbarHostState() }
+    searchFocusRequester: androidx.compose.ui.focus.FocusRequester =
+        androidx.compose.ui.focus
+            .FocusRequester(),
+    snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
 ) {
     var isFabMenuOpen by remember { mutableStateOf(false) }
     var isSearchOpen by remember { mutableStateOf(false) }
@@ -131,56 +133,56 @@ fun DeckPickerScreen(
                                 }) {
                                     Icon(Icons.Default.Close, contentDescription = stringResource(R.string.close))
                                 }
-                            }
+                            },
                         )
                     } else {
                         IconButton(onClick = { isSearchOpen = true }) {
                             Icon(Icons.Default.Search, contentDescription = stringResource(R.string.search_decks))
                         }
                     }
-                }
+                },
             )
         },
         floatingActionButton = {
             FloatingActionButton(
-                onClick = { isFabMenuOpen = !isFabMenuOpen }
+                onClick = { isFabMenuOpen = !isFabMenuOpen },
             ) {
                 Icon(Icons.Filled.Add, contentDescription = stringResource(R.string.add))
                 DropdownMenu(
                     expanded = isFabMenuOpen,
-                    onDismissRequest = { isFabMenuOpen = false }
+                    onDismissRequest = { isFabMenuOpen = false },
                 ) {
                     DropdownMenuItem(
                         text = { Text(stringResource(R.string.add_note)) },
                         onClick = {
                             onAddNote()
                             isFabMenuOpen = false
-                        }
+                        },
                     )
                     DropdownMenuItem(
                         text = { Text(stringResource(R.string.new_deck)) },
                         onClick = {
                             onAddDeck()
                             isFabMenuOpen = false
-                        }
+                        },
                     )
                     DropdownMenuItem(
                         text = { Text(stringResource(R.string.get_shared)) },
                         onClick = {
                             onAddSharedDeck()
                             isFabMenuOpen = false
-                        }
+                        },
                     )
                     DropdownMenuItem(
                         text = { Text(stringResource(R.string.new_dynamic_deck)) },
                         onClick = {
                             onAddFilteredDeck()
                             isFabMenuOpen = false
-                        }
+                        },
                     )
                 }
             }
-        }
+        },
     ) { paddingValues ->
         DeckPickerContent(
             decks = decks,
@@ -195,7 +197,7 @@ fun DeckPickerScreen(
             onExport = onExport,
             onDelete = onDelete,
             onRebuild = onRebuild,
-            onEmpty = onEmpty
+            onEmpty = onEmpty,
         )
     }
 }

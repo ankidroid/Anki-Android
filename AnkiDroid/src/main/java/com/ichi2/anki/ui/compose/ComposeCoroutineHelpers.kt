@@ -6,9 +6,7 @@ import com.ichi2.anki.AnkiActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-suspend fun <T> AnkiActivity.withComposeProgress(
-    op: suspend () -> T,
-): T {
+suspend fun <T> AnkiActivity.withComposeProgress(op: suspend () -> T): T {
     val view = ComposeView(this)
     view.setContent {
         LoadingIndicator()

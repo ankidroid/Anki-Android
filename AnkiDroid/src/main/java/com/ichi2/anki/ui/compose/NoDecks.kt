@@ -21,20 +21,20 @@ fun NoDecks() {
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Image(
             painter = painterResource(id = R.drawable.anki_box),
-            contentDescription = stringResource(id = R.string.no_cards_placeholder_title)
+            contentDescription = stringResource(id = R.string.no_cards_placeholder_title),
         )
         Text(
             text = stringResource(id = R.string.no_cards_placeholder_title),
             modifier = Modifier.padding(top = 24.dp, bottom = 8.dp),
-            textAlign = TextAlign.Center
+            textAlign = TextAlign.Center,
         )
         Text(
             text = stringResource(id = R.string.no_cards_placeholder_description),
-            textAlign = TextAlign.Center
+            textAlign = TextAlign.Center,
         )
     }
 }

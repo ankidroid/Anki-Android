@@ -30,54 +30,55 @@ fun DeckItem(
     onExport: () -> Unit,
     onDelete: () -> Unit,
     onRebuild: () -> Unit,
-    onEmpty: () -> Unit
+    onEmpty: () -> Unit,
 ) {
     var isContextMenuOpen by remember { mutableStateOf(false) }
 
     Row(
-        modifier = modifier
-            .pointerInput(Unit) {
-                detectTapGestures(
-                    onTap = { onDeckClick() },
-                    onLongPress = { isContextMenuOpen = true }
-                )
-            }
-            .padding(start = (deck.depth * 16).dp),
-        verticalAlignment = Alignment.CenterVertically
+        modifier =
+            modifier
+                .pointerInput(Unit) {
+                    detectTapGestures(
+                        onTap = { onDeckClick() },
+                        onLongPress = { isContextMenuOpen = true },
+                    )
+                }.padding(start = (deck.depth * 16).dp),
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         if (deck.canCollapse) {
             Icon(
                 imageVector = if (deck.collapsed) Icons.Default.ExpandMore else Icons.Default.ExpandLess,
                 contentDescription = if (deck.collapsed) stringResource(R.string.expand) else stringResource(R.string.collapse),
-                modifier = Modifier.pointerInput(Unit) {
-                    detectTapGestures(onTap = { onExpandClick() })
-                }
+                modifier =
+                    Modifier.pointerInput(Unit) {
+                        detectTapGestures(onTap = { onExpandClick() })
+                    },
             )
         } else {
             Spacer(modifier = Modifier.width(24.dp))
         }
         Text(
             text = deck.lastDeckNameComponent,
-            modifier = Modifier.weight(1f)
+            modifier = Modifier.weight(1f),
         )
         Text(
             text = deck.newCount.toString(),
             color = MaterialTheme.colorScheme.primary,
-            modifier = Modifier.padding(horizontal = 4.dp)
+            modifier = Modifier.padding(horizontal = 4.dp),
         )
         Text(
             text = deck.lrnCount.toString(),
             color = MaterialTheme.colorScheme.error,
-            modifier = Modifier.padding(horizontal = 4.dp)
+            modifier = Modifier.padding(horizontal = 4.dp),
         )
         Text(
             text = deck.revCount.toString(),
             color = Color(0xFF4CAF50), // Green 500
-            modifier = Modifier.padding(horizontal = 4.dp)
+            modifier = Modifier.padding(horizontal = 4.dp),
         )
         DropdownMenu(
             expanded = isContextMenuOpen,
-            onDismissRequest = { isContextMenuOpen = false }
+            onDismissRequest = { isContextMenuOpen = false },
         ) {
             if (deck.filtered) {
                 DropdownMenuItem(
@@ -85,14 +86,14 @@ fun DeckItem(
                     onClick = {
                         onRebuild()
                         isContextMenuOpen = false
-                    }
+                    },
                 )
                 DropdownMenuItem(
                     text = { Text(stringResource(R.string.empty_cards_action)) },
                     onClick = {
                         onEmpty()
                         isContextMenuOpen = false
-                    }
+                    },
                 )
             } else {
                 DropdownMenuItem(
@@ -100,14 +101,14 @@ fun DeckItem(
                     onClick = {
                         onRename()
                         isContextMenuOpen = false
-                    }
+                    },
                 )
                 DropdownMenuItem(
                     text = { Text(stringResource(R.string.export)) },
                     onClick = {
                         onExport()
                         isContextMenuOpen = false
-                    }
+                    },
                 )
             }
             DropdownMenuItem(
@@ -115,14 +116,14 @@ fun DeckItem(
                 onClick = {
                     onDeckOptions()
                     isContextMenuOpen = false
-                }
+                },
             )
             DropdownMenuItem(
                 text = { Text(stringResource(R.string.delete_deck)) },
                 onClick = {
                     onDelete()
                     isContextMenuOpen = false
-                }
+                },
             )
         }
     }

@@ -18,14 +18,14 @@ import com.ichi2.anki.theme.AnkiDroidTheme
 // State holder classes for checkbox groups
 data class CollectionExportState(
     val includeMedia: Boolean = true,
-    val supportOlderVersions: Boolean = false
+    val supportOlderVersions: Boolean = false,
 )
 
 data class ApkgExportState(
     val includeScheduling: Boolean = true,
     val includeDeckConfigs: Boolean = false,
     val includeMedia: Boolean = true,
-    val supportOlderVersions: Boolean = false
+    val supportOlderVersions: Boolean = false,
 )
 
 data class NotesExportState(
@@ -33,11 +33,11 @@ data class NotesExportState(
     val includeTags: Boolean = true,
     val includeDeckName: Boolean = false,
     val includeNotetypeName: Boolean = false,
-    val includeGuid: Boolean = false
+    val includeGuid: Boolean = false,
 )
 
 data class CardsExportState(
-    val includeHtml: Boolean = true
+    val includeHtml: Boolean = true,
 )
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -62,9 +62,10 @@ fun ExportDialog(
     onCardsStateChanged: (CardsExportState) -> Unit,
 ) {
     Column(
-        modifier = Modifier
-            .padding(16.dp)
-            .verticalScroll(rememberScrollState())
+        modifier =
+            Modifier
+                .padding(16.dp)
+                .verticalScroll(rememberScrollState()),
     ) {
         // I'm not using HtmlCompat.fromHtml here because it's not directly supported in Compose.
         // The strings will be plain text. If HTML is required, a more complex solution is needed.
@@ -72,7 +73,7 @@ fun ExportDialog(
         DropdownSelector(
             options = exportFormats,
             selectedOption = selectedFormat,
-            onOptionSelected = onFormatSelected
+            onOptionSelected = onFormatSelected,
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -84,7 +85,7 @@ fun ExportDialog(
                 options = decks.map { it.name },
                 selectedOption = selectedDeck?.name ?: "",
                 onOptionSelected = { name -> decks.find { it.name == name }?.let { onDeckSelected(it) } },
-                loading = decksLoading
+                loading = decksLoading,
             )
         }
 
@@ -93,9 +94,10 @@ fun ExportDialog(
                 text = stringResource(R.string.exporting_selected_notes),
                 style = MaterialTheme.typography.bodySmall,
                 textAlign = TextAlign.Center,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 8.dp)
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 8.dp),
             )
         }
 
@@ -115,18 +117,18 @@ fun ExportDialog(
 @Composable
 fun CollectionExportOptions(
     state: CollectionExportState,
-    onStateChanged: (CollectionExportState) -> Unit
+    onStateChanged: (CollectionExportState) -> Unit,
 ) {
     Column {
         CheckboxWithLabel(
             label = stringResource(R.string.exporting_include_media),
             checked = state.includeMedia,
-            onCheckedChange = { onStateChanged(state.copy(includeMedia = it)) }
+            onCheckedChange = { onStateChanged(state.copy(includeMedia = it)) },
         )
         CheckboxWithLabel(
             label = stringResource(R.string.exporting_support_older_anki_versions),
             checked = state.supportOlderVersions,
-            onCheckedChange = { onStateChanged(state.copy(supportOlderVersions = it)) }
+            onCheckedChange = { onStateChanged(state.copy(supportOlderVersions = it)) },
         )
     }
 }
@@ -134,28 +136,28 @@ fun CollectionExportOptions(
 @Composable
 fun ApkgExportOptions(
     state: ApkgExportState,
-    onStateChanged: (ApkgExportState) -> Unit
+    onStateChanged: (ApkgExportState) -> Unit,
 ) {
     Column {
         CheckboxWithLabel(
             label = stringResource(R.string.exporting_include_scheduling_information),
             checked = state.includeScheduling,
-            onCheckedChange = { onStateChanged(state.copy(includeScheduling = it)) }
+            onCheckedChange = { onStateChanged(state.copy(includeScheduling = it)) },
         )
         CheckboxWithLabel(
             label = stringResource(R.string.exporting_include_deck_configs),
             checked = state.includeDeckConfigs,
-            onCheckedChange = { onStateChanged(state.copy(includeDeckConfigs = it)) }
+            onCheckedChange = { onStateChanged(state.copy(includeDeckConfigs = it)) },
         )
         CheckboxWithLabel(
             label = stringResource(R.string.exporting_include_media),
             checked = state.includeMedia,
-            onCheckedChange = { onStateChanged(state.copy(includeMedia = it)) }
+            onCheckedChange = { onStateChanged(state.copy(includeMedia = it)) },
         )
         CheckboxWithLabel(
             label = stringResource(R.string.exporting_support_older_anki_versions),
             checked = state.supportOlderVersions,
-            onCheckedChange = { onStateChanged(state.copy(supportOlderVersions = it)) }
+            onCheckedChange = { onStateChanged(state.copy(supportOlderVersions = it)) },
         )
     }
 }
@@ -163,33 +165,33 @@ fun ApkgExportOptions(
 @Composable
 fun NotesExportOptions(
     state: NotesExportState,
-    onStateChanged: (NotesExportState) -> Unit
+    onStateChanged: (NotesExportState) -> Unit,
 ) {
     Column {
         CheckboxWithLabel(
             label = stringResource(R.string.exporting_include_html_and_media_references),
             checked = state.includeHtml,
-            onCheckedChange = { onStateChanged(state.copy(includeHtml = it)) }
+            onCheckedChange = { onStateChanged(state.copy(includeHtml = it)) },
         )
         CheckboxWithLabel(
             label = stringResource(R.string.exporting_include_tags),
             checked = state.includeTags,
-            onCheckedChange = { onStateChanged(state.copy(includeTags = it)) }
+            onCheckedChange = { onStateChanged(state.copy(includeTags = it)) },
         )
         CheckboxWithLabel(
             label = stringResource(R.string.exporting_include_deck),
             checked = state.includeDeckName,
-            onCheckedChange = { onStateChanged(state.copy(includeDeckName = it)) }
+            onCheckedChange = { onStateChanged(state.copy(includeDeckName = it)) },
         )
         CheckboxWithLabel(
             label = stringResource(R.string.exporting_include_notetype),
             checked = state.includeNotetypeName,
-            onCheckedChange = { onStateChanged(state.copy(includeNotetypeName = it)) }
+            onCheckedChange = { onStateChanged(state.copy(includeNotetypeName = it)) },
         )
         CheckboxWithLabel(
             label = stringResource(R.string.exporting_include_guid),
             checked = state.includeGuid,
-            onCheckedChange = { onStateChanged(state.copy(includeGuid = it)) }
+            onCheckedChange = { onStateChanged(state.copy(includeGuid = it)) },
         )
     }
 }
@@ -197,13 +199,13 @@ fun NotesExportOptions(
 @Composable
 fun CardsExportOptions(
     state: CardsExportState,
-    onStateChanged: (CardsExportState) -> Unit
+    onStateChanged: (CardsExportState) -> Unit,
 ) {
     Column {
         CheckboxWithLabel(
             label = stringResource(R.string.exporting_include_html_and_media_references),
             checked = state.includeHtml,
-            onCheckedChange = { onStateChanged(state.copy(includeHtml = it)) }
+            onCheckedChange = { onStateChanged(state.copy(includeHtml = it)) },
         )
     }
 }
@@ -213,11 +215,11 @@ fun CheckboxWithLabel(
     label: String,
     checked: Boolean,
     onCheckedChange: (Boolean) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        modifier = modifier.fillMaxWidth()
+        modifier = modifier.fillMaxWidth(),
     ) {
         Checkbox(checked = checked, onCheckedChange = onCheckedChange)
         Spacer(modifier = Modifier.width(8.dp))
@@ -232,7 +234,7 @@ fun DropdownSelector(
     selectedOption: String,
     onOptionSelected: (String) -> Unit,
     modifier: Modifier = Modifier,
-    loading: Boolean = false
+    loading: Boolean = false,
 ) {
     var expanded by remember { mutableStateOf(false) }
 
@@ -242,9 +244,10 @@ fun DropdownSelector(
             onExpandedChange = { expanded = !expanded },
         ) {
             OutlinedTextField(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .menuAnchor(),
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .menuAnchor(),
                 readOnly = true,
                 value = selectedOption,
                 onValueChange = {},
@@ -273,7 +276,6 @@ fun DropdownSelector(
     }
 }
 
-
 @Preview(showBackground = true)
 @Composable
 fun ExportDialogPreview() {
@@ -290,7 +292,6 @@ fun ExportDialogPreview() {
     var apkgState by remember { mutableStateOf(ApkgExportState()) }
     var notesState by remember { mutableStateOf(NotesExportState()) }
     var cardsState by remember { mutableStateOf(CardsExportState()) }
-
 
     AnkiDroidTheme {
         ExportDialog(
@@ -310,7 +311,7 @@ fun ExportDialogPreview() {
             notesState = notesState,
             onNotesStateChanged = { notesState = it },
             cardsState = cardsState,
-            onCardsStateChanged = { cardsState = it }
+            onCardsStateChanged = { cardsState = it },
         )
     }
 }

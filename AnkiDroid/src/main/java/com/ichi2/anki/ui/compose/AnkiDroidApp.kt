@@ -47,9 +47,13 @@ fun AnkiDroidApp(
     onUnbury: (Long) -> Unit,
     requestSearchFocus: Boolean,
     onSearchFocusRequested: () -> Unit,
-    snackbarHostState: SnackbarHostState = remember { SnackbarHostState() }
+    snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
 ) {
-    val searchFocusRequester = remember { androidx.compose.ui.focus.FocusRequester() }
+    val searchFocusRequester =
+        remember {
+            androidx.compose.ui.focus
+                .FocusRequester()
+        }
 
     LaunchedEffect(requestSearchFocus) {
         if (requestSearchFocus) {
@@ -78,7 +82,7 @@ fun AnkiDroidApp(
                             TextField(
                                 value = searchQuery,
                                 onValueChange = onSearchQueryChanged,
-                                        modifier = Modifier.weight(1f).focusRequester(searchFocusRequester),
+                                modifier = Modifier.weight(1f).focusRequester(searchFocusRequester),
                                 placeholder = { Text(stringResource(R.string.search_decks)) },
                                 trailingIcon = {
                                     IconButton(onClick = {
@@ -87,7 +91,7 @@ fun AnkiDroidApp(
                                     }) {
                                         Icon(Icons.Default.Close, contentDescription = stringResource(R.string.close))
                                     }
-                                }
+                                },
                             )
                         } else {
                             IconButton(onClick = { isSearchOpen = true }) {
@@ -100,7 +104,7 @@ fun AnkiDroidApp(
                             }
                             DropdownMenu(
                                 expanded = isStudyOptionsMenuOpen,
-                                onDismissRequest = { isStudyOptionsMenuOpen = false }
+                                onDismissRequest = { isStudyOptionsMenuOpen = false },
                             ) {
                                 if (studyOptionsData.isFiltered) {
                                     DropdownMenuItem(
@@ -109,7 +113,7 @@ fun AnkiDroidApp(
                                             onRebuildDeck(studyOptionsData.deckId)
                                             isStudyOptionsMenuOpen = false
                                         },
-                                        leadingIcon = { Icon(Icons.Default.Refresh, contentDescription = null) }
+                                        leadingIcon = { Icon(Icons.Default.Refresh, contentDescription = null) },
                                     )
                                     DropdownMenuItem(
                                         text = { Text(stringResource(R.string.empty_cards_action)) },
@@ -117,7 +121,7 @@ fun AnkiDroidApp(
                                             onEmptyDeck(studyOptionsData.deckId)
                                             isStudyOptionsMenuOpen = false
                                         },
-                                        leadingIcon = { Icon(Icons.Default.DeleteOutline, contentDescription = null) }
+                                        leadingIcon = { Icon(Icons.Default.DeleteOutline, contentDescription = null) },
                                     )
                                 } else {
                                     DropdownMenuItem(
@@ -126,7 +130,7 @@ fun AnkiDroidApp(
                                             onCustomStudy(studyOptionsData.deckId)
                                             isStudyOptionsMenuOpen = false
                                         },
-                                        leadingIcon = { Icon(Icons.Default.Star, contentDescription = null) }
+                                        leadingIcon = { Icon(Icons.Default.Star, contentDescription = null) },
                                     )
                                 }
                                 DropdownMenuItem(
@@ -135,7 +139,7 @@ fun AnkiDroidApp(
                                         onDeckOptionsItemSelected(studyOptionsData.deckId)
                                         isStudyOptionsMenuOpen = false
                                     },
-                                    leadingIcon = { Icon(Icons.Default.Settings, contentDescription = null) }
+                                    leadingIcon = { Icon(Icons.Default.Settings, contentDescription = null) },
                                 )
                                 if (studyOptionsData.haveBuried) {
                                     DropdownMenuItem(
@@ -144,54 +148,54 @@ fun AnkiDroidApp(
                                             onUnbury(studyOptionsData.deckId)
                                             isStudyOptionsMenuOpen = false
                                         },
-                                        leadingIcon = { Icon(Icons.Default.Undo, contentDescription = null) }
+                                        leadingIcon = { Icon(Icons.Default.Undo, contentDescription = null) },
                                     )
                                 }
                             }
                         }
-                    }
+                    },
                 )
             },
             floatingActionButton = {
                 FloatingActionButton(
-                    onClick = { isFabMenuOpen = !isFabMenuOpen }
+                    onClick = { isFabMenuOpen = !isFabMenuOpen },
                 ) {
                     Icon(Icons.Filled.Add, contentDescription = stringResource(R.string.add))
                     DropdownMenu(
                         expanded = isFabMenuOpen,
-                        onDismissRequest = { isFabMenuOpen = false }
+                        onDismissRequest = { isFabMenuOpen = false },
                     ) {
                         DropdownMenuItem(
                             text = { Text(stringResource(R.string.add_note)) },
                             onClick = {
                                 onAddNote()
                                 isFabMenuOpen = false
-                            }
+                            },
                         )
                         DropdownMenuItem(
                             text = { Text(stringResource(R.string.new_deck)) },
                             onClick = {
                                 onAddDeck()
                                 isFabMenuOpen = false
-                            }
+                            },
                         )
                         DropdownMenuItem(
                             text = { Text(stringResource(R.string.get_shared)) },
                             onClick = {
                                 onAddSharedDeck()
                                 isFabMenuOpen = false
-                            }
+                            },
                         )
                         DropdownMenuItem(
                             text = { Text(stringResource(R.string.new_dynamic_deck)) },
                             onClick = {
                                 onAddFilteredDeck()
                                 isFabMenuOpen = false
-                            }
+                            },
                         )
                     }
                 }
-            }
+            },
         ) { paddingValues ->
             Row(Modifier.fillMaxSize().padding(paddingValues)) {
                 Box(modifier = Modifier.weight(1f)) {
@@ -207,14 +211,14 @@ fun AnkiDroidApp(
                         onExport = onExport,
                         onDelete = onDelete,
                         onRebuild = onRebuild,
-                        onEmpty = onEmpty
+                        onEmpty = onEmpty,
                     )
                 }
                 Box(modifier = Modifier.weight(1f)) {
                     StudyOptionsScreen(
                         studyOptionsData = studyOptionsData,
                         onStartStudy = onStartStudy,
-                        onCustomStudy = onCustomStudy
+                        onCustomStudy = onCustomStudy,
                     )
                 }
             }
@@ -242,7 +246,7 @@ fun AnkiDroidApp(
             onDelete = onDelete,
             onRebuild = onRebuild,
             onEmpty = onEmpty,
-            onNavigationIconClick = onNavigationIconClick
+            onNavigationIconClick = onNavigationIconClick,
         )
     }
 }

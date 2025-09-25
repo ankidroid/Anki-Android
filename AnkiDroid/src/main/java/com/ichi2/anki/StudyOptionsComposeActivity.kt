@@ -17,36 +17,37 @@ class StudyOptionsComposeActivity : AnkiActivity() {
             var studyOptionsData by remember { mutableStateOf<StudyOptionsData?>(null) }
 
             LaunchedEffect(Unit) {
-                studyOptionsData = withContext(Dispatchers.IO) {
-                    CollectionManager.withCol {
-                        val deck = decks.current()
-                        val counts = sched.counts()
-                        var buriedNew = 0
-                        var buriedLearning = 0
-                        var buriedReview = 0
-                        val tree = sched.deckDueTree(deck.id)
-                        if (tree != null) {
-                            buriedNew = tree.newCount - counts.new
-                            buriedLearning = tree.learnCount - counts.lrn
-                            buriedReview = tree.reviewCount - counts.rev
+                studyOptionsData =
+                    withContext(Dispatchers.IO) {
+                        CollectionManager.withCol {
+                            val deck = decks.current()
+                            val counts = sched.counts()
+                            var buriedNew = 0
+                            var buriedLearning = 0
+                            var buriedReview = 0
+                            val tree = sched.deckDueTree(deck.id)
+                            if (tree != null) {
+                                buriedNew = tree.newCount - counts.new
+                                buriedLearning = tree.learnCount - counts.lrn
+                                buriedReview = tree.reviewCount - counts.rev
+                            }
+                            StudyOptionsData(
+                                deckId = deck.id,
+                                deckName = deck.getString("name"),
+                                deckDescription = deck.description,
+                                newCount = counts.new,
+                                lrnCount = counts.lrn,
+                                revCount = counts.rev,
+                                buriedNew = buriedNew,
+                                buriedLrn = buriedLearning,
+                                buriedRev = buriedReview,
+                                totalNewCards = sched.totalNewForCurrentDeck(),
+                                totalCards = decks.cardCount(deck.id, true),
+                                isFiltered = deck.isFiltered,
+                                haveBuried = sched.haveBuried(),
+                            )
                         }
-                        StudyOptionsData(
-                            deckId = deck.id,
-                            deckName = deck.getString("name"),
-                            deckDescription = deck.description,
-                            newCount = counts.new,
-                            lrnCount = counts.lrn,
-                            revCount = counts.rev,
-                            buriedNew = buriedNew,
-                            buriedLrn = buriedLearning,
-                            buriedRev = buriedReview,
-                            totalNewCards = sched.totalNewForCurrentDeck(),
-                            totalCards = decks.cardCount(deck.id, true),
-                            isFiltered = deck.isFiltered,
-                            haveBuried = sched.haveBuried()
-                        )
                     }
-                }
             }
 
             StudyOptionsScreen(
@@ -56,7 +57,7 @@ class StudyOptionsComposeActivity : AnkiActivity() {
                 },
                 onCustomStudy = { deckId ->
                     showDialogFragment(CustomStudyDialog.createInstance(deckId))
-                }
+                },
             )
         }
     }

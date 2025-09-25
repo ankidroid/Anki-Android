@@ -24,112 +24,117 @@ fun BrowserOptions(
     onIgnoreAccentsChanged: (Boolean) -> Unit,
     initialIgnoreAccents: Boolean,
     onManageColumnsClicked: () -> Unit,
-    onRenameFlagClicked: () -> Unit
+    onRenameFlagClicked: () -> Unit,
 ) {
     val selectedMode = remember { mutableStateOf(initialMode) }
     val truncateChecked = remember { mutableStateOf(initialTruncate) }
     val ignoreAccentsChecked = remember { mutableStateOf(initialIgnoreAccents) }
 
     Column(
-        modifier = Modifier
-            .padding(16.dp)
-            .verticalScroll(rememberScrollState())
+        modifier =
+            Modifier
+                .padding(16.dp)
+                .verticalScroll(rememberScrollState()),
     ) {
         Text(
             text = stringResource(id = R.string.toggle_cards_notes),
-            style = MaterialTheme.typography.titleMedium
+            style = MaterialTheme.typography.titleMedium,
         )
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 8.dp),
-            verticalAlignment = Alignment.CenterVertically
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(top = 8.dp),
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             RadioButton(
                 selected = selectedMode.value == 0,
                 onClick = {
                     selectedMode.value = 0
                     onCardsModeSelected()
-                }
+                },
             )
             Text(
                 text = stringResource(id = R.string.show_cards),
-                modifier = Modifier.padding(start = 8.dp)
+                modifier = Modifier.padding(start = 8.dp),
             )
         }
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 8.dp),
-            verticalAlignment = Alignment.CenterVertically
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(top = 8.dp),
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             RadioButton(
                 selected = selectedMode.value == 1,
                 onClick = {
                     selectedMode.value = 1
                     onNotesModeSelected()
-                }
+                },
             )
             Text(
                 text = stringResource(id = R.string.show_notes),
-                modifier = Modifier.padding(start = 8.dp)
+                modifier = Modifier.padding(start = 8.dp),
             )
         }
         Divider(modifier = Modifier.padding(vertical = 8.dp))
         Text(
             text = stringResource(id = R.string.card_browser_truncate),
-            style = MaterialTheme.typography.titleMedium
+            style = MaterialTheme.typography.titleMedium,
         )
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 8.dp),
-            verticalAlignment = Alignment.CenterVertically
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(top = 8.dp),
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             Checkbox(
                 checked = truncateChecked.value,
                 onCheckedChange = {
                     truncateChecked.value = it
                     onTruncateChanged(it)
-                }
+                },
             )
             Text(
                 text = stringResource(id = R.string.card_browser_truncate),
-                modifier = Modifier.padding(start = 8.dp)
+                modifier = Modifier.padding(start = 8.dp),
             )
         }
         Text(
             text = stringResource(id = R.string.truncate_content_help),
             style = MaterialTheme.typography.bodySmall,
-            modifier = Modifier.padding(start = 16.dp, top = 4.dp)
+            modifier = Modifier.padding(start = 16.dp, top = 4.dp),
         )
         Divider(modifier = Modifier.padding(vertical = 8.dp))
         Text(
             text = stringResource(id = R.string.pref_cat_studying),
-            style = MaterialTheme.typography.titleMedium
+            style = MaterialTheme.typography.titleMedium,
         )
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 8.dp),
-            verticalAlignment = Alignment.CenterVertically
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(top = 8.dp),
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             Checkbox(
                 checked = ignoreAccentsChecked.value,
                 onCheckedChange = {
                     ignoreAccentsChecked.value = it
                     onIgnoreAccentsChanged(it)
-                }
+                },
             )
             Text(
                 text = stringResource(id = R.string.ignore_accents_in_search),
-                modifier = Modifier.padding(start = 8.dp)
+                modifier = Modifier.padding(start = 8.dp),
             )
         }
         Divider(modifier = Modifier.padding(vertical = 8.dp))
         Text(
             text = stringResource(id = R.string.browse_manage_columns_main_heading),
-            style = MaterialTheme.typography.titleMedium
+            style = MaterialTheme.typography.titleMedium,
         )
         TextButton(onClick = onManageColumnsClicked) {
             Text(text = stringResource(id = R.string.browse_manage_columns))
@@ -137,7 +142,7 @@ fun BrowserOptions(
         Divider(modifier = Modifier.padding(vertical = 8.dp))
         Text(
             text = stringResource(id = R.string.menu_flag),
-            style = MaterialTheme.typography.titleMedium
+            style = MaterialTheme.typography.titleMedium,
         )
         TextButton(onClick = onRenameFlagClicked) {
             Text(text = stringResource(id = R.string.rename_flag))
@@ -157,6 +162,6 @@ fun PreviewBrowserOptions() {
         onIgnoreAccentsChanged = {},
         initialIgnoreAccents = false,
         onManageColumnsClicked = {},
-        onRenameFlagClicked = {}
+        onRenameFlagClicked = {},
     )
 }

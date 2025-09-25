@@ -18,7 +18,6 @@ import com.ichi2.anki.theme.AnkiDroidTheme
 import timber.log.Timber
 
 class BrowserOptionsDialog : AppCompatDialogFragment() {
-
     private val viewModel: CardBrowserViewModel by activityViewModels()
 
     private var cardsOrNotes: CardsOrNotes by mutableStateOf(CardsOrNotes.CARDS)
@@ -26,10 +25,11 @@ class BrowserOptionsDialog : AppCompatDialogFragment() {
     private var shouldIgnoreAccents: Boolean by mutableStateOf(false)
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        cardsOrNotes = when (requireArguments().getBoolean(CARDS_OR_NOTES_KEY)) {
-            true -> CardsOrNotes.CARDS
-            else -> CardsOrNotes.NOTES
-        }
+        cardsOrNotes =
+            when (requireArguments().getBoolean(CARDS_OR_NOTES_KEY)) {
+                true -> CardsOrNotes.CARDS
+                else -> CardsOrNotes.NOTES
+            }
         isTruncated = requireArguments().getBoolean(IS_TRUNCATED_KEY)
         shouldIgnoreAccents = viewModel.shouldIgnoreAccents
 
@@ -40,8 +40,7 @@ class BrowserOptionsDialog : AppCompatDialogFragment() {
                 viewModel.setCardsOrNotes(cardsOrNotes)
                 viewModel.setTruncated(isTruncated)
                 viewModel.setIgnoreAccents(shouldIgnoreAccents)
-            }
-            .setView(
+            }.setView(
                 ComposeView(requireActivity()).apply {
                     setContent {
                         AnkiDroidTheme {
@@ -61,13 +60,12 @@ class BrowserOptionsDialog : AppCompatDialogFragment() {
                                     val flagRenameDialog = FlagRenameDialog()
                                     flagRenameDialog.show(parentFragmentManager, "FlagRenameDialog")
                                     dismiss()
-                                }
+                                },
                             )
                         }
                     }
-                }
-            )
-            .create()
+                },
+            ).create()
     }
 
     companion object {
