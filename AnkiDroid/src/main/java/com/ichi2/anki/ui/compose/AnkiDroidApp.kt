@@ -14,8 +14,24 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.outlined.Delete
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TopAppBar
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.painter.Painter
@@ -58,11 +74,9 @@ fun AnkiDroidApp(
     onSearchFocusRequested: () -> Unit,
     snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
 ) {
-    val searchFocusRequester =
-        remember {
-            androidx.compose.ui.focus
-                .FocusRequester()
-        }
+    val searchFocusRequester = remember {
+        androidx.compose.ui.focus.FocusRequester()
+    }
 
     LaunchedEffect(requestSearchFocus) {
         if (requestSearchFocus) {
@@ -83,7 +97,10 @@ fun AnkiDroidApp(
                     title = { if (!isSearchOpen) Text(stringResource(R.string.app_name)) },
                     navigationIcon = {
                         IconButton(onClick = onNavigationIconClick) {
-                            Icon(Icons.Default.Menu, contentDescription = stringResource(R.string.navigation_drawer_open))
+                            Icon(
+                                Icons.Default.Menu,
+                                contentDescription = stringResource(R.string.navigation_drawer_open)
+                            )
                         }
                     },
                     actions = {
@@ -91,25 +108,36 @@ fun AnkiDroidApp(
                             TextField(
                                 value = searchQuery,
                                 onValueChange = onSearchQueryChanged,
-                                modifier = Modifier.weight(1f).focusRequester(searchFocusRequester),
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .focusRequester(searchFocusRequester),
                                 placeholder = { Text(stringResource(R.string.search_decks)) },
                                 trailingIcon = {
                                     IconButton(onClick = {
                                         onSearchQueryChanged("")
                                         isSearchOpen = false
                                     }) {
-                                        Icon(Icons.Default.Close, contentDescription = stringResource(R.string.close))
+                                        Icon(
+                                            Icons.Default.Close,
+                                            contentDescription = stringResource(R.string.close)
+                                        )
                                     }
                                 },
                             )
                         } else {
                             IconButton(onClick = { isSearchOpen = true }) {
-                                Icon(Icons.Default.Search, contentDescription = stringResource(R.string.search_decks))
+                                Icon(
+                                    Icons.Default.Search,
+                                    contentDescription = stringResource(R.string.search_decks)
+                                )
                             }
                         }
                         if (studyOptionsData != null) {
                             IconButton(onClick = { isStudyOptionsMenuOpen = true }) {
-                                Icon(Icons.Default.MoreVert, contentDescription = stringResource(R.string.more_options))
+                                Icon(
+                                    Icons.Default.MoreVert,
+                                    contentDescription = stringResource(R.string.more_options)
+                                )
                             }
                             DropdownMenu(
                                 expanded = isStudyOptionsMenuOpen,
@@ -122,7 +150,12 @@ fun AnkiDroidApp(
                                             onRebuildDeck(studyOptionsData.deckId)
                                             isStudyOptionsMenuOpen = false
                                         },
-                                        leadingIcon = { Icon(Icons.Default.Refresh, contentDescription = null) },
+                                        leadingIcon = {
+                                            Icon(
+                                                Icons.Default.Refresh,
+                                                contentDescription = null
+                                            )
+                                        },
                                     )
                                     DropdownMenuItem(
                                         text = { Text(stringResource(R.string.empty_cards_action)) },
@@ -130,7 +163,12 @@ fun AnkiDroidApp(
                                             onEmptyDeck(studyOptionsData.deckId)
                                             isStudyOptionsMenuOpen = false
                                         },
-                                        leadingIcon = { Icon(Icons.Outlined.Delete, contentDescription = null) },
+                                        leadingIcon = {
+                                            Icon(
+                                                Icons.Outlined.Delete,
+                                                contentDescription = null
+                                            )
+                                        },
                                     )
                                 } else {
                                     DropdownMenuItem(
@@ -139,7 +177,12 @@ fun AnkiDroidApp(
                                             onCustomStudy(studyOptionsData.deckId)
                                             isStudyOptionsMenuOpen = false
                                         },
-                                        leadingIcon = { Icon(Icons.Default.Star, contentDescription = null) },
+                                        leadingIcon = {
+                                            Icon(
+                                                Icons.Default.Star,
+                                                contentDescription = null
+                                            )
+                                        },
                                     )
                                 }
                                 DropdownMenuItem(
@@ -148,7 +191,12 @@ fun AnkiDroidApp(
                                         onDeckOptionsItemSelected(studyOptionsData.deckId)
                                         isStudyOptionsMenuOpen = false
                                     },
-                                    leadingIcon = { Icon(Icons.Default.Settings, contentDescription = null) },
+                                    leadingIcon = {
+                                        Icon(
+                                            Icons.Default.Settings,
+                                            contentDescription = null
+                                        )
+                                    },
                                 )
                                 if (studyOptionsData.haveBuried) {
                                     DropdownMenuItem(
@@ -157,7 +205,12 @@ fun AnkiDroidApp(
                                             onUnbury(studyOptionsData.deckId)
                                             isStudyOptionsMenuOpen = false
                                         },
-                                        leadingIcon = { Icon(painter = painterResource(R.drawable.ic_undo), contentDescription = null) },
+                                        leadingIcon = {
+                                            Icon(
+                                                painter = painterResource(R.drawable.undo_24px),
+                                                contentDescription = null
+                                            )
+                                        },
                                     )
                                 }
                             }
@@ -206,7 +259,9 @@ fun AnkiDroidApp(
                 }
             },
         ) { paddingValues ->
-            Row(Modifier.fillMaxSize().padding(paddingValues)) {
+            Row(Modifier
+                .fillMaxSize()
+                .padding(paddingValues)) {
                 Box(modifier = Modifier.weight(1f)) {
                     DeckPickerContent(
                         decks = decks,
