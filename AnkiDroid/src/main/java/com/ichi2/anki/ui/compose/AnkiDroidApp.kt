@@ -13,13 +13,13 @@ import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Star
-import androidx.compose.material.icons.filled.Undo
-import androidx.compose.material.icons.outlined.DeleteOutline
+import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import com.ichi2.anki.R
 import com.ichi2.anki.deckpicker.DisplayDeckNode
@@ -83,7 +83,7 @@ fun AnkiDroidApp(
                     title = { if (!isSearchOpen) Text(stringResource(R.string.app_name)) },
                     navigationIcon = {
                         IconButton(onClick = onNavigationIconClick) {
-                            Icon(Icons.Filled.Menu, contentDescription = stringResource(R.string.navigation_drawer_open))
+                            Icon(Icons.Default.Menu, contentDescription = stringResource(R.string.navigation_drawer_open))
                         }
                     },
                     actions = {
@@ -98,18 +98,18 @@ fun AnkiDroidApp(
                                         onSearchQueryChanged("")
                                         isSearchOpen = false
                                     }) {
-                                        Icon(Icons.Filled.Close, contentDescription = stringResource(R.string.close))
+                                        Icon(Icons.Default.Close, contentDescription = stringResource(R.string.close))
                                     }
                                 },
                             )
                         } else {
                             IconButton(onClick = { isSearchOpen = true }) {
-                                Icon(Icons.Filled.Search, contentDescription = stringResource(R.string.search_decks))
+                                Icon(Icons.Default.Search, contentDescription = stringResource(R.string.search_decks))
                             }
                         }
                         if (studyOptionsData != null) {
                             IconButton(onClick = { isStudyOptionsMenuOpen = true }) {
-                                Icon(Icons.Filled.MoreVert, contentDescription = stringResource(R.string.more_options))
+                                Icon(Icons.Default.MoreVert, contentDescription = stringResource(R.string.more_options))
                             }
                             DropdownMenu(
                                 expanded = isStudyOptionsMenuOpen,
@@ -122,7 +122,7 @@ fun AnkiDroidApp(
                                             onRebuildDeck(studyOptionsData.deckId)
                                             isStudyOptionsMenuOpen = false
                                         },
-                                        leadingIcon = { Icon(Icons.Filled.Refresh, contentDescription = null) },
+                                        leadingIcon = { Icon(Icons.Default.Refresh, contentDescription = null) },
                                     )
                                     DropdownMenuItem(
                                         text = { Text(stringResource(R.string.empty_cards_action)) },
@@ -130,7 +130,7 @@ fun AnkiDroidApp(
                                             onEmptyDeck(studyOptionsData.deckId)
                                             isStudyOptionsMenuOpen = false
                                         },
-                                        leadingIcon = { Icon(Icons.Outlined.DeleteOutline, contentDescription = null) },
+                                        leadingIcon = { Icon(Icons.Outlined.Delete, contentDescription = null) },
                                     )
                                 } else {
                                     DropdownMenuItem(
@@ -139,7 +139,7 @@ fun AnkiDroidApp(
                                             onCustomStudy(studyOptionsData.deckId)
                                             isStudyOptionsMenuOpen = false
                                         },
-                                        leadingIcon = { Icon(Icons.Filled.Star, contentDescription = null) },
+                                        leadingIcon = { Icon(Icons.Default.Star, contentDescription = null) },
                                     )
                                 }
                                 DropdownMenuItem(
@@ -148,7 +148,7 @@ fun AnkiDroidApp(
                                         onDeckOptionsItemSelected(studyOptionsData.deckId)
                                         isStudyOptionsMenuOpen = false
                                     },
-                                    leadingIcon = { Icon(Icons.Filled.Settings, contentDescription = null) },
+                                    leadingIcon = { Icon(Icons.Default.Settings, contentDescription = null) },
                                 )
                                 if (studyOptionsData.haveBuried) {
                                     DropdownMenuItem(
@@ -157,7 +157,7 @@ fun AnkiDroidApp(
                                             onUnbury(studyOptionsData.deckId)
                                             isStudyOptionsMenuOpen = false
                                         },
-                                        leadingIcon = { Icon(Icons.Filled.Undo, contentDescription = null) },
+                                        leadingIcon = { Icon(painter = painterResource(R.drawable.ic_undo), contentDescription = null) },
                                     )
                                 }
                             }
@@ -169,7 +169,7 @@ fun AnkiDroidApp(
                 FloatingActionButton(
                     onClick = { isFabMenuOpen = !isFabMenuOpen },
                 ) {
-                    Icon(Icons.Filled.Add, contentDescription = stringResource(R.string.add))
+                    Icon(Icons.Default.Add, contentDescription = stringResource(R.string.add))
                     DropdownMenu(
                         expanded = isFabMenuOpen,
                         onDismissRequest = { isFabMenuOpen = false },

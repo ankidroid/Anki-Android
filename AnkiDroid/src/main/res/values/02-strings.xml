@@ -72,7 +72,7 @@
     <string name="leech_suspend_notification">Card marked as leech and suspended</string>
     <string name="leech_notification">Card marked as leech</string>
     <string name="webview_crash_unknown">Unknown error</string>
-    <string name="webview_crash_unknwon_detailed">This was caused by an internal error in the WebView</string>
+    <string name="webview_crash_unknown_detailed">This was caused by an internal error in the WebView</string>
     <string name="webview_crash_oom">Out of Memory</string>
     <string name="webview_crash_oom_details">The WebView was terminated by the system. This typically happens when the application runs out of memory, often due to large fonts or media.</string>
     <string name="webview_crash_nonfatal">WebView renderer crashed. Cause: %s</string>
@@ -181,7 +181,6 @@
     <string name="menu__deck_options" maxLength="28">Deck options</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>
     <string name="select_tts" maxLength="28">Set TTS language</string>
-    <string name="custom_study" maxLength="28">Custom study</string>
     <string name="dyn_deck_desc">This is a special deck for studying outside of the normal schedule. Cards will be automatically returned to their original decks after you review them. Deleting this deck from the deck list will return all remaining cards to their original deck.</string>
     <string name="steps_error">Steps must be numbers greater than 0</string>
     <string name="steps_min_error">At least one step is required</string>
@@ -235,7 +234,6 @@
     <string name="card_viewer_could_not_find_image">Card Content Error: Failed to load ‘%s’</string>
 
     <!-- Deck Picker -->
-    <string name="search_decks" maxLength="28">Search decks</string>
     <string name="ankidroid_init_failed_webview_title">Fatal Error</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid relies on the System WebView which is unavailable. This can happen if the system is installing updates. Please try again in a few minutes.\n\n%s</string>
 
@@ -446,7 +444,6 @@ opening the system text to speech settings fails">Failed to open text to speech 
         <item quantity="one">%d note</item>
         <item quantity="other">%d notes</item>
     </plurals>
-    <string name="more_options">More options</string>
     <string name="fields">Fields</string>
     <string name="cards">Cards</string>
 
