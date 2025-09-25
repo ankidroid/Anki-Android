@@ -83,6 +83,7 @@ import androidx.work.WorkInfo
 import androidx.work.WorkManager
 import anki.collection.OpChanges
 import anki.sync.SyncStatusResponse
+import coil.compose.rememberAsyncImagePainter
 import coil.compose.rememberImagePainter
 import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.google.android.material.snackbar.Snackbar
@@ -223,7 +224,7 @@ private fun DeckPicker.deckPickerPainter(): Painter? {
     }
 
     Timber.i("Applying background")
-    return rememberImagePainter(data = imgFile)
+    return rememberAsyncImagePainter(model = imgFile)
 }
 
 /**

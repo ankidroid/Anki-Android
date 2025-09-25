@@ -28,7 +28,6 @@ import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.DeckPicker
-import com.ichi2.anki.DeckSelectionType
 import com.ichi2.anki.InitialActivity
 import com.ichi2.anki.OnErrorListener
 import com.ichi2.anki.PermissionSet
@@ -37,7 +36,6 @@ import com.ichi2.anki.configureRenderingMode
 import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.libanki.CardId
 import com.ichi2.anki.libanki.Consts
-import com.ichi2.anki.libanki.Consts.DEFAULT_DECK_ID
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.sched.DeckNode
 import com.ichi2.anki.libanki.utils.extend
@@ -206,8 +204,11 @@ class DeckPickerViewModel :
     @CheckResult // This is a slow operation and should be inside `withProgress`
     fun deleteDeck(did: DeckId) =
         viewModelScope.launch {
-            val deckName = withCol { decks.getLegacy(did)!!.name }
-            val changes = undoableOp { decks.remove(listOf(did)) }
+            val (deckName, changes) = withCol {
+                val name = decks.getLegacy(did)!!.name
+                val opChanges = undoableOp { decks.remove(listOf(did)) }
+                Pair(name, opChanges)
+            }
             // After deletion: decks.current() reverts to Default, necessitating `focusedDeck`
             // to match and avoid unnecessary scrolls in `renderPage()`.
             focusedDeck = Consts.DEFAULT_DECK_ID
@@ -251,7 +252,9 @@ class DeckPickerViewModel :
                 toDelete.extend(note.cardIdsList)
             }
         }
-        val result = undoableOp { removeCardsAndOrphanedNotes(toDelete) }
+        val result = withCol {
+            undoableOp { removeCardsAndOrphanedNotes(toDelete) }
+        }
         emptyCardsNotification.emit(EmptyCardsResult(cardsDeleted = result.count))
     }
 
@@ -259,8 +262,10 @@ class DeckPickerViewModel :
     fun emptyFilteredDeck(deckId: DeckId): Job =
         viewModelScope.launch {
             Timber.i("empty filtered deck %s", deckId)
-            withCol { decks.select(deckId) }
-            undoableOp { sched.emptyFilteredDeck(decks.selected()) }
+            withCol {
+                decks.select(deckId)
+                undoableOp { sched.emptyFilteredDeck(decks.selected()) }
+            }
             flowOfDeckCountsChanged.emit(Unit)
         }
 
@@ -302,7 +307,7 @@ class DeckPickerViewModel :
 
     fun unburyDeck(deckId: DeckId) =
         launchCatchingIO {
-            undoableOp<OpChanges> { sched.unburyDeck(deckId) }
+            withCol { undoableOp<OpChanges> { sched.unburyDeck(deckId) } }
         }
 
     fun scheduleReviewReminders(deckId: DeckId) =
@@ -346,7 +351,7 @@ class DeckPickerViewModel :
 
                 // TODO: This is in the wrong place
                 // Backend returns studiedToday() with newlines for HTML formatting,so we replace them with spaces.
-                flowOfStudiedTodayStats.value = withCol { sched.studiedToday().replace("\\n", " ") }
+                flowOfStudiedTodayStats.value = withCol { sched.studiedToday().replace("\n", " ") }
 
                 /**
                  * Checks the current scheduler version and prompts the upgrade dialog if using the legacy version.
@@ -477,30 +482,3 @@ data class EmptyCardsResult(
     @CheckResult
     fun toHumanReadableString() = TR.emptyCardsDeletedCount(cardsDeleted)
 }
-
-fun DeckNode.onlyHasDefaultDeck() = children.singleOrNull()?.did == DEFAULT_DECK_ID
-
-enum class DeckSelectionType {
-    /** Show study options if fragmented, otherwise, review  */
-    DEFAULT,
-
-    /** Always show study options (if the deck counts are clicked)  */
-    SHOW_STUDY_OPTIONS,
-
-    /** Always open reviewer (keyboard shortcut)  */
-    SKIP_STUDY_OPTIONS,
-}
-
-sealed class DeckSelectionResult {
-    data class HasCardsToStudy(
-        val selectionType: DeckSelectionType,
-    ) : DeckSelectionResult()
-
-    data class Empty(
-        val deckId: DeckId,
-    ) : DeckSelectionResult()
-
-    object NoCardsToStudy : DeckSelectionResult()
-}
-
-fun DeckNode.hasCardsReadyToStudy(): Boolean = newCount > 0 || lrnCount > 0 || revCount > 0

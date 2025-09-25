@@ -42,7 +42,7 @@ class StudyOptionsComposeActivity : AnkiActivity() {
                                 buriedLrn = buriedLearning,
                                 buriedRev = buriedReview,
                                 totalNewCards = sched.totalNewForCurrentDeck(),
-                                totalCards = decks.cardCount(deck.id, true),
+                                totalCards = decks.cardCount(deck.id, includeSubdecks = true),
                                 isFiltered = deck.isFiltered,
                                 haveBuried = sched.haveBuried(),
                             )
