@@ -43,78 +43,73 @@ class ExportDialogFragment : DialogFragment() {
         )
 
         return AlertDialog.Builder(activity).setView(
-                ComposeView(activity).apply {
-                    setContent {
-                        val selectedFormatIndex = remember {
-                            mutableIntStateOf(if ((extraDid != null && extraDid != -1L) || extraType != null) 1 else 0)
-                        }
-                        val decks = remember { mutableStateOf<List<DeckNameId>>(emptyList()) }
-                        val selectedDeck = remember { mutableStateOf<DeckNameId?>(null) }
-                        val decksLoading = remember { mutableStateOf(true) }
+            ComposeView(activity).apply {
+                setContent {
+                    val selectedFormatIndex = remember {
+                        mutableIntStateOf(if ((extraDid != null && extraDid != -1L) || extraType != null) 1 else 0)
+                    }
+                    val decks = remember { mutableStateOf<List<DeckNameId>>(emptyList()) }
+                    val selectedDeck = remember { mutableStateOf<DeckNameId?>(null) }
+                    val decksLoading = remember { mutableStateOf(true) }
 
-                        val showDeckSelector =
-                            remember { mutableStateOf(selectedFormatIndex.value != 0 && extraType == null) }
-                        val showSelectedNotesLabel =
-                            remember { mutableStateOf(selectedFormatIndex.value != 0 && extraType != null) }
+                    val collectionState = remember { mutableStateOf(CollectionExportState()) }
+                    val apkgState = remember { mutableStateOf(ApkgExportState()) }
+                    val notesState = remember { mutableStateOf(NotesExportState()) }
+                    val cardsState = remember { mutableStateOf(CardsExportState()) }
 
-                        val collectionState = remember { mutableStateOf(CollectionExportState()) }
-                        val apkgState = remember { mutableStateOf(ApkgExportState()) }
-                        val notesState = remember { mutableStateOf(NotesExportState()) }
-                        val cardsState = remember { mutableStateOf(CardsExportState()) }
+                    val showDeckSelector = selectedFormatIndex.intValue != 0 && extraType == null
+                    val showSelectedNotesLabel = selectedFormatIndex.intValue != 0 && extraType != null
 
-                        LaunchedEffect(Unit) {
-                            decksLoading.value = true
-                            val allDecks = mutableListOf(
-                                DeckNameId(
-                                    requireActivity().getString(R.string.card_browser_all_decks),
-                                    DeckSpinnerSelection.ALL_DECKS_ID,
-                                ),
-                            )
-                            allDecks.addAll(withCol { it.decks.allNamesAndIds(false) })
-                            decks.value = allDecks
-
-                            val preselectedDeck = if (extraDid != null) {
-                                allDecks.find { it.id == extraDid } ?: allDecks.first()
-                            } else {
-                                allDecks.first()
-                            }
-                            selectedDeck.value = preselectedDeck
-                            decksLoading.value = false
-                        }
-
-
-                        ExportDialog(
-                            exportFormats = exportFormats,
-                            selectedFormat = exportFormats[selectedFormatIndex.value],
-                            onFormatSelected = { format ->
-                                val index = exportFormats.indexOf(format)
-                                selectedFormatIndex.value = index
-                                showDeckSelector.value = index != 0 && extraType == null
-                                showSelectedNotesLabel.value = index != 0 && extraType != null
-                            },
-                            decks = decks.value,
-                            selectedDeck = selectedDeck.value,
-                            onDeckSelected = { deck -> selectedDeck.value = deck },
-                            decksLoading = decksLoading.value,
-                            showDeckSelector = showDeckSelector.value,
-                            showSelectedNotesLabel = showSelectedNotesLabel.value,
-                            collectionState = collectionState.value,
-                            onCollectionStateChanged = { collectionState.value = it },
-                            apkgState = apkgState.value,
-                            onApkgStateChanged = { apkgState.value = it },
-                            notesState = notesState.value,
-                            onNotesStateChanged = { notesState.value = it },
-                            cardsState = cardsState.value,
-                            onCardsStateChanged = { cardsState.value = it },
+                    LaunchedEffect(Unit) {
+                        decksLoading.value = true
+                        val allDecks = mutableListOf(
+                            DeckNameId(
+                                requireActivity().getString(R.string.card_browser_all_decks),
+                                DeckSpinnerSelection.ALL_DECKS_ID,
+                            ),
                         )
+                        allDecks.addAll(withCol { this.decks.allNamesAndIds(false) })
+                        decks.value = allDecks
+
+                        val preselectedDeck = if (extraDid != null) {
+                            allDecks.find { it.id == extraDid } ?: allDecks.first()
+                        } else {
+                            allDecks.first()
+                        }
+                        selectedDeck.value = preselectedDeck
+                        decksLoading.value = false
                     }
 
-                    // Set positive button action here, capturing the state
-                    (dialog as? AlertDialog)?.let { d ->
-                        d.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
-                            if (selectedFormatIndex.value != 0 && decksLoading.value) return@setOnClickListener
+                    ExportDialog(
+                        exportFormats = exportFormats,
+                        selectedFormat = exportFormats[selectedFormatIndex.intValue],
+                        onFormatSelected = { format ->
+                            val index = exportFormats.indexOf(format)
+                            selectedFormatIndex.intValue = index
+                        },
+                        decks = decks.value,
+                        selectedDeck = selectedDeck.value,
+                        onDeckSelected = { deck -> selectedDeck.value = deck },
+                        decksLoading = decksLoading.value,
+                        showDeckSelector = showDeckSelector,
+                        showSelectedNotesLabel = showSelectedNotesLabel,
+                        collectionState = collectionState.value,
+                        onCollectionStateChanged = { collectionState.value = it },
+                        apkgState = apkgState.value,
+                        onApkgStateChanged = { apkgState.value = it },
+                        notesState = notesState.value,
+                        onNotesStateChanged = { notesState.value = it },
+                        cardsState = cardsState.value,
+                        onCardsStateChanged = { cardsState.value = it },
+                    )
 
-                            when (selectedFormatIndex.value) {
+                    // Set positive button action here, capturing the state
+                    val d = dialog as? AlertDialog
+                    LaunchedEffect(d) {
+                        d?.getButton(AlertDialog.BUTTON_POSITIVE)?.setOnClickListener {
+                            if (selectedFormatIndex.intValue != 0 && decksLoading.value) return@setOnClickListener
+
+                            when (selectedFormatIndex.intValue) {
                                 0 -> handleCollectionExport(collectionState.value)
                                 1 -> handleAnkiPackageExport(apkgState.value, selectedDeck.value)
                                 2 -> handleNotesInPlainTextExport(
@@ -130,9 +125,9 @@ class ExportDialogFragment : DialogFragment() {
                             d.dismiss()
                         }
                     }
-
-                },
-            ).setNegativeButton(R.string.dialog_cancel, null)
+                }
+            },
+        ).setNegativeButton(R.string.dialog_cancel, null)
             .setPositiveButton(R.string.dialog_ok, null) // Listener is set in Compose content
             .create()
     }
