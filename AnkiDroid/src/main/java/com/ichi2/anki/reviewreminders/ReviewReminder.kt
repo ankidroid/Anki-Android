@@ -79,6 +79,19 @@ data class ReviewReminderTime(
     }
 
     fun toSecondsFromMidnight(): Long = (hour.hours + minute.minutes).inWholeSeconds
+
+    companion object {
+        /**
+         * Returns the current time as a [ReviewReminderTime].
+         * Used as the default displayed time when creating a review reminder.
+         */
+        fun getCurrentTime(): ReviewReminderTime {
+            val calendarInstance = TimeManager.time.calendar()
+            val currentHour = calendarInstance.get(Calendar.HOUR_OF_DAY)
+            val currentMinute = calendarInstance.get(Calendar.MINUTE)
+            return ReviewReminderTime(currentHour, currentMinute)
+        }
+    }
 }
 
 /**
