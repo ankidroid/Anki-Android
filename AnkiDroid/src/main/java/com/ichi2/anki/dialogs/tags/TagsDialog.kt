@@ -43,6 +43,7 @@ import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.ui.AccessibleSearchView
 import com.ichi2.utils.DisplayUtils.resizeWhenSoftInputShown
+import com.ichi2.utils.ColorUtil
 import com.ichi2.utils.TagsUtil
 import com.ichi2.utils.customView
 import com.ichi2.utils.getInputField
@@ -318,7 +319,8 @@ class TagsDialog : AnalyticsDialogFragment {
 
         val toolbarAddItem = toolbar.menu.findItem(R.id.tags_dialog_action_add)
         val drawable = ContextCompat.getDrawable(requireContext(), R.drawable.ic_add_white)
-        drawable?.setTint(requireContext().getColor(R.color.white))
+        val color = ColorUtil.getThemeColor(requireContext(), com.google.android.material.R.attr.colorOnSurface)
+        drawable?.setTint(color)
         toolbarAddItem.icon = drawable
 
         toolbarAddItem.setOnMenuItemClickListener {

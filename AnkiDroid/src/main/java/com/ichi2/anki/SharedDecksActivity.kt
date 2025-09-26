@@ -38,6 +38,7 @@ import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_INDEFI
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.ui.AccessibleSearchView
+import com.ichi2.utils.ColorUtil
 import com.ichi2.utils.FileNameAndExtension
 import timber.log.Timber
 import java.io.Serializable
@@ -219,7 +220,7 @@ class SharedDecksActivity : AnkiActivity() {
         setTitle(R.string.download_deck)
 
         val webviewToolbar: Toolbar = findViewById(R.id.webview_toolbar)
-        webviewToolbar.setTitleTextColor(getColor(R.color.white))
+        webviewToolbar.setTitleTextColor(ColorUtil.getThemeColor(this, com.google.android.material.R.attr.colorOnSurface))
 
         setSupportActionBar(webviewToolbar)
 

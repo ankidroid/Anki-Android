@@ -162,6 +162,7 @@ import com.ichi2.imagecropper.ImageCropper.Companion.CROP_IMAGE_RESULT
 import com.ichi2.imagecropper.ImageCropperLauncher
 import com.ichi2.themes.Themes
 import com.ichi2.utils.AndroidUiUtils.showSoftInput
+import com.ichi2.utils.ColorUtil
 import com.ichi2.utils.ClipboardUtil
 import com.ichi2.utils.ClipboardUtil.MEDIA_MIME_TYPES
 import com.ichi2.utils.ClipboardUtil.hasMedia
@@ -1830,7 +1831,7 @@ class NoteEditorFragment :
                 MEDIA_MIME_TYPES,
                 DropHelper.Options
                     .Builder()
-                    .setHighlightColor(R.color.material_lime_green_A700)
+                    .setHighlightColor(ColorUtil.getThemeColor(requireContext(), com.google.android.material.R.attr.colorPrimary))
                     .setHighlightCornerRadiusPx(0)
                     .addInnerEditTexts(newEditText)
                     .build(),

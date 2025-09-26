@@ -26,8 +26,10 @@ import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.core.view.MenuItemCompat
 import androidx.core.view.isGone
+import android.content.res.ColorStateList
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.themes.Themes
+import com.ichi2.utils.ColorUtil
 import com.ichi2.utils.iconAlpha
 import timber.log.Timber
 import java.io.FileNotFoundException
@@ -59,12 +61,10 @@ class DrawingActivity : AnkiActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.drawing_menu, menu)
         val whiteboardEditItem = menu.findItem(R.id.action_whiteboard_edit)
+        val color = ColorUtil.getThemeColor(this, com.google.android.material.R.attr.colorOnSurface)
         MenuItemCompat.setIconTintList(
             whiteboardEditItem,
-            ContextCompat.getColorStateList(
-                this,
-                R.color.white,
-            ),
+            ColorStateList.valueOf(color)
         )
 
         // undo button

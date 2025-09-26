@@ -49,6 +49,7 @@ import com.ichi2.anki.showThemedToast
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.openUrl
 import com.ichi2.themes.Themes
+import com.ichi2.utils.ColorUtil
 import com.ichi2.utils.UiUtil.makeFullscreen
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
@@ -117,9 +118,7 @@ class TtsVoicesDialogFragment : DialogFragment() {
                             viewModel.showInternetEnabled.value = value
                             chipBackgroundColor =
                                 if (value) {
-                                    // TODO: This should be RMaterial.attr.colorSecondaryContainer
-                                    // but this shows as Purple after Themes.setTheme
-                                    ColorStateList.valueOf(requireContext().getColor(R.color.text_input_background))
+                                    ColorStateList.valueOf(ColorUtil.getThemeColor(requireContext(), com.google.android.material.R.attr.colorSecondaryContainer))
                                 } else {
                                     ColorStateList.valueOf(Color.TRANSPARENT)
                                 }
@@ -131,7 +130,7 @@ class TtsVoicesDialogFragment : DialogFragment() {
                         viewModel.showNotInstalled.value = value
                         chipBackgroundColor =
                             if (value) {
-                                ColorStateList.valueOf(requireContext().getColor(R.color.text_input_background))
+                                ColorStateList.valueOf(ColorUtil.getThemeColor(requireContext(), com.google.android.material.R.attr.colorSecondaryContainer))
                             } else {
                                 ColorStateList.valueOf(Color.TRANSPARENT)
                             }

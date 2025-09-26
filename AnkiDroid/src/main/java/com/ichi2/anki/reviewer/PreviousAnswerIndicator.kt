@@ -19,6 +19,7 @@ package com.ichi2.anki.reviewer
 import android.widget.TextView
 import anki.scheduler.CardAnswer.Rating
 import com.ichi2.anki.R
+import com.ichi2.utils.ColorUtil
 import com.ichi2.utils.HandlerUtils.newHandler
 
 /**
@@ -49,22 +50,23 @@ class PreviousAnswerIndicator(
      * @param rating The ordinal of the button answered
      */
     fun displayAnswerIndicator(rating: Rating) {
+        val context = chosenAnswerText.context
         when (rating) {
             Rating.AGAIN -> {
                 chosenAnswerText.text = "\u2022"
-                chosenAnswerText.setTextColor(getColor(R.color.material_red_500))
+                chosenAnswerText.setTextColor(ColorUtil.getThemeColor(context, com.google.android.material.R.attr.colorError))
             }
             Rating.HARD -> {
                 chosenAnswerText.text = "\u2022\u2022"
-                chosenAnswerText.setTextColor(getColor(R.color.material_blue_grey_600))
+                chosenAnswerText.setTextColor(ColorUtil.getThemeColor(context, com.google.android.material.R.attr.colorSecondary))
             }
             Rating.GOOD -> {
                 chosenAnswerText.text = "\u2022\u2022\u2022"
-                chosenAnswerText.setTextColor(getColor(R.color.material_green_500))
+                chosenAnswerText.setTextColor(ColorUtil.getThemeColor(context, com.google.android.material.R.attr.colorTertiary))
             }
             Rating.EASY -> {
                 chosenAnswerText.text = "\u2022\u2022\u2022\u2022"
-                chosenAnswerText.setTextColor(getColor(R.color.material_light_blue_500))
+                chosenAnswerText.setTextColor(ColorUtil.getThemeColor(context, com.google.android.material.R.attr.colorPrimary))
             }
             Rating.UNRECOGNIZED -> {}
         }
@@ -86,8 +88,6 @@ class PreviousAnswerIndicator(
     fun stopAutomaticHide() {
         timerHandler.removeCallbacks(removeChosenAnswerText)
     }
-
-    private fun getColor(color: Int) = chosenAnswerText.context.getColor(color)
 
     companion object {
         /** The amount of time to display the answer indicator (2 seconds) */

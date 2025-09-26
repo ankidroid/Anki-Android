@@ -22,6 +22,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
 import com.ichi2.anki.R
+import com.ichi2.utils.ColorUtil
 
 /**
  * Custom component that represents a resizable divider used in multi-pane layouts.
@@ -44,6 +45,6 @@ class ResizingDivider
             dividerHandle = findViewById(R.id.divider_handle)
 
             // Set the default background color
-            setBackgroundColor(context.getColor(R.color.idle_divider_color))
+            setBackgroundColor(ColorUtil.getThemeColor(context, com.google.android.material.R.attr.outline))
         }
     }

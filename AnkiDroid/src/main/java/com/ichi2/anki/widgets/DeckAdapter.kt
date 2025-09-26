@@ -34,6 +34,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.deckpicker.DisplayDeckNode
 import com.ichi2.anki.libanki.DeckId
+import com.ichi2.utils.ColorUtil
 import com.ichi2.anki.utils.ext.findViewById
 import kotlinx.coroutines.runBlocking
 import net.ankiweb.rsdroid.RustCleanup
@@ -238,35 +239,26 @@ class DeckAdapter(
     }
 
     init {
-        // Get the colors from the theme attributes
-        val attrs =
-            intArrayOf(
-                R.attr.zeroCountColor,
-                R.attr.newCountColor,
-                R.attr.learnCountColor,
-                R.attr.reviewCountColor,
-                R.attr.currentDeckBackground,
-                android.R.attr.textColor,
-                R.attr.dynDeckColor,
-                R.attr.expandRef,
-                R.attr.collapseRef,
-            )
+        zeroCountColor = ColorUtil.getThemeColor(context, R.attr.zeroCountColor)
+        newCountColor = ColorUtil.getThemeColor(context, R.attr.newCountColor)
+        learnCountColor = ColorUtil.getThemeColor(context, R.attr.learnCountColor)
+        reviewCountColor = ColorUtil.getThemeColor(context, R.attr.reviewCountColor)
+        deckNameDefaultColor = ColorUtil.getThemeColor(context, android.R.attr.textColor)
+        deckNameDynColor = ColorUtil.getThemeColor(context, R.attr.dynDeckColor)
+
+        val attrs = intArrayOf(
+            R.attr.currentDeckBackground,
+            R.attr.expandRef,
+            R.attr.collapseRef,
+            android.R.attr.selectableItemBackground
+        )
         val ta = context.obtainStyledAttributes(attrs)
-        zeroCountColor = ta.getColor(0, context.getColor(R.color.black))
-        newCountColor = ta.getColor(1, context.getColor(R.color.black))
-        learnCountColor = ta.getColor(2, context.getColor(R.color.black))
-        reviewCountColor = ta.getColor(3, context.getColor(R.color.black))
-        rowCurrentDrawable = ta.getResourceId(4, 0)
-        deckNameDefaultColor = ta.getColor(5, context.getColor(R.color.black))
-        deckNameDynColor = ta.getColor(6, context.getColor(R.color.material_blue_A700))
-        expandImage = ta.getDrawableOrThrow(7)
+        rowCurrentDrawable = ta.getResourceId(0, 0)
+        expandImage = ta.getDrawableOrThrow(1)
         expandImage.isAutoMirrored = true
-        collapseImage = ta.getDrawableOrThrow(8)
-        collapseImage.isAutoMirrored = true
+        collapseImage = ta.getDrawableOrThrow(2)
+        selectableItemBackground = ta.getResourceId(3, 0)
         ta.recycle()
-        context.withStyledAttributes(attrs = intArrayOf(android.R.attr.selectableItemBackground)) {
-            selectableItemBackground = ta.getResourceId(0, 0)
-        }
     }
 }
 

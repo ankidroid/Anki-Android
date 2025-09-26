@@ -27,6 +27,7 @@ import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
 import com.ichi2.anki.preferences.PENDING_NOTIFICATIONS_ONLY
 import com.ichi2.anki.preferences.sharedPrefs
+import com.ichi2.utils.ColorUtil
 import com.ichi2.widget.WidgetStatus
 import timber.log.Timber
 
@@ -66,7 +67,7 @@ class NotificationService : BroadcastReceiver() {
                             Channel.GENERAL.id,
                         ).setCategory(NotificationCompat.CATEGORY_REMINDER)
                         .setSmallIcon(R.drawable.ic_star_notify)
-                        .setColor(context.getColor(R.color.material_light_blue_700))
+                        .setColor(ColorUtil.getThemeColor(context, com.google.android.material.R.attr.colorPrimary))
                         .setContentTitle(cardsDueText)
                         .setTicker(cardsDueText)
                 // Enable vibrate and blink if set in preferences

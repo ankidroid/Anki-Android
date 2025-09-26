@@ -34,6 +34,7 @@ import androidx.core.net.toUri
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.MutableLiveData
 import anki.collection.OpChanges
+import com.google.android.material.color.DynamicColors
 import com.ichi2.anki.CrashReportService.sendExceptionReport
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.browser.SharedPreferencesLastDeckIdRepository
@@ -95,6 +96,9 @@ open class AnkiDroidApp :
      * On application creation.
      */
     override fun onCreate() {
+        // Apply dynamic colors
+        DynamicColors.applyToActivitiesIfAvailable(this)
+
         try {
             Os.setenv("PLATFORM", syncPlatform(), false)
             // enable debug logging of sync actions

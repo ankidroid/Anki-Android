@@ -54,6 +54,7 @@ import com.ichi2.compat.Compat
 import com.ichi2.compat.CompatHelper.Companion.compat
 import com.ichi2.compat.USAGE_TOUCH
 import com.ichi2.ui.FixedTextView
+import com.ichi2.utils.ColorUtil
 import com.ichi2.utils.Permissions.canRecordAudio
 import com.ichi2.utils.UiUtil
 import timber.log.Timber
@@ -345,8 +346,9 @@ class AudioRecordingController(
         when (state) {
             ImmediatePlayback.CLEARED -> {
                 recordButton.apply {
-                    iconTint = ContextCompat.getColorStateList(context, R.color.audio_recorder_red)
-                    strokeColor = ContextCompat.getColorStateList(context, R.color.audio_recorder_red)
+                    val color = ColorUtil.getThemeColor(context, com.google.android.material.R.attr.colorError)
+                    iconTint = ColorStateList.valueOf(color)
+                    strokeColor = ColorStateList.valueOf(color)
                     setIconResource(R.drawable.ic_record)
                     contentDescription = context.getString(R.string.start_recording)
                 }
@@ -356,8 +358,9 @@ class AudioRecordingController(
             }
             ImmediatePlayback.RECORDING_IN_PROGRESS -> {
                 recordButton.apply {
-                    iconTint = ContextCompat.getColorStateList(context, R.color.audio_recorder_red)
-                    strokeColor = ContextCompat.getColorStateList(context, R.color.audio_recorder_red)
+                    val color = ColorUtil.getThemeColor(context, com.google.android.material.R.attr.colorError)
+                    iconTint = ColorStateList.valueOf(color)
+                    strokeColor = ColorStateList.valueOf(color)
                     setIconResource(R.drawable.ic_stop)
                     contentDescription = context.getString(R.string.stop_recording)
                 }
@@ -366,8 +369,9 @@ class AudioRecordingController(
             }
             ImmediatePlayback.PLAYBACK_PLAYING -> {
                 recordButton.apply {
-                    iconTint = ContextCompat.getColorStateList(context, R.color.audio_recorder_grey)
-                    strokeColor = ContextCompat.getColorStateList(context, R.color.audio_recorder_grey)
+                    val color = ColorUtil.getThemeColor(context, com.google.android.material.R.attr.colorOnSurface)
+                    iconTint = ColorStateList.valueOf(color)
+                    strokeColor = ColorStateList.valueOf(color)
                     setIconResource(R.drawable.ic_skip_next)
                     contentDescription = context.getString(R.string.next_recording)
                 }
@@ -377,8 +381,9 @@ class AudioRecordingController(
             }
             ImmediatePlayback.PLAYBACK_ENDED -> {
                 recordButton.apply {
-                    iconTint = ContextCompat.getColorStateList(context, R.color.audio_recorder_grey)
-                    strokeColor = ContextCompat.getColorStateList(context, R.color.audio_recorder_grey)
+                    val color = ColorUtil.getThemeColor(context, com.google.android.material.R.attr.colorOnSurface)
+                    iconTint = ColorStateList.valueOf(color)
+                    strokeColor = ColorStateList.valueOf(color)
                     setIconResource(R.drawable.ic_play)
                     contentDescription = context.getString(R.string.play_recording)
                 }
@@ -389,14 +394,16 @@ class AudioRecordingController(
             }
             AppendToRecording.CLEARED -> {
                 recordButton.apply {
-                    iconTint = ContextCompat.getColorStateList(context, R.color.audio_recorder_red)
-                    strokeColor = ContextCompat.getColorStateList(context, R.color.audio_recorder_red)
+                    val color = ColorUtil.getThemeColor(context, com.google.android.material.R.attr.colorError)
+                    iconTint = ColorStateList.valueOf(color)
+                    strokeColor = ColorStateList.valueOf(color)
                     setIconResource(R.drawable.ic_record)
                 }
                 playAudioButton.apply {
                     setIconResource(R.drawable.round_play_arrow_24)
-                    iconTint = ContextCompat.getColorStateList(context, R.color.audio_recorder_red)
-                    strokeColor = ContextCompat.getColorStateList(context, R.color.audio_recorder_red)
+                    val color = ColorUtil.getThemeColor(context, com.google.android.material.R.attr.colorError)
+                    iconTint = ColorStateList.valueOf(color)
+                    strokeColor = ColorStateList.valueOf(color)
                 }
                 cancelAudioRecordingButton.isEnabled = false
                 audioTimeView?.text = DEFAULT_TIME
@@ -428,8 +435,9 @@ class AudioRecordingController(
                 forwardAudioButton.isEnabled = false
                 audioProgressBar.progress = 0
                 playAudioButton.apply {
-                    iconTint = ContextCompat.getColorStateList(context, R.color.audio_recorder_red)
-                    strokeColor = ContextCompat.getColorStateList(context, R.color.audio_recorder_red)
+                    val color = ColorUtil.getThemeColor(context, com.google.android.material.R.attr.colorError)
+                    iconTint = ColorStateList.valueOf(color)
+                    strokeColor = ColorStateList.valueOf(color)
                     setIconResource(R.drawable.round_play_arrow_24)
                 }
             }
@@ -438,8 +446,9 @@ class AudioRecordingController(
                 forwardAudioButton.isEnabled = false
                 playAudioButton.apply {
                     setIconResource(R.drawable.round_play_arrow_24)
-                    iconTint = ContextCompat.getColorStateList(context, R.color.audio_recorder_red)
-                    strokeColor = ContextCompat.getColorStateList(context, R.color.audio_recorder_red)
+                    val color = ColorUtil.getThemeColor(context, com.google.android.material.R.attr.colorError)
+                    iconTint = ColorStateList.valueOf(color)
+                    strokeColor = ColorStateList.valueOf(color)
                 }
             }
             AppendToRecording.PLAYBACK_PLAYING -> {
@@ -447,8 +456,9 @@ class AudioRecordingController(
                 forwardAudioButton.isEnabled = true
                 playAudioButton.apply {
                     setIconResource(R.drawable.round_pause_24)
-                    iconTint = ContextCompat.getColorStateList(context, R.color.audio_recorder_green)
-                    strokeColor = ContextCompat.getColorStateList(context, R.color.audio_recorder_green)
+                    val color = ColorUtil.getThemeColor(context, com.google.android.material.R.attr.colorTertiary)
+                    iconTint = ColorStateList.valueOf(color)
+                    strokeColor = ColorStateList.valueOf(color)
                 }
             }
         }

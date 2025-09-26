@@ -89,6 +89,7 @@ import com.ichi2.compat.customtabs.CustomTabsFallback
 import com.ichi2.compat.customtabs.CustomTabsHelper
 import com.ichi2.themes.Themes
 import com.ichi2.utils.AdaptionUtil
+import com.ichi2.utils.ColorUtil
 import com.ichi2.utils.HandlerUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -606,7 +607,7 @@ open class AnkiActivity :
                 ).setSmallIcon(R.drawable.ic_star_notify)
                 .setContentTitle(title)
                 .setContentText(message)
-                .setColor(getColor(R.color.material_light_blue_500))
+                .setColor(ColorUtil.getThemeColor(this, com.google.android.material.R.attr.colorPrimary))
                 .setStyle(NotificationCompat.BigTextStyle().bigText(message))
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                 .setTicker(ticker)

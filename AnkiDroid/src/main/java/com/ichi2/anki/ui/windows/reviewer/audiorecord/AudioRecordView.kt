@@ -39,6 +39,7 @@ import androidx.core.util.TypedValueCompat
 import androidx.core.view.isVisible
 import com.ichi2.anki.R
 import com.ichi2.compat.CompatHelper
+import com.ichi2.utils.ColorUtil
 import com.ichi2.compat.USAGE_TOUCH
 import com.ichi2.utils.Permissions
 import kotlin.math.abs
@@ -79,7 +80,7 @@ class AudioRecordView : ConstraintLayout {
     private var state = ViewState.IDLE
     private var stopTrackingAction = false
     private var chronometerBase: Long = 0
-    private val recordEnabledColor = context.getColor(R.color.material_red_600)
+    private val recordEnabledColor = ColorUtil.getThemeColor(context, com.google.android.material.R.attr.colorError)
     private val recordDisabledColor = ThemeUtils.getThemeAttrColor(context, R.attr.editTextDisabled)
 
     private var firstX = 0f

@@ -164,6 +164,7 @@ import com.ichi2.anki.worker.UniqueWorkNames
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.ui.BadgeDrawableBuilder
 import com.ichi2.utils.AdaptionUtil
+import com.ichi2.utils.ColorUtil
 import com.ichi2.utils.ClipboardUtil.IMPORT_MIME_TYPES
 import com.ichi2.utils.ImportUtils
 import com.ichi2.utils.ImportUtils.ImportResult
@@ -966,7 +967,7 @@ open class DeckPicker :
             SyncIconState.OneWay, SyncIconState.NotLoggedIn -> {
                 BadgeDrawableBuilder(this)
                     .withText('!')
-                    .withColor(getColor(R.color.badge_error))
+                    .withColor(ColorUtil.getThemeColor(this, com.google.android.material.R.attr.colorError))
                     .replaceBadge(provider)
             }
         }

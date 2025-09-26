@@ -1,85 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="DuplicateCrowdInStrings">
-    <color name="theme_dark_primary">#3d3d3d</color>
-    <color name="theme_dark_primary_dark">@color/material_grey_900</color>
-    <color name="theme_dark_primary_light">@color/material_grey_800</color>
-    <color name="theme_dark_primary_text">@color/white</color>
-    <color name="theme_dark_secondary_text">#b2ffffff</color>
-    <color name="theme_dark_row_current">#393939</color>
-    <color name="theme_dark_drawer_row_current">#33999999</color>
-    <color name="theme_dark_drawer_item">#DEFFFFFF</color>
-
     <style name="Base.Theme.Dark" parent="@style/Theme.Material3.Dark.NoActionBar">
         <!-- Android colors -->
-        <item name="colorAccent">@color/material_blue_400</item>
+        <item name="colorAccent">?attr/colorPrimary</item>
 
         <item name="android:textColor">@color/text_color_dark</item>
         <item name="android:textColorSecondary">@color/text_color_secondary_dark</item>
 
         <item name="colorSurfaceContainerHighest">?attr/colorSurfaceContainer</item>
         <item name="colorSurfaceContainerHigh">?android:attr/colorBackground</item>
-        <item name="colorSurfaceContainer">#0F42A5F5</item>
+        <item name="colorSurfaceContainer">?attr/colorSurfaceVariant</item>
         <item name="colorSurfaceContainerLow">?android:attr/colorBackground</item>
         <!-- Widget colors -->
-        <item name="widgetColorActivated">?attr/colorAccent</item>
-        <item name="preferenceCategoryTitleTextColor">?attr/colorAccent</item>
+        <item name="widgetColorActivated">?attr/colorPrimary</item>
+        <item name="preferenceCategoryTitleTextColor">?attr/colorPrimary</item>
         <!-- Navigation drawer -->
-        <item name="navDrawerItemColor">@color/drawer_item_text_dark</item>
+        <item name="navDrawerItemColor">?attr/colorOnSurfaceVariant</item>
         <item name="navDrawerItemBackgroundColor">@drawable/drawer_item_background_dark</item>
         <!-- Menu -->
         <item name="actionOverflowMenuStyle">@style/OverflowMenuStyle</item>
         <item name="popupMenuStyle">@style/PopupMenuStyle</item>
         <item name="spinnerStyle">@style/SpinnerStyle</item>
         <!-- Action bar styles -->
-        <item name="appBarColor">@color/theme_dark_primary</item>
+        <item name="appBarColor">?attr/colorSurface</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="windowActionModeOverlay">true</item>
-        <item name="actionBarTextColor">@color/white</item>
-        <item name="actionBarPopupTextColor">@color/theme_dark_primary_text</item>
-        <item name="actionModeBackground">@color/theme_dark_primary</item>
+        <item name="actionBarTextColor">?attr/colorOnSurface</item>
+        <item name="actionBarPopupTextColor">?attr/colorOnSurface</item>
+        <item name="actionModeBackground">?attr/colorSurface</item>
         <!-- Tab layout -->
-        <item name="tabLayoutBackgroundColor">@color/theme_dark_primary</item>
-        <item name="tabActiveIconColor">@color/material_blue_500</item>
+        <item name="tabLayoutBackgroundColor">?attr/colorSurface</item>
+        <item name="tabActiveIconColor">?attr/colorPrimary</item>
         <!-- Deck list colors and divider -->
         <item name="currentDeckBackground">@drawable/item_background_selected</item>
-        <item name="currentDeckBackgroundColor">@color/theme_dark_row_current</item>
-        <item name="focusedRowBackgroundColor">@color/theme_dark_row_current</item>
-        <item name="dynDeckColor">#6699d6</item>
+        <item name="currentDeckBackgroundColor">?attr/colorSecondaryContainer</item>
+        <item name="focusedRowBackgroundColor">?attr/colorSecondaryContainer</item>
+        <item name="dynDeckColor">?attr/colorPrimary</item>
         <item name="deckDivider">@drawable/divider_dark</item>
         <item name="expandRef">@drawable/ic_chevron_right_white</item>
         <item name="collapseRef">@drawable/ic_expand_more_white</item>
         <!-- Count colors -->
-        <item name="newCountColor">@color/material_indigo_200</item>
-        <item name="learnCountColor">@color/material_red_200</item>
-        <item name="reviewCountColor">@color/material_green_200</item>
-        <item name="buryCountColor">@color/disabled_gray_dark</item>
-        <item name="zeroCountColor">#404040</item>
+        <item name="newCountColor">?attr/colorPrimary</item>
+        <item name="learnCountColor">?attr/colorError</item>
+        <item name="reviewCountColor">?attr/colorTertiary</item>
+        <item name="buryCountColor">?attr/colorOnSurfaceVariant</item>
+        <item name="zeroCountColor">?attr/colorOnSurfaceVariant</item>
         <!-- Study Screen colors -->
-        <item name="showAnswerButtonBackground">#22333f</item>
-        <item name="againButtonBackground">@color/material_red_800</item>
-        <item name="hardButtonBackground">@color/material_blue_grey_800</item>
-        <item name="goodButtonBackground">@color/material_green_800</item>
-        <item name="easyButtonBackground">@color/material_light_blue_800</item>
-        <item name="topBarColor">@color/theme_dark_primary_light</item>
-        <item name="maxTimerColor">@color/material_red_300</item>
-        <item name="answerButtonTextColor">@color/white</item>
-        <item name="againButtonTextColor">@color/white</item>
-        <item name="hardButtonTextColor">@color/white</item>
-        <item name="goodButtonTextColor">@color/white</item>
-        <item name="easyButtonTextColor">@color/white</item>
+        <item name="showAnswerButtonBackground">?attr/colorPrimary</item>
+        <item name="againButtonBackground">?attr/colorError</item>
+        <item name="hardButtonBackground">?attr/colorSecondary</item>
+        <item name="goodButtonBackground">?attr/colorTertiary</item>
+        <item name="easyButtonBackground">?attr/colorPrimary</item>
+        <item name="topBarColor">?attr/colorSurface</item>
+        <item name="maxTimerColor">?attr/colorError</item>
+        <item name="answerButtonTextColor">?attr/colorOnError</item>
+        <item name="againButtonTextColor">?attr/colorOnError</item>
+        <item name="hardButtonTextColor">?attr/colorOnSecondary</item>
+        <item name="goodButtonTextColor">?attr/colorOnTertiary</item>
+        <item name="easyButtonTextColor">?attr/colorOnPrimary</item>
 
-        <item name="alternativeBackgroundColor">#2a2a2a</item>
-        <item name="againTextColor">@color/material_red_200</item>
-        <item name="hardTextColor">@color/material_orange_200</item>
-        <item name="goodTextColor">@color/material_light_green_200</item>
-        <item name="easyTextColor">@color/material_light_blue_A100</item>
-        <item name="againBackgroundColor">#462828</item>
-        <item name="hardBackgroundColor">#4e3122</item>
-        <item name="goodBackgroundColor">#2c3b2c</item>
-        <item name="easyBackgroundColor">#223946</item>
+        <item name="alternativeBackgroundColor">?attr/colorSurfaceVariant</item>
+        <item name="againTextColor">?attr/colorError</item>
+        <item name="hardTextColor">?attr/colorSecondary</item>
+        <item name="goodTextColor">?attr/colorTertiary</item>
+        <item name="easyTextColor">?attr/colorPrimary</item>
+        <item name="againBackgroundColor">?attr/colorErrorContainer</item>
+        <item name="hardBackgroundColor">?attr/colorSecondaryContainer</item>
+        <item name="goodBackgroundColor">?attr/colorTertiaryContainer</item>
+        <item name="easyBackgroundColor">?attr/colorPrimaryContainer</item>
         <!-- Study Screen button drawables -->
-        <item name="showAnswerColor">@color/material_blue_grey_800</item>
+        <item name="showAnswerColor">?attr/colorPrimary</item>
         <item name="againButtonRef">@drawable/footer_button_again_dark</item>
         <item name="hardButtonRef">@drawable/footer_button_hard_dark</item>
         <item name="goodButtonRef">@drawable/footer_button_good_dark</item>
@@ -89,23 +80,24 @@
         <item name="goodButtonRippleRef">@drawable/footer_button_ripple</item>
         <item name="easyButtonRippleRef">@drawable/footer_button_ripple</item>
         <!-- Card Browser Colors -->
-        <item name="cardBrowserDivider">@color/white</item>
+        <item name="cardBrowserDivider">?attr/outline</item>
         <!-- Browser colors -->
-        <item name="suspendedColor">@color/material_grey_700</item>
-        <item name="buriedColor">#612B09</item>
-        <item name="markedColor">@color/material_deep_purple_400</item>
+        <item name="suspendedColor">?attr/colorErrorContainer</item>
+        <item name="buriedColor">?attr/colorSecondaryContainer</item>
+        <item name="selectedColor">?attr/colorPrimaryContainer</item>
+        <item name="markedColor">?attr/colorTertiaryContainer</item>
         <!-- Note editor colors -->
-        <item name="duplicateColor">#855</item>
-        <item name="editTextBackgroundColor">#EE5C5C5C</item>
-        <item name="toolbarBackgroundColor">#616161</item>
-        <item name="toolbarIconColor">@color/white</item>
-        <item name="buttonShadowColor">#bdbdbd</item>
-        <item name="buttonRippleColor">#BABABA</item>
-        <item name="buttonForegroundColor">#757575</item>
+        <item name="duplicateColor">?attr/colorError</item>
+        <item name="editTextBackgroundColor">?attr/colorSurfaceVariant</item>
+        <item name="toolbarBackgroundColor">?attr/colorSurface</item>
+        <item name="toolbarIconColor">?attr/colorOnSurface</item>
+        <item name="buttonShadowColor">@android:color/transparent</item>
+        <item name="buttonRippleColor">?attr/colorOnSurface</item>
+        <item name="buttonForegroundColor">?attr/colorSurface</item>
         <!-- FAB -->
-        <item name="fab_normal">@color/material_light_blue_700</item>
-        <item name="fab_pressed">@color/material_light_blue_900</item>
-        <item name="fab_labelsTextColor">@color/white</item>
+        <item name="fab_normal">?attr/colorPrimaryContainer</item>
+        <item name="fab_pressed">?attr/colorPrimary</item>
+        <item name="fab_labelsTextColor">?attr/colorOnPrimaryContainer</item>
         <item name="fab_item_background">@drawable/fab_label_background</item>
         <!-- Images -->
         <item name="navDrawerImage">@drawable/nav_drawer_logo_dark_theme</item>
@@ -114,7 +106,7 @@
         <item name="textAllCaps">false</item>
         <!--Custom Tabs colors-->
         <item name="popupBackgroundColor">?attr/colorSurface</item>
-        <item name="editTextDisabled">@color/material_grey_500</item>
+        <item name="editTextDisabled">@color/disabled_gray_dark</item>
         <item name="overflowAndPopupMenuIconColor">?attr/colorOnSurfaceVariant</item>
         <!-- StatusBar and Navbar for Edge-to-Edge -->
         <item name="android:statusBarColor" tools:targetApi="l">@android:color/transparent</item>
@@ -128,8 +120,8 @@
         <item name="snackbarStyle">@style/SnackbarStyle</item>
         <item name="snackbarTextViewStyle">@style/Widget.MaterialComponents.Snackbar.TextView</item>
         <item name="snackbarButtonStyle">@style/SnackbarButtonStyle</item>
-        <item name="snackbarBackgroundTintColor">#cfcfcf</item>
-        <item name="snackbarButtonTextColor">@color/material_light_blue_900</item>
+        <item name="snackbarBackgroundTintColor">?attr/colorSurfaceVariant</item>
+        <item name="snackbarButtonTextColor">?attr/colorPrimary</item>
 
         <!-- Introduction -->
         <item name="introductionLogoTransparent">#883d3d3d</item>
@@ -140,11 +132,11 @@
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.AnkiDroid</item>
 
         <!-- ProgressDialog-->
-        <item name="dialogBackground">#ff303030</item>
-        <item name="progressDialogButtonTextColor">@color/material_light_blue_400</item>
+        <item name="dialogBackground">?attr/colorSurface</item>
+        <item name="progressDialogButtonTextColor">?attr/colorPrimary</item>
 
-        <item name="checkMediaListBackground">@color/material_grey_700</item>
-        <item name="checkMediaListForeground">@color/white</item>
+        <item name="checkMediaListBackground">?attr/colorSurfaceVariant</item>
+        <item name="checkMediaListForeground">?attr/colorOnSurfaceVariant</item>
 
         <!-- AlertDialogTheme-->
         <item name="alertDialogTheme">@style/ThemeOverlay.AnkiDroid.AlertDialog</item>
@@ -153,5 +145,5 @@
         <item name="bottomSheetDialogTheme">@style/ThemeOverlay.App.BottomSheetDialog</item>
     </style>
 
-    <style name="Theme_Dark" parent="Base.Theme.Dark"/>
+    <style name="Theme.Dark" parent="Base.Theme.Dark" />
 </resources>

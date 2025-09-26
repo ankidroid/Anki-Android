@@ -23,6 +23,7 @@ import android.view.View
 import android.widget.LinearLayout
 import androidx.core.content.edit
 import com.ichi2.anki.R
+import com.ichi2.utils.ColorUtil
 import timber.log.Timber
 
 /**
@@ -38,8 +39,8 @@ class ResizablePaneManager(
     private val leftPaneWeightKey: String,
     private val rightPaneWeightKey: String,
     private val minWeight: Float = 0.5f, // Minimum weight for each pane
-    private val dragColor: Int = divider.context.getColor(R.color.drag_divider_color),
-    private val idleColor: Int = divider.context.getColor(R.color.idle_divider_color),
+    private val dragColor: Int = ColorUtil.getThemeColor(divider.context, com.google.android.material.R.attr.colorPrimary),
+    private val idleColor: Int = ColorUtil.getThemeColor(divider.context, com.google.android.material.R.attr.outline),
 ) {
     init {
         setupResizableDivider()

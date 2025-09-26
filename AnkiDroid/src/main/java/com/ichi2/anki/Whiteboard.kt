@@ -47,6 +47,7 @@ import com.ichi2.anki.dialogs.WhiteBoardWidthDialog
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.compat.CompatHelper
 import com.ichi2.themes.Themes.currentTheme
+import com.ichi2.utils.ColorUtil
 import com.ichi2.utils.DisplayUtils.getDisplayDimensions
 import com.mrudultora.colorpicker.ColorPickerPopUp
 import timber.log.Timber
@@ -379,19 +380,19 @@ class Whiteboard(
                 penColor = Color.BLACK
             }
             R.id.pen_color_red -> {
-                val redPenColor = context.getColor(R.color.material_red_500)
+                val redPenColor = ColorUtil.getThemeColor(context, com.google.android.material.R.attr.colorError)
                 penColor = redPenColor
             }
             R.id.pen_color_green -> {
-                val greenPenColor = context.getColor(R.color.material_green_500)
+                val greenPenColor = ColorUtil.getThemeColor(context, com.google.android.material.R.attr.colorTertiary)
                 penColor = greenPenColor
             }
             R.id.pen_color_blue -> {
-                val bluePenColor = context.getColor(R.color.material_blue_500)
+                val bluePenColor = ColorUtil.getThemeColor(context, com.google.android.material.R.attr.colorPrimary)
                 penColor = bluePenColor
             }
             R.id.pen_color_yellow -> {
-                val yellowPenColor = context.getColor(R.color.material_yellow_500)
+                val yellowPenColor = ColorUtil.getThemeColor(context, com.google.android.material.R.attr.colorSecondary)
                 penColor = yellowPenColor
             }
             R.id.pen_color_custom -> {

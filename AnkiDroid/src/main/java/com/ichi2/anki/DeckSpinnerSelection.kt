@@ -33,6 +33,7 @@ import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.DeckNameId
 import com.ichi2.anki.model.SelectableDeck
+import com.ichi2.utils.ColorUtil
 import com.ichi2.anki.model.SelectableDeck.Companion.fromCollection
 import com.ichi2.anki.utils.showDialogFragmentImpl
 import com.ichi2.anki.widgets.DeckDropDownAdapter
@@ -140,8 +141,8 @@ class DeckSpinnerSelection(
 
                         // If this item is selected
                         if (position == spinner.selectedItemPosition) {
-                            tv.setBackgroundColor(context.getColor(R.color.note_editor_selected_item_background))
-                            tv.setTextColor(context.getColor(R.color.note_editor_selected_item_text))
+                            tv.setBackgroundColor(ColorUtil.getThemeColor(context, com.google.android.material.R.attr.colorPrimaryContainer))
+                            tv.setTextColor(ColorUtil.getThemeColor(context, com.google.android.material.R.attr.colorOnPrimaryContainer))
                         }
 
                         // Return the modified view
@@ -173,8 +174,8 @@ class DeckSpinnerSelection(
 
                         // If this item is selected
                         if (position == spinner.selectedItemPosition) {
-                            tv.setBackgroundColor(context.getColor(R.color.note_editor_selected_item_background))
-                            tv.setTextColor(context.getColor(R.color.note_editor_selected_item_text))
+                            tv.setBackgroundColor(ColorUtil.getThemeColor(context, com.google.android.material.R.attr.colorPrimaryContainer))
+                            tv.setTextColor(ColorUtil.getThemeColor(context, com.google.android.material.R.attr.colorOnPrimaryContainer))
                         }
 
                         // Return the modified view
