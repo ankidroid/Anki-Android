@@ -104,7 +104,6 @@ import com.ichi2.anki.widgets.DeckDropDownAdapter
 import com.ichi2.ui.CardBrowserSearchView
 import com.ichi2.utils.LanguageUtil
 import com.ichi2.utils.increaseHorizontalPaddingOfOverflowMenuIcons
-import com.ichi2.widget.WidgetStatus.updateInBackground
 import kotlinx.coroutines.launch
 import net.ankiweb.rsdroid.RustCleanup
 import timber.log.Timber
@@ -769,14 +768,6 @@ open class CardBrowser :
                 showSnackbar(R.string.multimedia_editor_something_wrong)
             }
         }
-
-    override fun onStop() {
-        // cancel rendering the question and answer, which has shared access to mCards
-        super.onStop()
-        if (!isFinishing) {
-            updateInBackground(this)
-        }
-    }
 
     override fun onPause() {
         super.onPause()

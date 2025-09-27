@@ -32,7 +32,6 @@ import com.ichi2.anki.libanki.undoLabel
 import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.utils.ext.setFragmentResultListener
 import com.ichi2.ui.RtlCompliantActionProvider
-import com.ichi2.widget.WidgetStatus
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -122,13 +121,6 @@ class StudyOptionsActivity :
     override fun onResume() {
         super.onResume()
         refreshUndoState()
-    }
-
-    public override fun onStop() {
-        super.onStop()
-        if (colIsOpenUnsafe()) {
-            WidgetStatus.updateInBackground(this)
-        }
     }
 
     override fun onRequireDeckListUpdate() {
