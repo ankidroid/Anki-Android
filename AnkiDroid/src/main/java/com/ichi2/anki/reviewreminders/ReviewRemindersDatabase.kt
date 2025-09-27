@@ -265,7 +265,8 @@ object ReviewRemindersDatabase {
             .associateTo(hashMapOf()) { it.toPair() }
 
     /**
-     * Edit the [ReviewReminder]s for a specific key.
+     * Edit the [ReviewReminder]s for a specific key. Deletes the review reminders map for this key if, after the editing operation,
+     * no review reminders remain.
      * @param key
      * @param reminderEditor A lambda that takes the current map and returns the updated map.
      * @throws SerializationException If the current reminders map has not been stored in SharedPreferences as a valid JSON string.
@@ -278,7 +279,11 @@ object ReviewRemindersDatabase {
         val existingReminders = getRemindersForKey(key)
         val updatedReminders = reminderEditor(existingReminders)
         remindersSharedPrefs.edit {
-            putString(key, encodeJson(updatedReminders))
+            if (updatedReminders.isEmpty()) {
+                remove(key)
+            } else {
+                putString(key, encodeJson(updatedReminders))
+            }
         }
     }
 
