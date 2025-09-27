@@ -25,7 +25,7 @@
             android:id="@+id/reminders_list_time_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="32sp"
+            android:textSize="28sp"
             android:textStyle="bold"
             tools:text="12:00 a.m." />
 
