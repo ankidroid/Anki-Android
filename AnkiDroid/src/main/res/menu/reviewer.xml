@@ -114,6 +114,11 @@
         android:title="@string/card_info_title"
         ankidroid:showAsAction="never"/>
     <item
+        android:id="@+id/action_previous_card_info"
+        android:icon="@drawable/ic_outline_info_24"
+        android:title="@string/previous_card_info_title"
+        ankidroid:showAsAction="never"/>
+    <item
         android:id="@+id/action_tag"
         android:icon="@drawable/ic_tag"
         android:title="@string/menu_edit_tags"
