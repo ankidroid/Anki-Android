@@ -32,7 +32,7 @@ class AppLifecycleObserver(
         super.onStop(owner)
 
         val workRequest =
-            PeriodicWorkRequestBuilder<SmallWidgetUpdateWorker>(1, TimeUnit.MINUTES)
+            PeriodicWorkRequestBuilder<SmallWidgetUpdateWorker>(15, TimeUnit.MINUTES)
                 .build()
 
         WorkManager.getInstance(appContext).enqueueUniquePeriodicWork(
