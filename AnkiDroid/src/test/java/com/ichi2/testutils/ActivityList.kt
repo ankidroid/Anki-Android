@@ -32,14 +32,13 @@ import com.ichi2.anki.IntentHandler
 import com.ichi2.anki.IntentHandler.Companion.getReviewDeckIntent
 import com.ichi2.anki.IntentHandler2
 import com.ichi2.anki.IntroductionActivity
-import com.ichi2.anki.LoginActivity
-import com.ichi2.anki.MyAccount
 import com.ichi2.anki.NoteEditorActivity
 import com.ichi2.anki.NoteTypeFieldEditor
 import com.ichi2.anki.Reviewer
 import com.ichi2.anki.SharedDecksActivity
 import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.StudyOptionsActivity
+import com.ichi2.anki.account.AccountActivity
 import com.ichi2.anki.instantnoteeditor.InstantNoteEditorActivity
 import com.ichi2.anki.multimedia.MultimediaActivity
 import com.ichi2.anki.notetype.ManageNotetypes
@@ -76,7 +75,6 @@ object ActivityList {
             get(NoteEditorActivity::class.java),
             // Likely has unhandled intents
             get(Reviewer::class.java),
-            get(MyAccount::class.java),
             get(PreferencesActivity::class.java),
             get(FilteredDeckOptions::class.java),
             get(DrawingActivity::class.java),
@@ -85,7 +83,6 @@ object ActivityList {
             get(CardTemplateEditor::class.java) { intentForCardTemplateEditor() },
             get(CardTemplateBrowserAppearanceEditor::class.java) { intentForCardTemplateBrowserAppearanceEditor() },
             get(SharedDecksActivity::class.java),
-            get(LoginActivity::class.java),
             get(IntroductionActivity::class.java),
             get(ManageNotetypes::class.java),
             get(ManageSpaceActivity::class.java),
@@ -97,6 +94,7 @@ object ActivityList {
             get(MultimediaActivity::class.java),
             get(DeckPickerWidgetConfig::class.java),
             get(CardAnalysisWidgetConfig::class.java),
+            get(AccountActivity::class.java),
         )
 
     private fun intentForCardTemplateBrowserAppearanceEditor(): Intent {
