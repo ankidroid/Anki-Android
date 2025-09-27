@@ -14,7 +14,7 @@ Add material through the desktop application Anki or directly through AnkiDroid.
 • progress widget
 • detailed statistics
 • syncing with AnkiWeb
-• open source
+• iepenboarne
 
 ★ Additional features:
 • write answers (optional)
@@ -30,5 +30,5 @@ Add material through the desktop application Anki or directly through AnkiDroid.
 • customisable
 • dynamic deck handling
 • night mode
-• 27 localisations
+• 27 talen
 • All previous AnkiDroid versions can be downloaded from the website
