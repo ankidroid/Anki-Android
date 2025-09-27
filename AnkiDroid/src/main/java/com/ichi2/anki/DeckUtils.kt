@@ -47,6 +47,16 @@ private fun Collection.isDeckEmpty(
 suspend fun isDefaultDeckEmpty(): Boolean = withCol { isDeckEmpty(Consts.DEFAULT_DECK_ID) }
 
 /**
+ * Checks if a deck with the specified ID exists. Since the default deck (ID=1) always exists but is hidden
+ * when it is empty, we simply check if it is empty in that case.
+ */
+suspend fun doesDeckExist(did: DeckId): Boolean =
+    when (did) {
+        Consts.DEFAULT_DECK_ID -> !isDefaultDeckEmpty()
+        else -> withCol { decks.have(did) }
+    }
+
+/**
  * Returns whether the deck picker displays any deck.
  * Technically, it means that there is a non-default deck, or that the default deck is non-empty.
  *
