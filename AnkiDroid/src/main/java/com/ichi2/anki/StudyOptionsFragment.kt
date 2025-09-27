@@ -14,7 +14,6 @@
 package com.ichi2.anki
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.Spanned
@@ -46,6 +45,7 @@ import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.Decks
 import com.ichi2.anki.observability.ChangeManager
+import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.reviewreminders.ReviewReminderScope
 import com.ichi2.anki.reviewreminders.ScheduleReminders
 import com.ichi2.anki.settings.Prefs
@@ -91,11 +91,8 @@ class StudyOptionsFragment :
 
     private var retryMenuRefreshJob: Job? = null
 
-    // Flag to indicate if the fragment should load the deck options immediately after it loads
-    private var loadWithDeckOptions = false
     private var fragmented = false
     private var fullNewCountThread: Thread? = null
-    private lateinit var listener: StudyOptionsListener
 
     /**
      * Callbacks for UI events
@@ -115,20 +112,6 @@ class StudyOptionsFragment :
             }
         }
 
-    interface StudyOptionsListener {
-        fun onRequireDeckListUpdate()
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        listener =
-            try {
-                context as StudyOptionsListener
-            } catch (e: ClassCastException) {
-                throw ClassCastException("$context must implement StudyOptionsListener")
-            }
-    }
-
     /**
      * Open the FilteredDeckOptions activity to allow the user to modify the parameters of the
      * filtered deck.
@@ -141,14 +124,6 @@ class StudyOptionsFragment :
         i.putExtra("defaultConfig", defaultConfig)
         Timber.i("openFilteredDeckOptions()")
         onDeckOptionsActivityResult.launch(i)
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        // If we're being restored, don't launch deck options again.
-        if (savedInstanceState == null && arguments != null) {
-            loadWithDeckOptions = requireArguments().getBoolean("withDeckOptions")
-        }
     }
 
     override fun onCreateView(
@@ -277,9 +252,8 @@ class StudyOptionsFragment :
             R.id.action_unbury -> {
                 Timber.i("StudyOptionsFragment:: unbury button pressed")
                 launchCatchingTask {
-                    withCol { sched.unburyDeck(decks.getCurrentId()) }
+                    undoableOp<OpChanges> { sched.unburyDeck(decks.getCurrentId()) }
                 }
-                refreshInterface(true)
                 item.isVisible = false
                 return true
             }
@@ -302,11 +276,12 @@ class StudyOptionsFragment :
             requireActivity().withProgress(resources.getString(R.string.rebuild_filtered_deck)) {
                 withCol {
                     Timber.d("doInBackground - RebuildCram")
-                    sched.rebuildFilteredDeck(decks.selected())
+                    val changes = sched.rebuildFilteredDeck(decks.selected())
+                    ChangeManager.notifySubscribers(changes, null)
                     fetchStudyOptionsData()
                 }
             }
-        rebuildUi(result, true)
+        rebuildUi(result)
     }
 
     @VisibleForTesting
@@ -315,11 +290,12 @@ class StudyOptionsFragment :
             requireActivity().withProgress(resources.getString(R.string.empty_filtered_deck)) {
                 withCol {
                     Timber.d("doInBackgroundEmptyCram")
-                    sched.emptyFilteredDeck(decks.selected())
+                    val changes = sched.emptyFilteredDeck(decks.selected())
+                    ChangeManager.notifySubscribers(changes, null)
                     fetchStudyOptionsData()
                 }
             }
-        rebuildUi(result, true)
+        rebuildUi(result)
     }
 
     private fun configureToolbar() {
@@ -388,16 +364,6 @@ class StudyOptionsFragment :
                 closeStudyOptions(result.resultCode)
                 return@registerForActivityResult
             }
-            if (loadWithDeckOptions) {
-                loadWithDeckOptions = false
-                val deck = col!!.decks.current()
-                if (deck.isFiltered && deck.has("empty")) {
-                    deck.remove("empty")
-                }
-                launchCatchingTask { rebuildCram() }
-            } else {
-                refreshInterface()
-            }
         }
 
     private fun dismissProgressDialog() {
@@ -418,11 +384,8 @@ class StudyOptionsFragment :
 
     /**
      * Rebuild the fragment's interface to reflect the status of the currently selected deck.
-     *
-     * @param resetDecklist Indicates whether to call back to the parent activity in order to
-     *                      also refresh the deck list.
      */
-    fun refreshInterface(resetDecklist: Boolean = false) {
+    fun refreshInterface() {
         Timber.d("Refreshing StudyOptionsFragment")
         updateValuesFromDeckJob?.cancel()
         // Load the deck counts for the deck from Collection asynchronously
@@ -430,7 +393,7 @@ class StudyOptionsFragment :
             launchCatchingTask {
                 if (CollectionManager.isOpenUnsafe()) {
                     val result = withCol { fetchStudyOptionsData() }
-                    rebuildUi(result, resetDecklist)
+                    rebuildUi(result)
                 }
             }
     }
@@ -458,17 +421,6 @@ class StudyOptionsFragment :
         val numberOfCardsInDeck: Int,
     )
 
-    /** Open cram deck option if deck is opened for the first time
-     * @return Whether we opened the deck options */
-    private fun tryOpenCramDeckOptions(): Boolean {
-        if (!loadWithDeckOptions) {
-            return false
-        }
-        openFilteredDeckOptions(true)
-        loadWithDeckOptions = false
-        return true
-    }
-
     private val col: Collection?
         get() {
             try {
@@ -487,14 +439,9 @@ class StudyOptionsFragment :
     /**
      * Rebuilds the interface.
      *
-     * @param refreshDecklist If true, the listener notifies the parent activity to update its deck list
-     *                        to reflect the latest values.
      * @param result the new DeckStudyData using which UI is to be rebuilt
      */
-    private fun rebuildUi(
-        result: DeckStudyData?,
-        refreshDecklist: Boolean,
-    ) {
+    private fun rebuildUi(result: DeckStudyData?) {
         dismissProgressDialog()
         if (result != null) {
             // Don't do anything if the fragment is no longer attached to it's Activity or col has been closed
@@ -505,7 +452,6 @@ class StudyOptionsFragment :
 
             // #5506 If we have no view, short circuit all UI logic
             if (studyOptionsView == null) {
-                tryOpenCramDeckOptions()
                 return
             }
 
@@ -534,9 +480,6 @@ class StudyOptionsFragment :
                 nameBuilder.append("\n").append(name[name.size - 1])
             }
             textDeckName.text = nameBuilder.toString()
-            if (tryOpenCramDeckOptions()) {
-                return
-            }
 
             // Switch between the empty view, the ordinary view, and the "congratulations" view
             val isDynamic = deck.isFiltered
@@ -611,11 +554,6 @@ class StudyOptionsFragment :
             // Rebuild the options menu
             configureToolbar()
         }
-
-        // If in fragmented mode, refresh the deck list
-        if (fragmented && refreshDecklist) {
-            listener.onRequireDeckListUpdate()
-        }
     }
 
     /**
@@ -671,19 +609,7 @@ class StudyOptionsFragment :
         private const val CONTENT_CONGRATS = 1
         private const val CONTENT_EMPTY = 2
 
-        /**
-         * Get a new instance of the fragment.
-         * @param withDeckOptions If true, the fragment will load a new activity on top of itself
-         * which shows the current deck's options. Set to true when programmatically
-         * opening a new filtered deck for the first time.
-         */
-        fun newInstance(withDeckOptions: Boolean): StudyOptionsFragment {
-            val f = StudyOptionsFragment()
-            val args = Bundle()
-            args.putBoolean("withDeckOptions", withDeckOptions)
-            f.arguments = args
-            return f
-        }
+        fun newInstance(): StudyOptionsFragment = StudyOptionsFragment()
 
         @VisibleForTesting
         fun formatDescription(
@@ -703,7 +629,7 @@ class StudyOptionsFragment :
         handler: Any?,
     ) {
         if (activity != null) {
-            refreshInterface(true)
+            refreshInterface()
         }
     }
 }

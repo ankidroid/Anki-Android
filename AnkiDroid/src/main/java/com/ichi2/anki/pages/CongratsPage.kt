@@ -160,10 +160,7 @@ class CongratsPage :
         )
 
     private fun openStudyOptionsAndFinish() {
-        val intent =
-            Intent(requireContext(), StudyOptionsActivity::class.java).apply {
-                putExtra("withDeckOptions", false)
-            }
+        val intent = Intent(requireContext(), StudyOptionsActivity::class.java)
         startActivity(intent, null)
         requireActivity().finish()
     }
