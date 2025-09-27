@@ -57,6 +57,12 @@ class Deck : JSONObject {
             put("collapsed", value)
         }
 
+    var browserCollapsed: Boolean
+        get() = optBoolean("browserCollapsed", false)
+        set(value) {
+            put("browserCollapsed", value)
+        }
+
     /**
      * Unique identifier of the deck
      *
