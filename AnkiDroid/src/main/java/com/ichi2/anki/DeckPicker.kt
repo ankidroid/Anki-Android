@@ -26,7 +26,6 @@
 package com.ichi2.anki
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.Configuration
@@ -115,6 +114,7 @@ import com.ichi2.anki.deckpicker.DeckPickerViewModel.AnkiDroidEnvironment
 import com.ichi2.anki.deckpicker.DeckPickerViewModel.FlattenedDeckList
 import com.ichi2.anki.deckpicker.DeckPickerViewModel.StartupResponse
 import com.ichi2.anki.deckpicker.EmptyCardsResult
+import com.ichi2.anki.deckpicker.ShortcutData
 import com.ichi2.anki.dialogs.AsyncDialogFragment
 import com.ichi2.anki.dialogs.BackupPromptDialog
 import com.ichi2.anki.dialogs.ConfirmationDialog
@@ -144,7 +144,6 @@ import com.ichi2.anki.export.ExportDialogFragment
 import com.ichi2.anki.introduction.CollectionPermissionScreenLauncher
 import com.ichi2.anki.introduction.hasCollectionStoragePermissions
 import com.ichi2.anki.libanki.DeckId
-import com.ichi2.anki.libanki.Decks
 import com.ichi2.anki.libanki.exception.ConfirmModSchemaException
 import com.ichi2.anki.libanki.sched.DeckNode
 import com.ichi2.anki.libanki.undoAvailable
@@ -703,6 +702,10 @@ open class DeckPicker :
             startActivity(destination.toIntent(this))
         }
 
+        fun onExportDeck(deckId: DeckId) {
+            ExportDialogFragment.newInstance(deckId).show(supportFragmentManager, "exportOptions")
+        }
+
         fun onPromptUserToUpdateScheduler(op: Unit) {
             SchedulerUpgradeDialog(
                 activity = this,
@@ -804,7 +807,7 @@ open class DeckPicker :
         }
 
         fun onFocusedDeckChanged(deckId: DeckId?) {
-            val position = deckId?.let { findDeckPosition(it) } ?: 0
+            val position = deckId?.let { viewModel.findDeckPosition(it) } ?: 0
             // HACK: a small delay is required before scrolling works
             recyclerView.postDelayed({
                 recyclerViewLayoutManager.scrollToPositionWithOffset(position, recyclerView.height / 2)
@@ -863,6 +866,9 @@ open class DeckPicker :
         viewModel.emptyCardsNotification.launchCollectionInLifecycleScope(::onCardsEmptied)
         viewModel.flowOfDeckCountsChanged.launchCollectionInLifecycleScope(::onDeckCountsChanged)
         viewModel.flowOfDestination.launchCollectionInLifecycleScope(::onDestinationChanged)
+        viewModel.flowOfExportDeck.launchCollectionInLifecycleScope(::onExportDeck)
+        viewModel.flowOfCreateShortcut.launchCollectionInLifecycleScope(::createIcon)
+        viewModel.flowOfDisableShortcuts.launchCollectionInLifecycleScope(::disableDeckAndChildrenShortcuts)
         viewModel.onError.launchCollectionInLifecycleScope(::onError)
         viewModel.flowOfPromptUserToUpdateScheduler.launchCollectionInLifecycleScope(::onPromptUserToUpdateScheduler)
         viewModel.flowOfUndoUpdated.launchCollectionInLifecycleScope(::onUndoUpdated)
@@ -913,7 +919,7 @@ open class DeckPicker :
                  * if fixed or given free hand to delete the shortcut with the help of API update this method and use the new one
                  */
                 // TODO: it feels buggy that this is not called on all deck deletion paths
-                disableDeckAndChildrenShortcuts(deckId)
+                viewModel.disableDeckAndChildrenShortcuts(deckId)
                 dismissAllDialogFragments()
                 deleteDeck(deckId)
             }
@@ -928,7 +934,7 @@ open class DeckPicker :
             }
             DeckPickerContextMenuOption.CREATE_SHORTCUT -> {
                 Timber.i("ContextMenu: Create icon for a deck")
-                createIcon(this, deckId)
+                viewModel.createIcon(deckId)
             }
             DeckPickerContextMenuOption.RENAME_DECK -> {
                 Timber.i("ContextMenu: Rename deck selected")
@@ -937,7 +943,7 @@ open class DeckPicker :
             }
             DeckPickerContextMenuOption.EXPORT_DECK -> {
                 Timber.i("ContextMenu: Export deck selected")
-                exportDeck(deckId)
+                viewModel.exportDeck(deckId)
             }
             DeckPickerContextMenuOption.UNBURY -> {
                 Timber.i("ContextMenu: Unbury deck selected")
@@ -2267,38 +2273,20 @@ open class DeckPicker :
         // Also forget the last deck used by the Browser
         CardBrowser.clearLastDeckId()
         viewModel.focusedDeck = did
-        val deck = getNodeByDid(did)
-        if (deck.hasCardsReadyToStudy()) {
+
+        val deck = withCol { sched.deckDueTree().find(did) }
+        if (deck?.hasCardsReadyToStudy() == true) {
             openReviewerOrStudyOptions(selectionType)
             return
         }
 
-        if (!deck.filtered && isDeckAndSubdeckEmpty(did)) {
+        val isEmpty = withCol { decks.cardCount(did, includeSubdecks = true) == 0 }
+        if (!deck?.filtered!! && isEmpty) {
             showEmptyDeckSnackbar()
             updateUi()
         } else {
             onDeckCompleted()
         }
-    }
-
-    /**
-     * Return the position of the deck in the deck list. If the deck is a child of a collapsed deck
-     * (i.e., not visible in the deck list), then the position of the parent deck is returned instead.
-     *
-     * An invalid deck ID will return position 0.
-     */
-    private fun findDeckPosition(did: DeckId): Int {
-        deckListAdapter.currentList.forEachIndexed { index, treeNode ->
-            if (treeNode.did == did) {
-                return index
-            }
-        }
-
-        // If the deck is not in our list, we search again using the immediate parent
-        // If the deck is not found, return 0
-        val collapsedDeck = dueTree?.find(did) ?: return 0
-        val parent = collapsedDeck.parent?.get() ?: return 0
-        return findDeckPosition(parent.did)
     }
 
     /**
@@ -2311,28 +2299,16 @@ open class DeckPicker :
         }
     }
 
-    /**
-     * Get the [DeckNode] identified by [did] from [DeckAdapter].
-     */
-    private fun DeckPicker.getNodeByDid(did: DeckId): DeckNode = deckListAdapter.currentList[findDeckPosition(did)].deckNode
-
-    fun exportDeck(did: DeckId) {
-        ExportDialogFragment.newInstance(did).show(supportFragmentManager, "exportOptions")
-    }
-
-    private fun createIcon(
-        context: Context,
-        did: DeckId,
-    ) {
+    private fun createIcon(shortcutData: ShortcutData) {
         // This code should not be reachable with lower versions
         val shortcut =
             ShortcutInfoCompat
-                .Builder(this, did.toString())
+                .Builder(this, shortcutData.deckId.toString())
                 .setIntent(
-                    intentToReviewDeckFromShortcuts(context, did),
-                ).setIcon(IconCompat.createWithResource(context, R.mipmap.ic_launcher))
-                .setShortLabel(Decks.basename(getColUnsafe.decks.name(did)))
-                .setLongLabel(getColUnsafe.decks.name(did))
+                    intentToReviewDeckFromShortcuts(this, shortcutData.deckId),
+                ).setIcon(IconCompat.createWithResource(this, R.mipmap.ic_launcher))
+                .setShortLabel(shortcutData.shortLabel)
+                .setLongLabel(shortcutData.longLabel)
                 .build()
         try {
             val success = ShortcutManagerCompat.requestPinShortcut(this, shortcut, null)
@@ -2350,28 +2326,27 @@ open class DeckPicker :
         }
     }
 
-    /** Disables the shortcut of the deck and the children belonging to it.*/
-    @NeedsTest("ensure collapsed decks are also deleted")
-    private fun disableDeckAndChildrenShortcuts(did: DeckId) {
-        // Get the DeckId and all child DeckIds
-        val deckTreeDids = dueTree?.find(did)?.map { it.did.toString() } ?: listOf()
+    private fun disableDeckAndChildrenShortcuts(deckTreeDids: List<String>) {
         val errorMessage: CharSequence = getString(R.string.deck_shortcut_doesnt_exist)
         ShortcutManagerCompat.disableShortcuts(this, deckTreeDids, errorMessage)
     }
 
     fun renameDeckDialog(did: DeckId) {
-        val currentName = getColUnsafe.decks.name(did)
-        val createDeckDialog = CreateDeckDialog(this@DeckPicker, R.string.rename_deck, CreateDeckDialog.DeckDialogType.RENAME_DECK, null)
-        createDeckDialog.deckName = currentName
-        createDeckDialog.onNewDeckCreated = {
-            dismissAllDialogFragments()
-            deckListAdapter.notifyDataSetChanged()
-            updateDeckList()
-            if (fragmented) {
-                loadStudyOptionsFragment(false)
+        launchCatchingTask {
+            val currentName = withCol { decks.name(did) }
+            val createDeckDialog =
+                CreateDeckDialog(this@DeckPicker, R.string.rename_deck, CreateDeckDialog.DeckDialogType.RENAME_DECK, null)
+            createDeckDialog.deckName = currentName
+            createDeckDialog.onNewDeckCreated = {
+                dismissAllDialogFragments()
+                deckListAdapter.notifyDataSetChanged()
+                updateDeckList()
+                if (fragmented) {
+                    loadStudyOptionsFragment(false)
+                }
             }
+            createDeckDialog.showDialog()
         }
-        createDeckDialog.showDialog()
     }
 
     /**
@@ -2403,11 +2378,7 @@ open class DeckPicker :
     fun rebuildFiltered(did: DeckId) {
         launchCatchingTask {
             withProgress(resources.getString(R.string.rebuild_filtered_deck)) {
-                withCol {
-                    Timber.d("rebuildFiltered: doInBackground - RebuildCram")
-                    decks.select(did)
-                    sched.rebuildFilteredDeck(decks.selected())
-                }
+                viewModel.rebuildFilteredDeck(did).join()
             }
             updateDeckList()
             if (fragmented) loadStudyOptionsFragment(false)
@@ -2444,7 +2415,7 @@ open class DeckPicker :
             // a deck was created
             dismissAllDialogFragments()
             deckListAdapter.notifyDataSetChanged()
-            updateDeckList()
+            viewModel.onSubDeckCreated()
             if (fragmented) {
                 loadStudyOptionsFragment(false)
             }
@@ -2555,18 +2526,6 @@ open class DeckPicker :
             invalidateOptionsMenu()
             updateDeckList()
             importColpkgListener?.onImportColpkg(colpkgPath)
-        }
-    }
-
-    /**
-     * Returns if the deck and its subdecks are all empty.
-     *
-     * @param did The id of a deck with no pending cards to review
-     */
-    private suspend fun isDeckAndSubdeckEmpty(did: DeckId): Boolean {
-        val node = getNodeByDid(did)
-        return withCol {
-            node.all { decks.isEmpty(it.did) }
         }
     }
 
