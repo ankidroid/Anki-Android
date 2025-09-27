@@ -290,7 +290,8 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
      */
     @NeedsTest("17757: fragment not dismissed before result is output")
     private fun buildInputDialog(contextMenuOption: ContextMenuOption): AlertDialog {
-        require(deferredDefaults.isCompleted || selectedSubDialog!!.checkAvailability == null)
+        require(deferredDefaults.isCompleted || selectedSubDialog?.requiresDefaults == false)
+
         /*
             TODO: Try to change to a standard input dialog (currently the thing holding us back is having the extra
             TODO: hint line for the number of cards available, and having the pre-filled text selected by default)
@@ -316,6 +317,12 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
                     setDropDownViewResource(R.layout.multiline_spinner_item)
                 }
         }
+
+        val canChooseTags =
+            deferredDefaults.isCompleted &&
+                deferredDefaults.getCompleted().tags.isNotEmpty() &&
+                contextMenuOption == STUDY_TAGS
+
         val editText =
             v.findViewById<EditText>(R.id.custom_study_details_edittext2).apply {
                 setText(defaultValue)
@@ -328,7 +335,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
                 }
             }
         val positiveBtnLabel =
-            if (contextMenuOption == STUDY_TAGS) {
+            if (canChooseTags) {
                 TR.customStudyChooseTags().toSentenceCase(requireContext(), R.string.sentence_choose_tags)
             } else {
                 getString(R.string.dialog_ok)
@@ -370,7 +377,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
                         allowSubmit = true
                         return@setOnClickListener
                     }
-                if (contextMenuOption == STUDY_TAGS) {
+                if (canChooseTags) {
                     // mark allowSubmit as true because, if the user cancels TagLimitFragment, when
                     // we come back we wouldn't be able to trigger again TagLimitFragment
                     allowSubmit = true
@@ -394,7 +401,16 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
                     }
                     return@setOnClickListener
                 }
-                launchCustomStudy(contextMenuOption, n)
+                requireActivity().launchCatchingTask {
+                    withProgress {
+                        try {
+                            val kind = CustomStudyCardState.entries[selectedStatePosition].kind
+                            customStudy(contextMenuOption, n, kind, emptyList(), emptyList())
+                        } finally {
+                            requireActivity().dismissAllDialogFragments()
+                        }
+                    }
+                }
             }
         }
 
@@ -567,12 +583,21 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
     enum class ContextMenuOption(
         val getTitle: Resources.() -> String,
         val checkAvailability: ((CustomStudyDefaults) -> Boolean)? = null,
+        val requiresDefaults: Boolean = false,
     ) {
         /** Increase today's new card limit */
-        EXTEND_NEW({ TR.customStudyIncreaseTodaysNewCardLimit() }, checkAvailability = { it.extendNew.isUsable }),
+        EXTEND_NEW(
+            getTitle = { TR.customStudyIncreaseTodaysNewCardLimit() },
+            checkAvailability = { it.extendNew.isUsable },
+            requiresDefaults = true,
+        ),
 
         /** Increase today's review card limit */
-        EXTEND_REV({ TR.customStudyIncreaseTodaysReviewCardLimit() }, checkAvailability = { it.extendReview.isUsable }),
+        EXTEND_REV(
+            getTitle = { TR.customStudyIncreaseTodaysReviewCardLimit() },
+            checkAvailability = { it.extendReview.isUsable },
+            requiresDefaults = true,
+        ),
 
         /** Review forgotten cards */
         STUDY_FORGOT({ TR.customStudyReviewForgottenCards() }),
@@ -584,7 +609,10 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
         STUDY_PREVIEW({ TR.customStudyPreviewNewCards() }),
 
         /** Limit to particular tags */
-        STUDY_TAGS({ TR.customStudyStudyByCardStateOrTag() }),
+        STUDY_TAGS(
+            getTitle = { TR.customStudyStudyByCardStateOrTag() },
+            requiresDefaults = true,
+        ),
     }
 
     @Parcelize
