@@ -16,6 +16,8 @@
 
 package com.ichi2.anki.deckpicker
 
+import android.annotation.SuppressLint
+import android.content.SharedPreferences
 import android.os.Build
 import androidx.annotation.CheckResult
 import androidx.lifecycle.ViewModel
@@ -23,9 +25,11 @@ import androidx.lifecycle.viewModelScope
 import anki.card_rendering.EmptyCardsReport
 import anki.collection.OpChanges
 import anki.i18n.GeneratedTranslations
+import anki.sync.SyncStatusResponse
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.CollectionManager.withOpenColOrNull
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.InitialActivity
 import com.ichi2.anki.OnErrorListener
@@ -38,6 +42,8 @@ import com.ichi2.anki.libanki.Consts
 import com.ichi2.anki.libanki.Consts.DEFAULT_DECK_ID
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.sched.DeckNode
+import com.ichi2.anki.libanki.undoAvailable
+import com.ichi2.anki.libanki.undoLabel
 import com.ichi2.anki.libanki.utils.extend
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import com.ichi2.anki.notetype.ManageNoteTypesDestination
@@ -45,7 +51,10 @@ import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.pages.DeckOptionsDestination
 import com.ichi2.anki.performBackupInBackground
 import com.ichi2.anki.reviewreminders.ScheduleRemindersDestination
+import com.ichi2.anki.settings.Prefs
+import com.ichi2.anki.syncAuth
 import com.ichi2.anki.utils.Destination
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -54,7 +63,9 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import net.ankiweb.rsdroid.RustCleanup
+import net.ankiweb.rsdroid.exceptions.BackendNetworkException
 import timber.log.Timber
 
 /**
@@ -423,6 +434,89 @@ class DeckPickerViewModel :
             val empty = FlattenedDeckList(emptyList(), hasSubDecks = false)
         }
     }
+
+    /**
+     * Fetches the current sync icon state for the menu
+     */
+    suspend fun fetchSyncIconState(): SyncIconState {
+        if (!Prefs.displaySyncStatus) return SyncIconState.Normal
+        val auth = syncAuth()
+        if (auth == null) return SyncIconState.NotLoggedIn
+        return try {
+            // Use CollectionManager to ensure that this doesn't block 'deck count' tasks
+            // throws if a .colpkg import or similar occurs just before this call
+            val output = withContext(Dispatchers.IO) { CollectionManager.getBackend().syncStatus(auth) }
+            if (output.hasNewEndpoint() && output.newEndpoint.isNotEmpty()) {
+                Prefs.currentSyncUri = output.newEndpoint
+            }
+            when (output.required) {
+                SyncStatusResponse.Required.NO_CHANGES -> SyncIconState.Normal
+                SyncStatusResponse.Required.NORMAL_SYNC -> SyncIconState.PendingChanges
+                SyncStatusResponse.Required.FULL_SYNC -> SyncIconState.OneWay
+                SyncStatusResponse.Required.UNRECOGNIZED, null -> TODO("unexpected required response")
+            }
+        } catch (_: BackendNetworkException) {
+            SyncIconState.Normal
+        } catch (e: Exception) {
+            Timber.d(e, "error obtaining sync status: collection likely closed")
+            SyncIconState.Normal
+        }
+    }
+
+    /**
+     * Updates the menu state with current collection information
+     */
+    suspend fun updateMenuState(): OptionsMenuState? =
+        withOpenColOrNull {
+            val searchIcon = decks.count() >= 10
+            val undoLabel = undoLabel()
+            val undoAvailable = undoAvailable()
+            // besides checking for cards being available also consider if we have empty decks
+            val isColEmpty = isEmpty && decks.count() == 1
+            // the correct sync status is fetched in the next call so "Normal" is used as a placeholder
+            OptionsMenuState(searchIcon, undoLabel, SyncIconState.Normal, undoAvailable, isColEmpty)
+        }?.let { (searchIcon, undoLabel, _, undoAvailable, isColEmpty) ->
+            val syncIcon = fetchSyncIconState()
+            OptionsMenuState(searchIcon, undoLabel, syncIcon, undoAvailable, isColEmpty)
+        }
+
+    @SuppressLint("UseKtx")
+    fun getPreviousVersion(
+        preferences: SharedPreferences,
+        current: Long,
+    ): Long {
+        var previous: Long
+        try {
+            previous = preferences.getLong(UPGRADE_VERSION_KEY, current)
+        } catch (e: ClassCastException) {
+            Timber.w(e)
+            previous =
+                try {
+                    // set 20900203 to default value, as it's the latest version that stores integer in shared prefs
+                    preferences.getInt(UPGRADE_VERSION_KEY, 20900203).toLong()
+                } catch (cce: ClassCastException) {
+                    Timber.w(cce)
+                    // Previous versions stored this as a string.
+                    val s = preferences.getString(UPGRADE_VERSION_KEY, "")
+                    // The last version of AnkiDroid that stored this as a string was 2.0.2.
+                    // We manually set the version here, but anything older will force a DB check.
+                    if ("2.0.2" == s) {
+                        40
+                    } else {
+                        0
+                    }
+                }
+            Timber.d("Updating shared preferences stored key %s type to long", UPGRADE_VERSION_KEY)
+            // Expected Editor.putLong to be called later to update the value in shared prefs
+            preferences.edit().remove(UPGRADE_VERSION_KEY).apply()
+        }
+        Timber.i("Previous AnkiDroid version: %s", previous)
+        return previous
+    }
+
+    companion object {
+        const val UPGRADE_VERSION_KEY = "lastUpgradeVersion"
+    }
 }
 
 /** Result of [DeckPickerViewModel.deleteDeck] */
@@ -453,3 +547,20 @@ data class EmptyCardsResult(
 }
 
 fun DeckNode.onlyHasDefaultDeck() = children.singleOrNull()?.did == DEFAULT_DECK_ID
+
+enum class SyncIconState {
+    Normal,
+    PendingChanges,
+    OneWay,
+    NotLoggedIn,
+}
+
+/** Menu state data for the options menu */
+data class OptionsMenuState(
+    val searchIcon: Boolean,
+    /** If undo is available, a string describing the action. */
+    val undoLabel: String?,
+    val syncIcon: SyncIconState,
+    val undoAvailable: Boolean,
+    val isColEmpty: Boolean,
+)
