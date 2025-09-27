@@ -37,7 +37,7 @@ import org.json.JSONObject
 
 /**
  * Represents a note type, a.k.a. Model.
- * The content of an object is described in https://github.com/ankidroid/Anki-Android/wiki/Database-Structure
+ * The content of an object is described in [https://github.com/ankidroid/Anki-Android/wiki/Database-Structure](https://github.com/ankidroid/Anki-Android/wiki/Database-Structure)
  * Each time the object is modified, `Models.save(this)` should be called, otherwise the change will not be synchronized
  * If a change affect card generation, (i.e. any change on the list of field, or the question side of a card type),
  * `Models.save(this, true)` should be called. However, you should do the change in batch and change only when all are d
