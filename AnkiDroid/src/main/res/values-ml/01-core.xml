@@ -74,7 +74,7 @@
     </plurals>
     <plurals name="reviewer_window_title_days_new" comment="Header of the reviewer, telling the users how many minutes remains before they have seen all cards. The second parameter is the number of hours.">
         <item quantity="one">%1$d day %2$dh left</item>
-        <item quantity="other">%1$d days %2$dh left</item>
+        <item quantity="other">%1$d ദിവസങ്ങൾ %2$dh ബാക്കി</item>
     </plurals>
     <string name="type_answer_hint" comment="In the reviewer. When the user use note type with hint. It\'s the default content of the text field in which the user is invited to type their answer. It disappears as soon as the user start to type.">ഉത്തരം ടൈപ്പുചെയ്യുക</string>
     <string name="show_answer" maxLength="41" comment="When displaying the question side of a card. This is the label of a button that display the answer side.">ഉത്തരം കാണിക്കുക</string>
@@ -133,7 +133,7 @@
     <string name="empty_deck">ഈ ഡെക്ക് ശൂന്യമാണ്</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">ഡെക്ക് തിരയൽ</string>
     <string name="invalid_deck_name">ഡെക്കിന്റെ പേര് അസാധുവാണ്</string>
-    <string name="studyoptions_congrats_finished">Congratulations! You have finished for today.</string>
+    <string name="studyoptions_congrats_finished">അഭിനന്ദനങ്ങൾ! ഇന്നത്തെ കാര്യം നിങ്ങൾ പൂർത്തിയാക്കി.</string>
     <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">ഡെക്ക് ഇപ്പോൾ പൂർത്തിയായി! %s</string>
     <string name="studyoptions_no_cards_due">കാർഡുകളൊന്നും ഇതുവരെ ലഭിച്ചിട്ടില്ല</string>
     <string name="sd_card_not_mounted">ഉപകരണ സംഭരണം മ .ണ്ട് ചെയ്തിട്ടില്ല</string>

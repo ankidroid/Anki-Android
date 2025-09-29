@@ -124,8 +124,8 @@
     <string name="multimedia_editor_failed">Multimedia muharririni ochib boʻlmadi</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Audio yozuvga ruxsat olib boʻlmadi</string>
-    <string name="permission_denied">Permission denied</string>
-    <string name="recording_permission_denied_message">Microphone permission is necessary for the “Record voice” feature. Please grant it in the app settings.</string>
+    <string name="permission_denied">Ruxsat berilmadi</string>
+    <string name="recording_permission_denied_message">“Ovozni yozib olish” funksiyasi uchun mikrofonga ruxsat kerak. Ilova sozlamalarida ruxsat bering.</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid yangilandi</string>
     <string name="integrity_check_startup_content">AnkiDroid yangilandi. Ushbu yangilanish maʼlumotlar bazasi muammolari uchun tuzatishlarni oʼz ichiga oladi va hozir maʼlumotlar bazasini tekshirishingizni maslahat beramiz.</string>

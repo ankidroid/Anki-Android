@@ -47,7 +47,7 @@
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Tortmani ochish</string>
     <string name="drawer_close">Tortmani yopish</string>
-    <string name="note_message">Note saved</string>
+    <string name="note_message">Qayt saqlandi</string>
     <string name="CardEditorCardDeck">Karta dastai:</string>
     <string name="CardEditorNoteDeck">dasta</string>
     <string name="CardEditorModel">Turi:</string>
@@ -65,18 +65,18 @@
     <string name="save_whiteboard" maxLength="28">Yozuv taxtasini saqlash</string>
     <string name="enable_stylus" maxLength="28">Qalam rejimini yoqish</string>
     <string name="disable_stylus">Qalam rejimini oʻchirish</string>
-    <string name="eraser" maxLength="28">Eraser</string>
-    <string name="add_brush" maxLength="28">Add brush</string>
-    <string name="whiteboard_align_left" comment="Option to align the whiteboard toolbar on the left" maxLength="28">Left</string>
-    <string name="whiteboard_align_bottom" comment="Option to align the whiteboard toolbar on the bottom" maxLength="28">Bottom</string>
-    <string name="whiteboard_align_right" comment="Option to align the whiteboard toolbar on the right" maxLength="28">Right</string>
-    <string name="whiteboard_clear" comment="Button text to clear the whiteboard" maxLength="28">Clear</string>
-    <string name="whiteboard_more_options" comment="Tooltip of the whiteboard \'More\' button" maxLength="28">More options</string>
-    <string name="whiteboard_remove_brush_message">Are you sure you want to remove this brush from your palette?</string>
-    <string name="whiteboard_ink_eraser" comment="Title of the whiteboard Ink eraser">Ink</string>
-    <string name="whiteboard_stroke_eraser" comment="Title of the whiteboard Stroke eraser">Stroke</string>
-    <string name="stylus_mode" comment="Title of the menu item that toggles the whiteboard stylus mode" maxLength="28">Stylus mode</string>
-    <string name="cannot_remove_last_brush_message">The last brush may not be removed</string>
+    <string name="eraser" maxLength="28">Oʻchirgich</string>
+    <string name="add_brush" maxLength="28">Choʻtka qoʻshish</string>
+    <string name="whiteboard_align_left" comment="Option to align the whiteboard toolbar on the left" maxLength="28">Chap</string>
+    <string name="whiteboard_align_bottom" comment="Option to align the whiteboard toolbar on the bottom" maxLength="28">Past</string>
+    <string name="whiteboard_align_right" comment="Option to align the whiteboard toolbar on the right" maxLength="28">Oʻng</string>
+    <string name="whiteboard_clear" comment="Button text to clear the whiteboard" maxLength="28">Tozalash</string>
+    <string name="whiteboard_more_options" comment="Tooltip of the whiteboard \'More\' button" maxLength="28">Boshqa parametrlar</string>
+    <string name="whiteboard_remove_brush_message">Rostdan ham bu choʻtkani palitradan olib tashlamoqchimisiz?</string>
+    <string name="whiteboard_ink_eraser" comment="Title of the whiteboard Ink eraser">Siyoh</string>
+    <string name="whiteboard_stroke_eraser" comment="Title of the whiteboard Stroke eraser">Chiziq</string>
+    <string name="stylus_mode" comment="Title of the menu item that toggles the whiteboard stylus mode" maxLength="28">Stilus rejimi</string>
+    <string name="cannot_remove_last_brush_message">Oxirigi choʻtkani olib tashlab boʻlmaydi</string>
     <string name="enable_whiteboard" maxLength="28">Yozuv taxtasini yoqish</string>
     <string name="disable_whiteboard">Yozuv taxtasini oʻchirish</string>
     <string name="show_whiteboard">Yozuv taxtasini koʻrsatish</string>
@@ -95,7 +95,7 @@
     <string name="webview_crash_fatal">Fatal xatolik: WebView ishdan chiqdi. Sababi: %s</string>
     <string name="webview_crash_loop_dialog_title">Tizim WebView renderlashda xatolik</string>
     <string name="webview_crash_loop_dialog_content">Tizim WebView “%1$s” kartasini koʻrsata olmadi.\n %2$s</string>
-    <string name="slide_to_cancel" comment="Message shown when pressing the record button">Slide to cancel</string>
+    <string name="slide_to_cancel" comment="Message shown when pressing the record button">Bekor qilish uchun suring</string>
     <string name="filter_by_flags" maxLength="41">Bayroqlar</string>
     <!-- Custom study options -->
     <string name="custom_study_loading_tags">Teglar roʻyxati qurilmoqda</string>
@@ -122,10 +122,10 @@
     <string name="missing_note_type">Qayd turi topilmadi</string>
     <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (boʻsh)</string>
     <!-- Image cropper -->
-    <string name="image_cropper_action_rotate" maxLength="28" comment="Action in image cropper screen">Rotate</string>
-    <string name="image_cropper_action_flip" maxLength="28" comment="Action in image cropper screen">Flip</string>
-    <string name="image_cropper_action_flip_horizontally" maxLength="28" comment="Submenu action in image cropper screen">Flip horizontally</string>
-    <string name="image_cropper_action_flip_vertically" maxLength="28" comment="Submenu action in image cropper screen">Flip vertically</string>
+    <string name="image_cropper_action_rotate" maxLength="28" comment="Action in image cropper screen">Aylantirish</string>
+    <string name="image_cropper_action_flip" maxLength="28" comment="Action in image cropper screen">Oʻgirish</string>
+    <string name="image_cropper_action_flip_horizontally" maxLength="28" comment="Submenu action in image cropper screen">Gorizontal oʻgirish</string>
+    <string name="image_cropper_action_flip_vertically" maxLength="28" comment="Submenu action in image cropper screen">Vertikal oʻgirish</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">Oʻrganish muddati tugadi</string>
     <plurals name="timebox_reached">
@@ -336,9 +336,9 @@
     <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">Nutq sintezatori sozlamalarini ochib boʻlmadi</string>
     <string name="shared_decks_login_required">Koʻproq dasta yuklab olish uchun, iltimos, tizimga kiring</string>
     <string name="deck_description_field_hint">Tavsif</string>
-    <string name="deck_description_saved">Description updated</string>
-    <string name="format_deck_description_as_markdown">Format as Markdown</string>
-    <string name="help_button_content_description">Open help for ‘%s’</string>
+    <string name="deck_description_saved">Tavsif yangilandi</string>
+    <string name="format_deck_description_as_markdown">Markdown sifatida formatlash</string>
+    <string name="help_button_content_description">‘%s’ uchun yordamni ochish</string>
     <string name="failed_to_copy">Nusxa olib boʻlmadi</string>
     <string name="card_browser_unavailable_when_notes_mode">‘Qaydlar’ rejimida ishlatib boʻlmaydi</string>
     <plurals name="unbury_cards_feedback">
