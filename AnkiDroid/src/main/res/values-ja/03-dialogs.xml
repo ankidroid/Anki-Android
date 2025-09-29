@@ -121,8 +121,8 @@
     <string name="multimedia_editor_failed">マルチメディアエディタを開けませんでした</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">音声録音の権限が付与されませんでした</string>
-    <string name="permission_denied">Permission denied</string>
-    <string name="recording_permission_denied_message">Microphone permission is necessary for the “Record voice” feature. Please grant it in the app settings.</string>
+    <string name="permission_denied">権限が許可されていません</string>
+    <string name="recording_permission_denied_message">「音声を録音」オプションを使用するにはマイクの権限が必要です。システムの、このアプリに関する設定画面でマイクの権限を許可してください。</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroidをアップグレードしました</string>
     <string name="integrity_check_startup_content">AnkiDroidをアップグレードしました。このアップグレードには、データベースに関する不具合の修正が含まれています。今すぐ「データベースをチェック」を実行することをおすすめします。</string>

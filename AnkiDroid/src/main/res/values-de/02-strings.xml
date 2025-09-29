@@ -66,13 +66,13 @@
     <string name="enable_stylus" maxLength="28">Stylus Modus aktivieren</string>
     <string name="disable_stylus">Stylus Modus deaktivieren</string>
     <string name="eraser" maxLength="28">Radierer</string>
-    <string name="add_brush" maxLength="28">Add brush</string>
+    <string name="add_brush" maxLength="28">Farbe hinzufügen</string>
     <string name="whiteboard_align_left" comment="Option to align the whiteboard toolbar on the left" maxLength="28">Links</string>
     <string name="whiteboard_align_bottom" comment="Option to align the whiteboard toolbar on the bottom" maxLength="28">Unten</string>
     <string name="whiteboard_align_right" comment="Option to align the whiteboard toolbar on the right" maxLength="28">Rechts</string>
     <string name="whiteboard_clear" comment="Button text to clear the whiteboard" maxLength="28">Leeren</string>
     <string name="whiteboard_more_options" comment="Tooltip of the whiteboard \'More\' button" maxLength="28">Mehr Optionen</string>
-    <string name="whiteboard_remove_brush_message">Are you sure you want to remove this brush from your palette?</string>
+    <string name="whiteboard_remove_brush_message">Bist du sicher, dass du diesen Pinsel von der Palette entfernen möchtest</string>
     <string name="whiteboard_ink_eraser" comment="Title of the whiteboard Ink eraser">Tinte</string>
     <string name="whiteboard_stroke_eraser" comment="Title of the whiteboard Stroke eraser">Strich</string>
     <string name="stylus_mode" comment="Title of the menu item that toggles the whiteboard stylus mode" maxLength="28">Stylus-Modus</string>

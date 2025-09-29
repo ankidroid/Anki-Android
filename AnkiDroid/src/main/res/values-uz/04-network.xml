@@ -49,7 +49,7 @@
     <string name="sync_error">Sinxronlash xatoligi</string>
     <string name="vague_error" comment="Network error dialog title">Xatolik</string>
     <string name="retry">Qayta urinib koʻrish</string>
-    <string name="menu_get_shared_decks">Ulashilgan dastalarni olish</string>
+    <string name="menu_get_shared_decks">Dasta yuklab olish</string>
     <string name="connection_error_message">Tarmoq xatoligi yuz berdi</string>
     <string name="not_logged_in_title">AnkiWebʼga kirish</string>
     <string name="login_create_account_message">Bulut sinxronizatsiya xizmatidan foydalanish uchun uchinchi tomonning hisobiga kirishingiz kerak. Hisobni keyingi bosqichda yaratishingiz mumkin.</string>
