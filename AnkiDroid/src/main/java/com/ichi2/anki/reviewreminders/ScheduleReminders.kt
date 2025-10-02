@@ -20,9 +20,11 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.BundleCompat
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.setFragmentResultListener
@@ -376,14 +378,16 @@ class ScheduleReminders :
 
     /**
      * Trigger a RecyclerView UI update for ScheduleReminders.
+     * If there are no reminders to display, show the "No Reminders" placeholder icon and text.
      */
     private fun triggerUIUpdate() {
-        adapter.submitList(
+        val listToDisplay =
             reminders
                 .values
                 .sortedBy { it.time.toSecondsFromMidnight() }
-                .toList(),
-        )
+                .toList()
+        adapter.submitList(listToDisplay)
+        view?.findViewById<LinearLayout>(R.id.no_reminders_placeholder)?.isVisible = listToDisplay.isEmpty()
     }
 
     companion object {
