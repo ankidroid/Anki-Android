@@ -100,7 +100,7 @@ materialTapTargetPrompt = "3.3.2"
 mockitoCore = "5.19.0"
 mockitoInline = "5.2.0"
 mockitoKotlin = "6.0.0" # maybe can remove mockitoCore and its usage with release > 5.4.0
-mockk = "1.14.5"
+mockk = "1.14.6"
 nanohttpd = "2.3.1"
 okhttp = "5.1.0"
 # https://github.com/protocolbuffers/protobuf/releases
