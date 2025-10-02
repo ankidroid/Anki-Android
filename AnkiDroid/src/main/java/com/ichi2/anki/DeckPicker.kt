@@ -261,10 +261,6 @@ open class DeckPicker :
     private var shortAnimDuration = 0
     private lateinit var deckPickerContent: RelativeLayout
 
-    // TODO: Encapsulate ProgressDialog within a class to limit the use of deprecated functionality
-    @Suppress("Deprecation")
-    private var progressDialog: android.app.ProgressDialog? = null
-
     private var studyoptionsFrame: View? = null // not lateInit - can be null
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
@@ -1526,13 +1522,6 @@ open class DeckPicker :
     override fun onStop() {
         super.onStop()
         WidgetStatus.updateInBackground(this@DeckPicker)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        if (progressDialog != null && progressDialog!!.isShowing) {
-            progressDialog!!.dismiss()
-        }
     }
 
     /**
