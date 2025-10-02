@@ -40,9 +40,11 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputLayout
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.DeckSpinnerSelection
 import com.ichi2.anki.R
 import com.ichi2.anki.dialogs.ConfirmationDialog
+import com.ichi2.anki.isDefaultDeckEmpty
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.Consts
 import com.ichi2.anki.libanki.DeckId
@@ -192,8 +194,33 @@ class AddEditReminderDialog : DialogFragment() {
         launchCatchingTask {
             Timber.d("Setting up deck spinner")
             deckSpinnerSelection.initializeScheduleRemindersDeckSpinner()
-            deckSpinnerSelection.selectDeckById(viewModel.deckSelected.value ?: Consts.DEFAULT_DECK_ID, setAsCurrentDeck = false)
+            val deckToSelect = ensureValidDeckSelected()
+            deckSpinnerSelection.selectDeckById(deckToSelect, setAsCurrentDeck = false)
         }
+    }
+
+    /**
+     * Checks to see if the ViewModel's selected deck is valid and exists. If it does not, we set the selected deck to a
+     * valid deck (either the default deck or "all decks", depending on whether the default deck is present or not).
+     *
+     * @return The valid deck ID that is now selected.
+     */
+    private suspend fun ensureValidDeckSelected(): DeckId {
+        val fallbackSelection = if (isDefaultDeckEmpty()) DeckSpinnerSelection.ALL_DECKS_ID else Consts.DEFAULT_DECK_ID
+        val currentlySelectedDeckID = viewModel.deckSelected.value
+        val deckToSelect =
+            when (currentlySelectedDeckID) {
+                DeckSpinnerSelection.ALL_DECKS_ID -> DeckSpinnerSelection.ALL_DECKS_ID
+                Consts.DEFAULT_DECK_ID -> fallbackSelection
+                null -> fallbackSelection
+                else -> {
+                    val doesDeckExist = withCol { decks.have(currentlySelectedDeckID) }
+                    if (doesDeckExist) currentlySelectedDeckID else fallbackSelection
+                }
+            }
+        viewModel.setDeckSelected(deckToSelect)
+        Timber.d("Initial selected deck ID: %s, newly selected deck ID: %s", currentlySelectedDeckID, deckToSelect)
+        return deckToSelect
     }
 
     private fun setUpAdvancedDropdown() {
