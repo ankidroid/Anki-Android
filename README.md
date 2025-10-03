@@ -46,7 +46,7 @@ Install
 
 <a href="https://f-droid.org/repository/browse/?fdid=com.ichi2.anki">
     <img alt="Get it on F-Droid" height="80"
-        src="docs/graphics/logos/fdroid.png"></a>
+        src="docs/graphics/logos/f-droid-badge.png"></a>
 
 <a href="http://apps.obtainium.imranr.dev/redirect.html?r=obtainium://add/https://github.com/ankidroid/Anki-Android">
     <img alt="Get it on Obtainium" height="80"
@@ -77,7 +77,7 @@ See the [contribution wiki page](https://github.com/ankidroid/Anki-Android/wiki/
 Join Us On
 ----------
 
-<a href="https://discord.gg/qjzcRTx"><img src="docs/graphics/logos/discord_logo.png" height="60px"/></a>
+<a href="https://discord.gg/qjzcRTx"><img src="docs/graphics/logos/discord_logo_color.png" height="60px"/></a>
 <a href="https://www.reddit.com/r/Anki"><img src="docs/graphics/logos/reddit_logo_color.png" height="50px"/></a>
 <a href="https://www.facebook.com/AnkiDroid/"><img src="docs/graphics/logos/facebook_logo.png" height="60px"/></a>
 <a href="https://x.com/ankidroid"><img src="docs/graphics/logos/twitter_logo.png" height="50px"/></a>
