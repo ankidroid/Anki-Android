@@ -21,8 +21,11 @@ import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
 
+/**
+ * Tests for [StudyOptionsFragment.formatDescription].
+ */
 @RunWith(AndroidJUnit4::class) // required for String -> Spannable conversion in formatDescription
-class StudyOptionsFragmentTest {
+class FormatDeckDescriptionTest {
     // Fixes for #5715: In deck description, ignore what is in style and script tag
     @Test
     fun spanTagsAreNotRemoved() {

@@ -51,7 +51,6 @@ import com.ichi2.anki.reviewreminders.ScheduleReminders
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.ui.internationalization.toSentenceCase
 import com.ichi2.anki.utils.ext.showDialogFragment
-import com.ichi2.utils.HtmlUtils.convertNewlinesToHtml
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -563,9 +562,10 @@ class StudyOptionsFragment :
             // #5715: In deck description, ignore what is in style and script tag
             // Since we don't currently execute the JS/CSS, it's not worth displaying.
             val withStrippedTags = stripHTMLScriptAndStyleTags(desc)
-            // #5188 - fromHtml displays newlines as " "
-            val withFixedNewlines = convertNewlinesToHtml(withStrippedTags)
-            return HtmlCompat.fromHtml(withFixedNewlines!!, HtmlCompat.FROM_HTML_MODE_LEGACY)
+            // #5188 - compat.fromHtml converts newlines into spaces.
+            val withoutWindowsLineEndings = withStrippedTags.replace("\r\n", "<br/>")
+            val withoutLinuxLineEndings = withoutWindowsLineEndings.replace("\n", "<br/>")
+            return HtmlCompat.fromHtml(withoutLinuxLineEndings, HtmlCompat.FROM_HTML_MODE_LEGACY)
         }
     }
 
