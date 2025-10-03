@@ -243,6 +243,7 @@ class Decks(
         scope: SetDeckCollapsedRequest.Scope,
     ): OpChanges = col.backend.setDeckCollapsed(deckId, collapsed, scope)
 
+    @LibAnkiAlias("collapse")
     fun collapse(did: DeckId) {
         val deck = this.getLegacy(did) ?: return
         deck.collapsed = !deck.collapsed
