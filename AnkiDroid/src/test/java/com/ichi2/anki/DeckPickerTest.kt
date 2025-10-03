@@ -16,7 +16,6 @@ import androidx.fragment.app.FragmentManager
 import androidx.test.core.app.ActivityScenario
 import anki.scheduler.CardAnswer.Rating
 import app.cash.turbine.test
-import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.dialogs.DatabaseErrorDialog
@@ -653,9 +652,8 @@ class DeckPickerTest : RobolectricTest() {
     }
 
     @Test
-    @NeedsTest("possible bug: Moving the ops outside the deckPicker { } failed in tablet mode")
-    fun `undo menu item changes`() =
-        runTest {
+    fun `undo menu item is updated after undoableOp call`() =
+        deckPicker {
             fun DeckPicker.getUndoTitle() = menu().findItem(R.id.action_undo).title.toString()
 
             fun waitForMenu() = ShadowLooper.runUiThreadTasksIncludingDelayedTasks()
@@ -665,16 +663,14 @@ class DeckPickerTest : RobolectricTest() {
                 waitForMenu()
             }
 
-            deckPicker {
-                // enqueue two actions, neither of which affect the study queues
-                val note = addBasicNoteWithOp()
-                note.updateOp { this.fields[0] = "baz" }
+            // enqueue two actions, neither of which affect the study queues
+            val note = addBasicNoteWithOp()
+            note.updateOp { this.fields[0] = "baz" }
 
-                waitForMenu()
-                assertThat(getUndoTitle(), containsString("Update Note"))
-                undo()
-                assertThat(getUndoTitle(), containsString("Add Note"))
-            }
+            waitForMenu()
+            assertThat(getUndoTitle(), containsString("Update Note"))
+            undo()
+            assertThat(getUndoTitle(), containsString("Add Note"))
         }
 
     @Test
