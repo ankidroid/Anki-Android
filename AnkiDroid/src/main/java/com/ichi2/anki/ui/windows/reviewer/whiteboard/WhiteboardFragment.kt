@@ -81,6 +81,13 @@ class WhiteboardFragment :
         val whiteboardView = view.findViewById<WhiteboardView>(R.id.whiteboard_view)
         brushToolbarContainerHorizontal = view.findViewById(R.id.brush_toolbar_container_horizontal)
         brushToolbarContainerVertical = view.findViewById(R.id.brush_toolbar_container_vertical)
+        val touchBlockerView = view.findViewById<View>(R.id.touch_blocker_view)
+
+        whiteboardView.isDrawing
+            .onEach { isCurrentlyDrawing ->
+                // When drawing starts, show the blocker. When it stops, hide it.
+                touchBlockerView.visibility = if (isCurrentlyDrawing) View.VISIBLE else View.GONE
+            }.launchIn(lifecycleScope)
 
         val isNightMode = Themes.systemIsInNightMode(requireContext())
         viewModel.loadState(isNightMode)

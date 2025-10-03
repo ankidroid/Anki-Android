@@ -28,6 +28,8 @@ import android.view.MotionEvent
 import android.view.View
 import androidx.core.graphics.createBitmap
 import com.ichi2.anki.R
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 /**
  * A custom view for the whiteboard that handles drawing and touch events.
@@ -67,6 +69,8 @@ class WhiteboardView : View {
     private val canvasPaint = Paint(Paint.DITHER_FLAG)
 
     private var hasMoved = false
+    private val _isDrawing = MutableStateFlow(false)
+    val isDrawing = _isDrawing.asStateFlow()
 
     /**
      * Recreates the drawing buffer when the view size changes.
@@ -118,6 +122,7 @@ class WhiteboardView : View {
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
                 hasMoved = false
+                _isDrawing.value = true
                 currentPath.moveTo(touchX, touchY)
                 if (isPathEraser) {
                     onEraseGestureStart?.invoke()
@@ -127,6 +132,7 @@ class WhiteboardView : View {
             }
             MotionEvent.ACTION_MOVE -> {
                 hasMoved = true
+                _isDrawing.value = true
                 currentPath.lineTo(touchX, touchY)
                 if (isPathEraser) {
                     onEraseGestureMove?.invoke(touchX, touchY)
@@ -134,6 +140,7 @@ class WhiteboardView : View {
                 invalidate()
             }
             MotionEvent.ACTION_UP -> {
+                _isDrawing.value = false
                 if (isPathEraser) {
                     onEraseGestureEnd?.invoke()
                 } else {
