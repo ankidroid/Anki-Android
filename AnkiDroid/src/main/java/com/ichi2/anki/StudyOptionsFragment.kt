@@ -62,18 +62,7 @@ class StudyOptionsFragment :
     Fragment(),
     ChangeManager.Subscriber,
     MenuProvider {
-    /**
-     * Preferences
-     */
     private var currentContentView = CONTENT_STUDY_OPTIONS
-
-    /** Alerts to inform the user about different situations  */
-    @Suppress("Deprecation")
-    private var progressDialog: android.app.ProgressDialog? = null
-
-    /**
-     * UI elements for "Study Options" view
-     */
     private var studyOptionsView: View? = null
     private lateinit var deckInfoLayout: Group
     private lateinit var buttonStart: Button
@@ -92,11 +81,7 @@ class StudyOptionsFragment :
     private var retryMenuRefreshJob: Job? = null
 
     private var fragmented = false
-    private var fullNewCountThread: Thread? = null
 
-    /**
-     * Callbacks for UI events
-     */
     private val buttonClickListener =
         View.OnClickListener { v: View ->
             if (v.id == R.id.studyoptions_start) {
@@ -156,13 +141,6 @@ class StudyOptionsFragment :
         menuInflater.inflate(R.menu.study_options_fragment, menu)
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        if (fullNewCountThread != null) {
-            fullNewCountThread!!.interrupt()
-        }
-    }
-
     override fun onResume() {
         super.onResume()
         refreshInterface()
@@ -211,9 +189,6 @@ class StudyOptionsFragment :
         totalCardsCount = studyOptionsView.findViewById(R.id.studyoptions_total_count)
     }
 
-    /**
-     * Show the context menu for the custom study options
-     */
     private fun showCustomStudyContextMenu() {
         val dialog = CustomStudyDialog.createInstance(deckId = col!!.decks.selected())
         requireActivity().showDialogFragment(dialog)
@@ -368,21 +343,10 @@ class StudyOptionsFragment :
         if (studyOptionsView != null && studyOptionsView!!.findViewById<View?>(R.id.progress_bar) != null) {
             studyOptionsView!!.findViewById<View>(R.id.progress_bar).visibility = View.GONE
         }
-        // for rebuilding cram decks
-        if (progressDialog != null && progressDialog!!.isShowing) {
-            try {
-                progressDialog!!.dismiss()
-            } catch (e: Exception) {
-                Timber.e("onPostExecute - Dialog dismiss Exception = %s", e.message)
-            }
-        }
     }
 
     private var updateValuesFromDeckJob: Job? = null
 
-    /**
-     * Rebuild the fragment's interface to reflect the status of the currently selected deck.
-     */
     fun refreshInterface() {
         Timber.d("Refreshing StudyOptionsFragment")
         updateValuesFromDeckJob?.cancel()
@@ -423,7 +387,7 @@ class StudyOptionsFragment :
         get() {
             try {
                 return CollectionManager.getColUnsafe()
-            } catch (e: Exception) {
+            } catch (_: Exception) {
                 // This may happen if the backend is locked or similar.
             }
             return null
@@ -434,11 +398,6 @@ class StudyOptionsFragment :
         updateValuesFromDeckJob?.cancel()
     }
 
-    /**
-     * Rebuilds the interface.
-     *
-     * @param result the new DeckStudyData using which UI is to be rebuilt
-     */
     private fun rebuildUi(result: DeckStudyData?) {
         dismissProgressDialog()
         if (result != null) {
@@ -584,21 +543,9 @@ class StudyOptionsFragment :
     companion object {
         /**
          * Identifier for a fragment result request to study(open the reviewer). Activities using
-         * this fragment need to handle this request and initialize the study screen as they seem fit.
+         * this fragment need to handle this request and initialize the study screen as they see fit.
          */
         const val REQUEST_STUDY_OPTIONS_STUDY = "request_study_option_study"
-
-        /**
-         * Available options performed by other activities
-         */
-        @Suppress("unused")
-        private const val BROWSE_CARDS = 3
-
-        @Suppress("unused")
-        private const val STATISTICS = 4
-
-        @Suppress("unused")
-        private const val DECK_OPTIONS = 5
 
         /**
          * Constants for selecting which content view to display
