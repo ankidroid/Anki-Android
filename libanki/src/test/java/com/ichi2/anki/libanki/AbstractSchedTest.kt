@@ -32,7 +32,7 @@ class AbstractSchedTest : InMemoryAnkiTest() {
     @Test
     fun ensureUndoCorrectCounts() {
         val sched = col.sched
-        val dconf = col.decks.getConfig(1)
+        val dconf = col.decks.getConfig(1)!!
         assertThat(dconf, notNullValue())
         dconf.new.perDay = 10
         col.decks.save(dconf)
