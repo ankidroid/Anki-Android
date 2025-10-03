@@ -62,7 +62,6 @@ class StudyOptionsFragment :
     ChangeManager.Subscriber,
     MenuProvider {
     private var currentContentView = CONTENT_STUDY_OPTIONS
-    private var studyOptionsView: View? = null
     private lateinit var deckInfoLayout: Group
     private lateinit var buttonStart: Button
     private lateinit var textDeckName: TextView
@@ -96,20 +95,6 @@ class StudyOptionsFragment :
             }
         }
 
-    /**
-     * Open the FilteredDeckOptions activity to allow the user to modify the parameters of the
-     * filtered deck.
-     * @param defaultConfig If true, signals to the FilteredDeckOptions activity that the filtered
-     * deck has no options associated with it yet and should use a default
-     * set of values.
-     */
-    private fun openFilteredDeckOptions(defaultConfig: Boolean = false) {
-        val i = Intent(activity, FilteredDeckOptions::class.java)
-        i.putExtra("defaultConfig", defaultConfig)
-        Timber.i("openFilteredDeckOptions()")
-        onDeckOptionsActivityResult.launch(i)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -117,7 +102,6 @@ class StudyOptionsFragment :
     ): View? {
         Timber.i("onCreateView()")
         val studyOptionsView = inflater.inflate(R.layout.studyoptions_fragment, container, false)
-        this.studyOptionsView = studyOptionsView
         fragmented = requireActivity().javaClass != StudyOptionsActivity::class.java
         initAllContentViews(studyOptionsView)
         refreshInterface()
@@ -198,7 +182,10 @@ class StudyOptionsFragment :
             R.id.action_deck_or_study_options -> {
                 Timber.i("StudyOptionsFragment:: Deck or study options button pressed")
                 if (col!!.decks.isFiltered(col!!.decks.selected())) {
-                    openFilteredDeckOptions()
+                    val i = Intent(activity, FilteredDeckOptions::class.java)
+                    i.putExtra("defaultConfig", false)
+                    Timber.i("Opening filtered deck options")
+                    onDeckOptionsActivityResult.launch(i)
                 } else {
                     val i =
                         com.ichi2.anki.pages.DeckOptions
@@ -270,10 +257,6 @@ class StudyOptionsFragment :
         rebuildUi(result)
     }
 
-    private fun configureToolbar() {
-        activity?.invalidateMenu()
-    }
-
     override fun onPrepareMenu(menu: Menu) {
         super.onPrepareMenu(menu)
         Timber.i("configureToolbarInternal()")
@@ -331,18 +314,12 @@ class StudyOptionsFragment :
                 "Handling onActivityResult for StudyOptionsFragment (deckOptions/filteredDeckOptions, resultCode = %d)",
                 result.resultCode,
             )
-            configureToolbar()
+            activity?.invalidateMenu()
             if (result.resultCode == DeckPicker.RESULT_DB_ERROR || result.resultCode == DeckPicker.RESULT_MEDIA_EJECTED) {
                 closeStudyOptions(result.resultCode)
                 return@registerForActivityResult
             }
         }
-
-    private fun dismissProgressDialog() {
-        if (studyOptionsView != null && studyOptionsView!!.findViewById<View?>(R.id.progress_bar) != null) {
-            studyOptionsView!!.findViewById<View>(R.id.progress_bar).visibility = View.GONE
-        }
-    }
 
     private var updateValuesFromDeckJob: Job? = null
 
@@ -398,14 +375,14 @@ class StudyOptionsFragment :
     }
 
     private fun rebuildUi(result: DeckStudyData?) {
-        dismissProgressDialog()
+        view?.findViewById<View?>(R.id.progress_bar)?.visibility = View.GONE
         if (result != null) {
             // Don't do anything if the fragment is no longer attached to it's Activity or col has been closed
             if (activity == null) {
                 Timber.e("StudyOptionsFragment.mRefreshFragmentListener :: can't refresh")
                 return
             }
-
+            val studyOptionsView = view
             // #5506 If we have no view, short circuit all UI logic
             if (studyOptionsView == null) {
                 return
@@ -416,7 +393,7 @@ class StudyOptionsFragment :
                     ?: throw NullPointerException("StudyOptionsFragment:: Collection is null while rebuilding Ui")
 
             // Reinitialize controls in case changed to filtered deck
-            initAllContentViews(studyOptionsView!!)
+            initAllContentViews(studyOptionsView)
             // Set the deck name
             val deck = col.decks.current()
             // Main deck name
@@ -508,7 +485,7 @@ class StudyOptionsFragment :
             totalNewCardsCount.text = result.totalNewCards.toString()
             totalCardsCount.text = result.numberOfCardsInDeck.toString()
             // Rebuild the options menu
-            configureToolbar()
+            activity?.invalidateMenu()
         }
     }
 
@@ -552,8 +529,6 @@ class StudyOptionsFragment :
         private const val CONTENT_STUDY_OPTIONS = 0
         private const val CONTENT_CONGRATS = 1
         private const val CONTENT_EMPTY = 2
-
-        fun newInstance(): StudyOptionsFragment = StudyOptionsFragment()
 
         @VisibleForTesting
         fun formatDescription(
