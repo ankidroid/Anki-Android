@@ -295,6 +295,13 @@ object Prefs {
 
     val devUsingCardBrowserSearchView: Boolean by booleanPref(R.string.dev_card_browser_search_view, false)
 
+    // ************************************* Switch Profile option ********************************** //
+
+    /**
+     * Whether the switch profile feature is enabled.
+     */
+    val switchProfileEnabled by booleanPref(R.string.pref_enable_switch_profile_key, false)
+
     // **************************************** UI Config *************************************** //
 
     private const val UI_CONFIG_PREFERENCES_NAME = "ui-config"
