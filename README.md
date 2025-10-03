@@ -16,7 +16,7 @@
 # AnkiDroid
 A semi-official port of the open source [Anki](https://apps.ankiweb.net/index.html) spaced repetition flashcard system to Android. Memorize anything with AnkiDroid!
 
-<img src="docs/graphics/logos/ankidroid_logo.png" align="right" width="40%" height="100%"></img>
+<img src="docs/graphics/src/logo.svg" align="right" width="40%" height="100%"></img>
 
 ### Features
 
@@ -81,7 +81,7 @@ Join Us On
 <a href="https://www.reddit.com/r/Anki"><img src="docs/graphics/logos/reddit_logo_color.png" height="50px"/></a>
 <a href="https://www.facebook.com/AnkiDroid/"><img src="docs/graphics/logos/facebook_logo_color.png" height="50px"/></a>
 <a href="https://x.com/ankidroid"><img src="docs/graphics/logos/twitter_logo.png" height="50px"/></a>
-<a href="https://forums.ankiweb.net/"><img src="/docs/graphics/logos/anki_forums_logo.png" height="50px"/></a>
+<a href="https://forums.ankiweb.net/"><img src="docs/graphics/logos/anki_forums_logo.png" height="50px"/></a>
 
 ## Credits
 <!--- Do not rename this section. AnkiDroid contains a deep link to the section
