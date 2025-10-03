@@ -374,119 +374,117 @@ class StudyOptionsFragment :
         updateValuesFromDeckJob?.cancel()
     }
 
-    private fun rebuildUi(result: DeckStudyData?) {
+    private fun rebuildUi(result: DeckStudyData) {
         view?.findViewById<View?>(R.id.progress_bar)?.visibility = View.GONE
-        if (result != null) {
-            // Don't do anything if the fragment is no longer attached to it's Activity or col has been closed
-            if (activity == null) {
-                Timber.e("StudyOptionsFragment.mRefreshFragmentListener :: can't refresh")
-                return
-            }
-            val studyOptionsView = view
-            // #5506 If we have no view, short circuit all UI logic
-            if (studyOptionsView == null) {
-                return
-            }
-
-            val col =
-                col
-                    ?: throw NullPointerException("StudyOptionsFragment:: Collection is null while rebuilding Ui")
-
-            // Reinitialize controls in case changed to filtered deck
-            initAllContentViews(studyOptionsView)
-            // Set the deck name
-            val deck = col.decks.current()
-            // Main deck name
-            val fullName = deck.getString("name")
-            val name = Decks.path(fullName)
-            val nameBuilder = StringBuilder()
-            if (name.isNotEmpty()) {
-                nameBuilder.append(name[0])
-            }
-            if (name.size > 1) {
-                nameBuilder.append("\n").append(name[1])
-            }
-            if (name.size > 3) {
-                nameBuilder.append("...")
-            }
-            if (name.size > 2) {
-                nameBuilder.append("\n").append(name[name.size - 1])
-            }
-            textDeckName.text = nameBuilder.toString()
-
-            // Switch between the empty view, the ordinary view, and the "congratulations" view
-            val isDynamic = deck.isFiltered
-            if (result.numberOfCardsInDeck == 0 && !isDynamic) {
-                currentContentView = CONTENT_EMPTY
-                deckInfoLayout.visibility = View.VISIBLE
-                buttonStart.visibility = View.GONE
-            } else if (result.newCardsToday + result.lrnCardsToday + result.revCardsToday == 0) {
-                currentContentView = CONTENT_CONGRATS
-                if (!isDynamic) {
-                    deckInfoLayout.visibility = View.GONE
-                    buttonStart.visibility = View.VISIBLE
-                    buttonStart.text = TR.actionsCustomStudy().toSentenceCase(this, R.string.sentence_custom_study)
-                } else {
-                    buttonStart.visibility = View.GONE
-                }
-            } else {
-                currentContentView = CONTENT_STUDY_OPTIONS
-                deckInfoLayout.visibility = View.VISIBLE
-                buttonStart.visibility = View.VISIBLE
-                buttonStart.setText(R.string.studyoptions_start)
-            }
-
-            // Set deck description
-            @Language("HTML")
-            val desc: String =
-                if (isDynamic) {
-                    resources.getString(R.string.dyn_deck_desc)
-                } else {
-                    val deck = col.decks.current()
-                    if (deck.descriptionAsMarkdown) {
-                        @Suppress("DEPRECATION") // renderMarkdown is fine here.
-                        col.renderMarkdown(deck.description, sanitize = true)
-                    } else {
-                        deck.description
-                    }
-                }
-            if (desc.isNotEmpty()) {
-                textDeckDescription.text = formatDescription(desc)
-                textDeckDescription.visibility = View.VISIBLE
-            } else {
-                textDeckDescription.visibility = View.GONE
-            }
-
-            // Set new/learn/review card counts
-            newCountText.text = result.newCardsToday.toString()
-            learningCountText.text = result.lrnCardsToday.toString()
-            reviewCountText.text = result.revCardsToday.toString()
-
-            // set bury numbers
-            buryInfoLabel.isVisible = result.buriedNew > 0 || result.buriedLearning > 0 || result.buriedReview > 0
-
-            fun TextView.updateBuryText(count: Int) {
-                this.isVisible = count > 0
-                this.text =
-                    when {
-                        count > 0 ->
-                            requireContext().resources.getQuantityString(
-                                R.plurals.studyoptions_buried_count,
-                                count,
-                                count,
-                            )
-                        // #18094 - potential race condition: view may be visible with a count of 0
-                        else -> ""
-                    }
-            }
-            newBuryText.updateBuryText(result.buriedNew)
-            learningBuryText.updateBuryText(result.buriedLearning)
-            reviewBuryText.updateBuryText(result.buriedReview)
-            totalNewCardsCount.text = result.totalNewCards.toString()
-            totalCardsCount.text = result.numberOfCardsInDeck.toString()
-            // Rebuild the options menu
-            activity?.invalidateMenu()
+        // Don't do anything if the fragment is no longer attached to it's Activity or col has been closed
+        if (activity == null) {
+            Timber.e("StudyOptionsFragment.mRefreshFragmentListener :: can't refresh")
+            return
         }
+        val studyOptionsView = view
+        // #5506 If we have no view, short circuit all UI logic
+        if (studyOptionsView == null) {
+            return
+        }
+
+        val col =
+            col
+                ?: throw NullPointerException("StudyOptionsFragment:: Collection is null while rebuilding Ui")
+
+        // Reinitialize controls in case changed to filtered deck
+        initAllContentViews(studyOptionsView)
+        // Set the deck name
+        val deck = col.decks.current()
+        // Main deck name
+        val fullName = deck.getString("name")
+        val name = Decks.path(fullName)
+        val nameBuilder = StringBuilder()
+        if (name.isNotEmpty()) {
+            nameBuilder.append(name[0])
+        }
+        if (name.size > 1) {
+            nameBuilder.append("\n").append(name[1])
+        }
+        if (name.size > 3) {
+            nameBuilder.append("...")
+        }
+        if (name.size > 2) {
+            nameBuilder.append("\n").append(name[name.size - 1])
+        }
+        textDeckName.text = nameBuilder.toString()
+
+        // Switch between the empty view, the ordinary view, and the "congratulations" view
+        val isDynamic = deck.isFiltered
+        if (result.numberOfCardsInDeck == 0 && !isDynamic) {
+            currentContentView = CONTENT_EMPTY
+            deckInfoLayout.visibility = View.VISIBLE
+            buttonStart.visibility = View.GONE
+        } else if (result.newCardsToday + result.lrnCardsToday + result.revCardsToday == 0) {
+            currentContentView = CONTENT_CONGRATS
+            if (!isDynamic) {
+                deckInfoLayout.visibility = View.GONE
+                buttonStart.visibility = View.VISIBLE
+                buttonStart.text = TR.actionsCustomStudy().toSentenceCase(this, R.string.sentence_custom_study)
+            } else {
+                buttonStart.visibility = View.GONE
+            }
+        } else {
+            currentContentView = CONTENT_STUDY_OPTIONS
+            deckInfoLayout.visibility = View.VISIBLE
+            buttonStart.visibility = View.VISIBLE
+            buttonStart.setText(R.string.studyoptions_start)
+        }
+
+        // Set deck description
+        @Language("HTML")
+        val desc: String =
+            if (isDynamic) {
+                resources.getString(R.string.dyn_deck_desc)
+            } else {
+                val deck = col.decks.current()
+                if (deck.descriptionAsMarkdown) {
+                    @Suppress("DEPRECATION") // renderMarkdown is fine here.
+                    col.renderMarkdown(deck.description, sanitize = true)
+                } else {
+                    deck.description
+                }
+            }
+        if (desc.isNotEmpty()) {
+            textDeckDescription.text = formatDescription(desc)
+            textDeckDescription.visibility = View.VISIBLE
+        } else {
+            textDeckDescription.visibility = View.GONE
+        }
+
+        // Set new/learn/review card counts
+        newCountText.text = result.newCardsToday.toString()
+        learningCountText.text = result.lrnCardsToday.toString()
+        reviewCountText.text = result.revCardsToday.toString()
+
+        // set bury numbers
+        buryInfoLabel.isVisible = result.buriedNew > 0 || result.buriedLearning > 0 || result.buriedReview > 0
+
+        fun TextView.updateBuryText(count: Int) {
+            this.isVisible = count > 0
+            this.text =
+                when {
+                    count > 0 ->
+                        requireContext().resources.getQuantityString(
+                            R.plurals.studyoptions_buried_count,
+                            count,
+                            count,
+                        )
+                    // #18094 - potential race condition: view may be visible with a count of 0
+                    else -> ""
+                }
+        }
+        newBuryText.updateBuryText(result.buriedNew)
+        learningBuryText.updateBuryText(result.buriedLearning)
+        reviewBuryText.updateBuryText(result.buriedReview)
+        totalNewCardsCount.text = result.totalNewCards.toString()
+        totalCardsCount.text = result.numberOfCardsInDeck.toString()
+        // Rebuild the options menu
+        activity?.invalidateMenu()
     }
 
     /**
