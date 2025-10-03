@@ -19,7 +19,6 @@ package com.ichi2.widget.deckpicker
 import android.appwidget.AppWidgetManager
 import android.content.BroadcastReceiver
 import android.content.Context
-import android.content.ContextWrapper
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
@@ -47,6 +46,7 @@ import com.ichi2.anki.showThemedToast
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.utils.ext.unregisterReceiverSilently
 import com.ichi2.widget.AppWidgetId.Companion.INVALID_APPWIDGET_ID
 import com.ichi2.widget.AppWidgetId.Companion.getAppWidgetId
 import com.ichi2.widget.AppWidgetId.Companion.updateWidget
@@ -468,26 +468,5 @@ class DeckPickerWidgetConfig :
          * Maximum number of decks allowed in the widget.
          */
         private const val MAX_DECKS_ALLOWED = 5
-    }
-}
-
-/**
- * Unregisters a broadcast receiver from the context silently.
- *
- * This extension function attempts to unregister a broadcast receiver from the context
- * without throwing an exception if the receiver is not registered.
- * It catches the `IllegalArgumentException` that is thrown when attempting to unregister
- * a receiver that is not registered, allowing the operation to fail gracefully without crashing.
- *
- * @param receiver The broadcast receiver to be unregistered.
- *
- * @see ContextWrapper.unregisterReceiver
- * @see IllegalArgumentException
- */
-fun ContextWrapper.unregisterReceiverSilently(receiver: BroadcastReceiver) {
-    try {
-        unregisterReceiver(receiver)
-    } catch (e: IllegalArgumentException) {
-        Timber.d(e, "unregisterReceiverSilently")
     }
 }
