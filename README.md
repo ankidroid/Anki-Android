@@ -46,7 +46,7 @@ Install
 
 <a href="https://f-droid.org/repository/browse/?fdid=com.ichi2.anki">
     <img alt="Get it on F-Droid" height="80"
-        src="docs/graphics/logos/f-droid-badge.png"></a>
+        src="docs/graphics/logos/fdroid.png"></a>
 
 <a href="http://apps.obtainium.imranr.dev/redirect.html?r=obtainium://add/https://github.com/ankidroid/Anki-Android">
     <img alt="Get it on Obtainium" height="80"
