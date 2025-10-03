@@ -71,7 +71,7 @@ class StudyOptionsActivity :
     }
 
     private fun loadStudyOptionsFragment() {
-        val currentFragment = StudyOptionsFragment.newInstance()
+        val currentFragment = StudyOptionsFragment()
         supportFragmentManager.commit {
             replace(R.id.studyoptions_frame, currentFragment)
         }

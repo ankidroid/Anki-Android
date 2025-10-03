@@ -2147,9 +2147,8 @@ open class DeckPicker :
     }
 
     private fun loadStudyOptionsFragment() {
-        val details = StudyOptionsFragment.newInstance()
         supportFragmentManager.commit {
-            replace(R.id.studyoptions_fragment, details)
+            replace(R.id.studyoptions_fragment, StudyOptionsFragment())
         }
     }
 
