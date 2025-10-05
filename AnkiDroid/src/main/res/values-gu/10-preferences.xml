@@ -235,6 +235,8 @@
     <string name="misc" maxLength="41">વિવિધ</string>
     <!-- Review reminders -->
     <string name="add_reminder" comment="Label for the add reminder button in the screen for adding and editing review reminders">Add reminder</string>
+    <string name="add_review_reminder" comment="Title of the screen for creating a new review reminder">Add review reminder</string>
+    <string name="edit_review_reminder" comment="Title of the screen for editing an existing review reminder">Edit review reminder</string>
     <!-- studyoptions -->
     <string name="studyoptions_limit_select_tags">ટૅગ્સ પસંદ કરો</string>
     <!-- Deck configurations -->

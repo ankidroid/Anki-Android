@@ -76,7 +76,7 @@
     <string name="card_browser_list_my_searches_new_name">Назва для пошукового запиту</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">Не можна зберегти пошуковий запит без назви</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">Така назва вже існує!</string>
-    <string name="card_browser_list_my_searches_successful_save">Search was saved</string>
+    <string name="card_browser_list_my_searches_successful_save">Пошук збережено</string>
     <string name="no_note_to_edit">Немає записів для редагування</string>
     <string name="card_browser_list_my_searches_remove_content">Видалити «%1$s»?</string>
     <string name="card_browser_change_display_order" maxLength="28">Сортувати за</string>
@@ -97,7 +97,7 @@
         <item>За кількістю забувань</item>
         <item>За назвою колоди</item>
     </string-array>
-    <string name="manage_browser_column">Manage column</string>
+    <string name="manage_browser_column">Налаштувати стовпець</string>
     <string name="no_columns_available">Немає доступних стовпців</string>
     <string name="card_browser_select_all" maxLength="28">Обрати все</string>
     <string name="card_browser_select_none" maxLength="28">Зняти виділення</string>
