@@ -82,7 +82,7 @@ class DeckSpinnerSelection(
         actionBar.setDisplayShowTitleEnabled(false)
 
         // Add drop-down menu to select deck to action bar.
-        computeDropDownDecks(col, includeFiltered = showFilteredDecks).toMutableList().let {
+        computeDropDownDecks(col, skipEmptyDefault = !alwaysShowDefault, includeFiltered = showFilteredDecks).toMutableList().let {
             dropDownDecks = it
             deckDropDownAdapter = DeckDropDownAdapter(context, subtitleProvider, it)
             spinner.adapter = deckDropDownAdapter
@@ -93,7 +93,7 @@ class DeckSpinnerSelection(
     @MainThread // spinner.adapter
     suspend fun initializeStatsBarDeckSpinner() {
         withCol {
-            decks.allNamesAndIds(includeFiltered = showFilteredDecks, skipEmptyDefault = true)
+            decks.allNamesAndIds(includeFiltered = showFilteredDecks, skipEmptyDefault = !alwaysShowDefault)
         }.toMutableList().let {
             dropDownDecks = it
             // custom implementation as DeckDropDownAdapter automatically includes a ALL_DECKS entry +
@@ -124,7 +124,7 @@ class DeckSpinnerSelection(
         col: Collection,
         @LayoutRes layoutResource: Int = R.layout.multiline_spinner_item,
     ) {
-        computeDropDownDecks(col, includeFiltered = false).toMutableList().let {
+        computeDropDownDecks(col, skipEmptyDefault = !alwaysShowDefault, includeFiltered = false).toMutableList().let {
             dropDownDecks = it
             val deckNames = it.map { it.name }
             val noteDeckAdapter: ArrayAdapter<String?> =
@@ -156,7 +156,7 @@ class DeckSpinnerSelection(
     @MainThread // spinner.adapter
     suspend fun initializeScheduleRemindersDeckSpinner() {
         withCol {
-            decks.allNamesAndIds(includeFiltered = showFilteredDecks, skipEmptyDefault = true)
+            decks.allNamesAndIds(includeFiltered = showFilteredDecks, skipEmptyDefault = !alwaysShowDefault)
         }.toMutableList().let { decks ->
             dropDownDecks = decks
             val deckNames = decks.map { it.name }.toMutableList()
@@ -188,13 +188,15 @@ class DeckSpinnerSelection(
     }
 
     /** @return All decks.  */
-    suspend fun computeDropDownDecks(includeFiltered: Boolean): List<DeckNameId> = withCol { computeDropDownDecks(this, includeFiltered) }
+    suspend fun computeDropDownDecks(includeFiltered: Boolean): List<DeckNameId> =
+        withCol { computeDropDownDecks(this, skipEmptyDefault = !alwaysShowDefault, includeFiltered) }
 
     /** @return All decks. */
     private fun computeDropDownDecks(
         col: Collection,
+        skipEmptyDefault: Boolean,
         includeFiltered: Boolean,
-    ): List<DeckNameId> = col.decks.allNamesAndIds(includeFiltered = includeFiltered)
+    ): List<DeckNameId> = col.decks.allNamesAndIds(skipEmptyDefault = skipEmptyDefault, includeFiltered = includeFiltered)
 
     private fun setSpinnerListener() {
         spinner.setOnTouchListener { _: View?, motionEvent: MotionEvent ->
@@ -291,7 +293,11 @@ class DeckSpinnerSelection(
      * Displays a [DeckSelectionDialog]
      */
     suspend fun displayDeckSelectionDialog() {
-        val decks: MutableList<SelectableDeck> = fromCollection(includeFiltered = showFilteredDecks).toMutableList()
+        val decks: MutableList<SelectableDeck> =
+            fromCollection(
+                skipEmptyDefault = !alwaysShowDefault,
+                includeFiltered = showFilteredDecks,
+            ).toMutableList()
         if (showAllDecks) {
             decks.add(SelectableDeck.AllDecks)
         }
