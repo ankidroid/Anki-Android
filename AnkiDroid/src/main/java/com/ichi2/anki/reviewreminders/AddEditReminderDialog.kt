@@ -188,7 +188,7 @@ class AddEditReminderDialog : DialogFragment() {
                 context = (activity as AppCompatActivity),
                 spinner = deckSpinner,
                 showAllDecks = true,
-                alwaysShowDefault = true,
+                alwaysShowDefault = false,
                 showFilteredDecks = true,
             )
         launchCatchingTask {
