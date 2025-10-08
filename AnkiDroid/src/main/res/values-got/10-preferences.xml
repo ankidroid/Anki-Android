@@ -236,6 +236,8 @@
     <string name="misc" maxLength="41">𐌰𐌽𐌸𐌰𐍂</string>
     <!-- Review reminders -->
     <string name="add_reminder" comment="Label for the add reminder button in the screen for adding and editing review reminders">𐌲𐌰𐌼𐌿𐌽𐌳 𐌱𐌹𐌰𐌿𐌺𐌰𐌽</string>
+    <string name="add_review_reminder" comment="Title of the screen for creating a new review reminder">Add review reminder</string>
+    <string name="edit_review_reminder" comment="Title of the screen for editing an existing review reminder">Edit review reminder</string>
     <!-- studyoptions -->
     <string name="studyoptions_limit_select_tags">𐍃𐍉𐌺𐌽𐌹𐍅𐌰𐌿𐍂𐌳𐌰 𐍅𐌰𐌻𐌾𐌰𐌽</string>
     <!-- Deck configurations -->
