@@ -132,7 +132,6 @@ class WhiteboardView : View {
             }
             MotionEvent.ACTION_MOVE -> {
                 hasMoved = true
-                _isDrawing.value = true
                 currentPath.lineTo(touchX, touchY)
                 if (isPathEraser) {
                     onEraseGestureMove?.invoke(touchX, touchY)

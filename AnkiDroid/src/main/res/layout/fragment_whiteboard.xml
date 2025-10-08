@@ -122,19 +122,4 @@
         </LinearLayout>
 
     </com.google.android.material.card.MaterialCardView>
-
-    <View
-        android:id="@+id/touch_blocker_view"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@android:color/transparent"
-        android:clickable="true"
-        android:focusable="true"
-        android:elevation="10dp"
-        android:visibility="gone"
-        app:layout_constraintTop_toTopOf="@id/controls_container"
-        app:layout_constraintBottom_toBottomOf="@id/controls_container"
-        app:layout_constraintStart_toStartOf="@id/controls_container"
-        app:layout_constraintEnd_toEndOf="@id/controls_container" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

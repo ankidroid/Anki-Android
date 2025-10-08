@@ -41,6 +41,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.button.MaterialButtonToggleGroup
+import com.google.android.material.card.MaterialCardView
 import com.google.android.material.slider.Slider
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
@@ -81,24 +82,72 @@ class WhiteboardFragment :
         val whiteboardView = view.findViewById<WhiteboardView>(R.id.whiteboard_view)
         brushToolbarContainerHorizontal = view.findViewById(R.id.brush_toolbar_container_horizontal)
         brushToolbarContainerVertical = view.findViewById(R.id.brush_toolbar_container_vertical)
-        val touchBlockerView = view.findViewById<View>(R.id.touch_blocker_view)
-
-        whiteboardView.isDrawing
-            .onEach { isCurrentlyDrawing ->
-                // When drawing starts, show the blocker. When it stops, hide it.
-                touchBlockerView.visibility = if (isCurrentlyDrawing) View.VISIBLE else View.GONE
-            }.launchIn(lifecycleScope)
+        val toolbarContainer = view.findViewById<MaterialCardView>(R.id.controls_container)
 
         val isNightMode = Themes.systemIsInNightMode(requireContext())
         viewModel.loadState(isNightMode)
 
         setupUI(view)
         observeViewModel(whiteboardView)
+        setupToolbarAnimation(whiteboardView, toolbarContainer)
 
         whiteboardView.onNewPath = viewModel::addPath
         whiteboardView.onEraseGestureStart = viewModel::startPathEraseGesture
         whiteboardView.onEraseGestureMove = viewModel::erasePathsAtPoint
         whiteboardView.onEraseGestureEnd = viewModel::endPathEraseGesture
+    }
+
+    private fun setupToolbarAnimation(
+        whiteboardView: WhiteboardView,
+        toolbarContainer: View,
+    ) {
+        combine(
+            whiteboardView.isDrawing,
+            viewModel.toolbarAlignment,
+        ) { isCurrentlyDrawing, alignment ->
+            isCurrentlyDrawing to alignment
+        }.onEach { (isCurrentlyDrawing, alignment) ->
+            val animator = toolbarContainer.animate().setDuration(250)
+
+            animator.withStartAction {
+                if (!isCurrentlyDrawing) {
+                    toolbarContainer.translationX = 0f
+                    toolbarContainer.translationY = 0f
+                    toolbarContainer.visibility = View.VISIBLE
+                }
+            }
+
+            animator.withEndAction {
+                if (isCurrentlyDrawing) {
+                    toolbarContainer.visibility = View.GONE
+                }
+            }
+
+            when (alignment) {
+                ToolbarAlignment.BOTTOM -> {
+                    val distance =
+                        toolbarContainer.height.toFloat() +
+                            ((toolbarContainer.layoutParams as? ViewGroup.MarginLayoutParams)?.bottomMargin?.toFloat() ?: 0f)
+                    val targetY = if (isCurrentlyDrawing) distance else 0f
+                    animator.translationY(targetY)
+                }
+                ToolbarAlignment.LEFT -> {
+                    val distance =
+                        -toolbarContainer.width.toFloat() -
+                            ((toolbarContainer.layoutParams as? ViewGroup.MarginLayoutParams)?.leftMargin?.toFloat() ?: 0f)
+                    val targetX = if (isCurrentlyDrawing) distance else 0f
+                    animator.translationX(targetX)
+                }
+                ToolbarAlignment.RIGHT -> {
+                    val distance =
+                        toolbarContainer.width.toFloat() +
+                            ((toolbarContainer.layoutParams as? ViewGroup.MarginLayoutParams)?.rightMargin?.toFloat() ?: 0f)
+                    val targetX = if (isCurrentlyDrawing) distance else 0f
+                    animator.translationX(targetX)
+                }
+            }
+            animator.start()
+        }.launchIn(lifecycleScope)
     }
 
     private fun setupUI(view: View) {
