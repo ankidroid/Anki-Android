@@ -151,9 +151,6 @@ class ReviewerFragment :
     override fun onStart() {
         super.onStart()
         if (!requireActivity().isChangingConfigurations) {
-            if (viewModel.answerTimerStatusFlow.value is AnswerTimerStatus.Running) {
-                timer?.resume()
-            }
             shakeDetector?.start(sensorManager, SensorManager.SENSOR_DELAY_UI)
         }
     }
@@ -162,7 +159,6 @@ class ReviewerFragment :
         super.onStop()
         if (!requireActivity().isChangingConfigurations) {
             viewModel.stopAutoAdvance()
-            timer?.stop()
             shakeDetector?.stop()
         }
     }
