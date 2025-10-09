@@ -72,12 +72,17 @@ sealed class SelectableDeck : Parcelable {
 
     companion object {
         /**
+         * @param skipEmptyDefault If true, will not include the default deck if it is empty;
+         * if false, will always include the default deck
          * @param includeFiltered Whether to include filtered decks in the output
          * @return all [SelectableDecks][SelectableDeck] in the collection satisfying the filter
          */
-        suspend fun fromCollection(includeFiltered: Boolean): List<Deck> =
+        suspend fun fromCollection(
+            skipEmptyDefault: Boolean = false,
+            includeFiltered: Boolean = true,
+        ): List<Deck> =
             CollectionManager
-                .withCol { decks.allNamesAndIds(includeFiltered = includeFiltered) }
+                .withCol { decks.allNamesAndIds(skipEmptyDefault = skipEmptyDefault, includeFiltered = includeFiltered) }
                 .map { nameAndId -> Deck(nameAndId) }
     }
 }
