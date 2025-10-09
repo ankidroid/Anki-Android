@@ -116,6 +116,7 @@ import com.ichi2.anki.dialogs.TtsVoicesDialogFragment
 import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
+import com.ichi2.anki.jsapi.JsApi
 import com.ichi2.anki.libanki.Card
 import com.ichi2.anki.libanki.CardId
 import com.ichi2.anki.libanki.Collection
@@ -2721,9 +2722,9 @@ abstract class AbstractFlashcardViewer :
         uri: String,
         bytes: ByteArray,
     ): ByteArray =
-        if (uri.startsWith(AnkiServer.ANKIDROID_JS_PREFIX)) {
+        if (uri.startsWith(JsApi.REQUEST_PREFIX)) {
             jsApi.handleJsApiRequest(
-                uri.substring(AnkiServer.ANKIDROID_JS_PREFIX.length),
+                uri.substring(JsApi.REQUEST_PREFIX.length),
                 bytes,
                 returnDefaultValues = true,
             )
