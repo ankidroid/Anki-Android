@@ -78,6 +78,11 @@ abstract class CardViewerFragment(
         }
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        webView.destroy() // stops <audio> playbacks
+    }
+
     protected open fun onLoadInitialHtml(): String =
         stdHtml(
             context = requireContext(),
