@@ -17,12 +17,12 @@
 
 package com.ichi2.anki
 
-import android.content.Intent
 import android.widget.Button
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.google.android.material.textfield.TextInputEditText
+import com.ichi2.anki.account.LoginFragment
 import com.ichi2.anki.settings.Prefs
-import com.ichi2.ui.TextInputEditField
+import com.ichi2.testutils.launchFragmentInContainer
 import junit.framework.TestCase.assertFalse
 import org.junit.Before
 import org.junit.Test
@@ -39,48 +39,43 @@ class MyAccountTest : RobolectricTest() {
 
     @Test
     fun testLoginEmailPasswordProvided() {
-        val myAccount =
-            super.startActivityNormallyOpenCollectionWithIntent(
-                MyAccount::class.java,
-                Intent(),
-            )
+        val scenario = launchFragmentInContainer<LoginFragment>()
 
-        val testPassword = "randomStrongPassword"
-        val testEmail = "random.email@example.com"
+        scenario.onFragment { fragment ->
+            val testPassword = "randomStrongPassword"
+            val testEmail = "random.email@example.com"
 
-        myAccount.findViewById<TextInputEditText>(R.id.username).setText(testEmail)
-        myAccount.findViewById<TextInputEditField>(R.id.password).setText(testPassword)
-        val loginButton = myAccount.findViewById<Button>(R.id.login_button)
-        assertTrue(loginButton.isEnabled)
+            fragment.view?.findViewById<TextInputEditText>(R.id.username)?.setText(testEmail)
+            fragment.view?.findViewById<TextInputEditText>(R.id.password)?.setText(testPassword)
+
+            val loginButton = fragment.view?.findViewById<Button>(R.id.login_button)
+            assertTrue(loginButton?.isEnabled == true)
+        }
     }
 
     @Test
     fun testLoginFailsNoEmailProvided() {
-        val myAccount =
-            super.startActivityNormallyOpenCollectionWithIntent(
-                MyAccount::class.java,
-                Intent(),
-            )
+        val scenario = launchFragmentInContainer<LoginFragment>()
 
-        val testPassword = "randomStrongPassword"
+        scenario.onFragment { fragment ->
+            val testPassword = "randomStrongPassword"
 
-        myAccount.findViewById<TextInputEditField>(R.id.password).setText(testPassword)
-        val loginButton = myAccount.findViewById<Button>(R.id.login_button)
-        assertFalse(loginButton.isEnabled)
+            fragment.view?.findViewById<TextInputEditText>(R.id.password)?.setText(testPassword)
+            val loginButton = fragment.view?.findViewById<Button>(R.id.login_button)
+            assertFalse(loginButton?.isEnabled == true)
+        }
     }
 
     @Test
     fun testLoginFailsNoPasswordProvided() {
-        val myAccount =
-            super.startActivityNormallyOpenCollectionWithIntent(
-                MyAccount::class.java,
-                Intent(),
-            )
+        val scenario = launchFragmentInContainer<LoginFragment>()
 
-        val testEmail = "random.email@example.com"
+        scenario.onFragment { fragment ->
+            val testEmail = "random.email@example.com"
 
-        myAccount.findViewById<TextInputEditText>(R.id.username).setText(testEmail)
-        val loginButton = myAccount.findViewById<Button>(R.id.login_button)
-        assertFalse(loginButton.isEnabled)
+            fragment.view?.findViewById<TextInputEditText>(R.id.username)?.setText(testEmail)
+            val loginButton = fragment.view?.findViewById<Button>(R.id.login_button)
+            assertFalse(loginButton?.isEnabled == true)
+        }
     }
 }
