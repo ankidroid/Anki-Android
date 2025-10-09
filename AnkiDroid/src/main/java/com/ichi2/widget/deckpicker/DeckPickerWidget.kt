@@ -302,9 +302,27 @@ class DeckPickerWidget : AnalyticsWidgetProvider() {
             // It is triggered by the setRecurringAlarm method to refresh the widget's data periodically.
             ACTION_UPDATE_WIDGET -> {
                 val appWidgetId = intent.getAppWidgetId()
-                if (appWidgetId != INVALID_APPWIDGET_ID) {
-                    Timber.d("Received ACTION_UPDATE_WIDGET for widget ID: $appWidgetId")
+                if (appWidgetId == INVALID_APPWIDGET_ID) {
+                    return
                 }
+
+                val selectedDeckIds = widgetPreferences.getSelectedDeckIdsFromPreferences(appWidgetId)
+                if (selectedDeckIds.isEmpty()) {
+                    /**
+                     * Rationale: see [performUpdate]
+                     */
+                    Timber.d(
+                        "Ignoring ACTION_UPDATE_WIDGET for widget ID: $appWidgetId because selectedDeckIds is empty",
+                    )
+                    return
+                }
+
+                Timber.d(
+                    "Updating widget with ID: $appWidgetId on ACTION_UPDATE_WIDGET. selectedDeckIds: ${
+                        selectedDeckIds.joinToString(", ")
+                    }",
+                )
+                updateWidget(context, AppWidgetManager.getInstance(context), appWidgetId, selectedDeckIds)
             }
             AppWidgetManager.ACTION_APPWIDGET_DELETED -> {
                 Timber.d("ACTION_APPWIDGET_DELETED received")
