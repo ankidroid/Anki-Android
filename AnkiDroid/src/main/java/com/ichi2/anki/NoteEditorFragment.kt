@@ -1789,6 +1789,9 @@ class NoteEditorFragment :
         editNoteTypeMode: Boolean,
     ) {
         val editLines = fieldState.loadFieldEditLines(type)
+        // showing the fields is not needed for image occlusion notetypes as they are handled by the
+        // backend page
+        fieldsLayoutContainer?.isVisible = !currentNotetypeIsImageOcclusion()
         fieldsLayoutContainer!!.removeAllViews()
         customViewIds.clear()
         imageOcclusionButtonsContainer?.isVisible = currentNotetypeIsImageOcclusion()
@@ -2644,6 +2647,9 @@ class NoteEditorFragment :
                     .trim()
                     .replace(" ", ", "),
             )
+        // showing the tags is not needed for image occlusion notetypes as they are handled by the
+        // backend page
+        tagsButton?.isVisible = !currentNotetypeIsImageOcclusion()
     }
 
     /** Update the list of card templates for current note type  */
