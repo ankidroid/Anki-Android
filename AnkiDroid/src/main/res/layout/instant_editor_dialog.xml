@@ -118,8 +118,9 @@
 
                 <com.google.android.material.chip.ChipGroup
                     app:chipSpacingVertical="0dp"
-                    app:chipSpacingHorizontal="4dp"
+                    app:chipSpacingHorizontal="6dp"
                     android:id="@+id/cloze_text_chip_group"
+                    android:padding="4dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
             </LinearLayout>
