@@ -27,6 +27,7 @@ import com.google.android.material.appbar.MaterialToolbar
 import com.ichi2.anki.BuildConfig
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
+import com.ichi2.anki.preferences.profiles.SwitchProfilesFragment
 import com.ichi2.anki.preferences.reviewer.ReviewerMenuSettingsFragment
 import com.ichi2.anki.reviewreminders.ReviewReminderScope
 import com.ichi2.anki.reviewreminders.ScheduleReminders
@@ -68,6 +69,7 @@ class HeaderFragment : SettingsFragment() {
 
         requirePreference<HeaderPreference>(R.string.pref_review_reminders_screen_key).isVisible = Prefs.newReviewRemindersEnabled
         requirePreference<HeaderPreference>(R.string.pref_notifications_screen_key).isVisible = !Prefs.newReviewRemindersEnabled
+        requirePreference<HeaderPreference>(R.string.pref_switch_profile_screen_key).isVisible = Prefs.switchProfileEnabled
 
         configureSearchBar(
             requireActivity() as AppCompatActivity,
@@ -253,6 +255,7 @@ class HeaderFragment : SettingsFragment() {
                 is ReviewerOptionsFragment, is ReviewerMenuSettingsFragment -> R.string.new_reviewer_options_key
                 is DevOptionsFragment -> R.string.pref_dev_options_screen_key
                 is AboutFragment -> R.string.about_screen_key
+                is SwitchProfilesFragment -> R.string.pref_switch_profile_screen_key
                 else -> null
             }
     }
