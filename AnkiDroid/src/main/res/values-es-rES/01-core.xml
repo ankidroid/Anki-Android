@@ -202,7 +202,7 @@
     <string name="storage_access_summary">Guarda tu colección en un lugar seguro que no se borrará si se desinstala la aplicación</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after. See [android.permission.MANAGE_EXTERNAL_STORAGE] on https://developer.android.com/training/data-storage/manage-all-files for context.">Acceso a todos los archivos</string>
     <string name="image_occlusion">Imagen oculta</string>
-    <string name="microphone" comment="Title of the microphone permission in the permissions explanation screen.">Microphone</string>
+    <string name="microphone" comment="Title of the microphone permission in the permissions explanation screen.">Micrófono</string>
     <string name="microphone_permission_explanation" comment="Description explaining why AnkiDroid needs the microphone permission, shown on the permissions explanation screen.">Allows you to add sounds to cards and enables voice playback while reviewing</string>
     <string name="notifications_permission_explanation" comment="Description explaining why AnkiDroid needs the notification permission.">Enables background media syncing and allows you to create review reminders</string>
     <string name="heading_required_permissions" comment="Heading for the section of required permissions that the app needs to function, shown in the permissions explanation screen.">Required</string>
