@@ -190,6 +190,11 @@ abstract class InstrumentedTest {
         return n
     }
 
+    internal fun addBasicWithTypingNote(
+        front: String = "Front",
+        back: String = "Back",
+    ): Note = addNoteUsingNoteTypeName("Basic (type in the answer)", front, back)
+
     @DuplicatedCode("This is copied from RobolectricTest. This will be refactored into a shared library later")
     fun addClozeNote(
         text: String,

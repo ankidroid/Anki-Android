@@ -78,6 +78,7 @@ import com.ichi2.anki.preferences.reviewer.ReviewerMenuView
 import com.ichi2.anki.preferences.reviewer.ViewerAction
 import com.ichi2.anki.previewer.CardViewerActivity
 import com.ichi2.anki.previewer.CardViewerFragment
+import com.ichi2.anki.previewer.TypeAnswer
 import com.ichi2.anki.previewer.stdHtml
 import com.ichi2.anki.reviewer.BindingMap
 import com.ichi2.anki.reviewer.ReviewerBinding
@@ -308,18 +309,6 @@ class ReviewerFragment :
                 }
                 addTextChangedListener { editable ->
                     viewModel.typedAnswer = editable?.toString() ?: ""
-
-                    // Check if ',' needs to be replaced with '.' or vice versa
-                    val inputTypeNumber =
-                        InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL or InputType.TYPE_NUMBER_FLAG_SIGNED
-                    val expectedAnswer = viewModel.typeAnswerFlow.value?.expectedAnswer
-
-                    if (inputType == inputTypeNumber) {
-                        when {
-                            expectedAnswer?.contains(',') == true -> viewModel.typedAnswer = viewModel.typedAnswer.replace('.', ',')
-                            expectedAnswer?.contains('.') == true -> viewModel.typedAnswer = viewModel.typedAnswer.replace(',', '.')
-                        }
-                    }
                 }
             }
 
@@ -340,13 +329,7 @@ class ReviewerFragment :
 
                     typeAnswerContainer.isVisible = true
                     typeAnswerEditText.apply {
-                        // bring up numeric keyboard, if answer is a number
-                        inputType =
-                            if (stripHtml(typeInAnswer.expectedAnswer).matches(Regex("^-?\\d+([.,]\\d*)?$"))) {
-                                InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL or InputType.TYPE_NUMBER_FLAG_SIGNED
-                            } else {
-                                InputType.TYPE_CLASS_TEXT
-                            }
+                        inputType = chooseInputType(typeInAnswer)
 
                         if (imeHintLocales != typeInAnswer.imeHintLocales) {
                             imeHintLocales = typeInAnswer.imeHintLocales
@@ -363,6 +346,14 @@ class ReviewerFragment :
             typeAnswerEditText.text = null
         }
     }
+
+    /** Chooses the input type based on whether the expected answer is a number or text */
+    fun chooseInputType(typeAnswer: TypeAnswer): Int =
+        if (stripHtml(typeAnswer.expectedAnswer).matches(Regex("^-?\\d+([.,]\\d*)?$"))) {
+            InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL or InputType.TYPE_NUMBER_FLAG_SIGNED
+        } else {
+            InputType.TYPE_CLASS_TEXT
+        }
 
     /** Removes HTML tags from a string */
     fun stripHtml(html: String): String = HtmlCompat.fromHtml(html, HtmlCompat.FROM_HTML_MODE_LEGACY).toString()

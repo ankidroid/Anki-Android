@@ -13,6 +13,7 @@
  */
 package com.ichi2.anki
 
+import android.text.InputType
 import androidx.core.content.edit
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
@@ -21,6 +22,7 @@ import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.google.android.material.textfield.TextInputEditText
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.tests.InstrumentedTest
@@ -118,6 +120,53 @@ class ReviewerFragmentTest : InstrumentedTest() {
         ensureAnswerButtonsAreDisplayed()
     }
 
+    @Test
+    @Flaky(os = OS.ALL, "Fails on CI with timing issues frequently")
+    fun testSelectedKeyboardType() {
+        setNewReviewer()
+        closeGetStartedScreenIfExists()
+        closeBackupCollectionDialogIfExists()
+
+        val inputTypeNumber = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL or InputType.TYPE_NUMBER_FLAG_SIGNED
+        val inputTypeText = InputType.TYPE_CLASS_TEXT
+
+        val testValues: List<Pair<String, Int>> =
+            listOf(
+                "123" to inputTypeNumber,
+                "-123.45" to inputTypeNumber,
+                "123.45" to inputTypeNumber,
+                "123,45" to inputTypeNumber,
+                "<b>123</b>" to inputTypeNumber,
+                "AnkiDroid" to inputTypeText,
+                "123abc" to inputTypeText,
+                "" to inputTypeText,
+            )
+
+        var i = 0
+        for ((value, expectedInputType) in testValues) {
+            if (i > 0)onView(withId(R.id.back_button)).perform(click())
+            i += 1
+            val note = addBasicWithTypingNote(value, value)
+            val card = note.firstCard(col)
+            card.did = col.decks.id("Default$i")
+            card.update { this }
+            checkInputType(expectedInputType, i)
+        }
+    }
+
+    fun checkInputType(
+        expectedInputType: Int,
+        i: Int,
+    ) {
+        reviewDeckWithName("Default$i")
+        ensureKeyboardIsDisplayed()
+        onView(withId(R.id.type_answer_edit_text)).check { view, _ ->
+            val editText = view as TextInputEditText
+            val inputType = editText.inputType
+            assertThat(inputType, equalTo(expectedInputType))
+        }
+    }
+
     private fun clickShowAnswerAndAnswerGood() {
         clickShowAnswer()
         ensureAnswerButtonsAreDisplayed()
@@ -126,6 +175,14 @@ class ReviewerFragmentTest : InstrumentedTest() {
 
     private fun clickShowAnswer() {
         onView(withId(R.id.show_answer)).perform(click())
+    }
+
+    private fun ensureKeyboardIsDisplayed() {
+        onView(withId(R.id.type_answer_edit_text)).checkWithTimeout(
+            matches(isDisplayed()),
+            100,
+            TimeUnit.SECONDS.toMillis(30),
+        )
     }
 
     private fun ensureAnswerButtonsAreDisplayed() {
