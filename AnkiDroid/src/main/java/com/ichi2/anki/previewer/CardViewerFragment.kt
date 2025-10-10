@@ -78,6 +78,22 @@ abstract class CardViewerFragment(
         }
     }
 
+    override fun onPause() {
+        super.onPause()
+        webView.onPause()
+        webView.pauseTimers()
+        webView.evaluateJavascript(
+            "(function(){document.querySelectorAll('audio,video').forEach(function(m){try{m.pause()}catch(e){}})})();",
+            null
+        )
+    }
+
+    override fun onResume() {
+        super.onResume()
+        webView.onResume()
+        webView.resumeTimers()
+    }
+
     protected open fun onLoadInitialHtml(): String =
         stdHtml(
             context = requireContext(),
