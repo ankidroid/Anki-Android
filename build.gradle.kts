@@ -68,10 +68,20 @@ subprojects {
                     logTestResultsToGitHubActions(desc, result)
                 }))
 
-                it.maxParallelForks = gradleTestMaxParallelForks
+                // Avoid concurrent modification of Dispatchers.Main across parallel tests
+                // while we migrate tests to a unified Main dispatcher rule. Running sequentially
+                // removes flakes like "Dispatchers.Main is used concurrently with setting it".
+                it.maxParallelForks = 1
                 it.forkEvery = 40
-                it.systemProperties["junit.jupiter.execution.parallel.enabled"] = true
-                it.systemProperties["junit.jupiter.execution.parallel.mode.default"] = "concurrent"
+                // Disable JUnit Jupiter parallelism within a single JVM to prevent concurrent usage
+                // of test Main dispatcher. Keep fork count at 1 for determinism.
+                it.systemProperties["junit.jupiter.execution.parallel.enabled"] = false
+                it.systemProperties["junit.jupiter.execution.parallel.mode.default"] = "same_thread"
+
+                // Stabilize locale/timezone dependent tests (e.g., Turkish i/I case rules, date formatting)
+                it.systemProperties["user.language"] = "en"
+                it.systemProperties["user.region"] = "US"
+                it.systemProperties["user.timezone"] = "UTC"
             }
 
             val androidComponentsExtension =
