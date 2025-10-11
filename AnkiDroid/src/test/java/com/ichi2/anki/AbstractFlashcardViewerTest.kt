@@ -268,7 +268,9 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
             assertThat("A note type with a language hint (japanese) should use it", viewer.hintLocale, equalTo("ja"))
 
             viewer.executeCommand(ViewerCommand.FLIP_OR_ANSWER_EASE4)
+            advanceRobolectricLooper()
             viewer.executeCommand(ViewerCommand.FLIP_OR_ANSWER_EASE4)
+            advanceRobolectricLooper()
 
             assertThat("A default note type should have no preference", viewer.hintLocale, nullValue())
         }
@@ -295,11 +297,21 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
             viewer.lifecycle.addObserver(viewer.automaticAnswer)
             viewer.automaticAnswer.enable()
             viewer.executeCommand(ViewerCommand.SHOW_ANSWER)
+            viewer.onMediaGroupCompleted() // Explicitly trigger media completion
+            repeat(5) { advanceRobolectricLooper() }
+            var waited = 0
+            while (!viewer.hasAutomaticAnswerQueued() && waited < 200) {
+                Thread.sleep(10)
+                advanceRobolectricLooper()
+                waited += 10
+            }
             assertThat("messages after flipping card", viewer.hasAutomaticAnswerQueued(), equalTo(true))
             controller.pause()
+            advanceRobolectricLooper()
             assertThat("disabled after pause", viewer.automaticAnswer.isDisabled, equalTo(true))
             assertThat("no auto answer after pause", viewer.hasAutomaticAnswerQueued(), equalTo(false))
             viewer.onRenderProcessGoneDelegate.onRenderProcessGone(viewer.webView!!, mock(RenderProcessGoneDetail::class.java))
+            advanceRobolectricLooper()
             assertThat("no auto answer after onRenderProcessGone when paused", viewer.hasAutomaticAnswerQueued(), equalTo(false))
         }
 

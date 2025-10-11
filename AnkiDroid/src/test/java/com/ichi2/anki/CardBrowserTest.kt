@@ -1054,6 +1054,7 @@ class CardBrowserTest : RobolectricTest() {
 
             // WHEN: CardBrowser is created
             val cardBrowser: CardBrowser = getBrowserWithNotes(7)
+            advanceRobolectricLooper()
 
             // THEN: The display column selections should match the shared preferences values
             assertThat(cardBrowser.columnHeadings[0], equalTo("Question"))
@@ -1384,13 +1385,13 @@ class CardBrowserTest : RobolectricTest() {
         val note1 = createFindReplaceTestNote("B", "pink", "chicken")
         withBrowser {
             viewModel.selectRowAtPosition(1)
+            advanceRobolectricLooper()
             createFindReplaceRequest("BField1", "k", "X")
+            advanceRobolectricLooper()
             val colNote0 = withCol { getNote(note0.id) }
-            // didn't modify other unselected notes
             assertEquals("kart", colNote0.fields[0])
             assertEquals("kilogram", colNote0.fields[1])
             val colNote1 = withCol { getNote(note1.id) }
-            // only modified the specified field, not other fields as well
             assertEquals("pink", colNote1.fields[0])
             assertEquals("chicXen", colNote1.fields[1])
             onView(withText(TR.browsingNotesUpdated(1))).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)))
@@ -1404,14 +1405,14 @@ class CardBrowserTest : RobolectricTest() {
         val note1 = createFindReplaceTestNote("B", "pink", "chicken")
         withBrowser {
             viewModel.selectRowAtPosition(0)
+            advanceRobolectricLooper()
             createFindReplaceRequest("AField1", "\\d", "X", regex = true)
+            advanceRobolectricLooper()
             val colNote0 = withCol { getNote(note0.id) }
             val colNote1 = withCol { getNote(note1.id) }
-            // didn't modify other unselected notes or unselected fields
             assertEquals("kart", colNote0.fields[0])
             assertEquals("pink", colNote1.fields[0])
             assertEquals("chicken", colNote1.fields[1])
-            // modified the specified field
             assertEquals("kiXlogram", colNote0.fields[1])
             onView(withText(TR.browsingNotesUpdated(1))).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)))
         }
@@ -1426,18 +1427,18 @@ class CardBrowserTest : RobolectricTest() {
         val note3 = createFindReplaceTestNote("C", "klean", "kip")
         withBrowser {
             viewModel.selectRowAtPosition(1)
+            advanceRobolectricLooper()
             createFindReplaceRequest("BField1", "k", "X", onlyInSelectedNotes = false)
+            advanceRobolectricLooper()
             val colNote0 = withCol { getNote(note0.id) }
             val colNote1 = withCol { getNote(note1.id) }
             val colNote2 = withCol { getNote(note2.id) }
             val colNote3 = withCol { getNote(note3.id) }
-            // didn't modify other unselected fields
             assertEquals("kart", colNote0.fields[0])
-            assertEquals("kilogram", colNote0.fields[1]) // other field name
+            assertEquals("kilogram", colNote0.fields[1])
             assertEquals("pink", colNote1.fields[0])
             assertEquals("kinetik", colNote2.fields[0])
             assertEquals("klean", colNote3.fields[0])
-            // all modified
             assertEquals("chicXen", colNote1.fields[1])
             assertEquals("Xotlin", colNote2.fields[1])
             assertEquals("Xip", colNote3.fields[1])
@@ -1452,16 +1453,15 @@ class CardBrowserTest : RobolectricTest() {
         val note1 = createFindReplaceTestNote("B", "pink", "chicken")
         withBrowser {
             viewModel.selectRowAtPosition(1)
+            advanceRobolectricLooper()
             createFindReplaceRequest(ALL_FIELDS_AS_FIELD, "k", "X")
+            advanceRobolectricLooper()
             val colNote0 = withCol { getNote(note0.id) }
-            // didn't modify other unselected notes
             assertEquals("kart", colNote0.fields[0])
             assertEquals("kilogram", colNote0.fields[1])
             val colNote1 = withCol { getNote(note1.id) }
-            // only modified the specified field, not other fields as well
             assertEquals("pinX", colNote1.fields[0])
             assertEquals("chicXen", colNote1.fields[1])
-            // two fields modified but one note is actually updated
             onView(withText(TR.browsingNotesUpdated(1))).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)))
         }
     }
@@ -1474,14 +1474,13 @@ class CardBrowserTest : RobolectricTest() {
         withBrowser {
             withCol { tags.bulkAdd(listOf(note0.id, note1.id), "JoJo") }
             viewModel.selectRowAtPosition(0)
+            advanceRobolectricLooper()
             createFindReplaceRequest(TAGS_AS_FIELD, "JoJo", "KoKo")
+            advanceRobolectricLooper()
             val colNote0 = withCol { getNote(note0.id) }
             val colNote1 = withCol { getNote(note1.id) }
-            // didn't modify other unselected notes
             assertEquals("JoJo", colNote1.tags[0])
-            // changed tag
             assertEquals("KoKo", colNote0.tags[0])
-            // doesn't have the previous tags
             assertEquals(1, colNote0.tags.size)
             onView(withText(TR.browsingNotesUpdated(1))).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)))
         }
@@ -1494,14 +1493,15 @@ class CardBrowserTest : RobolectricTest() {
         val note1 = createFindReplaceTestNote("B", "krate", "chicKen")
         withBrowser {
             viewModel.selectRowAtPosition(1)
+            advanceRobolectricLooper()
             createFindReplaceRequest(ALL_FIELDS_AS_FIELD, "k", "X", matchCase = true)
+            advanceRobolectricLooper()
             val colNote0 = withCol { getNote(note0.id) }
             val colNote1 = withCol { getNote(note1.id) }
-            // didn't modify other unselected notes
             assertEquals("kart", colNote0.fields[0])
             assertEquals("kilogram", colNote0.fields[1])
-            assertEquals("Xrate", colNote1.fields[0]) // matches case
-            assertEquals("chicKen", colNote1.fields[1]) // doesn't match case
+            assertEquals("Xrate", colNote1.fields[0])
+            assertEquals("chicKen", colNote1.fields[1])
             onView(withText(TR.browsingNotesUpdated(1))).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)))
         }
     }

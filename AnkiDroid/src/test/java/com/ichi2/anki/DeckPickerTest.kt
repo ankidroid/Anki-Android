@@ -526,6 +526,7 @@ class DeckPickerTest : RobolectricTest() {
                 assertEquals(1, visibleDeckCount)
                 assertTrue(getColUnsafe.sched.haveBuried(), "Deck should have buried cards")
                 supportFragmentManager.selectContextMenuOption(DeckPickerContextMenuOption.UNBURY, deckId)
+                advanceRobolectricLooper() // Ensure all posted tasks complete
                 kotlin.test.assertFalse(getColUnsafe.sched.haveBuried())
             }
         }
