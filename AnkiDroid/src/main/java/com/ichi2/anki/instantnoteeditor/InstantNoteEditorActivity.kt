@@ -17,7 +17,6 @@
 
 package com.ichi2.anki.instantnoteeditor
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -28,7 +27,6 @@ import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
-import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.LinearLayout
 import androidx.activity.OnBackPressedCallback
@@ -59,6 +57,7 @@ import com.ichi2.anki.showThemedToast
 import com.ichi2.anki.withProgress
 import com.ichi2.themes.setTransparentBackground
 import com.ichi2.ui.FixedTextView
+import com.ichi2.utils.AndroidUiUtils.hideKeyboard
 import com.ichi2.utils.AssetHelper.TEXT_PLAIN
 import com.ichi2.utils.message
 import com.ichi2.utils.negativeButton
@@ -314,7 +313,7 @@ class InstantNoteEditorActivity :
             viewModel.setClozeFieldText(textBox.text.toString())
             when (editMode) {
                 EditMode.ADVANCED -> {
-                    hideKeyboard()
+                    clozeEditTextField.hideKeyboard()
                     textBox.setText(clozeFieldText)
                     viewModel.setEditorMode(EditMode.SINGLE_TAP)
                     editModeButton.setIconResource(R.drawable.ic_mode_edit_white)
@@ -348,12 +347,6 @@ class InstantNoteEditorActivity :
                 editFieldsLayout?.visibility = View.VISIBLE
             }
         }
-    }
-
-    private fun hideKeyboard() {
-        val inputMethodManager =
-            this.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-        inputMethodManager.hideSoftInputFromWindow(clozeEditTextField.windowToken, 0)
     }
 
     private fun handleClozeMode(clozeButton: MaterialButton) {
