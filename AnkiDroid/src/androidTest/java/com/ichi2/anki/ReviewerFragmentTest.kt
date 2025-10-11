@@ -121,7 +121,6 @@ class ReviewerFragmentTest : InstrumentedTest() {
     }
 
     @Test
-    @Flaky(os = OS.ALL, "Fails on CI with timing issues frequently")
     fun testSelectedKeyboardType() {
         setNewReviewer()
         closeGetStartedScreenIfExists()
@@ -142,29 +141,39 @@ class ReviewerFragmentTest : InstrumentedTest() {
                 "" to inputTypeText,
             )
 
-        var i = 0
-        for ((value, expectedInputType) in testValues) {
-            if (i > 0)onView(withId(R.id.back_button)).perform(click())
-            i += 1
-            val note = addBasicWithTypingNote(value, value)
-            val card = note.firstCard(col)
-            card.did = col.decks.id("Default$i")
-            card.update { this }
-            checkInputType(expectedInputType, i)
+        testValues.forEachIndexed { index, (value, _) ->
+            addBasicWithTypingNote(value, index)
+        }
+
+        // Check decks after adding all notes to ensure that the deck list is updated with the new cards
+        testValues.forEachIndexed { index, (_, expectedInputType) ->
+            // Ensures that we are in the deckpicker screen to make reviewDeckWithName work
+            if (index > 0)onView(withId(R.id.back_button)).perform(click())
+            checkInputType(expectedInputType, index)
         }
     }
 
     fun checkInputType(
         expectedInputType: Int,
-        i: Int,
+        index: Int,
     ) {
-        reviewDeckWithName("Default$i")
+        reviewDeckWithName("Default$index")
         ensureKeyboardIsDisplayed()
         onView(withId(R.id.type_answer_edit_text)).check { view, _ ->
             val editText = view as TextInputEditText
             val inputType = editText.inputType
             assertThat(inputType, equalTo(expectedInputType))
         }
+    }
+
+    private fun addBasicWithTypingNote(
+        value: String,
+        index: Int,
+    ) {
+        val note = addBasicWithTypingNote(value, value)
+        val card = note.firstCard(col)
+        card.did = col.decks.id("Default$index")
+        card.update { this }
     }
 
     private fun clickShowAnswerAndAnswerGood() {
