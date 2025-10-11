@@ -24,6 +24,8 @@ import android.widget.ImageButton
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
@@ -37,6 +39,7 @@ import com.ichi2.anki.StudyOptionsFragment
 import com.ichi2.anki.dialogs.EditDeckDescriptionDialogViewModel.DismissType
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.utils.AndroidUiUtils.hideKeyboard
 import com.ichi2.utils.AndroidUiUtils.setFocusAndOpenKeyboard
 import com.ichi2.utils.create
 import com.ichi2.utils.negativeButton
@@ -66,10 +69,16 @@ class EditDeckDescriptionDialog : DialogFragment() {
     private val toolbar: MaterialToolbar
         get() = dialogView.findViewById(R.id.topAppBar)
 
+    private var isKeyboardVisible: Boolean = false
+
     private val onUnsavedChangesBackCallback =
         object : OnBackPressedCallback(enabled = false) {
             override fun handleOnBackPressed() {
-                showDiscardChangesDialog()
+                if (isKeyboardVisible) {
+                    deckDescriptionInput.hideKeyboard()
+                } else {
+                    showDiscardChangesDialog()
+                }
             }
         }
 
@@ -92,6 +101,19 @@ class EditDeckDescriptionDialog : DialogFragment() {
                 show()
                 setupDialogView(dialogView)
             }
+    }
+
+    override fun setupDialog(
+        dialog: Dialog,
+        style: Int,
+    ) {
+        super.setupDialog(dialog, style)
+        dialog.window?.let {
+            ViewCompat.setOnApplyWindowInsetsListener(it.decorView) { _, insets ->
+                isKeyboardVisible = insets.isVisible(WindowInsetsCompat.Type.ime())
+                insets
+            }
+        }
     }
 
     private fun setupDialogView(view: View) {
