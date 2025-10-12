@@ -15,6 +15,7 @@
  */
 package com.ichi2.anki.preferences
 
+import android.webkit.WebView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.edit
@@ -189,6 +190,17 @@ class DevOptionsFragment : SettingsFragment() {
         requirePreference<Preference>(R.string.pref_new_review_reminders).setOnPreferenceChangeListener { _, _ ->
             ActivityCompat.recreate(requireActivity())
             true
+        }
+
+        setupWebDebugPreference()
+    }
+
+    private fun setupWebDebugPreference() {
+        requirePreference<SwitchPreferenceCompat>(R.string.html_javascript_debugging_key).apply {
+            isVisible = !BuildConfig.DEBUG
+            setOnPreferenceChangeListener { isEnabled ->
+                WebView.setWebContentsDebuggingEnabled(isEnabled)
+            }
         }
     }
 

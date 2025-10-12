@@ -28,8 +28,8 @@ import android.os.Bundle
 import android.os.Environment
 import android.system.Os
 import android.webkit.CookieManager
+import android.webkit.WebView
 import androidx.annotation.VisibleForTesting
-import androidx.core.content.edit
 import androidx.core.net.toUri
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.MutableLiveData
@@ -40,7 +40,6 @@ import com.ichi2.anki.browser.SharedPreferencesLastDeckIdRepository
 import com.ichi2.anki.common.annotations.LegacyNotifications
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
-import com.ichi2.anki.common.utils.isRunningAsUnitTest
 import com.ichi2.anki.contextmenu.AnkiCardContextMenu
 import com.ichi2.anki.contextmenu.CardBrowserContextMenu
 import com.ichi2.anki.exception.StorageAccessException
@@ -163,10 +162,8 @@ open class AnkiDroidApp :
             showThemedToast(this.applicationContext, getString(R.string.user_is_a_robot), false)
         }
 
-        // make default HTML / JS debugging true for debug build and disable for unit/android tests
-        if (BuildConfig.DEBUG && !isRunningAsUnitTest) {
-            preferences.edit { putBoolean("html_javascript_debugging", true) }
-        }
+        WebView.setWebContentsDebuggingEnabled(Prefs.isWebDebugEnabled)
+
         CardBrowserContextMenu.ensureConsistentStateWithPreferenceStatus(
             this,
             preferences.getBoolean(

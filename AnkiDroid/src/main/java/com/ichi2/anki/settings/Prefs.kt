@@ -23,6 +23,7 @@ import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.BuildConfig
 import com.ichi2.anki.R
 import com.ichi2.anki.cardviewer.TapGestureMode
+import com.ichi2.anki.common.utils.isRunningAsUnitTest
 import com.ichi2.anki.settings.enums.FrameStyle
 import com.ichi2.anki.settings.enums.HideSystemBars
 import com.ichi2.anki.settings.enums.PrefEnum
@@ -294,6 +295,9 @@ object Prefs {
         get() = getBoolean(R.string.dev_card_browser_fragmented, false)
 
     val devUsingCardBrowserSearchView: Boolean by booleanPref(R.string.dev_card_browser_search_view, false)
+
+    val isWebDebugEnabled: Boolean
+        get() = (getBoolean(R.string.html_javascript_debugging_key, false) || BuildConfig.DEBUG) && !isRunningAsUnitTest
 
     // **************************************** UI Config *************************************** //
 
