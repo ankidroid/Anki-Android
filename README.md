@@ -41,7 +41,7 @@ Install
 <div style="display:flex;">
 
 <a href="https://play.google.com/store/apps/details?id=com.ichi2.anki&utm_source=global_co&utm_medium=prtnr&utm_content=Mar2515&utm_campaign=PartBadge&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1">
-    <img alt="Get it on Google Play" height="82"
+    <img alt="Get it on Google Play" height="80"
         src="docs/graphics/logos/google-badge.png" /></a>
 
 <a href="https://f-droid.org/repository/browse/?fdid=com.ichi2.anki">
