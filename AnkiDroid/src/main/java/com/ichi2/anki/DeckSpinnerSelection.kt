@@ -188,9 +188,6 @@ class DeckSpinnerSelection(
         }
     }
 
-    /** @return All decks.  */
-    suspend fun computeDropDownDecks(includeFiltered: Boolean): List<DeckNameId> = withCol { computeDropDownDecks(this, includeFiltered) }
-
     /** @return All decks. */
     private fun computeDropDownDecks(
         col: Collection,
