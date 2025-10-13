@@ -25,6 +25,7 @@ import androidx.annotation.LayoutRes
 import androidx.annotation.MainThread
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.dialogs.DeckSelectionDialog
@@ -309,5 +310,42 @@ class DeckSpinnerSelection(
 
     companion object {
         const val ALL_DECKS_ID = 0L
+    }
+}
+
+/**
+ * Displays a [DeckSelectionDialog] for the user to select a deck, with the list of displayed decks
+ * filtered based on the parameters of this method.
+ * @param all true if 'All Decks' should be shown, false otherwise
+ * @param filtered true if filtered decks should be shown, false otherwise
+ * @param skipEmptyDefault true to hide the 'Default' deck if it doesn't have any cards, false to
+ * show it anyway
+ */
+fun Fragment.startDeckSelection(
+    all: Boolean = true,
+    filtered: Boolean = true,
+    skipEmptyDefault: Boolean = true,
+) {
+    requireActivity().launchCatchingTask {
+        withProgress {
+            val backendDecks =
+                withCol {
+                    decks.allNamesAndIds(includeFiltered = filtered, skipEmptyDefault = skipEmptyDefault)
+                }
+            val decks: MutableList<SelectableDeck> = backendDecks.map { SelectableDeck.Deck(it) }.toMutableList()
+            if (all) {
+                decks.add(0, SelectableDeck.AllDecks)
+            }
+            val dialog =
+                DeckSelectionDialog.newInstance(
+                    getString(R.string.select_deck),
+                    null,
+                    false,
+                    decks,
+                )
+            if (!parentFragmentManager.isStateSaved) {
+                dialog.show(parentFragmentManager, "DeckSelectionDialog")
+            }
+        }
     }
 }
