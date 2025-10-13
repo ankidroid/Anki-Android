@@ -21,25 +21,24 @@ import android.os.Bundle
 import android.print.PrintAttributes
 import android.print.PrintManager
 import android.view.View
-import android.widget.TextView
 import androidx.core.content.ContextCompat.getSystemService
-import com.google.android.material.appbar.AppBarLayout
-import com.google.android.material.appbar.MaterialToolbar
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.time.getTimestamp
+import com.ichi2.anki.databinding.StatisticsBinding
 import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.anki.startDeckSelection
 import com.ichi2.anki.withProgress
+import dev.androidbroadcast.vbpd.viewBinding
 
 class Statistics :
     PageFragment(R.layout.statistics),
     DeckSelectionDialog.DeckSelectionListener {
-    private lateinit var deckNameView: TextView
+    private val binding by viewBinding(StatisticsBinding::bind)
 
     @Suppress("deprecation", "API35 properly handle edge-to-edge")
     override fun onViewCreated(
@@ -49,15 +48,13 @@ class Statistics :
         super.onViewCreated(view, savedInstanceState)
         webView.isNestedScrollingEnabled = true
 
-        deckNameView = view.findViewById(R.id.deck_name)
-        deckNameView.setOnClickListener { startDeckSelection(all = false, filtered = false) }
-        view
-            .findViewById<AppBarLayout>(R.id.app_bar)
+        binding.deckName.setOnClickListener { startDeckSelection(all = false, filtered = false) }
+        binding.appBar
             .addLiftOnScrollListener { _, backgroundColor ->
                 activity?.window?.statusBarColor = backgroundColor
             }
 
-        view.findViewById<MaterialToolbar>(R.id.toolbar).apply {
+        binding.toolbar.apply {
             menu.findItem(R.id.action_export_stats).title = CollectionManager.TR.statisticsSavePdf()
             setOnMenuItemClickListener { item ->
                 if (item.itemId == R.id.action_export_stats) {
@@ -98,7 +95,7 @@ class Statistics :
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putString(KEY_DECK_NAME, deckNameView.text.toString())
+        outState.putString(KEY_DECK_NAME, binding.deckName.text.toString())
     }
 
     /**
@@ -109,7 +106,7 @@ class Statistics :
      * stats. See issue #3394 in Anki repository.
      **/
     private fun changeDeck(selectedDeckName: String) {
-        deckNameView.text = selectedDeckName
+        binding.deckName.text = selectedDeckName
         val javascriptCode =
             """
             var textBox = document.getElementById("statisticsSearchText");
