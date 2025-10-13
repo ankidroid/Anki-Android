@@ -21,30 +21,25 @@ import android.os.Bundle
 import android.print.PrintAttributes
 import android.print.PrintManager
 import android.view.View
-import android.widget.AdapterView.INVALID_POSITION
-import android.widget.Spinner
+import android.widget.TextView
 import androidx.core.content.ContextCompat.getSystemService
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.MaterialToolbar
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.anki.DeckSpinnerSelection
 import com.ichi2.anki.R
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.time.getTimestamp
 import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.launchCatchingTask
-import com.ichi2.anki.libanki.DeckId
-import com.ichi2.anki.libanki.DeckNameId
 import com.ichi2.anki.model.SelectableDeck
-import com.ichi2.anki.requireAnkiActivity
-import com.ichi2.utils.BundleUtils.getNullableLong
+import com.ichi2.anki.startDeckSelection
+import com.ichi2.anki.withProgress
 
 class Statistics :
     PageFragment(R.layout.statistics),
     DeckSelectionDialog.DeckSelectionListener {
-    private lateinit var deckSpinnerSelection: DeckSpinnerSelection
-    private lateinit var spinner: Spinner
+    private lateinit var deckNameView: TextView
 
     @Suppress("deprecation", "API35 properly handle edge-to-edge")
     override fun onViewCreated(
@@ -54,7 +49,8 @@ class Statistics :
         super.onViewCreated(view, savedInstanceState)
         webView.isNestedScrollingEnabled = true
 
-        spinner = view.findViewById(R.id.deck_selector)
+        deckNameView = view.findViewById(R.id.deck_name)
+        deckNameView.setOnClickListener { startDeckSelection(all = false, filtered = false) }
         view
             .findViewById<AppBarLayout>(R.id.app_bar)
             .addLiftOnScrollListener { _, backgroundColor ->
@@ -70,28 +66,11 @@ class Statistics :
                 true
             }
         }
-        deckSpinnerSelection =
-            DeckSpinnerSelection(
-                requireAnkiActivity(),
-                spinner,
-                showAllDecks = false,
-                alwaysShowDefault = false,
-                showFilteredDecks = false,
-            )
-        if (savedInstanceState == null) {
-            requireActivity().launchCatchingTask {
-                deckSpinnerSelection.initializeStatsBarDeckSpinner()
-                val selectedDeck = withCol { decks.getLegacy(decks.selected()) }
-                if (selectedDeck == null) return@launchCatchingTask
-                select(selectedDeck.id)
-                changeDeck(selectedDeck.name)
-            }
-        } else {
-            val savedDeckId = savedInstanceState.getNullableLong(KEY_DECK_ID) ?: return
-            requireActivity().launchCatchingTask {
-                deckSpinnerSelection.initializeStatsBarDeckSpinner()
-                select(savedDeckId)
-                savedInstanceState.getString(KEY_DECK_NAME)?.let { changeDeck(it) }
+        requireActivity().launchCatchingTask {
+            withProgress {
+                val deckName =
+                    savedInstanceState?.getString(KEY_DECK_NAME, null) ?: withCol { decks.current().name }
+                changeDeck(deckName)
             }
         }
     }
@@ -114,43 +93,23 @@ class Statistics :
     override fun onDeckSelected(deck: SelectableDeck?) {
         if (deck == null) return
         require(deck is SelectableDeck.Deck)
-        select(deck.deckId)
         changeDeck(deck.name)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        val selectedPosition = spinner.selectedItemPosition
-        if (selectedPosition != INVALID_POSITION) {
-            val selectedDeck = spinner.adapter.getItem(selectedPosition) as DeckNameId
-            outState.putLong(KEY_DECK_ID, selectedDeck.id)
-            outState.putString(KEY_DECK_NAME, selectedDeck.name)
-        }
-    }
-
-    private val decksAdapterSequence
-        get() =
-            sequence {
-                for (i in 0 until spinner.adapter.count) {
-                    yield(spinner.adapter.getItem(i) as DeckNameId)
-                }
-            }
-
-    /**
-     * Given the [deckId] look in the decks adapter for its position and select it if found.
-     */
-    private fun select(deckId: DeckId) {
-        val itemToSelect = decksAdapterSequence.withIndex().firstOrNull { it.value.id == deckId } ?: return
-        spinner.setSelection(itemToSelect.index)
+        outState.putString(KEY_DECK_NAME, deckNameView.text.toString())
     }
 
     /**
-     * This method is a workaround to change the deck in the webview by finding the text box and
-     * replacing the deck name with the selected deck name from the dialog and updating the stats
+     * Updates the ui with the new selected deck. Doesn't change the backend.
      *
-     * See issue #3394 in the Anki repository
+     * This method includes a workaround to change the deck in the webview by finding the text box
+     * and replacing the deck name with the selected deck name from the dialog and updating the
+     * stats. See issue #3394 in Anki repository.
      **/
     private fun changeDeck(selectedDeckName: String) {
+        deckNameView.text = selectedDeckName
         val javascriptCode =
             """
             var textBox = document.getElementById("statisticsSearchText");
@@ -162,7 +121,6 @@ class Statistics :
     }
 
     companion object {
-        private const val KEY_DECK_ID = "key_deck_id"
         private const val KEY_DECK_NAME = "key_deck_name"
 
         /**
