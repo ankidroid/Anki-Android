@@ -52,6 +52,7 @@ android {
         }
     }
     compileOptions {
+        // API remains on VERSION_11 for compatibility
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }

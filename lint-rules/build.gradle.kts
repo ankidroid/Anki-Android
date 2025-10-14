@@ -6,14 +6,13 @@ plugins {
 }
 
 tasks.withType(JavaCompile::class).configureEach {
-    sourceCompatibility = JavaVersion.VERSION_11.toString()
-    targetCompatibility = JavaVersion.VERSION_11.toString()
+    sourceCompatibility = JavaVersion.VERSION_17.toString()
+    targetCompatibility = JavaVersion.VERSION_17.toString()
 }
 
 tasks.withType(KotlinCompile::class).all {
     compilerOptions {
-        // starting with AGP 7.4.0 we need to target JVM 11 bytecode
-        jvmTarget = JvmTarget.JVM_11
+        jvmTarget = JvmTarget.JVM_17
     }
 }
 
