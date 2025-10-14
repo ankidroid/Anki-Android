@@ -40,7 +40,7 @@ jobs:
       # 5. 軽量ビルド（APK生成なし / Play依存なし）
       - name: Compile only (Fdroid Debug)
         run: |
-          ./gradlew --no-daemon --max-workers=2 -x test -x lint :AnkiDroid:compileFdroidDebugSources
+          ./gradlew --no-daemon --max-workers=2 -x test -x lint :AnkiDroid:compilePlayDebugSources
 
       # 6. CodeQL Analysis
       - name: Perform CodeQL Analysis
