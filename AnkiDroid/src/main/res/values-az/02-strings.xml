@@ -47,7 +47,7 @@
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Siyirməni aç</string>
     <string name="drawer_close">Siyirməni bağla</string>
-    <string name="note_message">Note saved</string>
+    <string name="note_message">Qeyd yadda saxlanıldı</string>
     <string name="CardEditorCardDeck">Kart dəsti:</string>
     <string name="CardEditorNoteDeck">Dəst:</string>
     <string name="CardEditorModel">Növ:</string>
@@ -60,34 +60,34 @@
     <string name="check_all_tags" maxLength="28">Bütün etiketləri işarələ/işarələmə</string>
     <string name="filter_tags" maxLength="28">Etiketləri filtrlə</string>
     <string name="no_tags">Hələki heç bir etiket əlavə etməmisiniz.</string>
-    <string name="updated_version">Updated to version %s</string>
+    <string name="updated_version">Bu versiyaya güncəllə %s</string>
     <!-- Reviewer.kt (Study Screen) -->
-    <string name="save_whiteboard" maxLength="28">Save whiteboard</string>
+    <string name="save_whiteboard" maxLength="28">Lövhəni yadda saxla</string>
     <string name="enable_stylus" maxLength="28">Enable stylus writing</string>
     <string name="disable_stylus">Disable stylus writing</string>
-    <string name="eraser" maxLength="28">Eraser</string>
+    <string name="eraser" maxLength="28">Pozan</string>
     <string name="add_brush" maxLength="28">Add brush</string>
-    <string name="whiteboard_align_left" comment="Option to align the whiteboard toolbar on the left" maxLength="28">Left</string>
-    <string name="whiteboard_align_bottom" comment="Option to align the whiteboard toolbar on the bottom" maxLength="28">Bottom</string>
-    <string name="whiteboard_align_right" comment="Option to align the whiteboard toolbar on the right" maxLength="28">Right</string>
-    <string name="whiteboard_clear" comment="Button text to clear the whiteboard" maxLength="28">Clear</string>
-    <string name="whiteboard_more_options" comment="Tooltip of the whiteboard \'More\' button" maxLength="28">More options</string>
+    <string name="whiteboard_align_left" comment="Option to align the whiteboard toolbar on the left" maxLength="28">Solda</string>
+    <string name="whiteboard_align_bottom" comment="Option to align the whiteboard toolbar on the bottom" maxLength="28">Altda</string>
+    <string name="whiteboard_align_right" comment="Option to align the whiteboard toolbar on the right" maxLength="28">Sağda</string>
+    <string name="whiteboard_clear" comment="Button text to clear the whiteboard" maxLength="28">Təmizlə</string>
+    <string name="whiteboard_more_options" comment="Tooltip of the whiteboard \'More\' button" maxLength="28">Daha çox seçim</string>
     <string name="whiteboard_remove_brush_message">Are you sure you want to remove this brush from your palette?</string>
     <string name="whiteboard_ink_eraser" comment="Title of the whiteboard Ink eraser">Ink</string>
     <string name="whiteboard_stroke_eraser" comment="Title of the whiteboard Stroke eraser">Stroke</string>
     <string name="stylus_mode" comment="Title of the menu item that toggles the whiteboard stylus mode" maxLength="28">Stylus mode</string>
     <string name="cannot_remove_last_brush_message">The last brush may not be removed</string>
-    <string name="enable_whiteboard" maxLength="28">Enable whiteboard</string>
-    <string name="disable_whiteboard">Disable whiteboard</string>
-    <string name="show_whiteboard">Show whiteboard</string>
-    <string name="enable_eraser" maxLength="28">Enable eraser</string>
-    <string name="disable_eraser" maxLength="28">Disable eraser</string>
-    <string name="hide_whiteboard" maxLength="28">Hide whiteboard</string>
-    <string name="clear_whiteboard" maxLength="28">Clear whiteboard</string>
-    <string name="replay_media" maxLength="28">Replay media</string>
+    <string name="enable_whiteboard" maxLength="28">Lövhəni aktiv et</string>
+    <string name="disable_whiteboard">Lövhəni deaktiv et</string>
+    <string name="show_whiteboard">Lövhəni göstər</string>
+    <string name="enable_eraser" maxLength="28">Pozanı aktiv et</string>
+    <string name="disable_eraser" maxLength="28">Pozanı deaktiv et</string>
+    <string name="hide_whiteboard" maxLength="28">Lövhəni gizlət</string>
+    <string name="clear_whiteboard" maxLength="28">Lövhəni təmizlə</string>
+    <string name="replay_media" maxLength="28">Medianı yenidən oynat</string>
     <string name="leech_suspend_notification">Card marked as leech and suspended</string>
     <string name="leech_notification">Card marked as leech</string>
-    <string name="webview_crash_unknown">Unknown error</string>
+    <string name="webview_crash_unknown">Bilinməyən xəta</string>
     <string name="webview_crash_unknwon_detailed">This was caused by an internal error in the WebView</string>
     <string name="webview_crash_oom">Out of Memory</string>
     <string name="webview_crash_oom_details">The WebView was terminated by the system. This typically happens when the application runs out of memory, often due to large fonts or media.</string>
@@ -95,8 +95,8 @@
     <string name="webview_crash_fatal">Fatal Error: WebView renderer crashed. Cause: %s</string>
     <string name="webview_crash_loop_dialog_title">System WebView Rendering Failure</string>
     <string name="webview_crash_loop_dialog_content">System WebView failed to render card \'%1$s\'.\n %2$s</string>
-    <string name="slide_to_cancel" comment="Message shown when pressing the record button">Slide to cancel</string>
-    <string name="filter_by_flags" maxLength="41">Flags</string>
+    <string name="slide_to_cancel" comment="Message shown when pressing the record button">Ləğv etmək üçün sürüşdür</string>
+    <string name="filter_by_flags" maxLength="41">Bayraqlar</string>
     <!-- Custom study options -->
     <string name="custom_study_loading_tags">Building list of tags&#8230;</string>
     <!-- Study options -->
@@ -104,22 +104,22 @@
         <item quantity="one">+%d buried</item>
         <item quantity="other">+%d buried</item>
     </plurals>
-    <string name="studyoptions_total_new_label">Total new cards</string>
-    <string name="studyoptions_total_label">Total cards</string>
+    <string name="studyoptions_total_new_label">Bütün yeni kartlar</string>
+    <string name="studyoptions_total_label">Bütün kartlar</string>
     <!-- Card editor -->
-    <string name="cardeditor_title_edit_card" maxLength="28">Edit note</string>
-    <string name="discard">Discard</string>
+    <string name="cardeditor_title_edit_card" maxLength="28">Qeydi redakte et</string>
+    <string name="discard">Yadda saxlama</string>
     <string name="note_editor_no_cards_created">No cards created. Please fill in more fields</string>
     <string name="note_editor_no_cards_created_all_fields">The current note type did not produce any cards.\nPlease choose another note type, or click ‘Cards’ and add a field substitution</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
-    <string name="saving_facts">Saving note</string>
-    <string name="saving_model">Saving note type</string>
-    <string name="save" maxLength="28">Save</string>
-    <string name="close">Close</string>
-    <string name="select">Select</string>
+    <string name="saving_facts">Qeyd yadda saxlanılır</string>
+    <string name="saving_model">Qeyd növü yadda saxlanılır</string>
+    <string name="save" maxLength="28">Yadda saxla</string>
+    <string name="close">Bağla</string>
+    <string name="select">Seç</string>
     <string name="field_remapping">%1$s (from “%2$s”)</string>
     <string name="confirm_map_cards_to_nothing">Any cards mapped to nothing will be deleted. If a note has no remaining cards, it will be lost. Are you sure you want to continue?</string>
-    <string name="missing_note_type">No note type found</string>
+    <string name="missing_note_type">Qeyd növü tapılmadı</string>
     <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (empty)</string>
     <!-- Image cropper -->
     <string name="image_cropper_action_rotate" maxLength="28" comment="Action in image cropper screen">Rotate</string>
@@ -137,29 +137,29 @@
         <item quantity="one">%1$d minute</item>
         <item quantity="other">%1$d minutes</item>
     </plurals>
-    <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid card</string>
-    <string name="note_editor_copy_note" maxLength="28">Copy note</string>
+    <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid kartı</string>
+    <string name="note_editor_copy_note" maxLength="28">Qeydi kopyala</string>
     <string name="card_editor_reposition_card" comment="reposition a card in the new queue" maxLength="28">Reposition</string>
     <string name="card_editor_reset_card" maxLength="28">Reset progress</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card" maxLength="28">Reschedule</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)" maxLength="28">Preview</string>
     <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown" maxLength="28">Copy as Markdown</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d of %2$d</string>
-    <string name="rename" comment="Confirm that the renaming action should be processed." maxLength="28">Rename</string>
-    <string name="checks_action" maxLength="28">Check</string>
+    <string name="rename" comment="Confirm that the renaming action should be processed." maxLength="28">Yenidən adlandır</string>
+    <string name="checks_action" maxLength="28">Yoxla</string>
     <string name="check_db" maxLength="28">Check database</string>
     <string name="check_media" maxLength="28">Check media</string>
-    <string name="empty_cards" maxLength="28">Empty cards</string>
+    <string name="empty_cards" maxLength="28">Boş kartlar</string>
     <string name="unknown_type_field_warning">Type answer: unknown field %s</string>
-    <string name="delete_deck" comment="Message on a progress bar starting a deck is being deleted.">Deleting deck&#8230;</string>
-    <string name="info_rate">Rate AnkiDroid</string>
-    <string name="import_title">Importing</string>
-    <string name="import_preparing_file">Preparing file for import&#8230;</string>
-    <string name="import_message_add" comment="Adding a new deck to the collection (import)">Add</string>
+    <string name="delete_deck" comment="Message on a progress bar starting a deck is being deleted.">Dəstə silinir&#8230;</string>
+    <string name="info_rate">AnkiDroid\'ə xal ver</string>
+    <string name="import_title">İxrac edilir</string>
+    <string name="import_preparing_file">Fayl ixrac üçün hazırlanır&#8230;</string>
+    <string name="import_message_add" comment="Adding a new deck to the collection (import)">Əlavə et</string>
     <string name="import_message_replace_confirm">This will delete your existing collection and replace it with the data of file %s</string>
     <string name="import_dialog_message_add">Add “%s” to collection? This may take a long time</string>
     <string name="import_log_no_apkg">This isn’t a valid Anki package file</string>
-    <string name="import_title_error" comment="Title of error dialog">Error</string>
+    <string name="import_title_error" comment="Title of error dialog">Xəta</string>
     <string name="import_error_handle_exception">Failed to import file\n\n%s</string>
     <string name="import_error_not_apkg_extension">Filename “%s” doesn’t have .apkg or .colpkg extension</string>
     <string name="import_error_load_imported_database">Anki Database (.anki2) replacements are not yet supported. Please see the manual for replacement instructions.</string>
@@ -179,10 +179,10 @@
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
-    <string name="export_choice_share">Share</string>
+    <string name="export_choice_share">Paylaş</string>
     <string name="export_choice_save_to">Save to</string>
     <string name="export_saving_exported_collection">Saving exported file&#8230;</string>
-    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="28">Options</string>
+    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="28">Seçimlər</string>
     <string name="menu__deck_options" maxLength="28">Deck options</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>
     <string name="select_tts" maxLength="28">Set TTS language</string>

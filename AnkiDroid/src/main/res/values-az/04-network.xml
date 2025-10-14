@@ -48,38 +48,38 @@
     <string name="youre_offline">Aktiv deyilsiniz</string>
     <string name="sync_error">Sinxronizasiya xətası</string>
     <string name="vague_error" comment="Network error dialog title">Xəta</string>
-    <string name="retry">yeniden</string>
+    <string name="retry">Yenidən</string>
     <string name="menu_get_shared_decks">Paylaşılan katları alın</string>
-    <string name="connection_error_message">Bir səhv baş verdi</string>
+    <string name="connection_error_message">Şəbəkə xətası baş verdi</string>
     <string name="not_logged_in_title">AnkiWeb-ə daxil olun</string>
     <string name="login_create_account_message">Bulud senkronizasyon xidmətindən istifadə etmək üçün üçüncü tərəf hesabına daxil olmalısınız.Bir sonrakı addımda bir yarada bilərsiniz.</string>
     <!-- MyAccount.kt -->
     <string name="username">E-poçt ünvanı</string>
-    <string name="password">parol</string>
-    <string name="log_in">Daxil olmaq</string>
+    <string name="password">Şifrə</string>
+    <string name="log_in">Daxil ol</string>
     <string name="sign_up_description">AnkiWeb hesabınız yoxdur? Bu pulsuzdur!</string>
     <string name="sign_up_not_affiliated">Qeyd: AnkiWeb AnkiDroid ilə əlaqəli deyil</string>
     <string name="sign_up">Qeydiyyatdan keç</string>
     <string name="logged_as">Daxil olundu:</string>
     <string name="log_out">Çıxış</string>
     <string name="reset_password">Şifrəni dəyiş</string>
-    <string name="lost_mail_instructions">Forgot Email?</string>
-    <string name="sign_in">Signing in</string>
+    <string name="lost_mail_instructions">E-poçtunu unutmusan?</string>
+    <string name="sign_in">Qeydiyyatdan keçilir</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">XXX seçimləri</string>
     <string name="sync_title">Sinxronizasiya</string>
-    <string name="sync_log_uploading_message">Yerli tam sync</string>
+    <string name="sync_log_uploading_message">Yerli tam sinxronizasiya</string>
     <string name="sync_database_acknowledge">Kolleksiya sinxronizasiya olunmuşdur</string>
     <string name="col_synced_media_in_background">Collection synced. Media is being synced in the background.</string>
     <string name="sync_corrupt_database">Verilənlər bazası xarabdır.Yenidən sinxronlaşdırmağı sınamadan əvvəl düzəldin.Verilənlər bazasını təmiri haqqında məlumat üçün gözləyin: %s.</string>
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">Yerli</string>
     <string name="sync_sanity_remote">Uzaqdan</string>
-    <string name="one_way_sync_title" maxLength="41">One-way sync</string>
+    <string name="one_way_sync_title" maxLength="41">Bir tərəfli Sinxronizasiya</string>
     <string name="one_way_sync_confirmation">One way sync requested</string>
     <string name="full_sync_confirmation">İstənilən dəyişiklik sonradan kolleksiyanı sinxronlaşdırdığınız zaman bazanın tam yüklənməsini tələb edəcək.Hal hazirda buradakı sinxronizasiya edilməmiş başqa bir cihazda gözdən keçirmə və ya digər dəyişiklikləriniz varsa, onlar itirilmiş olacaq.Davam?</string>
     <string name="full_sync_confirmation_upgrade">Daha əvvəl quraşdırılmış AnkiDroid versiyasında bir səhv səbəbiylə,tam bir sinxronlaşdırma məcburiyyətindədir.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title_one_way_sync">Sync (one-way)</string>
-    <string name="sync_menu_title_no_account">Sync (log in)</string>
+    <string name="sync_menu_title_one_way_sync">Sinxronizasiya (bir tərəfli)</string>
+    <string name="sync_menu_title_no_account">Sinxronizasiya (giriş)</string>
 </resources>

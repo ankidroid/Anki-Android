@@ -237,7 +237,7 @@
     <string name="add_reminder" comment="Label for the add reminder button in the screen for adding and editing review reminders">Hatırlatıcı ekle</string>
     <string name="add_review_reminder" comment="Title of the screen for creating a new review reminder">Çalışma hatırlatıcısı ekle</string>
     <string name="edit_review_reminder" comment="Title of the screen for editing an existing review reminder">Çalışma hatırlatıcısını değiştir</string>
-    <string name="you_have_no_review_reminders" comment="Text that appears in the review reminder editing screen when there are no reminders set">You have no review reminders</string>
+    <string name="you_have_no_review_reminders" comment="Text that appears in the review reminder editing screen when there are no reminders set">Çalışma hatırlatıcınız yok</string>
     <!-- studyoptions -->
     <string name="studyoptions_limit_select_tags">Etiketleri Seçin</string>
     <!-- Deck configurations -->
