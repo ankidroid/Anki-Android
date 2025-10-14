@@ -246,7 +246,7 @@
     <string name="add_reminder" comment="Label for the add reminder button in the screen for adding and editing review reminders">إضافة تنبيه</string>
     <string name="add_review_reminder" comment="Title of the screen for creating a new review reminder">إضافة تنبيه للمراجعة</string>
     <string name="edit_review_reminder" comment="Title of the screen for editing an existing review reminder">تعديل تنبيه المراجعة</string>
-    <string name="you_have_no_review_reminders" comment="Text that appears in the review reminder editing screen when there are no reminders set">You have no review reminders</string>
+    <string name="you_have_no_review_reminders" comment="Text that appears in the review reminder editing screen when there are no reminders set">ليس لديك تنبيهات للمراجعة</string>
     <!-- studyoptions -->
     <string name="studyoptions_limit_select_tags">اختيار وسوم</string>
     <!-- Deck configurations -->
