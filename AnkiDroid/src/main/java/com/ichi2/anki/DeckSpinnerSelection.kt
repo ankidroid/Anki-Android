@@ -154,40 +154,6 @@ class DeckSpinnerSelection(
         }
     }
 
-    @MainThread // spinner.adapter
-    suspend fun initializeScheduleRemindersDeckSpinner() {
-        withCol {
-            decks.allNamesAndIds(includeFiltered = showFilteredDecks, skipEmptyDefault = true)
-        }.toMutableList().let { decks ->
-            dropDownDecks = decks
-            val deckNames = decks.map { it.name }.toMutableList()
-            if (showAllDecks) deckNames.add(0, context.getString(R.string.card_browser_all_decks))
-            val noteDeckAdapter: ArrayAdapter<String?> =
-                object :
-                    ArrayAdapter<String?>(context, R.layout.multiline_spinner_item, deckNames as List<String?>) {
-                    override fun getDropDownView(
-                        position: Int,
-                        convertView: View?,
-                        parent: ViewGroup,
-                    ): View {
-                        // Cast the drop down items (popup items) as text view
-                        val tv = super.getDropDownView(position, convertView, parent) as TextView
-
-                        // If this item is selected
-                        if (position == spinner.selectedItemPosition) {
-                            tv.setBackgroundColor(context.getColor(R.color.note_editor_selected_item_background))
-                            tv.setTextColor(context.getColor(R.color.note_editor_selected_item_text))
-                        }
-
-                        // Return the modified view
-                        return tv
-                    }
-                }
-            spinner.adapter = noteDeckAdapter
-            setSpinnerListener()
-        }
-    }
-
     /** @return All decks. */
     private fun computeDropDownDecks(
         col: Collection,

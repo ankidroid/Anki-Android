@@ -81,14 +81,21 @@
                         android:textSize="18sp"
                         tools:ignore="HardcodedText" />
 
-                    <Spinner
-                        android:id="@+id/add_edit_reminder_deck_spinner"
+                    <TextView
+                        android:id="@+id/add_edit_reminder_deck_name"
                         android:layout_width="0dp"
                         android:layout_weight="3"
                         android:layout_height="match_parent"
-                        app:popupTheme="@style/ActionBar.Popup"
+                        android:textAppearance="?attr/textAppearanceListItem"
                         android:minHeight="?minTouchTargetSize"
-                        android:layout_marginStart="12dp" />
+                        android:maxLines="1"
+                        android:gravity="center_vertical"
+                        android:drawableEnd="@drawable/id_arrow_drop_down"
+                        android:background="?attr/selectableItemBackground"
+                        android:ellipsize="end"
+                        android:layout_marginStart="12dp"
+                        tools:text="Deck name here"
+                        />
 
                 </LinearLayout>
 
