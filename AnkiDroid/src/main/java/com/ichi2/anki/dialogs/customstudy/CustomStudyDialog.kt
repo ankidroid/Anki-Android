@@ -399,7 +399,8 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
         }
 
         editText.doAfterTextChanged {
-            dialog.positiveButton.isEnabled = editText.textAsIntOrNull() != null
+            val num = editText.textAsIntOrNull()
+            dialog.positiveButton.isEnabled = num != null && num != 0
         }
 
         // Show soft keyboard
