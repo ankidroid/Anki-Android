@@ -15,7 +15,6 @@
  */
 package com.ichi2.anki.preferences
 
-import android.webkit.WebView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.edit
@@ -34,6 +33,7 @@ import com.ichi2.anki.showThemedToast
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.withProgress
 import com.ichi2.preferences.IncrementerNumberRangePreferenceCompat
+import com.ichi2.utils.setWebContentsDebuggingEnabled
 import com.ichi2.utils.show
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -199,7 +199,7 @@ class DevOptionsFragment : SettingsFragment() {
         requirePreference<SwitchPreferenceCompat>(R.string.html_javascript_debugging_key).apply {
             isVisible = !BuildConfig.DEBUG
             setOnPreferenceChangeListener { isEnabled ->
-                WebView.setWebContentsDebuggingEnabled(isEnabled)
+                setWebContentsDebuggingEnabled(isEnabled)
             }
         }
     }
