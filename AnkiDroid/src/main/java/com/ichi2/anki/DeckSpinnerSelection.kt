@@ -283,3 +283,38 @@ fun Fragment.startDeckSelection(
         }
     }
 }
+
+/**
+ * Displays a [DeckSelectionDialog] for the user to select a deck, with the list of displayed decks
+ * filtered based on the parameters of this method.
+ * @param all true if 'All Decks' should be shown, false otherwise
+ * @param filtered true if filtered decks should be shown, false otherwise
+ * @param skipEmptyDefault true to hide the 'Default' deck if it doesn't have any cards, false to
+ * show it anyway
+ */
+fun AnkiActivity.startDeckSelection(
+    all: Boolean = true,
+    filtered: Boolean = true,
+    skipEmptyDefault: Boolean = true,
+) {
+    launchCatchingTask {
+        withProgress {
+            val backendDecks =
+                withCol {
+                    decks.allNamesAndIds(includeFiltered = filtered, skipEmptyDefault = skipEmptyDefault)
+                }
+            val decks: MutableList<SelectableDeck> = backendDecks.map { SelectableDeck.Deck(it) }.toMutableList()
+            if (all) {
+                decks.add(0, SelectableDeck.AllDecks)
+            }
+            val dialog =
+                DeckSelectionDialog.newInstance(
+                    getString(R.string.select_deck),
+                    null,
+                    false,
+                    decks,
+                )
+            dialog.show(supportFragmentManager, "DeckSelectionDialog")
+        }
+    }
+}
