@@ -23,7 +23,6 @@ import android.widget.Spinner
 import android.widget.TextView
 import androidx.annotation.LayoutRes
 import androidx.annotation.MainThread
-import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.ichi2.anki.CollectionManager.withCol
@@ -66,7 +65,6 @@ class DeckSpinnerSelection(
     private val showAllDecks: Boolean,
     private val alwaysShowDefault: Boolean,
     private val showFilteredDecks: Boolean,
-    private val subtitleProvider: DeckDropDownAdapter.SubtitleProvider? = null,
     private val fragmentManagerSupplier: FragmentManagerSupplier = context.asFragmentManagerSupplier(),
 ) {
     private var deckDropDownAdapter: DeckDropDownAdapter? = null
@@ -74,22 +72,6 @@ class DeckSpinnerSelection(
     // This should be deckDropDownAdapter.decks
     // but this class also handles initializeNoteEditorDeckSpinner, so this can't happen yet
     private var dropDownDecks: MutableList<DeckNameId>? = null
-
-    @MainThread // spinner.adapter
-    fun initializeActionBarDeckSpinner(
-        col: Collection,
-        actionBar: ActionBar,
-    ) {
-        actionBar.setDisplayShowTitleEnabled(false)
-
-        // Add drop-down menu to select deck to action bar.
-        computeDropDownDecks(col, includeFiltered = showFilteredDecks).toMutableList().let {
-            dropDownDecks = it
-            deckDropDownAdapter = DeckDropDownAdapter(context, subtitleProvider, it)
-            spinner.adapter = deckDropDownAdapter
-            setSpinnerListener()
-        }
-    }
 
     @MainThread // spinner.adapter
     fun initializeNoteEditorDeckSpinner(
