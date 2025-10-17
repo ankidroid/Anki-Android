@@ -614,7 +614,7 @@ class InstantNoteEditorActivity :
     }
 
     private fun showDiscardChangesDialog() {
-        DiscardChangesDialog.showDialog(this) {
+        DiscardChangesDialog.showDialog(this, message = TR.addingDiscardCurrentInput()) {
             Timber.i("InstantNoteEditorActivity:: OK button pressed to confirm discard changes")
             finish()
         }

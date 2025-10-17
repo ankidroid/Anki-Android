@@ -33,7 +33,7 @@ object DiscardChangesDialog {
         positiveButtonText: String = context.getString(R.string.discard),
         negativeButtonText: String = CollectionManager.TR.addingKeepEditing(),
         neutralButtonText: String? = null,
-        message: String = CollectionManager.TR.addingDiscardCurrentInput(),
+        message: String = CollectionManager.TR.cardTemplatesDiscardChanges(),
         negativeMethod: () -> Unit = {},
         neutralMethod: (() -> Unit)? = null,
         positiveMethod: () -> Unit,
