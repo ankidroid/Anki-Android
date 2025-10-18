@@ -356,6 +356,7 @@ dependencies {
     }
     api project(":api")
     implementation libs.androidx.work.runtime
+    implementation libs.androidx.lifecycle.process
     lintChecks project(":lint-rules")
     coreLibraryDesugaring libs.desugar.jdk.libs.nio
 
