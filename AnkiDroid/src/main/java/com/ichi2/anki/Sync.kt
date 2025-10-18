@@ -25,12 +25,15 @@ import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.common.time.TimeManager
+import com.ichi2.anki.dialogs.ConfirmationDialog
 import com.ichi2.anki.dialogs.SyncErrorDialog
+import com.ichi2.anki.libanki.exception.ConfirmModSchemaException
 import com.ichi2.anki.observability.ChangeManager.notifySubscribersAllValuesChanged
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.settings.enums.ShouldFetchMedia
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.internationalization.toSentenceCase
+import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.worker.SyncMediaWorker
 import com.ichi2.preferences.VersatileTextWithASwitchPreference
 import com.ichi2.utils.NetworkUtils
@@ -367,3 +370,30 @@ fun DeckPicker.showSyncLogMessage(
 fun setLastSyncTimeToNow() {
     Prefs.lastSyncTime = TimeManager.time.intTimeMS()
 }
+
+/**
+ * [launchCatchingTask], showing a one-way sync dialog: [R.string.full_sync_confirmation]
+ *
+ * @param block code which may throw [ConfirmModSchemaException]
+ */
+fun AnkiActivity.launchCatchingRequiringOneWaySync(block: suspend () -> Unit) =
+    launchCatchingTask {
+        try {
+            block()
+        } catch (e: ConfirmModSchemaException) {
+            e.log()
+
+            // .also is used to ensure the activity is used as context
+            val confirmModSchemaDialog =
+                ConfirmationDialog().also { dialog ->
+                    dialog.setArgs(message = getString(R.string.full_sync_confirmation))
+                    dialog.setConfirm {
+                        launchCatchingTask {
+                            withCol { modSchemaNoCheck() }
+                            block()
+                        }
+                    }
+                }
+            showDialogFragment(confirmModSchemaDialog)
+        }
+    }
