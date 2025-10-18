@@ -37,17 +37,6 @@ jobs:
         languages: ${{ matrix.language }}
         build-mode: ${{ matrix.build-mode }}
 
-      if: matrix.build-mode == 'manual'
-      shell: bash
-      run: |
-        echo 'If you are using a "manual" build mode for one or more of the' \
-          'languages you are analyzing, replace this with the commands to build' \
-          'your code, for example:'
-        echo '  ./gradlew --no-daemon assembleDebug -x lint'
-        echo '  ./gradlew --no-daemon assembleRelease -x lint'
-        # You should replace the above example with the appropriate Gradle tasks
-        # for your project. Keep this step to perform the build required for CodeQL extraction.
-
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v4
       with:
