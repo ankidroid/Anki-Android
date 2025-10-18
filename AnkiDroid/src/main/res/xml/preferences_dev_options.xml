@@ -117,5 +117,9 @@
             android:title="Enable new notifications"
             android:key="@string/pref_new_review_reminders"
             android:defaultValue="false"/>
+        <SwitchPreferenceCompat
+            android:title="Switch Profile option"
+            android:key="@string/pref_enable_switch_profile_key"
+            android:defaultValue="false"/>
     </com.ichi2.anki.preferences.ExtendedPreferenceCategory>
 </PreferenceScreen>
