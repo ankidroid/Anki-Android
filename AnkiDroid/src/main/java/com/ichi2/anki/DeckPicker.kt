@@ -98,6 +98,7 @@ import com.ichi2.anki.InitialActivity.StartupFailure.SDCardNotMounted
 import com.ichi2.anki.InitialActivity.StartupFailure.WebviewFailed
 import com.ichi2.anki.IntentHandler.Companion.intentToReviewDeckFromShortcuts
 import com.ichi2.anki.StudyOptionsFragment.StudyOptionsListener
+import com.ichi2.anki.account.AccountActivity
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.android.back.exitViaDoubleTapBackCallback
 import com.ichi2.anki.android.input.ShortcutGroup
@@ -2110,7 +2111,7 @@ open class DeckPicker :
             return
         }
 
-        MyAccount.checkNotificationPermission(this, notificationPermissionLauncher)
+        AccountActivity.checkNotificationPermission(this, notificationPermissionLauncher)
 
         /** Nested function that makes the connection to
          * the sync server and starts syncing the data */
@@ -2133,9 +2134,8 @@ open class DeckPicker :
     }
 
     override fun loginToSyncServer() {
-        val myAccount = Intent(this, MyAccount::class.java)
-        myAccount.putExtra("notLoggedIn", true)
-        loginForSyncLauncher.launch(myAccount)
+        val intent = AccountActivity.getIntent(this, forResult = true)
+        loginForSyncLauncher.launch(intent)
     }
 
     // Callback to import a file -- adding it to existing collection

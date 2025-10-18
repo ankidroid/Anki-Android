@@ -13,7 +13,12 @@
         android:layout_height="match_parent"
         android:foregroundGravity="center">
 
-        <include layout="@layout/toolbar" />
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:navigationContentDescription="@string/abc_action_bar_up_description"
+            android:navigationIcon="?attr/homeAsUpIndicator"/>
 
         <ScrollView
             android:layout_width="match_parent"
