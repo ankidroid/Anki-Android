@@ -105,6 +105,7 @@ import com.squareup.seismic.ShakeDetector
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import org.jetbrains.annotations.VisibleForTesting
 import timber.log.Timber
 import java.lang.IllegalArgumentException
 import kotlin.math.roundToInt
@@ -348,6 +349,7 @@ class ReviewerFragment :
     }
 
     /** Chooses the input type based on whether the expected answer is a number or text */
+    @VisibleForTesting
     fun chooseInputType(typeAnswer: TypeAnswer): Int =
         if (stripHtml(typeAnswer.expectedAnswer).matches(Regex("^-?\\d+([.,]\\d*)?$"))) {
             InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL or InputType.TYPE_NUMBER_FLAG_SIGNED

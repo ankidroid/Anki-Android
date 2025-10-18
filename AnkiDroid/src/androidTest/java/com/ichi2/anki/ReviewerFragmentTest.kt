@@ -42,6 +42,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.util.concurrent.TimeUnit
+import kotlin.time.Duration.Companion.seconds
 
 @RunWith(AndroidJUnit4::class)
 class ReviewerFragmentTest : InstrumentedTest() {
@@ -142,7 +143,7 @@ class ReviewerFragmentTest : InstrumentedTest() {
             )
 
         testValues.forEachIndexed { index, (value, _) ->
-            addBasicWithTypingNote(value, index)
+            addNewBasicWithTypingCardAndDeck(value, index)
         }
 
         // Check decks after adding all notes to ensure that the deck list is updated with the new cards
@@ -166,14 +167,14 @@ class ReviewerFragmentTest : InstrumentedTest() {
         }
     }
 
-    private fun addBasicWithTypingNote(
+    private fun addNewBasicWithTypingCardAndDeck(
         value: String,
         index: Int,
     ) {
         val note = addBasicWithTypingNote(value, value)
         val card = note.firstCard(col)
         card.did = col.decks.id("Default$index")
-        card.update { this }
+        col.updateCards(listOf(card))
     }
 
     private fun clickShowAnswerAndAnswerGood() {
@@ -190,7 +191,7 @@ class ReviewerFragmentTest : InstrumentedTest() {
         onView(withId(R.id.type_answer_edit_text)).checkWithTimeout(
             matches(isDisplayed()),
             100,
-            TimeUnit.SECONDS.toMillis(30),
+            30.seconds.inWholeMilliseconds,
         )
     }
 
