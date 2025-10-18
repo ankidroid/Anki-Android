@@ -18,31 +18,32 @@ jobs:
       security-events: write
 
     steps:
+      # 1. リポジトリ取得
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 2. JDK17
+      # 2. JDK 17 セットアップ（安定動作用）
       - name: Setup JDK 17
         uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: '17'
 
-      # 4. Init CodeQL（light query）
+      # 3. CodeQL初期化（軽量クエリ）
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v3
         with:
           languages: java-kotlin
-          queries: security-extended
+          queries: security-extended   # 軽量かつ主要チェックのみ
           ram: 6144
           threads: 2
 
-      # 5. 軽量ビルド（APK生成なし / Play依存なし）
-      - name: Compile only (Fdroid Debug)
+      # 4. 軽量ビルド（APK生成なし・Play Debugフレーバー）
+      - name: Compile only (Play Debug)
         run: |
           ./gradlew --no-daemon --max-workers=2 -x test -x lint :AnkiDroid:compilePlayDebugSources
 
-      # 6. CodeQL Analysis
+      # 5. CodeQL解析実行
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v3
         with:
