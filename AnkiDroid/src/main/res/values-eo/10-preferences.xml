@@ -231,8 +231,9 @@
     <string name="misc" maxLength="41">Aliaj</string>
     <!-- Review reminders -->
     <string name="add_reminder" comment="Label for the add reminder button in the screen for adding and editing review reminders">Aldoni memorigon</string>
-    <string name="add_review_reminder" comment="Title of the screen for creating a new review reminder">Add review reminder</string>
-    <string name="edit_review_reminder" comment="Title of the screen for editing an existing review reminder">Edit review reminder</string>
+    <string name="add_review_reminder" comment="Title of the screen for creating a new review reminder">Aldoni memorigon pri ripetado</string>
+    <string name="edit_review_reminder" comment="Title of the screen for editing an existing review reminder">Redakti memorigon pri ripetado</string>
+    <string name="you_have_no_review_reminders" comment="Text that appears in the review reminder editing screen when there are no reminders set">Vi havas neniun memorigon pri ripetado</string>
     <!-- studyoptions -->
     <string name="studyoptions_limit_select_tags">Elekti etikedojn</string>
     <!-- Deck configurations -->

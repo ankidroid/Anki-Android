@@ -60,13 +60,13 @@
     <!-- html_size_code_labels -->
     <string name="html_size_code_xx_small">xx-small</string>
     <string name="html_size_code_x_small">x-small</string>
-    <string name="html_size_code_small">small</string>
-    <string name="html_size_code_medium">medium</string>
-    <string name="html_size_code_large">large</string>
+    <string name="html_size_code_small">Balaca</string>
+    <string name="html_size_code_medium">Orta</string>
+    <string name="html_size_code_large">Böyük</string>
     <string name="html_size_code_x_large">x-large</string>
     <string name="html_size_code_xx_large">xx-large</string>
     <!-- gestures_labels -->
-    <string name="answer_again" maxLength="41">Answer again</string>
+    <string name="answer_again" maxLength="41">Yenidən cavab ver</string>
     <string name="answer_hard" maxLength="41">Answer hard</string>
     <string name="answer_good" maxLength="41">Answer good</string>
     <string name="answer_easy" maxLength="41">Answer easy</string>
@@ -78,7 +78,7 @@
     <string name="gesture_flag_pink" maxLength="41">Toggle pink flag</string>
     <string name="gesture_flag_turquoise" maxLength="41">Toggle turquoise flag</string>
     <string name="gesture_flag_purple" maxLength="41">Toggle purple flag</string>
-    <string name="gesture_flag_remove" maxLength="41">Remove flag</string>
+    <string name="gesture_flag_remove" maxLength="41">Bayrağı sil</string>
     <string name="gesture_page_up" maxLength="41">Page up</string>
     <string name="gesture_page_down" maxLength="41">Page down</string>
     <string name="gesture_toggle_whiteboard" maxLength="41">Toggle whiteboard</string>
@@ -86,6 +86,6 @@
     <string name="gesture_show_hint" maxLength="41">Show hint</string>
     <string name="gesture_show_all_hints" maxLength="41">Show all hints</string>
     <string name="record_voice" maxLength="41">Record voice</string>
-    <string name="replay_voice" maxLength="41">Replay voice</string>
-    <string name="save_voice" maxLength="41">Save recording</string>
+    <string name="replay_voice" maxLength="41">Səsi yenidən oynat</string>
+    <string name="save_voice" maxLength="41">Səsi yadda saxla</string>
 </resources>

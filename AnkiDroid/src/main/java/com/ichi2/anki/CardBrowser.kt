@@ -27,7 +27,6 @@ import android.view.MenuItem
 import android.view.SubMenu
 import android.view.View
 import android.view.WindowManager
-import android.view.inputmethod.InputMethodManager
 import android.widget.BaseAdapter
 import android.widget.LinearLayout
 import android.widget.Spinner
@@ -102,6 +101,7 @@ import com.ichi2.anki.ui.internationalization.toSentenceCase
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.widgets.DeckDropDownAdapter
 import com.ichi2.ui.CardBrowserSearchView
+import com.ichi2.utils.AndroidUiUtils.hideKeyboard
 import com.ichi2.utils.LanguageUtil
 import com.ichi2.utils.increaseHorizontalPaddingOfOverflowMenuIcons
 import com.ichi2.widget.WidgetStatus.updateInBackground
@@ -592,8 +592,7 @@ open class CardBrowser :
         Timber.d("hideKeyboard()")
         searchView?.let { view ->
             view.clearFocus()
-            val imm = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
-            imm?.hideSoftInputFromWindow(view.windowToken, 0)
+            view.hideKeyboard()
         }
     }
 

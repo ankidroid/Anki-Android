@@ -5,19 +5,14 @@ on:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
-  schedule:
-    - cron: '34 23 * * 1'
 
 jobs:
   analyze:
     name: Analyze (${{ matrix.language }})
     runs-on: ${{ (matrix.language == 'swift' && 'macos-latest') || 'ubuntu-latest' }}
     permissions:
-
       security-events: write
-
       packages: read
-
       actions: read
       contents: read
 
@@ -33,7 +28,6 @@ jobs:
           build-mode: none
         - language: python
           build-mode: none
-
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4

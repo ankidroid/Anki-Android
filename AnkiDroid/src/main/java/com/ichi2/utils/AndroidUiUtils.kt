@@ -66,4 +66,12 @@ object AndroidUiUtils {
             runnable?.run()
         }, 200)
     }
+
+    /**
+     * Sends a request to hide the soft keyboard for this view.
+     */
+    fun View.hideKeyboard() {
+        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(windowToken, 0)
+    }
 }
