@@ -38,9 +38,9 @@ import anki.import_export.ExportLimit
 import anki.import_export.exportLimit
 import anki.notes.noteIds
 import com.google.android.material.progressindicator.CircularProgressIndicator
+import com.ichi2.anki.ALL_DECKS_ID
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.anki.DeckSpinnerSelection
 import com.ichi2.anki.R
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.time.TimeManager
@@ -153,7 +153,7 @@ class ExportDialogFragment : DialogFragment() {
                 mutableListOf(
                     DeckNameId(
                         requireActivity().getString(R.string.card_browser_all_decks),
-                        DeckSpinnerSelection.ALL_DECKS_ID,
+                        ALL_DECKS_ID,
                     ),
                 )
             allDecks.addAll(withCol { decks.allNamesAndIds(false) })
@@ -420,7 +420,7 @@ class ExportDialogFragment : DialogFragment() {
                 val deckNameId =
                     (deckSelector.adapter as DeckDisplayAdapter)
                         .getItem(deckSelector.selectedItemPosition)
-                if (deckNameId.id == DeckSpinnerSelection.ALL_DECKS_ID) {
+                if (deckNameId.id == ALL_DECKS_ID) {
                     exportLimit { this.wholeCollection = Empty.getDefaultInstance() }
                 } else {
                     exportLimit { this.deckId = deckNameId.id }
