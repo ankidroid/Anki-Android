@@ -34,12 +34,12 @@ import anki.collection.OpChangesWithCount
 import anki.config.ConfigKey
 import anki.search.BrowserColumns
 import anki.search.BrowserRow
+import com.ichi2.anki.ALL_DECKS_ID
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.CrashReportService
-import com.ichi2.anki.DeckSpinnerSelection.Companion.ALL_DECKS_ID
 import com.ichi2.anki.Flag
 import com.ichi2.anki.PreviewerDestination
 import com.ichi2.anki.browser.CardBrowserViewModel.ChangeMultiSelectMode.MultiSelectCause

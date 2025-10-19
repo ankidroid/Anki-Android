@@ -20,7 +20,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import com.ichi2.anki.DeckSpinnerSelection
+import com.ichi2.anki.ALL_DECKS_ID
 import com.ichi2.anki.libanki.Consts
 import com.ichi2.anki.libanki.DeckId
 import timber.log.Timber
@@ -62,13 +62,13 @@ class AddEditReminderDialogViewModel(
             when (dialogMode) {
                 is AddEditReminderDialog.DialogMode.Add -> {
                     when (dialogMode.schedulerScope) {
-                        is ReviewReminderScope.Global -> DeckSpinnerSelection.ALL_DECKS_ID
+                        is ReviewReminderScope.Global -> ALL_DECKS_ID
                         is ReviewReminderScope.DeckSpecific -> dialogMode.schedulerScope.did
                     }
                 }
                 is AddEditReminderDialog.DialogMode.Edit -> {
                     when (dialogMode.reminderToBeEdited.scope) {
-                        is ReviewReminderScope.Global -> DeckSpinnerSelection.ALL_DECKS_ID
+                        is ReviewReminderScope.Global -> ALL_DECKS_ID
                         is ReviewReminderScope.DeckSpecific -> dialogMode.reminderToBeEdited.scope.did
                     }
                 }
@@ -76,8 +76,7 @@ class AddEditReminderDialogViewModel(
         )
 
     /**
-     * [com.ichi2.anki.DeckSpinnerSelection.ALL_DECKS_ID] is used to represent All Decks
-     * (i.e. [ReviewReminderScope.Global]) being selected.
+     * [ALL_DECKS_ID] is used to represent All Decks (i.e. [ReviewReminderScope.Global]) being selected.
      */
     val deckSelected: LiveData<DeckId> = _deckSelected
 
@@ -126,7 +125,7 @@ class AddEditReminderDialogViewModel(
                 ),
             scope =
                 when (deckSelected.value) {
-                    DeckSpinnerSelection.ALL_DECKS_ID -> ReviewReminderScope.Global
+                    ALL_DECKS_ID -> ReviewReminderScope.Global
                     else ->
                         ReviewReminderScope.DeckSpecific(
                             did = deckSelected.value ?: Consts.DEFAULT_DECK_ID,
