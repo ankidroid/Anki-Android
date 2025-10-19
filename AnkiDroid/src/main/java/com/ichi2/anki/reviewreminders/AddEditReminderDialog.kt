@@ -39,8 +39,8 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputLayout
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
+import com.ichi2.anki.ALL_DECKS_ID
 import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.anki.DeckSpinnerSelection
 import com.ichi2.anki.R
 import com.ichi2.anki.dialogs.ConfirmationDialog
 import com.ichi2.anki.isDefaultDeckEmpty
@@ -148,7 +148,7 @@ class AddEditReminderDialog : DialogFragment() {
             val selectedDeckId: DeckId =
                 when (selectedDeck) {
                     is SelectableDeck.Deck -> selectedDeck.deckId
-                    is SelectableDeck.AllDecks -> DeckSpinnerSelection.ALL_DECKS_ID
+                    is SelectableDeck.AllDecks -> ALL_DECKS_ID
                     else -> Consts.DEFAULT_DECK_ID
                 }
             viewModel.setDeckSelected(selectedDeckId)
@@ -205,14 +205,14 @@ class AddEditReminderDialog : DialogFragment() {
     private suspend fun getValidDeckSelection(): Pair<DeckId, String> {
         suspend fun getFallbackSelection(): Pair<DeckId, String> =
             if (isDefaultDeckEmpty()) {
-                Pair(DeckSpinnerSelection.ALL_DECKS_ID, getString(R.string.card_browser_all_decks))
+                Pair(ALL_DECKS_ID, getString(R.string.card_browser_all_decks))
             } else {
                 Pair(Consts.DEFAULT_DECK_ID, withCol { decks.name(Consts.DEFAULT_DECK_ID) })
             }
 
         val currentlySelectedDeckID = viewModel.deckSelected.value
         return when (currentlySelectedDeckID) {
-            DeckSpinnerSelection.ALL_DECKS_ID -> Pair(DeckSpinnerSelection.ALL_DECKS_ID, getString(R.string.card_browser_all_decks))
+            ALL_DECKS_ID -> Pair(ALL_DECKS_ID, getString(R.string.card_browser_all_decks))
             Consts.DEFAULT_DECK_ID -> getFallbackSelection()
             null -> getFallbackSelection()
             else -> {

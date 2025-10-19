@@ -36,6 +36,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import anki.decks.deckTreeNode
+import com.ichi2.anki.ALL_DECKS_ID
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.OnContextAndLongClickListener.Companion.setOnContextAndLongClickListener
 import com.ichi2.anki.R
@@ -436,7 +437,6 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
     }
 
     companion object {
-        const val ALL_DECKS_ID = 0L
         private const val SUMMARY_MESSAGE = "summaryMessage"
         private const val TITLE = "title"
         private const val KEEP_RESTORE_DEFAULT_BUTTON = "keepRestoreDefaultButton"

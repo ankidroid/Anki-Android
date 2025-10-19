@@ -595,7 +595,7 @@ open class CardBrowser :
         registerReceiver()
 
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
-        updateAppBarInfo(viewModel.deckId ?: DeckSpinnerSelection.ALL_DECKS_ID)
+        updateAppBarInfo(viewModel.deckId ?: ALL_DECKS_ID)
     }
 
     override fun onKeyUp(
@@ -1288,7 +1288,7 @@ open class CardBrowser :
             try {
                 when (val deckId = viewModel.lastDeckId) {
                     null -> getString(R.string.card_browser_unknown_deck_name)
-                    DeckSpinnerSelection.ALL_DECKS_ID -> getString(R.string.card_browser_all_decks)
+                    ALL_DECKS_ID -> getString(R.string.card_browser_all_decks)
                     else -> getColUnsafe.decks.name(deckId)
                 }
             } catch (e: Exception) {
@@ -1357,7 +1357,7 @@ open class CardBrowser :
         launchCatchingTask {
             val deckName =
                 when (deckId) {
-                    DeckSpinnerSelection.ALL_DECKS_ID -> getString(R.string.card_browser_all_decks)
+                    ALL_DECKS_ID -> getString(R.string.card_browser_all_decks)
                     else -> withCol { decks.getLegacy(deckId)?.name }
                 }
             findViewById<TextView>(R.id.deck_name)?.text = deckName
