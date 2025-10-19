@@ -61,11 +61,19 @@
                     android:gravity="start|center_vertical"
                     android:textStyle="bold"
                     android:text="@string/CardEditorNoteDeck" />
-                <Spinner
-                    android:id="@+id/note_deck_spinner"
+                <!-- different horizontal padding to match note_type_spinner drop down alignment -->
+                <com.ichi2.ui.FixedTextView
+                    android:id="@+id/note_deck_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:popupTheme="@style/ActionBar.Popup"/>
+                    android:paddingStart="8dp"
+                    android:paddingEnd="12dp"
+                    android:drawableEnd="@drawable/id_arrow_drop_down"
+                    android:background="?attr/selectableItemBackground"
+                    android:minHeight="?attr/listPreferredItemHeightSmall"
+                    android:gravity="center_vertical"
+                    tools:text="Deck name here"
+                    />
             </LinearLayout>
 
             <!-- Front/Back/Attach views added in NoteEditor.populateEditFields(..) -->

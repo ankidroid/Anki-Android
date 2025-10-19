@@ -58,7 +58,6 @@ import androidx.annotation.CheckResult
 import androidx.annotation.DrawableRes
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.content.FileProvider
@@ -239,7 +238,6 @@ class NoteEditorFragment :
 
     @VisibleForTesting
     internal var noteTypeSpinner: Spinner? = null
-    private var deckSpinnerSelection: DeckSpinnerSelection? = null
     private var imageOcclusionButtonsContainer: LinearLayout? = null
     private var selectImageForOcclusionButton: Button? = null
     private var editOcclusionsButton: Button? = null
@@ -433,11 +431,7 @@ class NoteEditorFragment :
         }
         require(deck is SelectableDeck.Deck)
         deckId = deck.deckId
-        // this is called because DeckSpinnerSelection.onDeckAdded doesn't update the list
-        deckSpinnerSelection!!.initializeNoteEditorDeckSpinner(getColUnsafe)
-        launchCatchingTask {
-            deckSpinnerSelection!!.selectDeckById(deckId, false)
-        }
+        view?.findViewById<TextView>(R.id.note_deck_name)?.text = deck.name
     }
 
     private enum class AddClozeType {
@@ -825,17 +819,14 @@ class NoteEditorFragment :
         if (!addNote && editorNote!!.notetype.templates.length() > 1) {
             deckTextView.setText(R.string.CardEditorCardDeck)
         }
-        deckSpinnerSelection =
-            DeckSpinnerSelection(
-                requireContext() as AppCompatActivity,
-                requireView().findViewById(R.id.note_deck_spinner),
-                showAllDecks = false,
-                alwaysShowDefault = true,
-                showFilteredDecks = false,
-                fragmentManagerSupplier = { childFragmentManager },
-            )
-        deckSpinnerSelection!!.initializeNoteEditorDeckSpinner(col)
+
         deckId = requireArguments().getLong(EXTRA_DID, deckId)
+        view?.findViewById<TextView>(R.id.note_deck_name)?.apply {
+            text = col.decks.name(deckId)
+            setOnClickListener {
+                startDeckSelection(all = false, filtered = false)
+            }
+        }
         val getTextFromSearchView = requireArguments().getString(EXTRA_TEXT_FROM_SEARCH_VIEW)
         setDid(editorNote)
         setNote(editorNote, FieldChangeType.onActivityCreation(shouldReplaceNewlines()))
@@ -1055,7 +1046,7 @@ class NoteEditorFragment :
                 }
             KeyEvent.KEYCODE_D -> // null check in case Spinner is moved into options menu in the future
                 if (event.isCtrlPressed) {
-                    launchCatchingTask { deckSpinnerSelection!!.displayDeckSelectionDialog() }
+                    launchCatchingTask { startDeckSelection(all = false, filtered = false) }
                     return true
                 }
             KeyEvent.KEYCODE_L ->
@@ -1847,7 +1838,7 @@ class NoteEditorFragment :
             )
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
                 if (i == 0) {
-                    requireView().findViewById<View>(R.id.note_deck_spinner).nextFocusForwardId = newEditText.id
+                    requireView().findViewById<View>(R.id.note_deck_name).nextFocusForwardId = newEditText.id
                 }
                 if (previous != null) {
                     previous.lastViewInTabOrder.nextFocusForwardId = newEditText.id
@@ -2379,7 +2370,10 @@ class NoteEditorFragment :
         }
 
         deckId = calculateDeckId()
-        launchCatchingTask { deckSpinnerSelection!!.selectDeckById(deckId, false) }
+        launchCatchingTask {
+            val selectedDeckName = withCol { decks.name(deckId) }
+            view?.findViewById<TextView>(R.id.note_deck_name)?.text = selectedDeckName
+        }
     }
 
     /** Refreshes the UI using the currently selected note type as a template  */
@@ -2393,7 +2387,7 @@ class NoteEditorFragment :
         changeType: FieldChangeType,
     ) {
         requireView().findViewById<TextView>(R.id.CardEditorDeckText).isVisible = !currentNotetypeIsImageOcclusion()
-        requireView().findViewById<View>(R.id.note_deck_spinner).isVisible = !currentNotetypeIsImageOcclusion()
+        requireView().findViewById<View>(R.id.note_deck_name).isVisible = !currentNotetypeIsImageOcclusion()
         editorNote =
             if (note == null || addNote) {
                 getColUnsafe.run {
@@ -2784,7 +2778,6 @@ class NoteEditorFragment :
 
         refreshNoteData(FieldChangeType.changeFieldCount(shouldReplaceNewlines()))
         setDuplicateFieldStyles()
-        deckSpinnerSelection!!.updateDeckPosition(deckId)
     }
 
     // ----------------------------------------------------------------------------
@@ -2858,15 +2851,14 @@ class NoteEditorFragment :
                 updateTags()
                 requireView().findViewById<View>(R.id.CardEditorTagButton).isEnabled = false
                 // ((LinearLayout) findViewById(R.id.CardEditorCardsButton)).setEnabled(false);
-                deckSpinnerSelection!!.setEnabledActionBarSpinner(false)
-                deckSpinnerSelection!!.updateDeckPosition(currentEditedCard!!.did)
+                view?.findViewById<TextView>(R.id.note_deck_name)?.isEnabled = false
                 updateFieldsFromStickyText()
             } else {
                 populateEditFields(FieldChangeType.refresh(shouldReplaceNewlines()), false)
                 updateCards(currentEditedCard!!.noteType(getColUnsafe))
                 requireView().findViewById<View>(R.id.CardEditorTagButton).isEnabled = true
                 // ((LinearLayout) findViewById(R.id.CardEditorCardsButton)).setEnabled(false);
-                deckSpinnerSelection!!.setEnabledActionBarSpinner(true)
+                view?.findViewById<TextView>(R.id.note_deck_name)?.isEnabled = true
             }
         }
 

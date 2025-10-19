@@ -17,12 +17,7 @@ package com.ichi2.anki
 
 import android.view.MotionEvent
 import android.view.View
-import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import android.widget.Spinner
-import android.widget.TextView
-import androidx.annotation.LayoutRes
-import androidx.annotation.MainThread
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.ichi2.anki.CollectionManager.withCol
@@ -72,40 +67,6 @@ class DeckSpinnerSelection(
     // This should be deckDropDownAdapter.decks
     // but this class also handles initializeNoteEditorDeckSpinner, so this can't happen yet
     private var dropDownDecks: MutableList<DeckNameId>? = null
-
-    @MainThread // spinner.adapter
-    fun initializeNoteEditorDeckSpinner(
-        col: Collection,
-        @LayoutRes layoutResource: Int = R.layout.multiline_spinner_item,
-    ) {
-        computeDropDownDecks(col, includeFiltered = false).toMutableList().let {
-            dropDownDecks = it
-            val deckNames = it.map { it.name }
-            val noteDeckAdapter: ArrayAdapter<String?> =
-                object :
-                    ArrayAdapter<String?>(context, layoutResource, deckNames as List<String?>) {
-                    override fun getDropDownView(
-                        position: Int,
-                        convertView: View?,
-                        parent: ViewGroup,
-                    ): View {
-                        // Cast the drop down items (popup items) as text view
-                        val tv = super.getDropDownView(position, convertView, parent) as TextView
-
-                        // If this item is selected
-                        if (position == spinner.selectedItemPosition) {
-                            tv.setBackgroundColor(context.getColor(R.color.note_editor_selected_item_background))
-                            tv.setTextColor(context.getColor(R.color.note_editor_selected_item_text))
-                        }
-
-                        // Return the modified view
-                        return tv
-                    }
-                }
-            spinner.adapter = noteDeckAdapter
-            setSpinnerListener()
-        }
-    }
 
     /** @return All decks. */
     private fun computeDropDownDecks(
