@@ -97,7 +97,6 @@ import com.ichi2.anki.InitialActivity.StartupFailure.FutureAnkidroidVersion
 import com.ichi2.anki.InitialActivity.StartupFailure.SDCardNotMounted
 import com.ichi2.anki.InitialActivity.StartupFailure.WebviewFailed
 import com.ichi2.anki.IntentHandler.Companion.intentToReviewDeckFromShortcuts
-import com.ichi2.anki.StudyOptionsFragment.StudyOptionsListener
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.android.back.exitViaDoubleTapBackCallback
 import com.ichi2.anki.android.input.ShortcutGroup
@@ -196,7 +195,6 @@ import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
 import com.ichi2.utils.title
-import com.ichi2.widget.WidgetStatus
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
@@ -239,7 +237,6 @@ import java.io.File
 @NeedsTest("If the user selects 'Sync Profile' in the app intro, a sync starts immediately")
 open class DeckPicker :
     NavigationDrawerActivity(),
-    StudyOptionsListener,
     SyncErrorDialogListener,
     ImportDialogListener,
     OnRequestPermissionsResultCallback,
@@ -464,6 +461,7 @@ open class DeckPicker :
                         sched.haveBuried(),
                     )
                 }
+            CardBrowser.clearLastDeckId()
             updateDeckList()
             showDialogFragment(
                 DeckPickerContextMenu.newInstance(
@@ -622,7 +620,7 @@ open class DeckPicker :
                 CustomStudyAction.CUSTOM_STUDY_SESSION -> {
                     Timber.d("Custom study created")
                     updateDeckList()
-                    openStudyOptions(false)
+                    openStudyOptions()
                 }
                 CustomStudyAction.EXTEND_STUDY_LIMITS -> {
                     Timber.d("Study limits updated")
@@ -692,7 +690,7 @@ open class DeckPicker :
 
         fun onDeckCountsChanged(unit: Unit) {
             updateDeckList()
-            if (fragmented) loadStudyOptionsFragment(false)
+            if (fragmented) loadStudyOptionsFragment()
         }
 
         fun onDestinationChanged(destination: Destination) {
@@ -826,7 +824,7 @@ open class DeckPicker :
 
                     // Open StudyOptionsFragment if in fragmented mode
                     if (fragmented) {
-                        loadStudyOptionsFragment(false)
+                        loadStudyOptionsFragment()
 
                         val resizingDivider = findViewById<View>(R.id.homescreen_resizing_divider)
                         val parentLayout = findViewById<LinearLayout>(R.id.deckpicker_xl_view)
@@ -1141,9 +1139,7 @@ open class DeckPicker :
                 updateMenuState()
                 updateSearchVisibilityFromState(menu)
                 updateDeckRelatedMenuItems(menu)
-                if (!fragmented) {
-                    updateMenuFromState(menu)
-                }
+                updateMenuFromState(menu)
             }
         return super.onCreateOptionsMenu(menu)
     }
@@ -1517,11 +1513,6 @@ open class DeckPicker :
         // The deck count will be computed on resume. No need to compute it now
         viewModel.loadDeckCounts?.cancel()
         super.onPause()
-    }
-
-    override fun onStop() {
-        super.onStop()
-        WidgetStatus.updateInBackground(this@DeckPicker)
     }
 
     /**
@@ -2150,16 +2141,9 @@ open class DeckPicker :
         importColpkg(importPath)
     }
 
-    /**
-     * Load a new studyOptionsFragment. If withDeckOptions is true, the deck options activity will
-     * be loaded on top of it. Use this flag when creating a new filtered deck to allow the user to
-     * modify the filter settings before being shown the fragment. The fragment itself will handle
-     * rebuilding the deck if the settings change.
-     */
-    private fun loadStudyOptionsFragment(withDeckOptions: Boolean) {
-        val details = StudyOptionsFragment.newInstance(withDeckOptions)
+    private fun loadStudyOptionsFragment() {
         supportFragmentManager.commit {
-            replace(R.id.studyoptions_fragment, details)
+            replace(R.id.studyoptions_fragment, StudyOptionsFragment())
         }
     }
 
@@ -2186,15 +2170,12 @@ open class DeckPicker :
         startActivity(intent)
     }
 
-    private fun openStudyOptions(
-        @Suppress("SameParameterValue") withDeckOptions: Boolean,
-    ) {
+    private fun openStudyOptions() {
         if (fragmented) {
             // The fragment will show the study options screen instead of launching a new activity.
-            loadStudyOptionsFragment(withDeckOptions)
+            loadStudyOptionsFragment()
         } else {
             val intent = Intent()
-            intent.putExtra("withDeckOptions", withDeckOptions)
             intent.setClass(this, StudyOptionsActivity::class.java)
             reviewLauncher.launch(intent)
         }
@@ -2204,14 +2185,14 @@ open class DeckPicker :
         when (selectionType) {
             DeckSelectionType.DEFAULT -> {
                 if (fragmented) {
-                    openStudyOptions(false)
+                    openStudyOptions()
                 } else {
                     openReviewer()
                 }
                 return
             }
             DeckSelectionType.SHOW_STUDY_OPTIONS -> {
-                openStudyOptions(false)
+                openStudyOptions()
                 return
             }
             DeckSelectionType.SKIP_STUDY_OPTIONS -> {
@@ -2243,7 +2224,7 @@ open class DeckPicker :
             if (fragmented) {
                 // Tablets must always show the study options that corresponds to the current deck,
                 // regardless of whether the deck is currently reviewable or not.
-                openStudyOptions(withDeckOptions = false)
+                openStudyOptions()
             } else {
                 // On phones, we update the deck list to ensure the currently selected deck is
                 // highlighted correctly.
@@ -2357,7 +2338,7 @@ open class DeckPicker :
             deckListAdapter.notifyDataSetChanged()
             updateDeckList()
             if (fragmented) {
-                loadStudyOptionsFragment(false)
+                loadStudyOptionsFragment()
             }
         }
         createDeckDialog.showDialog()
@@ -2399,7 +2380,7 @@ open class DeckPicker :
                 }
             }
             updateDeckList()
-            if (fragmented) loadStudyOptionsFragment(false)
+            if (fragmented) loadStudyOptionsFragment()
         }
     }
 
@@ -2418,10 +2399,6 @@ open class DeckPicker :
         }
     }
 
-    override fun onRequireDeckListUpdate() {
-        updateDeckList()
-    }
-
     private fun openReviewer() {
         val intent = Reviewer.getIntent(this)
         reviewLauncher.launch(intent)
@@ -2435,7 +2412,7 @@ open class DeckPicker :
             deckListAdapter.notifyDataSetChanged()
             updateDeckList()
             if (fragmented) {
-                loadStudyOptionsFragment(false)
+                loadStudyOptionsFragment()
             }
             invalidateOptionsMenu()
         }

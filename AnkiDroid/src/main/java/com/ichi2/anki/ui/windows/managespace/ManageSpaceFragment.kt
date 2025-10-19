@@ -44,7 +44,6 @@ import com.ichi2.anki.ui.dialogs.tools.DialogResult
 import com.ichi2.anki.ui.dialogs.tools.awaitDialog
 import com.ichi2.anki.utils.getUserFriendlyErrorText
 import com.ichi2.anki.withProgress
-import com.ichi2.async.clearMediaAndTrash
 import com.ichi2.preferences.TextWidgetPreference
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -110,7 +109,10 @@ class ManageSpaceViewModel(
 
     suspend fun deleteMediaFiles(filesNamesToDelete: List<String>) {
         try {
-            withCol { clearMediaAndTrash(this@withCol, filesNamesToDelete) }
+            withCol {
+                media.trashFiles(filesNamesToDelete)
+                media.emptyTrash()
+            }
         } finally {
             launchCalculationOfSizeOfEverything()
             launchCalculationOfCollectionSize()

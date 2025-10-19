@@ -103,25 +103,12 @@ class DeckAdapter(
         data: List<DisplayDeckNode>,
         hasSubDecks: Boolean,
     ) {
-        // submitList is smart to not trigger a refresh if the new list is the same, but we do need
-        // an adapter refresh if the other two properties have changed even if the new data is the
-        // same as they modify some of the adapter's content appearance
-        val forceRefresh =
-            areDataSetsEqual(currentList, data) &&
-                (this.hasSubdecks != hasSubDecks)
+        // force refresh when sub decks status changes as this info isn't encapsulated in the
+        // adapter's items so there wouldn't be an ui refresh just from using submitList()
+        val forceRefresh = this.hasSubdecks != hasSubDecks
         this.hasSubdecks = hasSubDecks
         submitList(data)
         if (forceRefresh) notifyDataSetChanged()
-    }
-
-    private fun areDataSetsEqual(
-        currentSet: List<DisplayDeckNode>,
-        newSet: List<DisplayDeckNode>,
-    ): Boolean {
-        if (currentSet.size != newSet.size) return false
-        return currentSet.zip(newSet).all { (fst, snd) ->
-            fst.fullDeckName == snd.fullDeckName
-        }
     }
 
     /**
@@ -154,6 +141,7 @@ class DeckAdapter(
             runBlocking { setDeckExpander(holder.deckExpander, holder.indentView, node) }
         } else {
             holder.deckExpander.visibility = View.GONE
+            holder.indentView.minimumWidth = 0
             deckLayout.setPaddingRelative(startPadding, 0, endPadding, 0)
         }
         if (node.canCollapse) {

@@ -86,8 +86,8 @@ android {
         //
         // This ensures the correct ordering between the various types of releases (dev < alpha < beta < release) which is
         // needed for upgrades to be offered correctly.
-        versionCode=22300104
-        versionName="2.23.0alpha4"
+        versionCode=22300105
+        versionName="2.23.0alpha5"
         minSdk = libs.versions.minSdk.get().toInteger()
 
         // After #13695: change .tests_emulator.yml
@@ -366,6 +366,7 @@ dependencies {
     // modules
     implementation project(":common")
     implementation project(":libanki")
+    implementation project(":vbpd")
 
     implementation libs.androidx.activity
     implementation libs.androidx.annotation
@@ -375,6 +376,7 @@ dependencies {
     implementation libs.androidx.draganddrop
     implementation libs.androidx.exifinterface
     implementation libs.androidx.fragment.ktx
+    implementation libs.androidx.lifecycle.process
     implementation libs.androidx.media
     implementation libs.androidx.preference.ktx
     implementation libs.androidx.recyclerview
@@ -423,7 +425,6 @@ dependencies {
     implementation libs.jsoup
     implementation libs.java.semver // For AnkiDroid JS API Versioning
     implementation libs.drakeet.drawer
-    implementation libs.tapTargetPrompt
     implementation libs.colorpicker
     implementation libs.kotlin.reflect
     implementation libs.kotlin.test

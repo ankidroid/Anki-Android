@@ -97,6 +97,8 @@ val collectionMethods =
         "getIgnoredBeforeCount" to { bytes -> getIgnoredBeforeCountRaw(bytes) },
         "getRetentionWorkload" to { bytes -> getRetentionWorkloadRaw(bytes) },
         "simulateFsrsWorkload" to { bytes -> simulateFsrsWorkloadRaw(bytes) },
+        // https://github.com/ankitects/anki/pull/4326 -> saveCustomColours should be no-op in mobile clients
+        "saveCustomColours" to { bytes -> backendIdentity(bytes) },
     )
 
 suspend fun handleCollectionPostRequest(

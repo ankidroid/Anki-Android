@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2020 David Allison <davidallisongithub@gmail.com>
+ *  Copyright (c) 2025 David Allison <davidallisongithub@gmail.com>
  *
  *  This program is free software; you can redistribute it and/or modify it under
  *  the terms of the GNU General Public License as published by the Free Software
@@ -13,9 +13,25 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.ichi2.utils
 
-import androidx.core.text.HtmlCompat
+package com.ichi2.anki
 
-/** Removes HTML tags from a string */
-fun stripHtml(html: String): String = HtmlCompat.fromHtml(html, HtmlCompat.FROM_HTML_MODE_LEGACY).toString()
+import android.content.Intent
+import androidx.test.ext.junit.rules.ActivityScenarioRule
+import com.ichi2.anki.tests.InstrumentedTest
+import org.junit.Rule
+import org.junit.Test
+
+class DrawingActivityTest : InstrumentedTest() {
+    @get:Rule
+    var activityRule =
+        ActivityScenarioRule<DrawingActivity>(
+            Intent(testContext, DrawingActivity::class.java),
+        )
+
+    @Test
+    fun smokeTest_canBeLaunched() {
+        activityRule.scenario.onActivity {
+        }
+    }
+}
