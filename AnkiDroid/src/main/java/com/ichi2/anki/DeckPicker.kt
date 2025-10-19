@@ -196,7 +196,6 @@ import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
 import com.ichi2.utils.title
-import com.ichi2.widget.WidgetStatus
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
@@ -1517,11 +1516,6 @@ open class DeckPicker :
         // The deck count will be computed on resume. No need to compute it now
         viewModel.loadDeckCounts?.cancel()
         super.onPause()
-    }
-
-    override fun onStop() {
-        super.onStop()
-        WidgetStatus.updateInBackground(this@DeckPicker)
     }
 
     /**
