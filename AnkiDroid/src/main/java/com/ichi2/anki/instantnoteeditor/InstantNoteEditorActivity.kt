@@ -29,11 +29,11 @@ import android.view.MotionEvent
 import android.view.View
 import android.widget.EditText
 import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.button.MaterialButton
@@ -42,8 +42,8 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.CollectionManager.TR
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.CustomActionModeCallback
-import com.ichi2.anki.DeckSpinnerSelection
 import com.ichi2.anki.R
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.dialogs.DeckSelectionDialog
@@ -54,6 +54,7 @@ import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.anki.showThemedToast
+import com.ichi2.anki.startDeckSelection
 import com.ichi2.anki.withProgress
 import com.ichi2.themes.setTransparentBackground
 import com.ichi2.ui.FixedTextView
@@ -79,8 +80,6 @@ class InstantNoteEditorActivity :
     AnkiActivity(),
     DeckSelectionDialog.DeckSelectionListener {
     private val viewModel: InstantEditorViewModel by viewModels()
-
-    private var deckSpinnerSelection: DeckSpinnerSelection? = null
 
     private var dialogView: View? = null
 
@@ -169,19 +168,21 @@ class InstantNoteEditorActivity :
     /** Setup the deck spinner and custom editor dialog layout **/
     private fun showEditorDialog() {
         showDialog()
-        deckSpinnerSelection =
-            DeckSpinnerSelection(
-                dialogView!!.context as AppCompatActivity,
-                dialogView!!.findViewById(R.id.note_deck_spinner),
-                showAllDecks = false,
-                alwaysShowDefault = true,
-                showFilteredDecks = false,
-            ).apply {
-                initializeNoteEditorDeckSpinner(getColUnsafe, android.R.layout.simple_spinner_item)
+        updateSelectedDeckName()
+    }
+
+    private fun updateSelectedDeckName() {
+        viewModel.deckId?.let { did ->
+            if (this::instantAlertDialog.isInitialized) {
                 launchCatchingTask {
-                    viewModel.deckId?.let { selectDeckById(it, true) }
+                    withProgress {
+                        val selectedDeckName = withCol { decks.name(did) }
+                        instantAlertDialog.findViewById<TextView>(R.id.note_deck_name)?.text =
+                            selectedDeckName
+                    }
                 }
             }
+        }
     }
 
     /** Gets the shared text received through an Intent. **/
@@ -225,9 +226,8 @@ class InstantNoteEditorActivity :
                 setView(dialogView)
                 setCancelable(false)
                 setFinishOnTouchOutside(false)
-                val spinner = dialogView.findViewById<LinearLayout>(R.id.spinner_layout)
-                spinner.setOnClickListener {
-                    launchCatchingTask { deckSpinnerSelection!!.displayDeckSelectionDialog() }
+                dialogView.findViewById<LinearLayout>(R.id.spinner_layout).setOnClickListener {
+                    startDeckSelection(all = false, filtered = false)
                 }
                 dialogView.findViewById<MaterialButton>(R.id.action_save_note)?.setOnClickListener {
                     Timber.d("Save note button pressed")
@@ -553,11 +553,7 @@ class InstantNoteEditorActivity :
         }
         require(deck is SelectableDeck.Deck)
         viewModel.deckId = deck.deckId
-        // this is called because DeckSpinnerSelection.onDeckAdded doesn't update the list
-        deckSpinnerSelection!!.initializeNoteEditorDeckSpinner(getColUnsafe, android.R.layout.simple_spinner_item)
-        launchCatchingTask {
-            viewModel.deckId?.let { deckSpinnerSelection!!.selectDeckById(it, false) }
-        }
+        updateSelectedDeckName()
     }
 
     private fun setActionModeCallback(textBox: TextInputEditText) {
