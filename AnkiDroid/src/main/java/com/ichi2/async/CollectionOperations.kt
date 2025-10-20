@@ -23,20 +23,6 @@ import com.ichi2.anki.libanki.NotetypeJson
 import timber.log.Timber
 
 /**
- * Trashes the specified media files and immediately empties the trash in the given [Collection].
- *
- * @param col The [Collection] from which media files should be removed.
- * @param unused A list of media file names to be deleted.
- */
-fun clearMediaAndTrash(
-    col: Collection,
-    unused: List<String>,
-) {
-    col.media.trashFiles(unused)
-    col.media.emptyTrash()
-}
-
-/**
  * Handles everything for a note type change at once - template add / deletes as well as content updates
  */
 @KotlinCleanup("strongly type templateChanges")
