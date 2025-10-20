@@ -23,18 +23,6 @@ import com.ichi2.anki.libanki.NotetypeJson
 import timber.log.Timber
 
 /**
- * Takes a list of media file names and removes them from the [Collection]
- * @param unused List of media names to be deleted
- */
-fun deleteMedia(
-    col: Collection,
-    unused: List<String>,
-): Int {
-    col.media.trashFiles(unused)
-    return unused.size
-}
-
-/**
  * Trashes the specified media files and immediately empties the trash in the given [Collection].
  *
  * @param col The [Collection] from which media files should be removed.
