@@ -464,6 +464,7 @@ open class DeckPicker :
                         sched.haveBuried(),
                     )
                 }
+            CardBrowser.clearLastDeckId()
             updateDeckList()
             showDialogFragment(
                 DeckPickerContextMenu.newInstance(
