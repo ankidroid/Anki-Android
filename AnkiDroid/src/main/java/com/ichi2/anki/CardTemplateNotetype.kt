@@ -27,7 +27,6 @@ import com.ichi2.anki.libanki.CardTemplate
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.NoteTypeId
 import com.ichi2.anki.libanki.NotetypeJson
-import com.ichi2.async.saveNoteType
 import com.ichi2.compat.CompatHelper.Companion.compat
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import timber.log.Timber
@@ -101,6 +100,41 @@ class CardTemplateNotetype(
         dumpChanges()
         clearTempNoteTypeFiles()
         return saveNoteType(col, notetype, adjustedTemplateChanges)
+    }
+
+    /**
+     * Handles everything for a note type change at once - template add / deletes as well as content updates
+     */
+    @KotlinCleanup("strongly type templateChanges")
+    fun saveNoteType(
+        col: Collection,
+        notetype: NotetypeJson,
+        templateChanges: ArrayList<Array<Any>>,
+    ) {
+        Timber.d("saveNoteType")
+        val oldNoteType = col.notetypes.get(notetype.id)
+
+        // TODO: make undoable
+        val newTemplates = notetype.templates
+        for (change in templateChanges) {
+            val oldTemplates = oldNoteType!!.templates
+            when (change[1] as ChangeType) {
+                ChangeType.ADD -> {
+                    Timber.d("saveNoteType() adding template %s", change[0])
+                    col.notetypes.addTemplate(oldNoteType, newTemplates[change[0] as Int])
+                }
+                ChangeType.DELETE -> {
+                    Timber.d("saveNoteType() deleting template currently at ordinal %s", change[0])
+                    col.notetypes.remTemplate(oldNoteType, oldTemplates[change[0] as Int])
+                }
+            }
+        }
+
+        // required for Rust: the modified time can't go backwards, and we updated the note type by adding fields
+        // This could be done better
+        notetype.mod = oldNoteType!!.mod
+        col.notetypes.save(notetype)
+        col.notetypes.update(notetype)
     }
 
     /**
