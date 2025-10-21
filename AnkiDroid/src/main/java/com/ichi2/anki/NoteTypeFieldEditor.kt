@@ -20,8 +20,6 @@ import android.content.Context
 import android.os.Bundle
 import android.text.InputType
 import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
@@ -33,6 +31,7 @@ import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.core.os.BundleCompat
 import androidx.fragment.app.FragmentManager
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
@@ -121,12 +120,6 @@ class NoteTypeFieldEditor : AnkiActivity() {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        super.onCreateOptionsMenu(menu)
-        menuInflater.inflate(R.menu.note_type_editor, menu)
-        return true
-    }
-
     // ----------------------------------------------------------------------------
     // ANKI METHODS
     // ----------------------------------------------------------------------------
@@ -161,6 +154,7 @@ class NoteTypeFieldEditor : AnkiActivity() {
                 showDialogFragment(newInstance(fieldsLabels[position]))
                 currentPos = position
             }
+        findViewById<FloatingActionButton>(R.id.btn_add).setOnClickListener { addFieldDialog() }
     }
     // ----------------------------------------------------------------------------
     // CONTEXT MENU DIALOGUES
@@ -505,15 +499,6 @@ class NoteTypeFieldEditor : AnkiActivity() {
         }
         initialize()
     }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean =
-        when (item.itemId) {
-            R.id.action_add_new_model -> {
-                addFieldDialog()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
 
     private fun closeActivity() {
         finish()

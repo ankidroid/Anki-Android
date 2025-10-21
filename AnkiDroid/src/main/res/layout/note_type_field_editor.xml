@@ -40,6 +40,22 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/notetype_name"
             app:layout_constraintBottom_toBottomOf="parent"
+            android:clipToPadding="false"
+            android:paddingBottom="104dp"
             tools:listitem="@layout/item_notetype_field"/>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btn_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fabSize="normal"
+            app:srcCompat="@drawable/ic_add_white"
+            android:contentDescription="@string/model_field_editor_add"
+            app:backgroundTint="?attr/fab_normal"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="32dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
