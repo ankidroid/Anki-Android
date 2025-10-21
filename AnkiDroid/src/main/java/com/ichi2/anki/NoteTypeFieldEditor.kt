@@ -592,9 +592,9 @@ internal class NoteFieldAdapter(
         val view =
             convertView ?: LayoutInflater
                 .from(context)
-                .inflate(R.layout.note_type_field_editor_list_item, parent, false)
+                .inflate(R.layout.item_notetype_field, parent, false)
 
-        val nameTextView: TextView = view.findViewById(R.id.model_editor_list_display)
+        val nameTextView: TextView = view.findViewById(R.id.field_name)
 
         getItem(position)?.let {
             val (name, kind) = it
