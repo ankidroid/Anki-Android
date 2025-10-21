@@ -20,13 +20,20 @@ import android.content.Context
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.ichi2.widget.WidgetStatus
+import timber.log.Timber
 
 class SmallWidgetUpdateWorker(
-    appContext: Context,
+    val appContext: Context,
     workerParams: WorkerParameters,
 ) : Worker(appContext, workerParams) {
     override fun doWork(): Result {
-        WidgetStatus.updateInBackground(applicationContext)
-        return Result.success()
+        try {
+            WidgetStatus.updateInBackground(appContext)
+            return Result.success()
+        }catch (e: Exception){
+            val message = e.message ?: "Unknown error"
+            Timber.d(message)
+            return Result.failure()
+        }
     }
 }

@@ -58,6 +58,9 @@ androidxViewpager2 = "1.1.0"
 # https://developer.android.com/jetpack/androidx/releases/webkit
 androidxWebkit = "1.14.0"
 # https://developer.android.com/jetpack/androidx/releases/work
+androidxLifecycleProcess = "2.9.3"
+# https://developer.android.com/jetpack/androidx/releases/lifecycle
+
 androidxWork = "2.10.5"
 ankiBackend = '0.1.61-anki25.09'
 autoService = "1.1.1"
@@ -113,7 +116,6 @@ timber = "5.0.1"
 # In the past, releases have been published before the changelog
 triplet = "3.12.1"
 turbine = "1.2.1"
-lifecycleProcess = "2.9.3"
 
 [libraries]
 acra-limiter = { module = "ch.acra:acra-limiter", version.ref = "acra" }
@@ -172,6 +174,8 @@ seismic = { module = "com.squareup:seismic", version.ref = "seismic" }
 slf4j-timber = { module = "com.arcao:slf4j-timber", version.ref = "slf4jTimber" }
 jakewharton-timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
 androidx-work-runtime = { group = "androidx.work", name = "work-runtime-ktx", version.ref = "androidxWork" }
+androidx-lifecycle-process = { group = "androidx.lifecycle", name = "lifecycle-process", version.ref = "androidxLifecycleProcess" }
+
 
 
 #testing libs
@@ -202,7 +206,6 @@ mockito-kotlin = { module = "org.mockito.kotlin:mockito-kotlin", version.ref = "
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 robolectric = { module = "org.robolectric:robolectric", version.ref = "robolectric" }
 cashapp-turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
-androidx-lifecycle-process = { group = "androidx.lifecycle", name = "lifecycle-process", version.ref = "lifecycleProcess" }
 
 [plugins]
 

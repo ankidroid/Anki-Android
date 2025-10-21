@@ -36,7 +36,7 @@ class AppLifecycleObserver(
                 .build()
 
         WorkManager.getInstance(appContext).enqueueUniquePeriodicWork(
-            "Small Widget Update",
+            R.string.small_widget_update_work.toString(),
             ExistingPeriodicWorkPolicy.UPDATE,
             workRequest,
         )
