@@ -97,9 +97,7 @@ class NoteTypeFieldEditor : AnkiActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.note_type_field_editor)
         fieldsListView = findViewById(R.id.fields)
-        enableToolbar().apply {
-            setTitle(R.string.model_field_editor_title)
-        }
+        enableToolbar()
         findViewById<TextView>(R.id.notetype_name).text = intent.getStringExtra("title")
         startLoadingCollection()
         setFragmentResultListener(REQUEST_HINT_LOCALE_SELECTION) { _, bundle ->
