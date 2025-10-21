@@ -17,6 +17,6 @@
             android:layout_width="match_parent"
             android:gravity="center"
             android:layout_height="wrap_content"
-            tools:listitem="@layout/note_type_field_editor_list_item"/>
+            tools:listitem="@layout/item_notetype_field"/>
     </LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
