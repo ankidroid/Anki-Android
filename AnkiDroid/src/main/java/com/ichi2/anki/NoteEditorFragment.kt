@@ -903,8 +903,8 @@ class NoteEditorFragment :
             )
         }
 
-        // don't open keyboard if not adding note
-        if (!addNote) {
+        // Don't open keyboard if not adding note or the note type is Image Occlusion
+        if (!addNote || currentNotetypeIsImageOcclusion()) {
             requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
         }
 
