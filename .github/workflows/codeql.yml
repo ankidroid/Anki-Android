@@ -1,41 +1,146 @@
-name: CodeQL
+name: "CodeQL action"
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [main, releases/v*]
   pull_request:
-    branches: [ "main" ]
+    branches: [main, releases/v*]
+    # Run checks on reopened draft PRs to support triggering PR checks on draft PRs that were opened
+    # by other workflows.
+    types: [opened, synchronize, reopened, ready_for_review]
+  schedule:
+    # Weekly on Sunday.
+    - cron: '30 1 * * 0'
+  workflow_dispatch:
+
+defaults:
+  run:
+    shell: bash
+
+env:
+  CODEQL_ACTION_TESTING_ENVIRONMENT: codeql-action-pr-checks
 
 jobs:
-  analyze:
-    name: Analyze (java-kotlin)
+  # Identify the CodeQL tool versions to use in the analysis job.
+  check-codeql-versions:
+    if: github.triggering_actor != 'dependabot[bot]'
     runs-on: ubuntu-latest
+    outputs:
+      versions: ${{ steps.compare.outputs.versions }}
+
     permissions:
-      security-events: write
       contents: read
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v5
+    - uses: actions/checkout@v5
+    - name: Init with default CodeQL bundle from the VM image
+      id: init-default
+      uses: ./init
+      with:
+        languages: javascript
+    - name: Remove empty database
+      # allows us to run init a second time
+      run: |
+        rm -rf "$RUNNER_TEMP/codeql_databases"
+    - name: Init with latest CodeQL bundle
+      id: init-latest
+      uses: ./init
+      with:
+        tools: linked
+        languages: javascript
+    - name: Compare default and latest CodeQL bundle versions
+      id: compare
+      env:
+        CODEQL_DEFAULT: ${{ steps.init-default.outputs.codeql-path }}
+        CODEQL_LATEST: ${{ steps.init-latest.outputs.codeql-path }}
+      run: |
+        CODEQL_VERSION_DEFAULT="$("$CODEQL_DEFAULT" version --format terse)"
+        CODEQL_VERSION_LATEST="$("$CODEQL_LATEST" version --format terse)"
+        echo "Default CodeQL bundle version is $CODEQL_VERSION_DEFAULT"
+        echo "Latest CodeQL bundle version is $CODEQL_VERSION_LATEST"
 
-      - name: Setup JDK
-        uses: actions/setup-java@v5
-        with:
-          distribution: temurin
-          java-version: 21
+        # If we're running on a pull request, run with both bundles, even if `tools: linked` would
+        # be the same as `tools: null`. This allows us to make the job for each of the bundles a
+        # required status check.
+        #
+        # If we're running on push or schedule, then we can skip running with `tools: linked` when it would be
+        # the same as running with `tools: null`.
+        if [[ "$GITHUB_EVENT_NAME" != "pull_request" && "$CODEQL_VERSION_DEFAULT" == "$CODEQL_VERSION_LATEST" ]]; then
+          VERSIONS_JSON='[null]'
+        else
+          VERSIONS_JSON='[null, "linked"]'
+        fi
 
-      - name: Initialize CodeQL
-        uses: github/codeql-action/init@v4
-        with:
-          languages: java-kotlin
-          build-mode: manual
+        # Output a JSON-encoded list with the distinct versions to test against.
+        echo "Suggested matrix config for analysis job: $VERSIONS_JSON"
+        echo "versions=${VERSIONS_JSON}" >> $GITHUB_OUTPUT
 
-      # Skip compiling and running test-related tasks
-      # to prevent OOM errors and reduce build time during CodeQL analysis.
-      - name: Build with Gradle
-        run: ./gradlew assembleDebug -x test
+  analyze-javascript:
+    if: github.triggering_actor != 'dependabot[bot]'
+    needs: [check-codeql-versions]
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-22.04,ubuntu-24.04,windows-2022,windows-2025,macos-13,macos-14,macos-15]
+        tools: ${{ fromJson(needs.check-codeql-versions.outputs.versions) }}
+    runs-on: ${{ matrix.os }}
 
-      - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v4
-        with:
-          category: "/language:java-kotlin"
+    permissions:
+      contents: read
+      security-events: write
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v5
+    - name: Initialize CodeQL
+      uses: ./init
+      id: init
+      with:
+        languages: javascript
+        config-file: ./.github/codeql/codeql-config-javascript.yml
+        tools: ${{ matrix.tools }}
+    # confirm steps.init.outputs.codeql-path points to the codeql binary
+    - name: Print CodeQL Version
+      run: >
+        "$CODEQL" version --format=json
+      env:
+        CODEQL: ${{steps.init.outputs.codeql-path}}
+    - name: Perform CodeQL Analysis
+      uses: ./analyze
+      with:
+        category: "/language:javascript"
+        upload: ${{ (matrix.os == 'ubuntu-24.04' && !matrix.tools && 'always') || 'never' }}
+
+  analyze-other:
+    if: github.triggering_actor != 'dependabot[bot]'
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - language: actions
+          - language: python
+
+    permissions:
+      contents: read
+      security-events: write
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v5
+    - name: Initialize CodeQL
+      uses: ./init
+      with:
+        languages: ${{ matrix.language }}
+        build-mode: none
+        config: >
+          paths-ignore:
+            - lib
+            - tests
+          queries:
+            - uses: security-and-quality
+    - name: Perform CodeQL Analysis
+      uses: ./analyze
+      with:
+        category: "/language:${{ matrix.language }}"
