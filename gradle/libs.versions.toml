@@ -37,6 +37,8 @@ androidxDragAndDrop = "1.0.0"
 androidxExifinterface = "1.4.1"
 # https://developer.android.com/jetpack/androidx/releases/fragment
 androidxFragmentKtx = "1.8.9"
+# https://developer.android.com/jetpack/androidx/releases/lifecycle
+androidxLifecycleProcess = "2.9.3"
 # https://developer.android.com/jetpack/androidx/releases/media
 androidxMedia = "1.7.1"
 # https://developer.android.com/jetpack/androidx/releases/media3
@@ -58,9 +60,6 @@ androidxViewpager2 = "1.1.0"
 # https://developer.android.com/jetpack/androidx/releases/webkit
 androidxWebkit = "1.14.0"
 # https://developer.android.com/jetpack/androidx/releases/work
-androidxLifecycleProcess = "2.9.3"
-# https://developer.android.com/jetpack/androidx/releases/lifecycle
-
 androidxWork = "2.10.5"
 ankiBackend = '0.1.61-anki25.09'
 autoService = "1.1.1"
@@ -125,6 +124,7 @@ acra-http = { module = "ch.acra:acra-http", version.ref = "acra" }
 android-image-cropper = { module = "com.vanniktech:android-image-cropper", version.ref = "imageCropper" }
 androidx-constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "androidxConstraintlayout" }
 androidx-fragment-ktx = { module = "androidx.fragment:fragment-ktx", version.ref = "androidxFragmentKtx" }
+androidx-lifecycle-process = { group = "androidx.lifecycle", name = "lifecycle-process", version.ref = "androidxLifecycleProcess" }
 androidx-exifinterface = { module = "androidx.exifinterface:exifinterface", version.ref = "androidxExifinterface" }
 androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "androidxCoreKtx" }
 androidx-draganddrop = { module = "androidx.draganddrop:draganddrop", version.ref = "androidxDragAndDrop" }
@@ -174,8 +174,6 @@ seismic = { module = "com.squareup:seismic", version.ref = "seismic" }
 slf4j-timber = { module = "com.arcao:slf4j-timber", version.ref = "slf4jTimber" }
 jakewharton-timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
 androidx-work-runtime = { group = "androidx.work", name = "work-runtime-ktx", version.ref = "androidxWork" }
-androidx-lifecycle-process = { group = "androidx.lifecycle", name = "lifecycle-process", version.ref = "androidxLifecycleProcess" }
-
 
 
 #testing libs
