@@ -948,7 +948,7 @@ open class CardBrowser :
         actionBarMenu.findItem(R.id.action_suspend_card).apply {
             title = TR.browsingToggleSuspend().toSentenceCase(this@CardBrowser, R.string.sentence_toggle_suspend)
             // TODO: I don't think this icon is necessary
-            setIcon(R.drawable.ic_suspend)
+            setIcon(R.drawable.ic_pause_square_filled)
             isVisible = viewModel.hasSelectedAnyRows()
         }
         actionBarMenu.findItem(R.id.action_toggle_bury).apply {

@@ -85,7 +85,70 @@ import java.io.Closeable
 class CardMediaPlayer : Closeable {
     private val soundTagPlayer: SoundTagPlayer
     private val ttsPlayer: Deferred<TtsPlayer>
+    private var isTtsPlaying: Boolean = false
+    private var wasTtsPlayingBeforeSoundTagStarted: Boolean = false
+
     private val mediaErrorListener: MediaErrorListener
+
+    private var onPlaybackStarted: (() -> Unit)? = null
+
+    fun setOnPlaybackStartedListener(listener: (() -> Unit)?) {
+        // Store the listener registered in ReviewerViewModel inside CardMediaPlayer
+        // so CardMediaPlayer can invoke the listener when playback starts
+        // via the "Replay media" action, which triggers all-media playback.
+        onPlaybackStarted = listener
+
+        // Pass the listener registered in ReviewerViewModel down to SoundTagPlayer
+        // so SoundTagPlayer can invoke the listener when playback starts
+        // via an in-card play button, which triggers single-media playback.
+        soundTagPlayer.setOnPlaybackStartedListener {
+            isSoundPlaybackStart = true
+
+            listener?.invoke()
+        }
+    }
+
+    private var onSoundTagStarted: (() -> Unit)? = null
+
+    fun setOnSoundTagStartedListener(listener: (() -> Unit)?) {
+        onSoundTagStarted = listener
+    }
+
+    private var onTtsStarted: (() -> Unit)? = null
+
+    fun setOnTtsStartedListener(listener: (() -> Unit)?) {
+        onTtsStarted = listener
+    }
+
+    private var onTtsFinished: (() -> Unit)? = null
+
+    fun setOnTtsFinishedListener(listener: (() -> Unit)?) {
+        onTtsFinished = listener
+    }
+
+    private var onVideoStarted: (() -> Unit)? = null
+
+    fun setOnVideoStartedListener(listener: (() -> Unit)?) {
+        onVideoStarted = listener
+    }
+
+    private var onVideoFinished: (() -> Unit)? = null
+
+    fun setOnVideoFinishedListener(listener: (() -> Unit)?) {
+        onVideoFinished = listener
+    }
+
+    private var onVideoPaused: (() -> Unit)? = null
+
+    fun setOnVideoPausedListener(listener: (() -> Unit)?) {
+        onVideoPaused = listener
+    }
+
+    private var isSoundPlaybackStart = false
+
+    fun isSoundPlaybackStart() = isSoundPlaybackStart
+
+    fun wasTtsPlayingBeforeSoundTagStarted(): Boolean = wasTtsPlayingBeforeSoundTagStarted
 
     @VisibleForTesting
     constructor(soundTagPlayer: SoundTagPlayer, ttsPlayer: Deferred<TtsPlayer>, mediaErrorListener: MediaErrorListener) {
@@ -102,6 +165,10 @@ class CardMediaPlayer : Closeable {
                 videoPlayer = VideoPlayer(javascriptEvaluator),
             )
         this.ttsPlayer = scope.async { AndroidTtsPlayer.createInstance(scope) }
+
+        soundTagPlayer.videoPlayer.setOnVideoStartedListener {
+            onVideoStarted()
+        }
     }
 
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
@@ -130,6 +197,17 @@ class CardMediaPlayer : Closeable {
 
     fun setOnMediaGroupCompletedListener(listener: (() -> Unit)?) {
         onMediaGroupCompleted = listener
+    }
+
+    private var onSingleMediaCompleted: (() -> Unit)? = null
+
+    fun setOnSingleMediaCompletedListener(listener: (() -> Unit)?) {
+        onSingleMediaCompleted = listener
+
+        // Pass the listener registered in ReviewerViewModel down to SoundTagPlayer
+        // so SoundTagPlayer can invoke the listener
+        // when single-media playback triggered by an in-card play button completes.
+        soundTagPlayer.setOnPlaybackCompletedListener(listener)
     }
 
     suspend fun loadCardAvTags(card: Card) {
@@ -165,6 +243,7 @@ class CardMediaPlayer : Closeable {
 
     suspend fun autoplayAllForSide(cardSide: CardSide) {
         if (config.autoplay) {
+            onPlaybackStarted?.invoke()
             playAllForSide(cardSide)
         }
     }
@@ -226,6 +305,22 @@ class CardMediaPlayer : Closeable {
         playAvTagsJob?.cancelAndJoin()
     }
 
+    private var isPaused: Boolean = false
+
+    fun pause() {
+        Timber.i("CardMediaPlayer::pause soundTag playback")
+        isPaused = true
+        soundTagPlayer.pause()
+    }
+
+    fun resume() {
+        if (isPaused) {
+            Timber.i("CardMediaPlayer::resume soundTag playback")
+            isPaused = false
+            soundTagPlayer.resume()
+        }
+    }
+
     override fun close() {
         soundTagPlayer.release()
         try {
@@ -243,6 +338,7 @@ class CardMediaPlayer : Closeable {
         cardSide: CardSide,
         isAutomaticPlayback: Boolean,
     ) {
+        isPaused = false
         if (!isEnabled) return
         val avTagList =
             when (cardSide) {
@@ -277,11 +373,21 @@ class CardMediaPlayer : Closeable {
             suspend fun play() {
                 ensureActive()
                 when (tag) {
-                    is SoundOrVideoTag -> soundTagPlayer.play(tag, mediaErrorListener)
+                    is SoundOrVideoTag -> {
+                        wasTtsPlayingBeforeSoundTagStarted = isTtsPlaying
+                        onSoundTagStarted?.invoke()
+                        soundTagPlayer.play(tag, mediaErrorListener)
+                    }
                     is TTSTag -> {
+                        isTtsPlaying = true
+                        onTtsStarted?.invoke()
+
                         awaitTtsPlayer(isAutomaticPlayback)?.play(tag)?.error?.let {
                             mediaErrorListener.onTtsError(it, isAutomaticPlayback)
                         }
+
+                        isTtsPlaying = false
+                        onTtsFinished?.invoke()
                     }
                 }
                 ensureActive()
@@ -319,11 +425,15 @@ class CardMediaPlayer : Closeable {
     /**
      * Replays all sounds for [side], calling [onMediaGroupCompleted] when completed
      */
-    suspend fun replayAll(side: SingleCardSide) =
+    suspend fun replayAll(side: SingleCardSide) {
+        Timber.i("CardMediaPlayer::replay all media")
+        onPlaybackStarted?.invoke()
+
         when (side) {
             SingleCardSide.BACK -> if (config.replayQuestion) playAllForSide(CardSide.BOTH) else playAllForSide(CardSide.ANSWER)
             SingleCardSide.FRONT -> playAllForSide(CardSide.QUESTION)
         }
+    }
 
     private suspend fun awaitTtsPlayer(isAutomaticPlayback: Boolean): TtsPlayer? {
         val player =
@@ -338,15 +448,24 @@ class CardMediaPlayer : Closeable {
         return player
     }
 
+    fun onVideoStarted() {
+        Timber.i("CardMediaPlayer::video started")
+        isSoundPlaybackStart = false
+        onVideoStarted?.invoke()
+    }
+
     @NeedsTest("finish moves to next sound")
     fun onVideoFinished() {
+        Timber.i("CardMediaPlayer::video finished")
         soundTagPlayer.videoPlayer.onVideoFinished()
+        onVideoFinished?.invoke()
     }
 
     @NeedsTest("pause starts automatic answer")
     fun onVideoPaused() {
-        Timber.i("video paused")
+        Timber.i("CardMediaPlayer::video paused")
         soundTagPlayer.videoPlayer.onVideoPaused()
+        onVideoPaused?.invoke()
     }
 
     companion object {

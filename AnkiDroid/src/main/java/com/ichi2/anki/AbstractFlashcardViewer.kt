@@ -1709,6 +1709,13 @@ abstract class AbstractFlashcardViewer :
                 true
             }
 
+            ViewerCommand.PAUSE_AUDIO -> {
+                // Do nothing here
+                // (The new Reviewer handles this in ReviewerViewModel.
+                //  The legacy Reviewer does not support Pause audio.)
+                true
+            }
+
             ViewerCommand.PAGE_UP -> {
                 onPageUp()
                 true

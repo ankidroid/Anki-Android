@@ -145,12 +145,12 @@
     </item>
     <item android:id="@+id/action_suspend_card"
         android:title="@string/menu_suspend_card"
-        android:icon="@drawable/ic_suspend"
+        android:icon="@drawable/ic_pause_square_filled"
         android:visible="false"/>
     <item
         android:id="@+id/action_suspend"
         android:title="@string/menu_suspend"
-        android:icon="@drawable/ic_suspend">
+        android:icon="@drawable/ic_pause_square_filled">
         <menu>
             <item
                 android:id="@+id/action_suspend_card"

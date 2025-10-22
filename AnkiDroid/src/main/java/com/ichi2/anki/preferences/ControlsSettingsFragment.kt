@@ -124,6 +124,9 @@ class ControlsSettingsFragment :
         findPreference<ControlPreference>(getString(R.string.remove_flag_command_key))?.let {
             it.title = getString(R.string.gesture_flag_remove).toSentenceCase(R.string.sentence_gesture_flag_remove)
         }
+        findPreference<ControlPreference>(getString(R.string.pause_audio_command_key))?.let {
+            it.title = TR.studyingPauseAudio().toSentenceCase(R.string.sentence_pause_audio)
+        }
     }
 
     private fun String.toSentenceCase(
@@ -134,6 +137,8 @@ class ControlsSettingsFragment :
         if (!Prefs.isNewStudyScreenEnabled) {
             findPreference<Preference>(R.string.gestures_corner_touch_preference)?.dependency = getString(R.string.gestures_preference)
             findPreference<Preference>(R.string.pref_swipe_sensitivity_key)?.dependency = getString(R.string.gestures_preference)
+            // Hide "Pause audio" item
+            findPreference<ControlPreference>(getString(R.string.pause_audio_command_key))?.isVisible = false
             return
         }
         for (keyRes in legacyStudyScreenSettings) {

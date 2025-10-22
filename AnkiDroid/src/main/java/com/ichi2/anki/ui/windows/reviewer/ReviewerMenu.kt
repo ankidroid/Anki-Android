@@ -25,10 +25,12 @@ import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.R
 import com.ichi2.anki.preferences.reviewer.ReviewerMenuView
 import com.ichi2.anki.preferences.reviewer.ViewerAction
+import com.ichi2.anki.ui.internationalization.toSentenceCase
 import com.ichi2.anki.utils.ext.collectLatestIn
 import com.ichi2.anki.utils.ext.menu
 import com.ichi2.anki.utils.ext.removeSubMenu
 import com.ichi2.utils.setPaddedIcon
+import kotlinx.coroutines.flow.combine
 
 fun ReviewerMenuView.setup(
     lifecycle: Lifecycle,
@@ -109,4 +111,34 @@ fun ReviewerMenuView.setup(
             buryItem.setTitle(ViewerAction.BURY_CARD.titleRes)
         }
     }
+
+    val pauseAudioItem = findItem(ViewerAction.PAUSE_AUDIO.menuId)
+    // Refresh "Pause audio" action's icon and title based on pause state
+    viewModel.audioPausedFlow
+        .flowWithLifecycle(lifecycle)
+        .collectLatestIn(lifecycle.coroutineScope) { isPaused ->
+            if (isPaused) {
+                pauseAudioItem?.setPaddedIcon(context, R.drawable.ic_resume_circle)
+                pauseAudioItem?.setTitle(R.string.resume_audio)
+            } else {
+                pauseAudioItem?.setPaddedIcon(context, R.drawable.ic_pause_circle)
+                pauseAudioItem?.setTitle(
+                    CollectionManager.TR
+                        .studyingPauseAudio()
+                        .toSentenceCase(context, R.string.sentence_pause_audio),
+                )
+            }
+        }
+
+    // Toggle "Pause audio" action's enable/disable state based on playback activity
+    combine(
+        viewModel.audioActiveFlow,
+        viewModel.ttsPlayingFlow,
+        viewModel.videoActiveFlow,
+    ) { audioActive, ttsPlaying, videoActive ->
+        audioActive && !ttsPlaying && !videoActive
+    }.flowWithLifecycle(lifecycle)
+        .collectLatestIn(lifecycle.coroutineScope) { audioActiveButNotTtsNorVideo ->
+            pauseAudioItem?.isEnabled = audioActiveButNotTtsNorVideo
+        }
 }

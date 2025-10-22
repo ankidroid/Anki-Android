@@ -43,6 +43,7 @@
     <item type="id" name="action_toggle_whiteboard"/>
     <item type="id" name="action_record_voice"/>
     <item type="id" name="action_replay_media"/>
+    <item type="id" name="action_toggle_pause_audio"/>
     <item type="id" name="action_set_due_date"/>
     <item type="id" name="action_browse"/>
     <item type="id" name="action_statistics"/>

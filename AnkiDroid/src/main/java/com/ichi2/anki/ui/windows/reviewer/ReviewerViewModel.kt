@@ -108,6 +108,10 @@ class ReviewerViewModel(
     val setDueDateFlow = MutableSharedFlow<CardId>()
     val answerTimerStatusFlow = MutableStateFlow<AnswerTimerStatus?>(null)
     val answerFeedbackFlow = MutableSharedFlow<Rating>()
+    val audioActiveFlow = MutableStateFlow(false)
+    val ttsPlayingFlow = MutableStateFlow(false)
+    val audioPausedFlow = MutableStateFlow(false)
+    val videoActiveFlow = MutableStateFlow(false)
     val voiceRecorderEnabledFlow = MutableStateFlow(false)
     val whiteboardEnabledFlow = MutableStateFlow(false)
     val replayVoiceFlow = MutableSharedFlow<Unit>()
@@ -154,15 +158,98 @@ class ReviewerViewModel(
             // button with the answer buttons.
             updateNextTimes()
         }
+
         cardMediaPlayer.setOnMediaGroupCompletedListener {
             launchCatchingIO {
+                // Ignore this completion event if a new playback have already started.
+                // This is to avoid making the audio active state false when audio is actually active.
+                // (Making the state true would disable the Pause audio item.)
+                if (cardMediaPlayer.isPlaying) return@launchCatchingIO
+
                 if (!autoAdvance.shouldWaitForAudio()) return@launchCatchingIO
+
+                // Reset Pause/Active state when all media playbacks finish.
+                audioActiveFlow.value = false
+                audioPausedFlow.value = false
+                Timber.i("Group media playback completed")
 
                 if (showingAnswer.value) {
                     autoAdvance.onShowAnswer()
                 } else {
                     autoAdvance.onShowQuestion()
                 }
+            }
+        }
+
+        cardMediaPlayer.setOnSingleMediaCompletedListener {
+            launchCatchingIO {
+                delay(100)
+                // Ignore this completion event if a new playback have already started.
+                // This is to avoid making the audio active state false when audio is actually active.
+                // (Making the state true would disable the Pause audio item.)
+                if (cardMediaPlayer.isPlaying) return@launchCatchingIO
+
+                // Reset Pause/Active state when a single audio playback finishes
+                audioActiveFlow.value = false
+                audioPausedFlow.value = false
+                Timber.i("Single media playback completed")
+            }
+        }
+
+        cardMediaPlayer.setOnPlaybackStartedListener {
+            // Activate Pause Audio when in-card playback starts
+            audioActiveFlow.value = true
+            audioPausedFlow.value = false
+
+            if (cardMediaPlayer.isSoundPlaybackStart()) {
+                videoActiveFlow.value = false
+                Timber.i("videoActiveFlow = false (audio playback started)")
+            }
+
+            Timber.i("Playback started")
+        }
+
+        cardMediaPlayer.setOnSoundTagStartedListener {
+            launchCatchingIO {
+                if (cardMediaPlayer.wasTtsPlayingBeforeSoundTagStarted()) {
+                    Timber.i("TTS forced stopped because SoundTag playback started")
+                }
+                ttsPlayingFlow.value = false
+            }
+        }
+
+        cardMediaPlayer.setOnTtsStartedListener {
+            launchCatchingIO {
+                ttsPlayingFlow.value = true
+                Timber.i("TTS started")
+            }
+        }
+
+        cardMediaPlayer.setOnTtsFinishedListener {
+            launchCatchingIO {
+                ttsPlayingFlow.value = false
+                Timber.i("TTS finished")
+            }
+        }
+
+        cardMediaPlayer.setOnVideoStartedListener {
+            launchCatchingIO {
+                videoActiveFlow.value = true
+                Timber.i("videoActiveFlow = true (started)")
+            }
+        }
+
+        cardMediaPlayer.setOnVideoFinishedListener {
+            launchCatchingIO {
+                videoActiveFlow.value = false
+                Timber.i("videoActiveFlow = false (finished)")
+            }
+        }
+
+        cardMediaPlayer.setOnVideoPausedListener {
+            launchCatchingIO {
+                videoActiveFlow.value = true // Video playback is active when it is playing or paused.
+                Timber.i("videoActiveFlow = true (paused)")
             }
         }
     }
@@ -560,7 +647,13 @@ class ReviewerViewModel(
         autoAdvance.onCardChange(card)
         onCardUpdatedFlow.emit(Unit) // must be before showQuestion()
         showQuestion()
+
+        // Reset audio state
+        audioActiveFlow.value = false
+        audioPausedFlow.value = false
+
         loadAndPlayMedia(CardSide.QUESTION)
+
         canBuryNoteFlow.emit(isBuryNoteAvailable(card))
         canSuspendNoteFlow.emit(isSuspendNoteAvailable(card))
         countsFlow.emit(state.counts to state.countsIndex)
@@ -663,6 +756,27 @@ class ReviewerViewModel(
     private suspend fun replayMedia() {
         val side = if (showingAnswer.value) SingleCardSide.BACK else SingleCardSide.FRONT
         cardMediaPlayer.replayAll(side)
+        audioActiveFlow.value = true
+        audioPausedFlow.value = false
+    }
+
+    private fun togglePauseAudio() {
+        // Skip if 'audio is inactive (= neither playing nor paused)' or 'TTS audio is playing'
+        if (!audioActiveFlow.value || ttsPlayingFlow.value) {
+            Timber.i("Pause audio ignored: sound tag audio not active")
+            return
+        }
+
+        val player = cardMediaPlayer
+        if (audioPausedFlow.value) {
+            player.resume()
+            audioPausedFlow.value = false
+            Timber.i("Audio resumed")
+        } else {
+            player.pause()
+            audioPausedFlow.value = true
+            Timber.i("Audio paused")
+        }
     }
 
     fun executeAction(action: ViewerAction) {
@@ -727,6 +841,7 @@ class ReviewerViewModel(
                 ViewerAction.STATISTICS -> destinationFlow.emit(StatisticsDestination())
                 ViewerAction.BROWSE -> emitBrowseDestination()
                 ViewerAction.PLAY_MEDIA -> replayMedia()
+                ViewerAction.PAUSE_AUDIO -> togglePauseAudio()
                 ViewerAction.FLAG_MENU -> {}
             }
         }

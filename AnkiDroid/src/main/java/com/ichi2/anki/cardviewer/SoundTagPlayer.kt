@@ -52,6 +52,18 @@ class SoundTagPlayer(
             .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
             .build()
 
+    private var onPlaybackStarted: (() -> Unit)? = null
+
+    fun setOnPlaybackStartedListener(listener: (() -> Unit)?) {
+        onPlaybackStarted = listener
+    }
+
+    private var onPlaybackCompleted: (() -> Unit)? = null
+
+    fun setOnPlaybackCompletedListener(listener: (() -> Unit)?) {
+        onPlaybackCompleted = listener
+    }
+
     /**
      * AudioManager to request/release audio focus
      */
@@ -74,6 +86,10 @@ class SoundTagPlayer(
         tag: SoundOrVideoTag,
         mediaErrorListener: MediaErrorListener?,
     ) {
+        // Invoke the listener registered in CardMediaPlayer
+        // to notify that SoundTagPlayer's playback has started
+        onPlaybackStarted?.invoke()
+
         val tagType = tag.getType()
         suspendCancellableCoroutine { continuation ->
             Timber.d("Playing SoundOrVideoTag")
@@ -106,6 +122,11 @@ class SoundTagPlayer(
             setOnCompletionListener {
                 Timber.v("finished playing SoundOrVideoTag successfully")
                 abandonAudioFocus()
+
+                // Invoke the listener registered in CardMediaPlayer
+                // to notify soundTagPlayer's playback has completed
+                onPlaybackCompleted?.invoke()
+
                 // guard against a potential issue: task cancellation
                 if (!continuation.isCompleted) {
                     continuation.resume(Unit)
@@ -173,6 +194,37 @@ class SoundTagPlayer(
             Timber.w(e, "stopSounds()")
         }
         abandonAudioFocus()
+    }
+
+    private var pausedPosition: Int = 0
+    private var isPaused: Boolean = false
+
+    fun pause() {
+        try {
+            val mp = mediaPlayer
+            if (mp != null && mp.isPlaying) {
+                pausedPosition = mp.currentPosition
+                mp.pause()
+                isPaused = true
+                Timber.i("SoundTagPlayer::pause at position $pausedPosition")
+            }
+        } catch (e: Exception) {
+            Timber.w(e, "Error while pausing audio")
+        }
+    }
+
+    fun resume() {
+        try {
+            val mp = mediaPlayer
+            if (mp != null && isPaused) {
+                mp.seekTo(pausedPosition)
+                mp.start()
+                isPaused = false
+                Timber.i("SoundTagPlayer::resume from position $pausedPosition")
+            }
+        } catch (e: Exception) {
+            Timber.w(e, "Error while resuming audio")
+        }
     }
 
     /**

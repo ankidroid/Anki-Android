@@ -40,12 +40,31 @@ class VideoPlayer(
 ) {
     private var continuation: CancellableContinuation<Unit>? = null
 
+    private var onVideoStarted: (() -> Unit)? = null
+
+    fun setOnVideoStartedListener(listener: (() -> Unit)?) {
+        onVideoStarted = listener
+    }
+
+    private var onVideoFinished: (() -> Unit)? = null
+
+    fun setOnVideoPausedListener(listener: (() -> Unit)?) {
+        onVideoPaused = listener
+    }
+
+    private var onVideoPaused: (() -> Unit)? = null
+
+    fun setOnVideoFinishedListener(listener: (() -> Unit)?) {
+        onVideoFinished = listener
+    }
+
     fun playVideo(
         continuation: CancellableContinuation<Unit>,
         tag: SoundOrVideoTag,
     ) {
         this.continuation = continuation
-
+        // Notify CardMediaPlayer that video playback has started
+        onVideoStarted?.invoke()
         val fileNameToFind = tag.filename
         // find & play the video with a matching 'data-file' attribute
 
@@ -69,12 +88,16 @@ class VideoPlayer(
 
     fun onVideoFinished() {
         Timber.v("video ended")
+        // Notify CardMediaPlayer that video playback has finished
+        onVideoFinished?.invoke()
         continuation?.resume(Unit)
         continuation = null
     }
 
     fun onVideoPaused() {
         Timber.i("video paused")
+        // Notify CardMediaPlayer that video playback has been paused
+        onVideoPaused?.invoke()
         continuation?.resumeWithException(MediaException(MediaErrorBehavior.STOP_MEDIA))
         continuation = null
     }

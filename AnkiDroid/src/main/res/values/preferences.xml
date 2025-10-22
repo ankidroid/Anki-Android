@@ -113,6 +113,7 @@
     <string name="suspend_card_command_key">binding_SUSPEND_CARD</string>
     <string name="delete_command_key">binding_DELETE</string>
     <string name="play_media_command_key">binding_PLAY_MEDIA</string>
+    <string name="pause_audio_command_key">binding_PAUSE_AUDIO</string>
     <string name="abort_command_key">binding_EXIT</string>
     <string name="bury_note_command_key">binding_BURY_NOTE</string>
     <string name="suspend_note_command_key">binding_SUSPEND_NOTE</string>

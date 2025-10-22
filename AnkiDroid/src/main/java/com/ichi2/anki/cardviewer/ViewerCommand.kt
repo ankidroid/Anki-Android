@@ -41,6 +41,7 @@ enum class ViewerCommand : MappableAction<ReviewerBinding> {
     SUSPEND_CARD,
     DELETE,
     PLAY_MEDIA,
+    PAUSE_AUDIO,
     EXIT,
     BURY_NOTE,
     SUSPEND_NOTE,
@@ -127,6 +128,7 @@ enum class ViewerCommand : MappableAction<ReviewerBinding> {
                 SUSPEND_CARD -> listOf(unicode('@', CardSide.BOTH))
                 SUSPEND_NOTE -> listOf(unicode('!', CardSide.BOTH))
                 PLAY_MEDIA -> listOf(keyCode(KeyEvent.KEYCODE_R, CardSide.BOTH), keyCode(KeyEvent.KEYCODE_F5, CardSide.BOTH))
+                PAUSE_AUDIO -> listOf(keyCode(KeyEvent.KEYCODE_5, CardSide.BOTH))
                 REPLAY_VOICE -> listOf(keyCode(KeyEvent.KEYCODE_V, CardSide.BOTH))
                 RECORD_VOICE -> listOf(keyCode(KeyEvent.KEYCODE_V, CardSide.BOTH, shift()))
                 SAVE_VOICE -> listOf(keyCode(KeyEvent.KEYCODE_S, CardSide.BOTH, shift()))
