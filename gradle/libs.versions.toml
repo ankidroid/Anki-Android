@@ -58,7 +58,7 @@ androidxViewpager2 = "1.1.0"
 # https://developer.android.com/jetpack/androidx/releases/webkit
 androidxWebkit = "1.14.0"
 # https://developer.android.com/jetpack/androidx/releases/work
-androidxWork = "2.10.5"
+androidxWork = "2.11.0"
 ankiBackend = '0.1.62-anki25.09.2'
 autoService = "1.1.1"
 autoServiceAnnotations = "1.1.1"
@@ -97,7 +97,7 @@ mockitoInline = "5.2.0"
 mockitoKotlin = "6.1.0"
 mockk = "1.14.6"
 nanohttpd = "2.3.1"
-okhttp = "5.2.1"
+okhttp = "5.3.0"
 # https://github.com/protocolbuffers/protobuf/releases
 protobufKotlinLite = "4.33.0"
 # ../AnkiDroid/robolectricDownload.gradle may need changes - read instructions in that file
