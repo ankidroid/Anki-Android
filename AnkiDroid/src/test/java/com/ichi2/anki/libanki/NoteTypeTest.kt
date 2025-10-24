@@ -419,6 +419,7 @@ class NoteTypeTest : JvmTest() {
 
     @Test
     @Throws(ConfirmModSchemaException::class)
+    @Suppress("deprecation") // notetypes.change
     fun test_modelChange() {
         val cloze = col.notetypes.byName("Cloze")
         // enable second template and add a note
