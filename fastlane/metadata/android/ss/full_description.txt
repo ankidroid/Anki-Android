@@ -6,9 +6,9 @@ Create your own flashcard decks or download free decks compiled for many languag
 
 Add material through the desktop application Anki or directly through AnkiDroid. The application even supports adding material automatically from a dictionary!
 
-<b>Key features:</b>
-• supported flashcard contents: text, images, sounds, video, mathjax, LaTeX
-• spaced repetition
+★ Key features:
+• supported flashcard contents: text, images, sounds, LaTeX
+• spaced repetition (AI-optimized FSRS algorithm)
 • text-to-speech integration
 • more than 10,000 premade decks
 • progress widget
@@ -22,8 +22,9 @@ Add material through the desktop application Anki or directly through AnkiDroid.
 • card editor/adder
 • card browser
 • tablet layout
-• import existing collection files
+• import existing collection files (via Anki Desktop)
 • add cards by intent from other applications like dictionaries
+• custom font support
 • full backup system
 • navigation by swipe, tap
 • customisable
