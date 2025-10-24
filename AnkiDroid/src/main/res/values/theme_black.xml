@@ -80,6 +80,7 @@
         <item name="duplicateColor">#855</item>
         <!-- Note editor colors -->
         <item name="editTextBackgroundColor">#EE5C5C5C</item>
+        <item name="editTextHighlightColor">@color/material_light_blue_900</item>
         <item name="toolbarBackgroundColor">#616161</item>
         <item name="toolbarIconColor">@color/white</item>
         <item name="buttonShadowColor">#726B6B</item>
