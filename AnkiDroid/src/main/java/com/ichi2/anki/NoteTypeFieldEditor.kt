@@ -20,8 +20,6 @@ import android.content.Context
 import android.os.Bundle
 import android.text.InputType
 import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
@@ -33,6 +31,7 @@ import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.core.os.BundleCompat
 import androidx.fragment.app.FragmentManager
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
@@ -96,11 +95,9 @@ class NoteTypeFieldEditor : AnkiActivity() {
         }
         super.onCreate(savedInstanceState)
         setContentView(R.layout.note_type_field_editor)
-        fieldsListView = findViewById(R.id.note_type_editor_fields)
-        enableToolbar().apply {
-            setTitle(R.string.model_field_editor_title)
-            subtitle = intent.getStringExtra("title")
-        }
+        fieldsListView = findViewById(R.id.fields)
+        enableToolbar()
+        findViewById<TextView>(R.id.notetype_name).text = intent.getStringExtra("title")
         startLoadingCollection()
         setFragmentResultListener(REQUEST_HINT_LOCALE_SELECTION) { _, bundle ->
             val selectedLocale =
@@ -121,12 +118,6 @@ class NoteTypeFieldEditor : AnkiActivity() {
         if (!isFinishing) {
             WidgetStatus.updateInBackground(this)
         }
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        super.onCreateOptionsMenu(menu)
-        menuInflater.inflate(R.menu.note_type_editor, menu)
-        return true
     }
 
     // ----------------------------------------------------------------------------
@@ -163,6 +154,7 @@ class NoteTypeFieldEditor : AnkiActivity() {
                 showDialogFragment(newInstance(fieldsLabels[position]))
                 currentPos = position
             }
+        findViewById<FloatingActionButton>(R.id.btn_add).setOnClickListener { addFieldDialog() }
     }
     // ----------------------------------------------------------------------------
     // CONTEXT MENU DIALOGUES
@@ -508,15 +500,6 @@ class NoteTypeFieldEditor : AnkiActivity() {
         initialize()
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean =
-        when (item.itemId) {
-            R.id.action_add_new_model -> {
-                addFieldDialog()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-
     private fun closeActivity() {
         finish()
     }
@@ -592,9 +575,9 @@ internal class NoteFieldAdapter(
         val view =
             convertView ?: LayoutInflater
                 .from(context)
-                .inflate(R.layout.note_type_field_editor_list_item, parent, false)
+                .inflate(R.layout.item_notetype_field, parent, false)
 
-        val nameTextView: TextView = view.findViewById(R.id.model_editor_list_display)
+        val nameTextView: TextView = view.findViewById(R.id.field_name)
 
         getItem(position)?.let {
             val (name, kind) = it
