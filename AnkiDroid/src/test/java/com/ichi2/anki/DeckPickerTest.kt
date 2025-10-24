@@ -37,6 +37,7 @@ import com.ichi2.testutils.ext.addBasicNoteWithOp
 import com.ichi2.testutils.ext.menu
 import com.ichi2.testutils.grantWritePermissions
 import com.ichi2.testutils.revokeWritePermissions
+import kotlinx.coroutines.test.advanceUntilIdle
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.containsInAnyOrder
 import org.hamcrest.Matchers.containsString
@@ -501,6 +502,9 @@ class DeckPickerTest : RobolectricTest() {
             startActivityNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent()).run {
                 val didA = addDeck("Deck 1")
                 supportFragmentManager.selectContextMenuOption(DeckPickerContextMenuOption.CREATE_SHORTCUT, didA)
+                advanceUntilIdle()
+                // Wait for the shortcut creation to complete
+                ShadowLooper.runUiThreadTasksIncludingDelayedTasks()
                 assertEquals(
                     "Deck 1",
                     ShortcutManagerCompat.getShortcuts(this, ShortcutManagerCompat.FLAG_MATCH_PINNED).first().shortLabel,
