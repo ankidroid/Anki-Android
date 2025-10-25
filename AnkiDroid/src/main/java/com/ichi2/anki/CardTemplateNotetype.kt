@@ -22,7 +22,6 @@ import android.os.Bundle
 import android.os.Parcel
 import android.os.Parcelable
 import androidx.core.os.bundleOf
-import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.libanki.CardTemplate
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.NoteTypeId
@@ -110,11 +109,10 @@ class CardTemplateNotetype(
     /**
      * Handles everything for a note type change at once - template add / deletes as well as content updates
      */
-    @KotlinCleanup("strongly type templateChanges")
     fun saveNoteType(
         col: Collection,
         notetype: NotetypeJson,
-        templateChanges: ArrayList<Array<Any>>,
+        templateChanges: ArrayList<TemplateChange>,
     ) {
         Timber.d("saveNoteType")
         val oldNoteType = col.notetypes.get(notetype.id)
@@ -123,14 +121,14 @@ class CardTemplateNotetype(
         val newTemplates = notetype.templates
         for (change in templateChanges) {
             val oldTemplates = oldNoteType!!.templates
-            when (change[1] as ChangeType) {
+            when (change.type as ChangeType) {
                 ChangeType.ADD -> {
-                    Timber.d("saveNoteType() adding template %s", change[0])
-                    col.notetypes.addTemplate(oldNoteType, newTemplates[change[0] as Int])
+                    Timber.d("saveNoteType() adding template %s", change.ordinal)
+                    col.notetypes.addTemplate(oldNoteType, newTemplates[change.ordinal as Int])
                 }
                 ChangeType.DELETE -> {
-                    Timber.d("saveNoteType() deleting template currently at ordinal %s", change[0])
-                    col.notetypes.remTemplate(oldNoteType, oldTemplates[change[0] as Int])
+                    Timber.d("saveNoteType() deleting template currently at ordinal %s", change.ordinal)
+                    col.notetypes.remTemplate(oldNoteType, oldTemplates[change.ordinal as Int])
                 }
             }
         }
@@ -244,8 +242,8 @@ class CardTemplateNotetype(
             Timber.d(
                 "dumpChanges() During save change %s will be ord/type %s/%s",
                 i,
-                adjustedChange[0],
-                adjustedChange[1],
+                adjustedChange.ordinal,
+                adjustedChange.type,
             )
         }
     }
@@ -256,11 +254,10 @@ class CardTemplateNotetype(
      *
      * @return ArrayList<Object></Object>[2]> of [ordinal][ChangeType] entries
      */
-    @KotlinCleanup("strongly type changes")
-    val adjustedTemplateChanges: ArrayList<Array<Any>>
+    val adjustedTemplateChanges: ArrayList<TemplateChange>
         get() {
             val changes = templateChanges
-            val adjustedChanges = ArrayList<Array<Any>>(changes.size)
+            val adjustedChanges = ArrayList<TemplateChange>(changes.size)
 
             // In order to save the changes into the database, the ordinals in the changelist must correspond to the
             // ordinals in the database (for deletes) or the correct index in the changes array (for adds)
@@ -268,19 +265,20 @@ class CardTemplateNotetype(
             // change list as-is until the save time comes, then the adjustment is made all at once
             for (i in changes.indices) {
                 val change = changes[i]
-                val adjustedChange = arrayOf(change.ordinal as Any, change.type)
-                when (adjustedChange[1] as ChangeType) {
-                    ChangeType.ADD -> {
-                        adjustedChange[0] = getAdjustedAddOrdinalAtChangeIndex(this, i)
-                        Timber.d(
-                            "getAdjustedTemplateChanges() change %s ordinal adjusted from %s to %s",
-                            i,
-                            change.ordinal,
-                            adjustedChange[0],
-                        )
+                val adjustedChange =
+                    when (change.type) {
+                        ChangeType.ADD -> {
+                            val adjustedOrdinal = getAdjustedAddOrdinalAtChangeIndex(this, i)
+                            Timber.d(
+                                "getAdjustedTemplateChanges() change %s ordinal adjusted from %s to %s",
+                                i,
+                                change.ordinal,
+                                adjustedOrdinal,
+                            )
+                            TemplateChange(adjustedOrdinal, ChangeType.ADD)
+                        }
+                        ChangeType.DELETE -> change
                     }
-                    ChangeType.DELETE -> {}
-                }
                 adjustedChanges.add(adjustedChange)
             }
             return adjustedChanges
