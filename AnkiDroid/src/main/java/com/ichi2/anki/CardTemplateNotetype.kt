@@ -36,7 +36,6 @@ import java.io.File
 import java.io.IOException
 
 /** A wrapper for a notetype in JSON format with helpers for editing the notetype. */
-@KotlinCleanup("_templateChanges -> use templateChanges")
 class CardTemplateNotetype(
     val notetype: NotetypeJson,
 ) {
@@ -45,17 +44,18 @@ class CardTemplateNotetype(
         DELETE,
     }
 
-    private var _templateChanges = ArrayList<Array<Any>>()
+    var templateChanges = ArrayList<Array<Any>>()
+        private set
 
     fun toBundle(): Bundle =
         bundleOf(
             INTENT_MODEL_FILENAME to saveTempNoteType(AnkiDroidApp.instance.applicationContext, notetype),
-            "mTemplateChanges" to _templateChanges,
+            "mTemplateChanges" to templateChanges,
         )
 
     private fun loadTemplateChanges(bundle: Bundle) {
         try {
-            _templateChanges = bundle.getSerializableCompat("mTemplateChanges")!!
+            templateChanges = bundle.getSerializableCompat("mTemplateChanges")!!
         } catch (e: ClassCastException) {
             Timber.e(e, "Unexpected cast failure")
         }
@@ -187,17 +187,17 @@ class CardTemplateNotetype(
         Timber.d("getDeleteDbOrds()")
 
         // array containing the original / db-relative ordinals for all pending deletes plus the proposed one
-        val deletedDbOrds = ArrayList<Int>(_templateChanges.size)
+        val deletedDbOrds = ArrayList<Int>(templateChanges.size)
 
         // For each entry in the changes list - and the proposed delete - scan for deletes to get original ordinal
-        for (i in 0.._templateChanges.size) {
+        for (i in 0..templateChanges.size) {
             var ordinalAdjustment = 0
 
             // We need an initializer. Though proposed change is checked last, it's a reasonable default initializer.
             var currentChange = arrayOf<Any>(ord, ChangeType.DELETE)
-            if (i < _templateChanges.size) {
+            if (i < templateChanges.size) {
                 // Until we exhaust the pending change list we will use them
-                currentChange = _templateChanges[i]
+                currentChange = templateChanges[i]
             }
 
             // If the current pending change isn't a delete, it is unimportant here
@@ -207,7 +207,7 @@ class CardTemplateNotetype(
 
             // If it is a delete, scan previous deletes and shift as necessary for original ord
             for (j in 0 until i) {
-                val previousChange = _templateChanges[j]
+                val previousChange = templateChanges[j]
 
                 // Is previous change a delete? Lower ordinal than current change?
                 if (previousChange[1] === ChangeType.DELETE && previousChange[0] as Int <= currentChange[0] as Int) {
@@ -232,8 +232,8 @@ class CardTemplateNotetype(
             return
         }
         val adjustedChanges = adjustedTemplateChanges
-        for (i in _templateChanges.indices) {
-            val change = _templateChanges[i]
+        for (i in templateChanges.indices) {
+            val change = templateChanges[i]
             val adjustedChange = adjustedChanges[i]
             Timber.d("dumpChanges() Change %s is ord/type %s/%s", i, change[0], change[1])
             Timber.d(
@@ -244,11 +244,6 @@ class CardTemplateNotetype(
             )
         }
     }
-
-    val templateChanges: ArrayList<Array<Any>>
-        get() {
-            return _templateChanges
-        }
 
     /**
      * Adjust the ordinals in our accrued change list so that any pending adds have the correct
@@ -297,8 +292,8 @@ class CardTemplateNotetype(
         var postChange = false
         var ordinalAdjustment = 0
         var i = 0
-        while (i < _templateChanges.size) {
-            val change = _templateChanges[i]
+        while (i < templateChanges.size) {
+            val change = templateChanges[i]
             var ordinal = change[0] as Int
             val changeType = change[1] as ChangeType
             Timber.d("compactTemplateChanges() examining change entry %s / %s", ordinal, changeType)
@@ -309,7 +304,7 @@ class CardTemplateNotetype(
                     Timber.d("compactTemplateChanges() found our entry at index %s", i)
                     // Remove this entry to start compaction, then fix up the loop counter since we altered size
                     postChange = true
-                    _templateChanges.removeAt(i)
+                    templateChanges.removeAt(i)
                     i--
                 }
                 i++
