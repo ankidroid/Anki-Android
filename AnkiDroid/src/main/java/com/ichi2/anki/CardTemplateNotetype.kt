@@ -44,7 +44,12 @@ class CardTemplateNotetype(
         DELETE,
     }
 
-    var templateChanges = ArrayList<Array<Any>>()
+    data class TemplateChange(
+        var ordinal: Int,
+        val type: ChangeType,
+    )
+
+    var templateChanges = ArrayList<TemplateChange>()
         private set
 
     fun toBundle(): Bundle =
@@ -147,30 +152,30 @@ class CardTemplateNotetype(
     ) {
         Timber.d("addTemplateChange() type %s for ordinal %s", type, ordinal)
         val templateChanges = templateChanges
-        val change = arrayOf<Any>(ordinal, type)
+        val change = TemplateChange(ordinal, type)
 
         // If we are deleting something we added but have not saved, edit it out of the change list
         if (type == ChangeType.DELETE) {
             var ordinalAdjustment = 0
             for (i in templateChanges.indices.reversed()) {
                 val oldChange = templateChanges[i]
-                when (oldChange[1] as ChangeType) {
+                when (oldChange.type as ChangeType) {
                     ChangeType.DELETE ->
-                        if (oldChange[0] as Int - ordinalAdjustment <= ordinal) {
+                        if (oldChange.ordinal as Int - ordinalAdjustment <= ordinal) {
                             // Deleting an ordinal at or below us? Adjust our comparison basis...
                             ordinalAdjustment++
                             continue
                         }
                     ChangeType.ADD ->
-                        if (ordinal == oldChange[0] as Int - ordinalAdjustment) {
+                        if (ordinal == oldChange.ordinal as Int - ordinalAdjustment) {
                             // Deleting something we added this session? Edit it out via compaction
-                            compactTemplateChanges(oldChange[0] as Int)
+                            compactTemplateChanges(oldChange.ordinal as Int)
                             return
                         }
                 }
             }
         }
-        Timber.d("addTemplateChange() added ord/type: %s/%s", change[0], change[1])
+        Timber.d("addTemplateChange() added ord/type: %s/%s", change.ordinal, change.type)
         templateChanges.add(change)
         dumpChanges()
     }
@@ -194,14 +199,14 @@ class CardTemplateNotetype(
             var ordinalAdjustment = 0
 
             // We need an initializer. Though proposed change is checked last, it's a reasonable default initializer.
-            var currentChange = arrayOf<Any>(ord, ChangeType.DELETE)
+            var currentChange = TemplateChange(ord, ChangeType.DELETE)
             if (i < templateChanges.size) {
                 // Until we exhaust the pending change list we will use them
                 currentChange = templateChanges[i]
             }
 
             // If the current pending change isn't a delete, it is unimportant here
-            if (currentChange[1] !== ChangeType.DELETE) {
+            if (currentChange.type !== ChangeType.DELETE) {
                 continue
             }
 
@@ -210,7 +215,7 @@ class CardTemplateNotetype(
                 val previousChange = templateChanges[j]
 
                 // Is previous change a delete? Lower ordinal than current change?
-                if (previousChange[1] === ChangeType.DELETE && previousChange[0] as Int <= currentChange[0] as Int) {
+                if (previousChange.type === ChangeType.DELETE && previousChange.ordinal as Int <= currentChange.ordinal as Int) {
                     // If so, that is the case where things shift. It means our ordinals moved and original ord is higher
                     ordinalAdjustment++
                 }
@@ -218,7 +223,7 @@ class CardTemplateNotetype(
 
             // We know how many times ordinals smaller than the current were deleted so we have the total adjustment
             // Save this pending delete at it's original / db-relative position
-            deletedDbOrds.add(currentChange[0] as Int + ordinalAdjustment)
+            deletedDbOrds.add(currentChange.ordinal as Int + ordinalAdjustment)
         }
         val deletedDbOrdInts = IntArray(deletedDbOrds.size)
         for (i in deletedDbOrdInts.indices) {
@@ -235,7 +240,7 @@ class CardTemplateNotetype(
         for (i in templateChanges.indices) {
             val change = templateChanges[i]
             val adjustedChange = adjustedChanges[i]
-            Timber.d("dumpChanges() Change %s is ord/type %s/%s", i, change[0], change[1])
+            Timber.d("dumpChanges() Change %s is ord/type %s/%s", i, change.ordinal, change.type)
             Timber.d(
                 "dumpChanges() During save change %s will be ord/type %s/%s",
                 i,
@@ -251,6 +256,7 @@ class CardTemplateNotetype(
      *
      * @return ArrayList<Object></Object>[2]> of [ordinal][ChangeType] entries
      */
+    @KotlinCleanup("strongly type changes")
     val adjustedTemplateChanges: ArrayList<Array<Any>>
         get() {
             val changes = templateChanges
@@ -262,14 +268,14 @@ class CardTemplateNotetype(
             // change list as-is until the save time comes, then the adjustment is made all at once
             for (i in changes.indices) {
                 val change = changes[i]
-                val adjustedChange = arrayOf(change[0], change[1])
+                val adjustedChange = arrayOf(change.ordinal as Any, change.type)
                 when (adjustedChange[1] as ChangeType) {
                     ChangeType.ADD -> {
                         adjustedChange[0] = getAdjustedAddOrdinalAtChangeIndex(this, i)
                         Timber.d(
                             "getAdjustedTemplateChanges() change %s ordinal adjusted from %s to %s",
                             i,
-                            change[0],
+                            change.ordinal,
                             adjustedChange[0],
                         )
                     }
@@ -294,8 +300,8 @@ class CardTemplateNotetype(
         var i = 0
         while (i < templateChanges.size) {
             val change = templateChanges[i]
-            var ordinal = change[0] as Int
-            val changeType = change[1] as ChangeType
+            var ordinal = change.ordinal as Int
+            val changeType = change.type as ChangeType
             Timber.d("compactTemplateChanges() examining change entry %s / %s", ordinal, changeType)
 
             // Only make adjustments after the ordinal we want to delete was added
@@ -323,7 +329,7 @@ class CardTemplateNotetype(
             // If following ordinals were higher, we move them as part of compaction
             if (ordinal + ordinalAdjustment > addedOrdinalToDelete) {
                 Timber.d("compactTemplateChanges() shifting later/higher ordinal down")
-                change[0] = --ordinal
+                change.ordinal = --ordinal
             }
             i++
         }
@@ -457,11 +463,11 @@ class CardTemplateNotetype(
             }
             var ordinalAdjustment = 0
             val change = noteType.templateChanges[changesIndex]
-            val ordinalToInspect = change[0] as Int
+            val ordinalToInspect = change.ordinal as Int
             for (i in noteType.templateChanges.size - 1 downTo changesIndex) {
                 val oldChange = noteType.templateChanges[i]
-                val currentOrdinal = change[0] as Int
-                when (oldChange[1] as ChangeType) {
+                val currentOrdinal = change.ordinal as Int
+                when (oldChange.type as ChangeType) {
                     ChangeType.DELETE -> {
                         // Deleting an ordinal at or below us? Adjust our comparison basis...
                         if (currentOrdinal - ordinalAdjustment <= ordinalToInspect) {
