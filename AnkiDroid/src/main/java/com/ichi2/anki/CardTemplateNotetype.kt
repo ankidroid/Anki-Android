@@ -121,14 +121,14 @@ class CardTemplateNotetype(
         val newTemplates = notetype.templates
         for (change in templateChanges) {
             val oldTemplates = oldNoteType!!.templates
-            when (change.type as ChangeType) {
+            when (change.type) {
                 ChangeType.ADD -> {
                     Timber.d("saveNoteType() adding template %s", change.ordinal)
-                    col.notetypes.addTemplate(oldNoteType, newTemplates[change.ordinal as Int])
+                    col.notetypes.addTemplate(oldNoteType, newTemplates[change.ordinal])
                 }
                 ChangeType.DELETE -> {
                     Timber.d("saveNoteType() deleting template currently at ordinal %s", change.ordinal)
-                    col.notetypes.remTemplate(oldNoteType, oldTemplates[change.ordinal as Int])
+                    col.notetypes.remTemplate(oldNoteType, oldTemplates[change.ordinal])
                 }
             }
         }
@@ -157,17 +157,17 @@ class CardTemplateNotetype(
             var ordinalAdjustment = 0
             for (i in templateChanges.indices.reversed()) {
                 val oldChange = templateChanges[i]
-                when (oldChange.type as ChangeType) {
+                when (oldChange.type) {
                     ChangeType.DELETE ->
-                        if (oldChange.ordinal as Int - ordinalAdjustment <= ordinal) {
+                        if (oldChange.ordinal - ordinalAdjustment <= ordinal) {
                             // Deleting an ordinal at or below us? Adjust our comparison basis...
                             ordinalAdjustment++
                             continue
                         }
                     ChangeType.ADD ->
-                        if (ordinal == oldChange.ordinal as Int - ordinalAdjustment) {
+                        if (ordinal == oldChange.ordinal - ordinalAdjustment) {
                             // Deleting something we added this session? Edit it out via compaction
-                            compactTemplateChanges(oldChange.ordinal as Int)
+                            compactTemplateChanges(oldChange.ordinal)
                             return
                         }
                 }
@@ -213,7 +213,7 @@ class CardTemplateNotetype(
                 val previousChange = templateChanges[j]
 
                 // Is previous change a delete? Lower ordinal than current change?
-                if (previousChange.type === ChangeType.DELETE && previousChange.ordinal as Int <= currentChange.ordinal as Int) {
+                if (previousChange.type === ChangeType.DELETE && previousChange.ordinal <= currentChange.ordinal) {
                     // If so, that is the case where things shift. It means our ordinals moved and original ord is higher
                     ordinalAdjustment++
                 }
@@ -221,7 +221,7 @@ class CardTemplateNotetype(
 
             // We know how many times ordinals smaller than the current were deleted so we have the total adjustment
             // Save this pending delete at it's original / db-relative position
-            deletedDbOrds.add(currentChange.ordinal as Int + ordinalAdjustment)
+            deletedDbOrds.add(currentChange.ordinal + ordinalAdjustment)
         }
         val deletedDbOrdInts = IntArray(deletedDbOrds.size)
         for (i in deletedDbOrdInts.indices) {
@@ -298,8 +298,8 @@ class CardTemplateNotetype(
         var i = 0
         while (i < templateChanges.size) {
             val change = templateChanges[i]
-            var ordinal = change.ordinal as Int
-            val changeType = change.type as ChangeType
+            var ordinal = change.ordinal
+            val changeType = change.type
             Timber.d("compactTemplateChanges() examining change entry %s / %s", ordinal, changeType)
 
             // Only make adjustments after the ordinal we want to delete was added
@@ -461,11 +461,11 @@ class CardTemplateNotetype(
             }
             var ordinalAdjustment = 0
             val change = noteType.templateChanges[changesIndex]
-            val ordinalToInspect = change.ordinal as Int
+            val ordinalToInspect = change.ordinal
             for (i in noteType.templateChanges.size - 1 downTo changesIndex) {
                 val oldChange = noteType.templateChanges[i]
-                val currentOrdinal = change.ordinal as Int
-                when (oldChange.type as ChangeType) {
+                val currentOrdinal = change.ordinal
+                when (oldChange.type) {
                     ChangeType.DELETE -> {
                         // Deleting an ordinal at or below us? Adjust our comparison basis...
                         if (currentOrdinal - ordinalAdjustment <= ordinalToInspect) {
