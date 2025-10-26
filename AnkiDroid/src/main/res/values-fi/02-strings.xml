@@ -47,7 +47,7 @@
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Avaa laatikosto</string>
     <string name="drawer_close">Sulje laatikosto</string>
-    <string name="note_message">Note saved</string>
+    <string name="note_message">Merkintä tallennettu</string>
     <string name="CardEditorCardDeck">Korttipakka:</string>
     <string name="CardEditorNoteDeck">Pakka:</string>
     <string name="CardEditorModel">Tyyppi:</string>
@@ -65,26 +65,26 @@
     <string name="save_whiteboard" maxLength="28">Tallenna tussitaulu</string>
     <string name="enable_stylus" maxLength="28">Ota käyttöön kynäkirjoitus</string>
     <string name="disable_stylus">Poista kynäkirjoitus käytöstä</string>
-    <string name="eraser" maxLength="28">Eraser</string>
-    <string name="add_brush" maxLength="28">Add brush</string>
+    <string name="eraser" maxLength="28">Pyyhin</string>
+    <string name="add_brush" maxLength="28">Lisää pensseli</string>
     <string name="whiteboard_align_left" comment="Option to align the whiteboard toolbar on the left" maxLength="28">Left</string>
     <string name="whiteboard_align_bottom" comment="Option to align the whiteboard toolbar on the bottom" maxLength="28">Bottom</string>
     <string name="whiteboard_align_right" comment="Option to align the whiteboard toolbar on the right" maxLength="28">Right</string>
-    <string name="whiteboard_clear" comment="Button text to clear the whiteboard" maxLength="28">Clear</string>
-    <string name="whiteboard_more_options" comment="Tooltip of the whiteboard \'More\' button" maxLength="28">More options</string>
-    <string name="whiteboard_remove_brush_message">Are you sure you want to remove this brush from your palette?</string>
-    <string name="whiteboard_ink_eraser" comment="Title of the whiteboard Ink eraser">Ink</string>
+    <string name="whiteboard_clear" comment="Button text to clear the whiteboard" maxLength="28">Tyhjennä</string>
+    <string name="whiteboard_more_options" comment="Tooltip of the whiteboard \'More\' button" maxLength="28">Lisäasetukset</string>
+    <string name="whiteboard_remove_brush_message">Haluatko varmasti poistaa tämän pensselin paletistasi?</string>
+    <string name="whiteboard_ink_eraser" comment="Title of the whiteboard Ink eraser">Muste</string>
     <string name="whiteboard_stroke_eraser" comment="Title of the whiteboard Stroke eraser">Stroke</string>
-    <string name="stylus_mode" comment="Title of the menu item that toggles the whiteboard stylus mode" maxLength="28">Stylus mode</string>
-    <string name="cannot_remove_last_brush_message">The last brush may not be removed</string>
+    <string name="stylus_mode" comment="Title of the menu item that toggles the whiteboard stylus mode" maxLength="28">Stylus tila</string>
+    <string name="cannot_remove_last_brush_message">Viimeistä pensseliä ei voi poistaa</string>
     <string name="enable_whiteboard" maxLength="28">Ota kirjoitustaulu käyttöön</string>
     <string name="disable_whiteboard">Poista kirjoitustaulu käytöstä</string>
     <string name="show_whiteboard">Näytä kirjoitustaulu</string>
-    <string name="enable_eraser" maxLength="28">Enable eraser</string>
-    <string name="disable_eraser" maxLength="28">Disable eraser</string>
+    <string name="enable_eraser" maxLength="28">Käytä pyyhintä</string>
+    <string name="disable_eraser" maxLength="28">Poista pyyhin käytöstä</string>
     <string name="hide_whiteboard" maxLength="28">Piilota kirjoitustaulu</string>
     <string name="clear_whiteboard" maxLength="28">Tyhjennä kirjoitustaulu</string>
-    <string name="replay_media" maxLength="28">Replay media</string>
+    <string name="replay_media" maxLength="28">Uudelleentoista media</string>
     <string name="leech_suspend_notification">Kortti on merkitty resurssisyöpöksi ja hyllytetty</string>
     <string name="leech_notification">Kortti on merkitty resurssisyöpöksi</string>
     <string name="webview_crash_unknown">Tuntematon virhe</string>
@@ -95,10 +95,10 @@
     <string name="webview_crash_fatal">Kriittinen virhe: WebView-renderöijä kaatui. Syy: %s</string>
     <string name="webview_crash_loop_dialog_title">Järjestelmän WebView Renderöinti Epäonnistui</string>
     <string name="webview_crash_loop_dialog_content">Järjestelmän WebView ei pystynyt näyttämään korttia \'%1$s\'.\n %2$s</string>
-    <string name="slide_to_cancel" comment="Message shown when pressing the record button">Slide to cancel</string>
+    <string name="slide_to_cancel" comment="Message shown when pressing the record button">Pyyhkäise hylkääksesi</string>
     <string name="filter_by_flags" maxLength="41">Liput</string>
     <!-- Custom study options -->
-    <string name="custom_study_loading_tags">Building list of tags&#8230;</string>
+    <string name="custom_study_loading_tags">Luodaan tunnisteluetteloa&#8230;</string>
     <!-- Study options -->
     <plurals name="studyoptions_buried_count">
         <item quantity="one">+%d haudattu</item>
@@ -120,12 +120,12 @@
     <string name="field_remapping">%1$s (”%2$s”:sta)</string>
     <string name="confirm_map_cards_to_nothing">Kortit, joita ei ole liitetty mihinkään, poistetaan. Jos muistiinpanoon ei liity jäljelle jääviä kortteja, se katoaa. Oletko varma, että haluat jatkaa?</string>
     <string name="missing_note_type">Muistiinpanotyyppejä ei löytynyt</string>
-    <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (empty)</string>
+    <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (tyhjä)</string>
     <!-- Image cropper -->
-    <string name="image_cropper_action_rotate" maxLength="28" comment="Action in image cropper screen">Rotate</string>
-    <string name="image_cropper_action_flip" maxLength="28" comment="Action in image cropper screen">Flip</string>
-    <string name="image_cropper_action_flip_horizontally" maxLength="28" comment="Submenu action in image cropper screen">Flip horizontally</string>
-    <string name="image_cropper_action_flip_vertically" maxLength="28" comment="Submenu action in image cropper screen">Flip vertically</string>
+    <string name="image_cropper_action_rotate" maxLength="28" comment="Action in image cropper screen">Kierrä</string>
+    <string name="image_cropper_action_flip" maxLength="28" comment="Action in image cropper screen">Käännä</string>
+    <string name="image_cropper_action_flip_horizontally" maxLength="28" comment="Submenu action in image cropper screen">Käännä vaakasuunnassa</string>
+    <string name="image_cropper_action_flip_vertically" maxLength="28" comment="Submenu action in image cropper screen">Käännä pystysuunnassa</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">Aikaikkuna saavutettu</string>
     <plurals name="timebox_reached">
@@ -204,14 +204,14 @@
     <!-- Deckpicker Background -->
     <string name="background_image_title" maxLength="41">Tausta</string>
     <string name="choose_an_image" maxLength="41">Valitse kuva</string>
-    <string name="remove_wallpaper_image" maxLength="41">Remove background</string>
+    <string name="remove_wallpaper_image" maxLength="41">Poista taustakuva</string>
     <string name="remove_background_image">Poistetaanko tausta?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default" maxLength="28">Palauta oletusarvot</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Tyhjä</string>
     <!-- Whiteboard eraser mode toggle message in Reviewer -->
-    <string name="white_board_eraser_enabled">Eraser mode activated</string>
-    <string name="white_board_eraser_disabled">Eraser mode deactivated</string>
+    <string name="white_board_eraser_enabled">Pyyhintila aktivoitu</string>
+    <string name="white_board_eraser_disabled">Pyyhintila pois päältä</string>
     <!-- Whiteboard save image message in the Study Screen -->
     <string name="white_board_image_save_failed">Kirjoitustaulun kuvan tallentaminen epäonnistui. %s</string>
     <string name="white_board_image_saved">Kirjoitustaulun kuva tallennettu sijaintiin %s</string>
@@ -253,7 +253,7 @@
     <string name="note_editor_image_too_large">Kuva on liian suuri, aseta kuva käsin</string>
     <string name="note_editor_video_too_large">Videotiedosto on liian suuri, aseta video käsin</string>
     <string name="note_editor_audio_too_large">Äänitiedosto on liian suuri, aseta ääni käsin</string>
-    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">Android backup in progress. Please try again</string>
+    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">Android varmuuskopiointi käynnissä. Yritä uudelleen</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Saatat joutua käyttämään iManageria, jotta AnkiDroid voi lisätä pikanäppäimiä.</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">Aloitusnäyttösi ei salli AnkiDroidin lisätä pikakuvakkeita</string>
     <string name="create_shortcut_error">Virhe lisättäessä pikakuvaketta: %s</string>
@@ -269,7 +269,7 @@
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
     <string name="download_deck">Lataa pakka</string>
-    <string name="open_in_browser" comment="Label of a button inviting to open ankiweb\'s shared deck page if automated download failed">Open in browser</string>
+    <string name="open_in_browser" comment="Label of a button inviting to open ankiweb\'s shared deck page if automated download failed">Avaa selaimessa</string>
     <string name="try_again">Yritä uudelleen</string>
     <string name="cancel_download">Peruuta lataus</string>
     <string name="cancel_download_question_title">Peruutetaanko lataus?</string>
@@ -322,23 +322,23 @@
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Kortit</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Muistiinpanot</string>
     <string name="toggle_cards_notes">Näytä kortit/muistiinpanot</string>
-    <string name="truncate_content_help">Truncate the height of each row of the Browser to show only first 3 lines of content</string>
+    <string name="truncate_content_help">Katkaise selaimen jokaisen rivin korkeus näyttääksesi vain 3 ensimmäistä sisältöriviä</string>
     <string name="browser_options_dialog_heading">Selaimen asetukset</string>
     <string name="audio_saved">Äänitys tallennettu</string>
     <string name="deleting_selected_notes">Poistetaan valittuja muistiinpanoja</string>
-    <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">Tap a voice to listen</string>
-    <string name="tts_voices_selected_voice_should_be_installed" comment="If a voice has been tapped, is installable but not installed, we want to inform the user that they should install it for the best experience There will also be an option to use it without downloading">Voice should be installed before use</string>
-    <string name="tts_voices_use_selected_voice_without_install" comment="A user has been informed that a voice should be installed before use. This is text on a snackbar button which allows them to use the voice without installing it">Use anyway</string>
+    <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">Napauta ääntä kuullaksesi</string>
+    <string name="tts_voices_selected_voice_should_be_installed" comment="If a voice has been tapped, is installable but not installed, we want to inform the user that they should install it for the best experience There will also be an option to use it without downloading">Ääni tulee asentaa ennen käyttöä</string>
+    <string name="tts_voices_use_selected_voice_without_install" comment="A user has been informed that a voice should be installed before use. This is text on a snackbar button which allows them to use the voice without installing it">Käytä joka tapauksessa</string>
     <string name="tts_voices_playback_error_new" comment="an error occurred when playing a text to speech voice. The parameter is a technical error code such as \'ERROR_NOT_INSTALLED_YET\' or \'ERROR_NETWORK_TIMEOUT\'">Tekstistä puheeksi -toiminnon virhe (%s)</string>
     <!-- Chips should probably be in a separate file, due to the additional length req -->
     <string name="tts_voices_chip_filter_to_internet" comment="     Filters a list of text to speech voices, to enable/disable voices which require the internet to     function.     This is on a chip control, so keep the text short, ideally one word">Internet</string>
-    <string name="tts_voices_chip_filter_to_installable_audio" comment="     Displays a list of Text to Speech voices which should be downloaded/installed before use     This is on a chip control, so keep the text short, ideally one word">Install</string>
-    <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">Failed to open text to speech settings</string>
+    <string name="tts_voices_chip_filter_to_installable_audio" comment="     Displays a list of Text to Speech voices which should be downloaded/installed before use     This is on a chip control, so keep the text short, ideally one word">Asenna</string>
+    <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">Teksti puheeksi -asetusten avaaminen epäonnistui</string>
     <string name="shared_decks_login_required">Kirjaudu sisään ladataksesi lisää pakkoja</string>
     <string name="deck_description_field_hint">Kuvaus</string>
-    <string name="deck_description_saved">Description updated</string>
-    <string name="format_deck_description_as_markdown">Format as Markdown</string>
-    <string name="help_button_content_description">Open help for ‘%s’</string>
+    <string name="deck_description_saved">Kuvaus päivitetty</string>
+    <string name="format_deck_description_as_markdown">Muotoile Markdownina</string>
+    <string name="help_button_content_description">Avaa \'%s\' ohje</string>
     <string name="failed_to_copy">Kopiointi epäonnistui</string>
     <string name="card_browser_unavailable_when_notes_mode">Ei saatavilla ”Muistiinpanot” -tilassa</string>
     <plurals name="unbury_cards_feedback">
@@ -346,8 +346,8 @@
         <item quantity="other">%d kortin hautaus poistettu</item>
     </plurals>
     <string name="card_template_reposition_template" comment="move a card template to a new position" maxLength="28">Uudelleenasettele</string>
-    <string name="previewer_next" comment="Name of the next button in the previewer" maxLength="28">Next</string>
-    <string name="previewer_back" comment="Name of the back button in the previewer" maxLength="28">Back</string>
+    <string name="previewer_next" comment="Name of the next button in the previewer" maxLength="28">Seuraava</string>
+    <string name="previewer_back" comment="Name of the back button in the previewer" maxLength="28">Takaisin</string>
     <string name="start_recording">Äänitä</string>
     <string name="stop_recording">Pysäytä</string>
     <string name="play_recording">Toista</string>
@@ -372,5 +372,5 @@
     <string name="missing_user_action_dialog_message" comment="%s is the user action number">Käyttäjän toimea %s ei ole määritetty tässä muistiinpanotyypissä. Määritä se</string>
     <string name="directory_inaccessible_info">Lue lisää siitä, miten palauttaa pääsy tänne (%s) tai siirry asetuksiin vaihtaaksesi kokoelmakansiota</string>
     <!-- Scheduler Upgrade Required Dialog title-->
-    <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">Scheduler upgrade required</string>
+    <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">Aikataulu vaatii päivitystä</string>
 </resources>
