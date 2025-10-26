@@ -57,7 +57,7 @@
     <string name="tag_name">Назва позначки</string>
     <string name="add_new_filter_tags">Додати/фільтрувати теги</string>
     <string name="add_tag" maxLength="28">Додати позначку</string>
-    <string name="check_all_tags" maxLength="28">Обрати/прибрати усі позначки</string>
+    <string name="check_all_tags" maxLength="28">Обрати/прибрати всі позначки</string>
     <string name="filter_tags" maxLength="28">Пошук тегів</string>
     <string name="no_tags">Ви ще не додали жодного тегу</string>
     <string name="updated_version">Оновлено до версії %s</string>
@@ -94,7 +94,7 @@
     <string name="webview_crash_nonfatal">Помилка WebView. Причина: %s</string>
     <string name="webview_crash_fatal">Критична помилка WebView. Причина: %s</string>
     <string name="webview_crash_loop_dialog_title">Збій системного WebView</string>
-    <string name="webview_crash_loop_dialog_content">Системою WebView не вдалося відобразити картку \'%1$s\'.\n %2$s</string>
+    <string name="webview_crash_loop_dialog_content">Системою WebView не вдалося показати картку \'%1$s\'.\n %2$s</string>
     <string name="slide_to_cancel" comment="Message shown when pressing the record button">Проведіть, щоб скасувати</string>
     <string name="filter_by_flags" maxLength="41">Прапорці</string>
     <!-- Custom study options -->
@@ -162,7 +162,7 @@
     <string name="import_title">Імпортування</string>
     <string name="import_preparing_file">Файл готується для імпорту&#8230;</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Додати</string>
-    <string name="import_message_replace_confirm">Дана операція видалить вміст колеції і замінить її даними з файлу %s. Продовжити?</string>
+    <string name="import_message_replace_confirm">Дана операція видалить вміст колекції та замінить її даними з файлу %s. Продовжити?</string>
     <string name="import_dialog_message_add">Додати \"%s\" до колекції? Це може зайняти багато часу</string>
     <string name="import_log_no_apkg">Це не файл пакету Anki</string>
     <string name="import_title_error" comment="Title of error dialog">Помилка</string>
@@ -181,7 +181,7 @@
     <string name="export_email_text"><![CDATA[        Привіт!
         <br/><br/>
         Це колода Anki надіслана з AnkiDroid[1].
-        Спробуйте відкрити її за допомогою однієї з версій Anki[2] і насолоджуйтесь легким та ефективним навчанням!<br/><br/>
+        Спробуйте відкрити її за допомогою однієї з версій та Anki[2] і насолоджуйтесь легким та ефективним навчанням!<br/><br/>
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
@@ -197,7 +197,7 @@
     <string name="steps_error">Кроки повинні бути числами, більшими ніж 0</string>
     <string name="steps_min_error">Принаймні один крок потрібний</string>
     <string name="tag_editor_add_feedback">Натисніть \"%2$s\", аби підтвердити додавання \"%1$s\"</string>
-    <string name="tag_editor_add_feedback_existing">Обрано існуючу позначку \"%1$s\"</string>
+    <string name="tag_editor_add_feedback_existing">Обрано наявну позначку \"%1$s\"</string>
     <!-- Time spans -->
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Помилка поширення файлу apkg</string>
