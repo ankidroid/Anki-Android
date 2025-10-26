@@ -76,7 +76,6 @@ import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
 import com.ichi2.anki.dialogs.DiscardChangesDialog
 import com.ichi2.anki.dialogs.InsertFieldDialog
-import com.ichi2.anki.dialogs.InsertFieldDialog.Companion.REQUEST_FIELD_INSERT
 import com.ichi2.anki.libanki.CardTemplates
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.Note
@@ -729,7 +728,9 @@ open class CardTemplateEditor :
         )
         fun showInsertFieldDialog() {
             templateEditor.fieldNames?.let { fieldNames ->
-                templateEditor.showDialogFragment(InsertFieldDialog.newInstance(fieldNames))
+                val cardIndex = requireArguments().getInt(CARD_INDEX)
+                val dialog = InsertFieldDialog.newInstance(fieldNames, cardIndex)
+                templateEditor.showDialogFragment(dialog)
             }
         }
 
@@ -810,11 +811,12 @@ open class CardTemplateEditor :
                     }
                 },
             )
-            parentFragmentManager.setFragmentResultListener(REQUEST_FIELD_INSERT, viewLifecycleOwner) { key, bundle ->
-                if (key == REQUEST_FIELD_INSERT) {
-                    // this is guaranteed to be non null, as we put a non null value on the other side
-                    insertField(bundle.getString(InsertFieldDialog.KEY_INSERTED_FIELD)!!)
-                }
+
+            val cardIndex = requireArguments().getInt(CARD_INDEX)
+            val requestKey = InsertFieldDialog.requestKey(cardIndex)
+            parentFragmentManager.setFragmentResultListener(requestKey, viewLifecycleOwner) { key, bundle ->
+                // this is guaranteed to be non null, as we put a non null value on the other side
+                insertField(bundle.getString(InsertFieldDialog.KEY_INSERTED_FIELD)!!)
             }
             setupMenu()
         }

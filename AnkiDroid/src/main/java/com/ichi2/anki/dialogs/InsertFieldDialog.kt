@@ -38,6 +38,7 @@ import com.ichi2.utils.title
  */
 class InsertFieldDialog : DialogFragment() {
     private lateinit var fieldList: List<String>
+    private var cardIndex: Int = 0
 
     /**
      * A dialog for inserting field in card template editor
@@ -45,6 +46,7 @@ class InsertFieldDialog : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): AlertDialog {
         super.onCreate(savedInstanceState)
         fieldList = requireArguments().getStringArrayList(KEY_FIELD_ITEMS)!!
+        cardIndex = requireArguments().getInt(KEY_CARD_INDEX, 0)
         val adapter: RecyclerView.Adapter<*> =
             object : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 override fun onCreateViewHolder(
@@ -75,7 +77,7 @@ class InsertFieldDialog : DialogFragment() {
 
     private fun selectFieldAndClose(textView: TextView) {
         parentFragmentManager.setFragmentResult(
-            REQUEST_FIELD_INSERT,
+            requestKey(cardIndex),
             bundleOf(KEY_INSERTED_FIELD to textView.text.toString()),
         )
         dismiss()
@@ -86,17 +88,33 @@ class InsertFieldDialog : DialogFragment() {
          * Other fragments sharing the activity can use this with
          * [androidx.fragment.app.FragmentManager.setFragmentResultListener] to get a result back.
          */
-        const val REQUEST_FIELD_INSERT = "request_field_insert"
+        private const val REQUEST_FIELD_INSERT = "request_field_insert"
+
+        /**
+         * Other fragments sharing the activity can use this with
+         * [androidx.fragment.app.FragmentManager.setFragmentResultListener] to get a result back.
+         *
+         * Adding [cardIndex] ensures unique request key for each card.
+         */
+        fun requestKey(cardIndex: Int): String = "${REQUEST_FIELD_INSERT}_$cardIndex"
 
         /**
          * This fragment requires that a list of fields names to be passed in.
          */
         const val KEY_INSERTED_FIELD = "key_inserted_field"
         private const val KEY_FIELD_ITEMS = "key_field_items"
+        private const val KEY_CARD_INDEX = "key_card_index"
 
-        fun newInstance(fieldItems: List<String>): InsertFieldDialog =
+        fun newInstance(
+            fieldItems: List<String>,
+            cardIndex: Int,
+        ): InsertFieldDialog =
             InsertFieldDialog().apply {
-                arguments = bundleOf(KEY_FIELD_ITEMS to ArrayList(fieldItems))
+                arguments =
+                    bundleOf(
+                        KEY_FIELD_ITEMS to ArrayList(fieldItems),
+                        KEY_CARD_INDEX to cardIndex,
+                    )
             }
     }
 }
