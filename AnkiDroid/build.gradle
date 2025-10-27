@@ -366,6 +366,7 @@ dependencies {
     // modules
     implementation project(":common")
     implementation project(":libanki")
+    implementation project(":vbpd")
 
     implementation libs.androidx.activity
     implementation libs.androidx.annotation
