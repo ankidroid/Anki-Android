@@ -20,6 +20,7 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Paint
 import android.graphics.drawable.RippleDrawable
+import android.graphics.drawable.StateListDrawable
 import android.text.TextUtils
 import android.util.TypedValue
 import android.view.LayoutInflater
@@ -163,6 +164,7 @@ class BrowserMultiColumnAdapter(
             @ColorInt color: Int,
         ) {
             var pressedColor = darkenColor(color, 0.85f)
+            var focusedColor = darkenColor(color, 0.4f)
 
             if (pressedColor == color) {
                 // if the color is black, we can't darken it.
@@ -170,6 +172,7 @@ class BrowserMultiColumnAdapter(
 
                 // 25% was determined by visual inspection
                 pressedColor = lightenColorAbsolute(pressedColor, 0.25f)
+                focusedColor = pressedColor
             }
 
             require(pressedColor != color)
@@ -183,7 +186,15 @@ class BrowserMultiColumnAdapter(
                     null,
                 )
 
-            itemView.background = rippleDrawable
+            // When a row gains keyboard focus, apply a static background color instead of RippleDrawable
+            // to avoid the brief dark flicker caused by Ripple's focus exit animation.
+            // For the other states (pressed/normal), apply the RippleDrawable.
+            val background =
+                StateListDrawable().apply {
+                    addState(intArrayOf(android.R.attr.state_focused), focusedColor.toDrawable())
+                    addState(intArrayOf(), rippleDrawable)
+                }
+            itemView.background = background
         }
 
         fun setIsTruncated(truncated: Boolean) {
