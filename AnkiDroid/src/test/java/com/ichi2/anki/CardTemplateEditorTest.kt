@@ -807,11 +807,9 @@ class CardTemplateEditorTest : RobolectricTest() {
         firstFragmentAgain!!.showInsertFieldDialog()
         advanceRobolectricLooper()
 
-        val cardIndex = 0
-        val requestKey = InsertFieldDialog.requestKey(cardIndex)
         val resultBundle = Bundle()
         resultBundle.putString(InsertFieldDialog.KEY_INSERTED_FIELD, fieldToInsert)
-        testEditor.supportFragmentManager.setFragmentResult(requestKey, resultBundle)
+        testEditor.supportFragmentManager.setFragmentResult(firstFragmentAgain.insertFieldRequestKey, resultBundle)
         advanceRobolectricLooper()
 
         // Verify the field was inserted into the first fragment

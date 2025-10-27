@@ -521,6 +521,13 @@ open class CardTemplateEditor :
         private val refreshFragmentHandler = Handler(Looper.getMainLooper())
         private lateinit var editorEditText: FixedEditText
 
+        // Index of this card template fragment in ViewPager
+        private val cardIndex
+            get() = requireArguments().getInt(CARD_INDEX)
+
+        val insertFieldRequestKey
+            get() = "request_field_insert_$cardIndex"
+
         var currentEditorViewId = 0
 
         private lateinit var templateEditor: CardTemplateEditor
@@ -535,7 +542,6 @@ open class CardTemplateEditor :
             // Storing a reference to the templateEditor allows us to use member variables
             templateEditor = activity as CardTemplateEditor
             val mainView = inflater.inflate(R.layout.card_template_editor_item, container, false)
-            val cardIndex = requireArguments().getInt(CARD_INDEX)
             tempModel = templateEditor.tempNoteType!!
             // Load template
             val template: BackendCardTemplate =
@@ -728,8 +734,7 @@ open class CardTemplateEditor :
         )
         fun showInsertFieldDialog() {
             templateEditor.fieldNames?.let { fieldNames ->
-                val cardIndex = requireArguments().getInt(CARD_INDEX)
-                val dialog = InsertFieldDialog.newInstance(fieldNames, cardIndex)
+                val dialog = InsertFieldDialog.newInstance(fieldNames, insertFieldRequestKey)
                 templateEditor.showDialogFragment(dialog)
             }
         }
@@ -812,9 +817,7 @@ open class CardTemplateEditor :
                 },
             )
 
-            val cardIndex = requireArguments().getInt(CARD_INDEX)
-            val requestKey = InsertFieldDialog.requestKey(cardIndex)
-            parentFragmentManager.setFragmentResultListener(requestKey, viewLifecycleOwner) { key, bundle ->
+            parentFragmentManager.setFragmentResultListener(insertFieldRequestKey, viewLifecycleOwner) { key, bundle ->
                 // this is guaranteed to be non null, as we put a non null value on the other side
                 insertField(bundle.getString(InsertFieldDialog.KEY_INSERTED_FIELD)!!)
             }
