@@ -208,7 +208,7 @@ class ReviewerFragment :
             }
         }
 
-        viewModel.statesMutationEval.collectIn(lifecycleScope) { eval ->
+        viewModel.statesMutationEvalFlow.collectIn(lifecycleScope) { eval ->
             webView.evaluateJavascript(eval) {
                 viewModel.onStateMutationCallback()
             }

@@ -110,10 +110,10 @@ class ReviewerViewModel(
     val whiteboardEnabledFlow = MutableStateFlow(false)
     val replayVoiceFlow = MutableSharedFlow<Unit>()
     val timeBoxReachedFlow = MutableSharedFlow<Collection.TimeboxReached>()
+    val statesMutationEvalFlow = MutableSharedFlow<String>()
 
     override val server: AnkiServer = AnkiServer(this, StudyScreenRepository.getServerPort()).also { it.start() }
     private val stateMutationKey = TimeManager.time.intTimeMS().toString()
-    val statesMutationEval = MutableSharedFlow<String>()
     var typedAnswer = ""
 
     private val autoAdvance = AutoAdvance(this)
@@ -431,7 +431,7 @@ class ReviewerViewModel(
             return
         }
         statesMutated = false
-        statesMutationEval.emit(
+        statesMutationEvalFlow.emit(
             "anki.mutateNextCardStates('$stateMutationKey', async (states, customData, ctx) => { $js });",
         )
     }
