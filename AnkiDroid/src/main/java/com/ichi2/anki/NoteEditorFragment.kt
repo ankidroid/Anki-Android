@@ -1446,12 +1446,22 @@ class NoteEditorFragment :
                 }
             }
         }
-        menu.findItem(R.id.action_show_toolbar).isChecked =
-            !shouldHideToolbar()
-        menu.findItem(R.id.action_capitalize).isChecked =
-            sharedPrefs().getBoolean(PREF_NOTE_EDITOR_CAPITALIZE, true)
-        menu.findItem(R.id.action_scroll_toolbar).isChecked =
-            sharedPrefs().getBoolean(PREF_NOTE_EDITOR_SCROLL_TOOLBAR, true)
+        if (currentNotetypeIsImageOcclusion()) {
+            // Showing options related to editing text in fields is not needed
+            // for image occlusion notetypes as there are no fields for inputting
+            // text in the editor screen. (Text is handled by the backend page.)
+            menu.findItem(R.id.action_font_size).isVisible = false
+            menu.findItem(R.id.action_show_toolbar).isVisible = false
+            menu.findItem(R.id.action_scroll_toolbar).isVisible = false
+            menu.findItem(R.id.action_capitalize).isVisible = false
+        } else {
+            menu.findItem(R.id.action_show_toolbar).isChecked =
+                !shouldHideToolbar()
+            menu.findItem(R.id.action_capitalize).isChecked =
+                sharedPrefs().getBoolean(PREF_NOTE_EDITOR_CAPITALIZE, true)
+            menu.findItem(R.id.action_scroll_toolbar).isChecked =
+                sharedPrefs().getBoolean(PREF_NOTE_EDITOR_SCROLL_TOOLBAR, true)
+        }
     }
 
     /**
@@ -1802,7 +1812,6 @@ class NoteEditorFragment :
         // Showing the bottom toolbar (for HTML format) is not needed for image occlusion notetypes
         // as there are no fields for inputting text.
         toolbar.isVisible = !currentNotetypeIsImageOcclusion()
-
         editFields = LinkedList()
 
         var previous: FieldEditLine? = null
@@ -1892,6 +1901,7 @@ class NoteEditorFragment :
 
             fieldsLayoutContainer!!.addView(editLineView)
         }
+        requireActivity().invalidateOptionsMenu()
     }
 
     private fun getActionModeCallback(
