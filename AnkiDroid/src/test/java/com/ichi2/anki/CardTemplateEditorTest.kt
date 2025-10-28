@@ -24,6 +24,7 @@ import android.widget.EditText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CardTemplateEditor.CardTemplateFragment.CardTemplate
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.dialogs.InsertFieldDialog
 import com.ichi2.anki.libanki.NotetypeJson
 import com.ichi2.anki.libanki.testutils.ext.addNote
 import com.ichi2.anki.model.SelectableDeck
@@ -750,6 +751,94 @@ class CardTemplateEditorTest : RobolectricTest() {
         // check if current view is changed or not
         assumeThat(templateEditText.text.toString(), Matchers.equalTo(tempNoteType.css))
         assumeThat(cardTemplateFragment.currentEditorViewId, Matchers.equalTo(R.id.styling_edit))
+    }
+
+    @Test
+    fun testInsertFieldInCorrectFragmentAfterNavigation() {
+        val noteTypeName = "Basic (and reversed card)"
+
+        // Start the CardTemplateEditor with a note type that has multiple templates
+        val collectionBasicNoteTypeOriginal = getCurrentDatabaseNoteTypeCopy(noteTypeName)
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.putExtra("noteTypeId", collectionBasicNoteTypeOriginal.id)
+        val templateEditorController =
+            Robolectric
+                .buildActivity(CardTemplateEditor::class.java, intent)
+                .create()
+                .start()
+                .resume()
+                .visible()
+        saveControllerForCleanup(templateEditorController)
+        val testEditor = templateEditorController.get()
+
+        assertEquals("Note type should have 2 templates", 2, testEditor.tempNoteType?.templateCount)
+
+        // Start on first fragment (Card 1)
+        assertEquals("Should start on first fragment", 0, testEditor.viewPager.currentItem)
+        advanceRobolectricLooper()
+
+        val firstFragment = testEditor.currentFragment
+        assertNotNull("First fragment should exist", firstFragment)
+        val firstTemplateEditText = testEditor.findViewById<EditText>(R.id.editor_editText)
+        val originalFirstContent = firstTemplateEditText.text.toString()
+
+        // Navigate to second fragment (Card 2)
+        testEditor.viewPager.currentItem = 1
+        advanceRobolectricLooper()
+
+        val secondFragment = testEditor.currentFragment
+        assertNotNull("Second fragment should exist", secondFragment)
+        val secondTemplateEditText = testEditor.findViewById<EditText>(R.id.editor_editText)
+        val originalSecondContent = secondTemplateEditText.text.toString()
+
+        // Navigate back to first fragment
+        testEditor.viewPager.currentItem = 0
+        advanceRobolectricLooper()
+
+        val firstFragmentAgain = testEditor.currentFragment
+        assertNotNull("First fragment should exist after navigation back", firstFragmentAgain)
+        assertEquals("Should be back on first fragment", 0, testEditor.viewPager.currentItem)
+
+        // Insert a field into the first fragment
+        val fieldToInsert = "Front"
+        val expectedFieldText = "{{$fieldToInsert}}"
+
+        // Simulate showing the insert field dialog and selecting a field
+        firstFragmentAgain!!.showInsertFieldDialog()
+        advanceRobolectricLooper()
+
+        val resultBundle = Bundle()
+        resultBundle.putString(InsertFieldDialog.KEY_INSERTED_FIELD, fieldToInsert)
+        testEditor.supportFragmentManager.setFragmentResult(firstFragmentAgain.insertFieldRequestKey, resultBundle)
+        advanceRobolectricLooper()
+
+        // Verify the field was inserted into the first fragment
+        val updatedFirstContent = firstTemplateEditText.text.toString()
+        assertTrue(
+            "Field should be inserted into first fragment",
+            updatedFirstContent.contains(expectedFieldText),
+        )
+        assertTrue(
+            "First fragment content should have changed",
+            updatedFirstContent != originalFirstContent,
+        )
+
+        // Navigate to second fragment to verify it wasn't modified
+        testEditor.viewPager.currentItem = 1
+        advanceRobolectricLooper()
+
+        val secondTemplateEditTextAfter = testEditor.findViewById<EditText>(R.id.editor_editText)
+        val secondContentAfter = secondTemplateEditTextAfter.text.toString()
+
+        assertEquals(
+            "Second fragment should not have been modified",
+            originalSecondContent,
+            secondContentAfter,
+        )
+        assertFalse(
+            "Field should NOT be in second fragment",
+            secondContentAfter.contains(expectedFieldText),
+        )
     }
 
     private fun addCardType(
