@@ -792,8 +792,9 @@ class NoteEditorTest : RobolectricTest() {
         }
 
         fun buildInternal(): NoteEditorFragment {
-            col.notetypes.setCurrent(notetype)
             val noteEditor = getNoteEditorAddingNote(REVIEWER)
+            advanceRobolectricLooper()
+            noteEditor.setCurrentlySelectedNoteType(notetype.id)
             advanceRobolectricLooper()
             // image occlusion does not need a first field
             if (this.firstField != null) {
