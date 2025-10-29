@@ -206,12 +206,14 @@ sealed interface NoteEditorLauncher : Destination {
         val deckId: DeckId,
         val fieldsText: String,
         val tags: List<String>? = null,
+        val noteTypeId: Long? = null,
     ) : NoteEditorLauncher {
         override fun toBundle(): Bundle =
             bundleOf(
                 NoteEditorFragment.EXTRA_CALLER to NoteEditorCaller.NOTEEDITOR.value,
                 NoteEditorFragment.EXTRA_DID to deckId,
                 NoteEditorFragment.EXTRA_CONTENTS to fieldsText,
+                NoteEditorFragment.EXTRA_NOTE_TYPE_ID to noteTypeId,
             ).also { bundle ->
                 tags?.let { tags -> bundle.putStringArray(NoteEditorFragment.EXTRA_TAGS, tags.toTypedArray()) }
             }
