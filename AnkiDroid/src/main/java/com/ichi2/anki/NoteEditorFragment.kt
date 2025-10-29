@@ -1589,7 +1589,14 @@ class NoteEditorFragment :
     }
 
     fun copyNote() {
-        launchNoteEditor(NoteEditorLauncher.CopyNote(deckId, fieldsText, selectedTags)) { }
+        val noteTypeId =
+            if (currentlySelectedNotetype != null) {
+                currentlySelectedNotetype!!.id
+            } else {
+                editorNote?.notetype?.id
+            }
+
+        launchNoteEditor(NoteEditorLauncher.CopyNote(deckId, fieldsText, selectedTags, noteTypeId)) { }
     }
 
     private fun launchNoteEditor(
