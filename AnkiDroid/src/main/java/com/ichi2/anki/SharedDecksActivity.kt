@@ -260,13 +260,11 @@ class SharedDecksActivity : AnkiActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.home) {
-            // R.id.home refers to a custom 'home' menu item defined in your app resources (res/menu/...).
-            shouldHistoryBeCleared = true
-            webView.loadUrl(resources.getString(R.string.shared_decks_url))
-        } else if (item.itemId == android.R.id.home) {
-            // android.R.id.home refers to the system-provided "up" button in the app toolbar
-            onBackPressedCallback.isEnabled = false
+        when (item.itemId) {
+            R.id.home -> {
+                shouldHistoryBeCleared = true
+                webView.loadUrl(resources.getString(R.string.shared_decks_url))
+            }
         }
         return super.onOptionsItemSelected(item)
     }
