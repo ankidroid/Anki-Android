@@ -30,14 +30,12 @@ import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.activity.OnBackPressedCallback
-import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.core.os.bundleOf
 import androidx.fragment.app.commit
 import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_INDEFINITE
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.snackbar.showSnackbar
-import com.ichi2.ui.AccessibleSearchView
 import com.ichi2.utils.FileNameAndExtension
 import timber.log.Timber
 import java.io.Serializable
@@ -258,23 +256,6 @@ class SharedDecksActivity : AnkiActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.download_shared_decks_menu, menu)
-
-        val searchView = menu.findItem(R.id.search)?.actionView as AccessibleSearchView
-        searchView.queryHint = getString(R.string.search_using_deck_name)
-        searchView.setMaxWidth(Integer.MAX_VALUE)
-        searchView.setOnQueryTextListener(
-            object : SearchView.OnQueryTextListener {
-                override fun onQueryTextSubmit(query: String?): Boolean {
-                    webView.loadUrl(resources.getString(R.string.shared_decks_url) + query)
-                    return true
-                }
-
-                override fun onQueryTextChange(newText: String?): Boolean {
-                    // Nothing to do here
-                    return false
-                }
-            },
-        )
         return true
     }
 
