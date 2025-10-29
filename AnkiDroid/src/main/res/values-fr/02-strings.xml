@@ -74,7 +74,7 @@
     <string name="whiteboard_more_options" comment="Tooltip of the whiteboard \'More\' button" maxLength="28">Plus d\'options</string>
     <string name="whiteboard_remove_brush_message">Êtes-vous sûr de vouloir supprimer ce pinceau de votre palette ?</string>
     <string name="whiteboard_ink_eraser" comment="Title of the whiteboard Ink eraser">Encre</string>
-    <string name="whiteboard_stroke_eraser" comment="Title of the whiteboard Stroke eraser">Stroke</string>
+    <string name="whiteboard_stroke_eraser" comment="Title of the whiteboard Stroke eraser">Trait</string>
     <string name="stylus_mode" comment="Title of the menu item that toggles the whiteboard stylus mode" maxLength="28">Mode stylet</string>
     <string name="cannot_remove_last_brush_message">Le dernier pinceau n\'a pas pu être supprimé</string>
     <string name="enable_whiteboard" maxLength="28">Activer le tableau blanc</string>
