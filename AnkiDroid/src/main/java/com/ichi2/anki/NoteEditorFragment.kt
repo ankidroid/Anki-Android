@@ -857,6 +857,27 @@ class NoteEditorFragment :
         if (addNote) {
             noteTypeSpinner!!.onItemSelectedListener = SetNoteTypeListener()
             requireAnkiActivity().setToolbarTitle(R.string.menu_add)
+
+            // set the note type
+            val noteTypeId: Long? =
+                if (!allNoteTypeIds.isNullOrEmpty()) {
+                    requireArguments().getLong(
+                        EXTRA_NOTE_TYPE_ID,
+                        allNoteTypeIds!![0],
+                    )
+                } else {
+                    null
+                }
+            val noteTypeIdIndex: Int =
+                if (noteTypeId != null && !allNoteTypeIds.isNullOrEmpty()) {
+                    allNoteTypeIds!!.indexOfFirst { it == noteTypeId }.let {
+                        if (it == -1) 0 else it
+                    }
+                } else {
+                    0
+                }
+            noteTypeSpinner!!.setSelection(noteTypeIdIndex)
+
             // set information transferred by intent
             var contents: String? = null
             val tags = requireArguments().getStringArray(EXTRA_TAGS)
