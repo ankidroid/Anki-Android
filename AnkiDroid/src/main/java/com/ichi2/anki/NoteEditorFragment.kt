@@ -91,7 +91,6 @@ import com.ichi2.anki.OnContextAndLongClickListener.Companion.setOnContextAndLon
 import com.ichi2.anki.android.input.ShortcutGroup
 import com.ichi2.anki.android.input.ShortcutGroupProvider
 import com.ichi2.anki.android.input.shortcut
-import com.ichi2.anki.bottomsheet.ImageOcclusionBottomSheetFragment
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.dialogs.ConfirmationDialog
@@ -241,8 +240,11 @@ class NoteEditorFragment :
     internal var noteTypeSpinner: Spinner? = null
     private var deckSpinnerSelection: DeckSpinnerSelection? = null
     private var imageOcclusionButtonsContainer: LinearLayout? = null
-    private var selectImageForOcclusionButton: Button? = null
     private var editOcclusionsButton: Button? = null
+    private var imageSelectionForOcclusionContainer: LinearLayout? = null
+    private var imageSelectionForOcclusionLabel: TextView? = null
+    private var cameraForOcclusionButton: Button? = null
+    private var galleryForOcclusionButton: Button? = null
     private var pasteOcclusionImageButton: Button? = null
 
     // non-null after onCollectionLoaded
@@ -702,7 +704,10 @@ class NoteEditorFragment :
         }
         imageOcclusionButtonsContainer = requireView().findViewById(R.id.ImageOcclusionButtonsLayout)
         editOcclusionsButton = requireView().findViewById(R.id.EditOcclusionsButton)
-        selectImageForOcclusionButton = requireView().findViewById(R.id.SelectImageForOcclusionButton)
+        imageSelectionForOcclusionContainer = requireView().findViewById(R.id.ImageSelectionForOcclusionContainer)
+        imageSelectionForOcclusionLabel = requireView().findViewById(R.id.ImageSelectionForOcclusionLabel)
+        cameraForOcclusionButton = requireView().findViewById<Button>(R.id.CameraForOcclusionButton)
+        galleryForOcclusionButton = requireView().findViewById<Button>(R.id.GalleryForOcclusionButton)
         pasteOcclusionImageButton = requireView().findViewById(R.id.PasteImageForOcclusionButton)
 
         try {
@@ -761,33 +766,23 @@ class NoteEditorFragment :
 
         if (addNote) {
             editOcclusionsButton?.visibility = View.GONE
-            selectImageForOcclusionButton?.setOnClickListener {
-                Timber.i("selecting image for occlusion")
-                val imageOcclusionBottomSheet = ImageOcclusionBottomSheetFragment()
-                imageOcclusionBottomSheet.listener =
-                    object : ImageOcclusionBottomSheetFragment.ImagePickerListener {
-                        override fun onCameraClicked() {
-                            Timber.i("onCameraClicked")
-                            dispatchCameraEvent()
-                        }
 
-                        override fun onGalleryClicked() {
-                            Timber.i("onGalleryClicked")
-                            try {
-                                ioEditorLauncher.launch("image/*")
-                            } catch (_: ActivityNotFoundException) {
-                                Timber.w("No app found to handle onGalleryClicked request")
-                                activity?.showSnackbar(R.string.activity_start_failed)
-                            }
-                        }
-                    }
-                imageOcclusionBottomSheet.show(
-                    parentFragmentManager,
-                    "ImageOcclusionBottomSheetFragment",
-                )
+            imageSelectionForOcclusionLabel?.text = TR.notetypesImage() + ":"
+
+            cameraForOcclusionButton?.setOnClickListener {
+                Timber.i("Camera button clicked")
+                dispatchCameraEvent()
             }
 
-            pasteOcclusionImageButton?.text = TR.notetypesIoPasteImageFromClipboard()
+            galleryForOcclusionButton?.setOnClickListener {
+                Timber.i("Gallery button clicked")
+                try {
+                    ioEditorLauncher.launch("image/*")
+                } catch (_: ActivityNotFoundException) {
+                    Timber.w("No app found to handle onGalleryClicked request")
+                    activity?.showSnackbar(R.string.activity_start_failed)
+                }
+            }
             pasteOcclusionImageButton?.setOnClickListener {
                 // TODO: Support all extensions
                 //  See https://github.com/ankitects/anki/blob/6f3550464d37aee1b8b784e431cbfce8382d3ce7/rslib/src/image_occlusion/imagedata.rs#L154
@@ -806,8 +801,7 @@ class NoteEditorFragment :
                 }
             }
         } else {
-            selectImageForOcclusionButton?.visibility = View.GONE
-            pasteOcclusionImageButton?.visibility = View.GONE
+            imageSelectionForOcclusionContainer?.visibility = View.GONE
             editOcclusionsButton?.visibility = View.VISIBLE
             editOcclusionsButton?.text = resources.getString(R.string.edit_occlusions)
             editOcclusionsButton?.setOnClickListener {
