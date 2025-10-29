@@ -163,6 +163,7 @@ import com.ichi2.imagecropper.ImageCropper.Companion.CROP_IMAGE_RESULT
 import com.ichi2.imagecropper.ImageCropperLauncher
 import com.ichi2.themes.Themes
 import com.ichi2.utils.AndroidUiUtils.showSoftInput
+import com.ichi2.utils.BundleUtils.getNullableLong
 import com.ichi2.utils.ClipboardUtil
 import com.ichi2.utils.ClipboardUtil.MEDIA_MIME_TYPES
 import com.ichi2.utils.ClipboardUtil.hasMedia
@@ -857,6 +858,12 @@ class NoteEditorFragment :
         if (addNote) {
             noteTypeSpinner!!.onItemSelectedListener = SetNoteTypeListener()
             requireAnkiActivity().setToolbarTitle(R.string.menu_add)
+
+            // if a specific note type id was provided in the arguments select it in the spinner
+            val noteTypeId: Long? = requireArguments().getNullableLong(EXTRA_NOTE_TYPE_ID)
+            val noteTypeIdIndex: Int? = noteTypeId?.let { allNoteTypeIds?.indexOf(it)?.takeIf { it >= 0 } }
+            noteTypeIdIndex?.let { noteTypeSpinner?.setSelection(it) }
+
             // set information transferred by intent
             var contents: String? = null
             val tags = requireArguments().getStringArray(EXTRA_TAGS)
