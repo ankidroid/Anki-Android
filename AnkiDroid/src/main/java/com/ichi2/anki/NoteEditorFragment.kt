@@ -3026,6 +3026,7 @@ class NoteEditorFragment :
         const val RELOAD_REQUIRED_EXTRA_KEY = "reloadRequired"
         const val EXTRA_IMG_OCCLUSION = "image_uri"
         const val IN_CARD_BROWSER_ACTIVITY = "inCardBrowserActivity"
+        const val EXTRA_NOTE_TYPE_ID = "NOTE_TYPE_ID"
 
         // calling activity
         enum class NoteEditorCaller(
