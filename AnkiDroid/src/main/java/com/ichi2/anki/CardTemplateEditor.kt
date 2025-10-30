@@ -33,6 +33,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.LinearLayout
 import android.widget.ScrollView
 import androidx.activity.OnBackPressedCallback
@@ -177,6 +178,7 @@ open class CardTemplateEditor :
             return
         }
         super.onCreate(savedInstanceState)
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
         setContentView(R.layout.card_template_editor)
         // Load the args either from the intent or savedInstanceState bundle
         if (savedInstanceState == null) {
