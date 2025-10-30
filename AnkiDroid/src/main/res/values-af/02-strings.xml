@@ -279,7 +279,6 @@
     <string name="download_failed">Aflaai het misluk</string>
     <string name="deck_download_progress_message">Jy kan ander toepassings gebruik terwyl die aflaai loop</string>
     <string name="check_network">Kontroleer asseblief jou netwerkverbinding</string>
-    <string name="search_using_deck_name">Soek met paknaam</string>
     <string name="external_storage_unavailable">Aflaai gestaak, die eksterne berging is nie beskikbaar nie</string>
     <string name="home" maxLength="28">Tuis</string>
     <!-- Study Screen actions

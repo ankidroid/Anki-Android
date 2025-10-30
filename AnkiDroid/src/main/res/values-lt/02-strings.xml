@@ -285,7 +285,6 @@
     <string name="download_failed">Atsisiųsti nepavyko</string>
     <string name="deck_download_progress_message">Atsisiuntimo metu galite naudoti kitas programas</string>
     <string name="check_network">Patikrinkite tinklo ryšį</string>
-    <string name="search_using_deck_name">Paieška pagal kortelių rinkinio pavadinimą</string>
     <string name="external_storage_unavailable">Atsisiuntimas nutrauktas, išorinė saugykla nepasiekiama</string>
     <string name="home" maxLength="28">Namai</string>
     <!-- Study Screen actions

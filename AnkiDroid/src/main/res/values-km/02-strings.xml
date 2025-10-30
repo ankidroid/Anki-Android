@@ -276,7 +276,6 @@
     <string name="download_failed">ការទាញយកបានបរាជ័យ</string>
     <string name="deck_download_progress_message">អ្នកអាចប្រើកម្មវិធីដទៃទៀតអំឡុងពេលទាញយក</string>
     <string name="check_network">សូមពិនិត្យការភ្ជាប់បណ្ដាញរបស់អ្នក</string>
-    <string name="search_using_deck_name">ស្វែងរកដោយប្រើឈ្មោះជាន់</string>
     <string name="external_storage_unavailable">Download aborted, the external storage is not available</string>
     <string name="home" maxLength="28">Home</string>
     <!-- Study Screen actions

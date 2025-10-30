@@ -131,7 +131,6 @@
     <string name="empty_filtered_deck">سۈزۈلگەن دەستىنى بوشىتىۋاتىدۇ&#8230;</string>
     <string name="search_deck" comment="Deck search for selecting it">دەستە ئىزدە</string>
     <string name="empty_deck">بۇ دەستە بوش</string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">دەستە ئىزدە</string>
     <string name="invalid_deck_name">ئىناۋەتسىز دەستە ئاتى</string>
     <string name="studyoptions_congrats_finished">مۇبارەك بولسۇن! بۈگۈنكىنى تاماملىدىڭىز.</string>
     <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">دەستە ھازىرچە تاماملاندى! %s</string>

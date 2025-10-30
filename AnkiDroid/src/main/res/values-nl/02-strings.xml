@@ -279,7 +279,6 @@
     <string name="download_failed">Download mislukt</string>
     <string name="deck_download_progress_message">U kunt andere apps gebruiken terwijl de download bezig is</string>
     <string name="check_network">Controleer alsrublief uw internetconnectie</string>
-    <string name="search_using_deck_name">Zoek met setnaam</string>
     <string name="external_storage_unavailable">Download afgebroken, externe opslag is niet beschikbaar</string>
     <string name="home" maxLength="28">Startpagina</string>
     <!-- Study Screen actions

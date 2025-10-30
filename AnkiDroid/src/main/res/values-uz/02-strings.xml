@@ -279,7 +279,6 @@
     <string name="download_failed">Yuklab olib boʻlmadi</string>
     <string name="deck_download_progress_message">Yuklab olish jarayonida boshqa ilovalardan foydalanishingiz mumkin</string>
     <string name="check_network">Iltimos, tarmoqqa ulanganingizni tekshiring</string>
-    <string name="search_using_deck_name">Dasta nomi boʻyicha qidirish</string>
     <string name="external_storage_unavailable">Yuklab olish toʻxtatildi, tashqi xotira mavjud emas</string>
     <string name="home" maxLength="28">Bosh sahifa</string>
     <!-- Study Screen actions

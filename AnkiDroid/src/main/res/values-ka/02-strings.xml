@@ -279,7 +279,6 @@
     <string name="download_failed">ჩამოტვირთვა წარუმატებელია</string>
     <string name="deck_download_progress_message">ჩამოტვირთვისას შეგიძლიათ სხვა აპლიკაციებიც გამოიყენოთ</string>
     <string name="check_network">გთხოვთ შეამოწმოთ ქსელთან კავშირი</string>
-    <string name="search_using_deck_name">დასტის სახელით ძებნა</string>
     <string name="external_storage_unavailable">ჩამოტვირთვა გაუქმდა, გარე მეხსიერება ხელმიუწვდომელია</string>
     <string name="home" maxLength="28">მთავარი</string>
     <!-- Study Screen actions

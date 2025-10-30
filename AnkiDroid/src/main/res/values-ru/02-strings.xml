@@ -285,7 +285,6 @@
     <string name="download_failed">Загрузка не удалась</string>
     <string name="deck_download_progress_message">Вы можете использовать другие приложения во время загрузки</string>
     <string name="check_network">Проверьте подключение к Интернету</string>
-    <string name="search_using_deck_name">Искать по названию колоды</string>
     <string name="external_storage_unavailable">Загрузка прервана, внешняя память недоступна</string>
     <string name="home" maxLength="28">Главная</string>
     <!-- Study Screen actions

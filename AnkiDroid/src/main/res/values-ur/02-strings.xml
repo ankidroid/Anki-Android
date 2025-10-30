@@ -280,7 +280,6 @@
     <string name="download_failed">ڈاؤن لوڈ ناکام ہو گیا۔</string>
     <string name="deck_download_progress_message">جب ڈاؤن لوڈ چل رہا ہو تو آپ دوسری ایپس استعمال کر سکتے ہیں۔</string>
     <string name="check_network">براہ کرم اپنا نیٹ ورک کنکشن چیک کریں</string>
-    <string name="search_using_deck_name">ڈیک کا نام استعمال کرکے تلاش کریں</string>
     <string name="external_storage_unavailable">ڈاؤن لوڈ منسوخ کر دیا گیا، بیرونی اسٹوریج دستیاب نہیں ہے</string>
     <string name="home" maxLength="28">گھر</string>
     <!-- Study Screen actions

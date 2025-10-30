@@ -137,7 +137,6 @@
     <string name="empty_filtered_deck">Opróżnienie filtrowanej talii&#8230;</string>
     <string name="search_deck" comment="Deck search for selecting it">Przeszukaj talię</string>
     <string name="empty_deck">Ta talia jest pusta</string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">Wyszukiwanie talii</string>
     <string name="invalid_deck_name">Nieprawidłowa nazwa talii</string>
     <string name="studyoptions_congrats_finished">Gratulacje! Zakończono powtórki na dziś.</string>
     <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Talia na razie skończona! %s</string>

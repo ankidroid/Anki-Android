@@ -276,7 +276,6 @@
     <string name="download_failed">下载失败</string>
     <string name="deck_download_progress_message">您可以在下载过程中使用其他应用</string>
     <string name="check_network">请检查您的网络连接。</string>
-    <string name="search_using_deck_name">使用牌组名称搜索</string>
     <string name="external_storage_unavailable">下载中止，外部存储不可用</string>
     <string name="home" maxLength="28">主页</string>
     <!-- Study Screen actions

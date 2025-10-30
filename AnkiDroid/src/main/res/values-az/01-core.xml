@@ -131,7 +131,6 @@
     <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
     <string name="search_deck" comment="Deck search for selecting it">Dəstə axtar</string>
     <string name="empty_deck">Bu dəstə boşdur</string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">Dəstə axtar</string>
     <string name="invalid_deck_name">Etibarsız kart adı</string>
     <string name="studyoptions_congrats_finished">Congratulations! You have finished for today.</string>
     <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Deck finished for now! %s</string>

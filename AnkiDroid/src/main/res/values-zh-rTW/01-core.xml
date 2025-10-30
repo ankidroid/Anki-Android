@@ -129,7 +129,6 @@
     <string name="empty_filtered_deck">清除已篩選牌組中&#8230;</string>
     <string name="search_deck" comment="Deck search for selecting it">牌組搜尋</string>
     <string name="empty_deck">這是個空牌組</string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">牌組搜尋</string>
     <string name="invalid_deck_name">無效牌組名稱</string>
     <string name="studyoptions_congrats_finished">恭喜！今日份已完成</string>
     <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">完成了本牌組了！ %s</string>

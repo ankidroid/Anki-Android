@@ -279,7 +279,6 @@
     <string name="download_failed">ಡೌನ್‌ಲೋಡ್ ವಿಫಲವಾಗಿದೆ</string>
     <string name="deck_download_progress_message">ಡೌನ್‌ಲೋಡ್ ಚಾಲನೆಯಲ್ಲಿರುವಾಗ ನೀವು ಇತರ ಅಪ್ಲಿಕೇಶನ್‌ಗಳನ್ನು ಬಳಸಬಹುದು</string>
     <string name="check_network">ದಯವಿಟ್ಟು ನಿಮ್ಮ ನೆಟ್‌ವರ್ಕ್ ಸಂಪರ್ಕವನ್ನು ಪರಿಶೀಲಿಸಿ</string>
-    <string name="search_using_deck_name">ಡೆಕ್ ಹೆಸರನ್ನು ಬಳಸಿ ಹುಡುಕಿ</string>
     <string name="external_storage_unavailable">ಡೌನ್‌ಲೋಡ್ ನಿಲ್ಲಿಸಲಾಗಿದೆ, ಯಾವುದೇ ಬಾಹ್ಯ ಸಂಗ್ರಹಣೆ ಲಭ್ಯವಿಲ್ಲ</string>
     <string name="home" maxLength="28">ಮನೆ</string>
     <!-- Study Screen actions

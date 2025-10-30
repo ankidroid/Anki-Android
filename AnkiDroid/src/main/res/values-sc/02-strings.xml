@@ -281,7 +281,6 @@
     <string name="download_failed">Iscarrigamentu fallidu</string>
     <string name="deck_download_progress_message">Podes impreare àteras aplicatziones in su mentres chi s\'iscarrigamentu est in cursu</string>
     <string name="check_network">Verìfica sa connessione de retze tua</string>
-    <string name="search_using_deck_name">Chirca impreende su nùmene de su matzu</string>
     <string name="external_storage_unavailable">Iscarrigamentu annulladu, sa memòria esterna no est a disponimentu</string>
     <string name="home" maxLength="28">Pàgina printzipale</string>
     <!-- Study Screen actions

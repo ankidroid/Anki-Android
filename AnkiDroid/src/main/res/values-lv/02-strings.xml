@@ -282,7 +282,6 @@
     <string name="download_failed">Lejupielāde neizdevās</string>
     <string name="deck_download_progress_message">Var izmantot citas lietotnes, kamēr notiek lejupielāde</string>
     <string name="check_network">Lūgums pārbaudīt savu tīkla savienojumu</string>
-    <string name="search_using_deck_name">Meklēt izmantojot kavas nosaukumu</string>
     <string name="external_storage_unavailable">Lejupielāde priekšlaicīgi pārtraukta, ārējā krātuve nav pieejama</string>
     <string name="home" maxLength="28">Sākums</string>
     <!-- Study Screen actions

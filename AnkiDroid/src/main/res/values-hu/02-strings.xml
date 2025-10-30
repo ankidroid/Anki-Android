@@ -279,7 +279,6 @@
     <string name="download_failed">Letöltés sikertelen</string>
     <string name="deck_download_progress_message">Más alkalmazásokat használhatsz, amíg a letöltés folyik.</string>
     <string name="check_network">Ellenőrizd a hálózati kapcsolatodat!</string>
-    <string name="search_using_deck_name">Keresés a paklik nevében</string>
     <string name="external_storage_unavailable">A letöltés megszakadt, a külső tároló nem elérhető</string>
     <string name="home" maxLength="28">Kezdőlap</string>
     <!-- Study Screen actions

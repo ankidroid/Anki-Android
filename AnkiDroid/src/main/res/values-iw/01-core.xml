@@ -138,7 +138,6 @@
     <string name="empty_filtered_deck">מרוקן חפיסה מסוננת&#8230;</string>
     <string name="search_deck" comment="Deck search for selecting it">חיפוש חפיסה</string>
     <string name="empty_deck">החפיסה ריקה</string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">חיפוש חפיסה</string>
     <string name="invalid_deck_name">שם חפיסה לא חוקי</string>
     <string name="studyoptions_congrats_finished">אשריך!  סיימת להיום.</string>
     <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">סיימת את החפיסה לעכשיו! %s</string>

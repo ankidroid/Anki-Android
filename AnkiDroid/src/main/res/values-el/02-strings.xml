@@ -279,7 +279,6 @@
     <string name="download_failed">Αποτυχία λήψης</string>
     <string name="deck_download_progress_message">Μπορείτε να χρησιμοποιήσετε άλλες εφαρμογές ενώ εκτελείται η λήψη</string>
     <string name="check_network">Παρακαλώ ελέγξτε τη σύνδεσή σας στο δίκτυο</string>
-    <string name="search_using_deck_name">Αναζήτηση με το όνομα τράπουλας</string>
     <string name="external_storage_unavailable">Η λήψη ματαιώθηκε, ο εξωτερικός χώρος αποθήκευσης δεν είναι διαθέσιμος</string>
     <string name="home" maxLength="28">Αρχική</string>
     <!-- Study Screen actions

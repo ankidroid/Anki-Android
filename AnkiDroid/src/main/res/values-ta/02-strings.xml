@@ -279,7 +279,6 @@
     <string name="download_failed">பதிவிறக்கம் தோல்வியடைந்தது</string>
     <string name="deck_download_progress_message">பதிவிறக்கம் இயங்கும்போது நீங்கள் பிற பயன்பாடுகளைப் பயன்படுத்தலாம்</string>
     <string name="check_network">உங்கள் பிணைய இணைப்பைச் சரிபார்க்கவும்</string>
-    <string name="search_using_deck_name">டெக் பெயரைப் பயன்படுத்தி தேடவும்</string>
     <string name="external_storage_unavailable">பதிவிறக்கம் நிறுத்தப்பட்டது, வெளிப்புற சேமிப்பிடம் கிடைக்கவில்லை</string>
     <string name="home" maxLength="28">வீடு</string>
     <!-- Study Screen actions

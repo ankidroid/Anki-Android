@@ -279,7 +279,6 @@
     <string name="download_failed">ഡൗൺലോഡ് പരാജയപ്പെട്ടു</string>
     <string name="deck_download_progress_message">ഡൗൺലോഡ് പ്രവർത്തിക്കുമ്പോൾ നിങ്ങൾക്ക് മറ്റ് ആപ്പുകൾ ഉപയോഗിക്കാം</string>
     <string name="check_network">നിങ്ങളുടെ നെറ്റ്‌വർക്ക് കണക്ഷൻ പരിശോധിക്കുക</string>
-    <string name="search_using_deck_name">ഡെക്കിൻ്റെ പേര് ഉപയോഗിച്ച് തിരയുക</string>
     <string name="external_storage_unavailable">ഡൗൺലോഡ് നിർത്തലാക്കി, ബാഹ്യ സംഭരണം ലഭ്യമല്ല</string>
     <string name="home" maxLength="28">Home</string>
     <!-- Study Screen actions

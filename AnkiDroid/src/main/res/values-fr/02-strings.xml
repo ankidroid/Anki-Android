@@ -279,7 +279,6 @@
     <string name="download_failed">Le téléchargement a échoué</string>
     <string name="deck_download_progress_message">Vous pouvez utiliser d\'autres applications pendant que le téléchargement est en cours d\'exécution</string>
     <string name="check_network">Veuillez vérifier votre connexion réseau</string>
-    <string name="search_using_deck_name">Chercher en utilisant le nom du paquet</string>
     <string name="external_storage_unavailable">Téléchargement interrompu, le stockage externe n\'est pas disponible</string>
     <string name="home" maxLength="28">Accueil</string>
     <!-- Study Screen actions

@@ -279,7 +279,6 @@
     <string name="download_failed">ડાઉનલોડ ફેઇલ ગયું છે</string>
     <string name="deck_download_progress_message">ડાઉનલોડ ચાલુ હોય ત્યારે તમે અન્ય એપ્સનો ઉપયોગ કરી શકો છો</string>
     <string name="check_network">કૃપા કરીને તમારું નેટવર્ક કનેક્શન તપાસો</string>
-    <string name="search_using_deck_name">ડેક નામનો ઉપયોગ કરીને શોધો</string>
     <string name="external_storage_unavailable">ડાઉનલોડ રદ કર્યું, બાહ્ય સ્ટોરેજ ઉપલબ્ધ નથી</string>
     <string name="home" maxLength="28">ઘર</string>
     <!-- Study Screen actions

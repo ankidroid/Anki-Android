@@ -279,7 +279,6 @@
     <string name="download_failed">Descarga fallida</string>
     <string name="deck_download_progress_message">Puedes usar otras aplicaciones mientras se ejecuta la descarga</string>
     <string name="check_network">Por favor revisa tu conexión de red</string>
-    <string name="search_using_deck_name">Buscar usando nombre de mazo</string>
     <string name="external_storage_unavailable">Descarga abortada, el almacenamiento externo no está disponible</string>
     <string name="home" maxLength="28">Inicio</string>
     <!-- Study Screen actions
