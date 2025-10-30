@@ -7,11 +7,15 @@
         android:title="@string/home"
         android:icon="@drawable/home_icon"
         app:showAsAction="ifRoom" />
-        
     <item
         android:id="@+id/search"
         android:title="@string/search_for_download_deck"
         android:icon="@drawable/ic_search_white"
         app:showAsAction="ifRoom|collapseActionView"
         app:actionViewClass="com.ichi2.ui.AccessibleSearchView" />
+    <item
+        android:id="@+id/close"
+        android:title="@string/close"
+        android:icon="@drawable/close_icon"
+        app:showAsAction="always" />
 </menu>
