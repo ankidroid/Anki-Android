@@ -45,8 +45,6 @@ import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import androidx.core.view.size
 import androidx.fragment.app.Fragment
@@ -178,7 +176,8 @@ open class CardTemplateEditor :
             return
         }
         super.onCreate(savedInstanceState)
-        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
+        @Suppress("DEPRECATION")
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
         setContentView(R.layout.card_template_editor)
         // Load the args either from the intent or savedInstanceState bundle
         if (savedInstanceState == null) {
@@ -667,10 +666,10 @@ open class CardTemplateEditor :
 
             /* When keyboard is visible, hide the bottom navigation bar to allow viewing
             of all template text when resize happens */
-            ViewCompat.setOnApplyWindowInsetsListener(mainView) { _, insets ->
-                bottomNavigation.isVisible = !insets.isVisible(WindowInsetsCompat.Type.ime())
-                insets
-            }
+//            ViewCompat.setOnApplyWindowInsetsListener(mainView) { _, insets ->
+//                bottomNavigation.isVisible = !insets.isVisible(WindowInsetsCompat.Type.ime())
+//                insets
+//            }
 
             /**
              * We focus on the editText to indicate it's editable, but we don't automatically
@@ -761,8 +760,18 @@ open class CardTemplateEditor :
                 Timber.i("updated card template name")
                 Timber.d("updated name of template %d to '%s'", ordinal, newName)
 
-                // update the tab
+                // Save the current tab position before notifying adapter
+                val currentPosition = templateEditor.viewPager.currentItem
+
+                // Update the tab
                 templateEditor.viewPager.adapter!!.notifyDataSetChanged()
+
+                // Restore the tab position immediately (without post)
+                // The position should remain the same since we're just renaming
+                if (currentPosition < templateEditor.tempNoteType!!.templateCount) {
+                    templateEditor.viewPager.setCurrentItem(currentPosition, false)
+                }
+
                 // Update the tab name in previewer
                 templateEditor.loadTemplatePreviewerFragmentIfFragmented()
             }
