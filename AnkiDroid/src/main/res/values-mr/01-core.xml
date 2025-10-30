@@ -131,7 +131,6 @@
     <string name="empty_filtered_deck">फिल्टर केलेले डेक रिक्त करत आहे&#8230;</string>
     <string name="search_deck" comment="Deck search for selecting it">डेक शोध</string>
     <string name="empty_deck">हा डेक रिक्त आहे</string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">डेक शोध</string>
     <string name="invalid_deck_name">अवैध डेक नाव</string>
     <string name="studyoptions_congrats_finished">Congratulations! You have finished for today.</string>
     <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">डेक आतासाठी पूर्ण झाले आहे! %s</string>

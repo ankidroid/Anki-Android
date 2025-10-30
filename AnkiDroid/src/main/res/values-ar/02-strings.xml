@@ -291,7 +291,6 @@
     <string name="download_failed">فشل التنزيل</string>
     <string name="deck_download_progress_message">تستطيع استخدام التطبيقات الأخرى أثناء استمرار التنزيل</string>
     <string name="check_network">تحقق من اتصالك بالشبكة</string>
-    <string name="search_using_deck_name">ابحث باستخدام اسم الرزمة</string>
     <string name="external_storage_unavailable">تم إلغاء التنزيل لأن التخزين الخارجي غير متوفر</string>
     <string name="home" maxLength="28">الصفحة الرئيسية</string>
     <!-- Study Screen actions

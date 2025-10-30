@@ -276,7 +276,6 @@
     <string name="download_failed">Gagal mengunduh</string>
     <string name="deck_download_progress_message">Anda dapat menggunakan aplikasi lain selagi unduhan berjalan</string>
     <string name="check_network">Harap periksa koneksi jaringan Anda</string>
-    <string name="search_using_deck_name">Cari berdasarkan nama dek</string>
     <string name="external_storage_unavailable">Unduhan dibatalkan, penyimpanan eksternal tidak tersedia</string>
     <string name="home" maxLength="28">Beranda</string>
     <!-- Study Screen actions

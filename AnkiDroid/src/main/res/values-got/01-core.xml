@@ -131,7 +131,6 @@
     <string name="empty_filtered_deck">𐌻𐌰𐌿𐍃𐌾𐌰𐌳𐌰 𐍆𐌹𐌻𐌻𐌾𐌹𐌽𐍃 𐌺𐌰𐍂𐍄𐌰𐌷𐌿𐌶𐌳&#8230;</string>
     <string name="search_deck" comment="Deck search for selecting it">𐌺𐌰𐍂𐍄𐌰𐌷𐌿𐌶𐌳 𐍃𐍉𐌺𐌾𐌰𐌽</string>
     <string name="empty_deck">𐌸𐌰𐍄𐌰 𐌺𐌰𐍂𐍄𐌰𐌷𐌿𐌶𐌳 𐌻𐌰𐌿𐍃 𐌹𐍃𐍄</string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">𐌺𐌰𐍂𐍄𐌰𐌷𐌿𐌶𐌳 𐍃𐍉𐌺𐌾𐌰𐌽</string>
     <string name="invalid_deck_name">𐌽𐌰𐌼𐍉 𐌿𐌽𐍂𐌰𐌹𐌷𐍄 𐌺𐌰𐍂𐍄𐌰𐌷𐌿𐌶𐌳𐌹𐍃</string>
     <string name="studyoptions_congrats_finished">𐍅𐌰𐌹𐌻𐌰 𐍄𐌰𐍅𐌹𐌳𐌴𐍃! 𐌿𐍃𐍄𐌰𐌿𐌷𐍄 𐌷𐌹𐌼𐌼𐌰 𐌳𐌰𐌲𐌰.</string>
     <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">𐌺𐌰𐍂𐍄𐌰𐌷𐌿𐌶𐌳 𐌽𐌿 𐌿𐍃𐍄𐌰𐌿𐌷! %s</string>

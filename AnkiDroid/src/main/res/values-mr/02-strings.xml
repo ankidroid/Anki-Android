@@ -279,7 +279,6 @@
     <string name="download_failed">डाउनलोड अयशस्वी</string>
     <string name="deck_download_progress_message">डाउनलोड सुरू असताना तुम्ही इतर ॲप्स वापरू शकता</string>
     <string name="check_network">कृपया तुमचे नेटवर्क कनेक्शन तपासा</string>
-    <string name="search_using_deck_name">डेकचे नाव वापरून शोधा</string>
     <string name="external_storage_unavailable">डाउनलोड रद्द केले, बाह्य संचयन उपलब्ध नाही</string>
     <string name="home" maxLength="28">मुख्यपृष्ठ</string>
     <!-- Study Screen actions

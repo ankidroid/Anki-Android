@@ -279,7 +279,6 @@
     <string name="download_failed">Elŝuto malsukcesis</string>
     <string name="deck_download_progress_message">Vi povas uzi aliajn aplikaĵojn kiam la dosiero(j) estas elŝutata(j)</string>
     <string name="check_network">Kontrolu vian retkonekton</string>
-    <string name="search_using_deck_name">Serĉi laŭ nomo de kartaro</string>
     <string name="external_storage_unavailable">Elŝutado ĉesigita, la ekstera konservejo estas neailrebla</string>
     <string name="home" maxLength="28">Hejmo</string>
     <!-- Study Screen actions

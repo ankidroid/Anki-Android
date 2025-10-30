@@ -279,7 +279,6 @@
     <string name="download_failed">چۈشۈرەلمىدى</string>
     <string name="deck_download_progress_message">اچۈشۈرۈۋاتقاندا باشقا ئەپنى ئىشلىتەلەيسىز</string>
     <string name="check_network">تور باغلىنىشىنى تەكشۈرۈڭ</string>
-    <string name="search_using_deck_name">دەستە ئىسمى بويىچە ئىزدەيدۇ</string>
     <string name="external_storage_unavailable">چۈشۈرۈش بىكار قىلىندى، سىرتقا ساقلىغۇچنى ئىشلەتكىلى بولمايدۇ</string>
     <string name="home" maxLength="28">باش بەت</string>
     <!-- Study Screen actions

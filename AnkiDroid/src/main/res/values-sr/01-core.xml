@@ -134,7 +134,6 @@
     <string name="empty_filtered_deck">Испразњује се филтрирани сет&#8230;</string>
     <string name="search_deck" comment="Deck search for selecting it">Претрага сетова</string>
     <string name="empty_deck">Овај шпил је празан</string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">Претрага сетова</string>
     <string name="invalid_deck_name">Неисправно име сета</string>
     <string name="studyoptions_congrats_finished">Браво! То је све за данас.</string>
     <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Сет „%s“ је за сада завршен!</string>

@@ -279,7 +279,6 @@
     <string name="download_failed">ଡାଉନଲୋଡ୍ ଵିଫଳ ହେଲା</string>
     <string name="deck_download_progress_message">ଡାଉନଲୋଡ୍ ଚାଲୁଥିବା ସମୟରେ ଆପଣ ଅନ୍ୟ ଆପସ୍ ବ୍ୟବହାର କରିପାରିବେ</string>
     <string name="check_network">ଦୟାକରି ଆପଣଙ୍କ ନେଟୱର୍କ ସଂଯୋଜନା ଯାଞ୍ଚ କରନ୍ତୁ</string>
-    <string name="search_using_deck_name">କେରୀ ନାମ ବ୍ୟବହାର କରି ସନ୍ଧାନ କରିବା</string>
     <string name="external_storage_unavailable">ଡାଉନଲୋଡ୍ ପରିତ୍ୟାଗ ହୋଇଛି, ବହିଃ-ଷ୍ଟୋରେଜ୍ ଉପଲବ୍ଧ ନାହିଁ</string>
     <string name="home" maxLength="28">ଗୃହ</string>
     <!-- Study Screen actions

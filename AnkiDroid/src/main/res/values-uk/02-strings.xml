@@ -285,7 +285,6 @@
     <string name="download_failed">Не вдалося завантажити</string>
     <string name="deck_download_progress_message">Ви можете використовувати інші додатки під час завантаження</string>
     <string name="check_network">Будь ласка, перевірте підключення до мережі</string>
-    <string name="search_using_deck_name">Пошук за назвою колоди</string>
     <string name="external_storage_unavailable">Завантаження перервано, зовнішнє сховище недоступне</string>
     <string name="home" maxLength="28">Головна</string>
     <!-- Study Screen actions

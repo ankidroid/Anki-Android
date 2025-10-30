@@ -279,7 +279,6 @@
     <string name="download_failed">دانلود نشد</string>
     <string name="deck_download_progress_message">شما می‌توانید زمانی که این در حال دانلود است از برنامه‌های دیگر استفاده کنید</string>
     <string name="check_network">لطفا اتصال اینترنت خود را چک کنید</string>
-    <string name="search_using_deck_name">جست و جو با استفاده از اسم دسته</string>
     <string name="external_storage_unavailable">بارگیری توقف شد، حافظه خارجی در دسترس نیست</string>
     <string name="home" maxLength="28">خانه</string>
     <!-- Study Screen actions

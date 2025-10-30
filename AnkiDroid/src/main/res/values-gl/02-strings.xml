@@ -279,7 +279,6 @@
     <string name="download_failed">Fallo ao descargar</string>
     <string name="deck_download_progress_message">Podes utilizar outras aplicacións mentres a descarga está en curso</string>
     <string name="check_network">Comproba a túa conexión de rede</string>
-    <string name="search_using_deck_name">Buscar usando o nome da baralla</string>
     <string name="external_storage_unavailable">Descarga interrompida, o almacenamento externo non está dispoñíbel</string>
     <string name="home" maxLength="28">Inicio</string>
     <!-- Study Screen actions

@@ -131,7 +131,6 @@
     <string name="empty_filtered_deck">Изпразване на филтрирано тесте&#8230;</string>
     <string name="search_deck" comment="Deck search for selecting it">Потърси тесте</string>
     <string name="empty_deck">Това тесте е празно</string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">Потърси тесте</string>
     <string name="invalid_deck_name">Невалидно име на тесте</string>
     <string name="studyoptions_congrats_finished">Поздравления! Приключихте за днес</string>
     <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Това е всичко от тестето засега. %s</string>

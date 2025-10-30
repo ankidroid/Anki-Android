@@ -285,7 +285,6 @@
     <string name="download_failed">Памылка пры спампоўцы</string>
     <string name="deck_download_progress_message">Можаце карыстацца іншымі праграмамі падчас спампоўвання</string>
     <string name="check_network">Калі ласка, праверце падключэнне да інтэрнэту</string>
-    <string name="search_using_deck_name">Пошук па назве калоды</string>
     <string name="external_storage_unavailable">Спампоўванне абарвана, бо знешняе сховішча недаступна.</string>
     <string name="home" maxLength="28">Галоўная</string>
     <!-- Study Screen actions

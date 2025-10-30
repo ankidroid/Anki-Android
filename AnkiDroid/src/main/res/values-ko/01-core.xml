@@ -128,7 +128,6 @@
     <string name="empty_filtered_deck">필터링된 덱을 비우는 중&#8230;</string>
     <string name="search_deck" comment="Deck search for selecting it">덱 검색하기</string>
     <string name="empty_deck">이 덱은 비어있습니다</string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">카드 덱 검색</string>
     <string name="invalid_deck_name">유효하지 않은 덱 이름</string>
     <string name="studyoptions_congrats_finished">축하합니다! 오늘의 학습을 마쳤습니다.</string>
     <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">이제 덱이 끝났습니다! %s</string>

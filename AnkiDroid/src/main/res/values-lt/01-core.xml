@@ -137,7 +137,6 @@
     <string name="empty_filtered_deck">Išvalomas filtruotas rinkinys&#8230;</string>
     <string name="search_deck" comment="Deck search for selecting it">Rinkinio paieška</string>
     <string name="empty_deck">Šis rinkinys yra tuščias</string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">Rinkinio paieška</string>
     <string name="invalid_deck_name">Blogas rinkinio vardas</string>
     <string name="studyoptions_congrats_finished">Sveikiname! Jūs šiandienai jau baigėte.</string>
     <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Kaladė šiandienai baigta. %s</string>

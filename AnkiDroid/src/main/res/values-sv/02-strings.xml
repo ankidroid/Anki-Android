@@ -279,7 +279,6 @@
     <string name="download_failed">Hämtning misslyckades</string>
     <string name="deck_download_progress_message">Du kan använda andra appar medan nedladdningen pågår</string>
     <string name="check_network">Kontrollera din nätverksanslutning</string>
-    <string name="search_using_deck_name">Sök efter kortlekens namn</string>
     <string name="external_storage_unavailable">Nedladdningen avbruten, det externa lagringsutrymmet är inte tillgängligt</string>
     <string name="home" maxLength="28">Hem</string>
     <!-- Study Screen actions

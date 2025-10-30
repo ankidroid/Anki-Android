@@ -279,7 +279,6 @@
     <string name="download_failed">İndirme başarısız</string>
     <string name="deck_download_progress_message">İndirme devam ederken diğer uygulamaları kullanabilirsiniz</string>
     <string name="check_network">Lütfen ağ bağlantını kontrol et</string>
-    <string name="search_using_deck_name">Deste ismini kullanarak ara</string>
     <string name="external_storage_unavailable">İndirme iptal edildi, harici hafıza erişilebilir değil.</string>
     <string name="home" maxLength="28">Ana sayfa</string>
     <!-- Study Screen actions

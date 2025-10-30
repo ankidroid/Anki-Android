@@ -276,7 +276,6 @@
     <string name="download_failed">Tải xuống thất bại</string>
     <string name="deck_download_progress_message">Bạn được phép sử dụng những ứng dụng khác khi đang tải.</string>
     <string name="check_network">Vui lòng kiểm tra kết nối mạng của bạn</string>
-    <string name="search_using_deck_name">Tìm kiếm theo tên bộ thẻ</string>
     <string name="external_storage_unavailable">Tải xuống bị hủy, bộ nhớ ngoài không khả dụng</string>
     <string name="home" maxLength="28">Trang chủ</string>
     <!-- Study Screen actions

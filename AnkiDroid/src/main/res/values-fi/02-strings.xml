@@ -279,7 +279,6 @@
     <string name="download_failed">Lataus epäonnistui</string>
     <string name="deck_download_progress_message">Voit käyttää muita sovelluksia latauksen aikana</string>
     <string name="check_network">Tarkista verkkoyhteytesi</string>
-    <string name="search_using_deck_name">Etsi käyttäen pakan nimeä</string>
     <string name="external_storage_unavailable">Lataus keskeytetty, ulkoinen tallennustila ei ole käytettävissä</string>
     <string name="home" maxLength="28">Koti</string>
     <!-- Study Screen actions

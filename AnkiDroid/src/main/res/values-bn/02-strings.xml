@@ -279,7 +279,6 @@
     <string name="download_failed">ডাউনলোড ব্যর্থ হয়েছে৷</string>
     <string name="deck_download_progress_message">ডাউনলোড করার সময় আপনি অন্যান্য অ্যাপ ব্যবহার করতে পারেন</string>
     <string name="check_network">আপনার নেটওয়ার্ক সংযোগ পরীক্ষা করুন</string>
-    <string name="search_using_deck_name">ডেকের নাম ব্যবহার করে অনুসন্ধান করুন</string>
     <string name="external_storage_unavailable">ডাউনলোড বাতিল করা হয়েছে, কোনো বাহ্যিক সঞ্চয়স্থান উপলব্ধ নেই</string>
     <string name="home" maxLength="28">বাড়ি</string>
     <!-- Study Screen actions

@@ -279,7 +279,6 @@
     <string name="download_failed">डाउनलोड विफल हुआ</string>
     <string name="deck_download_progress_message">डाउनलोड चलने के दौरान आप अन्य ऐप्स का उपयोग कर सकते हैं</string>
     <string name="check_network">कृपया अपने नेटवर्क कनेक्शन की जांच करें</string>
-    <string name="search_using_deck_name">डेक नाम का उपयोग करके खोजें</string>
     <string name="external_storage_unavailable">डाउनलोड निरस्त हो गया, बाह्य स्टोरेज  उपलब्ध नहीं है</string>
     <string name="home" maxLength="28">गृह</string>
     <!-- Study Screen actions

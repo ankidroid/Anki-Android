@@ -137,7 +137,6 @@
     <string name="empty_filtered_deck">Фильтрованная колода очищается&#8230;</string>
     <string name="search_deck" comment="Deck search for selecting it">Поиск колод</string>
     <string name="empty_deck">Эта колода пуста</string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">Поиск колоды</string>
     <string name="invalid_deck_name">Недопустимое название колоды</string>
     <string name="studyoptions_congrats_finished">Ура! На сегодня всё.</string>
     <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Колода закончилась! %s</string>

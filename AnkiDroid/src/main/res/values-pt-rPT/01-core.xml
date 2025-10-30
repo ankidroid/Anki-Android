@@ -131,7 +131,6 @@
     <string name="empty_filtered_deck">A esvaziar baralho filtrado&#8230;</string>
     <string name="search_deck" comment="Deck search for selecting it">Pesquisar baralhos</string>
     <string name="empty_deck">Este baralho está vazio</string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">Pesquisar baralhos</string>
     <string name="invalid_deck_name">Nome de baralho inválido</string>
     <string name="studyoptions_congrats_finished">Parabéns! Por hoje, acabou.</string>
     <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Baralho finalizado por enquanto! %s</string>

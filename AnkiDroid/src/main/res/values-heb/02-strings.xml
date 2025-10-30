@@ -285,7 +285,6 @@
     <string name="download_failed">ההורדה נכשלה</string>
     <string name="deck_download_progress_message">ניתן לעבור ליישומים אחרים בזמן ההורדה</string>
     <string name="check_network">נא בדוק את החיבור לרשת</string>
-    <string name="search_using_deck_name">חיפוש באמצעות שם החפיסה</string>
     <string name="external_storage_unavailable">ההורדה בוטלה, האחסון החיצוני אינו זמין</string>
     <string name="home" maxLength="28">בית</string>
     <!-- Study Screen actions

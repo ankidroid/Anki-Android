@@ -279,7 +279,6 @@
     <string name="download_failed">𐌽𐌹 𐌼𐌰𐌷𐍄𐌰 𐌰𐍄𐌳𐍂𐌰𐌲𐌰𐌽</string>
     <string name="deck_download_progress_message">𐌼𐌰𐌲𐍄 𐌰𐌽𐌸𐌰𐍂𐌰𐌹𐌶𐌴 𐌰𐍀𐍀𐌴 𐌱𐍂𐌿𐌺𐌾𐌰𐌽 𐌼𐌹𐌸𐌸𐌰𐌽𐌴𐌹 𐌰𐍄𐌳𐍂𐌰𐌲𐌰𐌳𐌰</string>
     <string name="check_network">𐌱𐌹𐌳𐌾𐌰𐌼 𐌸𐌿𐌺, 𐍃𐌰𐌹 𐌲𐌰𐍅𐌹𐍃𐍃 𐌽𐌰𐍄𐌾𐌰𐍅𐌰𐌿𐍂𐌺𐌹𐍃 𐌸𐌴𐌹𐌽𐌹𐍃</string>
-    <string name="search_using_deck_name">𐍃𐍉𐌺𐌽𐍃 𐌱𐍂𐌿𐌺𐌾𐌰𐌽𐌳𐌴𐌹 𐌽𐌰𐌼𐌹𐌽𐍃 𐌺𐌰𐍂𐍄𐌰𐌷𐌿𐌶𐌳𐌹𐍃</string>
     <string name="external_storage_unavailable">Download aborted, the external storage is not available</string>
     <string name="home" maxLength="28">𐌲𐌰𐍂𐌳𐍃</string>
     <!-- Study Screen actions

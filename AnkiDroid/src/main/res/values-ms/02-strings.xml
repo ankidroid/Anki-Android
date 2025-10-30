@@ -276,7 +276,6 @@
     <string name="download_failed">Memuat turun gagal</string>
     <string name="deck_download_progress_message">Anda boleh guna aplikasi lain sementara memuat turun</string>
     <string name="check_network">Sila semak sambungan rangkaian anda</string>
-    <string name="search_using_deck_name">Cari menggunakan nama dek</string>
     <string name="external_storage_unavailable">Muat turun batal, tiada storan luaran tersedia</string>
     <string name="home" maxLength="28">Laman Utama</string>
     <!-- Study Screen actions

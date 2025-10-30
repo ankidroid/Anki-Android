@@ -279,7 +279,6 @@
     <string name="download_failed">A transferência falhou</string>
     <string name="deck_download_progress_message">Pode utilizar outras aplicações enquanto a transferência decorre.</string>
     <string name="check_network">Por favor, verifique a sua ligação à rede</string>
-    <string name="search_using_deck_name">Pesquisar utilizando o nome do baralho</string>
     <string name="external_storage_unavailable">Transferência cancelada, o armazenamento externo não está disponível.</string>
     <string name="home" maxLength="28">Página Inicial</string>
     <!-- Study Screen actions

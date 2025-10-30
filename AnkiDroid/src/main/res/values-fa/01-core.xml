@@ -131,7 +131,6 @@
     <string name="empty_filtered_deck">درحال تخلیه دسته‌ی کارت فیلتر شده&#8230;</string>
     <string name="search_deck" comment="Deck search for selecting it">جستجوی دسته‌ها</string>
     <string name="empty_deck">این دسته خالی است</string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">جستجوی دسته‌ها</string>
     <string name="invalid_deck_name">نام دسته نامعتبر است</string>
     <string name="studyoptions_congrats_finished">تبریک! امروز کارتان تمام شد.</string>
     <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">دسته کارت فعلاً به پایان رسید! %s</string>

@@ -276,7 +276,6 @@
     <string name="download_failed">ダウンロードに失敗しました</string>
     <string name="deck_download_progress_message">ダウンロード中、他のアプリを使用できます</string>
     <string name="check_network">ネットワーク接続を確認してください</string>
-    <string name="search_using_deck_name">デッキ名で検索</string>
     <string name="external_storage_unavailable">ダウンロードが中止されました。この外部ストレージは利用できません。</string>
     <string name="home" maxLength="28">ホーム</string>
     <!-- Study Screen actions

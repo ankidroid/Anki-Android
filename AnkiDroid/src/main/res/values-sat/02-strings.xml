@@ -279,7 +279,6 @@
     <string name="download_failed">ᱰᱟᱩᱱᱞᱳᱰ ᱵᱟᱝᱜᱟᱱ ᱞᱮᱱᱟ</string>
     <string name="deck_download_progress_message">ᱰᱟᱩᱱᱞᱳᱰᱤᱝ ᱚᱠᱛᱚᱨᱮ ᱟᱢ ᱮᱴᱟᱜ ᱟᱯᱥ ᱮᱢ ᱵᱮᱵᱷᱟᱨ ᱫᱟᱲᱮ ᱟᱫ-ᱟ</string>
     <string name="check_network">ᱫᱟᱭᱟᱠᱟᱛᱮ ᱟᱢᱟᱜ ᱱᱮᱴᱣᱟᱨᱠ ᱠᱳᱱᱮᱠᱥᱚᱱ ᱡᱟᱸᱪ ᱢᱮ</string>
-    <string name="search_using_deck_name">ᱰᱮᱠ ᱧᱩᱛᱩᱢ ᱵᱮᱵᱷᱟᱨ ᱠᱟᱛᱮ ᱥᱮᱸᱫᱽᱨᱟᱭ ᱢᱮ</string>
     <string name="external_storage_unavailable">ᱰᱟᱩᱱᱞᱚᱰ ᱵᱚᱫᱚᱞ ᱟᱠᱟᱱᱟ, ᱵᱟᱦᱨᱮ ᱥᱴᱳᱨᱮᱡᱽ ᱵᱟᱭ ᱦᱟᱹᱴᱤᱧ ᱟᱠᱟᱱᱟ</string>
     <string name="home" maxLength="28">ᱚᱲᱟᱜ</string>
     <!-- Study Screen actions

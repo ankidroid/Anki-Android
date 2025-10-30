@@ -131,7 +131,6 @@
     <string name="empty_filtered_deck">Besig om die gefilterde pak leeg te maak&#8230;</string>
     <string name="search_deck" comment="Deck search for selecting it">Pak Soek</string>
     <string name="empty_deck">Hierdie pak is leeg</string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">Pak Soek</string>
     <string name="invalid_deck_name">Ongeldige pak naam</string>
     <string name="studyoptions_congrats_finished">Congratulations! You have finished for today.</string>
     <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Pak vir eers klaar! %s</string>

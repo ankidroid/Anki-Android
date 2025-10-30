@@ -279,7 +279,6 @@
     <string name="download_failed">Herunterladen gescheitert</string>
     <string name="deck_download_progress_message">Während des Herunterladens können Sie andere Apps verwenden</string>
     <string name="check_network">Bitte überprüfen Sie die Netzverbindung</string>
-    <string name="search_using_deck_name">Über Stapelnamen suchen</string>
     <string name="external_storage_unavailable">Download abgebrochen, externer Speicher nicht verfügbar</string>
     <string name="home" maxLength="28">Start</string>
     <!-- Study Screen actions

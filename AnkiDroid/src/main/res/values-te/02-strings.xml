@@ -279,7 +279,6 @@
     <string name="download_failed">డౌన్ లోడ్ విఫలం</string>
     <string name="deck_download_progress_message">డౌన్‌లోడ్ రన్ అవుతున్నప్పుడు మీరు ఇతర యాప్‌లను ఉపయోగించవచ్చు</string>
     <string name="check_network">దయచేసి మీ నెట్‌వర్క్ కనెక్షన్‌ని తనిఖీ చేయండి</string>
-    <string name="search_using_deck_name">డెక్ పేరును ఉపయోగించి శోధించండి</string>
     <string name="external_storage_unavailable">డౌన్‌లోడ్ ఆగిపోయింది, బాహ్య నిల్వ అందుబాటులో లేదు</string>
     <string name="home" maxLength="28">హోమ్</string>
     <!-- Study Screen actions

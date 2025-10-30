@@ -279,7 +279,6 @@ Context | Request Context    [1]</string>
     <string name="download_failed">다운로드 실패</string>
     <string name="deck_download_progress_message">다운로드하는 동안 다른 앱을 이용하실 수 있습니다.</string>
     <string name="check_network">네트워크 연결 상태를 확인해 주세요.</string>
-    <string name="search_using_deck_name">사용 중인 카드 덱 이름 찾기</string>
     <string name="external_storage_unavailable">다운로드가 중단되었습니다. 외부 저장 공간을 사용할 수 없습니다.</string>
     <string name="home" maxLength="28">홈</string>
     <!-- Study Screen actions
