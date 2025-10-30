@@ -92,35 +92,6 @@ class DeckSpinnerSelection(
     }
 
     @MainThread // spinner.adapter
-    suspend fun initializeStatsBarDeckSpinner() {
-        withCol {
-            decks.allNamesAndIds(includeFiltered = showFilteredDecks, skipEmptyDefault = true)
-        }.toMutableList().let {
-            dropDownDecks = it
-            // custom implementation as DeckDropDownAdapter automatically includes a ALL_DECKS entry +
-            // in order for the spinner to wrap the content a row layout with wrap_content for root
-            // width was introduced
-            spinner.adapter =
-                object : ArrayAdapter<DeckNameId>(
-                    context,
-                    R.layout.item_stats_deck,
-                    it,
-                ) {
-                    override fun getView(
-                        position: Int,
-                        convertView: View?,
-                        parent: ViewGroup,
-                    ): View {
-                        val rowView = super.getView(position, convertView, parent)
-                        rowView.findViewById<TextView>(R.id.title).text = getItem(position)!!.name
-                        return rowView
-                    }
-                }.apply { setDropDownViewResource(android.R.layout.simple_spinner_item) }
-            setSpinnerListener()
-        }
-    }
-
-    @MainThread // spinner.adapter
     fun initializeNoteEditorDeckSpinner(
         col: Collection,
         @LayoutRes layoutResource: Int = R.layout.multiline_spinner_item,

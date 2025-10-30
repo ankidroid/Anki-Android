@@ -21,14 +21,13 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.webkit.WebView
-import android.widget.Spinner
+import android.widget.TextView
 import androidx.activity.addCallback
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.appbar.MaterialToolbar
 import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.anki.DeckSpinnerSelection
 import com.ichi2.anki.R
 import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.common.annotations.NeedsTest
@@ -36,11 +35,11 @@ import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.dialogs.DiscardChangesDialog
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.DeckId
-import com.ichi2.anki.libanki.DeckNameId
 import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.anki.pages.viewmodel.ImageOcclusionArgs
 import com.ichi2.anki.pages.viewmodel.ImageOcclusionViewModel
 import com.ichi2.anki.requireAnkiActivity
+import com.ichi2.anki.startDeckSelection
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -48,8 +47,7 @@ class ImageOcclusion :
     PageFragment(R.layout.image_occlusion),
     DeckSelectionDialog.DeckSelectionListener {
     private val viewModel: ImageOcclusionViewModel by viewModels()
-    private lateinit var deckSpinnerSelection: DeckSpinnerSelection
-    private lateinit var spinner: Spinner
+    private lateinit var deckNameView: TextView
 
     override fun onViewCreated(
         view: View,
@@ -64,21 +62,13 @@ class ImageOcclusion :
             }
         }
 
-        spinner = view.findViewById(R.id.deck_selector)
-        deckSpinnerSelection =
-            DeckSpinnerSelection(
-                requireAnkiActivity(),
-                spinner,
-                showAllDecks = false,
-                alwaysShowDefault = false,
-                showFilteredDecks = false,
-            )
+        deckNameView = view.findViewById<TextView>(R.id.deck_name)
+        deckNameView.setOnClickListener { startDeckSelection(all = false, filtered = false, skipEmptyDefault = false) }
 
         requireAnkiActivity().launchCatchingTask {
-            deckSpinnerSelection.initializeStatsBarDeckSpinner()
             val selectedDeck = withCol { decks.getLegacy(decks.selected()) }
             if (selectedDeck == null) return@launchCatchingTask
-            select(selectedDeck.id)
+            deckNameView.text = selectedDeck.name
         }
 
         @NeedsTest("#17393 verify that the added image occlusion cards are put in the correct deck")
@@ -117,30 +107,13 @@ class ImageOcclusion :
     override fun onDeckSelected(deck: SelectableDeck?) {
         if (deck == null) return
         require(deck is SelectableDeck.Deck)
-
+        deckNameView.text = deck.name
         val deckDidChange = viewModel.handleDeckSelection(deck.deckId)
         if (deckDidChange) {
             viewLifecycleOwner.lifecycleScope.launch {
-                select(deck.deckId)
-                deckSpinnerSelection.selectDeckById(viewModel.selectedDeckId, true)
+                withCol { decks.select(viewModel.selectedDeckId) }
             }
         }
-    }
-
-    private val decksAdapterSequence
-        get() =
-            sequence {
-                for (i in 0 until spinner.adapter.count) {
-                    yield(spinner.adapter.getItem(i) as DeckNameId)
-                }
-            }
-
-    /**
-     * Given the [deckId] look in the decks adapter for its position and select it if found.
-     */
-    private fun select(deckId: DeckId) {
-        val itemToSelect = decksAdapterSequence.withIndex().firstOrNull { it.value.id == deckId } ?: return
-        spinner.setSelection(itemToSelect.index)
     }
 
     companion object {
