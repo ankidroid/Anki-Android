@@ -49,7 +49,6 @@ import com.ichi2.compat.setTooltipTextCompat
 import com.ichi2.themes.Themes
 import com.ichi2.utils.dp
 import com.ichi2.utils.increaseHorizontalPaddingOfMenuIcons
-import com.mrudultora.colorpicker.ColorPickerPopUp
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -274,21 +273,11 @@ class WhiteboardFragment :
      * Shows a popup for adding a new brush color.
      */
     private fun showAddColorDialog() {
-        ColorPickerPopUp(context).run {
-            setShowAlpha(true)
-            setDefaultColor(viewModel.brushColor.value)
-            setOnPickColorListener(
-                object : ColorPickerPopUp.OnPickColorListener {
-                    override fun onColorPicked(color: Int) {
-                        Timber.i("Added brush with color %d", color)
-                        viewModel.addBrush(color)
-                    }
-
-                    override fun onCancel() {}
-                },
-            )
-            show()
-        }
+        requireContext()
+            .showColorPickerDialog(viewModel.brushColor.value) { color ->
+                Timber.i("Added brush with color %d", color)
+                viewModel.addBrush(color)
+            }
     }
 
     /**
@@ -367,19 +356,11 @@ class WhiteboardFragment :
      * Shows a color picker popup to change the active brush's color.
      */
     private fun showChangeColorDialog() {
-        ColorPickerPopUp(requireContext())
-            .setShowAlpha(true)
-            .setDefaultColor(viewModel.brushColor.value)
-            .setOnPickColorListener(
-                object : ColorPickerPopUp.OnPickColorListener {
-                    override fun onColorPicked(color: Int) {
-                        viewModel.updateBrushColor(color)
-                        strokeWidthPopup?.dismiss()
-                    }
-
-                    override fun onCancel() {}
-                },
-            ).show()
+        requireContext()
+            .showColorPickerDialog(viewModel.brushColor.value) { color ->
+                viewModel.updateBrushColor(color)
+                strokeWidthPopup?.dismiss()
+            }
     }
 
     /**
