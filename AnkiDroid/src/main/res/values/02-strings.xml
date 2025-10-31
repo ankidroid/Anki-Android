@@ -25,10 +25,12 @@
     <string name="note_message">Note saved</string>
     <string name="CardEditorCardDeck">Card deck:</string>
     <string name="CardEditorNoteDeck">Deck:</string>
+    <string name="imageSelectionForOcclusionLabel">Image:</string>
     <string name="CardEditorModel">Type:</string>
     <string name="CardEditorTags">Tags: %1$s</string>
     <string name="CardEditorCards">Cards: %1$s</string>
     <string name="edit_occlusions">Edit Occlusions</string>
+    <string name="clipboard_for_occlusions" comment="Button's label for pasting image from clipboard in Image Occlusion note type's Add screen" maxLength="28">Paste from clipboard</string>
 
     <string name="tag_name">Tag name</string>
     <string name="add_new_filter_tags">Add/filter tags</string>
