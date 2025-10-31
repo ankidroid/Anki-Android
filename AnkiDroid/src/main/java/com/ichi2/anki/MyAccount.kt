@@ -35,7 +35,6 @@ import androidx.core.view.isVisible
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.dialogs.help.HelpDialog
 import com.ichi2.anki.pages.RemoveAccountFragment
 import com.ichi2.anki.settings.Prefs
@@ -71,9 +70,9 @@ open class MyAccount : AnkiActivity() {
             }
         }
 
-    open fun switchToState(newState: Int) {
+    open fun switchToState(newState: LoginState) {
         when (newState) {
-            STATE_LOGGED_IN -> {
+            LoginState.LOGGED_IN -> {
                 val username = Prefs.username
                 usernameLoggedIn.text = username
                 toolbar =
@@ -85,7 +84,7 @@ open class MyAccount : AnkiActivity() {
                     }
                 setContentView(loggedIntoMyAccountView)
             }
-            STATE_LOG_IN -> {
+            LoginState.LOG_IN -> {
                 toolbar =
                     loginToMyAccountView.findViewById<Toolbar?>(R.id.toolbar)?.also { toolbar ->
                         // This can be cleaned up if all three main layouts
@@ -115,9 +114,9 @@ open class MyAccount : AnkiActivity() {
         mayOpenUrl(R.string.register_url)
         initAllContentViews()
         if (isLoggedIn()) {
-            switchToState(STATE_LOGGED_IN)
+            switchToState(LoginState.LOGGED_IN)
         } else {
-            switchToState(STATE_LOG_IN)
+            switchToState(LoginState.LOG_IN)
         }
         if (isScreenSmall && this.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             loginLogo.visibility = View.GONE
@@ -157,7 +156,7 @@ open class MyAccount : AnkiActivity() {
             withCol {
                 media.forceResync()
             }
-            switchToState(STATE_LOG_IN)
+            switchToState(LoginState.LOG_IN)
         }
     }
 
@@ -361,10 +360,6 @@ open class MyAccount : AnkiActivity() {
     }
 
     companion object {
-        @KotlinCleanup("change to enum")
-        internal const val STATE_LOG_IN = 1
-        internal const val STATE_LOGGED_IN = 2
-
         /**
          * Displays a system prompt: "Allow AnkiDroid to send you notifications"
          *
@@ -392,5 +387,11 @@ open class MyAccount : AnkiActivity() {
                 launcher.launch(permission)
             }
         }
+    }
+
+    // Represents the different authentication states of the MyAccount screen.
+    enum class LoginState {
+        LOG_IN,
+        LOGGED_IN,
     }
 }

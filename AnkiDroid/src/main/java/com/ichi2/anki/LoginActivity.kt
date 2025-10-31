@@ -64,8 +64,8 @@ class LoginActivity :
     /**
      * Handles closing the activity and setting the result when the user is logged in
      */
-    override fun switchToState(newState: Int) {
-        if (newState == STATE_LOGGED_IN) {
+    override fun switchToState(newState: LoginState) {
+        if (newState == LoginState.LOGGED_IN) {
             // This was intended to be shown from the 'app intro' where a user should not be logged in
             if (!lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
                 showThemedToast(this, R.string.already_logged_in, true)
