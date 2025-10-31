@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2021 David Allison <davidallisongithub@gmail.com>
+ *  Copyright (c) 2025 David Allison <davidallisongithub@gmail.com>
  *
  *  This program is free software; you can redistribute it and/or modify it under
  *  the terms of the GNU General Public License as published by the Free Software
@@ -17,6 +17,7 @@
  *  permission notice:
  *
  *  https://github.com/ankitects/anki/blob/c4db4bd2913234d077aa289543da6405a62f53dc/pylib/anki/decks.py
+ *  https://github.com/ankitects/anki/blob/a6d5c949970627f2b4dcea8a02fea3a497e0440f/pylib/anki/decks.py
  *
  *  # Copyright: Ankitects Pty Ltd and contributors
  *  # License: GNU AGPL, version 3 or later; http://www.gnu.org/licenses/agpl.html
@@ -38,10 +39,12 @@ import anki.decks.copy
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.utils.ext.jsonObjectIterable
 import com.ichi2.anki.libanki.backend.BackendUtils
+import com.ichi2.anki.libanki.backend.BackendUtils.fromJsonBytes
 import com.ichi2.anki.libanki.backend.BackendUtils.toJsonBytes
 import com.ichi2.anki.libanki.utils.LibAnkiAlias
 import com.ichi2.anki.libanki.utils.NotInLibAnki
 import com.ichi2.anki.libanki.utils.append
+import com.ichi2.anki.libanki.utils.deepClone
 import com.ichi2.anki.libanki.utils.len
 import net.ankiweb.rsdroid.RustCleanup
 import net.ankiweb.rsdroid.exceptions.BackendDeckIsFilteredException
@@ -49,6 +52,9 @@ import net.ankiweb.rsdroid.exceptions.BackendNotFoundException
 import org.json.JSONArray
 import java.util.LinkedList
 
+// public exports
+typealias FilteredDeckConfig = anki.decks.Deck.Filtered
+typealias DeckCollapseScope = anki.decks.SetDeckCollapsedRequest.Scope
 typealias UpdateDeckConfigs = UpdateDeckConfigsRequest
 
 data class DeckNameId(
@@ -72,6 +78,7 @@ class Decks(
      * Add or update an existing deck. Used for syncing and merging.
      * @throws BackendDeckIsFilteredException
      */
+    @LibAnkiAlias("save")
     fun save(g: Deck) {
         g.id =
             col.backend.addOrUpdateDeckLegacy(
@@ -80,6 +87,7 @@ class Decks(
             )
     }
 
+    @LibAnkiAlias("save")
     fun save(g: DeckConfig) {
         g.id = col.backend.addOrUpdateDeckConfigLegacy(toJsonBytes(g))
     }
@@ -109,7 +117,7 @@ class Decks(
     private fun addDeckLegacy(deck: Deck): OpChangesWithId {
         val changes =
             col.backend.addDeckLegacy(
-                json = BackendUtils.toJsonBytes(deck),
+                json = toJsonBytes(deck),
             )
         deck.id = changes.id
         return changes
@@ -144,6 +152,7 @@ class Decks(
      * Deletes one or more decks from the collection
      * @return [OpChangesWithCount]: the number of cards deleted
      */
+    @LibAnkiAlias("remove")
     fun remove(deckIds: Iterable<DeckId>): OpChangesWithCount = col.backend.removeDecks(dids = deckIds)
 
     /** A sorted sequence of deck names and IDs. */
@@ -174,12 +183,14 @@ class Decks(
 
     fun have(id: DeckId): Boolean = getLegacy(id) != null
 
-    @RustCleanup("implement and make public")
     @LibAnkiAlias("get_all_legacy")
     @Suppress("unused")
-    private fun getAllLegacy(): List<Deck> {
-        TODO()
-    }
+    fun getAllLegacy(): List<Deck> =
+        BackendUtils
+            .fromJsonBytes(col.backend.getAllDecksLegacy())
+            .jsonObjectIterable()
+            .map { Deck(it) }
+            .toList()
 
     /** Return a new normal deck. It must be added with [addDeck] after a name assigned. */
     @LibAnkiAlias("new_deck")
@@ -189,6 +200,7 @@ class Decks(
     fun addDeck(deck: anki.decks.Deck): OpChangesWithId = col.backend.addDeck(input = deck)
 
     @LibAnkiAlias("new_deck_legacy")
+    @RustCleanup("doesn't match upstream")
     private fun newDeckLegacy(filtered: Boolean): Deck {
         val deck = BackendUtils.fromJsonBytes(col.backend.newDeckLegacy(filtered))
         return Deck(
@@ -208,12 +220,9 @@ class Decks(
         )
     }
 
-    @RustCleanup("implement and make public")
     @LibAnkiAlias("deck_tree")
     @Suppress("unused")
-    private fun deckTree(): DeckTreeNode {
-        TODO()
-    }
+    fun deckTree(): DeckTreeNode = col.backend.deckTree(now = 0)
 
     @LibAnkiAlias("find_deck_in_tree")
     fun findDeckInTree(
@@ -228,19 +237,22 @@ class Decks(
         return null
     }
 
-    @RustCleanup("implement and make public")
-    @Suppress("unused")
     /** "All decks. Expensive; prefer [allNamesAndIds] */
-    private fun all(): List<Deck> {
-        TODO()
-    }
+    @Deprecated("Expensive, prefer [allNamesAndIds]", replaceWith = ReplaceWith("allNamesAndIds"))
+    @LibAnkiAlias("all")
+    fun all(): List<Deck> = getAllLegacy()
 
     @LibAnkiAlias("set_collapsed")
     fun setCollapsed(
         deckId: DeckId,
         collapsed: Boolean,
         scope: SetDeckCollapsedRequest.Scope,
-    ): OpChanges = col.backend.setDeckCollapsed(deckId, collapsed, scope)
+    ): OpChanges =
+        col.backend.setDeckCollapsed(
+            deckId = deckId,
+            collapsed = collapsed,
+            scope = scope,
+        )
 
     @LibAnkiAlias("collapse")
     fun collapse(did: DeckId) {
@@ -258,9 +270,12 @@ class Decks(
         this.save(deck)
     }
 
+    @LibAnkiAlias("count")
+    @CheckResult
     fun count(): Int = len(this.allNamesAndIds())
 
     @LibAnkiAlias("card_count")
+    @CheckResult
     fun cardCount(
         vararg decks: DeckId,
         includeSubdecks: Boolean,
@@ -277,6 +292,7 @@ class Decks(
     @RustCleanup("implement and make public")
     @LibAnkiAlias("get")
     @Suppress("unused", "unused_parameter")
+    @CheckResult
     private fun get(
         did: DeckId,
         default: Boolean = true,
@@ -289,6 +305,7 @@ class Decks(
 
     /** Get deck with NAME, ignoring case. */
     @LibAnkiAlias("by_name")
+    @CheckResult
     fun byName(name: String): Deck? {
         val id = this.idForName(name)
         if (id != null) {
@@ -299,23 +316,25 @@ class Decks(
 
     /** Add or update an existing deck. Used for syncing and merging. */
     @Suppress("unused")
+    @LibAnkiAlias("update")
     fun update(
         deck: Deck,
         preserveUsn: Boolean,
     ) {
         deck.id =
             col.backend.addOrUpdateDeckLegacy(
-                deck = BackendUtils.toJsonBytes(deck),
+                deck = toJsonBytes(deck),
                 preserveUsnAndMtime = preserveUsn,
             )
     }
 
     @LibAnkiAlias("update_dict")
     @Suppress("unused")
-    fun updateDict(deck: Deck): OpChanges = col.backend.updateDeckLegacy(BackendUtils.toJsonBytes(deck))
+    fun updateDict(deck: Deck): OpChanges = col.backend.updateDeckLegacy(toJsonBytes(deck))
 
     /** Rename deck prefix to NAME if not exists. Updates children. */
     @RustCleanup("return OpChanges")
+    @LibAnkiAlias("rename")
     fun rename(
         deck: Deck,
         newName: String,
@@ -351,17 +370,19 @@ class Decks(
 
     @LibAnkiAlias("get_deck_configs_for_update")
     @Suppress("unused")
+    @CheckResult
     fun getDeckConfigsForUpdate(deckId: DeckId): DeckConfigsForUpdate = col.backend.getDeckConfigsForUpdate(deckId)
 
-    @RustCleanup("implement and make public")
     @LibAnkiAlias("update_deck_configs")
-    @Suppress("unused", "unused_parameter")
-    private fun updateDeckConfigs(input: UpdateDeckConfigs): DeckConfigsForUpdate {
-        TODO()
+    @Suppress("unused")
+    fun updateDeckConfigs(input: UpdateDeckConfigs): OpChanges {
+        val opBytes = col.backend.updateDeckConfigsRaw(input.toByteArray())
+        return OpChanges.parseFrom(opBytes)!!
     }
 
     /** A list of all deck config. */
     @LibAnkiAlias("all_config")
+    @CheckResult
     fun allConfig(): List<DeckConfig> =
         BackendUtils
             .jsonToArray(col.backend.allDeckConfigLegacy())
@@ -371,35 +392,61 @@ class Decks(
 
     /** Falls back on default config if deck or config missing */
     @LibAnkiAlias("config_dict_for_deck_id")
+    @RustCleanup("does not match upstream")
+    @CheckResult
     fun configDictForDeckId(did: DeckId): DeckConfig {
         val conf = getLegacy(did)?.conf ?: 1
         return DeckConfig(BackendUtils.fromJsonBytes(col.backend.getDeckConfigLegacy(conf)))
     }
 
-    // Reverts to default if provided id missing
     @LibAnkiAlias("get_config")
-    fun getConfig(confId: DeckConfigId): DeckConfig = DeckConfig(BackendUtils.fromJsonBytes(col.backend.getDeckConfigLegacy(confId)))
+    @CheckResult
+    fun getConfig(confId: DeckConfigId): DeckConfig? =
+        try {
+            DeckConfig(BackendUtils.fromJsonBytes(col.backend.getDeckConfigLegacy(confId)))
+        } catch (e: BackendNotFoundException) {
+            null
+        }
 
-    @RustCleanup("implement and make public")
+    /**
+     * @param config Config to update
+     * @param preserveUsn ignored
+     */
     @LibAnkiAlias("update_config")
-    @Suppress("unused", "unused_parameter")
+    @Suppress("unused")
     private fun updateConfig(
         config: DeckConfig,
+        @Suppress("unused_parameter")
         preserveUsn: Boolean = false,
     ) {
-        TODO()
+        config.id =
+            col.backend.addOrUpdateDeckConfigLegacy(
+                json = toJsonBytes(config),
+            )
     }
 
     @LibAnkiAlias("add_config")
-    private fun addConfig(name: String): DeckConfig {
-        val conf = newDeckConfigLegacy()
+    private fun addConfig(
+        name: String,
+        cloneFrom: DeckConfig? = null,
+    ): DeckConfig {
+        val conf: DeckConfig
+        if (cloneFrom != null) {
+            conf = cloneFrom.deepClone().also { it.id = 0 }
+        } else {
+            conf = DeckConfig(fromJsonBytes(col.backend.newDeckConfigLegacy()))
+        }
+
         conf.name = name
         this.save(conf)
         return conf
     }
 
     @LibAnkiAlias("add_config_returning_id")
-    fun addConfigReturningId(name: String): Long = addConfig(name).id
+    fun addConfigReturningId(
+        name: String,
+        cloneFrom: DeckConfig? = null,
+    ): Long = addConfig(name, cloneFrom).id
 
     @RustCleanup("implement and make public")
     @LibAnkiAlias("remove_config")
@@ -410,22 +457,26 @@ class Decks(
 
     @LibAnkiAlias("set_config_id_for_deck_dict")
     fun setConfigIdForDeckDict(
-        grp: Deck,
+        deck: Deck,
         id: DeckConfigId,
     ) {
-        grp.conf = id
-        this.save(grp)
+        deck.conf = id
+        this.save(deck)
     }
 
-    @NotInLibAnki
-    @RustCleanup("inline")
-    private fun newDeckConfigLegacy(): DeckConfig = DeckConfig(BackendUtils.fromJsonBytes(col.backend.newDeckConfigLegacy()))
-
-    @RustCleanup("implement and make public")
     @LibAnkiAlias("decks_using_config")
-    @Suppress("unused", "unused_parameter")
-    private fun decksUsingConfig(config: DeckConfig): List<DeckId> {
-        TODO()
+    @Suppress("unused")
+    @NeedsTest("ensure that this matches upstream for dconf = 1 on corrupt decks")
+    @CheckResult
+    fun decksUsingConfig(config: DeckConfig): List<DeckId> {
+        val dids = mutableListOf<DeckId>()
+        @Suppress("DEPRECATION") // all()
+        for (deck in all()) {
+            if (deck.confOrNull() == config.id) {
+                dids.append(deck.id)
+            }
+        }
+        return dids
     }
 
     @RustCleanup("implement and make public")
@@ -440,17 +491,20 @@ class Decks(
      *************************************************************
      */
 
+    /** Returns the [deck name][Deck.name], or 'no deck' if not found */
+    @LibAnkiAlias("name")
+    @CheckResult
     fun name(did: DeckId): String = getLegacy(did)?.name ?: col.backend.tr.decksNoDeck()
 
-    @RustCleanup("implement and make public")
+    /** Returns the [deck name][Deck.name], or `null` if not found */
     @LibAnkiAlias("name_if_exists")
-    @Suppress("unused", "unused_parameter")
-    private fun nameIfExists(did: DeckId): String? {
-        TODO()
-    }
+    @Suppress("unused")
+    @CheckResult
+    fun nameIfExists(did: DeckId): String? = getLegacy(did)?.name
 
     @RustCleanup("implement and make public")
     @Suppress("unused", "unused_parameter")
+    @CheckResult
     private fun cids(
         did: DeckId,
         children: Boolean,
@@ -461,6 +515,7 @@ class Decks(
     @RustCleanup("implement and make public")
     @LibAnkiAlias("for_card_ids")
     @Suppress("unused", "unused_parameter")
+    @CheckResult
     private fun forCardIds(cids: List<CardId>): List<DeckId> {
         TODO()
     }
@@ -478,10 +533,12 @@ class Decks(
     @LibAnkiAlias("get_current_id")
     fun getCurrentId(): DeckId = col.backend.getCurrentDeck().id
 
+    @LibAnkiAlias("current")
     fun current(): Deck = this.getLegacy(this.selected()) ?: this.getLegacy(1)!!
 
     /** The currently active dids. Returned list is never empty. */
     @RustCleanup("Probably better as a queue")
+    @LibAnkiAlias("active")
     fun active(): LinkedList<DeckId> {
         val active = col.sched.activeDecks()
         return if (active.isNotEmpty()) {
@@ -491,7 +548,9 @@ class Decks(
         }
     }
 
-    /** Select a new branch. */
+    /** Select a new branch (deck and descendants). */
+    @LibAnkiAlias("select")
+    @RustCleanup("does not match upstream")
     fun select(did: DeckId) {
         col.backend.setCurrentDeck(did)
         val selectedDeckName = name(did)
@@ -503,6 +562,7 @@ class Decks(
     }
 
     /** @return The currently selected deck ID. */
+    @LibAnkiAlias("selected")
     fun selected(): DeckId = getCurrentId()
 
     /*
@@ -592,15 +652,16 @@ class Decks(
      *************************************************************
      */
 
-    /** For new code, prefer [getOrCreateFilteredDeck] */
+    /** For new code, prefer [getOrCreateFilteredDeck][com.ichi2.anki.libanki.sched.Scheduler.getOrCreateFilteredDeck] */
     @LibAnkiAlias("new_filtered")
     fun newFiltered(name: String): DeckId {
         val did = id(name, type = DEFAULT_DECK_CONF_ID)
-        select(did!!)
+        select(did)
         return did
     }
 
     @LibAnkiAlias("is_filtered")
+    @CheckResult
     fun isFiltered(did: DeckId): Boolean = this.getLegacy(did)?.isFiltered == true
 
     /*
@@ -610,6 +671,7 @@ class Decks(
 
     /** @return the fully qualified name of the subdeck, or null if unavailable */
     @NotInLibAnki
+    @CheckResult
     fun getSubdeckName(
         did: DeckId,
         subdeckName: String?,
