@@ -1232,13 +1232,15 @@ class NoteEditorFragment :
     // ----------------------------------------------------------------------------
 
     @KotlinCleanup("return early and simplify if possible")
-    private fun onNoteAdded() {
+    private fun onNoteAdded(count: Int) {
         var closeEditorAfterSave = false
         var closeIntent: Intent? = null
         changed = true
         sourceText = null
         refreshNoteData(FieldChangeType.refreshWithStickyFields(shouldReplaceNewlines()))
-        showSnackbar(TR.addingAdded(), Snackbar.LENGTH_SHORT)
+        // backend text ends with dot
+        val successMessage = TR.importingCardsAdded(count).replace(".", "")
+        showSnackbar(successMessage, Snackbar.LENGTH_SHORT)
 
         if (caller == NoteEditorCaller.NOTEEDITOR || aedictIntent) {
             closeEditorAfterSave = true
@@ -1263,14 +1265,15 @@ class NoteEditorFragment :
 
     private suspend fun saveNoteWithProgress() {
         // adding current note to collection
-        requireActivity().withProgress(resources.getString(R.string.saving_facts)) {
-            undoableOp {
-                notetypes.save(editorNote!!.notetype)
-                addNote(editorNote!!, deckId)
+        val changes =
+            requireActivity().withProgress(resources.getString(R.string.saving_facts)) {
+                undoableOp {
+                    notetypes.save(editorNote!!.notetype)
+                    addNote(editorNote!!, deckId)
+                }
             }
-        }
         // update UI based on the result, noOfAddedCards
-        onNoteAdded()
+        onNoteAdded(changes.count)
         updateFieldsFromStickyText()
     }
 
