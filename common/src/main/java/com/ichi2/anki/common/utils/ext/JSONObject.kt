@@ -117,3 +117,48 @@ fun JSONObject.getStringOrNull(key: String): String? {
         null
     }
 }
+
+/**
+ * @return `null` if:
+ * * The key does not exist
+ * * The value is [null][JSONObject.NULL]
+ */
+fun JSONObject.getLongOrNull(key: String): Long? {
+    if (!has(key)) return null
+    if (isNull(key)) return null
+    return try {
+        getLong(key)
+    } catch (_: Exception) {
+        null
+    }
+}
+
+/**
+ * @return `null` if:
+ * * The key does not exist
+ * * The value is [null][JSONObject.NULL]
+ */
+fun JSONObject.getIntOrNull(key: String): Int? {
+    if (!has(key)) return null
+    if (isNull(key)) return null
+    return try {
+        getInt(key)
+    } catch (_: Exception) {
+        null
+    }
+}
+
+/**
+ * @return `null` if:
+ * * The key does not exist
+ * * The value is [null][JSONObject.NULL]
+ */
+fun JSONObject.getDoubleOrNull(key: String): Double? {
+    if (!has(key)) return null
+    if (isNull(key)) return null
+    return try {
+        getDouble(key)
+    } catch (_: Exception) {
+        null
+    }
+}

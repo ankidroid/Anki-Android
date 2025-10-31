@@ -42,6 +42,7 @@ import androidx.constraintlayout.widget.ConstraintSet
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
+import androidx.core.graphics.toColorInt
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
@@ -71,6 +72,9 @@ import com.ichi2.anki.common.utils.android.isRobolectric
 import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
+import com.ichi2.anki.jsapi.Endpoint
+import com.ichi2.anki.jsapi.JsApi
+import com.ichi2.anki.jsapi.UiRequest
 import com.ichi2.anki.libanki.sched.Counts
 import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.preferences.reviewer.ReviewerMenuView
@@ -672,6 +676,25 @@ class ReviewerFragment :
         indeterminateTags: List<String>,
         stateFilter: CardStateFilter,
     ) = viewModel.onEditedTags(selectedTags)
+
+    override fun handleJsUiRequest(request: UiRequest): ByteArray {
+        val result: ByteArray? =
+            when (request.endpoint) {
+                Endpoint.StudyScreen.SET_BACKGROUND_COLOR -> {
+                    val colorHex = request.data?.optString("colorHex") ?: return JsApi.fail("Missing hex code")
+                    val color =
+                        try {
+                            colorHex.toColorInt()
+                        } catch (_: IllegalArgumentException) {
+                            return JsApi.fail("Invalid hex code")
+                        }
+                    view?.setBackgroundColor(color)
+                    JsApi.success()
+                }
+                else -> null
+            }
+        return result ?: super.handleJsUiRequest(request)
+    }
 
     override fun onCreateWebViewClient(savedInstanceState: Bundle?): WebViewClient = ReviewerWebViewClient(savedInstanceState)
 
