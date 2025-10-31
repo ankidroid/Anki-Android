@@ -213,4 +213,8 @@
 
     <!-- Instant Note Editor -->
     <string name="instant_card" comment="Used in the Android system context menu/share dialog to quickly create a note. This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. ">Instant card</string>
+    
+    <!-- Internet Permissions -->
+    <string name="internet_access_title" comment = "used for notifying user to unable internet access">Internet</string>
+    <string name="internet_access_summary">Required for some screens like Statistics to work</string>
 </resources>
