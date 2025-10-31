@@ -17,7 +17,27 @@
 
 package com.ichi2.anki.preferences.profiles
 
+import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.Fragment
+import com.google.android.material.appbar.MaterialToolbar
 import com.ichi2.anki.R
 
-class SwitchProfilesFragment : Fragment(R.layout.fragment_switch_profiles)
+/**
+ * A [Fragment] that allows the user to switch between different profiles.
+ */
+class SwitchProfilesFragment : Fragment(R.layout.fragment_switch_profiles) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
+        super.onViewCreated(view, savedInstanceState)
+
+        view.findViewById<MaterialToolbar>(R.id.toolbar).apply {
+            setTitle("Switch profile")
+            setNavigationOnClickListener {
+                requireActivity().onBackPressedDispatcher.onBackPressed()
+            }
+        }
+    }
+}
