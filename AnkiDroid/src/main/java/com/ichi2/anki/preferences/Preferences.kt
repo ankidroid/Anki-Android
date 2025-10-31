@@ -42,6 +42,7 @@ import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.google.android.material.appbar.MaterialToolbar
 import com.ichi2.anki.R
 import com.ichi2.anki.SingleFragmentActivity
+import com.ichi2.anki.common.annotations.LegacyNotifications
 import com.ichi2.anki.preferences.HeaderFragment.Companion.getHeaderKeyForFragment
 import com.ichi2.anki.reviewreminders.ReviewReminderScope
 import com.ichi2.anki.reviewreminders.ScheduleReminders
@@ -260,6 +261,7 @@ class PreferencesActivity :
 }
 
 // Only enable AnkiDroid notifications unrelated to due reminders
+@LegacyNotifications("Magic number which is no longer needed")
 const val PENDING_NOTIFICATIONS_ONLY = 1000000
 
 const val INITIAL_FRAGMENT_EXTRA = "initial_fragment"
