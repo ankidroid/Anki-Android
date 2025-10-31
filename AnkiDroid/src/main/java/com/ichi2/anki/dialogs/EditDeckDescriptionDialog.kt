@@ -39,6 +39,7 @@ import com.ichi2.anki.StudyOptionsFragment
 import com.ichi2.anki.dialogs.EditDeckDescriptionDialogViewModel.DismissType
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.utils.AndroidUiUtils.hideKeyboard
 import com.ichi2.utils.AndroidUiUtils.setFocusAndOpenKeyboard
 import com.ichi2.utils.create
@@ -150,9 +151,9 @@ class EditDeckDescriptionDialog : DialogFragment() {
                 .filterNotNull()
                 .collect { dismissType ->
                     when (dismissType) {
-                        DismissType.ClosedWithoutSaving -> dismiss()
+                        DismissType.ClosedWithoutSaving -> requireActivity().dismissAllDialogFragments()
                         DismissType.Saved -> {
-                            dismiss()
+                            requireActivity().dismissAllDialogFragments()
                             showSnackbar(R.string.deck_description_saved)
                             // notify DeckPicker to invalidate its toolbar menu, otherwise the undo
                             // action to revert the description change is not going to be visible
