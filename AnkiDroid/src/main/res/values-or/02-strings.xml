@@ -311,7 +311,6 @@
     <string name="intro_sync_from_ankiweb">AnkiWeb ରୁ ସୀଙ୍କ୍ କରିବା</string>
     <!-- IntentHandler -->
     <string name="app_not_initialized_new">AnkiDroid is not initialized yet. Please open AnkiDroid and try again</string>
-    <string name="already_logged_in">ଆଗରୁ ଲଗ୍ ଇନ୍ କରିସାରିଛନ୍ତି</string>
     <!-- Deck Creation -->
     <string name="deck_created">କେରୀ ସୃଷ୍ଟି କରାଗଲା</string>
     <string name="deck_renamed">କେରୀ ନାମ ବଦଳାଗଲା</string>

@@ -319,7 +319,6 @@
     <string name="intro_sync_from_ankiweb">Сінхранізаваць з AnkiWeb</string>
     <!-- IntentHandler -->
     <string name="app_not_initialized_new">AnkiDroid пакуль не ініцыялізаваны. Адкрыйце праграму і паспрабуйце яшчэ раз</string>
-    <string name="already_logged_in">Вы ўжо ўвайшлі</string>
     <!-- Deck Creation -->
     <string name="deck_created">Створаная калода</string>
     <string name="deck_renamed">Перайменаваная калода</string>

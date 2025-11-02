@@ -327,7 +327,6 @@
     <string name="intro_sync_from_ankiweb">مزامنة مع آنكي ويب</string>
     <!-- IntentHandler -->
     <string name="app_not_initialized_new">لم يتم تمهيد آنكي درويد بعد. من فضلك إفتح آنكي درويد وحاول مجددًا</string>
-    <string name="already_logged_in">تم تسجيل الدخول مسبقًا</string>
     <!-- Deck Creation -->
     <string name="deck_created">كيفية</string>
     <string name="deck_renamed">أُعيدت تسمية الرِزمة</string>

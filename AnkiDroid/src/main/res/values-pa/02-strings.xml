@@ -311,7 +311,6 @@
     <string name="intro_sync_from_ankiweb">AnkiWeb ਤੋਂ ਸਿੰਕ ਕਰੋ</string>
     <!-- IntentHandler -->
     <string name="app_not_initialized_new">AnkiDroid ਨੂੰ ਅਜੇ ਲਾਂਚ ਨਹੀਂ ਕੀਤਾ ਗਿਆ ਹੈ। ਕਿਰਪਾ ਕਰਕੇ AnkiDroid ਖੋਲ੍ਹੋ ਅਤੇ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ</string>
-    <string name="already_logged_in">ਪਹਿਲਾਂ ਹੀ ਲੌਗ ਇਨ ਹੈ</string>
     <!-- Deck Creation -->
     <string name="deck_created">ਡੇਕ ਬਣਾਇਆ ਗਿਆ ਸੀ</string>
     <string name="deck_renamed">ਡੇਕ ਦਾ ਨਾਮ ਬਦਲਿਆ ਗਿਆ</string>

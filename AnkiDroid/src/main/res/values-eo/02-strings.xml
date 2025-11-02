@@ -311,7 +311,6 @@
     <string name="intro_sync_from_ankiweb">Samtempigi kun AnkiWeb</string>
     <!-- IntentHandler -->
     <string name="app_not_initialized_new">AnkiDroid ankoraŭ ne estas preta. Remalfermu AnkiDroid kaj reprovu</string>
-    <string name="already_logged_in">Jam ensalutinta</string>
     <!-- Deck Creation -->
     <string name="deck_created">Kartaro kreita</string>
     <string name="deck_renamed">Kartaro renomigita</string>

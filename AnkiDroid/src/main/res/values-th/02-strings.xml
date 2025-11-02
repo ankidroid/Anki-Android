@@ -307,7 +307,6 @@
     <string name="intro_sync_from_ankiweb">Sync from AnkiWeb</string>
     <!-- IntentHandler -->
     <string name="app_not_initialized_new">AnkiDroid is not initialized yet. Please open AnkiDroid and try again</string>
-    <string name="already_logged_in">Already logged in</string>
     <!-- Deck Creation -->
     <string name="deck_created">Deck created</string>
     <string name="deck_renamed">Deck renamed</string>

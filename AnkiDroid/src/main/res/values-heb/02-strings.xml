@@ -319,7 +319,6 @@
     <string name="intro_sync_from_ankiweb">סנכרון מ-AnkiWeb</string>
     <!-- IntentHandler -->
     <string name="app_not_initialized_new">AnkiDroid עדיין לא אתחול. פתח את AnkiDroid ונסה שוב</string>
-    <string name="already_logged_in">כבר מחובר</string>
     <!-- Deck Creation -->
     <string name="deck_created">חבילה שנוצרה</string>
     <string name="deck_renamed">חבילה ששונה שמה</string>

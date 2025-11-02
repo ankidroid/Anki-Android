@@ -307,7 +307,6 @@
     <string name="intro_sync_from_ankiweb">Đồng bộ từ AnkiWeb</string>
     <!-- IntentHandler -->
     <string name="app_not_initialized_new">AnkiDroid chưa được khởi tạo. Vui lòng mở AnkiDroid và thử lại</string>
-    <string name="already_logged_in">Đã đăng nhập</string>
     <!-- Deck Creation -->
     <string name="deck_created">Đã tạo bộ thẻ</string>
     <string name="deck_renamed">Đã đổi tên bộ thẻ</string>

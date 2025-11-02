@@ -311,7 +311,6 @@
     <string name="intro_sync_from_ankiweb">AnkiWeb నుండి సమకాలీకరించండి</string>
     <!-- IntentHandler -->
     <string name="app_not_initialized_new">AnkiDroid ఇంకా ప్రారంభించబడలేదు. దయచేసి AnkiDroidని తెరిచి, మళ్లీ ప్రయత్నించండి</string>
-    <string name="already_logged_in">ఇప్పటికే లాగిన్ చేసారు</string>
     <!-- Deck Creation -->
     <string name="deck_created">డెక్ సృష్టించబడింది</string>
     <string name="deck_renamed">డెక్ పేరు మార్చబడింది</string>

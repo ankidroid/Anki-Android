@@ -310,7 +310,6 @@ Context | Request Context    [1]</string>
     <string name="intro_sync_from_ankiweb">AnkiWeb과 동기화</string>
     <!-- IntentHandler -->
     <string name="app_not_initialized_new">AnkiDroid가 초기화되지 않았습니다. AnkiDroid를 열어 다시 시도해 주세요.</string>
-    <string name="already_logged_in">이미 로그인되어 있습니다</string>
     <!-- Deck Creation -->
     <string name="deck_created">생성된 덱</string>
     <string name="deck_renamed">이름이 변경된 덱</string>

@@ -311,7 +311,6 @@
     <string name="intro_sync_from_ankiweb">AnkiWeb থেকে সিঙ্ক</string>
     <!-- IntentHandler -->
     <string name="app_not_initialized_new">AnkiDroid এখনও চালু হয়নি। অনুগ্রহ করে AnkiDroid খুলুন এবং আবার চেষ্টা করুন</string>
-    <string name="already_logged_in">ইতিমধ্যে লগ ইন</string>
     <!-- Deck Creation -->
     <string name="deck_created">ডেক নির্মিত হয়</string>
     <string name="deck_renamed">ডেকের নাম পরিবর্তন করা হয়েছে</string>

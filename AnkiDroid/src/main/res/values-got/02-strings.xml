@@ -311,7 +311,6 @@
     <string name="intro_sync_from_ankiweb">𐌲𐌰𐌲𐌰𐌻𐌴𐌹𐌺𐍉 𐍆𐍂𐌰𐌼 𐌰𐌽𐌺𐌴𐌹𐍅𐌰𐌱𐌾𐌰</string>
     <!-- IntentHandler -->
     <string name="app_not_initialized_new">AnkiDroid is not initialized yet. Please open AnkiDroid and try again</string>
-    <string name="already_logged_in">𐌾𐌿𐌸𐌰𐌽 𐌰𐍄𐌹𐌳𐌳𐌾𐌴𐍃</string>
     <!-- Deck Creation -->
     <string name="deck_created">𐌺𐌰𐍂𐍄𐌰𐌷𐌿𐌶𐌳 𐌲𐌰𐍃𐌺𐌰𐍀𐌰𐌽</string>
     <string name="deck_renamed">𐌺𐌰𐍂𐍄𐌰𐌷𐌿𐌶𐌳 𐌰𐍆𐍄𐍂𐌰𐌷𐌰𐌹𐍄𐌰𐌽</string>

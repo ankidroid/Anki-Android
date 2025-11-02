@@ -311,7 +311,6 @@
     <string name="intro_sync_from_ankiweb">AnkiWeb ᱠᱷᱚᱱ ᱥᱟᱸᱠᱨᱚᱱ ᱢᱮ</string>
     <!-- IntentHandler -->
     <string name="app_not_initialized_new">AnkiDroid ᱫᱚ ᱱᱤᱛ ᱦᱟᱵᱤᱡ ᱛᱮ ᱵᱟᱝ ᱮᱦᱚᱵ ᱟᱠᱟᱱᱟ. AnkiDroid ᱮᱛᱦᱚᱵ ᱢᱮ ᱟᱨ ᱟᱨᱦᱚᱸ ᱯᱨᱚᱵᱷᱟᱣ ᱢᱮ</string>
-    <string name="already_logged_in">ᱱᱤᱛ ᱜᱮ ᱥᱮᱞᱮᱫ ᱟᱠᱟᱱᱟ</string>
     <!-- Deck Creation -->
     <string name="deck_created">ᱰᱮᱠ ᱵᱮᱱᱟᱣ ᱟᱠᱟᱱᱟ</string>
     <string name="deck_renamed">ᱰᱮᱠ ᱧᱩᱛᱩᱢ ᱮᱱᱟ</string>

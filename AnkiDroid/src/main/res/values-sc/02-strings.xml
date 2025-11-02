@@ -313,7 +313,6 @@
     <string name="intro_sync_from_ankiweb">Sincroniza dae AnkiWeb</string>
     <!-- IntentHandler -->
     <string name="app_not_initialized_new">AnkiDroid no est galu aviadu. Torra a abèrrere AnkiDroid e a proare</string>
-    <string name="already_logged_in">Giai intradu</string>
     <!-- Deck Creation -->
     <string name="deck_created">Matzu creadu</string>
     <string name="deck_renamed">Matzu mudadu de nùmene</string>

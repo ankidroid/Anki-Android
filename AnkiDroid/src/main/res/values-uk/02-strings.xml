@@ -319,7 +319,6 @@
     <string name="intro_sync_from_ankiweb">Синхронізувати з AnkiWeb</string>
     <!-- IntentHandler -->
     <string name="app_not_initialized_new">AnkiDroid ще не ініціалізовано. Будь ласка, відкрийте AnkiDroid і спробуйте знову</string>
-    <string name="already_logged_in">Вже ввійшли в систему</string>
     <!-- Deck Creation -->
     <string name="deck_created">Створена колода</string>
     <string name="deck_renamed">Перейменовано колоду</string>
