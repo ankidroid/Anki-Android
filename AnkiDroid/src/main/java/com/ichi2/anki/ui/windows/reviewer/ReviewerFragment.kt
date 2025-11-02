@@ -720,6 +720,7 @@ class ReviewerFragment :
                         "focusin" -> webviewHasFocus = true
                         "focusout" -> webviewHasFocus = false
                         "typeinput" -> url.path?.substring(1)?.let { viewModel.typedAnswer = it }
+                        "show-answer" -> viewModel.onShowAnswer()
                     }
                     true
                 }
