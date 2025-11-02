@@ -118,15 +118,17 @@ subprojects {
     }
 }
 
-val jvmVersion = Jvm.current().javaVersion?.majorVersion
-val minSdk = libs.versions.compileSdk.get()
-if (jvmVersion != "17" && jvmVersion != "21" && jvmVersion != "24") {
+val jvmVersion = Jvm.current().javaVersion?.majorVersion.parseIntOrDefault(defaultValue = 0)
+val minSdk = libs.versions.minSdk.get()
+val jvmVersionLowerBound = 17
+val jvmVersionUpperBound = 24
+if (jvmVersion !in jvmVersionLowerBound..jvmVersionUpperBound) {
     println("\n\n\n")
     println("**************************************************************************************************************")
     println("\n\n\n")
-    println("ERROR: AnkiDroid builds with JVM version 17, 21 and 24.")
+    println("ERROR: AnkiDroid builds with JVM versions between $jvmVersionLowerBound and $jvmVersionUpperBound.")
     println("  Incompatible major version detected: '$jvmVersion'")
-    if (jvmVersion.parseIntOrDefault(defaultValue = 0) > 24) {
+    if (jvmVersion > jvmVersionUpperBound) {
         println("\n\n\n")
         println("  If you receive this error because you want to use a newer JDK, we may accept PRs to support new versions.")
         println("  Edit the main build.gradle file, find this message in the file, and add support for the new version.")
