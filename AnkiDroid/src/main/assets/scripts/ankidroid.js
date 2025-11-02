@@ -30,6 +30,15 @@ globalThis.ankidroid.onTypeAnswerInput = function (event) {
     window.location.href = `ankidroid://typeinput/${encodedValue}`;
 };
 
+/**
+ * @param {KeyboardEvent} event - the onkeydown event of the type answer <input>
+ */
+globalThis.ankidroid.onTypeAnswerKeyDown = function (event) {
+    if (event.key === "Enter") {
+        window.location.href = `ankidroid://show-answer`;
+    }
+};
+
 document.addEventListener("focusin", event => {
     window.location.href = `ankidroid://focusin`;
 });

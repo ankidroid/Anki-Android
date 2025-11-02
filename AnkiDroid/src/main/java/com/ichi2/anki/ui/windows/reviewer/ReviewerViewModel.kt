@@ -577,7 +577,7 @@ class ReviewerViewModel(
         val repl =
             """
             <center>
-            <input type="text" id="typeans" oninput="ankidroid.onTypeAnswerInput(event);" 
+            <input type="text" id="typeans" oninput="ankidroid.onTypeAnswerInput(event);" onkeydown="ankidroid.onTypeAnswerKeyDown(event);" 
                style="font-family: '${typeAnswer.font}'; font-size: ${typeAnswer.fontSize}px;">
             </center>
             """.trimIndent()
