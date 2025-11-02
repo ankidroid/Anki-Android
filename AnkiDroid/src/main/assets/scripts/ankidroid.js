@@ -23,14 +23,6 @@ globalThis.ankidroid.showAllHints = function () {
 };
 
 /**
- * @param {InputEvent} event - the oninput event of the type answer <input>
- */
-globalThis.ankidroid.onTypeAnswerInput = function (event) {
-    const encodedValue = encodeURIComponent(event.target.value);
-    window.location.href = `ankidroid://typeinput/${encodedValue}`;
-};
-
-/**
  * @param {KeyboardEvent} event - the onkeydown event of the type answer <input>
  */
 globalThis.ankidroid.onTypeAnswerKeyDown = function (event) {
