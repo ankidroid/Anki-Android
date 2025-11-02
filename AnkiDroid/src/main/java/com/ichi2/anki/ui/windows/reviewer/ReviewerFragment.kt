@@ -48,7 +48,6 @@ import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
-import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.FragmentContainerView
 import androidx.fragment.app.commit
 import androidx.fragment.app.viewModels
@@ -288,7 +287,7 @@ class ReviewerFragment :
         val typeAnswerContainer = view.findViewById<MaterialCardView>(R.id.type_answer_container)
         val typeAnswerEditText =
             view.findViewById<TextInputEditText>(R.id.type_answer_edit_text).apply {
-                setOnEditorActionListener { editTextView, actionId, _ ->
+                setOnEditorActionListener { _, actionId, _ ->
                     if (actionId == EditorInfo.IME_ACTION_DONE) {
                         viewModel.onShowAnswer()
                         return@setOnEditorActionListener true
@@ -303,11 +302,9 @@ class ReviewerFragment :
                         insetsController.hide(WindowInsetsCompat.Type.ime())
                     }
                 }
-                addTextChangedListener { editable ->
-                    viewModel.typedAnswer = editable?.toString() ?: ""
-                }
             }
 
+        val isHtmlTypeAnswerEnabled = Prefs.isHtmlTypeAnswerEnabled
         lifecycleScope.launch {
             val autoFocusTypeAnswer = Prefs.autoFocusTypeAnswer
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -317,7 +314,7 @@ class ReviewerFragment :
                         return@collect
                     }
 
-                    if (Prefs.isHtmlTypeAnswerEnabled) {
+                    if (isHtmlTypeAnswerEnabled) {
                         webView.requestFocus()
                         webView.evaluateJavascript("document.getElementById('typeans').focus();", null)
                         return@collect
@@ -341,6 +338,22 @@ class ReviewerFragment :
         viewModel.onCardUpdatedFlow.flowWithLifecycle(lifecycle).collectIn(lifecycleScope) {
             typeAnswerEditText.text = null
         }
+
+        viewModel.onTypedAnswerResultFlow
+            .flowWithLifecycle(lifecycle)
+            .collectIn(lifecycleScope) { request ->
+                if (isHtmlTypeAnswerEnabled) {
+                    val script = """document.getElementById("typeans").value;"""
+                    webView.evaluateJavascript(script) { callback ->
+                        // the retuned string comes with surrounding `"`, so remove it once
+                        val typedAnswer = callback.removeSurrounding("\"")
+                        request.complete(typedAnswer)
+                    }
+                } else {
+                    val typedAnswer = typeAnswerEditText.text.toString()
+                    request.complete(typedAnswer)
+                }
+            }
     }
 
     /** Chooses the input type based on whether the expected answer is a number or text */
@@ -719,7 +732,6 @@ class ReviewerFragment :
                     when (url.host) {
                         "focusin" -> webviewHasFocus = true
                         "focusout" -> webviewHasFocus = false
-                        "typeinput" -> url.path?.substring(1)?.let { viewModel.typedAnswer = it }
                         "show-answer" -> viewModel.onShowAnswer()
                     }
                     true

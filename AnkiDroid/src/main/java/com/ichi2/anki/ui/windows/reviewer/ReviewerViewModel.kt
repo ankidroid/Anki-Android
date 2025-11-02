@@ -70,6 +70,7 @@ import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.withTimeoutOrNull
 import org.intellij.lang.annotations.Language
 import timber.log.Timber
 
@@ -96,6 +97,7 @@ class ReviewerViewModel :
     val redoLabelFlow = MutableStateFlow<String?>(null)
     val countsFlow = MutableStateFlow(Counts() to Counts.Queue.NEW)
     val typeAnswerFlow = MutableStateFlow<TypeAnswer?>(null)
+    val onTypedAnswerResultFlow = MutableSharedFlow<CompletableDeferred<String>>()
     val onCardUpdatedFlow = MutableSharedFlow<Unit>()
     val destinationFlow = MutableSharedFlow<Destination>()
     val editNoteTagsFlow = MutableSharedFlow<NoteId>()
@@ -110,7 +112,7 @@ class ReviewerViewModel :
 
     override val server: AnkiServer = AnkiServer(this, StudyScreenRepository.getServerPort()).also { it.start() }
     private val stateMutationKey = TimeManager.time.intTimeMS().toString()
-    var typedAnswer = ""
+    private var typedAnswer = ""
 
     private val autoAdvance = AutoAdvance(this)
     private val isHtmlTypeAnswerEnabled = Prefs.isHtmlTypeAnswerEnabled
@@ -185,6 +187,17 @@ class ReviewerViewModel :
             while (!statesMutated) {
                 delay(50)
             }
+
+            val typedAnswerResult = CompletableDeferred<String>()
+            if (typeAnswerFlow.value != null) {
+                onTypedAnswerResultFlow.emit(typedAnswerResult)
+            } else {
+                typedAnswerResult.complete("")
+            }
+            typedAnswer = withTimeoutOrNull(1000L) {
+                typedAnswerResult.await()
+            } ?: ""
+
             updateNextTimes()
             showAnswer()
             loadAndPlayMedia(CardSide.ANSWER)
@@ -560,7 +573,7 @@ class ReviewerViewModel :
         val repl =
             """
             <center>
-            <input type="text" id="typeans" oninput="ankidroid.onTypeAnswerInput(event);" onkeydown="ankidroid.onTypeAnswerKeyDown(event);" 
+            <input type="text" id="typeans" onkeydown="ankidroid.onTypeAnswerKeyDown(event);" 
                style="font-family: '${typeAnswer.font}'; font-size: ${typeAnswer.fontSize}px;">
             </center>
             """.trimIndent()
