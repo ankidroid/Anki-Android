@@ -171,6 +171,7 @@ Back - बैक</string>
     <string name="card_template_browser_appearance_title">ब्राउज़र का दिखाव</string>
     <!-- card Info -->
     <string name="card_info_title" maxLength="28">कार्ड की जानकारी</string>
+    <string name="previous_card_info_title" maxLength="28">Previous card info</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">पढ़ें और AnkiDroid डेटाबेस के लिए लिखें</string>
     <string name="read_write_permission_description">मौजूदा नोट्स, कार्ड, नोट प्रकार, और डेक तक पहुंचें, साथ ही नए बनाएं</string>

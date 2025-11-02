@@ -174,6 +174,7 @@
     <string name="card_template_browser_appearance_title">Изглед претраживача</string>
     <!-- card Info -->
     <string name="card_info_title" maxLength="28">Подаци о картици</string>
+    <string name="previous_card_info_title" maxLength="28">Previous card info</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Читати и писати у бази података AnkiDroid</string>
     <string name="read_write_permission_description">Приступи постојећим белешкама, картицама, типовима белешки и сетовима и креирај нове</string>

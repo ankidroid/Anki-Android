@@ -169,6 +169,7 @@
     <string name="card_template_browser_appearance_title">ಬ್ರೌಸರ್ ನೋಟ</string>
     <!-- card Info -->
     <string name="card_info_title" maxLength="28">ಕಾರ್ಡ್ ಮಾಹಿತಿ</string>
+    <string name="previous_card_info_title" maxLength="28">Previous card info</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">ಆಂಕಿಡ್ರಾಯ್ಡ್ ಡೇಟಾಬೇಸ್‌ಗೆ ಓದಿ ಮತ್ತು ಬರೆಯಿರಿ</string>
     <string name="read_write_permission_description">ಅಸ್ತಿತ್ವದಲ್ಲಿರುವ ಟಿಪ್ಪಣಿಗಳು, ಕಾರ್ಡ್‌ಗಳು, ಟಿಪ್ಪಣಿ ಪ್ರಕಾರಗಳು ಮತ್ತು ಡೆಕ್‌ಗಳನ್ನು ಪ್ರವೇಶಿಸಿ, ಹಾಗೆಯೇ ಹೊಸದನ್ನು ರಚಿಸಿ</string>

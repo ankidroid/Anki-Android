@@ -172,6 +172,7 @@
     <string name="card_template_browser_appearance_title">Aparèntzia de su navigadore</string>
     <!-- card Info -->
     <string name="card_info_title" maxLength="28">Info de sa carta</string>
+    <string name="previous_card_info_title" maxLength="28">Previous card info</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Leghe e iscrie in sa base de datos de AnkiDroid</string>
     <string name="read_write_permission_description">atzede a sas notas, a sas cartas, a sas castas de notas e a sos matzos chi esistint giai, e crea·nde de noos</string>

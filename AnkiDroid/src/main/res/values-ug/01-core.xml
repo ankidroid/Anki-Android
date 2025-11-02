@@ -169,6 +169,7 @@
     <string name="card_template_browser_appearance_title">كۆرگۈچ كۆرۈنۈشى</string>
     <!-- card Info -->
     <string name="card_info_title" maxLength="28">كارتا ئۇچۇرى</string>
+    <string name="previous_card_info_title" maxLength="28">Previous card info</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">AnkiDroid ساندانىنى ئوقۇيدۇ ۋە يازىدۇ</string>
     <string name="read_write_permission_description">مەۋجۇت خاتىرە، كارتا، خاتىرە تۈرى ۋە دەستىنى زىيارەت قىلىپلا قالماي يەنە يېڭىسىنى قۇرىدۇ</string>

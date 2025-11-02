@@ -165,6 +165,7 @@
     <string name="card_template_browser_appearance_title">瀏覽器外觀</string>
     <!-- card Info -->
     <string name="card_info_title" maxLength="28">卡片資訊</string>
+    <string name="previous_card_info_title" maxLength="28">Previous card info</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">讀寫 AnkiDroid 資料庫</string>
     <string name="read_write_permission_description">瀏覽現有的筆記、卡片、筆記類型和牌組，或者自己動手建立新的~</string>

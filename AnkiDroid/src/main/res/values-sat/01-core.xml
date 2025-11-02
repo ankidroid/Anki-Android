@@ -169,6 +169,7 @@
     <string name="card_template_browser_appearance_title">ᱵᱨᱟᱩᱡᱚᱨ ᱧᱮᱞᱚᱜ ᱠᱚ</string>
     <!-- card Info -->
     <string name="card_info_title" maxLength="28">ᱠᱟᱰ ᱵᱟᱵᱚᱛ</string>
+    <string name="previous_card_info_title" maxLength="28">Previous card info</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">AnkiDroid ᱥᱟᱫᱠᱷᱤᱭᱟᱽ ᱵᱟᱹᱭᱥᱟᱣ ᱨᱮ ᱯᱟᱲᱦᱟᱣ ᱟᱨ ᱚᱞ ᱪᱷᱚᱭ ᱢᱮ</string>
     <string name="read_write_permission_description">ᱢᱟᱲᱟᱝ ᱠᱷᱚᱱ ᱢᱮᱱᱟᱜ ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨᱥ, ᱠᱟᱰ, ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨᱥ ᱯᱨᱚᱠᱟᱨ ᱟᱨ ᱰᱮᱠ ᱠᱚ ᱦᱚᱠ ᱫᱟᱲᱮᱭᱟᱼᱜᱢ ᱚᱱᱟ ᱥᱟᱞᱟᱜ ᱛᱮ ᱱᱟᱶᱟ ᱠᱟᱰ ᱦᱚᱸ ᱛᱮᱭᱟᱨ ᱫᱟᱲᱮᱭᱟᱼᱜᱢ</string>

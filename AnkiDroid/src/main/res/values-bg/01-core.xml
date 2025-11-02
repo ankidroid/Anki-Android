@@ -169,6 +169,7 @@
     <string name="card_template_browser_appearance_title">Външен вид на браузъра</string>
     <!-- card Info -->
     <string name="card_info_title" maxLength="28">Инфо за картата</string>
+    <string name="previous_card_info_title" maxLength="28">Previous card info</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Четене и писане в базата от данни на AnkiDroid</string>
     <string name="read_write_permission_description">достъп до съществуващи бележки, карти, типове бележки и тестета, както и създаване на нови</string>

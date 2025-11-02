@@ -179,6 +179,7 @@
     <string name="card_template_browser_appearance_title">Naršyklės išvaizda</string>
     <!-- card Info -->
     <string name="card_info_title" maxLength="28">Kortelės informacija</string>
+    <string name="previous_card_info_title" maxLength="28">Previous card info</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Skaitykite ir rašykite į „AnkiDroid“ duomenų bazę</string>
     <string name="read_write_permission_description">prisijunkite prie turimų užrašų, kortelių, užrašų tipų ir rinkinių bei kurkite naujus</string>

@@ -164,6 +164,7 @@
     <string name="card_template_browser_appearance_title">Tampilan Peramban</string>
     <!-- card Info -->
     <string name="card_info_title" maxLength="28">Info kartu</string>
+    <string name="previous_card_info_title" maxLength="28">Previous card info</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Baca dan tulis ke basisdata AnkiDroid</string>
     <string name="read_write_permission_description">mengakses catatan yang ada, kartu, tipe catatan, dan dek, serta membuat yang baru</string>

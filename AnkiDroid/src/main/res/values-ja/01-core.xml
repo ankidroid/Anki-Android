@@ -164,6 +164,7 @@
     <string name="card_template_browser_appearance_title">ブラウザ表示設定</string>
     <!-- card Info -->
     <string name="card_info_title" maxLength="28">カード情報</string>
+    <string name="previous_card_info_title" maxLength="28">Previous card info</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">AnkiDroidデータベースの読み取りと書き込み</string>
     <string name="read_write_permission_description">ノート、カード、ノートタイプ、デッキへのアクセスや、それらの新規作成を行います。</string>

@@ -180,6 +180,7 @@
     <string name="card_template_browser_appearance_title">מראה הדפדפן</string>
     <!-- card Info -->
     <string name="card_info_title" maxLength="28">מידע על הכרטיס</string>
+    <string name="previous_card_info_title" maxLength="28">Previous card info</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">קרא ושמור לממסד הנתונים של אנקידרוייד</string>
     <string name="read_write_permission_description">לגשת להערות, כרטיס, סוגי רשומות וחפיסות וגם ליצור חדשים</string>

@@ -164,6 +164,7 @@
     <string name="card_template_browser_appearance_title">카드 모양 설정</string>
     <!-- card Info -->
     <string name="card_info_title" maxLength="28">카드 정보</string>
+    <string name="previous_card_info_title" maxLength="28">Previous card info</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">AnkiDroid 데이터베이스 읽고 쓰기</string>
     <string name="read_write_permission_description">기존의 노트, 카드, 노트 유형, 덱에 접근하여 새로운 항목 생성하기</string>
