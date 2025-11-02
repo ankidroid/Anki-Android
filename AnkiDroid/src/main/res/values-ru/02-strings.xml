@@ -319,7 +319,6 @@
     <string name="intro_sync_from_ankiweb">Скачать с AnkiWeb</string>
     <!-- IntentHandler -->
     <string name="app_not_initialized_new">AnkiDroid не запущен. Пожалуйста, откройте AnkiDroid и попробуйте снова</string>
-    <string name="already_logged_in">Вход уже выполнен</string>
     <!-- Deck Creation -->
     <string name="deck_created">Колода создана</string>
     <string name="deck_renamed">Колода переименована</string>

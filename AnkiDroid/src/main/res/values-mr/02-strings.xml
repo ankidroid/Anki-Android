@@ -311,7 +311,6 @@
     <string name="intro_sync_from_ankiweb">AnkiWeb वरून सिंक करा</string>
     <!-- IntentHandler -->
     <string name="app_not_initialized_new">AnkiDroid अजून लाँच झालेले नाही. कृपया AnkiDroid उघडा आणि पुन्हा प्रयत्न करा</string>
-    <string name="already_logged_in">आधीपासून लॉग इन केले</string>
     <!-- Deck Creation -->
     <string name="deck_created">डेक तयार केला</string>
     <string name="deck_renamed">डेकचे नाव बदलले</string>

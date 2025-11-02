@@ -311,7 +311,6 @@
     <string name="intro_sync_from_ankiweb">با AnkiWeb همگام سازی کن</string>
     <!-- IntentHandler -->
     <string name="app_not_initialized_new">انکی‌دروید هنوز راه‌اندازی نشده است. لطفاً انکی‌دروید را باز کرده و دوباره تلاش کنید</string>
-    <string name="already_logged_in">قبلاً وارد شده‌اید</string>
     <!-- Deck Creation -->
     <string name="deck_created">دسته ایجاد شد</string>
     <string name="deck_renamed">نام دسته تغییر کرد</string>

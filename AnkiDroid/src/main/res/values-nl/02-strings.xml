@@ -311,7 +311,6 @@
     <string name="intro_sync_from_ankiweb">Synchronizeren vanaf AnkiWeb</string>
     <!-- IntentHandler -->
     <string name="app_not_initialized_new">AnkiDroid is nog niet geïnitialiseerd. Open AnkiDroid en probeer het opnieuw</string>
-    <string name="already_logged_in">Reeds ingelogd</string>
     <!-- Deck Creation -->
     <string name="deck_created">Leerset aanmaken</string>
     <string name="deck_renamed">Setnaam wijzigen</string>

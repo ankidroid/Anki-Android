@@ -315,7 +315,6 @@
     <string name="intro_sync_from_ankiweb">Vienādot no AnkiWeb</string>
     <!-- IntentHandler -->
     <string name="app_not_initialized_new">AnkiDroid vēl nav sāknēta. Lūgums atvērt AnkiDroid un mēģināt vēlreiz</string>
-    <string name="already_logged_in">Jau pieteicies</string>
     <!-- Deck Creation -->
     <string name="deck_created">Kava izveidota</string>
     <string name="deck_renamed">Kava pārdēvēta</string>

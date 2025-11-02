@@ -311,7 +311,6 @@
     <string name="intro_sync_from_ankiweb">Sincronizar desde AnkiWeb</string>
     <!-- IntentHandler -->
     <string name="app_not_initialized_new">AnkiDroid aún no está inicializado. Por favor, abre AnkiDroid e inténtalo de nuevo</string>
-    <string name="already_logged_in">Ya iniciaste sesión</string>
     <!-- Deck Creation -->
     <string name="deck_created">Mazo creado</string>
     <string name="deck_renamed">Mazo renombrado</string>

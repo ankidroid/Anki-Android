@@ -311,7 +311,6 @@
     <string name="intro_sync_from_ankiweb">Синхро от AnkiWeb</string>
     <!-- IntentHandler -->
     <string name="app_not_initialized_new">AnkiDroid is not initialized yet. Please open AnkiDroid and try again</string>
-    <string name="already_logged_in">Вече сте влезли</string>
     <!-- Deck Creation -->
     <string name="deck_created">Създадено тесте</string>
     <string name="deck_renamed">Преименувано тесте</string>

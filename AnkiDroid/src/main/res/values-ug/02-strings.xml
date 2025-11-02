@@ -311,7 +311,6 @@
     <string name="intro_sync_from_ankiweb">AnkiWeb دىن قەدەمداشلا</string>
     <!-- IntentHandler -->
     <string name="app_not_initialized_new">AnkiDroid تېخى دەسلەپلەشتۈرۈلمىدى. AnkiDroid نى ئېچىپ قايتا سىناڭ</string>
-    <string name="already_logged_in">ئاللىبۇرۇن كىرگەن</string>
     <!-- Deck Creation -->
     <string name="deck_created">دەستە قۇرۇلدى</string>
     <string name="deck_renamed">دەستە ئىسمى ئۆزگەرتىلدى</string>

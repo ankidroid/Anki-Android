@@ -311,7 +311,6 @@
     <string name="intro_sync_from_ankiweb">Mag-sync mula sa AnkiWeb</string>
     <!-- IntentHandler -->
     <string name="app_not_initialized_new">Hindi pa na-initialize ang AnkiDroid. Mangyaring buksan ulit ang AnkiDroid at subukan muli</string>
-    <string name="already_logged_in">Naka-login na</string>
     <!-- Deck Creation -->
     <string name="deck_created">Nailikha ang deck</string>
     <string name="deck_renamed">Napangalanan muli ang deck</string>

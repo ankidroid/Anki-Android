@@ -319,7 +319,6 @@
     <string name="intro_sync_from_ankiweb">Synchronizovat z AnkiWebu</string>
     <!-- IntentHandler -->
     <string name="app_not_initialized_new">AnkiDroid ještě není inicializován. Otevřete prosím AnkiDroid a zkuste to znovu</string>
-    <string name="already_logged_in">Již jste přihlášeni</string>
     <!-- Deck Creation -->
     <string name="deck_created">Balíček vytvořen</string>
     <string name="deck_renamed">Balíček přejmenován</string>

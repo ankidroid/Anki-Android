@@ -319,7 +319,6 @@
     <string name="intro_sync_from_ankiweb">Synchronizacja z AnkiWeb</string>
     <!-- IntentHandler -->
     <string name="app_not_initialized_new">AnkiDroid nie został jeszcze zainicjowany. Otwórz AnkiDroid i spróbuj ponownie</string>
-    <string name="already_logged_in">Już zalogowany!</string>
     <!-- Deck Creation -->
     <string name="deck_created">Utworzono talię</string>
     <string name="deck_renamed">Zmieniono nazwę talii</string>

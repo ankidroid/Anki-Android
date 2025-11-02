@@ -312,7 +312,6 @@
     <string name="intro_sync_from_ankiweb">Synka från AnkiWeb</string>
     <!-- IntentHandler -->
     <string name="app_not_initialized_new">AnkiDroid är inte initierat än. Öppna AnkiDroid och försök igen</string>
-    <string name="already_logged_in">Redan inloggad</string>
     <!-- Deck Creation -->
     <string name="deck_created">Kortlek skapad</string>
     <string name="deck_renamed">Kortlek namnändrad</string>

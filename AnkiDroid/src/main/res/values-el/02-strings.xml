@@ -311,7 +311,6 @@
     <string name="intro_sync_from_ankiweb">Συγχρονισμός απο το AnkiWeb</string>
     <!-- IntentHandler -->
     <string name="app_not_initialized_new">Το AnkiDroid δεν έχει αρχικοποιηθεί ακόμα. Ανοίξτε το AnkiDroid και δοκιμάστε ξανά</string>
-    <string name="already_logged_in">Ήδη συνδεδεμένος</string>
     <!-- Deck Creation -->
     <string name="deck_created">Η τράπουλα δημιουργήθηκε</string>
     <string name="deck_renamed">Η τράπουλα μετονομάστηκε</string>

@@ -311,7 +311,6 @@
     <string name="intro_sync_from_ankiweb">AnkiWebʼdan sinxronlash</string>
     <!-- IntentHandler -->
     <string name="app_not_initialized_new">AnkiDroid hali ishga tushirilmagan. AnkiDroidʼni oching va qayta urinib koʻring</string>
-    <string name="already_logged_in">Allaqachon tizimga kirilgan</string>
     <!-- Deck Creation -->
     <string name="deck_created">Dasta yaratildi</string>
     <string name="deck_renamed">Dasta nomi oʻzgartirildi</string>

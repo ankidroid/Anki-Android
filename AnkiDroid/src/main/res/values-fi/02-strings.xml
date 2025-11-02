@@ -311,7 +311,6 @@
     <string name="intro_sync_from_ankiweb">Synkronoi AnkiWebistä</string>
     <!-- IntentHandler -->
     <string name="app_not_initialized_new">AnkiDroidia ei ole vielä alustettu. Avaa AnkiDroid ja yritä uudelleen</string>
-    <string name="already_logged_in">Olet jo kirjautunut sisään</string>
     <!-- Deck Creation -->
     <string name="deck_created">Pakka luotu</string>
     <string name="deck_renamed">Pakka nimetty uudelleen</string>

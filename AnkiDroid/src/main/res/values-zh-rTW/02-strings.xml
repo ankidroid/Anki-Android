@@ -307,7 +307,6 @@
     <string name="intro_sync_from_ankiweb">從AnkiWeb同步</string>
     <!-- IntentHandler -->
     <string name="app_not_initialized_new">AnkiDroid尚未初始化。請打開AnkiDroid再試一次</string>
-    <string name="already_logged_in">已登入</string>
     <!-- Deck Creation -->
     <string name="deck_created">已創建牌組</string>
     <string name="deck_renamed">重命名的牌組</string>

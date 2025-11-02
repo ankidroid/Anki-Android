@@ -311,7 +311,6 @@
     <string name="intro_sync_from_ankiweb">Sinkroniseer Van AnkiWeb</string>
     <!-- IntentHandler -->
     <string name="app_not_initialized_new">AnkiDroid Is Nog Nie Geïnisialiseer Nie. Maak Asseblief AnkiDroid Oop En Probeer Weer.</string>
-    <string name="already_logged_in">Reeds ingelog</string>
     <!-- Deck Creation -->
     <string name="deck_created">Pak geskep</string>
     <string name="deck_renamed">Pak hernoem</string>

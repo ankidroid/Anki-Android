@@ -307,7 +307,6 @@
     <string name="intro_sync_from_ankiweb">AnkiWebから同期</string>
     <!-- IntentHandler -->
     <string name="app_not_initialized_new">AnkiDroidがまだ起動していません。AnkiDroidを開いてから、もう一度やり直してください</string>
-    <string name="already_logged_in">すでにログイン済みです</string>
     <!-- Deck Creation -->
     <string name="deck_created">デッキを作成しました</string>
     <string name="deck_renamed">デッキ名を変更しました</string>

@@ -312,7 +312,6 @@
     <string name="intro_sync_from_ankiweb">AnkiWeb سے مطابقت پذیری کریں۔</string>
     <!-- IntentHandler -->
     <string name="app_not_initialized_new">AnkiDroid ابھی شروع نہیں ہوا ہے۔ براہ کرم AnkiDroid کھولیں اور دوبارہ کوشش کریں</string>
-    <string name="already_logged_in">پہلے سے لاگ ان</string>
     <!-- Deck Creation -->
     <string name="deck_created">ڈیک بنایا گیا</string>
     <string name="deck_renamed">ڈیک کا نام تبدیل کر دیا گیا</string>

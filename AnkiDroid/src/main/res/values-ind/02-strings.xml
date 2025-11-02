@@ -307,7 +307,6 @@
     <string name="intro_sync_from_ankiweb">Sinkronkan dari AnkiWeb</string>
     <!-- IntentHandler -->
     <string name="app_not_initialized_new">AnkiDroid belum dimulai. Silakan buka AnkiDroid dan coba lagi</string>
-    <string name="already_logged_in">Sudah masuk</string>
     <!-- Deck Creation -->
     <string name="deck_created">Dek dibuat</string>
     <string name="deck_renamed">Dek diubah namanya</string>

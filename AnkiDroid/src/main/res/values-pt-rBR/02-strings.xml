@@ -311,7 +311,6 @@
     <string name="intro_sync_from_ankiweb">Sincronizar do AnkiWeb</string>
     <!-- IntentHandler -->
     <string name="app_not_initialized_new">O AnkiDroid ainda não foi inicializado.  Por favor, abra o AnkiDroid e tente novamente</string>
-    <string name="already_logged_in">Já está logado</string>
     <!-- Deck Creation -->
     <string name="deck_created">Baralho criado</string>
     <string name="deck_renamed">Baralho renomeado</string>

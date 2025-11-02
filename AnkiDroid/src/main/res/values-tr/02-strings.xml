@@ -311,7 +311,6 @@
     <string name="intro_sync_from_ankiweb">AnkiWeb\'den senkronize et</string>
     <!-- IntentHandler -->
     <string name="app_not_initialized_new">AnkiDroid henüz açılmadı. Lütfen AnkiDroid\'i açıp tekrar deneyin</string>
-    <string name="already_logged_in">Zaten giriş yapılmış</string>
     <!-- Deck Creation -->
     <string name="deck_created">Deste oluşturuldu</string>
     <string name="deck_renamed">Deste yeniden adlandırıldı</string>

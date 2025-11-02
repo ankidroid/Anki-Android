@@ -311,7 +311,6 @@
     <string name="intro_sync_from_ankiweb">AnkiWeb இலிருந்து ஒத்திசைவு</string>
     <!-- IntentHandler -->
     <string name="app_not_initialized_new">AnkiDroid இன்னும் துவக்கப்படவில்லை. AnkiDroid ஐ திறந்து மீண்டும் முயற்சிக்கவும்</string>
-    <string name="already_logged_in">ஏற்கனவே உள்நுழைந்துள்ளீர்கள்</string>
     <!-- Deck Creation -->
     <string name="deck_created">டெக் உருவாக்கப்பட்டது</string>
     <string name="deck_renamed">டெக் மறுபெயரிடப்பட்டது</string>

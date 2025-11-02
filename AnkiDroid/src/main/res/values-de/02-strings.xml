@@ -311,7 +311,6 @@
     <string name="intro_sync_from_ankiweb">Mit AnkiWeb synchronisieren</string>
     <!-- IntentHandler -->
     <string name="app_not_initialized_new">AnkiDroid ist noch nicht initialisiert. Bitte öffne die App nochmal und versuche erneut.</string>
-    <string name="already_logged_in">Bereits angemeldet</string>
     <!-- Deck Creation -->
     <string name="deck_created">Stapel wurde erstellt</string>
     <string name="deck_renamed">Stapel wurde umbenannt</string>
