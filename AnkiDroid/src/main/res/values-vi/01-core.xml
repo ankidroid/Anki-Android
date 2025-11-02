@@ -164,6 +164,7 @@
     <string name="card_template_browser_appearance_title">Giao diện trình duyệt</string>
     <!-- card Info -->
     <string name="card_info_title" maxLength="28">Thông tin thẻ</string>
+    <string name="previous_card_info_title" maxLength="28">Previous card info</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Đọc và ghi vào cơ sở dữ liệu AnkiDroid</string>
     <string name="read_write_permission_description">truy cập các ghi chú, thẻ, loại ghi chú và các bộ thẻ hiện có, cũng như tạo mới chúng</string>

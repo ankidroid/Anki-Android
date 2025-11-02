@@ -169,6 +169,7 @@
     <string name="card_template_browser_appearance_title">உலாவித் தோற்றம்</string>
     <!-- card Info -->
     <string name="card_info_title" maxLength="28">அட்டை தகவல்</string>
+    <string name="previous_card_info_title" maxLength="28">Previous card info</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">AnkiDroid டேட்டாபேஸ் எழுதப்</string>
     <string name="read_write_permission_description">தற்போதுள்ள குறிப்புகள், அட்டைகள், குறிப்பு வகைகள் மற்றும் அடுக்குகள் அணுக, அத்துடன் புதிய ஒன்றை உருவாக்க</string>

@@ -169,6 +169,7 @@
     <string name="card_template_browser_appearance_title">Изглед на пребарувач</string>
     <!-- card Info -->
     <string name="card_info_title" maxLength="28">Card info</string>
+    <string name="previous_card_info_title" maxLength="28">Previous card info</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Читајте и пишувајте на базата на податоци на AnkiDroid</string>
     <string name="read_write_permission_description">да пристапите до постоечките белешки, картички, типови белешки и decks, како и креирање нови</string>

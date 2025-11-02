@@ -169,6 +169,7 @@
     <string name="card_template_browser_appearance_title">Läsarens utseende</string>
     <!-- card Info -->
     <string name="card_info_title" maxLength="28">Kortinformation</string>
+    <string name="previous_card_info_title" maxLength="28">Previous card info</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Läs och skriv till AnkiDroid-databasen</string>
     <string name="read_write_permission_description">åtkomst till befintliga noter, kort, nottyper och kortlekar, samt att skapa nya</string>

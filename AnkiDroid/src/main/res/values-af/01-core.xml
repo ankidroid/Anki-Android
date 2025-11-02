@@ -169,6 +169,7 @@
     <string name="card_template_browser_appearance_title">Kaartblaaier voorkoms</string>
     <!-- card Info -->
     <string name="card_info_title" maxLength="28">Kaart inligting</string>
+    <string name="previous_card_info_title" maxLength="28">Previous card info</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Lees en skryf na die AnkiDroid databasis</string>
     <string name="read_write_permission_description">toegang tot bestaande notas, kaarte, notatipes en pakke, sowel as om nuwe te skep</string>

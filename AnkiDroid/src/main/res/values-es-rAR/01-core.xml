@@ -169,6 +169,7 @@
     <string name="card_template_browser_appearance_title">Apariencia del navegador</string>
     <!-- card Info -->
     <string name="card_info_title" maxLength="28">Información de la tarjeta</string>
+    <string name="previous_card_info_title" maxLength="28">Previous card info</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Leer y escribir en la base de datos de AnkiDroid</string>
     <string name="read_write_permission_description">acceder a las notas existentes, tarjetas, tipos de nota y mazos, así como crear nuevos</string>
