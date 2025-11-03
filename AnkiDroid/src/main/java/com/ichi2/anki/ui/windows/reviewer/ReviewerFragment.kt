@@ -659,6 +659,14 @@ class ReviewerFragment :
             showDialogFragment(dialogFragment)
         }
 
+        viewModel.pageUpFlow.flowWithLifecycle(lifecycle).collectIn(lifecycleScope) {
+            webView.pageUp(false)
+        }
+
+        viewModel.pageDownFlow.flowWithLifecycle(lifecycle).collectIn(lifecycleScope) {
+            webView.pageDown(false)
+        }
+
         val repository = StudyScreenRepository(sharedPrefs())
         val markView = view.findViewById<AppCompatImageView>(R.id.mark_icon)
         viewModel.isMarkedFlow
