@@ -41,6 +41,7 @@ import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.model.SelectableDeck
+import com.ichi2.anki.services.AlarmManagerService
 import com.ichi2.anki.showError
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
@@ -186,6 +187,7 @@ class ScheduleReminders :
         Timber.d("Handling add/edit dialog result: mode=%s reminder=%s", modeOfFinishedDialog, newOrModifiedReminder)
         updateDatabaseForAddEditDialog(newOrModifiedReminder, modeOfFinishedDialog)
         updateUIForAddEditDialog(newOrModifiedReminder, modeOfFinishedDialog)
+        updateAlarmsForAddEditDialog(newOrModifiedReminder, modeOfFinishedDialog)
         // Feedback
         showSnackbar(
             when (modeOfFinishedDialog) {
@@ -283,6 +285,28 @@ class ScheduleReminders :
     }
 
     /**
+     * Update the AlarmManager notifications for the new or modified reminder.
+     * @see handleAddEditDialogResult
+     */
+    private fun updateAlarmsForAddEditDialog(
+        newOrModifiedReminder: ReviewReminder?,
+        modeOfFinishedDialog: AddEditReminderDialog.DialogMode,
+    ) {
+        if (modeOfFinishedDialog is AddEditReminderDialog.DialogMode.Edit) {
+            AlarmManagerService.unscheduleReviewReminderNotifications(
+                requireContext(),
+                modeOfFinishedDialog.reminderToBeEdited,
+            )
+        }
+        newOrModifiedReminder?.let {
+            AlarmManagerService.scheduleReviewReminderNotification(
+                requireContext(),
+                it,
+            )
+        }
+    }
+
+    /**
      * Retrieves a deck name from the collection for a given deck ID and passes it to the provided callback.
      * Used by the [ScheduleRemindersAdapter] because it cannot access the collection directly.
      */
@@ -344,6 +368,12 @@ class ScheduleReminders :
         // Update UI
         reminder.enabled = newState
         triggerUIUpdate()
+
+        // Update scheduled AlarmManager notifications
+        when (newState) {
+            true -> AlarmManagerService.scheduleReviewReminderNotification(requireContext(), reminder)
+            false -> AlarmManagerService.unscheduleReviewReminderNotifications(requireContext(), reminder)
+        }
     }
 
     /**
