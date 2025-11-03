@@ -42,7 +42,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.button.MaterialButton
 import com.ichi2.anki.CollectionManager.TR
-import com.ichi2.anki.DrawingActivity
 import com.ichi2.anki.DrawingFragment
 import com.ichi2.anki.R
 import com.ichi2.anki.common.annotations.NeedsTest
@@ -124,7 +123,7 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
         }
 
     /**
-     * Launches the [DrawingActivity] and handles the result by adding the drawing as image.
+     * Launches the [DrawingFragment] and handles the result by adding the drawing as image.
      */
     private val drawingActivityLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->

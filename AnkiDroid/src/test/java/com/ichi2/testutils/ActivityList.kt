@@ -25,7 +25,6 @@ import com.ichi2.anki.CardTemplateBrowserAppearanceEditor.Companion.INTENT_ANSWE
 import com.ichi2.anki.CardTemplateBrowserAppearanceEditor.Companion.INTENT_QUESTION_FORMAT
 import com.ichi2.anki.CardTemplateEditor
 import com.ichi2.anki.DeckPicker
-import com.ichi2.anki.DrawingActivity
 import com.ichi2.anki.FilteredDeckOptions
 import com.ichi2.anki.Info
 import com.ichi2.anki.IntentHandler
@@ -77,7 +76,6 @@ object ActivityList {
             get(Reviewer::class.java),
             get(PreferencesActivity::class.java),
             get(FilteredDeckOptions::class.java),
-            get(DrawingActivity::class.java),
             // Info has unhandled intents
             get(Info::class.java),
             get(CardTemplateEditor::class.java) { intentForCardTemplateEditor() },
