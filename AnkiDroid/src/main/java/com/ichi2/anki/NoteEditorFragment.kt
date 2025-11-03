@@ -102,6 +102,7 @@ import com.ichi2.anki.dialogs.tags.TagsDialogFactory
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
 import com.ichi2.anki.libanki.Card
 import com.ichi2.anki.libanki.Collection
+import com.ichi2.anki.libanki.Consts
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.Decks.Companion.CURRENT_DECK
 import com.ichi2.anki.libanki.Field
@@ -821,6 +822,33 @@ class NoteEditorFragment :
         }
 
         deckId = requireArguments().getLong(EXTRA_DID, deckId)
+        if (addNote) {
+            // When adding and if we didn't receive a valid deck id or it's the 'Default' deck, look
+            // at what deck is selected and use that(guards against certain scenarios when deleting
+            // a deck and no deck is visually selected in DeckPicker)
+            if (deckId == 0L || deckId == Consts.DEFAULT_DECK_ID) {
+                // check if this is the actual deck selected
+                val currentSelectedDeckId = col.decks.selected()
+                if (currentSelectedDeckId != Consts.DEFAULT_DECK_ID) {
+                    deckId = currentSelectedDeckId
+                }
+            }
+            // Also guard against adding to a filtered deck in which case revert to 'Default'
+            val deck = col.decks.getLegacy(deckId)
+            if (deck == null || deck.isFiltered) {
+                deckId = Consts.DEFAULT_DECK_ID
+            }
+        } else {
+            // When editing we always have a valid currentEditCard. Check to see if it's from a normal
+            // deck or a filtered deck(in which case use it's original did or revert to 'Default')
+            val cardDeckId = currentEditedCard?.did
+            deckId =
+                if (cardDeckId == null || col.decks.isFiltered(cardDeckId)) {
+                    currentEditedCard?.oDid ?: Consts.DEFAULT_DECK_ID
+                } else {
+                    cardDeckId
+                }
+        }
         view?.findViewById<TextView>(R.id.note_deck_name)?.apply {
             text = col.decks.name(deckId)
             setOnClickListener {

@@ -414,6 +414,50 @@ class NoteEditorTest : RobolectricTest() {
     }
 
     @Test
+    fun `shows 'Default' as selected when attempting to add to a filtered deck`() {
+        val testDeckId = addDeck("TestDeckA")
+        val testFilteredDeckId = addDynamicDeck("TestFiltered")
+        col.decks.select(testFilteredDeckId)
+        val editor = getNoteEditorAdding(NoteType.BASIC).build()
+        val deckNameView = editor.view?.findViewById<TextView>(R.id.note_deck_name)
+        assertNotNull(deckNameView)
+        // we can't add to a filtered deck so this should show the Default deck
+        assertEquals("Default", deckNameView.text.toString())
+    }
+
+    @Test
+    fun `shows the currently selected deck if no deck id is provided`() {
+        val testDeckName = "TestDeckC"
+        addDeck("TestDeckA")
+        addDeck("TestDeckB")
+        val testDeckId3 = addDeck(testDeckName)
+        col.decks.select(testDeckId3)
+        val editor = getNoteEditorAdding(NoteType.BASIC).build()
+        val deckNameView = editor.view?.findViewById<TextView>(R.id.note_deck_name)
+        assertNotNull(deckNameView)
+        // we can't add to a filtered deck so this should show the Default deck
+        assertEquals(testDeckName, deckNameView.text.toString())
+    }
+
+    @Test
+    fun `shows the expected deck if a deck id is provided`() {
+        val testDeckName = "TestDeckA"
+        val testDeckId1 = addDeck(testDeckName)
+        val testDeckId2 = addDeck("TestDeckB")
+        col.decks.select(testDeckId2)
+        val activity =
+            startActivityNormallyOpenCollectionWithIntent(
+                NoteEditorActivity::class.java,
+                NoteEditorLauncher.AddNote(testDeckId1).toIntent(targetContext),
+            )
+        val editor = activity.getNoteEditorFragment()
+        val deckNameView = editor.view?.findViewById<TextView>(R.id.note_deck_name)
+        assertNotNull(deckNameView)
+        // we can't add to a filtered deck so this should show the Default deck
+        assertEquals(testDeckName, deckNameView.text.toString())
+    }
+
+    @Test
     fun `edit note in filtered deck from reviewer - 15919`() {
         // TODO: As a future extension, the filtered deck should be displayed
         // in the UI
