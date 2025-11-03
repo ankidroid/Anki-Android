@@ -111,11 +111,6 @@
         <activity
             android:name="com.ichi2.anki.ui.windows.managespace.ManageSpaceActivity"
             android:exported="true"/>
-        <activity android:name=".DrawingActivity"
-            android:label="@string/drawing"
-            android:exported="false"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            />
         <activity
             android:name="com.ichi2.anki.IntentHandler"
             android:configChanges="keyboardHidden|orientation|screenSize"
