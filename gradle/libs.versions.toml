@@ -18,7 +18,7 @@ ktlint = '1.5.0'
 #
 # Old changelogs - See 'Table of Contents' in sidebar
 # https://developer.android.com/build/releases/past-releases
-androidGradlePlugin = "8.13.0"
+androidGradlePlugin = "8.13.1"
 # https://developer.android.com/jetpack/androidx/releases/activity
 androidxActivity = "1.11.0"
 # https://developer.android.com/jetpack/androidx/releases/annotation
@@ -68,7 +68,7 @@ commonsCollections4 = "4.5.0"
 # https://commons.apache.org/proper/commons-compress/changes-report.html
 commonsCompress = "1.28.0"
 # https://commons.apache.org/proper/commons-io/changes.html
-commonsIo = "2.20.0"
+commonsIo = "2.21.0"
 coroutines = '1.10.2'
 desugar-jdk-libs-nio = "2.1.5"
 drawer = "1.0.3"
@@ -83,14 +83,14 @@ json = "20250517"
 jsoup = "1.21.2"
 androidTestJunit = "1.3.0"
 # https://github.com/junit-team/junit5/releases/
-junit = "6.0.0"
+junit = "6.0.1"
 # https://github.com/JetBrains/kotlin/releases/
 kotlin = '2.2.10'
 # https://github.com/Kotlin/kotlinx.serialization/releases
 kotlinxSerializationJson = "1.9.0"
-ktlintGradlePlugin = "13.1.0"
+ktlintGradlePlugin = "14.0.1"
 leakcanaryAndroid = "2.14"
-lint = '31.13.0'
+lint = '31.13.1'
 material = "1.13.0"
 
 mockitoInline = "5.2.0"
@@ -110,7 +110,7 @@ slf4jTimber = "3.1"
 timber = "5.0.1"
 # https://github.com/Triple-T/gradle-play-publisher/releases
 # In the past, releases have been published before the changelog
-triplet = "3.12.1"
+triplet = "3.12.2"
 turbine = "1.2.1"
 
 [libraries]
