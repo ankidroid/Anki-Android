@@ -64,7 +64,7 @@ class WhiteboardFragment :
 
     // binding pattern to handle onCreateView/onDestroyView
     private var fragmentBinding: FragmentWhiteboardBinding? = null
-    private val binding: FragmentWhiteboardBinding get() = fragmentBinding!!
+    val binding: FragmentWhiteboardBinding get() = fragmentBinding!!
 
     private var eraserPopup: PopupWindow? = null
     private var strokeWidthPopup: PopupWindow? = null
