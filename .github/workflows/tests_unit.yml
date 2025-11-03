@@ -118,7 +118,7 @@ jobs:
     #  CODACY_TOKEN: ${{ secrets.CODACY_TOKEN }}
     steps:
       - name: Configure Windows Pagefile
-        uses: al-cheb/configure-pagefile-action@v1.4
+        uses: al-cheb/configure-pagefile-action@v1.5
         if: contains(matrix.os, 'windows')
         with:
           minimum-size: 8GB
