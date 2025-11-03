@@ -638,6 +638,11 @@
             android:exported="false"
             />
         <receiver
+            android:name=".services.AlarmManagerService"
+            android:enabled="true"
+            android:exported="false"
+            />
+        <receiver
             android:name=".services.BootService"
             android:enabled="true"
             android:exported="false"
