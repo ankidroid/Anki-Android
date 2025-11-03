@@ -67,7 +67,7 @@ class BootService : BroadcastReceiver() {
         }
         if (Prefs.newReviewRemindersEnabled) {
             Timber.i("Executing Boot Service - Review reminders")
-            // TODO: GSoC 2025: Run schedule all notifications method
+            AlarmManagerService.scheduleAllNotifications(context)
         } else {
             // There are cases where the app is installed, and we have access, but nothing exist yet
             val col = getColSafe()
