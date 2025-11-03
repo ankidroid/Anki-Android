@@ -191,14 +191,9 @@ class ReviewerFragment :
         setupAnswerTimer(view)
         setupMargins(view)
         setupCheckPronunciation(view)
+        setupActions(view)
         setupWhiteboard()
         setupTimebox()
-
-        viewModel.actionFeedbackFlow
-            .flowWithLifecycle(lifecycle)
-            .collectIn(lifecycleScope) { message ->
-                showSnackbar(message, duration = 500)
-            }
 
         viewModel.finishResultFlow.collectIn(lifecycleScope) { result ->
             requireActivity().run {
@@ -224,21 +219,6 @@ class ReviewerFragment :
             startActivity(destination.toIntent(requireContext()))
         }
 
-        viewModel.editNoteTagsFlow.collectIn(lifecycleScope) { noteId ->
-            val dialogFragment =
-                tagsDialogFactory.newTagsDialog().withArguments(
-                    requireContext(),
-                    TagsDialog.DialogType.EDIT_TAGS,
-                    listOf(noteId),
-                )
-            showDialogFragment(dialogFragment)
-        }
-
-        viewModel.setDueDateFlow.collectIn(lifecycleScope) { cardId ->
-            val dialogFragment = SetDueDateDialog.newInstance(listOf(cardId))
-            showDialogFragment(dialogFragment)
-        }
-
         if (Prefs.showAnswerFeedback) {
             viewModel.answerFeedbackFlow.collectIn(lifecycleScope) { ease ->
                 if (ease == Rating.AGAIN) {
@@ -258,29 +238,6 @@ class ReviewerFragment :
                 }
             }
         }
-
-        val repository = StudyScreenRepository(sharedPrefs())
-        val markView = view.findViewById<AppCompatImageView>(R.id.mark_icon)
-        viewModel.isMarkedFlow
-            .flowWithLifecycle(lifecycle)
-            .collectIn(lifecycleScope) { isMarked ->
-                if (!repository.isMarkShownInToolbar) {
-                    markView.isVisible = isMarked
-                }
-            }
-        val flagView = view.findViewById<AppCompatImageView>(R.id.flag_icon)
-        viewModel.flagFlow
-            .flowWithLifecycle(lifecycle)
-            .collectIn(lifecycleScope) { flag ->
-                if (!repository.isFlagShownInToolbar) {
-                    if (flag == Flag.NONE) {
-                        flagView.isVisible = false
-                    } else {
-                        flagView.setImageDrawable(ContextCompat.getDrawable(requireContext(), flag.drawableRes))
-                        flagView.isVisible = true
-                    }
-                }
-            }
     }
 
     private fun setupTypeAnswer(view: View) {
@@ -678,6 +635,52 @@ class ReviewerFragment :
                 setCancelable(false)
             }
         }
+    }
+
+    private fun setupActions(view: View) {
+        viewModel.actionFeedbackFlow
+            .flowWithLifecycle(lifecycle)
+            .collectIn(lifecycleScope) { message ->
+                showSnackbar(message, duration = 500)
+            }
+
+        viewModel.editNoteTagsFlow.collectIn(lifecycleScope) { noteId ->
+            val dialogFragment =
+                tagsDialogFactory.newTagsDialog().withArguments(
+                    requireContext(),
+                    TagsDialog.DialogType.EDIT_TAGS,
+                    listOf(noteId),
+                )
+            showDialogFragment(dialogFragment)
+        }
+
+        viewModel.setDueDateFlow.collectIn(lifecycleScope) { cardId ->
+            val dialogFragment = SetDueDateDialog.newInstance(listOf(cardId))
+            showDialogFragment(dialogFragment)
+        }
+
+        val repository = StudyScreenRepository(sharedPrefs())
+        val markView = view.findViewById<AppCompatImageView>(R.id.mark_icon)
+        viewModel.isMarkedFlow
+            .flowWithLifecycle(lifecycle)
+            .collectIn(lifecycleScope) { isMarked ->
+                if (!repository.isMarkShownInToolbar) {
+                    markView.isVisible = isMarked
+                }
+            }
+        val flagView = view.findViewById<AppCompatImageView>(R.id.flag_icon)
+        viewModel.flagFlow
+            .flowWithLifecycle(lifecycle)
+            .collectIn(lifecycleScope) { flag ->
+                if (!repository.isFlagShownInToolbar) {
+                    if (flag == Flag.NONE) {
+                        flagView.isVisible = false
+                    } else {
+                        flagView.setImageDrawable(ContextCompat.getDrawable(requireContext(), flag.drawableRes))
+                        flagView.isVisible = true
+                    }
+                }
+            }
     }
 
     override fun onSelectedTags(
