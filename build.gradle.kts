@@ -85,15 +85,6 @@ subprojects {
         }
 
         /**
-        Kotlin allows concrete function implementations inside interfaces.
-        For those to work when Kotlin compilation targets the JVM backend, you have to enable the interoperability via
-        'freeCompilerArgs' in your gradle file, and you have to choose one of the appropriate '-Xjvm-default' modes.
-
-        https://kotlinlang.org/docs/java-to-kotlin-interop.html#default-methods-in-interfaces
-
-        and we used "all" because we don't have downstream consumers
-        https://docs.gradle.org/current/userguide/task_configuration_avoidance.html
-
         Related to ExperimentalCoroutinesApi: this opt-in is added to enable usage of experimental
         coroutines API, this targets all project modules with the exception of the "api" module,
         which doesn't use coroutines so the annotation isn't not available. This would normally
@@ -104,7 +95,6 @@ subprojects {
             compilerOptions {
                 allWarningsAsErrors = fatalWarnings
                 val compilerArgs = mutableListOf(
-                    "-Xjvm-default=all",
                     // https://youtrack.jetbrains.com/issue/KT-73255
                     // Apply @StringRes to both constructor params and generated properties
                     "-Xannotation-default-target=param-property"
