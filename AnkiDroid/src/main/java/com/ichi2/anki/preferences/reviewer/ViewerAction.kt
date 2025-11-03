@@ -116,6 +116,8 @@ enum class ViewerAction(
     SHOW_HINT,
     SHOW_ALL_HINTS,
     REPLAY_VOICE,
+    PAGE_UP,
+    PAGE_DOWN,
     EXIT,
     ;
 
@@ -217,6 +219,8 @@ enum class ViewerAction(
             EXIT,
             RESCHEDULE_NOTE,
             TOGGLE_WHITEBOARD,
+            PAGE_UP,
+            PAGE_DOWN,
             USER_ACTION_1,
             USER_ACTION_2,
             USER_ACTION_3,
