@@ -16,8 +16,8 @@
 package com.ichi2.anki.tests
 
 import android.app.NotificationManager
-import android.content.Context
 import android.os.Build
+import androidx.core.content.getSystemService
 import androidx.test.annotation.UiThreadTest
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SdkSuppress
@@ -54,7 +54,7 @@ class NotificationChannelTest : InstrumentedTest() {
         (targetContext.applicationContext as AnkiDroidApp).onCreate()
         currentAPI = sdkVersion
         targetAPI = targetContext.applicationInfo.targetSdkVersion
-        manager = targetContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        manager = targetContext.getSystemService<NotificationManager>()!!
     }
 
     private fun channelsInAPI(): Boolean = currentAPI >= 26
