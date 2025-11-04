@@ -289,19 +289,29 @@ class Decks(
         return col.db.queryScalar("select count() from cards where did in $strIds or odid in $strIds")
     }
 
-    @RustCleanup("implement and make public")
     @LibAnkiAlias("get")
-    @Suppress("unused", "unused_parameter")
+    @Suppress("unused", "unused_parameter", "LiftReturnOrAssignment")
     @CheckResult
-    private fun get(
-        did: DeckId,
+    fun get(
+        did: DeckId?,
         default: Boolean = true,
-    ): Deck? =
-        try {
-            Deck(BackendUtils.fromJsonBytes(col.backend.getDeckLegacy(did)))
-        } catch (ex: BackendNotFoundException) {
-            null
+    ): Deck? {
+        if (did == null) {
+            if (default) {
+                return getLegacy(Consts.DEFAULT_DECK_ID)
+            } else {
+                return null
+            }
         }
+        val deck = getLegacy(did)
+        if (deck != null) {
+            return deck
+        } else if (default) {
+            return getLegacy(Consts.DEFAULT_DECK_ID)
+        } else {
+            return null
+        }
+    }
 
     /** Get deck with NAME, ignoring case. */
     @LibAnkiAlias("by_name")
@@ -333,15 +343,18 @@ class Decks(
     fun updateDict(deck: Deck): OpChanges = col.backend.updateDeckLegacy(toJsonBytes(deck))
 
     /** Rename deck prefix to NAME if not exists. Updates children. */
-    @RustCleanup("return OpChanges")
     @LibAnkiAlias("rename")
     fun rename(
         deck: Deck,
         newName: String,
-    ) {
-        deck.name = newName
-        this.save(deck)
-    }
+    ) = col.backend.renameDeck(deckId = deck.id, newName = newName)
+
+    /** Rename deck prefix to NAME if not exists. Updates children. */
+    @LibAnkiAlias("rename")
+    fun rename(
+        deckId: DeckId,
+        newName: String,
+    ) = col.backend.renameDeck(deckId = deckId, newName = newName)
 
     /*
      * Drag/drop
@@ -491,16 +504,19 @@ class Decks(
      *************************************************************
      */
 
-    /** Returns the [deck name][Deck.name], or 'no deck' if not found */
+    /** Returns the [deck name][Deck.name], or 'no deck' if not found and default is set to false */
     @LibAnkiAlias("name")
     @CheckResult
-    fun name(did: DeckId): String = getLegacy(did)?.name ?: col.backend.tr.decksNoDeck()
+    fun name(
+        did: DeckId,
+        default: Boolean = false,
+    ): String = get(did, default = default)?.name ?: col.backend.tr.decksNoDeck()
 
     /** Returns the [deck name][Deck.name], or `null` if not found */
     @LibAnkiAlias("name_if_exists")
     @Suppress("unused")
     @CheckResult
-    fun nameIfExists(did: DeckId): String? = getLegacy(did)?.name
+    fun nameIfExists(did: DeckId): String? = get(did, default = false)?.name
 
     @RustCleanup("implement and make public")
     @Suppress("unused", "unused_parameter")
