@@ -46,6 +46,7 @@ android {
         buildConfig = true
         aidl = true
         viewBinding = true
+        resValues = true
     }
 
     if (rootProject.testReleaseBuild) {
