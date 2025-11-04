@@ -19,6 +19,7 @@ import android.animation.Animator
 import android.content.Context
 import android.content.res.ColorStateList
 import android.provider.Settings
+import android.view.KeyEvent
 import android.view.MotionEvent
 import android.view.View
 import android.widget.LinearLayout
@@ -380,6 +381,23 @@ class DeckPickerFloatingActionMenu(
                 }
             },
         )
+
+        // Add keyboard support for FAB main button
+        fabMain.setOnKeyListener { _, keyCode, event ->
+            if (event.action == KeyEvent.ACTION_DOWN &&
+                (keyCode == KeyEvent.KEYCODE_ENTER || keyCode == KeyEvent.KEYCODE_DPAD_CENTER)
+            ) {
+                Timber.d("FAB main button: ENTER key pressed")
+                if (!isFABOpen) {
+                    showFloatingActionMenu()
+                } else {
+                    addNote()
+                }
+                return@setOnKeyListener true
+            }
+            false
+        }
+
         fabBGLayout.setOnClickListener { closeFloatingActionMenu(applyRiseAndShrinkAnimation = true) }
         val addDeckListener =
             View.OnClickListener {
@@ -390,6 +408,24 @@ class DeckPickerFloatingActionMenu(
             }
         addDeckButton.setOnClickListener(addDeckListener)
         addDeckLabel.setOnClickListener(addDeckListener)
+
+        // Add keyboard support for Create Deck button
+        val addDeckKeyListener =
+            View.OnKeyListener { _, keyCode, event ->
+                if (event.action == KeyEvent.ACTION_DOWN &&
+                    (keyCode == KeyEvent.KEYCODE_ENTER || keyCode == KeyEvent.KEYCODE_DPAD_CENTER)
+                ) {
+                    Timber.d("Add Deck button: ENTER key pressed")
+                    if (isFABOpen) {
+                        closeFloatingActionMenu(applyRiseAndShrinkAnimation = false)
+                        deckPicker.showCreateDeckDialog()
+                    }
+                    return@OnKeyListener true
+                }
+                false
+            }
+        addDeckButton.setOnKeyListener(addDeckKeyListener)
+        addDeckLabel.setOnKeyListener(addDeckKeyListener)
         val addFilteredDeckListener =
             View.OnClickListener {
                 if (isFABOpen) {
@@ -399,6 +435,24 @@ class DeckPickerFloatingActionMenu(
             }
         addFilteredDeckButton.setOnClickListener(addFilteredDeckListener)
         addFilteredDeckLabel.setOnClickListener(addFilteredDeckListener)
+
+        // Add keyboard support for Create Filtered Deck button
+        val addFilteredDeckKeyListener =
+            View.OnKeyListener { _, keyCode, event ->
+                if (event.action == KeyEvent.ACTION_DOWN &&
+                    (keyCode == KeyEvent.KEYCODE_ENTER || keyCode == KeyEvent.KEYCODE_DPAD_CENTER)
+                ) {
+                    Timber.d("Add Filtered Deck button: ENTER key pressed")
+                    if (isFABOpen) {
+                        closeFloatingActionMenu(applyRiseAndShrinkAnimation = false)
+                        deckPicker.showCreateFilteredDeckDialog()
+                    }
+                    return@OnKeyListener true
+                }
+                false
+            }
+        addFilteredDeckButton.setOnKeyListener(addFilteredDeckKeyListener)
+        addFilteredDeckLabel.setOnKeyListener(addFilteredDeckKeyListener)
         val addSharedListener =
             View.OnClickListener {
                 if (isFABOpen) {
@@ -409,6 +463,24 @@ class DeckPickerFloatingActionMenu(
             }
         addSharedButton.setOnClickListener(addSharedListener)
         addSharedLabel.setOnClickListener(addSharedListener)
+
+        // Add keyboard support for Get Shared Decks button
+        val addSharedKeyListener =
+            View.OnKeyListener { _, keyCode, event ->
+                if (event.action == KeyEvent.ACTION_DOWN &&
+                    (keyCode == KeyEvent.KEYCODE_ENTER || keyCode == KeyEvent.KEYCODE_DPAD_CENTER)
+                ) {
+                    Timber.d("Add Shared Deck button: ENTER key pressed")
+                    if (isFABOpen) {
+                        closeFloatingActionMenu(applyRiseAndShrinkAnimation = false)
+                        deckPicker.openAnkiWebSharedDecks()
+                    }
+                    return@OnKeyListener true
+                }
+                false
+            }
+        addSharedButton.setOnKeyListener(addSharedKeyListener)
+        addSharedLabel.setOnKeyListener(addSharedKeyListener)
         val addNoteLabelListener =
             View.OnClickListener {
                 if (isFABOpen) {
@@ -418,6 +490,21 @@ class DeckPickerFloatingActionMenu(
                 }
             }
         addNote.setOnClickListener(addNoteLabelListener)
+
+        // Add keyboard support for Add Note label
+        addNote.setOnKeyListener { _, keyCode, event ->
+            if (event.action == KeyEvent.ACTION_DOWN &&
+                (keyCode == KeyEvent.KEYCODE_ENTER || keyCode == KeyEvent.KEYCODE_DPAD_CENTER)
+            ) {
+                Timber.d("Add Note label: ENTER key pressed")
+                if (isFABOpen) {
+                    closeFloatingActionMenu(applyRiseAndShrinkAnimation = false)
+                    addNote()
+                }
+                return@setOnKeyListener true
+            }
+            false
+        }
     }
 
     /**
