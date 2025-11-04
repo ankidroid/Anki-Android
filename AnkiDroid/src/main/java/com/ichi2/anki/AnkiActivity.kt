@@ -102,9 +102,9 @@ import java.io.FileOutputStream
 import androidx.browser.customtabs.CustomTabsIntent.Builder as CustomTabsIntentBuilder
 
 @UiThread
-@KotlinCleanup("set activityName")
-open class AnkiActivity :
-    AppCompatActivity,
+open class AnkiActivity(
+    @LayoutRes contentLayoutId: Int? = null,
+) : AppCompatActivity(contentLayoutId ?: 0),
     ShortcutGroupProvider,
     AnkiActivityProvider {
     /**
@@ -117,8 +117,6 @@ open class AnkiActivity :
 
     var importColpkgListener: ImportColpkgListener? = null
 
-    /** The name of the parent class (example: 'Reviewer')  */
-    private val activityName: String
     val dialogHandler = DialogHandler(this)
     override val ankiActivity = this
 
@@ -133,16 +131,6 @@ open class AnkiActivity :
                 Timber.i("The file selection for the exported collection was cancelled")
             }
         }
-
-    constructor() : super() {
-        activityName = javaClass.simpleName
-    }
-
-    constructor(
-        @LayoutRes contentLayoutId: Int,
-    ) : super(contentLayoutId) {
-        activityName = javaClass.simpleName
-    }
 
     @Suppress("deprecation") // #9332: UI Visibility -> Insets
     override fun onCreate(savedInstanceState: Bundle?) {
