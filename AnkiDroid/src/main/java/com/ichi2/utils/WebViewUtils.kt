@@ -19,6 +19,7 @@ package com.ichi2.utils
 import android.content.Context
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
+import android.util.AndroidRuntimeException
 import android.webkit.WebView
 import androidx.annotation.MainThread
 import androidx.annotation.StringRes
@@ -56,6 +57,13 @@ fun checkWebviewVersion(activity: AnkiActivity) {
 fun getWebviewUserAgent(context: Context): String? {
     try {
         return WebView(context).settings.userAgentString
+    } catch (e: AndroidRuntimeException) {
+        // MissingWebViewPackageException is not public
+        if (e.cause.toString().contains("MissingWebViewPackageException")) {
+            Timber.w(e, "MissingWebViewPackageException")
+            return null // WebView not installed - don't log a crash report
+        }
+        CrashReportService.sendExceptionReport(e, "WebViewUtils", "some issue occurred while extracting webview user agent")
     } catch (e: Throwable) {
         CrashReportService.sendExceptionReport(e, "WebViewUtils", "some issue occurred while extracting webview user agent")
     }
