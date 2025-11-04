@@ -46,6 +46,7 @@ import com.ichi2.themes.Themes
 import com.ichi2.utils.dp
 import com.ichi2.utils.increaseHorizontalPaddingOfMenuIcons
 import com.mrudultora.colorpicker.ColorPickerPopUp
+import dev.androidbroadcast.vbpd.viewBinding
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -56,28 +57,16 @@ import kotlin.math.roundToInt
  * Fragment that displays a whiteboard and its controls.
  */
 class WhiteboardFragment :
-    Fragment(),
+    Fragment(R.layout.fragment_whiteboard),
     PopupMenu.OnMenuItemClickListener {
     private val viewModel: WhiteboardViewModel by viewModels {
         WhiteboardViewModel.factory(AnkiDroidApp.sharedPrefs())
     }
 
-    // binding pattern to handle onCreateView/onDestroyView
-    private var fragmentBinding: FragmentWhiteboardBinding? = null
-    val binding: FragmentWhiteboardBinding get() = fragmentBinding!!
+    val binding by viewBinding(FragmentWhiteboardBinding::bind)
 
     private var eraserPopup: PopupWindow? = null
     private var strokeWidthPopup: PopupWindow? = null
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ) = FragmentWhiteboardBinding
-        .inflate(inflater, container, false)
-        .apply {
-            fragmentBinding = this
-        }.root
 
     /**
      * Sets up the view, observers, and event listeners.
@@ -98,11 +87,6 @@ class WhiteboardFragment :
         binding.whiteboardView.onEraseGestureStart = viewModel::startPathEraseGesture
         binding.whiteboardView.onEraseGestureMove = viewModel::erasePathsAtPoint
         binding.whiteboardView.onEraseGestureEnd = viewModel::endPathEraseGesture
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        fragmentBinding = null
     }
 
     private fun setupUI() {
@@ -164,7 +148,7 @@ class WhiteboardFragment :
             viewModel.eraserDisplayWidth,
         ) { isActive, mode, width ->
             whiteboardView.isEraserActive = isActive
-            fragmentBinding?.eraserButton?.updateState(isActive, mode, width)
+            binding.eraserButton.updateState(isActive, mode, width)
             whiteboardView.eraserMode = mode
             if (!isActive) {
                 eraserPopup?.dismiss()
@@ -457,21 +441,19 @@ class WhiteboardFragment :
      * Updates the toolbar's constraints and orientation.
      */
     private fun updateLayoutForAlignment(alignment: ToolbarAlignment) {
-        val fragmentBinding = fragmentBinding ?: return
-
         val isVertical = alignment == ToolbarAlignment.LEFT || alignment == ToolbarAlignment.RIGHT
-        fragmentBinding.innerControlsLayout.orientation = if (isVertical) LinearLayout.VERTICAL else LinearLayout.HORIZONTAL
+        binding.innerControlsLayout.orientation = if (isVertical) LinearLayout.VERTICAL else LinearLayout.HORIZONTAL
 
         if (isVertical) {
-            fragmentBinding.brushScrollViewHorizontal.visibility = View.GONE
-            fragmentBinding.brushScrollViewVertical.visibility = View.VISIBLE
+            binding.brushScrollViewHorizontal.visibility = View.GONE
+            binding.brushScrollViewVertical.visibility = View.VISIBLE
         } else {
-            fragmentBinding.brushScrollViewHorizontal.visibility = View.VISIBLE
-            fragmentBinding.brushScrollViewVertical.visibility = View.GONE
+            binding.brushScrollViewHorizontal.visibility = View.VISIBLE
+            binding.brushScrollViewVertical.visibility = View.GONE
         }
 
         val dp = 1.dp.toPx(requireContext())
-        val dividerParams = fragmentBinding.controlsDivider.layoutParams as LinearLayout.LayoutParams
+        val dividerParams = binding.controlsDivider.layoutParams as LinearLayout.LayoutParams
         val dividerMargin = 4 * dp
         if (isVertical) {
             dividerParams.width = LinearLayout.LayoutParams.MATCH_PARENT
@@ -482,11 +464,11 @@ class WhiteboardFragment :
             dividerParams.height = LinearLayout.LayoutParams.MATCH_PARENT
             dividerParams.setMargins(dividerMargin, 0, dividerMargin, 0)
         }
-        fragmentBinding.controlsDivider.layoutParams = dividerParams
+        binding.controlsDivider.layoutParams = dividerParams
 
         val constraintSet = ConstraintSet()
-        constraintSet.clone(fragmentBinding.root)
-        val containerId = fragmentBinding.controlsContainer.id
+        constraintSet.clone(binding.root)
+        val containerId = binding.controlsContainer.id
         constraintSet.clear(containerId)
 
         when (alignment) {
@@ -519,7 +501,7 @@ class WhiteboardFragment :
             }
         }
 
-        constraintSet.applyTo(fragmentBinding.root)
+        constraintSet.applyTo(binding.root)
     }
 
     override fun onMenuItemClick(item: MenuItem): Boolean {
