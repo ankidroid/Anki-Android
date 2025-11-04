@@ -520,4 +520,9 @@ class WhiteboardFragment :
     }
 
     fun resetCanvas() = viewModel.reset()
+
+    /**
+     * @return whether the whiteboard is completely empty, including the undo and redo stacks.
+     */
+    fun isEmpty(): Boolean = !viewModel.canUndo.value && !viewModel.canRedo.value
 }

@@ -29,6 +29,7 @@ import androidx.fragment.app.Fragment
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.time.getTimestamp
 import com.ichi2.anki.databinding.DrawingFragmentBinding
+import com.ichi2.anki.dialogs.DiscardChangesDialog
 import com.ichi2.anki.ui.windows.reviewer.whiteboard.WhiteboardFragment
 import com.ichi2.anki.ui.windows.reviewer.whiteboard.WhiteboardView
 import com.ichi2.compat.CompatHelper
@@ -37,6 +38,8 @@ import dev.androidbroadcast.vbpd.viewBinding
 
 class DrawingFragment : Fragment(R.layout.drawing_fragment) {
     private val binding by viewBinding(DrawingFragmentBinding::bind)
+    private val whiteboardFragment
+        get() = childFragmentManager.findFragmentById(R.id.fragment_container) as? WhiteboardFragment
 
     override fun onViewCreated(
         view: View,
@@ -45,7 +48,15 @@ class DrawingFragment : Fragment(R.layout.drawing_fragment) {
         super.onViewCreated(view, savedInstanceState)
         binding.toolbar.apply {
             setNavigationOnClickListener {
-                requireActivity().onBackPressedDispatcher.onBackPressed()
+                // avoid showing the discard changes dialog only if the user hasn't drawn anything,
+                // even if is is erased or undone, since they may want to undo/redo something.
+                if (whiteboardFragment?.isEmpty() == true) {
+                    requireActivity().onBackPressedDispatcher.onBackPressed()
+                } else {
+                    DiscardChangesDialog.showDialog(requireContext()) {
+                        requireActivity().onBackPressedDispatcher.onBackPressed()
+                    }
+                }
             }
             setOnMenuItemClickListener { item ->
                 when (item.itemId) {
@@ -58,8 +69,7 @@ class DrawingFragment : Fragment(R.layout.drawing_fragment) {
     }
 
     private fun onSaveDrawing() {
-        val fragment = childFragmentManager.findFragmentById(R.id.fragment_container) as? WhiteboardFragment
-        val whiteboardView = fragment?.binding?.whiteboardView ?: return
+        val whiteboardView = whiteboardFragment?.binding?.whiteboardView ?: return
         val imagePath = saveWhiteboard(whiteboardView)
         val result =
             Intent().apply {
