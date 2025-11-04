@@ -18,6 +18,8 @@ package com.ichi2.anki
 import androidx.fragment.app.Fragment
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.dialogs.DeckSelectionDialog
+import com.ichi2.anki.libanki.Collection
+import com.ichi2.anki.libanki.Deck
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.model.SelectableDeck
 
@@ -32,6 +34,18 @@ import com.ichi2.anki.model.SelectableDeck
  * [DeckId] constant to represent "All decks" in screens that need it(ex. browser).
  */
 const val ALL_DECKS_ID = 0L
+
+/**
+ * Returns the current selected deck only if it's not filtered otherwise returns the 'Default' deck.
+ */
+fun Collection.selectedDeckIfNotFiltered(): Deck {
+    val selectedDeck = decks.getLegacy(decks.selected())
+    return if (selectedDeck == null || selectedDeck.isFiltered) {
+        decks.getDefault()
+    } else {
+        selectedDeck
+    }
+}
 
 /**
  * Displays a [DeckSelectionDialog] for the user to select a deck, with the list of displayed decks

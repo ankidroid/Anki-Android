@@ -693,6 +693,12 @@ class Decks(
     @NotInLibAnki
     fun isEmpty(did: DeckId): Boolean = cardCount(did) == 0
 
+    /**
+     * Retrieve the 'Default' deck which is always available.
+     */
+    @NotInLibAnki
+    fun getDefault(): Deck = getLegacy(Consts.DEFAULT_DECK_ID)!!
+
     companion object {
         // Parents/children
 
