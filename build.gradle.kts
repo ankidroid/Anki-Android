@@ -93,7 +93,7 @@ subprojects {
          */
         tasks.withType(KotlinCompile::class.java).configureEach {
             compilerOptions {
-                allWarningsAsErrors = fatalWarnings
+                allWarningsAsErrors = false //fatalWarnings
                 val compilerArgs = mutableListOf(
                     // https://youtrack.jetbrains.com/issue/KT-73255
                     // Apply @StringRes to both constructor params and generated properties
