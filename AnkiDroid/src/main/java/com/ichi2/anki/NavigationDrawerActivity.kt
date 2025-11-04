@@ -56,8 +56,9 @@ import com.ichi2.utils.HandlerUtils
 import com.ichi2.utils.IntentUtil
 import timber.log.Timber
 
-abstract class NavigationDrawerActivity :
-    AnkiActivity(),
+abstract class NavigationDrawerActivity(
+    @LayoutRes contentLayoutId: Int? = null,
+) : AnkiActivity(contentLayoutId),
     NavigationView.OnNavigationItemSelectedListener {
     /**
      * Navigation Drawer
