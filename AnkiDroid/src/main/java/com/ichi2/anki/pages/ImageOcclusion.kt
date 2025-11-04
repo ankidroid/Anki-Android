@@ -39,6 +39,7 @@ import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.anki.pages.viewmodel.ImageOcclusionArgs
 import com.ichi2.anki.pages.viewmodel.ImageOcclusionViewModel
 import com.ichi2.anki.requireAnkiActivity
+import com.ichi2.anki.selectedDeckIfNotFiltered
 import com.ichi2.anki.startDeckSelection
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -62,12 +63,11 @@ class ImageOcclusion :
             }
         }
 
-        deckNameView = view.findViewById<TextView>(R.id.deck_name)
+        deckNameView = view.findViewById(R.id.deck_name)
         deckNameView.setOnClickListener { startDeckSelection(all = false, filtered = false, skipEmptyDefault = false) }
 
         requireAnkiActivity().launchCatchingTask {
-            val selectedDeck = withCol { decks.getLegacy(decks.selected()) }
-            if (selectedDeck == null) return@launchCatchingTask
+            val selectedDeck = withCol { selectedDeckIfNotFiltered() }
             deckNameView.text = selectedDeck.name
         }
 
