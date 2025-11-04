@@ -34,7 +34,7 @@ if (project.rootProject.file("local.properties").exists()) {
 val fatalWarnings = localProperties["fatal_warnings"] != "false"
 
 // can't be obtained inside 'subprojects'
-val ktlintVersion: String? = libs.versions.ktlint.get()
+val ktlintVersion: String = libs.versions.ktlint.get()
 
 // Here we extract per-module "best practices" settings to a single top-level evaluation
 subprojects {
@@ -113,7 +113,7 @@ subprojects {
 }
 
 val jvmVersion = Jvm.current().javaVersion?.majorVersion.parseIntOrDefault(defaultValue = 0)
-val minSdk: String? = libs.versions.minSdk.get()
+val minSdk: String = libs.versions.minSdk.get()
 val jvmVersionLowerBound = 21
 val jvmVersionUpperBound = 25
 if (jvmVersion !in jvmVersionLowerBound..jvmVersionUpperBound) {
