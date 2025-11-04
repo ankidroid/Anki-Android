@@ -18,7 +18,9 @@ ktlint = '1.8.0'
 #
 # Old changelogs - See 'Table of Contents' in sidebar
 # https://developer.android.com/build/releases/past-releases
-androidGradlePlugin = "8.13.2"
+# Pinned to 9.0.1 until building androidTest in release mode circular dependency issue resolved
+# Upstream reference https://issuetracker.google.com/issues/491718901
+androidGradlePlugin = "9.0.1"
 # https://developer.android.com/jetpack/androidx/releases/activity
 androidxActivity = "1.12.4"
 # https://developer.android.com/jetpack/androidx/releases/annotation
@@ -117,7 +119,7 @@ slf4jTimber = "3.1"
 timber = "5.0.1"
 # https://github.com/Triple-T/gradle-play-publisher/releases
 # In the past, releases have been published before the changelog
-triplet = "3.13.0"
+triplet = "4.0.0"
 turbine = "1.2.1"
 
 [libraries]
@@ -163,7 +165,7 @@ java-semver = { module = "com.github.zafarkhaja:java-semver", version.ref = "jav
 jsoup = { module = "org.jsoup:jsoup", version.ref = "jsoup" }
 kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
-kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core" }
+kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 leakcanary-android = { module = "com.squareup.leakcanary:leakcanary-android", version.ref = "leakcanaryAndroid" }
 google-material = { module = "com.google.android.material:material", version.ref = "material" }
 nanohttpd = { module = "org.nanohttpd:nanohttpd", version.ref = "nanohttpd" }
