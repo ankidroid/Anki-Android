@@ -85,6 +85,12 @@ class DeckPickerTest : RobolectricTest() {
     fun before() {
         RuntimeEnvironment.setQualifiers(mQualifiers)
         setIntroductionSlidesShown(true)
+        getPreferences().edit {
+            putBoolean(IntroductionActivity.INTRODUCTION_SLIDES_SHOWN, true)
+        }
+
+        val shadowApp = Shadows.shadowOf(RuntimeEnvironment.getApplication())
+        shadowApp.grantPermissions(android.Manifest.permission.INTERNET)
     }
 
     @Test
