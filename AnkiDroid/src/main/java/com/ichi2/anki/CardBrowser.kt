@@ -362,9 +362,9 @@ open class CardBrowser :
             // initialize the lateinit variables
             // Load reference to action bar title
             actionBarTitle = findViewById(R.id.toolbar_title)
+            // new deck selection is only available when the new search view is not used
+            findViewById<LinearLayout>(R.id.toolbar_content).setOnClickListener { startDeckSelection(all = true, filtered = true) }
         }
-
-        findViewById<LinearLayout>(R.id.toolbar_content).setOnClickListener { startDeckSelection(all = true, filtered = true) }
 
         startLoadingCollection()
 
