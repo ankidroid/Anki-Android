@@ -101,7 +101,7 @@ object HanUnificationDetector {
         if (cjkCharacters.isNotEmpty()) {
             // Check if the HTML has language attributes to disambiguate
             val hasLangAttribute =
-                html.contains(Regex("""lang=["'](zh|ja|ko)""", RegexOption.IGNORE_CASE))
+                html.contains(Regex("""lang=["'](zh|ja|ko)[^"']*["']""", RegexOption.IGNORE_CASE))
 
             if (!hasLangAttribute) {
                 hasIssues = true
@@ -147,7 +147,7 @@ object HanUnificationDetector {
         }
 
         val hasLangAttribute =
-            html.contains(Regex("""lang=["'](zh|ja|ko)""", RegexOption.IGNORE_CASE))
+            html.contains(Regex("""lang=["'](zh|ja|ko)[^"']*["']""", RegexOption.IGNORE_CASE))
 
         return DetectionResult(
             hasCJKCharacters = cjkCharacters.isNotEmpty(),
