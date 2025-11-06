@@ -61,6 +61,46 @@ object HanUnificationDetector {
     }
 
     /**
+     * Extracts text content from HTML by removing tags.
+     * 
+     * Note: This is a simple implementation that works for the common case
+     * but doesn't handle HTML comments, CDATA sections, or script/style tags.
+     * This is acceptable for the current use case of detecting CJK characters
+     * in card content, which is typically simple HTML.
+     *
+     * @param html The HTML content to parse
+     * @return The text content without HTML tags
+     */
+    private fun extractTextFromHtml(html: String): String {
+        var inTag = false
+        val textContent = StringBuilder()
+
+        for (char in html) {
+            when (char) {
+                '<' -> inTag = true
+                '>' -> inTag = false
+                else -> if (!inTag) textContent.append(char)
+            }
+        }
+
+        return textContent.toString()
+    }
+
+    /**
+     * Checks if the HTML contains a language attribute for CJK languages.
+     * 
+     * Looks for lang attributes with values starting with zh, ja, or ko.
+     * Handles quoted attributes with various whitespace patterns.
+     *
+     * @param html The HTML content to check
+     * @return true if a CJK language attribute is found
+     */
+    private fun hasLangAttribute(html: String): Boolean {
+        // Pattern handles: lang="ja", lang='ja', lang = "ja", lang="zh-Hans", etc.
+        return html.contains(Regex("""lang\s*=\s*["']?(zh|ja|ko)[^"'\s>]*""", RegexOption.IGNORE_CASE))
+    }
+
+    /**
      * Detects potential Han Unification issues in HTML content.
      *
      * This method scans the HTML content for CJK characters that are not properly
@@ -75,47 +115,21 @@ object HanUnificationDetector {
         html: String,
         cardId: Long,
     ): Boolean {
-        var hasIssues = false
-        val cjkCharacters = mutableListOf<Char>()
+        val textContent = extractTextFromHtml(html)
+        val cjkCharacters = textContent.filter { isCJKCharacter(it) }
 
-        // Extract text content from HTML (simple approach - outside of tags)
-        // This is a basic implementation that looks for CJK characters in the content
-        var inTag = false
-        val textContent = StringBuilder()
-
-        for (char in html) {
-            when (char) {
-                '<' -> inTag = true
-                '>' -> inTag = false
-                else -> if (!inTag) textContent.append(char)
-            }
+        if (cjkCharacters.isNotEmpty() && !hasLangAttribute(html)) {
+            Timber.w(
+                "Han Unification issue detected in card %d: Found %d CJK characters without lang attribute. " +
+                    "Characters: %s. Consider adding lang=\"ja\", lang=\"zh\", or lang=\"ko\" to disambiguate.",
+                cardId,
+                cjkCharacters.length,
+                cjkCharacters.toSet().take(10).joinToString(""),
+            )
+            return true
         }
 
-        // Check for CJK characters in the text content
-        for (char in textContent) {
-            if (isCJKCharacter(char)) {
-                cjkCharacters.add(char)
-            }
-        }
-
-        if (cjkCharacters.isNotEmpty()) {
-            // Check if the HTML has language attributes to disambiguate
-            val hasLangAttribute =
-                html.contains(Regex("""lang=["'](zh|ja|ko)[^"']*["']""", RegexOption.IGNORE_CASE))
-
-            if (!hasLangAttribute) {
-                hasIssues = true
-                Timber.w(
-                    "Han Unification issue detected in card %d: Found %d CJK characters without lang attribute. " +
-                        "Characters: %s. Consider adding lang=\"ja\", lang=\"zh\", or lang=\"ko\" to disambiguate.",
-                    cardId,
-                    cjkCharacters.size,
-                    cjkCharacters.distinct().take(10).joinToString(""),
-                )
-            }
-        }
-
-        return hasIssues
+        return false
     }
 
     /**
@@ -125,33 +139,12 @@ object HanUnificationDetector {
      * @return A [DetectionResult] containing information about detected issues
      */
     fun analyze(html: String): DetectionResult {
-        val cjkCharacters = mutableSetOf<Char>()
-
-        // Extract text content from HTML
-        var inTag = false
-        val textContent = StringBuilder()
-
-        for (char in html) {
-            when (char) {
-                '<' -> inTag = true
-                '>' -> inTag = false
-                else -> if (!inTag) textContent.append(char)
-            }
-        }
-
-        // Collect CJK characters
-        for (char in textContent) {
-            if (isCJKCharacter(char)) {
-                cjkCharacters.add(char)
-            }
-        }
-
-        val hasLangAttribute =
-            html.contains(Regex("""lang=["'](zh|ja|ko)[^"']*["']""", RegexOption.IGNORE_CASE))
+        val textContent = extractTextFromHtml(html)
+        val cjkCharacters = textContent.filter { isCJKCharacter(it) }.toSet()
 
         return DetectionResult(
             hasCJKCharacters = cjkCharacters.isNotEmpty(),
-            hasLangAttribute = hasLangAttribute,
+            hasLangAttribute = hasLangAttribute(html),
             cjkCharacterCount = cjkCharacters.size,
             sampleCharacters = cjkCharacters.take(10).toList(),
         )
