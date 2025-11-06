@@ -512,14 +512,14 @@ open class CardBrowser :
                 Timber.d("load multiselect mode")
                 // show title and hide spinner
                 actionBarTitle?.visibility = View.VISIBLE
-                findViewById<TextView>(R.id.deck_name).isVisible = false
-                findViewById<TextView>(R.id.subtitle).isVisible = false
+                findViewById<TextView>(R.id.deck_name)?.isVisible = false
+                findViewById<TextView>(R.id.subtitle)?.isVisible = false
                 multiSelectOnBackPressedCallback.isEnabled = true
             } else {
                 Timber.d("end multiselect mode")
                 refreshSubtitle()
-                findViewById<TextView>(R.id.deck_name).isVisible = true
-                findViewById<TextView>(R.id.subtitle).isVisible = true
+                findViewById<TextView>(R.id.deck_name)?.isVisible = true
+                findViewById<TextView>(R.id.subtitle)?.isVisible = true
                 actionBarTitle?.visibility = View.GONE
                 multiSelectOnBackPressedCallback.isEnabled = false
             }
@@ -943,6 +943,8 @@ open class CardBrowser :
         }
         // set the number of selected rows (only in multiselect)
         actionBarTitle?.text = String.format(LanguageUtil.getLocaleCompat(resources), "%d", viewModel.selectedRowCount())
+        findViewById<TextView>(R.id.deck_name)?.isVisible = !viewModel.hasSelectedAnyRows() && !viewModel.isInMultiSelectMode
+        findViewById<TextView>(R.id.subtitle)?.isVisible = !viewModel.hasSelectedAnyRows() && !viewModel.isInMultiSelectMode
 
         actionBarMenu.findItem(R.id.action_flag).isVisible = viewModel.hasSelectedAnyRows()
         actionBarMenu.findItem(R.id.action_suspend_card).apply {
