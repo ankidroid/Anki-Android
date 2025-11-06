@@ -57,6 +57,15 @@ import kotlinx.coroutines.launch
 import org.intellij.lang.annotations.Language
 import timber.log.Timber
 
+/**
+ * Displays an overview of a deck (title, counts, description) and allows studying or modification
+ * of the deck (Unbury, Deck Options, Custom Study)
+ *
+ * Filtered decks may be emptied or rebuilt
+ *
+ * On a tablet, this is the primary screen to study a deck and appears inside [DeckPicker]
+ * On a phone, this is hosted inside [StudyOptionsActivity], opened via the the [DeckPicker] counts
+ */
 class StudyOptionsFragment :
     Fragment(),
     ChangeManager.Subscriber,
