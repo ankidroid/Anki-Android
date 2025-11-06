@@ -26,6 +26,7 @@ import com.ichi2.anki.libanki.template.MathJax
 import com.ichi2.anki.multimedia.expandSounds
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.reviewer.ReviewerCustomFonts
+import com.ichi2.anki.settings.Prefs
 import timber.log.Timber
 
 /**
@@ -38,16 +39,19 @@ class AndroidCardRenderContext(
     private val cardAppearance: CardAppearance,
     private val cardTemplate: CardTemplate,
     private val showAudioPlayButtons: Boolean,
+    private val context: Context,
 ) {
     /**
      * Renders Android-specific functionality to produce a [RenderedCard]
+     * 
+     * @return A [RenderedCard] and optionally a [HanUnificationIssue] if one was detected
      */
     @CheckResult
     fun renderCard(
         col: Collection,
         card: Card,
         side: SingleCardSide,
-    ): RenderedCard {
+    ): RenderedCardWithIssue {
         // obtain the libAnki-rendered card
         var content: String = if (side == SingleCardSide.FRONT) card.question(col) else card.answer(col)
         // IRI-encodes media: `foo bar` -> `foo%20bar`
@@ -61,11 +65,40 @@ class AndroidCardRenderContext(
         // fixes an Android bug where font-weight:600 does not display
         content = CardAppearance.fixBoldStyle(content)
 
-        // detect potential Han Unification rendering issues
-        HanUnificationDetector.detectIssues(content, card.id)
+        // detect and optionally fix Han Unification rendering issues
+        val detectionResult = HanUnificationDetector.analyze(content)
+        var issue: HanUnificationIssue? = null
+        
+        if (detectionResult.hasIssue) {
+            // Check if auto-fix is enabled
+            if (Prefs.hanUnificationAutoFix) {
+                val defaultLang = Prefs.hanUnificationDefaultLang
+                content = HanUnificationDetector.autoFix(content, defaultLang)
+                Timber.i("Auto-fixed Han Unification issue in card %d using lang=%s", card.id, defaultLang)
+            } else {
+                // Log warning and create issue info for user notification
+                Timber.w(
+                    "Han Unification issue detected in card %d: Found %d CJK characters without lang attribute. " +
+                        "Characters: %s. Consider adding lang=\"ja\", lang=\"zh\", or lang=\"ko\" to disambiguate.",
+                    card.id,
+                    detectionResult.cjkCharacterCount,
+                    detectionResult.sampleCharacters.joinToString(""),
+                )
+                
+                // Only create issue if warnings are not ignored
+                if (!Prefs.hanUnificationIgnoreWarnings) {
+                    issue = HanUnificationIssue(
+                        cardId = card.id,
+                        cjkCharacterCount = detectionResult.cjkCharacterCount,
+                        sampleCharacters = detectionResult.sampleCharacters,
+                    )
+                }
+            }
+        }
 
         // based on the content, load appropriate scripts such as MathJax, then render
-        return render(content, card.ord)
+        val renderedCard = render(content, card.ord)
+        return RenderedCardWithIssue(renderedCard, issue)
     }
 
     private fun render(
@@ -142,7 +175,25 @@ class AndroidCardRenderContext(
                 cardAppearance,
                 cardHtmlTemplate,
                 showAudioPlayButtons,
+                context,
             )
         }
     }
 }
+
+/**
+ * Result of card rendering that may include Han Unification issue information.
+ */
+data class RenderedCardWithIssue(
+    val renderedCard: RenderedCard,
+    val issue: HanUnificationIssue?,
+)
+
+/**
+ * Information about a detected Han Unification issue.
+ */
+data class HanUnificationIssue(
+    val cardId: Long,
+    val cjkCharacterCount: Int,
+    val sampleCharacters: List<Char>,
+)

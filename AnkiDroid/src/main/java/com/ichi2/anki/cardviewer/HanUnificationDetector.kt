@@ -162,6 +162,37 @@ object HanUnificationDetector {
     }
 
     /**
+     * Automatically fixes Han Unification issues by adding lang attributes to the HTML content.
+     * 
+     * This method wraps the content in a div with the specified language attribute if CJK characters
+     * are found without proper lang attributes.
+     *
+     * @param html The HTML content to fix
+     * @param lang The language code to use (e.g., "ja", "zh", "ko")
+     * @return The fixed HTML content with lang attribute added, or original content if no fix needed
+     */
+    fun autoFix(html: String, lang: String = "ja"): String {
+        val result = analyze(html)
+        
+        if (!result.hasIssue) {
+            return html
+        }
+
+        // Check if content is already wrapped in a div with id="qa"
+        // If so, add lang to that div; otherwise, wrap the entire content
+        return if (html.contains("""<div id="qa">""")) {
+            // Add lang attribute to existing qa div
+            html.replace(
+                """<div id="qa">""",
+                """<div id="qa" lang="$lang">"""
+            )
+        } else {
+            // Wrap content in a div with lang attribute
+            """<div lang="$lang">$html</div>"""
+        }
+    }
+
+    /**
      * Result of Han Unification detection analysis.
      *
      * @property hasCJKCharacters Whether CJK characters were found in the content

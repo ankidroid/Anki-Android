@@ -92,6 +92,7 @@ import com.ichi2.anki.backend.stripHTMLAndSpecialFields
 import com.ichi2.anki.cardviewer.AndroidCardRenderContext
 import com.ichi2.anki.cardviewer.AndroidCardRenderContext.Companion.createInstance
 import com.ichi2.anki.cardviewer.CardMediaPlayer
+import com.ichi2.anki.cardviewer.HanUnificationIssue
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.GestureProcessor
 import com.ichi2.anki.cardviewer.JavascriptEvaluator
@@ -1337,14 +1338,15 @@ abstract class AbstractFlashcardViewer :
         } else {
             answerField?.visibility = View.GONE
         }
-        val content = cardRenderContext!!.renderCard(getColUnsafe, currentCard!!, SingleCardSide.FRONT)
+        val contentWithIssue = cardRenderContext!!.renderCard(getColUnsafe, currentCard!!, SingleCardSide.FRONT)
         automaticAnswer.onDisplayQuestion()
         launchCatchingTask {
             if (!automaticAnswerShouldWaitForMedia()) {
                 automaticAnswer.scheduleAutomaticDisplayAnswer()
             }
         }
-        updateCard(content)
+        updateCard(contentWithIssue.renderedCard)
+        contentWithIssue.issue?.let { showHanUnificationDialog(it) }
         hideEaseButtons()
         // If Card-based TTS is enabled, we "automatic display" after the TTS has finished as we don't know the duration
         Timber.i(
@@ -1383,14 +1385,15 @@ abstract class AbstractFlashcardViewer :
             typeAnswer!!.input = answerField!!.text.toString()
         }
         isSelecting = false
-        val answerContent = cardRenderContext!!.renderCard(getColUnsafe, currentCard!!, SingleCardSide.BACK)
+        val answerContentWithIssue = cardRenderContext!!.renderCard(getColUnsafe, currentCard!!, SingleCardSide.BACK)
         automaticAnswer.onDisplayAnswer()
         launchCatchingTask {
             if (!automaticAnswerShouldWaitForMedia()) {
                 automaticAnswer.scheduleAutomaticDisplayQuestion()
             }
         }
-        updateCard(answerContent)
+        updateCard(answerContentWithIssue.renderedCard)
+        answerContentWithIssue.issue?.let { showHanUnificationDialog(it) }
         displayAnswerBottomBar()
     }
 
@@ -1453,6 +1456,26 @@ abstract class AbstractFlashcardViewer :
         cardContent = content.html
         fillFlashcard()
         playMedia(false) // Play media if appropriate
+    }
+
+    /**
+     * Shows a dialog to inform the user about a detected Han Unification issue.
+     */
+    private fun showHanUnificationDialog(issue: HanUnificationIssue) {
+        val message = resources.getString(
+            R.string.han_unification_dialog_message,
+            issue.cjkCharacterCount,
+            issue.sampleCharacters.take(5).joinToString(""),
+        )
+        
+        AlertDialog.Builder(this).show {
+            setTitle(R.string.han_unification_dialog_title)
+            setMessage(message)
+            setPositiveButton(R.string.dialog_ok) { _, _ -> }
+            setNeutralButton(R.string.help) { _, _ ->
+                openUrl(R.string.link_han_unification_help)
+            }
+        }
     }
 
     /**
@@ -1980,7 +2003,9 @@ abstract class AbstractFlashcardViewer :
             } else {
                 answerField?.visibility = View.GONE
             }
-            val content = cardRenderContext!!.renderCard(getColUnsafe, currentCard!!, SingleCardSide.FRONT)
+            val contentWithIssue = cardRenderContext!!.renderCard(getColUnsafe, currentCard!!, SingleCardSide.FRONT)
+            val content = contentWithIssue.renderedCard
+            contentWithIssue.issue?.let { showHanUnificationDialog(it) }
             automaticAnswer.onDisplayQuestion()
             updateCard(content)
             hideEaseButtons()

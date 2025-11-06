@@ -148,6 +148,7 @@
     <string name="link_set_due_date_help">https://docs.ankiweb.net/browsing.html#cards</string>
     <string name="link_full_storage_access">https://github.com/ankidroid/Anki-Android/wiki/Full-Storage-Access</string>
     <string name="link_help_forget_cards">https://docs.ankiweb.net/studying.html#editing-and-more</string>
+    <string name="link_han_unification_help">https://github.com/ankidroid/Anki-Android/wiki/Han-Unification</string>
     <string name="link_scheduler_upgrade_faq">https://faqs.ankiweb.net/the-anki-2.1-scheduler.html#updating-to-v2-from-v1</string>
 
     <string-array name="add_to_cur_values">

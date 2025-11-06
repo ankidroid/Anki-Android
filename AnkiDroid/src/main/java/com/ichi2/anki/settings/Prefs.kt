@@ -255,6 +255,23 @@ object Prefs {
     val toolbarPosition: ToolbarPosition
         get() = getEnum(R.string.reviewer_toolbar_position_key, ToolbarPosition.TOP)
 
+    // ************************************** Han Unification ************************************* //
+
+    /**
+     * Whether to ignore Han Unification warnings (don't show dialogs/notifications).
+     */
+    var hanUnificationIgnoreWarnings by booleanPref(R.string.han_unification_ignore_warnings_key, defaultValue = false)
+
+    /**
+     * Whether to automatically fix Han Unification issues by adding lang attributes.
+     */
+    var hanUnificationAutoFix by booleanPref(R.string.han_unification_auto_fix_key, defaultValue = false)
+
+    /**
+     * Default language code to use for auto-fix (ja, zh, or ko).
+     */
+    var hanUnificationDefaultLang by stringPref(R.string.han_unification_default_lang_key, defaultValue = "ja")
+
     // **************************************** Controls **************************************** //
     //region Controls
 

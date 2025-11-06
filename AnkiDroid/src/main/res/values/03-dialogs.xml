@@ -259,7 +259,11 @@ also changes the interval of the card"
     <string name="change_cloze_mode">Change cloze mode</string>
 
     <!-- Outdated WebView dialog -->
-    <string name="webview_update_message">The system WebView is outdated. Some features won’t work correctly. Please update it.\n\nInstalled version: %1$d\nMinimum required version: %2$d</string>
+    <string name="webview_update_message">The system WebView is outdated. Some features won't work correctly. Please update it.\n\nInstalled version: %1$d\nMinimum required version: %2$d</string>
+
+    <!-- Han Unification dialog -->
+    <string name="han_unification_dialog_title">Han Unification Rendering Issue</string>
+    <string name="han_unification_dialog_message">This card contains %1$d CJK character(s) (e.g., %2$s) that may render incorrectly without a language attribute.\n\nTo fix this, add lang=\"ja\", lang=\"zh\", or lang=\"ko\" to your card template HTML.</string>
 
     <string name="compress">Compress</string>
 

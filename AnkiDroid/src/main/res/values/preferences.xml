@@ -256,4 +256,9 @@
     <string name="reviewer_frame_style_key">reviewerFrameStyle</string>
     <string name="reviewer_toolbar_position_key">reviewerToolbarPosition</string>
 
+    <!-- Han Unification -->
+    <string name="han_unification_ignore_warnings_key">hanUnificationIgnoreWarnings</string>
+    <string name="han_unification_auto_fix_key">hanUnificationAutoFix</string>
+    <string name="han_unification_default_lang_key">hanUnificationDefaultLang</string>
+
 </resources>
