@@ -90,14 +90,19 @@ object HanUnificationDetector {
      * Checks if the HTML contains a language attribute for CJK languages.
      * 
      * Looks for lang attributes with values starting with zh, ja, or ko.
-     * Handles quoted attributes with various whitespace patterns.
+     * Handles both quoted and unquoted attributes with various whitespace patterns.
+     * Supports language variants like zh-Hans, ja-JP, etc.
      *
      * @param html The HTML content to check
      * @return true if a CJK language attribute is found
      */
     private fun hasLangAttribute(html: String): Boolean {
-        // Pattern handles: lang="ja", lang='ja', lang = "ja", lang="zh-Hans", etc.
-        return html.contains(Regex("""lang\s*=\s*["']?(zh|ja|ko)[^"'\s>]*""", RegexOption.IGNORE_CASE))
+        // Pattern handles both quoted and unquoted attributes:
+        // - Quoted: lang="ja", lang='zh-Hans', lang = "ko"
+        // - Unquoted: lang=ja, lang=zh-Hans-CN (must be followed by space, >, or end of string)
+        return html.contains(
+            Regex("""lang\s*=\s*(?:["'](?:zh|ja|ko)[^"']*["']|(?:zh|ja|ko)(?:-[a-zA-Z]+)*(?=\s|>|$))""", RegexOption.IGNORE_CASE),
+        )
     }
 
     /**
