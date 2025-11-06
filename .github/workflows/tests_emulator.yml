@@ -156,7 +156,10 @@ jobs:
         # Only generate a snapshot for saving if we are on main branch with a cache miss
         # Comment the if out to generate snapshots on branch for performance testing
         if: "${{ github.event.inputs.clearCaches != '' || (steps.avd-cache.outputs.cache-hit != 'true' && github.ref == 'refs/heads/main') }}"
-        uses: reactivecircus/android-emulator-runner@v2
+        # Temporarily using a direct commit from the PR we submitted that implements support
+        # for 16kb page emulators - should be visible on the v2 tag at some point
+        # when they get around to releasing it...
+        uses: reactivecircus/android-emulator-runner@66283c03190cd3f51c1e1d38ad4206ae99cb5afd
         with:
           api-level: ${{ matrix.api-level }}
           force-avd-creation: false
@@ -180,7 +183,10 @@ jobs:
         if: "${{ github.event.inputs.clearCaches != '' || (steps.avd-cache.outputs.cache-hit != 'true' && github.ref == 'refs/heads/main') }}"
         env:
           FIRST_BOOT_DELAY: ${{ matrix.first-boot-delay }}
-        uses: reactivecircus/android-emulator-runner@v2
+        # Temporarily using a direct commit from the PR we submitted that implements support
+        # for 16kb page emulators - should be visible on the v2 tag at some point
+        # when they get around to releasing it...
+        uses: reactivecircus/android-emulator-runner@66283c03190cd3f51c1e1d38ad4206ae99cb5afd
         with:
           api-level: ${{ matrix.api-level }}
           force-avd-creation: false
@@ -200,7 +206,10 @@ jobs:
             echo "First boot warmup completed."
 
       - name: Run Emulator Tests
-        uses: reactivecircus/android-emulator-runner@v2
+        # Temporarily using a direct commit from the PR we submitted that implements support
+        # for 16kb page emulators - should be visible on the v2 tag at some point
+        # when they get around to releasing it...
+        uses: reactivecircus/android-emulator-runner@66283c03190cd3f51c1e1d38ad4206ae99cb5afd
         timeout-minutes: 30
         with:
           api-level: ${{ matrix.api-level }}
