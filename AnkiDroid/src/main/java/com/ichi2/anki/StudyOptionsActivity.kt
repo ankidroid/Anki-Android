@@ -35,6 +35,9 @@ import com.ichi2.widget.WidgetStatus
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
+/**
+ * Hosts [StudyOptionsFragment] when non-fragmented
+ */
 class StudyOptionsActivity :
     AnkiActivity(R.layout.studyoptions),
     ChangeManager.Subscriber {
