@@ -61,6 +61,9 @@ class AndroidCardRenderContext(
         // fixes an Android bug where font-weight:600 does not display
         content = CardAppearance.fixBoldStyle(content)
 
+        // detect potential Han Unification rendering issues
+        HanUnificationDetector.detectIssues(content, card.id)
+
         // based on the content, load appropriate scripts such as MathJax, then render
         return render(content, card.ord)
     }
