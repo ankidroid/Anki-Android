@@ -64,9 +64,15 @@ object HanUnificationDetector {
      * Extracts text content from HTML by removing tags.
      * 
      * Note: This is a simple implementation that works for the common case
-     * but doesn't handle HTML comments, CDATA sections, or script/style tags.
-     * This is acceptable for the current use case of detecting CJK characters
-     * in card content, which is typically simple HTML.
+     * but has known limitations:
+     * - Doesn't handle HTML comments (`<!-- -->`), CDATA sections, or script/style tags
+     * - Doesn't decode HTML entities like `&lt;` or `&gt;`
+     * - Malformed HTML with unescaped `<` or `>` in text may cause incorrect parsing
+     * 
+     * These limitations are acceptable for the current use case of detecting CJK 
+     * characters in Anki card content, which is typically simple, well-formed HTML.
+     * The goal is to detect potential Han Unification issues, not to be a 
+     * production-grade HTML parser.
      *
      * @param html The HTML content to parse
      * @return The text content without HTML tags
