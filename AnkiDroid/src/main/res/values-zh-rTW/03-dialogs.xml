@@ -239,7 +239,7 @@
     <string name="open_note_editor">開啓筆記編輯器</string>
     <string name="change_cloze_mode">變更詞彙練習模式</string>
     <!-- Outdated WebView dialog -->
-    <string name="webview_update_message">系統 WebView 已經過時。某些功能無法正常運作。請更新。\n\n安裝版本：%1$d%1$d最低要求版本：%2$d</string>
+    <string name="webview_update_message">系統 WebView 已經過時。某些功能無法正常運作。請更新。\n\n安裝版本：%1$d\n最低要求版本：%2$d</string>
     <string name="compress">壓縮</string>
     <!-- Tts playback error dialog -->
     <string name="tts_error_dialog_title">不支援的語言</string>

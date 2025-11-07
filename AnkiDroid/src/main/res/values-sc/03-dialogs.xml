@@ -261,7 +261,7 @@
     <string name="open_note_editor">Aberi s\'editore de notas</string>
     <string name="change_cloze_mode">Càmbia sa modalidade de omissione de paràulas</string>
     <!-- Outdated WebView dialog -->
-    <string name="webview_update_message">Su sistema WebView no est atualizadu. Unas cantas funtzionalidades no ant a funtzionare comente si tocat. Pro praghere atualiza·lu.\n\Versione installada: %1$d\nVersione mìnima netzessària: %2$d</string>
+    <string name="webview_update_message">Su sistema WebView no est atualizadu. Unas cantas funtzionalidades no ant a funtzionare comente si tocat. Pro praghere atualiza·lu.\n\nVersione installada: %1$d\nVersione mìnima netzessària: %2$d</string>
     <string name="compress">Cumprime</string>
     <!-- Tts playback error dialog -->
     <string name="tts_error_dialog_title">Limba non suportada</string>

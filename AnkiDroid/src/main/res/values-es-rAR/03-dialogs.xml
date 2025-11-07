@@ -247,7 +247,7 @@
     <string name="open_note_editor">Abrir editor de notas</string>
     <string name="change_cloze_mode">Cambiar modo de cloze</string>
     <!-- Outdated WebView dialog -->
-    <string name="webview_update_message">El sistema WebView está obsoleto. Algunas funciones no funcionarán correctamente. Por favor, actualízalo.\nnVersión instalada: %1$d\nVersión mínima requerida: %2$d</string>
+    <string name="webview_update_message">El sistema WebView está obsoleto. Algunas funciones no funcionarán correctamente. Por favor, actualízalo.\n\nVersión instalada: %1$d\nVersión mínima requerida: %2$d</string>
     <string name="compress">Comprimir</string>
     <!-- Tts playback error dialog -->
     <string name="tts_error_dialog_title">Este idioma no está disponible.</string>
