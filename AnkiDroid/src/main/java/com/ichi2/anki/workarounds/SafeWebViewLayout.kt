@@ -23,6 +23,10 @@ import android.webkit.WebChromeClient
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.widget.FrameLayout
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.findFragment
+import com.ichi2.anki.BuildConfig
+import timber.log.Timber
 
 class SafeWebViewLayout :
     FrameLayout,
@@ -102,7 +106,42 @@ class SafeWebViewLayout :
         webView.destroy()
 
         this.webView = createWebView()
-        addView(webView, webViewLayoutParams)
+        addView(this.webView, webViewLayoutParams)
+
+        val fragment = findFragment<Fragment>()
+        (fragment as? OnWebViewRecreatedListener)?.onWebViewRecreated(this.webView)
+    }
+
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+
+        val fragment =
+            try {
+                findFragment<Fragment>()
+            } catch (e: IllegalStateException) {
+                // findFragment throws if the View is not attached to a Fragment.
+                // This can happen in scenarios like Android Studio previews
+                // or if the view is added directly to an Activity.
+                if (BuildConfig.DEBUG && !isInEditMode) {
+                    throw IllegalStateException(
+                        "SafeWebViewLayout must be used within a Fragment",
+                        e,
+                    )
+                } else {
+                    Timber.w(e, "SafeWebViewLayout not attached to a Fragment")
+                }
+                return
+            }
+
+        if (fragment !is OnWebViewRecreatedListener) {
+            if (BuildConfig.DEBUG && !isInEditMode) {
+                throw IllegalStateException(
+                    "Fragment '${fragment::class.simpleName}' must implement OnWebViewRecreatedListener",
+                )
+            } else {
+                Timber.w("Fragment does not implement OnWebViewRecreatedListener. WebView recreation may not be handled")
+            }
+        }
     }
 
     companion object {
@@ -112,4 +151,8 @@ class SafeWebViewLayout :
                 LayoutParams.MATCH_PARENT,
             )
     }
+}
+
+fun interface OnWebViewRecreatedListener {
+    fun onWebViewRecreated(webView: WebView)
 }

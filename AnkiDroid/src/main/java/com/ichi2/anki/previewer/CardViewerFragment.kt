@@ -42,6 +42,7 @@ import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.ext.collectIn
 import com.ichi2.anki.utils.ext.packageManager
 import com.ichi2.anki.utils.openUrl
+import com.ichi2.anki.workarounds.OnWebViewRecreatedListener
 import com.ichi2.anki.workarounds.SafeWebViewClient
 import com.ichi2.anki.workarounds.SafeWebViewLayout
 import com.ichi2.compat.CompatHelper.Companion.resolveActivityCompat
@@ -53,7 +54,8 @@ import timber.log.Timber
 
 abstract class CardViewerFragment(
     @LayoutRes layout: Int,
-) : Fragment(layout) {
+) : Fragment(layout),
+    OnWebViewRecreatedListener {
     abstract val viewModel: CardViewerViewModel
     protected abstract val webViewLayout: SafeWebViewLayout
 
@@ -64,6 +66,9 @@ abstract class CardViewerFragment(
     ) {
         setupWebView(savedInstanceState)
         setupErrorListeners()
+        viewModel.eval.collectIn(lifecycleScope) { eval ->
+            webViewLayout.evaluateJavascript(eval)
+        }
     }
 
     override fun onStart() {
@@ -113,9 +118,6 @@ abstract class CardViewerFragment(
                 null,
             )
         }
-        viewModel.eval.collectIn(lifecycleScope) { eval ->
-            webViewLayout.evaluateJavascript(eval)
-        }
     }
 
     private fun setupErrorListeners() {
@@ -140,6 +142,10 @@ abstract class CardViewerFragment(
 
     protected open fun onCreateWebViewClient(savedInstanceState: Bundle?): CardViewerWebViewClient =
         CardViewerWebViewClient(savedInstanceState)
+
+    override fun onWebViewRecreated(webView: WebView) {
+        setupWebView(null)
+    }
 
     open inner class CardViewerWebViewClient(
         val savedInstanceState: Bundle?,

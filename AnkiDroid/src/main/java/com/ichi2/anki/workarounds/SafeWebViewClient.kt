@@ -22,7 +22,7 @@ import android.webkit.WebViewClient
 import androidx.annotation.RequiresApi
 import timber.log.Timber
 
-interface OnRenderProcessGoneListener {
+fun interface OnRenderProcessGoneListener {
     fun onRenderProcessGone(webView: WebView)
 }
 
