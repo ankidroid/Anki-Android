@@ -20,10 +20,11 @@ import android.webkit.ValueCallback
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
-import android.webkit.WebViewClient
 import androidx.core.view.isVisible
 import com.google.android.material.color.MaterialColors
 import com.ichi2.anki.OnPageFinishedCallback
+import com.ichi2.anki.workarounds.SafeWebViewClient
+import com.ichi2.anki.workarounds.SafeWebViewLayout
 import com.ichi2.utils.AssetHelper.guessMimeType
 import com.ichi2.utils.toRGBHex
 import timber.log.Timber
@@ -33,7 +34,7 @@ import java.io.IOException
 /**
  * Base WebViewClient to be used on [PageFragment]
  */
-open class PageWebViewClient : WebViewClient() {
+open class PageWebViewClient : SafeWebViewClient() {
     val onPageFinishedCallbacks: MutableList<OnPageFinishedCallback> = mutableListOf()
 
     override fun shouldInterceptRequest(
@@ -93,6 +94,7 @@ open class PageWebViewClient : WebViewClient() {
     open fun onShowWebView(webView: WebView) {
         Timber.v("Displaying WebView")
         webView.isVisible = true
+        (webView.parent as? SafeWebViewLayout)?.isVisible = true
     }
 
     override fun onPageFinished(

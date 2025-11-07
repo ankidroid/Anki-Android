@@ -75,7 +75,7 @@ class ImageOcclusion :
         view.findViewById<MaterialToolbar>(R.id.toolbar).setOnMenuItemClickListener {
             if (it.itemId == R.id.action_save) {
                 Timber.i("save item selected")
-                webView.evaluateJavascript("anki.imageOcclusion.save()") {
+                webViewLayout.evaluateJavascript("anki.imageOcclusion.save()") {
                     // reset to the previous deck that the backend "saw" as selected, this
                     // avoids other screens unexpectedly having their working decks modified(
                     // most important being the Reviewer where the user would find itself

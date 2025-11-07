@@ -35,11 +35,10 @@
         </com.google.android.material.appbar.MaterialToolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <com.ichi2.anki.workarounds.NestedScrollingWebView
-        android:id="@+id/webview"
+    <com.ichi2.anki.workarounds.NestedScrollingSafeWebViewLayout
+        android:id="@+id/webview_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:visibility="invisible"/>
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

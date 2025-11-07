@@ -20,13 +20,14 @@ import android.os.Bundle
 import android.view.View
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
-import android.webkit.WebViewClient
 import androidx.annotation.CallSuper
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.google.android.material.appbar.MaterialToolbar
 import com.ichi2.anki.R
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.workarounds.SafeWebViewClient
+import com.ichi2.anki.workarounds.SafeWebViewLayout
 import timber.log.Timber
 
 /**
@@ -48,7 +49,7 @@ import timber.log.Timber
  */
 @NeedsTest("pressing 'back' on this screen closes it")
 class RemoveAccountFragment : Fragment(R.layout.page_fragment) {
-    private lateinit var webView: WebView
+    private lateinit var webViewLayout: SafeWebViewLayout
 
     /**
      * A count of the redirects performed, to ensure we don't get into an infinite loop
@@ -70,7 +71,7 @@ class RemoveAccountFragment : Fragment(R.layout.page_fragment) {
         }
 
         Timber.i("redirecting to 'remove account'")
-        webView.loadUrl(getString(R.string.remove_account_url))
+        webViewLayout.loadUrl(getString(R.string.remove_account_url))
         return true
     }
 
@@ -79,8 +80,8 @@ class RemoveAccountFragment : Fragment(R.layout.page_fragment) {
         view: View,
         savedInstanceState: Bundle?,
     ) {
-        webView =
-            view.findViewById<WebView>(R.id.webview).apply {
+        webViewLayout =
+            view.findViewById<SafeWebViewLayout>(R.id.webview_layout).apply {
                 isVisible = true
                 with(settings) {
                     javaScriptEnabled = true
@@ -88,8 +89,8 @@ class RemoveAccountFragment : Fragment(R.layout.page_fragment) {
                     builtInZoomControls = true
                     setSupportZoom(true)
                 }
-                webViewClient =
-                    object : WebViewClient() {
+                val webViewClient =
+                    object : SafeWebViewClient() {
                         override fun shouldOverrideUrlLoading(
                             view: WebView?,
                             request: WebResourceRequest?,
@@ -119,12 +120,13 @@ class RemoveAccountFragment : Fragment(R.layout.page_fragment) {
                             maybeRedirectToRemoveAccount(url)
                         }
                     }
+                setWebViewClient(webViewClient)
             }
 
         // BUG: custom sync server doesn't use this URL
         val url = getString(R.string.remove_account_url)
         Timber.i("Loading '$url'")
-        webView.loadUrl(url)
+        webViewLayout.loadUrl(url)
 
         view.findViewById<MaterialToolbar?>(R.id.toolbar)?.apply {
             title = getString(R.string.remove_account)

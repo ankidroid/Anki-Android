@@ -57,7 +57,7 @@ class DeckOptions : PageFragment() {
         object : OnBackPressedCallback(false) {
             override fun handleOnBackPressed() {
                 Timber.v("webView: navigating back")
-                webView.goBack()
+                webViewLayout.goBack()
             }
         }
 
@@ -71,7 +71,7 @@ class DeckOptions : PageFragment() {
             override fun handleOnBackPressed() {
                 Timber.v("DeckOptions: requesting the webview to handle the user close request.")
                 if (webViewIsReady) {
-                    webView.evaluateJavascript("anki.deckOptionsPendingChanges()") {
+                    webViewLayout.evaluateJavascript("anki.deckOptionsPendingChanges()") {
                         // Callback is handled in the WebView:
                         //  * A 'discard changes' dialog may be shown, using confirm()
                         //  * if no changes, or changes discarded, `deckOptionsRequireClose` is called
@@ -115,7 +115,7 @@ class DeckOptions : PageFragment() {
             override fun handleOnBackPressed() {
                 Timber.i("back button: closing displayed modal")
                 try {
-                    webView.evaluateJavascript(
+                    webViewLayout.evaluateJavascript(
                         """
                         document.getElementsByClassName("modal show")[0]
                         .getElementsByClassName("btn-close")[0].click()
@@ -160,18 +160,18 @@ class DeckOptions : PageFragment() {
         super.onViewCreated(view, savedInstanceState)
     }
 
-    override fun onWebViewCreated(webView: WebView) {
+    override fun onWebViewCreated() {
         // addJavascriptInterface needs to happen before loadUrl
-        webView.addJavascriptInterface(ModalJavaScriptInterfaceListener(), "ankidroid")
+        webViewLayout.addJavascriptInterface(ModalJavaScriptInterfaceListener(), "ankidroid")
         Timber.d("Added JS Interface: 'ankidroid")
     }
 
     @NeedsTest("going back on a manual page takes priority over closing a modal")
     override fun onCreateWebViewClient(savedInstanceState: Bundle?): PageWebViewClient {
-        requireActivity().onBackPressedDispatcher.addCallback(this, onBackFromDeckOptions)
-        requireActivity().onBackPressedDispatcher.addCallback(this, onBackFromModal)
+        activity?.onBackPressedDispatcher?.addCallback(this, onBackFromDeckOptions)
+        activity?.onBackPressedDispatcher?.addCallback(this, onBackFromModal)
         // going back on a manual page takes priority over closing a modal
-        requireActivity().onBackPressedDispatcher.addCallback(this, onBackFromManual)
+        activity?.onBackPressedDispatcher?.addCallback(this, onBackFromManual)
 
         return object : PageWebViewClient() {
             private val ankiManualHostRegex = Regex("^docs\\.ankiweb\\.net\$")
@@ -228,14 +228,14 @@ class DeckOptions : PageFragment() {
         val openJs = getListenerJs("shown.bs.modal", "open")
         val closeJs = getListenerJs("hidden.bs.modal", "close")
 
-        webView.evaluateJavascript(openJs, {})
-        webView.evaluateJavascript(closeJs, {})
+        webViewLayout.evaluateJavascript(openJs, {})
+        webViewLayout.evaluateJavascript(closeJs, {})
     }
 
     fun onWebViewReady() {
         Timber.d("WebView ready to receive input")
         webViewIsReady = true
-        webView.isVisible = true
+        webViewLayout.isVisible = true
         pageLoadingIndicator.isVisible = false
     }
 
