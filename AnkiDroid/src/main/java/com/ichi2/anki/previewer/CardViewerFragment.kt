@@ -161,9 +161,12 @@ abstract class CardViewerFragment(
         override fun shouldOverrideUrlLoading(
             view: WebView,
             request: WebResourceRequest,
-        ): Boolean = handleUrl(request.url)
+        ): Boolean = handleUrl(view, request.url)
 
-        protected open fun handleUrl(url: Uri): Boolean {
+        protected open fun handleUrl(
+            webView: WebView,
+            url: Uri,
+        ): Boolean {
             when (url.scheme) {
                 "playsound" -> viewModel.playSoundFromUrl(url.toString())
                 "videoended" -> viewModel.onVideoFinished()

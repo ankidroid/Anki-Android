@@ -728,7 +728,10 @@ class ReviewerFragment :
             }
         }
 
-        override fun handleUrl(url: Uri): Boolean {
+        override fun handleUrl(
+            webView: WebView,
+            url: Uri,
+        ): Boolean {
             return when (url.scheme) {
                 "gesture" -> {
                     if (isScrolling) return true
@@ -747,7 +750,7 @@ class ReviewerFragment :
                     }
                     true
                 }
-                else -> super.handleUrl(url)
+                else -> super.handleUrl(webView, url)
             }
         }
 
