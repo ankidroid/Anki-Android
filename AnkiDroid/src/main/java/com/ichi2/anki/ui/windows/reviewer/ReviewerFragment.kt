@@ -30,7 +30,6 @@ import android.view.ViewGroup.MarginLayoutParams
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.webkit.WebView
-import android.webkit.WebViewClient
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import androidx.appcompat.app.AlertDialog
@@ -96,6 +95,7 @@ import com.ichi2.anki.utils.ext.sharedPrefs
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.utils.ext.window
 import com.ichi2.anki.utils.isWindowCompact
+import com.ichi2.anki.workarounds.SafeWebViewLayout
 import com.ichi2.themes.Themes
 import com.ichi2.utils.dp
 import com.ichi2.utils.show
@@ -118,7 +118,7 @@ class ReviewerFragment :
     ShakeDetector.Listener {
     override val viewModel: ReviewerViewModel by viewModels()
 
-    override val webView: WebView get() = requireView().findViewById(R.id.webview)
+    override val webViewLayout: SafeWebViewLayout get() = requireView().findViewById(R.id.webview_layout)
     private val timer: AnswerTimer? get() = view?.findViewById(R.id.timer)
     private lateinit var bindingMap: BindingMap<ReviewerBinding, ViewerAction>
     private var shakeDetector: ShakeDetector? = null
@@ -203,7 +203,7 @@ class ReviewerFragment :
         }
 
         viewModel.statesMutationEvalFlow.collectIn(lifecycleScope) { eval ->
-            webView.evaluateJavascript(eval) {
+            webViewLayout.evaluateJavascript(eval) {
                 viewModel.onStateMutationCallback()
             }
         }
@@ -272,8 +272,8 @@ class ReviewerFragment :
                     }
 
                     if (isHtmlTypeAnswerEnabled) {
-                        webView.requestFocus()
-                        webView.evaluateJavascript("document.getElementById('typeans').focus();", null)
+                        webViewLayout.focusOnWebView()
+                        webViewLayout.evaluateJavascript("document.getElementById('typeans').focus();", null)
                         return@collect
                     }
 
@@ -301,7 +301,7 @@ class ReviewerFragment :
             .collectIn(lifecycleScope) { request ->
                 if (isHtmlTypeAnswerEnabled) {
                     val script = """document.getElementById("typeans").value;"""
-                    webView.evaluateJavascript(script) { callback ->
+                    webViewLayout.evaluateJavascript(script) { callback ->
                         // the retuned string comes with surrounding `"`, so remove it once
                         val typedAnswer = callback.removeSurrounding("\"")
                         request.complete(typedAnswer)
@@ -323,8 +323,8 @@ class ReviewerFragment :
         }
 
     private fun resetZoom() {
-        webView.settings.loadWithOverviewMode = false
-        webView.settings.loadWithOverviewMode = true
+        webViewLayout.settings.loadWithOverviewMode = false
+        webViewLayout.settings.loadWithOverviewMode = true
     }
 
     override fun dispatchKeyEvent(event: KeyEvent): Boolean {
@@ -660,11 +660,11 @@ class ReviewerFragment :
         }
 
         viewModel.pageUpFlow.flowWithLifecycle(lifecycle).collectIn(lifecycleScope) {
-            webView.pageUp(false)
+            webViewLayout.pageUp()
         }
 
         viewModel.pageDownFlow.flowWithLifecycle(lifecycle).collectIn(lifecycleScope) {
-            webView.pageDown(false)
+            webViewLayout.pageDown()
         }
 
         val repository = StudyScreenRepository(sharedPrefs())
@@ -697,16 +697,12 @@ class ReviewerFragment :
         stateFilter: CardStateFilter,
     ) = viewModel.onEditedTags(selectedTags)
 
-    override fun onCreateWebViewClient(savedInstanceState: Bundle?): WebViewClient = ReviewerWebViewClient(savedInstanceState)
+    override fun onCreateWebViewClient(savedInstanceState: Bundle?): CardViewerWebViewClient = ReviewerWebViewClient(savedInstanceState)
 
     private inner class ReviewerWebViewClient(
         savedInstanceState: Bundle?,
     ) : CardViewerWebViewClient(savedInstanceState) {
-        @Suppress("DEPRECATION") // the deprecation suggests using `onScaleChanged` to avoid
-        // race conditions when the scale is being changed. The method is already being used below
-        // for that matter. For only getting the initial scale, it's safe to use the property.
-        // Robolectric crashes with 'java.lang.Integer cannot be cast to class java.lang.Float'
-        private var scale: Float = if (!isRobolectric) webView.scale else 1F
+        private var scale: Float = if (!isRobolectric) webViewLayout.scale else 1F
         private var isScrolling: Boolean = false
         private var isScrollingJob: Job? = null
         private val gestureParser by lazy {
@@ -717,7 +713,7 @@ class ReviewerFragment :
         }
 
         init {
-            webView.setOnScrollChangeListener { _, _, _, _, _ ->
+            webViewLayout.setOnScrollChangeListener { _, _, _, _, _ ->
                 isScrolling = true
                 isScrollingJob?.cancel()
                 isScrollingJob =
