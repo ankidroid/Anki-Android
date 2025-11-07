@@ -19,13 +19,11 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import android.webkit.CookieManager
 import android.webkit.WebChromeClient
 import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
-import android.webkit.WebViewClient
 import android.widget.FrameLayout
 import androidx.annotation.CallSuper
 import androidx.annotation.LayoutRes
@@ -44,6 +42,8 @@ import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.ext.collectIn
 import com.ichi2.anki.utils.ext.packageManager
 import com.ichi2.anki.utils.openUrl
+import com.ichi2.anki.workarounds.SafeWebViewClient
+import com.ichi2.anki.workarounds.SafeWebViewLayout
 import com.ichi2.compat.CompatHelper.Companion.resolveActivityCompat
 import com.ichi2.themes.Themes
 import com.ichi2.utils.show
@@ -55,7 +55,7 @@ abstract class CardViewerFragment(
     @LayoutRes layout: Int,
 ) : Fragment(layout) {
     abstract val viewModel: CardViewerViewModel
-    protected abstract val webView: WebView
+    protected abstract val webViewLayout: SafeWebViewLayout
 
     @CallSuper
     override fun onViewCreated(
@@ -80,7 +80,7 @@ abstract class CardViewerFragment(
 
     override fun onDestroyView() {
         super.onDestroyView()
-        webView.destroy() // stops <audio> playbacks
+        webViewLayout.destroy() // stops <audio> playbacks
     }
 
     protected open fun onLoadInitialHtml(): String =
@@ -90,11 +90,11 @@ abstract class CardViewerFragment(
         )
 
     private fun setupWebView(savedInstanceState: Bundle?) {
-        CookieManager.getInstance().setAcceptThirdPartyCookies(webView, true)
-        with(webView) {
-            webViewClient = onCreateWebViewClient(savedInstanceState)
-            webChromeClient = onCreateWebChromeClient()
-            scrollBarStyle = View.SCROLLBARS_OUTSIDE_OVERLAY
+        with(webViewLayout) {
+            setWebViewClient(onCreateWebViewClient(savedInstanceState))
+            setWebChromeClient(onCreateWebChromeClient())
+            scrollBars = View.SCROLLBARS_OUTSIDE_OVERLAY
+            setAcceptThirdPartyCookies(true)
             with(settings) {
                 javaScriptEnabled = true
                 loadWithOverviewMode = true
@@ -105,7 +105,6 @@ abstract class CardViewerFragment(
                 // allow videos to autoplay via our JavaScript eval
                 mediaPlaybackRequiresUserGesture = false
             }
-
             loadDataWithBaseURL(
                 viewModel.baseUrl(),
                 onLoadInitialHtml(),
@@ -115,7 +114,7 @@ abstract class CardViewerFragment(
             )
         }
         viewModel.eval.collectIn(lifecycleScope) { eval ->
-            webView.evaluateJavascript(eval, null)
+            webViewLayout.evaluateJavascript(eval)
         }
     }
 
@@ -139,11 +138,12 @@ abstract class CardViewerFragment(
             .launchIn(lifecycleScope)
     }
 
-    protected open fun onCreateWebViewClient(savedInstanceState: Bundle?): WebViewClient = CardViewerWebViewClient(savedInstanceState)
+    protected open fun onCreateWebViewClient(savedInstanceState: Bundle?): CardViewerWebViewClient =
+        CardViewerWebViewClient(savedInstanceState)
 
     open inner class CardViewerWebViewClient(
         val savedInstanceState: Bundle?,
-    ) : WebViewClient() {
+    ) : SafeWebViewClient() {
         private val resourceHandler = ViewerResourceHandler(requireContext())
 
         override fun shouldInterceptRequest(

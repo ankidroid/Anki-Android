@@ -43,11 +43,10 @@
             style="@style/CardView.ViewerStyle"
             >
 
-            <WebView
-                android:id="@+id/webview"
+            <com.ichi2.anki.workarounds.SafeWebViewLayout
+                android:id="@+id/webview_layout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                />
+                android:layout_height="match_parent" />
 
         </com.google.android.material.card.MaterialCardView>
 
