@@ -28,7 +28,7 @@ import androidx.fragment.app.findFragment
 import com.ichi2.anki.BuildConfig
 import timber.log.Timber
 
-class SafeWebViewLayout :
+open class SafeWebViewLayout :
     FrameLayout,
     OnRenderProcessGoneListener {
     constructor(context: Context) : this(context, null)
@@ -43,7 +43,7 @@ class SafeWebViewLayout :
             field = value
         }
 
-    private fun createWebView() = WebView(context)
+    protected open fun createWebView() = WebView(context)
 
     init {
         addView(webView, webViewLayoutParams)
@@ -98,6 +98,8 @@ class SafeWebViewLayout :
     fun focusOnWebView() = webView.requestFocus()
 
     fun destroy() = webView.destroy()
+
+    fun createPrintDocumentAdapter(documentName: String) = webView.createPrintDocumentAdapter(documentName)
 
     override fun setOnScrollChangeListener(l: OnScrollChangeListener?) = webView.setOnScrollChangeListener(l)
 

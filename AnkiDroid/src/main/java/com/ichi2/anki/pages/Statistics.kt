@@ -46,7 +46,6 @@ class Statistics :
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        webView.isNestedScrollingEnabled = true
 
         binding.deckName.setOnClickListener { startDeckSelection(all = false, filtered = false) }
         binding.appBar
@@ -79,7 +78,7 @@ class Statistics :
         val printManager = getSystemService(requireContext(), PrintManager::class.java)
         val currentDateTime = getTimestamp(TimeManager.time)
         val jobName = "${getString(R.string.app_name)}-stats-$currentDateTime"
-        val printAdapter = webView.createPrintDocumentAdapter(jobName)
+        val printAdapter = webViewLayout.createPrintDocumentAdapter(jobName)
         printManager?.print(
             jobName,
             printAdapter,
@@ -114,7 +113,7 @@ class Statistics :
             textBox.dispatchEvent(new Event("input", { bubbles: true }));
             textBox.dispatchEvent(new Event("change"));
             """.trimIndent()
-        webView.evaluateJavascript(javascriptCode, null)
+        webViewLayout.evaluateJavascript(javascriptCode, null)
     }
 
     companion object {
