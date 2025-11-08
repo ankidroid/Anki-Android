@@ -169,6 +169,7 @@ import com.ichi2.anki.ui.animations.fadeOut
 import com.ichi2.anki.ui.windows.permissions.PermissionsActivity
 import com.ichi2.anki.utils.Destination
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
+import com.ichi2.anki.utils.ext.getSizeOfBitmapFromCollection
 import com.ichi2.anki.utils.ext.setFragmentResultListener
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.widgets.DeckAdapter
@@ -1084,8 +1085,14 @@ open class DeckPicker :
         // TODO: Temporary fix to stop a crash on startup [15450], it can be removed either:
         // * by moving this check to an upgrade path
         // * once enough time has passed
-        val size = BackgroundImage.getBackgroundImageDimensions(this)
-        if (size.width * size.height * BITMAP_BYTES_PER_PIXEL > BackgroundImage.MAX_BITMAP_SIZE) {
+        // null shouldn't happen as we check for the file being present above this call
+        val (bitmapWidth, bitmapHeight) = getSizeOfBitmapFromCollection(BackgroundImage.FILENAME) ?: return false
+        if (bitmapWidth <= 0 || bitmapHeight <= 0) {
+            Timber.w("Decoding background image for dimensions info failed")
+            deckPickerBinding.background.setBackgroundResource(0)
+            return false
+        }
+        if (bitmapWidth * bitmapHeight * BITMAP_BYTES_PER_PIXEL > BackgroundImage.MAX_BITMAP_SIZE) {
             Timber.w("DeckPicker background image dimensions too large")
             deckPickerBinding.background.setBackgroundResource(0)
             return false
