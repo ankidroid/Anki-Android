@@ -106,6 +106,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.jetbrains.annotations.VisibleForTesting
 import timber.log.Timber
+import kotlin.math.max
 import kotlin.math.roundToInt
 import kotlin.reflect.jvm.jvmName
 
@@ -478,6 +479,12 @@ class ReviewerFragment :
             systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
         }
 
+        val minTopPadding =
+            if (Prefs.frameStyle == FrameStyle.CARD && (!resources.isWindowCompact() || Prefs.toolbarPosition != ToolbarPosition.TOP)) {
+                8F.dp.toPx(requireContext())
+            } else {
+                0
+            }
         val ignoreDisplayCutout = Prefs.ignoreDisplayCutout
         ViewCompat.setOnApplyWindowInsetsListener(view) { v, insets ->
             val defaultTypes = WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.ime()
@@ -488,9 +495,11 @@ class ReviewerFragment :
                     defaultTypes or WindowInsetsCompat.Type.displayCutout()
                 }
             val bars = insets.getInsets(typeMask)
+            // don't let a 'card' frame reach the top of the screen
+            val topPadding = max(bars.top, minTopPadding)
             v.updatePadding(
                 left = bars.left,
-                top = bars.top,
+                top = topPadding,
                 right = bars.right,
                 bottom = bars.bottom,
             )
