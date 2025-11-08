@@ -23,7 +23,9 @@ import android.provider.MediaStore
 import androidx.core.content.edit
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CollectionHelper
+import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
+import com.ichi2.anki.deckpicker.BackgroundImage.shouldBeShown
 import com.ichi2.anki.preferences.AppearanceSettingsFragment
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.snackbar.showSnackbar
@@ -44,12 +46,19 @@ object BackgroundImage {
     const val MAX_BITMAP_SIZE: Long = 100 * 1024 * 1024
 
     /**
+     * The name of the file in the collection folder representing the background the user selected
+     * for [DeckPicker].
+     */
+    const val FILENAME = "DeckPickerBackground.png"
+
+    /**
      * @see shouldBeShown
      */
     var enabled: Boolean
         get() = AnkiDroidApp.instance.sharedPrefs().getBoolean("deckPickerBackground", false)
         set(value) {
             AnkiDroidApp.instance.sharedPrefs().edit {
+
                 putBoolean("deckPickerBackground", value)
             }
         }
@@ -101,8 +110,7 @@ object BackgroundImage {
         selectedImage: Uri,
     ) {
         val currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(target.requireContext())
-        val imageName = "DeckPickerBackground.png"
-        val destFile = File(currentAnkiDroidDirectory, imageName)
+        val destFile = File(currentAnkiDroidDirectory, FILENAME)
         (target.requireContext().contentResolver.openInputStream(selectedImage) as FileInputStream).channel.use { sourceChannel ->
             FileOutputStream(destFile).channel.use { destChannel ->
                 destChannel.transferFrom(sourceChannel, 0, sourceChannel.size())
@@ -119,8 +127,7 @@ object BackgroundImage {
 
     fun getBackgroundImageDimensions(context: Context): Size {
         val currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(context)
-        val imageName = "DeckPickerBackground.png"
-        val destFile = File(currentAnkiDroidDirectory, imageName)
+        val destFile = File(currentAnkiDroidDirectory, FILENAME)
         val bmp = BitmapFactory.decodeFile(destFile.absolutePath)
         val w = bmp.width
         val h = bmp.height
@@ -143,7 +150,7 @@ object BackgroundImage {
     /** @return a [File] referencing the image, or `null` if the file does not exist */
     private fun getImageFile(context: Context): File? {
         val currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(context)
-        val imgFile = File(currentAnkiDroidDirectory, "DeckPickerBackground.png")
+        val imgFile = File(currentAnkiDroidDirectory, FILENAME)
         if (!imgFile.exists()) {
             return null
         }
