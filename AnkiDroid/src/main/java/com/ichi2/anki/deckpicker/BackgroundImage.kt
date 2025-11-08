@@ -17,7 +17,6 @@
 package com.ichi2.anki.deckpicker
 
 import android.content.Context
-import android.graphics.BitmapFactory
 import android.net.Uri
 import android.provider.MediaStore
 import com.ichi2.anki.CollectionHelper
@@ -103,21 +102,6 @@ object BackgroundImage {
             }
         }
         Prefs.isBackgroundEnabled = true
-    }
-
-    data class Size(
-        val width: Int,
-        val height: Int,
-    )
-
-    fun getBackgroundImageDimensions(context: Context): Size {
-        val currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(context)
-        val destFile = File(currentAnkiDroidDirectory, FILENAME)
-        val bmp = BitmapFactory.decodeFile(destFile.absolutePath)
-        val w = bmp.width
-        val h = bmp.height
-        bmp.recycle()
-        return Size(width = w, height = h)
     }
 
     /**
