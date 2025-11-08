@@ -190,6 +190,7 @@ class ReviewerFragment :
         setupMenu(view)
         setupToolbarPosition(view)
         setupAnswerTimer(view)
+        setupToolbarOnBigWindows(view)
         setupMargins(view)
         setupCheckPronunciation(view)
         setupActions(view)
@@ -539,6 +540,22 @@ class ReviewerFragment :
      * of [Prefs.toolbarPosition] and `Hide answer buttons`
      */
     private fun setupMargins(view: View) {
+        val toolbarPosition = Prefs.toolbarPosition
+        val webViewContainer = view.findViewById<MaterialCardView>(R.id.webview_container)
+        val answerArea = view.findViewById<FrameLayout>(R.id.answer_area)
+        val typeAnswerContainer = view.findViewById<MaterialCardView>(R.id.type_answer_container)
+
+        if (toolbarPosition == ToolbarPosition.BOTTOM) {
+            if (Prefs.showAnswerButtons) {
+                answerArea.updateLayoutParams<MarginLayoutParams> { bottomMargin = 0 }
+            } else {
+                webViewContainer.updateLayoutParams<MarginLayoutParams> { bottomMargin = 0 }
+                typeAnswerContainer.updateLayoutParams<MarginLayoutParams> { topMargin = 8F.dp.toPx(requireContext()) }
+            }
+        }
+    }
+
+    private fun setupToolbarOnBigWindows(view: View) {
         val hideAnswerButtons = !Prefs.showAnswerButtons
         // In big screens, let the menu expand if there are no answer buttons
         if (hideAnswerButtons && !resources.isWindowCompact()) {
@@ -558,20 +575,6 @@ class ReviewerFragment :
             // which includes the timer, so set again its visibility.
             timer?.isVisible = viewModel.answerTimerStatusFlow.value != null
             return
-        }
-
-        val toolbarPosition = Prefs.toolbarPosition
-        val webViewContainer = view.findViewById<MaterialCardView>(R.id.webview_container)
-        val answerArea = view.findViewById<FrameLayout>(R.id.answer_area)
-        val typeAnswerContainer = view.findViewById<MaterialCardView>(R.id.type_answer_container)
-
-        if (toolbarPosition == ToolbarPosition.BOTTOM) {
-            if (hideAnswerButtons) {
-                webViewContainer.updateLayoutParams<MarginLayoutParams> { bottomMargin = 0 }
-                typeAnswerContainer.updateLayoutParams<MarginLayoutParams> { topMargin = 8F.dp.toPx(requireContext()) }
-            } else {
-                answerArea.updateLayoutParams<MarginLayoutParams> { bottomMargin = 0 }
-            }
         }
     }
 
