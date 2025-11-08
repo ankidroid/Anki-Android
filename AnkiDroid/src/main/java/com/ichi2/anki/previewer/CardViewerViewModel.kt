@@ -34,6 +34,7 @@ import com.ichi2.anki.multimedia.getAvTag
 import com.ichi2.anki.multimedia.replaceAvRefsWithPlayButtons
 import com.ichi2.anki.pages.AnkiServer
 import com.ichi2.anki.pages.PostRequestHandler
+import com.ichi2.anki.pages.PostRequestUri
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -192,15 +193,12 @@ abstract class CardViewerViewModel :
     }
 
     override suspend fun handlePostRequest(
-        uri: String,
+        uri: PostRequestUri,
         bytes: ByteArray,
     ): ByteArray =
-        if (uri.startsWith(AnkiServer.ANKI_PREFIX)) {
-            when (uri.substring(AnkiServer.ANKI_PREFIX.length)) {
-                "i18nResources" -> withCol { i18nResourcesRaw(bytes) }
-                else -> throw IllegalArgumentException("Unhandled Anki request: $uri")
-            }
-        } else {
-            throw IllegalArgumentException("Unhandled POST request: $uri")
+        when (uri.backendMethodName) {
+            null -> throw IllegalArgumentException("Unhandled POST request: $uri")
+            "i18nResources" -> withCol { i18nResourcesRaw(bytes) }
+            else -> throw IllegalArgumentException("Unhandled Anki request: $uri")
         }
 }
