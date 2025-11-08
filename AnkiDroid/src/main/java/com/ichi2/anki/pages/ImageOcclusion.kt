@@ -75,15 +75,7 @@ class ImageOcclusion :
         view.findViewById<MaterialToolbar>(R.id.toolbar).setOnMenuItemClickListener {
             if (it.itemId == R.id.action_save) {
                 Timber.i("save item selected")
-                webViewLayout.evaluateJavascript("anki.imageOcclusion.save()") {
-                    // reset to the previous deck that the backend "saw" as selected, this
-                    // avoids other screens unexpectedly having their working decks modified(
-                    // most important being the Reviewer where the user would find itself
-                    // studying another deck after editing a note with changing the deck)
-                    viewLifecycleOwner.lifecycleScope.launch {
-                        viewModel.onSaveOperationCompleted()
-                    }
-                }
+                webViewLayout.evaluateJavascript("anki.imageOcclusion.save()")
             }
             return@setOnMenuItemClickListener true
         }
@@ -115,6 +107,18 @@ class ImageOcclusion :
             }
         }
     }
+
+    // HACK: detect a successful save; #19443 will provide a better method
+    // backend calls are only made on success; .save() does not notify on failure
+    override suspend fun handlePostRequest(
+        uri: PostRequestUri,
+        bytes: ByteArray,
+    ): ByteArray =
+        super.handlePostRequest(uri, bytes).also {
+            when (uri.backendMethodName) {
+                "addImageOcclusionNote", "updateImageOcclusionNote" -> viewModel.onSaveOperationCompleted()
+            }
+        }
 
     companion object {
         const val IO_ARGS_KEY = "IMAGE_OCCLUSION_ARGS"
