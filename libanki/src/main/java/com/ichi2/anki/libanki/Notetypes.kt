@@ -606,18 +606,9 @@ class Notetypes(
      *
      * A compatibility wrapper that converts legacy-style arguments and
      * feeds them into a backend request, so that AnkiDroid's editor-bound
-     * notetype changing can be used. Changing the notetype via the editor is
-     * not ideal: it doesn't let users re-order fields in a 2 element note,
-     * doesn't provide a warning to users about fields/cards that will be removed,
-     * and doesn't allow mapping one source field to multiple target fields. In
-     * the future, it may be worth removing this routine and exposing the
-     * change_notetype.html page to the user instead. The editor could remove
-     * the field-reordering code, and when saving a note where the notetype
-     * has been changed, the separate change_notetype screen could be shown.
-     * It would also be a good idea to expose change notetype as a bulk action
-     * in the browsing screen, so that the user can change the notetype of
-     * multiple notes at once.
+     * notetype changing can be used.
      * */
+    @Deprecated("Replace with ChangeNoteTypeDialog")
     fun change(
         noteType: NotetypeJson,
         nid: NoteId,
