@@ -526,11 +526,6 @@ class ReviewerFragment :
      * of [Prefs.toolbarPosition], [Prefs.frameStyle] and `Hide answer buttons`
      */
     private fun setupMargins(view: View) {
-        val toolbarPosition = Prefs.toolbarPosition
-        val webViewContainer = view.findViewById<MaterialCardView>(R.id.webview_container)
-        val answerArea = view.findViewById<FrameLayout>(R.id.answer_area)
-        val typeAnswerContainer = view.findViewById<MaterialCardView>(R.id.type_answer_container)
-
         if (Prefs.frameStyle == FrameStyle.BOX) {
             view.findViewById<MaterialCardView>(R.id.webview_container).apply {
                 updateLayoutParams<MarginLayoutParams> {
@@ -542,13 +537,9 @@ class ReviewerFragment :
             }
         }
 
-        if (toolbarPosition == ToolbarPosition.BOTTOM) {
-            if (Prefs.showAnswerButtons) {
-                answerArea.updateLayoutParams<MarginLayoutParams> { bottomMargin = 0 }
-            } else {
-                webViewContainer.updateLayoutParams<MarginLayoutParams> { bottomMargin = 0 }
-                typeAnswerContainer.updateLayoutParams<MarginLayoutParams> { topMargin = 8F.dp.toPx(requireContext()) }
-            }
+        if (Prefs.toolbarPosition == ToolbarPosition.BOTTOM) {
+            view.findViewById<LinearLayout>(R.id.complements_layout)?.showDividers =
+                LinearLayout.SHOW_DIVIDER_MIDDLE or LinearLayout.SHOW_DIVIDER_BEGINNING
         }
     }
 
