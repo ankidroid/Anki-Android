@@ -684,11 +684,11 @@ class NoteEditorTest : RobolectricTest() {
             NoteType.BASIC -> col.notetypes.byName("Basic")
             NoteType.CLOZE -> col.notetypes.byName("Cloze")
             NoteType.BACK_TO_FRONT -> {
-                val name = super.addStandardNoteType("Reversed", arrayOf("Front", "Back"), "{{Back}}", "{{Front}}")
+                val name = addStandardNoteType("Reversed", arrayOf("Front", "Back"), "{{Back}}", "{{Front}}")
                 col.notetypes.byName(name)
             }
             NoteType.THREE_FIELD_INVALID_TEMPLATE -> {
-                val name = super.addStandardNoteType("Invalid", arrayOf("Front", "Back", "Side"), "", "")
+                val name = addStandardNoteType("Invalid", arrayOf("Front", "Back", "Side"), "", "")
                 col.notetypes.byName(name)
             }
             NoteType.IMAGE_OCCLUSION -> col.notetypes.byName("Image Occlusion")
