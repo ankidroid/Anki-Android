@@ -21,7 +21,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
 import androidx.annotation.RequiresApi
 import androidx.core.os.BundleCompat
 import androidx.fragment.app.FragmentManager
@@ -29,6 +28,8 @@ import androidx.fragment.app.commit
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.ichi2.anki.PermissionSet
 import com.ichi2.anki.R
+import com.ichi2.anki.databinding.PermissionsBottomSheetBinding
+import dev.androidbroadcast.vbpd.viewBinding
 
 /**
  * BottomSheet that requests permissions from the user.
@@ -40,6 +41,8 @@ import com.ichi2.anki.R
  */
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 class PermissionsBottomSheet : BottomSheetDialogFragment() {
+    private val binding by viewBinding(PermissionsBottomSheetBinding::bind)
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -51,8 +54,7 @@ class PermissionsBottomSheet : BottomSheetDialogFragment() {
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        val closeButton = view.findViewById<ImageButton>(R.id.close_button)
-        closeButton.setOnClickListener { dismiss() }
+        binding.closeButton.setOnClickListener { dismiss() }
 
         val permissionSet =
             requireNotNull(BundleCompat.getParcelable(requireArguments(), PERMISSION_SET_ARGUMENT_KEY, PermissionSet::class.java)) {
@@ -64,7 +66,7 @@ class PermissionsBottomSheet : BottomSheetDialogFragment() {
             }
         view.post {
             childFragmentManager.commit {
-                replace(R.id.bottom_sheet_fragment_container, permissionsFragment)
+                replace(binding.bottomSheetFragmentContainer.id, permissionsFragment)
             }
         }
     }

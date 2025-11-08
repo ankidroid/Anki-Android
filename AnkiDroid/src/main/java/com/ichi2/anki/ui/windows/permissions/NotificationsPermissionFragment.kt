@@ -22,7 +22,9 @@ import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import com.ichi2.anki.R
+import com.ichi2.anki.databinding.NotificationsPermissionBinding
 import com.ichi2.utils.Permissions
+import dev.androidbroadcast.vbpd.viewBinding
 import timber.log.Timber
 
 /**
@@ -36,6 +38,8 @@ import timber.log.Timber
  */
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 class NotificationsPermissionFragment : PermissionsFragment(R.layout.notifications_permission) {
+    private val binding by viewBinding(NotificationsPermissionBinding::bind)
+
     /**
      * Launches the OS dialog for requesting notification permissions.
      */
@@ -53,9 +57,8 @@ class NotificationsPermissionFragment : PermissionsFragment(R.layout.notificatio
         view: View,
         savedInstanceState: Bundle?,
     ) {
-        val notificationPermission = view.findViewById<PermissionsItem>(R.id.notification_permission)
         Permissions.postNotification?.let {
-            notificationPermission.offerToGrantOrRevokeOnClick(
+            binding.notificationPermission.offerToGrantOrRevokeOnClick(
                 notificationPermissionLauncher,
                 arrayOf(Permissions.postNotification),
             )
