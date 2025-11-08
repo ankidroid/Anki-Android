@@ -1074,7 +1074,7 @@ open class DeckPicker :
             return false
         }
         val currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(this)
-        val imgFile = File(currentAnkiDroidDirectory, "DeckPickerBackground.png")
+        val imgFile = File(currentAnkiDroidDirectory, BackgroundImage.FILENAME)
         if (!imgFile.exists()) {
             Timber.d("No DeckPicker background image")
             deckPickerBinding.background.setBackgroundResource(0)
