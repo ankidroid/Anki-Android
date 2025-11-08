@@ -2495,7 +2495,7 @@ class OneWaySyncDialog(
 /**
  * [launchCatchingTask], showing a one-way sync dialog: [R.string.full_sync_confirmation]
  */
-private fun AnkiActivity.launchCatchingRequiringOneWaySync(block: suspend () -> Unit) =
+fun AnkiActivity.launchCatchingRequiringOneWaySync(block: suspend () -> Unit) =
     launchCatchingTask {
         try {
             block()

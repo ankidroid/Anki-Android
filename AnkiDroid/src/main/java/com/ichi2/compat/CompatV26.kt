@@ -17,6 +17,7 @@
 package com.ichi2.compat
 
 import android.content.Context
+import android.icu.text.ListFormatter
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.view.View
@@ -137,5 +138,18 @@ open class CompatV26 : CompatV24() {
                 }
             }
         }
+    }
+
+    // API 26+: Use ListFormatter to dynamically get the locale-specific separator
+    override fun getListSeparator(context: Context): String {
+        val formatter = ListFormatter.getInstance()
+        // Format a list with 3 dummy items
+        val formatted = formatter.format("A", "B", "C")
+        // Parse the separator from the first two items
+        // The format should be something like "A, B, and C" or "A، B، و C" (Arabic)
+        // We extract the part between "A" and "B"
+        val separatorStart = formatted.indexOf("A") + 1
+        val separatorEnd = formatted.indexOf("B")
+        return formatted.substring(separatorStart, separatorEnd)
     }
 }

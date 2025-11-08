@@ -50,6 +50,10 @@
         tools:title="Toggle bury" />
 
     <item
+        android:id="@+id/action_change_note_type"
+        android:title="@string/sentence_change_note_type"/>
+
+    <item
         android:id="@+id/action_change_deck"
         android:title="@string/card_browser_change_deck"/>
 
