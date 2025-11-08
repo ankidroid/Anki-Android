@@ -125,5 +125,10 @@
             android:title="Switch Profile option"
             android:key="@string/pref_enable_switch_profile_key"
             android:defaultValue="false"/>
+        <SwitchPreferenceCompat
+            android:title="Change Note type"
+            android:summary="This is a work-in-progress feature, use at your own risk!"
+            android:key="@string/pref_change_note_type"
+            android:defaultValue="false"/>
     </com.ichi2.anki.preferences.ExtendedPreferenceCategory>
 </PreferenceScreen>
