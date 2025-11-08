@@ -1068,7 +1068,7 @@ open class DeckPicker :
     @Throws(OutOfMemoryError::class)
     private fun applyDeckPickerBackground(): Boolean {
         // Allow the user to clear data and get back to a good state if they provide an invalid background.
-        if (!this.sharedPrefs().getBoolean("deckPickerBackground", false)) {
+        if (!Prefs.isBackgroundEnabled) {
             Timber.d("No DeckPicker background preference")
             deckPickerBinding.background.setBackgroundResource(0)
             return false
