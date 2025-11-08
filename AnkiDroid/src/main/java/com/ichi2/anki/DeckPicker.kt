@@ -172,6 +172,7 @@ import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.anki.utils.ext.getSizeOfBitmapFromCollection
 import com.ichi2.anki.utils.ext.setFragmentResultListener
 import com.ichi2.anki.utils.ext.showDialogFragment
+import com.ichi2.anki.utils.runWithOOMCheck
 import com.ichi2.anki.widgets.DeckAdapter
 import com.ichi2.anki.worker.SyncMediaWorker
 import com.ichi2.anki.worker.SyncWorker
@@ -198,6 +199,7 @@ import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
 import com.ichi2.utils.title
 import com.ichi2.widget.WidgetStatus
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
@@ -557,22 +559,9 @@ open class DeckPicker :
         // Add background to Deckpicker activity
         val view = binding.deckpickerXlView ?: binding.rootLayout
 
-        var hasDeckPickerBackground = false
-        try {
-            hasDeckPickerBackground = applyDeckPickerBackground()
-        } catch (e: OutOfMemoryError) {
-            // 6608 - OOM should be catchable here.
-            Timber.w(e, "Failed to apply background - OOM")
-            showThemedToast(this, getString(R.string.background_image_too_large), false)
-        } catch (e: Exception) {
-            Timber.w(e, "Failed to apply background")
-            showThemedToast(this, getString(R.string.failed_to_apply_background_image, e.localizedMessage), false)
-        }
-
         deckListAdapter =
             DeckAdapter(
                 this,
-                activityHasBackground = hasDeckPickerBackground,
                 onDeckSelected = { onDeckClick(it, DeckSelectionType.DEFAULT) },
                 onDeckCountsSelected = { onDeckClick(it, DeckSelectionType.SHOW_STUDY_OPTIONS) },
                 onDeckChildrenToggled = { deckId ->
@@ -586,6 +575,8 @@ open class DeckPicker :
                 },
             )
         deckPickerBinding.decks.adapter = deckListAdapter
+
+        lifecycleScope.launch { applyDeckPickerBackground() }
 
         pullToSyncWrapper =
             deckPickerBinding.pullToSyncWrapper.apply {
@@ -1065,43 +1056,82 @@ open class DeckPicker :
         showDatabaseErrorDialog(DatabaseErrorDialogType.DIALOG_DISK_FULL)
     }
 
-    // throws doesn't seem to be checked by the compiler - consider it to be documentation
-    @Throws(OutOfMemoryError::class)
-    private fun applyDeckPickerBackground(): Boolean {
+    // Note: when changing this method consider OutOfMemoryErrors
+    private suspend fun applyDeckPickerBackground() {
         // Allow the user to clear data and get back to a good state if they provide an invalid background.
         if (!Prefs.isBackgroundEnabled) {
             Timber.d("No DeckPicker background preference")
             deckPickerBinding.background.setBackgroundResource(0)
-            return false
+            deckListAdapter.activityHasBackground = false
+            return
         }
         val currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(this)
         val imgFile = File(currentAnkiDroidDirectory, BackgroundImage.FILENAME)
         if (!imgFile.exists()) {
             Timber.d("No DeckPicker background image")
             deckPickerBinding.background.setBackgroundResource(0)
-            return false
+            deckListAdapter.activityHasBackground = false
+            return
         }
 
         // TODO: Temporary fix to stop a crash on startup [15450], it can be removed either:
         // * by moving this check to an upgrade path
         // * once enough time has passed
         // null shouldn't happen as we check for the file being present above this call
-        val (bitmapWidth, bitmapHeight) = getSizeOfBitmapFromCollection(BackgroundImage.FILENAME) ?: return false
+        val (bitmapWidth, bitmapHeight) = getSizeOfBitmapFromCollection(BackgroundImage.FILENAME) ?: return
         if (bitmapWidth <= 0 || bitmapHeight <= 0) {
             Timber.w("Decoding background image for dimensions info failed")
             deckPickerBinding.background.setBackgroundResource(0)
-            return false
+            deckListAdapter.activityHasBackground = false
+            return
         }
         if (bitmapWidth * bitmapHeight * BITMAP_BYTES_PER_PIXEL > BackgroundImage.MAX_BITMAP_SIZE) {
             Timber.w("DeckPicker background image dimensions too large")
             deckPickerBinding.background.setBackgroundResource(0)
-            return false
+            deckListAdapter.activityHasBackground = false
+            return
         }
 
-        Timber.i("Applying background")
-        val drawable = Drawable.createFromPath(imgFile.absolutePath)
-        deckPickerBinding.background.setImageDrawable(drawable)
-        return true
+        fun onOOMError(error: OutOfMemoryError) {
+            Timber.w(error, "Failed to apply background - OOM")
+            showThemedToast(
+                this@DeckPicker,
+                getString(R.string.background_image_too_large),
+                false,
+            )
+            deckListAdapter.activityHasBackground = false
+        }
+
+        try {
+            Timber.i("Applying background image selected by user")
+            val drawable =
+                withContext(Dispatchers.IO) {
+                    // 6608 - OOM should be catchable here.
+                    runWithOOMCheck(
+                        { Drawable.createFromPath(imgFile.absolutePath) },
+                        ::onOOMError,
+                    )
+                }
+            runWithOOMCheck(
+                {
+                    deckPickerBinding.background.setImageDrawable(drawable)
+                    deckListAdapter.activityHasBackground = drawable != null
+                },
+                onError = ::onOOMError,
+            )
+        } catch (e: Exception) {
+            if (e is CancellationException) {
+                throw e
+            } else {
+                Timber.w(e, "Failed to apply background")
+                showThemedToast(
+                    this,
+                    getString(R.string.failed_to_apply_background_image, e.localizedMessage),
+                    false,
+                )
+                deckListAdapter.activityHasBackground = false
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

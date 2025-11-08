@@ -41,8 +41,6 @@ import net.ankiweb.rsdroid.RustCleanup
 /**
  * A [RecyclerView.Adapter] used to show the list of decks inside [com.ichi2.anki.DeckPicker].
  *
- * @param activityHasBackground true if [com.ichi2.anki.DeckPicker] has a background set, false
- * otherwise. If true the adapter will make the rows transparent so the background can be seen.
  * @param onDeckSelected callback triggered when the user selects a deck
  * @param onDeckCountsSelected callback triggered when the user selects the counts of a deck
  * @param onDeckChildrenToggled callback triggered when the user toggles the visibility of its
@@ -54,7 +52,6 @@ import net.ankiweb.rsdroid.RustCleanup
 @RustCleanup("Differs from legacy backend: Create deck 'One', create deck 'One::two'. 'One::two' was not expanded")
 class DeckAdapter(
     context: Context,
-    private val activityHasBackground: Boolean,
     private val onDeckSelected: (DeckId) -> Unit,
     private val onDeckCountsSelected: (DeckId) -> Unit,
     private val onDeckChildrenToggled: (DeckId) -> Unit,
@@ -81,6 +78,18 @@ class DeckAdapter(
 
     // Flags
     private var hasSubdecks = false
+
+    /**
+     * Flag to indicate if the activity has a background set. If true the adapter will make the rows
+     * transparent so the background can be seen.
+     */
+    var activityHasBackground: Boolean = false
+        set(value) {
+            if (field != value) {
+                field = value
+                notifyDataSetChanged()
+            }
+        }
 
     class ViewHolder(
         v: View,
