@@ -183,7 +183,6 @@ class ReviewerFragment :
 
         setupBindings(view)
         setupImmersiveMode(view)
-        setupFrame(view)
         setupTypeAnswer(view)
         setupAnswerButtons(view)
         setupCounts(view)
@@ -508,19 +507,6 @@ class ReviewerFragment :
         }
     }
 
-    private fun setupFrame(view: View) {
-        if (Prefs.frameStyle == FrameStyle.BOX) {
-            view.findViewById<MaterialCardView>(R.id.webview_container).apply {
-                updateLayoutParams<MarginLayoutParams> {
-                    leftMargin = 0
-                    rightMargin = 0
-                }
-                cardElevation = 0F
-                shapeAppearanceModel = ShapeAppearanceModel() // Remove corners
-            }
-        }
-    }
-
     private fun setupToolbarPosition(view: View) {
         if (!resources.isWindowCompact()) return
         when (Prefs.toolbarPosition) {
@@ -537,13 +523,24 @@ class ReviewerFragment :
 
     /**
      * Updates margins based on the possible combinations
-     * of [Prefs.toolbarPosition] and `Hide answer buttons`
+     * of [Prefs.toolbarPosition], [Prefs.frameStyle] and `Hide answer buttons`
      */
     private fun setupMargins(view: View) {
         val toolbarPosition = Prefs.toolbarPosition
         val webViewContainer = view.findViewById<MaterialCardView>(R.id.webview_container)
         val answerArea = view.findViewById<FrameLayout>(R.id.answer_area)
         val typeAnswerContainer = view.findViewById<MaterialCardView>(R.id.type_answer_container)
+
+        if (Prefs.frameStyle == FrameStyle.BOX) {
+            view.findViewById<MaterialCardView>(R.id.webview_container).apply {
+                updateLayoutParams<MarginLayoutParams> {
+                    leftMargin = 0
+                    rightMargin = 0
+                }
+                cardElevation = 0F
+                shapeAppearanceModel = ShapeAppearanceModel() // Remove corners
+            }
+        }
 
         if (toolbarPosition == ToolbarPosition.BOTTOM) {
             if (Prefs.showAnswerButtons) {
