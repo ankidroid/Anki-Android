@@ -200,7 +200,8 @@
             android:layout_marginHorizontal="@dimen/reviewer_side_margin"
             android:layout_gravity="center_horizontal"
             android:elevation="2dp"
-            android:visibility="gone"/>
+            android:visibility="gone"
+            tools:layout="@layout/check_pronunciation_fragment" />
 
         <FrameLayout
             android:id="@+id/answer_area"
