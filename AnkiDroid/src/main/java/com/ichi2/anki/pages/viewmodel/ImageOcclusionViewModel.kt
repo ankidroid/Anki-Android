@@ -27,6 +27,7 @@ import com.ichi2.anki.pages.ImageOcclusion
 import kotlinx.coroutines.launch
 import kotlinx.parcelize.Parcelize
 import org.json.JSONObject
+import timber.log.Timber
 
 @Parcelize
 data class ImageOcclusionArgs(
@@ -86,7 +87,12 @@ class ImageOcclusionViewModel(
     }
 
     fun onSaveOperationCompleted() {
+        Timber.i("save operation completed")
         if (oldDeckId == selectedDeckId) return
+        // reset to the previous deck that the backend "saw" as selected, this
+        // avoids other screens unexpectedly having their working decks modified(
+        // most important being the Reviewer where the user would find itself
+        // studying another deck after editing a note with changing the deck)
         viewModelScope.launch {
             CollectionManager.withCol { backend.setCurrentDeck(oldDeckId) }
         }
