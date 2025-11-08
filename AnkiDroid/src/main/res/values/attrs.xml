@@ -197,6 +197,8 @@
     <attr name="dialogBackground" format="color"/>
     <attr name="snackbarButtonTextColor" format="color"/>
 
+    <attr name="clozeColor" format="color" />
+
     <declare-styleable name="CheckBoxTriStates">
         <attr name="cycle_checked_to_indeterminate" format="boolean" />
         <attr name="cycle_indeterminate_to_checked" format="boolean" />
