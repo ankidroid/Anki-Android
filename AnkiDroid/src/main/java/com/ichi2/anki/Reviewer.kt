@@ -89,9 +89,8 @@ import com.ichi2.anki.multimedia.audio.AudioRecordingController.Companion.tempAu
 import com.ichi2.anki.multimedia.audio.AudioRecordingController.RecordingState
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import com.ichi2.anki.observability.undoableOp
-import com.ichi2.anki.pages.AnkiServer.Companion.ANKIDROID_JS_PREFIX
-import com.ichi2.anki.pages.AnkiServer.Companion.ANKI_PREFIX
 import com.ichi2.anki.pages.CardInfoDestination
+import com.ichi2.anki.pages.PostRequestUri
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.reviewer.ActionButtons
 import com.ichi2.anki.reviewer.AnswerButtons.Companion.getBackgroundColors
@@ -1612,25 +1611,27 @@ open class Reviewer :
     ): Boolean = activity.window.decorView.systemUiVisibility and View.SYSTEM_UI_FLAG_HIDE_NAVIGATION == 0
 
     override suspend fun handlePostRequest(
-        uri: String,
+        uri: PostRequestUri,
         bytes: ByteArray,
-    ): ByteArray =
-        if (uri.startsWith(ANKI_PREFIX)) {
-            when (val methodName = uri.substring(ANKI_PREFIX.length)) {
+    ): ByteArray {
+        uri.backendMethodName?.let { methodName ->
+            return when (methodName) {
                 "getSchedulingStatesWithContext" -> getSchedulingStatesWithContext()
                 "setSchedulingStates" -> setSchedulingStates(bytes)
                 "i18nResources" -> withCol { i18nResourcesRaw(bytes) }
-                else -> throw IllegalArgumentException("unhandled request: $methodName")
+                else -> throw IllegalArgumentException("Unhandled backend request: $methodName")
             }
-        } else if (uri.startsWith(ANKIDROID_JS_PREFIX)) {
-            jsApi.handleJsApiRequest(
-                uri.substring(ANKIDROID_JS_PREFIX.length),
+        }
+
+        uri.jsApiMethodName?.let { apiMethod ->
+            return jsApi.handleJsApiRequest(
+                apiMethod,
                 bytes,
                 returnDefaultValues = false,
             )
-        } else {
-            throw IllegalArgumentException("unhandled request: $uri")
         }
+        throw IllegalArgumentException("unhandled request: $uri")
+    }
 
     private fun getSchedulingStatesWithContext(): ByteArray {
         val state = queueState ?: return ByteArray(0)

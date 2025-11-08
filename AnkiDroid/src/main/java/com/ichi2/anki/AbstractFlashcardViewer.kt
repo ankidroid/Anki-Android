@@ -132,6 +132,7 @@ import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.pages.AnkiServer
 import com.ichi2.anki.pages.CongratsPage
 import com.ichi2.anki.pages.PostRequestHandler
+import com.ichi2.anki.pages.PostRequestUri
 import com.ichi2.anki.preferences.AccessibilitySettingsFragment
 import com.ichi2.anki.preferences.PreferencesActivity
 import com.ichi2.anki.preferences.sharedPrefs
@@ -2717,18 +2718,16 @@ abstract class AbstractFlashcardViewer :
     open fun getCardDataForJsApi(): AnkiDroidJsAPI.CardDataForJsApi = AnkiDroidJsAPI.CardDataForJsApi()
 
     override suspend fun handlePostRequest(
-        uri: String,
+        uri: PostRequestUri,
         bytes: ByteArray,
     ): ByteArray =
-        if (uri.startsWith(AnkiServer.ANKIDROID_JS_PREFIX)) {
+        uri.jsApiMethodName?.let { methodName ->
             jsApi.handleJsApiRequest(
-                uri.substring(AnkiServer.ANKIDROID_JS_PREFIX.length),
+                methodName,
                 bytes,
                 returnDefaultValues = true,
             )
-        } else {
-            throw IllegalArgumentException("unhandled request: $uri")
-        }
+        } ?: throw IllegalArgumentException("unhandled request: $uri")
 
     companion object {
         /**
