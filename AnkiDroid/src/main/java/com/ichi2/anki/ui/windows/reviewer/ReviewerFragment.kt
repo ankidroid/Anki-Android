@@ -263,6 +263,7 @@ class ReviewerFragment :
             }
 
         val isHtmlTypeAnswerEnabled = Prefs.isHtmlTypeAnswerEnabled
+        val insetsController = WindowInsetsControllerCompat(window, view)
         lifecycleScope.launch {
             val autoFocusTypeAnswer = Prefs.autoFocusTypeAnswer
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -273,8 +274,10 @@ class ReviewerFragment :
                     }
 
                     if (isHtmlTypeAnswerEnabled) {
+                        if (!autoFocusTypeAnswer) return@collect
                         webViewLayout.focusOnWebView()
                         webViewLayout.evaluateJavascript("document.getElementById('typeans').focus();", null)
+                        insetsController.show(WindowInsetsCompat.Type.ime())
                         return@collect
                     }
 
