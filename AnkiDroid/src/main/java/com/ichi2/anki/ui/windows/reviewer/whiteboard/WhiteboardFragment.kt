@@ -45,6 +45,7 @@ import com.ichi2.compat.setTooltipTextCompat
 import com.ichi2.themes.Themes
 import com.ichi2.utils.dp
 import com.ichi2.utils.increaseHorizontalPaddingOfMenuIcons
+import com.ichi2.utils.toRGBAHex
 import com.mrudultora.colorpicker.ColorPickerPopUp
 import dev.androidbroadcast.vbpd.viewBinding
 import kotlinx.coroutines.flow.combine
@@ -278,7 +279,7 @@ class WhiteboardFragment :
             setOnPickColorListener(
                 object : ColorPickerPopUp.OnPickColorListener {
                     override fun onColorPicked(color: Int) {
-                        Timber.i("Added brush with color %d", color)
+                        Timber.i("Added brush with color ${color.toRGBAHex()}")
                         viewModel.addBrush(color)
                     }
 
