@@ -400,10 +400,12 @@ class ReviewerFragment :
             }
         val answerButtonsLayout = view.findViewById<LinearLayout>(R.id.answer_buttons)
 
+        val insetsController = WindowInsetsControllerCompat(window, view)
         viewModel.showingAnswer.collectLatestIn(lifecycleScope) { isAnswerShown ->
             if (isAnswerShown) {
                 showAnswerButton.visibility = View.INVISIBLE
                 answerButtonsLayout.visibility = View.VISIBLE
+                insetsController.hide(WindowInsetsCompat.Type.ime())
             } else {
                 showAnswerButton.visibility = View.VISIBLE
                 answerButtonsLayout.visibility = View.INVISIBLE
