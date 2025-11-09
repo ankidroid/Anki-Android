@@ -18,6 +18,7 @@ package com.ichi2.anki.ui.windows.reviewer.whiteboard
 import android.content.SharedPreferences
 import android.graphics.Color
 import androidx.core.content.edit
+import com.ichi2.utils.toRGBAHex
 
 /**
  * Holds the configuration for a single brush.
@@ -25,7 +26,9 @@ import androidx.core.content.edit
 data class BrushInfo(
     val color: Int,
     val width: Float,
-)
+) {
+    override fun toString(): String = "BrushInfo(color=${color.toRGBAHex()}, width=${"%.1f".format(width)})"
+}
 
 /**
  * Repository for handling data operations, specifically for saving and loading
