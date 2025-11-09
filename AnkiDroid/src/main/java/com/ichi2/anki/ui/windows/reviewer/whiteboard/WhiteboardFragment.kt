@@ -65,6 +65,8 @@ class WhiteboardFragment :
 
     val binding by viewBinding(FragmentWhiteboardBinding::bind)
 
+    private lateinit var brushToolbarContainerHorizontal: LinearLayout
+    private lateinit var brushToolbarContainerVertical: LinearLayout
     private var eraserPopup: PopupWindow? = null
     private var strokeWidthPopup: PopupWindow? = null
 
@@ -82,11 +84,44 @@ class WhiteboardFragment :
 
         setupUI()
         observeViewModel(binding.whiteboardView)
+        setupToolbarDisabling(binding.whiteboardView, binding.controlsContainer)
 
         binding.whiteboardView.onNewPath = viewModel::addPath
         binding.whiteboardView.onEraseGestureStart = viewModel::startPathEraseGesture
         binding.whiteboardView.onEraseGestureMove = viewModel::erasePathsAtPoint
         binding.whiteboardView.onEraseGestureEnd = viewModel::endPathEraseGesture
+    }
+
+    /**
+     * Recursively enables or disables a view and all of its children.
+     */
+    private fun setViewAndChildrenEnabled(
+        view: View,
+        enabled: Boolean,
+    ) {
+        view.isEnabled = enabled
+        if (view is ViewGroup) {
+            for (i in 0 until view.childCount) {
+                val child = view.getChildAt(i)
+                setViewAndChildrenEnabled(child, enabled)
+            }
+        }
+    }
+
+    /**
+     * Observes the drawing state to enable or disable the toolbar,
+     * preventing any interaction while drawing.
+     */
+    private fun setupToolbarDisabling(
+        whiteboardView: WhiteboardView,
+        toolbarContainer: View,
+    ) {
+        whiteboardView.isDrawing
+            .onEach { isCurrentlyDrawing ->
+                // Use the recursive function to disable the toolbar
+                // and EVERYTHING inside it.
+                setViewAndChildrenEnabled(toolbarContainer, !isCurrentlyDrawing)
+            }.launchIn(lifecycleScope)
     }
 
     private fun setupUI() {
