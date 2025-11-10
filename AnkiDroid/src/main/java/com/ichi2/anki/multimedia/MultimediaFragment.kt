@@ -86,9 +86,9 @@ abstract class MultimediaFragment(
         if (arguments != null) {
             Timber.d("Getting MultimediaActivityExtra values from arguments")
             val multimediaActivityExtra =
-                arguments?.getSerializableCompat(
+                arguments?.getSerializableCompat<MultimediaActivityExtra>(
                     MultimediaActivity.MULTIMEDIA_ARGS_EXTRA,
-                ) as? MultimediaActivityExtra
+                )
 
             if (multimediaActivityExtra != null) {
                 indexValue = multimediaActivityExtra.index
