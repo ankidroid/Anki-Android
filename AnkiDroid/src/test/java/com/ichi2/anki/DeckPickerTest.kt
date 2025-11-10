@@ -648,6 +648,7 @@ class DeckPickerTest : RobolectricTest() {
             deckToClick.performLongClick()
 
             // ASSERT
+            advanceRobolectricLooper() // ensure that 'focusedDeck' is current
             assertThat("unbury is visible: one card is buried", col.sched.haveBuried())
             assertThat("deck focus has changed", viewModel.focusedDeck, equalTo(deckWithCards))
         }

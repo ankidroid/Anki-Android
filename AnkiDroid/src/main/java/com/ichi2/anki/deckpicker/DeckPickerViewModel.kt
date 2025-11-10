@@ -303,24 +303,28 @@ class DeckPickerViewModel :
      *
      * This method also triggers an update for the widget to reflect the newly calculated counts.
      */
+    // TODO: this should not be executed if syncing - called after sync is completed
     @RustCleanup("backup with 5 minute timer, instead of deck list refresh")
-    fun updateDeckList(): Job? {
-        if (!CollectionManager.isOpenUnsafe()) {
-            return null
+    fun updateDeckList(): Job =
+        viewModelScope.launch(Dispatchers.IO) {
+            // WARN: On a regular sync, this blocks until the sync completes
+            // On a full sync, the collection is closed
+            if (!CollectionManager.isOpenUnsafe()) {
+                return@launch
+            }
+            if (Build.FINGERPRINT != "robolectric") {
+                // uses user's desktop settings to determine whether a backup
+                // actually happens
+                launchCatchingIO { performBackupInBackground() }
+            }
+            Timber.d("updateDeckList")
+            reloadDeckCounts().join()
         }
-        if (Build.FINGERPRINT != "robolectric") {
-            // uses user's desktop settings to determine whether a backup
-            // actually happens
-            launchCatchingIO { performBackupInBackground() }
-        }
-        Timber.d("updateDeckList")
-        return reloadDeckCounts()
-    }
 
-    fun reloadDeckCounts(): Job? {
+    fun reloadDeckCounts(): Job {
         loadDeckCounts?.cancel()
         val loadDeckCounts =
-            viewModelScope.launch {
+            viewModelScope.launch(Dispatchers.IO) {
                 Timber.d("Refreshing deck list")
                 val (deckDueTree, collectionHasNoCards) =
                     withCol {
