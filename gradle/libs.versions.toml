@@ -62,7 +62,8 @@ androidxWork = "2.11.0"
 ankiBackend = '0.1.62-anki25.09.2'
 autoService = "1.1.1"
 autoServiceAnnotations = "1.1.1"
-colorpicker = "1.2.0"
+# https://github.com/skydoves/ColorPickerView/releases
+colorPickerView = "2.3.0"
 # https://commons.apache.org/proper/commons-collections/changes.html
 commonsCollections4 = "4.5.0"
 # https://commons.apache.org/proper/commons-compress/changes-report.html
@@ -143,7 +144,7 @@ androidx-recyclerview = { module = "androidx.recyclerview:recyclerview", version
 auto-service = { module = "com.google.auto.service:auto-service", version.ref = "autoService" }
 auto-service-annotations = { module = "com.google.auto.service:auto-service-annotations", version.ref = "autoServiceAnnotations" }
 jetbrains-annotations = { module = "org.jetbrains:annotations", version.ref = "jetbrainsAnnotations" }
-colorpicker = { module = "com.github.mrudultora:Colorpicker", version.ref = "colorpicker" }
+skydoves-colorpickerview = { module = "com.github.skydoves:colorpickerview", version.ref = "colorPickerView" }
 commons-io = { module = "commons-io:commons-io", version.ref = "commonsIo" }
 commons-collections4 = { module = "org.apache.commons:commons-collections4", version.ref = "commonsCollections4" }
 commons-compress = { module = "org.apache.commons:commons-compress", version.ref = "commonsCompress" }
