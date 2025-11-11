@@ -1483,7 +1483,7 @@ open class CardTemplateEditor :
         private const val TAB_TO_CURSOR_POSITION_KEY = "tabToCursorPosition"
         private const val EDITOR_VIEW_ID_KEY = "editorViewId"
         private const val TAB_TO_VIEW_ID = "tabToViewId"
-        private const val EDITOR_NOTE_TYPE_ID = "noteTypeId"
+        const val EDITOR_NOTE_TYPE_ID = "noteTypeId"
         private const val EDITOR_NOTE_ID = "noteId"
         private const val EDITOR_START_ORD_ID = "ordId"
         private const val CARD_INDEX = "card_ord"
