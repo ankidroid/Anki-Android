@@ -438,7 +438,9 @@ suspend fun <T> withProgressDialog(
                 }
             }
         // disable taps immediately
-        context.window.setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+        context.runOnUiThread {
+            context.window.setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+        }
         // reveal the dialog after 600ms
         var dialogIsOurs = false
         val dialogJob =
@@ -470,7 +472,7 @@ suspend fun <T> withProgressDialog(
         } finally {
             dialogJob.cancel()
             dismissDialogIfShowing(dialog)
-            context.window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+            context.runOnUiThread { context.window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE) }
             if (dialogIsOurs) {
                 AnkiDroidApp.instance.progressDialogShown = false
             }
