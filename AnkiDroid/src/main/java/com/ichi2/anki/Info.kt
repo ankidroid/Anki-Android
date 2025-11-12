@@ -44,6 +44,8 @@ private const val CHANGE_LOG_URL = "https://docs.ankidroid.org/changelog.html"
 
 /**
  * Shows an about box, which is a small HTML page.
+ *
+ * Typically for the AnkiDroid changelog
  */
 class Info :
     AnkiActivity(R.layout.info),
