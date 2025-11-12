@@ -437,5 +437,10 @@ opening the system text to speech settings fails">Failed to open text to speech 
 
     <!-- Scheduler Upgrade Required Dialog title-->
     <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">Scheduler upgrade required</string>
+    
+    <!-- Circular Progress Dialog -->
+    <string name="progress_percentage" comment="Format string for displaying progress as a percentage. %d is the percentage value">%d%%</string>
+    <string name="progress_accessibility_determinate" comment="Accessibility description for determinate progress. %1$s is the message, %2$d is the percentage">%1$s. Progress: %2$d percent</string>
+    <string name="progress_accessibility_indeterminate" comment="Accessibility description for indeterminate progress. %s is the message">%1$s. Progress indicator</string>
 </resources>
 

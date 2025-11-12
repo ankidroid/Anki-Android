@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="24dp"
+    android:minWidth="280dp">
+
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/circular_progress_indicator"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:indeterminate="true"
+        app:indicatorSize="64dp"
+        app:trackThickness="4dp"
+        app:indicatorColor="?attr/colorPrimary"
+        app:trackColor="?attr/colorSurfaceVariant"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:progress="42" />
+
+    <TextView
+        android:id="@+id/progress_percentage_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="?attr/colorOnSurface"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="@id/circular_progress_indicator"
+        app:layout_constraintBottom_toBottomOf="@id/circular_progress_indicator"
+        app:layout_constraintStart_toStartOf="@id/circular_progress_indicator"
+        app:layout_constraintEnd_toEndOf="@id/circular_progress_indicator"
+        tools:text="42%"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/progress_message_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:textSize="14sp"
+        android:textColor="?attr/colorOnSurfaceVariant"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@id/circular_progress_indicator"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="Processing..." />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

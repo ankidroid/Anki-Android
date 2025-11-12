@@ -17,9 +17,7 @@
 package com.ichi2.anki
 
 import android.app.Activity
-import android.app.Dialog
 import android.content.Context
-import android.content.DialogInterface
 import android.net.Uri
 import android.view.WindowManager
 import android.view.WindowManager.BadTokenException
@@ -40,6 +38,7 @@ import com.ichi2.anki.CrashReportData.HelpAction
 import com.ichi2.anki.CrashReportData.HelpAction.AnkiBackendLink
 import com.ichi2.anki.CrashReportData.HelpAction.OpenDeckOptions
 import com.ichi2.anki.common.annotations.UseContextParameter
+import com.ichi2.anki.dialogs.CircularProgressDialog
 import com.ichi2.anki.exception.StorageAccessException
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.pages.DeckOptionsDestination
@@ -410,21 +409,20 @@ suspend fun <T> Fragment.withProgress(
     block: suspend () -> T,
 ): T = requireActivity().withProgress(messageId, block)
 
-@Suppress("Deprecation") // ProgressDialog deprecation
 suspend fun <T> withProgressDialog(
     context: Activity,
     onCancel: (() -> Unit)?,
     delayMillis: Long = 600,
     @StringRes manualCancelButton: Int? = null,
-    op: suspend (android.app.ProgressDialog) -> T,
+    op: suspend (CircularProgressDialog) -> T,
 ): T =
     coroutineScope {
         val dialog =
-            android.app.ProgressDialog(context, R.style.AppCompatProgressDialogStyle).apply {
+            CircularProgressDialog(context).apply {
                 setCancelable(onCancel != null)
                 if (manualCancelButton != null) {
                     setCancelable(false)
-                    setButton(DialogInterface.BUTTON_NEGATIVE, context.getString(manualCancelButton)) { _, _ ->
+                    setButton(manualCancelButton) { _, _ ->
                         Timber.i("Progress dialog cancelled via cancel button")
                         onCancel?.let { it() }
                     }
@@ -477,9 +475,9 @@ suspend fun <T> withProgressDialog(
         }
     }
 
-private fun dismissDialogIfShowing(dialog: Dialog) {
+private fun dismissDialogIfShowing(dialog: CircularProgressDialog) {
     try {
-        if (dialog.isShowing) {
+        if (dialog.isShowing()) {
             dialog.dismiss()
         }
     } catch (e: Exception) {
@@ -523,18 +521,18 @@ data class ProgressContext(
     var amount: Pair<Int, Int>? = null,
 )
 
-@Suppress("Deprecation") // ProgressDialog deprecation
-private fun ProgressContext.updateDialog(dialog: android.app.ProgressDialog) {
-    // ideally this would show a progress bar, but MaterialDialog does not support
-    // setting progress after starting with indeterminate progress, so we just use
-    // this for now
-    // this code has since been updated to ProgressDialog, and the above not rechecked
-    val progressText =
-        amount?.let {
-            " ${it.first}/${it.second}"
-        } ?: ""
-    @Suppress("Deprecation") // ProgressDialog deprecation
-    dialog.setMessage(text + progressText)
+private fun ProgressContext.updateDialog(dialog: CircularProgressDialog) {
+    // Update message
+    dialog.setMessage(text)
+
+    // Update progress if we have amount information
+    amount?.let { (current, total) ->
+        dialog.setIndeterminate(false)
+        dialog.setProgress(current, total)
+    } ?: run {
+        // No amount info, keep it indeterminate
+        dialog.setIndeterminate(true)
+    }
 }
 
 /**
