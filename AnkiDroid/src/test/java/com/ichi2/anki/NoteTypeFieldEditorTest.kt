@@ -108,8 +108,8 @@ class NoteTypeFieldEditorTest(
 
                     // start ModelFieldEditor activity
                     val intent = Intent()
-                    intent.putExtra("title", noteTypeName)
-                    intent.putExtra("noteTypeID", col.notetypes.idForName(noteTypeName)!!)
+                    intent.putExtra(NoteTypeFieldEditor.EXTRA_NOTETYPE_NAME, noteTypeName)
+                    intent.putExtra(NoteTypeFieldEditor.EXTRA_NOTETYPE_ID, col.notetypes.idForName(noteTypeName)!!)
                     val noteTypeFieldEditor =
                         startActivityNormallyOpenCollectionWithIntent(
                             this@NoteTypeFieldEditorTest,

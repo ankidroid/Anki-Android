@@ -125,7 +125,7 @@ class ManageNoteTypesViewModel : ViewModel() {
                     _state.update { oldState ->
                         oldState.copy(isLoading = false, message = UserMessage.DeletingLastModel)
                     }
-                    OpChanges.getDefaultInstance()
+                    return@undoableOp OpChanges.getDefaultInstance()
                 }
                 safeRemoveNoteType(nid)
                     .onSuccess { changes ->

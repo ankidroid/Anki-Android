@@ -150,7 +150,7 @@ class AddNewNotesType(
         selectedOption: AddNotetypeUiModel,
     ) {
         activity.launchCatchingTask {
-            activity.runAndRefreshAfter {
+            withCol {
                 val kind = StockNotetype.Kind.forNumber(selectedOption.id.toInt())
                 val updatedStandardNotetype =
                     getStockNotetype(kind).apply {
@@ -158,6 +158,7 @@ class AddNewNotesType(
                     }
                 addNotetypeLegacy(BackendUtils.toJsonBytes(updatedStandardNotetype))
             }
+            activity.viewModel.refreshNoteTypes()
         }
     }
 
@@ -166,7 +167,7 @@ class AddNewNotesType(
         model: AddNotetypeUiModel,
     ) {
         activity.launchCatchingTask {
-            activity.runAndRefreshAfter {
+            withCol {
                 val targetNotetype = getNotetype(model.id)
                 val newNotetype =
                     targetNotetype.copy {
@@ -175,6 +176,7 @@ class AddNewNotesType(
                     }
                 addNotetype(newNotetype)
             }
+            activity.viewModel.refreshNoteTypes()
         }
     }
 
