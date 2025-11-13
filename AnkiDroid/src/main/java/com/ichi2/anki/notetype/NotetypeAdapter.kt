@@ -19,11 +19,12 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
+import android.widget.PopupMenu
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.button.MaterialButton
 import com.ichi2.anki.R
 
 private val notetypeNamesAndCountDiff =
@@ -77,17 +78,28 @@ internal class NotetypeViewHolder(
 ) : RecyclerView.ViewHolder(rowView) {
     val name: TextView = rowView.findViewById(R.id.note_name)
     val useCount: TextView = rowView.findViewById(R.id.note_use_count)
-    private val btnDelete: Button = rowView.findViewById(R.id.note_delete)
-    private val btnRename: Button = rowView.findViewById(R.id.note_rename)
-    private val btnEditCards: Button = rowView.findViewById(R.id.note_edit_cards)
+    private val btnEditCards: MaterialButton = rowView.findViewById(R.id.note_edit_cards)
+    private val btnMoreActions: MaterialButton = rowView.findViewById(R.id.btn_more)
     private var noteTypeItemState: NoteTypeItemState? = null
     private val resources = rowView.context.resources
 
     init {
         rowView.setOnClickListener { noteTypeItemState?.let(onItemClick) }
         btnEditCards.setOnClickListener { noteTypeItemState?.let(onEditCards) }
-        btnDelete.setOnClickListener { noteTypeItemState?.let(onDelete) }
-        btnRename.setOnClickListener { noteTypeItemState?.let(onRename) }
+        btnMoreActions.setOnClickListener {
+            PopupMenu(rowView.context, btnMoreActions)
+                .apply {
+                    inflate(R.menu.note_types_more_actions)
+                    setOnMenuItemClickListener { item ->
+                        when (item.itemId) {
+                            R.id.action_rename -> noteTypeItemState?.let(onRename)
+                            R.id.action_delete -> noteTypeItemState?.let(onDelete)
+                            else -> error("Unexpected menu item!")
+                        }
+                        true
+                    }
+                }.show()
+        }
     }
 
     fun bind(state: NoteTypeItemState) {
