@@ -29,7 +29,6 @@
 
     <!--Browser-->
     <string name="model_browser_delete">Delete note type</string>
-    <string name="model_browser_rename" comment="Rename a note type">Rename</string>
     <string name="model_browser_template">Edit cards</string>
 
 
