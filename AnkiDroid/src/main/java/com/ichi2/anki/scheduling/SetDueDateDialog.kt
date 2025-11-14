@@ -135,7 +135,12 @@ class SetDueDateDialog : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
         MaterialAlertDialogBuilder(requireContext())
             .create {
-                title(text = TR.actionsSetDueDate().toSentenceCase(this@SetDueDateDialog, R.string.sentence_set_due_date))
+                title(
+                    text =
+                        TR
+                            .actionsSetDueDate()
+                            .toSentenceCase(this@SetDueDateDialog, R.string.sentence_set_due_date),
+                )
                 positiveButton(R.string.dialog_ok) { launchUpdateDueDate() }
                 negativeButton(R.string.dialog_cancel)
                 neutralButton(R.string.help)
@@ -167,9 +172,11 @@ class SetDueDateDialog : DialogFragment() {
                 viewPager.registerOnPageChangeCallback(
                     object : ViewPager2.OnPageChangeCallback() {
                         override fun onPageSelected(position: Int) {
-                            SetDueDateViewModel.Tab.entries.first { it.position == position }.let { selectedTab ->
-                                viewModel.currentTab = selectedTab
-                            }
+                            SetDueDateViewModel.Tab.entries
+                                .first { it.position == position }
+                                .let { selectedTab ->
+                                    viewModel.currentTab = selectedTab
+                                }
                             super.onPageSelected(position)
                         }
                     },
@@ -217,7 +224,8 @@ class SetDueDateDialog : DialogFragment() {
         // The dialog is too wide on tablets
         // Select either 450dp (tablets)
         // or 100% of the screen width (smaller phones)
-        val intendedWidth = min(MAX_WIDTH_DP.dp.toPx(this.requireContext()), resources.displayMetrics.widthPixels)
+        val intendedWidth =
+            min(MAX_WIDTH_DP.dp.toPx(this.requireContext()), resources.displayMetrics.widthPixels)
         Timber.d("updating width to %d", intendedWidth)
         this.dialog?.window?.setLayout(
             intendedWidth,
@@ -242,7 +250,10 @@ class SetDueDateDialog : DialogFragment() {
                 arguments =
                     bundleOf(
                         ARG_CARD_IDS to cardIds.toLongArray(),
-                        ARG_FSRS to (getFSRSStatus() ?: false.also { Timber.w("FSRS Status error") }),
+                        ARG_FSRS to (
+                            getFSRSStatus()
+                                ?: false.also { Timber.w("FSRS Status error") }
+                        ),
                     )
                 Timber.i("Showing 'set due date' dialog for %d cards", cardIds.size)
             }
@@ -275,7 +286,11 @@ class SetDueDateDialog : DialogFragment() {
                     doOnTextChanged { text, _, _, _ ->
                         val currentValue = text?.toString()?.toIntOrNull()
                         viewModel.nextSingleDayDueDate = currentValue
-                        suffixText = resources.getQuantityString(R.plurals.set_due_date_label_suffix, currentValue ?: 0)
+                        suffixText =
+                            resources.getQuantityString(
+                                R.plurals.set_due_date_label_suffix,
+                                currentValue ?: 0,
+                            )
                     }
                     suffixText = resources.getQuantityString(R.plurals.set_due_date_label_suffix, 0)
                     helperText =
@@ -290,7 +305,10 @@ class SetDueDateDialog : DialogFragment() {
                         return@setOnEditorActionListener if (actionId == EditorInfo.IME_ACTION_DONE ||
                             event?.keyCode == KeyEvent.KEYCODE_ENTER
                         ) {
-                            parentFragmentManager.setFragmentResult(RESULT_SUBMIT_DUE_DATE, bundleOf())
+                            parentFragmentManager.setFragmentResult(
+                                RESULT_SUBMIT_DUE_DATE,
+                                bundleOf(),
+                            )
                             true
                         } else {
                             false
@@ -300,14 +318,18 @@ class SetDueDateDialog : DialogFragment() {
                 }
             }
             view.findViewById<TextView>(R.id.date_single_label).text =
-                resources.getQuantityString(R.plurals.set_due_date_single_day_label, viewModel.cardCount)
+                resources.getQuantityString(
+                    R.plurals.set_due_date_single_day_label,
+                    viewModel.cardCount,
+                )
         }
 
         override fun onResume() {
             super.onResume()
             this.requireView().requestLayout() // update the height of the ViewPager
 
-            val editText = requireView().findViewById<TextInputLayout>(R.id.set_due_date_single_day_text).editText!!
+            val editText =
+                requireView().findViewById<TextInputLayout>(R.id.set_due_date_single_day_text).editText!!
             AndroidUiUtils.setFocusAndOpenKeyboard(editText)
         }
     }
@@ -330,7 +352,10 @@ class SetDueDateDialog : DialogFragment() {
                         val value = text.toString().toIntOrNull()
                         viewModel.setNextDateRangeStart(value)
                         suffixText =
-                            resources.getQuantityString(R.plurals.set_due_date_label_suffix, value ?: 0)
+                            resources.getQuantityString(
+                                R.plurals.set_due_date_label_suffix,
+                                value ?: 0,
+                            )
                     }
                     suffixText = resources.getQuantityString(R.plurals.set_due_date_label_suffix, 0)
                     selectAllWhenFocused()
@@ -342,7 +367,10 @@ class SetDueDateDialog : DialogFragment() {
                         val value = text.toString().toIntOrNull()
                         viewModel.setNextDateRangeEnd(value)
                         suffixText =
-                            resources.getQuantityString(R.plurals.set_due_date_label_suffix, value ?: 0)
+                            resources.getQuantityString(
+                                R.plurals.set_due_date_label_suffix,
+                                value ?: 0,
+                            )
                     }
                     suffixText = resources.getQuantityString(R.plurals.set_due_date_label_suffix, 0)
                     viewModel.dateRange.end?.let { end -> setText(end.toString()) }
@@ -350,7 +378,10 @@ class SetDueDateDialog : DialogFragment() {
                         return@setOnEditorActionListener if (actionId == EditorInfo.IME_ACTION_DONE ||
                             event?.keyCode == KeyEvent.KEYCODE_ENTER
                         ) {
-                            parentFragmentManager.setFragmentResult(RESULT_SUBMIT_DUE_DATE, bundleOf())
+                            parentFragmentManager.setFragmentResult(
+                                RESULT_SUBMIT_DUE_DATE,
+                                bundleOf(),
+                            )
                             true
                         } else {
                             false
@@ -367,7 +398,8 @@ class SetDueDateDialog : DialogFragment() {
             super.onResume()
             this.requireView().requestLayout() // update the height of the ViewPager
 
-            val editText = requireView().findViewById<TextInputLayout>(R.id.date_range_start_layout).editText!!
+            val editText =
+                requireView().findViewById<TextInputLayout>(R.id.date_range_start_layout).editText!!
             AndroidUiUtils.setFocusAndOpenKeyboard(editText)
         }
     }
