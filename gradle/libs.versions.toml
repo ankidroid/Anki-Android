@@ -20,7 +20,7 @@ ktlint = '1.5.0'
 # https://developer.android.com/build/releases/past-releases
 androidGradlePlugin = "8.13.1"
 # https://developer.android.com/jetpack/androidx/releases/activity
-androidxActivity = "1.11.0"
+androidxActivity = "1.12.0"
 # https://developer.android.com/jetpack/androidx/releases/annotation
 androidxAnnotation = "1.9.1"
 # https://developer.android.com/jetpack/androidx/releases/appcompat
@@ -46,7 +46,7 @@ androidxPreferenceKtx = "1.2.1"
 # https://developer.android.com/jetpack/androidx/releases/recyclerview
 androidxRecyclerview = "1.4.0"
 # https://developer.android.com/jetpack/androidx/releases/sqlite
-androidxSqlite = "2.6.1"
+androidxSqlite = "2.6.2"
 # https://developer.android.com/jetpack/androidx/releases/swiperefreshlayout
 androidxSwipeRefreshLayout = "1.1.0"
 # https://developer.android.com/jetpack/androidx/releases/test
@@ -75,7 +75,7 @@ drawer = "1.0.3"
 espresso = '3.7.0'
 mikehardyGoogleAnalyticsJava7 = "2.0.13"
 hamcrest = "3.0"
-imageCropper = "4.6.0"
+imageCropper = "4.7.0"
 jacoco = "0.8.14"
 javaSemver = "0.10.2"
 jetbrainsAnnotations = "26.0.2-1"
@@ -97,9 +97,9 @@ mockitoInline = "5.2.0"
 mockitoKotlin = "6.1.0"
 mockk = "1.14.6"
 nanohttpd = "2.3.1"
-okhttp = "5.3.0"
+okhttp = "5.3.2"
 # https://github.com/protocolbuffers/protobuf/releases
-protobufKotlinLite = "4.33.0"
+protobufKotlinLite = "4.33.1"
 # ../AnkiDroid/robolectricDownload.gradle may need changes - read instructions in that file
 robolectric = "4.16"
 searchpreference = "2.7.3"
