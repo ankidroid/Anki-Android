@@ -30,6 +30,7 @@ object PreferenceTestUtils {
         @XmlRes xml: Int,
         attrName: String,
         namespace: String = AnkiDroidApp.ANDROID_NAMESPACE,
+        excludeTags: Set<String> = emptySet(),
     ): List<String> {
         val occurrences = mutableListOf<String>()
 
@@ -41,9 +42,11 @@ object PreferenceTestUtils {
 
         while (xrp.eventType != XmlPullParser.END_DOCUMENT) {
             if (xrp.eventType == XmlPullParser.START_TAG) {
-                val attr = xrp.getAttributeValue(namespace, attrName)
-                if (attr != null) {
-                    occurrences.add(attr)
+                if (xrp.name !in excludeTags) {
+                    val attr = xrp.getAttributeValue(namespace, attrName)
+                    if (attr != null) {
+                        occurrences.add(attr)
+                    }
                 }
             }
             xrp.next()
@@ -56,6 +59,7 @@ object PreferenceTestUtils {
         @XmlRes xml: Int,
         attrNames: List<String>,
         namespace: String = AnkiDroidApp.ANDROID_NAMESPACE,
+        excludeTags: Set<String> = emptySet(),
     ): List<Map<String, String>> {
         val occurrences = mutableListOf<Map<String, String>>()
 
@@ -67,8 +71,10 @@ object PreferenceTestUtils {
 
         while (xrp.eventType != XmlPullParser.END_DOCUMENT) {
             if (xrp.eventType == XmlPullParser.START_TAG) {
-                val attrValues = attrNames.associateWith { xrp.getAttributeValue(namespace, it) }
-                occurrences.add(attrValues)
+                if (xrp.name !in excludeTags) {
+                    val attrValues = attrNames.associateWith { xrp.getAttributeValue(namespace, it) }
+                    occurrences.add(attrValues)
+                }
             }
             xrp.next()
         }
@@ -117,13 +123,25 @@ object PreferenceTestUtils {
     fun getKeysFromXml(
         context: Context,
         @XmlRes xml: Int,
-    ): List<String> = getAttrFromXml(context, xml, "key").map { attrValueToString(it, context) }
+        excludeCategories: Boolean = false,
+    ): List<String> {
+        val exclusions =
+            if (excludeCategories) {
+                setOf("PreferenceCategory")
+            } else {
+                emptySet()
+            }
+        return getAttrFromXml(context, xml, "key", excludeTags = exclusions)
+            .map { attrValueToString(it, context) }
+    }
 
     fun getAllPreferenceKeys(context: Context): Set<String> =
         getAllPreferencesFragments(context)
             .filterIsInstance<PreferenceXmlSource>()
             .map { it.preferenceResource }
-            .flatMapTo(hashSetOf()) { getKeysFromXml(context, it) } + ViewerCommand.entries.map { it.preferenceKey }
+            .flatMapTo(hashSetOf()) {
+                getKeysFromXml(context, it, excludeCategories = false)
+            } + ViewerCommand.entries.map { it.preferenceKey }
 
     fun getAllCustomButtonKeys(context: Context): Set<String> {
         val keys = getKeysFromXml(context, R.xml.preferences_custom_buttons).toMutableSet()
