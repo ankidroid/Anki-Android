@@ -59,7 +59,6 @@ import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
 import com.ichi2.utils.title
-import com.ichi2.widget.WidgetStatus
 import dev.androidbroadcast.vbpd.viewBinding
 import org.json.JSONArray
 import org.json.JSONException
@@ -110,13 +109,6 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.note_type_field_editor) {
                 addFieldLocaleHint(selectedLocale)
             }
             dismissAllDialogFragments()
-        }
-    }
-
-    override fun onStop() {
-        super.onStop()
-        if (!isFinishing) {
-            WidgetStatus.updateInBackground(this)
         }
     }
 

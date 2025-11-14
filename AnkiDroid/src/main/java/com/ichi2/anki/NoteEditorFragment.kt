@@ -181,7 +181,6 @@ import com.ichi2.utils.neutralButton
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
 import com.ichi2.utils.title
-import com.ichi2.widget.WidgetStatus
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -1045,13 +1044,6 @@ class NoteEditorFragment :
             StringBuilder(length).append(beforeText).append(newText).append(afterText)
         textBox.setText(newFieldContent)
         textBox.setSelection(start + newStart, start + newEnd)
-    }
-
-    override fun onStop() {
-        super.onStop()
-        if (!isRemoving) {
-            WidgetStatus.updateInBackground(requireContext())
-        }
     }
 
     @KotlinCleanup("convert KeyUtils to extension functions")

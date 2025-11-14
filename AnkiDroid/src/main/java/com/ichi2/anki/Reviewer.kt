@@ -138,7 +138,6 @@ import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
 import com.ichi2.utils.tintOverflowMenuIcons
 import com.ichi2.utils.title
-import com.ichi2.widget.WidgetStatus.updateInBackground
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
 import timber.log.Timber
@@ -1334,13 +1333,6 @@ open class Reviewer :
             textBarNew.visibility = visible
             textBarLearn.visibility = visible
             textBarReview.visibility = visible
-        }
-    }
-
-    override fun onStop() {
-        super.onStop()
-        if (!isFinishing && colIsOpenUnsafe()) {
-            updateInBackground(this)
         }
     }
 
