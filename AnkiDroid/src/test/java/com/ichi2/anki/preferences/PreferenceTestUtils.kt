@@ -41,8 +41,9 @@ object PreferenceTestUtils {
             }
 
         while (xrp.eventType != XmlPullParser.END_DOCUMENT) {
+            val name = xrp.name
             if (xrp.eventType == XmlPullParser.START_TAG) {
-                if (xrp.name !in excludeTags) {
+                if (name !in excludeTags) {
                     val attr = xrp.getAttributeValue(namespace, attrName)
                     if (attr != null) {
                         occurrences.add(attr)
@@ -127,7 +128,7 @@ object PreferenceTestUtils {
     ): List<String> {
         val exclusions =
             if (excludeCategories) {
-                setOf("PreferenceCategory")
+                setOf("PreferenceCategory", "com.ichi2.anki.preferences.ExtendedPreferenceCategory")
             } else {
                 emptySet()
             }
