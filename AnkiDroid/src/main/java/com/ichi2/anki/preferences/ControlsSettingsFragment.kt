@@ -177,7 +177,7 @@ enum class ControlPreferenceScreen(
 
     fun getActions(): List<MappableAction<*>> =
         when (this) {
-            REVIEWER -> ViewerCommand.entries
+            REVIEWER -> if (Prefs.isNewStudyScreenEnabled) ViewerAction.entries else ViewerCommand.entries
             PREVIEWER -> PreviewerAction.entries
         }
 }
