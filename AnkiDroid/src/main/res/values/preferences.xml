@@ -159,7 +159,7 @@
     <string name="previewer_mark_key">previewer_MARK</string>
     <string name="previewer_edit_key">previewer_EDIT</string>
     <string name="previewer_replay_media_key">previewer_REPLAY_AUDIO</string>
-    <string name="previewer_backside_only_action_key">previewer_BACKSIDE_ONLY</string>
+    <string name="previewer_backside_only_action_key">previewer_TOGGLE_BACKSIDE_ONLY</string>
     <string name="previewer_flag_red_key">previewer_TOGGLE_FLAG_RED</string>
     <string name="previewer_flag_orange_key">previewer_TOGGLE_FLAG_ORANGE</string>
     <string name="previewer_flag_green_key">previewer_TOGGLE_FLAG_GREEN</string>
