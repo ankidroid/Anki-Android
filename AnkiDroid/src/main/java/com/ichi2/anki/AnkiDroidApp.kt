@@ -110,6 +110,12 @@ open class AnkiDroidApp :
         // because the SQL statement appeared later.
         //   Os.setenv("TRACESQL", "1", false);
         super.onCreate()
+        val appLifecycleObserver = AppLifecycleObserver(applicationContext)
+
+        androidx.lifecycle.ProcessLifecycleOwner
+            .get()
+            .lifecycle
+            .addObserver(appLifecycleObserver)
         if (isInitialized) {
             Timber.i("onCreate() called multiple times")
             // 5887 - fix crash.
