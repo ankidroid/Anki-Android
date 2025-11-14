@@ -66,7 +66,7 @@
     <string name="enable_stylus" maxLength="28">تفعيل وضع القلم</string>
     <string name="disable_stylus">تعطيل وضع القلم</string>
     <string name="eraser" maxLength="28">ممحاة</string>
-    <string name="add_brush" maxLength="28">إضافة فرشة</string>
+    <string name="add_brush" maxLength="28">إضافة فرشةنعم</string>
     <string name="whiteboard_align_left" comment="Option to align the whiteboard toolbar on the left" maxLength="28">شمال</string>
     <string name="whiteboard_align_bottom" comment="Option to align the whiteboard toolbar on the bottom" maxLength="28">أسفل</string>
     <string name="whiteboard_align_right" comment="Option to align the whiteboard toolbar on the right" maxLength="28">يمين</string>
