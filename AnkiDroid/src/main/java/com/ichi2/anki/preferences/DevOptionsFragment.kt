@@ -27,11 +27,13 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.UsageAnalytics
+import com.ichi2.anki.dialogs.TtsVoicesDialogFragment
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.showThemedToast
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.ext.defaultConfig
+import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.withProgress
 import com.ichi2.preferences.IncrementerNumberRangePreferenceCompat
 import com.ichi2.utils.setWebContentsDebuggingEnabled
@@ -132,6 +134,12 @@ class DevOptionsFragment : SettingsFragment() {
                 }
                 setNegativeButton(R.string.dialog_cancel) { _, _ -> }
             }
+            false
+        }
+
+        // Open TTS voice selection ({{tts-voices:}})
+        requirePreference<Preference>(R.string.dev_open_tts_voices).setOnPreferenceClickListener {
+            showDialogFragment(TtsVoicesDialogFragment())
             false
         }
 
