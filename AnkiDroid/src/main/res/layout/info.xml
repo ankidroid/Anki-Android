@@ -41,7 +41,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical" />
-            <include layout="@layout/progress_bar" />
+            <!-- progress bar -->
+            <LinearLayout
+                android:id="@+id/progress_bar_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
+                <ProgressBar
+                    android:id="@+id/progress_bar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+                </ProgressBar>
+            </LinearLayout>
         </RelativeLayout>
 
         <com.google.android.material.divider.MaterialDivider
