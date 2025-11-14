@@ -109,9 +109,18 @@ class RecyclerFastScroller
             object : RecyclerView.AdapterDataObserver() {
                 override fun onChanged() {
                     super.onChanged()
+                    // Reset cached scroll range when adapter changes
+                    cachedMaxScrollRange = 0
                     requestLayout()
                 }
             }
+
+        /**
+         * Cached maximum scroll range to prevent thumb size from changing during scroll.
+         * RecyclerView's computeVerticalScrollRange() can vary when items have different heights,
+         * so we cache the maximum value we've seen to keep the thumb size stable.
+         */
+        private var cachedMaxScrollRange: Int = 0
 
         var touchTargetWidth: Int = 24.dp.toPx(context)
             /**
@@ -314,6 +323,8 @@ class RecyclerFastScroller
             this.adapter?.unregisterAdapterDataObserver(adapterObserver)
             adapter?.registerAdapterDataObserver(adapterObserver)
             this.adapter = adapter
+            // Reset cached scroll range when adapter changes
+            cachedMaxScrollRange = 0
         }
 
         /**
@@ -379,15 +390,29 @@ class RecyclerFastScroller
             if (recyclerView == null) return
 
             val scrollOffset = recyclerView!!.computeVerticalScrollOffset() + appBarLayoutOffset
-            val verticalScrollRange = (
+            val currentScrollRange = (
                 recyclerView!!.computeVerticalScrollRange() +
                     recyclerView!!.paddingBottom
             )
 
-            val barHeight = bar.height
-            val ratio = scrollOffset.toFloat() / (verticalScrollRange - barHeight)
+            // Update cached maximum scroll range if we see a larger value.
+            // This prevents the thumb size from changing when items with different heights
+            // scroll in and out of view, which can cause computeVerticalScrollRange() to vary.
+            // This also handles initialization when cachedMaxScrollRange is 0.
+            if (currentScrollRange > cachedMaxScrollRange) {
+                cachedMaxScrollRange = currentScrollRange
+            }
 
-            var calculatedHandleHeight = (barHeight.toFloat() / verticalScrollRange * barHeight).toInt()
+            val barHeight = bar.height
+
+            // Use current range for position calculation (for accurate thumb position)
+            val ratio = scrollOffset.toFloat() / (currentScrollRange - barHeight).coerceAtLeast(1)
+
+            // ALWAYS use cached maximum for thumb height calculation to keep it stable during scroll.
+            // The cached max represents the true maximum content height we've seen,
+            // preventing the thumb from resizing as items with different heights scroll in/out of view.
+            val verticalScrollRangeForThumb = if (cachedMaxScrollRange > 0) cachedMaxScrollRange else currentScrollRange
+            var calculatedHandleHeight = (barHeight.toFloat() / verticalScrollRangeForThumb * barHeight).toInt()
             if (calculatedHandleHeight < minScrollHandleHeight) {
                 calculatedHandleHeight = minScrollHandleHeight
             }
