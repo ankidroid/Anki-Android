@@ -395,7 +395,7 @@ class RecyclerFastScroller
                     recyclerView!!.paddingBottom
             )
 
-             // Update cached maximum scroll range if we see a larger value.
+            // Update cached maximum scroll range if we see a larger value.
             // This prevents the thumb size from changing when items with different heights
             // scroll in and out of view, which can cause computeVerticalScrollRange() to vary.
             // This also handles initialization when cachedMaxScrollRange is 0.
