@@ -84,7 +84,12 @@ document.addEventListener("focusout", event => {
             }
 
             // Swipes and tap detection
-            const endX = event.changedTouches[0].pageX;
+            // Ignore gesture if user held finger too long (timeout after 1000ms)
+            if (Date.now() - touchStartTime > 1000) {
+                return;
+            }
+            
+ const endX = event.changedTouches[0].pageX;
             const endY = event.changedTouches[0].pageY;
             const scrollDirection = getScrollDirection(event.target);
             const params = new URLSearchParams({
