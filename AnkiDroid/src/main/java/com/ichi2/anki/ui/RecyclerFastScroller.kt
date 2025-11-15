@@ -410,8 +410,7 @@ class RecyclerFastScroller
             // ALWAYS use cached maximum for thumb height calculation to keep it stable during scroll.
             // The cached max represents the true maximum content height we've seen,
             // preventing the thumb from resizing as items with different heights scroll in/out of view.
-            val verticalScrollRangeForThumb = if (cachedMaxScrollRange > 0) cachedMaxScrollRange else currentScrollRange
-            var calculatedHandleHeight = (barHeight.toFloat() / verticalScrollRangeForThumb * barHeight).toInt()
+            var calculatedHandleHeight = (barHeight.toFloat() / cachedMaxScrollRange * barHeight).toInt()
             if (calculatedHandleHeight < minScrollHandleHeight) {
                 calculatedHandleHeight = minScrollHandleHeight
             }
