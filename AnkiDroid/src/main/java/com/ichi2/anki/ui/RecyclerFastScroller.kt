@@ -395,6 +395,13 @@ class RecyclerFastScroller
                     recyclerView!!.paddingBottom
             )
 
+             // Update cached maximum scroll range if we see a larger value.
+            // This prevents the thumb size from changing when items with different heights
+            // scroll in and out of view, which can cause computeVerticalScrollRange() to vary.
+            // This also handles initialization when cachedMaxScrollRange is 0.
+            if (currentScrollRange > cachedMaxScrollRange) {
+                cachedMaxScrollRange = currentScrollRange
+            }
             val barHeight = bar.height
 
             // Use current range for position calculation (for accurate thumb position)
