@@ -94,6 +94,11 @@ var throwOnShowError = false
  * Runs a suspend function that catches any uncaught errors and reports them to the user.
  * Errors from the backend contain localized text that is often suitable to show to the user as-is.
  * Other errors should ideally be handled in the block.
+ *
+ * @param context Coroutine context passed to [launch]
+ * @param errorMessageHandler Called after an exception is caught and logged, input is either
+ * `Exception.localizedMessage` or `Exception.toString()`
+ * @param block code to execute inside [launch]
  */
 fun CoroutineScope.launchCatching(
     context: CoroutineContext = EmptyCoroutineContext,
