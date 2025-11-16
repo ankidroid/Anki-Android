@@ -26,6 +26,7 @@ import com.ichi2.anki.libanki.CardTemplate
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.NoteTypeId
 import com.ichi2.anki.libanki.NotetypeJson
+import com.ichi2.anki.observability.undoableOp
 import com.ichi2.compat.CompatHelper.Companion.compat
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import timber.log.Timber
@@ -99,11 +100,13 @@ class CardTemplateNotetype(
         addTemplateChange(ChangeType.DELETE, ord)
     }
 
-    fun saveToDatabase(col: Collection) {
+    suspend fun saveToDatabase() {
         Timber.d("saveToDatabase() called")
         dumpChanges()
         clearTempNoteTypeFiles()
-        return saveNoteType(col, notetype, adjustedTemplateChanges)
+        undoableOp {
+            saveNoteType(this, notetype, adjustedTemplateChanges)
+        }
     }
 
     /**
@@ -117,7 +120,6 @@ class CardTemplateNotetype(
         Timber.d("saveNoteType")
         val oldNoteType = col.notetypes.get(notetype.id)
 
-        // TODO: make undoable
         val newTemplates = notetype.templates
         for (change in templateChanges) {
             val oldTemplates = oldNoteType!!.templates
