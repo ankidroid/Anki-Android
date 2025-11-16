@@ -26,9 +26,12 @@ import kotlinx.coroutines.flow.asStateFlow
 /**
  * @param noteIds IDs of notes whose tags should bfe retrieved and marked as "checked"
  * @param checkedTags additional list of checked tags.
+ * These tags coming from EXTRAS are treated as absolute checked and cannot be indeterminate.
  * @param isCustomStudying true if all inputs are to be handled as unchecked tags, false otherwise(
  * this is a temporary parameter until custom study by tags is modified)
  *  They are joined with the tags retrieved from noteIds
+ *
+ *  @see <a href="https://github.com/ankidroid/Anki-Android/pull/19499#discussion_r2532184695">Extra checked tags</>
  */
 class TagsDialogViewModel(
     noteIds: Collection<NoteId> = emptyList(),
@@ -43,17 +46,26 @@ class TagsDialogViewModel(
     init {
         tags =
             asyncIO {
-                val allTags = withCol { tags.all() }.toSet()
-                val allCheckedTags =
-                    noteIds
-                        .flatMapIndexedTo(mutableSetOf()) { index, nid ->
-                            _initProgress.emit(InitProgress.FetchingNoteTags(index + 1, noteIds.size))
-                            withCol { getNote(nid) }.tags
-                        }.apply {
-                            addAll(checkedTags)
-                        }
+                val allTags = withCol { tags.all() }
+                val allCheckedTags = mutableSetOf<String>()
+                val uncheckedTags = mutableSetOf<String>()
+                // For each note, put the checked tag in checked list and unchecked tags in unchecked list.
+                // This will result in few tags being present in both lists, checked and
+                // unchecked as they might be present in one note but absent in any other.
+                // Such tags are referred as `indeterminateTags` in [TagsList]
+                noteIds.forEachIndexed { index, nid ->
+                    // TODO: Lift up withCol{ } call out of loop. Performs `N` expensive db queries.
+                    val noteTags = withCol { getNote(nid) }.tags
+                    _initProgress.emit(InitProgress.FetchingNoteTags(index + 1, noteIds.size))
+                    val (checked, unchecked) = allTags.partition { noteTags.contains(it) }
+                    allCheckedTags.addAll(checked)
+                    uncheckedTags.addAll(unchecked)
+                }
+                // add the extra checked tags, these are to be shown as `checked` and cannot be indeterminate
+                val extraCheckedTags = checkedTags.toSet()
+                allCheckedTags.addAll(extraCheckedTags)
+                uncheckedTags.removeAll(extraCheckedTags)
                 _initProgress.emit(InitProgress.Processing)
-                val uncheckedTags = allTags - allCheckedTags
                 if (isCustomStudying) {
                     TagsList(
                         allTags = allCheckedTags,
