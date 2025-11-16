@@ -43,17 +43,27 @@ class TagsDialogViewModel(
     init {
         tags =
             asyncIO {
-                val allTags = withCol { tags.all() }.toSet()
-                val allCheckedTags =
-                    noteIds
-                        .flatMapIndexedTo(mutableSetOf()) { index, nid ->
-                            _initProgress.emit(InitProgress.FetchingNoteTags(index + 1, noteIds.size))
-                            withCol { getNote(nid) }.tags
-                        }.apply {
-                            addAll(checkedTags)
+                val allTags = withCol { tags.all() }
+                val allCheckedTags = mutableSetOf<String>()
+                val uncheckedTags = mutableSetOf<String>()
+                // For each note, put the checked tag in checked list and unchecked tags in unchecked list.
+                // This will result in few tags being present in both lists, checked and
+                // unchecked as they might be present in one note but absent in any other.
+                // Such tags are referred as `indeterminateTags` in [TagsList]
+                noteIds.forEachIndexed { index, nid ->
+                    val noteTags = withCol { getNote(nid) }.tags
+                    _initProgress.emit(InitProgress.FetchingNoteTags(index + 1, noteIds.size))
+                    allTags.forEach { tag ->
+                        if (noteTags.contains(tag)) {
+                            allCheckedTags.add(tag)
+                        } else {
+                            uncheckedTags.add(tag)
                         }
+                    }
+                }
+                // add the extra checked tags
+                allCheckedTags.addAll(checkedTags)
                 _initProgress.emit(InitProgress.Processing)
-                val uncheckedTags = allTags - allCheckedTags
                 if (isCustomStudying) {
                     TagsList(
                         allTags = allCheckedTags,
