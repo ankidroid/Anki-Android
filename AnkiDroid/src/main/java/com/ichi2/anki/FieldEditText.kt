@@ -183,9 +183,9 @@ class FieldEditText :
         getPlainText(clipboard, context)?.let { pasted ->
             val start = min(selectionStart, selectionEnd)
             val end = max(selectionStart, selectionEnd)
-            setText(
-                text!!.substring(0, start) + pasted + text!!.substring(end),
-            )
+            // Use Editable.replace() instead of setText() to preserve Editor state
+            // This prevents interference with cut operations and selection tracking
+            text?.replace(start, end, pasted)
             setSelection(start + pasted.length)
             return true
         }
