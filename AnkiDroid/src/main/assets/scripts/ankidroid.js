@@ -56,7 +56,7 @@ document.addEventListener("focusout", event => {
             startX = event.touches[0].pageX;
             startY = event.touches[0].pageY;
             // start counting from the first finger touch
-            if (touchCount == 1) {
+            if (touchCount === 1) {
                 touchStartTime = Date.now();
             }
         },
