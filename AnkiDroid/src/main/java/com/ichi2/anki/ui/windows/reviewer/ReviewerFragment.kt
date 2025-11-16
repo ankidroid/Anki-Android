@@ -30,6 +30,7 @@ import android.view.ViewGroup.MarginLayoutParams
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.webkit.WebView
+import android.widget.FrameLayout
 import android.widget.LinearLayout
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.ActionMenuView
@@ -666,6 +667,8 @@ class ReviewerFragment :
 
     override fun onCreateWebViewClient(savedInstanceState: Bundle?): CardViewerWebViewClient = ReviewerWebViewClient(savedInstanceState)
 
+    override fun onCreateWebChromeClient(): CardViewerWebChromeClient = ReviewerWebChromeClient()
+
     private inner class ReviewerWebViewClient(
         savedInstanceState: Bundle?,
     ) : CardViewerWebViewClient(savedInstanceState) {
@@ -736,6 +739,29 @@ class ReviewerFragment :
                 val scale = it / 100.0
                 val script = """document.body.style.zoom = `$scale`;"""
                 view?.evaluateJavascript(script, null)
+            }
+        }
+    }
+
+    private inner class ReviewerWebChromeClient : CardViewerWebChromeClient() {
+        override fun onHideCustomView() {
+            val barsToHide = Prefs.hideSystemBars
+            if (barsToHide == HideSystemBars.NONE) {
+                super.onHideCustomView()
+            } else {
+                val window = requireActivity().window
+                (window.decorView as FrameLayout).removeView(paramView)
+
+                val barsToShowBack =
+                    when (barsToHide) {
+                        HideSystemBars.STATUS_BAR -> WindowInsetsCompat.Type.navigationBars()
+                        HideSystemBars.NAVIGATION_BAR -> WindowInsetsCompat.Type.statusBars()
+                        HideSystemBars.ALL, HideSystemBars.NONE -> return
+                    }
+                with(WindowInsetsControllerCompat(window, window.decorView)) {
+                    show(barsToShowBack)
+                    systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+                }
             }
         }
     }
