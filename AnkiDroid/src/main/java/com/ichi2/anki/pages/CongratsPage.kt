@@ -76,7 +76,7 @@ class CongratsPage :
         // typically due to 'day rollover'
         if (changes.studyQueues) {
             Timber.i("refreshing: study queues updated")
-            webViewLayout.reload()
+            webViewLayout.post { webViewLayout.reload() }
         }
     }
 
