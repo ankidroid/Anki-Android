@@ -403,24 +403,17 @@ class RecyclerFastScroller
                 cachedMaxScrollRange = currentScrollRange
             }
 
+            // Update cached maximum scroll range if we see a larger value.
+            // This prevents the thumb size from changing when items with different heights
+            // scroll in and out of view, which can cause computeVerticalScrollRange() to vary.
+            // This also handles initialization when cachedMaxScrollRange is 0.
+            if (currentScrollRange > cachedMaxScrollRange) {
+                cachedMaxScrollRange = currentScrollRange
+            }
             val barHeight = bar.height
+            val ratio = scrollOffset.toFloat() / (verticalScrollRange - barHeight)
 
-            // Use current range for position calculation (for accurate thumb position)
-            val ratio = scrollOffset.toFloat() / (currentScrollRange - barHeight).coerceAtLeast(1)
-
-            // ALWAYS use cached maximum for thumb height calculation to keep it stable during scroll.
-            // The cached max represents the true maximum content height we've seen,
-            // preventing the thumb from resizing as items with different heights scroll in/out of view.
-            val verticalScrollRangeForThumb = cachedMaxScrollRange.coerceAtLeast(currentScrollRange)
-            // Calculate handle height based on visible extent vs total range
-            // The handle represents the proportion of visible content to total content
-            val visibleExtent = recyclerView!!.computeVerticalScrollExtent()
-            var calculatedHandleHeight =
-                if (verticalScrollRangeForThumb > 0) {
-                    (visibleExtent.toFloat() / verticalScrollRangeForThumb * barHeight).toInt()
-                } else {
-                    barHeight // If range is 0, show full handle (all content visible)
-                }
+            var calculatedHandleHeight = (barHeight.toFloat() / verticalScrollRange * barHeight).toInt()
             if (calculatedHandleHeight < minScrollHandleHeight) {
                 calculatedHandleHeight = minScrollHandleHeight
             }
