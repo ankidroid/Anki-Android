@@ -113,6 +113,8 @@ class RecyclerFastScroller
                     cachedMaxScrollRange = 0
                     cachedVisibleExtent = 0
                     lastRecyclerViewHeight = 0
+                    cachedHandleHeight = 0
+                    cachedBarHeight = 0
                     requestLayout()
                 }
             }
@@ -131,6 +133,13 @@ class RecyclerFastScroller
          */
         private var cachedVisibleExtent: Int = 0
         private var lastRecyclerViewHeight: Int = 0
+
+        /**
+         * Cached handle height to prevent jitter during scroll.
+         * Only update when there's a significant change (> 2px difference).
+         */
+        private var cachedHandleHeight: Int = 0
+        private var cachedBarHeight: Int = 0
 
         var touchTargetWidth: Int = 24.dp.toPx(context)
             /**
@@ -337,6 +346,8 @@ class RecyclerFastScroller
             cachedMaxScrollRange = 0
             cachedVisibleExtent = 0
             lastRecyclerViewHeight = 0
+            cachedHandleHeight = 0
+            cachedBarHeight = 0
         }
 
         /**
@@ -435,15 +446,28 @@ class RecyclerFastScroller
             // Calculate handle height based on visible extent vs total range
             // The handle represents the proportion of visible content to total content
             // Use cached visible extent to prevent jitter during scroll
-            var calculatedHandleHeight =
+            // Only recalculate if barHeight changed or handle height hasn't been cached yet
+            val newCalculatedHandleHeight =
                 if (verticalScrollRangeForThumb > 0) {
                     (cachedVisibleExtent.toFloat() / verticalScrollRangeForThumb * barHeight).toInt()
                 } else {
                     barHeight // If range is 0, show full handle (all content visible)
                 }
-            if (calculatedHandleHeight < minScrollHandleHeight) {
-                calculatedHandleHeight = minScrollHandleHeight
-            }
+
+            // Only update cached handle height if barHeight changed or if the difference is significant (> 2px)
+            // This prevents jitter from small calculation fluctuations
+            val calculatedHandleHeight =
+                if (cachedBarHeight != barHeight ||
+                    cachedHandleHeight == 0 ||
+                    kotlin.math.abs(newCalculatedHandleHeight - cachedHandleHeight) > 2
+                ) {
+                    val finalHeight = newCalculatedHandleHeight.coerceAtLeast(minScrollHandleHeight)
+                    cachedHandleHeight = finalHeight
+                    cachedBarHeight = barHeight
+                    finalHeight
+                } else {
+                    cachedHandleHeight
+                }
 
             if (calculatedHandleHeight >= barHeight) {
                 translationX = hiddenTranslationX.toFloat()
