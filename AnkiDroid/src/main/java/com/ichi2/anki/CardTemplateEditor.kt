@@ -932,7 +932,7 @@ open class CardTemplateEditor :
                 }
                 launchCatchingTask(resources.getString(R.string.card_template_editor_save_error)) {
                     requireActivity().withProgress(resources.getString(R.string.saving_model)) {
-                        withCol { templateEditor.tempNoteType!!.saveToDatabase(this@withCol) }
+                        templateEditor.tempNoteType!!.saveToDatabase()
                     }
                     onModelSaved()
                 }
