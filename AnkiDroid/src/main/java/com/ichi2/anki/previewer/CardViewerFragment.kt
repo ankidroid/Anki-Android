@@ -143,6 +143,8 @@ abstract class CardViewerFragment(
     protected open fun onCreateWebViewClient(savedInstanceState: Bundle?): CardViewerWebViewClient =
         CardViewerWebViewClient(savedInstanceState)
 
+    protected open fun onCreateWebChromeClient() = CardViewerWebChromeClient()
+
     override fun onWebViewRecreated(webView: WebView) {
         setupWebView(null)
     }
@@ -236,43 +238,42 @@ abstract class CardViewerFragment(
         }
     }
 
-    private fun onCreateWebChromeClient(): WebChromeClient =
-        object : WebChromeClient() {
-            private lateinit var customView: View
+    open inner class CardViewerWebChromeClient : WebChromeClient() {
+        protected lateinit var paramView: View
 
-            // used for displaying `<video>` in fullscreen.
-            // This implementation requires configChanges="orientation" in the manifest
-            // to avoid destroying the View if the device is rotated
-            override fun onShowCustomView(
-                paramView: View,
-                paramCustomViewCallback: CustomViewCallback?,
-            ) {
-                customView = paramView
-                val window = requireActivity().window
-                (window.decorView as FrameLayout).addView(
-                    customView,
-                    FrameLayout.LayoutParams(
-                        FrameLayout.LayoutParams.MATCH_PARENT,
-                        FrameLayout.LayoutParams.MATCH_PARENT,
-                    ),
-                )
-                // hide system bars
-                with(WindowInsetsControllerCompat(window, window.decorView)) {
-                    systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
-                    hide(WindowInsetsCompat.Type.systemBars())
-                }
-            }
-
-            override fun onHideCustomView() {
-                val window = requireActivity().window
-                (window.decorView as FrameLayout).removeView(customView)
-                // show system bars back
-                with(WindowInsetsControllerCompat(window, window.decorView)) {
-                    systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_DEFAULT
-                    show(WindowInsetsCompat.Type.systemBars())
-                }
+        // used for displaying `<video>` in fullscreen.
+        // This implementation requires configChanges="orientation" in the manifest
+        // to avoid destroying the View if the device is rotated
+        override fun onShowCustomView(
+            paramView: View,
+            paramCustomViewCallback: CustomViewCallback?,
+        ) {
+            this@CardViewerWebChromeClient.paramView = paramView
+            val window = requireActivity().window
+            (window.decorView as FrameLayout).addView(
+                paramView,
+                FrameLayout.LayoutParams(
+                    FrameLayout.LayoutParams.MATCH_PARENT,
+                    FrameLayout.LayoutParams.MATCH_PARENT,
+                ),
+            )
+            // hide system bars
+            with(WindowInsetsControllerCompat(window, window.decorView)) {
+                systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+                hide(WindowInsetsCompat.Type.systemBars())
             }
         }
+
+        override fun onHideCustomView() {
+            val window = requireActivity().window
+            (window.decorView as FrameLayout).removeView(paramView)
+            // show system bars back
+            with(WindowInsetsControllerCompat(window, window.decorView)) {
+                systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_DEFAULT
+                show(WindowInsetsCompat.Type.systemBars())
+            }
+        }
+    }
 
     private fun showMediaErrorSnackbar(filename: String) {
         showSnackbar(getString(R.string.card_viewer_could_not_find_image, filename)) {
