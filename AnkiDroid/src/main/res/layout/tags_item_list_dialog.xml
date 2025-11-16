@@ -30,6 +30,8 @@
         android:layout_weight="1"
         android:paddingStart="6dp"
         android:textSize="16sp"
+        android:ellipsize="end"
+        android:singleLine="true"
         tools:text="Example Tag" />
 
     <com.ichi2.ui.CheckBoxTriStates

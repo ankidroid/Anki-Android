@@ -106,7 +106,6 @@ class CardTemplateNotetype(
         clearTempNoteTypeFiles()
         undoableOp {
             saveNoteType(notetype, adjustedTemplateChanges)
-            Unit
         }
     }
 

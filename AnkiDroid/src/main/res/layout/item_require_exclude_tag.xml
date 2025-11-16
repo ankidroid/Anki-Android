@@ -8,4 +8,6 @@
     android:gravity="center_vertical"
     android:paddingHorizontal="8dp"
     android:background="?attr/selectableItemBackground"
+    android:ellipsize="end"
+    android:singleLine="true"
     tools:text="Tag entry"/>
