@@ -42,6 +42,7 @@ document.addEventListener("focusout", event => {
 (() => {
     const SCHEME = "gesture";
     const MULTI_TOUCH_TIMEOUT = 300;
+    const GESTURE_TIMEOUT = 800;
 
     let startX = 0,
         startY = 0,
@@ -80,6 +81,11 @@ document.addEventListener("focusout", event => {
                     return;
                 }
                 window.location.href = `${SCHEME}://multiFingerTap/?touchCount=${touchCount}`;
+                return;
+            }
+
+            // Ignore gesture if it takes too long
+            if (Date.now() - touchStartTime > GESTURE_TIMEOUT) {
                 return;
             }
 
