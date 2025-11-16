@@ -164,6 +164,17 @@ class FieldEditText :
             }
             return pastePlainText()
         }
+        // Fix for issue where backspace removes multiple characters after CTRL+X cut
+        // After cutting, we need to reset the selection to a single cursor position
+        // to prevent backspace from using the old selection range
+        if (id == android.R.id.cut) {
+            // Get the cut position before calling super, as the selection will change
+            val cutPosition = min(selectionStart, selectionEnd)
+            val result = super.onTextContextMenuItem(id)
+            // Reset selection to cursor position after cut to fix backspace behavior
+            setSelection(cutPosition)
+            return result
+        }
         return super.onTextContextMenuItem(id)
     }
 
