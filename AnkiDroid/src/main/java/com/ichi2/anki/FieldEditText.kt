@@ -1,6 +1,17 @@
 /****************************************************************************************
- * Copyright (c) 2015 Timothy Rae <perceptualchaos2@gmail.com>
- * Licensed under GPLv3 or later.
+ * Copyright (c) 2015 Timothy Rae <perceptualchaos2@gmail.com>                          *
+ *                                                                                      *
+ * This program is free software; you can redistribute it and/or modify it under        *
+ * the terms of the GNU General Public License as published by the Free Software        *
+ * Foundation; either version 3 of the License, or (at your option) any later           *
+ * version.                                                                             *
+ *                                                                                      *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY      *
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A      *
+ * PARTICULAR PURPOSE. See the GNU General Public License for more details.             *
+ *                                                                                      *
+ * You should have received a copy of the GNU General Public License along with         *
+ * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
 package com.ichi2.anki
@@ -13,18 +24,19 @@ import android.net.Uri
 import android.os.LocaleList
 import android.os.Parcelable
 import android.text.InputType
-import android.util.AttributeSet
 import android.view.KeyEvent
+import android.util.AttributeSet
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import androidx.annotation.VisibleForTesting
 import androidx.core.graphics.toColorInt
 import com.google.android.material.color.MaterialColors
+import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.anki.snackbar.showSnackbar
-import com.ichi2.libanki.CollectionHelper
 import com.ichi2.ui.FixedEditText
 import com.ichi2.utils.ClipboardUtil.getDescription
 import com.ichi2.utils.ClipboardUtil.getPlainText
@@ -39,7 +51,6 @@ import kotlin.math.min
 class FieldEditText :
     FixedEditText,
     NoteService.NoteField {
-
     override var ord = 0
     private var origBackground: Drawable? = null
     private var selectionChangeListener: TextSelectionListener? = null
@@ -59,16 +70,18 @@ class FieldEditText :
         super.onAttachedToWindow()
         if (shouldDisableExtendedTextUi()) {
             Timber.i("Disabling Extended Text UI")
-            imeOptions = imeOptions or EditorInfo.IME_FLAG_NO_EXTRACT_UI
+            this.imeOptions = this.imeOptions or EditorInfo.IME_FLAG_NO_EXTRACT_UI
         }
     }
 
-    private fun shouldDisableExtendedTextUi(): Boolean =
-        context.sharedPrefs().getBoolean("disableExtendedTextUi", false)
+    private fun shouldDisableExtendedTextUi(): Boolean = this.context.sharedPrefs().getBoolean("disableExtendedTextUi", false)
 
     @KotlinCleanup("Simplify")
     override val fieldText: String?
-        get() = text?.toString()
+        get() {
+            val text = text ?: return null
+            return text.toString()
+        }
 
     fun init() {
         try {
@@ -76,75 +89,111 @@ class FieldEditText :
         } catch (e: Exception) {
             Timber.w(e)
         }
-
         minimumWidth = 400
         origBackground = background
+        // Fixes bug where new instances of this object have wrong colors, probably
+        // from some reuse mechanic in Android.
         setDefaultStyle()
 
-        val highlightColor = MaterialColors.getColor(
-            context,
-            R.attr.editTextHighlightColor,
-            "#99CCFF".toColorInt(),
-        )
+        val highlightColor =
+            MaterialColors.getColor(
+                context,
+                R.attr.editTextHighlightColor,
+                "#99CCFF".toColorInt(), // light blue color for fallback just-in-case
+            )
         setHighlightColor(highlightColor)
     }
 
-    fun setPasteListener(listener: PasteListener) {
-        pasteListener = listener
+    fun setPasteListener(pasteListener: PasteListener) {
+        this.pasteListener = pasteListener
     }
 
-    override fun onSelectionChanged(selStart: Int, selEnd: Int) {
-        try {
-            selectionChangeListener?.onSelectionChanged(selStart, selEnd)
-        } catch (e: Exception) {
-            Timber.w(e, "mSelectionChangeListener")
+    override fun onSelectionChanged(
+        selStart: Int,
+        selEnd: Int,
+    ) {
+        if (selectionChangeListener != null) {
+            try {
+                selectionChangeListener!!.onSelectionChanged(selStart, selEnd)
+            } catch (e: Exception) {
+                Timber.w(e, "mSelectionChangeListener")
+            }
         }
         super.onSelectionChanged(selStart, selEnd)
     }
 
     fun setHintLocale(locale: Locale) {
+        Timber.d("Setting hint locale to '%s'", locale)
         imeHintLocales = LocaleList(locale)
     }
 
+    /**
+     * Modify the style of this view to represent a duplicate field.
+     */
     fun setDupeStyle() {
         setBackgroundColor(MaterialColors.getColor(context, R.attr.duplicateColor, 0))
     }
 
+    /**
+     * Restore the default style of this view.
+     */
     fun setDefaultStyle() {
         background = origBackground
     }
 
-    fun setContent(content: String?, replaceNewLine: Boolean) {
-        val text = when {
-            content == null -> ""
-            replaceNewLine -> content.replace("<br(\\s*/*)>".toRegex(), NEW_LINE)
-            else -> content
-        }
+    fun setContent(
+        content: String?,
+        replaceNewLine: Boolean,
+    ) {
+        val text =
+            if (content == null) {
+                ""
+            } else if (replaceNewLine) {
+                content.replace("<br(\\s*/*)>".toRegex(), NEW_LINE)
+            } else {
+                content
+            }
         setText(text)
     }
 
-    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-
-        // Handle Ctrl+X (cut)
+    override fun onKeyDown(
+        keyCode: Int,
+        event: KeyEvent?,
+    ): Boolean {
+        // Handle Ctrl+X (cut operation) to fix backspace behavior after cut
+        // Issue #19504: Backspace deletes multiple characters after cut operation
+        // Core issue: When text is deleted via cut, Android Editor's internal mSelectedText
+        // and selection cache isn't invalidated. The next key press (e.g., backspace)
+        // uses the old cached selection causing multi-char deletion.
+        //
+        // The REAL fix: After cutting and deleting text, we need to invalidate the Editor's
+        // internal selection tracking by simulating a cursor movement that forces it to refresh.
         if (keyCode == KeyEvent.KEYCODE_X && event?.isCtrlPressed == true) {
             val selStart = selectionStart
             val selEnd = selectionEnd
 
+            // Only intercept if there's an actual selection
             if (selStart != selEnd) {
                 try {
                     val start = min(selStart, selEnd)
                     val end = max(selStart, selEnd)
                     val editable = editableText
 
+                    // Get the text that will be cut
                     val cutText = editable.subSequence(start, end)
+
+                    // Copy to clipboard
                     val clip = android.content.ClipData.newPlainText("cut", cutText)
                     clipboard?.setPrimaryClip(clip)
 
+                    // Delete the selected text
                     editable.delete(start, end)
 
+                    // CRITICAL: Force Android's Editor to invalidate its selection cache
+                    // by temporarily moving selection away and back
                     isHandlingCut = true
 
-                    // Force editor refresh
+                    // Move selection slightly to force Editor to re-evaluate state
                     if (start > 0) {
                         setSelection(start - 1)
                         setSelection(start)
@@ -155,24 +204,23 @@ class FieldEditText :
                         setSelection(start)
                     }
 
-                    lastCutTime = CollectionHelper.getInstance().col.time().currentTimeMillis()
+                    lastCutTime = TimeManager.time.intTimeMS()
                     isHandlingCut = false
                     return true
-
                 } catch (e: Exception) {
-                    Timber.w(e, "Manual cut failed")
+                    Timber.w(e, "Failed to perform manual cut, falling back to parent")
                     isHandlingCut = false
                     return super.onKeyDown(keyCode, event)
                 }
             }
         }
 
-        // Fix backspace after cut
-        val now = CollectionHelper.getInstance().col.time().currentTimeMillis()
-        if (keyCode == KeyEvent.KEYCODE_DEL && !isHandlingCut && now - lastCutTime < 100) {
-            val cursor = selectionStart
+        // Immediately after cut, if backspace is pressed, clear the selection that might be lingering
+        if (keyCode == KeyEvent.KEYCODE_DEL && !isHandlingCut && TimeManager.time.intTimeMS() - lastCutTime < 100) {
+            // Force clear any lingering selection by explicitly setting cursor
+            val currentCursor = selectionStart
             if (selectionStart != selectionEnd) {
-                setSelection(cursor)
+                setSelection(currentCursor)
             }
         }
 
@@ -180,10 +228,13 @@ class FieldEditText :
     }
 
     override fun onSaveInstanceState(): Parcelable {
-        return SavedState(super.onSaveInstanceState(), ord)
+        val state = super.onSaveInstanceState()
+        return SavedState(state, ord)
     }
 
     override fun onTextContextMenuItem(id: Int): Boolean {
+        // The current function is called both by Ctrl+V and pasting from the context menu
+        // It does not deal with drag and drop
         if (id == android.R.id.paste) {
             if (hasMedia(clipboard)) {
                 return onPaste(getUri(clipboard), getDescription(clipboard))
@@ -198,24 +249,30 @@ class FieldEditText :
         getPlainText(clipboard, context)?.let { pasted ->
             val start = min(selectionStart, selectionEnd)
             val end = max(selectionStart, selectionEnd)
-            setText(text!!.substring(0, start) + pasted + text!!.substring(end))
+            setText(
+                text!!.substring(0, start) + pasted + text!!.substring(end),
+            )
             setSelection(start + pasted.length)
             return true
         }
         return false
     }
 
-    private fun onPaste(mediaUri: Uri?, description: ClipDescription?): Boolean {
-        if (mediaUri == null) return false
-
-        return try {
-            pasteListener?.onPaste(this, mediaUri, description) ?: false
-        } catch (e: Exception) {
-            Timber.w(e, "Failed to paste media")
-            showSnackbar(context.getString(R.string.multimedia_editor_something_wrong))
+    private fun onPaste(
+        mediaUri: Uri?,
+        description: ClipDescription?,
+    ): Boolean =
+        if (mediaUri == null) {
             false
+        } else {
+            try {
+                pasteListener!!.onPaste(this, mediaUri, description)
+            } catch (e: Exception) {
+                Timber.w(e, "Failed to paste media")
+                showSnackbar(context.getString(R.string.multimedia_editor_something_wrong))
+                false
+            }
         }
-    }
 
     override fun onRestoreInstanceState(state: Parcelable) {
         if (state !is SavedState) {
@@ -228,16 +285,16 @@ class FieldEditText :
 
     fun setCapitalize(value: Boolean) {
         val inputType = this.inputType
-        this.inputType = if (value) {
-            inputType or InputType.TYPE_TEXT_FLAG_CAP_SENTENCES
-        } else {
-            inputType and InputType.TYPE_TEXT_FLAG_CAP_SENTENCES.inv()
-        }
+        this.inputType =
+            if (value) {
+                inputType or InputType.TYPE_TEXT_FLAG_CAP_SENTENCES
+            } else {
+                inputType and InputType.TYPE_TEXT_FLAG_CAP_SENTENCES.inv()
+            }
     }
 
     val isCapitalized: Boolean
-        get() = inputType and InputType.TYPE_TEXT_FLAG_CAP_SENTENCES ==
-            InputType.TYPE_TEXT_FLAG_CAP_SENTENCES
+        get() = this.inputType and InputType.TYPE_TEXT_FLAG_CAP_SENTENCES == InputType.TYPE_TEXT_FLAG_CAP_SENTENCES
 
     @Parcelize
     internal class SavedState(
@@ -246,11 +303,18 @@ class FieldEditText :
     ) : BaseSavedState(state)
 
     interface TextSelectionListener {
-        fun onSelectionChanged(selStart: Int, selEnd: Int)
+        fun onSelectionChanged(
+            selStart: Int,
+            selEnd: Int,
+        )
     }
 
     fun interface PasteListener {
-        fun onPaste(editText: EditText, uri: Uri?, description: ClipDescription?): Boolean
+        fun onPaste(
+            editText: EditText,
+            uri: Uri?,
+            description: ClipDescription?,
+        ): Boolean
     }
 
     companion object {
