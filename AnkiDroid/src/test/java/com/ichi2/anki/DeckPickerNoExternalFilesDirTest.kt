@@ -41,7 +41,9 @@ class DeckPickerNoExternalFilesDirTest : RobolectricTest() {
         // Currently undefined if we should fail when PREF_COLLECTION_PATH is set
         //  but getExternalFilesDir returns null
 
-        getPreferences().edit { putBoolean(IntroductionActivity.INTRODUCTION_SLIDES_SHOWN, true) }
+        // IntroductionActivity should be skipped by our code so we can show the error
+        // without user interaction
+        getPreferences().edit { putBoolean(IntroductionActivity.INTRODUCTION_SLIDES_SHOWN, false) }
 
         startActivityNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent()).run {
             val message = (ShadowDialog.getLatestDialog() as AlertDialog).message
