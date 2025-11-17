@@ -194,6 +194,7 @@ import com.ichi2.utils.customView
 import com.ichi2.utils.dp
 import com.ichi2.utils.message
 import com.ichi2.utils.negativeButton
+import com.ichi2.utils.neutralButton
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
 import com.ichi2.utils.title
@@ -1004,6 +1005,11 @@ open class DeckPicker :
                     message(text = failure.toHumanReadableString(this@DeckPicker))
                     positiveButton(R.string.close) {
                         closeCollectionAndFinish()
+                    }
+                    failure.infoLink?.let { url ->
+                        neutralButton(R.string.help) {
+                            openUrl(url)
+                        }
                     }
                     cancelable(false)
                 }

@@ -155,6 +155,9 @@ object InitialActivity {
         data class InitializationError(
             val error: FatalInitializationError,
         ) : StartupFailure() {
+            val infoLink
+                get() = error.infoLink
+
             fun toHumanReadableString(context: Context): String =
                 when (error) {
                     is FatalInitializationError.WebViewError ->
