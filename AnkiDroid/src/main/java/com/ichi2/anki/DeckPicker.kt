@@ -1133,6 +1133,10 @@ open class DeckPicker :
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        if (viewModel.flowOfStartupResponse.value is StartupResponse.FatalError) {
+            return false
+        }
+
         Timber.d("onCreateOptionsMenu()")
         floatingActionMenu.closeFloatingActionMenu(applyRiseAndShrinkAnimation = false)
         // TODO: Refactor menu handling logic to the activity
