@@ -44,6 +44,7 @@ import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.contextmenu.AnkiCardContextMenu
 import com.ichi2.anki.contextmenu.CardBrowserContextMenu
 import com.ichi2.anki.exception.StorageAccessException
+import com.ichi2.anki.exception.SystemStorageException
 import com.ichi2.anki.logging.FragmentLifecycleLogger
 import com.ichi2.anki.logging.LogType
 import com.ichi2.anki.logging.ProductionCrashReportingTree
@@ -197,11 +198,20 @@ open class AnkiDroidApp :
         CardBrowser.clearLastDeckId()
         LanguageUtil.setDefaultBackendLanguages()
 
-        // Create the AnkiDroid directory if missing. Send exception report if inaccessible.
-        if (Permissions.hasLegacyStorageAccessPermission(this)) {
+        // #13207: `getCurrentAnkiDroidDirectory` failing is an unconditional be a fatal error
+        // TODO: For now, a null getExternalFilesDir, but a valid AnkiDroid Directory in prefs
+        //  is not considered to be a fatal error
+        val ankiDroidDir =
             try {
-                val dir = CollectionHelper.getCurrentAnkiDroidDirectory(this)
-                CollectionHelper.initializeAnkiDroidDirectory(dir)
+                CollectionHelper.getCurrentAnkiDroidDirectory(this)
+            } catch (e: SystemStorageException) {
+                fatalInitializationError = FatalInitializationError.StorageError(e)
+                null
+            }
+        // Create the AnkiDroid directory if missing. Send exception report if inaccessible.
+        if (ankiDroidDir != null && Permissions.hasLegacyStorageAccessPermission(this)) {
+            try {
+                CollectionHelper.initializeAnkiDroidDirectory(ankiDroidDir)
             } catch (e: StorageAccessException) {
                 Timber.e(e, "Could not initialize AnkiDroid directory")
                 val defaultDir = CollectionHelper.getDefaultAnkiDroidDirectory(this)
@@ -489,16 +499,22 @@ sealed class FatalInitializationError {
         val error: Throwable,
     ) : FatalInitializationError()
 
+    data class StorageError(
+        val error: SystemStorageException,
+    ) : FatalInitializationError()
+
     /** Advanced/developer-facing string representing the error */
     val errorDetail: String
         get() =
             when (this) {
                 is WebViewError -> ExceptionUtil.getExceptionMessage(error)
+                is StorageError -> error.message
             }
 
     val infoLink: Uri?
         get() =
             when (this) {
                 is WebViewError -> null
+                is StorageError -> error.infoUri?.toUri()
             }
 }
