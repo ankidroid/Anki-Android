@@ -83,7 +83,7 @@ document.addEventListener("focusout", event => {
                 return;
             }
 
-            // Swipes and tap detection 
+            // Swipes and tap detection
             const endX = event.changedTouches[0].pageX;
             const endY = event.changedTouches[0].pageY;
             const scrollDirection = getScrollDirection(event.target);
