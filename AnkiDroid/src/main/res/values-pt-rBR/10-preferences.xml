@@ -261,7 +261,7 @@
     <string name="type_in_answer_focus" maxLength="41">Focar em “tipo em resposta”</string>
     <string name="type_in_answer_focus_summ">Automaticamente focar no campo \"Escreva sua resposta\" na tela de estudos</string>
     <!-- About -->
-    <string name="open_changelog">Open changelog</string>
+    <string name="open_changelog">Abrir histórico de alterações</string>
     <string name="pref_cat_about_title" maxLength="41">Sobre</string>
     <string name="contributors_title">Colaboradores</string>
     <string name="about_contributors_description"><![CDATA[Estes são os nossos incríveis <a href=\"%1$s\">colaboradores</a>. Você também pode ajudar o AnkiDroid programando, traduzindo, doando e <a href=\"%2$s\">mais</a>!]]></string>

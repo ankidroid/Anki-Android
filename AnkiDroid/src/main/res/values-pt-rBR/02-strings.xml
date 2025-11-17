@@ -74,8 +74,8 @@
     <string name="whiteboard_more_options" comment="Tooltip of the whiteboard \'More\' button" maxLength="28">Mais opções</string>
     <string name="whiteboard_remove_brush_message">Tem certeza que deseja remover este pincel da sua paleta?</string>
     <string name="whiteboard_ink_eraser" comment="Title of the whiteboard Ink eraser">Tinta</string>
-    <string name="whiteboard_stroke_eraser" comment="Title of the whiteboard Stroke eraser">Stroke</string>
-    <string name="stylus_mode" comment="Title of the menu item that toggles the whiteboard stylus mode" maxLength="28">Stylus mode</string>
+    <string name="whiteboard_stroke_eraser" comment="Title of the whiteboard Stroke eraser">Traço</string>
+    <string name="stylus_mode" comment="Title of the menu item that toggles the whiteboard stylus mode" maxLength="28">Modo Stylus</string>
     <string name="cannot_remove_last_brush_message">O último pincel não pode ser removido</string>
     <string name="enable_whiteboard" maxLength="28">Habilitar quadro</string>
     <string name="disable_whiteboard">Desabilitar quadro</string>
@@ -336,7 +336,7 @@
     <string name="deck_description_field_hint">Descrição</string>
     <string name="deck_description_saved">Descrição atualizada</string>
     <string name="format_deck_description_as_markdown">Formatar como Markdown</string>
-    <string name="help_button_content_description">Open help for ‘%s’</string>
+    <string name="help_button_content_description">Abrir ajuda para ‘%s’</string>
     <string name="failed_to_copy">Falha ao copiar</string>
     <string name="card_browser_unavailable_when_notes_mode">Indisponível no modo \'Notas\'</string>
     <plurals name="unbury_cards_feedback">
