@@ -35,6 +35,7 @@ import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.libanki.CollectionHelper
 import com.ichi2.ui.FixedEditText
 import com.ichi2.utils.ClipboardUtil.getDescription
 import com.ichi2.utils.ClipboardUtil.getPlainText
@@ -203,7 +204,8 @@ class FieldEditText :
                         setSelection(start)
                     }
 
-                    lastCutTime = System.currentTimeMillis()
+                    // use collection time instead of System.currentTimeMillis()
+                    lastCutTime = CollectionHelper.getInstance().col.time().currentTimeMillis()
                     isHandlingCut = false
                     return true
                 } catch (e: Exception) {
@@ -216,7 +218,8 @@ class FieldEditText :
 
         // Immediately after cut, if backspace is pressed, clear the selection that might be lingering
         @Suppress("ComplexCondition", "MagicNumber")
-        if (keyCode == KeyEvent.KEYCODE_DEL && !isHandlingCut && System.currentTimeMillis() - lastCutTime < 100) {
+        val now = CollectionHelper.getInstance().col.time().currentTimeMillis()
+        if (keyCode == KeyEvent.KEYCODE_DEL && !isHandlingCut && now - lastCutTime < 100) {
             // Force clear any lingering selection by explicitly setting cursor
             val currentCursor = selectionStart
             if (selectionStart != selectionEnd) {
