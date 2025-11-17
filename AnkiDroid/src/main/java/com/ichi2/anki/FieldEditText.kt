@@ -24,14 +24,13 @@ import android.net.Uri
 import android.os.LocaleList
 import android.os.Parcelable
 import android.text.InputType
-import android.view.KeyEvent
 import android.util.AttributeSet
+import android.view.KeyEvent
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import androidx.annotation.VisibleForTesting
 import androidx.core.graphics.toColorInt
 import com.google.android.material.color.MaterialColors
-import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.preferences.sharedPrefs
