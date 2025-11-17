@@ -166,6 +166,7 @@ class FieldEditText :
         //
         // The REAL fix: After cutting and deleting text, we need to invalidate the Editor's
         // internal selection tracking by simulating a cursor movement that forces it to refresh.
+        @Suppress("ComplexCondition")
         if (keyCode == KeyEvent.KEYCODE_X && event?.isCtrlPressed == true) {
             val selStart = selectionStart
             val selEnd = selectionEnd
@@ -214,6 +215,7 @@ class FieldEditText :
         }
 
         // Immediately after cut, if backspace is pressed, clear the selection that might be lingering
+        @Suppress("ComplexCondition", "MagicNumber")
         if (keyCode == KeyEvent.KEYCODE_DEL && !isHandlingCut && System.currentTimeMillis() - lastCutTime < 100) {
             // Force clear any lingering selection by explicitly setting cursor
             val currentCursor = selectionStart
