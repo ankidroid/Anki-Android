@@ -36,6 +36,8 @@ object ScopedStorageService {
      *   [com.ichi2.anki.ui.windows.managespace.isInsideDirectoriesRemovedWithTheApp].
      *
      * @return `true` if AnkiDroid is storing user data in a Legacy Storage Directory.
+     *
+     * @throws com.ichi2.anki.exception.SystemStorageException if `getExternalFilesDir` returns null
      */
     fun isLegacyStorage(context: Context): Boolean = isLegacyStorage(CollectionHelper.getCurrentAnkiDroidDirectory(context), context)
 
