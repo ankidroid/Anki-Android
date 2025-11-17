@@ -56,6 +56,9 @@ class FieldEditText :
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     var clipboard: ClipboardManager? = null
 
+    private var lastCutTime: Long = 0
+    private var isHandlingCut = false
+
     constructor(context: Context?) : super(context!!)
     constructor(context: Context?, attr: AttributeSet?) : super(context!!, attr)
     constructor(context: Context?, attrs: AttributeSet?, defStyle: Int) : super(context!!, attrs, defStyle)
@@ -148,6 +151,77 @@ class FieldEditText :
                 content
             }
         setText(text)
+    }
+
+    override fun onKeyDown(
+        keyCode: Int,
+        event: KeyEvent?,
+    ): Boolean {
+        // Handle Ctrl+X (cut operation) to fix backspace behavior after cut
+        // Issue #19504: Backspace deletes multiple characters after cut operation
+        // Core issue: When text is deleted via cut, Android Editor's internal mSelectedText
+        // and selection cache isn't invalidated. The next key press (e.g., backspace)
+        // uses the old cached selection causing multi-char deletion.
+        //
+        // The REAL fix: After cutting and deleting text, we need to invalidate the Editor's
+        // internal selection tracking by simulating a cursor movement that forces it to refresh.
+        if (keyCode == KeyEvent.KEYCODE_X && event?.isCtrlPressed == true) {
+            val selStart = selectionStart
+            val selEnd = selectionEnd
+
+            // Only intercept if there's an actual selection
+            if (selStart != selEnd) {
+                try {
+                    val start = min(selStart, selEnd)
+                    val end = max(selStart, selEnd)
+                    val editable = editableText
+
+                    // Get the text that will be cut
+                    val cutText = editable.subSequence(start, end)
+
+                    // Copy to clipboard
+                    val clip = android.content.ClipData.newPlainText("cut", cutText)
+                    clipboard?.setPrimaryClip(clip)
+
+                    // Delete the selected text
+                    editable.delete(start, end)
+
+                    // CRITICAL: Force Android's Editor to invalidate its selection cache
+                    // by temporarily moving selection away and back
+                    isHandlingCut = true
+
+                    // Move selection slightly to force Editor to re-evaluate state
+                    if (start > 0) {
+                        setSelection(start - 1)
+                        setSelection(start)
+                    } else if (editable.length > start) {
+                        setSelection(start + 1)
+                        setSelection(start)
+                    } else {
+                        setSelection(start)
+                    }
+
+                    lastCutTime = System.currentTimeMillis()
+                    isHandlingCut = false
+                    return true
+                } catch (e: Exception) {
+                    Timber.w(e, "Failed to perform manual cut, falling back to parent")
+                    isHandlingCut = false
+                    return super.onKeyDown(keyCode, event)
+                }
+            }
+        }
+
+        // Immediately after cut, if backspace is pressed, clear the selection that might be lingering
+        if (keyCode == KeyEvent.KEYCODE_DEL && !isHandlingCut && System.currentTimeMillis() - lastCutTime < 100) {
+            // Force clear any lingering selection by explicitly setting cursor
+            val currentCursor = selectionStart
+            if (selectionStart != selectionEnd) {
+                setSelection(currentCursor)
+            }
+        }
+
+        return super.onKeyDown(keyCode, event)
     }
 
     override fun onSaveInstanceState(): Parcelable {
