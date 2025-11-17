@@ -79,8 +79,8 @@ import java.util.Locale
 open class AnkiDroidApp :
     Application(),
     ChangeManager.Subscriber {
-    /** An exception if the WebView subsystem fails to load  */
-    private var webViewError: Throwable? = null
+    /** An exception if AnkiDroidApp fails to load  */
+    private var fatalInitializationError: FatalInitializationError? = null
 
     @LegacyNotifications("The widget triggers notifications by posting null to this, but we plan to stop relying on the widget")
     private val notifications = MutableLiveData<Void?>()
@@ -302,7 +302,7 @@ open class AnkiDroidApp :
             // 5794: Errors occur if the WebView fails to load
             // android.webkit.WebViewFactory.MissingWebViewPackageException.MissingWebViewPackageException
             // Error may be excessive, but I expect a UnsatisfiedLinkError to be possible here.
-            webViewError = e
+            fatalInitializationError = FatalInitializationError.WebViewError(e)
             sendExceptionReport(e, "setAcceptFileSchemeCookies")
             Timber.e(e, "setAcceptFileSchemeCookies")
             false
@@ -474,16 +474,24 @@ open class AnkiDroidApp :
                     else -> appResources.getString(R.string.link_manual)
                 }
 
-        fun webViewFailedToLoad(): Boolean = instance.webViewError != null
-
-        val webViewErrorMessage: String?
-            get() {
-                val error = instance.webViewError
-                if (error == null) {
-                    Timber.w("getWebViewExceptionMessage called without webViewFailedToLoad check")
-                    return null
-                }
-                return ExceptionUtil.getExceptionMessage(error)
-            }
+        /** (optional) set if an unrecoverable error occurs during Application startup */
+        val fatalError: FatalInitializationError?
+            get() = instance.fatalInitializationError
     }
+}
+
+/**
+ * Types of unrecoverable errors which we want to inform the user of
+ */
+sealed class FatalInitializationError {
+    data class WebViewError(
+        val error: Throwable,
+    ) : FatalInitializationError()
+
+    /** Advanced/developer-facing string representing the error */
+    val errorDetail: String
+        get() =
+            when (this) {
+                is WebViewError -> ExceptionUtil.getExceptionMessage(error)
+            }
 }

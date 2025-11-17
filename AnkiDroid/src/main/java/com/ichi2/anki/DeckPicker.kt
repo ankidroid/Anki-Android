@@ -90,7 +90,6 @@ import com.ichi2.anki.InitialActivity.StartupFailure.DirectoryNotAccessible
 import com.ichi2.anki.InitialActivity.StartupFailure.DiskFull
 import com.ichi2.anki.InitialActivity.StartupFailure.FutureAnkidroidVersion
 import com.ichi2.anki.InitialActivity.StartupFailure.SDCardNotMounted
-import com.ichi2.anki.InitialActivity.StartupFailure.WebviewFailed
 import com.ichi2.anki.IntentHandler.Companion.intentToReviewDeckFromShortcuts
 import com.ichi2.anki.account.AccountActivity
 import com.ichi2.anki.analytics.UsageAnalytics
@@ -999,16 +998,10 @@ open class DeckPicker :
                 Timber.i("Displaying database locked error")
                 showDatabaseErrorDialog(DatabaseErrorDialogType.DIALOG_DB_LOCKED)
             }
-            is WebviewFailed ->
+            is StartupFailure.InitializationError ->
                 AlertDialog.Builder(this).show {
                     title(R.string.ankidroid_init_failed_webview_title)
-                    message(
-                        text =
-                            getString(
-                                R.string.ankidroid_init_failed_webview,
-                                AnkiDroidApp.webViewErrorMessage,
-                            ),
-                    )
+                    message(text = failure.toHumanReadableString(this@DeckPicker))
                     positiveButton(R.string.close) {
                         closeCollectionAndFinish()
                     }
