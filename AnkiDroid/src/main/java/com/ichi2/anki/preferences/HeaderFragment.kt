@@ -130,6 +130,12 @@ class HeaderFragment : SettingsFragment() {
                         .addBreadcrumb(R.string.pref_cat_appearance)
                 }
                 index(R.xml.preferences_controls)
+                index(R.xml.preferences_reviewer_controls)
+                    .addBreadcrumb(activity.getString(R.string.pref_cat_controls))
+                    .addBreadcrumb(activity.getString(R.string.pref_controls_reviews_tab))
+                index(R.xml.preferences_previewer_controls)
+                    .addBreadcrumb(activity.getString(R.string.pref_cat_controls))
+                    .addBreadcrumb(activity.getString(R.string.pref_controls_previews_tab))
                 index(R.xml.preferences_accessibility)
                 index(R.xml.preferences_backup_limits)
                 ignorePreference(activity.getString(R.string.pref_backups_help_key))
