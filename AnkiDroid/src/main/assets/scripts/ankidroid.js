@@ -42,7 +42,6 @@ document.addEventListener("focusout", event => {
 (() => {
     const SCHEME = "gesture";
     const MULTI_TOUCH_TIMEOUT = 300;
-    const GESTURE_TIMEOUT = 1000;
 
     let startX = 0,
         startY = 0,
@@ -56,7 +55,7 @@ document.addEventListener("focusout", event => {
             startX = event.touches[0].pageX;
             startY = event.touches[0].pageY;
             // start counting from the first finger touch
-            if (touchCount === 1) {
+            if (touchCount == 1) {
                 touchStartTime = Date.now();
             }
         },
