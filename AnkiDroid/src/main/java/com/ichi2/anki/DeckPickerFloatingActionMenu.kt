@@ -18,7 +18,6 @@ package com.ichi2.anki
 import android.animation.Animator
 import android.content.Context
 import android.content.res.ColorStateList
-import android.provider.Settings
 import android.view.KeyEvent
 import android.view.MotionEvent
 import android.view.View
@@ -27,6 +26,7 @@ import android.widget.TextView
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.ichi2.anki.ui.DoubleTapListener
+import com.ichi2.anki.utils.AnimationUtils.areSystemAnimationsEnabled
 import timber.log.Timber
 
 class DeckPickerFloatingActionMenu(
@@ -79,7 +79,7 @@ class DeckPickerFloatingActionMenu(
                 /*
                  * If system animations are true changes the FAB color otherwise it remains the same
                  */
-                if (areSystemAnimationsEnabled()) {
+                if (areSystemAnimationsEnabled(context)) {
                     fabMain.backgroundTintList = ColorStateList.valueOf(fabPressedColor)
                 } else {
                     // Changes the background color of FAB
@@ -325,35 +325,6 @@ class DeckPickerFloatingActionMenu(
             Timber.i("DeckPicker:: hideFloatingActionButton()")
             fabMain.visibility = View.GONE
         }
-    }
-
-    /**
-     * This function returns false if any of the mentioned system animations are disabled (0f)
-     *
-     * ANIMATION_DURATION_SCALE - controls app switching animation speed.
-     * TRANSITION_ANIMATION_SCALE - controls app window opening and closing animation speed
-     * WINDOW_ANIMATION_SCALE - controls pop-up window opening and closing animation speed
-     */
-    private fun areSystemAnimationsEnabled(): Boolean {
-        val animDuration: Float =
-            Settings.Global.getFloat(
-                context.contentResolver,
-                Settings.Global.ANIMATOR_DURATION_SCALE,
-                1f,
-            )
-        val animTransition: Float =
-            Settings.Global.getFloat(
-                context.contentResolver,
-                Settings.Global.TRANSITION_ANIMATION_SCALE,
-                1f,
-            )
-        val animWindow: Float =
-            Settings.Global.getFloat(
-                context.contentResolver,
-                Settings.Global.WINDOW_ANIMATION_SCALE,
-                1f,
-            )
-        return animDuration != 0f && animTransition != 0f && animWindow != 0f
     }
 
     private fun createActivationKeyListener(
