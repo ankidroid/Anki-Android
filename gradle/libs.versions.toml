@@ -97,7 +97,7 @@ mockitoInline = "5.2.0"
 mockitoKotlin = "6.1.0"
 mockk = "1.14.6"
 nanohttpd = "2.3.1"
-okhttp = "5.3.0"
+okhttp = "5.3.1"
 # https://github.com/protocolbuffers/protobuf/releases
 protobufKotlinLite = "4.33.1"
 # ../AnkiDroid/robolectricDownload.gradle may need changes - read instructions in that file
