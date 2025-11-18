@@ -656,6 +656,7 @@ class CardBrowserFragment :
             }
         }
 
+    // TODO: This dialog should survive activity recreation
     fun showChangeDeckDialog() =
         launchCatchingTask {
             if (!activityViewModel.hasSelectedAnyRows()) {
