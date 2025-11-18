@@ -1279,7 +1279,6 @@ class NoteEditorFragment :
         val changes =
             requireActivity().withProgress(resources.getString(R.string.saving_facts)) {
                 undoableOp {
-                    notetypes.save(editorNote!!.notetype)
                     addNote(editorNote!!, deckId)
                 }
             }
@@ -1304,9 +1303,6 @@ class NoteEditorFragment :
             for (f in editFields!!) {
                 updateField(f)
             }
-            // Save deck to noteType
-            Timber.d("setting 'last deck' of note type %s to %d", editorNote!!.notetype.name, deckId)
-            editorNote!!.notetype.did = deckId
             // Save tags to model
             editorNote!!.setTagsFromStr(getColUnsafe, tagsAsString(selectedTags!!))
             val tags = JSONArray()
