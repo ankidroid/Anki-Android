@@ -25,6 +25,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.edit
 import androidx.core.os.BundleCompat
 import com.ichi2.anki.account.AccountActivity
+import com.ichi2.anki.account.LoginFragment
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.introduction.SetupCollectionFragment
 import com.ichi2.anki.introduction.SetupCollectionFragment.CollectionSetupOption
@@ -37,7 +38,7 @@ import timber.log.Timber
 /**
  * App introduction for new users.
  *
- * Links to [LoginActivity] ("Sync from AnkiWeb") or [DeckPicker] ("Get Started")
+ * Links to [AccountActivity]/[LoginFragment] ("Sync from AnkiWeb") or [DeckPicker] ("Get Started")
  *
  * @see SetupCollectionFragment
  */
