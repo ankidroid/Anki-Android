@@ -40,6 +40,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResult
@@ -1445,6 +1446,14 @@ open class DeckPicker :
 
     override fun onResume() {
         activityPaused = false
+        // Reset progress dialog flag in case it was left in an inconsistent state
+        // during activity recreation (e.g., after theme changes)
+        if (AnkiDroidApp.instance.progressDialogShown) {
+            Timber.w("Resetting progressDialogShown flag - was true when activity resumed")
+            AnkiDroidApp.instance.progressDialogShown = false
+            // Also ensure window flags are cleared in case they were set
+            window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+        }
         // stop onResume() processing the message.
         // we need to process the message after `loadDeckCounts` is added in refreshState
         // As `loadDeckCounts` is cancelled in `migrate()`

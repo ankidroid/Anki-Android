@@ -7,6 +7,7 @@ import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.Menu
+import android.view.WindowManager
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.edit
@@ -64,6 +65,7 @@ import org.robolectric.shadows.ShadowDialog
 import org.robolectric.shadows.ShadowLooper
 import timber.log.Timber
 import kotlin.test.assertFailsWith
+import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 import kotlin.time.Duration.Companion.seconds
@@ -766,4 +768,37 @@ class DeckPickerTest : RobolectricTest() {
             return super.onPrepareOptionsMenu(menu)
         }
     }
+
+    @Test
+    fun `test progressDialogShown flag is reset in onResume`() =
+        runTest {
+            // Create the activity controller manually to have access to it
+            val controller =
+                Robolectric
+                    .buildActivity(DeckPicker::class.java, Intent())
+                    .create()
+                    .start()
+                    .visible()
+            saveControllerForCleanup(controller)
+            val activity = controller.get()
+
+            // Simulate the flag being set (e.g., from a previous operation that didn't complete properly)
+            AnkiDroidApp.instance.progressDialogShown = true
+
+            // Call onResume which should reset the flag
+            controller.resume()
+
+            // Verify the flag was reset
+            assertFalse(
+                AnkiDroidApp.instance.progressDialogShown,
+                "progressDialogShown should be reset to false in onResume",
+            )
+
+            // Verify window flags are also cleared
+            assertEquals(
+                0,
+                activity.window.attributes.flags and WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                "FLAG_NOT_TOUCHABLE should be cleared in onResume",
+            )
+        }
 }
