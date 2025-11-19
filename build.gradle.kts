@@ -9,6 +9,7 @@ import java.nio.file.Files
 import java.nio.file.Paths
 import java.nio.file.StandardOpenOption
 import kotlin.math.max
+import kotlin.system.exitProcess
 import kotlin.time.Duration.Companion.milliseconds
 
 
@@ -28,7 +29,7 @@ val localProperties = java.util.Properties()
 if (project.rootProject.file("local.properties").exists()) {
     localProperties.load(project.rootProject.file("local.properties").inputStream())
 }
-val fatalWarnings = !(localProperties["fatal_warnings"] == "false")
+val fatalWarnings = localProperties["fatal_warnings"] != "false"
 
 // can't be obtained inside 'subprojects'
 val ktlintVersion = libs.versions.ktlint.get()
@@ -129,7 +130,7 @@ if (jvmVersion !in jvmVersionLowerBound..jvmVersionUpperBound) {
     println("\n\n\n")
     println("**************************************************************************************************************")
     println("\n\n\n")
-    System.exit(1)
+    exitProcess(1)
 }
 
 val ciBuild by extra(System.getenv("CI") == "true") // works for Travis CI or Github Actions
