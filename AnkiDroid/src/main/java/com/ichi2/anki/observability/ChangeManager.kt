@@ -81,7 +81,11 @@ object ChangeManager {
             if (ref == null) {
                 expired.add(subscriber)
             } else {
-                ref.opExecuted(changes, handler)
+                try {
+                    ref.opExecuted(changes, handler)
+                } catch (e: Exception) {
+                    Timber.e(e, "Exception in subscriber during notifySubscribers")
+                }
             }
         }
         expired.size.ifNotZero { size -> Timber.v("removing %d expired subscribers", size) }
