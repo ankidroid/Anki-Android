@@ -16,12 +16,15 @@
 package com.ichi2.anki.observability
 
 import anki.collection.OpChanges
+import anki.collection.opChanges
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.greaterThan
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.verify
 import kotlin.reflect.KProperty1
 import kotlin.reflect.full.memberProperties
 import kotlin.reflect.javaType
@@ -56,5 +59,33 @@ class ChangeManagerTest {
                 arrayOf(it, it.name)
             }
         }
+    }
+}
+
+class ChangeManagerExceptionTest {
+    
+    @Test
+    fun `subscriber exception does not prevent other subscribers from being notified`() {
+        ChangeManager.clearSubscribers()
+        
+        val goodSubscriber = mock<ChangeManager.Subscriber>()
+        val badSubscriber = object : ChangeManager.Subscriber {
+            override fun opExecuted(changes: OpChanges, handler: Any?) {
+                throw RuntimeException("Test exception")
+            }
+        }
+        
+        ChangeManager.subscribe(badSubscriber)
+        ChangeManager.subscribe(goodSubscriber)
+        
+        val testChanges = opChanges { }
+        
+        // Should not throw despite bad subscriber
+        ChangeManager.notifySubscribers(testChanges, null)
+        
+        // Good subscriber should still be called
+        verify(goodSubscriber).opExecuted(testChanges, null)
+        
+        ChangeManager.clearSubscribers()
     }
 }
