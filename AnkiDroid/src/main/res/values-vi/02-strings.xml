@@ -230,6 +230,7 @@
     <string name="search_decks" maxLength="28">Tìm kiếm bộ thẻ</string>
     <string name="ankidroid_init_failed_webview_title">Lỗi nghiêm trọng</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid dựa trên WebView hệ thống không khả dụng. Điều này có thể xảy ra nếu hệ thống đang cài đặt các bản cập nhật. Vui lòng thử lại sau vài phút.\n\n%s</string>
+    <string name="ankidroid_init_failed_storage">AnkiDroid cannot access storage due to an Android error.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">Cỡ chữ</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Hiển thị thanh công cụ</string>

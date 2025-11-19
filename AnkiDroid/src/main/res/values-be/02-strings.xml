@@ -239,6 +239,7 @@
     <string name="search_decks" maxLength="28">Пошук калод</string>
     <string name="ankidroid_init_failed_webview_title">Крытычная памылка</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid выкарыстоўвае сістэмныя WebView, якія зараз недаступныя. Гэта можа здарыцца таму, што ў дадзены момант адбываюцца ўсталяванне абнаўленняў. Паспрабуйце, калі ласка, пачакаць і паўтарыць спробу праз некалькі хвілін.\n\n%s</string>
+    <string name="ankidroid_init_failed_storage">AnkiDroid cannot access storage due to an Android error.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">Памер шрыфту</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Паказаць панэль інструментаў</string>

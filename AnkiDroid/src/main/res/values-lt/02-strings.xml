@@ -239,6 +239,7 @@
     <string name="search_decks" maxLength="28">kortelių rinkinių paieška</string>
     <string name="ankidroid_init_failed_webview_title">Fatališka klaida</string>
     <string name="ankidroid_init_failed_webview">\"AnkiDroid\" remiasi sistemos žiniatinklio peržiūra, kuri yra neprieinama. Taip gali atsitikti, jei sistema diegia naujinius. Prašome pabandyti dar kartą po kelių minučių.\n\n%s</string>
+    <string name="ankidroid_init_failed_storage">AnkiDroid cannot access storage due to an Android error.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">Šrifto dydis</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Rodyti įrankių juostą</string>
