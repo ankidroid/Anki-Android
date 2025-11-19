@@ -118,11 +118,13 @@ if (jvmVersion !in jvmVersionLowerBound..jvmVersionUpperBound) {
     println("\n\n\n")
     println("ERROR: AnkiDroid builds with JVM versions between $jvmVersionLowerBound and $jvmVersionUpperBound.")
     println("  Incompatible major version detected: '$jvmVersion'")
+    println("\n\n\n")
     if (jvmVersion > jvmVersionUpperBound) {
-        println("\n\n\n")
         println("  If you receive this error because you want to use a newer JDK, we may accept PRs to support new versions.")
         println("  Edit the main build.gradle file, find this message in the file, and add support for the new version.")
         println("  Please make sure the `jacocoTestReport` target works on an emulator with our minSdk (currently $minSdk).")
+    } else {
+        println("  Please update: Settings - Build, Execution, Deployment - Build Tools - Gradle - Gradle JDK")
     }
     println("\n\n\n")
     println("**************************************************************************************************************")
