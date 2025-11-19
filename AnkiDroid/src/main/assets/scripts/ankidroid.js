@@ -42,6 +42,7 @@ document.addEventListener("focusout", event => {
 (() => {
     const SCHEME = "gesture";
     const MULTI_TOUCH_TIMEOUT = 300;
+    const GESTURE_TIMEOUT = 800;
 
     let startX = 0,
         startY = 0,
@@ -55,7 +56,7 @@ document.addEventListener("focusout", event => {
             startX = event.touches[0].pageX;
             startY = event.touches[0].pageY;
             // start counting from the first finger touch
-            if (touchCount == 1) {
+            if (touchCount === 1) {
                 touchStartTime = Date.now();
             }
         },
@@ -83,12 +84,12 @@ document.addEventListener("focusout", event => {
                 return;
             }
 
-            // Swipes and tap detection
-            // Ignore gesture if user held finger too long (timeout after 1000ms)
+            // Ignore gesture if it takes too long
             if (Date.now() - touchStartTime > GESTURE_TIMEOUT) {
                 return;
             }
 
+            // Swipes and tap detection
             const endX = event.changedTouches[0].pageX;
             const endY = event.changedTouches[0].pageY;
             const scrollDirection = getScrollDirection(event.target);
