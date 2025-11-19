@@ -233,6 +233,7 @@
     <string name="search_decks" maxLength="28">Etsi pakkoja</string>
     <string name="ankidroid_init_failed_webview_title">Vakava virhe</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid vaatii toimiakseen System WebView -palvelun, joka ei ole käytettävissä. Näin voi käydä, jos järjestelmän päivitys on käynnissä. Yritä uudelleen muutaman minuutin kuluttua.\n\n%s</string>
+    <string name="ankidroid_init_failed_storage">AnkiDroid cannot access storage due to an Android error.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">Fonttikoko</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Näytä työkalupalkki</string>

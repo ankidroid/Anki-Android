@@ -56,7 +56,7 @@
     <!-- Entries of the Support ankidroid menu. -->
     <string name="send_feedback" comment="Menu entry in the \'Help&gt;Support ankidroid\' menu, that opens the web page explaining how to send feedback.">अभिप्राय पाठवा</string>
     <!-- Study Options-->
-    <string name="studyoptions_start" comment="Title of the Reviewer activity. Also the button to open it.">अभ्यास शुरू करा</string>
+    <string name="studyoptions_start" comment="Title of the Reviewer activity. Also the button to open it.">अभ्यास सुरू करा</string>
     <!-- DeckPicker.kt -->
     <string name="expand" comment="In the deck picker: accessibility label of the buttons that display the subdecks of a deck.">विस्तृत करा</string>
     <string name="collapse" comment="In the deck picker: accessibility label of the buttons that hide the subdecks of a deck.">कोसळणे</string>
@@ -73,8 +73,8 @@
         <item quantity="other">%1$d तास %2$d बाकी</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new" comment="Header of the reviewer, telling the users how many minutes remains before they have seen all cards. The second parameter is the number of hours.">
-        <item quantity="one">%1$d day %2$dh left</item>
-        <item quantity="other">%1$d days %2$dh left</item>
+        <item quantity="one">%1$d दिवस %2$d तास बाकी</item>
+        <item quantity="other">%1$d दिवस %2$d तास बाकी</item>
     </plurals>
     <string name="type_answer_hint" comment="In the reviewer. When the user use note type with hint. It\'s the default content of the text field in which the user is invited to type their answer. It disappears as soon as the user start to type.">उत्तर टाइप करा</string>
     <string name="show_answer" maxLength="41" comment="When displaying the question side of a card. This is the label of a button that display the answer side.">उत्तर दाखवा</string>
