@@ -443,6 +443,6 @@ opening the system text to speech settings fails">Failed to open text to speech 
     <string name="copy">Copy</string>
     <string name="email_copied">Email copied to clipboard</string>
     <string name="proceed">Proceed</string>
-    <string name="cancel_btn">Cancel</string>
+    <string name="cancel_btn">Dismiss</string>
 </resources>
 
