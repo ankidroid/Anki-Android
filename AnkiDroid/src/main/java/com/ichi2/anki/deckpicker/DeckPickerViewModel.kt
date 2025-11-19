@@ -105,7 +105,7 @@ class DeckPickerViewModel :
     /**
      * Used if the Deck Due Tree is mutated
      */
-    private val flowOfRefreshDeckList = MutableSharedFlow<Unit>()
+    private val flowOfRefreshDeckList = MutableSharedFlow<Unit>(extraBufferCapacity = 1)
 
     val flowOfDeckList =
         combine(
@@ -130,16 +130,16 @@ class DeckPickerViewModel :
      * @see deleteDeck
      * @see DeckDeletionResult
      */
-    val deckDeletedNotification = MutableSharedFlow<DeckDeletionResult>()
-    val emptyCardsNotification = MutableSharedFlow<EmptyCardsResult>()
-    val flowOfDestination = MutableSharedFlow<Destination>()
-    override val onError = MutableSharedFlow<String>()
+    val deckDeletedNotification = MutableSharedFlow<DeckDeletionResult>(extraBufferCapacity = 1)
+    val emptyCardsNotification = MutableSharedFlow<EmptyCardsResult>(extraBufferCapacity = 1)
+    val flowOfDestination = MutableSharedFlow<Destination>(extraBufferCapacity = 1)
+    override val onError = MutableSharedFlow<String>(extraBufferCapacity = 1)
 
     /**
      * A notification that the study counts have changed
      */
     // TODO: most of the recalculation should be moved inside the ViewModel
-    val flowOfDeckCountsChanged = MutableSharedFlow<Unit>()
+    val flowOfDeckCountsChanged = MutableSharedFlow<Unit>(extraBufferCapacity = 1)
 
     var loadDeckCounts: Job? = null
         private set
@@ -150,9 +150,9 @@ class DeckPickerViewModel :
      */
     private var schedulerUpgradeDialogShownForVersion: Long? = null
 
-    val flowOfPromptUserToUpdateScheduler = MutableSharedFlow<Unit>()
+    val flowOfPromptUserToUpdateScheduler = MutableSharedFlow<Unit>(extraBufferCapacity = 1)
 
-    val flowOfUndoUpdated = MutableSharedFlow<Unit>()
+    val flowOfUndoUpdated = MutableSharedFlow<Unit>(extraBufferCapacity = 1)
 
     val flowOfCollectionHasNoCards = MutableStateFlow(true)
 
@@ -180,7 +180,7 @@ class DeckPickerViewModel :
 
     // HACK: dismiss a legacy progress bar
     // TODO: Replace with better progress handling for first load/corrupt collections
-    val flowOfDecksReloaded = MutableSharedFlow<Unit>()
+    val flowOfDecksReloaded = MutableSharedFlow<Unit>(extraBufferCapacity = 1)
 
     /**
      * Deletes the provided deck, child decks. and all cards inside.
