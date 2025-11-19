@@ -61,7 +61,7 @@ class BootService : BroadcastReceiver() {
             Timber.d("BootService - Already run")
             return
         }
-        if (!grantedStoragePermissions(context, showToast = false)) {
+        if (runCatching { grantedStoragePermissions(context, showToast = false) }.getOrNull() != true) {
             Timber.w("Boot Service did not execute - no permissions")
             return
         }

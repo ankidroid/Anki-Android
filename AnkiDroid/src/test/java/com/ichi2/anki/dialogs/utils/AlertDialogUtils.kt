@@ -38,6 +38,12 @@ val AlertDialog.title
             "androidx.appcompat.R.id.alertTitle not found"
         }.text.toString()
 
+val AlertDialog.message
+    get() =
+        requireNotNull(this.findViewById<TextView>(android.R.id.message)) {
+            "android.R.id.message not found"
+        }.text.toString()
+
 fun AlertDialog.performPositiveClick() {
     // This exists as callOnClick did not call the listener
     val positiveButton = assertNotNull(getButton(DialogInterface.BUTTON_POSITIVE), message = "positive button")

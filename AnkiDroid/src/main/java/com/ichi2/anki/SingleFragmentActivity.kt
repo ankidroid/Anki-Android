@@ -22,6 +22,7 @@ import android.view.KeyEvent
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentContainerView
 import androidx.fragment.app.commit
+import com.ichi2.anki.SingleFragmentActivity.Companion.getIntent
 import com.ichi2.anki.android.input.ShortcutGroup
 import com.ichi2.anki.android.input.ShortcutGroupProvider
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyAction
@@ -42,7 +43,7 @@ import kotlin.reflect.jvm.jvmName
  *
  * [getIntent] can be used as an easy way to build a [SingleFragmentActivity]
  */
-open class SingleFragmentActivity : AnkiActivity() {
+open class SingleFragmentActivity : AnkiActivity(R.layout.single_fragment_activity) {
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
             return
@@ -52,7 +53,6 @@ open class SingleFragmentActivity : AnkiActivity() {
         if (!ensureStoragePermissions()) {
             return
         }
-        setContentView(R.layout.single_fragment_activity)
         setTransparentStatusBar()
 
         // avoid recreating the fragment on configuration changes

@@ -90,7 +90,6 @@ import com.ichi2.anki.InitialActivity.StartupFailure.DirectoryNotAccessible
 import com.ichi2.anki.InitialActivity.StartupFailure.DiskFull
 import com.ichi2.anki.InitialActivity.StartupFailure.FutureAnkidroidVersion
 import com.ichi2.anki.InitialActivity.StartupFailure.SDCardNotMounted
-import com.ichi2.anki.InitialActivity.StartupFailure.WebviewFailed
 import com.ichi2.anki.IntentHandler.Companion.intentToReviewDeckFromShortcuts
 import com.ichi2.anki.account.AccountActivity
 import com.ichi2.anki.analytics.UsageAnalytics
@@ -195,6 +194,7 @@ import com.ichi2.utils.customView
 import com.ichi2.utils.dp
 import com.ichi2.utils.message
 import com.ichi2.utils.negativeButton
+import com.ichi2.utils.neutralButton
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
 import com.ichi2.utils.title
@@ -520,7 +520,8 @@ open class DeckPicker :
         binding = HomescreenBinding.inflate(layoutInflater)
 
         // handle the first load: display the app introduction
-        if (!hasShownAppIntro()) {
+        // This screen is currently better equipped to handle errors than IntroductionActivity
+        if (!hasShownAppIntro() && AnkiDroidApp.fatalError == null) {
             Timber.i("Displaying app intro")
             val appIntro = Intent(this, IntroductionActivity::class.java)
             appIntro.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -999,18 +1000,17 @@ open class DeckPicker :
                 Timber.i("Displaying database locked error")
                 showDatabaseErrorDialog(DatabaseErrorDialogType.DIALOG_DB_LOCKED)
             }
-            is WebviewFailed ->
+            is StartupFailure.InitializationError ->
                 AlertDialog.Builder(this).show {
                     title(R.string.ankidroid_init_failed_webview_title)
-                    message(
-                        text =
-                            getString(
-                                R.string.ankidroid_init_failed_webview,
-                                AnkiDroidApp.webViewErrorMessage,
-                            ),
-                    )
+                    message(text = failure.toHumanReadableString(this@DeckPicker))
                     positiveButton(R.string.close) {
                         closeCollectionAndFinish()
+                    }
+                    failure.infoLink?.let { url ->
+                        neutralButton(R.string.help) {
+                            openUrl(url)
+                        }
                     }
                     cancelable(false)
                 }
@@ -1134,6 +1134,10 @@ open class DeckPicker :
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        if (viewModel.flowOfStartupResponse.value is StartupResponse.FatalError) {
+            return false
+        }
+
         Timber.d("onCreateOptionsMenu()")
         floatingActionMenu.closeFloatingActionMenu(applyRiseAndShrinkAnimation = false)
         // TODO: Refactor menu handling logic to the activity

@@ -233,6 +233,7 @@
     <string name="search_decks" maxLength="28">సెర్చ్ డెక్స్</string>
     <string name="ankidroid_init_failed_webview_title">తీవ్రమైన లోపం</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid అందుబాటులో లేని సిస్టమ్ WebViewపై ఆధారపడుతుంది. సిస్టమ్ అప్‌డేట్‌లను ఇన్‌స్టాల్ చేస్తున్నప్పుడు ఇది జరగవచ్చు. దయచేసి కొన్ని నిమిషాల్లో మళ్లీ ప్రయత్నించండి.\n\n%s</string>
+    <string name="ankidroid_init_failed_storage">AnkiDroid cannot access storage due to an Android error.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">ఫాంట్ పరిమాణం</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">టూల్ బార్ చూపించు</string>

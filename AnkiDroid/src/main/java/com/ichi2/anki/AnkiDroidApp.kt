@@ -23,6 +23,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.Resources
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
@@ -43,6 +44,7 @@ import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.contextmenu.AnkiCardContextMenu
 import com.ichi2.anki.contextmenu.CardBrowserContextMenu
 import com.ichi2.anki.exception.StorageAccessException
+import com.ichi2.anki.exception.SystemStorageException
 import com.ichi2.anki.logging.FragmentLifecycleLogger
 import com.ichi2.anki.logging.LogType
 import com.ichi2.anki.logging.ProductionCrashReportingTree
@@ -79,8 +81,8 @@ import java.util.Locale
 open class AnkiDroidApp :
     Application(),
     ChangeManager.Subscriber {
-    /** An exception if the WebView subsystem fails to load  */
-    private var webViewError: Throwable? = null
+    /** An exception if AnkiDroidApp fails to load  */
+    private var fatalInitializationError: FatalInitializationError? = null
 
     @LegacyNotifications("The widget triggers notifications by posting null to this, but we plan to stop relying on the widget")
     private val notifications = MutableLiveData<Void?>()
@@ -196,11 +198,20 @@ open class AnkiDroidApp :
         CardBrowser.clearLastDeckId()
         LanguageUtil.setDefaultBackendLanguages()
 
-        // Create the AnkiDroid directory if missing. Send exception report if inaccessible.
-        if (Permissions.hasLegacyStorageAccessPermission(this)) {
+        // #13207: `getCurrentAnkiDroidDirectory` failing is an unconditional be a fatal error
+        // TODO: For now, a null getExternalFilesDir, but a valid AnkiDroid Directory in prefs
+        //  is not considered to be a fatal error
+        val ankiDroidDir =
             try {
-                val dir = CollectionHelper.getCurrentAnkiDroidDirectory(this)
-                CollectionHelper.initializeAnkiDroidDirectory(dir)
+                CollectionHelper.getCurrentAnkiDroidDirectory(this)
+            } catch (e: SystemStorageException) {
+                fatalInitializationError = FatalInitializationError.StorageError(e)
+                null
+            }
+        // Create the AnkiDroid directory if missing. Send exception report if inaccessible.
+        if (ankiDroidDir != null && Permissions.hasLegacyStorageAccessPermission(this)) {
+            try {
+                CollectionHelper.initializeAnkiDroidDirectory(ankiDroidDir)
             } catch (e: StorageAccessException) {
                 Timber.e(e, "Could not initialize AnkiDroid directory")
                 val defaultDir = CollectionHelper.getDefaultAnkiDroidDirectory(this)
@@ -302,7 +313,7 @@ open class AnkiDroidApp :
             // 5794: Errors occur if the WebView fails to load
             // android.webkit.WebViewFactory.MissingWebViewPackageException.MissingWebViewPackageException
             // Error may be excessive, but I expect a UnsatisfiedLinkError to be possible here.
-            webViewError = e
+            fatalInitializationError = FatalInitializationError.WebViewError(e)
             sendExceptionReport(e, "setAcceptFileSchemeCookies")
             Timber.e(e, "setAcceptFileSchemeCookies")
             false
@@ -474,16 +485,36 @@ open class AnkiDroidApp :
                     else -> appResources.getString(R.string.link_manual)
                 }
 
-        fun webViewFailedToLoad(): Boolean = instance.webViewError != null
-
-        val webViewErrorMessage: String?
-            get() {
-                val error = instance.webViewError
-                if (error == null) {
-                    Timber.w("getWebViewExceptionMessage called without webViewFailedToLoad check")
-                    return null
-                }
-                return ExceptionUtil.getExceptionMessage(error)
-            }
+        /** (optional) set if an unrecoverable error occurs during Application startup */
+        val fatalError: FatalInitializationError?
+            get() = instance.fatalInitializationError
     }
+}
+
+/**
+ * Types of unrecoverable errors which we want to inform the user of
+ */
+sealed class FatalInitializationError {
+    data class WebViewError(
+        val error: Throwable,
+    ) : FatalInitializationError()
+
+    data class StorageError(
+        val error: SystemStorageException,
+    ) : FatalInitializationError()
+
+    /** Advanced/developer-facing string representing the error */
+    val errorDetail: String
+        get() =
+            when (this) {
+                is WebViewError -> ExceptionUtil.getExceptionMessage(error)
+                is StorageError -> error.message
+            }
+
+    val infoLink: Uri?
+        get() =
+            when (this) {
+                is WebViewError -> null
+                is StorageError -> error.infoUri?.toUri()
+            }
 }

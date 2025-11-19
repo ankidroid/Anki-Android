@@ -233,6 +233,7 @@
     <string name="search_decks" maxLength="28">ಹುಡುಕಾಟ ಡೆಕ್‌ಗಳು</string>
     <string name="ankidroid_init_failed_webview_title">ಗಂಭೀರವಾದ ತಪ್ಪು</string>
     <string name="ankidroid_init_failed_webview">ಆಂಕಿಡ್ರಾಯ್ಡ್ ಸಿಸ್ಟಮ್ ವೆಬ್‌ವೀಕ್ಷಣೆಯನ್ನು ಅವಲಂಬಿಸಿದೆ, ಅದು ಲಭ್ಯವಿಲ್ಲ. ಸಿಸ್ಟಮ್ ನವೀಕರಣಗಳನ್ನು ಸ್ಥಾಪಿಸುತ್ತಿದ್ದರೆ ಇದು ಸಂಭವಿಸಬಹುದು. ದಯವಿಟ್ಟು ಕೆಲವು ನಿಮಿಷಗಳಲ್ಲಿ ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ. \n\n%s</string>
+    <string name="ankidroid_init_failed_storage">AnkiDroid cannot access storage due to an Android error.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">ಫಾಂಟ್ ಗಾತ್ರ</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">ಉಪಕರಣಪಟ್ಟಿ ಪ್ರದರ್ಶಿಸಿ</string>

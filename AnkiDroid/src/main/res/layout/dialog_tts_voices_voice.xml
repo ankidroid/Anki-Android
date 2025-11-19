@@ -66,7 +66,7 @@
         app:layout_constraintBottom_toBottomOf="parent"/>
 
     <com.ichi2.ui.FixedTextView
-        android:id="@+id/mtrl_list_item_text"
+        android:id="@+id/text_view_bottom"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:maxLines="1"
@@ -79,14 +79,14 @@
         android:textFontWeight="400"
         app:layout_constraintEnd_toStartOf="@id/action_button"
         app:layout_constraintStart_toEndOf="@id/local_or_network"
-        app:layout_constraintTop_toBottomOf="@+id/mtrl_list_item_secondary_text"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_top"
         tools:text="mtrl_list_item_text" />
 
     <com.ichi2.ui.FixedTextView
-        android:id="@+id/mtrl_list_item_secondary_text"
+        android:id="@+id/text_view_top"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/mtrl_list_item_text"
+        android:layout_below="@id/text_view_bottom"
         android:layout_gravity="center_vertical"
         android:maxLines="2"
         android:paddingEnd="16dp"

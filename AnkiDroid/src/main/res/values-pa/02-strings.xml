@@ -233,6 +233,7 @@
     <string name="search_decks" maxLength="28">ਖੋਜ ਡੈੱਕ</string>
     <string name="ankidroid_init_failed_webview_title">ਘਾਤਕ ਗਲਤੀ</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid ਸਿਸਟਮ WebView \'ਤੇ ਨਿਰਭਰ ਕਰਦਾ ਹੈ ਜੋ ਕਿ ਉਪਲਬਧ ਨਹੀਂ ਹੈ। ਇਹ ਉਦੋਂ ਹੋ ਸਕਦਾ ਹੈ ਜੇਕਰ ਸਿਸਟਮ ਅੱਪਡੇਟ ਸਥਾਪਤ ਕਰ ਰਿਹਾ ਹੈ। ਕਿਰਪਾ ਕਰਕੇ ਕੁਝ ਮਿੰਟਾਂ ਵਿੱਚ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।\n\n%s</string>
+    <string name="ankidroid_init_failed_storage">AnkiDroid cannot access storage due to an Android error.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">ਫੌਂਟ ਦਾ ਆਕਾਰ</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">ਟੂਲਬਾਰ ਦਿਖਾਓ</string>

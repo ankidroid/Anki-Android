@@ -233,6 +233,7 @@
     <string name="search_decks" maxLength="28">دەستە ئىزدە</string>
     <string name="ankidroid_init_failed_webview_title">ئېغىر خاتالىق</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid سىستېمىدىكى WebView غا تايىنىدۇ ئەمما ئۇنى ئىشلەتكىلى بولمايدۇ. بۇ سىستېما يېڭىلانمىنى ئورنىتىۋاتقاندا يۈز بېرىشى مۇمكىن. بىر قانچە مىنۇتتىن كېيىن قايتا سىناڭ.\n\n%s</string>
+    <string name="ankidroid_init_failed_storage">AnkiDroid cannot access storage due to an Android error.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">خەت چوڭلۇقى</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">قورال بالداقنى كۆرسەت</string>

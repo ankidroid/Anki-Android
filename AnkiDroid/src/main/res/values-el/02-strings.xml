@@ -233,6 +233,7 @@
     <string name="search_decks" maxLength="28">Αναζήτηση τραπουλών</string>
     <string name="ankidroid_init_failed_webview_title">Κρίσιμο σφάλμα</string>
     <string name="ankidroid_init_failed_webview">Το AnkiDroid βασίζεται στο System WebView το οποίο δεν είναι διαθέσιμο. Αυτό μπορεί να συμβεί αν το σύστημα εγκαθιστά ενημερώσεις. Δοκιμάστε ξανά σε λίγα λεπτά.\n\n%s</string>
+    <string name="ankidroid_init_failed_storage">AnkiDroid cannot access storage due to an Android error.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">Μέγεθος γραμματοσειράς</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Εμφάνιση γραμμής εργαλείων</string>

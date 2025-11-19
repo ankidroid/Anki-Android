@@ -338,6 +338,8 @@ open class CardBrowser :
                 leftPaneWeightKey = PREF_CARD_BROWSER_PANE_WEIGHT,
                 rightPaneWeightKey = PREF_NOTE_EDITOR_PANE_WEIGHT,
             )
+        } else {
+            binding.noteEditorFrame?.isVisible = false
         }
 
         // must be called once we have an accessible collection

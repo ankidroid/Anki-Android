@@ -233,6 +233,7 @@
     <string name="search_decks" maxLength="28">தேடல் தளங்கள்</string>
     <string name="ankidroid_init_failed_webview_title">அபாயகரமான பிழை</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid கணினி WebView ஐ நம்பியுள்ளது, இது கிடைக்கவில்லை. கணினி புதுப்பிப்புகளை நிறுவினால் இது நிகழலாம். சில நிமிடங்களில் மீண்டும் முயற்சிக்கவும்.\n\n%s</string>
+    <string name="ankidroid_init_failed_storage">AnkiDroid cannot access storage due to an Android error.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">எழுத்துரு அளவு</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">கருவிப்பட்டியைக் காட்டு</string>

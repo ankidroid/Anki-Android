@@ -23,11 +23,10 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
-import android.widget.TextView
 import androidx.core.os.BundleCompat
-import com.google.android.material.button.MaterialButton
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.R
+import com.ichi2.anki.databinding.ActivityCardAnalysisWidgetConfigBinding
 import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
 import com.ichi2.anki.isCollectionEmpty
@@ -39,6 +38,7 @@ import com.ichi2.anki.withProgress
 import com.ichi2.widget.AppWidgetId.Companion.INVALID_APPWIDGET_ID
 import com.ichi2.widget.AppWidgetId.Companion.getAppWidgetId
 import com.ichi2.widget.cardanalysis.CardAnalysisWidget.Companion.EXTRA_SELECTED_DECK_ID
+import dev.androidbroadcast.vbpd.viewBinding
 import timber.log.Timber
 
 /**
@@ -59,12 +59,13 @@ import timber.log.Timber
  * @see CardAnalysisWidgetPreferences
  */
 class CardAnalysisWidgetConfig :
-    AnkiActivity(),
+    AnkiActivity(R.layout.activity_card_analysis_widget_config),
     DeckSelectionListener {
+    private val binding by viewBinding(ActivityCardAnalysisWidgetConfigBinding::bind)
+
     private var appWidgetId = INVALID_APPWIDGET_ID
     private var deck: SelectableDeck.Deck? = null
     private lateinit var preferences: CardAnalysisWidgetPreferences
-    private lateinit var deckName: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
@@ -76,7 +77,6 @@ class CardAnalysisWidgetConfig :
             return
         }
 
-        setContentView(R.layout.activity_card_analysis_widget_config)
         preferences = CardAnalysisWidgetPreferences(this)
         appWidgetId = intent.getAppWidgetId()
         if (appWidgetId == INVALID_APPWIDGET_ID) {
@@ -84,7 +84,6 @@ class CardAnalysisWidgetConfig :
             finish()
             return
         }
-        deckName = findViewById(R.id.deck_name)
         if (savedInstanceState != null) {
             deck =
                 BundleCompat.getParcelable(
@@ -92,16 +91,16 @@ class CardAnalysisWidgetConfig :
                     KEY_DECK,
                     SelectableDeck.Deck::class.java,
                 )
-            deckName.text = deck?.name
+            binding.deckName.text = deck?.name
         } else {
             loadContent()
         }
-        findViewById<MaterialButton>(R.id.change_btn).setOnClickListener {
+        binding.changeBtn.setOnClickListener {
             launchCatchingTask {
                 withProgress { showDeckSelectionDialog() }
             }
         }
-        findViewById<MaterialButton>(R.id.done_btn).setOnClickListener { close() }
+        binding.doneBtn.setOnClickListener { close() }
         registerReceiver(
             widgetRemovedReceiver,
             IntentFilter(AppWidgetManager.ACTION_APPWIDGET_DELETED),
@@ -129,7 +128,7 @@ class CardAnalysisWidgetConfig :
         // widget and finish
         val shouldClose = this.deck == null
         this.deck = deck
-        deckName.text = deck.name
+        binding.deckName.text = deck.name
         preferences.saveSelectedDeck(appWidgetId, deck.deckId)
         updateWidget()
         if (shouldClose) {
@@ -155,7 +154,7 @@ class CardAnalysisWidgetConfig :
                     showDeckSelectionDialog()
                 } else {
                     deck = SelectableDeck.Deck.fromId(selectedDeckId)
-                    deckName.text = deck?.name ?: getString(R.string.select_deck)
+                    binding.deckName.text = deck?.name ?: getString(R.string.select_deck)
                 }
             }
         }
