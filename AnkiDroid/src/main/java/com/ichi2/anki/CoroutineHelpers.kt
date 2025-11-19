@@ -71,6 +71,7 @@ import kotlinx.coroutines.withTimeout
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.BackendException
 import net.ankiweb.rsdroid.exceptions.BackendInterruptedException
+import net.ankiweb.rsdroid.exceptions.BackendInvalidInputException
 import net.ankiweb.rsdroid.exceptions.BackendNetworkException
 import net.ankiweb.rsdroid.exceptions.BackendSyncException
 import org.jetbrains.annotations.VisibleForTesting
@@ -650,6 +651,7 @@ data class CrashReportData(
     fun shouldReportException(): Boolean {
         if (!reportableException) return false
         if (exception.isInvalidFsrsParametersException()) return false
+        if (exception is BackendInvalidInputException && exception.message == "missing template") return false
         return true
     }
 
