@@ -21,6 +21,7 @@ import com.ichi2.anki.libanki.exception.ConfirmModSchemaException
 import com.ichi2.anki.libanki.testutils.InMemoryAnkiTest
 import com.ichi2.anki.libanki.testutils.ext.addNote
 import com.ichi2.anki.libanki.testutils.ext.newNote
+import net.ankiweb.rsdroid.exceptions.BackendInvalidInputException
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.containsString
 import org.hamcrest.Matchers.equalTo
@@ -28,6 +29,7 @@ import org.hamcrest.Matchers.hasItemInArray
 import org.hamcrest.Matchers.not
 import org.junit.Assert.assertEquals
 import org.junit.Test
+import kotlin.test.assertFailsWith
 import kotlin.test.assertNotNull
 
 class CardTest : InMemoryAnkiTest() {
@@ -217,6 +219,21 @@ class CardTest : InMemoryAnkiTest() {
         note.setItem("Front", "foo")
         col.addNote(note)
         assertNoteOrdinalAre(note, arrayOf(0, 1))
+    }
+
+    @Test
+    fun `renderOutput regression test`() {
+        // #18896: renderOutput throws "missing template". We want to be sure this error does not change
+        // as we ignore it when reporting it in ACRA
+        val cid = addBasicNote().firstCard().id
+
+        // corrupt the card
+        col.db.execute("update cards set ord = 2 where id = ?", cid)
+
+        // at the time of writing, "missing template" is a hardcoded string. permalink:
+        // https://github.com/ankitects/anki/blob/71ec878780c1b81b49b1e18b3c41237bda51e20c/rslib/src/notetype/render.rs#L54-L64
+        val ex = assertFailsWith<BackendInvalidInputException> { col.getCard(cid).renderOutput(col) }
+        assertThat(ex.message, equalTo("missing template"))
     }
 
     private fun assertNoteOrdinalAre(
