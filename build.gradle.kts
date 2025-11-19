@@ -110,7 +110,7 @@ subprojects {
 
 val jvmVersion = Jvm.current().javaVersion?.majorVersion.parseIntOrDefault(defaultValue = 0)
 val minSdk = libs.versions.minSdk.get()
-val jvmVersionLowerBound = 17
+val jvmVersionLowerBound = 21
 val jvmVersionUpperBound = 25
 if (jvmVersion !in jvmVersionLowerBound..jvmVersionUpperBound) {
     println("\n\n\n")
