@@ -175,17 +175,21 @@ suspend fun FragmentActivity?.handleUiPostRequest(
     methodName: String,
     bytes: ByteArray,
 ): ByteArray? {
-    if (this == null) {
-        Timber.w("ignored UI request '%s' due to screen/app being backgrounded", methodName)
-        return null
-    }
-
-    val data =
-        uiMethods[methodName]?.invoke(this, bytes)?.await() ?: run {
+    // an unknown method may be valid for another request handler
+    val uiMethod =
+        uiMethods[methodName] ?: run {
             Timber.w("Unknown TS method called.")
             Timber.d("handleUiPostRequest could not resolve TS method %s", methodName)
             return null
         }
+
+    // a resolved but ignored method should not be retried
+    if (this == null) {
+        Timber.w("ignored UI request '%s' - activity == null", methodName)
+        return null
+    }
+
+    val data = uiMethod.invoke(this, bytes).await()
     when (methodName) {
         "addImageOcclusionNote" -> {
             undoableOp { OpChanges.parseFrom(data) }
