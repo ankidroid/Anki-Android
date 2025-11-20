@@ -249,7 +249,6 @@ class ReviewerFragment :
         }
 
         val isHtmlTypeAnswerEnabled = Prefs.isHtmlTypeAnswerEnabled
-        val insetsController = WindowInsetsControllerCompat(window, binding.root)
         lifecycleScope.launch {
             val autoFocusTypeAnswer = Prefs.autoFocusTypeAnswer
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -262,8 +261,9 @@ class ReviewerFragment :
                     if (isHtmlTypeAnswerEnabled) {
                         if (!autoFocusTypeAnswer) return@collect
                         webViewLayout.focusOnWebView()
-                        webViewLayout.evaluateJavascript("document.getElementById('typeans').focus();", null)
-                        insetsController.show(WindowInsetsCompat.Type.ime())
+                        // `evaluateJavascript()` doesn't trigger the IME unless the WebView
+                        // has been touched before, so ´loadUrl()` is used instead.
+                        webViewLayout.loadUrl("javascript:document.getElementById('typeans')?.focus();")
                         return@collect
                     }
 
