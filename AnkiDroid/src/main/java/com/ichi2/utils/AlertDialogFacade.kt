@@ -42,7 +42,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textfield.TextInputLayout
 import com.ichi2.anki.R
-import com.ichi2.themes.Theme
 import com.ichi2.themes.Themes
 import com.ichi2.ui.FixedTextView
 import com.ichi2.utils.HandlerUtils.executeOnMainThread
@@ -316,12 +315,6 @@ fun AlertDialog.input(
     if (!this.isShowing) throw IllegalStateException("input() requires .show()")
 
     getInputTextLayout().hint = hint
-    // TODO Fix this:
-    //  Disable the error icon when the black theme is applied. With this theme, showing an error
-    //  makes the wrapped TextInputEditText's outline to disappear around the error icon(#18535, #18596)
-    if (Themes.currentTheme == Theme.BLACK) {
-        getInputTextLayout().errorIconDrawable = null
-    }
 
     getInputField().apply {
         if (displayKeyboard) {
