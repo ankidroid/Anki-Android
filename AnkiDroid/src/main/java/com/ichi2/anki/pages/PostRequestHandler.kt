@@ -127,12 +127,7 @@ val collectionMethods =
 suspend fun handleCollectionPostRequest(
     methodName: String,
     bytes: ByteArray,
-): ByteArray? =
-    collectionMethods[methodName]?.let { method -> withCol { method.invoke(this, bytes) } } ?: run {
-        Timber.w("Unknown TS method called.")
-        Timber.d("handleCollectionPostRequest could not resolve TS method %s", methodName)
-        null
-    }
+): ByteArray? = collectionMethods[methodName]?.let { method -> withCol { method.invoke(this, bytes) } }
 
 typealias UIBackendInterface = FragmentActivity.(bytes: ByteArray) -> Deferred<ByteArray>
 
@@ -171,22 +166,47 @@ val uiMethods =
         "deckOptionsRequireClose" to { bytes -> lifecycleScope.async { deckOptionsRequireClose(bytes) } },
     )
 
+sealed class UiPostRequestResponse {
+    /** The requested method was not a valid UI POST request */
+    data object UnknownMethod : UiPostRequestResponse()
+
+    /**
+     * A valid method could not be executed
+     *
+     * For example: if the calling fragment was not attached to an activity
+     */
+    data object Ignored : UiPostRequestResponse()
+
+    /**
+     * The request was handled by the backend (success/failure)
+     */
+    data class Handled(
+        val data: ByteArray,
+    ) : UiPostRequestResponse() {
+        override fun equals(other: Any?): Boolean {
+            if (this === other) return true
+            if (javaClass != other?.javaClass) return false
+
+            other as Handled
+
+            return data.contentEquals(other.data)
+        }
+
+        override fun hashCode(): Int = data.contentHashCode()
+    }
+}
+
 suspend fun FragmentActivity?.handleUiPostRequest(
     methodName: String,
     bytes: ByteArray,
-): ByteArray? {
+): UiPostRequestResponse {
     // an unknown method may be valid for another request handler
-    val uiMethod =
-        uiMethods[methodName] ?: run {
-            Timber.w("Unknown TS method called.")
-            Timber.d("handleUiPostRequest could not resolve TS method %s", methodName)
-            return null
-        }
+    val uiMethod = uiMethods[methodName] ?: return UiPostRequestResponse.UnknownMethod
 
     // a resolved but ignored method should not be retried
     if (this == null) {
         Timber.w("ignored UI request '%s' - activity == null", methodName)
-        return null
+        return UiPostRequestResponse.Ignored
     }
 
     val data = uiMethod.invoke(this, bytes).await()
@@ -211,5 +231,5 @@ suspend fun FragmentActivity?.handleUiPostRequest(
             }
         }
     }
-    return data
+    return UiPostRequestResponse.Handled(data)
 }
