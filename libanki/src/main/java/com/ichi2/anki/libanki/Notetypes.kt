@@ -267,6 +267,16 @@ class Notetypes(
         mutateAfterWrite(notetype)
     }
 
+    /** Update a NotetypeDict. Caller will need to re-load notetype if new fields/cards added. */
+    fun updateDict(
+        notetype: NotetypeJson,
+        skipChecks: Boolean = false,
+    ): OpChanges {
+        removeFromCache(notetype.id)
+        ensureNameUnique(notetype)
+        return col.backend.updateNotetypeLegacy(toJsonBytes(notetype), skipChecks)
+    }
+
     @LibAnkiAlias("_mutate_after_write")
     private fun mutateAfterWrite(nt: NotetypeJson) {
         // existing code expects the note type to be mutated to reflect
