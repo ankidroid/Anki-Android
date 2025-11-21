@@ -48,12 +48,14 @@
     <string name="drawer_open">ড্রয়ার খুলুন</string>
     <string name="drawer_close">ড্রয়ার বন্ধ করুন</string>
     <string name="note_message">Note saved</string>
+    <!-- Note editor screen -->
     <string name="CardEditorCardDeck">কার্ড ডেক:</string>
     <string name="CardEditorNoteDeck">ডেক:</string>
     <string name="CardEditorModel">ধরন:</string>
     <string name="CardEditorTags">ট্যাগসমূহ: %1$s</string>
     <string name="CardEditorCards">কার্ড: %1$s</string>
     <string name="edit_occlusions">শূন্য স্থান পূরণ সমস্যা সম্পাদনা</string>
+    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
     <string name="tag_name">ট্যাগের নাম</string>
     <string name="add_new_filter_tags">ট্যাগ যুক্ত/ফিল্টার করুন</string>
     <string name="add_tag" maxLength="28">ট্যাগ যোগ করুন</string>

@@ -48,12 +48,14 @@
     <string name="drawer_open">തുറക്കുക ഡ്രോയർ</string>
     <string name="drawer_close">ഡ്രോയർ അടയ്‌ക്കുക</string>
     <string name="note_message">Note saved</string>
+    <!-- Note editor screen -->
     <string name="CardEditorCardDeck">കാർഡ് ഡെക്ക്:</string>
     <string name="CardEditorNoteDeck">ഡെക്ക്:</string>
     <string name="CardEditorModel">തരം:</string>
     <string name="CardEditorTags">ടാഗുകൾ‌:%1$s</string>
     <string name="CardEditorCards">കാർഡുകൾ:%1$s</string>
     <string name="edit_occlusions">അടവുകൾ എഡിറ്റ് ചെയ്യുക</string>
+    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
     <string name="tag_name">ടാഗ് നാമം</string>
     <string name="add_new_filter_tags">ടാഗുകൾ ചേർക്കുക / ഫിൽട്ടർ ചെയ്യുക</string>
     <string name="add_tag" maxLength="28">ടാഗ് ചേർക്കുക</string>

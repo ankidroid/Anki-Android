@@ -163,7 +163,7 @@
     <string name="safe_display_summ">Отключает всю анимацию и использует безопасную отрисовку. Может понадобиться для экранов на электронных чернилах</string>
     <string name="disable_extended_text_ui" maxLength="41">Отключить режим одного поля</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
-    <string name="disable_extended_text_ui_summ">Включает контекстное меню «Задание с пропусками» в альбомном режиме</string>
+    <string name="disable_extended_text_ui_summ">Включает контекстное меню «Тест с пропусками» в альбомном режиме</string>
     <string name="vertical_centering" maxLength="41">Выравнивать по центру</string>
     <string name="vertical_centering_summ">Выравнивает содержимое карточек по вертикали</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Интервал двойного нажатия</string>

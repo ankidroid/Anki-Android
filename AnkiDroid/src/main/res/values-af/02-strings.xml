@@ -48,12 +48,14 @@
     <string name="drawer_open">Maak laai oop</string>
     <string name="drawer_close">Maak laai toe</string>
     <string name="note_message">Note saved</string>
+    <!-- Note editor screen -->
     <string name="CardEditorCardDeck">Kaartpak:</string>
     <string name="CardEditorNoteDeck">Pak:</string>
     <string name="CardEditorModel">Tipe:</string>
     <string name="CardEditorTags">Etikette: %1$s</string>
     <string name="CardEditorCards">Kaarte: %1$s</string>
     <string name="edit_occlusions">Wysig Okkulasies</string>
+    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
     <string name="tag_name">Etiket Naam</string>
     <string name="add_new_filter_tags">Voeg/filter etikette</string>
     <string name="add_tag" maxLength="28">Voeg etiket by</string>

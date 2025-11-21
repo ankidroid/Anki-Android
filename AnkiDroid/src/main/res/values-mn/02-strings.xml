@@ -48,12 +48,14 @@
     <string name="drawer_open">Шургуулгыг нээх</string>
     <string name="drawer_close">Шургуулгыг хаах</string>
     <string name="note_message">Note saved</string>
+    <!-- Note editor screen -->
     <string name="CardEditorCardDeck">Картны Багц</string>
     <string name="CardEditorNoteDeck">Багц:</string>
     <string name="CardEditorModel">Төрөл:</string>
     <string name="CardEditorTags">Шошгонууд:%1$s</string>
     <string name="CardEditorCards">Картнууд: %1$s</string>
     <string name="edit_occlusions">Edit Occlusions</string>
+    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
     <string name="tag_name">Шошгоны нэр</string>
     <string name="add_new_filter_tags">Шошго нэмэх/ангилах</string>
     <string name="add_tag" maxLength="28">Шошго нэмэх</string>

@@ -48,12 +48,14 @@
     <string name="drawer_open">Buksan and kahon</string>
     <string name="drawer_close">Isara ang kahon</string>
     <string name="note_message">Note saved</string>
+    <!-- Note editor screen -->
     <string name="CardEditorCardDeck">Deck ng baraha:</string>
     <string name="CardEditorNoteDeck">Deck:</string>
     <string name="CardEditorModel">Uri:</string>
     <string name="CardEditorTags">Tags: %1$s</string>
     <string name="CardEditorCards">Mga baraha: %1$s</string>
     <string name="edit_occlusions">Edit Occlusions</string>
+    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
     <string name="tag_name">Pangalan ng tag</string>
     <string name="add_new_filter_tags">Magdadag/sumala ng mga tag</string>
     <string name="add_tag" maxLength="28">Magdagdag ng tag</string>

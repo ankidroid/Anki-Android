@@ -48,12 +48,14 @@
     <string name="drawer_open">開啟側欄</string>
     <string name="drawer_close">關閉側欄</string>
     <string name="note_message">筆記已儲存</string>
+    <!-- Note editor screen -->
     <string name="CardEditorCardDeck">卡片牌組：</string>
     <string name="CardEditorNoteDeck">牌組：</string>
     <string name="CardEditorModel">種類：</string>
     <string name="CardEditorTags">標籤: %1$s</string>
     <string name="CardEditorCards">卡片：%1$s</string>
     <string name="edit_occlusions">編輯遮蔽</string>
+    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
     <string name="tag_name">標籤名稱</string>
     <string name="add_new_filter_tags">新增/篩選標籤</string>
     <string name="add_tag" maxLength="28">新增標籤</string>

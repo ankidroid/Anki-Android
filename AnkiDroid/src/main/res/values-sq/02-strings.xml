@@ -48,12 +48,14 @@
     <string name="drawer_open">Hap sirtarin</string>
     <string name="drawer_close">Mbylleni sirtarin</string>
     <string name="note_message">Note saved</string>
+    <!-- Note editor screen -->
     <string name="CardEditorCardDeck">Kuverta e kartave:</string>
     <string name="CardEditorNoteDeck">Kuvertë:</string>
     <string name="CardEditorModel">Lloji:</string>
     <string name="CardEditorTags">Etiketa: %1$s</string>
     <string name="CardEditorCards">Kartat: %1$s</string>
     <string name="edit_occlusions">Redakto okluzionet</string>
+    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
     <string name="tag_name">Emri i etiketës</string>
     <string name="add_new_filter_tags">Shto/filtro etiketat</string>
     <string name="add_tag" maxLength="28">Shto etiketë</string>

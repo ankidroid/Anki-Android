@@ -48,12 +48,14 @@
     <string name="drawer_open">ნავიგაციის პანელის გახსნა</string>
     <string name="drawer_close">ნავიგაციის პანელის დახურვა</string>
     <string name="note_message">Note saved</string>
+    <!-- Note editor screen -->
     <string name="CardEditorCardDeck">ბარათის დასტა:</string>
     <string name="CardEditorNoteDeck">დასტა:</string>
     <string name="CardEditorModel">ტიპი:</string>
     <string name="CardEditorTags">იარლიყები: %1$s</string>
     <string name="CardEditorCards">ბარათები: %1$s</string>
     <string name="edit_occlusions">საფარველების რედაქტირება</string>
+    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
     <string name="tag_name">იარლიყის სახელი</string>
     <string name="add_new_filter_tags">იარლიყების დამატება/გაფილტვრა</string>
     <string name="add_tag" maxLength="28">იარლიყის დამატება</string>

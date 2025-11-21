@@ -48,12 +48,14 @@
     <string name="drawer_open">ಡ್ರಾಯರ್ ತೆರೆಯಿರಿ</string>
     <string name="drawer_close">ಡ್ರಾಯರ್ ಮುಚ್ಚಿ</string>
     <string name="note_message">Note saved</string>
+    <!-- Note editor screen -->
     <string name="CardEditorCardDeck">ಕಾರ್ಡ್ ಡೆಕ್:</string>
     <string name="CardEditorNoteDeck">ಡೆಕ್:</string>
     <string name="CardEditorModel">ಮಾದರಿ:</string>
     <string name="CardEditorTags">ಟ್ಯಾಗ್ಗಳು:%1$s</string>
     <string name="CardEditorCards">ಕಾರ್ಡ್‌ಗಳು: %1$s</string>
     <string name="edit_occlusions">ಮುಚ್ಚುವಿಕೆಯನ್ನು ಸಂಪಾದಿಸಿ</string>
+    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
     <string name="tag_name">ಟ್ಯಾಗ್ ಹೆಸರು</string>
     <string name="add_new_filter_tags">ಟ್ಯಾಗ್‌ಗಳನ್ನು ಸೇರಿಸಿ / ಫಿಲ್ಟರ್ ಮಾಡಿ</string>
     <string name="add_tag" maxLength="28">ಟ್ಯಾಗ್ ಸೇರಿಸಿ</string>

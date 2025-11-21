@@ -48,12 +48,14 @@
     <string name="drawer_open">Tortmani ochish</string>
     <string name="drawer_close">Tortmani yopish</string>
     <string name="note_message">Qayt saqlandi</string>
+    <!-- Note editor screen -->
     <string name="CardEditorCardDeck">Karta dastai:</string>
     <string name="CardEditorNoteDeck">dasta</string>
     <string name="CardEditorModel">Turi:</string>
     <string name="CardEditorTags">Teglar: %1$s</string>
     <string name="CardEditorCards">Kartalar: %1$s</string>
     <string name="edit_occlusions">Rasm toʻsiqlarini tahrirlash</string>
+    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
     <string name="tag_name">Teg nomi</string>
     <string name="add_new_filter_tags">Teglar qoʻshish/filtrlash</string>
     <string name="add_tag" maxLength="28">Teg qoʻshish</string>

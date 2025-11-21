@@ -48,12 +48,14 @@
     <string name="drawer_open">បើកថត</string>
     <string name="drawer_close">បិទថត</string>
     <string name="note_message">Note saved</string>
+    <!-- Note editor screen -->
     <string name="CardEditorCardDeck">ជាន់របស់កាត</string>
     <string name="CardEditorNoteDeck">ជាន់</string>
     <string name="CardEditorModel">ប្រភេទ</string>
     <string name="CardEditorTags">Tags: %1$s</string>
     <string name="CardEditorCards">Cards: %1$s</string>
     <string name="edit_occlusions">Edit Occlusions</string>
+    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
     <string name="tag_name">ឈ្មោះស្លាក</string>
     <string name="add_new_filter_tags">Add/filter tags</string>
     <string name="add_tag" maxLength="28">បន្ថែមស្លាក</string>

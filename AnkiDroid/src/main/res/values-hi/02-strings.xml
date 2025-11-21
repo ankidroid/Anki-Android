@@ -48,12 +48,14 @@
     <string name="drawer_open">दराज़ खोलें</string>
     <string name="drawer_close">दराज़ बंद करें</string>
     <string name="note_message">टिप्पणी सुरक्षित</string>
+    <!-- Note editor screen -->
     <string name="CardEditorCardDeck">पत्ता डेक:</string>
     <string name="CardEditorNoteDeck">डेक:</string>
     <string name="CardEditorModel">प्रकार:</string>
     <string name="CardEditorTags">टैग: %1$s</string>
     <string name="CardEditorCards">पत्ते: %1$s</string>
     <string name="edit_occlusions">निष्कर्ष को एडिट   करें</string>
+    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
     <string name="tag_name">टैग नाम</string>
     <string name="add_new_filter_tags">टैग को जोड़ें/छानें</string>
     <string name="add_tag" maxLength="28">टैग जोड़ें</string>

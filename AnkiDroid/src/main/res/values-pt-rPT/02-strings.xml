@@ -48,12 +48,14 @@
     <string name="drawer_open">Abrir painel</string>
     <string name="drawer_close">Fechar painel</string>
     <string name="note_message">Note saved</string>
+    <!-- Note editor screen -->
     <string name="CardEditorCardDeck">Baralho de fichas:</string>
     <string name="CardEditorNoteDeck">Baralho:</string>
     <string name="CardEditorModel">Tipo:</string>
     <string name="CardEditorTags">Etiquetas: %1$s</string>
     <string name="CardEditorCards">Fichas: %1$s</string>
     <string name="edit_occlusions">Editar Oclusões</string>
+    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
     <string name="tag_name">Nome da etiqueta</string>
     <string name="add_new_filter_tags">Adicionar/filtrar etiquetas</string>
     <string name="add_tag" maxLength="28">Adicionar etiqueta</string>

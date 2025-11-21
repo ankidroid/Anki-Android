@@ -48,12 +48,14 @@
     <string name="drawer_open">Mở ngăn kéo</string>
     <string name="drawer_close">Đóng ngăn kéo</string>
     <string name="note_message">Ghi chú đã được lưu</string>
+    <!-- Note editor screen -->
     <string name="CardEditorCardDeck">Bộ thẻ:</string>
     <string name="CardEditorNoteDeck">Bộ:</string>
     <string name="CardEditorModel">Loại:</string>
     <string name="CardEditorTags">Các đuôi: %1$s</string>
     <string name="CardEditorCards">Các thẻ: %1$s</string>
     <string name="edit_occlusions">Sửa Occlusions</string>
+    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
     <string name="tag_name">Tên đuôi</string>
     <string name="add_new_filter_tags">Thêm/lọc các đuôi</string>
     <string name="add_tag" maxLength="28">Thêm đuôi</string>

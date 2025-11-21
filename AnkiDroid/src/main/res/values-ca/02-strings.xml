@@ -48,12 +48,14 @@
     <string name="drawer_open">Obrir el calaix</string>
     <string name="drawer_close">Tancar el calaix</string>
     <string name="note_message">Note saved</string>
+    <!-- Note editor screen -->
     <string name="CardEditorCardDeck">Paquet de cartes:</string>
     <string name="CardEditorNoteDeck">Paquet:</string>
     <string name="CardEditorModel">Tipus:</string>
     <string name="CardEditorTags">Etiquetes: %1$s</string>
     <string name="CardEditorCards">Cartes: %1$s</string>
     <string name="edit_occlusions">Edit Occlusions</string>
+    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
     <string name="tag_name">Nom de l\'etiqueta</string>
     <string name="add_new_filter_tags">Afegir/filtrar etiquetes</string>
     <string name="add_tag" maxLength="28">Afegir etiqueta</string>

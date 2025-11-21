@@ -48,12 +48,14 @@
     <string name="drawer_open">Siyirməni aç</string>
     <string name="drawer_close">Siyirməni bağla</string>
     <string name="note_message">Qeyd yadda saxlanıldı</string>
+    <!-- Note editor screen -->
     <string name="CardEditorCardDeck">Kart dəsti:</string>
     <string name="CardEditorNoteDeck">Dəst:</string>
     <string name="CardEditorModel">Növ:</string>
     <string name="CardEditorTags">Etiketlər: %1$s</string>
     <string name="CardEditorCards">Kartlar: %1$s</string>
     <string name="edit_occlusions">Edit Occlusions</string>
+    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
     <string name="tag_name">Etiket adı</string>
     <string name="add_new_filter_tags">Etiket əlavə et/filtrlə</string>
     <string name="add_tag" maxLength="28">Etiket əlavə et</string>

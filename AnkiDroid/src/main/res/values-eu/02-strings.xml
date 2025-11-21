@@ -48,12 +48,14 @@
     <string name="drawer_open">Open drawer</string>
     <string name="drawer_close">Itxi Kutxa</string>
     <string name="note_message">Note saved</string>
+    <!-- Note editor screen -->
     <string name="CardEditorCardDeck">Txartel-sorta:</string>
     <string name="CardEditorNoteDeck">Sorta:</string>
     <string name="CardEditorModel">Mota:</string>
     <string name="CardEditorTags">Etiketak: %1$s</string>
     <string name="CardEditorCards">Cards: %1$s</string>
     <string name="edit_occlusions">Edit Occlusions</string>
+    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
     <string name="tag_name">Etiketaren izena</string>
     <string name="add_new_filter_tags">Add/filter tags</string>
     <string name="add_tag" maxLength="28">Etiketa gehitu</string>

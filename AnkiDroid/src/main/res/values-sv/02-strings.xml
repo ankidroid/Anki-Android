@@ -48,12 +48,14 @@
     <string name="drawer_open">Öppna meny</string>
     <string name="drawer_close">Stäng meny</string>
     <string name="note_message">Note saved</string>
+    <!-- Note editor screen -->
     <string name="CardEditorCardDeck">Kortlek:</string>
     <string name="CardEditorNoteDeck">Kortlek:</string>
     <string name="CardEditorModel">Typ:</string>
     <string name="CardEditorTags">Etiketter: %1$s</string>
     <string name="CardEditorCards">Kort: %1$s</string>
     <string name="edit_occlusions">Redigera täckskärmar</string>
+    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
     <string name="tag_name">Etikettnamn</string>
     <string name="add_new_filter_tags">Lägg till/Filtrera etiketter</string>
     <string name="add_tag" maxLength="28">Lägg till etikett</string>

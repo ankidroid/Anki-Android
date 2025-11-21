@@ -48,12 +48,14 @@
     <string name="drawer_open">Ḍrŏvara ughaḍā</string>
     <string name="drawer_close">Ḍrŏvara banda karā</string>
     <string name="note_message">Note saved</string>
+    <!-- Note editor screen -->
     <string name="CardEditorCardDeck">Kārḍa ḍēka:</string>
     <string name="CardEditorNoteDeck">Ḍēka:</string>
     <string name="CardEditorModel">Prakāra:</string>
     <string name="CardEditorTags">Ṭĕgja:%1$s</string>
     <string name="CardEditorCards">Kārḍa:%1$s</string>
     <string name="edit_occlusions">Edit Occlusions</string>
+    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
     <string name="tag_name">Ṭĕga nāva</string>
     <string name="add_new_filter_tags">Ṭĕga jōḍā/ philṭara karā</string>
     <string name="add_tag" maxLength="28">Ṭĕga jōḍā</string>

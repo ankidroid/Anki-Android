@@ -48,12 +48,14 @@
     <string name="drawer_open">Avaa laatikosto</string>
     <string name="drawer_close">Sulje laatikosto</string>
     <string name="note_message">Merkintä tallennettu</string>
+    <!-- Note editor screen -->
     <string name="CardEditorCardDeck">Korttipakka:</string>
     <string name="CardEditorNoteDeck">Pakka:</string>
     <string name="CardEditorModel">Tyyppi:</string>
     <string name="CardEditorTags">Tunnisteet: %1$s</string>
     <string name="CardEditorCards">Kortit: %1$s</string>
     <string name="edit_occlusions">Muokkaa peitteitä</string>
+    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
     <string name="tag_name">Tunnistenimi</string>
     <string name="add_new_filter_tags">Lisää/suodata tunnisteita</string>
     <string name="add_tag" maxLength="28">Lisää tunniste</string>

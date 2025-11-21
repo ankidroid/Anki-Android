@@ -48,12 +48,14 @@
     <string name="drawer_open">Otwórz menu boczne</string>
     <string name="drawer_close">Zamknij menu boczne</string>
     <string name="note_message">Zapisano notatkę</string>
+    <!-- Note editor screen -->
     <string name="CardEditorCardDeck">Talia kart:</string>
     <string name="CardEditorNoteDeck">Talia:</string>
     <string name="CardEditorModel">Typ:</string>
     <string name="CardEditorTags">Etykiety: %1$s</string>
     <string name="CardEditorCards">Karty: %1$s</string>
     <string name="edit_occlusions">Edytuj okluzje</string>
+    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
     <string name="tag_name">Nazwa tagu</string>
     <string name="add_new_filter_tags">Dodaj/filtruj tagi</string>
     <string name="add_tag" maxLength="28">Dodaj tag</string>

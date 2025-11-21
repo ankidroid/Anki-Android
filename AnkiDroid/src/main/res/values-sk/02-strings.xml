@@ -48,12 +48,14 @@
     <string name="drawer_open">Otvoriť lištu</string>
     <string name="drawer_close">Zavrieť lištu</string>
     <string name="note_message">Note saved</string>
+    <!-- Note editor screen -->
     <string name="CardEditorCardDeck">Balíček kartičky:</string>
     <string name="CardEditorNoteDeck">Balíček:</string>
     <string name="CardEditorModel">Typ:</string>
     <string name="CardEditorTags">Štítky: %1$s</string>
     <string name="CardEditorCards">Kartičky: %1$s</string>
     <string name="edit_occlusions">Upraviť prekrytý obsah</string>
+    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
     <string name="tag_name">Názov štítku</string>
     <string name="add_new_filter_tags">Pridať/filtrovať štítky</string>
     <string name="add_tag" maxLength="28">Pridať štítok</string>

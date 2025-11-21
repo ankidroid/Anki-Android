@@ -48,12 +48,14 @@
     <string name="drawer_open">يان تارتمىنى ئاچ</string>
     <string name="drawer_close">يان تارتمىنى تاقا</string>
     <string name="note_message">خاتىرە ساقلاندى</string>
+    <!-- Note editor screen -->
     <string name="CardEditorCardDeck">كارتا دەستىسى:</string>
     <string name="CardEditorNoteDeck">دەستە:</string>
     <string name="CardEditorModel">تۈرى:</string>
     <string name="CardEditorTags">بەلگە: %1$s</string>
     <string name="CardEditorCards">كارتا: %1$s</string>
     <string name="edit_occlusions">دالدىلاش تەھرىر</string>
+    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
     <string name="tag_name">بەلگە ئاتى</string>
     <string name="add_new_filter_tags">بەلگە قوش/سۈزگۈچ</string>
     <string name="add_tag" maxLength="28">بەلگە قوش</string>

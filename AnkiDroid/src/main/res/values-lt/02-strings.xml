@@ -48,12 +48,14 @@
     <string name="drawer_open">Atidaryti meniu</string>
     <string name="drawer_close">Uždaryti meniu</string>
     <string name="note_message">Note saved</string>
+    <!-- Note editor screen -->
     <string name="CardEditorCardDeck">Kortelių rinkinys:</string>
     <string name="CardEditorNoteDeck">Rinkinys:</string>
     <string name="CardEditorModel">Tipas:</string>
     <string name="CardEditorTags">Žymės: %1$s</string>
     <string name="CardEditorCards">Kortelės: %1$s</string>
     <string name="edit_occlusions">Redaguoti uždengimus</string>
+    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
     <string name="tag_name">Žymės pavadinimas</string>
     <string name="add_new_filter_tags">Pridėti/filtruoti žymes</string>
     <string name="add_tag" maxLength="28">Pridėti žymę</string>
