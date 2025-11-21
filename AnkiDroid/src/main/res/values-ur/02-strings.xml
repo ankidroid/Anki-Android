@@ -48,12 +48,14 @@
     <string name="drawer_open">دراز کھولیں</string>
     <string name="drawer_close">دراز بند کریں</string>
     <string name="note_message">Note saved</string>
+    <!-- Note editor screen -->
     <string name="CardEditorCardDeck">کارڈ ڈیک:</string>
     <string name="CardEditorNoteDeck">ڈیک:</string>
     <string name="CardEditorModel">قسم:</string>
     <string name="CardEditorTags">ٹیگز: %1$s</string>
     <string name="CardEditorCards">کارڈ: %1$s</string>
     <string name="edit_occlusions">مواقع میں ترمیم کریں</string>
+    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
     <string name="tag_name">ٹیگ کا نام</string>
     <string name="add_new_filter_tags">شامل/فلٹر کریں ٹیگ</string>
     <string name="add_tag" maxLength="28">ٹیگ شامل کریں</string>

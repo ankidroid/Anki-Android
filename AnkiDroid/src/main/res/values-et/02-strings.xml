@@ -48,12 +48,14 @@
     <string name="drawer_open">Ava sahtel</string>
     <string name="drawer_close">Sulge sahtel</string>
     <string name="note_message">Note saved</string>
+    <!-- Note editor screen -->
     <string name="CardEditorCardDeck">Kaardipakk:</string>
     <string name="CardEditorNoteDeck">Kaardipakk:</string>
     <string name="CardEditorModel">Tüüp:</string>
     <string name="CardEditorTags">Sildid: %1$s</string>
     <string name="CardEditorCards">Kaardid: %1$s</string>
     <string name="edit_occlusions">Edit Occlusions</string>
+    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
     <string name="tag_name">Sildi nimi</string>
     <string name="add_new_filter_tags">Lisa/filtri silte</string>
     <string name="add_tag" maxLength="28">Lisa silt</string>

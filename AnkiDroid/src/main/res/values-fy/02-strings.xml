@@ -48,12 +48,14 @@
     <string name="drawer_open">Open drawer</string>
     <string name="drawer_close">Close drawer</string>
     <string name="note_message">Note saved</string>
+    <!-- Note editor screen -->
     <string name="CardEditorCardDeck">Kaartenset:</string>
     <string name="CardEditorNoteDeck">Set:</string>
     <string name="CardEditorModel">Type:</string>
     <string name="CardEditorTags">Skaaimerken: %1$s</string>
     <string name="CardEditorCards">Cards: %1$s</string>
     <string name="edit_occlusions">Edit Occlusions</string>
+    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
     <string name="tag_name">Tag name</string>
     <string name="add_new_filter_tags">Add/filter tags</string>
     <string name="add_tag" maxLength="28">Add tag</string>

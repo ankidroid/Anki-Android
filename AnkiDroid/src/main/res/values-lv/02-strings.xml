@@ -48,12 +48,14 @@
     <string name="drawer_open">Atvērt izvēlni</string>
     <string name="drawer_close">Aizvērt izvēlni</string>
     <string name="note_message">Note saved</string>
+    <!-- Note editor screen -->
     <string name="CardEditorCardDeck">Kartītes kava:</string>
     <string name="CardEditorNoteDeck">Kava:</string>
     <string name="CardEditorModel">Veids:</string>
     <string name="CardEditorTags">Birkas: %1$s</string>
     <string name="CardEditorCards">Kartītes: %1$s</string>
     <string name="edit_occlusions">Labot aizklājumus</string>
+    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
     <string name="tag_name">Birkas nosaukums</string>
     <string name="add_new_filter_tags">Pievienot/atlasīt birkas</string>
     <string name="add_tag" maxLength="28">Pievienot birku</string>

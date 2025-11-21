@@ -48,12 +48,14 @@
     <string name="drawer_open">Otvori ladicu</string>
     <string name="drawer_close">Zatvori ladicu</string>
     <string name="note_message">Note saved</string>
+    <!-- Note editor screen -->
     <string name="CardEditorCardDeck">Špil karata:</string>
     <string name="CardEditorNoteDeck">Špil:</string>
     <string name="CardEditorModel">Tip:</string>
     <string name="CardEditorTags">Oznake: %1$s</string>
     <string name="CardEditorCards">Karte: %1$s</string>
     <string name="edit_occlusions">Edit Occlusions</string>
+    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
     <string name="tag_name">Naziv oznake</string>
     <string name="add_new_filter_tags">Dodaj / filtriraj oznake</string>
     <string name="add_tag" maxLength="28">Dodaj oznaku</string>

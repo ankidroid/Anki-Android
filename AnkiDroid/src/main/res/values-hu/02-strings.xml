@@ -48,12 +48,14 @@
     <string name="drawer_open">Fiók megnyitása</string>
     <string name="drawer_close">Fiók bezárása</string>
     <string name="note_message">Note saved</string>
+    <!-- Note editor screen -->
     <string name="CardEditorCardDeck">Kártyapakli:</string>
     <string name="CardEditorNoteDeck">Pakli:</string>
     <string name="CardEditorModel">Típus:</string>
     <string name="CardEditorTags">Címkék: %1$s</string>
     <string name="CardEditorCards">Címkék: %1$s</string>
     <string name="edit_occlusions">Kitakarások szerkesztése</string>
+    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
     <string name="tag_name">Címke neve</string>
     <string name="add_new_filter_tags">Címkék hozzáadása/szűrése</string>
     <string name="add_tag" maxLength="28">Címke hozzáadása</string>

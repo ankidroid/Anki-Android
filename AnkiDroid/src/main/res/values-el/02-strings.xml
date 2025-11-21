@@ -48,12 +48,14 @@
     <string name="drawer_open">Άνοιγμα συρταριού</string>
     <string name="drawer_close">Κλείσιμο συρταριού</string>
     <string name="note_message">Note saved</string>
+    <!-- Note editor screen -->
     <string name="CardEditorCardDeck">Τράπουλα κάρτας:</string>
     <string name="CardEditorNoteDeck">Τράπουλα:</string>
     <string name="CardEditorModel">Τύπος:</string>
     <string name="CardEditorTags">Ετικέτες:%1$s</string>
     <string name="CardEditorCards">Κάρτες %1$s</string>
     <string name="edit_occlusions">Επεξεργασία αποκρύψεων</string>
+    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
     <string name="tag_name">Όνομα ετικέτας</string>
     <string name="add_new_filter_tags">Προσθήκη/φιλτράρισμα ετικετών</string>
     <string name="add_tag" maxLength="28">Προσθήκη ετικέτας</string>

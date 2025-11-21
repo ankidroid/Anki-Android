@@ -48,12 +48,14 @@
     <string name="drawer_open">打开侧栏</string>
     <string name="drawer_close">关闭侧栏</string>
     <string name="note_message">已保存附注</string>
+    <!-- Note editor screen -->
     <string name="CardEditorCardDeck">牌组：</string>
     <string name="CardEditorNoteDeck">牌组：</string>
     <string name="CardEditorModel">笔记模板：</string>
     <string name="CardEditorTags">标签：%1$s</string>
     <string name="CardEditorCards">卡片：%1$s</string>
     <string name="edit_occlusions">编辑闭合</string>
+    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
     <string name="tag_name">标签</string>
     <string name="add_new_filter_tags">添加/过滤标签</string>
     <string name="add_tag" maxLength="28">添加标签</string>

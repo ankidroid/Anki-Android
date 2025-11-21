@@ -48,12 +48,14 @@
     <string name="drawer_open">Відкрити шухляду</string>
     <string name="drawer_close">Закрити шухляду</string>
     <string name="note_message">Запис збережено</string>
+    <!-- Note editor screen -->
     <string name="CardEditorCardDeck">Колода карток:</string>
     <string name="CardEditorNoteDeck">Колода:</string>
     <string name="CardEditorModel">Тип:</string>
     <string name="CardEditorTags">Теги: %1$s</string>
     <string name="CardEditorCards">Картки: %1$s</string>
     <string name="edit_occlusions">Редагувати оклюзії</string>
+    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
     <string name="tag_name">Назва позначки</string>
     <string name="add_new_filter_tags">Додати/фільтрувати теги</string>
     <string name="add_tag" maxLength="28">Додати позначку</string>

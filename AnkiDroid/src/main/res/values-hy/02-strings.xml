@@ -48,12 +48,14 @@
     <string name="drawer_open">Բացել արկղը</string>
     <string name="drawer_close">Փակել արկղը</string>
     <string name="note_message">Note saved</string>
+    <!-- Note editor screen -->
     <string name="CardEditorCardDeck">Քարտերի կապուկ՝</string>
     <string name="CardEditorNoteDeck">Կապուկ՝</string>
     <string name="CardEditorModel">Տեսակ՝</string>
     <string name="CardEditorTags">Պիտակներ՝ %1$s</string>
     <string name="CardEditorCards">Քարտեր՝ %1$s</string>
     <string name="edit_occlusions">Edit Occlusions</string>
+    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
     <string name="tag_name">Պիտակի անվանում</string>
     <string name="add_new_filter_tags">Ավելացնել/զտել պիտակները</string>
     <string name="add_tag" maxLength="28">Ավելացնել պիտակ</string>

@@ -48,12 +48,14 @@
     <string name="drawer_open">باز کردن منوی جانبی</string>
     <string name="drawer_close">بستن منوی جانبی</string>
     <string name="note_message">یادداشت ذخیره شد</string>
+    <!-- Note editor screen -->
     <string name="CardEditorCardDeck">دسته کارت:</string>
     <string name="CardEditorNoteDeck">دسته:</string>
     <string name="CardEditorModel">نوع:</string>
     <string name="CardEditorTags">برچسب ها: %1$s</string>
     <string name="CardEditorCards">کارت‌ها: %1$s</string>
     <string name="edit_occlusions">ویرایش پوشانده ها</string>
+    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
     <string name="tag_name">نام برچسب</string>
     <string name="add_new_filter_tags">افزودن/فیلترکردن برچسب‌ها</string>
     <string name="add_tag" maxLength="28">اضافه نمودن برچسب</string>

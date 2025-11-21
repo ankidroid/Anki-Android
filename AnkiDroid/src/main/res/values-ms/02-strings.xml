@@ -48,12 +48,14 @@
     <string name="drawer_open">Buka laci</string>
     <string name="drawer_close">Tutup laci</string>
     <string name="note_message">Note saved</string>
+    <!-- Note editor screen -->
     <string name="CardEditorCardDeck">Dek kad:</string>
     <string name="CardEditorNoteDeck">Dek:</string>
     <string name="CardEditorModel">Jenis:</string>
     <string name="CardEditorTags">Tag: %1$s</string>
     <string name="CardEditorCards">Kad: %1$s</string>
     <string name="edit_occlusions">Edit Occlusions</string>
+    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
     <string name="tag_name">Nama tag</string>
     <string name="add_new_filter_tags">Tambah/tapis tag</string>
     <string name="add_tag" maxLength="28">Tambah tag</string>

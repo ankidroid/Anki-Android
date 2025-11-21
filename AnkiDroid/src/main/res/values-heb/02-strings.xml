@@ -48,12 +48,14 @@
     <string name="drawer_open">פתיחת תפריט</string>
     <string name="drawer_close">סגירת תפריט</string>
     <string name="note_message">הערה נשמרה</string>
+    <!-- Note editor screen -->
     <string name="CardEditorCardDeck">חפיסת כרטיסים:‏</string>
     <string name="CardEditorNoteDeck">חפיסה:‏</string>
     <string name="CardEditorModel">סוג:</string>
     <string name="CardEditorTags">תגיות: %1$s</string>
     <string name="CardEditorCards">כרטסיות: %1$s</string>
     <string name="edit_occlusions">ערוך חסימות</string>
+    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
     <string name="tag_name">שם התיוג</string>
     <string name="add_new_filter_tags">הוסף/סנן תגיות</string>
     <string name="add_tag" maxLength="28">הוסף תג</string>

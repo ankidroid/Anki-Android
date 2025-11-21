@@ -48,12 +48,14 @@
     <string name="drawer_open">ナビゲーションドロワーを開く</string>
     <string name="drawer_close">ナビゲーションドロワーを閉じる</string>
     <string name="note_message">ノートを保存しました</string>
+    <!-- Note editor screen -->
     <string name="CardEditorCardDeck">カードデッキ:</string>
     <string name="CardEditorNoteDeck">デッキ:</string>
     <string name="CardEditorModel">ノートタイプ:</string>
     <string name="CardEditorTags">タグ: %1$s</string>
     <string name="CardEditorCards">カード: %1$s</string>
     <string name="edit_occlusions">画像穴埋め問題を編集</string>
+    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
     <string name="tag_name">タグ名</string>
     <string name="add_new_filter_tags">タグフィルター / 新規タグ追加</string>
     <string name="add_tag" maxLength="28">タグを追加</string>

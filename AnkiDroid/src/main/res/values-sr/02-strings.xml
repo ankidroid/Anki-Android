@@ -48,12 +48,14 @@
     <string name="drawer_open">Отвори фиоку</string>
     <string name="drawer_close">Затвори фиоку</string>
     <string name="note_message">Note saved</string>
+    <!-- Note editor screen -->
     <string name="CardEditorCardDeck">Шпил карата:</string>
     <string name="CardEditorNoteDeck">Шпил:</string>
     <string name="CardEditorModel">Тип:</string>
     <string name="CardEditorTags">Ознаке: %1$s</string>
     <string name="CardEditorCards">Карте: %1$s</string>
     <string name="edit_occlusions">Edit Occlusions</string>
+    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
     <string name="tag_name">Име ознаке</string>
     <string name="add_new_filter_tags">Додај/филтрирај ознаке</string>
     <string name="add_tag" maxLength="28">Додај ознаку</string>

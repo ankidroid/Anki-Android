@@ -48,12 +48,14 @@
     <string name="drawer_open">Abrir cajón</string>
     <string name="drawer_close">Cerrar cajón</string>
     <string name="note_message">Note saved</string>
+    <!-- Note editor screen -->
     <string name="CardEditorCardDeck">Mazo de tarjetas:</string>
     <string name="CardEditorNoteDeck">Mazo:</string>
     <string name="CardEditorModel">Tipo:</string>
     <string name="CardEditorTags">Etiquetas: %1$s</string>
     <string name="CardEditorCards">Tarjetas: %1$s</string>
     <string name="edit_occlusions">Editar Oclusiones</string>
+    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
     <string name="tag_name">Nombre de la etiqueta</string>
     <string name="add_new_filter_tags">Añadir/filtrar etiquetas</string>
     <string name="add_tag" maxLength="28">Añadir etiqueta</string>

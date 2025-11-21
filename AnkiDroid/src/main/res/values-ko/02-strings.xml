@@ -48,12 +48,14 @@
     <string name="drawer_open">메뉴 열기</string>
     <string name="drawer_close">메뉴 닫기</string>
     <string name="note_message">노트가 저장되었습니다.</string>
+    <!-- Note editor screen -->
     <string name="CardEditorCardDeck">카드 덱:</string>
     <string name="CardEditorNoteDeck">덱 :</string>
     <string name="CardEditorModel">유형:</string>
     <string name="CardEditorTags">태그: %1$s</string>
     <string name="CardEditorCards">카드: %1$s</string>
     <string name="edit_occlusions">가리기 편집</string>
+    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
     <string name="tag_name">태그 이름</string>
     <string name="add_new_filter_tags">태그 추가/필터링</string>
     <string name="add_tag" maxLength="28">태그 추가</string>

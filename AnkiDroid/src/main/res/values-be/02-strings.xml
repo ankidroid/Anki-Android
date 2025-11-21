@@ -48,12 +48,14 @@
     <string name="drawer_open">Адкрыць панэль</string>
     <string name="drawer_close">Закрыць панэль</string>
     <string name="note_message">Note saved</string>
+    <!-- Note editor screen -->
     <string name="CardEditorCardDeck">Калода картак:</string>
     <string name="CardEditorNoteDeck">Калода:</string>
     <string name="CardEditorModel">Тып:</string>
     <string name="CardEditorTags">Меткі: %1$s</string>
     <string name="CardEditorCards">Карткі: %1$s</string>
     <string name="edit_occlusions">Рэдагаваць аклюзіі</string>
+    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
     <string name="tag_name">Назва меткі</string>
     <string name="add_new_filter_tags">Дадаць/фільтраваць меткі</string>
     <string name="add_tag" maxLength="28">Дадаць метку</string>

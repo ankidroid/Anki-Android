@@ -48,12 +48,14 @@
     <string name="drawer_open">Malfermi la tirmenuon</string>
     <string name="drawer_close">Fermi la tirmenuon</string>
     <string name="note_message">Noto konservita</string>
+    <!-- Note editor screen -->
     <string name="CardEditorCardDeck">Kartaro:</string>
     <string name="CardEditorNoteDeck">Kartaro:</string>
     <string name="CardEditorModel">Tipo:</string>
     <string name="CardEditorTags">Etikedoj: %1$s</string>
     <string name="CardEditorCards">Kartoj: %1$s</string>
     <string name="edit_occlusions">Redakti vualojn</string>
+    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
     <string name="tag_name">Nomo de etikedo</string>
     <string name="add_new_filter_tags">Aldoni/filtri etikedojn</string>
     <string name="add_tag" maxLength="28">Aldoni etikedon</string>
