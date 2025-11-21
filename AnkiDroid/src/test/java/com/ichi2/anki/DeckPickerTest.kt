@@ -706,7 +706,7 @@ class DeckPickerTest : RobolectricTest() {
     }
 }
 
-private fun RobolectricTest.setIntroductionSlidesShown(shown: Boolean) {
+fun RobolectricTest.setIntroductionSlidesShown(shown: Boolean) {
     getPreferences().edit {
         putBoolean(IntroductionActivity.INTRODUCTION_SLIDES_SHOWN, shown)
     }

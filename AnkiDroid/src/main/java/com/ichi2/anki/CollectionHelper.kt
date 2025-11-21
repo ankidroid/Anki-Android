@@ -25,7 +25,6 @@ import androidx.core.content.edit
 import com.ichi2.anki.AnkiDroidFolder.AppPrivateFolder
 import com.ichi2.anki.CollectionHelper.PREF_COLLECTION_PATH
 import com.ichi2.anki.CollectionHelper.getCurrentAnkiDroidDirectory
-import com.ichi2.anki.CollectionHelper.getDefaultAnkiDroidDirectory
 import com.ichi2.anki.backend.createDatabaseUsingAndroidFramework
 import com.ichi2.anki.exception.StorageAccessException
 import com.ichi2.anki.exception.SystemStorageException
@@ -313,15 +312,18 @@ object CollectionHelper {
         }
 
     /**
-     * Resets the AnkiDroid directory to the [getDefaultAnkiDroidDirectory]
+     * Resets the AnkiDroid directory to [directory]
      * Note: if [android.R.attr.preserveLegacyExternalStorage] is in use
      * this will represent a change from `/AnkiDroid` to `/Android/data/...`
+     *
+     * @throws SystemStorageException if `getExternalFilesDir` returns null
      */
-    fun resetAnkiDroidDirectory(context: Context) {
-        val preferences = context.sharedPrefs()
-        val directory = getDefaultAnkiDroidDirectory(context)
+    fun resetAnkiDroidDirectory(
+        context: Context,
+        directory: File = getDefaultAnkiDroidDirectory(context),
+    ) {
         Timber.d("resetting AnkiDroid directory to %s", directory)
-        preferences.edit { putString(PREF_COLLECTION_PATH, directory.absolutePath) }
+        context.sharedPrefs().edit { putString(PREF_COLLECTION_PATH, directory.absolutePath) }
     }
 
     @Throws(UnknownDatabaseVersionException::class)

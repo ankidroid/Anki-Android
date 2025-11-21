@@ -457,6 +457,11 @@ open class AnkiDroidApp :
             return Intent(Intent.ACTION_VIEW, parsed)
         } // TODO actually this can be done by translating "link_help" string for each language when the App is
 
+        @VisibleForTesting
+        fun clearFatalError() {
+            this.instance.fatalInitializationError = null
+        }
+
         /**
          * Get the url for the properly translated feedback page
          * @return
