@@ -16,16 +16,65 @@
 package com.ichi2.anki.observability
 
 import anki.collection.OpChanges
+import com.ichi2.testutils.JvmTest
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.greaterThan
+import org.junit.After
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
+import org.robolectric.RobolectricTestRunner
 import kotlin.reflect.KProperty1
 import kotlin.reflect.full.memberProperties
 import kotlin.reflect.javaType
 import kotlin.reflect.jvm.isAccessible
+
+@RunWith(RobolectricTestRunner::class)
+class ChangeManagerExceptionHandlingTest : JvmTest() {
+    @After
+    override fun tearDown() {
+        super.tearDown()
+        ChangeManager.clearSubscribers()
+    }
+
+    @Test
+    fun `all subscribers notified even if one throws exception`() {
+        var firstCalled = false
+        var secondCalled = false
+
+        // First subscriber throws an exception
+        val throwingSubscriber =
+            object : ChangeManager.Subscriber {
+                override fun opExecuted(
+                    changes: OpChanges,
+                    handler: Any?,
+                ) {
+                    firstCalled = true
+                    throw RuntimeException("Test exception")
+                }
+            }
+
+        // Second subscriber should still be called
+        val normalSubscriber =
+            object : ChangeManager.Subscriber {
+                override fun opExecuted(
+                    changes: OpChanges,
+                    handler: Any?,
+                ) {
+                    secondCalled = true
+                }
+            }
+
+        ChangeManager.subscribe(throwingSubscriber)
+        ChangeManager.subscribe(normalSubscriber)
+
+        ChangeManager.notifySubscribersAllValuesChanged()
+
+        assertThat("First subscriber should be called", firstCalled, equalTo(true))
+        assertThat("Second subscriber should be called despite first throwing", secondCalled, equalTo(true))
+    }
+}
 
 @RunWith(Parameterized::class)
 class ChangeManagerTest {
