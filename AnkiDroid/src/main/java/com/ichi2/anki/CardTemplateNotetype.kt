@@ -103,7 +103,7 @@ class CardTemplateNotetype(
         Timber.d("saveToDatabase() called")
         dumpChanges()
         clearTempNoteTypeFiles()
-        return saveNoteType(col, notetype, adjustedTemplateChanges)
+        saveNoteType(col, notetype, adjustedTemplateChanges)
     }
 
     /**
