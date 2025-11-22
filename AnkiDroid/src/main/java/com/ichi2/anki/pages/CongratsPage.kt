@@ -230,6 +230,7 @@ class CongratsPage :
         }
 
         fun DeckPicker.onDeckCompleted() {
+            Timber.i("Opening CongratsPage")
             startActivity(getIntent(this))
         }
     }

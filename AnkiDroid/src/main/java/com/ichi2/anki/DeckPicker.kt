@@ -2123,6 +2123,7 @@ open class DeckPicker :
             // The fragment will show the study options screen instead of launching a new activity.
             loadStudyOptionsFragment()
         } else {
+            Timber.i("Opening Study Options")
             val intent = Intent()
             intent.setClass(this, StudyOptionsActivity::class.java)
             reviewLauncher.launch(intent)
@@ -2348,6 +2349,7 @@ open class DeckPicker :
     }
 
     private fun openReviewer() {
+        Timber.i("Opening Reviewer")
         val intent = Reviewer.getIntent(this)
         reviewLauncher.launch(intent)
     }
