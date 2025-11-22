@@ -128,7 +128,8 @@ class CardTemplateNotetype(
                 }
                 ChangeType.DELETE -> {
                     Timber.d("saveNoteType() deleting template currently at ordinal %s", change.ordinal)
-                    col.notetypes.remTemplate(oldNoteType, oldTemplates[change.ordinal])
+                    col.notetypes.removeTemplate(oldNoteType, oldTemplates[change.ordinal])
+                    col.notetypes.save(oldNoteType)
                 }
             }
         }
