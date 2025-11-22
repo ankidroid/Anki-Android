@@ -531,15 +531,6 @@ class Notetypes(
         save(notetype)
     }
 
-    fun moveTemplate(
-        notetype: NotetypeJson,
-        template: CardTemplate,
-        idx: Int,
-    ) {
-        repositionTemplate(notetype, template, idx)
-        save(notetype)
-    }
-
     /*
      * Changing notetypes of notes
      * ***********************************************************

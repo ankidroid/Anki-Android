@@ -249,7 +249,8 @@ class NoteTypeTest : JvmTest() {
         assertEquals(0, c.ord)
         assertEquals(1, c2.ord)
         // switch templates
-        col.notetypes.moveTemplate(noteType, c.template(), 1)
+        col.notetypes.repositionTemplate(noteType, c.template(), 1)
+        col.notetypes.save(noteType)
         c.load()
         c2.load()
         assertEquals(1, c.ord)
