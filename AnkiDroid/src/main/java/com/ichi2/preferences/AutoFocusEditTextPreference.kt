@@ -21,11 +21,11 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.EditText
 import com.ichi2.utils.AndroidUiUtils.setFocusAndOpenKeyboard
+import com.ichi2.utils.moveCursorToEnd
 
 interface AutoFocusable {
     fun autoFocusAndMoveCursorToEnd(editText: EditText) {
-        // focus EditText and place cursor at the end of text
-        setFocusAndOpenKeyboard(editText) { editText.setSelection(editText.text.length) }
+        setFocusAndOpenKeyboard(editText) { editText.moveCursorToEnd() }
     }
 }
 
