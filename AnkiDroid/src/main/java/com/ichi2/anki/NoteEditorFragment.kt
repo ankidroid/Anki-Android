@@ -150,6 +150,7 @@ import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.setupNoteTypeSpinner
+import com.ichi2.anki.utils.HanUnificationDetector
 import com.ichi2.anki.utils.ext.sharedPrefs
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.utils.ext.window
@@ -1298,6 +1299,8 @@ class NoteEditorFragment :
             for (f in editFields!!) {
                 updateField(f)
             }
+            // Check for Han Unification issues (Stage 1: detection only)
+            checkForHanUnificationIssues()
             // Save deck to noteType
             Timber.d("setting 'last deck' of note type %s to %d", editorNote!!.notetype.name, deckId)
             editorNote!!.notetype.did = deckId
@@ -1366,6 +1369,8 @@ class NoteEditorFragment :
             for (f in editFields!!) {
                 modified = modified or updateField(f)
             }
+            // Check for Han Unification issues (Stage 1: detection only)
+            checkForHanUnificationIssues()
             // added tag?
             for (t in selectedTags!!) {
                 modified = modified || !editorNote!!.hasTag(getColUnsafe, tag = t)
@@ -1393,6 +1398,47 @@ class NoteEditorFragment :
             }
             closeNoteEditor()
             return
+        }
+    }
+
+    /**
+     * Checks note fields for potential Han Unification rendering issues.
+     *
+     * This detection runs during note save/edit to catch issues early, before the user encounters
+     * them during review.
+     *
+     * @see HanUnificationDetector for detection logic
+     */
+    private fun checkForHanUnificationIssues() {
+        if (editFields == null || editFields!!.isEmpty()) {
+            return
+        }
+
+        val noteId = editorNote?.id ?: 0L
+        val noteIdentifier = if (noteId == 0L) "New note" else "Note ID: $noteId"
+
+        editFields!!.forEachIndexed { index, field ->
+            val fieldText = field.fieldText ?: return@forEachIndexed
+            if (fieldText.isBlank()) {
+                return@forEachIndexed
+            }
+
+            val result = HanUnificationDetector.detectIssue(fieldText)
+            if (result.hasIssue) {
+                val fieldName =
+                    try {
+                        editorNote?.notetype?.getField(index)?.name ?: "Field $index"
+                    } catch (_: Exception) {
+                        "Field $index"
+                    }
+
+                Timber.w(
+                    "Han Unification issue detected - $noteIdentifier, Field: '$fieldName' (index $index), " +
+                        "${result.count} problematic character(s): ${result.problematicCharacters.joinToString(", ") { char ->
+                            "$char (U+${char.code.toString(16).uppercase()})"
+                        }}",
+                )
+            }
         }
     }
 
