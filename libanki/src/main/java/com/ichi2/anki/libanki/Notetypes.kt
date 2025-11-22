@@ -225,11 +225,6 @@ class Notetypes(
             ),
         )
 
-    /** Delete model, and all its cards/notes. */
-    fun rem(notetype: NotetypeJson) {
-        remove(notetype.id)
-    }
-
     /** Modifies schema. */
     fun remove(id: NoteTypeId) {
         removeFromCache(id)
