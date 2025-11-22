@@ -27,22 +27,17 @@ import com.skydoves.colorpickerview.listeners.ColorEnvelopeListener
  *
  * @receiver The Android context used to create the dialog.
  * @param initialColor The initial color to display in the picker as an `AARRGGBB` integer.
- * @param showAlpha Whether to show the alpha (transparency) slider. Defaults to `true`.
- * @param showBrightnessSlider Whether to show the brightness adjustment slider. Defaults to `true`.
  * @param onColorSelected Callback invoked when the user confirms their color selection.
  *                        Receives the selected color as an `AARRGGBB` integer.
  *
  */
 fun Context.showColorPickerDialog(
     initialColor: Int,
-    showAlpha: Boolean = true,
-    showBrightnessSlider: Boolean = true,
     onColorSelected: (Int) -> Unit,
 ) {
     ColorPickerDialog
         .Builder(this)
         .apply {
-            attachAlphaSlideBar(showAlpha)
             colorPickerView.post { colorPickerView.setInitialColor(initialColor) }
             setPositiveButton(
                 R.string.dialog_ok,
@@ -57,7 +52,6 @@ fun Context.showColorPickerDialog(
             )
             setTitle(R.string.choose_color)
             setNegativeButton(R.string.dialog_cancel, null)
-            attachBrightnessSlideBar(showBrightnessSlider)
             setBottomSpace(12) // 12Dp
         }.show()
 }
