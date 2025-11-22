@@ -40,6 +40,7 @@ import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.utils.AndroidUiUtils.hideKeyboard
 import com.ichi2.utils.AndroidUiUtils.setFocusAndOpenKeyboard
 import com.ichi2.utils.create
+import com.ichi2.utils.moveCursorToEnd
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
@@ -171,9 +172,7 @@ class EditDeckDescriptionDialog : DialogFragment() {
                 if (!it) return@collect
                 binding.toolbar.title = viewModel.windowTitle
                 setFocusAndOpenKeyboard(binding.deckDescriptionInput) {
-                    binding.deckDescriptionInput.setSelection(
-                        binding.deckDescriptionInput.text!!.length,
-                    )
+                    binding.deckDescriptionInput.moveCursorToEnd()
                 }
             }
         }

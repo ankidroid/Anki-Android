@@ -25,6 +25,7 @@ import android.widget.Button
 import android.widget.LinearLayout
 import com.ichi2.anki.R
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
+import com.ichi2.utils.moveCursorToEnd
 
 // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019 : use IncrementerNumberRangePreferenceCompat
 @Suppress("deprecation", "OVERRIDE_DEPRECATION")
@@ -128,6 +129,6 @@ class IncrementerNumberRangePreference : NumberRangePreference {
         // Make sure value is within range
         lastValidEntry = super.getValidatedRangeFromInt(value)
         editText.setText(lastValidEntry.toString())
-        editText.setSelection(editText.text.length)
+        editText.moveCursorToEnd()
     }
 }
