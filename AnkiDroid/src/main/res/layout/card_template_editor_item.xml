@@ -31,6 +31,7 @@
                 android:gravity="top"
                 android:inputType="textMultiLine"
                 android:fontFamily="monospace"
+                android:textColorHighlight="?attr/colorPrimaryContainer"
                 tools:text="{{Front}}"/>
         </LinearLayout>
     </ScrollView>
