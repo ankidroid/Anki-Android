@@ -29,6 +29,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -83,8 +84,8 @@ class MediaCheckFragment : Fragment(R.layout.fragment_media_check) {
             viewModel.mediaCheckResult.collectLatest { result ->
                 updateWebView(result?.report.orEmpty())
                 if (result != null) {
-                    binding.tagMissingMediaButton.visibility = if (result.missingCount != 0) View.VISIBLE else View.GONE
-                    binding.deleteUsedMediaButton.visibility = if (result.unusedCount != 0) View.VISIBLE else View.GONE
+                    binding.tagMissingMediaButton.isVisible = result.missingCount != 0
+                    binding.deleteUsedMediaButton.isVisible = result.unusedCount != 0
                     if (result.haveTrash) setupMenu()
                 }
             }
