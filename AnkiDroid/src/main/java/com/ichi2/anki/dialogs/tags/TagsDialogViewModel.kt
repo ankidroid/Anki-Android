@@ -61,8 +61,10 @@ class TagsDialogViewModel(
                         }
                     }
                 }
-                // add the extra checked tags
-                allCheckedTags.addAll(checkedTags)
+                // add the extra checked tags, these are to be shown as `checked` and cannot be indeterminate
+                val extraCheckedTags = checkedTags.toSet()
+                allCheckedTags.addAll(extraCheckedTags)
+                uncheckedTags.removeAll(extraCheckedTags)
                 _initProgress.emit(InitProgress.Processing)
                 if (isCustomStudying) {
                     TagsList(
