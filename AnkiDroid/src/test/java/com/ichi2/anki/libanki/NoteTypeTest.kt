@@ -95,7 +95,7 @@ class NoteTypeTest : JvmTest() {
         note.setItem("Back", "2")
         col.addNote(note)
         assertEquals(1, col.cardCount())
-        col.notetypes.rem(col.notetypes.current())
+        col.notetypes.remove(col.notetypes.current().id)
         assertEquals(0, col.cardCount())
     }
 
