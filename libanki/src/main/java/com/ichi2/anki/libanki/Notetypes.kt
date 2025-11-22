@@ -518,14 +518,6 @@ class Notetypes(
         }
     }
 
-    fun remTemplate(
-        notetype: NotetypeJson,
-        template: CardTemplate,
-    ) {
-        removeTemplate(notetype, template)
-        save(notetype)
-    }
-
     /*
      * Changing notetypes of notes
      * ***********************************************************
