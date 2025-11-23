@@ -333,17 +333,18 @@ class StudyOptionsFragment :
     private var updateValuesFromDeckJob: Job? = null
 
     fun refreshInterface() {
-        Timber.d("Refreshing StudyOptionsFragment")
-        updateValuesFromDeckJob?.cancel()
-        // Load the deck counts for the deck from Collection asynchronously
-        updateValuesFromDeckJob =
-            launchCatchingTask {
-                if (CollectionManager.isOpenUnsafe()) {
-                    val result = withCol { fetchStudyOptionsData() }
-                    rebuildUi(result)
-                }
+    Timber.d("Refreshing StudyOptionsFragment")
+    updateValuesFromDeckJob?.cancel()
+    updateValuesFromDeckJob =
+        launchCatchingTask {
+            // Show progress bar explicitly as it is now hidden by default (fix for DeckPicker spinner issue)
+            view?.findViewById<View>(R.id.progress_bar)?.visibility = View.VISIBLE
+            if (CollectionManager.isOpenUnsafe()) {
+                val result = withCol { fetchStudyOptionsData() }
+                rebuildUi(result)
             }
-    }
+        }
+}
 
     class DeckStudyData(
         /**
