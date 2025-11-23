@@ -1739,7 +1739,7 @@ class NoteEditorFragment :
         index: Int,
         fieldEditText: FieldEditText,
     ) {
-        val fileSizeMB = String.format("%.2f MB", fileSize / (1024.0 * 1024.0))
+        val fileSizeMB = String.format(java.util.Locale.getDefault(), "%.2f MB", fileSize / (1024.0 * 1024.0))
         val message = getString(R.string.media_file_size_warning_message, fileName, fileSizeMB)
 
         MaterialAlertDialogBuilder(requireContext())
