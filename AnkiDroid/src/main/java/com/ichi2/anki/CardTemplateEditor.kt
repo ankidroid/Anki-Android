@@ -589,6 +589,7 @@ open class CardTemplateEditor :
             binding.bottomNavigation.setOnItemSelectedListener { item: MenuItem ->
                 val currentSelectedId = item.itemId
                 templateEditor.tabToViewId[cardIndex] = currentSelectedId
+                Timber.i("selected editor view: %s", item.title)
                 when (currentSelectedId) {
                     R.id.styling_edit ->
                         setCurrentEditorView(
@@ -680,14 +681,15 @@ open class CardTemplateEditor :
 
             templateEditor.topBinding.slidingTabs.addOnTabSelectedListener(
                 object : TabLayout.OnTabSelectedListener {
-                    override fun onTabSelected(p0: TabLayout.Tab?) {
+                    override fun onTabSelected(tab: TabLayout.Tab) {
+                        Timber.i("selected card index: %s", tab.position)
                         templateEditor.loadTemplatePreviewerFragmentIfFragmented()
                     }
 
-                    override fun onTabUnselected(p0: TabLayout.Tab?) {
+                    override fun onTabUnselected(tab: TabLayout.Tab) {
                     }
 
-                    override fun onTabReselected(p0: TabLayout.Tab?) {
+                    override fun onTabReselected(tab: TabLayout.Tab) {
                     }
                 },
             )
