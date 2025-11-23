@@ -388,7 +388,7 @@ class CardBrowserViewModel(
         }
 
     init {
-        Timber.d("CardBrowserViewModel::init")
+        Timber.d("CardBrowserViewModel::init, launchOptions: '${options?.javaClass?.simpleName}'")
 
         var selectAllDecks = false
         when (options) {
