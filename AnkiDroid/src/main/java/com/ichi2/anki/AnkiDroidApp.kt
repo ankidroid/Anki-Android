@@ -240,7 +240,10 @@ open class AnkiDroidApp :
                     activity: Activity,
                     savedInstanceState: Bundle?,
                 ) {
-                    Timber.i("${activity::class.simpleName}::onCreate")
+                    Timber.i(
+                        "${activity::class.simpleName}::onCreate, savedInstanceState: %s",
+                        savedInstanceState?.let { "${it.keySet().size} keys" },
+                    )
                     (activity as? FragmentActivity)
                         ?.supportFragmentManager
                         ?.registerFragmentLifecycleCallbacks(
