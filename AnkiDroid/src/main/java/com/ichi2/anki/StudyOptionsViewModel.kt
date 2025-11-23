@@ -18,7 +18,7 @@ class StudyOptionsViewModel : ViewModel() {
         viewModelScope.launch {
             // Set loading to true immediately
             _uiState.value = _uiState.value.copy(isLoading = true)
-            
+
             if (!CollectionManager.isOpenUnsafe()) {
                 // If collection is closed, just stop loading
                 _uiState.value = _uiState.value.copy(isLoading = false)
@@ -38,9 +38,7 @@ class StudyOptionsViewModel : ViewModel() {
     fun updateData(newData: DeckStudyData) {
         _uiState.value = _uiState.value.copy(data = newData)
     }
-
-    }
-
+}
 
 /**
  * See https://github.com/ankitects/anki/blob/b05c9d15986ab4e33daa2a47a947efb066bb69b6/qt/aqt/overview.py#L226-L272
@@ -71,7 +69,7 @@ fun Collection.fetchStudyOptionsData(): DeckStudyData {
 
 data class StudyOptionsState(
     val data: DeckStudyData? = null,
-    val isLoading: Boolean = false
+    val isLoading: Boolean = false,
 )
 
 data class DeckStudyData(
