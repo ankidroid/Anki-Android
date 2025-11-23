@@ -2080,7 +2080,7 @@ class NoteEditorFragment :
         index: Int,
         field: IField,
     ) {
-        lifecycleScope.launch {
+        launchCatchingTask {
             val note = getCurrentMultimediaEditableNote()
             note.setField(index, field)
             val fieldEditText = editFields!![index]
@@ -2089,7 +2089,12 @@ class NoteEditorFragment :
             // This goes before setting formattedValue to update
             // media paths with the checksum when they have the same name
             withCol {
-                NoteService.importMediaToDirectory(this, field)
+                try {
+                    NoteService.importMediaToDirectory(this, field)
+                } catch (oomError: OutOfMemoryError) {
+                    // TODO: a 'retry' flow would be possible here
+                    throw Exception(oomError)
+                }
             }
 
             // Completely replace text for text fields (because current text was passed in)

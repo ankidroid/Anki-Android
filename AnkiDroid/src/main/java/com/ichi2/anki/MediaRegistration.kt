@@ -47,6 +47,11 @@ object MediaRegistration {
         /** [Something wrong wrong][R.string.multimedia_editor_something_wrong] */
         data object GenericError : MediaError()
 
+        /** [Something went wrong, please try again[R.string.something_wrong] */
+        data class GenericErrorTryAgain(
+            val details: String?,
+        ) : MediaError()
+
         /** [Error converting clipboard image to png][R.string.multimedia_editor_png_paste_error] */
         class ConversionError(
             val message: String,
@@ -64,6 +69,7 @@ object MediaRegistration {
         fun toHumanReadableString(context: Context): String =
             when (this) {
                 is GenericError -> context.getString(R.string.multimedia_editor_something_wrong)
+                is GenericErrorTryAgain -> context.getString(R.string.something_wrong) + details?.let { "\n\n$it" }.orEmpty()
                 is ConversionError -> context.getString(R.string.multimedia_editor_png_paste_error, message)
                 is ImageTooLarge -> context.getString(R.string.note_editor_image_too_large)
                 is VideoTooLarge -> context.getString(R.string.note_editor_video_too_large)
@@ -115,6 +121,11 @@ object MediaRegistration {
             CrashReportService.sendExceptionReport("File is invalid issue:8880", "RegisterMediaForWebView:onImagePaste URI of file:$uri")
             Timber.w(e, "Failed to paste media")
             showError(MediaError.GenericError)
+            null
+        } catch (ex: OutOfMemoryError) {
+            CrashReportService.sendExceptionReport(ex, "onPaste", additionalInfo = null, onlyIfSilent = true)
+            Timber.w(ex, "Failed to paste media")
+            showError(MediaError.GenericErrorTryAgain(details = ex.toString()))
             null
         }
 
