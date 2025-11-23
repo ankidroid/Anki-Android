@@ -118,6 +118,9 @@
         <!-- ProgressDialog-->
         <item name="dialogBackground">@color/theme_black_primary_light</item>
         <item name="progressDialogButtonTextColor">@color/material_light_blue_400</item>
+
+        <!-- HTML 'lightblue' -->
+        <item name="clozeColor">#ADD8E6</item>
     </style>
 
     <style name="SnackbarTextStyleBlack" parent="@style/Widget.MaterialComponents.Snackbar.TextView">
