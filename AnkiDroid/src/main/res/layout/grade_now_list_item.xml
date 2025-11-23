@@ -22,7 +22,7 @@
     >
 
     <com.ichi2.ui.FixedTextView
-        android:id="@+id/grade_view"
+        android:id="@+id/grade_text_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="?attr/listPreferredItemHeight"
