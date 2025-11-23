@@ -160,6 +160,7 @@ open class AnkiDroidApp :
         ThrowableFilterService.initialize()
 
         applicationScope.launch {
+            Timber.i("AnkiDroidApp: listing debug info")
             Timber.i(DebugInfoService.getDebugInfo(this@AnkiDroidApp))
         }
 
