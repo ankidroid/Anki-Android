@@ -26,6 +26,7 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.appbar.MaterialToolbar
 import com.ichi2.anki.R
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.workarounds.OnWebViewRecreatedListener
 import com.ichi2.anki.workarounds.SafeWebViewClient
 import com.ichi2.anki.workarounds.SafeWebViewLayout
 import timber.log.Timber
@@ -48,7 +49,9 @@ import timber.log.Timber
  * @see com.ichi2.anki.pages.PageFragment
  */
 @NeedsTest("pressing 'back' on this screen closes it")
-class RemoveAccountFragment : Fragment(R.layout.page_fragment) {
+class RemoveAccountFragment :
+    Fragment(R.layout.page_fragment),
+    OnWebViewRecreatedListener {
     private lateinit var webViewLayout: SafeWebViewLayout
 
     /**
@@ -73,6 +76,10 @@ class RemoveAccountFragment : Fragment(R.layout.page_fragment) {
         Timber.i("redirecting to 'remove account'")
         webViewLayout.loadUrl(getString(R.string.remove_account_url))
         return true
+    }
+
+    override fun onWebViewRecreated(webView: WebView) {
+        // Required by OnWebViewRecreatedListener
     }
 
     @CallSuper
