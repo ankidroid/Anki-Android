@@ -138,8 +138,8 @@ class ManageNotetypes : AnkiActivity(R.layout.activity_manage_note_types) {
                 state.noteTypes.size,
             )
         if (state.searchQuery.isNotEmpty()) {
-            val searchView =
-                findViewById<Toolbar>(R.id.toolbar).menu?.findItem(R.id.search_item) as? AccessibleSearchView
+            val searchMenuItem = findViewById<Toolbar>(R.id.toolbar).menu?.findItem(R.id.search_item)
+            val searchView = searchMenuItem?.actionView as? AccessibleSearchView
             searchView?.setQuery(state.searchQuery, false)
         }
     }
