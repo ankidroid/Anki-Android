@@ -65,6 +65,11 @@ open class Media(
         if (oFile == null || oFile.length() == 0L) {
             throw EmptyMediaException()
         }
+        if (oFile.length() > ANKIWEB_MAX_MEDIA_FILE_SIZE) {
+            throw IllegalArgumentException(
+                "MEDIA_SIZE_LIMIT_EXCEEDED: ${oFile.name}|${oFile.length()}|$ANKIWEB_MAX_MEDIA_FILE_SIZE",
+            )
+        }
         Timber.v("dir now %s", dir)
         return col.backend.addMediaFile(oFile.name, oFile.readBytes().toByteString())
     }
@@ -161,6 +166,13 @@ open class Media(
     fun restoreTrash() = col.backend.restoreTrash()
 
     companion object {
+        /**
+         * Maximum file size for media files to sync with AnkiWeb (100 MiB)
+         * Files exceeding this limit cannot be synced to AnkiWeb.
+         * @see <a href="https://faqs.ankiweb.net/are-there-limits-on-file-sizes-on-ankiweb.html">AnkiWeb FAQ</a>
+         */
+        const val ANKIWEB_MAX_MEDIA_FILE_SIZE = 100 * 1024 * 1024L // 100 MiB = 104,857,600 bytes
+
         /**
          * Given a [media regex][htmlMediaRegexps] and a match, return the captured media filename
          */
