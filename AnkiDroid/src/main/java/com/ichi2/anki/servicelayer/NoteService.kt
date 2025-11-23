@@ -19,9 +19,6 @@
 
 package com.ichi2.anki.servicelayer
 
-import android.os.Bundle
-import androidx.annotation.CheckResult
-import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.FieldEditText
 import com.ichi2.anki.libanki.Card
@@ -147,31 +144,6 @@ object NoteService {
             inFile.delete()
         }
         field.mediaFile = outFile
-    }
-
-    /**
-     * @param replaceNewlines Converts [FieldEditText.NEW_LINE] to HTML linebreaks
-     */
-    @VisibleForTesting
-    @CheckResult
-    fun getFieldsAsBundleForPreview(
-        editFields: List<NoteField?>?,
-        replaceNewlines: Boolean,
-    ): Bundle {
-        val fields = Bundle()
-        // Save the content of all the note fields. We use the field's ord as the key to
-        // easily map the fields correctly later.
-        if (editFields == null) {
-            return fields
-        }
-        for (e in editFields) {
-            if (e?.fieldText == null) {
-                continue
-            }
-            val fieldValue = convertToHtmlNewline(e.fieldText!!, replaceNewlines)
-            fields.putString(e.ord.toString(), fieldValue)
-        }
-        return fields
     }
 
     fun convertToHtmlNewline(
