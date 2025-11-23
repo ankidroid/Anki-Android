@@ -21,4 +21,12 @@
     android:paddingStart="8dp"
     android:paddingVertical="1dp"
     android:layout_gravity="top"
+  android:gravity="center_vertical|start"
+  android:ellipsize="end"
+  android:maxLines="2"
+  android:textColor="?android:attr/textColorPrimary"
+  android:textSize="14sp"
+  android:paddingEnd="6dp"
+  android:paddingVertical="6dp"
+  android:lineSpacingMultiplier="1.1"
 />
