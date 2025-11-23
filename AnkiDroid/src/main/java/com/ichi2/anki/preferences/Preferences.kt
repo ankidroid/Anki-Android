@@ -32,6 +32,7 @@ import androidx.fragment.app.FragmentFactory
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.commit
+import androidx.lifecycle.lifecycleScope
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.bytehamster.lib.preferencesearch.SearchConfiguration
@@ -46,10 +47,13 @@ import com.ichi2.anki.common.annotations.LegacyNotifications
 import com.ichi2.anki.preferences.HeaderFragment.Companion.getHeaderKeyForFragment
 import com.ichi2.anki.reviewreminders.ReviewReminderScope
 import com.ichi2.anki.reviewreminders.ScheduleReminders
+import com.ichi2.anki.utils.AnimationUtils.areSystemAnimationsEnabled
 import com.ichi2.anki.utils.ext.sharedPrefs
 import com.ichi2.anki.utils.isWindowCompact
 import com.ichi2.themes.Themes
 import com.ichi2.utils.FragmentFactoryUtils
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import kotlin.reflect.KClass
 import kotlin.reflect.jvm.jvmName
@@ -137,8 +141,22 @@ class PreferencesFragment :
             addToBackStack(fragment.javaClass.name)
         }
 
-        Timber.i("Highlighting key '%s' on %s", result.key, fragment)
-        result.highlight(fragment as PreferenceFragmentCompat)
+        if (fragment is ControlsSettingsFragment) {
+            fragment.lifecycleScope.launch {
+                if (areSystemAnimationsEnabled(requireContext())) {
+                    delay(100)
+                    fragment.selectTabForPreference(result.key)
+                    delay(150)
+                    result.highlight(fragment as PreferenceFragmentCompat)
+                } else {
+                    // Animations disabled - do everything immediately
+                    fragment.selectTabForPreference(result.key)
+                    result.highlight(fragment as PreferenceFragmentCompat)
+                }
+            }
+        } else {
+            result.highlight(fragment as PreferenceFragmentCompat)
+        }
     }
 
     private fun setupBackCallbacks() {
@@ -282,6 +300,8 @@ fun getFragmentFromXmlRes(
         R.xml.preferences_notifications -> NotificationsSettingsFragment()
         R.xml.preferences_appearance -> AppearanceSettingsFragment()
         R.xml.preferences_controls -> ControlsSettingsFragment()
+        R.xml.preferences_reviewer_controls -> ControlsSettingsFragment()
+        R.xml.preferences_previewer_controls -> ControlsSettingsFragment()
         R.xml.preferences_advanced -> AdvancedSettingsFragment()
         R.xml.preferences_accessibility -> AccessibilitySettingsFragment()
         R.xml.preferences_dev_options -> DevOptionsFragment()

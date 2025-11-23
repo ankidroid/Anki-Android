@@ -61,6 +61,24 @@ class ControlsSettingsFragment :
         setupNewStudyScreenSettings()
     }
 
+    /**
+     * Selects the appropriate tab based on a preference key from search results.
+     * This allows search navigation to automatically switch to the correct tab.
+     */
+    fun selectTabForPreference(key: String) {
+        val targetTabIndex = actionToScreenMap[key]?.ordinal
+        if (targetTabIndex == null) {
+            Timber.w("Could not find the preference with %s key", key)
+            return
+        }
+
+        view?.post {
+            requirePreference<ControlsTabPreference>(
+                R.string.pref_controls_tab_layout_key,
+            ).selectTab(targetTabIndex)
+        }
+    }
+
     private fun setControlPreferencesDefaultValues(screen: ControlPreferenceScreen) {
         val commands = screen.getActions().associateBy { it.preferenceKey }
         val prefs = sharedPrefs()
@@ -157,6 +175,13 @@ class ControlsSettingsFragment :
     }
 
     companion object {
+        val actionToScreenMap: Map<String, ControlPreferenceScreen> by lazy {
+            ControlPreferenceScreen.entries
+                .flatMap { screen ->
+                    screen.getActions().map { action -> action.preferenceKey to screen }
+                }.toMap()
+        }
+
         val legacyStudyScreenSettings =
             listOf(
                 R.string.save_voice_command_key,
