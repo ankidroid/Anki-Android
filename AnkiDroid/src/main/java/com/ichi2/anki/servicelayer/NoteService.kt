@@ -42,6 +42,7 @@ import com.ichi2.anki.observability.undoableOp
 import org.json.JSONException
 import timber.log.Timber
 import java.io.File
+import java.io.IOException
 
 object NoteService {
     /**
@@ -123,6 +124,9 @@ object NoteService {
      * Considering the field is new, if it has media handle it
      *
      * @param field
+     *
+     * @throws IOException
+     * @throws OutOfMemoryError if the file could not be copied to a contiguous block of memory (or is >= 2GB)
      */
     fun importMediaToDirectory(
         col: Collection,

@@ -61,6 +61,10 @@ open class Media(
      ***********************************************************
      */
 
+    /**
+     * @throws EmptyMediaException if [oFile] is empty or null
+     * @throws OutOfMemoryError if the file could not be copied to a contiguous block of memory (or is >= 2GB)
+     */
     fun addFile(oFile: File?): String {
         if (oFile == null || oFile.length() == 0L) {
             throw EmptyMediaException()
