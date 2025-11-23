@@ -23,6 +23,7 @@ import android.os.Parcel
 import android.os.Parcelable
 import androidx.core.os.bundleOf
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.libanki.CardTemplate
 import com.ichi2.anki.libanki.NoteTypeId
 import com.ichi2.anki.libanki.NotetypeJson
@@ -44,10 +45,11 @@ class CardTemplateNotetype(
         DELETE,
     }
 
+    @NeedsTest("serialization on Android 15+ - regression test for crash when TemplateChange wasn't serializable")
     data class TemplateChange(
         var ordinal: Int,
         val type: ChangeType,
-    )
+    ) : java.io.Serializable
 
     var templateChanges = ArrayList<TemplateChange>()
         private set
