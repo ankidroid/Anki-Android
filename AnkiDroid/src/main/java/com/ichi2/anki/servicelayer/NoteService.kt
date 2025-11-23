@@ -23,7 +23,6 @@ import android.os.Bundle
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.FieldEditText
 import com.ichi2.anki.libanki.Card
 import com.ichi2.anki.libanki.Collection
@@ -31,7 +30,6 @@ import com.ichi2.anki.libanki.Note
 import com.ichi2.anki.libanki.NoteTypeId
 import com.ichi2.anki.libanki.NotetypeJson
 import com.ichi2.anki.libanki.QueueType
-import com.ichi2.anki.libanki.exception.EmptyMediaException
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote
 import com.ichi2.anki.multimediacard.fields.AudioRecordingField
 import com.ichi2.anki.multimediacard.fields.EFieldType
@@ -44,7 +42,6 @@ import com.ichi2.anki.observability.undoableOp
 import org.json.JSONException
 import timber.log.Timber
 import java.io.File
-import java.io.IOException
 
 object NoteService {
     /**
@@ -129,39 +126,23 @@ object NoteService {
      */
     fun importMediaToDirectory(
         col: Collection,
-        field: IField?,
+        field: IField,
     ) {
-        var tmpMediaPath: File? = null
-        when (field!!.type) {
-            EFieldType.AUDIO_RECORDING, EFieldType.MEDIA_CLIP, EFieldType.IMAGE -> tmpMediaPath = field.mediaFile
-            EFieldType.TEXT -> {
-            }
+        val inFile =
+            when (field.type) {
+                EFieldType.AUDIO_RECORDING, EFieldType.MEDIA_CLIP, EFieldType.IMAGE -> field.mediaFile
+                EFieldType.TEXT -> null
+            } ?: return
+
+        if (inFile.length() == 0L) return
+
+        val fname = col.media.addFile(inFile)
+        val outFile = File(col.media.dir, fname)
+        Timber.v("""File "%s" should be copied to "%s""", fname, outFile)
+        if (field.hasTemporaryMedia && outFile != inFile) {
+            inFile.delete()
         }
-        if (tmpMediaPath != null) {
-            try {
-                val inFile = tmpMediaPath
-                if (inFile.exists() && inFile.length() > 0) {
-                    val fname = col.media.addFile(inFile)
-                    val outFile = File(col.media.dir, fname)
-                    Timber.v("""File "%s" should be copied to "%s""", fname, outFile)
-                    if (field.hasTemporaryMedia && outFile != tmpMediaPath) {
-                        // Delete original
-                        inFile.delete()
-                    }
-                    when (field.type) {
-                        EFieldType.AUDIO_RECORDING, EFieldType.MEDIA_CLIP, EFieldType.IMAGE -> field.mediaFile = outFile
-                        else -> {
-                        }
-                    }
-                }
-            } catch (e: IOException) {
-                throw RuntimeException(e)
-            } catch (mediaException: EmptyMediaException) {
-                // This shouldn't happen, but we're fine to ignore it if it does.
-                Timber.w(mediaException)
-                CrashReportService.sendExceptionReport(mediaException, "noteService::importMediaToDirectory")
-            }
-        }
+        field.mediaFile = outFile
     }
 
     /**
