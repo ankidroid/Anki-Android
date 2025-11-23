@@ -19,8 +19,6 @@ package com.ichi2.anki.dialogs
 import android.app.Dialog
 import android.os.Bundle
 import android.view.View
-import android.widget.CheckBox
-import android.widget.ImageButton
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
@@ -30,12 +28,11 @@ import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.textfield.TextInputEditText
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
 import com.ichi2.anki.StudyOptionsFragment
+import com.ichi2.anki.databinding.DialogDeckDescriptionBinding
 import com.ichi2.anki.dialogs.EditDeckDescriptionDialogViewModel.DismissType
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.snackbar.showSnackbar
@@ -43,6 +40,7 @@ import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.utils.AndroidUiUtils.hideKeyboard
 import com.ichi2.utils.AndroidUiUtils.setFocusAndOpenKeyboard
 import com.ichi2.utils.create
+import com.ichi2.utils.moveCursorToEnd
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
@@ -58,17 +56,9 @@ import timber.log.Timber
 class EditDeckDescriptionDialog : DialogFragment() {
     private val viewModel: EditDeckDescriptionDialogViewModel by viewModels()
 
+    private lateinit var binding: DialogDeckDescriptionBinding
+
     private lateinit var alertDialog: AlertDialog
-    private lateinit var dialogView: View
-
-    private val deckDescriptionInput: TextInputEditText
-        get() = dialogView.findViewById(R.id.deck_description_input)
-
-    private val formatAsMarkdownInput: CheckBox
-        get() = dialogView.findViewById(R.id.format_as_markdown)
-
-    private val toolbar: MaterialToolbar
-        get() = dialogView.findViewById(R.id.topAppBar)
 
     private var isKeyboardVisible: Boolean = false
 
@@ -76,7 +66,7 @@ class EditDeckDescriptionDialog : DialogFragment() {
         object : OnBackPressedCallback(enabled = false) {
             override fun handleOnBackPressed() {
                 if (isKeyboardVisible) {
-                    deckDescriptionInput.hideKeyboard()
+                    binding.deckDescriptionInput.hideKeyboard()
                 } else {
                     showDiscardChangesDialog()
                 }
@@ -84,10 +74,10 @@ class EditDeckDescriptionDialog : DialogFragment() {
         }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        this.dialogView = layoutInflater.inflate(R.layout.dialog_deck_description, null)
+        this.binding = DialogDeckDescriptionBinding.inflate(layoutInflater)
         return MaterialAlertDialogBuilder(requireContext())
             .create {
-                setView(dialogView)
+                setView(binding.root)
                 positiveButton(R.string.save)
                 negativeButton(R.string.close)
             }.apply {
@@ -100,7 +90,7 @@ class EditDeckDescriptionDialog : DialogFragment() {
                 setCancelable(false)
                 onBackPressedDispatcher.addCallback(this, onUnsavedChangesBackCallback)
                 show()
-                setupDialogView(dialogView)
+                setupDialogView(binding.root)
             }
     }
 
@@ -118,23 +108,23 @@ class EditDeckDescriptionDialog : DialogFragment() {
     }
 
     private fun setupDialogView(view: View) {
-        deckDescriptionInput.apply {
+        binding.deckDescriptionInput.apply {
             doOnTextChanged { text, _, _, _ ->
                 viewModel.description = text?.toString() ?: ""
             }
         }
 
-        formatAsMarkdownInput.apply {
+        binding.formatAsMarkdownInput.apply {
             setOnCheckedChangeListener { _, value -> viewModel.formatAsMarkdown = value }
         }
 
         // setup 'Format as Markdown' help
-        view.findViewById<ImageButton>(R.id.markdown_formatting_help).apply {
+        binding.markdownFormattingHelp.apply {
             contentDescription =
                 getString(R.string.help_button_content_description, getString(R.string.format_deck_description_as_markdown))
             setOnClickListener {
                 MaterialAlertDialogBuilder(requireContext()).show {
-                    setTitle(formatAsMarkdownInput.text)
+                    setTitle(binding.formatAsMarkdownInput.text)
                     setIcon(R.drawable.ic_help_black_24dp)
                     // FIXME: the upstream string unexpectedly contains newlines
                     setMessage(TR.deckConfigDescriptionNewHandlingHint().replace("\n", " ").replace("  ", " "))
@@ -166,22 +156,24 @@ class EditDeckDescriptionDialog : DialogFragment() {
 
         lifecycleScope.launch {
             viewModel.flowOfDescription.collect { desc ->
-                if (desc == deckDescriptionInput.text.toString()) return@collect
-                deckDescriptionInput.setText(desc)
+                if (desc == binding.deckDescriptionInput.text.toString()) return@collect
+                binding.deckDescriptionInput.setText(desc)
             }
         }
 
         lifecycleScope.launch {
             viewModel.flowOfFormatAsMarkdown.collect {
-                formatAsMarkdownInput.isChecked = it
+                binding.formatAsMarkdownInput.isChecked = it
             }
         }
 
         lifecycleScope.launch {
             viewModel.flowOfInitCompleted.collect {
                 if (!it) return@collect
-                toolbar.title = viewModel.windowTitle
-                setFocusAndOpenKeyboard(deckDescriptionInput) { deckDescriptionInput.setSelection(deckDescriptionInput.text!!.length) }
+                binding.toolbar.title = viewModel.windowTitle
+                setFocusAndOpenKeyboard(binding.deckDescriptionInput) {
+                    binding.deckDescriptionInput.moveCursorToEnd()
+                }
             }
         }
 

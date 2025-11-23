@@ -39,6 +39,7 @@ import com.ichi2.anki.libanki.getNotetypeNames
 import com.ichi2.anki.libanki.getStockNotetype
 import com.ichi2.anki.withProgress
 import com.ichi2.utils.customView
+import com.ichi2.utils.moveCursorToEnd
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
 
@@ -119,7 +120,7 @@ class AddNewNotesType(
                     ) {
                         val selectedNotetype = optionsToDisplay[index]
                         nameInput.setText(randomizeName(selectedNotetype.name))
-                        nameInput.setSelection(nameInput.text.length)
+                        nameInput.moveCursorToEnd()
                     }
 
                     override fun onNothingSelected(widget: AdapterView<*>?) {

@@ -33,6 +33,7 @@ import com.google.android.material.textfield.TextInputEditText
 import com.ichi2.anki.Flag
 import com.ichi2.anki.R
 import com.ichi2.anki.utils.ext.findViewById
+import com.ichi2.utils.moveCursorToEnd
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -85,7 +86,7 @@ class FlagAdapter(
             holder.flagNameViewLayout.visibility = View.GONE
             holder.flagNameEditLayout.visibility = View.VISIBLE
             holder.flagNameEdit.requestFocus()
-            holder.flagNameEdit.text?.let { text -> holder.flagNameEdit.setSelection(text.length) }
+            holder.flagNameEdit.moveCursorToEnd()
             val inputMethodManager = holder.flagNameEdit.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             inputMethodManager.showSoftInput(holder.flagNameEdit, InputMethodManager.SHOW_IMPLICIT)
         }
