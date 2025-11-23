@@ -17,7 +17,6 @@
 package com.ichi2.anki.dialogs
 
 import android.app.Dialog
-import android.content.DialogInterface
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.core.os.bundleOf
@@ -29,6 +28,9 @@ import com.ichi2.anki.browser.BrowserColumnSelectionFragment
 import com.ichi2.anki.browser.CardBrowserViewModel
 import com.ichi2.anki.databinding.BrowserOptionsDialogBinding
 import com.ichi2.anki.model.CardsOrNotes
+import com.ichi2.utils.create
+import com.ichi2.utils.negativeButton
+import com.ichi2.utils.positiveButton
 import timber.log.Timber
 
 class BrowserOptionsDialog : AppCompatDialogFragment(R.layout.browser_options_dialog) {
@@ -45,7 +47,8 @@ class BrowserOptionsDialog : AppCompatDialogFragment(R.layout.browser_options_di
             }
         }
 
-    private val positiveButtonClick = { _: DialogInterface, _: Int ->
+    /** Persists updated options to the ViewModel */
+    fun saveChanges() {
         if (cardsOrNotes != dialogCardsOrNotes) {
             viewModel.setCardsOrNotes(dialogCardsOrNotes)
         }
@@ -109,14 +112,11 @@ class BrowserOptionsDialog : AppCompatDialogFragment(R.layout.browser_options_di
 
         binding.browsingTextView.text = TR.preferencesBrowsing()
 
-        return MaterialAlertDialogBuilder(requireContext()).run {
-            this.setView(binding.root)
-            this.setTitle(getString(R.string.browser_options_dialog_heading))
-            this.setNegativeButton(getString(R.string.dialog_cancel)) { _: DialogInterface, _: Int ->
-                dismiss()
-            }
-            this.setPositiveButton(getString(R.string.dialog_ok), DialogInterface.OnClickListener(function = positiveButtonClick))
-            this.create()
+        return MaterialAlertDialogBuilder(requireContext()).create {
+            setView(binding.root)
+            setTitle(getString(R.string.browser_options_dialog_heading))
+            positiveButton(R.string.dialog_ok) { saveChanges() }
+            negativeButton(R.string.dialog_cancel)
         }
     }
 
