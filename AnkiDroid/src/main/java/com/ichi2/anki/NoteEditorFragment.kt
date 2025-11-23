@@ -26,6 +26,7 @@ import android.content.ClipData
 import android.content.ClipDescription
 import android.content.ClipboardManager
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.res.Configuration
 import android.net.Uri
@@ -81,7 +82,7 @@ import androidx.lifecycle.lifecycleScope
 import anki.config.ConfigKey
 import anki.notes.NoteFieldsCheckResponse
 import com.google.android.material.color.MaterialColors
-import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
@@ -1245,7 +1246,7 @@ class NoteEditorFragment :
         refreshNoteData(FieldChangeType.refreshWithStickyFields(shouldReplaceNewlines()))
         // backend text ends with dot
         val successMessage = TR.importingCardsAdded(count).replace(".", "")
-        showSnackbar(successMessage, Snackbar.LENGTH_SHORT)
+        showSnackbar(successMessage)
 
         if (caller == NoteEditorCaller.NOTEEDITOR || aedictIntent) {
             closeEditorAfterSave = true
@@ -1722,6 +1723,63 @@ class NoteEditorFragment :
         showDialogFragment(dialog)
     }
 
+    /**
+     * Shows a warning dialog when a media file exceeds the AnkiWeb size limit (100 MiB).
+     *
+     * @param fileName The name of the large file
+     * @param fileSize The size of the file in bytes
+     * @param field The IField containing the media file
+     * @param index The field index in the note
+     * @param fieldEditText The EditText widget for this field
+     */
+    private fun showLargeMediaFileWarning(
+        fileName: String,
+        fileSize: Long,
+        field: IField,
+        index: Int,
+        fieldEditText: FieldEditText,
+    ) {
+        val fileSizeMB = String.format("%.2f MB", fileSize / (1024.0 * 1024.0))
+        val message = getString(R.string.media_file_size_warning_message, fileName, fileSizeMB)
+
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(R.string.media_file_size_warning_title)
+            .setMessage(message)
+            .setPositiveButton(R.string.media_file_size_add_anyway) { dialog: DialogInterface, _ ->
+                // User confirmed - add the file anyway by bypassing size check
+                lifecycleScope.launch {
+                    // Add file directly without size check
+                    try {
+                        withCol {
+                            // Force add by calling addFile directly on media
+                            val inFile = field.mediaFile ?: return@withCol
+                            if (inFile.exists() && inFile.length() > 0) {
+                                val fname = this.media.addFile(inFile)
+                                val outFile = java.io.File(this.media.dir, fname)
+                                if (field.hasTemporaryMedia && outFile != inFile) {
+                                    inFile.delete()
+                                }
+                                field.mediaFile = outFile
+                            }
+                        }
+
+                        // Update field UI
+                        val formattedValue = field.formattedValue
+                        if (field.type === com.ichi2.anki.multimediacard.fields.EFieldType.TEXT) {
+                            fieldEditText.setText(formattedValue)
+                        } else if (fieldEditText.text != null) {
+                            insertStringInField(fieldEditText, formattedValue)
+                        }
+                        changed = true
+                    } catch (e: Exception) {
+                        Timber.w(e, "Failed to add large media file")
+                        showSnackbar(R.string.something_wrong)
+                    }
+                }
+            }.setNegativeButton(R.string.dialog_cancel, null)
+            .show()
+    }
+
     override fun onSelectedTags(
         selectedTags: List<String>,
         indeterminateTags: List<String>,
@@ -2092,8 +2150,24 @@ class NoteEditorFragment :
             // Import field media
             // This goes before setting formattedValue to update
             // media paths with the checksum when they have the same name
-            withCol {
-                NoteService.importMediaToDirectory(this, field)
+            try {
+                withCol {
+                    NoteService.importMediaToDirectory(this, field)
+                }
+            } catch (e: IllegalArgumentException) {
+                // Check if this is a media size limit exception
+                val message = e.message ?: ""
+                if (message.startsWith("MEDIA_SIZE_LIMIT_EXCEEDED:")) {
+                    val parts = message.substringAfter("MEDIA_SIZE_LIMIT_EXCEEDED: ").split("|")
+                    if (parts.size == 3) {
+                        val fileName = parts[0]
+                        val fileSize = parts[1].toLongOrNull() ?: 0L
+                        showLargeMediaFileWarning(fileName, fileSize, field, index, fieldEditText)
+                        return@launch
+                    }
+                }
+                // Re-throw if not a media size exception
+                throw e
             }
 
             // Completely replace text for text fields (because current text was passed in)
