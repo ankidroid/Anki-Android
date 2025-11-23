@@ -455,7 +455,21 @@ class CardBrowserViewModel(
                     savedStateHandle.get<Bundle>(STATE_MULTISELECT_VALUES)?.let { bundle ->
                         BundleCompat.getParcelable(bundle, STATE_MULTISELECT_VALUES, IdsFile::class.java)
                     }
-                val ids = idsFile?.getIds()?.map { CardOrNoteId(it) } ?: emptyList()
+                val ids =
+                    try {
+                        idsFile?.getIds()?.map { CardOrNoteId(it) }
+                    } catch (e: Exception) {
+                        // #19572: I suspect we have a startup bug here, so continue reporting the exception
+                        Timber.w(e, "failed to read STATE_MULTISELECT_VALUES")
+                        CrashReportService.sendExceptionReport(
+                            e = e,
+                            origin = "19572: STATE_MULTISELECT_VALUES",
+                            additionalInfo = null,
+                            onlyIfSilent = true,
+                        )
+                        // fallback to no selections, but still in multiselect mode
+                        null
+                    } ?: emptyList()
 
                 launchSearchForCards(cardOrNoteIdsToSelect = ids)
             }
