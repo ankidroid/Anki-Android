@@ -21,7 +21,7 @@
 
 
     <com.ichi2.ui.FixedTextView
-        android:id="@+id/axis_picker_selected_axis"
+        android:id="@+id/selected_axis_text_view"
         app:layout_constraintDimensionRatio="1:1"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -37,14 +37,16 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
+    <!-- Contains `available_axes`, initially invisible -->
     <ScrollView
-        android:id="@+id/axis_picker_scrollview"
+        android:id="@+id/available_axes_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone"
         >
+        <!-- AxisSelector elements are added here dynamically if motion is detected -->
         <LinearLayout
-            android:id="@+id/axis_picker_available_axes"
+            android:id="@+id/available_axes"
             android:layout_width="match_parent"
             android:orientation="vertical"
             android:layout_height="0dp"/>

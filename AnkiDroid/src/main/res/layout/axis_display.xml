@@ -51,7 +51,7 @@
 
 
     <com.ichi2.ui.AxisValueDisplay
-        android:id="@+id/axis_value"
+        android:id="@+id/axis_display"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="@+id/select_min_extremity"
@@ -75,7 +75,7 @@
         android:enabled="false"
 
         app:layout_constraintTop_toBottomOf="@id/axis_name"
-        app:layout_constraintStart_toEndOf="@id/axis_value"
+        app:layout_constraintStart_toEndOf="@id/axis_display"
         app:layout_constraintEnd_toEndOf="parent"
 
         app:shapeAppearance="?attr/shapeAppearanceCornerLarge" />
