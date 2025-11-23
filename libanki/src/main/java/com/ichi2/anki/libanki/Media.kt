@@ -73,11 +73,9 @@ open class Media(
      */
     @LibAnkiAlias("add_file")
     @RustCleanup("use backend exception instead of EmptyMediaException")
-    fun addFile(file: File?): String {
+    fun addFile(file: File): String {
         // fail if non-existing or empty
-        if (file == null || file.length() == 0L) {
-            throw EmptyMediaException()
-        }
+        if (file.length() == 0L) throw EmptyMediaException()
         return writeData(file.name, file.readBytes().toByteString())
     }
 
