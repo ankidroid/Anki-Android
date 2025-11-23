@@ -35,6 +35,7 @@ import androidx.core.text.HtmlCompat
 import androidx.core.view.MenuProvider
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import anki.collection.OpChanges
@@ -89,6 +90,8 @@ class StudyOptionsFragment :
 
     private var fragmented = false
 
+    private val viewModel: StudyOptionsViewModel by viewModels()
+
     private val buttonClickListener =
         View.OnClickListener { v: View ->
             if (v.id == R.id.studyoptions_start) {
@@ -124,6 +127,14 @@ class StudyOptionsFragment :
     ) {
         super.onViewCreated(view, savedInstanceState)
         requireActivity().addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.uiState.collect { state ->
+                view.findViewById<View>(R.id.progress_bar)?.visibility =
+                    if (state.isLoading) View.VISIBLE else View.GONE
+                state.data?.let { rebuildUi(it) }
+            }
+        }
     }
 
     override fun onCreateMenu(
@@ -250,7 +261,7 @@ class StudyOptionsFragment :
                 }
                 withCol { fetchStudyOptionsData() }
             }
-        rebuildUi(result)
+        viewModel.updateData(result)
     }
 
     @VisibleForTesting
@@ -263,7 +274,7 @@ class StudyOptionsFragment :
                 }
                 withCol { fetchStudyOptionsData() }
             }
-        rebuildUi(result)
+        viewModel.updateData(result)
     }
 
     override fun onPrepareMenu(menu: Menu) {
@@ -330,45 +341,10 @@ class StudyOptionsFragment :
             }
         }
 
-    private var updateValuesFromDeckJob: Job? = null
-
     fun refreshInterface() {
         Timber.d("Refreshing StudyOptionsFragment")
-        updateValuesFromDeckJob?.cancel()
-        // Load the deck counts for the deck from Collection asynchronously
-        updateValuesFromDeckJob =
-            launchCatchingTask {
-                // Show progress bar explicitly as it is now hidden by default (fix for DeckPicker spinner issue)
-                view?.findViewById<View>(R.id.progress_bar)?.visibility = View.VISIBLE
-                if (CollectionManager.isOpenUnsafe()) {
-                    val result = withCol { fetchStudyOptionsData() }
-                    rebuildUi(result)
-                }
-            }
+        viewModel.refreshData()
     }
-
-    class DeckStudyData(
-        /**
-         * The number of new card to see today in a deck, including subdecks.
-         */
-        val newCardsToday: Int,
-        /**
-         * The number of (repetition of) card in learning to see today in a deck, including subdecks. The exact way cards with multiple steps are counted depends on the scheduler
-         */
-        val lrnCardsToday: Int,
-        /**
-         * The number of review card to see today in a deck, including subdecks.
-         */
-        val revCardsToday: Int,
-        val buriedNew: Int,
-        val buriedLearning: Int,
-        val buriedReview: Int,
-        val totalNewCards: Int,
-        /**
-         * Number of cards in this decks and its subdecks.
-         */
-        val numberOfCardsInDeck: Int,
-    )
 
     private val col: Collection?
         get() {
@@ -382,11 +358,9 @@ class StudyOptionsFragment :
 
     override fun onPause() {
         super.onPause()
-        updateValuesFromDeckJob?.cancel()
     }
 
     private fun rebuildUi(result: DeckStudyData) {
-        view?.findViewById<View?>(R.id.progress_bar)?.visibility = View.GONE
         // Don't do anything if the fragment is no longer attached to it's Activity or col has been closed
         if (activity == null) {
             Timber.e("StudyOptionsFragment.mRefreshFragmentListener :: can't refresh")
@@ -496,33 +470,6 @@ class StudyOptionsFragment :
         totalCardsCount.text = result.numberOfCardsInDeck.toString()
         // Rebuild the options menu
         activity?.invalidateMenu()
-    }
-
-    /**
-     * See https://github.com/ankitects/anki/blob/b05c9d15986ab4e33daa2a47a947efb066bb69b6/qt/aqt/overview.py#L226-L272
-     */
-    private fun Collection.fetchStudyOptionsData(): DeckStudyData {
-        val deckId = decks.current().id
-        val counts = sched.counts()
-        var buriedNew = 0
-        var buriedLearning = 0
-        var buriedReview = 0
-        val tree = sched.deckDueTree(deckId)
-        if (tree != null) {
-            buriedNew = tree.newCount - counts.new
-            buriedLearning = tree.learnCount - counts.lrn
-            buriedReview = tree.reviewCount - counts.rev
-        }
-        return DeckStudyData(
-            newCardsToday = counts.new,
-            lrnCardsToday = counts.lrn,
-            revCardsToday = counts.rev,
-            buriedNew = buriedNew,
-            buriedLearning = buriedLearning,
-            buriedReview = buriedReview,
-            totalNewCards = sched.totalNewForCurrentDeck(),
-            numberOfCardsInDeck = decks.cardCount(deckId, includeSubdecks = true),
-        )
     }
 
     companion object {
