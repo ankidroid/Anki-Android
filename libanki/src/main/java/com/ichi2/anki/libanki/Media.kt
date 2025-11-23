@@ -19,11 +19,13 @@ package com.ichi2.anki.libanki
 
 import androidx.annotation.WorkerThread
 import anki.media.CheckMediaResponse
+import com.google.protobuf.ByteString
 import com.google.protobuf.kotlin.toByteString
 import com.ichi2.anki.libanki.Media.Companion.htmlMediaRegexps
 import com.ichi2.anki.libanki.exception.EmptyMediaException
 import com.ichi2.anki.libanki.utils.LibAnkiAlias
 import com.ichi2.anki.libanki.utils.NotInLibAnki
+import net.ankiweb.rsdroid.RustCleanup
 import timber.log.Timber
 import java.io.File
 
@@ -62,16 +64,39 @@ open class Media(
      */
 
     /**
-     * @throws EmptyMediaException if [oFile] is empty or null
+     * Add [filename][File.name] to the media folder, renaming if not unique
+     *
+     * @return possibly-renamed filename
+     *
+     * @throws EmptyMediaException if [file] is empty
      * @throws OutOfMemoryError if the file could not be copied to a contiguous block of memory (or is >= 2GB)
      */
-    fun addFile(oFile: File?): String {
-        if (oFile == null || oFile.length() == 0L) {
+    @LibAnkiAlias("add_file")
+    @RustCleanup("use backend exception instead of EmptyMediaException")
+    fun addFile(file: File?): String {
+        // fail if non-existing or empty
+        if (file == null || file.length() == 0L) {
             throw EmptyMediaException()
         }
-        Timber.v("dir now %s", dir)
-        return col.backend.addMediaFile(oFile.name, oFile.readBytes().toByteString())
+        return writeData(file.name, file.readBytes().toByteString())
     }
+
+    /**
+     * Write the file to the media folder, renaming if not unique
+     *
+     * @return possibly-renamed filename
+     *
+     * @throws OutOfMemoryError if the file could not be copied to a contiguous block of memory (or is >= 2GB)
+     */
+    @LibAnkiAlias("write_data")
+    fun writeData(
+        desiredFname: String,
+        data: ByteString,
+    ): String =
+        col.backend.addMediaFile(
+            desiredName = desiredFname,
+            data = data,
+        )
 
     /*
      * String manipulation
