@@ -47,25 +47,17 @@ sealed class ImageOcclusionArgs : Parcelable {
     data class Add(
         val imagePath: String,
         val noteTypeId: NoteTypeId,
-        val deckId: DeckId,
+        /**
+         * The ID of the deck that was selected when the editor was opened.
+         * Used to restore the deck after saving a note to prevent unexpected deck changes.
+         */
+        val originalDeckId: DeckId,
     ) : ImageOcclusionArgs()
 
     @Parcelize
     data class Edit(
         val noteId: NoteId,
-        val deckId: DeckId,
     ) : ImageOcclusionArgs()
-
-    /**
-     * The ID of the deck that was selected when the editor was opened.
-     * Used to restore the deck after saving a note to prevent unexpected deck changes.
-     */
-    val originalDeckId: DeckId
-        get() =
-            when (this) {
-                is Add -> this.deckId
-                is Edit -> this.deckId
-            }
 
     /**
      * A [JSONObject] containing options for loading the [image occlusion page][ImageOcclusion].
@@ -98,18 +90,30 @@ class ImageOcclusionViewModel(
     val args: ImageOcclusionArgs =
         checkNotNull(savedStateHandle[IO_ARGS_KEY]) { "$IO_ARGS_KEY required" }
 
-    var selectedDeckIdFlow = MutableStateFlow(args.originalDeckId)
+    private val originalDeckId: DeckId? = (args as? ImageOcclusionArgs.Add)?.originalDeckId
 
+    /**
+     * The currently selected deck ID
+     *
+     * Only valid in 'ADD' mode
+     */
+    val selectedDeckIdFlow: MutableStateFlow<DeckId>? =
+        originalDeckId?.let { MutableStateFlow(it) }
+
+    /**
+     * The currently selected deck name
+     *
+     * Only valid in 'ADD' mode
+     */
     val deckNameFlow =
-        selectedDeckIdFlow
-            .map { did -> withCol { decks.name(did) } }
+        selectedDeckIdFlow?.map { did -> withCol { decks.name(did) } }
 
     init {
-        // if we are in 'add' mode, thr current deck is used to add the note.
-        // This is reverted in 'onSaveOperationCompleted'
+        // if we are in 'add' mode, the current deck is used to add the note.
+        // This is reverted in 'resetTemporaryDeckOverride'
         selectedDeckIdFlow
-            .onEach { withCol { decks.select(it) } }
-            .launchIn(viewModelScope)
+            ?.onEach { withCol { decks.select(it) } }
+            ?.launchIn(viewModelScope)
     }
 
     /**
@@ -118,7 +122,9 @@ class ImageOcclusionViewModel(
      * @param deckId The [DeckId] object representing the selected deck. Can be null if no deck is selected.
      */
     fun handleDeckSelection(deckId: DeckId) {
-        selectedDeckIdFlow.value = deckId
+        selectedDeckIdFlow?.let { it.value = deckId } ?: run {
+            Timber.w("deck selection is unavailable")
+        }
     }
 
     /**
@@ -126,13 +132,27 @@ class ImageOcclusionViewModel(
      */
     fun onSaveOperationCompleted() {
         Timber.i("save operation completed")
-        if (args.originalDeckId == selectedDeckIdFlow.value) return
+        if (originalDeckId != null) {
+            resetTemporaryDeckOverride(originalDeckId)
+        }
+    }
+
+    /**
+     * Resets the current deck to the deck the screen was opened with
+     *
+     * Only for [ImageOcclusionArgs.Add] mode
+     */
+    private fun resetTemporaryDeckOverride(originalDeckId: DeckId) {
+        // no need to reset if the DeckId was unchanged
+        if (originalDeckId == selectedDeckIdFlow?.value) return
+
         // reset to the previous deck that the backend "saw" as selected, this
-        // avoids other screens unexpectedly having their working decks modified(
-        // most important being the Reviewer where the user would find itself
-        // studying another deck after editing a note with changing the deck)
+        // avoids other screens unexpectedly having their working decks modified
+        // For example, the study screen: if a user backgrounds the screen, then
+        // adds an occluded image via 'Share'
         viewModelScope.launch {
-            withCol { backend.setCurrentDeck(args.originalDeckId) }
+            Timber.i("resetting temporary deck override")
+            withCol { backend.setCurrentDeck(originalDeckId) }
         }
     }
 

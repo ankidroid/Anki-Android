@@ -24,6 +24,7 @@ import android.webkit.WebView
 import android.widget.TextView
 import androidx.activity.addCallback
 import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -52,6 +53,8 @@ import timber.log.Timber
  * IO: Like an image-based cloze: hide parts of an image, revealed on the back
  * ([docs](https://docs.ankiweb.net/editing.html#image-occlusion) and
  * [source](https://github.com/ankitects/anki/blob/main/proto/anki/image_occlusion.proto)).
+ *
+ * When adding, a user may select the deck of the note
  *
  * **Paths**
  * `/image-occlusion/$PATH`
@@ -132,7 +135,9 @@ class ImageOcclusion :
             deckNameView.text = name
         }
 
-        viewModel.deckNameFlow.launchCollectionInLifecycleScope(::onDeckNameChanged)
+        viewModel.deckNameFlow?.launchCollectionInLifecycleScope(::onDeckNameChanged) ?: run {
+            deckNameView.isVisible = false
+        }
     }
 
     // TODO: Move this to an extension method once we have context parameters

@@ -2423,10 +2423,11 @@ class NoteEditorFragment :
         populateEditFields(changeType, false)
         updateFieldsFromStickyText()
 
-        // Showing the deck selection parts is not needed for Image Occlusion notetypes
-        // as deck selection is handled by the backend page
-        requireView().findViewById<TextView>(R.id.CardEditorDeckText).isVisible = !currentNotetypeIsImageOcclusion()
-        requireView().findViewById<View>(R.id.note_deck_name).isVisible = !currentNotetypeIsImageOcclusion()
+        // When adding a note, ImageOcclusion handles the deck selection
+        // as a user can reach this screen directly from an intent
+        val disableDeckEditing = addNote && currentNotetypeIsImageOcclusion()
+        requireView().findViewById<TextView>(R.id.CardEditorDeckText).isVisible = !disableDeckEditing
+        requireView().findViewById<View>(R.id.note_deck_name).isVisible = !disableDeckEditing
     }
 
     private fun addClozeButton(
@@ -2764,12 +2765,11 @@ class NoteEditorFragment :
                 ImageOcclusionArgs.Add(
                     noteTypeId = noteTypeId,
                     imagePath = imagePath,
-                    deckId = deckId,
+                    originalDeckId = deckId,
                 )
             } else {
                 ImageOcclusionArgs.Edit(
                     noteId = editorNote!!.id,
-                    deckId = deckId,
                 )
             }
 
