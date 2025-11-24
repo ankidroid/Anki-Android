@@ -31,7 +31,7 @@
         app:navigationIcon="?attr/homeAsUpIndicator" />
 
     <WebView
-        android:id="@+id/media_check_webview"
+        android:id="@+id/web_view"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:layout_width="match_parent" />

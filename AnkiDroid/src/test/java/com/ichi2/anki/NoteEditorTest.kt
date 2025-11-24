@@ -487,7 +487,8 @@ class NoteEditorTest : RobolectricTest() {
             addDeck("Basic")
             val reversedDeckId = addDeck("Reversed", setAsSelected = true)
 
-            assertThat("setup: deckId", col.notetypes.byName("Basic")!!.did, equalTo(1))
+            val basicNotetypeId = col.notetypes.byName("Basic")!!.id
+            assertThat("setup: no default deck set yet", col.defaultDeckForNoteType(basicNotetypeId), equalTo(null))
 
             getNoteEditorAdding(NoteType.BASIC).build().also { editor ->
                 editor.onDeckSelected(SelectableDeck.Deck(reversedDeckId, "Reversed"))
@@ -498,7 +499,7 @@ class NoteEditorTest : RobolectricTest() {
             col.notetypes.clearCache()
 
             assertThat("a note was added", col.noteCount(), equalTo(1))
-            assertThat("note type deck is updated", col.notetypes.byName("Basic")!!.did, equalTo(reversedDeckId))
+            assertThat("default deck for notetype is updated", col.defaultDeckForNoteType(basicNotetypeId), equalTo(reversedDeckId))
 
             getNoteEditorAdding(NoteType.BASIC).build().also { editor ->
                 assertThat("Deck ID is remembered", editor.deckId, equalTo(reversedDeckId))

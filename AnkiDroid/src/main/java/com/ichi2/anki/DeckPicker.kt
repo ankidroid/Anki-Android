@@ -129,6 +129,7 @@ import com.ichi2.anki.dialogs.DeckPickerNoSpaceLeftDialog
 import com.ichi2.anki.dialogs.DialogHandlerMessage
 import com.ichi2.anki.dialogs.EditDeckDescriptionDialog
 import com.ichi2.anki.dialogs.EmptyCardsDialogFragment
+import com.ichi2.anki.dialogs.FatalErrorDialog
 import com.ichi2.anki.dialogs.ImportDialog.ImportDialogListener
 import com.ichi2.anki.dialogs.ImportFileSelectionFragment.ApkgImportResultLauncherProvider
 import com.ichi2.anki.dialogs.ImportFileSelectionFragment.CsvImportResultLauncherProvider
@@ -194,7 +195,6 @@ import com.ichi2.utils.customView
 import com.ichi2.utils.dp
 import com.ichi2.utils.message
 import com.ichi2.utils.negativeButton
-import com.ichi2.utils.neutralButton
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
 import com.ichi2.utils.title
@@ -1000,20 +1000,7 @@ open class DeckPicker :
                 Timber.i("Displaying database locked error")
                 showDatabaseErrorDialog(DatabaseErrorDialogType.DIALOG_DB_LOCKED)
             }
-            is StartupFailure.InitializationError ->
-                AlertDialog.Builder(this).show {
-                    title(R.string.ankidroid_init_failed_webview_title)
-                    message(text = failure.toHumanReadableString(this@DeckPicker))
-                    positiveButton(R.string.close) {
-                        closeCollectionAndFinish()
-                    }
-                    failure.infoLink?.let { url ->
-                        neutralButton(R.string.help) {
-                            openUrl(url)
-                        }
-                    }
-                    cancelable(false)
-                }
+            is StartupFailure.InitializationError -> FatalErrorDialog.build(this, failure).show()
             is DiskFull -> displayNoStorageError()
             is DBError -> displayDatabaseFailure(CustomExceptionData.fromException(failure.exception))
         }
@@ -2123,6 +2110,7 @@ open class DeckPicker :
             // The fragment will show the study options screen instead of launching a new activity.
             loadStudyOptionsFragment()
         } else {
+            Timber.i("Opening Study Options")
             val intent = Intent()
             intent.setClass(this, StudyOptionsActivity::class.java)
             reviewLauncher.launch(intent)
@@ -2348,6 +2336,7 @@ open class DeckPicker :
     }
 
     private fun openReviewer() {
+        Timber.i("Opening Reviewer")
         val intent = Reviewer.getIntent(this)
         reviewLauncher.launch(intent)
     }

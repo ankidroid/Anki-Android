@@ -147,11 +147,12 @@ class CardTemplateEditorTest : RobolectricTest() {
         shadowTestEditor.receiveResult(startedIntent, Activity.RESULT_OK, Intent())
 
         // Save the template then fetch it from the collection to see if it was saved correctly
-        val testEditorNoteTypeEdited = testEditor.tempNoteType?.notetype
+        var testEditorNoteTypeEdited = testEditor.tempNoteType?.notetype
         advanceRobolectricLooper()
         assertTrue("Unable to click?", shadowTestEditor.clickMenuItem(R.id.action_confirm))
         advanceRobolectricLooper()
         val collectionBasicNoteTypeCopyEdited = getCurrentDatabaseNoteTypeCopy(noteTypeName)
+        testEditorNoteTypeEdited = col.notetypes.get(testEditorNoteTypeEdited!!.id)
         assertNotEquals("Note type is unchanged?", collectionBasicNoteTypeOriginal, collectionBasicNoteTypeCopyEdited)
         assertEquals(
             "note type did not save?",
@@ -206,10 +207,11 @@ class CardTemplateEditorTest : RobolectricTest() {
         )
 
         // Save the change to the database and make sure there's only one template after
-        val testEditorNoteTypeEdited = testEditor.tempNoteType?.notetype
+        var testEditorNoteTypeEdited = testEditor.tempNoteType?.notetype
         assertTrue("Unable to click?", shadowTestEditor.clickMenuItem(R.id.action_confirm))
         advanceRobolectricLooper()
         val collectionBasicNoteTypeCopyEdited = getCurrentDatabaseNoteTypeCopy(noteTypeName)
+        testEditorNoteTypeEdited = col.notetypes.get(testEditorNoteTypeEdited!!.id)
         assertNotEquals("Note type is unchanged?", collectionBasicNoteTypeOriginal, collectionBasicNoteTypeCopyEdited)
         assertEquals(
             "Note type did not save?",
@@ -261,11 +263,13 @@ class CardTemplateEditorTest : RobolectricTest() {
         )
 
         // Save the change to the database and make sure there are two templates after
-        val testEditorNoteTypeEdited = testEditor.tempNoteType?.notetype
+        var testEditorNoteTypeEdited = col.notetypes.get(testEditor.tempNoteType!!.notetype.id)
         assertTrue("Unable to click?", shadowTestEditor.clickMenuItem(R.id.action_confirm))
         advanceRobolectricLooper()
         val collectionBasicNoteTypeCopyEdited = getCurrentDatabaseNoteTypeCopy(noteTypeName)
         assertNotEquals("Note type is unchanged?", collectionBasicNoteTypeOriginal, collectionBasicNoteTypeCopyEdited)
+        testEditorNoteTypeEdited = col.notetypes.get(testEditorNoteTypeEdited!!.id)
+
         assertEquals(
             "Note type did not save?",
             testEditorNoteTypeEdited.toString().trim(),
@@ -444,6 +448,8 @@ class CardTemplateEditorTest : RobolectricTest() {
 
             // Add a template - click add, click confirm for card add, click confirm again for full sync
             addCardType(testEditor, shadowTestEditor)
+            // the templates must be different
+            testEditor.tempNoteType!!.getTemplate(2).qfmt += "different_template"
             assertTrue("Note type should have changed", testEditor.noteTypeHasChanged())
             assertEquals(
                 "Change added but not adjusted correctly?",

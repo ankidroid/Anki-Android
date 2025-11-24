@@ -160,6 +160,7 @@ open class AnkiDroidApp :
         ThrowableFilterService.initialize()
 
         applicationScope.launch {
+            Timber.i("AnkiDroidApp: listing debug info")
             Timber.i(DebugInfoService.getDebugInfo(this@AnkiDroidApp))
         }
 
@@ -240,7 +241,10 @@ open class AnkiDroidApp :
                     activity: Activity,
                     savedInstanceState: Bundle?,
                 ) {
-                    Timber.i("${activity::class.simpleName}::onCreate")
+                    Timber.i(
+                        "${activity::class.simpleName}::onCreate, savedInstanceState: %s",
+                        savedInstanceState?.let { "${it.keySet().size} keys" },
+                    )
                     (activity as? FragmentActivity)
                         ?.supportFragmentManager
                         ?.registerFragmentLifecycleCallbacks(
@@ -456,6 +460,11 @@ open class AnkiDroidApp :
             val parsed = uri.toUri()
             return Intent(Intent.ACTION_VIEW, parsed)
         } // TODO actually this can be done by translating "link_help" string for each language when the App is
+
+        @VisibleForTesting
+        fun clearFatalError() {
+            this.instance.fatalInitializationError = null
+        }
 
         /**
          * Get the url for the properly translated feedback page

@@ -37,6 +37,7 @@ import anki.collection.opChanges
 import anki.import_export.ImportResponse
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.utils.ext.ifNotZero
+import org.jetbrains.annotations.Contract
 import timber.log.Timber
 import java.lang.ref.WeakReference
 import java.util.concurrent.CopyOnWriteArrayList
@@ -61,6 +62,7 @@ object ChangeManager {
 
     val subscriberCount get() = subscribers.size
 
+    @Contract("subscriber -> call")
     fun subscribe(subscriber: Subscriber) {
         subscribers.add(WeakReference(subscriber))
     }
@@ -81,7 +83,11 @@ object ChangeManager {
             if (ref == null) {
                 expired.add(subscriber)
             } else {
-                ref.opExecuted(changes, handler)
+                try {
+                    ref.opExecuted(changes, handler)
+                } catch (e: Exception) {
+                    CrashReportService.sendExceptionReport(e, "notifySubscribers", "opExecuted failed")
+                }
             }
         }
         expired.size.ifNotZero { size -> Timber.v("removing %d expired subscribers", size) }

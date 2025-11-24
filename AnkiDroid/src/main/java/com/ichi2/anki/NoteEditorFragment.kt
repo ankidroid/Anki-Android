@@ -1273,7 +1273,6 @@ class NoteEditorFragment :
         val changes =
             requireActivity().withProgress(resources.getString(R.string.saving_facts)) {
                 undoableOp {
-                    notetypes.save(editorNote!!.notetype)
                     addNote(editorNote!!, deckId)
                 }
             }
@@ -1298,9 +1297,6 @@ class NoteEditorFragment :
             for (f in editFields!!) {
                 updateField(f)
             }
-            // Save deck to noteType
-            Timber.d("setting 'last deck' of note type %s to %d", editorNote!!.notetype.name, deckId)
-            editorNote!!.notetype.did = deckId
             // Save tags to model
             editorNote!!.setTagsFromStr(getColUnsafe, tagsAsString(selectedTags!!))
             val tags = JSONArray()
@@ -2084,7 +2080,7 @@ class NoteEditorFragment :
         index: Int,
         field: IField,
     ) {
-        lifecycleScope.launch {
+        launchCatchingTask {
             val note = getCurrentMultimediaEditableNote()
             note.setField(index, field)
             val fieldEditText = editFields!![index]
@@ -2093,7 +2089,12 @@ class NoteEditorFragment :
             // This goes before setting formattedValue to update
             // media paths with the checksum when they have the same name
             withCol {
-                NoteService.importMediaToDirectory(this, field)
+                try {
+                    NoteService.importMediaToDirectory(this, field)
+                } catch (oomError: OutOfMemoryError) {
+                    // TODO: a 'retry' flow would be possible here
+                    throw Exception(oomError)
+                }
             }
 
             // Completely replace text for text fields (because current text was passed in)

@@ -154,8 +154,6 @@ class InstantEditorViewModel :
      */
     private suspend fun saveNote(): SaveNoteResult {
         return try {
-            editorNote.notetype.did = deckId!!
-
             val note = editorNote
             val deckId = deckId ?: return SaveNoteResult.Failure()
 
