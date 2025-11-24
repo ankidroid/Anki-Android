@@ -21,11 +21,15 @@ import android.os.Parcelable
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ichi2.anki.CollectionManager
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.NoteId
 import com.ichi2.anki.libanki.NoteTypeId
 import com.ichi2.anki.pages.ImageOcclusion
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import kotlinx.parcelize.Parcelize
 import org.json.JSONObject
@@ -94,17 +98,27 @@ class ImageOcclusionViewModel(
     val args: ImageOcclusionArgs =
         checkNotNull(savedStateHandle[IO_ARGS_KEY]) { "$IO_ARGS_KEY required" }
 
-    var selectedDeckId: DeckId = args.originalDeckId
+    var selectedDeckIdFlow = MutableStateFlow(args.originalDeckId)
+
+    val deckNameFlow =
+        selectedDeckIdFlow
+            .map { did -> withCol { decks.name(did) } }
+
+    init {
+        // if we are in 'add' mode, thr current deck is used to add the note.
+        // This is reverted in 'onSaveOperationCompleted'
+        selectedDeckIdFlow
+            .onEach { withCol { decks.select(it) } }
+            .launchIn(viewModelScope)
+    }
 
     /**
      * Handles the selection of a new deck.
      *
      * @param deckId The [DeckId] object representing the selected deck. Can be null if no deck is selected.
      */
-    fun handleDeckSelection(deckId: DeckId): Boolean {
-        if (deckId == selectedDeckId) return false
-        selectedDeckId = deckId
-        return true
+    fun handleDeckSelection(deckId: DeckId) {
+        selectedDeckIdFlow.value = deckId
     }
 
     /**
@@ -112,13 +126,13 @@ class ImageOcclusionViewModel(
      */
     fun onSaveOperationCompleted() {
         Timber.i("save operation completed")
-        if (args.originalDeckId == selectedDeckId) return
+        if (args.originalDeckId == selectedDeckIdFlow.value) return
         // reset to the previous deck that the backend "saw" as selected, this
         // avoids other screens unexpectedly having their working decks modified(
         // most important being the Reviewer where the user would find itself
         // studying another deck after editing a note with changing the deck)
         viewModelScope.launch {
-            CollectionManager.withCol { backend.setCurrentDeck(args.originalDeckId) }
+            withCol { backend.setCurrentDeck(args.originalDeckId) }
         }
     }
 
