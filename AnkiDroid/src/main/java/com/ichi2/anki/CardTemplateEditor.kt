@@ -166,6 +166,23 @@ open class CardTemplateEditor :
             }
         }
 
+    /**
+     * Triggered when a card template ('Card 1') is selected in the top tab view
+     */
+    private val onCardTemplateSelectedListener: TabLayout.OnTabSelectedListener =
+        object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab) {
+                Timber.i("selected card index: %s", tab.position)
+                loadTemplatePreviewerFragmentIfFragmented()
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab) {
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab) {
+            }
+        }
+
     // ----------------------------------------------------------------------------
     // Listeners
     // ----------------------------------------------------------------------------
@@ -224,6 +241,8 @@ open class CardTemplateEditor :
         // Open TemplatePreviewerFragment if in fragmented mode
         loadTemplatePreviewerFragmentIfFragmented()
         onBackPressedDispatcher.addCallback(this, displayDiscardChangesCallback)
+
+        topBinding.slidingTabs.addOnTabSelectedListener(onCardTemplateSelectedListener)
     }
 
     /**
@@ -680,21 +699,6 @@ open class CardTemplateEditor :
             binding.editText.post {
                 binding.editText.requestFocus()
             }
-
-            templateEditor.topBinding.slidingTabs.addOnTabSelectedListener(
-                object : TabLayout.OnTabSelectedListener {
-                    override fun onTabSelected(tab: TabLayout.Tab) {
-                        Timber.i("selected card index: %s", tab.position)
-                        templateEditor.loadTemplatePreviewerFragmentIfFragmented()
-                    }
-
-                    override fun onTabUnselected(tab: TabLayout.Tab) {
-                    }
-
-                    override fun onTabReselected(tab: TabLayout.Tab) {
-                    }
-                },
-            )
 
             parentFragmentManager.setFragmentResultListener(insertFieldRequestKey, viewLifecycleOwner) { key, bundle ->
                 // this is guaranteed to be non null, as we put a non null value on the other side
