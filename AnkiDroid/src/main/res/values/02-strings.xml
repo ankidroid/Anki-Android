@@ -438,11 +438,7 @@ opening the system text to speech settings fails">Failed to open text to speech 
     <!-- Scheduler Upgrade Required Dialog title-->
     <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">Scheduler upgrade required</string>
 
-    <string name="remove_account_explanation_title">Account Removal Requires Authentication</string>
-    <string name="remove_account_explanation_message">To remove your AnkiWeb account, you need to re-authenticate first. You will be redirected to the AnkiWeb login page.</string>
-    <string name="copy">Copy</string>
-    <string name="email_copied">Email copied to clipboard</string>
-    <string name="proceed">Proceed</string>
-    <string name="cancel_btn">Dismiss</string>
+    <string name="remove_account_explanation_title">Re-authentication required</string>
+    <string name="remove_account_explanation_message">You need to re-authenticate before you remove your AnkiWeb account. You will be redirected to the AnkiWeb login page.</string>
 </resources>
 

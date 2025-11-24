@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:padding="24dp">
 
-    <TextView
+    <com.ichi2.ui.FixedTextView
         android:id="@+id/dialog_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -14,7 +14,7 @@
         android:textColor="?attr/colorOnSurface"
         android:layout_marginBottom="16dp" />
 
-    <TextView
+    <com.ichi2.ui.FixedTextView
         android:id="@+id/dialog_message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -31,7 +31,7 @@
         android:padding="12dp"
         android:gravity="center_vertical">
 
-        <TextView
+        <com.ichi2.ui.FixedTextView
             android:id="@+id/email_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -46,7 +46,7 @@
             style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/copy"
+            android:text="@android:string/copy"
             android:minWidth="0dp"
             android:paddingStart="8dp"
             android:paddingEnd="8dp" />
