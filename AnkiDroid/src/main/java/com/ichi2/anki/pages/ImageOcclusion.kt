@@ -44,6 +44,20 @@ import com.ichi2.anki.startDeckSelection
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
+/**
+ * Page provided by the backend, for a user to add or edit an image occlusion (IO) note
+ *
+ * IO: Like an image-based cloze: hide parts of an image, revealed on the back
+ * ([docs](https://docs.ankiweb.net/editing.html#image-occlusion) and
+ * [source](https://github.com/ankitects/anki/blob/main/proto/anki/image_occlusion.proto)).
+ *
+ * **Paths**
+ * `/image-occlusion/$PATH`
+ * `/image-occlusion/$NOTE_ID`
+ *
+ * @see ImageOcclusionViewModel
+ * @see ImageOcclusion.getIntent
+ */
 class ImageOcclusion :
     PageFragment(R.layout.image_occlusion),
     DeckSelectionDialog.DeckSelectionListener {
