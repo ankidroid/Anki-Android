@@ -23,7 +23,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.libanki.DeckId
-import com.ichi2.anki.pages.ImageOcclusion
 import kotlinx.coroutines.launch
 import kotlinx.parcelize.Parcelize
 import org.json.JSONObject
@@ -43,13 +42,16 @@ data class ImageOcclusionArgs(
 class ImageOcclusionViewModel(
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
-    var selectedDeckId: Long
+    private val args: ImageOcclusionArgs =
+        checkNotNull(savedStateHandle[IO_ARGS_KEY]) { "$IO_ARGS_KEY required" }
+
+    var selectedDeckId: Long = args.editorDeckId
 
     /**
      * The ID of the deck that was originally selected when the editor was opened.
      * This is used to restore the deck after saving a note to prevent unexpected deck changes.
      */
-    val oldDeckId: Long
+    val oldDeckId: Long = args.editorDeckId
 
     /**
      * A [JSONObject] containing options for loading the [image occlusion page][ImageOcclusion].
@@ -57,25 +59,16 @@ class ImageOcclusionViewModel(
      *
      * Defined in https://github.com/ankitects/anki/blob/main/ts/routes/image-occlusion/lib.ts
      */
-    val webViewOptions: JSONObject
-
-    init {
-        val args: ImageOcclusionArgs = checkNotNull(savedStateHandle[ImageOcclusion.IO_ARGS_KEY])
-
-        selectedDeckId = args.editorDeckId
-        oldDeckId = args.editorDeckId
-
-        webViewOptions =
-            JSONObject().apply {
-                put("kind", args.kind)
-                if (args.kind == "add") {
-                    put("imagePath", args.imagePath)
-                    put("notetypeId", args.id)
-                } else {
-                    put("noteId", args.id)
-                }
+    val webViewOptions: JSONObject =
+        JSONObject().apply {
+            put("kind", args.kind)
+            if (args.kind == "add") {
+                put("imagePath", args.imagePath)
+                put("notetypeId", args.id)
+            } else {
+                put("noteId", args.id)
             }
-    }
+        }
 
     /**
      * Handles the selection of a new deck.
@@ -101,5 +94,9 @@ class ImageOcclusionViewModel(
         viewModelScope.launch {
             CollectionManager.withCol { backend.setCurrentDeck(oldDeckId) }
         }
+    }
+
+    companion object {
+        const val IO_ARGS_KEY = "IMAGE_OCCLUSION_ARGS"
     }
 }

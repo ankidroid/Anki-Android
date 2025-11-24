@@ -38,6 +38,7 @@ import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.anki.pages.viewmodel.ImageOcclusionArgs
 import com.ichi2.anki.pages.viewmodel.ImageOcclusionViewModel
+import com.ichi2.anki.pages.viewmodel.ImageOcclusionViewModel.Companion.IO_ARGS_KEY
 import com.ichi2.anki.requireAnkiActivity
 import com.ichi2.anki.selectedDeckIfNotFiltered
 import com.ichi2.anki.startDeckSelection
@@ -135,8 +136,6 @@ class ImageOcclusion :
         }
 
     companion object {
-        const val IO_ARGS_KEY = "IMAGE_OCCLUSION_ARGS"
-
         /**
          * @param editorWorkingDeckId the current deck id that [com.ichi2.anki.NoteEditorFragment] is using
          */
