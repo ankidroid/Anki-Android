@@ -23,18 +23,67 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.libanki.DeckId
+import com.ichi2.anki.libanki.NoteId
+import com.ichi2.anki.libanki.NoteTypeId
+import com.ichi2.anki.pages.ImageOcclusion
 import kotlinx.coroutines.launch
 import kotlinx.parcelize.Parcelize
 import org.json.JSONObject
 import timber.log.Timber
 
+/**
+ * Arguments for either adding or editing an image occlusion note
+ *
+ * @see ImageOcclusionArgs.Add
+ * @see ImageOcclusionArgs.Edit
+ */
 @Parcelize
-data class ImageOcclusionArgs(
-    val kind: String,
-    val id: Long,
-    val imagePath: String?,
-    val editorDeckId: Long,
-) : Parcelable
+sealed class ImageOcclusionArgs : Parcelable {
+    @Parcelize
+    data class Add(
+        val imagePath: String,
+        val noteTypeId: NoteTypeId,
+        val deckId: DeckId,
+    ) : ImageOcclusionArgs()
+
+    @Parcelize
+    data class Edit(
+        val noteId: NoteId,
+        val deckId: DeckId,
+    ) : ImageOcclusionArgs()
+
+    /**
+     * The ID of the deck that was selected when the editor was opened.
+     * Used to restore the deck after saving a note to prevent unexpected deck changes.
+     */
+    val originalDeckId: DeckId
+        get() =
+            when (this) {
+                is Add -> this.deckId
+                is Edit -> this.deckId
+            }
+
+    /**
+     * A [JSONObject] containing options for loading the [image occlusion page][ImageOcclusion].
+     * This includes the type of operation ("add" or "edit"), and relevant IDs and paths.
+     *
+     * See 'IOMode' in https://github.com/ankitects/anki/blob/main/ts/routes/image-occlusion/lib.ts
+     */
+    fun toImageOcclusionMode() =
+        when (this) {
+            is Add ->
+                JSONObject().also {
+                    it.put("kind", "add")
+                    it.put("imagePath", this.imagePath)
+                    it.put("notetypeId", this.noteTypeId)
+                }
+            is Edit ->
+                JSONObject().also {
+                    it.put("kind", "edit")
+                    it.put("noteId", this.noteId)
+                }
+        }
+}
 
 /**
  * ViewModel for the Image Occlusion fragment.
@@ -42,33 +91,10 @@ data class ImageOcclusionArgs(
 class ImageOcclusionViewModel(
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
-    private val args: ImageOcclusionArgs =
+    val args: ImageOcclusionArgs =
         checkNotNull(savedStateHandle[IO_ARGS_KEY]) { "$IO_ARGS_KEY required" }
 
-    var selectedDeckId: Long = args.editorDeckId
-
-    /**
-     * The ID of the deck that was originally selected when the editor was opened.
-     * This is used to restore the deck after saving a note to prevent unexpected deck changes.
-     */
-    val oldDeckId: Long = args.editorDeckId
-
-    /**
-     * A [JSONObject] containing options for loading the [image occlusion page][ImageOcclusion].
-     * This includes the type of operation ("add" or "edit"), and relevant IDs and paths.
-     *
-     * Defined in https://github.com/ankitects/anki/blob/main/ts/routes/image-occlusion/lib.ts
-     */
-    val webViewOptions: JSONObject =
-        JSONObject().apply {
-            put("kind", args.kind)
-            if (args.kind == "add") {
-                put("imagePath", args.imagePath)
-                put("notetypeId", args.id)
-            } else {
-                put("noteId", args.id)
-            }
-        }
+    var selectedDeckId: DeckId = args.originalDeckId
 
     /**
      * Handles the selection of a new deck.
@@ -86,13 +112,13 @@ class ImageOcclusionViewModel(
      */
     fun onSaveOperationCompleted() {
         Timber.i("save operation completed")
-        if (oldDeckId == selectedDeckId) return
+        if (args.originalDeckId == selectedDeckId) return
         // reset to the previous deck that the backend "saw" as selected, this
         // avoids other screens unexpectedly having their working decks modified(
         // most important being the Reviewer where the user would find itself
         // studying another deck after editing a note with changing the deck)
         viewModelScope.launch {
-            CollectionManager.withCol { backend.setCurrentDeck(oldDeckId) }
+            CollectionManager.withCol { backend.setCurrentDeck(args.originalDeckId) }
         }
     }
 
