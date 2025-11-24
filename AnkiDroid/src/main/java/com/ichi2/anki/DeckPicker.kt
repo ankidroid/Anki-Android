@@ -2083,7 +2083,10 @@ open class DeckPicker :
     }
 
     val fragment: StudyOptionsFragment?
-        get() = supportFragmentManager.findFragmentById(R.id.studyoptions_fragment) as? StudyOptionsFragment
+        get() {
+            val frag = supportFragmentManager.findFragmentById(R.id.studyoptions_fragment)
+            return frag as? StudyOptionsFragment
+        }
 
     /**
      * Refresh the deck picker when the SD card is inserted.
