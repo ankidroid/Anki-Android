@@ -34,7 +34,6 @@ import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.dialogs.DiscardChangesDialog
 import com.ichi2.anki.launchCatchingTask
-import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.anki.pages.viewmodel.ImageOcclusionArgs
 import com.ichi2.anki.pages.viewmodel.ImageOcclusionViewModel
@@ -103,7 +102,7 @@ class ImageOcclusion :
                 url: String?,
             ) {
                 super.onPageFinished(view, url)
-                viewModel.webViewOptions.let { options ->
+                viewModel.args.toImageOcclusionMode().let { options ->
                     view?.evaluateJavascript("globalThis.anki.imageOcclusion.mode = $options") {
                         super.onPageFinished(view, url)
                     }
@@ -137,24 +136,17 @@ class ImageOcclusion :
 
     companion object {
         /**
-         * @param editorWorkingDeckId the current deck id that [com.ichi2.anki.NoteEditorFragment] is using
+         * @param args arguments for either adding or editing a note
          */
         fun getIntent(
             context: Context,
-            kind: String,
-            noteOrNotetypeId: Long,
-            imagePath: String?,
-            editorWorkingDeckId: DeckId,
+            args: ImageOcclusionArgs,
         ): Intent {
-            val suffix = if (kind == "edit") noteOrNotetypeId else Uri.encode(imagePath)
-
-            val args =
-                ImageOcclusionArgs(
-                    kind = kind,
-                    id = noteOrNotetypeId,
-                    imagePath = imagePath,
-                    editorDeckId = editorWorkingDeckId,
-                )
+            val suffix =
+                when (args) {
+                    is ImageOcclusionArgs.Add -> Uri.encode(args.imagePath)
+                    is ImageOcclusionArgs.Edit -> args.noteId
+                }
 
             val arguments =
                 bundleOf(

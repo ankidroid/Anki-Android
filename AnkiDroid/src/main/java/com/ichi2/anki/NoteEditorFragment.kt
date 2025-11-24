@@ -141,6 +141,7 @@ import com.ichi2.anki.noteeditor.Toolbar.TextFormatListener
 import com.ichi2.anki.noteeditor.Toolbar.TextWrapper
 import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.pages.ImageOcclusion
+import com.ichi2.anki.pages.viewmodel.ImageOcclusionArgs
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.previewer.TemplatePreviewerArguments
 import com.ichi2.anki.previewer.TemplatePreviewerPage
@@ -2751,22 +2752,28 @@ class NoteEditorFragment :
     private fun currentNotetypeIsImageOcclusion() = currentlySelectedNotetype?.isImageOcclusion == true
 
     private fun setupImageOcclusionEditor(imagePath: String = "") {
-        val kind: String
-        val id: Long
-        if (addNote) {
-            kind = "add"
-            // if opened from an intent, the selected note type may not be suitable for IO
-            id =
-                if (currentNotetypeIsImageOcclusion()) {
-                    currentlySelectedNotetype!!.id
-                } else {
-                    0
-                }
-        } else {
-            kind = "edit"
-            id = editorNote?.id!!
-        }
-        val intent = ImageOcclusion.getIntent(requireContext(), kind, id, imagePath, deckId)
+        val args =
+            if (addNote) {
+                // if opened from an intent, the selected note type may not be suitable for IO
+                val noteTypeId =
+                    if (currentNotetypeIsImageOcclusion()) {
+                        currentlySelectedNotetype!!.id
+                    } else {
+                        0
+                    }
+                ImageOcclusionArgs.Add(
+                    noteTypeId = noteTypeId,
+                    imagePath = imagePath,
+                    deckId = deckId,
+                )
+            } else {
+                ImageOcclusionArgs.Edit(
+                    noteId = editorNote!!.id,
+                    deckId = deckId,
+                )
+            }
+
+        val intent = ImageOcclusion.getIntent(requireContext(), args)
         requestIOEditorCloser.launch(intent)
     }
 
