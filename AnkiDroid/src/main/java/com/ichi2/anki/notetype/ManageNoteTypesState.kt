@@ -62,22 +62,22 @@ data class ManageNoteTypesState(
     )
 
     data class CardEditor(
-        val nid: NoteTypeId,
+        val ntid: NoteTypeId,
     ) : Destination {
         override fun toIntent(context: Context): Intent =
             Intent(context, CardTemplateEditor::class.java).apply {
-                putExtra(CardTemplateEditor.EDITOR_NOTE_TYPE_ID, nid)
+                putExtra(CardTemplateEditor.EDITOR_NOTE_TYPE_ID, ntid)
             }
     }
 
     data class FieldsEditor(
-        val nid: NoteTypeId,
+        val ntid: NoteTypeId,
         val name: String,
     ) : Destination {
         override fun toIntent(context: Context): Intent =
             Intent(context, NoteTypeFieldEditor::class.java).apply {
                 putExtra(NoteTypeFieldEditor.EXTRA_NOTETYPE_NAME, name)
-                putExtra(NoteTypeFieldEditor.EXTRA_NOTETYPE_ID, nid)
+                putExtra(NoteTypeFieldEditor.EXTRA_NOTETYPE_ID, ntid)
             }
     }
 }
