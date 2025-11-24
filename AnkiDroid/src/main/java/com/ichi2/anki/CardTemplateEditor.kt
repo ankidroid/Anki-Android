@@ -209,10 +209,10 @@ open class CardTemplateEditor :
 
         if (fragmented) {
             ResizablePaneManager(
-                parentLayout = requireNotNull(binding.cardTemplateEditorXlView),
-                divider = requireNotNull(binding.cardTemplateEditorResizingDivider),
-                leftPane = requireNotNull(binding.templateEditor.root),
-                rightPane = requireNotNull(binding.fragmentContainer),
+                parentLayout = requireNotNull(binding.cardTemplateEditorXlView) { "cardTemplateEditorXlView" },
+                divider = requireNotNull(binding.cardTemplateEditorResizingDivider) { "cardTemplateEditorResizingDivider" },
+                leftPane = requireNotNull(binding.templateEditor.root) { "templateEditor.root" },
+                rightPane = requireNotNull(binding.fragmentContainer) { "fragmentContainer" },
                 sharedPrefs = Prefs.getUiConfig(this),
                 leftPaneWeightKey = PREF_TEMPLATE_EDITOR_PANE_WEIGHT,
                 rightPaneWeightKey = PREF_TEMPLATE_PREVIEWER_PANE_WEIGHT,

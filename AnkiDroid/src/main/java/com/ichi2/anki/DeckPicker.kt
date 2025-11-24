@@ -808,10 +808,10 @@ open class DeckPicker :
 
                     if (tryShowStudyOptionsPanel()) {
                         ResizablePaneManager(
-                            parentLayout = requireNotNull(binding.deckpickerXlView),
-                            divider = requireNotNull(binding.resizingDivider),
+                            parentLayout = requireNotNull(binding.deckpickerXlView) { "deckpickerXlView" },
+                            divider = requireNotNull(binding.resizingDivider) { "resizingDivider" },
                             leftPane = deckPickerBinding.root,
-                            rightPane = requireNotNull(binding.studyoptionsFragment),
+                            rightPane = requireNotNull(binding.studyoptionsFragment) { "studyoptionsFragment" },
                             sharedPrefs = Prefs.getUiConfig(this),
                             leftPaneWeightKey = PREF_DECK_PICKER_PANE_WEIGHT,
                             rightPaneWeightKey = PREF_STUDY_OPTIONS_PANE_WEIGHT,
