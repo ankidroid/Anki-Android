@@ -811,15 +811,24 @@ open class DeckPicker :
                     if (fragmented) {
                         loadStudyOptionsFragment()
 
-                        ResizablePaneManager(
-                            parentLayout = requireNotNull(binding.deckpickerXlView),
-                            divider = requireNotNull(binding.resizingDivider),
-                            leftPane = deckPickerBinding.root,
-                            rightPane = requireNotNull(binding.studyoptionsFragment),
-                            sharedPrefs = Prefs.getUiConfig(this),
-                            leftPaneWeightKey = PREF_DECK_PICKER_PANE_WEIGHT,
-                            rightPaneWeightKey = PREF_STUDY_OPTIONS_PANE_WEIGHT,
-                        )
+                        val xlView = binding.deckpickerXlView
+                        val divider = binding.resizingDivider
+                        val rightPaneView = binding.studyoptionsFragment
+
+                        // Avoid crash if tablet layout is not actually loaded
+                        if (xlView != null && divider != null && rightPaneView != null) {
+                            ResizablePaneManager(
+                                parentLayout = xlView,
+                                divider = divider,
+                                leftPane = deckPickerBinding.root,
+                                rightPane = rightPaneView,
+                                sharedPrefs = Prefs.getUiConfig(this),
+                                leftPaneWeightKey = PREF_DECK_PICKER_PANE_WEIGHT,
+                                rightPaneWeightKey = PREF_STUDY_OPTIONS_PANE_WEIGHT,
+                            )
+                        } else {
+                            Timber.w("XL PaneManager skipped because one or more views were null")
+                        }
                     }
                 }
                 is StartupResponse.FatalError -> handleStartupFailure(response.failure)
