@@ -52,8 +52,10 @@ class ImageOcclusionViewModel(
     val oldDeckId: Long
 
     /**
-     * A [JSONObject] containing options for initializing the WebView. This includes
-     * the type of operation ("add" or "edit"), and relevant IDs and paths.
+     * A [JSONObject] containing options for loading the [image occlusion page][ImageOcclusion].
+     * This includes the type of operation ("add" or "edit"), and relevant IDs and paths.
+     *
+     * Defined in https://github.com/ankitects/anki/blob/main/ts/routes/image-occlusion/lib.ts
      */
     val webViewOptions: JSONObject
 
@@ -86,6 +88,9 @@ class ImageOcclusionViewModel(
         return true
     }
 
+    /**
+     * Executed when the 'save' operation is completed, before the UI receives the response
+     */
     fun onSaveOperationCompleted() {
         Timber.i("save operation completed")
         if (oldDeckId == selectedDeckId) return
