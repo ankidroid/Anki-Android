@@ -127,7 +127,9 @@ open class CardTemplateEditor :
     AnkiActivity(R.layout.card_template_editor),
     DeckSelectionListener {
     private val binding by viewBinding(CardTemplateEditorBinding::bind)
-    private val topBinding: CardTemplateEditorTopBinding
+
+    @VisibleForTesting
+    val topBinding: CardTemplateEditorTopBinding
         get() = binding.templateEditorTop
 
     @VisibleForTesting
