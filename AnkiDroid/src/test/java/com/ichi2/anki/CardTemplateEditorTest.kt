@@ -39,7 +39,6 @@ import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers
 import org.json.JSONObject
 import org.junit.Assume.assumeThat
-import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Robolectric
@@ -854,7 +853,6 @@ class CardTemplateEditorTest : RobolectricTest() {
     }
 
     @Test
-    @Ignore("19589")
     fun `tab changes succeed with tablet UI - Issue 19589`() =
         withTabletUi {
             withCardTemplateEditor(col.notetypes.basicAndReversed) {
