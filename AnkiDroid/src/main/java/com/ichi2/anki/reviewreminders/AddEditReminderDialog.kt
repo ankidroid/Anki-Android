@@ -49,10 +49,12 @@ import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.Consts
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.model.SelectableDeck
+import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.startDeckSelection
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.utils.DisplayUtils.resizeWhenSoftInputShown
+import com.ichi2.utils.Permissions
 import com.ichi2.utils.customView
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.neutralButton
@@ -333,6 +335,14 @@ class AddEditReminderDialog : DialogFragment() {
                 putParcelable(ScheduleReminders.ADD_EDIT_DIALOG_RESULT_REQUEST_KEY, reminderToBeReturned)
             },
         )
+
+        // Request notification permissions from the user if they have not been requested due to review reminders ever before
+        if (!Prefs.reminderNotifsRequestShown) {
+            Permissions.showNotificationsPermissionBottomSheetIfNeeded(requireActivity(), parentFragmentManager) {
+                Prefs.reminderNotifsRequestShown = true
+            }
+        }
+
         dismiss()
     }
 
