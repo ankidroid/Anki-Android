@@ -500,11 +500,6 @@ open class DeckPicker :
         }
     }
 
-    private val notificationPermissionLauncher =
-        registerForActivityResult(ActivityResultContracts.RequestPermission()) {
-            Timber.i("notification permission: %b", it)
-        }
-
     // ----------------------------------------------------------------------------
     // ANDROID ACTIVITY METHODS
     // ----------------------------------------------------------------------------
@@ -2030,8 +2025,6 @@ open class DeckPicker :
             showSyncErrorDialog(SyncErrorDialog.Type.DIALOG_USER_NOT_LOGGED_IN_SYNC)
             return
         }
-
-        AccountActivity.checkNotificationPermission(this, notificationPermissionLauncher)
 
         /** Nested function that makes the connection to
          * the sync server and starts syncing the data */

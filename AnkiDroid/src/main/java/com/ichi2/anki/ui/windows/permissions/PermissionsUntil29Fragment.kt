@@ -22,6 +22,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.R
 import com.ichi2.utils.Permissions
+import com.ichi2.utils.Permissions.showToastAndOpenAppSettingsScreen
 
 /**
  * Permissions screen for requesting permissions until API 29.
