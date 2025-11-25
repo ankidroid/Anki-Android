@@ -55,7 +55,6 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import anki.notetypes.StockNotetype
 import anki.notetypes.StockNotetype.OriginalStockKind.ORIGINAL_STOCK_KIND_UNKNOWN_VALUE
 import anki.notetypes.notetypeId
-import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
@@ -210,10 +209,10 @@ open class CardTemplateEditor :
 
         if (fragmented) {
             ResizablePaneManager(
-                parentLayout = requireNotNull(binding.cardTemplateEditorXlView),
-                divider = requireNotNull(binding.cardTemplateEditorResizingDivider),
-                leftPane = requireNotNull(binding.templateEditor.root),
-                rightPane = requireNotNull(binding.fragmentContainer),
+                parentLayout = requireNotNull(binding.cardTemplateEditorXlView) { "cardTemplateEditorXlView" },
+                divider = requireNotNull(binding.cardTemplateEditorResizingDivider) { "cardTemplateEditorResizingDivider" },
+                leftPane = requireNotNull(binding.templateEditor.root) { "templateEditor.root" },
+                rightPane = requireNotNull(binding.fragmentContainer) { "fragmentContainer" },
                 sharedPrefs = Prefs.getUiConfig(this),
                 leftPaneWeightKey = PREF_TEMPLATE_EDITOR_PANE_WEIGHT,
                 rightPaneWeightKey = PREF_TEMPLATE_PREVIEWER_PANE_WEIGHT,
@@ -255,15 +254,13 @@ open class CardTemplateEditor :
             // Modify the "Show Answer" button height to 80dp to maintain visual consistency with the BottomNavigationView,
             // which has a default height of 80dp.
             fragment.view?.post {
-                val showAnswerButton = fragment.view?.findViewById<MaterialButton>(R.id.show_answer)
-                showAnswerButton?.let { button ->
+                fragment.binding.showAnswer.let { button ->
                     button.layoutParams.height = 80.dp.toPx(button.context)
                     button.requestLayout()
                 }
 
                 // Adjust the top margin of the webview container to match template editor top margin
-                val webView = fragment.view?.findViewById<MaterialCardView>(R.id.webview_container)
-                webView?.let { container ->
+                fragment.binding.webViewContainer.let { container ->
                     val params = container.layoutParams as ViewGroup.MarginLayoutParams
                     val topMargin = resources.getDimensionPixelSize(R.dimen.reviewer_side_margin)
                     params.topMargin = topMargin
@@ -937,7 +934,7 @@ open class CardTemplateEditor :
                 }
                 launchCatchingTask(resources.getString(R.string.card_template_editor_save_error)) {
                     requireActivity().withProgress(resources.getString(R.string.saving_model)) {
-                        withCol { templateEditor.tempNoteType!!.saveToDatabase(this@withCol) }
+                        templateEditor.tempNoteType!!.saveToDatabase()
                     }
                     onModelSaved()
                 }

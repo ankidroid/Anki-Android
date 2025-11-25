@@ -48,12 +48,14 @@
     <string name="drawer_open">Aberi sa barra de navigatzione</string>
     <string name="drawer_close">Serra sa barra de navigatzione</string>
     <string name="note_message">Note saved</string>
+    <!-- Note editor screen -->
     <string name="CardEditorCardDeck">Matzu de cartas:</string>
     <string name="CardEditorNoteDeck">Matzu:</string>
     <string name="CardEditorModel">Casta:</string>
     <string name="CardEditorTags">Etichetas: %1$s</string>
     <string name="CardEditorCards">Cartas: %1$s</string>
     <string name="edit_occlusions">Modìfica sas oclusiones</string>
+    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
     <string name="tag_name">Nùmene de s\'eticheta</string>
     <string name="add_new_filter_tags">Annanghe/filtra etichetas</string>
     <string name="add_tag" maxLength="28">Annanghe un\'eticheta</string>
@@ -235,6 +237,7 @@
     <string name="search_decks" maxLength="28">Chirca matzos</string>
     <string name="ankidroid_init_failed_webview_title">Faddina fatale</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid si basat in subrade sa WebView de sistema chi no est a disponimentu. Custu podet acontèssere si su sistema est installende atualizatziones. Torra a proare a pustis de una paja de minutos.\n\n%s</string>
+    <string name="ankidroid_init_failed_storage">AnkiDroid cannot access storage due to an Android error.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">Mannària de su caràtere</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Ammustra sa barra de sas ainas</string>

@@ -120,7 +120,7 @@ class SyncMediaWorker(
                 val notificationText = syncProgress.run { "$added $removed $checked" }
                 notify(getProgressNotification(notificationText))
             }
-            delay(100)
+            delay(NOTIFICATION_UPDATE_RATE_MS)
         }
     }
 
@@ -174,6 +174,7 @@ class SyncMediaWorker(
     companion object {
         private const val HKEY_KEY = "hkey"
         private const val ENDPOINT_KEY = "endpoint"
+        const val NOTIFICATION_UPDATE_RATE_MS = 500L
 
         fun getWorkRequest(auth: SyncAuth): OneTimeWorkRequest {
             val constraints =

@@ -126,7 +126,7 @@ class SetDueDateDialog : DialogFragment() {
         // (the window size & position was incorrectly calculated)
 
         // There was a minor bug in Reviewer (timer is reset), which meant that
-        // generally we could not remove the configChanges, we probably can with the CardBrowser
+        // generally we could not remove the configChanges
         // For now, only recreate the activity if this dialog is open
         if (getScreenRotation() != initialRotation) {
             Timber.d("recreating activity: orientation changed with 'Set due date' open")

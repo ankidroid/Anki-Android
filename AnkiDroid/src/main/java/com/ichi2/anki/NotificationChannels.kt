@@ -26,6 +26,13 @@ import androidx.core.app.NotificationManagerCompat
 import timber.log.Timber
 
 /**
+ * Minimum delay between notifications to avoid reaching the
+ * maximum update rate, which currently is 5 updates per second.
+ * https://cs.android.com/android/platform/superproject/+/android-latest-release:frameworks/base/core/java/android/app/NotificationManager.java;l=675;drc=e13ace5dabea6d65c05dbfd9d19dc697a687d7be
+ */
+const val NOTIFICATION_MIN_DELAY_MS = 200L
+
+/**
  * Create or update all the notification channels for the app
  *
  * In Oreo and higher, you must create a channel for all notifications.

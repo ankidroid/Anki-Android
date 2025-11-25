@@ -51,7 +51,7 @@ import timber.log.Timber
 @NeedsTest("pressing 'back' on this screen closes it")
 class RemoveAccountFragment :
     Fragment(R.layout.page_fragment),
-    OnWebViewRecreatedListener { // TEMPORARY: Added for #19561, allows testing of account removal dialog
+    OnWebViewRecreatedListener {
     private lateinit var webViewLayout: SafeWebViewLayout
 
     /**
@@ -84,54 +84,8 @@ class RemoveAccountFragment :
         view: View,
         savedInstanceState: Bundle?,
     ) {
-        webViewLayout =
-            view.findViewById<SafeWebViewLayout>(R.id.webview_layout).apply {
-                isVisible = true
-                with(settings) {
-                    javaScriptEnabled = true
-                    displayZoomControls = false
-                    builtInZoomControls = true
-                    setSupportZoom(true)
-                }
-                val webViewClient =
-                    object : SafeWebViewClient() {
-                        override fun shouldOverrideUrlLoading(
-                            view: WebView?,
-                            request: WebResourceRequest?,
-                        ): Boolean {
-                            @Suppress("DEPRECATION")
-                            return shouldOverrideUrlLoading(view, request?.url.toString())
-                        }
-
-                        @Deprecated(
-                            "Deprecated in java, still needed for API 23",
-                            replaceWith = ReplaceWith("shouldOverrideUrlLoading"),
-                        )
-                        override fun shouldOverrideUrlLoading(
-                            view: WebView?,
-                            url: String?,
-                        ): Boolean {
-                            if (url == null) return false
-                            return maybeRedirectToRemoveAccount(url)
-                        }
-
-                        override fun onPageFinished(
-                            view: WebView?,
-                            url: String?,
-                        ) {
-                            super.onPageFinished(view, url)
-                            if (url == null) return
-                            maybeRedirectToRemoveAccount(url)
-                        }
-                    }
-                setWebViewClient(webViewClient)
-            }
-
-        // BUG: custom sync server doesn't use this URL
-        val url = getString(R.string.remove_account_url)
-        Timber.i("Loading '$url'")
-        webViewLayout.loadUrl(url)
-
+        webViewLayout = view.findViewById(R.id.webview_layout)
+        setupWebView()
         view.findViewById<MaterialToolbar?>(R.id.toolbar)?.apply {
             title = getString(R.string.remove_account)
             setNavigationOnClickListener {
@@ -140,11 +94,55 @@ class RemoveAccountFragment :
         }
     }
 
-    // TEMPORARY: Minimal implementation to allow testing
-    // TODO: Remove this patch once #19561 is properly fixed
+    /**
+     * Creates a WebViewClient that handles URL loading
+     */
+    private fun createWebViewClient(): SafeWebViewClient {
+        return object : SafeWebViewClient() {
+            override fun shouldOverrideUrlLoading(
+                view: WebView?,
+                request: WebResourceRequest?,
+            ): Boolean {
+                @Suppress("DEPRECATION")
+                return shouldOverrideUrlLoading(view, request?.url.toString())
+            }
+
+            override fun shouldOverrideUrlLoading(
+                view: WebView?,
+                url: String?,
+            ): Boolean {
+                if (url == null) return false
+                return maybeRedirectToRemoveAccount(url)
+            }
+
+            override fun onPageFinished(
+                view: WebView?,
+                url: String?,
+            ) {
+                super.onPageFinished(view, url)
+                if (url == null) return
+                maybeRedirectToRemoveAccount(url)
+            }
+        }
+    }
+
+    private fun setupWebView() {
+        webViewLayout.isVisible = true
+        with(webViewLayout.settings) {
+            javaScriptEnabled = true
+            displayZoomControls = false
+            builtInZoomControls = true
+            setSupportZoom(true)
+        }
+        webViewLayout.setWebViewClient(createWebViewClient())
+        // BUG: custom sync server doesn't use this URL
+        val url = getString(R.string.remove_account_url)
+        Timber.i("Loading '$url'")
+        webViewLayout.loadUrl(url)
+    }
+
     override fun onWebViewRecreated(webView: WebView) {
-        Timber.i("WebView recreated, reloading removal page")
-        webView.loadUrl(getString(R.string.remove_account_url))
+        setupWebView()
     }
 
     companion object {

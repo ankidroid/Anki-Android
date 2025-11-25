@@ -75,6 +75,7 @@ import com.ichi2.anki.dialogs.ExportReadyDialog.Companion.KEY_EXPORT_PATH
 import com.ichi2.anki.dialogs.ExportReadyDialog.Companion.REQUEST_EXPORT_SAVE
 import com.ichi2.anki.dialogs.ExportReadyDialog.Companion.REQUEST_EXPORT_SHARE
 import com.ichi2.anki.dialogs.SimpleMessageDialog
+import com.ichi2.anki.exception.SystemStorageException
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.receiver.SdCardReceiver
@@ -740,6 +741,8 @@ open class AnkiActivity(
      *
      * @return `true`: activity may continue to start, `false`: [onCreate] should stop executing
      * as storage permissions are mot granted
+     *
+     * @throws SystemStorageException if `getExternalFilesDir` returns null
      */
     fun ensureStoragePermissions(): Boolean {
         if (IntentHandler.grantedStoragePermissions(this, showToast = true)) {

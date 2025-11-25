@@ -9,6 +9,7 @@ import java.nio.file.Files
 import java.nio.file.Paths
 import java.nio.file.StandardOpenOption
 import kotlin.math.max
+import kotlin.system.exitProcess
 import kotlin.time.Duration.Companion.milliseconds
 
 
@@ -28,7 +29,7 @@ val localProperties = java.util.Properties()
 if (project.rootProject.file("local.properties").exists()) {
     localProperties.load(project.rootProject.file("local.properties").inputStream())
 }
-val fatalWarnings = !(localProperties["fatal_warnings"] == "false")
+val fatalWarnings = localProperties["fatal_warnings"] != "false"
 
 // can't be obtained inside 'subprojects'
 val ktlintVersion = libs.versions.ktlint.get()
@@ -110,7 +111,7 @@ subprojects {
 
 val jvmVersion = Jvm.current().javaVersion?.majorVersion.parseIntOrDefault(defaultValue = 0)
 val minSdk = libs.versions.minSdk.get()
-val jvmVersionLowerBound = 17
+val jvmVersionLowerBound = 21
 val jvmVersionUpperBound = 25
 if (jvmVersion !in jvmVersionLowerBound..jvmVersionUpperBound) {
     println("\n\n\n")
@@ -118,16 +119,18 @@ if (jvmVersion !in jvmVersionLowerBound..jvmVersionUpperBound) {
     println("\n\n\n")
     println("ERROR: AnkiDroid builds with JVM versions between $jvmVersionLowerBound and $jvmVersionUpperBound.")
     println("  Incompatible major version detected: '$jvmVersion'")
+    println("\n\n\n")
     if (jvmVersion > jvmVersionUpperBound) {
-        println("\n\n\n")
         println("  If you receive this error because you want to use a newer JDK, we may accept PRs to support new versions.")
         println("  Edit the main build.gradle file, find this message in the file, and add support for the new version.")
         println("  Please make sure the `jacocoTestReport` target works on an emulator with our minSdk (currently $minSdk).")
+    } else {
+        println("  Please update: Settings - Build, Execution, Deployment - Build Tools - Gradle - Gradle JDK")
     }
     println("\n\n\n")
     println("**************************************************************************************************************")
     println("\n\n\n")
-    System.exit(1)
+    exitProcess(1)
 }
 
 val ciBuild by extra(System.getenv("CI") == "true") // works for Travis CI or Github Actions

@@ -48,12 +48,14 @@
     <string name="drawer_open">Отваряне на чекмеджето</string>
     <string name="drawer_close">Затваряне на чекмеджето</string>
     <string name="note_message">Запазена бележка</string>
+    <!-- Note editor screen -->
     <string name="CardEditorCardDeck">Тесте от карти:</string>
     <string name="CardEditorNoteDeck">Тесте:</string>
     <string name="CardEditorModel">Тип:</string>
     <string name="CardEditorTags">Етикети:%1$s</string>
     <string name="CardEditorCards">Карти: %1$s</string>
     <string name="edit_occlusions">Редактиране на закривявания</string>
+    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
     <string name="tag_name">Име на етикет</string>
     <string name="add_new_filter_tags">Добавяне/филтър на тагове</string>
     <string name="add_tag" maxLength="28">Нов етикет</string>
@@ -233,6 +235,7 @@
     <string name="search_decks" maxLength="28">Потърси тесте</string>
     <string name="ankidroid_init_failed_webview_title">Фатална грешка</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid разчита на системния WebView, който не е достъпен. Това може да се случи, ако системата инсталира актуализации. Моля, опитайте отново след няколко минути.\n\n%s</string>
+    <string name="ankidroid_init_failed_storage">AnkiDroid cannot access storage due to an Android error.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">Големина на шрифт</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Показване на лентата с инструменти</string>

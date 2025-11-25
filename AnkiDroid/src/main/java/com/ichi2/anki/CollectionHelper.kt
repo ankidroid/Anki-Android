@@ -25,9 +25,9 @@ import androidx.core.content.edit
 import com.ichi2.anki.AnkiDroidFolder.AppPrivateFolder
 import com.ichi2.anki.CollectionHelper.PREF_COLLECTION_PATH
 import com.ichi2.anki.CollectionHelper.getCurrentAnkiDroidDirectory
-import com.ichi2.anki.CollectionHelper.getDefaultAnkiDroidDirectory
 import com.ichi2.anki.backend.createDatabaseUsingAndroidFramework
 import com.ichi2.anki.exception.StorageAccessException
+import com.ichi2.anki.exception.SystemStorageException
 import com.ichi2.anki.exception.UnknownDatabaseVersionException
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.CollectionFiles
@@ -175,6 +175,8 @@ object CollectionHelper {
      * very different things as explained above.
      *
      * @return Absolute Path to the default location starting location for the AnkiDroid directory
+     *
+     * @throws SystemStorageException if `getExternalFilesDir` returns null
      */
     // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5304
     @CheckResult
@@ -215,6 +217,8 @@ object CollectionHelper {
      *
      * @param context Used to get the External App-Specific directory for AnkiDroid
      * @return Returns the absolute path to the App-Specific External AnkiDroid directory
+     *
+     * @throws SystemStorageException if `getExternalFilesDir` returns null
      */
     private fun getAppSpecificExternalAnkiDroidDirectory(context: Context): String? {
         val externalFilesDir = context.getExternalFilesDir(null)
@@ -224,9 +228,9 @@ object CollectionHelper {
         // we will now check for null and if so try to log more information about why.
         if (externalFilesDir == null) {
             Timber.e("Attempting to determine collection path, but no valid external storage?")
-            throw IllegalStateException(
-                "getExternalFilesDir unexpectedly returned null. Media state: " +
-                    Environment.getExternalStorageState(),
+            throw SystemStorageException.build(
+                errorDetail = "getExternalFilesDir unexpectedly returned null",
+                infoUri = "https://github.com/ankidroid/Anki-Android/issues/13207",
             )
         }
         return externalFilesDir.absolutePath
@@ -262,6 +266,8 @@ object CollectionHelper {
 
     /**
      * @return the absolute path to the AnkiDroid directory.
+     *
+     * @throws SystemStorageException if `getExternalFilesDir` returns null
      */
     fun getCurrentAnkiDroidDirectory(context: Context): File =
         getCurrentAnkiDroidDirectoryOptionalContext(context.sharedPrefs()) { context }
@@ -306,15 +312,18 @@ object CollectionHelper {
         }
 
     /**
-     * Resets the AnkiDroid directory to the [getDefaultAnkiDroidDirectory]
+     * Resets the AnkiDroid directory to [directory]
      * Note: if [android.R.attr.preserveLegacyExternalStorage] is in use
      * this will represent a change from `/AnkiDroid` to `/Android/data/...`
+     *
+     * @throws SystemStorageException if `getExternalFilesDir` returns null
      */
-    fun resetAnkiDroidDirectory(context: Context) {
-        val preferences = context.sharedPrefs()
-        val directory = getDefaultAnkiDroidDirectory(context)
+    fun resetAnkiDroidDirectory(
+        context: Context,
+        directory: File = getDefaultAnkiDroidDirectory(context),
+    ) {
         Timber.d("resetting AnkiDroid directory to %s", directory)
-        preferences.edit { putString(PREF_COLLECTION_PATH, directory.absolutePath) }
+        context.sharedPrefs().edit { putString(PREF_COLLECTION_PATH, directory.absolutePath) }
     }
 
     @Throws(UnknownDatabaseVersionException::class)

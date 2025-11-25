@@ -16,6 +16,11 @@
 
 package com.ichi2.anki.exception
 
+/**
+ * If a known storage path is unusable
+ *
+ * @see [SystemStorageException] if no path is available
+ */
 class StorageAccessException(
     msg: String? = null,
     e: Throwable? = null,

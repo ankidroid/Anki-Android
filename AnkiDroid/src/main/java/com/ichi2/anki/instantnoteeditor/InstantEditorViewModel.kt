@@ -116,7 +116,7 @@ class InstantEditorViewModel :
             }
 
             @Suppress("RedundantRequireNotNullCall") // postValue lint requires this
-            val clozeNoteType = requireNotNull(noteType)
+            val clozeNoteType = requireNotNull(noteType) { "noteType" }
             Timber.d("Changing to cloze type note")
             _currentlySelectedNotetype.postValue(clozeNoteType)
             Timber.i("Using note type '%d", clozeNoteType.id)
@@ -154,8 +154,6 @@ class InstantEditorViewModel :
      */
     private suspend fun saveNote(): SaveNoteResult {
         return try {
-            editorNote.notetype.did = deckId!!
-
             val note = editorNote
             val deckId = deckId ?: return SaveNoteResult.Failure()
 

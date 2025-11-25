@@ -48,12 +48,14 @@
     <string name="drawer_open">دراز کھولیں</string>
     <string name="drawer_close">دراز بند کریں</string>
     <string name="note_message">Note saved</string>
+    <!-- Note editor screen -->
     <string name="CardEditorCardDeck">کارڈ ڈیک:</string>
     <string name="CardEditorNoteDeck">ڈیک:</string>
     <string name="CardEditorModel">قسم:</string>
     <string name="CardEditorTags">ٹیگز: %1$s</string>
     <string name="CardEditorCards">کارڈ: %1$s</string>
     <string name="edit_occlusions">مواقع میں ترمیم کریں</string>
+    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
     <string name="tag_name">ٹیگ کا نام</string>
     <string name="add_new_filter_tags">شامل/فلٹر کریں ٹیگ</string>
     <string name="add_tag" maxLength="28">ٹیگ شامل کریں</string>
@@ -234,6 +236,7 @@
     <string name="search_decks" maxLength="28">ڈیکس تلاش کریں</string>
     <string name="ankidroid_init_failed_webview_title">مہلک غلطی</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid سسٹم WebView پر انحصار کرتا ہے جو دستیاب نہیں ہے۔ اگر سسٹم اپ ڈیٹس انسٹال کر رہا ہو تو ایسا ہو سکتا ہے۔ براہ کرم چند منٹوں میں دوبارہ کوشش کریں۔\n\n%s</string>
+    <string name="ankidroid_init_failed_storage">AnkiDroid cannot access storage due to an Android error.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">حرف کا سائز</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">ٹول بار دکھائیں</string>

@@ -48,12 +48,14 @@
     <string name="drawer_open">Buka laci</string>
     <string name="drawer_close">Tutup laci</string>
     <string name="note_message">Note saved</string>
+    <!-- Note editor screen -->
     <string name="CardEditorCardDeck">Dek kad:</string>
     <string name="CardEditorNoteDeck">Dek:</string>
     <string name="CardEditorModel">Jenis:</string>
     <string name="CardEditorTags">Tag: %1$s</string>
     <string name="CardEditorCards">Kad: %1$s</string>
     <string name="edit_occlusions">Edit Occlusions</string>
+    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
     <string name="tag_name">Nama tag</string>
     <string name="add_new_filter_tags">Tambah/tapis tag</string>
     <string name="add_tag" maxLength="28">Tambah tag</string>
@@ -230,6 +232,7 @@
     <string name="search_decks" maxLength="28">Cari dek</string>
     <string name="ankidroid_init_failed_webview_title">Ralat Maut</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid bergantung kepada WebView Sistem yang tidak tersedia. Ini boleh berlaku jika sistem sedang kemas kini. Sila cuba lagi dalam beberapa minit.\n\n%s</string>
+    <string name="ankidroid_init_failed_storage">AnkiDroid cannot access storage due to an Android error.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">Saiz tulisan</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Lihat Bar Alat</string>

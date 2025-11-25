@@ -48,12 +48,14 @@
     <string name="drawer_open">Otvoriť lištu</string>
     <string name="drawer_close">Zavrieť lištu</string>
     <string name="note_message">Note saved</string>
+    <!-- Note editor screen -->
     <string name="CardEditorCardDeck">Balíček kartičky:</string>
     <string name="CardEditorNoteDeck">Balíček:</string>
     <string name="CardEditorModel">Typ:</string>
     <string name="CardEditorTags">Štítky: %1$s</string>
     <string name="CardEditorCards">Kartičky: %1$s</string>
     <string name="edit_occlusions">Upraviť prekrytý obsah</string>
+    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
     <string name="tag_name">Názov štítku</string>
     <string name="add_new_filter_tags">Pridať/filtrovať štítky</string>
     <string name="add_tag" maxLength="28">Pridať štítok</string>
@@ -239,6 +241,7 @@
     <string name="search_decks" maxLength="28">Prehľadať balíčky</string>
     <string name="ankidroid_init_failed_webview_title">Kritická chyba</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid sa spolieha na systém WebView, ktorý je nedostupný. Toto môže nastať, ak systém inštaluje aktualizácie. Skúste znovu, prosím, o pár minút.\n\n%s</string>
+    <string name="ankidroid_init_failed_storage">AnkiDroid cannot access storage due to an Android error.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">Veľkosť fontu</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Zobraziť panel s nástrojmi</string>

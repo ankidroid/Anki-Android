@@ -32,6 +32,7 @@ import com.ichi2.anki.common.utils.trimToLength
 import com.ichi2.anki.dialogs.DialogHandler.Companion.storeMessage
 import com.ichi2.anki.dialogs.DialogHandlerMessage
 import com.ichi2.anki.dialogs.requireDeckPickerOrShowError
+import com.ichi2.anki.exception.SystemStorageException
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import com.ichi2.anki.servicelayer.ScopedStorageService
@@ -350,6 +351,8 @@ class IntentHandler : AbstractIntentHandler() {
         /** Checks whether storage permissions are granted on the device. If the device is not using legacy storage,
          *  it verifies if the app has been granted the necessary storage access permission.
          *  @return `true`: if granted, otherwise `false` and shows a missing permission toast
+         *
+         * @throws SystemStorageException if `getExternalFilesDir` returns null
          */
         fun grantedStoragePermissions(
             context: Context,

@@ -19,19 +19,15 @@ package com.ichi2.anki.browser
 import android.os.Build
 import android.view.LayoutInflater
 import android.view.MotionEvent
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.textview.MaterialTextView
 import com.ichi2.anki.R
 import com.ichi2.anki.browser.BrowserColumnSelectionRecyclerItem.ColumnItem
 import com.ichi2.anki.browser.BrowserColumnSelectionRecyclerItem.UsageItem
 import com.ichi2.anki.browser.ColumnUsage.AVAILABLE
-import com.ichi2.anki.utils.ext.findViewById
+import com.ichi2.anki.databinding.BrowserColumnsSelectionEntryBinding
+import com.ichi2.anki.databinding.BrowserColumnsSelectionHeadingBinding
 import java.util.Collections
 
 class BrowserColumnSelectionAdapter(
@@ -71,13 +67,11 @@ class BrowserColumnSelectionAdapter(
     ): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         return when (viewType) {
-            BrowserColumnSelectionRecyclerItem.COLUMN_VIEW_TYPE -> {
-                val itemView = inflater.inflate(R.layout.browser_columns_selection_entry, parent, false)
-                ColumnViewHolder(itemView)
-            }
+            BrowserColumnSelectionRecyclerItem.COLUMN_VIEW_TYPE ->
+                ColumnViewHolder(BrowserColumnsSelectionEntryBinding.inflate(inflater, parent, false))
+
             BrowserColumnSelectionRecyclerItem.USAGE_VIEW_TYPE -> {
-                val itemView = inflater.inflate(R.layout.browser_columns_selection_heading, parent, false)
-                UsageViewHolder(itemView)
+                UsageViewHolder(BrowserColumnsSelectionHeadingBinding.inflate(inflater, parent, false))
             }
             else -> throw IllegalArgumentException("Unexpected viewType")
         }
@@ -139,13 +133,13 @@ class BrowserColumnSelectionAdapter(
      * @see R.layout.browser_columns_selection_entry
      */
     private inner class ColumnViewHolder(
-        itemView: View,
-    ) : RecyclerView.ViewHolder(itemView) {
+        private val binding: BrowserColumnsSelectionEntryBinding,
+    ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(column: ColumnWithSample) {
-            column.label.let { findViewById<TextView>(R.id.column_title).text = it }
-            column.sampleValue.let { findViewById<TextView>(R.id.column_example).text = it }
+            column.label.let { binding.columnTitle.text = it }
+            column.sampleValue.let { binding.columnExample.text = it }
 
-            findViewById<ImageView>(R.id.button_toggle_column).apply {
+            binding.buttonToggleColumn.apply {
                 // NICE_TO_HAVE: animate between + and -
                 val isExclude = absoluteAdapterPosition < positionOfAvailableHeading
                 setImageResource(if (isExclude) R.drawable.ic_remove else R.drawable.ic_add)
@@ -160,7 +154,7 @@ class BrowserColumnSelectionAdapter(
                 }
             }
 
-            findViewById<AppCompatImageView>(R.id.drag_handle).setOnTouchListener { _, event ->
+            binding.dragHandle.setOnTouchListener { _, event ->
                 if (event.action == MotionEvent.ACTION_DOWN) {
                     onDragHandleTouchedListener?.invoke(this)
                 }
@@ -171,10 +165,10 @@ class BrowserColumnSelectionAdapter(
 
     /** @see [R.layout.browser_columns_selection_heading] */
     private class UsageViewHolder(
-        itemView: View,
-    ) : RecyclerView.ViewHolder(itemView) {
+        private val binding: BrowserColumnsSelectionHeadingBinding,
+    ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(columnUsage: ColumnUsage) {
-            findViewById<MaterialTextView>(R.id.title).text = itemView.context.getString(columnUsage.titleRes)
+            binding.title.text = itemView.context.getString(columnUsage.titleRes)
         }
     }
 }

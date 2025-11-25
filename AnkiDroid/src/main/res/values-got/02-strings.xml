@@ -48,12 +48,14 @@
     <string name="drawer_open">Open drawer</string>
     <string name="drawer_close">Close drawer</string>
     <string name="note_message">𐌼𐌴𐌻𐌴𐌹𐌽𐍃 𐌲𐌰𐍆𐌰𐍃𐍄𐌰𐌽𐌰</string>
+    <!-- Note editor screen -->
     <string name="CardEditorCardDeck">𐌺𐌰𐍂𐍄𐌰𐌷𐌿𐌶𐌳:</string>
     <string name="CardEditorNoteDeck">𐌲𐌰𐌻𐌹𐍃𐌰 𐌺𐌰𐍂𐍄𐍉</string>
     <string name="CardEditorModel">𐌺𐌹𐌽𐌸𐍃:</string>
     <string name="CardEditorTags">𐍃𐍉𐌺𐌽𐌹𐍅𐌰𐌿𐍂𐌳𐌰: %1$s</string>
     <string name="CardEditorCards">𐌺𐌰𐍂𐍄𐍉𐍃: %1$s</string>
     <string name="edit_occlusions">Edit Occlusions</string>
+    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
     <string name="tag_name">𐌽𐌰𐌼𐍉 𐍃𐍉𐌺𐌽𐌹𐍅𐌰𐌿𐍂𐌳𐌹𐍃</string>
     <string name="add_new_filter_tags">𐍃𐍉𐌺𐌽𐌹𐍅𐌰𐌿𐍂𐌳𐌰 𐌰𐌽𐌰𐌰𐌿𐌺𐌰𐌽/𐍃𐌴𐌹𐍈𐌰𐌽</string>
     <string name="add_tag" maxLength="28">𐍃𐍉𐌺𐌽𐌹𐍅𐌰𐌿𐍂𐌳 𐌱𐌹𐌰𐌿𐌺𐌰𐌽</string>
@@ -233,6 +235,7 @@
     <string name="search_decks" maxLength="28">𐌺𐌰𐍂𐍄𐌰𐌷𐌿𐌶𐌳𐌰 𐍃𐍉𐌺𐌾𐌰𐌽</string>
     <string name="ankidroid_init_failed_webview_title">𐌿𐍃𐍄𐌹𐌿𐌷𐌰𐌽𐌳𐌴𐌹 𐌰𐌹𐍂𐌶𐌴𐌹</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid relies on the System WebView which is unavailable. This can happen if the system is installing updates. Please try again in a few minutes.\n\n%s</string>
+    <string name="ankidroid_init_failed_storage">AnkiDroid cannot access storage due to an Android error.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">𐌼𐌹𐌺𐌹𐌻𐌴𐌹 𐍆𐌰𐌿𐌽𐍄𐌹𐍃</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">𐍄𐍉𐌻𐌰-𐌰𐌽𐍃 𐌱𐌰𐌽𐌳𐍅𐌾𐌰𐌽</string>
