@@ -51,7 +51,7 @@ import timber.log.Timber
 @NeedsTest("pressing 'back' on this screen closes it")
 class RemoveAccountFragment :
     Fragment(R.layout.page_fragment),
-    OnWebViewRecreatedListener {
+    OnWebViewRecreatedListener { // TEMPORARY: Added for #19561, allows testing of account removal dialog
     private lateinit var webViewLayout: SafeWebViewLayout
 
     /**
@@ -62,6 +62,7 @@ class RemoveAccountFragment :
     /**
      * Redirect from post-login pages (such as 'verify account') to the required page
      */
+
     private fun maybeRedirectToRemoveAccount(url: String): Boolean {
         if (!urlsToRedirect.any { urlToRedirect -> url.startsWith(urlToRedirect) }) {
             Timber.v("not redirecting to remove account: url does not match")
@@ -76,10 +77,6 @@ class RemoveAccountFragment :
         Timber.i("redirecting to 'remove account'")
         webViewLayout.loadUrl(getString(R.string.remove_account_url))
         return true
-    }
-
-    override fun onWebViewRecreated(webView: WebView) {
-        // Required by OnWebViewRecreatedListener
     }
 
     @CallSuper
@@ -141,6 +138,13 @@ class RemoveAccountFragment :
                 requireActivity().onBackPressedDispatcher.onBackPressed()
             }
         }
+    }
+
+    // TEMPORARY: Minimal implementation to allow testing
+    // TODO: Remove this patch once #19561 is properly fixed
+    override fun onWebViewRecreated(webView: WebView) {
+        Timber.i("WebView recreated, reloading removal page")
+        webView.loadUrl(getString(R.string.remove_account_url))
     }
 
     companion object {

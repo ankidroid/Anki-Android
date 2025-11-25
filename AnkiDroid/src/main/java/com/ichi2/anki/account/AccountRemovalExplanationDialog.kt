@@ -18,12 +18,13 @@ package com.ichi2.anki.account
 import android.app.Dialog
 import android.os.Bundle
 import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.setFragmentResult
-import androidx.preference.PreferenceManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.ichi2.anki.R
 import com.ichi2.anki.databinding.DialogAccountRemovalExplanationBinding
+import com.ichi2.anki.settings.Prefs
 import com.ichi2.utils.copyToClipboard
 import com.ichi2.utils.create
 
@@ -36,14 +37,17 @@ class AccountRemovalExplanationDialog : DialogFragment() {
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val preferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
-        val email = preferences.getString("username", "") ?: ""
-
+        val email = Prefs.username ?: ""
         val binding = DialogAccountRemovalExplanationBinding.inflate(layoutInflater)
 
-        binding.emailText.text = email
-        binding.copyEmailButton.setOnClickListener {
-            requireContext().copyToClipboard(email)
+        if (email.isNotEmpty()) {
+            binding.emailText.text = email
+            binding.copyEmailButton.setOnClickListener {
+                requireContext().copyToClipboard(email)
+            }
+        } else {
+            binding.emailText.isVisible = false
+            binding.copyEmailButton.isVisible = false
         }
 
         return MaterialAlertDialogBuilder(requireContext()).create {

@@ -56,20 +56,6 @@ class LoggedInFragment : Fragment(R.layout.my_account_logged_in) {
 
     private lateinit var loggedInLogo: ImageView
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        // Register the listener BEFORE the dialog is shown
-        parentFragmentManager.setFragmentResultListener(
-            AccountRemovalExplanationDialog.REQUEST_KEY,
-            this,
-        ) { _, bundle ->
-            if (bundle.getBoolean(AccountRemovalExplanationDialog.RESULT_PROCEED, false)) {
-                openRemoveAccountScreen()
-            }
-        }
-    }
-
     override fun onViewCreated(
         view: View,
         savedInstanceState: Bundle?,
@@ -96,6 +82,15 @@ class LoggedInFragment : Fragment(R.layout.my_account_logged_in) {
         view.findViewById<Button>(R.id.remove_account_button).setOnClickListener { showAccountRemovalExplanation() }
 
         loggedInLogo = view.findViewById(R.id.login_logo)
+
+        parentFragmentManager.setFragmentResultListener(
+            AccountRemovalExplanationDialog.REQUEST_KEY,
+            viewLifecycleOwner,
+        ) { _, bundle ->
+            if (bundle.getBoolean(AccountRemovalExplanationDialog.RESULT_PROCEED, false)) {
+                openRemoveAccountScreen()
+            }
+        }
     }
 
     private fun openAnkiDroidPrivacyPolicy() {
@@ -146,10 +141,5 @@ class LoggedInFragment : Fragment(R.layout.my_account_logged_in) {
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
         loggedInLogo.isVisible = !(isCompactWidth && newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        parentFragmentManager.clearFragmentResultListener(AccountRemovalExplanationDialog.REQUEST_KEY)
     }
 }
