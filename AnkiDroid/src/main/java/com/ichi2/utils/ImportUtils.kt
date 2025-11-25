@@ -353,13 +353,13 @@ object ImportUtils {
          */
         protected open fun copyFileToCache(
             context: Context,
-            data: Uri?,
+            data: Uri,
             tempPath: String,
         ): Pair<Boolean, String?> {
             // Get an input stream to the data in ContentProvider
             val inputStream: InputStream =
                 try {
-                    context.contentResolver.openInputStream(data!!)
+                    context.contentResolver.openInputStream(data)
                 } catch (e: FileNotFoundException) {
                     Timber.e(e, "Could not open input stream to intent data")
                     return Pair(false, "copyFileToCache: FileNotFoundException when accessing ContentProvider")
