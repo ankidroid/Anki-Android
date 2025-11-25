@@ -35,15 +35,13 @@ import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.dialogs.DialogHandler
 import com.ichi2.anki.dialogs.DialogHandlerMessage
 import com.ichi2.anki.dialogs.ImportDialog
+import com.ichi2.anki.exception.ManuallyReportedException
 import com.ichi2.anki.onSelectedCsvForImport
 import com.ichi2.anki.showImportDialog
 import com.ichi2.compat.CompatHelper
 import org.jetbrains.annotations.Contract
 import timber.log.Timber
 import java.io.File
-import java.io.FileNotFoundException
-import java.io.IOException
-import java.io.InputStream
 import java.net.URLDecoder
 import java.net.URLEncoder
 import java.util.Locale
@@ -164,10 +162,9 @@ object ImportUtils {
         ): String? {
             val filename = ensureValidLength(getFileNameFromContentProvider(context, uri) ?: return null)
             val tempFile = File(context.cacheDir, filename)
-            return if (copyFileToCache(context, uri, tempFile.absolutePath).first) {
-                tempFile.absolutePath
-            } else {
-                null
+            return when (val result = copyFileToCache(context, uri, tempFile.absolutePath)) {
+                is CacheFileResult.Success -> result.path
+                else -> null
             }
         }
 
@@ -231,26 +228,15 @@ object ImportUtils {
                     // Don't import if file doesn't have an Anki package extension
                     ImportResult.fromErrorString(context.resources.getString(R.string.import_error_not_apkg_extension, filename))
                 }
-            } else {
-                // Copy to temporary file
-                filename = ensureValidLength(filename)
-                tempOutDir = Uri.fromFile(File(context.cacheDir, filename)).encodedPath!!
-                val cachingResult = copyFileToCache(context, importPathUri, tempOutDir)
-                val errorMessage =
-                    if (cachingResult.first) {
-                        null
-                    } else {
-                        context.getString(R.string.import_error_copy_to_cache)
-                    }
-                // Show import dialog
-                if (errorMessage != null) {
-                    CrashReportService.sendExceptionReport(
-                        RuntimeException("Error importing apkg file"),
-                        "IntentHandler.java",
-                        cachingResult.second,
-                    )
-                    return ImportResult.fromErrorString(errorMessage)
-                }
+            }
+
+            // Copy to temporary file
+            filename = ensureValidLength(filename)
+            tempOutDir = Uri.fromFile(File(context.cacheDir, filename)).encodedPath!!
+
+            copyFileToCache(context, importPathUri, tempOutDir).asErrorDetails(context)?.let { details ->
+                CrashReportService.sendExceptionReport(details.exception, "ImportUtils")
+                return ImportResult.fromErrorString(details.userFacingString)
             }
             sendShowImportFileDialogMsg(tempOutDir)
             return ImportResult.fromSuccess()
@@ -348,36 +334,56 @@ object ImportUtils {
          * Copy the data from the intent to a temporary file
          * @param data intent from which to get input stream
          * @param tempPath temporary path to store the cached file
-         * @return a [Pair] with a boolean indicating if the copy to cache action was successful
-         * and an optional message if anything went wrong
+         * @return see [CacheFileResult]
          */
         protected open fun copyFileToCache(
             context: Context,
             data: Uri,
             tempPath: String,
-        ): Pair<Boolean, String?> {
-            // Get an input stream to the data in ContentProvider
-            val inputStream: InputStream =
-                try {
-                    context.contentResolver.openInputStream(data)
-                } catch (e: FileNotFoundException) {
-                    Timber.e(e, "Could not open input stream to intent data")
-                    return Pair(false, "copyFileToCache: FileNotFoundException when accessing ContentProvider")
-                } ?: return Pair(false, "copyFileToCache: provider recently crashed")
-            // Check non-null
+        ): CacheFileResult =
             try {
-                CompatHelper.compat.copyFile(inputStream, tempPath)
-            } catch (e: IOException) {
-                Timber.e(e, "Could not copy file to %s", tempPath)
-                return Pair(false, "copyFileToCache: ${e.javaClass} when copying the imported file")
-            } finally {
-                try {
-                    inputStream.close()
-                } catch (e: IOException) {
-                    Timber.e(e, "Error closing input stream")
+                context.contentResolver.openInputStreamSafe(data)?.use { input ->
+                    CompatHelper.compat.copyFile(input, tempPath)
+                    CacheFileResult.Success(tempPath)
+                } ?: run {
+                    Timber.w("Content provider crashed")
+                    CacheFileResult.ContentProviderCrashed
                 }
+            } catch (e: Exception) {
+                Timber.w("Could not copy file to %s", tempPath)
+                CacheFileResult.Error(e)
             }
-            return Pair(true, null)
+
+        sealed class CacheFileResult {
+            data class Success(
+                val path: String,
+            ) : CacheFileResult()
+
+            data class Error(
+                val exception: Exception,
+            ) : CacheFileResult()
+
+            data object ContentProviderCrashed : CacheFileResult()
+
+            fun asErrorDetails(context: Context): ErrorDetails? =
+                when (this) {
+                    is Success -> null
+                    is Error ->
+                        ErrorDetails(
+                            exception = this.exception,
+                            userFacingString = context.getString(R.string.import_error_copy_to_cache),
+                        )
+                    is ContentProviderCrashed ->
+                        ErrorDetails(
+                            exception = ManuallyReportedException("Content provider crashed"),
+                            userFacingString = context.getString(R.string.import_error_copy_to_cache),
+                        )
+                }
+
+            data class ErrorDetails(
+                val exception: Exception,
+                val userFacingString: String,
+            )
         }
 
         companion object {

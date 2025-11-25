@@ -29,6 +29,7 @@ import com.ichi2.compat.CompatHelper
 import com.ichi2.utils.ClipboardUtil
 import com.ichi2.utils.ContentResolverUtil.getFileName
 import com.ichi2.utils.FileNameAndExtension
+import com.ichi2.utils.openInputStreamSafe
 import timber.log.Timber
 import java.io.File
 import java.io.FileOutputStream
@@ -184,7 +185,7 @@ object MediaRegistration {
         val isVideo = ClipboardUtil.hasVideo(description)
 
         // Opens InputStream, copies to file, and converts to PNG if needed. Returns null on failure.
-        context.contentResolver.openInputStream(uri).use { fd ->
+        context.contentResolver.openInputStreamSafe(uri).use { fd ->
             if (fd == null) return@use
             if (pasteAsPng) {
                 clipCopy = File.createTempFile(fileName, ".png")

@@ -51,6 +51,7 @@ import com.ichi2.compat.CompatHelper
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.utils.ExceptionUtil.executeSafe
 import com.ichi2.utils.FileUtil
+import com.ichi2.utils.openInputStreamSafe
 import timber.log.Timber
 import java.io.File
 
@@ -372,7 +373,7 @@ class AudioVideoFragment : MultimediaFragment(R.layout.fragment_audio_video) {
         clipCopy: File,
     ) {
         try {
-            requireContext().contentResolver.openInputStream(selectedMediaClip).use { inputStream ->
+            requireContext().contentResolver.openInputStreamSafe(selectedMediaClip).use { inputStream ->
                 CompatHelper.compat.copyFile(inputStream!!, clipCopy.absolutePath)
 
                 viewModel.updateCurrentMultimediaPath(clipCopy)
