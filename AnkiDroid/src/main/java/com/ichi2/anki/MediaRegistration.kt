@@ -123,7 +123,7 @@ object MediaRegistration {
             showError(MediaError.GenericError)
             null
         } catch (ex: OutOfMemoryError) {
-            CrashReportService.sendExceptionReport(ex, "onPaste", additionalInfo = null, onlyIfSilent = true)
+            CrashReportService.sendExceptionReport(ex, "onPaste", onlyIfSilent = true)
             Timber.w(ex, "Failed to paste media")
             showError(MediaError.GenericErrorTryAgain(details = ex.toString()))
             null

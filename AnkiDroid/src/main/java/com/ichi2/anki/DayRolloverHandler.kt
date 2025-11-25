@@ -79,7 +79,6 @@ object DayRolloverHandler : BroadcastReceiver() {
             CrashReportService.sendExceptionReport(
                 e = ManuallyReportedException(msg),
                 origin = "DayRolloverHandler::onReceive",
-                additionalInfo = null,
                 onlyIfSilent = true,
             )
         }) {

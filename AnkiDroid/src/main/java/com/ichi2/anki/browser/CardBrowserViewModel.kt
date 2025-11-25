@@ -464,7 +464,6 @@ class CardBrowserViewModel(
                         CrashReportService.sendExceptionReport(
                             e = e,
                             origin = "19572: STATE_MULTISELECT_VALUES",
-                            additionalInfo = null,
                             onlyIfSilent = true,
                         )
                         // fallback to no selections, but still in multiselect mode
