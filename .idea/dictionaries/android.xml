@@ -21,6 +21,7 @@
       <w>contextmenu</w>
       <w>customtabs</w>
       <w>fileprovider</w>
+      <w>fonipa</w>
       <w>funcs</w>
       <w>greylist</w>
       <w>greylisted</w>
@@ -37,6 +38,8 @@
       <w>requery</w>
       <w>robo</w>
       <w>runnables</w>
+      <w>searchview</w>
+      <w>searchview's</w>
       <w>securitycenter</w>
       <w>setprop</w>
       <w>snackbar</w>
@@ -45,6 +48,7 @@
       <w>stacktraces</w>
       <w>testutils</w>
       <w>tracesql</w>
+      <w>uint</w>
       <w>ungzip</w>
       <w>ungzipped</w>
       <w>ungzipping</w>
