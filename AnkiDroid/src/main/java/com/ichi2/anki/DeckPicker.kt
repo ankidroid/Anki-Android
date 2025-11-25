@@ -186,6 +186,7 @@ import com.ichi2.utils.ImportUtils
 import com.ichi2.utils.ImportUtils.ImportResult
 import com.ichi2.utils.NetworkUtils
 import com.ichi2.utils.NetworkUtils.isActiveNetworkMetered
+import com.ichi2.utils.Permissions
 import com.ichi2.utils.VersionUtils
 import com.ichi2.utils.cancelable
 import com.ichi2.utils.checkBoxPrompt
@@ -2030,6 +2031,13 @@ open class DeckPicker :
             pullToSyncWrapper.isRefreshing = false
             showSyncErrorDialog(SyncErrorDialog.Type.DIALOG_USER_NOT_LOGGED_IN_SYNC)
             return
+        }
+
+        // Request notification permissions from the user if they have not been requested due to syncing ever before
+        if (!Prefs.syncNotifsRequestShown) {
+            Permissions.showNotificationsPermissionBottomSheetIfNeeded(activity = this, supportFragmentManager) {
+                Prefs.syncNotifsRequestShown = true
+            }
         }
 
         /** Nested function that makes the connection to
