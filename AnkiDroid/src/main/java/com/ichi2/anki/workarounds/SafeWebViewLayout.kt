@@ -27,6 +27,7 @@ import androidx.annotation.MainThread
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.findFragment
 import com.ichi2.anki.BuildConfig
+import com.ichi2.anki.runCatchingWithReport
 import timber.log.Timber
 
 open class SafeWebViewLayout :
@@ -157,6 +158,33 @@ open class SafeWebViewLayout :
             } else {
                 Timber.w("Fragment does not implement OnWebViewRecreatedListener. WebView recreation may not be handled")
             }
+        }
+    }
+
+    /**
+     * Destroys the internal state of the wrapped [webView]
+     *
+     * No other methods may be called on this WebView after destroy
+     */
+    @MainThread
+    fun safeDestroy() {
+        Timber.d("Destroying WebView")
+
+        runCatchingWithReport("safeDestroy", onlyIfSilent = true) {
+            webView.stopLoading()
+            webView.loadUrl("about:blank")
+
+            webView.webChromeClient = null
+
+            removeView(webView)
+
+            // remove listeners this class exposes
+            webView.setOnScrollChangeListener(null)
+        }
+
+        // attempt to run destroy() even if the above fails
+        runCatchingWithReport("safeDestroy", onlyIfSilent = true) {
+            webView.destroy()
         }
     }
 
