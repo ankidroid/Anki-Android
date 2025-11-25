@@ -61,13 +61,16 @@ class TagsList(
         indeterminateTags = TreeSet(java.lang.String.CASE_INSENSITIVE_ORDER)
         if (uncheckedTags != null) {
             this.allTags.addAll(uncheckedTags)
-            // intersection between mCheckedTags and uncheckedTags
             indeterminateTags.addAll(this.checkedTags)
             val uncheckedSet: MutableSet<String> = TreeSet(java.lang.String.CASE_INSENSITIVE_ORDER)
             uncheckedSet.addAll(uncheckedTags)
             indeterminateTags.retainAll(uncheckedSet)
             this.checkedTags.removeAll(indeterminateTags)
+        } else {
+            // new: compute partial tags when uncheckedTags list is not provided
+            computePartialTags(this.allTags, checkedTags)
         }
+
         prepareTagHierarchy()
     }
 
@@ -285,4 +288,18 @@ class TagsList(
      * @return Iterator over all tags
      */
     override fun iterator(): MutableIterator<String> = allTags.iterator()
+
+    private fun computePartialTags(
+        allTags: Collection<String>,
+        checkedTags: Collection<String>,
+    ) {
+        for (tag in allTags) {
+            val inChecked = checkedTags.contains(tag)
+            val inUnchecked = !inChecked
+            if (inChecked && inUnchecked) {
+                indeterminateTags.add(tag)
+                this.checkedTags.remove(tag)
+            }
+        }
+    }
 }
