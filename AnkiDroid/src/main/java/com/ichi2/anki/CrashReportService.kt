@@ -382,3 +382,37 @@ object CrashReportService {
             .filter { it.exceptionClass == UserSubmittedException::class.java.name }
             .maxOfOrNull { it.timestamp?.timeInMillis ?: -1L } ?: -1L
 }
+
+/**
+ * Runs the provided block, catching [Exception], logging it and reporting it to [CrashReportService]
+ *
+ * **Example**
+ * ```
+ * runCatchingWithReport("callingMethod", onlyIfSilent = true) {
+ *     doSomethingRisky()
+ * }
+ * ```
+ *
+ * **Note**: This differs from [runCatching] - `Error` is thrown
+ *
+ * @param origin Data logged to Timber, and provided as the 'origin' field in the error report
+ * @param onlyIfSilent Skip crash report if the crash reporting service is not 'always accept'
+ * @param block Code to execute
+ *
+ * @throws Error If raised, this will be reported and rethrown
+ *
+ * @return A Result containing either the successful result of [block] or the [Exception] thrown
+ */
+fun <T> runCatchingWithReport(
+    origin: String?,
+    onlyIfSilent: Boolean = false,
+    block: () -> T,
+): Result<T> =
+    try {
+        Result.success(block())
+    } catch (e: Throwable) {
+        Timber.w(e, origin)
+        CrashReportService.sendExceptionReport(e, origin, onlyIfSilent = onlyIfSilent)
+        if (e is Error) throw e
+        Result.failure(e)
+    }
