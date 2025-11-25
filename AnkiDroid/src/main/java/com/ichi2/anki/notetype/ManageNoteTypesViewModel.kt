@@ -82,18 +82,18 @@ class ManageNoteTypesViewModel : ViewModel() {
     }
 
     fun rename(
-        nid: NoteTypeId,
+        ntid: NoteTypeId,
         name: String,
     ) {
-        Timber.i("Renaming notetype with id $nid")
+        Timber.i("Renaming notetype with id $ntid")
         _state.update { oldState -> oldState.copy(isLoading = true) }
         viewModelScope.launch {
             undoableOp<OpChanges> {
-                safeRenameNoteType(nid, name)
+                safeRenameNoteType(ntid, name)
                     .onSuccess { changes ->
                         _state.update { oldState ->
                             val updatedNoteTypes =
-                                oldState.noteTypes.withUpdatedItem(nid) { old -> old.copy(name = name) }
+                                oldState.noteTypes.withUpdatedItem(ntid) { old -> old.copy(name = name) }
                             oldState.copy(isLoading = false, noteTypes = updatedNoteTypes)
                         }
                         return@undoableOp changes
@@ -114,9 +114,9 @@ class ManageNoteTypesViewModel : ViewModel() {
         }
     }
 
-    /** Deletes the note type with [nid] and also updates the multi select mode status if needed */
-    fun delete(nid: NoteTypeId) {
-        Timber.i("Deleting notetype with id $nid")
+    /** Deletes the note type with [ntid] and also updates the multi select mode status if needed */
+    fun delete(ntid: NoteTypeId) {
+        Timber.i("Deleting notetype with id $ntid")
         _state.update { oldState -> oldState.copy(isLoading = true) }
         val noteTypesCount = _state.value.noteTypes.size
         viewModelScope.launch {
@@ -127,10 +127,10 @@ class ManageNoteTypesViewModel : ViewModel() {
                     }
                     return@undoableOp OpChanges.getDefaultInstance()
                 }
-                safeRemoveNoteType(nid)
+                safeRemoveNoteType(ntid)
                     .onSuccess { changes ->
                         _state.update { oldState ->
-                            val updatedNoteTypes = oldState.noteTypes.filterNot { it.id == nid }
+                            val updatedNoteTypes = oldState.noteTypes.filterNot { it.id == ntid }
                             oldState.copy(
                                 isLoading = false,
                                 noteTypes = updatedNoteTypes,
@@ -322,20 +322,20 @@ val ManageNoteTypesViewModel.selectedNoteTypes: List<NoteTypeItemState>
     get() = state.value.noteTypes.filter { it.isSelected }
 
 private fun Collection.safeRenameNoteType(
-    nid: NoteTypeId,
+    ntid: NoteTypeId,
     newName: String,
 ): Result<OpChanges> =
     try {
-        val currentNoteType: Notetype = getNotetype(nid)
+        val currentNoteType: Notetype = getNotetype(ntid)
         val renamedNotetype = currentNoteType.copy { this.name = newName }
         Result.success(updateNotetype(renamedNotetype))
     } catch (exception: Exception) {
         Result.failure(exception)
     }
 
-private fun Collection.safeRemoveNoteType(nid: NoteTypeId): Result<OpChanges> =
+private fun Collection.safeRemoveNoteType(ntid: NoteTypeId): Result<OpChanges> =
     try {
-        Result.success(removeNotetype(nid))
+        Result.success(removeNotetype(ntid))
     } catch (exception: Exception) {
         Result.failure(exception)
     }
