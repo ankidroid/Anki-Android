@@ -77,6 +77,7 @@
       <w>mdir</w>
       <w>mid</w>
       <w>mids</w>
+      <w>mins</w>
       <w>msync</w>
       <w>mtime</w>
       <w>mult</w>
@@ -89,11 +90,13 @@
       <w>nid</w>
       <w>nids</w>
       <w>notetype</w>
+      <w>notetypes</w>
       <w>ntid</w>
       <w>oconf</w>
       <w>odid</w>
       <w>odue</w>
       <w>oldidx</w>
+      <w>overdueness</w>
       <w>playsound</w>
       <w>pylib</w>
       <w>qfmt</w>
@@ -102,6 +105,7 @@
       <w>rconf</w>
       <w>relrn</w>
       <w>replaybutton</w>
+      <w>replayq</w>
       <w>resched</w>
       <w>retrievability</w>
       <w>revlog</w>
@@ -132,6 +136,8 @@
       <w>timebox</w>
       <w>timeboxing</w>
       <w>tmpls</w>
+      <w>unflag</w>
+      <w>unmark</w>
       <w>unsynced</w>
       <w>usn</w>
       <w>zabcdefghijklmnopqrstuvwxyz</w>
