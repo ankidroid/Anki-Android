@@ -265,30 +265,13 @@ object CrashReportService {
     fun sendExceptionReport(
         message: String?,
         origin: String?,
-    ) {
-        sendExceptionReport(ManuallyReportedException(message), origin, null)
-    }
+    ) = sendExceptionReport(ManuallyReportedException(message), origin)
 
     fun sendExceptionReport(
         e: Throwable,
         origin: String?,
-    ) {
-        sendExceptionReport(e, origin, null)
-    }
-
-    fun sendExceptionReport(
-        e: Throwable,
-        origin: String?,
-        additionalInfo: String?,
-    ) {
-        sendExceptionReport(e, origin, additionalInfo, false)
-    }
-
-    fun sendExceptionReport(
-        e: Throwable,
-        origin: String?,
-        additionalInfo: String?,
-        onlyIfSilent: Boolean,
+        additionalInfo: String? = null,
+        onlyIfSilent: Boolean = false,
     ) {
         sendAnalyticsException(e, false)
         AnkiDroidApp.sentExceptionReportHack = true
