@@ -177,6 +177,7 @@ import com.ichi2.utils.configureView
 import com.ichi2.utils.message
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.neutralButton
+import com.ichi2.utils.openInputStreamSafe
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
 import com.ichi2.utils.title
@@ -637,7 +638,7 @@ class NoteEditorFragment :
      */
     private fun copyUriToInternalCache(uri: Uri): String? {
         return try {
-            val inputStream = requireContext().contentResolver.openInputStream(uri) ?: return null
+            val inputStream = requireContext().contentResolver.openInputStreamSafe(uri) ?: return null
 
             val fileName = ContentResolverUtil.getFileName(requireContext().contentResolver, uri)
             val cacheDir = requireContext().cacheDir

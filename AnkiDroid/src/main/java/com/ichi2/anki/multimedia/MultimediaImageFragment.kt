@@ -64,6 +64,7 @@ import com.ichi2.utils.ExifUtil
 import com.ichi2.utils.FileUtil
 import com.ichi2.utils.message
 import com.ichi2.utils.negativeButton
+import com.ichi2.utils.openInputStreamSafe
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
 import kotlinx.coroutines.flow.collectLatest
@@ -676,7 +677,7 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
      */
     private fun loadSvgFromUri(uri: Uri): String? =
         try {
-            context?.contentResolver?.openInputStream(uri)?.use { inputStream ->
+            context?.contentResolver?.openInputStreamSafe(uri)?.use { inputStream ->
                 inputStream.convertToString()
             }
         } catch (e: Exception) {
