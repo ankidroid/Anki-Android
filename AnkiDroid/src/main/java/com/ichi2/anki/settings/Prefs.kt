@@ -313,6 +313,14 @@ open class PrefsRepository(
      * Flags like [reminderNotifsRequestShown] etc. are not enough because those flags check if
      * the BottomSheet dialog explaining the need for notification permissions has been shown before,
      * whereas this flag checks if the system dialog has been shown before.
+     *
+     * If the user restores their data from a backup or migrates to a new device, this flag may be true
+     * when in reality notification permissions have not been requested for the device. This is most prominently
+     * an issue for the review reminders feature, so to ensure the user is able to receive review reminder notifications after
+     * a data restore / migration, a Snackbar noting that notification permissions are missing will be shown
+     * on the [com.ichi2.anki.reviewreminders.ScheduleReminders] fragment if notification permissions are not granted.
+     *
+     * @see com.ichi2.anki.reviewreminders.ScheduleReminders.checkForNotificationPermissions
      */
     var notificationsPermissionRequested by booleanPref(R.string.notifications_permission_requested_key, false)
 
