@@ -139,7 +139,7 @@ object ImportUtils {
             } catch (e: Exception) {
                 CrashReportService.sendExceptionReport(e, "handleFileImport")
                 Timber.e(e, "failed to handle import intent")
-                ImportResult.fromErrorString(context.getString(R.string.import_error_handle_exception, e.localizedMessage))
+                ImportResult.Failure(context.getString(R.string.import_error_handle_exception, e.localizedMessage))
             }
         }
 
@@ -151,7 +151,7 @@ object ImportUtils {
             return if (importPathUri != null) {
                 handleContentProviderFile(context, importPathUri, intent)
             } else {
-                ImportResult.fromErrorString(context.getString(R.string.import_error_handle_exception))
+                ImportResult.Failure(context.getString(R.string.import_error_handle_exception))
             }
         }
 
@@ -186,7 +186,7 @@ object ImportUtils {
         ): ImportResult {
             // Note: intent.getData() can be null. Use data instead.
             if (!isValidImportType(context, importPathUri)) {
-                return ImportResult.fromErrorString(context.getString(R.string.import_log_no_apkg))
+                return ImportResult.Failure(context.getString(R.string.import_log_no_apkg))
             }
             // Get the original filename from the content provider URI
             var filename = getFileNameFromContentProvider(context, importPathUri)
@@ -206,7 +206,7 @@ object ImportUtils {
                             "IntentHandler.java",
                             "apkg import failed; mime type ${intent?.type}",
                         )
-                        return ImportResult.fromErrorString(
+                        return ImportResult.Failure(
                             AnkiDroidApp.appResources.getString(
                                 R.string.import_error_content_provider,
                                 AnkiDroidApp.manualUrl + "#importing",
@@ -218,15 +218,15 @@ object ImportUtils {
             val tempOutDir: String
             if (isValidTextOrDataFile(context, importPathUri)) {
                 (context as Activity).onSelectedCsvForImport(intent!!)
-                return ImportResult.fromSuccess()
+                return ImportResult.Success
             } else if (!isValidPackageName(filename)) {
                 return if (isAnkiDatabase(filename)) {
                     // .anki2 files aren't supported by Anki Desktop, we should eventually support them, because we can
                     // but for now, show a "nice" error.
-                    ImportResult.fromErrorString(context.resources.getString(R.string.import_error_load_imported_database))
+                    ImportResult.Failure(context.resources.getString(R.string.import_error_load_imported_database))
                 } else {
                     // Don't import if file doesn't have an Anki package extension
-                    ImportResult.fromErrorString(context.resources.getString(R.string.import_error_not_apkg_extension, filename))
+                    ImportResult.Failure(context.resources.getString(R.string.import_error_not_apkg_extension, filename))
                 }
             }
 
@@ -236,10 +236,10 @@ object ImportUtils {
 
             copyFileToCache(context, importPathUri, tempOutDir).asErrorDetails(context)?.let { details ->
                 CrashReportService.sendExceptionReport(details.exception, "ImportUtils")
-                return ImportResult.fromErrorString(details.userFacingString)
+                return ImportResult.Failure(details.userFacingString)
             }
             sendShowImportFileDialogMsg(tempOutDir)
-            return ImportResult.fromSuccess()
+            return ImportResult.Success
         }
 
         fun isValidImportType(
@@ -448,19 +448,6 @@ object ImportUtils {
         }
     }
 
-    class ImportResult(
-        val humanReadableMessage: String?,
-    ) {
-        val isSuccess: Boolean
-            get() = humanReadableMessage == null
-
-        companion object {
-            fun fromErrorString(message: String?): ImportResult = ImportResult(message)
-
-            fun fromSuccess(): ImportResult = ImportResult(null)
-        }
-    }
-
     /** Show confirmation dialog asking to confirm import with replace when file called "collection.apkg" */
     class CollectionImportReplace(
         private val importPath: String,
@@ -506,4 +493,12 @@ object ImportUtils {
             fun fromMessage(message: Message): CollectionImportAdd = CollectionImportAdd(message.data.getString("importPath")!!)
         }
     }
+}
+
+sealed class ImportResult {
+    data object Success : ImportResult()
+
+    data class Failure(
+        val humanReadableMessage: String,
+    ) : ImportResult()
 }

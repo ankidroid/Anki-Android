@@ -30,6 +30,7 @@ import com.ichi2.anki.pages.CsvImporter
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.anki.utils.ext.showDialogFragment
+import com.ichi2.utils.ImportResult
 import com.ichi2.utils.ImportUtils
 import timber.log.Timber
 import java.io.File
@@ -50,15 +51,16 @@ fun interface ImportColpkgListener {
 
 @NeedsTest("successful import from the app menu")
 fun AnkiActivity.onSelectedPackageToImport(data: Intent) {
-    val importResult = ImportUtils.handleFileImport(this, data)
-    if (!importResult.isSuccess) {
-        runOnUiThread {
-            ImportUtils.showImportUnsuccessfulDialog(this, importResult.humanReadableMessage, false)
-        }
-    } else {
-        // a Message was posted, don't wait for onResume to process it
-        if (this.lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
-            dialogHandler.popMessage()?.let { dialogHandler.sendStoredMessage(it) }
+    when (val importResult = ImportUtils.handleFileImport(this, data)) {
+        is ImportResult.Failure ->
+            runOnUiThread {
+                ImportUtils.showImportUnsuccessfulDialog(this, importResult.humanReadableMessage, exitActivity = false)
+            }
+        is ImportResult.Success -> {
+            // a Message was posted, don't wait for onResume to process it
+            if (this.lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
+                dialogHandler.popMessage()?.let { dialogHandler.sendStoredMessage(it) }
+            }
         }
     }
 }

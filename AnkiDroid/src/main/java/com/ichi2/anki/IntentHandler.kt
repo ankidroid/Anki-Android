@@ -41,6 +41,7 @@ import com.ichi2.anki.ui.windows.reviewer.ReviewerFragment
 import com.ichi2.anki.utils.MimeTypeUtils
 import com.ichi2.anki.worker.SyncWorker
 import com.ichi2.utils.FileUtil
+import com.ichi2.utils.ImportResult
 import com.ichi2.utils.ImportUtils.handleFileImport
 import com.ichi2.utils.ImportUtils.isInvalidViewIntent
 import com.ichi2.utils.ImportUtils.showImportUnsuccessfulDialog
@@ -214,16 +215,19 @@ class IntentHandler : AbstractIntentHandler() {
         }
 
         // Start DeckPicker if we correctly processed ACTION_VIEW
-        if (importResult.isSuccess) {
-            deleteImportedDeck(intent.data?.path)
-            reloadIntent.action = action
-            reloadIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-            startActivity(reloadIntent)
-            finish()
-        } else {
-            Timber.i("File import failed")
-            // Don't import the file if it didn't load properly or doesn't have apkg extension
-            showImportUnsuccessfulDialog(this, importResult.humanReadableMessage, true)
+        when (importResult) {
+            is ImportResult.Success -> {
+                deleteImportedDeck(intent.data?.path)
+                reloadIntent.action = action
+                reloadIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                startActivity(reloadIntent)
+                finish()
+            }
+            is ImportResult.Failure -> {
+                Timber.i("File import failed")
+                // Don't import the file if it didn't load properly or doesn't have apkg extension
+                showImportUnsuccessfulDialog(this, importResult.humanReadableMessage, true)
+            }
         }
     }
 
