@@ -16,11 +16,15 @@
 
 package com.ichi2.anki.reviewreminders
 
+import android.Manifest
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.BundleCompat
 import androidx.core.view.isVisible
@@ -32,6 +36,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.CrashReportData.Companion.toCrashReportData
 import com.ichi2.anki.R
@@ -42,12 +47,15 @@ import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.anki.services.AlarmManagerService
+import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.showError
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.withProgress
+import com.ichi2.utils.Permissions
+import com.ichi2.utils.Permissions.requestPermissionThroughDialogOrSettings
 import kotlinx.serialization.SerializationException
 import timber.log.Timber
 
@@ -77,6 +85,16 @@ class ScheduleReminders :
     override val baseSnackbarBuilder: SnackbarBuilder = {
         anchorView = requireView().findViewById<ExtendedFloatingActionButton>(R.id.schedule_reminders_add_reminder_fab)
     }
+
+    /**
+     * Launches the OS dialog for requesting notification permissions.
+     * If notification permissions are not granted, a small persistent Snackbar reminder about it shows up.
+     * When the user clicks the "Enable" action on the Snackbar, this launcher is used.
+     */
+    private val notificationPermissionLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.RequestPermission(),
+        ) { isGranted -> Timber.i("Notification permission result: $isGranted") }
 
     /**
      * The reminders currently being displayed in the UI. To make changes to this list show up on screen,
@@ -430,6 +448,35 @@ class ScheduleReminders :
                 .toList()
         adapter.submitList(listToDisplay)
         view?.findViewById<LinearLayout>(R.id.no_reminders_placeholder)?.isVisible = listToDisplay.isEmpty()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            checkForNotificationPermissions()
+        }
+    }
+
+    /**
+     * Shows a persistent snackbar if the user has not granted notification permissions.
+     */
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    private fun checkForNotificationPermissions() {
+        if (Prefs.reminderNotifsRequestShown && !Permissions.canPostNotifications(requireContext())) {
+            showSnackbar(
+                "Notifications are disabled",
+                Snackbar.LENGTH_INDEFINITE,
+            ) {
+                setAction("Enable") {
+                    requestPermissionThroughDialogOrSettings(
+                        activity = requireActivity(),
+                        permission = Manifest.permission.POST_NOTIFICATIONS,
+                        permissionRequestedFlag = Prefs::notificationsPermissionRequested,
+                        permissionRequestLauncher = notificationPermissionLauncher,
+                    )
+                }
+            }
+        }
     }
 
     companion object {
