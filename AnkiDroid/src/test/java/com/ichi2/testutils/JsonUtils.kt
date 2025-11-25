@@ -19,11 +19,14 @@ package com.ichi2.testutils
 import com.ichi2.anki.common.json.JSONObjectHolder
 import org.hamcrest.BaseMatcher
 import org.hamcrest.Description
+import org.intellij.lang.annotations.Language
 import org.json.JSONObject
 
 fun isJsonEqual(value: JSONObject) = IsJsonEqual(value)
 
-fun isJsonEqual(value: String) = IsJsonEqual(JSONObject(value))
+fun isJsonEqual(
+    @Language("JSON") value: String,
+) = IsJsonEqual(JSONObject(value))
 
 private fun matchesJsonValue(
     expectedValue: JSONObject,
@@ -35,7 +38,7 @@ private fun matchesJsonValue(
     }
     // And that each key have the same associated values in both object.
     for (key in expectedValue.keys()) {
-        if (expectedValue[key] != actualValue[key]) {
+        if (!areJsonEquivalent(expectedValue[key], actualValue[key])) {
             return false
         }
     }
@@ -78,3 +81,24 @@ private fun jsonObjectOf(vararg pairs: Pair<String, Any>): JSONObject =
             put(key, value)
         }
     }
+
+/**
+ * Returns whether [a] and [b] produce the same JSON output as a string
+ *
+ * [JSONObject] handles Int and Long differently, but they are equivalent in the JSON output
+ */
+private fun areJsonEquivalent(
+    a: Any,
+    b: Any,
+): Boolean {
+    if (a == b) return true
+
+    // In the string output, 1L and 1 are the same
+    fun isIntOrLong(n: Any) = n is Int || n is Long
+    if (isIntOrLong(a) && isIntOrLong(b)) {
+        return (a as Number).toLong() == (b as Number).toLong()
+    }
+
+    // Double & Long are not equivalent: '1.0' and '1' are different textual outputs
+    return false
+}
