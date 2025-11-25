@@ -42,7 +42,8 @@ import com.ichi2.themes.setTransparentStatusBar
  * * Easily reusable
  * * Doesn't need to block any UI elements or background routines that depends on a permission.
  *     Nor needs to add callbacks after the permissions are granted
- * * TODO Show which permissions are mandatory and which are optional
+ *
+ * To request optional permissions from the user, prefer [PermissionsBottomSheet].
  */
 class PermissionsActivity : AnkiActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
