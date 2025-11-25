@@ -23,6 +23,7 @@ import android.webkit.WebChromeClient
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.widget.FrameLayout
+import androidx.annotation.MainThread
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.findFragment
 import com.ichi2.anki.BuildConfig
@@ -54,15 +55,18 @@ open class SafeWebViewLayout :
     @Suppress("DEPRECATION")
     val scale get() = webView.scale
 
+    @MainThread
     fun setWebViewClient(webViewClient: SafeWebViewClient) {
         webViewClient.setOnRenderProcessGoneListener(this)
         webView.webViewClient = webViewClient
     }
 
+    @MainThread
     fun setWebChromeClient(webChromeClient: WebChromeClient) {
         webView.webChromeClient = webChromeClient
     }
 
+    @MainThread
     fun evaluateJavascript(
         script: String,
         resultCallback: ((String) -> Unit)? = null,
@@ -70,13 +74,16 @@ open class SafeWebViewLayout :
         resultCallback?.invoke(callback)
     }
 
+    @MainThread
     fun addJavascriptInterface(
         javascriptInterface: Any,
         name: String,
     ) = webView.addJavascriptInterface(javascriptInterface, name)
 
+    @MainThread
     fun loadUrl(url: String) = webView.loadUrl(url)
 
+    @MainThread
     fun loadDataWithBaseURL(
         baseUrl: String?,
         data: String,
@@ -87,18 +94,25 @@ open class SafeWebViewLayout :
 
     fun setAcceptThirdPartyCookies(accept: Boolean) = CookieManager.getInstance().setAcceptThirdPartyCookies(webView, accept)
 
+    @MainThread
     fun goBack() = webView.goBack()
 
+    @MainThread
     fun pageUp() = webView.pageUp(false)
 
+    @MainThread
     fun pageDown() = webView.pageDown(false)
 
+    @MainThread
     fun reload() = webView.reload()
 
+    @MainThread
     fun focusOnWebView() = webView.requestFocus()
 
+    @MainThread
     fun destroy() = webView.destroy()
 
+    @MainThread
     fun createPrintDocumentAdapter(documentName: String) = webView.createPrintDocumentAdapter(documentName)
 
     override fun setOnScrollChangeListener(l: OnScrollChangeListener?) = webView.setOnScrollChangeListener(l)
