@@ -28,6 +28,7 @@
     <string name="username_key">username</string>
     <string name="last_sync_time_key">lastSyncTime</string>
     <string name="current_sync_uri_key">currentSyncUri</string>
+    <string name="sync_notifs_request_shown_key">SyncNotifsRequestShown</string>
     <!-- Backup -->
     <string name="pref_backup_limits_screen_key">backupLimitsScreen</string>
     <!-- Editing -->
@@ -211,6 +212,10 @@
     <!-- Review reminders -->
     <string name="pref_review_reminders_screen_key">reviewRemindersScreen</string>
     <string name="review_reminders_next_free_id">reviewRemindersNextFreeId</string>
+    <string name="reminder_notifs_request_shown_key">reminderNotifsRequestShown</string>
+    <!-- Notifications -->
+    <string name="notifications_permission_requested_key">notificationsPermissionRequested</string>
+    <string name="record_audio_permission_requested_key">recordAudioPermissionRequested</string>
     <!-- Developer options -->
     <string name="pref_dev_options_screen_key">devOptionsKey</string>
     <string name="pref_trigger_crash_key">trigger_crash_preference</string>

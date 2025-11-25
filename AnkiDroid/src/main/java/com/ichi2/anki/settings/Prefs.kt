@@ -266,6 +266,15 @@ open class PrefsRepository(
 
     //endregion
 
+    /**
+     * Whether the sync process has requested notification permissions before.
+     * We only want to request notification permissions for the sync feature if the dialog has never been shown
+     * for this reason before.
+     *
+     * @see reminderNotifsRequestShown
+     */
+    var syncNotifsRequestShown by booleanPref(R.string.sync_notifs_request_shown_key, defaultValue = false)
+
     // ************************************** Review Reminders ********************************** //
 
     /**
@@ -277,6 +286,40 @@ open class PrefsRepository(
      * Review reminder IDs are unique, starting at 0 and climbing upwards by one each time a new one is created.
      */
     var reviewReminderNextFreeId by intPref(R.string.review_reminders_next_free_id, defaultValue = 0)
+
+    /**
+     * Whether the review reminder feature has requested notification permissions before.
+     * We only want to request notification permissions for the review reminder feature if the dialog has never been
+     * shown for this reason before.
+     *
+     * @see syncNotifsRequestShown
+     */
+    var reminderNotifsRequestShown by booleanPref(R.string.reminder_notifs_request_shown_key, defaultValue = false)
+
+    // *************************************** Permissions ************************************** //
+
+    // Flags for whether the system UI dialog for requesting certain permissions has been shown before.
+    // If the user has viewed the dialog at least once, we should check if they pressed "don't ask again"
+    // or pressed "deny" repeatedly (via [androidx.core.app.ActivityCompat.shouldShowRequestPermissionRationale]).
+    // This is because trying to show the system dialog again after the user has indicated they don't want to see it
+    // is likely tracked by Play Console statistics and may lead to lower Play Store discoverability.
+    //
+    // @see com.ichi2.anki.ui.windows.permissions.PermissionsFragment.requestPermissionThroughDialogOrSettings
+    // @see com.ichi2.utils.Permissions.isUserOpenToPermission
+
+    /**
+     * Whether the system UI dialog for requesting notification permissions has been shown before.
+     *
+     * Flags like [reminderNotifsRequestShown] etc. are not enough because those flags check if
+     * the BottomSheet dialog explaining the need for notification permissions has been shown before,
+     * whereas this flag checks if the system dialog has been shown before.
+     */
+    var notificationsPermissionRequested by booleanPref(R.string.notifications_permission_requested_key, false)
+
+    /**
+     * Whether the system UI dialog for requesting audio recording permissions has been shown before.
+     */
+    var recordAudioPermissionRequested by booleanPref(R.string.record_audio_permission_requested_key, false)
 
     // **************************************** Reviewer **************************************** //
 
