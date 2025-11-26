@@ -268,9 +268,9 @@
     <string name="note_editor_image_too_large">The image is too large, please insert the image manually</string>
     <string name="note_editor_video_too_large">The video file is too large, please insert the video manually</string>
     <string name="note_editor_audio_too_large">The audio file is too large, please insert the audio manually</string>
-    <string name="media_file_size_warning_title">Large Media File</string>
+    <string name="media_file_size_warning_title">Large media File</string>
     <string name="media_file_size_warning_message">This file (%1$s, %2$s) exceeds AnkiWeb\'s 100MB limit and cannot be synced. Add anyway?</string>
-    <string name="media_file_size_add_anyway">Add Anyway</string>
+    <string name="media_file_size_add_anyway">Add anyway</string>
     <string name="ankidroid_cannot_open_after_backup_try_again"
         comment="After an Android backup is restored, AnkiDroid opens and shows this message.
         Opening AnkiDroid again will work correctly">Android backup in progress. Please try again</string>
