@@ -139,7 +139,10 @@ object ImportUtils {
             } catch (e: Exception) {
                 CrashReportService.sendExceptionReport(e, "handleFileImport")
                 Timber.e(e, "failed to handle import intent")
-                ImportResult.Failure(context.getString(R.string.import_error_handle_exception, e.localizedMessage), e)
+                ImportResult.Failure(
+                    humanReadableMessage = context.getString(R.string.import_error_handle_exception, e.localizedMessage),
+                    exception = e,
+                )
             }
         }
 
@@ -234,9 +237,13 @@ object ImportUtils {
             filename = ensureValidLength(filename)
             tempOutDir = Uri.fromFile(File(context.cacheDir, filename)).encodedPath!!
 
-            copyFileToCache(context, importPathUri, tempOutDir).asErrorDetails(context)?.let { details ->
+            copyFileToCache(context, importPathUri, tempOutDir).asErrorDetails()?.let { details ->
                 CrashReportService.sendExceptionReport(details.exceptionForReport, "ImportUtils")
-                return ImportResult.Failure(details.userFacingString, details.userFacingException)
+                return ImportResult.Failure(
+                    title = details.buildTitle(context),
+                    humanReadableMessage = details.buildHumanReadableMessage(context),
+                    exception = details.userFacingException,
+                )
             }
             sendShowImportFileDialogMsg(tempOutDir)
             return ImportResult.Success
@@ -317,7 +324,7 @@ object ImportUtils {
             exitActivity: Boolean,
         ) {
             Timber.d("showImportUnsuccessfulDialog() message %s", failure.humanReadableMessage)
-            val title = activity.resources.getString(R.string.import_title_error)
+            val title = failure.title ?: activity.getString(R.string.import_title_error)
             val dialog =
                 AlertDialog.Builder(activity).show {
                     title(text = title)
@@ -376,28 +383,48 @@ object ImportUtils {
 
             data object ContentProviderCrashed : CacheFileResult()
 
-            fun asErrorDetails(context: Context): ErrorDetails? =
+            fun asErrorDetails(): CacheErrorDetails? =
                 when (this) {
                     is Success -> null
                     is Error ->
-                        ErrorDetails(
+                        CacheErrorDetails(
                             exceptionForReport = exception,
-                            userFacingString = context.getString(R.string.import_error_copy_to_cache),
                             userFacingException = exception,
                         )
                     is ContentProviderCrashed ->
-                        ErrorDetails(
+                        CacheErrorDetails(
                             exceptionForReport = ManuallyReportedException("Content provider crashed"),
-                            userFacingString = context.getString(R.string.import_error_copy_to_cache),
                             userFacingException = null,
                         )
                 }
 
-            data class ErrorDetails(
+            data class CacheErrorDetails(
                 val exceptionForReport: Exception,
-                val userFacingString: String,
                 val userFacingException: Exception?,
-            )
+            ) {
+                fun buildTitle(context: Context) = context.getString(R.string.import_error_copy_to_cache_title)
+
+                fun buildHumanReadableMessage(context: Context) =
+                    buildString {
+                        // "oaz: Cello error 2."
+                        if (userFacingException != null) {
+                            appendLine(userFacingException.message)
+                            appendLine()
+                        }
+
+                        // "This is often caused by the file provider, try these fixes:"
+                        val suggestedFixes =
+                            buildString {
+                                // build a bulleted list of suggested fixes
+                                // TODO: "Open the file using your device’s file browser app" -
+                                //  convert it, and others to actions
+                                for (line in context.resources.getStringArray(R.array.import_cache_error_resolutions)) {
+                                    appendLine("\u2022 $line")
+                                }
+                            }
+                        append(context.getString(R.string.import_error_copy_to_cache_explanation, suggestedFixes))
+                    }
+            }
         }
 
         companion object {
@@ -515,13 +542,18 @@ sealed class ImportResult {
     data class Failure(
         val humanReadableMessage: String,
         val exception: Exception? = null,
+        val title: String? = null,
     ) : ImportResult() {
         fun toDebugInfo(): String? {
             if (exception == null) return null
             return buildString {
-                appendLine(humanReadableMessage)
-                appendLine()
                 appendLine(exception.stackTraceToString())
+                if (title != null) {
+                    appendLine()
+                    appendLine(title)
+                }
+                appendLine()
+                appendLine(humanReadableMessage)
             }
         }
     }
