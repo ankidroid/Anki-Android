@@ -46,6 +46,7 @@ import com.ichi2.anki.previewer.CardViewerActivity
 import com.ichi2.anki.ui.windows.managespace.ManageSpaceActivity
 import com.ichi2.anki.ui.windows.permissions.AllPermissionsExplanationActivity
 import com.ichi2.anki.ui.windows.permissions.PermissionsActivity
+import com.ichi2.anki.utils.ConfigAwareSingleFragmentActivity
 import com.ichi2.testutils.ActivityList.ActivityLaunchParam.Companion.get
 import com.ichi2.widget.cardanalysis.CardAnalysisWidgetConfig
 import com.ichi2.widget.deckpicker.DeckPickerWidgetConfig
@@ -87,6 +88,7 @@ object ActivityList {
             get(PermissionsActivity::class.java),
             get(AllPermissionsExplanationActivity::class.java),
             get(SingleFragmentActivity::class.java),
+            get(ConfigAwareSingleFragmentActivity::class.java),
             get(CardViewerActivity::class.java),
             get(InstantNoteEditorActivity::class.java),
             get(MultimediaActivity::class.java),
