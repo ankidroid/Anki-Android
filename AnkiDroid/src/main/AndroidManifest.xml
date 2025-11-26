@@ -471,6 +471,10 @@
             android:configChanges="orientation|screenSize"
             />
         <activity
+            android:name="com.ichi2.anki.utils.ConfigAwareSingleFragmentActivity"
+            android:exported="false"
+            />
+        <activity
             android:name="com.ichi2.anki.NoteEditorActivity"
             android:exported="false"
             android:configChanges="keyboardHidden|orientation|screenSize"
