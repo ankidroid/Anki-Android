@@ -144,9 +144,9 @@ fun AlertDialog.Builder.cancelable(cancelable: Boolean): AlertDialog.Builder = t
  * Executes the provided block, then creates an [AlertDialog] with the arguments supplied
  * and immediately displays the dialog
  */
-inline fun AlertDialog.Builder.show(
+inline fun <T : AlertDialog.Builder> T.show(
     enableEnterKeyHandler: Boolean = false, // Make it opt-in
-    block: AlertDialog.Builder.() -> Unit,
+    block: T.() -> Unit,
 ): AlertDialog {
     this.apply { block() }
     val dialog = this.show()
@@ -187,7 +187,7 @@ fun AlertDialog.Builder.createAndApply(block: AlertDialog.() -> Unit): AlertDial
 /**
  * Executes [block] on the [AlertDialog.Builder] instance and returns the initialized [AlertDialog].
  */
-fun AlertDialog.Builder.create(block: AlertDialog.Builder.() -> Unit): AlertDialog {
+fun <T : AlertDialog.Builder> T.create(block: T.() -> Unit): AlertDialog {
     block()
     return create()
 }
