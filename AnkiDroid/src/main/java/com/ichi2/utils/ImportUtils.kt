@@ -37,8 +37,10 @@ import com.ichi2.anki.dialogs.DialogHandlerMessage
 import com.ichi2.anki.dialogs.ImportDialog
 import com.ichi2.anki.exception.ManuallyReportedException
 import com.ichi2.anki.onSelectedCsvForImport
+import com.ichi2.anki.servicelayer.DebugInfoService
 import com.ichi2.anki.showImportDialog
 import com.ichi2.compat.CompatHelper
+import kotlinx.coroutines.launch
 import org.jetbrains.annotations.Contract
 import timber.log.Timber
 import java.io.File
@@ -323,6 +325,20 @@ object ImportUtils {
             failure: ImportResult.Failure,
             exitActivity: Boolean,
         ) {
+            // Use applicationScope: IntentHandler calls this and does not have a lifecycleScope
+            fun copyDebugInfo(debugInfo: String) =
+                AnkiDroidApp.applicationScope.launch {
+                    Timber.i("copying debug info to clipboard")
+                    val stringToCopy =
+                        buildString {
+                            appendLine(debugInfo)
+                            appendLine()
+                            appendLine(DebugInfoService.getDebugInfo(activity))
+                        }
+
+                    AnkiDroidApp.instance.copyToClipboard(stringToCopy)
+                }
+
             Timber.d("showImportUnsuccessfulDialog() message %s", failure.humanReadableMessage)
             val title = failure.title ?: activity.getString(R.string.import_title_error)
             val dialog =
@@ -342,8 +358,7 @@ object ImportUtils {
             // 'copy' should not close the dialog
             failure.toDebugInfo()?.let { debugInfo ->
                 dialog.negativeButton.setOnClickListener {
-                    Timber.i("copying debug info to clipboard")
-                    activity.copyToClipboard(debugInfo)
+                    copyDebugInfo(debugInfo)
                 }
             }
         }
@@ -544,17 +559,6 @@ sealed class ImportResult {
         val exception: Exception? = null,
         val title: String? = null,
     ) : ImportResult() {
-        fun toDebugInfo(): String? {
-            if (exception == null) return null
-            return buildString {
-                appendLine(exception.stackTraceToString())
-                if (title != null) {
-                    appendLine()
-                    appendLine(title)
-                }
-                appendLine()
-                appendLine(humanReadableMessage)
-            }
-        }
+        fun toDebugInfo(): String? = exception?.stackTraceToString()
     }
 }
