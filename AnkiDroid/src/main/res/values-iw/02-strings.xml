@@ -48,12 +48,14 @@
     <string name="drawer_open">פתיחת תפריט</string>
     <string name="drawer_close">סגירת תפריט</string>
     <string name="note_message">הערה נשמרה</string>
+    <!-- Note editor screen -->
     <string name="CardEditorCardDeck">חפיסת כרטיסים:‏</string>
     <string name="CardEditorNoteDeck">חפיסה:‏</string>
     <string name="CardEditorModel">סוג:</string>
     <string name="CardEditorTags">תגיות: %1$s</string>
     <string name="CardEditorCards">כרטסיות: %1$s</string>
     <string name="edit_occlusions">ערוך חסימות</string>
+    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
     <string name="tag_name">שם התיוג</string>
     <string name="add_new_filter_tags">הוסף/סנן תגיות</string>
     <string name="add_tag" maxLength="28">הוסף תג</string>
@@ -239,6 +241,7 @@
     <string name="search_decks" maxLength="28">חיפוש בחפיסות</string>
     <string name="ankidroid_init_failed_webview_title">שגיאה מכרעת</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid משתמש בדפדפן המערכת שאינו זמין. זה קורה לפעמים אם המערכת מתקינה עדכונים. נא נסה שנית בעוד כמה דקות. \n\n%s</string>
+    <string name="ankidroid_init_failed_storage">AnkiDroid cannot access storage due to an Android error.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">גודל גופן</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">הצגת סרגל הכלים</string>

@@ -48,12 +48,14 @@
     <string name="drawer_open">ნავიგაციის პანელის გახსნა</string>
     <string name="drawer_close">ნავიგაციის პანელის დახურვა</string>
     <string name="note_message">Note saved</string>
+    <!-- Note editor screen -->
     <string name="CardEditorCardDeck">ბარათის დასტა:</string>
     <string name="CardEditorNoteDeck">დასტა:</string>
     <string name="CardEditorModel">ტიპი:</string>
     <string name="CardEditorTags">იარლიყები: %1$s</string>
     <string name="CardEditorCards">ბარათები: %1$s</string>
     <string name="edit_occlusions">საფარველების რედაქტირება</string>
+    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
     <string name="tag_name">იარლიყის სახელი</string>
     <string name="add_new_filter_tags">იარლიყების დამატება/გაფილტვრა</string>
     <string name="add_tag" maxLength="28">იარლიყის დამატება</string>
@@ -233,6 +235,7 @@
     <string name="search_decks" maxLength="28">დასტების მოძიება</string>
     <string name="ankidroid_init_failed_webview_title">ფატალური შეცდომა</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid relies on the System WebView which is unavailable. This can happen if the system is installing updates. Please try again in a few minutes.\n\n%s</string>
+    <string name="ankidroid_init_failed_storage">AnkiDroid cannot access storage due to an Android error.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">ტექსტის ზომა</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">ინსტრუმენტების პანელის ჩვენება</string>

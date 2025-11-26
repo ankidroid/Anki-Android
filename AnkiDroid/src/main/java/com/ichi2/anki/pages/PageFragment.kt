@@ -147,13 +147,27 @@ open class PageFragment(
         bytes: ByteArray,
     ): ByteArray {
         val methodName = uri.backendMethodName ?: throw IllegalArgumentException("unhandled request: $uri")
-        return activity.handleUiPostRequest(methodName, bytes)
-            ?: handleCollectionPostRequest(methodName, bytes)
-            ?: throw IllegalArgumentException("unhandled method: $methodName")
+
+        val resolvedUiMethod =
+            when (val uiResponse = activity.handleUiPostRequest(methodName, bytes)) {
+                is UiPostRequestResponse.Handled -> return uiResponse.data
+                is UiPostRequestResponse.UnknownMethod -> false
+                is UiPostRequestResponse.Ignored -> true
+            }
+
+        return handleCollectionPostRequest(methodName, bytes) ?: run {
+            if (!resolvedUiMethod) {
+                Timber.w("Unknown TS method called.")
+                Timber.d("No handlers resolve TS method %s", methodName)
+            }
+            throw IllegalArgumentException("unhandled method: $methodName")
+        }
     }
 
+    @CallSuper
     override fun onDestroyView() {
         server.stop()
+        webViewLayout.safeDestroy()
         super.onDestroyView()
     }
 

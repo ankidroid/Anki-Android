@@ -24,7 +24,7 @@
     >
 
     <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/topAppBar"
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="?attr/actionBarSize"
@@ -68,7 +68,7 @@
         android:layout_marginEnd="10dp">
 
         <CheckBox
-            android:id="@+id/format_as_markdown"
+            android:id="@+id/format_as_markdown_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"

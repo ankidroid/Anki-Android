@@ -48,12 +48,14 @@
     <string name="drawer_open">Çekmeceyi aç</string>
     <string name="drawer_close">Çekmeceyi kapat</string>
     <string name="note_message">Not kaydedildi</string>
+    <!-- Note editor screen -->
     <string name="CardEditorCardDeck">Kart destesi:</string>
     <string name="CardEditorNoteDeck">Deste:</string>
     <string name="CardEditorModel">Tür:</string>
     <string name="CardEditorTags">Etiketler: %1$s</string>
     <string name="CardEditorCards">Kartlar: %1$s</string>
     <string name="edit_occlusions">Örtüleri Düzenle</string>
+    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
     <string name="tag_name">Etiket adı</string>
     <string name="add_new_filter_tags">Etiket ekle/filtrele</string>
     <string name="add_tag" maxLength="28">Etiket ekle</string>
@@ -233,6 +235,7 @@
     <string name="search_decks" maxLength="28">Deste ara</string>
     <string name="ankidroid_init_failed_webview_title">Kritik Hata</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid şu an ulaşılamayan System WebView\'a dayanır. Bu sistem güncelleme yüklerken olabilir. Lütfen birkaç dakika sonra tekrar deneyin.\n\n%s</string>
+    <string name="ankidroid_init_failed_storage">AnkiDroid cannot access storage due to an Android error.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">Yazı tipi boyutu</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Araç çubuğunu göster</string>

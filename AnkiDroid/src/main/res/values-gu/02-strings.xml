@@ -48,12 +48,14 @@
     <string name="drawer_open">ડ્રોઅર ખોલો</string>
     <string name="drawer_close">ડ્રોઅર બંધ કરો</string>
     <string name="note_message">Note saved</string>
+    <!-- Note editor screen -->
     <string name="CardEditorCardDeck">કાર્ડ ડેક:</string>
     <string name="CardEditorNoteDeck">તૂતક:</string>
     <string name="CardEditorModel">પ્રકાર:</string>
     <string name="CardEditorTags">ટૅગ્સ: %1$s</string>
     <string name="CardEditorCards">કાર્ડ્સ: %1$s</string>
     <string name="edit_occlusions">અવરોધો સંપાદિત કરો</string>
+    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
     <string name="tag_name">ટૅગ નામ</string>
     <string name="add_new_filter_tags">ટૅગ્સ ઉમેરો/ફિલ્ટર કરો</string>
     <string name="add_tag" maxLength="28">ટેગ ઉમેરો</string>
@@ -233,6 +235,7 @@
     <string name="search_decks" maxLength="28">તૂતક શોધો</string>
     <string name="ankidroid_init_failed_webview_title">જીવલેણ ભૂલ</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid સિસ્ટમ WebView પર આધાર રાખે છે જે અનુપલબ્ધ છે. જો સિસ્ટમ અપડેટ્સ ઇન્સ્ટોલ કરી રહી હોય તો આ થઈ શકે છે. કૃપા કરીને થોડીવારમાં ફરી પ્રયાસ કરો.\n\n%s</string>
+    <string name="ankidroid_init_failed_storage">AnkiDroid cannot access storage due to an Android error.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">અક્ષર ની જાડાઈ</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">ટૂલબાર બતાવો</string>

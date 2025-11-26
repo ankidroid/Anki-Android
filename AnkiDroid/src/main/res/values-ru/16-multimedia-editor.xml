@@ -44,7 +44,7 @@
     <string name="multimedia_editor_popup_audio_clip">Добавить аудио</string>
     <string name="multimedia_editor_popup_video_clip">Добавить видео</string>
     <string name="multimedia_editor_popup_audio">Записать звук</string>
-    <string name="multimedia_editor_popup_cloze">Задание с пропусками</string>
+    <string name="multimedia_editor_popup_cloze">Тест с пропусками</string>
     <!-- Field editing general -->
     <!-- these are button names to convert field type -->
     <string name="multimedia_editor_field_editing_audio">Аудиозапись</string>

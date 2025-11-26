@@ -48,12 +48,14 @@
     <string name="drawer_open">Abrir gaveta</string>
     <string name="drawer_close">Fechar gaveta</string>
     <string name="note_message">Nota salva</string>
+    <!-- Note editor screen -->
     <string name="CardEditorCardDeck">Baralho de cartões:</string>
     <string name="CardEditorNoteDeck">Baralho:</string>
     <string name="CardEditorModel">Tipo:</string>
     <string name="CardEditorTags">Tags: %1$s</string>
     <string name="CardEditorCards">Cartões: %1$s</string>
     <string name="edit_occlusions">Editar Oclusões</string>
+    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
     <string name="tag_name">Nome da tag</string>
     <string name="add_new_filter_tags">Adicionar/filtrar tags</string>
     <string name="add_tag" maxLength="28">Adicionar tag</string>
@@ -74,8 +76,8 @@
     <string name="whiteboard_more_options" comment="Tooltip of the whiteboard \'More\' button" maxLength="28">Mais opções</string>
     <string name="whiteboard_remove_brush_message">Tem certeza que deseja remover este pincel da sua paleta?</string>
     <string name="whiteboard_ink_eraser" comment="Title of the whiteboard Ink eraser">Tinta</string>
-    <string name="whiteboard_stroke_eraser" comment="Title of the whiteboard Stroke eraser">Stroke</string>
-    <string name="stylus_mode" comment="Title of the menu item that toggles the whiteboard stylus mode" maxLength="28">Stylus mode</string>
+    <string name="whiteboard_stroke_eraser" comment="Title of the whiteboard Stroke eraser">Traço</string>
+    <string name="stylus_mode" comment="Title of the menu item that toggles the whiteboard stylus mode" maxLength="28">Modo Stylus</string>
     <string name="cannot_remove_last_brush_message">O último pincel não pode ser removido</string>
     <string name="enable_whiteboard" maxLength="28">Habilitar quadro</string>
     <string name="disable_whiteboard">Desabilitar quadro</string>
@@ -233,6 +235,7 @@
     <string name="search_decks" maxLength="28">Pesquisar baralhos</string>
     <string name="ankidroid_init_failed_webview_title">Erro Fatal</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid depende do System WebView que não está disponível. Isso pode acontecer se o sistema está instalando atualizações. Por favor, tente novamente em alguns minutos.\n\n%s</string>
+    <string name="ankidroid_init_failed_storage">AnkiDroid cannot access storage due to an Android error.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">Tamanho da fonte</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Mostrar barra de ferramentas</string>
@@ -336,7 +339,7 @@
     <string name="deck_description_field_hint">Descrição</string>
     <string name="deck_description_saved">Descrição atualizada</string>
     <string name="format_deck_description_as_markdown">Formatar como Markdown</string>
-    <string name="help_button_content_description">Open help for ‘%s’</string>
+    <string name="help_button_content_description">Abrir ajuda para ‘%s’</string>
     <string name="failed_to_copy">Falha ao copiar</string>
     <string name="card_browser_unavailable_when_notes_mode">Indisponível no modo \'Notas\'</string>
     <plurals name="unbury_cards_feedback">

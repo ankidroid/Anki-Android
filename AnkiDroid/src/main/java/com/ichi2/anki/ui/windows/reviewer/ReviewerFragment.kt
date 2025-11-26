@@ -34,11 +34,7 @@ import android.widget.FrameLayout
 import android.widget.LinearLayout
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.ActionMenuView
-import androidx.appcompat.widget.AppCompatImageButton
-import androidx.appcompat.widget.AppCompatImageView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
-import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
 import androidx.core.view.ViewCompat
@@ -47,7 +43,6 @@ import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
-import androidx.fragment.app.FragmentContainerView
 import androidx.fragment.app.commit
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -55,23 +50,19 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import anki.scheduler.CardAnswer.Rating
-import com.google.android.material.button.MaterialButton
-import com.google.android.material.card.MaterialCardView
 import com.google.android.material.shape.ShapeAppearanceModel
-import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textview.MaterialTextView
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.DispatchKeyEventListener
 import com.ichi2.anki.Flag
 import com.ichi2.anki.R
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.common.utils.android.isRobolectric
+import com.ichi2.anki.databinding.Reviewer2Binding
 import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
 import com.ichi2.anki.libanki.sched.Counts
 import com.ichi2.anki.model.CardStateFilter
-import com.ichi2.anki.preferences.reviewer.ReviewerMenuView
 import com.ichi2.anki.preferences.reviewer.ViewerAction
 import com.ichi2.anki.previewer.CardViewerActivity
 import com.ichi2.anki.previewer.CardViewerFragment
@@ -101,6 +92,7 @@ import com.ichi2.utils.dp
 import com.ichi2.utils.show
 import com.ichi2.utils.stripHtml
 import com.squareup.seismic.ShakeDetector
+import dev.androidbroadcast.vbpd.viewBinding
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -118,26 +110,22 @@ class ReviewerFragment :
     TagsDialogListener,
     ShakeDetector.Listener {
     override val viewModel: ReviewerViewModel by viewModels()
+    private val binding by viewBinding(Reviewer2Binding::bind)
 
-    override val webViewLayout: SafeWebViewLayout get() = requireView().findViewById(R.id.webview_layout)
-    private val timer: AnswerTimer? get() = view?.findViewById(R.id.timer)
+    override val webViewLayout: SafeWebViewLayout get() = binding.webViewLayout
     private lateinit var bindingMap: BindingMap<ReviewerBinding, ViewerAction>
     private var shakeDetector: ShakeDetector? = null
     private val sensorManager get() = ContextCompat.getSystemService(requireContext(), SensorManager::class.java)
     private var webviewHasFocus = false
 
     override val baseSnackbarBuilder: SnackbarBuilder = {
-        val fragmentView = this@ReviewerFragment.view
-        val typeAnswerContainer = fragmentView?.findViewById<View>(R.id.type_answer_container)
-        val answerArea = fragmentView?.findViewById<View>(R.id.answer_area)
         anchorView =
             when {
-                typeAnswerContainer?.isVisible == true -> typeAnswerContainer
-                answerArea?.isVisible == true -> answerArea
+                binding.typeAnswerContainer.isVisible -> binding.typeAnswerContainer
+                binding.answerArea.isVisible -> binding.answerArea
                 (Prefs.toolbarPosition == ToolbarPosition.BOTTOM || !resources.isWindowCompact()) ->
-                    fragmentView?.findViewById(
-                        R.id.tools_layout,
-                    )
+                    binding.toolsLayout
+
                 else -> null
             }
     }
@@ -177,22 +165,22 @@ class ReviewerFragment :
     ) {
         super.onViewCreated(view, savedInstanceState)
 
-        view.findViewById<AppCompatImageButton>(R.id.back_button).setOnClickListener {
+        binding.backButton.setOnClickListener {
             requireActivity().finish()
         }
 
-        setupBindings(view)
-        setupImmersiveMode(view)
-        setupTypeAnswer(view)
-        setupAnswerButtons(view)
-        setupCounts(view)
-        setupMenu(view)
-        setupToolbarPosition(view)
-        setupAnswerTimer(view)
-        setupToolbarOnBigWindows(view)
-        setupMargins(view)
-        setupCheckPronunciation(view)
-        setupActions(view)
+        setupBindings()
+        setupImmersiveMode()
+        setupTypeAnswer()
+        setupAnswerButtons()
+        setupCounts()
+        setupMenu()
+        setupToolbarPosition()
+        setupAnswerTimer()
+        setupToolbarOnBigWindows()
+        setupMargins()
+        setupCheckPronunciation()
+        setupActions()
         setupWhiteboard()
         setupTimebox()
 
@@ -213,7 +201,7 @@ class ReviewerFragment :
             resetZoom()
             // focus on the whole layout so motion controllers can be captured
             // without navigating the other View elements
-            view.findViewById<CoordinatorLayout>(R.id.root_layout).requestFocus()
+            binding.rootLayout.requestFocus()
         }
 
         viewModel.destinationFlow.collectIn(lifecycleScope) { destination ->
@@ -223,7 +211,7 @@ class ReviewerFragment :
         if (Prefs.showAnswerFeedback) {
             viewModel.answerFeedbackFlow.collectIn(lifecycleScope) { ease ->
                 if (ease == Rating.AGAIN) {
-                    view.findViewById<AnswerFeedbackView>(R.id.wrong_answer_feedback).toggle()
+                    binding.wrongAnswerFeedback.toggle()
                     return@collectIn
                 }
                 val drawableId =
@@ -233,7 +221,7 @@ class ReviewerFragment :
                         Rating.EASY -> R.drawable.ic_ease_easy
                         Rating.AGAIN, Rating.UNRECOGNIZED -> throw IllegalArgumentException("Invalid rating")
                     }
-                view.findViewById<AnswerFeedbackView>(R.id.correct_answer_feedback).apply {
+                binding.correctAnswerFeedback.apply {
                     setImageResource(drawableId)
                     toggle()
                 }
@@ -241,48 +229,46 @@ class ReviewerFragment :
         }
     }
 
-    private fun setupTypeAnswer(view: View) {
-        val typeAnswerContainer = view.findViewById<MaterialCardView>(R.id.type_answer_container)
-        val typeAnswerEditText =
-            view.findViewById<TextInputEditText>(R.id.type_answer_edit_text).apply {
-                setOnEditorActionListener { _, actionId, _ ->
-                    if (actionId == EditorInfo.IME_ACTION_DONE) {
-                        viewModel.onShowAnswer()
-                        return@setOnEditorActionListener true
-                    }
-                    false
+    private fun setupTypeAnswer() {
+        binding.typeAnswerEditText.apply {
+            setOnEditorActionListener { _, actionId, _ ->
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    viewModel.onShowAnswer()
+                    return@setOnEditorActionListener true
                 }
-                setOnFocusChangeListener { editTextView, hasFocus ->
-                    val insetsController = WindowInsetsControllerCompat(window, editTextView)
-                    if (hasFocus) {
-                        insetsController.show(WindowInsetsCompat.Type.ime())
-                    } else {
-                        insetsController.hide(WindowInsetsCompat.Type.ime())
-                    }
+                false
+            }
+            setOnFocusChangeListener { editTextView, hasFocus ->
+                val insetsController = WindowInsetsControllerCompat(window, editTextView)
+                if (hasFocus) {
+                    insetsController.show(WindowInsetsCompat.Type.ime())
+                } else {
+                    insetsController.hide(WindowInsetsCompat.Type.ime())
                 }
             }
+        }
 
         val isHtmlTypeAnswerEnabled = Prefs.isHtmlTypeAnswerEnabled
-        val insetsController = WindowInsetsControllerCompat(window, view)
         lifecycleScope.launch {
             val autoFocusTypeAnswer = Prefs.autoFocusTypeAnswer
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.typeAnswerFlow.collect { typeInAnswer ->
                     if (typeInAnswer == null) {
-                        typeAnswerContainer.isVisible = false
+                        binding.typeAnswerContainer.isVisible = false
                         return@collect
                     }
 
                     if (isHtmlTypeAnswerEnabled) {
                         if (!autoFocusTypeAnswer) return@collect
                         webViewLayout.focusOnWebView()
-                        webViewLayout.evaluateJavascript("document.getElementById('typeans').focus();", null)
-                        insetsController.show(WindowInsetsCompat.Type.ime())
+                        // `evaluateJavascript()` doesn't trigger the IME unless the WebView
+                        // has been touched before, so ´loadUrl()` is used instead.
+                        webViewLayout.loadUrl("javascript:document.getElementById('typeans')?.focus();")
                         return@collect
                     }
 
-                    typeAnswerContainer.isVisible = true
-                    typeAnswerEditText.apply {
+                    binding.typeAnswerContainer.isVisible = true
+                    binding.typeAnswerEditText.apply {
                         inputType = chooseInputType(typeInAnswer)
 
                         if (imeHintLocales != typeInAnswer.imeHintLocales) {
@@ -297,7 +283,7 @@ class ReviewerFragment :
             }
         }
         viewModel.onCardUpdatedFlow.flowWithLifecycle(lifecycle).collectIn(lifecycleScope) {
-            typeAnswerEditText.text = null
+            binding.typeAnswerEditText.text = null
         }
 
         viewModel.onTypedAnswerResultFlow
@@ -311,7 +297,7 @@ class ReviewerFragment :
                         request.complete(typedAnswer)
                     }
                 } else {
-                    val typedAnswer = typeAnswerEditText.text.toString()
+                    val typedAnswer = binding.typeAnswerEditText.text.toString()
                     request.complete(typedAnswer)
                 }
             }
@@ -334,7 +320,7 @@ class ReviewerFragment :
     override fun dispatchKeyEvent(event: KeyEvent): Boolean {
         if (webviewHasFocus ||
             event.action != KeyEvent.ACTION_DOWN ||
-            view?.findViewById<TextInputEditText>(R.id.type_answer_edit_text)?.isFocused == true
+            view?.let { binding.typeAnswerEditText }?.isFocused == true
         ) {
             return false
         }
@@ -353,9 +339,9 @@ class ReviewerFragment :
         bindingMap.onGesture(Gesture.SHAKE)
     }
 
-    private fun setupBindings(view: View) {
+    private fun setupBindings() {
         bindingMap = BindingMap(sharedPrefs(), ViewerAction.entries, viewModel)
-        view.setOnGenericMotionListener { _, event ->
+        binding.root.setOnGenericMotionListener { _, event ->
             bindingMap.onGenericMotionEvent(event)
         }
         if (bindingMap.isBound(Gesture.SHAKE)) {
@@ -364,89 +350,68 @@ class ReviewerFragment :
         }
     }
 
-    private fun setupAnswerButtons(view: View) {
-        val answerArea = view.findViewById<FrameLayout>(R.id.answer_area)
+    private fun setupAnswerButtons() {
         if (!Prefs.showAnswerButtons) {
-            answerArea.isVisible = false
+            binding.answerArea.isVisible = false
             return
         }
 
-        val againButton =
-            view.findViewById<AnswerButton>(R.id.again_button).apply {
-                setOnClickListener { viewModel.answerCard(Rating.AGAIN) }
-            }
-        val hardButton =
-            view.findViewById<AnswerButton>(R.id.hard_button).apply {
-                setOnClickListener { viewModel.answerCard(Rating.HARD) }
-            }
-        val goodButton =
-            view.findViewById<AnswerButton>(R.id.good_button).apply {
-                setOnClickListener { viewModel.answerCard(Rating.GOOD) }
-            }
-        val easyButton =
-            view.findViewById<AnswerButton>(R.id.easy_button).apply {
-                setOnClickListener { viewModel.answerCard(Rating.EASY) }
-            }
-
+        binding.againButton.setOnClickListener { viewModel.answerCard(Rating.AGAIN) }
+        binding.hardButton.setOnClickListener { viewModel.answerCard(Rating.HARD) }
+        binding.goodButton.setOnClickListener { viewModel.answerCard(Rating.GOOD) }
+        binding.easyButton.setOnClickListener { viewModel.answerCard(Rating.EASY) }
         viewModel.answerButtonsNextTimeFlow
             .flowWithLifecycle(lifecycle)
             .collectIn(lifecycleScope) { times ->
-                againButton.setNextTime(times?.again)
-                hardButton.setNextTime(times?.hard)
-                goodButton.setNextTime(times?.good)
-                easyButton.setNextTime(times?.easy)
+                binding.againButton.setNextTime(times?.again)
+                binding.hardButton.setNextTime(times?.hard)
+                binding.goodButton.setNextTime(times?.good)
+                binding.easyButton.setNextTime(times?.easy)
             }
 
-        val showAnswerButton =
-            view.findViewById<MaterialButton>(R.id.show_answer).apply {
-                setOnClickListener { viewModel.onShowAnswer() }
-            }
-        val answerButtonsLayout = view.findViewById<LinearLayout>(R.id.answer_buttons)
+        binding.showAnswerButton.setOnClickListener { viewModel.onShowAnswer() }
 
-        val insetsController = WindowInsetsControllerCompat(window, view)
+        val insetsController = WindowInsetsControllerCompat(window, binding.rootLayout)
+
         viewModel.showingAnswer.collectLatestIn(lifecycleScope) { isAnswerShown ->
             if (isAnswerShown) {
-                showAnswerButton.visibility = View.INVISIBLE
-                answerButtonsLayout.visibility = View.VISIBLE
+                binding.showAnswerButton.visibility = View.INVISIBLE
+                binding.answerButtonsLayout.visibility = View.VISIBLE
                 insetsController.hide(WindowInsetsCompat.Type.ime())
             } else {
-                showAnswerButton.visibility = View.VISIBLE
-                answerButtonsLayout.visibility = View.INVISIBLE
+                binding.showAnswerButton.visibility = View.VISIBLE
+                binding.answerButtonsLayout.visibility = View.INVISIBLE
             }
         }
 
         if (sharedPrefs().getBoolean(getString(R.string.hide_hard_and_easy_key), false)) {
-            hardButton.isVisible = false
-            easyButton.isVisible = false
+            binding.hardButton.isVisible = false
+            binding.easyButton.isVisible = false
         }
 
         val buttonsHeight = Prefs.newStudyScreenAnswerButtonSize
         if (buttonsHeight > 100) {
-            answerButtonsLayout.post {
-                answerButtonsLayout.updateLayoutParams {
-                    height = answerButtonsLayout.measuredHeight * buttonsHeight / 100
+            binding.answerButtonsLayout.post {
+                binding.answerButtonsLayout.updateLayoutParams {
+                    height = binding.answerButtonsLayout.measuredHeight * buttonsHeight / 100
                 }
             }
         }
     }
 
-    private fun setupCounts(view: View) {
-        val newCount = view.findViewById<MaterialTextView>(R.id.new_count)
-        val learnCount = view.findViewById<MaterialTextView>(R.id.lrn_count)
-        val reviewCount = view.findViewById<MaterialTextView>(R.id.rev_count)
-
+    private fun setupCounts() {
         viewModel.countsFlow
             .flowWithLifecycle(lifecycle)
             .collectLatestIn(lifecycleScope) { (counts, countsType) ->
-                newCount.text = counts.new.toString()
-                learnCount.text = counts.lrn.toString()
-                reviewCount.text = counts.rev.toString()
+                binding.newCount.text = counts.new.toString()
+                binding.learnCount.text = counts.lrn.toString()
+                binding.reviewCount.text = counts.rev.toString()
 
                 val currentCount =
                     when (countsType) {
-                        Counts.Queue.NEW -> newCount
-                        Counts.Queue.LRN -> learnCount
-                        Counts.Queue.REV -> reviewCount
+                        Counts.Queue.NEW -> binding.newCount
+                        Counts.Queue.LRN -> binding.learnCount
+                        Counts.Queue.REV -> binding.reviewCount
                     }
                 val spannableString = SpannableString(currentCount.text)
                 spannableString.setSpan(UnderlineSpan(), 0, currentCount.text.length, 0)
@@ -455,21 +420,21 @@ class ReviewerFragment :
 
         lifecycleScope.launch {
             if (!CollectionPreferences.getShowRemainingDueCounts()) {
-                newCount.isVisible = false
-                learnCount.isVisible = false
-                reviewCount.isVisible = false
+                binding.newCount.isVisible = false
+                binding.learnCount.isVisible = false
+                binding.reviewCount.isVisible = false
             }
         }
     }
 
-    private fun setupMenu(view: View) {
-        view.findViewById<ReviewerMenuView>(R.id.reviewer_menu_view).apply {
+    private fun setupMenu() {
+        binding.reviewerMenuView.apply {
             setup(lifecycle, viewModel)
             setOnMenuItemClickListener(this@ReviewerFragment)
         }
     }
 
-    private fun setupImmersiveMode(view: View) {
+    private fun setupImmersiveMode() {
         val barsToHide =
             when (Prefs.hideSystemBars) {
                 HideSystemBars.NONE -> return
@@ -491,7 +456,7 @@ class ReviewerFragment :
                 0
             }
         val ignoreDisplayCutout = Prefs.ignoreDisplayCutout
-        ViewCompat.setOnApplyWindowInsetsListener(view) { v, insets ->
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
             val defaultTypes = WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.ime()
             val typeMask =
                 if (ignoreDisplayCutout) {
@@ -512,14 +477,14 @@ class ReviewerFragment :
         }
     }
 
-    private fun setupToolbarPosition(view: View) {
+    private fun setupToolbarPosition() {
         if (!resources.isWindowCompact()) return
         when (Prefs.toolbarPosition) {
             ToolbarPosition.TOP -> return
-            ToolbarPosition.NONE -> view.findViewById<View>(R.id.tools_layout).isVisible = false
+            ToolbarPosition.NONE -> binding.toolsLayout.isVisible = false
             ToolbarPosition.BOTTOM -> {
-                val mainLayout = view.findViewById<LinearLayout>(R.id.main_layout)
-                val toolbar = view.findViewById<View>(R.id.tools_layout)
+                val mainLayout = binding.mainLayout!! // we can use !! due to isWindowCompact
+                val toolbar = binding.toolsLayout
                 mainLayout.removeView(toolbar)
                 mainLayout.addView(toolbar, mainLayout.childCount)
             }
@@ -530,9 +495,9 @@ class ReviewerFragment :
      * Updates margins based on the possible combinations
      * of [Prefs.toolbarPosition], [Prefs.frameStyle] and `Hide answer buttons`
      */
-    private fun setupMargins(view: View) {
+    private fun setupMargins() {
         if (Prefs.frameStyle == FrameStyle.BOX) {
-            view.findViewById<MaterialCardView>(R.id.webview_container).apply {
+            binding.webViewContainer.apply {
                 updateLayoutParams<MarginLayoutParams> {
                     leftMargin = 0
                     rightMargin = 0
@@ -543,18 +508,17 @@ class ReviewerFragment :
         }
 
         if (Prefs.toolbarPosition == ToolbarPosition.BOTTOM) {
-            view.findViewById<LinearLayout>(R.id.complements_layout)?.showDividers =
+            binding.complementsLayout?.showDividers =
                 LinearLayout.SHOW_DIVIDER_MIDDLE or LinearLayout.SHOW_DIVIDER_BEGINNING
         }
     }
 
-    private fun setupToolbarOnBigWindows(view: View) {
+    private fun setupToolbarOnBigWindows() {
         val hideAnswerButtons = !Prefs.showAnswerButtons
         // In big screens, let the menu expand if there are no answer buttons
         if (hideAnswerButtons && !resources.isWindowCompact()) {
-            val constraintLayout = view.findViewById<ConstraintLayout>(R.id.tools_layout)
             with(ConstraintSet()) {
-                clone(constraintLayout)
+                clone(binding.toolsLayout)
                 clear(R.id.reviewer_menu_view, ConstraintSet.START)
                 connect(
                     R.id.reviewer_menu_view,
@@ -562,17 +526,17 @@ class ReviewerFragment :
                     R.id.counts_flow,
                     ConstraintSet.END,
                 )
-                applyTo(constraintLayout)
+                applyTo(binding.toolsLayout)
             }
             // applying a ConstraintSet resets the visibility of counts_flow,
             // which includes the timer, so set again its visibility.
-            timer?.isVisible = viewModel.answerTimerStatusFlow.value != null
+            binding.timer.isVisible = viewModel.answerTimerStatusFlow.value != null
             return
         }
     }
 
-    private fun setupAnswerTimer(view: View) {
-        val timer = view.findViewById<AnswerTimer>(R.id.timer)
+    private fun setupAnswerTimer() {
+        val timer = binding.timer
         timer.isVisible = viewModel.answerTimerStatusFlow.value != null // necessary to handle configuration changes
         viewModel.answerTimerStatusFlow.collectIn(lifecycleScope) { status ->
             when (status) {
@@ -592,10 +556,9 @@ class ReviewerFragment :
         }
     }
 
-    private fun setupCheckPronunciation(view: View) {
-        val container = view.findViewById<FragmentContainerView>(R.id.check_pronunciation_container)
+    private fun setupCheckPronunciation() {
         viewModel.voiceRecorderEnabledFlow.flowWithLifecycle(lifecycle).collectIn(lifecycleScope) { isEnabled ->
-            container.isVisible = isEnabled
+            binding.checkPronunciationContainer.isVisible = isEnabled
         }
     }
 
@@ -605,7 +568,7 @@ class ReviewerFragment :
                 val whiteboardFragment = childFragmentManager.findFragmentByTag(WhiteboardFragment::class.jvmName)
                 if (isEnabled) {
                     if (whiteboardFragment != null) return@commit
-                    add(R.id.webview_container, WhiteboardFragment::class.java, null, WhiteboardFragment::class.jvmName)
+                    add(R.id.web_view_container, WhiteboardFragment::class.java, null, WhiteboardFragment::class.jvmName)
                 } else {
                     whiteboardFragment?.let { remove(it) }
                 }
@@ -642,7 +605,7 @@ class ReviewerFragment :
         }
     }
 
-    private fun setupActions(view: View) {
+    private fun setupActions() {
         viewModel.actionFeedbackFlow
             .flowWithLifecycle(lifecycle)
             .collectIn(lifecycleScope) { message ->
@@ -673,15 +636,15 @@ class ReviewerFragment :
         }
 
         val repository = StudyScreenRepository(sharedPrefs())
-        val markView = view.findViewById<AppCompatImageView>(R.id.mark_icon)
+
         viewModel.isMarkedFlow
             .flowWithLifecycle(lifecycle)
             .collectIn(lifecycleScope) { isMarked ->
                 if (!repository.isMarkShownInToolbar) {
-                    markView.isVisible = isMarked
+                    binding.markIcon.isVisible = isMarked
                 }
             }
-        val flagView = view.findViewById<AppCompatImageView>(R.id.flag_icon)
+        val flagView = binding.flagIcon
         viewModel.flagFlow
             .flowWithLifecycle(lifecycle)
             .collectIn(lifecycleScope) { flag ->
@@ -703,6 +666,8 @@ class ReviewerFragment :
     ) = viewModel.onEditedTags(selectedTags)
 
     override fun onCreateWebViewClient(savedInstanceState: Bundle?): CardViewerWebViewClient = ReviewerWebViewClient(savedInstanceState)
+
+    override fun onCreateWebChromeClient(): CardViewerWebChromeClient = ReviewerWebChromeClient()
 
     private inner class ReviewerWebViewClient(
         savedInstanceState: Bundle?,
@@ -774,6 +739,29 @@ class ReviewerFragment :
                 val scale = it / 100.0
                 val script = """document.body.style.zoom = `$scale`;"""
                 view?.evaluateJavascript(script, null)
+            }
+        }
+    }
+
+    private inner class ReviewerWebChromeClient : CardViewerWebChromeClient() {
+        override fun onHideCustomView() {
+            val barsToHide = Prefs.hideSystemBars
+            if (barsToHide == HideSystemBars.NONE) {
+                super.onHideCustomView()
+            } else {
+                val window = requireActivity().window
+                (window.decorView as FrameLayout).removeView(paramView)
+
+                val barsToShowBack =
+                    when (barsToHide) {
+                        HideSystemBars.STATUS_BAR -> WindowInsetsCompat.Type.navigationBars()
+                        HideSystemBars.NAVIGATION_BAR -> WindowInsetsCompat.Type.statusBars()
+                        HideSystemBars.ALL, HideSystemBars.NONE -> return
+                    }
+                with(WindowInsetsControllerCompat(window, window.decorView)) {
+                    show(barsToShowBack)
+                    systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+                }
             }
         }
     }

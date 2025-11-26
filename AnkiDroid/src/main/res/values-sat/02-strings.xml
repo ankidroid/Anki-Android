@@ -48,12 +48,14 @@
     <string name="drawer_open">ᱰᱨᱚᱣᱟᱹᱨ ᱠᱷᱩᱞᱟᱹᱭ ᱢᱮ</string>
     <string name="drawer_close">ᱰᱨᱚᱣᱟᱹᱨ ᱵᱚᱸᱫᱚᱭ ᱢᱮ</string>
     <string name="note_message">Note saved</string>
+    <!-- Note editor screen -->
     <string name="CardEditorCardDeck">ᱠᱟᱰ ᱰᱮᱠᱺ</string>
     <string name="CardEditorNoteDeck">ᱰᱮᱠᱺ</string>
     <string name="CardEditorModel">ᱯᱨᱚᱠᱟᱨᱺ</string>
     <string name="CardEditorTags">ᱴᱮᱜᱥᱺ%1$s</string>
     <string name="CardEditorCards">ᱠᱟᱰᱺ%1$s</string>
     <string name="edit_occlusions">ᱚᱠᱥᱩᱞᱤᱥᱚᱱ ᱥᱟᱯᱲᱟᱣ ᱢᱮ</string>
+    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
     <string name="tag_name">ᱴᱮᱜ ᱧᱩᱛᱩᱢ</string>
     <string name="add_new_filter_tags">ᱥᱮᱞᱮᱫ/ᱴᱮᱜ ᱯᱷᱤᱞᱴᱚᱨ</string>
     <string name="add_tag" maxLength="28">ᱴᱮᱜ ᱥᱮᱞᱮᱫ ᱢᱮ</string>
@@ -233,6 +235,7 @@
     <string name="search_decks" maxLength="28">ᱰᱮᱠ ᱠᱚ ᱥᱮᱸᱫᱽᱨᱟ</string>
     <string name="ankidroid_init_failed_webview_title">ᱯᱩᱨᱟᱹ ᱵᱷᱩᱞ</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid ᱫᱚ ᱥᱭᱥᱴᱮᱢ ᱣᱮᱵᱼᱵᱷᱤᱭᱩ ᱪᱮᱛᱟᱱ ᱨᱮ ᱱᱤᱨᱵᱷᱚᱨᱚᱜ ᱠᱟᱱᱟᱭ ᱚᱠᱟ ᱫᱚ ᱱᱤᱛᱚᱜ ᱵᱟᱹᱱᱩᱜᱼᱟ ᱾ ᱱᱚᱶᱟ ᱫᱚ ᱛᱮᱵᱮ ᱦᱩᱭᱩᱜᱼᱟ ᱚᱠᱟ ᱡᱷᱚᱜ ᱥᱭᱥᱴᱟᱹᱢ ᱟᱹᱯᱰᱮᱴ ᱠᱚ ᱠᱚ ᱵᱚᱦᱟᱞ ᱮᱪᱟᱭ ᱾ ᱫᱚᱭᱟᱠᱟᱛᱮ ᱱᱟᱥᱮ ᱴᱤᱯᱤᱡ ᱜᱦᱟᱹᱬᱤᱡ ᱛᱟᱭᱚᱢ ᱫᱩᱦᱲᱟᱹ ᱪᱮᱥᱴᱟᱭ ᱢᱮ ᱾ \n\n%s</string>
+    <string name="ankidroid_init_failed_storage">AnkiDroid cannot access storage due to an Android error.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">ᱪᱤᱠᱤ ᱢᱟᱯ</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">ᱴᱩᱞᱵᱟᱨ ᱫᱮᱠᱷᱟᱣᱢᱮ</string>

@@ -57,7 +57,7 @@
             android:layout_marginHorizontal="16dp" />
 
             <CheckBox
-            android:id="@+id/truncate_checkbox"
+            android:id="@+id/truncate_check_box"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/card_browser_truncate"
@@ -87,7 +87,7 @@
                 android:layout_marginHorizontal="16dp" />
 
             <CheckBox
-                android:id="@+id/ignore_accents_checkbox"
+                android:id="@+id/ignore_accents_check_box"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
@@ -137,7 +137,7 @@
             <LinearLayout
             android:gravity="center"
             android:minHeight="?attr/listPreferredItemHeightSmall"
-            android:id="@+id/action_rename_flag"
+            android:id="@+id/rename_flag"
             android:background="?attr/selectableItemBackground"
             android:layout_marginHorizontal="16dp"
             android:layout_width="match_parent"

@@ -48,12 +48,14 @@
     <string name="drawer_open">Öppna meny</string>
     <string name="drawer_close">Stäng meny</string>
     <string name="note_message">Note saved</string>
+    <!-- Note editor screen -->
     <string name="CardEditorCardDeck">Kortlek:</string>
     <string name="CardEditorNoteDeck">Kortlek:</string>
     <string name="CardEditorModel">Typ:</string>
     <string name="CardEditorTags">Etiketter: %1$s</string>
     <string name="CardEditorCards">Kort: %1$s</string>
     <string name="edit_occlusions">Redigera täckskärmar</string>
+    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
     <string name="tag_name">Etikettnamn</string>
     <string name="add_new_filter_tags">Lägg till/Filtrera etiketter</string>
     <string name="add_tag" maxLength="28">Lägg till etikett</string>
@@ -233,6 +235,7 @@
     <string name="search_decks" maxLength="28">Sök kortlekar</string>
     <string name="ankidroid_init_failed_webview_title">Kritiskt fel</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid använder sig av System WebView vilket inte är tillgängligt. Detta kan hända om systemet håller på att installera uppdateringar. Försök igen om några minuter.\n\n%s</string>
+    <string name="ankidroid_init_failed_storage">AnkiDroid cannot access storage due to an Android error.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">Teckenstorlek</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Visa verktygsfält</string>

@@ -95,7 +95,7 @@ class NoteTypeTest : JvmTest() {
         note.setItem("Back", "2")
         col.addNote(note)
         assertEquals(1, col.cardCount())
-        col.notetypes.rem(col.notetypes.current())
+        col.notetypes.remove(col.notetypes.current().id)
         assertEquals(0, col.cardCount())
     }
 
@@ -249,13 +249,15 @@ class NoteTypeTest : JvmTest() {
         assertEquals(0, c.ord)
         assertEquals(1, c2.ord)
         // switch templates
-        col.notetypes.moveTemplate(noteType, c.template(), 1)
+        col.notetypes.repositionTemplate(noteType, c.template(), 1)
+        col.notetypes.save(noteType)
         c.load()
         c2.load()
         assertEquals(1, c.ord)
         assertEquals(0, c2.ord)
         // removing a template should delete its cards
-        col.notetypes.remTemplate(noteType, noteType.templates[0])
+        col.notetypes.removeTemplate(noteType, noteType.templates[0])
+        col.notetypes.save(noteType)
         assertEquals(1, col.cardCount())
         // and should have updated the other cards' ordinals
         c = note.cards()[0]
@@ -267,7 +269,8 @@ class NoteTypeTest : JvmTest() {
                 qfmt = "{{Front}}1"
             }
         col.notetypes.addTemplateModChanged(noteType, t)
-        col.notetypes.remTemplate(noteType, noteType.templates[0])
+        col.notetypes.removeTemplate(noteType, noteType.templates[0])
+        col.notetypes.save(noteType)
         assertEquals(
             0,
             col.db.queryLongScalar(
@@ -290,7 +293,8 @@ class NoteTypeTest : JvmTest() {
             }
         col.notetypes.addTemplateModChanged(noteType, t)
         col.notetypes.save(noteType)
-        col.notetypes.remTemplate(noteType, noteType.templates[0])
+        col.notetypes.removeTemplate(noteType, noteType.templates[0])
+        col.notetypes.save(noteType)
 
         val note = col.newNote()
         note.setItem("Text", "{{c1::firstQ::firstA}}{{c2::secondQ::secondA}}")
@@ -399,7 +403,8 @@ class NoteTypeTest : JvmTest() {
             }
         col.notetypes.addTemplateModChanged(noteType, t)
         col.notetypes.save(noteType)
-        col.notetypes.remTemplate(noteType, noteType.templates[0])
+        col.notetypes.removeTemplate(noteType, noteType.templates[0])
+        col.notetypes.save(noteType)
         val note = col.newNote()
         val q1 = "<span style=\"color:red\">phrase</span>"
         val a1 = "<b>sentence</b>"
@@ -495,7 +500,8 @@ class NoteTypeTest : JvmTest() {
         assertEquals("f2", note.getItem("Text"))
         assertEquals(2, note.numberOfCards())
         // back the other way, with deletion of second ord
-        col.notetypes.remTemplate(basic, basic.templates[1])
+        col.notetypes.removeTemplate(basic, basic.templates[1])
+        col.notetypes.save(basic)
         assertEquals(
             2,
             col.db.queryScalar("select count() from cards where nid = ?", note.id),

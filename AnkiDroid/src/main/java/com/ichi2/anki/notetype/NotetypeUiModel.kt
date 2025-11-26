@@ -16,23 +16,7 @@
 package com.ichi2.anki.notetype
 
 import anki.notetypes.NotetypeNameId
-import anki.notetypes.NotetypeNameIdUseCount
 import com.ichi2.anki.libanki.NoteTypeId
-
-/**
- * Data holder class which contains the data to display a single note type in [ManageNotetypes]'s
- * list of notetypes.
- */
-internal data class ManageNoteTypeUiModel(
-    val id: NoteTypeId,
-    val name: String,
-    /**
-     * The number of note using this note type.
-     */
-    val useCount: Int,
-)
-
-internal fun NotetypeNameIdUseCount.toUiModel(): ManageNoteTypeUiModel = ManageNoteTypeUiModel(id, name, useCount)
 
 /**
  * Data holder class which contains the data to display a single note type in [AddNewNotesType]'s

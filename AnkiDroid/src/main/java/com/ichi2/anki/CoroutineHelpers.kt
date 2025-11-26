@@ -70,7 +70,9 @@ import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeout
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.BackendException
+import net.ankiweb.rsdroid.BackendException.BackendCardTypeException
 import net.ankiweb.rsdroid.exceptions.BackendInterruptedException
+import net.ankiweb.rsdroid.exceptions.BackendInvalidInputException
 import net.ankiweb.rsdroid.exceptions.BackendNetworkException
 import net.ankiweb.rsdroid.exceptions.BackendSyncException
 import org.jetbrains.annotations.VisibleForTesting
@@ -94,6 +96,11 @@ var throwOnShowError = false
  * Runs a suspend function that catches any uncaught errors and reports them to the user.
  * Errors from the backend contain localized text that is often suitable to show to the user as-is.
  * Other errors should ideally be handled in the block.
+ *
+ * @param context Coroutine context passed to [launch]
+ * @param errorMessageHandler Called after an exception is caught and logged, input is either
+ * `Exception.localizedMessage` or `Exception.toString()`
+ * @param block code to execute inside [launch]
  */
 fun CoroutineScope.launchCatching(
     context: CoroutineContext = EmptyCoroutineContext,
@@ -187,7 +194,7 @@ suspend fun <T> FragmentActivity.runCatching(
                 Timber.w(exc, errorMessage)
                 exc.localizedMessage?.let { showSnackbar(it) }
             }
-            is BackendNetworkException, is BackendSyncException, is StorageAccessException -> {
+            is BackendNetworkException, is BackendSyncException, is StorageAccessException, is BackendCardTypeException -> {
                 // these exceptions do not generate worthwhile crash reports
                 Timber.i("Showing error dialog but not sending a crash report.")
                 showError(exc.localizedMessage!!, exc.toCrashReportData(this, reportException = false))
@@ -645,6 +652,7 @@ data class CrashReportData(
     fun shouldReportException(): Boolean {
         if (!reportableException) return false
         if (exception.isInvalidFsrsParametersException()) return false
+        if (exception is BackendInvalidInputException && exception.message == "missing template") return false
         return true
     }
 

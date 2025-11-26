@@ -1,4 +1,4 @@
-## ViewBindingPropertyDelegate (`vbdp`)
+## ViewBindingPropertyDelegate (`vbpd`)
 
 Simplifies [view bindings](https://developer.android.com/topic/libraries/view-binding):
 

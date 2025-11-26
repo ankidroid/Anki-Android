@@ -22,8 +22,9 @@ import android.os.Bundle
 import android.os.Parcel
 import android.os.Parcelable
 import androidx.core.os.bundleOf
+import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.libanki.CardTemplate
-import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.NoteTypeId
 import com.ichi2.anki.libanki.NotetypeJson
 import com.ichi2.anki.observability.undoableOp
@@ -44,10 +45,11 @@ class CardTemplateNotetype(
         DELETE,
     }
 
+    @NeedsTest("serialization on Android 15+ - regression test for crash when TemplateChange wasn't serializable")
     data class TemplateChange(
         var ordinal: Int,
         val type: ChangeType,
-    )
+    ) : java.io.Serializable
 
     var templateChanges = ArrayList<TemplateChange>()
         private set
@@ -104,21 +106,19 @@ class CardTemplateNotetype(
         Timber.d("saveToDatabase() called")
         dumpChanges()
         clearTempNoteTypeFiles()
-        undoableOp {
-            saveNoteType(notetype, adjustedTemplateChanges)
-        }
+        saveNoteType(notetype, adjustedTemplateChanges)
     }
 
     /**
      * Handles everything for a note type change at once - template add / deletes as well as content updates
      * This is an extension function on Collection and should be called from within undoableOp
      */
-    private fun Collection.saveNoteType(
+    suspend fun saveNoteType(
         notetype: NotetypeJson,
         templateChanges: ArrayList<TemplateChange>,
     ) {
         Timber.d("saveNoteType")
-        val oldNoteType = notetypes.get(notetype.id)
+        val oldNoteType = withCol { notetypes.get(notetype.id) }
 
         val newTemplates = notetype.templates
         for (change in templateChanges) {
@@ -126,11 +126,11 @@ class CardTemplateNotetype(
             when (change.type) {
                 ChangeType.ADD -> {
                     Timber.d("saveNoteType() adding template %s", change.ordinal)
-                    notetypes.addTemplate(oldNoteType, newTemplates[change.ordinal])
+                    withCol { notetypes.addTemplate(oldNoteType, newTemplates[change.ordinal]) }
                 }
                 ChangeType.DELETE -> {
                     Timber.d("saveNoteType() deleting template currently at ordinal %s", change.ordinal)
-                    notetypes.remTemplate(oldNoteType, oldTemplates[change.ordinal])
+                    withCol { notetypes.removeTemplate(oldNoteType, oldTemplates[change.ordinal]) }
                 }
             }
         }
@@ -138,8 +138,9 @@ class CardTemplateNotetype(
         // required for Rust: the modified time can't go backwards, and we updated the note type by adding fields
         // This could be done better
         notetype.mod = oldNoteType!!.mod
-        notetypes.save(notetype)
-        notetypes.update(notetype)
+        undoableOp {
+            notetypes.updateDict(notetype)
+        }
     }
 
     /**

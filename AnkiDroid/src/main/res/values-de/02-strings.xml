@@ -48,12 +48,14 @@
     <string name="drawer_open">Navigationsleiste öffnen</string>
     <string name="drawer_close">Navigationsleiste schließen</string>
     <string name="note_message">Notiz gespeichert</string>
+    <!-- Note editor screen -->
     <string name="CardEditorCardDeck">Kartenstapel:</string>
     <string name="CardEditorNoteDeck">Stapel:</string>
     <string name="CardEditorModel">Typ:</string>
     <string name="CardEditorTags">Schlagwörter: %1$s</string>
     <string name="CardEditorCards">Karten: %1$s</string>
     <string name="edit_occlusions">Okklusionen bearbeiten</string>
+    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
     <string name="tag_name">Schlagwortname</string>
     <string name="add_new_filter_tags">Schlagwörter hinzufügen/filtern</string>
     <string name="add_tag" maxLength="28">Schlagwort hinzufügen</string>
@@ -233,6 +235,7 @@
     <string name="search_decks" maxLength="28">Stapel durchsuchen</string>
     <string name="ankidroid_init_failed_webview_title">Schwerer Fehler</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid basiert auf dem System WebView, der nicht verfügbar ist. Dies kann passieren, wenn das System Aktualisierungen installiert. Bitte versuchen Sie es in ein paar Minuten erneut.\n\n%s</string>
+    <string name="ankidroid_init_failed_storage">AnkiDroid cannot access storage due to an Android error.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">Schriftgröße</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Werkzeug zeigen</string>

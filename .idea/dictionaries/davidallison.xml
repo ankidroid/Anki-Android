@@ -28,7 +28,6 @@
       <w>autoreport</w>
       <w>barfoo</w>
       <w>beolingus</w>
-      <w>brayan</w>
       <w>canonify</w>
       <w>cardbrowser</w>
       <w>cardviewer</w>
@@ -52,7 +51,6 @@
       <w>filepaths</w>
       <w>fixme</w>
       <w>fixmes</w>
-      <w>fonipa</w>
       <w>foobaz</w>
       <w>freqs</w>
       <w>furigana</w>
@@ -72,16 +70,13 @@
       <w>lightpencolor</w>
       <w>linebreaks</w>
       <w>mbit</w>
-      <w>mins</w>
       <w>misclick</w>
       <w>misclicks</w>
       <w>munge</w>
       <w>mutliselect</w>
-      <w>notetypes</w>
       <w>numpad</w>
       <w>onboarding</w>
       <w>optin</w>
-      <w>overdueness</w>
       <w>pcent</w>
       <w>playlink</w>
       <w>polytonic</w>
@@ -91,12 +86,9 @@
       <w>quuux</w>
       <w>quux</w>
       <w>relativize</w>
-      <w>replayq</w>
       <w>rerender</w>
       <w>resync</w>
       <w>retryable</w>
-      <w>searchview</w>
-      <w>searchview's</w>
       <w>servicelayer</w>
       <w>sinh</w>
       <w>spacebar</w>
@@ -120,15 +112,12 @@
       <w>typeblurtext</w>
       <w>typeentertext</w>
       <w>typefocus</w>
-      <w>uint</w>
       <w>unbury</w>
       <w>unburying</w>
       <w>uncatchable</w>
       <w>undeletable</w>
       <w>underlaid</w>
       <w>unencoded</w>
-      <w>unflag</w>
-      <w>unmark</w>
       <w>unopenable</w>
       <w>unsubmitted</w>
       <w>unsuspend</w>
@@ -137,6 +126,7 @@
       <w>upstream</w>
       <w>upstream's</w>
       <w>userbase</w>
+      <w>vbpd</w>
       <w>walkthrough</w>
     </words>
   </dictionary>

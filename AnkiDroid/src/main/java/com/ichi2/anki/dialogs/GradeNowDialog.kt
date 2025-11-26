@@ -21,7 +21,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.TextView
 import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AppCompatActivity
 import anki.scheduler.CardAnswer.Rating
@@ -29,6 +28,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.databinding.GradeNowListItemBinding
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.CardId
 import com.ichi2.anki.observability.undoableOp
@@ -51,6 +51,7 @@ import timber.log.Timber
  *
  * @see net.ankiweb.rsdroid.Backend.gradeNow
  */
+// TODO: handle rotation, via a DialogFragment with IdsFile handling or Fragment Result API
 @NeedsTest("UI test for this dialog")
 @NeedsTest("Menu only displayed if cards selected")
 @NeedsTest("Suspended card handling")
@@ -104,13 +105,15 @@ private class GradeNowListAdapter(
         convertView: View?,
         parent: ViewGroup,
     ): View =
-        convertView ?: LayoutInflater.from(context).inflate(R.layout.grade_now_list_item, parent, false).apply {
-            val grade = getItem(position)!!
-            findViewById<TextView>(R.id.grade_view).apply {
-                text = grade.getLabel()
-                setCompoundDrawablesRelativeWithIntrinsicBoundsKt(start = grade.iconRes)
-            }
-        }
+        convertView ?: GradeNowListItemBinding
+            .inflate(LayoutInflater.from(context), parent, false)
+            .also { binding ->
+                val grade = getItem(position)!!
+                binding.gradeTextView.apply {
+                    text = grade.getLabel()
+                    setCompoundDrawablesRelativeWithIntrinsicBoundsKt(start = grade.iconRes)
+                }
+            }.root
 }
 
 private enum class Grade(

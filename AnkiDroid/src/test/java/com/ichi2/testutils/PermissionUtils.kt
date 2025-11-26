@@ -33,6 +33,19 @@ fun withNoWritePermission(runnable: (() -> Unit)) {
     }
 }
 
+/**
+ * [block] runs with both [WRITE_EXTERNAL_STORAGE], [READ_EXTERNAL_STORAGE] granted
+ *
+ * @see grantWritePermissions
+ */
+fun withWritePermissions(block: () -> Unit) =
+    try {
+        grantWritePermissions()
+        block()
+    } finally {
+        revokeWritePermissions()
+    }
+
 fun grantWritePermissions() {
     val app = Shadows.shadowOf(ApplicationProvider.getApplicationContext<Context>() as Application)
     app.grantPermissions(WRITE_EXTERNAL_STORAGE, READ_EXTERNAL_STORAGE)

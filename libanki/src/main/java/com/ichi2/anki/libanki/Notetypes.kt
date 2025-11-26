@@ -225,11 +225,6 @@ class Notetypes(
             ),
         )
 
-    /** Delete model, and all its cards/notes. */
-    fun rem(notetype: NotetypeJson) {
-        remove(notetype.id)
-    }
-
     /** Modifies schema. */
     fun remove(id: NoteTypeId) {
         removeFromCache(id)
@@ -265,6 +260,16 @@ class Notetypes(
             )
         setCurrent(notetype)
         mutateAfterWrite(notetype)
+    }
+
+    /** Update a NotetypeDict. Caller will need to re-load notetype if new fields/cards added. */
+    fun updateDict(
+        notetype: NotetypeJson,
+        skipChecks: Boolean = false,
+    ): OpChanges {
+        removeFromCache(notetype.id)
+        ensureNameUnique(notetype)
+        return col.backend.updateNotetypeLegacy(toJsonBytes(notetype), skipChecks)
     }
 
     @LibAnkiAlias("_mutate_after_write")
@@ -511,23 +516,6 @@ class Notetypes(
         if (notetype.id != 0L) {
             save(notetype)
         }
-    }
-
-    fun remTemplate(
-        notetype: NotetypeJson,
-        template: CardTemplate,
-    ) {
-        removeTemplate(notetype, template)
-        save(notetype)
-    }
-
-    fun moveTemplate(
-        notetype: NotetypeJson,
-        template: CardTemplate,
-        idx: Int,
-    ) {
-        repositionTemplate(notetype, template, idx)
-        save(notetype)
     }
 
     /*

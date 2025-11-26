@@ -55,6 +55,7 @@ import com.ichi2.ui.FixedEditText
 import com.ichi2.utils.customView
 import com.ichi2.utils.getInputField
 import com.ichi2.utils.input
+import com.ichi2.utils.moveCursorToEnd
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
@@ -96,7 +97,7 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.note_type_field_editor) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.note_type_field_editor)
         enableToolbar()
-        binding.notetypeName.text = intent.getStringExtra("title")
+        binding.notetypeName.text = intent.getStringExtra(EXTRA_NOTETYPE_NAME)
         startLoadingCollection()
         setFragmentResultListener(REQUEST_HINT_LOCALE_SELECTION) { _, bundle ->
             val selectedLocale =
@@ -130,7 +131,7 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.note_type_field_editor) {
      * to finish the activity.
      */
     private fun initialize() {
-        val noteTypeID = intent.getLongExtra("noteTypeID", 0)
+        val noteTypeID = intent.getLongExtra(EXTRA_NOTETYPE_ID, 0)
         val collectionModel = getColUnsafe.notetypes.get(noteTypeID)
         if (collectionModel == null) {
             showThemedToast(this, R.string.field_editor_model_not_available, true)
@@ -318,7 +319,7 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.note_type_field_editor) {
         fieldNameInput?.let { fieldNameInput ->
             fieldNameInput.isSingleLine = true
             fieldNameInput.setText(fieldsLabels[currentPos])
-            fieldNameInput.setSelection(fieldNameInput.text!!.length)
+            fieldNameInput.moveCursorToEnd()
             AlertDialog.Builder(this).show {
                 customView(view = fieldNameInput, paddingStart = 64, paddingEnd = 64, paddingTop = 32)
                 title(R.string.model_field_editor_rename)
@@ -548,6 +549,11 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.note_type_field_editor) {
                 if (index == notetype.sortf) NodetypeKind.SORT else NodetypeKind.UNDEFINED,
             )
         }
+
+    companion object {
+        const val EXTRA_NOTETYPE_NAME = "extra_notetype_name"
+        const val EXTRA_NOTETYPE_ID = "extra_notetype_id"
+    }
 }
 
 enum class NodetypeKind {

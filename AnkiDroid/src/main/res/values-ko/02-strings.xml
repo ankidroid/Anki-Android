@@ -48,12 +48,14 @@
     <string name="drawer_open">메뉴 열기</string>
     <string name="drawer_close">메뉴 닫기</string>
     <string name="note_message">노트가 저장되었습니다.</string>
+    <!-- Note editor screen -->
     <string name="CardEditorCardDeck">카드 덱:</string>
     <string name="CardEditorNoteDeck">덱 :</string>
     <string name="CardEditorModel">유형:</string>
     <string name="CardEditorTags">태그: %1$s</string>
     <string name="CardEditorCards">카드: %1$s</string>
     <string name="edit_occlusions">가리기 편집</string>
+    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
     <string name="tag_name">태그 이름</string>
     <string name="add_new_filter_tags">태그 추가/필터링</string>
     <string name="add_tag" maxLength="28">태그 추가</string>
@@ -233,6 +235,7 @@ Context | Request Context    [1]</string>
     <string name="search_decks" maxLength="28">덱 검색하기</string>
     <string name="ankidroid_init_failed_webview_title">심각한 오류</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid이 필요한 시스템 WebView를 사용할 수 없습니다. 이 문제는 시스템이 업데이트를 설치하는 경우 발생할 수도 있습니다. 잠시 후 다시 시도하십시오.\n\n%s</string>
+    <string name="ankidroid_init_failed_storage">AnkiDroid cannot access storage due to an Android error.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">글꼴 크기</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">도구 모음 표시</string>

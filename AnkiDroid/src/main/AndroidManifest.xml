@@ -325,7 +325,6 @@
             android:label="@string/card_browser"
             android:theme="@style/Theme_Dark.Launcher"
             android:exported="true"
-            android:configChanges="keyboardHidden|orientation|screenSize"
             android:parentActivityName=".DeckPicker"
             >
             <intent-filter android:label="@string/card_browser">

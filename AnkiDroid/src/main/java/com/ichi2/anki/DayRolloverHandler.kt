@@ -35,6 +35,7 @@ import androidx.core.content.ContextCompat.RECEIVER_EXPORTED
 import anki.collection.OpChanges
 import anki.collection.opChanges
 import com.ichi2.anki.CollectionManager.withOpenColOrNull
+import com.ichi2.anki.exception.ManuallyReportedException
 import com.ichi2.anki.libanki.EpochSeconds
 import com.ichi2.anki.libanki.sched.Scheduler
 import com.ichi2.anki.observability.ChangeManager
@@ -74,7 +75,13 @@ object DayRolloverHandler : BroadcastReceiver() {
         // the outcome would be two calls to notifySubscribers, which is acceptable
         Timber.v("received ${intent?.action}")
         // launch coroutine as we need access to `col.sched`
-        AnkiDroidApp.applicationScope.launchCatching(Dispatchers.IO, errorMessageHandler = { Timber.w(it) }) {
+        AnkiDroidApp.applicationScope.launchCatching(Dispatchers.IO, errorMessageHandler = { msg ->
+            CrashReportService.sendExceptionReport(
+                e = ManuallyReportedException(msg),
+                origin = "DayRolloverHandler::onReceive",
+                onlyIfSilent = true,
+            )
+        }) {
             handleTimeChange()
         }
     }

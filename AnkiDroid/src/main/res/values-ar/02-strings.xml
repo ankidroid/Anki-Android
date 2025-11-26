@@ -48,12 +48,14 @@
     <string name="drawer_open">فتح القائمة</string>
     <string name="drawer_close">أغلق القائمة</string>
     <string name="note_message">تم حفظ الملحوظة</string>
+    <!-- Note editor screen -->
     <string name="CardEditorCardDeck">رزمة البطاقة:</string>
     <string name="CardEditorNoteDeck">الرزمة:</string>
     <string name="CardEditorModel">النوع:</string>
     <string name="CardEditorTags">الوسوم: %1$s</string>
     <string name="CardEditorCards">البطاقات: %1$s</string>
     <string name="edit_occlusions">تحرير الصور المُعَمَّاة</string>
+    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
     <string name="tag_name">اسم الوسم</string>
     <string name="add_new_filter_tags">إضافة وفرز الوسوم</string>
     <string name="add_tag" maxLength="28">إضافة وسم</string>
@@ -245,6 +247,7 @@
     <string name="search_decks" maxLength="28">بحث في الرزم</string>
     <string name="ankidroid_init_failed_webview_title">خلل فادح</string>
     <string name="ankidroid_init_failed_webview">يعتمد آنكي درويد على الويب فيو الخاص بالنظام وهو غير متوفر. يمكن أن يَحدث هذا إذا كان النظام قيد التحديث. الرجاء المحاولة مرةً أخرى بعد بضع دقائق.\n\n%s</string>
+    <string name="ankidroid_init_failed_storage">لم يتمكن آنكي درويد من الوصول إلى التخزين نتيجة لخلل في نظام الآندرويد.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">حجم الخط</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">إظهار شريط الأدوات</string>

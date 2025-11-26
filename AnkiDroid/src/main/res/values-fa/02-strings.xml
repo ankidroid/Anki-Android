@@ -48,12 +48,14 @@
     <string name="drawer_open">باز کردن منوی جانبی</string>
     <string name="drawer_close">بستن منوی جانبی</string>
     <string name="note_message">یادداشت ذخیره شد</string>
+    <!-- Note editor screen -->
     <string name="CardEditorCardDeck">دسته کارت:</string>
     <string name="CardEditorNoteDeck">دسته:</string>
     <string name="CardEditorModel">نوع:</string>
     <string name="CardEditorTags">برچسب ها: %1$s</string>
     <string name="CardEditorCards">کارت‌ها: %1$s</string>
     <string name="edit_occlusions">ویرایش پوشانده ها</string>
+    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
     <string name="tag_name">نام برچسب</string>
     <string name="add_new_filter_tags">افزودن/فیلترکردن برچسب‌ها</string>
     <string name="add_tag" maxLength="28">اضافه نمودن برچسب</string>
@@ -233,6 +235,7 @@
     <string name="search_decks" maxLength="28">جستجو در تمام دسته‌ها</string>
     <string name="ankidroid_init_failed_webview_title">خطای مخرب</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid بر روی سیستم WebView تکیه میکند که غیرقابل دسترسی است. این میتواند اتفاق بیفتد اگر سیستم در حال نسب کردن آپدیت باشد. لطفا دقایقی دیگر تلاش کنید.\n\n%s</string>
+    <string name="ankidroid_init_failed_storage">AnkiDroid cannot access storage due to an Android error.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">اندازه فونت</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">نمایش نوار ابزار</string>

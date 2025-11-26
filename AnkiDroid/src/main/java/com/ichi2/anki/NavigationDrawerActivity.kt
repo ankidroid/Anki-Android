@@ -45,6 +45,7 @@ import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.navigation.NavigationView
+import com.ichi2.anki.IntentHandler.Companion.grantedStoragePermissions
 import com.ichi2.anki.NoteEditorFragment.Companion.NoteEditorCaller
 import com.ichi2.anki.dialogs.help.HelpDialog
 import com.ichi2.anki.libanki.CardId
@@ -480,7 +481,7 @@ abstract class NavigationDrawerActivity(
         // * having variables in shortcuts used to be doable with https://plugins.gradle.org/plugin/de.timfreiheit.resourceplaceholders, however
         // * after manually testing it, and looking at open issue https://github.com/timfreiheit/ResourcePlaceholdersPlugin/issues/13 , it seems this was broken with recent version of gradle
         fun enablePostShortcut(context: Context) {
-            if (!IntentHandler.grantedStoragePermissions(context, showToast = false)) {
+            if (runCatching { grantedStoragePermissions(context, showToast = false) }.getOrNull() != true) {
                 Timber.w("No storage access, not enabling shortcuts")
                 return
             }

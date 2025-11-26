@@ -26,7 +26,6 @@ import android.view.WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM
 import android.view.WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
-import android.widget.TextView
 import androidx.annotation.CheckResult
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
@@ -38,17 +37,17 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
-import com.google.android.material.checkbox.MaterialCheckBox
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import com.google.android.material.textfield.TextInputLayout
-import com.google.android.material.textview.MaterialTextView
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
 import com.ichi2.anki.asyncCatching
+import com.ichi2.anki.databinding.DialogSetDueDateBinding
+import com.ichi2.anki.databinding.SetDueDateRangeBinding
+import com.ichi2.anki.databinding.SetDueDateSingleBinding
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.CardId
 import com.ichi2.anki.libanki.sched.Scheduler
@@ -68,6 +67,7 @@ import com.ichi2.utils.neutralButton
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.requireBoolean
 import com.ichi2.utils.title
+import dev.androidbroadcast.vbpd.viewBinding
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -89,6 +89,8 @@ class SetDueDateDialog : DialogFragment() {
     // TODO: This does not handle configuration changes on some EditTexts [screen rotate/night mode]
 
     val viewModel: SetDueDateViewModel by activityViewModels<SetDueDateViewModel>()
+
+    private lateinit var binding: DialogSetDueDateBinding
 
     // used to determine if a rotation has taken place
     private var initialRotation: Int = 0
@@ -124,7 +126,7 @@ class SetDueDateDialog : DialogFragment() {
         // (the window size & position was incorrectly calculated)
 
         // There was a minor bug in Reviewer (timer is reset), which meant that
-        // generally we could not remove the configChanges, we probably can with the CardBrowser
+        // generally we could not remove the configChanges
         // For now, only recreate the activity if this dialog is open
         if (getScreenRotation() != initialRotation) {
             Timber.d("recreating activity: orientation changed with 'Set due date' open")
@@ -132,14 +134,20 @@ class SetDueDateDialog : DialogFragment() {
         }
     }
 
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
-        MaterialAlertDialogBuilder(requireContext())
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        binding = DialogSetDueDateBinding.inflate(layoutInflater)
+        return MaterialAlertDialogBuilder(requireContext())
             .create {
-                title(text = TR.actionsSetDueDate().toSentenceCase(this@SetDueDateDialog, R.string.sentence_set_due_date))
+                title(
+                    text =
+                        TR
+                            .actionsSetDueDate()
+                            .toSentenceCase(this@SetDueDateDialog, R.string.sentence_set_due_date),
+                )
                 positiveButton(R.string.dialog_ok) { launchUpdateDueDate() }
                 negativeButton(R.string.dialog_cancel)
                 neutralButton(R.string.help)
-                setView(R.layout.dialog_set_due_date)
+                setView(binding.root)
             }.apply {
                 show()
 
@@ -152,31 +160,34 @@ class SetDueDateDialog : DialogFragment() {
                     viewModel.isValidFlow.collect { isValid -> positiveButton.isEnabled = isValid }
                 }
                 // setup viewpager + tabs
-                val viewPager = findViewById<ViewPager2>(R.id.set_due_date_pager)!!
-                viewPager.adapter = DueDateStateAdapter(this@SetDueDateDialog)
-                val tabLayout = findViewById<TabLayout>(R.id.tab_layout)!!
-                TabLayoutMediator(tabLayout, viewPager) { tab: TabLayout.Tab, position: Int ->
+                binding.setDueDatePager.adapter = DueDateStateAdapter(this@SetDueDateDialog)
+                TabLayoutMediator(
+                    binding.tabLayout,
+                    binding.setDueDatePager,
+                ) { tab: TabLayout.Tab, position: Int ->
                     SetDueDateViewModel.Tab.entries
                         .first { it.position == position }
                         .let { selectedTab ->
                             tab.setIcon(selectedTab.icon)
                         }
                 }.attach()
-                tabLayout.selectTab(tabLayout.getTabAt(0))
+                binding.tabLayout.selectTab(binding.tabLayout.getTabAt(0))
 
-                viewPager.registerOnPageChangeCallback(
+                binding.setDueDatePager.registerOnPageChangeCallback(
                     object : ViewPager2.OnPageChangeCallback() {
                         override fun onPageSelected(position: Int) {
-                            SetDueDateViewModel.Tab.entries.first { it.position == position }.let { selectedTab ->
-                                viewModel.currentTab = selectedTab
-                            }
+                            SetDueDateViewModel.Tab.entries
+                                .first { it.position == position }
+                                .let { selectedTab ->
+                                    viewModel.currentTab = selectedTab
+                                }
                             super.onPageSelected(position)
                         }
                     },
                 )
 
                 // setup 'set interval to same value' checkbox
-                findViewById<MaterialCheckBox>(R.id.change_interval)!!.also { cb ->
+                binding.changeInterval.also { cb ->
                     // `.also` is used as .isVisible is an extension, so Kotlin prefers
                     // incorrectly setting Fragment.isVisible
                     cb.isVisible = viewModel.canSetUpdateIntervalToMatchDueDate
@@ -188,7 +199,7 @@ class SetDueDateDialog : DialogFragment() {
 
                 lifecycleScope.launch {
                     viewModel.currentInterval.collect { currentInterval ->
-                        findViewById<MaterialTextView>(R.id.current_interval_text)!!.also { tv ->
+                        binding.currentIntervalText.also { tv ->
                             // Current interval is set to null when multiple cards are selected
                             if (currentInterval != null) {
                                 tv.isVisible = true
@@ -205,6 +216,7 @@ class SetDueDateDialog : DialogFragment() {
                     }
                 }
             }
+    }
 
     override fun setupDialog(
         dialog: Dialog,
@@ -217,7 +229,8 @@ class SetDueDateDialog : DialogFragment() {
         // The dialog is too wide on tablets
         // Select either 450dp (tablets)
         // or 100% of the screen width (smaller phones)
-        val intendedWidth = min(MAX_WIDTH_DP.dp.toPx(this.requireContext()), resources.displayMetrics.widthPixels)
+        val intendedWidth =
+            min(MAX_WIDTH_DP.dp.toPx(this.requireContext()), resources.displayMetrics.widthPixels)
         Timber.d("updating width to %d", intendedWidth)
         this.dialog?.window?.setLayout(
             intendedWidth,
@@ -242,7 +255,10 @@ class SetDueDateDialog : DialogFragment() {
                 arguments =
                     bundleOf(
                         ARG_CARD_IDS to cardIds.toLongArray(),
-                        ARG_FSRS to (getFSRSStatus() ?: false.also { Timber.w("FSRS Status error") }),
+                        ARG_FSRS to (
+                            getFSRSStatus()
+                                ?: false.also { Timber.w("FSRS Status error") }
+                        ),
                     )
                 Timber.i("Showing 'set due date' dialog for %d cards", cardIds.size)
             }
@@ -264,18 +280,24 @@ class SetDueDateDialog : DialogFragment() {
     class SelectSingleDateFragment : Fragment(R.layout.set_due_date_single) {
         private val viewModel: SetDueDateViewModel by activityViewModels<SetDueDateViewModel>()
 
+        private val binding by viewBinding(SetDueDateSingleBinding::bind)
+
         override fun onViewCreated(
             view: View,
             savedInstanceState: Bundle?,
         ) {
             super.onViewCreated(view, savedInstanceState)
-            view.findViewById<TextInputLayout>(R.id.set_due_date_single_day_text).apply {
+            binding.setDueDateSingleDayInputLayout.apply {
                 editText!!.apply {
                     viewModel.nextSingleDayDueDate?.let { value -> setText(value.toString()) }
                     doOnTextChanged { text, _, _, _ ->
                         val currentValue = text?.toString()?.toIntOrNull()
                         viewModel.nextSingleDayDueDate = currentValue
-                        suffixText = resources.getQuantityString(R.plurals.set_due_date_label_suffix, currentValue ?: 0)
+                        suffixText =
+                            resources.getQuantityString(
+                                R.plurals.set_due_date_label_suffix,
+                                currentValue ?: 0,
+                            )
                     }
                     suffixText = resources.getQuantityString(R.plurals.set_due_date_label_suffix, 0)
                     helperText =
@@ -290,7 +312,10 @@ class SetDueDateDialog : DialogFragment() {
                         return@setOnEditorActionListener if (actionId == EditorInfo.IME_ACTION_DONE ||
                             event?.keyCode == KeyEvent.KEYCODE_ENTER
                         ) {
-                            parentFragmentManager.setFragmentResult(RESULT_SUBMIT_DUE_DATE, bundleOf())
+                            parentFragmentManager.setFragmentResult(
+                                RESULT_SUBMIT_DUE_DATE,
+                                bundleOf(),
+                            )
                             true
                         } else {
                             false
@@ -299,16 +324,17 @@ class SetDueDateDialog : DialogFragment() {
                     selectAllWhenFocused()
                 }
             }
-            view.findViewById<TextView>(R.id.date_single_label).text =
-                resources.getQuantityString(R.plurals.set_due_date_single_day_label, viewModel.cardCount)
+            binding.dateSingleLabel.text =
+                resources.getQuantityString(
+                    R.plurals.set_due_date_single_day_label,
+                    viewModel.cardCount,
+                )
         }
 
         override fun onResume() {
             super.onResume()
             this.requireView().requestLayout() // update the height of the ViewPager
-
-            val editText = requireView().findViewById<TextInputLayout>(R.id.set_due_date_single_day_text).editText!!
-            AndroidUiUtils.setFocusAndOpenKeyboard(editText)
+            AndroidUiUtils.setFocusAndOpenKeyboard(binding.setDueDateSingleDayEditText)
         }
     }
 
@@ -318,31 +344,39 @@ class SetDueDateDialog : DialogFragment() {
     class SelectDateRangeFragment : Fragment(R.layout.set_due_date_range) {
         private val viewModel: SetDueDateViewModel by activityViewModels<SetDueDateViewModel>()
 
+        private val binding by viewBinding(SetDueDateRangeBinding::bind)
+
         override fun onViewCreated(
             view: View,
             savedInstanceState: Bundle?,
         ) {
             super.onViewCreated(view, savedInstanceState)
-            view.findViewById<TextInputLayout>(R.id.date_range_start_layout).apply {
+            binding.dateRangeStartLayout.apply {
                 editText!!.apply {
                     viewModel.dateRange.start?.let { start -> setText(start.toString()) }
                     doOnTextChanged { text, _, _, _ ->
                         val value = text.toString().toIntOrNull()
                         viewModel.setNextDateRangeStart(value)
                         suffixText =
-                            resources.getQuantityString(R.plurals.set_due_date_label_suffix, value ?: 0)
+                            resources.getQuantityString(
+                                R.plurals.set_due_date_label_suffix,
+                                value ?: 0,
+                            )
                     }
                     suffixText = resources.getQuantityString(R.plurals.set_due_date_label_suffix, 0)
                     selectAllWhenFocused()
                 }
             }
-            view.findViewById<TextInputLayout>(R.id.date_range_end_layout).apply {
+            binding.dateRangeEndLayout.apply {
                 editText!!.apply {
                     doOnTextChanged { text, _, _, _ ->
                         val value = text.toString().toIntOrNull()
                         viewModel.setNextDateRangeEnd(value)
                         suffixText =
-                            resources.getQuantityString(R.plurals.set_due_date_label_suffix, value ?: 0)
+                            resources.getQuantityString(
+                                R.plurals.set_due_date_label_suffix,
+                                value ?: 0,
+                            )
                     }
                     suffixText = resources.getQuantityString(R.plurals.set_due_date_label_suffix, 0)
                     viewModel.dateRange.end?.let { end -> setText(end.toString()) }
@@ -350,7 +384,10 @@ class SetDueDateDialog : DialogFragment() {
                         return@setOnEditorActionListener if (actionId == EditorInfo.IME_ACTION_DONE ||
                             event?.keyCode == KeyEvent.KEYCODE_ENTER
                         ) {
-                            parentFragmentManager.setFragmentResult(RESULT_SUBMIT_DUE_DATE, bundleOf())
+                            parentFragmentManager.setFragmentResult(
+                                RESULT_SUBMIT_DUE_DATE,
+                                bundleOf(),
+                            )
                             true
                         } else {
                             false
@@ -359,7 +396,7 @@ class SetDueDateDialog : DialogFragment() {
                     selectAllWhenFocused()
                 }
             }
-            view.findViewById<TextView>(R.id.date_range_label).text =
+            binding.dateRangeLabel.text =
                 resources.getQuantityString(R.plurals.set_due_date_range_label, viewModel.cardCount)
         }
 
@@ -367,8 +404,7 @@ class SetDueDateDialog : DialogFragment() {
             super.onResume()
             this.requireView().requestLayout() // update the height of the ViewPager
 
-            val editText = requireView().findViewById<TextInputLayout>(R.id.date_range_start_layout).editText!!
-            AndroidUiUtils.setFocusAndOpenKeyboard(editText)
+            AndroidUiUtils.setFocusAndOpenKeyboard(binding.dateRangeStartEditText)
         }
     }
 }
