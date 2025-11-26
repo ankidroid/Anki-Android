@@ -77,10 +77,10 @@ object ImportUtils {
 
     fun showImportUnsuccessfulDialog(
         activity: Activity,
-        errorMessage: String?,
+        failure: ImportResult.Failure,
         exitActivity: Boolean,
     ) {
-        FileImporter().showImportUnsuccessfulDialog(activity, errorMessage, exitActivity)
+        FileImporter().showImportUnsuccessfulDialog(activity, failure, exitActivity)
     }
 
     @SuppressLint("LocaleRootUsage")
@@ -139,7 +139,7 @@ object ImportUtils {
             } catch (e: Exception) {
                 CrashReportService.sendExceptionReport(e, "handleFileImport")
                 Timber.e(e, "failed to handle import intent")
-                ImportResult.Failure(context.getString(R.string.import_error_handle_exception, e.localizedMessage))
+                ImportResult.Failure(context.getString(R.string.import_error_handle_exception, e.localizedMessage), e)
             }
         }
 
@@ -235,8 +235,8 @@ object ImportUtils {
             tempOutDir = Uri.fromFile(File(context.cacheDir, filename)).encodedPath!!
 
             copyFileToCache(context, importPathUri, tempOutDir).asErrorDetails(context)?.let { details ->
-                CrashReportService.sendExceptionReport(details.exception, "ImportUtils")
-                return ImportResult.Failure(details.userFacingString)
+                CrashReportService.sendExceptionReport(details.exceptionForReport, "ImportUtils")
+                return ImportResult.Failure(details.userFacingString, details.userFacingException)
             }
             sendShowImportFileDialogMsg(tempOutDir)
             return ImportResult.Success
@@ -313,19 +313,30 @@ object ImportUtils {
 
         fun showImportUnsuccessfulDialog(
             activity: Activity,
-            errorMessage: String?,
+            failure: ImportResult.Failure,
             exitActivity: Boolean,
         ) {
-            Timber.e("showImportUnsuccessfulDialog() message %s", errorMessage)
+            Timber.d("showImportUnsuccessfulDialog() message %s", failure.humanReadableMessage)
             val title = activity.resources.getString(R.string.import_title_error)
-            AlertDialog.Builder(activity).show {
-                title(text = title)
-                message(text = errorMessage!!)
-                setCancelable(false)
-                positiveButton(R.string.dialog_ok) {
-                    if (exitActivity) {
-                        activity.finish()
+            val dialog =
+                AlertDialog.Builder(activity).show {
+                    title(text = title)
+                    message(text = failure.humanReadableMessage)
+                    setCancelable(false)
+                    positiveButton(R.string.dialog_ok) {
+                        if (exitActivity) {
+                            activity.finish()
+                        }
                     }
+                    if (failure.toDebugInfo() != null) {
+                        negativeButton(R.string.feedback_copy_debug)
+                    }
+                }
+            // 'copy' should not close the dialog
+            failure.toDebugInfo()?.let { debugInfo ->
+                dialog.negativeButton.setOnClickListener {
+                    Timber.i("copying debug info to clipboard")
+                    activity.copyToClipboard(debugInfo)
                 }
             }
         }
@@ -370,19 +381,22 @@ object ImportUtils {
                     is Success -> null
                     is Error ->
                         ErrorDetails(
-                            exception = this.exception,
+                            exceptionForReport = exception,
                             userFacingString = context.getString(R.string.import_error_copy_to_cache),
+                            userFacingException = exception,
                         )
                     is ContentProviderCrashed ->
                         ErrorDetails(
-                            exception = ManuallyReportedException("Content provider crashed"),
+                            exceptionForReport = ManuallyReportedException("Content provider crashed"),
                             userFacingString = context.getString(R.string.import_error_copy_to_cache),
+                            userFacingException = null,
                         )
                 }
 
             data class ErrorDetails(
-                val exception: Exception,
+                val exceptionForReport: Exception,
                 val userFacingString: String,
+                val userFacingException: Exception?,
             )
         }
 
@@ -500,5 +514,15 @@ sealed class ImportResult {
 
     data class Failure(
         val humanReadableMessage: String,
-    ) : ImportResult()
+        val exception: Exception? = null,
+    ) : ImportResult() {
+        fun toDebugInfo(): String? {
+            if (exception == null) return null
+            return buildString {
+                appendLine(humanReadableMessage)
+                appendLine()
+                appendLine(exception.stackTraceToString())
+            }
+        }
+    }
 }
