@@ -54,7 +54,7 @@ fun AnkiActivity.onSelectedPackageToImport(data: Intent) {
     when (val importResult = ImportUtils.handleFileImport(this, data)) {
         is ImportResult.Failure ->
             runOnUiThread {
-                ImportUtils.showImportUnsuccessfulDialog(this, importResult.humanReadableMessage, exitActivity = false)
+                ImportUtils.showImportUnsuccessfulDialog(this, importResult, exitActivity = false)
             }
         is ImportResult.Success -> {
             // a Message was posted, don't wait for onResume to process it
