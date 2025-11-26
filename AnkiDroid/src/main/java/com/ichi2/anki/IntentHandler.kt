@@ -226,7 +226,7 @@ class IntentHandler : AbstractIntentHandler() {
             is ImportResult.Failure -> {
                 Timber.i("File import failed")
                 // Don't import the file if it didn't load properly or doesn't have apkg extension
-                showImportUnsuccessfulDialog(this, importResult.humanReadableMessage, true)
+                showImportUnsuccessfulDialog(this, importResult, true)
             }
         }
     }
