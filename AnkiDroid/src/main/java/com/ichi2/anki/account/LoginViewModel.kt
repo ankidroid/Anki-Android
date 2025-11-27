@@ -31,6 +31,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import net.ankiweb.rsdroid.exceptions.BackendSyncException
+import timber.log.Timber
 
 /**
  * ViewModel that manages the state for user login. It handles the login process,
@@ -84,15 +85,20 @@ class LoginViewModel : ViewModel() {
         password: String,
         endpoint: String?,
     ) {
+        Timber.i("Logging in")
         viewModelScope.launch {
             try {
                 val auth = syncLogin(username, password, endpoint)
+                Timber.i("Login success")
                 updateLogin(username, auth.hkey)
                 _loginState.value = LoginState.Success
             } catch (exc: BackendSyncException.BackendSyncAuthFailedException) {
+                Timber.i("Login auth failed")
                 updateLogin("", "")
                 _loginState.value = LoginState.Error(exc)
             } catch (exc: Exception) {
+                // do not log the error, can contain PII
+                Timber.w("Login error")
                 _loginState.value = LoginState.Error(exc)
             }
         }
@@ -136,7 +142,11 @@ sealed class LoginState {
 
     data object Success : LoginState()
 
-    /** The error here is an exception from the login attempt itself i.e. [net.ankiweb.rsdroid.exceptions.BackendSyncException.BackendSyncAuthFailedException] */
+    /**
+     * The error here is an exception from the login attempt itself i.e. [net.ankiweb.rsdroid.exceptions.BackendSyncException.BackendSyncAuthFailedException]
+     *
+     * This may contain PII as it comes from the backend
+     */
     data class Error(
         val exception: Exception,
     ) : LoginState()
