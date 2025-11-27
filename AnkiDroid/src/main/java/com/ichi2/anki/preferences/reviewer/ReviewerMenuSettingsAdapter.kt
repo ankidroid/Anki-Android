@@ -23,6 +23,19 @@ import com.ichi2.anki.R
 import com.ichi2.anki.databinding.ReviewerMenuDisplayTypeBinding
 import com.ichi2.anki.databinding.ReviewerMenuItemBinding
 
+/**
+ * Provides bindings from menu items and display types (headings) to [RecyclerView] views
+ * and support for dragging menu items to change display types or reorder.
+ *
+ * Handles ViewHolders for two classes:
+ * * [ReviewerMenuSettingsRecyclerItem.DisplayType] - Headings: Always show, Menu only, etc...
+ *   * [DisplayTypeViewHolder]
+ * * [ReviewerMenuSettingsRecyclerItem.Action] - Study screen menu items: Undo, Flag, etc...
+ *   * [ActionViewHolder]
+ *
+ * @see ReviewerMenuSettingsFragment
+ * @see ReviewerMenuSettingsRecyclerItem
+ */
 class ReviewerMenuSettingsAdapter(
     private val items: List<ReviewerMenuSettingsRecyclerItem>,
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
