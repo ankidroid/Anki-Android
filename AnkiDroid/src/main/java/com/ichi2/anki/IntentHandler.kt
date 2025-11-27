@@ -261,8 +261,7 @@ class IntentHandler : AbstractIntentHandler() {
                 data.data
             }
 
-        val imageOcclusionIntentBuilder = ImageOcclusionIntentBuilder(this)
-        val intentImageOcclusion = imageOcclusionIntentBuilder.buildIntent(imageUri)
+        val intentImageOcclusion = NoteEditorLauncher.ImageOcclusion(imageUri).toIntent(this)
 
         TaskStackBuilder
             .create(this)
