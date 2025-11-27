@@ -67,7 +67,7 @@ class WhiteboardFragment :
     val binding by viewBinding(FragmentWhiteboardBinding::bind)
 
     private var eraserPopup: PopupWindow? = null
-    private var strokeWidthPopup: PopupWindow? = null
+    private var brushConfigPopup: PopupWindow? = null
 
     /**
      * Sets up the view, observers, and event listeners.
@@ -235,7 +235,7 @@ class WhiteboardFragment :
         button.setOnClickListener {
             if (viewModel.activeBrushIndex.value == index && !viewModel.isEraserActive.value) {
                 button.isChecked = true
-                showStrokeWidthPopup(it, index)
+                showBrushConfigurationPopup(it, index)
             } else {
                 viewModel.setActiveBrush(index)
             }
@@ -305,9 +305,9 @@ class WhiteboardFragment :
     }
 
     /**
-     * Shows a popup for adjusting the stroke width of a specific brush.
+     * Shows a popup for adjusting the stroke width or color of a specific brush.
      */
-    private fun showStrokeWidthPopup(
+    private fun showBrushConfigurationPopup(
         anchorView: View,
         brushIndex: Int,
     ) {
@@ -349,17 +349,17 @@ class WhiteboardFragment :
             value.roundToInt().toString()
         }
 
-        strokeWidthPopup =
+        brushConfigPopup =
             PopupWindow(popupBrushBinding.root, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true)
-        strokeWidthPopup?.elevation = resources.getDimension(R.dimen.study_screen_elevation)
-        strokeWidthPopup?.setOnDismissListener {
-            strokeWidthPopup = null
+        brushConfigPopup?.elevation = resources.getDimension(R.dimen.study_screen_elevation)
+        brushConfigPopup?.setOnDismissListener {
+            brushConfigPopup = null
         }
 
         popupBrushBinding.root.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
         val yOffset = -(anchorView.height + popupBrushBinding.root.measuredHeight)
         val xOffset = (anchorView.width - popupBrushBinding.root.measuredWidth) / 2
-        strokeWidthPopup?.showAsDropDown(anchorView, xOffset, yOffset)
+        brushConfigPopup?.showAsDropDown(anchorView, xOffset, yOffset)
     }
 
     /**
@@ -373,7 +373,7 @@ class WhiteboardFragment :
                 object : ColorPickerPopUp.OnPickColorListener {
                     override fun onColorPicked(color: Int) {
                         viewModel.updateBrushColor(color)
-                        strokeWidthPopup?.dismiss()
+                        brushConfigPopup?.dismiss()
                     }
 
                     override fun onCancel() {}
