@@ -133,7 +133,7 @@ enum class LoginError(
     EMPTY_PASSWORD(R.string.password_empty),
     ;
 
-    fun toHumanReadableString(context: Context): String? = context.getString(this.messageResId)
+    fun toHumanReadableString(context: Context): String = context.getString(this.messageResId)
 }
 
 /** Handles the Login State */
