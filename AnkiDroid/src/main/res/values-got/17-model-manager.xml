@@ -45,7 +45,6 @@
     </plurals>
     <!--Browser-->
     <string name="model_browser_delete">𐌼𐌴𐌻𐌴𐌹𐌽𐌰𐌹𐍃 𐌺𐌹𐌽𐌸𐌰𐌹 𐌿𐍃𐌵𐌹𐍃𐍄𐌾𐌰𐌽</string>
-    <string name="model_browser_rename" comment="Rename a note type">𐌰𐍆𐍄𐍂𐌰𐌷𐌰𐌹𐍄𐌰𐌽</string>
     <string name="model_browser_template">𐌺𐌰𐍂𐍄𐍉𐍃 𐌹𐌽𐌼𐌰𐌹𐌳𐌾𐌰𐌽</string>
     <!--Rename-->
     <string name="rename_model">𐌼𐌴𐌻𐌴𐌹𐌽𐌰𐌹𐍃 𐌺𐌹𐌽𐌸 𐌰𐍆𐍄𐍂𐌰𐌷𐌰𐌹𐍄𐌰𐌽</string>
@@ -62,6 +61,12 @@
     <string name="model_field_editor_sort_field">Sort by this field</string>
     <!--Warnings-->
     <string name="model_delete_warning">𐌱𐌹 𐍃𐌿𐌽𐌾𐌰𐌹 𐍅𐌹𐌻𐌴𐌹𐌶𐌿 𐌸𐌹𐌶𐌰𐌹 𐌺𐌹𐌽𐌸𐌰𐌹 𐌼𐌴𐌻𐌴𐌹𐌽𐍉 𐌿𐍃𐌵𐌹𐍃𐍄𐌾𐌰𐌽?</string>
+    <!--
+        Example output:
+        Delete the note types below?
+        Basic, Basic (and reversed card), Cloze
+     -->
+    <string name="model_delete_multiple_warning">Delete the note types below?\n %s</string>
     <string name="field_delete_warning">𐌱𐌹 𐍃𐌿𐌽𐌾𐌰𐌹 𐍅𐌹𐌻𐌴𐌹𐌶𐌿 𐌸𐌰𐌼𐌼𐌰 𐍅𐌰𐌹𐍂𐌸𐌰 𐌿𐍃𐌵𐌹𐍃𐍄𐌾𐌰𐌽?</string>
     <!--Model Add Suffixes-->
     <string name="model_browser_add_add">𐌱𐌹𐌰𐌿𐌺𐌰𐌽: %1$s</string>

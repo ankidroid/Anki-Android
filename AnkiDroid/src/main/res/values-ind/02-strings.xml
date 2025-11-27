@@ -302,6 +302,9 @@
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">Gagal mengakses koleksi. Silakan coba lagi!</string>
     <string name="cd_manage_notetypes_add">Menambahkan jenis catatan baru</string>
+    <plurals name="note_types_selected">
+        <item quantity="other">%d note types selected</item>
+    </plurals>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">Belajar lebih sedikit</string>
     <string name="intro_ankidroid_tagline_two">Ingat lebih banyak</string>

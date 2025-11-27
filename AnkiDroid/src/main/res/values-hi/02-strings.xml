@@ -306,6 +306,10 @@
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">संग्रह तक पहुंचने में विफल. कृपया पुन: प्रयास करें!</string>
     <string name="cd_manage_notetypes_add">एक नया नोट प्रकार जोड़ें</string>
+    <plurals name="note_types_selected">
+        <item quantity="one">%d note type selected</item>
+        <item quantity="other">%d note types selected</item>
+    </plurals>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">कम पढ़ें</string>
     <string name="intro_ankidroid_tagline_two">अधिक याद करें</string>

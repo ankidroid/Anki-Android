@@ -45,7 +45,6 @@
     </plurals>
     <!--Browser-->
     <string name="model_browser_delete">टीप प्रकार हटवा</string>
-    <string name="model_browser_rename" comment="Rename a note type">नाव बदला</string>
     <string name="model_browser_template">कार्ड संपादित करा</string>
     <!--Rename-->
     <string name="rename_model">टीप प्रकार पुनर्नामित करा</string>
@@ -62,6 +61,12 @@
     <string name="model_field_editor_sort_field">या फील्डनुसार क्रमवारी लावा</string>
     <!--Warnings-->
     <string name="model_delete_warning">आपली खात्री आहे की आपण हा टीप प्रकार हटवू इच्छिता?</string>
+    <!--
+        Example output:
+        Delete the note types below?
+        Basic, Basic (and reversed card), Cloze
+     -->
+    <string name="model_delete_multiple_warning">Delete the note types below?\n %s</string>
     <string name="field_delete_warning">आपली खात्री आहे की आपण हे फील्ड हटवू इच्छिता?</string>
     <!--Model Add Suffixes-->
     <string name="model_browser_add_add">Add: %1$s</string>

@@ -306,6 +306,10 @@
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">সংগ্রহ অ্যাক্সেস করতে ব্যর্থ হয়েছে. আবার চেষ্টা করুন!</string>
     <string name="cd_manage_notetypes_add">একটি নতুন নোট টাইপ যোগ করুন</string>
+    <plurals name="note_types_selected">
+        <item quantity="one">%d note type selected</item>
+        <item quantity="other">%d note types selected</item>
+    </plurals>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">কম পড়াশুনা করুন</string>
     <string name="intro_ankidroid_tagline_two">আরও মনে রাখবেন</string>

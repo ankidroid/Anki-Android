@@ -45,7 +45,6 @@
     </plurals>
     <!--Browser-->
     <string name="model_browser_delete">შენიშვნის ტიპის წაშლა</string>
-    <string name="model_browser_rename" comment="Rename a note type">გადარქმევა</string>
     <string name="model_browser_template">ბარათების რედაქტირება</string>
     <!--Rename-->
     <string name="rename_model">შენიშვნის ტიპის სახელის შეცვლა</string>
@@ -62,6 +61,12 @@
     <string name="model_field_editor_sort_field">ამ ველის მიხედვით დახარისხება</string>
     <!--Warnings-->
     <string name="model_delete_warning">ნამდვილად გსურთ ამ შენიშვნის ტიპის წაშლა?</string>
+    <!--
+        Example output:
+        Delete the note types below?
+        Basic, Basic (and reversed card), Cloze
+     -->
+    <string name="model_delete_multiple_warning">Delete the note types below?\n %s</string>
     <string name="field_delete_warning">ნამდვილად გსურთ ამ ველის წაშლა?</string>
     <!--Model Add Suffixes-->
     <string name="model_browser_add_add">Add: %1$s</string>

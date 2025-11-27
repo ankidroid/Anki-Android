@@ -45,7 +45,6 @@
     </plurals>
     <!--Browser-->
     <string name="model_browser_delete">Tanggalin ang uri ng tala</string>
-    <string name="model_browser_rename" comment="Rename a note type">Palitan ang pangalan</string>
     <string name="model_browser_template">I-edit ang mga card</string>
     <!--Rename-->
     <string name="rename_model">Palitan ang pangalan ng uri ng tala.</string>
@@ -62,6 +61,12 @@
     <string name="model_field_editor_sort_field">Ayusin ayon sa patlang na ito</string>
     <!--Warnings-->
     <string name="model_delete_warning">Sigurado ka ba na nais mong burahin ang uri ng tala na ito?</string>
+    <!--
+        Example output:
+        Delete the note types below?
+        Basic, Basic (and reversed card), Cloze
+     -->
+    <string name="model_delete_multiple_warning">Delete the note types below?\n %s</string>
     <string name="field_delete_warning">Sigurado ka bang nais mong tanggalin ang field na ito?</string>
     <!--Model Add Suffixes-->
     <string name="model_browser_add_add">Add: %1$s</string>

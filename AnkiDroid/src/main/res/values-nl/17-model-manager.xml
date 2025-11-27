@@ -45,7 +45,6 @@
     </plurals>
     <!--Browser-->
     <string name="model_browser_delete">Notitietype verwijderen</string>
-    <string name="model_browser_rename" comment="Rename a note type">Naam wijzigen</string>
     <string name="model_browser_template">Bewerk kaarten</string>
     <!--Rename-->
     <string name="rename_model">Memotype hernoemen</string>
@@ -62,6 +61,12 @@
     <string name="model_field_editor_sort_field">Sorteren op dit veld</string>
     <!--Warnings-->
     <string name="model_delete_warning">Weet u zeker dat u dit memotype wilt verwijderen?</string>
+    <!--
+        Example output:
+        Delete the note types below?
+        Basic, Basic (and reversed card), Cloze
+     -->
+    <string name="model_delete_multiple_warning">Delete the note types below?\n %s</string>
     <string name="field_delete_warning">Weet u zeker dat u dit veld wilt verwijderen?</string>
     <!--Model Add Suffixes-->
     <string name="model_browser_add_add">Toevoegen: %1$s</string>
