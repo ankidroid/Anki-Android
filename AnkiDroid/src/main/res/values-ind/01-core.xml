@@ -71,7 +71,7 @@
         <item quantity="other">%1$d jam %2$d lagi</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new" comment="Header of the reviewer, telling the users how many minutes remains before they have seen all cards. The second parameter is the number of hours.">
-        <item quantity="other">%1$d days %2$dh left</item>
+        <item quantity="other">%1$d hari %2$d lagi</item>
     </plurals>
     <string name="type_answer_hint" comment="In the reviewer. When the user use note type with hint. It\'s the default content of the text field in which the user is invited to type their answer. It disappears as soon as the user start to type.">Ketik jawaban</string>
     <string name="show_answer" maxLength="41" comment="When displaying the question side of a card. This is the label of a button that display the answer side.">Tampilkan jawaban</string>
@@ -80,7 +80,7 @@
     <string name="ease_button_hard" maxLength="41" comment="In the reviewer, in the answer side. Label of the button that used by the user to state finding the correct answer was hard.">Sulit</string>
     <string name="ease_button_good" maxLength="41" comment="In the reviewer, in the answer side. Label of the button that used by the user to state their answer was good.">Baik</string>
     <string name="ease_button_easy" maxLength="41" comment="In the reviewer, in the answer side. Label of the button that used by the user to state that finding the answer to the question was easy.">Mudah</string>
-    <string name="show_answer_hint_long_press" comment="In the reviewer, hint is shown when touching the show answer button and the user has the long-press accessibility setting enabled">\'%s\' is enabled</string>
+    <string name="show_answer_hint_long_press" comment="In the reviewer, hint is shown when touching the show answer button and the user has the long-press accessibility setting enabled">\'%s\' diaktifkan</string>
     <!-- General -->
     <string name="undo" maxLength="28" comment="When tapping on this text, the last action is undone.">Urungkan</string>
     <string name="redo" maxLength="28" comment="Menu entry that allows to redo action that was just undone.">Ulangi</string>
@@ -126,10 +126,10 @@
     <string name="empty_cram_label" maxLength="28">Kosong</string>
     <string name="create_subdeck">Buat subdek</string>
     <string name="empty_filtered_deck">Mengosongkan dek yang telah difilter</string>
-    <string name="search_deck" comment="Deck search for selecting it">Mencari Dek</string>
+    <string name="search_deck" comment="Deck search for selecting it">Pencarian Dek</string>
     <string name="empty_deck">Dek ini kosong</string>
     <string name="invalid_deck_name">Nama dek tidak valid</string>
-    <string name="studyoptions_congrats_finished">Congratulations! You have finished for today.</string>
+    <string name="studyoptions_congrats_finished">Selamat! Anda telah selesai untuk hari ini.</string>
     <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Dek selesai untuk saat ini! %s</string>
     <string name="studyoptions_no_cards_due">Belum ada kartu jatuh tempo.</string>
     <string name="sd_card_not_mounted">Penyimpanan perangkat tidak terpasang</string>
@@ -164,7 +164,7 @@
     <string name="card_template_browser_appearance_title">Tampilan Peramban</string>
     <!-- card Info -->
     <string name="card_info_title" maxLength="28">Info kartu</string>
-    <string name="previous_card_info_title" maxLength="28">Previous card info</string>
+    <string name="previous_card_info_title" maxLength="28">Informasi kartu sebelumnya</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Baca dan tulis ke basisdata AnkiDroid</string>
     <string name="read_write_permission_description">mengakses catatan yang ada, kartu, tipe catatan, dan dek, serta membuat yang baru</string>
@@ -192,18 +192,18 @@
     <string name="new_unsafe_collection">Koleksi baru ini akan dihapus dari perangkat apabila AnkiDroid dihapus.</string>
     <!-- Permissions screen -->
     <string name="permissions_screen_headline">AnkiDroid memerlukan perizinan untuk dapat bekerja</string>
-    <string name="permissions_screen_optional_headline" comment="Explains that there are optional permissions that can be granted to AnkiDroid.">AnkiDroid works best with these permissions</string>
+    <string name="permissions_screen_optional_headline" comment="Explains that there are optional permissions that can be granted to AnkiDroid.">AnkiDroid berfungsi optimal dengan izin-izin berikut ini</string>
     <string name="storage_access_title">Akses penyimpanan</string>
     <string name="storage_access_summary">Menyimpan koleksi Anda dalam tempat yang aman yang tidak akan terhapus jika aplikasi dicopot pemasangannya</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after. See [android.permission.MANAGE_EXTERNAL_STORAGE] on https://developer.android.com/training/data-storage/manage-all-files for context.">Akses semua berkas</string>
     <string name="image_occlusion">Oklusi Gambar</string>
-    <string name="microphone" comment="Title of the microphone permission in the permissions explanation screen.">Microphone</string>
-    <string name="microphone_permission_explanation" comment="Description explaining why AnkiDroid needs the microphone permission, shown on the permissions explanation screen.">Allows you to add sounds to cards and enables voice playback while reviewing</string>
-    <string name="notifications_permission_explanation" comment="Description explaining why AnkiDroid needs the notification permission.">Enables background media syncing and allows you to create review reminders</string>
-    <string name="heading_required_permissions" comment="Heading for the section of required permissions that the app needs to function, shown in the permissions explanation screen.">Required</string>
-    <string name="heading_optional_permissions" comment="Heading for the section of optional permissions that the app needs to function, shown in the permissions explanation screen.">Optional</string>
-    <string name="manually_grant_permissions" comment="Pop-up message that is shown to the user when they want to grant an app permission that must be granted via the OS settings screen.">This permission must be manually granted from Settings</string>
-    <string name="revoke_permissions" comment="Pop-up message that is shown to the user when they are revoking an app permission.">This permission must be manually revoked from Settings</string>
+    <string name="microphone" comment="Title of the microphone permission in the permissions explanation screen.">Mikrofon</string>
+    <string name="microphone_permission_explanation" comment="Description explaining why AnkiDroid needs the microphone permission, shown on the permissions explanation screen.">Memungkinkan Anda menambahkan suara ke kartu dan mengaktifkan pemutaran suara saat meninjau</string>
+    <string name="notifications_permission_explanation" comment="Description explaining why AnkiDroid needs the notification permission.">Mengaktifkan sinkronisasi media di latar belakang dan memungkinkan Anda membuat pengingat ulasan</string>
+    <string name="heading_required_permissions" comment="Heading for the section of required permissions that the app needs to function, shown in the permissions explanation screen.">Diperlukan</string>
+    <string name="heading_optional_permissions" comment="Heading for the section of optional permissions that the app needs to function, shown in the permissions explanation screen.">Opsional</string>
+    <string name="manually_grant_permissions" comment="Pop-up message that is shown to the user when they want to grant an app permission that must be granted via the OS settings screen.">Izin ini harus diberikan secara manual dari Pengaturan</string>
+    <string name="revoke_permissions" comment="Pop-up message that is shown to the user when they are revoking an app permission.">Izin ini harus dicabut secara manual dari Pengaturan</string>
     <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Hapus akun</string>
     <!-- Instant Note Editor -->
     <string name="instant_card" comment="Used in the Android system context menu/share dialog to quickly create a note. This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. ">Kartu instan</string>

@@ -131,8 +131,8 @@
     <string name="multimedia_editor_failed">נכשל בפתיחת עורך מדיה.</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">הרשאת הקלטת שמע נדחתה</string>
-    <string name="permission_denied">Permission denied</string>
-    <string name="recording_permission_denied_message">Microphone permission is necessary for the “Record voice” feature. Please grant it in the app settings.</string>
+    <string name="permission_denied">הרשאה נדחתה</string>
+    <string name="recording_permission_denied_message">נדרשת הרשאת מיקרופון עבור התכונה \"הקלטת קול\". אנא אשר אותה בהגדרות האפליקציה.</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">שדרוג ל־AnkiDroid</string>
     <string name="integrity_check_startup_content">AnkiDroid שודרג. שדרוג זה כולל תיקונים לבעיות אפשריות במסד הנתונים, ואנו ממליצים לך להפעיל את מסד הנתונים לבדוק כעת.</string>

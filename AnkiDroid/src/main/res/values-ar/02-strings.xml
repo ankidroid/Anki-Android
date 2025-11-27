@@ -55,7 +55,7 @@
     <string name="CardEditorTags">الوسوم: %1$s</string>
     <string name="CardEditorCards">البطاقات: %1$s</string>
     <string name="edit_occlusions">تحرير الصور المُعَمَّاة</string>
-    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
+    <string name="paste_from_clipboard" maxLength="28">لصق من الحافظة</string>
     <string name="tag_name">اسم الوسم</string>
     <string name="add_new_filter_tags">إضافة وفرز الوسوم</string>
     <string name="add_tag" maxLength="28">إضافة وسم</string>
@@ -68,7 +68,7 @@
     <string name="enable_stylus" maxLength="28">تفعيل وضع القلم</string>
     <string name="disable_stylus">تعطيل وضع القلم</string>
     <string name="eraser" maxLength="28">ممحاة</string>
-    <string name="add_brush" maxLength="28">إضافة فرشةنعم</string>
+    <string name="add_brush" maxLength="28">إضافة فرشة</string>
     <string name="whiteboard_align_left" comment="Option to align the whiteboard toolbar on the left" maxLength="28">شمال</string>
     <string name="whiteboard_align_bottom" comment="Option to align the whiteboard toolbar on the bottom" maxLength="28">أسفل</string>
     <string name="whiteboard_align_right" comment="Option to align the whiteboard toolbar on the right" maxLength="28">يمين</string>
@@ -331,7 +331,7 @@
     <!-- IntentHandler -->
     <string name="app_not_initialized_new">لم يتم تمهيد آنكي درويد بعد. من فضلك إفتح آنكي درويد وحاول مجددًا</string>
     <!-- Deck Creation -->
-    <string name="deck_created">كيفية</string>
+    <string name="deck_created">تم إنشاء الرِزمة</string>
     <string name="deck_renamed">أُعيدت تسمية الرِزمة</string>
     <!-- Deck Deletion -->
     <string name="deck_shortcut_doesnt_exist">تم حذف الرزمة. يرجى حذف الاختصار</string>
