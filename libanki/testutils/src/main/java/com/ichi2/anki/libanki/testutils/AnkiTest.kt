@@ -335,4 +335,13 @@ interface AnkiTest {
     suspend fun TestScope.runTestInner(testBody: suspend TestScope.() -> Unit) {
         testBody()
     }
+
+    val Notetypes.basic
+        get() = byName("Basic")!!
+
+    val Notetypes.basicAndReversed
+        get() = byName("Basic (and reversed card)")!!
+
+    val Notetypes.cloze
+        get() = byName("Cloze")!!
 }

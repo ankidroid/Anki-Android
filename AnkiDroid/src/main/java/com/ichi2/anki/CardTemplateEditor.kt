@@ -127,7 +127,9 @@ open class CardTemplateEditor :
     AnkiActivity(R.layout.card_template_editor),
     DeckSelectionListener {
     private val binding by viewBinding(CardTemplateEditorBinding::bind)
-    private val topBinding: CardTemplateEditorTopBinding
+
+    @VisibleForTesting
+    val topBinding: CardTemplateEditorTopBinding
         get() = binding.templateEditorTop
 
     @VisibleForTesting
@@ -161,6 +163,23 @@ open class CardTemplateEditor :
         object : OnBackPressedCallback(false) {
             override fun handleOnBackPressed() {
                 showDiscardChangesDialog()
+            }
+        }
+
+    /**
+     * Triggered when a card template ('Card 1') is selected in the top tab view
+     */
+    private val onCardTemplateSelectedListener: TabLayout.OnTabSelectedListener =
+        object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab) {
+                Timber.i("selected card index: %s", tab.position)
+                loadTemplatePreviewerFragmentIfFragmented()
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab) {
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab) {
             }
         }
 
@@ -222,6 +241,8 @@ open class CardTemplateEditor :
         // Open TemplatePreviewerFragment if in fragmented mode
         loadTemplatePreviewerFragmentIfFragmented()
         onBackPressedDispatcher.addCallback(this, displayDiscardChangesCallback)
+
+        topBinding.slidingTabs.addOnTabSelectedListener(onCardTemplateSelectedListener)
     }
 
     /**
@@ -589,6 +610,7 @@ open class CardTemplateEditor :
             binding.bottomNavigation.setOnItemSelectedListener { item: MenuItem ->
                 val currentSelectedId = item.itemId
                 templateEditor.tabToViewId[cardIndex] = currentSelectedId
+                Timber.i("selected editor view: %s", item.title)
                 when (currentSelectedId) {
                     R.id.styling_edit ->
                         setCurrentEditorView(
@@ -677,20 +699,6 @@ open class CardTemplateEditor :
             binding.editText.post {
                 binding.editText.requestFocus()
             }
-
-            templateEditor.topBinding.slidingTabs.addOnTabSelectedListener(
-                object : TabLayout.OnTabSelectedListener {
-                    override fun onTabSelected(p0: TabLayout.Tab?) {
-                        templateEditor.loadTemplatePreviewerFragmentIfFragmented()
-                    }
-
-                    override fun onTabUnselected(p0: TabLayout.Tab?) {
-                    }
-
-                    override fun onTabReselected(p0: TabLayout.Tab?) {
-                    }
-                },
-            )
 
             parentFragmentManager.setFragmentResultListener(insertFieldRequestKey, viewLifecycleOwner) { key, bundle ->
                 // this is guaranteed to be non null, as we put a non null value on the other side

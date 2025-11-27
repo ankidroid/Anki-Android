@@ -28,7 +28,6 @@ import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.utils.ext.sharedPrefs
 import com.ichi2.anki.workarounds.SafeWebViewLayout
 import com.ichi2.utils.BundleUtils.getNullableInt
-import dev.androidbroadcast.vbpd.viewBinding
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
@@ -40,7 +39,7 @@ class TemplatePreviewerFragment :
         TemplatePreviewerViewModel.factory(arguments)
     }
 
-    val binding by viewBinding(TemplatePreviewerBinding::bind)
+    lateinit var binding: TemplatePreviewerBinding
 
     override val webViewLayout: SafeWebViewLayout get() = binding.webViewLayout
 
@@ -51,6 +50,10 @@ class TemplatePreviewerFragment :
         view: View,
         savedInstanceState: Bundle?,
     ) {
+        // binding must be set before super.onViewCreated
+        // as super.onViewCreated depends on webViewLayout, which depends on the binding
+        binding = TemplatePreviewerBinding.bind(view)
+
         super.onViewCreated(view, savedInstanceState)
 
         binding.showAnswer.setOnClickListener { viewModel.toggleShowAnswer() }
