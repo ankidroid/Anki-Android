@@ -222,16 +222,10 @@ object CollectionHelper {
      */
     private fun getAppSpecificExternalAnkiDroidDirectory(context: Context): String? {
         val externalFilesDir = context.getExternalFilesDir(null)
-
-        // This value *may* be null but we strictly require it. This has caused NullPointerException
-        // in previous releases as we dereference. We can't recover but for purposes of triage,
-        // we will now check for null and if so try to log more information about why.
+        // If it's null fall back to internal storage instead of crashing
         if (externalFilesDir == null) {
-            Timber.e("Attempting to determine collection path, but no valid external storage?")
-            throw SystemStorageException.build(
-                errorDetail = "getExternalFilesDir unexpectedly returned null",
-                infoUri = "https://github.com/ankidroid/Anki-Android/issues/13207",
-            )
+            Timber.w("getExternalFilesDir() returned null, falling back to internal filesDir")
+            return context.filesDir.absolutePath
         }
         return externalFilesDir.absolutePath
     }
