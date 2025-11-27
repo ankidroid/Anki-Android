@@ -17,9 +17,11 @@
 package com.ichi2.ui
 
 import android.content.Context
+import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.ichi2.anki.databinding.DialogAxisPickerBinding
 import com.ichi2.anki.reviewer.Axis
 import com.ichi2.anki.reviewer.Binding
@@ -33,10 +35,12 @@ import timber.log.Timber
  *
  * @see AxisSelector
  */
-class AxisPicker(
-    private val binding: DialogAxisPickerBinding,
-) {
-    val rootLayout = binding.root
+class AxisPicker : ConstraintLayout {
+    constructor(context: Context) : super(context)
+    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
+
+    val binding = DialogAxisPickerBinding.inflate(LayoutInflater.from(context))
 
     /** Maps from an [Axis] to the [AxisSelector] displaying + allowing selection of it */
     private val axisMap = mutableMapOf<Axis, AxisSelector>()
@@ -48,10 +52,8 @@ class AxisPicker(
     }
 
     init {
-        // We use a TextView to listen due to issues with handling AXIS_BRAKE and AXIS_GAS
-        // When listening to 'rootLayout', these axes are ONLY detected after another joystick is moved
-        binding.selectedAxisTextView.requestFocus()
-        binding.selectedAxisTextView.setOnGenericMotionListener { _, event -> handleMotionEvent(event) }
+        binding.root.requestFocus()
+        binding.root.setOnGenericMotionListener { _, event -> handleMotionEvent(event) }
     }
 
     @Suppress("SameReturnValue")
@@ -94,13 +96,6 @@ class AxisPicker(
 
             axisMap[axis] = view
             binding.availableAxes.addView(view)
-        }
-    }
-
-    companion object {
-        fun inflate(context: Context): AxisPicker {
-            val binding = DialogAxisPickerBinding.inflate(LayoutInflater.from(context))
-            return AxisPicker(binding)
         }
     }
 }
