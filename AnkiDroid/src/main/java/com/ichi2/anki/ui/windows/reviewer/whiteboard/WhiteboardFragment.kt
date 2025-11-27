@@ -353,7 +353,6 @@ class WhiteboardFragment :
             PopupWindow(popupBrushBinding.root, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true)
         strokeWidthPopup?.elevation = resources.getDimension(R.dimen.study_screen_elevation)
         strokeWidthPopup?.setOnDismissListener {
-            updateToolbarSelection()
             strokeWidthPopup = null
         }
 
