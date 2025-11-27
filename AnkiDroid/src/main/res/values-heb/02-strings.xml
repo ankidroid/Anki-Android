@@ -55,7 +55,7 @@
     <string name="CardEditorTags">תגיות: %1$s</string>
     <string name="CardEditorCards">כרטסיות: %1$s</string>
     <string name="edit_occlusions">ערוך חסימות</string>
-    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
+    <string name="paste_from_clipboard" maxLength="28">הדבק מן הלוח</string>
     <string name="tag_name">שם התיוג</string>
     <string name="add_new_filter_tags">הוסף/סנן תגיות</string>
     <string name="add_tag" maxLength="28">הוסף תג</string>
@@ -67,18 +67,18 @@
     <string name="save_whiteboard" maxLength="28">שמור לוח</string>
     <string name="enable_stylus" maxLength="28">הפעל מצב סטיילוס</string>
     <string name="disable_stylus">כבה מצב סטיילוס</string>
-    <string name="eraser" maxLength="28">Eraser</string>
-    <string name="add_brush" maxLength="28">Add brush</string>
-    <string name="whiteboard_align_left" comment="Option to align the whiteboard toolbar on the left" maxLength="28">Left</string>
-    <string name="whiteboard_align_bottom" comment="Option to align the whiteboard toolbar on the bottom" maxLength="28">Bottom</string>
-    <string name="whiteboard_align_right" comment="Option to align the whiteboard toolbar on the right" maxLength="28">Right</string>
-    <string name="whiteboard_clear" comment="Button text to clear the whiteboard" maxLength="28">Clear</string>
-    <string name="whiteboard_more_options" comment="Tooltip of the whiteboard \'More\' button" maxLength="28">More options</string>
-    <string name="whiteboard_remove_brush_message">Are you sure you want to remove this brush from your palette?</string>
-    <string name="whiteboard_ink_eraser" comment="Title of the whiteboard Ink eraser">Ink</string>
-    <string name="whiteboard_stroke_eraser" comment="Title of the whiteboard Stroke eraser">Stroke</string>
-    <string name="stylus_mode" comment="Title of the menu item that toggles the whiteboard stylus mode" maxLength="28">Stylus mode</string>
-    <string name="cannot_remove_last_brush_message">The last brush may not be removed</string>
+    <string name="eraser" maxLength="28">מחק</string>
+    <string name="add_brush" maxLength="28">הוסף מברשת</string>
+    <string name="whiteboard_align_left" comment="Option to align the whiteboard toolbar on the left" maxLength="28">שמאלה</string>
+    <string name="whiteboard_align_bottom" comment="Option to align the whiteboard toolbar on the bottom" maxLength="28">למטה</string>
+    <string name="whiteboard_align_right" comment="Option to align the whiteboard toolbar on the right" maxLength="28">ימין</string>
+    <string name="whiteboard_clear" comment="Button text to clear the whiteboard" maxLength="28">ניקוי</string>
+    <string name="whiteboard_more_options" comment="Tooltip of the whiteboard \'More\' button" maxLength="28">אפשרויות נוספות</string>
+    <string name="whiteboard_remove_brush_message">האם אתה בטוח שאתה רוצה להסיר את המברשת הזו מהפלטה שלך?</string>
+    <string name="whiteboard_ink_eraser" comment="Title of the whiteboard Ink eraser">דיו</string>
+    <string name="whiteboard_stroke_eraser" comment="Title of the whiteboard Stroke eraser">קו חוצה</string>
+    <string name="stylus_mode" comment="Title of the menu item that toggles the whiteboard stylus mode" maxLength="28">מצב סטיילוס</string>
+    <string name="cannot_remove_last_brush_message">ייתכן שלא ניתן להסיר את המברשת האחרונה</string>
     <string name="enable_whiteboard" maxLength="28">לאפשר ציור</string>
     <string name="disable_whiteboard">בטל הציור</string>
     <string name="show_whiteboard">הצג לוח ציור</string>
@@ -97,7 +97,7 @@
     <string name="webview_crash_fatal">שגיאה קריטית: הדמיית ה WebView קרסה. הסיבה: %s</string>
     <string name="webview_crash_loop_dialog_title">נכשלה הדמיית WebView של המערכת.</string>
     <string name="webview_crash_loop_dialog_content">מנוע התצוגה נכשל להציג את הכרטיס: %1$s. \n %2$s</string>
-    <string name="slide_to_cancel" comment="Message shown when pressing the record button">Slide to cancel</string>
+    <string name="slide_to_cancel" comment="Message shown when pressing the record button">החלק כדי לבטל</string>
     <string name="filter_by_flags" maxLength="41">דגלים</string>
     <!-- Custom study options -->
     <string name="custom_study_loading_tags">בניית רשימת תגיות&#8230;</string>
@@ -241,7 +241,7 @@
     <string name="search_decks" maxLength="28">חיפוש בחפיסות</string>
     <string name="ankidroid_init_failed_webview_title">שגיאה מכרעת</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid משתמש בדפדפן המערכת שאינו זמין. זה קורה לפעמים אם המערכת מתקינה עדכונים. נא נסה שנית בעוד כמה דקות. \n\n%s</string>
-    <string name="ankidroid_init_failed_storage">AnkiDroid cannot access storage due to an Android error.\n\n%s</string>
+    <string name="ankidroid_init_failed_storage">ל-AnkiDroid אין גישה לאחסון עקב שגיאת אנדרואיד.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">גודל גופן</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">הצגת סרגל הכלים</string>

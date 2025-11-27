@@ -124,8 +124,8 @@
     <string name="multimedia_editor_failed">Error al abrir el Editor Multimedia</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Permiso de grabación de audio denegado</string>
-    <string name="permission_denied">Permission denied</string>
-    <string name="recording_permission_denied_message">Microphone permission is necessary for the “Record voice” feature. Please grant it in the app settings.</string>
+    <string name="permission_denied">Permiso denegado</string>
+    <string name="recording_permission_denied_message">Acceso al micrófono necesario para la función \"Grabación de voz\". Por favor actívelo en los ajustes de la aplicación.</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid actualizado</string>
     <string name="integrity_check_startup_content">AnkiDroid ha sido actualizado. Esta actualización incluye correcciones para posibles problemas de base de datos, y le aconsejamos que comprueba la base de datos ahora.</string>
@@ -162,10 +162,10 @@
     <string name="locale_selection_dialog_summary">Algunos teclados multilingües, tales como el soporte de GBoard para cambiar el idioma cuando se edite el texto\n\nSolicite la función \"setImeHintLocales\" de su fabricante de teclado si su teclado no cambia el idioma.</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">Usando AnkiDroid</string>
-    <string name="help_item_ankidroid_manual">AnkiDroid manual</string>
-    <string name="help_item_anki_manual">Anki manual</string>
+    <string name="help_item_ankidroid_manual">Manual de AnkiDroid</string>
+    <string name="help_item_anki_manual">Manuela de Anki</string>
     <string name="help_item_ankidroid_faq">Preguntas frecuentes de AnkiDroid</string>
-    <string name="help_title_get_help">Get help</string>
+    <string name="help_title_get_help">Obtener ayuda</string>
     <string name="help_item_mailing_list">Mailing list</string>
     <string name="help_item_reddit">Reddit</string>
     <string name="help_item_report_bug">Report a bug</string>

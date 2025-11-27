@@ -47,7 +47,7 @@
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Abrir cajón</string>
     <string name="drawer_close">Cerrar cajón</string>
-    <string name="note_message">Note saved</string>
+    <string name="note_message">Nota guardada</string>
     <!-- Note editor screen -->
     <string name="CardEditorCardDeck">Mazo de tarjetas:</string>
     <string name="CardEditorNoteDeck">Mazo:</string>
@@ -55,7 +55,7 @@
     <string name="CardEditorTags">Etiquetas: %1$s</string>
     <string name="CardEditorCards">Tarjetas: %1$s</string>
     <string name="edit_occlusions">Editar Oclusiones</string>
-    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
+    <string name="paste_from_clipboard" maxLength="28">Pegar desde el portapapeles</string>
     <string name="tag_name">Nombre de la etiqueta</string>
     <string name="add_new_filter_tags">Añadir/filtrar etiquetas</string>
     <string name="add_tag" maxLength="28">Añadir etiqueta</string>
@@ -67,26 +67,26 @@
     <string name="save_whiteboard" maxLength="28">Guardar pizarra</string>
     <string name="enable_stylus" maxLength="28">Activar el modo del lápiz óptico</string>
     <string name="disable_stylus">Desactivar el modo del lápiz óptico</string>
-    <string name="eraser" maxLength="28">Eraser</string>
-    <string name="add_brush" maxLength="28">Add brush</string>
-    <string name="whiteboard_align_left" comment="Option to align the whiteboard toolbar on the left" maxLength="28">Left</string>
-    <string name="whiteboard_align_bottom" comment="Option to align the whiteboard toolbar on the bottom" maxLength="28">Bottom</string>
-    <string name="whiteboard_align_right" comment="Option to align the whiteboard toolbar on the right" maxLength="28">Right</string>
-    <string name="whiteboard_clear" comment="Button text to clear the whiteboard" maxLength="28">Clear</string>
-    <string name="whiteboard_more_options" comment="Tooltip of the whiteboard \'More\' button" maxLength="28">More options</string>
-    <string name="whiteboard_remove_brush_message">Are you sure you want to remove this brush from your palette?</string>
-    <string name="whiteboard_ink_eraser" comment="Title of the whiteboard Ink eraser">Ink</string>
-    <string name="whiteboard_stroke_eraser" comment="Title of the whiteboard Stroke eraser">Stroke</string>
-    <string name="stylus_mode" comment="Title of the menu item that toggles the whiteboard stylus mode" maxLength="28">Stylus mode</string>
-    <string name="cannot_remove_last_brush_message">The last brush may not be removed</string>
+    <string name="eraser" maxLength="28">Borrador</string>
+    <string name="add_brush" maxLength="28">Añadir pincel</string>
+    <string name="whiteboard_align_left" comment="Option to align the whiteboard toolbar on the left" maxLength="28">Izquierda</string>
+    <string name="whiteboard_align_bottom" comment="Option to align the whiteboard toolbar on the bottom" maxLength="28">Abajo</string>
+    <string name="whiteboard_align_right" comment="Option to align the whiteboard toolbar on the right" maxLength="28">Derecha</string>
+    <string name="whiteboard_clear" comment="Button text to clear the whiteboard" maxLength="28">Limpiar</string>
+    <string name="whiteboard_more_options" comment="Tooltip of the whiteboard \'More\' button" maxLength="28">Más opciones</string>
+    <string name="whiteboard_remove_brush_message">¿Está seguro que quiere eliminar este pincel de la paleta?</string>
+    <string name="whiteboard_ink_eraser" comment="Title of the whiteboard Ink eraser">Tinta</string>
+    <string name="whiteboard_stroke_eraser" comment="Title of the whiteboard Stroke eraser">Pincelada</string>
+    <string name="stylus_mode" comment="Title of the menu item that toggles the whiteboard stylus mode" maxLength="28">Modo de stylus</string>
+    <string name="cannot_remove_last_brush_message">El último pincel no puede eliminarse</string>
     <string name="enable_whiteboard" maxLength="28">Activar pizarra</string>
     <string name="disable_whiteboard">Desactivar pizarra</string>
     <string name="show_whiteboard">Mostrar pizarra</string>
-    <string name="enable_eraser" maxLength="28">Enable eraser</string>
-    <string name="disable_eraser" maxLength="28">Disable eraser</string>
+    <string name="enable_eraser" maxLength="28">Activar borrador</string>
+    <string name="disable_eraser" maxLength="28">Desactivar borrador</string>
     <string name="hide_whiteboard" maxLength="28">Ocultar pizarra</string>
     <string name="clear_whiteboard" maxLength="28">Limpiar pizarra</string>
-    <string name="replay_media" maxLength="28">Replay media</string>
+    <string name="replay_media" maxLength="28">Reproducir media</string>
     <string name="leech_suspend_notification">Tarjeta marcada como sanguijuela y suspendida</string>
     <string name="leech_notification">Tarjeta marcada como sanguijuela</string>
     <string name="webview_crash_unknown">Error desconocido</string>
@@ -97,7 +97,7 @@
     <string name="webview_crash_fatal">Error fatal: El renderizador de WebView se cayó. Causa: %s</string>
     <string name="webview_crash_loop_dialog_title">Fallo de procesamiento de WebView del sistema</string>
     <string name="webview_crash_loop_dialog_content">WebView del sistema no pudo procesar la tarjeta \'%1$s\'.\n %2$s</string>
-    <string name="slide_to_cancel" comment="Message shown when pressing the record button">Slide to cancel</string>
+    <string name="slide_to_cancel" comment="Message shown when pressing the record button">Deslizar para cancelar</string>
     <string name="filter_by_flags" maxLength="41">Banderas</string>
     <!-- Custom study options -->
     <string name="custom_study_loading_tags">Creando lista de etiquetas&#8230;</string>
@@ -124,10 +124,10 @@
     <string name="missing_note_type">No se encontró ningún tipo de nota</string>
     <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (vacío)</string>
     <!-- Image cropper -->
-    <string name="image_cropper_action_rotate" maxLength="28" comment="Action in image cropper screen">Rotate</string>
-    <string name="image_cropper_action_flip" maxLength="28" comment="Action in image cropper screen">Flip</string>
-    <string name="image_cropper_action_flip_horizontally" maxLength="28" comment="Submenu action in image cropper screen">Flip horizontally</string>
-    <string name="image_cropper_action_flip_vertically" maxLength="28" comment="Submenu action in image cropper screen">Flip vertically</string>
+    <string name="image_cropper_action_rotate" maxLength="28" comment="Action in image cropper screen">Girar</string>
+    <string name="image_cropper_action_flip" maxLength="28" comment="Action in image cropper screen">Invertir</string>
+    <string name="image_cropper_action_flip_horizontally" maxLength="28" comment="Submenu action in image cropper screen">Invertir horizontalmente</string>
+    <string name="image_cropper_action_flip_vertically" maxLength="28" comment="Submenu action in image cropper screen">Invertir verticalmente</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">Límite de tiempo alcanzado</string>
     <plurals name="timebox_reached">
@@ -165,9 +165,9 @@
     <string name="import_error_handle_exception">Error al importar el archivo\n\n%s</string>
     <string name="import_error_not_apkg_extension">El nombre de archivo “%s” no tiene extensión .apkg o .colpkg</string>
     <string name="import_error_load_imported_database">Los reemplazos de la base de datos de Anki (.anki2) aún no están soportados. Consulta el manual para obtener instrucciones de reemplazo.</string>
-    <string name="import_error_content_provider">AnkiDroid no ha podido importar automáticamente el archivo seleccionado. Por favor, lee el manual de usuario sobre como importar manualmente Anki files: \n %s</string>
-    <string name="import_error_copy_to_cache">Error al almacenar el archivo en caché (posiblemente fuera de espacio de almacenamiento)</string>
-    <string name="import_interrupted">Importación interrumpida</string>
+    <string name="import_error_content_provider">AnkiDroid no ha podido importar automáticamente el archivo seleccionado. Por favor, lea el manual de usuario sobre como importar manualmente Anki files: \n %s</string>
+    <string name="import_error_copy_to_cache">Error al almacenar el archivo en caché (posiblemente sin almacenamiento disponible)</string>
+    <string name="import_interrupted">Importación interrumpida: AnkiDroid se cerró</string>
     <string name="export_ready_title">Exportación preparada</string>
     <string name="export_send_no_handlers">No hay aplicaciones disponibles para manejar apkg. Guardando&#8230;</string>
     <string name="export_save_apkg_successful">Paquete Anki guardado correctamente</string>
@@ -189,7 +189,7 @@
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Opciones de estudio</string>
     <string name="select_tts" maxLength="28">Establecer idioma TTS</string>
     <string name="custom_study" maxLength="28">Estudio personalizado</string>
-    <string name="dyn_deck_desc">Esta es un mazo especial para estudiar aparte del programa habitual. Las cartas se devolverán automáticamente a sus mazos originales después de que las revises. Borrar este mazo de la lista de mazos devolverá todas las cartas restantes a su mazo original.</string>
+    <string name="dyn_deck_desc">Éste es un mazo especial para estudiar aparte del programa habitual. Las cartas se devolverán automáticamente a sus mazos originales después de que las revises. Borrar este mazo de la lista de mazos devolverá todas las cartas restantes a su mazo original.</string>
     <string name="steps_error">Los pasos deben ser un número mayor que 0</string>
     <string name="steps_min_error">Se requiere al menos un paso</string>
     <string name="tag_editor_add_feedback">Tocar \"%2$s\" para confirmar la adición de \"%1$s\"</string>
@@ -213,7 +213,7 @@
     <string name="reviewer_tts_cloze_spoken_replacement">En blanco</string>
     <!-- Whiteboard eraser mode toggle message in Reviewer -->
     <string name="white_board_eraser_enabled">Modo borrador activado</string>
-    <string name="white_board_eraser_disabled">Eraser mode deactivated</string>
+    <string name="white_board_eraser_disabled">Modo borrador desactivado</string>
     <!-- Whiteboard save image message in the Study Screen -->
     <string name="white_board_image_save_failed">No se pudo guardar la imagen de pizarra. %s</string>
     <string name="white_board_image_saved">Imagen de pizarra guardada en %s</string>
@@ -235,7 +235,7 @@
     <string name="search_decks" maxLength="28">Buscar mazos</string>
     <string name="ankidroid_init_failed_webview_title">Error fatal</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid confía en la WebView del sistema, que no está disponible. Esto puede suceder si el sistema está instalando actualizaciones. Por favor, inténtalo de nuevo en unos minutos.\n\n%s</string>
-    <string name="ankidroid_init_failed_storage">AnkiDroid cannot access storage due to an Android error.\n\n%s</string>
+    <string name="ankidroid_init_failed_storage">AnkiDroid no puede acceder al almacenamiento debido a un error de Android.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">Tamaño de Letra</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Mostrar barra de herramientas</string>
@@ -272,7 +272,7 @@
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
     <string name="download_deck">Descargar mazo</string>
-    <string name="open_in_browser" comment="Label of a button inviting to open ankiweb\'s shared deck page if automated download failed">Open in browser</string>
+    <string name="open_in_browser" comment="Label of a button inviting to open ankiweb\'s shared deck page if automated download failed">Abrir en el navegador</string>
     <string name="try_again">Inténtalo de nuevo</string>
     <string name="cancel_download">Cancelar descarga</string>
     <string name="cancel_download_question_title">¿Cancelar descarga?</string>
@@ -337,9 +337,9 @@
     <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">Error al abrir la configuración de texto a voz</string>
     <string name="shared_decks_login_required">Por favor, inicia sesión para descargar más mazos</string>
     <string name="deck_description_field_hint">Descripción</string>
-    <string name="deck_description_saved">Description updated</string>
+    <string name="deck_description_saved">Descripción actualizada</string>
     <string name="format_deck_description_as_markdown">Format as Markdown</string>
-    <string name="help_button_content_description">Open help for ‘%s’</string>
+    <string name="help_button_content_description">Abrir ayuda para \'%s\'</string>
     <string name="failed_to_copy">Error al copiar</string>
     <string name="card_browser_unavailable_when_notes_mode">No disponible en modo \'Notas\'</string>
     <plurals name="unbury_cards_feedback">

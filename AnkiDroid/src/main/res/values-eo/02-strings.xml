@@ -55,7 +55,7 @@
     <string name="CardEditorTags">Etikedoj: %1$s</string>
     <string name="CardEditorCards">Kartoj: %1$s</string>
     <string name="edit_occlusions">Redakti vualojn</string>
-    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
+    <string name="paste_from_clipboard" maxLength="28">Alglui el tondujo</string>
     <string name="tag_name">Nomo de etikedo</string>
     <string name="add_new_filter_tags">Aldoni/filtri etikedojn</string>
     <string name="add_tag" maxLength="28">Aldoni etikedon</string>
@@ -235,7 +235,7 @@
     <string name="search_decks" maxLength="28">Serĉi en kartaroj</string>
     <string name="ankidroid_init_failed_webview_title">Neriparebla eraro</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid necesas la komponanton System WebView, kiu estas nedisponebla. Tio ĉi povas okazi, kiam la operaciumo instalas ĝisdatigojn. Reprovu post kelkaj minutoj.\n\n%s</string>
-    <string name="ankidroid_init_failed_storage">AnkiDroid cannot access storage due to an Android error.\n\n%s</string>
+    <string name="ankidroid_init_failed_storage">AnkiDroid ne povas aliri konservejon pro eraro rilata al Android.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">Grando de tiparo</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Montri ilarstrion</string>
