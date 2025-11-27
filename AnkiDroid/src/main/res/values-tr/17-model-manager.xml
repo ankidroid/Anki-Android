@@ -45,7 +45,6 @@
     </plurals>
     <!--Browser-->
     <string name="model_browser_delete">Not türünü sil</string>
-    <string name="model_browser_rename" comment="Rename a note type">Adını değiştir</string>
     <string name="model_browser_template">Kartları düzenle</string>
     <!--Rename-->
     <string name="rename_model">Not türünün adını değiştir</string>
@@ -62,6 +61,12 @@
     <string name="model_field_editor_sort_field">Bu alana göre sırala</string>
     <!--Warnings-->
     <string name="model_delete_warning">Bu not türünü silmek istediğinize emin misiniz?</string>
+    <!--
+        Example output:
+        Delete the note types below?
+        Basic, Basic (and reversed card), Cloze
+     -->
+    <string name="model_delete_multiple_warning">Delete the note types below?\n %s</string>
     <string name="field_delete_warning">Bu alanı silmek istediğinize emin misiniz?</string>
     <!--Model Add Suffixes-->
     <string name="model_browser_add_add">Ekle: %1$s</string>

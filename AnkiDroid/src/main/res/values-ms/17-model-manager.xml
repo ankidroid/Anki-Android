@@ -43,7 +43,6 @@
     </plurals>
     <!--Browser-->
     <string name="model_browser_delete">Padam jenis nota</string>
-    <string name="model_browser_rename" comment="Rename a note type">Nama semula</string>
     <string name="model_browser_template">Sunting kad</string>
     <!--Rename-->
     <string name="rename_model">Nama semula jenis nota</string>
@@ -60,6 +59,12 @@
     <string name="model_field_editor_sort_field">Susun ikut medan ini</string>
     <!--Warnings-->
     <string name="model_delete_warning">Anda pasti ingin memadam jenis nota ini?</string>
+    <!--
+        Example output:
+        Delete the note types below?
+        Basic, Basic (and reversed card), Cloze
+     -->
+    <string name="model_delete_multiple_warning">Delete the note types below?\n %s</string>
     <string name="field_delete_warning">Anda pasti ingin menghapuskan medan ini?</string>
     <!--Model Add Suffixes-->
     <string name="model_browser_add_add">Add: %1$s</string>

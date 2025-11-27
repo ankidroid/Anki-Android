@@ -306,6 +306,10 @@
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">Failed to access collection. Please try again!</string>
     <string name="cd_manage_notetypes_add">Add a new note type</string>
+    <plurals name="note_types_selected">
+        <item quantity="one">%d note type selected</item>
+        <item quantity="other">%d note types selected</item>
+    </plurals>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">Study less</string>
     <string name="intro_ankidroid_tagline_two">Remember more</string>

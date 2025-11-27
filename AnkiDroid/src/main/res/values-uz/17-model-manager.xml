@@ -45,7 +45,6 @@
     </plurals>
     <!--Browser-->
     <string name="model_browser_delete">Karta turini oʻchirish</string>
-    <string name="model_browser_rename" comment="Rename a note type">Nomini oʻzgartirish</string>
     <string name="model_browser_template">Kartalarni tahrirlash</string>
     <!--Rename-->
     <string name="rename_model">Qayd turi nomini oʻzgartirish</string>
@@ -62,6 +61,12 @@
     <string name="model_field_editor_sort_field">Bu maydon boʻyicha saralash</string>
     <!--Warnings-->
     <string name="model_delete_warning">Rostdan ham bu qayd turini oʻchirib tashlamoqchimisiz?</string>
+    <!--
+        Example output:
+        Delete the note types below?
+        Basic, Basic (and reversed card), Cloze
+     -->
+    <string name="model_delete_multiple_warning">Delete the note types below?\n %s</string>
     <string name="field_delete_warning">Rostdan ham bu maydonni oʻchirib tashlamoqchimisiz?</string>
     <!--Model Add Suffixes-->
     <string name="model_browser_add_add">Qoʻsh: %1$s</string>

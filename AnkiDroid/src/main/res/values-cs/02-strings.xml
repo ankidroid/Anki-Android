@@ -314,6 +314,12 @@
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">Přístup ke kolekci se nezdařil. Zkuste to prosím znovu!</string>
     <string name="cd_manage_notetypes_add">Přidat nový typ poznámky</string>
+    <plurals name="note_types_selected">
+        <item quantity="one">%d note type selected</item>
+        <item quantity="few">%d note types selected</item>
+        <item quantity="many">%d note types selected</item>
+        <item quantity="other">%d note types selected</item>
+    </plurals>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">Studujte méně</string>
     <string name="intro_ankidroid_tagline_two">Pamatujte si více</string>
