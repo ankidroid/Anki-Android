@@ -31,8 +31,8 @@ import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
 import timber.log.Timber
 
-internal const val OLDEST_WORKING_WEBVIEW_VERSION_CODE = 386507305L
-internal const val OLDEST_WORKING_WEBVIEW_VERSION = 77
+internal const val OLDEST_WORKING_WEBVIEW_VERSION_CODE = 418306960L
+internal const val OLDEST_WORKING_WEBVIEW_VERSION = 85
 
 /**
  * Shows a dialog if the current WebView version is older than the last supported version.
