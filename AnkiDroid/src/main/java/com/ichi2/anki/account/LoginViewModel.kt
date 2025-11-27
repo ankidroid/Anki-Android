@@ -24,6 +24,7 @@ import androidx.lifecycle.viewModelScope
 import anki.sync.SyncAuth
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
+import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.settings.Prefs
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -77,6 +78,7 @@ class LoginViewModel : ViewModel() {
      * @param password The password entered by the user.
      * @param endpoint An endpoint for authentication.
      */
+    @NeedsTest("updateLogin/_loginState changes after an exception")
     fun handleLogin(
         username: String,
         password: String,
@@ -89,6 +91,8 @@ class LoginViewModel : ViewModel() {
                 _loginState.value = LoginState.Success
             } catch (exc: BackendSyncException.BackendSyncAuthFailedException) {
                 updateLogin("", "")
+                _loginState.value = LoginState.Error(exc)
+            } catch (exc: Exception) {
                 _loginState.value = LoginState.Error(exc)
             }
         }
