@@ -791,7 +791,10 @@ class NoteEditorFragment :
                         setupImageOcclusionEditor(path)
                     }
                 } else {
-                    showSnackbar(TR.editingNoImageFoundOnClipboard())
+                    // Show the Snackbar via the Activity root view
+                    // because a snackbars via NoteEditorFragment root view would be invisible
+                    // when the note editor is initially loaded with Image Occlusion note type.
+                    requireActivity().showSnackbar(TR.editingNoImageFoundOnClipboard())
                 }
             }
         } else {
