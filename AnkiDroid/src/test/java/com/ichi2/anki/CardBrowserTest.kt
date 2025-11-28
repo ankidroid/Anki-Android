@@ -872,9 +872,10 @@ class CardBrowserTest : RobolectricTest() {
 
     /** PR #14859  */
     @Test
-    fun checkDisplayOrderAfterTogglingCardsToNotes() {
-        browserWithNoNewCards.apply {
+    fun checkDisplayOrderAfterTogglingCardsToNotes() =
+        withBrowser {
             viewModel.changeCardOrder(SortType.EASE) // order no. 7 corresponds to "cardEase"
+
             viewModel.changeCardOrder(SortType.EASE) // reverse the list
 
             viewModel.setCardsOrNotes(NOTES)
@@ -891,7 +892,6 @@ class CardBrowserTest : RobolectricTest() {
                 equalTo(true),
             )
         }
-    }
 
     data class CheckedCardResult(
         val row: BrowserRow,
@@ -1681,13 +1681,13 @@ val CardBrowser.columnHeadings
     get() =
         columnHeadingViews.map { it.text.toString() }
 
-fun CardBrowser.searchCards(search: String? = null) {
+suspend fun CardBrowser.searchCards(search: String? = null) {
     if (search != null) {
         viewModel.launchSearchForCards(search)
     } else {
         viewModel.launchSearchForCards()
     }
-    runBlocking { viewModel.searchJob?.join() }
+    viewModel.searchJob?.join()
 }
 
 fun CardBrowser.showFindAndReplaceDialog() = cardBrowserFragment.showFindAndReplaceDialog()
