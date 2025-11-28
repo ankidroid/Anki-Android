@@ -482,8 +482,9 @@ class NoteEditorFragment :
             }
 
     override val baseSnackbarBuilder: SnackbarBuilder = {
-        if (sharedPrefs().getBoolean(PREF_NOTE_EDITOR_SHOW_TOOLBAR, true)) {
-            anchorView = requireView().findViewById<Toolbar>(R.id.editor_toolbar)
+        val view = this@NoteEditorFragment.view?.findViewById<Toolbar?>(R.id.editor_toolbar)
+        if (view?.isVisible == true) {
+            anchorView = view
         }
     }
 
