@@ -17,7 +17,6 @@ package com.ichi2.anki.ui.windows.reviewer
 
 import androidx.lifecycle.SavedStateHandle
 import anki.collection.OpChanges
-import anki.collection.OpChangesAfterUndo
 import anki.frontend.SetSchedulingStatesRequest
 import anki.scheduler.CardAnswer.Rating
 import com.ichi2.anki.AbstractFlashcardViewer
@@ -35,11 +34,9 @@ import com.ichi2.anki.libanki.Card
 import com.ichi2.anki.libanki.CardId
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.NoteId
-import com.ichi2.anki.libanki.redoAvailable
 import com.ichi2.anki.libanki.redoLabel
 import com.ichi2.anki.libanki.sched.Counts
 import com.ichi2.anki.libanki.sched.CurrentQueueState
-import com.ichi2.anki.libanki.undoAvailable
 import com.ichi2.anki.libanki.undoLabel
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import com.ichi2.anki.observability.ChangeManager
@@ -61,6 +58,8 @@ import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.anki.servicelayer.isBuryNoteAvailable
 import com.ichi2.anki.servicelayer.isSuspendNoteAvailable
 import com.ichi2.anki.settings.Prefs
+import com.ichi2.anki.tryRedo
+import com.ichi2.anki.tryUndo
 import com.ichi2.anki.ui.windows.reviewer.autoadvance.AutoAdvance
 import com.ichi2.anki.utils.CollectionPreferences
 import com.ichi2.anki.utils.Destination
@@ -347,46 +346,18 @@ class ReviewerViewModel(
 
     private suspend fun undo() {
         Timber.v("ReviewerViewModel::undo")
-        val changes =
-            undoableOp {
-                if (undoAvailable()) {
-                    undo()
-                } else {
-                    OpChangesAfterUndo.getDefaultInstance()
-                }
-            }
-        val message =
-            if (changes.operation.isEmpty()) {
-                TR.actionsNothingToUndo()
-            } else {
-                TR.undoActionUndone(changes.operation)
-            }
-        actionFeedbackFlow.emit(message)
+        actionFeedbackFlow.emit(tryUndo())
     }
 
     private suspend fun redo() {
         Timber.v("ReviewerViewModel::redo")
-        val changes =
-            undoableOp {
-                if (redoAvailable()) {
-                    redo()
-                } else {
-                    OpChangesAfterUndo.getDefaultInstance()
-                }
-            }
-        val message =
-            if (changes.operation.isEmpty()) {
-                TR.actionsNothingToRedo()
-            } else {
-                TR.undoRedoAction(changes.operation)
-            }
-        actionFeedbackFlow.emit(message)
+        actionFeedbackFlow.emit(tryRedo())
     }
 
     private suspend fun userAction(
         @Reviewer.UserAction number: Int,
     ) {
-        eval.emit("javascript: ankidroid.userAction($number);")
+        eval.emit("ankidroid.userAction($number);")
     }
 
     fun stopAutoAdvance() {
