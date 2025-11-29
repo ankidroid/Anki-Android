@@ -18,6 +18,7 @@ package com.ichi2.anki.previewer
 import android.os.Parcelable
 import androidx.annotation.CheckResult
 import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.viewModelScope
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.NotetypeFile
@@ -32,11 +33,11 @@ import com.ichi2.anki.libanki.NotetypeJson
 import com.ichi2.anki.libanki.clozeNumbersInNote
 import com.ichi2.anki.pages.AnkiServer
 import com.ichi2.anki.reviewer.CardSide
+import com.ichi2.anki.utils.ext.collectLatestIn
 import com.ichi2.anki.utils.ext.require
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.parcelize.Parcelize
 import org.intellij.lang.annotations.Language
 import org.jetbrains.annotations.VisibleForTesting
@@ -139,6 +140,9 @@ class TemplatePreviewerViewModel(
                     }
                 }
         }
+        ordFlow.collectLatestIn(viewModelScope) { ord ->
+            loadCard(ord)
+        }
     }
 
     /* *********************************************************************************************
@@ -151,24 +155,9 @@ class TemplatePreviewerViewModel(
             launchCatchingIO {
                 if (showingAnswer.value) showAnswer() else showQuestion()
             }
-            return
-        }
-        launchCatchingIO {
-            ordFlow.collectLatest { ord ->
-                currentCard =
-                    asyncIO {
-                        val note = note.await()
-                        withCol {
-                            note.ephemeralCard(
-                                col = this,
-                                ord = ord,
-                                customNoteType = notetype,
-                                fillEmpty = fillEmpty,
-                            )
-                        }
-                    }
-                showQuestion()
-                loadAndPlaySounds(CardSide.QUESTION)
+        } else {
+            launchCatchingIO {
+                loadCard(ordFlow.value)
             }
         }
     }
@@ -215,6 +204,23 @@ class TemplatePreviewerViewModel(
     private suspend fun loadAndPlaySounds(side: CardSide) {
         cardMediaPlayer.loadCardAvTags(currentCard.await())
         cardMediaPlayer.autoplayAllForSide(side)
+    }
+
+    private suspend fun loadCard(ord: Int) {
+        currentCard =
+            asyncIO {
+                val note = note.await()
+                withCol {
+                    note.ephemeralCard(
+                        col = this,
+                        ord = ord,
+                        customNoteType = notetype,
+                        fillEmpty = fillEmpty,
+                    )
+                }
+            }
+        showQuestion()
+        loadAndPlaySounds(CardSide.QUESTION)
     }
 
     // https://github.com/ankitects/anki/blob/df70564079f53e587dc44f015c503fdf6a70924f/qt/aqt/clayout.py#L579
