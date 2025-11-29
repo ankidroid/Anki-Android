@@ -109,9 +109,37 @@ class RecyclerFastScroller
             object : RecyclerView.AdapterDataObserver() {
                 override fun onChanged() {
                     super.onChanged()
+                    // Reset cached scroll range and visible extent when adapter changes
+                    cachedMaxScrollRange = 0
+                    cachedVisibleExtent = 0
+                    lastRecyclerViewHeight = 0
+                    cachedHandleHeight = 0
+                    cachedBarHeight = 0
                     requestLayout()
                 }
             }
+
+        /**
+         * Cached maximum scroll range to prevent thumb size from changing during scroll.
+         * RecyclerView's computeVerticalScrollRange() can vary when items have different heights,
+         * so we cache the maximum value we've seen to keep the thumb size stable.
+         */
+        private var cachedMaxScrollRange: Int = 0
+
+        /**
+         * Cached visible extent to prevent thumb size from changing during scroll.
+         * RecyclerView's computeVerticalScrollExtent() can vary slightly during scroll,
+         * so we cache it and only update when the RecyclerView is resized.
+         */
+        private var cachedVisibleExtent: Int = 0
+        private var lastRecyclerViewHeight: Int = 0
+
+        /**
+         * Cached handle height to prevent jitter during scroll.
+         * Only update when there's a significant change (> 2px difference).
+         */
+        private var cachedHandleHeight: Int = 0
+        private var cachedBarHeight: Int = 0
 
         var touchTargetWidth: Int = 24.dp.toPx(context)
             /**
@@ -314,6 +342,12 @@ class RecyclerFastScroller
             this.adapter?.unregisterAdapterDataObserver(adapterObserver)
             adapter?.registerAdapterDataObserver(adapterObserver)
             this.adapter = adapter
+            // Reset cached scroll range and visible extent when adapter changes
+            cachedMaxScrollRange = 0
+            cachedVisibleExtent = 0
+            lastRecyclerViewHeight = 0
+            cachedHandleHeight = 0
+            cachedBarHeight = 0
         }
 
         /**
@@ -379,18 +413,61 @@ class RecyclerFastScroller
             if (recyclerView == null) return
 
             val scrollOffset = recyclerView!!.computeVerticalScrollOffset() + appBarLayoutOffset
-            val verticalScrollRange = (
+            val currentScrollRange = (
                 recyclerView!!.computeVerticalScrollRange() +
                     recyclerView!!.paddingBottom
             )
 
-            val barHeight = bar.height
-            val ratio = scrollOffset.toFloat() / (verticalScrollRange - barHeight)
-
-            var calculatedHandleHeight = (barHeight.toFloat() / verticalScrollRange * barHeight).toInt()
-            if (calculatedHandleHeight < minScrollHandleHeight) {
-                calculatedHandleHeight = minScrollHandleHeight
+            // Update cached maximum scroll range if we see a larger value.
+            // This prevents the thumb size from changing when items with different heights
+            // scroll in and out of view, which can cause computeVerticalScrollRange() to vary.
+            // This also handles initialization when cachedMaxScrollRange is 0.
+            if (currentScrollRange > cachedMaxScrollRange) {
+                cachedMaxScrollRange = currentScrollRange
             }
+
+            val barHeight = bar.height
+
+            // Use current range for position calculation (for accurate thumb position)
+            val ratio = scrollOffset.toFloat() / (currentScrollRange - barHeight).coerceAtLeast(1)
+
+            // ALWAYS use cached maximum for thumb height calculation to keep it stable during scroll.
+            // The cached max represents the true maximum content height we've seen,
+            // preventing the thumb from resizing as items with different heights scroll in/out of view.
+            val verticalScrollRangeForThumb = cachedMaxScrollRange.coerceAtLeast(currentScrollRange)
+
+            // Cache visible extent and only update when RecyclerView is resized to prevent jitter
+            val currentRecyclerViewHeight = recyclerView!!.height
+            if (currentRecyclerViewHeight != lastRecyclerViewHeight || cachedVisibleExtent == 0) {
+                cachedVisibleExtent = recyclerView!!.computeVerticalScrollExtent()
+                lastRecyclerViewHeight = currentRecyclerViewHeight
+            }
+
+            // Calculate handle height based on visible extent vs total range
+            // The handle represents the proportion of visible content to total content
+            // Use cached visible extent to prevent jitter during scroll
+            // Only recalculate if barHeight changed or handle height hasn't been cached yet
+            val newCalculatedHandleHeight =
+                if (verticalScrollRangeForThumb > 0) {
+                    (cachedVisibleExtent.toFloat() / verticalScrollRangeForThumb * barHeight).toInt()
+                } else {
+                    barHeight // If range is 0, show full handle (all content visible)
+                }
+
+            // Only update cached handle height if barHeight changed or if the difference is significant (> 2px)
+            // This prevents jitter from small calculation fluctuations
+            val calculatedHandleHeight =
+                if (cachedBarHeight != barHeight ||
+                    cachedHandleHeight == 0 ||
+                    kotlin.math.abs(newCalculatedHandleHeight - cachedHandleHeight) > 2
+                ) {
+                    val finalHeight = newCalculatedHandleHeight.coerceAtLeast(minScrollHandleHeight)
+                    cachedHandleHeight = finalHeight
+                    cachedBarHeight = barHeight
+                    finalHeight
+                } else {
+                    cachedHandleHeight
+                }
 
             if (calculatedHandleHeight >= barHeight) {
                 translationX = hiddenTranslationX.toFloat()

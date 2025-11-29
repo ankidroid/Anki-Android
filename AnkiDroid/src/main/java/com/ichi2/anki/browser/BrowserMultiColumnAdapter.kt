@@ -246,6 +246,10 @@ class BrowserMultiColumnAdapter(
             LayoutInflater
                 .from(parent.context)
                 .inflate(R.layout.card_item_browser, parent, false)
+        // Set a fixed height to prevent scrollbar jitter, with enough space to show content
+        val params = view.layoutParams
+        params.height = (parent.context.resources.displayMetrics.density * 56).toInt() // 56dp for better visibility
+        view.layoutParams = params
         return MultiColumnViewHolder(view)
     }
 
@@ -275,7 +279,23 @@ class BrowserMultiColumnAdapter(
             holder.numberOfColumns = row.cellsCount
 
             for (i in 0 until row.cellsCount) {
-                holder.columnViews[i].text = renderColumn(i)
+                val columnText = renderColumn(i)
+                holder.columnViews[i].text = columnText
+                // Add long-press handler to show full text when truncated
+                holder.columnViews[i].setOnLongClickListener { view ->
+                    android.widget.Toast
+                        .makeText(
+                            context,
+                            "Long text:\n$columnText",
+                            android.widget.Toast.LENGTH_LONG,
+                        ).show()
+                    true
+                }
+                // Set content description for accessibility and add tooltip
+                holder.columnViews[i].contentDescription = columnText
+                if (columnText.length > 30) {
+                    holder.columnViews[i].setTooltipText("Long press to see full text")
+                }
             }
             holder.setIsSelected(isSelected)
             val rowColor =
