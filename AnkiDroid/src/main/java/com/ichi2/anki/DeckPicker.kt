@@ -182,8 +182,8 @@ import com.ichi2.ui.AccessibleSearchView
 import com.ichi2.ui.BadgeDrawableBuilder
 import com.ichi2.utils.AdaptionUtil
 import com.ichi2.utils.ClipboardUtil.IMPORT_MIME_TYPES
+import com.ichi2.utils.ImportResult
 import com.ichi2.utils.ImportUtils
-import com.ichi2.utils.ImportUtils.ImportResult
 import com.ichi2.utils.NetworkUtils
 import com.ichi2.utils.NetworkUtils.isActiveNetworkMetered
 import com.ichi2.utils.VersionUtils
@@ -855,7 +855,8 @@ open class DeckPicker :
             val clip = uriContent?.clip ?: return@OnReceiveContentListener remaining
             val uri = clip.getItemAt(0).uri
             if (!ImportUtils.FileImporter().isValidImportType(this, uri)) {
-                ImportResult.fromErrorString(getString(R.string.import_log_no_apkg))
+                // TODO: This does nothing
+                ImportResult.Failure(getString(R.string.import_log_no_apkg))
                 return@OnReceiveContentListener remaining
             }
 

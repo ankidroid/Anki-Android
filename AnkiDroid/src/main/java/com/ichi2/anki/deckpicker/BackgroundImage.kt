@@ -25,6 +25,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.preferences.AppearanceSettingsFragment
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.utils.openInputStreamSafe
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
@@ -95,7 +96,7 @@ object BackgroundImage {
     ) {
         val currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(target.requireContext())
         val destFile = File(currentAnkiDroidDirectory, FILENAME)
-        (target.requireContext().contentResolver.openInputStream(selectedImage) as FileInputStream).channel.use { sourceChannel ->
+        (target.requireContext().contentResolver.openInputStreamSafe(selectedImage) as FileInputStream).channel.use { sourceChannel ->
             FileOutputStream(destFile).channel.use { destChannel ->
                 destChannel.transferFrom(sourceChannel, 0, sourceChannel.size())
                 target.showSnackbar(R.string.background_image_applied)

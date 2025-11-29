@@ -41,6 +41,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.withProgress
 import com.ichi2.utils.ContentResolverUtil
+import com.ichi2.utils.openInputStreamSafe
 import kotlinx.coroutines.launch
 import kotlinx.parcelize.Parcelize
 import timber.log.Timber
@@ -100,7 +101,7 @@ class ImageCropper :
      */
     private fun isImageTooBig(imageUri: Uri): Boolean =
         try {
-            val imageStream = requireContext().contentResolver.openInputStream(imageUri)
+            val imageStream = requireContext().contentResolver.openInputStreamSafe(imageUri)
             if (imageStream != null) {
                 val opts = BitmapFactory.Options()
                 opts.inJustDecodeBounds = true
