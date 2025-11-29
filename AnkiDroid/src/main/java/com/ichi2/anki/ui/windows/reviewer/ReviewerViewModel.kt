@@ -386,7 +386,7 @@ class ReviewerViewModel(
     private suspend fun userAction(
         @Reviewer.UserAction number: Int,
     ) {
-        eval.emit("javascript: ankidroid.userAction($number);")
+        eval.emit("ankidroid.userAction($number);")
     }
 
     fun stopAutoAdvance() {
