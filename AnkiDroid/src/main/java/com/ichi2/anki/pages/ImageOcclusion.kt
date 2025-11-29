@@ -24,26 +24,45 @@ import android.webkit.WebView
 import android.widget.TextView
 import androidx.activity.addCallback
 import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.appbar.MaterialToolbar
-import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
 import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.common.utils.android.isRobolectric
 import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.dialogs.DiscardChangesDialog
-import com.ichi2.anki.launchCatchingTask
-import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.anki.pages.viewmodel.ImageOcclusionArgs
 import com.ichi2.anki.pages.viewmodel.ImageOcclusionViewModel
-import com.ichi2.anki.requireAnkiActivity
-import com.ichi2.anki.selectedDeckIfNotFiltered
+import com.ichi2.anki.pages.viewmodel.ImageOcclusionViewModel.Companion.IO_ARGS_KEY
 import com.ichi2.anki.startDeckSelection
+import com.ichi2.utils.HandlerUtils
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import timber.log.Timber
 
+/**
+ * Page provided by the backend, for a user to add or edit an image occlusion (IO) note
+ *
+ * IO: Like an image-based cloze: hide parts of an image, revealed on the back
+ * ([docs](https://docs.ankiweb.net/editing.html#image-occlusion) and
+ * [source](https://github.com/ankitects/anki/blob/main/proto/anki/image_occlusion.proto)).
+ *
+ * When adding, a user may select the deck of the note
+ *
+ * **Paths**
+ * `/image-occlusion/$PATH`
+ * `/image-occlusion/$NOTE_ID`
+ *
+ * @see ImageOcclusionViewModel
+ * @see ImageOcclusion.getIntent
+ */
 class ImageOcclusion :
     PageFragment(R.layout.image_occlusion),
     DeckSelectionDialog.DeckSelectionListener {
@@ -66,11 +85,6 @@ class ImageOcclusion :
         deckNameView = view.findViewById(R.id.deck_name)
         deckNameView.setOnClickListener { startDeckSelection(all = false, filtered = false, skipEmptyDefault = false) }
 
-        requireAnkiActivity().launchCatchingTask {
-            val selectedDeck = withCol { selectedDeckIfNotFiltered() }
-            deckNameView.text = selectedDeck.name
-        }
-
         @NeedsTest("#17393 verify that the added image occlusion cards are put in the correct deck")
         view.findViewById<MaterialToolbar>(R.id.toolbar).setOnMenuItemClickListener {
             if (it.itemId == R.id.action_save) {
@@ -79,6 +93,8 @@ class ImageOcclusion :
             }
             return@setOnMenuItemClickListener true
         }
+
+        setupFlows()
     }
 
     override fun onCreateWebViewClient(savedInstanceState: Bundle?): PageWebViewClient =
@@ -88,7 +104,7 @@ class ImageOcclusion :
                 url: String?,
             ) {
                 super.onPageFinished(view, url)
-                viewModel.webViewOptions.let { options ->
+                viewModel.args.toImageOcclusionMode().let { options ->
                     view?.evaluateJavascript("globalThis.anki.imageOcclusion.mode = $options") {
                         super.onPageFinished(view, url)
                     }
@@ -99,13 +115,7 @@ class ImageOcclusion :
     override fun onDeckSelected(deck: SelectableDeck?) {
         if (deck == null) return
         require(deck is SelectableDeck.Deck)
-        deckNameView.text = deck.name
-        val deckDidChange = viewModel.handleDeckSelection(deck.deckId)
-        if (deckDidChange) {
-            viewLifecycleOwner.lifecycleScope.launch {
-                withCol { decks.select(viewModel.selectedDeckId) }
-            }
-        }
+        viewModel.handleDeckSelection(deck.deckId)
     }
 
     // HACK: detect a successful save; #19443 will provide a better method
@@ -120,28 +130,44 @@ class ImageOcclusion :
             }
         }
 
-    companion object {
-        const val IO_ARGS_KEY = "IMAGE_OCCLUSION_ARGS"
+    private fun setupFlows() {
+        fun onDeckNameChanged(name: String) {
+            deckNameView.text = name
+        }
 
+        viewModel.deckNameFlow?.launchCollectionInLifecycleScope(::onDeckNameChanged) ?: run {
+            deckNameView.isVisible = false
+        }
+    }
+
+    // TODO: Move this to an extension method once we have context parameters
+    private fun <T> Flow<T>.launchCollectionInLifecycleScope(block: suspend (T) -> Unit) {
+        lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                this@launchCollectionInLifecycleScope.collect {
+                    if (isRobolectric) {
+                        HandlerUtils.postOnNewHandler { runBlocking { block(it) } }
+                    } else {
+                        block(it)
+                    }
+                }
+            }
+        }
+    }
+
+    companion object {
         /**
-         * @param editorWorkingDeckId the current deck id that [com.ichi2.anki.NoteEditorFragment] is using
+         * @param args arguments for either adding or editing a note
          */
         fun getIntent(
             context: Context,
-            kind: String,
-            noteOrNotetypeId: Long,
-            imagePath: String?,
-            editorWorkingDeckId: DeckId,
+            args: ImageOcclusionArgs,
         ): Intent {
-            val suffix = if (kind == "edit") noteOrNotetypeId else Uri.encode(imagePath)
-
-            val args =
-                ImageOcclusionArgs(
-                    kind = kind,
-                    id = noteOrNotetypeId,
-                    imagePath = imagePath,
-                    editorDeckId = editorWorkingDeckId,
-                )
+            val suffix =
+                when (args) {
+                    is ImageOcclusionArgs.Add -> Uri.encode(args.imagePath)
+                    is ImageOcclusionArgs.Edit -> args.noteId
+                }
 
             val arguments =
                 bundleOf(

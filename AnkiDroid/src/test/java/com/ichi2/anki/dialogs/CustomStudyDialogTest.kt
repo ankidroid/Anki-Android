@@ -48,7 +48,6 @@ import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.CoreMatchers.not
 import org.hamcrest.MatcherAssert.assertThat
 import org.intellij.lang.annotations.Language
-import org.json.JSONObject
 import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -104,7 +103,7 @@ class CustomStudyDialogTest : RobolectricTest() {
                     "usn": -1
                 }
                 """.trimIndent()
-            assertThat(customStudy, isJsonEqual(JSONObject(expected)))
+            assertThat(customStudy, isJsonEqual(expected))
         }
 
     @Test

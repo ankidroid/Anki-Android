@@ -141,6 +141,7 @@ import com.ichi2.anki.noteeditor.Toolbar.TextFormatListener
 import com.ichi2.anki.noteeditor.Toolbar.TextWrapper
 import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.pages.ImageOcclusion
+import com.ichi2.anki.pages.viewmodel.ImageOcclusionArgs
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.previewer.TemplatePreviewerArguments
 import com.ichi2.anki.previewer.TemplatePreviewerPage
@@ -2422,10 +2423,11 @@ class NoteEditorFragment :
         populateEditFields(changeType, false)
         updateFieldsFromStickyText()
 
-        // Showing the deck selection parts is not needed for Image Occlusion notetypes
-        // as deck selection is handled by the backend page
-        requireView().findViewById<TextView>(R.id.CardEditorDeckText).isVisible = !currentNotetypeIsImageOcclusion()
-        requireView().findViewById<View>(R.id.note_deck_name).isVisible = !currentNotetypeIsImageOcclusion()
+        // When adding a note, ImageOcclusion handles the deck selection
+        // as a user can reach this screen directly from an intent
+        val disableDeckEditing = addNote && currentNotetypeIsImageOcclusion()
+        requireView().findViewById<TextView>(R.id.CardEditorDeckText).isVisible = !disableDeckEditing
+        requireView().findViewById<View>(R.id.note_deck_name).isVisible = !disableDeckEditing
     }
 
     private fun addClozeButton(
@@ -2751,22 +2753,27 @@ class NoteEditorFragment :
     private fun currentNotetypeIsImageOcclusion() = currentlySelectedNotetype?.isImageOcclusion == true
 
     private fun setupImageOcclusionEditor(imagePath: String = "") {
-        val kind: String
-        val id: Long
-        if (addNote) {
-            kind = "add"
-            // if opened from an intent, the selected note type may not be suitable for IO
-            id =
-                if (currentNotetypeIsImageOcclusion()) {
-                    currentlySelectedNotetype!!.id
-                } else {
-                    0
-                }
-        } else {
-            kind = "edit"
-            id = editorNote?.id!!
-        }
-        val intent = ImageOcclusion.getIntent(requireContext(), kind, id, imagePath, deckId)
+        val args =
+            if (addNote) {
+                // if opened from an intent, the selected note type may not be suitable for IO
+                val noteTypeId =
+                    if (currentNotetypeIsImageOcclusion()) {
+                        currentlySelectedNotetype!!.id
+                    } else {
+                        0
+                    }
+                ImageOcclusionArgs.Add(
+                    noteTypeId = noteTypeId,
+                    imagePath = imagePath,
+                    originalDeckId = deckId,
+                )
+            } else {
+                ImageOcclusionArgs.Edit(
+                    noteId = editorNote!!.id,
+                )
+            }
+
+        val intent = ImageOcclusion.getIntent(requireContext(), args)
         requestIOEditorCloser.launch(intent)
     }
 
