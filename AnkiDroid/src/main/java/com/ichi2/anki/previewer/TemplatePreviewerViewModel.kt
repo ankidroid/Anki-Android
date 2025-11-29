@@ -40,10 +40,11 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.parcelize.Parcelize
 import org.intellij.lang.annotations.Language
 import org.jetbrains.annotations.VisibleForTesting
+import timber.log.Timber
 
 class TemplatePreviewerViewModel(
     savedStateHandle: SavedStateHandle,
-) : CardViewerViewModel() {
+) : CardViewerViewModel(savedStateHandle) {
     private val notetype: NotetypeJson
     private val fillEmpty: Boolean
     private val isCloze: Boolean
@@ -145,9 +146,9 @@ class TemplatePreviewerViewModel(
      ********************************************************************************************* */
 
     override fun onPageFinished(isAfterRecreation: Boolean) {
+        Timber.i("onPageFinished (isAfterRecreation %b)", isAfterRecreation)
         if (isAfterRecreation) {
             launchCatchingIO {
-                // TODO: We should persist showingAnswer to SavedStateHandle
                 if (showingAnswer.value) showAnswer() else showQuestion()
             }
             return
