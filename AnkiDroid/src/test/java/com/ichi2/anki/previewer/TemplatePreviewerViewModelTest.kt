@@ -15,6 +15,7 @@
  */
 package com.ichi2.anki.previewer
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.NotetypeFile
 import com.ichi2.anki.libanki.testutils.AnkiTest
@@ -79,7 +80,8 @@ class TemplatePreviewerViewModelTest : JvmTest() {
                 tags = mutableListOf(),
                 ord = ord,
             )
-        val viewModel = TemplatePreviewerViewModel(arguments)
+        val savedStateHandle = SavedStateHandle(mapOf(TemplatePreviewerFragment.ARGS_KEY to arguments))
+        val viewModel = TemplatePreviewerViewModel(savedStateHandle)
         block(viewModel)
     }
 }
@@ -98,6 +100,7 @@ fun AnkiTest.runClozeTest(
             tags = mutableListOf(),
             ord = ord,
         )
-    val viewModel = TemplatePreviewerViewModel(arguments)
+    val savedStateHandle = SavedStateHandle(mapOf(TemplatePreviewerFragment.ARGS_KEY to arguments))
+    val viewModel = TemplatePreviewerViewModel(savedStateHandle)
     block(viewModel)
 }

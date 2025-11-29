@@ -17,9 +17,8 @@ package com.ichi2.anki.previewer
 
 import android.os.Parcelable
 import androidx.annotation.CheckResult
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewmodel.initializer
-import androidx.lifecycle.viewmodel.viewModelFactory
+import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.viewModelScope
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.NotetypeFile
@@ -34,20 +33,22 @@ import com.ichi2.anki.libanki.NotetypeJson
 import com.ichi2.anki.libanki.clozeNumbersInNote
 import com.ichi2.anki.pages.AnkiServer
 import com.ichi2.anki.reviewer.CardSide
+import com.ichi2.anki.utils.ext.collectLatestIn
+import com.ichi2.anki.utils.ext.require
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.parcelize.Parcelize
 import org.intellij.lang.annotations.Language
 import org.jetbrains.annotations.VisibleForTesting
+import timber.log.Timber
 
 class TemplatePreviewerViewModel(
-    arguments: TemplatePreviewerArguments,
-) : CardViewerViewModel() {
-    private val notetype = arguments.notetype
-    private val fillEmpty = arguments.fillEmpty
-    private val isCloze = notetype.isCloze
+    savedStateHandle: SavedStateHandle,
+) : CardViewerViewModel(savedStateHandle) {
+    private val notetype: NotetypeJson
+    private val fillEmpty: Boolean
+    private val isCloze: Boolean
 
     /**
      * identifies which of the card templates or cloze deletions it corresponds to
@@ -55,7 +56,7 @@ class TemplatePreviewerViewModel(
      * * for cloze deletions, values are from 0 to max cloze index minus 1
      */
     @VisibleForTesting
-    val ordFlow = MutableStateFlow(arguments.ord)
+    val ordFlow: MutableStateFlow<Int>
 
     private val note: Deferred<Note>
     private val templateNames: Deferred<List<String>>
@@ -69,6 +70,12 @@ class TemplatePreviewerViewModel(
     internal val cardsWithEmptyFronts: Deferred<List<Boolean>>?
 
     init {
+        val arguments = savedStateHandle.require<TemplatePreviewerArguments>(TemplatePreviewerFragment.ARGS_KEY)
+        notetype = arguments.notetype
+        fillEmpty = arguments.fillEmpty
+        isCloze = notetype.isCloze
+        ordFlow = savedStateHandle.getMutableStateFlow(KEY_ORD, arguments.ord)
+
         note =
             asyncIO {
                 withCol {
@@ -133,6 +140,9 @@ class TemplatePreviewerViewModel(
                     }
                 }
         }
+        ordFlow.collectLatestIn(viewModelScope) { ord ->
+            loadCard(ord)
+        }
     }
 
     /* *********************************************************************************************
@@ -140,29 +150,14 @@ class TemplatePreviewerViewModel(
      ********************************************************************************************* */
 
     override fun onPageFinished(isAfterRecreation: Boolean) {
+        Timber.i("onPageFinished (isAfterRecreation %b)", isAfterRecreation)
         if (isAfterRecreation) {
             launchCatchingIO {
-                // TODO: We should persist showingAnswer to SavedStateHandle
                 if (showingAnswer.value) showAnswer() else showQuestion()
             }
-            return
-        }
-        launchCatchingIO {
-            ordFlow.collectLatest { ord ->
-                currentCard =
-                    asyncIO {
-                        val note = note.await()
-                        withCol {
-                            note.ephemeralCard(
-                                col = this,
-                                ord = ord,
-                                customNoteType = notetype,
-                                fillEmpty = fillEmpty,
-                            )
-                        }
-                    }
-                showQuestion()
-                loadAndPlaySounds(CardSide.QUESTION)
+        } else {
+            launchCatchingIO {
+                loadCard(ordFlow.value)
             }
         }
     }
@@ -211,6 +206,28 @@ class TemplatePreviewerViewModel(
         cardMediaPlayer.autoplayAllForSide(side)
     }
 
+    private suspend fun loadCard(ord: Int) {
+        currentCard =
+            asyncIO {
+                val note = note.await()
+                withCol {
+                    note.ephemeralCard(
+                        col = this,
+                        ord = ord,
+                        customNoteType = notetype,
+                        fillEmpty = fillEmpty,
+                    )
+                }
+            }
+        if (showingAnswer.value) {
+            showAnswer()
+            loadAndPlaySounds(CardSide.ANSWER)
+        } else {
+            showQuestion()
+            loadAndPlaySounds(CardSide.QUESTION)
+        }
+    }
+
     // https://github.com/ankitects/anki/blob/df70564079f53e587dc44f015c503fdf6a70924f/qt/aqt/clayout.py#L579
     override suspend fun typeAnsFilter(text: String): String =
         if (showingAnswer.value) {
@@ -228,13 +245,7 @@ class TemplatePreviewerViewModel(
     companion object {
         @Language("HTML")
         private const val EMPTY_FRONT_LINK = """<a href='https://docs.ankiweb.net/templates/errors.html#front-of-card-is-blank'>"""
-
-        fun factory(arguments: TemplatePreviewerArguments): ViewModelProvider.Factory =
-            viewModelFactory {
-                initializer {
-                    TemplatePreviewerViewModel(arguments)
-                }
-            }
+        private const val KEY_ORD = "ord"
     }
 }
 
