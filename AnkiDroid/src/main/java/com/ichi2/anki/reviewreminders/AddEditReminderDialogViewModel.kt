@@ -89,6 +89,33 @@ class AddEditReminderDialogViewModel(
         )
     val cardTriggerThreshold: LiveData<Int> = _cardTriggerThreshold
 
+    private val _countNew =
+        MutableLiveData(
+            when (dialogMode) {
+                is AddEditReminderDialog.DialogMode.Add -> INITIAL_COUNT_NEW
+                is AddEditReminderDialog.DialogMode.Edit -> dialogMode.reminderToBeEdited.countNew
+            },
+        )
+    val countNew: LiveData<Boolean> = _countNew
+
+    private val _countLrn =
+        MutableLiveData(
+            when (dialogMode) {
+                is AddEditReminderDialog.DialogMode.Add -> INITIAL_COUNT_LRN
+                is AddEditReminderDialog.DialogMode.Edit -> dialogMode.reminderToBeEdited.countLrn
+            },
+        )
+    val countLrn: LiveData<Boolean> = _countLrn
+
+    private val _countRev =
+        MutableLiveData(
+            when (dialogMode) {
+                is AddEditReminderDialog.DialogMode.Add -> INITIAL_COUNT_REV
+                is AddEditReminderDialog.DialogMode.Edit -> dialogMode.reminderToBeEdited.countRev
+            },
+        )
+    val countRev: LiveData<Boolean> = _countRev
+
     private val _advancedSettingsOpen = MutableLiveData(INITIAL_ADVANCED_SETTINGS_OPEN)
     val advancedSettingsOpen: LiveData<Boolean> = _advancedSettingsOpen
 
@@ -105,6 +132,21 @@ class AddEditReminderDialogViewModel(
     fun setCardTriggerThreshold(threshold: Int) {
         Timber.d("Updated card trigger threshold to %s", threshold)
         _cardTriggerThreshold.value = threshold
+    }
+
+    fun toggleCountNew() {
+        Timber.d("Toggled count new from %s", _countNew.value)
+        _countNew.value = !(_countNew.value ?: false)
+    }
+
+    fun toggleCountLrn() {
+        Timber.d("Toggled count lrn from %s", _countLrn.value)
+        _countLrn.value = !(_countLrn.value ?: false)
+    }
+
+    fun toggleCountRev() {
+        Timber.d("Toggled count rev from %s", _countRev.value)
+        _countRev.value = !(_countRev.value ?: false)
     }
 
     fun toggleAdvancedSettingsOpen() {
@@ -136,6 +178,9 @@ class AddEditReminderDialogViewModel(
                     is AddEditReminderDialog.DialogMode.Add -> true
                     is AddEditReminderDialog.DialogMode.Edit -> dialogMode.reminderToBeEdited.enabled
                 },
+            countNew = countNew.value ?: INITIAL_COUNT_NEW,
+            countLrn = countLrn.value ?: INITIAL_COUNT_LRN,
+            countRev = countRev.value ?: INITIAL_COUNT_REV,
         )
 
     companion object {
@@ -153,5 +198,25 @@ class AddEditReminderDialogViewModel(
          * We start with it closed to avoid overwhelming the user.
          */
         private const val INITIAL_ADVANCED_SETTINGS_OPEN = false
+
+        /**
+         * The default setting for whether new cards are counted when checking the card trigger threshold.
+         * This value, and the other default settings for whether certain kinds of cards are counted
+         * when checking the card trigger threshold, are all set to true, as removing some card types
+         * from card trigger threshold consideration is a form of advanced review reminder customization.
+         */
+        private const val INITIAL_COUNT_NEW = true
+
+        /**
+         * The default setting for whether cards in learning are counted when checking the card trigger threshold.
+         * @see INITIAL_COUNT_NEW
+         */
+        private const val INITIAL_COUNT_LRN = true
+
+        /**
+         * The default setting for whether cards in review are counted when checking the card trigger threshold.
+         * @see INITIAL_COUNT_NEW
+         */
+        private const val INITIAL_COUNT_REV = true
     }
 }

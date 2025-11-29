@@ -35,7 +35,9 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.LiveData
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.checkbox.MaterialCheckBox
 import com.google.android.material.textfield.TextInputLayout
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
@@ -134,6 +136,7 @@ class AddEditReminderDialog : DialogFragment() {
         setInitialDeckSelection()
         setUpAdvancedDropdown()
         setUpCardThresholdInput()
+        setUpCountCheckboxes()
 
         // For getting the result of the deck selection sub-dialog from ScheduleReminders
         // See ScheduleReminders.onDeckSelected for more information
@@ -261,6 +264,54 @@ class AddEditReminderDialog : DialogFragment() {
                     else -> null
                 }
             viewModel.setCardTriggerThreshold(value ?: 0)
+        }
+    }
+
+    /**
+     * Convenience data class for setting up the checkboxes for whether to count new, learning, and review cards
+     * when considering the card trigger threshold.
+     * @see setUpCountCheckboxes
+     */
+    private data class CountViewsAndActions(
+        val section: LinearLayout,
+        val checkbox: MaterialCheckBox,
+        val actionOnClick: () -> Unit,
+        val state: LiveData<Boolean>,
+    )
+
+    /**
+     * Sets up the checkboxes for whether to count new, learning, and review cards when considering the card trigger threshold.
+     * @see CountViewsAndActions
+     */
+    private fun setUpCountCheckboxes() {
+        val countViewsAndActionsItems =
+            listOf(
+                CountViewsAndActions(
+                    section = contentView.findViewById(R.id.add_edit_reminder_count_new_section),
+                    checkbox = contentView.findViewById(R.id.add_edit_reminder_count_new_checkbox),
+                    actionOnClick = viewModel::toggleCountNew,
+                    state = viewModel.countNew,
+                ),
+                CountViewsAndActions(
+                    section = contentView.findViewById(R.id.add_edit_reminder_count_lrn_section),
+                    checkbox = contentView.findViewById(R.id.add_edit_reminder_count_lrn_checkbox),
+                    actionOnClick = viewModel::toggleCountLrn,
+                    state = viewModel.countLrn,
+                ),
+                CountViewsAndActions(
+                    section = contentView.findViewById(R.id.add_edit_reminder_count_rev_section),
+                    checkbox = contentView.findViewById(R.id.add_edit_reminder_count_rev_checkbox),
+                    actionOnClick = viewModel::toggleCountRev,
+                    state = viewModel.countRev,
+                ),
+            )
+
+        countViewsAndActionsItems.forEach { item ->
+            item.section.setOnClickListener { item.actionOnClick() }
+            item.checkbox.setOnClickListener { item.actionOnClick() }
+            item.state.observe(this) { value ->
+                item.checkbox.isChecked = value
+            }
         }
     }
 
