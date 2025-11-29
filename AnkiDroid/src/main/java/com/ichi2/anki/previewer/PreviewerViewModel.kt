@@ -15,6 +15,7 @@
  */
 package com.ichi2.anki.previewer
 
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import anki.collection.OpChanges
@@ -52,7 +53,9 @@ class PreviewerViewModel(
     val backSideOnly = MutableStateFlow(false)
     val isMarked = MutableStateFlow(false)
     val flag: MutableStateFlow<Flag> = MutableStateFlow(Flag.NONE)
-    private val selectedCardIds: List<Long> = stateHandle.require<IdsFile>(PreviewerFragment.CARD_IDS_FILE_ARG).getIds()
+
+    @VisibleForTesting
+    val selectedCardIds: List<Long> = stateHandle.require<IdsFile>(PreviewerFragment.CARD_IDS_FILE_ARG).getIds()
 
     override val showingAnswer = MutableStateFlow(stateHandle[SHOWING_ANSWER_KEY] ?: false)
     val isBackButtonEnabled =
@@ -195,8 +198,10 @@ class PreviewerViewModel(
      * @param sliderPosition the value of the slider (i.e. Slider::value). It's NOT the card index.
      */
     fun onSliderChange(sliderPosition: Int) {
+        val index = sliderPosition - 1
+        if (index !in selectedCardIds.indices) return
         launchCatchingIO {
-            currentIndex.emit(sliderPosition - 1)
+            currentIndex.emit(index)
         }
     }
 
