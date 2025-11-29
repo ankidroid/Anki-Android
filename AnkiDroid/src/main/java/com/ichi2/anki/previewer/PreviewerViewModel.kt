@@ -191,9 +191,12 @@ class PreviewerViewModel(
 
     fun cardsCount() = selectedCardIds.count()
 
-    fun onSliderChange(value: Int) {
+    /**
+     * @param sliderPosition the value of the slider (i.e. Slider::value). It's NOT the card index.
+     */
+    fun onSliderChange(sliderPosition: Int) {
         launchCatchingIO {
-            currentIndex.emit(value - 1)
+            currentIndex.emit(sliderPosition - 1)
         }
     }
 
