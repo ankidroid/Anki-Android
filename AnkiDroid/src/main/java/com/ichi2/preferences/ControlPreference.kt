@@ -150,10 +150,10 @@ open class ControlPreference :
     }
 
     fun showAddAxisDialog() {
-        val axisPicker = AxisPicker.inflate(context)
+        val axisPicker = AxisPicker(context)
         val dialog =
             AlertDialog.Builder(context).create {
-                customView(view = axisPicker.rootLayout)
+                customView(view = axisPicker.binding.root)
                 setTitle(title)
                 setIcon(icon)
                 negativeButton(R.string.dialog_cancel) { it.dismiss() }

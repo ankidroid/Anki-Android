@@ -19,10 +19,9 @@ package com.ichi2.ui
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.widget.Button
 import android.widget.LinearLayout
-import android.widget.TextView
 import com.ichi2.anki.R
+import com.ichi2.anki.databinding.AxisDisplayBinding
 import com.ichi2.anki.reviewer.Axis
 import com.ichi2.anki.reviewer.Binding
 import timber.log.Timber
@@ -31,12 +30,13 @@ import timber.log.Timber
  * Displays live values of an [Axis] (joystick/trigger), and allows selection of a binding if an
  * [extremity][AxisValueDisplay.isExtremity] has been received
  *
- * The [name] of the Axis (AXIS_X)
+ * The [axisName][AxisDisplayBinding.axisName] of the Axis (AXIS_X)
  *
  * The [value] of the Axis [-1, 1]
  *   - If a value hits an extremity, the display changes color. See [AxisValueDisplay]
  *
- * Two buttons: [minButton] and [maxButton]
+ * Two buttons: [selectMinExtremity][AxisDisplayBinding.selectMinExtremity] and
+ *  [selectMaxExtremity][AxisDisplayBinding.selectMaxExtremity]
  *   - If an [extremity][AxisValueDisplay.isExtremity] is reached, these are activated
  *   - Calls [onExtremitySelectedListener] if tapped
  *
@@ -52,25 +52,15 @@ class AxisSelector : LinearLayout {
         defStyle,
     )
 
-    private val name: TextView
-    private val minButton: Button
-    private val axisDisplay: AxisValueDisplay
-    private val maxButton: Button
+    private val binding = AxisDisplayBinding.inflate(LayoutInflater.from(context), this, true)
 
     private var onExtremitySelectedListener: ((Binding.AxisButtonBinding) -> Unit)? = null
 
     init {
-        val inflater = LayoutInflater.from(context)
-        inflater.inflate(R.layout.axis_display, this, true)
-        name = findViewById(R.id.axis_name)
-        minButton = findViewById(R.id.select_min_extremity)
-        axisDisplay = findViewById(R.id.axis_value)
-        maxButton = findViewById(R.id.select_max_extremity)
-
         // Disabling buttons ensures that a user cannot map a negative value on a unidirectional
         // axis, such as the triggers on my 8BitDo
         // It's hard to know if an axis is single, or multidimensional until we've received input
-        axisDisplay.setExtremityListener { valueAtExtremity ->
+        binding.axisDisplay.setExtremityListener { valueAtExtremity ->
             when (valueAtExtremity) {
                 -1f -> enableMinButton()
                 1f -> enableMaxButton()
@@ -78,8 +68,8 @@ class AxisSelector : LinearLayout {
         }
 
         // call onExtremitySelectedListener
-        minButton.setOnClickListener { selectMinimumValue() }
-        maxButton.setOnClickListener { selectMaximumValue() }
+        binding.selectMinExtremity.setOnClickListener { selectMinimumValue() }
+        binding.selectMaxExtremity.setOnClickListener { selectMaximumValue() }
     }
 
     private fun selectMaximumValue() {
@@ -93,15 +83,15 @@ class AxisSelector : LinearLayout {
     }
 
     private fun enableMaxButton() {
-        if (maxButton.isEnabled) return
+        if (binding.selectMaxExtremity.isEnabled) return
         Timber.i("%s: max button enabled", axis)
-        maxButton.isEnabled = true
+        binding.selectMaxExtremity.isEnabled = true
     }
 
     private fun enableMinButton() {
-        if (minButton.isEnabled) return
+        if (binding.selectMinExtremity.isEnabled) return
         Timber.i("%s: min button enabled", axis)
-        minButton.isEnabled = true
+        binding.selectMinExtremity.isEnabled = true
     }
 
     /**
@@ -117,12 +107,12 @@ class AxisSelector : LinearLayout {
 
     /** The name of the axis */
     var text: String
-        get() = name.text.toString()
+        get() = binding.axisName.text.toString()
         private set(value) {
-            name.text = value
+            binding.axisName.text = value
         }
 
-    var value: Float by axisDisplay::value
+    var value: Float by binding.axisDisplay::value
 
     fun setOnExtremitySelectedListener(listener: ((Binding.AxisButtonBinding) -> Unit)?) {
         onExtremitySelectedListener = listener
