@@ -45,10 +45,15 @@ class TemplatePreviewerPage : Fragment(R.layout.template_previewer_container) {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
 
-        val arguments = BundleCompat.getParcelable(requireArguments(), ARGS_KEY, TemplatePreviewerArguments::class.java)!!
-        val fragment = TemplatePreviewerFragment.newInstance(arguments)
-        childFragmentManager.commitNow {
-            replace(R.id.fragment_container, fragment)
+        val fragment: TemplatePreviewerFragment
+        if (savedInstanceState == null) {
+            val arguments = BundleCompat.getParcelable(requireArguments(), ARGS_KEY, TemplatePreviewerArguments::class.java)!!
+            fragment = TemplatePreviewerFragment.newInstance(arguments)
+            childFragmentManager.commitNow {
+                replace(R.id.fragment_container, fragment)
+            }
+        } else {
+            fragment = childFragmentManager.findFragmentById(R.id.fragment_container) as TemplatePreviewerFragment
         }
 
         val viewModel = fragment.viewModel
