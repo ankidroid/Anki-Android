@@ -74,7 +74,7 @@ class TemplatePreviewerViewModel(
         notetype = arguments.notetype
         fillEmpty = arguments.fillEmpty
         isCloze = notetype.isCloze
-        ordFlow = MutableStateFlow(arguments.ord)
+        ordFlow = savedStateHandle.getMutableStateFlow(KEY_ORD, arguments.ord)
 
         note =
             asyncIO {
@@ -219,8 +219,13 @@ class TemplatePreviewerViewModel(
                     )
                 }
             }
-        showQuestion()
-        loadAndPlaySounds(CardSide.QUESTION)
+        if (showingAnswer.value) {
+            showAnswer()
+            loadAndPlaySounds(CardSide.ANSWER)
+        } else {
+            showQuestion()
+            loadAndPlaySounds(CardSide.QUESTION)
+        }
     }
 
     // https://github.com/ankitects/anki/blob/df70564079f53e587dc44f015c503fdf6a70924f/qt/aqt/clayout.py#L579
@@ -240,6 +245,7 @@ class TemplatePreviewerViewModel(
     companion object {
         @Language("HTML")
         private const val EMPTY_FRONT_LINK = """<a href='https://docs.ankiweb.net/templates/errors.html#front-of-card-is-blank'>"""
+        private const val KEY_ORD = "ord"
     }
 }
 
