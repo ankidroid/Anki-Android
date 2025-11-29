@@ -246,4 +246,24 @@ class PreviewerViewModelTest : JvmTest() {
             assertTrue("Should show answer", viewModel.showingAnswer.value)
             assertEquals("Should remain on index 1", 1, viewModel.currentIndex.value)
         }
+
+    @Test
+    fun `slider change ignores out of bounds values`() =
+        runTest {
+            // There are 4 cards and the current is the first one
+            assertEquals(4, viewModel.selectedCardIds.size)
+            assertEquals(0, viewModel.currentIndex.value)
+
+            // 1. Upper Bound (Input 5 -> Index 4)
+            onSliderChange(sliderPosition = 5)
+            assertEquals("Index should not change for upper bound overflow", 0, viewModel.currentIndex.value)
+
+            // 2. Lower Bound (Input 0 -> Index -1)
+            onSliderChange(sliderPosition = 0)
+            assertEquals("Index should not change for lower bound underflow", 0, viewModel.currentIndex.value)
+
+            // 3. Valid input still works (Input 2 -> Index 1)
+            onSliderChange(sliderPosition = 2)
+            assertEquals("Index should update for valid input", 1, viewModel.currentIndex.value)
+        }
 }
