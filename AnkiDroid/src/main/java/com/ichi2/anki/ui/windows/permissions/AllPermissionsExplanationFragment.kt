@@ -23,7 +23,9 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.core.view.isVisible
 import com.ichi2.anki.R
+import com.ichi2.anki.settings.Prefs
 import com.ichi2.utils.Permissions
+import com.ichi2.utils.Permissions.requestPermissionThroughDialogOrSettings
 import timber.log.Timber
 
 /**
@@ -42,13 +44,8 @@ class AllPermissionsExplanationFragment : PermissionsFragment(R.layout.all_permi
      */
     private val permissionRequestLauncher =
         registerForActivityResult(
-            ActivityResultContracts.RequestMultiplePermissions(),
-        ) { requestedPermissions ->
-            Timber.i("Permission result: $requestedPermissions")
-            if (!requestedPermissions.all { it.value }) {
-                showToastAndOpenAppSettingsScreen(R.string.manually_grant_permissions)
-            }
-        }
+            ActivityResultContracts.RequestPermission(),
+        ) { isGranted -> Timber.i("Permission result: $isGranted") }
 
     /**
      * Activity launcher for the external storage management permission.
@@ -80,16 +77,27 @@ class AllPermissionsExplanationFragment : PermissionsFragment(R.layout.all_permi
         Permissions.postNotification?.let {
             notificationPermission.apply {
                 isVisible = true
-                offerToGrantOrRevokeOnClick(permissionRequestLauncher, arrayOf(it))
+                revokeIfGrantedOnClickElse {
+                    requestPermissionThroughDialogOrSettings(
+                        activity = requireActivity(),
+                        permission = it,
+                        permissionRequestedFlag = Prefs::notificationsPermissionRequested,
+                        permissionRequestLauncher = permissionRequestLauncher,
+                    )
+                }
             }
         }
 
         recordAudioPermission.apply {
             isVisible = true
-            offerToGrantOrRevokeOnClick(
-                permissionRequestLauncher,
-                arrayOf(Permissions.recordAudioPermission),
-            )
+            revokeIfGrantedOnClickElse {
+                requestPermissionThroughDialogOrSettings(
+                    activity = requireActivity(),
+                    permission = Permissions.recordAudioPermission,
+                    permissionRequestedFlag = Prefs::recordAudioPermissionRequested,
+                    permissionRequestLauncher = permissionRequestLauncher,
+                )
+            }
         }
     }
 }
