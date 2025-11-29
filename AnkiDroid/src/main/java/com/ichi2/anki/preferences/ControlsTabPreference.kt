@@ -45,6 +45,14 @@ class ControlsTabPreference
             tabLayout?.addOnTabSelectedListener(listener)
         }
 
+        /**
+         * Selects a tab programmatically by position.
+         * @param tabPosition The position of the tab to select.
+         */
+        fun selectTab(tabPosition: Int) {
+            tabLayout?.selectTab(tabLayout?.getTabAt(tabPosition))
+        }
+
         override fun onBindViewHolder(holder: PreferenceViewHolder) {
             super.onBindViewHolder(holder)
             tabLayout = holder.itemView as? TabLayout
