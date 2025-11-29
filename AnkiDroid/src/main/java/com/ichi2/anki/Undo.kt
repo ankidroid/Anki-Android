@@ -26,24 +26,43 @@ import com.ichi2.anki.libanki.undoAvailable
 import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.snackbar.showSnackbar
 
+suspend fun tryUndo(): String {
+    val changes =
+        undoableOp {
+            if (undoAvailable()) {
+                undo()
+            } else {
+                OpChangesAfterUndo.getDefaultInstance()
+            }
+        }
+    return if (changes.operation.isEmpty()) {
+        TR.actionsNothingToUndo()
+    } else {
+        TR.undoActionUndone(changes.operation)
+    }
+}
+
+suspend fun tryRedo(): String {
+    val changes =
+        undoableOp {
+            if (redoAvailable()) {
+                redo()
+            } else {
+                OpChangesAfterUndo.getDefaultInstance()
+            }
+        }
+    return if (changes.operation.isEmpty()) {
+        TR.actionsNothingToRedo()
+    } else {
+        TR.undoRedoAction(changes.operation)
+    }
+}
+
 /** If there's an action pending in the review queue, undo it and show a snackbar */
 suspend fun FragmentActivity.undoAndShowSnackbar(duration: Int = Snackbar.LENGTH_SHORT) {
     withProgress {
-        val changes =
-            undoableOp {
-                if (!undoAvailable()) {
-                    OpChangesAfterUndo.getDefaultInstance()
-                } else {
-                    undo()
-                }
-            }
-        val message =
-            if (changes.operation.isEmpty()) {
-                TR.actionsNothingToUndo()
-            } else {
-                TR.undoActionUndone(changes.operation)
-            }
-        showSnackbar(message, duration)
+        val text = tryUndo()
+        showSnackbar(text, duration)
     }
 }
 
@@ -54,20 +73,7 @@ suspend fun Fragment.undoAndShowSnackbar(duration: Int = Snackbar.LENGTH_SHORT) 
 
 suspend fun FragmentActivity.redoAndShowSnackbar(duration: Int = Snackbar.LENGTH_SHORT) {
     withProgress {
-        val changes =
-            undoableOp {
-                if (redoAvailable()) {
-                    redo()
-                } else {
-                    OpChangesAfterUndo.getDefaultInstance()
-                }
-            }
-        val message =
-            if (changes.operation.isEmpty()) {
-                TR.actionsNothingToRedo()
-            } else {
-                TR.undoActionRedone(changes.operation)
-            }
-        showSnackbar(message, duration)
+        val text = tryRedo()
+        showSnackbar(text, duration)
     }
 }
