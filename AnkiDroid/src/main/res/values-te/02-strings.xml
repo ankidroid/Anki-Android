@@ -166,7 +166,8 @@
     <string name="import_error_not_apkg_extension">ఫైల్ పేరు “%s”కి .apkg లేదా .colpkg పొడిగింపు లేదు</string>
     <string name="import_error_load_imported_database">Anki డేటాబేస్ (.anki2) భర్తీకి ఇంకా మద్దతు లేదు. దయచేసి భర్తీ సూచనల కోసం మాన్యువల్‌ని చూడండి.</string>
     <string name="import_error_content_provider">The selected file couldn’t be imported automatically by AnkiDroid. Please see the user manual for how to manually import Anki files: \n%s</string>
-    <string name="import_error_copy_to_cache">ఫైల్‌ను కాష్ చేయడంలో విఫలమైంది (బహుశా నిల్వ స్థలం లేదు)</string>
+    <string name="import_error_copy_to_cache_title">Failed to cache file</string>
+    <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">This is often caused by a bug in the app you used to select the file. Please try the following fixes:\n\n%s</string>
     <string name="import_interrupted">దిగుమతికి అంతరాయం ఏర్పడింది: AnkiDroid మూసివేయబడింది</string>
     <string name="export_ready_title">ఎగుమతి సిద్ధంగా ఉంది</string>
     <string name="export_send_no_handlers">apkkని నిర్వహించడానికి అప్లికేషన్‌లు ఏవీ అందుబాటులో లేవు. సేవ్ చేస్తోంది&#8230;</string>

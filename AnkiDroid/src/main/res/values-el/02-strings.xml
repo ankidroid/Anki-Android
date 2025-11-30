@@ -166,7 +166,8 @@
     <string name="import_error_not_apkg_extension">Το όνομα αρχείου “%s” δεν έχει κατάληξη .apkg ή .colpkg</string>
     <string name="import_error_load_imported_database">Οι αντικαταστάσεις της βάσης δεδομένων Anki (.anki2) δεν υποστηρίζονται ακόμα. Ανατρέξτε στο εγχειρίδιο για τις οδηγίες αντικατάστασης.</string>
     <string name="import_error_content_provider">Δεν είναι δυνατή η αυτόματη εισαγωγή του επιλεγμένου αρχείου από το AnkiDroid. Ανατρέξτε στο εγχειρίδιο για να μάθετε πώς να εισαγάγετε χειροκίνητα αρχεία Anki: \n%s</string>
-    <string name="import_error_copy_to_cache">Αποτυχία προσωρινής μνήμης αρχείου (πιθανόν εκτός χώρου αποθήκευσης)</string>
+    <string name="import_error_copy_to_cache_title">Failed to cache file</string>
+    <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">This is often caused by a bug in the app you used to select the file. Please try the following fixes:\n\n%s</string>
     <string name="import_interrupted">Η εισαγωγή διακόπηκε: το AnkiDroid έκλεισε</string>
     <string name="export_ready_title">Εξαγωγή έτοιμη</string>
     <string name="export_send_no_handlers">Δεν υπάρχουν διαθέσιμες εφαρμογές για χειρισμό apkg. Αποθήκευση&#8230;</string>

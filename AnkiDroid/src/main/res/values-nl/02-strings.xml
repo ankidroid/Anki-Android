@@ -166,7 +166,8 @@
     <string name="import_error_not_apkg_extension">Bestandsnaam “%s” heeft geen .apkg of .colpkg-extensie</string>
     <string name="import_error_load_imported_database">Anki Database (.anki2) vervangingen worden nog niet ondersteund. Zie alstublieft de handleiding voor vervangende instructies.</string>
     <string name="import_error_content_provider">Het selecteerde bestand kon niet automatisch geïmporteerd worden door AnkiDroid. Bekijk de gebruikershandleiding om te zien hoe je Anki bestanden handmatig importeert: \n%s</string>
-    <string name="import_error_copy_to_cache">Het cachen van het bestand is mislukt (mogelijk gebrek aan opslagruimte)</string>
+    <string name="import_error_copy_to_cache_title">Failed to cache file</string>
+    <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">This is often caused by a bug in the app you used to select the file. Please try the following fixes:\n\n%s</string>
     <string name="import_interrupted">Importeren onderbroken</string>
     <string name="export_ready_title">Export klaar</string>
     <string name="export_send_no_handlers">Geen applicaties beschikbaar om apkg te verwerken. Opslaan&#8230;</string>

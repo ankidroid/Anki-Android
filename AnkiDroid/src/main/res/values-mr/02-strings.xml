@@ -166,7 +166,8 @@
     <string name="import_error_not_apkg_extension">फाइलनाव \"%s\" मध्ये .apkg किंवा .colpkg विस्तार नाही</string>
     <string name="import_error_load_imported_database">अंकी डेटाबेस (.anki2) बदली अद्याप समर्थित नाहीत. कृपया बदलीच्या सूचनांसाठी मॅन्युअल पहा.</string>
     <string name="import_error_content_provider">The selected file couldn’t be imported automatically by AnkiDroid. Please see the user manual for how to manually import Anki files: \n%s</string>
-    <string name="import_error_copy_to_cache">फाइल कॅशे करण्यात अयशस्वी (शक्यतो स्टोरेज जागा नाही)</string>
+    <string name="import_error_copy_to_cache_title">Failed to cache file</string>
+    <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">This is often caused by a bug in the app you used to select the file. Please try the following fixes:\n\n%s</string>
     <string name="import_interrupted">आयात व्यत्यय: अंकीड्रोइड बंद होता</string>
     <string name="export_ready_title">निर्यात तयार आहे</string>
     <string name="export_send_no_handlers">एपीकेजी हाताळण्यासाठी कोणतेही अनुप्रयोग उपलब्ध नाहीत. बचत&#8230;</string>

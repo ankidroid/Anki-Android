@@ -163,7 +163,8 @@
     <string name="import_error_not_apkg_extension">Tên file \"%s\" không chứa định dạng .apkg hoặc .colpkg</string>
     <string name="import_error_load_imported_database">Cơ sở dữ liệu Anki (.anki2) thay thế chưa được hỗ trợ. Vui lòng xem sách hướng dẫn để biết hướng dẫn thay thế.</string>
     <string name="import_error_content_provider">Tệp đã chọn không thể được nhập tự động bởi AnkiDroid. Xin xem hướng dẫn sử dụng để biết cách nhập thủ công tệp Anki: \n%s</string>
-    <string name="import_error_copy_to_cache">Không thể lưu tệp vào bộ nhớ đệm (có thể hết dùng lượng lưu trữ)</string>
+    <string name="import_error_copy_to_cache_title">Failed to cache file</string>
+    <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">This is often caused by a bug in the app you used to select the file. Please try the following fixes:\n\n%s</string>
     <string name="import_interrupted">Nhập dữ liệu bị gián đoạn: AnkiDroid đã bị đóng</string>
     <string name="export_ready_title">Trích xuất sẵn sàng</string>
     <string name="export_send_no_handlers">Không có ứng dụng nào khả dụng để xử lý apkg. Đang lưu&#8230;</string>
