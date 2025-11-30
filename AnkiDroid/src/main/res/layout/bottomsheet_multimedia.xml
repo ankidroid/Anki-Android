@@ -59,7 +59,7 @@
 
         <ImageView
             android:layout_width="wrap_content"
-            app:srcCompat="@drawable/ic_camera"
+            app:srcCompat="@drawable/ic_camera_filled"
             android:layout_marginEnd="24dp"
             android:layout_marginStart="8dp"
             android:layout_height="match_parent" />
@@ -83,7 +83,7 @@
 
         <ImageView
             android:layout_width="wrap_content"
-            app:srcCompat="@drawable/ic_rounded_draw"
+            app:srcCompat="@drawable/ic_draw_filled"
             android:layout_marginEnd="24dp"
             android:layout_marginStart="8dp"
             android:layout_height="match_parent" />
