@@ -174,6 +174,7 @@ import com.ichi2.utils.MapUtil
 import com.ichi2.utils.NoteFieldDecorator
 import com.ichi2.utils.TextViewUtil
 import com.ichi2.utils.configureView
+import com.ichi2.utils.ifVisible
 import com.ichi2.utils.message
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.neutralButton
@@ -477,8 +478,8 @@ class NoteEditorFragment :
             }
 
     override val baseSnackbarBuilder: SnackbarBuilder = {
-        if (sharedPrefs().getBoolean(PREF_NOTE_EDITOR_SHOW_TOOLBAR, true)) {
-            anchorView = requireView().findViewById<Toolbar>(R.id.editor_toolbar)
+        requireView().findViewById<Toolbar>(R.id.editor_toolbar).ifVisible {
+            anchorView = it
         }
     }
 
@@ -791,10 +792,7 @@ class NoteEditorFragment :
                         setupImageOcclusionEditor(path)
                     }
                 } else {
-                    // Show the Snackbar via the Activity root view
-                    // because a snackbars via NoteEditorFragment root view would be invisible
-                    // when the note editor is initially loaded with Image Occlusion note type.
-                    requireActivity().showSnackbar(TR.editingNoImageFoundOnClipboard())
+                    showSnackbar(TR.editingNoImageFoundOnClipboard())
                 }
             }
         } else {
