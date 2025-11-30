@@ -45,7 +45,6 @@ import java.io.File
 import java.nio.file.Files
 import java.nio.file.Path
 import kotlin.io.path.absolutePathString
-import kotlin.test.Ignore
 
 @RunWith(AndroidJUnit4::class)
 @Config(shadows = [ShadowNullExternalFilesDir::class])
@@ -65,7 +64,6 @@ class DeckPickerNoExternalFilesDirTest : RobolectricTest() {
     }
 
     @Test
-    @Ignore("19652")
     @Config(application = AnkiDroidAppWithCollectionButUnwritableStorage::class)
     fun `Fatal error is shown when getExternalFilesDir is null and collection is set but unwritable`() {
         // IntroductionActivity should be skipped by our code so we can show the error
