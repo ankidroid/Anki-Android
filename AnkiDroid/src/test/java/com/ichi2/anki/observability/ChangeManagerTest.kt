@@ -34,7 +34,6 @@ import kotlin.reflect.jvm.isAccessible
 @OptIn(ExperimentalStdlibApi::class)
 @RunWith(AndroidJUnit4::class)
 class ChangeManagerTest : RobolectricTest() {
-
     @Test
     fun `Property is set in ALL object`() {
         val props =
@@ -49,11 +48,13 @@ class ChangeManagerTest : RobolectricTest() {
     @Test
     fun `subscriber exception does not prevent other subscribers from being notified`() {
         val goodSubscriber = mock<ChangeManager.Subscriber>()
-        val badSubscriber = object : ChangeManager.Subscriber {
-            override fun opExecuted(changes: OpChanges, handler: Any?) {
-                throw RuntimeException("Test exception")
+        val badSubscriber =
+            object : ChangeManager.Subscriber {
+                override fun opExecuted(
+                    changes: OpChanges,
+                    handler: Any?,
+                ): Unit = throw RuntimeException("Test exception")
             }
-        }
 
         ChangeManager.subscribe(badSubscriber)
         ChangeManager.subscribe(goodSubscriber)

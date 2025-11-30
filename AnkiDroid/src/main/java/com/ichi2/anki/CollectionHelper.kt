@@ -256,6 +256,18 @@ object CollectionHelper {
     fun getAppSpecificInternalAnkiDroidDirectory(context: Context): String = context.filesDir.absolutePath
 
     /**
+     * Returns the AnkiDroid directory under internal storage as a fallback
+     * when external storage is not available.
+     *
+     * This is used when `getExternalFilesDir` returns null due to external storage
+     * being removed or unmounted (issue #19652).
+     *
+     * @param context Used to get the internal storage directory
+     * @return File object pointing to the internal AnkiDroid directory
+     */
+    fun getInternalAnkiDroidDirectory(context: Context): File = File(getAppSpecificInternalAnkiDroidDirectory(context), "AnkiDroid")
+
+    /**
      * @return the path to the actual [Collection] file
      *
      * @throws UnsupportedOperationException if the collection is in-memory
