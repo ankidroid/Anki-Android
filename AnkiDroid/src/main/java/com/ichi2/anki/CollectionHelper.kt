@@ -25,6 +25,7 @@ import androidx.core.content.edit
 import com.ichi2.anki.AnkiDroidFolder.AppPrivateFolder
 import com.ichi2.anki.CollectionHelper.PREF_COLLECTION_PATH
 import com.ichi2.anki.CollectionHelper.getCurrentAnkiDroidDirectory
+import com.ichi2.anki.CollectionHelper.getDefaultAnkiDroidDirectory
 import com.ichi2.anki.backend.createDatabaseUsingAndroidFramework
 import com.ichi2.anki.exception.StorageAccessException
 import com.ichi2.anki.exception.SystemStorageException
@@ -255,6 +256,18 @@ object CollectionHelper {
     fun getAppSpecificInternalAnkiDroidDirectory(context: Context): String = context.filesDir.absolutePath
 
     /**
+     * Returns the AnkiDroid directory under internal storage as a fallback
+     * when external storage is not available.
+     *
+     * This is used when `getExternalFilesDir` returns null due to external storage
+     * being removed or unmounted (issue #19652).
+     *
+     * @param context Used to get the internal storage directory
+     * @return File object pointing to the internal AnkiDroid directory
+     */
+    fun getInternalAnkiDroidDirectory(context: Context): File = File(getAppSpecificInternalAnkiDroidDirectory(context), "AnkiDroid")
+
+    /**
      * @return the path to the actual [Collection] file
      *
      * @throws UnsupportedOperationException if the collection is in-memory
@@ -312,18 +325,15 @@ object CollectionHelper {
         }
 
     /**
-     * Resets the AnkiDroid directory to [directory]
+     * Resets the AnkiDroid directory to the [getDefaultAnkiDroidDirectory]
      * Note: if [android.R.attr.preserveLegacyExternalStorage] is in use
      * this will represent a change from `/AnkiDroid` to `/Android/data/...`
-     *
-     * @throws SystemStorageException if `getExternalFilesDir` returns null
      */
-    fun resetAnkiDroidDirectory(
-        context: Context,
-        directory: File = getDefaultAnkiDroidDirectory(context),
-    ) {
+    fun resetAnkiDroidDirectory(context: Context) {
+        val preferences = context.sharedPrefs()
+        val directory = getDefaultAnkiDroidDirectory(context)
         Timber.d("resetting AnkiDroid directory to %s", directory)
-        context.sharedPrefs().edit { putString(PREF_COLLECTION_PATH, directory.absolutePath) }
+        preferences.edit { putString(PREF_COLLECTION_PATH, directory.absolutePath) }
     }
 
     @Throws(UnknownDatabaseVersionException::class)
