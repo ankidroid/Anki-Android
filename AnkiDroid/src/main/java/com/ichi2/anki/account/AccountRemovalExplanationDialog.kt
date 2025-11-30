@@ -27,6 +27,8 @@ import com.ichi2.anki.databinding.DialogAccountRemovalExplanationBinding
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.utils.copyToClipboard
 import com.ichi2.utils.create
+import com.ichi2.utils.negativeButton
+import com.ichi2.utils.positiveButton
 
 class AccountRemovalExplanationDialog : DialogFragment() {
     companion object {
@@ -52,10 +54,10 @@ class AccountRemovalExplanationDialog : DialogFragment() {
 
         return MaterialAlertDialogBuilder(requireContext()).create {
             setView(binding.root)
-            setPositiveButton(R.string.dialog_ok) { _, _ ->
+            positiveButton(R.string.dialog_ok) {
                 setFragmentResult(REQUEST_KEY, bundleOf(RESULT_PROCEED to true))
             }
-            setNegativeButton(R.string.dialog_cancel) { _, _ -> }
+            negativeButton(R.string.dialog_cancel)
         }
     }
 }

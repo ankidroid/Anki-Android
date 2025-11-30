@@ -62,7 +62,6 @@ class RemoveAccountFragment :
     /**
      * Redirect from post-login pages (such as 'verify account') to the required page
      */
-
     private fun maybeRedirectToRemoveAccount(url: String): Boolean {
         if (!urlsToRedirect.any { urlToRedirect -> url.startsWith(urlToRedirect) }) {
             Timber.v("not redirecting to remove account: url does not match")
