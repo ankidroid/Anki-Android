@@ -266,6 +266,15 @@ open class AnkiDroidApp :
         TtsVoicesFieldFilter.ensureApplied()
     }
 
+    /**
+     * Manually initializes the collection directory and `.nomedia` if
+     * [Permissions.hasLegacyStorageAccessPermission] is set
+     *
+     * On failure, sets [fatalInitializationError] to [storageError][FatalInitializationError.StorageError]
+     *
+     * In most cases the Anki Backend now creates the collection and [initializeAnkiDroidDirectory]
+     *  is called on startup of the activity.
+     */
     private fun initializeAnkiDroidDirectory() {
         // #13207: `getCurrentAnkiDroidDirectory` failing is an unconditional be a fatal error
         // TODO: For now, a null getExternalFilesDir, but a valid AnkiDroid Directory in prefs
@@ -275,19 +284,22 @@ open class AnkiDroidApp :
                 CollectionHelper.getCurrentAnkiDroidDirectory(this)
             } catch (e: SystemStorageException) {
                 fatalInitializationError = FatalInitializationError.StorageError(e)
-                null
+                return
             }
-        // Create the AnkiDroid directory if missing. Send exception report if inaccessible.
-        if (ankiDroidDir != null && Permissions.hasLegacyStorageAccessPermission(this)) {
-            try {
-                CollectionHelper.initializeAnkiDroidDirectory(ankiDroidDir)
-            } catch (e: StorageAccessException) {
-                Timber.e(e, "Could not initialize AnkiDroid directory")
-                val defaultDir = CollectionHelper.getDefaultAnkiDroidDirectory(this)
-                if (isSdCardMounted && CollectionHelper.getCurrentAnkiDroidDirectory(this) == defaultDir) {
-                    // Don't send report if the user is using a custom directory as SD cards trip up here a lot
-                    sendExceptionReport(e, "AnkiDroidApp.onCreate")
-                }
+
+        // TODO: This line is questionable, as it doesn't work on most post-scoped-storage
+        //  builds/Android versions, but we call initializeAnkiDroidDirectory later on startup
+        if (!Permissions.hasLegacyStorageAccessPermission(this)) return
+
+        try {
+            CollectionHelper.initializeAnkiDroidDirectory(ankiDroidDir)
+            return
+        } catch (e: StorageAccessException) {
+            Timber.e(e, "Could not initialize AnkiDroid directory")
+            val defaultDir = CollectionHelper.getDefaultAnkiDroidDirectory(this)
+            if (isSdCardMounted && CollectionHelper.getCurrentAnkiDroidDirectory(this) == defaultDir) {
+                // Don't send report if the user is using a custom directory as SD cards trip up here a lot
+                sendExceptionReport(e, "AnkiDroidApp.onCreate")
             }
         }
     }
