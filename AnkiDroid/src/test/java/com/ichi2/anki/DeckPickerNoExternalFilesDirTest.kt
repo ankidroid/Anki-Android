@@ -18,15 +18,19 @@ package com.ichi2.anki
 
 import android.content.Context
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.edit
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.dialogs.utils.ankiListView
 import com.ichi2.anki.dialogs.utils.message
 import com.ichi2.anki.dialogs.utils.title
+import com.ichi2.anki.exception.StorageAccessException
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.testutils.TestException
 import com.ichi2.testutils.withNoWritePermission
 import io.mockk.every
 import io.mockk.mockkObject
 import io.mockk.unmockkAll
+import io.mockk.unmockkObject
 import org.hamcrest.CoreMatchers.containsString
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
@@ -38,6 +42,10 @@ import org.robolectric.annotation.Implementation
 import org.robolectric.annotation.Implements
 import org.robolectric.shadows.ShadowDialog
 import java.io.File
+import java.nio.file.Files
+import java.nio.file.Path
+import kotlin.io.path.absolutePathString
+import kotlin.test.Ignore
 
 @RunWith(AndroidJUnit4::class)
 @Config(shadows = [ShadowNullExternalFilesDir::class])
@@ -48,6 +56,18 @@ class DeckPickerNoExternalFilesDirTest : RobolectricTest() {
         // Currently undefined if we should fail when PREF_COLLECTION_PATH is set
         //  but getExternalFilesDir returns null
 
+        // IntroductionActivity should be skipped by our code so we can show the error
+        // without user interaction
+        deckPicker(skipIntroduction = false) {
+            val message = (ShadowDialog.getLatestDialog() as AlertDialog).message
+            assertThat(message, containsString("getExternalFilesDir unexpectedly returned null"))
+        }
+    }
+
+    @Test
+    @Ignore("19652")
+    @Config(application = AnkiDroidAppWithCollectionButUnwritableStorage::class)
+    fun `Fatal error is shown when getExternalFilesDir is null and collection is set but unwritable`() {
         // IntroductionActivity should be skipped by our code so we can show the error
         // without user interaction
         deckPicker(skipIntroduction = false) {
@@ -97,4 +117,32 @@ class DeckPickerNoExternalFilesDirTest : RobolectricTest() {
 class ShadowNullExternalFilesDir {
     @Implementation
     protected fun getExternalFilesDir(type: String?): File? = null
+}
+
+class AnkiDroidAppWithCollectionButUnwritableStorage : AnkiDroidApp() {
+    override fun onCreate() =
+        withTempDir("DeckPickerNoExternalFilesDirTest") { path ->
+            try {
+                mockkObject(CollectionHelper)
+                every { CollectionHelper.initializeAnkiDroidDirectory(any()) } throws StorageAccessException("testing")
+                this.sharedPrefs().edit {
+                    putString(CollectionHelper.PREF_COLLECTION_PATH, path.absolutePathString())
+                }
+                super.onCreate()
+            } finally {
+                unmockkObject(CollectionHelper)
+            }
+        }
+}
+
+fun <T> withTempDir(
+    prefix: String,
+    block: (Path) -> T,
+): T {
+    val dir = Files.createTempDirectory(prefix)
+    return try {
+        block(dir)
+    } finally {
+        dir.toFile().deleteRecursively()
+    }
 }
