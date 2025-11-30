@@ -338,8 +338,6 @@ class StudyOptionsFragment :
         // Load the deck counts for the deck from Collection asynchronously
         updateValuesFromDeckJob =
             launchCatchingTask {
-                // Show progress bar explicitly as it is now hidden by default (fix for DeckPicker spinner issue)
-                view?.findViewById<View>(R.id.progress_bar)?.visibility = View.VISIBLE
                 if (CollectionManager.isOpenUnsafe()) {
                     val result = withCol { fetchStudyOptionsData() }
                     rebuildUi(result)
