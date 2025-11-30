@@ -23,6 +23,7 @@ import android.graphics.Rect
 import android.view.MotionEvent
 import android.view.View
 import androidx.core.view.OnReceiveContentListener
+import androidx.core.view.isVisible
 import androidx.draganddrop.DropHelper
 
 /** @see View.performClick */
@@ -153,3 +154,9 @@ private fun Float.dpToPx(context: Context): Int = (this * context.resources.disp
 fun View.isRtl() = isRtl(resources)
 
 fun isRtl(res: Resources): Boolean = res.configuration.layoutDirection == View.LAYOUT_DIRECTION_RTL
+
+fun <T : View> T.ifVisible(block: (T) -> Unit) {
+    if (isVisible) {
+        block(this)
+    }
+}
