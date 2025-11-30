@@ -1455,8 +1455,12 @@ class NoteEditorFragment :
             !shouldHideToolbar()
         menu.findItem(R.id.action_capitalize).isChecked =
             sharedPrefs().getBoolean(PREF_NOTE_EDITOR_CAPITALIZE, true)
-        menu.findItem(R.id.action_scroll_toolbar).isChecked =
-            sharedPrefs().getBoolean(PREF_NOTE_EDITOR_SCROLL_TOOLBAR, true)
+        menu.findItem(R.id.action_scroll_toolbar).apply {
+            isChecked =
+                sharedPrefs().getBoolean(PREF_NOTE_EDITOR_SCROLL_TOOLBAR, true)
+            isEnabled =
+                !shouldHideToolbar()
+        }
     }
 
     /**
@@ -1511,6 +1515,9 @@ class NoteEditorFragment :
                     putBoolean(PREF_NOTE_EDITOR_SHOW_TOOLBAR, item.isChecked)
                 }
                 updateToolbar()
+
+                // Update the overflow action menu in order to switch the enable/disable status of the "Scroll toolbar" item on the spot
+                requireActivity().invalidateOptionsMenu()
             }
             R.id.action_capitalize -> {
                 Timber.i("NoteEditor:: Capitalize button pressed. New State: %b", !item.isChecked)
