@@ -254,4 +254,16 @@
     <string name="tts_error_dialog_reason_text">موتور متن به گفتار <b>%1$s</b> این زبان را همایت نمیکند: <b>%2$s</b></string>
     <string name="tts_error_dialog_change_button_text">موتور را تغییر بده</string>
     <string name="tts_error_dialog_supported_voices_button_text">گزینه های صدا</string>
+    <string-array name="import_cache_error_resolutions">
+        <item>@string/import_error_resolution_try_again</item>
+        <item>@string/import_error_resolution_free_up_space</item>
+        <item>@string/import_error_resolution_check_internet</item>
+        <item>@string/import_error_resolution_copy_to_device</item>
+        <item>@string/import_error_resolution_select_file</item>
+    </string-array>
+    <string name="import_error_resolution_try_again">Re-import the file</string>
+    <string name="import_error_resolution_free_up_space">Ensure there is sufficient free space on your device</string>
+    <string name="import_error_resolution_check_internet">Ensure you are connected to the internet</string>
+    <string name="import_error_resolution_copy_to_device">Copy the file to your device and try again with the local file</string>
+    <string name="import_error_resolution_select_file">Open the file using your device’s file browser app</string>
 </resources>

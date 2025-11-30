@@ -168,7 +168,8 @@
     <string name="import_error_not_apkg_extension">Su nùmene de su documentu “%s” non tenet un\'estensione .apkg o. colpkg</string>
     <string name="import_error_load_imported_database">Sas sostitutziones de sa base de datos de Anki (.anki2) non sunt galu suportadas. Pòmpia·ti su manuale pro sas istrutziones de sostitutzione.</string>
     <string name="import_error_content_provider">Su documentu ischertadu non podet èssere importadu in manera automàtica dae AnkiDroid. Pòmpia·ti su manuale pro imparare comente importare sos documentos de Anki in automàticu: \n%s</string>
-    <string name="import_error_copy_to_cache">Sarvamentu de s\'archìviu in sa memòria temporànea fallidu (probabilmente ca non b\'at logu in sa memòria)</string>
+    <string name="import_error_copy_to_cache_title">Failed to cache file</string>
+    <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">This is often caused by a bug in the app you used to select the file. Please try the following fixes:\n\n%s</string>
     <string name="import_interrupted">Importatzione firmada: AnkiDroid est istadu serradu</string>
     <string name="export_ready_title">Esportatzione pronta</string>
     <string name="export_send_no_handlers">Peruna aplicatzione a disponimentu pro gestire apkg. Sarvende&#8230;</string>

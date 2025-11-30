@@ -178,7 +178,8 @@
     <string name="import_error_not_apkg_extension">لا يحتوي اسم الملف «%s» على ملحق «.apkg» أو «.colpkg»</string>
     <string name="import_error_load_imported_database">استبدالات قاعدة بيانات آنكي «.anki2» ليست مدعومة بعد. الرجاء الاطلاع على الدليل حول تعليمات الاستبدال.</string>
     <string name="import_error_content_provider">تعذر استيراد المِلَفّ المحدد تلقائيًا بواسطة آنكي درويد. الرجاء الاطّلاع على دليل المستخدم لكيفية استيراد ملفات آنكي يدويًا: \n%s</string>
-    <string name="import_error_copy_to_cache">فشل تخزين الملف مؤقتًا (ربما بسبب نفاد مساحة التخزين)</string>
+    <string name="import_error_copy_to_cache_title">Failed to cache file</string>
+    <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">This is often caused by a bug in the app you used to select the file. Please try the following fixes:\n\n%s</string>
     <string name="import_interrupted">تمت مقاطعة الاستيراد: لقد أُغلق آنكي درويد</string>
     <string name="export_ready_title">المُصَدَّر مُعدّ</string>
     <string name="export_send_no_handlers">لا توجد تطبيقات متاحة للتعامل مع «apkg». يتم الحفظ&#8230;</string>

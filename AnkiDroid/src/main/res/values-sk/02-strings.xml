@@ -172,7 +172,8 @@
     <string name="import_error_not_apkg_extension">Názov súboru “%s” nemá príponu .apkg alebo .colpkg</string>
     <string name="import_error_load_imported_database">Náhrady Anki databázy (.anki2) ešte nie sú podporované. Pozrite si, prosím, manuál pre náhrady.</string>
     <string name="import_error_content_provider">Zvolený súbor nemohol byť importovaný automaticky AnkiDroidom. Pozrite si, prosím, používateľský manuál ako manuálne importovať Anki súbory: \n%s</string>
-    <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
+    <string name="import_error_copy_to_cache_title">Failed to cache file</string>
+    <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">This is often caused by a bug in the app you used to select the file. Please try the following fixes:\n\n%s</string>
     <string name="import_interrupted">Import prerušený</string>
     <string name="export_ready_title">Pripravené na export</string>
     <string name="export_send_no_handlers">Žiadna aplikácia na spracovanie apkg. Ukladanie&#8230;</string>

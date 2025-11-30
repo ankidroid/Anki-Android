@@ -172,7 +172,8 @@
     <string name="import_error_not_apkg_extension">У файла “%s” должно быть расширение .apkg или .colpkg</string>
     <string name="import_error_load_imported_database">Замена базы данных Anki (.anki2) пока не поддерживается. Смотрите руководство для инструкций по замене.</string>
     <string name="import_error_content_provider">Этот файл не получится импортировать автоматически. См. руководство, чтобы импортировать Anki-файлы вручную: \n %s</string>
-    <string name="import_error_copy_to_cache">Не удалось кэшировать файл (возможно, не хватает места)</string>
+    <string name="import_error_copy_to_cache_title">Failed to cache file</string>
+    <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">This is often caused by a bug in the app you used to select the file. Please try the following fixes:\n\n%s</string>
     <string name="import_interrupted">Импорт прерван</string>
     <string name="export_ready_title">Экспорт готов</string>
     <string name="export_send_no_handlers">Нет приложений для чтения файлов apkg. Сохраняется&#8230;</string>

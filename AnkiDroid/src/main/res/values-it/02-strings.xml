@@ -166,7 +166,8 @@
     <string name="import_error_not_apkg_extension">Il file \"%s\" non ha estensione .apkg o .colpkg</string>
     <string name="import_error_load_imported_database">Le sostituzioni di Anki Database (.anki2) non sono ancora supportate. Consultare il manuale per le istruzioni di sostituzione.</string>
     <string name="import_error_content_provider">Il file selezionato non ha potuto essere importato automaticamente da AnkiDroid. Consulta il manuale utente per importare manualmente i file Anki: \n %s</string>
-    <string name="import_error_copy_to_cache">Impossibile cache del file (forse fuori dallo spazio di archiviazione)</string>
+    <string name="import_error_copy_to_cache_title">Failed to cache file</string>
+    <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">This is often caused by a bug in the app you used to select the file. Please try the following fixes:\n\n%s</string>
     <string name="import_interrupted">Importazione interrotta</string>
     <string name="export_ready_title">Esportazione pronta</string>
     <string name="export_send_no_handlers">Nessuna applicazione disponibile per gestire apkg. Salvataggio&#8230;</string>

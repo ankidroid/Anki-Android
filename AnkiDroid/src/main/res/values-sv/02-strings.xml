@@ -166,7 +166,8 @@
     <string name="import_error_not_apkg_extension">Filnamnet \"%s\" har varken .apkg eller .colpkg suffix</string>
     <string name="import_error_load_imported_database">Anki Database (.anki2) ersättningar stöds inte än. Se manualen för ersättningsinstruktioner.</string>
     <string name="import_error_content_provider">Den valda filen kunde inte importeras automatiskt av AnkiDroid. Vänligen se användarmanualen för information om manuell import av Anki-filer: \n %s</string>
-    <string name="import_error_copy_to_cache">Misslyckades att cacha filen (eventuellt slut lagringsutrymme)</string>
+    <string name="import_error_copy_to_cache_title">Failed to cache file</string>
+    <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">This is often caused by a bug in the app you used to select the file. Please try the following fixes:\n\n%s</string>
     <string name="import_interrupted">Import avbruten: AnkiDroid stängdes</string>
     <string name="export_ready_title">Export redo</string>
     <string name="export_send_no_handlers">Inga program tillgängliga för att hantera apkg. Sparar&#8230;</string>
