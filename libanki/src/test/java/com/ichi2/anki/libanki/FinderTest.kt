@@ -126,7 +126,7 @@ class FinderTest : InMemoryAnkiTest() {
         note.setItem("Back", "sheep")
         col.addNote(note)
         val catCard = note.cards()[0]
-        var noteType = col.notetypes.current()
+        var noteType = col.notetypes.get(col.defaultsForAdding().notetypeId)!!
         noteType = col.notetypes.copy(noteType)
         val t =
             Notetypes.newTemplate("Reverse").apply {
@@ -135,7 +135,7 @@ class FinderTest : InMemoryAnkiTest() {
             }
         col.notetypes.addTemplateModChanged(noteType, t)
         col.notetypes.save(noteType)
-        note = col.newNote()
+        note = col.newNote(noteType)
         note.setItem("Front", "test")
         note.setItem("Back", "foo bar")
         col.addNote(note)
