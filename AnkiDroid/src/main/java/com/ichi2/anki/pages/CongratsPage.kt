@@ -33,7 +33,6 @@ import com.google.android.material.appbar.MaterialToolbar
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.DeckPicker
-import com.ichi2.anki.FilteredDeckOptions
 import com.ichi2.anki.OnErrorListener
 import com.ichi2.anki.R
 import com.ichi2.anki.StudyOptionsActivity
@@ -42,6 +41,7 @@ import com.ichi2.anki.common.time.TIME_HOUR
 import com.ichi2.anki.common.time.TIME_MINUTE
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyAction
+import com.ichi2.anki.filtered.FilteredDeckOptionsFragment
 import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.DeckId
@@ -283,7 +283,7 @@ class DeckOptionsDestination(
 ) : Destination {
     override fun toIntent(context: Context): Intent =
         if (isFiltered) {
-            FilteredDeckOptions.getIntent(context, deckId = deckId)
+            FilteredDeckOptionsFragment.getIntent(context, did = deckId)
         } else {
             DeckOptions.getIntent(context, deckId)
         }
