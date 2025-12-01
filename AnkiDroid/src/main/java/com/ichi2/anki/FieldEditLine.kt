@@ -57,10 +57,10 @@ class FieldEditLine : FrameLayout {
         binding.toggleSticky.setTooltipTextCompat(CollectionManager.TR.editingToggleSticky())
         // 7433 -
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
-            binding.editText.id = View.generateViewId()
-            binding.toggleSticky.id = View.generateViewId()
-            binding.mediaButton.id = View.generateViewId()
-            binding.expandButton.id = View.generateViewId()
+            binding.editText.id = generateViewId()
+            binding.toggleSticky.id = generateViewId()
+            binding.mediaButton.id = generateViewId()
+            binding.expandButton.id = generateViewId()
             binding.editText.nextFocusForwardId = binding.toggleSticky.id
             binding.toggleSticky.nextFocusForwardId = binding.mediaButton.id
             binding.mediaButton.nextFocusForwardId = binding.expandButton.id

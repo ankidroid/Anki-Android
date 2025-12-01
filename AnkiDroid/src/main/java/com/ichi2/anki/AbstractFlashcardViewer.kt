@@ -2814,7 +2814,7 @@ abstract class AbstractFlashcardViewer :
                     error: TtsPlayer.TtsError,
                     isAutomaticPlayback: Boolean,
                 ) {
-                    AbstractFlashcardViewer.mediaErrorHandler.processTtsFailure(error, isAutomaticPlayback) {
+                    mediaErrorHandler.processTtsFailure(error, isAutomaticPlayback) {
                         when (error) {
                             is AndroidTtsError.MissingVoiceError ->
                                 TtsPlaybackErrorDialog.ttsPlaybackErrorDialog(activity, supportFragmentManager, error.tag)
@@ -2836,7 +2836,7 @@ abstract class AbstractFlashcardViewer :
                         // Retrying fixes most of these
                         if (file.exists()) return RETRY_MEDIA
                         // just doesn't exist - process the error
-                        AbstractFlashcardViewer.mediaErrorHandler.processMissingMedia(
+                        mediaErrorHandler.processMissingMedia(
                             file,
                         ) { filename: String? -> displayCouldNotFindMediaSnackbar(filename) }
                         return CONTINUE_MEDIA
