@@ -19,7 +19,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.annotation.CheckResult
 import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.anki.FilteredDeckOptions
+import com.ichi2.anki.filtered.FilteredDeckOptionsFragment
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.utils.Destination
 
@@ -29,7 +29,7 @@ class DeckOptionsDestination(
 ) : Destination {
     override fun toIntent(context: Context): Intent =
         if (isFiltered) {
-            FilteredDeckOptions.getIntent(context, deckId = deckId)
+            FilteredDeckOptionsFragment.getIntent(context, did = deckId)
         } else {
             DeckOptions.getIntent(context, deckId)
         }

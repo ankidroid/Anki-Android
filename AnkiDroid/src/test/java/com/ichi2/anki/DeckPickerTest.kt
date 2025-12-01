@@ -447,7 +447,7 @@ class DeckPickerTest : RobolectricTest() {
 
             // select deck options for a dynamic deck
             val deckOptionsDynamic = selectContextMenuOptionForActivity(DeckPickerContextMenuOption.DECK_OPTIONS, didDynamicA)
-            assertEquals("com.ichi2.anki.FilteredDeckOptions", deckOptionsDynamic.component!!.className)
+            assertEquals("com.ichi2.anki.utils.ConfigAwareSingleFragmentActivity", deckOptionsDynamic.component!!.className)
             onBackPressedDispatcher.onBackPressed()
 
             Prefs.newReviewRemindersEnabled = true
