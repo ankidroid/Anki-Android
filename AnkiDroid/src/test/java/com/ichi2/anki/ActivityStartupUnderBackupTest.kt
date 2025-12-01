@@ -58,10 +58,6 @@ class ActivityStartupUnderBackupTest : RobolectricTest() {
             "Not working (or implemented) - inherits from AppCompatPreferenceActivity",
         )
         notYetHandled(
-            FilteredDeckOptions::class.java.simpleName,
-            "Not working (or implemented) - inherits from AppCompatPreferenceActivity",
-        )
-        notYetHandled(
             SingleFragmentActivity::class.java.simpleName,
             "Implemented, but the test fails because the activity throws if a specific intent extra isn't set",
         )

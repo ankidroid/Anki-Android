@@ -44,7 +44,6 @@
     <string name="sign_in">Signing in</string>
 
     <!-- AndroidManifest.xml -->
-    <string name="deckpreferences_title">Options for XXX</string>
     <string name="sync_title">Synchronization</string>
     <string name="sync_log_uploading_message">Full sync from local</string>
     <string name="sync_database_acknowledge">Collection synchronized</string>
