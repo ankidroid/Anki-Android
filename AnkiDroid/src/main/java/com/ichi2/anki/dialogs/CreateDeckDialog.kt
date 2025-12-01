@@ -24,7 +24,6 @@ import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.CollectionManager
-import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.libanki.Collection
@@ -62,7 +61,6 @@ class CreateDeckDialog(
     private var shownDialog: AlertDialog? = null
 
     enum class DeckDialogType {
-        FILTERED_DECK,
         DECK,
         SUB_DECK,
         RENAME_DECK,
@@ -70,15 +68,6 @@ class CreateDeckDialog(
 
     private val getColUnsafe
         get() = CollectionManager.getColUnsafe()
-
-    suspend fun showFilteredDeckDialog() {
-        Timber.i("CreateDeckDialog::showFilteredDeckDialog")
-        initialDeckName =
-            withCol {
-                sched.getOrCreateFilteredDeck(did = 0).name
-            }
-        showDialog()
-    }
 
     /** Used for rename  */
     var deckName: String
@@ -168,7 +157,7 @@ class CreateDeckDialog(
      */
     private fun fullyQualifyDeckName(dialogText: CharSequence) =
         when (deckDialogType) {
-            DeckDialogType.DECK, DeckDialogType.FILTERED_DECK, DeckDialogType.RENAME_DECK -> dialogText.toString()
+            DeckDialogType.DECK, DeckDialogType.RENAME_DECK -> dialogText.toString()
             DeckDialogType.SUB_DECK -> getColUnsafe.decks.getSubdeckName(parentId!!, dialogText.toString())
         }
 
@@ -191,34 +180,6 @@ class CreateDeckDialog(
         }
         // AlertDialog should be dismissed after the Keyboard 'Done' or Deck 'Ok' button is pressed
         shownDialog?.dismiss()
-    }
-
-    fun createFilteredDeck(deckName: String): Boolean {
-        fun validFilteredDeckName(initialName: String): String {
-            for (i in 0..10) {
-                val name = initialName + "+".repeat(i)
-                if (getColUnsafe.decks.byName(name) == null) return name
-            }
-            throw IllegalStateException("Could not generate valid name")
-        }
-
-        try {
-            // create filtered deck
-            Timber.i("CreateDeckDialog::createFilteredDeck...")
-            val newDeckId = getColUnsafe.decks.newFiltered(validFilteredDeckName(deckName))
-            Timber.d("Created filtered deck '%s'; id: %d", deckName, newDeckId)
-            onNewDeckCreated(newDeckId)
-        } catch (ex: IllegalStateException) {
-            if (ex.message != "Could not generate valid name") {
-                throw ex
-            }
-            displayFeedback(ex.localizedMessage ?: ex.message ?: "", Snackbar.LENGTH_LONG)
-            return false
-        } catch (ex: BackendDeckIsFilteredException) {
-            displayFeedback(ex.localizedMessage ?: ex.message ?: "", Snackbar.LENGTH_LONG)
-            return false
-        }
-        return true
     }
 
     private fun createNewDeck(deckName: String): Boolean {
@@ -248,10 +209,6 @@ class CreateDeckDialog(
                 DeckDialogType.SUB_DECK -> {
                     // create sub deck
                     createSubDeck(parentId!!, deckName)
-                }
-                DeckDialogType.FILTERED_DECK -> {
-                    // create filtered deck
-                    createFilteredDeck(deckName)
                 }
             }
         }
