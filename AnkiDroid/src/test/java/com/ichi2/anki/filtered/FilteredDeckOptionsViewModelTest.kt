@@ -184,6 +184,20 @@ class FilteredDeckOptionsViewModelTest : RobolectricTest() {
             }
         }
 
+    @Test
+    fun `filter search in browser produces expected state`() =
+        runTest {
+            withViewModel {
+                onSearchChange(FilterIndex.First, "deck:A flag:1")
+                onSearchInBrowser(FilterIndex.First)
+                val currentState = state.value
+                assertInstanceOf<FilteredDeckOptions>(currentState)
+                assertThat(currentState.browserQuery, equalTo("deck:A flag:1"))
+                clearSearchInBrowser()
+                assertNull((state.value as FilteredDeckOptions).browserQuery)
+            }
+        }
+
     /** Returns the current state as a [FilteredDeckOptions] or throw otherwise */
     private val FilteredDeckOptionsViewModel.current: FilteredDeckOptions
         get() = state.value as FilteredDeckOptions

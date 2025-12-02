@@ -88,6 +88,10 @@ data class FilteredDeckOptions(
      * user and then clear them.
      */
     val throwable: Throwable? = null,
+    /**
+     * If not null start the browser with [browserQuery] as the search string.
+     */
+    val browserQuery: String? = null,
 ) : Parcelable,
     FilteredDeckOptionsState
 

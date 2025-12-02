@@ -26,6 +26,7 @@ import anki.decks.DeckKt.filtered
 import anki.decks.FilteredDeckForUpdate
 import anki.decks.filteredDeckForUpdate
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.exception.InvalidSearchException
 import com.ichi2.anki.filtered.FilteredDeckOptionsFragment.Companion.ARG_DECK_ID
 import com.ichi2.anki.filtered.FilteredDeckOptionsFragment.Companion.ARG_SEARCH
 import com.ichi2.anki.filtered.FilteredDeckOptionsFragment.Companion.ARG_SEARCH_2
@@ -114,6 +115,32 @@ class FilteredDeckOptionsViewModel(
         Timber.i("Filtered deck filter($filterIndex) cards options index changing to $cardOptionIndex")
         if (currentFilterState(filterIndex)?.index == cardOptionIndex) return
         updateCurrentFilterState(filterIndex) { copy(index = cardOptionIndex) }
+    }
+
+    fun onSearchInBrowser(filterIndex: FilterIndex) {
+        Timber.i("Building search query to show in browser")
+        val filterState = currentFilterState(filterIndex) ?: return
+        viewModelScope.launch {
+            val buildBrowserQueryResult =
+                withCol { safeBuildSearchString(listOf(filterState.search)) }
+            buildBrowserQueryResult
+                .onFailure { throwable ->
+                    updateCurrentState {
+                        currentState().copy(throwable = InvalidSearchException(cause = throwable))
+                    }
+                }.onSuccess {
+                    updateCurrentState { currentState().copy(browserQuery = buildBrowserQueryResult.getOrThrow()) }
+                }
+        }
+    }
+
+    /**
+     * Clears the browser query from the state (so we don't enter a loop when coming back from the
+     * browser) and also the search string building indicator from both filters.
+     */
+    fun clearSearchInBrowser() {
+        Timber.i("Clearing search in browser query from state")
+        updateCurrentState { copy(browserQuery = null) }
     }
 
     fun onSecondFilterStatusChange(isEnabled: Boolean) {
@@ -222,6 +249,18 @@ class FilteredDeckOptionsViewModel(
         }
         _state.update { currentState() }
     }
+
+    /**
+     * Uses the backend to build a search string from the provided nodes.
+     * @see Collection.buildSearchString
+     * @see Collection.groupSearches
+     */
+    private fun Collection.safeBuildSearchString(nodes: List<Any>): Result<String> =
+        try {
+            Result.success(buildSearchString(nodes))
+        } catch (ex: Exception) {
+            Result.failure(ex)
+        }
 
     /** Queries the backend for cards search options and [FilteredDeckForUpdate] guarding against any exception. */
     private fun Collection.safeBackendDataQuery(did: DeckId): Result<Pair<FilteredDeckForUpdate, List<String>>> =

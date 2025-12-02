@@ -37,6 +37,7 @@ import com.google.android.material.materialswitch.MaterialSwitch
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
 import com.ichi2.anki.databinding.FragmentFilteredDeckOptionsBinding
@@ -122,6 +123,13 @@ class FilteredDeckOptionsFragment : Fragment(R.layout.fragment_filtered_deck_opt
                                     positiveButton(R.string.dialog_ok)
                                     setOnDismissListener { viewModel.clearError() }
                                 }
+                                return@collect
+                            }
+                            if (state.browserQuery != null) {
+                                val browserSearchIntent = Intent(context, CardBrowser::class.java)
+                                browserSearchIntent.putExtra("search_query", state.browserQuery)
+                                startActivity(browserSearchIntent)
+                                viewModel.clearSearchInBrowser()
                             }
                         }
                     }
@@ -198,6 +206,9 @@ class FilteredDeckOptionsFragment : Fragment(R.layout.fragment_filtered_deck_opt
         binding.filterSearchInput.onTextChanged { text ->
             viewModel.onSearchChange(FilterIndex.First, text)
         }
+        binding.filterSearchInputLayout.setEndIconOnClickListener {
+            viewModel.onSearchInBrowser(FilterIndex.First)
+        }
         binding.filterLimitInput.onTextChanged { text ->
             viewModel.onLimitChange(FilterIndex.First, text)
         }
@@ -209,6 +220,9 @@ class FilteredDeckOptionsFragment : Fragment(R.layout.fragment_filtered_deck_opt
         binding.switchSecondFilter.onCheckedChanged(viewModel::onSecondFilterStatusChange)
         binding.secondFilterSearchInput.onTextChanged { text ->
             viewModel.onSearchChange(FilterIndex.Second, text)
+        }
+        binding.secondFilterSearchInputLayout.setEndIconOnClickListener {
+            viewModel.onSearchInBrowser(FilterIndex.Second)
         }
         binding.secondFilterLimitInput.onTextChanged { text ->
             viewModel.onLimitChange(FilterIndex.Second, text)

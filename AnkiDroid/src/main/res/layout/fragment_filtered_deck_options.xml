@@ -124,6 +124,9 @@
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    app:endIconMode="custom"
+                    app:endIconDrawable="@drawable/ic_search_white"
+                    app:endIconContentDescription="@string/card_browser_cram_search"
                     tools:hint="Search">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -195,6 +198,8 @@
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
+                    app:endIconMode="custom"
+                    app:endIconDrawable="@drawable/ic_search_white"
                     tools:hint="Search">
 
                     <com.google.android.material.textfield.TextInputEditText
