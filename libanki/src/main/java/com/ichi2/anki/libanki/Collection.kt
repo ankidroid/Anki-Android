@@ -52,6 +52,7 @@ import anki.search.BrowserColumns
 import anki.search.BrowserRow
 import anki.search.SearchNode
 import anki.search.SearchNode.Group.Joiner
+import anki.search.searchNode
 import anki.stats.CardStatsResponse
 import anki.stats.CardStatsResponse.StatsRevlogEntry
 import anki.sync.MediaSyncStatusResponse
@@ -863,7 +864,17 @@ class Collection(
      */
 
     /**
-     * Construct a search string from the provided search nodes. For example:
+     * Construct a search string from the provided [String] or [SearchNode].
+     *
+     * Note on implementation:
+     * Python allows types mixing so the "nodes" parameter was declared here as ```List<Any>``` and
+     * each entry will be verified inside the method to be either a [String] or a [SearchNode].
+     *
+     * ```python
+     * def build_search_string(self, *nodes: str | SearchNode, joiner: SearchJoiner = "AND") -> str:
+     * ```
+     * Usage example:
+     *
      * ```kotlin
      *       import anki.search.searchNode
      *       import anki.search.SearchNode
@@ -882,31 +893,69 @@ class Collection(
      *           }
      *       }
      *       // yields "deck:a \*\*test\*\* deck" -tag:foo flag:3
-     *       val text = col.buildSearchString(node)
+     *       val text = col.buildSearchString(listOf(node))
      *   }
      * ```
+     * @param stringsOrSearchNodes a list of [String] or [SearchNode] or a combination of [String]
+     * and [SearchNode]
+     * @throws IllegalArgumentException if [stringsOrSearchNodes] is empty or it has entries which
+     * aren't a [String] or a [SearchNode]
      */
-    @RustCleanup("support SearchJoiner argument")
+    // TODO consider implementing a custom dsl for this method, see comments in #19677
     @LibAnkiAlias("build_search_string")
     fun buildSearchString(
-        node: SearchNode,
+        stringsOrSearchNodes: List<Any>,
         joiner: SearchJoiner = SearchJoiner.AND,
-    ): String = backend.buildSearchString(node)
+    ): String {
+        if (!stringsOrSearchNodes.all { it is String || it is SearchNode }) {
+            throw IllegalArgumentException("buildSearchString expects a list containing Strings or SearchNodes: $stringsOrSearchNodes")
+        }
+        val term = groupSearches(stringsOrSearchNodes, joiner)
+        return backend.buildSearchString(term)
+    }
 
     /**
-     * Join provided search nodes and strings into a single [SearchNode].
-     * If a single [SearchNode] is provided, it is returned as-is.
-     * At least one node must be provided.
+     * Join provided [SearchNode]s or [String]s into a single [SearchNode]. If the list has only one
+     * entry it will be returned as-is. At least one node must be provided.
      *
+     * Note on implementation:
+     * Python allows types mixing so the "nodes" parameter was declared here as ```List<Any>``` and
+     * each entry will be verified inside the method to be either a [String] or a [SearchNode].
+     *
+     * ```python
+     * def group_searches(self, *nodes: str | SearchNode, joiner: SearchJoiner = "AND") -> SearchNode:
+     * ```
+     * @param stringsOrSearchNodes a list of [String] or [SearchNode] or a combination of [String]
+     * and [SearchNode]
      * @throws IllegalArgumentException if no nodes are provided
      */
-    @Deprecated("not implemented")
-    @RustCleanup("input upstream is either ")
     @LibAnkiAlias("group_searches")
     fun groupSearches(
-        nodes: List<SearchNode>,
+        stringsOrSearchNodes: List<Any>,
         joiner: SearchJoiner = SearchJoiner.AND,
-    ): Nothing = TODO()
+    ): SearchNode {
+        if (stringsOrSearchNodes.isEmpty()) throw IllegalArgumentException("At least one entry must be provided!")
+        val searchNodes =
+            stringsOrSearchNodes.map {
+                when (it) {
+                    is String -> searchNode { parsableText = it }
+                    is SearchNode -> it
+                    else -> throw IllegalArgumentException("groupSearches expects a list containing Strings or SearchNodes found: $it")
+                }
+            }
+        return if (searchNodes.size > 1) {
+            searchNode {
+                group =
+                    SearchNode.Group
+                        .newBuilder()
+                        .addAllNodes(searchNodes)
+                        .setJoiner(toPbSearchSeparator(joiner))
+                        .build()
+            }
+        } else {
+            searchNodes[0]
+        }
+    }
 
     /**
      * AND or OR `additional_term` to `existing_term`, without wrapping `existing_term` in brackets.
@@ -940,7 +989,7 @@ class Collection(
     ): String = backend.replaceSearchNode(existingNode = existingNode, replacementNode = replacementNode)
 
     @LibAnkiAlias("_pb_search_separator")
-    fun toPbSearchSeparator(operator: SearchJoiner): SearchNode.Group.Joiner =
+    private fun toPbSearchSeparator(operator: SearchJoiner): Joiner =
         when (operator) {
             SearchJoiner.AND -> Joiner.AND
             SearchJoiner.OR -> Joiner.OR
