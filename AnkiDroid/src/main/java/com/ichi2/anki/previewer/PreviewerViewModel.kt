@@ -15,6 +15,7 @@
  */
 package com.ichi2.anki.previewer
 
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import anki.collection.OpChanges
@@ -45,16 +46,18 @@ import kotlinx.coroutines.flow.update
 import timber.log.Timber
 
 class PreviewerViewModel(
-    stateHandle: SavedStateHandle,
+    savedStateHandle: SavedStateHandle,
 ) : CardViewerViewModel(),
     ChangeManager.Subscriber {
-    val currentIndex = MutableStateFlow<Int>(stateHandle.require(PreviewerFragment.CURRENT_INDEX_ARG))
+    val currentIndex = MutableStateFlow<Int>(savedStateHandle.require(PreviewerFragment.CURRENT_INDEX_ARG))
     val backSideOnly = MutableStateFlow(false)
     val isMarked = MutableStateFlow(false)
     val flag: MutableStateFlow<Flag> = MutableStateFlow(Flag.NONE)
-    private val selectedCardIds: List<Long> = stateHandle.require<IdsFile>(PreviewerFragment.CARD_IDS_FILE_ARG).getIds()
 
-    override val showingAnswer = MutableStateFlow(stateHandle[SHOWING_ANSWER_KEY] ?: false)
+    @VisibleForTesting
+    val selectedCardIds: List<Long> = savedStateHandle.require<IdsFile>(PreviewerFragment.CARD_IDS_FILE_ARG).getIds()
+
+    override val showingAnswer = MutableStateFlow(savedStateHandle[SHOWING_ANSWER_KEY] ?: false)
     val isBackButtonEnabled =
         combine(currentIndex, showingAnswer, backSideOnly) { index, showingAnswer, isBackSideOnly ->
             index != 0 || (showingAnswer && !isBackSideOnly)
@@ -68,17 +71,17 @@ class PreviewerViewModel(
 
     override var currentCard: Deferred<Card> =
         asyncIO {
-            withCol { getCard(selectedCardIds[stateHandle.require(PreviewerFragment.CURRENT_INDEX_ARG)]) }
+            withCol { getCard(selectedCardIds[savedStateHandle.require(PreviewerFragment.CURRENT_INDEX_ARG)]) }
         }
     override val server = AnkiServer(this).also { it.start() }
 
     init {
         ChangeManager.subscribe(this)
         showingAnswer.collectIn(viewModelScope) {
-            stateHandle[SHOWING_ANSWER_KEY] = it
+            savedStateHandle[SHOWING_ANSWER_KEY] = it
         }
         currentIndex.collectIn(viewModelScope) {
-            stateHandle[PreviewerFragment.CURRENT_INDEX_ARG] = it
+            savedStateHandle[PreviewerFragment.CURRENT_INDEX_ARG] = it
         }
     }
 
@@ -191,9 +194,14 @@ class PreviewerViewModel(
 
     fun cardsCount() = selectedCardIds.count()
 
-    fun onSliderChange(value: Int) {
+    /**
+     * @param sliderPosition the value of the slider (i.e. Slider::value). It's NOT the card index.
+     */
+    fun onSliderChange(sliderPosition: Int) {
+        val index = sliderPosition - 1
+        if (index !in selectedCardIds.indices) return
         launchCatchingIO {
-            currentIndex.emit(value - 1)
+            currentIndex.emit(index)
         }
     }
 

@@ -24,12 +24,14 @@ import androidx.lifecycle.viewModelScope
 import anki.sync.SyncAuth
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
+import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.settings.Prefs
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import net.ankiweb.rsdroid.exceptions.BackendSyncException
+import timber.log.Timber
 
 /**
  * ViewModel that manages the state for user login. It handles the login process,
@@ -77,18 +79,26 @@ class LoginViewModel : ViewModel() {
      * @param password The password entered by the user.
      * @param endpoint An endpoint for authentication.
      */
+    @NeedsTest("updateLogin/_loginState changes after an exception")
     fun handleLogin(
         username: String,
         password: String,
         endpoint: String?,
     ) {
+        Timber.i("Logging in")
         viewModelScope.launch {
             try {
                 val auth = syncLogin(username, password, endpoint)
+                Timber.i("Login success")
                 updateLogin(username, auth.hkey)
                 _loginState.value = LoginState.Success
             } catch (exc: BackendSyncException.BackendSyncAuthFailedException) {
+                Timber.i("Login auth failed")
                 updateLogin("", "")
+                _loginState.value = LoginState.Error(exc)
+            } catch (exc: Exception) {
+                // do not log the error, can contain PII
+                Timber.w("Login error")
                 _loginState.value = LoginState.Error(exc)
             }
         }
@@ -123,7 +133,7 @@ enum class LoginError(
     EMPTY_PASSWORD(R.string.password_empty),
     ;
 
-    fun toHumanReadableString(context: Context): String? = context.getString(this.messageResId)
+    fun toHumanReadableString(context: Context): String = context.getString(this.messageResId)
 }
 
 /** Handles the Login State */
@@ -132,7 +142,11 @@ sealed class LoginState {
 
     data object Success : LoginState()
 
-    /** The error here is an exception from the login attempt itself i.e. [net.ankiweb.rsdroid.exceptions.BackendSyncException.BackendSyncAuthFailedException] */
+    /**
+     * The error here is an exception from the login attempt itself i.e. [net.ankiweb.rsdroid.exceptions.BackendSyncException.BackendSyncAuthFailedException]
+     *
+     * This may contain PII as it comes from the backend
+     */
     data class Error(
         val exception: Exception,
     ) : LoginState()

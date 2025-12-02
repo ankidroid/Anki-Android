@@ -55,7 +55,7 @@
     <string name="CardEditorTags">标签：%1$s</string>
     <string name="CardEditorCards">卡片：%1$s</string>
     <string name="edit_occlusions">编辑闭合</string>
-    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
+    <string name="paste_from_clipboard" maxLength="28">从剪贴板中粘贴</string>
     <string name="tag_name">标签</string>
     <string name="add_new_filter_tags">添加/过滤标签</string>
     <string name="add_tag" maxLength="28">添加标签</string>
@@ -120,7 +120,7 @@
     <string name="select">选择</string>
     <string name="field_remapping">%1$s（来自「%2$s」）</string>
     <string name="confirm_map_cards_to_nothing">任何无法映射的卡片都会被删除。如果该笔记没有生成其他卡片，该笔记将会丢失。你确定要继续吗？</string>
-    <string name="missing_note_type">找不到笔记类型</string>
+    <string name="missing_note_type">未找到笔记模板</string>
     <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (空)</string>
     <!-- Image cropper -->
     <string name="image_cropper_action_rotate" maxLength="28" comment="Action in image cropper screen">旋转</string>
@@ -163,7 +163,8 @@
     <string name="import_error_not_apkg_extension">「%s」并不是具有 .apkg 或 .colpkg 扩展名的文件</string>
     <string name="import_error_load_imported_database">尚不支持替换 Anki 数据库（.anki2）。请参阅手册以获取替换说明。</string>
     <string name="import_error_content_provider">所选文件无法由 AnkiDroid 自动导入。请查看用户手册了解如何手动导入 Anki 文件：\n%s</string>
-    <string name="import_error_copy_to_cache">缓存文件失败（可能超出存储空间）</string>
+    <string name="import_error_copy_to_cache_title">Failed to cache file</string>
+    <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">This is often caused by a bug in the app you used to select the file. Please try the following fixes:\n\n%s</string>
     <string name="import_interrupted">导入中断</string>
     <string name="export_ready_title">已准备好导出</string>
     <string name="export_send_no_handlers">没有可用处理 apkg 的应用程序。正在保存&#8230;</string>
@@ -232,7 +233,7 @@
     <string name="search_decks" maxLength="28">搜索牌组</string>
     <string name="ankidroid_init_failed_webview_title">严重错误</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid 依赖的系统 WebView 不可用。如果系统正在安装更新，可能会发生这种情况。请几分钟后再试。\n\n%s</string>
-    <string name="ankidroid_init_failed_storage">AnkiDroid cannot access storage due to an Android error.\n\n%s</string>
+    <string name="ankidroid_init_failed_storage">由于 Android 系统错误，AnkiDroid 无法访问存储。\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">字体大小</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">显示工具栏</string>
@@ -253,7 +254,7 @@
     <string name="note_editor_image_too_large">图片过大，请手动插入图像</string>
     <string name="note_editor_video_too_large">视频文件太大，请手动插入视频</string>
     <string name="note_editor_audio_too_large">音频文件太大，请手动插入音频</string>
-    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">正在进行 Android 备份。请重试</string>
+    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">Android 备份正在进行中。请重试</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">请使用 iManager 来允许 AnkiDroid 添加快捷方式</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">您的主屏幕不允许 AnkiDroid 添加快捷方式</string>
     <string name="create_shortcut_error">添加快捷方式时出错：%s</string>
@@ -301,7 +302,10 @@
     <string name="expand_tag">展开标签「%s」</string>
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">访问集合失败。请重试！</string>
-    <string name="cd_manage_notetypes_add">添加新的笔记类型</string>
+    <string name="cd_manage_notetypes_add">添加新的笔记模板</string>
+    <plurals name="note_types_selected">
+        <item quantity="other">已选择 %d 个笔记模板</item>
+    </plurals>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">学得更少</string>
     <string name="intro_ankidroid_tagline_two">记得更牢</string>

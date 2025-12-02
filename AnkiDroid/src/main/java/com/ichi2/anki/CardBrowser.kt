@@ -329,10 +329,10 @@ open class CardBrowser :
 
         if (fragmented) {
             ResizablePaneManager(
-                parentLayout = requireNotNull(binding.cardBrowserXlView),
-                divider = requireNotNull(binding.cardBrowserResizingDivider),
-                leftPane = requireNotNull(binding.cardBrowserFrame),
-                rightPane = requireNotNull(binding.noteEditorFrame),
+                parentLayout = requireNotNull(binding.cardBrowserXlView) { "cardBrowserXlView" },
+                divider = requireNotNull(binding.cardBrowserResizingDivider) { "cardBrowserResizingDivider" },
+                leftPane = requireNotNull(binding.cardBrowserFrame) { "cardBrowserFrame" },
+                rightPane = requireNotNull(binding.noteEditorFrame) { "noteEditorFrame" },
                 sharedPrefs = Prefs.getUiConfig(this),
                 leftPaneWeightKey = PREF_CARD_BROWSER_PANE_WEIGHT,
                 rightPaneWeightKey = PREF_NOTE_EDITOR_PANE_WEIGHT,

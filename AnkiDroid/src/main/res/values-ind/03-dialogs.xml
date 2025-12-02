@@ -71,7 +71,7 @@
     <string name="custom_study_forgotten">Ulas kartu yang terlupakan dalam x hari terakhir:</string>
     <string name="custom_study_ahead">Ulas duluan sampai x hari:</string>
     <string name="custom_study_preview">Pratinjau kartu yang baru ditambahkan dalam x hari terakhir:</string>
-    <string name="custom_study_tags">Select x cards from the deck:</string>
+    <string name="custom_study_tags">Pilih x kartu dari dek:</string>
     <string name="storage_full_title">Penyimpanan sudah penuh</string>
     <string name="storage_almost_full_title">Penyimpanan hampir penuh</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Tidak ada ruang</string>
@@ -98,13 +98,13 @@
     <string name="dialog_collection_path_not_dir">Jalur yang dipilih bukan direktori yang valid</string>
     <string name="dialog_invalid_custom_certificate">The provided text does not resolve to a valid PEM-encoded X509 certificate</string>
     <string name="dialog_invalid_custom_certificate_title">Error parsing certificate</string>
-    <string name="dialog_updated_custom_certificate">Certificate updated</string>
+    <string name="dialog_updated_custom_certificate">Sertifikat diperbarui</string>
     <!-- Media checking -->
     <string name="check_media_title">Periksa media?</string>
     <string name="check_media_warning">Ini dapat memakan waktu lama karena koleksi media yang besar</string>
     <string name="check_media_message">Memeriksa media&#8230;</string>
-    <string name="check_media_adding_missing_tag">Adding tags&#8230;</string>
-    <string name="check_media_tags_added">Tags added</string>
+    <string name="check_media_adding_missing_tag">Menambah tag&#8230;</string>
+    <string name="check_media_tags_added">Tag telah ditambahkan</string>
     <string name="delete_media_message">Menghapus media&#8230;</string>
     <string name="delete_media_result_title">Hasil penghapusan</string>
     <plurals name="delete_media_result_message">
@@ -121,7 +121,7 @@
     <string name="multimedia_editor_failed">Gagal membuka Editor Multimedia</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Izin merekam audio ditolak</string>
-    <string name="permission_denied">Permission denied</string>
+    <string name="permission_denied">Izin ditolak</string>
     <string name="recording_permission_denied_message">Microphone permission is necessary for the “Record voice” feature. Please grant it in the app settings.</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid Diperbarui</string>
@@ -178,15 +178,15 @@
     <string name="help_item_facebook">Facebook</string>
     <string name="help_item_twitter">Twitter</string>
     <string name="help_title_privacy">Privasi</string>
-    <string name="help_item_ankidroid_privacy_policy">AnkiDroid privacy policy</string>
-    <string name="help_item_ankiweb_privacy_policy">AnkiWeb privacy policy</string>
-    <string name="help_item_ankiweb_terms_and_conditions">AnkiWeb terms and conditions</string>
+    <string name="help_item_ankidroid_privacy_policy">Kebijakan privasi AnkiDroid</string>
+    <string name="help_item_ankiweb_privacy_policy">Kebijakan privasi AnkiWeb</string>
+    <string name="help_item_ankiweb_terms_and_conditions">Syarat dan ketentuan AnkiWeb</string>
     <string name="help_title_send_exception">Kirim laporan hasil troubleshooting</string>
     <string name="help_dialog_exception_report_debounce">Laporan telah dikirim</string>
     <string name="help_dialog_exception_report_sent">Laporan terkirim!</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
-        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">An automatic sync may be triggered in %d seconds</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">Sinkronisasi otomatis mungkin akan dimulai dalam %d detik.</item>
     </plurals>
     <string name="metered_sync_data_warning">Penyedia internet Anda dapat menagih biaya untuk penggunaan data</string>
     <string name="deck_picker_new">Jumlah kartu baru di dek untuk dipelajari hari ini.</string>
@@ -207,32 +207,32 @@
     <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Nanti</string>
     <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Jangan tampilkan lagi</string>
     <string name="dismiss_backup_warning_title">Peringatan kehilangan data</string>
-    <string name="dismiss_backup_warning_new_user">Due to Android privacy changes, your data and automated backups will be deleted from your phone if the app is uninstalled</string>
-    <string name="dismiss_backup_warning_upgrade">Due to Android privacy changes, your data and automated backups will be inaccessible if the app is uninstalled</string>
-    <string name="deck_already_exists">Deck already exists</string>
-    <string name="empty_deck_name">Deck name cannot be empty</string>
-    <string name="create_deck_numeric_hint">If you have deck ordering issues (e.g. ‘10’ appears before ‘2’), replace ‘2’ with ‘02’</string>
+    <string name="dismiss_backup_warning_new_user">Karena perubahan kebijakan privasi Android, data dan cadangan otomatis Anda akan dihapus dari ponsel Anda jika aplikasi dihapus.</string>
+    <string name="dismiss_backup_warning_upgrade">Karena perubahan kebijakan privasi Android, data dan cadangan otomatis Anda akan tidak dapat diakses jika aplikasi dihapus.</string>
+    <string name="deck_already_exists">Dek sudah ada</string>
+    <string name="empty_deck_name">Nama dek tidak boleh kosong</string>
+    <string name="create_deck_numeric_hint">Jika Anda mengalami permasalahan urutan kartu (misalnya ‘10’ muncul sebelum ‘2’), ganti ‘2’ dengan ‘02’</string>
     <!-- Set Due Date -->
-    <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Set interval to same value</string>
+    <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Atur interval menjadi nilai yang sama</string>
     <plurals name="set_due_date_single_day_label" comment="a date control is provided afterwards">
-        <item quantity="other">Show cards in</item>
+        <item quantity="other">Tunjukkan kartu pada</item>
     </plurals>
     <plurals name="set_due_date_range_label" comment="a date control is provided afterwards">
         <item quantity="other">Show cards in range</item>
     </plurals>
     <plurals name="set_due_date_label_suffix" comment="a suffix on a text field allowing a user to enter a number of days">
-        <item quantity="other">days</item>
+        <item quantity="other">hari</item>
     </plurals>
     <plurals name="set_due_date_current_interval">
-        <item quantity="other">Current interval: %d days</item>
+        <item quantity="other">Interval Sekarang: %d hari</item>
     </plurals>
     <string name="range_delimiter" comment="Placed between two input boxes to denote a range">–</string>
-    <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">From</string>
-    <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">To</string>
+    <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">Dari</string>
+    <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">Ke</string>
     <!-- Instant Note Editor -->
     <string name="cloze_note_required">Cloze Type Note Required</string>
     <string name="cloze_not_found_message">No Cloze type note found, open the Note Editor or try again after adding a Cloze type note.</string>
-    <string name="open">Open</string>
+    <string name="open">Buka</string>
     <string name="change_cloze_number">Change cloze number</string>
     <string name="cloze_number">Cloze number:</string>
     <string name="change_editor_mode">Change editor mode</string>
@@ -240,10 +240,22 @@
     <string name="change_cloze_mode">Change cloze mode</string>
     <!-- Outdated WebView dialog -->
     <string name="webview_update_message">The system WebView is outdated. Some features won’t work correctly. Please update it.\n\nInstalled version: %1$d\nMinimum required version: %2$d</string>
-    <string name="compress">Compress</string>
+    <string name="compress">Kompres</string>
     <!-- Tts playback error dialog -->
-    <string name="tts_error_dialog_title">Language not supported</string>
+    <string name="tts_error_dialog_title">Bahasa tidak didukung</string>
     <string name="tts_error_dialog_reason_text">The text to speech engine <b>%1$s</b> does not support the following language: <b>%2$s</b></string>
-    <string name="tts_error_dialog_change_button_text">Change engine</string>
-    <string name="tts_error_dialog_supported_voices_button_text">Voice options</string>
+    <string name="tts_error_dialog_change_button_text">Ganti engine</string>
+    <string name="tts_error_dialog_supported_voices_button_text">Opsi suara</string>
+    <string-array name="import_cache_error_resolutions">
+        <item>@string/import_error_resolution_try_again</item>
+        <item>@string/import_error_resolution_free_up_space</item>
+        <item>@string/import_error_resolution_check_internet</item>
+        <item>@string/import_error_resolution_copy_to_device</item>
+        <item>@string/import_error_resolution_select_file</item>
+    </string-array>
+    <string name="import_error_resolution_try_again">Re-import the file</string>
+    <string name="import_error_resolution_free_up_space">Ensure there is sufficient free space on your device</string>
+    <string name="import_error_resolution_check_internet">Ensure you are connected to the internet</string>
+    <string name="import_error_resolution_copy_to_device">Copy the file to your device and try again with the local file</string>
+    <string name="import_error_resolution_select_file">Open the file using your device’s file browser app</string>
 </resources>

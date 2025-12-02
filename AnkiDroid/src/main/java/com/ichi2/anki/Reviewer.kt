@@ -1206,11 +1206,16 @@ open class Reviewer :
                     topCard.renderOutput(this@withCol, reload = true)
                 }
             }
-        state?.timeboxReached?.let { dealWithTimeBox(it) }
+
         currentCard = state?.topCard
         queueState = state
     }
 
+    /**
+     * Answer the current card, update the scheduler and checks if the timebox limit has been reached
+     * and, if so, displays a dialog to the user
+     * @param rating The user's rating for the card
+     */
     override suspend fun answerCardInner(rating: Rating) {
         val state = queueState!!
         val cardId = currentCard!!.id
@@ -1232,6 +1237,12 @@ open class Reviewer :
                     }
                 showSnackbar(leechMessage, Snackbar.LENGTH_SHORT)
             }
+        }
+
+        // showing the timebox reached dialog if the timebox is reached
+        val timebox = withCol { timeboxReached() }
+        if (timebox != null) {
+            dealWithTimeBox(timebox)
         }
     }
 

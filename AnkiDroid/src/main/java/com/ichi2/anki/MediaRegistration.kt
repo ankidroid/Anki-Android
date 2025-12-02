@@ -29,6 +29,7 @@ import com.ichi2.compat.CompatHelper
 import com.ichi2.utils.ClipboardUtil
 import com.ichi2.utils.ContentResolverUtil.getFileName
 import com.ichi2.utils.FileNameAndExtension
+import com.ichi2.utils.openInputStreamSafe
 import timber.log.Timber
 import java.io.File
 import java.io.FileOutputStream
@@ -44,21 +45,32 @@ object MediaRegistration {
      * Represents different types of media errors.
      */
     sealed class MediaError {
+        /** [Something wrong wrong][R.string.multimedia_editor_something_wrong] */
         data object GenericError : MediaError()
 
+        /** [Something went wrong, please try again[R.string.something_wrong] */
+        data class GenericErrorTryAgain(
+            val details: String?,
+        ) : MediaError()
+
+        /** [Error converting clipboard image to png][R.string.multimedia_editor_png_paste_error] */
         class ConversionError(
             val message: String,
         ) : MediaError()
 
+        /** [The image is too large, please insert the image manually][R.string.note_editor_image_too_large] */
         data object ImageTooLarge : MediaError()
 
+        /** [The video file is too large, please insert the video manually][R.string.note_editor_video_too_large] */
         data object VideoTooLarge : MediaError()
 
+        /** [The audio file is too large, please insert the audio manually][R.string.note_editor_audio_too_large] */
         data object AudioTooLarge : MediaError()
 
         fun toHumanReadableString(context: Context): String =
             when (this) {
                 is GenericError -> context.getString(R.string.multimedia_editor_something_wrong)
+                is GenericErrorTryAgain -> context.getString(R.string.something_wrong) + details?.let { "\n\n$it" }.orEmpty()
                 is ConversionError -> context.getString(R.string.multimedia_editor_png_paste_error, message)
                 is ImageTooLarge -> context.getString(R.string.note_editor_image_too_large)
                 is VideoTooLarge -> context.getString(R.string.note_editor_video_too_large)
@@ -111,6 +123,11 @@ object MediaRegistration {
             Timber.w(e, "Failed to paste media")
             showError(MediaError.GenericError)
             null
+        } catch (ex: OutOfMemoryError) {
+            CrashReportService.sendExceptionReport(ex, "onPaste", onlyIfSilent = true)
+            Timber.w(ex, "Failed to paste media")
+            showError(MediaError.GenericErrorTryAgain(details = ex.toString()))
+            null
         }
 
     /**
@@ -144,6 +161,8 @@ object MediaRegistration {
      * Loads media into the collection.media directory and returns a HTML reference
      * @param uri The uri of the image to load
      * @return HTML referring to the loaded image
+     *
+     * @throws OutOfMemoryError if the file could not be copied to a contiguous block of memory (or is >= 2GB)
      */
     // TODO: remove the Android dependencies and handle them outside the method
     @Throws(IOException::class)
@@ -166,7 +185,7 @@ object MediaRegistration {
         val isVideo = ClipboardUtil.hasVideo(description)
 
         // Opens InputStream, copies to file, and converts to PNG if needed. Returns null on failure.
-        context.contentResolver.openInputStream(uri).use { fd ->
+        context.contentResolver.openInputStreamSafe(uri).use { fd ->
             if (fd == null) return@use
             if (pasteAsPng) {
                 clipCopy = File.createTempFile(fileName, ".png")
@@ -222,6 +241,9 @@ object MediaRegistration {
         return true
     }
 
+    /**
+     * @throws OutOfMemoryError if the file could not be copied to a contiguous block of memory (or is >= 2GB)
+     */
     @CheckResult
     fun registerMediaForWebView(mediaPath: File?): Boolean {
         if (mediaPath == null) {

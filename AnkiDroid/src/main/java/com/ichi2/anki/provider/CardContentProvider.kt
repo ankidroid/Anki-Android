@@ -1028,6 +1028,9 @@ class CardContentProvider : ContentProvider() {
             val uriFromF = Uri.fromFile(f)
             Timber.d("insert -> MEDIA: uriFromF = %s", uriFromF)
             Uri.fromFile(File(fname))
+        } catch (e: OutOfMemoryError) {
+            Timber.e(e, "insert failed from %s", fileUri)
+            null
         } catch (e: IOException) {
             Timber.w(e, "insert failed from %s", fileUri)
             null

@@ -55,7 +55,7 @@
     <string name="CardEditorTags">الوسوم: %1$s</string>
     <string name="CardEditorCards">البطاقات: %1$s</string>
     <string name="edit_occlusions">تحرير الصور المُعَمَّاة</string>
-    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
+    <string name="paste_from_clipboard" maxLength="28">لصق من الحافظة</string>
     <string name="tag_name">اسم الوسم</string>
     <string name="add_new_filter_tags">إضافة وفرز الوسوم</string>
     <string name="add_tag" maxLength="28">إضافة وسم</string>
@@ -68,7 +68,7 @@
     <string name="enable_stylus" maxLength="28">تفعيل وضع القلم</string>
     <string name="disable_stylus">تعطيل وضع القلم</string>
     <string name="eraser" maxLength="28">ممحاة</string>
-    <string name="add_brush" maxLength="28">إضافة فرشةنعم</string>
+    <string name="add_brush" maxLength="28">إضافة فرشة</string>
     <string name="whiteboard_align_left" comment="Option to align the whiteboard toolbar on the left" maxLength="28">شمال</string>
     <string name="whiteboard_align_bottom" comment="Option to align the whiteboard toolbar on the bottom" maxLength="28">أسفل</string>
     <string name="whiteboard_align_right" comment="Option to align the whiteboard toolbar on the right" maxLength="28">يمين</string>
@@ -178,7 +178,8 @@
     <string name="import_error_not_apkg_extension">لا يحتوي اسم الملف «%s» على ملحق «.apkg» أو «.colpkg»</string>
     <string name="import_error_load_imported_database">استبدالات قاعدة بيانات آنكي «.anki2» ليست مدعومة بعد. الرجاء الاطلاع على الدليل حول تعليمات الاستبدال.</string>
     <string name="import_error_content_provider">تعذر استيراد المِلَفّ المحدد تلقائيًا بواسطة آنكي درويد. الرجاء الاطّلاع على دليل المستخدم لكيفية استيراد ملفات آنكي يدويًا: \n%s</string>
-    <string name="import_error_copy_to_cache">فشل تخزين الملف مؤقتًا (ربما بسبب نفاد مساحة التخزين)</string>
+    <string name="import_error_copy_to_cache_title">Failed to cache file</string>
+    <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">This is often caused by a bug in the app you used to select the file. Please try the following fixes:\n\n%s</string>
     <string name="import_interrupted">تمت مقاطعة الاستيراد: لقد أُغلق آنكي درويد</string>
     <string name="export_ready_title">المُصَدَّر مُعدّ</string>
     <string name="export_send_no_handlers">لا توجد تطبيقات متاحة للتعامل مع «apkg». يتم الحفظ&#8230;</string>
@@ -322,6 +323,14 @@
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">فشل الوصول إلى المجموعة. يرجى المحاولة مجددًا!</string>
     <string name="cd_manage_notetypes_add">إضافة نوع جديد من الملاحظات</string>
+    <plurals name="note_types_selected">
+        <item quantity="zero">%d note types selected</item>
+        <item quantity="one">%d note type selected</item>
+        <item quantity="two">%d note types selected</item>
+        <item quantity="few">%d note types selected</item>
+        <item quantity="many">%d note types selected</item>
+        <item quantity="other">%d note types selected</item>
+    </plurals>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">ادرس أقل</string>
     <string name="intro_ankidroid_tagline_two">تذكر أكثر</string>
@@ -331,7 +340,7 @@
     <!-- IntentHandler -->
     <string name="app_not_initialized_new">لم يتم تمهيد آنكي درويد بعد. من فضلك إفتح آنكي درويد وحاول مجددًا</string>
     <!-- Deck Creation -->
-    <string name="deck_created">كيفية</string>
+    <string name="deck_created">تم إنشاء الرِزمة</string>
     <string name="deck_renamed">أُعيدت تسمية الرِزمة</string>
     <!-- Deck Deletion -->
     <string name="deck_shortcut_doesnt_exist">تم حذف الرزمة. يرجى حذف الاختصار</string>

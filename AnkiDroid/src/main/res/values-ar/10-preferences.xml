@@ -186,11 +186,11 @@
     <string name="use_current" maxLength="41">رزمة البطاقات الجديدة</string>
     <string name="learn_cutoff" maxLength="41">حد التعلم المبكر</string>
     <string name="time_limit" maxLength="41">مهلة مربع الوقت</string>
-    <string name="day_offset_with_description" maxLength="41">بداية اليوم التالي (0 يعني منتصف الليل، 23 يعني الساعة 11 مساءً)</string>
+    <string name="day_offset_with_description" maxLength="41">بداية اليوم التالي</string>
     <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
-        <item quantity="zero">%d ساعت بعد منتصف الليل</item>
-        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">%d ساعت بعد منتصف الليل</item>
-        <item quantity="two">%d ساعت بعد منتصف الليل</item>
+        <item quantity="zero">%d ساعة بعد منتصف الليل</item>
+        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">%d ساعة بعد منتصف الليل</item>
+        <item quantity="two">%d ساعة بعد منتصف الليل</item>
         <item quantity="few">%d ساعات بعد منتصف الليل</item>
         <item quantity="many">%d ساعة بعد منتصف الليل</item>
         <item quantity="other" comment="Consider keeping the unbreakable space after the digit">%d ساعة بعد منتصف الليل</item>
@@ -286,15 +286,15 @@
     <string name="axis_picker_move_joystick">نقل وحدة عصا التحكم أو جهاز التحرك/حركة</string>
     <string name="user_actions" maxLength="41">إجراءات المستخدم</string>
     <string name="user_actions_summary" maxLength="41">فعل JavaScript في شاشة الدراسة</string>
-    <string name="user_action_1" maxLength="28">إجراء رقم 1</string>
-    <string name="user_action_2" maxLength="28">إجراء رقم 2</string>
-    <string name="user_action_3" maxLength="28">إجراء رقم 3</string>
-    <string name="user_action_4" maxLength="28">إجراء رقم 4</string>
-    <string name="user_action_5" maxLength="28">إجراء رقم 5</string>
-    <string name="user_action_6" maxLength="28">إجراء رقم 6</string>
-    <string name="user_action_7" maxLength="28">إجراء رقم 7</string>
-    <string name="user_action_8" maxLength="28">إجراء رقم 8</string>
-    <string name="user_action_9" maxLength="28">إجراء رقم 9</string>
+    <string name="user_action_1" maxLength="28">إجراء رقم ١</string>
+    <string name="user_action_2" maxLength="28">إجراء رقم ٢</string>
+    <string name="user_action_3" maxLength="28">إجراء رقم ٣</string>
+    <string name="user_action_4" maxLength="28">إجراء رقم ٤</string>
+    <string name="user_action_5" maxLength="28">إجراء رقم ٥</string>
+    <string name="user_action_6" maxLength="28">إجراء رقم ٦</string>
+    <string name="user_action_7" maxLength="28">إجراء رقم ٧</string>
+    <string name="user_action_8" maxLength="28">إجراء رقم ٨</string>
+    <string name="user_action_9" maxLength="28">إجراء رقم ٩</string>
     <string name="toggle_auto_advance" maxLength="28">بدأ أو إيقاف التقدم التلقائي</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">حدد جانب بطاقة</string>

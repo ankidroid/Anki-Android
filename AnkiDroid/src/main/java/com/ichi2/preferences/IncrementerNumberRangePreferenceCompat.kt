@@ -26,6 +26,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.LinearLayout
 import com.ichi2.anki.R
+import com.ichi2.utils.moveCursorToEnd
 
 /** Marker class to be used in preferences */
 class IncrementerNumberRangePreferenceCompat :
@@ -131,7 +132,7 @@ class IncrementerNumberRangePreferenceCompat :
             // Make sure value is within range
             lastValidEntry = numberRangePreference.getValidatedRangeFromInt(value)
             editText.setText(lastValidEntry.toString())
-            editText.setSelection(editText.text.length)
+            editText.moveCursorToEnd()
         }
     }
 

@@ -166,7 +166,8 @@
     <string name="import_error_not_apkg_extension">A \"%s\" fájlnévnek nincsen .apkg vagy .colpkg kiterjesztése</string>
     <string name="import_error_load_imported_database">Az Anki Adatbázis (.anki2) csere még nem támogatott. Kérjük olvassa el az útmutatót az instrukciókhoz.</string>
     <string name="import_error_content_provider">A kiválasztott fájl nem importálható automatikusan. Olvasd el a felhasználói kézikönyvet, hogy megtudd, hogyan importálhatsz manuálisan Anki fájlokat:\n%s</string>
-    <string name="import_error_copy_to_cache">Nem sikerült gyorsítótárba helyezni a fájlt (valószínűleg elfogyott a tárhely)</string>
+    <string name="import_error_copy_to_cache_title">Failed to cache file</string>
+    <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">This is often caused by a bug in the app you used to select the file. Please try the following fixes:\n\n%s</string>
     <string name="import_interrupted">Importálás megszakítva</string>
     <string name="export_ready_title">Exportálás kész</string>
     <string name="export_send_no_handlers">Nincs elérhető alkalmazás, ami kezelni tudja az apkg-t. Mentés&#8230;</string>
@@ -307,6 +308,10 @@
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">Nem sikerült elérni a gyűjteményt. Kérjük próbálja meg később!</string>
     <string name="cd_manage_notetypes_add">Add a new note type</string>
+    <plurals name="note_types_selected">
+        <item quantity="one">%d note type selected</item>
+        <item quantity="other">%d note types selected</item>
+    </plurals>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">Tanulj kevesebbet</string>
     <string name="intro_ankidroid_tagline_two">Jegyezz meg többet</string>

@@ -55,7 +55,7 @@
     <string name="CardEditorTags">タグ: %1$s</string>
     <string name="CardEditorCards">カード: %1$s</string>
     <string name="edit_occlusions">画像穴埋め問題を編集</string>
-    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
+    <string name="paste_from_clipboard" maxLength="28">クリップボードから貼り付け</string>
     <string name="tag_name">タグ名</string>
     <string name="add_new_filter_tags">タグフィルター / 新規タグ追加</string>
     <string name="add_tag" maxLength="28">タグを追加</string>
@@ -163,7 +163,8 @@
     <string name="import_error_not_apkg_extension">ファイル名 \"%s\" は拡張子が .apkg か .colpkg ではありません。</string>
     <string name="import_error_load_imported_database">Anki Database (.anki2) の置換はまだサポートされていません。マニュアルを参照してください。</string>
     <string name="import_error_content_provider">選択したファイルを自動インポートできませんでした。手動でインポートする方法については、ユーザーマニュアルを参照してください。\n%s</string>
-    <string name="import_error_copy_to_cache">一時ファイルの作成に失敗しました（ストレージの空き容量が不足している可能性があります）</string>
+    <string name="import_error_copy_to_cache_title">Failed to cache file</string>
+    <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">This is often caused by a bug in the app you used to select the file. Please try the following fixes:\n\n%s</string>
     <string name="import_interrupted">インポートが中断されました: AnkiDroidが閉じられました</string>
     <string name="export_ready_title">エクスポートの準備完了</string>
     <string name="export_send_no_handlers">Ankiパッケージに対応する他のアプリがありません。ファイルを保存します&#8230;</string>
@@ -232,7 +233,7 @@
     <string name="search_decks" maxLength="28">デッキ名を検索</string>
     <string name="ankidroid_init_failed_webview_title">重大なエラー</string>
     <string name="ankidroid_init_failed_webview">AnkiDroidはAndroidシステムのWebViewに依存していますが、このWebViewが現在使用できません。この状況は、システムがアップデートプログラムをインストールしている場合に発生する可能性があります。数分後に再試行してください。\n\n%s</string>
-    <string name="ankidroid_init_failed_storage">AnkiDroid cannot access storage due to an Android error.\n\n%s</string>
+    <string name="ankidroid_init_failed_storage">Androidのエラーのため、AnkiDroidはストレージにアクセスできません。\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">フォントサイズ</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">ツールバーを表示</string>
@@ -302,6 +303,9 @@
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">コレクションにアクセスできませんでした。もう一度試してみてください</string>
     <string name="cd_manage_notetypes_add">新しいノートタイプを追加</string>
+    <plurals name="note_types_selected">
+        <item quantity="other">%d note types selected</item>
+    </plurals>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">負担は小さく</string>
     <string name="intro_ankidroid_tagline_two">成果は大きく</string>

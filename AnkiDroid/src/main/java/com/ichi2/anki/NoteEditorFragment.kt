@@ -141,6 +141,7 @@ import com.ichi2.anki.noteeditor.Toolbar.TextFormatListener
 import com.ichi2.anki.noteeditor.Toolbar.TextWrapper
 import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.pages.ImageOcclusion
+import com.ichi2.anki.pages.viewmodel.ImageOcclusionArgs
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.previewer.TemplatePreviewerArguments
 import com.ichi2.anki.previewer.TemplatePreviewerPage
@@ -177,6 +178,7 @@ import com.ichi2.utils.configureView
 import com.ichi2.utils.message
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.neutralButton
+import com.ichi2.utils.openInputStreamSafe
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
 import com.ichi2.utils.title
@@ -635,7 +637,7 @@ class NoteEditorFragment :
      */
     private fun copyUriToInternalCache(uri: Uri): String? {
         return try {
-            val inputStream = requireContext().contentResolver.openInputStream(uri) ?: return null
+            val inputStream = requireContext().contentResolver.openInputStreamSafe(uri) ?: return null
 
             val fileName = ContentResolverUtil.getFileName(requireContext().contentResolver, uri)
             val cacheDir = requireContext().cacheDir
@@ -1821,7 +1823,7 @@ class NoteEditorFragment :
         for (i in editLines.indices) {
             val editLineView = editLines[i]
             customViewIds.add(editLineView.id)
-            val newEditText = editLineView.editText
+            val newEditText = editLineView.binding.editText
             lifecycleScope.launch {
                 val pasteAsPng = shouldPasteAsPng()
                 newEditText.setPasteListener { editText: EditText?, uri: Uri?, description: ClipDescription? ->
@@ -1865,8 +1867,8 @@ class NoteEditorFragment :
                 newEditText.textSize = prefs.getInt(PREF_NOTE_EDITOR_FONT_SIZE, -1).toFloat()
             }
             newEditText.setCapitalize(prefs.getBoolean(PREF_NOTE_EDITOR_CAPITALIZE, true))
-            val mediaButton = editLineView.mediaButton
-            val toggleStickyButton = editLineView.toggleSticky
+            val mediaButton = editLineView.binding.mediaButton
+            val toggleStickyButton = editLineView.binding.toggleSticky
             // Make the icon change between media icon and switch field icon depending on whether editing note type
             if (editNoteTypeMode && allowFieldRemapping()) {
                 // Allow remapping if originally more than two fields
@@ -2078,7 +2080,7 @@ class NoteEditorFragment :
         index: Int,
         field: IField,
     ) {
-        lifecycleScope.launch {
+        launchCatchingTask {
             val note = getCurrentMultimediaEditableNote()
             note.setField(index, field)
             val fieldEditText = editFields!![index]
@@ -2087,7 +2089,12 @@ class NoteEditorFragment :
             // This goes before setting formattedValue to update
             // media paths with the checksum when they have the same name
             withCol {
-                NoteService.importMediaToDirectory(this, field)
+                try {
+                    NoteService.importMediaToDirectory(this, field)
+                } catch (oomError: OutOfMemoryError) {
+                    // TODO: a 'retry' flow would be possible here
+                    throw Exception(oomError)
+                }
             }
 
             // Completely replace text for text fields (because current text was passed in)
@@ -2411,10 +2418,11 @@ class NoteEditorFragment :
         populateEditFields(changeType, false)
         updateFieldsFromStickyText()
 
-        // Showing the deck selection parts is not needed for Image Occlusion notetypes
-        // as deck selection is handled by the backend page
-        requireView().findViewById<TextView>(R.id.CardEditorDeckText).isVisible = !currentNotetypeIsImageOcclusion()
-        requireView().findViewById<View>(R.id.note_deck_name).isVisible = !currentNotetypeIsImageOcclusion()
+        // When adding a note, ImageOcclusion handles the deck selection
+        // as a user can reach this screen directly from an intent
+        val disableDeckEditing = addNote && currentNotetypeIsImageOcclusion()
+        requireView().findViewById<TextView>(R.id.CardEditorDeckText).isVisible = !disableDeckEditing
+        requireView().findViewById<View>(R.id.note_deck_name).isVisible = !disableDeckEditing
     }
 
     private fun addClozeButton(
@@ -2740,22 +2748,27 @@ class NoteEditorFragment :
     private fun currentNotetypeIsImageOcclusion() = currentlySelectedNotetype?.isImageOcclusion == true
 
     private fun setupImageOcclusionEditor(imagePath: String = "") {
-        val kind: String
-        val id: Long
-        if (addNote) {
-            kind = "add"
-            // if opened from an intent, the selected note type may not be suitable for IO
-            id =
-                if (currentNotetypeIsImageOcclusion()) {
-                    currentlySelectedNotetype!!.id
-                } else {
-                    0
-                }
-        } else {
-            kind = "edit"
-            id = editorNote?.id!!
-        }
-        val intent = ImageOcclusion.getIntent(requireContext(), kind, id, imagePath, deckId)
+        val args =
+            if (addNote) {
+                // if opened from an intent, the selected note type may not be suitable for IO
+                val noteTypeId =
+                    if (currentNotetypeIsImageOcclusion()) {
+                        currentlySelectedNotetype!!.id
+                    } else {
+                        0
+                    }
+                ImageOcclusionArgs.Add(
+                    noteTypeId = noteTypeId,
+                    imagePath = imagePath,
+                    originalDeckId = deckId,
+                )
+            } else {
+                ImageOcclusionArgs.Edit(
+                    noteId = editorNote!!.id,
+                )
+            }
+
+        val intent = ImageOcclusion.getIntent(requireContext(), args)
         requestIOEditorCloser.launch(intent)
     }
 

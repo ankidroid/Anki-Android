@@ -55,7 +55,7 @@ class AddEditReminderDialogViewModel(
      * Here, we set an immediate default value for the deck selected based on the dialog mode.
      * However, it is possible that the deck with this deck ID does not currently exist in the collection
      * (ex. due to a deleted deck, changed collection folder, etc.). Since checking for this case requires
-     * accessing the collection, we handle it in [AddEditReminderDialog.ensureValidDeckSelected].
+     * accessing the collection, we handle it in [AddEditReminderDialog.setInitialDeckSelection].
      */
     private val _deckSelected =
         MutableLiveData(

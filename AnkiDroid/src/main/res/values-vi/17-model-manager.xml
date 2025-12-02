@@ -43,7 +43,6 @@
     </plurals>
     <!--Browser-->
     <string name="model_browser_delete">Xóa loại ghi chú</string>
-    <string name="model_browser_rename" comment="Rename a note type">Đổi tên</string>
     <string name="model_browser_template">Chỉnh sửa thẻ</string>
     <!--Rename-->
     <string name="rename_model">Đổi tên loại ghi chú</string>
@@ -60,6 +59,12 @@
     <string name="model_field_editor_sort_field">Sắp xếp theo trường này</string>
     <!--Warnings-->
     <string name="model_delete_warning">Bạn có chắc chắn muốn xóa loại ghi chú này không?</string>
+    <!--
+        Example output:
+        Delete the note types below?
+        Basic, Basic (and reversed card), Cloze
+     -->
+    <string name="model_delete_multiple_warning">Delete the note types below?\n %s</string>
     <string name="field_delete_warning">Bạn có chắc chắn muốn xóa trường này không?</string>
     <!--Model Add Suffixes-->
     <string name="model_browser_add_add">Thêm: %1$s</string>

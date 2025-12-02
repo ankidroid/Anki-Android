@@ -172,7 +172,8 @@
     <string name="import_error_not_apkg_extension">Назва файла \"%s\" не мае пашырэння .apkg або .colpkg</string>
     <string name="import_error_load_imported_database">Замена базы даных Anki (.anki2) пакуль не падтрымліваецца. Звярніцеся да даведніка для інструкцыі па замене.</string>
     <string name="import_error_content_provider">The selected file couldn’t be imported automatically by AnkiDroid. Please see the user manual for how to manually import Anki files: \n%s</string>
-    <string name="import_error_copy_to_cache">Не атрымалася кэшыраваць файл (магчыма, што скончылася месца ў сховішчы)</string>
+    <string name="import_error_copy_to_cache_title">Failed to cache file</string>
+    <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">This is often caused by a bug in the app you used to select the file. Please try the following fixes:\n\n%s</string>
     <string name="import_interrupted">Імпарт перарваны</string>
     <string name="export_ready_title">Экспартаванне выканана</string>
     <string name="export_send_no_handlers">Няма адпаведнай праграмы для апрацоўкі пакета apkg. Захаванне&#8230;</string>
@@ -314,6 +315,12 @@
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">Збой атрымання доступу да калекцыі. Калі ласка, паспрабуйце яшчэ раз!</string>
     <string name="cd_manage_notetypes_add">Дадаць новы тып нататкі</string>
+    <plurals name="note_types_selected">
+        <item quantity="one">%d note type selected</item>
+        <item quantity="few">%d note types selected</item>
+        <item quantity="many">%d note types selected</item>
+        <item quantity="other">%d note types selected</item>
+    </plurals>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">Вучыцеся менш</string>
     <string name="intro_ankidroid_tagline_two">А запамінайце больш</string>

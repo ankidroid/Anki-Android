@@ -228,11 +228,7 @@ class CardMediaPlayer : Closeable {
 
     override fun close() {
         soundTagPlayer.release()
-        try {
-            ttsPlayer.getCompleted().close()
-        } catch (e: Exception) {
-            Timber.i(e, "ttsPlayer close()")
-        }
+        ttsPlayer.close(logPrefix = "ttsPlayer")
         scope.cancel()
     }
 
@@ -351,6 +347,28 @@ class CardMediaPlayer : Closeable {
 
     companion object {
         private const val TTS_PLAYER_TIMEOUT_MS = 2_500L
+    }
+}
+
+/**
+ * Cancels the [Deferred] and safely closes its resulting [Closeable] upon completion.
+ *
+ * The deferred is cancelled immediately.
+ * When it completes, the underlying [Closeable] is closed.
+ *
+ * @param logPrefix Prefix used when logging
+ */
+private fun Deferred<Closeable>.close(logPrefix: String) {
+    this.cancel()
+    this.invokeOnCompletion {
+        try {
+            this.getCompleted().close()
+            Timber.d("$logPrefix closed")
+        } catch (e: CancellationException) {
+            // Ignore: no value was produced, nothing to close
+        } catch (e: Exception) {
+            Timber.w(e, "$logPrefix close()")
+        }
     }
 }
 

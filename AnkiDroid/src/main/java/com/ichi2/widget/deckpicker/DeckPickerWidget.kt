@@ -349,7 +349,6 @@ class DeckPickerWidget : AnalyticsWidgetProvider() {
                 CrashReportService.sendExceptionReport(
                     Exception("Unexpected action received: ${intent.action}"),
                     "DeckPickerWidget - onReceive",
-                    null,
                     onlyIfSilent = true,
                 )
             }

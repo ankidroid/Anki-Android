@@ -166,7 +166,8 @@
     <string name="import_error_not_apkg_extension">ფაილის სახელს „%s“ არ აქვს .apkg ან .colpkg დაბოლოება</string>
     <string name="import_error_load_imported_database">Anki მონაცემთა ბაზის შემცვლელი ფაილები (.anki2)  ჯერ არ არის მხარდაჭერილი. იხილეთ ინსტრუქცია შესაბამისი მითითებებისთვის</string>
     <string name="import_error_content_provider">მონიშნული ფაილის ავტომატური იმპორტირება ვერ მოხერხდა. იხილეთ ინსტრუქცია Anki-ფაილების არაავტომატური იმპორტირების მეთოდისთვის: \n%s</string>
-    <string name="import_error_copy_to_cache">ფაილის ვერ ჩაიწერა ქეშში (შესაძლოა, მეხსიერების სივრცეში არასაკმარისი ადგილის არსებობის გამო)</string>
+    <string name="import_error_copy_to_cache_title">Failed to cache file</string>
+    <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">This is often caused by a bug in the app you used to select the file. Please try the following fixes:\n\n%s</string>
     <string name="import_interrupted">იმპორტი შეჩერდა: AnkiDroid გამოირთო</string>
     <string name="export_ready_title">ექსპორტი მზადაა</string>
     <string name="export_send_no_handlers">არაა სხვა აპლიკაციები APKG-ფაილების გასახსნელად. ინახება&#8230;</string>
@@ -306,6 +307,10 @@
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">კოლექციაზე წვდომა ვერ მოხერხდა. გთხოვთ ხელახლა სცადოთ!</string>
     <string name="cd_manage_notetypes_add">ახალი შენიშვნის ტიპის დამატება</string>
+    <plurals name="note_types_selected">
+        <item quantity="one">%d note type selected</item>
+        <item quantity="other">%d note types selected</item>
+    </plurals>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">ნაკლები მეცადინეობა</string>
     <string name="intro_ankidroid_tagline_two">მეტის დამახსოვრება</string>

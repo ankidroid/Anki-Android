@@ -35,15 +35,15 @@ import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.dialogs.DialogHandler
 import com.ichi2.anki.dialogs.DialogHandlerMessage
 import com.ichi2.anki.dialogs.ImportDialog
+import com.ichi2.anki.exception.ManuallyReportedException
 import com.ichi2.anki.onSelectedCsvForImport
+import com.ichi2.anki.servicelayer.DebugInfoService
 import com.ichi2.anki.showImportDialog
 import com.ichi2.compat.CompatHelper
+import kotlinx.coroutines.launch
 import org.jetbrains.annotations.Contract
 import timber.log.Timber
 import java.io.File
-import java.io.FileNotFoundException
-import java.io.IOException
-import java.io.InputStream
 import java.net.URLDecoder
 import java.net.URLEncoder
 import java.util.Locale
@@ -79,10 +79,10 @@ object ImportUtils {
 
     fun showImportUnsuccessfulDialog(
         activity: Activity,
-        errorMessage: String?,
+        failure: ImportResult.Failure,
         exitActivity: Boolean,
     ) {
-        FileImporter().showImportUnsuccessfulDialog(activity, errorMessage, exitActivity)
+        FileImporter().showImportUnsuccessfulDialog(activity, failure, exitActivity)
     }
 
     @SuppressLint("LocaleRootUsage")
@@ -141,7 +141,10 @@ object ImportUtils {
             } catch (e: Exception) {
                 CrashReportService.sendExceptionReport(e, "handleFileImport")
                 Timber.e(e, "failed to handle import intent")
-                ImportResult.fromErrorString(context.getString(R.string.import_error_handle_exception, e.localizedMessage))
+                ImportResult.Failure(
+                    humanReadableMessage = context.getString(R.string.import_error_handle_exception, e.localizedMessage),
+                    exception = e,
+                )
             }
         }
 
@@ -153,7 +156,7 @@ object ImportUtils {
             return if (importPathUri != null) {
                 handleContentProviderFile(context, importPathUri, intent)
             } else {
-                ImportResult.fromErrorString(context.getString(R.string.import_error_handle_exception))
+                ImportResult.Failure(context.getString(R.string.import_error_handle_exception))
             }
         }
 
@@ -164,10 +167,9 @@ object ImportUtils {
         ): String? {
             val filename = ensureValidLength(getFileNameFromContentProvider(context, uri) ?: return null)
             val tempFile = File(context.cacheDir, filename)
-            return if (copyFileToCache(context, uri, tempFile.absolutePath).first) {
-                tempFile.absolutePath
-            } else {
-                null
+            return when (val result = copyFileToCache(context, uri, tempFile.absolutePath)) {
+                is CacheFileResult.Success -> result.path
+                else -> null
             }
         }
 
@@ -189,7 +191,7 @@ object ImportUtils {
         ): ImportResult {
             // Note: intent.getData() can be null. Use data instead.
             if (!isValidImportType(context, importPathUri)) {
-                return ImportResult.fromErrorString(context.getString(R.string.import_log_no_apkg))
+                return ImportResult.Failure(context.getString(R.string.import_log_no_apkg))
             }
             // Get the original filename from the content provider URI
             var filename = getFileNameFromContentProvider(context, importPathUri)
@@ -209,7 +211,7 @@ object ImportUtils {
                             "IntentHandler.java",
                             "apkg import failed; mime type ${intent?.type}",
                         )
-                        return ImportResult.fromErrorString(
+                        return ImportResult.Failure(
                             AnkiDroidApp.appResources.getString(
                                 R.string.import_error_content_provider,
                                 AnkiDroidApp.manualUrl + "#importing",
@@ -221,39 +223,32 @@ object ImportUtils {
             val tempOutDir: String
             if (isValidTextOrDataFile(context, importPathUri)) {
                 (context as Activity).onSelectedCsvForImport(intent!!)
-                return ImportResult.fromSuccess()
+                return ImportResult.Success
             } else if (!isValidPackageName(filename)) {
                 return if (isAnkiDatabase(filename)) {
                     // .anki2 files aren't supported by Anki Desktop, we should eventually support them, because we can
                     // but for now, show a "nice" error.
-                    ImportResult.fromErrorString(context.resources.getString(R.string.import_error_load_imported_database))
+                    ImportResult.Failure(context.resources.getString(R.string.import_error_load_imported_database))
                 } else {
                     // Don't import if file doesn't have an Anki package extension
-                    ImportResult.fromErrorString(context.resources.getString(R.string.import_error_not_apkg_extension, filename))
-                }
-            } else {
-                // Copy to temporary file
-                filename = ensureValidLength(filename)
-                tempOutDir = Uri.fromFile(File(context.cacheDir, filename)).encodedPath!!
-                val cachingResult = copyFileToCache(context, importPathUri, tempOutDir)
-                val errorMessage =
-                    if (cachingResult.first) {
-                        null
-                    } else {
-                        context.getString(R.string.import_error_copy_to_cache)
-                    }
-                // Show import dialog
-                if (errorMessage != null) {
-                    CrashReportService.sendExceptionReport(
-                        RuntimeException("Error importing apkg file"),
-                        "IntentHandler.java",
-                        cachingResult.second,
-                    )
-                    return ImportResult.fromErrorString(errorMessage)
+                    ImportResult.Failure(context.resources.getString(R.string.import_error_not_apkg_extension, filename))
                 }
             }
+
+            // Copy to temporary file
+            filename = ensureValidLength(filename)
+            tempOutDir = Uri.fromFile(File(context.cacheDir, filename)).encodedPath!!
+
+            copyFileToCache(context, importPathUri, tempOutDir).asErrorDetails()?.let { details ->
+                CrashReportService.sendExceptionReport(details.exceptionForReport, "ImportUtils")
+                return ImportResult.Failure(
+                    title = details.buildTitle(context),
+                    humanReadableMessage = details.buildHumanReadableMessage(context),
+                    exception = details.userFacingException,
+                )
+            }
             sendShowImportFileDialogMsg(tempOutDir)
-            return ImportResult.fromSuccess()
+            return ImportResult.Success
         }
 
         fun isValidImportType(
@@ -327,19 +322,43 @@ object ImportUtils {
 
         fun showImportUnsuccessfulDialog(
             activity: Activity,
-            errorMessage: String?,
+            failure: ImportResult.Failure,
             exitActivity: Boolean,
         ) {
-            Timber.e("showImportUnsuccessfulDialog() message %s", errorMessage)
-            val title = activity.resources.getString(R.string.import_title_error)
-            AlertDialog.Builder(activity).show {
-                title(text = title)
-                message(text = errorMessage!!)
-                setCancelable(false)
-                positiveButton(R.string.dialog_ok) {
-                    if (exitActivity) {
-                        activity.finish()
+            // Use applicationScope: IntentHandler calls this and does not have a lifecycleScope
+            fun copyDebugInfo(debugInfo: String) =
+                AnkiDroidApp.applicationScope.launch {
+                    Timber.i("copying debug info to clipboard")
+                    val stringToCopy =
+                        buildString {
+                            appendLine(debugInfo)
+                            appendLine()
+                            appendLine(DebugInfoService.getDebugInfo(activity))
+                        }
+
+                    AnkiDroidApp.instance.copyToClipboard(stringToCopy)
+                }
+
+            Timber.d("showImportUnsuccessfulDialog() message %s", failure.humanReadableMessage)
+            val title = failure.title ?: activity.getString(R.string.import_title_error)
+            val dialog =
+                AlertDialog.Builder(activity).show {
+                    title(text = title)
+                    message(text = failure.humanReadableMessage)
+                    setCancelable(false)
+                    positiveButton(R.string.dialog_ok) {
+                        if (exitActivity) {
+                            activity.finish()
+                        }
                     }
+                    if (failure.toDebugInfo() != null) {
+                        negativeButton(R.string.feedback_copy_debug)
+                    }
+                }
+            // 'copy' should not close the dialog
+            failure.toDebugInfo()?.let { debugInfo ->
+                dialog.negativeButton.setOnClickListener {
+                    copyDebugInfo(debugInfo)
                 }
             }
         }
@@ -348,36 +367,79 @@ object ImportUtils {
          * Copy the data from the intent to a temporary file
          * @param data intent from which to get input stream
          * @param tempPath temporary path to store the cached file
-         * @return a [Pair] with a boolean indicating if the copy to cache action was successful
-         * and an optional message if anything went wrong
+         * @return see [CacheFileResult]
          */
         protected open fun copyFileToCache(
             context: Context,
-            data: Uri?,
+            data: Uri,
             tempPath: String,
-        ): Pair<Boolean, String?> {
-            // Get an input stream to the data in ContentProvider
-            val inputStream: InputStream =
-                try {
-                    context.contentResolver.openInputStream(data!!)
-                } catch (e: FileNotFoundException) {
-                    Timber.e(e, "Could not open input stream to intent data")
-                    return Pair(false, "copyFileToCache: FileNotFoundException when accessing ContentProvider")
-                } ?: return Pair(false, "copyFileToCache: provider recently crashed")
-            // Check non-null
+        ): CacheFileResult =
             try {
-                CompatHelper.compat.copyFile(inputStream, tempPath)
-            } catch (e: IOException) {
-                Timber.e(e, "Could not copy file to %s", tempPath)
-                return Pair(false, "copyFileToCache: ${e.javaClass} when copying the imported file")
-            } finally {
-                try {
-                    inputStream.close()
-                } catch (e: IOException) {
-                    Timber.e(e, "Error closing input stream")
+                context.contentResolver.openInputStreamSafe(data)?.use { input ->
+                    CompatHelper.compat.copyFile(input, tempPath)
+                    CacheFileResult.Success(tempPath)
+                } ?: run {
+                    Timber.w("Content provider crashed")
+                    CacheFileResult.ContentProviderCrashed
                 }
+            } catch (e: Exception) {
+                Timber.w("Could not copy file to %s", tempPath)
+                CacheFileResult.Error(e)
             }
-            return Pair(true, null)
+
+        sealed class CacheFileResult {
+            data class Success(
+                val path: String,
+            ) : CacheFileResult()
+
+            data class Error(
+                val exception: Exception,
+            ) : CacheFileResult()
+
+            data object ContentProviderCrashed : CacheFileResult()
+
+            fun asErrorDetails(): CacheErrorDetails? =
+                when (this) {
+                    is Success -> null
+                    is Error ->
+                        CacheErrorDetails(
+                            exceptionForReport = exception,
+                            userFacingException = exception,
+                        )
+                    is ContentProviderCrashed ->
+                        CacheErrorDetails(
+                            exceptionForReport = ManuallyReportedException("Content provider crashed"),
+                            userFacingException = null,
+                        )
+                }
+
+            data class CacheErrorDetails(
+                val exceptionForReport: Exception,
+                val userFacingException: Exception?,
+            ) {
+                fun buildTitle(context: Context) = context.getString(R.string.import_error_copy_to_cache_title)
+
+                fun buildHumanReadableMessage(context: Context) =
+                    buildString {
+                        // "oaz: Cello error 2."
+                        if (userFacingException != null) {
+                            appendLine(userFacingException.message)
+                            appendLine()
+                        }
+
+                        // "This is often caused by the file provider, try these fixes:"
+                        val suggestedFixes =
+                            buildString {
+                                // build a bulleted list of suggested fixes
+                                // TODO: "Open the file using your device’s file browser app" -
+                                //  convert it, and others to actions
+                                for (line in context.resources.getStringArray(R.array.import_cache_error_resolutions)) {
+                                    appendLine("\u2022 $line")
+                                }
+                            }
+                        append(context.getString(R.string.import_error_copy_to_cache_explanation, suggestedFixes))
+                    }
+            }
         }
 
         companion object {
@@ -442,19 +504,6 @@ object ImportUtils {
         }
     }
 
-    class ImportResult(
-        val humanReadableMessage: String?,
-    ) {
-        val isSuccess: Boolean
-            get() = humanReadableMessage == null
-
-        companion object {
-            fun fromErrorString(message: String?): ImportResult = ImportResult(message)
-
-            fun fromSuccess(): ImportResult = ImportResult(null)
-        }
-    }
-
     /** Show confirmation dialog asking to confirm import with replace when file called "collection.apkg" */
     class CollectionImportReplace(
         private val importPath: String,
@@ -499,5 +548,17 @@ object ImportUtils {
         companion object {
             fun fromMessage(message: Message): CollectionImportAdd = CollectionImportAdd(message.data.getString("importPath")!!)
         }
+    }
+}
+
+sealed class ImportResult {
+    data object Success : ImportResult()
+
+    data class Failure(
+        val humanReadableMessage: String,
+        val exception: Exception? = null,
+        val title: String? = null,
+    ) : ImportResult() {
+        fun toDebugInfo(): String? = exception?.stackTraceToString()
     }
 }

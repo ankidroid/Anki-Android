@@ -172,7 +172,8 @@
     <string name="import_error_not_apkg_extension">Failas „%s“ neturi .apkg arba .colpkg plėtinio</string>
     <string name="import_error_load_imported_database">\"Anki\" duomenų bazės (.anki2) pakeitimai dar nepalaikomi. Pakeitimo instrukcijas rasite vadove.</string>
     <string name="import_error_content_provider">Pažymėto failo „AnkiDroid“ automatiškai įkelti negali. Norėdami sužinoti, kaip „Anki“ failus galėtumėte įkelti rankiniu būdu, prašome perskaityti vartotojo vadovą: \n%s</string>
-    <string name="import_error_copy_to_cache">Nepavyko įrašyti failo į talpyklą (galbūt nebeliko vietos)</string>
+    <string name="import_error_copy_to_cache_title">Failed to cache file</string>
+    <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">This is often caused by a bug in the app you used to select the file. Please try the following fixes:\n\n%s</string>
     <string name="import_interrupted">Importas nutrauktas: AnkiDroid buvo uždarytas</string>
     <string name="export_ready_title">Paruošta eksportuoti</string>
     <string name="export_send_no_handlers">Nėra jokių programėlių, galinčių nuskaityti apkg. Išsaugoma&#8230;</string>
@@ -314,6 +315,12 @@
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">Nepavyko pasiekti kolekcijos. Bandykite dar kartą!</string>
     <string name="cd_manage_notetypes_add">Pridėti naują pastabos tipą</string>
+    <plurals name="note_types_selected">
+        <item quantity="one">%d note type selected</item>
+        <item quantity="few">%d note types selected</item>
+        <item quantity="many">%d note types selected</item>
+        <item quantity="other">%d note types selected</item>
+    </plurals>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">Studijuokite mažiau</string>
     <string name="intro_ankidroid_tagline_two">Prisiminti daugiau</string>

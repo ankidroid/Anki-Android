@@ -191,7 +191,7 @@ class RecyclerFastScroller
                         v: View,
                         event: MotionEvent,
                     ): Boolean {
-                        val recyclerView = requireNotNull(recyclerView)
+                        val recyclerView = requireNotNull(recyclerView) { "recyclerView" }
                         val recyclerViewAdapter = recyclerView.adapter
                         if (recyclerViewAdapter == null || recyclerViewAdapter.itemCount == 0) return false
 

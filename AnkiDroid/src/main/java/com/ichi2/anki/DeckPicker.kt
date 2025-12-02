@@ -128,6 +128,7 @@ import com.ichi2.anki.dialogs.DeckPickerNoSpaceLeftDialog
 import com.ichi2.anki.dialogs.DialogHandlerMessage
 import com.ichi2.anki.dialogs.EditDeckDescriptionDialog
 import com.ichi2.anki.dialogs.EmptyCardsDialogFragment
+import com.ichi2.anki.dialogs.FatalErrorDialog
 import com.ichi2.anki.dialogs.ImportDialog.ImportDialogListener
 import com.ichi2.anki.dialogs.ImportFileSelectionFragment.ApkgImportResultLauncherProvider
 import com.ichi2.anki.dialogs.ImportFileSelectionFragment.CsvImportResultLauncherProvider
@@ -180,8 +181,8 @@ import com.ichi2.ui.AccessibleSearchView
 import com.ichi2.ui.BadgeDrawableBuilder
 import com.ichi2.utils.AdaptionUtil
 import com.ichi2.utils.ClipboardUtil.IMPORT_MIME_TYPES
+import com.ichi2.utils.ImportResult
 import com.ichi2.utils.ImportUtils
-import com.ichi2.utils.ImportUtils.ImportResult
 import com.ichi2.utils.NetworkUtils
 import com.ichi2.utils.NetworkUtils.isActiveNetworkMetered
 import com.ichi2.utils.VersionUtils
@@ -193,7 +194,6 @@ import com.ichi2.utils.customView
 import com.ichi2.utils.dp
 import com.ichi2.utils.message
 import com.ichi2.utils.negativeButton
-import com.ichi2.utils.neutralButton
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
 import com.ichi2.utils.title
@@ -212,7 +212,7 @@ import java.io.File
 /**
  * The current entry point for AnkiDroid. Displays decks, allowing users to study. Many other functions.
  *
- * On a tablet, this is a fragmented view, with [StudyOptionsFragment] to the right: [loadStudyOptionsFragment]
+ * On a tablet, this is a fragmented view, with [StudyOptionsFragment] to the right: [tryShowStudyOptionsPanel]
  *
  * Often used as navigation to: [Reviewer], [NoteEditorFragment] (adding notes), [StudyOptionsFragment] [SharedDecksDownloadFragment]
  *
@@ -236,6 +236,7 @@ import java.io.File
  */
 @NeedsTest("If the collection has been created, the app intro is not displayed")
 @NeedsTest("If the user selects 'Sync Profile' in the app intro, a sync starts immediately")
+@NeedsTest("Regression test of #19555 or remove 'android:configChanges' for the screen")
 open class DeckPicker :
     NavigationDrawerActivity(),
     SyncErrorDialogListener,
@@ -610,9 +611,7 @@ open class DeckPicker :
                 }
                 CustomStudyAction.EXTEND_STUDY_LIMITS -> {
                     Timber.d("Study limits updated")
-                    if (fragmented) {
-                        fragment!!.refreshInterface()
-                    }
+                    fragment?.refreshInterface()
                     updateDeckList()
                 }
             }
@@ -676,7 +675,7 @@ open class DeckPicker :
 
         fun onDeckCountsChanged(unit: Unit) {
             updateDeckList()
-            if (fragmented) loadStudyOptionsFragment()
+            tryShowStudyOptionsPanel()
         }
 
         fun onDestinationChanged(destination: Destination) {
@@ -770,7 +769,7 @@ open class DeckPicker :
 
         fun onStudyOptionsVisibilityChanged(collectionHasNoCards: Boolean) {
             invalidateOptionsMenu()
-            binding.studyoptionsFrame?.isVisible = fragmented && !collectionHasNoCards
+            binding.studyoptionsFrame?.isVisible = !collectionHasNoCards
         }
 
         fun onDeckListChanged(deckList: FlattenedDeckList) {
@@ -805,15 +804,12 @@ open class DeckPicker :
                 is StartupResponse.Success -> {
                     showStartupScreensAndDialogs(sharedPrefs(), 0)
 
-                    // Open StudyOptionsFragment if in fragmented mode
-                    if (fragmented) {
-                        loadStudyOptionsFragment()
-
+                    if (tryShowStudyOptionsPanel()) {
                         ResizablePaneManager(
-                            parentLayout = requireNotNull(binding.deckpickerXlView),
-                            divider = requireNotNull(binding.resizingDivider),
+                            parentLayout = requireNotNull(binding.deckpickerXlView) { "deckpickerXlView" },
+                            divider = requireNotNull(binding.resizingDivider) { "resizingDivider" },
                             leftPane = deckPickerBinding.root,
-                            rightPane = requireNotNull(binding.studyoptionsFragment),
+                            rightPane = requireNotNull(binding.studyoptionsFragment) { "studyoptionsFragment" },
                             sharedPrefs = Prefs.getUiConfig(this),
                             leftPaneWeightKey = PREF_DECK_PICKER_PANE_WEIGHT,
                             rightPaneWeightKey = PREF_STUDY_OPTIONS_PANE_WEIGHT,
@@ -857,7 +853,8 @@ open class DeckPicker :
             val clip = uriContent?.clip ?: return@OnReceiveContentListener remaining
             val uri = clip.getItemAt(0).uri
             if (!ImportUtils.FileImporter().isValidImportType(this, uri)) {
-                ImportResult.fromErrorString(getString(R.string.import_log_no_apkg))
+                // TODO: This does nothing
+                ImportResult.Failure(getString(R.string.import_log_no_apkg))
                 return@OnReceiveContentListener remaining
             }
 
@@ -998,20 +995,7 @@ open class DeckPicker :
                 Timber.i("Displaying database locked error")
                 showDatabaseErrorDialog(DatabaseErrorDialogType.DIALOG_DB_LOCKED)
             }
-            is StartupFailure.InitializationError ->
-                AlertDialog.Builder(this).show {
-                    title(R.string.ankidroid_init_failed_webview_title)
-                    message(text = failure.toHumanReadableString(this@DeckPicker))
-                    positiveButton(R.string.close) {
-                        closeCollectionAndFinish()
-                    }
-                    failure.infoLink?.let { url ->
-                        neutralButton(R.string.help) {
-                            openUrl(url)
-                        }
-                    }
-                    cancelable(false)
-                }
+            is StartupFailure.InitializationError -> FatalErrorDialog.build(this, failure).show()
             is DiskFull -> displayNoStorageError()
             is DBError -> displayDatabaseFailure(CustomExceptionData.fromException(failure.exception))
         }
@@ -1439,9 +1423,7 @@ open class DeckPicker :
     private fun processReviewResults(resultCode: Int) {
         if (resultCode == AbstractFlashcardViewer.RESULT_NO_MORE_CARDS) {
             CongratsPage.onReviewsCompleted(this, getColUnsafe.sched.totalCount() == 0)
-            if (fragmented) {
-                fragment?.refreshInterface()
-            }
+            fragment?.refreshInterface()
         }
     }
 
@@ -2087,10 +2069,19 @@ open class DeckPicker :
         importColpkg(importPath)
     }
 
-    private fun loadStudyOptionsFragment() {
+    /**
+     * Displays [StudyOptionsFragment] in a side panel on larger devices
+     *
+     * @see [HomescreenBinding.studyoptionsFragment]
+     *
+     * @return whether the panel was shown
+     */
+    private fun tryShowStudyOptionsPanel(): Boolean {
+        val containerId = binding.studyoptionsFragment?.id ?: return false
         supportFragmentManager.commit {
-            replace(R.id.studyoptions_fragment, StudyOptionsFragment())
+            replace(containerId, StudyOptionsFragment())
         }
+        return true
     }
 
     val fragment: StudyOptionsFragment?
@@ -2117,35 +2108,23 @@ open class DeckPicker :
     }
 
     private fun openStudyOptions() {
-        if (fragmented) {
-            // The fragment will show the study options screen instead of launching a new activity.
-            loadStudyOptionsFragment()
-        } else {
-            Timber.i("Opening Study Options")
-            val intent = Intent()
-            intent.setClass(this, StudyOptionsActivity::class.java)
-            reviewLauncher.launch(intent)
-        }
+        if (tryShowStudyOptionsPanel()) return
+
+        // otherwise, we need to launch the activity
+        Timber.i("Opening Study Options")
+        val intent = Intent()
+        intent.setClass(this, StudyOptionsActivity::class.java)
+        reviewLauncher.launch(intent)
     }
 
     private fun openReviewerOrStudyOptions(selectionType: DeckSelectionType) {
         when (selectionType) {
             DeckSelectionType.DEFAULT -> {
-                if (fragmented) {
-                    openStudyOptions()
-                } else {
-                    openReviewer()
-                }
-                return
-            }
-            DeckSelectionType.SHOW_STUDY_OPTIONS -> {
-                openStudyOptions()
-                return
-            }
-            DeckSelectionType.SKIP_STUDY_OPTIONS -> {
+                if (tryShowStudyOptionsPanel()) return
                 openReviewer()
-                return
             }
+            DeckSelectionType.SHOW_STUDY_OPTIONS -> openStudyOptions()
+            DeckSelectionType.SKIP_STUDY_OPTIONS -> openReviewer()
         }
     }
 
@@ -2168,15 +2147,13 @@ open class DeckPicker :
 
         /** Check if we need to update the fragment or update the deck list */
         fun updateUi() {
-            if (fragmented) {
-                // Tablets must always show the study options that corresponds to the current deck,
-                // regardless of whether the deck is currently reviewable or not.
-                openStudyOptions()
-            } else {
-                // On phones, we update the deck list to ensure the currently selected deck is
-                // highlighted correctly.
-                updateDeckList()
-            }
+            // Tablets must always show the study options that corresponds to the current deck,
+            // regardless of whether the deck is currently reviewable or not.
+            if (tryShowStudyOptionsPanel()) return
+
+            // On phones, we update the deck list to ensure the currently selected deck is
+            // highlighted correctly.
+            updateDeckList()
         }
 
         withCol { decks.select(did) }
@@ -2284,9 +2261,7 @@ open class DeckPicker :
             dismissAllDialogFragments()
             deckListAdapter.notifyDataSetChanged()
             updateDeckList()
-            if (fragmented) {
-                loadStudyOptionsFragment()
-            }
+            tryShowStudyOptionsPanel()
         }
         createDeckDialog.showDialog()
     }
@@ -2327,7 +2302,7 @@ open class DeckPicker :
                 }
             }
             updateDeckList()
-            if (fragmented) loadStudyOptionsFragment()
+            tryShowStudyOptionsPanel()
         }
     }
 
@@ -2359,9 +2334,7 @@ open class DeckPicker :
             dismissAllDialogFragments()
             deckListAdapter.notifyDataSetChanged()
             updateDeckList()
-            if (fragmented) {
-                loadStudyOptionsFragment()
-            }
+            tryShowStudyOptionsPanel()
             invalidateOptionsMenu()
         }
         createDeckDialog.showDialog()

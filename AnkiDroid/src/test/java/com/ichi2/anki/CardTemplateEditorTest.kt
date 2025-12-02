@@ -28,9 +28,14 @@ import com.ichi2.anki.dialogs.InsertFieldDialog
 import com.ichi2.anki.libanki.NotetypeJson
 import com.ichi2.anki.libanki.testutils.ext.addNote
 import com.ichi2.anki.model.SelectableDeck
+import com.ichi2.anki.notetype.ManageNoteTypesState.CardEditor
 import com.ichi2.anki.previewer.CardViewerActivity
+import com.ichi2.anki.scheduling.selectTab
 import com.ichi2.testutils.assertFalse
+import com.ichi2.testutils.withTabletUi
+import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert
+import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers
 import org.json.JSONObject
 import org.junit.Assume.assumeThat
@@ -847,6 +852,17 @@ class CardTemplateEditorTest : RobolectricTest() {
         )
     }
 
+    @Test
+    fun `tab changes succeed with tablet UI - Issue 19589`() =
+        withTabletUi {
+            withCardTemplateEditor(col.notetypes.basicAndReversed) {
+                selectTab(1)
+                selectTab(0)
+
+                assertThat(selectedTabPosition, equalTo(0))
+            }
+        }
+
     private fun addCardType(
         testEditor: CardTemplateEditor,
         shadowTestEditor: ShadowActivity,
@@ -928,3 +944,16 @@ private val CardTemplateEditor.editText: EditText
 
 private val CardTemplateEditor.viewPager
     get() = this.mainBinding.cardTemplateEditorPager
+
+fun RobolectricTest.withCardTemplateEditor(
+    noteType: NotetypeJson = col.notetypes.basic,
+    block: CardTemplateEditor.() -> Unit,
+) {
+    val intent = CardEditor(ntid = noteType.id).toIntent(targetContext)
+    val activity = startActivityNormallyOpenCollectionWithIntent(CardTemplateEditor::class.java, intent)
+    block(activity)
+}
+
+fun CardTemplateEditor.selectTab(index: Int) = topBinding.slidingTabs.selectTab(index)
+
+val CardTemplateEditor.selectedTabPosition: Int get() = topBinding.slidingTabs.selectedTabPosition

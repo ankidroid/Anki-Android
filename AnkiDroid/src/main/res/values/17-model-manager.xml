@@ -29,7 +29,6 @@
 
     <!--Browser-->
     <string name="model_browser_delete">Delete note type</string>
-    <string name="model_browser_rename" comment="Rename a note type">Rename</string>
     <string name="model_browser_template">Edit cards</string>
 
 
@@ -52,6 +51,12 @@
 
     <!--Warnings-->
     <string name="model_delete_warning">Are you sure you wish to delete this note type?</string>
+    <!--
+        Example output:
+        Delete the note types below?
+        Basic, Basic (and reversed card), Cloze
+     -->
+    <string name="model_delete_multiple_warning">Delete the note types below?\n %s</string>
     <string name="field_delete_warning">Are you sure you wish to delete this field?</string>
 
 

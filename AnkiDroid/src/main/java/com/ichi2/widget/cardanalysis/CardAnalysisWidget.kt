@@ -324,7 +324,6 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
                 CrashReportService.sendExceptionReport(
                     Exception("Unexpected action received: ${intent.action}"),
                     "CardAnalysisWidget - onReceive",
-                    null,
                     onlyIfSilent = true,
                 )
             }

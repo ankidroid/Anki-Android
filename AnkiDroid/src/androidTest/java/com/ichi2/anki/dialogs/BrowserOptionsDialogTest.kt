@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2024 Brayan Oliveira <brayandso.dev@gmail.com>
+ *  Copyright (c) 2025 David Allison <davidallisongithub@gmail.com>
  *
  *  This program is free software; you can redistribute it and/or modify it under
  *  the terms of the GNU General Public License as published by the Free Software
@@ -13,32 +13,32 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.ichi2.anki.previewer
 
+package com.ichi2.anki.dialogs
+
+import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.CardBrowser
+import com.ichi2.anki.model.CardsOrNotes
+import com.ichi2.anki.tests.InstrumentedTest
 import org.junit.Rule
 import org.junit.Test
-import org.junit.rules.TemporaryFolder
 import org.junit.runner.RunWith
-import kotlin.test.assertNotEquals
 
+/** Tests [BrowserOptionsDialog] */
 @RunWith(AndroidJUnit4::class)
-class TemplatePreviewerViewModelFileSystemTest : RobolectricTest() {
-    // TODO(PERF): Needs investigation why this is necessary
-    override fun getCollectionStorageMode() = CollectionStorageMode.ON_DISK
-
+class BrowserOptionsDialogTest : InstrumentedTest() {
     @get:Rule
-    val tempDirectory = TemporaryFolder()
+    val activityRule = ActivityScenarioRule(CardBrowser::class.java)
 
     @Test
-    fun `card ords are changed`() {
-        runClozeTest(tempDirectory = tempDirectory, fields = mutableListOf("{{c1::one}} {{c2::bar}}")) {
-            onPageFinished(false)
-            val ord1 = currentCard.await().ord
-            onTabSelected(1)
-            val ord2 = currentCard.await().ord
-            assertNotEquals(ord1, ord2)
+    fun dialogLoads() {
+        activityRule.scenario.onActivity { activity ->
+            BrowserOptionsDialog
+                .newInstance(
+                    CardsOrNotes.CARDS,
+                    isTruncated = true,
+                ).show(activity.supportFragmentManager, "BrowserOptionsDialog")
         }
     }
 }

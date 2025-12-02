@@ -20,6 +20,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -27,6 +28,7 @@ import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
+import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -56,10 +58,12 @@ class ManageNotetypes : AnkiActivity(R.layout.activity_manage_note_types) {
     private val binding by viewBinding(ActivityManageNoteTypesBinding::bind)
     val viewModel by viewModels<ManageNoteTypesViewModel>()
 
-    private val notetypesAdapter: NotetypesAdapter by lazy {
-        NotetypesAdapter(
+    private val notetypesAdapter: NoteTypesAdapter by lazy {
+        NoteTypesAdapter(
             this@ManageNotetypes,
             onItemClick = viewModel::onItemClick,
+            onItemLongClick = viewModel::onItemLongClick,
+            onItemChecked = viewModel::onItemChecked,
             onEditCards = viewModel::onCardEditorRequested,
             onRename = ::renameNotetype,
             onDelete = ::deleteNotetype,
@@ -69,6 +73,13 @@ class ManageNotetypes : AnkiActivity(R.layout.activity_manage_note_types) {
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
             if (result.resultCode == RESULT_OK) {
                 viewModel.refreshNoteTypes()
+            }
+        }
+
+    private val backCallback =
+        object : OnBackPressedCallback(enabled = false) {
+            override fun handleOnBackPressed() {
+                viewModel.clearSelection()
             }
         }
 
@@ -84,9 +95,31 @@ class ManageNotetypes : AnkiActivity(R.layout.activity_manage_note_types) {
             val addNewNotesType = AddNewNotesType(this)
             launchCatchingTask { addNewNotesType.showAddNewNotetypeDialog() }
         }
+        binding.btnClearSelection.setOnClickListener { viewModel.clearSelection() }
+        binding.btnDeleteSelection.setOnClickListener {
+            launchCatchingTask {
+                val deleteMessage =
+                    if (userAcceptsSchemaChange()) {
+                        val selection =
+                            viewModel.selectedNoteTypes.joinToString { it.name }
+                        getString(R.string.model_delete_multiple_warning, selection)
+                    } else {
+                        return@launchCatchingTask
+                    }
+                AlertDialog.Builder(this@ManageNotetypes).show {
+                    title(R.string.dialog_positive_delete)
+                    message(text = deleteMessage)
+                    positiveButton(R.string.dialog_positive_delete) {
+                        viewModel.deleteSelectedNoteTypes()
+                    }
+                    negativeButton(R.string.dialog_cancel)
+                }
+            }
+        }
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.state.collect { state ->
+                    backCallback.isEnabled = viewModel.state.value.isInMultiSelectMode
                     // as they are transient user messages take precedence and are immediately consumed
                     if (state.message != null) {
                         val snackbarMessage =
@@ -108,6 +141,7 @@ class ManageNotetypes : AnkiActivity(R.layout.activity_manage_note_types) {
                 }
             }
         }
+        onBackPressedDispatcher.addCallback(this, backCallback)
     }
 
     private fun bindState(state: ManageNoteTypesState) {
@@ -130,7 +164,9 @@ class ManageNotetypes : AnkiActivity(R.layout.activity_manage_note_types) {
         } else {
             dismissLoadingDialog()
         }
-        notetypesAdapter.submitList(state.noteTypes)
+        // send only the items that should be displayed
+        notetypesAdapter.submitList(state.noteTypes.filter { it.shouldBeDisplayed })
+        notetypesAdapter.isInMultiSelectMode = state.isInMultiSelectMode
         supportActionBar?.subtitle =
             resources.getQuantityString(
                 R.plurals.model_browser_types_available,
@@ -138,10 +174,20 @@ class ManageNotetypes : AnkiActivity(R.layout.activity_manage_note_types) {
                 state.noteTypes.size,
             )
         if (state.searchQuery.isNotEmpty()) {
-            val searchView =
-                findViewById<Toolbar>(R.id.toolbar).menu?.findItem(R.id.search_item) as? AccessibleSearchView
+            val searchMenuItem =
+                findViewById<Toolbar>(R.id.toolbar).menu?.findItem(R.id.search_item)
+            val searchView = searchMenuItem?.actionView as? AccessibleSearchView
             searchView?.setQuery(state.searchQuery, false)
         }
+        binding.selectionToolbar.isVisible = state.isInMultiSelectMode
+        val selectedCount = state.noteTypes.count { it.isSelected }
+        binding.selectedLabel.text =
+            resources.getQuantityString(
+                R.plurals.note_types_selected,
+                selectedCount,
+                selectedCount,
+            )
+        binding.floatingActionButton.isVisible = !state.isInMultiSelectMode
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

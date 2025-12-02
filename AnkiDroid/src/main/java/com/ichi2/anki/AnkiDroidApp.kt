@@ -159,6 +159,7 @@ open class AnkiDroidApp :
         ThrowableFilterService.initialize()
 
         applicationScope.launch {
+            Timber.i("AnkiDroidApp: listing debug info")
             Timber.i(DebugInfoService.getDebugInfo(this@AnkiDroidApp))
         }
 
@@ -197,29 +198,7 @@ open class AnkiDroidApp :
         CardBrowser.clearLastDeckId()
         LanguageUtil.setDefaultBackendLanguages()
 
-        // #13207: `getCurrentAnkiDroidDirectory` failing is an unconditional be a fatal error
-        // TODO: For now, a null getExternalFilesDir, but a valid AnkiDroid Directory in prefs
-        //  is not considered to be a fatal error
-        val ankiDroidDir =
-            try {
-                CollectionHelper.getCurrentAnkiDroidDirectory(this)
-            } catch (e: SystemStorageException) {
-                fatalInitializationError = FatalInitializationError.StorageError(e)
-                null
-            }
-        // Create the AnkiDroid directory if missing. Send exception report if inaccessible.
-        if (ankiDroidDir != null && Permissions.hasLegacyStorageAccessPermission(this)) {
-            try {
-                CollectionHelper.initializeAnkiDroidDirectory(ankiDroidDir)
-            } catch (e: StorageAccessException) {
-                Timber.e(e, "Could not initialize AnkiDroid directory")
-                val defaultDir = CollectionHelper.getDefaultAnkiDroidDirectory(this)
-                if (isSdCardMounted && CollectionHelper.getCurrentAnkiDroidDirectory(this) == defaultDir) {
-                    // Don't send report if the user is using a custom directory as SD cards trip up here a lot
-                    sendExceptionReport(e, "AnkiDroidApp.onCreate")
-                }
-            }
-        }
+        initializeAnkiDroidDirectory()
 
         if (Prefs.newReviewRemindersEnabled) {
             Timber.i("Setting review reminder notifications if they have not already been set")
@@ -239,7 +218,10 @@ open class AnkiDroidApp :
                     activity: Activity,
                     savedInstanceState: Bundle?,
                 ) {
-                    Timber.i("${activity::class.simpleName}::onCreate")
+                    Timber.i(
+                        "${activity::class.simpleName}::onCreate, savedInstanceState: %s",
+                        savedInstanceState?.let { "${it.keySet().size} keys" },
+                    )
                     (activity as? FragmentActivity)
                         ?.supportFragmentManager
                         ?.registerFragmentLifecycleCallbacks(
@@ -281,6 +263,51 @@ open class AnkiDroidApp :
         TtsVoices.launchBuildLocalesJob()
         // enable {{tts-voices:}} field filter
         TtsVoicesFieldFilter.ensureApplied()
+    }
+
+    /**
+     * Manually initializes the collection directory and `.nomedia` if
+     * [Permissions.hasLegacyStorageAccessPermission] is set
+     *
+     * On failure, sets [fatalInitializationError] to [storageError][FatalInitializationError.StorageError]
+     *
+     * In most cases the Anki Backend now creates the collection and [initializeAnkiDroidDirectory]
+     *  is called on startup of the activity.
+     */
+    private fun initializeAnkiDroidDirectory() {
+        // #13207: `getCurrentAnkiDroidDirectory` failing is an unconditional be a fatal error
+        // TODO: For now, a null getExternalFilesDir, but a valid AnkiDroid Directory in prefs
+        //  is not considered to be a fatal error, unless the directory itself is not writable.
+        val ankiDroidDir =
+            try {
+                CollectionHelper.getCurrentAnkiDroidDirectory(this)
+            } catch (e: SystemStorageException) {
+                fatalInitializationError = FatalInitializationError.StorageError(e)
+                return
+            }
+
+        // TODO: This line is questionable, as it doesn't work on most post-scoped-storage
+        //  builds/Android versions, but we call initializeAnkiDroidDirectory later on startup
+        if (!Permissions.hasLegacyStorageAccessPermission(this)) return
+
+        try {
+            CollectionHelper.initializeAnkiDroidDirectory(ankiDroidDir)
+            return
+        } catch (e: StorageAccessException) {
+            Timber.e(e, "Could not initialize AnkiDroid directory")
+            try {
+                val defaultDir = CollectionHelper.getDefaultAnkiDroidDirectory(this)
+                if (isSdCardMounted && CollectionHelper.getCurrentAnkiDroidDirectory(this) == defaultDir) {
+                    // Don't send report if the user is using a custom directory as SD cards trip up here a lot
+                    sendExceptionReport(e, "AnkiDroidApp.onCreate")
+                }
+            } catch (e: SystemStorageException) {
+                // The user can't write to the AnkiDroid directory (=> cant write to the collection)
+                // AND getExternalFilesDir is null - file permissions are likely corrupted (Android 16 bug)
+                // => show the 'fatal storage error' screen
+                fatalInitializationError = FatalInitializationError.StorageError(e)
+            }
+        }
     }
 
     /**
@@ -455,6 +482,11 @@ open class AnkiDroidApp :
             val parsed = uri.toUri()
             return Intent(Intent.ACTION_VIEW, parsed)
         } // TODO actually this can be done by translating "link_help" string for each language when the App is
+
+        @VisibleForTesting
+        fun clearFatalError() {
+            this.instance.fatalInitializationError = null
+        }
 
         /**
          * Get the url for the properly translated feedback page

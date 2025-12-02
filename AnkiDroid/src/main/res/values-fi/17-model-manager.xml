@@ -45,7 +45,6 @@
     </plurals>
     <!--Browser-->
     <string name="model_browser_delete">Poista malli</string>
-    <string name="model_browser_rename" comment="Rename a note type">Uudelleennimeä</string>
     <string name="model_browser_template">Muokkaa kortteja</string>
     <!--Rename-->
     <string name="rename_model">Nimeä muistiinpanotyyppi uudelleen</string>
@@ -62,6 +61,12 @@
     <string name="model_field_editor_sort_field">Järjestä tämän kentän mukaan</string>
     <!--Warnings-->
     <string name="model_delete_warning">Haluatko varmasti poistaa tämän muistiinpanotyypin?</string>
+    <!--
+        Example output:
+        Delete the note types below?
+        Basic, Basic (and reversed card), Cloze
+     -->
+    <string name="model_delete_multiple_warning">Delete the note types below?\n %s</string>
     <string name="field_delete_warning">Oletko varma, että haluat poistaa tämän kentän?</string>
     <!--Model Add Suffixes-->
     <string name="model_browser_add_add">Lisää: %1$s</string>

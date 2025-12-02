@@ -45,7 +45,6 @@
     </plurals>
     <!--Browser-->
     <string name="model_browser_delete">Изтриване тип на бележка</string>
-    <string name="model_browser_rename" comment="Rename a note type">Преименуване</string>
     <string name="model_browser_template">Редактиране на карти</string>
     <!--Rename-->
     <string name="rename_model">Rename note type</string>
@@ -62,6 +61,12 @@
     <string name="model_field_editor_sort_field">Сортиране по това поле</string>
     <!--Warnings-->
     <string name="model_delete_warning">Наистина ли искате да изтриете този тип бележка?</string>
+    <!--
+        Example output:
+        Delete the note types below?
+        Basic, Basic (and reversed card), Cloze
+     -->
+    <string name="model_delete_multiple_warning">Delete the note types below?\n %s</string>
     <string name="field_delete_warning">Сигурни ли сте, че желаете изтриване на модела?</string>
     <!--Model Add Suffixes-->
     <string name="model_browser_add_add">Add: %1$s</string>

@@ -44,6 +44,12 @@ data class ManageNoteTypesState(
      * and after marked as consumed.
      */
     val destination: Destination? = null,
+    /**
+     * Flag to indicate if we are selecting multiple items. This being true implies that at least
+     * one item in the list of [com.ichi2.anki.notetype.NoteTypeItemState] has its isSelected
+     * property set to true.
+     */
+    val isInMultiSelectMode: Boolean = false,
 ) {
     /** Simple message to be shown to the user, usually in a [Snackbar] or [Toast] */
     enum class UserMessage {
@@ -62,22 +68,22 @@ data class ManageNoteTypesState(
     )
 
     data class CardEditor(
-        val nid: NoteTypeId,
+        val ntid: NoteTypeId,
     ) : Destination {
         override fun toIntent(context: Context): Intent =
             Intent(context, CardTemplateEditor::class.java).apply {
-                putExtra(CardTemplateEditor.EDITOR_NOTE_TYPE_ID, nid)
+                putExtra(CardTemplateEditor.EDITOR_NOTE_TYPE_ID, ntid)
             }
     }
 
     data class FieldsEditor(
-        val nid: NoteTypeId,
+        val ntid: NoteTypeId,
         val name: String,
     ) : Destination {
         override fun toIntent(context: Context): Intent =
             Intent(context, NoteTypeFieldEditor::class.java).apply {
                 putExtra(NoteTypeFieldEditor.EXTRA_NOTETYPE_NAME, name)
-                putExtra(NoteTypeFieldEditor.EXTRA_NOTETYPE_ID, nid)
+                putExtra(NoteTypeFieldEditor.EXTRA_NOTETYPE_ID, ntid)
             }
     }
 }
@@ -87,6 +93,16 @@ data class NoteTypeItemState(
     val id: NoteTypeId,
     val name: String,
     val useCount: Int,
+    /**
+     * Only set and used in multiple selection mode, true if this entry is currently selected,
+     * false otherwise.
+     */
+    val isSelected: Boolean = false,
+    /**
+     * Flag to indicate if the ui should show this item or not, used for filtering items when we
+     * want to hide entries but still holding on to them for their state.
+     */
+    val shouldBeDisplayed: Boolean = true,
 ) {
     companion object {
         fun asModel(source: NotetypeNameIdUseCount) = NoteTypeItemState(source.id, source.name, source.useCount)

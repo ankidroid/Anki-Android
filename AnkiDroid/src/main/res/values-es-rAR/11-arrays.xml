@@ -71,21 +71,21 @@
     <string name="answer_good" maxLength="41">Respuesta buena</string>
     <string name="answer_easy" maxLength="41">Respuesta fácil</string>
     <string name="gesture_abort_learning" maxLength="41">Cerrar pantalla de estudio</string>
-    <string name="gesture_flag_red" maxLength="41">Toggle red flag</string>
-    <string name="gesture_flag_orange" maxLength="41">Toggle orange flag</string>
-    <string name="gesture_flag_green" maxLength="41">Toggle green flag</string>
-    <string name="gesture_flag_blue" maxLength="41">Toggle blue flag</string>
-    <string name="gesture_flag_pink" maxLength="41">Toggle pink flag</string>
-    <string name="gesture_flag_turquoise" maxLength="41">Toggle turquoise flag</string>
-    <string name="gesture_flag_purple" maxLength="41">Toggle purple flag</string>
-    <string name="gesture_flag_remove" maxLength="41">Remove flag</string>
+    <string name="gesture_flag_red" maxLength="41">Activar/desactivar marcador rojo</string>
+    <string name="gesture_flag_orange" maxLength="41">Activar/desactivar marcador naranja</string>
+    <string name="gesture_flag_green" maxLength="41">Activar/desactivar marcador verde</string>
+    <string name="gesture_flag_blue" maxLength="41">Activar/desactivar marcador azul</string>
+    <string name="gesture_flag_pink" maxLength="41">Activar/desactivar marcador rosa</string>
+    <string name="gesture_flag_turquoise" maxLength="41">Activar/desactivar marcador turquesa</string>
+    <string name="gesture_flag_purple" maxLength="41">Activar/desactivar marcador morado</string>
+    <string name="gesture_flag_remove" maxLength="41">Eliminar marcador</string>
     <string name="gesture_page_up" maxLength="41">Page up</string>
     <string name="gesture_page_down" maxLength="41">Page down</string>
-    <string name="gesture_toggle_whiteboard" maxLength="41">Toggle whiteboard</string>
-    <string name="gesture_toggle_eraser" maxLength="41">Toggle eraser</string>
+    <string name="gesture_toggle_whiteboard" maxLength="41">Activar/desactivar pizarra</string>
+    <string name="gesture_toggle_eraser" maxLength="41">Activar/desactivar borrador</string>
     <string name="gesture_show_hint" maxLength="41">Mostrar pista</string>
-    <string name="gesture_show_all_hints" maxLength="41">Show all hints</string>
-    <string name="record_voice" maxLength="41">Record voice</string>
-    <string name="replay_voice" maxLength="41">Replay voice</string>
-    <string name="save_voice" maxLength="41">Save recording</string>
+    <string name="gesture_show_all_hints" maxLength="41">Mostrar todas las pistas</string>
+    <string name="record_voice" maxLength="41">Grabar voz</string>
+    <string name="replay_voice" maxLength="41">Reproducir voz</string>
+    <string name="save_voice" maxLength="41">Guardar grabación</string>
 </resources>
