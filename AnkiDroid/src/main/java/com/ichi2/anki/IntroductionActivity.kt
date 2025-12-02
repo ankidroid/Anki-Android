@@ -74,7 +74,7 @@ class IntroductionActivity : AnkiActivity(R.layout.introduction_activity) {
 
     private fun openLoginDialog() {
         Timber.i("Opening login screen")
-        val intent = AccountActivity.getIntent(this)
+        val intent = AccountActivity.getIntent(context = this, forResult = true)
         onLoginResult.launch(intent)
     }
 
