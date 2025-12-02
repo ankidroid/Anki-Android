@@ -700,10 +700,15 @@ class CardBrowserFragment :
             Timber.i("Attempted reschedule - no cards selected")
             return
         }
-        if (ankiActivity.warnUserIfInNotesOnlyMode()) return
 
         launchCatchingTask {
             val allCardIds = activityViewModel.queryAllSelectedCardIds()
+            Timber.i(
+                "Reschedule: mode=%s, selected rows=%d, cards=%d",
+                activityViewModel.cardsOrNotes,
+                activityViewModel.selectedRows.size,
+                allCardIds.size,
+            )
             showDialogFragment(SetDueDateDialog.newInstance(allCardIds))
         }
     }
@@ -711,7 +716,6 @@ class CardBrowserFragment :
     /** @see repositionCardsNoValidation */
     fun repositionSelectedCards(): Boolean {
         Timber.i("CardBrowser:: Reposition button pressed")
-        if (ankiActivity.warnUserIfInNotesOnlyMode()) return false
         launchCatchingTask {
             when (val repositionCardsResult = activityViewModel.prepareToRepositionCards()) {
                 is ContainsNonNewCardsError -> {
@@ -757,7 +761,15 @@ class CardBrowserFragment :
         }
 
     fun onResetProgress() {
-        if (ankiActivity.warnUserIfInNotesOnlyMode()) return
+        launchCatchingTask {
+            val allCardIds = activityViewModel.queryAllSelectedCardIds()
+            Timber.i(
+                "Reset Progress: mode=%s, selected rows=%d, cards=%d",
+                activityViewModel.cardsOrNotes,
+                activityViewModel.selectedRows.size,
+                allCardIds.size,
+            )
+        }
         showDialogFragment(ForgetCardsDialog())
     }
 
