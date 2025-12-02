@@ -24,11 +24,9 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
 import com.ichi2.anki.R
-import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 
 // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019 : use IncrementerNumberRangePreferenceCompat
 @Suppress("deprecation", "OVERRIDE_DEPRECATION")
-@KotlinCleanup("_editText")
 class IncrementerNumberRangePreference : NumberRangePreference {
     private val linearLayout = LinearLayout(context)
     private val incrementButton = Button(context)

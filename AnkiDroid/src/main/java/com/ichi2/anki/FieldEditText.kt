@@ -30,7 +30,6 @@ import android.widget.EditText
 import androidx.annotation.VisibleForTesting
 import androidx.core.graphics.toColorInt
 import com.google.android.material.color.MaterialColors
-import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.anki.snackbar.showSnackbar
@@ -70,12 +69,8 @@ class FieldEditText :
 
     private fun shouldDisableExtendedTextUi(): Boolean = this.context.sharedPrefs().getBoolean("disableExtendedTextUi", false)
 
-    @KotlinCleanup("Simplify")
     override val fieldText: String?
-        get() {
-            val text = text ?: return null
-            return text.toString()
-        }
+        get() = text?.toString()
 
     fun init() {
         try {

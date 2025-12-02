@@ -37,7 +37,6 @@ import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.FlashCardsContract
 import com.ichi2.anki.common.time.TimeManager
-import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.libanki.Card
 import com.ichi2.anki.libanki.CardId
 import com.ichi2.anki.libanki.CardTemplate
@@ -636,27 +635,16 @@ class CardContentProvider : ContentProvider() {
                 }
                 if (cardOrd != -1 && noteId != -1L) {
                     val cardToAnswer: Card = getCard(noteId, cardOrd, col)
-                    @Suppress("SENSELESS_COMPARISON")
-                    @KotlinCleanup("based on getCard() method, cardToAnswer does seem to be not null")
-                    if (cardToAnswer != null) {
-                        if (bury == 1) {
-                            // bury card
-                            buryOrSuspendCard(col, cardToAnswer, true)
-                        } else if (suspend == 1) {
-                            // suspend card
-                            buryOrSuspendCard(col, cardToAnswer, false)
-                        } else {
-                            answerCard(col, cardToAnswer, ease!!, timeTaken)
-                        }
-                        updated++
+                    if (bury == 1) {
+                        // bury card
+                        buryOrSuspendCard(col, cardToAnswer, true)
+                    } else if (suspend == 1) {
+                        // suspend card
+                        buryOrSuspendCard(col, cardToAnswer, false)
                     } else {
-                        Timber.e(
-                            "Requested card with noteId %d and cardOrd %d was not found. Either the provided " +
-                                "noteId/cardOrd were wrong or the card has been deleted in the meantime.",
-                            noteId,
-                            cardOrd,
-                        )
+                        answerCard(col, cardToAnswer, ease!!, timeTaken)
                     }
+                    updated++
                 }
             }
             DECKS -> throw IllegalArgumentException("Can't update decks in bulk")
@@ -977,18 +965,14 @@ class CardContentProvider : ContentProvider() {
                     throw IllegalArgumentException(filteredSubdeck.message)
                 }
                 val deck: Deck = col.decks.getLegacy(did)!!
-                @KotlinCleanup("remove the null check if deck is found to be not null in DeckManager.get(Long)")
-                @Suppress("SENSELESS_COMPARISON")
-                if (deck != null) {
-                    try {
-                        val deckDesc = values.getAsString(FlashCardsContract.Deck.DECK_DESC)
-                        if (deckDesc != null) {
-                            deck.put("desc", deckDesc)
-                        }
-                    } catch (e: JSONException) {
-                        Timber.e(e, "Could not set a field of new deck %s", deckName)
-                        return null
+                try {
+                    val deckDesc = values.getAsString(FlashCardsContract.Deck.DECK_DESC)
+                    if (deckDesc != null) {
+                        deck.put("desc", deckDesc)
                     }
+                } catch (e: JSONException) {
+                    Timber.e(e, "Could not set a field of new deck %s", deckName)
+                    return null
                 }
                 Uri.withAppendedPath(FlashCardsContract.Deck.CONTENT_ALL_URI, did.toString())
             }
@@ -1067,16 +1051,8 @@ class CardContentProvider : ContentProvider() {
                     FlashCardsContract.Model._ID -> rb.add(noteTypeId)
                     FlashCardsContract.Model.NAME -> rb.add(noteType.name)
                     FlashCardsContract.Model.FIELD_NAMES -> {
-                        @KotlinCleanup("maybe jsonObject.fieldsNames. Difference: optString vs get")
-                        val flds = noteType.fields
-                        val allFlds = arrayOfNulls<String>(flds.length())
-                        var idx = 0
-                        while (idx < flds.length()) {
-                            allFlds[idx] = flds[idx].jsonObject.optString("name", "")
-                            idx++
-                        }
-                        @KotlinCleanup("remove requireNoNulls")
-                        rb.add(Utils.joinFields(allFlds.requireNoNulls()))
+                        val allFlds = noteType.fields.map { it.name }
+                        rb.add(Utils.joinFields(allFlds.toTypedArray()))
                     }
                     FlashCardsContract.Model.NUM_CARDS -> rb.add(noteType.templates.length())
                     FlashCardsContract.Model.CSS -> rb.add(noteType.css)

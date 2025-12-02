@@ -205,8 +205,6 @@ const val CALLER_KEY = "caller"
  *
  * @see [the Anki Desktop manual](https://docs.ankiweb.net/getting-started.html.cards)
  */
-@KotlinCleanup("Go through the class and select elements to fix")
-@KotlinCleanup("see if we can lateinit")
 class NoteEditorFragment :
     Fragment(R.layout.note_editor_fragment),
     DeckSelectionListener,
@@ -2336,14 +2334,10 @@ class NoteEditorFragment :
         editorNote!!.values()[0] = oldValue
     }
 
-    @KotlinCleanup("remove 'requireNoNulls'")
     val fieldsText: String
         get() {
-            val fields = arrayOfNulls<String>(editFields!!.size)
-            for (i in editFields!!.indices) {
-                fields[i] = getCurrentFieldText(i)
-            }
-            return Utils.joinFields(fields.requireNoNulls())
+            val fields = Array(editFields!!.size) { i -> getCurrentFieldText(i) }
+            return Utils.joinFields(fields)
         }
 
     /** Returns the value of the field at the given index  */
@@ -2833,7 +2827,6 @@ class NoteEditorFragment :
             }
             // Configure the interface according to whether note type is getting changed or not
             if (allNoteTypeIds!![pos] != noteNoteTypeId) {
-                @KotlinCleanup("Check if this ever happens")
                 val tmpls =
                     try {
                         newNoteType.templates
@@ -2849,7 +2842,7 @@ class NoteEditorFragment :
                 }
                 // Initialize mapping between cards new note type -> old note type
                 val templatesLength = tmpls.length()
-                noteTypeChangeCardMap = HashUtil.hashMapInit(templatesLength)
+                noteTypeChangeCardMap = HashUtil.hashMapInit<Int, Int?>(templatesLength) as HashMap<Int, Int?>
                 for (i in 0 until templatesLength) {
                     if (i < editorNote!!.numberOfCards(getColUnsafe)) {
                         noteTypeChangeCardMap!![i] = i

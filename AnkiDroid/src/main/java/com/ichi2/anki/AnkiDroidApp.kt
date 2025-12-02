@@ -77,7 +77,6 @@ import java.util.Locale
 /**
  * Application class.
  */
-@KotlinCleanup("IDE Lint")
 open class AnkiDroidApp :
     Application(),
     ChangeManager.Subscriber {

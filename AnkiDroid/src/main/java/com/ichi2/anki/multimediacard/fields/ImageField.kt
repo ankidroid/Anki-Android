@@ -21,7 +21,6 @@ package com.ichi2.anki.multimediacard.fields
 
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
-import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.requireMediaFolder
 import org.jsoup.Jsoup
@@ -31,7 +30,6 @@ import java.io.File
 /**
  * Field with an image.
  */
-@KotlinCleanup("convert properties to single-line overrides")
 class ImageField :
     FieldBase(),
     IField {
@@ -41,8 +39,7 @@ class ImageField :
 
     override val type: EFieldType = EFieldType.IMAGE
 
-    override val isModified: Boolean
-        get() = thisModified
+    override val isModified: Boolean get() = thisModified
 
     override var mediaFile: File?
         get() = extraImageFileRef
@@ -61,11 +58,7 @@ class ImageField :
             _name = value
         }
 
-    override val formattedValue: String
-        get() {
-            val file = mediaFile!!
-            return formatImageFileName(file)
-        }
+    override val formattedValue: String get() = formatImageFileName(mediaFile!!)
 
     override fun setFormattedString(
         col: Collection,

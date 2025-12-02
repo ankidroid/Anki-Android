@@ -28,7 +28,6 @@ import com.ichi2.anki.libanki.utils.LibAnkiAlias
 import com.ichi2.anki.libanki.utils.NotInLibAnki
 import java.util.regex.Pattern
 
-@KotlinCleanup("lots to do")
 class Note : Cloneable {
     /**
      * Should only be mutated by addNote()
@@ -297,17 +296,15 @@ class Note : Cloneable {
          * @param fieldValues Iterable of field values that may contain existing cloze deletions
          * @return the next index that a cloze should be inserted at
          */
-        @KotlinCleanup("general regex fixes for '.group' being nullable")
         fun getNextClozeIndex(fieldValues: Iterable<String>): Int {
             var highestClozeId = 0
-            // Begin looping through the fields
             for (fieldLiteral in fieldValues) {
-                // Begin searching in the current field for cloze references
                 val matcher = clozeRegexPattern.matcher(fieldLiteral)
                 while (matcher.find()) {
-                    val detectedClozeId = matcher.group(1)!!.toInt()
-                    if (detectedClozeId > highestClozeId) {
-                        highestClozeId = detectedClozeId
+                    matcher.group(1)?.toIntOrNull()?.let { detectedClozeId ->
+                        if (detectedClozeId > highestClozeId) {
+                            highestClozeId = detectedClozeId
+                        }
                     }
                 }
             }

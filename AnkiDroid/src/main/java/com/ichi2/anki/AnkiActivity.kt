@@ -65,7 +65,6 @@ import com.ichi2.anki.android.input.ShortcutGroupProvider
 import com.ichi2.anki.android.input.shortcut
 import com.ichi2.anki.common.annotations.LegacyNotifications
 import com.ichi2.anki.common.utils.android.isRobolectric
-import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.dialogs.AsyncDialogFragment
 import com.ichi2.anki.dialogs.DatabaseErrorDialog
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.CustomExceptionData
@@ -341,7 +340,7 @@ open class AnkiActivity(
         intent: Intent,
         animation: Direction,
     ) {
-        enableIntentAnimation(intent)
+        applyIntentAnimationSettings(intent)
         super.startActivity(intent)
         enableActivityAnimation(animation)
     }
@@ -396,8 +395,7 @@ open class AnkiActivity(
         ActivityTransitionAnimation.slide(this, NONE)
     }
 
-    @KotlinCleanup("Maybe rename this? This only disables the animation conditionally")
-    private fun enableIntentAnimation(intent: Intent) {
+    private fun applyIntentAnimationSettings(intent: Intent) {
         if (animationDisabled()) {
             disableIntentAnimation(intent)
         }

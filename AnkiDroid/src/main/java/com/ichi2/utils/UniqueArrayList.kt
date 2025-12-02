@@ -18,9 +18,7 @@
 
 package com.ichi2.utils
 
-import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import org.apache.commons.collections4.list.SetUniqueList
-import java.util.Arrays
 import java.util.Spliterator
 import java.util.TreeSet
 
@@ -89,7 +87,6 @@ class UniqueArrayList<E> /**
          *
          * @see .sort
          */
-        @KotlinCleanup("sortWith")
         fun sort() {
             sortOverride(null)
         }
@@ -117,17 +114,20 @@ class UniqueArrayList<E> /**
          *
          * @see Collections.sort
          */
-        @KotlinCleanup("sortWith")
         override fun sort(c: Comparator<in E>?) {
             sortOverride(c)
         }
 
         /** Exists temporarily: [sort] has been defined as invalid in kotlin so it can't be called internally */
         @Suppress("UNCHECKED_CAST")
-        @KotlinCleanup("use sortWith")
         fun sortOverride(c: Comparator<in E>?) {
-            val elements = ArrayList(list).toArray() as Array<E>
-            Arrays.sort(elements, c)
+            val elements = ArrayList(list)
+            if (c != null) {
+                elements.sortWith(c)
+            } else {
+                @Suppress("UNCHECKED_CAST")
+                (elements as MutableList<Comparable<Any>>).sort()
+            }
             val i = list.listIterator()
             for (element in elements) {
                 i.next()

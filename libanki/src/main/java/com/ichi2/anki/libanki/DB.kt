@@ -24,7 +24,6 @@ import android.database.Cursor
 import android.database.SQLException
 import android.database.sqlite.SQLiteDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import timber.log.Timber
 
 /**
@@ -134,12 +133,12 @@ class DB(
         database.execSQL(sql, `object`)
     }
 
-    @KotlinCleanup("""Use Kotlin string. Change split so that there is no empty string after last ";".""")
     fun executeScript(sql: String) {
-        val queries = java.lang.String(sql).split(";")
-        for (query in queries) {
-            database.execSQL(query)
-        }
+        sql
+            .split(";")
+            .map { it.trim() }
+            .filter { it.isNotEmpty() }
+            .forEach { database.execSQL(it) }
     }
 
     fun update(

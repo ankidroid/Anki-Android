@@ -110,7 +110,6 @@ import timber.log.Timber
 
 @Suppress("LeakingThis")
 // The class is only 'open' due to testing
-@KotlinCleanup("scan through this class and add attributes - in process")
 open class CardBrowser :
     NavigationDrawerActivity(),
     DeckDropDownAdapter.SubtitleProvider,

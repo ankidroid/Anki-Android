@@ -64,7 +64,6 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.android.input.ShortcutGroup
 import com.ichi2.anki.android.input.shortcut
 import com.ichi2.anki.common.annotations.NeedsTest
-import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.databinding.CardTemplateEditorBinding
 import com.ichi2.anki.databinding.CardTemplateEditorItemBinding
 import com.ichi2.anki.databinding.CardTemplateEditorMainBinding
@@ -112,7 +111,6 @@ import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 import timber.log.Timber
-import java.util.regex.Pattern
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.time.Duration.Companion.seconds
@@ -122,7 +120,6 @@ private typealias BackendCardTemplate = com.ichi2.anki.libanki.CardTemplate
 /**
  * Allows the user to view the template for the current note type
  */
-@KotlinCleanup("lateinit wherever possible")
 open class CardTemplateEditor :
     AnkiActivity(R.layout.card_template_editor),
     DeckSelectionListener {
@@ -1425,16 +1422,16 @@ open class CardTemplateEditor :
          * Flip the question and answer side of the template
          * @param template template to flip
          */
-        @KotlinCleanup("Use Kotlin's Regex methods")
         private fun flipQA(template: BackendCardTemplate) {
             val qfmt = template.qfmt
             val afmt = template.afmt
-            val m = Pattern.compile("(?s)(.+)<hr id=answer>(.+)").matcher(afmt)
+            val regex = Regex("(?s)(.+)<hr id=answer>(.+)")
+            val matchResult = regex.find(afmt)
             template.qfmt =
-                if (!m.find()) {
+                if (matchResult == null) {
                     afmt.replace("{{FrontSide}}", "")
                 } else {
-                    m.group(2)!!.trim()
+                    matchResult.groupValues[2].trim()
                 }
             template.afmt = "{{FrontSide}}\n\n<hr id=answer>\n\n$qfmt"
         }

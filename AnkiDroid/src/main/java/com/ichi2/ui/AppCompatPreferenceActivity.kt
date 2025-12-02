@@ -43,7 +43,6 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.R
-import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.Deck
 import com.ichi2.anki.receiver.SdCardReceiver
@@ -67,14 +66,10 @@ import java.util.LinkedList
  * This technique can be used with an [android.app.Activity] class, not just
  * [android.preference.PreferenceActivity].
  */
-@KotlinCleanup("replace _delegate with `field`")
 abstract class AppCompatPreferenceActivity<PreferenceHack : AppCompatPreferenceActivity<PreferenceHack>.AbstractPreferenceHack> :
     PreferenceActivity(),
     CoroutineScope by MainScope(),
     SharedPreferences.OnSharedPreferenceChangeListener {
-    @Suppress("ktlint:standard:backing-property-naming")
-    private var _delegate: AppCompatDelegate? = null
-
     fun isColInitialized() = ::col.isInitialized
 
     protected var prefChanged = false
@@ -89,7 +84,6 @@ abstract class AppCompatPreferenceActivity<PreferenceHack : AppCompatPreferenceA
         val summaries: MutableMap<String, String?> = HashMap()
         protected val listeners: MutableList<SharedPreferences.OnSharedPreferenceChangeListener> = LinkedList()
 
-        @KotlinCleanup("scope function")
         abstract fun cacheValues()
 
         abstract inner class Editor : SharedPreferences.Editor {
@@ -159,11 +153,6 @@ abstract class AppCompatPreferenceActivity<PreferenceHack : AppCompatPreferenceA
                 // TODO Auto-generated method stub
                 return null
             }
-
-            @Suppress("unused")
-            @KotlinCleanup("maybe remove this")
-            val deckPreferenceHack: AbstractPreferenceHack
-                get() = this@AbstractPreferenceHack
         }
 
         override fun contains(key: String): Boolean = values.containsKey(key)
@@ -324,13 +313,9 @@ abstract class AppCompatPreferenceActivity<PreferenceHack : AppCompatPreferenceA
         updateSummaries()
     }
 
-    private val delegate: AppCompatDelegate
-        get() {
-            if (_delegate == null) {
-                _delegate = AppCompatDelegate.create(this, null)
-            }
-            return _delegate!! // safe as mDelegate is only initialized here, before being returned
-        }
+    private val delegate: AppCompatDelegate by lazy {
+        AppCompatDelegate.create(this, null)
+    }
 
     /**
      * Call exactly once, during creation

@@ -184,7 +184,6 @@ class CheckBoxTriStates : AppCompatCheckBox {
         setButtonDrawable(btnDrawable)
     }
 
-    @KotlinCleanup("https://stackoverflow.com/a/69476454")
     private class SavedState : BaseSavedState {
         lateinit var state: State
         var cycleCheckedToIndeterminate = false

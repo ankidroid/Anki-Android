@@ -15,7 +15,6 @@
  ****************************************************************************************/
 package com.ichi2.utils
 
-import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import java.util.HashMap
 import java.util.HashSet
 
@@ -28,8 +27,7 @@ object HashUtil {
 
     fun <T> hashSetInit(size: Int): HashSet<T> = HashSet(capacity(size))
 
-    @KotlinCleanup("return mutableMap")
-    fun <T, U> hashMapInit(size: Int): HashMap<T, U> = HashMap(capacity(size))
+    fun <T, U> hashMapInit(size: Int): MutableMap<T, U> = HashMap(capacity(size))
 }
 
 /** Provides a hashcode given a series of ints */

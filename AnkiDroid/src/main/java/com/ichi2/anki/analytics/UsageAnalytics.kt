@@ -257,15 +257,9 @@ object UsageAnalytics {
         sendAnalyticsException(getCause(t).toString(), fatal)
     }
 
-    @KotlinCleanup("convert to sequence")
-    fun getCause(t: Throwable): Throwable {
-        var cause: Throwable?
-        var result = t
-        while (null != result.cause.also { cause = it } && result != cause) {
-            result = cause!!
-        }
-        return result
-    }
+    fun getCause(t: Throwable): Throwable =
+        generateSequence(t) { it.cause?.takeIf { cause -> cause != it } }
+            .last()
 
     /**
      * Send an exception event out for aggregation/analysis

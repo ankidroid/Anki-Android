@@ -98,7 +98,6 @@ import com.ichi2.anki.android.input.ShortcutGroup
 import com.ichi2.anki.android.input.shortcut
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.time.TimeManager
-import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.contextmenu.DeckPickerMenuContentProvider
 import com.ichi2.anki.contextmenu.MouseContextMenuHandler
 import com.ichi2.anki.databinding.DeckPickerBinding
@@ -235,7 +234,6 @@ import java.io.File
  * * A Floating Action Button [floatingActionMenu] allowing the user to quickly add notes/cards.
  * * A custom image as a background can be added: [applyDeckPickerBackground]
  */
-@KotlinCleanup("lots to do")
 @NeedsTest("If the collection has been created, the app intro is not displayed")
 @NeedsTest("If the user selects 'Sync Profile' in the app intro, a sync starts immediately")
 open class DeckPicker :

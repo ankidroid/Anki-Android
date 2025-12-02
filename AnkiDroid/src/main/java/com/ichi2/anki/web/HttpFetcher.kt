@@ -19,7 +19,6 @@
  ****************************************************************************************/
 
 package com.ichi2.anki.web
-import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.utils.VersionUtils.pkgVersionName
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -103,13 +102,7 @@ object HttpFetcher {
                         ),
                     )
 
-                val stringBuilder = StringBuilder()
-                var line: String?
-                @KotlinCleanup("it's strange")
-                while (reader.readLine().also { line = it } != null) {
-                    stringBuilder.append(line)
-                }
-                stringBuilder.toString()
+                reader.readText()
             }
         } catch (e: Exception) {
             Timber.d(e, "Failed with an exception")

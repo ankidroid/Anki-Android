@@ -22,7 +22,6 @@ import android.view.View
 import com.ichi2.anki.FieldEditLine
 import com.ichi2.anki.NoteEditorFragment
 import com.ichi2.anki.R
-import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.libanki.Field
 import com.ichi2.anki.libanki.NotetypeJson
 import com.ichi2.anki.libanki.Notetypes
@@ -149,7 +148,6 @@ class FieldState private constructor(
 
         fun fromEditor(editor: NoteEditorFragment): FieldState = FieldState(editor)
 
-        @KotlinCleanup("speed - no need for arrayOfNulls")
         private fun fromFieldMap(
             context: Context,
             oldFields: Array<Array<String>>,
@@ -157,7 +155,7 @@ class FieldState private constructor(
             modelChangeFieldMap: Map<Int, Int>,
         ): Array<Array<String>> {
             // Build array of label/values to provide to field EditText views
-            val fields = Array(fMapNew.size) { arrayOfNulls<String>(2) }
+            val fields = Array(fMapNew.size) { arrayOf("", "") }
             for (fname in fMapNew.keys) {
                 val fieldPair = fMapNew[fname] ?: continue
                 // Field index of new note type
@@ -182,7 +180,7 @@ class FieldState private constructor(
                     fields[i][1] = ""
                 }
             }
-            return fields.map { it.requireNoNulls() }.toTypedArray()
+            return fields
         }
     }
 }
