@@ -379,7 +379,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
                             withCol {
                                 val currentDeckname = decks.name(dialogDeckId)
                                 val search = SearchNode.newBuilder().setDeck(currentDeckname).build()
-                                val query = buildSearchString(search)
+                                val query = buildSearchString(listOf(search))
                                 findNotes(query)
                             }
                         if (isAdded) {
