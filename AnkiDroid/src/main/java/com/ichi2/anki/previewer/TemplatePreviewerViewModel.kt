@@ -79,8 +79,8 @@ class TemplatePreviewerViewModel(
                         Note.fromNotetypeId(this@withCol, arguments.notetype.id)
                     }
                 }.apply {
-                    fields = arguments.fields
-                    tags = arguments.tags
+                    fields = arguments.fields.toMutableList()
+                    tags = arguments.tags.toMutableList()
                 }
             }
         currentCard =
@@ -251,8 +251,8 @@ class TemplatePreviewerViewModel(
 @Parcelize
 data class TemplatePreviewerArguments(
     private val notetypeFile: NotetypeFile,
-    val fields: MutableList<String>,
-    val tags: MutableList<String>,
+    val fields: List<String>,
+    val tags: List<String>,
     val id: NoteId = 0,
     val ord: Int = 0,
     val fillEmpty: Boolean = false,
