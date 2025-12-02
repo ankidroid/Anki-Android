@@ -155,6 +155,9 @@ fun View.isRtl() = isRtl(resources)
 
 fun isRtl(res: Resources): Boolean = res.configuration.layoutDirection == View.LAYOUT_DIRECTION_RTL
 
+/**
+ * Executes the provided action only when this view is currently visible.
+ */
 fun <T : View> T.ifVisible(block: (T) -> Unit) {
     if (isVisible) {
         block(this)
