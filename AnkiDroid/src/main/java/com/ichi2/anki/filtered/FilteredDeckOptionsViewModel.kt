@@ -25,13 +25,17 @@ import anki.decks.DeckKt.FilteredKt.searchTerm
 import anki.decks.DeckKt.filtered
 import anki.decks.FilteredDeckForUpdate
 import anki.decks.filteredDeckForUpdate
+import anki.search.SearchNode
+import anki.search.searchNode
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.exception.InvalidSearchException
 import com.ichi2.anki.filtered.FilteredDeckOptionsFragment.Companion.ARG_DECK_ID
 import com.ichi2.anki.filtered.FilteredDeckOptionsFragment.Companion.ARG_SEARCH
 import com.ichi2.anki.filtered.FilteredDeckOptionsFragment.Companion.ARG_SEARCH_2
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.DeckId
+import com.ichi2.anki.libanki.SearchJoiner
 import com.ichi2.anki.observability.undoableOp
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -181,6 +185,53 @@ class FilteredDeckOptionsViewModel(
         if (currentState().allowEmpty == isEnabled) return
         updateCurrentState { copy(allowEmpty = isEnabled) }
     }
+
+    /*
+     * Open the browser to show cards that match the typed-in filters but cannot be included  due
+     * to internal limitations.
+     *
+     * See https://github.com/ankitects/anki/blob/5614d20bedcc4dd268136d389ad796b404a69d2c/qt/aqt/filtered_deck.py#L209-L226
+     */
+    fun onShowExcludedCards() {
+        Timber.i("Building unmovable cards search query to show in browser")
+        viewModelScope.launch {
+            val manualFilters = mutableListOf(currentFilterState(FilterIndex.First)?.search ?: return@launch)
+            if (currentState().isSecondFilterEnabled && currentFilterState(FilterIndex.Second) != null) {
+                manualFilters.add(currentFilterState(FilterIndex.Second)?.search ?: return@launch)
+            }
+            val implicitFilters =
+                listOf(
+                    searchNode { cardState = SearchNode.CardState.CARD_STATE_SUSPENDED },
+                    searchNode { cardState = SearchNode.CardState.CARD_STATE_BURIED },
+                    withCol { filteredSearchNode() },
+                )
+            val manualFilter = withCol { groupSearches(manualFilters, SearchJoiner.OR) }
+            val implicitFilter = withCol { groupSearches(implicitFilters, SearchJoiner.OR) }
+            try {
+                val browserSearch = withCol { buildSearchString(listOf(manualFilter, implicitFilter)) }
+                updateCurrentState { copy(browserQuery = browserSearch) }
+            } catch (ex: Exception) {
+                updateCurrentState { copy(throwable = ex) }
+            }
+        }
+    }
+
+    /**
+     * Return a search node that matches cards in filtered decks, if applicable excluding those in
+     * the deck being rebuilt.
+     */
+    @NeedsTest("Ensure this method produces the expected filter")
+    private fun Collection.filteredSearchNode(): SearchNode =
+        if (currentState().id != null) {
+            groupSearches(
+                listOf(
+                    searchNode { deck = "filtered" },
+                    searchNode { negated = searchNode { deck = currentState().name } },
+                ),
+            )
+        } else {
+            searchNode { deck = "filtered" }
+        }
 
     fun build() {
         Timber.i("Building/Rebuilding filtered deck")

@@ -73,11 +73,12 @@
         android:layout_height="0dp"
         android:layout_marginVertical="8dp"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/btn_show_excluded_cards"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
         android:clipToPadding="false"
+        android:paddingBottom="48dp"
         tools:visibility="visible">
 
         <LinearLayout
@@ -345,4 +346,19 @@
                 />
         </LinearLayout>
     </ScrollView>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_show_excluded_cards"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/Widget.Material3.Button.TextButton"
+        tools:text="Show excluded cards"
+        android:layout_gravity="center_horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/scroll_view"
+        app:flow_verticalBias="1.0"
+        app:layout_goneMarginBottom="8dp"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>

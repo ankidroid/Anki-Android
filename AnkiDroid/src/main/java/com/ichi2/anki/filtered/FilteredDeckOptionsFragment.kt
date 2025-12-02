@@ -248,6 +248,7 @@ class FilteredDeckOptionsFragment : Fragment(R.layout.fragment_filtered_deck_opt
             it.isEnabled = false // try to avoid/limit multiple clicks
             viewModel.build()
         }
+        binding.btnShowExcludedCards.setOnClickListener { viewModel.onShowExcludedCards() }
     }
 
     /** Registers a [doOnTextChanged] to listen for non-null text changes */
@@ -279,6 +280,7 @@ class FilteredDeckOptionsFragment : Fragment(R.layout.fragment_filtered_deck_opt
         binding.secondFilterLimitInputLayout.hint = TR.decksLimitTo()
         binding.secondFilterCardsInputLayout.hint = TR.decksCardsSelectedBy()
         // buttons
+        binding.btnShowExcludedCards.text = TR.decksUnmovableCards()
         binding.checkBoxReschedule.text = TR.decksRescheduleCardsBasedOnMyAnswers()
         binding.checkBoxAllowEmpty.text = TR.decksCreateEvenIfEmpty()
         // reschedule options
