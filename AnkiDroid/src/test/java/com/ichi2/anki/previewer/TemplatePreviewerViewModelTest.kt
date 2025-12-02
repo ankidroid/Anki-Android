@@ -42,14 +42,14 @@ class TemplatePreviewerViewModelTest : JvmTest() {
 
     @Test
     fun `getCurrentTabIndex returns the correct tab if the first cloze isn't 1 and ord isn't 0`() =
-        runClozeTest(ord = 6, fields = mutableListOf("{{c7::foo}} {{c4::bar}} {{c9::ha}}")) {
+        runClozeTest(ord = 6, fields = listOf("{{c7::foo}} {{c4::bar}} {{c9::ha}}")) {
             val expectedTab = 1 // 0 will be c4 (ord 3), 1: c7 (ord 6), 2: c9 (ord 8)
             assertThat(getCurrentTabIndex(), equalTo(expectedTab))
         }
 
     @Test
     fun `correct cloze ord is shown for tab`() =
-        runClozeTest(ord = 8, fields = mutableListOf("{{c7::foo}} {{c4::bar}} {{c9::ha}}")) {
+        runClozeTest(ord = 8, fields = listOf("{{c7::foo}} {{c4::bar}} {{c9::ha}}")) {
             onTabSelected(0) // 0 will be c4 (ord 3), 1: c7 (ord 6), 2: c9 (ord 8)
             assertThat(ordFlow.value, equalTo(3))
         }
@@ -58,7 +58,7 @@ class TemplatePreviewerViewModelTest : JvmTest() {
     fun `empty front field detected correctly for tab badge`() =
         runOptionalReversedTest(
             fields =
-                mutableListOf(
+                listOf(
                     "we have two normal fields",
                     "and purposefully leave the third blank",
                     "",
@@ -71,7 +71,7 @@ class TemplatePreviewerViewModelTest : JvmTest() {
 
     @Test
     fun `card ords are changed`() {
-        runClozeTest(tempDirectory = tempDirectory, fields = mutableListOf("{{c1::one}} {{c2::bar}}")) {
+        runClozeTest(tempDirectory = tempDirectory, fields = listOf("{{c1::one}} {{c2::bar}}")) {
             onPageFinished(false)
             val ord1 = currentCard.await().ord
             onTabSelected(1)
@@ -82,21 +82,21 @@ class TemplatePreviewerViewModelTest : JvmTest() {
 
     private fun runClozeTest(
         ord: Int = 0,
-        fields: MutableList<String>? = null,
+        fields: List<String>? = null,
         block: suspend TemplatePreviewerViewModel.() -> Unit,
     ) = runClozeTest(ord, tempDirectory, fields, block)
 
     private fun runOptionalReversedTest(
         ord: Int = 0,
-        fields: MutableList<String>? = null,
+        fields: List<String>? = null,
         block: suspend TemplatePreviewerViewModel.() -> Unit,
     ) = runTest {
         val notetype = col.notetypes.byName("Basic (optional reversed card)")!!
         val arguments =
             TemplatePreviewerArguments(
                 notetypeFile = NotetypeFile(tempDirectory.root, notetype),
-                fields = fields ?: mutableListOf("question text", "answer text", "y"),
-                tags = mutableListOf(),
+                fields = fields ?: listOf("question text", "answer text", "y"),
+                tags = emptyList(),
                 ord = ord,
             )
         val viewModel = createViewModel(arguments)
@@ -106,15 +106,15 @@ class TemplatePreviewerViewModelTest : JvmTest() {
     private fun runClozeTest(
         ord: Int = 0,
         tempDirectory: TemporaryFolder,
-        fields: MutableList<String>? = null,
+        fields: List<String>? = null,
         block: suspend TemplatePreviewerViewModel.() -> Unit,
     ) = runTest {
         val notetype = col.notetypes.byName("Cloze")!!
         val arguments =
             TemplatePreviewerArguments(
                 notetypeFile = NotetypeFile(tempDirectory.root, notetype),
-                fields = fields ?: mutableListOf("{{c1::foo}} {{c2::bar}}", "anki"),
-                tags = mutableListOf(),
+                fields = fields ?: listOf("{{c1::foo}} {{c2::bar}}", "anki"),
+                tags = emptyList(),
                 ord = ord,
             )
         val viewModel = createViewModel(arguments)
