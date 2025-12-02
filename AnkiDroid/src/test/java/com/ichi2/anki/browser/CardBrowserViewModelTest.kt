@@ -59,7 +59,9 @@ import com.ichi2.anki.browser.RepositionCardsRequest.ContainsNonNewCardsError
 import com.ichi2.anki.browser.RepositionCardsRequest.RepositionData
 import com.ichi2.anki.export.ExportDialogFragment
 import com.ichi2.anki.flagCardForNote
+import com.ichi2.anki.libanki.Card
 import com.ichi2.anki.libanki.CardId
+import com.ichi2.anki.libanki.CardType
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.Note
 import com.ichi2.anki.libanki.QueueType
@@ -86,6 +88,7 @@ import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.contains
 import org.hamcrest.Matchers.containsInAnyOrder
 import org.hamcrest.Matchers.equalTo
+import org.hamcrest.Matchers.greaterThanOrEqualTo
 import org.hamcrest.Matchers.hasSize
 import org.hamcrest.Matchers.lessThan
 import org.hamcrest.Matchers.not
@@ -153,6 +156,95 @@ class CardBrowserViewModelTest : JvmTest() {
 
             val hasSomeDecksUnchanged = cards.any { row -> col.getCard(row.toCardId(cardsOrNotes)).did != newDeck }
             assertThat("some decks are unchanged", hasSomeDecksUnchanged)
+        }
+
+    /** Issue 18307: Reposition should work in notes mode and affect all cards */
+    @Test
+    fun `reposition in notes mode affects all cards 18307`() =
+        runViewModelNotesTest(notes = 3) {
+            // Select first 2 notes (should be 4 cards total)
+            selectRowsWithPositions(0, 1)
+
+            val allCardIds = queryAllSelectedCardIds()
+            assertThat("Should have 4 cards (2 notes × 2 cards)", allCardIds.size, equalTo(4))
+
+            // Reposition to position 100
+            val count = repositionSelectedRows(position = 100, step = 1, shuffle = false, shift = false)
+            assertThat("Should reposition 4 cards", count, equalTo(4))
+
+            // Verify all 4 cards are repositioned (due >= 100)
+            for (cardId in allCardIds) {
+                val card = col.getCard(cardId)
+                assertThat(
+                    "Card $cardId should be repositioned to position >= 100",
+                    card.due,
+                    greaterThanOrEqualTo(100),
+                )
+            }
+
+            // Verify the 3rd note's cards (2 cards) are NOT repositioned
+            val unselectedRow = cards[2]
+            val unselectedCardIds =
+                BrowserRowCollection(cardsOrNotes, mutableListOf(unselectedRow))
+                    .queryCardIds()
+            for (cardId in unselectedCardIds) {
+                val card = col.getCard(cardId)
+                assertThat(
+                    "Unselected card $cardId should not be repositioned",
+                    card.due,
+                    not(greaterThanOrEqualTo(100)),
+                )
+            }
+        }
+
+    /** Issue 18307: Reset progress should work in notes mode and affect all cards */
+    @Test
+    fun `reset progress in notes mode affects all cards 18307`() =
+        runViewModelNotesTest(notes = 3) {
+            // Give all cards some review history
+            val allCards = col.findCards("deck:current")
+            for (cardId in allCards) {
+                moveToReviewQueue(col.getCard(cardId))
+            }
+
+            setCardsOrNotes(CardsOrNotes.NOTES)
+            waitForSearchResults()
+
+            selectRowsWithPositions(0, 1)
+
+            val selectedCardIds = queryAllSelectedCardIds()
+            assertThat("Should have 4 cards", selectedCardIds.size, equalTo(4))
+
+            // Reset progress
+            // TODO: This test directly calls forgetCards, but the actual logic includes
+            // restorePosition and resetCounts parameters handled in ForgetCardsDialog (Activity-level)
+            col.sched.forgetCards(ids = selectedCardIds)
+
+            // Verify all 4 cards are reset to NEW
+            for (cardId in selectedCardIds) {
+                val card = col.getCard(cardId)
+                assertThat("Card $cardId should be new", card.type, equalTo(CardType.New))
+                assertThat("Card $cardId queue should be new", card.queue, equalTo(New))
+            }
+
+            // Verify unselected note's cards (2 cards) still have review history
+            val unselectedRow = cards[2]
+            val unselectedCardIds =
+                BrowserRowCollection(cardsOrNotes, mutableListOf(unselectedRow))
+                    .queryCardIds()
+            for (cardId in unselectedCardIds) {
+                val card = col.getCard(cardId)
+                assertThat(
+                    "Unselected card $cardId should still be review type",
+                    card.type,
+                    equalTo(CardType.Rev),
+                )
+                assertThat(
+                    "Unselected card $cardId should still have reps",
+                    card.reps,
+                    equalTo(5),
+                )
+            }
         }
 
     /** 7420  */
@@ -1385,3 +1477,17 @@ fun CardOrNoteId.toRowSelection() = RowSelection(rowId = this, topOffset = 0)
 
 private val SavedStateHandle.multiselectMode
     get() = get<ChangeMultiSelectMode>("multiselect")
+
+/**
+ * Helper function to move a card to the review queue with review history.
+ * Simulates a card that has been reviewed multiple times.
+ */
+private fun CardBrowserViewModelTest.moveToReviewQueue(card: Card) {
+    card.update {
+        queue = QueueType.Rev
+        type = CardType.Rev
+        reps = 5
+        lapses = 1
+        due = 50
+    }
+}
