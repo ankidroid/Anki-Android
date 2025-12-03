@@ -2393,8 +2393,6 @@ class NoteEditorFragment :
         note: Note?,
         changeType: FieldChangeType,
     ) {
-        requireView().findViewById<TextView>(R.id.CardEditorDeckText).isVisible = !currentNotetypeIsImageOcclusion()
-        requireView().findViewById<View>(R.id.note_deck_name).isVisible = !currentNotetypeIsImageOcclusion()
         editorNote =
             if (note == null || addNote) {
                 getColUnsafe.run {
