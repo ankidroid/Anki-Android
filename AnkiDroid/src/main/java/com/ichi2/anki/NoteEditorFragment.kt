@@ -1805,10 +1805,6 @@ class NoteEditorFragment :
         customViewIds.clear()
         imageOcclusionButtonsContainer?.isVisible = currentNotetypeIsImageOcclusion()
 
-        // Showing the bottom toolbar (for HTML format) is not needed for image occlusion notetypes
-        // as there are no fields for inputting text.
-        toolbar.isVisible = !currentNotetypeIsImageOcclusion()
-
         editFields = LinkedList()
 
         var previous: FieldEditLine? = null
