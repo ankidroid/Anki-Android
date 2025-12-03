@@ -2403,6 +2403,8 @@ class NoteEditorFragment :
         note: Note?,
         changeType: FieldChangeType,
     ) {
+        requireView().findViewById<TextView>(R.id.CardEditorDeckText).isVisible = !currentNotetypeIsImageOcclusion()
+        requireView().findViewById<View>(R.id.note_deck_name).isVisible = !currentNotetypeIsImageOcclusion()
         editorNote =
             if (note == null || addNote) {
                 getColUnsafe.run {
@@ -2423,12 +2425,6 @@ class NoteEditorFragment :
         updateToolbar()
         populateEditFields(changeType, false)
         updateFieldsFromStickyText()
-
-        // When adding a note, ImageOcclusion handles the deck selection
-        // as a user can reach this screen directly from an intent
-        val disableDeckEditing = addNote && currentNotetypeIsImageOcclusion()
-        requireView().findViewById<TextView>(R.id.CardEditorDeckText).isVisible = !disableDeckEditing
-        requireView().findViewById<View>(R.id.note_deck_name).isVisible = !disableDeckEditing
     }
 
     private fun addClozeButton(
