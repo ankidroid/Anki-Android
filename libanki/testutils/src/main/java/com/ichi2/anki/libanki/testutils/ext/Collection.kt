@@ -68,4 +68,4 @@ fun Collection.createBasicTypingNoteType(name: String): NotetypeJson {
  * the configuration (curModel)
  * @return The new note
  */
-fun Collection.newNote(forDeck: Boolean = true): Note = newNote(notetypes.current(forDeck))
+fun Collection.newNote(forDeck: Boolean = true): Note = newNote(notetypes.get(defaultsForAdding().notetypeId)!!)

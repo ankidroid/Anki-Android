@@ -102,12 +102,13 @@ class MediaTest : InstrumentedTest() {
         val file = createNonEmptyFile("fake.png")
         testCol.media.addFile(file)
         // add a note which references it
-        var f = testCol.newNote(testCol.notetypes.current())
+        var defaults = testCol.defaultsForAdding()
+        var f = testCol.newNote(testCol.notetypes.get(defaults.notetypeId)!!)
         f.setField(0, "one")
         f.setField(1, "<img src='fake.png'>")
         testCol.addNote(f)
         // and one which references a non-existent file
-        f = testCol.newNote(testCol.notetypes.current())
+        f = testCol.newNote(testCol.notetypes.get(defaults.notetypeId)!!)
         f.setField(0, "one")
         f.setField(1, "<img src='fake2.png'>")
         testCol.addNote(f)

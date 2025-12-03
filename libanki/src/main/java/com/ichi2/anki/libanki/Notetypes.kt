@@ -145,6 +145,10 @@ class Notetypes(
      */
 
     /** Get current model.*/
+    @Deprecated(
+        message = "Use defaultsForAdding() instead, which provides both deck and notetype context",
+        replaceWith = ReplaceWith("defaultsForAdding()"),
+    )
     @RustCleanup("Should use defaultsForAdding() instead")
     fun current(forDeck: Boolean = true): NotetypeJson {
         var noteType = get(col.decks.current().getLongOrNull("mid"))

@@ -455,7 +455,8 @@ class ReviewerTest : RobolectricTest() {
     @Throws(ConfirmModSchemaException::class)
     @KotlinCleanup("use a assertNotNull which returns rather than !!")
     private fun addNoteWithThreeCards() {
-        var notetype = col.notetypes.copy(col.notetypes.current())
+        val defaults = col.defaultsForAdding()
+        var notetype = col.notetypes.copy(col.notetypes.get(defaults.notetypeId)!!)
         notetype.name = "Three"
         col.notetypes.add(notetype)
         notetype = col.notetypes.byName("Three")!!
