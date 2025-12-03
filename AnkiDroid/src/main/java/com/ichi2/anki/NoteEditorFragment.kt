@@ -1798,12 +1798,22 @@ class NoteEditorFragment :
         editNoteTypeMode: Boolean,
     ) {
         val editLines = fieldState.loadFieldEditLines(type)
-        // showing the fields is not needed for image occlusion notetypes as they are handled by the
-        // backend page
-        fieldsLayoutContainer?.isVisible = !currentNotetypeIsImageOcclusion()
         fieldsLayoutContainer!!.removeAllViews()
         customViewIds.clear()
         imageOcclusionButtonsContainer?.isVisible = currentNotetypeIsImageOcclusion()
+
+        val indicesToHide = mutableListOf<Int>()
+        if (currentNotetypeIsImageOcclusion()) {
+            val occlusionTag = "0"
+            val imageTag = "1"
+            val fields = currentlySelectedNotetype!!.fields
+            for ((i, field) in fields.withIndex()) {
+                val tag = field.imageOcclusionTag
+                if (tag == occlusionTag || tag == imageTag) {
+                    indicesToHide.add(i)
+                }
+            }
+        }
 
         editFields = LinkedList()
 
@@ -1892,6 +1902,7 @@ class NoteEditorFragment :
             toggleStickyButton.contentDescription =
                 getString(R.string.note_editor_toggle_sticky, editLineView.name)
 
+            editLineView.isVisible = i !in indicesToHide
             fieldsLayoutContainer!!.addView(editLineView)
         }
     }
