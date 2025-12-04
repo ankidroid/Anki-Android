@@ -26,7 +26,7 @@ import java.net.BindException
 import java.net.ServerSocket
 
 class StudyScreenRepository(
-    prefs: PrefsRepository = Prefs,
+    private val prefs: PrefsRepository = Prefs,
 ) {
     val isMarkShownInToolbar: Boolean
     val isFlagShownInToolbar: Boolean
@@ -42,23 +42,21 @@ class StudyScreenRepository(
         isFlagShownInToolbar = isToolbarShown && ViewerAction.FLAG_MENU in actions
     }
 
-    companion object {
-        fun getServerPort(): Int {
-            if (!Prefs.useFixedPortInReviewer) return 0
-            return try {
-                ServerSocket(Prefs.reviewerPort)
-                    .use {
-                        it.reuseAddress = true
-                        it.localPort
-                    }.also {
-                        if (Prefs.reviewerPort == 0) {
-                            Prefs.reviewerPort = it
-                        }
+    fun getServerPort(): Int {
+        if (!prefs.useFixedPortInReviewer) return 0
+        return try {
+            ServerSocket(prefs.reviewerPort)
+                .use {
+                    it.reuseAddress = true
+                    it.localPort
+                }.also {
+                    if (prefs.reviewerPort == 0) {
+                        prefs.reviewerPort = it
                     }
-            } catch (_: BindException) {
-                Timber.w("Fixed port %d under use. Using dynamic port", Prefs.reviewerPort)
-                0
-            }
+                }
+        } catch (_: BindException) {
+            Timber.w("Fixed port %d under use. Using dynamic port", prefs.reviewerPort)
+            0
         }
     }
 }
