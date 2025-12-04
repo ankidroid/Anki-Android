@@ -26,11 +26,13 @@ import com.ichi2.anki.utils.Destination
 /**
  * Opens the [CardBrowser]
  */
-class BrowserDestination(
-    val deckId: DeckId,
-) : Destination {
-    override fun toIntent(context: Context): Intent {
-        AnkiDroidApp.instance.sharedPrefsLastDeckIdRepository.lastDeckId = deckId
-        return Intent(context, CardBrowser::class.java)
+sealed interface BrowserDestination : Destination {
+    data class ToDeck(
+        val deckId: DeckId,
+    ) : BrowserDestination {
+        override fun toIntent(context: Context): Intent {
+            AnkiDroidApp.instance.sharedPrefsLastDeckIdRepository.lastDeckId = deckId
+            return Intent(context, CardBrowser::class.java)
+        }
     }
 }
