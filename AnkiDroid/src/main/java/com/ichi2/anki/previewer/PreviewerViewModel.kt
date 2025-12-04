@@ -50,7 +50,7 @@ class PreviewerViewModel(
 ) : CardViewerViewModel(),
     ChangeManager.Subscriber {
     val currentIndex = MutableStateFlow<Int>(savedStateHandle.require(PreviewerFragment.CURRENT_INDEX_ARG))
-    val backSideOnly = MutableStateFlow(false)
+    val backSideOnly = savedStateHandle.getMutableStateFlow(KEY_BACKSIDE_ONLY, false)
     val isMarked = MutableStateFlow(false)
     val flag: MutableStateFlow<Flag> = MutableStateFlow(Flag.NONE)
 
@@ -275,6 +275,7 @@ class PreviewerViewModel(
     }
 
     companion object {
+        private const val KEY_BACKSIDE_ONLY = "backsideOnly"
         private const val SHOWING_ANSWER_KEY = "showingAnswer"
     }
 }
