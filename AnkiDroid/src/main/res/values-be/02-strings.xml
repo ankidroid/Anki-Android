@@ -172,7 +172,7 @@
     <string name="import_error_not_apkg_extension">Назва файла \"%s\" не мае пашырэння .apkg або .colpkg</string>
     <string name="import_error_load_imported_database">Замена базы даных Anki (.anki2) пакуль не падтрымліваецца. Звярніцеся да даведніка для інструкцыі па замене.</string>
     <string name="import_error_content_provider">The selected file couldn’t be imported automatically by AnkiDroid. Please see the user manual for how to manually import Anki files: \n%s</string>
-    <string name="import_error_copy_to_cache_title">Failed to cache file</string>
+    <string name="import_error_copy_to_cache_title">Не атрымалася кэшыраваць файл</string>
     <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">This is often caused by a bug in the app you used to select the file. Please try the following fixes:\n\n%s</string>
     <string name="import_interrupted">Імпарт перарваны</string>
     <string name="export_ready_title">Экспартаванне выканана</string>

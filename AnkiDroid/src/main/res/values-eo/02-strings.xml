@@ -166,7 +166,7 @@
     <string name="import_error_not_apkg_extension">Dosiernomo \"%s\" ne finiĝas per .apkg aŭ .colpkg</string>
     <string name="import_error_load_imported_database">Anstataŭigoj de Anki-datumbazo (.anki2) ankoraŭ ne estas subtenataj. Legu la manlibron por instrukciojn pri anstataŭigo.</string>
     <string name="import_error_content_provider">Ne povas aŭtomate enporti elektitan dosieron al AnkiDroid. Bonvolu legi la manlibron de uzanto por sciiĝi pri kiel permane enporti Anki-dosierojn:\n%s</string>
-    <string name="import_error_copy_to_cache_title">Failed to cache file</string>
+    <string name="import_error_copy_to_cache_title">Malsukcesis kaŝmemori dosieron</string>
     <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">This is often caused by a bug in the app you used to select the file. Please try the following fixes:\n\n%s</string>
     <string name="import_interrupted">Enportado interrompita</string>
     <string name="export_ready_title">Elporto estas preta</string>

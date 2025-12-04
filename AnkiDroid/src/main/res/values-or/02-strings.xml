@@ -166,7 +166,7 @@
     <string name="import_error_not_apkg_extension">ଫାଇଲ୍‌ନାମ “%s” ପାଖରେ .apkg କିମ୍ବା .colpkg extension ନାହିଁ</string>
     <string name="import_error_load_imported_database">Anki ଡାଟାବେସ୍ (.anki2) ପ୍ରତିସ୍ଥାପନ ଗୁଡ଼ିକ ଏପର୍ଯ୍ୟନ୍ତ ସମର୍ଥିତ ନୁହେଁ। ପ୍ରତିସ୍ଥାପନ ନିର୍ଦ୍ଦେଶାବଳୀ ପାଇଁ ଦୟାକରି ମାନୁଆଲ୍ ଦେଖନ୍ତୁ।</string>
     <string name="import_error_content_provider">ବଚ୍ଛିତ ଫାଇଲ୍‌ଟି AnkiDroid ଦ୍ୱାରା ସ୍ୱଚାଳିତ ଭାବେ ଆମଦାନୀ ହୋଇପାରିଲା ନାହିଁ। Anki ଫାଇଲଗୁଡ଼ିକୁ କିପରି ହସ୍ତକୃତ ଭାବେ ଆମଦାନୀ କରିବେ ଜାଣିବା ପାଇଁ ଦୟାକରି ଉପଭୋକ୍ତା ମାନୁଆଲ୍ ଦେଖନ୍ତୁ: \n%s</string>
-    <string name="import_error_copy_to_cache_title">Failed to cache file</string>
+    <string name="import_error_copy_to_cache_title">ଫାଇଲ୍ ଦ୍ରୁତିକା କରି ସାଇତିବାରେ ବିଫଳ</string>
     <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">This is often caused by a bug in the app you used to select the file. Please try the following fixes:\n\n%s</string>
     <string name="import_interrupted">ଆମଦାନୀ ବାଧାପ୍ରାପ୍ତ: AnkiDroid ବନ୍ଦ ହୋଇଯାଇଥିଲା</string>
     <string name="export_ready_title">ରପ୍ତାନି ପ୍ରସ୍ତୁତ ହୋଇଅଛି</string>

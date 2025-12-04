@@ -166,7 +166,7 @@
     <string name="import_error_not_apkg_extension">“%s” fayl nomida .apkg yoki .colpkg kengaytmasi yoʻq</string>
     <string name="import_error_load_imported_database">Anki maʼlumotlar bazasini (.anki2) almashtirish hali qoʻllab-quvvatlanmaydi. Iltimos, almashtirish boʻyicha koʻrsatmalar uchun qoʻllanmaga murojaat qiling.</string>
     <string name="import_error_content_provider">Tanlangan faylni AnkiDroid tomonidan avtomatik import qilib boʻlmadi. Anki fayllarni qoʻlda import qilish uchun foydalanuvchi qoʻllanmasiga murojaat qiling: \n%s</string>
-    <string name="import_error_copy_to_cache_title">Failed to cache file</string>
+    <string name="import_error_copy_to_cache_title">Faylni keshlash amalga oshmadi</string>
     <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">This is often caused by a bug in the app you used to select the file. Please try the following fixes:\n\n%s</string>
     <string name="import_interrupted">Import uzuldi: AnkiDroid yopilgan</string>
     <string name="export_ready_title">Eksportga tayyor</string>
