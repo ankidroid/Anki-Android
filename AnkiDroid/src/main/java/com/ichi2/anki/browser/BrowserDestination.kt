@@ -20,6 +20,7 @@ import android.content.Context
 import android.content.Intent
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CardBrowser
+import com.ichi2.anki.libanki.CardId
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.utils.Destination
 
@@ -33,6 +34,26 @@ sealed interface BrowserDestination : Destination {
         override fun toIntent(context: Context): Intent {
             AnkiDroidApp.instance.sharedPrefsLastDeckIdRepository.lastDeckId = deckId
             return Intent(context, CardBrowser::class.java)
+        }
+    }
+
+    /**
+     * Opens the [CardBrowser] with the specified deck selected,
+     * and automatically scrolls to [cardId] if the card is present on the deck.
+     */
+    data class ToCard(
+        val deckId: DeckId,
+        val cardId: CardId,
+    ) : BrowserDestination {
+        override fun toIntent(context: Context): Intent {
+            AnkiDroidApp.instance.sharedPrefsLastDeckIdRepository.lastDeckId = deckId
+            return Intent(context, CardBrowser::class.java).apply {
+                putExtra(EXTRA_CARD_ID_KEY, cardId)
+            }
+        }
+
+        companion object {
+            const val EXTRA_CARD_ID_KEY = "cardId"
         }
     }
 }

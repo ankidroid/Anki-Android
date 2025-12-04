@@ -168,6 +168,11 @@ class CardBrowserViewModel(
     // card that was clicked (not marked)
     var currentCardId: CardId = 0
 
+    var cardIdToBeScrolledTo: CardId? = null
+        private set
+
+    val flowOfScrollRequest = MutableSharedFlow<RowSelection>()
+
     private val sortTypeFlow = MutableStateFlow(SortType.NO_SORTING)
     val order get() = sortTypeFlow.value
 
@@ -401,6 +406,9 @@ class CardBrowserViewModel(
             }
             is CardBrowserLaunchOptions.DeepLink -> {
                 flowOfSearchTerms.value = options.search
+            }
+            is CardBrowserLaunchOptions.ScrollToCard -> {
+                cardIdToBeScrolledTo = options.cardId
             }
             null -> {}
         }
@@ -1175,6 +1183,7 @@ class CardBrowserViewModel(
      * @see com.ichi2.anki.searchForRows
      */
     @NeedsTest("Invalid searches are handled. For instance: 'and'")
+    @NeedsTest("card id is scrolled")
     fun launchSearchForCards(cardOrNoteIdsToSelect: List<CardOrNoteId> = emptyList()) {
         if (!initCompleted) return
 
@@ -1204,6 +1213,20 @@ class CardBrowserViewModel(
                     flowOfSearchState.emit(SearchState.Completed)
                     selectUnvalidatedRowIds(cardOrNoteIdsToSelect)
                 }
+
+            viewModelScope.launch {
+                searchJob?.join()
+                cardIdToBeScrolledTo?.let { targetId ->
+                    val rowId =
+                        if (cardsOrNotes == CARDS) {
+                            CardOrNoteId(targetId)
+                        } else {
+                            val nid = withCol { getCard(targetId) }.nid
+                            CardOrNoteId(nid)
+                        }
+                    flowOfScrollRequest.emit(RowSelection(rowId, topOffset = 0))
+                }
+            }
         }
     }
 
