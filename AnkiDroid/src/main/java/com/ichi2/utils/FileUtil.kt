@@ -98,7 +98,7 @@ object FileUtil {
         // If we got a real file name, do a copy from it
         val inputStream: InputStream =
             try {
-                contentResolver.openInputStream(uri)!!
+                contentResolver.openInputStreamSafe(uri)!!
             } catch (e: Exception) {
                 Timber.w(e, "internalizeUri() unable to open input stream from content resolver for Uri %s", uri)
                 throw e
