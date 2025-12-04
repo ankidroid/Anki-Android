@@ -5,7 +5,6 @@ import com.android.tools.lint.detector.api.Detector
 import com.android.tools.lint.detector.api.Implementation
 import com.android.tools.lint.detector.api.Issue
 import com.android.tools.lint.detector.api.JavaContext
-import com.android.tools.lint.detector.api.LintFix
 import com.android.tools.lint.detector.api.Scope
 import com.android.tools.lint.detector.api.Severity
 import com.android.tools.lint.detector.api.SourceCodeScanner
@@ -23,7 +22,7 @@ class OpenInputStreamSafeDetector :
     SourceCodeScanner {
     companion object {
         private const val EXPLANATION = """
-            Use `openInputStreamSafe()` instead of `openInputStream()` to prevent \
+            Use openInputStreamSafe() instead of openInputStream() to prevent \
             path traversal vulnerabilities. The safe version normalizes paths and blocks \
             access to sensitive directories like /data.
         """
@@ -51,25 +50,12 @@ class OpenInputStreamSafeDetector :
         node: UCallExpression,
         method: PsiMethod,
     ) {
-        // Check if this is ContentResolver.openInputStream()
-        val evaluator = context.evaluator
-        if (!evaluator.isMemberInClass(method, "android.content.ContentResolver")) {
-            return
-        }
-
-        // Report the issue
+        // Only warn on ContentResolver.openInputStream()
+        if (!context.evaluator.isMemberInClass(method, "android.content.ContentResolver")) return
         context.report(
             issue = ISSUE,
             location = context.getNameLocation(node),
-            message = "Use `openInputStreamSafe()` instead of `openInputStream()` for security",
-            quickfixData =
-                LintFix
-                    .create()
-                    .replace()
-                    .text("openInputStream")
-                    .with("openInputStreamSafe")
-                    .autoFix()
-                    .build(),
+            message = "Use openInputStreamSafe() instead of openInputStream()",
         )
     }
 }
