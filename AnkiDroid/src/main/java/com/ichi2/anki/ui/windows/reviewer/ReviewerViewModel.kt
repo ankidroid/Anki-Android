@@ -291,7 +291,7 @@ class ReviewerViewModel(
 
     private suspend fun emitBrowseDestination() {
         val deckId = withCol { decks.getCurrentId() }
-        val destination = BrowserDestination(deckId)
+        val destination = BrowserDestination.ToDeck(deckId)
         Timber.i("Launching 'browse options' for deck %d", deckId)
         destinationFlow.emit(destination)
     }
