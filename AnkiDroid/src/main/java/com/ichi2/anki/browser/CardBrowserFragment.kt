@@ -465,6 +465,7 @@ class CardBrowserFragment :
         activityViewModel.flowOfToggleSelectionState.launchCollectionInLifecycleScope(::onToggleSelectionStateUpdated)
         viewModel.flowOfSearchForDecks.launchCollectionInLifecycleScope(::onSearchForDecks)
         activityViewModel.flowOfDeckSelection.launchCollectionInLifecycleScope(::onDeckChanged)
+        activityViewModel.flowOfScrollRequest.launchCollectionInLifecycleScope(::autoScrollTo)
     }
 
     private fun setupFragmentResultListeners() {
