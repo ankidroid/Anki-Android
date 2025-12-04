@@ -48,7 +48,7 @@ androidxRecyclerview = "1.4.0"
 # https://developer.android.com/jetpack/androidx/releases/sqlite
 androidxSqlite = "2.6.2"
 # https://developer.android.com/jetpack/androidx/releases/swiperefreshlayout
-androidxSwipeRefreshLayout = "1.1.0"
+androidxSwipeRefreshLayout = "1.2.0"
 # https://developer.android.com/jetpack/androidx/releases/test
 androidxTest = "1.7.0"
 # https://developer.android.com/jetpack/androidx/releases/test-uiautomator
