@@ -20,7 +20,7 @@ ktlint = '1.5.0'
 # https://developer.android.com/build/releases/past-releases
 androidGradlePlugin = "8.13.1"
 # https://developer.android.com/jetpack/androidx/releases/activity
-androidxActivity = "1.12.0"
+androidxActivity = "1.12.1"
 # https://developer.android.com/jetpack/androidx/releases/annotation
 androidxAnnotation = "1.9.1"
 # https://developer.android.com/jetpack/androidx/releases/appcompat
@@ -34,7 +34,7 @@ androidxCoreKtx = "1.17.0"
 # https://developer.android.com/jetpack/androidx/releases/draganddrop
 androidxDragAndDrop = "1.0.0"
 # https://developer.android.com/jetpack/androidx/releases/exifinterface
-androidxExifinterface = "1.4.1"
+androidxExifinterface = "1.4.2"
 # https://developer.android.com/jetpack/androidx/releases/fragment
 androidxFragmentKtx = "1.8.9"
 # https://developer.android.com/jetpack/androidx/releases/media
@@ -48,7 +48,7 @@ androidxRecyclerview = "1.4.0"
 # https://developer.android.com/jetpack/androidx/releases/sqlite
 androidxSqlite = "2.6.2"
 # https://developer.android.com/jetpack/androidx/releases/swiperefreshlayout
-androidxSwipeRefreshLayout = "1.1.0"
+androidxSwipeRefreshLayout = "1.2.0"
 # https://developer.android.com/jetpack/androidx/releases/test
 androidxTest = "1.7.0"
 # https://developer.android.com/jetpack/androidx/releases/test-uiautomator
