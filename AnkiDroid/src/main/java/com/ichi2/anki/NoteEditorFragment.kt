@@ -227,6 +227,8 @@ class NoteEditorFragment :
     private val getColUnsafe: Collection
         get() = CollectionManager.getColUnsafe()
 
+    private var optionsMenu: Menu? = null
+
     /**
      * Flag which forces the calling activity to rebuild it's definition of current card from scratch
      */
@@ -1431,6 +1433,7 @@ class NoteEditorFragment :
      * Configures the main toolbar with the appropriate menu items and their visibility based on the current state.
      */
     override fun onPrepareMenu(menu: Menu) {
+        optionsMenu = menu
         if (addNote) {
             menu.findItem(R.id.action_copy_note).isVisible = false
             val iconVisible = allowSaveAndPreview()
@@ -1461,12 +1464,17 @@ class NoteEditorFragment :
             menu.findItem(R.id.action_scroll_toolbar).isVisible = false
             menu.findItem(R.id.action_capitalize).isVisible = false
         } else {
-            menu.findItem(R.id.action_show_toolbar).isChecked =
-                !shouldHideToolbar()
+            val showToolbarItem = menu.findItem(R.id.action_show_toolbar)
+            showToolbarItem.isChecked = !shouldHideToolbar()
+
             menu.findItem(R.id.action_capitalize).isChecked =
                 sharedPrefs().getBoolean(PREF_NOTE_EDITOR_CAPITALIZE, true)
-            menu.findItem(R.id.action_scroll_toolbar).isChecked =
+
+            val scrollToolbarItem = menu.findItem(R.id.action_scroll_toolbar)
+            scrollToolbarItem.isChecked =
                 sharedPrefs().getBoolean(PREF_NOTE_EDITOR_SCROLL_TOOLBAR, true)
+            // Disable the "Scroll toolbar" option if this "Show toolbar" option is not checked
+            scrollToolbarItem.isEnabled = showToolbarItem.isChecked
         }
     }
 
@@ -1522,6 +1530,10 @@ class NoteEditorFragment :
                     putBoolean(PREF_NOTE_EDITOR_SHOW_TOOLBAR, item.isChecked)
                 }
                 updateToolbar()
+
+                // Disable the "Scroll toolbar" option if this "Show toolbar" option is not checked
+                val scrollToolbarItem = optionsMenu?.findItem(R.id.action_scroll_toolbar)
+                scrollToolbarItem?.isEnabled = item.isChecked
             }
             R.id.action_capitalize -> {
                 Timber.i("NoteEditor:: Capitalize button pressed. New State: %b", !item.isChecked)
