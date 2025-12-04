@@ -40,7 +40,7 @@ import kotlin.reflect.KProperty
 object Prefs : PrefsRepository(AnkiDroidApp.sharedPrefs(), AnkiDroidApp.appResources)
 
 open class PrefsRepository(
-    private val sharedPrefs: SharedPreferences,
+    val sharedPrefs: SharedPreferences,
     private val resources: Resources,
 ) {
     @VisibleForTesting

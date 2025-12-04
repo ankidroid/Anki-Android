@@ -635,7 +635,7 @@ class ReviewerFragment :
             webViewLayout.pageDown()
         }
 
-        val repository = StudyScreenRepository(sharedPrefs())
+        val repository = StudyScreenRepository()
 
         viewModel.isMarkedFlow
             .flowWithLifecycle(lifecycle)
