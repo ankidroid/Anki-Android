@@ -37,6 +37,7 @@ import com.ichi2.anki.lint.rules.InvalidStringFormatDetector
 import com.ichi2.anki.lint.rules.JUnitNullAssertionDetector
 import com.ichi2.anki.lint.rules.LocaleRootDetector
 import com.ichi2.anki.lint.rules.NonPositionalFormatSubstitutions
+import com.ichi2.anki.lint.rules.OpenInputStreamSafeDetector
 import com.ichi2.anki.lint.rules.PrintStackTraceUsage
 import com.ichi2.anki.lint.rules.SentenceCaseConventions
 import com.ichi2.anki.lint.rules.TranslationTypo
@@ -62,6 +63,7 @@ class IssueRegistry : IssueRegistry() {
                 LocaleRootDetector.ISSUE,
                 PrintStackTraceUsage.ISSUE,
                 NonPositionalFormatSubstitutions.ISSUE,
+                OpenInputStreamSafeDetector.ISSUE,
                 SentenceCaseConventions.ISSUE,
                 TranslationTypo.ISSUE,
                 FixedPreferencesTitleLength.PREFERENCES_ISSUE_MAX_LENGTH,
