@@ -294,9 +294,9 @@
         <item>@string/import_error_resolution_copy_to_device</item>
         <item>@string/import_error_resolution_select_file</item>
     </string-array>
-    <string name="import_error_resolution_try_again">Re-import the file</string>
-    <string name="import_error_resolution_free_up_space">Ensure there is sufficient free space on your device</string>
-    <string name="import_error_resolution_check_internet">Ensure you are connected to the internet</string>
-    <string name="import_error_resolution_copy_to_device">Copy the file to your device and try again with the local file</string>
-    <string name="import_error_resolution_select_file">Open the file using your device’s file browser app</string>
+    <string name="import_error_resolution_try_again">إعادة استيراد الملف</string>
+    <string name="import_error_resolution_free_up_space">تأكد من وجود مساحة تخزين كافية في جهازك</string>
+    <string name="import_error_resolution_check_internet">تأكد من اتصالك بالإنترنت</string>
+    <string name="import_error_resolution_copy_to_device">انسخ الملف إلى جهازك وحاول مجدداً باستخدام الملف الذي في جهازك</string>
+    <string name="import_error_resolution_select_file">افتح الملف باستخدام تطبيق متصفح الملفات الخاص بجهازك</string>
 </resources>

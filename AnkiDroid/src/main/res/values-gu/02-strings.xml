@@ -166,7 +166,7 @@
     <string name="import_error_not_apkg_extension">ફાઇલનામ “%s” માં .apkg અથવા .colpkg એક્સ્ટેંશન નથી</string>
     <string name="import_error_load_imported_database">Anki Database (.anki2) રિપ્લેસમેન્ટ હજુ સુધી સપોર્ટેડ નથી. કૃપા કરીને રિપ્લેસમેન્ટ સૂચનાઓ માટે મેન્યુઅલ જુઓ.</string>
     <string name="import_error_content_provider">The selected file couldn’t be imported automatically by AnkiDroid. Please see the user manual for how to manually import Anki files: \n%s</string>
-    <string name="import_error_copy_to_cache_title">Failed to cache file</string>
+    <string name="import_error_copy_to_cache_title">ફાઇલ કેશ કરવામાં નિષ્ફળ</string>
     <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">This is often caused by a bug in the app you used to select the file. Please try the following fixes:\n\n%s</string>
     <string name="import_interrupted">આયાત વિક્ષેપિત: AnkiDroid બંધ હતું</string>
     <string name="export_ready_title">નિકાસ તૈયાર છે</string>

@@ -166,7 +166,7 @@
     <string name="import_error_not_apkg_extension">Ang filename na \"%s\" ay walang extension na .apkg o .colpkg</string>
     <string name="import_error_load_imported_database">Hindi pa suportado ang mga pamalit na Anki Database (.anki2). Mangyaring tingnan ang manual para sa tagubilin sa pagpapalit.</string>
     <string name="import_error_content_provider">Ang napiling file ay hindi awtomatikong ma-import ng AnkiDroid. Pakitingnan ang user manwal kung paano ang manwal na pag-import ng mga Anki file: \n%s</string>
-    <string name="import_error_copy_to_cache_title">Failed to cache file</string>
+    <string name="import_error_copy_to_cache_title">Bigo sa pag-cache sa file</string>
     <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">This is often caused by a bug in the app you used to select the file. Please try the following fixes:\n\n%s</string>
     <string name="import_interrupted">Naudlot ang pag-angkat: Nasara ang AnkiDroid</string>
     <string name="export_ready_title">Handa na ang pag-export</string>
