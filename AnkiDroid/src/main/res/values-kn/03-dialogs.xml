@@ -254,13 +254,7 @@
     <string name="tts_error_dialog_reason_text">ಪಠ್ಯದಿಂದ ಧ್ವನಿ ಎಂಜಿನ್ <b>%1$s</b> ಕೆಳಗಿನ ಭಾಷೆಯನ್ನು ಬೆಂಬಲಿಸುವುದಿಲ್ಲ: <b>%2$s</b></string>
     <string name="tts_error_dialog_change_button_text">Change engine</string>
     <string name="tts_error_dialog_supported_voices_button_text">ಧ್ವನಿ ಆಯ್ಕೆಗಳು</string>
-    <string-array name="import_cache_error_resolutions">
-        <item>@string/import_error_resolution_try_again</item>
-        <item>@string/import_error_resolution_free_up_space</item>
-        <item>@string/import_error_resolution_check_internet</item>
-        <item>@string/import_error_resolution_copy_to_device</item>
-        <item>@string/import_error_resolution_select_file</item>
-    </string-array>
+    <!-- import_cache_error_resolutions -->
     <string name="import_error_resolution_try_again">Re-import the file</string>
     <string name="import_error_resolution_free_up_space">Ensure there is sufficient free space on your device</string>
     <string name="import_error_resolution_check_internet">Ensure you are connected to the internet</string>

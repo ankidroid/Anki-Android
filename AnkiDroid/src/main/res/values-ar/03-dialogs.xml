@@ -287,13 +287,7 @@
 <b>%2$s</b></string>
     <string name="tts_error_dialog_change_button_text">تغيير المحرك</string>
     <string name="tts_error_dialog_supported_voices_button_text">خيارات الصوت</string>
-    <string-array name="import_cache_error_resolutions">
-        <item>@string/import_error_resolution_try_again</item>
-        <item>@string/import_error_resolution_free_up_space</item>
-        <item>@string/import_error_resolution_check_internet</item>
-        <item>@string/import_error_resolution_copy_to_device</item>
-        <item>@string/import_error_resolution_select_file</item>
-    </string-array>
+    <!-- import_cache_error_resolutions -->
     <string name="import_error_resolution_try_again">إعادة استيراد الملف</string>
     <string name="import_error_resolution_free_up_space">تأكد من وجود مساحة تخزين كافية في جهازك</string>
     <string name="import_error_resolution_check_internet">تأكد من اتصالك بالإنترنت</string>
