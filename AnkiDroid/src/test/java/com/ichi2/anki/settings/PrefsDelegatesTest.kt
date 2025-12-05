@@ -38,21 +38,21 @@ class PrefsDelegatesTest {
     }
 
     @Test
-    fun `booleanSetting getter and setter work`() {
-        var setting by prefs.booleanPref(123, false)
-        assertThat(setting, equalTo(false))
+    fun `booleanPref getter and setter work`() {
+        var pref by prefs.booleanPref(123, false)
+        assertThat(pref, equalTo(false))
 
-        setting = true
-        assertThat(setting, equalTo(true))
+        pref = true
+        assertThat(pref, equalTo(true))
     }
 
     @Test
-    fun `stringSetting getter and setter work`() {
-        var setting by prefs.stringPref(456, "defaultValue")
-        assertThat(setting, equalTo("defaultValue"))
+    fun `stringPref getter and setter work`() {
+        var pref by prefs.stringPref(456, "defaultValue")
+        assertThat(pref, equalTo("defaultValue"))
 
-        setting = "newValue"
-        assertThat(setting, equalTo("newValue"))
+        pref = "newValue"
+        assertThat(pref, equalTo("newValue"))
     }
 
     @Test
