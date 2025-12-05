@@ -151,6 +151,7 @@ import com.ichi2.anki.libanki.undoAvailable
 import com.ichi2.anki.libanki.undoLabel
 import com.ichi2.anki.mediacheck.MediaCheckFragment
 import com.ichi2.anki.observability.ChangeManager
+import com.ichi2.anki.observability.subscribeToChangeManager
 import com.ichi2.anki.pages.AnkiPackageImporterFragment
 import com.ichi2.anki.pages.CongratsPage
 import com.ichi2.anki.pages.CongratsPage.Companion.onDeckCompleted
@@ -432,7 +433,7 @@ open class DeckPicker :
     var createMenuJob: Job? = null
 
     init {
-        ChangeManager.subscribe(this)
+        subscribeToChangeManager(this)
     }
 
     // ----------------------------------------------------------------------------

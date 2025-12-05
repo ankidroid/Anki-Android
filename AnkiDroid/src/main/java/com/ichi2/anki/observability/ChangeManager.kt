@@ -28,6 +28,8 @@
 package com.ichi2.anki.observability
 
 import androidx.annotation.VisibleForTesting
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.LifecycleOwner
 import anki.collection.OpChanges
 import anki.collection.OpChangesAfterUndo
 import anki.collection.OpChangesOnly
@@ -65,6 +67,10 @@ object ChangeManager {
     @Contract("subscriber -> call")
     fun subscribe(subscriber: Subscriber) {
         subscribers.add(WeakReference(subscriber))
+    }
+
+    fun unsubscribe(subscriber: Subscriber) {
+        subscribers.removeWeakReferences { it == null || it === subscriber }
     }
 
     private fun notifySubscribers(
@@ -142,4 +148,27 @@ object ChangeManager {
             noteText = true
             studyQueues = true
         }
+}
+
+/**
+ * Automatically subscribes to ChangeManager in onCreate and unsubscribes in onDestroy.
+ * This ensures no events are received when the view is dead.
+ */
+fun LifecycleOwner.subscribeToChangeManager(subscriber: ChangeManager.Subscriber) {
+    this.lifecycle.addObserver(
+        object : DefaultLifecycleObserver {
+            override fun onCreate(owner: LifecycleOwner) {
+                ChangeManager.subscribe(subscriber)
+            }
+
+            override fun onDestroy(owner: LifecycleOwner) {
+                ChangeManager.unsubscribe(subscriber)
+                owner.lifecycle.removeObserver(this)
+            }
+        },
+    )
+}
+
+private fun <T> MutableList<WeakReference<T>>.removeWeakReferences(block: (T?) -> Boolean) {
+    this.removeAll { block(it.get()) }
 }
