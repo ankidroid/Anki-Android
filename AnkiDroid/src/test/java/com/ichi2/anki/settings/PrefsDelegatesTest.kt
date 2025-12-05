@@ -17,6 +17,7 @@ package com.ichi2.anki.settings
 
 import android.content.res.Resources
 import com.github.ivanshafran.sharedpreferencesmock.SPMockBuilder
+import com.ichi2.anki.settings.enums.PrefEnum
 import io.mockk.every
 import io.mockk.mockk
 import org.hamcrest.MatcherAssert.assertThat
@@ -52,5 +53,21 @@ class PrefsDelegatesTest {
 
         setting = "newValue"
         assertThat(setting, equalTo("newValue"))
+    }
+
+    @Test
+    fun `enumPref getter and setter work`() {
+        var pref by prefs.enumPref(789, TestEnum.SECOND)
+        assertThat(pref, equalTo(TestEnum.SECOND))
+
+        pref = TestEnum.FIRST
+        assertThat(pref, equalTo(TestEnum.FIRST))
+    }
+
+    private enum class TestEnum(
+        override val entryResId: Int,
+    ) : PrefEnum {
+        FIRST(0),
+        SECOND(1),
     }
 }
