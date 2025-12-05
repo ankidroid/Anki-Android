@@ -56,6 +56,24 @@ class PrefsDelegatesTest {
     }
 
     @Test
+    fun `intPref getter and setter work`() {
+        var pref by prefs.intPref(101, 42)
+        assertThat(pref, equalTo(42))
+
+        pref = 99
+        assertThat(pref, equalTo(99))
+    }
+
+    @Test
+    fun `longPref getter and setter work`() {
+        var pref by prefs.longPref(202, 12345L)
+        assertThat(pref, equalTo(12345L))
+
+        pref = 9876543210L
+        assertThat(pref, equalTo(9876543210L))
+    }
+
+    @Test
     fun `enumPref getter and setter work`() {
         var pref by prefs.enumPref(789, TestEnum.SECOND)
         assertThat(pref, equalTo(TestEnum.SECOND))

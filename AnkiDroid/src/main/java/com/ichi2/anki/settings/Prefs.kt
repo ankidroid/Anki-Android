@@ -165,7 +165,7 @@ open class PrefsRepository(
     fun intPref(
         @StringRes keyResId: Int,
         defaultValue: Int,
-    ): ReadWriteProperty<Any, Int> =
+    ): ReadWriteProperty<Any?, Int> =
         object : ReadWriteProperty<Any?, Int> {
             override fun getValue(
                 thisRef: Any?,
@@ -185,7 +185,7 @@ open class PrefsRepository(
     fun longPref(
         @StringRes keyResId: Int,
         defaultValue: Long,
-    ): ReadWriteProperty<Any, Long> =
+    ): ReadWriteProperty<Any?, Long> =
         object : ReadWriteProperty<Any?, Long> {
             override fun getValue(
                 thisRef: Any?,
