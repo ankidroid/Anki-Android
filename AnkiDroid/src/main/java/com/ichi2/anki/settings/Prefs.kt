@@ -111,6 +111,14 @@ open class PrefsRepository(
         } ?: defaultValue
     }
 
+    fun <E> putEnum(
+        @StringRes keyResId: Int,
+        value: E,
+    ) where E : Enum<E>, E : PrefEnum {
+        val stringValue = resources.getString(value.entryResId)
+        putString(keyResId, stringValue)
+    }
+
     // **************************************** Delegates *************************************** //
 
     @VisibleForTesting
@@ -193,6 +201,26 @@ open class PrefsRepository(
             }
         }
 
+    @VisibleForTesting
+    fun <E> enumPref(
+        @StringRes keyResId: Int,
+        defaultValue: E,
+    ): ReadWriteProperty<Any?, E> where E : Enum<E>, E : PrefEnum =
+        object : ReadWriteProperty<Any?, E> {
+            override fun getValue(
+                thisRef: Any?,
+                property: KProperty<*>,
+            ): E = getEnum(keyResId, defaultValue)
+
+            override fun setValue(
+                thisRef: Any?,
+                property: KProperty<*>,
+                value: E,
+            ) {
+                putEnum(keyResId, value)
+            }
+        }
+
     // ****************************************************************************************** //
     // **************************************** Settings **************************************** //
     // ****************************************************************************************** //
@@ -250,14 +278,9 @@ open class PrefsRepository(
     val swipeSensitivity: Float
         get() = getInt(R.string.pref_swipe_sensitivity_key, 100) / 100F
 
-    val frameStyle: FrameStyle
-        get() = getEnum(R.string.reviewer_frame_style_key, FrameStyle.CARD)
-
-    val hideSystemBars: HideSystemBars
-        get() = getEnum(R.string.hide_system_bars_key, HideSystemBars.NONE)
-
-    val toolbarPosition: ToolbarPosition
-        get() = getEnum(R.string.reviewer_toolbar_position_key, ToolbarPosition.TOP)
+    val frameStyle: FrameStyle by enumPref(R.string.reviewer_frame_style_key, FrameStyle.CARD)
+    val hideSystemBars: HideSystemBars by enumPref(R.string.hide_system_bars_key, HideSystemBars.NONE)
+    val toolbarPosition: ToolbarPosition by enumPref(R.string.reviewer_toolbar_position_key, ToolbarPosition.TOP)
 
     // **************************************** Controls **************************************** //
     //region Controls
