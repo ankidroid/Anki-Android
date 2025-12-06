@@ -125,7 +125,7 @@ abstract class PageFragment(
             setupBridgeCommand(pageWebViewClient)
             onWebViewCreated()
         }
-        val nightMode = if (Themes.currentTheme.isNightMode) "#night" else ""
+        val nightMode = if (Themes.isNightTheme) "#night" else ""
         val url = "${server.baseUrl()}$pagePath$nightMode".toUri()
         Timber.i("Loading $url")
         webViewLayout.loadUrl(url.toString())
