@@ -133,6 +133,7 @@ object PreferenceUpgradeService {
                     yield(RemoveHostNum())
                     yield(UpgradeHideAnswerButtons())
                     yield(UpgradeToggleBacksideOnlyControl())
+                    yield(UpgradeThemes())
                 }
 
             /** Returns a list of preference upgrade classes which have not been applied */
@@ -747,6 +748,44 @@ object PreferenceUpgradeService {
                 preferences.edit {
                     remove(oldPrefKey)
                     putString("previewer_TOGGLE_BACKSIDE_ONLY", value)
+                }
+            }
+        }
+
+        internal class UpgradeThemes : PreferenceUpgrade(26) {
+            companion object {
+                const val KEY_APP_THEME = "appTheme"
+                const val KEY_DAY_THEME = "dayTheme"
+                const val KEY_NIGHT_THEME = "nightTheme"
+
+                const val THEME_FOLLOW_SYSTEM = "0"
+                const val THEME_LIGHT = "1"
+                const val THEME_PLAIN = "2"
+                const val THEME_BLACK = "3"
+                const val THEME_DARK = "4"
+
+                const val THEME_DAY = "1"
+                const val THEME_NIGHT = "2"
+            }
+
+            @Suppress("MoveVariableDeclarationIntoWhen")
+            override fun upgrade(preferences: SharedPreferences) {
+                val appTheme = preferences.getString(KEY_APP_THEME, THEME_FOLLOW_SYSTEM)
+
+                when (appTheme) {
+                    THEME_FOLLOW_SYSTEM -> return
+                    THEME_LIGHT, THEME_PLAIN -> {
+                        preferences.edit {
+                            putString(KEY_APP_THEME, THEME_DAY)
+                            putString(KEY_DAY_THEME, appTheme)
+                        }
+                    }
+                    THEME_BLACK, THEME_DARK -> {
+                        preferences.edit {
+                            putString(KEY_APP_THEME, THEME_NIGHT)
+                            putString(KEY_NIGHT_THEME, appTheme)
+                        }
+                    }
                 }
             }
         }

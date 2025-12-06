@@ -19,8 +19,8 @@ package com.ichi2.ui
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.dialogs.KeySelectionDialogUtils
+import com.ichi2.anki.settings.enums.DayTheme
 import com.ichi2.testutils.KeyEventUtils
-import com.ichi2.themes.Theme
 import org.hamcrest.CoreMatchers.not
 import org.hamcrest.CoreMatchers.notNullValue
 import org.hamcrest.CoreMatchers.nullValue
@@ -33,7 +33,7 @@ import org.junit.runner.RunWith
 class KeyPickerTest : RobolectricTest() {
     private var keyPicker: KeyPicker =
         run {
-            targetContext.setTheme(Theme.LIGHT.resId)
+            targetContext.setTheme(DayTheme.LIGHT.styleResId)
             KeyPicker.inflate(targetContext)
         }
 
