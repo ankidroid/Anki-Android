@@ -356,17 +356,31 @@ class DeckPickerFloatingActionMenu(
         return animDuration != 0f && animTransition != 0f && animWindow != 0f
     }
 
-    private fun createActivationKeyListener(
+    private fun onFabMenuItemsKeyListener(
         logMessage: String,
-        action: () -> Unit,
+        onEnter: () -> Unit,
     ): View.OnKeyListener =
         View.OnKeyListener { _, keyCode, event ->
-            if (event.action == KeyEvent.ACTION_DOWN &&
-                (keyCode == KeyEvent.KEYCODE_ENTER || keyCode == KeyEvent.KEYCODE_DPAD_CENTER)
-            ) {
-                Timber.d(logMessage)
-                action()
-                return@OnKeyListener true
+            if (event.action != KeyEvent.ACTION_DOWN) {
+                return@OnKeyListener false
+            }
+
+            when (keyCode) {
+                KeyEvent.KEYCODE_ENTER,
+                KeyEvent.KEYCODE_DPAD_CENTER,
+                -> {
+                    Timber.d(logMessage)
+                    onEnter()
+                    return@OnKeyListener true
+                }
+
+                KeyEvent.KEYCODE_ESCAPE -> {
+                    if (isFABOpen) {
+                        Timber.d("ESC key pressed - closing FAB menu")
+                        closeFloatingActionMenu(applyRiseAndShrinkAnimation = true)
+                        return@OnKeyListener true
+                    }
+                }
             }
             false
         }
@@ -397,30 +411,18 @@ class DeckPickerFloatingActionMenu(
             },
         )
 
-        // Enable keyboard activation for Enter/DPAD_CENTER/ESC keys
-        fabMain.setOnKeyListener { _, keyCode, event ->
-            if (event.action == KeyEvent.ACTION_DOWN) {
-                when (keyCode) {
-                    KeyEvent.KEYCODE_ENTER, KeyEvent.KEYCODE_DPAD_CENTER -> {
-                        Timber.d("FAB main button: ENTER key pressed")
-                        if (!isFABOpen) {
-                            showFloatingActionMenu()
-                        } else {
-                            addNote()
-                        }
-                        return@setOnKeyListener true
-                    }
-                    KeyEvent.KEYCODE_ESCAPE -> {
-                        if (isFABOpen) {
-                            Timber.d("FAB main button: ESC key pressed - closing menu")
-                            closeFloatingActionMenu(applyRiseAndShrinkAnimation = true)
-                            return@setOnKeyListener true
-                        }
-                    }
+        // Enable keyboard activation for Enter/DPAD_CENTER keys
+        val mainFabKeyListener =
+            onFabMenuItemsKeyListener(
+                logMessage = "FAB main: ENTER pressed",
+            ) {
+                if (!isFABOpen) {
+                    showFloatingActionMenu()
+                } else {
+                    addNote()
                 }
             }
-            false
-        }
+        fabMain.setOnKeyListener(mainFabKeyListener)
 
         fabBGLayout.setOnClickListener { closeFloatingActionMenu(applyRiseAndShrinkAnimation = true) }
         val addDeckListener =
@@ -435,7 +437,7 @@ class DeckPickerFloatingActionMenu(
 
         // Enable keyboard activation for Enter/DPAD_CENTER keys
         val addDeckKeyListener =
-            createActivationKeyListener("Add Deck button: ENTER key pressed") {
+            onFabMenuItemsKeyListener("Add Deck button: ENTER key pressed") {
                 if (isFABOpen) {
                     closeFloatingActionMenu(applyRiseAndShrinkAnimation = false)
                     deckPicker.showCreateDeckDialog()
@@ -443,6 +445,7 @@ class DeckPickerFloatingActionMenu(
             }
         addDeckButton.setOnKeyListener(addDeckKeyListener)
         addDeckLabel.setOnKeyListener(addDeckKeyListener)
+
         val addFilteredDeckListener =
             View.OnClickListener {
                 if (isFABOpen) {
@@ -455,7 +458,7 @@ class DeckPickerFloatingActionMenu(
 
         // Enable keyboard activation for Enter/DPAD_CENTER keys
         val addFilteredDeckKeyListener =
-            createActivationKeyListener("Add Filtered Deck button: ENTER key pressed") {
+            onFabMenuItemsKeyListener("Add Filtered Deck button: ENTER key pressed") {
                 if (isFABOpen) {
                     closeFloatingActionMenu(applyRiseAndShrinkAnimation = false)
                     deckPicker.showCreateFilteredDeckDialog()
@@ -463,6 +466,7 @@ class DeckPickerFloatingActionMenu(
             }
         addFilteredDeckButton.setOnKeyListener(addFilteredDeckKeyListener)
         addFilteredDeckLabel.setOnKeyListener(addFilteredDeckKeyListener)
+
         val addSharedListener =
             View.OnClickListener {
                 if (isFABOpen) {
@@ -476,7 +480,7 @@ class DeckPickerFloatingActionMenu(
 
         // Enable keyboard activation for Enter/DPAD_CENTER keys
         val addSharedKeyListener =
-            createActivationKeyListener("Add Shared Deck button: ENTER key pressed") {
+            onFabMenuItemsKeyListener("Add Shared Deck button: ENTER key pressed") {
                 if (isFABOpen) {
                     closeFloatingActionMenu(applyRiseAndShrinkAnimation = false)
                     deckPicker.openAnkiWebSharedDecks()
@@ -484,6 +488,7 @@ class DeckPickerFloatingActionMenu(
             }
         addSharedButton.setOnKeyListener(addSharedKeyListener)
         addSharedLabel.setOnKeyListener(addSharedKeyListener)
+
         val addNoteLabelListener =
             View.OnClickListener {
                 if (isFABOpen) {
@@ -496,7 +501,7 @@ class DeckPickerFloatingActionMenu(
 
         // Enable keyboard activation for Enter/DPAD_CENTER keys
         addNote.setOnKeyListener(
-            createActivationKeyListener("Add Note label: ENTER key pressed") {
+            onFabMenuItemsKeyListener("Add Note label: ENTER key pressed") {
                 if (isFABOpen) {
                     closeFloatingActionMenu(applyRiseAndShrinkAnimation = false)
                     addNote()
