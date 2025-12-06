@@ -36,10 +36,10 @@ import com.ichi2.anki.reviewer.FullScreenMode
 import com.ichi2.anki.reviewer.FullScreenMode.Companion.setPreference
 import com.ichi2.anki.reviewer.MappableBinding.Companion.toPreferenceString
 import com.ichi2.anki.reviewer.ReviewerBinding
+import com.ichi2.anki.settings.enums.NightTheme
 import com.ichi2.anki.utils.ext.addBinding
 import com.ichi2.testutils.common.Flaky
 import com.ichi2.testutils.common.OS
-import com.ichi2.themes.Theme
 import com.ichi2.themes.Themes.currentTheme
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
@@ -363,7 +363,7 @@ class ReviewerNoParamTest : RobolectricTest() {
         addBasicNote("Hello", "World")
 
         val reviewer = startReviewer()
-        currentTheme = Theme.DARK
+        currentTheme = NightTheme.DARK
         reviewer.toggleWhiteboard()
 
         return reviewer.whiteboard
