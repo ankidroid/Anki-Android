@@ -12,4 +12,6 @@
             android:src="@drawable/ankidroid_txt"
             android:gravity="center"/>
     </item>
+
+    <item name="android:windowBackground">@color/reviewer_background_light</item>
 </layer-list>

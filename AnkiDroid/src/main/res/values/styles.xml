@@ -3,6 +3,7 @@
 
     <style name="Theme_Dark.Launcher">
         <item name="android:windowBackground">@drawable/launch_screen</item>
+
     </style>
 
     <style name="Animation.Translucent" parent="@android:style/Animation.Translucent">
