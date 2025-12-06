@@ -43,6 +43,8 @@ open class PrefsRepository(
     val sharedPrefs: SharedPreferences,
     private val resources: Resources,
 ) {
+    constructor(context: Context) : this(context.sharedPrefs(), context.resources)
+
     @VisibleForTesting
     fun key(
         @StringRes resId: Int,
