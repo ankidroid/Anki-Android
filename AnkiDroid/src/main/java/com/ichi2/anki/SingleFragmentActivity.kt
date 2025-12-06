@@ -26,6 +26,7 @@ import com.ichi2.anki.SingleFragmentActivity.Companion.getIntent
 import com.ichi2.anki.android.input.ShortcutGroup
 import com.ichi2.anki.android.input.ShortcutGroupProvider
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyAction
+import com.ichi2.anki.services.StoragePermissionsValidator
 import com.ichi2.anki.ui.windows.managespace.ManageSpaceActivity
 import com.ichi2.anki.utils.ext.setFragmentResultListener
 import com.ichi2.themes.setTransparentStatusBar
@@ -50,9 +51,17 @@ open class SingleFragmentActivity : AnkiActivity(R.layout.single_fragment_activi
         }
 
         super.onCreate(savedInstanceState)
+
+        // Verify storage accessibility before proceeding.
+        // On some devices, getExternalFilesDir() may return null due to corrupted storage.
+        if (!StoragePermissionsValidator.verifyStoragePermissions(this)) {
+            return
+        }
+
         if (!ensureStoragePermissions()) {
             return
         }
+
         setTransparentStatusBar()
 
         // avoid recreating the fragment on configuration changes

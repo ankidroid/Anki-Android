@@ -447,5 +447,9 @@ opening the system text to speech settings fails">Failed to open text to speech 
 
     <!-- Scheduler Upgrade Required Dialog title-->
     <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">Scheduler upgrade required</string>
+
+    <!-- Storage Access Error -->
+    <string name="sd_card_access_error_title">Storage Access Error</string>
+    <string name="sd_card_access_error_message">AnkiDroid cannot access the file system. Please restart your device and try again.</string>
 </resources>
 
