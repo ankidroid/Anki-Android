@@ -1443,7 +1443,7 @@ abstract class AbstractFlashcardViewer :
     }
 
     internal val isInNightMode: Boolean
-        get() = Themes.currentTheme.isNightMode
+        get() = Themes.isNightTheme
 
     private fun updateCard(content: RenderedCard) {
         Timber.d("updateCard()")

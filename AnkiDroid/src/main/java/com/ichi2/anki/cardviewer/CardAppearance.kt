@@ -18,7 +18,8 @@ package com.ichi2.anki.cardviewer
 import android.content.SharedPreferences
 import androidx.annotation.CheckResult
 import com.ichi2.anki.reviewer.ReviewerCustomFonts
-import com.ichi2.themes.Theme
+import com.ichi2.anki.settings.enums.DayTheme
+import com.ichi2.anki.settings.enums.NightTheme
 import com.ichi2.themes.Themes.currentTheme
 
 /** Responsible for calculating CSS and element styles and modifying content on a flashcard  */
@@ -47,17 +48,17 @@ class CardAppearance(
         if (centerVertically) {
             cardClass.append(" vertically_centered")
         }
-        if (currentTheme.isNightMode) {
+        if (currentTheme is NightTheme) {
             // Enable the night-mode class
             cardClass.append(" night_mode nightMode")
 
             // Emit the dark_mode selector to allow dark theme overrides
-            if (currentTheme == Theme.DARK) {
+            if (currentTheme == NightTheme.DARK) {
                 cardClass.append(" ankidroid_dark_mode")
             }
         } else {
             // Emit the plain_mode selector to allow plain theme overrides
-            if (currentTheme == Theme.PLAIN) {
+            if (currentTheme == DayTheme.PLAIN) {
                 cardClass.append(" ankidroid_plain_mode")
             }
         }

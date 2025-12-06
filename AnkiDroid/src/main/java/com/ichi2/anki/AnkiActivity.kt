@@ -493,7 +493,7 @@ open class AnkiActivity(
         get() =
             if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM) {
                 COLOR_SCHEME_SYSTEM
-            } else if (Themes.currentTheme.isNightMode) {
+            } else if (Themes.isNightTheme) {
                 COLOR_SCHEME_DARK
             } else {
                 COLOR_SCHEME_LIGHT

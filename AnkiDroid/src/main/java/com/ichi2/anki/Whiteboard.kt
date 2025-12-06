@@ -45,6 +45,7 @@ import com.ichi2.anki.common.time.Time
 import com.ichi2.anki.common.time.getTimestamp
 import com.ichi2.anki.dialogs.WhiteBoardWidthDialog
 import com.ichi2.anki.preferences.sharedPrefs
+import com.ichi2.anki.settings.enums.NightTheme
 import com.ichi2.compat.CompatHelper
 import com.ichi2.themes.Themes.currentTheme
 import com.ichi2.utils.DisplayUtils.getDisplayDimensions
@@ -584,7 +585,7 @@ class Whiteboard(
             handleMultiTouch: Boolean,
             whiteboardMultiTouchMethods: WhiteboardMultiTouchMethods?,
         ): Whiteboard {
-            val whiteboard = Whiteboard(context, handleMultiTouch, currentTheme.isNightMode)
+            val whiteboard = Whiteboard(context, handleMultiTouch, currentTheme is NightTheme)
             Companion.whiteboardMultiTouchMethods = whiteboardMultiTouchMethods
             val lp2 =
                 FrameLayout.LayoutParams(
