@@ -17,14 +17,14 @@
 package com.ichi2.anki.model
 
 import androidx.annotation.CheckResult
-import com.ichi2.themes.Themes.currentTheme
+import com.ichi2.themes.Themes
 
 class WhiteboardPenColor(
     val lightPenColor: Int?,
     val darkPenColor: Int?,
 ) {
     fun fromPreferences(): Int? =
-        if (currentTheme.isNightMode) {
+        if (Themes.isNightTheme) {
             darkPenColor
         } else {
             lightPenColor

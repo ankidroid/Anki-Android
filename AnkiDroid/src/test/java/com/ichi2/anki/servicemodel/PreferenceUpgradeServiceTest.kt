@@ -19,12 +19,14 @@ package com.ichi2.anki.servicemodel
 import android.content.SharedPreferences
 import androidx.core.content.edit
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.libanki.Consts
 import com.ichi2.anki.noteeditor.CustomToolbarButton
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService.PreferenceUpgrade
+import com.ichi2.anki.servicelayer.PreferenceUpgradeService.PreferenceUpgrade.UpgradeThemes
 import com.ichi2.anki.servicelayer.RemovedPreferences
 import com.ichi2.utils.HashUtil
 import com.ichi2.utils.LanguageUtil
@@ -229,5 +231,62 @@ class PreferenceUpgradeServiceTest : RobolectricTest() {
 
         assertThat(prefs.getString("language", null), equalTo(""))
         assertThat(LanguageUtil.getCurrentLocaleTag(), equalTo(""))
+    }
+
+    @Test
+    fun upgradeThemes() {
+        val upgrade = UpgradeThemes()
+
+        // Constants should have the correct values
+        assertEquals(UpgradeThemes.THEME_FOLLOW_SYSTEM, targetContext.getString(R.string.theme_follow_system_value))
+        assertEquals(UpgradeThemes.THEME_LIGHT, targetContext.getString(R.string.theme_light_value))
+        assertEquals(UpgradeThemes.THEME_PLAIN, targetContext.getString(R.string.theme_plain_value))
+        assertEquals(UpgradeThemes.THEME_BLACK, targetContext.getString(R.string.theme_black_value))
+        assertEquals(UpgradeThemes.THEME_DARK, targetContext.getString(R.string.theme_dark_value))
+        assertEquals(UpgradeThemes.THEME_DAY, targetContext.getString(R.string.theme_day_scheme_value))
+        assertEquals(UpgradeThemes.THEME_NIGHT, targetContext.getString(R.string.theme_night_scheme_value))
+
+        // Follow System -> Should remain Follow System, no sub-themes set
+        prefs.edit { putString(UpgradeThemes.KEY_APP_THEME, UpgradeThemes.THEME_FOLLOW_SYSTEM) }
+        upgrade.performUpgrade(prefs)
+        assertThat(prefs.getString(UpgradeThemes.KEY_APP_THEME, null), equalTo(UpgradeThemes.THEME_FOLLOW_SYSTEM))
+        assertThat(prefs.contains(UpgradeThemes.KEY_DAY_THEME), equalTo(false))
+        assertThat(prefs.contains(UpgradeThemes.KEY_NIGHT_THEME), equalTo(false))
+
+        // Light -> Day + dayTheme: Light
+        prefs.edit {
+            putString(UpgradeThemes.KEY_APP_THEME, UpgradeThemes.THEME_LIGHT)
+            remove(UpgradeThemes.KEY_DAY_THEME)
+        }
+        upgrade.performUpgrade(prefs)
+        assertThat(prefs.getString(UpgradeThemes.KEY_APP_THEME, null), equalTo(UpgradeThemes.THEME_DAY))
+        assertThat(prefs.getString(UpgradeThemes.KEY_DAY_THEME, null), equalTo(UpgradeThemes.THEME_LIGHT))
+
+        // Plain -> Day + dayTheme: Plain
+        prefs.edit {
+            putString(UpgradeThemes.KEY_APP_THEME, UpgradeThemes.THEME_PLAIN)
+            remove(UpgradeThemes.KEY_DAY_THEME)
+        }
+        upgrade.performUpgrade(prefs)
+        assertThat(prefs.getString(UpgradeThemes.KEY_APP_THEME, null), equalTo(UpgradeThemes.THEME_DAY))
+        assertThat(prefs.getString(UpgradeThemes.KEY_DAY_THEME, null), equalTo(UpgradeThemes.THEME_PLAIN))
+
+        // Black -> Night + nightTheme: Black
+        prefs.edit {
+            putString(UpgradeThemes.KEY_APP_THEME, UpgradeThemes.THEME_BLACK)
+            remove(UpgradeThemes.KEY_NIGHT_THEME)
+        }
+        upgrade.performUpgrade(prefs)
+        assertThat(prefs.getString(UpgradeThemes.KEY_APP_THEME, null), equalTo(UpgradeThemes.THEME_NIGHT))
+        assertThat(prefs.getString(UpgradeThemes.KEY_NIGHT_THEME, null), equalTo(UpgradeThemes.THEME_BLACK))
+
+        // Dark -> Night + nightTheme: Dark
+        prefs.edit {
+            putString(UpgradeThemes.KEY_APP_THEME, UpgradeThemes.THEME_DARK)
+            remove(UpgradeThemes.KEY_NIGHT_THEME)
+        }
+        upgrade.performUpgrade(prefs)
+        assertThat(prefs.getString(UpgradeThemes.KEY_APP_THEME, null), equalTo(UpgradeThemes.THEME_NIGHT))
+        assertThat(prefs.getString(UpgradeThemes.KEY_NIGHT_THEME, null), equalTo(UpgradeThemes.THEME_DARK))
     }
 }
