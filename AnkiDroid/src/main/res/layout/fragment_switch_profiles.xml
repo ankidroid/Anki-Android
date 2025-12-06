@@ -49,4 +49,16 @@
 
     </LinearLayout>
 
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/add_profile_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        style="?attr/floatingActionButtonPrimaryStyle"
+        app:backgroundTint="?attr/fab_normal"
+        android:text="@string/add_profile"
+        app:icon="@drawable/ic_switch_profile"
+        android:contentDescription="@string/add_profile" />
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
