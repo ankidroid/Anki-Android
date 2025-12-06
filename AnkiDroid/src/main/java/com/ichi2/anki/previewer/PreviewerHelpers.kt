@@ -88,7 +88,7 @@ fun stdHtml(
  */
 fun bodyClassForCardOrd(
     cardOrd: Int,
-    nightMode: Boolean = Themes.currentTheme.isNightMode,
+    nightMode: Boolean = Themes.isNightTheme,
 ): String = "card card${cardOrd + 1} ${bodyClass(nightMode)} mathjax-rendered"
 
-private fun bodyClass(nightMode: Boolean = Themes.currentTheme.isNightMode): String = if (nightMode) "nightMode night_mode" else ""
+private fun bodyClass(nightMode: Boolean = Themes.isNightTheme): String = if (nightMode) "nightMode night_mode" else ""

@@ -164,7 +164,7 @@ class BrowserMultiColumnAdapter(
         fun setColor(
             @ColorInt color: Int,
         ) {
-            val nightMode = Themes.currentTheme.isNightMode
+            val nightMode = Themes.isNightTheme
             val pressedColor: Int
             val focusedColor: Int
 
