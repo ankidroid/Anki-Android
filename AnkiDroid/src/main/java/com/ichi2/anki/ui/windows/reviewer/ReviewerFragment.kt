@@ -136,7 +136,7 @@ class ReviewerFragment :
         stdHtml(
             context = requireContext(),
             extraJsAssets = listOf("scripts/ankidroid.js"),
-            nightMode = Themes.currentTheme.isNightMode,
+            nightMode = Themes.isNightTheme,
         )
 
     override fun onStart() {

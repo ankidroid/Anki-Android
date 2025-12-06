@@ -136,7 +136,7 @@ open class PageFragment(
             onWebViewCreated()
         }
         val path = requireNotNull(requireArguments().getString(PATH_ARG_KEY)) { "'$PATH_ARG_KEY' missing" }
-        val nightMode = if (Themes.currentTheme.isNightMode) "#night" else ""
+        val nightMode = if (Themes.isNightTheme) "#night" else ""
         val url = "${server.baseUrl()}$path$nightMode".toUri()
         Timber.i("Loading $url")
         webViewLayout.loadUrl(url.toString())
