@@ -14,6 +14,7 @@ import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.view.children
 import androidx.fragment.app.FragmentManager
 import androidx.test.core.app.ActivityScenario
+import anki.collection.opChanges
 import anki.scheduler.CardAnswer.Rating
 import app.cash.turbine.test
 import com.ichi2.anki.common.time.TimeManager
@@ -25,6 +26,7 @@ import com.ichi2.anki.dialogs.DeckPickerContextMenu
 import com.ichi2.anki.dialogs.DeckPickerContextMenu.DeckPickerContextMenuOption
 import com.ichi2.anki.dialogs.utils.title
 import com.ichi2.anki.libanki.DeckId
+import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.utils.Destination
@@ -46,6 +48,7 @@ import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.not
 import org.hamcrest.Matchers.notNullValue
 import org.hamcrest.Matchers.nullValue
+import org.junit.Assert
 import org.junit.Assert.assertEquals
 import org.junit.Assume.assumeTrue
 import org.junit.Before
@@ -86,6 +89,16 @@ class DeckPickerTest : RobolectricTest() {
     fun before() {
         RuntimeEnvironment.setQualifiers(qualifiers)
         setIntroductionSlidesShown(true)
+    }
+
+    @Test
+    fun `receiving opExecuted call doesn't crash if ViewModel is not yet initialized`() {
+        DeckPicker()
+        try {
+            ChangeManager.notifySubscribers(opChanges { studyQueues = true }, null)
+        } catch (e: IllegalStateException) {
+            Assert.fail("Crash detected! ${e.message}")
+        }
     }
 
     @Test
