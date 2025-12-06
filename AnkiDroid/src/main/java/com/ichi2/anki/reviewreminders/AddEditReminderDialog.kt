@@ -36,6 +36,7 @@ import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.checkbox.MaterialCheckBox
 import com.google.android.material.textfield.TextInputLayout
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
@@ -134,6 +135,7 @@ class AddEditReminderDialog : DialogFragment() {
         setInitialDeckSelection()
         setUpAdvancedDropdown()
         setUpCardThresholdInput()
+        setUpOnlyNotifyIfNoReviewsCheckbox()
 
         // For getting the result of the deck selection sub-dialog from ScheduleReminders
         // See ScheduleReminders.onDeckSelected for more information
@@ -261,6 +263,20 @@ class AddEditReminderDialog : DialogFragment() {
                     else -> null
                 }
             viewModel.setCardTriggerThreshold(value ?: 0)
+        }
+    }
+
+    private fun setUpOnlyNotifyIfNoReviewsCheckbox() {
+        val contentSection = contentView.findViewById<LinearLayout>(R.id.add_edit_reminder_only_notify_if_no_reviews_section)
+        val checkbox = contentView.findViewById<MaterialCheckBox>(R.id.add_edit_reminder_only_notify_if_no_reviews_checkbox)
+        contentSection.setOnClickListener {
+            viewModel.toggleOnlyNotifyIfNoReviews()
+        }
+        checkbox.setOnClickListener {
+            viewModel.toggleOnlyNotifyIfNoReviews()
+        }
+        viewModel.onlyNotifyIfNoReviews.observe(this) { onlyNotifyIfNoReviews ->
+            checkbox.isChecked = onlyNotifyIfNoReviews
         }
     }
 
