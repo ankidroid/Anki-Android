@@ -164,7 +164,8 @@
         <!-- AlertDialogTheme-->
         <item name="alertDialogTheme">@style/ThemeOverlay.AnkiDroid.AlertDialog</item>
         <item name="tabStyle">@style/Widget.MaterialComponents.TabLayout</item>
-
+        //used in reviewer2.xml
+        <item name="android:windowBackground">@color/reviewer_background_dark</item>
         <item name="bottomSheetDialogTheme">@style/ThemeOverlay.App.BottomSheetDialog</item>
     </style>
 

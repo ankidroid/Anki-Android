@@ -23,6 +23,7 @@
 
     <color name="answer_buttons_highlight_color">#66FFFFFF</color>
     <color name="whiteboard_eraser">#80808080</color>
+    <color name="reviewer_background_dark">#303030</color>
 
 
     <!-- Material Design: http://www.google.com/design/spec/style/color.html#color-color-palette -->

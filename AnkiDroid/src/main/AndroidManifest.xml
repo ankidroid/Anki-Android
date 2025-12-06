@@ -371,7 +371,12 @@
             android:theme="@style/Theme_Dark.Launcher"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:windowSoftInputMode="adjustResize"
-            android:parentActivityName=".DeckPicker">
+            android:parentActivityName=".DeckPicker"
+            android:windowIsTranslucent="false"
+            android:background="@color/reviewer_background_dark"
+            android:windowBackground="@color/reviewer_background_dark"
+            android:forceDarkAllowed="false"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />

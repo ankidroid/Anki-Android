@@ -79,7 +79,8 @@
         <!-- ProgressDialog-->
         <item name="dialogBackground">@color/white</item>
         <item name="progressDialogButtonTextColor">@color/theme_plain_primary</item>
-
+        //used in reviewer2.xml
+        <item name="android:windowBackground">@color/reviewer_background_dark</item>
     </style>
 
     <style name="Theme_Light.Plain" parent="Base.Theme.Light.Plain"/>

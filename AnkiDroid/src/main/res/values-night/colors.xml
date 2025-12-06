@@ -7,4 +7,5 @@
     <color name="flag_pink">#A70D64</color>
     <color name="flag_turquoise">#138072</color>
     <color name="flag_purple">#6320A0</color>
+    <color name="reviewer_background_dark">#303030</color>
 </resources>
