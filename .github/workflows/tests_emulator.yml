@@ -66,7 +66,7 @@ jobs:
             // These are used for performance tuning what emulator to use.
             // try different architectures, targets, delays etc
             let arch = ['x86_64'];
-            let target = ['google_apis'];
+            let target = ['google_apis', 'google_apis_ps16k'];
             let firstBootDelay = [600];
 
             return {
@@ -216,6 +216,54 @@ jobs:
             adb emu screenrecord start --time-limit 1800 video.webm
             sleep 5
             ./gradlew uninstallAll jacocoAndroidTestReport --daemon
+
+      - name: Configure NDK tools PATH for alignment checking
+        run: |
+          echo "Using pre-installed NDK tools for alignment checking"
+          if [ ! -d "$ANDROID_NDK_LATEST_HOME" ]; then
+            echo "Error: NDK tools not found at $ANDROID_NDK_LATEST_HOME"
+            echo "The NDK should be pre-installed in the runner image. Failing fast."
+            exit 1
+          fi
+
+          NDK_VERSION=$(basename $ANDROID_NDK_LATEST_HOME)
+          echo "Using NDK version: $NDK_VERSION"
+          echo "export PATH=$ANDROID_NDK_LATEST_HOME/toolchains/llvm/prebuilt/linux-x86_64/bin:$PATH" >> $GITHUB_ENV
+
+      - name: Check APK ELF Alignment
+        run: |
+          chmod +x .github/check_elf_alignment.sh
+          APK_PATH="AnkiDroid/build/outputs/apk/play/release/AnkiDroid-play-arm64-v8a-release.apk"
+
+          if [ ! -f "$APK_PATH" ]; then
+            echo "Error: APK file not found at $APK_PATH"
+            echo "The APK should have been built in previous steps. Failing fast."
+            exit 1
+          fi
+
+          echo "Using APK: $APK_PATH"
+          .github/check_elf_alignment.sh $APK_PATH
+
+      - name: Verify zipalign
+        run: |
+          APK_PATH="AnkiDroid/build/outputs/apk/play/release/AnkiDroid-play-arm64-v8a-release.apk"
+          echo "Verifying zipalign with 16KB alignment for $APK_PATH"
+
+          # Find the latest build-tools version dynamically
+          LATEST_BUILD_TOOLS=$(ls -d $ANDROID_HOME/build-tools/* | sort -V | tail -n 1)
+          ZIPALIGN_PATH="$LATEST_BUILD_TOOLS/zipalign"
+          echo "Using zipalign at: $ZIPALIGN_PATH"
+
+          # Verify zipalign exists
+          if [ ! -f "$ZIPALIGN_PATH" ]; then
+            echo "Error: zipalign not found at $ZIPALIGN_PATH"
+            echo "Available build-tools versions:"
+            ls -la $ANDROID_HOME/build-tools/
+            exit 1
+          fi
+
+          # Use the zipalign tool
+          $ZIPALIGN_PATH -c -P 16 -v 4 $APK_PATH
 
       - name: Upload Test Report
         uses: actions/upload-artifact@v5
