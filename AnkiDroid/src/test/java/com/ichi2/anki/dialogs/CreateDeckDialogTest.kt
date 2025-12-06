@@ -36,7 +36,6 @@ import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.CoreMatchers.nullValue
 import org.hamcrest.Matcher
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.hasItem
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
@@ -64,19 +63,6 @@ class CreateDeckDialogTest : RobolectricTest() {
     override fun tearDown() {
         super.tearDown()
         activityScenario.closeQuietly()
-    }
-
-    @Test
-    fun testCreateFilteredDeckFunction() {
-        val deckName = "filteredDeck"
-        ensureExecutionOfScenario(DeckDialogType.FILTERED_DECK) { createDeckDialog, assertionCalled ->
-            createDeckDialog.onNewDeckCreated = { id: DeckId ->
-                // a deck was created
-                assertThat(id, equalTo(col.decks.id(deckName)))
-                assertionCalled()
-            }
-            createDeckDialog.createFilteredDeck(deckName)
-        }
     }
 
     @Test
@@ -272,37 +258,6 @@ class CreateDeckDialogTest : RobolectricTest() {
             input = previousDeckName
             assertThat("no error is displayed", getInputTextLayout().error, nullValue())
         }
-    }
-
-    @Test
-    fun `filtered decks - duplicate creation`() {
-        fun allDeckNames() = col.decks.allNamesAndIds().map { it.name }
-
-        fun createDeck(
-            deckName: String,
-            expectedReturnValue: Boolean = true,
-        ) {
-            withCreateDeckDialog(DeckDialogType.FILTERED_DECK) {
-                onNewDeckCreated = { }
-                assertThat("createFilteredDeck", createFilteredDeck(deckName), equalTo(expectedReturnValue))
-            }
-        }
-
-        val duplicatedName = col.sched.getOrCreateFilteredDeck(did = 0).name
-
-        createDeck(duplicatedName)
-        assertThat("initial filtered deck created", allDeckNames(), hasItem(duplicatedName))
-
-        createDeck(duplicatedName)
-        assertThat("initial filtered deck", allDeckNames(), hasItem(duplicatedName))
-        assertThat("duplicate deck is created", allDeckNames(), hasItem("$duplicatedName+"))
-
-        repeat(9) {
-            createDeck(duplicatedName)
-        }
-
-        assertThat("final duplicate deck is created", allDeckNames(), hasItem("$duplicatedName${"+".repeat(10)}"))
-        createDeck(duplicatedName, expectedReturnValue = false)
     }
 
     /**

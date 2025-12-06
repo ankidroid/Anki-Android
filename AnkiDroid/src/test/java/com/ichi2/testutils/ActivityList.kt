@@ -25,7 +25,6 @@ import com.ichi2.anki.CardTemplateBrowserAppearanceEditor.Companion.INTENT_ANSWE
 import com.ichi2.anki.CardTemplateBrowserAppearanceEditor.Companion.INTENT_QUESTION_FORMAT
 import com.ichi2.anki.CardTemplateEditor
 import com.ichi2.anki.DeckPicker
-import com.ichi2.anki.FilteredDeckOptions
 import com.ichi2.anki.Info
 import com.ichi2.anki.IntentHandler
 import com.ichi2.anki.IntentHandler.Companion.getReviewDeckIntent
@@ -46,6 +45,7 @@ import com.ichi2.anki.previewer.CardViewerActivity
 import com.ichi2.anki.ui.windows.managespace.ManageSpaceActivity
 import com.ichi2.anki.ui.windows.permissions.AllPermissionsExplanationActivity
 import com.ichi2.anki.ui.windows.permissions.PermissionsActivity
+import com.ichi2.anki.utils.ConfigAwareSingleFragmentActivity
 import com.ichi2.testutils.ActivityList.ActivityLaunchParam.Companion.get
 import com.ichi2.widget.cardanalysis.CardAnalysisWidgetConfig
 import com.ichi2.widget.deckpicker.DeckPickerWidgetConfig
@@ -75,7 +75,6 @@ object ActivityList {
             // Likely has unhandled intents
             get(Reviewer::class.java),
             get(PreferencesActivity::class.java),
-            get(FilteredDeckOptions::class.java),
             // Info has unhandled intents
             get(Info::class.java),
             get(CardTemplateEditor::class.java) { intentForCardTemplateEditor() },
@@ -87,6 +86,7 @@ object ActivityList {
             get(PermissionsActivity::class.java),
             get(AllPermissionsExplanationActivity::class.java),
             get(SingleFragmentActivity::class.java),
+            get(ConfigAwareSingleFragmentActivity::class.java),
             get(CardViewerActivity::class.java),
             get(InstantNoteEditorActivity::class.java),
             get(MultimediaActivity::class.java),
