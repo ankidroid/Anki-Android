@@ -32,6 +32,7 @@ import androidx.annotation.VisibleForTesting
 import androidx.constraintlayout.widget.Group
 import androidx.core.os.bundleOf
 import androidx.core.text.HtmlCompat
+import androidx.core.text.parseAsHtml
 import androidx.core.view.MenuProvider
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -51,6 +52,7 @@ import com.ichi2.anki.reviewreminders.ScheduleReminders
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.ui.internationalization.toSentenceCase
 import com.ichi2.anki.utils.ext.showDialogFragment
+import com.ichi2.utils.UrlImageGetter
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -459,7 +461,8 @@ class StudyOptionsFragment :
                 }
             }
         if (desc.isNotEmpty()) {
-            textDeckDescription.text = formatDescription(desc)
+            val imageGetter = UrlImageGetter(textDeckDescription, requireContext(), lifecycleScope)
+            textDeckDescription.text = formatDescription(desc, imageGetter)
             textDeckDescription.visibility = View.VISIBLE
         } else {
             textDeckDescription.visibility = View.GONE
@@ -540,14 +543,17 @@ class StudyOptionsFragment :
         @VisibleForTesting
         fun formatDescription(
             @Language("HTML") desc: String,
+            imageGetter: android.text.Html.ImageGetter? = null, // <--- Added parameter
         ): Spanned {
             // #5715: In deck description, ignore what is in style and script tag
-            // Since we don't currently execute the JS/CSS, it's not worth displaying.
             val withStrippedTags = stripHTMLScriptAndStyleTags(desc)
             // #5188 - compat.fromHtml converts newlines into spaces.
             val withoutWindowsLineEndings = withStrippedTags.replace("\r\n", "<br/>")
             val withoutLinuxLineEndings = withoutWindowsLineEndings.replace("\n", "<br/>")
-            return HtmlCompat.fromHtml(withoutLinuxLineEndings, HtmlCompat.FROM_HTML_MODE_LEGACY)
+            return withoutLinuxLineEndings.parseAsHtml(
+                HtmlCompat.FROM_HTML_MODE_LEGACY,
+                imageGetter,
+            )
         }
     }
 

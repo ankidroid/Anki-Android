@@ -394,7 +394,7 @@ open class CardTemplateEditor :
                 template.jsonObject.put("did", deck.deckId)
                 getString(R.string.model_manager_deck_override_added_message, templateName, deck.name)
             }
-
+        displayDiscardChangesCallback.isEnabled = true
         showSnackbar(message, Snackbar.LENGTH_SHORT)
 
         // Deck Override can change from "on" <-> "off"
