@@ -20,7 +20,9 @@ import android.app.Activity
 import android.os.Bundle
 import android.os.Process
 import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
+import com.ichi2.anki.exception.ManuallyReportedException
 import com.ichi2.anki.showThemedToast
 import com.ichi2.themes.Themes
 import timber.log.Timber
@@ -58,6 +60,12 @@ object AppLoadedFromBackupWorkaround {
             getString(R.string.ankidroid_cannot_open_after_backup_try_again),
             false,
         )
+        CrashReportService.sendExceptionReport(
+            ManuallyReportedException("19050: Activity started with no application instance"),
+            origin = "showedActivityFailedScreen",
+            additionalInfo = null,
+            onlyIfSilent = true,
+        )
 
         // fixes: java.lang.IllegalStateException: You need to use a Theme.AppCompat theme (or descendant) with this activity.
         // on Importer
@@ -75,6 +83,7 @@ object AppLoadedFromBackupWorkaround {
             } catch (e: InterruptedException) {
                 Timber.w(e)
             }
+            Timber.e("killing process")
             Process.killProcess(Process.myPid())
         }.start()
         return true
