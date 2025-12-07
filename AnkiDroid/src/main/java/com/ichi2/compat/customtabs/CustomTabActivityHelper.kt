@@ -24,6 +24,7 @@ import androidx.browser.customtabs.CustomTabsClient
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.browser.customtabs.CustomTabsServiceConnection
 import androidx.browser.customtabs.CustomTabsSession
+import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
 import com.ichi2.anki.snackbar.showSnackbar
 import timber.log.Timber
@@ -69,12 +70,17 @@ class CustomTabActivityHelper : ServiceConnectionCallback {
      */
     fun bindCustomTabsService(activity: Activity) {
         if (client != null) return
-        val packageName = CustomTabsHelper.getPackageNameToUse(activity) ?: return
-        connection = ServiceConnection(this)
         try {
+            val packageName = CustomTabsHelper.getPackageNameToUse(activity) ?: return
+            connection = ServiceConnection(this)
             CustomTabsClient.bindCustomTabsService(activity, packageName, connection!!)
         } catch (e: SecurityException) {
             Timber.w(e, "CustomTabsService bind attempt failed, using fallback")
+            CrashReportService.sendExceptionReport(
+                e = e,
+                origin = "bindCustomTabsService",
+                onlyIfSilent = true,
+            )
             disableCustomTabHandler()
         }
     }
