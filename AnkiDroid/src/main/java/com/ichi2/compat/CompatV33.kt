@@ -33,6 +33,9 @@ import kotlin.time.Duration
 open class CompatV33 :
     CompatV31(),
     Compat {
+    /**
+     *  @throws SecurityException on some Xiaomi phones if performing a cross-profile query #19711
+     */
     override fun resolveActivity(
         packageManager: PackageManager,
         intent: Intent,

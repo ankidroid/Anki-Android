@@ -168,6 +168,8 @@ class CompatHelper private constructor() {
          *  matching activity was found. If multiple matching activities are
          *  found and there is no default set, returns a [ResolveInfo] object
          *  containing something else, such as the activity resolver.
+         *
+         *  @throws SecurityException on some Xiaomi phones if performing a cross-profile query #19711
          */
         fun PackageManager.resolveActivityCompat(
             intent: Intent,
