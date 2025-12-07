@@ -166,7 +166,7 @@
     <string name="import_error_not_apkg_extension">El nombre de archivo “%s” no tiene extensión .apkg o .colpkg</string>
     <string name="import_error_load_imported_database">Los reemplazos de la base de datos de Anki (.anki2) aún no están soportados. Consulta el manual para obtener instrucciones de reemplazo.</string>
     <string name="import_error_content_provider">AnkiDroid no ha podido importar automáticamente el archivo seleccionado. Por favor, lea el manual de usuario sobre como importar manualmente Anki files: \n %s</string>
-    <string name="import_error_copy_to_cache_title">Failed to cache file</string>
+    <string name="import_error_copy_to_cache_title">Error al almacenar el archivo en caché</string>
     <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">This is often caused by a bug in the app you used to select the file. Please try the following fixes:\n\n%s</string>
     <string name="import_interrupted">Importación interrumpida: AnkiDroid se cerró</string>
     <string name="export_ready_title">Exportación preparada</string>

@@ -253,7 +253,7 @@ class DeckPickerViewModel :
     fun browseCards(deckId: DeckId) =
         launchCatchingIO {
             withCol { decks.select(deckId) }
-            flowOfDestination.emit(BrowserDestination(deckId))
+            flowOfDestination.emit(BrowserDestination.ToDeck(deckId))
         }
 
     fun addNote(

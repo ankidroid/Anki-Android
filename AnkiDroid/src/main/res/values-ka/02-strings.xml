@@ -166,7 +166,7 @@
     <string name="import_error_not_apkg_extension">ფაილის სახელს „%s“ არ აქვს .apkg ან .colpkg დაბოლოება</string>
     <string name="import_error_load_imported_database">Anki მონაცემთა ბაზის შემცვლელი ფაილები (.anki2)  ჯერ არ არის მხარდაჭერილი. იხილეთ ინსტრუქცია შესაბამისი მითითებებისთვის</string>
     <string name="import_error_content_provider">მონიშნული ფაილის ავტომატური იმპორტირება ვერ მოხერხდა. იხილეთ ინსტრუქცია Anki-ფაილების არაავტომატური იმპორტირების მეთოდისთვის: \n%s</string>
-    <string name="import_error_copy_to_cache_title">Failed to cache file</string>
+    <string name="import_error_copy_to_cache_title">ფაილის ვერ ჩაიწერა ქეშში</string>
     <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">This is often caused by a bug in the app you used to select the file. Please try the following fixes:\n\n%s</string>
     <string name="import_interrupted">იმპორტი შეჩერდა: AnkiDroid გამოირთო</string>
     <string name="export_ready_title">ექსპორტი მზადაა</string>

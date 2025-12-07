@@ -169,7 +169,7 @@
     <string name="card_template_browser_appearance_title">Tarayıcı görünümü</string>
     <!-- card Info -->
     <string name="card_info_title" maxLength="28">Kart bilgileri</string>
-    <string name="previous_card_info_title" maxLength="28">Previous card info</string>
+    <string name="previous_card_info_title" maxLength="28">Önceki kart bilgisi</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">AnkiDroid veritabanına okut ve yaz</string>
     <string name="read_write_permission_description">varolan notlara, kartlara, not türlerine ve destelere erişmek, ve yenilerini oluşturmak</string>

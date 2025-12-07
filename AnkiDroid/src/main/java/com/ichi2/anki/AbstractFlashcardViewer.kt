@@ -562,7 +562,7 @@ abstract class AbstractFlashcardViewer :
 
         setContentView(getContentViewAttr(fullscreenMode))
 
-        val port = StudyScreenRepository.getServerPort()
+        val port = StudyScreenRepository().getServerPort()
         server = AnkiServer(this, port).also { it.start() }
         // Make ACTION_PROCESS_TEXT for in-app searching possible on > Android 4.0
         delegate.isHandleNativeActionModesEnabled = true

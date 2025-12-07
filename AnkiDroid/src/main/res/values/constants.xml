@@ -344,4 +344,12 @@
     <string name="post_notification_permission">android.permission.POST_NOTIFICATIONS</string>
     <string name="record_audio_permission">android.permission.RECORD_AUDIO</string>
 
+
+    <string-array name="import_cache_error_resolutions">
+        <item>@string/import_error_resolution_try_again</item>
+        <item>@string/import_error_resolution_free_up_space</item>
+        <item>@string/import_error_resolution_check_internet</item>
+        <item>@string/import_error_resolution_copy_to_device</item>
+        <item>@string/import_error_resolution_select_file</item>
+    </string-array>
 </resources>

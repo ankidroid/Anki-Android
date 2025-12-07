@@ -55,7 +55,7 @@
     <string name="CardEditorTags">Štítky: %1$s</string>
     <string name="CardEditorCards">Karty: %1$s</string>
     <string name="edit_occlusions">Upravit okluze</string>
-    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
+    <string name="paste_from_clipboard" maxLength="28">Vložit ze schránky</string>
     <string name="tag_name">Název štítku</string>
     <string name="add_new_filter_tags">Přidat/Filtrovat štítky</string>
     <string name="add_tag" maxLength="28">Přidat štítek</string>
@@ -172,7 +172,7 @@
     <string name="import_error_not_apkg_extension">Název souboru „%s“ nemá příponu .apkg nebo .colpkg</string>
     <string name="import_error_load_imported_database">Náhrady Anki databáze (.anki2) ještě nejsou podporovány. Pokyny k náhradě naleznete v příručce.</string>
     <string name="import_error_content_provider">Vybraný soubor nelze automaticky importovat pomocí AnkiDroid. V uživatelské příručce naleznete, jak provést ruční import souborů Anki: \n %s</string>
-    <string name="import_error_copy_to_cache_title">Failed to cache file</string>
+    <string name="import_error_copy_to_cache_title">Nepodařilo se uložit soubor do mezipaměti</string>
     <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">This is often caused by a bug in the app you used to select the file. Please try the following fixes:\n\n%s</string>
     <string name="import_interrupted">Import přerušen: AnkiDroid se zavřel</string>
     <string name="export_ready_title">Export připraven</string>
@@ -242,7 +242,7 @@
     <string name="search_decks" maxLength="28">Hledat balíčky</string>
     <string name="ankidroid_init_failed_webview_title">Kritická chyba</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid spoléhá na systémový WebView, který je nedostupný. K tomu může dojít, jestliže systém instaluje aktualizace. Zkuste to prosím znovu za pár minut.\n\n%s</string>
-    <string name="ankidroid_init_failed_storage">AnkiDroid cannot access storage due to an Android error.\n\n%s</string>
+    <string name="ankidroid_init_failed_storage">AnkiDroid nemůže přistupovat k úložišti kvůli chybě Androidu.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">Velikost písma</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Zobrazit nástrojovou lištu</string>

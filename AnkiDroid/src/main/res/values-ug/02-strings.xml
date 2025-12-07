@@ -166,7 +166,7 @@
     <string name="import_error_not_apkg_extension">ھۆججەت «%s» نىڭ .apkg ياكى .colpkg كېڭەيتىلگەن نامى يوق</string>
     <string name="import_error_load_imported_database">Anki سانداق (.anki2) ئالماشتۇرۇشنى تېخى قوللىمايدۇ. ئالماشتۇرۇش كۆرسەتمىسىنى قوللانمىدىن كۆرۈڭ.</string>
     <string name="import_error_content_provider">تاللانغان ھۆججەتنى AnkiDroid ئۆزلۈكىدىن ئەكىرەلمەيدۇ. ئىشلەتكۈچى قوللانمىسىدىن Anki ھۆججەتنى قانداق ئەكىرىشنى كۆرۈڭ: \n%s</string>
-    <string name="import_error_copy_to_cache_title">Failed to cache file</string>
+    <string name="import_error_copy_to_cache_title">ھۆججەتنى غەملىيەلمىدى</string>
     <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">This is often caused by a bug in the app you used to select the file. Please try the following fixes:\n\n%s</string>
     <string name="import_interrupted">ئەكىرىش ئۈزۈلدى: AnkiDroid تاقالغان</string>
     <string name="export_ready_title">چىقىرىشقا تەييار</string>

@@ -166,7 +166,7 @@
     <string name="import_error_not_apkg_extension">ᱨᱮᱫᱧᱩᱛᱩᱢ “%s” ᱴᱷᱮᱱ .apkg or .colpkg extension ᱵᱟᱱᱩᱜᱽᱟ</string>
     <string name="import_error_load_imported_database">Anki Database (.anki2) ᱵᱚᱫᱚᱞ ᱥᱟᱹᱯᱚᱴ ᱵᱟᱹᱱᱩᱜᱼᱟ ᱾ ᱨᱤᱯᱞᱮᱥᱢᱮᱴ ᱞᱟᱹᱜᱤᱫ ᱢᱮᱱᱩᱟᱞ ᱧᱮᱞᱯᱮ</string>
     <string name="import_error_content_provider">ᱵᱟᱪᱷᱟᱣᱟᱠᱟᱱ ᱨᱮᱫ AnkiDroid ᱛᱮ ᱵᱟᱭ ᱞᱟᱫᱮᱜ ᱠᱟᱱᱟ ᱾ ᱫᱚᱭᱟᱠᱟᱛᱮ ᱨᱤᱯᱞᱮᱥᱢᱮᱴ ᱞᱟᱹᱜᱤᱫ ᱢᱮᱱᱩᱟᱞ ᱧᱮᱞᱯᱮ Anki ᱨᱮᱫ: \n%s</string>
-    <string name="import_error_copy_to_cache_title">Failed to cache file</string>
+    <string name="import_error_copy_to_cache_title">ᱯᱷᱤᱞ ᱠᱷᱟᱪ ᱨᱮ ᱵᱟᱭ ᱥᱮᱞᱮᱫ ᱫᱟᱲᱮᱭᱟᱜ ᱠᱟᱱᱟ</string>
     <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">This is often caused by a bug in the app you used to select the file. Please try the following fixes:\n\n%s</string>
     <string name="import_interrupted">ᱨᱮᱫ ᱟᱠᱚᱴ ᱮᱱᱟ</string>
     <string name="export_ready_title">ᱮᱠᱥᱯᱳᱨᱴ ᱞᱟᱹᱜᱤᱫ ᱥᱟᱹᱛ</string>

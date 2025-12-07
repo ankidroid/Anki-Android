@@ -71,7 +71,7 @@ val hideShowButtonCss =
  * input. This method will always return the received input.
  */
 suspend fun FragmentActivity.searchInBrowser(input: ByteArray): ByteArray {
-    val searchString = withCol { buildSearchString(SearchNode.parseFrom(input)) }
+    val searchString = withCol { buildSearchString(listOf(SearchNode.parseFrom(input))) }
     val starterIntent =
         Intent(this, CardBrowser::class.java).apply {
             putExtra("search_query", searchString)

@@ -15,7 +15,9 @@
  */
 package com.ichi2.anki.settings
 
+import android.content.Context
 import android.content.SharedPreferences
+import android.content.res.Resources
 import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
 import androidx.core.content.edit
@@ -24,6 +26,7 @@ import com.ichi2.anki.BuildConfig
 import com.ichi2.anki.R
 import com.ichi2.anki.cardviewer.TapGestureMode
 import com.ichi2.anki.common.utils.isRunningAsUnitTest
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.settings.enums.FrameStyle
 import com.ichi2.anki.settings.enums.HideSystemBars
 import com.ichi2.anki.settings.enums.PrefEnum
@@ -34,12 +37,12 @@ import kotlin.reflect.KProperty
 
 // TODO move this to `com.ichi2.anki.preferences`
 //  after the UI classes of that package are moved to `com.ichi2.anki.ui.preferences`
-object Prefs {
-    private val sharedPrefs get() = AnkiDroidApp.sharedPrefs()
+object Prefs : PrefsRepository(AnkiDroidApp.sharedPrefs(), AnkiDroidApp.appResources)
 
-    @VisibleForTesting
-    val resources get() = AnkiDroidApp.appResources
-
+open class PrefsRepository(
+    val sharedPrefs: SharedPreferences,
+    private val resources: Resources,
+) {
     @VisibleForTesting
     fun key(
         @StringRes resId: Int,
@@ -108,6 +111,14 @@ object Prefs {
         } ?: defaultValue
     }
 
+    fun <E> putEnum(
+        @StringRes keyResId: Int,
+        value: E,
+    ) where E : Enum<E>, E : PrefEnum {
+        val stringValue = resources.getString(value.entryResId)
+        putString(keyResId, stringValue)
+    }
+
     // **************************************** Delegates *************************************** //
 
     @VisibleForTesting
@@ -154,7 +165,7 @@ object Prefs {
     fun intPref(
         @StringRes keyResId: Int,
         defaultValue: Int,
-    ): ReadWriteProperty<Any, Int> =
+    ): ReadWriteProperty<Any?, Int> =
         object : ReadWriteProperty<Any?, Int> {
             override fun getValue(
                 thisRef: Any?,
@@ -174,7 +185,7 @@ object Prefs {
     fun longPref(
         @StringRes keyResId: Int,
         defaultValue: Long,
-    ): ReadWriteProperty<Any, Long> =
+    ): ReadWriteProperty<Any?, Long> =
         object : ReadWriteProperty<Any?, Long> {
             override fun getValue(
                 thisRef: Any?,
@@ -187,6 +198,26 @@ object Prefs {
                 value: Long,
             ) {
                 putLong(keyResId, value)
+            }
+        }
+
+    @VisibleForTesting
+    fun <E> enumPref(
+        @StringRes keyResId: Int,
+        defaultValue: E,
+    ): ReadWriteProperty<Any?, E> where E : Enum<E>, E : PrefEnum =
+        object : ReadWriteProperty<Any?, E> {
+            override fun getValue(
+                thisRef: Any?,
+                property: KProperty<*>,
+            ): E = getEnum(keyResId, defaultValue)
+
+            override fun setValue(
+                thisRef: Any?,
+                property: KProperty<*>,
+                value: E,
+            ) {
+                putEnum(keyResId, value)
             }
         }
 
@@ -247,14 +278,9 @@ object Prefs {
     val swipeSensitivity: Float
         get() = getInt(R.string.pref_swipe_sensitivity_key, 100) / 100F
 
-    val frameStyle: FrameStyle
-        get() = getEnum(R.string.reviewer_frame_style_key, FrameStyle.CARD)
-
-    val hideSystemBars: HideSystemBars
-        get() = getEnum(R.string.hide_system_bars_key, HideSystemBars.NONE)
-
-    val toolbarPosition: ToolbarPosition
-        get() = getEnum(R.string.reviewer_toolbar_position_key, ToolbarPosition.TOP)
+    val frameStyle: FrameStyle by enumPref(R.string.reviewer_frame_style_key, FrameStyle.CARD)
+    val hideSystemBars: HideSystemBars by enumPref(R.string.hide_system_bars_key, HideSystemBars.NONE)
+    val toolbarPosition: ToolbarPosition by enumPref(R.string.reviewer_toolbar_position_key, ToolbarPosition.TOP)
 
     // **************************************** Controls **************************************** //
     //region Controls
@@ -309,11 +335,12 @@ object Prefs {
 
     // **************************************** UI Config *************************************** //
 
-    private const val UI_CONFIG_PREFERENCES_NAME = "ui-config"
-
     /**
      * Get the SharedPreferences used for UI configuration such as Resizable layouts
      */
-    fun getUiConfig(context: android.content.Context): SharedPreferences =
-        context.getSharedPreferences(UI_CONFIG_PREFERENCES_NAME, android.content.Context.MODE_PRIVATE)
+    fun getUiConfig(context: Context): SharedPreferences = context.getSharedPreferences(UI_CONFIG_PREFERENCES_NAME, Context.MODE_PRIVATE)
+
+    companion object {
+        private const val UI_CONFIG_PREFERENCES_NAME = "ui-config"
+    }
 }

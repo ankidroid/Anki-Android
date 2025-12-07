@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025 Brayan Oliveira <brayandso.dev@gmail.com>
+ * Copyright (c) 2025 Brayan Oliveira <69634269+brayandso@users.noreply.github.com>
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -11,17 +11,14 @@
  * PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License along with
- * this program.  If not, see <http://www.gnu.org/licenses/>.
+ * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.ichi2.anki.settings.enums
+package com.ichi2.anki.common.utils.ext
 
-import androidx.annotation.StringRes
+import android.content.Intent
 
-/**
- * An enum representing the possible values of a Preference.
- */
-interface PrefEnum {
-    /** The resource ID of a constant that corresponds to the preference string value. */
-    @get:StringRes
-    val entryResId: Int
+fun Intent.getLongExtra(key: String): Long? {
+    @Suppress("DEPRECATION") // get()
+    val value = extras?.get(key) ?: return null
+    return value as Long
 }

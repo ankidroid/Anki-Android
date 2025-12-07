@@ -166,7 +166,7 @@
     <string name="import_error_not_apkg_extension">Tiedostolla ”%s” ei ole .apkg tai .colpkg päätettä</string>
     <string name="import_error_load_imported_database">Ankin tietokannan (.anki2) korvaamista ei vielä tueta. Katso korvausohjeet käyttöoppaasta.</string>
     <string name="import_error_content_provider">Valittua tiedostoa ei voitu tuoda automaattisesti AnkiDroidiin. Katso käyttöohjeesta, kuinka tuoda manuaalisesti Anki-tiedostoja: \n%s</string>
-    <string name="import_error_copy_to_cache_title">Failed to cache file</string>
+    <string name="import_error_copy_to_cache_title">Tiedoston tallentaminen välimuistiin epäonnistui</string>
     <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">This is often caused by a bug in the app you used to select the file. Please try the following fixes:\n\n%s</string>
     <string name="import_interrupted">Tuonti keskeytyi: AnkiDroid suljettiin</string>
     <string name="export_ready_title">Vienti valmis</string>

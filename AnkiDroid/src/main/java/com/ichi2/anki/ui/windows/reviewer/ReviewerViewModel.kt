@@ -116,7 +116,7 @@ class ReviewerViewModel(
     val pageDownFlow = MutableSharedFlow<Unit>()
     val statesMutationEvalFlow = MutableSharedFlow<String>()
 
-    override val server: AnkiServer = AnkiServer(this, StudyScreenRepository.getServerPort()).also { it.start() }
+    override val server: AnkiServer = AnkiServer(this, StudyScreenRepository().getServerPort()).also { it.start() }
     private val stateMutationKey = TimeManager.time.intTimeMS().toString()
     private var typedAnswer = ""
 
@@ -291,7 +291,8 @@ class ReviewerViewModel(
 
     private suspend fun emitBrowseDestination() {
         val deckId = withCol { decks.getCurrentId() }
-        val destination = BrowserDestination(deckId)
+        val cardId = currentCard.await().id
+        val destination = BrowserDestination.ToCard(deckId, cardId)
         Timber.i("Launching 'browse options' for deck %d", deckId)
         destinationFlow.emit(destination)
     }
