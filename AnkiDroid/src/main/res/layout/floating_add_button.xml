@@ -183,6 +183,7 @@
                     app:srcCompat="@drawable/ic_add_white"
                     app:backgroundTint="?attr/fab_normal"
                     app:fabSize="normal"
+                    android:contentDescription="@string/menu_add"
                     android:focusable="true"
                     android:clickable="true"
                     />
