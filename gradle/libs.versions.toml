@@ -18,9 +18,9 @@ ktlint = '1.8.0'
 #
 # Old changelogs - See 'Table of Contents' in sidebar
 # https://developer.android.com/build/releases/past-releases
-androidGradlePlugin = "8.13.1"
+androidGradlePlugin = "8.13.2"
 # https://developer.android.com/jetpack/androidx/releases/activity
-androidxActivity = "1.12.1"
+androidxActivity = "1.12.2"
 # https://developer.android.com/jetpack/androidx/releases/annotation
 androidxAnnotation = "1.9.1"
 # https://developer.android.com/jetpack/androidx/releases/appcompat
@@ -38,11 +38,11 @@ androidxExifinterface = "1.4.2"
 # https://developer.android.com/jetpack/androidx/releases/fragment
 androidxFragmentKtx = "1.8.9"
 # https://developer.android.com/jetpack/androidx/releases/lifecycle
-androidxLifecycleProcess = "2.9.3"
+androidxLifecycleProcess = "2.10.0"
 # https://developer.android.com/jetpack/androidx/releases/media
 androidxMedia = "1.7.1"
 # https://developer.android.com/jetpack/androidx/releases/media3
-androidxMedia3 = "1.8.0"
+androidxMedia3 = "1.9.0"
 # https://developer.android.com/jetpack/androidx/releases/preference
 androidxPreferenceKtx = "1.2.1"
 # https://developer.android.com/jetpack/androidx/releases/recyclerview
@@ -58,7 +58,7 @@ androidxTestUiAutomator = "2.3.0"
 # https://developer.android.com/jetpack/androidx/releases/viewpager2
 androidxViewpager2 = "1.1.0"
 # https://developer.android.com/jetpack/androidx/releases/webkit
-androidxWebkit = "1.14.0"
+androidxWebkit = "1.15.0"
 # https://developer.android.com/jetpack/androidx/releases/work
 androidxWork = "2.11.0"
 ankiBackend = '0.1.62-anki25.09.2'
@@ -81,7 +81,7 @@ imageCropper = "4.7.0"
 jacoco = "0.8.14"
 javaSemver = "0.10.2"
 jetbrainsAnnotations = "26.0.2-1"
-json = "20250517"
+json = "20251224"
 jsoup = "1.21.2"
 androidTestJunit = "1.3.0"
 # https://github.com/junit-team/junit5/releases/
@@ -92,16 +92,16 @@ kotlin = '2.2.10'
 kotlinxSerializationJson = "1.9.0"
 ktlintGradlePlugin = "14.0.1"
 leakcanaryAndroid = "2.14"
-lint = '31.13.1'
+lint = '31.13.2'
 material = "1.13.0"
 
 mockitoInline = "5.2.0"
 mockitoKotlin = "6.1.0"
-mockk = "1.14.6"
+mockk = "1.14.7"
 nanohttpd = "2.3.1"
 okhttp = "5.3.2"
 # https://github.com/protocolbuffers/protobuf/releases
-protobufKotlinLite = "4.33.1"
+protobufKotlinLite = "4.33.2"
 # ../AnkiDroid/robolectricDownload.gradle may need changes - read instructions in that file
 robolectric = "4.16"
 searchpreference = "2.7.3"
@@ -112,7 +112,7 @@ slf4jTimber = "3.1"
 timber = "5.0.1"
 # https://github.com/Triple-T/gradle-play-publisher/releases
 # In the past, releases have been published before the changelog
-triplet = "3.12.2"
+triplet = "3.13.0"
 turbine = "1.2.1"
 
 [libraries]
