@@ -222,4 +222,6 @@
     <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Usuń konto</string>
     <!-- Instant Note Editor -->
     <string name="instant_card" comment="Used in the Android system context menu/share dialog to quickly create a note. This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. ">Szybka karta</string>
+    <!-- Multiple profile -->
+    <string name="add_profile">Add profile</string>
 </resources>

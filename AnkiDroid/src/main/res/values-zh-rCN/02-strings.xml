@@ -164,7 +164,7 @@
     <string name="import_error_load_imported_database">尚不支持替换 Anki 数据库（.anki2）。请参阅手册以获取替换说明。</string>
     <string name="import_error_content_provider">所选文件无法由 AnkiDroid 自动导入。请查看用户手册了解如何手动导入 Anki 文件：\n%s</string>
     <string name="import_error_copy_to_cache_title">缓存文件失败</string>
-    <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">This is often caused by a bug in the app you used to select the file. Please try the following fixes:\n\n%s</string>
+    <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">这通常是由您用来选择文件的应用中的错误引起的。请尝试以下修复：\n\n%s</string>
     <string name="import_interrupted">导入中断</string>
     <string name="export_ready_title">已准备好导出</string>
     <string name="export_send_no_handlers">没有可用处理 apkg 的应用程序。正在保存&#8230;</string>

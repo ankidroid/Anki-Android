@@ -167,7 +167,7 @@
     <string name="import_error_load_imported_database">Anstataŭigoj de Anki-datumbazo (.anki2) ankoraŭ ne estas subtenataj. Legu la manlibron por instrukciojn pri anstataŭigo.</string>
     <string name="import_error_content_provider">Ne povas aŭtomate enporti elektitan dosieron al AnkiDroid. Bonvolu legi la manlibron de uzanto por sciiĝi pri kiel permane enporti Anki-dosierojn:\n%s</string>
     <string name="import_error_copy_to_cache_title">Malsukcesis kaŝmemori dosieron</string>
-    <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">This is often caused by a bug in the app you used to select the file. Please try the following fixes:\n\n%s</string>
+    <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">Tio ĉi ofte okazas pro eraro en la aplikaĵo uzita por elekti la dosieron. Provu la jenon por solvi la problemon:\n\n%s</string>
     <string name="import_interrupted">Enportado interrompita</string>
     <string name="export_ready_title">Elporto estas preta</string>
     <string name="export_send_no_handlers">Neniu aplikaĵo por pritrakti apkg. Konservado&#8230;</string>
@@ -308,8 +308,8 @@
     <string name="field_editor_model_not_available">Malsukcesis aliri la kolekton. Reprovu!</string>
     <string name="cd_manage_notetypes_add">Aldoni novan nototipon</string>
     <plurals name="note_types_selected">
-        <item quantity="one">%d note type selected</item>
-        <item quantity="other">%d note types selected</item>
+        <item quantity="one">%d nototipo elektita</item>
+        <item quantity="other">%d nototipoj elektitaj</item>
     </plurals>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">Lernu malpli</string>
