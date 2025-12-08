@@ -52,8 +52,11 @@ jobs:
         # "lintPlayRelease" doesn't test androidTest
         # "lintPlayDebug" doesn't test the API
         # "lintVitalFullRelease": if `main` resources are only used in `androidTest` (#15741)
+
+        # update workflows/README.md when modifying this line
         run: ./gradlew lintPlayDebug :api:lintDebug :libanki:lintDebug ktLintCheck lintVitalFullRelease lint-rules:test --daemon
 
+  # update workflows/README.md when modifying commands
   lintJavascript:
     name: Lint Javascript
     timeout-minutes: 20
