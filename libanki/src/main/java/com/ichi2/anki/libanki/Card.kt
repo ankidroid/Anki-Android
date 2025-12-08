@@ -18,7 +18,6 @@
 package com.ichi2.anki.libanki
 
 import androidx.annotation.VisibleForTesting
-import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.utils.ext.ifZero
 import com.ichi2.anki.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput
@@ -237,7 +236,6 @@ open class Card : Cloneable {
     }
 
     @LibAnkiAlias("current_deck_id")
-    @NeedsTest("Test functionality which calls this")
     fun currentDeckId() = oDid.ifZero { did }
 
     /**
