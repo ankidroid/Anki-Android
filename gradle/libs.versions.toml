@@ -112,7 +112,7 @@ slf4jTimber = "3.1"
 timber = "5.0.1"
 # https://github.com/Triple-T/gradle-play-publisher/releases
 # In the past, releases have been published before the changelog
-triplet = "3.12.2"
+triplet = "3.13.0"
 turbine = "1.2.1"
 
 [libraries]
