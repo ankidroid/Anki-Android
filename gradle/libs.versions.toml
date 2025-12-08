@@ -97,7 +97,7 @@ material = "1.13.0"
 
 mockitoInline = "5.2.0"
 mockitoKotlin = "6.1.0"
-mockk = "1.14.6"
+mockk = "1.14.7"
 nanohttpd = "2.3.1"
 okhttp = "5.3.2"
 # https://github.com/protocolbuffers/protobuf/releases
