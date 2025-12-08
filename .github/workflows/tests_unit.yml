@@ -152,6 +152,7 @@ jobs:
           max_attempts: 3
           command: ./gradlew robolectricSdkDownload --daemon
 
+        # update workflows/README.md when modifying this step
       - name: Run Unit Tests
         run: ./gradlew jacocoUnitTestReport --daemon
 
