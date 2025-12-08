@@ -37,6 +37,8 @@ androidxDragAndDrop = "1.0.0"
 androidxExifinterface = "1.4.2"
 # https://developer.android.com/jetpack/androidx/releases/fragment
 androidxFragmentKtx = "1.8.9"
+# https://developer.android.com/jetpack/androidx/releases/lifecycle
+androidxLifecycleProcess = "2.9.3"
 # https://developer.android.com/jetpack/androidx/releases/media
 androidxMedia = "1.7.1"
 # https://developer.android.com/jetpack/androidx/releases/media3
@@ -112,7 +114,6 @@ timber = "5.0.1"
 # In the past, releases have been published before the changelog
 triplet = "3.12.2"
 turbine = "1.2.1"
-lifecycleProcess = "2.9.3"
 
 [libraries]
 acra-limiter = { module = "ch.acra:acra-limiter", version.ref = "acra" }
@@ -129,6 +130,7 @@ androidx-browser = { module = "androidx.browser:browser", version.ref = "android
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidxAppCompat" }
 androidx-annotation = { module = "androidx.annotation:annotation", version.ref = "androidxAnnotation" }
 androidx-activity = { module = "androidx.activity:activity", version.ref = "androidxActivity" }
+androidx-lifecycle-process = { group = "androidx.lifecycle", name = "lifecycle-process", version.ref = "androidxLifecycleProcess" }
 androidx-media3-ui = { module = "androidx.media3:media3-ui", version.ref = "androidxMedia3" }
 androidx-media3-exoplayer-dash = { module = "androidx.media3:media3-exoplayer-dash", version.ref = "androidxMedia3" }
 androidx-media3-exoplayer = { module = "androidx.media3:media3-exoplayer", version.ref = "androidxMedia3" }
@@ -200,7 +202,6 @@ mockito-kotlin = { module = "org.mockito.kotlin:mockito-kotlin", version.ref = "
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 robolectric = { module = "org.robolectric:robolectric", version.ref = "robolectric" }
 cashapp-turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
-androidx-lifecycle-process = { group = "androidx.lifecycle", name = "lifecycle-process", version.ref = "lifecycleProcess" }
 
 [plugins]
 
