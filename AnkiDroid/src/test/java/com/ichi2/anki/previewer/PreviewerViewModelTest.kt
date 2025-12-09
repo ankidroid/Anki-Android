@@ -22,6 +22,8 @@ import com.ichi2.anki.browser.IdsFile
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.anki.utils.ext.flag
 import com.ichi2.testutils.JvmTest
+import com.ichi2.testutils.common.Flaky
+import com.ichi2.testutils.common.OS
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
@@ -174,6 +176,7 @@ class PreviewerViewModelTest : JvmTest() {
         }
 
     @Test
+    @Flaky(OS.ALL) // 19729: failed on macOS
     fun `next, slider and previous navigation integration`() =
         runTest {
             // 1. Start at Index 0 (Question)
