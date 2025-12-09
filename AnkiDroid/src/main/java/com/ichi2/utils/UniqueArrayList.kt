@@ -61,7 +61,7 @@ class UniqueArrayList<E> /**
          *
          * This is the same list as the one used internally in [SetUniqueList]. We keep a reference to it here in
          * order to be able to sort it. [SetUniqueList] implementation needs to make sure the internal [Set]
-         * and [List] don't get out of sync, and [<] cannot be sorted via [Collections.sort]
+         * and [List] don't get out of sync, and [SetUniqueList] cannot be sorted via [java.util.Collections.sort]
          * or [SetUniqueList.sort] both will throw an exception, due to a limitation on this class [java.util.ListIterator]
          *
          * Sorting can be only done via [UniqueArrayList.sort] or [UniqueArrayList.sort].
@@ -107,15 +107,15 @@ class UniqueArrayList<E> /**
          * The specified list must be modifiable, but need not be resizable.
          *
          * @implNote
-         * DO NOT call [Collections.sort] using this list directly
-         * this can throw due to a limitation on setting items on the [ListIterator]
-         * returned by [listIterator]
+         * DO NOT call [java.util.Collections.sort] using this list directly
+         * this can throw due to a limitation on setting items on the [java.util.ListIterator]
+         * returned by [java.util.ListIterator]
          *
          * @param c the comparator to determine the order of the list.  A
          * `null` value indicates that the elements' *natural
          * ordering* should be used.
          *
-         * @see Collections.sort
+         * @see java.util.Collections.sort
          */
         @KotlinCleanup("sortWith")
         override fun sort(c: Comparator<in E>?) {
