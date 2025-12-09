@@ -54,6 +54,13 @@ class EaseButton(
         get() = easeTimeView.text.toString()
         set(value) {
             easeTimeView.text = value
+            val label = easeTextView.text.toString()
+            val spokenTime =
+                nextTime
+                    .replace("m\\b".toRegex(), "minutes")
+                    .replace("d\\b".toRegex(), "days")
+                    .replace("h\\b".toRegex(), "hours")
+            layout.contentDescription = "$spokenTime,$label"
         }
 
     fun hideNextReviewTime() {

@@ -103,6 +103,7 @@
                 <com.ichi2.ui.FixedTextView
                     android:id="@+id/ease2"
                     android:text="@string/ease_button_hard"
+
                     style="@style/HardButtonEaseStyle" />
             </LinearLayout>
 
@@ -123,7 +124,6 @@
                     android:id="@+id/nextTime3"
                     style="@style/GoodButtonTimeStyle"
                     tools:text="3 d" />
-
                 <com.ichi2.ui.FixedTextView
                     android:id="@+id/ease3"
                     android:text="@string/ease_button_good"
