@@ -255,9 +255,9 @@
     <string name="tts_error_dialog_change_button_text">Ŝanĝi</string>
     <string name="tts_error_dialog_supported_voices_button_text">Agordi</string>
     <!-- import_cache_error_resolutions -->
-    <string name="import_error_resolution_try_again">Re-import the file</string>
-    <string name="import_error_resolution_free_up_space">Ensure there is sufficient free space on your device</string>
-    <string name="import_error_resolution_check_internet">Ensure you are connected to the internet</string>
-    <string name="import_error_resolution_copy_to_device">Copy the file to your device and try again with the local file</string>
-    <string name="import_error_resolution_select_file">Open the file using your device’s file browser app</string>
+    <string name="import_error_resolution_try_again">reenportu la dosieron</string>
+    <string name="import_error_resolution_free_up_space">certiĝu, ke sufiĉas libera spaco en via aparato</string>
+    <string name="import_error_resolution_check_internet">certiĝu, ke vi estas konektita kun la interreto</string>
+    <string name="import_error_resolution_copy_to_device">kopiu la dosieron al via aparato kaj reprovu elektante lokan dosieron</string>
+    <string name="import_error_resolution_select_file">malfermu la dosieron per dosier-esplorilo</string>
 </resources>

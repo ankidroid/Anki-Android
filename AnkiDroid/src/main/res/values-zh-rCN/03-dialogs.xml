@@ -247,9 +247,9 @@
     <string name="tts_error_dialog_change_button_text">更改引擎</string>
     <string name="tts_error_dialog_supported_voices_button_text">语音选项</string>
     <!-- import_cache_error_resolutions -->
-    <string name="import_error_resolution_try_again">Re-import the file</string>
-    <string name="import_error_resolution_free_up_space">Ensure there is sufficient free space on your device</string>
-    <string name="import_error_resolution_check_internet">Ensure you are connected to the internet</string>
-    <string name="import_error_resolution_copy_to_device">Copy the file to your device and try again with the local file</string>
-    <string name="import_error_resolution_select_file">Open the file using your device’s file browser app</string>
+    <string name="import_error_resolution_try_again">重新导入文件</string>
+    <string name="import_error_resolution_free_up_space">确保您的设备上有足够的可用空间</string>
+    <string name="import_error_resolution_check_internet">确保您已连接到互联网</string>
+    <string name="import_error_resolution_copy_to_device">将文件复制到您的设备，然后使用本地文件重试</string>
+    <string name="import_error_resolution_select_file">使用设备的文件浏览器应用打开文件</string>
 </resources>

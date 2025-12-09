@@ -28,6 +28,9 @@
 package com.ichi2.anki.observability
 
 import androidx.annotation.VisibleForTesting
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
 import anki.collection.OpChanges
 import anki.collection.OpChangesAfterUndo
 import anki.collection.OpChangesOnly
@@ -62,9 +65,48 @@ object ChangeManager {
 
     val subscriberCount get() = subscribers.size
 
+    /**
+     * Subscribes to changes.
+     *
+     * @param subscriber The object listening for changes.
+     * @param owner The lifecycle owner controlling this subscription.
+     * Defaults to [subscriber] if it implements [LifecycleOwner] (e.g. Activities/Fragments).
+     * If provided, subscription waits for [Lifecycle.State.CREATED] and auto-unsubscribes on destroy.
+     */
     @Contract("subscriber -> call")
-    fun subscribe(subscriber: Subscriber) {
-        subscribers.add(WeakReference(subscriber))
+    fun subscribe(
+        subscriber: Subscriber,
+        owner: LifecycleOwner? = subscriber as? LifecycleOwner,
+    ) {
+        val weakRef = WeakReference(subscriber)
+
+        if (owner == null) {
+            subscribers.add(weakRef)
+            return
+        }
+
+        if (owner.lifecycle.currentState.isAtLeast(Lifecycle.State.CREATED)) {
+            subscribers.add(weakRef)
+        }
+
+        owner.lifecycle.addObserver(
+            object : DefaultLifecycleObserver {
+                override fun onCreate(owner: LifecycleOwner) {
+                    if (subscribers.none { it.get() === subscriber }) {
+                        subscribers.add(weakRef)
+                    }
+                }
+
+                override fun onDestroy(owner: LifecycleOwner) {
+                    unsubscribe(subscriber)
+                    owner.lifecycle.removeObserver(this)
+                }
+            },
+        )
+    }
+
+    fun unsubscribe(subscriber: Subscriber) {
+        subscribers.removeWeakReferences { it == null || it === subscriber }
     }
 
     private fun notifySubscribers(
@@ -142,4 +184,8 @@ object ChangeManager {
             noteText = true
             studyQueues = true
         }
+}
+
+private fun <T> MutableList<WeakReference<T>>.removeWeakReferences(block: (T?) -> Boolean) {
+    this.removeAll { block(it.get()) }
 }
