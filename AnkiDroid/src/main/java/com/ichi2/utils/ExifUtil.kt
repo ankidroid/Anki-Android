@@ -30,30 +30,22 @@ object ExifUtil {
     fun rotateFromCamera(
         theFile: File,
         bitmap: Bitmap,
-    ): Bitmap {
-        var bmp = bitmap
-        return try {
+    ): Bitmap =
+        try {
             val exif = ExifInterface(theFile.path)
             val orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
-            var angle = 0
-            when (orientation) {
-                ExifInterface.ORIENTATION_ROTATE_90 -> {
-                    angle = 90
+            val angle =
+                when (orientation) {
+                    ExifInterface.ORIENTATION_ROTATE_90 -> 90
+                    ExifInterface.ORIENTATION_ROTATE_180 -> 180
+                    ExifInterface.ORIENTATION_ROTATE_270 -> 270
+                    else -> 0
                 }
-                ExifInterface.ORIENTATION_ROTATE_180 -> {
-                    angle = 180
-                }
-                ExifInterface.ORIENTATION_ROTATE_270 -> {
-                    angle = 270
-                }
-            }
             val mat = Matrix()
             mat.postRotate(angle.toFloat())
-            bmp = Bitmap.createBitmap(bmp, 0, 0, bmp.width, bmp.height, mat, true)
-            bmp
+            Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, mat, true)
         } catch (e: Exception) {
             Timber.w(e)
-            bmp
+            bitmap
         }
-    }
 }
