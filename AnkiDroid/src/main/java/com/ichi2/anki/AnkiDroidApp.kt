@@ -72,6 +72,7 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import timber.log.Timber.DebugTree
+import java.io.File
 import java.util.Locale
 
 /**
@@ -276,15 +277,28 @@ open class AnkiDroidApp :
      *  is called on startup of the activity.
      */
     private fun initializeAnkiDroidDirectory() {
-        // #13207: `getCurrentAnkiDroidDirectory` failing is an unconditional be a fatal error
-        // TODO: For now, a null getExternalFilesDir, but a valid AnkiDroid Directory in prefs
-        //  is not considered to be a fatal error, unless the directory itself is not writable.
-        val ankiDroidDir =
+        val preferences = this.sharedPrefs()
+        val existingCollectionPath = preferences.getString("deckPath", null)
+
+        val ankiDroidDir: File =
             try {
                 CollectionHelper.getCurrentAnkiDroidDirectory(this)
             } catch (e: SystemStorageException) {
-                fatalInitializationError = FatalInitializationError.StorageError(e)
-                return
+                if (existingCollectionPath != null) {
+                    val existingDir = File(existingCollectionPath)
+                    if (existingDir.exists() && existingDir.canWrite()) {
+                        Timber.w(e, "getExternalFilesDir is null, but existing directory is valid: $existingCollectionPath")
+                        existingDir
+                    } else {
+                        Timber.e(e, "getExternalFilesDir is null and no valid existing directory found")
+                        fatalInitializationError = FatalInitializationError.StorageError(e)
+                        return
+                    }
+                } else {
+                    Timber.e(e, "getExternalFilesDir is null and no valid existing directory found")
+                    fatalInitializationError = FatalInitializationError.StorageError(e)
+                    return
+                }
             }
 
         // TODO: This line is questionable, as it doesn't work on most post-scoped-storage
@@ -303,13 +317,38 @@ open class AnkiDroidApp :
                     sendExceptionReport(e, "AnkiDroidApp.onCreate")
                 }
             } catch (e: SystemStorageException) {
+                // Check one more time if we have a valid existing directory before failing
+                if (existingCollectionPath != null && isDirectoryAccessible(existingCollectionPath)) {
+                    Timber.w(
+                        e,
+                        "getExternalFilesDir is null during error recovery, but existing directory is valid",
+                    )
+                    return
+                }
+
                 // The user can't write to the AnkiDroid directory (=> cant write to the collection)
                 // AND getExternalFilesDir is null - file permissions are likely corrupted (Android 16 bug)
+                // AND there's no valid existing directory
                 // => show the 'fatal storage error' screen
                 fatalInitializationError = FatalInitializationError.StorageError(e)
             }
         }
     }
+
+    /**
+     * Helper function to check if a directory path is accessible
+     * @param path The directory path to check
+     * @return true if the directory exists and is writable
+     */
+    private fun isDirectoryAccessible(path: String): Boolean =
+        try {
+            val dir = File(path)
+            // Check if directory exists, is a directory, can read and write
+            dir.exists() && dir.isDirectory && dir.canRead() && dir.canWrite()
+        } catch (e: Exception) {
+            Timber.w(e, "Error checking directory accessibility: $path")
+            false
+        }
 
     /**
      * @return the app version, OS version and device model, provided when syncing.
