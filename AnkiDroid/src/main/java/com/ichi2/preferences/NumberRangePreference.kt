@@ -142,19 +142,13 @@ open class NumberRangePreference :
         editText.filters += LengthFilter(max.toString().length)
     }
 
+    /**
+     * This preference's value. The value is validated and persisted as an Integer.
+     *
+     * @param value to set.
+     */
     var value: Int
-        /**
-         * Get the persisted value held by this preference.
-         *
-         * @return the persisted value.
-         */
         get() = getPersistedInt(min)
-
-        /**
-         * Set this preference's value. The value is validated and persisted as an Integer.
-         *
-         * @param value to set.
-         */
         set(value) {
             val validated = getValidatedRangeFromInt(value)
             text = validated.toString()

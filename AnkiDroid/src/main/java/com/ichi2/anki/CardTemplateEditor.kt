@@ -690,7 +690,7 @@ open class CardTemplateEditor :
                 insets
             }
 
-            /**
+            /*
              * We focus on the editText to indicate it's editable, but we don't automatically
              * show the keyboard. This is intentional - the keyboard should only appear
              * when the user taps on the edit field, not every time the fragment loads.
@@ -706,7 +706,7 @@ open class CardTemplateEditor :
             setupMenu()
         }
 
-        /**
+        /*
          * Custom ActionMode.Callback implementation for adding new field action
          * button in the text selection menu.
          */

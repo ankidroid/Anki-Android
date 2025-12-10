@@ -253,7 +253,8 @@ class DeckPickerWidget : AnalyticsWidgetProvider() {
             Timber.d("Updating widget with ID: $widgetId")
             val selectedDeckIds = widgetPreferences.getSelectedDeckIdsFromPreferences(widgetId)
 
-            /**Explanation of behavior when selectedDeckIds is empty
+            /*
+             * Explanation of behavior when selectedDeckIds is empty
              * If selectedDeckIds is empty, the widget will retain the previous deck list.
              * This behavior ensures that the widget does not display an empty view, which could be
              * confusing to the user. Instead, it maintains the last known state until a new valid
@@ -308,8 +309,8 @@ class DeckPickerWidget : AnalyticsWidgetProvider() {
 
                 val selectedDeckIds = widgetPreferences.getSelectedDeckIdsFromPreferences(appWidgetId)
                 if (selectedDeckIds.isEmpty()) {
-                    /**
-                     * Rationale: see [performUpdate]
+                    /*
+                     * Rationale: see `performUpdate`
                      */
                     Timber.d(
                         "Ignoring ACTION_UPDATE_WIDGET for widget ID: $appWidgetId because selectedDeckIds is empty",

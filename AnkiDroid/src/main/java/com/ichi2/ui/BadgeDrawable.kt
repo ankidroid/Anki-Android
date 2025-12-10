@@ -22,6 +22,11 @@ import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.DrawableWrapper
 
+/**
+ * Creates a new wrapper around the specified drawable.
+ *
+ * @param dr the drawable to wrap
+ */
 class BadgeDrawable(
     dr: Drawable?,
 ) : DrawableWrapper(dr) {
@@ -100,11 +105,6 @@ class BadgeDrawable(
         const val ICON_SCALE_BARE = 0.40
     }
 
-    /**
-     * Creates a new wrapper around the specified drawable.
-     *
-     * @param dr the drawable to wrap
-     */
     init {
         paint.typeface = Typeface.DEFAULT_BOLD
         paint.textAlign = Paint.Align.CENTER

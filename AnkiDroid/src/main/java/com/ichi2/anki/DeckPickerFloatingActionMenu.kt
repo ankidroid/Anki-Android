@@ -76,7 +76,7 @@ class DeckPickerFloatingActionMenu(
             fabBGLayout.visibility = View.VISIBLE
             addNoteLabel.visibility = View.VISIBLE
             fabMain.animate().apply {
-                /**
+                /*
                  * If system animations are true changes the FAB color otherwise it remains the same
                  */
                 if (areSystemAnimationsEnabled()) {

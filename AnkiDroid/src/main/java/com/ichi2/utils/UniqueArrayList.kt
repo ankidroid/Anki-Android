@@ -14,7 +14,11 @@
  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-@file:Suppress("ktlint:standard:discouraged-comment-location", "ktlint:standard:kdoc-wrapping")
+@file:Suppress(
+    "ktlint:standard:discouraged-comment-location",
+    "ktlint:standard:kdoc-wrapping",
+    "ktlint:standard:kdoc", // private constructor docs
+)
 
 package com.ichi2.utils
 

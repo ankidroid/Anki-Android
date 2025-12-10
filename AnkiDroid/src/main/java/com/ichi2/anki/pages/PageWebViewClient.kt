@@ -104,7 +104,7 @@ open class PageWebViewClient : SafeWebViewClient() {
         super.onPageFinished(view, url)
         if (view == null) return
         onPageFinishedCallbacks.map { callback -> callback.onPageFinished(view) }
-        /** [PageFragment.webView] is invisible by default to avoid flashes while
+        /* webView is invisible by default to avoid flashes while
          * the page is loaded, and can be made visible again after it finishes loading */
         onShowWebView(view)
     }
