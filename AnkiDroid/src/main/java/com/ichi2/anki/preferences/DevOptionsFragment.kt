@@ -56,21 +56,7 @@ class DevOptionsFragment : SettingsFragment() {
         get() = "prefs.dev_options"
 
     override fun initSubscreen() {
-        val enableDevOptionsPref = requirePreference<SwitchPreferenceCompat>(R.string.dev_options_enabled_by_user_key)
-        /**
-         * If it is a DEBUG build, hide the preference to disable developer options
-         * If it is a RELEASE build, configure the preference to disable dev options
-         * Ensure that the preference is searchable or not
-         * based on the same condition at [HeaderFragment.configureSearchBar]
-         */
-        if (BuildConfig.DEBUG) {
-            enableDevOptionsPref.isVisible = false
-        } else {
-            enableDevOptionsPref.setOnPreferenceChangeListener { _, _ ->
-                showDisableDevOptionsDialog()
-                false
-            }
-        }
+        setupEnableDevOptions()
         // Make it possible to test crash reporting
         requirePreference<Preference>(R.string.pref_trigger_crash_key).setOnPreferenceClickListener {
             // If we don't delete the limiter data, our test crash may not go through,
@@ -208,6 +194,26 @@ class DevOptionsFragment : SettingsFragment() {
         }
 
         setupWebDebugPreference()
+    }
+
+    /**
+     * In a DEBUG build, hide the preference to disable developer options
+     * In a RELEASE build, configure the preference to disable dev options
+     * Ensure that the preference is searchable or not
+     * based on the same condition at [HeaderFragment.configureSearchBar]
+     */
+    private fun setupEnableDevOptions() {
+        val enableDevOptionsPref =
+            requirePreference<SwitchPreferenceCompat>(R.string.dev_options_enabled_by_user_key)
+
+        if (BuildConfig.DEBUG) {
+            enableDevOptionsPref.isVisible = false
+        } else {
+            enableDevOptionsPref.setOnPreferenceChangeListener { _, _ ->
+                showDisableDevOptionsDialog()
+                false
+            }
+        }
     }
 
     private fun setupWebDebugPreference() {
