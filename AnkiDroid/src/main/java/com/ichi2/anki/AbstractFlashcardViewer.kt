@@ -1488,7 +1488,7 @@ abstract class AbstractFlashcardViewer :
         // Text to speech is in effect here
         // If the question is displayed or if the question should be replayed, read the question
         if (ttsInitialized) {
-            if (!displayAnswer || doMediaReplay && replayQuestion) {
+            if (!displayAnswer || (doMediaReplay && replayQuestion)) {
                 readCardTts(SingleCardSide.FRONT)
             }
             if (displayAnswer) {

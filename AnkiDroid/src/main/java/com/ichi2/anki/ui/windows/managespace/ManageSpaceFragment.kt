@@ -401,10 +401,8 @@ class ManageSpaceFragment : SettingsFragment() {
 
         isEnabled =
             !(
-                size is Size.Bytes &&
-                    size.totalSize == 0L ||
-                    size is Size.FilesAndBytes &&
-                    size.files.isEmpty()
+                (size is Size.Bytes && size.totalSize == 0L) ||
+                    (size is Size.FilesAndBytes && size.files.isEmpty())
             )
     }
 
