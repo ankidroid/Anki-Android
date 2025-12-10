@@ -72,9 +72,9 @@ abstract class Test21And26 {
     @Parameterized.Parameter(0)
     lateinit var compat: Compat
 
+    /** Used in the "Test Results" Window */
     @Parameterized.Parameter(1)
     @Suppress("unused")
-    /** Used in the "Test Results" Window */
     lateinit var unitTestDescription: String
 
     val isV26: Boolean

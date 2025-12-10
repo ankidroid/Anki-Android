@@ -93,10 +93,10 @@ open class AnkiDroidApp :
     /** Used to avoid showing extra progress dialogs when one already shown. */
     var progressDialogShown = false
 
-    @KotlinCleanup("analytics can be moved to attachBaseContext()")
     /**
      * On application creation.
      */
+    @KotlinCleanup("analytics can be moved to attachBaseContext()")
     override fun onCreate() {
         try {
             Os.setenv("PLATFORM", syncPlatform(), false)

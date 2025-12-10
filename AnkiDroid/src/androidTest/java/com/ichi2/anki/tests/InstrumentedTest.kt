@@ -217,8 +217,8 @@ abstract class InstrumentedTest {
             col.addNote(this)
         }
 
-    @DuplicatedCode("This is copied from RobolectricTest. This will be refactored into a shared library later")
     /** Helper method to update a note */
+    @DuplicatedCode("This is copied from RobolectricTest. This will be refactored into a shared library later")
     @SuppressLint("CheckResult")
     fun Note.update(block: Note.() -> Unit): Note {
         block(this)

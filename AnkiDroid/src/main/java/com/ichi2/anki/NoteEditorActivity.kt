@@ -21,6 +21,8 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
+import com.ichi2.anki.NoteEditorActivity.Companion.FRAGMENT_ARGS_EXTRA
+import com.ichi2.anki.NoteEditorActivity.Companion.FRAGMENT_NAME_EXTRA
 import com.ichi2.anki.android.input.ShortcutGroup
 import com.ichi2.anki.android.input.ShortcutGroupProvider
 import com.ichi2.anki.libanki.Collection
@@ -108,7 +110,7 @@ class NoteEditorActivity :
             supportFragmentManager.commit {
                 replace(R.id.note_editor_fragment_frame, NoteEditorFragment.newInstance(launcher), FRAGMENT_TAG)
                 setReorderingAllowed(true)
-                /**
+                /*
                  * Initializes the noteEditorFragment reference only after the transaction is committed.
                  * This ensures the fragment is fully created and available in the activity before
                  * any code attempts to interact with it, preventing potential null reference issues.

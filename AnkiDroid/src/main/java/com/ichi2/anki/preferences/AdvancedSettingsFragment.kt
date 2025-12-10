@@ -136,7 +136,7 @@ class AdvancedSettingsFragment : SettingsFragment() {
     }
 
     private fun removeUnnecessaryAdvancedPrefs() {
-        /** These preferences should be searchable or not based
+        /* These preferences should be searchable or not based
          * on this same condition at [HeaderFragment.configureSearchBar] */
         // Disable the double scroll preference if no scrolling keys
         if (!CompatHelper.hasScrollKeys()) {

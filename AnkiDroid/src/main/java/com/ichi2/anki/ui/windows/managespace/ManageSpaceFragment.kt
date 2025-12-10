@@ -308,7 +308,7 @@ class ManageSpaceFragment : SettingsFragment() {
         }
     }
 
-    /************************************* Delete collection **************************************/
+    // ************************************ Delete collection *************************************
 
     /** While we are in this activity, we may have other activities opened.
      * These activities might be visible to user, e.g. when using Split screen mode.

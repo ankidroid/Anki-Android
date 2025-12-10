@@ -113,10 +113,10 @@ class RecyclerFastScroller
                 }
             }
 
+        /**
+         * @throws RuntimeException if set to more than 48dp
+         */
         var touchTargetWidth: Int = 24.dp.toPx(context)
-            /**
-             * @param touchTargetWidth In pixels, less than or equal to 48dp
-             */
             set(touchTargetWidth) {
                 field = touchTargetWidth
 
