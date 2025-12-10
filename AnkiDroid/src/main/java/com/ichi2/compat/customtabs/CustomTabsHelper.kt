@@ -64,7 +64,7 @@ object CustomTabsHelper {
         if (sPackageNameToUse != null) return sPackageNameToUse
         val pm = context.packageManager
         // Get default VIEW intent handler.
-        val activityIntent = Intent(Intent.ACTION_VIEW, "http://www.example.com".toUri())
+        val activityIntent = Intent(Intent.ACTION_VIEW, "https://www.example.com".toUri())
         val defaultViewHandlerInfo =
             runCatchingWithReport("getPackageNameToUse", onlyIfSilent = true) {
                 pm.resolveActivityCompat(activityIntent, ResolveInfoFlagsCompat.EMPTY)
