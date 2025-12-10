@@ -1,4 +1,4 @@
-/**
+/*
  *  Copyright (c) 2025 Amit Bisht <iamitsbisht07@gmail.com>
  *
  *  This program is free software; you can redistribute it and/or modify it under

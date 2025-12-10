@@ -14,7 +14,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/**
+/*
  * With the Rust backend, operations that modify the collection return a description of changes (OpChanges).
  * The UI can subscribe to these changes, so it can update itself when actions have been performed
  * (eg, the deck list can check if studyQueues has been updated, and if so, it will redraw the list).

@@ -1,5 +1,4 @@
-/****************************************************************************************
- *                                                                                      *
+/*                                                                                      *
  * Copyright (c) 2022 Brian Da Silva <brianjose2010@gmail.com>                          *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
@@ -13,7 +12,7 @@
  *                                                                                      *
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
- ****************************************************************************************/
+ */
 
 package com.ichi2.anki.ui.windows.managespace
 
