@@ -46,6 +46,7 @@ import org.junit.Rule
 import timber.log.Timber
 import java.io.File
 import java.io.IOException
+import java.util.Locale
 import java.util.concurrent.TimeUnit
 import kotlin.test.fail
 
@@ -77,28 +78,40 @@ abstract class InstrumentedTest {
     companion object {
         /**
          * This is how google detects emulators in flutter and how react-native does it in the device info module
-         * https://github.com/react-native-community/react-native-device-info/blob/bb505716ff50e5900214fcbcc6e6434198010d95/android/src/main/java/com/learnium/RNDeviceInfo/RNDeviceModule.java#L185
+         * https://github.com/react-native-device-info/react-native-device-info/blob/9b17b707fdd3a1427064a333a01bfd98ab81e6a8/android/src/main/java/com/learnium/RNDeviceInfo/RNDeviceModule.java#L298-L321
          * @return boolean true if the execution environment is most likely an emulator
          */
+        @Suppress("DEPRECATION")
+        @SuppressLint("LocaleRootUsage")
         fun isEmulator(): Boolean =
             (
-                Build.BRAND.startsWith("generic") &&
-                    Build.DEVICE.startsWith("generic") ||
-                    Build.FINGERPRINT.startsWith("generic") ||
+                Build.FINGERPRINT.startsWith("generic") ||
                     Build.FINGERPRINT.startsWith("unknown") ||
-                    Build.HARDWARE.contains("goldfish") ||
-                    Build.HARDWARE.contains("ranchu") ||
                     Build.MODEL.contains("google_sdk") ||
+                    Build.MODEL.lowercase(Locale.ROOT).contains("droid4x") ||
                     Build.MODEL.contains("Emulator") ||
                     Build.MODEL.contains("Android SDK built for x86") ||
                     Build.MANUFACTURER.contains("Genymotion") ||
-                    Build.PRODUCT.contains("sdk_google") ||
-                    Build.PRODUCT.contains("google_sdk") ||
+                    Build.HARDWARE.contains("goldfish") ||
+                    Build.HARDWARE.contains("ranchu") ||
+                    Build.HARDWARE.contains("vbox86") ||
                     Build.PRODUCT.contains("sdk") ||
+                    Build.PRODUCT.contains("google_sdk") ||
+                    Build.PRODUCT.contains("sdk_google") ||
                     Build.PRODUCT.contains("sdk_x86") ||
                     Build.PRODUCT.contains("vbox86p") ||
                     Build.PRODUCT.contains("emulator") ||
-                    Build.PRODUCT.contains("simulator")
+                    Build.PRODUCT.contains("simulator") ||
+                    Build.BOARD.lowercase(Locale.ROOT).contains("nox") ||
+                    Build.BOOTLOADER.lowercase(Locale.ROOT).contains("nox") ||
+                    Build.HARDWARE.lowercase(Locale.ROOT).contains("nox") ||
+                    Build.PRODUCT.lowercase(Locale.ROOT).contains("nox") ||
+                    Build.SERIAL.lowercase(Locale.ROOT).contains("nox") ||
+                    (
+                        Build.BRAND.startsWith("generic") && Build.DEVICE.startsWith("generic")
+                        // Ignored - needs inputMethodManager
+                        // || this.hasKeyboard("memuime"))
+                    )
             )
     }
 
