@@ -126,7 +126,7 @@ class FinderTest : InMemoryAnkiTest() {
         note.setItem("Back", "sheep")
         col.addNote(note)
         val catCard = note.cards()[0]
-        var noteType = col.notetypes.current
+        var noteType = col.notetypes.current()
         noteType = col.notetypes.copy(noteType)
         val t =
             Notetypes.newTemplate("Reverse").apply {

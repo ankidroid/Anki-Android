@@ -29,7 +29,6 @@ import com.ichi2.anki.R
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.dialogs.TtsVoicesDialogFragment
 import com.ichi2.anki.launchCatchingTask
-import com.ichi2.anki.libanki.Note
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.showThemedToast
 import com.ichi2.anki.snackbar.showSnackbar
@@ -235,9 +234,8 @@ class DevOptionsFragment : SettingsFragment() {
                     }
                     withCol {
                         val deck = decks.addNormalDeckWithName(deckName(i))
-                        val ntid = defaultsForAdding().notetypeId
                         addNote(
-                            Note.fromNotetypeId(this, ntid).apply { setField(0, "$i") },
+                            newNote(notetypes.current()).apply { setField(0, "$i") },
                             deck.id,
                         )
                     }

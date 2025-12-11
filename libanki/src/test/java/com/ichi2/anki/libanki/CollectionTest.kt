@@ -109,7 +109,7 @@ class CollectionTest : InMemoryAnkiTest() {
         var n = col.addNote(note)
         assertEquals(1, n)
         // test multiple cards - add another template
-        val noteType = col.notetypes.current
+        val noteType = col.notetypes.current()
         val t = Notetypes.newTemplate("Reverse")
         t.qfmt = "{{Back}}"
         t.afmt = "{{Front}}"
@@ -189,7 +189,7 @@ class CollectionTest : InMemoryAnkiTest() {
     @Test
     @Ignore("Pending port of media search from Rust code")
     fun test_furigana() {
-        val noteType = col.notetypes.current
+        val noteType = col.notetypes.current()
         // filter should work
         noteType.templates[0].qfmt = "{{kana:Front}}"
         col.notetypes.save(noteType)

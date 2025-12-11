@@ -887,7 +887,7 @@ open class SchedulerTest : InMemoryAnkiTest() {
     @Throws(Exception::class)
     fun test_ordcycleV2() {
         // add two more templates and set second active
-        val noteType = col.notetypes.current
+        val noteType = col.notetypes.current()
         var t =
             Notetypes.newTemplate("Reverse").apply {
                 qfmt = "{{Back}}"

@@ -39,7 +39,7 @@ class NoteTypeTest : JvmTest() {
     @Test
     fun test_frontSide_field() {
         // #8951 - Anki Special-cases {{FrontSide}} on the front to return empty string
-        val noteType = col.notetypes.current
+        val noteType = col.notetypes.current()
         noteType.templates[0].qfmt = "{{Front}}{{FrontSide}}"
         col.notetypes.save(noteType)
         val note = col.newNote()
@@ -62,7 +62,7 @@ class NoteTypeTest : JvmTest() {
     @Test
     fun test_field_named_frontSide() {
         // #8951 - A field named "FrontSide" is ignored - this matches Anki 2.1.34 (8af8f565)
-        val noteType = col.notetypes.current
+        val noteType = col.notetypes.current()
 
         // Add a field called FrontSide and FrontSide2 (to ensure that fields are added correctly)
         col.notetypes.addFieldModChanged(noteType, col.notetypes.newField("FrontSide"))
@@ -95,13 +95,13 @@ class NoteTypeTest : JvmTest() {
         note.setItem("Back", "2")
         col.addNote(note)
         assertEquals(1, col.cardCount())
-        col.notetypes.remove(col.notetypes.current.id)
+        col.notetypes.remove(col.notetypes.current().id)
         assertEquals(0, col.cardCount())
     }
 
     @Test
     fun test_modelCopy() {
-        val noteType = col.notetypes.current
+        val noteType = col.notetypes.current()
         val noteType2 = col.notetypes.copy(noteType)
         assertEquals("Basic copy", noteType2.name)
         assertNotEquals(noteType2.id, noteType.id)
@@ -120,7 +120,7 @@ class NoteTypeTest : JvmTest() {
         note.setItem("Front", "1")
         note.setItem("Back", "2")
         col.addNote(note)
-        val noteType = col.notetypes.current
+        val noteType = col.notetypes.current()
         // make sure renaming a field updates the templates
         col.notetypes.renameFieldLegacy(noteType, noteType.fields[0], "NewFront")
         assertThat(noteType.templates[0].qfmt, containsString("{{NewFront}}"))
@@ -228,7 +228,7 @@ class NoteTypeTest : JvmTest() {
     @Test
     @Throws(ConfirmModSchemaException::class)
     fun test_templates() {
-        val noteType = col.notetypes.current
+        val noteType = col.notetypes.current()
         var t =
             Notetypes.newTemplate("Reverse").apply {
                 qfmt = "{{Back}}"
@@ -283,7 +283,7 @@ class NoteTypeTest : JvmTest() {
     @Throws(ConfirmModSchemaException::class)
     fun test_cloze_ordinals() {
         col.notetypes.setCurrent(col.notetypes.byName("Cloze")!!)
-        val noteType = col.notetypes.current
+        val noteType = col.notetypes.current()
 
         // We replace the default Cloze template
         val t =
@@ -312,7 +312,7 @@ class NoteTypeTest : JvmTest() {
     @Test
     fun test_text() {
         val noteType =
-            col.notetypes.current.apply {
+            col.notetypes.current().apply {
                 templates[0].qfmt = "{{text:Front}}"
             }
         col.notetypes.save(noteType)
@@ -393,7 +393,7 @@ class NoteTypeTest : JvmTest() {
     @Suppress("SpellCheckingInspection") // chaine
     fun test_chained_mods() {
         col.notetypes.setCurrent(col.notetypes.byName("Cloze")!!)
-        val noteType = col.notetypes.current
+        val noteType = col.notetypes.current()
 
         // We replace the default Cloze template
         val t =
@@ -427,7 +427,7 @@ class NoteTypeTest : JvmTest() {
     fun test_modelChange() {
         val cloze = col.notetypes.byName("Cloze")
         // enable second template and add a note
-        val basic = col.notetypes.current
+        val basic = col.notetypes.current()
         val t =
             Notetypes.newTemplate("Reverse").apply {
                 qfmt = "{{Back}}"
@@ -555,7 +555,7 @@ class NoteTypeTest : JvmTest() {
 
     @Test
     fun test_updateNotetype_clears_cache() {
-        val noteType = col.notetypes.current
+        val noteType = col.notetypes.current()
         val originalName = noteType.name
         val noteTypeId = noteType.id
 
