@@ -73,7 +73,7 @@ class CardTest : InMemoryAnkiTest() {
         note.setItem("Back", "2")
         col.addNote(note)
         val c = note.cards()[0]
-        col.notetypes.current.id
+        col.notetypes.current().id
         assertEquals(0, c.template().ord)
     }
 
@@ -84,7 +84,7 @@ class CardTest : InMemoryAnkiTest() {
         note.setItem("Back", "")
         col.addNote(note)
         assertEquals(1, note.numberOfCards())
-        val noteType = col.notetypes.current
+        val noteType = col.notetypes.current()
         // adding a new template should automatically create cards
         var t =
             Notetypes.newTemplate("rev").apply {

@@ -32,7 +32,6 @@
 package com.ichi2.anki.libanki
 
 import androidx.annotation.CheckResult
-import androidx.annotation.VisibleForTesting
 import anki.collection.OpChanges
 import anki.collection.OpChangesWithId
 import anki.notetypes.ChangeNotetypeInfo
@@ -146,8 +145,7 @@ class Notetypes(
      */
 
     /** Get current model.*/
-    @VisibleForTesting
-    @Deprecated("Use col.defaultsForAdding()")
+    @RustCleanup("Should use defaultsForAdding() instead")
     fun current(forDeck: Boolean = true): NotetypeJson {
         var noteType = get(col.decks.current().getLongOrNull("mid"))
         if (!forDeck || noteType == null) {

@@ -68,5 +68,4 @@ fun Collection.createBasicTypingNoteType(name: String): NotetypeJson {
  * the configuration (curModel)
  * @return The new note
  */
-@Suppress("DEPRECATION")
 fun Collection.newNote(forDeck: Boolean = true): Note = newNote(notetypes.current(forDeck))

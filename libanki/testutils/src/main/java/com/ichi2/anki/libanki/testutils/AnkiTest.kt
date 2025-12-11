@@ -336,14 +336,6 @@ interface AnkiTest {
         testBody()
     }
 
-    /**
-     * Returns the current default notetype for adding new cards.
-     *
-     * @see Collection.defaultNotetype
-     */
-    val Notetypes.current: NotetypeJson
-        get() = this.get(col.defaultsForAdding().notetypeId)!!
-
     val Notetypes.basic
         get() = byName("Basic")!!
 

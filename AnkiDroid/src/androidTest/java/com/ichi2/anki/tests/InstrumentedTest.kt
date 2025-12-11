@@ -31,7 +31,6 @@ import com.ichi2.anki.libanki.Card
 import com.ichi2.anki.libanki.CardType
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.Note
-import com.ichi2.anki.libanki.NotetypeJson
 import com.ichi2.anki.libanki.Notetypes
 import com.ichi2.anki.libanki.QueueType
 import com.ichi2.anki.testutil.addNote
@@ -215,15 +214,6 @@ abstract class InstrumentedTest {
     }
 
     val notetypes get() = col.notetypes
-
-    /**
-     * Returns the current default notetype for adding new cards.
-     *
-     * @see Collection.defaultNotetype
-     */
-    @DuplicatedCode("From AnkiTest")
-    val Notetypes.current: NotetypeJson
-        get() = this.get(col.defaultsForAdding().notetypeId)!!
 
     val Notetypes.basic
         get() = byName("Basic")!!

@@ -2370,8 +2370,9 @@ class NoteEditorFragment :
             }
 
             if (!getColUnsafe.config.getBool(ConfigKey.Bool.ADDING_DEFAULTS_TO_CURRENT_DECK)) {
-                return getColUnsafe.defaultsForAdding().deckId.also { deckId ->
-                    Timber.d("Adding to configured default deck: %d", deckId)
+                return getColUnsafe.notetypes.current().let {
+                    Timber.d("Adding to deck of note type, noteType: %s", it.name)
+                    return@let it.did
                 }
             }
 
@@ -2408,8 +2409,8 @@ class NoteEditorFragment :
         editorNote =
             if (note == null || addNote) {
                 getColUnsafe.run {
-                    val notetypeId = defaultsForAdding().notetypeId
-                    Note.fromNotetypeId(this@run, notetypeId)
+                    val notetype = notetypes.current()
+                    Note.fromNotetypeId(this@run, notetype.id)
                 }
             } else {
                 note
@@ -2772,7 +2773,7 @@ class NoteEditorFragment :
     }
 
     private fun changeNoteType(newId: NoteTypeId) {
-        val oldNoteTypeId = getColUnsafe.defaultsForAdding().notetypeId
+        val oldNoteTypeId = getColUnsafe.notetypes.current().id
         Timber.i("Changing note type to '%d", newId)
 
         if (oldNoteTypeId == newId) {
