@@ -551,6 +551,44 @@ class NoteEditorTest : RobolectricTest() {
             }
         }
 
+    @Test
+    @Ignore("19750")
+    fun `Changed note type respects 'Deck for new cards - Decide by Note Type'`() =
+        runTest {
+            val defaultDeckId = Consts.DEFAULT_DECK_ID
+            val deckIdForBasic = addDeck("For Basic")
+            val deckIdForReversed = addDeck("For Reversed")
+
+            // new cards should decide by note type, not the current deck
+            col.config.setBool(ConfigKey.Bool.ADDING_DEFAULTS_TO_CURRENT_DECK, false)
+            assertThat(col.decks.current().id, equalTo(defaultDeckId))
+
+            // add a note to 'Basic'
+            withNoteEditorAdding {
+                fields[0] = "Basic"
+                noteType = col.notetypes.basic
+                selectDeck(deckIdForBasic)
+                saveNote()
+            }
+
+            // add a note to 'Basic and Reversed'
+            withNoteEditorAdding {
+                fields[0] = "Reversed"
+                noteType = col.notetypes.basicAndReversed
+                selectDeck(deckIdForReversed)
+                saveNote()
+            }
+
+            // check the deck changes correctly
+            withNoteEditorAdding {
+                assertThat("using last note type", noteType.name, equalTo(col.notetypes.basicAndReversed.name))
+                assertThat("using associated deck", deckId, equalTo(deckIdForReversed))
+
+                noteType = col.notetypes.basic
+                assertThat("using deck for associated note type", deckId, equalTo(deckIdForBasic))
+            }
+        }
+
     private suspend fun withNoteEditorAdding(
         from: FromScreen = FromScreen.DECK_LIST,
         block: suspend NoteEditorFragment.() -> Unit,
@@ -762,6 +800,10 @@ private class NoteEditorFieldAccessor(
 
 private val NoteEditorFragment.fields: NoteEditorFieldAccessor
     get() = NoteEditorFieldAccessor(this)
+
+private var NoteEditorFragment.noteType: NotetypeJson
+    get() = editorNote!!.notetype
+    set(value) = this.setCurrentlySelectedNoteType(value.id)
 
 /** Select a deck by Id */
 private fun NoteEditorFragment.selectDeck(
