@@ -32,6 +32,7 @@ import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.dialogs.DialogHandler
 import com.ichi2.anki.dialogs.DialogHandlerMessage
 import com.ichi2.anki.dialogs.ImportDialog
@@ -165,7 +166,7 @@ object ImportUtils {
             context: Context,
             uri: Uri,
         ): String? {
-            val filename = ensureValidLength(getFileNameFromContentProvider(context, uri) ?: return null)
+            val filename = validateFileName(getFileNameFromContentProvider(context, uri) ?: return null)
             val tempFile = File(context.cacheDir, filename)
             return when (val result = copyFileToCache(context, uri, tempFile.absolutePath)) {
                 is CacheFileResult.Success -> result.path
@@ -236,7 +237,7 @@ object ImportUtils {
             }
 
             // Copy to temporary file
-            filename = ensureValidLength(filename)
+            filename = validateFileName(filename)
             tempOutDir = Uri.fromFile(File(context.cacheDir, filename)).encodedPath!!
 
             copyFileToCache(context, importPathUri, tempOutDir).asErrorDetails()?.let { details ->
@@ -266,7 +267,8 @@ object ImportUtils {
 
         private fun isAnkiDatabase(filename: String?): Boolean = filename != null && hasExtension(filename, "anki2")
 
-        private fun ensureValidLength(fileName: String): String {
+        @NeedsTest("Add test for the fallback, ensure the fallback filename \"file_<timestamp>.<ext>\" is produced when decoding fails")
+        private fun validateFileName(fileName: String): String {
             // #6137 - filenames can be too long when URLEncoded
             return try {
                 val encoded = URLEncoder.encode(fileName, "UTF-8")
@@ -284,7 +286,7 @@ object ImportUtils {
                 }
             } catch (e: Exception) {
                 Timber.w(e, "Failed to shorten file: %s", fileName)
-                fileName
+                "file_${TimeManager.time.intTimeMS()}.${getExtension(fileName)}"
             }
         }
 
