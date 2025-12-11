@@ -49,6 +49,8 @@ import timber.log.Timber
 @NeedsTest("15130: pressing back: icon + button should return to options if the manual is open")
 @NeedsTest("17905: pressing back before the webpage is ready closes the screen")
 class DeckOptions : PageFragment() {
+    private val deckId: DeckId by lazy { requireArguments().getLong(KEY_DECK_ID) }
+
     override val pagePath: String by lazy {
         val deckId = requireArguments().getLong(KEY_DECK_ID)
         "deck-options/$deckId"
@@ -164,7 +166,10 @@ class DeckOptions : PageFragment() {
     ) {
         pageLoadingIndicator.isVisible = true
         super.onViewCreated(view, savedInstanceState)
-        view.findViewById<MaterialToolbar>(R.id.toolbar)?.setTitle(R.string.menu__deck_options)
+        launchCatchingTask {
+            val deckName = withCol { decks.name(deckId, default = true) }
+            view.findViewById<MaterialToolbar>(R.id.toolbar).title = deckName
+        }
     }
 
     override fun onWebViewCreated() {
