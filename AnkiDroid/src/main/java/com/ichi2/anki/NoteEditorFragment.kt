@@ -91,6 +91,7 @@ import com.ichi2.anki.android.input.ShortcutGroupProvider
 import com.ichi2.anki.android.input.shortcut
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
+import com.ichi2.anki.common.utils.ext.ifZero
 import com.ichi2.anki.dialogs.ConfirmationDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
 import com.ichi2.anki.dialogs.DiscardChangesDialog
@@ -208,6 +209,7 @@ const val CALLER_KEY = "caller"
  */
 @KotlinCleanup("Go through the class and select elements to fix")
 @KotlinCleanup("see if we can lateinit")
+@NeedsTest("19733")
 class NoteEditorFragment :
     Fragment(R.layout.note_editor_fragment),
     DeckSelectionListener,
@@ -817,20 +819,14 @@ class NoteEditorFragment :
 
         deckId = requireArguments().getLong(EXTRA_DID, deckId)
         if (addNote) {
-            // When adding and if we didn't receive a valid deck id or it's the 'Default' deck, look
-            // at what deck is selected and use that(guards against certain scenarios when deleting
-            // a deck and no deck is visually selected in DeckPicker)
-            if (deckId == 0L || deckId == Consts.DEFAULT_DECK_ID) {
-                // check if this is the actual deck selected
-                val currentSelectedDeckId = col.decks.selected()
-                if (currentSelectedDeckId != Consts.DEFAULT_DECK_ID) {
-                    deckId = currentSelectedDeckId
-                }
-            }
-            // Also guard against adding to a filtered deck in which case revert to 'Default'
+            // When adding and if we didn't receive a valid deck id or it's the 'Default' deck,
+            // use the recommended deck for adding
+            deckId = deckId.ifZero { col.defaultsForAdding().deckId }
+
+            // Also guard against adding to a filtered deck
             val deck = col.decks.getLegacy(deckId)
             if (deck == null || deck.isFiltered) {
-                deckId = Consts.DEFAULT_DECK_ID
+                deckId = col.defaultsForAdding().deckId
             }
         } else {
             // When editing we always have a valid currentEditCard. Check to see if it's from a normal

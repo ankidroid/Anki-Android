@@ -527,6 +527,38 @@ class NoteEditorTest : RobolectricTest() {
             assertThat("after: current deck", note.firstCard().did, not(equalTo(homeDeckId)))
         }
 
+    @Test
+    fun `Initial deck respects 'Deck for new cards - Decide by Note Type'`() =
+        runTest {
+            val defaultDeckId = Consts.DEFAULT_DECK_ID
+            val newDeckId = addDeck("New Deck")
+
+            // new cards should decide by note type, not the current deck
+            col.config.setBool(ConfigKey.Bool.ADDING_DEFAULTS_TO_CURRENT_DECK, false)
+            assertThat(col.decks.current().id, equalTo(defaultDeckId))
+
+            // add a note, with a different deck
+            withNoteEditorAdding {
+                fields[0] = "Test"
+                selectDeck(newDeckId)
+                saveNote()
+            }
+
+            // Ensure the displayed deck is updated
+            withNoteEditorAdding {
+                assertThat("Current deck is unchanged", col.decks.current().id, equalTo(defaultDeckId))
+                assertThat("Default deck is updated", this.deckId, equalTo(newDeckId))
+            }
+        }
+
+    private suspend fun withNoteEditorAdding(
+        from: FromScreen = FromScreen.DECK_LIST,
+        block: suspend NoteEditorFragment.() -> Unit,
+    ) {
+        val editor = getNoteEditorAddingNote(from)
+        editor.block()
+    }
+
     private fun moveToDynamicDeck(note: Note): DeckId {
         val dyn = addDynamicDeck("All")
         col.decks.select(dyn)
@@ -710,4 +742,32 @@ class NoteEditorTest : RobolectricTest() {
             this.notetype = notetype
         }
     }
+}
+
+/**
+ * Boilerplate to support `NoteEditor.fields[0] = "foo"`
+ */
+private class NoteEditorFieldAccessor(
+    val editor: NoteEditorFragment,
+) {
+    operator fun get(index: Int): String = editor.getFieldForTest(index).fieldText!!
+
+    operator fun set(
+        index: Int,
+        value: String,
+    ) {
+        editor.setFieldValueFromUi(index, value)
+    }
+}
+
+private val NoteEditorFragment.fields: NoteEditorFieldAccessor
+    get() = NoteEditorFieldAccessor(this)
+
+/** Select a deck by Id */
+private fun NoteEditorFragment.selectDeck(
+    deckId: DeckId,
+    name: String = "Undefined",
+) {
+    // TODO: get name from collection and make this 'suspend fun' after Context Parameters (#19614)
+    onDeckSelected(SelectableDeck.Deck(deckId, name))
 }
