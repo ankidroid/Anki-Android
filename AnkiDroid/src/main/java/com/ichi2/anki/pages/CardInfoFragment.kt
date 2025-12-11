@@ -15,4 +15,30 @@
  */
 package com.ichi2.anki.pages
 
-class CardInfoFragment : PageFragment()
+import android.os.Bundle
+import android.view.View
+import com.google.android.material.appbar.MaterialToolbar
+import com.ichi2.anki.R
+
+class CardInfoFragment : PageFragment() {
+    override val pagePath: String by lazy {
+        val cardId = requireArguments().getLong(KEY_CARD_ID)
+        "card-info/$cardId"
+    }
+
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
+        super.onViewCreated(view, savedInstanceState)
+        val title = requireArguments().getString(KEY_TITLE)
+        if (title != null) {
+            view.findViewById<MaterialToolbar>(R.id.toolbar)?.setTitle(title)
+        }
+    }
+
+    companion object {
+        const val KEY_CARD_ID = "cardId"
+        const val KEY_TITLE = "title"
+    }
+}

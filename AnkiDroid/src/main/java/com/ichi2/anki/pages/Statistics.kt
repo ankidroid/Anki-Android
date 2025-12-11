@@ -36,6 +36,7 @@ import dev.androidbroadcast.vbpd.viewBinding
 class Statistics :
     PageFragment(R.layout.statistics),
     DeckSelectionDialog.DeckSelectionListener {
+    override val pagePath: String = "graphs"
     private val binding by viewBinding(StatisticsBinding::bind)
 
     @Suppress("deprecation", "API35 properly handle edge-to-edge")

@@ -23,6 +23,7 @@ import android.view.View
 import android.webkit.WebView
 import android.widget.TextView
 import androidx.activity.addCallback
+import androidx.core.os.BundleCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
@@ -46,6 +47,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import timber.log.Timber
+import java.lang.IllegalArgumentException
 
 /**
  * Page provided by the backend, for a user to add or edit an image occlusion (IO) note
@@ -68,6 +70,18 @@ class ImageOcclusion :
     DeckSelectionDialog.DeckSelectionListener {
     private val viewModel: ImageOcclusionViewModel by viewModels()
     private lateinit var deckNameView: TextView
+
+    override val pagePath: String by lazy {
+        val args =
+            BundleCompat.getParcelable(requireArguments(), IO_ARGS_KEY, ImageOcclusionArgs::class.java)
+                ?: throw IllegalArgumentException("IO args were not setup correctly")
+        val suffix =
+            when (args) {
+                is ImageOcclusionArgs.Add -> Uri.encode(args.imagePath)
+                is ImageOcclusionArgs.Edit -> args.noteId
+            }
+        "image-occlusion/$suffix"
+    }
 
     override fun onViewCreated(
         view: View,
@@ -163,18 +177,7 @@ class ImageOcclusion :
             context: Context,
             args: ImageOcclusionArgs,
         ): Intent {
-            val suffix =
-                when (args) {
-                    is ImageOcclusionArgs.Add -> Uri.encode(args.imagePath)
-                    is ImageOcclusionArgs.Edit -> args.noteId
-                }
-
-            val arguments =
-                bundleOf(
-                    IO_ARGS_KEY to args,
-                    PATH_ARG_KEY to "image-occlusion/$suffix",
-                )
-
+            val arguments = bundleOf(IO_ARGS_KEY to args)
             return SingleFragmentActivity.getIntent(context, ImageOcclusion::class, arguments)
         }
     }
