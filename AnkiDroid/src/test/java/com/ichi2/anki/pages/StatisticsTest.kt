@@ -44,7 +44,11 @@ class StatisticsTest : RobolectricTest() {
     @Test
     fun `shows 'Default' deck when collection is empty`() =
         runTest {
-            ActivityScenario.launch<SingleFragmentActivity>(Statistics.getIntent(targetContext))
+            ActivityScenario.launch<SingleFragmentActivity>(
+                StatisticsDestination().toIntent(
+                    targetContext,
+                ),
+            )
             advanceUntilIdle()
             onView(withText("Default")).check(matches(isDisplayed()))
         }
@@ -57,7 +61,11 @@ class StatisticsTest : RobolectricTest() {
             val testDeck1 = addDeck(testDeckName1)
             withCol { decks.select(testDeck1) }
             addDeck(testDeckName2)
-            ActivityScenario.launch<SingleFragmentActivity>(Statistics.getIntent(targetContext))
+            ActivityScenario.launch<SingleFragmentActivity>(
+                StatisticsDestination().toIntent(
+                    targetContext,
+                ),
+            )
             advanceUntilIdle()
             onView(withId(R.id.deck_name)).check(matches(withText(testDeckName1)))
             onView(withId(R.id.deck_name)).perform(click())
@@ -75,7 +83,7 @@ class StatisticsTest : RobolectricTest() {
             // and filtered decks
             mockkStatic("com.ichi2.anki.DeckSpinnerSelectionKt")
             ActivityScenario
-                .launch<SingleFragmentActivity>(Statistics.getIntent(targetContext))
+                .launch<SingleFragmentActivity>(StatisticsDestination().toIntent(targetContext))
                 .onActivity { activity ->
                     val statisticsFragment =
                         activity.supportFragmentManager.findFragmentById(R.id.fragment_container)

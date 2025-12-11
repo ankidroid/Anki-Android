@@ -27,7 +27,7 @@ import com.ichi2.anki.libanki.Card
 import com.ichi2.anki.pages.CardInfoDestination
 import com.ichi2.anki.pages.DeckOptions
 import com.ichi2.anki.pages.PageFragment
-import com.ichi2.anki.pages.Statistics
+import com.ichi2.anki.pages.StatisticsDestination
 import com.ichi2.anki.tests.InstrumentedTest
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
@@ -83,7 +83,7 @@ class PagesTest : InstrumentedTest() {
     }
 }
 
-fun PagesTest.getStatistics(context: Context): Intent = Statistics.getIntent(context)
+fun PagesTest.getStatistics(context: Context): Intent = StatisticsDestination().toIntent(context)
 
 fun PagesTest.getCardInfo(context: Context): Intent =
     addNoteUsingBasicNoteType().firstCard(col).let { card ->
