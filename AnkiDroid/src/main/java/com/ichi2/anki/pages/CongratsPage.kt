@@ -19,7 +19,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import androidx.annotation.CheckResult
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.setFragmentResultListener
@@ -33,7 +32,6 @@ import com.google.android.material.appbar.MaterialToolbar
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.DeckPicker
-import com.ichi2.anki.FilteredDeckOptions
 import com.ichi2.anki.OnErrorListener
 import com.ichi2.anki.R
 import com.ichi2.anki.StudyOptionsActivity
@@ -44,13 +42,11 @@ import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyAction
 import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.launchCatchingTask
-import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.showThemedToast
 import com.ichi2.anki.snackbar.showSnackbar
-import com.ichi2.anki.utils.Destination
 import com.ichi2.utils.listItemsAndMessage
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.show
@@ -274,36 +270,6 @@ class CongratsViewModel :
             val isFiltered = withCol { decks.isFiltered(deckId) }
             deckOptionsDestination.emit(DeckOptionsDestination(deckId, isFiltered))
         }
-    }
-}
-
-class DeckOptionsDestination(
-    private val deckId: DeckId,
-    private val isFiltered: Boolean,
-) : Destination {
-    override fun toIntent(context: Context): Intent =
-        if (isFiltered) {
-            FilteredDeckOptions.getIntent(context, deckId = deckId)
-        } else {
-            DeckOptions.getIntent(context, deckId)
-        }
-
-    companion object {
-        suspend fun fromDeckId(deckId: DeckId): DeckOptionsDestination =
-            DeckOptionsDestination(
-                deckId = deckId,
-                isFiltered = withCol { decks.isFiltered(deckId) },
-            )
-
-        @CheckResult
-        suspend fun fromCurrentDeck() =
-            withCol {
-                val deckId = decks.getCurrentId()
-                DeckOptionsDestination(
-                    deckId = deckId,
-                    isFiltered = decks.isFiltered(deckId),
-                )
-            }
     }
 }
 
