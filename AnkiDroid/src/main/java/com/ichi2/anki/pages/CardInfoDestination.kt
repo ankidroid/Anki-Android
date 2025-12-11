@@ -40,6 +40,7 @@ data class CardInfoDestination(
             context,
             "card-info/$cardId",
             sentenceStrings.firstOrNull { it != simplifiedTitle } ?: title,
+            clazz = CardInfoFragment::class,
         )
     }
 }

@@ -183,7 +183,7 @@ open class PageFragment(
             context: Context,
             path: String,
             title: String? = null,
-            clazz: KClass<out PageFragment> = PageFragment::class,
+            clazz: KClass<out PageFragment>,
         ): Intent {
             val arguments = bundleOf(PATH_ARG_KEY to path, TITLE_ARG_KEY to title)
             return SingleFragmentActivity.getIntent(context, clazz, arguments)
