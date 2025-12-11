@@ -249,7 +249,9 @@ class NoteEditorFragment :
     private var pasteOcclusionImageButton: Button? = null
 
     // non-null after onCollectionLoaded
-    private var editorNote: Note? = null
+    @VisibleForTesting
+    var editorNote: Note? = null
+        private set
 
     private val multimediaViewModel: MultimediaViewModel by activityViewModels()
 
