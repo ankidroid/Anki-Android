@@ -40,7 +40,7 @@ import kotlin.reflect.KClass
 /**
  * Base class for displaying Anki HTML pages
  */
-open class PageFragment(
+abstract class PageFragment(
     @LayoutRes contentLayoutId: Int = R.layout.page_fragment,
 ) : Fragment(contentLayoutId),
     PostRequestHandler,
