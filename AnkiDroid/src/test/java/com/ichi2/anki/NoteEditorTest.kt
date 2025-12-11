@@ -552,7 +552,6 @@ class NoteEditorTest : RobolectricTest() {
         }
 
     @Test
-    @Ignore("19750")
     fun `Changed note type respects 'Deck for new cards - Decide by Note Type'`() =
         runTest {
             val defaultDeckId = Consts.DEFAULT_DECK_ID

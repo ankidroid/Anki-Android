@@ -2791,7 +2791,7 @@ class NoteEditorFragment :
 
         // Update deck
         if (!getColUnsafe.config.getBool(ConfigKey.Bool.ADDING_DEFAULTS_TO_CURRENT_DECK)) {
-            deckId = noteType.did
+            deckId = getColUnsafe.defaultsForAdding().deckId
         }
 
         refreshNoteData(FieldChangeType.changeFieldCount(shouldReplaceNewlines()))
