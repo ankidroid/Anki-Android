@@ -92,7 +92,7 @@ kotlin = '2.2.10'
 kotlinxSerializationJson = "1.9.0"
 ktlintGradlePlugin = "14.0.1"
 leakcanaryAndroid = "2.14"
-lint = '31.13.1'
+lint = '31.13.2'
 material = "1.13.0"
 
 mockitoInline = "5.2.0"
