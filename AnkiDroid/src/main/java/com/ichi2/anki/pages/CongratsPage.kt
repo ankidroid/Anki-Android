@@ -34,6 +34,7 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.OnErrorListener
 import com.ichi2.anki.R
+import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.StudyOptionsActivity
 import com.ichi2.anki.common.time.SECONDS_PER_DAY
 import com.ichi2.anki.common.time.TIME_HOUR
@@ -59,6 +60,8 @@ import kotlin.math.round
 class CongratsPage :
     PageFragment(),
     ChangeManager.Subscriber {
+    override val pagePath: String = "congrats"
+
     private val viewModel by viewModels<CongratsViewModel>()
 
     init {
@@ -169,7 +172,7 @@ class CongratsPage :
     }
 
     companion object {
-        fun getIntent(context: Context): Intent = getIntent(context, path = "congrats", clazz = CongratsPage::class)
+        fun getIntent(context: Context): Intent = SingleFragmentActivity.getIntent(context, fragmentClass = CongratsPage::class)
 
         private fun displayNewCongratsScreen(context: Context): Boolean = context.sharedPrefs().getBoolean("new_congrats_screen", false)
 
