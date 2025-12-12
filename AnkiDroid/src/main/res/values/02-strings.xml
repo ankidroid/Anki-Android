@@ -425,5 +425,8 @@ opening the system text to speech settings fails">Failed to open text to speech 
 
     <!-- Scheduler Upgrade Required Dialog title-->
     <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">Scheduler upgrade required</string>
+
+    <!-- Image Occlusion -->
+    <string name="image_occlusion_no_masks">No masks set — please add at least one mask before creating the card</string>
 </resources>
 

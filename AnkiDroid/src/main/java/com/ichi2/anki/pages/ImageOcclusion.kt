@@ -31,6 +31,7 @@ import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.dialogs.DiscardChangesDialog
 import com.ichi2.anki.libanki.DeckId
+import com.ichi2.anki.snackbar.showSnackbar
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 import timber.log.Timber
@@ -61,20 +62,34 @@ class ImageOcclusion : PageFragment(R.layout.image_occlusion) {
                 // there's a deck change and keeps its own deckId reference, we need to use that
                 // deck id reference as the target deck in this fragment(backend code simply uses
                 // the current selected deck it sees as the target deck for adding)
-                lifecycleScope.launch {
-                    val previousDeckId =
-                        withCol {
-                            val current = backend.getCurrentDeck().id
-                            backend.setCurrentDeck(editorWorkingDeckId)
-                            current
-                        }
-                    webView.evaluateJavascript("anki.imageOcclusion.save()") {
-                        // reset to the previous deck that the backend "saw" as selected, this
-                        // avoids other screens unexpectedly having their working decks modified(
-                        // most important being the Reviewer where the user would find itself
-                        // studying another deck after editing a note with changing the deck)
-                        lifecycleScope.launch {
-                            withCol { backend.setCurrentDeck(previousDeckId) }
+
+                // Guard: check mask count from JS and prevent save if zero
+                webView.evaluateJavascript(
+                    "(function(){const s=globalThis.anki?.imageOcclusion;return (s&&s.getMaskCount?s.getMaskCount():s?.masks?.length||0)})()",
+                ) { result ->
+                    val maskCount = result?.trim()?.trim('"')?.toIntOrNull() ?: 0
+                    if (maskCount == 0) {
+                        requireView().showSnackbar(
+                            R.string.image_occlusion_no_masks,
+                            duration = com.google.android.material.snackbar.Snackbar.LENGTH_SHORT,
+                        )
+                        return@evaluateJavascript
+                    }
+                    lifecycleScope.launch {
+                        val previousDeckId =
+                            withCol {
+                                val current = backend.getCurrentDeck().id
+                                backend.setCurrentDeck(editorWorkingDeckId)
+                                current
+                            }
+                        webView.evaluateJavascript("anki.imageOcclusion.save()") {
+                            // reset to the previous deck that the backend "saw" as selected, this
+                            // avoids other screens unexpectedly having their working decks modified(
+                            // most important being the Reviewer where the user would find itself
+                            // studying another deck after editing a note with changing the deck)
+                            lifecycleScope.launch {
+                                withCol { backend.setCurrentDeck(previousDeckId) }
+                            }
                         }
                     }
                 }
