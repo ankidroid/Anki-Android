@@ -50,7 +50,7 @@ if [ "$PUBLIC" = "public" ]; then
 
   # Render the new changelog
   echo "Rendering changelog..."
-  if ! asciidoctor ../ankidroiddocs/changelog.asc -o "$CHANGELOG"
+  if ! asciidoctor -a webfonts! ../ankidroiddocs/changelog.asc -o "$CHANGELOG"
   then
     echo "Failed to render changelog?"
     exit 1
