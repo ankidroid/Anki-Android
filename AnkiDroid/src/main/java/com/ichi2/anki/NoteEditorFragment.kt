@@ -1386,9 +1386,16 @@ class NoteEditorFragment :
                     }
                 }
             }
-            closeNoteEditor()
+
+            closeNoteEditorAfterSave()
             return
         }
+    }
+
+    private fun closeNoteEditorAfterSave() {
+        isFieldEdited = false
+        isTagsEdited = false
+        closeNoteEditor()
     }
 
     /**
@@ -1407,8 +1414,9 @@ class NoteEditorFragment :
         }
         // refresh the note object to reflect the database changes
         withCol { editorNote!!.load(this@withCol) }
+
         // close note editor
-        closeNoteEditor()
+        closeNoteEditorAfterSave()
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
