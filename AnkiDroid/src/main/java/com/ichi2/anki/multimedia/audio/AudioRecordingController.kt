@@ -734,7 +734,7 @@ class AudioRecordingController(
         var isAudioRecordingSaved = false
         private var inEditField: Boolean = true
         const val DEFAULT_TIME = "00:00.00"
-        const val JUMP_VALUE = 500
+        const val JUMP_VALUE = 5000
 
         fun generateTempAudioFile(context: Context) =
             try {
