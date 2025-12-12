@@ -38,7 +38,7 @@ androidxExifinterface = "1.4.2"
 # https://developer.android.com/jetpack/androidx/releases/fragment
 androidxFragmentKtx = "1.8.9"
 # https://developer.android.com/jetpack/androidx/releases/lifecycle
-androidxLifecycleProcess = "2.9.3"
+androidxLifecycleProcess = "2.10.0"
 # https://developer.android.com/jetpack/androidx/releases/media
 androidxMedia = "1.7.1"
 # https://developer.android.com/jetpack/androidx/releases/media3
