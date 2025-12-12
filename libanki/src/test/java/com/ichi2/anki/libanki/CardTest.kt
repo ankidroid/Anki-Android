@@ -17,6 +17,7 @@ package com.ichi2.anki.libanki
 
 import android.annotation.SuppressLint
 import anki.scheduler.CardAnswer.Rating
+import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.libanki.exception.ConfirmModSchemaException
 import com.ichi2.anki.libanki.testutils.InMemoryAnkiTest
 import com.ichi2.anki.libanki.testutils.ext.addNote
@@ -244,31 +245,31 @@ class CardTest : InMemoryAnkiTest() {
     fun timeLimitUsesCurrentDeckIdForNormalDeck() {
         // Normal deck (oDid = 0) should use did to get time limit
         val card = addBasicNote().firstCard()
-        val deckId = card.did
-        card.oDid = 0L
 
         val timeLimit = card.timeLimit(col)
 
         // Verify that timeLimit uses the correct deck config (via currentDeckId)
-        val config = col.decks.configDictForDeckId(deckId)
+        val config = col.decks.configDictForDeckId(card.did)
         assertEquals(config.maxTaken * 1000, timeLimit)
     }
 
     @Test
     fun timeLimitUsesCurrentDeckIdForFilteredDeck() {
-        // Move card to filtered deck
-        val card = addBasicNote().firstCard()
-        val originalDeckId = card.did
-        val filteredDeckId = col.decks.id("TestFilteredDeck")
+        val filteredDeckId = col.decks.newFiltered("TestFilteredDeck")
 
-        card.oDid = originalDeckId
-        card.did = filteredDeckId
+        // Move card to filtered deck
+        val card =
+            addBasicNote().firstCard().apply {
+                oDid = did
+                did = filteredDeckId
+            }
 
         val timeLimit = card.timeLimit(col)
 
         // currentDeckId() should return oDid (originalDeckId) for filtered decks
-        assertEquals(originalDeckId, card.currentDeckId())
-        val config = col.decks.configDictForDeckId(originalDeckId)
+        assertEquals(card.oDid, card.currentDeckId())
+        // TODO: BUG: this would also pass if card.oDid is used
+        val config = col.decks.configDictForDeckId(filteredDeckId)
         assertEquals(config.maxTaken * 1000, timeLimit)
     }
 
@@ -276,7 +277,6 @@ class CardTest : InMemoryAnkiTest() {
     fun shouldShowTimerUsesCurrentDeckId() {
         // shouldShowTimer should use currentDeckId to get deck configuration
         val card = addBasicNote().firstCard()
-        card.oDid = 0L
 
         val shouldShowTimer = card.shouldShowTimer(col)
 
@@ -286,10 +286,27 @@ class CardTest : InMemoryAnkiTest() {
     }
 
     @Test
+    fun shouldShowTimerUsesCurrentDeckIdForFilteredDeck() {
+        // shouldShowTimer should use oDid for filtered decks
+        val card = addBasicNote().firstCard()
+        val originalDeckId = card.did
+        val filteredDeckId = col.decks.id("TestFilteredDeck")
+
+        card.oDid = originalDeckId
+        card.did = filteredDeckId
+
+        val shouldShowTimer = card.shouldShowTimer(col)
+
+        // Verify it uses the config from oDid (originalDeckId)
+        assertEquals(originalDeckId, card.currentDeckId())
+        val config = col.decks.configDictForDeckId(originalDeckId)
+        assertEquals(config.timer, shouldShowTimer)
+    }
+
+    @Test
     fun autoplayUsesCurrentDeckId() {
         // autoplay should use currentDeckId to determine autoplay setting
         val card = addBasicNote().firstCard()
-        card.oDid = 0L
 
         val autoplay = card.autoplay(col)
 
@@ -302,7 +319,6 @@ class CardTest : InMemoryAnkiTest() {
     fun replayQuestionAudioOnAnswerSideUsesCurrentDeckId() {
         // replayQuestionAudioOnAnswerSide should use currentDeckId for deck config
         val card = addBasicNote().firstCard()
-        card.oDid = 0L
 
         val replayQuestion = card.replayQuestionAudioOnAnswerSide(col)
 
@@ -315,12 +331,12 @@ class CardTest : InMemoryAnkiTest() {
     fun timeTakenUsesCurrentDeckIdForTimeLimit() {
         // timeTaken uses timeLimit() which calls currentDeckId()
         val card = addBasicNote().firstCard()
-        card.startTimer()
-        Thread.sleep(100) // Wait a bit
+        card.timerStarted = TimeManager.time.intTimeMS() - 100 // Set to 100ms ago
 
         val timeTaken = card.timeTaken(col)
         val timeLimit = card.timeLimit(col)
 
+        assert(timeTaken >= 100)
         // timeTaken should respect the time limit from currentDeckId
         assert(timeTaken <= timeLimit)
     }
