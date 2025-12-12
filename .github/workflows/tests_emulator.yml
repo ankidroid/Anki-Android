@@ -219,21 +219,21 @@ jobs:
             ./gradlew uninstallAll jacocoAndroidTestReport --daemon
 
       - name: Upload Test Report
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         if: always()
         with:
           name: ${{ matrix.api-level }}-${{ matrix.arch }}-${{matrix.target}}-${{matrix.first-boot-delay}}-${{matrix.iteration}}-jacocoAndroidTestReport
           path: ~/work/Anki-Android/Anki-Android/AnkiDroid/build/reports/jacoco/
 
       - name: Upload Emulator Log
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         if: always()
         with:
           name: ${{ matrix.api-level }}-${{ matrix.arch }}-${{matrix.target}}-${{matrix.first-boot-delay}}-${{matrix.iteration}}-adb_logs
           path: adb-log.txt
 
       - name: Upload Emulator Screen Record
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         if: always()
         with:
           name: ${{ matrix.api-level }}-${{ matrix.arch }}-${{matrix.target}}-${{matrix.first-boot-delay}}-${{matrix.iteration}}-adb_video
