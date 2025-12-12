@@ -192,7 +192,7 @@
             <!-- Timer below counts means UI elements may jump if timer is selectively enabled.
               This was a considered decision vs other options. Current thinking is the selectively-
               enabled timer case will be very rare, so UI element motion should also be rare. -->
-            <com.ichi2.anki.ui.windows.reviewer.AnswerTimer
+            <com.ichi2.anki.ui.windows.reviewer.AnswerTimerView
                 android:id="@+id/timer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
