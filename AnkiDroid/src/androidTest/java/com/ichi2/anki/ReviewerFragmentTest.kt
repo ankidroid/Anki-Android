@@ -129,7 +129,7 @@ class ReviewerFragmentTest : InstrumentedTest() {
 
         val inputTypeNumber =
             InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL or InputType.TYPE_NUMBER_FLAG_SIGNED
-        val inputTypeText = InputType.TYPE_CLASS_TEXT
+        val inputTypeText = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS
 
         val testValues: List<Pair<String, Int>> =
             listOf(
