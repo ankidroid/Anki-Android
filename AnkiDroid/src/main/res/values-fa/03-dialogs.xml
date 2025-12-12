@@ -124,8 +124,8 @@
     <string name="multimedia_editor_failed">باز کردن ویرایشگر رسانه انجام نشد</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">دسترسی به ضبط صدا به آنکی‌دروید داده نشد</string>
-    <string name="permission_denied">Permission denied</string>
-    <string name="recording_permission_denied_message">Microphone permission is necessary for the “Record voice” feature. Please grant it in the app settings.</string>
+    <string name="permission_denied">مجوز رد شد.</string>
+    <string name="recording_permission_denied_message">مجوز میکروفون برای قابلیت «ضبط صدا» ضروری است. لطفاً آن را در تنظیمات برنامه فعال کنید.</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">آنکی‌دروید به روز‌رسانی شد</string>
     <string name="integrity_check_startup_content">آنکی دروید به‌روزرسانی شده است. این نسخۀ شامل تعمیراتی برای مشکلات محتمل دیتابیس است، بنابراین ما به شما پیشنهاد می‌کنیم که اکنون از گزینۀ بررسی دیتابیس استفاده کنید.</string>
@@ -255,9 +255,9 @@
     <string name="tts_error_dialog_change_button_text">موتور را تغییر بده</string>
     <string name="tts_error_dialog_supported_voices_button_text">گزینه های صدا</string>
     <!-- import_cache_error_resolutions -->
-    <string name="import_error_resolution_try_again">Re-import the file</string>
-    <string name="import_error_resolution_free_up_space">Ensure there is sufficient free space on your device</string>
-    <string name="import_error_resolution_check_internet">Ensure you are connected to the internet</string>
-    <string name="import_error_resolution_copy_to_device">Copy the file to your device and try again with the local file</string>
-    <string name="import_error_resolution_select_file">Open the file using your device’s file browser app</string>
+    <string name="import_error_resolution_try_again">فایل را دوباره وارد کنید.</string>
+    <string name="import_error_resolution_free_up_space">مطمئن شوید فضای خالی کافی در دستگاه شما وجود دارد.</string>
+    <string name="import_error_resolution_check_internet">مطمئن شوید که به اینترنت متصل هستید.</string>
+    <string name="import_error_resolution_copy_to_device">فایل را در دستگاه خود کپی کنید و دوباره با فایل محلی امتحان کنید.</string>
+    <string name="import_error_resolution_select_file">فایل را با استفاده از برنامه مرورگر فایل دستگاه خود باز کنید.</string>
 </resources>

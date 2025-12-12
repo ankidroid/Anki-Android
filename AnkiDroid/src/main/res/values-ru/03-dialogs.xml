@@ -272,9 +272,9 @@
     <string name="tts_error_dialog_change_button_text">Изменить движок</string>
     <string name="tts_error_dialog_supported_voices_button_text">Настройки голоса</string>
     <!-- import_cache_error_resolutions -->
-    <string name="import_error_resolution_try_again">Re-import the file</string>
-    <string name="import_error_resolution_free_up_space">Ensure there is sufficient free space on your device</string>
-    <string name="import_error_resolution_check_internet">Ensure you are connected to the internet</string>
+    <string name="import_error_resolution_try_again">Повторите импорт файла</string>
+    <string name="import_error_resolution_free_up_space">Убедитесь что на устройстве достаточно свободного места</string>
+    <string name="import_error_resolution_check_internet">Убедитесь что вы подключены к Интернету</string>
     <string name="import_error_resolution_copy_to_device">Copy the file to your device and try again with the local file</string>
     <string name="import_error_resolution_select_file">Open the file using your device’s file browser app</string>
 </resources>
