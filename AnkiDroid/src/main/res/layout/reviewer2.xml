@@ -199,7 +199,6 @@
 
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/check_pronunciation_container"
-                android:name="com.ichi2.anki.ui.windows.reviewer.audiorecord.CheckPronunciationFragment"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
                 android:clipChildren="false"
