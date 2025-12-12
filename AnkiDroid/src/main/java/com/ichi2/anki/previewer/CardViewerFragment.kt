@@ -110,9 +110,19 @@ abstract class CardViewerFragment(
                 // allow videos to autoplay via our JavaScript eval
                 mediaPlaybackRequiresUserGesture = false
             }
+            val css = "<style>img { max-width: 100% !important; height: auto !important; object-fit: contain; }</style>"
+            val rawHtml = onLoadInitialHtml()
+            val html =
+                if (rawHtml.contains("</head>")) {
+                    rawHtml.replace("</head>", "$css</head>")
+                } else if (rawHtml.contains("<body>")) {
+                    rawHtml.replace("<body>", "<body>$css")
+                } else {
+                    css + rawHtml
+                }
             loadDataWithBaseURL(
                 viewModel.baseUrl(),
-                onLoadInitialHtml(),
+                html,
                 "text/html",
                 null,
                 null,
