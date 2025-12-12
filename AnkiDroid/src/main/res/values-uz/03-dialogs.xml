@@ -255,9 +255,9 @@
     <string name="tts_error_dialog_change_button_text">Nutq sintezatorini almashtirish</string>
     <string name="tts_error_dialog_supported_voices_button_text">Ovoz parametrlari</string>
     <!-- import_cache_error_resolutions -->
-    <string name="import_error_resolution_try_again">Re-import the file</string>
-    <string name="import_error_resolution_free_up_space">Ensure there is sufficient free space on your device</string>
-    <string name="import_error_resolution_check_internet">Ensure you are connected to the internet</string>
-    <string name="import_error_resolution_copy_to_device">Copy the file to your device and try again with the local file</string>
-    <string name="import_error_resolution_select_file">Open the file using your device’s file browser app</string>
+    <string name="import_error_resolution_try_again">Faylni qaytadan import qilish</string>
+    <string name="import_error_resolution_free_up_space">Qurilmangizda yetarlicha boʻsh joy borligiga ishonch hosil qiling</string>
+    <string name="import_error_resolution_check_internet">Internetga ulanganingizga ishonch hosil qiling</string>
+    <string name="import_error_resolution_copy_to_device">Faylni qurilmangizga koʻchiring va mahalliy fayl bilan qaytadan urinib koʻring</string>
+    <string name="import_error_resolution_select_file">Faylni qurilmangiz fayl brauzeri orqali ochish</string>
 </resources>
