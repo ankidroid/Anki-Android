@@ -78,6 +78,7 @@ import com.ichi2.anki.settings.enums.ToolbarPosition
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.ui.windows.reviewer.audiorecord.CheckPronunciationFragment
 import com.ichi2.anki.ui.windows.reviewer.whiteboard.WhiteboardFragment
 import com.ichi2.anki.utils.CollectionPreferences
 import com.ichi2.anki.utils.ext.collectIn
@@ -558,6 +559,11 @@ class ReviewerFragment :
 
     private fun setupCheckPronunciation() {
         viewModel.voiceRecorderEnabledFlow.flowWithLifecycle(lifecycle).collectIn(lifecycleScope) { isEnabled ->
+            if (isEnabled && binding.checkPronunciationContainer.getFragment<CheckPronunciationFragment?>() == null) {
+                childFragmentManager.commit {
+                    add(binding.checkPronunciationContainer.id, CheckPronunciationFragment())
+                }
+            }
             binding.checkPronunciationContainer.isVisible = isEnabled
         }
     }
