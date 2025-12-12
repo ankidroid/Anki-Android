@@ -87,8 +87,13 @@ jobs:
                             if (pullRequestData.data.labels.find(label => label.name === 'Has Conflicts')) {
                                 console.log(`'Has Conflicts' label already exists on PR #${prNumber}`);
                             } else {
-                                console.log(`Adding 'Has Conflicts' label to PR #${prNumber}`);
-                                await addLabel(['Has Conflicts'], prNumber);
+                                // Only add label if PR is not already stale to prevent resetting stale timer
+                                if (!pullRequestData.data.labels.find(label => label.name === 'Stale')) {
+                                    console.log(`Adding 'Has Conflicts' label to PR #${prNumber} (not stale)`);
+                                    await addLabel(['Has Conflicts'], prNumber);
+                                } else {
+                                    console.warn(`PR #${prNumber} is stale, skipping label addition to prevent timer reset`);
+                                }
                             }
                         } else if (pullRequestData.data.mergeable_state === 'clean') {
                             // if PR has no conflicts, remove the label
