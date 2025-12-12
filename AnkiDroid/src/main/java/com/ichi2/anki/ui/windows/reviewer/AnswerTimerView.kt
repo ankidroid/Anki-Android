@@ -31,7 +31,7 @@ import kotlinx.parcelize.Parcelize
  * - Restore its status after configuration changes
  * - Stop the timer after [limitInMs] is reached.
  */
-class AnswerTimer(
+class AnswerTimerView(
     context: Context,
     attributeSet: AttributeSet?,
 ) : Chronometer(context, attributeSet) {
