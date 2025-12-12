@@ -16,11 +16,16 @@
 package com.ichi2.anki.ui.windows.reviewer
 
 import android.net.Uri
+import android.view.ViewConfiguration
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.TapGestureMode
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.mockkStatic
+import io.mockk.unmockkStatic
 import kotlinx.coroutines.test.TestScope
+import org.junit.AfterClass
+import org.junit.BeforeClass
 import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
@@ -64,7 +69,6 @@ class GestureParserTest {
                 scope = TestScope(),
                 swipeSensitivity = swipeSensitivity,
                 gestureMode = gestureMode,
-                doubleTapTimeout = 200,
                 isDoubleTapEnabled = false,
             )
         val webViewState = GestureParser.WebViewState(scale, scrollX, scrollY, measuredWidth, measuredHeight)
@@ -319,4 +323,19 @@ class GestureParserTest {
         assertEquals(Gesture.SWIPE_UP, gesture2)
     }
     //endregion
+
+    companion object {
+        @BeforeClass
+        @JvmStatic // required for @BeforeClass
+        fun before() {
+            mockkStatic(ViewConfiguration::class)
+            every { ViewConfiguration.getDoubleTapTimeout() } answers { 300 }
+        }
+
+        @JvmStatic // required for @AfterClass
+        @AfterClass
+        fun after() {
+            unmockkStatic(ViewConfiguration::class)
+        }
+    }
 }

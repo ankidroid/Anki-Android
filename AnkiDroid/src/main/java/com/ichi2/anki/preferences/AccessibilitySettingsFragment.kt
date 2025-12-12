@@ -50,6 +50,7 @@ class AccessibilitySettingsFragment : SettingsFragment() {
                 R.string.show_large_answer_buttons_preference,
                 R.string.pref_card_minimal_click_time,
                 R.string.answer_button_size_preference,
+                R.string.double_tap_timeout_pref_key, // TODO implement it in the new study screen
             )
     }
 }
