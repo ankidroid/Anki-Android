@@ -173,7 +173,7 @@
     <string name="import_error_load_imported_database">Náhrady Anki databáze (.anki2) ještě nejsou podporovány. Pokyny k náhradě naleznete v příručce.</string>
     <string name="import_error_content_provider">Vybraný soubor nelze automaticky importovat pomocí AnkiDroid. V uživatelské příručce naleznete, jak provést ruční import souborů Anki: \n %s</string>
     <string name="import_error_copy_to_cache_title">Nepodařilo se uložit soubor do mezipaměti</string>
-    <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">This is often caused by a bug in the app you used to select the file. Please try the following fixes:\n\n%s</string>
+    <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">Toto je často způsobeno chybou v aplikaci, kterou jste použili pro výběr souboru. Zkuste prosím následující opravy:\n\n%s</string>
     <string name="import_interrupted">Import přerušen: AnkiDroid se zavřel</string>
     <string name="export_ready_title">Export připraven</string>
     <string name="export_send_no_handlers">Nenalezena žádná aplikace pro zpracování apkg. Ukládá se&#8230;</string>
@@ -316,10 +316,10 @@
     <string name="field_editor_model_not_available">Přístup ke kolekci se nezdařil. Zkuste to prosím znovu!</string>
     <string name="cd_manage_notetypes_add">Přidat nový typ poznámky</string>
     <plurals name="note_types_selected">
-        <item quantity="one">%d note type selected</item>
-        <item quantity="few">%d note types selected</item>
-        <item quantity="many">%d note types selected</item>
-        <item quantity="other">%d note types selected</item>
+        <item quantity="one">Vybrán %d typ poznámky</item>
+        <item quantity="few">Vybrány %d typy poznámek</item>
+        <item quantity="many">Vybráno %d typu poznámky</item>
+        <item quantity="other">Vybráno %d typů poznámek</item>
     </plurals>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">Studujte méně</string>

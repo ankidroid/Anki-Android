@@ -55,7 +55,7 @@
     <string name="CardEditorTags">برچسب ها: %1$s</string>
     <string name="CardEditorCards">کارت‌ها: %1$s</string>
     <string name="edit_occlusions">ویرایش پوشانده ها</string>
-    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
+    <string name="paste_from_clipboard" maxLength="28">جای گذاری از کیبورد</string>
     <string name="tag_name">نام برچسب</string>
     <string name="add_new_filter_tags">افزودن/فیلترکردن برچسب‌ها</string>
     <string name="add_tag" maxLength="28">اضافه نمودن برچسب</string>
@@ -74,11 +74,11 @@
     <string name="whiteboard_align_right" comment="Option to align the whiteboard toolbar on the right" maxLength="28">راست</string>
     <string name="whiteboard_clear" comment="Button text to clear the whiteboard" maxLength="28">پاک کن</string>
     <string name="whiteboard_more_options" comment="Tooltip of the whiteboard \'More\' button" maxLength="28">گزینه های بیشتر</string>
-    <string name="whiteboard_remove_brush_message">Are you sure you want to remove this brush from your palette?</string>
+    <string name="whiteboard_remove_brush_message">آیا مطمئن هستید که می‌خواهید این قلم‌مو را از پالت خود حذف کنید؟</string>
     <string name="whiteboard_ink_eraser" comment="Title of the whiteboard Ink eraser">جوهر</string>
     <string name="whiteboard_stroke_eraser" comment="Title of the whiteboard Stroke eraser">خط</string>
-    <string name="stylus_mode" comment="Title of the menu item that toggles the whiteboard stylus mode" maxLength="28">Stylus mode</string>
-    <string name="cannot_remove_last_brush_message">The last brush may not be removed</string>
+    <string name="stylus_mode" comment="Title of the menu item that toggles the whiteboard stylus mode" maxLength="28">حالت قلم</string>
+    <string name="cannot_remove_last_brush_message">آخرین قلم ممکن است حذف نشود.</string>
     <string name="enable_whiteboard" maxLength="28">فعال سازی تخته سفید</string>
     <string name="disable_whiteboard">غیر فعال کردن تخته سفید</string>
     <string name="show_whiteboard">نمایش تخته سفید</string>
@@ -97,7 +97,7 @@
     <string name="webview_crash_fatal">خطای وخیم: تنظیم‌کنندۀ ظاهر برنامه دچار مشکل شد. دلیل: %s</string>
     <string name="webview_crash_loop_dialog_title">مشکل در سیستم تنظیم‌کنندۀ ظاهر برنامه</string>
     <string name="webview_crash_loop_dialog_content">سیستم در تنظیم ظاهر کارت %1$s با خطا مواجه شد.\n%2$s</string>
-    <string name="slide_to_cancel" comment="Message shown when pressing the record button">Slide to cancel</string>
+    <string name="slide_to_cancel" comment="Message shown when pressing the record button">برای لغو، صفحه و بکشید.</string>
     <string name="filter_by_flags" maxLength="41">پرچم ها</string>
     <!-- Custom study options -->
     <string name="custom_study_loading_tags">در حال ساختن لیست تگ ها&#8230;</string>
@@ -167,7 +167,7 @@
     <string name="import_error_load_imported_database">جایگزین پایگاه داده آنکی (.anki2) هنوز پشتیبانی نشده است. لطفاً برای راهنمایی در مورد جایگزینی راهنما را بخوانید.</string>
     <string name="import_error_content_provider">فایل انتخاب شده به صورت خودکار توسط AnkiDroid نمی تواند وارد شود. لطفا راهنمای کاربر را ببینید که چگونه به صورت دستی بتوان فایل Anki را وارد کرد:\n%s</string>
     <string name="import_error_copy_to_cache_title">کش کردن فایل ناموفق بود</string>
-    <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">This is often caused by a bug in the app you used to select the file. Please try the following fixes:\n\n%s</string>
+    <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">این مشکل اغلب به دلیل وجود اشکال در برنامه‌ای که برای انتخاب فایل استفاده کرده‌اید، ایجاد می‌شود. لطفاً راه‌حل‌های زیر را امتحان کنید:\n\n%s</string>
     <string name="import_interrupted">در فرایند ورود اختلال ایجاد شد: AnkiDroid بسته بود</string>
     <string name="export_ready_title">خروجی آماده است</string>
     <string name="export_send_no_handlers">هیچ برنامه ای برای بررسی apkg در دسترس نیست. در حال ذخیره&#8230;</string>
@@ -236,7 +236,9 @@
     <string name="search_decks" maxLength="28">جستجو در تمام دسته‌ها</string>
     <string name="ankidroid_init_failed_webview_title">خطای مخرب</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid بر روی سیستم WebView تکیه میکند که غیرقابل دسترسی است. این میتواند اتفاق بیفتد اگر سیستم در حال نسب کردن آپدیت باشد. لطفا دقایقی دیگر تلاش کنید.\n\n%s</string>
-    <string name="ankidroid_init_failed_storage">AnkiDroid cannot access storage due to an Android error.\n\n%s</string>
+    <string name="ankidroid_init_failed_storage">آنکی‌دروید به دلیل خطای اندروید نمی‌تواند به فضای ذخیره‌سازی دسترسی داشته باشد
+
+خطا.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">اندازه فونت</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">نمایش نوار ابزار</string>
@@ -308,8 +310,8 @@
     <string name="field_editor_model_not_available">دسترسی به مجموعه ناموقف بود. لطفا دوباره تلاش کنید</string>
     <string name="cd_manage_notetypes_add">افزودن یک نوع یادداشت جدید</string>
     <plurals name="note_types_selected">
-        <item quantity="one">%d note type selected</item>
-        <item quantity="other">%d note types selected</item>
+        <item quantity="one">%d نوع یادداشت انتخاب شد</item>
+        <item quantity="other">%d نوع یادداشت انتخاب شد</item>
     </plurals>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">کمتر مطالعه کنید</string>

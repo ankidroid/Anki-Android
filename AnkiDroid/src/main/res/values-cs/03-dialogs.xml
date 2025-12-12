@@ -271,9 +271,9 @@
     <string name="tts_error_dialog_change_button_text">Změnit modul</string>
     <string name="tts_error_dialog_supported_voices_button_text">Možnosti hlasu</string>
     <!-- import_cache_error_resolutions -->
-    <string name="import_error_resolution_try_again">Re-import the file</string>
-    <string name="import_error_resolution_free_up_space">Ensure there is sufficient free space on your device</string>
-    <string name="import_error_resolution_check_internet">Ensure you are connected to the internet</string>
-    <string name="import_error_resolution_copy_to_device">Copy the file to your device and try again with the local file</string>
-    <string name="import_error_resolution_select_file">Open the file using your device’s file browser app</string>
+    <string name="import_error_resolution_try_again">Znovu importovat soubor</string>
+    <string name="import_error_resolution_free_up_space">Ujistěte se, že je na vašem zařízení dostatek volného místa</string>
+    <string name="import_error_resolution_check_internet">Ujistěte se, že jste připojeni k internetu</string>
+    <string name="import_error_resolution_copy_to_device">Zkopírujte soubor do vašeho zařízení a zkuste to znovu s tímto místním souborem</string>
+    <string name="import_error_resolution_select_file">Otevřete soubor pomocí aplikace prohlížeč souborů ve vašem zařízení</string>
 </resources>

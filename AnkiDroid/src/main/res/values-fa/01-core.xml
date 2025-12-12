@@ -169,7 +169,7 @@
     <string name="card_template_browser_appearance_title">ظاهر مرورگر کارت</string>
     <!-- card Info -->
     <string name="card_info_title" maxLength="28">مشخصات کارت</string>
-    <string name="previous_card_info_title" maxLength="28">Previous card info</string>
+    <string name="previous_card_info_title" maxLength="28">اطلاعات کارت قبلی</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">بخوان و به پایگاه داده AnkiDroid پیام بده</string>
     <string name="read_write_permission_description">دسترسی به یادداشت‌ها، کارت‌ها، انواع یادداشت‌ها و دسته‌های موجود، و همچنین ایجاد موارد جدید</string>
@@ -197,21 +197,21 @@
     <string name="new_unsafe_collection">اگر اپلیکیشن AnkiDroid را از تلفن خود پاک کنید، مجموعه جدید نیز پاک خواهد شد</string>
     <!-- Permissions screen -->
     <string name="permissions_screen_headline">AnkiDroid برای کار کردن بعضی اجازه ها را احتیاج دارد</string>
-    <string name="permissions_screen_optional_headline" comment="Explains that there are optional permissions that can be granted to AnkiDroid.">AnkiDroid works best with these permissions</string>
+    <string name="permissions_screen_optional_headline" comment="Explains that there are optional permissions that can be granted to AnkiDroid.">انکی دروید با این مجوز ها بهترین عملکرد را دارد.</string>
     <string name="storage_access_title">دسترسی به حافظه</string>
     <string name="storage_access_summary">مجموعه‌ی شما را جای امن ذخیره کرده که حذف نشود وقتی برنامه حذف میشود</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after. See [android.permission.MANAGE_EXTERNAL_STORAGE] on https://developer.android.com/training/data-storage/manage-all-files for context.">دسترسی به همه فایل ها</string>
     <string name="image_occlusion">پوشاندن تصویر</string>
     <string name="microphone" comment="Title of the microphone permission in the permissions explanation screen.">میکروفون</string>
-    <string name="microphone_permission_explanation" comment="Description explaining why AnkiDroid needs the microphone permission, shown on the permissions explanation screen.">Allows you to add sounds to cards and enables voice playback while reviewing</string>
-    <string name="notifications_permission_explanation" comment="Description explaining why AnkiDroid needs the notification permission.">Enables background media syncing and allows you to create review reminders</string>
+    <string name="microphone_permission_explanation" comment="Description explaining why AnkiDroid needs the microphone permission, shown on the permissions explanation screen.">به شما امکان می‌دهد صداها را به کارت‌ها اضافه کنید و پخش صدا را هنگام بررسی فعال می‌کند.</string>
+    <string name="notifications_permission_explanation" comment="Description explaining why AnkiDroid needs the notification permission.">همگام‌سازی رسانه‌های پس‌زمینه را فعال می‌کند و به شما امکان می‌دهد برایشان یادآوری‌ تعیین کنید.</string>
     <string name="heading_required_permissions" comment="Heading for the section of required permissions that the app needs to function, shown in the permissions explanation screen.">الزامی</string>
     <string name="heading_optional_permissions" comment="Heading for the section of optional permissions that the app needs to function, shown in the permissions explanation screen.">اختیاری</string>
-    <string name="manually_grant_permissions" comment="Pop-up message that is shown to the user when they want to grant an app permission that must be granted via the OS settings screen.">This permission must be manually granted from Settings</string>
-    <string name="revoke_permissions" comment="Pop-up message that is shown to the user when they are revoking an app permission.">This permission must be manually revoked from Settings</string>
+    <string name="manually_grant_permissions" comment="Pop-up message that is shown to the user when they want to grant an app permission that must be granted via the OS settings screen.">این مجوز باید به صورت دستی از تنظیمات اعطا شود.</string>
+    <string name="revoke_permissions" comment="Pop-up message that is shown to the user when they are revoking an app permission.">این مجوز باید به صورت دستی از تنظیمات لغو شود.</string>
     <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">حذف حساب کاربری</string>
     <!-- Instant Note Editor -->
     <string name="instant_card" comment="Used in the Android system context menu/share dialog to quickly create a note. This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. ">کارت فوری</string>
     <!-- Multiple profile -->
-    <string name="add_profile">Add profile</string>
+    <string name="add_profile">اضافه کردن پروفایل</string>
 </resources>
