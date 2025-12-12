@@ -16,6 +16,7 @@
 package com.ichi2.anki.ui.windows.reviewer
 
 import android.net.Uri
+import android.view.ViewConfiguration
 import android.webkit.WebView
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.cardviewer.Gesture
@@ -38,12 +39,12 @@ class GestureParser(
     private val scope: CoroutineScope,
     private val isDoubleTapEnabled: Boolean,
     private val gestureMode: TapGestureMode = Prefs.tapGestureMode,
-    private val doubleTapTimeout: Long = Prefs.doubleTapInterval.toLong(),
     swipeSensitivity: Float = Prefs.swipeSensitivity,
 ) {
     private val swipeThresholdBase = 100 / swipeSensitivity
     private var lastTapTime = 0L
     private var singleTapJob: Job? = null
+    private val doubleTapTimeout = ViewConfiguration.getDoubleTapTimeout().toLong()
 
     @VisibleForTesting
     fun parseInternal(
