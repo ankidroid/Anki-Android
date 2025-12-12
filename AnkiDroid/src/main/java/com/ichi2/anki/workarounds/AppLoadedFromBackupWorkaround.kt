@@ -65,6 +65,7 @@ object AppLoadedFromBackupWorkaround {
             origin = "showedActivityFailedScreen",
             additionalInfo = null,
             onlyIfSilent = true,
+            context = this,
         )
 
         // fixes: java.lang.IllegalStateException: You need to use a Theme.AppCompat theme (or descendant) with this activity.

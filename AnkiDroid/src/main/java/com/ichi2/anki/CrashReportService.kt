@@ -272,11 +272,12 @@ object CrashReportService {
         origin: String?,
         additionalInfo: String? = null,
         onlyIfSilent: Boolean = false,
+        context: Context = application.applicationContext,
     ) {
         sendAnalyticsException(e, false)
         AnkiDroidApp.sentExceptionReportHack = true
         val reportMode =
-            application.applicationContext
+            context
                 .sharedPrefs()
                 .getString(FEEDBACK_REPORT_KEY, FEEDBACK_REPORT_ASK)
         if (onlyIfSilent) {
