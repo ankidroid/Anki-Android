@@ -123,23 +123,29 @@ open class PrefsRepository(
 
     @VisibleForTesting
     fun booleanPref(
-        @StringRes keyResId: Int,
+        key: String,
         defaultValue: Boolean,
     ): ReadWriteProperty<Any?, Boolean> =
         object : ReadWriteProperty<Any?, Boolean> {
             override fun getValue(
                 thisRef: Any?,
                 property: KProperty<*>,
-            ): Boolean = getBoolean(keyResId, defaultValue)
+            ): Boolean = sharedPrefs.getBoolean(key, defaultValue)
 
             override fun setValue(
                 thisRef: Any?,
                 property: KProperty<*>,
                 value: Boolean,
             ) {
-                putBoolean(keyResId, value)
+                sharedPrefs.edit { putBoolean(key, value) }
             }
         }
+
+    @VisibleForTesting
+    fun booleanPref(
+        @StringRes keyResId: Int,
+        defaultValue: Boolean,
+    ): ReadWriteProperty<Any?, Boolean> = booleanPref(key(keyResId), defaultValue)
 
     @VisibleForTesting
     fun stringPref(
