@@ -88,7 +88,7 @@ class AllPermissionsExplanationFragment : PermissionsFragment(R.layout.all_permi
             isVisible = true
             offerToGrantOrRevokeOnClick(
                 permissionRequestLauncher,
-                arrayOf(Permissions.recordAudioPermission),
+                arrayOf(Permissions.RECORD_AUDIO_PERMISSION),
             )
         }
     }

@@ -57,6 +57,7 @@ class TemplatePreviewerViewModel(
     @VisibleForTesting
     val ordFlow = MutableStateFlow(arguments.ord)
 
+    @Suppress("JoinDeclarationAndAssignment")
     private val note: Deferred<Note>
     private val templateNames: Deferred<List<String>>
     private val clozeOrds: Deferred<List<Int>>?

@@ -30,7 +30,7 @@ class InvalidStringFormatDetectorTest {
         |<string name="testString">test%</string>
         |<string name="testString3">test% string</string>
         |<plurals name="pluralTestString1">
-            <item quantity="other">आज%  %1${'$'}'d' मध्ये% %2${'$'}'s' कार्डांचा अभ्यास केला</item>
+            <item quantity="other">आज%  %1$'d' मध्ये% %2$'s' कार्डांचा अभ्यास केला</item>
         </plurals>
         |</resources>
         """.trimMargin()
@@ -49,7 +49,7 @@ class InvalidStringFormatDetectorTest {
             <item quantity="other">%1$'d' cards (0 due)</item>
         </plurals>
         |<plurals name="pluralTestString">
-            <item quantity="one">आज %1${'$'}'d' मध्ये %2${'$'}'s' कार्डचा अभ्यास केला</item>
+            <item quantity="one">आज %1$'d' मध्ये %2$'s' कार्डचा अभ्यास केला</item>
         </plurals>
         |<string name="testString7">XXX%</string>
         |</resources>

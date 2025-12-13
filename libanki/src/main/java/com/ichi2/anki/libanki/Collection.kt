@@ -155,12 +155,12 @@ class Collection(
      * Getters/Setters ********************************************************** *************************************
      */
 
-    val media: Media
+    val media: Media = Media(this)
 
     lateinit var decks: Decks
         protected set
 
-    val tags: Tags
+    val tags: Tags = Tags(this)
 
     lateinit var config: Config
 
@@ -175,8 +175,6 @@ class Collection(
     // END: SQL table columns
 
     init {
-        media = Media(this)
-        tags = Tags(this)
         val created = reopen(databaseBuilder = databaseBuilder)
         _loadScheduler()
         if (created) {
@@ -1155,6 +1153,7 @@ class Collection(
     @LibAnkiAlias("_check_backend_undo_status")
     private fun checkBackendUndoStatus(): UndoStatus? {
         val status = backend.getUndoStatus()
+        @Suppress("LiftReturnOrAssignment")
         if (status.undo.any() || status.redo.any()) {
             return UndoStatus.from(status)
         } else {

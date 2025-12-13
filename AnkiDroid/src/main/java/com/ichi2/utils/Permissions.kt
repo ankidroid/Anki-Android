@@ -61,9 +61,9 @@ object Permissions {
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
         )
 
-    val recordAudioPermission = Manifest.permission.RECORD_AUDIO
+    const val RECORD_AUDIO_PERMISSION = Manifest.permission.RECORD_AUDIO
 
-    fun canRecordAudio(context: Context): Boolean = hasPermission(context, recordAudioPermission)
+    fun canRecordAudio(context: Context): Boolean = hasPermission(context, RECORD_AUDIO_PERMISSION)
 
     /**
      * Whether the app is granted [permission]

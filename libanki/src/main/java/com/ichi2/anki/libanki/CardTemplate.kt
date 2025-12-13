@@ -107,7 +107,7 @@ data class CardTemplate(
 
     /** @see ord */
     @RustCleanup("Check JSONObject.NULL")
-    fun setOrd(value: Int?) = jsonObject.put("ord", if (value == null) JSONObject.NULL else value)
+    fun setOrd(value: Int?) = jsonObject.put("ord", value ?: JSONObject.NULL)
 
     fun deepClone() = CardTemplate(jsonObject.deepClone())
 

@@ -221,7 +221,6 @@ object ImportUtils {
                     }
                 }
             }
-            val tempOutDir: String
             if (isValidTextOrDataFile(context, importPathUri)) {
                 (context as Activity).onSelectedCsvForImport(intent!!)
                 return ImportResult.Success
@@ -238,7 +237,7 @@ object ImportUtils {
 
             // Copy to temporary file
             filename = validateFileName(filename)
-            tempOutDir = Uri.fromFile(File(context.cacheDir, filename)).encodedPath!!
+            val tempOutDir: String = Uri.fromFile(File(context.cacheDir, filename)).encodedPath!!
 
             copyFileToCache(context, importPathUri, tempOutDir).asErrorDetails()?.let { details ->
                 CrashReportService.sendExceptionReport(details.exceptionForReport, "ImportUtils")

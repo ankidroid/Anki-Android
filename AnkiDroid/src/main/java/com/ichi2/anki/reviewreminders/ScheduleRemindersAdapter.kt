@@ -171,6 +171,7 @@ class ScheduleRemindersAdapter(
                 }.data
         }
 
+    @Suppress("MayBeConstant")
     companion object {
         /**
          * Theme attribute for the primary color used in the normal (non-errored-out) state of a review reminder.

@@ -1028,7 +1028,7 @@ open class Reviewer :
     private fun setupFlags(subMenu: SubMenu) {
         lifecycleScope.launch {
             for ((flag, displayName) in Flag.queryDisplayNames()) {
-                subMenu.findItem(flag.id).setTitle(displayName)
+                subMenu.findItem(flag.id).title = displayName
                 flagItemIds.add(flag.id)
             }
         }
