@@ -21,12 +21,15 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
 import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.view.isVisible
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.snackbar.onAttachedToWindow2
 import com.ichi2.anki.BuildConfig
+import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
+import com.ichi2.anki.exception.ManuallyReportedException
 import com.ichi2.anki.showThemedToast
 import timber.log.Timber
 
@@ -206,6 +209,21 @@ fun View.showSnackbar(
 
     if (snackbarBuilder != null) {
         snackbar.snackbarBuilder()
+    }
+
+    if (snackbar.anchorView?.isVisible == false) {
+        val errorMessage = "While trying to show a snackbar, anchorView was not visible"
+        if (BuildConfig.DEBUG) {
+            throw IllegalArgumentException(errorMessage)
+        }
+        Timber.w(errorMessage)
+        CrashReportService.sendExceptionReport(
+            ManuallyReportedException(errorMessage),
+            "View.showSnackbar",
+            onlyIfSilent = true,
+        )
+
+        snackbar.anchorView = null
     }
 
     snackbar.show()
