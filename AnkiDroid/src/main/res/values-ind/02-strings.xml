@@ -370,6 +370,7 @@
     <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">Salin templat sebagai markdown</string>
     <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">Ubah penampilan browser</string>
     <string name="missing_user_action_dialog_message" comment="%s is the user action number">Aksi pengguna %s tidak diatur dalam jenis catatan ini. Mohon untuk dikonfigurasi.</string>
+    <string name="feature_not_supported_by_study_screen">This card has features that are not yet supported by the new study screen.</string>
     <string name="directory_inaccessible_info">Pelajari lebih lanjut tentang cara mengembalikan akses di sini %s atau buka pengaturan untuk memperbarui folder koleksi.</string>
     <!-- Scheduler Upgrade Required Dialog title-->
     <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">Pembaruan scheduler diperlukan</string>

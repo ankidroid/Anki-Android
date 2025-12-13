@@ -376,6 +376,7 @@
     <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">টেমপ্লেটটিকে মার্কডাউন হিসাবে অনুলিপি করুন</string>
     <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">ব্রাউজারের চেহারা সম্পাদনা করুন</string>
     <string name="missing_user_action_dialog_message" comment="%s is the user action number">এই নোটের প্রকারে ব্যবহারকারীর ক্রিয়া %s সেট নেই। এটি কনফিগার করুন</string>
+    <string name="feature_not_supported_by_study_screen">This card has features that are not yet supported by the new study screen.</string>
     <string name="directory_inaccessible_info">Learn more about how to restore access here %s or go to settings to update collection folder.</string>
     <!-- Scheduler Upgrade Required Dialog title-->
     <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">Scheduler upgrade required</string>
