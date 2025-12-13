@@ -106,7 +106,6 @@ class ReviewerViewModel(
     val destinationFlow = MutableSharedFlow<Destination>()
     val editNoteTagsFlow = MutableSharedFlow<NoteId>()
     val setDueDateFlow = MutableSharedFlow<CardId>()
-    val answerTimerStatusFlow = MutableStateFlow<AnswerTimerStatus?>(null)
     val answerFeedbackFlow = MutableSharedFlow<Rating>()
     val voiceRecorderEnabledFlow = MutableStateFlow(false)
     val whiteboardEnabledFlow = MutableStateFlow(false)
@@ -122,6 +121,7 @@ class ReviewerViewModel(
 
     private val autoAdvance = AutoAdvance(this)
     private val isHtmlTypeAnswerEnabled = Prefs.isHtmlTypeAnswerEnabled
+    val answerTimer = AnswerTimer()
 
     /**
      * A flag that determines if the SchedulingStates in CurrentQueueState are
@@ -211,11 +211,11 @@ class ReviewerViewModel(
                 autoAdvance.onShowAnswer()
             } // else wait for onMediaGroupCompleted
 
-            if (answerTimerStatusFlow.value == null) return@launchCatchingIO
+            if (answerTimer.state.value == AnswerTimerState.Hidden) return@launchCatchingIO
             val did = currentCard.await().currentDeckId()
             val stopTimerOnAnswer = withCol { decks.configDictForDeckId(did) }.stopTimerOnAnswer
             if (stopTimerOnAnswer) {
-                answerTimerStatusFlow.emit(AnswerTimerStatus.Stopped)
+                answerTimer.stop()
             }
         }
     }
@@ -621,12 +621,8 @@ class ReviewerViewModel(
 
     private suspend fun setupAnswerTimer(card: Card) {
         val shouldShowTimer = withCol { card.shouldShowTimer(this@withCol) }
-        if (!shouldShowTimer) {
-            answerTimerStatusFlow.emit(null)
-            return
-        }
-        val limitInMillis = withCol { card.timeLimit(this@withCol) }
-        answerTimerStatusFlow.emit(AnswerTimerStatus.Running(limitInMillis))
+        val limitMs = withCol { card.timeLimit(this@withCol) }
+        answerTimer.configureForCard(shouldShowTimer, limitMs)
     }
 
     private suspend fun replayMedia() {

@@ -528,31 +528,14 @@ class ReviewerFragment :
                 )
                 applyTo(binding.toolsLayout)
             }
-            // applying a ConstraintSet resets the visibility of counts_flow,
-            // which includes the timer, so set again its visibility.
-            binding.timer.isVisible = viewModel.answerTimerStatusFlow.value != null
             return
         }
     }
 
     private fun setupAnswerTimer() {
-        val timer = binding.timer
-        timer.isVisible = viewModel.answerTimerStatusFlow.value != null // necessary to handle configuration changes
-        viewModel.answerTimerStatusFlow.collectIn(lifecycleScope) { status ->
-            when (status) {
-                is AnswerTimerStatus.Running -> {
-                    timer.isVisible = true
-                    timer.limitInMs = status.limitInMs
-                    timer.restart()
-                }
-                AnswerTimerStatus.Stopped -> {
-                    timer.isVisible = true
-                    timer.stop()
-                }
-                null -> {
-                    timer.isVisible = false
-                }
-            }
+        lifecycle.addObserver(viewModel.answerTimer)
+        viewModel.answerTimer.state.collectIn(lifecycleScope) { state ->
+            binding.timer.setup(state)
         }
     }
 

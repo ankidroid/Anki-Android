@@ -16,33 +16,25 @@
 package com.ichi2.anki.ui.windows.reviewer
 
 import android.content.Context
-import android.os.Parcelable
 import android.os.SystemClock
 import android.util.AttributeSet
 import android.widget.Chronometer
 import androidx.appcompat.widget.ThemeUtils
+import androidx.core.view.isVisible
 import com.ichi2.anki.R
-import kotlinx.parcelize.Parcelize
 
-/**
- * Improved version of a [Chronometer] aimed at handling Anki Decks' `Timer` configurations.
- *
- * Compared to a default [Chronometer], it can:
- * - Restore its status after configuration changes
- * - Stop the timer after [limitInMs] is reached.
- */
 class AnswerTimerView(
     context: Context,
     attributeSet: AttributeSet?,
 ) : Chronometer(context, attributeSet) {
-    var limitInMs = Int.MAX_VALUE
-    private var elapsedMillisBeforeStop = 0L
+    private var limitInMs: Int = Int.MAX_VALUE
     private var isRunning = false
 
     init {
         setOnChronometerTickListener {
-            if (hasReachedLimit()) {
-                setTextColor(ThemeUtils.getThemeAttrColor(context, R.attr.maxTimerColor))
+            val elapsed = SystemClock.elapsedRealtime() - base
+            if (elapsed >= limitInMs) {
+                updateTextColor(true)
                 stop()
             }
         }
@@ -54,57 +46,55 @@ class AnswerTimerView(
     }
 
     override fun stop() {
-        elapsedMillisBeforeStop = SystemClock.elapsedRealtime() - base
         super.stop()
         isRunning = false
     }
 
-    fun resume() {
-        base = SystemClock.elapsedRealtime() - elapsedMillisBeforeStop
-        start()
-    }
+    fun setup(state: AnswerTimerState) {
+        isVisible = state !is AnswerTimerState.Hidden
 
-    fun restart() {
-        elapsedMillisBeforeStop = 0
-        base = SystemClock.elapsedRealtime()
-        setTextColor(ThemeUtils.getThemeAttrColor(context, android.R.attr.textColor))
-        start()
-    }
+        when (state) {
+            is AnswerTimerState.Hidden -> {
+                stop()
+            }
+            is AnswerTimerState.Running -> {
+                this.limitInMs = state.limitMs
+                if (this.base != state.baseTime) {
+                    this.base = state.baseTime
+                }
 
-    private fun hasReachedLimit() = SystemClock.elapsedRealtime() - base >= limitInMs
-
-    override fun onSaveInstanceState(): Parcelable {
-        val elapsedMillis = if (isRunning) SystemClock.elapsedRealtime() - base else elapsedMillisBeforeStop
-        return SavedState(
-            state = super.onSaveInstanceState(),
-            elapsedMs = elapsedMillis,
-            isRunning = isRunning,
-            limitInMs = limitInMs,
-        )
-    }
-
-    override fun onRestoreInstanceState(state: Parcelable?) {
-        if (state !is SavedState) {
-            super.onRestoreInstanceState(state)
-            return
-        }
-        super.onRestoreInstanceState(state.superState)
-
-        elapsedMillisBeforeStop = state.elapsedMs
-        isRunning = state.isRunning
-        limitInMs = state.limitInMs
-
-        base = SystemClock.elapsedRealtime() - elapsedMillisBeforeStop
-        if (isRunning && !hasReachedLimit()) {
-            super.start()
+                val elapsed = SystemClock.elapsedRealtime() - base
+                if (elapsed >= limitInMs) {
+                    // Already passed limit, render static and ensure stopped
+                    updateTextColor(true)
+                    if (isRunning) stop()
+                } else {
+                    // Under limit, ensure running
+                    updateTextColor(false)
+                    if (!isRunning) start()
+                }
+            }
+            is AnswerTimerState.Stopped -> {
+                stopAndUpdateTextColor(state.elapsedTimeMs, state.limitMs)
+            }
+            is AnswerTimerState.Paused -> {
+                stopAndUpdateTextColor(state.elapsedTimeMs, state.limitMs)
+            }
         }
     }
 
-    @Parcelize
-    private data class SavedState(
-        val state: Parcelable?,
-        val elapsedMs: Long,
-        val isRunning: Boolean,
-        val limitInMs: Int,
-    ) : BaseSavedState(state)
+    private fun stopAndUpdateTextColor(
+        elapsedTimeMs: Long,
+        limitMs: Int,
+    ) {
+        this.limitInMs = limitMs
+        this.base = SystemClock.elapsedRealtime() - elapsedTimeMs
+        stop()
+        updateTextColor(elapsedTimeMs >= limitMs)
+    }
+
+    private fun updateTextColor(isOverLimit: Boolean) {
+        val colorAttr = if (isOverLimit) R.attr.maxTimerColor else android.R.attr.textColor
+        setTextColor(ThemeUtils.getThemeAttrColor(context, colorAttr))
+    }
 }
