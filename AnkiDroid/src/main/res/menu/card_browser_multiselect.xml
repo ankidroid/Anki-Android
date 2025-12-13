@@ -40,7 +40,7 @@
     <item
         ankidroid:showAsAction="ifRoom"
         android:id="@+id/action_suspend_card"
-        android:icon="@drawable/ic_suspend"
+        android:icon="@drawable/ic_pause_square_filled"
         tools:title="Toggle suspend" />
 
     <item

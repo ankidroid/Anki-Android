@@ -60,7 +60,7 @@ enum class ViewerAction(
     MARK(R.id.action_mark, R.drawable.ic_star, R.string.menu_mark_note, MENU_ONLY),
     EDIT(R.id.action_edit_note, R.drawable.ic_mode_edit_white, R.string.cardeditor_title_edit_card, MENU_ONLY),
     BURY_MENU(R.id.action_bury, R.drawable.ic_flip_to_back_white, R.string.menu_bury, MENU_ONLY),
-    SUSPEND_MENU(R.id.action_suspend, R.drawable.ic_suspend, R.string.menu_suspend, MENU_ONLY),
+    SUSPEND_MENU(R.id.action_suspend, R.drawable.ic_pause_square_filled, R.string.menu_suspend, MENU_ONLY),
     DELETE(R.id.action_delete, R.drawable.ic_delete_white, R.string.menu_delete_note, MENU_ONLY),
     TOGGLE_WHITEBOARD(R.id.action_toggle_whiteboard, R.drawable.ic_enable_whiteboard, R.string.gesture_toggle_whiteboard, MENU_ONLY),
 
@@ -76,6 +76,7 @@ enum class ViewerAction(
     TOGGLE_AUTO_ADVANCE(R.id.action_toggle_auto_advance, R.drawable.ic_fast_forward, R.string.toggle_auto_advance, DISABLED),
     RECORD_VOICE(R.id.action_record_voice, R.drawable.ic_action_mic, R.string.record_voice, DISABLED),
     PLAY_MEDIA(R.id.action_replay_media, R.drawable.ic_play_circle_white, R.string.replay_media, DISABLED),
+    PAUSE_AUDIO(R.id.action_toggle_pause_audio, R.drawable.ic_pause_circle, R.string.empty_string, DISABLED),
     USER_ACTION_1(R.id.user_action_1, R.drawable.user_action_1, R.string.user_action_1, DISABLED),
     USER_ACTION_2(R.id.user_action_2, R.drawable.user_action_2, R.string.user_action_2, DISABLED),
     USER_ACTION_3(R.id.user_action_3, R.drawable.user_action_3, R.string.user_action_3, DISABLED),
@@ -147,6 +148,7 @@ enum class ViewerAction(
             BROWSE -> listOf(keycode(KeyEvent.KEYCODE_B))
             STATISTICS -> listOf(keycode(KeyEvent.KEYCODE_T))
             PLAY_MEDIA -> listOf(keycode(KeyEvent.KEYCODE_R))
+            PAUSE_AUDIO -> listOf(keycode(KeyEvent.KEYCODE_5))
             PREVIOUS_CARD_INFO -> listOf(keycode(KeyEvent.KEYCODE_I, ModifierKeys(shift = false, ctrl = true, alt = true)))
             TOGGLE_FLAG_RED ->
                 listOf(
@@ -255,6 +257,7 @@ enum class ViewerAction(
             STATISTICS -> TR.statisticsTitle()
             RESCHEDULE_NOTE -> TR.actionsSetDueDate().toSentenceCase(context, R.string.sentence_set_due_date)
             PREVIOUS_CARD_INFO -> TR.actionsPreviousCardInfo().toSentenceCase(context, R.string.sentence_actions_previous_card_info)
+            PAUSE_AUDIO -> TR.studyingPauseAudio().toSentenceCase(context, R.string.sentence_pause_audio)
             else -> context.getString(titleRes)
         }
 
