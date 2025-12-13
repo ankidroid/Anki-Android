@@ -378,6 +378,7 @@
     <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">Còpia su modellu comente markdown</string>
     <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">Modìfica s\'aparèntzia de su navigadore</string>
     <string name="missing_user_action_dialog_message" comment="%s is the user action number">S\'atzione de utente %s no est cunfigurada pro custa casta de nota. Cunfigura·la</string>
+    <string name="feature_not_supported_by_study_screen">This card has features that are not yet supported by the new study screen.</string>
     <string name="directory_inaccessible_info">Impara de prus subra de comente ripristinare s\'atzessu inoghe %s o bae a sas impostatziones pro atualizare sa cartella de sas colletziones.</string>
     <!-- Scheduler Upgrade Required Dialog title-->
     <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">Scheduler upgrade required</string>
