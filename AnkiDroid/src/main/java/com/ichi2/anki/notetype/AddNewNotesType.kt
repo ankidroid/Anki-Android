@@ -20,8 +20,6 @@ import android.view.View
 import android.view.WindowManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.EditText
-import android.widget.Spinner
 import androidx.appcompat.app.AlertDialog
 import androidx.core.widget.addTextChangedListener
 import anki.notetypes.StockNotetype
@@ -29,6 +27,7 @@ import anki.notetypes.copy
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
 import com.ichi2.anki.common.time.TimeManager
+import com.ichi2.anki.databinding.DialogNewNoteTypeBinding
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.Utils
 import com.ichi2.anki.libanki.addNotetype
@@ -46,10 +45,10 @@ import com.ichi2.utils.positiveButton
 class AddNewNotesType(
     private val activity: ManageNotetypes,
 ) {
-    private lateinit var dialogView: View
+    private lateinit var binding: DialogNewNoteTypeBinding
 
     suspend fun showAddNewNotetypeDialog() {
-        dialogView = LayoutInflater.from(activity).inflate(R.layout.dialog_new_note_type, null)
+        binding = DialogNewNoteTypeBinding.inflate(LayoutInflater.from(activity))
         val (allOptions, currentNames) =
             activity.withProgress {
                 withCol {
@@ -77,12 +76,10 @@ class AddNewNotesType(
             AlertDialog
                 .Builder(activity)
                 .apply {
-                    customView(dialogView, paddingStart = 32, paddingEnd = 32, paddingTop = 64, paddingBottom = 64)
+                    customView(binding.root, paddingStart = 32, paddingEnd = 32, paddingTop = 64, paddingBottom = 64)
                     positiveButton(R.string.dialog_ok) { _ ->
-                        val newName =
-                            dialogView.findViewById<EditText>(R.id.notetype_new_name).text.toString()
-                        val selectedPosition =
-                            dialogView.findViewById<Spinner>(R.id.notetype_new_type).selectedItemPosition
+                        val newName = binding.notetypeNewName.text.toString()
+                        val selectedPosition = binding.notetypeNewType.selectedItemPosition
                         if (selectedPosition == AdapterView.INVALID_POSITION) return@positiveButton
                         val selectedOption = allOptions[selectedPosition]
                         if (selectedOption.isStandard) {
@@ -102,14 +99,13 @@ class AddNewNotesType(
     ) {
         val addPrefixStr = context.resources.getString(R.string.model_browser_add_add)
         val clonePrefixStr = context.resources.getString(R.string.model_browser_add_clone)
-        val nameInput = dialogView.findViewById<EditText>(R.id.notetype_new_name)
-        nameInput.addTextChangedListener { editableText ->
+        binding.notetypeNewName.addTextChangedListener { editableText ->
             val currentName = editableText?.toString() ?: ""
             positiveButton.isEnabled =
                 currentName.isNotEmpty() &&
                 !currentNames.contains(currentName)
         }
-        dialogView.findViewById<Spinner>(R.id.notetype_new_type).apply {
+        binding.notetypeNewType.apply {
             onItemSelectedListener =
                 object : AdapterView.OnItemSelectedListener {
                     override fun onItemSelected(
@@ -119,12 +115,12 @@ class AddNewNotesType(
                         id: Long,
                     ) {
                         val selectedNotetype = optionsToDisplay[index]
-                        nameInput.setText(randomizeName(selectedNotetype.name))
-                        nameInput.moveCursorToEnd()
+                        binding.notetypeNewName.setText(randomizeName(selectedNotetype.name))
+                        binding.notetypeNewName.moveCursorToEnd()
                     }
 
                     override fun onNothingSelected(widget: AdapterView<*>?) {
-                        nameInput.setText("")
+                        binding.notetypeNewName.setText("")
                     }
                 }
             adapter =
@@ -141,7 +137,7 @@ class AddNewNotesType(
                 ).apply {
                     setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                 }
-            nameInput.requestFocus()
+            binding.notetypeNewName.requestFocus()
             window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE)
         }
     }
