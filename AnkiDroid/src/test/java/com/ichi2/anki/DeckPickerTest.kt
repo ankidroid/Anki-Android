@@ -601,7 +601,7 @@ class DeckPickerTest : RobolectricTest() {
             // ACT: open up the Deck Context Menu
             val deckToClick =
                 deckPickerBinding.decks.children.single {
-                    it.findViewById<TextView>(R.id.deckpicker_name).text == "With Cards"
+                    it.findViewById<TextView>(R.id.deck_name).text == "With Cards"
                 }
             deckToClick.performLongClick()
 

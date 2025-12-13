@@ -16,7 +16,7 @@
 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/DeckPickerHoriz"
+    android:id="@+id/deck_layout"
     android:background="?attr/selectableItemBackground"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -27,7 +27,7 @@
     tools:background="@android:color/holo_orange_light">
 
     <ImageButton
-        android:id="@+id/deckpicker_indent"
+        android:id="@+id/indent_view"
         android:minWidth="0dp"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
@@ -37,19 +37,19 @@
         android:id="@+id/deck_name_linear_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@+id/deckpicker_indent"
+        android:layout_toEndOf="@+id/indent_view"
         android:layout_toStartOf="@+id/counts_layout"
         android:orientation="horizontal"
         android:gravity="center_vertical">
         <ImageButton
-            android:id="@+id/deckpicker_expander"
+            android:id="@+id/deck_expander"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:minWidth="48dp"
             android:padding="12dp"
             android:background="?attr/selectableItemBackgroundBorderless" />
         <com.ichi2.ui.FixedTextView
-            android:id="@+id/deckpicker_name"
+            android:id="@+id/deck_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:minHeight="48dp"
@@ -75,7 +75,7 @@
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true" >
         <com.ichi2.ui.FixedTextView
-            android:id="@+id/deckpicker_new"
+            android:id="@+id/deck_new"
             android:contentDescription="@string/deck_picker_new"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -87,7 +87,7 @@
             tools:text="10" />
 
         <com.ichi2.ui.FixedTextView
-            android:id="@+id/deckpicker_lrn"
+            android:id="@+id/deck_learn"
             android:contentDescription="@string/deck_picker_lrn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -99,7 +99,7 @@
             tools:text="42" />
 
         <com.ichi2.ui.FixedTextView
-            android:id="@+id/deckpicker_rev"
+            android:id="@+id/deck_review"
             android:contentDescription="@string/deck_picker_rev"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
