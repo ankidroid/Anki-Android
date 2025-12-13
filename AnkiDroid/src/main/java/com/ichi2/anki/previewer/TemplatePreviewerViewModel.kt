@@ -57,7 +57,19 @@ class TemplatePreviewerViewModel(
     @VisibleForTesting
     val ordFlow = MutableStateFlow(arguments.ord)
 
-    private val note: Deferred<Note>
+    private val note: Deferred<Note> =
+        asyncIO {
+            withCol {
+                if (arguments.id != 0L) {
+                    Note(this, arguments.id)
+                } else {
+                    Note.fromNotetypeId(this@withCol, arguments.notetype.id)
+                }
+            }.apply {
+                fields = arguments.fields
+                tags = arguments.tags
+            }
+        }
     private val templateNames: Deferred<List<String>>
     private val clozeOrds: Deferred<List<Int>>?
     override var currentCard: Deferred<Card>
@@ -69,19 +81,6 @@ class TemplatePreviewerViewModel(
     internal val cardsWithEmptyFronts: Deferred<List<Boolean>>?
 
     init {
-        note =
-            asyncIO {
-                withCol {
-                    if (arguments.id != 0L) {
-                        Note(this, arguments.id)
-                    } else {
-                        Note.fromNotetypeId(this@withCol, arguments.notetype.id)
-                    }
-                }.apply {
-                    fields = arguments.fields
-                    tags = arguments.tags
-                }
-            }
         currentCard =
             asyncIO {
                 val note = note.await()

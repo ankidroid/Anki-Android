@@ -43,7 +43,6 @@ class BackendEmulatingOpenConflictTest : RobolectricTest() {
     fun assumeMocksAreValid() {
         assertThrows(
             BackendDbLockedException::class.java,
-            { CollectionManager.getColUnsafe() },
-        )
+        ) { CollectionManager.getColUnsafe() }
     }
 }

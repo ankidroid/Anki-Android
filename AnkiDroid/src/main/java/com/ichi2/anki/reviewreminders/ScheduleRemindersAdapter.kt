@@ -91,7 +91,7 @@ class ScheduleRemindersAdapter(
         holder: ViewHolder,
     ) {
         val activeTextColor = getThemeColor(holder.context, normalTextThemeAttribute)
-        val activeTrackColor = getThemeColor(holder.context, normalPrimaryColorThemeAttribute)
+        val activeTrackColor = getThemeColor(holder.context, NORMAL_PRIMARY_COLOR_THEME_ATTRIBUTE)
         val inactiveTextColor = holder.context.getColor(erroredReviewReminderColor)
         val inactiveTrackColor = holder.context.getColor(erroredReviewReminderColor)
 
@@ -177,7 +177,7 @@ class ScheduleRemindersAdapter(
          * Used for the switch track color of a reminder in the UI if it is not errored-out.
          * The corresponding color resource can be obtained via [getThemeColor].
          */
-        private val normalPrimaryColorThemeAttribute: Int = android.R.attr.colorPrimary
+        private const val NORMAL_PRIMARY_COLOR_THEME_ATTRIBUTE: Int = android.R.attr.colorPrimary
 
         /**
          * Theme attribute for the text color used in the normal (non-errored-out) state of a review reminder.

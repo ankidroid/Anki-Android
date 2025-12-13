@@ -110,7 +110,7 @@ data class ComputedMemoryState(
 @RustCleanup("combine with BackendImportExport")
 @RustCleanup("Config is not fully implemented")
 @WorkerThread
-class Collection(
+open class Collection(
     /**
      *  The path to the folder containing collection.anki2 database. Must be unicode and openable with [File].
      */
@@ -155,12 +155,12 @@ class Collection(
      * Getters/Setters ********************************************************** *************************************
      */
 
-    val media: Media
+    val media: Media = Media(this)
 
     lateinit var decks: Decks
         protected set
 
-    val tags: Tags
+    val tags: Tags = Tags(this)
 
     lateinit var config: Config
 
@@ -175,8 +175,6 @@ class Collection(
     // END: SQL table columns
 
     init {
-        media = Media(this)
-        tags = Tags(this)
         val created = reopen(databaseBuilder = databaseBuilder)
         _loadScheduler()
         if (created) {
@@ -1155,10 +1153,10 @@ class Collection(
     @LibAnkiAlias("_check_backend_undo_status")
     private fun checkBackendUndoStatus(): UndoStatus? {
         val status = backend.getUndoStatus()
-        if (status.undo.any() || status.redo.any()) {
-            return UndoStatus.from(status)
+        return if (status.undo.any() || status.redo.any()) {
+            UndoStatus.from(status)
         } else {
-            return null
+            null
         }
     }
 

@@ -91,7 +91,7 @@ hello"""
  background-color: white;
 }
 </style>Type in hello
-<code id=typeans><span class=typeBad>hello</span><br><span id=typearrow>&darr;</span><br><span class=typeMissed>xyzzy${"$"}${"$"}$22</span></code>
+<code id=typeans><span class=typeBad>hello</span><br><span id=typearrow>&darr;</span><br><span class=typeMissed>xyzzy$$$22</span></code>
 
 <hr id=answer>
 

@@ -92,12 +92,12 @@ class ColumnSelectionDialogFragment : DialogFragment() {
 
         lifecycleScope.launch {
             // Load the available columns either from the viewModel or savedInstanceState bundle
-            if (savedInstanceState == null) {
-                availableColumns = viewModel.previewColumnHeadings(viewModel.cardsOrNotes).second
-            } else {
-                availableColumns =
+            availableColumns =
+                if (savedInstanceState == null) {
+                    viewModel.previewColumnHeadings(viewModel.cardsOrNotes).second
+                } else {
                     BundleCompat.getParcelableArrayList(savedInstanceState, AVAILABLE_COLUMNS, ColumnWithSample::class.java)!!.toList()
-            }
+                }
             adapter.clear()
             adapter.addAll(availableColumns)
             adapter.notifyDataSetChanged()
