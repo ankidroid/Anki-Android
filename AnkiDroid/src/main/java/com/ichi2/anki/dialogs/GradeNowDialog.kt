@@ -72,13 +72,13 @@ object GradeNowDialog {
         MaterialAlertDialogBuilder(context).show {
             title(text = TR.actionsGradeNow().toSentenceCase(context, R.string.sentence_grade_now))
             negativeButton(R.string.dialog_cancel)
-            setAdapter(adapter, { dialog, which ->
+            setAdapter(adapter) { dialog, which ->
                 val selectedGrade = adapter.getItem(which)!!
                 Timber.i("selected '%s'", selectedGrade.name)
                 // dismiss the dialog before the operation completes to stop duplicate clicks
                 context.gradeNow(cardIds, selectedGrade)
                 dialog.dismiss()
-            })
+            }
         }
     }
 
@@ -98,7 +98,7 @@ object GradeNowDialog {
 
 private class GradeNowListAdapter(
     context: Context,
-    val grades: List<Grade>,
+    grades: List<Grade>,
 ) : ArrayAdapter<Grade>(context, R.layout.grade_now_list_item, grades) {
     override fun getView(
         position: Int,

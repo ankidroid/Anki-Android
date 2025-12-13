@@ -435,9 +435,9 @@ private fun AnkiActivity.updateDueDate(
     }
 
 private fun EditText.selectAllWhenFocused() {
-    setOnFocusChangeListener({ _, hasFocus ->
+    setOnFocusChangeListener { _, hasFocus ->
         if (hasFocus) {
             selectAll()
         }
-    })
+    }
 }

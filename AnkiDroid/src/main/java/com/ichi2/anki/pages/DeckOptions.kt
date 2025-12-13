@@ -128,8 +128,7 @@ class DeckOptions : PageFragment() {
                         document.getElementsByClassName("modal show")[0]
                         .getElementsByClassName("btn-close")[0].click()
                         """.trimIndent(),
-                        {},
-                    )
+                    ) {}
                 } catch (e: Exception) {
                     CrashReportService.sendExceptionReport(e, "DeckOptions:onCloseBootstrapModalCallback")
                 } finally {
@@ -186,7 +185,7 @@ class DeckOptions : PageFragment() {
         activity?.onBackPressedDispatcher?.addCallback(this, onBackFromManual)
 
         return object : PageWebViewClient() {
-            private val ankiManualHostRegex = Regex("^docs\\.ankiweb\\.net\$")
+            private val ankiManualHostRegex = Regex("^docs\\.ankiweb\\.net$")
 
             /** @see onWebViewReady */
             override fun onShowWebView(webView: WebView) {
@@ -240,8 +239,8 @@ class DeckOptions : PageFragment() {
         val openJs = getListenerJs("shown.bs.modal", "open")
         val closeJs = getListenerJs("hidden.bs.modal", "close")
 
-        webViewLayout.evaluateJavascript(openJs, {})
-        webViewLayout.evaluateJavascript(closeJs, {})
+        webViewLayout.evaluateJavascript(openJs) {}
+        webViewLayout.evaluateJavascript(closeJs) {}
     }
 
     fun onWebViewReady() {

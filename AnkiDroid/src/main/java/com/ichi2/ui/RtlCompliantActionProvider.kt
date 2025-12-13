@@ -67,11 +67,10 @@ class RtlCompliantActionProvider(
             while (unwrappedContext !is Activity && unwrappedContext is ContextWrapper) {
                 unwrappedContext = unwrappedContext.baseContext
             }
-            return if (unwrappedContext is Activity) {
-                unwrappedContext
-            } else {
-                throw ClassCastException("Passed context should be either an instanceof Activity or a ContextWrapper wrapping an Activity")
-            }
+            return unwrappedContext as? Activity
+                ?: throw ClassCastException(
+                    "Passed context should be either an instanceof Activity or a ContextWrapper wrapping an Activity",
+                )
         }
     }
 }

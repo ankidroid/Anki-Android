@@ -146,7 +146,7 @@ object Consts {
     // The labels defined in consts.py are in AnkiDroid's resources files.
     const val DEFAULT_DECK_ID: DeckId = 1L
 
-    val FIELD_SEPARATOR = "${'\u001f'}"
+    const val FIELD_SEPARATOR = "${'\u001f'}"
 
     /** Time duration for toast **/
     const val SHORT_TOAST_DURATION: Long = 2000
