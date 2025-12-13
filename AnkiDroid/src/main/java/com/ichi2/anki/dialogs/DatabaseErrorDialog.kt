@@ -1,18 +1,18 @@
-/****************************************************************************************
- * Copyright (c) 2015 Timothy Rae <perceptualchaos2@gmail.com>                          *
- *                                                                                      *
- * This program is free software; you can redistribute it and/or modify it under        *
- * the terms of the GNU General Public License as published by the Free Software        *
- * Foundation; either version 3 of the License, or (at your option) any later           *
- * version.                                                                             *
- *                                                                                      *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY      *
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A      *
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.             *
- *                                                                                      *
- * You should have received a copy of the GNU General Public License along with         *
- * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
- ****************************************************************************************/
+/*
+ * Copyright (c) 2015 Timothy Rae <perceptualchaos2@gmail.com>
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 3 of the License, or (at your option) any later
+ * version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 package com.ichi2.anki.dialogs
 
@@ -26,7 +26,6 @@ import androidx.annotation.CheckResult
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
-import androidx.core.net.toUri
 import androidx.core.os.BundleCompat
 import androidx.core.os.bundleOf
 import androidx.lifecycle.lifecycleScope
@@ -37,8 +36,11 @@ import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.ConflictResolution
 import com.ichi2.anki.DatabaseRestorationListener
 import com.ichi2.anki.DeckPicker
+import com.ichi2.anki.FatalInitializationError.StorageError
+import com.ichi2.anki.InitialActivity.StartupFailure.InitializationError
 import com.ichi2.anki.LocalizedUnambiguousBackupTimeFormatter
 import com.ichi2.anki.R
+import com.ichi2.anki.ankiActivity
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType.DIALOG_CONFIRM_DATABASE_CHECK
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType.DIALOG_CONFIRM_RESTORE_BACKUP
@@ -55,6 +57,7 @@ import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType.DIALOG
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType.INCOMPATIBLE_DB_VERSION
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.UninstallListItem.Companion.createList
 import com.ichi2.anki.dialogs.ImportFileSelectionFragment.ImportOptions
+import com.ichi2.anki.exception.SystemStorageException
 import com.ichi2.anki.isLoggedIn
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.Consts
@@ -150,7 +153,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 // to the previous dialog
                 val options = ArrayList<String>(7)
                 val values = ArrayList<ErrorHandlingEntries>(7)
-                if (!(activity as AnkiActivity).colIsOpenUnsafe()) {
+                if (!requireAnkiActivity().colIsOpenUnsafe()) {
                     // retry
                     options.add(res.getString(R.string.backup_retry_opening))
                     values.add(ErrorHandlingEntries.RETRY)
@@ -247,7 +250,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     alertDialog
                         .title(R.string.backup_restore_select_title)
                         .positiveButton(R.string.restore_backup_choose_another) {
-                            (activity as? AnkiActivity)?.let {
+                            ankiActivity?.let {
                                 ImportFileSelectionFragment.openImportFilePicker(it, ImportFileSelectionFragment.ImportFileType.APKG)
                             }
                         }.negativeButton(R.string.dialog_cancel)
@@ -443,23 +446,21 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
             R.string.restore_data_from_ankiweb,
             dismissesDialog = true,
             {
-                this.displayResetToNewDirectoryDialog(it)
+                this.displayCreateNewCollectionDialog(it)
             },
         ),
         INSTALL_NON_PLAY_APP_RECOMMENDED(
             R.string.install_non_play_store_ankidroid_recommended,
             dismissesDialog = false,
             {
-                val restoreUi = it.getString(R.string.link_install_non_play_store_install).toUri()
-                it.openUrl(restoreUi)
+                it.openUrl(R.string.link_install_non_play_store_install)
             },
         ),
         INSTALL_NON_PLAY_APP_NORMAL(
             R.string.install_non_play_store_ankidroid,
             dismissesDialog = false,
             {
-                val restoreUi = it.getString(R.string.link_install_non_play_store_install).toUri()
-                it.openUrl(restoreUi)
+                it.openUrl(R.string.link_install_non_play_store_install)
             },
         ),
         RESTORE_FROM_BACKUP(
@@ -489,21 +490,29 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
             R.string.help_title_get_help,
             dismissesDialog = false,
             {
-                it.openUrl(it.getString(R.string.link_forum).toUri())
+                it.openUrl(R.string.link_forum)
             },
         ),
         RECREATE_COLLECTION(
             R.string.create_new_collection,
             dismissesDialog = false,
             {
-                this.displayResetToNewDirectoryDialog(it)
+                this.displayCreateNewCollectionDialog(it)
             },
         ),
         ;
 
         companion object {
             /** A dialog which creates a new collection in an unsafe location */
-            fun displayResetToNewDirectoryDialog(context: AnkiActivity) {
+            fun displayCreateNewCollectionDialog(context: AnkiActivity) {
+                val directory =
+                    try {
+                        CollectionHelper.getDefaultAnkiDroidDirectory(context)
+                    } catch (e: SystemStorageException) {
+                        Timber.w(e, "failed to show 'Create new collection' dialog")
+                        FatalErrorDialog.build(context, InitializationError(StorageError(e))).show()
+                        return
+                    }
                 AlertDialog.Builder(context).show {
                     title(R.string.backup_new_collection)
                     setIcon(R.drawable.ic_warning)
@@ -515,7 +524,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                             "DatabaseErrorDialog: Before Create New Collection",
                         )
                         CollectionManager.closeCollectionBlocking()
-                        CollectionHelper.resetAnkiDroidDirectory(context)
+                        CollectionHelper.resetAnkiDroidDirectory(context, directory)
                         context.closeCollectionAndFinish()
                     }
                     negativeButton(R.string.dialog_cancel)
@@ -543,7 +552,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
     }
 
     private fun closeCollectionAndFinish() {
-        (requireActivity() as AnkiActivity).closeCollectionAndFinish()
+        requireAnkiActivity().closeCollectionAndFinish()
     } // Generic message shown when a libanki task failed
 
     // The sqlite database has been corrupted (DatabaseErrorHandler.onCorrupt() was called)

@@ -48,12 +48,14 @@
     <string name="drawer_open">Malfermi la tirmenuon</string>
     <string name="drawer_close">Fermi la tirmenuon</string>
     <string name="note_message">Noto konservita</string>
+    <!-- Note editor screen -->
     <string name="CardEditorCardDeck">Kartaro:</string>
     <string name="CardEditorNoteDeck">Kartaro:</string>
     <string name="CardEditorModel">Tipo:</string>
     <string name="CardEditorTags">Etikedoj: %1$s</string>
     <string name="CardEditorCards">Kartoj: %1$s</string>
     <string name="edit_occlusions">Redakti vualojn</string>
+    <string name="paste_from_clipboard" maxLength="28">Alglui el tondujo</string>
     <string name="tag_name">Nomo de etikedo</string>
     <string name="add_new_filter_tags">Aldoni/filtri etikedojn</string>
     <string name="add_tag" maxLength="28">Aldoni etikedon</string>
@@ -65,6 +67,18 @@
     <string name="save_whiteboard" maxLength="28">Konservi skribtabulon</string>
     <string name="enable_stylus" maxLength="28">Ebligi grifelan skribadon</string>
     <string name="disable_stylus">Malebligi grifelan skribadon</string>
+    <string name="eraser" maxLength="28">Viŝilo</string>
+    <string name="add_brush" maxLength="28">Aldoni penikon</string>
+    <string name="whiteboard_align_left" comment="Option to align the whiteboard toolbar on the left" maxLength="28">Maldekstre</string>
+    <string name="whiteboard_align_bottom" comment="Option to align the whiteboard toolbar on the bottom" maxLength="28">Sube</string>
+    <string name="whiteboard_align_right" comment="Option to align the whiteboard toolbar on the right" maxLength="28">Dekstre</string>
+    <string name="whiteboard_clear" comment="Button text to clear the whiteboard" maxLength="28">Forviŝi</string>
+    <string name="whiteboard_more_options" comment="Tooltip of the whiteboard \'More\' button" maxLength="28">Pliaj agordoj</string>
+    <string name="whiteboard_remove_brush_message">Ĉu vi certe volas forigi tiun ĉi panikon el via paletro?</string>
+    <string name="whiteboard_ink_eraser" comment="Title of the whiteboard Ink eraser">Forviŝi</string>
+    <string name="whiteboard_stroke_eraser" comment="Title of the whiteboard Stroke eraser">Forviŝegi</string>
+    <string name="stylus_mode" comment="Title of the menu item that toggles the whiteboard stylus mode" maxLength="28">Grifelo-reĝimo</string>
+    <string name="cannot_remove_last_brush_message">Ne eblas forigi la lastan penikon</string>
     <string name="enable_whiteboard" maxLength="28">Aktivigi skribtabulon</string>
     <string name="disable_whiteboard">Malaktivigi skribtabulon</string>
     <string name="show_whiteboard">Montri skribtabulon</string>
@@ -83,6 +97,7 @@
     <string name="webview_crash_fatal">Neriparebla eraro pri WebView. Kaŭzo: %s</string>
     <string name="webview_crash_loop_dialog_title">Eraro bildigi per operaciuma WebView</string>
     <string name="webview_crash_loop_dialog_content">La operciuma komponanto WebView malsukcesis bildigi la karton “%1$s”.\n%2$s</string>
+    <string name="slide_to_cancel" comment="Message shown when pressing the record button">Deŝovu por nuligi</string>
     <string name="filter_by_flags" maxLength="41">Flagoj</string>
     <!-- Custom study options -->
     <string name="custom_study_loading_tags">Kreado de listo de etikedoj&#8230;</string>
@@ -151,7 +166,8 @@
     <string name="import_error_not_apkg_extension">Dosiernomo \"%s\" ne finiĝas per .apkg aŭ .colpkg</string>
     <string name="import_error_load_imported_database">Anstataŭigoj de Anki-datumbazo (.anki2) ankoraŭ ne estas subtenataj. Legu la manlibron por instrukciojn pri anstataŭigo.</string>
     <string name="import_error_content_provider">Ne povas aŭtomate enporti elektitan dosieron al AnkiDroid. Bonvolu legi la manlibron de uzanto por sciiĝi pri kiel permane enporti Anki-dosierojn:\n%s</string>
-    <string name="import_error_copy_to_cache">Malsukcesis kaŝmemori dosieron (probable mankas spaco)</string>
+    <string name="import_error_copy_to_cache_title">Malsukcesis kaŝmemori dosieron</string>
+    <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">Tio ĉi ofte okazas pro eraro en la aplikaĵo uzita por elekti la dosieron. Provu la jenon por solvi la problemon:\n\n%s</string>
     <string name="import_interrupted">Enportado interrompita</string>
     <string name="export_ready_title">Elporto estas preta</string>
     <string name="export_send_no_handlers">Neniu aplikaĵo por pritrakti apkg. Konservado&#8230;</string>
@@ -180,11 +196,6 @@
     <string name="tag_editor_add_feedback">Frapetu “%2$s” por konfirmi aldoni “%1$s”</string>
     <string name="tag_editor_add_feedback_existing">Elektis ekzistan etikedon “%1$s”</string>
     <!-- Time spans -->
-    <string name="reminder_title">Ne forgesu lerni hodiaŭ!</string>
-    <plurals name="reminder_text">
-        <item quantity="one">%2$d karto por ripeti en %1$s</item>
-        <item quantity="other">%2$d karto por ripeti en %1$s</item>
-    </plurals>
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Eraro dum kunhavigado de apkg-dosiero</string>
     <!-- Import and export v2 feedback -->
@@ -225,6 +236,7 @@
     <string name="search_decks" maxLength="28">Serĉi en kartaroj</string>
     <string name="ankidroid_init_failed_webview_title">Neriparebla eraro</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid necesas la komponanton System WebView, kiu estas nedisponebla. Tio ĉi povas okazi, kiam la operaciumo instalas ĝisdatigojn. Reprovu post kelkaj minutoj.\n\n%s</string>
+    <string name="ankidroid_init_failed_storage">AnkiDroid ne povas aliri konservejon pro eraro rilata al Android.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">Grando de tiparo</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Montri ilarstrion</string>
@@ -271,7 +283,6 @@
     <string name="download_failed">Elŝuto malsukcesis</string>
     <string name="deck_download_progress_message">Vi povas uzi aliajn aplikaĵojn kiam la dosiero(j) estas elŝutata(j)</string>
     <string name="check_network">Kontrolu vian retkonekton</string>
-    <string name="search_using_deck_name">Serĉi laŭ nomo de kartaro</string>
     <string name="external_storage_unavailable">Elŝutado ĉesigita, la ekstera konservejo estas neailrebla</string>
     <string name="home" maxLength="28">Hejmo</string>
     <!-- Study Screen actions
@@ -296,6 +307,10 @@
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">Malsukcesis aliri la kolekton. Reprovu!</string>
     <string name="cd_manage_notetypes_add">Aldoni novan nototipon</string>
+    <plurals name="note_types_selected">
+        <item quantity="one">%d nototipo elektita</item>
+        <item quantity="other">%d nototipoj elektitaj</item>
+    </plurals>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">Lernu malpli</string>
     <string name="intro_ankidroid_tagline_two">Memoru pli</string>
@@ -304,7 +319,6 @@
     <string name="intro_sync_from_ankiweb">Samtempigi kun AnkiWeb</string>
     <!-- IntentHandler -->
     <string name="app_not_initialized_new">AnkiDroid ankoraŭ ne estas preta. Remalfermu AnkiDroid kaj reprovu</string>
-    <string name="already_logged_in">Jam ensalutinta</string>
     <!-- Deck Creation -->
     <string name="deck_created">Kartaro kreita</string>
     <string name="deck_renamed">Kartaro renomigita</string>

@@ -24,6 +24,8 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.edit
 import androidx.core.os.BundleCompat
+import com.ichi2.anki.account.AccountActivity
+import com.ichi2.anki.account.LoginFragment
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.introduction.SetupCollectionFragment
 import com.ichi2.anki.introduction.SetupCollectionFragment.CollectionSetupOption
@@ -36,13 +38,13 @@ import timber.log.Timber
 /**
  * App introduction for new users.
  *
- * Links to [LoginActivity] ("Sync from AnkiWeb") or [DeckPicker] ("Get Started")
+ * Links to [AccountActivity]/[LoginFragment] ("Sync from AnkiWeb") or [DeckPicker] ("Get Started")
  *
  * @see SetupCollectionFragment
  */
 // TODO: Background of introduction_layout does not display on API 25 emulator: https://github.com/ankidroid/Anki-Android/pull/12033#issuecomment-1228429130
 @NeedsTest("Ensure that we can get here on first run without an exception dialog shown")
-class IntroductionActivity : AnkiActivity() {
+class IntroductionActivity : AnkiActivity(R.layout.introduction_activity) {
     @NeedsTest("ensure this is called when the activity ends")
     private val onLoginResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
@@ -59,7 +61,6 @@ class IntroductionActivity : AnkiActivity() {
             return
         }
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.introduction_activity)
 
         setFragmentResultListener(FRAGMENT_KEY) { _, bundle ->
             val option =
@@ -73,7 +74,8 @@ class IntroductionActivity : AnkiActivity() {
 
     private fun openLoginDialog() {
         Timber.i("Opening login screen")
-        onLoginResult.launch(Intent(this, LoginActivity::class.java))
+        val intent = AccountActivity.getIntent(context = this, forResult = true)
+        onLoginResult.launch(intent)
     }
 
     private fun startDeckPicker(result: Int = RESULT_START_NEW) {

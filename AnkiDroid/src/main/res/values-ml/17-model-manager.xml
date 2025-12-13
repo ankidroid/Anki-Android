@@ -45,7 +45,6 @@
     </plurals>
     <!--Browser-->
     <string name="model_browser_delete">കുറിപ്പ് തരം ഇല്ലാതാക്കുക</string>
-    <string name="model_browser_rename" comment="Rename a note type">പേരുമാറ്റുക</string>
     <string name="model_browser_template">കാർഡുകൾ എഡിറ്റ് ചെയ്യുക</string>
     <!--Rename-->
     <string name="rename_model">നോട്ട് തരം പുനർനാമകരണം ചെയ്യുക</string>
@@ -53,7 +52,6 @@
     <!--Language Hint-->
     <string name="model_field_editor_language_hint_dialog_success_result">ഭാഷാ സൂചന %s ആയി സജ്ജമാക്കുക</string>
     <!--Field Editing-->
-    <string name="model_field_editor_title">ഫീൽഡുകൾ എഡിറ്റ് ചെയ്യുക</string>
     <string name="model_field_editor_add" maxLength="28">ഫീൽഡ് ചേർക്കുക</string>
     <string name="model_field_editor_delete">ഫീൽഡ് ഇല്ലാതാക്കുക</string>
     <string name="model_field_editor_rename">ഫീൽഡിൻ്റെ പേര് മാറ്റുക</string>
@@ -63,6 +61,12 @@
     <string name="model_field_editor_sort_field">ഈ ഫീൽഡ് അനുസരിച്ച് അടുക്കുക</string>
     <!--Warnings-->
     <string name="model_delete_warning">ഈ പോസ്റ്റ് തരം ഇല്ലാതാക്കണമെന്ന് തീർച്ചയാണോ?</string>
+    <!--
+        Example output:
+        Delete the note types below?
+        Basic, Basic (and reversed card), Cloze
+     -->
+    <string name="model_delete_multiple_warning">Delete the note types below?\n %s</string>
     <string name="field_delete_warning">ഈ ഫീൽഡ് ഇല്ലാതാക്കണമെന്ന് തീർച്ചയാണോ?</string>
     <!--Model Add Suffixes-->
     <string name="model_browser_add_add">Add: %1$s</string>

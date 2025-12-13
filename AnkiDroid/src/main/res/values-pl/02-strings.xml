@@ -48,12 +48,14 @@
     <string name="drawer_open">Otwórz menu boczne</string>
     <string name="drawer_close">Zamknij menu boczne</string>
     <string name="note_message">Zapisano notatkę</string>
+    <!-- Note editor screen -->
     <string name="CardEditorCardDeck">Talia kart:</string>
     <string name="CardEditorNoteDeck">Talia:</string>
     <string name="CardEditorModel">Typ:</string>
     <string name="CardEditorTags">Etykiety: %1$s</string>
     <string name="CardEditorCards">Karty: %1$s</string>
     <string name="edit_occlusions">Edytuj okluzje</string>
+    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
     <string name="tag_name">Nazwa tagu</string>
     <string name="add_new_filter_tags">Dodaj/filtruj tagi</string>
     <string name="add_tag" maxLength="28">Dodaj tag</string>
@@ -65,6 +67,18 @@
     <string name="save_whiteboard" maxLength="28">Zapisz tablicę</string>
     <string name="enable_stylus" maxLength="28">Włącz tryb rysika</string>
     <string name="disable_stylus">Wyłącz tryb rysika</string>
+    <string name="eraser" maxLength="28">Eraser</string>
+    <string name="add_brush" maxLength="28">Add brush</string>
+    <string name="whiteboard_align_left" comment="Option to align the whiteboard toolbar on the left" maxLength="28">Left</string>
+    <string name="whiteboard_align_bottom" comment="Option to align the whiteboard toolbar on the bottom" maxLength="28">Bottom</string>
+    <string name="whiteboard_align_right" comment="Option to align the whiteboard toolbar on the right" maxLength="28">Right</string>
+    <string name="whiteboard_clear" comment="Button text to clear the whiteboard" maxLength="28">Clear</string>
+    <string name="whiteboard_more_options" comment="Tooltip of the whiteboard \'More\' button" maxLength="28">More options</string>
+    <string name="whiteboard_remove_brush_message">Are you sure you want to remove this brush from your palette?</string>
+    <string name="whiteboard_ink_eraser" comment="Title of the whiteboard Ink eraser">Ink</string>
+    <string name="whiteboard_stroke_eraser" comment="Title of the whiteboard Stroke eraser">Stroke</string>
+    <string name="stylus_mode" comment="Title of the menu item that toggles the whiteboard stylus mode" maxLength="28">Stylus mode</string>
+    <string name="cannot_remove_last_brush_message">The last brush may not be removed</string>
     <string name="enable_whiteboard" maxLength="28">Włącz tablicę</string>
     <string name="disable_whiteboard">Wyłącz tablicę</string>
     <string name="show_whiteboard">Pokaż tablicę</string>
@@ -83,6 +97,7 @@
     <string name="webview_crash_fatal">Błąd krytyczny: awaria renderowania WebView. Przyczyna: %s</string>
     <string name="webview_crash_loop_dialog_title">Błąd renderowania WebView systemu</string>
     <string name="webview_crash_loop_dialog_content">System WebView nie potrafił wyrenderować karty \'%1$s\'.\n %2$s</string>
+    <string name="slide_to_cancel" comment="Message shown when pressing the record button">Slide to cancel</string>
     <string name="filter_by_flags" maxLength="41">Flagi</string>
     <!-- Custom study options -->
     <string name="custom_study_loading_tags">Tworzenie listy tagów&#8230;</string>
@@ -157,7 +172,8 @@
     <string name="import_error_not_apkg_extension">Nazwa pliku \"%s\" nie ma rozszerzenia .apkg lub .colpkg</string>
     <string name="import_error_load_imported_database">Pliki bazy danych Anki (.anki2) nie są jeszcze obsługiwane. W podręczniku możesz przeczytać o alternatywnych możliwościach importu</string>
     <string name="import_error_content_provider">Wybrany plik nie mógł zostać automatycznie zaimportowany przez AnkiDroid. Zapoznaj się z podręcznikiem użytkownika na temat ręcznego importowania plików Anki: \n%s</string>
-    <string name="import_error_copy_to_cache">Błąd copyFileToCache() (prawdopodobnie brak miejsca)</string>
+    <string name="import_error_copy_to_cache_title">Failed to cache file</string>
+    <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">This is often caused by a bug in the app you used to select the file. Please try the following fixes:\n\n%s</string>
     <string name="import_interrupted">Import przerwany</string>
     <string name="export_ready_title">Eksportowanie zakończone</string>
     <string name="export_send_no_handlers">Nie znaleziono aplikacji, która obsługuje apkg. Zapisywanie&#8230;</string>
@@ -186,13 +202,6 @@
     <string name="tag_editor_add_feedback">Dotknij “%2$s” aby potwierdzić dodanie “%1$s”</string>
     <string name="tag_editor_add_feedback_existing">Wybrano istniejący tag “%1$s”</string>
     <!-- Time spans -->
-    <string name="reminder_title">Nie zapomnij się dziś pouczyć!</string>
-    <plurals name="reminder_text">
-        <item quantity="one">%2$d karta do powtórki w %1$s</item>
-        <item quantity="few">%2$d karty do powtórki w %1$s</item>
-        <item quantity="many">%2$d kart do powtórki w %1$s</item>
-        <item quantity="other">%2$d kart do powtórki w %1$s</item>
-    </plurals>
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Błąd udostępniania pliku apkg</string>
     <!-- Import and export v2 feedback -->
@@ -233,6 +242,7 @@
     <string name="search_decks" maxLength="28">Przeszukaj talie</string>
     <string name="ankidroid_init_failed_webview_title">Błąd krytyczny</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid do działania wymaga System WebView który jest teraz niedostępny. Może być to spowodowane trwającą teraz instalacją aktualizacji przez system. Spróbuj ponownie za kilka minut.\n\n%s</string>
+    <string name="ankidroid_init_failed_storage">AnkiDroid cannot access storage due to an Android error.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">Rozmiar czcionki</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Pokaż pasek narzędzi</string>
@@ -269,7 +279,7 @@
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
     <string name="download_deck">Pobierz talię</string>
-    <string name="open_in_browser" comment="Label of a button inviting to open ankiweb\'s shared deck page if automated download failed">Open in browser</string>
+    <string name="open_in_browser" comment="Label of a button inviting to open ankiweb\'s shared deck page if automated download failed">Otwórz w przeglądarce</string>
     <string name="try_again">Spróbuj ponownie</string>
     <string name="cancel_download">Anuluj pobieranie</string>
     <string name="cancel_download_question_title">Anulować pobieranie?</string>
@@ -279,7 +289,6 @@
     <string name="download_failed">Pobieranie nie powiodło się</string>
     <string name="deck_download_progress_message">Możesz używać innych aplikacji podczas pobierania</string>
     <string name="check_network">Sprawdź swoje połączenie internetowe</string>
-    <string name="search_using_deck_name">Szukaj używając nazwy talii</string>
     <string name="external_storage_unavailable">Pobieranie przerwane, pamięć zewnętrzna nie jest dostępna</string>
     <string name="home" maxLength="28">Strona główna</string>
     <!-- Study Screen actions
@@ -306,6 +315,12 @@
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">Nie udało się uzyskać dostępu do kolekcji fiszek. Spróbuj ponownie!</string>
     <string name="cd_manage_notetypes_add">Dodaj nowy typ notatki</string>
+    <plurals name="note_types_selected">
+        <item quantity="one">%d note type selected</item>
+        <item quantity="few">%d note types selected</item>
+        <item quantity="many">%d note types selected</item>
+        <item quantity="other">%d note types selected</item>
+    </plurals>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">Ucz się mniej</string>
     <string name="intro_ankidroid_tagline_two">Pamiętaj więcej</string>
@@ -314,7 +329,6 @@
     <string name="intro_sync_from_ankiweb">Synchronizacja z AnkiWeb</string>
     <!-- IntentHandler -->
     <string name="app_not_initialized_new">AnkiDroid nie został jeszcze zainicjowany. Otwórz AnkiDroid i spróbuj ponownie</string>
-    <string name="already_logged_in">Już zalogowany!</string>
     <!-- Deck Creation -->
     <string name="deck_created">Utworzono talię</string>
     <string name="deck_renamed">Zmieniono nazwę talii</string>
@@ -338,9 +352,9 @@
     <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">Nie udało się otworzyć ustawień przekształcania tekstu na mowę</string>
     <string name="shared_decks_login_required">Zaloguj się, aby pobrać więcej talii</string>
     <string name="deck_description_field_hint">Opis</string>
-    <string name="deck_description_saved">Description updated</string>
-    <string name="format_deck_description_as_markdown">Format as Markdown</string>
-    <string name="help_button_content_description">Open help for ‘%s’</string>
+    <string name="deck_description_saved">Opis zaktualizowany</string>
+    <string name="format_deck_description_as_markdown">Formatuj jako Markdown</string>
+    <string name="help_button_content_description">Otwórz pomoc dla \'%s\'</string>
     <string name="failed_to_copy">Kopiowanie nieudane</string>
     <string name="card_browser_unavailable_when_notes_mode">Niedostępne w trybie \"Notatki\"</string>
     <plurals name="unbury_cards_feedback">

@@ -21,18 +21,49 @@
             android:background="@drawable/browser_heading_bottom_divider"
             app:navigationIcon="?attr/homeAsUpIndicator" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/schedule_reminders_recycler_view"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="?android:attr/colorBackground"
-            android:overScrollFooter="@color/transparent"
-            android:clipToPadding="false"
-            android:drawSelectorOnTop="true"
-            android:scrollbars="vertical"
-            android:contentDescription="List of scheduled review reminders"
-            tools:listitem="@layout/schedule_reminders_list_item"
-            tools:ignore="HardcodedText" />
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/schedule_reminders_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="?android:attr/colorBackground"
+                android:overScrollFooter="@color/transparent"
+                android:clipToPadding="false"
+                android:drawSelectorOnTop="true"
+                android:paddingBottom="84dp"
+                android:scrollbars="vertical"
+                android:contentDescription="List of scheduled review reminders"
+                tools:listitem="@layout/schedule_reminders_list_item"
+                tools:ignore="HardcodedText" />
+
+            <LinearLayout
+                android:id="@+id/no_reminders_placeholder"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="96dp"
+                    android:layout_height="96dp"
+                    android:layout_marginBottom="24dp"
+                    android:layout_gravity="center_horizontal"
+                    app:srcCompat="@drawable/outline_notifications_off_24" />
+
+                <com.ichi2.ui.FixedTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:gravity="center"
+                    android:text="@string/you_have_no_review_reminders"
+                    style="@style/TextAppearance.AppCompat.Medium" />
+
+            </LinearLayout>
+
+        </FrameLayout>
 
     </LinearLayout>
 

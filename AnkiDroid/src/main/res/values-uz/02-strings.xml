@@ -47,13 +47,15 @@
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Tortmani ochish</string>
     <string name="drawer_close">Tortmani yopish</string>
-    <string name="note_message">Note saved</string>
+    <string name="note_message">Qayt saqlandi</string>
+    <!-- Note editor screen -->
     <string name="CardEditorCardDeck">Karta dastai:</string>
     <string name="CardEditorNoteDeck">dasta</string>
     <string name="CardEditorModel">Turi:</string>
     <string name="CardEditorTags">Teglar: %1$s</string>
     <string name="CardEditorCards">Kartalar: %1$s</string>
     <string name="edit_occlusions">Rasm toʻsiqlarini tahrirlash</string>
+    <string name="paste_from_clipboard" maxLength="28">Buferdan qoʻyish</string>
     <string name="tag_name">Teg nomi</string>
     <string name="add_new_filter_tags">Teglar qoʻshish/filtrlash</string>
     <string name="add_tag" maxLength="28">Teg qoʻshish</string>
@@ -65,6 +67,18 @@
     <string name="save_whiteboard" maxLength="28">Yozuv taxtasini saqlash</string>
     <string name="enable_stylus" maxLength="28">Qalam rejimini yoqish</string>
     <string name="disable_stylus">Qalam rejimini oʻchirish</string>
+    <string name="eraser" maxLength="28">Oʻchirgich</string>
+    <string name="add_brush" maxLength="28">Choʻtka qoʻshish</string>
+    <string name="whiteboard_align_left" comment="Option to align the whiteboard toolbar on the left" maxLength="28">Chap</string>
+    <string name="whiteboard_align_bottom" comment="Option to align the whiteboard toolbar on the bottom" maxLength="28">Past</string>
+    <string name="whiteboard_align_right" comment="Option to align the whiteboard toolbar on the right" maxLength="28">Oʻng</string>
+    <string name="whiteboard_clear" comment="Button text to clear the whiteboard" maxLength="28">Tozalash</string>
+    <string name="whiteboard_more_options" comment="Tooltip of the whiteboard \'More\' button" maxLength="28">Boshqa parametrlar</string>
+    <string name="whiteboard_remove_brush_message">Rostdan ham bu choʻtkani palitradan olib tashlamoqchimisiz?</string>
+    <string name="whiteboard_ink_eraser" comment="Title of the whiteboard Ink eraser">Siyoh</string>
+    <string name="whiteboard_stroke_eraser" comment="Title of the whiteboard Stroke eraser">Chiziq</string>
+    <string name="stylus_mode" comment="Title of the menu item that toggles the whiteboard stylus mode" maxLength="28">Stilus rejimi</string>
+    <string name="cannot_remove_last_brush_message">Oxirigi choʻtkani olib tashlab boʻlmaydi</string>
     <string name="enable_whiteboard" maxLength="28">Yozuv taxtasini yoqish</string>
     <string name="disable_whiteboard">Yozuv taxtasini oʻchirish</string>
     <string name="show_whiteboard">Yozuv taxtasini koʻrsatish</string>
@@ -83,6 +97,7 @@
     <string name="webview_crash_fatal">Fatal xatolik: WebView ishdan chiqdi. Sababi: %s</string>
     <string name="webview_crash_loop_dialog_title">Tizim WebView renderlashda xatolik</string>
     <string name="webview_crash_loop_dialog_content">Tizim WebView “%1$s” kartasini koʻrsata olmadi.\n %2$s</string>
+    <string name="slide_to_cancel" comment="Message shown when pressing the record button">Bekor qilish uchun suring</string>
     <string name="filter_by_flags" maxLength="41">Bayroqlar</string>
     <!-- Custom study options -->
     <string name="custom_study_loading_tags">Teglar roʻyxati qurilmoqda</string>
@@ -109,10 +124,10 @@
     <string name="missing_note_type">Qayd turi topilmadi</string>
     <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (boʻsh)</string>
     <!-- Image cropper -->
-    <string name="image_cropper_action_rotate" maxLength="28" comment="Action in image cropper screen">Rotate</string>
-    <string name="image_cropper_action_flip" maxLength="28" comment="Action in image cropper screen">Flip</string>
-    <string name="image_cropper_action_flip_horizontally" maxLength="28" comment="Submenu action in image cropper screen">Flip horizontally</string>
-    <string name="image_cropper_action_flip_vertically" maxLength="28" comment="Submenu action in image cropper screen">Flip vertically</string>
+    <string name="image_cropper_action_rotate" maxLength="28" comment="Action in image cropper screen">Aylantirish</string>
+    <string name="image_cropper_action_flip" maxLength="28" comment="Action in image cropper screen">Oʻgirish</string>
+    <string name="image_cropper_action_flip_horizontally" maxLength="28" comment="Submenu action in image cropper screen">Gorizontal oʻgirish</string>
+    <string name="image_cropper_action_flip_vertically" maxLength="28" comment="Submenu action in image cropper screen">Vertikal oʻgirish</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">Oʻrganish muddati tugadi</string>
     <plurals name="timebox_reached">
@@ -151,7 +166,8 @@
     <string name="import_error_not_apkg_extension">“%s” fayl nomida .apkg yoki .colpkg kengaytmasi yoʻq</string>
     <string name="import_error_load_imported_database">Anki maʼlumotlar bazasini (.anki2) almashtirish hali qoʻllab-quvvatlanmaydi. Iltimos, almashtirish boʻyicha koʻrsatmalar uchun qoʻllanmaga murojaat qiling.</string>
     <string name="import_error_content_provider">Tanlangan faylni AnkiDroid tomonidan avtomatik import qilib boʻlmadi. Anki fayllarni qoʻlda import qilish uchun foydalanuvchi qoʻllanmasiga murojaat qiling: \n%s</string>
-    <string name="import_error_copy_to_cache">Faylni keshlash amalga oshmadi (xotirada joy qolmagan boʻlishi mumkin)</string>
+    <string name="import_error_copy_to_cache_title">Faylni keshlash amalga oshmadi</string>
+    <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">Bu koʻpincha faylni tanlash uchun foydalangan ilovadagi xato tufayli yuzaga keladi. Quyidagi yechimlarni sinab koʻring:\n\n%s</string>
     <string name="import_interrupted">Import uzuldi: AnkiDroid yopilgan</string>
     <string name="export_ready_title">Eksportga tayyor</string>
     <string name="export_send_no_handlers">apkg bilan ishlash uchun ilova mavjud emas. Saqlanmoqda&#8230;</string>
@@ -180,11 +196,6 @@
     <string name="tag_editor_add_feedback">“%1$s” qoʻshishni tasdiqlash uchun “%2$s” tugmasini bosing</string>
     <string name="tag_editor_add_feedback_existing">Mavjud boʻlgan “%1$s” tegi tanlandi</string>
     <!-- Time spans -->
-    <string name="reminder_title">Bugun oʻrganishni unutmang!</string>
-    <plurals name="reminder_text">
-        <item quantity="one">%1$s dan %2$d ta kartani takrorlashingiz kerak</item>
-        <item quantity="other">%1$s dan %2$d ta kartani takrorlashingiz kerak</item>
-    </plurals>
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">apkg faylni ulashishda xatolik yuz berdi</string>
     <!-- Import and export v2 feedback -->
@@ -225,6 +236,7 @@
     <string name="search_decks" maxLength="28">Dastalarni qidirish</string>
     <string name="ankidroid_init_failed_webview_title">Fatal xatolik</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid hozirda mavjud boʻlmagan tizim WebViewʼga tayanadi. Bu tizim yangilanishlarni oʻrnatayotganda sodir boʻlishi mumkin. Bir necha daqiqadan soʻng qayta urinib koʻring.\n\n%s</string>
+    <string name="ankidroid_init_failed_storage">Android xatoligi sababli AnkiDroid diskka ruxsati yoʻq.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">Shrift oʻlchami</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Asboblar panelini koʻrsatish</string>
@@ -271,7 +283,6 @@
     <string name="download_failed">Yuklab olib boʻlmadi</string>
     <string name="deck_download_progress_message">Yuklab olish jarayonida boshqa ilovalardan foydalanishingiz mumkin</string>
     <string name="check_network">Iltimos, tarmoqqa ulanganingizni tekshiring</string>
-    <string name="search_using_deck_name">Dasta nomi boʻyicha qidirish</string>
     <string name="external_storage_unavailable">Yuklab olish toʻxtatildi, tashqi xotira mavjud emas</string>
     <string name="home" maxLength="28">Bosh sahifa</string>
     <!-- Study Screen actions
@@ -296,6 +307,10 @@
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">Toʻplamni ochib boʻlmadi. Iltimos, qayta urinib koʻring!</string>
     <string name="cd_manage_notetypes_add">Yangi qayd turini qoʻshish</string>
+    <plurals name="note_types_selected">
+        <item quantity="one">%d ta qayd turi tanlandi</item>
+        <item quantity="other">%d ta qayd turi tanlandi</item>
+    </plurals>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">Kamroq oʻqi</string>
     <string name="intro_ankidroid_tagline_two">Koʻproq eslab qol</string>
@@ -304,7 +319,6 @@
     <string name="intro_sync_from_ankiweb">AnkiWebʼdan sinxronlash</string>
     <!-- IntentHandler -->
     <string name="app_not_initialized_new">AnkiDroid hali ishga tushirilmagan. AnkiDroidʼni oching va qayta urinib koʻring</string>
-    <string name="already_logged_in">Allaqachon tizimga kirilgan</string>
     <!-- Deck Creation -->
     <string name="deck_created">Dasta yaratildi</string>
     <string name="deck_renamed">Dasta nomi oʻzgartirildi</string>
@@ -328,9 +342,9 @@
     <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">Nutq sintezatori sozlamalarini ochib boʻlmadi</string>
     <string name="shared_decks_login_required">Koʻproq dasta yuklab olish uchun, iltimos, tizimga kiring</string>
     <string name="deck_description_field_hint">Tavsif</string>
-    <string name="deck_description_saved">Description updated</string>
-    <string name="format_deck_description_as_markdown">Format as Markdown</string>
-    <string name="help_button_content_description">Open help for ‘%s’</string>
+    <string name="deck_description_saved">Tavsif yangilandi</string>
+    <string name="format_deck_description_as_markdown">Markdown sifatida formatlash</string>
+    <string name="help_button_content_description">‘%s’ uchun yordamni ochish</string>
     <string name="failed_to_copy">Nusxa olib boʻlmadi</string>
     <string name="card_browser_unavailable_when_notes_mode">‘Qaydlar’ rejimida ishlatib boʻlmaydi</string>
     <plurals name="unbury_cards_feedback">

@@ -43,7 +43,6 @@
     </plurals>
     <!--Browser-->
     <string name="model_browser_delete">Hapus tipe catatan</string>
-    <string name="model_browser_rename" comment="Rename a note type">Ubah nama</string>
     <string name="model_browser_template">Edit kartu</string>
     <!--Rename-->
     <string name="rename_model">Ubah nama tipe catatan</string>
@@ -51,7 +50,6 @@
     <!--Language Hint-->
     <string name="model_field_editor_language_hint_dialog_success_result">Atur petunjuk bahasa menjadi %s</string>
     <!--Field Editing-->
-    <string name="model_field_editor_title">Edit kolom</string>
     <string name="model_field_editor_add" maxLength="28">Tambah kolom</string>
     <string name="model_field_editor_delete">Hapus kolom</string>
     <string name="model_field_editor_rename">Ubah nama kolom</string>
@@ -61,6 +59,12 @@
     <string name="model_field_editor_sort_field">Urutkan menurut kolom ini</string>
     <!--Warnings-->
     <string name="model_delete_warning">Yakin ingin menghapus tipe catatan ini?</string>
+    <!--
+        Example output:
+        Delete the note types below?
+        Basic, Basic (and reversed card), Cloze
+     -->
+    <string name="model_delete_multiple_warning">Delete the note types below?\n %s</string>
     <string name="field_delete_warning">Yakin ingin menghapus kolom ini?</string>
     <!--Model Add Suffixes-->
     <string name="model_browser_add_add">Add: %1$s</string>

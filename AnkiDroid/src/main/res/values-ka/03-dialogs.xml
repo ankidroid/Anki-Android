@@ -124,6 +124,8 @@
     <string name="multimedia_editor_failed">ვერ გაიხსნა მულტიმედია-რედაქტორი</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">აუდიოფაილის ჩაწერის უფლება უარყოფილია</string>
+    <string name="permission_denied">Permission denied</string>
+    <string name="recording_permission_denied_message">Microphone permission is necessary for the “Record voice” feature. Please grant it in the app settings.</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid განახლდა</string>
     <string name="integrity_check_startup_content">AnkiDroid განახლდა. ეს განახლება შეიცავს მონაცემთა ბაზისთვის მოსალოდნელი  პრობლემების შესწორებებს. გირჩევთ ახლავე განახორციელოთ „მონაცემთა ბაზის შემოწმება“.</string>
@@ -201,8 +203,6 @@
     <string name="import_deck_package">დასტის პაკეტი (.apkg)</string>
     <string name="import_collection_package">კოლექციის პაკეტი (.colpkg)</string>
     <string name="import_csv">ტექსტური ფაილი (.txt, .csv)</string>
-    <!-- Deck selection dialog -->
-    <string name="cannot_create_subdeck_for_all_decks">ყველა დასტისთვის ვერ შექმნით ქვედასტას</string>
     <!-- scoped storage -->
     <string name="backup_your_collection">კოლექციის სარეზერვო ასლი</string>
     <string name="backup_collection_message">კარგა ხანია არ შეგიქმნიათ კოლექციის სარეზერვო ასლი. უმჯობესია ეს გააკეთოთ, რათა მონაცემები არ დაგეკარგოთ</string>
@@ -254,4 +254,10 @@
     <string name="tts_error_dialog_reason_text">ხმოვან წამკითხველ <b>%1$s-ში</b> არაა მხარდაჭერილი ეს ენა: <b>%2$s</b></string>
     <string name="tts_error_dialog_change_button_text">ძრავას შეცვლა</string>
     <string name="tts_error_dialog_supported_voices_button_text">ხმის პარამეტრები</string>
+    <!-- import_cache_error_resolutions -->
+    <string name="import_error_resolution_try_again">Re-import the file</string>
+    <string name="import_error_resolution_free_up_space">Ensure there is sufficient free space on your device</string>
+    <string name="import_error_resolution_check_internet">Ensure you are connected to the internet</string>
+    <string name="import_error_resolution_copy_to_device">Copy the file to your device and try again with the local file</string>
+    <string name="import_error_resolution_select_file">Open the file using your device’s file browser app</string>
 </resources>

@@ -48,12 +48,14 @@
     <string name="drawer_open">فتح القائمة</string>
     <string name="drawer_close">أغلق القائمة</string>
     <string name="note_message">تم حفظ الملحوظة</string>
+    <!-- Note editor screen -->
     <string name="CardEditorCardDeck">رزمة البطاقة:</string>
     <string name="CardEditorNoteDeck">الرزمة:</string>
     <string name="CardEditorModel">النوع:</string>
     <string name="CardEditorTags">الوسوم: %1$s</string>
     <string name="CardEditorCards">البطاقات: %1$s</string>
     <string name="edit_occlusions">تحرير الصور المُعَمَّاة</string>
+    <string name="paste_from_clipboard" maxLength="28">لصق من الحافظة</string>
     <string name="tag_name">اسم الوسم</string>
     <string name="add_new_filter_tags">إضافة وفرز الوسوم</string>
     <string name="add_tag" maxLength="28">إضافة وسم</string>
@@ -65,6 +67,18 @@
     <string name="save_whiteboard" maxLength="28">حفظ السبورة</string>
     <string name="enable_stylus" maxLength="28">تفعيل وضع القلم</string>
     <string name="disable_stylus">تعطيل وضع القلم</string>
+    <string name="eraser" maxLength="28">ممحاة</string>
+    <string name="add_brush" maxLength="28">إضافة فرشة</string>
+    <string name="whiteboard_align_left" comment="Option to align the whiteboard toolbar on the left" maxLength="28">شمال</string>
+    <string name="whiteboard_align_bottom" comment="Option to align the whiteboard toolbar on the bottom" maxLength="28">أسفل</string>
+    <string name="whiteboard_align_right" comment="Option to align the whiteboard toolbar on the right" maxLength="28">يمين</string>
+    <string name="whiteboard_clear" comment="Button text to clear the whiteboard" maxLength="28">محو</string>
+    <string name="whiteboard_more_options" comment="Tooltip of the whiteboard \'More\' button" maxLength="28">مزيد من الخيارات</string>
+    <string name="whiteboard_remove_brush_message">أواثق أنك تود إزالة هذه الفرشة من لوحة الألوان خاصتك؟</string>
+    <string name="whiteboard_ink_eraser" comment="Title of the whiteboard Ink eraser">حبر</string>
+    <string name="whiteboard_stroke_eraser" comment="Title of the whiteboard Stroke eraser">خط</string>
+    <string name="stylus_mode" comment="Title of the menu item that toggles the whiteboard stylus mode" maxLength="28">وضع القلم</string>
+    <string name="cannot_remove_last_brush_message">لا يمكن إزالة آخر فرشة</string>
     <string name="enable_whiteboard" maxLength="28">تفعيل السبورة</string>
     <string name="disable_whiteboard">تعطيل السبورة</string>
     <string name="show_whiteboard">إظهار السبورة</string>
@@ -83,6 +97,7 @@
     <string name="webview_crash_fatal">خلل فادح: تَعطَّل معالج الويب فيو. المسبب: %s</string>
     <string name="webview_crash_loop_dialog_title">فَشَلٌ في معالجة الويب فيو الخاص بالنظام</string>
     <string name="webview_crash_loop_dialog_content">فَشِلَ ويب فيو الخاص بالنظام في عرض البطاقة %1$s.\n %2$s</string>
+    <string name="slide_to_cancel" comment="Message shown when pressing the record button">اسحب للإلغاء</string>
     <string name="filter_by_flags" maxLength="41">الأعلام</string>
     <!-- Custom study options -->
     <string name="custom_study_loading_tags">يتم بناء مجموعة الوسوم&#8230;</string>
@@ -163,7 +178,8 @@
     <string name="import_error_not_apkg_extension">لا يحتوي اسم الملف «%s» على ملحق «.apkg» أو «.colpkg»</string>
     <string name="import_error_load_imported_database">استبدالات قاعدة بيانات آنكي «.anki2» ليست مدعومة بعد. الرجاء الاطلاع على الدليل حول تعليمات الاستبدال.</string>
     <string name="import_error_content_provider">تعذر استيراد المِلَفّ المحدد تلقائيًا بواسطة آنكي درويد. الرجاء الاطّلاع على دليل المستخدم لكيفية استيراد ملفات آنكي يدويًا: \n%s</string>
-    <string name="import_error_copy_to_cache">فشل تخزين الملف مؤقتًا (ربما بسبب نفاد مساحة التخزين)</string>
+    <string name="import_error_copy_to_cache_title">فشل تخزين الملف مؤقتًا</string>
+    <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">غالباً ما يحدث هذا نتيجة لخلل في التطبيق الذي استعملته لاختيار الملف. جرب الحلول التالية رجاءاً:\n\n%s</string>
     <string name="import_interrupted">تمت مقاطعة الاستيراد: لقد أُغلق آنكي درويد</string>
     <string name="export_ready_title">المُصَدَّر مُعدّ</string>
     <string name="export_send_no_handlers">لا توجد تطبيقات متاحة للتعامل مع «apkg». يتم الحفظ&#8230;</string>
@@ -192,15 +208,6 @@
     <string name="tag_editor_add_feedback">انقر «%2$s» لتُأكِّد إضافة «%1$s»</string>
     <string name="tag_editor_add_feedback_existing">تم تحديد الوسم الموجود «%1$s»</string>
     <!-- Time spans -->
-    <string name="reminder_title">لا تنسَ أن تدرس اليوم!</string>
-    <plurals name="reminder_text">
-        <item quantity="zero">%2$d بطاقة بانتظار المراجعة في %1$s</item>
-        <item quantity="one">%2$d بطاقة بانتظار المراجعة في %1$s</item>
-        <item quantity="two">%2$d بطاقة بانتظار المراجعة في %1$s</item>
-        <item quantity="few">%2$d بطاقات بانتظار المراجعة في %1$s</item>
-        <item quantity="many">%2$d بطاقة بانتظار المراجعة في %1$s</item>
-        <item quantity="other">%2$d بطاقة بانتظار المراجعة في %1$s</item>
-    </plurals>
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">حدث خطأ أثناء مشاركة ملف «apkg»</string>
     <!-- Import and export v2 feedback -->
@@ -241,6 +248,7 @@
     <string name="search_decks" maxLength="28">بحث في الرزم</string>
     <string name="ankidroid_init_failed_webview_title">خلل فادح</string>
     <string name="ankidroid_init_failed_webview">يعتمد آنكي درويد على الويب فيو الخاص بالنظام وهو غير متوفر. يمكن أن يَحدث هذا إذا كان النظام قيد التحديث. الرجاء المحاولة مرةً أخرى بعد بضع دقائق.\n\n%s</string>
+    <string name="ankidroid_init_failed_storage">لم يتمكن آنكي درويد من الوصول إلى التخزين نتيجة لخلل في نظام الآندرويد.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">حجم الخط</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">إظهار شريط الأدوات</string>
@@ -287,7 +295,6 @@
     <string name="download_failed">فشل التنزيل</string>
     <string name="deck_download_progress_message">تستطيع استخدام التطبيقات الأخرى أثناء استمرار التنزيل</string>
     <string name="check_network">تحقق من اتصالك بالشبكة</string>
-    <string name="search_using_deck_name">ابحث باستخدام اسم الرزمة</string>
     <string name="external_storage_unavailable">تم إلغاء التنزيل لأن التخزين الخارجي غير متوفر</string>
     <string name="home" maxLength="28">الصفحة الرئيسية</string>
     <!-- Study Screen actions
@@ -316,6 +323,14 @@
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">فشل الوصول إلى المجموعة. يرجى المحاولة مجددًا!</string>
     <string name="cd_manage_notetypes_add">إضافة نوع جديد من الملاحظات</string>
+    <plurals name="note_types_selected">
+        <item quantity="zero">تم اختيار %d نوع ملحوظة</item>
+        <item quantity="one">تم اختيار %d نوع ملحوظة</item>
+        <item quantity="two">تم اختيار %d نوع ملحوظة</item>
+        <item quantity="few">تم اختيار %d أنواع ملحوظات</item>
+        <item quantity="many">تم اختيار %d نوع ملحوظة</item>
+        <item quantity="other">تم اختيار %d نوع ملحوظة</item>
+    </plurals>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">ادرس أقل</string>
     <string name="intro_ankidroid_tagline_two">تذكر أكثر</string>
@@ -324,9 +339,8 @@
     <string name="intro_sync_from_ankiweb">مزامنة مع آنكي ويب</string>
     <!-- IntentHandler -->
     <string name="app_not_initialized_new">لم يتم تمهيد آنكي درويد بعد. من فضلك إفتح آنكي درويد وحاول مجددًا</string>
-    <string name="already_logged_in">تم تسجيل الدخول مسبقًا</string>
     <!-- Deck Creation -->
-    <string name="deck_created">كيفية</string>
+    <string name="deck_created">تم إنشاء الرِزمة</string>
     <string name="deck_renamed">أُعيدت تسمية الرِزمة</string>
     <!-- Deck Deletion -->
     <string name="deck_shortcut_doesnt_exist">تم حذف الرزمة. يرجى حذف الاختصار</string>

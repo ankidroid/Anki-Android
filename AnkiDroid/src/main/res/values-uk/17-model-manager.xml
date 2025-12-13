@@ -49,7 +49,6 @@
     </plurals>
     <!--Browser-->
     <string name="model_browser_delete">Видалити тип запису</string>
-    <string name="model_browser_rename" comment="Rename a note type">Перейменувати</string>
     <string name="model_browser_template">Редагувати картки</string>
     <!--Rename-->
     <string name="rename_model">Перейменувати тип запису</string>
@@ -57,7 +56,6 @@
     <!--Language Hint-->
     <string name="model_field_editor_language_hint_dialog_success_result">Встановити %s як мову підказок</string>
     <!--Field Editing-->
-    <string name="model_field_editor_title">Редагувати поля</string>
     <string name="model_field_editor_add" maxLength="28">Додати поле</string>
     <string name="model_field_editor_delete">Видалити поле</string>
     <string name="model_field_editor_rename">Перейменувати поле</string>
@@ -67,13 +65,19 @@
     <string name="model_field_editor_sort_field">Сортувати за цим полем</string>
     <!--Warnings-->
     <string name="model_delete_warning">Ви впевнені, що хочете видалити цей тип запису?</string>
+    <!--
+        Example output:
+        Delete the note types below?
+        Basic, Basic (and reversed card), Cloze
+     -->
+    <string name="model_delete_multiple_warning">Delete the note types below?\n %s</string>
     <string name="field_delete_warning">Ви впевнені, що хочете видалити це поле?</string>
     <!--Model Add Suffixes-->
     <string name="model_browser_add_add">Додати: %1$s</string>
     <!--This prefix is used for standard note types-->
     <string name="model_browser_add_clone">Клонувати: %1$s</string>
     <!--Browser Appearance-->
-    <string name="card_template_browser_appearance_summary">Введіть шаблон, який використовуватиме переглядач карток для відображення ваших карток. Використовуйте це для відображення стислішої відповіді.\n\nШаблон передньої сторони\n\"Столицею {{Країна}} є:\"\nможна стиснути в переглядачі карток до\n\"Столиця:{{Країна}}\"</string>
+    <string name="card_template_browser_appearance_summary">Введіть шаблон, який використовуватиме переглядач карток для показу ваших карток. Використовуйте це для показу стислішої відповіді.\n\nШаблон передньої сторони\n\"Столицею {{Країна}} є:\"\nможна стиснути в переглядачі карток до\n\"Столиця:{{Країна}}\"</string>
     <string name="card_template_browser_appearance_question_format">Формат запитання</string>
     <string name="card_template_browser_appearance_answer_format">Формат відповіді</string>
     <string name="card_template_browser_appearance_restore_default_dialog">Відновити значення за замовчуванням?</string>

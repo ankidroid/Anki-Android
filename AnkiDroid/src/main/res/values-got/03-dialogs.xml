@@ -44,214 +44,220 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="check_db_title">Saihv gibahuzd?</string>
-    <string name="check_db_warning">Lagga hveila wairþai mahts ist</string>
-    <string name="contextmenu_deckpicker_delete_deck" maxLength="28">Usnim wikon</string>
-    <string name="delete_deck_title">Usnim wikon?</string>
+    <string name="check_db_title">𐌳𐌰𐍄𐌰𐌷𐌿𐌶𐌳 𐌿𐍃𐍃𐍉𐌺𐌾𐌰𐌽?</string>
+    <string name="check_db_warning">𐌼𐌰𐌲 𐌻𐌰𐌲𐌲 𐌼𐌴𐌻 𐍅𐌰𐌹𐍂𐌸𐌰𐌽</string>
+    <string name="contextmenu_deckpicker_delete_deck" maxLength="28">𐌺𐌰𐍂𐍄𐌰𐌷𐌿𐌶𐌳𐌰 𐌿𐍃𐌵𐌹𐍃𐍄𐌾𐌰𐌽</string>
+    <string name="delete_deck_title">𐌺𐌰𐍂𐍄𐌰𐌷𐌿𐌶𐌳𐌰 𐌿𐍃𐌵𐌹𐍃𐍄𐌾𐌰𐌽?</string>
     <plurals name="delete_deck_message">
-        <item quantity="one">Delete all cards in %1$s? It contains %2$d card</item>
-        <item quantity="other">Delete all cards in %1$s? It contains %2$d cards</item>
+        <item quantity="one">𐌰𐌻𐌻𐌰𐌹𐌼 𐌺𐌰𐍂𐍄𐍉𐌼 𐌹𐌽 %1$s 𐌿𐍃𐌵𐌹𐍃𐍄𐌾𐌰𐌽? 𐌷𐌰𐌱𐌰𐌹𐌸 %2$d 𐌺𐌰𐍂𐍄𐌰</item>
+        <item quantity="other">𐌰𐌻𐌻𐌰𐌹𐌼 𐌺𐌰𐍂𐍄𐍉𐌼 𐌹𐌽 %1$s 𐌿𐍃𐌵𐌹𐍃𐍄𐌾𐌰𐌽? 𐌷𐌰𐌱𐌰𐌹𐌸 %2$d 𐌺𐌰𐍂𐍄𐍉𐍃</item>
     </plurals>
     <string name="delete_cram_deck_message">Delete filtered deck %s and send all cards back to their original decks?</string>
-    <string name="no_tts_available_message">Bokos-du-gwaurdja razda nist</string>
-    <string name="tts_no_tts">Ni rodei</string>
-    <string name="reposition_card_not_new_error">Þatainei kartos niujos magt lagjan in staþ anþarana.</string>
-    <string name="reset_card_dialog_title">Reset card progress</string>
+    <string name="no_tts_available_message">𐌱𐍉𐌺𐍉-𐌳𐌿-𐍃𐍄𐌹𐌱𐌽𐌰𐌹 𐍂𐌰𐌶𐌳𐌰 𐌽𐌹𐍃𐍄</string>
+    <string name="tts_no_tts">𐌽𐌹 𐌵𐌹𐌸</string>
+    <string name="reposition_card_not_new_error">𐌸𐌰𐍄𐌰𐌹𐌽𐌴𐌹 𐌺𐌰𐍂𐍄𐍉𐍃 𐌽𐌹𐌿𐌾𐍉𐍃 𐌼𐌰𐌲𐍄 𐌻𐌰𐌲𐌾𐌰𐌽 𐌹𐌽 𐍃𐍄𐌰𐌸 𐌰𐌽𐌸𐌰𐍂𐌰𐌽𐌰</string>
+    <string name="reset_card_dialog_title">𐌺𐌰𐍂𐍄𐍉 𐍆𐍂𐌰𐌼𐌲𐌰𐌷𐍄 𐌰𐍆𐍄𐍂𐌰𐌻𐌰𐌲𐌾𐌰𐌽</string>
     <plurals name="reset_cards_dialog_acknowledge">
-        <item quantity="one">%d karta aftralagida</item>
-        <item quantity="other">%d kartos aftralagida</item>
+        <item quantity="one">%d 𐌺𐌰𐍂𐍄𐌰 𐌰𐍆𐍄𐍂𐌰𐌻𐌰𐌲𐌹𐌳𐌰</item>
+        <item quantity="other">%d 𐌺𐌰𐍂𐍄𐍉𐍃 𐌰𐍆𐍄𐍂𐌰𐌻𐌰𐌲𐌹𐌳𐍉𐍃</item>
     </plurals>
-    <string name="answering_error_title">Airzei datahuzdis</string>
+    <string name="answering_error_title">𐌰𐌹𐍂𐌶𐌴𐌹 𐌳𐌰𐍄𐌰𐌷𐌿𐌶𐌳𐌹𐍃</string>
     <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
-    <string name="answering_error_report">Merei airzein</string>
-    <string name="storage_full_message">Nist ganoh rumis in stada du uslukan AnkiDroid. Ufarþeihai rum du þairhwisan.</string>
-    <string name="repair_deck_dialog">Do you really want to try to repair the database?\n\nBefore starting the attempt, a copy will be created in subfolder “%s”.</string>
-    <string name="intent_aedict_empty">Category “default” is empty</string>
+    <string name="answering_error_report">𐌰𐌹𐍂𐌶𐌴𐌹𐌽 𐌼𐌴𐍂𐌾𐌰𐌽</string>
+    <string name="storage_full_message">𐌽𐌹𐍃𐍄 𐌲𐌰𐌽𐍉𐌷 𐍂𐌿𐌼𐌹𐍃 𐌹𐌽 𐍃𐍄𐌰𐌳𐌰 𐌳𐌿 𐌿𐍃𐌻𐌿𐌺𐌰𐌽 𐌰𐌽𐌺𐌴𐌹𐌳𐍂𐌰𐌿𐌳. 𐌿𐍆𐌰𐍂𐌸𐌴𐌹𐌷𐌰𐌹 𐍂𐌿𐌼 𐌳𐌿 𐌸𐌰𐌹𐍂𐌷𐍅𐌹𐍃𐌰𐌽.</string>
+    <string name="repair_deck_dialog">𐍅𐌹𐌻𐌴𐌹𐌶𐌿 𐌱𐌹 𐍃𐌿𐌽𐌾𐌰𐌹 𐌳𐌰𐍄𐌰𐌷𐌿𐌶𐌳 𐌲𐌰𐌱𐍉𐍄𐌾𐌰𐌽?\n\n𐍆𐌰𐌿𐍂𐌸𐌹𐌶𐌴𐌹 𐌳𐌿𐌲𐌹𐌽𐌽𐌰𐌹𐍃 𐍃𐍉𐌺𐌽, 𐌲𐌰𐌲𐌰𐌻𐌴𐌹𐌺𐍉𐌸 𐌹𐌽 𐌿𐍆𐍃𐍄𐌰𐌳𐌰 “%s”.</string>
+    <string name="intent_aedict_empty">𐌺𐌿𐌽𐌹 “𐌱𐌹𐌿𐌷𐍄” 𐌻𐌰𐌿𐍃 𐌹𐍃𐍄</string>
     <string name="intent_aedict_category">To add cards to AnkiDroid remove all Notepad categories or add one named “default”</string>
     <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
     <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
     <string name="custom_study_forgotten">Review cards forgotten in last x days:</string>
-    <string name="custom_study_ahead">Review ahead by x days:</string>
-    <string name="custom_study_preview">Preview new cards added in the last x days:</string>
-    <string name="custom_study_tags">Walei x kartos kartahuzdis:</string>
-    <string name="storage_full_title">Rum ist full</string>
-    <string name="storage_almost_full_title">Lisa nehva fulla</string>
-    <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Nist rumis</string>
-    <string name="no_space_to_downgrade_content" tools:ignore="UnusedResources">AnkiDroid needs %s free storage space to continue. Please clear some space</string>
-    <string name="restore_backup_title">Baik-ap ganasjan?</string>
-    <string name="restore_backup">Huzd þein miþsatjada miþ gagaleikonai fairnjai. Framgahtai ungafastanai fraliusada.</string>
-    <string name="restore_backup_choose_another">Walei anþar</string>
-    <string name="dialog_cancel">Biwandjan</string>
-    <string name="dialog_ok">JAI</string>
-    <string name="dialog_confirm" tools:ignore="UnusedResources">Gatulgjan</string>
-    <string name="dialog_no">Ne</string>
-    <string name="dialog_yes">Jai</string>
-    <string name="dialog_keep">Gafastan</string>
-    <string name="dialog_remove">Usniman</string>
-    <string name="dialog_continue">Þairhwis</string>
-    <string name="dialog_processing">Gaþeihando&#8230;</string>
-    <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Skapei</string>
-    <string name="dialog_positive_delete" maxLength="28">Usnim</string>
+    <string name="custom_study_ahead">𐍆𐌰𐌿𐍂𐌰𐍃𐌰𐌹𐍈𐌰𐌽 𐌱𐌹 𐍇 𐌳𐌰𐌲𐌰𐌽𐍃:</string>
+    <string name="custom_study_preview">𐌽𐌹𐌿𐌾𐍉𐍃 𐌺𐌰𐍂𐍄𐍉𐍃 𐍆𐌰𐌿𐍂𐌰𐍃𐌰𐌹𐍈𐌰𐌽 𐌹𐌽 𐌰𐍆𐍄𐌿𐌼𐌹𐍃𐍄𐌰𐌹𐌼 𐍇 𐌳𐌰𐌲𐌰𐌼:</string>
+    <string name="custom_study_tags">𐍅𐌰𐌻𐌴𐌹 x 𐌺𐌰𐍂𐍄𐍉𐍃 𐌺𐌰𐍂𐍄𐌰𐌷𐌿𐌶𐌳𐌹𐍃:</string>
+    <string name="storage_full_title">𐍂𐌿𐌼 𐌹𐍃𐍄 𐍆𐌿𐌻𐌻</string>
+    <string name="storage_almost_full_title">𐌻𐌹𐍃𐌰 𐌽𐌴𐍈𐌰 𐍆𐌿𐌻𐌻𐌰</string>
+    <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">𐌽𐌹𐍃𐍄 𐍂𐌿𐌼𐌹𐍃</string>
+    <string name="no_space_to_downgrade_content" tools:ignore="UnusedResources">𐌰𐌽𐌺𐌴𐌹𐌳𐍂𐌰𐌿𐌳 𐌸𐌰𐍂𐍆 %s 𐍆𐍂𐌴𐌹𐍃 𐍂𐌿𐌼𐌹𐍃 𐌳𐌿 𐌸𐌰𐌹𐍂𐌷𐍅𐌹𐍃𐌰𐌽. 𐌱𐌹𐌳𐌾𐌰𐌼 𐌸𐌿𐌺, 𐌰𐍆𐌷𐍂𐌰𐌹𐌽𐌴𐌹 𐍂𐌿𐌼.</string>
+    <string name="restore_backup_title">𐌱𐌰𐌹𐌺-𐌰𐍀 𐌲𐌰𐌽𐌰𐍃𐌾𐌰𐌽?</string>
+    <string name="restore_backup">𐌷𐌿𐌶𐌳 𐌸𐌴𐌹𐌽 𐌼𐌹𐌸𐍃𐌰𐍄𐌾𐌰𐌳𐌰 𐌼𐌹𐌸 𐌲𐌰𐌲𐌰𐌻𐌴𐌹𐌺𐍉𐌽𐌰𐌹 𐍆𐌰𐌹𐍂𐌽𐌾𐌰𐌹. 𐍆𐍂𐌰𐌼𐌲𐌰𐌷𐍄𐌰𐌹 𐌿𐌽𐌲𐌰𐍆𐌰𐍃𐍄𐌰𐌽𐌰𐌹 𐍆𐍂𐌰𐌻𐌹𐌿𐍃𐌰𐌳𐌰.</string>
+    <string name="restore_backup_choose_another">𐌰𐌽𐌸𐌰𐍂 𐍅𐌰𐌻𐌾𐌰𐌽</string>
+    <string name="dialog_cancel">𐌱𐌹𐍅𐌰𐌽𐌳𐌾𐌰𐌽</string>
+    <string name="dialog_ok">𐌾𐌰𐌹</string>
+    <string name="dialog_confirm" tools:ignore="UnusedResources">𐌲𐌰𐍄𐌿𐌻𐌲𐌾𐌰𐌽</string>
+    <string name="dialog_no">𐌽𐌴</string>
+    <string name="dialog_yes">𐌾𐌰𐌹</string>
+    <string name="dialog_keep">𐌲𐌰𐍆𐌰𐍃𐍄𐌰𐌽</string>
+    <string name="dialog_remove">𐌿𐍃𐌽𐌹𐌼𐌰𐌽</string>
+    <string name="dialog_continue">𐌸𐌰𐌹𐍂𐌷𐍅𐌹𐍃𐌰𐌽</string>
+    <string name="dialog_processing">𐌲𐌰𐌸𐌴𐌹𐌷𐌰𐌽𐌳𐍉&#8230;</string>
+    <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">𐍃𐌺𐌰𐍀𐌾𐌰𐌽</string>
+    <string name="dialog_positive_delete" maxLength="28">𐌿𐍃𐌵𐌹𐍃𐍄𐌾𐌰𐌽</string>
     <!-- Currently unsued, should be useful in the future -->
-    <string name="dialog_positive_disable" tools:ignore="UnusedResources">Disable</string>
-    <string name="dialog_positive_overwrite">Ufarmeljan</string>
-    <string name="dialog_positive_repair">Nasei</string>
-    <string name="dialog_positive_replace">Replace</string>
-    <string name="dialog_collection_path_not_dir">The path specified wasn’t a valid directory</string>
+    <string name="dialog_positive_disable" tools:ignore="UnusedResources">𐌿𐌽𐌲𐌰𐍄𐌰𐌿𐌾𐌰𐌽</string>
+    <string name="dialog_positive_overwrite">𐌿𐍆𐌰𐍂𐌼𐌴𐌻𐌾𐌰𐌽</string>
+    <string name="dialog_positive_repair">𐌲𐌰𐌱𐍉𐍄𐌾𐌰𐌽</string>
+    <string name="dialog_positive_replace">𐌼𐌹𐌸𐍃𐌰𐍄𐌾𐌰𐌽</string>
+    <string name="dialog_collection_path_not_dir">𐌻𐌰𐌹𐌳𐌰 𐍃𐌴𐌹 𐌲𐌰𐍂𐌰𐌹𐌷𐍄𐌹𐌳𐌰 𐌽𐌹 𐍅𐌰𐍃 𐌳𐌹𐍂𐌰𐌹𐌺𐍄𐌰𐌿𐍂𐌹 𐍂𐌰𐌹𐌷𐍄</string>
     <string name="dialog_invalid_custom_certificate">The provided text does not resolve to a valid PEM-encoded X509 certificate</string>
     <string name="dialog_invalid_custom_certificate_title">Error parsing certificate</string>
     <string name="dialog_updated_custom_certificate">Certificate updated</string>
     <!-- Media checking -->
-    <string name="check_media_title">Maidja ussokjan?</string>
-    <string name="check_media_warning">Þata mag lagg mel wisan huzdam maidje mikilaize</string>
-    <string name="check_media_message">Ussokjanda maidja&#8230;</string>
-    <string name="check_media_adding_missing_tag">Biaukanda sokniwaurda&#8230;</string>
-    <string name="check_media_tags_added">Sokniwaurda biaukana</string>
-    <string name="delete_media_message">Usqistjanda maidjam&#8230;</string>
-    <string name="delete_media_result_title">Taui usqistais</string>
+    <string name="check_media_title">𐌼𐌰𐌹𐌳𐌾𐌰 𐌿𐍃𐍃𐍉𐌺𐌾𐌰𐌽?</string>
+    <string name="check_media_warning">𐌸𐌰𐍄𐌰 𐌼𐌰𐌲 𐌻𐌰𐌲𐌲 𐌼𐌴𐌻 𐍅𐌹𐍃𐌰𐌽 𐌷𐌿𐌶𐌳𐌰𐌼 𐌼𐌰𐌹𐌳𐌾𐌴 𐌼𐌹𐌺𐌹𐌻𐌰𐌹𐌶𐌴</string>
+    <string name="check_media_message">𐌿𐍃𐍃𐍉𐌺𐌾𐌰𐌽𐌳𐌰 𐌼𐌰𐌹𐌳𐌾𐌰&#8230;</string>
+    <string name="check_media_adding_missing_tag">𐌱𐌹𐌰𐌿𐌺𐌰𐌽𐌳𐌰 𐍃𐍉𐌺𐌽𐌹𐍅𐌰𐌿𐍂𐌳𐌰&#8230;</string>
+    <string name="check_media_tags_added">𐍃𐍉𐌺𐌽𐌹𐍅𐌰𐌿𐍂𐌳𐌰 𐌱𐌹𐌰𐌿𐌺𐌰𐌽𐌰</string>
+    <string name="delete_media_message">𐌿𐍃𐌵𐌹𐍃𐍄𐌾𐌰𐌽𐌳𐌰 𐌼𐌰𐌹𐌳𐌾𐌰𐌼&#8230;</string>
+    <string name="delete_media_result_title">𐍄𐌰𐌿𐌹 𐌿𐍃𐌵𐌹𐍃𐍄𐌰𐌹𐍃</string>
     <plurals name="delete_media_result_message">
-        <item quantity="one">%d fajla usqast</item>
-        <item quantity="other">%d fajlam usqast</item>
+        <item quantity="one">%d 𐍆𐌰𐌾𐌻𐌰 𐌿𐍃𐌵𐌰𐍃𐍄</item>
+        <item quantity="other">%d 𐍆𐌰𐌾𐌻𐌰𐌼 𐌿𐍃𐌵𐌰𐍃𐍄</item>
     </plurals>
     <!-- Tags Dialog Options -->
-    <string name="tags_dialog_option_all_cards">Allos kartos</string>
-    <string name="tags_dialog_option_new_cards">Niwi</string>
-    <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">Due</string>
+    <string name="tags_dialog_option_all_cards">𐌰𐌻𐌻𐍉𐍃 𐌺𐌰𐍂𐍄𐍉𐍃</string>
+    <string name="tags_dialog_option_new_cards">𐌽𐌹𐍅𐌹</string>
+    <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">𐌽𐌰𐌿𐌷</string>
     <!-- Empty cards -->
-    <string name="emtpy_cards_finding">Bigitanda lausos kartos&#8230;</string>
+    <string name="emtpy_cards_finding">𐌱𐌹𐌲𐌹𐍄𐌰𐌽𐌳𐌰 𐌻𐌰𐌿𐍃𐍉𐍃 𐌺𐌰𐍂𐍄𐍉𐍃&#8230;</string>
     <!-- Multimedia - Edit Field Activity -->
-    <string name="multimedia_editor_audio_permission_refused">Atgagg du meikrofon mahteig ni was.</string>
-    <string name="multimedia_editor_failed">Ni mahta Inmaidjan Managmaidje uslukan</string>
+    <string name="multimedia_editor_audio_permission_refused">𐌰𐍄𐌲𐌰𐌲𐌲 𐌳𐌿 𐌼𐌴𐌹𐌺𐍂𐍉𐍆𐍉𐌽 𐌽𐌹 𐍅𐌰𐍃 𐌼𐌰𐌷𐍄𐌴𐌹𐌲.</string>
+    <string name="multimedia_editor_failed">𐌽𐌹 𐌼𐌰𐌷𐍄𐌰 𐌹𐌽𐌼𐌰𐌹𐌳𐌾𐍉 𐌼𐌰𐌽𐌰𐌲𐌼𐌰𐌹𐌳𐌾𐌴 𐌿𐍃𐌻𐌿𐌺𐌰𐌽</string>
     <!-- Multimedia - Audio View -->
-    <string name="multimedia_editor_audio_permission_denied">Audio recording permission denied</string>
+    <string name="multimedia_editor_audio_permission_denied">𐌰𐌽𐌳𐌻𐌴𐍄 𐌲𐌰𐌼𐌰𐌿𐌳𐌴𐌹𐌽𐌰𐌹𐍃 𐌰𐍅𐌳𐌾𐍉𐌽𐍃 𐌲𐌹𐌱𐌰𐌽 𐌽𐌹𐍃𐍄</string>
+    <string name="permission_denied">𐌰𐌽𐌳𐌻𐌴𐍄 𐌲𐌹𐌱𐌰𐌽 𐌽𐌹𐍃𐍄</string>
+    <string name="recording_permission_denied_message">Microphone permission is necessary for the “Record voice” feature. Please grant it in the app settings.</string>
     <!-- Database Integrity Check -->
-    <string name="integrity_check_startup_title">AnkiDroid aftraananiujida</string>
+    <string name="integrity_check_startup_title">𐌰𐌽𐌺𐌴𐌹𐌳𐍂𐌰𐌿𐌳 𐌰𐍆𐍄𐍂𐌰𐌰𐌽𐌰𐌽𐌹𐌿𐌾𐌹𐌳𐌰</string>
     <string name="integrity_check_startup_content">AnkiDroid has been upgraded. This upgrade includes fixes for possible database problems, and we advise you to run check database now.</string>
-    <string name="integrity_check_continue_anyway">Þauh þairhwis</string>
+    <string name="integrity_check_continue_anyway">𐌸𐌰𐌿𐌷 𐌸𐌰𐌹𐍂𐌷𐍅𐌹𐍃𐌰𐌽</string>
     <string name="integrity_check_insufficient_space">Check Database uses a large amount of temporary storage.\n\nIt is strongly recommended that you have at least %s free space on your device before continuing.</string>
-    <string name="integrity_check_insufficient_space_extra_content">\n\nNu habais %s frei.</string>
+    <string name="integrity_check_insufficient_space_extra_content">\n\n𐌽𐌿 𐌷𐌰𐌱𐌰𐌹𐍃 %s 𐍆𐍂𐌴𐌹.</string>
     <!-- Card Browser -->
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Error decoding data from card</string>
     <!-- Deck Options -->
     <!-- Database Errors-->
-    <string name="database_locked_title">Datahuzd Lukan</string>
+    <string name="database_locked_title">𐌳𐌰𐍄𐌰𐌷𐌿𐌶𐌳 𐌻𐌿𐌺𐌰𐌽</string>
     <string name="database_locked_summary">The AnkiDroid database is in use by another application. Please close the other application then reopen AnkiDroid.</string>
-    <string name="incompatible_database_version_title">Incompatible Database Version</string>
+    <string name="incompatible_database_version_title">𐌿𐌽𐌲𐌰𐍄𐌹𐌻 𐌳𐌰𐍄𐌰𐌷𐌿𐌶𐌳𐌹𐍃 𐌿𐍃𐌼𐌴𐍂𐌹</string>
     <string name="incompatible_database_version_summary">The database is a more advanced version than this version of AnkiDroid can work with. Upgrade AnkiDroid or downgrade the database to open it\n\nSupported version: %1$d\nDatabase version: %2$d\n\nThe following restore options will overwrite your current collection, possibly with a compatible database version:</string>
     <!-- Deck Picker Background-->
     <string name="background_image_applied">Background image applied</string>
     <string name="background_image_removed">Background image removed</string>
-    <string name="no_image_selected">Ni frisahts gawalida</string>
-    <string name="error_selecting_image">Airzei warþ waljan frisaht. Bidjam þuk, sai handubokos. %s</string>
-    <string name="error_deleting_image">Airzei warþ usqistjan frisahtai</string>
+    <string name="no_image_selected">𐌽𐌹 𐍆𐍂𐌹𐍃𐌰𐌷𐍄𐍃 𐌲𐌰𐍅𐌰𐌻𐌹𐌳𐌰</string>
+    <string name="error_selecting_image">𐌰𐌹𐍂𐌶𐌴𐌹 𐍅𐌰𐍂𐌸 𐍅𐌰𐌻𐌾𐌰𐌽 𐍆𐍂𐌹𐍃𐌰𐌷𐍄. 𐌱𐌹𐌳𐌾𐌰𐌼 𐌸𐌿𐌺, 𐍃𐌰𐌹 𐌷𐌰𐌽𐌳𐌿𐌱𐍉𐌺𐍉𐍃. %s</string>
+    <string name="error_deleting_image">𐌰𐌹𐍂𐌶𐌴𐌹 𐍅𐌰𐍂𐌸 𐌿𐍃𐌵𐌹𐍃𐍄𐌾𐌰𐌽 𐍆𐍂𐌹𐍃𐌰𐌷𐍄𐌰𐌹</string>
     <string name="failed_to_apply_background_image">Failed to apply background image %s</string>
     <string name="background_image_too_large">Deck Picker background too large</string>
-    <string name="image_max_size_allowed" comment="Consider keeping the unbreakable space after the digit">Maximum image size %d MB allowed</string>
+    <string name="image_max_size_allowed" comment="Consider keeping the unbreakable space after the digit">𐍃𐍉 𐌼𐌰𐌹𐍃𐍄𐍉 𐌼𐌹𐌺𐌹𐌻𐌴𐌹 𐍆𐍂𐌹𐍃𐌰𐌷𐍄𐌰𐌹𐍃 %d 𐌼𐌱 𐌰𐌽𐌳𐌻𐌴𐍄𐌰𐌳𐌰</string>
     <string name="image_dimensions_too_large">Image dimensions are too large (%1$d × %2$d)</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
     <string name="intent_handler_failed_no_storage_permission">Missing required storage permission. Please grant storage permission then retry your action.</string>
     <!-- Boot Service -->
     <string name="boot_service_failed_to_schedule_notifications">Failed to schedule reminders</string>
-    <string name="boot_service_too_many_notifications">Too many reminders scheduled. Some will not appear</string>
+    <string name="boot_service_too_many_notifications">𐌿𐍆𐌰𐍂𐍆𐌹𐌻𐌿 𐌲𐌰𐌼𐌰𐌿𐌳𐌾𐌰𐌽𐌳𐌰𐌽𐍃 𐌹𐌽 𐌲𐌰𐍂𐌴𐌷𐍃𐌽𐌰𐌹. 𐍃𐌿𐌼𐌰𐌹 𐌽𐌹 𐌲𐌰𐌱𐌰𐌹𐍂𐌷𐍄𐌾𐌰𐌽𐌳 𐍃𐌹𐌺</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title_new">Lagei Razda</string>
+    <string name="locale_selection_dialog_title_new">𐍂𐌰𐌶𐌳𐌰 𐌻𐌰𐌲𐌾𐌰𐌽</string>
     <string name="locale_selection_dialog_summary">Some multilingual keyboards, such as GBoard support changing language when editing text\n\nPlease request the “setImeHintLocales” feature from your keyboard manufacturer if your keyboard does not change language.</string>
     <!-- Help Dialog -->
-    <string name="help_title_using_ankidroid">Brukjada AnkiDroids</string>
-    <string name="help_item_ankidroid_manual">AnkiDroid handubokos</string>
-    <string name="help_item_anki_manual">Anki handubokos</string>
-    <string name="help_item_ankidroid_faq">AnkiDroid FAQ</string>
-    <string name="help_title_get_help">Nim hilpa</string>
-    <string name="help_item_mailing_list">Wiko E-mel</string>
-    <string name="help_item_reddit">Raiddit</string>
+    <string name="help_title_using_ankidroid">𐌰𐌽𐌺𐌴𐌹𐌳𐍂𐌰𐌿𐌳𐍃 𐌱𐍂𐌿𐌺𐌴𐌹𐌸</string>
+    <string name="help_item_ankidroid_manual">𐌰𐌽𐌺𐌴𐌹𐌳𐍂𐌰𐌿𐌳 𐌷𐌰𐌽𐌳𐌿𐌱𐍉𐌺𐍉𐍃</string>
+    <string name="help_item_anki_manual">𐌰𐌽𐌺𐌴𐌹 𐌷𐌰𐌽𐌳𐌿𐌱𐍉𐌺𐍉𐍃</string>
+    <string name="help_item_ankidroid_faq">𐌰𐌽𐌺𐌴𐌹𐌳𐍂𐌰𐌿𐌳 FAQ</string>
+    <string name="help_title_get_help">𐌷𐌹𐌻𐍀𐌰 𐌽𐌹𐌼𐌰𐌽</string>
+    <string name="help_item_mailing_list">𐍅𐌹𐌺𐍉 𐌴-𐌼𐌴𐌻</string>
+    <string name="help_item_reddit">𐍂𐌰𐌹𐌳𐌳𐌹𐍄</string>
     <string name="help_item_report_bug">Report a bug</string>
-    <string name="help_title_support_ankidroid" maxLength="28">AnkiDroid Stodjan</string>
-    <string name="help_item_support_opencollective_donate">Andstaldan</string>
-    <string name="help_item_support_develop_ankidroid">Andwaibei</string>
-    <string name="help_item_support_rate_ankidroid">Rate</string>
-    <string name="help_item_support_other_ankidroid">Anþar</string>
-    <string name="multimedia_editor_trans_translate">Gaskeirjan</string>
-    <string name="help_title_community">Gamainduþs</string>
-    <string name="help_item_anki_forums">Anki maþla</string>
-    <string name="help_item_discord">Diskaurd</string>
-    <string name="help_item_facebook">Fesbuk</string>
-    <string name="help_item_twitter">Twitair</string>
-    <string name="help_title_privacy">Sundraleikei</string>
-    <string name="help_item_ankidroid_privacy_policy">AnkiDroid privacy policy</string>
-    <string name="help_item_ankiweb_privacy_policy">AnkiWeb privacy policy</string>
+    <string name="help_title_support_ankidroid" maxLength="28">𐌰𐌽𐌺𐌴𐌹𐌳𐍂𐌰𐌿𐌳 𐍃𐍄𐍉𐌳𐌾𐌰𐌽</string>
+    <string name="help_item_support_opencollective_donate">𐌰𐌽𐌳𐍃𐍄𐌰𐌻𐌳𐌰𐌽</string>
+    <string name="help_item_support_develop_ankidroid">𐌰𐌽𐌳𐍅𐌰𐌹𐌱𐌾𐌰𐌽</string>
+    <string name="help_item_support_rate_ankidroid">𐍅𐌰𐌹𐍂𐌸𐍉𐌽</string>
+    <string name="help_item_support_other_ankidroid">𐌰𐌽𐌸𐌰𐍂</string>
+    <string name="multimedia_editor_trans_translate">𐌲𐌰𐍃𐌺𐌴𐌹𐍂𐌾𐌰𐌽</string>
+    <string name="help_title_community">𐌲𐌰𐌼𐌰𐌹𐌽𐌳𐌿𐌸𐍃</string>
+    <string name="help_item_anki_forums">𐌰𐌽𐌺𐌴𐌹 𐌼𐌰𐌸𐌻𐌰</string>
+    <string name="help_item_discord">𐌳𐌹𐍃𐌺𐌰𐌿𐍂𐌳</string>
+    <string name="help_item_facebook">𐍆𐌴𐍃𐌱𐌿𐌺</string>
+    <string name="help_item_twitter">𐍄𐍅𐌹𐍄𐍄𐌰𐌹𐍂</string>
+    <string name="help_title_privacy">𐍃𐌿𐌽𐌳𐍂𐌰𐌻𐌴𐌹𐌺𐌴𐌹</string>
+    <string name="help_item_ankidroid_privacy_policy">𐌰𐌽𐌺𐌴𐌹𐌳𐍂𐌰𐌿𐌳𐍃 𐌲𐌰𐍂𐌴𐌳𐌴𐌹𐌽𐍃 𐍃𐌿𐌽𐌳𐍂𐌰𐌻𐌴𐌹𐌺𐌴𐌹𐌽𐍃</string>
+    <string name="help_item_ankiweb_privacy_policy">𐌰𐌽𐌺𐌴𐌹𐌳𐍂𐌰𐌿𐌳𐍃 𐌲𐌰𐍂𐌴𐌳𐌴𐌹𐌽𐍃 𐍃𐌿𐌽𐌳𐍂𐌰𐌻𐌴𐌹𐌺𐌴𐌹𐌽𐍃</string>
     <string name="help_item_ankiweb_terms_and_conditions">AnkiWeb terms and conditions</string>
     <string name="help_title_send_exception">Send troubleshooting report</string>
-    <string name="help_dialog_exception_report_debounce">Report already submitted</string>
-    <string name="help_dialog_exception_report_sent">Report was sent!</string>
+    <string name="help_dialog_exception_report_debounce">𐌼𐌴𐍂𐌹𐌸𐌰 𐌾𐌿 𐌹𐌽𐍃𐌰𐌽𐌳𐌹𐌳𐌰 𐌹𐍃𐍄</string>
+    <string name="help_dialog_exception_report_sent">𐌼𐌴𐍂𐌹𐌸𐌰 𐌹𐌽𐍃𐌰𐌽𐌳𐌹𐌳𐌰!</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="one" comment="Consider keeping the unbreakable space after the digit">An automatic sync may be triggered in %d second</item>
         <item quantity="other" comment="Consider keeping the unbreakable space after the digit">An automatic sync may be triggered in %d seconds</item>
     </plurals>
-    <string name="metered_sync_data_warning">Mahteig ist þatei gibands ganatjis þeins nimiþ af þus skattans brukeinai datos</string>
-    <string name="deck_picker_new">Raþjo karto niujaizo saiƕan in þamma kartahuzda himma daga.</string>
-    <string name="deck_picker_rev">Number of cards due today in this deck.</string>
-    <string name="deck_picker_lrn">Number of cards in learning in this deck.</string>
+    <string name="metered_sync_data_warning">𐌼𐌰𐌷𐍄𐌴𐌹𐌲 𐌹𐍃𐍄 𐌸𐌰𐍄𐌴𐌹 𐌲𐌹𐌱𐌰𐌽𐌳𐍃 𐌲𐌰𐌽𐌰𐍄𐌾𐌹𐍃 𐌸𐌴𐌹𐌽𐍃 𐌽𐌹𐌼𐌹𐌸 𐌰𐍆 𐌸𐌿𐍃 𐍃𐌺𐌰𐍄𐍄𐌰𐌽𐍃 𐌱𐍂𐌿𐌺𐌴𐌹𐌽𐌰𐌹 𐌳𐌰𐍄𐍉𐍃</string>
+    <string name="deck_picker_new">𐍂𐌰𐌸𐌾𐍉 𐌺𐌰𐍂𐍄𐍉 𐌽𐌹𐌿𐌾𐌰𐌹𐌶𐍉 𐍃𐌰𐌹𐍈𐌰𐌽 𐌹𐌽 𐌸𐌰𐌼𐌼𐌰 𐌺𐌰𐍂𐍄𐌰𐌷𐌿𐌶𐌳𐌰 𐌷𐌹𐌼𐌼𐌰 𐌳𐌰𐌲𐌰.</string>
+    <string name="deck_picker_rev">𐍂𐌰𐌸𐌾𐍉 𐌺𐌰𐍂𐍄𐍉 𐌸𐍉𐌶𐌴𐌹 𐍃𐌺𐌰𐌻𐍄 𐍄𐌰𐌿𐌾𐌰𐌽 𐌹𐌽 𐌺𐌰𐍂𐍄𐌰𐌷𐌿𐌶𐌳𐌰 𐌷𐌹𐌼𐌼𐌰 𐌳𐌰𐌲𐌰.</string>
+    <string name="deck_picker_lrn">𐍂𐌰𐌸𐌾𐍉 𐌺𐌰𐍂𐍄𐍉 𐌹𐌽 𐌻𐌰𐌹𐍃𐌴𐌹𐌽𐌰𐌹 𐌸𐌹𐍃 𐌺𐌰𐍂𐍄𐌰𐌷𐌿𐌶𐌳𐌹𐍃.</string>
     <!-- This description is valid fos
     sched V2. For V1, it was counting the number of repetitions of cards in learning. This approximation is acceptable
     for the sake of simplicity and because V1 will leave.-->
     <string name="deck_picker_counts">Open the deck overview page containing the number of cards to see today.</string>
-    <string name="import_deck_package">Deck package (.apkg)</string>
-    <string name="import_collection_package">Collection package (.colpkg)</string>
-    <string name="import_csv">Boko fajl (.txt, .csv)</string>
-    <!-- Deck selection dialog -->
-    <string name="cannot_create_subdeck_for_all_decks">Ni magt ufkartahuzd kartahuzde allaize skapjan</string>
+    <string name="import_deck_package">𐍃𐌰𐌺𐌺𐌿𐍃 𐌷𐌰𐍂𐍄𐌰𐌷𐌿𐌶𐌳𐌹𐍃 (.apkg)</string>
+    <string name="import_collection_package">𐌷𐌿𐌶𐌳 𐌺𐌰𐍂𐍄𐌰𐌷𐌿𐌶𐌳𐌹𐍃 (.colpkg)</string>
+    <string name="import_csv">𐌱𐍉𐌺𐍉 𐍆𐌰𐌾𐌻 (.txt, .csv)</string>
     <!-- scoped storage -->
     <string name="backup_your_collection">Backup your collection</string>
     <string name="backup_collection_message">You haven\'t backed up your collection in a while. You should do this now to prevent data loss</string>
-    <string name="button_backup" maxLength="41">Baikap</string>
+    <string name="button_backup" maxLength="41">𐌱𐌰𐌹𐌺-𐌰𐍀</string>
     <string name="button_disable_reminder">Disable reminder</string>
-    <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Biþe</string>
-    <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Ni aftra bandwjan</string>
-    <string name="dismiss_backup_warning_title">ƕota Fralustais Datos</string>
-    <string name="dismiss_backup_warning_new_user">Due to Android privacy changes, your data and automated backups will be deleted from your phone if the app is uninstalled</string>
-    <string name="dismiss_backup_warning_upgrade">Due to Android privacy changes, your data and automated backups will be inaccessible if the app is uninstalled</string>
-    <string name="deck_already_exists">Kartahuzd ju ist</string>
-    <string name="empty_deck_name">Namo kartahuzdis ni mag wisan laus</string>
+    <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">𐌱𐌹𐌸𐌴</string>
+    <string name="button_do_not_show_again" comment="permanently dismisses a dialog">𐌽𐌹 𐌰𐍆𐍄𐍂𐌰 𐌱𐌰𐌽𐌳𐍅𐌾𐌰𐌽</string>
+    <string name="dismiss_backup_warning_title">𐍈𐍉𐍄𐌰 𐍆𐍂𐌰𐌻𐌿𐍃𐍄𐌰𐌹𐍃 𐌳𐌰𐍄𐍉𐍃</string>
+    <string name="dismiss_backup_warning_new_user">𐌹𐌽 𐌹𐌽𐌼𐌰𐌹𐌳𐌴𐌹𐌽𐍉 𐍃𐌿𐌽𐌳𐍂𐌰𐌻𐌴𐌹𐌺𐌴𐌹𐌽𐍃 𐌰𐌽𐌺𐌴𐌹𐌳𐍂𐌰𐌿𐌳𐍃, 𐌳𐌰𐍄𐌰𐌼 𐌸𐌴𐌹𐌽𐌰𐌹𐌼 𐌾𐌰𐌷 𐌱𐌰𐌹𐌺-𐌰𐍀𐌰𐌼 𐍃𐌹𐌻𐌱𐌰𐍄𐍉𐌾𐌰𐌽𐌳𐌰𐌼 𐌿𐍃𐌵𐌹𐍃𐍄𐌾𐌰𐌽𐌳𐌰 𐍆𐍂𐌰𐌼 𐍆𐍉𐌽 𐌸𐌴𐌹𐌽𐌰𐌼𐌼𐌰 𐌾𐌰𐌱𐌰𐌹 𐌸𐌰𐍄𐌰 𐌰𐍀𐍀 𐌿𐌽𐍄𐌹𐌼𐍂𐌾𐌰𐌳𐌰</string>
+    <string name="dismiss_backup_warning_upgrade">𐌹𐌽 𐌹𐌽𐌼𐌰𐌹𐌳𐌴𐌹𐌽𐍉 𐍃𐌿𐌽𐌳𐍂𐌰𐌻𐌴𐌹𐌺𐌴𐌹𐌽𐍃 𐌰𐌽𐌺𐌴𐌹𐌳𐍂𐌰𐌿𐌳𐍃, 𐌳𐌰𐍄𐌰 𐌸𐌴𐌹𐌽𐌰 𐌾𐌰𐌷 𐌱𐌰𐌹𐌺-𐌰𐍀𐌰 𐍃𐌹𐌻𐌱𐌰𐍄𐍉𐌾𐌰𐌽𐌳𐍉𐌽𐌰 𐌿𐌽𐌰𐍄𐌲𐌰𐌷𐍄𐌰 𐍅𐌰𐌹𐍂𐌸𐌰𐌽𐌳 𐌾𐌰𐌱𐌰𐌹 𐌸𐌰𐍄𐌰 𐌰𐍀𐍀 𐌿𐌽𐍄𐌹𐌼𐍂𐌾𐌰𐌳𐌰</string>
+    <string name="deck_already_exists">𐌺𐌰𐍂𐍄𐌰𐌷𐌿𐌶𐌳 𐌾𐌿 𐌹𐍃𐍄</string>
+    <string name="empty_deck_name">𐌽𐌰𐌼𐍉 𐌺𐌰𐍂𐍄𐌰𐌷𐌿𐌶𐌳𐌹𐍃 𐌽𐌹 𐌼𐌰𐌲 𐍅𐌹𐍃𐌰𐌽 𐌻𐌰𐌿𐍃</string>
     <string name="create_deck_numeric_hint">If you have deck ordering issues (e.g. ‘10’ appears before ‘2’), replace ‘2’ with ‘02’</string>
     <!-- Set Due Date -->
-    <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Set interval to same value</string>
+    <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">𐌼𐌹𐌸𐍂𐌿𐌼 𐌻𐌰𐌲𐌾𐌰𐌽 𐌳𐌿 𐍃𐌰𐌼𐌹𐌽 𐍅𐌰𐌹𐍂𐌸𐌰</string>
     <plurals name="set_due_date_single_day_label" comment="a date control is provided afterwards">
-        <item quantity="one">Bandwei karta in</item>
-        <item quantity="other">Bandwei kartos in</item>
+        <item quantity="one">𐌱𐌰𐌽𐌳𐍅𐌴𐌹 𐌺𐌰𐍂𐍄𐌰 𐌹𐌽</item>
+        <item quantity="other">𐌱𐌰𐌽𐌳𐍅𐌴𐌹 𐌺𐌰𐍂𐍄𐍉𐍃 𐌹𐌽</item>
     </plurals>
     <plurals name="set_due_date_range_label" comment="a date control is provided afterwards">
-        <item quantity="one">Show card in range</item>
-        <item quantity="other">Show cards in range</item>
+        <item quantity="one">𐌺𐌰𐍂𐍄𐌰 𐌱𐌰𐌽𐌳𐍅𐌾𐌰𐌽 𐌹𐌽 𐌼𐌰𐍂𐌺𐌰𐌹</item>
+        <item quantity="other">𐌺𐌰𐍂𐍄𐍉𐍃 𐌱𐌰𐌽𐌳𐍅𐌾𐌰𐌽 𐌹𐌽 𐌼𐌰𐍂𐌺𐌰𐌹</item>
     </plurals>
     <plurals name="set_due_date_label_suffix" comment="a suffix on a text field allowing a user to enter a number of days">
-        <item quantity="one">dags</item>
-        <item quantity="other">dagos</item>
+        <item quantity="one">𐌳𐌰𐌲𐍃</item>
+        <item quantity="other">𐌳𐌰𐌲𐍉𐍃</item>
     </plurals>
     <plurals name="set_due_date_current_interval">
         <item quantity="one">Current interval: %d day</item>
         <item quantity="other">Current interval: %d days</item>
     </plurals>
     <string name="range_delimiter" comment="Placed between two input boxes to denote a range">–</string>
-    <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">Fram</string>
-    <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">Du</string>
+    <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">𐍆𐍂𐌰𐌼</string>
+    <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">𐌳𐌿</string>
     <!-- Instant Note Editor -->
     <string name="cloze_note_required">Cloze Type Note Required</string>
     <string name="cloze_not_found_message">No Cloze type note found, open the Note Editor or try again after adding a Cloze type note.</string>
-    <string name="open">Usluk</string>
+    <string name="open">𐌿𐍃𐌻𐌿𐌺𐌰𐌽</string>
     <string name="change_cloze_number">Change cloze number</string>
     <string name="cloze_number">Cloze number:</string>
-    <string name="change_editor_mode">Inmaidjins modu inmaidjan</string>
-    <string name="open_note_editor">Open note editor</string>
+    <string name="change_editor_mode">𐌹𐌽𐌼𐌰𐌹𐌳𐌾𐌹𐌽𐍃 𐌼𐍉𐌳𐌿 𐌹𐌽𐌼𐌰𐌹𐌳𐌾𐌰𐌽</string>
+    <string name="open_note_editor">𐌼𐌴𐌻𐌴𐌹𐌽𐌰𐌹𐍃 𐌹𐌽𐌼𐌰𐌹𐌳𐌾𐍉 𐌿𐍃𐌻𐌿𐌺𐌰𐌽</string>
     <string name="change_cloze_mode">Change cloze mode</string>
     <!-- Outdated WebView dialog -->
     <string name="webview_update_message">The system WebView is outdated. Some features won’t work correctly. Please update it.\n\nInstalled version: %1$d\nMinimum required version: %2$d</string>
-    <string name="compress">Compress</string>
+    <string name="compress">𐌲𐌰𐌸𐍂𐌿𐌺𐌾𐌰𐌽</string>
     <!-- Tts playback error dialog -->
-    <string name="tts_error_dialog_title">Razda stodida nist</string>
+    <string name="tts_error_dialog_title">𐍂𐌰𐌶𐌳𐌰 𐍃𐍄𐍉𐌳𐌹𐌳𐌰 𐌽𐌹𐍃𐍄</string>
     <string name="tts_error_dialog_reason_text">The text to speech engine <b>%1$s</b> does not support the following language: <b>%2$s</b></string>
-    <string name="tts_error_dialog_change_button_text">Change engine</string>
-    <string name="tts_error_dialog_supported_voices_button_text">Mahteis Stibnos</string>
+    <string name="tts_error_dialog_change_button_text">𐌹𐌽𐌲𐌰𐌹𐌽 𐌹𐌽𐌼𐌰𐌹𐌳𐌾𐌰𐌽</string>
+    <string name="tts_error_dialog_supported_voices_button_text">𐌼𐌰𐌷𐍄𐌴𐌹𐍃 𐍃𐍄𐌹𐌱𐌽𐍉𐍃</string>
+    <!-- import_cache_error_resolutions -->
+    <string name="import_error_resolution_try_again">Re-import the file</string>
+    <string name="import_error_resolution_free_up_space">Ensure there is sufficient free space on your device</string>
+    <string name="import_error_resolution_check_internet">Ensure you are connected to the internet</string>
+    <string name="import_error_resolution_copy_to_device">Copy the file to your device and try again with the local file</string>
+    <string name="import_error_resolution_select_file">Open the file using your device’s file browser app</string>
 </resources>

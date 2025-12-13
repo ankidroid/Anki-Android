@@ -124,7 +124,7 @@
     <string name="menu_disable_voice_playback">Вимкнути запис голосу</string>
     <string name="new_deck">Створити колоду</string>
     <string name="new_dynamic_deck">Створити фільтровану колоду</string>
-    <string name="directory_inaccessible">Папка AnkiDroid недоступна</string>
+    <string name="directory_inaccessible">Тека AnkiDroid недоступна</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
@@ -137,7 +137,6 @@
     <string name="empty_filtered_deck">Очищення фільтрованої колоди&#8230;</string>
     <string name="search_deck" comment="Deck search for selecting it">Пошук колоди</string>
     <string name="empty_deck">Ця колода порожня</string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">Пошук колоди</string>
     <string name="invalid_deck_name">Некоректна назва колоди</string>
     <string name="studyoptions_congrats_finished">Вітаємо! На сьогодні це все.</string>
     <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Колоду завершено! %s</string>
@@ -180,9 +179,10 @@
     <string name="card_template_browser_appearance_title">Зовнішній вигляд переглядача</string>
     <!-- card Info -->
     <string name="card_info_title" maxLength="28">Інформація про картку</string>
+    <string name="previous_card_info_title" maxLength="28">Previous card info</string>
     <!-- Permissions -->
-    <string name="read_write_permission_label">Читати і записувати в базу даних AnkiDroid</string>
-    <string name="read_write_permission_description">доступ до існуючих карток, колод, записів та їх типів, а також створення нових</string>
+    <string name="read_write_permission_label">Читати й записувати в базу даних AnkiDroid</string>
+    <string name="read_write_permission_description">Доступ до наявних карток, колод, записів та їх типів, а також створення нових</string>
     <!-- Context Menu -->
     <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Переглядач карток</string>
     <string name="context_menu_anki_card_label">Anki картка</string>
@@ -197,21 +197,31 @@
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">Неможливо записати чи створити файл %s</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Недоступна колекція</string>
-    <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Ми не можемо отримати доступ до вашої колекції після видалення AnkiDroid через зміну політики Play Store\n\nВаші дані в безпеці і можуть бути відновлені. Місцезнаходження даних \n%s\n\nВиберіть опцію нижче для відновлення:</string>
+    <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Ми не можемо отримати доступ до вашої колекції після видалення AnkiDroid через зміну політики Play Store\n\nВаші дані в безпеці та можуть бути відновлені. Розташування даних \n%s\n\nВиберіть опцію нижче для відновлення:</string>
     <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android видалив дозвіл AnkiDroid %1$s через неактивність додатку.\n\nВаші дані в безпеці та можуть бути відновлені. Вони знаходяться в\n%2$s\n\nВиберіть опцію нижче, щоб їх відновити:</string>
     <string name="restore_data_from_ankiweb">Відновити з AnkiWeb (рекомендовано)</string>
     <string name="install_non_play_store_ankidroid_recommended">Відновлення доступу до теки (рекомендовано)</string>
     <string name="install_non_play_store_ankidroid">Відновлення доступу до теки (розширено)</string>
     <string name="restore_data_from_backup">Відновити з резервної копії .colpkg (розширено)</string>
-    <string name="create_new_collection">створити нову колекцію</string>
+    <string name="create_new_collection">Створити нову колекцію</string>
     <string name="new_unsafe_collection">Нова колекція буде видалена з вашого телефону, якщо ви видалите AnkiDroid</string>
     <!-- Permissions screen -->
     <string name="permissions_screen_headline">AnkiDroid потребує певних дозволів для роботи</string>
+    <string name="permissions_screen_optional_headline" comment="Explains that there are optional permissions that can be granted to AnkiDroid.">AnkiDroid найкраще працює з цими дозволами</string>
     <string name="storage_access_title">Доступ до сховища</string>
     <string name="storage_access_summary">Зберігає вашу колекцію в безпечному місці, яке не видалиться, якщо ви видалите додаток</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after. See [android.permission.MANAGE_EXTERNAL_STORAGE] on https://developer.android.com/training/data-storage/manage-all-files for context.">Доступ до всіх файлів</string>
     <string name="image_occlusion">Оклюзія зображення</string>
+    <string name="microphone" comment="Title of the microphone permission in the permissions explanation screen.">Мікрофон</string>
+    <string name="microphone_permission_explanation" comment="Description explaining why AnkiDroid needs the microphone permission, shown on the permissions explanation screen.">Дозволяє додавати звуки до карток та записувати голос під час навчання</string>
+    <string name="notifications_permission_explanation" comment="Description explaining why AnkiDroid needs the notification permission.">Вмикає фонову синхронізацію медіафайлів і дозволяє створювати нагадування про навчання</string>
+    <string name="heading_required_permissions" comment="Heading for the section of required permissions that the app needs to function, shown in the permissions explanation screen.">Обов’язкові</string>
+    <string name="heading_optional_permissions" comment="Heading for the section of optional permissions that the app needs to function, shown in the permissions explanation screen.">Додаткові</string>
+    <string name="manually_grant_permissions" comment="Pop-up message that is shown to the user when they want to grant an app permission that must be granted via the OS settings screen.">Цей дозвіл потрібно надати вручну в Налаштуваннях</string>
+    <string name="revoke_permissions" comment="Pop-up message that is shown to the user when they are revoking an app permission.">Цей дозвіл потрібно скасувати вручну в Налаштуваннях</string>
     <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Видалити обліковий запис</string>
     <!-- Instant Note Editor -->
     <string name="instant_card" comment="Used in the Android system context menu/share dialog to quickly create a note. This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. ">Миттєве додання картки</string>
+    <!-- Multiple profile -->
+    <string name="add_profile">Add profile</string>
 </resources>

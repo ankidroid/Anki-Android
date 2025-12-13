@@ -1,20 +1,19 @@
-/***************************************************************************************
- *                                                                                      *
- * Copyright (c) 2012 Norbert Nagold <norbert.nagold@gmail.com>                         *
- * Copyright (c) 2014 Timothy Rae <perceptualchaos2@gmail.com>                          *
- *                                                                                      *
- * This program is free software; you can redistribute it and/or modify it under        *
- * the terms of the GNU General Public License as published by the Free Software        *
- * Foundation; either version 3 of the License, or (at your option) any later           *
- * version.                                                                             *
- *                                                                                      *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY      *
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A      *
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.             *
- *                                                                                      *
- * You should have received a copy of the GNU General Public License along with         *
- * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
- ****************************************************************************************/
+/*
+ * Copyright (c) 2012 Norbert Nagold <norbert.nagold@gmail.com>
+ * Copyright (c) 2014 Timothy Rae <perceptualchaos2@gmail.com>
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 3 of the License, or (at your option) any later
+ * version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 package com.ichi2.anki
 
@@ -58,14 +57,12 @@ import androidx.annotation.CheckResult
 import androidx.annotation.DrawableRes
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.content.FileProvider
 import androidx.core.content.IntentCompat
 import androidx.core.content.edit
 import androidx.core.content.res.ResourcesCompat
-import androidx.core.net.toUri
 import androidx.core.os.BundleCompat
 import androidx.core.text.HtmlCompat
 import androidx.core.util.component1
@@ -92,12 +89,11 @@ import com.ichi2.anki.OnContextAndLongClickListener.Companion.setOnContextAndLon
 import com.ichi2.anki.android.input.ShortcutGroup
 import com.ichi2.anki.android.input.ShortcutGroupProvider
 import com.ichi2.anki.android.input.shortcut
-import com.ichi2.anki.bottomsheet.ImageOcclusionBottomSheetFragment
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
+import com.ichi2.anki.common.utils.ext.ifZero
 import com.ichi2.anki.dialogs.ConfirmationDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
-import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
 import com.ichi2.anki.dialogs.DiscardChangesDialog
 import com.ichi2.anki.dialogs.IntegerDialog
 import com.ichi2.anki.dialogs.tags.TagsDialog
@@ -105,6 +101,7 @@ import com.ichi2.anki.dialogs.tags.TagsDialogFactory
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
 import com.ichi2.anki.libanki.Card
 import com.ichi2.anki.libanki.Collection
+import com.ichi2.anki.libanki.Consts
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.Decks.Companion.CURRENT_DECK
 import com.ichi2.anki.libanki.Field
@@ -118,6 +115,7 @@ import com.ichi2.anki.libanki.Notetypes.Companion.NOT_FOUND_NOTE_TYPE
 import com.ichi2.anki.libanki.Utils
 import com.ichi2.anki.libanki.clozeNumbersInNote
 import com.ichi2.anki.model.CardStateFilter
+import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.anki.multimedia.AudioRecordingFragment
 import com.ichi2.anki.multimedia.AudioVideoFragment
 import com.ichi2.anki.multimedia.MultimediaActivity.Companion.MULTIMEDIA_RESULT
@@ -143,6 +141,7 @@ import com.ichi2.anki.noteeditor.Toolbar.TextFormatListener
 import com.ichi2.anki.noteeditor.Toolbar.TextWrapper
 import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.pages.ImageOcclusion
+import com.ichi2.anki.pages.viewmodel.ImageOcclusionArgs
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.previewer.TemplatePreviewerArguments
 import com.ichi2.anki.previewer.TemplatePreviewerPage
@@ -155,6 +154,7 @@ import com.ichi2.anki.ui.setupNoteTypeSpinner
 import com.ichi2.anki.utils.ext.sharedPrefs
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.utils.ext.window
+import com.ichi2.anki.utils.openUrl
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.compat.setTooltipTextCompat
 import com.ichi2.imagecropper.ImageCropper
@@ -178,10 +178,10 @@ import com.ichi2.utils.configureView
 import com.ichi2.utils.message
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.neutralButton
+import com.ichi2.utils.openInputStreamSafe
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
 import com.ichi2.utils.title
-import com.ichi2.widget.WidgetStatus
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -209,6 +209,7 @@ const val CALLER_KEY = "caller"
  */
 @KotlinCleanup("Go through the class and select elements to fix")
 @KotlinCleanup("see if we can lateinit")
+@NeedsTest("19733")
 class NoteEditorFragment :
     Fragment(R.layout.note_editor_fragment),
     DeckSelectionListener,
@@ -239,14 +240,18 @@ class NoteEditorFragment :
 
     @VisibleForTesting
     internal var noteTypeSpinner: Spinner? = null
-    private var deckSpinnerSelection: DeckSpinnerSelection? = null
     private var imageOcclusionButtonsContainer: LinearLayout? = null
-    private var selectImageForOcclusionButton: Button? = null
     private var editOcclusionsButton: Button? = null
+    private var imageSelectionForOcclusionContainer: LinearLayout? = null
+    private var imageSelectionForOcclusionLabel: TextView? = null
+    private var cameraForOcclusionButton: Button? = null
+    private var galleryForOcclusionButton: Button? = null
     private var pasteOcclusionImageButton: Button? = null
 
     // non-null after onCollectionLoaded
-    private var editorNote: Note? = null
+    @VisibleForTesting
+    var editorNote: Note? = null
+        private set
 
     private val multimediaViewModel: MultimediaViewModel by activityViewModels()
 
@@ -431,12 +436,9 @@ class NoteEditorFragment :
         if (deck == null) {
             return
         }
+        require(deck is SelectableDeck.Deck)
         deckId = deck.deckId
-        // this is called because DeckSpinnerSelection.onDeckAdded doesn't update the list
-        deckSpinnerSelection!!.initializeNoteEditorDeckSpinner(getColUnsafe)
-        launchCatchingTask {
-            deckSpinnerSelection!!.selectDeckById(deckId, false)
-        }
+        view?.findViewById<TextView>(R.id.note_deck_name)?.text = deck.name
     }
 
     private enum class AddClozeType {
@@ -640,7 +642,7 @@ class NoteEditorFragment :
      */
     private fun copyUriToInternalCache(uri: Uri): String? {
         return try {
-            val inputStream = requireContext().contentResolver.openInputStream(uri) ?: return null
+            val inputStream = requireContext().contentResolver.openInputStreamSafe(uri) ?: return null
 
             val fileName = ContentResolverUtil.getFileName(requireContext().contentResolver, uri)
             val cacheDir = requireContext().cacheDir
@@ -701,7 +703,10 @@ class NoteEditorFragment :
         }
         imageOcclusionButtonsContainer = requireView().findViewById(R.id.ImageOcclusionButtonsLayout)
         editOcclusionsButton = requireView().findViewById(R.id.EditOcclusionsButton)
-        selectImageForOcclusionButton = requireView().findViewById(R.id.SelectImageForOcclusionButton)
+        imageSelectionForOcclusionContainer = requireView().findViewById(R.id.ImageSelectionForOcclusionContainer)
+        imageSelectionForOcclusionLabel = requireView().findViewById(R.id.ImageSelectionForOcclusionLabel)
+        cameraForOcclusionButton = requireView().findViewById<Button>(R.id.CameraForOcclusionButton)
+        galleryForOcclusionButton = requireView().findViewById<Button>(R.id.GalleryForOcclusionButton)
         pasteOcclusionImageButton = requireView().findViewById(R.id.PasteImageForOcclusionButton)
 
         try {
@@ -760,33 +765,23 @@ class NoteEditorFragment :
 
         if (addNote) {
             editOcclusionsButton?.visibility = View.GONE
-            selectImageForOcclusionButton?.setOnClickListener {
-                Timber.i("selecting image for occlusion")
-                val imageOcclusionBottomSheet = ImageOcclusionBottomSheetFragment()
-                imageOcclusionBottomSheet.listener =
-                    object : ImageOcclusionBottomSheetFragment.ImagePickerListener {
-                        override fun onCameraClicked() {
-                            Timber.i("onCameraClicked")
-                            dispatchCameraEvent()
-                        }
 
-                        override fun onGalleryClicked() {
-                            Timber.i("onGalleryClicked")
-                            try {
-                                ioEditorLauncher.launch("image/*")
-                            } catch (_: ActivityNotFoundException) {
-                                Timber.w("No app found to handle onGalleryClicked request")
-                                activity?.showSnackbar(R.string.activity_start_failed)
-                            }
-                        }
-                    }
-                imageOcclusionBottomSheet.show(
-                    parentFragmentManager,
-                    "ImageOcclusionBottomSheetFragment",
-                )
+            imageSelectionForOcclusionLabel?.text = TR.notetypesImage() + ":"
+
+            cameraForOcclusionButton?.setOnClickListener {
+                Timber.i("Camera button clicked")
+                dispatchCameraEvent()
             }
 
-            pasteOcclusionImageButton?.text = TR.notetypesIoPasteImageFromClipboard()
+            galleryForOcclusionButton?.setOnClickListener {
+                Timber.i("Gallery button clicked")
+                try {
+                    ioEditorLauncher.launch("image/*")
+                } catch (_: ActivityNotFoundException) {
+                    Timber.w("No app found to handle onGalleryClicked request")
+                    activity?.showSnackbar(R.string.activity_start_failed)
+                }
+            }
             pasteOcclusionImageButton?.setOnClickListener {
                 // TODO: Support all extensions
                 //  See https://github.com/ankitects/anki/blob/6f3550464d37aee1b8b784e431cbfce8382d3ce7/rslib/src/image_occlusion/imagedata.rs#L154
@@ -805,8 +800,7 @@ class NoteEditorFragment :
                 }
             }
         } else {
-            selectImageForOcclusionButton?.visibility = View.GONE
-            pasteOcclusionImageButton?.visibility = View.GONE
+            imageSelectionForOcclusionContainer?.visibility = View.GONE
             editOcclusionsButton?.visibility = View.VISIBLE
             editOcclusionsButton?.text = resources.getString(R.string.edit_occlusions)
             editOcclusionsButton?.setOnClickListener {
@@ -824,17 +818,35 @@ class NoteEditorFragment :
         if (!addNote && editorNote!!.notetype.templates.length() > 1) {
             deckTextView.setText(R.string.CardEditorCardDeck)
         }
-        deckSpinnerSelection =
-            DeckSpinnerSelection(
-                requireContext() as AppCompatActivity,
-                requireView().findViewById(R.id.note_deck_spinner),
-                showAllDecks = false,
-                alwaysShowDefault = true,
-                showFilteredDecks = false,
-                fragmentManagerSupplier = { childFragmentManager },
-            )
-        deckSpinnerSelection!!.initializeNoteEditorDeckSpinner(col)
+
         deckId = requireArguments().getLong(EXTRA_DID, deckId)
+        if (addNote) {
+            // When adding and if we didn't receive a valid deck id or it's the 'Default' deck,
+            // use the recommended deck for adding
+            deckId = deckId.ifZero { col.defaultsForAdding().deckId }
+
+            // Also guard against adding to a filtered deck
+            val deck = col.decks.getLegacy(deckId)
+            if (deck == null || deck.isFiltered) {
+                deckId = col.defaultsForAdding().deckId
+            }
+        } else {
+            // When editing we always have a valid currentEditCard. Check to see if it's from a normal
+            // deck or a filtered deck(in which case use it's original did or revert to 'Default')
+            val cardDeckId = currentEditedCard?.did
+            deckId =
+                if (cardDeckId == null || col.decks.isFiltered(cardDeckId)) {
+                    currentEditedCard?.oDid ?: Consts.DEFAULT_DECK_ID
+                } else {
+                    cardDeckId
+                }
+        }
+        view?.findViewById<TextView>(R.id.note_deck_name)?.apply {
+            text = col.decks.name(deckId)
+            setOnClickListener {
+                startDeckSelection(all = false, filtered = false)
+            }
+        }
         val getTextFromSearchView = requireArguments().getString(EXTRA_TEXT_FROM_SEARCH_VIEW)
         setDid(editorNote)
         setNote(editorNote, FieldChangeType.onActivityCreation(shouldReplaceNewlines()))
@@ -1027,13 +1039,6 @@ class NoteEditorFragment :
         textBox.setSelection(start + newStart, start + newEnd)
     }
 
-    override fun onStop() {
-        super.onStop()
-        if (!isRemoving) {
-            WidgetStatus.updateInBackground(requireContext())
-        }
-    }
-
     @KotlinCleanup("convert KeyUtils to extension functions")
     override fun dispatchKeyEvent(event: KeyEvent): Boolean {
         // We want to behave as onKeyUp and thus only react to ACTION_UP
@@ -1054,7 +1059,7 @@ class NoteEditorFragment :
                 }
             KeyEvent.KEYCODE_D -> // null check in case Spinner is moved into options menu in the future
                 if (event.isCtrlPressed) {
-                    launchCatchingTask { deckSpinnerSelection!!.displayDeckSelectionDialog() }
+                    launchCatchingTask { startDeckSelection(all = false, filtered = false) }
                     return true
                 }
             KeyEvent.KEYCODE_L ->
@@ -1231,13 +1236,15 @@ class NoteEditorFragment :
     // ----------------------------------------------------------------------------
 
     @KotlinCleanup("return early and simplify if possible")
-    private fun onNoteAdded() {
+    private fun onNoteAdded(count: Int) {
         var closeEditorAfterSave = false
         var closeIntent: Intent? = null
         changed = true
         sourceText = null
         refreshNoteData(FieldChangeType.refreshWithStickyFields(shouldReplaceNewlines()))
-        showSnackbar(TR.addingAdded(), Snackbar.LENGTH_SHORT)
+        // backend text ends with dot
+        val successMessage = TR.importingCardsAdded(count).replace(".", "")
+        showSnackbar(successMessage, Snackbar.LENGTH_SHORT)
 
         if (caller == NoteEditorCaller.NOTEEDITOR || aedictIntent) {
             closeEditorAfterSave = true
@@ -1262,14 +1269,14 @@ class NoteEditorFragment :
 
     private suspend fun saveNoteWithProgress() {
         // adding current note to collection
-        requireActivity().withProgress(resources.getString(R.string.saving_facts)) {
-            undoableOp {
-                notetypes.save(editorNote!!.notetype)
-                addNote(editorNote!!, deckId)
+        val changes =
+            requireActivity().withProgress(resources.getString(R.string.saving_facts)) {
+                undoableOp {
+                    addNote(editorNote!!, deckId)
+                }
             }
-        }
         // update UI based on the result, noOfAddedCards
-        onNoteAdded()
+        onNoteAdded(changes.count)
         updateFieldsFromStickyText()
     }
 
@@ -1289,9 +1296,6 @@ class NoteEditorFragment :
             for (f in editFields!!) {
                 updateField(f)
             }
-            // Save deck to noteType
-            Timber.d("setting 'last deck' of note type %s to %d", editorNote!!.notetype.name, deckId)
-            editorNote!!.notetype.did = deckId
             // Save tags to model
             editorNote!!.setTagsFromStr(getColUnsafe, tagsAsString(selectedTags!!))
             val tags = JSONArray()
@@ -1449,8 +1453,12 @@ class NoteEditorFragment :
             !shouldHideToolbar()
         menu.findItem(R.id.action_capitalize).isChecked =
             sharedPrefs().getBoolean(PREF_NOTE_EDITOR_CAPITALIZE, true)
-        menu.findItem(R.id.action_scroll_toolbar).isChecked =
-            sharedPrefs().getBoolean(PREF_NOTE_EDITOR_SCROLL_TOOLBAR, true)
+        menu.findItem(R.id.action_scroll_toolbar).apply {
+            isChecked =
+                sharedPrefs().getBoolean(PREF_NOTE_EDITOR_SCROLL_TOOLBAR, true)
+            isEnabled =
+                !shouldHideToolbar()
+        }
     }
 
     /**
@@ -1505,6 +1513,9 @@ class NoteEditorFragment :
                     putBoolean(PREF_NOTE_EDITOR_SHOW_TOOLBAR, item.isChecked)
                 }
                 updateToolbar()
+
+                // Update the overflow action menu in order to switch the enable/disable status of the "Scroll toolbar" item on the spot
+                requireActivity().invalidateOptionsMenu()
             }
             R.id.action_capitalize -> {
                 Timber.i("NoteEditor:: Capitalize button pressed. New State: %b", !item.isChecked)
@@ -1629,7 +1640,10 @@ class NoteEditorFragment :
     }
 
     private fun showDiscardChangesDialog() {
-        DiscardChangesDialog.showDialog(requireContext()) {
+        DiscardChangesDialog.showDialog(
+            requireContext(),
+            message = if (addNote) TR.addingDiscardCurrentInput() else TR.cardTemplatesDiscardChanges(),
+        ) {
             Timber.i("NoteEditor:: OK button pressed to confirm discard changes")
             closeNoteEditor()
         }
@@ -1812,7 +1826,7 @@ class NoteEditorFragment :
         for (i in editLines.indices) {
             val editLineView = editLines[i]
             customViewIds.add(editLineView.id)
-            val newEditText = editLineView.editText
+            val newEditText = editLineView.binding.editText
             lifecycleScope.launch {
                 val pasteAsPng = shouldPasteAsPng()
                 newEditText.setPasteListener { editText: EditText?, uri: Uri?, description: ClipDescription? ->
@@ -1837,7 +1851,7 @@ class NoteEditorFragment :
             )
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
                 if (i == 0) {
-                    requireView().findViewById<View>(R.id.note_deck_spinner).nextFocusForwardId = newEditText.id
+                    requireView().findViewById<View>(R.id.note_deck_name).nextFocusForwardId = newEditText.id
                 }
                 if (previous != null) {
                     previous.lastViewInTabOrder.nextFocusForwardId = newEditText.id
@@ -1856,8 +1870,8 @@ class NoteEditorFragment :
                 newEditText.textSize = prefs.getInt(PREF_NOTE_EDITOR_FONT_SIZE, -1).toFloat()
             }
             newEditText.setCapitalize(prefs.getBoolean(PREF_NOTE_EDITOR_CAPITALIZE, true))
-            val mediaButton = editLineView.mediaButton
-            val toggleStickyButton = editLineView.toggleSticky
+            val mediaButton = editLineView.binding.mediaButton
+            val toggleStickyButton = editLineView.binding.toggleSticky
             // Make the icon change between media icon and switch field icon depending on whether editing note type
             if (editNoteTypeMode && allowFieldRemapping()) {
                 // Allow remapping if originally more than two fields
@@ -2069,7 +2083,7 @@ class NoteEditorFragment :
         index: Int,
         field: IField,
     ) {
-        lifecycleScope.launch {
+        launchCatchingTask {
             val note = getCurrentMultimediaEditableNote()
             note.setField(index, field)
             val fieldEditText = editFields!![index]
@@ -2078,7 +2092,12 @@ class NoteEditorFragment :
             // This goes before setting formattedValue to update
             // media paths with the checksum when they have the same name
             withCol {
-                NoteService.importMediaToDirectory(this, field)
+                try {
+                    NoteService.importMediaToDirectory(this, field)
+                } catch (oomError: OutOfMemoryError) {
+                    // TODO: a 'retry' flow would be possible here
+                    throw Exception(oomError)
+                }
             }
 
             // Completely replace text for text fields (because current text was passed in)
@@ -2369,7 +2388,10 @@ class NoteEditorFragment :
         }
 
         deckId = calculateDeckId()
-        launchCatchingTask { deckSpinnerSelection!!.selectDeckById(deckId, false) }
+        launchCatchingTask {
+            val selectedDeckName = withCol { decks.name(deckId) }
+            view?.findViewById<TextView>(R.id.note_deck_name)?.text = selectedDeckName
+        }
     }
 
     /** Refreshes the UI using the currently selected note type as a template  */
@@ -2563,7 +2585,7 @@ class NoteEditorFragment :
             AlertDialog
                 .Builder(requireContext())
                 .neutralButton(R.string.help) {
-                    requireAnkiActivity().openUrl(getString(R.string.link_manual_note_format_toolbar).toUri())
+                    requireContext().openUrl(R.string.link_manual_note_format_toolbar)
                 }.negativeButton(R.string.dialog_cancel)
 
     private fun displayAddToolbarDialog() {
@@ -2724,22 +2746,27 @@ class NoteEditorFragment :
     private fun currentNotetypeIsImageOcclusion() = currentlySelectedNotetype?.isImageOcclusion == true
 
     private fun setupImageOcclusionEditor(imagePath: String = "") {
-        val kind: String
-        val id: Long
-        if (addNote) {
-            kind = "add"
-            // if opened from an intent, the selected note type may not be suitable for IO
-            id =
-                if (currentNotetypeIsImageOcclusion()) {
-                    currentlySelectedNotetype!!.id
-                } else {
-                    0
-                }
-        } else {
-            kind = "edit"
-            id = editorNote?.id!!
-        }
-        val intent = ImageOcclusion.getIntent(requireContext(), kind, id, imagePath, deckId)
+        val args =
+            if (addNote) {
+                // if opened from an intent, the selected note type may not be suitable for IO
+                val noteTypeId =
+                    if (currentNotetypeIsImageOcclusion()) {
+                        currentlySelectedNotetype!!.id
+                    } else {
+                        0
+                    }
+                ImageOcclusionArgs.Add(
+                    noteTypeId = noteTypeId,
+                    imagePath = imagePath,
+                    originalDeckId = deckId,
+                )
+            } else {
+                ImageOcclusionArgs.Edit(
+                    noteId = editorNote!!.id,
+                )
+            }
+
+        val intent = ImageOcclusion.getIntent(requireContext(), args)
         requestIOEditorCloser.launch(intent)
     }
 
@@ -2764,12 +2791,11 @@ class NoteEditorFragment :
 
         // Update deck
         if (!getColUnsafe.config.getBool(ConfigKey.Bool.ADDING_DEFAULTS_TO_CURRENT_DECK)) {
-            deckId = noteType.did
+            deckId = getColUnsafe.defaultsForAdding().deckId
         }
 
         refreshNoteData(FieldChangeType.changeFieldCount(shouldReplaceNewlines()))
         setDuplicateFieldStyles()
-        deckSpinnerSelection!!.updateDeckPosition(deckId)
     }
 
     // ----------------------------------------------------------------------------
@@ -2843,15 +2869,14 @@ class NoteEditorFragment :
                 updateTags()
                 requireView().findViewById<View>(R.id.CardEditorTagButton).isEnabled = false
                 // ((LinearLayout) findViewById(R.id.CardEditorCardsButton)).setEnabled(false);
-                deckSpinnerSelection!!.setEnabledActionBarSpinner(false)
-                deckSpinnerSelection!!.updateDeckPosition(currentEditedCard!!.did)
+                view?.findViewById<TextView>(R.id.note_deck_name)?.isEnabled = false
                 updateFieldsFromStickyText()
             } else {
                 populateEditFields(FieldChangeType.refresh(shouldReplaceNewlines()), false)
                 updateCards(currentEditedCard!!.noteType(getColUnsafe))
                 requireView().findViewById<View>(R.id.CardEditorTagButton).isEnabled = true
                 // ((LinearLayout) findViewById(R.id.CardEditorCardsButton)).setEnabled(false);
-                deckSpinnerSelection!!.setEnabledActionBarSpinner(true)
+                view?.findViewById<TextView>(R.id.note_deck_name)?.isEnabled = true
             }
         }
 

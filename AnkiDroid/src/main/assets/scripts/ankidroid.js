@@ -23,11 +23,12 @@ globalThis.ankidroid.showAllHints = function () {
 };
 
 /**
- * @param {InputEvent} event - the oninput event of the type answer <input>
+ * @param {KeyboardEvent} event - the onkeydown event of the type answer <input>
  */
-globalThis.ankidroid.onTypeAnswerInput = function (event) {
-    const encodedValue = encodeURIComponent(event.target.value);
-    window.location.href = `ankidroid://typeinput/${encodedValue}`;
+globalThis.ankidroid.onTypeAnswerKeyDown = function (event) {
+    if (event.key === "Enter") {
+        window.location.href = `ankidroid://show-answer`;
+    }
 };
 
 document.addEventListener("focusin", event => {
@@ -41,6 +42,7 @@ document.addEventListener("focusout", event => {
 (() => {
     const SCHEME = "gesture";
     const MULTI_TOUCH_TIMEOUT = 300;
+    const GESTURE_TIMEOUT = 800;
 
     let startX = 0,
         startY = 0,
@@ -54,7 +56,7 @@ document.addEventListener("focusout", event => {
             startX = event.touches[0].pageX;
             startY = event.touches[0].pageY;
             // start counting from the first finger touch
-            if (touchCount == 1) {
+            if (touchCount === 1) {
                 touchStartTime = Date.now();
             }
         },
@@ -79,6 +81,11 @@ document.addEventListener("focusout", event => {
                     return;
                 }
                 window.location.href = `${SCHEME}://multiFingerTap/?touchCount=${touchCount}`;
+                return;
+            }
+
+            // Ignore gesture if it takes too long
+            if (Date.now() - touchStartTime > GESTURE_TIMEOUT) {
                 return;
             }
 

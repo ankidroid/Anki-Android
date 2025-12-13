@@ -104,6 +104,9 @@ class LayoutValidationTest : InstrumentedTest() {
             val ignoredLayoutIds =
                 listOf(
                     com.ichi2.anki.R.layout.introduction_activity,
+                    com.ichi2.anki.R.layout.reviewer2,
+                    com.ichi2.anki.R.layout.preferences,
+                    com.ichi2.anki.R.layout.drawing_fragment,
                 ) +
                     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
                         listOf(com.ichi2.anki.R.layout.widget_small_unthemed)

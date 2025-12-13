@@ -124,6 +124,8 @@
     <string name="multimedia_editor_failed">Multimedia muharririni ochib boʻlmadi</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Audio yozuvga ruxsat olib boʻlmadi</string>
+    <string name="permission_denied">Ruxsat berilmadi</string>
+    <string name="recording_permission_denied_message">“Ovozni yozib olish” funksiyasi uchun mikrofonga ruxsat kerak. Ilova sozlamalarida ruxsat bering.</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid yangilandi</string>
     <string name="integrity_check_startup_content">AnkiDroid yangilandi. Ushbu yangilanish maʼlumotlar bazasi muammolari uchun tuzatishlarni oʼz ichiga oladi va hozir maʼlumotlar bazasini tekshirishingizni maslahat beramiz.</string>
@@ -201,8 +203,6 @@
     <string name="import_deck_package">Dasta paketi (.apkg)</string>
     <string name="import_collection_package">Toʻplam paketi (.colpkg)</string>
     <string name="import_csv">Matn fayl (.txt, .csv)</string>
-    <!-- Deck selection dialog -->
-    <string name="cannot_create_subdeck_for_all_decks">Barcha dastalar uchun ostdastani yarata olmaysiz</string>
     <!-- scoped storage -->
     <string name="backup_your_collection">Toʻplamingizni zaxiralang</string>
     <string name="backup_collection_message">Toʻplamingizni uzoq vaqt zaxiralamadingiz. Maʼlumotlar yoʻqolishini oldini olish uchun buni hozir qilishingiz kerak.</string>
@@ -254,4 +254,10 @@
     <string name="tts_error_dialog_reason_text"><b>%1$s</b> nutq sintezatori quyidagi tilni qo‘llab-quvvatlamaydi: <b>%2$s</b></string>
     <string name="tts_error_dialog_change_button_text">Nutq sintezatorini almashtirish</string>
     <string name="tts_error_dialog_supported_voices_button_text">Ovoz parametrlari</string>
+    <!-- import_cache_error_resolutions -->
+    <string name="import_error_resolution_try_again">Faylni qaytadan import qilish</string>
+    <string name="import_error_resolution_free_up_space">Qurilmangizda yetarlicha boʻsh joy borligiga ishonch hosil qiling</string>
+    <string name="import_error_resolution_check_internet">Internetga ulanganingizga ishonch hosil qiling</string>
+    <string name="import_error_resolution_copy_to_device">Faylni qurilmangizga koʻchiring va mahalliy fayl bilan qaytadan urinib koʻring</string>
+    <string name="import_error_resolution_select_file">Faylni qurilmangiz fayl brauzeri orqali ochish</string>
 </resources>

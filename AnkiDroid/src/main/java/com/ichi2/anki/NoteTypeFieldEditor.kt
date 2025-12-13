@@ -1,33 +1,30 @@
-/****************************************************************************************
- * Copyright (c) 2015 Ryan Annis <squeenix@live.ca>                                     *
- * Copyright (c) 2015 Timothy Rae <perceptualchaos2@gmail.com>                          *
- *                                                                                      *
- * This program is free software; you can redistribute it and/or modify it under        *
- * the terms of the GNU General Public License as published by the Free Software        *
- * Foundation; either version 3 of the License, or (at your option) any later           *
- * version.                                                                             *
- *                                                                                      *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY      *
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A      *
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.             *
- *                                                                                      *
- * You should have received a copy of the GNU General Public License along with         *
- * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
- ****************************************************************************************/
+/*
+ * Copyright (c) 2015 Ryan Annis <squeenix@live.ca>
+ * Copyright (c) 2015 Timothy Rae <perceptualchaos2@gmail.com>
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 3 of the License, or (at your option) any later
+ * version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package com.ichi2.anki
 
 import android.content.Context
 import android.os.Bundle
 import android.text.InputType
 import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.EditText
-import android.widget.ListView
 import android.widget.TextView
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
@@ -37,6 +34,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.databinding.NoteTypeFieldEditorBinding
 import com.ichi2.anki.dialogs.ConfirmationDialog
 import com.ichi2.anki.dialogs.LocaleSelectionDialog
 import com.ichi2.anki.dialogs.LocaleSelectionDialog.Companion.KEY_SELECTED_LOCALE
@@ -57,21 +55,23 @@ import com.ichi2.ui.FixedEditText
 import com.ichi2.utils.customView
 import com.ichi2.utils.getInputField
 import com.ichi2.utils.input
+import com.ichi2.utils.moveCursorToEnd
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
 import com.ichi2.utils.title
-import com.ichi2.widget.WidgetStatus
+import dev.androidbroadcast.vbpd.viewBinding
 import org.json.JSONArray
 import org.json.JSONException
 import timber.log.Timber
 import java.util.Locale
 
 @NeedsTest("perform one action, then another")
-class NoteTypeFieldEditor : AnkiActivity() {
+class NoteTypeFieldEditor : AnkiActivity(R.layout.note_type_field_editor) {
+    private val binding by viewBinding(NoteTypeFieldEditorBinding::bind)
+
     // Position of the current field selected
     private var currentPos = 0
-    private lateinit var fieldsListView: ListView
     private var fieldNameInput: EditText? = null
 
     // Backing field for [notetype]. Not with _ because it's only allowed for public field.
@@ -96,11 +96,8 @@ class NoteTypeFieldEditor : AnkiActivity() {
         }
         super.onCreate(savedInstanceState)
         setContentView(R.layout.note_type_field_editor)
-        fieldsListView = findViewById(R.id.note_type_editor_fields)
-        enableToolbar().apply {
-            setTitle(R.string.model_field_editor_title)
-            subtitle = intent.getStringExtra("title")
-        }
+        enableToolbar()
+        binding.notetypeName.text = intent.getStringExtra(EXTRA_NOTETYPE_NAME)
         startLoadingCollection()
         setFragmentResultListener(REQUEST_HINT_LOCALE_SELECTION) { _, bundle ->
             val selectedLocale =
@@ -114,19 +111,6 @@ class NoteTypeFieldEditor : AnkiActivity() {
             }
             dismissAllDialogFragments()
         }
-    }
-
-    override fun onStop() {
-        super.onStop()
-        if (!isFinishing) {
-            WidgetStatus.updateInBackground(this)
-        }
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        super.onCreateOptionsMenu(menu)
-        menuInflater.inflate(R.menu.note_type_editor, menu)
-        return true
     }
 
     // ----------------------------------------------------------------------------
@@ -147,7 +131,7 @@ class NoteTypeFieldEditor : AnkiActivity() {
      * to finish the activity.
      */
     private fun initialize() {
-        val noteTypeID = intent.getLongExtra("noteTypeID", 0)
+        val noteTypeID = intent.getLongExtra(EXTRA_NOTETYPE_ID, 0)
         val collectionModel = getColUnsafe.notetypes.get(noteTypeID)
         if (collectionModel == null) {
             showThemedToast(this, R.string.field_editor_model_not_available, true)
@@ -157,12 +141,13 @@ class NoteTypeFieldEditor : AnkiActivity() {
         notetype = collectionModel
         noteFields = notetype.fields
         fieldsLabels = notetype.fieldsNames
-        fieldsListView.adapter = NoteFieldAdapter(this, fieldNamesWithKind())
-        fieldsListView.onItemClickListener =
+        binding.fields.adapter = NoteFieldAdapter(this, fieldNamesWithKind())
+        binding.fields.onItemClickListener =
             AdapterView.OnItemClickListener { _, _, position: Int, _ ->
                 showDialogFragment(newInstance(fieldsLabels[position]))
                 currentPos = position
             }
+        binding.btnAdd.setOnClickListener { addFieldDialog() }
     }
     // ----------------------------------------------------------------------------
     // CONTEXT MENU DIALOGUES
@@ -334,7 +319,7 @@ class NoteTypeFieldEditor : AnkiActivity() {
         fieldNameInput?.let { fieldNameInput ->
             fieldNameInput.isSingleLine = true
             fieldNameInput.setText(fieldsLabels[currentPos])
-            fieldNameInput.setSelection(fieldNameInput.text!!.length)
+            fieldNameInput.moveCursorToEnd()
             AlertDialog.Builder(this).show {
                 customView(view = fieldNameInput, paddingStart = 64, paddingEnd = 64, paddingTop = 32)
                 title(R.string.model_field_editor_rename)
@@ -508,15 +493,6 @@ class NoteTypeFieldEditor : AnkiActivity() {
         initialize()
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean =
-        when (item.itemId) {
-            R.id.action_add_new_model -> {
-                addFieldDialog()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-
     private fun closeActivity() {
         finish()
     }
@@ -573,6 +549,11 @@ class NoteTypeFieldEditor : AnkiActivity() {
                 if (index == notetype.sortf) NodetypeKind.SORT else NodetypeKind.UNDEFINED,
             )
         }
+
+    companion object {
+        const val EXTRA_NOTETYPE_NAME = "extra_notetype_name"
+        const val EXTRA_NOTETYPE_ID = "extra_notetype_id"
+    }
 }
 
 enum class NodetypeKind {
@@ -592,9 +573,9 @@ internal class NoteFieldAdapter(
         val view =
             convertView ?: LayoutInflater
                 .from(context)
-                .inflate(R.layout.note_type_field_editor_list_item, parent, false)
+                .inflate(R.layout.item_notetype_field, parent, false)
 
-        val nameTextView: TextView = view.findViewById(R.id.model_editor_list_display)
+        val nameTextView: TextView = view.findViewById(R.id.field_name)
 
         getItem(position)?.let {
             val (name, kind) = it

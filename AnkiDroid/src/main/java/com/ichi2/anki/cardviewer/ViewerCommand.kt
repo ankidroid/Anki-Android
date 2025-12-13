@@ -56,6 +56,7 @@ enum class ViewerCommand : MappableAction<ReviewerBinding> {
     PAGE_DOWN,
     TAG,
     CARD_INFO,
+    PREVIOUS_CARD_INFO,
     RECORD_VOICE,
     SAVE_VOICE,
     REPLAY_VOICE,
@@ -131,6 +132,10 @@ enum class ViewerCommand : MappableAction<ReviewerBinding> {
                 SAVE_VOICE -> listOf(keyCode(KeyEvent.KEYCODE_S, CardSide.BOTH, shift()))
                 UNDO -> listOf(keyCode(KeyEvent.KEYCODE_Z, CardSide.BOTH, ctrl()))
                 REDO -> listOf(keyCode(KeyEvent.KEYCODE_Z, CardSide.BOTH, ModifierKeys(shift = true, ctrl = true, alt = false)))
+                PREVIOUS_CARD_INFO ->
+                    listOf(
+                        keyCode(KeyEvent.KEYCODE_I, CardSide.BOTH, ModifierKeys(shift = false, ctrl = true, alt = true)),
+                    )
                 TOGGLE_FLAG_RED ->
                     listOf(
                         keyCode(KeyEvent.KEYCODE_1, CardSide.BOTH, ctrl()),

@@ -1,18 +1,18 @@
-/****************************************************************************************
- * Copyright (c) 2021 Akshay Jadhav <jadhavakshay0701@gmail.com>                          *
- *                                                                                      *
- * This program is free software; you can redistribute it and/or modify it under        *
- * the terms of the GNU General Public License as published by the Free Software        *
- * Foundation; either version 3 of the License, or (at your option) any later           *
- * version.                                                                             *
- *                                                                                      *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY      *
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A      *
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.             *
- *                                                                                      *
- * You should have received a copy of the GNU General Public License along with         *
- * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
- ****************************************************************************************/
+/*
+ * Copyright (c) 2021 Akshay Jadhav <jadhavakshay0701@gmail.com>
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 3 of the License, or (at your option) any later
+ * version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 package com.ichi2.anki.dialogs
 
@@ -38,6 +38,7 @@ import com.ichi2.utils.title
  */
 class InsertFieldDialog : DialogFragment() {
     private lateinit var fieldList: List<String>
+    private lateinit var requestKey: String
 
     /**
      * A dialog for inserting field in card template editor
@@ -45,6 +46,7 @@ class InsertFieldDialog : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): AlertDialog {
         super.onCreate(savedInstanceState)
         fieldList = requireArguments().getStringArrayList(KEY_FIELD_ITEMS)!!
+        requestKey = requireArguments().getString(KEY_REQUEST_KEY)!!
         val adapter: RecyclerView.Adapter<*> =
             object : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 override fun onCreateViewHolder(
@@ -75,7 +77,7 @@ class InsertFieldDialog : DialogFragment() {
 
     private fun selectFieldAndClose(textView: TextView) {
         parentFragmentManager.setFragmentResult(
-            REQUEST_FIELD_INSERT,
+            requestKey,
             bundleOf(KEY_INSERTED_FIELD to textView.text.toString()),
         )
         dismiss()
@@ -83,20 +85,29 @@ class InsertFieldDialog : DialogFragment() {
 
     companion object {
         /**
-         * Other fragments sharing the activity can use this with
-         * [androidx.fragment.app.FragmentManager.setFragmentResultListener] to get a result back.
-         */
-        const val REQUEST_FIELD_INSERT = "request_field_insert"
-
-        /**
          * This fragment requires that a list of fields names to be passed in.
          */
         const val KEY_INSERTED_FIELD = "key_inserted_field"
         private const val KEY_FIELD_ITEMS = "key_field_items"
+        private const val KEY_REQUEST_KEY = "key_request_key"
 
-        fun newInstance(fieldItems: List<String>): InsertFieldDialog =
+        /**
+         * Creates a new instance of [InsertFieldDialog]
+         *
+         * @param fieldItems The list of field names to be displayed in the dialog.
+         * @param requestKey The key used to identify the result when returning the selected field
+         *                   to the calling fragment.
+         */
+        fun newInstance(
+            fieldItems: List<String>,
+            requestKey: String,
+        ): InsertFieldDialog =
             InsertFieldDialog().apply {
-                arguments = bundleOf(KEY_FIELD_ITEMS to ArrayList(fieldItems))
+                arguments =
+                    bundleOf(
+                        KEY_FIELD_ITEMS to ArrayList(fieldItems),
+                        KEY_REQUEST_KEY to requestKey,
+                    )
             }
     }
 }

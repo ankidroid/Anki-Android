@@ -15,18 +15,7 @@
  */
 package com.ichi2.utils
 
-import com.ichi2.anki.common.utils.htmlEncode
+import androidx.core.text.HtmlCompat
 
-object HtmlUtils {
-    // #5188 - compat.fromHtml converts newlines into spaces.
-    fun convertNewlinesToHtml(html: String?): String? {
-        if (html == null) {
-            return null
-        }
-        val withoutWindowsLineEndings = html.replace("\r\n", "<br/>")
-        // replace unix line endings
-        return withoutWindowsLineEndings.replace("\n", "<br/>")
-    }
-
-    fun escape(html: String): String = html.htmlEncode()
-}
+/** Removes HTML tags from a string */
+fun stripHtml(html: String): String = HtmlCompat.fromHtml(html, HtmlCompat.FROM_HTML_MODE_LEGACY).toString()

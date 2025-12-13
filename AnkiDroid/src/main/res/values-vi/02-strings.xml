@@ -48,12 +48,14 @@
     <string name="drawer_open">Mở ngăn kéo</string>
     <string name="drawer_close">Đóng ngăn kéo</string>
     <string name="note_message">Ghi chú đã được lưu</string>
+    <!-- Note editor screen -->
     <string name="CardEditorCardDeck">Bộ thẻ:</string>
     <string name="CardEditorNoteDeck">Bộ:</string>
     <string name="CardEditorModel">Loại:</string>
     <string name="CardEditorTags">Các đuôi: %1$s</string>
     <string name="CardEditorCards">Các thẻ: %1$s</string>
     <string name="edit_occlusions">Sửa Occlusions</string>
+    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
     <string name="tag_name">Tên đuôi</string>
     <string name="add_new_filter_tags">Thêm/lọc các đuôi</string>
     <string name="add_tag" maxLength="28">Thêm đuôi</string>
@@ -65,6 +67,18 @@
     <string name="save_whiteboard" maxLength="28">Lưu bảng viết</string>
     <string name="enable_stylus" maxLength="28">Bật tính năng viết bằng bút cảm ứng</string>
     <string name="disable_stylus">Tắt tính năng viết bằng bút cảm ứng</string>
+    <string name="eraser" maxLength="28">Eraser</string>
+    <string name="add_brush" maxLength="28">Add brush</string>
+    <string name="whiteboard_align_left" comment="Option to align the whiteboard toolbar on the left" maxLength="28">Left</string>
+    <string name="whiteboard_align_bottom" comment="Option to align the whiteboard toolbar on the bottom" maxLength="28">Bottom</string>
+    <string name="whiteboard_align_right" comment="Option to align the whiteboard toolbar on the right" maxLength="28">Right</string>
+    <string name="whiteboard_clear" comment="Button text to clear the whiteboard" maxLength="28">Clear</string>
+    <string name="whiteboard_more_options" comment="Tooltip of the whiteboard \'More\' button" maxLength="28">More options</string>
+    <string name="whiteboard_remove_brush_message">Are you sure you want to remove this brush from your palette?</string>
+    <string name="whiteboard_ink_eraser" comment="Title of the whiteboard Ink eraser">Ink</string>
+    <string name="whiteboard_stroke_eraser" comment="Title of the whiteboard Stroke eraser">Stroke</string>
+    <string name="stylus_mode" comment="Title of the menu item that toggles the whiteboard stylus mode" maxLength="28">Stylus mode</string>
+    <string name="cannot_remove_last_brush_message">The last brush may not be removed</string>
     <string name="enable_whiteboard" maxLength="28">Bật bảng viết</string>
     <string name="disable_whiteboard">Tắt bảng viết</string>
     <string name="show_whiteboard">Hiện bảng viết</string>
@@ -83,6 +97,7 @@
     <string name="webview_crash_fatal">Lỗi nghiêm trọng: Trình kết xuất WebView bị lỗi. Nguyên nhân: %s</string>
     <string name="webview_crash_loop_dialog_title">Hệ thống hiển thị WebView không thành công</string>
     <string name="webview_crash_loop_dialog_content">Hệ thống WebView không thể hiển thị thẻ \'%1$s\'.\ n%2$s</string>
+    <string name="slide_to_cancel" comment="Message shown when pressing the record button">Slide to cancel</string>
     <string name="filter_by_flags" maxLength="41">Cờ</string>
     <!-- Custom study options -->
     <string name="custom_study_loading_tags">Đang làm danh sách tag&#8230;</string>
@@ -148,7 +163,8 @@
     <string name="import_error_not_apkg_extension">Tên file \"%s\" không chứa định dạng .apkg hoặc .colpkg</string>
     <string name="import_error_load_imported_database">Cơ sở dữ liệu Anki (.anki2) thay thế chưa được hỗ trợ. Vui lòng xem sách hướng dẫn để biết hướng dẫn thay thế.</string>
     <string name="import_error_content_provider">Tệp đã chọn không thể được nhập tự động bởi AnkiDroid. Xin xem hướng dẫn sử dụng để biết cách nhập thủ công tệp Anki: \n%s</string>
-    <string name="import_error_copy_to_cache">Không thể lưu tệp vào bộ nhớ đệm (có thể hết dùng lượng lưu trữ)</string>
+    <string name="import_error_copy_to_cache_title">Không thể lưu tệp vào bộ nhớ đệm</string>
+    <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">This is often caused by a bug in the app you used to select the file. Please try the following fixes:\n\n%s</string>
     <string name="import_interrupted">Nhập dữ liệu bị gián đoạn: AnkiDroid đã bị đóng</string>
     <string name="export_ready_title">Trích xuất sẵn sàng</string>
     <string name="export_send_no_handlers">Không có ứng dụng nào khả dụng để xử lý apkg. Đang lưu&#8230;</string>
@@ -177,10 +193,6 @@
     <string name="tag_editor_add_feedback">Bấm \"%2$s\" để xác nhận thêm \"%1$s\"</string>
     <string name="tag_editor_add_feedback_existing">Đã chọn đuôi hiện hữu \"%1$s\"</string>
     <!-- Time spans -->
-    <string name="reminder_title">Đừng quên học ngày hôm nay!</string>
-    <plurals name="reminder_text">
-        <item quantity="other">%2$d thẻ ôn tập trong %1$s</item>
-    </plurals>
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Lỗi chia sẻ tệp tin apkg</string>
     <!-- Import and export v2 feedback -->
@@ -221,6 +233,7 @@
     <string name="search_decks" maxLength="28">Tìm kiếm bộ thẻ</string>
     <string name="ankidroid_init_failed_webview_title">Lỗi nghiêm trọng</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid dựa trên WebView hệ thống không khả dụng. Điều này có thể xảy ra nếu hệ thống đang cài đặt các bản cập nhật. Vui lòng thử lại sau vài phút.\n\n%s</string>
+    <string name="ankidroid_init_failed_storage">AnkiDroid cannot access storage due to an Android error.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">Cỡ chữ</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Hiển thị thanh công cụ</string>
@@ -267,7 +280,6 @@
     <string name="download_failed">Tải xuống thất bại</string>
     <string name="deck_download_progress_message">Bạn được phép sử dụng những ứng dụng khác khi đang tải.</string>
     <string name="check_network">Vui lòng kiểm tra kết nối mạng của bạn</string>
-    <string name="search_using_deck_name">Tìm kiếm theo tên bộ thẻ</string>
     <string name="external_storage_unavailable">Tải xuống bị hủy, bộ nhớ ngoài không khả dụng</string>
     <string name="home" maxLength="28">Trang chủ</string>
     <!-- Study Screen actions
@@ -291,6 +303,9 @@
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">Truy cập bộ sưu tập thất bại. Vui lòng thử lại!</string>
     <string name="cd_manage_notetypes_add">Thêm loại ghi chú mới</string>
+    <plurals name="note_types_selected">
+        <item quantity="other">%d note types selected</item>
+    </plurals>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">Học ít</string>
     <string name="intro_ankidroid_tagline_two">Nhớ nhiều hơn</string>
@@ -299,7 +314,6 @@
     <string name="intro_sync_from_ankiweb">Đồng bộ từ AnkiWeb</string>
     <!-- IntentHandler -->
     <string name="app_not_initialized_new">AnkiDroid chưa được khởi tạo. Vui lòng mở AnkiDroid và thử lại</string>
-    <string name="already_logged_in">Đã đăng nhập</string>
     <!-- Deck Creation -->
     <string name="deck_created">Đã tạo bộ thẻ</string>
     <string name="deck_renamed">Đã đổi tên bộ thẻ</string>

@@ -72,7 +72,7 @@
         <item quantity="other">還剩%1$d小時%2$d分鐘</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new" comment="Header of the reviewer, telling the users how many minutes remains before they have seen all cards. The second parameter is the number of hours.">
-        <item quantity="other">%1$d days %2$dh left</item>
+        <item quantity="other">還剩 %1$d 日 %2$d小時</item>
     </plurals>
     <string name="type_answer_hint" comment="In the reviewer. When the user use note type with hint. It\'s the default content of the text field in which the user is invited to type their answer. It disappears as soon as the user start to type.">輸入答案</string>
     <string name="show_answer" maxLength="41" comment="When displaying the question side of a card. This is the label of a button that display the answer side.">顯示答案</string>
@@ -81,7 +81,7 @@
     <string name="ease_button_hard" maxLength="41" comment="In the reviewer, in the answer side. Label of the button that used by the user to state finding the correct answer was hard.">難</string>
     <string name="ease_button_good" maxLength="41" comment="In the reviewer, in the answer side. Label of the button that used by the user to state their answer was good.">還行</string>
     <string name="ease_button_easy" maxLength="41" comment="In the reviewer, in the answer side. Label of the button that used by the user to state that finding the answer to the question was easy.">簡單</string>
-    <string name="show_answer_hint_long_press" comment="In the reviewer, hint is shown when touching the show answer button and the user has the long-press accessibility setting enabled">\'%s\' is enabled</string>
+    <string name="show_answer_hint_long_press" comment="In the reviewer, hint is shown when touching the show answer button and the user has the long-press accessibility setting enabled">\'%s\' 已啟用</string>
     <!-- General -->
     <string name="undo" maxLength="28" comment="When tapping on this text, the last action is undone.">復原</string>
     <string name="redo" maxLength="28" comment="Menu entry that allows to redo action that was just undone.">重做</string>
@@ -129,9 +129,8 @@
     <string name="empty_filtered_deck">清除已篩選牌組中&#8230;</string>
     <string name="search_deck" comment="Deck search for selecting it">牌組搜尋</string>
     <string name="empty_deck">這是個空牌組</string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">牌組搜尋</string>
     <string name="invalid_deck_name">無效牌組名稱</string>
-    <string name="studyoptions_congrats_finished">Congratulations! You have finished for today.</string>
+    <string name="studyoptions_congrats_finished">恭喜！今日份已完成</string>
     <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">完成了本牌組了！ %s</string>
     <string name="studyoptions_no_cards_due">尚無到期的卡片。</string>
     <string name="sd_card_not_mounted">儲存裝置未掛載</string>
@@ -166,6 +165,7 @@
     <string name="card_template_browser_appearance_title">瀏覽器外觀</string>
     <!-- card Info -->
     <string name="card_info_title" maxLength="28">卡片資訊</string>
+    <string name="previous_card_info_title" maxLength="28">Previous card info</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">讀寫 AnkiDroid 資料庫</string>
     <string name="read_write_permission_description">瀏覽現有的筆記、卡片、筆記類型和牌組，或者自己動手建立新的~</string>
@@ -194,11 +194,21 @@
     <string name="new_unsafe_collection">這個新牌組會在解除安裝 AnkiDroid 後刪除</string>
     <!-- Permissions screen -->
     <string name="permissions_screen_headline">AnkiDroid 需要一些權限才能運作</string>
+    <string name="permissions_screen_optional_headline" comment="Explains that there are optional permissions that can be granted to AnkiDroid.">AnkiDroid在這些權限下運行效果最佳</string>
     <string name="storage_access_title">存取儲存空間</string>
     <string name="storage_access_summary">將收藏儲存到安全的地方，即使應用程式卸載也不會被刪除</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after. See [android.permission.MANAGE_EXTERNAL_STORAGE] on https://developer.android.com/training/data-storage/manage-all-files for context.">存取所有檔案</string>
     <string name="image_occlusion">圖像遮蔽</string>
+    <string name="microphone" comment="Title of the microphone permission in the permissions explanation screen.">麥克風</string>
+    <string name="microphone_permission_explanation" comment="Description explaining why AnkiDroid needs the microphone permission, shown on the permissions explanation screen.">允許你在卡牌上添加聲音，並在回顧的時候進行語音播放</string>
+    <string name="notifications_permission_explanation" comment="Description explaining why AnkiDroid needs the notification permission.">啟用後台媒體同步，並允許你建立回顧提醒</string>
+    <string name="heading_required_permissions" comment="Heading for the section of required permissions that the app needs to function, shown in the permissions explanation screen.">必填</string>
+    <string name="heading_optional_permissions" comment="Heading for the section of optional permissions that the app needs to function, shown in the permissions explanation screen.">選填</string>
+    <string name="manually_grant_permissions" comment="Pop-up message that is shown to the user when they want to grant an app permission that must be granted via the OS settings screen.">此權限需在設定裏手動批准</string>
+    <string name="revoke_permissions" comment="Pop-up message that is shown to the user when they are revoking an app permission.">此權限需在設定裏手動撤回</string>
     <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">移除帳戶</string>
     <!-- Instant Note Editor -->
     <string name="instant_card" comment="Used in the Android system context menu/share dialog to quickly create a note. This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. ">即時卡片</string>
+    <!-- Multiple profile -->
+    <string name="add_profile">Add profile</string>
 </resources>

@@ -48,12 +48,14 @@
     <string name="drawer_open">Maak laai oop</string>
     <string name="drawer_close">Maak laai toe</string>
     <string name="note_message">Note saved</string>
+    <!-- Note editor screen -->
     <string name="CardEditorCardDeck">Kaartpak:</string>
     <string name="CardEditorNoteDeck">Pak:</string>
     <string name="CardEditorModel">Tipe:</string>
     <string name="CardEditorTags">Etikette: %1$s</string>
     <string name="CardEditorCards">Kaarte: %1$s</string>
     <string name="edit_occlusions">Wysig Okkulasies</string>
+    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
     <string name="tag_name">Etiket Naam</string>
     <string name="add_new_filter_tags">Voeg/filter etikette</string>
     <string name="add_tag" maxLength="28">Voeg etiket by</string>
@@ -65,6 +67,18 @@
     <string name="save_whiteboard" maxLength="28">Stoor witbord</string>
     <string name="enable_stylus" maxLength="28">Aktiveer stylus skryf</string>
     <string name="disable_stylus">Deaktiveer stylus skryf</string>
+    <string name="eraser" maxLength="28">Eraser</string>
+    <string name="add_brush" maxLength="28">Add brush</string>
+    <string name="whiteboard_align_left" comment="Option to align the whiteboard toolbar on the left" maxLength="28">Left</string>
+    <string name="whiteboard_align_bottom" comment="Option to align the whiteboard toolbar on the bottom" maxLength="28">Bottom</string>
+    <string name="whiteboard_align_right" comment="Option to align the whiteboard toolbar on the right" maxLength="28">Right</string>
+    <string name="whiteboard_clear" comment="Button text to clear the whiteboard" maxLength="28">Clear</string>
+    <string name="whiteboard_more_options" comment="Tooltip of the whiteboard \'More\' button" maxLength="28">More options</string>
+    <string name="whiteboard_remove_brush_message">Are you sure you want to remove this brush from your palette?</string>
+    <string name="whiteboard_ink_eraser" comment="Title of the whiteboard Ink eraser">Ink</string>
+    <string name="whiteboard_stroke_eraser" comment="Title of the whiteboard Stroke eraser">Stroke</string>
+    <string name="stylus_mode" comment="Title of the menu item that toggles the whiteboard stylus mode" maxLength="28">Stylus mode</string>
+    <string name="cannot_remove_last_brush_message">The last brush may not be removed</string>
     <string name="enable_whiteboard" maxLength="28">Aktiveer witbord</string>
     <string name="disable_whiteboard">Deaktiveer witbord</string>
     <string name="show_whiteboard">Wys witbord</string>
@@ -83,6 +97,7 @@
     <string name="webview_crash_fatal">Fataal Fout: WebView-renderer het gecrash. Oorsaak: %s</string>
     <string name="webview_crash_loop_dialog_title">Stelsel WebView Weergawes Fout</string>
     <string name="webview_crash_loop_dialog_content">Stelsel webaansig kon nie kaart verbeeld nie \'%1$s\'.\n%2$s</string>
+    <string name="slide_to_cancel" comment="Message shown when pressing the record button">Slide to cancel</string>
     <string name="filter_by_flags" maxLength="41">Etikette</string>
     <!-- Custom study options -->
     <string name="custom_study_loading_tags">Building list of tags&#8230;</string>
@@ -151,7 +166,8 @@
     <string name="import_error_not_apkg_extension">Lêernaam “%s” het nie .apkg of .colpkg uitbreiding nie</string>
     <string name="import_error_load_imported_database">Anki-databasis (.anki2) vervangings word nog nie ondersteun nie. Raadpleeg asseblief die handleiding vir vervangingsinstruksies.</string>
     <string name="import_error_content_provider">Die geselekteerde lêer kon nie outomaties deur AnkiDroid ingevoer word nie. Raadpleeg asseblief die gebruikershandleiding vir hoe om Anki-lêers handmatig in te voer: \n%s</string>
-    <string name="import_error_copy_to_cache">Kon nie lêer kas nie (moontlik uit stoorplek)</string>
+    <string name="import_error_copy_to_cache_title">Kon nie lêer kas nie</string>
+    <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">This is often caused by a bug in the app you used to select the file. Please try the following fixes:\n\n%s</string>
     <string name="import_interrupted">Invoer onderbreek: AnkiDroid is gesluit</string>
     <string name="export_ready_title">Gereed vir uitvoer</string>
     <string name="export_send_no_handlers">Geen toepassings beskikbaar om .apkg te hanteer nie. Stoor&#8230;</string>
@@ -180,11 +196,6 @@
     <string name="tag_editor_add_feedback">Raak \"%2$s\" aan om \"%1$s\" by te voeg</string>
     <string name="tag_editor_add_feedback_existing">Bestaande etiket “%1$s” gekies</string>
     <!-- Time spans -->
-    <string name="reminder_title">Moet nie vergeet om vandag te studeer nie!</string>
-    <plurals name="reminder_text">
-        <item quantity="one">%2$d Kaart Om Te Hersien In %1$s</item>
-        <item quantity="other">%2$d kaarte om te hersien in %1$s</item>
-    </plurals>
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Fout met die deel van apkg-lêer</string>
     <!-- Import and export v2 feedback -->
@@ -225,6 +236,7 @@
     <string name="search_decks" maxLength="28">Soek pakke</string>
     <string name="ankidroid_init_failed_webview_title">Fatale fout</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid maak staat op die Stelsel WebView wat nie beskikbaar is nie. Dit kan gebeur as die stelsel opdaterings installeer. Probeer asseblief weer oor \'n paar minute.\n\n%s</string>
+    <string name="ankidroid_init_failed_storage">AnkiDroid cannot access storage due to an Android error.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">Lettergrootte</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Wys nutsbalk</string>
@@ -271,7 +283,6 @@
     <string name="download_failed">Aflaai het misluk</string>
     <string name="deck_download_progress_message">Jy kan ander toepassings gebruik terwyl die aflaai loop</string>
     <string name="check_network">Kontroleer asseblief jou netwerkverbinding</string>
-    <string name="search_using_deck_name">Soek met paknaam</string>
     <string name="external_storage_unavailable">Aflaai gestaak, die eksterne berging is nie beskikbaar nie</string>
     <string name="home" maxLength="28">Tuis</string>
     <!-- Study Screen actions
@@ -296,6 +307,10 @@
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">Kon nie toegang tot versameling kry nie. Probeer asseblief weer!</string>
     <string name="cd_manage_notetypes_add">Voeg \'n nuwe noottipe by</string>
+    <plurals name="note_types_selected">
+        <item quantity="one">%d note type selected</item>
+        <item quantity="other">%d note types selected</item>
+    </plurals>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">Minder studeer</string>
     <string name="intro_ankidroid_tagline_two">Onthou meer</string>
@@ -304,7 +319,6 @@
     <string name="intro_sync_from_ankiweb">Sinkroniseer Van AnkiWeb</string>
     <!-- IntentHandler -->
     <string name="app_not_initialized_new">AnkiDroid Is Nog Nie Geïnisialiseer Nie. Maak Asseblief AnkiDroid Oop En Probeer Weer.</string>
-    <string name="already_logged_in">Reeds ingelog</string>
     <!-- Deck Creation -->
     <string name="deck_created">Pak geskep</string>
     <string name="deck_renamed">Pak hernoem</string>

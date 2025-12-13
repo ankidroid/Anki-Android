@@ -56,7 +56,7 @@
     <!-- preferences.xml categories-->
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">Genel</string>
     <string name="pref_cat_studying" maxLength="41">Çalışma</string>
-    <string name="pref_cat_system_wide" maxLength="41">Sistem Geneli</string>
+    <string name="pref_cat_system_wide" maxLength="41">Sistem geneli</string>
     <string name="pref_cat_reviewing" maxLength="41">Çalışma</string>
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Senkronizasyon</string>
     <string name="pref_cat_scheduling" maxLength="41">Zamanlama</string>
@@ -235,11 +235,13 @@
     <string name="misc" maxLength="41">Diğer</string>
     <!-- Review reminders -->
     <string name="add_reminder" comment="Label for the add reminder button in the screen for adding and editing review reminders">Hatırlatıcı ekle</string>
+    <string name="add_review_reminder" comment="Title of the screen for creating a new review reminder">Çalışma hatırlatıcısı ekle</string>
+    <string name="edit_review_reminder" comment="Title of the screen for editing an existing review reminder">Çalışma hatırlatıcısını değiştir</string>
+    <string name="you_have_no_review_reminders" comment="Text that appears in the review reminder editing screen when there are no reminders set">Çalışma hatırlatıcınız yok</string>
     <!-- studyoptions -->
     <string name="studyoptions_limit_select_tags">Etiketleri Seçin</string>
     <!-- Deck configurations -->
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">Genel</string>
-    <string name="deck_conf_reminders" maxLength="41">Hatırlatmalar</string>
     <string name="deck_conf_cram_filter" maxLength="41">Filtre</string>
     <string name="deck_conf_cram_search" maxLength="41" comment="Label of a text field that contains a search query.">Arama</string>
     <string name="deck_conf_cram_limit" maxLength="41">Sınırla</string>
@@ -372,7 +374,7 @@
     <string name="hide_system_bars_navigation_bar" comment="Setting option to hide the system navigation bar (the bottom one that can go back, to home, etc)">Navigasyon çubuğu</string>
     <string name="hide_system_bars_all_bars" comment="Setting option to hide all the system bars">Hepsi</string>
     <string name="ignore_display_cutout" maxLength="41">Ekran kesintisini yok say</string>
-    <string name="hide_answer_buttons" maxLength="41">Cevap düğmelerini gizle</string>
+    <string name="show_answer_buttons" maxLength="41">Cevap düğmelerini göster</string>
     <string name="hide_hard_and_easy" maxLength="41">\"Zor\" ve \"Kolay\" düğmelerini gizle</string>
     <string name="reviewer_frame_style" maxLength="41">Çerçeve tarzı</string>
     <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Study Screen">Kart</string>
@@ -382,10 +384,11 @@
     <string name="reviewer_toolbar_none" maxLength="41" comment="Setting to remove the toolbar from the study screen">Hiçbiri</string>
     <string name="toolbar" maxLength="41">Araç çubuğu</string>
     <string name="toolbar_actions" maxLength="41">Araç çubuğu eylemleri</string>
-    <string name="toolbar_position" maxLength="41">Araç çubuğu konumu</string>
+    <string name="toolbar_position" maxLength="28">Araç çubuğu konumu</string>
     <string name="new_study_screen" maxLength="41">Yeni çalışma ekranı</string>
     <string name="new_study_screen_summ"><![CDATA[Şu anda varolan çalışma ekranının yerine geçecek olan ekran. Eski ekranın belirli özellikleri değiştirilmiş veya silinmiş bulunuyor. Lütfen herhangi bir <a href="%1$s">geri bildiriminizi</a> veya <a href="%2$s">bulduğunuz hataları</a> bildirin.]]></string>
     <string name="show_answer_feedback" maxLength="41">Cevap geribildirimini göster</string>
+    <string name="screen" maxLength="41">Ekran</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">Ayarları aç</string>
 </resources>

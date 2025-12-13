@@ -1,19 +1,19 @@
-/****************************************************************************************
- * Copyright (c) 2015 Timothy Rae <perceptualchaos2@gmail.com>                          *
- * Copyright (c) 2024 David Allison <davidallisongithub@gmail.com>                      *
- *                                                                                      *
- * This program is free software; you can redistribute it and/or modify it under        *
- * the terms of the GNU General Public License as published by the Free Software        *
- * Foundation; either version 3 of the License, or (at your option) any later           *
- * version.                                                                             *
- *                                                                                      *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY      *
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A      *
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.             *
- *                                                                                      *
- * You should have received a copy of the GNU General Public License along with         *
- * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
- ****************************************************************************************/
+/*
+ * Copyright (c) 2015 Timothy Rae <perceptualchaos2@gmail.com>
+ * Copyright (c) 2024 David Allison <davidallisongithub@gmail.com>
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 3 of the License, or (at your option) any later
+ * version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 package com.ichi2.anki.dialogs.customstudy
 
@@ -38,6 +38,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.edit
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
+import androidx.core.view.updatePadding
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.setFragmentResult
 import androidx.lifecycle.lifecycleScope
@@ -248,6 +249,10 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
                 }.forEach { (menuItem, isItemEnabled) ->
                     (layoutInflater.inflate(android.R.layout.simple_list_item_1, container, false) as TextView)
                         .apply {
+                            updatePadding(
+                                top = 12.dp.toPx(requireContext()),
+                                bottom = 12.dp.toPx(requireContext()),
+                            )
                             text = menuItem.getTitle(requireContext().resources)
                             isEnabled = isItemEnabled
                             setBackgroundResource(ta.resourceId)
@@ -374,7 +379,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
                             withCol {
                                 val currentDeckname = decks.name(dialogDeckId)
                                 val search = SearchNode.newBuilder().setDeck(currentDeckname).build()
-                                val query = buildSearchString(search)
+                                val query = buildSearchString(listOf(search))
                                 findNotes(query)
                             }
                         if (isAdded) {
@@ -394,7 +399,8 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
         }
 
         editText.doAfterTextChanged {
-            dialog.positiveButton.isEnabled = editText.textAsIntOrNull() != null
+            val num = editText.textAsIntOrNull()
+            dialog.positiveButton.isEnabled = num != null && num != 0
         }
 
         // Show soft keyboard

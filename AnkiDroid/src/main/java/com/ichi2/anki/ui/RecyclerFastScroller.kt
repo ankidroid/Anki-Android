@@ -191,50 +191,54 @@ class RecyclerFastScroller
                         v: View,
                         event: MotionEvent,
                     ): Boolean {
-                        val recyclerView = requireNotNull(recyclerView)
+                        val recyclerView = requireNotNull(recyclerView) { "recyclerView" }
                         val recyclerViewAdapter = recyclerView.adapter
                         if (recyclerViewAdapter == null || recyclerViewAdapter.itemCount == 0) return false
 
                         onHandleTouchListener?.onTouch(v, event)
-                        if (event.actionMasked == MotionEvent.ACTION_DOWN) {
-                            handle.isPressed = true
-                            recyclerView.stopScroll()
+                        when (event.actionMasked) {
+                            MotionEvent.ACTION_DOWN -> {
+                                handle.isPressed = true
+                                recyclerView.stopScroll()
 
-                            var nestedScrollAxis = ViewCompat.SCROLL_AXIS_NONE
-                            nestedScrollAxis = nestedScrollAxis or ViewCompat.SCROLL_AXIS_VERTICAL
+                                var nestedScrollAxis = ViewCompat.SCROLL_AXIS_NONE
+                                nestedScrollAxis = nestedScrollAxis or ViewCompat.SCROLL_AXIS_VERTICAL
 
-                            recyclerView.startNestedScroll(nestedScrollAxis)
+                                recyclerView.startNestedScroll(nestedScrollAxis)
 
-                            initialBarHeight = bar.height.toFloat()
-                            lastPressedYAdjustedToInitial = event.y + handle.y + bar.y
-                            lastAppBarLayoutOffset = appBarLayoutOffset
-                        } else if (event.actionMasked == MotionEvent.ACTION_MOVE) {
-                            val newHandlePressedY = event.y + handle.y + bar.y
-                            val barHeight = bar.height
-                            val newHandlePressedYAdjustedToInitial =
-                                newHandlePressedY + (initialBarHeight - barHeight)
-
-                            val scrollProportion = newHandlePressedYAdjustedToInitial / initialBarHeight
-                            val targetPosition =
-                                (scrollProportion * recyclerViewAdapter.itemCount)
-                                    .toInt()
-                                    .coerceIn(0, recyclerViewAdapter.itemCount - 1)
-
-                            try {
-                                recyclerView.scrollToPosition(targetPosition)
-                            } catch (e: Exception) {
-                                Timber.w(e, "scrollToPosition")
+                                initialBarHeight = bar.height.toFloat()
+                                lastPressedYAdjustedToInitial = event.y + handle.y + bar.y
+                                lastAppBarLayoutOffset = appBarLayoutOffset
                             }
+                            MotionEvent.ACTION_MOVE -> {
+                                val newHandlePressedY = event.y + handle.y + bar.y
+                                val barHeight = bar.height
+                                val newHandlePressedYAdjustedToInitial =
+                                    newHandlePressedY + (initialBarHeight - barHeight)
 
-                            lastPressedYAdjustedToInitial = newHandlePressedYAdjustedToInitial
-                            lastAppBarLayoutOffset = appBarLayoutOffset
-                        } else if (event.actionMasked == MotionEvent.ACTION_UP) {
-                            lastPressedYAdjustedToInitial = -1f
+                                val scrollProportion = newHandlePressedYAdjustedToInitial / initialBarHeight
+                                val targetPosition =
+                                    (scrollProportion * recyclerViewAdapter.itemCount)
+                                        .toInt()
+                                        .coerceIn(0, recyclerViewAdapter.itemCount - 1)
 
-                            recyclerView.stopNestedScroll()
+                                try {
+                                    recyclerView.scrollToPosition(targetPosition)
+                                } catch (e: Exception) {
+                                    Timber.w(e, "scrollToPosition")
+                                }
 
-                            handle.isPressed = false
-                            postAutoHide()
+                                lastPressedYAdjustedToInitial = newHandlePressedYAdjustedToInitial
+                                lastAppBarLayoutOffset = appBarLayoutOffset
+                            }
+                            MotionEvent.ACTION_UP -> {
+                                lastPressedYAdjustedToInitial = -1f
+
+                                recyclerView.stopNestedScroll()
+
+                                handle.isPressed = false
+                                postAutoHide()
+                            }
                         }
 
                         return true

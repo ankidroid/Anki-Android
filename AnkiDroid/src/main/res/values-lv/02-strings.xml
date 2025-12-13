@@ -48,12 +48,14 @@
     <string name="drawer_open">Atvērt izvēlni</string>
     <string name="drawer_close">Aizvērt izvēlni</string>
     <string name="note_message">Note saved</string>
+    <!-- Note editor screen -->
     <string name="CardEditorCardDeck">Kartītes kava:</string>
     <string name="CardEditorNoteDeck">Kava:</string>
     <string name="CardEditorModel">Veids:</string>
     <string name="CardEditorTags">Birkas: %1$s</string>
     <string name="CardEditorCards">Kartītes: %1$s</string>
     <string name="edit_occlusions">Labot aizklājumus</string>
+    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
     <string name="tag_name">Birkas nosaukums</string>
     <string name="add_new_filter_tags">Pievienot/atlasīt birkas</string>
     <string name="add_tag" maxLength="28">Pievienot birku</string>
@@ -65,6 +67,18 @@
     <string name="save_whiteboard" maxLength="28">Saglabāt tāfeli</string>
     <string name="enable_stylus" maxLength="28">Iespējot rakstīšanu ar irbuli</string>
     <string name="disable_stylus">Atspējot rakstīšanu ar irbuli</string>
+    <string name="eraser" maxLength="28">Eraser</string>
+    <string name="add_brush" maxLength="28">Add brush</string>
+    <string name="whiteboard_align_left" comment="Option to align the whiteboard toolbar on the left" maxLength="28">Left</string>
+    <string name="whiteboard_align_bottom" comment="Option to align the whiteboard toolbar on the bottom" maxLength="28">Bottom</string>
+    <string name="whiteboard_align_right" comment="Option to align the whiteboard toolbar on the right" maxLength="28">Right</string>
+    <string name="whiteboard_clear" comment="Button text to clear the whiteboard" maxLength="28">Clear</string>
+    <string name="whiteboard_more_options" comment="Tooltip of the whiteboard \'More\' button" maxLength="28">More options</string>
+    <string name="whiteboard_remove_brush_message">Are you sure you want to remove this brush from your palette?</string>
+    <string name="whiteboard_ink_eraser" comment="Title of the whiteboard Ink eraser">Ink</string>
+    <string name="whiteboard_stroke_eraser" comment="Title of the whiteboard Stroke eraser">Stroke</string>
+    <string name="stylus_mode" comment="Title of the menu item that toggles the whiteboard stylus mode" maxLength="28">Stylus mode</string>
+    <string name="cannot_remove_last_brush_message">The last brush may not be removed</string>
     <string name="enable_whiteboard" maxLength="28">Iespējot tāfeli</string>
     <string name="disable_whiteboard">Atspējot tāfeli</string>
     <string name="show_whiteboard">Rādīt tāfeli</string>
@@ -83,6 +97,7 @@
     <string name="webview_crash_fatal">Nenovēršama kļūda: WebView atveidotājs avarēja. Cēlonis: %s</string>
     <string name="webview_crash_loop_dialog_title">Sistēmas WebView atveidotāja atteice</string>
     <string name="webview_crash_loop_dialog_content">Sistēmas WebView neizdevās attēlot kartīti \"%1$s\".\n %2$s</string>
+    <string name="slide_to_cancel" comment="Message shown when pressing the record button">Slide to cancel</string>
     <string name="filter_by_flags" maxLength="41">Karogi</string>
     <!-- Custom study options -->
     <string name="custom_study_loading_tags">Veido birku sarakstu&#8230;</string>
@@ -154,7 +169,8 @@
     <string name="import_error_not_apkg_extension">Datnes nosaukumam \"%s\" nav paplašinājuma .apkg vai .colpkg</string>
     <string name="import_error_load_imported_database">Anki datubāze (.anki2) aizvietotāji vēl nav atbalstīti. Lūgums apskatīt rokasgrāmatu, lai iegūtu norādes par aizvietotājiem.</string>
     <string name="import_error_content_provider">AnkiDroid nevarēja automātiski ievietot atlasīto datni. Lūgums apskatīt lietotāja rokasgrāmatu, lai uzzinātu, kā pašrocīgi ievietot Anki datnes: \n%s</string>
-    <string name="import_error_copy_to_cache">Neizdevās kešot datni (iespējams, ka trūkst vietas krātuvē)</string>
+    <string name="import_error_copy_to_cache_title">Neizdevās kešot datni</string>
+    <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">This is often caused by a bug in the app you used to select the file. Please try the following fixes:\n\n%s</string>
     <string name="import_interrupted">Ievietošana pārtraukta: AnkiDroid tika aizvērta</string>
     <string name="export_ready_title">Izguve gatava</string>
     <string name="export_send_no_handlers">Nav pieejama neviena lietotne .apkg apstrādāšanai. Saglabā&#8230;</string>
@@ -183,12 +199,6 @@
     <string name="tag_editor_add_feedback">Pieskarties \"%2$s\", lai apstiprinātu \"%1$s\" pievienošanu</string>
     <string name="tag_editor_add_feedback_existing">Atlasīta esoša birka \"%1$s\"</string>
     <!-- Time spans -->
-    <string name="reminder_title">Neaizmirsti šodien mācīties!</string>
-    <plurals name="reminder_text">
-        <item quantity="zero">%2$d izskatāmu kartīšu kavā \"%1$s\"</item>
-        <item quantity="one">%2$d izskatāma kartīte kavā \"%1$s\"</item>
-        <item quantity="other">%2$d izskatāmas kartītes kavā \"%1$s\"</item>
-    </plurals>
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Kļūda .apkg datnes kopīgošanas laikā</string>
     <!-- Import and export v2 feedback -->
@@ -229,6 +239,7 @@
     <string name="search_decks" maxLength="28">Meklēt kavas</string>
     <string name="ankidroid_init_failed_webview_title">Nenovēršama kļūda</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid paļaujas uz sistēmas WebView, kas nav pieejams. Tas var notikt, ja sistēma uzstāda atjauninājumus. Lūgums pēc dažām minūtēm mēģināt vēlreiz.\n\n%s</string>
+    <string name="ankidroid_init_failed_storage">AnkiDroid cannot access storage due to an Android error.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">Burtu lielums</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Rādīt rīkjoslu</string>
@@ -275,7 +286,6 @@
     <string name="download_failed">Lejupielāde neizdevās</string>
     <string name="deck_download_progress_message">Var izmantot citas lietotnes, kamēr notiek lejupielāde</string>
     <string name="check_network">Lūgums pārbaudīt savu tīkla savienojumu</string>
-    <string name="search_using_deck_name">Meklēt izmantojot kavas nosaukumu</string>
     <string name="external_storage_unavailable">Lejupielāde priekšlaicīgi pārtraukta, ārējā krātuve nav pieejama</string>
     <string name="home" maxLength="28">Sākums</string>
     <!-- Study Screen actions
@@ -301,6 +311,11 @@
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">Neizdevās piekļūt krājumam. Lūgums mēģināt vēlreiz.</string>
     <string name="cd_manage_notetypes_add">Pievienot jaunu piezīmju veidu</string>
+    <plurals name="note_types_selected">
+        <item quantity="zero">%d note types selected</item>
+        <item quantity="one">%d note type selected</item>
+        <item quantity="other">%d note types selected</item>
+    </plurals>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">Mācies mazāk</string>
     <string name="intro_ankidroid_tagline_two">Apgūsti vairāk</string>
@@ -309,7 +324,6 @@
     <string name="intro_sync_from_ankiweb">Vienādot no AnkiWeb</string>
     <!-- IntentHandler -->
     <string name="app_not_initialized_new">AnkiDroid vēl nav sāknēta. Lūgums atvērt AnkiDroid un mēģināt vēlreiz</string>
-    <string name="already_logged_in">Jau pieteicies</string>
     <!-- Deck Creation -->
     <string name="deck_created">Kava izveidota</string>
     <string name="deck_renamed">Kava pārdēvēta</string>

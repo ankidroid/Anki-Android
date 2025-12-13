@@ -1,19 +1,19 @@
-/***************************************************************************************
- * Copyright (c) 2018 Mike Hardy <github@mikehardy.net>                                 *
- * Copyright (c) 2022 Arthur Milchior <arthur@milchior.fr>                              *
- *                                                                                      *
- * This program is free software; you can redistribute it and/or modify it under        *
- * the terms of the GNU General Public License as published by the Free Software        *
- * Foundation; either version 3 of the License, or (at your option) any later           *
- * version.                                                                             *
- *                                                                                      *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY      *
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A      *
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.             *
- *                                                                                      *
- * You should have received a copy of the GNU General Public License along with         *
- * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
- ****************************************************************************************/
+/*
+ * Copyright (c) 2018 Mike Hardy <github@mikehardy.net>
+ * Copyright (c) 2022 Arthur Milchior <arthur@milchior.fr>
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 3 of the License, or (at your option) any later
+ * version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package com.ichi2.compat
 
 import android.content.Context
@@ -43,7 +43,11 @@ open class CompatV26 : CompatV24() {
     }
 
     @Suppress("DEPRECATION") // VIBRATOR_SERVICE => VIBRATOR_MANAGER_SERVICE handled in CompatV31
-    override fun vibrate(context: Context, duration: Duration) {
+    override fun vibrate(
+        context: Context,
+        duration: Duration,
+        @VibrationUsage usage: Int,
+    ) {
         val vibratorManager = context.getSystemService(Context.VIBRATOR_SERVICE) as? Vibrator
         if (vibratorManager != null) {
             val effect = VibrationEffect.createOneShot(duration.inWholeMilliseconds, VibrationEffect.DEFAULT_AMPLITUDE)

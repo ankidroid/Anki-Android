@@ -124,6 +124,8 @@
     <string name="multimedia_editor_failed">മൾട്ടിമീഡിയ എഡിറ്റർ തുറക്കുന്നതിൽ പരാജയപ്പെട്ടു</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">ഓഡിയോ റെക്കോർഡിംഗ് അനുമതി നിരസിച്ചു</string>
+    <string name="permission_denied">Permission denied</string>
+    <string name="recording_permission_denied_message">Microphone permission is necessary for the “Record voice” feature. Please grant it in the app settings.</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid അപ്‌ഗ്രേഡുചെയ്‌തു</string>
     <string name="integrity_check_startup_content">AnkiDroid അപ്‌ഗ്രേഡുചെയ്‌തു. ഈ അപ്‌ഗ്രേഡിൽ സാധ്യമായ ഡാറ്റാബേസ് പ്രശ്‌നങ്ങൾക്കുള്ള പരിഹാരങ്ങൾ ഉൾപ്പെടുന്നു, ഇപ്പോൾ ചെക്ക് ഡാറ്റാബേസ് പ്രവർത്തിപ്പിക്കാൻ ഞങ്ങൾ നിങ്ങളെ ഉപദേശിക്കുന്നു.</string>
@@ -201,8 +203,6 @@
     <string name="import_deck_package">ഡെക്ക് പാക്കേജ് (.apkg)</string>
     <string name="import_collection_package">ശേഖരണ പാക്കേജ് (.colpkg)</string>
     <string name="import_csv">ടെക്സ്റ്റ് ഫയൽ (.txt, .csv)</string>
-    <!-- Deck selection dialog -->
-    <string name="cannot_create_subdeck_for_all_decks">ഓരോ ഡെക്കിനും നിങ്ങൾക്ക് ഒരു സബ്ഡെക്ക് സൃഷ്ടിക്കാൻ കഴിയില്ല</string>
     <!-- scoped storage -->
     <string name="backup_your_collection">നിങ്ങളുടെ ശേഖരം ബാക്കപ്പ് ചെയ്യുക</string>
     <string name="backup_collection_message">കുറച്ച് കാലമായി നിങ്ങളുടെ ശേഖരം ബാക്കപ്പ് ചെയ്തിട്ടില്ല. ഡാറ്റ നഷ്‌ടപ്പെടുന്നത് തടയാൻ നിങ്ങൾ ഇപ്പോൾ ഇത് ചെയ്യണം</string>
@@ -254,4 +254,10 @@
     <string name="tts_error_dialog_reason_text">The text to speech engine <b>%1$s</b> does not support the following language: <b>%2$s</b></string>
     <string name="tts_error_dialog_change_button_text">Change engine</string>
     <string name="tts_error_dialog_supported_voices_button_text">Voice options</string>
+    <!-- import_cache_error_resolutions -->
+    <string name="import_error_resolution_try_again">Re-import the file</string>
+    <string name="import_error_resolution_free_up_space">Ensure there is sufficient free space on your device</string>
+    <string name="import_error_resolution_check_internet">Ensure you are connected to the internet</string>
+    <string name="import_error_resolution_copy_to_device">Copy the file to your device and try again with the local file</string>
+    <string name="import_error_resolution_select_file">Open the file using your device’s file browser app</string>
 </resources>

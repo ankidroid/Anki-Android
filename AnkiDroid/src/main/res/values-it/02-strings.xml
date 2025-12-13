@@ -47,13 +47,15 @@
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Apri barra di navigazione</string>
     <string name="drawer_close">Chiudi barra di navigazione</string>
-    <string name="note_message">Note saved</string>
+    <string name="note_message">Nota salvata</string>
+    <!-- Note editor screen -->
     <string name="CardEditorCardDeck">Mazzo:</string>
     <string name="CardEditorNoteDeck">Mazzo:</string>
     <string name="CardEditorModel">Tipo:</string>
     <string name="CardEditorTags">Etichette: %1$s</string>
     <string name="CardEditorCards">Carte: %1$s</string>
     <string name="edit_occlusions">Modifica occlusioni</string>
+    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
     <string name="tag_name">Nome etichetta</string>
     <string name="add_new_filter_tags">Aggiungi/filtra etichette</string>
     <string name="add_tag" maxLength="28">Aggiungi etichetta</string>
@@ -65,6 +67,18 @@
     <string name="save_whiteboard" maxLength="28">Salva lavagna</string>
     <string name="enable_stylus" maxLength="28">Abilita la modalità stilo</string>
     <string name="disable_stylus">Disabilita la modalità stilo</string>
+    <string name="eraser" maxLength="28">Eraser</string>
+    <string name="add_brush" maxLength="28">Add brush</string>
+    <string name="whiteboard_align_left" comment="Option to align the whiteboard toolbar on the left" maxLength="28">Left</string>
+    <string name="whiteboard_align_bottom" comment="Option to align the whiteboard toolbar on the bottom" maxLength="28">In basso</string>
+    <string name="whiteboard_align_right" comment="Option to align the whiteboard toolbar on the right" maxLength="28">Right</string>
+    <string name="whiteboard_clear" comment="Button text to clear the whiteboard" maxLength="28">Clear</string>
+    <string name="whiteboard_more_options" comment="Tooltip of the whiteboard \'More\' button" maxLength="28">More options</string>
+    <string name="whiteboard_remove_brush_message">Are you sure you want to remove this brush from your palette?</string>
+    <string name="whiteboard_ink_eraser" comment="Title of the whiteboard Ink eraser">Ink</string>
+    <string name="whiteboard_stroke_eraser" comment="Title of the whiteboard Stroke eraser">Stroke</string>
+    <string name="stylus_mode" comment="Title of the menu item that toggles the whiteboard stylus mode" maxLength="28">Stylus mode</string>
+    <string name="cannot_remove_last_brush_message">The last brush may not be removed</string>
     <string name="enable_whiteboard" maxLength="28">Abilita la lavagna</string>
     <string name="disable_whiteboard">Disabilita la lavagna</string>
     <string name="show_whiteboard">Mostra lavagna</string>
@@ -80,9 +94,10 @@
     <string name="webview_crash_oom">Memoria insufficiente</string>
     <string name="webview_crash_oom_details">La WebView è stata terminata dal sistema. Questo accade tipicamente quando l\'applicazione si esaurisce di memoria, spesso a causa di caratteri o supporti di grandi dimensioni.</string>
     <string name="webview_crash_nonfatal">Il renderer WebView si è bloccato. Causa: %s</string>
-    <string name="webview_crash_fatal">Errore fatale: il renderer WebView si è blocatto. Causa: %s</string>
+    <string name="webview_crash_fatal">Errore fatale: il renderer WebView si è bloccato. Causa: %s</string>
     <string name="webview_crash_loop_dialog_title">Errore di restituzione grafica del sistema WebView</string>
     <string name="webview_crash_loop_dialog_content">La WebView sistema non è riuscita a rendere la carta «%1$s».\n %2$s</string>
+    <string name="slide_to_cancel" comment="Message shown when pressing the record button">Slide to cancel</string>
     <string name="filter_by_flags" maxLength="41">Contrassegni</string>
     <!-- Custom study options -->
     <string name="custom_study_loading_tags">Costruendo lista di tag&#8230;</string>
@@ -109,10 +124,10 @@
     <string name="missing_note_type">Nessun tipo di nota trovato</string>
     <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (vuoto)</string>
     <!-- Image cropper -->
-    <string name="image_cropper_action_rotate" maxLength="28" comment="Action in image cropper screen">Rotate</string>
-    <string name="image_cropper_action_flip" maxLength="28" comment="Action in image cropper screen">Flip</string>
-    <string name="image_cropper_action_flip_horizontally" maxLength="28" comment="Submenu action in image cropper screen">Flip horizontally</string>
-    <string name="image_cropper_action_flip_vertically" maxLength="28" comment="Submenu action in image cropper screen">Flip vertically</string>
+    <string name="image_cropper_action_rotate" maxLength="28" comment="Action in image cropper screen">Ruota</string>
+    <string name="image_cropper_action_flip" maxLength="28" comment="Action in image cropper screen">Inverti</string>
+    <string name="image_cropper_action_flip_horizontally" maxLength="28" comment="Submenu action in image cropper screen">Inverti orizzontalmente</string>
+    <string name="image_cropper_action_flip_vertically" maxLength="28" comment="Submenu action in image cropper screen">Inverti verticalmente</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">Limite di tempo raggiunto</string>
     <plurals name="timebox_reached">
@@ -151,7 +166,8 @@
     <string name="import_error_not_apkg_extension">Il file \"%s\" non ha estensione .apkg o .colpkg</string>
     <string name="import_error_load_imported_database">Le sostituzioni di Anki Database (.anki2) non sono ancora supportate. Consultare il manuale per le istruzioni di sostituzione.</string>
     <string name="import_error_content_provider">Il file selezionato non ha potuto essere importato automaticamente da AnkiDroid. Consulta il manuale utente per importare manualmente i file Anki: \n %s</string>
-    <string name="import_error_copy_to_cache">Impossibile cache del file (forse fuori dallo spazio di archiviazione)</string>
+    <string name="import_error_copy_to_cache_title">Impossibile cache del file</string>
+    <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">This is often caused by a bug in the app you used to select the file. Please try the following fixes:\n\n%s</string>
     <string name="import_interrupted">Importazione interrotta</string>
     <string name="export_ready_title">Esportazione pronta</string>
     <string name="export_send_no_handlers">Nessuna applicazione disponibile per gestire apkg. Salvataggio&#8230;</string>
@@ -180,11 +196,6 @@
     <string name="tag_editor_add_feedback">Tocca \"%2$s\" per confermare l\'aggiunta di \"%1$s\"</string>
     <string name="tag_editor_add_feedback_existing">Etichetta esistente \"%1$s\" selezionata</string>
     <!-- Time spans -->
-    <string name="reminder_title">Non dimenticare di studiare oggi!</string>
-    <plurals name="reminder_text">
-        <item quantity="one">%2$d carta da studiare in %1$s</item>
-        <item quantity="other">%2$d carte da studiare in %1$s</item>
-    </plurals>
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Errore nella condivisione del file apkg</string>
     <!-- Import and export v2 feedback -->
@@ -225,6 +236,7 @@
     <string name="search_decks" maxLength="28">Cerca mazzi</string>
     <string name="ankidroid_init_failed_webview_title">Errore Fatale</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid si basa sulla WebView di Sistema che non è disponibile. Questo può verificarsi se il sistema sta installando aggiornamenti. Sei pregato di riprovare tra qualche minuto.\n\n%s</string>
+    <string name="ankidroid_init_failed_storage">AnkiDroid cannot access storage due to an Android error.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">Dimensione Carattere</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Mostra barra strumenti</string>
@@ -271,7 +283,6 @@
     <string name="download_failed">Scaricamento non riuscito</string>
     <string name="deck_download_progress_message">È possibile utilizzare altre applicazioni mentre lo scaricamento è in esecuzione</string>
     <string name="check_network">Controlla la tua connessione di rete</string>
-    <string name="search_using_deck_name">Cerca usando il nome del mazzo</string>
     <string name="external_storage_unavailable">Download interrotto, l\'archiviazione esterna non è disponibile</string>
     <string name="home" maxLength="28">Pagina principale</string>
     <!-- Study Screen actions
@@ -296,6 +307,10 @@
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">Accesso alla collezione fallito. Riprova!</string>
     <string name="cd_manage_notetypes_add">Aggiungi un nuovo tipo di nota</string>
+    <plurals name="note_types_selected">
+        <item quantity="one">%d note type selected</item>
+        <item quantity="other">%d note types selected</item>
+    </plurals>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">Studia meno</string>
     <string name="intro_ankidroid_tagline_two">Memorizza di più</string>
@@ -304,7 +319,6 @@
     <string name="intro_sync_from_ankiweb">Sincronizza da AnkiWeb</string>
     <!-- IntentHandler -->
     <string name="app_not_initialized_new">AnkiDroid non è ancora inizializzato. Aprirlo e riprovare</string>
-    <string name="already_logged_in">Già connesso</string>
     <!-- Deck Creation -->
     <string name="deck_created">Mazzo creato</string>
     <string name="deck_renamed">Mazzo rinominato</string>
@@ -328,9 +342,9 @@
     <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">Non è stato possibile aprire le impostazioni della voce</string>
     <string name="shared_decks_login_required">Accedi per scaricare altri mazzi</string>
     <string name="deck_description_field_hint">Descrizione</string>
-    <string name="deck_description_saved">Description updated</string>
-    <string name="format_deck_description_as_markdown">Format as Markdown</string>
-    <string name="help_button_content_description">Open help for ‘%s’</string>
+    <string name="deck_description_saved">Descrizione aggiornata</string>
+    <string name="format_deck_description_as_markdown">Formatta come Markdown</string>
+    <string name="help_button_content_description">Apri aiuti per \'%s\'</string>
     <string name="failed_to_copy">Copia non riuscita</string>
     <string name="card_browser_unavailable_when_notes_mode">Non disponibile in modalità \"Note\"</string>
     <plurals name="unbury_cards_feedback">
@@ -356,10 +370,10 @@
     <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">Seleziona tipo di nota</string>
     <string name="tag_editor" comment="Description of the shortcut that opens the tags dialog">Editor dei tag</string>
     <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">Editor template carte</string>
-    <string name="edit_front_template" comment="Description of the shortcut that shows the question side of the card template">Edit front template</string>
-    <string name="edit_back_template" comment="Description of the shortcut that shows the answer side of the card template">Edit back template</string>
+    <string name="edit_front_template" comment="Description of the shortcut that shows the question side of the card template">Modifica il modello frontale</string>
+    <string name="edit_back_template" comment="Description of the shortcut that shows the answer side of the card template">Modifica il modello posteriore</string>
     <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">Modifica stile</string>
-    <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">Copy template as markdown</string>
+    <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">Copia il modello come Markdown</string>
     <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">Modifica l\'aspetto del browser</string>
     <string name="missing_user_action_dialog_message" comment="%s is the user action number">L\'azione utente %s non è impostata in questo tipo di nota. Si prega di configurarla</string>
     <string name="directory_inaccessible_info">Scopri di più su come ripristinare l\'accesso qui %s o vai alle impostazioni per aggiornare la cartella di raccolta.</string>

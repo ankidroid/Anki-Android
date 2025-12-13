@@ -124,6 +124,8 @@
     <string name="multimedia_editor_failed">Error al abrir el Editor Multimedia</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Permiso de grabación de audio denegado</string>
+    <string name="permission_denied">Permiso denegado</string>
+    <string name="recording_permission_denied_message">Acceso al micrófono necesario para la función \"Grabación de voz\". Por favor actívelo en los ajustes de la aplicación.</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid actualizado</string>
     <string name="integrity_check_startup_content">AnkiDroid ha sido actualizado. Esta actualización incluye correcciones para posibles problemas de base de datos, y le aconsejamos que comprueba la base de datos ahora.</string>
@@ -163,7 +165,7 @@
     <string name="help_item_ankidroid_manual">Manual de AnkiDroid</string>
     <string name="help_item_anki_manual">Manual de Anki</string>
     <string name="help_item_ankidroid_faq">Preguntas frecuentes sobre AnkiDroid</string>
-    <string name="help_title_get_help">Get help</string>
+    <string name="help_title_get_help">Obtener ayuda</string>
     <string name="help_item_mailing_list">Mailing list</string>
     <string name="help_item_reddit">Reddit</string>
     <string name="help_item_report_bug">Reportar un error</string>
@@ -201,8 +203,6 @@
     <string name="import_deck_package">Paquete de mazo (.apkg)</string>
     <string name="import_collection_package">Paquete de colección (.colpkg)</string>
     <string name="import_csv">Archivo de texto (.txt, .csv)</string>
-    <!-- Deck selection dialog -->
-    <string name="cannot_create_subdeck_for_all_decks">No puedes crear un submazo para todos los mazos</string>
     <!-- scoped storage -->
     <string name="backup_your_collection">Haz una copia de seguridad de tu colección</string>
     <string name="backup_collection_message">No has hecho una copia de seguridad de tu colección en un tiempo. Deberías hacer esto ahora para prevenir la pérdida de datos</string>
@@ -254,4 +254,10 @@
     <string name="tts_error_dialog_reason_text">El motor de texto a voz <b>%1$s</b> no soporta el siguiente idioma: <b>%2$s</b></string>
     <string name="tts_error_dialog_change_button_text">Cambiar motor</string>
     <string name="tts_error_dialog_supported_voices_button_text">Opciones de voz</string>
+    <!-- import_cache_error_resolutions -->
+    <string name="import_error_resolution_try_again">Re-import the file</string>
+    <string name="import_error_resolution_free_up_space">Ensure there is sufficient free space on your device</string>
+    <string name="import_error_resolution_check_internet">Ensure you are connected to the internet</string>
+    <string name="import_error_resolution_copy_to_device">Copy the file to your device and try again with the local file</string>
+    <string name="import_error_resolution_select_file">Open the file using your device’s file browser app</string>
 </resources>

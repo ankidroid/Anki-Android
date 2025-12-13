@@ -150,7 +150,7 @@ val SetDueDateDialog.positiveButtonIsEnabled get() =
     (dialog as AlertDialog).positiveButton.isEnabled
 
 val SetDueDateDialog.singleDayTextLayout: TextInputLayout get() =
-    dialog!!.findViewById(R.id.set_due_date_single_day_text)
+    dialog!!.findViewById(R.id.set_due_date_single_day_input_layout)
 
 val SetDueDateDialog.singleDayText: EditText get() = singleDayTextLayout.editText!!
 

@@ -7,7 +7,7 @@
     android:orientation="vertical">
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/webview_container"
+        android:id="@+id/web_view_container"
         android:layout_width="match_parent"
         android:layout_marginHorizontal="@dimen/reviewer_side_margin"
         android:layout_height="0dp"
@@ -15,8 +15,8 @@
         android:layout_weight="1"
         >
 
-        <WebView
-            android:id="@+id/webview"
+        <com.ichi2.anki.workarounds.SafeWebViewLayout
+            android:id="@+id/web_view_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             />

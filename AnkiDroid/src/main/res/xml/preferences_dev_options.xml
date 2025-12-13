@@ -56,6 +56,10 @@
         android:title="New congrats screen"
         android:key="@string/new_congrats_screen_pref_key"
         android:defaultValue="false"/>
+    <Preference
+        android:title="Open TTS voice selection"
+        android:summary="shortcut for {{tts-voices:}}"
+        android:key="@string/dev_open_tts_voices"/>
     <PreferenceCategory
         android:title="Create meaningless cards notes"
         >
@@ -100,12 +104,13 @@
         android:summary="Only for testing. Not suited for use. Don't create reports about them">
 
         <SwitchPreferenceCompat
-            android:title="@string/new_study_screen"
-            android:key="@string/new_reviewer_pref_key"
-            android:defaultValue="false"/>
-        <SwitchPreferenceCompat
             android:title="[Tablet] Side-by-side browser and editor"
             android:key="@string/dev_card_browser_fragmented"
+            android:defaultValue="false"/>
+        <SwitchPreferenceCompat
+            android:title="New card browser search view"
+            android:summary="Not compatible with side-by-side editor"
+            android:key="@string/dev_card_browser_search_view"
             android:defaultValue="false"/>
         <SwitchPreferenceCompat
             android:title="Find and replace in browser"
@@ -115,6 +120,10 @@
         <SwitchPreferenceCompat
             android:title="Enable new notifications"
             android:key="@string/pref_new_review_reminders"
+            android:defaultValue="false"/>
+        <SwitchPreferenceCompat
+            android:title="Switch Profile option"
+            android:key="@string/pref_enable_switch_profile_key"
             android:defaultValue="false"/>
     </com.ichi2.anki.preferences.ExtendedPreferenceCategory>
 </PreferenceScreen>

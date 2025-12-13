@@ -49,6 +49,8 @@
                     android:layout_marginEnd="5dp"
                     android:layout_height="wrap_content"
                     android:text="@string/menu_get_shared_decks"
+                    android:focusable="true"
+                    android:clickable="true"
                     />
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/add_shared_action"
@@ -59,6 +61,8 @@
                     app:backgroundTint="?attr/fab_normal"
                     android:src="@drawable/ic_file_download_white"
                     android:contentDescription="@string/menu_get_shared_decks"
+                    android:focusable="true"
+                    android:clickable="true"
                     />
             </LinearLayout>
 
@@ -86,6 +90,8 @@
                     android:layout_marginEnd="5dp"
                     android:layout_height="wrap_content"
                     android:text="@string/new_dynamic_deck"
+                    android:focusable="true"
+                    android:clickable="true"
                     />
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/add_filtered_deck_action"
@@ -96,6 +102,8 @@
                     app:backgroundTint="?attr/fab_normal"
                     android:src="@drawable/ic_add_filtered_deck"
                     android:contentDescription="@string/new_dynamic_deck"
+                    android:focusable="true"
+                    android:clickable="true"
                     />
             </LinearLayout>
 
@@ -123,6 +131,8 @@
                     android:layout_marginEnd="5dp"
                     android:layout_height="wrap_content"
                     android:text="@string/new_deck"
+                    android:focusable="true"
+                    android:clickable="true"
                     />
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/add_deck_action"
@@ -133,6 +143,8 @@
                     app:backgroundTint="?attr/fab_normal"
                     android:src="@drawable/ic_add_deck_filled"
                     android:contentDescription="@string/new_deck"
+                    android:focusable="true"
+                    android:clickable="true"
                     />
             </LinearLayout>
 
@@ -157,6 +169,8 @@
                     android:text="@string/menu_add"
                     android:visibility="gone"
                     android:translationX="180px"
+                    android:focusable="true"
+                    android:clickable="true"
                     />
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/fab_main"
@@ -169,6 +183,9 @@
                     app:srcCompat="@drawable/ic_add_white"
                     app:backgroundTint="?attr/fab_normal"
                     app:fabSize="normal"
+                    android:contentDescription="@string/menu_add"
+                    android:focusable="true"
+                    android:clickable="true"
                     />
             </LinearLayout>
 

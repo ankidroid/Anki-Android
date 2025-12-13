@@ -45,7 +45,6 @@
     </plurals>
     <!--Browser-->
     <string name="model_browser_delete">Slett notattype</string>
-    <string name="model_browser_rename" comment="Rename a note type">Endre navn</string>
     <string name="model_browser_template">Rediger kort</string>
     <!--Rename-->
     <string name="rename_model">Gi nytt navn til notattype</string>
@@ -53,7 +52,6 @@
     <!--Language Hint-->
     <string name="model_field_editor_language_hint_dialog_success_result">Set language hint to %s</string>
     <!--Field Editing-->
-    <string name="model_field_editor_title">Rediger felt</string>
     <string name="model_field_editor_add" maxLength="28">Legg til felt</string>
     <string name="model_field_editor_delete">Slett felt</string>
     <string name="model_field_editor_rename">Endre navn på felt</string>
@@ -63,6 +61,12 @@
     <string name="model_field_editor_sort_field">Sorter etter dette feltet</string>
     <!--Warnings-->
     <string name="model_delete_warning">Er du sikker på at du vil slette denne notattypen?</string>
+    <!--
+        Example output:
+        Delete the note types below?
+        Basic, Basic (and reversed card), Cloze
+     -->
+    <string name="model_delete_multiple_warning">Delete the note types below?\n %s</string>
     <string name="field_delete_warning">Er du sikker på at du vil slette dette feltet?</string>
     <!--Model Add Suffixes-->
     <string name="model_browser_add_add">Add: %1$s</string>

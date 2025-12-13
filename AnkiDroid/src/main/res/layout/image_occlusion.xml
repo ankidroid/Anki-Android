@@ -27,7 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/webview">
+        app:layout_constraintBottom_toTopOf="@id/webview_layout">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
@@ -35,12 +35,23 @@
             android:layout_height="wrap_content"
             app:navigationContentDescription="@string/abc_action_bar_up_description"
             app:navigationIcon="?attr/homeAsUpIndicator"
-            app:menu="@menu/image_occlusion"/>
+            app:menu="@menu/image_occlusion">
 
+            <com.ichi2.ui.FixedTextView
+                android:id="@+id/deck_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:drawableEnd="@drawable/id_arrow_drop_down"
+                android:background="?attr/selectableItemBackground"
+                android:textAppearance="?attr/textAppearanceListItem"
+                tools:text="Deck name here"
+                />
+        </com.google.android.material.appbar.MaterialToolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <WebView
-        android:id="@+id/webview"
+    <com.ichi2.anki.workarounds.SafeWebViewLayout
+        android:id="@+id/webview_layout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintTop_toBottomOf="@id/app_bar"

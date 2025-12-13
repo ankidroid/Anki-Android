@@ -13,7 +13,7 @@ jobs:
       issues: write
       pull-requests: write
     steps:
-    - uses: actions/github-script@v7
+    - uses: actions/github-script@v8
       with:
         script: |
           await github.rest.issues.update({
@@ -51,7 +51,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: issue.number,
-              milestone: 71
+              milestone: 74
             });
           }
 

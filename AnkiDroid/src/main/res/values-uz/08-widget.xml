@@ -45,7 +45,6 @@
 -->
 <resources>
     <!-- Widget -->
-    <string name="widget_minimum_cards_due_notification_ticker_title">Muddati kelgan kartalar</string>
     <plurals name="widget_minimum_cards_due_notification_ticker_text">
         <item quantity="one">%d ta AnkiDroid kartasini muddati keldi</item>
         <item quantity="other">%d ta AnkiDroid kartasini muddati keldi</item>

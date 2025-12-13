@@ -40,39 +40,39 @@
 -->
 <resources>
     <!-- Main editor popup menu items -->
-    <string name="multimedia_editor_popup_image">Biauk frisaht</string>
-    <string name="multimedia_editor_popup_audio_clip">Add audio clip</string>
-    <string name="multimedia_editor_popup_video_clip">Add video clip</string>
-    <string name="multimedia_editor_popup_audio">Record audio</string>
+    <string name="multimedia_editor_popup_image">𐍆𐍂𐌹𐍃𐌰𐌷𐍄 𐌱𐌹𐌰𐌿𐌺𐌰𐌽</string>
+    <string name="multimedia_editor_popup_audio_clip">𐌰𐍅𐌳𐌾𐍉𐌽𐍃 𐍃𐍄𐌿𐌺𐌺𐌹 𐌱𐌹𐌰𐌿𐌺𐌰𐌽</string>
+    <string name="multimedia_editor_popup_video_clip">𐌵𐌹𐍅𐌰𐍆𐍂𐌹𐍃𐌰𐌷𐍄𐌰𐌹𐍃 𐍃𐍄𐌿𐌺𐌺𐌹 𐌱𐌹𐌰𐌿𐌺𐌰𐌽</string>
+    <string name="multimedia_editor_popup_audio">𐌰𐍅𐌳𐌾𐍉𐌽 𐌲𐌰𐌼𐌰𐌿𐌳𐌾𐌰𐌽</string>
     <string name="multimedia_editor_popup_cloze">Cloze deletion</string>
     <!-- Field editing general -->
     <!-- these are button names to convert field type -->
-    <string name="multimedia_editor_field_editing_audio">Gafastains awdjons</string>
-    <string name="multimedia_editor_field_editing_done" maxLength="28" comment="Label of a button to tell the app that the current action is \'Done\'.">Manwiþ</string>
+    <string name="multimedia_editor_field_editing_audio">𐌰𐍅𐌳𐌾𐍉𐌽𐍃 𐌲𐌰𐌼𐌰𐌿𐌳𐌴𐌹𐌽𐍃</string>
+    <string name="multimedia_editor_field_editing_done" maxLength="28" comment="Label of a button to tell the app that the current action is \'Done\'.">𐌲𐌰𐍄𐌰𐍅𐌹𐌸</string>
     <!-- Multimedia card editor activity -->
     <!-- for buttons -->
     <!-- delete confirmation -->
     <!-- Image editing -->
     <!-- for buttons -->
-    <string name="multimedia_editor_image_field_editing_galery">Frisahtiwiko</string>
-    <string name="multimedia_editor_image_field_editing_photo">Kamaira</string>
+    <string name="multimedia_editor_image_field_editing_galery">𐍆𐍂𐌹𐍃𐌰𐌷𐍄𐌹𐌷𐌰𐌻𐌻𐌰</string>
+    <string name="multimedia_editor_image_field_editing_photo">𐌺𐌰𐌼𐌰𐌹𐍂𐌰</string>
     <!-- General -->
     <!-- not a good message, when an unexpected error happens -->
-    <string name="multimedia_editor_something_wrong">Warþ airzei</string>
+    <string name="multimedia_editor_something_wrong">𐌰𐌹𐍂𐌶𐌴𐌹 𐍅𐌰𐍂𐌸</string>
     <string name="multimedia_editor_png_paste_error">Error converting clipboard image to png: %s</string>
     <string name="multimedia_editor_attach_tooltip" comment="Appear when holding the finger  on the paperclip icon">Attach multimedia content</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">Attach multimedia content to the %1$s field</string>
     <!-- Audio view -->
     <!-- Message when recording fails -->
-    <string name="multimedia_editor_audio_view_recording_failed">Ni mahta gafastan</string>
-    <string name="multimedia_editor_audio_view_playing_failed">Ni mahta spilon</string>
+    <string name="multimedia_editor_audio_view_recording_failed">𐌽𐌹 𐌼𐌰𐌷𐍄𐌰 𐌲𐌰𐌼𐌰𐌿𐌳𐌾𐌰𐌽</string>
+    <string name="multimedia_editor_audio_view_playing_failed">𐌽𐌹 𐌼𐌰𐌷𐍄𐌰 𐍃𐍀𐌹𐌻𐍉𐌽</string>
     <string name="multimedia_editor_audio_view_create_failed">Unable to create recorder tool bar</string>
     <!-- Crop function-->
-    <string name="crop_image">Do you want to crop this image?</string>
-    <string name="crop_button" maxLength="28">Crop image</string>
-    <string name="save_dialog_content">Current image size is %sMB. Default image size limit is 1MB. Do you want to compress it?</string>
-    <string name="select_image_failed">"Select image failed, Please retry"</string>
-    <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Wairþis Bokos</string>
+    <string name="crop_image">𐍅𐌹𐌻𐌴𐌹𐌶𐌿 𐌸𐍉 𐍆𐍂𐌹𐍃𐌰𐌷𐍄 𐌰𐍆𐌼𐌰𐌹𐍄𐌰𐌽?</string>
+    <string name="crop_button" maxLength="28">𐍆𐍂𐌹𐍃𐌰𐌷𐍄 𐌰𐍆𐌼𐌰𐌹𐍄𐌰𐌽</string>
+    <string name="save_dialog_content">𐌼𐌹𐌺𐌹𐌻𐌴𐌹 𐍆𐍂𐌹𐍃𐌰𐌷𐍄𐌰𐌹𐍃 𐌰𐌽𐌳𐍅𐌰𐌹𐍂𐌸𐌰𐌹𐌶𐍉𐍃 %s𐌼𐌱 𐌹𐍃𐍄. 𐌼𐌰𐍂𐌺𐌰 𐌱𐌹𐌿𐌷𐍄𐌰 𐍆𐍂𐌹𐍃𐌰𐌷𐍄𐌰𐌹𐍃 𐌼𐌹𐌺𐌹𐌻𐌴𐌹𐌽𐍃 𐌹𐍃𐍄 1𐌼𐌱. 𐍅𐌹𐌻𐌴𐌹𐌶𐌿 𐌲𐌰𐌸𐍂𐌿𐌺𐌾𐌰𐌽?</string>
+    <string name="select_image_failed">"𐌽𐌹 𐌼𐌰𐌷𐍄𐌰 𐍆𐍂𐌹𐍃𐌰𐌷𐍄𐌰𐌹𐍃 𐍅𐌰𐌻𐌾𐌰𐌽, 𐌱𐌹𐌳𐌾𐌰𐌼 𐌸𐌿𐌺 𐌺𐌹𐌿𐍃𐌰𐌽 𐌰𐍆𐍄𐍂𐌰"</string>
+    <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">𐍅𐌰𐌹𐍂𐌸𐌹𐍃 𐌱𐍉𐌺𐍉𐍃</string>
     <string name="crop_image_size_notice">The image is too big to be handled by the crop editor. Please resize it and try again!</string>
-    <string name="reselect" maxLength="28">Aftrawaljan</string>
+    <string name="reselect" maxLength="28">𐌰𐍆𐍄𐍂𐌰𐍅𐌰𐌻𐌾𐌰𐌽</string>
 </resources>

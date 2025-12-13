@@ -8,7 +8,7 @@
     android:orientation="vertical"
     tools:context=".ui.windows.permissions.PermissionsUntil29Fragment">
 
-    <com.ichi2.anki.ui.windows.permissions.PermissionItem
+    <com.ichi2.anki.ui.windows.permissions.PermissionsItem
         android:id="@+id/storage_permission"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

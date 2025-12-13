@@ -47,13 +47,15 @@
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Abrir gaveta</string>
     <string name="drawer_close">Fechar gaveta</string>
-    <string name="note_message">Note saved</string>
+    <string name="note_message">Nota salva</string>
+    <!-- Note editor screen -->
     <string name="CardEditorCardDeck">Baralho de cartões:</string>
     <string name="CardEditorNoteDeck">Baralho:</string>
     <string name="CardEditorModel">Tipo:</string>
     <string name="CardEditorTags">Tags: %1$s</string>
     <string name="CardEditorCards">Cartões: %1$s</string>
     <string name="edit_occlusions">Editar Oclusões</string>
+    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
     <string name="tag_name">Nome da tag</string>
     <string name="add_new_filter_tags">Adicionar/filtrar tags</string>
     <string name="add_tag" maxLength="28">Adicionar tag</string>
@@ -65,6 +67,18 @@
     <string name="save_whiteboard" maxLength="28">Salvar quadro.</string>
     <string name="enable_stylus" maxLength="28">Ativar o modo stylus</string>
     <string name="disable_stylus">Desativar o modo stylus</string>
+    <string name="eraser" maxLength="28">Apagar</string>
+    <string name="add_brush" maxLength="28">Adicionar pincel</string>
+    <string name="whiteboard_align_left" comment="Option to align the whiteboard toolbar on the left" maxLength="28">Esquerda</string>
+    <string name="whiteboard_align_bottom" comment="Option to align the whiteboard toolbar on the bottom" maxLength="28">Inferior</string>
+    <string name="whiteboard_align_right" comment="Option to align the whiteboard toolbar on the right" maxLength="28">Direita</string>
+    <string name="whiteboard_clear" comment="Button text to clear the whiteboard" maxLength="28">Limpar</string>
+    <string name="whiteboard_more_options" comment="Tooltip of the whiteboard \'More\' button" maxLength="28">Mais opções</string>
+    <string name="whiteboard_remove_brush_message">Tem certeza que deseja remover este pincel da sua paleta?</string>
+    <string name="whiteboard_ink_eraser" comment="Title of the whiteboard Ink eraser">Tinta</string>
+    <string name="whiteboard_stroke_eraser" comment="Title of the whiteboard Stroke eraser">Traço</string>
+    <string name="stylus_mode" comment="Title of the menu item that toggles the whiteboard stylus mode" maxLength="28">Modo Stylus</string>
+    <string name="cannot_remove_last_brush_message">O último pincel não pode ser removido</string>
     <string name="enable_whiteboard" maxLength="28">Habilitar quadro</string>
     <string name="disable_whiteboard">Desabilitar quadro</string>
     <string name="show_whiteboard">Mostrar quadro</string>
@@ -83,6 +97,7 @@
     <string name="webview_crash_fatal">Erro Fatal: WebView renderer crashou. Causa: %s</string>
     <string name="webview_crash_loop_dialog_title">Falha no System Rendering WebView</string>
     <string name="webview_crash_loop_dialog_content">O System WebView falhou ao renderizar o card \'%1$s\'.\n %2$s</string>
+    <string name="slide_to_cancel" comment="Message shown when pressing the record button">Deslize para cancelar</string>
     <string name="filter_by_flags" maxLength="41">Bandeiras</string>
     <!-- Custom study options -->
     <string name="custom_study_loading_tags">Criando lista de tags&#8230;</string>
@@ -109,10 +124,10 @@
     <string name="missing_note_type">Nenhum tipo de nota encontrado</string>
     <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (vazio)</string>
     <!-- Image cropper -->
-    <string name="image_cropper_action_rotate" maxLength="28" comment="Action in image cropper screen">Rotate</string>
-    <string name="image_cropper_action_flip" maxLength="28" comment="Action in image cropper screen">Flip</string>
-    <string name="image_cropper_action_flip_horizontally" maxLength="28" comment="Submenu action in image cropper screen">Flip horizontally</string>
-    <string name="image_cropper_action_flip_vertically" maxLength="28" comment="Submenu action in image cropper screen">Flip vertically</string>
+    <string name="image_cropper_action_rotate" maxLength="28" comment="Action in image cropper screen">Girar</string>
+    <string name="image_cropper_action_flip" maxLength="28" comment="Action in image cropper screen">Virar</string>
+    <string name="image_cropper_action_flip_horizontally" maxLength="28" comment="Submenu action in image cropper screen">Virar horizontalmente</string>
+    <string name="image_cropper_action_flip_vertically" maxLength="28" comment="Submenu action in image cropper screen">Virar Verticalmente</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">Caixa do tempo alcançada</string>
     <plurals name="timebox_reached">
@@ -151,7 +166,8 @@
     <string name="import_error_not_apkg_extension">O arquivo \"%s\" não tem a extensão .apkg ou .colpkg</string>
     <string name="import_error_load_imported_database">Substituições do banco de dados do Anki (.anki2) não são ainda suportadas. Por favor, consulte o manual para obter instruções de substituição.</string>
     <string name="import_error_content_provider">O arquivo selecionado não pôde ser importado automaticamente pelo AnkiDroid. Por favor veja o manual do usuário para aprender a importar manualmente arquivos Anki: \n%s</string>
-    <string name="import_error_copy_to_cache">Falha ao armazenar em cache o arquivo (possivelmente sem espaço de armazenamento)</string>
+    <string name="import_error_copy_to_cache_title">Falha ao armazenar em cache o arquivo</string>
+    <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">This is often caused by a bug in the app you used to select the file. Please try the following fixes:\n\n%s</string>
     <string name="import_interrupted">Importação interrompida: AnkiDroid foi fechado</string>
     <string name="export_ready_title">Exportação pronta</string>
     <string name="export_send_no_handlers">Nenhum aplicativo disponível para lidar com apkg. Salvando&#8230;</string>
@@ -180,11 +196,6 @@
     <string name="tag_editor_add_feedback">Toque \"%2$s\" para confirmar a adição de \"%1$s\"</string>
     <string name="tag_editor_add_feedback_existing">Tag existente \"%1$s\" selecionada</string>
     <!-- Time spans -->
-    <string name="reminder_title">Não se esqueça de estudar hoje!</string>
-    <plurals name="reminder_text">
-        <item quantity="one">%2$d novo card para revisar em %1$s</item>
-        <item quantity="other">%2$d novos cards para revisar em %1$s</item>
-    </plurals>
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Erro ao compartilhar arquivo apkg</string>
     <!-- Import and export v2 feedback -->
@@ -225,6 +236,7 @@
     <string name="search_decks" maxLength="28">Pesquisar baralhos</string>
     <string name="ankidroid_init_failed_webview_title">Erro Fatal</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid depende do System WebView que não está disponível. Isso pode acontecer se o sistema está instalando atualizações. Por favor, tente novamente em alguns minutos.\n\n%s</string>
+    <string name="ankidroid_init_failed_storage">AnkiDroid cannot access storage due to an Android error.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">Tamanho da fonte</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Mostrar barra de ferramentas</string>
@@ -261,7 +273,7 @@
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
     <string name="download_deck">Baixar baralho</string>
-    <string name="open_in_browser" comment="Label of a button inviting to open ankiweb\'s shared deck page if automated download failed">Open in browser</string>
+    <string name="open_in_browser" comment="Label of a button inviting to open ankiweb\'s shared deck page if automated download failed">Abrir no navegador</string>
     <string name="try_again">Tentar Novamente</string>
     <string name="cancel_download">Cancelar download</string>
     <string name="cancel_download_question_title">Cancelar download?</string>
@@ -271,7 +283,6 @@
     <string name="download_failed">Download falhou</string>
     <string name="deck_download_progress_message">Você pode usar outros apps enquanto o download está rodando</string>
     <string name="check_network">Por favor, verifique sua conexão de rede</string>
-    <string name="search_using_deck_name">Pesquisar usando o nome do baralho</string>
     <string name="external_storage_unavailable">Transferência abortada, o armazenamento externo não está disponível</string>
     <string name="home" maxLength="28">Início</string>
     <!-- Study Screen actions
@@ -296,6 +307,10 @@
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">Não foi possível acessar a coleção. Tente novamente!</string>
     <string name="cd_manage_notetypes_add">Adicionar um novo modelo</string>
+    <plurals name="note_types_selected">
+        <item quantity="one">%d note type selected</item>
+        <item quantity="other">%d note types selected</item>
+    </plurals>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">Estude menos</string>
     <string name="intro_ankidroid_tagline_two">Lembre mais</string>
@@ -304,7 +319,6 @@
     <string name="intro_sync_from_ankiweb">Sincronizar do AnkiWeb</string>
     <!-- IntentHandler -->
     <string name="app_not_initialized_new">O AnkiDroid ainda não foi inicializado.  Por favor, abra o AnkiDroid e tente novamente</string>
-    <string name="already_logged_in">Já está logado</string>
     <!-- Deck Creation -->
     <string name="deck_created">Baralho criado</string>
     <string name="deck_renamed">Baralho renomeado</string>
@@ -328,9 +342,9 @@
     <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">Falha ao abrir configurações de texto para fala</string>
     <string name="shared_decks_login_required">Faça login para baixar mais baralhos</string>
     <string name="deck_description_field_hint">Descrição</string>
-    <string name="deck_description_saved">Description updated</string>
-    <string name="format_deck_description_as_markdown">Format as Markdown</string>
-    <string name="help_button_content_description">Open help for ‘%s’</string>
+    <string name="deck_description_saved">Descrição atualizada</string>
+    <string name="format_deck_description_as_markdown">Formatar como Markdown</string>
+    <string name="help_button_content_description">Abrir ajuda para ‘%s’</string>
     <string name="failed_to_copy">Falha ao copiar</string>
     <string name="card_browser_unavailable_when_notes_mode">Indisponível no modo \'Notas\'</string>
     <plurals name="unbury_cards_feedback">

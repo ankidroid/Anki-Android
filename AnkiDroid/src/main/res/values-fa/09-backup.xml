@@ -45,7 +45,7 @@
 -->
 <resources>
     <string name="backup_deck_no_storage_left">فایل پشتیبان ذخیره نشد. کارت حافظه فاقد فضای کافی است. گزینه‌های پشتبان گیری را کاهش داده یا مقداری از فضای حافظه را آزاد کنید.</string>
-    <string name="storage_warning" comment="Consider keeping the unbreakable space after the digit">Less than %d MB space on your storage left.\nFree some space to avoid data loss.</string>
+    <string name="storage_warning" comment="Consider keeping the unbreakable space after the digit">کم‌تر از %d مگابایت فضای خالی روی حافظهٔ شما باقی‌ مانده.\nبرای جلوگیری از حذف داده‌ها کمی فضا خالی کنید.</string>
     <string name="backup_restore" maxLength="28">بازیابی از فایل پشتیبان</string>
     <string name="backup_new_collection">مجموعه جدید</string>
     <string name="backup_del_collection">حذف مجموعه و ایجاد یک مجموعه جدید دیگر</string>

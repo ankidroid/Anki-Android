@@ -1,20 +1,19 @@
-/****************************************************************************************
- * This program is free software; you can redistribute it and/or modify it under        *
- * the terms of the GNU General Public License as published by the Free Software        *
- * Foundation; either version 3 of the License, or (at your option) any later           *
- * version.                                                                             *
- *                                                                                      *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY      *
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A      *
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.             *
- *                                                                                      *
- * You should have received a copy of the GNU General Public License along with         *
- * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
- ****************************************************************************************/
+/*
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 3 of the License, or (at your option) any later
+ * version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package com.ichi2.anki.dialogs.help
 
 import androidx.annotation.StringRes
-import androidx.core.net.toUri
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CrashReportService
@@ -43,11 +42,13 @@ class AnkiActivityHelpActionsDispatcher(
     private val ankiActivity: AnkiActivity,
 ) : HelpItemActionsDispatcher {
     override fun onOpenUrl(url: String) {
-        ankiActivity.openUrl(url.toUri())
+        ankiActivity.openUrl(url)
     }
 
-    override fun onOpenUrlResource(url: Int) {
-        ankiActivity.openUrl(ankiActivity.getString(url).toUri())
+    override fun onOpenUrlResource(
+        @StringRes url: Int,
+    ) {
+        ankiActivity.openUrl(url)
     }
 
     override fun onRate() {

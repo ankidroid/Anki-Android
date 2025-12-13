@@ -121,6 +121,8 @@
     <string name="multimedia_editor_failed">マルチメディアエディタを開けませんでした</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">音声録音の権限が付与されませんでした</string>
+    <string name="permission_denied">権限が許可されていません</string>
+    <string name="recording_permission_denied_message">「音声を録音」オプションを使用するにはマイクの権限が必要です。システムの、このアプリに関する設定画面でマイクの権限を許可してください。</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroidをアップグレードしました</string>
     <string name="integrity_check_startup_content">AnkiDroidをアップグレードしました。このアップグレードには、データベースに関する不具合の修正が含まれています。今すぐ「データベースをチェック」を実行することをおすすめします。</string>
@@ -197,8 +199,6 @@
     <string name="import_deck_package">デッキパッケージ (.apkg)</string>
     <string name="import_collection_package">コレクションパッケージ (.colpkg)</string>
     <string name="import_csv">テキストファイル (.txt, .csv)</string>
-    <!-- Deck selection dialog -->
-    <string name="cannot_create_subdeck_for_all_decks">すべてのデッキのサブデッキを作成することはできません</string>
     <!-- scoped storage -->
     <string name="backup_your_collection">コレクションのバックアップ</string>
     <string name="backup_collection_message">しばらくの期間、このアプリ内ではない場所にコレクションのバックアップを作成していません。デバイスの故障・紛失など、アプリ内のコレクションを失う万一の事態に備え、今すぐアプリの外（かつ、デバイスの外）にバックアップを作成することをおすすめします。</string>
@@ -246,4 +246,10 @@
     <string name="tts_error_dialog_reason_text">テキスト読み上げエンジン <b>%1$s</b> は次の言語をサポートしていません: <b>%2$s</b></string>
     <string name="tts_error_dialog_change_button_text">エンジンを変更</string>
     <string name="tts_error_dialog_supported_voices_button_text">読み上げオプション</string>
+    <!-- import_cache_error_resolutions -->
+    <string name="import_error_resolution_try_again">Re-import the file</string>
+    <string name="import_error_resolution_free_up_space">Ensure there is sufficient free space on your device</string>
+    <string name="import_error_resolution_check_internet">Ensure you are connected to the internet</string>
+    <string name="import_error_resolution_copy_to_device">Copy the file to your device and try again with the local file</string>
+    <string name="import_error_resolution_select_file">Open the file using your device’s file browser app</string>
 </resources>

@@ -14,10 +14,11 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:clipChildren="false">
 
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/webview_container"
+            android:id="@+id/web_view_container"
             style="@style/CardView.ViewerStyle"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -25,8 +26,8 @@
             android:layout_marginBottom="6dp"
             android:layout_marginHorizontal="@dimen/reviewer_side_margin">
 
-            <WebView
-                android:id="@+id/webview"
+            <com.ichi2.anki.workarounds.SafeWebViewLayout
+                android:id="@+id/web_view_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 tools:backgroundTint="@color/white" />
@@ -101,6 +102,16 @@
         </com.google.android.material.card.MaterialCardView>
 
 
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/check_pronunciation_container"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:clipChildren="false"
+            android:layout_marginHorizontal="@dimen/reviewer_side_margin"
+            android:layout_gravity="center_horizontal"
+            android:elevation="2dp"
+            android:visibility="gone"/>
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/tools_layout"
             android:layout_width="match_parent"
@@ -141,7 +152,7 @@
                 />
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/lrn_count"
+                android:id="@+id/learn_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="?attr/learnCountColor"
@@ -151,7 +162,7 @@
                 />
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/rev_count"
+                android:id="@+id/review_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="?attr/reviewCountColor"
@@ -164,7 +175,7 @@
                 android:id="@+id/counts_flow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:constraint_referenced_ids="new_count,lrn_count,rev_count,timer"
+                app:constraint_referenced_ids="new_count,learn_count,review_count,timer"
                 app:flow_wrapMode="chain"
                 app:flow_verticalStyle="packed"
                 app:flow_horizontalStyle="packed"
@@ -199,7 +210,7 @@
                 app:layout_constraintEnd_toEndOf="parent">
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/show_answer"
+                    android:id="@+id/show_answer_button"
                     style="@style/AnswerButton"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -212,7 +223,7 @@
                     />
 
                 <LinearLayout
-                    android:id="@+id/answer_buttons"
+                    android:id="@+id/answer_buttons_layout"
                     android:layout_height="match_parent"
                     android:layout_width="match_parent"
                     android:minHeight="?minTouchTargetSize"

@@ -132,6 +132,7 @@ import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.pages.AnkiServer
 import com.ichi2.anki.pages.CongratsPage
 import com.ichi2.anki.pages.PostRequestHandler
+import com.ichi2.anki.pages.PostRequestUri
 import com.ichi2.anki.preferences.AccessibilitySettingsFragment
 import com.ichi2.anki.preferences.PreferencesActivity
 import com.ichi2.anki.preferences.sharedPrefs
@@ -163,7 +164,6 @@ import com.ichi2.ui.FixedEditText
 import com.ichi2.utils.HandlerUtils.newHandler
 import com.ichi2.utils.HashUtil.hashSetInit
 import com.ichi2.utils.Stopwatch
-import com.ichi2.utils.WebViewDebugging.initializeDebugging
 import com.ichi2.utils.message
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
@@ -562,12 +562,12 @@ abstract class AbstractFlashcardViewer :
 
         setContentView(getContentViewAttr(fullscreenMode))
 
-        val port = StudyScreenRepository.getServerPort()
+        val port = StudyScreenRepository().getServerPort()
         server = AnkiServer(this, port).also { it.start() }
         // Make ACTION_PROCESS_TEXT for in-app searching possible on > Android 4.0
         delegate.isHandleNativeActionModesEnabled = true
-        val mainView = findViewById<View>(android.R.id.content)
-        initNavigationDrawer(mainView)
+
+        initNavigationDrawer()
         previousAnswerIndicator = PreviousAnswerIndicator(findViewById(R.id.chosen_answer))
         shortAnimDuration = resources.getInteger(android.R.integer.config_shortAnimTime)
         gestureDetectorImpl = LinkDetectingGestureDetector()
@@ -1269,7 +1269,6 @@ abstract class AbstractFlashcardViewer :
     protected open fun recreateWebView() {
         if (webView == null) {
             webView = createWebView()
-            initializeDebugging(this.sharedPrefs())
             cardFrame!!.addView(webView)
             gestureDetectorImpl.onWebViewCreated(webView!!)
         }
@@ -1489,7 +1488,7 @@ abstract class AbstractFlashcardViewer :
         // Text to speech is in effect here
         // If the question is displayed or if the question should be replayed, read the question
         if (ttsInitialized) {
-            if (!displayAnswer || doMediaReplay && replayQuestion) {
+            if (!displayAnswer || (doMediaReplay && replayQuestion)) {
                 readCardTts(SingleCardSide.FRONT)
             }
             if (displayAnswer) {
@@ -1776,6 +1775,7 @@ abstract class AbstractFlashcardViewer :
             ViewerCommand.TOGGLE_FLAG_PURPLE,
             ViewerCommand.UNSET_FLAG,
             ViewerCommand.CARD_INFO,
+            ViewerCommand.PREVIOUS_CARD_INFO,
             ViewerCommand.ADD_NOTE,
             ViewerCommand.RESCHEDULE_NOTE,
             ViewerCommand.TOGGLE_AUTO_ADVANCE,
@@ -2667,7 +2667,7 @@ abstract class AbstractFlashcardViewer :
 
     internal fun displayCouldNotFindMediaSnackbar(filename: String?) {
         showSnackbar(getString(R.string.card_viewer_could_not_find_image, filename)) {
-            setAction(R.string.help) { openUrl(getString(R.string.link_faq_missing_media).toUri()) }
+            setAction(R.string.help) { openUrl(R.string.link_faq_missing_media) }
         }
     }
 
@@ -2718,18 +2718,16 @@ abstract class AbstractFlashcardViewer :
     open fun getCardDataForJsApi(): AnkiDroidJsAPI.CardDataForJsApi = AnkiDroidJsAPI.CardDataForJsApi()
 
     override suspend fun handlePostRequest(
-        uri: String,
+        uri: PostRequestUri,
         bytes: ByteArray,
     ): ByteArray =
-        if (uri.startsWith(AnkiServer.ANKIDROID_JS_PREFIX)) {
+        uri.jsApiMethodName?.let { methodName ->
             jsApi.handleJsApiRequest(
-                uri.substring(AnkiServer.ANKIDROID_JS_PREFIX.length),
+                methodName,
                 bytes,
                 returnDefaultValues = true,
             )
-        } else {
-            throw IllegalArgumentException("unhandled request: $uri")
-        }
+        } ?: throw IllegalArgumentException("unhandled request: $uri")
 
     companion object {
         /**
@@ -2816,7 +2814,7 @@ abstract class AbstractFlashcardViewer :
                     error: TtsPlayer.TtsError,
                     isAutomaticPlayback: Boolean,
                 ) {
-                    AbstractFlashcardViewer.mediaErrorHandler.processTtsFailure(error, isAutomaticPlayback) {
+                    mediaErrorHandler.processTtsFailure(error, isAutomaticPlayback) {
                         when (error) {
                             is AndroidTtsError.MissingVoiceError ->
                                 TtsPlaybackErrorDialog.ttsPlaybackErrorDialog(activity, supportFragmentManager, error.tag)
@@ -2838,7 +2836,7 @@ abstract class AbstractFlashcardViewer :
                         // Retrying fixes most of these
                         if (file.exists()) return RETRY_MEDIA
                         // just doesn't exist - process the error
-                        AbstractFlashcardViewer.mediaErrorHandler.processMissingMedia(
+                        mediaErrorHandler.processMissingMedia(
                             file,
                         ) { filename: String? -> displayCouldNotFindMediaSnackbar(filename) }
                         return CONTINUE_MEDIA

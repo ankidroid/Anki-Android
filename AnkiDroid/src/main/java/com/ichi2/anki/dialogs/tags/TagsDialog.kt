@@ -47,6 +47,7 @@ import com.ichi2.utils.TagsUtil
 import com.ichi2.utils.customView
 import com.ichi2.utils.getInputField
 import com.ichi2.utils.input
+import com.ichi2.utils.moveCursorToEnd
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
@@ -334,7 +335,7 @@ class TagsDialog : AnalyticsDialogFragment {
         toolbarSearchItem = toolbar.menu.findItem(R.id.tags_dialog_action_filter)
         val toolbarSearchItem: MenuItem? = toolbarSearchItem
         toolbarSearchView = toolbarSearchItem?.actionView as AccessibleSearchView
-        val queryET = toolbarSearchView!!.findViewById<EditText>(com.google.android.material.R.id.search_src_text)
+        val queryET = toolbarSearchView!!.findViewById<EditText>(androidx.appcompat.R.id.search_src_text)
         queryET.filters = arrayOf(addTagFilter)
         toolbarSearchView!!.queryHint = getString(R.string.filter_tags)
         toolbarSearchView!!.setOnQueryTextListener(
@@ -398,7 +399,7 @@ class TagsDialog : AnalyticsDialogFragment {
             // utilize the addTagFilter to append '::' properly by appending a space to prefixTag
             inputET.setText("$prefixTag ")
         }
-        inputET.setSelection(inputET.text.length)
+        inputET.moveCursorToEnd()
         addTagDialog.show()
     }
 

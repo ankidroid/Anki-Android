@@ -76,6 +76,7 @@
     <string name="card_browser_list_my_searches_new_name">Název aktuálního hledání</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">Nelze uložit hledání bez názvu.</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">Název již existuje</string>
+    <string name="card_browser_list_my_searches_successful_save">Hledání bylo uloženo</string>
     <string name="no_note_to_edit">Žádná poznámka k úpravě</string>
     <string name="card_browser_list_my_searches_remove_content">Odstranit „%1$s“?</string>
     <string name="card_browser_change_display_order" maxLength="28">Změnit řazení</string>
@@ -96,7 +97,7 @@
         <item>Podle zapomínání</item>
         <item>Podle názvu balíčku</item>
     </string-array>
-    <string name="manage_browser_column">Manage column</string>
+    <string name="manage_browser_column">Spravovat sloupec</string>
     <string name="no_columns_available">Nejsou k dispozici žádné sloupce</string>
     <string name="card_browser_select_all" maxLength="28">Vybrat vše</string>
     <string name="card_browser_select_none" maxLength="28">Zrušit výběr</string>

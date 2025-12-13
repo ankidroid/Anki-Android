@@ -1,29 +1,31 @@
-/****************************************************************************************
- * Copyright (c) 2011 Kostas Spyropoulos <inigo.aldana@gmail.com>                       *
- * Copyright (c) 2014 Houssam Salem <houssam.salem.au@gmail.com>                        *
- *                                                                                      *
- * This program is free software; you can redistribute it and/or modify it under        *
- * the terms of the GNU General Public License as published by the Free Software        *
- * Foundation; either version 3 of the License, or (at your option) any later           *
- * version.                                                                             *
- *                                                                                      *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY      *
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A      *
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.             *
- *                                                                                      *
- * You should have received a copy of the GNU General Public License along with         *
- * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
- ****************************************************************************************/
+/*
+ * Copyright (c) 2011 Kostas Spyropoulos <inigo.aldana@gmail.com>
+ * Copyright (c) 2014 Houssam Salem <houssam.salem.au@gmail.com>
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 3 of the License, or (at your option) any later
+ * version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 package com.ichi2.anki.libanki
 
 import androidx.annotation.WorkerThread
 import anki.media.CheckMediaResponse
+import com.google.protobuf.ByteString
 import com.google.protobuf.kotlin.toByteString
 import com.ichi2.anki.libanki.Media.Companion.htmlMediaRegexps
 import com.ichi2.anki.libanki.exception.EmptyMediaException
 import com.ichi2.anki.libanki.utils.LibAnkiAlias
 import com.ichi2.anki.libanki.utils.NotInLibAnki
+import net.ankiweb.rsdroid.RustCleanup
 import timber.log.Timber
 import java.io.File
 
@@ -61,13 +63,38 @@ open class Media(
      ***********************************************************
      */
 
-    fun addFile(oFile: File?): String {
-        if (oFile == null || oFile.length() == 0L) {
-            throw EmptyMediaException()
-        }
-        Timber.v("dir now %s", dir)
-        return col.backend.addMediaFile(oFile.name, oFile.readBytes().toByteString())
+    /**
+     * Add [filename][File.name] to the media folder, renaming if not unique
+     *
+     * @return possibly-renamed filename
+     *
+     * @throws EmptyMediaException if [file] is empty
+     * @throws OutOfMemoryError if the file could not be copied to a contiguous block of memory (or is >= 2GB)
+     */
+    @LibAnkiAlias("add_file")
+    @RustCleanup("use backend exception instead of EmptyMediaException")
+    fun addFile(file: File): String {
+        // fail if non-existing or empty
+        if (file.length() == 0L) throw EmptyMediaException()
+        return writeData(file.name, file.readBytes().toByteString())
     }
+
+    /**
+     * Write the file to the media folder, renaming if not unique
+     *
+     * @return possibly-renamed filename
+     *
+     * @throws OutOfMemoryError if the file could not be copied to a contiguous block of memory (or is >= 2GB)
+     */
+    @LibAnkiAlias("write_data")
+    fun writeData(
+        desiredFname: String,
+        data: ByteString,
+    ): String =
+        col.backend.addMediaFile(
+            desiredName = desiredFname,
+            data = data,
+        )
 
     /*
      * String manipulation
@@ -152,7 +179,8 @@ open class Media(
 
     /** Move provided files to the trash. */
     @LibAnkiAlias("trash_files")
-    fun trashFiles(fnames: Iterable<String>) {
+    fun trashFiles(fnames: List<String>) {
+        Timber.i("Deleting %d file(s) from %s", fnames.size, dir)
         col.backend.trashMediaFiles(fnames = fnames)
     }
 

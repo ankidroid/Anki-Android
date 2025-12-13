@@ -1,16 +1,16 @@
-/****************************************************************************************
- * This program is free software; you can redistribute it and/or modify it under        *
- * the terms of the GNU General Public License as published by the Free Software        *
- * Foundation; either version 3 of the License, or (at your option) any later           *
- * version.                                                                             *
- *                                                                                      *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY      *
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A      *
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.             *
- *                                                                                      *
- * You should have received a copy of the GNU General Public License along with         *
- * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
- ****************************************************************************************/
+/*
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 3 of the License, or (at your option) any later
+ * version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package com.ichi2.anki.export
 
 import android.app.Dialog
@@ -38,10 +38,9 @@ import anki.import_export.ExportLimit
 import anki.import_export.exportLimit
 import anki.notes.noteIds
 import com.google.android.material.progressindicator.CircularProgressIndicator
-import com.ichi2.anki.AnkiActivity
+import com.ichi2.anki.ALL_DECKS_ID
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.anki.DeckSpinnerSelection
 import com.ichi2.anki.R
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.time.TimeManager
@@ -52,6 +51,7 @@ import com.ichi2.anki.exportSelectedCards
 import com.ichi2.anki.exportSelectedNotes
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.DeckNameId
+import com.ichi2.anki.requireAnkiActivity
 import com.ichi2.anki.ui.BasicItemSelectedListener
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.utils.negativeButton
@@ -153,7 +153,7 @@ class ExportDialogFragment : DialogFragment() {
                 mutableListOf(
                     DeckNameId(
                         requireActivity().getString(R.string.card_browser_all_decks),
-                        DeckSpinnerSelection.ALL_DECKS_ID,
+                        ALL_DECKS_ID,
                     ),
                 )
             allDecks.addAll(withCol { decks.allNamesAndIds(false) })
@@ -315,7 +315,7 @@ class ExportDialogFragment : DialogFragment() {
                 getExportRootFile(),
                 "${CollectionManager.TR.exportingCollection()}-${getTimestamp(TimeManager.time)}.colpkg",
             ).path
-        (requireActivity() as AnkiActivity).exportCollectionPackage(exportPath, includeMedia, legacy)
+        requireAnkiActivity().exportCollectionPackage(exportPath, includeMedia, legacy)
     }
 
     private fun handleAnkiPackageExport() {
@@ -332,7 +332,7 @@ class ExportDialogFragment : DialogFragment() {
                 getExportRootFile(),
                 "$packagePrefix-${getTimestamp(TimeManager.time)}.apkg",
             ).path
-        (requireActivity() as AnkiActivity).exportApkgPackage(
+        requireAnkiActivity().exportApkgPackage(
             exportPath = exportPath,
             withScheduling = includeSchedule,
             withDeckConfigs = includeDeckConfigs,
@@ -365,7 +365,7 @@ class ExportDialogFragment : DialogFragment() {
                 getExportRootFile(),
                 "${getNonCollectionNamePrefix()}-${getTimestamp(TimeManager.time)}.txt",
             ).path
-        (requireActivity() as AnkiActivity).exportSelectedNotes(
+        requireAnkiActivity().exportSelectedNotes(
             exportPath = exportPath,
             withHtml = includeHtml,
             withTags = includeTags,
@@ -384,7 +384,7 @@ class ExportDialogFragment : DialogFragment() {
                 getExportRootFile(),
                 "${getNonCollectionNamePrefix()}-${getTimestamp(TimeManager.time)}.txt",
             ).path
-        (requireActivity() as AnkiActivity).exportSelectedCards(
+        requireAnkiActivity().exportSelectedCards(
             exportPath = exportPath,
             withHtml = includeHtml,
             limit = exportLimit,
@@ -420,7 +420,7 @@ class ExportDialogFragment : DialogFragment() {
                 val deckNameId =
                     (deckSelector.adapter as DeckDisplayAdapter)
                         .getItem(deckSelector.selectedItemPosition)
-                if (deckNameId.id == DeckSpinnerSelection.ALL_DECKS_ID) {
+                if (deckNameId.id == ALL_DECKS_ID) {
                     exportLimit { this.wholeCollection = Empty.getDefaultInstance() }
                 } else {
                     exportLimit { this.deckId = deckNameId.id }

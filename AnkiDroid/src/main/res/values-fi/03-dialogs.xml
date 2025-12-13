@@ -45,9 +45,9 @@
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">Tarkista tietokanta?</string>
-    <string name="check_db_warning">Tähän voi mennä vähän aikaa</string>
+    <string name="check_db_warning">Tämä voi kestää kauan</string>
     <string name="contextmenu_deckpicker_delete_deck" maxLength="28">Poista korttipakka</string>
-    <string name="delete_deck_title">Poista korttipakka?</string>
+    <string name="delete_deck_title">Poista pakka?</string>
     <plurals name="delete_deck_message">
         <item quantity="one">Poistetaanko kaikki kortit pakassa \'%1$s\'? Se sisältää %2$d kortin</item>
         <item quantity="other">Poistetaanko kaikki kortit pakassa \'%1$s\'? Se sisältää %2$d korttia</item>
@@ -64,7 +64,7 @@
     <string name="answering_error_title">Tietokantavirhe</string>
     <string name="answering_error_message">Kirjoittaminen kokoelmaan epäonnistui. Tietokanta voi olla vioittunut tai levyllä ei ole tarpeeksi tyhjää tilaa.\n\nJos näin tapahtuu useammin, tarkista tietokanta, korjaa kokoelma tai palauta se varmuuskopiosta. Löydät tämän asetuksista.\n\Mahdollisesti kyseessä voi olla myös AnkiDroidin virhe; ilmoita virheestä, jotta voimme tarkistaa sen.</string>
     <string name="answering_error_report">Ilmoita viasta</string>
-    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue.</string>
+    <string name="storage_full_message">AnkiDroidin avaamiseen ei ole riittävästi vapaata tallennustilaa. Vapauta tilaa jatkaaksesi.</string>
     <string name="repair_deck_dialog">Haluatko varmasti yrittää korjata tietokannan?\n\nEnnen yritystä kopio tietokannasta luodaan alihakemistoon ”%s”.</string>
     <string name="intent_aedict_empty">Oletus-luokka on tyhjä</string>
     <string name="intent_aedict_category">Lisätäksesi kortteja AnkiDroidiin poista kaikki Notepad-kategoriat tai lisää uusi nimellä ”default”</string>
@@ -73,7 +73,7 @@
     <string name="custom_study_forgotten">Kortteja unohdettu edellisenä x päivänä:</string>
     <string name="custom_study_ahead">Kertaa etukäteen x päivää:</string>
     <string name="custom_study_preview">Esikatsele viimeisinä x päivänä lisättyjä kortteja:</string>
-    <string name="custom_study_tags">Select x cards from the deck:</string>
+    <string name="custom_study_tags">Valitse x korttia satunnaisesti pakasta:</string>
     <string name="storage_full_title">Tallennustila on täynnä</string>
     <string name="storage_almost_full_title">Tallennustila on melkein täynnä</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Ei tilaa</string>
@@ -105,8 +105,8 @@
     <string name="check_media_title">Tarkista media?</string>
     <string name="check_media_warning">Jos sinulla on suuri mediakokoelma, tämä voi kestää pitkään</string>
     <string name="check_media_message">Tarkistetaan mediaa&#8230;</string>
-    <string name="check_media_adding_missing_tag">Adding tags&#8230;</string>
-    <string name="check_media_tags_added">Tags added</string>
+    <string name="check_media_adding_missing_tag">Lisätään tunnisteita&#8230;</string>
+    <string name="check_media_tags_added">Tunnisteet lisätty</string>
     <string name="delete_media_message">Poistetaan mediaa&#8230;</string>
     <string name="delete_media_result_title">Poiston tulos</string>
     <plurals name="delete_media_result_message">
@@ -124,6 +124,8 @@
     <string name="multimedia_editor_failed">Multimediaeditorin avaaminen ei onnistunut</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Äänen tallentamisen käyttöoikeus evättiin</string>
+    <string name="permission_denied">Lupa kielletty</string>
+    <string name="recording_permission_denied_message">\"Nauhoita ääntä\" -ominaisuus vaatii mikin käyttöoikeutta. Voit sallia sen sovellusasetuksissa.</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid on päivitetty</string>
     <string name="integrity_check_startup_content">AnkiDroid on päivitetty. Tämä päivitys sisältää korjauksia mahdollisiin tietokantaongelmiin, ja suosittelemme, että tarkistat tietokannan nyt.</string>
@@ -147,7 +149,7 @@
     <string name="error_deleting_image">Virhe poistettaessa kuvaa</string>
     <string name="failed_to_apply_background_image">Taustakuvan %s käyttöönotto epäonnistui</string>
     <string name="background_image_too_large">Pakan valintanäkymän taustakuva on liian suuri</string>
-    <string name="image_max_size_allowed" comment="Consider keeping the unbreakable space after the digit">Maximum image size %d MB allowed</string>
+    <string name="image_max_size_allowed" comment="Consider keeping the unbreakable space after the digit">Kuvan suurin sallittu koko on %d Mt</string>
     <string name="image_dimensions_too_large">Kuvan mitat ovat liian suuret (%1$d × %2$d)</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
@@ -187,8 +189,8 @@
     <string name="help_dialog_exception_report_sent">Raportti lähetetty!</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
-        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">An automatic sync may be triggered in %d second</item>
-        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">An automatic sync may be triggered in %d seconds</item>
+        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">Automaattinen synkronointi voi käynnistyä %d sekunnissa</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">Automaattinen synkronointi voi käynnistyä %d sekunnissa</item>
     </plurals>
     <string name="metered_sync_data_warning">Internet-palveluntarjoaja voi veloittaa rahaa datan käytöstä</string>
     <string name="deck_picker_new">Tässä pakassa olevien tänään näytettävien uusien korttien lukumäärä.</string>
@@ -201,8 +203,6 @@
     <string name="import_deck_package">Pakattu Anki-pakka (.apkg)</string>
     <string name="import_collection_package">Pakattu Anki-kokoelma (.colpkg)</string>
     <string name="import_csv">Tekstitiedosto (.txt, .csv)</string>
-    <!-- Deck selection dialog -->
-    <string name="cannot_create_subdeck_for_all_decks">Kaikille pakoille ei voi luoda alipakkaa</string>
     <!-- scoped storage -->
     <string name="backup_your_collection">Varmuuskopioi kokoelmasi</string>
     <string name="backup_collection_message">Et ole varmuuskopioinut kokoelmaasi vähään aikaan. On suositeltavaa tehdä se nyt tietojen menettämisen estämiseksi.</string>
@@ -211,8 +211,8 @@
     <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Myöhemmin</string>
     <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Älä näytä uudelleen</string>
     <string name="dismiss_backup_warning_title">Varoitus tietojen menettämisestä</string>
-    <string name="dismiss_backup_warning_new_user">Due to Android privacy changes, your data and automated backups will be deleted from your phone if the app is uninstalled</string>
-    <string name="dismiss_backup_warning_upgrade">Due to Android privacy changes, your data and automated backups will be inaccessible if the app is uninstalled</string>
+    <string name="dismiss_backup_warning_new_user">Androidin tietosuojamuutosten vuoksi tietosi ja automaattiset varmuuskopiot poistetaan laitteestasi, jos poistat sovelluksen.</string>
+    <string name="dismiss_backup_warning_upgrade">Androidin tietosuojamuutosten vuoksi et pääse käsiksi tietoihisi tai automaattisiin varmuuskopioihin, jos poistat sovelluksen.</string>
     <string name="deck_already_exists">Pakka on jo olemassa</string>
     <string name="empty_deck_name">Pakan nimi ei voi olla tyhjä</string>
     <string name="create_deck_numeric_hint">Jos pakan järjestyksen kanssa onongelmia (esim. ”10” näkyy ennen ”2”:a), korvaa ”2” merkinnällä ”02”.</string>
@@ -231,8 +231,8 @@
         <item quantity="other">päivää</item>
     </plurals>
     <plurals name="set_due_date_current_interval">
-        <item quantity="one">Current interval: %d day</item>
-        <item quantity="other">Current interval: %d days</item>
+        <item quantity="one">Nykyinen kertausväli: %d päivä</item>
+        <item quantity="other">Nykyinen kertausväli: %d päivää</item>
     </plurals>
     <string name="range_delimiter" comment="Placed between two input boxes to denote a range">–</string>
     <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">Alkaen</string>
@@ -254,4 +254,10 @@
     <string name="tts_error_dialog_reason_text">Tekstistä puheeksi -moottori <b>%1$s</b> ei tue kieltä <b>%2$s</b></string>
     <string name="tts_error_dialog_change_button_text">Vaihda moottoria</string>
     <string name="tts_error_dialog_supported_voices_button_text">Äänen asetukset</string>
+    <!-- import_cache_error_resolutions -->
+    <string name="import_error_resolution_try_again">Re-import the file</string>
+    <string name="import_error_resolution_free_up_space">Ensure there is sufficient free space on your device</string>
+    <string name="import_error_resolution_check_internet">Ensure you are connected to the internet</string>
+    <string name="import_error_resolution_copy_to_device">Copy the file to your device and try again with the local file</string>
+    <string name="import_error_resolution_select_file">Open the file using your device’s file browser app</string>
 </resources>

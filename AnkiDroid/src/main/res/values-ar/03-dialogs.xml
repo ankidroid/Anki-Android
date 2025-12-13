@@ -136,6 +136,8 @@
     <string name="multimedia_editor_failed">تعذر فتح محرر الوسائط المتعددة</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">رُفِض إذن تسجيل الصوت</string>
+    <string name="permission_denied">رُفِضَ الإذن</string>
+    <string name="recording_permission_denied_message">إذن الميكروفون ضروري لميزة «تسجيل الصوت». امنحه من إعدادات التطبيق رجاءًا.</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">تم تحديث آنكي درويد</string>
     <string name="integrity_check_startup_content">تم تحديث آنكي درويد. يتضمن هذا التحديث إصلاحًا لأعطال ممكنة في قاعدة البيانات، لذلك ننصح باستخدام ميزة فحص قاعدة البيانات الآن.</string>
@@ -217,8 +219,6 @@
     <string name="import_deck_package">حزمة رزمة (.apkg)</string>
     <string name="import_collection_package">حزمة مجموعة (.colpkg)</string>
     <string name="import_csv">ملف نصي (.txt; .csv)</string>
-    <!-- Deck selection dialog -->
-    <string name="cannot_create_subdeck_for_all_decks">لا يمكنك إنشاء رزمة فرعية لكل الرزم</string>
     <!-- scoped storage -->
     <string name="backup_your_collection">انسخ  المجموعة الخاصة بك احتياطيًا</string>
     <string name="backup_collection_message">لم تقم بنسخ مجموعتك احتياطيًا منذ مدة. من الأفضل أن تقوم بذلك الآن لمنع فقدان البيانات</string>
@@ -287,4 +287,10 @@
 <b>%2$s</b></string>
     <string name="tts_error_dialog_change_button_text">تغيير المحرك</string>
     <string name="tts_error_dialog_supported_voices_button_text">خيارات الصوت</string>
+    <!-- import_cache_error_resolutions -->
+    <string name="import_error_resolution_try_again">إعادة استيراد الملف</string>
+    <string name="import_error_resolution_free_up_space">تأكد من وجود مساحة تخزين كافية في جهازك</string>
+    <string name="import_error_resolution_check_internet">تأكد من اتصالك بالإنترنت</string>
+    <string name="import_error_resolution_copy_to_device">انسخ الملف إلى جهازك وحاول مجدداً باستخدام الملف الذي في جهازك</string>
+    <string name="import_error_resolution_select_file">افتح الملف باستخدام تطبيق متصفح الملفات الخاص بجهازك</string>
 </resources>

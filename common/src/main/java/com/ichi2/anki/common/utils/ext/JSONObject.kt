@@ -117,3 +117,15 @@ fun JSONObject.getStringOrNull(key: String): String? {
         null
     }
 }
+
+/**
+ * Returns a [Sequence] of all values in the [JSONObject], assuming each value is a [JSONObject]
+ *
+ * @throws org.json.JSONException if any value is not a [JSONObject].
+ */
+fun JSONObject.jsonObjectIterable(): Iterable<JSONObject> =
+    this
+        .keys()
+        .asSequence()
+        .map { getJSONObject(it) }
+        .asIterable()

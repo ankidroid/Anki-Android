@@ -1,18 +1,18 @@
-/****************************************************************************************
- * Copyright (c) 2022 lukstbit <lukstbit@users.noreply.github.com>                      *
- *                                                                                      *
- * This program is free software; you can redistribute it and/or modify it under        *
- * the terms of the GNU General Public License as published by the Free Software        *
- * Foundation; either version 3 of the License, or (at your option) any later           *
- * version.                                                                             *
- *                                                                                      *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY      *
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A      *
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.             *
- *                                                                                      *
- * You should have received a copy of the GNU General Public License along with         *
- * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
- ****************************************************************************************/
+/*
+ * Copyright (c) 2022 lukstbit <lukstbit@users.noreply.github.com>
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 3 of the License, or (at your option) any later
+ * version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package com.ichi2.anki
 
 import android.app.Application
@@ -265,30 +265,13 @@ object CrashReportService {
     fun sendExceptionReport(
         message: String?,
         origin: String?,
-    ) {
-        sendExceptionReport(ManuallyReportedException(message), origin, null)
-    }
+    ) = sendExceptionReport(ManuallyReportedException(message), origin)
 
     fun sendExceptionReport(
         e: Throwable,
         origin: String?,
-    ) {
-        sendExceptionReport(e, origin, null)
-    }
-
-    fun sendExceptionReport(
-        e: Throwable,
-        origin: String?,
-        additionalInfo: String?,
-    ) {
-        sendExceptionReport(e, origin, additionalInfo, false)
-    }
-
-    fun sendExceptionReport(
-        e: Throwable,
-        origin: String?,
-        additionalInfo: String?,
-        onlyIfSilent: Boolean,
+        additionalInfo: String? = null,
+        onlyIfSilent: Boolean = false,
     ) {
         sendAnalyticsException(e, false)
         AnkiDroidApp.sentExceptionReportHack = true
@@ -399,3 +382,37 @@ object CrashReportService {
             .filter { it.exceptionClass == UserSubmittedException::class.java.name }
             .maxOfOrNull { it.timestamp?.timeInMillis ?: -1L } ?: -1L
 }
+
+/**
+ * Runs the provided block, catching [Exception], logging it and reporting it to [CrashReportService]
+ *
+ * **Example**
+ * ```
+ * runCatchingWithReport("callingMethod", onlyIfSilent = true) {
+ *     doSomethingRisky()
+ * }
+ * ```
+ *
+ * **Note**: This differs from [runCatching] - `Error` is thrown
+ *
+ * @param origin Data logged to Timber, and provided as the 'origin' field in the error report
+ * @param onlyIfSilent Skip crash report if the crash reporting service is not 'always accept'
+ * @param block Code to execute
+ *
+ * @throws Error If raised, this will be reported and rethrown
+ *
+ * @return A Result containing either the successful result of [block] or the [Exception] thrown
+ */
+fun <T> runCatchingWithReport(
+    origin: String?,
+    onlyIfSilent: Boolean = false,
+    block: () -> T,
+): Result<T> =
+    try {
+        Result.success(block())
+    } catch (e: Throwable) {
+        Timber.w(e, origin)
+        CrashReportService.sendExceptionReport(e, origin, onlyIfSilent = onlyIfSilent)
+        if (e is Error) throw e
+        Result.failure(e)
+    }

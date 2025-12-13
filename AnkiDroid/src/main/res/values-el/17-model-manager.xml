@@ -45,7 +45,6 @@
     </plurals>
     <!--Browser-->
     <string name="model_browser_delete">Διαγραφή τύπου σημείωσης</string>
-    <string name="model_browser_rename" comment="Rename a note type">Μετονομασία</string>
     <string name="model_browser_template">Επεξεργασία καρτών</string>
     <!--Rename-->
     <string name="rename_model">Μετονομασία τύπου σημείωσης</string>
@@ -53,7 +52,6 @@
     <!--Language Hint-->
     <string name="model_field_editor_language_hint_dialog_success_result">Ορισμός γλώσσας υποδείξεων σε %s</string>
     <!--Field Editing-->
-    <string name="model_field_editor_title">Επεξεργασία πεδίων</string>
     <string name="model_field_editor_add" maxLength="28">Προσθήκη πεδίου</string>
     <string name="model_field_editor_delete">Διαγραφή πεδίου</string>
     <string name="model_field_editor_rename">Μετονομασία πεδίου</string>
@@ -63,6 +61,12 @@
     <string name="model_field_editor_sort_field">Ταξινόμηση κατά αυτό το πεδίο</string>
     <!--Warnings-->
     <string name="model_delete_warning">Θέλετε σίγουρα να διαγράψετε αυτό τον τύπο σημείωσης;</string>
+    <!--
+        Example output:
+        Delete the note types below?
+        Basic, Basic (and reversed card), Cloze
+     -->
+    <string name="model_delete_multiple_warning">Delete the note types below?\n %s</string>
     <string name="field_delete_warning">Θέλετε σίγουρα να διαγράψετε αυτό το πεδίο;</string>
     <!--Model Add Suffixes-->
     <string name="model_browser_add_add">Προσθήκη: %1$s</string>

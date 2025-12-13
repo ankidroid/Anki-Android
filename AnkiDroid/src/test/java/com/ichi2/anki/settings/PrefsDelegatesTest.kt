@@ -17,55 +17,75 @@ package com.ichi2.anki.settings
 
 import android.content.res.Resources
 import com.github.ivanshafran.sharedpreferencesmock.SPMockBuilder
-import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.settings.enums.PrefEnum
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.mockkObject
-import io.mockk.unmockkObject
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
-import org.junit.BeforeClass
 import org.junit.Test
 
 class PrefsDelegatesTest {
-    @Test
-    fun `booleanSetting getter and setter work`() {
-        var setting by Prefs.booleanPref(123, false)
-        assertThat(setting, equalTo(false))
+    val prefs: PrefsRepository
 
-        setting = true
-        assertThat(setting, equalTo(true))
+    init {
+        val sharedPrefs = SPMockBuilder().createSharedPreferences()
+        val mockResources = mockk<Resources>()
+        every { mockResources.getString(any()) } answers {
+            val resId = invocation.args[0] as Int
+            resId.toString()
+        }
+        prefs = PrefsRepository(sharedPrefs, mockResources)
     }
 
     @Test
-    fun `stringSetting getter and setter work`() {
-        var setting by Prefs.stringPref(456, "defaultValue")
-        assertThat(setting, equalTo("defaultValue"))
+    fun `booleanPref getter and setter work`() {
+        var pref by prefs.booleanPref(123, false)
+        assertThat(pref, equalTo(false))
 
-        setting = "newValue"
-        assertThat(setting, equalTo("newValue"))
+        pref = true
+        assertThat(pref, equalTo(true))
     }
 
-    companion object {
-        @BeforeClass
-        @JvmStatic
-        fun before() {
-            val mockResources = mockk<Resources>()
-            AnkiDroidApp.sharedPreferencesTestingOverride = SPMockBuilder().createSharedPreferences()
+    @Test
+    fun `stringPref getter and setter work`() {
+        var pref by prefs.stringPref(456, "defaultValue")
+        assertThat(pref, equalTo("defaultValue"))
 
-            every { mockResources.getString(any()) } answers {
-                val resId = invocation.args[0] as Int
-                resId.toString()
-            }
+        pref = "newValue"
+        assertThat(pref, equalTo("newValue"))
+    }
 
-            mockkObject(Prefs)
-            every { Prefs.resources } returns mockResources
-        }
+    @Test
+    fun `intPref getter and setter work`() {
+        var pref by prefs.intPref(101, 42)
+        assertThat(pref, equalTo(42))
 
-        @BeforeClass
-        @JvmStatic
-        fun after() {
-            unmockkObject(Prefs)
-        }
+        pref = 99
+        assertThat(pref, equalTo(99))
+    }
+
+    @Test
+    fun `longPref getter and setter work`() {
+        var pref by prefs.longPref(202, 12345L)
+        assertThat(pref, equalTo(12345L))
+
+        pref = 9876543210L
+        assertThat(pref, equalTo(9876543210L))
+    }
+
+    @Test
+    fun `enumPref getter and setter work`() {
+        var pref by prefs.enumPref(789, TestEnum.SECOND)
+        assertThat(pref, equalTo(TestEnum.SECOND))
+
+        pref = TestEnum.FIRST
+        assertThat(pref, equalTo(TestEnum.FIRST))
+    }
+
+    private enum class TestEnum(
+        override val entryResId: Int,
+    ) : PrefEnum {
+        FIRST(0),
+        SECOND(1),
     }
 }

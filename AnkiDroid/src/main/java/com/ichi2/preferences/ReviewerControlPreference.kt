@@ -24,6 +24,7 @@ import com.ichi2.anki.reviewer.Binding
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.reviewer.MappableBinding.Companion.toPreferenceString
 import com.ichi2.anki.reviewer.ReviewerBinding
+import com.ichi2.anki.settings.Prefs
 
 class ReviewerControlPreference : ControlPreference {
     @Suppress("unused")
@@ -47,7 +48,7 @@ class ReviewerControlPreference : ControlPreference {
     private val viewerAction get() = ViewerAction.fromPreferenceKey(key)
 
     override val areGesturesEnabled: Boolean
-        get() = sharedPreferences?.getBoolean(GestureProcessor.PREF_KEY, false) ?: false
+        get() = Prefs.isNewStudyScreenEnabled || sharedPreferences?.getBoolean(GestureProcessor.PREF_KEY, false) ?: false
 
     override fun getMappableBindings(): List<ReviewerBinding> = ReviewerBinding.fromPreferenceString(value).toList()
 

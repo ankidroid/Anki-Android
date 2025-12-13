@@ -16,18 +16,18 @@
 
 package com.ichi2.anki.reviewreminders
 
+import android.content.Context
 import android.os.Parcelable
+import android.text.format.DateFormat
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.settings.Prefs
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.Serializable
 import timber.log.Timber
-import java.time.LocalTime
-import java.time.format.DateTimeFormatter
-import java.time.format.FormatStyle
-import java.util.Locale
+import java.util.Calendar
 import kotlin.time.Duration.Companion.hours
 import kotlin.time.Duration.Companion.minutes
 
@@ -35,7 +35,7 @@ import kotlin.time.Duration.Companion.minutes
 @Serializable
 @Parcelize
 value class ReviewReminderId(
-    val id: Int,
+    val value: Int,
 ) : Parcelable {
     companion object {
         /**
@@ -66,16 +66,32 @@ data class ReviewReminderTime(
         require(minute in 0..59) { "Minute must be between 0 and 59" }
     }
 
-    override fun toString(): String =
-        LocalTime
-            .of(hour, minute)
-            .format(
-                DateTimeFormatter
-                    .ofLocalizedTime(FormatStyle.SHORT)
-                    .withLocale(Locale.getDefault()),
-            )
+    /**
+     * Formats the time as a string in the user's locale and 12/24-hour preference.
+     */
+    fun toFormattedString(context: Context): String {
+        val calendarInstance =
+            TimeManager.time.calendar().apply {
+                set(Calendar.HOUR_OF_DAY, hour)
+                set(Calendar.MINUTE, minute)
+            }
+        return DateFormat.getTimeFormat(context).format(calendarInstance.time)
+    }
 
     fun toSecondsFromMidnight(): Long = (hour.hours + minute.minutes).inWholeSeconds
+
+    companion object {
+        /**
+         * Returns the current time as a [ReviewReminderTime].
+         * Used as the default displayed time when creating a review reminder.
+         */
+        fun getCurrentTime(): ReviewReminderTime {
+            val calendarInstance = TimeManager.time.calendar()
+            val currentHour = calendarInstance.get(Calendar.HOUR_OF_DAY)
+            val currentMinute = calendarInstance.get(Calendar.MINUTE)
+            return ReviewReminderTime(currentHour, currentMinute)
+        }
+    }
 }
 
 /**
@@ -151,14 +167,16 @@ sealed class ReviewReminderScope : Parcelable {
  * stored review reminders on user devices will no longer be able to be read, as decoding them to the new
  * [ReviewReminder] schema will cause a serialization exception.
  * You must specify a schema migration mapping for users who already have review reminders set on their devices
- * so that [ReviewRemindersDatabase.attemptSchemaMigration] can migrate their reminders to the new schema.
- * Use an [OldReviewReminderSchema] to store the old schema and to define a method for migrating to the new schema.
- * Your method will be called from [ScheduleReminders.catchDatabaseExceptions]. To inform [ScheduleReminders.catchDatabaseExceptions]
- * that some users may have review reminders in the form of your old schema, add your [OldReviewReminderSchema]
- * to [ScheduleReminders.oldReviewReminderSchemasForMigration]. We store a list of old schemas since there may be
- * multiple old schemas, and users do not always update their app from
- * version A -> B -> C but may sometimes jump from A -> C.
- * [ScheduleReminders.catchDatabaseExceptions] will attempt to migrate from all old schemas present in the list.
+ * so that [ReviewRemindersDatabase.performSchemaMigration] can migrate their reminders to the new schema.
+ * Use a [ReviewReminderSchema] to store the old schema and to define a method for migrating to the new schema.
+ * Your method will be called from [ReviewRemindersDatabase.performSchemaMigration]. To inform [ReviewRemindersDatabase.performSchemaMigration]
+ * that some users may have review reminders in the form of your old schema, add your [ReviewReminderSchema]
+ * to [ReviewRemindersDatabase.oldReviewReminderSchemasForMigration] and update [ReviewRemindersDatabase.schemaVersion].
+ * [ReviewRemindersDatabase.oldReviewReminderSchemasForMigration] should contain a chain of versions, from 1 -> 2 -> 3 -> ...,
+ * and when a migration begins, it will happen step by step via the [ReviewReminderSchema.migrate] method, going from version 1 to version 2,
+ * from version 2 to version 3, and so on, until [ReviewRemindersDatabase.schemaVersion] is reached.
+ * Preferably, also add some unit tests to ensure your migration works properly on all user devices once your update is rolled out.
+ * See ReviewRemindersDatabaseTest for examples on how to do this.
  *
  * TODO: add remaining fields planned for GSoC 2025.
  *
@@ -167,17 +185,21 @@ sealed class ReviewReminderScope : Parcelable {
  * @param cardTriggerThreshold See [ReviewReminderCardTriggerThreshold].
  * @param scope See [ReviewReminderScope].
  * @param enabled Whether the review reminder's notifications are active or disabled.
+ * @param profileID ID representing the profile which created this review reminder, as review reminders for
+ * multiple profiles might be active simultaneously.
  */
 @Serializable
 @Parcelize
 @ConsistentCopyVisibility
 data class ReviewReminder private constructor(
-    val id: ReviewReminderId,
+    override val id: ReviewReminderId,
     val time: ReviewReminderTime,
     val cardTriggerThreshold: ReviewReminderCardTriggerThreshold,
     val scope: ReviewReminderScope,
     var enabled: Boolean,
-) : Parcelable {
+    val profileID: String,
+) : Parcelable,
+    ReviewReminderSchema {
     companion object {
         /**
          * Create a new review reminder. This will allocate a new ID for the reminder.
@@ -189,12 +211,19 @@ data class ReviewReminder private constructor(
             cardTriggerThreshold: ReviewReminderCardTriggerThreshold,
             scope: ReviewReminderScope = ReviewReminderScope.Global,
             enabled: Boolean = true,
+            profileID: String = "",
         ) = ReviewReminder(
             id = ReviewReminderId.getAndIncrementNextFreeReminderId(),
             time,
             cardTriggerThreshold,
             scope,
             enabled,
+            profileID,
         )
     }
+
+    /**
+     * This is the up-to-date schema, we cannot migrate to a newer version.
+     */
+    override fun migrate(): ReviewReminder = this
 }

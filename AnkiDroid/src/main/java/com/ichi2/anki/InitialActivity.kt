@@ -29,10 +29,9 @@ import com.ichi2.anki.exception.StorageAccessException
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService.setPreferencesUpToDate
 import com.ichi2.anki.servicelayer.ScopedStorageService.isLegacyStorage
-import com.ichi2.anki.ui.windows.permissions.Full30and31PermissionsFragment
 import com.ichi2.anki.ui.windows.permissions.PermissionsFragment
+import com.ichi2.anki.ui.windows.permissions.PermissionsStartingAt30Fragment
 import com.ichi2.anki.ui.windows.permissions.PermissionsUntil29Fragment
-import com.ichi2.anki.ui.windows.permissions.TiramisuPermissionsFragment
 import com.ichi2.compat.CompatHelper.Companion.sdkVersion
 import com.ichi2.utils.Permissions
 import com.ichi2.utils.VersionUtils.pkgVersionName
@@ -49,9 +48,8 @@ object InitialActivity {
     /** Returns null on success  */
     @CheckResult
     fun getStartupFailureType(initializeAnkiDroidDirectory: () -> Boolean): StartupFailure? {
-        // A WebView failure means that we skip `AnkiDroidApp`, and therefore haven't loaded the collection
-        if (AnkiDroidApp.webViewFailedToLoad()) {
-            return StartupFailure.WebviewFailed
+        AnkiDroidApp.fatalError?.let {
+            return StartupFailure.InitializationError(it)
         }
 
         val failure =
@@ -151,7 +149,29 @@ object InitialActivity {
 
         data object DatabaseLocked : StartupFailure()
 
-        data object WebviewFailed : StartupFailure()
+        /**
+         * [AnkiDroidApp] encountered a fatal error
+         */
+        data class InitializationError(
+            val error: FatalInitializationError,
+        ) : StartupFailure() {
+            val infoLink
+                get() = error.infoLink
+
+            fun toHumanReadableString(context: Context): String =
+                when (error) {
+                    is FatalInitializationError.WebViewError ->
+                        context.getString(
+                            R.string.ankidroid_init_failed_webview,
+                            error.errorDetail,
+                        )
+                    is FatalInitializationError.StorageError ->
+                        context.getString(
+                            R.string.ankidroid_init_failed_storage,
+                            error.errorDetail,
+                        )
+                }
+        }
 
         data object DiskFull : StartupFailure()
     }
@@ -190,13 +210,7 @@ enum class PermissionSet(
     LEGACY_ACCESS(Permissions.legacyStorageAccessPermissions, PermissionsUntil29Fragment::class.java),
 
     @RequiresApi(Build.VERSION_CODES.R)
-    EXTERNAL_MANAGER(listOf(Permissions.MANAGE_EXTERNAL_STORAGE), Full30and31PermissionsFragment::class.java),
-
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
-    TIRAMISU_EXTERNAL_MANAGER(
-        permissions = listOf(Permissions.MANAGE_EXTERNAL_STORAGE),
-        permissionsFragment = TiramisuPermissionsFragment::class.java,
-    ),
+    EXTERNAL_MANAGER(listOf(Permissions.MANAGE_EXTERNAL_STORAGE), PermissionsStartingAt30Fragment::class.java),
 
     APP_PRIVATE(emptyList(), null),
 }
@@ -221,11 +235,7 @@ internal fun selectAnkiDroidFolder(
 
     // If the user can manage external storage, we can access the safe folder & access is fast
     return if (canManageExternalStorage) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            AnkiDroidFolder.PublicFolder(PermissionSet.TIRAMISU_EXTERNAL_MANAGER)
-        } else {
-            AnkiDroidFolder.PublicFolder(PermissionSet.EXTERNAL_MANAGER)
-        }
+        AnkiDroidFolder.PublicFolder(PermissionSet.EXTERNAL_MANAGER)
     } else {
         return AnkiDroidFolder.AppPrivateFolder
     }

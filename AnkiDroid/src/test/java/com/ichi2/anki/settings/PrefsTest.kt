@@ -17,11 +17,8 @@ package com.ichi2.anki.settings
 
 import android.content.res.Resources
 import com.github.ivanshafran.sharedpreferencesmock.SPMockBuilder
-import com.ichi2.anki.AnkiDroidApp
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.mockkObject
-import io.mockk.unmockkObject
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Test
@@ -32,32 +29,30 @@ import kotlin.reflect.full.memberProperties
 class PrefsTest {
     @Test
     fun `getters and setters use the same key`() {
-        AnkiDroidApp.sharedPreferencesTestingOverride = SPMockBuilder().createSharedPreferences()
-        var lastKey = 0
+        val sharedPrefs = SPMockBuilder().createSharedPreferences()
         val mockResources = mockk<Resources>()
+        var lastKey = 0
         every { mockResources.getString(any()) } answers {
             val resId = invocation.args[0] as Int
             lastKey = resId
             resId.toString()
         }
-        mockkObject(Prefs)
-        every { Prefs.resources } returns mockResources
+        val prefs = PrefsRepository(sharedPrefs, mockResources)
 
-        for (property in Prefs::class.memberProperties) {
+        for (property in PrefsRepository::class.memberProperties) {
             if (property.visibility != KVisibility.PUBLIC || property !is KMutableProperty<*>) continue
 
-            property.getter.call(Prefs)
+            property.getter.call(prefs)
             val getterKey = lastKey
 
             when (property.returnType.classifier) {
-                Boolean::class -> property.setter.call(Prefs, false)
-                String::class -> property.setter.call(Prefs, "foo")
+                Boolean::class -> property.setter.call(prefs, false)
+                String::class -> property.setter.call(prefs, "foo")
                 else -> continue
             }
             val setterKey = lastKey
 
             assertThat("The getter and setter of '${property.name}' use the same key", getterKey, equalTo(setterKey))
         }
-        unmockkObject(Prefs)
     }
 }

@@ -45,7 +45,6 @@
 -->
 <resources>
     <!-- Widget -->
-    <string name="widget_minimum_cards_due_notification_ticker_title">Karty do przejrzenia</string>
     <plurals name="widget_minimum_cards_due_notification_ticker_text">
         <item quantity="one">%d karta do przejrzenia</item>
         <item quantity="few">%d karty do przejrzenia</item>
@@ -77,7 +76,7 @@
     <plurals name="deck_limit_reached">
         <item quantity="one" comment="Consider keeping the unbreakable space after the digit">Możesz wybrać do %d talii</item>
         <item quantity="few">Możesz wybrać do %d talii</item>
-        <item quantity="many">You can select up to %d decks.</item>
+        <item quantity="many">Możesz wybrać do %d talii</item>
         <item quantity="other" comment="Consider keeping the unbreakable space after the digit">You can select up to %d decks.</item>
     </plurals>
     <string name="empty_widget_state" comment="To denote the widget is empty">Brakuje talii. Dotknij, aby ponownie skonfigurować.</string>

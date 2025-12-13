@@ -128,7 +128,6 @@
     <string name="empty_filtered_deck">Đang làm trống các bộ thẻ đã lọc</string>
     <string name="search_deck" comment="Deck search for selecting it">Tìm kiếm bộ thẻ</string>
     <string name="empty_deck">Bộ thẻ này rỗng</string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">Tìm kiếm bộ thẻ</string>
     <string name="invalid_deck_name">Tên bộ thẻ không hợp lệ</string>
     <string name="studyoptions_congrats_finished">Chúc mừng! Bạn đã hoàn thành hết cho hôm nay.</string>
     <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Bộ thẻ tạm thời hoàn tất! %s</string>
@@ -165,6 +164,7 @@
     <string name="card_template_browser_appearance_title">Giao diện trình duyệt</string>
     <!-- card Info -->
     <string name="card_info_title" maxLength="28">Thông tin thẻ</string>
+    <string name="previous_card_info_title" maxLength="28">Previous card info</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Đọc và ghi vào cơ sở dữ liệu AnkiDroid</string>
     <string name="read_write_permission_description">truy cập các ghi chú, thẻ, loại ghi chú và các bộ thẻ hiện có, cũng như tạo mới chúng</string>
@@ -192,11 +192,21 @@
     <string name="new_unsafe_collection">Bộ sưu tập mới sẽ bị xóa khỏi thiết bị của bạn khi bạn xóa AnkiDroid</string>
     <!-- Permissions screen -->
     <string name="permissions_screen_headline">AnkiDroid cần một số quyền để hoạt động</string>
+    <string name="permissions_screen_optional_headline" comment="Explains that there are optional permissions that can be granted to AnkiDroid.">AnkiDroid hoạt động tốt nhất với những quyền này</string>
     <string name="storage_access_title">Truy cập bộ nhớ</string>
     <string name="storage_access_summary">Lưu bộ sưu tập của bạn ở nơi an toàn sẽ không bị xóa nếu gỡ cài đặt ứng dụng</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after. See [android.permission.MANAGE_EXTERNAL_STORAGE] on https://developer.android.com/training/data-storage/manage-all-files for context.">Quyền truy cập vào mọi tệp</string>
     <string name="image_occlusion">Image Occlusion</string>
+    <string name="microphone" comment="Title of the microphone permission in the permissions explanation screen.">Microphone</string>
+    <string name="microphone_permission_explanation" comment="Description explaining why AnkiDroid needs the microphone permission, shown on the permissions explanation screen.">Cho phép bạn thêm âm thanh vào thẻ và bật phát lại giọng nói trong khi ôn tập</string>
+    <string name="notifications_permission_explanation" comment="Description explaining why AnkiDroid needs the notification permission.">Bật đồng bộ đa phương tiện dưới nền và cho phép bạn tạo nhắc nhở ôn tập</string>
+    <string name="heading_required_permissions" comment="Heading for the section of required permissions that the app needs to function, shown in the permissions explanation screen.">Bắt buộc</string>
+    <string name="heading_optional_permissions" comment="Heading for the section of optional permissions that the app needs to function, shown in the permissions explanation screen.">Tùy chọn</string>
+    <string name="manually_grant_permissions" comment="Pop-up message that is shown to the user when they want to grant an app permission that must be granted via the OS settings screen.">Quyền này phải được cho phép thủ công từ cài đặt</string>
+    <string name="revoke_permissions" comment="Pop-up message that is shown to the user when they are revoking an app permission.">Quyền này phải được tắt thủ công trong cài đặt</string>
     <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Gỡ bỏ tài khoản</string>
     <!-- Instant Note Editor -->
     <string name="instant_card" comment="Used in the Android system context menu/share dialog to quickly create a note. This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. ">Thêm nhanh</string>
+    <!-- Multiple profile -->
+    <string name="add_profile">Add profile</string>
 </resources>

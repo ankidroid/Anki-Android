@@ -1,50 +1,48 @@
-/****************************************************************************************
- * Copyright (c) 2022 lukstbit <52494258+lukstbit@users.noreply.github.com>             *
- *                                                                                      *
- * This program is free software; you can redistribute it and/or modify it under        *
- * the terms of the GNU General Public License as published by the Free Software        *
- * Foundation; either version 3 of the License, or (at your option) any later           *
- * version.                                                                             *
- *                                                                                      *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY      *
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A      *
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.             *
- *                                                                                      *
- * You should have received a copy of the GNU General Public License along with         *
- * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
- ****************************************************************************************/
+/*
+ * Copyright (c) 2022 lukstbit <52494258+lukstbit@users.noreply.github.com>
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 3 of the License, or (at your option) any later
+ * version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package com.ichi2.anki.notetype
 
-import android.annotation.SuppressLint
 import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.ActionBar
+import androidx.activity.viewModels
+import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
-import androidx.recyclerview.widget.RecyclerView
-import anki.notetypes.copy
-import com.google.android.material.floatingactionbutton.FloatingActionButton
+import androidx.appcompat.widget.Toolbar
+import androidx.core.view.isVisible
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.ichi2.anki.AnkiActivity
-import com.ichi2.anki.CardTemplateEditor
-import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.anki.NoteTypeFieldEditor
+import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
-import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.databinding.ActivityManageNoteTypesBinding
+import com.ichi2.anki.dialogs.dismissLoadingDialog
+import com.ichi2.anki.dialogs.showLoadingDialog
 import com.ichi2.anki.launchCatchingTask
-import com.ichi2.anki.libanki.getNotetype
-import com.ichi2.anki.libanki.getNotetypeNameIdUseCount
-import com.ichi2.anki.libanki.getNotetypeNames
-import com.ichi2.anki.libanki.removeNotetype
-import com.ichi2.anki.libanki.updateNotetype
+import com.ichi2.anki.notetype.ManageNoteTypesState.UserMessage
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.userAcceptsSchemaChange
 import com.ichi2.anki.utils.Destination
-import com.ichi2.anki.withProgress
 import com.ichi2.ui.AccessibleSearchView
 import com.ichi2.utils.getInputField
 import com.ichi2.utils.input
@@ -53,29 +51,20 @@ import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
 import com.ichi2.utils.title
-import net.ankiweb.rsdroid.BackendException
+import dev.androidbroadcast.vbpd.viewBinding
+import kotlinx.coroutines.launch
 
-class ManageNotetypes : AnkiActivity() {
-    private lateinit var actionBar: ActionBar
-    private lateinit var noteTypesList: RecyclerView
+class ManageNotetypes : AnkiActivity(R.layout.activity_manage_note_types) {
+    private val binding by viewBinding(ActivityManageNoteTypesBinding::bind)
+    val viewModel by viewModels<ManageNoteTypesViewModel>()
 
-    private var currentNotetypes: List<ManageNoteTypeUiModel> = emptyList()
-
-    // Store search query
-    private var searchQuery: String = ""
-
-    private val notetypesAdapter: NotetypesAdapter by lazy {
-        NotetypesAdapter(
+    private val notetypesAdapter: NoteTypesAdapter by lazy {
+        NoteTypesAdapter(
             this@ManageNotetypes,
-            onShowFields = {
-                launchForChanges<NoteTypeFieldEditor>(
-                    mapOf(
-                        "title" to it.name,
-                        "noteTypeID" to it.id,
-                    ),
-                )
-            },
-            onEditCards = { launchForChanges<CardTemplateEditor>(mapOf("noteTypeId" to it.id)) },
+            onItemClick = viewModel::onItemClick,
+            onItemLongClick = viewModel::onItemLongClick,
+            onItemChecked = viewModel::onItemChecked,
+            onEditCards = viewModel::onCardEditorRequested,
             onRename = ::renameNotetype,
             onDelete = ::deleteNotetype,
         )
@@ -83,7 +72,14 @@ class ManageNotetypes : AnkiActivity() {
     private val outsideChangesLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
             if (result.resultCode == RESULT_OK) {
-                launchCatchingTask { runAndRefreshAfter() }
+                viewModel.refreshNoteTypes()
+            }
+        }
+
+    private val backCallback =
+        object : OnBackPressedCallback(enabled = false) {
+            override fun handleOnBackPressed() {
+                viewModel.clearSelection()
             }
         }
 
@@ -93,25 +89,112 @@ class ManageNotetypes : AnkiActivity() {
         }
 
         super.onCreate(savedInstanceState)
-        setTitle(R.string.model_browser_label)
-        setContentView(R.layout.activity_manage_note_types)
-        actionBar = enableToolbar()
-        noteTypesList =
-            findViewById<RecyclerView>(R.id.note_types_list).apply {
-                adapter = notetypesAdapter
-            }
-        findViewById<FloatingActionButton>(R.id.note_type_add).setOnClickListener {
+        enableToolbar().title = getString(R.string.model_browser_label)
+        binding.noteTypesList.adapter = notetypesAdapter
+        binding.floatingActionButton.setOnClickListener {
             val addNewNotesType = AddNewNotesType(this)
             launchCatchingTask { addNewNotesType.showAddNewNotetypeDialog() }
         }
-        launchCatchingTask { runAndRefreshAfter() } // shows the initial note types list
+        binding.btnClearSelection.setOnClickListener { viewModel.clearSelection() }
+        binding.btnDeleteSelection.setOnClickListener {
+            launchCatchingTask {
+                val deleteMessage =
+                    if (userAcceptsSchemaChange()) {
+                        val selection =
+                            viewModel.selectedNoteTypes.joinToString { it.name }
+                        getString(R.string.model_delete_multiple_warning, selection)
+                    } else {
+                        return@launchCatchingTask
+                    }
+                AlertDialog.Builder(this@ManageNotetypes).show {
+                    title(R.string.dialog_positive_delete)
+                    message(text = deleteMessage)
+                    positiveButton(R.string.dialog_positive_delete) {
+                        viewModel.deleteSelectedNoteTypes()
+                    }
+                    negativeButton(R.string.dialog_cancel)
+                }
+            }
+        }
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.state.collect { state ->
+                    backCallback.isEnabled = viewModel.state.value.isInMultiSelectMode
+                    // as they are transient user messages take precedence and are immediately consumed
+                    if (state.message != null) {
+                        val snackbarMessage =
+                            when (state.message) {
+                                UserMessage.DeletingLastModel -> getString(R.string.toast_last_model)
+                            }
+                        showSnackbar(snackbarMessage)
+                        viewModel.clearMessage()
+                        return@collect
+                    }
+                    // after messages destinations are immediate targets for execution
+                    val currentDestination = state.destination
+                    if (currentDestination != null) {
+                        viewModel.clearDestination()
+                        outsideChangesLauncher.launch(currentDestination.toIntent(this@ManageNotetypes))
+                        return@collect
+                    }
+                    bindState(state)
+                }
+            }
+        }
+        onBackPressedDispatcher.addCallback(this, backCallback)
+    }
+
+    private fun bindState(state: ManageNoteTypesState) {
+        if (state.error != null) {
+            if (state.error.isReportable) {
+                CrashReportService.sendExceptionReport(
+                    state.error.source,
+                    ManageNotetypes::class.java.simpleName,
+                )
+            }
+            AlertDialog.Builder(this).show {
+                message(text = state.error.source.message)
+                positiveButton(R.string.close) { viewModel.refreshNoteTypes() }
+            }
+            viewModel.clearError()
+            return
+        }
+        if (state.isLoading) {
+            showLoadingDialog()
+        } else {
+            dismissLoadingDialog()
+        }
+        // send only the items that should be displayed
+        notetypesAdapter.submitList(state.noteTypes.filter { it.shouldBeDisplayed })
+        notetypesAdapter.isInMultiSelectMode = state.isInMultiSelectMode
+        supportActionBar?.subtitle =
+            resources.getQuantityString(
+                R.plurals.model_browser_types_available,
+                state.noteTypes.size,
+                state.noteTypes.size,
+            )
+        if (state.searchQuery.isNotEmpty()) {
+            val searchMenuItem =
+                findViewById<Toolbar>(R.id.toolbar).menu?.findItem(R.id.search_item)
+            val searchView = searchMenuItem?.actionView as? AccessibleSearchView
+            searchView?.setQuery(state.searchQuery, false)
+        }
+        binding.selectionToolbar.isVisible = state.isInMultiSelectMode
+        val selectedCount = state.noteTypes.count { it.isSelected }
+        binding.selectedLabel.text =
+            resources.getQuantityString(
+                R.plurals.note_types_selected,
+                selectedCount,
+                selectedCount,
+            )
+        binding.floatingActionButton.isVisible = !state.isInMultiSelectMode
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.search, menu)
 
         val searchItem = menu.findItem(R.id.search_item)
-        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        val searchManager = getSystemService(SEARCH_SERVICE) as SearchManager
         val searchView = searchItem?.actionView as? AccessibleSearchView
         searchView?.maxWidth = Integer.MAX_VALUE
         searchView?.setSearchableInfo(searchManager.getSearchableInfo(componentName))
@@ -121,9 +204,9 @@ class ManageNotetypes : AnkiActivity() {
                 override fun onQueryTextSubmit(query: String): Boolean = true
 
                 override fun onQueryTextChange(newText: String?): Boolean {
-                    // Update the search query
-                    searchQuery = newText.orEmpty()
-                    filterNoteTypes(searchQuery)
+                    if (newText != null && viewModel.state.value.searchQuery != newText) {
+                        viewModel.filter(newText)
+                    }
                     return true
                 }
             },
@@ -131,65 +214,28 @@ class ManageNotetypes : AnkiActivity() {
         return true
     }
 
-    /**
-     * Filters and updates the note types list based on the query
-     */
-    @NeedsTest("verify note types list still filtered by search query after rename or delete")
-    private fun filterNoteTypes(query: String) {
-        val filteredList =
-            if (query.isEmpty()) {
-                currentNotetypes
-            } else {
-                currentNotetypes.filter {
-                    it.name.lowercase().contains(query.lowercase())
-                }
-            }
-        notetypesAdapter.submitList(filteredList)
-    }
-
-    @SuppressLint("CheckResult")
-    private fun renameNotetype(manageNoteTypeUiModel: ManageNoteTypeUiModel) {
+    private fun renameNotetype(state: NoteTypeItemState) {
         launchCatchingTask {
-            val allNotetypes = mutableListOf<AddNotetypeUiModel>()
-            allNotetypes.addAll(
-                withProgress {
-                    withCol { getNotetypeNames().map { it.toUiModel() } }
-                },
-            )
+            val allNotetypes = viewModel.state.value.noteTypes
             val dialog =
                 AlertDialog
                     .Builder(this@ManageNotetypes)
                     .show {
                         title(R.string.rename_model)
                         positiveButton(R.string.rename) {
-                            launchCatchingTask(
-                                // TODO: Change to CardTypeException: https://github.com/ankidroid/Anki-Android-Backend/issues/537
-                                // Card template 1 in note type 'character' has a problem.
-                                // Expected to find a field replacement on the front of the card template.
-                                skipCrashReport = { it is BackendException },
-                            ) {
-                                runAndRefreshAfter {
-                                    val initialNotetype = getNotetype(manageNoteTypeUiModel.id)
-                                    val renamedNotetype =
-                                        initialNotetype.copy {
-                                            this.name = (it as AlertDialog).getInputField().text.toString()
-                                        }
-                                    updateNotetype(renamedNotetype)
-                                }
-                            }
+                            val userInput = (it as AlertDialog).getInputField().text.toString()
+                            viewModel.rename(state.id, userInput)
                         }
                         negativeButton(R.string.dialog_cancel)
                         setView(R.layout.dialog_generic_text_input)
                     }.input(
-                        prefill = manageNoteTypeUiModel.name,
+                        prefill = state.name,
                         waitForPositiveButton = false,
                         displayKeyboard = true,
                         callback = { dialog, text ->
-                            dialog.positiveButton.isEnabled =
-                                text.isNotEmpty() &&
-                                !allNotetypes
-                                    .map { it.name }
-                                    .contains(text.toString())
+                            val isNotADuplicate =
+                                !allNotetypes.map { it.name }.contains(text.toString())
+                            dialog.positiveButton.isEnabled = text.isNotEmpty() && isNotADuplicate
                         },
                     )
             // start with the button disabled as dialog shows the initial name
@@ -197,77 +243,22 @@ class ManageNotetypes : AnkiActivity() {
         }
     }
 
-    private fun deleteNotetype(manageNoteTypeUiModel: ManageNoteTypeUiModel) {
+    private fun deleteNotetype(state: NoteTypeItemState) {
         launchCatchingTask {
-            val messageResourceId: Int? =
+            @StringRes val messageResourceId: Int? =
                 if (userAcceptsSchemaChange()) {
-                    withProgress {
-                        withCol {
-                            if (getNotetypeNames().size <= 1) {
-                                return@withCol null
-                            }
-                            R.string.model_delete_warning
-                        }
-                    }
+                    R.string.model_delete_warning
                 } else {
                     return@launchCatchingTask
                 }
-            if (messageResourceId == null) {
-                showSnackbar(getString(R.string.toast_last_model))
-                return@launchCatchingTask
-            }
             AlertDialog.Builder(this@ManageNotetypes).show {
                 title(R.string.model_browser_delete)
                 message(messageResourceId)
                 positiveButton(R.string.dialog_positive_delete) {
-                    launchCatchingTask {
-                        runAndRefreshAfter { removeNotetype(manageNoteTypeUiModel.id) }
-                    }
+                    viewModel.delete(state.id)
                 }
                 negativeButton(R.string.dialog_cancel)
             }
-        }
-    }
-
-    /**
-     * Run the provided block on the [Collection](also displaying progress) and then refresh the list
-     * of note types to show the changes. This method expects to be called from the main thread.
-     *
-     * @param action the action to run before the notetypes refresh, if not provided simply refresh
-     */
-    suspend fun runAndRefreshAfter(action: com.ichi2.anki.libanki.Collection.() -> Unit = {}) {
-        val updatedNotetypes =
-            withProgress {
-                withCol {
-                    action()
-                    getNotetypeNameIdUseCount().map { it.toUiModel() }
-                }
-            }
-
-        currentNotetypes = updatedNotetypes
-
-        filterNoteTypes(searchQuery)
-        actionBar.subtitle =
-            resources.getQuantityString(
-                R.plurals.model_browser_types_available,
-                updatedNotetypes.size,
-                updatedNotetypes.size,
-            )
-    }
-
-    private inline fun <reified T : AnkiActivity> launchForChanges(extras: Map<String, Any>) {
-        val targetIntent =
-            Intent(this@ManageNotetypes, T::class.java).apply {
-                extras.forEach { toExtra(it) }
-            }
-        outsideChangesLauncher.launch(targetIntent)
-    }
-
-    private fun Intent.toExtra(newExtra: Map.Entry<String, Any>) {
-        when (newExtra.value) {
-            is String -> putExtra(newExtra.key, newExtra.value as String)
-            is Long -> putExtra(newExtra.key, newExtra.value as Long)
-            else -> throw IllegalArgumentException("Unexpected value type: ${newExtra.value}")
         }
     }
 }

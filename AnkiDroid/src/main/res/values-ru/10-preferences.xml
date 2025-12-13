@@ -70,7 +70,7 @@
     <string name="pref_cat_advanced" maxLength="41">Расширенные</string>
     <string name="pref_cat_workarounds" maxLength="41">Костыли и велосипеды</string>
     <string name="pref_cat_plugins" maxLength="41">Плагины</string>
-    <string name="pref_cat_editing" maxLength="41">Editing</string>
+    <string name="pref_cat_editing" maxLength="41">Редактирование</string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width" maxLength="41">Толщина линии</string>
     <string name="use_input_tag" maxLength="41">Ввод ответа на карточке</string>
@@ -118,9 +118,9 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">Касание в центре экрана</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Касание внизу в левом углу</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Касание внизу в правом углу</string>
-    <string name="gestures_two_finger_tap" maxLength="41">Two-finger tap</string>
-    <string name="gestures_three_finger_tap" maxLength="41">Three-finger tap</string>
-    <string name="gestures_four_finger_tap" maxLength="41">Four-finger tap</string>
+    <string name="gestures_two_finger_tap" maxLength="41">Касание двумя пальцами</string>
+    <string name="gestures_three_finger_tap" maxLength="41">Касание тремя пальцами</string>
+    <string name="gestures_four_finger_tap" maxLength="41">Касание четырьмя пальцами</string>
     <string name="gestures_shake" maxLength="41">Потрясти устройство</string>
     <string name="card_browser_enable_external_context_menu" maxLength="41">Пункт «%s» в меню</string>
     <string name="card_browser_enable_external_context_menu_summary">Добавляет пункт «%s» в контекстное меню системы</string>
@@ -163,7 +163,7 @@
     <string name="safe_display_summ">Отключает всю анимацию и использует безопасную отрисовку. Может понадобиться для экранов на электронных чернилах</string>
     <string name="disable_extended_text_ui" maxLength="41">Отключить режим одного поля</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
-    <string name="disable_extended_text_ui_summ">Включает контекстное меню «Задание с пропусками» в альбомном режиме</string>
+    <string name="disable_extended_text_ui_summ">Включает контекстное меню «Тест с пропусками» в альбомном режиме</string>
     <string name="vertical_centering" maxLength="41">Выравнивать по центру</string>
     <string name="vertical_centering_summ">Выравнивает содержимое карточек по вертикали</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Интервал двойного нажатия</string>
@@ -173,7 +173,7 @@
     <string name="show_estimates" maxLength="41">Показывать время на кнопках</string>
     <string name="show_estimates_summ">Показывает время следующего повторения над кнопками ответа</string>
     <string name="show_large_answer_buttons" maxLength="41">Большие кнопки ответа</string>
-    <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
+    <string name="show_large_answer_buttons_summ">Показать кнопку ответа в 2 строки</string>
     <string name="show_top_bar" maxLength="41">Показывать верхнюю панель</string>
     <string name="show_top_bar_summary">Показать счетчик карт, время ответа, флаг и отметку в верхней строке</string>
     <string name="show_progress" maxLength="41">Показать оставшиеся</string>
@@ -185,10 +185,10 @@
     <string name="time_limit" maxLength="41">Лимит учебного блока</string>
     <string name="day_offset_with_description" maxLength="41">Начало нового дня</string>
     <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
-        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">%d hour past midnight</item>
-        <item quantity="few">%d hours past midnight</item>
-        <item quantity="many">%d hours past midnight</item>
-        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">%d hours past midnight</item>
+        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">%d час после полуночи</item>
+        <item quantity="few">%d часа после полуночи</item>
+        <item quantity="many">%d часов после полуночи</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">%d часов после полуночи</item>
     </plurals>
     <string name="pref_keep_screen_on" maxLength="41">Не выключать экран</string>
     <string name="pref_keep_screen_on_summ">Отключает спящий режим экрана</string>
@@ -204,17 +204,17 @@
     <string name="reset">Сброс</string>
     <string name="thirdparty_apps_title" maxLength="41">Сторонние приложения</string>
     <string name="thirdparty_apps_summary">Покажет список приложений, которые используют API AnkiDroid, например, словари</string>
-    <string name="pref_controls_reviews_tab" maxLength="41" comment="Name of the tab to configure controls for the reviews screen">Reviews</string>
+    <string name="pref_controls_reviews_tab" maxLength="41" comment="Name of the tab to configure controls for the reviews screen">Просмотр</string>
     <string name="pref_controls_previews_tab" maxLength="41" comment="Name of the tab to configure controls for the previews screen">Предпросмотр</string>
-    <string name="toggle_backside_only" maxLength="41" comment="Control setting that toggles \'Backside only\' in the previews screen">Toggle backside only</string>
+    <string name="toggle_backside_only" maxLength="41" comment="Control setting that toggles \'Backside only\' in the previews screen">Включить только заднюю сторону</string>
     <!-- Appearance settings -->
-    <string name="pref_cat_reviewer" maxLength="41">Study Screen</string>
+    <string name="pref_cat_reviewer" maxLength="41">Экран обучения</string>
     <string name="show_deck_title" maxLength="41">Показывать название колоды</string>
     <string name="accessibility" maxLength="41">Специальные возможности</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Вставлять изображения буфера как PNG</string>
     <string name="exit_via_double_tap_back" maxLength="41">Нажмите «Назад» дважды, чтобы выйти</string>
-    <string name="exit_via_double_tap_back_summ">To avoid accidentally leaving the study screen or the app</string>
+    <string name="exit_via_double_tap_back_summ">Предотвращать случайный выход с экрана обучения или приложения</string>
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">Разрешить все медиафайлы при импорте</string>
     <string name="media_import_allow_all_files_summ">Используйте, если Android не распознаёт файлы</string>
@@ -237,12 +237,14 @@
     <string name="media" maxLength="41">Медиа</string>
     <string name="misc" maxLength="41">Разное</string>
     <!-- Review reminders -->
-    <string name="add_reminder" comment="Label for the add reminder button in the screen for adding and editing review reminders">Add reminder</string>
+    <string name="add_reminder" comment="Label for the add reminder button in the screen for adding and editing review reminders">Добавить напоминание</string>
+    <string name="add_review_reminder" comment="Title of the screen for creating a new review reminder">Add review reminder</string>
+    <string name="edit_review_reminder" comment="Title of the screen for editing an existing review reminder">Edit review reminder</string>
+    <string name="you_have_no_review_reminders" comment="Text that appears in the review reminder editing screen when there are no reminders set">You have no review reminders</string>
     <!-- studyoptions -->
     <string name="studyoptions_limit_select_tags">Выберите метки</string>
     <!-- Deck configurations -->
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">Общие</string>
-    <string name="deck_conf_reminders" maxLength="41">Напоминания</string>
     <string name="deck_conf_cram_filter" maxLength="41">Фильтр</string>
     <string name="deck_conf_cram_search" maxLength="41" comment="Label of a text field that contains a search query.">Запрос</string>
     <string name="deck_conf_cram_limit" maxLength="41">Количество</string>
@@ -376,20 +378,21 @@
     <string name="hide_system_bars_navigation_bar" comment="Setting option to hide the system navigation bar (the bottom one that can go back, to home, etc)">Панель навигации</string>
     <string name="hide_system_bars_all_bars" comment="Setting option to hide all the system bars">Все</string>
     <string name="ignore_display_cutout" maxLength="41">Игнорировать вырез экрана</string>
-    <string name="hide_answer_buttons" maxLength="41">Скрывать кнопки ответа</string>
+    <string name="show_answer_buttons" maxLength="41">Показать кнопки ответа</string>
     <string name="hide_hard_and_easy" maxLength="41">Скрывать кнопки «Трудно» и «Легко»</string>
     <string name="reviewer_frame_style" maxLength="41">Стиль рамки</string>
     <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Study Screen">Карточка</string>
     <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Study Screen">Квадратная</string>
-    <string name="reviewer_toolbar_top" maxLength="41" comment="Setting to put the toolbar on the top of the study screen">Top</string>
-    <string name="reviewer_toolbar_bottom" maxLength="41" comment="Setting to put the toolbar on the bottom of the study screen">Bottom</string>
-    <string name="reviewer_toolbar_none" maxLength="41" comment="Setting to remove the toolbar from the study screen">None</string>
-    <string name="toolbar" maxLength="41">Toolbar</string>
-    <string name="toolbar_actions" maxLength="41">Toolbar actions</string>
-    <string name="toolbar_position" maxLength="41">Toolbar position</string>
-    <string name="new_study_screen" maxLength="41">New study screen</string>
+    <string name="reviewer_toolbar_top" maxLength="41" comment="Setting to put the toolbar on the top of the study screen">Наверх</string>
+    <string name="reviewer_toolbar_bottom" maxLength="41" comment="Setting to put the toolbar on the bottom of the study screen">Вниз</string>
+    <string name="reviewer_toolbar_none" maxLength="41" comment="Setting to remove the toolbar from the study screen">Удалить</string>
+    <string name="toolbar" maxLength="41">Панель инструментов</string>
+    <string name="toolbar_actions" maxLength="41">Действия на панели</string>
+    <string name="toolbar_position" maxLength="28">Расположение панели</string>
+    <string name="new_study_screen" maxLength="41">Новый экран обучения</string>
     <string name="new_study_screen_summ"><![CDATA[Improved study screen that will succeed the current one. Some features of the old screen have been changed or removed. Please report any <a href="%1$s">feedback</a> or <a href="%2$s">bugs</a>.]]></string>
-    <string name="show_answer_feedback" maxLength="41">Show answer feedback</string>
+    <string name="show_answer_feedback" maxLength="41">Показать обратную связь по ответу</string>
+    <string name="screen" maxLength="41">Экран</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">Открыть настройки</string>
 </resources>

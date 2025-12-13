@@ -131,7 +131,6 @@
     <string name="empty_filtered_deck">খালি করা হচ্ছে ফিল্টারড ডেক</string>
     <string name="search_deck" comment="Deck search for selecting it">ডেক অনুসন্ধান</string>
     <string name="empty_deck">এই ডেক ফাঁকা।</string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">ডেক অনুসন্ধান</string>
     <string name="invalid_deck_name">ডেক নাম বৈধ নয়</string>
     <string name="studyoptions_congrats_finished">Congratulations! You have finished for today.</string>
     <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">ডেক আপাতত শেষ! %s</string>
@@ -170,6 +169,7 @@
     <string name="card_template_browser_appearance_title">ব্রাউজারের চেহারা</string>
     <!-- card Info -->
     <string name="card_info_title" maxLength="28">কার্ডের বিবরণী</string>
+    <string name="previous_card_info_title" maxLength="28">Previous card info</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">AnkiDroid ডাটাবেস থেকে পড়ুন এবং লিখুন</string>
     <string name="read_write_permission_description">বিদ্যমান নোট, কার্ড, নোটের ধরন এবং ডেক এ প্রবেশের পাশাপাশি নতুন একটি তৈরি করুন</string>
@@ -197,11 +197,21 @@
     <string name="new_unsafe_collection">AnkiDroid আনইনষ্টল করা হলে নতুন সংগ্রহটি ফোন থেকে ডিলিট হয়ে যাবে</string>
     <!-- Permissions screen -->
     <string name="permissions_screen_headline">AnkiDroid কাজ করার জন্য কতকগুলি অনুমতির প্রয়োজন রয়েছে</string>
+    <string name="permissions_screen_optional_headline" comment="Explains that there are optional permissions that can be granted to AnkiDroid.">AnkiDroid works best with these permissions</string>
     <string name="storage_access_title">স্টোরেজ অ্যাকসেস</string>
     <string name="storage_access_summary">সংগ্রহটিকে সুরক্ষিত করে রাখা হবে যাতে অ্যাপ আনইনষ্টল করা হলেও ডিলিট না হয়ে যায়</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after. See [android.permission.MANAGE_EXTERNAL_STORAGE] on https://developer.android.com/training/data-storage/manage-all-files for context.">সব ফাইলের অ্যাক্সেস</string>
     <string name="image_occlusion">ছবিতে শূন্য স্থান পূরণ করা</string>
+    <string name="microphone" comment="Title of the microphone permission in the permissions explanation screen.">Microphone</string>
+    <string name="microphone_permission_explanation" comment="Description explaining why AnkiDroid needs the microphone permission, shown on the permissions explanation screen.">Allows you to add sounds to cards and enables voice playback while reviewing</string>
+    <string name="notifications_permission_explanation" comment="Description explaining why AnkiDroid needs the notification permission.">Enables background media syncing and allows you to create review reminders</string>
+    <string name="heading_required_permissions" comment="Heading for the section of required permissions that the app needs to function, shown in the permissions explanation screen.">Required</string>
+    <string name="heading_optional_permissions" comment="Heading for the section of optional permissions that the app needs to function, shown in the permissions explanation screen.">Optional</string>
+    <string name="manually_grant_permissions" comment="Pop-up message that is shown to the user when they want to grant an app permission that must be granted via the OS settings screen.">This permission must be manually granted from Settings</string>
+    <string name="revoke_permissions" comment="Pop-up message that is shown to the user when they are revoking an app permission.">This permission must be manually revoked from Settings</string>
     <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">অ্যাকাউন্ট মুছে ফেলুন</string>
     <!-- Instant Note Editor -->
     <string name="instant_card" comment="Used in the Android system context menu/share dialog to quickly create a note. This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. ">তাত্ক্ষণিক কার্ড</string>
+    <!-- Multiple profile -->
+    <string name="add_profile">Add profile</string>
 </resources>

@@ -45,7 +45,6 @@
 -->
 <resources>
     <!-- Widget -->
-    <string name="widget_minimum_cards_due_notification_ticker_title">К просмотру</string>
     <plurals name="widget_minimum_cards_due_notification_ticker_text">
         <item quantity="one">%d карточка AnkiDroid к просмотру</item>
         <item quantity="few">%d карточки AnkiDroid к просмотру</item>
@@ -75,10 +74,10 @@
     <string name="deck_removed_from_widget" comment="Snackbar when deck is removed from widget">Колода удалена</string>
     <string name="deck_already_selected_message" comment="Snackbar when user try to select the same deck again">Эта колода уже выбрана</string>
     <plurals name="deck_limit_reached">
-        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">You can select up to %d deck.</item>
-        <item quantity="few">You can select up to %d decks.</item>
-        <item quantity="many">You can select up to %d decks.</item>
-        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">You can select up to %d decks.</item>
+        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">Максимально колод для выбора: %d</item>
+        <item quantity="few">Максимально колод для выбора: %d</item>
+        <item quantity="many">Максимально колод для выбора: %d</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">Максимально колод для выбора: %d</item>
     </plurals>
     <string name="empty_widget_state" comment="To denote the widget is empty">Колоды нет. Нажмите, чтобы перенастроить.</string>
     <string name="empty_collection_state_in_widget" comment="To denote the collection is empty">Коллекция пуста, используйте приложение для добавления колод, после перенастройте</string>

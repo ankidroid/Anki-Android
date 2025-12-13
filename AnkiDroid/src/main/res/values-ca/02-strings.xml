@@ -48,12 +48,14 @@
     <string name="drawer_open">Obrir el calaix</string>
     <string name="drawer_close">Tancar el calaix</string>
     <string name="note_message">Note saved</string>
+    <!-- Note editor screen -->
     <string name="CardEditorCardDeck">Paquet de cartes:</string>
     <string name="CardEditorNoteDeck">Paquet:</string>
     <string name="CardEditorModel">Tipus:</string>
     <string name="CardEditorTags">Etiquetes: %1$s</string>
     <string name="CardEditorCards">Cartes: %1$s</string>
     <string name="edit_occlusions">Edit Occlusions</string>
+    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
     <string name="tag_name">Nom de l\'etiqueta</string>
     <string name="add_new_filter_tags">Afegir/filtrar etiquetes</string>
     <string name="add_tag" maxLength="28">Afegir etiqueta</string>
@@ -65,6 +67,18 @@
     <string name="save_whiteboard" maxLength="28">Desar pissarra</string>
     <string name="enable_stylus" maxLength="28">Activa el mode de llapis</string>
     <string name="disable_stylus">Desactiva el mode de llapis</string>
+    <string name="eraser" maxLength="28">Eraser</string>
+    <string name="add_brush" maxLength="28">Add brush</string>
+    <string name="whiteboard_align_left" comment="Option to align the whiteboard toolbar on the left" maxLength="28">Left</string>
+    <string name="whiteboard_align_bottom" comment="Option to align the whiteboard toolbar on the bottom" maxLength="28">Bottom</string>
+    <string name="whiteboard_align_right" comment="Option to align the whiteboard toolbar on the right" maxLength="28">Right</string>
+    <string name="whiteboard_clear" comment="Button text to clear the whiteboard" maxLength="28">Clear</string>
+    <string name="whiteboard_more_options" comment="Tooltip of the whiteboard \'More\' button" maxLength="28">More options</string>
+    <string name="whiteboard_remove_brush_message">Are you sure you want to remove this brush from your palette?</string>
+    <string name="whiteboard_ink_eraser" comment="Title of the whiteboard Ink eraser">Ink</string>
+    <string name="whiteboard_stroke_eraser" comment="Title of the whiteboard Stroke eraser">Stroke</string>
+    <string name="stylus_mode" comment="Title of the menu item that toggles the whiteboard stylus mode" maxLength="28">Stylus mode</string>
+    <string name="cannot_remove_last_brush_message">The last brush may not be removed</string>
     <string name="enable_whiteboard" maxLength="28">Activar pissarra</string>
     <string name="disable_whiteboard">Desactiva la pissarra</string>
     <string name="show_whiteboard">Mostra la pissarra</string>
@@ -83,6 +97,7 @@
     <string name="webview_crash_fatal">Error Fatal: El renderitzador de WebView s\'ha penjat. Causa: %s</string>
     <string name="webview_crash_loop_dialog_title">Error al sistema de renderització de WebView</string>
     <string name="webview_crash_loop_dialog_content">El sistema WebView ha fallat al renderitzar la carta \'%1$s.\n%2$s</string>
+    <string name="slide_to_cancel" comment="Message shown when pressing the record button">Slide to cancel</string>
     <string name="filter_by_flags" maxLength="41">Bandera</string>
     <!-- Custom study options -->
     <string name="custom_study_loading_tags">Building list of tags&#8230;</string>
@@ -151,7 +166,8 @@
     <string name="import_error_not_apkg_extension">El nom del fitxer \"%s\" no té l\'extensió .apkg o .colpkg</string>
     <string name="import_error_load_imported_database">Les substitucions a la base de dades Anki (.anki2) encara no són suportades. Consulteu el manual per obtenir instruccions de substitució.</string>
     <string name="import_error_content_provider">El fitxer seleccionat no s\'ha importat automàticament per AnkiDroid. Consulteu el manual d\'usuari per com importar arxius Anki manualment: \n%s</string>
-    <string name="import_error_copy_to_cache">No ha estat possible copiar el fitxer a la memòria cau (segurament falta espai)</string>
+    <string name="import_error_copy_to_cache_title">No ha estat possible copiar el fitxer a la memòria cau</string>
+    <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">This is often caused by a bug in the app you used to select the file. Please try the following fixes:\n\n%s</string>
     <string name="import_interrupted">Importació interrompuda: AnkiDroid s\'ha tancat</string>
     <string name="export_ready_title">Export ready</string>
     <string name="export_send_no_handlers">No hi ha aplicacions disponibles per a gestionar apkg. Desant&#8230;</string>
@@ -180,11 +196,6 @@
     <string name="tag_editor_add_feedback">Prem \"%2$s\" per confirmar afegir \"%1$s\"</string>
     <string name="tag_editor_add_feedback_existing">Etiqueta existent \"%1$s\" seleccionada</string>
     <!-- Time spans -->
-    <string name="reminder_title">No t\'oblidis d\'estudiar avui!</string>
-    <plurals name="reminder_text">
-        <item quantity="one">%2$d carta per revisar a %1$s</item>
-        <item quantity="other">%2$d cartes per revisar a %1$s</item>
-    </plurals>
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Error en compartir l\'arxiu apkg</string>
     <!-- Import and export v2 feedback -->
@@ -225,6 +236,7 @@
     <string name="search_decks" maxLength="28">Cerca de paquets</string>
     <string name="ankidroid_init_failed_webview_title">Error fatal</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid confia en el sistema WebView que no està disponible. Això pot passar si el sistema instal·la actualitzacions. Torneu-ho a provar d\'aquí a uns quants minuts.\n\n%s</string>
+    <string name="ankidroid_init_failed_storage">AnkiDroid cannot access storage due to an Android error.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">Mida de la lletra</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Mostra la barra d\'eines</string>
@@ -271,7 +283,6 @@
     <string name="download_failed">Error al baixar</string>
     <string name="deck_download_progress_message">Es poden usar altres aplicacions mentre es fa la baixada</string>
     <string name="check_network">Comproveu la vostra connexió de xarxa si us plau</string>
-    <string name="search_using_deck_name">Cercar usant el nom del paquet</string>
     <string name="external_storage_unavailable">Download aborted, the external storage is not available</string>
     <string name="home" maxLength="28">Inici</string>
     <!-- Study Screen actions
@@ -296,6 +307,10 @@
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">No s\'ha pogut accedir a la col·lecció. Si us plau, torneu-ho a provar!</string>
     <string name="cd_manage_notetypes_add">Add a new note type</string>
+    <plurals name="note_types_selected">
+        <item quantity="one">%d note type selected</item>
+        <item quantity="other">%d note types selected</item>
+    </plurals>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">Estudieu menys</string>
     <string name="intro_ankidroid_tagline_two">Recorda més</string>
@@ -304,7 +319,6 @@
     <string name="intro_sync_from_ankiweb">Sincronitza-ho amb AnkiWeb</string>
     <!-- IntentHandler -->
     <string name="app_not_initialized_new">AnkiDroid is not initialized yet. Please open AnkiDroid and try again</string>
-    <string name="already_logged_in">Ja heu iniciat la sessió</string>
     <!-- Deck Creation -->
     <string name="deck_created">S\'ha generat un paquet</string>
     <string name="deck_renamed">S\'ha canviat el nom del paquet</string>

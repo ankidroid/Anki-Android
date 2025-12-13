@@ -27,6 +27,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
+import androidx.annotation.LayoutRes
 import androidx.annotation.VisibleForTesting
 import androidx.core.content.ContextCompat
 import androidx.core.view.MenuHost
@@ -42,7 +43,10 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import anki.collection.OpChanges
+import com.google.android.material.chip.Chip
 import com.google.android.material.progressindicator.LinearProgressIndicator
+import com.google.android.material.search.SearchBar
+import com.google.android.material.search.SearchView
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.AnkiActivityProvider
 import com.ichi2.anki.CardBrowser
@@ -72,9 +76,7 @@ import com.ichi2.anki.dialogs.BrowserOptionsDialog
 import com.ichi2.anki.dialogs.CardBrowserOrderDialog
 import com.ichi2.anki.dialogs.CreateDeckDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog
-import com.ichi2.anki.dialogs.DeckSelectionDialog.Companion.newInstance
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
-import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
 import com.ichi2.anki.dialogs.SimpleMessageDialog
 import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory
@@ -83,10 +85,12 @@ import com.ichi2.anki.export.ExportDialogFragment
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.model.CardStateFilter
+import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.anki.model.SortType
 import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.requireAnkiActivity
+import com.ichi2.anki.requireNavigationDrawerActivity
 import com.ichi2.anki.scheduling.ForgetCardsDialog
 import com.ichi2.anki.scheduling.SetDueDateDialog
 import com.ichi2.anki.snackbar.showSnackbar
@@ -97,6 +101,7 @@ import com.ichi2.anki.utils.ext.ifNotZero
 import com.ichi2.anki.utils.ext.setFragmentResultListener
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.utils.ext.visibleItemPositions
+import com.ichi2.anki.utils.showDialogFragmentImpl
 import com.ichi2.anki.withProgress
 import com.ichi2.utils.HandlerUtils
 import com.ichi2.utils.TagsUtil.getUpdatedTags
@@ -111,7 +116,7 @@ import timber.log.Timber
 // At some point, starting between 35k and 60k selections, the scroll position is lost on recreation
 // This occurred on a Pixel 9 Pro, Android 15
 class CardBrowserFragment :
-    Fragment(R.layout.cardbrowser),
+    Fragment(),
     AnkiActivityProvider,
     ChangeManager.Subscriber,
     TagsDialogListener {
@@ -145,6 +150,25 @@ class CardBrowserFragment :
         get() = ankiActivity.tagsDialogFactory
 
     private var undoSnackbar: Snackbar? = null
+
+    // Dev option for Issue 18709
+    private val useSearchView: Boolean
+        get() = requireCardBrowserActivity().useSearchView
+
+    // only usable if 'useSearchView' is set
+    private var searchBar: SearchBar? = null
+    private var searchView: SearchView? = null
+    private var deckChip: Chip? = null
+
+    @get:LayoutRes
+    private val layout: Int
+        get() = if (useSearchView) R.layout.card_browser_searchview_fragment else R.layout.card_browser_fragment
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View? = inflater.inflate(layout, container, false)
 
     override fun onViewCreated(
         view: View,
@@ -194,6 +218,18 @@ class CardBrowserFragment :
             }
 
         progressIndicator = view.findViewById(R.id.browser_progress)
+
+        deckChip =
+            view.findViewById<Chip>(R.id.chip_decks)?.apply {
+                setOnClickListener { viewModel.openDeckSelectionDialog() }
+            }
+        searchBar =
+            view.findViewById<SearchBar>(R.id.search_bar)?.apply {
+                setNavigationOnClickListener {
+                    requireNavigationDrawerActivity().onNavigationPressed()
+                }
+            }
+        searchView = view.findViewById<SearchView>(R.id.search_view)
 
         setupFlows()
 
@@ -403,6 +439,21 @@ class CardBrowserFragment :
                 )
         }
 
+        fun onSearchForDecks(decks: List<SelectableDeck>) {
+            val dialog =
+                DeckSelectionDialog.newInstance(
+                    title = getString(R.string.search_deck),
+                    summaryMessage = null,
+                    keepRestoreDefaultButton = false,
+                    decks = decks,
+                )
+            showDialogFragmentImpl(childFragmentManager, dialog)
+        }
+
+        fun onDeckChanged(deck: SelectableDeck?) {
+            deckChip?.text = deck?.getFullDisplayName(requireContext())
+        }
+
         activityViewModel.flowOfIsTruncated.launchCollectionInLifecycleScope(::onIsTruncatedChanged)
         activityViewModel.flowOfSelectedRows.launchCollectionInLifecycleScope(::onSelectedRowsChanged)
         activityViewModel.flowOfActiveColumns.launchCollectionInLifecycleScope(::onColumnsChanged)
@@ -412,6 +463,9 @@ class CardBrowserFragment :
         activityViewModel.flowOfColumnHeadings.launchCollectionInLifecycleScope(::onColumnNamesChanged)
         activityViewModel.flowOfCardStateChanged.launchCollectionInLifecycleScope(::onCardsMarkedEvent)
         activityViewModel.flowOfToggleSelectionState.launchCollectionInLifecycleScope(::onToggleSelectionStateUpdated)
+        viewModel.flowOfSearchForDecks.launchCollectionInLifecycleScope(::onSearchForDecks)
+        activityViewModel.flowOfDeckSelection.launchCollectionInLifecycleScope(::onDeckChanged)
+        activityViewModel.flowOfScrollRequest.launchCollectionInLifecycleScope(::autoScrollTo)
     }
 
     private fun setupFragmentResultListeners() {
@@ -603,6 +657,7 @@ class CardBrowserFragment :
             }
         }
 
+    // TODO: This dialog should survive activity recreation
     fun showChangeDeckDialog() =
         launchCatchingTask {
             if (!activityViewModel.hasSelectedAnyRows()) {
@@ -612,7 +667,6 @@ class CardBrowserFragment :
             val selectableDecks =
                 activityViewModel
                     .getAvailableDecks()
-                    .map { d -> SelectableDeck(d) }
             val dialog = getChangeDeckDialog(selectableDecks)
             showDialogFragment(dialog)
         }
@@ -815,7 +869,7 @@ class CardBrowserFragment :
     @VisibleForTesting
     internal fun getChangeDeckDialog(selectableDecks: List<SelectableDeck>?): DeckSelectionDialog {
         val dialog =
-            newInstance(
+            DeckSelectionDialog.newInstance(
                 getString(R.string.move_all_to_deck),
                 null,
                 false,
@@ -824,7 +878,11 @@ class CardBrowserFragment :
         // Add change deck argument so the dialog can be dismissed
         // after activity recreation, since the selected cards will be gone with it
         dialog.requireArguments().putBoolean(CHANGE_DECK_KEY, true)
-        dialog.deckSelectionListener = DeckSelectionListener { deck: SelectableDeck? -> moveSelectedCardsToDeck(deck!!.deckId) }
+        dialog.deckSelectionListener =
+            DeckSelectionListener { deck: SelectableDeck? ->
+                require(deck is SelectableDeck.Deck) { "Expected non-null deck" }
+                moveSelectedCardsToDeck(deck.deckId)
+            }
         return dialog
     }
 

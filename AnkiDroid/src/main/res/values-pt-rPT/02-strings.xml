@@ -48,12 +48,14 @@
     <string name="drawer_open">Abrir painel</string>
     <string name="drawer_close">Fechar painel</string>
     <string name="note_message">Note saved</string>
+    <!-- Note editor screen -->
     <string name="CardEditorCardDeck">Baralho de fichas:</string>
     <string name="CardEditorNoteDeck">Baralho:</string>
     <string name="CardEditorModel">Tipo:</string>
     <string name="CardEditorTags">Etiquetas: %1$s</string>
     <string name="CardEditorCards">Fichas: %1$s</string>
     <string name="edit_occlusions">Editar Oclusões</string>
+    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
     <string name="tag_name">Nome da etiqueta</string>
     <string name="add_new_filter_tags">Adicionar/filtrar etiquetas</string>
     <string name="add_tag" maxLength="28">Adicionar etiqueta</string>
@@ -65,6 +67,18 @@
     <string name="save_whiteboard" maxLength="28">Guardar o quadro de escrita</string>
     <string name="enable_stylus" maxLength="28">Activar a escrita com caneta</string>
     <string name="disable_stylus">Desactivar a escrita com caneta</string>
+    <string name="eraser" maxLength="28">Eraser</string>
+    <string name="add_brush" maxLength="28">Add brush</string>
+    <string name="whiteboard_align_left" comment="Option to align the whiteboard toolbar on the left" maxLength="28">Left</string>
+    <string name="whiteboard_align_bottom" comment="Option to align the whiteboard toolbar on the bottom" maxLength="28">Bottom</string>
+    <string name="whiteboard_align_right" comment="Option to align the whiteboard toolbar on the right" maxLength="28">Right</string>
+    <string name="whiteboard_clear" comment="Button text to clear the whiteboard" maxLength="28">Clear</string>
+    <string name="whiteboard_more_options" comment="Tooltip of the whiteboard \'More\' button" maxLength="28">More options</string>
+    <string name="whiteboard_remove_brush_message">Are you sure you want to remove this brush from your palette?</string>
+    <string name="whiteboard_ink_eraser" comment="Title of the whiteboard Ink eraser">Ink</string>
+    <string name="whiteboard_stroke_eraser" comment="Title of the whiteboard Stroke eraser">Stroke</string>
+    <string name="stylus_mode" comment="Title of the menu item that toggles the whiteboard stylus mode" maxLength="28">Stylus mode</string>
+    <string name="cannot_remove_last_brush_message">The last brush may not be removed</string>
     <string name="enable_whiteboard" maxLength="28">Activar quadro de escrita</string>
     <string name="disable_whiteboard">Desactivar quadro de escrita</string>
     <string name="show_whiteboard">Mostrar quadro</string>
@@ -83,6 +97,7 @@
     <string name="webview_crash_fatal">Erro fatal: o processador do \"WebView\" falhou. Causa: %s</string>
     <string name="webview_crash_loop_dialog_title">Falha no processamento do \"WebView\"</string>
     <string name="webview_crash_loop_dialog_content">O \"WebView\" de sistema falhou no processamento da ficha \'%1$s\'.\n %2$s</string>
+    <string name="slide_to_cancel" comment="Message shown when pressing the record button">Slide to cancel</string>
     <string name="filter_by_flags" maxLength="41">Bandeiras</string>
     <!-- Custom study options -->
     <string name="custom_study_loading_tags">A construir lista de etiquetas&#8230;</string>
@@ -151,7 +166,8 @@
     <string name="import_error_not_apkg_extension">Ficheiro \"%s\" não tem nenhuma das extensões .apkg, nem .colpkg</string>
     <string name="import_error_load_imported_database">Substitutos para a Base de Dados Anki (.anki2) ainda não são suportados. Por favor, consulte o manual para seguir as instruções relativas à substituição.</string>
     <string name="import_error_content_provider">Não foi possível importar automaticamente o ficheiro selecionado com AnkiDroid. Por favor, consulte o manual do utilizador para saber como importar manualmente os ficheiros Anki: \n%s</string>
-    <string name="import_error_copy_to_cache">Falhou ao armazenar um ficheiro de \"cache\" (possivelmente está sem espaço)</string>
+    <string name="import_error_copy_to_cache_title">Falhou ao armazenar um ficheiro de \"cache\"</string>
+    <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">This is often caused by a bug in the app you used to select the file. Please try the following fixes:\n\n%s</string>
     <string name="import_interrupted">Importação interrompida: o AnkiDroid foi fechado</string>
     <string name="export_ready_title">Exportação pronta</string>
     <string name="export_send_no_handlers">Não tem nenhuma aplicação para lidar com ficheiros .apkg. A guardar&#8230;</string>
@@ -180,11 +196,6 @@
     <string name="tag_editor_add_feedback">Toque em \"%2$s\" para confirmar a adição de \"%1$s\"</string>
     <string name="tag_editor_add_feedback_existing">Etiqueta \"%1$s\" selecionada</string>
     <!-- Time spans -->
-    <string name="reminder_title">Não se esqueça de estudar hoje!</string>
-    <plurals name="reminder_text">
-        <item quantity="one">%2$d ficha a rever em %1$s</item>
-        <item quantity="other">%2$d fichas a rever em %1$s</item>
-    </plurals>
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Erro ao partilhar ficheiro apkg</string>
     <!-- Import and export v2 feedback -->
@@ -225,6 +236,7 @@
     <string name="search_decks" maxLength="28">Procurar baralhos</string>
     <string name="ankidroid_init_failed_webview_title">Erro fatal</string>
     <string name="ankidroid_init_failed_webview">O AnkiDroid depende da \"WebView\" de sistema, e esta encontra-se indisponível. Isto pode ocorrer durante a instalação de actualizações. Por favor, volte a tentar dentro de alguns minutos.\n\n%s</string>
+    <string name="ankidroid_init_failed_storage">AnkiDroid cannot access storage due to an Android error.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">Tamanho da letra</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Mostrar Barra de Ferramentas</string>
@@ -271,7 +283,6 @@
     <string name="download_failed">A transferência falhou</string>
     <string name="deck_download_progress_message">Pode utilizar outras aplicações enquanto a transferência decorre.</string>
     <string name="check_network">Por favor, verifique a sua ligação à rede</string>
-    <string name="search_using_deck_name">Pesquisar utilizando o nome do baralho</string>
     <string name="external_storage_unavailable">Transferência cancelada, o armazenamento externo não está disponível.</string>
     <string name="home" maxLength="28">Página Inicial</string>
     <!-- Study Screen actions
@@ -296,6 +307,10 @@
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">Não foi possível aceder à colecção. Por favor, tente de novo!</string>
     <string name="cd_manage_notetypes_add">Adicionar um novo tipo de nota</string>
+    <plurals name="note_types_selected">
+        <item quantity="one">%d note type selected</item>
+        <item quantity="other">%d note types selected</item>
+    </plurals>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">Estudar menos</string>
     <string name="intro_ankidroid_tagline_two">Lembrar mais</string>
@@ -304,7 +319,6 @@
     <string name="intro_sync_from_ankiweb">Sincronizar a partir do AnkiWeb</string>
     <!-- IntentHandler -->
     <string name="app_not_initialized_new">O AnkiDroid ainda não foi inicializado. Por favor, abra o AnkiDroid de novo</string>
-    <string name="already_logged_in">Já está ligado</string>
     <!-- Deck Creation -->
     <string name="deck_created">Baralho criado</string>
     <string name="deck_renamed">Baralho renomeado</string>

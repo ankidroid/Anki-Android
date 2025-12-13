@@ -45,7 +45,6 @@
 -->
 <resources>
     <!-- Widget -->
-    <string name="widget_minimum_cards_due_notification_ticker_title">Үлдсэн картууд</string>
     <plurals name="widget_minimum_cards_due_notification_ticker_text">
         <item quantity="one">%d Анкидройд карт үлдсэн байна</item>
         <item quantity="other">%d Анкидройд карт үлдсэн байна</item>

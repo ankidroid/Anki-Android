@@ -450,7 +450,7 @@ open class SchedulerTest : InMemoryAnkiTest() {
         Assert.assertEquals(2650, c.factor)
         // leech handling
         // //////////////////////////////////////////////////////////////////////////////////////////////////
-        val conf = col.decks.getConfig(1)
+        val conf = col.decks.getConfig(1)!!
         conf.lapse.leechAction = LEECH_SUSPEND
         col.decks.save(conf)
         cardcopy.clone().update { lapses = 7 }
@@ -706,7 +706,7 @@ open class SchedulerTest : InMemoryAnkiTest() {
         // should cope with cards in cram decks
         c.update { this.due = 1 }
         addDynamicDeck("tmp")
-        col.sched.rebuildDyn()
+        col.sched.rebuildFilteredDeck(col.decks.selected())
         c.load()
         Assert.assertNotEquals(1, c.due)
         Assert.assertNotEquals(1, c.did)
@@ -740,7 +740,7 @@ open class SchedulerTest : InMemoryAnkiTest() {
         Assert.assertEquals(Counts(0, 0, 0), col.sched.counts())
         // create a dynamic deck and refresh it
         val did = addDynamicDeck("Cram")
-        col.sched.rebuildDyn(did)
+        col.sched.rebuildFilteredDeck(did)
         // should appear as normal in the deck list
 
         // TODO: sort
@@ -783,7 +783,7 @@ open class SchedulerTest : InMemoryAnkiTest() {
             ivl = 100
             due = (col.sched.today + 75)
         }
-        col.sched.rebuildDyn(did)
+        col.sched.rebuildFilteredDeck(did)
         c = col.sched.card!!
         Assert.assertEquals(60 * SECONDS_PER_DAY, col.sched.nextIvl(c, Rating.HARD))
         Assert.assertEquals(100 * SECONDS_PER_DAY, col.sched.nextIvl(c, Rating.GOOD))
@@ -812,7 +812,7 @@ open class SchedulerTest : InMemoryAnkiTest() {
 
         // create a dynamic deck and refresh it
         val did = addDynamicDeck("Cram")
-        col.sched.rebuildDyn(did)
+        col.sched.rebuildFilteredDeck(did)
 
         // card should still be in learning state
         c.load()
@@ -829,7 +829,7 @@ open class SchedulerTest : InMemoryAnkiTest() {
         )
 
         // emptying the deck preserves learning state
-        col.sched.emptyDyn(did)
+        col.sched.emptyFilteredDeck(did)
         c.load()
         Assert.assertEquals(QueueType.Lrn, c.queue)
         Assert.assertEquals(CardType.Lrn, c.type)
@@ -855,7 +855,7 @@ open class SchedulerTest : InMemoryAnkiTest() {
         val cram = col.decks.getLegacy(did)!!
         cram.put("resched", false)
         col.decks.save(cram)
-        col.sched.rebuildDyn(did)
+        col.sched.rebuildFilteredDeck(did)
         // grab the first card
         val c: Card = col.sched.card!!
         Assert.assertEquals(60, col.sched.nextIvl(c, Rating.AGAIN))
@@ -876,7 +876,7 @@ open class SchedulerTest : InMemoryAnkiTest() {
         Assert.assertEquals(CardType.New, c2.type)
 
         // emptying the filtered deck should restore card
-        col.sched.emptyDyn(did)
+        col.sched.emptyFilteredDeck(did)
         c.load()
         Assert.assertEquals(QueueType.New, c.queue)
         Assert.assertEquals(0, c.reps)
@@ -1292,8 +1292,8 @@ open class SchedulerTest : InMemoryAnkiTest() {
             }
         // into and out of filtered deck
         val did = addDynamicDeck("Cram")
-        col.sched.rebuildDyn(did)
-        col.sched.emptyDyn(did)
+        col.sched.rebuildFilteredDeck(did)
+        col.sched.emptyFilteredDeck(did)
         c.load()
         Assert.assertEquals(-5, c.due)
     }
@@ -1334,7 +1334,7 @@ open class SchedulerTest : InMemoryAnkiTest() {
         val did = addDynamicDeck("test")
         val deck = decks.getLegacy(did)!!
         deck.put("resched", false)
-        sched.rebuildDyn(did)
+        sched.rebuildFilteredDeck(did)
         var card: Card?
         for (i in 0..2) {
             card = sched.card

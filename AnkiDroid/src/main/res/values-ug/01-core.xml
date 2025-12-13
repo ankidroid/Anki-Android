@@ -131,7 +131,6 @@
     <string name="empty_filtered_deck">سۈزۈلگەن دەستىنى بوشىتىۋاتىدۇ&#8230;</string>
     <string name="search_deck" comment="Deck search for selecting it">دەستە ئىزدە</string>
     <string name="empty_deck">بۇ دەستە بوش</string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">دەستە ئىزدە</string>
     <string name="invalid_deck_name">ئىناۋەتسىز دەستە ئاتى</string>
     <string name="studyoptions_congrats_finished">مۇبارەك بولسۇن! بۈگۈنكىنى تاماملىدىڭىز.</string>
     <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">دەستە ھازىرچە تاماملاندى! %s</string>
@@ -170,6 +169,7 @@
     <string name="card_template_browser_appearance_title">كۆرگۈچ كۆرۈنۈشى</string>
     <!-- card Info -->
     <string name="card_info_title" maxLength="28">كارتا ئۇچۇرى</string>
+    <string name="previous_card_info_title" maxLength="28">ئالدىنقى كارتا ئۇچۇرى</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">AnkiDroid ساندانىنى ئوقۇيدۇ ۋە يازىدۇ</string>
     <string name="read_write_permission_description">مەۋجۇت خاتىرە، كارتا، خاتىرە تۈرى ۋە دەستىنى زىيارەت قىلىپلا قالماي يەنە يېڭىسىنى قۇرىدۇ</string>
@@ -197,11 +197,21 @@
     <string name="new_unsafe_collection">ئەگەر AnkiDroid نى ئۆچۈرسىڭىز، يېڭى توپلام تېلېفونىڭىزدىن ئۆچۈرۈلىدۇ</string>
     <!-- Permissions screen -->
     <string name="permissions_screen_headline">AnkiDroid بەزى ئىجازەتكە ئېرىشسە ئاندىن ئىشلەيدۇ</string>
+    <string name="permissions_screen_optional_headline" comment="Explains that there are optional permissions that can be granted to AnkiDroid.">AnkiDroid بۇ ئىجازەتتە ياخشى ئىشلەيدۇ</string>
     <string name="storage_access_title">ساقلاش زىيارىتى</string>
     <string name="storage_access_summary">توپلامنى ئەپنى ئۆچۈرگەن تەقدىردىمۇ ئۆچۈرگىلى بولمايدىغان بىخەتەر جايغا ساقلاڭ</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after. See [android.permission.MANAGE_EXTERNAL_STORAGE] on https://developer.android.com/training/data-storage/manage-all-files for context.">بارلىق ھۆججەت زىيارىتى</string>
     <string name="image_occlusion">سۈرەت دالدىلاش</string>
+    <string name="microphone" comment="Title of the microphone permission in the permissions explanation screen.">مىكروفون</string>
+    <string name="microphone_permission_explanation" comment="Description explaining why AnkiDroid needs the microphone permission, shown on the permissions explanation screen.">كارتىغا ئاۋاز قوشۇش ۋە تەكرارلىغاندا ئاۋازنى قويۇشىڭىزغا يول قويىدۇ</string>
+    <string name="notifications_permission_explanation" comment="Description explaining why AnkiDroid needs the notification permission.">ئارقا سۇپىدا ۋاسىتىنى قەدەمداشلاشنى قوزغىتىدۇ ۋە تەكرارلاش ئەسكەرتىشى قۇرۇشىڭىزغا يول قويىدۇ</string>
+    <string name="heading_required_permissions" comment="Heading for the section of required permissions that the app needs to function, shown in the permissions explanation screen.">زۆرۈر</string>
+    <string name="heading_optional_permissions" comment="Heading for the section of optional permissions that the app needs to function, shown in the permissions explanation screen.">تاللانما</string>
+    <string name="manually_grant_permissions" comment="Pop-up message that is shown to the user when they want to grant an app permission that must be granted via the OS settings screen.">بۇ ئىجازەتنى تەڭشەكتىن قولدا بېرىش كېرەك</string>
+    <string name="revoke_permissions" comment="Pop-up message that is shown to the user when they are revoking an app permission.">بۇ ئىجازەتنى تەڭشەكتىن قولدا چىقىرىۋېتىش كېرەك</string>
     <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">ھېساباتنى چىقىرىۋەت</string>
     <!-- Instant Note Editor -->
     <string name="instant_card" comment="Used in the Android system context menu/share dialog to quickly create a note. This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. ">شۇئان كارتا</string>
+    <!-- Multiple profile -->
+    <string name="add_profile">Add profile</string>
 </resources>

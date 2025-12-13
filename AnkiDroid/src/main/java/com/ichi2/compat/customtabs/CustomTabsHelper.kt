@@ -19,6 +19,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import androidx.browser.customtabs.CustomTabsService
 import androidx.core.net.toUri
+import com.ichi2.anki.runCatchingWithReport
 import com.ichi2.compat.CompatHelper.Companion.queryIntentActivitiesCompat
 import com.ichi2.compat.CompatHelper.Companion.resolveActivityCompat
 import com.ichi2.compat.CompatHelper.Companion.resolveServiceCompat
@@ -63,8 +64,11 @@ object CustomTabsHelper {
         if (sPackageNameToUse != null) return sPackageNameToUse
         val pm = context.packageManager
         // Get default VIEW intent handler.
-        val activityIntent = Intent(Intent.ACTION_VIEW, "http://www.example.com".toUri())
-        val defaultViewHandlerInfo = pm.resolveActivityCompat(activityIntent, ResolveInfoFlagsCompat.EMPTY)
+        val activityIntent = Intent(Intent.ACTION_VIEW, "https://www.example.com".toUri())
+        val defaultViewHandlerInfo =
+            runCatchingWithReport("getPackageNameToUse", onlyIfSilent = true) {
+                pm.resolveActivityCompat(activityIntent, ResolveInfoFlagsCompat.EMPTY)
+            }.getOrNull()
         var defaultViewHandlerPackageName: String? = null
         if (defaultViewHandlerInfo != null) {
             defaultViewHandlerPackageName = defaultViewHandlerInfo.activityInfo.packageName

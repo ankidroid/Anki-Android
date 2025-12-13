@@ -124,6 +124,8 @@
     <string name="multimedia_editor_failed">Non se puido abrir o editor multimedia</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Denegouse o permiso para gravar audio</string>
+    <string name="permission_denied">Permiso denegado</string>
+    <string name="recording_permission_denied_message">O permiso de micrófono é necesario para a funcionalidade de \"Gravar voz\". Concédeo nos axustes da aplicación.</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid actualizado</string>
     <string name="integrity_check_startup_content">AnkiDroid foi actualizado. Esta actualización inclúe correccións para posíbeis problemas na base de datos, polo que recomendamos que comprobes a base de datos agora.</string>
@@ -201,8 +203,6 @@
     <string name="import_deck_package">Baralla (.apkg)</string>
     <string name="import_collection_package">Colección (.colpkg)</string>
     <string name="import_csv">Ficheiro de texto (.txt, .csv)</string>
-    <!-- Deck selection dialog -->
-    <string name="cannot_create_subdeck_for_all_decks">Non podes crear unha subbaralla para todas as barallas</string>
     <!-- scoped storage -->
     <string name="backup_your_collection">Copia de seguranza da colección</string>
     <string name="backup_collection_message">Hai tempo que non se fai unha copia de seguranza da colección. Deberías facela agora para evitar perdas de datos</string>
@@ -254,4 +254,10 @@
     <string name="tts_error_dialog_reason_text">O motor de texto a voz <b>%1$s</b> non é compatíbel co seguinte idioma: <b>%2$s</b></string>
     <string name="tts_error_dialog_change_button_text">Mudar motor</string>
     <string name="tts_error_dialog_supported_voices_button_text">Opcións de voz</string>
+    <!-- import_cache_error_resolutions -->
+    <string name="import_error_resolution_try_again">Volver a importar o ficheiro</string>
+    <string name="import_error_resolution_free_up_space">Comproba que hai espazo dabondo no dispositivo</string>
+    <string name="import_error_resolution_check_internet">Comproba que hai conexión á internet</string>
+    <string name="import_error_resolution_copy_to_device">Copia o ficheiro ao teu dispositivo e téntao de novo co ficheiro local</string>
+    <string name="import_error_resolution_select_file">Abre o ficheiro co explorador de ficheiros do teu dispositivo</string>
 </resources>

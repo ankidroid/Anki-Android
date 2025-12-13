@@ -45,7 +45,6 @@
 -->
 <resources>
     <!-- Widget -->
-    <string name="widget_minimum_cards_due_notification_ticker_title">სასწავლო ბარათები</string>
     <plurals name="widget_minimum_cards_due_notification_ticker_text">
         <item quantity="one">სასწავლოა %d AnkiDroid ბარათი</item>
         <item quantity="other">სასწავლოა %d AnkiDroid ბარათი</item>

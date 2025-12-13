@@ -48,12 +48,14 @@
     <string name="drawer_open">ড্রয়ার খুলুন</string>
     <string name="drawer_close">ড্রয়ার বন্ধ করুন</string>
     <string name="note_message">Note saved</string>
+    <!-- Note editor screen -->
     <string name="CardEditorCardDeck">কার্ড ডেক:</string>
     <string name="CardEditorNoteDeck">ডেক:</string>
     <string name="CardEditorModel">ধরন:</string>
     <string name="CardEditorTags">ট্যাগসমূহ: %1$s</string>
     <string name="CardEditorCards">কার্ড: %1$s</string>
     <string name="edit_occlusions">শূন্য স্থান পূরণ সমস্যা সম্পাদনা</string>
+    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
     <string name="tag_name">ট্যাগের নাম</string>
     <string name="add_new_filter_tags">ট্যাগ যুক্ত/ফিল্টার করুন</string>
     <string name="add_tag" maxLength="28">ট্যাগ যোগ করুন</string>
@@ -65,6 +67,18 @@
     <string name="save_whiteboard" maxLength="28">হোয়াইটবোর্ড সংরক্ষণ করুন</string>
     <string name="enable_stylus" maxLength="28">স্টাইলাস মোড অন করুন</string>
     <string name="disable_stylus">স্টাইলাস মোড অফ করুন</string>
+    <string name="eraser" maxLength="28">Eraser</string>
+    <string name="add_brush" maxLength="28">Add brush</string>
+    <string name="whiteboard_align_left" comment="Option to align the whiteboard toolbar on the left" maxLength="28">Left</string>
+    <string name="whiteboard_align_bottom" comment="Option to align the whiteboard toolbar on the bottom" maxLength="28">Bottom</string>
+    <string name="whiteboard_align_right" comment="Option to align the whiteboard toolbar on the right" maxLength="28">Right</string>
+    <string name="whiteboard_clear" comment="Button text to clear the whiteboard" maxLength="28">Clear</string>
+    <string name="whiteboard_more_options" comment="Tooltip of the whiteboard \'More\' button" maxLength="28">More options</string>
+    <string name="whiteboard_remove_brush_message">Are you sure you want to remove this brush from your palette?</string>
+    <string name="whiteboard_ink_eraser" comment="Title of the whiteboard Ink eraser">Ink</string>
+    <string name="whiteboard_stroke_eraser" comment="Title of the whiteboard Stroke eraser">Stroke</string>
+    <string name="stylus_mode" comment="Title of the menu item that toggles the whiteboard stylus mode" maxLength="28">Stylus mode</string>
+    <string name="cannot_remove_last_brush_message">The last brush may not be removed</string>
     <string name="enable_whiteboard" maxLength="28">হোয়াইটবোর্ড সক্রিয় করুন</string>
     <string name="disable_whiteboard">হোয়াইটবোর্ড নিষ্ক্রিয় করুন</string>
     <string name="show_whiteboard">হোয়াইটবোর্ড প্রদর্শন করুন</string>
@@ -83,6 +97,7 @@
     <string name="webview_crash_fatal">মারাত্মক ত্রুটি: ওয়েবভিউ রেনডারার ক্র্যাশ করেছে। কারণ: %s</string>
     <string name="webview_crash_loop_dialog_title">সিস্টেম ওয়েবভিউ রেন্ডারিং ব্যর্থ</string>
     <string name="webview_crash_loop_dialog_content">সিস্টেম ওয়েব-ভিউ \'%1$s\'.\n %2$s কার্ড রেন্ডার করতে ব্যর্থ হয়েছে</string>
+    <string name="slide_to_cancel" comment="Message shown when pressing the record button">Slide to cancel</string>
     <string name="filter_by_flags" maxLength="41">নিশান</string>
     <!-- Custom study options -->
     <string name="custom_study_loading_tags">Building list of tags&#8230;</string>
@@ -151,7 +166,8 @@
     <string name="import_error_not_apkg_extension">\"%s\" ফাইলে .apkg বা .colpkg এক্সটেনশন নেই</string>
     <string name="import_error_load_imported_database">Anki ডাটাবেস (.anki2) প্রতিস্থাপন এখনও সমর্থিত নয়। প্রতিস্থাপন নির্দেশাবলীর জন্য ম্যানুয়াল দেখুন।</string>
     <string name="import_error_content_provider">The selected file couldn’t be imported automatically by AnkiDroid. Please see the user manual for how to manually import Anki files: \n%s</string>
-    <string name="import_error_copy_to_cache">ফাইল ক্যাশে করতে ব্যর্থ হয়েছে (সম্ভবত স্টোরেজ স্পেস নেই)</string>
+    <string name="import_error_copy_to_cache_title">ফাইল ক্যাশে করতে ব্যর্থ হয়েছে</string>
+    <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">This is often caused by a bug in the app you used to select the file. Please try the following fixes:\n\n%s</string>
     <string name="import_interrupted">আমদানি ব্যাধিত: AnkiDroid বন্ধ করা হয়েছে</string>
     <string name="export_ready_title">রপ্তানি প্রস্তুতি সমাপ্ত</string>
     <string name="export_send_no_handlers">apkg সামলানোর জন্য কোনো অ্যাপ নেই। সেভ করা হচ্ছে&#8230;</string>
@@ -180,11 +196,6 @@
     <string name="tag_editor_add_feedback">Touch “%2$s” to confirm adding “%1$s”</string>
     <string name="tag_editor_add_feedback_existing">Existing tag “%1$s” selected</string>
     <!-- Time spans -->
-    <string name="reminder_title">আজ অধ্যয়ন করতে ভুলবেন না!</string>
-    <plurals name="reminder_text">
-        <item quantity="one">%2$d card to review in %1$s</item>
-        <item quantity="other">%2$d cards to review in %1$s</item>
-    </plurals>
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Error sharing apkg file</string>
     <!-- Import and export v2 feedback -->
@@ -225,6 +236,7 @@
     <string name="search_decks" maxLength="28">অনুসন্ধান ডেক</string>
     <string name="ankidroid_init_failed_webview_title">মারাত্মক ত্রুটি</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid relies on the System WebView which is unavailable. This can happen if the system is installing updates. Please try again in a few minutes.\n\n%s</string>
+    <string name="ankidroid_init_failed_storage">AnkiDroid cannot access storage due to an Android error.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">ফন্টের আকার</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">টুলবার দেখান</string>
@@ -271,7 +283,6 @@
     <string name="download_failed">ডাউনলোড ব্যর্থ হয়েছে৷</string>
     <string name="deck_download_progress_message">ডাউনলোড করার সময় আপনি অন্যান্য অ্যাপ ব্যবহার করতে পারেন</string>
     <string name="check_network">আপনার নেটওয়ার্ক সংযোগ পরীক্ষা করুন</string>
-    <string name="search_using_deck_name">ডেকের নাম ব্যবহার করে অনুসন্ধান করুন</string>
     <string name="external_storage_unavailable">ডাউনলোড বাতিল করা হয়েছে, কোনো বাহ্যিক সঞ্চয়স্থান উপলব্ধ নেই</string>
     <string name="home" maxLength="28">বাড়ি</string>
     <!-- Study Screen actions
@@ -296,6 +307,10 @@
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">সংগ্রহ অ্যাক্সেস করতে ব্যর্থ হয়েছে. আবার চেষ্টা করুন!</string>
     <string name="cd_manage_notetypes_add">একটি নতুন নোট টাইপ যোগ করুন</string>
+    <plurals name="note_types_selected">
+        <item quantity="one">%d note type selected</item>
+        <item quantity="other">%d note types selected</item>
+    </plurals>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">কম পড়াশুনা করুন</string>
     <string name="intro_ankidroid_tagline_two">আরও মনে রাখবেন</string>
@@ -304,7 +319,6 @@
     <string name="intro_sync_from_ankiweb">AnkiWeb থেকে সিঙ্ক</string>
     <!-- IntentHandler -->
     <string name="app_not_initialized_new">AnkiDroid এখনও চালু হয়নি। অনুগ্রহ করে AnkiDroid খুলুন এবং আবার চেষ্টা করুন</string>
-    <string name="already_logged_in">ইতিমধ্যে লগ ইন</string>
     <!-- Deck Creation -->
     <string name="deck_created">ডেক নির্মিত হয়</string>
     <string name="deck_renamed">ডেকের নাম পরিবর্তন করা হয়েছে</string>

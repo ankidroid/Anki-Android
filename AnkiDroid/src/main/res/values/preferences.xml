@@ -31,6 +31,9 @@
     <string name="pref_backup_limits_screen_key">backupLimitsScreen</string>
     <!-- Editing -->
     <string name="paste_png_key">pastePNG</string>
+    <!-- Switch Profile -->
+    <string name="pref_switch_profile_screen_key">switchProfileScreen</string>
+    <string name="pref_enable_switch_profile_key">enableSwitchProfile</string>
     <!-- Appearance -->
     <string name="pref_appearance_screen_key">appearance_preference_group</string>
     <string name="app_theme_key">appTheme</string>
@@ -38,6 +41,7 @@
     <string name="night_theme_key">nightTheme</string>
     <string name="pref_deck_picker_background_key">deckPickerBackground</string>
     <string name="pref_remove_wallpaper_key">removeWallPaper</string>
+    <string name="study_screen_category_key">studyScreenAppearance</string>
     <string name="custom_buttons_link_preference">custom_buttons_link</string>
     <string name="fullscreen_mode_preference">fullscreenMode</string>
     <string name="center_vertically_preference">centerVertically</string>
@@ -50,6 +54,7 @@
     <string name="pref_card_browser_font_scale_key">relativeCardBrowserFontSize</string>
     <string name="show_deck_title_key">showDeckTitle</string>
     <string name="show_answer_feedback_key">showAnswerFeedback</string>
+    <string name="pref_review_category_key">reviewCategory</string>
     <!-- App bar buttons -->
     <string name="pref_app_bar_buttons_screen_key">appBarButtonsScreen</string>
     <string name="reset_custom_buttons_key">reset_custom_buttons</string>
@@ -62,6 +67,7 @@
     <string name="custom_button_add_card_key">customButtonAddCard</string>
     <string name="custom_button_replay_key">customButtonReplay</string>
     <string name="custom_button_card_info_key">customButtonCardInfo</string>
+    <string name="custom_button_previous_card_info_key">customButtonPreviousCardInfo</string>
     <string name="custom_button_select_tts_key">customButtonSelectTts</string>
     <string name="custom_button_deck_options_key">customButtonDeckOptions</string>
     <string name="custom_button_mark_card_key">customButtonMarkCard</string>
@@ -120,8 +126,11 @@
     <string name="remove_flag_command_key">binding_UNSET_FLAG</string>
     <string name="page_up_command_key">binding_PAGE_UP</string>
     <string name="page_down_command_key">binding_PAGE_DOWN</string>
+    <string name="browse_command_key">binding_BROWSE</string>
+    <string name="statistics_command_key">binding_STATISTICS</string>
     <string name="tag_command_key">binding_TAG</string>
     <string name="card_info_command_key">binding_CARD_INFO</string>
+    <string name="previous_card_info_command_key">binding_PREVIOUS_CARD_INFO</string>
     <string name="record_voice_command_key">binding_RECORD_VOICE</string>
     <string name="replay_voice_command_key">binding_REPLAY_VOICE</string>
     <string name="save_voice_command_key">binding_SAVE_VOICE</string>
@@ -150,7 +159,7 @@
     <string name="previewer_mark_key">previewer_MARK</string>
     <string name="previewer_edit_key">previewer_EDIT</string>
     <string name="previewer_replay_media_key">previewer_REPLAY_AUDIO</string>
-    <string name="previewer_backside_only_action_key">previewer_BACKSIDE_ONLY</string>
+    <string name="previewer_backside_only_action_key">previewer_TOGGLE_BACKSIDE_ONLY</string>
     <string name="previewer_flag_red_key">previewer_TOGGLE_FLAG_RED</string>
     <string name="previewer_flag_orange_key">previewer_TOGGLE_FLAG_ORANGE</string>
     <string name="previewer_flag_green_key">previewer_TOGGLE_FLAG_GREEN</string>
@@ -209,7 +218,6 @@
     <string name="pref_lock_database_key">debug_lock_database</string>
     <string name="pref_corrupt_fsrs_params">debug_corrupt_fsrs_params</string>
     <string name="new_congrats_screen_pref_key">new_congrats_screen</string>
-    <string name="new_reviewer_pref_key">newReviewer</string>
     <string name="new_reviewer_options_key">newReviewerOptions</string>
     <string name="pref_browser_find_replace">browserFindReplace</string>
     <string name="pref_new_review_reminders">newReviewReminders</string>
@@ -218,6 +226,8 @@
     <string name="reviewer_port_pref_key">reviewerPort</string>
     <string name="use_fixed_port_pref_key">useFixedPort</string>
     <string name="dev_card_browser_fragmented">cardBrowserFragmented</string>
+    <string name="dev_card_browser_search_view">cardBrowserSearchView</string>
+    <string name="dev_open_tts_voices">openTtsVoices</string>
     <!-- Developer options > Create fake notes -->
     <string name="pref_fill_default_deck_number_key">FillDefaultNumberDeck</string>
     <string name="pref_fill_default_deck_key">FillDefaultDeck</string>
@@ -241,11 +251,10 @@
     <!-- Study Screen options -->
     <string name="hide_system_bars_key">hideSystemBars</string>
     <string name="ignore_display_cutout_key">ignoreDisplayCutout</string>
-    <string name="hide_answer_buttons_key">hideAnswerButtons</string>
+    <string name="show_answer_buttons_key">showAnswerButtons</string>
     <string name="hide_hard_and_easy_key">hideHardAndEasy</string>
     <string name="reviewer_menu_settings_key">reviewerMenuSettings</string>
     <string name="reviewer_frame_style_key">reviewerFrameStyle</string>
     <string name="reviewer_toolbar_position_key">reviewerToolbarPosition</string>
-    <string name="addons_category_key">addonsCat</string>
 
 </resources>

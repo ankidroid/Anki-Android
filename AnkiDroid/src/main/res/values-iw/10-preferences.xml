@@ -239,11 +239,13 @@
     <string name="misc" maxLength="41">אחר</string>
     <!-- Review reminders -->
     <string name="add_reminder" comment="Label for the add reminder button in the screen for adding and editing review reminders">הוספת תזכורת</string>
+    <string name="add_review_reminder" comment="Title of the screen for creating a new review reminder">הוסף תזכורת לסקירה</string>
+    <string name="edit_review_reminder" comment="Title of the screen for editing an existing review reminder">תזכורת עריכת סקירה</string>
+    <string name="you_have_no_review_reminders" comment="Text that appears in the review reminder editing screen when there are no reminders set">You have no review reminders</string>
     <!-- studyoptions -->
     <string name="studyoptions_limit_select_tags">בחר תגיות</string>
     <!-- Deck configurations -->
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">כללי</string>
-    <string name="deck_conf_reminders" maxLength="41">תזכורות</string>
     <string name="deck_conf_cram_filter" maxLength="41">מסנן</string>
     <string name="deck_conf_cram_search" maxLength="41" comment="Label of a text field that contains a search query.">חיפוש</string>
     <string name="deck_conf_cram_limit" maxLength="41">הגבלה לכדי</string>
@@ -378,7 +380,7 @@
     <string name="hide_system_bars_navigation_bar" comment="Setting option to hide the system navigation bar (the bottom one that can go back, to home, etc)">סרגל ניווט</string>
     <string name="hide_system_bars_all_bars" comment="Setting option to hide all the system bars">הכל</string>
     <string name="ignore_display_cutout" maxLength="41">התעלם מגזרת התצוגה</string>
-    <string name="hide_answer_buttons" maxLength="41">הסתר כפתורי תשובה</string>
+    <string name="show_answer_buttons" maxLength="41">הצג כפתורי תשובה</string>
     <string name="hide_hard_and_easy" maxLength="41">הסתר את הלחצנים \'קשה\' ו\'קל\'</string>
     <string name="reviewer_frame_style" maxLength="41">סגנון מסגרת</string>
     <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Study Screen">כרטיס</string>
@@ -388,10 +390,11 @@
     <string name="reviewer_toolbar_none" maxLength="41" comment="Setting to remove the toolbar from the study screen">ללא</string>
     <string name="toolbar" maxLength="41">סרגל כלים</string>
     <string name="toolbar_actions" maxLength="41">פעולות בסרגל הכלים</string>
-    <string name="toolbar_position" maxLength="41">מיקום סרגל כלים</string>
+    <string name="toolbar_position" maxLength="28">מיקום סרגל כלים</string>
     <string name="new_study_screen" maxLength="41">מסך לימוד חדש</string>
     <string name="new_study_screen_summ"><![CDATA[מסך לימוד משופר שיחליף את המסך הנוכחי. חלק מהתכונות של המסך הישן שונו או הוסרו. אנא דווחו על כל <a href="%1$s">משוב</a> או <a href="%2$s">באג</a>.]]></string>
     <string name="show_answer_feedback" maxLength="41">הצג משוב על התשובה</string>
+    <string name="screen" maxLength="41">מסך</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">פתח הגדרות</string>
 </resources>

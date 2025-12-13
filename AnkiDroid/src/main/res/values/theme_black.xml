@@ -80,6 +80,7 @@
         <item name="duplicateColor">#855</item>
         <!-- Note editor colors -->
         <item name="editTextBackgroundColor">#EE5C5C5C</item>
+        <item name="editTextHighlightColor">@color/material_light_blue_900</item>
         <item name="toolbarBackgroundColor">#616161</item>
         <item name="toolbarIconColor">@color/white</item>
         <item name="buttonShadowColor">#726B6B</item>
@@ -128,7 +129,7 @@
     </style>
 
     <style name="ThemeOverlay.AnkiDroid.AlertDialog.Black" parent="ThemeOverlay.AnkiDroid.AlertDialog">
-        <item name="android:background">@color/theme_black_primary_light</item>
+        <item name="android:colorBackground">@color/theme_black_primary_light</item>
     </style>
 
     <style name="Theme_Dark.Black" parent="Base.Theme.Dark.Black"/>

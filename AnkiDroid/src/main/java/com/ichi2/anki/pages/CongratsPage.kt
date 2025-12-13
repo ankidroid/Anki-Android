@@ -76,7 +76,7 @@ class CongratsPage :
         // typically due to 'day rollover'
         if (changes.studyQueues) {
             Timber.i("refreshing: study queues updated")
-            webView.reload()
+            webViewLayout.post { webViewLayout.reload() }
         }
     }
 
@@ -160,10 +160,7 @@ class CongratsPage :
         )
 
     private fun openStudyOptionsAndFinish() {
-        val intent =
-            Intent(requireContext(), StudyOptionsActivity::class.java).apply {
-                putExtra("withDeckOptions", false)
-            }
+        val intent = Intent(requireContext(), StudyOptionsActivity::class.java)
         startActivity(intent, null)
         requireActivity().finish()
     }
@@ -233,6 +230,7 @@ class CongratsPage :
         }
 
         fun DeckPicker.onDeckCompleted() {
+            Timber.i("Opening CongratsPage")
             startActivity(getIntent(this))
         }
     }

@@ -45,7 +45,6 @@
 -->
 <resources>
     <!-- Widget -->
-    <string name="widget_minimum_cards_due_notification_ticker_title">पत्ते बाकी</string>
     <plurals name="widget_minimum_cards_due_notification_ticker_text">
         <item quantity="one">%d अंकीड्रॉइड  कार्ड बाकी है</item>
         <item quantity="other">%d अंकीड्रॉइड  कार्ड्स बाकी है</item>

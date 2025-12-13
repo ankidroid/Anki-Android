@@ -143,7 +143,6 @@
     <string name="empty_filtered_deck">يتم إفراغ الرزمة المفروزة&#8230;</string>
     <string name="search_deck" comment="Deck search for selecting it">البحث عن رزمة</string>
     <string name="empty_deck">هذه الرزمة فارغة</string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">بحث عن رزمة</string>
     <string name="invalid_deck_name">اسم رزمة غير صالح</string>
     <string name="studyoptions_congrats_finished">مبروك! لقد أتممت مهامَّك لهذا اليوم.</string>
     <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">إنتهت حِصتك المحددة من الرزمة!  %s</string>
@@ -190,6 +189,7 @@
     <string name="card_template_browser_appearance_title">قالب المتصفح</string>
     <!-- card Info -->
     <string name="card_info_title" maxLength="28">معلومات البطاقة</string>
+    <string name="previous_card_info_title" maxLength="28">معلومات البطاقة السابقة</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">القراءة والكتابة إلى قاعدة بيانات آنكي درويد</string>
     <string name="read_write_permission_description">الوصول إلى الملحوظات والبطاقات وأنواع الملحوظات والرزم الموجودة بالإضافة إلى إنشاء أخرى</string>
@@ -217,11 +217,21 @@
     <string name="new_unsafe_collection">سيتم حذف المجموعة الجديدة من هاتفك إذا قمت بإلغاء تثبيت آنكي درويد</string>
     <!-- Permissions screen -->
     <string name="permissions_screen_headline">يحتاج آنكي درويد إلى أذوناتٍ ليعمل</string>
+    <string name="permissions_screen_optional_headline" comment="Explains that there are optional permissions that can be granted to AnkiDroid.">يعمل آنكي درويد بصورة أفضل مع هذه الأذونات</string>
     <string name="storage_access_title">الوصول إلى التخزين</string>
     <string name="storage_access_summary">احفَظ مجموعتك في مأمنٍ لئلَّا يُحذف بعد إلغاء تثبيت التطبيق</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after. See [android.permission.MANAGE_EXTERNAL_STORAGE] on https://developer.android.com/training/data-storage/manage-all-files for context.">الوصول إلى جميع الملفات</string>
     <string name="image_occlusion">صورة مُعَمَّاة</string>
+    <string name="microphone" comment="Title of the microphone permission in the permissions explanation screen.">الميكروفون</string>
+    <string name="microphone_permission_explanation" comment="Description explaining why AnkiDroid needs the microphone permission, shown on the permissions explanation screen.">يسمح لك بإضافة التسجيلات الصوتية إلى البطاقات ويفعل خاصية تسجيل الصوت في أثناء المراجعة</string>
+    <string name="notifications_permission_explanation" comment="Description explaining why AnkiDroid needs the notification permission.">يفعل مزامنة الوسائط في الخلفية ويسمح لك بإنشاء تنبيهات المراجعة</string>
+    <string name="heading_required_permissions" comment="Heading for the section of required permissions that the app needs to function, shown in the permissions explanation screen.">لازمة</string>
+    <string name="heading_optional_permissions" comment="Heading for the section of optional permissions that the app needs to function, shown in the permissions explanation screen.">اختيارية</string>
+    <string name="manually_grant_permissions" comment="Pop-up message that is shown to the user when they want to grant an app permission that must be granted via the OS settings screen.">يجب منح هذا الإذن يدويًا من إعدادات التطبيق في جهازك</string>
+    <string name="revoke_permissions" comment="Pop-up message that is shown to the user when they are revoking an app permission.">يجب إلغاء هذا الإذن يدويًا من إعدادات التطبيق في جهازك</string>
     <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">حذف الحساب</string>
     <!-- Instant Note Editor -->
     <string name="instant_card" comment="Used in the Android system context menu/share dialog to quickly create a note. This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. ">بطاقة فورية</string>
+    <!-- Multiple profile -->
+    <string name="add_profile">Add profile</string>
 </resources>

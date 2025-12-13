@@ -54,9 +54,32 @@ import timber.log.Timber
 
 interface PostRequestHandler {
     suspend fun handlePostRequest(
-        uri: String,
+        uri: PostRequestUri,
         bytes: ByteArray,
     ): ByteArray
+}
+
+@JvmInline
+value class PostRequestUri(
+    val uri: String,
+) {
+    val backendMethodName: String?
+        get() =
+            if (uri.startsWith(AnkiServer.ANKI_PREFIX)) {
+                uri.substring(AnkiServer.ANKI_PREFIX.length)
+            } else {
+                null
+            }
+
+    val jsApiMethodName: String?
+        get() =
+            if (uri.startsWith(AnkiServer.ANKIDROID_JS_PREFIX)) {
+                uri.substring(AnkiServer.ANKIDROID_JS_PREFIX.length)
+            } else {
+                null
+            }
+
+    override fun toString() = uri
 }
 
 fun <ByteArray> backendIdentity(bytes: ByteArray): ByteArray = bytes
@@ -96,17 +119,15 @@ val collectionMethods =
         "getImageOcclusionFields" to { bytes -> getImageOcclusionFieldsRaw(bytes) },
         "getIgnoredBeforeCount" to { bytes -> getIgnoredBeforeCountRaw(bytes) },
         "getRetentionWorkload" to { bytes -> getRetentionWorkloadRaw(bytes) },
+        "simulateFsrsWorkload" to { bytes -> simulateFsrsWorkloadRaw(bytes) },
+        // https://github.com/ankitects/anki/pull/4326 -> saveCustomColours should be no-op in mobile clients
+        "saveCustomColours" to { bytes -> backendIdentity(bytes) },
     )
 
 suspend fun handleCollectionPostRequest(
     methodName: String,
     bytes: ByteArray,
-): ByteArray? =
-    collectionMethods[methodName]?.let { method -> withCol { method.invoke(this, bytes) } } ?: run {
-        Timber.w("Unknown TS method called.")
-        Timber.d("handleCollectionPostRequest could not resolve TS method %s", methodName)
-        null
-    }
+): ByteArray? = collectionMethods[methodName]?.let { method -> withCol { method.invoke(this, bytes) } }
 
 typealias UIBackendInterface = FragmentActivity.(bytes: ByteArray) -> Deferred<ByteArray>
 
@@ -145,21 +166,50 @@ val uiMethods =
         "deckOptionsRequireClose" to { bytes -> lifecycleScope.async { deckOptionsRequireClose(bytes) } },
     )
 
+sealed class UiPostRequestResponse {
+    /** The requested method was not a valid UI POST request */
+    data object UnknownMethod : UiPostRequestResponse()
+
+    /**
+     * A valid method could not be executed
+     *
+     * For example: if the calling fragment was not attached to an activity
+     */
+    data object Ignored : UiPostRequestResponse()
+
+    /**
+     * The request was handled by the backend (success/failure)
+     */
+    data class Handled(
+        val data: ByteArray,
+    ) : UiPostRequestResponse() {
+        override fun equals(other: Any?): Boolean {
+            if (this === other) return true
+            if (javaClass != other?.javaClass) return false
+
+            other as Handled
+
+            return data.contentEquals(other.data)
+        }
+
+        override fun hashCode(): Int = data.contentHashCode()
+    }
+}
+
 suspend fun FragmentActivity?.handleUiPostRequest(
     methodName: String,
     bytes: ByteArray,
-): ByteArray? {
+): UiPostRequestResponse {
+    // an unknown method may be valid for another request handler
+    val uiMethod = uiMethods[methodName] ?: return UiPostRequestResponse.UnknownMethod
+
+    // a resolved but ignored method should not be retried
     if (this == null) {
-        Timber.w("ignored UI request '%s' due to screen/app being backgrounded", methodName)
-        return null
+        Timber.w("ignored UI request '%s' - activity == null", methodName)
+        return UiPostRequestResponse.Ignored
     }
 
-    val data =
-        uiMethods[methodName]?.invoke(this, bytes)?.await() ?: run {
-            Timber.w("Unknown TS method called.")
-            Timber.d("handleUiPostRequest could not resolve TS method %s", methodName)
-            return null
-        }
+    val data = uiMethod.invoke(this, bytes).await()
     when (methodName) {
         "addImageOcclusionNote" -> {
             undoableOp { OpChanges.parseFrom(data) }
@@ -181,5 +231,5 @@ suspend fun FragmentActivity?.handleUiPostRequest(
             }
         }
     }
-    return data
+    return UiPostRequestResponse.Handled(data)
 }

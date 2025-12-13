@@ -48,12 +48,14 @@
     <string name="drawer_open">פתיחת תפריט</string>
     <string name="drawer_close">סגירת תפריט</string>
     <string name="note_message">הערה נשמרה</string>
+    <!-- Note editor screen -->
     <string name="CardEditorCardDeck">חפיסת כרטיסים:‏</string>
     <string name="CardEditorNoteDeck">חפיסה:‏</string>
     <string name="CardEditorModel">סוג:</string>
     <string name="CardEditorTags">תגיות: %1$s</string>
     <string name="CardEditorCards">כרטסיות: %1$s</string>
     <string name="edit_occlusions">ערוך חסימות</string>
+    <string name="paste_from_clipboard" maxLength="28">הדבק מן הלוח</string>
     <string name="tag_name">שם התיוג</string>
     <string name="add_new_filter_tags">הוסף/סנן תגיות</string>
     <string name="add_tag" maxLength="28">הוסף תג</string>
@@ -65,6 +67,18 @@
     <string name="save_whiteboard" maxLength="28">שמור לוח</string>
     <string name="enable_stylus" maxLength="28">הפעל מצב סטיילוס</string>
     <string name="disable_stylus">כבה מצב סטיילוס</string>
+    <string name="eraser" maxLength="28">מחק</string>
+    <string name="add_brush" maxLength="28">הוסף מברשת</string>
+    <string name="whiteboard_align_left" comment="Option to align the whiteboard toolbar on the left" maxLength="28">שמאלה</string>
+    <string name="whiteboard_align_bottom" comment="Option to align the whiteboard toolbar on the bottom" maxLength="28">למטה</string>
+    <string name="whiteboard_align_right" comment="Option to align the whiteboard toolbar on the right" maxLength="28">ימין</string>
+    <string name="whiteboard_clear" comment="Button text to clear the whiteboard" maxLength="28">ניקוי</string>
+    <string name="whiteboard_more_options" comment="Tooltip of the whiteboard \'More\' button" maxLength="28">אפשרויות נוספות</string>
+    <string name="whiteboard_remove_brush_message">האם אתה בטוח שאתה רוצה להסיר את המברשת הזו מהפלטה שלך?</string>
+    <string name="whiteboard_ink_eraser" comment="Title of the whiteboard Ink eraser">דיו</string>
+    <string name="whiteboard_stroke_eraser" comment="Title of the whiteboard Stroke eraser">קו חוצה</string>
+    <string name="stylus_mode" comment="Title of the menu item that toggles the whiteboard stylus mode" maxLength="28">מצב סטיילוס</string>
+    <string name="cannot_remove_last_brush_message">ייתכן שלא ניתן להסיר את המברשת האחרונה</string>
     <string name="enable_whiteboard" maxLength="28">לאפשר ציור</string>
     <string name="disable_whiteboard">בטל הציור</string>
     <string name="show_whiteboard">הצג לוח ציור</string>
@@ -83,6 +97,7 @@
     <string name="webview_crash_fatal">שגיאה קריטית: הדמיית ה WebView קרסה. הסיבה: %s</string>
     <string name="webview_crash_loop_dialog_title">נכשלה הדמיית WebView של המערכת.</string>
     <string name="webview_crash_loop_dialog_content">מנוע התצוגה נכשל להציג את הכרטיס: %1$s. \n %2$s</string>
+    <string name="slide_to_cancel" comment="Message shown when pressing the record button">החלק כדי לבטל</string>
     <string name="filter_by_flags" maxLength="41">דגלים</string>
     <!-- Custom study options -->
     <string name="custom_study_loading_tags">בניית רשימת תגיות&#8230;</string>
@@ -157,7 +172,8 @@
     <string name="import_error_not_apkg_extension">לשם הקובץ „%s” אין סיומת ‎.apkg או ‎.colpkg</string>
     <string name="import_error_load_imported_database">עדיין אין תמיכה בהחלפות של Anki Database (.anki2). אנא עיין במדריך להוראות החלפה.</string>
     <string name="import_error_content_provider">לא ניתן היה לייבא את הקובץ שנבחר באופן אוטומטי על ידי AnkiDroid. אנא עיין במדריך למשתמש כיצד לייבא קבצי Anki באופן ידני: \n%s</string>
-    <string name="import_error_copy_to_cache">לא הצליח לשמור את הקובץ במטמון (ייתכן ששטח האחסון נגמר)</string>
+    <string name="import_error_copy_to_cache_title">לא הצליח לשמור את הקובץ במטמון</string>
+    <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">This is often caused by a bug in the app you used to select the file. Please try the following fixes:\n\n%s</string>
     <string name="import_interrupted">הייבוא נפסק: AnkiDroid נסגר</string>
     <string name="export_ready_title">הייצוא מוכן</string>
     <string name="export_send_no_handlers">לא נמצא יישום התומך ב- apkg. שומר&#8230;</string>
@@ -186,13 +202,6 @@
     <string name="tag_editor_add_feedback">לחץ \"%2$s\" לאישור הוספת \"%1$s\"</string>
     <string name="tag_editor_add_feedback_existing">תגית קיימת \"%1$s\" נבחרה</string>
     <!-- Time spans -->
-    <string name="reminder_title">לא לשכוח ללמוד היום!</string>
-    <plurals name="reminder_text">
-        <item quantity="one">כרטיס אחד לשינון בעוד %1$s</item>
-        <item quantity="two">%2$d כרטיסים לשינון בעוד %1$s</item>
-        <item quantity="many">%2$d כרטיסים לשינון בעוד %1$s</item>
-        <item quantity="other">%2$d כרטיסים לשינון בעוד %1$s</item>
-    </plurals>
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">שגיאה בשיתוף קובץ apkg</string>
     <!-- Import and export v2 feedback -->
@@ -233,6 +242,7 @@
     <string name="search_decks" maxLength="28">חיפוש בחפיסות</string>
     <string name="ankidroid_init_failed_webview_title">שגיאה מכרעת</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid משתמש בדפדפן המערכת שאינו זמין. זה קורה לפעמים אם המערכת מתקינה עדכונים. נא נסה שנית בעוד כמה דקות. \n\n%s</string>
+    <string name="ankidroid_init_failed_storage">ל-AnkiDroid אין גישה לאחסון עקב שגיאת אנדרואיד.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">גודל גופן</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">הצגת סרגל הכלים</string>
@@ -279,7 +289,6 @@
     <string name="download_failed">ההורדה נכשלה</string>
     <string name="deck_download_progress_message">ניתן לעבור ליישומים אחרים בזמן ההורדה</string>
     <string name="check_network">נא בדוק את החיבור לרשת</string>
-    <string name="search_using_deck_name">חיפוש באמצעות שם החפיסה</string>
     <string name="external_storage_unavailable">ההורדה בוטלה, האחסון החיצוני אינו זמין</string>
     <string name="home" maxLength="28">בית</string>
     <!-- Study Screen actions
@@ -306,6 +315,12 @@
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">הגישה לאוסף נכשלה. בבקשה נסה שוב!</string>
     <string name="cd_manage_notetypes_add">הוסף סוג רשומה חדש</string>
+    <plurals name="note_types_selected">
+        <item quantity="one">%d note type selected</item>
+        <item quantity="two">%d note types selected</item>
+        <item quantity="many">%d note types selected</item>
+        <item quantity="other">%d note types selected</item>
+    </plurals>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">למד פחות</string>
     <string name="intro_ankidroid_tagline_two">זכור יותי</string>
@@ -314,7 +329,6 @@
     <string name="intro_sync_from_ankiweb">סנכרון מ-AnkiWeb</string>
     <!-- IntentHandler -->
     <string name="app_not_initialized_new">AnkiDroid עדיין לא אתחול. פתח את AnkiDroid ונסה שוב</string>
-    <string name="already_logged_in">כבר מחובר</string>
     <!-- Deck Creation -->
     <string name="deck_created">חבילה שנוצרה</string>
     <string name="deck_renamed">חבילה ששונה שמה</string>

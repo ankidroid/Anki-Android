@@ -131,6 +131,8 @@ object PreferenceUpgradeService {
                     yield(RemoveLongTouchGesture())
                     yield(UpgradeDoubleTapTimeout())
                     yield(RemoveHostNum())
+                    yield(UpgradeHideAnswerButtons())
+                    yield(UpgradeToggleBacksideOnlyControl())
                 }
 
             /** Returns a list of preference upgrade classes which have not been applied */
@@ -723,6 +725,28 @@ object PreferenceUpgradeService {
             override fun upgrade(preferences: SharedPreferences) {
                 preferences.edit {
                     remove("hostNum")
+                }
+            }
+        }
+
+        internal class UpgradeHideAnswerButtons : PreferenceUpgrade(24) {
+            override fun upgrade(preferences: SharedPreferences) {
+                val oldPrefKey = "hideAnswerButtons"
+                val value = preferences.getBoolean(oldPrefKey, false)
+                preferences.edit {
+                    remove(oldPrefKey)
+                    putBoolean("showAnswerButtons", !value)
+                }
+            }
+        }
+
+        internal class UpgradeToggleBacksideOnlyControl : PreferenceUpgrade(25) {
+            override fun upgrade(preferences: SharedPreferences) {
+                val oldPrefKey = "previewer_BACKSIDE_ONLY"
+                val value = preferences.getString(oldPrefKey, null) ?: return
+                preferences.edit {
+                    remove(oldPrefKey)
+                    putString("previewer_TOGGLE_BACKSIDE_ONLY", value)
                 }
             }
         }

@@ -48,12 +48,14 @@
     <string name="drawer_open">Otevřít menu</string>
     <string name="drawer_close">Zavřít menu</string>
     <string name="note_message">Poznámka uložena</string>
+    <!-- Note editor screen -->
     <string name="CardEditorCardDeck">Balíček karet:</string>
     <string name="CardEditorNoteDeck">Balíček:</string>
     <string name="CardEditorModel">Typ poznámky:</string>
     <string name="CardEditorTags">Štítky: %1$s</string>
     <string name="CardEditorCards">Karty: %1$s</string>
     <string name="edit_occlusions">Upravit okluze</string>
+    <string name="paste_from_clipboard" maxLength="28">Vložit ze schránky</string>
     <string name="tag_name">Název štítku</string>
     <string name="add_new_filter_tags">Přidat/Filtrovat štítky</string>
     <string name="add_tag" maxLength="28">Přidat štítek</string>
@@ -65,6 +67,18 @@
     <string name="save_whiteboard" maxLength="28">Uložit tabuli</string>
     <string name="enable_stylus" maxLength="28">Povolit stylus režim</string>
     <string name="disable_stylus">Zakázat stylus režim</string>
+    <string name="eraser" maxLength="28">Guma</string>
+    <string name="add_brush" maxLength="28">Přidat štětec</string>
+    <string name="whiteboard_align_left" comment="Option to align the whiteboard toolbar on the left" maxLength="28">Vlevo</string>
+    <string name="whiteboard_align_bottom" comment="Option to align the whiteboard toolbar on the bottom" maxLength="28">Dole</string>
+    <string name="whiteboard_align_right" comment="Option to align the whiteboard toolbar on the right" maxLength="28">Vpravo</string>
+    <string name="whiteboard_clear" comment="Button text to clear the whiteboard" maxLength="28">Vymazat</string>
+    <string name="whiteboard_more_options" comment="Tooltip of the whiteboard \'More\' button" maxLength="28">Další možnosti</string>
+    <string name="whiteboard_remove_brush_message">Jste si jisti, že chcete odstranit tento štětec z vaší palety?</string>
+    <string name="whiteboard_ink_eraser" comment="Title of the whiteboard Ink eraser">Inkoust</string>
+    <string name="whiteboard_stroke_eraser" comment="Title of the whiteboard Stroke eraser">Tah</string>
+    <string name="stylus_mode" comment="Title of the menu item that toggles the whiteboard stylus mode" maxLength="28">Režim pera</string>
+    <string name="cannot_remove_last_brush_message">Poslední štětec nesmí být odstraněn</string>
     <string name="enable_whiteboard" maxLength="28">Povolit tabuli</string>
     <string name="disable_whiteboard">Zakázat tabuli</string>
     <string name="show_whiteboard">Zobrazit tabuli</string>
@@ -83,6 +97,7 @@
     <string name="webview_crash_fatal">Kritická chyba: Vykreslování WebView selhalo. Příčina: %s</string>
     <string name="webview_crash_loop_dialog_title">Selhání vykreslování systémového webView</string>
     <string name="webview_crash_loop_dialog_content">Systémovému WebView se nepodařilo vykreslit kartu „%1$s“.\n %2$s</string>
+    <string name="slide_to_cancel" comment="Message shown when pressing the record button">Posunutím zrušíte</string>
     <string name="filter_by_flags" maxLength="41">Příznaky</string>
     <!-- Custom study options -->
     <string name="custom_study_loading_tags">Vytváří se seznam štítků&#8230;</string>
@@ -157,7 +172,8 @@
     <string name="import_error_not_apkg_extension">Název souboru „%s“ nemá příponu .apkg nebo .colpkg</string>
     <string name="import_error_load_imported_database">Náhrady Anki databáze (.anki2) ještě nejsou podporovány. Pokyny k náhradě naleznete v příručce.</string>
     <string name="import_error_content_provider">Vybraný soubor nelze automaticky importovat pomocí AnkiDroid. V uživatelské příručce naleznete, jak provést ruční import souborů Anki: \n %s</string>
-    <string name="import_error_copy_to_cache">Nepodařilo se uložit soubor do mezipaměti (možná nedostatek místa v úložišti)</string>
+    <string name="import_error_copy_to_cache_title">Nepodařilo se uložit soubor do mezipaměti</string>
+    <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">Toto je často způsobeno chybou v aplikaci, kterou jste použili pro výběr souboru. Zkuste prosím následující opravy:\n\n%s</string>
     <string name="import_interrupted">Import přerušen: AnkiDroid se zavřel</string>
     <string name="export_ready_title">Export připraven</string>
     <string name="export_send_no_handlers">Nenalezena žádná aplikace pro zpracování apkg. Ukládá se&#8230;</string>
@@ -186,13 +202,6 @@
     <string name="tag_editor_add_feedback">Klepněte na „%2$s“, abyste potvrdili přidání „%1$s“</string>
     <string name="tag_editor_add_feedback_existing">Vybrán stávající štítek „%1$s“</string>
     <!-- Time spans -->
-    <string name="reminder_title">Nezapomeňte dnes studovat!</string>
-    <plurals name="reminder_text">
-        <item quantity="one">%2$d karta k zopakování v %1$s</item>
-        <item quantity="few">%2$d karty k zopakování v %1$s</item>
-        <item quantity="many">%2$d karty k zopakování v %1$s</item>
-        <item quantity="other">%2$d karet k zopakování v %1$s</item>
-    </plurals>
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Chyba sdílení souboru apkg</string>
     <!-- Import and export v2 feedback -->
@@ -233,6 +242,7 @@
     <string name="search_decks" maxLength="28">Hledat balíčky</string>
     <string name="ankidroid_init_failed_webview_title">Kritická chyba</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid spoléhá na systémový WebView, který je nedostupný. K tomu může dojít, jestliže systém instaluje aktualizace. Zkuste to prosím znovu za pár minut.\n\n%s</string>
+    <string name="ankidroid_init_failed_storage">AnkiDroid nemůže přistupovat k úložišti kvůli chybě Androidu.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">Velikost písma</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Zobrazit nástrojovou lištu</string>
@@ -279,7 +289,6 @@
     <string name="download_failed">Stahování se nezdařilo</string>
     <string name="deck_download_progress_message">Během stahování můžete používat jiné aplikace</string>
     <string name="check_network">Zkontrolujte prosím připojení k síti</string>
-    <string name="search_using_deck_name">Hledat pomocí názvu balíčku</string>
     <string name="external_storage_unavailable">Stahování přerušeno, externí úložiště není k dispozici</string>
     <string name="home" maxLength="28">Domů</string>
     <!-- Study Screen actions
@@ -306,6 +315,12 @@
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">Přístup ke kolekci se nezdařil. Zkuste to prosím znovu!</string>
     <string name="cd_manage_notetypes_add">Přidat nový typ poznámky</string>
+    <plurals name="note_types_selected">
+        <item quantity="one">Vybrán %d typ poznámky</item>
+        <item quantity="few">Vybrány %d typy poznámek</item>
+        <item quantity="many">Vybráno %d typu poznámky</item>
+        <item quantity="other">Vybráno %d typů poznámek</item>
+    </plurals>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">Studujte méně</string>
     <string name="intro_ankidroid_tagline_two">Pamatujte si více</string>
@@ -314,7 +329,6 @@
     <string name="intro_sync_from_ankiweb">Synchronizovat z AnkiWebu</string>
     <!-- IntentHandler -->
     <string name="app_not_initialized_new">AnkiDroid ještě není inicializován. Otevřete prosím AnkiDroid a zkuste to znovu</string>
-    <string name="already_logged_in">Již jste přihlášeni</string>
     <!-- Deck Creation -->
     <string name="deck_created">Balíček vytvořen</string>
     <string name="deck_renamed">Balíček přejmenován</string>

@@ -62,14 +62,20 @@ enum class ViewerAction(
     BURY_MENU(R.id.action_bury, R.drawable.ic_flip_to_back_white, R.string.menu_bury, MENU_ONLY),
     SUSPEND_MENU(R.id.action_suspend, R.drawable.ic_suspend, R.string.menu_suspend, MENU_ONLY),
     DELETE(R.id.action_delete, R.drawable.ic_delete_white, R.string.menu_delete_note, MENU_ONLY),
+    TOGGLE_WHITEBOARD(R.id.action_toggle_whiteboard, R.drawable.ic_enable_whiteboard, R.string.gesture_toggle_whiteboard, MENU_ONLY),
 
     // Disabled
+    BROWSE(R.id.action_browse, R.drawable.ic_flashcard_black, R.string.empty_string, DISABLED),
+    STATISTICS(R.id.action_statistics, R.drawable.ic_bar_chart_black, R.string.empty_string, DISABLED),
     DECK_OPTIONS(R.id.action_deck_options, R.drawable.ic_tune_white, R.string.menu__deck_options, DISABLED),
     CARD_INFO(R.id.action_card_info, R.drawable.ic_dialog_info, R.string.card_info_title, DISABLED),
+    PREVIOUS_CARD_INFO(R.id.action_previous_card_info, R.drawable.ic_outline_info_24, R.string.empty_string, DISABLED),
     ADD_NOTE(R.id.action_add_note, R.drawable.ic_add, R.string.menu_add_note, DISABLED),
     TAG(R.id.action_edit_tags, R.drawable.ic_tag, R.string.menu_edit_tags, DISABLED),
     RESCHEDULE_NOTE(R.id.action_set_due_date, R.drawable.ic_reschedule, titleRes = R.string.empty_string, DISABLED),
     TOGGLE_AUTO_ADVANCE(R.id.action_toggle_auto_advance, R.drawable.ic_fast_forward, R.string.toggle_auto_advance, DISABLED),
+    RECORD_VOICE(R.id.action_record_voice, R.drawable.ic_action_mic, R.string.record_voice, DISABLED),
+    PLAY_MEDIA(R.id.action_replay_media, R.drawable.ic_play_circle_white, R.string.replay_media, DISABLED),
     USER_ACTION_1(R.id.user_action_1, R.drawable.user_action_1, R.string.user_action_1, DISABLED),
     USER_ACTION_2(R.id.user_action_2, R.drawable.user_action_2, R.string.user_action_2, DISABLED),
     USER_ACTION_3(R.id.user_action_3, R.drawable.user_action_3, R.string.user_action_3, DISABLED),
@@ -88,8 +94,8 @@ enum class ViewerAction(
     UNSET_FLAG(Flag.NONE.id, Flag.NONE.drawableRes, parentMenu = FLAG_MENU),
     FLAG_RED(Flag.RED.id, Flag.RED.drawableRes, parentMenu = FLAG_MENU),
     FLAG_ORANGE(Flag.ORANGE.id, Flag.ORANGE.drawableRes, parentMenu = FLAG_MENU),
-    FLAG_BLUE(Flag.BLUE.id, Flag.BLUE.drawableRes, parentMenu = FLAG_MENU),
     FLAG_GREEN(Flag.GREEN.id, Flag.GREEN.drawableRes, parentMenu = FLAG_MENU),
+    FLAG_BLUE(Flag.BLUE.id, Flag.BLUE.drawableRes, parentMenu = FLAG_MENU),
     FLAG_PINK(Flag.PINK.id, Flag.PINK.drawableRes, parentMenu = FLAG_MENU),
     FLAG_TURQUOISE(Flag.TURQUOISE.id, Flag.TURQUOISE.drawableRes, parentMenu = FLAG_MENU),
     FLAG_PURPLE(Flag.PURPLE.id, Flag.PURPLE.drawableRes, parentMenu = FLAG_MENU),
@@ -109,6 +115,9 @@ enum class ViewerAction(
     TOGGLE_FLAG_PURPLE,
     SHOW_HINT,
     SHOW_ALL_HINTS,
+    REPLAY_VOICE,
+    PAGE_UP,
+    PAGE_DOWN,
     EXIT,
     ;
 
@@ -133,6 +142,12 @@ enum class ViewerAction(
             TOGGLE_AUTO_ADVANCE -> listOf(keycode(KeyEvent.KEYCODE_A, shift()))
             SHOW_HINT -> listOf(keycode(KeyEvent.KEYCODE_H))
             SHOW_ALL_HINTS -> listOf(keycode(KeyEvent.KEYCODE_G))
+            RECORD_VOICE -> listOf(keycode(KeyEvent.KEYCODE_V, shift()))
+            REPLAY_VOICE -> listOf(keycode(KeyEvent.KEYCODE_V))
+            BROWSE -> listOf(keycode(KeyEvent.KEYCODE_B))
+            STATISTICS -> listOf(keycode(KeyEvent.KEYCODE_T))
+            PLAY_MEDIA -> listOf(keycode(KeyEvent.KEYCODE_R))
+            PREVIOUS_CARD_INFO -> listOf(keycode(KeyEvent.KEYCODE_I, ModifierKeys(shift = false, ctrl = true, alt = true)))
             TOGGLE_FLAG_RED ->
                 listOf(
                     keycode(KeyEvent.KEYCODE_1, ctrl()),
@@ -203,6 +218,9 @@ enum class ViewerAction(
             TAG,
             EXIT,
             RESCHEDULE_NOTE,
+            TOGGLE_WHITEBOARD,
+            PAGE_UP,
+            PAGE_DOWN,
             USER_ACTION_1,
             USER_ACTION_2,
             USER_ACTION_3,
@@ -233,7 +251,10 @@ enum class ViewerAction(
 
     fun title(context: Context): String =
         when (this) {
+            BROWSE -> TR.qtMiscBrowse()
+            STATISTICS -> TR.statisticsTitle()
             RESCHEDULE_NOTE -> TR.actionsSetDueDate().toSentenceCase(context, R.string.sentence_set_due_date)
+            PREVIOUS_CARD_INFO -> TR.actionsPreviousCardInfo().toSentenceCase(context, R.string.sentence_actions_previous_card_info)
             else -> context.getString(titleRes)
         }
 

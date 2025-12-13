@@ -76,7 +76,6 @@ import com.ichi2.anki.browser.setColumn
 import com.ichi2.anki.browser.toRowSelection
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.utils.isRunningAsUnitTest
-import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.libanki.BrowserConfig
 import com.ichi2.anki.libanki.CardId
 import com.ichi2.anki.libanki.CardType
@@ -86,6 +85,7 @@ import com.ichi2.anki.libanki.QueueType
 import com.ichi2.anki.libanki.testutils.AnkiTest
 import com.ichi2.anki.model.CardsOrNotes.CARDS
 import com.ichi2.anki.model.CardsOrNotes.NOTES
+import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.anki.model.SortType
 import com.ichi2.anki.scheduling.ForgetCardsDialog
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService
@@ -179,7 +179,7 @@ class CardBrowserTest : RobolectricTest() {
         withBrowser(noteCount = 1) {
             // Arrange
             val deckId = 123L
-            val selectableDeck = DeckSelectionDialog.SelectableDeck(deckId, "Test Deck")
+            val selectableDeck = SelectableDeck.Deck(deckId, "Test Deck")
 
             // Act
             this.onDeckSelected(selectableDeck)
@@ -359,11 +359,11 @@ class CardBrowserTest : RobolectricTest() {
             val deckOneId = addDeck("one")
             val browser = browserWithNoNewCards
             assertEquals(2, browser.validDecksForChangeDeck.size) // 1 added + default deck
-            assertEquals(1, browser.validDecksForChangeDeck.count { it.id == deckOneId })
+            assertEquals(1, browser.validDecksForChangeDeck.count { it.deckId == deckOneId })
             val deckTwoId = addDeck("two")
             assertEquals(3, browser.validDecksForChangeDeck.size) // 2 added + default deck
-            assertEquals(1, browser.validDecksForChangeDeck.count { it.id == deckOneId })
-            assertEquals(1, browser.validDecksForChangeDeck.count { it.id == deckTwoId })
+            assertEquals(1, browser.validDecksForChangeDeck.count { it.deckId == deckOneId })
+            assertEquals(1, browser.validDecksForChangeDeck.count { it.deckId == deckTwoId })
         }
 
     @Test
@@ -520,7 +520,7 @@ class CardBrowserTest : RobolectricTest() {
                 not(equalTo(targetDid)),
             )
 
-            b.viewModel.setDeckId(targetDid)
+            b.viewModel.setSelectedDeck(targetDid)
 
             assertThat("The target deck should be selected", b.lastDeckId, equalTo(targetDid))
 
@@ -872,9 +872,10 @@ class CardBrowserTest : RobolectricTest() {
 
     /** PR #14859  */
     @Test
-    fun checkDisplayOrderAfterTogglingCardsToNotes() {
-        browserWithNoNewCards.apply {
+    fun checkDisplayOrderAfterTogglingCardsToNotes() =
+        withBrowser {
             viewModel.changeCardOrder(SortType.EASE) // order no. 7 corresponds to "cardEase"
+
             viewModel.changeCardOrder(SortType.EASE) // reverse the list
 
             viewModel.setCardsOrNotes(NOTES)
@@ -891,7 +892,6 @@ class CardBrowserTest : RobolectricTest() {
                 equalTo(true),
             )
         }
-    }
 
     data class CheckedCardResult(
         val row: BrowserRow,
@@ -1169,7 +1169,7 @@ class CardBrowserTest : RobolectricTest() {
             val secondDeckId = requireNotNull(col.decks.idForName("Second"))
 
             browserWithNoNewCards.apply {
-                viewModel.setDeckId(secondDeckId)
+                viewModel.setSelectedDeck(secondDeckId)
                 assertThat(viewModel.deckId, equalTo(secondDeckId))
                 finish()
             }
@@ -1681,13 +1681,13 @@ val CardBrowser.columnHeadings
     get() =
         columnHeadingViews.map { it.text.toString() }
 
-fun CardBrowser.searchCards(search: String? = null) {
+suspend fun CardBrowser.searchCards(search: String? = null) {
     if (search != null) {
         viewModel.launchSearchForCards(search)
     } else {
         viewModel.launchSearchForCards()
     }
-    runBlocking { viewModel.searchJob?.join() }
+    viewModel.searchJob?.join()
 }
 
 fun CardBrowser.showFindAndReplaceDialog() = cardBrowserFragment.showFindAndReplaceDialog()

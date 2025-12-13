@@ -211,7 +211,7 @@
     <string name="exit_via_double_tap_back_summ">防止误触退出学习界面</string>
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">导入所有媒体文件</string>
-    <string name="media_import_allow_all_files_summ">假如系统不识别媒体文件</string>
+    <string name="media_import_allow_all_files_summ">如果 Android 系统无法识别媒体文件</string>
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">自定义同步服务器</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">未使用</string>
@@ -233,11 +233,13 @@
     <string name="misc" maxLength="41">杂项</string>
     <!-- Review reminders -->
     <string name="add_reminder" comment="Label for the add reminder button in the screen for adding and editing review reminders">添加提醒</string>
+    <string name="add_review_reminder" comment="Title of the screen for creating a new review reminder">添加复习提醒</string>
+    <string name="edit_review_reminder" comment="Title of the screen for editing an existing review reminder">编辑复习提醒</string>
+    <string name="you_have_no_review_reminders" comment="Text that appears in the review reminder editing screen when there are no reminders set">您没有复习提醒</string>
     <!-- studyoptions -->
     <string name="studyoptions_limit_select_tags">选择标签</string>
     <!-- Deck configurations -->
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">常规</string>
-    <string name="deck_conf_reminders" maxLength="41">提醒</string>
     <string name="deck_conf_cram_filter" maxLength="41">筛选器</string>
     <string name="deck_conf_cram_search" maxLength="41" comment="Label of a text field that contains a search query.">搜索</string>
     <string name="deck_conf_cram_limit" maxLength="41">限制至</string>
@@ -369,7 +371,7 @@
     <string name="hide_system_bars_navigation_bar" comment="Setting option to hide the system navigation bar (the bottom one that can go back, to home, etc)">导航栏</string>
     <string name="hide_system_bars_all_bars" comment="Setting option to hide all the system bars">全部</string>
     <string name="ignore_display_cutout" maxLength="41">忽略显示屏刘海</string>
-    <string name="hide_answer_buttons" maxLength="41">隐藏回答按钮</string>
+    <string name="show_answer_buttons" maxLength="41">显示回答按钮</string>
     <string name="hide_hard_and_easy" maxLength="41">隐藏“困难”和“简单”按钮</string>
     <string name="reviewer_frame_style" maxLength="41">框架样式</string>
     <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Study Screen">卡片</string>
@@ -379,10 +381,11 @@
     <string name="reviewer_toolbar_none" maxLength="41" comment="Setting to remove the toolbar from the study screen">无</string>
     <string name="toolbar" maxLength="41">工具栏</string>
     <string name="toolbar_actions" maxLength="41">工具栏操作</string>
-    <string name="toolbar_position" maxLength="41">工具栏位置:</string>
+    <string name="toolbar_position" maxLength="28">工具栏位置:</string>
     <string name="new_study_screen" maxLength="41">新学习屏</string>
     <string name="new_study_screen_summ"><![CDATA[完善了新学习屏，它会取代当前的学习屏。旧屏幕的一些功能已经更改或删除。请报告任何<a href="%1$s">反馈</a>或<a href="%2$s">故障</a>。]]></string>
     <string name="show_answer_feedback" maxLength="41">显示回答反馈</string>
+    <string name="screen" maxLength="41">屏幕</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">打开设置</string>
 </resources>

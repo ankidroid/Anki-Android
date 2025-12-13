@@ -89,7 +89,7 @@
     <string name="ease_button_hard" maxLength="41" comment="In the reviewer, in the answer side. Label of the button that used by the user to state finding the correct answer was hard.">Trudna</string>
     <string name="ease_button_good" maxLength="41" comment="In the reviewer, in the answer side. Label of the button that used by the user to state their answer was good.">Dobra</string>
     <string name="ease_button_easy" maxLength="41" comment="In the reviewer, in the answer side. Label of the button that used by the user to state that finding the answer to the question was easy.">Łatwa</string>
-    <string name="show_answer_hint_long_press" comment="In the reviewer, hint is shown when touching the show answer button and the user has the long-press accessibility setting enabled">\'%s\' is enabled</string>
+    <string name="show_answer_hint_long_press" comment="In the reviewer, hint is shown when touching the show answer button and the user has the long-press accessibility setting enabled">\'%s\' jest włączone</string>
     <!-- General -->
     <string name="undo" maxLength="28" comment="When tapping on this text, the last action is undone.">Cofnij</string>
     <string name="redo" maxLength="28" comment="Menu entry that allows to redo action that was just undone.">Ponów</string>
@@ -137,7 +137,6 @@
     <string name="empty_filtered_deck">Opróżnienie filtrowanej talii&#8230;</string>
     <string name="search_deck" comment="Deck search for selecting it">Przeszukaj talię</string>
     <string name="empty_deck">Ta talia jest pusta</string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">Wyszukiwanie talii</string>
     <string name="invalid_deck_name">Nieprawidłowa nazwa talii</string>
     <string name="studyoptions_congrats_finished">Gratulacje! Zakończono powtórki na dziś.</string>
     <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Talia na razie skończona! %s</string>
@@ -180,6 +179,7 @@
     <string name="card_template_browser_appearance_title">Wygląd przeglądarki</string>
     <!-- card Info -->
     <string name="card_info_title" maxLength="28">Informacje o karcie</string>
+    <string name="previous_card_info_title" maxLength="28">Previous card info</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Odczyt i zapis do bazy danych AnkiDroid</string>
     <string name="read_write_permission_description">dostęp do istniejących notatek, kart, typów notatek i talii, a także tworzenia istniejących</string>
@@ -207,11 +207,21 @@
     <string name="new_unsafe_collection">Nowa kolekcja zostanie usunięta z telefonu, jeśli odinstalujesz AnkiDroid</string>
     <!-- Permissions screen -->
     <string name="permissions_screen_headline">AnkiDroid potrzebuje pewnych uprawnień, by działać</string>
+    <string name="permissions_screen_optional_headline" comment="Explains that there are optional permissions that can be granted to AnkiDroid.">AnkiDroid działa najlepiej z poniższymi uprawnieniami</string>
     <string name="storage_access_title">Dostęp do pamięci</string>
     <string name="storage_access_summary">Zapisuje twoją kolekcję w bezpiecznym miejscu, żeby w przypadku odinstalowania aplikacji nie została usunięta</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after. See [android.permission.MANAGE_EXTERNAL_STORAGE] on https://developer.android.com/training/data-storage/manage-all-files for context.">Dostęp do wszystkich plików</string>
     <string name="image_occlusion">Okluzja obrazu</string>
+    <string name="microphone" comment="Title of the microphone permission in the permissions explanation screen.">Mikrofon</string>
+    <string name="microphone_permission_explanation" comment="Description explaining why AnkiDroid needs the microphone permission, shown on the permissions explanation screen.">Pozwala na dodawanie dźwięków do kart oraz włącza je podczas przeglądania</string>
+    <string name="notifications_permission_explanation" comment="Description explaining why AnkiDroid needs the notification permission.">Włącza synchronizację mediów w tle oraz pozwala na tworzenie przypomnień o przegląd</string>
+    <string name="heading_required_permissions" comment="Heading for the section of required permissions that the app needs to function, shown in the permissions explanation screen.">Wymagane</string>
+    <string name="heading_optional_permissions" comment="Heading for the section of optional permissions that the app needs to function, shown in the permissions explanation screen.">Opcjonalne</string>
+    <string name="manually_grant_permissions" comment="Pop-up message that is shown to the user when they want to grant an app permission that must be granted via the OS settings screen.">To zezwolenie musisz nadać ręcznie w ustawieniach</string>
+    <string name="revoke_permissions" comment="Pop-up message that is shown to the user when they are revoking an app permission.">This permission must be manually revoked from Settings</string>
     <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Usuń konto</string>
     <!-- Instant Note Editor -->
     <string name="instant_card" comment="Used in the Android system context menu/share dialog to quickly create a note. This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. ">Szybka karta</string>
+    <!-- Multiple profile -->
+    <string name="add_profile">Add profile</string>
 </resources>

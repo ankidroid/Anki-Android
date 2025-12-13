@@ -131,7 +131,6 @@
     <string name="empty_filtered_deck">Esvaziando baralho filtrado&#8230;</string>
     <string name="search_deck" comment="Deck search for selecting it">Pesquisar baralho</string>
     <string name="empty_deck">Este baralho está vazio</string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">Pesquisar baralho</string>
     <string name="invalid_deck_name">Nome do baralho inválido</string>
     <string name="studyoptions_congrats_finished">Parabéns! Você terminou por hoje.</string>
     <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Baralho finalizado por enquanto! %s</string>
@@ -170,6 +169,7 @@
     <string name="card_template_browser_appearance_title">Aparência do navegador</string>
     <!-- card Info -->
     <string name="card_info_title" maxLength="28">Informação do cartão</string>
+    <string name="previous_card_info_title" maxLength="28">Informações do cartão anterior</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Ler e escrever para o banco de dados do AnkiDroid</string>
     <string name="read_write_permission_description">acessar notas, cartões, tipos de notas e baralhos existentes, bem como criar novos</string>
@@ -197,11 +197,21 @@
     <string name="new_unsafe_collection">A nova coleção será excluída do seu telefone se você desinstalar AnkiDroid</string>
     <!-- Permissions screen -->
     <string name="permissions_screen_headline">AnkiDroid precisa de algumas permissões para funcionar</string>
+    <string name="permissions_screen_optional_headline" comment="Explains that there are optional permissions that can be granted to AnkiDroid.">O AnkiDroid funciona melhor com estas permissões</string>
     <string name="storage_access_title">Acesso ao armazenamento</string>
     <string name="storage_access_summary">Salva sua coleção em um lugar seguro que não será excluído se o aplicativo for desinstalado</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after. See [android.permission.MANAGE_EXTERNAL_STORAGE] on https://developer.android.com/training/data-storage/manage-all-files for context.">Acesso a todos os arquivos</string>
     <string name="image_occlusion">Oclusão de imagem</string>
+    <string name="microphone" comment="Title of the microphone permission in the permissions explanation screen.">Microfone</string>
+    <string name="microphone_permission_explanation" comment="Description explaining why AnkiDroid needs the microphone permission, shown on the permissions explanation screen.">Permite adicionar sons a cartões e gravar sua voz durante a revisão</string>
+    <string name="notifications_permission_explanation" comment="Description explaining why AnkiDroid needs the notification permission.">Habilita a sincronização de mídia em segundo plano e permite a criação de lembretes de revisão</string>
+    <string name="heading_required_permissions" comment="Heading for the section of required permissions that the app needs to function, shown in the permissions explanation screen.">Necessário</string>
+    <string name="heading_optional_permissions" comment="Heading for the section of optional permissions that the app needs to function, shown in the permissions explanation screen.">Opcional</string>
+    <string name="manually_grant_permissions" comment="Pop-up message that is shown to the user when they want to grant an app permission that must be granted via the OS settings screen.">Esta permissão deve ser concedida manualmente a partir das Configurações</string>
+    <string name="revoke_permissions" comment="Pop-up message that is shown to the user when they are revoking an app permission.">Esta permissão deve ser revogada manualmente a partir das Configurações</string>
     <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Remover conta</string>
     <!-- Instant Note Editor -->
     <string name="instant_card" comment="Used in the Android system context menu/share dialog to quickly create a note. This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. ">Cartão instantâneo</string>
+    <!-- Multiple profile -->
+    <string name="add_profile">Add profile</string>
 </resources>

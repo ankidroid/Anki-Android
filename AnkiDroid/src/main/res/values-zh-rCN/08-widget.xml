@@ -45,7 +45,6 @@
 -->
 <resources>
     <!-- Widget -->
-    <string name="widget_minimum_cards_due_notification_ticker_title">卡片到期</string>
     <plurals name="widget_minimum_cards_due_notification_ticker_text">
         <item quantity="other">%d 张卡片需要复习</item>
     </plurals>

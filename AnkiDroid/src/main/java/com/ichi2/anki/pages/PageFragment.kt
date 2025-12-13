@@ -31,6 +31,8 @@ import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.progressindicator.CircularProgressIndicator
 import com.ichi2.anki.R
 import com.ichi2.anki.SingleFragmentActivity
+import com.ichi2.anki.workarounds.OnWebViewRecreatedListener
+import com.ichi2.anki.workarounds.SafeWebViewLayout
 import com.ichi2.themes.Themes
 import timber.log.Timber
 import kotlin.reflect.KClass
@@ -41,8 +43,9 @@ import kotlin.reflect.KClass
 open class PageFragment(
     @LayoutRes contentLayoutId: Int = R.layout.page_fragment,
 ) : Fragment(contentLayoutId),
-    PostRequestHandler {
-    lateinit var webView: WebView
+    PostRequestHandler,
+    OnWebViewRecreatedListener {
+    lateinit var webViewLayout: SafeWebViewLayout
     private lateinit var server: AnkiServer
 
     /**
@@ -63,7 +66,7 @@ open class PageFragment(
      */
     protected open fun onCreateWebViewClient(savedInstanceState: Bundle?) = PageWebViewClient()
 
-    protected open fun onWebViewCreated(webView: WebView) { }
+    protected open fun onWebViewCreated() { }
 
     /**
      * When the webview calls `BridgeCommand("foo")`, the PageFragment execute `bridgeCommands["foo"]`.
@@ -78,7 +81,7 @@ open class PageFragment(
         if (bridgeCommands.isEmpty()) {
             return
         }
-        webView.addJavascriptInterface(
+        webViewLayout.addJavascriptInterface(
             object : Any() {
                 @JavascriptInterface
                 fun bridgeCommandImpl(request: String) {
@@ -101,32 +104,11 @@ open class PageFragment(
         view: View,
         savedInstanceState: Bundle?,
     ) {
-        val pageWebViewClient = onCreateWebViewClient(savedInstanceState)
         server = AnkiServer(this).also { it.start() }
-        webView =
-            view.findViewById<WebView>(R.id.webview).apply {
-                with(settings) {
-                    javaScriptEnabled = true
-                    displayZoomControls = false
-                    builtInZoomControls = true
-                    setSupportZoom(true)
-                }
-                webViewClient = pageWebViewClient
-                webChromeClient = PageChromeClient()
-            }
-        setupBridgeCommand(pageWebViewClient)
-        onWebViewCreated(webView)
+        webViewLayout = view.findViewById(R.id.webview_layout)
 
-        val arguments = requireArguments()
-        val path = requireNotNull(arguments.getString(PATH_ARG_KEY)) { "'$PATH_ARG_KEY' missing" }
-        val title = arguments.getString(TITLE_ARG_KEY)
-
-        val nightMode = if (Themes.currentTheme.isNightMode) "#night" else ""
-        val url = "${server.baseUrl()}$path$nightMode".toUri()
-        Timber.i("Loading $url")
-        webView.loadUrl(url.toString())
-
-        view.findViewById<MaterialToolbar>(R.id.toolbar).apply {
+        val title = requireArguments().getString(TITLE_ARG_KEY)
+        view.findViewById<MaterialToolbar>(R.id.toolbar)?.apply {
             if (title != null) {
                 setTitle(title)
             }
@@ -134,26 +116,63 @@ open class PageFragment(
                 requireActivity().onBackPressedDispatcher.onBackPressed()
             }
         }
+
+        setupWebView(savedInstanceState)
+    }
+
+    private fun setupWebView(savedInstanceState: Bundle?) {
+        val pageWebViewClient = onCreateWebViewClient(savedInstanceState)
+        webViewLayout.apply {
+            setAcceptThirdPartyCookies(true)
+            with(settings) {
+                javaScriptEnabled = true
+                displayZoomControls = false
+                builtInZoomControls = true
+                setSupportZoom(true)
+            }
+            setWebViewClient(pageWebViewClient)
+            setWebChromeClient(PageChromeClient())
+            setupBridgeCommand(pageWebViewClient)
+            onWebViewCreated()
+        }
+        val path = requireNotNull(requireArguments().getString(PATH_ARG_KEY)) { "'$PATH_ARG_KEY' missing" }
+        val nightMode = if (Themes.currentTheme.isNightMode) "#night" else ""
+        val url = "${server.baseUrl()}$path$nightMode".toUri()
+        Timber.i("Loading $url")
+        webViewLayout.loadUrl(url.toString())
     }
 
     override suspend fun handlePostRequest(
-        uri: String,
+        uri: PostRequestUri,
         bytes: ByteArray,
     ): ByteArray {
-        val methodName =
-            if (uri.startsWith(AnkiServer.ANKI_PREFIX)) {
-                uri.substring(AnkiServer.ANKI_PREFIX.length)
-            } else {
-                throw IllegalArgumentException("unhandled request: $uri")
+        val methodName = uri.backendMethodName ?: throw IllegalArgumentException("unhandled request: $uri")
+
+        val resolvedUiMethod =
+            when (val uiResponse = activity.handleUiPostRequest(methodName, bytes)) {
+                is UiPostRequestResponse.Handled -> return uiResponse.data
+                is UiPostRequestResponse.UnknownMethod -> false
+                is UiPostRequestResponse.Ignored -> true
             }
-        return activity.handleUiPostRequest(methodName, bytes)
-            ?: handleCollectionPostRequest(methodName, bytes)
-            ?: throw IllegalArgumentException("unhandled method: $methodName")
+
+        return handleCollectionPostRequest(methodName, bytes) ?: run {
+            if (!resolvedUiMethod) {
+                Timber.w("Unknown TS method called.")
+                Timber.d("No handlers resolve TS method %s", methodName)
+            }
+            throw IllegalArgumentException("unhandled method: $methodName")
+        }
     }
 
+    @CallSuper
     override fun onDestroyView() {
         server.stop()
+        webViewLayout.safeDestroy()
         super.onDestroyView()
+    }
+
+    override fun onWebViewRecreated(webView: WebView) {
+        setupWebView(null)
     }
 
     companion object {

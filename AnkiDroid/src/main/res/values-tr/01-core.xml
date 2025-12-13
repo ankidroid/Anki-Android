@@ -76,7 +76,7 @@
         <item quantity="one">%1$d gün %2$d saat kaldı</item>
         <item quantity="other">%1$d gün %2$d saat kaldı</item>
     </plurals>
-    <string name="type_answer_hint" comment="In the reviewer. When the user use note type with hint. It\'s the default content of the text field in which the user is invited to type their answer. It disappears as soon as the user start to type.">Cevabı yaz</string>
+    <string name="type_answer_hint" comment="In the reviewer. When the user use note type with hint. It\'s the default content of the text field in which the user is invited to type their answer. It disappears as soon as the user start to type.">Yanıtı yaz</string>
     <string name="show_answer" maxLength="41" comment="When displaying the question side of a card. This is the label of a button that display the answer side.">Cevabı göster</string>
     <string name="hide_answer" comment="In the previewer, when the answer side is displayed. This is the label of the button that sends back to the question side.">Cevabı gizle</string>
     <string name="ease_button_again" maxLength="41" comment="In the reviewer, in the answer side. Label of the button that request the card to be shown again soon.">Yeniden</string>
@@ -131,7 +131,6 @@
     <string name="empty_filtered_deck">Filtreli deste boşaltılıyor&#8230;</string>
     <string name="search_deck" comment="Deck search for selecting it">Deste Ara</string>
     <string name="empty_deck">Bu deste boş</string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">Deste Ara</string>
     <string name="invalid_deck_name">Geçersiz deste adı</string>
     <string name="studyoptions_congrats_finished">Tebrikler! Bugünlük bitirdiniz.</string>
     <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Deste şimdilik bitti! %s</string>
@@ -170,6 +169,7 @@
     <string name="card_template_browser_appearance_title">Tarayıcı görünümü</string>
     <!-- card Info -->
     <string name="card_info_title" maxLength="28">Kart bilgileri</string>
+    <string name="previous_card_info_title" maxLength="28">Önceki kart bilgisi</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">AnkiDroid veritabanına okut ve yaz</string>
     <string name="read_write_permission_description">varolan notlara, kartlara, not türlerine ve destelere erişmek, ve yenilerini oluşturmak</string>
@@ -197,11 +197,21 @@
     <string name="new_unsafe_collection">AnkiDroid\'i kaldırırsanız yeni koleksiyon telefonunuzdan silinecektir</string>
     <!-- Permissions screen -->
     <string name="permissions_screen_headline">AnkiDroid\'e çalışmak için bazı izinler gerekiyor</string>
+    <string name="permissions_screen_optional_headline" comment="Explains that there are optional permissions that can be granted to AnkiDroid.">AnkiDroid en iyi şekilde bu izinlerle çalışır</string>
     <string name="storage_access_title">Depolama erişimi</string>
     <string name="storage_access_summary">Koleksiyonunuzu uygulama kaldırılırsa silinmeyecek güvenli bir yerde saklar</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after. See [android.permission.MANAGE_EXTERNAL_STORAGE] on https://developer.android.com/training/data-storage/manage-all-files for context.">Bütün dosyalara erişim</string>
     <string name="image_occlusion">Resim Örtüsü</string>
+    <string name="microphone" comment="Title of the microphone permission in the permissions explanation screen.">Mikrofon</string>
+    <string name="microphone_permission_explanation" comment="Description explaining why AnkiDroid needs the microphone permission, shown on the permissions explanation screen.">Kartlara ses eklemenizi sağlar ve çalışırken ses yeniden oynatmayı açar</string>
+    <string name="notifications_permission_explanation" comment="Description explaining why AnkiDroid needs the notification permission.">Arkaplanda medya senkronizasyonunu etkinleştirir ve çalışma hatırlatıcıları kurmanızı sağlar</string>
+    <string name="heading_required_permissions" comment="Heading for the section of required permissions that the app needs to function, shown in the permissions explanation screen.">Zorunlu</string>
+    <string name="heading_optional_permissions" comment="Heading for the section of optional permissions that the app needs to function, shown in the permissions explanation screen.">İsteğe bağlı</string>
+    <string name="manually_grant_permissions" comment="Pop-up message that is shown to the user when they want to grant an app permission that must be granted via the OS settings screen.">Bu iznin Ayarlar\'dan elle verilmesi gerekir</string>
+    <string name="revoke_permissions" comment="Pop-up message that is shown to the user when they are revoking an app permission.">Bu iznin Ayarlar\'dan elle kaldırılması gerekir</string>
     <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Hesabı sil</string>
     <!-- Instant Note Editor -->
     <string name="instant_card" comment="Used in the Android system context menu/share dialog to quickly create a note. This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. ">Anında kart</string>
+    <!-- Multiple profile -->
+    <string name="add_profile">Add profile</string>
 </resources>

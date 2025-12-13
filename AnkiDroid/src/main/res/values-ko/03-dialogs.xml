@@ -79,7 +79,7 @@
     <string name="restore_backup_title">백업을 복원할까요?</string>
     <string name="restore_backup">컬렉션이 기존의 것으로 대체됩니다. 저장되지 않은 모든 작업은 손실됩니다.</string>
     <string name="restore_backup_choose_another">다른 항목 선택하기</string>
-    <string name="dialog_cancel">취소하기</string>
+    <string name="dialog_cancel">취소</string>
     <string name="dialog_ok">확인</string>
     <string name="dialog_confirm" tools:ignore="UnusedResources">확인</string>
     <string name="dialog_no">아니요</string>
@@ -121,6 +121,8 @@
     <string name="multimedia_editor_failed">멀티미디어 편집기를 열기 실패</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">오디오 녹음 권한이 거부됨</string>
+    <string name="permission_denied">권한이 거부되었습니다.</string>
+    <string name="recording_permission_denied_message">\"음성 녹음\" 기능을 사용하려면 마이크 권한이 필요합니다. 앱 설정에서 권한을 허용해 주세요.</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid Upgraded</string>
     <string name="integrity_check_startup_content">AnkiDroid has been upgraded. This upgrade includes fixes for possible database problems, and we advise you to run check database now.</string>
@@ -156,12 +158,12 @@
     <string name="locale_selection_dialog_title_new">언어 설정</string>
     <string name="locale_selection_dialog_summary">Some multilingual keyboards, such as GBoard support changing language when editing text\n\nPlease request the “setImeHintLocales” feature from your keyboard manufacturer if your keyboard does not change language.</string>
     <!-- Help Dialog -->
-    <string name="help_title_using_ankidroid">Using AnkiDroid</string>
-    <string name="help_item_ankidroid_manual">AnkiDroid manual</string>
-    <string name="help_item_anki_manual">Anki manual</string>
+    <string name="help_title_using_ankidroid">AnkiDroid 사용법</string>
+    <string name="help_item_ankidroid_manual">AnkiDroid 매뉴얼</string>
+    <string name="help_item_anki_manual">Anki 매뉴얼</string>
     <string name="help_item_ankidroid_faq">AnkiDroid FAQ</string>
-    <string name="help_title_get_help">Get help</string>
-    <string name="help_item_mailing_list">Mailing list</string>
+    <string name="help_title_get_help">문의하기</string>
+    <string name="help_item_mailing_list">메일 목록</string>
     <string name="help_item_reddit">Reddit</string>
     <string name="help_item_report_bug">오류 보고</string>
     <string name="help_title_support_ankidroid" maxLength="28">AnkiDroid 지원하기</string>
@@ -197,8 +199,6 @@
     <string name="import_deck_package">덱 패키지 (.apkg)</string>
     <string name="import_collection_package">컬렉션 패키지 (.colpkg)</string>
     <string name="import_csv">텍스트 파일 (.txt, .csv)</string>
-    <!-- Deck selection dialog -->
-    <string name="cannot_create_subdeck_for_all_decks">모든 덱의 하위 덱을 만들 수 없습니다</string>
     <!-- scoped storage -->
     <string name="backup_your_collection">컬렉션 백업하기</string>
     <string name="backup_collection_message">아직 컬렉션을 백업하지 않았습니다. 데이터 손실이 일어날 수 있으므로 지금 백업하세요.</string>
@@ -246,4 +246,10 @@
     <string name="tts_error_dialog_reason_text">TTS 엔진 <b>%1$s</b> 가 다음 언어를 지원하지 않습니다: <b>%2$s</b></string>
     <string name="tts_error_dialog_change_button_text">엔진 바꾸기</string>
     <string name="tts_error_dialog_supported_voices_button_text">음성 옵션</string>
+    <!-- import_cache_error_resolutions -->
+    <string name="import_error_resolution_try_again">Re-import the file</string>
+    <string name="import_error_resolution_free_up_space">Ensure there is sufficient free space on your device</string>
+    <string name="import_error_resolution_check_internet">Ensure you are connected to the internet</string>
+    <string name="import_error_resolution_copy_to_device">Copy the file to your device and try again with the local file</string>
+    <string name="import_error_resolution_select_file">Open the file using your device’s file browser app</string>
 </resources>

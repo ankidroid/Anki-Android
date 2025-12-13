@@ -18,7 +18,6 @@ package com.ichi2.anki.settings
 import android.content.res.Resources
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.github.ivanshafran.sharedpreferencesmock.SPMockBuilder
-import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.libanki.utils.append
 import com.ichi2.anki.preferences.PreferenceTestUtils
@@ -28,18 +27,14 @@ import com.ichi2.anki.settings.enums.PrefEnum
 import com.ichi2.testutils.EmptyApplication
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.mockkObject
-import io.mockk.unmockkObject
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.ArgumentMatchers.anyInt
-import org.mockito.Mockito.anyBoolean
-import org.mockito.Mockito.anyString
-import org.mockito.Mockito.doAnswer
-import org.mockito.Mockito.spy
+import org.mockito.kotlin.any
 import org.mockito.kotlin.anyOrNull
+import org.mockito.kotlin.doAnswer
+import org.mockito.kotlin.spy
 import org.mockito.kotlin.whenever
 import org.robolectric.annotation.Config
 import kotlin.reflect.KClass
@@ -55,29 +50,27 @@ import kotlin.test.assertEquals
 @Config(application = EmptyApplication::class)
 class PrefsRobolectricTest : RobolectricTest() {
     private fun getKeysAndDefaultValues(): MutableMap<String, Any?> {
-        val spy = spy(SPMockBuilder().createSharedPreferences())
-        AnkiDroidApp.sharedPreferencesTestingOverride = spy
-        val keysAndDefaultValues: MutableMap<String, Any?> = mutableMapOf()
-
+        val sharedPrefsSpy = spy(SPMockBuilder().createSharedPreferences())
         val mockResources = mockk<Resources>()
         every { mockResources.getString(any()) } answers { invocation.args[0].toString() }
-        mockkObject(Prefs)
-        every { Prefs.resources } returns mockResources
+        val prefs = PrefsRepository(sharedPrefsSpy, mockResources)
+
+        val keysAndDefaultValues: MutableMap<String, Any?> = mutableMapOf()
         doAnswer { invocation ->
             val key = invocation.arguments[0] as String
             keysAndDefaultValues[key] = invocation.arguments[1]
             invocation.callRealMethod()
         }.run {
-            whenever(spy).getBoolean(anyString(), anyBoolean())
-            whenever(spy).getString(anyString(), anyOrNull())
-            whenever(spy).getInt(anyString(), anyInt())
+            whenever(sharedPrefsSpy).getBoolean(any(), any())
+            whenever(sharedPrefsSpy).getString(any(), anyOrNull())
+            whenever(sharedPrefsSpy).getInt(any(), any())
         }
 
-        for (property in Prefs::class.memberProperties) {
+        for (property in PrefsRepository::class.memberProperties) {
             if (property.visibility != KVisibility.PUBLIC) continue
-            property.getter.call(Prefs)
+            property.getter.call(prefs)
         }
-        unmockkObject(Prefs)
+
         return keysAndDefaultValues
     }
 
@@ -103,30 +96,27 @@ class PrefsRobolectricTest : RobolectricTest() {
     }
 
     private fun getPropertyNamesAndKeys(): MutableMap<String, String> {
-        val spy = spy(SPMockBuilder().createSharedPreferences())
-        AnkiDroidApp.sharedPreferencesTestingOverride = spy
-        val keys = mutableListOf<String>()
-
+        val sharedPrefsSpy = spy(SPMockBuilder().createSharedPreferences())
         val mockResources = mockk<Resources>()
         every { mockResources.getString(any()) } answers { invocation.args[0].toString() }
-        mockkObject(Prefs)
-        every { Prefs.resources } returns mockResources
+        val prefs = PrefsRepository(sharedPrefsSpy, mockResources)
+        val keys = mutableListOf<String>()
+
         doAnswer { invocation ->
             val key = PreferenceTestUtils.attrValueToString("@${invocation.arguments[0]}", targetContext)
             keys.append(key)
             invocation.callRealMethod()
         }.run {
-            whenever(spy).getBoolean(anyString(), anyBoolean())
-            whenever(spy).getString(anyString(), anyOrNull())
-            whenever(spy).getInt(anyString(), anyInt())
+            whenever(sharedPrefsSpy).getBoolean(any(), any())
+            whenever(sharedPrefsSpy).getString(any(), anyOrNull())
+            whenever(sharedPrefsSpy).getInt(any(), any())
         }
         val propertyNamesAndKeys = mutableMapOf<String, String>()
-        for (property in Prefs::class.memberProperties) {
+        for (property in PrefsRepository::class.memberProperties) {
             if (property.visibility != KVisibility.PUBLIC) continue
-            property.getter.call(Prefs)
+            property.getter.call(prefs)
             propertyNamesAndKeys[property.name] = keys.last()
         }
-        unmockkObject(Prefs)
         return propertyNamesAndKeys
     }
 

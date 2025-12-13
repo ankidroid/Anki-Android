@@ -33,7 +33,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/set_due_date_single_day_text"
+        android:id="@+id/set_due_date_single_day_input_layout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -49,6 +49,7 @@
         >
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/set_due_date_single_day_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="number"

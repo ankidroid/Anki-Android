@@ -49,7 +49,6 @@
     </plurals>
     <!--Browser-->
     <string name="model_browser_delete">Odstranit typ poznámky</string>
-    <string name="model_browser_rename" comment="Rename a note type">Přejmenovat</string>
     <string name="model_browser_template">Upravit karty</string>
     <!--Rename-->
     <string name="rename_model">Přejmenovat typ poznámky</string>
@@ -57,7 +56,6 @@
     <!--Language Hint-->
     <string name="model_field_editor_language_hint_dialog_success_result">Jazyk nápovědy nastaven na %s</string>
     <!--Field Editing-->
-    <string name="model_field_editor_title">Upravit pole</string>
     <string name="model_field_editor_add" maxLength="28">Přidat pole</string>
     <string name="model_field_editor_delete">Odstranit pole</string>
     <string name="model_field_editor_rename">Přejmenovat pole</string>
@@ -67,6 +65,12 @@
     <string name="model_field_editor_sort_field">Seřadit podle tohoto pole</string>
     <!--Warnings-->
     <string name="model_delete_warning">Opravdu si přejete odstranit tento typ poznámky?</string>
+    <!--
+        Example output:
+        Delete the note types below?
+        Basic, Basic (and reversed card), Cloze
+     -->
+    <string name="model_delete_multiple_warning">Odstranit typy poznámek níže?\n %s</string>
     <string name="field_delete_warning">Opravdu si přejete odstranit toto pole?</string>
     <!--Model Add Suffixes-->
     <string name="model_browser_add_add">Přidat: %1$s</string>

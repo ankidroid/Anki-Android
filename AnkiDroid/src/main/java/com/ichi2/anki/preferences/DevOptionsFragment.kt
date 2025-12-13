@@ -27,12 +27,16 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.UsageAnalytics
+import com.ichi2.anki.dialogs.TtsVoicesDialogFragment
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.showThemedToast
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.utils.ext.defaultConfig
+import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.withProgress
 import com.ichi2.preferences.IncrementerNumberRangePreferenceCompat
+import com.ichi2.utils.setWebContentsDebuggingEnabled
 import com.ichi2.utils.show
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -51,21 +55,7 @@ class DevOptionsFragment : SettingsFragment() {
         get() = "prefs.dev_options"
 
     override fun initSubscreen() {
-        val enableDevOptionsPref = requirePreference<SwitchPreferenceCompat>(R.string.dev_options_enabled_by_user_key)
-        /**
-         * If it is a DEBUG build, hide the preference to disable developer options
-         * If it is a RELEASE build, configure the preference to disable dev options
-         * Ensure that the preference is searchable or not
-         * based on the same condition at [HeaderFragment.configureSearchBar]
-         */
-        if (BuildConfig.DEBUG) {
-            enableDevOptionsPref.isVisible = false
-        } else {
-            enableDevOptionsPref.setOnPreferenceChangeListener { _, _ ->
-                showDisableDevOptionsDialog()
-                false
-            }
-        }
+        setupEnableDevOptions()
         // Make it possible to test crash reporting
         requirePreference<Preference>(R.string.pref_trigger_crash_key).setOnPreferenceClickListener {
             // If we don't delete the limiter data, our test crash may not go through,
@@ -96,7 +86,7 @@ class DevOptionsFragment : SettingsFragment() {
             Timber.w("Corrupting FSRS parameters for default deck config")
             launchCatchingTask {
                 withCol {
-                    val defaultConfig = decks.getConfig(1)
+                    val defaultConfig = decks.defaultConfig
                     val invalidFsrsConfig =
                         JSONArray().apply {
                             put(0.4197)
@@ -130,6 +120,12 @@ class DevOptionsFragment : SettingsFragment() {
                 }
                 setNegativeButton(R.string.dialog_cancel) { _, _ -> }
             }
+            false
+        }
+
+        // Open TTS voice selection ({{tts-voices:}})
+        requirePreference<Preference>(R.string.dev_open_tts_voices).setOnPreferenceClickListener {
+            showDialogFragment(TtsVoicesDialogFragment())
             false
         }
 
@@ -191,11 +187,40 @@ class DevOptionsFragment : SettingsFragment() {
             true
         }
 
-        requirePreference<Preference>(R.string.new_reviewer_pref_key).setOnPreferenceChangeListener { pref, newValue ->
-            val boolValue = newValue as? Boolean ?: return@setOnPreferenceChangeListener false
-            pref.sharedPreferences?.edit { putBoolean("newReviewerOptions", boolValue) }
+        requirePreference<Preference>(R.string.pref_enable_switch_profile_key).setOnPreferenceChangeListener { _, _ ->
             ActivityCompat.recreate(requireActivity())
             true
+        }
+
+        setupWebDebugPreference()
+    }
+
+    /**
+     * In a DEBUG build, hide the preference to disable developer options
+     * In a RELEASE build, configure the preference to disable dev options
+     * Ensure that the preference is searchable or not
+     * based on the same condition at [HeaderFragment.configureSearchBar]
+     */
+    private fun setupEnableDevOptions() {
+        val enableDevOptionsPref =
+            requirePreference<SwitchPreferenceCompat>(R.string.dev_options_enabled_by_user_key)
+
+        if (BuildConfig.DEBUG) {
+            enableDevOptionsPref.isVisible = false
+        } else {
+            enableDevOptionsPref.setOnPreferenceChangeListener { _, _ ->
+                showDisableDevOptionsDialog()
+                false
+            }
+        }
+    }
+
+    private fun setupWebDebugPreference() {
+        requirePreference<SwitchPreferenceCompat>(R.string.html_javascript_debugging_key).apply {
+            isVisible = !BuildConfig.DEBUG
+            setOnPreferenceChangeListener { isEnabled ->
+                setWebContentsDebuggingEnabled(isEnabled)
+            }
         }
     }
 

@@ -42,7 +42,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.button.MaterialButton
 import com.ichi2.anki.CollectionManager.TR
-import com.ichi2.anki.DrawingActivity
+import com.ichi2.anki.DrawingFragment
 import com.ichi2.anki.R
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.multimedia.MultimediaActivity.Companion.EXTRA_MEDIA_OPTIONS
@@ -64,6 +64,7 @@ import com.ichi2.utils.ExifUtil
 import com.ichi2.utils.FileUtil
 import com.ichi2.utils.message
 import com.ichi2.utils.negativeButton
+import com.ichi2.utils.openInputStreamSafe
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
 import kotlinx.coroutines.flow.collectLatest
@@ -123,7 +124,7 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
         }
 
     /**
-     * Launches the [DrawingActivity] and handles the result by adding the drawing as image.
+     * Launches the [DrawingFragment] and handles the result by adding the drawing as image.
      */
     private val drawingActivityLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -366,7 +367,8 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
     }
 
     private fun openDrawingCanvas() {
-        drawingActivityLauncher.launch(Intent(requireContext(), DrawingActivity::class.java))
+        val intent = DrawingFragment.getIntent(requireContext())
+        drawingActivityLauncher.launch(intent)
     }
 
     private fun dispatchCamera() {
@@ -400,7 +402,7 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
         val imageUri =
             BundleCompat.getParcelable(
                 intent.extras!!,
-                DrawingActivity.EXTRA_RESULT_WHITEBOARD,
+                DrawingFragment.IMAGE_PATH_KEY,
                 Uri::class.java,
             )
 
@@ -675,7 +677,7 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
      */
     private fun loadSvgFromUri(uri: Uri): String? =
         try {
-            context?.contentResolver?.openInputStream(uri)?.use { inputStream ->
+            context?.contentResolver?.openInputStreamSafe(uri)?.use { inputStream ->
                 inputStream.convertToString()
             }
         } catch (e: Exception) {

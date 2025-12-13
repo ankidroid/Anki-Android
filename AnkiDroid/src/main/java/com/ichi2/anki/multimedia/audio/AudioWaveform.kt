@@ -24,8 +24,7 @@ import android.util.AttributeSet
 import android.view.View
 import androidx.core.content.withStyledAttributes
 import com.ichi2.anki.R
-
-// TODO : Middle blue line should move left->mid https://github.com/ankidroid/Anki-Android/pull/14591#issuecomment-1791037102
+import kotlin.math.ceil
 
 /**This class represents a custom View used for creating audio waveforms when recording audio.
  * It loops over each spike and add it on the screen and the height of the spike is determined by the
@@ -77,7 +76,7 @@ class AudioWaveform(
 
     private val spikeCount
         get() =
-            (sw / (w + d) * percentageOfWidthToFill)
+            ceil(sw / (w + d) * percentageOfWidthToFill)
                 .toInt()
 
     init {
@@ -120,8 +119,18 @@ class AudioWaveform(
         }
 
         if (displayVerticalLine) {
-            // mid blue vertical line
-            val centerX = width / 2f
+            val maxCenterX = width / 2f
+            val isFilled = audioSpikes.size == spikeCount
+
+            val centerX =
+                if (isFilled) {
+                    maxCenterX
+                } else {
+                    val currentLineX = audioSpikes.size * (w + d)
+
+                    currentLineX.coerceAtMost(maxCenterX)
+                }
+
             val startY = 0f
             val endY = height.toFloat()
             canvas.drawLine(centerX, startY, centerX, endY, verticalLinePaint)

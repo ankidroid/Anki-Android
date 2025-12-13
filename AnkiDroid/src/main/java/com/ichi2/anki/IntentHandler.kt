@@ -1,18 +1,18 @@
-/****************************************************************************************
- * Copyright (c) 2015 Timothy Rae <perceptualchaos2@gmail.com>                          *
- *                                                                                      *
- * This program is free software; you can redistribute it and/or modify it under        *
- * the terms of the GNU General Public License as published by the Free Software        *
- * Foundation; either version 3 of the License, or (at your option) any later           *
- * version.                                                                             *
- *                                                                                      *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY      *
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A      *
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.             *
- *                                                                                      *
- * You should have received a copy of the GNU General Public License along with         *
- * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
- ****************************************************************************************/
+/*
+ * Copyright (c) 2015 Timothy Rae <perceptualchaos2@gmail.com>
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 3 of the License, or (at your option) any later
+ * version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 package com.ichi2.anki
 
@@ -32,15 +32,16 @@ import com.ichi2.anki.common.utils.trimToLength
 import com.ichi2.anki.dialogs.DialogHandler.Companion.storeMessage
 import com.ichi2.anki.dialogs.DialogHandlerMessage
 import com.ichi2.anki.dialogs.requireDeckPickerOrShowError
+import com.ichi2.anki.exception.SystemStorageException
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import com.ichi2.anki.servicelayer.ScopedStorageService
-import com.ichi2.anki.services.ReminderService
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.ui.windows.reviewer.ReviewerFragment
 import com.ichi2.anki.utils.MimeTypeUtils
 import com.ichi2.anki.worker.SyncWorker
 import com.ichi2.utils.FileUtil
+import com.ichi2.utils.ImportResult
 import com.ichi2.utils.ImportUtils.handleFileImport
 import com.ichi2.utils.ImportUtils.isInvalidViewIntent
 import com.ichi2.utils.ImportUtils.showImportUnsuccessfulDialog
@@ -162,7 +163,7 @@ class IntentHandler : AbstractIntentHandler() {
         reloadIntent: Intent,
         reviewerIntent: Intent,
     ) {
-        val deckId = intent.getLongExtra(ReminderService.EXTRA_DECK_ID, 0)
+        val deckId = intent.getLongExtra(REVIEW_DECK_INTENT_EXTRA_DECK_ID, 0)
         Timber.i("Handling intent to review deck '%d'", deckId)
 
         val reviewIntent =
@@ -214,16 +215,19 @@ class IntentHandler : AbstractIntentHandler() {
         }
 
         // Start DeckPicker if we correctly processed ACTION_VIEW
-        if (importResult.isSuccess) {
-            deleteImportedDeck(intent.data?.path)
-            reloadIntent.action = action
-            reloadIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-            startActivity(reloadIntent)
-            finish()
-        } else {
-            Timber.i("File import failed")
-            // Don't import the file if it didn't load properly or doesn't have apkg extension
-            showImportUnsuccessfulDialog(this, importResult.humanReadableMessage, true)
+        when (importResult) {
+            is ImportResult.Success -> {
+                deleteImportedDeck(intent.data?.path)
+                reloadIntent.action = action
+                reloadIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                startActivity(reloadIntent)
+                finish()
+            }
+            is ImportResult.Failure -> {
+                Timber.i("File import failed")
+                // Don't import the file if it didn't load properly or doesn't have apkg extension
+                showImportUnsuccessfulDialog(this, importResult, true)
+            }
         }
     }
 
@@ -261,8 +265,7 @@ class IntentHandler : AbstractIntentHandler() {
                 data.data
             }
 
-        val imageOcclusionIntentBuilder = ImageOcclusionIntentBuilder(this)
-        val intentImageOcclusion = imageOcclusionIntentBuilder.buildIntent(imageUri)
+        val intentImageOcclusion = NoteEditorLauncher.ImageOcclusion(imageUri).toIntent(this)
 
         TaskStackBuilder
             .create(this)
@@ -336,6 +339,7 @@ class IntentHandler : AbstractIntentHandler() {
     }
 
     companion object {
+        const val REVIEW_DECK_INTENT_EXTRA_DECK_ID = "EXTRA_DECK_ID"
         private const val CLIPBOARD_INTENT = "com.ichi2.anki.COPY_DEBUG_INFO"
         private const val CLIPBOARD_INTENT_EXTRA_DATA = "clip_data"
 
@@ -350,6 +354,8 @@ class IntentHandler : AbstractIntentHandler() {
         /** Checks whether storage permissions are granted on the device. If the device is not using legacy storage,
          *  it verifies if the app has been granted the necessary storage access permission.
          *  @return `true`: if granted, otherwise `false` and shows a missing permission toast
+         *
+         * @throws SystemStorageException if `getExternalFilesDir` returns null
          */
         fun grantedStoragePermissions(
             context: Context,
@@ -371,7 +377,7 @@ class IntentHandler : AbstractIntentHandler() {
         @CheckResult
         fun getLaunchType(intent: Intent): LaunchType {
             val action = intent.action
-            return if (action == Intent.ACTION_SEND || Intent.ACTION_VIEW == action && isValidViewIntent(intent)) {
+            return if (action == Intent.ACTION_SEND || (Intent.ACTION_VIEW == action && isValidViewIntent(intent))) {
                 val mimeType = intent.resolveMimeType()
                 when {
                     mimeType?.startsWith("image/") == true -> LaunchType.IMAGE_IMPORT
@@ -383,7 +389,7 @@ class IntentHandler : AbstractIntentHandler() {
                 }
             } else if ("com.ichi2.anki.DO_SYNC" == action) {
                 LaunchType.SYNC
-            } else if (intent.hasExtra(ReminderService.EXTRA_DECK_ID)) {
+            } else if (intent.hasExtra(REVIEW_DECK_INTENT_EXTRA_DECK_ID)) {
                 LaunchType.REVIEW
             } else if (action == CLIPBOARD_INTENT) {
                 LaunchType.COPY_DEBUG_INFO
@@ -474,6 +480,17 @@ class IntentHandler : AbstractIntentHandler() {
 
         /**
          * Returns an intent to review a specific deck.
+         *
+         * @param context
+         * @param deckId the deck ID of the deck to review
+         */
+        fun getReviewDeckIntent(
+            context: Context,
+            deckId: DeckId,
+        ): Intent = Intent(context, IntentHandler::class.java).putExtra(REVIEW_DECK_INTENT_EXTRA_DECK_ID, deckId)
+
+        /**
+         * Returns an intent to review a specific deck.
          * This does not states which reviewer to use, instead IntentHandler will choose whether to use the
          * legacy or the new reviewer based on the "newReviewer" preference.
          * It is expected to be used from widget, shortcut, reminders but not from ankidroid directly because of the CLEAR_TOP flag.
@@ -483,7 +500,7 @@ class IntentHandler : AbstractIntentHandler() {
             deckId: DeckId,
         ) = Intent(context, IntentHandler::class.java).apply {
             setAction(Intent.ACTION_VIEW)
-            putExtra(ReminderService.EXTRA_DECK_ID, deckId)
+            putExtra(REVIEW_DECK_INTENT_EXTRA_DECK_ID, deckId)
         }
     }
 }

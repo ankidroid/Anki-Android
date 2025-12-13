@@ -149,6 +149,7 @@
     <!-- Note editor colors -->
     <attr name="duplicateColor" format="color"/>
     <attr name="editTextBackgroundColor" format="color"/>
+    <attr name="editTextHighlightColor" format="color"/><!-- TODO replace this with colorOnPrimaryContainer, see #19361 -->
     <attr name="toolbarBackgroundColor" format="color"/>
     <attr name="toolbarIconColor" format="color"/>
     <attr name="buttonShadowColor" format="color"/>

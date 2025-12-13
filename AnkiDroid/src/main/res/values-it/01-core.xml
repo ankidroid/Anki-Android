@@ -83,7 +83,7 @@
     <string name="ease_button_hard" maxLength="41" comment="In the reviewer, in the answer side. Label of the button that used by the user to state finding the correct answer was hard.">Difficile</string>
     <string name="ease_button_good" maxLength="41" comment="In the reviewer, in the answer side. Label of the button that used by the user to state their answer was good.">Normale</string>
     <string name="ease_button_easy" maxLength="41" comment="In the reviewer, in the answer side. Label of the button that used by the user to state that finding the answer to the question was easy.">Facile</string>
-    <string name="show_answer_hint_long_press" comment="In the reviewer, hint is shown when touching the show answer button and the user has the long-press accessibility setting enabled">\'%s\' is enabled</string>
+    <string name="show_answer_hint_long_press" comment="In the reviewer, hint is shown when touching the show answer button and the user has the long-press accessibility setting enabled">\'%s\' abilitato</string>
     <!-- General -->
     <string name="undo" maxLength="28" comment="When tapping on this text, the last action is undone.">Annulla</string>
     <string name="redo" maxLength="28" comment="Menu entry that allows to redo action that was just undone.">Ripristina</string>
@@ -131,7 +131,6 @@
     <string name="empty_filtered_deck">Svuotamento del mazzo filtrato in corso&#8230;</string>
     <string name="search_deck" comment="Deck search for selecting it">Ricerca mazzo</string>
     <string name="empty_deck">Questo mazzo è vuoto</string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">Ricerca mazzo</string>
     <string name="invalid_deck_name">Nome mazzo non valido</string>
     <string name="studyoptions_congrats_finished">Congratulazioni! Per oggi hai finito.</string>
     <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Mazzo completato per ora! %s</string>
@@ -170,6 +169,7 @@
     <string name="card_template_browser_appearance_title">Aspetto nel browser</string>
     <!-- card Info -->
     <string name="card_info_title" maxLength="28">Info carta</string>
+    <string name="previous_card_info_title" maxLength="28">Previous card info</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Leggere e scrivere nel database di AnkiDroid</string>
     <string name="read_write_permission_description">accedere a note esistenti, carte, modelli e mazzi, nonché crearne di nuovi</string>
@@ -189,7 +189,7 @@
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Collezione inaccessibile</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Non è possibile accedere alla tua collezione dopo che AnkiDroid è stato disinstallato a causa di un cambiamento della politica del Google Play Store\n\nI tuoi dati sono al sicuro e possono essere ripristinati. Si trovano \n%s\n\nSelezione un\'opzione tra quelle qui sotto per ripristinare:</string>
     <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android ha rimosso i permessi %1$s di AnkiDroid a causa dell\'inattività dell\'app.\n\nI dati sono al sicuro e possono essere ripristinati; si trovano al percorso\n%2$s\n\nSelezionare un\'opzione qui sotto per effettuare il ripristino:</string>
-    <string name="restore_data_from_ankiweb">Ripristina da AnkiWeb (consigliato)</string>
+    <string name="restore_data_from_ankiweb">Ripristinare da AnkiWeb (consigliato)</string>
     <string name="install_non_play_store_ankidroid_recommended">Ripristina l\'accesso alla cartella (raccomandato)</string>
     <string name="install_non_play_store_ankidroid">Ripristina l\'accesso alla cartella (avanzato)</string>
     <string name="restore_data_from_backup">Ripristina da backup .colpkg (avanzato)</string>
@@ -197,11 +197,21 @@
     <string name="new_unsafe_collection">La nuova collezione verrà eliminata dal telefono se si disinstalla AnkiDroid</string>
     <!-- Permissions screen -->
     <string name="permissions_screen_headline">AnkiDroid ha bisogno di alcuni permessi per funzionare</string>
+    <string name="permissions_screen_optional_headline" comment="Explains that there are optional permissions that can be granted to AnkiDroid.">AnkiDroid works best with these permissions</string>
     <string name="storage_access_title">Accesso all\'archiviazione</string>
     <string name="storage_access_summary">Salva la tua collezione in un posto sicuro che non verrà cancellato se si disinstalla l\'app</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after. See [android.permission.MANAGE_EXTERNAL_STORAGE] on https://developer.android.com/training/data-storage/manage-all-files for context.">Accesso a tutti i file</string>
     <string name="image_occlusion">Occludi immagine</string>
+    <string name="microphone" comment="Title of the microphone permission in the permissions explanation screen.">Microphone</string>
+    <string name="microphone_permission_explanation" comment="Description explaining why AnkiDroid needs the microphone permission, shown on the permissions explanation screen.">Allows you to add sounds to cards and enables voice playback while reviewing</string>
+    <string name="notifications_permission_explanation" comment="Description explaining why AnkiDroid needs the notification permission.">Enables background media syncing and allows you to create review reminders</string>
+    <string name="heading_required_permissions" comment="Heading for the section of required permissions that the app needs to function, shown in the permissions explanation screen.">Required</string>
+    <string name="heading_optional_permissions" comment="Heading for the section of optional permissions that the app needs to function, shown in the permissions explanation screen.">Optional</string>
+    <string name="manually_grant_permissions" comment="Pop-up message that is shown to the user when they want to grant an app permission that must be granted via the OS settings screen.">This permission must be manually granted from Settings</string>
+    <string name="revoke_permissions" comment="Pop-up message that is shown to the user when they are revoking an app permission.">Questa autorizzazione deve essere revocata manualmente dalle impostazioni</string>
     <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Rimuovi account</string>
     <!-- Instant Note Editor -->
     <string name="instant_card" comment="Used in the Android system context menu/share dialog to quickly create a note. This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. ">Carta istantanea</string>
+    <!-- Multiple profile -->
+    <string name="add_profile">Add profile</string>
 </resources>

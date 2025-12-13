@@ -25,9 +25,11 @@ import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.preferences.reviewer.ViewerAction
 import com.ichi2.anki.previewer.PreviewerAction
 import com.ichi2.anki.reviewer.MappableAction
 import com.ichi2.anki.reviewer.MappableBinding.Companion.toPreferenceString
+import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.ui.internationalization.toSentenceCase
 import com.ichi2.anki.utils.ext.sharedPrefs
 import com.ichi2.preferences.ControlPreference
@@ -56,6 +58,7 @@ class ControlsSettingsFragment :
         }
         setControlPreferencesDefaultValues(initialScreen)
         setDynamicTitle()
+        setupNewStudyScreenSettings()
     }
 
     private fun setControlPreferencesDefaultValues(screen: ControlPreferenceScreen) {
@@ -74,6 +77,7 @@ class ControlsSettingsFragment :
         addPreferencesFromResource(screen.xmlRes)
         setControlPreferencesDefaultValues(screen)
         setDynamicTitle()
+        setupNewStudyScreenSettings()
     }
 
     @NeedsTest("Only the tab elements are removed")
@@ -125,6 +129,43 @@ class ControlsSettingsFragment :
     private fun String.toSentenceCase(
         @StringRes resId: Int,
     ): String = this.toSentenceCase(this@ControlsSettingsFragment, resId)
+
+    private fun setupNewStudyScreenSettings() {
+        if (!Prefs.isNewStudyScreenEnabled) {
+            findPreference<Preference>(R.string.gestures_corner_touch_preference)?.dependency = getString(R.string.gestures_preference)
+            findPreference<Preference>(R.string.pref_swipe_sensitivity_key)?.dependency = getString(R.string.gestures_preference)
+            return
+        }
+        for (keyRes in legacyStudyScreenSettings) {
+            val key = getString(keyRes)
+            findPreference<Preference>(key)?.isVisible = false
+        }
+        findPreference<ControlPreference>(getString(R.string.browse_command_key))?.apply {
+            title = TR.qtMiscBrowse()
+            isVisible = true
+            if (value == null) {
+                value = ViewerAction.BROWSE.getBindings(sharedPrefs()).toPreferenceString()
+            }
+        }
+        findPreference<ControlPreference>(getString(R.string.statistics_command_key))?.apply {
+            title = TR.statisticsTitle()
+            isVisible = true
+            if (value == null) {
+                value = ViewerAction.STATISTICS.getBindings(sharedPrefs()).toPreferenceString()
+            }
+        }
+    }
+
+    companion object {
+        val legacyStudyScreenSettings =
+            listOf(
+                R.string.save_voice_command_key,
+                R.string.toggle_eraser_command_key,
+                R.string.clear_whiteboard_command_key,
+                R.string.change_whiteboard_pen_color_command_key,
+                R.string.gestures_preference,
+            )
+    }
 }
 
 enum class ControlPreferenceScreen(
@@ -136,7 +177,7 @@ enum class ControlPreferenceScreen(
 
     fun getActions(): List<MappableAction<*>> =
         when (this) {
-            REVIEWER -> ViewerCommand.entries
+            REVIEWER -> if (Prefs.isNewStudyScreenEnabled) ViewerAction.entries else ViewerCommand.entries
             PREVIEWER -> PreviewerAction.entries
         }
 }

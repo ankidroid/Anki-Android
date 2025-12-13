@@ -67,6 +67,7 @@
     <string name="card_browser_list_my_searches_new_name">現在の検索条件に付ける名前</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">名前なしで検索条件を保存することはできません</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">同じ名前がすでに存在します</string>
+    <string name="card_browser_list_my_searches_successful_save">検索条件を保存しました</string>
     <string name="no_note_to_edit">編集するノートがありません</string>
     <string name="card_browser_list_my_searches_remove_content">「%1$s」を削除しますか？</string>
     <string name="card_browser_change_display_order" maxLength="28">表示順を変更</string>
@@ -87,7 +88,7 @@
         <item>復習での忘却回数順</item>
         <item>デッキ名順</item>
     </string-array>
-    <string name="manage_browser_column">Manage column</string>
+    <string name="manage_browser_column">リストの列を管理</string>
     <string name="no_columns_available">利用可能な列がありません</string>
     <string name="card_browser_select_all" maxLength="28">すべて選択</string>
     <string name="card_browser_select_none" maxLength="28">選択をすべて解除</string>

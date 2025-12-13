@@ -124,6 +124,8 @@
     <string name="multimedia_editor_failed">Multimedya Düzenleyiciyi açma başarısız oldu</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Ses kayıt izni reddedildi</string>
+    <string name="permission_denied">İzin reddedildi</string>
+    <string name="recording_permission_denied_message">\"Ses kaydetme\" özelliği için mikrofon izni gereklidir. Lütfen uygulama ayarlarından erişim izni verin.</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid Güncellendi</string>
     <string name="integrity_check_startup_content">AnkiDroid yükseltildi. Bu yükseltme, olası veritabanı sorunları için düzeltmeleri içerir ve veritabanını şimdi kontrol etmenizi öneririz.</string>
@@ -201,8 +203,6 @@
     <string name="import_deck_package">Deste paketi (.apkg)</string>
     <string name="import_collection_package">Koleksiyon paketi (.colpkg)</string>
     <string name="import_csv">Metin dosyası (.txt, .csv)</string>
-    <!-- Deck selection dialog -->
-    <string name="cannot_create_subdeck_for_all_decks">Bütün desteler için bir altdeste oluşturamazsınız</string>
     <!-- scoped storage -->
     <string name="backup_your_collection">Koleksiyonunuzu yedekleyin</string>
     <string name="backup_collection_message">Koleksiyonunuzu bir süredir yedeklemediniz. Veri kaybını önlemek için bunu şimdi yapmalısınız</string>
@@ -254,4 +254,10 @@
     <string name="tts_error_dialog_reason_text"><b>%1$s</b> metin okuma motoru şu dili desteklemiyor: <b>%2$s</b></string>
     <string name="tts_error_dialog_change_button_text">Motor değiştir</string>
     <string name="tts_error_dialog_supported_voices_button_text">Ses seçenekleri</string>
+    <!-- import_cache_error_resolutions -->
+    <string name="import_error_resolution_try_again">Dosyayı tekrar içeri aktarın</string>
+    <string name="import_error_resolution_free_up_space">Cihazınızda yeterince boş alan olduğuna emin olun</string>
+    <string name="import_error_resolution_check_internet">İnternete bağlı olduğunuzdan emin olun</string>
+    <string name="import_error_resolution_copy_to_device">Dosyayı cihazınıza kopyalayıp yerel dosyayla yeniden deneyin</string>
+    <string name="import_error_resolution_select_file">Dosyayı cihazınızın dosya gezgini uygulamasıyla açın</string>
 </resources>

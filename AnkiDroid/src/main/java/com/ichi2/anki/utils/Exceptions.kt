@@ -36,3 +36,19 @@ fun Context.getUserFriendlyErrorText(e: Exception): String =
             ?: e::class.simpleName?.ifBlank { null }
             ?: getString(R.string.error__etc__unknown_error)
     }
+
+/**
+ * Runs [action] and guards against [OutOfMemoryError] using a try-catch block.
+ * @param action the code to run
+ * @param onError optional listener to be notified when a [OutOfMemoryError] occurred
+ * @return the result of successfully executing [action] or null if an [OutOfMemoryError] occurred
+ */
+fun <T> runWithOOMCheck(
+    action: () -> T,
+    onError: ((OutOfMemoryError) -> Unit)? = null,
+) = try {
+    action()
+} catch (e: OutOfMemoryError) {
+    onError?.invoke(e)
+    null
+}

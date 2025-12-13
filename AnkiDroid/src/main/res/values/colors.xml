@@ -22,6 +22,7 @@
     <color name="semi_transparent_black">#80000000</color>
 
     <color name="answer_buttons_highlight_color">#66FFFFFF</color>
+    <color name="whiteboard_eraser">#80808080</color>
 
 
     <!-- Material Design: http://www.google.com/design/spec/style/color.html#color-color-palette -->

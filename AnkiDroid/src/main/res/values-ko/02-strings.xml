@@ -47,13 +47,15 @@
     <!-- Navigation drawer strings -->
     <string name="drawer_open">메뉴 열기</string>
     <string name="drawer_close">메뉴 닫기</string>
-    <string name="note_message">Note saved</string>
+    <string name="note_message">노트가 저장되었습니다.</string>
+    <!-- Note editor screen -->
     <string name="CardEditorCardDeck">카드 덱:</string>
     <string name="CardEditorNoteDeck">덱 :</string>
     <string name="CardEditorModel">유형:</string>
     <string name="CardEditorTags">태그: %1$s</string>
     <string name="CardEditorCards">카드: %1$s</string>
     <string name="edit_occlusions">가리기 편집</string>
+    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
     <string name="tag_name">태그 이름</string>
     <string name="add_new_filter_tags">태그 추가/필터링</string>
     <string name="add_tag" maxLength="28">태그 추가</string>
@@ -65,6 +67,18 @@
     <string name="save_whiteboard" maxLength="28">화이트보드 저장하기</string>
     <string name="enable_stylus" maxLength="28">스타일러스 쓰기 켜기</string>
     <string name="disable_stylus">스타일러스 쓰기 끄기</string>
+    <string name="eraser" maxLength="28">Eraser</string>
+    <string name="add_brush" maxLength="28">Add brush</string>
+    <string name="whiteboard_align_left" comment="Option to align the whiteboard toolbar on the left" maxLength="28">Left</string>
+    <string name="whiteboard_align_bottom" comment="Option to align the whiteboard toolbar on the bottom" maxLength="28">Bottom</string>
+    <string name="whiteboard_align_right" comment="Option to align the whiteboard toolbar on the right" maxLength="28">Right</string>
+    <string name="whiteboard_clear" comment="Button text to clear the whiteboard" maxLength="28">Clear</string>
+    <string name="whiteboard_more_options" comment="Tooltip of the whiteboard \'More\' button" maxLength="28">More options</string>
+    <string name="whiteboard_remove_brush_message">Are you sure you want to remove this brush from your palette?</string>
+    <string name="whiteboard_ink_eraser" comment="Title of the whiteboard Ink eraser">Ink</string>
+    <string name="whiteboard_stroke_eraser" comment="Title of the whiteboard Stroke eraser">Stroke</string>
+    <string name="stylus_mode" comment="Title of the menu item that toggles the whiteboard stylus mode" maxLength="28">Stylus mode</string>
+    <string name="cannot_remove_last_brush_message">The last brush may not be removed</string>
     <string name="enable_whiteboard" maxLength="28">화이트보드 활성화하기</string>
     <string name="disable_whiteboard">화이트보드 비활성화하기</string>
     <string name="show_whiteboard">화이트보드 표시하기</string>
@@ -84,9 +98,10 @@
     <string name="webview_crash_loop_dialog_title">WebView 렌더링이 실패했습니다.</string>
     <string name="webview_crash_loop_dialog_content">WebView가 \'%1$s\' 카드를 렌더링하지 못했습니다.
 %2$s</string>
+    <string name="slide_to_cancel" comment="Message shown when pressing the record button">밀어서 취소</string>
     <string name="filter_by_flags" maxLength="41">플래그</string>
     <!-- Custom study options -->
-    <string name="custom_study_loading_tags">Building list of tags&#8230;</string>
+    <string name="custom_study_loading_tags">태그 목록 작성 중&#8230;</string>
     <!-- Study options -->
     <plurals name="studyoptions_buried_count">
         <item quantity="other">+%d 숨겨짐</item>
@@ -107,12 +122,12 @@
     <string name="field_remapping">%1$s (\'%2$s\'에서)</string>
     <string name="confirm_map_cards_to_nothing">연결되지 않은 모든 카드는 삭제됩니다. 만약 노트에 남아있는 카드가 없다면 버려질 것입니다. 계속 진행할까요?</string>
     <string name="missing_note_type">노트 유형이 없습니다.</string>
-    <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (empty)</string>
+    <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (비어있음)</string>
     <!-- Image cropper -->
-    <string name="image_cropper_action_rotate" maxLength="28" comment="Action in image cropper screen">Rotate</string>
-    <string name="image_cropper_action_flip" maxLength="28" comment="Action in image cropper screen">Flip</string>
-    <string name="image_cropper_action_flip_horizontally" maxLength="28" comment="Submenu action in image cropper screen">Flip horizontally</string>
-    <string name="image_cropper_action_flip_vertically" maxLength="28" comment="Submenu action in image cropper screen">Flip vertically</string>
+    <string name="image_cropper_action_rotate" maxLength="28" comment="Action in image cropper screen">회전</string>
+    <string name="image_cropper_action_flip" maxLength="28" comment="Action in image cropper screen">반전</string>
+    <string name="image_cropper_action_flip_horizontally" maxLength="28" comment="Submenu action in image cropper screen">수평으로 뒤집기</string>
+    <string name="image_cropper_action_flip_vertically" maxLength="28" comment="Submenu action in image cropper screen">수직으로 뒤집기</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">시간 상자에 도달했습니다</string>
     <plurals name="timebox_reached">
@@ -149,7 +164,8 @@
     <string name="import_error_not_apkg_extension">apkg, colpkg 확장자를 가진 \"%s\" 파일이 없습니다.</string>
     <string name="import_error_load_imported_database">Anki 데이터베이스 (.anki2)의 덮어쓰기는 아직 지원되지 않습니다. 덮어쓰려면 설명서를 참조해주십시오.</string>
     <string name="import_error_content_provider">선택된 파일은 AnkiDroid가 자동적으로 가져올 수 없습니다. Anki 파일을 수동으로 가져오는 방법은 사용자 설명서를 참조하세요. \n %s</string>
-    <string name="import_error_copy_to_cache">파일 캐시 실패 (저장 공간이 부족하기 때문일 수 있습니다)</string>
+    <string name="import_error_copy_to_cache_title">파일 캐시 실패</string>
+    <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">This is often caused by a bug in the app you used to select the file. Please try the following fixes:\n\n%s</string>
     <string name="import_interrupted">불러오기 중단됨: AnkiDroid가 닫힘</string>
     <string name="export_ready_title">내보내기 준비 완료</string>
     <string name="export_send_no_handlers">apkg. 파일을 처리할 수 있는 응용 프로그램이 없습니다. 저장 중&#8230;</string>
@@ -180,10 +196,6 @@ Context | Request Context    [1]</string>
     <string name="tag_editor_add_feedback">\"%1$s\" 추가를 확인하려면 \"%2$s\" 누르세요</string>
     <string name="tag_editor_add_feedback_existing">기존 태그 \"%1$s\" 선택됨</string>
     <!-- Time spans -->
-    <string name="reminder_title">오늘의 학습 잊지 마세요!</string>
-    <plurals name="reminder_text">
-        <item quantity="other">%1$s에서 복습할 카드 %2$d장</item>
-    </plurals>
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Apkg 파일 공유 오류</string>
     <!-- Import and export v2 feedback -->
@@ -224,6 +236,7 @@ Context | Request Context    [1]</string>
     <string name="search_decks" maxLength="28">덱 검색하기</string>
     <string name="ankidroid_init_failed_webview_title">심각한 오류</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid이 필요한 시스템 WebView를 사용할 수 없습니다. 이 문제는 시스템이 업데이트를 설치하는 경우 발생할 수도 있습니다. 잠시 후 다시 시도하십시오.\n\n%s</string>
+    <string name="ankidroid_init_failed_storage">AnkiDroid cannot access storage due to an Android error.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">글꼴 크기</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">도구 모음 표시</string>
@@ -270,7 +283,6 @@ Context | Request Context    [1]</string>
     <string name="download_failed">다운로드 실패</string>
     <string name="deck_download_progress_message">다운로드하는 동안 다른 앱을 이용하실 수 있습니다.</string>
     <string name="check_network">네트워크 연결 상태를 확인해 주세요.</string>
-    <string name="search_using_deck_name">사용 중인 카드 덱 이름 찾기</string>
     <string name="external_storage_unavailable">다운로드가 중단되었습니다. 외부 저장 공간을 사용할 수 없습니다.</string>
     <string name="home" maxLength="28">홈</string>
     <!-- Study Screen actions
@@ -294,6 +306,9 @@ Context | Request Context    [1]</string>
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">컬렉션 액세스에 실패했습니다. 다시 시도해 주세요!</string>
     <string name="cd_manage_notetypes_add">새로운 노트 유형 추가</string>
+    <plurals name="note_types_selected">
+        <item quantity="other">%d note types selected</item>
+    </plurals>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">공부 시간은 줄이고</string>
     <string name="intro_ankidroid_tagline_two">더 많이 기억하세요</string>
@@ -302,7 +317,6 @@ Context | Request Context    [1]</string>
     <string name="intro_sync_from_ankiweb">AnkiWeb과 동기화</string>
     <!-- IntentHandler -->
     <string name="app_not_initialized_new">AnkiDroid가 초기화되지 않았습니다. AnkiDroid를 열어 다시 시도해 주세요.</string>
-    <string name="already_logged_in">이미 로그인되어 있습니다</string>
     <!-- Deck Creation -->
     <string name="deck_created">생성된 덱</string>
     <string name="deck_renamed">이름이 변경된 덱</string>
@@ -312,7 +326,7 @@ Context | Request Context    [1]</string>
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">카드</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">메모</string>
     <string name="toggle_cards_notes">카드, 메모 켜기/ 끄기</string>
-    <string name="truncate_content_help">Truncate the height of each row of the Browser to show only first 3 lines of content</string>
+    <string name="truncate_content_help">목록 화면에서 카드 또는 노트의 내용을 하나당 최대 3줄까지만 표시하도록 제한합니다.</string>
     <string name="browser_options_dialog_heading">브라우저 옵션</string>
     <string name="audio_saved">녹음 파일 저장됨</string>
     <string name="deleting_selected_notes">선택한 메모 삭제 중</string>
@@ -326,9 +340,9 @@ Context | Request Context    [1]</string>
     <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">TTS 설정 열기 실패</string>
     <string name="shared_decks_login_required">카드 덱을 더 다운로드하려면 로그인해 주세요</string>
     <string name="deck_description_field_hint">설명</string>
-    <string name="deck_description_saved">Description updated</string>
-    <string name="format_deck_description_as_markdown">Format as Markdown</string>
-    <string name="help_button_content_description">Open help for ‘%s’</string>
+    <string name="deck_description_saved">설명이 업데이트되었습니다.</string>
+    <string name="format_deck_description_as_markdown">마크다운 서식</string>
+    <string name="help_button_content_description">%s 도움말 열기</string>
     <string name="failed_to_copy">복사 실패</string>
     <string name="card_browser_unavailable_when_notes_mode">\'메모\' 모드에서는 사용할 수 없습니다</string>
     <plurals name="unbury_cards_feedback">

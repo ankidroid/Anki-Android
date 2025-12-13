@@ -15,11 +15,17 @@
  */
 package com.ichi2.anki.utils.ext
 
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.res.TypedArray
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.util.AttributeSet
 import androidx.annotation.AttrRes
 import androidx.annotation.StyleRes
+import com.ichi2.anki.CollectionHelper
+import timber.log.Timber
+import java.io.File
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -43,4 +49,44 @@ inline fun <T> Context.usingStyledAttributes(
 
     val typedArray = obtainStyledAttributes(set, attrs, defStyleAttr, defStyleRes)
     return typedArray.block().also { typedArray.recycle() }
+}
+
+/**
+ * Unregisters a [BroadcastReceiver] from [Context] without throwing an [IllegalArgumentException]
+ * if the receiver wasn't registered.
+ *
+ * @param receiver [BroadcastReceiver] to unregister
+ * @see Context.unregisterReceiver
+ */
+fun Context.unregisterReceiverSilently(receiver: BroadcastReceiver) {
+    try {
+        unregisterReceiver(receiver)
+    } catch (e: IllegalArgumentException) {
+        Timber.d(e, "BroadcastReceiver was not previously registered")
+    }
+}
+
+/**
+ * Encapsulates the dimensions of a [Bitmap].
+ * Note: width and height might be set to -1 if there are errors when decoding the file.
+ */
+data class BitmapSize(
+    val width: Int,
+    val height: Int,
+)
+
+/**
+ * Calculate the size of a [Bitmap] from [com.ichi2.anki.libanki.Collection].
+ * @param filename the full name of the [Bitmap] file
+ * @return a [BitmapSize] containing the calculated dimensions or null if the file was not found in
+ * the collection directory
+ */
+fun Context.getSizeOfBitmapFromCollection(filename: String): BitmapSize? {
+    val currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(this)
+    val destFile = File(currentAnkiDroidDirectory, filename)
+    if (!destFile.exists()) return null
+    val opts = BitmapFactory.Options().apply { inJustDecodeBounds = true }
+    // returned bitmap will be null, we just calculate the size
+    BitmapFactory.decodeFile(destFile.absolutePath, opts)
+    return BitmapSize(opts.outWidth, opts.outHeight)
 }

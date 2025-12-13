@@ -45,7 +45,6 @@
     </plurals>
     <!--Browser-->
     <string name="model_browser_delete">குறிப்பு வகையை நீக்கு</string>
-    <string name="model_browser_rename" comment="Rename a note type">மறுபெயரிடவும்</string>
     <string name="model_browser_template">அட்டைகளைத் திருத்தவும்</string>
     <!--Rename-->
     <string name="rename_model">குறிப்பு வகையை மறுபெயரிடவும்</string>
@@ -53,7 +52,6 @@
     <!--Language Hint-->
     <string name="model_field_editor_language_hint_dialog_success_result">மொழி குறிப்பை %s ஆக அமைக்கவும்</string>
     <!--Field Editing-->
-    <string name="model_field_editor_title">புலங்களைத் திருத்து</string>
     <string name="model_field_editor_add" maxLength="28">ஒரு புலத்தைச் சேர்க்கவும்</string>
     <string name="model_field_editor_delete">புலத்தை நீக்கு</string>
     <string name="model_field_editor_rename">புலத்தை மறுபெயரிடவும்</string>
@@ -63,6 +61,12 @@
     <string name="model_field_editor_sort_field">இந்தப் புலத்தின்படி வரிசைப்படுத்தவும்</string>
     <!--Warnings-->
     <string name="model_delete_warning">இந்தக் குறிப்பு வகையை நிச்சயமாக நீக்க விரும்புகிறீர்களா?</string>
+    <!--
+        Example output:
+        Delete the note types below?
+        Basic, Basic (and reversed card), Cloze
+     -->
+    <string name="model_delete_multiple_warning">Delete the note types below?\n %s</string>
     <string name="field_delete_warning">இந்தப் புலத்தை நிச்சயமாக நீக்க விரும்புகிறீர்களா?</string>
     <!--Model Add Suffixes-->
     <string name="model_browser_add_add">Add: %1$s</string>

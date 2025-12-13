@@ -83,7 +83,7 @@
     <string name="ease_button_hard" maxLength="41" comment="In the reviewer, in the answer side. Label of the button that used by the user to state finding the correct answer was hard.">Mahirap</string>
     <string name="ease_button_good" maxLength="41" comment="In the reviewer, in the answer side. Label of the button that used by the user to state their answer was good.">Mabuti</string>
     <string name="ease_button_easy" maxLength="41" comment="In the reviewer, in the answer side. Label of the button that used by the user to state that finding the answer to the question was easy.">Madali</string>
-    <string name="show_answer_hint_long_press" comment="In the reviewer, hint is shown when touching the show answer button and the user has the long-press accessibility setting enabled">\'%s\' is enabled</string>
+    <string name="show_answer_hint_long_press" comment="In the reviewer, hint is shown when touching the show answer button and the user has the long-press accessibility setting enabled">\'%s\' ay nakagana</string>
     <!-- General -->
     <string name="undo" maxLength="28" comment="When tapping on this text, the last action is undone.">Ibalik sa dati</string>
     <string name="redo" maxLength="28" comment="Menu entry that allows to redo action that was just undone.">Ulitin</string>
@@ -110,12 +110,12 @@
     <string name="rename_flag">Pangalanan ulit ang mga flag</string>
     <string name="menu_flag_card" maxLength="28">Lagyan ng watawat ang card</string>
     <string name="menu_edit_tags" maxLength="28">Baguhin ang mga tag</string>
-    <string name="delete_note_message">Talaga bang gusto mong burahin ang talang ito at pati na rin ang lahat ngmga kard?\n%s</string>
+    <string name="delete_note_message">Talaga bang gusto mong burahin ang talang ito at pati na rin ang lahat nang mga kard?\n%s</string>
     <string name="menu_search" maxLength="28">Hanapin sa %1$s</string>
     <string name="menu_mark_note" maxLength="28">Markahan ang tala</string>
     <string name="menu_unmark_note">Alisin ang marka sa tala</string>
-    <string name="menu_enable_voice_playback" maxLength="28">Enable voice playback</string>
-    <string name="menu_disable_voice_playback">Disable voice playback</string>
+    <string name="menu_enable_voice_playback" maxLength="28">Buksan ang voice playback</string>
+    <string name="menu_disable_voice_playback">Ipatay ang voice playback</string>
     <string name="new_deck">Gumawa ng deck</string>
     <string name="new_dynamic_deck">Gumawa ng na-filter na deck</string>
     <string name="directory_inaccessible">Hindi mapuntahan ang AnkiDroid directory</string>
@@ -131,9 +131,8 @@
     <string name="empty_filtered_deck">Inaalisan ng laman ang nasala na deck&#8230;</string>
     <string name="search_deck" comment="Deck search for selecting it">Maghanap ng Deck</string>
     <string name="empty_deck">Ang deck na ito ay walang laman</string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">Maghanap ng Deck</string>
     <string name="invalid_deck_name">Hindi wasto ang pangalan ng deck</string>
-    <string name="studyoptions_congrats_finished">Congratulations! You have finished for today.</string>
+    <string name="studyoptions_congrats_finished">Mahusay! Nakatapos ka para sa araw na ito.</string>
     <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Tapos na ang deck sa ngayon! %s</string>
     <string name="studyoptions_no_cards_due">Wala pang card na nakatakda</string>
     <string name="sd_card_not_mounted">Ang device storage ay hindi naka-mount</string>
@@ -144,7 +143,7 @@
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Kinakansela&#8230;\nIto ay maaaring matagalan.</string>
     <string name="syncing_media">Sini-sync ang media</string>
     <string name="export_deck" maxLength="28">I-export ang deck</string>
-    <string name="export_collection">Export collection</string>
+    <string name="export_collection">I-export and koleksyon</string>
     <string name="nothing">Wala</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Uri ng mga kard</string>
@@ -170,6 +169,7 @@
     <string name="card_template_browser_appearance_title">Hitsura ng Browser</string>
     <!-- card Info -->
     <string name="card_info_title" maxLength="28">Detalye ng card</string>
+    <string name="previous_card_info_title" maxLength="28">Previous card info</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Basahin at isulat sa database ng AnkiDroid</string>
     <string name="read_write_permission_description">i-access ang mga umiiral na tala, kard, mga uri ng tala, at mga deck, pati na rin ang gumawa ng mga bago</string>
@@ -197,11 +197,21 @@
     <string name="new_unsafe_collection">Mabubura ang bagong koleksyon mula sa iyong phone sakaling i-uninstall mo ang AnkiDroid</string>
     <!-- Permissions screen -->
     <string name="permissions_screen_headline">Kailangan ng mga permiso ang AnkiDroid upang gumana</string>
+    <string name="permissions_screen_optional_headline" comment="Explains that there are optional permissions that can be granted to AnkiDroid.">AnkiDroid works best with these permissions</string>
     <string name="storage_access_title">Access sa storage</string>
     <string name="storage_access_summary">I-save ang iyong koleksyon sa ligtas na lugar nang hindi ito mabura kapag inuninstall ang app.</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after. See [android.permission.MANAGE_EXTERNAL_STORAGE] on https://developer.android.com/training/data-storage/manage-all-files for context.">Access sa lahat ng mga file</string>
     <string name="image_occlusion">Oklusyon ng Imahe</string>
+    <string name="microphone" comment="Title of the microphone permission in the permissions explanation screen.">Microphone</string>
+    <string name="microphone_permission_explanation" comment="Description explaining why AnkiDroid needs the microphone permission, shown on the permissions explanation screen.">Allows you to add sounds to cards and enables voice playback while reviewing</string>
+    <string name="notifications_permission_explanation" comment="Description explaining why AnkiDroid needs the notification permission.">Enables background media syncing and allows you to create review reminders</string>
+    <string name="heading_required_permissions" comment="Heading for the section of required permissions that the app needs to function, shown in the permissions explanation screen.">Required</string>
+    <string name="heading_optional_permissions" comment="Heading for the section of optional permissions that the app needs to function, shown in the permissions explanation screen.">Optional</string>
+    <string name="manually_grant_permissions" comment="Pop-up message that is shown to the user when they want to grant an app permission that must be granted via the OS settings screen.">This permission must be manually granted from Settings</string>
+    <string name="revoke_permissions" comment="Pop-up message that is shown to the user when they are revoking an app permission.">This permission must be manually revoked from Settings</string>
     <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Burahin ang account</string>
     <!-- Instant Note Editor -->
     <string name="instant_card" comment="Used in the Android system context menu/share dialog to quickly create a note. This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. ">Instant na card</string>
+    <!-- Multiple profile -->
+    <string name="add_profile">Add profile</string>
 </resources>

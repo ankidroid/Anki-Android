@@ -191,3 +191,14 @@ class NestedScrollingWebView
             velocityY: Float,
         ) = childHelper.dispatchNestedPreFling(velocityX, velocityY)
     }
+
+class NestedScrollingSafeWebViewLayout : SafeWebViewLayout {
+    constructor(context: Context) : this(context, null)
+    constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
+
+    override fun createWebView(): NestedScrollingWebView =
+        NestedScrollingWebView(context).also {
+            it.isNestedScrollingEnabled = true
+        }
+}

@@ -76,6 +76,7 @@
     <string name="card_browser_list_my_searches_new_name">Название запроса</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">Нельзя сохранить запрос без названия</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">Такое название уже существует</string>
+    <string name="card_browser_list_my_searches_successful_save">Поиск сохранен</string>
     <string name="no_note_to_edit">Нет записей для правки</string>
     <string name="card_browser_list_my_searches_remove_content">Удалить «%1$s»?</string>
     <string name="card_browser_change_display_order" maxLength="28">Изменить сортировку</string>
@@ -94,9 +95,9 @@
         <item>По лёгкости</item>
         <item>По повторениям</item>
         <item>По забытым</item>
-        <item>By deck name</item>
+        <item>По названию колоды</item>
     </string-array>
-    <string name="manage_browser_column">Manage column</string>
+    <string name="manage_browser_column">Управление столбцами</string>
     <string name="no_columns_available">Нет доступных столбцов</string>
     <string name="card_browser_select_all" maxLength="28">Выбрать все</string>
     <string name="card_browser_select_none" maxLength="28">Снять выделение</string>
@@ -133,6 +134,6 @@
     <string name="user_potential_columns">Доступные</string>
     <string name="include_column">Включить столбец</string>
     <string name="exclude_column">Исключить столбец</string>
-    <string name="save_changes_message">Please save your changes first</string>
-    <string name="browser_find_replace_loading_fields">Retrieving fields names&#8230;</string>
+    <string name="save_changes_message">Сначала сохраните ваши изменения</string>
+    <string name="browser_find_replace_loading_fields">Получение названий полей&#8230;</string>
 </resources>

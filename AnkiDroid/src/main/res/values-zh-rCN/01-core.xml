@@ -128,7 +128,6 @@
     <string name="empty_filtered_deck">正在清空筛选牌组&#8230;</string>
     <string name="search_deck" comment="Deck search for selecting it">牌组搜索</string>
     <string name="empty_deck">此牌组为空</string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">牌组搜索</string>
     <string name="invalid_deck_name">无效的牌组名称</string>
     <string name="studyoptions_congrats_finished">恭喜！你已经完成了今天的学习任务。</string>
     <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">牌组目前已完成！%s</string>
@@ -165,6 +164,7 @@
     <string name="card_template_browser_appearance_title">浏览器外观</string>
     <!-- card Info -->
     <string name="card_info_title" maxLength="28">卡片信息</string>
+    <string name="previous_card_info_title" maxLength="28">上一个卡片信息</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">读取并写入 AnkiDroid 数据库</string>
     <string name="read_write_permission_description">创建或访问现有的笔记、卡片、笔记模板和牌组</string>
@@ -192,11 +192,21 @@
     <string name="new_unsafe_collection">如果您卸载 AnkiDroid，新集合将从您的手机中被删除</string>
     <!-- Permissions screen -->
     <string name="permissions_screen_headline">AnkiDroid 需要一些权限才能运行</string>
+    <string name="permissions_screen_optional_headline" comment="Explains that there are optional permissions that can be granted to AnkiDroid.">AnkiDroid 获取这些权限后效果更佳</string>
     <string name="storage_access_title">存储权限</string>
     <string name="storage_access_summary">将您的集合保存在安全的地方，即使卸载应用也不会被删除</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after. See [android.permission.MANAGE_EXTERNAL_STORAGE] on https://developer.android.com/training/data-storage/manage-all-files for context.">所有文件访问权限</string>
     <string name="image_occlusion">图片遮挡</string>
+    <string name="microphone" comment="Title of the microphone permission in the permissions explanation screen.">麦克风</string>
+    <string name="microphone_permission_explanation" comment="Description explaining why AnkiDroid needs the microphone permission, shown on the permissions explanation screen.">允许您向卡片添加声音并在复习时启用语音播放</string>
+    <string name="notifications_permission_explanation" comment="Description explaining why AnkiDroid needs the notification permission.">启用后台媒体同步并允许您创建复习提醒</string>
+    <string name="heading_required_permissions" comment="Heading for the section of required permissions that the app needs to function, shown in the permissions explanation screen.">必须</string>
+    <string name="heading_optional_permissions" comment="Heading for the section of optional permissions that the app needs to function, shown in the permissions explanation screen.">可选</string>
+    <string name="manually_grant_permissions" comment="Pop-up message that is shown to the user when they want to grant an app permission that must be granted via the OS settings screen.">必须从设置中手动授予此权限</string>
+    <string name="revoke_permissions" comment="Pop-up message that is shown to the user when they are revoking an app permission.">必须从设置中手动撤销此权限</string>
     <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">删除账户</string>
     <!-- Instant Note Editor -->
     <string name="instant_card" comment="Used in the Android system context menu/share dialog to quickly create a note. This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. ">即时卡片</string>
+    <!-- Multiple profile -->
+    <string name="add_profile">添加配置文件</string>
 </resources>

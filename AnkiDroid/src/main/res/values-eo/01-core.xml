@@ -131,9 +131,8 @@
     <string name="empty_filtered_deck">Malplenigado de filtrita kartaro&#8230;</string>
     <string name="search_deck" comment="Deck search for selecting it">Serĉi kartaron</string>
     <string name="empty_deck">Tiu ĉi kartaro estas malplena</string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">Serĉi kartaron</string>
     <string name="invalid_deck_name">Malĝusta nomo por kartaro</string>
-    <string name="studyoptions_congrats_finished">Gratulon! Vi finis la hodiaŭan.</string>
+    <string name="studyoptions_congrats_finished">Gratulon! Vi finis la hodiaŭan lernadon.</string>
     <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">La kartaro estas ripetita! %s</string>
     <string name="studyoptions_no_cards_due">Neniu karto por ripeti</string>
     <string name="sd_card_not_mounted">Aparata konservejo ne muntita</string>
@@ -170,6 +169,7 @@
     <string name="card_template_browser_appearance_title">Aspekto de la foliumilo</string>
     <!-- card Info -->
     <string name="card_info_title" maxLength="28">Informoj pri la karto</string>
+    <string name="previous_card_info_title" maxLength="28">Informoj pri antaŭa karto</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Legi kaj skribi al la datumbazo de AnkiDroid</string>
     <string name="read_write_permission_description">aliri ekzistajn notojn, kartojn, nototipojn kaj kartarojn, kaj krei novajn</string>
@@ -197,11 +197,21 @@
     <string name="new_unsafe_collection">La nova kolekto estos forigita el via telefono, se vi malinstalos AnkiDroid</string>
     <!-- Permissions screen -->
     <string name="permissions_screen_headline">AnkiDroid postulas kelkajn permesojn por funkcii</string>
+    <string name="permissions_screen_optional_headline" comment="Explains that there are optional permissions that can be granted to AnkiDroid.">AnkiDroid plej bone funkcias kun la jenaj permesoj</string>
     <string name="storage_access_title">Aliro al konservejo</string>
-    <string name="storage_access_summary">Konservu vian kolekton en sekura loko, kiu ne estos forviŝita kiam malinstali la aplikaĵon</string>
+    <string name="storage_access_summary">Por konservi vian kolekton en sekura loko, kiu ne estos forviŝita dum malinstali la aplikaĵon</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after. See [android.permission.MANAGE_EXTERNAL_STORAGE] on https://developer.android.com/training/data-storage/manage-all-files for context.">Aliro al ĉiuj dosieroj</string>
     <string name="image_occlusion">Vualita bildo</string>
+    <string name="microphone" comment="Title of the microphone permission in the permissions explanation screen.">Mikrofono</string>
+    <string name="microphone_permission_explanation" comment="Description explaining why AnkiDroid needs the microphone permission, shown on the permissions explanation screen.">Ebligas aldoni sonojn al kartoj kaj ludi voĉon dum ripeti</string>
+    <string name="notifications_permission_explanation" comment="Description explaining why AnkiDroid needs the notification permission.">Ebligas fone samtempigi aŭdvidaĵojn kaj krei memorigojn pri ripetoj</string>
+    <string name="heading_required_permissions" comment="Heading for the section of required permissions that the app needs to function, shown in the permissions explanation screen.">Necesaj</string>
+    <string name="heading_optional_permissions" comment="Heading for the section of optional permissions that the app needs to function, shown in the permissions explanation screen.">Nenecesaj</string>
+    <string name="manually_grant_permissions" comment="Pop-up message that is shown to the user when they want to grant an app permission that must be granted via the OS settings screen.">Tiu ĉi permeso devas esti permane donita en agordoj de la operaciumo</string>
+    <string name="revoke_permissions" comment="Pop-up message that is shown to the user when they are revoking an app permission.">Tiu ĉi permeso povas esti rifuzita nur per agordoj de la operciumo</string>
     <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Forigi konton</string>
     <!-- Instant Note Editor -->
     <string name="instant_card" comment="Used in the Android system context menu/share dialog to quickly create a note. This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. ">Tuja karto</string>
+    <!-- Multiple profile -->
+    <string name="add_profile">Add profile</string>
 </resources>

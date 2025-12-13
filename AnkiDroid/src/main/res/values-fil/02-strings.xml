@@ -48,12 +48,14 @@
     <string name="drawer_open">Buksan ang kahon</string>
     <string name="drawer_close">Isara ang kahon</string>
     <string name="note_message">Note saved</string>
+    <!-- Note editor screen -->
     <string name="CardEditorCardDeck">Card deck:</string>
     <string name="CardEditorNoteDeck">Deck:</string>
     <string name="CardEditorModel">Uri:</string>
     <string name="CardEditorTags">Mga Tag:%1$s</string>
     <string name="CardEditorCards">Mga Card: %1$s</string>
     <string name="edit_occlusions">Ulitin ang mga Harang</string>
+    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
     <string name="tag_name">Pangalan ng tag</string>
     <string name="add_new_filter_tags">Magdagdag / mag-filter ng mga tag</string>
     <string name="add_tag" maxLength="28">Magdagdag ng tag</string>
@@ -65,6 +67,18 @@
     <string name="save_whiteboard" maxLength="28">I-save ang puting pisara</string>
     <string name="enable_stylus" maxLength="28">Paganahin ang stylus mode</string>
     <string name="disable_stylus">Hindi paganahin ang stylus mode</string>
+    <string name="eraser" maxLength="28">Eraser</string>
+    <string name="add_brush" maxLength="28">Add brush</string>
+    <string name="whiteboard_align_left" comment="Option to align the whiteboard toolbar on the left" maxLength="28">Left</string>
+    <string name="whiteboard_align_bottom" comment="Option to align the whiteboard toolbar on the bottom" maxLength="28">Bottom</string>
+    <string name="whiteboard_align_right" comment="Option to align the whiteboard toolbar on the right" maxLength="28">Right</string>
+    <string name="whiteboard_clear" comment="Button text to clear the whiteboard" maxLength="28">Clear</string>
+    <string name="whiteboard_more_options" comment="Tooltip of the whiteboard \'More\' button" maxLength="28">More options</string>
+    <string name="whiteboard_remove_brush_message">Are you sure you want to remove this brush from your palette?</string>
+    <string name="whiteboard_ink_eraser" comment="Title of the whiteboard Ink eraser">Ink</string>
+    <string name="whiteboard_stroke_eraser" comment="Title of the whiteboard Stroke eraser">Stroke</string>
+    <string name="stylus_mode" comment="Title of the menu item that toggles the whiteboard stylus mode" maxLength="28">Stylus mode</string>
+    <string name="cannot_remove_last_brush_message">The last brush may not be removed</string>
     <string name="enable_whiteboard" maxLength="28">Paganahin ang puting pisara</string>
     <string name="disable_whiteboard">Hindi paganahin ang puting pisara</string>
     <string name="show_whiteboard">Ipakita ang puting pisara</string>
@@ -72,7 +86,7 @@
     <string name="disable_eraser" maxLength="28">Disable eraser</string>
     <string name="hide_whiteboard" maxLength="28">Itago ang puting pisara</string>
     <string name="clear_whiteboard" maxLength="28">Burahin ang puting pisara</string>
-    <string name="replay_media" maxLength="28">Replay media</string>
+    <string name="replay_media" maxLength="28">I-replay ang media</string>
     <string name="leech_suspend_notification">Ang card ay minarkahan bilang linta at sinuspinde</string>
     <string name="leech_notification">Ang card ay minarkahan bilang linta</string>
     <string name="webview_crash_unknown">Hindi matukoy na kamalian</string>
@@ -83,9 +97,10 @@
     <string name="webview_crash_fatal">Malubhang Kamalian: Nawask ang renderer ng WebView. Dahilan: %s</string>
     <string name="webview_crash_loop_dialog_title">Bigo ang Pag-Render ng Pansistemang WebView</string>
     <string name="webview_crash_loop_dialog_content">Bigo ang Pansistemang Webview sa pag-render sa card na \'%1$s\'.\n %2$s</string>
+    <string name="slide_to_cancel" comment="Message shown when pressing the record button">Slide to cancel</string>
     <string name="filter_by_flags" maxLength="41">Mga Watawat</string>
     <!-- Custom study options -->
-    <string name="custom_study_loading_tags">Building list of tags&#8230;</string>
+    <string name="custom_study_loading_tags">Gumagawa nang listahan nang tags&#8230;</string>
     <!-- Study options -->
     <plurals name="studyoptions_buried_count">
         <item quantity="one">+%d buried</item>
@@ -109,7 +124,7 @@
     <string name="missing_note_type">Walang mahanap na uri ng tala</string>
     <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (empty)</string>
     <!-- Image cropper -->
-    <string name="image_cropper_action_rotate" maxLength="28" comment="Action in image cropper screen">Rotate</string>
+    <string name="image_cropper_action_rotate" maxLength="28" comment="Action in image cropper screen">Ikot</string>
     <string name="image_cropper_action_flip" maxLength="28" comment="Action in image cropper screen">Flip</string>
     <string name="image_cropper_action_flip_horizontally" maxLength="28" comment="Submenu action in image cropper screen">Flip horizontally</string>
     <string name="image_cropper_action_flip_vertically" maxLength="28" comment="Submenu action in image cropper screen">Flip vertically</string>
@@ -151,7 +166,8 @@
     <string name="import_error_not_apkg_extension">Ang filename na \"%s\" ay walang extension na .apkg o .colpkg</string>
     <string name="import_error_load_imported_database">Hindi pa suportado ang mga pamalit na Anki Database (.anki2). Mangyaring tingnan ang manual para sa tagubilin sa pagpapalit.</string>
     <string name="import_error_content_provider">Ang napiling file ay hindi awtomatikong ma-import ng AnkiDroid. Pakitingnan ang user manwal kung paano ang manwal na pag-import ng mga Anki file: \n%s</string>
-    <string name="import_error_copy_to_cache">Bigo sa pag-cache sa file (posibleng naubusan na ng storage)</string>
+    <string name="import_error_copy_to_cache_title">Bigo sa pag-cache sa file</string>
+    <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">This is often caused by a bug in the app you used to select the file. Please try the following fixes:\n\n%s</string>
     <string name="import_interrupted">Naudlot ang pag-angkat: Nasara ang AnkiDroid</string>
     <string name="export_ready_title">Handa na ang pag-export</string>
     <string name="export_send_no_handlers">Walang magagamit na mga aplikasyon upang pangasiwaan ang apkg. Sini-save&#8230;</string>
@@ -180,11 +196,6 @@
     <string name="tag_editor_add_feedback">Pindutin ang \"%2$s\" para kumpirmahin ang pagdaragdag ng \"%1$s\"</string>
     <string name="tag_editor_add_feedback_existing">Napili ang umiiral na tag na \"%1$s\"</string>
     <!-- Time spans -->
-    <string name="reminder_title">Huwag kaligtaang mag-aral ngayon!</string>
-    <plurals name="reminder_text">
-        <item quantity="one">%2$d card ang dapat repasuhin sa %1$s</item>
-        <item quantity="other">%2$d na mga card ang dapat repasuhin sa %1$s</item>
-    </plurals>
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Mali sa pagbabahagi ng apkg file</string>
     <!-- Import and export v2 feedback -->
@@ -225,6 +236,7 @@
     <string name="search_decks" maxLength="28">Maghanap ng mga deck</string>
     <string name="ankidroid_init_failed_webview_title">Malubhang Kamalian</string>
     <string name="ankidroid_init_failed_webview">Umaasa ang AnkiDroid sa Pansistemang WebView kung saan ito ay hindi magamit. Nangyayari ito kung nag-iinstall ng update ang sistema. Mangyaring subukan muli makaraan ang ilang minuto.\n\n%s</string>
+    <string name="ankidroid_init_failed_storage">AnkiDroid cannot access storage due to an Android error.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">Laki ng font</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Ipakita ang toolbar</string>
@@ -242,9 +254,9 @@
     <string name="edit_toolbar_item">Baguhin ang Toolbar Item</string>
     <string name="toolbar_item_explain_edit_or_remove">Magtala ng HTML na ilalagay bago at pagkatapos ng piniling teksto\n\nIdiin ang toolbar item upang baguhin o tanggalin ito</string>
     <string name="remove_toolbar_item">Tanggalin ang Toolbar Item?</string>
-    <string name="note_editor_image_too_large">The image is too large, please insert the image manually</string>
-    <string name="note_editor_video_too_large">The video file is too large, please insert the video manually</string>
-    <string name="note_editor_audio_too_large">The audio file is too large, please insert the audio manually</string>
+    <string name="note_editor_image_too_large">Ang larawan ay masyadong malaki, pakilagay ang larawan nang mano-mano</string>
+    <string name="note_editor_video_too_large">Ang video file ay masyadong malaki, pakilagay ang video nang mano-mano</string>
+    <string name="note_editor_audio_too_large">Ang audio file ay masyadong malaki, pakilagay ang audio nang mano-mano</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">Android backup in progress. Please try again</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Maaring kailangang gumamit ng iManager upang payagan ang AnkiDroid na magdagdag ng mga gitis.</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">Hindi pinpayagan ang AnkiDroid na maglagay ng gitis sa iyong home screen.</string>
@@ -271,7 +283,6 @@
     <string name="download_failed">Bigo ang pag-download</string>
     <string name="deck_download_progress_message">Maari kang kumamit ng iba pang apps habang tumatakbo ang download</string>
     <string name="check_network">Mangyaring suriin ang iyong koneksyon sa network.</string>
-    <string name="search_using_deck_name">Hanapin gamit ang pangalan ng deck</string>
     <string name="external_storage_unavailable">Naudlot ang pag-download, wala nang natirang lugar sa external storage</string>
     <string name="home" maxLength="28">Home</string>
     <!-- Study Screen actions
@@ -296,6 +307,10 @@
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">Bigo na ma-access ang tipon. Mangyaring subukan muli!</string>
     <string name="cd_manage_notetypes_add">Magdagdag ng bagong uri ng tala</string>
+    <plurals name="note_types_selected">
+        <item quantity="one">%d note type selected</item>
+        <item quantity="other">%d note types selected</item>
+    </plurals>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">Aralin ay Mabawasan</string>
     <string name="intro_ankidroid_tagline_two">Higitan pa ang Matandaan</string>
@@ -304,7 +319,6 @@
     <string name="intro_sync_from_ankiweb">Mag-sync mula sa AnkiWeb</string>
     <!-- IntentHandler -->
     <string name="app_not_initialized_new">Hindi pa na-initialize ang AnkiDroid. Mangyaring buksan ulit ang AnkiDroid at subukan muli</string>
-    <string name="already_logged_in">Naka-login na</string>
     <!-- Deck Creation -->
     <string name="deck_created">Nailikha ang deck</string>
     <string name="deck_renamed">Napangalanan muli ang deck</string>
@@ -345,7 +359,7 @@
     <string name="play_recording">I-play</string>
     <string name="next_recording" comment="Description of a button to go to the next recording">Sunod</string>
     <!--  AlertDialog in the deleteCardTemplate  -->
-    <string name="orphan_note_title">Cannot Delete Card Type</string>
+    <string name="orphan_note_title">Hindi madelete ang card type</string>
     <string name="orphan_note_message">Deleting this card type will leave some notes without any cards.</string>
     <string name="voice_not_supported">Voice not supported. Try another or install a voice engine.</string>
     <!--Keyboard shortcuts dialog-->
@@ -356,10 +370,10 @@
     <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">Pumili ng uri ng tala</string>
     <string name="tag_editor" comment="Description of the shortcut that opens the tags dialog">Tag editor</string>
     <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">Card Template Editor</string>
-    <string name="edit_front_template" comment="Description of the shortcut that shows the question side of the card template">Edit front template</string>
-    <string name="edit_back_template" comment="Description of the shortcut that shows the answer side of the card template">Edit back template</string>
+    <string name="edit_front_template" comment="Description of the shortcut that shows the question side of the card template">I-edit ang harapan nang template</string>
+    <string name="edit_back_template" comment="Description of the shortcut that shows the answer side of the card template">I-edit ang likuran nang template</string>
     <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">Edit styling</string>
-    <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">Copy template as markdown</string>
+    <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">Kopyahin ang template bilang markdown</string>
     <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">Baguhin ang anyo ng browser</string>
     <string name="missing_user_action_dialog_message" comment="%s is the user action number">User action %s is not set in this notetype. Please configure it</string>
     <string name="directory_inaccessible_info">Learn more about how to restore access here %s or go to settings to update collection folder.</string>

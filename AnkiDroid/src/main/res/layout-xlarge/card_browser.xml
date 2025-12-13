@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <include layout="@layout/toolbar" />
+        <include layout="@layout/view_browser_toolbar" />
         <LinearLayout
             android:id="@+id/card_browser_xl_view"
             android:layout_width="match_parent"

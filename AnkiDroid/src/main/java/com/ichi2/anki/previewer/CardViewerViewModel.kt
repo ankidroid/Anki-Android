@@ -18,6 +18,7 @@ package com.ichi2.anki.previewer
 import android.media.MediaPlayer
 import android.net.Uri
 import androidx.annotation.CallSuper
+import androidx.annotation.VisibleForTesting
 import androidx.core.net.toFile
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -34,6 +35,7 @@ import com.ichi2.anki.multimedia.getAvTag
 import com.ichi2.anki.multimedia.replaceAvRefsWithPlayButtons
 import com.ichi2.anki.pages.AnkiServer
 import com.ichi2.anki.pages.PostRequestHandler
+import com.ichi2.anki.pages.PostRequestUri
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -115,7 +117,8 @@ abstract class CardViewerViewModel :
     /** From the [desktop code](https://github.com/ankitects/anki/blob/1ff55475b93ac43748d513794bcaabd5d7df6d9d/qt/aqt/reviewer.py#L358) */
     private suspend fun mungeQA(text: String) = typeAnsFilter(prepareCardTextForDisplay(text))
 
-    private suspend fun prepareCardTextForDisplay(text: String): String =
+    @VisibleForTesting
+    suspend fun prepareCardTextForDisplay(text: String): String =
         replaceAvRefsWithPlayButtons(
             text = withCol { media.escapeMediaFilenames(text) },
             renderOutput = currentCard.await().let { card -> withCol { card.renderOutput(this) } },
@@ -192,15 +195,12 @@ abstract class CardViewerViewModel :
     }
 
     override suspend fun handlePostRequest(
-        uri: String,
+        uri: PostRequestUri,
         bytes: ByteArray,
     ): ByteArray =
-        if (uri.startsWith(AnkiServer.ANKI_PREFIX)) {
-            when (uri.substring(AnkiServer.ANKI_PREFIX.length)) {
-                "i18nResources" -> withCol { i18nResourcesRaw(bytes) }
-                else -> throw IllegalArgumentException("Unhandled Anki request: $uri")
-            }
-        } else {
-            throw IllegalArgumentException("Unhandled POST request: $uri")
+        when (uri.backendMethodName) {
+            null -> throw IllegalArgumentException("Unhandled POST request: $uri")
+            "i18nResources" -> withCol { i18nResourcesRaw(bytes) }
+            else -> throw IllegalArgumentException("Unhandled Anki request: $uri")
         }
 }

@@ -42,18 +42,26 @@
             <com.ichi2.ui.FixedTextView
                 android:id="@+id/CardEditorDeckText"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
                 android:clickable="false"
-                android:gravity="start|center_vertical"
                 android:text="@string/CardEditorNoteDeck"
-                android:textStyle="bold" />
+                android:textAppearance="?attr/textAppearanceListItem"
+                android:layout_marginEnd="4dp"
+                android:textStyle="normal"
+                />
 
-            <Spinner
-                android:id="@+id/note_deck_spinner"
+            <com.ichi2.ui.FixedTextView
+                android:id="@+id/note_deck_name"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:popupTheme="@style/ActionBar.Popup" />
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:textAppearance="?attr/textAppearanceListItem"
+                android:drawableEnd="@drawable/id_arrow_drop_down"
+                android:maxLines="1"
+                android:ellipsize="end"
+                tools:text="Deck name here"
+                />
 
         </LinearLayout>
 
@@ -118,8 +126,9 @@
 
                 <com.google.android.material.chip.ChipGroup
                     app:chipSpacingVertical="0dp"
-                    app:chipSpacingHorizontal="4dp"
+                    app:chipSpacingHorizontal="6dp"
                     android:id="@+id/cloze_text_chip_group"
+                    android:padding="4dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
             </LinearLayout>

@@ -20,7 +20,7 @@ on:
           - '["macos-14"]'
           - '["ubuntu-latest"]'
   schedule:
-    - cron: "42 0 * * *"
+    - cron: "42 0 * * 2"
   pull_request:
   push:
     # Ignore merge queue branches on push; avoids merge_group+push concurrency race since ref is same
@@ -45,7 +45,7 @@ jobs:
       matrix: ${{ steps.build-matrix.outputs.result }}
     steps:
       - id: build-matrix
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             // by default, we will include all 3 platforms we test on
@@ -118,25 +118,25 @@ jobs:
     #  CODACY_TOKEN: ${{ secrets.CODACY_TOKEN }}
     steps:
       - name: Configure Windows Pagefile
-        uses: al-cheb/configure-pagefile-action@v1.4
+        uses: al-cheb/configure-pagefile-action@v1.5
         if: contains(matrix.os, 'windows')
         with:
           minimum-size: 8GB
           maximum-size: 12GB
           disk-root: "C:"
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 50
 
       - name: Configure JDK
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           distribution: "temurin"
           java-version: "21"  # also change jitpack.yml
 
       - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v4
+        uses: gradle/actions/setup-gradle@v5
         timeout-minutes: 10
         with:
           # Only write to the cache for builds on the 'main' branches, stops branches evicting main cache
@@ -152,6 +152,7 @@ jobs:
           max_attempts: 3
           command: ./gradlew robolectricSdkDownload --daemon
 
+        # update workflows/README.md when modifying this step
       - name: Run Unit Tests
         run: ./gradlew jacocoUnitTestReport --daemon
 
@@ -159,7 +160,7 @@ jobs:
         # cancelled() handles test timeouts
         # remove when test timeouts cause a failure()
         if: failure() || cancelled()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: logcat-${{ matrix.name }}-${{ matrix.iteration }}
           # look for the `<system-out>` element in the XML files in `test-results`

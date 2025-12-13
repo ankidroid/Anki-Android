@@ -45,7 +45,6 @@
     </plurals>
     <!--Browser-->
     <string name="model_browser_delete">ਨੋਟ ਦੀ ਕਿਸਮ ਮਿਟਾਓ</string>
-    <string name="model_browser_rename" comment="Rename a note type">ਨਾਮ ਬਦਲੋ</string>
     <string name="model_browser_template">ਕਾਰਡ ਨੂੰ ਸੋਧੋ</string>
     <!--Rename-->
     <string name="rename_model">ਨੋਟ ਦੀ ਕਿਸਮ ਦਾ ਨਾਮ ਬਦਲੋ</string>
@@ -53,7 +52,6 @@
     <!--Language Hint-->
     <string name="model_field_editor_language_hint_dialog_success_result">ਭਾਸ਼ਾ ਸੰਕੇਤਕ ਨੂੰ %s \'ਤੇ ਸੈੱਟ ਕਰੋ</string>
     <!--Field Editing-->
-    <string name="model_field_editor_title">ਖੇਤਰਾਂ ਦਾ ਸੰਪਾਦਨ ਕਰੋ</string>
     <string name="model_field_editor_add" maxLength="28">ਖੇਤਰ ਸ਼ਾਮਲ ਕਰੋ</string>
     <string name="model_field_editor_delete">ਖੇਤਰ ਮਿਟਾਓ</string>
     <string name="model_field_editor_rename">ਖੇਤਰ ਦਾ ਨਾਮ ਬਦਲੋ</string>
@@ -63,6 +61,12 @@
     <string name="model_field_editor_sort_field">ਇਸ ਖੇਤਰ ਦੁਆਰਾ ਕ੍ਰਮਬੱਧ ਕਰੋ</string>
     <!--Warnings-->
     <string name="model_delete_warning">ਕੀ ਤੁਸੀਂ ਯਕੀਨੀ ਤੌਰ \'ਤੇ ਇਸ ਨੋਟ ਕਿਸਮ ਨੂੰ ਮਿਟਾਉਣਾ ਚਾਹੁੰਦੇ ਹੋ?</string>
+    <!--
+        Example output:
+        Delete the note types below?
+        Basic, Basic (and reversed card), Cloze
+     -->
+    <string name="model_delete_multiple_warning">Delete the note types below?\n %s</string>
     <string name="field_delete_warning">ਕੀ ਤੁਸੀਂ ਯਕੀਨੀ ਤੌਰ \'ਤੇ ਇਸ ਖੇਤਰ ਨੂੰ ਮਿਟਾਉਣਾ ਚਾਹੁੰਦੇ ਹੋ?</string>
     <!--Model Add Suffixes-->
     <string name="model_browser_add_add">Add: %1$s</string>

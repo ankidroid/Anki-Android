@@ -69,7 +69,7 @@
         app:shapeAppearanceOverlay="?attr/shapeAppearanceCornerLarge">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/spoken_text"
+            android:id="@+id/spoken_text_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/ic_action_mic"
@@ -144,7 +144,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/files"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:fastScrollEnabled="true"
         android:focusable="true"
         android:scrollbarAlwaysDrawVerticalTrack="true"

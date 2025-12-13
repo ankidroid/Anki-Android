@@ -1,4 +1,4 @@
-/**
+/*
  *  Copyright (c) 2025 Amit Bisht <iamitsbisht07@gmail.com>
  *
  *  This program is free software; you can redistribute it and/or modify it under
@@ -66,9 +66,8 @@ class PreferencesNavigationTest {
         closeGetStartedScreenIfExists()
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open())
         onView(withId(R.id.nav_settings)).perform(click())
-        onView(withId(R.id.search)).perform(click())
-        onView(allOf(withId(R.id.search), hasFocus())).perform(typeText("Controls"))
-        pressBack()
+        onView(withId(com.bytehamster.lib.preferencesearch.R.id.search)).perform(click())
+        onView(allOf(withId(com.bytehamster.lib.preferencesearch.R.id.search), hasFocus())).perform(typeText("Controls"))
         // Checking the list of Settings Categories are displayed on the basis of our search "Controls"
         onView(allOf(withResourceName("list"), isAssignableFrom(RecyclerView::class.java))).check(
             matches(
@@ -94,8 +93,8 @@ class PreferencesNavigationTest {
         closeGetStartedScreenIfExists()
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open())
         onView(withId(R.id.nav_settings)).perform(click())
-        onView(withId(R.id.search)).perform(click())
-        onView(allOf(withId(R.id.search), hasFocus())).perform(typeText("Card"))
+        onView(withId(com.bytehamster.lib.preferencesearch.R.id.search)).perform(click())
+        onView(allOf(withId(com.bytehamster.lib.preferencesearch.R.id.search), hasFocus())).perform(typeText("Card"))
         onView(withText(R.string.card_zoom)).perform(click())
         onView(withId(R.id.settings_container)).check(matches(isDisplayed()))
         onView(withText(R.string.notification_pref)).perform(click())

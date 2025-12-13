@@ -48,12 +48,14 @@
     <string name="drawer_open">Çekmeceyi aç</string>
     <string name="drawer_close">Çekmeceyi kapat</string>
     <string name="note_message">Not kaydedildi</string>
+    <!-- Note editor screen -->
     <string name="CardEditorCardDeck">Kart destesi:</string>
     <string name="CardEditorNoteDeck">Deste:</string>
     <string name="CardEditorModel">Tür:</string>
     <string name="CardEditorTags">Etiketler: %1$s</string>
     <string name="CardEditorCards">Kartlar: %1$s</string>
     <string name="edit_occlusions">Örtüleri Düzenle</string>
+    <string name="paste_from_clipboard" maxLength="28">Panodan yapıştır</string>
     <string name="tag_name">Etiket adı</string>
     <string name="add_new_filter_tags">Etiket ekle/filtrele</string>
     <string name="add_tag" maxLength="28">Etiket ekle</string>
@@ -65,6 +67,18 @@
     <string name="save_whiteboard" maxLength="28">Yazı tahtasını kaydet</string>
     <string name="enable_stylus" maxLength="28">Kalem modunu aç</string>
     <string name="disable_stylus">Kalem kodunu kapat</string>
+    <string name="eraser" maxLength="28">Silgi</string>
+    <string name="add_brush" maxLength="28">Fırça ekle</string>
+    <string name="whiteboard_align_left" comment="Option to align the whiteboard toolbar on the left" maxLength="28">Sol</string>
+    <string name="whiteboard_align_bottom" comment="Option to align the whiteboard toolbar on the bottom" maxLength="28">Alt</string>
+    <string name="whiteboard_align_right" comment="Option to align the whiteboard toolbar on the right" maxLength="28">Sağ</string>
+    <string name="whiteboard_clear" comment="Button text to clear the whiteboard" maxLength="28">Temizle</string>
+    <string name="whiteboard_more_options" comment="Tooltip of the whiteboard \'More\' button" maxLength="28">Daha fazla seçenek</string>
+    <string name="whiteboard_remove_brush_message">Bu fırçayı paletinizden kaldırmak istediğinize emin misiniz?</string>
+    <string name="whiteboard_ink_eraser" comment="Title of the whiteboard Ink eraser">Mürekkep</string>
+    <string name="whiteboard_stroke_eraser" comment="Title of the whiteboard Stroke eraser">Darbe</string>
+    <string name="stylus_mode" comment="Title of the menu item that toggles the whiteboard stylus mode" maxLength="28">Stilus modu</string>
+    <string name="cannot_remove_last_brush_message">Son fırça kaldırılamaz</string>
     <string name="enable_whiteboard" maxLength="28">Yazı tahtasını etkinleştir</string>
     <string name="disable_whiteboard">Yazı tahtasını devre dışı bırak</string>
     <string name="show_whiteboard">Yazı tahtasını göster</string>
@@ -83,6 +97,7 @@
     <string name="webview_crash_fatal">Kritik Hata: WebView oluşturucusu çöktü. Neden: %s</string>
     <string name="webview_crash_loop_dialog_title">Sistem WebView Oluşturma Hatası</string>
     <string name="webview_crash_loop_dialog_content">Sistem WebView bu kartı işleyemedi: \'%1$s\'.\n %2$s</string>
+    <string name="slide_to_cancel" comment="Message shown when pressing the record button">İptal etmek için kaydır</string>
     <string name="filter_by_flags" maxLength="41">Bayraklar</string>
     <!-- Custom study options -->
     <string name="custom_study_loading_tags">Etiket listesi oluşturuluyor&#8230;</string>
@@ -151,7 +166,8 @@
     <string name="import_error_not_apkg_extension">\"%s\" adlı dosyanın uzantısı .apkg veya .colpkg değil</string>
     <string name="import_error_load_imported_database">Anki Veritabanı (.anki2) değiştirmeleri henüz desteklenmiyor. Lütfen değiştirme yönergeleri için kılavuza bakın.</string>
     <string name="import_error_content_provider">Seçilen dosya AnkiDroid tarafından otomatik olarak içeri aktarılamadı. Lütfen Anki dosyalarının nasıl elle içeri aktarıldığı hakkında kullanıcı kılavuzuna bakın:\n %s</string>
-    <string name="import_error_copy_to_cache">Dosya belleğe alınamadı (depolama alanı bitmiş olabilir)</string>
+    <string name="import_error_copy_to_cache_title">Dosya belleğe alınamadı</string>
+    <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">Bu genellikle dosyayı seçmek için kullandığınız uygulamadaki bir bugdan kaynaklanır. Lütfen şu düzeltmeleri deneyin:\n\n%s</string>
     <string name="import_interrupted">Aktarım yarıda kesildi: AnkiDroid kapatıldı</string>
     <string name="export_ready_title">Dışa aktarım hazır</string>
     <string name="export_send_no_handlers">Apkg işleyecek uygulama yok. Kaydediliyor&#8230;</string>
@@ -180,11 +196,6 @@
     <string name="tag_editor_add_feedback">\"%1$s\" eklemek için buna dokunun: \"%2$s\"</string>
     <string name="tag_editor_add_feedback_existing">Varolan bir etiketi seçtiniz: \"%1$s\"</string>
     <!-- Time spans -->
-    <string name="reminder_title">Bugün çalışmayı unutmayın!</string>
-    <plurals name="reminder_text">
-        <item quantity="one">%1$s içinde çalışmak için %2$d kart</item>
-        <item quantity="other">%1$s içinde çalışmak için %2$d kart</item>
-    </plurals>
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Apkg dosyasını paylaşırken hata</string>
     <!-- Import and export v2 feedback -->
@@ -225,6 +236,7 @@
     <string name="search_decks" maxLength="28">Deste ara</string>
     <string name="ankidroid_init_failed_webview_title">Kritik Hata</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid şu an ulaşılamayan System WebView\'a dayanır. Bu sistem güncelleme yüklerken olabilir. Lütfen birkaç dakika sonra tekrar deneyin.\n\n%s</string>
+    <string name="ankidroid_init_failed_storage">AnkiDroid bir Android hatasından dolayı depolamaya erişemiyor.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">Yazı tipi boyutu</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Araç çubuğunu göster</string>
@@ -271,7 +283,6 @@
     <string name="download_failed">İndirme başarısız</string>
     <string name="deck_download_progress_message">İndirme devam ederken diğer uygulamaları kullanabilirsiniz</string>
     <string name="check_network">Lütfen ağ bağlantını kontrol et</string>
-    <string name="search_using_deck_name">Deste ismini kullanarak ara</string>
     <string name="external_storage_unavailable">İndirme iptal edildi, harici hafıza erişilebilir değil.</string>
     <string name="home" maxLength="28">Ana sayfa</string>
     <!-- Study Screen actions
@@ -296,6 +307,10 @@
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">Koleksiyona erişilemedi. Lütfen tekrar deneyin!</string>
     <string name="cd_manage_notetypes_add">Yeni bir not türü ekle</string>
+    <plurals name="note_types_selected">
+        <item quantity="one">%d not türü seçili</item>
+        <item quantity="other">%d not türü seçili</item>
+    </plurals>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">Daha az ders çalış</string>
     <string name="intro_ankidroid_tagline_two">Daha çok hatırla</string>
@@ -304,7 +319,6 @@
     <string name="intro_sync_from_ankiweb">AnkiWeb\'den senkronize et</string>
     <!-- IntentHandler -->
     <string name="app_not_initialized_new">AnkiDroid henüz açılmadı. Lütfen AnkiDroid\'i açıp tekrar deneyin</string>
-    <string name="already_logged_in">Zaten giriş yapılmış</string>
     <!-- Deck Creation -->
     <string name="deck_created">Deste oluşturuldu</string>
     <string name="deck_renamed">Deste yeniden adlandırıldı</string>

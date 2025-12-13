@@ -70,6 +70,7 @@
     <string name="card_browser_list_my_searches_new_name">نام گذاری جستجوی فعلی</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">شما نمی توانید جستجو را بدون نام ذخیره کنید</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">نام وجود دارد</string>
+    <string name="card_browser_list_my_searches_successful_save">جستجو ذخیره شد.</string>
     <string name="no_note_to_edit">هیچ یادداشتی برای ویرایش ندلرید</string>
     <string name="card_browser_list_my_searches_remove_content">%1$s حذف شود؟</string>
     <string name="card_browser_change_display_order" maxLength="28">تغییر تنظیم صفحه نمایش</string>
@@ -88,16 +89,16 @@
         <item>بر اساس سهولت</item>
         <item>بر اساس مرورها</item>
         <item>بر اساس فاصله زمانی</item>
-        <item>By deck name</item>
+        <item>بر اساس نام دسته</item>
     </string-array>
-    <string name="manage_browser_column">Manage column</string>
-    <string name="no_columns_available">No columns available</string>
+    <string name="manage_browser_column">مدیریت ستون</string>
+    <string name="no_columns_available">ستونی موجود نیست</string>
     <string name="card_browser_select_all" maxLength="28">انتخاب همه</string>
     <string name="card_browser_select_none" maxLength="28">انتخاب هیچکدام</string>
     <string name="card_browser_no_cards_in_deck">در دستۀ «%s» هیچ کارتی یافت نشد</string>
     <string name="card_browser_search_all_decks">جستجو در تمام دسته‌ها</string>
     <string name="card_browser_unknown_deck_name">ناشناخته</string>
-    <string name="card_browser_truncate" comment="allows users to show less of a field value">محتوا را کوتاه کن</string>
+    <string name="card_browser_truncate" comment="allows users to show less of a field value">کوتاه‌کردن محتوا</string>
     <string name="set_due_date_hintText" comment="plural set_due_date_label_suffix is used for parameters, parameter 1 is the plural for 0, parameter 2 is the plural for 1">امروز ‘0 %1$s’ است، فردا ‘1 %2$s’ است، و غیره&#8230;</string>
     <plurals name="card_browser_export_cards">
         <item quantity="one">خروجی گرفتن کارت</item>
@@ -121,6 +122,6 @@
     <string name="user_potential_columns">در دسترس</string>
     <string name="include_column">در نظر گرفتن ستون ها</string>
     <string name="exclude_column">در نظر نگرفتن ستون ها</string>
-    <string name="save_changes_message">Please save your changes first</string>
+    <string name="save_changes_message">ابتدا تغییرات خود را ذخیره کنید</string>
     <string name="browser_find_replace_loading_fields">بازیابی اسامی فیلد ها&#8230;</string>
 </resources>

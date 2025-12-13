@@ -48,16 +48,18 @@
     <string name="drawer_open">Відкрити шухляду</string>
     <string name="drawer_close">Закрити шухляду</string>
     <string name="note_message">Запис збережено</string>
+    <!-- Note editor screen -->
     <string name="CardEditorCardDeck">Колода карток:</string>
     <string name="CardEditorNoteDeck">Колода:</string>
     <string name="CardEditorModel">Тип:</string>
     <string name="CardEditorTags">Теги: %1$s</string>
     <string name="CardEditorCards">Картки: %1$s</string>
     <string name="edit_occlusions">Редагувати оклюзії</string>
+    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
     <string name="tag_name">Назва позначки</string>
     <string name="add_new_filter_tags">Додати/фільтрувати теги</string>
     <string name="add_tag" maxLength="28">Додати позначку</string>
-    <string name="check_all_tags" maxLength="28">Обрати/прибрати усі позначки</string>
+    <string name="check_all_tags" maxLength="28">Обрати/прибрати всі позначки</string>
     <string name="filter_tags" maxLength="28">Пошук тегів</string>
     <string name="no_tags">Ви ще не додали жодного тегу</string>
     <string name="updated_version">Оновлено до версії %s</string>
@@ -65,6 +67,18 @@
     <string name="save_whiteboard" maxLength="28">Зберегти написане</string>
     <string name="enable_stylus" maxLength="28">Увімкнути режим стилусу</string>
     <string name="disable_stylus">Вимкнути режим стилусу</string>
+    <string name="eraser" maxLength="28">Гумка</string>
+    <string name="add_brush" maxLength="28">Додати пензлик</string>
+    <string name="whiteboard_align_left" comment="Option to align the whiteboard toolbar on the left" maxLength="28">Зліва</string>
+    <string name="whiteboard_align_bottom" comment="Option to align the whiteboard toolbar on the bottom" maxLength="28">Знизу</string>
+    <string name="whiteboard_align_right" comment="Option to align the whiteboard toolbar on the right" maxLength="28">Справа</string>
+    <string name="whiteboard_clear" comment="Button text to clear the whiteboard" maxLength="28">Очистити</string>
+    <string name="whiteboard_more_options" comment="Tooltip of the whiteboard \'More\' button" maxLength="28">Більше опцій</string>
+    <string name="whiteboard_remove_brush_message">Ви впевнені, що хочете видалити цей пензлик зі своєї палітри?</string>
+    <string name="whiteboard_ink_eraser" comment="Title of the whiteboard Ink eraser">Чорнило</string>
+    <string name="whiteboard_stroke_eraser" comment="Title of the whiteboard Stroke eraser">Штрих</string>
+    <string name="stylus_mode" comment="Title of the menu item that toggles the whiteboard stylus mode" maxLength="28">Режим стилуса</string>
+    <string name="cannot_remove_last_brush_message">Останній пензлик не може бути видалений</string>
     <string name="enable_whiteboard" maxLength="28">Увімкнути дошку</string>
     <string name="disable_whiteboard">Вимкнути дошку</string>
     <string name="show_whiteboard">Показати дошку</string>
@@ -82,7 +96,8 @@
     <string name="webview_crash_nonfatal">Помилка WebView. Причина: %s</string>
     <string name="webview_crash_fatal">Критична помилка WebView. Причина: %s</string>
     <string name="webview_crash_loop_dialog_title">Збій системного WebView</string>
-    <string name="webview_crash_loop_dialog_content">Системою WebView не вдалося відобразити картку \'%1$s\'.\n %2$s</string>
+    <string name="webview_crash_loop_dialog_content">Системою WebView не вдалося показати картку \'%1$s\'.\n %2$s</string>
+    <string name="slide_to_cancel" comment="Message shown when pressing the record button">Проведіть, щоб скасувати</string>
     <string name="filter_by_flags" maxLength="41">Прапорці</string>
     <!-- Custom study options -->
     <string name="custom_study_loading_tags">Створюється список тегів&#8230;</string>
@@ -149,7 +164,7 @@
     <string name="import_title">Імпортування</string>
     <string name="import_preparing_file">Файл готується для імпорту&#8230;</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Додати</string>
-    <string name="import_message_replace_confirm">Дана операція видалить вміст колеції і замінить її даними з файлу %s. Продовжити?</string>
+    <string name="import_message_replace_confirm">Дана операція видалить вміст колекції та замінить її даними з файлу %s. Продовжити?</string>
     <string name="import_dialog_message_add">Додати \"%s\" до колекції? Це може зайняти багато часу</string>
     <string name="import_log_no_apkg">Це не файл пакету Anki</string>
     <string name="import_title_error" comment="Title of error dialog">Помилка</string>
@@ -157,7 +172,8 @@
     <string name="import_error_not_apkg_extension">Ім\'я пакету “%s” не містить закінчення .apkg чи .colpkg</string>
     <string name="import_error_load_imported_database">Заміна Anki Database (.anki2) ще не підтримується. Перегляньте у посібнику інструкцію по заміні.</string>
     <string name="import_error_content_provider">Вибраний файл не вдалося імпортувати автоматично до AnkiDroid. Будь ласка, перегляньте посібник користувача для того аби вручну імпортувати Anki файли: \n%s</string>
-    <string name="import_error_copy_to_cache">Не вдалося зберегти файл в кеш (можливо закінчується пам\'ять на пристрої)</string>
+    <string name="import_error_copy_to_cache_title">Не вдалося зберегти файл в кеш</string>
+    <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">This is often caused by a bug in the app you used to select the file. Please try the following fixes:\n\n%s</string>
     <string name="import_interrupted">Імпортування перервано</string>
     <string name="export_ready_title">Експорт готовий</string>
     <string name="export_send_no_handlers">Не знайдено додатків для обробки apkg. Збереження&#8230;</string>
@@ -168,7 +184,7 @@
     <string name="export_email_text"><![CDATA[        Привіт!
         <br/><br/>
         Це колода Anki надіслана з AnkiDroid[1].
-        Спробуйте відкрити її за допомогою однієї з версій Anki[2] і насолоджуйтесь легким та ефективним навчанням!<br/><br/>
+        Спробуйте відкрити її за допомогою однієї з версій та Anki[2] і насолоджуйтесь легким та ефективним навчанням!<br/><br/>
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
@@ -184,15 +200,8 @@
     <string name="steps_error">Кроки повинні бути числами, більшими ніж 0</string>
     <string name="steps_min_error">Принаймні один крок потрібний</string>
     <string name="tag_editor_add_feedback">Натисніть \"%2$s\", аби підтвердити додавання \"%1$s\"</string>
-    <string name="tag_editor_add_feedback_existing">Обрано існуючу позначку \"%1$s\"</string>
+    <string name="tag_editor_add_feedback_existing">Обрано наявну позначку \"%1$s\"</string>
     <!-- Time spans -->
-    <string name="reminder_title">Не забудьте про сьогоднішнє навчання!</string>
-    <plurals name="reminder_text">
-        <item quantity="one">%2$d картка для повторення в %1$s</item>
-        <item quantity="few">%2$d картки для повторення в %1$s</item>
-        <item quantity="many">%2$d карток для повторення в %1$s</item>
-        <item quantity="other">%2$d карток для повторення в %1$s</item>
-    </plurals>
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Помилка поширення файлу apkg</string>
     <!-- Import and export v2 feedback -->
@@ -233,6 +242,7 @@
     <string name="search_decks" maxLength="28">Шукати колоди</string>
     <string name="ankidroid_init_failed_webview_title">Критична помилка</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid використовує системний WebView, який недоступний. Це можливе, якщо система встановлює оновлення. Будь ласка, спробуйте знову за кілька хвилин.\n\n%s</string>
+    <string name="ankidroid_init_failed_storage">AnkiDroid cannot access storage due to an Android error.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">Розмір шрифту</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Показувати панель інструментів</string>
@@ -279,7 +289,6 @@
     <string name="download_failed">Не вдалося завантажити</string>
     <string name="deck_download_progress_message">Ви можете використовувати інші додатки під час завантаження</string>
     <string name="check_network">Будь ласка, перевірте підключення до мережі</string>
-    <string name="search_using_deck_name">Пошук за назвою колоди</string>
     <string name="external_storage_unavailable">Завантаження перервано, зовнішнє сховище недоступне</string>
     <string name="home" maxLength="28">Головна</string>
     <!-- Study Screen actions
@@ -306,6 +315,12 @@
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">Не вдалося отримати доступ до колекції. Будь ласка, спробуйте ще раз!</string>
     <string name="cd_manage_notetypes_add">Додати новий тип записів</string>
+    <plurals name="note_types_selected">
+        <item quantity="one">%d note type selected</item>
+        <item quantity="few">%d note types selected</item>
+        <item quantity="many">%d note types selected</item>
+        <item quantity="other">%d note types selected</item>
+    </plurals>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">Вчіться менше</string>
     <string name="intro_ankidroid_tagline_two">Запам\'ятовуйте більше</string>
@@ -314,7 +329,6 @@
     <string name="intro_sync_from_ankiweb">Синхронізувати з AnkiWeb</string>
     <!-- IntentHandler -->
     <string name="app_not_initialized_new">AnkiDroid ще не ініціалізовано. Будь ласка, відкрийте AnkiDroid і спробуйте знову</string>
-    <string name="already_logged_in">Вже ввійшли в систему</string>
     <!-- Deck Creation -->
     <string name="deck_created">Створена колода</string>
     <string name="deck_renamed">Перейменовано колоду</string>

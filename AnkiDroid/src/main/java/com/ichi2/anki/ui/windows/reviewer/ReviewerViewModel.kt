@@ -15,27 +15,28 @@
  */
 package com.ichi2.anki.ui.windows.reviewer
 
+import androidx.lifecycle.SavedStateHandle
 import anki.collection.OpChanges
-import anki.collection.OpChangesAfterUndo
 import anki.frontend.SetSchedulingStatesRequest
 import anki.scheduler.CardAnswer.Rating
 import com.ichi2.anki.AbstractFlashcardViewer
 import com.ichi2.anki.AbstractFlashcardViewer.Companion.RESULT_NO_MORE_CARDS
-import com.ichi2.anki.CollectionManager
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.Flag
 import com.ichi2.anki.Reviewer
 import com.ichi2.anki.asyncIO
+import com.ichi2.anki.browser.BrowserDestination
+import com.ichi2.anki.cardviewer.SingleCardSide
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.libanki.Card
 import com.ichi2.anki.libanki.CardId
+import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.NoteId
-import com.ichi2.anki.libanki.redoAvailable
 import com.ichi2.anki.libanki.redoLabel
 import com.ichi2.anki.libanki.sched.Counts
 import com.ichi2.anki.libanki.sched.CurrentQueueState
-import com.ichi2.anki.libanki.undoAvailable
 import com.ichi2.anki.libanki.undoLabel
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import com.ichi2.anki.observability.ChangeManager
@@ -43,6 +44,8 @@ import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.pages.AnkiServer
 import com.ichi2.anki.pages.CardInfoDestination
 import com.ichi2.anki.pages.DeckOptionsDestination
+import com.ichi2.anki.pages.PostRequestUri
+import com.ichi2.anki.pages.StatisticsDestination
 import com.ichi2.anki.preferences.reviewer.ViewerAction
 import com.ichi2.anki.previewer.CardViewerViewModel
 import com.ichi2.anki.previewer.TypeAnswer
@@ -55,21 +58,28 @@ import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.anki.servicelayer.isBuryNoteAvailable
 import com.ichi2.anki.servicelayer.isSuspendNoteAvailable
 import com.ichi2.anki.settings.Prefs
+import com.ichi2.anki.tryRedo
+import com.ichi2.anki.tryUndo
 import com.ichi2.anki.ui.windows.reviewer.autoadvance.AutoAdvance
 import com.ichi2.anki.utils.CollectionPreferences
 import com.ichi2.anki.utils.Destination
+import com.ichi2.anki.utils.ext.answerCard
+import com.ichi2.anki.utils.ext.cardStatsNoCardClean
 import com.ichi2.anki.utils.ext.flag
+import com.ichi2.anki.utils.ext.getLongOrNull
 import com.ichi2.anki.utils.ext.setUserFlagForCards
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.withTimeoutOrNull
 import org.intellij.lang.annotations.Language
 import timber.log.Timber
 
-class ReviewerViewModel :
-    CardViewerViewModel(),
+class ReviewerViewModel(
+    val savedStateHandle: SavedStateHandle,
+) : CardViewerViewModel(),
     ChangeManager.Subscriber,
     BindingProcessor<ReviewerBinding, ViewerAction> {
     private var queueState: Deferred<CurrentQueueState?> =
@@ -91,17 +101,24 @@ class ReviewerViewModel :
     val redoLabelFlow = MutableStateFlow<String?>(null)
     val countsFlow = MutableStateFlow(Counts() to Counts.Queue.NEW)
     val typeAnswerFlow = MutableStateFlow<TypeAnswer?>(null)
-    val clearTypeAnswerFlow = MutableSharedFlow<Unit>()
+    val onTypedAnswerResultFlow = MutableSharedFlow<CompletableDeferred<String>>()
+    val onCardUpdatedFlow = MutableSharedFlow<Unit>()
     val destinationFlow = MutableSharedFlow<Destination>()
     val editNoteTagsFlow = MutableSharedFlow<NoteId>()
     val setDueDateFlow = MutableSharedFlow<CardId>()
     val answerTimerStatusFlow = MutableStateFlow<AnswerTimerStatus?>(null)
     val answerFeedbackFlow = MutableSharedFlow<Rating>()
+    val voiceRecorderEnabledFlow = MutableStateFlow(false)
+    val whiteboardEnabledFlow = MutableStateFlow(false)
+    val replayVoiceFlow = MutableSharedFlow<Unit>()
+    val timeBoxReachedFlow = MutableSharedFlow<Collection.TimeboxReached>()
+    val pageUpFlow = MutableSharedFlow<Unit>()
+    val pageDownFlow = MutableSharedFlow<Unit>()
+    val statesMutationEvalFlow = MutableSharedFlow<String>()
 
-    override val server: AnkiServer = AnkiServer(this, StudyScreenRepository.getServerPort()).also { it.start() }
+    override val server: AnkiServer = AnkiServer(this, StudyScreenRepository().getServerPort()).also { it.start() }
     private val stateMutationKey = TimeManager.time.intTimeMS().toString()
-    val statesMutationEval = MutableSharedFlow<String>()
-    var typedAnswer = ""
+    private var typedAnswer = ""
 
     private val autoAdvance = AutoAdvance(this)
     private val isHtmlTypeAnswerEnabled = Prefs.isHtmlTypeAnswerEnabled
@@ -130,6 +147,7 @@ class ReviewerViewModel :
     init {
         ChangeManager.subscribe(this)
         launchCatchingIO {
+            withCol { startTimebox() }
             updateUndoAndRedoLabels()
             // The height of the answer buttons may increase if `Show button time` is enabled.
             // To ensure consistent height, load the times to match the height of the `Show answer`
@@ -175,6 +193,17 @@ class ReviewerViewModel :
             while (!statesMutated) {
                 delay(50)
             }
+
+            val typedAnswerResult = CompletableDeferred<String>()
+            if (typeAnswerFlow.value != null) {
+                onTypedAnswerResultFlow.emit(typedAnswerResult)
+            } else {
+                typedAnswerResult.complete("")
+            }
+            typedAnswer = withTimeoutOrNull(1000L) {
+                typedAnswerResult.await()
+            } ?: ""
+
             updateNextTimes()
             showAnswer()
             loadAndPlayMedia(CardSide.ANSWER)
@@ -235,8 +264,20 @@ class ReviewerViewModel :
 
     private suspend fun emitCardInfoDestination() {
         val cardId = currentCard.await().id
-        val destination = CardInfoDestination(cardId)
+        val destination = CardInfoDestination(cardId, TR.cardStatsCurrentCard(TR.decksStudy()))
         Timber.i("Launching 'card info' for card %d", cardId)
+        destinationFlow.emit(destination)
+    }
+
+    private suspend fun emitPreviousCardInfoDestination() {
+        val previousCardId: CardId? = savedStateHandle.getLongOrNull(KEY_PREVIOUS_CARD_ID)
+        if (previousCardId == null) {
+            Timber.i("No previous answered card found, ignoring request for 'previous card info'")
+            actionFeedbackFlow.emit(TR.cardStatsNoCardClean())
+            return
+        }
+        val destination = CardInfoDestination(previousCardId, TR.cardStatsPreviousCard(TR.decksStudy()))
+        Timber.i("Launching 'previous card info' for card %d", previousCardId)
         destinationFlow.emit(destination)
     }
 
@@ -248,13 +289,21 @@ class ReviewerViewModel :
         destinationFlow.emit(destination)
     }
 
+    private suspend fun emitBrowseDestination() {
+        val deckId = withCol { decks.getCurrentId() }
+        val cardId = currentCard.await().id
+        val destination = BrowserDestination.ToCard(deckId, cardId)
+        Timber.i("Launching 'browse options' for deck %d", deckId)
+        destinationFlow.emit(destination)
+    }
+
     private suspend fun deleteNote() {
         val cardId = currentCard.await().id
         val noteCount =
             undoableOp {
                 removeNotes(cardIds = listOf(cardId))
             }.count
-        actionFeedbackFlow.emit(CollectionManager.TR.browsingCardsDeleted(noteCount))
+        actionFeedbackFlow.emit(TR.browsingCardsDeleted(noteCount))
         updateCurrentCard()
     }
 
@@ -264,7 +313,7 @@ class ReviewerViewModel :
             undoableOp {
                 sched.buryCards(cids = listOf(cardId))
             }.count
-        actionFeedbackFlow.emit(CollectionManager.TR.studyingCardsBuried(noteCount))
+        actionFeedbackFlow.emit(TR.studyingCardsBuried(noteCount))
         updateCurrentCard()
     }
 
@@ -274,7 +323,7 @@ class ReviewerViewModel :
             undoableOp {
                 sched.buryNotes(nids = listOf(noteId))
             }.count
-        actionFeedbackFlow.emit(CollectionManager.TR.studyingCardsBuried(noteCount))
+        actionFeedbackFlow.emit(TR.studyingCardsBuried(noteCount))
         updateCurrentCard()
     }
 
@@ -283,7 +332,7 @@ class ReviewerViewModel :
         undoableOp {
             sched.suspendCards(ids = listOf(cardId))
         }.count
-        actionFeedbackFlow.emit(CollectionManager.TR.studyingCardSuspended())
+        actionFeedbackFlow.emit(TR.studyingCardSuspended())
         updateCurrentCard()
     }
 
@@ -292,52 +341,24 @@ class ReviewerViewModel :
         undoableOp {
             sched.suspendNotes(ids = listOf(noteId))
         }
-        actionFeedbackFlow.emit(CollectionManager.TR.studyingNoteSuspended())
+        actionFeedbackFlow.emit(TR.studyingNoteSuspended())
         updateCurrentCard()
     }
 
     private suspend fun undo() {
         Timber.v("ReviewerViewModel::undo")
-        val changes =
-            undoableOp {
-                if (undoAvailable()) {
-                    undo()
-                } else {
-                    OpChangesAfterUndo.getDefaultInstance()
-                }
-            }
-        val message =
-            if (changes.operation.isEmpty()) {
-                CollectionManager.TR.actionsNothingToUndo()
-            } else {
-                CollectionManager.TR.undoActionUndone(changes.operation)
-            }
-        actionFeedbackFlow.emit(message)
+        actionFeedbackFlow.emit(tryUndo())
     }
 
     private suspend fun redo() {
         Timber.v("ReviewerViewModel::redo")
-        val changes =
-            undoableOp {
-                if (redoAvailable()) {
-                    redo()
-                } else {
-                    OpChangesAfterUndo.getDefaultInstance()
-                }
-            }
-        val message =
-            if (changes.operation.isEmpty()) {
-                CollectionManager.TR.actionsNothingToRedo()
-            } else {
-                CollectionManager.TR.undoRedoAction(changes.operation)
-            }
-        actionFeedbackFlow.emit(message)
+        actionFeedbackFlow.emit(tryRedo())
     }
 
     private suspend fun userAction(
         @Reviewer.UserAction number: Int,
     ) {
-        eval.emit("javascript: ankidroid.userAction($number);")
+        eval.emit("ankidroid.userAction($number);")
     }
 
     fun stopAutoAdvance() {
@@ -350,9 +371,9 @@ class ReviewerViewModel :
         autoAdvance.isEnabled = !autoAdvance.isEnabled
         val message =
             if (autoAdvance.isEnabled) {
-                CollectionManager.TR.actionsAutoAdvanceActivated()
+                TR.actionsAutoAdvanceActivated()
             } else {
-                CollectionManager.TR.actionsAutoAdvanceDeactivated()
+                TR.actionsAutoAdvanceDeactivated()
             }
         actionFeedbackFlow.emit(message)
 
@@ -366,17 +387,13 @@ class ReviewerViewModel :
     }
 
     override suspend fun handlePostRequest(
-        uri: String,
+        uri: PostRequestUri,
         bytes: ByteArray,
     ): ByteArray =
-        if (uri.startsWith(AnkiServer.ANKI_PREFIX)) {
-            when (uri.substring(AnkiServer.ANKI_PREFIX.length)) {
-                "getSchedulingStatesWithContext" -> getSchedulingStatesWithContext()
-                "setSchedulingStates" -> setSchedulingStates(bytes)
-                else -> super.handlePostRequest(uri, bytes)
-            }
-        } else {
-            super.handlePostRequest(uri, bytes)
+        when (uri.backendMethodName) {
+            "getSchedulingStatesWithContext" -> getSchedulingStatesWithContext()
+            "setSchedulingStates" -> setSchedulingStates(bytes)
+            else -> super.handlePostRequest(uri, bytes)
         }
 
     override suspend fun showQuestion() {
@@ -398,7 +415,7 @@ class ReviewerViewModel :
             return
         }
         statesMutated = false
-        statesMutationEval.emit(
+        statesMutationEvalFlow.emit(
             "anki.mutateNextCardStates('$stateMutationKey', async (states, customData, ctx) => { $js });",
         )
     }
@@ -437,15 +454,16 @@ class ReviewerViewModel :
             val card = currentCard.await()
             val answer =
                 withCol {
-                    sched.buildAnswer(
+                    sched.answerCard(
                         card = card,
                         states = state.states,
                         rating,
                     )
                 }
 
-            undoableOp { sched.answerCard(answer) }
+            undoableOp(handler = this) { sched.answerCard(answer) }
             answerFeedbackFlow.emit(rating)
+            savedStateHandle[KEY_PREVIOUS_CARD_ID] = card.id
 
             val wasLeech = withCol { sched.stateIsLeech(answer.newState) }
             if (wasLeech) {
@@ -460,10 +478,10 @@ class ReviewerViewModel :
     // https://github.com/ankitects/anki/blob/da907053460e2b78c31199f97bbea3cf3600f0c2/qt/aqt/reviewer.py#L954
     private suspend fun onLeech(isSuspended: Boolean) {
         Timber.i("ReviewerViewModel::onLeech (isSuspended = %b)", isSuspended)
-        val message = StringBuilder(CollectionManager.TR.studyingCardWasALeech())
+        val message = StringBuilder(TR.studyingCardWasALeech())
         if (isSuspended) {
             message.append(" ")
-            message.append(CollectionManager.TR.studyingItHasBeenSuspended())
+            message.append(TR.studyingItHasBeenSuspended())
         }
         actionFeedbackFlow.emit(message.toString())
     }
@@ -500,12 +518,16 @@ class ReviewerViewModel :
             finishResultFlow.emit(RESULT_NO_MORE_CARDS)
             return
         }
+        state.timeboxReached?.let {
+            timeBoxReachedFlow.emit(it)
+            return
+        }
 
         val card = state.topCard
         currentCard = CompletableDeferred(card)
         setupAnswerTimer(card)
         autoAdvance.onCardChange(card)
-        clearTypeAnswerFlow.emit(Unit) // must be before showQuestion()
+        onCardUpdatedFlow.emit(Unit) // must be before showQuestion()
         showQuestion()
         loadAndPlayMedia(CardSide.QUESTION)
         canBuryNoteFlow.emit(isBuryNoteAvailable(card))
@@ -534,11 +556,12 @@ class ReviewerViewModel :
         text: String,
         typeAnswer: TypeAnswer,
     ): String {
+        @Suppress("XmlDeprecatedElement") // upstream uses `<center>`
         @Language("HTML")
         val repl =
             """
             <center>
-            <input type="text" id="typeans" oninput="ankidroid.onTypeAnswerInput(event);" 
+            <input type="text" id="typeans" onkeydown="ankidroid.onTypeAnswerKeyDown(event);" 
                style="font-family: '${typeAnswer.font}'; font-size: ${typeAnswer.fontSize}px;">
             </center>
             """.trimIndent()
@@ -606,12 +629,18 @@ class ReviewerViewModel :
         answerTimerStatusFlow.emit(AnswerTimerStatus.Running(limitInMillis))
     }
 
+    private suspend fun replayMedia() {
+        val side = if (showingAnswer.value) SingleCardSide.BACK else SingleCardSide.FRONT
+        cardMediaPlayer.replayAll(side)
+    }
+
     fun executeAction(action: ViewerAction) {
         Timber.v("ReviewerViewModel::executeAction %s", action.name)
         launchCatchingIO {
             when (action) {
                 ViewerAction.ADD_NOTE -> emitAddNoteDestination()
                 ViewerAction.CARD_INFO -> emitCardInfoDestination()
+                ViewerAction.PREVIOUS_CARD_INFO -> emitPreviousCardInfoDestination()
                 ViewerAction.DECK_OPTIONS -> emitDeckOptionsDestination()
                 ViewerAction.EDIT -> emitEditNoteDestination()
                 ViewerAction.TAG -> editNoteTags()
@@ -647,6 +676,11 @@ class ReviewerViewModel :
                 ViewerAction.FLIP_OR_ANSWER_EASE4 -> flipOrAnswer(Rating.EASY)
                 ViewerAction.SHOW_HINT -> eval.emit("ankidroid.showHint()")
                 ViewerAction.SHOW_ALL_HINTS -> eval.emit("ankidroid.showAllHints()")
+                ViewerAction.TOGGLE_WHITEBOARD -> whiteboardEnabledFlow.emit(!whiteboardEnabledFlow.value)
+                ViewerAction.RECORD_VOICE -> voiceRecorderEnabledFlow.emit(!voiceRecorderEnabledFlow.value)
+                ViewerAction.REPLAY_VOICE -> replayVoiceFlow.emit(Unit)
+                ViewerAction.PAGE_UP -> pageUpFlow.emit(Unit)
+                ViewerAction.PAGE_DOWN -> pageDownFlow.emit(Unit)
                 ViewerAction.EXIT -> finishResultFlow.emit(AbstractFlashcardViewer.RESULT_DEFAULT)
                 ViewerAction.USER_ACTION_1 -> userAction(1)
                 ViewerAction.USER_ACTION_2 -> userAction(2)
@@ -659,6 +693,9 @@ class ReviewerViewModel :
                 ViewerAction.USER_ACTION_9 -> userAction(9)
                 ViewerAction.SUSPEND_MENU -> suspendCard()
                 ViewerAction.BURY_MENU -> buryCard()
+                ViewerAction.STATISTICS -> destinationFlow.emit(StatisticsDestination())
+                ViewerAction.BROWSE -> emitBrowseDestination()
+                ViewerAction.PLAY_MEDIA -> replayMedia()
                 ViewerAction.FLAG_MENU -> {}
             }
         }
@@ -690,6 +727,7 @@ class ReviewerViewModel :
                 changes.noteText -> {
                     val card = currentCard.await()
                     withCol { card.load(this) }
+                    cardMediaPlayer.loadCardAvTags(card)
                     updateMarkIcon()
                     if (showingAnswer.value) {
                         showAnswer()
@@ -704,5 +742,9 @@ class ReviewerViewModel :
                 }
             }
         }
+    }
+
+    companion object {
+        private const val KEY_PREVIOUS_CARD_ID = "key_previous_card_id"
     }
 }

@@ -52,7 +52,7 @@ class GesturePicker(
     private var onGestureListener: GestureListener? = null
 
     init {
-        val inflater = ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val inflater = LayoutInflater.from(ctx)
         inflater.inflate(R.layout.gesture_picker, this)
         gestureDisplay = findViewById(R.id.gestureDisplay)
         gestureSpinner = findViewById(R.id.spinner_gesture)

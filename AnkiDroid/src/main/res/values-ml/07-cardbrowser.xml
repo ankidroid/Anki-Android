@@ -70,6 +70,7 @@
     <string name="card_browser_list_my_searches_new_name">നിലവിലെ തിരയലിൻ്റെ പേര്</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">പേരില്ലാതെ നിങ്ങൾക്ക് ഒരു തിരയൽ സംരക്ഷിക്കാൻ കഴിയില്ല</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">പേര് നിലവിലുണ്ട്</string>
+    <string name="card_browser_list_my_searches_successful_save">Search was saved</string>
     <string name="no_note_to_edit">എഡിറ്റ് ചെയ്യാൻ കുറിപ്പില്ല</string>
     <string name="card_browser_list_my_searches_remove_content">\"%1$s\" ഇല്ലാതാക്കണോ?</string>
     <string name="card_browser_change_display_order" maxLength="28">ഡിസ്പ്ലേ ക്രമം മാറ്റുക</string>

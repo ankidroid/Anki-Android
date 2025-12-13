@@ -23,7 +23,6 @@ import anki.media.CheckMediaResponse
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.observability.undoableOp
-import com.ichi2.async.deleteMedia
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -69,7 +68,8 @@ class MediaCheckViewModel : ViewModel() {
     // TODO: investigate: the underlying implementation exposes progress, which we do not yet handle.
     fun deleteUnusedMedia(): Job =
         viewModelScope.launch {
-            val deletedMedia = withCol { deleteMedia(this@withCol, _mediaCheckResult.value?.unusedList ?: listOf()) }
-            deletedFilesCount.value = deletedMedia
+            val unused = _mediaCheckResult.value?.unusedList ?: listOf()
+            withCol { media.trashFiles(unused) }
+            deletedFilesCount.value = unused.size
         }
 }

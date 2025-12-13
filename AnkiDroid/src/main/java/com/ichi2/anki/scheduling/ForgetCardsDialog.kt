@@ -19,16 +19,15 @@ package com.ichi2.anki.scheduling
 import android.app.Dialog
 import android.os.Bundle
 import androidx.core.content.edit
-import androidx.core.net.toUri
 import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
-import com.google.android.material.checkbox.MaterialCheckBox
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.databinding.DialogForgetCardsBinding
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.CardId
 import com.ichi2.anki.libanki.sched.Scheduler
@@ -95,29 +94,29 @@ class ForgetCardsDialog : DialogFragment() {
                 resetRepetitionAndLapseCounts = getBoolean(ARG_RESET_REPETITION, false)
             }
         }
-        val contentView =
-            layoutInflater.inflate(R.layout.dialog_forget_cards, null).apply {
-                findViewById<MaterialCheckBox>(R.id.restore_original_position)!!.apply {
-                    isChecked = restoreOriginalPositionIfPossible
-                    setOnCheckedChangeListener { _, isChecked ->
-                        restoreOriginalPositionIfPossible = isChecked
-                    }
-                    text = TR.schedulingRestorePosition()
-                }
-                findViewById<MaterialCheckBox>(R.id.reset_lapse_counts)!!.apply {
-                    isChecked = resetRepetitionAndLapseCounts
-                    setOnCheckedChangeListener { _, isChecked ->
-                        resetRepetitionAndLapseCounts = isChecked
-                    }
-                    text = TR.schedulingResetCounts()
-                }
+        val binding = DialogForgetCardsBinding.inflate(layoutInflater)
+
+        binding.restoreOriginalPosition.apply {
+            isChecked = restoreOriginalPositionIfPossible
+            setOnCheckedChangeListener { _, isChecked ->
+                restoreOriginalPositionIfPossible = isChecked
             }
+            text = TR.schedulingRestorePosition()
+        }
+        binding.resetLapseCounts.apply {
+            isChecked = resetRepetitionAndLapseCounts
+            setOnCheckedChangeListener { _, isChecked ->
+                resetRepetitionAndLapseCounts = isChecked
+            }
+            text = TR.schedulingResetCounts()
+        }
+
         return MaterialAlertDialogBuilder(requireContext()).create {
             // BUG: this is 'Reset Card'/'Forget Card' in Anki Desktop (24.04)
             // title(text = TR.actionsForgetCard().toSentenceCase(R.string.sentence_forget_cards))
             // "Reset card progress" is less explicit on the singular/plural dimension
             titleWithHelpIcon(stringRes = R.string.reset_card_dialog_title) {
-                requireActivity().openUrl(getString(R.string.link_help_forget_cards).toUri())
+                requireContext().openUrl(R.string.link_help_forget_cards)
             }
             positiveButton(R.string.dialog_ok) {
                 sharedPrefs.edit {
@@ -133,7 +132,7 @@ class ForgetCardsDialog : DialogFragment() {
                 )
             }
             negativeButton(R.string.dialog_cancel)
-            setView(contentView)
+            setView(binding.root)
         }
     }
 

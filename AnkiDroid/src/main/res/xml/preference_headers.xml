@@ -36,6 +36,15 @@
         app:summaryEntries="@array/general_summary_entries">
     </com.ichi2.preferences.HeaderPreference>
 
+
+    <com.ichi2.preferences.HeaderPreference
+        android:fragment="com.ichi2.anki.preferences.ReviewerOptionsFragment"
+        android:title="@string/new_study_screen"
+        android:icon="@drawable/ic_cards_star"
+        android:key="@string/new_reviewer_options_key"
+        app:summaryEntries="@array/study_screen_summary_entries"
+        />
+
     <!-- Reviewing Preferences -->
     <com.ichi2.preferences.HeaderPreference
         android:fragment="com.ichi2.anki.preferences.ReviewingSettingsFragment"
@@ -80,6 +89,13 @@
         app:summaryEntries="@array/appearance_summary_entries">
     </com.ichi2.preferences.HeaderPreference>
 
+    <!-- Switch Profile Preferences  -->
+    <com.ichi2.preferences.HeaderPreference
+        android:key="@string/pref_switch_profile_screen_key"
+        android:title="Switch Profile"
+        android:icon="@drawable/ic_switch_profile"
+        android:fragment="com.ichi2.anki.preferences.profiles.SwitchProfilesFragment" />
+
     <!-- Keybinding preferences -->
     <com.ichi2.preferences.HeaderPreference
         android:fragment="com.ichi2.anki.preferences.ControlsSettingsFragment"
@@ -114,14 +130,6 @@
         android:icon="@drawable/ic_tune_white"
         app:summaryEntries="@array/advanced_summary_entries">
     </com.ichi2.preferences.HeaderPreference>
-
-    <com.ichi2.preferences.HeaderPreference
-        android:fragment="com.ichi2.anki.preferences.ReviewerOptionsFragment"
-        android:title="@string/new_study_screen"
-        android:icon="@drawable/ic_cards_star"
-        android:key="@string/new_reviewer_options_key"
-        app:summaryEntries="@array/study_screen_summary_entries"
-        />
 
     <com.ichi2.preferences.HeaderPreference
         android:key="@string/pref_dev_options_screen_key"

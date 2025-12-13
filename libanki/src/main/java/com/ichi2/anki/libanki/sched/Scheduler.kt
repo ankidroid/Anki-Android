@@ -1,18 +1,18 @@
-/***************************************************************************************
- * Copyright (c) 2022 Ankitects Pty Ltd <https://apps.ankiweb.net>                      *
- *                                                                                      *
- * This program is free software; you can redistribute it and/or modify it under        *
- * the terms of the GNU General Public License as published by the Free Software        *
- * Foundation; either version 3 of the License, or (at your option) any later           *
- * version.                                                                             *
- *                                                                                      *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY      *
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A      *
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.             *
- *                                                                                      *
- * You should have received a copy of the GNU General Public License along with         *
- * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
- ****************************************************************************************/
+/*
+ * Copyright (c) 2022 Ankitects Pty Ltd <https://apps.ankiweb.net>
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 3 of the License, or (at your option) any later
+ * version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 package com.ichi2.anki.libanki.sched
 
@@ -439,27 +439,30 @@ open class Scheduler(
     }
 
     /**
-     * Gets the filtered deck with given [did]
-     * or creates a new one if [did] = 0
+     * Rebuilds a filtered deck.
+     * @param did id of deck to rebuild. 0 means current deck.
+     */
+    @LibAnkiAlias("rebuild_filtered_deck")
+    fun rebuildFilteredDeck(did: DeckId) = col.backend.rebuildFilteredDeck(did)
+
+    /**
+     * Removes all cards from a filtered deck.
+     * @param did id of deck to empty. 0 means current deck.
+     */
+    @LibAnkiAlias("empty_filtered_deck")
+    fun emptyFilteredDeck(did: DeckId) = col.backend.emptyFilteredDeck(did)
+
+    /**
+     * Gets the filtered deck with given [did] or creates a new one if [did] = 0.
      */
     @LibAnkiAlias("get_or_create_filtered_deck")
     fun getOrCreateFilteredDeck(did: DeckId): FilteredDeckForUpdate = col.backend.getOrCreateFilteredDeck(did = did)
 
-    /** Rebuild a dynamic deck.
-     * @param did The deck to rebuild. 0 means current deck.
-     */
-    open fun rebuildDyn(did: DeckId) {
-        col.backend.rebuildFilteredDeck(did)
-    }
+    @LibAnkiAlias("add_or_update_filtered_deck")
+    fun addOrUpdateFilteredDeck(input: FilteredDeckForUpdate) = col.backend.addOrUpdateFilteredDeck(input)
 
-    fun rebuildDyn() {
-        rebuildDyn(col.decks.selected())
-    }
-
-    /** Remove all cards from a dynamic deck
-     * @param did The deck to empty. 0 means current deck.
-     */
-    open fun emptyDyn(did: DeckId) = col.backend.emptyFilteredDeck(did)
+    @LibAnkiAlias("filtered_deck_order_labels")
+    fun filteredDeckOrderLabels() = col.backend.filteredDeckOrderLabels()
 
     fun deckDueTree(): DeckNode = deckTree(true)
 
@@ -496,6 +499,9 @@ open class Scheduler(
 
     @CheckResult
     fun repositionDefaults(): RepositionDefaultsResponse = col.backend.repositionDefaults()
+
+    @LibAnkiAlias("active_decks")
+    fun activeDecks(): List<DeckId> = col.db.queryLongList("SELECT id FROM active_decks")
 
     /**
      * @return Number of new card in current deck and its descendants. Capped at [REPORT_LIMIT]

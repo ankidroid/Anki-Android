@@ -45,7 +45,6 @@
     </plurals>
     <!--Browser-->
     <string name="model_browser_delete">గమనిక రకాన్ని తొలగించండి</string>
-    <string name="model_browser_rename" comment="Rename a note type">పేరుమార్చు</string>
     <string name="model_browser_template">కార్డ్లను సవరించండి</string>
     <!--Rename-->
     <string name="rename_model">గమనిక రకం పేరు మార్చండి</string>
@@ -53,7 +52,6 @@
     <!--Language Hint-->
     <string name="model_field_editor_language_hint_dialog_success_result">భాష సూచనను %sకి సెట్ చేయండి</string>
     <!--Field Editing-->
-    <string name="model_field_editor_title">ఫీల్డ్లను సవరించండి</string>
     <string name="model_field_editor_add" maxLength="28">ఫీల్డ్ను జోడించండి</string>
     <string name="model_field_editor_delete">ఫీల్డ్ను తొలగించు</string>
     <string name="model_field_editor_rename">ఫీల్డ్ పేరు మార్చండి</string>
@@ -63,6 +61,12 @@
     <string name="model_field_editor_sort_field">ఈ ఫీల్డ్ ద్వారా క్రమబద్ధీకరించు</string>
     <!--Warnings-->
     <string name="model_delete_warning">మీరు ఈ గమనిక రకాన్ని ఖచ్చితంగా తొలగించాలనుకుంటున్నారా?</string>
+    <!--
+        Example output:
+        Delete the note types below?
+        Basic, Basic (and reversed card), Cloze
+     -->
+    <string name="model_delete_multiple_warning">Delete the note types below?\n %s</string>
     <string name="field_delete_warning">మీరు ఖచ్చితంగా ఈ ఫీల్డ్ని తొలగించాలనుకుంటున్నారా?</string>
     <!--Model Add Suffixes-->
     <string name="model_browser_add_add">Add: %1$s</string>

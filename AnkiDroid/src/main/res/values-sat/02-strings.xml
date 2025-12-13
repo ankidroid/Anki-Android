@@ -48,12 +48,14 @@
     <string name="drawer_open">ᱰᱨᱚᱣᱟᱹᱨ ᱠᱷᱩᱞᱟᱹᱭ ᱢᱮ</string>
     <string name="drawer_close">ᱰᱨᱚᱣᱟᱹᱨ ᱵᱚᱸᱫᱚᱭ ᱢᱮ</string>
     <string name="note_message">Note saved</string>
+    <!-- Note editor screen -->
     <string name="CardEditorCardDeck">ᱠᱟᱰ ᱰᱮᱠᱺ</string>
     <string name="CardEditorNoteDeck">ᱰᱮᱠᱺ</string>
     <string name="CardEditorModel">ᱯᱨᱚᱠᱟᱨᱺ</string>
     <string name="CardEditorTags">ᱴᱮᱜᱥᱺ%1$s</string>
     <string name="CardEditorCards">ᱠᱟᱰᱺ%1$s</string>
     <string name="edit_occlusions">ᱚᱠᱥᱩᱞᱤᱥᱚᱱ ᱥᱟᱯᱲᱟᱣ ᱢᱮ</string>
+    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
     <string name="tag_name">ᱴᱮᱜ ᱧᱩᱛᱩᱢ</string>
     <string name="add_new_filter_tags">ᱥᱮᱞᱮᱫ/ᱴᱮᱜ ᱯᱷᱤᱞᱴᱚᱨ</string>
     <string name="add_tag" maxLength="28">ᱴᱮᱜ ᱥᱮᱞᱮᱫ ᱢᱮ</string>
@@ -65,6 +67,18 @@
     <string name="save_whiteboard" maxLength="28">ᱯᱩᱸᱰ ᱵᱚᱰ ᱥᱟᱱᱪᱟᱣ ᱢᱮ</string>
     <string name="enable_stylus" maxLength="28">ᱥᱴᱟᱭᱞᱩᱥ ᱚᱞᱚᱜ ᱮᱱᱮᱡ ᱢᱮ</string>
     <string name="disable_stylus">ᱥᱴᱟᱭᱞᱩᱥ ᱚᱞᱚᱜ ᱵᱚᱫᱚᱞ ᱢᱮ</string>
+    <string name="eraser" maxLength="28">Eraser</string>
+    <string name="add_brush" maxLength="28">Add brush</string>
+    <string name="whiteboard_align_left" comment="Option to align the whiteboard toolbar on the left" maxLength="28">Left</string>
+    <string name="whiteboard_align_bottom" comment="Option to align the whiteboard toolbar on the bottom" maxLength="28">Bottom</string>
+    <string name="whiteboard_align_right" comment="Option to align the whiteboard toolbar on the right" maxLength="28">Right</string>
+    <string name="whiteboard_clear" comment="Button text to clear the whiteboard" maxLength="28">Clear</string>
+    <string name="whiteboard_more_options" comment="Tooltip of the whiteboard \'More\' button" maxLength="28">More options</string>
+    <string name="whiteboard_remove_brush_message">Are you sure you want to remove this brush from your palette?</string>
+    <string name="whiteboard_ink_eraser" comment="Title of the whiteboard Ink eraser">Ink</string>
+    <string name="whiteboard_stroke_eraser" comment="Title of the whiteboard Stroke eraser">Stroke</string>
+    <string name="stylus_mode" comment="Title of the menu item that toggles the whiteboard stylus mode" maxLength="28">Stylus mode</string>
+    <string name="cannot_remove_last_brush_message">The last brush may not be removed</string>
     <string name="enable_whiteboard" maxLength="28">ᱥᱤᱠᱮᱴ ᱞᱟᱜᱩᱭ ᱢᱮ</string>
     <string name="disable_whiteboard">ᱥᱤᱠᱮᱴ ᱵᱚᱱᱫ ᱢᱮ</string>
     <string name="show_whiteboard">ᱥᱤᱠᱮᱴ ᱫᱮᱠᱷᱟᱣ ᱢᱮ</string>
@@ -83,6 +97,7 @@
     <string name="webview_crash_fatal">Fatal ᱵᱷᱩᱞ: WebView ᱨᱮᱱᱰᱚᱨᱚᱨ ᱠᱨᱟᱥ ᱮᱱᱟ ᱾ ᱠᱟᱨᱚᱬ:%s</string>
     <string name="webview_crash_loop_dialog_title">ᱥᱤᱥᱴᱚᱢ WebView ᱨᱮᱱᱰᱚᱨᱤᱝ ᱯᱷᱮᱞ ᱮᱱᱟ</string>
     <string name="webview_crash_loop_dialog_content">ᱥᱤᱥᱴᱚᱢ WebView ᱠᱟᱨᱰ ᱨᱮᱱᱰᱚᱨᱤᱝ ᱡᱚᱠᱷᱟᱜ ᱯᱷᱮᱞ ᱮᱱᱟ \'%1$s\'.\n%2$s</string>
+    <string name="slide_to_cancel" comment="Message shown when pressing the record button">Slide to cancel</string>
     <string name="filter_by_flags" maxLength="41">ᱯᱚᱛᱠᱟ ᱠᱚ</string>
     <!-- Custom study options -->
     <string name="custom_study_loading_tags">Building list of tags&#8230;</string>
@@ -151,7 +166,8 @@
     <string name="import_error_not_apkg_extension">ᱨᱮᱫᱧᱩᱛᱩᱢ “%s” ᱴᱷᱮᱱ .apkg or .colpkg extension ᱵᱟᱱᱩᱜᱽᱟ</string>
     <string name="import_error_load_imported_database">Anki Database (.anki2) ᱵᱚᱫᱚᱞ ᱥᱟᱹᱯᱚᱴ ᱵᱟᱹᱱᱩᱜᱼᱟ ᱾ ᱨᱤᱯᱞᱮᱥᱢᱮᱴ ᱞᱟᱹᱜᱤᱫ ᱢᱮᱱᱩᱟᱞ ᱧᱮᱞᱯᱮ</string>
     <string name="import_error_content_provider">ᱵᱟᱪᱷᱟᱣᱟᱠᱟᱱ ᱨᱮᱫ AnkiDroid ᱛᱮ ᱵᱟᱭ ᱞᱟᱫᱮᱜ ᱠᱟᱱᱟ ᱾ ᱫᱚᱭᱟᱠᱟᱛᱮ ᱨᱤᱯᱞᱮᱥᱢᱮᱴ ᱞᱟᱹᱜᱤᱫ ᱢᱮᱱᱩᱟᱞ ᱧᱮᱞᱯᱮ Anki ᱨᱮᱫ: \n%s</string>
-    <string name="import_error_copy_to_cache">ᱯᱷᱤᱞ ᱠᱷᱟᱪ ᱨᱮ ᱵᱟᱭ ᱥᱮᱞᱮᱫ ᱫᱟᱲᱮᱭᱟᱜ ᱠᱟᱱᱟ (ᱥᱟᱹᱠᱭᱟᱹᱛ ᱨᱮ ᱥᱯᱮᱥ ᱵᱟᱦᱨᱮ)</string>
+    <string name="import_error_copy_to_cache_title">ᱯᱷᱤᱞ ᱠᱷᱟᱪ ᱨᱮ ᱵᱟᱭ ᱥᱮᱞᱮᱫ ᱫᱟᱲᱮᱭᱟᱜ ᱠᱟᱱᱟ</string>
+    <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">This is often caused by a bug in the app you used to select the file. Please try the following fixes:\n\n%s</string>
     <string name="import_interrupted">ᱨᱮᱫ ᱟᱠᱚᱴ ᱮᱱᱟ</string>
     <string name="export_ready_title">ᱮᱠᱥᱯᱳᱨᱴ ᱞᱟᱹᱜᱤᱫ ᱥᱟᱹᱛ</string>
     <string name="export_send_no_handlers">ᱪᱚᱫ ᱮᱯᱞᱤᱠᱮᱥᱚᱱ ᱵᱟᱹᱱᱩᱜᱼᱟ apkg ᱦᱮᱱᱰᱮᱞ ᱞᱟᱹᱜᱤᱫ ᱾ ᱥᱟᱝᱪᱟᱣ ᱪᱟᱹᱞᱩ ᱟᱠᱟᱱᱟ&#8230;</string>
@@ -180,11 +196,6 @@
     <string name="tag_editor_add_feedback">“%1$s” ᱥᱞᱮᱫ ᱞᱟᱹᱜᱤᱫ ᱛᱮ “%2$s” ᱚᱛᱟᱭᱯᱮ</string>
     <string name="tag_editor_add_feedback_existing">ᱢᱟᱲᱟᱝ ᱨᱮ ᱢᱮᱱᱟᱜᱠᱟ ᱴᱮᱛᱜ “%1$s” ᱪᱚᱭᱟᱱᱮᱱᱟ</string>
     <!-- Time spans -->
-    <string name="reminder_title">ᱯᱟᱲᱦᱟᱣ ᱞᱟᱹᱜᱤᱫ ᱟᱞᱚᱢ ᱦᱤᱲᱤᱧᱟ ᱛᱮᱦᱮᱸᱧ!</string>
-    <plurals name="reminder_text">
-        <item quantity="one">%2$d ᱠᱟᱰ %1$s ᱨᱮ ᱞᱟᱦᱟ ᱛᱮᱭᱟᱜ ᱧᱮᱞ</item>
-        <item quantity="other">%2$d ᱠᱟᱰ %1$s ᱨᱮ ᱞᱟᱦᱟ ᱛᱮᱭᱟᱜ ᱧᱮᱞ</item>
-    </plurals>
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">apkg ᱨᱮᱫ ᱵᱷᱮᱡᱟ ᱵᱷᱩᱞ</string>
     <!-- Import and export v2 feedback -->
@@ -225,6 +236,7 @@
     <string name="search_decks" maxLength="28">ᱰᱮᱠ ᱠᱚ ᱥᱮᱸᱫᱽᱨᱟ</string>
     <string name="ankidroid_init_failed_webview_title">ᱯᱩᱨᱟᱹ ᱵᱷᱩᱞ</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid ᱫᱚ ᱥᱭᱥᱴᱮᱢ ᱣᱮᱵᱼᱵᱷᱤᱭᱩ ᱪᱮᱛᱟᱱ ᱨᱮ ᱱᱤᱨᱵᱷᱚᱨᱚᱜ ᱠᱟᱱᱟᱭ ᱚᱠᱟ ᱫᱚ ᱱᱤᱛᱚᱜ ᱵᱟᱹᱱᱩᱜᱼᱟ ᱾ ᱱᱚᱶᱟ ᱫᱚ ᱛᱮᱵᱮ ᱦᱩᱭᱩᱜᱼᱟ ᱚᱠᱟ ᱡᱷᱚᱜ ᱥᱭᱥᱴᱟᱹᱢ ᱟᱹᱯᱰᱮᱴ ᱠᱚ ᱠᱚ ᱵᱚᱦᱟᱞ ᱮᱪᱟᱭ ᱾ ᱫᱚᱭᱟᱠᱟᱛᱮ ᱱᱟᱥᱮ ᱴᱤᱯᱤᱡ ᱜᱦᱟᱹᱬᱤᱡ ᱛᱟᱭᱚᱢ ᱫᱩᱦᱲᱟᱹ ᱪᱮᱥᱴᱟᱭ ᱢᱮ ᱾ \n\n%s</string>
+    <string name="ankidroid_init_failed_storage">AnkiDroid cannot access storage due to an Android error.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">ᱪᱤᱠᱤ ᱢᱟᱯ</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">ᱴᱩᱞᱵᱟᱨ ᱫᱮᱠᱷᱟᱣᱢᱮ</string>
@@ -271,7 +283,6 @@
     <string name="download_failed">ᱰᱟᱩᱱᱞᱳᱰ ᱵᱟᱝᱜᱟᱱ ᱞᱮᱱᱟ</string>
     <string name="deck_download_progress_message">ᱰᱟᱩᱱᱞᱳᱰᱤᱝ ᱚᱠᱛᱚᱨᱮ ᱟᱢ ᱮᱴᱟᱜ ᱟᱯᱥ ᱮᱢ ᱵᱮᱵᱷᱟᱨ ᱫᱟᱲᱮ ᱟᱫ-ᱟ</string>
     <string name="check_network">ᱫᱟᱭᱟᱠᱟᱛᱮ ᱟᱢᱟᱜ ᱱᱮᱴᱣᱟᱨᱠ ᱠᱳᱱᱮᱠᱥᱚᱱ ᱡᱟᱸᱪ ᱢᱮ</string>
-    <string name="search_using_deck_name">ᱰᱮᱠ ᱧᱩᱛᱩᱢ ᱵᱮᱵᱷᱟᱨ ᱠᱟᱛᱮ ᱥᱮᱸᱫᱽᱨᱟᱭ ᱢᱮ</string>
     <string name="external_storage_unavailable">ᱰᱟᱩᱱᱞᱚᱰ ᱵᱚᱫᱚᱞ ᱟᱠᱟᱱᱟ, ᱵᱟᱦᱨᱮ ᱥᱴᱳᱨᱮᱡᱽ ᱵᱟᱭ ᱦᱟᱹᱴᱤᱧ ᱟᱠᱟᱱᱟ</string>
     <string name="home" maxLength="28">ᱚᱲᱟᱜ</string>
     <!-- Study Screen actions
@@ -296,6 +307,10 @@
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">ᱥᱟᱠᱟᱢ ᱥᱮᱞᱮᱫ ᱨᱮ ᱵᱟᱭ ᱫᱟᱲᱮ ᱞᱮᱱᱟ. ᱞᱟᱹᱠᱛᱤ ᱠᱟᱱᱟ ᱟᱢ ᱟᱨᱦᱚᱸ ᱢᱮᱛᱟᱣ ᱢᱮ !</string>
     <string name="cd_manage_notetypes_add">ᱢᱤᱫ ᱱᱟᱶᱟ ᱱᱳᱴ ᱛᱷᱚᱠ ᱥᱮᱞᱮᱫ ᱢᱮ</string>
+    <plurals name="note_types_selected">
+        <item quantity="one">%d note type selected</item>
+        <item quantity="other">%d note types selected</item>
+    </plurals>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">ᱠᱚᱢ ᱥᱮᱪᱮᱫ ᱢᱮ</string>
     <string name="intro_ankidroid_tagline_two">ᱰᱷᱮᱨ ᱵᱟᱧᱪᱟᱣ ᱢᱮ</string>
@@ -304,7 +319,6 @@
     <string name="intro_sync_from_ankiweb">AnkiWeb ᱠᱷᱚᱱ ᱥᱟᱸᱠᱨᱚᱱ ᱢᱮ</string>
     <!-- IntentHandler -->
     <string name="app_not_initialized_new">AnkiDroid ᱫᱚ ᱱᱤᱛ ᱦᱟᱵᱤᱡ ᱛᱮ ᱵᱟᱝ ᱮᱦᱚᱵ ᱟᱠᱟᱱᱟ. AnkiDroid ᱮᱛᱦᱚᱵ ᱢᱮ ᱟᱨ ᱟᱨᱦᱚᱸ ᱯᱨᱚᱵᱷᱟᱣ ᱢᱮ</string>
-    <string name="already_logged_in">ᱱᱤᱛ ᱜᱮ ᱥᱮᱞᱮᱫ ᱟᱠᱟᱱᱟ</string>
     <!-- Deck Creation -->
     <string name="deck_created">ᱰᱮᱠ ᱵᱮᱱᱟᱣ ᱟᱠᱟᱱᱟ</string>
     <string name="deck_renamed">ᱰᱮᱠ ᱧᱩᱛᱩᱢ ᱮᱱᱟ</string>

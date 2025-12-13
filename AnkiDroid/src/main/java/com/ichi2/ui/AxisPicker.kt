@@ -17,13 +17,12 @@
 package com.ichi2.ui
 
 import android.content.Context
+import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
-import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
-import com.ichi2.anki.R
+import com.ichi2.anki.databinding.DialogAxisPickerBinding
 import com.ichi2.anki.reviewer.Axis
 import com.ichi2.anki.reviewer.Binding
 import timber.log.Timber
@@ -36,21 +35,12 @@ import timber.log.Timber
  *
  * @see AxisSelector
  */
-class AxisPicker(
-    val rootLayout: ConstraintLayout,
-) {
-    // DDisplays a message asking a user to provide input to the screen
-    // We use a TextView to listen due to issues with handling AXIS_BRAKE and AXIS_GAS
-    // When listening to 'rootLayout', these axes are ONLY detected after another joystick is moved
-    private val textView: TextView = rootLayout.findViewById(R.id.axis_picker_selected_axis)
+class AxisPicker : ConstraintLayout {
+    constructor(context: Context) : super(context)
+    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
-    /** Contains [availableAxes], initially invisible */
-    private val availableAxesContainer: View = rootLayout.findViewById(R.id.axis_picker_scrollview)
-
-    /** Where [AxisSelector] are added dynamically if motion is detected*/
-    private val availableAxes: LinearLayout = rootLayout.findViewById(R.id.axis_picker_available_axes)
-
-    private val context: Context get() = rootLayout.context
+    val binding = DialogAxisPickerBinding.inflate(LayoutInflater.from(context))
 
     /** Maps from an [Axis] to the [AxisSelector] displaying + allowing selection of it */
     private val axisMap = mutableMapOf<Axis, AxisSelector>()
@@ -62,8 +52,8 @@ class AxisPicker(
     }
 
     init {
-        textView.requestFocus()
-        textView.setOnGenericMotionListener { _, event -> handleMotionEvent(event) }
+        binding.root.requestFocus()
+        binding.root.setOnGenericMotionListener { _, event -> handleMotionEvent(event) }
     }
 
     @Suppress("SameReturnValue")
@@ -91,13 +81,13 @@ class AxisPicker(
 
         // when adding the first control, we want to make the
         // available axes visible, so the user can see their current values
-        availableAxesContainer.visibility = View.VISIBLE
+        binding.availableAxesContainer.visibility = View.VISIBLE
         // we also want to hide the TextView, but we can't make it invisible as it's
         // providing our input events. Blanking the text has the same effect
-        textView.text = ""
+        binding.selectedAxisTextView.text = ""
 
         // setup & return the control
-        return AxisSelector(context).also { view ->
+        return AxisSelector(binding.root.context).also { view ->
             view.axis = axis
             view.setOnExtremitySelectedListener { binding ->
                 Timber.d("selected binding %s", binding)
@@ -105,14 +95,7 @@ class AxisPicker(
             }
 
             axisMap[axis] = view
-            availableAxes.addView(view)
-        }
-    }
-
-    companion object {
-        fun inflate(context: Context): AxisPicker {
-            val layout = LayoutInflater.from(context).inflate(R.layout.dialog_axis_picker, null)
-            return AxisPicker(layout as ConstraintLayout)
+            binding.availableAxes.addView(view)
         }
     }
 }

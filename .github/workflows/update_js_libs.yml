@@ -7,7 +7,7 @@ jobs:
   update_js_libs:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: 'Update js libs'
         id: vars
         run: |
@@ -37,7 +37,7 @@ jobs:
           echo ::set-output name=mathjax_ver::"$mathjax_ver"
 
       - name: 'Create pull request'
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             try {

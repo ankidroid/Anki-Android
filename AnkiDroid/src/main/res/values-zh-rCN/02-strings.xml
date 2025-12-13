@@ -48,12 +48,14 @@
     <string name="drawer_open">打开侧栏</string>
     <string name="drawer_close">关闭侧栏</string>
     <string name="note_message">已保存附注</string>
+    <!-- Note editor screen -->
     <string name="CardEditorCardDeck">牌组：</string>
     <string name="CardEditorNoteDeck">牌组：</string>
     <string name="CardEditorModel">笔记模板：</string>
     <string name="CardEditorTags">标签：%1$s</string>
     <string name="CardEditorCards">卡片：%1$s</string>
     <string name="edit_occlusions">编辑闭合</string>
+    <string name="paste_from_clipboard" maxLength="28">从剪贴板中粘贴</string>
     <string name="tag_name">标签</string>
     <string name="add_new_filter_tags">添加/过滤标签</string>
     <string name="add_tag" maxLength="28">添加标签</string>
@@ -65,6 +67,18 @@
     <string name="save_whiteboard" maxLength="28">保存白板</string>
     <string name="enable_stylus" maxLength="28">启用荧光笔模式</string>
     <string name="disable_stylus">禁用荧光笔模式</string>
+    <string name="eraser" maxLength="28">橡皮擦</string>
+    <string name="add_brush" maxLength="28">添加笔刷</string>
+    <string name="whiteboard_align_left" comment="Option to align the whiteboard toolbar on the left" maxLength="28">左</string>
+    <string name="whiteboard_align_bottom" comment="Option to align the whiteboard toolbar on the bottom" maxLength="28">底部</string>
+    <string name="whiteboard_align_right" comment="Option to align the whiteboard toolbar on the right" maxLength="28">右</string>
+    <string name="whiteboard_clear" comment="Button text to clear the whiteboard" maxLength="28">清空</string>
+    <string name="whiteboard_more_options" comment="Tooltip of the whiteboard \'More\' button" maxLength="28">更多选项</string>
+    <string name="whiteboard_remove_brush_message">您确定要从您的调色板中删除此笔刷吗？</string>
+    <string name="whiteboard_ink_eraser" comment="Title of the whiteboard Ink eraser">墨水</string>
+    <string name="whiteboard_stroke_eraser" comment="Title of the whiteboard Stroke eraser">运笔</string>
+    <string name="stylus_mode" comment="Title of the menu item that toggles the whiteboard stylus mode" maxLength="28">光笔模式</string>
+    <string name="cannot_remove_last_brush_message">无法删除上一个笔刷</string>
     <string name="enable_whiteboard" maxLength="28">启用白板</string>
     <string name="disable_whiteboard">禁用白板</string>
     <string name="show_whiteboard">显示白板</string>
@@ -83,6 +97,7 @@
     <string name="webview_crash_fatal">严重错误：WebView 渲染器崩溃。原因：%s</string>
     <string name="webview_crash_loop_dialog_title">系统 WebView 渲染失败</string>
     <string name="webview_crash_loop_dialog_content">系统 WebView 渲染卡片 “%1$s” 失败。\n %2$s</string>
+    <string name="slide_to_cancel" comment="Message shown when pressing the record button">滑动取消</string>
     <string name="filter_by_flags" maxLength="41">旗标</string>
     <!-- Custom study options -->
     <string name="custom_study_loading_tags">构建标签列表&#8230;</string>
@@ -105,7 +120,7 @@
     <string name="select">选择</string>
     <string name="field_remapping">%1$s（来自「%2$s」）</string>
     <string name="confirm_map_cards_to_nothing">任何无法映射的卡片都会被删除。如果该笔记没有生成其他卡片，该笔记将会丢失。你确定要继续吗？</string>
-    <string name="missing_note_type">找不到笔记类型</string>
+    <string name="missing_note_type">未找到笔记模板</string>
     <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (空)</string>
     <!-- Image cropper -->
     <string name="image_cropper_action_rotate" maxLength="28" comment="Action in image cropper screen">旋转</string>
@@ -148,7 +163,8 @@
     <string name="import_error_not_apkg_extension">「%s」并不是具有 .apkg 或 .colpkg 扩展名的文件</string>
     <string name="import_error_load_imported_database">尚不支持替换 Anki 数据库（.anki2）。请参阅手册以获取替换说明。</string>
     <string name="import_error_content_provider">所选文件无法由 AnkiDroid 自动导入。请查看用户手册了解如何手动导入 Anki 文件：\n%s</string>
-    <string name="import_error_copy_to_cache">缓存文件失败（可能超出存储空间）</string>
+    <string name="import_error_copy_to_cache_title">缓存文件失败</string>
+    <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">这通常是由您用来选择文件的应用中的错误引起的。请尝试以下修复：\n\n%s</string>
     <string name="import_interrupted">导入中断</string>
     <string name="export_ready_title">已准备好导出</string>
     <string name="export_send_no_handlers">没有可用处理 apkg 的应用程序。正在保存&#8230;</string>
@@ -177,10 +193,6 @@
     <string name="tag_editor_add_feedback">点击「%2$s」以确认添加「%1$s」</string>
     <string name="tag_editor_add_feedback_existing">已选中 %1$s</string>
     <!-- Time spans -->
-    <string name="reminder_title">不要忘记今天去学习 ！</string>
-    <plurals name="reminder_text">
-        <item quantity="other">%2$d 张卡片在 %1$s 中待复习</item>
-    </plurals>
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">共享 apkg 文件时出错</string>
     <!-- Import and export v2 feedback -->
@@ -221,6 +233,7 @@
     <string name="search_decks" maxLength="28">搜索牌组</string>
     <string name="ankidroid_init_failed_webview_title">严重错误</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid 依赖的系统 WebView 不可用。如果系统正在安装更新，可能会发生这种情况。请几分钟后再试。\n\n%s</string>
+    <string name="ankidroid_init_failed_storage">由于 Android 系统错误，AnkiDroid 无法访问存储。\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">字体大小</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">显示工具栏</string>
@@ -241,7 +254,7 @@
     <string name="note_editor_image_too_large">图片过大，请手动插入图像</string>
     <string name="note_editor_video_too_large">视频文件太大，请手动插入视频</string>
     <string name="note_editor_audio_too_large">音频文件太大，请手动插入音频</string>
-    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">正在进行 Android 备份。请重试</string>
+    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">Android 备份正在进行中。请重试</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">请使用 iManager 来允许 AnkiDroid 添加快捷方式</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">您的主屏幕不允许 AnkiDroid 添加快捷方式</string>
     <string name="create_shortcut_error">添加快捷方式时出错：%s</string>
@@ -267,7 +280,6 @@
     <string name="download_failed">下载失败</string>
     <string name="deck_download_progress_message">您可以在下载过程中使用其他应用</string>
     <string name="check_network">请检查您的网络连接。</string>
-    <string name="search_using_deck_name">使用牌组名称搜索</string>
     <string name="external_storage_unavailable">下载中止，外部存储不可用</string>
     <string name="home" maxLength="28">主页</string>
     <!-- Study Screen actions
@@ -290,7 +302,10 @@
     <string name="expand_tag">展开标签「%s」</string>
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">访问集合失败。请重试！</string>
-    <string name="cd_manage_notetypes_add">添加新的笔记类型</string>
+    <string name="cd_manage_notetypes_add">添加新的笔记模板</string>
+    <plurals name="note_types_selected">
+        <item quantity="other">已选择 %d 个笔记模板</item>
+    </plurals>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">学得更少</string>
     <string name="intro_ankidroid_tagline_two">记得更牢</string>
@@ -299,7 +314,6 @@
     <string name="intro_sync_from_ankiweb">从 AnkiWeb 同步</string>
     <!-- IntentHandler -->
     <string name="app_not_initialized_new">AnkiDroid 尚未初始化。请打开 AnkiDroid，然后再试</string>
-    <string name="already_logged_in">已经登录</string>
     <!-- Deck Creation -->
     <string name="deck_created">已创建牌组</string>
     <string name="deck_renamed">重命名牌组</string>

@@ -70,6 +70,7 @@
     <string name="card_browser_list_my_searches_new_name">Qidiruv uchun nom</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">Qidiruvni nomsiz saqlab boʻlmaydi</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">Bu nom allaqachon mavjud</string>
+    <string name="card_browser_list_my_searches_successful_save">Qidiruv saqlandi</string>
     <string name="no_note_to_edit">Tahrirlash uchun qayd yoʻq</string>
     <string name="card_browser_list_my_searches_remove_content">“%1$s” oʻchirilsinmi?</string>
     <string name="card_browser_change_display_order" maxLength="28">Koʻrsatish tartibini oʻzgartirish</string>
@@ -90,7 +91,7 @@
         <item>Unitilishlar boʻyicha</item>
         <item>Dasta nomi boʻyicha</item>
     </string-array>
-    <string name="manage_browser_column">Manage column</string>
+    <string name="manage_browser_column">Ustunni boshqarish</string>
     <string name="no_columns_available">Tanlab boʻladigan ustun yoʻq</string>
     <string name="card_browser_select_all" maxLength="28">Barchasini tanlash</string>
     <string name="card_browser_select_none" maxLength="28">Hech qaysini tanlama</string>

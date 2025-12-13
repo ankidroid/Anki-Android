@@ -45,7 +45,6 @@
     </plurals>
     <!--Browser-->
     <string name="model_browser_delete">ಟಿಪ್ಪಣಿ ಪ್ರಕಾರವನ್ನು ಅಳಿಸಿ</string>
-    <string name="model_browser_rename" comment="Rename a note type">ಮರುಹೆಸರಿಸು</string>
     <string name="model_browser_template">ಕಾರ್ಡ್‌ಗಳನ್ನು ಸಂಪಾದಿಸಿ</string>
     <!--Rename-->
     <string name="rename_model">ಟಿಪ್ಪಣಿ ಪ್ರಕಾರವನ್ನು ಮರುಹೆಸರಿಸಿ</string>
@@ -53,7 +52,6 @@
     <!--Language Hint-->
     <string name="model_field_editor_language_hint_dialog_success_result">ಭಾಷೆಯ ಸುಳಿವನ್ನು %s ಗೆ ಹೊಂದಿಸಿ</string>
     <!--Field Editing-->
-    <string name="model_field_editor_title">ಕ್ಷೇತ್ರಗಳನ್ನು ಸಂಪಾದಿಸಿ</string>
     <string name="model_field_editor_add" maxLength="28">ಕ್ಷೇತ್ರವನ್ನು ಸೇರಿಸಿ</string>
     <string name="model_field_editor_delete">ಕ್ಷೇತ್ರವನ್ನು ಅಳಿಸಿ</string>
     <string name="model_field_editor_rename">ಕ್ಷೇತ್ರವನ್ನು ಮರುಹೆಸರಿಸಿ</string>
@@ -63,6 +61,12 @@
     <string name="model_field_editor_sort_field">ಈ ಕ್ಷೇತ್ರದಿಂದ ವಿಂಗಡಿಸಿ</string>
     <!--Warnings-->
     <string name="model_delete_warning">ಈ ಟಿಪ್ಪಣಿ ಪ್ರಕಾರವನ್ನು ಅಳಿಸಲು ನೀವು ಖಚಿತವಾಗಿ ಬಯಸುವಿರಾ?</string>
+    <!--
+        Example output:
+        Delete the note types below?
+        Basic, Basic (and reversed card), Cloze
+     -->
+    <string name="model_delete_multiple_warning">Delete the note types below?\n %s</string>
     <string name="field_delete_warning">ಈ ಕ್ಷೇತ್ರವನ್ನು ಅಳಿಸಲು ನೀವು ಖಚಿತವಾಗಿ ಬಯಸುವಿರಾ?</string>
     <!--Model Add Suffixes-->
     <string name="model_browser_add_add">Add: %1$s</string>

@@ -45,7 +45,6 @@
 -->
 <resources>
     <!-- Widget -->
-    <string name="widget_minimum_cards_due_notification_ticker_title">देय कार्ड</string>
     <plurals name="widget_minimum_cards_due_notification_ticker_text">
         <item quantity="one">%d AnkiDroid कार्ड मुळे</item>
         <item quantity="other">%d AnkiDroid कार्ड मुळे</item>

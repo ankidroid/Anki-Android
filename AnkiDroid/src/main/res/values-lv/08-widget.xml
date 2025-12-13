@@ -45,7 +45,6 @@
 -->
 <resources>
     <!-- Widget -->
-    <string name="widget_minimum_cards_due_notification_ticker_title">Kartītes, kurām pienācis laiks</string>
     <plurals name="widget_minimum_cards_due_notification_ticker_text">
         <item quantity="zero">Pienācis %d AnkiDroid kartīšu laiks</item>
         <item quantity="one">Pienācis %d AnkiDroid kartītes laiks</item>

@@ -99,6 +99,8 @@
         <!-- Note editor colors -->
         <item name="duplicateColor">#fcc</item>
         <item name="editTextBackgroundColor">#EBCCCCCC</item>
+        <item name="editTextHighlightColor">@color/material_light_blue_200</item>
+        <item name="textInputOutlinedStyle">@style/TextInputSelectionColorFixStyle</item>
         <item name="toolbarBackgroundColor">#D6D7D7</item>
         <item name="toolbarIconColor">@color/black</item>
         <item name="buttonShadowColor">#FFAAAAAA</item>
@@ -113,6 +115,8 @@
         <item name="navDrawerImage">@drawable/nav_drawer_logo</item>
         <!-- Dialog styles -->
         <item name="android:listPreferredItemHeight">56dip</item>
+        <item name="dialogCornerRadius">@dimen/dialog_corner_radius</item>
+        <item name="android:dialogCornerRadius" tools:targetApi="p">@dimen/dialog_corner_radius</item>
         <item name="textAllCaps">false</item>
         <!--Custom Tabs colors-->
         <item name="customTabNavBarColor">@color/material_light_blue_500</item>

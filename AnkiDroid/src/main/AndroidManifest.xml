@@ -32,6 +32,10 @@
          but this means preserveLegacyExternalStorage is inactive, and users do not have access to
          the ~/AnkiDroid public directory
     -->
+
+    <!-- Permissions used by AnkiDroid
+         If you add any new ones that require explicit user permission, please update the
+         AllPermissionsExplanation fragment (see ui.windows.permissions) -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" tools:ignore="ScopedStorage"/>
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -68,6 +72,11 @@
             <action android:name="android.intent.action.VIEW" />
             <category android:name="android.intent.category.BROWSABLE" />
             <data android:scheme="https" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.BROWSABLE" />
+            <data android:scheme="http" />
         </intent>
         <intent>
             <action android:name="android.intent.action.PROCESS_TEXT" />
@@ -107,11 +116,6 @@
         <activity
             android:name="com.ichi2.anki.ui.windows.managespace.ManageSpaceActivity"
             android:exported="true"/>
-        <activity android:name=".DrawingActivity"
-            android:label="@string/drawing"
-            android:exported="false"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            />
         <activity
             android:name="com.ichi2.anki.IntentHandler"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -326,7 +330,6 @@
             android:label="@string/card_browser"
             android:theme="@style/Theme_Dark.Launcher"
             android:exported="true"
-            android:configChanges="keyboardHidden|orientation|screenSize"
             android:parentActivityName=".DeckPicker"
             >
             <intent-filter android:label="@string/card_browser">
@@ -343,6 +346,21 @@
             android:exported="false"
             android:configChanges="keyboardHidden|orientation|screenSize"
             />
+
+        <!-- The activity that shows up when the user selects a more-info button in the OS permission settings for AnkiDroid
+             The more-info button only shows up in the OS settings at or above API 31
+             See https://developer.android.com/training/permissions/explaining-access#privacy-dashboard -->
+        <activity
+            android:name=".ui.windows.permissions.AllPermissionsExplanationActivity"
+            android:permission="android.permission.START_VIEW_PERMISSION_USAGE"
+            android:exported="true"
+            tools:targetApi="31">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW_PERMISSION_USAGE" />
+                <action android:name="android.intent.action.VIEW_PERMISSION_USAGE_FOR_PERIOD" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".ui.windows.permissions.PermissionsActivity"
             android:exported="false"
@@ -365,7 +383,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.ichi2.anki.MyAccount"
+            android:name="com.ichi2.anki.account.AccountActivity"
             android:label="@string/menu_my_account"
             android:exported="false"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -482,12 +500,6 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/download_deck"
             android:theme="@style/Theme.MaterialComponents.NoActionBar" />
-        <activity
-            android:name="com.ichi2.anki.LoginActivity"
-            android:label="@string/menu_my_account"
-            android:exported="false"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            />
 
         <activity android:name=".IntroductionActivity"
             android:exported="false"
@@ -625,7 +637,7 @@
             android:exported="false"
             />
         <receiver
-            android:name=".services.ReminderService"
+            android:name=".services.AlarmManagerService"
             android:enabled="true"
             android:exported="false"
             />

@@ -81,7 +81,7 @@
     <string name="button_size" maxLength="41">解答表示・回答ボタンのサイズ</string>
     <string name="card_browser_font_size" maxLength="41">カードブラウザのフォントサイズ</string>
     <string name="card_browser_hide_media" maxLength="41">リストにファイル名も表示</string>
-    <string name="card_browser_hide_media_summary">Display audio filenames in the card browser question/answer fields</string>
+    <string name="card_browser_hide_media_summary">カードブラウザのリスト画面の質問欄と解答欄に、メディア（画像・音声・動画）ファイル名も表示します</string>
     <string name="col_path" maxLength="41">AnkiDroidディレクトリ</string>
     <string name="fullscreen_review" maxLength="41">フルスクリーンモード</string>
     <string name="full_screen_off">オフ</string>
@@ -233,11 +233,13 @@
     <string name="misc" maxLength="41">その他</string>
     <!-- Review reminders -->
     <string name="add_reminder" comment="Label for the add reminder button in the screen for adding and editing review reminders">リマインダーを追加</string>
+    <string name="add_review_reminder" comment="Title of the screen for creating a new review reminder">学習リマインダーを追加</string>
+    <string name="edit_review_reminder" comment="Title of the screen for editing an existing review reminder">学習リマインダーを編集</string>
+    <string name="you_have_no_review_reminders" comment="Text that appears in the review reminder editing screen when there are no reminders set">学習のリマインダーがありません</string>
     <!-- studyoptions -->
     <string name="studyoptions_limit_select_tags">タグを選択</string>
     <!-- Deck configurations -->
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">一般</string>
-    <string name="deck_conf_reminders" maxLength="41">リマインダー</string>
     <string name="deck_conf_cram_filter" maxLength="41">フィルター</string>
     <string name="deck_conf_cram_search" maxLength="41" comment="Label of a text field that contains a search query.">抽出条件</string>
     <string name="deck_conf_cram_limit" maxLength="41">抽出件数の上限</string>
@@ -364,12 +366,12 @@
     <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">計算中&#8230;</string>
     <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">コレクションが存在しません</string>
     <string name="hide_system_bars" maxLength="41" comment="Title of a setting that allows to hide the system bars">システムバーを隠す</string>
-    <string name="hide_system_bars_none" comment="Setting option to not hide any of the system bars">なし（すべて表示）</string>
-    <string name="hide_system_bars_status_bar" comment="Setting option to hide the system status bar (the top one with clock, battery status, etc)">ステータスバー（通知バー）</string>
-    <string name="hide_system_bars_navigation_bar" comment="Setting option to hide the system navigation bar (the bottom one that can go back, to home, etc)">ナビゲーションバー</string>
-    <string name="hide_system_bars_all_bars" comment="Setting option to hide all the system bars">すべて</string>
-    <string name="ignore_display_cutout" maxLength="41">ノッチ（ディスプレイ上部のくぼみ）を無視</string>
-    <string name="hide_answer_buttons" maxLength="41">解答表示ボタン・回答ボタンを隠す</string>
+    <string name="hide_system_bars_none" comment="Setting option to not hide any of the system bars">なし（どちらも表示）</string>
+    <string name="hide_system_bars_status_bar" comment="Setting option to hide the system status bar (the top one with clock, battery status, etc)">ステータスバー（通知バー）を隠す</string>
+    <string name="hide_system_bars_navigation_bar" comment="Setting option to hide the system navigation bar (the bottom one that can go back, to home, etc)">ナビゲーションバーを隠す</string>
+    <string name="hide_system_bars_all_bars" comment="Setting option to hide all the system bars">どちらも隠す</string>
+    <string name="ignore_display_cutout" maxLength="41">ディスプレイカットアウト（ディスプレイ上部の穴やくぼみ）を無視</string>
+    <string name="show_answer_buttons" maxLength="41">解答表示ボタン・回答ボタンを表示</string>
     <string name="hide_hard_and_easy" maxLength="41">「難しい」ボタンと「簡単」ボタンを隠す</string>
     <string name="reviewer_frame_style" maxLength="41">カードの輪郭のスタイル</string>
     <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Study Screen">カード（角丸四角形）</string>
@@ -379,10 +381,11 @@
     <string name="reviewer_toolbar_none" maxLength="41" comment="Setting to remove the toolbar from the study screen">表示しない</string>
     <string name="toolbar" maxLength="41">ツールバー</string>
     <string name="toolbar_actions" maxLength="41">ツールバーのアクション</string>
-    <string name="toolbar_position" maxLength="41">ツールバーの位置</string>
+    <string name="toolbar_position" maxLength="28">ツールバーの位置</string>
     <string name="new_study_screen" maxLength="41">新しい学習画面</string>
     <string name="new_study_screen_summ"><![CDATA[現行の学習画面の後継となる、改良された学習画面。現行画面のいくつかの機能は変更または削除されました。ぜひ<a href="%1$s">ご意見・ご感想</a>をお寄せください。<a href="%2$s">不具合</a>がある場合もお知らせいただければ幸いです。]]></string>
     <string name="show_answer_feedback" maxLength="41">回答選択時にフィードバック（目印）を表示</string>
+    <string name="screen" maxLength="41">画面枠</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">設定画面を開く</string>
 </resources>

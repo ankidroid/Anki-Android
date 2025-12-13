@@ -1,18 +1,18 @@
-/***************************************************************************************
- * Copyright (c) 2012 Norbert Nagold <norbert.nagold@gmail.com>                         *
- *                                                                                      *
- * This program is free software; you can redistribute it and/or modify it under        *
- * the terms of the GNU General Public License as published by the Free Software        *
- * Foundation; either version 3 of the License, or (at your option) any later           *
- * version.                                                                             *
- *                                                                                      *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY      *
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A      *
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.             *
- *                                                                                      *
- * You should have received a copy of the GNU General Public License along with         *
- * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
- ****************************************************************************************/
+/*
+ * Copyright (c) 2012 Norbert Nagold <norbert.nagold@gmail.com>
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 3 of the License, or (at your option) any later
+ * version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package com.ichi2.anki
 
 import android.content.Intent
@@ -24,7 +24,6 @@ import androidx.fragment.app.commit
 import androidx.lifecycle.lifecycleScope
 import anki.collection.OpChanges
 import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.anki.StudyOptionsFragment.StudyOptionsListener
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyAction
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyAction.Companion.REQUEST_KEY
 import com.ichi2.anki.libanki.undoAvailable
@@ -32,12 +31,14 @@ import com.ichi2.anki.libanki.undoLabel
 import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.utils.ext.setFragmentResultListener
 import com.ichi2.ui.RtlCompliantActionProvider
-import com.ichi2.widget.WidgetStatus
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
+/**
+ * Hosts [StudyOptionsFragment] when non-fragmented
+ */
 class StudyOptionsActivity :
-    AnkiActivity(),
-    StudyOptionsListener,
+    AnkiActivity(R.layout.studyoptions),
     ChangeManager.Subscriber {
     private var undoState = UndoState()
 
@@ -46,7 +47,6 @@ class StudyOptionsActivity :
             return
         }
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.studyoptions)
         enableToolbar().apply { title = "" }
         if (savedInstanceState == null) {
             loadStudyOptionsFragment()
@@ -61,14 +61,18 @@ class StudyOptionsActivity :
                     currentFragment!!.refreshInterface()
             }
         }
+        setFragmentResultListener(StudyOptionsFragment.REQUEST_STUDY_OPTIONS_STUDY) { _, _ ->
+            Timber.d("Opening study screen from study options screen")
+            val reviewer = Reviewer.getIntent(this)
+            // go back to DeckPicker after studying when not in tablet mode
+            reviewer.flags = Intent.FLAG_ACTIVITY_FORWARD_RESULT
+            startActivity(reviewer)
+            finish()
+        }
     }
 
     private fun loadStudyOptionsFragment() {
-        var withDeckOptions = false
-        if (intent.extras != null) {
-            withDeckOptions = intent.extras!!.getBoolean("withDeckOptions")
-        }
-        val currentFragment = StudyOptionsFragment.newInstance(withDeckOptions)
+        val currentFragment = StudyOptionsFragment()
         supportFragmentManager.commit {
             replace(R.id.studyoptions_frame, currentFragment)
         }
@@ -115,22 +119,12 @@ class StudyOptionsActivity :
         refreshUndoState()
     }
 
-    public override fun onStop() {
-        super.onStop()
-        if (colIsOpenUnsafe()) {
-            WidgetStatus.updateInBackground(this)
-        }
-    }
-
-    override fun onRequireDeckListUpdate() {
-        currentFragment!!.refreshInterface()
-    }
-
     override fun opExecuted(
         changes: OpChanges,
         handler: Any?,
     ) {
         refreshUndoState()
+        currentFragment?.refreshInterface()
     }
 
     private fun refreshUndoState() {

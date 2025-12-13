@@ -19,13 +19,11 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import android.webkit.CookieManager
 import android.webkit.WebChromeClient
 import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
-import android.webkit.WebViewClient
 import android.widget.FrameLayout
 import androidx.annotation.CallSuper
 import androidx.annotation.LayoutRes
@@ -44,6 +42,9 @@ import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.ext.collectIn
 import com.ichi2.anki.utils.ext.packageManager
 import com.ichi2.anki.utils.openUrl
+import com.ichi2.anki.workarounds.OnWebViewRecreatedListener
+import com.ichi2.anki.workarounds.SafeWebViewClient
+import com.ichi2.anki.workarounds.SafeWebViewLayout
 import com.ichi2.compat.CompatHelper.Companion.resolveActivityCompat
 import com.ichi2.themes.Themes
 import com.ichi2.utils.show
@@ -53,9 +54,10 @@ import timber.log.Timber
 
 abstract class CardViewerFragment(
     @LayoutRes layout: Int,
-) : Fragment(layout) {
+) : Fragment(layout),
+    OnWebViewRecreatedListener {
     abstract val viewModel: CardViewerViewModel
-    protected abstract val webView: WebView
+    protected abstract val webViewLayout: SafeWebViewLayout
 
     @CallSuper
     override fun onViewCreated(
@@ -64,6 +66,9 @@ abstract class CardViewerFragment(
     ) {
         setupWebView(savedInstanceState)
         setupErrorListeners()
+        viewModel.eval.collectIn(lifecycleScope) { eval ->
+            webViewLayout.evaluateJavascript(eval)
+        }
     }
 
     override fun onStart() {
@@ -78,6 +83,11 @@ abstract class CardViewerFragment(
         }
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        webViewLayout.destroy() // stops <audio> playbacks
+    }
+
     protected open fun onLoadInitialHtml(): String =
         stdHtml(
             context = requireContext(),
@@ -85,11 +95,11 @@ abstract class CardViewerFragment(
         )
 
     private fun setupWebView(savedInstanceState: Bundle?) {
-        CookieManager.getInstance().setAcceptThirdPartyCookies(webView, true)
-        with(webView) {
-            webViewClient = onCreateWebViewClient(savedInstanceState)
-            webChromeClient = onCreateWebChromeClient()
-            scrollBarStyle = View.SCROLLBARS_OUTSIDE_OVERLAY
+        with(webViewLayout) {
+            setWebViewClient(onCreateWebViewClient(savedInstanceState))
+            setWebChromeClient(onCreateWebChromeClient())
+            scrollBars = View.SCROLLBARS_OUTSIDE_OVERLAY
+            setAcceptThirdPartyCookies(true)
             with(settings) {
                 javaScriptEnabled = true
                 loadWithOverviewMode = true
@@ -100,7 +110,6 @@ abstract class CardViewerFragment(
                 // allow videos to autoplay via our JavaScript eval
                 mediaPlaybackRequiresUserGesture = false
             }
-
             loadDataWithBaseURL(
                 viewModel.baseUrl(),
                 onLoadInitialHtml(),
@@ -108,9 +117,6 @@ abstract class CardViewerFragment(
                 null,
                 null,
             )
-        }
-        viewModel.eval.collectIn(lifecycleScope) { eval ->
-            webView.evaluateJavascript(eval, null)
         }
     }
 
@@ -134,11 +140,18 @@ abstract class CardViewerFragment(
             .launchIn(lifecycleScope)
     }
 
-    protected open fun onCreateWebViewClient(savedInstanceState: Bundle?): WebViewClient = CardViewerWebViewClient(savedInstanceState)
+    protected open fun onCreateWebViewClient(savedInstanceState: Bundle?): CardViewerWebViewClient =
+        CardViewerWebViewClient(savedInstanceState)
+
+    protected open fun onCreateWebChromeClient() = CardViewerWebChromeClient()
+
+    override fun onWebViewRecreated(webView: WebView) {
+        setupWebView(null)
+    }
 
     open inner class CardViewerWebViewClient(
         val savedInstanceState: Bundle?,
-    ) : WebViewClient() {
+    ) : SafeWebViewClient() {
         private val resourceHandler = ViewerResourceHandler(requireContext())
 
         override fun shouldInterceptRequest(
@@ -156,9 +169,12 @@ abstract class CardViewerFragment(
         override fun shouldOverrideUrlLoading(
             view: WebView,
             request: WebResourceRequest,
-        ): Boolean = handleUrl(request.url)
+        ): Boolean = handleUrl(view, request.url)
 
-        protected open fun handleUrl(url: Uri): Boolean {
+        protected open fun handleUrl(
+            webView: WebView,
+            url: Uri,
+        ): Boolean {
             when (url.scheme) {
                 "playsound" -> viewModel.playSoundFromUrl(url.toString())
                 "videoended" -> viewModel.onVideoFinished()
@@ -222,47 +238,46 @@ abstract class CardViewerFragment(
         }
     }
 
-    private fun onCreateWebChromeClient(): WebChromeClient =
-        object : WebChromeClient() {
-            private lateinit var customView: View
+    open inner class CardViewerWebChromeClient : WebChromeClient() {
+        protected lateinit var paramView: View
 
-            // used for displaying `<video>` in fullscreen.
-            // This implementation requires configChanges="orientation" in the manifest
-            // to avoid destroying the View if the device is rotated
-            override fun onShowCustomView(
-                paramView: View,
-                paramCustomViewCallback: CustomViewCallback?,
-            ) {
-                customView = paramView
-                val window = requireActivity().window
-                (window.decorView as FrameLayout).addView(
-                    customView,
-                    FrameLayout.LayoutParams(
-                        FrameLayout.LayoutParams.MATCH_PARENT,
-                        FrameLayout.LayoutParams.MATCH_PARENT,
-                    ),
-                )
-                // hide system bars
-                with(WindowInsetsControllerCompat(window, window.decorView)) {
-                    systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
-                    hide(WindowInsetsCompat.Type.systemBars())
-                }
-            }
-
-            override fun onHideCustomView() {
-                val window = requireActivity().window
-                (window.decorView as FrameLayout).removeView(customView)
-                // show system bars back
-                with(WindowInsetsControllerCompat(window, window.decorView)) {
-                    systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_DEFAULT
-                    show(WindowInsetsCompat.Type.systemBars())
-                }
+        // used for displaying `<video>` in fullscreen.
+        // This implementation requires configChanges="orientation" in the manifest
+        // to avoid destroying the View if the device is rotated
+        override fun onShowCustomView(
+            paramView: View,
+            paramCustomViewCallback: CustomViewCallback?,
+        ) {
+            this@CardViewerWebChromeClient.paramView = paramView
+            val window = requireActivity().window
+            (window.decorView as FrameLayout).addView(
+                paramView,
+                FrameLayout.LayoutParams(
+                    FrameLayout.LayoutParams.MATCH_PARENT,
+                    FrameLayout.LayoutParams.MATCH_PARENT,
+                ),
+            )
+            // hide system bars
+            with(WindowInsetsControllerCompat(window, window.decorView)) {
+                systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+                hide(WindowInsetsCompat.Type.systemBars())
             }
         }
 
+        override fun onHideCustomView() {
+            val window = requireActivity().window
+            (window.decorView as FrameLayout).removeView(paramView)
+            // show system bars back
+            with(WindowInsetsControllerCompat(window, window.decorView)) {
+                systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_DEFAULT
+                show(WindowInsetsCompat.Type.systemBars())
+            }
+        }
+    }
+
     private fun showMediaErrorSnackbar(filename: String) {
         showSnackbar(getString(R.string.card_viewer_could_not_find_image, filename)) {
-            setAction(R.string.help) { openUrl(getString(R.string.link_faq_missing_media).toUri()) }
+            setAction(R.string.help) { openUrl(R.string.link_faq_missing_media) }
         }
     }
 }

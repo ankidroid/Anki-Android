@@ -40,11 +40,11 @@
                         android:fastScrollEnabled="true"
                         android:focusable="true"
                         android:paddingBottom="72dp"
-                        android:layout_above="@id/today_stats_text_view"
+                        android:layout_above="@id/review_summary_text_view"
                         android:scrollbars="vertical" />
 
                     <com.ichi2.ui.FixedTextView
-                        android:id="@+id/today_stats_text_view"
+                        android:id="@+id/review_summary_text_view"
                         android:layout_width="match_parent"
                         android:layout_marginLeft="8dp"
                         android:layout_marginRight="8dp"
@@ -93,5 +93,7 @@
     </LinearLayout>
 
     <include layout="@layout/anki_progress"/>
-    <include layout="@layout/floating_add_button"/>
+    <include
+        android:id="@+id/floating_action_button"
+        layout="@layout/floating_add_button"/>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

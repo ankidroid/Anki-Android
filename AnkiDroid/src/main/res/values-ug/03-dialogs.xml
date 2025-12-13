@@ -124,6 +124,8 @@
     <string name="multimedia_editor_failed">كۆپ ۋاسىتە تەھرىرلىگۈچنى ئاچالمىدى</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">ئاۋاز خاتىرىلەش ئىجازىتى رەت قىلىندى</string>
+    <string name="permission_denied">ئىجازەت رەت قىلىندى</string>
+    <string name="recording_permission_denied_message">مىكروفون ئىجازىتى «ئاۋاز خاتىرىلەش» ئىقتىدارى ئۈچۈن زۆرۈر. ئەپ تەڭشىكىدە ئىجازەت بېرىڭ.</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid يېڭىلاندى</string>
     <string name="integrity_check_startup_content">AnkiDroid يېڭىلانغان. بۇ يۈكسەلتىش بەلكىم ساندان مەسىلىلىرىنى ھەل قىلىشنى ئۆز ئىچىگە ئالىدۇ، ھازىر «ساندان تەكشۈر» نى ئىجرا قىلىشىڭىزنى تەۋسىيە قىلىمىز.</string>
@@ -201,8 +203,6 @@
     <string name="import_deck_package">دەستە بولىقى (.apkg)</string>
     <string name="import_collection_package">توپلام بولىقى (.colpkg)</string>
     <string name="import_csv">تېكىست ھۆججەت (.txt, .csv)</string>
-    <!-- Deck selection dialog -->
-    <string name="cannot_create_subdeck_for_all_decks">ھەممە دەستىگە تارماق دەستە قۇرالمايسىز</string>
     <!-- scoped storage -->
     <string name="backup_your_collection">توپلىمىڭىزنى زاپاسلاڭ</string>
     <string name="backup_collection_message">توپلىمىڭىزنى زاپاسلىمىغىلى خېلى ئۇزۇن بولدى. سانلىق مەلۇماتلارنىڭ يوقاپ كېتىشىنىڭ ئالدىنى ئېلىش ئۈچۈن ھازىر بۇنى قىلىشىڭىز كېرەك</string>
@@ -254,4 +254,10 @@
     <string name="tts_error_dialog_reason_text">تېكىستتىن ئاۋازغا موتورى b&gt;%1$s&lt;/b&gt; تۆۋەندىكى تىلنى قوللىمايدۇ: &lt;b&gt;%2$s&lt;/b&gt;</string>
     <string name="tts_error_dialog_change_button_text">موتورنى ئۆزگەرت</string>
     <string name="tts_error_dialog_supported_voices_button_text">ئاۋاز تاللانما</string>
+    <!-- import_cache_error_resolutions -->
+    <string name="import_error_resolution_try_again">Re-import the file</string>
+    <string name="import_error_resolution_free_up_space">Ensure there is sufficient free space on your device</string>
+    <string name="import_error_resolution_check_internet">Ensure you are connected to the internet</string>
+    <string name="import_error_resolution_copy_to_device">Copy the file to your device and try again with the local file</string>
+    <string name="import_error_resolution_select_file">Open the file using your device’s file browser app</string>
 </resources>

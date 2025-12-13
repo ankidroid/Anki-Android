@@ -131,7 +131,6 @@
     <string name="empty_filtered_deck">Den filtrerte kortstokken tømmes&#8230;</string>
     <string name="search_deck" comment="Deck search for selecting it">Finn kortstokk</string>
     <string name="empty_deck">Denne kortleiken er tom</string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">Finn kortstokk</string>
     <string name="invalid_deck_name">Ugildt namn på kortleik</string>
     <string name="studyoptions_congrats_finished">Gratulerer! Du er ferdig for i dag.</string>
     <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Kortstokk ferdig for øyeblikket! %s</string>
@@ -154,7 +153,7 @@
     <string name="card_template_editor_menu_card_browser_appearance" maxLength="28">Kortleser utseende</string>
     <string name="card_template_editor_deck_override" maxLength="28">Overstyr kortstokk</string>
     <string name="card_template_editor_insert_field" maxLength="28">Legg til felt</string>
-    <string name="card_template_editor_select_field">Velg felt</string>
+    <string name="card_template_editor_select_field">Vel felt</string>
     <string name="card_template_editor_cant_delete">Minst én korttype kreves.</string>
     <plurals name="card_template_editor_confirm_add">
         <item quantity="one">Dette vil lage %1$d kort. Fortsett?</item>
@@ -170,6 +169,7 @@
     <string name="card_template_browser_appearance_title">Nettleser utseende</string>
     <!-- card Info -->
     <string name="card_info_title" maxLength="28">Informasjon om kort</string>
+    <string name="previous_card_info_title" maxLength="28">Previous card info</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Les og skriv til AnkiDroid databasen.</string>
     <string name="read_write_permission_description">tilgang til eksisterende notater, kort, notattyper og dekker, i tillegg til å opprette nye</string>
@@ -193,15 +193,25 @@
     <string name="install_non_play_store_ankidroid_recommended">Gjenopprett mappetilgang (anbefalt)</string>
     <string name="install_non_play_store_ankidroid">Gjenopprett mappetilgang (avansert)</string>
     <string name="restore_data_from_backup">Gjenopprett fra .colpkg sikkerhetskopi (avansert)</string>
-    <string name="create_new_collection">Opprett et nytt sett</string>
+    <string name="create_new_collection">Lag ei ny samling</string>
     <string name="new_unsafe_collection">Det nye settet vil bli slettet fra telefonen hvis du avinstallerer AnkiDroid</string>
     <!-- Permissions screen -->
     <string name="permissions_screen_headline">AnkiDroid trenger tillatelse for å fungere</string>
+    <string name="permissions_screen_optional_headline" comment="Explains that there are optional permissions that can be granted to AnkiDroid.">AnkiDroid works best with these permissions</string>
     <string name="storage_access_title">Lagringstilgang</string>
     <string name="storage_access_summary">Lagrer din kolleksjon i et trygg sted som kommer ikke til å bli slettet selv om appen avinstalleres</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after. See [android.permission.MANAGE_EXTERNAL_STORAGE] on https://developer.android.com/training/data-storage/manage-all-files for context.">Tilgang til alle filer</string>
     <string name="image_occlusion">Bilde okklusjon</string>
+    <string name="microphone" comment="Title of the microphone permission in the permissions explanation screen.">Microphone</string>
+    <string name="microphone_permission_explanation" comment="Description explaining why AnkiDroid needs the microphone permission, shown on the permissions explanation screen.">Allows you to add sounds to cards and enables voice playback while reviewing</string>
+    <string name="notifications_permission_explanation" comment="Description explaining why AnkiDroid needs the notification permission.">Enables background media syncing and allows you to create review reminders</string>
+    <string name="heading_required_permissions" comment="Heading for the section of required permissions that the app needs to function, shown in the permissions explanation screen.">Required</string>
+    <string name="heading_optional_permissions" comment="Heading for the section of optional permissions that the app needs to function, shown in the permissions explanation screen.">Optional</string>
+    <string name="manually_grant_permissions" comment="Pop-up message that is shown to the user when they want to grant an app permission that must be granted via the OS settings screen.">This permission must be manually granted from Settings</string>
+    <string name="revoke_permissions" comment="Pop-up message that is shown to the user when they are revoking an app permission.">This permission must be manually revoked from Settings</string>
     <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Slett konto</string>
     <!-- Instant Note Editor -->
     <string name="instant_card" comment="Used in the Android system context menu/share dialog to quickly create a note. This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. ">Hurtig kort</string>
+    <!-- Multiple profile -->
+    <string name="add_profile">Add profile</string>
 </resources>

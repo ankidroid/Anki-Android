@@ -124,6 +124,8 @@
     <string name="multimedia_editor_failed">ಮಲ್ಟಿಮೀಡಿಯಾ ಸಂಪಾದಕವನ್ನು ತೆರೆಯಲು ವಿಫಲವಾಗಿದೆ</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">ಆಡಿಯೋ ರೆಕಾರ್ಡಿಂಗ್ ಅನುಮತಿಯನ್ನು ನಿರಾಕರಿಸಲಾಗಿದೆ</string>
+    <string name="permission_denied">Permission denied</string>
+    <string name="recording_permission_denied_message">Microphone permission is necessary for the “Record voice” feature. Please grant it in the app settings.</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid ನವೀಕರಿಸಲಾಗಿದೆ</string>
     <string name="integrity_check_startup_content">AnkiDroid ಅನ್ನು ಅಪ್‌ಗ್ರೇಡ್ ಮಾಡಲಾಗಿದೆ. ಈ ಅಪ್‌ಗ್ರೇಡ್ ಸಂಭವನೀಯ ಡೇಟಾಬೇಸ್ ಸಮಸ್ಯೆಗಳಿಗೆ ಪರಿಹಾರಗಳನ್ನು ಒಳಗೊಂಡಿರುತ್ತದೆ ಮತ್ತು ಈಗ ನೀವು ಚೆಕ್ ಡೇಟಾಬೇಸ್ ಅನ್ನು ರನ್ ಮಾಡಲು ನಾವು ಸಲಹೆ ನೀಡುತ್ತೇವೆ.</string>
@@ -201,8 +203,6 @@
     <string name="import_deck_package">ಡೆಕ್ ಪ್ಯಾಕೇಜ್ (.apkg)</string>
     <string name="import_collection_package">ಸಂಗ್ರಹಣೆ ಪ್ಯಾಕೇಜ್ (.colpkg)</string>
     <string name="import_csv">Text file (.txt, .csv)</string>
-    <!-- Deck selection dialog -->
-    <string name="cannot_create_subdeck_for_all_decks">ನೀವು ಎಲ್ಲಾ ಡೆಕ್‌ಗಳಿಗೆ ಸಬ್‌ಡೆಕ್ ಅನ್ನು ರಚಿಸಲು ಸಾಧ್ಯವಿಲ್ಲ</string>
     <!-- scoped storage -->
     <string name="backup_your_collection">ನಿಮ್ಮ ಸಂಗ್ರಹಣೆಯನ್ನು ಬ್ಯಾಕಪ್ ಮಾಡಿ</string>
     <string name="backup_collection_message">ನೀವು ಸ್ವಲ್ಪ ಸಮಯದಿಂದ ನಿಮ್ಮ ಸಂಗ್ರಹಣೆಯನ್ನು ಬ್ಯಾಕಪ್ ಮಾಡಿಲ್ಲ. ಡೇಟಾ ನಷ್ಟವನ್ನು ತಡೆಯಲು ನೀವು ಈಗ ಇದನ್ನು ಮಾಡಬೇಕು</string>
@@ -254,4 +254,10 @@
     <string name="tts_error_dialog_reason_text">ಪಠ್ಯದಿಂದ ಧ್ವನಿ ಎಂಜಿನ್ <b>%1$s</b> ಕೆಳಗಿನ ಭಾಷೆಯನ್ನು ಬೆಂಬಲಿಸುವುದಿಲ್ಲ: <b>%2$s</b></string>
     <string name="tts_error_dialog_change_button_text">Change engine</string>
     <string name="tts_error_dialog_supported_voices_button_text">ಧ್ವನಿ ಆಯ್ಕೆಗಳು</string>
+    <!-- import_cache_error_resolutions -->
+    <string name="import_error_resolution_try_again">Re-import the file</string>
+    <string name="import_error_resolution_free_up_space">Ensure there is sufficient free space on your device</string>
+    <string name="import_error_resolution_check_internet">Ensure you are connected to the internet</string>
+    <string name="import_error_resolution_copy_to_device">Copy the file to your device and try again with the local file</string>
+    <string name="import_error_resolution_select_file">Open the file using your device’s file browser app</string>
 </resources>

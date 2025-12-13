@@ -4,9 +4,8 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 2.0.23">
+<meta name="generator" content="Asciidoctor 2.0.26">
 <title>AnkiDroid Changelog</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
 /* Uncomment the following line when using as a custom stylesheet */
@@ -116,7 +115,6 @@ h1 strong,h2 strong,h3 strong,#toctitle strong,.sidebarblock>.content>.title str
 :not(pre):not([class^=L])>code{font-size:.9375em;font-style:normal!important;letter-spacing:0;padding:.1em .5ex;word-spacing:-.15em;background:#f7f7f8;border-radius:4px;line-height:1.45;text-rendering:optimizeSpeed}
 pre{color:rgba(0,0,0,.9);font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;line-height:1.45;text-rendering:optimizeSpeed}
 pre code,pre pre{color:inherit;font-size:inherit;line-height:inherit}
-pre>code{display:block}
 pre.nowrap,pre.nowrap pre{white-space:pre;word-wrap:normal}
 em em{font-style:normal}
 strong strong{font-weight:400}
@@ -219,6 +217,7 @@ table.tableblock.fit-content>caption.title{white-space:nowrap;width:0}
 .literalblock pre,.listingblock>.content>pre:not(.highlight),.listingblock>.content>pre[class=highlight],.listingblock>.content>pre[class^="highlight "]{background:#f7f7f8}
 .literalblock.output pre{color:#f7f7f8;background:rgba(0,0,0,.9)}
 .listingblock>.content{position:relative}
+.listingblock pre>code{display:block}
 .listingblock code[data-lang]::before{display:none;content:attr(data-lang);position:absolute;font-size:.75em;top:.425rem;right:.5rem;line-height:1;text-transform:uppercase;color:inherit;opacity:.5}
 .listingblock:hover code[data-lang]::before{display:block}
 .listingblock.terminal pre .command::before{content:attr(data-prompt);padding-right:.5em;color:inherit;opacity:.5}
@@ -466,6 +465,209 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div id="content">
 <div class="sect1">
+<h2 id="_version_2_23_0_20251209"><a class="anchor" href="#_version_2_23_0_20251209"></a>Version 2.23.0 (20251209)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>What makes the holiday season better? An AnkiDroid feature release! 🎁</p>
+</div>
+<div class="paragraph">
+<p>As ever, a huge thanks for all the <a href="https://opencollective.com/ankidroid/contribute">donations</a>, it makes a huge difference to the group that works on the app for you 💝</p>
+</div>
+<div class="paragraph">
+<p>Here&#8217;s the list of new stuff:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://github.com/ankitects/anki/releases/tag/25.09">Anki 25.09 included</a></p>
+</li>
+<li>
+<p>Completely redesigned study screen! Available for testing. Enable it in the app settings.</p>
+</li>
+<li>
+<p>Some of the improvements:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>New design</p>
+</li>
+<li>
+<p>New commands and settings</p>
+</li>
+<li>
+<p>New whiteboard</p>
+</li>
+<li>
+<p>New and improved gestures</p>
+</li>
+<li>
+<p>New JavaScript API (to be released soon!)</p>
+</li>
+<li>
+<p>Better performance</p>
+</li>
+<li>
+<p>Better toolbar</p>
+</li>
+<li>
+<p>Tablets, Foldables and Desktop support</p>
+</li>
+<li>
+<p>Many, many, many fixed issues</p>
+</li>
+<li>
+<p>See the <a href="https://forums.ankiweb.net/t/new-study-screen-official-thread/67394">forum thread</a> for screenshots and more information.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>We participated in Google Summer of Code 2025!</p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://github.com/Haz3-jolt/AnkiDroid-GSoC-Report">Hari Srinivasan&#8217;s Tablet and Chromebook UI report</a></p>
+</li>
+<li>
+<p><a href="https://github.com/ericli3690/gsoc-ankidroid-report/blob/main/README.md">Song "Eric" Yu Li&#8217;s Report</a></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>New Features</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Tablets Resizable panels on tablets</p>
+</li>
+<li>
+<p>Chromebooks/Mouse input: improved right-click support</p>
+</li>
+<li>
+<p>Study Screen: 'Previous Card Info' command</p>
+</li>
+<li>
+<p>Filtered Decks: sort by 'Ascending/Descending retrievability'</p>
+</li>
+<li>
+<p>Study Screen: use numeric keyboard if the typed answer is numeric</p>
+</li>
+<li>
+<p>Image Occlusion: change deck support</p>
+</li>
+<li>
+<p>Note Types: delete multiple note types</p>
+</li>
+<li>
+<p>Fields: add icon to indicate sort field</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>General Improvements</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Widgets: improve card analysis widget UI</p>
+</li>
+<li>
+<p>FSRS: link to deck options on FSRS errors</p>
+</li>
+<li>
+<p>Settings: move "double tap timeout" to "Accessibility"</p>
+</li>
+<li>
+<p>Vibration: mark vibrations as 'touch' [Android 15+]</p>
+</li>
+<li>
+<p>Instant Add: Better dialog design</p>
+</li>
+<li>
+<p>Dialogs: better 'Discard changes' messages</p>
+</li>
+<li>
+<p>Card Browser: better 'save searches' UX</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Fixes</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Deck Picker: no longer hangs hanging when returning from a background sync</p>
+</li>
+<li>
+<p>Deck Picker: resolve inconsistencies when updating decks</p>
+</li>
+<li>
+<p>Reviewing: fix modifying typed answer with JS</p>
+</li>
+<li>
+<p>TTS Voices screen: fix design bugs</p>
+</li>
+<li>
+<p>Deck Description: - keyboard not closing</p>
+</li>
+<li>
+<p>Crash Reports: not shown for user input validation issues</p>
+</li>
+<li>
+<p>Crashes: recover from fatal errors in Anki WebViews [onRenderProcessGone]</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Improved community translations: <a href="https://crowdin.com/project/ankidroid/activity-stream">Thank you to all our translators!</a></p>
+</li>
+<li>
+<p><a href="https://github.com/ankidroid/Anki-Android/milestone/71?closed=1">Full set of 526 (!) changed items</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_version_2_22_3_20250802"><a class="anchor" href="#_version_2_22_3_20250802"></a>Version 2.22.3 (20250802)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Small bugfix release for the 2.22 series, please see 2.22.2 notes below 👇</p>
+</div>
+<div class="paragraph">
+<p>We are volunteers but <a href="https://opencollective.com/ankidroid/contribute">donations</a> buy 🍕 and 🍕 fuels bugfixes, thanks! ☺️</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Includes <a href="https://apps.ankiweb.net/">Anki 25.07.5</a></p>
+</li>
+<li>
+<p>Fix crash in sync worker</p>
+</li>
+<li>
+<p>Fix for empty 3rd party sync server endpoints</p>
+</li>
+<li>
+<p>Fix preferences navigation on large screens</p>
+</li>
+<li>
+<p>Fix missing media folder in collections</p>
+</li>
+<li>
+<p>Fix handling of corrupt FSRS parameters</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Main release notes for 2.22 follow, enjoy!</p>
+</div>
+</div>
+</div>
+<div class="sect1">
 <h2 id="_version_2_22_2_20250725"><a class="anchor" href="#_version_2_22_2_20250725"></a>Version 2.22.2 (20250725)</h2>
 <div class="sectionbody">
 <div class="paragraph">
@@ -481,7 +683,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="ulist">
 <ul>
 <li>
-<p>Includes <a href="https://apps.ankiweb.net/">Anki 25.07.3</a>, with <a href="https://github.com/open-spaced-repetition/fsrs4anki">FSRS 6.0</a></p>
+<p>Includes <a href="https://apps.ankiweb.net/">Anki 25.07.4</a>, with <a href="https://github.com/open-spaced-repetition/fsrs4anki">FSRS 6.0</a></p>
 </li>
 <li>
 <p>Card Browser - Grade Now: Inform Anki&#8217;s scheduler that you forgot a card at any time</p>
@@ -639,7 +841,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h2 id="_version_2_22_1_20250724"><a class="anchor" href="#_version_2_22_1_20250724"></a>Version 2.22.1 (20250724)</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Unreleaed internal version</p>
+<p>Unreleased internal version</p>
 </div>
 </div>
 </div>
@@ -647,7 +849,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h2 id="_version_2_22_0_20250724"><a class="anchor" href="#_version_2_22_0_20250724"></a>Version 2.22.0 (20250724)</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Unreleaed internal version</p>
+<p>Unreleased internal version</p>
 </div>
 </div>
 </div>
@@ -5210,7 +5412,7 @@ essentially rewritten from scratch to be compatible with the new Anki Desktop v2
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-07-25 12:01:42 UTC
+Last updated 2025-12-13 05:37:05 +0700
 </div>
 </div>
 </body>

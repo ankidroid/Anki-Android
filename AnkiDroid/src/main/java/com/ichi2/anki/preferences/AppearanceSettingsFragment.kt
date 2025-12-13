@@ -28,6 +28,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.deckpicker.BackgroundImage
 import com.ichi2.anki.deckpicker.BackgroundImage.FileSizeResult
 import com.ichi2.anki.launchCatchingTask
+import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.showThemedToast
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.CollectionPreferences
@@ -149,6 +150,8 @@ class AppearanceSettingsFragment : SettingsFragment() {
                 launchCatchingTask { CollectionPreferences.setHideAudioPlayButtons(!newValue) }
             }
         }
+
+        setupNewStudyScreenSettings()
     }
 
     private fun updateRemoveBackgroundVisibility() {
@@ -206,4 +209,28 @@ class AppearanceSettingsFragment : SettingsFragment() {
                 showSnackbar(getString(R.string.error_selecting_image, e.localizedMessage))
             }
         }
+
+    private fun setupNewStudyScreenSettings() {
+        if (!Prefs.isNewStudyScreenEnabled) return
+        for (key in legacyStudyScreenSettings) {
+            val keyString = getString(key)
+            findPreference<Preference>(keyString)?.isVisible = false
+        }
+    }
+
+    companion object {
+        val legacyStudyScreenSettings =
+            listOf(
+                R.string.study_screen_category_key,
+                R.string.custom_buttons_link_preference,
+                R.string.fullscreen_mode_preference,
+                R.string.center_vertically_preference,
+                R.string.show_estimates_preference,
+                R.string.answer_buttons_position_preference,
+                R.string.show_topbar_preference,
+                R.string.show_eta_preference,
+                R.string.show_audio_play_buttons_key,
+                R.string.show_deck_title_key,
+            )
+    }
 }

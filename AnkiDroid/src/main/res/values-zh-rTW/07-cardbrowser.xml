@@ -67,11 +67,12 @@
     <string name="card_browser_list_my_searches_new_name">目前搜尋的名稱</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">你不能儲存沒有名稱的搜尋</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">名稱已存在</string>
+    <string name="card_browser_list_my_searches_successful_save">Search was saved</string>
     <string name="no_note_to_edit">沒有可編輯的筆記</string>
     <string name="card_browser_list_my_searches_remove_content">刪除「%1$s」嗎？</string>
     <string name="card_browser_change_display_order" maxLength="28">更改顯示順序</string>
-    <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">Search</string>
-    <string name="card_browser_cram_search" maxLength="28" comment="Menu entry to start a search.">Search</string>
+    <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">搜尋</string>
+    <string name="card_browser_cram_search" maxLength="28" comment="Menu entry to start a search.">搜尋</string>
     <string name="card_browser_change_display_order_title">選擇顯示順序</string>
     <string name="card_details_tags">標籤</string>
     <string-array name="card_browser_order_labels">
@@ -85,7 +86,7 @@
         <item>依難易度</item>
         <item>依複習次數</item>
         <item>依忘記次數</item>
-        <item>By deck name</item>
+        <item>以牌組的名字</item>
     </string-array>
     <string name="manage_browser_column">Manage column</string>
     <string name="no_columns_available">No columns available</string>

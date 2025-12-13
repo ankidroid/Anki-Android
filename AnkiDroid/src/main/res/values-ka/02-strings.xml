@@ -48,12 +48,14 @@
     <string name="drawer_open">ნავიგაციის პანელის გახსნა</string>
     <string name="drawer_close">ნავიგაციის პანელის დახურვა</string>
     <string name="note_message">Note saved</string>
+    <!-- Note editor screen -->
     <string name="CardEditorCardDeck">ბარათის დასტა:</string>
     <string name="CardEditorNoteDeck">დასტა:</string>
     <string name="CardEditorModel">ტიპი:</string>
     <string name="CardEditorTags">იარლიყები: %1$s</string>
     <string name="CardEditorCards">ბარათები: %1$s</string>
     <string name="edit_occlusions">საფარველების რედაქტირება</string>
+    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
     <string name="tag_name">იარლიყის სახელი</string>
     <string name="add_new_filter_tags">იარლიყების დამატება/გაფილტვრა</string>
     <string name="add_tag" maxLength="28">იარლიყის დამატება</string>
@@ -65,6 +67,18 @@
     <string name="save_whiteboard" maxLength="28">დაფის შენახვა</string>
     <string name="enable_stylus" maxLength="28">სტილუსის რეჟიმის ჩართვა</string>
     <string name="disable_stylus">სტილუსის რეჟიმის გამორთვა</string>
+    <string name="eraser" maxLength="28">Eraser</string>
+    <string name="add_brush" maxLength="28">Add brush</string>
+    <string name="whiteboard_align_left" comment="Option to align the whiteboard toolbar on the left" maxLength="28">Left</string>
+    <string name="whiteboard_align_bottom" comment="Option to align the whiteboard toolbar on the bottom" maxLength="28">Bottom</string>
+    <string name="whiteboard_align_right" comment="Option to align the whiteboard toolbar on the right" maxLength="28">Right</string>
+    <string name="whiteboard_clear" comment="Button text to clear the whiteboard" maxLength="28">Clear</string>
+    <string name="whiteboard_more_options" comment="Tooltip of the whiteboard \'More\' button" maxLength="28">More options</string>
+    <string name="whiteboard_remove_brush_message">Are you sure you want to remove this brush from your palette?</string>
+    <string name="whiteboard_ink_eraser" comment="Title of the whiteboard Ink eraser">Ink</string>
+    <string name="whiteboard_stroke_eraser" comment="Title of the whiteboard Stroke eraser">Stroke</string>
+    <string name="stylus_mode" comment="Title of the menu item that toggles the whiteboard stylus mode" maxLength="28">Stylus mode</string>
+    <string name="cannot_remove_last_brush_message">The last brush may not be removed</string>
     <string name="enable_whiteboard" maxLength="28">დაფის ჩართვა</string>
     <string name="disable_whiteboard">დაფის გამორთვა</string>
     <string name="show_whiteboard">დაფის ჩვენება</string>
@@ -83,6 +97,7 @@
     <string name="webview_crash_fatal">ფატალური შეცდომა: WebView მიმღები ავარიულად გაითიშა. მიზეზი: %s</string>
     <string name="webview_crash_loop_dialog_title">შეცდომა WebView სისტემის დამუშავებისას</string>
     <string name="webview_crash_loop_dialog_content">WebView სისტემამ ვერ დაამუშავა ბარათი „%1$s“.\n %2$s</string>
+    <string name="slide_to_cancel" comment="Message shown when pressing the record button">Slide to cancel</string>
     <string name="filter_by_flags" maxLength="41">დროშები</string>
     <!-- Custom study options -->
     <string name="custom_study_loading_tags">იქმნება იარლიყების სია&#8230;</string>
@@ -151,7 +166,8 @@
     <string name="import_error_not_apkg_extension">ფაილის სახელს „%s“ არ აქვს .apkg ან .colpkg დაბოლოება</string>
     <string name="import_error_load_imported_database">Anki მონაცემთა ბაზის შემცვლელი ფაილები (.anki2)  ჯერ არ არის მხარდაჭერილი. იხილეთ ინსტრუქცია შესაბამისი მითითებებისთვის</string>
     <string name="import_error_content_provider">მონიშნული ფაილის ავტომატური იმპორტირება ვერ მოხერხდა. იხილეთ ინსტრუქცია Anki-ფაილების არაავტომატური იმპორტირების მეთოდისთვის: \n%s</string>
-    <string name="import_error_copy_to_cache">ფაილის ვერ ჩაიწერა ქეშში (შესაძლოა, მეხსიერების სივრცეში არასაკმარისი ადგილის არსებობის გამო)</string>
+    <string name="import_error_copy_to_cache_title">ფაილის ვერ ჩაიწერა ქეშში</string>
+    <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">This is often caused by a bug in the app you used to select the file. Please try the following fixes:\n\n%s</string>
     <string name="import_interrupted">იმპორტი შეჩერდა: AnkiDroid გამოირთო</string>
     <string name="export_ready_title">ექსპორტი მზადაა</string>
     <string name="export_send_no_handlers">არაა სხვა აპლიკაციები APKG-ფაილების გასახსნელად. ინახება&#8230;</string>
@@ -180,11 +196,6 @@
     <string name="tag_editor_add_feedback">„%1$s-ის“ დამატების დასადასტურებლად შეეხეთ „%2$s-ს“</string>
     <string name="tag_editor_add_feedback_existing">მოინიშნა არსებული იარლიყი „%1$s“</string>
     <!-- Time spans -->
-    <string name="reminder_title">დღესაც ვიმეცადინოთ!</string>
-    <plurals name="reminder_text">
-        <item quantity="one">%2$d ბარათია გადასახედი %1$s-ში</item>
-        <item quantity="other">%2$d ბარათია გადასახედი %1$s-ში</item>
-    </plurals>
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">შეცდომა APKG ფაილის გაზიარებისას</string>
     <!-- Import and export v2 feedback -->
@@ -225,6 +236,7 @@
     <string name="search_decks" maxLength="28">დასტების მოძიება</string>
     <string name="ankidroid_init_failed_webview_title">ფატალური შეცდომა</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid relies on the System WebView which is unavailable. This can happen if the system is installing updates. Please try again in a few minutes.\n\n%s</string>
+    <string name="ankidroid_init_failed_storage">AnkiDroid cannot access storage due to an Android error.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">ტექსტის ზომა</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">ინსტრუმენტების პანელის ჩვენება</string>
@@ -271,7 +283,6 @@
     <string name="download_failed">ჩამოტვირთვა წარუმატებელია</string>
     <string name="deck_download_progress_message">ჩამოტვირთვისას შეგიძლიათ სხვა აპლიკაციებიც გამოიყენოთ</string>
     <string name="check_network">გთხოვთ შეამოწმოთ ქსელთან კავშირი</string>
-    <string name="search_using_deck_name">დასტის სახელით ძებნა</string>
     <string name="external_storage_unavailable">ჩამოტვირთვა გაუქმდა, გარე მეხსიერება ხელმიუწვდომელია</string>
     <string name="home" maxLength="28">მთავარი</string>
     <!-- Study Screen actions
@@ -296,6 +307,10 @@
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">კოლექციაზე წვდომა ვერ მოხერხდა. გთხოვთ ხელახლა სცადოთ!</string>
     <string name="cd_manage_notetypes_add">ახალი შენიშვნის ტიპის დამატება</string>
+    <plurals name="note_types_selected">
+        <item quantity="one">%d note type selected</item>
+        <item quantity="other">%d note types selected</item>
+    </plurals>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">ნაკლები მეცადინეობა</string>
     <string name="intro_ankidroid_tagline_two">მეტის დამახსოვრება</string>
@@ -304,7 +319,6 @@
     <string name="intro_sync_from_ankiweb">სინქრონიზაცია AnkiWeb-თან</string>
     <!-- IntentHandler -->
     <string name="app_not_initialized_new">AnkiDroid is not initialized yet. Please open AnkiDroid and try again</string>
-    <string name="already_logged_in">უკვე შესული ხართ</string>
     <!-- Deck Creation -->
     <string name="deck_created">დასტა შეიქმნა</string>
     <string name="deck_renamed">დასტის სახელი შეიცვალა</string>

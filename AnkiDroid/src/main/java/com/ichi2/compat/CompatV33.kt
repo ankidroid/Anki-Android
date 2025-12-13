@@ -16,18 +16,26 @@
  */
 package com.ichi2.compat
 
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
 import android.os.Bundle
+import android.os.VibrationAttributes
+import android.os.VibrationEffect
+import android.os.VibratorManager
 import androidx.annotation.RequiresApi
 import java.io.Serializable
+import kotlin.time.Duration
 
 @RequiresApi(33)
 open class CompatV33 :
     CompatV31(),
     Compat {
+    /**
+     *  @throws SecurityException on some Xiaomi phones if performing a cross-profile query #19711
+     */
     override fun resolveActivity(
         packageManager: PackageManager,
         intent: Intent,
@@ -63,4 +71,16 @@ open class CompatV33 :
         intent: Intent,
         flags: ResolveInfoFlagsCompat,
     ): List<ResolveInfo> = packageManager.queryIntentActivities(intent, PackageManager.ResolveInfoFlags.of(flags.value))
+
+    override fun vibrate(
+        context: Context,
+        duration: Duration,
+        @VibrationUsage usage: Int,
+    ) {
+        val vibratorManager = context.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
+        val effect = VibrationEffect.createOneShot(duration.inWholeMilliseconds, VibrationEffect.DEFAULT_AMPLITUDE)
+        val vibrator = vibratorManager.defaultVibrator
+        val attributes = VibrationAttributes.Builder().setUsage(usage).build()
+        vibrator.vibrate(effect, attributes)
+    }
 }

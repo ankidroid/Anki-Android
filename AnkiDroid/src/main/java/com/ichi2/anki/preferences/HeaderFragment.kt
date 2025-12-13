@@ -27,12 +27,12 @@ import com.google.android.material.appbar.MaterialToolbar
 import com.ichi2.anki.BuildConfig
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
+import com.ichi2.anki.preferences.profiles.SwitchProfilesFragment
 import com.ichi2.anki.preferences.reviewer.ReviewerMenuSettingsFragment
 import com.ichi2.anki.reviewreminders.ReviewReminderScope
 import com.ichi2.anki.reviewreminders.ScheduleReminders
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.ui.internationalization.toSentenceCase
-import com.ichi2.anki.utils.ext.sharedPrefs
 import com.ichi2.compat.CompatHelper
 import com.ichi2.preferences.HeaderPreference
 import com.ichi2.utils.AdaptionUtil
@@ -59,9 +59,6 @@ class HeaderFragment : SettingsFragment() {
         requirePreference<Preference>(R.string.pref_dev_options_screen_key)
             .isVisible = Prefs.isDevOptionsEnabled
 
-        requirePreference<HeaderPreference>(R.string.new_reviewer_options_key)
-            .isVisible = sharedPrefs().getBoolean(getString(R.string.new_reviewer_pref_key), false)
-
         requirePreference<HeaderPreference>(R.string.pref_review_reminders_screen_key)
             .setOnPreferenceClickListener {
                 Timber.i("HeaderFragment:: edit review reminders button pressed")
@@ -72,6 +69,7 @@ class HeaderFragment : SettingsFragment() {
 
         requirePreference<HeaderPreference>(R.string.pref_review_reminders_screen_key).isVisible = Prefs.newReviewRemindersEnabled
         requirePreference<HeaderPreference>(R.string.pref_notifications_screen_key).isVisible = !Prefs.newReviewRemindersEnabled
+        requirePreference<HeaderPreference>(R.string.pref_switch_profile_screen_key).isVisible = Prefs.switchProfileEnabled
 
         configureSearchBar(
             requireActivity() as AppCompatActivity,
@@ -127,8 +125,10 @@ class HeaderFragment : SettingsFragment() {
                 }
 
                 index(R.xml.preferences_appearance)
-                index(R.xml.preferences_custom_buttons)
-                    .addBreadcrumb(R.string.pref_cat_appearance)
+                if (!Prefs.isNewStudyScreenEnabled) {
+                    index(R.xml.preferences_custom_buttons)
+                        .addBreadcrumb(R.string.pref_cat_appearance)
+                }
                 index(R.xml.preferences_controls)
                 index(R.xml.preferences_accessibility)
                 index(R.xml.preferences_backup_limits)
@@ -172,13 +172,15 @@ class HeaderFragment : SettingsFragment() {
                     .addBreadcrumb(activity.getString(R.string.pref_cat_general))
                     .addBreadcrumb(activity.getString(R.string.pref_cat_system_wide))
 
-                indexItem()
-                    .withKey(activity.getString(R.string.show_audio_play_buttons_key))
-                    .withTitle(
-                        TR.preferencesShowPlayButtonsOnCardsWith(),
-                    ).withResId(R.xml.preferences_appearance)
-                    .addBreadcrumb(activity.getString(R.string.pref_cat_appearance))
-                    .addBreadcrumb(activity.getString(R.string.pref_cat_reviewer))
+                if (!Prefs.isNewStudyScreenEnabled) {
+                    indexItem()
+                        .withKey(activity.getString(R.string.show_audio_play_buttons_key))
+                        .withTitle(
+                            TR.preferencesShowPlayButtonsOnCardsWith(),
+                        ).withResId(R.xml.preferences_appearance)
+                        .addBreadcrumb(activity.getString(R.string.pref_cat_appearance))
+                        .addBreadcrumb(activity.getString(R.string.pref_cat_reviewer))
+                }
 
                 indexItem()
                     .withKey(activity.getString(R.string.one_way_sync_key))
@@ -219,6 +221,17 @@ class HeaderFragment : SettingsFragment() {
             }
 
             searchConfiguration.ignorePreference(activity.getString(R.string.user_actions_controls_category_key))
+
+            if (Prefs.isNewStudyScreenEnabled) {
+                searchConfiguration.index(R.xml.preferences_reviewer)
+                val legacySettings =
+                    AdvancedSettingsFragment.legacyStudyScreenSettings + AccessibilitySettingsFragment.legacyStudyScreenSettings +
+                        AppearanceSettingsFragment.legacyStudyScreenSettings + ControlsSettingsFragment.legacyStudyScreenSettings
+                for (key in legacySettings) {
+                    val keyString = activity.getString(key)
+                    searchConfiguration.ignorePreference(keyString)
+                }
+            }
         }
 
         /**
@@ -242,6 +255,7 @@ class HeaderFragment : SettingsFragment() {
                 is ReviewerOptionsFragment, is ReviewerMenuSettingsFragment -> R.string.new_reviewer_options_key
                 is DevOptionsFragment -> R.string.pref_dev_options_screen_key
                 is AboutFragment -> R.string.about_screen_key
+                is SwitchProfilesFragment -> R.string.pref_switch_profile_screen_key
                 else -> null
             }
     }

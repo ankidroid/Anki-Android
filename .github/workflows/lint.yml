@@ -19,18 +19,18 @@ jobs:
     timeout-minutes: 20
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 1
 
       - name: Configure JDK
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           distribution: "temurin"
           java-version: "21"
 
       - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v4
+        uses: gradle/actions/setup-gradle@v5
         timeout-minutes: 5
         with:
           # Only write to the cache for builds on the 'main' branches, stops branches evicting main cache
@@ -52,14 +52,17 @@ jobs:
         # "lintPlayRelease" doesn't test androidTest
         # "lintPlayDebug" doesn't test the API
         # "lintVitalFullRelease": if `main` resources are only used in `androidTest` (#15741)
+
+        # update workflows/README.md when modifying this line
         run: ./gradlew lintPlayDebug :api:lintDebug :libanki:lintDebug ktLintCheck lintVitalFullRelease lint-rules:test --daemon
 
+  # update workflows/README.md when modifying commands
   lintJavascript:
     name: Lint Javascript
     timeout-minutes: 20
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 1
 

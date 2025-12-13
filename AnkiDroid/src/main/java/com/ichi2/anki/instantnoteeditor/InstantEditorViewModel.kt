@@ -28,10 +28,10 @@ import com.ichi2.anki.OnErrorListener
 import com.ichi2.anki.checkNoteFieldsResponse
 import com.ichi2.anki.instantnoteeditor.InstantNoteEditorActivity.DialogType
 import com.ichi2.anki.libanki.DeckId
-import com.ichi2.anki.libanki.Decks
 import com.ichi2.anki.libanki.Note
 import com.ichi2.anki.libanki.NotetypeJson
 import com.ichi2.anki.observability.undoableOp
+import com.ichi2.anki.selectedDeckIfNotFiltered
 import com.ichi2.anki.utils.ext.getAllClozeTextFields
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -104,9 +104,8 @@ class InstantEditorViewModel :
     init {
         viewModelScope.launch {
             // setup the deck Id
-            withCol { config.get<Long?>(Decks.CURRENT_DECK) ?: 1L }.let { did ->
-                deckId = did
-            }
+            val selectedDeck = withCol { selectedDeckIfNotFiltered() }
+            deckId = selectedDeck.id
 
             // setup the note type
             // TODO: Use did here
@@ -117,7 +116,7 @@ class InstantEditorViewModel :
             }
 
             @Suppress("RedundantRequireNotNullCall") // postValue lint requires this
-            val clozeNoteType = requireNotNull(noteType)
+            val clozeNoteType = requireNotNull(noteType) { "noteType" }
             Timber.d("Changing to cloze type note")
             _currentlySelectedNotetype.postValue(clozeNoteType)
             Timber.i("Using note type '%d", clozeNoteType.id)
@@ -155,8 +154,6 @@ class InstantEditorViewModel :
      */
     private suspend fun saveNote(): SaveNoteResult {
         return try {
-            editorNote.notetype.did = deckId!!
-
             val note = editorNote
             val deckId = deckId ?: return SaveNoteResult.Failure()
 

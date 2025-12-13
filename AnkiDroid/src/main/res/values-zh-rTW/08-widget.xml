@@ -45,9 +45,8 @@
 -->
 <resources>
     <!-- Widget -->
-    <string name="widget_minimum_cards_due_notification_ticker_title">卡片到期</string>
     <plurals name="widget_minimum_cards_due_notification_ticker_text">
-        <item quantity="other">%d AnkiDroid 卡片到期</item>
+        <item quantity="other">%d AnkiDroid 卡片待複習</item>
     </plurals>
     <string name="widget_small" comment="Label of the small ankidroid widget. This text can\'t be found directly in AnkiDroid">AnkiDroid 小型</string>
     <plurals name="widget_cards_due">
@@ -66,8 +65,8 @@
     <string name="deck_removed_from_widget" comment="Snackbar when deck is removed from widget">牌組已移除</string>
     <string name="deck_already_selected_message" comment="Snackbar when user try to select the same deck again">已選擇此卡組</string>
     <plurals name="deck_limit_reached">
-        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">You can select up to %d decks.</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">你最多可以選擇 %d 牌組</item>
     </plurals>
-    <string name="empty_widget_state" comment="To denote the widget is empty">Missing deck. Tap to reconfigure.</string>
+    <string name="empty_widget_state" comment="To denote the widget is empty">牌組缺失，輕觸以重新編排</string>
     <string name="empty_collection_state_in_widget" comment="To denote the collection is empty">Collection is empty, use app to add decks then reconfigure</string>
 </resources>

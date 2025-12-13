@@ -48,12 +48,14 @@
     <string name="drawer_open">يان تارتمىنى ئاچ</string>
     <string name="drawer_close">يان تارتمىنى تاقا</string>
     <string name="note_message">خاتىرە ساقلاندى</string>
+    <!-- Note editor screen -->
     <string name="CardEditorCardDeck">كارتا دەستىسى:</string>
     <string name="CardEditorNoteDeck">دەستە:</string>
     <string name="CardEditorModel">تۈرى:</string>
     <string name="CardEditorTags">بەلگە: %1$s</string>
     <string name="CardEditorCards">كارتا: %1$s</string>
     <string name="edit_occlusions">دالدىلاش تەھرىر</string>
+    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
     <string name="tag_name">بەلگە ئاتى</string>
     <string name="add_new_filter_tags">بەلگە قوش/سۈزگۈچ</string>
     <string name="add_tag" maxLength="28">بەلگە قوش</string>
@@ -65,6 +67,18 @@
     <string name="save_whiteboard" maxLength="28">ئاق دوسكىنى ساقلا</string>
     <string name="enable_stylus" maxLength="28">قەلەمدە يېزىشنى قوزغىتىدۇ</string>
     <string name="disable_stylus">قەلەمدە يېزىشنى چەكلەيدۇ</string>
+    <string name="eraser" maxLength="28">ئۆچۈرگۈچ</string>
+    <string name="add_brush" maxLength="28">چوتكا قوش</string>
+    <string name="whiteboard_align_left" comment="Option to align the whiteboard toolbar on the left" maxLength="28">سول</string>
+    <string name="whiteboard_align_bottom" comment="Option to align the whiteboard toolbar on the bottom" maxLength="28">ئاستى</string>
+    <string name="whiteboard_align_right" comment="Option to align the whiteboard toolbar on the right" maxLength="28">ئوڭ</string>
+    <string name="whiteboard_clear" comment="Button text to clear the whiteboard" maxLength="28">تازىلا</string>
+    <string name="whiteboard_more_options" comment="Tooltip of the whiteboard \'More\' button" maxLength="28">تېخىمۇ كۆپ تاللانما</string>
+    <string name="whiteboard_remove_brush_message">بۇ چوتكىنى رەڭ تاختىسىدىن راستتىنلا چىقىرىۋېتەمسىز؟</string>
+    <string name="whiteboard_ink_eraser" comment="Title of the whiteboard Ink eraser">سىياھ</string>
+    <string name="whiteboard_stroke_eraser" comment="Title of the whiteboard Stroke eraser">سىزىق توملۇقى</string>
+    <string name="stylus_mode" comment="Title of the menu item that toggles the whiteboard stylus mode" maxLength="28">قەلەم ھالىتى</string>
+    <string name="cannot_remove_last_brush_message">ئالدىنقى چوتكىنى چىقىرىۋېتەلمەيدۇ</string>
     <string name="enable_whiteboard" maxLength="28">ئاق دوسكىنى قوزغىتىدۇ</string>
     <string name="disable_whiteboard">ئاق دوسكىنى چەكلەيدۇ</string>
     <string name="show_whiteboard">ئاق دوسكىنى كۆرسەت</string>
@@ -83,6 +97,7 @@
     <string name="webview_crash_fatal">ئېغىر خاتالىق: WebView ھاسىللىغۇچ يىمىرىلدى. سەۋەبى: %s</string>
     <string name="webview_crash_loop_dialog_title">سىستېما WebView ھاسىللىيالمىدى</string>
     <string name="webview_crash_loop_dialog_content">سىستېما WebView دا «%1$s» كارتىنى ھاسىللىيالمىدى.\n %2$s</string>
+    <string name="slide_to_cancel" comment="Message shown when pressing the record button">سۈرۈلسە ۋاز كەچ</string>
     <string name="filter_by_flags" maxLength="41">بايراق</string>
     <!-- Custom study options -->
     <string name="custom_study_loading_tags">بەلگە تىزىمى ھاسىللاۋاتىدۇ&#8230;</string>
@@ -151,7 +166,8 @@
     <string name="import_error_not_apkg_extension">ھۆججەت «%s» نىڭ .apkg ياكى .colpkg كېڭەيتىلگەن نامى يوق</string>
     <string name="import_error_load_imported_database">Anki سانداق (.anki2) ئالماشتۇرۇشنى تېخى قوللىمايدۇ. ئالماشتۇرۇش كۆرسەتمىسىنى قوللانمىدىن كۆرۈڭ.</string>
     <string name="import_error_content_provider">تاللانغان ھۆججەتنى AnkiDroid ئۆزلۈكىدىن ئەكىرەلمەيدۇ. ئىشلەتكۈچى قوللانمىسىدىن Anki ھۆججەتنى قانداق ئەكىرىشنى كۆرۈڭ: \n%s</string>
-    <string name="import_error_copy_to_cache">ھۆججەتنى غەملىيەلمىدى (ساقلاش بوشلۇقى يېتىشمىگەن بولۇشى مۇمكىن)</string>
+    <string name="import_error_copy_to_cache_title">ھۆججەتنى غەملىيەلمىدى</string>
+    <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">This is often caused by a bug in the app you used to select the file. Please try the following fixes:\n\n%s</string>
     <string name="import_interrupted">ئەكىرىش ئۈزۈلدى: AnkiDroid تاقالغان</string>
     <string name="export_ready_title">چىقىرىشقا تەييار</string>
     <string name="export_send_no_handlers">apkg نى بىر تەرەپ قىلىدىغان ئەپ يوق. ساقلاۋاتىدۇ&#8230;</string>
@@ -180,11 +196,6 @@
     <string name="tag_editor_add_feedback">«%2$s» نى چېكىپ «%1$s» نى قوشۇش  جەزملىنىدۇ</string>
     <string name="tag_editor_add_feedback_existing">مەۋجۇت «%1$s» بەلگە تاللاندى</string>
     <!-- Time spans -->
-    <string name="reminder_title">بۈگۈن ئۆگىنىشنى ئۇنتۇماڭ!</string>
-    <plurals name="reminder_text">
-        <item quantity="one">%1$s دىكى %2$d كارتا تەكرارلىنىدۇ</item>
-        <item quantity="other">%1$s دىكى %2$d كارتا تەكرارلىنىدۇ</item>
-    </plurals>
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">apkg ھۆججەتنى ھەمبەھىرلەش خاتالىقى</string>
     <!-- Import and export v2 feedback -->
@@ -225,6 +236,7 @@
     <string name="search_decks" maxLength="28">دەستە ئىزدە</string>
     <string name="ankidroid_init_failed_webview_title">ئېغىر خاتالىق</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid سىستېمىدىكى WebView غا تايىنىدۇ ئەمما ئۇنى ئىشلەتكىلى بولمايدۇ. بۇ سىستېما يېڭىلانمىنى ئورنىتىۋاتقاندا يۈز بېرىشى مۇمكىن. بىر قانچە مىنۇتتىن كېيىن قايتا سىناڭ.\n\n%s</string>
+    <string name="ankidroid_init_failed_storage">AnkiDroid cannot access storage due to an Android error.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">خەت چوڭلۇقى</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">قورال بالداقنى كۆرسەت</string>
@@ -271,7 +283,6 @@
     <string name="download_failed">چۈشۈرەلمىدى</string>
     <string name="deck_download_progress_message">اچۈشۈرۈۋاتقاندا باشقا ئەپنى ئىشلىتەلەيسىز</string>
     <string name="check_network">تور باغلىنىشىنى تەكشۈرۈڭ</string>
-    <string name="search_using_deck_name">دەستە ئىسمى بويىچە ئىزدەيدۇ</string>
     <string name="external_storage_unavailable">چۈشۈرۈش بىكار قىلىندى، سىرتقا ساقلىغۇچنى ئىشلەتكىلى بولمايدۇ</string>
     <string name="home" maxLength="28">باش بەت</string>
     <!-- Study Screen actions
@@ -296,6 +307,10 @@
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">توپلامنى زىيارەت قىلالمىدى. قايتا سىناڭ!</string>
     <string name="cd_manage_notetypes_add">يېڭى خاتىرە تۈرى قوشىدۇ</string>
+    <plurals name="note_types_selected">
+        <item quantity="one">%d note type selected</item>
+        <item quantity="other">%d note types selected</item>
+    </plurals>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">ئازراق ئۆگىنىدۇ</string>
     <string name="intro_ankidroid_tagline_two">تېخىمۇ كۆپ ئەستە تۇتىدۇ</string>
@@ -304,7 +319,6 @@
     <string name="intro_sync_from_ankiweb">AnkiWeb دىن قەدەمداشلا</string>
     <!-- IntentHandler -->
     <string name="app_not_initialized_new">AnkiDroid تېخى دەسلەپلەشتۈرۈلمىدى. AnkiDroid نى ئېچىپ قايتا سىناڭ</string>
-    <string name="already_logged_in">ئاللىبۇرۇن كىرگەن</string>
     <!-- Deck Creation -->
     <string name="deck_created">دەستە قۇرۇلدى</string>
     <string name="deck_renamed">دەستە ئىسمى ئۆزگەرتىلدى</string>

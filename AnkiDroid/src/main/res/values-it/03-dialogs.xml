@@ -100,13 +100,13 @@
     <string name="dialog_collection_path_not_dir">Il percorso specificato non era una cartella valida</string>
     <string name="dialog_invalid_custom_certificate">Il testo fornito non si risolve con un certificato X509 codificato in PEM valido</string>
     <string name="dialog_invalid_custom_certificate_title">Error parsing certificate</string>
-    <string name="dialog_updated_custom_certificate">Certificate updated</string>
+    <string name="dialog_updated_custom_certificate">Certificato aggiornato</string>
     <!-- Media checking -->
     <string name="check_media_title">Controllare i media?</string>
     <string name="check_media_warning">Ciò può richiedere molto tempo con le collezioni multimediali di grandi dimensioni</string>
     <string name="check_media_message">Controllo i media&#8230;</string>
-    <string name="check_media_adding_missing_tag">Adding tags&#8230;</string>
-    <string name="check_media_tags_added">Tags added</string>
+    <string name="check_media_adding_missing_tag">Aggiungi etichetta</string>
+    <string name="check_media_tags_added">Etichette aggiunte</string>
     <string name="delete_media_message">Eliminando media&#8230;</string>
     <string name="delete_media_result_title">Eliminazione risultato</string>
     <plurals name="delete_media_result_message">
@@ -124,6 +124,8 @@
     <string name="multimedia_editor_failed">Apertura dell\'editore multimediale fallita</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Permesso registrazione audio negato</string>
+    <string name="permission_denied">Permission denied</string>
+    <string name="recording_permission_denied_message">Microphone permission is necessary for the “Record voice” feature. Please grant it in the app settings.</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid aggiornato</string>
     <string name="integrity_check_startup_content">AnkiDroid è stato aggiornato. Questo aggiornamento include correzioni per eventuali problemi nella banca dati e ti consigliamo di eseguire ora il controllo della banca dati.</string>
@@ -147,7 +149,7 @@
     <string name="error_deleting_image">Errore durante l\'eliminazione dell\'immagine</string>
     <string name="failed_to_apply_background_image">Impossibile applicare l\'immagine di sfondo %s</string>
     <string name="background_image_too_large">Sfondo del selettore di mazzo troppo grande</string>
-    <string name="image_max_size_allowed" comment="Consider keeping the unbreakable space after the digit">Maximum image size %d MB allowed</string>
+    <string name="image_max_size_allowed" comment="Consider keeping the unbreakable space after the digit">Peso massimo immagine di %dMB</string>
     <string name="image_dimensions_too_large">Le dimensioni dell\'immagine sono troppo grandi (%1$d × %2$d)</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
@@ -163,10 +165,10 @@
     <string name="help_item_ankidroid_manual">Manuale di AnkiDroid</string>
     <string name="help_item_anki_manual">Manuale di Anki</string>
     <string name="help_item_ankidroid_faq">FAQ di AnkiDroid</string>
-    <string name="help_title_get_help">Get help</string>
+    <string name="help_title_get_help">Chiedi aiuto</string>
     <string name="help_item_mailing_list">Lista di diffusione</string>
     <string name="help_item_reddit">Reddit</string>
-    <string name="help_item_report_bug">Report a bug</string>
+    <string name="help_item_report_bug">Riporta un bug</string>
     <string name="help_title_support_ankidroid" maxLength="28">Supporta AnkiDroid</string>
     <string name="help_item_support_opencollective_donate">Dona</string>
     <string name="help_item_support_develop_ankidroid">Sviluppa</string>
@@ -179,9 +181,9 @@
     <string name="help_item_facebook">Facebook</string>
     <string name="help_item_twitter">Twitter</string>
     <string name="help_title_privacy">Informativa Della Privacy</string>
-    <string name="help_item_ankidroid_privacy_policy">AnkiDroid privacy policy</string>
-    <string name="help_item_ankiweb_privacy_policy">AnkiWeb privacy policy</string>
-    <string name="help_item_ankiweb_terms_and_conditions">AnkiWeb terms and conditions</string>
+    <string name="help_item_ankidroid_privacy_policy">Polizza sulla privacy di AnkiDroid</string>
+    <string name="help_item_ankiweb_privacy_policy">Polizza sulla privacy di AnkiWeb</string>
+    <string name="help_item_ankiweb_terms_and_conditions">Termini e condizioni di AnkiWeb</string>
     <string name="help_title_send_exception">Invia un rapporto sulla risoluzione dei problemi</string>
     <string name="help_dialog_exception_report_debounce">Rapporto già inviato</string>
     <string name="help_dialog_exception_report_sent">Segnalazione inviata</string>
@@ -201,8 +203,6 @@
     <string name="import_deck_package">Pacchetto mazzo (.apkg)</string>
     <string name="import_collection_package">Pacchetto di raccolta (.colpkg)</string>
     <string name="import_csv">File di testo (.txt, .csv)</string>
-    <!-- Deck selection dialog -->
-    <string name="cannot_create_subdeck_for_all_decks">Non puoi creare un sottomazzo per tutti i mazzi</string>
     <!-- scoped storage -->
     <string name="backup_your_collection">Salva la tua collezione</string>
     <string name="backup_collection_message">Non hai eseguito il backup della tua collezione da un pò. Dovresti farlo ora per prevenire una perdita di dati</string>
@@ -254,4 +254,10 @@
     <string name="tts_error_dialog_reason_text">The text to speech engine <b>%1$s</b> does not support the following language: <b>%2$s</b></string>
     <string name="tts_error_dialog_change_button_text">Change engine</string>
     <string name="tts_error_dialog_supported_voices_button_text">Voice options</string>
+    <!-- import_cache_error_resolutions -->
+    <string name="import_error_resolution_try_again">Re-import the file</string>
+    <string name="import_error_resolution_free_up_space">Ensure there is sufficient free space on your device</string>
+    <string name="import_error_resolution_check_internet">Ensure you are connected to the internet</string>
+    <string name="import_error_resolution_copy_to_device">Copy the file to your device and try again with the local file</string>
+    <string name="import_error_resolution_select_file">Open the file using your device’s file browser app</string>
 </resources>

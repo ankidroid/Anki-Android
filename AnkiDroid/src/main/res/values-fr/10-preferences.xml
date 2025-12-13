@@ -82,7 +82,7 @@
     <string name="button_size" maxLength="41">Taille des boutons de réponse</string>
     <string name="card_browser_font_size" maxLength="41">Échelle de la police de l’explorateur</string>
     <string name="card_browser_hide_media" maxLength="41">Afficher les noms de fichiers dans le navigateur de cartes</string>
-    <string name="card_browser_hide_media_summary">Display audio filenames in the card browser question/answer fields</string>
+    <string name="card_browser_hide_media_summary">Afficher le nom des fichiers audio dans les champs questions/ réponses du navigateur de cartes.</string>
     <string name="col_path" maxLength="41">Répertoire de AnkiDroid</string>
     <string name="fullscreen_review" maxLength="41">Mode plein écran</string>
     <string name="full_screen_off">Inactif</string>
@@ -235,11 +235,13 @@
     <string name="misc" maxLength="41">Divers</string>
     <!-- Review reminders -->
     <string name="add_reminder" comment="Label for the add reminder button in the screen for adding and editing review reminders">Ajouter un rappel</string>
+    <string name="add_review_reminder" comment="Title of the screen for creating a new review reminder">Add review reminder</string>
+    <string name="edit_review_reminder" comment="Title of the screen for editing an existing review reminder">Edit review reminder</string>
+    <string name="you_have_no_review_reminders" comment="Text that appears in the review reminder editing screen when there are no reminders set">You have no review reminders</string>
     <!-- studyoptions -->
     <string name="studyoptions_limit_select_tags">Sélectionner les étiquettes</string>
     <!-- Deck configurations -->
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">Général</string>
-    <string name="deck_conf_reminders" maxLength="41">Rappels</string>
     <string name="deck_conf_cram_filter" maxLength="41">Filtre</string>
     <string name="deck_conf_cram_search" maxLength="41" comment="Label of a text field that contains a search query.">Recherche</string>
     <string name="deck_conf_cram_limit" maxLength="41">Limiter à</string>
@@ -257,7 +259,7 @@
     <string name="note_editor_replace_newlines" maxLength="41">Remplacer les nouvelles lignes par du HTML</string>
     <string name="note_editor_replace_newlines_summ">Dans l\'éditeur de notes, convertissez toutes les instances de &lt;br&gt; en nouvelles lignes lors de l\'édition d\'une carte.</string>
     <string name="type_in_answer_focus" maxLength="41">Mettre en évidence « Saisir la réponse »</string>
-    <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the study screen</string>
+    <string name="type_in_answer_focus_summ">Mettre en évidence automatique le champ \" Saisir la réponse\" dans l\'écran de révision</string>
     <!-- About -->
     <string name="open_changelog">Ouvrir le journal des modifications</string>
     <string name="pref_cat_about_title" maxLength="41">À propos</string>
@@ -265,7 +267,7 @@
     <string name="about_contributors_description"><![CDATA[Ce sont nos <a href=\"%1$s\">contributeurs</a> géniaux. Vous pouvez aussi aider AnkiDroid en programmant, traduisant, donnant et <a href=\"%2$s\">plus</a> !]]></string>
     <string name="license">Licence</string>
     <string name="license_description"><![CDATA[AnkiDroid est publié sous les licences <a href=\"%1$s\">GPL-3.0</a> et <a href=\"%2$s\">AGPL-3.0</a>, avec le code source disponible <a href=\"%3$s\">sur GitHub</a>]]></string>
-    <string name="other_licenses"><![CDATA[AnkiDroid also uses third-party libraries and icons, which are licensed under various open source <a href=\"%1$s\">licenses</a>]]></string>
+    <string name="other_licenses"><![CDATA[AnkiDroid utilise également des bibliothèques et des icônes tierces, sous l\'autorisation de différentes <a href=\"%1$s\">licences</a> open source. ]]></string>
     <string name="donate_description"><![CDATA[Vous pouvez supporter le développement de AnkiDroid en <a href=\"%1$s\">faisant un don</a>. N\'importe quel montant est très fortement apprécié.]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">Ajouter un geste</string>
@@ -299,8 +301,8 @@
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Expérimental</string>
     <string name="readtext_deprecation_warn">AnkiDroid a introduit un meilleur mécanisme de synthèse vocale qui est compatible avec d\'autres clients Anki et inclut plus de voix et des améliorations à la lecture de la langue !\n\nVeuillez mettre à jour dès que possible, car ce paramètre sera bientôt supprimé</string>
     <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">Veuillez mettre à jour vers le nouveau format de synthèse vocale</string>
-    <string name="pref_fixed_port_title" maxLength="41">localStorage in Study Screen</string>
-    <string name="pref_fixed_port_summary">Enables JavaScript localStorage by using a fixed server port in the Study Screen</string>
+    <string name="pref_fixed_port_title" maxLength="41">localStorage dans l\'écran de révision</string>
+    <string name="pref_fixed_port_summary">Active JavaScript localStorage en utilisant un serveur port fixé dans l\'écran de révision</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Options de développement</string>
     <string name="dev_options_enabled_pref" maxLength="41">Activer les options de développement</string>
@@ -373,7 +375,7 @@ Elles ne sont pas destinées à la plupart des utilisateurs et restent en anglai
     <string name="hide_system_bars_navigation_bar" comment="Setting option to hide the system navigation bar (the bottom one that can go back, to home, etc)">Barre de navigation</string>
     <string name="hide_system_bars_all_bars" comment="Setting option to hide all the system bars">Tout</string>
     <string name="ignore_display_cutout" maxLength="41">Ignorer la découpe d\'affichage</string>
-    <string name="hide_answer_buttons" maxLength="41">Masquer les boutons de réponse</string>
+    <string name="show_answer_buttons" maxLength="41">Afficher les boutons réponse</string>
     <string name="hide_hard_and_easy" maxLength="41">Masquer les boutons « dur» et « facile»</string>
     <string name="reviewer_frame_style" maxLength="41">Style de cadre</string>
     <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Study Screen">Carte</string>
@@ -383,10 +385,11 @@ Elles ne sont pas destinées à la plupart des utilisateurs et restent en anglai
     <string name="reviewer_toolbar_none" maxLength="41" comment="Setting to remove the toolbar from the study screen">Aucun</string>
     <string name="toolbar" maxLength="41">Barre à outils</string>
     <string name="toolbar_actions" maxLength="41">Actions de la barre à outils</string>
-    <string name="toolbar_position" maxLength="41">Position de la barre à outil</string>
+    <string name="toolbar_position" maxLength="28">Position de la barre à outil</string>
     <string name="new_study_screen" maxLength="41">Nouvel écran de révision</string>
-    <string name="new_study_screen_summ"><![CDATA[Improved study screen that will succeed the current one. Some features of the old screen have been changed or removed. Please report any <a href="%1$s">feedback</a> or <a href="%2$s">bugs</a>.]]></string>
+    <string name="new_study_screen_summ"><![CDATA[L\'écran de révision amélioré qui succédera à l\'actuel. Quelques caractéristiques de l\'ancien écran ont été modifiées ou retirées. Merci de nous signaler tout <a href="%1$s">feedback</a> ou <a href="%2$s">bugs</a>.]]></string>
     <string name="show_answer_feedback" maxLength="41">Montrer la réaction de réponse</string>
+    <string name="screen" maxLength="41">Écran</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">Aller aux paramètres</string>
 </resources>

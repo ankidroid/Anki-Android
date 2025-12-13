@@ -45,7 +45,6 @@
     </plurals>
     <!--Browser-->
     <string name="model_browser_delete">Supprimer un type de note</string>
-    <string name="model_browser_rename" comment="Rename a note type">Renommer</string>
     <string name="model_browser_template">Modifier les cartes</string>
     <!--Rename-->
     <string name="rename_model">Renommer le type de note</string>
@@ -53,7 +52,6 @@
     <!--Language Hint-->
     <string name="model_field_editor_language_hint_dialog_success_result">Suggestion de langue définie sur %s</string>
     <!--Field Editing-->
-    <string name="model_field_editor_title">Modifier les champs</string>
     <string name="model_field_editor_add" maxLength="28">Ajouter un champ</string>
     <string name="model_field_editor_delete">Supprimer le champ</string>
     <string name="model_field_editor_rename">Renommer le champ</string>
@@ -63,6 +61,12 @@
     <string name="model_field_editor_sort_field">Trier par ce champ</string>
     <!--Warnings-->
     <string name="model_delete_warning">Voulez-vous vraiment effacer ce type de note ?</string>
+    <!--
+        Example output:
+        Delete the note types below?
+        Basic, Basic (and reversed card), Cloze
+     -->
+    <string name="model_delete_multiple_warning">Delete the note types below?\n %s</string>
     <string name="field_delete_warning">Voulez-vous vraiment supprimer ce champ ?</string>
     <!--Model Add Suffixes-->
     <string name="model_browser_add_add">Ajouter : %1$s</string>

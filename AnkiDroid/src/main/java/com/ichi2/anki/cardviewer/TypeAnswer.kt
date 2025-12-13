@@ -238,7 +238,7 @@ class TypeAnswer(
          * @param txt The field text with the clozes
          * @param idx The index of the cloze to use
          * @return If the cloze strings are the same, return a single cloze string, otherwise, return
-         * a string with a comma-separeted list of strings with the correct index.
+         * a string with a comma-separated list of strings with the correct index.
          */
         @VisibleForTesting
         fun contentForCloze(

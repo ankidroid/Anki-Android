@@ -45,33 +45,32 @@
 -->
 <resources>
     <!-- Widget -->
-    <string name="widget_minimum_cards_due_notification_ticker_title">Kartos þozei nauh ni tawides</string>
     <plurals name="widget_minimum_cards_due_notification_ticker_text">
-        <item quantity="one">%d AnkiDroid karta nauh ni tawides</item>
-        <item quantity="other">%d AnkiDroid kartos nauh ni tawides</item>
+        <item quantity="one">%d 𐌰𐌽𐌺𐌴𐌹𐌳𐍂𐌰𐌿𐌳 𐌺𐌰𐍂𐍄𐌰 𐌽𐌰𐌿𐌷 𐌽𐌹 𐍄𐌰𐍅𐌹𐌳𐌴𐍃</item>
+        <item quantity="other">%d 𐌽𐌰𐌺𐌴𐌹𐌳𐍂𐌰𐌿𐌳 𐌺𐌰𐍂𐍄𐍉𐍃 𐌽𐌰𐌿𐌷 𐌽𐌹 𐍄𐌰𐍅𐌹𐌳𐌴𐍃</item>
     </plurals>
-    <string name="widget_small" comment="Label of the small ankidroid widget. This text can\'t be found directly in AnkiDroid">AnkiDroid leitil</string>
+    <string name="widget_small" comment="Label of the small ankidroid widget. This text can\'t be found directly in AnkiDroid">𐌰𐌽𐌺𐌴𐌹𐌳𐍂𐌰𐌿𐌳 𐌻𐌴𐌹𐍄𐌹𐌻</string>
     <plurals name="widget_cards_due">
-        <item quantity="one">%d karta nauh ni tawides</item>
-        <item quantity="other">%d kartos nauh ni tawides</item>
+        <item quantity="one">%d 𐌺𐌰𐍂𐍄𐌰 𐌽𐌰𐌿𐌷 𐌽𐌹 𐍄𐌰𐍅𐌹𐌳𐌴𐍃</item>
+        <item quantity="other">%d 𐌺𐌰𐍂𐍄𐍉𐍃 𐌽𐌰𐌿𐌷 𐌽𐌹 𐍄𐌰𐍅𐌹𐌳𐌴𐍃</item>
     </plurals>
     <plurals name="widget_eta">
-        <item quantity="one">%d minutus bileibiþ</item>
-        <item quantity="other">%d minutjus bileiband</item>
+        <item quantity="one">%d 𐌼𐌹𐌽𐌿𐍄𐌿𐍃 𐌱𐌹𐌻𐌴𐌹𐌱𐌹𐌸</item>
+        <item quantity="other">%d 𐌼𐌹𐌽𐌿𐍄𐌾𐌿𐍃 𐌱𐌹𐌻𐌴𐌹𐌱𐌰𐌽𐌳</item>
     </plurals>
-    <string name="widget_add_note_button">Biaiauk AnkiDroid melein niuja</string>
-    <string name="deck_picker_widget_description" comment="Title of the Deck Picker Widget. Displayed to the user in Android\'s Widget Selection menu">Nimands kartahuzdis</string>
+    <string name="widget_add_note_button">𐌱𐌹𐌰𐌹𐌰𐌿𐌺 𐌰𐌽𐌺𐌴𐌹𐌳𐍂𐌰𐌿𐌳 𐌼𐌴𐌻𐌴𐌹𐌽 𐌽𐌹𐌿𐌾𐌰</string>
+    <string name="deck_picker_widget_description" comment="Title of the Deck Picker Widget. Displayed to the user in Android\'s Widget Selection menu">𐌽𐌹𐌼𐌰𐌽𐌳𐍃 𐌺𐌰𐍂𐍄𐌰𐌷𐌿𐌶𐌳𐌹𐍃</string>
     <string name="card_analysis_extra_widget_description">Card Analysis</string>
     <!-- Strings to explain usage in Deck Picker and Card Analysis Widget Configuration screen -->
-    <string name="select_decks_title" comment="Title for Deck Selection Dialog">Walei kartahuzda</string>
-    <string name="select_deck_title" comment="Title for Deck Selection Dialog">Walei kartahuzd</string>
-    <string name="no_selected_deck_placeholder_title" comment="Placeholder title when no decks are selected">Walei kartahuzda du bandwjan in widjait. Walei kartahuzda miþ + taiknai.</string>
-    <string name="deck_removed_from_widget" comment="Snackbar when deck is removed from widget">Kartahuzd usnuman</string>
-    <string name="deck_already_selected_message" comment="Snackbar when user try to select the same deck again">Þata kartahuzd ju gawalid ist</string>
+    <string name="select_decks_title" comment="Title for Deck Selection Dialog">𐌺𐌰𐍂𐍄𐌰𐌷𐌿𐌶𐌳𐌰 𐍅𐌰𐌻𐌾𐌰𐌽</string>
+    <string name="select_deck_title" comment="Title for Deck Selection Dialog">𐌺𐌰𐍂𐍄𐌰𐌷𐌿𐌶𐌳 𐍅𐌰𐌻𐌾𐌰𐌽</string>
+    <string name="no_selected_deck_placeholder_title" comment="Placeholder title when no decks are selected">𐍅𐌰𐌻𐌴𐌹 𐌺𐌰𐍂𐍄𐌰𐌷𐌿𐌶𐌳𐌰 𐌳𐌿 𐌱𐌰𐌽𐌳𐍅𐌾𐌰𐌽 𐌹𐌽 𐍅𐌹𐌳𐌾𐌰𐌹𐍄. 𐍅𐌰𐌻𐌴𐌹 𐌺𐌰𐍂𐍄𐌰𐌷𐌿𐌶𐌳𐌰 𐌼𐌹𐌸 + 𐍄𐌰𐌹𐌺𐌽𐌰𐌹.</string>
+    <string name="deck_removed_from_widget" comment="Snackbar when deck is removed from widget">𐌺𐌰𐍂𐍄𐌰𐌷𐌿𐌶𐌳 𐌿𐍃𐌽𐌿𐌼𐌰𐌽</string>
+    <string name="deck_already_selected_message" comment="Snackbar when user try to select the same deck again">𐌸𐌰𐍄𐌰 𐌺𐌰𐍂𐍄𐌰𐌷𐌿𐌶𐌳 𐌾𐌿 𐌲𐌰𐍅𐌰𐌻𐌹𐌳 𐌹𐍃𐍄</string>
     <plurals name="deck_limit_reached">
-        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">You can select up to %d deck.</item>
-        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">You can select up to %d decks.</item>
+        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">𐌼𐌰𐌲𐍄 %d 𐌺𐌰𐍂𐍄𐌰𐌷𐌿𐌶𐌳 𐍅𐌰𐌻𐌾𐌰𐌽.</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">𐌼𐌰𐌲𐍄 %d 𐌺𐌰𐍂𐍄𐌰𐌷𐌿𐌶𐌳𐌴 𐍅𐌰𐌻𐌾𐌰𐌽.</item>
     </plurals>
-    <string name="empty_widget_state" comment="To denote the widget is empty">Wanandona kartahuzda. Tek du aftra atgaraihtjan.</string>
-    <string name="empty_collection_state_in_widget" comment="To denote the collection is empty">Huzd ist laus, brukei appis du biaukan kartahuzda þanuh þan aftra atgaraihtei</string>
+    <string name="empty_widget_state" comment="To denote the widget is empty">𐍅𐌰𐌽𐌰𐌽𐌳𐍉𐌽𐌰 𐌺𐌰𐍂𐍄𐌰𐌷𐌿𐌶𐌳𐌰. 𐍄𐌴𐌺 𐌳𐌿 𐌰𐍄𐌲𐌰𐍂𐌰𐌹𐌷𐍄𐌾𐌰𐌽 𐌰𐍆𐍄𐍂𐌰.</string>
+    <string name="empty_collection_state_in_widget" comment="To denote the collection is empty">𐌷𐌿𐌶𐌳 𐌹𐍃𐍄 𐌻𐌰𐌿𐍃, 𐌱𐍂𐌿𐌺𐌴𐌹 𐌰𐍀𐍀𐌹𐍃 𐌳𐌿 𐌱𐌹𐌰𐌿𐌺𐌰𐌽 𐌺𐌰𐍂𐍄𐌰𐌷𐌿𐌶𐌳𐌰 𐌸𐌰𐌽𐌿𐌷 𐌸𐌰𐌽 𐌰𐍆𐍄𐍂𐌰 𐌰𐍄𐌲𐌰𐍂𐌰𐌹𐌷𐍄𐌴𐌹</string>
 </resources>

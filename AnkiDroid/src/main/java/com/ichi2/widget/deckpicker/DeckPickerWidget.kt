@@ -35,12 +35,16 @@ import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.pages.DeckOptionsDestination
 import com.ichi2.widget.ACTION_UPDATE_WIDGET
 import com.ichi2.widget.AnalyticsWidgetProvider
+import com.ichi2.widget.AppWidgetId
+import com.ichi2.widget.AppWidgetId.Companion.INVALID_APPWIDGET_ID
+import com.ichi2.widget.AppWidgetId.Companion.getAppWidgetId
+import com.ichi2.widget.AppWidgetIds
 import com.ichi2.widget.cancelRecurringAlarm
+import com.ichi2.widget.getAppWidgetIdsEx
 import com.ichi2.widget.setRecurringAlarm
+import com.ichi2.widget.updateAppWidget
 import kotlinx.coroutines.launch
 import timber.log.Timber
-
-typealias AppWidgetId = Int
 
 /**
  * Data class representing the data for a deck displayed in the widget.
@@ -172,13 +176,13 @@ class DeckPickerWidget : AnalyticsWidgetProvider() {
 
             val configIntent =
                 Intent(context, DeckPickerWidgetConfig::class.java).apply {
-                    putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
+                    putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId.id)
                     flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 }
             val configPendingIntent =
                 PendingIntent.getActivity(
                     context,
-                    appWidgetId,
+                    appWidgetId.id,
                     configIntent,
                     PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
                 )
@@ -199,13 +203,13 @@ class DeckPickerWidget : AnalyticsWidgetProvider() {
 
             val configIntent =
                 Intent(context, DeckPickerWidgetConfig::class.java).apply {
-                    putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
+                    putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId.id)
                     flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 }
             val configPendingIntent =
                 PendingIntent.getActivity(
                     context,
-                    appWidgetId,
+                    appWidgetId.id,
                     configIntent,
                     PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
                 )
@@ -224,7 +228,7 @@ class DeckPickerWidget : AnalyticsWidgetProvider() {
             val provider = ComponentName(context, DeckPickerWidget::class.java)
             Timber.d("Fetching appWidgetIds for provider: ${provider.shortClassName}")
 
-            val appWidgetIds = appWidgetManager.getAppWidgetIds(provider)
+            val appWidgetIds = appWidgetManager.getAppWidgetIdsEx(provider)
             Timber.d("AppWidgetIds to update: ${appWidgetIds.joinToString(", ")}")
 
             for (appWidgetId in appWidgetIds) {
@@ -238,7 +242,7 @@ class DeckPickerWidget : AnalyticsWidgetProvider() {
     override fun performUpdate(
         context: Context,
         appWidgetManager: AppWidgetManager,
-        appWidgetIds: IntArray,
+        appWidgetIds: AppWidgetIds,
         usageAnalytics: UsageAnalytics,
     ) {
         Timber.d("Performing widget update for appWidgetIds: %s", appWidgetIds)
@@ -279,7 +283,7 @@ class DeckPickerWidget : AnalyticsWidgetProvider() {
                 val appWidgetManager = AppWidgetManager.getInstance(context)
 
                 // Retrieve the widget ID from the intent
-                val appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID)
+                val appWidgetId = intent.getAppWidgetId()
                 val selectedDeckIds = intent.getLongArrayExtra(EXTRA_SELECTED_DECK_IDS)
 
                 Timber.d(
@@ -288,7 +292,7 @@ class DeckPickerWidget : AnalyticsWidgetProvider() {
                     )}",
                 )
 
-                if (appWidgetId != AppWidgetManager.INVALID_APPWIDGET_ID && selectedDeckIds != null) {
+                if (appWidgetId != INVALID_APPWIDGET_ID && selectedDeckIds != null) {
                     Timber.d("Updating widget with ID: $appWidgetId")
                     updateWidget(context, appWidgetManager, appWidgetId, selectedDeckIds)
                     Timber.d("Widget update process completed for widget ID: $appWidgetId")
@@ -297,15 +301,33 @@ class DeckPickerWidget : AnalyticsWidgetProvider() {
             // This custom action is received to update a specific widget.
             // It is triggered by the setRecurringAlarm method to refresh the widget's data periodically.
             ACTION_UPDATE_WIDGET -> {
-                val appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID)
-                if (appWidgetId != AppWidgetManager.INVALID_APPWIDGET_ID) {
-                    Timber.d("Received ACTION_UPDATE_WIDGET for widget ID: $appWidgetId")
+                val appWidgetId = intent.getAppWidgetId()
+                if (appWidgetId == INVALID_APPWIDGET_ID) {
+                    return
                 }
+
+                val selectedDeckIds = widgetPreferences.getSelectedDeckIdsFromPreferences(appWidgetId)
+                if (selectedDeckIds.isEmpty()) {
+                    /**
+                     * Rationale: see [performUpdate]
+                     */
+                    Timber.d(
+                        "Ignoring ACTION_UPDATE_WIDGET for widget ID: $appWidgetId because selectedDeckIds is empty",
+                    )
+                    return
+                }
+
+                Timber.d(
+                    "Updating widget with ID: $appWidgetId on ACTION_UPDATE_WIDGET. selectedDeckIds: ${
+                        selectedDeckIds.joinToString(", ")
+                    }",
+                )
+                updateWidget(context, AppWidgetManager.getInstance(context), appWidgetId, selectedDeckIds)
             }
             AppWidgetManager.ACTION_APPWIDGET_DELETED -> {
                 Timber.d("ACTION_APPWIDGET_DELETED received")
-                val appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID)
-                if (appWidgetId != AppWidgetManager.INVALID_APPWIDGET_ID) {
+                val appWidgetId = intent.getAppWidgetId()
+                if (appWidgetId != INVALID_APPWIDGET_ID) {
                     Timber.d("Deleting widget with ID: $appWidgetId")
                     cancelRecurringAlarm(context, appWidgetId, DeckPickerWidget::class.java)
                     widgetPreferences.deleteDeckData(appWidgetId)
@@ -327,7 +349,6 @@ class DeckPickerWidget : AnalyticsWidgetProvider() {
                 CrashReportService.sendExceptionReport(
                     Exception("Unexpected action received: ${intent.action}"),
                     "DeckPickerWidget - onReceive",
-                    null,
                     onlyIfSilent = true,
                 )
             }
@@ -345,7 +366,7 @@ class DeckPickerWidget : AnalyticsWidgetProvider() {
 
         val widgetPreferences = DeckPickerWidgetPreferences(context)
 
-        appWidgetIds?.forEach { widgetId ->
+        AppWidgetIds.of(appWidgetIds)?.forEach { widgetId ->
             cancelRecurringAlarm(context, widgetId, DeckPickerWidget::class.java)
             widgetPreferences.deleteDeckData(widgetId)
         }

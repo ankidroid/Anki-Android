@@ -1,21 +1,21 @@
-/***************************************************************************************
- *                                                                                      *
- * Copyright (c) 2015 Frank Oltmanns <frank.oltmanns@gmail.com>                         *
- * Copyright (c) 2015 Timothy Rae <timothy.rae@gmail.com>                               *
- * Copyright (c) 2016 Mark Carter <mark@marcardar.com>                                  *
- *                                                                                      *
- * This program is free software; you can redistribute it and/or modify it under        *
- * the terms of the GNU General Public License as published by the Free Software        *
- * Foundation; either version 3 of the License, or (at your option) any later           *
- * version.                                                                             *
- *                                                                                      *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY      *
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A      *
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.             *
- *                                                                                      *
- * You should have received a copy of the GNU General Public License along with         *
- * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
- ****************************************************************************************/
+/*
+ *
+ * Copyright (c) 2015 Frank Oltmanns <frank.oltmanns@gmail.com>
+ * Copyright (c) 2015 Timothy Rae <timothy.rae@gmail.com>
+ * Copyright (c) 2016 Mark Carter <mark@marcardar.com>
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 3 of the License, or (at your option) any later
+ * version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package com.ichi2.anki.provider
 
 import android.annotation.SuppressLint
@@ -285,8 +285,8 @@ class CardContentProvider : ContentProvider() {
                 val columns = projection ?: FlashCardsContract.CardTemplate.DEFAULT_PROJECTION
                 val rv = MatrixCursor(columns, 1)
                 try {
-                    for ((idx, template) in currentNoteType!!.templates.withIndex()) {
-                        addTemplateToCursor(template, currentNoteType, idx + 1, col.notetypes, rv, columns)
+                    for ((ord, template) in currentNoteType!!.templates.withIndex()) {
+                        addTemplateToCursor(template, currentNoteType, ord + 1, col.notetypes, rv, columns)
                     }
                 } catch (e: JSONException) {
                     throw IllegalArgumentException("Note type is malformed", e)
@@ -1044,6 +1044,9 @@ class CardContentProvider : ContentProvider() {
             val uriFromF = Uri.fromFile(f)
             Timber.d("insert -> MEDIA: uriFromF = %s", uriFromF)
             Uri.fromFile(File(fname))
+        } catch (e: OutOfMemoryError) {
+            Timber.e(e, "insert failed from %s", fileUri)
+            null
         } catch (e: IOException) {
             Timber.w(e, "insert failed from %s", fileUri)
             null
@@ -1191,10 +1194,13 @@ class CardContentProvider : ContentProvider() {
         }
     }
 
+    /**
+     * @param [idx] The index of the template in the note type. First template is number 1.
+     */
     private fun addTemplateToCursor(
         tmpl: CardTemplate,
         notetype: NotetypeJson?,
-        id: Int,
+        idx: Int,
         notetypes: Notetypes,
         rv: MatrixCursor,
         columns: Array<String>,
@@ -1203,7 +1209,7 @@ class CardContentProvider : ContentProvider() {
             val rb = rv.newRow()
             for (column in columns) {
                 when (column) {
-                    FlashCardsContract.CardTemplate._ID -> rb.add(id)
+                    FlashCardsContract.CardTemplate._ID -> rb.add(idx)
                     FlashCardsContract.CardTemplate.MODEL_ID -> rb.add(notetype!!.id)
                     FlashCardsContract.CardTemplate.ORD -> rb.add(tmpl.ord)
                     FlashCardsContract.CardTemplate.NAME -> rb.add(tmpl.name)

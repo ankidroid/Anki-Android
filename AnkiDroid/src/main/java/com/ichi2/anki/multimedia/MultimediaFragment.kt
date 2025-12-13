@@ -34,13 +34,14 @@ import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.ichi2.anki.AnkiActivity
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.dialogs.DiscardChangesDialog
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote
 import com.ichi2.anki.multimediacard.fields.IField
+import com.ichi2.anki.requireAnkiActivity
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.utils.show
@@ -80,7 +81,7 @@ abstract class MultimediaFragment(
     ) {
         super.onViewCreated(view, savedInstanceState)
 
-        (activity as AnkiActivity).setToolbarTitle(title)
+        requireAnkiActivity().setToolbarTitle(title)
 
         if (arguments != null) {
             Timber.d("Getting MultimediaActivityExtra values from arguments")
@@ -104,7 +105,7 @@ abstract class MultimediaFragment(
                 enabled = viewModel.currentMultimediaPath.value != null,
             ) {
                 override fun handleOnBackPressed() {
-                    DiscardChangesDialog.showDialog(requireContext()) {
+                    DiscardChangesDialog.showDialog(requireContext(), message = TR.addingDiscardCurrentInput()) {
                         Timber.i("MultimediaFragment:: OK button pressed to confirm discard changes")
                         isEnabled = false
                         requireActivity().onBackPressedDispatcher.onBackPressed()

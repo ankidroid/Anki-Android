@@ -48,12 +48,14 @@
     <string name="drawer_open">Otvoriť lištu</string>
     <string name="drawer_close">Zavrieť lištu</string>
     <string name="note_message">Note saved</string>
+    <!-- Note editor screen -->
     <string name="CardEditorCardDeck">Balíček kartičky:</string>
     <string name="CardEditorNoteDeck">Balíček:</string>
     <string name="CardEditorModel">Typ:</string>
     <string name="CardEditorTags">Štítky: %1$s</string>
     <string name="CardEditorCards">Kartičky: %1$s</string>
     <string name="edit_occlusions">Upraviť prekrytý obsah</string>
+    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
     <string name="tag_name">Názov štítku</string>
     <string name="add_new_filter_tags">Pridať/filtrovať štítky</string>
     <string name="add_tag" maxLength="28">Pridať štítok</string>
@@ -65,6 +67,18 @@
     <string name="save_whiteboard" maxLength="28">Uložiť tabuľu</string>
     <string name="enable_stylus" maxLength="28">Povoliť pero</string>
     <string name="disable_stylus">Zakázať pero</string>
+    <string name="eraser" maxLength="28">Eraser</string>
+    <string name="add_brush" maxLength="28">Add brush</string>
+    <string name="whiteboard_align_left" comment="Option to align the whiteboard toolbar on the left" maxLength="28">Left</string>
+    <string name="whiteboard_align_bottom" comment="Option to align the whiteboard toolbar on the bottom" maxLength="28">Bottom</string>
+    <string name="whiteboard_align_right" comment="Option to align the whiteboard toolbar on the right" maxLength="28">Right</string>
+    <string name="whiteboard_clear" comment="Button text to clear the whiteboard" maxLength="28">Clear</string>
+    <string name="whiteboard_more_options" comment="Tooltip of the whiteboard \'More\' button" maxLength="28">More options</string>
+    <string name="whiteboard_remove_brush_message">Are you sure you want to remove this brush from your palette?</string>
+    <string name="whiteboard_ink_eraser" comment="Title of the whiteboard Ink eraser">Ink</string>
+    <string name="whiteboard_stroke_eraser" comment="Title of the whiteboard Stroke eraser">Stroke</string>
+    <string name="stylus_mode" comment="Title of the menu item that toggles the whiteboard stylus mode" maxLength="28">Stylus mode</string>
+    <string name="cannot_remove_last_brush_message">The last brush may not be removed</string>
     <string name="enable_whiteboard" maxLength="28">Povoliť tabuľu</string>
     <string name="disable_whiteboard">Zakázať tabuľu</string>
     <string name="show_whiteboard">Zobraziť tabuľu</string>
@@ -83,6 +97,7 @@
     <string name="webview_crash_fatal">Fatálna chyba: WebView renderovanie zlyhalo. Príčina: %s</string>
     <string name="webview_crash_loop_dialog_title">Zlyhanie systému WebView renderovania</string>
     <string name="webview_crash_loop_dialog_content">Zobrazenie kartičky systémom WebView zlyhalo \'%1$s\'.\n %2$s</string>
+    <string name="slide_to_cancel" comment="Message shown when pressing the record button">Slide to cancel</string>
     <string name="filter_by_flags" maxLength="41">Vlajky</string>
     <!-- Custom study options -->
     <string name="custom_study_loading_tags">Building list of tags&#8230;</string>
@@ -157,7 +172,8 @@
     <string name="import_error_not_apkg_extension">Názov súboru “%s” nemá príponu .apkg alebo .colpkg</string>
     <string name="import_error_load_imported_database">Náhrady Anki databázy (.anki2) ešte nie sú podporované. Pozrite si, prosím, manuál pre náhrady.</string>
     <string name="import_error_content_provider">Zvolený súbor nemohol byť importovaný automaticky AnkiDroidom. Pozrite si, prosím, používateľský manuál ako manuálne importovať Anki súbory: \n%s</string>
-    <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
+    <string name="import_error_copy_to_cache_title">Failed to cache file</string>
+    <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">This is often caused by a bug in the app you used to select the file. Please try the following fixes:\n\n%s</string>
     <string name="import_interrupted">Import prerušený</string>
     <string name="export_ready_title">Pripravené na export</string>
     <string name="export_send_no_handlers">Žiadna aplikácia na spracovanie apkg. Ukladanie&#8230;</string>
@@ -186,13 +202,6 @@
     <string name="tag_editor_add_feedback">Ťuknite “%2$s” pre potvrdenie pridania “%1$s”</string>
     <string name="tag_editor_add_feedback_existing">Existujúci štítok “%1$s” zvolený</string>
     <!-- Time spans -->
-    <string name="reminder_title">Nezabudnite dnes študovať!</string>
-    <plurals name="reminder_text">
-        <item quantity="one">%2$d kartička na zopakovanie v %1$s</item>
-        <item quantity="few">%2$d kartička na zopakovanie v %1$s</item>
-        <item quantity="many">%2$d kartičiek na zopakovanie v %1$s</item>
-        <item quantity="other">%2$d kartičiek na zopakovanie v %1$s</item>
-    </plurals>
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Chyba pri zdieľaní apkg súboru</string>
     <!-- Import and export v2 feedback -->
@@ -233,6 +242,7 @@
     <string name="search_decks" maxLength="28">Prehľadať balíčky</string>
     <string name="ankidroid_init_failed_webview_title">Kritická chyba</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid sa spolieha na systém WebView, ktorý je nedostupný. Toto môže nastať, ak systém inštaluje aktualizácie. Skúste znovu, prosím, o pár minút.\n\n%s</string>
+    <string name="ankidroid_init_failed_storage">AnkiDroid cannot access storage due to an Android error.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">Veľkosť fontu</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Zobraziť panel s nástrojmi</string>
@@ -279,7 +289,6 @@
     <string name="download_failed">Sťahovanie zlyhalo</string>
     <string name="deck_download_progress_message">Môžete používať iné aplikácie kým prebieha sťahovanie</string>
     <string name="check_network">Prosím, skontrolujte vaše sieťové pripojenie</string>
-    <string name="search_using_deck_name">Hľadať pomocou názvu balíčka</string>
     <string name="external_storage_unavailable">Download aborted, the external storage is not available</string>
     <string name="home" maxLength="28">Domov</string>
     <!-- Study Screen actions
@@ -306,6 +315,12 @@
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">Failed to access collection. Please try again!</string>
     <string name="cd_manage_notetypes_add">Add a new note type</string>
+    <plurals name="note_types_selected">
+        <item quantity="one">%d note type selected</item>
+        <item quantity="few">%d note types selected</item>
+        <item quantity="many">%d note types selected</item>
+        <item quantity="other">%d note types selected</item>
+    </plurals>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">Study less</string>
     <string name="intro_ankidroid_tagline_two">Remember more</string>
@@ -314,7 +329,6 @@
     <string name="intro_sync_from_ankiweb">Sync from AnkiWeb</string>
     <!-- IntentHandler -->
     <string name="app_not_initialized_new">AnkiDroid is not initialized yet. Please open AnkiDroid and try again</string>
-    <string name="already_logged_in">Already logged in</string>
     <!-- Deck Creation -->
     <string name="deck_created">Balíček bol vytvorený</string>
     <string name="deck_renamed">Balíček bol premenovaný</string>

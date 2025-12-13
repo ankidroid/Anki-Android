@@ -186,11 +186,11 @@
     <string name="use_current" maxLength="41">رزمة البطاقات الجديدة</string>
     <string name="learn_cutoff" maxLength="41">حد التعلم المبكر</string>
     <string name="time_limit" maxLength="41">مهلة مربع الوقت</string>
-    <string name="day_offset_with_description" maxLength="41">بداية اليوم التالي (0 يعني منتصف الليل، 23 يعني الساعة 11 مساءً)</string>
+    <string name="day_offset_with_description" maxLength="41">بداية اليوم التالي</string>
     <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
-        <item quantity="zero">%d ساعت بعد منتصف الليل</item>
-        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">%d ساعت بعد منتصف الليل</item>
-        <item quantity="two">%d ساعت بعد منتصف الليل</item>
+        <item quantity="zero">%d ساعة بعد منتصف الليل</item>
+        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">%d ساعة بعد منتصف الليل</item>
+        <item quantity="two">%d ساعة بعد منتصف الليل</item>
         <item quantity="few">%d ساعات بعد منتصف الليل</item>
         <item quantity="many">%d ساعة بعد منتصف الليل</item>
         <item quantity="other" comment="Consider keeping the unbreakable space after the digit">%d ساعة بعد منتصف الليل</item>
@@ -244,11 +244,13 @@
     <string name="misc" maxLength="41">منوع</string>
     <!-- Review reminders -->
     <string name="add_reminder" comment="Label for the add reminder button in the screen for adding and editing review reminders">إضافة تنبيه</string>
+    <string name="add_review_reminder" comment="Title of the screen for creating a new review reminder">إضافة تنبيه للمراجعة</string>
+    <string name="edit_review_reminder" comment="Title of the screen for editing an existing review reminder">تعديل تنبيه المراجعة</string>
+    <string name="you_have_no_review_reminders" comment="Text that appears in the review reminder editing screen when there are no reminders set">ليس لديك تنبيهات للمراجعة</string>
     <!-- studyoptions -->
     <string name="studyoptions_limit_select_tags">اختيار وسوم</string>
     <!-- Deck configurations -->
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">عام</string>
-    <string name="deck_conf_reminders" maxLength="41">تذكيرات</string>
     <string name="deck_conf_cram_filter" maxLength="41">الفرز</string>
     <string name="deck_conf_cram_search" maxLength="41" comment="Label of a text field that contains a search query.">البحث</string>
     <string name="deck_conf_cram_limit" maxLength="41">الحد إلى</string>
@@ -284,15 +286,15 @@
     <string name="axis_picker_move_joystick">نقل وحدة عصا التحكم أو جهاز التحرك/حركة</string>
     <string name="user_actions" maxLength="41">إجراءات المستخدم</string>
     <string name="user_actions_summary" maxLength="41">فعل JavaScript في شاشة الدراسة</string>
-    <string name="user_action_1" maxLength="28">إجراء رقم 1</string>
-    <string name="user_action_2" maxLength="28">إجراء رقم 2</string>
-    <string name="user_action_3" maxLength="28">إجراء رقم 3</string>
-    <string name="user_action_4" maxLength="28">إجراء رقم 4</string>
-    <string name="user_action_5" maxLength="28">إجراء رقم 5</string>
-    <string name="user_action_6" maxLength="28">إجراء رقم 6</string>
-    <string name="user_action_7" maxLength="28">إجراء رقم 7</string>
-    <string name="user_action_8" maxLength="28">إجراء رقم 8</string>
-    <string name="user_action_9" maxLength="28">إجراء رقم 9</string>
+    <string name="user_action_1" maxLength="28">إجراء رقم ١</string>
+    <string name="user_action_2" maxLength="28">إجراء رقم ٢</string>
+    <string name="user_action_3" maxLength="28">إجراء رقم ٣</string>
+    <string name="user_action_4" maxLength="28">إجراء رقم ٤</string>
+    <string name="user_action_5" maxLength="28">إجراء رقم ٥</string>
+    <string name="user_action_6" maxLength="28">إجراء رقم ٦</string>
+    <string name="user_action_7" maxLength="28">إجراء رقم ٧</string>
+    <string name="user_action_8" maxLength="28">إجراء رقم ٨</string>
+    <string name="user_action_9" maxLength="28">إجراء رقم ٩</string>
     <string name="toggle_auto_advance" maxLength="28">بدأ أو إيقاف التقدم التلقائي</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">حدد جانب بطاقة</string>
@@ -385,7 +387,7 @@
     <string name="hide_system_bars_navigation_bar" comment="Setting option to hide the system navigation bar (the bottom one that can go back, to home, etc)">شريط التنقل</string>
     <string name="hide_system_bars_all_bars" comment="Setting option to hide all the system bars">الكل</string>
     <string name="ignore_display_cutout" maxLength="41">تجاهل ثغرة الشاشة</string>
-    <string name="hide_answer_buttons" maxLength="41">أخفِ أزرار الإجابة</string>
+    <string name="show_answer_buttons" maxLength="41">أظهِر أزرار الإجابة</string>
     <string name="hide_hard_and_easy" maxLength="41">أخفِ زري «صعب» و«سهل»</string>
     <string name="reviewer_frame_style" maxLength="41">نمط الإطار</string>
     <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Study Screen">بطاقة</string>
@@ -395,10 +397,11 @@
     <string name="reviewer_toolbar_none" maxLength="41" comment="Setting to remove the toolbar from the study screen">لا خِيار</string>
     <string name="toolbar" maxLength="41">شريط الأدوات</string>
     <string name="toolbar_actions" maxLength="41">إجراءات شريط الأدوات</string>
-    <string name="toolbar_position" maxLength="41">مكان شريط الأدوات</string>
+    <string name="toolbar_position" maxLength="28">مكان شريط الأدوات</string>
     <string name="new_study_screen" maxLength="41">شاشة الدراسة الجديدة</string>
     <string name="new_study_screen_summ"><![CDATA[شاشة الدراسة المحسنة التي ستُستبدل بالشاشة الحالية. تم تغيير أو حذف بعض ميزات الشاشة القديمة. نرجو أن تُبَلِّغنا <a href="%1$s">برأيك</a> أو عن أي <a href="%2$s">خلل</a> تجده.]]></string>
     <string name="show_answer_feedback" maxLength="41">إظهار توكيد الإجابة</string>
+    <string name="screen" maxLength="41">شاشة</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">فتح الإعدادات</string>
 </resources>

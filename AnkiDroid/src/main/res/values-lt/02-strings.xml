@@ -48,12 +48,14 @@
     <string name="drawer_open">Atidaryti meniu</string>
     <string name="drawer_close">Uždaryti meniu</string>
     <string name="note_message">Note saved</string>
+    <!-- Note editor screen -->
     <string name="CardEditorCardDeck">Kortelių rinkinys:</string>
     <string name="CardEditorNoteDeck">Rinkinys:</string>
     <string name="CardEditorModel">Tipas:</string>
     <string name="CardEditorTags">Žymės: %1$s</string>
     <string name="CardEditorCards">Kortelės: %1$s</string>
     <string name="edit_occlusions">Redaguoti uždengimus</string>
+    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
     <string name="tag_name">Žymės pavadinimas</string>
     <string name="add_new_filter_tags">Pridėti/filtruoti žymes</string>
     <string name="add_tag" maxLength="28">Pridėti žymę</string>
@@ -65,6 +67,18 @@
     <string name="save_whiteboard" maxLength="28">Išsaugoti lentą</string>
     <string name="enable_stylus" maxLength="28">Įjungti rašymą plunksna</string>
     <string name="disable_stylus">Išjungti rašymą plunksna</string>
+    <string name="eraser" maxLength="28">Eraser</string>
+    <string name="add_brush" maxLength="28">Add brush</string>
+    <string name="whiteboard_align_left" comment="Option to align the whiteboard toolbar on the left" maxLength="28">Left</string>
+    <string name="whiteboard_align_bottom" comment="Option to align the whiteboard toolbar on the bottom" maxLength="28">Bottom</string>
+    <string name="whiteboard_align_right" comment="Option to align the whiteboard toolbar on the right" maxLength="28">Right</string>
+    <string name="whiteboard_clear" comment="Button text to clear the whiteboard" maxLength="28">Clear</string>
+    <string name="whiteboard_more_options" comment="Tooltip of the whiteboard \'More\' button" maxLength="28">More options</string>
+    <string name="whiteboard_remove_brush_message">Are you sure you want to remove this brush from your palette?</string>
+    <string name="whiteboard_ink_eraser" comment="Title of the whiteboard Ink eraser">Ink</string>
+    <string name="whiteboard_stroke_eraser" comment="Title of the whiteboard Stroke eraser">Stroke</string>
+    <string name="stylus_mode" comment="Title of the menu item that toggles the whiteboard stylus mode" maxLength="28">Stylus mode</string>
+    <string name="cannot_remove_last_brush_message">The last brush may not be removed</string>
     <string name="enable_whiteboard" maxLength="28">Įjungti rašymo lentą</string>
     <string name="disable_whiteboard">Išjungti rašymo lentą</string>
     <string name="show_whiteboard">Rodyti rašymo lentą</string>
@@ -83,6 +97,7 @@
     <string name="webview_crash_fatal">Fatališka klaida: Klaida: WebView rendereris sugedo. Priežastis: %s</string>
     <string name="webview_crash_loop_dialog_title">Sistemos \"WebView\" atvaizdavimo sutrikimas</string>
     <string name="webview_crash_loop_dialog_content">System WebView failed to render card \'%1$s\'.\n %2$s</string>
+    <string name="slide_to_cancel" comment="Message shown when pressing the record button">Slide to cancel</string>
     <string name="filter_by_flags" maxLength="41">Žymos</string>
     <!-- Custom study options -->
     <string name="custom_study_loading_tags">Žymų sąrašo kūrimas</string>
@@ -157,7 +172,8 @@
     <string name="import_error_not_apkg_extension">Failas „%s“ neturi .apkg arba .colpkg plėtinio</string>
     <string name="import_error_load_imported_database">\"Anki\" duomenų bazės (.anki2) pakeitimai dar nepalaikomi. Pakeitimo instrukcijas rasite vadove.</string>
     <string name="import_error_content_provider">Pažymėto failo „AnkiDroid“ automatiškai įkelti negali. Norėdami sužinoti, kaip „Anki“ failus galėtumėte įkelti rankiniu būdu, prašome perskaityti vartotojo vadovą: \n%s</string>
-    <string name="import_error_copy_to_cache">Nepavyko įrašyti failo į talpyklą (galbūt nebeliko vietos)</string>
+    <string name="import_error_copy_to_cache_title">Nepavyko įrašyti failo į talpyklą</string>
+    <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">This is often caused by a bug in the app you used to select the file. Please try the following fixes:\n\n%s</string>
     <string name="import_interrupted">Importas nutrauktas: AnkiDroid buvo uždarytas</string>
     <string name="export_ready_title">Paruošta eksportuoti</string>
     <string name="export_send_no_handlers">Nėra jokių programėlių, galinčių nuskaityti apkg. Išsaugoma&#8230;</string>
@@ -186,13 +202,6 @@
     <string name="tag_editor_add_feedback">Norėdami pridėti „%1$s“, spauskite „%2$s“</string>
     <string name="tag_editor_add_feedback_existing">Pasirinkta esama žymė „%1$s“</string>
     <!-- Time spans -->
-    <string name="reminder_title">Nepamirškite šiandien pasimokyti!</string>
-    <plurals name="reminder_text">
-        <item quantity="one">Peržiūrėti %2$d kortelę per %1$s</item>
-        <item quantity="few">Peržiūrėti %2$d korteles per %1$s</item>
-        <item quantity="many">Peržiūrėti %2$d kortelių per %1$s</item>
-        <item quantity="other">Peržiūrėti %2$d kort. per %1$s</item>
-    </plurals>
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Pasidalinti apkg failo nepavyko</string>
     <!-- Import and export v2 feedback -->
@@ -233,6 +242,7 @@
     <string name="search_decks" maxLength="28">kortelių rinkinių paieška</string>
     <string name="ankidroid_init_failed_webview_title">Fatališka klaida</string>
     <string name="ankidroid_init_failed_webview">\"AnkiDroid\" remiasi sistemos žiniatinklio peržiūra, kuri yra neprieinama. Taip gali atsitikti, jei sistema diegia naujinius. Prašome pabandyti dar kartą po kelių minučių.\n\n%s</string>
+    <string name="ankidroid_init_failed_storage">AnkiDroid cannot access storage due to an Android error.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">Šrifto dydis</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Rodyti įrankių juostą</string>
@@ -279,7 +289,6 @@
     <string name="download_failed">Atsisiųsti nepavyko</string>
     <string name="deck_download_progress_message">Atsisiuntimo metu galite naudoti kitas programas</string>
     <string name="check_network">Patikrinkite tinklo ryšį</string>
-    <string name="search_using_deck_name">Paieška pagal kortelių rinkinio pavadinimą</string>
     <string name="external_storage_unavailable">Atsisiuntimas nutrauktas, išorinė saugykla nepasiekiama</string>
     <string name="home" maxLength="28">Namai</string>
     <!-- Study Screen actions
@@ -306,6 +315,12 @@
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">Nepavyko pasiekti kolekcijos. Bandykite dar kartą!</string>
     <string name="cd_manage_notetypes_add">Pridėti naują pastabos tipą</string>
+    <plurals name="note_types_selected">
+        <item quantity="one">%d note type selected</item>
+        <item quantity="few">%d note types selected</item>
+        <item quantity="many">%d note types selected</item>
+        <item quantity="other">%d note types selected</item>
+    </plurals>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">Studijuokite mažiau</string>
     <string name="intro_ankidroid_tagline_two">Prisiminti daugiau</string>
@@ -314,7 +329,6 @@
     <string name="intro_sync_from_ankiweb">Sinchronizavimas iš \"AnkiWeb</string>
     <!-- IntentHandler -->
     <string name="app_not_initialized_new">AnkiDroid is not initialized yet. Please open AnkiDroid and try again</string>
-    <string name="already_logged_in">Jau prisijungta</string>
     <!-- Deck Creation -->
     <string name="deck_created">Kortelių rinkinys sukurtas</string>
     <string name="deck_renamed">Kortelių rinkinio vardas pakeistas</string>

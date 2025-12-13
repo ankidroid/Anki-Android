@@ -1,18 +1,18 @@
-/****************************************************************************************
- * Copyright (c) 2014 Timothy Rae <perceptualchaos2@gmail.com>                          *
- *                                                                                      *
- * This program is free software; you can redistribute it and/or modify it under        *
- * the terms of the GNU General Public License as published by the Free Software        *
- * Foundation; either version 3 of the License, or (at your option) any later           *
- * version.                                                                             *
- *                                                                                      *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY      *
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A      *
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.             *
- *                                                                                      *
- * You should have received a copy of the GNU General Public License along with         *
- * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
- ****************************************************************************************/
+/*
+ * Copyright (c) 2014 Timothy Rae <perceptualchaos2@gmail.com>
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 3 of the License, or (at your option) any later
+ * version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package com.ichi2.anki
 
 import android.content.Context
@@ -41,8 +41,11 @@ import androidx.core.view.get
 import androidx.core.view.size
 import androidx.drawerlayout.widget.ClosableDrawerLayout
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.Fragment
+import androidx.viewbinding.ViewBinding
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.navigation.NavigationView
+import com.ichi2.anki.IntentHandler.Companion.grantedStoragePermissions
 import com.ichi2.anki.NoteEditorFragment.Companion.NoteEditorCaller
 import com.ichi2.anki.dialogs.help.HelpDialog
 import com.ichi2.anki.libanki.CardId
@@ -54,8 +57,9 @@ import com.ichi2.utils.HandlerUtils
 import com.ichi2.utils.IntentUtil
 import timber.log.Timber
 
-abstract class NavigationDrawerActivity :
-    AnkiActivity(),
+abstract class NavigationDrawerActivity(
+    @LayoutRes contentLayoutId: Int? = null,
+) : AnkiActivity(contentLayoutId),
     NavigationView.OnNavigationItemSelectedListener {
     /**
      * Navigation Drawer
@@ -82,6 +86,31 @@ abstract class NavigationDrawerActivity :
                 closeDrawer()
             }
         }
+
+    override fun setViewBinding(binding: ViewBinding) {
+        val preferences = baseContext.sharedPrefs()
+
+        // Using ClosableDrawerLayout as a parent view.
+        val closableDrawerLayout =
+            LayoutInflater.from(this).inflate(
+                navigationDrawerLayout,
+                null,
+                false,
+            ) as ClosableDrawerLayout
+
+        val coordinatorLayout = binding.root
+        if (preferences.getBoolean(FULL_SCREEN_NAVIGATION_DRAWER, false)) {
+            // If full screen navigation drawer is needed, then add FullDraggableContainer as a child view of closableDrawerLayout.
+            // Then add coordinatorLayout as a child view of fullDraggableContainer.
+            val fullDraggableContainer = FullDraggableContainerFix(this)
+            fullDraggableContainer.addView(coordinatorLayout)
+            closableDrawerLayout.addView(fullDraggableContainer, 0)
+        } else {
+            // If full screen navigation drawer is not needed, then directly add coordinatorLayout as the child view.
+            closableDrawerLayout.addView(coordinatorLayout, 0)
+        }
+        setContentView(closableDrawerLayout)
+    }
 
     override fun setContentView(
         @LayoutRes layoutResID: Int,
@@ -124,7 +153,7 @@ abstract class NavigationDrawerActivity :
 
     // Navigation drawer initialisation
     @Suppress("deprecation", "API35 properly handle edge-to-edge")
-    protected fun initNavigationDrawer(mainView: View) {
+    protected fun initNavigationDrawer(mainView: View = findViewById(android.R.id.content)) {
         // Create inherited navigation drawer layout here so that it can be used by parent class
         drawerLayout = mainView.findViewById(R.id.drawer_layout)
         // set a custom shadow that overlays the main content when the drawer opens
@@ -275,6 +304,10 @@ abstract class NavigationDrawerActivity :
                 REQUEST_PREFERENCES_UPDATE,
                 result.resultCode,
             )
+
+            // We trigger a notifications channel set-up since the user may have changed the locale set
+            // from within the app, which should cause the notification channel names to be reloaded to
+            // match the new locale
             setupNotificationChannels(applicationContext)
             // Restart the activity on preference change
             // collection path hasn't been changed so just restart the current activity
@@ -448,7 +481,7 @@ abstract class NavigationDrawerActivity :
         // * having variables in shortcuts used to be doable with https://plugins.gradle.org/plugin/de.timfreiheit.resourceplaceholders, however
         // * after manually testing it, and looking at open issue https://github.com/timfreiheit/ResourcePlaceholdersPlugin/issues/13 , it seems this was broken with recent version of gradle
         fun enablePostShortcut(context: Context) {
-            if (!IntentHandler.grantedStoragePermissions(context, showToast = false)) {
+            if (runCatching { grantedStoragePermissions(context, showToast = false) }.getOrNull() != true) {
                 Timber.w("No storage access, not enabling shortcuts")
                 return
             }
@@ -509,3 +542,5 @@ abstract class NavigationDrawerActivity :
         }
     }
 }
+
+fun Fragment.requireNavigationDrawerActivity() = (requireActivity() as NavigationDrawerActivity)

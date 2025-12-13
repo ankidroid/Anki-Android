@@ -82,7 +82,7 @@
     <string name="button_size" maxLength="41">Javob tugmasini oʻlchami</string>
     <string name="card_browser_font_size" maxLength="41">Karta brauzeri shrift masshtabi</string>
     <string name="card_browser_hide_media" maxLength="41">Karta brauzerda fayl nomlarini koʻrsatish</string>
-    <string name="card_browser_hide_media_summary">Display audio filenames in the card browser question/answer fields</string>
+    <string name="card_browser_hide_media_summary">Audio fayl nomlarini karta brauzeri savol/javob maydonlarida ko\'rsatish</string>
     <string name="col_path" maxLength="41">AnkiDroid katalogi</string>
     <string name="fullscreen_review" maxLength="41">Butun ekran rejimi</string>
     <string name="full_screen_off">Oʻchiq</string>
@@ -116,9 +116,9 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">Oʻrta markazni bosish</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Pastki chap tomonni bosish</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Pastki oʻng tomonni bosish</string>
-    <string name="gestures_two_finger_tap" maxLength="41">Two-finger tap</string>
-    <string name="gestures_three_finger_tap" maxLength="41">Three-finger tap</string>
-    <string name="gestures_four_finger_tap" maxLength="41">Four-finger tap</string>
+    <string name="gestures_two_finger_tap" maxLength="41">Ikki barmoq bilan bosish</string>
+    <string name="gestures_three_finger_tap" maxLength="41">Uch barmoq bilan bosish</string>
+    <string name="gestures_four_finger_tap" maxLength="41">Toʻrt barmoq bilan bosish</string>
     <string name="gestures_shake" maxLength="41">Qurilmani silkitish</string>
     <string name="card_browser_enable_external_context_menu" maxLength="41">‘%s’ menyusi</string>
     <string name="card_browser_enable_external_context_menu_summary">“%s” kontekst menyusini ilova miqyosda yoqadi</string>
@@ -178,7 +178,7 @@
     <string name="show_progress_summ">Qolgan kartalar sonini koʻrsatish</string>
     <string name="show_eta" maxLength="41">Qolgan vaqtni koʻrsatish</string>
     <string name="show_eta_summ">Qolgan vaqtni koʻrsatish</string>
-    <string name="use_current" maxLength="41">Yangi kartalar ucun dasta</string>
+    <string name="use_current" maxLength="41">Yangi kartalar uchun dasta</string>
     <string name="learn_cutoff" maxLength="41">Oldindan oʻrganish chegarasi</string>
     <string name="time_limit" maxLength="41">Vaqt chegarasi</string>
     <string name="day_offset_with_description" maxLength="41">Keyingi kun boshlanishi</string>
@@ -234,12 +234,14 @@
     <string name="media" maxLength="41">Media fayllar</string>
     <string name="misc" maxLength="41">Boshqa</string>
     <!-- Review reminders -->
-    <string name="add_reminder" comment="Label for the add reminder button in the screen for adding and editing review reminders">Add reminder</string>
+    <string name="add_reminder" comment="Label for the add reminder button in the screen for adding and editing review reminders">Bildirishnoma qoʻshish</string>
+    <string name="add_review_reminder" comment="Title of the screen for creating a new review reminder">Takrorlash bildirishnomasini qoʻshish</string>
+    <string name="edit_review_reminder" comment="Title of the screen for editing an existing review reminder">Takrorlash bildirishnomasini tahrirlash</string>
+    <string name="you_have_no_review_reminders" comment="Text that appears in the review reminder editing screen when there are no reminders set">Siza hech qanday takrorlash bildirishnomalari yoʻq</string>
     <!-- studyoptions -->
     <string name="studyoptions_limit_select_tags">Teglarni tanlash</string>
     <!-- Deck configurations -->
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">Umumiy</string>
-    <string name="deck_conf_reminders" maxLength="41">Eslatmalar</string>
     <string name="deck_conf_cram_filter" maxLength="41">Filtr</string>
     <string name="deck_conf_cram_search" maxLength="41" comment="Label of a text field that contains a search query.">Qidirish</string>
     <string name="deck_conf_cram_limit" maxLength="41">Kartalar soni</string>
@@ -371,7 +373,7 @@
     <string name="hide_system_bars_navigation_bar" comment="Setting option to hide the system navigation bar (the bottom one that can go back, to home, etc)">Navigatsiya paneli</string>
     <string name="hide_system_bars_all_bars" comment="Setting option to hide all the system bars">Barchasi</string>
     <string name="ignore_display_cutout" maxLength="41">Displey qirqimiga eʼtibor berilmasin</string>
-    <string name="hide_answer_buttons" maxLength="41">Javob tugmalarini yashirish</string>
+    <string name="show_answer_buttons" maxLength="41">Javob tugmalarini koʻrsatish</string>
     <string name="hide_hard_and_easy" maxLength="41">‘Qiyin’ va ‘Oson’ tugmalarini yashirish</string>
     <string name="reviewer_frame_style" maxLength="41">Freym stili</string>
     <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Study Screen">Karta</string>
@@ -381,10 +383,11 @@
     <string name="reviewer_toolbar_none" maxLength="41" comment="Setting to remove the toolbar from the study screen">Hech qaysi</string>
     <string name="toolbar" maxLength="41">Asboblar paneli</string>
     <string name="toolbar_actions" maxLength="41">Asboblar paneli amallari</string>
-    <string name="toolbar_position" maxLength="41">Asboblar paneli joylashuvi</string>
+    <string name="toolbar_position" maxLength="28">Asboblar paneli joylashuvi</string>
     <string name="new_study_screen" maxLength="41">Yangi oʻrganish ekrani</string>
     <string name="new_study_screen_summ"><![CDATA[Oʻrganish ekrani takomillashtirildi va joriy ekranni almashtiradi. Eski ekranning baʼzi xususiyatlari oʻzgartirildi yoki oʻchirildi. Iltimos, <a href="%1$s">fikr-mulohazalaringiz</a> yoki <a href="%2$s">baglar</a> haqida xabar bering.]]></string>
-    <string name="show_answer_feedback" maxLength="41">Show answer feedback</string>
+    <string name="show_answer_feedback" maxLength="41">Javob firk-mulohazalarini koʻrsatish</string>
+    <string name="screen" maxLength="41">Ekran</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">Sozlamalarni ochish</string>
 </resources>

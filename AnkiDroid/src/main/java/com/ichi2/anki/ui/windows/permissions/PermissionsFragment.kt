@@ -23,8 +23,11 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.annotation.LayoutRes
 import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
+import androidx.core.os.bundleOf
 import androidx.core.view.allViews
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResult
+import com.ichi2.anki.R
 import com.ichi2.anki.showThemedToast
 import timber.log.Timber
 
@@ -37,20 +40,18 @@ abstract class PermissionsFragment(
     @LayoutRes contentLayoutId: Int,
 ) : Fragment(contentLayoutId) {
     /**
-     * All the [PermissionItem]s in the fragment.
+     * All the [PermissionsItem]s in the fragment.
      * Must be called ONLY AFTER [onCreateView]
      */
-    val permissionItems: List<PermissionItem>
-        by lazy { view?.allViews?.filterIsInstance<PermissionItem>()?.toList() ?: emptyList() }
+    val permissionsItems: List<PermissionsItem>
+        by lazy { view?.allViews?.filterIsInstance<PermissionsItem>()?.toList() ?: emptyList() }
 
-    protected fun hasAllPermissions() = permissionItems.all { it.isGranted }
+    protected fun hasAllPermissions() = permissionsItems.all { it.areGranted }
 
     override fun onResume() {
         super.onResume()
-        permissionItems.forEach { it.updateSwitchCheckedStatus() }
-        (activity as? PermissionsActivity)?.setContinueButtonEnabled(
-            hasAllPermissions(),
-        )
+        permissionsItems.forEach { it.updateSwitchCheckedStatus() }
+        setFragmentResult(PERMISSIONS_FRAGMENT_RESULT_KEY, bundleOf(HAS_ALL_PERMISSIONS_KEY to hasAllPermissions()))
     }
 
     /**
@@ -92,5 +93,42 @@ abstract class PermissionsFragment(
         } else {
             openAppSettingsScreen()
         }
+    }
+
+    /**
+     * Set this PermissionItem so that when it is clicked, the app requests external file management permissions
+     * from the user.
+     */
+    @RequiresApi(Build.VERSION_CODES.R)
+    protected fun PermissionsItem.requestExternalStorageOnClick(launcher: ActivityResultLauncher<Intent>) {
+        setOnPermissionsRequested { areAlreadyGranted ->
+            if (!areAlreadyGranted) launcher.showManageAllFilesScreen()
+        }
+    }
+
+    /**
+     * If these permissions are already granted, open the OS settings to allow the user to disable them, as
+     * it is impossible to programmatically revoke a permission. If the permissions have not been granted,
+     * use [permissionRequestLauncher] to try and grant them. Note that [permissionRequestLauncher] also falls back
+     * to opening the OS settings if the dialog fails to show up. This may happen if the user has previously
+     * denied the permissions multiple times, selected "don't ask again" on the permissions dialog, etc.
+     */
+    protected fun PermissionsItem.offerToGrantOrRevokeOnClick(
+        permissionRequestLauncher: ActivityResultLauncher<Array<String>>,
+        permissions: Array<String>,
+    ) {
+        setOnPermissionsRequested { areAlreadyGranted ->
+            if (areAlreadyGranted) {
+                // Offer the ability to revoke the permission
+                showToastAndOpenAppSettingsScreen(R.string.revoke_permissions)
+            } else {
+                permissionRequestLauncher.launch(permissions)
+            }
+        }
+    }
+
+    companion object {
+        const val PERMISSIONS_FRAGMENT_RESULT_KEY = "PERMISSION_FRAGMENT_RESULT"
+        const val HAS_ALL_PERMISSIONS_KEY = "HAS_ALL_PERMISSIONS"
     }
 }

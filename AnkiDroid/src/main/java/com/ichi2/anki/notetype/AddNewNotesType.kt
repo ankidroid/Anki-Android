@@ -1,18 +1,18 @@
-/****************************************************************************************
- * Copyright (c) 2024 Neel Doshi <neeldoshi147@gmail.com>                               *
- *                                                                                      *
- * This program is free software; you can redistribute it and/or modify it under        *
- * the terms of the GNU General Public License as published by the Free Software        *
- * Foundation; either version 3 of the License, or (at your option) any later           *
- * version.                                                                             *
- *                                                                                      *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY      *
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A      *
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.             *
- *                                                                                      *
- * You should have received a copy of the GNU General Public License along with         *
- * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
- ****************************************************************************************/
+/*
+ * Copyright (c) 2024 Neel Doshi <neeldoshi147@gmail.com>
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 3 of the License, or (at your option) any later
+ * version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package com.ichi2.anki.notetype
 
 import android.view.LayoutInflater
@@ -39,6 +39,7 @@ import com.ichi2.anki.libanki.getNotetypeNames
 import com.ichi2.anki.libanki.getStockNotetype
 import com.ichi2.anki.withProgress
 import com.ichi2.utils.customView
+import com.ichi2.utils.moveCursorToEnd
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
 
@@ -119,7 +120,7 @@ class AddNewNotesType(
                     ) {
                         val selectedNotetype = optionsToDisplay[index]
                         nameInput.setText(randomizeName(selectedNotetype.name))
-                        nameInput.setSelection(nameInput.text.length)
+                        nameInput.moveCursorToEnd()
                     }
 
                     override fun onNothingSelected(widget: AdapterView<*>?) {
@@ -150,7 +151,7 @@ class AddNewNotesType(
         selectedOption: AddNotetypeUiModel,
     ) {
         activity.launchCatchingTask {
-            activity.runAndRefreshAfter {
+            withCol {
                 val kind = StockNotetype.Kind.forNumber(selectedOption.id.toInt())
                 val updatedStandardNotetype =
                     getStockNotetype(kind).apply {
@@ -158,6 +159,7 @@ class AddNewNotesType(
                     }
                 addNotetypeLegacy(BackendUtils.toJsonBytes(updatedStandardNotetype))
             }
+            activity.viewModel.refreshNoteTypes()
         }
     }
 
@@ -166,7 +168,7 @@ class AddNewNotesType(
         model: AddNotetypeUiModel,
     ) {
         activity.launchCatchingTask {
-            activity.runAndRefreshAfter {
+            withCol {
                 val targetNotetype = getNotetype(model.id)
                 val newNotetype =
                     targetNotetype.copy {
@@ -175,6 +177,7 @@ class AddNewNotesType(
                     }
                 addNotetype(newNotetype)
             }
+            activity.viewModel.refreshNoteTypes()
         }
     }
 

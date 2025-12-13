@@ -131,9 +131,8 @@
     <string name="empty_filtered_deck">फ़िल्टर किए गए डेक को खाली करना &#8230;</string>
     <string name="search_deck" comment="Deck search for selecting it">डेक खोज</string>
     <string name="empty_deck">इस डेक खाली है</string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">डेक खोज</string>
     <string name="invalid_deck_name">अमान्य डेक नाम</string>
-    <string name="studyoptions_congrats_finished">Congratulations! You have finished for today.</string>
+    <string name="studyoptions_congrats_finished">मुबारक! आपने आज का काम पूरा कर दिया है.</string>
     <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">अभी के लिए डेक समाप्त हो गया! %s</string>
     <string name="studyoptions_no_cards_due">कोई कार्ड अभी तक देय नहीं है</string>
     <string name="sd_card_not_mounted">डिवाइस संग्रह माउंट नहीं</string>
@@ -172,6 +171,7 @@ Back - बैक</string>
     <string name="card_template_browser_appearance_title">ब्राउज़र का दिखाव</string>
     <!-- card Info -->
     <string name="card_info_title" maxLength="28">कार्ड की जानकारी</string>
+    <string name="previous_card_info_title" maxLength="28">पिछले कार्ड की जानकारी</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">पढ़ें और AnkiDroid डेटाबेस के लिए लिखें</string>
     <string name="read_write_permission_description">मौजूदा नोट्स, कार्ड, नोट प्रकार, और डेक तक पहुंचें, साथ ही नए बनाएं</string>
@@ -199,11 +199,21 @@ Back - बैक</string>
     <string name="new_unsafe_collection">यदि आप AnkiDroid की स्थापना रद्द करते हैं तो नया संग्रह आपके फ़ोन से हटा दिया जाएगा</string>
     <!-- Permissions screen -->
     <string name="permissions_screen_headline">अंकीड्रॉइड को काम करने के लिए कुछ अनुमतियों की आवश्यकता है</string>
+    <string name="permissions_screen_optional_headline" comment="Explains that there are optional permissions that can be granted to AnkiDroid.">Ankidorid इन इजाजतों के साथ बेहतरीन चलता है</string>
     <string name="storage_access_title">स्टोरेज एक्सेस</string>
     <string name="storage_access_summary">आपके संग्रह को एक सुरक्षित स्थान पर संग्रहीत करता है जिसे ऐप अनइंस्टॉल होने पर हटाया नहीं जाएगा</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after. See [android.permission.MANAGE_EXTERNAL_STORAGE] on https://developer.android.com/training/data-storage/manage-all-files for context.">सभी फ़ाइलों का एक्सेस</string>
     <string name="image_occlusion">छवि अवरोधन</string>
+    <string name="microphone" comment="Title of the microphone permission in the permissions explanation screen.">माइक</string>
+    <string name="microphone_permission_explanation" comment="Description explaining why AnkiDroid needs the microphone permission, shown on the permissions explanation screen.">Allows you to add sounds to cards and enables voice playback while reviewing</string>
+    <string name="notifications_permission_explanation" comment="Description explaining why AnkiDroid needs the notification permission.">Enables background media syncing and allows you to create review reminders</string>
+    <string name="heading_required_permissions" comment="Heading for the section of required permissions that the app needs to function, shown in the permissions explanation screen.">जरूरी</string>
+    <string name="heading_optional_permissions" comment="Heading for the section of optional permissions that the app needs to function, shown in the permissions explanation screen.">Optional</string>
+    <string name="manually_grant_permissions" comment="Pop-up message that is shown to the user when they want to grant an app permission that must be granted via the OS settings screen.">This permission must be manually granted from Settings</string>
+    <string name="revoke_permissions" comment="Pop-up message that is shown to the user when they are revoking an app permission.">This permission must be manually revoked from Settings</string>
     <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">खाता हटाएं</string>
     <!-- Instant Note Editor -->
     <string name="instant_card" comment="Used in the Android system context menu/share dialog to quickly create a note. This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. ">तत्काल कार्ड</string>
+    <!-- Multiple profile -->
+    <string name="add_profile">Add profile</string>
 </resources>

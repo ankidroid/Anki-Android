@@ -470,7 +470,6 @@ class Whiteboard(
             invalidate()
         }
 
-        @Suppress("deprecation", "API35 computeBounds - maybe compat, but...new API is Flagged?")
         fun erase(
             x: Int,
             y: Int,

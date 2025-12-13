@@ -131,6 +131,8 @@
     <string name="multimedia_editor_failed">Не удалось открыть редактор мультимедиа</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Не удалось получить разрешение на запись звука</string>
+    <string name="permission_denied">Доступ запрещен</string>
+    <string name="recording_permission_denied_message">Доступ к микрофону необходим для \"Записи голоса\". Предоставьте доступ в настройках приложения.</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid обновлён</string>
     <string name="integrity_check_startup_content">AnkiDroid был обновлён. Это обновление включает в себя исправления возможных проблем с базой данных, и мы рекомендуем вам запустить проверку базы данных.</string>
@@ -154,7 +156,7 @@
     <string name="error_deleting_image">Ошибка при удалении изображения</string>
     <string name="failed_to_apply_background_image">Не удалось установить фоновое изображение %s</string>
     <string name="background_image_too_large">Фоновое изображение слишком большое</string>
-    <string name="image_max_size_allowed" comment="Consider keeping the unbreakable space after the digit">Maximum image size %d MB allowed</string>
+    <string name="image_max_size_allowed" comment="Consider keeping the unbreakable space after the digit">Максимальный размер изображения – %d МБ</string>
     <string name="image_dimensions_too_large">Размер изображения слишком велик (%1$d × %2$d)</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
@@ -194,10 +196,10 @@
     <string name="help_dialog_exception_report_sent">Отчёт отправлен!</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
-        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">An automatic sync may be triggered in %d second</item>
-        <item quantity="few">An automatic sync may be triggered in %d seconds</item>
-        <item quantity="many">An automatic sync may be triggered in %d seconds</item>
-        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">An automatic sync may be triggered in %d seconds</item>
+        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">Автоматическая синхронизация может быть запущена через %d секунду</item>
+        <item quantity="few">Автоматическая синхронизация может быть запущена через %d секунды</item>
+        <item quantity="many">Автоматическая синхронизация может быть запущена через %d секунд</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">Автоматическая синхронизация может быть запущена через %d секунд</item>
     </plurals>
     <string name="metered_sync_data_warning">Ваш интернет провайдер может взимать плату за использование данных</string>
     <string name="deck_picker_new">Количество новых карточек на сегодня в этой колоде.</string>
@@ -210,8 +212,6 @@
     <string name="import_deck_package">Пакет колоды (.apkg)</string>
     <string name="import_collection_package">Пакет коллекции (.colpkg)</string>
     <string name="import_csv">Текстовый файл (.txt, .csv)</string>
-    <!-- Deck selection dialog -->
-    <string name="cannot_create_subdeck_for_all_decks">Вы не можете создать подколоду для всех колод</string>
     <!-- scoped storage -->
     <string name="backup_your_collection">Резервное копирование коллекции</string>
     <string name="backup_collection_message">Вы давно не сохраняли резервную копию своей коллекции. Сделайте это сейчас, чтобы предотвратить потерю данных</string>
@@ -246,17 +246,17 @@
         <item quantity="other">дней</item>
     </plurals>
     <plurals name="set_due_date_current_interval">
-        <item quantity="one">Current interval: %d day</item>
-        <item quantity="few">Current interval: %d days</item>
-        <item quantity="many">Current interval: %d days</item>
-        <item quantity="other">Current interval: %d days</item>
+        <item quantity="one">Текущий интервал: %d день</item>
+        <item quantity="few">Текущий интервал: %d дня</item>
+        <item quantity="many">Текущий интервал: %d дней</item>
+        <item quantity="other">Текущий интервал: %d дней</item>
     </plurals>
     <string name="range_delimiter" comment="Placed between two input boxes to denote a range">–</string>
     <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">От</string>
     <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">До</string>
     <!-- Instant Note Editor -->
     <string name="cloze_note_required">Нужен тип записи с пропусками</string>
-    <string name="cloze_not_found_message">Записей с пропусками не найдено, откройте редактор записей или попробуйте снова после добавления карточки с пропусками.</string>
+    <string name="cloze_not_found_message">Нет типа записей для тестов с пропусками. Откройте редактор записей или попробуйте снова после того, как добавите нужный тип записей.</string>
     <string name="open">Открыть</string>
     <string name="change_cloze_number">Количество пропусков</string>
     <string name="cloze_number">Количество пропусков:</string>
@@ -271,4 +271,10 @@
     <string name="tts_error_dialog_reason_text">TTS движок <b>%1$s</b> не поддерживает язык: <b>%2$s</b></string>
     <string name="tts_error_dialog_change_button_text">Изменить движок</string>
     <string name="tts_error_dialog_supported_voices_button_text">Настройки голоса</string>
+    <!-- import_cache_error_resolutions -->
+    <string name="import_error_resolution_try_again">Повторите импорт файла</string>
+    <string name="import_error_resolution_free_up_space">Убедитесь что на устройстве достаточно свободного места</string>
+    <string name="import_error_resolution_check_internet">Убедитесь что вы подключены к Интернету</string>
+    <string name="import_error_resolution_copy_to_device">Copy the file to your device and try again with the local file</string>
+    <string name="import_error_resolution_select_file">Open the file using your device’s file browser app</string>
 </resources>

@@ -61,12 +61,14 @@ class PreferencesAnalyticsTest : RobolectricTest() {
             R.string.pref_review_reminders_screen_key, // reviewRemindersScreen
             R.string.pref_backup_limits_screen_key, // backupLimitsScreen
             R.string.about_screen_key, // aboutScreen
+            R.string.pref_switch_profile_screen_key, // switchProfileScreen
             // Categories: don't have a value
+            R.string.study_screen_category_key, // studyScreenAppearance
             R.string.pref_appearance_screen_key, // appearance_preference_group
             R.string.pref_cat_plugins_key, // category_plugins
             R.string.pref_cat_workarounds_key, // category_workarounds
             R.string.pref_controls_tab_layout_key, // controlsTabLayout
-            R.string.addons_category_key, // addonsCat
+            R.string.pref_review_category_key, // reviewsCategory
             // Preferences that only click: don't have a value
             R.string.tts_key, // tts
             R.string.pref_reset_languages_key, // resetLanguages
@@ -91,7 +93,7 @@ class PreferencesAnalyticsTest : RobolectricTest() {
             R.string.custom_sync_certificate_key, // customSyncCertificate
             // Experimental settings
             R.string.reviewer_menu_settings_key, // reviewerMenuSettings
-            R.string.hide_answer_buttons_key, // hideAnswerButtons
+            R.string.show_answer_buttons_key, // showAnswerButtons
             R.string.hide_hard_and_easy_key, // hideHardAndEasy
             R.string.reviewer_frame_style_key, // reviewerFrameStyle
             R.string.hide_system_bars_key, // hideSystemBars

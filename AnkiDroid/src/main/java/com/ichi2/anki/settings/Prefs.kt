@@ -15,7 +15,9 @@
  */
 package com.ichi2.anki.settings
 
+import android.content.Context
 import android.content.SharedPreferences
+import android.content.res.Resources
 import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
 import androidx.core.content.edit
@@ -23,6 +25,8 @@ import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.BuildConfig
 import com.ichi2.anki.R
 import com.ichi2.anki.cardviewer.TapGestureMode
+import com.ichi2.anki.common.utils.isRunningAsUnitTest
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.settings.enums.FrameStyle
 import com.ichi2.anki.settings.enums.HideSystemBars
 import com.ichi2.anki.settings.enums.PrefEnum
@@ -33,12 +37,12 @@ import kotlin.reflect.KProperty
 
 // TODO move this to `com.ichi2.anki.preferences`
 //  after the UI classes of that package are moved to `com.ichi2.anki.ui.preferences`
-object Prefs {
-    private val sharedPrefs get() = AnkiDroidApp.sharedPrefs()
+object Prefs : PrefsRepository(AnkiDroidApp.sharedPrefs(), AnkiDroidApp.appResources)
 
-    @VisibleForTesting
-    val resources get() = AnkiDroidApp.appResources
-
+open class PrefsRepository(
+    val sharedPrefs: SharedPreferences,
+    private val resources: Resources,
+) {
     @VisibleForTesting
     fun key(
         @StringRes resId: Int,
@@ -107,6 +111,14 @@ object Prefs {
         } ?: defaultValue
     }
 
+    fun <E> putEnum(
+        @StringRes keyResId: Int,
+        value: E,
+    ) where E : Enum<E>, E : PrefEnum {
+        val stringValue = resources.getString(value.entryResId)
+        putString(keyResId, stringValue)
+    }
+
     // **************************************** Delegates *************************************** //
 
     @VisibleForTesting
@@ -153,7 +165,7 @@ object Prefs {
     fun intPref(
         @StringRes keyResId: Int,
         defaultValue: Int,
-    ): ReadWriteProperty<Any, Int> =
+    ): ReadWriteProperty<Any?, Int> =
         object : ReadWriteProperty<Any?, Int> {
             override fun getValue(
                 thisRef: Any?,
@@ -173,7 +185,7 @@ object Prefs {
     fun longPref(
         @StringRes keyResId: Int,
         defaultValue: Long,
-    ): ReadWriteProperty<Any, Long> =
+    ): ReadWriteProperty<Any?, Long> =
         object : ReadWriteProperty<Any?, Long> {
             override fun getValue(
                 thisRef: Any?,
@@ -186,6 +198,26 @@ object Prefs {
                 value: Long,
             ) {
                 putLong(keyResId, value)
+            }
+        }
+
+    @VisibleForTesting
+    fun <E> enumPref(
+        @StringRes keyResId: Int,
+        defaultValue: E,
+    ): ReadWriteProperty<Any?, E> where E : Enum<E>, E : PrefEnum =
+        object : ReadWriteProperty<Any?, E> {
+            override fun getValue(
+                thisRef: Any?,
+                property: KProperty<*>,
+            ): E = getEnum(keyResId, defaultValue)
+
+            override fun setValue(
+                thisRef: Any?,
+                property: KProperty<*>,
+                value: E,
+            ) {
+                putEnum(keyResId, value)
             }
         }
 
@@ -215,8 +247,9 @@ object Prefs {
     //region Custom sync server
 
     val customSyncCertificate by stringPref(R.string.custom_sync_certificate_key)
-    val customSyncUri by stringPref(R.string.current_sync_uri_key)
+    val customSyncUri by stringPref(R.string.custom_sync_server_collection_url_key)
     val isCustomSyncEnabled by booleanPref(R.string.custom_sync_server_enabled_key, defaultValue = false)
+    var isBackgroundEnabled by booleanPref(R.string.pref_deck_picker_background_key, defaultValue = false)
 
     //endregion
 
@@ -237,7 +270,7 @@ object Prefs {
     val ignoreDisplayCutout by booleanPref(R.string.ignore_display_cutout_key, false)
     val autoFocusTypeAnswer by booleanPref(R.string.type_in_answer_focus_key, true)
     val showAnswerFeedback by booleanPref(R.string.show_answer_feedback_key, defaultValue = true)
-    val hideAnswerButtons by booleanPref(R.string.hide_answer_buttons_key, false)
+    val showAnswerButtons by booleanPref(R.string.show_answer_buttons_key, true)
 
     val doubleTapInterval by intPref(R.string.double_tap_timeout_pref_key, defaultValue = 200)
     val newStudyScreenAnswerButtonSize by intPref(R.string.answer_button_size_pref_key, defaultValue = 100)
@@ -245,14 +278,9 @@ object Prefs {
     val swipeSensitivity: Float
         get() = getInt(R.string.pref_swipe_sensitivity_key, 100) / 100F
 
-    val frameStyle: FrameStyle
-        get() = getEnum(R.string.reviewer_frame_style_key, FrameStyle.CARD)
-
-    val hideSystemBars: HideSystemBars
-        get() = getEnum(R.string.hide_system_bars_key, HideSystemBars.NONE)
-
-    val toolbarPosition: ToolbarPosition
-        get() = getEnum(R.string.reviewer_toolbar_position_key, ToolbarPosition.TOP)
+    val frameStyle: FrameStyle by enumPref(R.string.reviewer_frame_style_key, FrameStyle.CARD)
+    val hideSystemBars: HideSystemBars by enumPref(R.string.hide_system_bars_key, HideSystemBars.NONE)
+    val toolbarPosition: ToolbarPosition by enumPref(R.string.reviewer_toolbar_position_key, ToolbarPosition.TOP)
 
     // **************************************** Controls **************************************** //
     //region Controls
@@ -288,19 +316,31 @@ object Prefs {
         get() = getBoolean(R.string.dev_options_enabled_by_user_key, false) || BuildConfig.DEBUG
         set(value) = putBoolean(R.string.dev_options_enabled_by_user_key, value)
 
-    val isNewStudyScreenEnabled: Boolean
-        get() = getBoolean(R.string.new_reviewer_pref_key, false) && getBoolean(R.string.new_reviewer_options_key, false)
+    val isNewStudyScreenEnabled by booleanPref(R.string.new_reviewer_options_key, false)
 
     val devIsCardBrowserFragmented: Boolean
         get() = getBoolean(R.string.dev_card_browser_fragmented, false)
 
-    // **************************************** UI Config *************************************** //
+    val devUsingCardBrowserSearchView: Boolean by booleanPref(R.string.dev_card_browser_search_view, false)
 
-    private const val UI_CONFIG_PREFERENCES_NAME = "ui-config"
+    val isWebDebugEnabled: Boolean
+        get() = (getBoolean(R.string.html_javascript_debugging_key, false) || BuildConfig.DEBUG) && !isRunningAsUnitTest
+
+    // ************************************* Switch Profile option ********************************** //
+
+    /**
+     * Whether the switch profile feature is enabled.
+     */
+    val switchProfileEnabled by booleanPref(R.string.pref_enable_switch_profile_key, false)
+
+    // **************************************** UI Config *************************************** //
 
     /**
      * Get the SharedPreferences used for UI configuration such as Resizable layouts
      */
-    fun getUiConfig(context: android.content.Context): SharedPreferences =
-        context.getSharedPreferences(UI_CONFIG_PREFERENCES_NAME, android.content.Context.MODE_PRIVATE)
+    fun getUiConfig(context: Context): SharedPreferences = context.getSharedPreferences(UI_CONFIG_PREFERENCES_NAME, Context.MODE_PRIVATE)
+
+    companion object {
+        private const val UI_CONFIG_PREFERENCES_NAME = "ui-config"
+    }
 }

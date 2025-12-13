@@ -121,6 +121,8 @@
     <string name="multimedia_editor_failed">打开多媒体编辑器失败</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">录音权限被拒绝</string>
+    <string name="permission_denied">权限被拒绝</string>
+    <string name="recording_permission_denied_message">麦克风权限是\"录制声音\"功能所必需的。请在应用程序设置中授予它。</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid 已升级</string>
     <string name="integrity_check_startup_content">AnkiDroid 已升级。此升级可能修复了一些数据库问题，我们建议您现在开始检查数据库。</string>
@@ -197,8 +199,6 @@
     <string name="import_deck_package">牌组包（.apkg）</string>
     <string name="import_collection_package">集合文件（.colpkg）</string>
     <string name="import_csv">文本文件(.txt, .csv)</string>
-    <!-- Deck selection dialog -->
-    <string name="cannot_create_subdeck_for_all_decks">您不能为所有牌组创建子牌组</string>
     <!-- scoped storage -->
     <string name="backup_your_collection">备份你的集合</string>
     <string name="backup_collection_message">您有一段时间没有备份您的集合了。您应该立即备份以防止数据丢失。</string>
@@ -207,8 +207,8 @@
     <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">稍后</string>
     <string name="button_do_not_show_again" comment="permanently dismisses a dialog">不再显示</string>
     <string name="dismiss_backup_warning_title">数据丢失警告</string>
-    <string name="dismiss_backup_warning_new_user">由于 Android 隐私发生变化，如果应用被卸载，您的数据和自动备份将从您的手机中删除</string>
-    <string name="dismiss_backup_warning_upgrade">由于Android 隐私发生变化，如果应用被卸载，您的数据和自动备份将无法访问</string>
+    <string name="dismiss_backup_warning_new_user">由于 Android 隐私更改，如果卸载应用，您的数据和自动备份将从您的手机中删除</string>
+    <string name="dismiss_backup_warning_upgrade">由于 Android 隐私更改，如果卸载应用，您的数据和自动备份将无法访问</string>
     <string name="deck_already_exists">牌组已存在</string>
     <string name="empty_deck_name">牌组名称不能为空</string>
     <string name="create_deck_numeric_hint">如果您有牌组排序问题 (例如“10”出现在“2”之前)，用“02”替换“2”</string>
@@ -246,4 +246,10 @@
     <string name="tts_error_dialog_reason_text">文本转语音引擎 <b>%1$s</b>不支持下列语言：<b>%2$s</b></string>
     <string name="tts_error_dialog_change_button_text">更改引擎</string>
     <string name="tts_error_dialog_supported_voices_button_text">语音选项</string>
+    <!-- import_cache_error_resolutions -->
+    <string name="import_error_resolution_try_again">重新导入文件</string>
+    <string name="import_error_resolution_free_up_space">确保您的设备上有足够的可用空间</string>
+    <string name="import_error_resolution_check_internet">确保您已连接到互联网</string>
+    <string name="import_error_resolution_copy_to_device">将文件复制到您的设备，然后使用本地文件重试</string>
+    <string name="import_error_resolution_select_file">使用设备的文件浏览器应用打开文件</string>
 </resources>

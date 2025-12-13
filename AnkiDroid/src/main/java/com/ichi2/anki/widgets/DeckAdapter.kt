@@ -1,18 +1,18 @@
-/****************************************************************************************
- * Copyright (c) 2015 Houssam Salem <houssam.salem.au@gmail.com>                        *
- *                                                                                      *
- * This program is free software; you can redistribute it and/or modify it under        *
- * the terms of the GNU General Public License as published by the Free Software        *
- * Foundation; either version 3 of the License, or (at your option) any later           *
- * version.                                                                             *
- *                                                                                      *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY      *
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A      *
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.             *
- *                                                                                      *
- * You should have received a copy of the GNU General Public License along with         *
- * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
- ****************************************************************************************/
+/*
+ * Copyright (c) 2015 Houssam Salem <houssam.salem.au@gmail.com>
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 3 of the License, or (at your option) any later
+ * version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 package com.ichi2.anki.widgets
 
@@ -30,7 +30,6 @@ import androidx.core.content.withStyledAttributes
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.ichi2.anki.OnContextAndLongClickListener.Companion.setOnContextAndLongClickListener
 import com.ichi2.anki.R
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.deckpicker.DisplayDeckNode
@@ -42,23 +41,22 @@ import net.ankiweb.rsdroid.RustCleanup
 /**
  * A [RecyclerView.Adapter] used to show the list of decks inside [com.ichi2.anki.DeckPicker].
  *
- * @param activityHasBackground true if [com.ichi2.anki.DeckPicker] has a background set, false
- * otherwise. If true the adapter will make the rows transparent so the background can be seen.
  * @param onDeckSelected callback triggered when the user selects a deck
  * @param onDeckCountsSelected callback triggered when the user selects the counts of a deck
  * @param onDeckChildrenToggled callback triggered when the user toggles the visibility of its
  * children to show/hide the children. Only for decks that have children.
  * @param onDeckContextRequested callback triggered when the user requested to see extra actions for
  * a deck. This consists in a context menu brought in by either a long touch or a right click.
+ * @param onDeckRightClick callback triggered when the user right-clicks on a deck with a mouse
  */
 @RustCleanup("Differs from legacy backend: Create deck 'One', create deck 'One::two'. 'One::two' was not expanded")
 class DeckAdapter(
     context: Context,
-    private val activityHasBackground: Boolean,
     private val onDeckSelected: (DeckId) -> Unit,
     private val onDeckCountsSelected: (DeckId) -> Unit,
     private val onDeckChildrenToggled: (DeckId) -> Unit,
     private val onDeckContextRequested: (DeckId) -> Unit,
+    private val onDeckRightClick: (DeckId, Float, Float) -> Unit,
 ) : ListAdapter<DisplayDeckNode, DeckAdapter.ViewHolder>(deckNodeDiffCallback) {
     private val layoutInflater = LayoutInflater.from(context)
     private val zeroCountColor: Int
@@ -81,6 +79,18 @@ class DeckAdapter(
     // Flags
     private var hasSubdecks = false
 
+    /**
+     * Flag to indicate if the activity has a background set. If true the adapter will make the rows
+     * transparent so the background can be seen.
+     */
+    var activityHasBackground: Boolean = false
+        set(value) {
+            if (field != value) {
+                field = value
+                notifyDataSetChanged()
+            }
+        }
+
     class ViewHolder(
         v: View,
     ) : RecyclerView.ViewHolder(v) {
@@ -102,25 +112,12 @@ class DeckAdapter(
         data: List<DisplayDeckNode>,
         hasSubDecks: Boolean,
     ) {
-        // submitList is smart to not trigger a refresh if the new list is the same, but we do need
-        // an adapter refresh if the other two properties have changed even if the new data is the
-        // same as they modify some of the adapter's content appearance
-        val forceRefresh =
-            areDataSetsEqual(currentList, data) &&
-                (this.hasSubdecks != hasSubDecks)
+        // force refresh when sub decks status changes as this info isn't encapsulated in the
+        // adapter's items so there wouldn't be an ui refresh just from using submitList()
+        val forceRefresh = this.hasSubdecks != hasSubDecks
         this.hasSubdecks = hasSubDecks
         submitList(data)
         if (forceRefresh) notifyDataSetChanged()
-    }
-
-    private fun areDataSetsEqual(
-        currentSet: List<DisplayDeckNode>,
-        newSet: List<DisplayDeckNode>,
-    ): Boolean {
-        if (currentSet.size != newSet.size) return false
-        return currentSet.zip(newSet).all { (fst, snd) ->
-            fst.fullDeckName == snd.fullDeckName
-        }
     }
 
     /**
@@ -153,6 +150,7 @@ class DeckAdapter(
             runBlocking { setDeckExpander(holder.deckExpander, holder.indentView, node) }
         } else {
             holder.deckExpander.visibility = View.GONE
+            holder.indentView.minimumWidth = 0
             deckLayout.setPaddingRelative(startPadding, 0, endPadding, 0)
         }
         if (node.canCollapse) {
@@ -189,11 +187,23 @@ class DeckAdapter(
         holder.deckRev.setTextColor(if (node.revCount == 0) zeroCountColor else reviewCountColor)
 
         holder.deckLayout.setOnClickListener { onDeckSelected(node.did) }
-        holder.deckLayout.setOnContextAndLongClickListener {
+        holder.deckLayout.setOnLongClickListener {
             onDeckContextRequested(node.did)
             true
         }
         holder.countsLayout.setOnClickListener { onDeckCountsSelected(node.did) }
+
+        // Right click listener for right click context menus
+        holder.deckLayout.setOnGenericMotionListener { _, motionEvent ->
+            if (motionEvent.action == android.view.MotionEvent.ACTION_BUTTON_PRESS &&
+                motionEvent.buttonState and android.view.MotionEvent.BUTTON_SECONDARY != 0
+            ) {
+                onDeckRightClick(node.did, motionEvent.x, motionEvent.y)
+                true
+            } else {
+                false
+            }
+        }
     }
 
     private fun setDeckExpander(

@@ -95,6 +95,11 @@
         <com.ichi2.preferences.ReviewerControlPreference
             android:key="@string/card_info_command_key"
             android:title="@string/card_info_title"
+            android:icon="@drawable/ic_dialog_info"
+            />
+        <com.ichi2.preferences.ReviewerControlPreference
+            android:key="@string/previous_card_info_command_key"
+            android:title="@string/previous_card_info_title"
             android:icon="@drawable/ic_outline_info_24"
             />
     </PreferenceCategory>
@@ -147,6 +152,18 @@
             android:key="@string/page_down_command_key"
             android:title="@string/gesture_page_down"
             android:icon="@drawable/ic_double_arrow_down"
+            />
+        <com.ichi2.preferences.ReviewerControlPreference
+            android:key="@string/browse_command_key"
+            android:icon="@drawable/ic_flashcard_black"
+            app:isPreferenceVisible="false"
+            tools:title="Browse"
+            />
+        <com.ichi2.preferences.ReviewerControlPreference
+            android:key="@string/statistics_command_key"
+            android:icon="@drawable/ic_bar_chart_black"
+            app:isPreferenceVisible="false"
+            tools:title="Statistics"
             />
         <com.ichi2.preferences.ReviewerControlPreference
             android:key="@string/abort_command_key"

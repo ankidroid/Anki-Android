@@ -40,6 +40,9 @@ import java.util.Calendar
 /**
  * BroadcastReceiver which listens to the Android system-level intent that fires when the device starts up.
  * Schedules notifications for review reminders.
+ *
+ * Note that Android battery optimizations may potentially block us from receiving the [Intent.ACTION_BOOT_COMPLETED]
+ * intent, which could cause review reminders to not be scheduled.
  */
 @NeedsTest("Check on various Android versions that this can execute")
 class BootService : BroadcastReceiver() {
@@ -58,13 +61,13 @@ class BootService : BroadcastReceiver() {
             Timber.d("BootService - Already run")
             return
         }
-        if (!grantedStoragePermissions(context, showToast = false)) {
+        if (runCatching { grantedStoragePermissions(context, showToast = false) }.getOrNull() != true) {
             Timber.w("Boot Service did not execute - no permissions")
             return
         }
         if (Prefs.newReviewRemindersEnabled) {
             Timber.i("Executing Boot Service - Review reminders")
-            // TODO: GSoC 2025: Run schedule all notifications method
+            AlarmManagerService.scheduleAllNotifications(context)
         } else {
             // There are cases where the app is installed, and we have access, but nothing exist yet
             val col = getColSafe()
