@@ -126,6 +126,7 @@ class AnkiDroidAppWithCollectionButUnwritableStorage : AnkiDroidApp() {
                 this.sharedPrefs().edit {
                     putString(CollectionHelper.PREF_COLLECTION_PATH, path.absolutePathString())
                 }
+                path.toFile().setWritable(false)
                 super.onCreate()
             } finally {
                 unmockkObject(CollectionHelper)
