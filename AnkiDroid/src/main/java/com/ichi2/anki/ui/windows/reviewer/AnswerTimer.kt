@@ -15,96 +15,92 @@
  */
 package com.ichi2.anki.ui.windows.reviewer
 
-import android.content.Context
-import android.os.Parcelable
 import android.os.SystemClock
-import android.util.AttributeSet
-import android.widget.Chronometer
-import androidx.appcompat.widget.ThemeUtils
-import com.ichi2.anki.R
-import kotlinx.parcelize.Parcelize
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.LifecycleOwner
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
-/**
- * Improved version of a [Chronometer] aimed at handling Anki Decks' `Timer` configurations.
- *
- * Compared to a default [Chronometer], it can:
- * - Restore its status after configuration changes
- * - Stop the timer after [limitInMs] is reached.
- */
-class AnswerTimer(
-    context: Context,
-    attributeSet: AttributeSet?,
-) : Chronometer(context, attributeSet) {
-    var limitInMs = Int.MAX_VALUE
-    private var elapsedMillisBeforeStop = 0L
-    private var isRunning = false
+class AnswerTimer : DefaultLifecycleObserver {
+    private val _state = MutableStateFlow<AnswerTimerState>(AnswerTimerState.Hidden)
+    val state = _state.asStateFlow()
 
-    init {
-        setOnChronometerTickListener {
-            if (hasReachedLimit()) {
-                setTextColor(ThemeUtils.getThemeAttrColor(context, R.attr.maxTimerColor))
-                stop()
+    fun configureForCard(
+        shouldShow: Boolean,
+        limitMs: Int,
+    ) {
+        if (!shouldShow) {
+            _state.value = AnswerTimerState.Hidden
+        } else {
+            _state.value =
+                AnswerTimerState.Running(
+                    baseTime = SystemClock.elapsedRealtime(),
+                    limitMs = limitMs,
+                )
+        }
+    }
+
+    /** Permanently stops the timer. */
+    fun stop() {
+        when (val currentState = _state.value) {
+            is AnswerTimerState.Running -> {
+                val elapsed = SystemClock.elapsedRealtime() - currentState.baseTime
+                _state.value =
+                    AnswerTimerState.Stopped(
+                        elapsedTimeMs = elapsed,
+                        limitMs = currentState.limitMs,
+                    )
+            }
+            is AnswerTimerState.Paused -> {
+                _state.value =
+                    AnswerTimerState.Stopped(
+                        elapsedTimeMs = currentState.elapsedTimeMs,
+                        limitMs = currentState.limitMs,
+                    )
+            }
+            AnswerTimerState.Hidden, is AnswerTimerState.Stopped -> return
+        }
+    }
+
+    /** Temporarily pauses the timer. */
+    override fun onPause(owner: LifecycleOwner) {
+        val currentState = _state.value
+        if (currentState is AnswerTimerState.Running) {
+            val rawElapsed = SystemClock.elapsedRealtime() - currentState.baseTime
+            // If the timer has a limit and we've passed it, clamp the elapsed time
+            // to the limit. This matches the UI behavior where the timer visually stops.
+            val effectiveElapsed = rawElapsed.coerceAtMost(currentState.limitMs.toLong())
+
+            _state.value =
+                AnswerTimerState.Paused(
+                    elapsedTimeMs = effectiveElapsed,
+                    limitMs = currentState.limitMs,
+                )
+        }
+    }
+
+    /** Resumes the timer if it was paused and the limit hasn't been exceeded. */
+    override fun onResume(owner: LifecycleOwner) {
+        val currentState = _state.value
+        if (currentState is AnswerTimerState.Paused) {
+            if (currentState.elapsedTimeMs < currentState.limitMs) {
+                _state.value =
+                    AnswerTimerState.Running(
+                        baseTime = SystemClock.elapsedRealtime() - currentState.elapsedTimeMs,
+                        limitMs = currentState.limitMs,
+                    )
+            } else {
+                // Limit reached while paused, permanently stop it.
+                _state.value =
+                    AnswerTimerState.Stopped(
+                        elapsedTimeMs = currentState.elapsedTimeMs,
+                        limitMs = currentState.limitMs,
+                    )
             }
         }
     }
 
-    override fun start() {
-        super.start()
-        isRunning = true
+    fun hide() {
+        _state.value = AnswerTimerState.Hidden
     }
-
-    override fun stop() {
-        elapsedMillisBeforeStop = SystemClock.elapsedRealtime() - base
-        super.stop()
-        isRunning = false
-    }
-
-    fun resume() {
-        base = SystemClock.elapsedRealtime() - elapsedMillisBeforeStop
-        start()
-    }
-
-    fun restart() {
-        elapsedMillisBeforeStop = 0
-        base = SystemClock.elapsedRealtime()
-        setTextColor(ThemeUtils.getThemeAttrColor(context, android.R.attr.textColor))
-        start()
-    }
-
-    private fun hasReachedLimit() = SystemClock.elapsedRealtime() - base >= limitInMs
-
-    override fun onSaveInstanceState(): Parcelable {
-        val elapsedMillis = if (isRunning) SystemClock.elapsedRealtime() - base else elapsedMillisBeforeStop
-        return SavedState(
-            state = super.onSaveInstanceState(),
-            elapsedMs = elapsedMillis,
-            isRunning = isRunning,
-            limitInMs = limitInMs,
-        )
-    }
-
-    override fun onRestoreInstanceState(state: Parcelable?) {
-        if (state !is SavedState) {
-            super.onRestoreInstanceState(state)
-            return
-        }
-        super.onRestoreInstanceState(state.superState)
-
-        elapsedMillisBeforeStop = state.elapsedMs
-        isRunning = state.isRunning
-        limitInMs = state.limitInMs
-
-        base = SystemClock.elapsedRealtime() - elapsedMillisBeforeStop
-        if (isRunning && !hasReachedLimit()) {
-            super.start()
-        }
-    }
-
-    @Parcelize
-    private data class SavedState(
-        val state: Parcelable?,
-        val elapsedMs: Long,
-        val isRunning: Boolean,
-        val limitInMs: Int,
-    ) : BaseSavedState(state)
 }
