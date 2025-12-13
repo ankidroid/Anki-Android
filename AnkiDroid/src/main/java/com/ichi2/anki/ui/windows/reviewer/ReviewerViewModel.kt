@@ -65,8 +65,10 @@ import com.ichi2.anki.utils.CollectionPreferences
 import com.ichi2.anki.utils.Destination
 import com.ichi2.anki.utils.ext.answerCard
 import com.ichi2.anki.utils.ext.cardStatsNoCardClean
+import com.ichi2.anki.utils.ext.currentCardStudy
 import com.ichi2.anki.utils.ext.flag
 import com.ichi2.anki.utils.ext.getLongOrNull
+import com.ichi2.anki.utils.ext.previousCardStudy
 import com.ichi2.anki.utils.ext.setUserFlagForCards
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Deferred
@@ -265,7 +267,7 @@ class ReviewerViewModel(
 
     private suspend fun emitCardInfoDestination() {
         val cardId = currentCard.await().id
-        val destination = CardInfoDestination(cardId, TR.cardStatsCurrentCard(TR.decksStudy()))
+        val destination = CardInfoDestination(cardId, TR.currentCardStudy())
         Timber.i("Launching 'card info' for card %d", cardId)
         destinationFlow.emit(destination)
     }
@@ -277,7 +279,7 @@ class ReviewerViewModel(
             actionFeedbackFlow.emit(TR.cardStatsNoCardClean())
             return
         }
-        val destination = CardInfoDestination(previousCardId, TR.cardStatsPreviousCard(TR.decksStudy()))
+        val destination = CardInfoDestination(previousCardId, TR.previousCardStudy())
         Timber.i("Launching 'previous card info' for card %d", previousCardId)
         destinationFlow.emit(destination)
     }

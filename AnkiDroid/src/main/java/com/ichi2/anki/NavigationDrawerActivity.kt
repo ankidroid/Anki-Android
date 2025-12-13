@@ -49,6 +49,7 @@ import com.ichi2.anki.IntentHandler.Companion.grantedStoragePermissions
 import com.ichi2.anki.NoteEditorFragment.Companion.NoteEditorCaller
 import com.ichi2.anki.dialogs.help.HelpDialog
 import com.ichi2.anki.libanki.CardId
+import com.ichi2.anki.pages.StatisticsDestination
 import com.ichi2.anki.preferences.PreferencesActivity
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.utils.ext.showDialogFragment
@@ -400,8 +401,7 @@ abstract class NavigationDrawerActivity(
     protected fun openStatistics() {
         Timber.i("launching statistics")
         val intent =
-            com.ichi2.anki.pages.Statistics
-                .getIntent(this)
+            StatisticsDestination().toIntent(this)
         startActivity(intent)
     }
 

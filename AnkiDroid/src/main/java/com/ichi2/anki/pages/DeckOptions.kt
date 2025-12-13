@@ -23,10 +23,12 @@ import android.webkit.JavascriptInterface
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import androidx.activity.OnBackPressedCallback
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentActivity
 import anki.collection.OpChanges
 import anki.collection.Progress
+import com.google.android.material.appbar.MaterialToolbar
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.CrashReportService
@@ -47,6 +49,12 @@ import timber.log.Timber
 @NeedsTest("15130: pressing back: icon + button should return to options if the manual is open")
 @NeedsTest("17905: pressing back before the webpage is ready closes the screen")
 class DeckOptions : PageFragment() {
+    private val deckId: DeckId by lazy { requireArguments().getLong(KEY_DECK_ID) }
+
+    override val pagePath: String by lazy {
+        val deckId = requireArguments().getLong(KEY_DECK_ID)
+        "deck-options/$deckId"
+    }
     private var webViewIsReady = false
 
     /**
@@ -158,6 +166,10 @@ class DeckOptions : PageFragment() {
     ) {
         pageLoadingIndicator.isVisible = true
         super.onViewCreated(view, savedInstanceState)
+        launchCatchingTask {
+            val deckName = withCol { decks.name(deckId, default = true) }
+            view.findViewById<MaterialToolbar>(R.id.toolbar).title = TR.actionsOptionsFor(deckName)
+        }
     }
 
     override fun onWebViewCreated() {
@@ -240,13 +252,13 @@ class DeckOptions : PageFragment() {
     }
 
     companion object {
+        private const val KEY_DECK_ID = "deckId"
+
         fun getIntent(
             context: Context,
             deckId: DeckId,
-        ): Intent {
-            val title = context.getString(R.string.menu__deck_options)
-            return getIntent(context, "deck-options/$deckId", title, DeckOptions::class)
-        }
+        ): Intent =
+            SingleFragmentActivity.getIntent(context, fragmentClass = DeckOptions::class, arguments = bundleOf(KEY_DECK_ID to deckId))
     }
 }
 

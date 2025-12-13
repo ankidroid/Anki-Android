@@ -15,8 +15,6 @@
  */
 package com.ichi2.anki.pages
 
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.print.PrintAttributes
 import android.print.PrintManager
@@ -38,6 +36,7 @@ import dev.androidbroadcast.vbpd.viewBinding
 class Statistics :
     PageFragment(R.layout.statistics),
     DeckSelectionDialog.DeckSelectionListener {
+    override val pagePath: String = "graphs"
     private val binding by viewBinding(StatisticsBinding::bind)
 
     @Suppress("deprecation", "API35 properly handle edge-to-edge")
@@ -118,11 +117,5 @@ class Statistics :
 
     companion object {
         private const val KEY_DECK_NAME = "key_deck_name"
-
-        /**
-         * Note: the title argument is set to null as the [Statistics] fragment is expected to
-         * handle the toolbar content(shows a deck selection spinner).
-         */
-        fun getIntent(context: Context): Intent = getIntent(context, "graphs", null, Statistics::class)
     }
 }
