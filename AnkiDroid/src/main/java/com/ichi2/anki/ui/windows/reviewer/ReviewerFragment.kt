@@ -681,6 +681,7 @@ class ReviewerFragment :
                 isDoubleTapEnabled = bindingMap.isBound(Gesture.DOUBLE_TAP),
             )
         }
+        private var hasShownUnsupportedFeatureWarning = false
 
         init {
             webViewLayout.setOnScrollChangeListener { _, _, _, _, _ ->
@@ -713,6 +714,15 @@ class ReviewerFragment :
                         "focusin" -> webviewHasFocus = true
                         "focusout" -> webviewHasFocus = false
                         "show-answer" -> viewModel.onShowAnswer()
+                    }
+                    true
+                }
+                "signal" -> {
+                    if (hasShownUnsupportedFeatureWarning) return true
+                    hasShownUnsupportedFeatureWarning = true
+                    AlertDialog.Builder(requireContext()).show {
+                        setMessage(R.string.feature_not_supported_by_study_screen)
+                        setPositiveButton(R.string.dialog_ok) { _, _ -> }
                     }
                     true
                 }
