@@ -203,7 +203,7 @@
                 android:id="@+id/answer_area"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                app:layout_constraintWidth_percent="0.40"
+                app:layout_constraintWidth_percent="0.6"
                 app:layout_constraintWidth_max="480dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
