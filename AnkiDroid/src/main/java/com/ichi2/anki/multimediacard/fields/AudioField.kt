@@ -31,7 +31,6 @@ abstract class AudioField :
     FieldBase(),
     IField {
     override var mediaFile: File? = null
-        get() = field
         set(value) {
             field = value
             thisModified = true

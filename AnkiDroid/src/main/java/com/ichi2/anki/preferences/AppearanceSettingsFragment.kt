@@ -58,7 +58,7 @@ class AppearanceSettingsFragment : SettingsFragment() {
             Preference.OnPreferenceClickListener {
                 try {
                     backgroundImageResultLauncher.launch("image/*")
-                } catch (ex: ActivityNotFoundException) {
+                } catch (_: ActivityNotFoundException) {
                     Timber.w("No app found to handle background preference change request")
                     activity?.showSnackbar(R.string.activity_start_failed)
                 }
@@ -101,7 +101,7 @@ class AppearanceSettingsFragment : SettingsFragment() {
             // Only restart if theme has changed
             if (newValue != appThemePref.value) {
                 val previousThemeId = Themes.currentTheme.id
-                appThemePref.value = newValue.toString()
+                appThemePref.value = newValue
                 updateCurrentTheme(requireContext())
 
                 if (previousThemeId != Themes.currentTheme.id) {
