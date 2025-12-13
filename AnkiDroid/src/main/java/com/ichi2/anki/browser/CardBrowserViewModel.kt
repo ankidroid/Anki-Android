@@ -272,10 +272,16 @@ class CardBrowserViewModel(
      */
     val flowOfSaveSearchNamePrompt = MutableSharedFlow<String>()
 
-    var focusedRow: CardOrNoteId? = null
+    /**
+     * Represents currently focused row
+     */
+    val flowOfFocusedRow = MutableStateFlow<CardOrNoteId?>(null)
+
+    var focusedRow: CardOrNoteId?
+        get() = if (isFragmented) flowOfFocusedRow.value else null
         set(value) {
             if (!isFragmented) return
-            field = value
+            flowOfFocusedRow.value = value
         }
 
     suspend fun queryAllSelectedCardIds() = selectedRows.queryCardIds(this.cardsOrNotes)
