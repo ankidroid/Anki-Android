@@ -86,7 +86,6 @@ import com.ichi2.anki.utils.ext.collectLatestIn
 import com.ichi2.anki.utils.ext.sharedPrefs
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.utils.ext.window
-import com.ichi2.anki.utils.isWindowCompact
 import com.ichi2.anki.workarounds.SafeWebViewLayout
 import com.ichi2.themes.Themes
 import com.ichi2.utils.dp
@@ -117,6 +116,7 @@ class ReviewerFragment :
     private lateinit var bindingMap: BindingMap<ReviewerBinding, ViewerAction>
     private var shakeDetector: ShakeDetector? = null
     private val sensorManager get() = ContextCompat.getSystemService(requireContext(), SensorManager::class.java)
+    private val isBigScreen: Boolean get() = binding.complementsLayout != null
     private var webviewHasFocus = false
 
     override val baseSnackbarBuilder: SnackbarBuilder = {
@@ -124,7 +124,7 @@ class ReviewerFragment :
             when {
                 binding.typeAnswerContainer.isVisible -> binding.typeAnswerContainer
                 binding.answerArea.isVisible -> binding.answerArea
-                (Prefs.toolbarPosition == ToolbarPosition.BOTTOM || !resources.isWindowCompact()) ->
+                (Prefs.toolbarPosition == ToolbarPosition.BOTTOM || isBigScreen) ->
                     binding.toolsLayout
 
                 else -> null
@@ -451,7 +451,7 @@ class ReviewerFragment :
         }
 
         val minTopPadding =
-            if (Prefs.frameStyle == FrameStyle.CARD && (!resources.isWindowCompact() || Prefs.toolbarPosition != ToolbarPosition.TOP)) {
+            if (Prefs.frameStyle == FrameStyle.CARD && (isBigScreen || Prefs.toolbarPosition != ToolbarPosition.TOP)) {
                 8F.dp.toPx(requireContext())
             } else {
                 0
@@ -479,7 +479,7 @@ class ReviewerFragment :
     }
 
     private fun setupToolbarPosition() {
-        if (!resources.isWindowCompact()) return
+        if (isBigScreen) return
         when (Prefs.toolbarPosition) {
             ToolbarPosition.TOP -> return
             ToolbarPosition.NONE -> binding.toolsLayout.isVisible = false
@@ -517,7 +517,7 @@ class ReviewerFragment :
     private fun setupToolbarOnBigWindows() {
         val hideAnswerButtons = !Prefs.showAnswerButtons
         // In big screens, let the menu expand if there are no answer buttons
-        if (hideAnswerButtons && !resources.isWindowCompact()) {
+        if (hideAnswerButtons && isBigScreen) {
             with(ConstraintSet()) {
                 clone(binding.toolsLayout)
                 clear(R.id.reviewer_menu_view, ConstraintSet.START)
