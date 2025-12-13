@@ -23,7 +23,6 @@ import androidx.annotation.CheckResult
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import anki.card_rendering.EmptyCardsReport
-import anki.collection.OpChanges
 import anki.decks.SetDeckCollapsedRequest
 import anki.i18n.GeneratedTranslations
 import anki.sync.SyncStatusResponse
@@ -288,7 +287,7 @@ class DeckPickerViewModel :
 
     fun unburyDeck(deckId: DeckId) =
         launchCatchingIO {
-            undoableOp<OpChanges> { sched.unburyDeck(deckId) }
+            undoableOp { sched.unburyDeck(deckId) }
         }
 
     fun scheduleReviewReminders(deckId: DeckId) =
@@ -451,8 +450,7 @@ class DeckPickerViewModel :
      */
     suspend fun fetchSyncIconState(): SyncIconState {
         if (!Prefs.displaySyncStatus) return SyncIconState.Normal
-        val auth = syncAuth()
-        if (auth == null) return SyncIconState.NotLoggedIn
+        val auth = syncAuth() ?: return SyncIconState.NotLoggedIn
         return try {
             // Use CollectionManager to ensure that this doesn't block 'deck count' tasks
             // throws if a .colpkg import or similar occurs just before this call
