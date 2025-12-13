@@ -21,14 +21,13 @@ import android.view.ViewGroup
 import android.widget.Filterable
 import android.widget.ImageButton
 import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.annotation.VisibleForTesting
 import androidx.recyclerview.widget.RecyclerView
 import com.ichi2.anki.OnContextAndLongClickListener
 import com.ichi2.anki.OnContextAndLongClickListener.Companion.setOnContextAndLongClickListener
 import com.ichi2.anki.R
 import com.ichi2.anki.common.annotations.NeedsTest
-import com.ichi2.anki.utils.ext.findViewById
+import com.ichi2.anki.databinding.TagsItemListDialogBinding
 import com.ichi2.ui.CheckBoxTriStates
 import com.ichi2.ui.CheckBoxTriStates.State.CHECKED
 import com.ichi2.ui.CheckBoxTriStates.State.INDETERMINATE
@@ -48,14 +47,9 @@ class TagsArrayAdapter(
 ) : RecyclerView.Adapter<TagsArrayAdapter.ViewHolder>(),
     Filterable {
     class ViewHolder(
-        itemView: View,
-    ) : RecyclerView.ViewHolder(itemView) {
+        val binding: TagsItemListDialogBinding,
+    ) : RecyclerView.ViewHolder(binding.root) {
         internal lateinit var node: TagTreeNode
-        internal val expandButton: ImageButton = findViewById(R.id.id_expand_button)
-        internal val checkBoxView: CheckBoxTriStates = findViewById(R.id.tags_dialog_tag_item_checkbox)
-
-        // TextView contains the displayed tag (only the last part), while the full tag is stored in TagTreeNode
-        internal val textView: TextView = findViewById(R.id.tags_dialog_tag_item_text)
 
         @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)
         val text: String
@@ -63,11 +57,11 @@ class TagsArrayAdapter(
 
         @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)
         val isChecked: Boolean
-            get() = checkBoxView.isChecked
+            get() = binding.checkBoxView.isChecked
 
         @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)
         val checkboxState: CheckBoxTriStates.State
-            get() = checkBoxView.state
+            get() = binding.checkBoxView.state
     }
 
     /**
@@ -102,9 +96,9 @@ class TagsArrayAdapter(
          * [vh] must be nonnull.
          */
         private var checkBoxState: CheckBoxTriStates.State?
-            get() = vh?.checkBoxView?.state
+            get() = vh?.binding?.checkBoxView?.state
             set(state) {
-                state?.let { vh?.checkBoxView?.state = it }
+                state?.let { vh?.binding?.checkBoxView?.state = it }
             }
 
         /**
@@ -146,8 +140,8 @@ class TagsArrayAdapter(
         fun updateCheckBoxCycleStyle(tags: TagsList) {
             val realSubtreeCnt = subtreeCheckedCnt - if (tags.isChecked(tag)) 1 else 0
             val hasDescendantChecked = realSubtreeCnt > 0
-            vh?.checkBoxView?.cycleIndeterminateToChecked = hasDescendantChecked
-            vh?.checkBoxView?.cycleCheckedToIndeterminate = hasDescendantChecked
+            vh?.binding?.checkBoxView?.cycleIndeterminateToChecked = hasDescendantChecked
+            vh?.binding?.checkBoxView?.cycleCheckedToIndeterminate = hasDescendantChecked
         }
 
         /**
@@ -174,7 +168,10 @@ class TagsArrayAdapter(
                     node.checkBoxState = UNCHECKED
                 }
                 node.updateCheckBoxCycleStyle(tags)
-                node.vh?.checkBoxView?.refreshDrawableState()
+                node.vh
+                    ?.binding
+                    ?.checkBoxView
+                    ?.refreshDrawableState()
             }
             update(this)
             for (ancestor in iterateAncestorsOf(this)) {
@@ -243,14 +240,11 @@ class TagsArrayAdapter(
         parent: ViewGroup,
         viewType: Int,
     ): ViewHolder {
-        val v =
-            LayoutInflater
-                .from(parent.context)
-                .inflate(R.layout.tags_item_list_dialog, parent, false)
-        val vh = ViewHolder(v.findViewById(R.id.tags_dialog_tag_item))
+        val binding = TagsItemListDialogBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val vh = ViewHolder(binding)
         // clicking the checkbox toggles the tag's check state
-        vh.checkBoxView.setOnClickListener {
-            val checkBox = vh.checkBoxView
+        binding.checkBoxView.setOnClickListener {
+            val checkBox = binding.checkBoxView
             when (checkBox.state) {
                 CHECKED -> tags.check(vh.node.tag, false)
                 UNCHECKED -> tags.uncheck(vh.node.tag)
@@ -264,7 +258,7 @@ class TagsArrayAdapter(
             if (vh.node.isNotLeaf()) {
                 vh.node.toggleIsExpanded()
                 tagToIsExpanded[vh.node.tag] = !tagToIsExpanded[vh.node.tag]!!
-                updateExpanderBackgroundImage(vh.expandButton, vh.node)
+                updateExpanderBackgroundImage(binding.expandButton, vh.node)
                 // content of RecyclerView may change due to the expansion / collapse
                 val deltaSize = vh.node.subtreeSize - 1
                 if (vh.node.isExpanded) {
@@ -274,8 +268,8 @@ class TagsArrayAdapter(
                 }
             } else {
                 // tapping on a leaf node toggles the checkbox
-                vh.checkBoxView.performClick()
-                vh.checkBoxView.refreshDrawableState()
+                binding.checkBoxView.performClick()
+                binding.checkBoxView.refreshDrawableState()
             }
         }
         // context and long clicking a tag opens the add tag dialog with the current tag as the prefix
@@ -287,29 +281,30 @@ class TagsArrayAdapter(
         holder: ViewHolder,
         position: Int,
     ) {
+        val binding = holder.binding
         holder.node = getVisibleTagTreeNode(position)!!
         holder.node.vh = holder
         holder.itemView.tag = holder.node.tag
 
         if (hasVisibleNestedTag) {
-            holder.expandButton.visibility = if (holder.node.isNotLeaf()) View.VISIBLE else View.INVISIBLE
-            updateExpanderBackgroundImage(holder.expandButton, holder.node)
+            binding.expandButton.visibility = if (holder.node.isNotLeaf()) View.VISIBLE else View.INVISIBLE
+            updateExpanderBackgroundImage(binding.expandButton, holder.node)
             // shift according to the level
             val lp = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
             lp.setMarginStart(HIERARCHY_SHIFT_BASE * holder.node.level)
-            holder.expandButton.layoutParams = lp
+            binding.expandButton.layoutParams = lp
         } else {
             // do not add padding if there is no visible nested tag
-            holder.expandButton.visibility = View.GONE
+            binding.expandButton.visibility = View.GONE
         }
-        holder.expandButton.contentDescription = holder.itemView.context.getString(R.string.expand_tag, holder.node.tag.replace("::", " "))
+        binding.expandButton.contentDescription = holder.itemView.context.getString(R.string.expand_tag, holder.node.tag.replace("::", " "))
 
-        holder.textView.text = TagsUtil.getTagParts(holder.node.tag).last()
+        binding.textView.text = TagsUtil.getTagParts(holder.node.tag).last()
 
         if (tags.isIndeterminate(holder.node.tag)) {
-            holder.checkBoxView.state = INDETERMINATE
+            binding.checkBoxView.state = INDETERMINATE
         } else {
-            holder.checkBoxView.state = if (tags.isChecked(holder.node.tag)) CHECKED else UNCHECKED
+            binding.checkBoxView.state = if (tags.isChecked(holder.node.tag)) CHECKED else UNCHECKED
         }
         holder.node.updateCheckBoxCycleStyle(tags)
     }
