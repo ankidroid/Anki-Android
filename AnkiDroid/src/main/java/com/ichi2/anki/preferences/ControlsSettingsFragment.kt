@@ -18,8 +18,12 @@ package com.ichi2.anki.preferences
 import android.content.res.Configuration
 import androidx.annotation.StringRes
 import androidx.annotation.XmlRes
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.withResumed
+import androidx.lifecycle.withStarted
 import androidx.preference.Preference
 import androidx.preference.children
+import com.bytehamster.lib.preferencesearch.SearchPreferenceResult
 import com.google.android.material.tabs.TabLayout
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
@@ -33,6 +37,7 @@ import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.ui.internationalization.toSentenceCase
 import com.ichi2.anki.utils.ext.sharedPrefs
 import com.ichi2.preferences.ControlPreference
+import kotlinx.coroutines.launch
 import timber.log.Timber
 
 class ControlsSettingsFragment :
@@ -59,6 +64,43 @@ class ControlsSettingsFragment :
         setControlPreferencesDefaultValues(initialScreen)
         setDynamicTitle()
         setupNewStudyScreenSettings()
+    }
+
+    /**
+     * Selects the appropriate tab based on a preference key from search results.
+     * This allows search navigation to automatically switch to the correct tab.
+     */
+    fun selectTabForPreference(key: String) {
+        val targetTabIndex = actionToScreenMap[key]?.ordinal
+        if (targetTabIndex == null) {
+            Timber.w("Could not find the preference with %s key", key)
+            return
+        }
+
+        view?.post {
+            requirePreference<ControlsTabPreference>(
+                R.string.pref_controls_tab_layout_key,
+            ).selectTab(targetTabIndex)
+        }
+    }
+
+    /**
+     * Highlights a search result with proper lifecycle handling.
+     *
+     * This handles the specific case where a tab must be selected before highlighting,
+     * ensuring the fragment is in the appropriate lifecycle states.
+     */
+    fun highlightPreference(result: SearchPreferenceResult) {
+        lifecycleScope.launch {
+            withStarted {
+                selectTabForPreference(result.key)
+            }
+            withResumed {
+                view?.post {
+                    result.highlight(this@ControlsSettingsFragment)
+                }
+            }
+        }
     }
 
     private fun setControlPreferencesDefaultValues(screen: ControlPreferenceScreen) {
@@ -157,6 +199,13 @@ class ControlsSettingsFragment :
     }
 
     companion object {
+        private val actionToScreenMap: Map<String, ControlPreferenceScreen> by lazy {
+            ControlPreferenceScreen.entries
+                .flatMap { screen ->
+                    screen.getActions().map { action -> action.preferenceKey to screen }
+                }.toMap()
+        }
+
         val legacyStudyScreenSettings =
             listOf(
                 R.string.save_voice_command_key,

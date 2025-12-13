@@ -137,8 +137,11 @@ class PreferencesFragment :
             addToBackStack(fragment.javaClass.name)
         }
 
-        Timber.i("Highlighting key '%s' on %s", result.key, fragment)
-        result.highlight(fragment as PreferenceFragmentCompat)
+        if (fragment is ControlsSettingsFragment) {
+            fragment.highlightPreference(result)
+        } else {
+            result.highlight(fragment as PreferenceFragmentCompat)
+        }
     }
 
     private fun setupBackCallbacks() {
@@ -282,6 +285,8 @@ fun getFragmentFromXmlRes(
         R.xml.preferences_notifications -> NotificationsSettingsFragment()
         R.xml.preferences_appearance -> AppearanceSettingsFragment()
         R.xml.preferences_controls -> ControlsSettingsFragment()
+        R.xml.preferences_reviewer_controls -> ControlsSettingsFragment()
+        R.xml.preferences_previewer_controls -> ControlsSettingsFragment()
         R.xml.preferences_advanced -> AdvancedSettingsFragment()
         R.xml.preferences_accessibility -> AccessibilitySettingsFragment()
         R.xml.preferences_dev_options -> DevOptionsFragment()
