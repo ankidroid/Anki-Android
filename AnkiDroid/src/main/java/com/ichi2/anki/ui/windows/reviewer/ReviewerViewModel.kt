@@ -91,6 +91,7 @@ class ReviewerViewModel(
             queueState.await()?.topCard
                 ?: Card(anki.cards.Card.getDefaultInstance())
         }
+    private val repository = StudyScreenRepository()
     val finishResultFlow = MutableSharedFlow<Int>()
     val isMarkedFlow = MutableStateFlow(false)
     val flagFlow = MutableStateFlow(Flag.NONE)
@@ -109,14 +110,14 @@ class ReviewerViewModel(
     val answerTimerStatusFlow = MutableStateFlow<AnswerTimerStatus?>(null)
     val answerFeedbackFlow = MutableSharedFlow<Rating>()
     val voiceRecorderEnabledFlow = MutableStateFlow(false)
-    val whiteboardEnabledFlow = MutableStateFlow(false)
+    val whiteboardEnabledFlow = MutableStateFlow(repository.isWhiteboardEnabled)
     val replayVoiceFlow = MutableSharedFlow<Unit>()
     val timeBoxReachedFlow = MutableSharedFlow<Collection.TimeboxReached>()
     val pageUpFlow = MutableSharedFlow<Unit>()
     val pageDownFlow = MutableSharedFlow<Unit>()
     val statesMutationEvalFlow = MutableSharedFlow<String>()
 
-    override val server: AnkiServer = AnkiServer(this, StudyScreenRepository().getServerPort()).also { it.start() }
+    override val server: AnkiServer = AnkiServer(this, repository.getServerPort()).also { it.start() }
     private val stateMutationKey = TimeManager.time.intTimeMS().toString()
     private var typedAnswer = ""
 
@@ -634,6 +635,12 @@ class ReviewerViewModel(
         cardMediaPlayer.replayAll(side)
     }
 
+    private fun toggleWhiteboard() {
+        val newValue = !whiteboardEnabledFlow.value
+        whiteboardEnabledFlow.value = newValue
+        repository.isWhiteboardEnabled = newValue
+    }
+
     fun executeAction(action: ViewerAction) {
         Timber.v("ReviewerViewModel::executeAction %s", action.name)
         launchCatchingIO {
@@ -676,7 +683,7 @@ class ReviewerViewModel(
                 ViewerAction.FLIP_OR_ANSWER_EASE4 -> flipOrAnswer(Rating.EASY)
                 ViewerAction.SHOW_HINT -> eval.emit("ankidroid.showHint()")
                 ViewerAction.SHOW_ALL_HINTS -> eval.emit("ankidroid.showAllHints()")
-                ViewerAction.TOGGLE_WHITEBOARD -> whiteboardEnabledFlow.emit(!whiteboardEnabledFlow.value)
+                ViewerAction.TOGGLE_WHITEBOARD -> toggleWhiteboard()
                 ViewerAction.RECORD_VOICE -> voiceRecorderEnabledFlow.emit(!voiceRecorderEnabledFlow.value)
                 ViewerAction.REPLAY_VOICE -> replayVoiceFlow.emit(Unit)
                 ViewerAction.PAGE_UP -> pageUpFlow.emit(Unit)

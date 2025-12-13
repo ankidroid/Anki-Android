@@ -30,6 +30,7 @@ class StudyScreenRepository(
 ) {
     val isMarkShownInToolbar: Boolean
     val isFlagShownInToolbar: Boolean
+    var isWhiteboardEnabled by prefs.booleanPref(KEY_WHITEBOARD_ENABLED, false)
 
     init {
         val actions =
@@ -58,5 +59,9 @@ class StudyScreenRepository(
             Timber.w("Fixed port %d under use. Using dynamic port", prefs.reviewerPort)
             0
         }
+    }
+
+    companion object {
+        private const val KEY_WHITEBOARD_ENABLED = "whiteboardEnabled"
     }
 }
