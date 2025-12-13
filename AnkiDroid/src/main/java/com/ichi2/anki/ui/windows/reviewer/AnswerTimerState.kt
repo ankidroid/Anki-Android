@@ -15,17 +15,21 @@
  */
 package com.ichi2.anki.ui.windows.reviewer
 
-import kotlin.random.Random
+sealed interface AnswerTimerState {
+    data object Hidden : AnswerTimerState
 
-sealed interface AnswerTimerStatus {
     data class Running(
-        val limitInMs: Int,
-    ) : AnswerTimerStatus {
-        // allows emitting the same value in MutableStateFlow
-        override fun equals(other: Any?): Boolean = false
+        val baseTime: Long,
+        val limitMs: Int,
+    ) : AnswerTimerState
 
-        override fun hashCode(): Int = Random.nextInt()
-    }
+    data class Paused(
+        val elapsedTimeMs: Long,
+        val limitMs: Int,
+    ) : AnswerTimerState
 
-    data object Stopped : AnswerTimerStatus
+    data class Stopped(
+        val elapsedTimeMs: Long,
+        val limitMs: Int,
+    ) : AnswerTimerState
 }
