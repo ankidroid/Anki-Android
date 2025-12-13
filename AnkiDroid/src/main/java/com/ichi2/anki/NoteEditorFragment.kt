@@ -853,6 +853,27 @@ class NoteEditorFragment :
         if (addNote) {
             noteTypeSpinner!!.onItemSelectedListener = SetNoteTypeListener()
             requireAnkiActivity().setToolbarTitle(R.string.menu_add)
+
+            // set the note type
+            val noteTypeId: Long? =
+                if (!allNoteTypeIds.isNullOrEmpty()) {
+                    requireArguments().getLong(
+                        EXTRA_NOTE_TYPE_ID,
+                        allNoteTypeIds!![0],
+                    )
+                } else {
+                    null
+                }
+            val noteTypeIdIndex: Int =
+                if (noteTypeId != null && !allNoteTypeIds.isNullOrEmpty()) {
+                    allNoteTypeIds!!.indexOfFirst { it == noteTypeId }.let {
+                        if (it == -1) 0 else it
+                    }
+                } else {
+                    0
+                }
+            noteTypeSpinner!!.setSelection(noteTypeIdIndex)
+
             // set information transferred by intent
             var contents: String? = null
             val tags = requireArguments().getStringArray(EXTRA_TAGS)
@@ -1571,7 +1592,14 @@ class NoteEditorFragment :
     }
 
     fun copyNote() {
-        launchNoteEditor(NoteEditorLauncher.CopyNote(deckId, fieldsText, selectedTags)) { }
+        val noteTypeId =
+            if (currentlySelectedNotetype != null) {
+                currentlySelectedNotetype!!.id
+            } else {
+                editorNote?.notetype?.id
+            }
+
+        launchNoteEditor(NoteEditorLauncher.CopyNote(deckId, fieldsText, selectedTags, noteTypeId)) { }
     }
 
     private fun launchNoteEditor(
@@ -2999,6 +3027,7 @@ class NoteEditorFragment :
         const val RELOAD_REQUIRED_EXTRA_KEY = "reloadRequired"
         const val EXTRA_IMG_OCCLUSION = "image_uri"
         const val IN_CARD_BROWSER_ACTIVITY = "inCardBrowserActivity"
+        const val EXTRA_NOTE_TYPE_ID = "NOTE_TYPE_ID"
 
         // calling activity
         enum class NoteEditorCaller(
