@@ -175,3 +175,118 @@ document.addEventListener("focusout", event => {
         return null;
     }
 })();
+
+// region TEMPORARY
+// those functions should be removed once the new API is implemented.
+// they only exist in the new study screen so the user is warned that they are not supported.
+
+function taFocus() {
+    window.location.href = "signal:typefocus";
+}
+
+function showAnswer() {
+    window.location.href = "signal:show_answer";
+}
+function buttonAnswerEase1() {
+    window.location.href = "signal:answer_ease1";
+}
+function buttonAnswerEase2() {
+    window.location.href = "signal:answer_ease2";
+}
+function buttonAnswerEase3() {
+    window.location.href = "signal:answer_ease3";
+}
+function buttonAnswerEase4() {
+    window.location.href = "signal:answer_ease4";
+}
+
+function reloadPage() {
+    window.location.href = "signal:reload_card_html";
+}
+
+const jsApiList = {
+    ankiGetNewCardCount: "newCardCount",
+    ankiGetLrnCardCount: "lrnCardCount",
+    ankiGetRevCardCount: "revCardCount",
+    ankiGetETA: "eta",
+    ankiGetCardMark: "cardMark",
+    ankiGetCardFlag: "cardFlag",
+    ankiGetNextTime1: "nextTime1",
+    ankiGetNextTime2: "nextTime2",
+    ankiGetNextTime3: "nextTime3",
+    ankiGetNextTime4: "nextTime4",
+    ankiGetCardReps: "cardReps",
+    ankiGetCardInterval: "cardInterval",
+    ankiGetCardFactor: "cardFactor",
+    ankiGetCardMod: "cardMod",
+    ankiGetCardId: "cardId",
+    ankiGetCardNid: "cardNid",
+    ankiGetCardType: "cardType",
+    ankiGetCardDid: "cardDid",
+    ankiGetCardLeft: "cardLeft",
+    ankiGetCardODid: "cardODid",
+    ankiGetCardODue: "cardODue",
+    ankiGetCardQueue: "cardQueue",
+    ankiGetCardLapses: "cardLapses",
+    ankiGetCardDue: "cardDue",
+    ankiIsInFullscreen: "isInFullscreen",
+    ankiIsTopbarShown: "isTopbarShown",
+    ankiIsInNightMode: "isInNightMode",
+    ankiIsDisplayingAnswer: "isDisplayingAnswer",
+    ankiGetDeckName: "deckName",
+    ankiIsActiveNetworkMetered: "isActiveNetworkMetered",
+    ankiTtsFieldModifierIsAvailable: "ttsFieldModifierIsAvailable",
+    ankiTtsIsSpeaking: "ttsIsSpeaking",
+    ankiTtsStop: "ttsStop",
+    ankiBuryCard: "buryCard",
+    ankiBuryNote: "buryNote",
+    ankiSuspendCard: "suspendCard",
+    ankiSuspendNote: "suspendNote",
+    ankiAddTagToCard: "addTagToCard",
+    ankiResetProgress: "resetProgress",
+    ankiMarkCard: "markCard",
+    ankiToggleFlag: "toggleFlag",
+    ankiSearchCard: "searchCard",
+    ankiSearchCardWithCallback: "searchCardWithCallback",
+    ankiTtsSpeak: "ttsSpeak",
+    ankiTtsSetLanguage: "ttsSetLanguage",
+    ankiTtsSetPitch: "ttsSetPitch",
+    ankiTtsSetSpeechRate: "ttsSetSpeechRate",
+    ankiEnableHorizontalScrollbar: "enableHorizontalScrollbar",
+    ankiEnableVerticalScrollbar: "enableVerticalScrollbar",
+    ankiSetCardDue: "setCardDue",
+    ankiShowNavigationDrawer: "showNavigationDrawer",
+    ankiShowOptionsMenu: "showOptionsMenu",
+    ankiShowToast: "showToast",
+    ankiShowAnswer: "showAnswer",
+    ankiAnswerEase1: "answerEase1",
+    ankiAnswerEase2: "answerEase2",
+    ankiAnswerEase3: "answerEase3",
+    ankiAnswerEase4: "answerEase4",
+    ankiSttSetLanguage: "sttSetLanguage",
+    ankiSttStart: "sttStart",
+    ankiSttStop: "sttStop",
+    ankiAddTagToNote: "addTagToNote",
+    ankiSetNoteTags: "setNoteTags",
+    ankiGetNoteTags: "getNoteTags",
+};
+
+class AnkiDroidJS {
+    constructor({ developer, version }) {
+        this.developer = developer;
+        this.version = version;
+    }
+
+    handleRequest = (endpoint, data) => {
+        // route all methods to `signal` so the warning is shown
+        window.location.href = "signal:jsapi";
+    };
+}
+
+Object.keys(jsApiList).forEach(method => {
+    AnkiDroidJS.prototype[method] = async function (data) {
+        const endpoint = jsApiList[method];
+        return this.handleRequest(endpoint, data);
+    };
+});
+// endregion
