@@ -73,21 +73,21 @@ class TypeAnswer private constructor(
             text: String,
         ): TypeAnswer? {
             val match = typeAnsRe.find(text) ?: return null
-            val fld = match.groups[1]?.value ?: return null
+            val rawField = match.groups[1]?.value ?: return null
 
             var combining = true
             val typeAnsFieldName =
-                if (fld.startsWith("cloze:")) {
-                    fld.split(":")[1]
-                } else if (fld.startsWith("nc:")) {
+                if (rawField.startsWith("cloze:")) {
+                    rawField.split(":")[1]
+                } else if (rawField.startsWith("nc:")) {
                     combining = false
-                    fld.split(":")[1]
+                    rawField.split(":")[1]
                 } else {
-                    fld
+                    rawField
                 }
             val fields = withCol { card.noteType(this).fields }
             val typeAnswerField = fields.firstOrNull { it.name == typeAnsFieldName } ?: return null
-            val expectedAnswer = getExpectedTypeInAnswer(card, typeAnswerField)
+            val expectedAnswer = getExpectedTypeInAnswer(card, rawField = rawField, fieldName = typeAnsFieldName)
 
             return TypeAnswer(
                 text = text,
@@ -97,13 +97,18 @@ class TypeAnswer private constructor(
             )
         }
 
+        /**
+         * @param rawField the content (x) of a `{{type:x}}` placeholder
+         * @param fieldName the name of the field in the card template
+         */
+        @NeedsTest("cloze type-in-answer are properly parsed")
         private suspend fun getExpectedTypeInAnswer(
             card: Card,
-            field: Field,
+            rawField: String,
+            fieldName: String,
         ): String {
-            val fieldName = field.name
             val expected = withCol { card.note(this@withCol).getItem(fieldName) }
-            return if (fieldName.startsWith("cloze:")) {
+            return if (rawField.startsWith("cloze:")) {
                 val clozeIdx = card.ord + 1
                 withCol {
                     extractClozeForTyping(expected, clozeIdx)
