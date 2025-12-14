@@ -126,7 +126,7 @@ class GestureParser(
      *
      * [GestureData.scrollDirection]: Indicates whether the underlying web content at the gesture's origin
      * is scrollable. This value is determined by the `getScrollDirection`
-     * function in `ankidroid.js` and is used to prevent custom swipe gestures
+     * function in `ankidroid-reviewer.js` and is used to prevent custom swipe gestures
      * from overriding the browser's native scrolling behavior. It can contain:
      * - 'h': The content is horizontally scrollable.
      * - 'v': The content is vertically scrollable.
