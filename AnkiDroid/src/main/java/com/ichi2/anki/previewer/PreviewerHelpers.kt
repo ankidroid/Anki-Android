@@ -81,10 +81,14 @@ fun stdHtml(
         """.trimIndent()
 }
 
-/** @return body classes used when showing a card */
+/**
+ * "mathjax-rendered" is a legacy class kept only to support old note types.
+ *
+ * @return body classes used when showing a card
+ */
 fun bodyClassForCardOrd(
     cardOrd: Int,
     nightMode: Boolean = Themes.currentTheme.isNightMode,
-): String = "card card${cardOrd + 1} ${bodyClass(nightMode)}"
+): String = "card card${cardOrd + 1} ${bodyClass(nightMode)} mathjax-rendered"
 
 private fun bodyClass(nightMode: Boolean = Themes.currentTheme.isNightMode): String = if (nightMode) "nightMode night_mode" else ""
