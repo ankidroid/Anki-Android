@@ -168,6 +168,7 @@ import com.ichi2.anki.ui.animations.fadeIn
 import com.ichi2.anki.ui.animations.fadeOut
 import com.ichi2.anki.ui.windows.permissions.PermissionsActivity
 import com.ichi2.anki.utils.Destination
+import com.ichi2.anki.utils.ShortcutUtils
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.anki.utils.ext.getSizeOfBitmapFromCollection
 import com.ichi2.anki.utils.ext.setFragmentResultListener
@@ -2249,10 +2250,9 @@ open class DeckPicker :
     /** Disables the shortcut of the deck and the children belonging to it.*/
     @NeedsTest("ensure collapsed decks are also deleted")
     private fun disableDeckAndChildrenShortcuts(did: DeckId) {
-        // Get the DeckId and all child DeckIds
         val deckTreeDids = dueTree?.find(did)?.map { it.did.toString() } ?: listOf()
         val errorMessage: CharSequence = getString(R.string.deck_shortcut_doesnt_exist)
-        ShortcutManagerCompat.disableShortcuts(this, deckTreeDids, errorMessage)
+        ShortcutUtils.disableShortcuts(this, deckTreeDids, errorMessage)
     }
 
     fun renameDeckDialog(did: DeckId) {
