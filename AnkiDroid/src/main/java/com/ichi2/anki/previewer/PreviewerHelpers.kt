@@ -25,8 +25,7 @@ import org.intellij.lang.annotations.Language
 
 /**
  * Not exactly equal to anki's stdHtml. Some differences:
- * * `ankidroid.css` is added
- * * `bridgeCommand()` is ignored
+ * * `ankidroid.css` and `ankidroid-cardviewer.js` are added
  *
  * Aimed to be used only for reviewing/previewing cards
  *
@@ -54,6 +53,7 @@ fun stdHtml(
             "backend/js/mathjax.js",
             "backend/js/vendor/mathjax/tex-chtml-full.js",
             "backend/js/reviewer.js",
+            "scripts/ankidroid-cardviewer.js",
         ) + extraJsAssets
     val jsTxt =
         jsAssets.joinToString("\n") {
@@ -76,7 +76,6 @@ fun stdHtml(
         <body class="${bodyClass()}">
             <div id="qa"></div>
             $jsTxt
-            <script>bridgeCommand = function(){};</script>
         </body>
         </html>
         """.trimIndent()
