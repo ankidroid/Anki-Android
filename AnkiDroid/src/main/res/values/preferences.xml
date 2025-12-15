@@ -14,6 +14,8 @@
     <string name="time_limit_preference">timeLimit</string>
     <string name="keep_screen_on_preference">keepScreenOn</string>
     <string name="double_tap_timeout_pref_key">doubleTapTimeout</string>
+    <string name="keep_scroll_position" maxLength="41">Keep scroll position</string>
+    <string name="keep_scroll_position_summ">Keep the scroll position when showing the answer side</string>
     <!-- Sync -->
     <string name="pref_sync_screen_key">syncScreen</string>
     <string name="sync_account_key">syncAccount</string>

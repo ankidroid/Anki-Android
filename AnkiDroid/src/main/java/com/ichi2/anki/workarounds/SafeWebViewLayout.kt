@@ -110,6 +110,21 @@ open class SafeWebViewLayout :
     @MainThread
     fun focusOnWebView() = webView.requestFocus()
 
+    /**
+     * Scroll the underlying WebView (NOT this FrameLayout wrapper).
+     * Calling FrameLayout.scrollTo() will move the WebView out of view and show blank space.
+     */
+    @MainThread
+    fun scrollWebViewTo(
+        x: Int = 0,
+        y: Int,
+    ) {
+        webView.scrollTo(x, y)
+    }
+
+    val webViewScrollY: Int
+        get() = webView.scrollY
+
     @MainThread
     fun destroy() = webView.destroy()
 

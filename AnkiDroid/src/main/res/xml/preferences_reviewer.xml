@@ -72,6 +72,14 @@
             android:icon="@drawable/ic_play_circle_white"
             />
 
+        <SwitchPreferenceCompat
+            android:key="@string/keep_scroll_position"
+            android:title="@string/keep_scroll_position"
+            android:summary="@string/keep_scroll_position_summ"
+            android:defaultValue="false"
+            android:icon="@drawable/ic_link"
+            />
+
     </PreferenceCategory>
 
     <PreferenceCategory

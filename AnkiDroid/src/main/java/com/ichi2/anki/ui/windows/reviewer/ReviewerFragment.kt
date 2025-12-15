@@ -119,6 +119,14 @@ class ReviewerFragment :
     private val isBigScreen: Boolean get() = binding.complementsLayout != null
     private var webviewHasFocus = false
 
+    /** Last known vertical scroll position of the reviewer web content. */
+    private var lastScrollY: Int = 0
+
+    /** If set, restore scroll to this Y once answer-side transition finishes. */
+    private var pendingRestoreScrollY: Int? = null
+
+    private var isAnswerShown: Boolean = false
+
     override val baseSnackbarBuilder: SnackbarBuilder = {
         anchorView =
             when {
@@ -132,6 +140,39 @@ class ReviewerFragment :
     }
 
     private lateinit var tagsDialogFactory: TagsDialogFactory
+
+    private fun isKeepScrollPositionEnabled(): Boolean = sharedPrefs().getBoolean(getString(R.string.keep_scroll_position), false)
+
+    private fun captureScrollForFlipIfNeeded() {
+        if (!isKeepScrollPositionEnabled()) return
+        if (isAnswerShown) return
+        pendingRestoreScrollY = lastScrollY
+    }
+
+    /**
+     * WebView frequently re-lays out after showAnswer (notably via resetZoom / loadWithOverviewMode),
+     * which can reset scroll to 0 after onPageFinished. Apply restoration multiple times.
+     */
+    private fun restoreScrollAfterFlipIfNeeded() {
+        val y = pendingRestoreScrollY ?: return
+        if (!isKeepScrollPositionEnabled()) {
+            pendingRestoreScrollY = null
+            return
+        }
+        if (!isAnswerShown) return
+
+        // Apply a few times; WebView may snap back during subsequent layout passes.
+        val delays = intArrayOf(0, 50, 150)
+        for (d in delays) {
+            webViewLayout.postDelayed({
+                // Try native scroll first.
+                webViewLayout.scrollWebViewTo(y = y)
+                // Also try JS scroll for cases where wrapper scrollTo doesn't affect the document.
+                webViewLayout.evaluateJavascript("window.scrollTo(0, $y);", null)
+            }, d.toLong())
+        }
+        pendingRestoreScrollY = null
+    }
 
     override fun onLoadInitialHtml(): String =
         stdHtml(
@@ -234,6 +275,7 @@ class ReviewerFragment :
         binding.typeAnswerEditText.apply {
             setOnEditorActionListener { _, actionId, _ ->
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    captureScrollForFlipIfNeeded()
                     viewModel.onShowAnswer()
                     return@setOnEditorActionListener true
                 }
@@ -370,15 +412,21 @@ class ReviewerFragment :
                 binding.easyButton.setNextTime(times?.easy)
             }
 
-        binding.showAnswerButton.setOnClickListener { viewModel.onShowAnswer() }
+        binding.showAnswerButton.setOnClickListener {
+            captureScrollForFlipIfNeeded()
+            viewModel.onShowAnswer()
+        }
 
         val insetsController = WindowInsetsControllerCompat(window, binding.rootLayout)
 
-        viewModel.showingAnswer.collectLatestIn(lifecycleScope) { isAnswerShown ->
-            if (isAnswerShown) {
+        viewModel.showingAnswer.collectLatestIn(lifecycleScope) { shown ->
+            isAnswerShown = shown
+            if (shown) {
                 binding.showAnswerButton.visibility = View.INVISIBLE
                 binding.answerButtonsLayout.visibility = View.VISIBLE
                 insetsController.hide(WindowInsetsCompat.Type.ime())
+                // restore AFTER the answer transition work (including resetZoom) has run
+                restoreScrollAfterFlipIfNeeded()
             } else {
                 binding.showAnswerButton.visibility = View.VISIBLE
                 binding.answerButtonsLayout.visibility = View.INVISIBLE
@@ -673,8 +721,8 @@ class ReviewerFragment :
         private var hasShownUnsupportedFeatureWarning = false
 
         init {
-            webViewLayout.setOnScrollChangeListener { _, _, _, _, _ ->
-                isScrolling = true
+            webViewLayout.setOnScrollChangeListener { _, _, scrollY, _, _ ->
+                lastScrollY = scrollY
                 isScrollingJob?.cancel()
                 isScrollingJob =
                     lifecycleScope.launch {
@@ -702,7 +750,10 @@ class ReviewerFragment :
                     when (url.host) {
                         "focusin" -> webviewHasFocus = true
                         "focusout" -> webviewHasFocus = false
-                        "show-answer" -> viewModel.onShowAnswer()
+                        "show-answer" -> {
+                            captureScrollForFlipIfNeeded()
+                            viewModel.onShowAnswer()
+                        }
                     }
                     true
                 }
