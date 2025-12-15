@@ -38,6 +38,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.SharedDecksActivity.Companion.DOWNLOAD_FILE
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.openUrl
@@ -429,7 +430,15 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
         val query = DownloadManager.Query()
         query.setFilterById(downloadId)
 
-        val cursor = downloadManager.query(query)
+        val cursor =
+            try {
+                downloadManager.query(query)
+            } catch (_: IllegalArgumentException) {
+                // 19812: column local_filename is not allowed in queries
+                downloadPercentageText.text = TR.syncDownloadingFromAnkiweb()
+                downloadProgressBar.progress = 0
+                return
+            }
 
         cursor.use {
             // Return if cursor is empty.
