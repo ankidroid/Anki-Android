@@ -17,7 +17,7 @@
 package com.ichi2.anki
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.AndroidTtsVoice.Companion.normalize
+import com.ichi2.anki.i18n.normalize
 import com.ichi2.anki.tests.InstrumentedTest
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
