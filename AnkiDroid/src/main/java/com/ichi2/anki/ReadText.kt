@@ -26,6 +26,7 @@ import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import com.ichi2.anki.cardviewer.SingleCardSide
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.i18n.iso3Code
 import com.ichi2.anki.libanki.Card
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.DeckId
@@ -121,11 +122,18 @@ object ReadText {
             val localeMappings: List<Pair<String, CharSequence>> =
                 mutableListOf<Pair<String, String>>().apply {
                     add(Pair(NO_TTS, res.getString(R.string.tts_no_tts))) // add option: "no tts"
-                    addAll(
+                    val (validLocales, invalidLocales) =
                         availableLocales()
                             .sortedWith(compareBy { it.displayName })
-                            .map { Pair(it.isO3Language, it.displayName) },
-                    )
+                            .map { Pair(it.iso3Code, it.displayName) }
+                            // iso3Code returns null if invalid
+                            // we could work around this, but ReadText is deprecated
+                            .partition { it.first != null }
+
+                    if (invalidLocales.isNotEmpty()) {
+                        Timber.w("%d invalid languages", invalidLocales.size)
+                    }
+                    addAll(validLocales.map { Pair(it.first!!, it.second) })
                 }
             Timber.i("showing 'select language' dialog")
             dialog
