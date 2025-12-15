@@ -1419,6 +1419,7 @@ class CardBrowserTest : RobolectricTest() {
 
     @Test
     @Flaky(OS.ALL)
+    @Ignore("flaking locally as well now; see 19021")
     fun `FindReplace - replaces text in all notes if 'Only in selected notes' is unchecked`() {
         val note0 = createFindReplaceTestNote("A", "kart", "kilogram")
         val note1 = createFindReplaceTestNote("B", "pink", "chicken")
