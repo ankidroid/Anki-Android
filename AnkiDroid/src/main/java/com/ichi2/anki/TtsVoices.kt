@@ -22,12 +22,10 @@
 
 package com.ichi2.anki
 
-import android.icu.util.ULocale
 import android.speech.tts.TextToSpeech
 import android.speech.tts.Voice
-import androidx.annotation.CheckResult
-import com.ichi2.anki.AndroidTtsVoice.Companion.normalize
-import com.ichi2.anki.common.utils.android.isRobolectric
+import com.ichi2.anki.i18n.normalize
+import com.ichi2.anki.i18n.toAnkiTwoLetterCode
 import com.ichi2.anki.libanki.TemplateManager
 import com.ichi2.anki.libanki.TtsVoice
 import kotlinx.coroutines.Dispatchers
@@ -276,86 +274,4 @@ class AndroidTtsVoice(
 
     val isNetworkConnectionRequired
         get() = voice.isNetworkConnectionRequired
-
-    companion object {
-        /**
-         * Returns an Anki-compatible 'two letter' code (ISO-639-1 + ISO 3166-1 [alpha-2 preferred])
-         * ```
-         * Locale("spa", "MEX", "001") => "es_MX"
-         * Locale("ar", "") => "ar"
-         * ```
-         *
-         * This differs from [Locale.toLanguageTag]:
-         * * [Locale.variant][Locale.getVariant] is not output
-         * * A "_" is used instead of a "-" to match Anki Desktop
-         */
-        @CheckResult
-        fun Locale.toAnkiTwoLetterCode(): String =
-            this.normalize().run {
-                return if (country.isBlank()) language else "${language}_$country"
-            }
-
-        // TODO: Move the following functions into a separate object
-        // All are coupled to `twoLetterSystemLocaleMapping`
-
-        /**
-         * Converts a locale to a 'two letter' code (ISO-639-1 + ISO 3166-1 alpha-2)
-         * Locale("spa", "MEX", "001") => Locale("es", "MX", "001")
-         */
-        @CheckResult
-        fun Locale.normalize(): Locale {
-            // ULocale isn't currently handled by Robolectric
-            if (isRobolectric) {
-                // normalises to "spa_MEX"
-                val iso3Code = this.iso3Code ?: return this
-                // convert back from this key to a two-letter mapping
-                return twoLetterSystemLocaleMapping[iso3Code] ?: this
-            }
-            return try {
-                val uLocale = ULocale(language, country, variant)
-                Locale.forLanguageTag(uLocale.language + '-' + uLocale.country + '-' + uLocale.variant)
-            } catch (e: Exception) {
-                Timber.w(e, "Failed to normalize locale %s", this)
-                this
-            }
-        }
-
-        /**
-         * Maps from the ISO 3 code of a locale to the locale in [Locale.getAvailableLocales]
-         */
-        private val twoLetterSystemLocaleMapping: Map<String, Locale>
-
-        /**
-         * Returns the ISO 3 code of the locale, with optional country specifier if provided.
-         * Or `null` if the device does not have a mapping from the ISO-2 to ISO-3 code.
-         *
-         * ```
-         * // "spa"
-         * // "spa_MX"
-         * // "cz" => `null` (on some devices)
-         * ```
-         */
-        val Locale.iso3Code: String?
-            get() {
-                try {
-                    if (this.country.isBlank()) {
-                        return this.isO3Language
-                    }
-                    return "${this.isO3Language}_${this.isO3Country}"
-                } catch (e: Exception) {
-                    // MissingResourceException can be thrown, in which case return null
-                    return null
-                }
-            }
-
-        init {
-            val locales = Locale.getAvailableLocales()
-            val validLocales = mutableMapOf<String, Locale>()
-            for (locale in locales) {
-                val code = locale.iso3Code ?: continue
-                validLocales.putIfAbsent(code, locale)
-            }
-            twoLetterSystemLocaleMapping = validLocales
-        }
-    }
 }
