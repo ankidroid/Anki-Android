@@ -90,14 +90,13 @@ fun Locale.normalize(): Locale {
  * ```
  */
 val Locale.iso3Code: String?
-    get() {
+    get() =
         try {
-            if (this.country.isBlank()) {
-                return this.isO3Language
-            }
-            return "${this.isO3Language}_${this.isO3Country}"
-        } catch (e: Exception) {
+            // use Java-style 'get' methods; `val` properties are badly named: 'isO3Language'
+            val language = this.getISO3Language()
+            if (this.country.isBlank()) language else "${language}_${this.getISO3Country()}"
+        } catch (_: Exception) {
             // MissingResourceException can be thrown, in which case return null
-            return null
+            // example: MissingResourceException: Couldn't find 3-letter language code for cz
+            null
         }
-    }
