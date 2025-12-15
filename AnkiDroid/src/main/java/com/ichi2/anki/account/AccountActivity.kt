@@ -19,40 +19,14 @@ package com.ichi2.anki.account
 
 import android.content.Context
 import android.content.Intent
-import android.os.Build
-import androidx.activity.result.ActivityResultLauncher
 import androidx.core.os.bundleOf
 import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.isLoggedIn
-import com.ichi2.utils.Permissions
 
 class AccountActivity : SingleFragmentActivity() {
     companion object {
         /** Sees if we want to go back to the DeckPicker after login*/
         const val START_FROM_DECKPICKER = "START_FOR_RESULT"
-
-        /**
-         * Displays a system prompt: "Allow AnkiDroid to send you notifications"
-         *
-         * [launcher] receives a callback result (`boolean`) unless:
-         *  * Permissions were already granted
-         *  * We are < API 33
-         *
-         * Permissions may permanently be denied, in which case [launcher] immediately
-         * receives a failure result
-         */
-        fun checkNotificationPermission(
-            context: Context,
-            launcher: ActivityResultLauncher<String>,
-        ) {
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) return
-
-            val permission = Permissions.postNotification ?: return
-
-            if (!Permissions.canPostNotifications(context)) {
-                launcher.launch(permission)
-            }
-        }
 
         /**
          * Returns an [Intent] to launch either [LoggedInFragment] or [LoginFragment]
