@@ -106,7 +106,6 @@ class LoginFragment : Fragment(R.layout.my_account) {
         initUsernameListeners()
         initPasswordListeners()
         initButtonListeners()
-        initObservers()
     }
 
     private fun initUsernameListeners() {
