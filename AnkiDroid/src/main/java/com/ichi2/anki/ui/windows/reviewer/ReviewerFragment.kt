@@ -27,6 +27,7 @@ import android.view.KeyEvent
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup.MarginLayoutParams
+import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.webkit.WebView
@@ -227,6 +228,10 @@ class ReviewerFragment :
                     toggle()
                 }
             }
+        }
+
+        if (Prefs.keepScreenOn) {
+            window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         }
     }
 

@@ -277,6 +277,7 @@ open class PrefsRepository(
     val autoFocusTypeAnswer by booleanPref(R.string.type_in_answer_focus_key, true)
     val showAnswerFeedback by booleanPref(R.string.show_answer_feedback_key, defaultValue = true)
     val showAnswerButtons by booleanPref(R.string.show_answer_buttons_key, true)
+    val keepScreenOn by booleanPref(R.string.keep_screen_on_preference, defaultValue = false)
 
     val doubleTapInterval by intPref(R.string.double_tap_timeout_pref_key, defaultValue = 200)
     val newStudyScreenAnswerButtonSize by intPref(R.string.answer_button_size_pref_key, defaultValue = 100)
