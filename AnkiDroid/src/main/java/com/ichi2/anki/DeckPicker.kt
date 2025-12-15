@@ -1253,7 +1253,7 @@ open class DeckPicker :
 
     private fun updateSearchVisibilityFromState(menu: Menu) {
         optionsMenuState?.run {
-            menu.findItem(R.id.deck_picker_action_filter).isVisible = searchIcon
+            menu.findItem(R.id.deck_picker_action_filter)?.isVisible = searchIcon
         }
     }
 
