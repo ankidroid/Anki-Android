@@ -153,7 +153,7 @@ class SavedBrowserSearchesDialogFragment : AnalyticsDialogFragment() {
             SavedBrowserSearchesDialogFragment().apply {
                 arguments =
                     Bundle().also {
-                        it.putSerializable(ARG_SAVED_FILTERS, savedFilters.let(::HashMap))
+                        it.putSerializable(ARG_SAVED_FILTERS, HashMap(savedFilters))
                     }
             }
     }

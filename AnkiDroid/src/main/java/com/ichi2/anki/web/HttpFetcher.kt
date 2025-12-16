@@ -98,7 +98,7 @@ object HttpFetcher {
                 val reader =
                     BufferedReader(
                         InputStreamReader(
-                            response.body!!.byteStream(),
+                            response.body.byteStream(),
                             Charset.forName(encoding),
                         ),
                     )

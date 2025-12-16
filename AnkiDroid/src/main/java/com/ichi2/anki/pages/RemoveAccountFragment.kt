@@ -106,6 +106,8 @@ class RemoveAccountFragment :
                 return shouldOverrideUrlLoading(view, request?.url.toString())
             }
 
+            @Suppress("OVERRIDE_DEPRECATION")
+            @Deprecated("Deprecated in Java")
             override fun shouldOverrideUrlLoading(
                 view: WebView?,
                 url: String?,

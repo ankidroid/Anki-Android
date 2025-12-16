@@ -136,7 +136,7 @@ class DB(
 
     @KotlinCleanup("""Use Kotlin string. Change split so that there is no empty string after last ";".""")
     fun executeScript(sql: String) {
-        val queries = java.lang.String(sql).split(";")
+        val queries = sql.split(";")
         for (query in queries) {
             database.execSQL(query)
         }

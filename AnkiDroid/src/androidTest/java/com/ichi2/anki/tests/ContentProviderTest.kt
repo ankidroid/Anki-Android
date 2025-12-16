@@ -123,7 +123,7 @@ class ContentProviderTest : InstrumentedTest() {
                 /* If parent already exists, don't add the deck, so
                  * that we are sure it won't get deleted at
                  * set-down, */
-                val did = col.decks.byName(partialName!!)?.id ?: col.decks.id(partialName)
+                val did = col.decks.byName(partialName)?.id ?: col.decks.id(partialName)
                 testDeckIds.add(did)
                 createdNotes.add(setupNewNote(col, noteTypeId, did, dummyFields, TEST_TAG))
                 partialName += "::"

@@ -85,6 +85,7 @@ abstract class MultimediaFragment(
 
         if (arguments != null) {
             Timber.d("Getting MultimediaActivityExtra values from arguments")
+            @Suppress("USELESS_CAST")
             val multimediaActivityExtra =
                 arguments?.getSerializableCompat(
                     MultimediaActivity.MULTIMEDIA_ARGS_EXTRA,
