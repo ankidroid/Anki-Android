@@ -10,7 +10,7 @@ minSdk = "24"  # also in testlib/build.gradle.kts
 
 targetSdk = "35"  # affects which SDKs download in ../robolectricDownloader.gradle
 acra = '5.13.1'
-ktlint = '1.5.0'
+ktlint = '1.8.0'
 # AGP is included in Android Studio and changelogs are not well maintained/at a stable URL
 # Open https://developer.android.com/build/releases/gradle-plugin#patch-releases
 # Maybe select a "bug fixes" link ->
