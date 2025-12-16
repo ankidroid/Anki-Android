@@ -48,6 +48,8 @@ import com.ichi2.anki.browser.CardBrowserColumn.SFLD
 import com.ichi2.anki.browser.CardBrowserColumn.TAGS
 import com.ichi2.anki.browser.CardBrowserLaunchOptions.DeepLink
 import com.ichi2.anki.browser.CardBrowserLaunchOptions.SystemContextMenu
+import com.ichi2.anki.browser.CardBrowserViewModel.ChangeMultiSelectMode
+import com.ichi2.anki.browser.CardBrowserViewModel.ChangeMultiSelectMode.MultiSelectCause
 import com.ichi2.anki.browser.CardBrowserViewModel.ChangeMultiSelectMode.SingleSelectCause
 import com.ichi2.anki.browser.CardBrowserViewModel.Companion.STATE_MULTISELECT_VALUES
 import com.ichi2.anki.browser.CardBrowserViewModel.RowSelection
@@ -1115,15 +1117,15 @@ class CardBrowserViewModelTest : JvmTest() {
         val handle = SavedStateHandle()
         runViewModelTest(savedStateHandle = handle, notes = 1) {
             assertThat(isInMultiSelectMode, equalTo(false))
-            assertThat("initial multiselect state", handle.get<Boolean>("multiselect"), equalTo(false))
+            assertInstanceOf<SingleSelectCause.Other>(handle.multiselectMode, "initial multiselect state")
             selectAll()
-            assertThat("multiselect after select all", handle.get<Boolean>("multiselect"), equalTo(true))
+            assertInstanceOf<MultiSelectCause.Other>(handle.multiselectMode, "multiselect after select all")
         }
 
         runViewModelTest(savedStateHandle = handle) {
-            assertThat("multiselect state restoration", isInMultiSelectMode, equalTo(true))
+            assertInstanceOf<MultiSelectCause.Other>(handle.multiselectMode, "multiselect state restoration")
             endMultiSelectMode(SingleSelectCause.NavigateBack)
-            assertThat("multiselect after 'end multiselect'", handle.get<Boolean>("multiselect"), equalTo(false))
+            assertInstanceOf<SingleSelectCause.NavigateBack>(handle.multiselectMode, "initial multiselect state")
         }
     }
 
@@ -1380,3 +1382,6 @@ fun CardBrowserViewModel.selectRowAtPosition(position: Int) {
 }
 
 fun CardOrNoteId.toRowSelection() = RowSelection(rowId = this, topOffset = 0)
+
+private val SavedStateHandle.multiselectMode
+    get() = get<ChangeMultiSelectMode>("multiselect")
