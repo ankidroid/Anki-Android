@@ -595,7 +595,7 @@ class CardBrowserViewModelTest : JvmTest() {
     fun `suspend - notes - some cards suspended`() =
         runViewModelNotesTest(notes = 2) {
             // this suspends o single cid from a nid
-            suspendCards(cards.first().toCardId(cardsOrNotes) as CardId)
+            suspendCards(cards.first().toCardId(cardsOrNotes))
             ensureOpsExecuted(1) {
                 selectAll()
                 toggleSuspendCards()

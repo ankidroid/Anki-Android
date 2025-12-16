@@ -101,7 +101,7 @@ class AppearanceSettingsFragment : SettingsFragment() {
             // Only restart if theme has changed
             if (newValue != appThemePref.value) {
                 val previousThemeId = Themes.currentTheme.id
-                appThemePref.value = newValue.toString()
+                appThemePref.value = newValue
                 updateCurrentTheme(requireContext())
 
                 if (previousThemeId != Themes.currentTheme.id) {

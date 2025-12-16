@@ -2204,7 +2204,7 @@ open class DeckPicker :
     @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
     fun updateDeckList() {
         launchCatchingTask {
-            withProgress { viewModel.updateDeckList()?.join() }
+            withProgress { viewModel.updateDeckList().join() }
         }
     }
 
