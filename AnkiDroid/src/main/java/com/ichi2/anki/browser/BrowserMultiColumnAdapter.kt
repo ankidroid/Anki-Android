@@ -45,6 +45,7 @@ import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.utils.android.darkenColor
 import com.ichi2.anki.utils.android.lightenColorAbsolute
 import com.ichi2.anki.utils.ext.findViewById
+import com.ichi2.themes.Themes
 import com.ichi2.utils.removeChildren
 import net.ankiweb.rsdroid.BackendException
 import timber.log.Timber
@@ -163,16 +164,17 @@ class BrowserMultiColumnAdapter(
         fun setColor(
             @ColorInt color: Int,
         ) {
-            var pressedColor = darkenColor(color, 0.85f)
-            var focusedColor = darkenColor(color, 0.4f)
+            val nightMode = Themes.currentTheme.isNightMode
+            val pressedColor: Int
+            val focusedColor: Int
 
-            if (pressedColor == color) {
-                // if the color is black, we can't darken it.
-                // A non-black background looks unusual, so the 'press' should lighten the color
-
+            if (nightMode) {
                 // 25% was determined by visual inspection
-                pressedColor = lightenColorAbsolute(pressedColor, 0.25f)
+                pressedColor = lightenColorAbsolute(color, 0.25f)
                 focusedColor = pressedColor
+            } else {
+                pressedColor = darkenColor(color, 0.85f)
+                focusedColor = darkenColor(color, 0.4f)
             }
 
             require(pressedColor != color)
