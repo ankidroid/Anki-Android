@@ -8,3 +8,19 @@ end_of_line = crlf
 # We often have block comments representing implementation details after KDocs.
 # This feels like an acceptable commenting strategy
 ktlint_standard_no-consecutive-comments = disabled
+
+# These lines add significant verbosity to the codebase. The PR introducing these rules (19817)
+# added 2k LOC to the codebase, often quadrupling the number of lines:
+#
+#             PreviewerAction.MARK -> viewModel.toggleMark()
+# became:
+#             PreviewerAction.MARK -> {
+#                 viewModel.toggleMark()
+#             }
+#             <blank line>
+#
+# https://pinterest.github.io/ktlint/latest/rules/standard/#when-entry-bracing
+ktlint_standard_when-entry-bracing = disabled
+# https://pinterest.github.io/ktlint/latest/rules/standard/#blank-line-between-when-conditions
+ktlint_standard_blank-line-between-when-conditions = disabled
+
