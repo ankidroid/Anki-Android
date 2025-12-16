@@ -58,7 +58,7 @@ object StringFormatDetector {
 
     /**
      * Removes all the unescaped quotes. See [Escaping
- * apostrophes and quotes](http://developer.android.com/guide/topics/resources/string-resource.html#FormattingAndStyling)
+     * apostrophes and quotes](http://developer.android.com/guide/topics/resources/string-resource.html#FormattingAndStyling)
      */
     fun stripQuotes(s: String): String {
         val sb = StringBuilder()
