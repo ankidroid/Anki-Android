@@ -24,7 +24,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.view.WindowManager
-import android.view.animation.Animation
 import android.widget.ProgressBar
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
@@ -330,12 +329,6 @@ open class AnkiActivity(
         startActivityWithAnimation(intent, DEFAULT)
     }
 
-    fun startActivityWithoutAnimation(intent: Intent) {
-        disableIntentAnimation(intent)
-        super.startActivity(intent)
-        disableActivityAnimation()
-    }
-
     fun startActivityWithAnimation(
         intent: Intent,
         animation: Direction,
@@ -343,22 +336,6 @@ open class AnkiActivity(
         enableIntentAnimation(intent)
         super.startActivity(intent)
         enableActivityAnimation(animation)
-    }
-
-    private fun launchActivityForResult(
-        intent: Intent?,
-        launcher: ActivityResultLauncher<Intent?>,
-        animation: Direction?,
-    ) {
-        try {
-            launcher.launch(
-                intent,
-                ActivityTransitionAnimation.getAnimationOptions(this, animation),
-            )
-        } catch (e: ActivityNotFoundException) {
-            Timber.w(e)
-            this.showSnackbar(R.string.activity_start_failed)
-        }
     }
 
     override fun finish() {
@@ -369,22 +346,6 @@ open class AnkiActivity(
         Timber.i("finishWithAnimation %s", animation)
         super.finish()
         enableActivityAnimation(animation)
-    }
-
-    @Suppress("MemberVisibilityCanBePrivate")
-    protected fun disableViewAnimation(view: View) {
-        view.clearAnimation()
-    }
-
-    protected fun enableViewAnimation(
-        view: View,
-        animation: Animation?,
-    ) {
-        if (animationDisabled()) {
-            disableViewAnimation(view)
-        } else {
-            view.animation = animation
-        }
     }
 
     private fun disableIntentAnimation(intent: Intent) {
@@ -668,21 +629,6 @@ open class AnkiActivity(
             findViewById<Toolbar>(R.id.toolbar)
                 ?: // likely missing "<include layout="@layout/toolbar" />"
                 throw IllegalStateException("Unable to find toolbar")
-        setSupportActionBar(toolbar)
-        return supportActionBar!!
-    }
-
-    /**
-     * sets [.getSupportActionBar] and returns the action bar
-     * @param view the view which contains a toolbar element:
-     * @return The action bar which was created
-     * @throws IllegalStateException if the bar could not be enabled
-     */
-    protected fun enableToolbar(view: View): ActionBar {
-        val toolbar =
-            view.findViewById<Toolbar>(R.id.toolbar)
-                ?: // likely missing "<include layout="@layout/toolbar" />"
-                throw IllegalStateException("Unable to find toolbar: $view")
         setSupportActionBar(toolbar)
         return supportActionBar!!
     }
