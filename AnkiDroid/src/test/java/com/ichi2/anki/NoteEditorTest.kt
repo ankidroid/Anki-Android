@@ -42,6 +42,7 @@ import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.Decks.Companion.CURRENT_DECK
 import com.ichi2.anki.libanki.Note
 import com.ichi2.anki.libanki.NotetypeJson
+import com.ichi2.anki.libanki.testutils.AnkiTest
 import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import com.ichi2.testutils.getString
@@ -805,10 +806,8 @@ private var NoteEditorFragment.noteType: NotetypeJson
     set(value) = this.setCurrentlySelectedNoteType(value.id)
 
 /** Select a deck by Id */
-private fun NoteEditorFragment.selectDeck(
-    deckId: DeckId,
-    name: String = "Undefined",
-) {
-    // TODO: get name from collection and make this 'suspend fun' after Context Parameters (#19614)
+context(testContext: AnkiTest)
+private fun NoteEditorFragment.selectDeck(deckId: DeckId) {
+    val name = testContext.col.decks.name(deckId)
     onDeckSelected(SelectableDeck.Deck(deckId, name))
 }
