@@ -222,10 +222,13 @@ class CustomStudyDialogTest : RobolectricTest() {
                 }
         }
 
-    private fun argumentsDisplayingSubscreen(subscreen: ContextMenuOption): Bundle {
+    private fun argumentsDisplayingSubscreen(
+        subscreen: ContextMenuOption,
+        deckId: DeckId = Consts.DEFAULT_DECK_ID,
+    ): Bundle {
         @Suppress("RedundantValueArgument")
         fun setupDefaultValuesSingleton() {
-            withCustomStudyFragment(argumentsDisplayingMainScreen(deckId = Consts.DEFAULT_DECK_ID)) { }
+            withCustomStudyFragment(argumentsDisplayingMainScreen(deckId = deckId)) { }
         }
 
         setupDefaultValuesSingleton()
@@ -233,7 +236,7 @@ class CustomStudyDialogTest : RobolectricTest() {
         return requireNotNull(
             CustomStudyDialog
                 .createSubDialog(
-                    deckId = Consts.DEFAULT_DECK_ID,
+                    deckId = deckId,
                     contextMenuAttribute = subscreen,
                 ).arguments,
         )
