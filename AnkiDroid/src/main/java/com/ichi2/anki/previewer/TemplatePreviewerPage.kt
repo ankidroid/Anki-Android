@@ -26,9 +26,9 @@ import androidx.fragment.app.commitNow
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.tabs.TabLayout
-import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.ichi2.anki.R
 import com.ichi2.anki.previewer.TemplatePreviewerFragment.Companion.ARGS_KEY
+import com.ichi2.anki.utils.ext.doOnTabSelected
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -72,22 +72,10 @@ class TemplatePreviewerPage : Fragment(R.layout.template_previewer_container) {
                 tabLayout.addTab(newTab)
             }
             tabLayout.selectTab(tabLayout.getTabAt(viewModel.getCurrentTabIndex()))
-            tabLayout.addOnTabSelectedListener(
-                object : OnTabSelectedListener {
-                    override fun onTabSelected(tab: TabLayout.Tab) {
-                        Timber.v("Selected tab %d", tab.position)
-                        viewModel.onTabSelected(tab.position)
-                    }
-
-                    override fun onTabUnselected(tab: TabLayout.Tab) {
-                        // do nothing
-                    }
-
-                    override fun onTabReselected(tab: TabLayout.Tab) {
-                        // do nothing
-                    }
-                },
-            )
+            tabLayout.doOnTabSelected { tab ->
+                Timber.v("Selected tab %d", tab.position)
+                viewModel.onTabSelected(tab.position)
+            }
         }
     }
 

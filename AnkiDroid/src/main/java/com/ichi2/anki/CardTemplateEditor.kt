@@ -96,6 +96,7 @@ import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.ResizablePaneManager
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
+import com.ichi2.anki.utils.ext.doOnTabSelected
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.utils.postDelayed
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
@@ -168,19 +169,6 @@ open class CardTemplateEditor :
     /**
      * Triggered when a card template ('Card 1') is selected in the top tab view
      */
-    private val onCardTemplateSelectedListener: TabLayout.OnTabSelectedListener =
-        object : TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab) {
-                Timber.i("selected card index: %s", tab.position)
-                loadTemplatePreviewerFragmentIfFragmented()
-            }
-
-            override fun onTabUnselected(tab: TabLayout.Tab) {
-            }
-
-            override fun onTabReselected(tab: TabLayout.Tab) {
-            }
-        }
 
     // ----------------------------------------------------------------------------
     // Listeners
@@ -241,7 +229,10 @@ open class CardTemplateEditor :
         loadTemplatePreviewerFragmentIfFragmented()
         onBackPressedDispatcher.addCallback(this, displayDiscardChangesCallback)
 
-        topBinding.slidingTabs.addOnTabSelectedListener(onCardTemplateSelectedListener)
+        topBinding.slidingTabs.doOnTabSelected { tab ->
+            Timber.i("selected card index: %s", tab.position)
+            loadTemplatePreviewerFragmentIfFragmented()
+        }
     }
 
     /**
