@@ -212,18 +212,15 @@ class ReviewerFragment :
 
         if (Prefs.showAnswerFeedback) {
             viewModel.answerFeedbackFlow.collectIn(lifecycleScope) { ease ->
-                if (ease == Rating.AGAIN) {
-                    binding.wrongAnswerFeedback.toggle()
-                    return@collectIn
-                }
                 val drawableId =
                     when (ease) {
+                        Rating.AGAIN -> R.drawable.ic_ease_again
                         Rating.HARD -> R.drawable.ic_ease_hard
                         Rating.GOOD -> R.drawable.ic_ease_good
                         Rating.EASY -> R.drawable.ic_ease_easy
-                        Rating.AGAIN, Rating.UNRECOGNIZED -> throw IllegalArgumentException("Invalid rating")
+                        Rating.UNRECOGNIZED -> throw IllegalArgumentException("Invalid rating")
                     }
-                binding.correctAnswerFeedback.apply {
+                binding.answerFeedback.apply {
                     setImageResource(drawableId)
                     toggle()
                 }

@@ -38,5 +38,5 @@
     <dimen name="study_screen_elevation">0.8dp</dimen>
     <dimen name="answer_button_corner_radius">12dp</dimen>
     <dimen name="reviewer_answer_button_textSize">14sp</dimen>
-    <dimen name="reviewer_mark_flag">18dp</dimen>
+    <dimen name="reviewer_mark_flag">16dp</dimen>
 </resources>
