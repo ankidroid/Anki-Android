@@ -102,6 +102,7 @@ subprojects {
                 )
                 if (project.name != "api") {
                     compilerArgs += "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"
+                    compilerArgs += "-Xcontext-parameters"
                 }
                 freeCompilerArgs = compilerArgs
             }
