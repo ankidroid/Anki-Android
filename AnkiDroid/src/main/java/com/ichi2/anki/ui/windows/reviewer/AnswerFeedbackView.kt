@@ -20,6 +20,7 @@ import android.util.AttributeSet
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import androidx.appcompat.widget.AppCompatImageView
+import com.ichi2.anki.R
 import com.ichi2.utils.HandlerUtils
 
 class AnswerFeedbackView : AppCompatImageView {
@@ -28,15 +29,15 @@ class AnswerFeedbackView : AppCompatImageView {
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
     /**
-     * Fades in and fades out for a brief amount of time.
+     * Shows the feedback for one second
+     * with a quick fade in, brief hold, then gentle fade out.
      *
      * TODO handle "safeDisplay" setting
      */
     fun toggle() {
-        val fadeIn = AnimationUtils.loadAnimation(context, android.R.anim.fade_in)
-        val fadeOut = AnimationUtils.loadAnimation(context, android.R.anim.fade_out)
-        fadeIn.duration = 125
-        fadeOut.duration = 175
+        val fadeIn = AnimationUtils.loadAnimation(context, R.anim.answer_feedback_fade_in)
+        val fadeOut = AnimationUtils.loadAnimation(context, R.anim.answer_feedback_fade_out)
+
         fadeIn.setAnimationListener(
             object : Animation.AnimationListener {
                 override fun onAnimationStart(animation: Animation) {
@@ -44,7 +45,7 @@ class AnswerFeedbackView : AppCompatImageView {
                 }
 
                 override fun onAnimationEnd(animation: Animation) {
-                    HandlerUtils.executeFunctionWithDelay(200) {
+                    HandlerUtils.executeFunctionWithDelay(600) {
                         startAnimation(fadeOut)
                     }
                 }
