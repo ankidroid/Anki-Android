@@ -97,10 +97,15 @@ class SyncMediaWorker(
             return Result.failure()
         }
         Timber.d("SyncMediaWorker: cancelling notification")
-        try {
-            // notificationManager?.cancel(NotificationId.SYNC_MEDIA)
-        } catch (e: Exception) {
-            // NotificationManagerCompat.from(context).cancel(NotificationId.SYNC_MEDIA)
+        if (notificationManager == null) {
+            // Notifications permission not granted; nothing to cancel
+            Timber.i("Skipping SYNC_MEDIA notification cancel: notificationManager is null (no notification permission)")
+        } else {
+            try {
+                notificationManager.cancel(NotificationId.SYNC_MEDIA)
+            } catch (e: Exception) {
+                Timber.w(e, "Failed to cancel SYNC_MEDIA notification")
+            }
         }
 
         Timber.d("SyncMediaWorker: success")
