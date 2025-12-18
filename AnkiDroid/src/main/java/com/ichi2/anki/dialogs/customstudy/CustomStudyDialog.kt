@@ -125,7 +125,8 @@ import timber.log.Timber
 @KotlinCleanup("remove 'runBlocking' call'")
 @NeedsTest("deferredDefaults")
 class CustomStudyDialog : AnalyticsDialogFragment() {
-    private lateinit var binding: FragmentCustomStudyBinding
+    @VisibleForTesting(otherwise = PRIVATE)
+    lateinit var binding: FragmentCustomStudyBinding
 
     @VisibleForTesting(otherwise = PRIVATE)
     val viewModel by viewModels<CustomStudyViewModel>()
@@ -137,9 +138,6 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
     private val selectedSubDialog: ContextMenuOption?
         get() = requireArguments().getNullableInt(ARG_SUB_DIALOG_ID)?.let { ContextMenuOption.entries[it] }
 
-    private val selectedStatePosition: Int
-        get() = binding.cardsStateSelector.selectedItemPosition
-
     private val userInputValue: Int?
         get() = binding.detailsEditText2.textAsIntOrNull()
 
@@ -148,8 +146,9 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
         parentFragmentManager.setFragmentResultListener(ON_SELECTED_TAGS_KEY, this) { _, bundle ->
             val tagsToInclude = bundle.getStringArrayList(ON_SELECTED_TAGS__SELECTED_TAGS) ?: emptyList<String>()
             val option = selectedSubDialog ?: return@setFragmentResultListener
-            if (selectedStatePosition == AdapterView.INVALID_POSITION) return@setFragmentResultListener
-            val kind = CustomStudyCardState.entries[selectedStatePosition].kind
+            val selectedCardStateIndex = viewModel.selectedCardStateIndex
+            if (selectedCardStateIndex == AdapterView.INVALID_POSITION) return@setFragmentResultListener
+            val kind = CustomStudyCardState.entries[selectedCardStateIndex].kind
             val cardsAmount = userInputValue ?: 100 // the default value
             launchCustomStudy(option, cardsAmount, kind, tagsToInclude, emptyList())
         }
@@ -299,16 +298,33 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
         binding.detailsText1.text = text1
         binding.detailsText2.text = text2
 
+        binding.cardsStateSelectorLayout.isVisible = contextMenuOption == STUDY_TAGS
         binding.cardsStateSelector.apply {
-            isVisible = contextMenuOption == STUDY_TAGS
-            adapter =
-                ArrayAdapter(
-                    requireContext(),
-                    android.R.layout.simple_spinner_item,
-                    CustomStudyCardState.entries.map { it.labelProducer() },
-                ).apply {
-                    setDropDownViewResource(R.layout.multiline_spinner_item)
+            fun setAdapterAndSelection(
+                entries: List<String>,
+                selectedIndex: Int,
+            ) {
+                setAdapter(
+                    ArrayAdapter(
+                        requireActivity(),
+                        R.layout.multiline_spinner_item,
+                        entries,
+                    ).apply { setDropDownViewResource(R.layout.multiline_spinner_item) },
+                )
+                setText(entries[selectedIndex], false)
+            }
+            val cardStates = CustomStudyCardState.entries.map { it.labelProducer() }
+            onItemClickListener =
+                AdapterView.OnItemClickListener { _, _, position, _ ->
+                    viewModel.selectedCardStateIndex = position
+                    setAdapterAndSelection(cardStates, viewModel.selectedCardStateIndex)
                 }
+            // set the first item as automatically selected if we don't already have a valid
+            // position stored in the ViewModel
+            if (viewModel.selectedCardStateIndex == AdapterView.INVALID_POSITION) {
+                viewModel.selectedCardStateIndex = 0
+            }
+            setAdapterAndSelection(cardStates, viewModel.selectedCardStateIndex)
         }
         binding.detailsEditText2.apply {
             setText(defaultValue)

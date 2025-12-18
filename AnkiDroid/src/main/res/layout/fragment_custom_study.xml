@@ -24,6 +24,7 @@
 
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:gravity="start"
     android:orientation="vertical" >
 
@@ -66,9 +67,25 @@
             />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <Spinner
-        android:id="@+id/cards_state_selector"
-        android:visibility="gone"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/cards_state_selector_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <!--
+        Material3Fix we shouldn't have to tint the dropdown background(otherwise it's transparent),
+        also the color of the selected entry needs to be updated in the theme
+         -->
+        <com.google.android.material.textfield.MaterialAutoCompleteTextView
+            android:id="@+id/cards_state_selector"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textFilter|textMultiLine"
+            app:dropDownBackgroundTint="?android:attr/colorBackground"
+            tools:text="New cards only"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
 </LinearLayout>
