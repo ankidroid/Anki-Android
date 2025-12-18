@@ -73,7 +73,7 @@ class AnswerFeedbackView : AppCompatImageView {
                 override fun onAnimationStart(animation: Animation) {}
 
                 override fun onAnimationEnd(animation: Animation) {
-                    visibility = INVISIBLE
+                    visibility = GONE
                     fadeOutRunnable = null
                 }
 
