@@ -97,7 +97,11 @@ class SyncMediaWorker(
             return Result.failure()
         }
         Timber.d("SyncMediaWorker: cancelling notification")
-        notificationManager?.cancel(NotificationId.SYNC_MEDIA)
+        try {
+#       notificationManager?.cancel(NotificationId.SYNC_MEDIA)
+#   } catch (e: Exception) {
+#       NotificationManagerCompat.from(context).cancel(NotificationId.SYNC_MEDIA)
+#   }
 
         Timber.d("SyncMediaWorker: success")
         return Result.success()
