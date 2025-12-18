@@ -16,6 +16,8 @@
 package com.ichi2.anki.ui.windows.reviewer
 
 import android.content.Context
+import android.os.Handler
+import android.os.Looper
 import android.util.AttributeSet
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
@@ -28,6 +30,9 @@ class AnswerFeedbackView : AppCompatImageView {
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
+    private var fadeOutRunnable: Runnable? = null
+    private val handler = Handler(Looper.getMainLooper())
+
     /**
      * Shows the feedback for one second
      * with a quick fade in, brief hold, then gentle fade out.
@@ -35,6 +40,13 @@ class AnswerFeedbackView : AppCompatImageView {
      * TODO handle "safeDisplay" setting
      */
     fun toggle() {
+        clearAnimation()
+
+        fadeOutRunnable?.let {
+            handler.removeCallbacks(it)
+            fadeOutRunnable = null
+        }
+
         val fadeIn = AnimationUtils.loadAnimation(context, R.anim.answer_feedback_fade_in)
         val fadeOut = AnimationUtils.loadAnimation(context, R.anim.answer_feedback_fade_out)
 
@@ -45,9 +57,12 @@ class AnswerFeedbackView : AppCompatImageView {
                 }
 
                 override fun onAnimationEnd(animation: Animation) {
-                    HandlerUtils.executeFunctionWithDelay(600) {
-                        startAnimation(fadeOut)
-                    }
+                    fadeOutRunnable =
+                        Runnable {
+                            startAnimation(fadeOut)
+                        }.also {
+                            handler.postDelayed(it, 600)
+                        }
                 }
 
                 override fun onAnimationRepeat(animation: Animation) {}
@@ -59,6 +74,7 @@ class AnswerFeedbackView : AppCompatImageView {
 
                 override fun onAnimationEnd(animation: Animation) {
                     visibility = INVISIBLE
+                    fadeOutRunnable = null
                 }
 
                 override fun onAnimationRepeat(animation: Animation) {}
