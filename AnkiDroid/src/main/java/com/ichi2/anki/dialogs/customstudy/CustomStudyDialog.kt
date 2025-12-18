@@ -32,6 +32,7 @@ import android.widget.LinearLayout
 import android.widget.ScrollView
 import android.widget.TextView
 import androidx.annotation.VisibleForTesting
+import androidx.annotation.VisibleForTesting.Companion.PRIVATE
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.edit
 import androidx.core.os.bundleOf
@@ -39,6 +40,7 @@ import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.setFragmentResult
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import anki.scheduler.CustomStudyDefaultsResponse
 import anki.scheduler.CustomStudyRequest.Cram.CramKind
@@ -64,7 +66,6 @@ import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogListener.Companion.ON_SELECTED_TAGS_KEY
 import com.ichi2.anki.dialogs.tags.TagsDialogListener.Companion.ON_SELECTED_TAGS__SELECTED_TAGS
 import com.ichi2.anki.launchCatchingTask
-import com.ichi2.anki.libanki.Deck
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.preferences.sharedPrefs
@@ -126,9 +127,8 @@ import timber.log.Timber
 class CustomStudyDialog : AnalyticsDialogFragment() {
     private lateinit var binding: FragmentCustomStudyBinding
 
-    /** ID of the [Deck] which this dialog was created for */
-    private val dialogDeckId: DeckId
-        get() = requireArguments().getLong(ARG_DID)
+    @VisibleForTesting(otherwise = PRIVATE)
+    val viewModel by viewModels<CustomStudyViewModel>()
 
     /**
      * `null` initially when the main view is shown
@@ -185,7 +185,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
             Timber.i("Showing Custom Study main menu")
             deferredDefaults = loadCustomStudyDefaults()
             // Select the specified deck
-            runBlocking { withCol { decks.select(dialogDeckId) } }
+            runBlocking { withCol { decks.select(viewModel.deckId) } }
             buildContextMenu()
         } else {
             Timber.i("Showing Custom Study dialog: $option")
@@ -208,7 +208,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
             }
         }
 
-        val dialog: CustomStudyDialog = createSubDialog(dialogDeckId, item)
+        val dialog: CustomStudyDialog = createSubDialog(viewModel.deckId, item)
         requireActivity().showDialogFragment(dialog)
     }
 
@@ -370,7 +370,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
                     launchCatchingTask {
                         val nids =
                             withCol {
-                                val currentDeckname = decks.name(dialogDeckId)
+                                val currentDeckname = decks.name(viewModel.deckId)
                                 val search = SearchNode.newBuilder().setDeck(currentDeckname).build()
                                 val query = buildSearchString(listOf(search))
                                 findNotes(query)
@@ -414,7 +414,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
 
         val request =
             customStudyRequest {
-                deckId = dialogDeckId
+                deckId = viewModel.deckId
                 when (contextMenuOption) {
                     EXTEND_NEW -> newLimitDelta = userEntry
                     EXTEND_REV -> reviewLimitDelta = userEntry
@@ -463,7 +463,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
     private fun loadCustomStudyDefaults() =
         lifecycleScope.asyncIO {
             coMeasureTime("loadCustomStudyDefaults") {
-                withCol { sched.customStudyDefaults(dialogDeckId).toDomainModel() }
+                withCol { sched.customStudyDefaults(viewModel.deckId).toDomainModel() }
             }
         }
 
@@ -557,7 +557,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
      *
      * @param checkAvailability Whether the menu option is available
      */
-    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    @VisibleForTesting(otherwise = PRIVATE)
     enum class ContextMenuOption(
         val getTitle: Resources.() -> String,
         val checkAvailability: ((CustomStudyDefaults) -> Boolean)? = null,
@@ -715,7 +715,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
             CustomStudyDialog().apply {
                 arguments =
                     bundleOfNotNull(
-                        ARG_DID to deckId,
+                        CustomStudyViewModel.KEY_DID to deckId,
                     )
             }
 
@@ -732,16 +732,10 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
             CustomStudyDialog().apply {
                 arguments =
                     bundleOfNotNull(
-                        ARG_DID to deckId,
+                        CustomStudyViewModel.KEY_DID to deckId,
                         ARG_SUB_DIALOG_ID to contextMenuAttribute.ordinal,
                     )
             }
-
-        /**
-         * (required) Key for the [DeckId] this dialog deals with.
-         * @see CustomStudyDialog.dialogDeckId
-         */
-        private const val ARG_DID = "did"
 
         /**
          * (optional) Key for the ordinal of the [ContextMenuOption] to display.
