@@ -21,8 +21,10 @@ import com.ichi2.anki.libanki.Card
 import com.ichi2.anki.libanki.CardType
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.Consts
+import com.ichi2.anki.libanki.Deck
 import com.ichi2.anki.libanki.DeckConfig
 import com.ichi2.anki.libanki.DeckId
+import com.ichi2.anki.libanki.Decks
 import com.ichi2.anki.libanki.Note
 import com.ichi2.anki.libanki.NotetypeJson
 import com.ichi2.anki.libanki.Notetypes
@@ -196,6 +198,13 @@ interface AnkiTest {
     fun selectDefaultDeck() {
         col.decks.select(Consts.DEFAULT_DECK_ID)
     }
+
+    /**
+     * Returns the 'Custom Study Session' deck if present, null otherwise.
+     * TODO this matches directly on 'Custom Study Session' and doesn't handle i18n!
+     */
+    val Decks.customStudySession: Deck?
+        get() = byName("Custom Study Session")
 
     /** Adds [count] notes in the same deck with the same front & back */
     fun addNotes(count: Int): List<Note> = List(count) { addBasicNote() }
