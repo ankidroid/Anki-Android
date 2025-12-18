@@ -298,7 +298,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
         // Input dialogs
         // Show input dialog for an individual custom study dialog
         @SuppressLint("InflateParams")
-        val v = requireActivity().layoutInflater.inflate(R.layout.styled_custom_study_details_dialog, null)
+        val v = requireActivity().layoutInflater.inflate(R.layout.fragment_custom_study, null)
         v.findViewById<TextView>(R.id.custom_study_details_text1).apply {
             text = text1
         }
