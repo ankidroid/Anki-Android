@@ -20,7 +20,7 @@ ktlint = '1.8.0'
 # https://developer.android.com/build/releases/past-releases
 androidGradlePlugin = "8.13.2"
 # https://developer.android.com/jetpack/androidx/releases/activity
-androidxActivity = "1.12.1"
+androidxActivity = "1.12.2"
 # https://developer.android.com/jetpack/androidx/releases/annotation
 androidxAnnotation = "1.9.1"
 # https://developer.android.com/jetpack/androidx/releases/appcompat
