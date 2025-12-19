@@ -42,7 +42,7 @@ androidxLifecycleProcess = "2.10.0"
 # https://developer.android.com/jetpack/androidx/releases/media
 androidxMedia = "1.7.1"
 # https://developer.android.com/jetpack/androidx/releases/media3
-androidxMedia3 = "1.8.0"
+androidxMedia3 = "1.9.0"
 # https://developer.android.com/jetpack/androidx/releases/preference
 androidxPreferenceKtx = "1.2.1"
 # https://developer.android.com/jetpack/androidx/releases/recyclerview
