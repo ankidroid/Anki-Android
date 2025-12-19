@@ -17,9 +17,12 @@ package com.ichi2.anki.workarounds
 
 import android.os.Build
 import android.webkit.RenderProcessGoneDetail
+import android.webkit.WebResourceRequest
+import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.annotation.RequiresApi
+import androidx.webkit.WebViewAssetLoader
 import timber.log.Timber
 
 fun interface OnRenderProcessGoneListener {
@@ -28,6 +31,7 @@ fun interface OnRenderProcessGoneListener {
 
 open class SafeWebViewClient : WebViewClient() {
     private var onRenderProcessGoneListener: OnRenderProcessGoneListener? = null
+    private var assetLoader: WebViewAssetLoader? = null
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onRenderProcessGone(
@@ -40,7 +44,16 @@ open class SafeWebViewClient : WebViewClient() {
         return true
     }
 
+    override fun shouldInterceptRequest(
+        view: WebView,
+        request: WebResourceRequest,
+    ): WebResourceResponse? = assetLoader?.shouldInterceptRequest(request.url)
+
     fun setOnRenderProcessGoneListener(onRenderProcessGoneListener: OnRenderProcessGoneListener) {
         this.onRenderProcessGoneListener = onRenderProcessGoneListener
+    }
+
+    fun setAssetLoader(loader: WebViewAssetLoader) {
+        assetLoader = loader
     }
 }

@@ -14,7 +14,6 @@
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package com.ichi2.anki.previewer
-
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle

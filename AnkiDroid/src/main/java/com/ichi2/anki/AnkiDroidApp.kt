@@ -28,7 +28,6 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.system.Os
-import android.webkit.CookieManager
 import androidx.annotation.VisibleForTesting
 import androidx.core.net.toUri
 import androidx.fragment.app.FragmentActivity
@@ -191,9 +190,6 @@ open class AnkiDroidApp :
         makeBackendUsable(this)
 
         // Configure WebView to allow file scheme pages to access cookies.
-        if (!acceptFileSchemeCookies()) {
-            return
-        }
 
         // Forget the last deck that was used in the CardBrowser
         CardBrowser.clearLastDeckId()
@@ -330,21 +326,6 @@ open class AnkiDroidApp :
     fun scheduleNotification() {
         notifications.postValue(null)
     }
-
-    @Suppress("deprecation") // 7109: setAcceptFileSchemeCookies
-    protected fun acceptFileSchemeCookies(): Boolean =
-        try {
-            CookieManager.setAcceptFileSchemeCookies(true)
-            true
-        } catch (e: Throwable) {
-            // 5794: Errors occur if the WebView fails to load
-            // android.webkit.WebViewFactory.MissingWebViewPackageException.MissingWebViewPackageException
-            // Error may be excessive, but I expect a UnsatisfiedLinkError to be possible here.
-            fatalInitializationError = FatalInitializationError.WebViewError(e)
-            sendExceptionReport(e, "setAcceptFileSchemeCookies")
-            Timber.e(e, "setAcceptFileSchemeCookies")
-            false
-        }
 
     /**
      * Callback method invoked when operations that affect the app state are executed.

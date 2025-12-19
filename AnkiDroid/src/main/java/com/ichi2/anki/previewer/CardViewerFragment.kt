@@ -22,7 +22,6 @@ import android.view.View
 import android.webkit.WebChromeClient
 import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
-import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import android.widget.FrameLayout
 import androidx.annotation.CallSuper
@@ -35,7 +34,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.ichi2.anki.R
-import com.ichi2.anki.ViewerResourceHandler
 import com.ichi2.anki.dialogs.TtsVoicesDialogFragment
 import com.ichi2.anki.localizedErrorMessage
 import com.ichi2.anki.snackbar.showSnackbar
@@ -152,13 +150,6 @@ abstract class CardViewerFragment(
     open inner class CardViewerWebViewClient(
         val savedInstanceState: Bundle?,
     ) : SafeWebViewClient() {
-        private val resourceHandler = ViewerResourceHandler(requireContext())
-
-        override fun shouldInterceptRequest(
-            view: WebView?,
-            request: WebResourceRequest,
-        ): WebResourceResponse? = resourceHandler.shouldInterceptRequest(request)
-
         override fun onPageFinished(
             view: WebView?,
             url: String?,

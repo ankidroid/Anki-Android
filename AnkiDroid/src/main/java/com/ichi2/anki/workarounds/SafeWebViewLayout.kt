@@ -26,6 +26,7 @@ import android.widget.FrameLayout
 import androidx.annotation.MainThread
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.findFragment
+import androidx.webkit.WebViewAssetLoader
 import com.ichi2.anki.BuildConfig
 import com.ichi2.anki.runCatchingWithReport
 import timber.log.Timber
@@ -38,6 +39,17 @@ open class SafeWebViewLayout :
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
     private var webView: WebView = createWebView()
+
+    private val assetLoader =
+        WebViewAssetLoader
+            .Builder()
+            .addPathHandler(
+                "/assets/",
+                WebViewAssetLoader.AssetsPathHandler(context),
+            ).addPathHandler(
+                "/res/",
+                WebViewAssetLoader.ResourcesPathHandler(context),
+            ).build()
 
     var scrollBars: Int = webView.scrollBarStyle
         set(value) {
@@ -59,6 +71,7 @@ open class SafeWebViewLayout :
     @MainThread
     fun setWebViewClient(webViewClient: SafeWebViewClient) {
         webViewClient.setOnRenderProcessGoneListener(this)
+        webViewClient.setAssetLoader(assetLoader)
         webView.webViewClient = webViewClient
     }
 
