@@ -24,6 +24,7 @@ import android.content.DialogInterface.OnClickListener
 import android.text.InputFilter
 import android.view.KeyEvent
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Button
@@ -40,6 +41,7 @@ import androidx.core.widget.doOnTextChanged
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewbinding.ViewBinding
 import com.google.android.material.textfield.TextInputLayout
 import com.ichi2.anki.R
 import com.ichi2.themes.Themes
@@ -377,6 +379,30 @@ val AlertDialog.negativeButton: Button
     get() = getButton(DialogInterface.BUTTON_NEGATIVE)
 val AlertDialog.neutralButton: Button?
     get() = getButton(DialogInterface.BUTTON_NEUTRAL)
+
+/**
+ * Executes [block] when a touch outside the dialog occurs
+ *
+ * This MUST be called after [show] or inside [AlertDialog.setOnShowListener]
+ *
+ * This will not call [AlertDialog.cancel]
+ */
+fun AlertDialog.handleOutsideTouch(
+    binding: ViewBinding,
+    block: () -> Unit,
+) {
+    val dialogContentView =
+        findViewById(com.google.android.material.R.id.contentPanel)
+            ?: binding.root.parent as? View
+            ?: binding.root
+
+    window?.decorView?.setOnTouchListener { _, event ->
+        if (event.action != MotionEvent.ACTION_DOWN) return@setOnTouchListener false
+        if (dialogContentView.rawHitTest(event)) return@setOnTouchListener false
+        block()
+        true
+    }
+}
 
 /**
  * Extension function for AlertDialog.Builder to set a list of items.
