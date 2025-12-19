@@ -929,6 +929,7 @@ open class CardTemplateEditor :
             confirmAddCards(templateEditor.tempNoteType!!.notetype, numAffectedCards)
         }
 
+        @NeedsTest("Ensure save button is enabled in case of exception")
         fun saveNoteType(): Boolean {
             if (noteTypeHasChanged()) {
                 val confirmButton = templateEditor.findViewById<View>(R.id.action_confirm)
@@ -940,10 +941,20 @@ open class CardTemplateEditor :
                     confirmButton.isEnabled = false
                 }
                 launchCatchingTask(resources.getString(R.string.card_template_editor_save_error)) {
-                    requireActivity().withProgress(resources.getString(R.string.saving_model)) {
-                        templateEditor.tempNoteType!!.saveToDatabase()
+                    try {
+                        requireActivity().withProgress(resources.getString(R.string.saving_model)) {
+                            templateEditor.tempNoteType!!.saveToDatabase()
+                        }
+                        onModelSaved()
+                    } catch (e: Exception) {
+                        Timber.e(e, "CardTemplateEditor:: saveNoteType() failed")
+
+                        confirmButton?.post {
+                            confirmButton.isEnabled = true
+                        }
+
+                        throw e
                     }
-                    onModelSaved()
                 }
             } else {
                 Timber.d("CardTemplateEditor:: note type has not changed, exiting")
