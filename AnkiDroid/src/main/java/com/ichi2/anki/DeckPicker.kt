@@ -538,10 +538,6 @@ open class DeckPicker :
         }
 
         setViewBinding(binding)
-        if (!Permissions.canAccessInternet(this)) {
-            this.startActivity(PermissionsActivity.getIntent(this, PermissionSet.APP_PRIVATE))
-            Timber.d("Internet not accessible")
-        }
 
         enableToolbar()
         // TODO This method is run on every activity recreation, which can happen often.
