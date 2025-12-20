@@ -25,7 +25,6 @@ import com.ichi2.anki.R
 import com.ichi2.anki.databinding.TemplatePreviewerBinding
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
-import com.ichi2.anki.utils.ext.sharedPrefs
 import com.ichi2.anki.workarounds.SafeWebViewLayout
 import com.ichi2.utils.BundleUtils.getNullableInt
 import kotlinx.coroutines.flow.launchIn
@@ -66,10 +65,6 @@ class TemplatePreviewerFragment :
                         getString(R.string.show_answer)
                     }
             }.launchIn(lifecycleScope)
-
-        if (sharedPrefs().getBoolean("safeDisplay", false)) {
-            binding.webViewContainer.elevation = 0F
-        }
 
         arguments?.getNullableInt(ARG_BACKGROUND_OVERRIDE_COLOR)?.let { color ->
             view.setBackgroundColor(color)
