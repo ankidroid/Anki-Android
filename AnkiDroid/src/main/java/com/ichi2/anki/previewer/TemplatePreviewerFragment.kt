@@ -74,6 +74,8 @@ class TemplatePreviewerFragment :
         arguments?.getNullableInt(ARG_BACKGROUND_OVERRIDE_COLOR)?.let { color ->
             view.setBackgroundColor(color)
         }
+
+        binding.webViewContainer.setFrameStyle()
     }
 
     companion object {
