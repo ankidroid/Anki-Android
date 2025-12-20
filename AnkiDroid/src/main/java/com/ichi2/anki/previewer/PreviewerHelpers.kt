@@ -16,9 +16,15 @@
 package com.ichi2.anki.previewer
 
 import android.content.Context
+import android.view.ViewGroup.MarginLayoutParams
 import androidx.appcompat.widget.ThemeUtils
+import androidx.core.view.updateLayoutParams
+import com.google.android.material.card.MaterialCardView
+import com.google.android.material.shape.ShapeAppearanceModel
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.LanguageUtils
+import com.ichi2.anki.settings.Prefs
+import com.ichi2.anki.settings.enums.FrameStyle
 import com.ichi2.themes.Themes
 import com.ichi2.utils.toRGBHex
 import org.intellij.lang.annotations.Language
@@ -92,3 +98,14 @@ fun bodyClassForCardOrd(
 ): String = "card card${cardOrd + 1} ${bodyClass(nightMode)} mathjax-rendered"
 
 private fun bodyClass(nightMode: Boolean = Themes.isNightTheme): String = if (nightMode) "nightMode night_mode" else ""
+
+fun MaterialCardView.setFrameStyle() {
+    if (Prefs.frameStyle == FrameStyle.BOX && Prefs.isNewStudyScreenEnabled) {
+        updateLayoutParams<MarginLayoutParams> {
+            leftMargin = 0
+            rightMargin = 0
+        }
+        cardElevation = 0F
+        shapeAppearanceModel = ShapeAppearanceModel() // Remove corners
+    }
+}
