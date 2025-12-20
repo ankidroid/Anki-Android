@@ -80,8 +80,8 @@ import org.intellij.lang.annotations.Language
 import timber.log.Timber
 
 class ReviewerViewModel(
-    val savedStateHandle: SavedStateHandle,
-) : CardViewerViewModel(),
+    savedStateHandle: SavedStateHandle,
+) : CardViewerViewModel(savedStateHandle),
     ChangeManager.Subscriber,
     BindingProcessor<ReviewerBinding, ViewerAction> {
     private var queueState: Deferred<CurrentQueueState?> =

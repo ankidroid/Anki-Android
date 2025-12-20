@@ -43,7 +43,7 @@ import org.jetbrains.annotations.VisibleForTesting
 
 class TemplatePreviewerViewModel(
     savedStateHandle: SavedStateHandle,
-) : CardViewerViewModel() {
+) : CardViewerViewModel(savedStateHandle) {
     private val notetype: NotetypeJson
     private val fillEmpty: Boolean
     private val isCloze: Boolean

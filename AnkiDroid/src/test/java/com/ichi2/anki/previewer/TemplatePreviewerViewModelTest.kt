@@ -15,6 +15,7 @@
  */
 package com.ichi2.anki.previewer
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.NotetypeFile
 import com.ichi2.testutils.JvmTest
@@ -33,12 +34,15 @@ class TemplatePreviewerViewModelTest : JvmTest() {
     @get:Rule
     val tempDirectory = TemporaryFolder()
 
-    private fun createViewModel(arguments: TemplatePreviewerArguments): TemplatePreviewerViewModel =
-        spyk(TemplatePreviewerViewModel(arguments)).apply {
+    private fun createViewModel(arguments: TemplatePreviewerArguments): TemplatePreviewerViewModel {
+        val savedStateHandle = SavedStateHandle(mapOf(TemplatePreviewerFragment.ARGS_KEY to arguments))
+        val viewModel = TemplatePreviewerViewModel(savedStateHandle)
+        return spyk(viewModel).apply {
             // the default implementation requires the Collection media directory,
             // which needs a Robolectric setup with CollectionStorageMode.IN_MEMORY_WITH_MEDIA or ON_DISK
             coEvery { prepareCardTextForDisplay(any()) } answers { firstArg() }
         }
+    }
 
     @Test
     fun `getCurrentTabIndex returns the correct tab if the first cloze isn't 1 and ord isn't 0`() =
