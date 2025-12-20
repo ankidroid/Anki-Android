@@ -359,46 +359,29 @@ class ReviewerFragment :
             return
         }
 
-        binding.againButton.setOnClickListener { viewModel.answerCard(Rating.AGAIN) }
-        binding.hardButton.setOnClickListener { viewModel.answerCard(Rating.HARD) }
-        binding.goodButton.setOnClickListener { viewModel.answerCard(Rating.GOOD) }
-        binding.easyButton.setOnClickListener { viewModel.answerCard(Rating.EASY) }
+        binding.answerArea.setButtonListeners(
+            onRatingClicked = { viewModel.answerCard(it) },
+            onShowAnswerClicked = { viewModel.onShowAnswer() },
+        )
+
+        binding.answerArea.setRelativeHeight(Prefs.newStudyScreenAnswerButtonSize)
+
         viewModel.answerButtonsNextTimeFlow
             .flowWithLifecycle(lifecycle)
             .collectIn(lifecycleScope) { times ->
-                binding.againButton.setNextTime(times?.again)
-                binding.hardButton.setNextTime(times?.hard)
-                binding.goodButton.setNextTime(times?.good)
-                binding.easyButton.setNextTime(times?.easy)
+                binding.answerArea.setNextTimes(times)
             }
-
-        binding.showAnswerButton.setOnClickListener { viewModel.onShowAnswer() }
 
         val insetsController = WindowInsetsControllerCompat(window, binding.rootLayout)
-
         viewModel.showingAnswer.collectLatestIn(lifecycleScope) { isAnswerShown ->
             if (isAnswerShown) {
-                binding.showAnswerButton.visibility = View.INVISIBLE
-                binding.answerButtonsLayout.visibility = View.VISIBLE
                 insetsController.hide(WindowInsetsCompat.Type.ime())
-            } else {
-                binding.showAnswerButton.visibility = View.VISIBLE
-                binding.answerButtonsLayout.visibility = View.INVISIBLE
             }
+            binding.answerArea.setAnswerState(isAnswerShown)
         }
 
         if (Prefs.hideHardAndEasyButtons) {
-            binding.hardButton.isVisible = false
-            binding.easyButton.isVisible = false
-        }
-
-        val buttonsHeight = Prefs.newStudyScreenAnswerButtonSize
-        if (buttonsHeight > 100) {
-            binding.answerButtonsLayout.post {
-                binding.answerButtonsLayout.updateLayoutParams {
-                    height = binding.answerButtonsLayout.measuredHeight * buttonsHeight / 100
-                }
-            }
+            binding.answerArea.hideHardAndEasyButtons()
         }
     }
 
