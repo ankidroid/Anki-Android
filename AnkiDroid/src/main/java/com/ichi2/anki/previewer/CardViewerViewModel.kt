@@ -17,6 +17,7 @@ package com.ichi2.anki.previewer
 
 import androidx.annotation.CallSuper
 import androidx.annotation.VisibleForTesting
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ichi2.anki.CollectionManager.withCol
@@ -33,13 +34,13 @@ import com.ichi2.anki.pages.PostRequestHandler
 import com.ichi2.anki.pages.PostRequestUri
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
 import timber.log.Timber
 
-abstract class CardViewerViewModel :
-    ViewModel(),
+abstract class CardViewerViewModel(
+    val savedStateHandle: SavedStateHandle,
+) : ViewModel(),
     OnErrorListener,
     PostRequestHandler {
     override val onError = MutableSharedFlow<String>()
@@ -53,7 +54,7 @@ abstract class CardViewerViewModel :
 
     val eval = MutableSharedFlow<String>()
 
-    open val showingAnswer = MutableStateFlow(false)
+    val showingAnswer = savedStateHandle.getMutableStateFlow(KEY_SHOWING_ANSWER, false)
 
     protected val cardMediaPlayer =
         CardMediaPlayer(
@@ -164,4 +165,8 @@ abstract class CardViewerViewModel :
             "i18nResources" -> withCol { i18nResourcesRaw(bytes) }
             else -> throw IllegalArgumentException("Unhandled Anki request: $uri")
         }
+
+    companion object {
+        private const val KEY_SHOWING_ANSWER = "showingAnswer"
+    }
 }
