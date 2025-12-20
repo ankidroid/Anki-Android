@@ -271,8 +271,12 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.note_type_field_editor) {
         } else {
             try {
                 getColUnsafe.modSchema()
+                val fieldName = noteFields[currentPos].name
                 ConfirmationDialog().let {
-                    it.setArgs(resources.getString(R.string.field_delete_warning))
+                    it.setArgs(
+                        title = fieldName,
+                        message = resources.getString(R.string.field_delete_warning),
+                    )
                     it.setConfirm(confirm)
                     showDialogFragment(it)
                 }
