@@ -387,7 +387,7 @@ class ReviewerFragment :
             }
         }
 
-        if (sharedPrefs().getBoolean(getString(R.string.hide_hard_and_easy_key), false)) {
+        if (Prefs.hideHardAndEasyButtons) {
             binding.hardButton.isVisible = false
             binding.easyButton.isVisible = false
         }
