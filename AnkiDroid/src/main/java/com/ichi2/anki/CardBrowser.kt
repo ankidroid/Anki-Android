@@ -122,7 +122,7 @@ open class CardBrowser :
      */
     @get:VisibleForTesting
     val addNoteLauncher: NoteEditorLauncher
-        get() = createAddNoteLauncher(viewModel, fragmented)
+        get() = createAddNoteLauncher(viewModel)
 
     /**
      * Provides an instance of NoteEditorLauncher for editing a note
@@ -1118,11 +1118,7 @@ open class CardBrowser :
     ): Intent = PreviewerDestination(index, idsFile).toIntent(this)
 
     private fun addNoteFromCardBrowser() {
-        if (fragmented) {
-            loadNoteEditorFragmentIfFragmented()
-        } else {
-            onAddNoteActivityResult.launch(addNoteLauncher.toIntent(this))
-        }
+        onAddNoteActivityResult.launch(addNoteLauncher.toIntent(this))
     }
 
     private val reviewerCardId: CardId
@@ -1361,10 +1357,8 @@ open class CardBrowser :
         fun clearLastDeckId() = SharedPreferencesLastDeckIdRepository.clearLastDeckId()
 
         @VisibleForTesting
-        fun createAddNoteLauncher(
-            viewModel: CardBrowserViewModel,
-            inCardBrowserActivity: Boolean = false,
-        ): NoteEditorLauncher = NoteEditorLauncher.AddNoteFromCardBrowser(viewModel, inCardBrowserActivity)
+        fun createAddNoteLauncher(viewModel: CardBrowserViewModel): NoteEditorLauncher =
+            NoteEditorLauncher.AddNoteFromCardBrowser(viewModel)
     }
 }
 

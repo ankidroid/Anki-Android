@@ -105,14 +105,13 @@ sealed interface NoteEditorLauncher : Destination {
      */
     data class AddNoteFromCardBrowser(
         val viewModel: CardBrowserViewModel,
-        val inCardBrowserActivity: Boolean = false,
     ) : NoteEditorLauncher {
         override fun toBundle(): Bundle {
             val fragmentArgs =
                 bundleOf(
                     NoteEditorFragment.EXTRA_CALLER to NoteEditorCaller.CARDBROWSER_ADD.value,
                     NoteEditorFragment.EXTRA_TEXT_FROM_SEARCH_VIEW to viewModel.searchTerms,
-                    NoteEditorFragment.IN_CARD_BROWSER_ACTIVITY to inCardBrowserActivity,
+                    NoteEditorFragment.IN_CARD_BROWSER_ACTIVITY to false,
                 )
             if (viewModel.lastDeckId?.let { id -> id > 0 } == true) {
                 fragmentArgs.putLong(NoteEditorFragment.EXTRA_DID, viewModel.lastDeckId!!)
