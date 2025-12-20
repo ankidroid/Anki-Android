@@ -417,3 +417,34 @@ fun <T> runCatchingWithReport(
         if (e is Error) throw e
         Result.failure(e)
     }
+
+/**
+ * Runs the provided block, catching [Exception], logging it and reporting it to [CrashReportService]
+ *
+ * **Example**
+ * ```
+ * runCatchingWithReport("callingMethod", onlyIfSilent = true) {
+ *     doSomethingRisky()
+ * }
+ * ```
+ *
+ * **Note**: This differs from [runCatching] - `Error` is thrown
+ *
+ * @param origin Data logged to Timber
+ * @param block Code to execute
+ *
+ * @throws Error If raised, this will be reported and rethrown
+ *
+ * @return A Result containing either the successful result of [block] or the [Exception] thrown
+ */
+fun <T> runCatchingWithLog(
+    origin: String? = null,
+    block: () -> T,
+): Result<T> =
+    try {
+        Result.success(block())
+    } catch (e: Throwable) {
+        Timber.w(e, origin)
+        if (e is Error) throw e
+        Result.failure(e)
+    }
