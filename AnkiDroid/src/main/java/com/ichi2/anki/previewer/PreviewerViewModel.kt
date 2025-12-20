@@ -47,7 +47,7 @@ import timber.log.Timber
 
 class PreviewerViewModel(
     savedStateHandle: SavedStateHandle,
-) : CardViewerViewModel(),
+) : CardViewerViewModel(savedStateHandle),
     ChangeManager.Subscriber {
     val currentIndex =
         savedStateHandle.getMutableStateFlow(
@@ -61,7 +61,6 @@ class PreviewerViewModel(
     @VisibleForTesting
     val selectedCardIds: List<Long> = savedStateHandle.require<IdsFile>(PreviewerFragment.CARD_IDS_FILE_ARG).getIds()
 
-    override val showingAnswer = MutableStateFlow(savedStateHandle[SHOWING_ANSWER_KEY] ?: false)
     val isBackButtonEnabled =
         combine(currentIndex, showingAnswer, backSideOnly) { index, showingAnswer, isBackSideOnly ->
             index != 0 || (showingAnswer && !isBackSideOnly)
@@ -81,9 +80,6 @@ class PreviewerViewModel(
 
     init {
         ChangeManager.subscribe(this)
-        showingAnswer.collectIn(viewModelScope) {
-            savedStateHandle[SHOWING_ANSWER_KEY] = it
-        }
     }
 
     /* *********************************************************************************************
@@ -278,6 +274,5 @@ class PreviewerViewModel(
     companion object {
         private const val KEY_BACKSIDE_ONLY = "backsideOnly"
         private const val KEY_CURRENT_INDEX = "currentIndex"
-        private const val SHOWING_ANSWER_KEY = "showingAnswer"
     }
 }
