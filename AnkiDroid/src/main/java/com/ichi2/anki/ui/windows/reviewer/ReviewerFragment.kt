@@ -528,12 +528,11 @@ class ReviewerFragment :
         viewModel.whiteboardEnabledFlow.flowWithLifecycle(lifecycle).collectIn(lifecycleScope) { isEnabled ->
             childFragmentManager.commit {
                 val whiteboardFragment = childFragmentManager.findFragmentByTag(WhiteboardFragment::class.jvmName)
-                if (isEnabled) {
-                    if (whiteboardFragment != null) return@commit
-                    add(R.id.web_view_container, WhiteboardFragment::class.java, null, WhiteboardFragment::class.jvmName)
-                } else {
-                    whiteboardFragment?.let { remove(it) }
+                if (whiteboardFragment == null && isEnabled) {
+                    add(R.id.whiteboard_container, WhiteboardFragment::class.java, null, WhiteboardFragment::class.jvmName)
+                    return@commit
                 }
+                binding.whiteboardContainer.isVisible = isEnabled
             }
         }
         viewModel.onCardUpdatedFlow.collectIn(lifecycleScope) {
