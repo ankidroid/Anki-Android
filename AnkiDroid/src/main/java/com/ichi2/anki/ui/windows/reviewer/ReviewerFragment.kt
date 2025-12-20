@@ -115,7 +115,7 @@ class ReviewerFragment :
     private lateinit var bindingMap: BindingMap<ReviewerBinding, ViewerAction>
     private var shakeDetector: ShakeDetector? = null
     private val sensorManager get() = ContextCompat.getSystemService(requireContext(), SensorManager::class.java)
-    private val isBigScreen: Boolean get() = binding.complementsLayout != null
+    private val isBigScreen: Boolean get() = resources.configuration.smallestScreenWidthDp >= 720
     private var webviewHasFocus = false
 
     override val baseSnackbarBuilder: SnackbarBuilder = {
@@ -478,15 +478,13 @@ class ReviewerFragment :
     }
 
     private fun setupToolbarPosition() {
-        if (isBigScreen) return
         when (Prefs.toolbarPosition) {
             ToolbarPosition.TOP -> return
             ToolbarPosition.NONE -> binding.toolsLayout.isVisible = false
             ToolbarPosition.BOTTOM -> {
-                val mainLayout = binding.mainLayout!! // we can use !! due to isWindowCompact
-                val toolbar = binding.toolsLayout
-                mainLayout.removeView(toolbar)
-                mainLayout.addView(toolbar, mainLayout.childCount)
+                if (isBigScreen) return
+                binding.mainLayout.removeView(binding.toolsLayout)
+                binding.mainLayout.addView(binding.toolsLayout)
             }
         }
     }
