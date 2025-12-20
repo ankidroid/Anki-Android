@@ -43,8 +43,6 @@ import com.ichi2.anki.previewer.PreviewerFragment.Companion.CARD_IDS_FILE_ARG
 import com.ichi2.anki.reviewer.BindingMap
 import com.ichi2.anki.reviewer.BindingProcessor
 import com.ichi2.anki.reviewer.MappableBinding
-import com.ichi2.anki.settings.Prefs
-import com.ichi2.anki.settings.enums.FrameStyle
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.utils.ext.collectIn
@@ -186,10 +184,6 @@ class PreviewerFragment :
         view.findViewById<MaterialToolbar>(R.id.toolbar).apply {
             setOnMenuItemClickListener(this@PreviewerFragment)
             setNavigationOnClickListener { requireActivity().onBackPressedDispatcher.onBackPressed() }
-        }
-
-        if (sharedPrefs().getBoolean("safeDisplay", false)) {
-            view.findViewById<MaterialCardView>(R.id.webview_container).elevation = 0F
         }
 
         view.findViewById<MaterialCardView>(R.id.webview_container).setFrameStyle()
