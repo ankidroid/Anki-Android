@@ -20,6 +20,8 @@ import android.app.Activity
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.os.Looper
+import android.view.View
 import android.widget.EditText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CardTemplateEditor.CardTemplateFragment.CardTemplate
@@ -730,6 +732,23 @@ class CardTemplateEditorTest : RobolectricTest() {
     }
 
     @Test
+    fun testSaveButtonEnabledAfterException() {
+        withCardTemplateEditor(noteType = col.notetypes.cloze) {
+            editText.setText("New Random Template Text")
+
+            // throw an exception to simulate failure
+            this.tempNoteType = null
+
+            confirmButton.performClick()
+
+            shadowOf(Looper.getMainLooper()).idle()
+
+            assertTrue("Button should be clickable after failure", confirmButton.isClickable)
+            assertTrue("Button should be enabled after failure", confirmButton.isEnabled)
+        }
+    }
+
+    @Test
     fun testBottomNavigationViewLayoutTransition() {
         val noteTypeName = "Basic"
 
@@ -980,3 +999,6 @@ val CardTemplateEditor.previewer: TemplatePreviewerFragment
 
 val TemplatePreviewerFragment.ord: CardOrdinal
     get() = this.viewModel.ordFlow.value
+
+val CardTemplateEditor.confirmButton: View
+    get() = findViewById(R.id.action_confirm)
