@@ -16,6 +16,7 @@
 package com.ichi2.anki.previewer
 
 import android.content.Intent
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
@@ -153,17 +154,31 @@ abstract class CardViewerFragment(
         val savedInstanceState: Bundle?,
     ) : SafeWebViewClient() {
         private val resourceHandler = ViewerResourceHandler(requireContext())
+        private var hasLoaded = false
 
         override fun shouldInterceptRequest(
             view: WebView?,
             request: WebResourceRequest,
         ): WebResourceResponse? = resourceHandler.shouldInterceptRequest(request)
 
+        override fun onPageStarted(
+            view: WebView?,
+            url: String?,
+            favicon: Bitmap?,
+        ) {
+            hasLoaded = false
+        }
+
         override fun onPageFinished(
             view: WebView?,
             url: String?,
         ) {
-            viewModel.onPageFinished(isAfterRecreation = savedInstanceState != null)
+            // clicking a `<a href="#">` link calls onPageFinished without calling onPageStarted,
+            // so avoid reloading the card content after clicking such a link.
+            if (!hasLoaded) {
+                viewModel.onPageFinished(isAfterRecreation = savedInstanceState != null)
+            }
+            hasLoaded = true
         }
 
         override fun shouldOverrideUrlLoading(
