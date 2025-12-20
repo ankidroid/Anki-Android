@@ -38,14 +38,14 @@ class WhiteboardView : View {
 
     // Callbacks for user actions
     var onNewPath: ((Path) -> Unit)? = null
+    var onStylusButtonStateChanged: ((Boolean) -> Unit)? = null
     var onEraseGestureStart: (() -> Unit)? = null
     var onEraseGestureMove: ((Float, Float) -> Unit)? = null
     var onEraseGestureEnd: (() -> Unit)? = null
 
     // Public properties for tool state
-    var isEraserActive: Boolean = false
-    var eraserMode: EraserMode = EraserMode.INK
     var isStylusOnlyMode: Boolean = false
+    private var currentTool: WhiteboardTool = WhiteboardTool.Brush(Color.BLACK, 10f)
 
     // Internal drawing state
     private val currentPath = Path()
@@ -67,6 +67,22 @@ class WhiteboardView : View {
     private val canvasPaint = Paint(Paint.DITHER_FLAG)
 
     private var hasMoved = false
+
+    fun setTool(tool: WhiteboardTool) {
+        currentTool = tool
+        when (tool) {
+            is WhiteboardTool.Brush -> {
+                currentPaint.color = tool.color
+                currentPaint.strokeWidth = tool.width
+                currentPaint.xfermode = null
+            }
+            is WhiteboardTool.Eraser -> {
+                currentPaint.strokeWidth = tool.width
+                eraserPreviewPaint.strokeWidth = tool.width
+            }
+        }
+        invalidate()
+    }
 
     /**
      * Recreates the drawing buffer when the view size changes.
@@ -93,11 +109,9 @@ class WhiteboardView : View {
         // Draw the committed history
         canvas.drawBitmap(bufferBitmap, 0f, 0f, canvasPaint)
 
-        // Draw the live preview path for the current gesture
-        if (isEraserActive) {
+        if (currentTool is WhiteboardTool.Eraser) {
             canvas.drawPath(currentPath, eraserPreviewPaint)
         } else {
-            // Draw the normal brush or pixel eraser preview
             canvas.drawPath(currentPath, currentPaint)
         }
     }
@@ -111,9 +125,15 @@ class WhiteboardView : View {
             return false
         }
 
+        val toolType = event.getToolType(0)
+        val isButtonPressed =
+            (event.buttonState and MotionEvent.BUTTON_STYLUS_PRIMARY != 0) ||
+                (toolType == MotionEvent.TOOL_TYPE_ERASER)
+        onStylusButtonStateChanged?.invoke(isButtonPressed)
+
         val touchX = event.x
         val touchY = event.y
-        val isPathEraser = isEraserActive && eraserMode == EraserMode.STROKE
+        val isPathEraser = (currentTool as? WhiteboardTool.Eraser)?.mode == EraserMode.STROKE
 
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
@@ -148,7 +168,10 @@ class WhiteboardView : View {
                 currentPath.reset()
                 invalidate()
             }
-            else -> return false
+            MotionEvent.ACTION_CANCEL -> {
+                currentPath.reset()
+                invalidate()
+            }
         }
         return true
     }
@@ -159,21 +182,6 @@ class WhiteboardView : View {
     fun setHistory(actions: List<DrawingAction>) {
         history = actions
         redrawHistory()
-    }
-
-    /**
-     * Configures the paint for the live drawing preview based on the current tool.
-     */
-    fun setCurrentBrush(
-        color: Int,
-        strokeWidth: Float,
-    ) {
-        currentPaint.strokeWidth = strokeWidth
-        currentPaint.xfermode = null
-        currentPaint.color = color
-
-        // Configure the stroke eraser's preview paint separately
-        eraserPreviewPaint.strokeWidth = strokeWidth
     }
 
     /**
