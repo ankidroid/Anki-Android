@@ -283,7 +283,7 @@ open class PrefsRepository(
     val ignoreDisplayCutout by booleanPref(R.string.ignore_display_cutout_key, false)
     val autoFocusTypeAnswer by booleanPref(R.string.type_in_answer_focus_key, true)
     val showAnswerFeedback by booleanPref(R.string.show_answer_feedback_key, defaultValue = true)
-    val showAnswerButtons by booleanPref(R.string.show_answer_buttons_key, true)
+    var showAnswerButtons by booleanPref(R.string.show_answer_buttons_key, true)
     val keepScreenOn by booleanPref(R.string.keep_screen_on_preference, defaultValue = false)
     val hideHardAndEasyButtons by booleanPref(R.string.hide_hard_and_easy_key, defaultValue = false)
 
@@ -293,9 +293,9 @@ open class PrefsRepository(
     val swipeSensitivity: Float
         get() = getInt(R.string.pref_swipe_sensitivity_key, 100) / 100F
 
-    val frameStyle: FrameStyle by enumPref(R.string.reviewer_frame_style_key, FrameStyle.CARD)
+    var frameStyle: FrameStyle by enumPref(R.string.reviewer_frame_style_key, FrameStyle.CARD)
     val hideSystemBars: HideSystemBars by enumPref(R.string.hide_system_bars_key, HideSystemBars.NONE)
-    val toolbarPosition: ToolbarPosition by enumPref(R.string.reviewer_toolbar_position_key, ToolbarPosition.TOP)
+    var toolbarPosition: ToolbarPosition by enumPref(R.string.reviewer_toolbar_position_key, ToolbarPosition.TOP)
 
     //region Appearance
 
