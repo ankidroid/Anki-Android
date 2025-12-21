@@ -525,7 +525,7 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
                 activity?.onBackPressedDispatcher?.onBackPressed()
             } else {
                 Timber.i("Download failed, update UI and provide option to retry")
-                context?.let { showThemedToast(it, R.string.something_wrong, false) }
+                context?.let { showThemedToast(it, R.string.shared_decks_login_required, false) }
                 // Update UI if download could not be successful
                 tryAgainButton.visibility = View.VISIBLE
                 openInBrowserButton.visibility = View.VISIBLE
