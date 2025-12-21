@@ -17,6 +17,8 @@
 package com.ichi2.anki.ui.windows.reviewer.whiteboard
 
 import android.content.Context
+import android.view.Choreographer
+import androidx.annotation.ColorInt
 import com.ichi2.anki.R
 import com.ichi2.utils.Dp
 import com.ichi2.utils.dp
@@ -39,12 +41,18 @@ import com.skydoves.colorpickerview.sliders.BrightnessSlideBar
  *                        Receives the selected color as an `AARRGGBB` integer.
  */
 fun Context.showColorPickerDialog(
-    initialColor: Int,
+    @ColorInt initialColor: Int,
     onColorSelected: (Int) -> Unit,
 ) {
+    val choreographer = Choreographer.getInstance()
+    var dismissed = false
     ColorPickerDialog
         .Builder(this)
         .show {
+            val onPositiveCallback =
+                ColorEnvelopeListener { envelope, _ ->
+                    envelope?.color?.let(onColorSelected)
+                }
             // Use post() so setInitialColor() runs after the view is laid out.
             // This ensures the BrightnessSlideBar is fully initialized before applying
             // the initial color. Calling it too early causes the slider to use its
@@ -52,18 +60,35 @@ fun Context.showColorPickerDialog(
             colorPickerView.post { colorPickerView.setInitialColor(initialColor) }
             // Bubble showing the selected color
             colorPickerView.flagView = BubbleFlag(this@showColorPickerDialog)
-            setPositiveButton(
-                R.string.dialog_ok,
-                ColorEnvelopeListener { envelope, _ ->
-                    envelope?.color?.let(onColorSelected)
-                },
-            )
             setTitle(R.string.choose_color)
+            setPositiveButton(R.string.dialog_ok, onPositiveCallback)
             negativeButton(R.string.dialog_cancel)
             setBottomSpace(12.dp)
-        }
+            val callback =
+                object : Choreographer.FrameCallback {
+                    override fun doFrame(frameTimeNanos: Long) {
+                        if (dismissed) return
+                        colorPickerView.flagView.x =
+                            (colorPickerView.selector.x + colorPickerView.selector.width / 2 - colorPickerView.flagView.width / 2)
+                        val y = (colorPickerView.selector.y - colorPickerView.flagView.height)
+                        if (y > 0) {
+                            colorPickerView.flagView.y = y
+                            colorPickerView.flagView.rotation = 0f
+                        } else {
+                            colorPickerView.flagView.y =
+                                colorPickerView.selector.y + colorPickerView.flagView.height
+                            colorPickerView.flagView.rotation = 180f
+                        }
+                        choreographer.postFrameCallback(this)
+                    }
+                }
+            choreographer.postFrameCallback(callback)
+        }.setOnDismissListener { dismissed = true }
 }
 
+/**
+ * Custom flag view that displays the selected color in a bubble above the color picker selector.
+ */
 private class BubbleFlag(
     context: Context?,
 ) : FlagView(context, R.layout.colorpicker_flag_bubble) {
