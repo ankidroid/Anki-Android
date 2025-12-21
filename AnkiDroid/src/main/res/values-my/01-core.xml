@@ -91,7 +91,7 @@
     <string name="rename_deck" maxLength="28">ကုန်းပတ်အမည်ပြောင်းပါ</string>
     <string name="create_shortcut">ဖြတ်လမ်းဖန်တီ</string>
     <string name="browse_cards">ကတ်ရှာဖွေ</string>
-    <string name="edit_deck_description" comment="edit the deck description">Edit description</string>
+    <string name="edit_deck_description" comment="edit the deck description">အညွှန်းစာသားပြင်ဆင်</string>
     <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings" maxLength="28">ထည့်ပါ</string>
     <string name="menu_add_note" maxLength="28">မှတ်ချက်ထည့်ပါ</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">အကောင့်အားတိုက်ဆိုင်ညှိယူပါ</string>
@@ -131,10 +131,10 @@
 ဘာမှမရှိဘူး</string>
     <string name="create_subdeck">လုပ်ငန်းအသစ်ဖန်တီး</string>
     <string name="empty_filtered_deck">ထပ်ဆင့်လုပ်ငန်းကိုဖျက်ပစ်နေသည်</string>
-    <string name="search_deck" comment="Deck search for selecting it">Deck Search</string>
-    <string name="empty_deck">This deck is empty</string>
-    <string name="invalid_deck_name">Invalid deck name</string>
-    <string name="studyoptions_congrats_finished">Congratulations! You have finished for today.</string>
+    <string name="search_deck" comment="Deck search for selecting it">Deck ရှာ</string>
+    <string name="empty_deck">ဒီ Deck က ဗလာကြီး</string>
+    <string name="invalid_deck_name">မကိုက်ညီသော deck နာမည်</string>
+    <string name="studyoptions_congrats_finished">ဂုဏ်ယူပါတယ်! မင်းသင်တာ ဒီတနေ့စာ ပြီးဆုံးသွားပါပြီ။</string>
     <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Deck finished for now! %s</string>
     <string name="studyoptions_no_cards_due">No cards are due yet</string>
     <string name="sd_card_not_mounted">Device storage not mounted</string>
