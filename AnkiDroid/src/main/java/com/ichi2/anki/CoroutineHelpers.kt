@@ -20,6 +20,7 @@ import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.content.DialogInterface
+import android.database.sqlite.SQLiteDatabaseCorruptException
 import android.net.Uri
 import android.view.WindowManager
 import android.view.WindowManager.BadTokenException
@@ -40,6 +41,7 @@ import com.ichi2.anki.CrashReportData.HelpAction
 import com.ichi2.anki.CrashReportData.HelpAction.AnkiBackendLink
 import com.ichi2.anki.CrashReportData.HelpAction.OpenDeckOptions
 import com.ichi2.anki.common.annotations.UseContextParameter
+import com.ichi2.anki.dialogs.DatabaseErrorDialog
 import com.ichi2.anki.exception.StorageAccessException
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.pages.DeckOptionsDestination
@@ -203,6 +205,12 @@ suspend fun <T> FragmentActivity.runCatching(
                 Timber.e(exc, errorMessage)
                 if (callerTrace != null) Timber.e(callerTrace)
                 showError(exc.localizedMessage!!, exc.toCrashReportData(this))
+            }
+            is SQLiteDatabaseCorruptException -> {
+                Timber.e(exc, errorMessage)
+                DatabaseErrorDialog.databaseCorruptFlag = true
+                if (callerTrace != null) Timber.e(callerTrace)
+                DatabaseErrorDialog.ShowDatabaseErrorDialog.fromMessage(CollectionLoadingErrorDialog().toMessage())
             }
             else -> {
                 Timber.e(exc, errorMessage)

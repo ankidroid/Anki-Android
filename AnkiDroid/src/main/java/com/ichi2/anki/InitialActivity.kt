@@ -18,6 +18,7 @@ package com.ichi2.anki
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.database.sqlite.SQLiteDatabaseCorruptException
 import android.database.sqlite.SQLiteFullException
 import android.os.Build
 import android.os.Environment
@@ -25,6 +26,7 @@ import android.os.Parcelable
 import androidx.annotation.CheckResult
 import androidx.annotation.RequiresApi
 import androidx.core.content.edit
+import com.ichi2.anki.dialogs.DatabaseErrorDialog
 import com.ichi2.anki.exception.StorageAccessException
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService.setPreferencesUpToDate
@@ -65,6 +67,10 @@ object InitialActivity {
             } catch (e: SQLiteFullException) {
                 Timber.w(e)
                 StartupFailure.DiskFull
+            } catch (e: SQLiteDatabaseCorruptException) {
+                Timber.w(e)
+                DatabaseErrorDialog.databaseCorruptFlag = true
+                StartupFailure.DBError(e)
             } catch (e: StorageAccessException) {
                 // Same handling as the fall through, but without the exception report
                 // These are now handled with a dialog and don't generate actionable reports
