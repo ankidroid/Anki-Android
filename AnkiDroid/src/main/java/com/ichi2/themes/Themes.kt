@@ -43,7 +43,7 @@ object Themes {
     const val ALPHA_ICON_DISABLED_LIGHT = 76 // 31%
 
     const val FOLLOW_SYSTEM_MODE = "0"
-    private const val APP_THEME_KEY = "appTheme"
+    const val APP_THEME_KEY = "appTheme"
     private const val DAY_THEME_KEY = "dayTheme"
     private const val NIGHT_THEME_KEY = "nightTheme"
 
