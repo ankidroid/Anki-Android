@@ -105,6 +105,8 @@ okhttp = "5.3.2"
 protobufKotlinLite = "4.33.2"
 # ../AnkiDroid/robolectricDownload.gradle may need changes - read instructions in that file
 robolectric = "4.16"
+# https://github.com/takahirom/roborazzi/releases
+roborazzi = "1.54.0"
 searchpreference = "2.7.3"
 seismic = "1.0.3"
 sharedPreferencesMock = "1.2.4"
@@ -202,6 +204,8 @@ mockito-inline = { module = "org.mockito:mockito-inline", version.ref = "mockito
 mockito-kotlin = { module = "org.mockito.kotlin:mockito-kotlin", version.ref = "mockitoKotlin" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 robolectric = { module = "org.robolectric:robolectric", version.ref = "robolectric" }
+roborazzi = { group = "io.github.takahirom.roborazzi", name = "roborazzi", version.ref = "roborazzi" }
+roborazzi-rule = { group = "io.github.takahirom.roborazzi", name = "roborazzi-junit-rule", version.ref = "roborazzi" }
 cashapp-turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
 
 [plugins]
@@ -222,3 +226,4 @@ ktlint-gradle-plugin = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "kt
 
 
 keeper = { id = "com.slack.keeper", version.ref = "slackKeeper" }
+roborazzi = { id = "io.github.takahirom.roborazzi", version.ref = "roborazzi" }
