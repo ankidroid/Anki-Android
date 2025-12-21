@@ -17,6 +17,7 @@
 package com.ichi2.anki.ui.windows.reviewer.whiteboard
 
 import android.content.Context
+import android.view.Choreographer
 import com.ichi2.anki.R
 import com.ichi2.utils.Dp
 import com.ichi2.utils.dp
@@ -42,6 +43,9 @@ fun Context.showColorPickerDialog(
     initialColor: Int,
     onColorSelected: (Int) -> Unit,
 ) {
+    val choreographer = Choreographer.getInstance()
+    // Defining callback here so that it can be removed from the onDismiss callback, if it is not null.
+    var callback: Choreographer.FrameCallback? = null
     ColorPickerDialog
         .Builder(this)
         .show {
@@ -58,9 +62,28 @@ fun Context.showColorPickerDialog(
                     envelope?.color?.let(onColorSelected)
                 },
             )
+            callback =
+                object : Choreographer.FrameCallback {
+                    override fun doFrame(frameTimeNanos: Long) {
+                        colorPickerView.flagView.x =
+                            (colorPickerView.selector.x + colorPickerView.selector.width / 2 - colorPickerView.flagView.width / 2)
+                        val y = (colorPickerView.selector.y - colorPickerView.flagView.height)
+                        if (y > 0) {
+                            colorPickerView.flagView.y = y
+                            colorPickerView.flagView.rotation = 0f
+                        } else {
+                            colorPickerView.flagView.y = colorPickerView.selector.y + colorPickerView.flagView.height
+                            colorPickerView.flagView.rotation = 180f
+                        }
+                        choreographer.postFrameCallback(this)
+                    }
+                }
+            choreographer.postFrameCallback(callback)
             setTitle(R.string.choose_color)
             negativeButton(R.string.dialog_cancel)
             setBottomSpace(12.dp)
+        }.setOnDismissListener {
+            callback?.let { choreographer.removeFrameCallback(it) }
         }
 }
 
