@@ -1947,10 +1947,11 @@ open class DeckPicker :
             Timber.d("doInBackgroundRepairCollection")
             val result =
                 withProgress(resources.getString(R.string.backup_repair_deck_progress)) {
-                    CollectionManager.ensureClosed()
-                    val colFile =
-                        CollectionManager.collectionPathInValidFolder().requireDiskBasedCollection().colDb
-                    BackupManager.repairCollection(colFile)
+                    withCol {
+                        Timber.i("RepairCollection: Closing collection")
+                        close()
+                        BackupManager.repairCollection(this@withCol)
+                    }
                 }
             if (!result) {
                 showThemedToast(this@DeckPicker, resources.getString(R.string.deck_repair_error), true)
