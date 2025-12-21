@@ -25,7 +25,6 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.EditText
-import android.widget.TextView
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.core.os.BundleCompat
@@ -34,6 +33,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.databinding.ItemNotetypeFieldBinding
 import com.ichi2.anki.databinding.NoteTypeFieldEditorBinding
 import com.ichi2.anki.dialogs.ConfirmationDialog
 import com.ichi2.anki.dialogs.LocaleSelectionDialog
@@ -574,17 +574,17 @@ internal class NoteFieldAdapter(
         convertView: View?,
         parent: ViewGroup,
     ): View {
-        val view =
-            convertView ?: LayoutInflater
-                .from(context)
-                .inflate(R.layout.item_notetype_field, parent, false)
-
-        val nameTextView: TextView = view.findViewById(R.id.field_name)
+        val binding =
+            if (convertView != null) {
+                ItemNotetypeFieldBinding.bind(convertView)
+            } else {
+                ItemNotetypeFieldBinding.inflate(LayoutInflater.from(context), parent, false)
+            }
 
         getItem(position)?.let {
             val (name, kind) = it
-            nameTextView.text = name
-            nameTextView.setCompoundDrawablesRelativeWithIntrinsicBoundsKt(
+            binding.fieldName.text = name
+            binding.fieldName.setCompoundDrawablesRelativeWithIntrinsicBoundsKt(
                 end =
                     when (kind) {
                         NodetypeKind.SORT -> R.drawable.ic_sort
@@ -592,6 +592,6 @@ internal class NoteFieldAdapter(
                     },
             )
         }
-        return view
+        return binding.root
     }
 }
