@@ -63,46 +63,7 @@ class NoteEditorActivity :
 
         setContentView(R.layout.note_editor)
 
-        /**
-         * The [NoteEditorActivity] activity supports multiple note editing workflows using fragments.
-         * It dynamically chooses the appropriate fragment to load and the arguments to pass to it,
-         * based on intent extras provided at launch time.
-         *
-         * - [FRAGMENT_NAME_EXTRA]: Fully qualified name of the fragment class to instantiate.
-         *   If set to [NoteEditorFragment], the activity initializes it with the arguments in
-         *   [FRAGMENT_ARGS_EXTRA].
-         *
-         * - [FRAGMENT_ARGS_EXTRA]: Bundle containing parameters for the fragment (e.g. note ID,
-         *   deck ID, etc.). Used to populate fields or determine editor behavior.
-         *
-         * This logic is encapsulated in the [launcher]  assignment, which selects the correct
-         * fragment mode (e.g. add note, edit note) based on intent contents.
-         */
-        val launcher =
-            if (intent.hasExtra(FRAGMENT_NAME_EXTRA)) {
-                val fragmentClassName = intent.getStringExtra(FRAGMENT_NAME_EXTRA)
-                if (fragmentClassName == NoteEditorFragment::class.java.name) {
-                    val fragmentArgs = intent.getBundleExtra(FRAGMENT_ARGS_EXTRA)
-                    if (fragmentArgs != null) {
-                        NoteEditorLauncher.PassArguments(fragmentArgs)
-                    } else {
-                        NoteEditorLauncher.AddNote()
-                    }
-                } else {
-                    NoteEditorLauncher.AddNote()
-                }
-            } else {
-                // Regular NoteEditor intent handling
-                intent.getBundleExtra(FRAGMENT_ARGS_EXTRA)?.let { fragmentArgs ->
-                    // If FRAGMENT_ARGS_EXTRA is provided, use it directly
-                    NoteEditorLauncher.PassArguments(fragmentArgs)
-                } ?: intent.extras?.let { bundle ->
-                    // Check if the bundle contains FRAGMENT_ARGS_EXTRA (for launchers that wrap their args)
-                    bundle.getBundle(FRAGMENT_ARGS_EXTRA)?.let { wrappedFragmentArgs ->
-                        NoteEditorLauncher.PassArguments(wrappedFragmentArgs)
-                    } ?: NoteEditorLauncher.PassArguments(bundle)
-                } ?: NoteEditorLauncher.AddNote()
-            }
+        val launcher = NoteIntentParser.parse(intent)
 
         val existingFragment = supportFragmentManager.findFragmentByTag(FRAGMENT_TAG)
 
@@ -172,5 +133,50 @@ class NoteEditorActivity :
                 putExtra(FRAGMENT_ARGS_EXTRA, arguments)
                 action = intentAction
             }
+    }
+}
+
+/**
+ * Helper to parse Intents for [NoteEditorActivity].
+ *
+ * It supports multiple note editing workflows using fragments by choosing the
+ * appropriate [noteeditor.NoteEditorLauncher] based on intent extras:
+ *
+ * - [NoteEditorActivity.Companion.FRAGMENT_NAME_EXTRA]: Fully qualified name of the fragment class.
+ * If set to [NoteEditorFragment], it initializes with arguments in [NoteEditorActivity.Companion.FRAGMENT_ARGS_EXTRA].
+ *
+ * - [NoteEditorActivity.Companion.FRAGMENT_ARGS_EXTRA]: Bundle containing parameters (note ID, deck ID, etc.).
+ */
+private object NoteIntentParser {
+    fun parse(intent: Intent): NoteEditorLauncher =
+        if (intent.hasExtra(FRAGMENT_NAME_EXTRA)) {
+            handleFragmentIntent(intent)
+        } else {
+            handleLegacyIntent(intent)
+        }
+
+    private fun handleFragmentIntent(intent: Intent): NoteEditorLauncher =
+        intent.getStringExtra(FRAGMENT_NAME_EXTRA)?.let { fragmentName ->
+            when (fragmentName) {
+                NoteEditorFragment::class.java.name ->
+                    intent
+                        .getBundleExtra(FRAGMENT_ARGS_EXTRA)
+                        ?.let { NoteEditorLauncher.PassArguments(it) }
+                        ?: NoteEditorLauncher.AddNote()
+                else -> NoteEditorLauncher.AddNote()
+            }
+        } ?: NoteEditorLauncher.AddNote()
+
+    private fun handleLegacyIntent(intent: Intent): NoteEditorLauncher {
+        intent.getBundleExtra(FRAGMENT_ARGS_EXTRA)?.let { args ->
+            return NoteEditorLauncher.PassArguments(args)
+        }
+        intent.extras?.let { bundle ->
+            bundle.getBundle(FRAGMENT_ARGS_EXTRA)?.let { wrappedArgs ->
+                return NoteEditorLauncher.PassArguments(wrappedArgs)
+            }
+            return NoteEditorLauncher.PassArguments(bundle)
+        }
+        return NoteEditorLauncher.AddNote()
     }
 }
