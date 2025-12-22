@@ -42,12 +42,14 @@ import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.sched.Scheduler
 import com.ichi2.testutils.AnkiFragmentScenario
 import com.ichi2.testutils.isJsonEqual
+import com.ichi2.testutils.uninitializeField
 import io.mockk.every
 import io.mockk.mockk
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.CoreMatchers.not
 import org.hamcrest.MatcherAssert.assertThat
 import org.intellij.lang.annotations.Language
+import org.junit.Before
 import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -56,6 +58,12 @@ import kotlin.test.assertNotNull
 
 @RunWith(AndroidJUnit4::class)
 class CustomStudyDialogTest : RobolectricTest() {
+    @Before
+    override fun setUp() {
+        super.setUp()
+        uninitializeField<CustomStudyDialog>("deferredDefaults")
+    }
+
     @Test
     fun `new custom study decks have expected structure - issue 6289`() =
         runTest {
@@ -200,6 +208,16 @@ class CustomStudyDialogTest : RobolectricTest() {
         }
     }
 
+    @Test
+    fun `subscreens are ignored when restoring from process death`() {
+        withCustomStudyFragment(args = argumentsDisplayingSubscreen(ContextMenuOption.EXTEND_REV, restoreFromProcessDeath = true)) {
+            // ensure we're on the main screen
+            onView(withText(TR.customStudyIncreaseTodaysReviewCardLimit()))
+                .inRoot(isDialog())
+                .check(matches(isEnabled()))
+        }
+    }
+
     /**
      * Runs [block] on a [CustomStudyDialog]
      */
@@ -222,13 +240,18 @@ class CustomStudyDialogTest : RobolectricTest() {
                 }
         }
 
-    private fun argumentsDisplayingSubscreen(subscreen: ContextMenuOption): Bundle {
+    private fun argumentsDisplayingSubscreen(
+        subscreen: ContextMenuOption,
+        restoreFromProcessDeath: Boolean = false,
+    ): Bundle {
         @Suppress("RedundantValueArgument")
         fun setupDefaultValuesSingleton() {
             withCustomStudyFragment(argumentsDisplayingMainScreen(deckId = Consts.DEFAULT_DECK_ID)) { }
         }
 
-        setupDefaultValuesSingleton()
+        if (!restoreFromProcessDeath) {
+            setupDefaultValuesSingleton()
+        }
 
         return requireNotNull(
             CustomStudyDialog

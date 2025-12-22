@@ -54,6 +54,7 @@ import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.anki.asyncIO
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
+import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.Companion.deferredDefaults
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption.EXTEND_NEW
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption.EXTEND_REV
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption.STUDY_AHEAD
@@ -123,7 +124,6 @@ import timber.log.Timber
  * @see TagLimitFragment
  */
 @KotlinCleanup("remove 'runBlocking' call'")
-@NeedsTest("deferredDefaults")
 class CustomStudyDialog : AnalyticsDialogFragment() {
     /** ID of the [Deck] which this dialog was created for */
     private val dialogDeckId: DeckId
@@ -185,7 +185,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         super.onCreate(savedInstanceState)
         val option = selectedSubDialog
-        return if (option == null) {
+        return if (option == null || !defaultsAreInitialized()) {
             Timber.i("Showing Custom Study main menu")
             deferredDefaults = loadCustomStudyDefaults()
             // Select the specified deck
@@ -714,6 +714,13 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
          * This exists so we don't need to pass an unbounded object between fragments
          */
         private lateinit var deferredDefaults: Deferred<CustomStudyDefaults>
+
+        /**
+         * Whether [deferredDefaults] is initialized; false on restoring the dialog from process
+         * death
+         */
+        // This exists as `isInitialized` can't be checked in an instance of CustomStudyDialog
+        private fun defaultsAreInitialized(): Boolean = ::deferredDefaults.isInitialized
 
         /**
          * Creates an instance of the Custom Study Dialog: a user can select a custom study type
