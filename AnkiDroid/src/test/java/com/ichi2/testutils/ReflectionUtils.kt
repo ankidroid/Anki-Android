@@ -31,6 +31,11 @@ inline fun <reified T : Any> requireAccessibleJavaField(fieldName: String): Fiel
     )
 
 /**
+ * Reverts a `lateinit` field to uninitialized
+ */
+inline fun <reified T : Any> uninitializeField(fieldName: String) = requireAccessibleJavaField<T>(fieldName).set(null, null)
+
+/**
  * @param clazz Java class to get the field
  * @param methodName name of the method
  * @return a [Field] object with `isAccessible` set to true
