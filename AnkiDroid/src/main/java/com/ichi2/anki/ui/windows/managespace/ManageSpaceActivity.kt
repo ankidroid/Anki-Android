@@ -16,7 +16,12 @@
 
 package com.ichi2.anki.ui.windows.managespace
 
+import android.os.Bundle
+import androidx.appcompat.app.AlertDialog
+import com.ichi2.anki.R
 import com.ichi2.anki.SingleFragmentActivity
+import com.ichi2.anki.exception.SystemStorageException
+import timber.log.Timber
 
 /**
  * This activity is called by the system from the app settings to let the user manage the app's
@@ -26,4 +31,24 @@ import com.ichi2.anki.SingleFragmentActivity
  * @see ManageSpaceFragment
  * @see SingleFragmentActivity.onCreate
  */
-class ManageSpaceActivity : SingleFragmentActivity()
+class ManageSpaceActivity : SingleFragmentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        try {
+            super.onCreate(savedInstanceState)
+        } catch (e: SystemStorageException) {
+            Timber.e(e, "Storage access failed in ManageSpaceActivity")
+            showFatalErrorDialog(e)
+            return
+        }
+    }
+
+    private fun showFatalErrorDialog(e: Throwable) {
+        AlertDialog
+            .Builder(this)
+            .setTitle(getString(R.string.ankidroid_init_failed_webview_title))
+            .setMessage(e.message)
+            .setPositiveButton(getString(R.string.dialog_ok)) { _, _ -> finish() }
+            .setOnCancelListener { finish() }
+            .show()
+    }
+}
