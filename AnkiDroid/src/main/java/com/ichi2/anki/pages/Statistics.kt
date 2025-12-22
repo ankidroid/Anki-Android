@@ -107,10 +107,36 @@ class Statistics :
         binding.deckName.text = selectedDeckName
         val javascriptCode =
             """
-            var textBox = document.getElementById("statisticsSearchText");
-            textBox.value = "deck:\"$selectedDeckName\"";
-            textBox.dispatchEvent(new Event("input", { bubbles: true }));
-            textBox.dispatchEvent(new Event("change"));
+            // finding the search box by id | by input[type=text] with deck in value
+            var textBox = document.getElementById('statisticsSearchText');
+            if (!textBox) {
+                var inputs = document.querySelectorAll('input[type="text"]');
+                for (var i = 0; i < inputs.length; i++) {
+                    if (inputs[i].value && inputs[i].value.startsWith('deck:')) {
+                        textBox = inputs[i];
+                        break;
+                    }
+                }
+            }
+            if (textBox) {
+                textBox.value = "deck:\"$selectedDeckName\"";
+                textBox.dispatchEvent(new Event("input", { bubbles: true }));
+                textBox.dispatchEvent(new Event("change"));
+            }
+            // for finding radio buttons by label | type
+            var radios = document.querySelectorAll('input[type="radio"]');
+            for (var i = 0; i < radios.length; i++) {
+                if (!radios[i].dataset._deckListener) {
+                    radios[i].addEventListener('change', function() {
+                        if (textBox) {
+                            textBox.value = "deck:\"$selectedDeckName\"";
+                            textBox.dispatchEvent(new Event("input", { bubbles: true }));
+                            textBox.dispatchEvent(new Event("change"));
+                        }
+                    });
+                    radios[i].dataset._deckListener = '1';
+                }
+            }
             """.trimIndent()
         webViewLayout.evaluateJavascript(javascriptCode, null)
     }
