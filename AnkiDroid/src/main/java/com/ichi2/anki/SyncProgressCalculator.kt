@@ -34,16 +34,16 @@ object SyncProgressCalculator {
      * - Labeled format (e.g., "Added/modified: 0↑ 132↓")
      *
      * Note: The arrow format "X↑ Y↓" represents sync operations:
-     * - X↑ = items already uploaded (completed)
-     * - Y↓ = items remaining to upload (pending)
+     * - X↑ = items remaining to upload (pending)
+     * - Y↓ = items already processed (completed)
      * - Total = X + Y (all items)
-     * - Completed = X (items uploaded so far)
-     * - Progress = X / (X + Y)
+     * - Completed = Y (items processed so far)
+     * - Progress = Y / (X + Y)
      *
      * Examples:
-     * - "0↑ 132↓" = 0 / 132 = 0%
-     * - "66↑ 66↓" = 66 / 132 = 50%
-     * - "132↑ 0↓" = 132 / 132 = 100%
+     * - "132↑ 0↓" = 0 / 132 = 0% (132 remaining, 0 done)
+     * - "66↑ 66↓" = 66 / 132 = 50% (66 remaining, 66 done)
+     * - "0↑ 132↓" = 132 / 132 = 100% (0 remaining, 132 done)
      *
      * @param progressString Progress string from backend
      * @return Pair of (completed, total) or (0, 0) if parsing fails
@@ -59,10 +59,10 @@ object SyncProgressCalculator {
                     .filter { it.isNotEmpty() }
                     .mapNotNull { it.toIntOrNull() }
                 if (parts.size >= 2) {
-                    val uploaded = parts[0]
-                    val remaining = parts[1]
-                    val total = uploaded + remaining
-                    val completed = uploaded
+                    val remaining = parts[0]  // X↑ = remaining to upload
+                    val processed = parts[1]  // Y↓ = already processed
+                    val total = remaining + processed
+                    val completed = processed  // Progress is based on what's been processed
                     return Pair(completed, total)
                 }
             }
