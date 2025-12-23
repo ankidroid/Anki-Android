@@ -40,6 +40,7 @@ import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
+import com.ichi2.anki.SyncProgressCalculator
 import com.ichi2.anki.cancelSync
 import com.ichi2.anki.notifications.NotificationId
 import com.ichi2.anki.setLastSyncTimeToNow
@@ -54,19 +55,6 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 import kotlin.coroutines.cancellation.CancellationException
 
-/**
- * Syncs collection and media in the background.
- *
- * The collection will be blocked while synchronizing, so any component that
- * depends on it should be blocked as well until the task ends.
- *
- * Media is synced by enqueueing a [SyncMediaWorker] work, which doesn't block the collection.
- *
- * Note that one-way syncs will be ignored, since they require user input.
- *
- * That is useful when the user isn't interacting with
- * the app, like when doing an automatic sync after leaving the app.
- */
 class SyncWorker(
     context: Context,
     parameters: WorkerParameters,
@@ -133,7 +121,10 @@ class SyncWorker(
                     val progress = backend.latestProgress() // avoid sending repeated notifications
                     if (progress.hasNormalSync() && syncProgress != progress.normalSync) {
                         syncProgress = progress.normalSync
-                        val text = syncProgress.run { "$added\n$removed" }
+                        val text = SyncProgressCalculator.formatSyncProgress(
+                            syncProgress.added,
+                            syncProgress.removed
+                        )
                         notify(getProgressNotification(text))
                     }
                     delay(SyncMediaWorker.NOTIFICATION_UPDATE_RATE_MS)

@@ -379,6 +379,34 @@ suspend fun <T> FragmentActivity.withProgress(
     }
 }
 
+suspend fun <T> FragmentActivity.withSyncProgress(
+    extractProgress: ProgressContext.() -> Unit,
+    onCancel: ((Backend) -> Unit)? = { it.setWantsAbort() },
+    @StringRes manualCancelButton: Int? = null,
+    op: suspend () -> T,
+): T {
+    val backend = CollectionManager.getBackend()
+    return withSyncProgressDialog(
+        context = this@withSyncProgress,
+        onCancel =
+            if (onCancel != null) {
+                fun() {
+                    onCancel(backend)
+                }
+            } else {
+                null
+            },
+        manualCancelButton = manualCancelButton,
+    ) { dialog ->
+        backend.withProgress(
+            extractProgress = extractProgress,
+            updateUi = { updateSyncDialog(dialog) },
+        ) {
+            op()
+        }
+    }
+}
+
 /**
  * Run the provided operation, showing a progress window with the provided
  * message until the operation completes.
@@ -496,6 +524,76 @@ private fun dismissDialogIfShowing(dialog: Dialog) {
     }
 }
 
+
+ // Helper function for showing a custom sync progress dialog with circular progress indicator.
+
+suspend fun <T> withSyncProgressDialog(
+    context: Activity,
+    onCancel: (() -> Unit)?,
+    delayMillis: Long = 600,
+    @StringRes manualCancelButton: Int? = null,
+    op: suspend (SyncProgressDialog) -> T,
+): T =
+    coroutineScope {
+        val cancelButtonText = manualCancelButton?.let { context.getString(it) }
+        val dialog =
+            SyncProgressDialog(
+                context = context,
+                onCancel = onCancel,
+                cancelButtonText = cancelButtonText,
+            )
+
+        // disable taps immediately
+        context.runOnUiThread {
+            context.window.setFlags(
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+            )
+        }
+
+        // reveal the dialog after delay
+        var dialogIsOurs = false
+        val dialogJob =
+            launch {
+                delay(delayMillis)
+                if (!AnkiDroidApp.instance.progressDialogShown) {
+                    Timber.i(
+                        """Displaying sync progress dialog: ${delayMillis}ms elapsed; 
+                |cancellable: ${onCancel != null}; 
+                |manualCancel: ${manualCancelButton != null}
+                |
+                        """.trimMargin(),
+                    )
+                    dialog.show()
+                    AnkiDroidApp.instance.progressDialogShown = true
+                    dialogIsOurs = true
+                } else {
+                    Timber.w(
+                        """A progress dialog is already displayed, not displaying sync progress dialog: 
+                |cancellable: ${onCancel != null}; 
+                |manualCancel: ${manualCancelButton != null}
+                |
+                        """.trimMargin(),
+                    )
+                }
+            }
+
+        try {
+            op(dialog)
+        } finally {
+            dialogJob.cancel()
+            if (dialog.isShowing()) {
+                dialog.dismiss()
+            }
+            context.runOnUiThread {
+                context.window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+            }
+            if (dialogIsOurs) {
+                AnkiDroidApp.instance.progressDialogShown = false
+            }
+        }
+    }
+
 /**
  * Poll the backend for progress info every 100ms until cancelled by caller.
  * Calls extractProgress() to gather progress info and write it into
@@ -530,6 +628,10 @@ data class ProgressContext(
     var text: String = "",
     /** If set, shows progress bar with a of b complete. */
     var amount: Pair<Int, Int>? = null,
+    /** If set, shows percentage in circular progress indicator. */
+    var percentage: Int? = null,
+    /** If set, shows details text below the progress indicator. */
+    var details: String? = null,
 )
 
 @Suppress("Deprecation") // ProgressDialog deprecation
@@ -544,6 +646,16 @@ private fun ProgressContext.updateDialog(dialog: android.app.ProgressDialog) {
         } ?: ""
     @Suppress("Deprecation") // ProgressDialog deprecation
     dialog.setMessage(text + progressText)
+}
+
+/**
+ * Updates a SyncProgressDialog with the current progress context.
+ */
+private fun ProgressContext.updateSyncDialog(dialog: SyncProgressDialog) {
+    percentage?.let { pct ->
+        dialog.updateProgress(pct, details)
+    }
+    // Don't show status message - only show progress and details
 }
 
 /**

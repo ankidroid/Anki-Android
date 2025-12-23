@@ -142,10 +142,18 @@ private suspend fun handleNormalSync(
     Timber.i("Sync: Normal collection sync")
     var auth2 = auth
     val output =
-        deckPicker.withProgress(
+        deckPicker.withSyncProgress(
             extractProgress = {
                 if (progress.hasNormalSync()) {
-                    text = progress.normalSync.run { "$added\n$removed" }
+                    percentage = SyncProgressCalculator.calculatePercentageFromStrings(
+                        progress.normalSync.added,
+                        progress.normalSync.removed
+                    )
+                    details = SyncProgressCalculator.formatSyncDetails(
+                        progress.normalSync.added,
+                        progress.normalSync.removed
+                    )
+                    text = TR.syncSyncing()
                 }
             },
             onCancel = ::cancelSync,

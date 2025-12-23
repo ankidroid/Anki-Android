@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:gravity="center">
+
+    <!-- Custom Circular Progress Indicator -->
+    <com.ichi2.anki.CustomCircularProgressView
+        android:id="@+id/custom_circular_progress"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_gravity="center" />
+
+    <!-- Sync Status Text (hidden by default, only details shown) -->
+    <TextView
+        android:id="@+id/sync_status_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/dialog_processing"
+        android:textSize="16sp"
+        android:textColor="?android:attr/textColorPrimary"
+        android:gravity="center"
+        android:visibility="gone" />
+
+    <!-- Details Text (Added/Modified and Removed counts) - always visible -->
+    <TextView
+        android:id="@+id/sync_details_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text=""
+        android:textSize="14sp"
+        android:textColor="?android:attr/textColorSecondary"
+        android:gravity="center"
+        android:visibility="visible" />
+
+</LinearLayout>
