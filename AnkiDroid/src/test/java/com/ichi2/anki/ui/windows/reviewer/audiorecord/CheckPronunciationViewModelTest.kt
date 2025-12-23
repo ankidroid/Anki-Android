@@ -18,6 +18,7 @@ package com.ichi2.anki.ui.windows.reviewer.audiorecord
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import app.cash.turbine.test
 import com.ichi2.anki.R
+import com.ichi2.anki.recorder.AudioRecorder
 import com.ichi2.testutils.JvmTest
 import io.mockk.coVerify
 import io.mockk.every
@@ -49,7 +50,7 @@ class CheckPronunciationViewModelTest : JvmTest() {
     fun setup() {
         mockRecorder =
             mockk(relaxUnitFun = true) {
-                every { currentFile } returns "test_file.3gp"
+                every { currentFile?.absolutePath } returns "test_file.3gp"
             }
         mockPlayer =
             mockk(relaxUnitFun = true) {
@@ -162,20 +163,20 @@ class CheckPronunciationViewModelTest : JvmTest() {
                 assertFalse(awaitItem())
             }
 
-            verify { mockRecorder.startRecording() }
+            verify { mockRecorder.start() }
             coVerify { mockPlayer.close() }
         }
 
     @Test
     fun `onRecordingCancelled should reset recorder`() {
         viewModel.onRecordingCancelled()
-        verify { mockRecorder.reset() }
+        verify { mockRecorder.stop() }
     }
 
     @Test
     fun `resetAll should reset recorder and player`() {
         viewModel.resetAll()
-        verify { mockRecorder.reset() }
+        verify { mockRecorder.stop() }
         verify { mockPlayer.close() }
     }
 }
