@@ -18,7 +18,7 @@ package com.ichi2.anki.ui.windows.reviewer
 import androidx.test.core.app.ActivityScenario
 import com.github.takahirom.roborazzi.ExperimentalRoborazziApi
 import com.github.takahirom.roborazzi.captureScreenRoboImage
-import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.ScreenshotTest
 import com.ichi2.anki.previewer.CardViewerActivity
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.settings.enums.FrameStyle
@@ -28,14 +28,12 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.ParameterizedRobolectricTestRunner
 import org.robolectric.RuntimeEnvironment
-import org.robolectric.annotation.GraphicsMode
 
 @Ignore("screenshots tests should be separated from the general unit tests task")
 @RunWith(ParameterizedRobolectricTestRunner::class)
-@GraphicsMode(GraphicsMode.Mode.NATIVE)
 class StudyScreenScreenshotTest(
     private val config: TestConfig,
-) : RobolectricTest() {
+) : ScreenshotTest() {
     init {
         Prefs.toolbarPosition = config.toolbarPosition
         Prefs.showAnswerButtons = config.showAnswerButtons
