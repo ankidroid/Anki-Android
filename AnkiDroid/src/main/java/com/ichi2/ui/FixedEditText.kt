@@ -136,8 +136,10 @@ open class FixedEditText : AppCompatEditText {
 
     /**
      * Focuses the edit text and opens the soft keyboard.
+     *
+     * @param runnable runnable executed after the field has focus
      */
-    fun focusWithKeyboard() {
-        setFocusAndOpenKeyboard(this)
+    fun focusWithKeyboard(runnable: Runnable? = null) {
+        setFocusAndOpenKeyboard(this, runnable)
     }
 }
