@@ -283,7 +283,6 @@ class NoteEditorTest : RobolectricTest() {
         }
 
     @Test
-    @Ignore("Fix this alongside 15086")
     fun `sticky fields do not impact current values`() =
         runTest {
             val basic = col.notetypes.basic
@@ -304,7 +303,6 @@ class NoteEditorTest : RobolectricTest() {
         }
 
     @Test
-    @Ignore("15086")
     fun `sticky fields are updated per note type`() =
         runTest {
             val basic = col.notetypes.basic

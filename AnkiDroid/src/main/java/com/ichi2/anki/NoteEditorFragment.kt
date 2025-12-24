@@ -2148,6 +2148,8 @@ class NoteEditorFragment :
     ) {
         if (currentFields[index].sticky) {
             toggleStickyText.getOrPut(index) { "" }
+        } else {
+            toggleStickyText.remove(index)
         }
         if (toggleStickyText[index] == null) {
             toggleStickyButton.background.alpha = 64
@@ -2445,7 +2447,9 @@ class NoteEditorFragment :
             }
         } else {
             populateEditFields(changeType, false)
-            updateFieldsFromStickyText()
+            if (changeType.type != Type.CHANGE_FIELD_COUNT) {
+                updateFieldsFromStickyText()
+            }
         }
     }
 
