@@ -1278,7 +1278,6 @@ class NoteEditorFragment :
             }
         // update UI based on the result, noOfAddedCards
         onNoteAdded(changes.count)
-        updateFieldsFromStickyText()
     }
 
     @VisibleForTesting
