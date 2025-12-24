@@ -27,7 +27,6 @@ import com.ichi2.anki.libanki.Field
 import com.ichi2.anki.libanki.NotetypeJson
 import com.ichi2.anki.libanki.Notetypes
 import com.ichi2.utils.MapUtil.getKeyByValue
-import java.util.ArrayList
 import kotlin.math.min
 
 /** Responsible for recreating EditFieldLines after NoteEditor operations
@@ -129,6 +128,8 @@ class FieldState private constructor(
 
             fun onActivityCreation(replaceNewlines: Boolean): FieldChangeType = fromType(Type.INIT, replaceNewlines)
 
+            fun onNoteAdded(replaceNewlines: Boolean): FieldChangeType = fromType(Type.NOTE_ADDED, replaceNewlines)
+
             private fun fromType(
                 type: Type,
                 replaceNewlines: Boolean,
@@ -142,6 +143,7 @@ class FieldState private constructor(
         CHANGE_FIELD_COUNT,
         REFRESH,
         REFRESH_WITH_MAP,
+        NOTE_ADDED,
     }
 
     companion object {
