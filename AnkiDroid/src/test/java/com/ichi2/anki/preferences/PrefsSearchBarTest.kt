@@ -67,7 +67,9 @@ class PrefsSearchBarTest : RobolectricTest() {
         for (resId in allResIds) {
             val fragment = getFragmentFromXmlRes(resId)
 
-            assertNotNull(fragment)
+            val resName = targetContext.resources.getResourceName(resId)
+
+            assertNotNull(fragment, message = "Could not resolve fragment for resource: $resName")
 
             // Special handling for ControlsSettingsFragment which handles multiple XML resources
             val expectedResourceId =
