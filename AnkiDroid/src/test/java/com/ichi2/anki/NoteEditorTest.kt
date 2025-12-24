@@ -42,6 +42,7 @@ import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.Decks.Companion.CURRENT_DECK
 import com.ichi2.anki.libanki.Note
 import com.ichi2.anki.libanki.NotetypeJson
+import com.ichi2.anki.libanki.testutils.AnkiTest
 import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import com.ichi2.testutils.getString
@@ -58,6 +59,7 @@ import org.robolectric.Shadows.shadowOf
 import org.robolectric.annotation.Config
 import java.util.concurrent.atomic.AtomicReference
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
@@ -278,6 +280,49 @@ class NoteEditorTest : RobolectricTest() {
             val actual = editor.currentFieldStrings.toList()
 
             assertThat("newlines should be preserved, second field should be blanked", actual, contains(newFirstField, ""))
+        }
+
+    @Test
+    @Ignore("Fix this alongside 15086")
+    fun `sticky fields do not impact current values`() =
+        runTest {
+            val basic = col.notetypes.basic
+            val reversed = col.notetypes.basicAndReversed
+
+            reversed.markFieldAsSticky(0)
+
+            withNoteEditorAdding {
+                fields[0] = "foo"
+                fields[1] = "bar"
+
+                setCurrentlySelectedNoteType(reversed.id)
+                setCurrentlySelectedNoteType(basic.id)
+
+                assertThat(fields[0], equalTo("foo"))
+                assertThat(fields[1], equalTo("bar"))
+            }
+        }
+
+    @Test
+    @Ignore("15086")
+    fun `sticky fields are updated per note type`() =
+        runTest {
+            val basic = col.notetypes.basic
+            val reversed = col.notetypes.basicAndReversed
+
+            reversed.markFieldAsSticky(0)
+
+            withNoteEditorAdding {
+                assertFalse(isSticky(0), "first field of basic is not sticky")
+
+                setCurrentlySelectedNoteType(reversed.id)
+
+                assertTrue(isSticky(0), "first field of reversed is not sticky")
+
+                setCurrentlySelectedNoteType(basic.id)
+
+                assertFalse(isSticky(0), "sticky flag is removed")
+            }
         }
 
     @Test
@@ -800,6 +845,8 @@ private class NoteEditorFieldAccessor(
 private val NoteEditorFragment.fields: NoteEditorFieldAccessor
     get() = NoteEditorFieldAccessor(this)
 
+private fun NoteEditorFragment.isSticky(index: Int) = this.toggleStickyText.containsKey(index)
+
 private var NoteEditorFragment.noteType: NotetypeJson
     get() = editorNote!!.notetype
     set(value) = this.setCurrentlySelectedNoteType(value.id)
@@ -811,4 +858,29 @@ private fun NoteEditorFragment.selectDeck(
 ) {
     // TODO: get name from collection and make this 'suspend fun' after Context Parameters (#19614)
     onDeckSelected(SelectableDeck.Deck(deckId, name))
+}
+
+/** sets a note type as sticky */
+private fun NotetypeJson.markFieldAsSticky(index: Int) {
+    this.fields[index].sticky = true
+}
+
+/**
+ * Updates the provided note type, without affecting the currently selected note type
+ */
+private fun NotetypeJson.update(
+    testContext: AnkiTest,
+    block: NotetypeJson.() -> Unit,
+) {
+    val notetypes = testContext.col.notetypes
+    val currentNoteType = notetypes.current()
+
+    // apply the updates
+    block(this)
+
+    // persist the updates
+    notetypes.update(this)
+
+    // ensure the current note type was unchanged
+    notetypes.setCurrent(currentNoteType)
 }
