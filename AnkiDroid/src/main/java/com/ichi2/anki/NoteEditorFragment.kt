@@ -135,6 +135,7 @@ import com.ichi2.anki.multimediacard.impl.MultimediaEditableNote
 import com.ichi2.anki.noteeditor.CustomToolbarButton
 import com.ichi2.anki.noteeditor.FieldState
 import com.ichi2.anki.noteeditor.FieldState.FieldChangeType
+import com.ichi2.anki.noteeditor.FieldState.Type
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import com.ichi2.anki.noteeditor.Toolbar
 import com.ichi2.anki.noteeditor.Toolbar.TextFormatListener
@@ -1242,7 +1243,7 @@ class NoteEditorFragment :
         var closeIntent: Intent? = null
         changed = true
         sourceText = null
-        refreshNoteData(FieldChangeType.refreshWithStickyFields(shouldReplaceNewlines()))
+        refreshNoteData(FieldChangeType.onNoteAdded(shouldReplaceNewlines()))
         // backend text ends with dot
         val successMessage = TR.importingCardsAdded(count).replace(".", "")
         showSnackbar(successMessage, Snackbar.LENGTH_SHORT)
@@ -2430,8 +2431,20 @@ class NoteEditorFragment :
         updateTags()
         updateCards(editorNote!!.notetype)
         updateToolbar()
-        populateEditFields(changeType, false)
-        updateFieldsFromStickyText()
+
+        if (changeType.type == Type.NOTE_ADDED) {
+            // rebuilding the edit fields causes a flicker - avoid it
+            // we update the fields after focus to stop a case where the field is cleared
+            // causing two selection updates: handling the selected field being blanked
+            // then focusing the first field
+            editFields!!.first().focusWithKeyboard {
+                editFields!!.forEach { it.setText("") }
+                updateFieldsFromStickyText()
+            }
+        } else {
+            populateEditFields(changeType, false)
+            updateFieldsFromStickyText()
+        }
     }
 
     private fun addClozeButton(
