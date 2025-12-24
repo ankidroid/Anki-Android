@@ -287,7 +287,9 @@ class NoteEditorFragment :
     private var pastedImageCache: HashMap<String, String> = HashMap()
 
     // save field index as key and text as value when toggle sticky clicked in Field Edit Text
-    private var toggleStickyText: HashMap<Int, String?> = HashMap()
+    @VisibleForTesting
+    var toggleStickyText: HashMap<Int, String?> = HashMap()
+        private set
 
     var clipboard: ClipboardManager? = null
 
