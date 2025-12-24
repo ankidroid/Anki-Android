@@ -15,6 +15,7 @@
  */
 package com.ichi2.anki.preferences
 
+import android.os.Looper
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.bytehamster.lib.preferencesearch.PreferenceItem
 import com.bytehamster.lib.preferencesearch.SearchConfiguration
@@ -25,6 +26,7 @@ import org.hamcrest.Matchers.equalTo
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Robolectric
+import org.robolectric.Shadows.shadowOf
 import kotlin.test.assertNotNull
 
 @RunWith(AndroidJUnit4::class)
@@ -67,7 +69,8 @@ class PrefsSearchBarTest : RobolectricTest() {
         for (resId in allResIds) {
             val fragment = getFragmentFromXmlRes(resId)
 
-            assertNotNull(fragment)
+            val resourceName = targetContext.resources.getResourceEntryName(resId)
+            assertNotNull(fragment, "Fragment for resource '$resourceName' (ID: $resId) should not be null")
 
             // Special handling for ControlsSettingsFragment which handles multiple XML resources
             val expectedResourceId =
@@ -86,11 +89,17 @@ class PrefsSearchBarTest : RobolectricTest() {
 
     private fun getPreferencesActivity(): PreferencesActivity {
         val intent = PreferencesActivity.getIntent(targetContext)
-        return Robolectric
-            .buildActivity(PreferencesActivity::class.java, intent)
-            .create()
-            .start()
-            .resume()
-            .get()
+        val activity =
+            Robolectric
+                .buildActivity(PreferencesActivity::class.java, intent)
+                .create()
+                .start()
+                .resume()
+                .get()
+
+        // Core fix: Wait for asynchronous operations to complete
+        shadowOf(Looper.getMainLooper()).idle()
+
+        return activity
     }
 }
