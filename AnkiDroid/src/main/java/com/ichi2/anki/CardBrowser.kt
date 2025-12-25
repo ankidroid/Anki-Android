@@ -555,6 +555,35 @@ open class CardBrowser :
             showDialogFragment(dialog)
         }
 
+        // Track the last focused row position
+        var lastFocusedPosition: Int? = null
+
+        fun onFocusedRowChanged(newFocusedRow: CardOrNoteId?) {
+            val adapter = cardBrowserFragment.cardsAdapter
+            val currentPosition =
+                if (newFocusedRow != null) {
+                    viewModel.cards.indexOf(newFocusedRow).takeIf { it >= 0 }
+                } else {
+                    null
+                }
+
+            // Update previously focused row
+            lastFocusedPosition?.let { oldPos ->
+                if (oldPos != currentPosition && oldPos < adapter.itemCount) {
+                    adapter.notifyItemChanged(oldPos)
+                }
+            }
+
+            // Update newly focused row
+            currentPosition?.let { newPos ->
+                if (newPos != lastFocusedPosition && newPos < adapter.itemCount) {
+                    adapter.notifyItemChanged(newPos)
+                }
+            }
+
+            lastFocusedPosition = currentPosition
+        }
+
         viewModel.flowOfSearchQueryExpanded.launchCollectionInLifecycleScope(::onSearchQueryExpanded)
         viewModel.flowOfSelectedRows.launchCollectionInLifecycleScope(::onSelectedRowsChanged)
         viewModel.flowOfFilterQuery.launchCollectionInLifecycleScope(::onFilterQueryChanged)
@@ -565,6 +594,7 @@ open class CardBrowser :
         viewModel.flowOfSearchState.launchCollectionInLifecycleScope(::searchStateChanged)
         viewModel.cardSelectionEventFlow.launchCollectionInLifecycleScope(::onSelectedCardUpdated)
         viewModel.flowOfSaveSearchNamePrompt.launchCollectionInLifecycleScope(::onSaveSearchNamePrompt)
+        viewModel.flowOfEditorRowId.launchCollectionInLifecycleScope { onFocusedRowChanged(it) }
     }
 
     fun isKeyboardVisible(view: View?): Boolean =
@@ -1156,7 +1186,18 @@ open class CardBrowser :
             // Hide note editor frame if deck is empty and fragmented
             binding.noteEditorFrame?.visibility =
                 if (fragmented && !isDeckEmpty) {
-                    viewModel.currentCardId = (viewModel.focusedRow ?: viewModel.cards[0]).toCardId(viewModel.cardsOrNotes)
+                    // If a specific card was passed from the reviewer, focus it
+                    if (reviewerCardId != -1L) {
+                        // Find the card in the list and set it as focused
+                        val cardOrNoteId = viewModel.cards.find { it.toCardId(viewModel.cardsOrNotes) == reviewerCardId }
+                        if (cardOrNoteId != null) {
+                            viewModel.editorRowId = cardOrNoteId
+                        }
+                    } else if (viewModel.editorRowId == null && viewModel.cards.isNotEmpty()) {
+                        // Otherwise, set the first row as focused if none is set
+                        viewModel.editorRowId = viewModel.cards[0]
+                    }
+                    viewModel.currentCardId = (viewModel.editorRowId ?: viewModel.cards[0]).toCardId(viewModel.cardsOrNotes)
                     loadNoteEditorFragmentIfFragmented()
                     View.VISIBLE
                 } else {
