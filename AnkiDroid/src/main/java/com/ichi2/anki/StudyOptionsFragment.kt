@@ -16,6 +16,7 @@ package com.ichi2.anki
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.text.Html
 import android.text.Spanned
 import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
@@ -32,6 +33,7 @@ import androidx.annotation.VisibleForTesting
 import androidx.constraintlayout.widget.Group
 import androidx.core.os.bundleOf
 import androidx.core.text.HtmlCompat
+import androidx.core.text.parseAsHtml
 import androidx.core.view.MenuProvider
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -51,6 +53,7 @@ import com.ichi2.anki.reviewreminders.ScheduleReminders
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.ui.internationalization.toSentenceCase
 import com.ichi2.anki.utils.ext.showDialogFragment
+import com.ichi2.ui.CollectionMediaImageGetter
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -459,7 +462,16 @@ class StudyOptionsFragment :
                 }
             }
         if (desc.isNotEmpty()) {
-            textDeckDescription.text = formatDescription(desc)
+            val mediaDir = col.media.dir
+            val imageGetter =
+                CollectionMediaImageGetter(
+                    requireContext(),
+                    textDeckDescription,
+                    mediaDir,
+                    viewLifecycleOwner.lifecycleScope,
+                )
+
+            textDeckDescription.text = formatDescription(desc, imageGetter)
             textDeckDescription.visibility = View.VISIBLE
         } else {
             textDeckDescription.visibility = View.GONE
@@ -540,6 +552,7 @@ class StudyOptionsFragment :
         @VisibleForTesting
         fun formatDescription(
             @Language("HTML") desc: String,
+            imageGetter: Html.ImageGetter? = null,
         ): Spanned {
             // #5715: In deck description, ignore what is in style and script tag
             // Since we don't currently execute the JS/CSS, it's not worth displaying.
@@ -547,7 +560,11 @@ class StudyOptionsFragment :
             // #5188 - compat.fromHtml converts newlines into spaces.
             val withoutWindowsLineEndings = withStrippedTags.replace("\r\n", "<br/>")
             val withoutLinuxLineEndings = withoutWindowsLineEndings.replace("\n", "<br/>")
-            return HtmlCompat.fromHtml(withoutLinuxLineEndings, HtmlCompat.FROM_HTML_MODE_LEGACY)
+
+            return withoutLinuxLineEndings.parseAsHtml(
+                flags = HtmlCompat.FROM_HTML_MODE_LEGACY,
+                imageGetter = imageGetter,
+            )
         }
     }
 
