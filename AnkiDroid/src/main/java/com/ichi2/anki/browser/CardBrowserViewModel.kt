@@ -157,6 +157,9 @@ class CardBrowserViewModel(
     var restrictOnDeck: String = ""
         private set
 
+    @VisibleForTesting
+    var pendingReviewerCardId: CardId? = null
+
     /** text in the search box (potentially unsubmitted) */
     // this does not currently bind to the value in the UI and is only used for posting
     val flowOfFilterQuery = MutableSharedFlow<String>()
@@ -277,11 +280,65 @@ class CardBrowserViewModel(
      */
     val flowOfSaveSearchNamePrompt = MutableSharedFlow<String>()
 
-    var focusedRow: CardOrNoteId? = null
+    /**
+     * Emits the currently focused editor row.
+     *
+     * Used to notify the UI when focus changes so the corresponding
+     * list rows can be refreshed.
+     *
+     * `null` means no row is focused.
+     */
+    val flowOfEditorRowId = MutableStateFlow<CardOrNoteId?>(null)
+    var editorRowId: CardOrNoteId?
+        get() = if (isFragmented) flowOfEditorRowId.value else null
         set(value) {
-            if (!isFragmented) return
-            field = value
+            if (!isFragmented) {
+                Timber.i("Cannot set editorRowId in non-fragmented mode")
+                return
+            }
+            flowOfEditorRowId.value = value
         }
+
+    fun setReviewerCardId(cardId: CardId?) {
+        pendingReviewerCardId = cardId
+    }
+
+    /**
+     * Returns the row ID for the given card ID.
+     *
+     * CARDS mode  -> row identity is CardId
+     * NOTES mode  -> resolve NoteId for CardId, then find matching row
+     */
+    suspend fun findRowForCardId(cardId: CardId): CardOrNoteId? {
+        val rowIdentity =
+            when (cardsOrNotes) {
+                CARDS -> cardId
+                NOTES -> {
+                    withCol {
+                        notesOfCards(cids = listOf(cardId)).firstOrNull()
+                    } ?: return null
+                }
+            }
+        return cards.firstOrNull { row ->
+            row.cardOrNoteId == rowIdentity
+        }
+    }
+
+    /**
+     * Decides which row should be focused after a search completes.
+     */
+    suspend fun resolveFocusAfterSearch(reviewerCardId: CardId?) {
+        if (!isFragmented) return
+        editorRowId =
+            when {
+                reviewerCardId != null -> findRowForCardId(reviewerCardId)
+                editorRowId == null && cards.isNotEmpty() -> cards.first()
+                else -> editorRowId
+            }
+        editorRowId?.let {
+            currentCardId = it.toCardId(cardsOrNotes)
+        }
+    }
 
     suspend fun queryAllSelectedCardIds() = selectedRows.queryCardIds(this.cardsOrNotes)
 
@@ -561,8 +618,24 @@ class CardBrowserViewModel(
             } else {
                 toggleRowSelection(rowSelection)
             }
-            focusedRow = id
         }
+
+    /**
+     * Handles a row tap and updates state accordingly.
+     */
+    @VisibleForTesting
+    fun handleRowTap(rowSelection: RowSelection) {
+        viewModelScope.launch {
+            val id = rowSelection.rowId
+            Timber.i("Row tapped: %s (multiselect=%s, fragmented=%s)", id, isInMultiSelectMode, isFragmented)
+            if (isInMultiSelectMode) {
+                toggleRowSelection(rowSelection)
+            } else {
+                editorRowId = id
+                openNoteEditorForCard(id.toCardId(cardsOrNotes))
+            }
+        }
+    }
 
     /**
      * Handles right-click on a row, by default delegating to onLongPress
@@ -576,7 +649,6 @@ class CardBrowserViewModel(
             } else {
                 toggleRowSelection(rowSelection)
             }
-            focusedRow = id
         }
     }
 
@@ -630,9 +702,9 @@ class CardBrowserViewModel(
         // PERF: use `undoableOp(this)` & notify CardBrowser of changes
         // this does a double search
         val cardIds = queryAllSelectedCardIds()
-        // reset focused row if that row is about to be deleted
-        if (focusedRow?.cardOrNoteId in cardIds) {
-            focusedRow = null
+        // reset editor row if that row is about to be deleted
+        if (editorRowId?.cardOrNoteId in cardIds) {
+            editorRowId = null
         }
         return undoableOp { removeNotes(cardIds = cardIds) }
             .count
@@ -1229,6 +1301,8 @@ class CardBrowserViewModel(
 
             viewModelScope.launch {
                 searchJob?.join()
+                resolveFocusAfterSearch(pendingReviewerCardId)
+                pendingReviewerCardId = null
                 cardIdToBeScrolledTo?.let { targetId ->
                     val rowId =
                         if (cardsOrNotes == CARDS) {

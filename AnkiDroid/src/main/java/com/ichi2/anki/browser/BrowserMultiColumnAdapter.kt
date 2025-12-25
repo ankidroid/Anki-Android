@@ -281,10 +281,11 @@ class BrowserMultiColumnAdapter(
             }
             holder.setIsSelected(isSelected)
             val rowColor =
-                if (viewModel.focusedRow == id) {
-                    ThemeUtils.getThemeAttrColor(context, R.attr.focusedRowBackgroundColor)
-                } else {
-                    backendColorToColor(row.color)
+                when {
+                    // don't highlight the editor row if in multiselect mode
+                    viewModel.isInMultiSelectMode -> backendColorToColor(row.color)
+                    viewModel.editorRowId == id -> ThemeUtils.getThemeAttrColor(context, R.attr.focusedRowBackgroundColor)
+                    else -> backendColorToColor(row.color)
                 }
             holder.setColor(rowColor)
             holder.setIsDeleted(false)

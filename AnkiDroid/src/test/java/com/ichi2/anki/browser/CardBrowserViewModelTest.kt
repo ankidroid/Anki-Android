@@ -102,6 +102,7 @@ import timber.log.Timber
 import java.io.File
 import kotlin.io.path.createTempDirectory
 import kotlin.io.path.pathString
+import kotlin.test.DefaultAsserter.assertNull
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
@@ -1325,6 +1326,116 @@ class CardBrowserViewModelTest : JvmTest() {
             }
         }
 
+    @Test
+    fun `editorRowId is updated only when fragmented`() =
+        runViewModelTest(
+            notes = 1,
+            isFragmented = true,
+        ) {
+            waitForSearchResults()
+            val rowId = cards.first()
+            handleRowTap(rowId.toRowSelection())
+            assertThat(flowOfEditorRowId.value, equalTo(rowId))
+            assertThat(currentCardId, equalTo(rowId.toCardId(cardsOrNotes)))
+        }
+
+    @Test
+    fun `editorRowId is ignored when not fragmented`() =
+        runViewModelTest(notes = 1) {
+            waitForSearchResults()
+            val rowId = cards.first()
+            handleRowTap(rowId.toRowSelection())
+            assertNull(
+                "editorRowId should be null when not fragmented",
+                flowOfEditorRowId.value,
+            )
+            assertThat(
+                "currentCardId is still updated",
+                currentCardId,
+                equalTo(rowId.toCardId(cardsOrNotes)),
+            )
+        }
+
+    @Test
+    fun `findRowForCardId returns card row in CARDS mode`() =
+        runViewModelTest(notes = 2) {
+            waitForSearchResults()
+            setCardsOrNotes(CardsOrNotes.CARDS)
+            waitForSearchResults()
+            val cardId = cards.first().toCardId(cardsOrNotes)
+            val rowId = findRowForCardId(cardId)
+            assertThat(rowId, equalTo(CardOrNoteId(cardId)))
+        }
+
+    @Test
+    fun `findRowForCardId returns note row in NOTES mode`() =
+        runViewModelNotesTest(notes = 2) {
+            waitForSearchResults()
+            val cardId = cards.first().toCardId(cardsOrNotes)
+            val expectedNoteId = col.getCard(cardId).nid
+            val rowId = findRowForCardId(cardId)
+            assertThat(rowId, equalTo(CardOrNoteId(expectedNoteId)))
+        }
+
+    @Test
+    fun `findRowForCardId returns null if card not in results`() =
+        runViewModelTest {
+            val orphanCard = addBasicNote().firstCard().id
+            val rowId = findRowForCardId(orphanCard)
+            assertNull(rowId)
+        }
+
+    @Test
+    fun `reviewer card is focused after search`() =
+        runViewModelTest(
+            notes = 1,
+            isFragmented = true,
+        ) {
+            val reviewerCardId = cards.first().toCardId(cardsOrNotes)
+            setReviewerCardId(reviewerCardId)
+            launchSearchForCards()
+            waitForSearchResults()
+            val expectedRowId =
+                if (cardsOrNotes == CardsOrNotes.CARDS) {
+                    CardOrNoteId(reviewerCardId)
+                } else {
+                    CardOrNoteId(col.getCard(reviewerCardId).nid)
+                }
+            assertThat(editorRowId, equalTo(expectedRowId))
+            assertThat(currentCardId, equalTo(reviewerCardId))
+        }
+
+    @Test
+    fun `first row is focused when no reviewer card`() =
+        runViewModelTest(
+            notes = 1,
+            isFragmented = true,
+        ) {
+            setReviewerCardId(null)
+            launchSearchForCards()
+            waitForSearchResults()
+            val firstRow = cards.first()
+            assertThat(editorRowId, equalTo(firstRow))
+            assertThat(
+                currentCardId,
+                equalTo(firstRow.toCardId(cardsOrNotes)),
+            )
+        }
+
+    @Test
+    fun `existing editorRowId is preserved after search`() =
+        runViewModelTest(
+            notes = 2,
+            isFragmented = true,
+        ) {
+            val secondRow = cards[1]
+            editorRowId = secondRow
+            setReviewerCardId(null)
+            launchSearchForCards()
+            waitForSearchResults()
+            assertThat(editorRowId, equalTo(secondRow))
+        }
+
     private fun assertDate(str: String?) {
         // 2025-01-09 @ 18:06
         assertNotNull(str)
@@ -1369,6 +1480,7 @@ class CardBrowserViewModelTest : JvmTest() {
     private fun runViewModelTest(
         notes: Int = 0,
         manualInit: Boolean = true,
+        isFragmented: Boolean = false,
         savedStateHandle: SavedStateHandle = SavedStateHandle(),
         testBody: suspend CardBrowserViewModel.() -> Unit,
     ) = runTest {
@@ -1382,7 +1494,7 @@ class CardBrowserViewModelTest : JvmTest() {
                 cacheDir = createTransientDirectory(),
                 options = null,
                 preferences = AnkiDroidApp.sharedPreferencesProvider,
-                isFragmented = false,
+                isFragmented = isFragmented,
                 manualInit = manualInit,
                 savedStateHandle = savedStateHandle,
             )

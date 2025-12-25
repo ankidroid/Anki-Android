@@ -44,6 +44,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.commit
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.RecyclerView
 import anki.collection.OpChanges
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation.Direction
@@ -98,6 +99,7 @@ import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.ResizablePaneManager
 import com.ichi2.anki.ui.internationalization.toSentenceCase
+import com.ichi2.anki.utils.ext.indexOfOrNull
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.ui.CardBrowserSearchView
 import com.ichi2.utils.AndroidUiUtils.hideKeyboard
@@ -561,6 +563,21 @@ open class CardBrowser :
             }
         }
 
+        // Track the last focused row position
+        var lastFocusedPosition: Int? = null
+
+        fun onFocusedRowChanged(newFocusedRow: CardOrNoteId?) {
+            val adapter = cardBrowserFragment.cardsAdapter
+            val currentPosition = viewModel.cards.indexOfOrNull(newFocusedRow)
+
+            if (lastFocusedPosition == currentPosition) return
+
+            lastFocusedPosition?.let { adapter.safeNotifyItemChanged(it) }
+            currentPosition?.let { adapter.safeNotifyItemChanged(it) }
+
+            lastFocusedPosition = currentPosition
+        }
+
         viewModel.flowOfSearchQueryExpanded.launchCollectionInLifecycleScope(::onSearchQueryExpanded)
         viewModel.flowOfSelectedRows.launchCollectionInLifecycleScope(::onSelectedRowsChanged)
         viewModel.flowOfFilterQuery.launchCollectionInLifecycleScope(::onFilterQueryChanged)
@@ -571,6 +588,16 @@ open class CardBrowser :
         viewModel.cardSelectionEventFlow.launchCollectionInLifecycleScope(::onSelectedCardUpdated)
         viewModel.flowOfSaveSearchNamePrompt.launchCollectionInLifecycleScope(::onSaveSearchNamePrompt)
         viewModel.flowOfChangeNoteType.launchCollectionInLifecycleScope(::onChangeNoteType)
+        viewModel.flowOfEditorRowId.launchCollectionInLifecycleScope { onFocusedRowChanged(it) }
+    }
+
+    /**
+     * Safely notifies item change with bounds checking.
+     * Prevents crashes from invalid positions.
+     */
+    internal fun RecyclerView.Adapter<*>.safeNotifyItemChanged(position: Int) {
+        if (position < 0 || position >= itemCount) return
+        notifyItemChanged(position)
     }
 
     fun isKeyboardVisible(view: View?): Boolean =
@@ -1164,7 +1191,7 @@ open class CardBrowser :
             // Hide note editor frame if deck is empty and fragmented
             binding.noteEditorFrame?.visibility =
                 if (fragmented && !isDeckEmpty) {
-                    viewModel.currentCardId = (viewModel.focusedRow ?: viewModel.cards[0]).toCardId(viewModel.cardsOrNotes)
+                    viewModel.setReviewerCardId(reviewerCardId.takeIf { it != -1L })
                     loadNoteEditorFragmentIfFragmented()
                     View.VISIBLE
                 } else {
