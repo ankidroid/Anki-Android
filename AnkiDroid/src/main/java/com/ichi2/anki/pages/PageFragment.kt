@@ -26,10 +26,12 @@ import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.progressindicator.CircularProgressIndicator
+import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.R
 import com.ichi2.anki.workarounds.OnWebViewRecreatedListener
 import com.ichi2.anki.workarounds.SafeWebViewLayout
 import com.ichi2.themes.Themes
+import com.ichi2.utils.checkWebviewVersion
 import timber.log.Timber
 
 /**
@@ -100,6 +102,12 @@ abstract class PageFragment(
         view: View,
         savedInstanceState: Bundle?,
     ) {
+        val ankiActivity = requireActivity() as AnkiActivity
+        if (checkWebviewVersion(ankiActivity)) {
+            Timber.w("Aborting PageFragement load: WebView is outdated")
+            ankiActivity.onBackPressedDispatcher.onBackPressed()
+            return
+        }
         server = AnkiServer(this).also { it.start() }
         webViewLayout = view.findViewById(R.id.webview_layout)
 
