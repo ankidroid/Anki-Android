@@ -93,22 +93,22 @@ class AddEditReminderDialogViewModel(
     val advancedSettingsOpen: LiveData<Boolean> = _advancedSettingsOpen
 
     fun setTime(time: ReviewReminderTime) {
-        Timber.d("Updated time to %s", time)
+        Timber.i("Updated time to %s", time)
         _time.value = time
     }
 
     fun setDeckSelected(deckId: DeckId) {
-        Timber.d("Updated deck selected to %s", deckId)
+        Timber.i("Updated deck selected to %s", deckId)
         _deckSelected.value = deckId
     }
 
     fun setCardTriggerThreshold(threshold: Int) {
-        Timber.d("Updated card trigger threshold to %s", threshold)
+        Timber.i("Updated card trigger threshold to %s", threshold)
         _cardTriggerThreshold.value = threshold
     }
 
     fun toggleAdvancedSettingsOpen() {
-        Timber.d("Toggled advanced settings open from %s", _advancedSettingsOpen.value)
+        Timber.i("Toggled advanced settings open from %s", _advancedSettingsOpen.value)
         _advancedSettingsOpen.value = !(_advancedSettingsOpen.value ?: false)
     }
 

@@ -105,7 +105,7 @@ class NotificationService : BroadcastReceiver() {
                 }
             val dueCardsTotal = dueCardsCount.count()
             if (dueCardsTotal < reviewReminder.cardTriggerThreshold.threshold) {
-                Timber.d("Aborting notification due to threshold: $dueCardsTotal < ${reviewReminder.cardTriggerThreshold.threshold}")
+                Timber.i("Aborting notification due to threshold: $dueCardsTotal < ${reviewReminder.cardTriggerThreshold.threshold}")
                 return
             }
 
@@ -182,7 +182,7 @@ class NotificationService : BroadcastReceiver() {
 
             val manager = context.getSystemService<NotificationManager>()
             if (manager != null) {
-                Timber.d("Sending notification with ID ${reviewReminder.id.value}")
+                Timber.i("Sending notification with ID ${reviewReminder.id.value}")
                 manager.notify(REVIEW_REMINDER_NOTIFICATION_TAG, reviewReminder.id.value, builder.build())
             } else {
                 Timber.w("Failed to get NotificationManager system service, aborting review reminder notification")
