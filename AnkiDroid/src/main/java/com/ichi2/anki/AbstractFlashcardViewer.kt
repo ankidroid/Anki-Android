@@ -1078,6 +1078,7 @@ abstract class AbstractFlashcardViewer :
 
     // #5780 - Users could OOM the WebView Renderer. This triggers the same symptoms
     @VisibleForTesting
+    @Suppress("unused")
     fun crashWebViewRenderer() {
         loadUrlInViewer("chrome://crash")
     }
@@ -2587,7 +2588,7 @@ abstract class AbstractFlashcardViewer :
             }
             try {
                 startActivity(intent)
-            } catch (e: ActivityNotFoundException) {
+            } catch (_: ActivityNotFoundException) {
                 Timber.w("No app found to handle open external url from AbstractFlashcardViewer")
                 showSnackbar(R.string.activity_start_failed)
             }
