@@ -17,6 +17,7 @@ package com.ichi2.anki.utils
 
 import android.content.Context
 import android.provider.Settings
+import timber.log.Timber
 
 /**
  * Utility class for animation-related helper functions
@@ -57,6 +58,7 @@ object AnimationUtils {
                 )
             animDuration != 0f && animTransition != 0f && animWindow != 0f
         } catch (e: Exception) {
+            Timber.w(e, "Failed to read system animation settings")
             true // Default to animations enabled if unable to read settings
         }
 }
