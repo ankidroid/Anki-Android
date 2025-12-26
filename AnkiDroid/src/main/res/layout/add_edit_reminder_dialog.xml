@@ -189,6 +189,27 @@
 
                         </LinearLayout>
 
+                        <LinearLayout
+                            android:id="@+id/add_edit_reminder_only_notify_if_no_reviews_section"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <com.google.android.material.checkbox.MaterialCheckBox
+                                android:id="@+id/add_edit_reminder_only_notify_if_no_reviews_checkbox"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                            <com.ichi2.ui.FixedTextView
+                                android:id="@+id/add_edit_reminder_only_notify_if_no_reviews_label"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Only notify me if no reviews have been done today"
+                                tools:ignore="HardcodedText" />
+
+                        </LinearLayout>
+
                     </LinearLayout>
 
                 </LinearLayout>
