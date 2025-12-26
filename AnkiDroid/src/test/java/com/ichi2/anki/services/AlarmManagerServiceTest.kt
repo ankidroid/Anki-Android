@@ -31,9 +31,7 @@ import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.common.time.MockTime
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.reviewreminders.ReviewReminder
-import com.ichi2.anki.reviewreminders.ReviewReminderCardTriggerThreshold
 import com.ichi2.anki.reviewreminders.ReviewReminderId
-import com.ichi2.anki.reviewreminders.ReviewReminderScope
 import com.ichi2.anki.reviewreminders.ReviewReminderTime
 import com.ichi2.anki.reviewreminders.ReviewRemindersDatabase
 import io.mockk.every
@@ -67,13 +65,7 @@ class AlarmManagerServiceTest : RobolectricTest() {
         notificationManager = mockk(relaxed = true)
         every { context.getSystemService<AlarmManager>() } returns alarmManager
         every { context.getSystemService<NotificationManager>() } returns notificationManager
-        reviewReminder =
-            ReviewReminder.createReviewReminder(
-                time = ReviewReminderTime(20, 0),
-                cardTriggerThreshold = ReviewReminderCardTriggerThreshold(0),
-                scope = ReviewReminderScope.Global,
-                enabled = true,
-            )
+        reviewReminder = ReviewReminder.createReviewReminder(time = ReviewReminderTime(20, 0))
         TimeManager.resetWith(mockTime)
         ReviewRemindersDatabase.remindersSharedPrefs.edit { clear() }
     }
@@ -106,12 +98,7 @@ class AlarmManagerServiceTest : RobolectricTest() {
     @Test
     fun `scheduleReviewReminderNotifications for past time calls AlarmManager setWindow with future time`() {
         val pastTimeReviewReminder =
-            ReviewReminder.createReviewReminder(
-                time = ReviewReminderTime(3, 0),
-                cardTriggerThreshold = ReviewReminderCardTriggerThreshold(0),
-                scope = ReviewReminderScope.Global,
-                enabled = true,
-            )
+            ReviewReminder.createReviewReminder(time = ReviewReminderTime(3, 0))
         val expectedSchedulingTime = mockTime.calendar().clone() as Calendar
         expectedSchedulingTime.apply {
             set(Calendar.HOUR_OF_DAY, 3)
@@ -151,32 +138,12 @@ class AlarmManagerServiceTest : RobolectricTest() {
         runTest {
             val did1 = addDeck("Deck1")
             val did2 = addDeck("Deck2")
-            val reminder1 =
-                ReviewReminder.createReviewReminder(
-                    time = ReviewReminderTime(9, 0),
-                    cardTriggerThreshold = ReviewReminderCardTriggerThreshold(0),
-                    scope = ReviewReminderScope.DeckSpecific(did1),
-                    enabled = true,
-                )
-            val reminder2 =
-                ReviewReminder.createReviewReminder(
-                    time = ReviewReminderTime(10, 0),
-                    cardTriggerThreshold = ReviewReminderCardTriggerThreshold(0),
-                    scope = ReviewReminderScope.DeckSpecific(did2),
-                    enabled = true,
-                )
-            val reminder3 =
-                ReviewReminder.createReviewReminder(
-                    time = ReviewReminderTime(11, 0),
-                    cardTriggerThreshold = ReviewReminderCardTriggerThreshold(0),
-                    scope = ReviewReminderScope.Global,
-                    enabled = true,
-                )
+            val reminder1 = ReviewReminder.createReviewReminder(time = ReviewReminderTime(9, 0))
+            val reminder2 = ReviewReminder.createReviewReminder(time = ReviewReminderTime(10, 0))
+            val reminder3 = ReviewReminder.createReviewReminder(time = ReviewReminderTime(11, 0))
             val disabledReminder =
                 ReviewReminder.createReviewReminder(
                     time = ReviewReminderTime(11, 0),
-                    cardTriggerThreshold = ReviewReminderCardTriggerThreshold(0),
-                    scope = ReviewReminderScope.Global,
                     enabled = false,
                 )
             ReviewRemindersDatabase.editRemindersForDeck(did1) { mapOf(ReviewReminderId(0) to reminder1) }

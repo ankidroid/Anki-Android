@@ -43,12 +43,7 @@ class ReviewReminderTest : RobolectricTest() {
     @Test
     fun `getAndIncrementNextFreeReminderId should increment IDs correctly`() {
         for (i in 0..10) {
-            val reminder =
-                ReviewReminder.createReviewReminder(
-                    ReviewReminderTime(12, 30),
-                    ReviewReminderCardTriggerThreshold(0),
-                    ReviewReminderScope.DeckSpecific(5),
-                )
+            val reminder = ReviewReminder.createReviewReminder(time = ReviewReminderTime(hour = i, minute = i))
             assertThat(reminder.id, equalTo(ReviewReminderId(i)))
         }
     }
