@@ -402,13 +402,13 @@ class ReviewerFragment :
     private fun setupCounts() {
         viewModel.countsFlow
             .flowWithLifecycle(lifecycle)
-            .collectLatestIn(lifecycleScope) { (counts, countsType) ->
-                binding.newCount.text = counts.new.toString()
-                binding.learnCount.text = counts.lrn.toString()
-                binding.reviewCount.text = counts.rev.toString()
+            .collectLatestIn(lifecycleScope) { counts ->
+                binding.newCount.text = counts.new
+                binding.learnCount.text = counts.learn
+                binding.reviewCount.text = counts.review
 
                 val currentCount =
-                    when (countsType) {
+                    when (counts.activeQueue) {
                         Counts.Queue.NEW -> binding.newCount
                         Counts.Queue.LRN -> binding.learnCount
                         Counts.Queue.REV -> binding.reviewCount

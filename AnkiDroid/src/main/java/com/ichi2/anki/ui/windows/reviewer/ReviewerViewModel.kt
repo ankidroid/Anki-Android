@@ -99,7 +99,7 @@ class ReviewerViewModel(
     val canSuspendNoteFlow = MutableStateFlow(true)
     val undoLabelFlow = MutableStateFlow<String?>(null)
     val redoLabelFlow = MutableStateFlow<String?>(null)
-    val countsFlow = MutableStateFlow(Counts() to Counts.Queue.NEW)
+    val countsFlow = savedStateHandle.getMutableStateFlow(KEY_COUNTS, StudyCounts())
     val typeAnswerFlow = MutableStateFlow<TypeAnswer?>(null)
     val onTypedAnswerResultFlow = MutableSharedFlow<CompletableDeferred<String>>()
     val onCardUpdatedFlow = MutableSharedFlow<Unit>()
@@ -532,7 +532,7 @@ class ReviewerViewModel(
         loadAndPlayMedia(CardSide.QUESTION)
         canBuryNoteFlow.emit(isBuryNoteAvailable(card))
         canSuspendNoteFlow.emit(isSuspendNoteAvailable(card))
-        countsFlow.emit(state.counts to state.countsIndex)
+        countsFlow.emit(StudyCounts(state))
     }
 
     override suspend fun typeAnsFilter(text: String): String {
@@ -742,5 +742,6 @@ class ReviewerViewModel(
 
     companion object {
         private const val KEY_PREVIOUS_CARD_ID = "key_previous_card_id"
+        private const val KEY_COUNTS = "counts"
     }
 }
