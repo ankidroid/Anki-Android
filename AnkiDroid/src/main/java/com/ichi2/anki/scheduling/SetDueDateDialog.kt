@@ -57,6 +57,7 @@ import com.ichi2.anki.servicelayer.getFSRSStatus
 import com.ichi2.anki.showThemedToast
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.internationalization.toSentenceCase
+import com.ichi2.anki.utils.doOnImeHidden
 import com.ichi2.anki.utils.openUrl
 import com.ichi2.anki.withProgress
 import com.ichi2.utils.AndroidUiUtils
@@ -430,7 +431,10 @@ private fun AnkiActivity.updateDueDate(
             return@asyncCatching null
         }
         Timber.d("updated %d cards", cardsUpdated)
-        showSnackbar(TR.schedulingSetDueDateDone(cardsUpdated), Snackbar.LENGTH_SHORT)
+        // Ensure the snackbar doesn't appear in the middle of the screen
+        doOnImeHidden {
+            showSnackbar(TR.schedulingSetDueDateDone(cardsUpdated), Snackbar.LENGTH_SHORT)
+        }
         return@asyncCatching cardsUpdated
     }
 
