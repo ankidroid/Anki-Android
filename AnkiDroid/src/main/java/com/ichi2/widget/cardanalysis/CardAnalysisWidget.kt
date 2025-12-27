@@ -24,6 +24,7 @@ import android.content.Context
 import android.content.Intent
 import android.view.View
 import android.widget.RemoteViews
+import androidx.core.content.ContextCompat
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.IntentHandler.Companion.intentToReviewDeckFromShortcuts
@@ -79,6 +80,9 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
             val deckId = getDeckIdForWidget(context, appWidgetId)
             val remoteViews = RemoteViews(context.packageName, R.layout.widget_card_analysis)
 
+            // Apply theming immediately
+            applyThemeToWidget(context, appWidgetId.id, remoteViews)
+
             if (deckId == NOT_FOUND_DECK_ID) {
                 // If deckId is null, it means no deck was selected or the selected deck was deleted.
                 // In this case, we don't save the null value to preferences because we want to
@@ -87,6 +91,9 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
                 showMissingDeck(context, appWidgetManager, appWidgetId, remoteViews)
                 return
             }
+
+            // Update widget immediately with theme applied
+            appWidgetManager.updateAppWidget(appWidgetId, remoteViews)
 
             AnkiDroidApp.applicationScope.launch {
                 val isCollectionEmpty = isCollectionEmpty()
@@ -104,6 +111,51 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
                     return@launch
                 }
                 showDeck(context, appWidgetManager, appWidgetId, remoteViews, deckData)
+            }
+        }
+
+        /**
+         * Applies theme to widget based on user preference.
+         * Dynamic mode uses rounded backgrounds that adapt to system theme.
+         * AnkiDroid mode uses solid colors that match the app's current theme.
+         */
+        private fun applyThemeToWidget(
+            context: Context,
+            appWidgetId: Int,
+            remoteViews: RemoteViews,
+        ) {
+            val widgetPreferences = CardAnalysisWidgetPreferences(context)
+            val dynamicTheming = widgetPreferences.getDynamicThemingPreference(appWidgetId)
+
+            if (dynamicTheming) {
+                // Dynamic theming: use rounded background resources that adapt to system theme
+                remoteViews.setInt(R.id.widget_deck_picker, "setBackgroundResource", R.drawable.widget_card_analysis_rounded_background)
+                remoteViews.setInt(
+                    R.id.cardAnalysisDataHolder,
+                    "setBackgroundResource",
+                    R.drawable.widget_card_analysis_rounded_inner_background,
+                )
+            } else {
+                // AnkiDroid theming: follow app's current theme with solid colors
+                val isAppInNightMode = com.ichi2.themes.Themes.currentTheme.isNightMode
+                val bgColor =
+                    if (isAppInNightMode) {
+                        ContextCompat.getColor(context, R.color.widget_bg_dark)
+                    } else {
+                        ContextCompat.getColor(context, R.color.widget_bg_light)
+                    }
+                val textColor =
+                    if (isAppInNightMode) {
+                        ContextCompat.getColor(context, R.color.white)
+                    } else {
+                        ContextCompat.getColor(context, R.color.black)
+                    }
+                remoteViews.setInt(R.id.widget_deck_picker, "setBackgroundColor", bgColor)
+                remoteViews.setInt(R.id.cardAnalysisDataHolder, "setBackgroundColor", bgColor)
+
+                // Ensure text is visible on solid background
+                remoteViews.setInt(R.id.deckNameCardAnalysis, "setTextColor", textColor)
+                remoteViews.setInt(R.id.empty_widget, "setTextColor", textColor)
             }
         }
 
@@ -309,6 +361,7 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
                     Timber.d("Deleting widget with ID: $appWidgetId")
                     cancelRecurringAlarm(context, appWidgetId, CardAnalysisWidget::class.java)
                     widgetPreferences.deleteDeckData(appWidgetId)
+                    widgetPreferences.deleteDynamicThemingPreference(appWidgetId.id)
                 } else {
                     Timber.e("Invalid widget ID received in ACTION_APPWIDGET_DELETED")
                 }
@@ -344,6 +397,7 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
         AppWidgetIds.of(appWidgetIds)?.forEach { appWidgetId ->
             cancelRecurringAlarm(context, appWidgetId, CardAnalysisWidget::class.java)
             widgetPreferences.deleteDeckData(appWidgetId)
+            widgetPreferences.deleteDynamicThemingPreference(appWidgetId.id)
         }
     }
 }

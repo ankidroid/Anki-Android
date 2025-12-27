@@ -23,6 +23,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
+import androidx.appcompat.app.AlertDialog
 import androidx.core.os.BundleCompat
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.R
@@ -100,6 +101,7 @@ class CardAnalysisWidgetConfig :
                 withProgress { showDeckSelectionDialog() }
             }
         }
+        binding.themeBtn.setOnClickListener { showThemeSelectionDialog() }
         binding.doneBtn.setOnClickListener { close() }
         registerReceiver(
             widgetRemovedReceiver,
@@ -174,6 +176,26 @@ class CardAnalysisWidgetConfig :
         }
     }
 
+    private fun showThemeSelectionDialog() {
+        val themeOptions =
+            arrayOf(
+                getString(R.string.widget_theme_dynamic),
+                getString(R.string.widget_theme_ankidroid),
+            )
+        val currentTheme = if (preferences.getDynamicThemingPreference(appWidgetId.id)) 0 else 1
+
+        AlertDialog
+            .Builder(this)
+            .setTitle(R.string.widget_theme_dialog_title)
+            .setSingleChoiceItems(themeOptions, currentTheme) { dialog, which ->
+                val isDynamic = which == 0
+                preferences.saveDynamicThemingPreference(appWidgetId.id, isDynamic)
+                updateWidget()
+                dialog.dismiss()
+            }.setNegativeButton(android.R.string.cancel, null)
+            .show()
+    }
+
     private fun updateWidget() {
         val updateIntent =
             Intent(this, CardAnalysisWidget::class.java).apply {
@@ -211,6 +233,7 @@ class CardAnalysisWidgetConfig :
                 }
 
                 preferences.deleteDeckData(appWidgetId)
+                preferences.deleteDynamicThemingPreference(appWidgetId.id)
             }
         }
 

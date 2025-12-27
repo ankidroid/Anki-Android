@@ -45,6 +45,15 @@
                     android:text="@string/select_deck"
                     android:layout_gravity="center_horizontal"
                     />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/theme_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/widget_theme"
+                    android:layout_gravity="center_horizontal"
+                    />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
