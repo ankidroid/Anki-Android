@@ -28,6 +28,9 @@ on:
       - 'gh-readonly-queue/**'
   merge_group:
 
+permissions:
+  contents: read
+
 concurrency:
   # if a workflow is run against the same ref, only one at a time...
   # ...but allow different triggers to run concurrent (push, manual flake run, scheduled flake run...)

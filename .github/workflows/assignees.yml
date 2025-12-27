@@ -4,11 +4,13 @@ on:
   pull_request_target:
     types: [ closed ]
 
+permissions:
+  contents: read
+
 jobs:
   merge_job:
     if: ${{ github.event.pull_request.merged == true }}
     permissions:
-      contents: read
       issues: write
       pull-requests: write
     runs-on: ubuntu-latest

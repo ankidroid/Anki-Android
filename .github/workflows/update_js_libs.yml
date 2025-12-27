@@ -3,6 +3,10 @@ name: Update JS Library
 on:
   workflow_dispatch:
 
+permissions:
+  contents: read
+  pull-requests: write
+
 jobs:
   update_js_libs:
     runs-on: ubuntu-latest
