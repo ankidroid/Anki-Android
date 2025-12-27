@@ -66,6 +66,8 @@ abstract class PageFragment(
 
     protected open fun onWebViewCreated() { }
 
+    protected open fun requiresModernWebView(): Boolean = false
+
     /**
      * When the webview calls `BridgeCommand("foo")`, the PageFragment execute `bridgeCommands["foo"]`.
      * By default, only bridge command is allowed, subclasses must redefine it if they expect bridge commands.
@@ -75,6 +77,7 @@ abstract class PageFragment(
     /**
      * Ensures that [pageWebViewClient] can receive `bridgeCommand` requests and execute the command from [bridgeCommands].
      */
+
     private fun setupBridgeCommand(pageWebViewClient: PageWebViewClient) {
         if (bridgeCommands.isEmpty()) {
             return
@@ -103,8 +106,8 @@ abstract class PageFragment(
         savedInstanceState: Bundle?,
     ) {
         val ankiActivity = requireActivity() as AnkiActivity
-        if (checkWebviewVersion(ankiActivity)) {
-            Timber.w("Aborting PageFragement load: WebView is outdated")
+        if (requiresModernWebView() && checkWebviewVersion(ankiActivity)) {
+            Timber.w("${this::class.simpleName} requires modern WebView (Chrome 90+), aborting load")
             ankiActivity.onBackPressedDispatcher.onBackPressed()
             return
         }
@@ -114,7 +117,6 @@ abstract class PageFragment(
         view.findViewById<MaterialToolbar>(R.id.toolbar)?.setNavigationOnClickListener {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
-
         setupWebView(savedInstanceState)
     }
 
