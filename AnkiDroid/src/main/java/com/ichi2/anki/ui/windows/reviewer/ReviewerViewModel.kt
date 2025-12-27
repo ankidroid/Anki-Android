@@ -16,6 +16,7 @@
 package com.ichi2.anki.ui.windows.reviewer
 
 import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.viewModelScope
 import anki.collection.OpChanges
 import anki.frontend.SetSchedulingStatesRequest
 import anki.scheduler.CardAnswer.Rating
@@ -60,7 +61,10 @@ import com.ichi2.anki.servicelayer.isSuspendNoteAvailable
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.tryRedo
 import com.ichi2.anki.tryUndo
+import com.ichi2.anki.ui.windows.reviewer.autoadvance.AnswerAction
 import com.ichi2.anki.ui.windows.reviewer.autoadvance.AutoAdvance
+import com.ichi2.anki.ui.windows.reviewer.autoadvance.AutoAdvanceAction
+import com.ichi2.anki.ui.windows.reviewer.autoadvance.QuestionAction
 import com.ichi2.anki.utils.CollectionPreferences
 import com.ichi2.anki.utils.Destination
 import com.ichi2.anki.utils.ext.answerCard
@@ -83,7 +87,8 @@ class ReviewerViewModel(
     savedStateHandle: SavedStateHandle,
 ) : CardViewerViewModel(savedStateHandle),
     ChangeManager.Subscriber,
-    BindingProcessor<ReviewerBinding, ViewerAction> {
+    BindingProcessor<ReviewerBinding, ViewerAction>,
+    AutoAdvance.ActionListener {
     private var queueState: Deferred<CurrentQueueState?> =
         asyncIO {
             withCol { sched.currentQueueState() }
@@ -123,7 +128,7 @@ class ReviewerViewModel(
     private val stateMutationJs: Deferred<String> = asyncIO { withCol { cardStateCustomizer } }
     private var typedAnswer = ""
 
-    private val autoAdvance = AutoAdvance(this)
+    private val autoAdvance = AutoAdvance(viewModelScope, this, currentCard)
     private val isHtmlTypeAnswerEnabled = Prefs.isHtmlTypeAnswerEnabled
     val answerTimer = AnswerTimer()
 
@@ -712,6 +717,18 @@ class ReviewerViewModel(
         if (binding.side != CardSide.BOTH && CardSide.fromAnswer(showingAnswer.value) != binding.side) return false
         executeAction(action)
         return true
+    }
+
+    override suspend fun onAutoAdvanceAction(action: AutoAdvanceAction) {
+        when (action) {
+            QuestionAction.SHOW_ANSWER -> onShowAnswer()
+            QuestionAction.SHOW_REMINDER -> actionFeedbackFlow.emit(TR.studyingQuestionTimeElapsed())
+            AnswerAction.BURY_CARD -> buryCard()
+            AnswerAction.ANSWER_AGAIN -> answerCard(Rating.AGAIN)
+            AnswerAction.ANSWER_GOOD -> answerCard(Rating.GOOD)
+            AnswerAction.ANSWER_HARD -> answerCard(Rating.HARD)
+            AnswerAction.SHOW_REMINDER -> actionFeedbackFlow.emit(TR.studyingAnswerTimeElapsed())
+        }
     }
 
     // Based in https://github.com/ankitects/anki/blob/1f95d030bbc7ebcc004ffe1e2be2a320c9fe1e94/qt/aqt/reviewer.py#L201

@@ -20,7 +20,7 @@ import com.ichi2.anki.libanki.DeckConfig.Companion.ANSWER_ACTION
 
 enum class AnswerAction(
     val code: Int,
-) {
+) : AutoAdvanceAction {
     BURY_CARD(0),
     ANSWER_AGAIN(1),
     ANSWER_GOOD(2),
