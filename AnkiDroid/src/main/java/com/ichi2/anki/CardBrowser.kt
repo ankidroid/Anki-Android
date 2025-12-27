@@ -338,6 +338,7 @@ open class CardBrowser :
             )
         } else {
             binding.noteEditorFrame?.isVisible = false
+            binding.cardBrowserResizingDivider?.isVisible = false
         }
 
         // must be called once we have an accessible collection
