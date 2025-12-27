@@ -27,8 +27,11 @@ import com.ichi2.anki.R
 import com.ichi2.anki.cardviewer.TapGestureMode
 import com.ichi2.anki.common.utils.isRunningAsUnitTest
 import com.ichi2.anki.preferences.sharedPrefs
+import com.ichi2.anki.settings.enums.AppTheme
+import com.ichi2.anki.settings.enums.DayTheme
 import com.ichi2.anki.settings.enums.FrameStyle
 import com.ichi2.anki.settings.enums.HideSystemBars
+import com.ichi2.anki.settings.enums.NightTheme
 import com.ichi2.anki.settings.enums.PrefEnum
 import com.ichi2.anki.settings.enums.ShouldFetchMedia
 import com.ichi2.anki.settings.enums.ToolbarPosition
@@ -43,6 +46,8 @@ open class PrefsRepository(
     val sharedPrefs: SharedPreferences,
     private val resources: Resources,
 ) {
+    constructor(context: Context) : this(context.sharedPrefs(), context.resources)
+
     @VisibleForTesting
     fun key(
         @StringRes resId: Int,
@@ -289,6 +294,14 @@ open class PrefsRepository(
     val frameStyle: FrameStyle by enumPref(R.string.reviewer_frame_style_key, FrameStyle.CARD)
     val hideSystemBars: HideSystemBars by enumPref(R.string.hide_system_bars_key, HideSystemBars.NONE)
     val toolbarPosition: ToolbarPosition by enumPref(R.string.reviewer_toolbar_position_key, ToolbarPosition.TOP)
+
+    //region Appearance
+
+    val appTheme: AppTheme by enumPref(R.string.app_theme_key, AppTheme.FOLLOW_SYSTEM)
+    val dayTheme: DayTheme by enumPref(R.string.day_theme_key, DayTheme.LIGHT)
+    val nightTheme: NightTheme by enumPref(R.string.night_theme_key, NightTheme.DARK)
+
+    //endregion
 
     // **************************************** Controls **************************************** //
     //region Controls
