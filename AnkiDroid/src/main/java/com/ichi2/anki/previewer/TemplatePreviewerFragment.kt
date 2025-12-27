@@ -17,7 +17,6 @@ package com.ichi2.anki.previewer
 
 import android.os.Bundle
 import android.view.View
-import androidx.core.os.BundleCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -34,10 +33,7 @@ import kotlinx.coroutines.flow.onEach
 class TemplatePreviewerFragment :
     CardViewerFragment(R.layout.template_previewer),
     BaseSnackbarBuilderProvider {
-    override val viewModel: TemplatePreviewerViewModel by viewModels {
-        val arguments = BundleCompat.getParcelable(requireArguments(), ARGS_KEY, TemplatePreviewerArguments::class.java)!!
-        TemplatePreviewerViewModel.factory(arguments)
-    }
+    override val viewModel: TemplatePreviewerViewModel by viewModels()
 
     lateinit var binding: TemplatePreviewerBinding
 
