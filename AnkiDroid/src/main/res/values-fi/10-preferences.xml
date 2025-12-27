@@ -301,8 +301,8 @@
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Kokeellinen</string>
     <string name="readtext_deprecation_warn">AnkiDroid on ottanut käyttöön paremman TTS-mekanismin, joka on yhteensopiva muiden Anki-ohjelmien kanssa ja sisältää enemmän ääniä ja parannuksia kielentoistoon!\n\nPäivitä mahdollisimman pian, sillä tämä asetus poistetaan pian.</string>
     <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">Päivitä uuteen tekstistä puheeksi -formaattiin</string>
-    <string name="pref_fixed_port_title" maxLength="41">localStorage in Study Screen</string>
-    <string name="pref_fixed_port_summary">Ottaa JavaScript localStoragen käyttöön kiinteällä palvelinportilla opiskeluruudussa</string>
+    <string name="pref_fixed_port_title" maxLength="41">Käytä localStoragea opiskelunäkymässä</string>
+    <string name="pref_fixed_port_summary">Ottaa JavaScriptin localStoragen käyttöön kiinteällä palvelinportilla opiskelunäkymässä</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Kehittäjän asetukset</string>
     <string name="dev_options_enabled_pref" maxLength="41">Ota kehittäjän asetukset käyttöön</string>
