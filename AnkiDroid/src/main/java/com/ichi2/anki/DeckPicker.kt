@@ -538,6 +538,7 @@ open class DeckPicker :
         }
 
         setViewBinding(binding)
+
         enableToolbar()
         // TODO This method is run on every activity recreation, which can happen often.
         //  It seems that the original idea was for for this to only run once, on app start.

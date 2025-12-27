@@ -29,6 +29,7 @@ import com.ichi2.anki.exception.StorageAccessException
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService.setPreferencesUpToDate
 import com.ichi2.anki.servicelayer.ScopedStorageService.isLegacyStorage
+import com.ichi2.anki.ui.windows.permissions.InternetPermissionFragment
 import com.ichi2.anki.ui.windows.permissions.PermissionsFragment
 import com.ichi2.anki.ui.windows.permissions.PermissionsStartingAt30Fragment
 import com.ichi2.anki.ui.windows.permissions.PermissionsUntil29Fragment
@@ -212,7 +213,7 @@ enum class PermissionSet(
     @RequiresApi(Build.VERSION_CODES.R)
     EXTERNAL_MANAGER(listOf(Permissions.MANAGE_EXTERNAL_STORAGE), PermissionsStartingAt30Fragment::class.java),
 
-    APP_PRIVATE(emptyList(), null),
+    APP_PRIVATE(listOf(android.Manifest.permission.INTERNET), InternetPermissionFragment::class.java),
 }
 
 /**
