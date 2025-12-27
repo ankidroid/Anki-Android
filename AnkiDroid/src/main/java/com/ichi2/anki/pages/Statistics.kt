@@ -96,47 +96,47 @@ class Statistics :
         outState.putString(KEY_DECK_NAME, binding.deckName.text.toString())
     }
 
-    /**
-     * Updates the ui with the new selected deck. Doesn't change the backend.
-     *
-     * This method includes a workaround to change the deck in the webview by finding the text box
-     * and replacing the deck name with the selected deck name from the dialog and updating the
-     * stats. See issue #3394 in Anki repository.
-     **/
     private fun changeDeck(selectedDeckName: String) {
         binding.deckName.text = selectedDeckName
+        val safeDeckName = selectedDeckName.replace("\"", "\\\"")
+
         val javascriptCode =
             """
-            // finding the search box by id | by input[type=text] with deck in value
-            var textBox = document.getElementById('statisticsSearchText');
-            if (!textBox) {
-                var inputs = document.querySelectorAll('input[type="text"]');
-                for (var i = 0; i < inputs.length; i++) {
-                    if (inputs[i].value && inputs[i].value.startsWith('deck:')) {
-                        textBox = inputs[i];
-                        break;
-                    }
-                }
-            }
-            if (textBox) {
-                textBox.value = "deck:\"$selectedDeckName\"";
+            (function() {
+                var textBox = document.getElementById("statisticsSearchText");
+                var targetDeck = "deck:\"$safeDeckName\"";
+
+                // set search box to the selected deck right away
+                textBox.value = targetDeck;
                 textBox.dispatchEvent(new Event("input", { bubbles: true }));
-                textBox.dispatchEvent(new Event("change"));
-            }
-            // for finding radio buttons by label | type
-            var radios = document.querySelectorAll('input[type="radio"]');
-            for (var i = 0; i < radios.length; i++) {
-                if (!radios[i].dataset._deckListener) {
-                    radios[i].addEventListener('change', function() {
-                        if (textBox) {
-                            textBox.value = "deck:\"$selectedDeckName\"";
-                            textBox.dispatchEvent(new Event("input", { bubbles: true }));
-                            textBox.dispatchEvent(new Event("change"));
+                textBox.dispatchEvent(new Event("change", { bubbles: true }));
+
+                // saveing the original value property so we can call it later
+                var originalDescriptor = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value');
+
+                // intercept any attempt to change the value of this box
+                Object.defineProperty(textBox, 'value', {
+                    get: function() {
+                        return originalDescriptor.get.call(this);
+                    },
+                    set: function(val) {
+                        // if Anki tries to reset to "deck:current", block it and keep our deck
+                        if (val === "deck:current") {
+                            originalDescriptor.set.call(this, targetDeck);
+
+                            // Fire the right events so the graphs update as if the user typed it
+                            var self = this;
+                            setTimeout(function() {
+                                self.dispatchEvent(new Event("input", { bubbles: true }));
+                                self.dispatchEvent(new Event("change", { bubbles: true }));
+                            }, 0);
+                        } else {
+                            // Let any other changes go through 
+                            originalDescriptor.set.call(this, val);
                         }
-                    });
-                    radios[i].dataset._deckListener = '1';
-                }
-            }
+                    }
+                });
+            })();
             """.trimIndent()
         webViewLayout.evaluateJavascript(javascriptCode, null)
     }
