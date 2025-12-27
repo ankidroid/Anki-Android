@@ -8,6 +8,7 @@ plugins {
     alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.keeper)
+    alias(libs.plugins.roborazzi)
     id 'idea'
 }
 
@@ -467,6 +468,8 @@ dependencies {
         exclude module: "protobuf-lite"
     }
     testImplementation libs.androidx.work.testing
+    testImplementation libs.roborazzi
+    testImplementation libs.roborazzi.rule
     // for testing flows
     testImplementation libs.cashapp.turbine
 
