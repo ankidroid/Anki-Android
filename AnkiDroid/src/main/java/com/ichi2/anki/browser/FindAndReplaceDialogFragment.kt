@@ -18,16 +18,10 @@ package com.ichi2.anki.browser
 
 import android.app.Dialog
 import android.os.Bundle
-import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.CheckBox
-import android.widget.EditText
-import android.widget.Spinner
-import android.widget.TextView
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
-import androidx.constraintlayout.widget.Group
 import androidx.core.os.bundleOf
 import androidx.core.text.HtmlCompat
 import androidx.core.view.isVisible
@@ -46,6 +40,7 @@ import com.ichi2.anki.browser.FindAndReplaceDialogFragment.Companion.ARG_REGEX
 import com.ichi2.anki.browser.FindAndReplaceDialogFragment.Companion.ARG_REPLACEMENT
 import com.ichi2.anki.browser.FindAndReplaceDialogFragment.Companion.ARG_SEARCH
 import com.ichi2.anki.browser.FindAndReplaceDialogFragment.Companion.REQUEST_FIND_AND_REPLACE
+import com.ichi2.anki.databinding.FragmentFindReplaceBinding
 import com.ichi2.anki.notetype.ManageNotetypes
 import com.ichi2.anki.ui.internationalization.toSentenceCase
 import com.ichi2.anki.utils.ext.setFragmentResultListener
@@ -72,18 +67,11 @@ import timber.log.Timber
 // TODO desktop offers history for inputs
 class FindAndReplaceDialogFragment : AnalyticsDialogFragment() {
     private val browserViewModel by activityViewModels<CardBrowserViewModel>()
-    private val fieldSelector: Spinner?
-        get() = dialog?.findViewById(R.id.fields_selector)
-    private val onlySelectedNotes: CheckBox?
-        get() = dialog?.findViewById(R.id.check_only_selected_notes)
-    private val contentViewsGroup: Group?
-        get() = dialog?.findViewById(R.id.content_views_group)
-    private val loadingViewsGroup: Group?
-        get() = dialog?.findViewById(R.id.loading_views_group)
+    private lateinit var binding: FragmentFindReplaceBinding
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val contentView = layoutInflater.inflate(R.layout.fragment_find_replace, null)
-        contentView.setupLabels()
+        binding = FragmentFindReplaceBinding.inflate(layoutInflater)
+        setupLabels()
         val title =
             TR
                 .browsingFindAndReplace()
@@ -92,7 +80,7 @@ class FindAndReplaceDialogFragment : AnalyticsDialogFragment() {
             .Builder(requireContext())
             .show {
                 title(text = title)
-                customView(contentView)
+                customView(binding.root)
                 neutralButton(R.string.help) { openUrl(R.string.link_manual_browser_find_replace) }
                 negativeButton(R.string.dialog_cancel)
                 positiveButton(R.string.dialog_ok) { startFindReplace() }
@@ -101,28 +89,27 @@ class FindAndReplaceDialogFragment : AnalyticsDialogFragment() {
             }
     }
 
-    private fun View.setupLabels() {
-        findViewById<TextView>(R.id.label_find).text =
+    private fun setupLabels() {
+        binding.labelFind.text =
             HtmlCompat.fromHtml(TR.browsingFind(), HtmlCompat.FROM_HTML_MODE_LEGACY)
-        findViewById<TextView>(R.id.label_replace).text =
+        binding.labelReplace.text =
             HtmlCompat.fromHtml(TR.browsingReplaceWith(), HtmlCompat.FROM_HTML_MODE_LEGACY)
-        findViewById<TextView>(R.id.label_in).text =
+        binding.labelIn.text =
             HtmlCompat.fromHtml(TR.browsingIn(), HtmlCompat.FROM_HTML_MODE_LEGACY)
-        findViewById<CheckBox>(R.id.check_only_selected_notes).text = TR.browsingSelectedNotesOnly()
-        findViewById<CheckBox>(R.id.check_ignore_case).text = TR.browsingIgnoreCase()
-        findViewById<CheckBox>(R.id.check_input_as_regex).text =
-            TR.browsingTreatInputAsRegularExpression()
+        binding.onlySelectedNotesCheckBox.text = TR.browsingSelectedNotesOnly()
+        binding.ignoreCaseCheckBox.text = TR.browsingIgnoreCase()
+        binding.inputAsRegexCheckBox.text = TR.browsingTreatInputAsRegularExpression()
     }
 
     override fun onStart() {
         super.onStart()
         lifecycleScope.launch {
             (dialog as? AlertDialog)?.positiveButton?.isEnabled = false
-            contentViewsGroup?.isVisible = false
-            loadingViewsGroup?.isVisible = true
+            binding.contentViewsGroup.isVisible = false
+            binding.loadingViewsGroup.isVisible = true
             val noteIds = browserViewModel.queryAllSelectedNoteIds()
-            onlySelectedNotes?.isChecked = noteIds.isNotEmpty()
-            onlySelectedNotes?.isEnabled = noteIds.isNotEmpty()
+            binding.onlySelectedNotesCheckBox.isChecked = noteIds.isNotEmpty()
+            binding.onlySelectedNotesCheckBox.isEnabled = noteIds.isNotEmpty()
             val fieldsNames =
                 buildList {
                     add(
@@ -134,14 +121,14 @@ class FindAndReplaceDialogFragment : AnalyticsDialogFragment() {
                     add(TR.editingTags())
                     addAll(withCol { fieldNamesForNoteIds(noteIds) })
                 }
-            fieldSelector?.adapter =
+            binding.fieldsSelector.adapter =
                 ArrayAdapter(
                     requireActivity(),
                     android.R.layout.simple_spinner_item,
                     fieldsNames,
                 ).also { it.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item) }
-            loadingViewsGroup?.isVisible = false
-            contentViewsGroup?.isVisible = true
+            binding.loadingViewsGroup.isVisible = false
+            binding.contentViewsGroup.isVisible = true
             (dialog as? AlertDialog)?.positiveButton?.isEnabled = true
         }
     }
@@ -149,20 +136,18 @@ class FindAndReplaceDialogFragment : AnalyticsDialogFragment() {
     // https://github.com/ankitects/anki/blob/64ca90934bc26ddf7125913abc9dd9de8cb30c2b/qt/aqt/browser/find_and_replace.py#L118
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     fun startFindReplace() {
-        val search = dialog?.findViewById<EditText>(R.id.input_search)?.text
-        val replacement = dialog?.findViewById<EditText>(R.id.input_replace)?.text
+        val search = binding.inputSearch.text
+        val replacement = binding.inputReplace.text
         if (search.isNullOrEmpty() || replacement == null) return
-        val onlyInSelectedNotes = onlySelectedNotes?.isChecked ?: true
-        val ignoreCase =
-            dialog?.findViewById<CheckBox>(R.id.check_ignore_case)?.isChecked ?: true
-        val inputAsRegex =
-            dialog?.findViewById<CheckBox>(R.id.check_input_as_regex)?.isChecked ?: false
+        val onlyInSelectedNotes = binding.onlySelectedNotesCheckBox.isChecked
+        val ignoreCase = binding.ignoreCaseCheckBox.isChecked
+        val inputAsRegex = binding.inputAsRegexCheckBox.isChecked
         val selectedField =
-            when (fieldSelector?.selectedItemPosition ?: AdapterView.INVALID_POSITION) {
+            when (binding.fieldsSelector.selectedItemPosition) {
                 AdapterView.INVALID_POSITION -> return
                 0 -> ALL_FIELDS_AS_FIELD
                 1 -> TAGS_AS_FIELD
-                else -> fieldSelector?.selectedItem as? String ?: return
+                else -> binding.fieldsSelector.selectedItem as? String ?: return
             }
         Timber.i("Sending request to find and replace...")
         setFragmentResult(

@@ -99,7 +99,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
         <CheckBox
-            android:id="@+id/check_only_selected_notes"
+            android:id="@+id/only_selected_notes_check_box"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -111,22 +111,22 @@
             app:layout_constraintHorizontal_bias="0.0"
             tools:text="Selected notes only"/>
         <CheckBox
-            android:id="@+id/check_ignore_case"
+            android:id="@+id/ignore_case_check_box"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="true"
             android:layout_marginStart="2dp"
-            app:layout_constraintTop_toBottomOf="@id/check_only_selected_notes"
+            app:layout_constraintTop_toBottomOf="@id/only_selected_notes_check_box"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             tools:text="Ignore case"/>
         <CheckBox
-            android:id="@+id/check_input_as_regex"
+            android:id="@+id/input_as_regex_check_box"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="2dp"
-            app:layout_constraintTop_toBottomOf="@id/check_ignore_case"
+            app:layout_constraintTop_toBottomOf="@id/ignore_case_check_box"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -137,7 +137,7 @@
             android:id="@+id/content_views_group"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:constraint_referenced_ids="label_find,input_search,label_replace,input_replace,label_in,fields_selector,check_only_selected_notes,check_ignore_case,check_input_as_regex"
+            app:constraint_referenced_ids="label_find,input_search,label_replace,input_replace,label_in,fields_selector,only_selected_notes_check_box,ignore_case_check_box,input_as_regex_check_box"
             tools:visibility="visible"/>
 
         <com.google.android.material.progressindicator.CircularProgressIndicator
