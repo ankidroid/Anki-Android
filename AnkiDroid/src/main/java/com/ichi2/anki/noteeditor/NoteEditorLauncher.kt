@@ -213,9 +213,9 @@ sealed interface NoteEditorLauncher : Destination {
                 NoteEditorFragment.EXTRA_CALLER to NoteEditorCaller.NOTEEDITOR.value,
                 NoteEditorFragment.EXTRA_DID to deckId,
                 NoteEditorFragment.EXTRA_CONTENTS to fieldsText,
-                NoteEditorFragment.EXTRA_NOTE_TYPE_ID to noteTypeId,
             ).also { bundle ->
                 tags?.let { tags -> bundle.putStringArray(NoteEditorFragment.EXTRA_TAGS, tags.toTypedArray()) }
+                noteTypeId?.let { id -> bundle.putLong(NoteEditorFragment.EXTRA_NOTE_TYPE_ID, id) }
             }
     }
 }
