@@ -183,7 +183,10 @@ class RecyclerFastScroller
 
             handle.setOnTouchListener(
                 object : OnTouchListener {
+                    // The bar height when the drag started - used to handle bar resizing mid-drag
                     private var initialBarHeight = 0f
+
+                    // The last touch Y position (in bar coordinates), adjusted for bar height changes
                     private var lastPressedYAdjustedToInitial = 0f
                     private var lastAppBarLayoutOffset = 0
 
@@ -211,21 +214,30 @@ class RecyclerFastScroller
                                 lastAppBarLayoutOffset = appBarLayoutOffset
                             }
                             MotionEvent.ACTION_MOVE -> {
+                                // Calculate touch position in bar coordinates
                                 val newHandlePressedY = event.y + handle.y + bar.y
                                 val barHeight = bar.height
+                                // Adjust for any bar height changes since drag started
                                 val newHandlePressedYAdjustedToInitial =
                                     newHandlePressedY + (initialBarHeight - barHeight)
 
-                                val scrollProportion = newHandlePressedYAdjustedToInitial / initialBarHeight
-                                val targetPosition =
-                                    (scrollProportion * recyclerViewAdapter.itemCount)
-                                        .toInt()
-                                        .coerceIn(0, recyclerViewAdapter.itemCount - 1)
+                                // Delta-based scrolling: scroll by the change in finger position,
+                                // not the absolute position. This ensures the handle "sticks" to
+                                // where the user grabbed it, rather than jumping
+                                val deltaY = newHandlePressedYAdjustedToInitial - lastPressedYAdjustedToInitial
+                                // Convert finger movement to scroll pixels:
+                                // (finger movement / bar height) gives the proportion of the bar moved,
+                                // multiply by scroll range to get pixels to scroll
+                                val scrollPixels =
+                                    (
+                                        (deltaY / initialBarHeight) *
+                                            recyclerView.computeVerticalScrollRange()
+                                    ).toInt()
 
                                 try {
-                                    recyclerView.scrollToPosition(targetPosition)
+                                    recyclerView.scrollBy(0, scrollPixels + lastAppBarLayoutOffset - appBarLayoutOffset)
                                 } catch (e: Exception) {
-                                    Timber.w(e, "scrollToPosition")
+                                    Timber.w(e, "scrollBy")
                                 }
 
                                 lastPressedYAdjustedToInitial = newHandlePressedYAdjustedToInitial
