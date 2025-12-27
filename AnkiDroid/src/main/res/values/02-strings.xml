@@ -405,8 +405,6 @@ opening the system text to speech settings fails">Failed to open text to speech 
 
     <string name="failed_to_copy">Failed to copy</string>
 
-    <string name="card_browser_unavailable_when_notes_mode">Unavailable in ‘Notes’ mode</string>
-
     <plurals name="unbury_cards_feedback">
         <item quantity="one">%d card unburied</item>
         <item quantity="other">%d cards unburied</item>
