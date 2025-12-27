@@ -642,7 +642,6 @@ class CardBrowserFragment :
     @VisibleForTesting
     fun onTap(id: CardOrNoteId) =
         launchCatchingTask {
-            activityViewModel.focusedRow = id
             if (activityViewModel.isInMultiSelectMode) {
                 val wasSelected = activityViewModel.selectedRows.contains(id)
                 activityViewModel.toggleRowSelection(id.toRowSelection())
@@ -652,6 +651,7 @@ class CardBrowserFragment :
                     requireCardBrowserActivity().loadNoteEditorFragmentIfFragmented()
                 }
             } else {
+                activityViewModel.editorRowId = id
                 val cardId = activityViewModel.queryDataForCardEdit(id)
                 requireCardBrowserActivity().openNoteEditorForCard(cardId)
             }
