@@ -20,7 +20,7 @@ import com.ichi2.anki.libanki.DeckConfig.Companion.QUESTION_ACTION
 
 enum class QuestionAction(
     val code: Int,
-) {
+) : AutoAdvanceAction {
     SHOW_ANSWER(0),
     SHOW_REMINDER(1),
     ;
