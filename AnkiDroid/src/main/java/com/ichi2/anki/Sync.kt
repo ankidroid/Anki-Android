@@ -102,22 +102,27 @@ fun DeckPicker.handleNewSync(
     val deckPicker = this
     launchCatchingTask {
         try {
-            when (conflict) {
-                ConflictResolution.FULL_DOWNLOAD -> handleDownload(deckPicker, auth, deckPicker.mediaUsnOnConflict)
-                ConflictResolution.FULL_UPLOAD -> handleUpload(deckPicker, auth, deckPicker.mediaUsnOnConflict)
-                null -> {
-                    handleNormalSync(deckPicker, auth, syncMedia)
+            try {
+                when (conflict) {
+                    ConflictResolution.FULL_DOWNLOAD -> handleDownload(deckPicker, auth, deckPicker.mediaUsnOnConflict)
+                    ConflictResolution.FULL_UPLOAD -> handleUpload(deckPicker, auth, deckPicker.mediaUsnOnConflict)
+                    null -> {
+                        handleNormalSync(deckPicker, auth, syncMedia)
+                    }
                 }
+            } catch (exc: BackendSyncException.BackendSyncAuthFailedException) {
+                // auth failed; log out
+                updateLogin("", "")
+                throw exc
             }
-        } catch (exc: BackendSyncException.BackendSyncAuthFailedException) {
-            // auth failed; log out
-            updateLogin("", "")
-            throw exc
+            withCol { notetypes.clearCache() }
+            notifySubscribersAllValuesChanged(deckPicker)
+            refreshState()
+        } finally {
+            // Always update last sync time to prevent infinite retry loops
+            // when sync fails (e.g., collection too large). See issue #19776
+            setLastSyncTimeToNow()
         }
-        withCol { notetypes.clearCache() }
-        notifySubscribersAllValuesChanged(deckPicker)
-        setLastSyncTimeToNow()
-        refreshState()
     }
 }
 
