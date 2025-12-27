@@ -73,7 +73,6 @@ import com.ichi2.anki.utils.ext.previousCardStudy
 import com.ichi2.anki.utils.ext.setUserFlagForCards
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.withTimeoutOrNull
@@ -132,16 +131,14 @@ class ReviewerViewModel(
      * A flag that determines if the SchedulingStates in CurrentQueueState are
      * safe to persist in the database when answering a card. This is used to
      * ensure that the custom JS scheduler has persisted its SchedulingStates
-     * back to the Reviewer before we save it to the database. If the custom
-     * scheduler has not been configured, then it is safe to immediately set
-     * this to true.
+     * back to the Reviewer before we save it to the database.
      *
-     * This flag should be set to false when we show the front of the card
-     * and only set to true once we know the custom scheduler has finished its
-     * execution, or set to true immediately if the custom scheduler has not
+     * This flag should be reset when we show the front of the card
+     * and only complete once we know the custom scheduler has finished its
+     * execution, or complete immediately if the custom scheduler has not
      * been configured.
      */
-    private var statesMutated = true
+    private var mutationSignal = CompletableDeferred(Unit)
 
     val answerButtonsNextTimeFlow: MutableStateFlow<AnswerButtonsNextTime?> = MutableStateFlow(null)
     private val shouldShowNextTimes: Deferred<Boolean> =
@@ -195,9 +192,7 @@ class ReviewerViewModel(
     fun onShowAnswer() {
         Timber.v("ReviewerViewModel::onShowAnswer")
         launchCatchingIO {
-            while (!statesMutated) {
-                delay(50)
-            }
+            mutationSignal.await()
 
             val typedAnswerResult = CompletableDeferred<String>()
             if (typeAnswerFlow.value != null) {
@@ -252,7 +247,7 @@ class ReviewerViewModel(
     }
 
     fun onStateMutationCallback() {
-        statesMutated = true
+        mutationSignal.complete(Unit)
     }
 
     private suspend fun emitEditNoteDestination() {
@@ -415,10 +410,12 @@ class ReviewerViewModel(
     private suspend fun runStateMutationHook() {
         val js = stateMutationJs.await()
         if (js.isEmpty()) {
-            statesMutated = true
+            if (!mutationSignal.isCompleted) {
+                mutationSignal.complete(Unit)
+            }
             return
         }
-        statesMutated = false
+        mutationSignal = CompletableDeferred()
         statesMutationEvalFlow.emit(
             "anki.mutateNextCardStates('$stateMutationKey', async (states, customData, ctx) => { $js });",
         )
