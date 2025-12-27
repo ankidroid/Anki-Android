@@ -178,6 +178,9 @@ class PreviewerViewModel(
         launchCatchingIO {
             if (currentIndex.value > 0) {
                 currentIndex.update { it - 1 }
+                if (!backSideOnly.value) {
+                    showingAnswer.emit(false)
+                }
             } else if (showingAnswer.value && !backSideOnly.value) {
                 showQuestion()
             }
@@ -203,6 +206,9 @@ class PreviewerViewModel(
         if (index !in selectedCardIds.indices) return
         launchCatchingIO {
             currentIndex.emit(index)
+            if (!backSideOnly.value) {
+                showingAnswer.emit(false)
+            }
         }
     }
 
