@@ -178,8 +178,6 @@ sealed class ReviewReminderScope : Parcelable {
  * Preferably, also add some unit tests to ensure your migration works properly on all user devices once your update is rolled out.
  * See ReviewRemindersDatabaseTest for examples on how to do this.
  *
- * TODO: add remaining fields planned for GSoC 2025.
- *
  * @param id Unique, auto-incremented ID of the review reminder.
  * @param time See [ReviewReminderTime].
  * @param cardTriggerThreshold See [ReviewReminderCardTriggerThreshold].
@@ -187,6 +185,9 @@ sealed class ReviewReminderScope : Parcelable {
  * @param enabled Whether the review reminder's notifications are active or disabled.
  * @param profileID ID representing the profile which created this review reminder, as review reminders for
  * multiple profiles might be active simultaneously.
+ * @param countNew Whether new cards are counted when checking the [cardTriggerThreshold].
+ * @param countLrn Whether learning cards are counted when checking the [cardTriggerThreshold].
+ * @param countRev Whether review cards are counted when checking the [cardTriggerThreshold].
  */
 @Serializable
 @Parcelize
@@ -198,6 +199,9 @@ data class ReviewReminder private constructor(
     val scope: ReviewReminderScope,
     var enabled: Boolean,
     val profileID: String,
+    val countNew: Boolean,
+    val countLrn: Boolean,
+    val countRev: Boolean,
 ) : Parcelable,
     ReviewReminderSchema {
     companion object {
@@ -212,6 +216,9 @@ data class ReviewReminder private constructor(
             scope: ReviewReminderScope = ReviewReminderScope.Global,
             enabled: Boolean = true,
             profileID: String = "",
+            countNew: Boolean = true,
+            countLrn: Boolean = true,
+            countRev: Boolean = true,
         ) = ReviewReminder(
             id = ReviewReminderId.getAndIncrementNextFreeReminderId(),
             time,
@@ -219,6 +226,9 @@ data class ReviewReminder private constructor(
             scope,
             enabled,
             profileID,
+            countNew,
+            countLrn,
+            countRev,
         )
     }
 
