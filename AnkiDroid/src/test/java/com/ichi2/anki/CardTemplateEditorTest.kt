@@ -20,6 +20,8 @@ import android.app.Activity
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.os.Looper
+import android.view.View
 import android.widget.EditText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CardTemplateEditor.CardTemplateFragment.CardTemplate
@@ -42,8 +44,11 @@ import org.junit.Assume.assumeThat
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Robolectric
+import org.robolectric.Shadows
 import org.robolectric.Shadows.shadowOf
+import org.robolectric.fakes.RoboMenuItem
 import org.robolectric.shadows.ShadowActivity
+import org.robolectric.shadows.ShadowLooper
 import timber.log.Timber
 import kotlin.test.junit5.JUnit5Asserter.assertEquals
 import kotlin.test.junit5.JUnit5Asserter.assertNotEquals
@@ -728,6 +733,23 @@ class CardTemplateEditorTest : RobolectricTest() {
     }
 
     @Test
+    fun testSaveButtonEnabledAfterException() {
+        withCardTemplateEditor(noteType = col.notetypes.cloze) {
+            editText.setText("New Random Template Text")
+
+            // throw an exception to simulate failure
+            this.tempNoteType = null
+
+            confirmButton.performClick()
+
+            shadowOf(Looper.getMainLooper()).idle()
+
+            assertTrue("Button should be clickable after failure", confirmButton.isClickable)
+            assertTrue("Button should be enabled after failure", confirmButton.isEnabled)
+        }
+    }
+
+    @Test
     fun testBottomNavigationViewLayoutTransition() {
         val noteTypeName = "Basic"
 
@@ -957,3 +979,6 @@ fun RobolectricTest.withCardTemplateEditor(
 fun CardTemplateEditor.selectTab(index: Int) = topBinding.slidingTabs.selectTab(index)
 
 val CardTemplateEditor.selectedTabPosition: Int get() = topBinding.slidingTabs.selectedTabPosition
+
+val CardTemplateEditor.confirmButton: View
+    get() = findViewById(R.id.action_confirm)
