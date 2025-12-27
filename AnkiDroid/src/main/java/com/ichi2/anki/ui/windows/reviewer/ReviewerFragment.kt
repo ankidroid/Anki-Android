@@ -26,7 +26,6 @@ import android.text.style.UnderlineSpan
 import android.view.KeyEvent
 import android.view.MenuItem
 import android.view.View
-import android.view.ViewGroup.MarginLayoutParams
 import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
@@ -51,7 +50,6 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import anki.scheduler.CardAnswer.Rating
-import com.google.android.material.shape.ShapeAppearanceModel
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.DispatchKeyEventListener
 import com.ichi2.anki.Flag
@@ -68,6 +66,7 @@ import com.ichi2.anki.preferences.reviewer.ViewerAction
 import com.ichi2.anki.previewer.CardViewerActivity
 import com.ichi2.anki.previewer.CardViewerFragment
 import com.ichi2.anki.previewer.TypeAnswer
+import com.ichi2.anki.previewer.setFrameStyle
 import com.ichi2.anki.previewer.stdHtml
 import com.ichi2.anki.reviewer.BindingMap
 import com.ichi2.anki.reviewer.ReviewerBinding
@@ -209,6 +208,8 @@ class ReviewerFragment :
         viewModel.destinationFlow.collectIn(lifecycleScope) { destination ->
             startActivity(destination.toIntent(requireContext()))
         }
+
+        binding.webViewContainer.setFrameStyle()
 
         if (Prefs.showAnswerFeedback) {
             viewModel.answerFeedbackFlow.collectIn(lifecycleScope) { ease ->
@@ -480,17 +481,6 @@ class ReviewerFragment :
      * of [Prefs.toolbarPosition], [Prefs.frameStyle] and `Hide answer buttons`
      */
     private fun setupMargins() {
-        if (Prefs.frameStyle == FrameStyle.BOX) {
-            binding.webViewContainer.apply {
-                updateLayoutParams<MarginLayoutParams> {
-                    leftMargin = 0
-                    rightMargin = 0
-                }
-                cardElevation = 0F
-                shapeAppearanceModel = ShapeAppearanceModel() // Remove corners
-            }
-        }
-
         if (Prefs.toolbarPosition == ToolbarPosition.BOTTOM) {
             binding.complementsLayout?.showDividers =
                 LinearLayout.SHOW_DIVIDER_MIDDLE or LinearLayout.SHOW_DIVIDER_BEGINNING

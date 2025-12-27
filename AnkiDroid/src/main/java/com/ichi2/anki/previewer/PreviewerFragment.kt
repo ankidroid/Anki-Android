@@ -186,9 +186,7 @@ class PreviewerFragment :
             setNavigationOnClickListener { requireActivity().onBackPressedDispatcher.onBackPressed() }
         }
 
-        if (sharedPrefs().getBoolean("safeDisplay", false)) {
-            view.findViewById<MaterialCardView>(R.id.webview_container).elevation = 0F
-        }
+        view.findViewById<MaterialCardView>(R.id.webview_container).setFrameStyle()
 
         bindingMap = BindingMap(sharedPrefs(), PreviewerAction.entries, this)
     }
