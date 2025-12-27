@@ -16,19 +16,22 @@
 package com.ichi2.anki.ui.windows.reviewer.autoadvance
 
 import com.ichi2.anki.libanki.DeckConfig
-import com.ichi2.anki.libanki.DeckConfig.Companion.QUESTION_ACTION
+import com.ichi2.anki.libanki.DeckConfig.Companion.ANSWER_ACTION
 
-enum class QuestionAction(
+enum class AnswerAction(
     val code: Int,
 ) : AutoAdvanceAction {
-    SHOW_ANSWER(0),
-    SHOW_REMINDER(1),
+    BURY_CARD(0),
+    ANSWER_AGAIN(1),
+    ANSWER_GOOD(2),
+    ANSWER_HARD(3),
+    SHOW_REMINDER(4),
     ;
 
     companion object {
-        fun from(code: Int): QuestionAction = entries.firstOrNull { it.code == code } ?: SHOW_ANSWER
+        fun from(code: Int): AnswerAction = AnswerAction.entries.firstOrNull { it.code == code } ?: BURY_CARD
 
-        val DeckConfig.questionAction: QuestionAction
-            get() = QuestionAction.from(jsonObject.optInt(QUESTION_ACTION))
+        val DeckConfig.answerAction: AnswerAction
+            get() = AnswerAction.from(jsonObject.optInt(ANSWER_ACTION))
     }
 }

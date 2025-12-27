@@ -17,8 +17,7 @@ package com.ichi2.anki.ui.windows.reviewer.autoadvance
 
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.libanki.DeckId
-import com.ichi2.anki.reviewer.AutomaticAnswerAction
-import com.ichi2.anki.reviewer.AutomaticAnswerAction.Companion.answerAction
+import com.ichi2.anki.ui.windows.reviewer.autoadvance.AnswerAction.Companion.answerAction
 import com.ichi2.anki.ui.windows.reviewer.autoadvance.QuestionAction.Companion.questionAction
 import kotlin.time.Duration
 import kotlin.time.DurationUnit
@@ -26,7 +25,7 @@ import kotlin.time.toDuration
 
 data class AutoAdvanceSettings(
     val questionAction: QuestionAction,
-    val answerAction: AutomaticAnswerAction,
+    val answerAction: AnswerAction,
     val durationToShowQuestionFor: Duration,
     val durationToShowAnswerFor: Duration,
     val waitForAudio: Boolean,
