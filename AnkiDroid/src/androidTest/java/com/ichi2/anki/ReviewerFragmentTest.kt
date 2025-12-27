@@ -23,7 +23,6 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.google.android.material.textfield.TextInputEditText
-import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.tests.InstrumentedTest
 import com.ichi2.anki.tests.checkWithTimeout
@@ -34,6 +33,7 @@ import com.ichi2.anki.testutil.closeGetStartedScreenIfExists
 import com.ichi2.anki.testutil.grantPermissions
 import com.ichi2.anki.testutil.notificationPermission
 import com.ichi2.anki.testutil.reviewDeckWithName
+import com.ichi2.anki.utils.ext.cardStateCustomizer
 import com.ichi2.testutils.common.Flaky
 import com.ichi2.testutils.common.OS
 import org.hamcrest.MatcherAssert.assertThat
@@ -209,9 +209,3 @@ class ReviewerFragmentTest : InstrumentedTest() {
         }
     }
 }
-
-private var Collection.cardStateCustomizer: String?
-    get() = config.get("cardStateCustomizer")
-    set(value) {
-        config.set("cardStateCustomizer", value)
-    }
