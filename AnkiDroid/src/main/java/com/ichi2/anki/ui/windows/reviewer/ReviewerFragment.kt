@@ -388,27 +388,13 @@ class ReviewerFragment :
     private fun setupCounts() {
         viewModel.countsFlow
             .flowWithLifecycle(lifecycle)
-            .collectLatestIn(lifecycleScope) { (counts, countsType) ->
-                binding.newCount.text = counts.new.toString()
-                binding.learnCount.text = counts.lrn.toString()
-                binding.reviewCount.text = counts.rev.toString()
-
-                val currentCount =
-                    when (countsType) {
-                        Counts.Queue.NEW -> binding.newCount
-                        Counts.Queue.LRN -> binding.learnCount
-                        Counts.Queue.REV -> binding.reviewCount
-                    }
-                val spannableString = SpannableString(currentCount.text)
-                spannableString.setSpan(UnderlineSpan(), 0, currentCount.text.length, 0)
-                currentCount.text = spannableString
+            .collectLatestIn(lifecycleScope) { counts ->
+                binding.studyCounts.updateCounts(counts)
             }
 
         lifecycleScope.launch {
             if (!CollectionPreferences.getShowRemainingDueCounts()) {
-                binding.newCount.isVisible = false
-                binding.learnCount.isVisible = false
-                binding.reviewCount.isVisible = false
+                binding.studyCounts.isVisible = false
             }
         }
     }
