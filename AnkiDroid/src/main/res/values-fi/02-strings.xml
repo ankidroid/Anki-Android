@@ -55,7 +55,7 @@
     <string name="CardEditorTags">Tunnisteet: %1$s</string>
     <string name="CardEditorCards">Kortit: %1$s</string>
     <string name="edit_occlusions">Muokkaa peitteitä</string>
-    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
+    <string name="paste_from_clipboard" maxLength="28">Sijoita leikepöydältä</string>
     <string name="tag_name">Tunnistenimi</string>
     <string name="add_new_filter_tags">Lisää/suodata tunnisteita</string>
     <string name="add_tag" maxLength="28">Lisää tunniste</string>
@@ -69,14 +69,14 @@
     <string name="disable_stylus">Poista kynäkirjoitus käytöstä</string>
     <string name="eraser" maxLength="28">Pyyhin</string>
     <string name="add_brush" maxLength="28">Lisää pensseli</string>
-    <string name="whiteboard_align_left" comment="Option to align the whiteboard toolbar on the left" maxLength="28">Left</string>
-    <string name="whiteboard_align_bottom" comment="Option to align the whiteboard toolbar on the bottom" maxLength="28">Bottom</string>
-    <string name="whiteboard_align_right" comment="Option to align the whiteboard toolbar on the right" maxLength="28">Right</string>
+    <string name="whiteboard_align_left" comment="Option to align the whiteboard toolbar on the left" maxLength="28">Vasen</string>
+    <string name="whiteboard_align_bottom" comment="Option to align the whiteboard toolbar on the bottom" maxLength="28">Alareuna</string>
+    <string name="whiteboard_align_right" comment="Option to align the whiteboard toolbar on the right" maxLength="28">Oikea</string>
     <string name="whiteboard_clear" comment="Button text to clear the whiteboard" maxLength="28">Tyhjennä</string>
     <string name="whiteboard_more_options" comment="Tooltip of the whiteboard \'More\' button" maxLength="28">Lisäasetukset</string>
     <string name="whiteboard_remove_brush_message">Haluatko varmasti poistaa tämän pensselin paletistasi?</string>
     <string name="whiteboard_ink_eraser" comment="Title of the whiteboard Ink eraser">Muste</string>
-    <string name="whiteboard_stroke_eraser" comment="Title of the whiteboard Stroke eraser">Stroke</string>
+    <string name="whiteboard_stroke_eraser" comment="Title of the whiteboard Stroke eraser">Viiva</string>
     <string name="stylus_mode" comment="Title of the menu item that toggles the whiteboard stylus mode" maxLength="28">Stylus tila</string>
     <string name="cannot_remove_last_brush_message">Viimeistä pensseliä ei voi poistaa</string>
     <string name="enable_whiteboard" maxLength="28">Ota kirjoitustaulu käyttöön</string>
@@ -167,7 +167,7 @@
     <string name="import_error_load_imported_database">Ankin tietokannan (.anki2) korvaamista ei vielä tueta. Katso korvausohjeet käyttöoppaasta.</string>
     <string name="import_error_content_provider">Valittua tiedostoa ei voitu tuoda automaattisesti AnkiDroidiin. Katso käyttöohjeesta, kuinka tuoda manuaalisesti Anki-tiedostoja: \n%s</string>
     <string name="import_error_copy_to_cache_title">Tiedoston tallentaminen välimuistiin epäonnistui</string>
-    <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">This is often caused by a bug in the app you used to select the file. Please try the following fixes:\n\n%s</string>
+    <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">Tämä johtuu usein viasta sovelluksessa, jota käytit tiedoston valitsemiseen. Kokeile seuraavia korjauksia:\n\n%s</string>
     <string name="import_interrupted">Tuonti keskeytyi: AnkiDroid suljettiin</string>
     <string name="export_ready_title">Vienti valmis</string>
     <string name="export_send_no_handlers">Sovellusta apkg:n käsittelyyn ei ole olemassa. Tallennetaan&#8230;</string>
@@ -236,7 +236,7 @@
     <string name="search_decks" maxLength="28">Etsi pakkoja</string>
     <string name="ankidroid_init_failed_webview_title">Vakava virhe</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid vaatii toimiakseen System WebView -palvelun, joka ei ole käytettävissä. Näin voi käydä, jos järjestelmän päivitys on käynnissä. Yritä uudelleen muutaman minuutin kuluttua.\n\n%s</string>
-    <string name="ankidroid_init_failed_storage">AnkiDroid cannot access storage due to an Android error.\n\n%s</string>
+    <string name="ankidroid_init_failed_storage">AnkiDroid ei voi käyttää tallennustilaa Android-virheen vuoksi.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">Fonttikoko</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Näytä työkalupalkki</string>
@@ -308,8 +308,8 @@
     <string name="field_editor_model_not_available">Kokoelmaan pääsy epäonnistui. Yritä uudelleen!</string>
     <string name="cd_manage_notetypes_add">Lisää uusi muistiinpanotyyppi</string>
     <plurals name="note_types_selected">
-        <item quantity="one">%d note type selected</item>
-        <item quantity="other">%d note types selected</item>
+        <item quantity="one">%d muistiinpanotyyppi valittu</item>
+        <item quantity="other">%d muistiinpanotyyppiä valittu</item>
     </plurals>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">Opiskele vähemmän</string>
@@ -376,7 +376,7 @@
     <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">Kopioi mallipohja Markdownina</string>
     <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">Muokkaa selaimen ulkoasua</string>
     <string name="missing_user_action_dialog_message" comment="%s is the user action number">Käyttäjän toimea %s ei ole määritetty tässä muistiinpanotyypissä. Määritä se</string>
-    <string name="feature_not_supported_by_study_screen">This card has features that are not yet supported by the new study screen.</string>
+    <string name="feature_not_supported_by_study_screen">Tässä kortissa on ominaisuuksia, joita uusi opiskelunäkymä ei vielä tue.</string>
     <string name="directory_inaccessible_info">Lue lisää siitä, miten palauttaa pääsy tänne (%s) tai siirry asetuksiin vaihtaaksesi kokoelmakansiota</string>
     <!-- Scheduler Upgrade Required Dialog title-->
     <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">Aikataulu vaatii päivitystä</string>
