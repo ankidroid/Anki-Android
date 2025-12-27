@@ -1,0 +1,15 @@
+<!-- Created based on the following icons:
+  - Crop square
+  - Pause circle
+  in  https://fonts.google.com/icons?
+  -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24"
+    android:tint="?attr/colorControlNormal">
+  <path
+      android:pathData="M5,3C4.45,3 3.98,3.196 3.588,3.588 3.196,3.98 3,4.45 3,5V19C3,19.55 3.196,20.02 3.588,20.412 3.98,20.804 4.45,21 5,21H19C19.55,21 20.02,20.804 20.412,20.412 20.804,20.02 21,19.55 21,19V5C21,4.45 20.804,3.98 20.412,3.588 20.02,3.196 19.55,3 19,3ZM9,8H11V16H9ZM13,8H15V16H13Z"
+      android:fillColor="#fff"/>
+</vector>
