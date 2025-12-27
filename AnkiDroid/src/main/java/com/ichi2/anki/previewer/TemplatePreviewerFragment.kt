@@ -21,15 +21,20 @@ import androidx.core.os.BundleCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.google.android.material.tabs.TabLayout
 import com.ichi2.anki.R
 import com.ichi2.anki.databinding.TemplatePreviewerBinding
+import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
+import com.ichi2.anki.utils.ext.doOnTabSelected
 import com.ichi2.anki.utils.ext.sharedPrefs
 import com.ichi2.anki.workarounds.SafeWebViewLayout
+import com.ichi2.themes.Themes
 import com.ichi2.utils.BundleUtils.getNullableInt
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import timber.log.Timber
 
 class TemplatePreviewerFragment :
     CardViewerFragment(R.layout.template_previewer),
@@ -75,6 +80,74 @@ class TemplatePreviewerFragment :
             view.setBackgroundColor(color)
         }
     }
+
+    /**
+     * Sets up the tab layout for this previewer fragment.
+     * This method should be called from the hosting activity after the fragment is attached.
+     *
+     * @param tabLayout The TabLayout to configure with template tabs
+     */
+    fun setupTabs(tabLayout: TabLayout) {
+        launchCatchingTask {
+            setupPreviewerTabs(tabLayout)
+        }
+    }
+
+    /**
+     * Sets up the previewer tabs with appropriate titles and selection handling.
+     *
+     * @param tabLayout The tab layout to configure
+     */
+    private suspend fun setupPreviewerTabs(tabLayout: TabLayout) {
+        tabLayout.removeAllTabs()
+
+        val backgroundColor =
+            Themes.getColorFromAttr(requireContext(), R.attr.alternativeBackgroundColor)
+        tabLayout.setBackgroundColor(backgroundColor)
+
+        val cardsWithEmptyFronts = viewModel.cardsWithEmptyFronts?.await()
+        for ((index, templateName) in viewModel.getTemplateNames().withIndex()) {
+            val tabTitle =
+                if (cardsWithEmptyFronts?.get(index) == true) {
+                    getString(R.string.card_previewer_empty_front_indicator, templateName)
+                } else {
+                    templateName
+                }
+            val newTab = tabLayout.newTab().setText(tabTitle)
+            tabLayout.addTab(newTab)
+        }
+
+        tabLayout.selectTab(tabLayout.getTabAt(viewModel.getCurrentTabIndex()))
+
+        // Remove any existing listeners to avoid duplicates
+        tabLayout.clearOnTabSelectedListeners()
+        tabLayout.doOnTabSelected { tab ->
+            Timber.v("Selected tab %d", tab.position)
+            viewModel.onTabSelected(tab.position)
+        }
+    }
+
+    /**
+     * Updates the content displayed in the previewer with the provided fields and tags
+     * Only updates the webView and not the tabs
+     * Should not be called for cloze deletions, since they they have dynamic ord
+     *
+     * @param fields The list of field values to display
+     * @param tags The list of tags associated with the note
+     */
+    fun updateContent(
+        fields: List<String>,
+        tags: List<String>,
+    ) {
+        viewModel.updateContent(fields, tags)
+    }
+
+    /**
+     * Retrieves a safe cloze ordinal number for cloze deletions.
+     *
+     * @return The safe cloze ordinal number
+     */
+    suspend fun getSafeClozeOrd(): Int = viewModel.getSafeClozeOrd()
 
     companion object {
         const val ARGS_KEY = "templatePreviewerArgs"
