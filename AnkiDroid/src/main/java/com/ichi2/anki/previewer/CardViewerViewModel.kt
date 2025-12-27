@@ -15,19 +15,14 @@
  */
 package com.ichi2.anki.previewer
 
-import android.media.MediaPlayer
-import android.net.Uri
 import androidx.annotation.CallSuper
 import androidx.annotation.VisibleForTesting
-import androidx.core.net.toFile
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.OnErrorListener
 import com.ichi2.anki.cardviewer.CardMediaPlayer
-import com.ichi2.anki.cardviewer.MediaErrorBehavior
 import com.ichi2.anki.cardviewer.MediaErrorHandler
-import com.ichi2.anki.cardviewer.MediaErrorListener
 import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.libanki.Card
 import com.ichi2.anki.libanki.TtsPlayer
@@ -50,7 +45,11 @@ abstract class CardViewerViewModel :
     override val onError = MutableSharedFlow<String>()
     val onMediaError = MutableSharedFlow<String>()
     val onTtsError = MutableSharedFlow<TtsPlayer.TtsError>()
-    val mediaErrorHandler = MediaErrorHandler()
+    val mediaErrorHandler =
+        MediaErrorHandler(
+            onMediaError = { viewModelScope.launch { onMediaError.emit(it) } },
+            onTtsError = { viewModelScope.launch { onTtsError.emit(it) } },
+        )
 
     val eval = MutableSharedFlow<String>()
 
@@ -59,7 +58,7 @@ abstract class CardViewerViewModel :
     protected val cardMediaPlayer =
         CardMediaPlayer(
             javascriptEvaluator = { launchCatchingIO { eval.emit(it) } },
-            mediaErrorListener = createSoundErrorListener(),
+            mediaErrorListener = mediaErrorHandler,
         ).also {
             addCloseable(it)
         }
@@ -154,44 +153,6 @@ abstract class CardViewerViewModel :
         val answer = mungeQA(answerData)
 
         eval.emit("_showAnswer(${Json.encodeToString(answer)}, '${bodyClass()}');")
-    }
-
-    private fun createSoundErrorListener(): MediaErrorListener {
-        return object : MediaErrorListener {
-            override fun onError(uri: Uri): MediaErrorBehavior {
-                if (uri.scheme != "file") {
-                    return MediaErrorBehavior.CONTINUE_MEDIA
-                }
-
-                val file = uri.toFile()
-                // There is a multitude of transient issues with the MediaPlayer.
-                // Retrying fixes most of these
-                if (file.exists()) return MediaErrorBehavior.RETRY_MEDIA
-                mediaErrorHandler.processMissingMedia(file) { fileName ->
-                    viewModelScope.launch { onMediaError.emit(fileName) }
-                }
-                return MediaErrorBehavior.CONTINUE_MEDIA
-            }
-
-            override fun onMediaPlayerError(
-                mp: MediaPlayer?,
-                which: Int,
-                extra: Int,
-                uri: Uri,
-            ): MediaErrorBehavior {
-                Timber.w("Media Error: (%d, %d)", which, extra)
-                return onError(uri)
-            }
-
-            override fun onTtsError(
-                error: TtsPlayer.TtsError,
-                isAutomaticPlayback: Boolean,
-            ) {
-                mediaErrorHandler.processTtsFailure(error, isAutomaticPlayback) {
-                    viewModelScope.launch { onTtsError.emit(error) }
-                }
-            }
-        }
     }
 
     override suspend fun handlePostRequest(
