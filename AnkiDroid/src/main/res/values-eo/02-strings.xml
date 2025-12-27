@@ -376,7 +376,7 @@
     <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">Kopii ŝablonon kiel Markdown</string>
     <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">Redakti aspekton de kart-foliumilo</string>
     <string name="missing_user_action_dialog_message" comment="%s is the user action number">La ago de uzanto “%s” ne estas agordita por tiu ĉi nototipo. Agordu ĝin.</string>
-    <string name="feature_not_supported_by_study_screen">This card has features that are not yet supported by the new study screen.</string>
+    <string name="feature_not_supported_by_study_screen">Tiu ĉi karto havas trajtojn, kiuj ankoraŭ ne estas subtenataj de la nova lernada ekrano.</string>
     <string name="directory_inaccessible_info">Sciiĝu pli pri kiel restarigi aliron ĉe %s aŭ malfermu agordojn kaj ŝanĝu la dosierujon por kolekto.</string>
     <!-- Scheduler Upgrade Required Dialog title-->
     <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">Necesas promocii planilon</string>

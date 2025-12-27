@@ -388,7 +388,7 @@
     <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">Kopírovat šablonu v markdown</string>
     <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">Upravit vzhled prohlížeče</string>
     <string name="missing_user_action_dialog_message" comment="%s is the user action number">Akce uživatele %s není v tomto typu poznámky nastavena. Nakonfigurujte ji prosím</string>
-    <string name="feature_not_supported_by_study_screen">Tato karta využívá funkcí, které ještě nejsou podporovány novým studijním zobrazením.</string>
+    <string name="feature_not_supported_by_study_screen">Tato karta využívá funkce, které ještě nejsou podporovány novou obrazovkou učení.</string>
     <string name="directory_inaccessible_info">Další informace o tom, jak obnovit přístup zde %s nebo přejděte do nastavení a aktualizujte složku s kolekcí.</string>
     <!-- Scheduler Upgrade Required Dialog title-->
     <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">Je vyžadována aktualizace plánovače</string>
