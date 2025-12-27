@@ -860,23 +860,22 @@ class NoteEditorFragment :
 
             // set the note type
             val noteTypeId: Long? =
-                if (!allNoteTypeIds.isNullOrEmpty()) {
+                if (requireArguments().containsKey(EXTRA_NOTE_TYPE_ID)) {
                     requireArguments().getLong(
                         EXTRA_NOTE_TYPE_ID,
-                        allNoteTypeIds!![0],
                     )
                 } else {
                     null
                 }
-            val noteTypeIdIndex: Int =
+            val noteTypeIdIndex: Int? =
                 if (noteTypeId != null && !allNoteTypeIds.isNullOrEmpty()) {
                     allNoteTypeIds!!.indexOfFirst { it == noteTypeId }.let {
-                        if (it == -1) 0 else it
+                        if (it == -1) null else it
                     }
                 } else {
-                    0
+                    null
                 }
-            noteTypeSpinner!!.setSelection(noteTypeIdIndex)
+            noteTypeIdIndex?.let { noteTypeSpinner!!.setSelection(it) }
 
             // set information transferred by intent
             var contents: String? = null
