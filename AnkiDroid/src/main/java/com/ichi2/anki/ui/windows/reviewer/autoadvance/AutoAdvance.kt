@@ -99,11 +99,11 @@ class AutoAdvance(
             viewModel.launchCatchingIO {
                 delay(durationToShowAnswerFor())
                 when (answerAction()) {
-                    AutomaticAnswerAction.BURY_CARD -> viewModel.buryCard()
-                    AutomaticAnswerAction.ANSWER_AGAIN -> viewModel.answerCard(Rating.AGAIN)
-                    AutomaticAnswerAction.ANSWER_HARD -> viewModel.answerCard(Rating.HARD)
-                    AutomaticAnswerAction.ANSWER_GOOD -> viewModel.answerCard(Rating.GOOD)
-                    AutomaticAnswerAction.SHOW_REMINDER -> showReminder(TR.studyingAnswerTimeElapsed())
+                    AnswerAction.BURY_CARD -> viewModel.buryCard()
+                    AnswerAction.ANSWER_AGAIN -> viewModel.answerCard(Rating.AGAIN)
+                    AnswerAction.ANSWER_HARD -> viewModel.answerCard(Rating.HARD)
+                    AnswerAction.ANSWER_GOOD -> viewModel.answerCard(Rating.GOOD)
+                    AnswerAction.SHOW_REMINDER -> showReminder(TR.studyingAnswerTimeElapsed())
                 }
             }
     }
