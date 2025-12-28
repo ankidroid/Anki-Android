@@ -43,6 +43,7 @@ import com.ichi2.anki.libanki.Decks.Companion.CURRENT_DECK
 import com.ichi2.anki.libanki.Note
 import com.ichi2.anki.libanki.NotetypeJson
 import com.ichi2.anki.libanki.testutils.AnkiTest
+import com.ichi2.anki.libanki.testutils.ext.addNote
 import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import com.ichi2.testutils.getString
@@ -253,6 +254,24 @@ class NoteEditorTest : RobolectricTest() {
             equalTo(currentDid),
         )
         assertThat("Deck ID in the new note should be the ID provided in the intent", newNoteEditor.deckId, equalTo(currentDid))
+    }
+
+    @Test
+    fun copyNoteCopiesNoteType() {
+        val originalNote = addBasicAndReversedNote()
+
+        // a decoy note is created so that the last used note type is something else and the test does not pass by accident
+        addBasicNote()
+
+        val editor = openNoteEditorWithArgs(NoteEditorLauncher.EditCard(originalNote.firstCard().id, DEFAULT).toBundle())
+        val copyNoteBundle = getCopyNoteIntent(editor)
+        val newNoteEditor = openNoteEditorWithArgs(copyNoteBundle)
+
+        assertThat(
+            "the note type of the copied note should be the same as the original",
+            newNoteEditor.editorNote!!.notetype.name,
+            equalTo(col.notetypes.basicAndReversed.name),
+        )
     }
 
     @Test
