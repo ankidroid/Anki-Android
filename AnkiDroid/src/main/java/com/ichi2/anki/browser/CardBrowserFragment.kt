@@ -82,6 +82,7 @@ import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
 import com.ichi2.anki.export.ExportDialogFragment
+import com.ichi2.anki.launchCatching
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.model.CardStateFilter
@@ -862,7 +863,13 @@ class CardBrowserFragment :
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     fun showFindAndReplaceDialog() {
-        FindAndReplaceDialogFragment().show(parentFragmentManager, FindAndReplaceDialogFragment.TAG)
+        lifecycleScope.launch {
+            withProgress {
+                val noteIds = activityViewModel.queryAllSelectedNoteIds()
+                val fragment = FindAndReplaceDialogFragment.newInstance(requireContext(), noteIds)
+                fragment.show(parentFragmentManager, FindAndReplaceDialogFragment.TAG)
+            }
+        }
     }
 
     @KotlinCleanup("DeckSelectionListener is almost certainly a bug - deck!!")
