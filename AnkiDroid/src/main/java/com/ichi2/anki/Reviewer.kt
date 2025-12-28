@@ -120,7 +120,7 @@ import com.ichi2.anki.ui.windows.reviewer.ReviewerFragment
 import com.ichi2.anki.utils.ext.cardStatsNoCardClean
 import com.ichi2.anki.utils.ext.currentCardStudy
 import com.ichi2.anki.utils.ext.flag
-import com.ichi2.anki.utils.ext.getNullableLong
+import com.ichi2.anki.utils.ext.getLongOrNull
 import com.ichi2.anki.utils.ext.previousCardStudy
 import com.ichi2.anki.utils.ext.setUserFlagForCards
 import com.ichi2.anki.utils.ext.showDialogFragment
@@ -252,7 +252,7 @@ open class Reviewer :
         }
         startLoadingCollection()
         registerOnForgetHandler { listOf(currentCardId!!) }
-        previousCardId = savedInstanceState?.getNullableLong(KEY_PREVIOUS_CARD_ID)
+        previousCardId = savedInstanceState?.getLongOrNull(KEY_PREVIOUS_CARD_ID)
     }
 
     override fun onPause() {

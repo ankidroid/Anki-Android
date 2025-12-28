@@ -75,7 +75,7 @@ import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.internationalization.toSentenceCase
 import com.ichi2.anki.utils.ext.bundleOfNotNull
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
-import com.ichi2.anki.utils.ext.getNullableInt
+import com.ichi2.anki.utils.ext.getIntOrNull
 import com.ichi2.anki.utils.ext.sharedPrefs
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.withProgress
@@ -137,7 +137,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
      * otherwise, the [ContextMenuOption] representing the current sub-dialog
      */
     private val selectedSubDialog: ContextMenuOption?
-        get() = requireArguments().getNullableInt(ARG_SUB_DIALOG_ID)?.let { ContextMenuOption.entries[it] }
+        get() = requireArguments().getIntOrNull(ARG_SUB_DIALOG_ID)?.let { ContextMenuOption.entries[it] }
 
     private val userInputValue: Int?
         get() = binding.detailsEditText2.textAsIntOrNull()

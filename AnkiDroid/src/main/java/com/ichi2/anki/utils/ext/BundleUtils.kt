@@ -1,5 +1,6 @@
 /*
  Copyright (c) 2021 Tarek Mohamed Abdalla <tarekkma@gmail.com>
+ Copyright (c) 2025 David Allison <davidallisongithub@gmail.com>
 
  This program is free software; you can redistribute it and/or modify it under
  the terms of the GNU General Public License as published by the Free Software
@@ -25,7 +26,7 @@ import androidx.core.os.bundleOf
  * @param key the key to use
  * @return the long value, or null if not found
  */
-fun Bundle.getNullableLong(key: String): Long? =
+fun Bundle.getLongOrNull(key: String): Long? =
     if (!containsKey(key)) {
         null
     } else {
@@ -53,7 +54,7 @@ fun Bundle.requireLong(key: String): Long {
  * @param key the key to use
  * @return the int value, or null if not found
  */
-fun Bundle.getNullableInt(key: String): Int? =
+fun Bundle.getIntOrNull(key: String): Int? =
     if (!containsKey(key)) {
         null
     } else {
