@@ -32,6 +32,7 @@ import androidx.annotation.StringRes
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import com.ichi2.anki.PermissionSet
 import com.ichi2.anki.R
@@ -146,6 +147,21 @@ object Permissions {
                 Timber.i("Showing notifications bottom sheet")
                 PermissionsBottomSheet.launch(fragmentManager, PermissionSet.NOTIFICATIONS)
                 callback()
+            }
+        }
+    }
+
+    /**
+     * Request notification permissions from the user if they have not been requested due to syncing ever before.
+     * Should be called whenever the user logs in to an account, but not right before the login activity is about
+     * to be dismissed, as that will cause the BottomSheet to show up and then immediately be dismissed.
+     * This constraint means the code needs to be called in multiple places (DeckPicker, LoginFragment, etc.),
+     * and hence it is placed here as a utility function.
+     */
+    fun requestNotificationPermissionsForSyncing(fragmentActivity: FragmentActivity) {
+        if (!Prefs.syncNotifsRequestShown) {
+            showNotificationsPermissionBottomSheetIfNeeded(fragmentActivity, fragmentActivity.supportFragmentManager) {
+                Prefs.syncNotifsRequestShown = true
             }
         }
     }

@@ -49,6 +49,7 @@ import com.ichi2.anki.utils.hideKeyboard
 import com.ichi2.anki.utils.openUrl
 import com.ichi2.anki.withProgress
 import com.ichi2.ui.TextInputEditField
+import com.ichi2.utils.Permissions
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -218,6 +219,7 @@ class LoginFragment : Fragment(R.layout.my_account) {
                                 .replace(R.id.fragment_container, LoggedInFragment())
                                 .commit()
                             fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+                            Permissions.requestNotificationPermissionsForSyncing(requireActivity())
                         }
                     }
                     is LoginState.Error -> {
