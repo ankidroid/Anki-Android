@@ -187,6 +187,7 @@ import com.ichi2.utils.ImportResult
 import com.ichi2.utils.ImportUtils
 import com.ichi2.utils.NetworkUtils
 import com.ichi2.utils.NetworkUtils.isActiveNetworkMetered
+import com.ichi2.utils.Permissions
 import com.ichi2.utils.VersionUtils
 import com.ichi2.utils.cancelable
 import com.ichi2.utils.checkBoxPrompt
@@ -1442,6 +1443,7 @@ open class DeckPicker :
         // Due to the App Introduction, this may be called before permission has been granted.
         if (syncOnResume && hasCollectionStoragePermissions()) {
             Timber.i("Performing Sync on Resume")
+            Permissions.requestNotificationPermissionsForSyncing(this)
             sync()
             syncOnResume = false
         } else {
