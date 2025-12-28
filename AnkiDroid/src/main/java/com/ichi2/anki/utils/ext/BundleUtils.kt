@@ -79,7 +79,7 @@ fun Bundle.requireBoolean(key: String): Boolean {
  * Convenience method, allowing a `null` pair to mean 'exclude from the bundle'
  *
  * ```kotlin
- * bundleOf(
+ * bundleOfNotNull(
  *     optional?.let { KEY to it }
  * )
  * ```
