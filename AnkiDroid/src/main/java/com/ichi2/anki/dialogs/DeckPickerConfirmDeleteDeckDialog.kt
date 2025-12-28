@@ -25,7 +25,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
-import com.ichi2.utils.BundleUtils.requireLong
+import com.ichi2.anki.utils.ext.requireLong
 
 class DeckPickerConfirmDeleteDeckDialog : AnalyticsDialogFragment() {
     private val deckId get() = requireArguments().requireLong("deckId")
