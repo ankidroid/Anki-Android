@@ -135,6 +135,10 @@
     <attr name="hardBackgroundColor" format="color"/>
     <attr name="goodBackgroundColor" format="color"/>
     <attr name="easyBackgroundColor" format="color"/>
+    <attr name="againIconColor" format="color"/>
+    <attr name="hardIconColor" format="color"/>
+    <attr name="goodIconColor" format="color"/>
+    <attr name="easyIconColor" format="color"/>
     <!-- Card Browser Colors -->
     <attr name="cardBrowserDivider" format="color"/>
     <!-- Study Screen other colors -->

@@ -33,6 +33,10 @@
         <item name="hardBackgroundColor">@color/material_grey_300</item>
         <item name="goodBackgroundColor">@color/material_grey_300</item>
         <item name="easyBackgroundColor">@color/material_grey_300</item>
+        <item name="againIconColor">@color/material_red_900</item>
+        <item name="hardIconColor">#B33800</item>
+        <item name="goodIconColor">@color/material_green_900</item>
+        <item name="easyIconColor">@color/material_light_blue_900</item>
         <!-- Study Screen button drawables -->
         <item name="showAnswerButtonBackground">@color/theme_plain_primary</item>
         <item name="showAnswerColor">@color/theme_plain_primary</item>
