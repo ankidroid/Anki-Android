@@ -39,47 +39,11 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.constraintlayout.helper.widget.Flow
-                android:id="@+id/counts_flow"
+            <com.ichi2.anki.ui.windows.reviewer.StudyCountsView
+                android:id="@+id/study_counts"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:constraint_referenced_ids="new_count,learn_count,review_count,timer"
-                app:flow_wrapMode="chain"
-                app:flow_verticalStyle="packed"
-                app:flow_horizontalStyle="packed"
-                app:flow_horizontalAlign="start"
-                app:flow_verticalGap="4dp"
-                app:flow_maxElementsWrap="3"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@id/back_button"
-                app:layout_constraintEnd_toStartOf="@id/reviewer_menu_view"
-                android:layout_marginEnd="12dp"
                 />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/new_count"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingEnd="4dp"
-                android:textColor="?attr/newCountColor"
-                tools:text="127" />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/learn_count"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingHorizontal="4dp"
-                android:textColor="?attr/learnCountColor"
-                tools:text="381" />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/review_count"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingStart="4dp"
-                android:textColor="?attr/reviewCountColor"
-                tools:text="954" />
 
             <!-- Timer below counts means UI elements may jump if timer is selectively enabled.
               This was a considered decision vs other options. Current thinking is the selectively-
@@ -92,6 +56,20 @@
                 tools:visibility="visible"
                 />
 
+            <androidx.constraintlayout.helper.widget.Flow
+                android:id="@+id/counts_flow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:constraint_referenced_ids="study_counts,timer"
+                app:flow_wrapMode="chain"
+                app:flow_verticalStyle="packed"
+                app:flow_verticalGap="4dp"
+                app:flow_maxElementsWrap="1"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/back_button"
+                />
+
             <com.ichi2.anki.preferences.reviewer.ReviewerMenuView
                 android:id="@+id/reviewer_menu_view"
                 android:layout_width="0dp"
@@ -99,7 +77,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/counts_flow"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginStart="12dp"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

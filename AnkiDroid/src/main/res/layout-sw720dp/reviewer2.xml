@@ -148,51 +148,10 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 />
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/new_count"
+            <com.ichi2.anki.ui.windows.reviewer.StudyCountsView
+                android:id="@+id/study_counts"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="?attr/newCountColor"
-                android:paddingEnd="4dp"
-                android:textSize="16sp"
-                tools:text="127"
-                />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/learn_count"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="?attr/learnCountColor"
-                android:paddingHorizontal="4dp"
-                android:textSize="16sp"
-                tools:text="381"
-                />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/review_count"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="?attr/reviewCountColor"
-                android:paddingStart="4dp"
-                android:textSize="16sp"
-                tools:text="954"
-                />
-
-            <androidx.constraintlayout.helper.widget.Flow
-                android:id="@+id/counts_flow"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:constraint_referenced_ids="new_count,learn_count,review_count,timer"
-                app:flow_wrapMode="chain"
-                app:flow_verticalStyle="packed"
-                app:flow_horizontalStyle="packed"
-                app:flow_horizontalAlign="start"
-                app:flow_verticalGap="4dp"
-                app:flow_maxElementsWrap="3"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@id/back_button"
-                android:layout_marginEnd="12dp"
                 />
 
             <!-- Timer below counts means UI elements may jump if timer is selectively enabled.
@@ -204,6 +163,20 @@
                 android:layout_height="wrap_content"
                 android:visibility="gone"
                 tools:visibility="visible"
+                />
+
+            <androidx.constraintlayout.helper.widget.Flow
+                android:id="@+id/counts_flow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:constraint_referenced_ids="study_counts,timer"
+                app:flow_wrapMode="chain"
+                app:flow_verticalStyle="packed"
+                app:flow_verticalGap="4dp"
+                app:flow_maxElementsWrap="1"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/back_button"
                 />
 
             <com.ichi2.anki.ui.windows.reviewer.AnswerAreaView
@@ -224,6 +197,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginStart="12dp"
                 />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
