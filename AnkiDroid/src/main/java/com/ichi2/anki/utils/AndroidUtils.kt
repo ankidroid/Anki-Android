@@ -25,6 +25,9 @@ import android.view.inputmethod.InputMethodManager
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.ichi2.anki.AnkiDroidApp
@@ -135,4 +138,39 @@ fun Fragment.hideKeyboard() {
 fun View.hideKeyboard() {
     val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
     imm.hideSoftInputFromWindow(windowToken, 0)
+}
+
+/**
+ * Hides the IME, and runs [block] after the operation completes
+ *
+ * [block] may be executed immediately if the IME is already hidden
+ *
+ * @param block the code to run after the IME is hidden. Run at most once
+ */
+fun FragmentActivity.doOnImeHidden(block: () -> Unit) {
+    val view = window.decorView
+    WindowInsetsControllerCompat(window, view).hide(WindowInsetsCompat.Type.ime())
+
+    var blockHasRun = false
+
+    fun runBlockOnce() {
+        if (blockHasRun) return
+        blockHasRun = true
+        Timber.v("IME hidden. executing...")
+        block()
+    }
+
+    ViewCompat.setOnApplyWindowInsetsListener(view) { _, insets ->
+        val imeVisible = insets.isVisible(WindowInsetsCompat.Type.ime())
+
+        if (!imeVisible) {
+            ViewCompat.setOnApplyWindowInsetsListener(view, null)
+            runBlockOnce()
+        }
+
+        insets
+    }
+
+    // ensure the block is run immediately if the IME is already hidden
+    ViewCompat.requestApplyInsets(view)
 }

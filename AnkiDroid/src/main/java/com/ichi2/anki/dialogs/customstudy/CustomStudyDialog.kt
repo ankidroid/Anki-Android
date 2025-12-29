@@ -55,6 +55,7 @@ import com.ichi2.anki.asyncIO
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.databinding.FragmentCustomStudyBinding
+import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.Companion.deferredDefaults
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption.EXTEND_NEW
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption.EXTEND_REV
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption.STUDY_AHEAD
@@ -67,6 +68,7 @@ import com.ichi2.anki.dialogs.tags.TagsDialogListener.Companion.ON_SELECTED_TAGS
 import com.ichi2.anki.dialogs.tags.TagsDialogListener.Companion.ON_SELECTED_TAGS__SELECTED_TAGS
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.DeckId
+import com.ichi2.anki.libanki.Tags
 import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.snackbar.showSnackbar
@@ -123,7 +125,6 @@ import timber.log.Timber
  * @see TagLimitFragment
  */
 @KotlinCleanup("remove 'runBlocking' call'")
-@NeedsTest("deferredDefaults")
 class CustomStudyDialog : AnalyticsDialogFragment() {
     @VisibleForTesting(otherwise = PRIVATE)
     lateinit var binding: FragmentCustomStudyBinding
@@ -180,7 +181,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         super.onCreate(savedInstanceState)
         val option = selectedSubDialog
-        return if (option == null) {
+        return if (option == null || !defaultsAreInitialized()) {
             Timber.i("Showing Custom Study main menu")
             deferredDefaults = loadCustomStudyDefaults()
             // Select the specified deck
@@ -386,19 +387,33 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
                     launchCatchingTask {
                         val nids =
                             withCol {
-                                val currentDeckname = decks.name(viewModel.deckId)
-                                val search = SearchNode.newBuilder().setDeck(currentDeckname).build()
-                                val query = buildSearchString(listOf(search))
-                                findNotes(query)
+                                val currentDeckName = decks.name(viewModel.deckId)
+                                // this allows us to skip the tag selection dialog entirely
+                                // if there are no tags available to choose from in this deck
+                                val searchNodes =
+                                    buildList {
+                                        add(SearchNode.newBuilder().setDeck(currentDeckName).build())
+                                        add(
+                                            SearchNode
+                                                .newBuilder()
+                                                .setNegated(SearchNode.newBuilder().setTag("none").build())
+                                                .build(),
+                                        )
+                                    }
+                                findNotes(buildSearchString(searchNodes))
                             }
+                        // skip tag selection if there's no tags to select
+                        if (nids.isEmpty()) {
+                            launchCustomStudy(contextMenuOption, n)
+                            return@launchCatchingTask
+                        }
                         if (isAdded) {
-                            val tagsDialog =
-                                TagsDialog().withArguments(
+                            TagsDialog()
+                                .withArguments(
                                     requireContext(),
                                     TagsDialog.DialogType.CUSTOM_STUDY,
                                     nids,
-                                )
-                            tagsDialog.show(parentFragmentManager, "TagsDialog")
+                                ).show(parentFragmentManager, "TagsDialog")
                         }
                     }
                     return@setOnClickListener
@@ -723,6 +738,13 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
          * This exists so we don't need to pass an unbounded object between fragments
          */
         private lateinit var deferredDefaults: Deferred<CustomStudyDefaults>
+
+        /**
+         * Whether [deferredDefaults] is initialized; false on restoring the dialog from process
+         * death
+         */
+        // This exists as `isInitialized` can't be checked in an instance of CustomStudyDialog
+        private fun defaultsAreInitialized(): Boolean = ::deferredDefaults.isInitialized
 
         /**
          * Creates an instance of the Custom Study Dialog: a user can select a custom study type

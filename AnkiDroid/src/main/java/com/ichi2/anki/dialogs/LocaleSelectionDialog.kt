@@ -31,6 +31,7 @@ import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.RecyclerView
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
+import com.ichi2.anki.databinding.LocaleSelectionDialogBinding
 import com.ichi2.anki.dialogs.LocaleSelectionDialog.LocaleListAdapter.TextViewHolder
 import com.ichi2.anki.servicelayer.LanguageHintService
 import com.ichi2.ui.AccessibleSearchView
@@ -53,16 +54,13 @@ class LocaleSelectionDialog : AnalyticsDialogFragment() {
                 Locale.getAvailableLocales() + IPALanguage,
                 ::sendSelectionResult,
             )
-        val dialogView = layoutInflater.inflate(R.layout.locale_selection_dialog, null)
-        dialogView
-            .findViewById<RecyclerView>(R.id.locale_dialog_selection_list)
-            .adapter = localeAdapter
-        dialogView
-            .findViewById<Toolbar>(R.id.locale_dialog_selection_toolbar)
-            .setupMenuWith(localeAdapter)
+
+        val binding = LocaleSelectionDialogBinding.inflate(layoutInflater)
+        binding.localeDialogSelectionList.adapter = localeAdapter
+        binding.localeDialogSelectionToolbar.setupMenuWith(localeAdapter)
         return AlertDialog.Builder(requireContext()).show {
             cancelable(true)
-            customView(dialogView)
+            customView(binding.root)
         }
     }
 

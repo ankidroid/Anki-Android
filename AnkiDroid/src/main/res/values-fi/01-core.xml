@@ -169,7 +169,7 @@
     <string name="card_template_browser_appearance_title">Selaimen ulkoasu</string>
     <!-- card Info -->
     <string name="card_info_title" maxLength="28">Kortin tiedot</string>
-    <string name="previous_card_info_title" maxLength="28">Previous card info</string>
+    <string name="previous_card_info_title" maxLength="28">Edellisen kortin tiedot</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Lue ja kirjoita AnkiDroidi-tietokantaan</string>
     <string name="read_write_permission_description">lupa päästä olemassaoleviin merkintöihin, kortteihin, merkintätyyppeihin ja pakkoihin, sekä luoda uusia</string>
@@ -202,7 +202,7 @@
     <string name="storage_access_summary">Tallentaa kokoelmasi turvalliseen paikkaan, jota ei poisteta, jos sovellus poistetaan.</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after. See [android.permission.MANAGE_EXTERNAL_STORAGE] on https://developer.android.com/training/data-storage/manage-all-files for context.">Pääsy kaikkiin tiedostoihin</string>
     <string name="image_occlusion">Kuvien peitto</string>
-    <string name="microphone" comment="Title of the microphone permission in the permissions explanation screen.">Microphone</string>
+    <string name="microphone" comment="Title of the microphone permission in the permissions explanation screen.">Mikrofoni</string>
     <string name="microphone_permission_explanation" comment="Description explaining why AnkiDroid needs the microphone permission, shown on the permissions explanation screen.">Mahdollistaa äänien lisäämisen kortteihin ja äänen toiston läpikäynneissä.</string>
     <string name="notifications_permission_explanation" comment="Description explaining why AnkiDroid needs the notification permission.">Sallii taustamedian synkronoinnin ja antaa sinun luoda läpikäyntimuistutuksia</string>
     <string name="heading_required_permissions" comment="Heading for the section of required permissions that the app needs to function, shown in the permissions explanation screen.">Pakolliset</string>
@@ -213,5 +213,5 @@
     <!-- Instant Note Editor -->
     <string name="instant_card" comment="Used in the Android system context menu/share dialog to quickly create a note. This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. ">Pikakortti</string>
     <!-- Multiple profile -->
-    <string name="add_profile">Add profile</string>
+    <string name="add_profile">Lisää profiili</string>
 </resources>

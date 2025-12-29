@@ -135,6 +135,8 @@ import com.ichi2.anki.multimediacard.impl.MultimediaEditableNote
 import com.ichi2.anki.noteeditor.CustomToolbarButton
 import com.ichi2.anki.noteeditor.FieldState
 import com.ichi2.anki.noteeditor.FieldState.FieldChangeType
+import com.ichi2.anki.noteeditor.FieldState.Type
+import com.ichi2.anki.noteeditor.NoteEditorFragmentDelegate
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import com.ichi2.anki.noteeditor.Toolbar
 import com.ichi2.anki.noteeditor.Toolbar.TextFormatListener
@@ -258,8 +260,10 @@ class NoteEditorFragment :
     private var currentImageOccPath: String? = null
 
     // Null if adding a new card. Presently NonNull if editing an existing note - but this is subject to change
-    private var currentEditedCard: Card? = null
-    private var selectedTags: MutableList<String>? = null
+    var currentEditedCard: Card? = null
+        private set
+    var selectedTags: MutableList<String>? = null
+        private set
 
     @get:VisibleForTesting
     var deckId: DeckId = 0
@@ -277,7 +281,8 @@ class NoteEditorFragment :
 
     // indicates which activity called Note Editor
     private var caller = NoteEditorCaller.NO_CALLER
-    private var editFields: LinkedList<FieldEditText>? = null
+    var editFields: LinkedList<FieldEditText>? = null
+        private set
     private var sourceText: Array<String?>? = null
     private val fieldState = FieldState.fromEditor(this)
     private lateinit var toolbar: Toolbar
@@ -286,9 +291,18 @@ class NoteEditorFragment :
     private var pastedImageCache: HashMap<String, String> = HashMap()
 
     // save field index as key and text as value when toggle sticky clicked in Field Edit Text
-    private var toggleStickyText: HashMap<Int, String?> = HashMap()
+    @VisibleForTesting
+    var toggleStickyText: HashMap<Int, String?> = HashMap()
+        private set
 
     var clipboard: ClipboardManager? = null
+
+    private var delegate: NoteEditorFragmentDelegate? = null
+    private val inNoteEditorActivity: Boolean
+        get() = requireAnkiActivity() is NoteEditorActivity
+
+    private val noteEditorActivity
+        get() = requireAnkiActivity() as? NoteEditorActivity
 
     /**
      * Whether this is displayed in a fragment view.
@@ -470,6 +484,12 @@ class NoteEditorFragment :
             }
             negativeButton(R.string.dialog_cancel)
         }
+    }
+
+    // Sets the delegate to receive callbacks when note editor events occur (ready, saved, changed, etc.)
+    // This allows the hosting activity to respond to fragment state changes
+    fun setDelegate(delegate: NoteEditorFragmentDelegate) {
+        this.delegate = delegate
     }
 
     @VisibleForTesting
@@ -940,6 +960,10 @@ class NoteEditorFragment :
                 Timber.w("Image uri is null")
             }
         }
+
+        requireView().post {
+            delegate?.onNoteEditorReady()
+        }
     }
 
     private val cameraLauncher =
@@ -1053,7 +1077,7 @@ class NoteEditorFragment :
             KeyEvent.KEYCODE_NUMPAD_ENTER, KeyEvent.KEYCODE_ENTER ->
                 if (event.isCtrlPressed) {
                     // disable it in case of image occlusion
-                    if (allowSaveAndPreview()) {
+                    if (allowSaveAction()) {
                         launchCatchingTask { saveNote() }
                         return true
                     }
@@ -1091,7 +1115,7 @@ class NoteEditorFragment :
             KeyEvent.KEYCODE_P -> {
                 if (event.isCtrlPressed) {
                     Timber.i("Ctrl+P: Preview Pressed")
-                    if (allowSaveAndPreview()) {
+                    if (allowPreviewAction()) {
                         launchCatchingTask { performPreview() }
                         return true
                     }
@@ -1242,7 +1266,7 @@ class NoteEditorFragment :
         var closeIntent: Intent? = null
         changed = true
         sourceText = null
-        refreshNoteData(FieldChangeType.refreshWithStickyFields(shouldReplaceNewlines()))
+        refreshNoteData(FieldChangeType.onNoteAdded(shouldReplaceNewlines()))
         // backend text ends with dot
         val successMessage = TR.importingCardsAdded(count).replace(".", "")
         showSnackbar(successMessage, Snackbar.LENGTH_SHORT)
@@ -1278,7 +1302,7 @@ class NoteEditorFragment :
             }
         // update UI based on the result, noOfAddedCards
         onNoteAdded(changes.count)
-        updateFieldsFromStickyText()
+        delegate?.onNoteSaved()
     }
 
     @VisibleForTesting
@@ -1391,6 +1415,7 @@ class NoteEditorFragment :
             closeNoteEditorAfterSave()
             return
         }
+        delegate?.onNoteSaved()
     }
 
     private fun closeNoteEditorAfterSave() {
@@ -1437,11 +1462,11 @@ class NoteEditorFragment :
      * Configures the main toolbar with the appropriate menu items and their visibility based on the current state.
      */
     override fun onPrepareMenu(menu: Menu) {
+        menu.findItem(R.id.action_preview).isVisible = allowPreviewAction()
         if (addNote) {
             menu.findItem(R.id.action_copy_note).isVisible = false
-            val iconVisible = allowSaveAndPreview()
-            menu.findItem(R.id.action_save).isVisible = iconVisible
-            menu.findItem(R.id.action_preview).isVisible = iconVisible
+            menu.findItem(R.id.action_save).isVisible = allowSaveAction()
+            menu.findItem(R.id.action_preview).isVisible = allowPreviewAction()
         } else {
             // Hide add note item if fragment is in fragmented activity
             // because this item is already present in CardBrowser
@@ -1475,8 +1500,23 @@ class NoteEditorFragment :
      * option to save/preview the card as it has a built in option and the user is notified
      * when the card is saved successfully
      */
-    private fun allowSaveAndPreview(): Boolean =
+    private fun allowSaveAction(): Boolean =
         when {
+            addNote && currentNotetypeIsImageOcclusion() -> false
+            else -> true
+        }
+
+    /**
+     * Determines whether the preview action should be available to the user.
+     *
+     * Preview action is disabled in the following scenarios:
+     * - When running in a fragmented note editor (previewer is already visible in a side panel)
+     * - When adding a new image occlusion note (uses built-in preview functionality)
+     */
+    // TODO: Move this logic to a [NoteEditorActivity.kt]
+    private fun allowPreviewAction(): Boolean =
+        when {
+            inNoteEditorActivity && noteEditorActivity?.fragmented == true -> false
             addNote && currentNotetypeIsImageOcclusion() -> false
             else -> true
         }
@@ -1486,14 +1526,14 @@ class NoteEditorFragment :
         when (item.itemId) {
             R.id.action_preview -> {
                 Timber.i("NoteEditor:: Preview button pressed")
-                if (allowSaveAndPreview()) {
+                if (allowPreviewAction()) {
                     launchCatchingTask { performPreview() }
                 }
                 return true
             }
             R.id.action_save -> {
                 Timber.i("NoteEditor:: Save note button pressed")
-                if (allowSaveAndPreview()) {
+                if (allowSaveAction()) {
                     launchCatchingTask { saveNote() }
                 }
                 return true
@@ -1602,12 +1642,47 @@ class NoteEditorFragment :
     @NeedsTest("cards with a cloze notetype but no cloze in fields are previewed as empty card")
     @NeedsTest("clozes that don't start at '1' are correctly displayed")
     suspend fun performPreview() {
+        val fields = prepareNoteFields()
+        val tags = selectedTags ?: mutableListOf()
+
+        val ord = determineCardOrdinal(fields)
+
+        val args =
+            TemplatePreviewerArguments(
+                notetypeFile = NotetypeFile(requireContext(), editorNote!!.notetype),
+                fields = fields,
+                tags = tags,
+                id = editorNote!!.id,
+                ord = ord,
+                fillEmpty = false,
+            )
+        val intent = TemplatePreviewerPage.getIntent(requireContext(), args)
+        startActivity(intent)
+    }
+
+    /**
+     * Prepares the note fields for the previewer by converting them to the appropriate format.
+     *
+     * @return A list of field values properly formatted for display
+     */
+    fun prepareNoteFields(): MutableList<String> {
         val convertNewlines = shouldReplaceNewlines()
 
         fun String?.toFieldText(): String = NoteService.convertToHtmlNewline(this.toString(), convertNewlines)
-        val fields = editFields?.mapTo(mutableListOf()) { it.fieldText.toFieldText() } ?: mutableListOf()
-        val tags = selectedTags ?: mutableListOf()
 
+        return editFields?.mapTo(mutableListOf()) { it.fieldText.toFieldText() } ?: mutableListOf()
+    }
+
+    /**
+     * Determines the appropriate card ordinal (template position) to display in the previewer
+     *
+     * For cloze notes, it identifies the first cloze number present in the fields.
+     * For standard notes, it uses the currently edited card ordinal if available.
+     *
+     * @param fields The processed note fields
+     * @return The ordinal (position) of the card template to display
+     */
+    suspend fun determineCardOrdinal(fields: MutableList<String>): Int {
         val ord =
             if (editorNote!!.notetype.isCloze) {
                 val tempNote = withCol { Note.fromNotetypeId(this@withCol, editorNote!!.notetype.id) }
@@ -1621,18 +1696,7 @@ class NoteEditorFragment :
             } else {
                 currentEditedCard?.ord ?: 0
             }
-
-        val args =
-            TemplatePreviewerArguments(
-                notetypeFile = NotetypeFile(requireContext(), editorNote!!.notetype),
-                fields = fields,
-                tags = tags,
-                id = editorNote!!.id,
-                ord = ord,
-                fillEmpty = false,
-            )
-        val intent = TemplatePreviewerPage.getIntent(requireContext(), args)
-        startActivity(intent)
+        return ord
     }
 
     private fun setTags(tags: Array<String>) {
@@ -2146,6 +2210,8 @@ class NoteEditorFragment :
     ) {
         if (currentFields[index].sticky) {
             toggleStickyText.getOrPut(index) { "" }
+        } else {
+            toggleStickyText.remove(index)
         }
         if (toggleStickyText[index] == null) {
             toggleStickyButton.background.alpha = 64
@@ -2431,8 +2497,22 @@ class NoteEditorFragment :
         updateTags()
         updateCards(editorNote!!.notetype)
         updateToolbar()
-        populateEditFields(changeType, false)
-        updateFieldsFromStickyText()
+
+        if (changeType.type == Type.NOTE_ADDED) {
+            // rebuilding the edit fields causes a flicker - avoid it
+            // we update the fields after focus to stop a case where the field is cleared
+            // causing two selection updates: handling the selected field being blanked
+            // then focusing the first field
+            editFields!!.first().focusWithKeyboard {
+                editFields!!.forEach { it.setText("") }
+                updateFieldsFromStickyText()
+            }
+        } else {
+            populateEditFields(changeType, false)
+            if (changeType.type != Type.CHANGE_FIELD_COUNT) {
+                updateFieldsFromStickyText()
+            }
+        }
     }
 
     private fun addClozeButton(
@@ -2822,6 +2902,8 @@ class NoteEditorFragment :
             // In case the type is changed while adding the card, the menu options need to be invalidated
             requireActivity().invalidateMenu()
             changeNoteType(allNoteTypeIds!![pos])
+
+            delegate?.onNoteTypeChanged()
         }
 
         override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -2954,6 +3036,8 @@ class NoteEditorFragment :
         private val index: Int,
     ) : TextWatcher {
         override fun afterTextChanged(arg0: Editable) {
+            delegate?.onNoteTextChanged()
+
             if (!loadingStickyFields) {
                 isFieldEdited = true
             }
@@ -3047,7 +3131,7 @@ class NoteEditorFragment :
                 this.arguments = launcher.toBundle()
             }
 
-        private fun shouldReplaceNewlines(): Boolean =
+        fun shouldReplaceNewlines(): Boolean =
             AnkiDroidApp.instance
                 .sharedPrefs()
                 .getBoolean(PREF_NOTE_EDITOR_NEWLINE_REPLACE, true)

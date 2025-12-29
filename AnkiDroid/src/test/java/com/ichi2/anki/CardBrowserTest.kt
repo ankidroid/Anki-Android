@@ -1248,11 +1248,11 @@ class CardBrowserTest : RobolectricTest() {
         withBrowser {
             showFindAndReplaceDialog()
             // nothing selected so checkbox 'Only selected notes' is not available
-            onView(withId(R.id.check_only_selected_notes)).inRoot(isDialog()).check(matches(isNotEnabled()))
-            onView(withId(R.id.check_only_selected_notes)).inRoot(isDialog()).check(matches(isNotChecked()))
+            onView(withId(R.id.only_selected_notes_check_box)).inRoot(isDialog()).check(matches(isNotEnabled()))
+            onView(withId(R.id.only_selected_notes_check_box)).inRoot(isDialog()).check(matches(isNotChecked()))
             val fieldSelectorAdapter = getFindReplaceFieldsAdapter()
-            onView(withId(R.id.check_ignore_case)).inRoot(isDialog()).check(matches(isChecked()))
-            onView(withId(R.id.check_input_as_regex)).inRoot(isDialog()).check(matches(isNotChecked()))
+            onView(withId(R.id.ignore_case_check_box)).inRoot(isDialog()).check(matches(isChecked()))
+            onView(withId(R.id.input_as_regex_check_box)).inRoot(isDialog()).check(matches(isNotChecked()))
             // as nothing is selected the fields selector has only the two default options
             assertNotNull(fieldSelectorAdapter, "Fields adapter was not set")
             assertEquals(2, fieldSelectorAdapter.count)
@@ -1317,12 +1317,12 @@ class CardBrowserTest : RobolectricTest() {
             openFindAndReplace()
             onView(withId(R.id.input_search)).inRoot(isDialog()).perform(ViewActions.typeText("k"))
             onView(withId(R.id.input_replace)).inRoot(isDialog()).perform(ViewActions.typeText("X"))
-            onView(withId(R.id.check_input_as_regex)).inRoot(isDialog()).perform(scrollCompletelyTo())
+            onView(withId(R.id.input_as_regex_check_box)).inRoot(isDialog()).perform(scrollCompletelyTo())
             onData(allOf(`is`(instanceOf(String::class.java)), `is`("Afield0")))
                 .inAdapterView(withId(R.id.fields_selector))
                 .perform(click())
             onView(withId(R.id.fields_selector)).check(matches(withSpinnerText(containsString("Afield0"))))
-            onView(withId(R.id.check_ignore_case)).inRoot(isDialog()).check(matches(isChecked()))
+            onView(withId(R.id.ignore_case_check_box)).inRoot(isDialog()).check(matches(isChecked()))
             // although the positive button exists, clicking it with Espresso doesn't work
             //     onView(withId(android.R.id.button1)).inRoot(isDialog()).perform(click())
             // so simulate clicking the positive button by running the associated method directly
@@ -1351,14 +1351,14 @@ class CardBrowserTest : RobolectricTest() {
             openFindAndReplace()
             onView(withId(R.id.input_search)).inRoot(isDialog()).perform(ViewActions.typeText("k"))
             onView(withId(R.id.input_replace)).inRoot(isDialog()).perform(ViewActions.typeText("X"))
-            onView(withId(R.id.check_input_as_regex)).inRoot(isDialog()).perform(scrollCompletelyTo())
+            onView(withId(R.id.input_as_regex_check_box)).inRoot(isDialog()).perform(scrollCompletelyTo())
             onData(allOf(`is`(instanceOf(String::class.java)), `is`("Afield0")))
                 .inAdapterView(withId(R.id.fields_selector))
                 .perform(click())
-            onView(withId(R.id.check_ignore_case)).inRoot(isDialog()).perform(scrollCompletelyTo())
-            onView(withId(R.id.check_ignore_case)).inRoot(isDialog()).check(matches(isChecked()))
-            onView(withId(R.id.check_ignore_case)).inRoot(isDialog()).perform(click())
-            onView(withId(R.id.check_ignore_case)).inRoot(isDialog()).check(matches(isNotChecked()))
+            onView(withId(R.id.ignore_case_check_box)).inRoot(isDialog()).perform(scrollCompletelyTo())
+            onView(withId(R.id.ignore_case_check_box)).inRoot(isDialog()).check(matches(isChecked()))
+            onView(withId(R.id.ignore_case_check_box)).inRoot(isDialog()).perform(click())
+            onView(withId(R.id.ignore_case_check_box)).inRoot(isDialog()).check(matches(isNotChecked()))
             // although the positive button exists, clicking it with Espresso doesn't work
             //     onView(withId(android.R.id.button1)).inRoot(isDialog()).perform(click())
             // so simulate clicking the positive button by running the associated method directly
@@ -1379,6 +1379,7 @@ class CardBrowserTest : RobolectricTest() {
 
     @Test
     @Flaky(OS.ALL)
+    @Ignore("flaking locally as well now; see 19021")
     fun `FindReplace - replaces text only for the field in the selected note`() {
         val note0 = createFindReplaceTestNote("A", "kart", "kilogram")
         val note1 = createFindReplaceTestNote("B", "pink", "chicken")
@@ -1399,6 +1400,7 @@ class CardBrowserTest : RobolectricTest() {
 
     @Test
     @Flaky(OS.ALL)
+    @Ignore("flaking locally as well now; see 19021")
     fun `FindReplace - replaces text based on regular expression`() {
         val note0 = createFindReplaceTestNote("A", "kart", "ki1logram")
         val note1 = createFindReplaceTestNote("B", "pink", "chicken")
@@ -1448,6 +1450,7 @@ class CardBrowserTest : RobolectricTest() {
 
     @Test
     @Flaky(OS.ALL)
+    @Ignore("flaking locally as well now; see 19021")
     fun `FindReplace - replaces text in all fields of selected note if 'All fields' is selected`() {
         val note0 = createFindReplaceTestNote("A", "kart", "kilogram")
         val note1 = createFindReplaceTestNote("B", "pink", "chicken")
@@ -1469,6 +1472,7 @@ class CardBrowserTest : RobolectricTest() {
 
     @Test
     @Flaky(OS.ALL)
+    @Ignore("flaking locally as well now; see 19021")
     fun `FindReplace - replaces text of tags as expected if 'Tags' is selected`() {
         val note0 = createFindReplaceTestNote("A", "kart", "kilogram")
         val note1 = createFindReplaceTestNote("A", "pink", "chicken")
@@ -1490,6 +1494,7 @@ class CardBrowserTest : RobolectricTest() {
 
     @Test
     @Flaky(OS.ALL)
+    @Ignore("flaking locally as well now; see 19021")
     fun `FindReplace - replaces text as expected when set to match case`() {
         val note0 = createFindReplaceTestNote("A", "kart", "kilogram")
         val note1 = createFindReplaceTestNote("B", "krate", "chicKen")

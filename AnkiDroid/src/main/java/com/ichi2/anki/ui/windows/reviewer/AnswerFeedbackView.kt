@@ -61,7 +61,7 @@ class AnswerFeedbackView : AppCompatImageView {
                         Runnable {
                             startAnimation(fadeOut)
                         }.also {
-                            handler.postDelayed(it, 600)
+                            handler.postDelayed(it, 400)
                         }
                 }
 

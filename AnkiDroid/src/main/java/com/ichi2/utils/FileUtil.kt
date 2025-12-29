@@ -221,3 +221,24 @@ fun ContentResolver.openInputStreamSafe(uri: Uri): InputStream? {
     }
     return openInputStream(uri)
 }
+
+/**
+ * Extension method to safely resolve a child file within this parent directory.
+ * Prevents directory traversal attacks (e.g. "../", symlinks) by verifying canonical paths.
+ *
+ * @throws SecurityException If the resolved path escapes the parent directory.
+ */
+fun File.withFileNameSafe(childName: String): File {
+    val child = File(this, childName)
+    try {
+        val canonicalParent = this.canonicalPath
+        val canonicalChild = child.canonicalPath
+
+        if (!canonicalChild.startsWith(canonicalParent)) {
+            throw SecurityException("Invalid path: $childName traversal attempt detected")
+        }
+    } catch (e: IOException) {
+        throw IllegalArgumentException("Unable to resolve canonical path for $childName", e)
+    }
+    return child
+}

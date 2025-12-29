@@ -20,6 +20,9 @@ aff1bb87900f420ac5a717146d52c6df7b0d76b3
 d7f67ad091b76f83ac5dce0939656fd43d729e40
 cd444112f5098baf9899cd6a1349c1c29c56783f
 f86bf55c4063e0804cc1336dc0b8a54a5cef8a5f
+# copyright header lint fixes
+9aa3e1646a9393b0a5d6b793fb48bae4acbca399
+22c565c3bec6caae2ce5f1c0b8d7f9b8519ec1e3
 
 # Kotlin Migration
 # Only ignoring the `Java -> Kotlin` change, the file rename should not be visible in-IDE

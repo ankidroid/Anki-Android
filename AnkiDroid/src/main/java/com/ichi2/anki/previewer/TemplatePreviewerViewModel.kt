@@ -79,8 +79,8 @@ class TemplatePreviewerViewModel(
                         Note.fromNotetypeId(this@withCol, arguments.notetype.id)
                     }
                 }.apply {
-                    fields = arguments.fields
-                    tags = arguments.tags
+                    fields = arguments.fields.toMutableList()
+                    tags = arguments.tags.toMutableList()
                 }
             }
         currentCard =
@@ -203,6 +203,39 @@ class TemplatePreviewerViewModel(
             ordFlow.value
         }
 
+    suspend fun getSafeClozeOrd(): Int = ordFlow.value.coerceIn(0, clozeOrds!!.await().size - 1)
+
+    fun updateContent(
+        fields: List<String>,
+        tags: List<String>,
+    ) {
+        launchCatchingIO {
+            // Update note fields and tags
+            val note = note.await()
+            note.fields = fields.toMutableList()
+            note.tags = tags.toMutableList()
+
+            currentCard =
+                asyncIO {
+                    withCol {
+                        note.ephemeralCard(
+                            col = this,
+                            ord = ordFlow.value,
+                            customNoteType = notetype,
+                            fillEmpty = fillEmpty,
+                        )
+                    }
+                }
+            if (showingAnswer.value) {
+                showAnswer()
+                loadAndPlaySounds(CardSide.ANSWER)
+            } else {
+                showQuestion()
+                loadAndPlaySounds(CardSide.QUESTION)
+            }
+        }
+    }
+
     /* *********************************************************************************************
      *************************************** Internal methods ***************************************
      ********************************************************************************************* */
@@ -251,8 +284,8 @@ class TemplatePreviewerViewModel(
 @Parcelize
 data class TemplatePreviewerArguments(
     private val notetypeFile: NotetypeFile,
-    val fields: MutableList<String>,
-    val tags: MutableList<String>,
+    val fields: List<String>,
+    val tags: List<String>,
     val id: NoteId = 0,
     val ord: Int = 0,
     val fillEmpty: Boolean = false,

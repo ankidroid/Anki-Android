@@ -117,7 +117,7 @@ class ReviewerFragment :
     private lateinit var bindingMap: BindingMap<ReviewerBinding, ViewerAction>
     private var shakeDetector: ShakeDetector? = null
     private val sensorManager get() = ContextCompat.getSystemService(requireContext(), SensorManager::class.java)
-    private val isBigScreen: Boolean get() = binding.complementsLayout != null
+    private val isBigScreen: Boolean get() = resources.configuration.smallestScreenWidthDp >= 720
     private var webviewHasFocus = false
 
     override val baseSnackbarBuilder: SnackbarBuilder = {
@@ -359,59 +359,42 @@ class ReviewerFragment :
             return
         }
 
-        binding.againButton.setOnClickListener { viewModel.answerCard(Rating.AGAIN) }
-        binding.hardButton.setOnClickListener { viewModel.answerCard(Rating.HARD) }
-        binding.goodButton.setOnClickListener { viewModel.answerCard(Rating.GOOD) }
-        binding.easyButton.setOnClickListener { viewModel.answerCard(Rating.EASY) }
+        binding.answerArea.setButtonListeners(
+            onRatingClicked = { viewModel.answerCard(it) },
+            onShowAnswerClicked = { viewModel.onShowAnswer() },
+        )
+
+        binding.answerArea.setRelativeHeight(Prefs.newStudyScreenAnswerButtonSize)
+
         viewModel.answerButtonsNextTimeFlow
             .flowWithLifecycle(lifecycle)
             .collectIn(lifecycleScope) { times ->
-                binding.againButton.setNextTime(times?.again)
-                binding.hardButton.setNextTime(times?.hard)
-                binding.goodButton.setNextTime(times?.good)
-                binding.easyButton.setNextTime(times?.easy)
+                binding.answerArea.setNextTimes(times)
             }
-
-        binding.showAnswerButton.setOnClickListener { viewModel.onShowAnswer() }
 
         val insetsController = WindowInsetsControllerCompat(window, binding.rootLayout)
-
         viewModel.showingAnswer.collectLatestIn(lifecycleScope) { isAnswerShown ->
             if (isAnswerShown) {
-                binding.showAnswerButton.visibility = View.INVISIBLE
-                binding.answerButtonsLayout.visibility = View.VISIBLE
                 insetsController.hide(WindowInsetsCompat.Type.ime())
-            } else {
-                binding.showAnswerButton.visibility = View.VISIBLE
-                binding.answerButtonsLayout.visibility = View.INVISIBLE
             }
+            binding.answerArea.setAnswerState(isAnswerShown)
         }
 
-        if (sharedPrefs().getBoolean(getString(R.string.hide_hard_and_easy_key), false)) {
-            binding.hardButton.isVisible = false
-            binding.easyButton.isVisible = false
-        }
-
-        val buttonsHeight = Prefs.newStudyScreenAnswerButtonSize
-        if (buttonsHeight > 100) {
-            binding.answerButtonsLayout.post {
-                binding.answerButtonsLayout.updateLayoutParams {
-                    height = binding.answerButtonsLayout.measuredHeight * buttonsHeight / 100
-                }
-            }
+        if (Prefs.hideHardAndEasyButtons) {
+            binding.answerArea.hideHardAndEasyButtons()
         }
     }
 
     private fun setupCounts() {
         viewModel.countsFlow
             .flowWithLifecycle(lifecycle)
-            .collectLatestIn(lifecycleScope) { (counts, countsType) ->
-                binding.newCount.text = counts.new.toString()
-                binding.learnCount.text = counts.lrn.toString()
-                binding.reviewCount.text = counts.rev.toString()
+            .collectLatestIn(lifecycleScope) { counts ->
+                binding.newCount.text = counts.new
+                binding.learnCount.text = counts.learn
+                binding.reviewCount.text = counts.review
 
                 val currentCount =
-                    when (countsType) {
+                    when (counts.activeQueue) {
                         Counts.Queue.NEW -> binding.newCount
                         Counts.Queue.LRN -> binding.learnCount
                         Counts.Queue.REV -> binding.reviewCount
@@ -481,15 +464,13 @@ class ReviewerFragment :
     }
 
     private fun setupToolbarPosition() {
-        if (isBigScreen) return
         when (Prefs.toolbarPosition) {
             ToolbarPosition.TOP -> return
             ToolbarPosition.NONE -> binding.toolsLayout.isVisible = false
             ToolbarPosition.BOTTOM -> {
-                val mainLayout = binding.mainLayout!! // we can use !! due to isWindowCompact
-                val toolbar = binding.toolsLayout
-                mainLayout.removeView(toolbar)
-                mainLayout.addView(toolbar, mainLayout.childCount)
+                if (isBigScreen) return
+                binding.mainLayout.removeView(binding.toolsLayout)
+                binding.mainLayout.addView(binding.toolsLayout)
             }
         }
     }

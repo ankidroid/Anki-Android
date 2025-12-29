@@ -28,6 +28,9 @@ on:
       - 'gh-readonly-queue/**'
   merge_group:
 
+permissions:
+  contents: read
+
 concurrency:
   # if a workflow is run against the same ref, only one at a time...
   # ...but allow different triggers to run concurrent (push, manual flake run, scheduled flake run...)
@@ -160,7 +163,7 @@ jobs:
         # cancelled() handles test timeouts
         # remove when test timeouts cause a failure()
         if: failure() || cancelled()
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: logcat-${{ matrix.name }}-${{ matrix.iteration }}
           # look for the `<system-out>` element in the XML files in `test-results`
