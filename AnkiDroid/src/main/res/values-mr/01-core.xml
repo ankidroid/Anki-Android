@@ -49,7 +49,7 @@
     <string name="card_browser" maxLength="28" comment="Title of the Card Browser, and button to open it.">कार्ड ब्राउझर</string>
     <string name="statistics" maxLength="28" comment="Title of the Statistics page and button to open it.">सांख्यिकी</string>
     <string name="settings" maxLength="28" comment="Title of the Settings page, and button to open it.">सेटिंग्ज</string>
-    <string name="help" maxLength="28" comment="Title of the help menu and button to open it.">सहायता</string>
+    <string name="help" maxLength="28" comment="Title of the help menu and button to open it.">मदत</string>
     <!-- The last entry "Support ankidroid" is in 03-dialogs.-->
     <!-- Entries of the "attach" in the "add card" view. -->
     <string name="drawing" comment="Menu entry to create a drawing to attach to a card. Also a title.">चित्र कथा</string>
@@ -83,7 +83,7 @@
     <string name="ease_button_hard" maxLength="41" comment="In the reviewer, in the answer side. Label of the button that used by the user to state finding the correct answer was hard.">कठीण</string>
     <string name="ease_button_good" maxLength="41" comment="In the reviewer, in the answer side. Label of the button that used by the user to state their answer was good.">चांगले</string>
     <string name="ease_button_easy" maxLength="41" comment="In the reviewer, in the answer side. Label of the button that used by the user to state that finding the answer to the question was easy.">सोपे</string>
-    <string name="show_answer_hint_long_press" comment="In the reviewer, hint is shown when touching the show answer button and the user has the long-press accessibility setting enabled">\'%s\' is enabled</string>
+    <string name="show_answer_hint_long_press" comment="In the reviewer, hint is shown when touching the show answer button and the user has the long-press accessibility setting enabled">\'%s\' सक्षम केले आहे</string>
     <!-- General -->
     <string name="undo" maxLength="28" comment="When tapping on this text, the last action is undone.">पूर्ववत् करा</string>
     <string name="redo" maxLength="28" comment="Menu entry that allows to redo action that was just undone.">पुन्हा करा</string>
@@ -132,7 +132,7 @@
     <string name="search_deck" comment="Deck search for selecting it">डेक शोध</string>
     <string name="empty_deck">हा डेक रिक्त आहे</string>
     <string name="invalid_deck_name">अवैध डेक नाव</string>
-    <string name="studyoptions_congrats_finished">Congratulations! You have finished for today.</string>
+    <string name="studyoptions_congrats_finished">अभिनंदन! तुम्ही आजचे काम पूर्ण केले आहे.</string>
     <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">डेक आतासाठी पूर्ण झाले आहे! %s</string>
     <string name="studyoptions_no_cards_due">अद्याप कोणतीही कार्ड शिल्लक नाही</string>
     <string name="sd_card_not_mounted">डिव्हाइस संचयन आरोहित नाही</string>
@@ -169,7 +169,7 @@
     <string name="card_template_browser_appearance_title">ब्राउझर देखावा</string>
     <!-- card Info -->
     <string name="card_info_title" maxLength="28">कार्ड माहिती</string>
-    <string name="previous_card_info_title" maxLength="28">Previous card info</string>
+    <string name="previous_card_info_title" maxLength="28">मागील कार्डची माहिती</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">AnkiDroid डेटाबेस वाचा आणि लिहा</string>
     <string name="read_write_permission_description">विद्यमान नोट्स, कार्डे, नोट्स प्रकार आणि डेकमध्ये प्रवेश करा तसेच नवीन तयार करा</string>
@@ -202,7 +202,7 @@
     <string name="storage_access_summary">तुमचा संग्रह एका सुरक्षित ठिकाणी सेव्ह करते जे ॲप अनइंस्टॉल केले असल्यास हटवले जाणार नाही</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after. See [android.permission.MANAGE_EXTERNAL_STORAGE] on https://developer.android.com/training/data-storage/manage-all-files for context.">सर्व फायली प्रवेश</string>
     <string name="image_occlusion">प्रतिमा अडथळा</string>
-    <string name="microphone" comment="Title of the microphone permission in the permissions explanation screen.">Microphone</string>
+    <string name="microphone" comment="Title of the microphone permission in the permissions explanation screen.">मायक्रोफोन</string>
     <string name="microphone_permission_explanation" comment="Description explaining why AnkiDroid needs the microphone permission, shown on the permissions explanation screen.">Allows you to add sounds to cards and enables voice playback while reviewing</string>
     <string name="notifications_permission_explanation" comment="Description explaining why AnkiDroid needs the notification permission.">Enables background media syncing and allows you to create review reminders</string>
     <string name="heading_required_permissions" comment="Heading for the section of required permissions that the app needs to function, shown in the permissions explanation screen.">Required</string>
