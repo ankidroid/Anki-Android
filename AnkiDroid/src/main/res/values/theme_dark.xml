@@ -87,6 +87,10 @@
         <item name="hardBackgroundColor">#4e3122</item>
         <item name="goodBackgroundColor">#2c3b2c</item>
         <item name="easyBackgroundColor">#223946</item>
+        <item name="againIconColor">?againTextColor</item>
+        <item name="hardIconColor">?hardTextColor</item>
+        <item name="goodIconColor">?goodTextColor</item>
+        <item name="easyIconColor">?easyTextColor</item>
         <!-- Study Screen button drawables -->
         <item name="showAnswerColor">@color/material_blue_grey_800</item>
         <item name="againButtonRef">@drawable/footer_button_again_dark</item>
