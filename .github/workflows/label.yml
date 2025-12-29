@@ -175,6 +175,23 @@ jobs:
               }
             }
 
+  add_needs_review_label:
+    if: github.event.action == 'opened' && github.event.pull_request.draft == false
+    permissions:
+      contents: read
+      pull-requests: write
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v8
+        with:
+          script: |
+            await github.rest.issues.addLabels({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels: ['Needs Review']
+            })
+
   add_new_contributor_label:
     if: github.event.action == 'opened'
     permissions:
