@@ -98,8 +98,8 @@ class SyncErrorDialog : AsyncDialogFragment() {
                         requireSyncErrorDialogListener().showSyncErrorDialog(DIALOG_SYNC_CONFLICT_CONFIRM_KEEP_LOCAL)
                     }.setNegativeButton(R.string.sync_conflict_keep_remote_new) { _, _ ->
                         requireSyncErrorDialogListener().showSyncErrorDialog(DIALOG_SYNC_CONFLICT_CONFIRM_KEEP_REMOTE)
-                    }.setNeutralButton(R.string.dialog_cancel) { _, _ ->
-                        activity?.dismissAllDialogFragments()
+                    }.setNeutralButton(R.string.help) { _, _ ->
+                        requireContext().openUrl(R.string.sync_conflict_help)
                     }.create()
             }
             DIALOG_SYNC_CONFLICT_CONFIRM_KEEP_LOCAL -> {

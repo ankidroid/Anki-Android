@@ -19,6 +19,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="sync_conflict_help">https://docs.ankiweb.net/syncing.html#conflicts</string>
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Open drawer</string>
     <string name="drawer_close">Close drawer</string>
