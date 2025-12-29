@@ -26,13 +26,16 @@ import android.text.style.UnderlineSpan
 import android.view.KeyEvent
 import android.view.MenuItem
 import android.view.View
+import android.view.ViewGroup
 import android.view.ViewGroup.MarginLayoutParams
 import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.webkit.WebView
+import android.widget.ArrayAdapter
 import android.widget.FrameLayout
 import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.ActionMenuView
 import androidx.constraintlayout.widget.ConstraintSet
@@ -51,19 +54,24 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import anki.scheduler.CardAnswer.Rating
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.shape.ShapeAppearanceModel
-import com.ichi2.anki.CollectionManager
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.DispatchKeyEventListener
 import com.ichi2.anki.Flag
 import com.ichi2.anki.R
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.common.utils.android.isRobolectric
+import com.ichi2.anki.databinding.DialogDeckOptionsSelectionBinding
 import com.ichi2.anki.databinding.Reviewer2Binding
 import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
 import com.ichi2.anki.libanki.sched.Counts
 import com.ichi2.anki.model.CardStateFilter
+import com.ichi2.anki.pages.DeckOptionEntry
+import com.ichi2.anki.pages.DeckOptionsDestination
+import com.ichi2.anki.pages.haMultipleOptions
 import com.ichi2.anki.preferences.reviewer.ViewerAction
 import com.ichi2.anki.previewer.CardViewerActivity
 import com.ichi2.anki.previewer.CardViewerFragment
@@ -86,12 +94,15 @@ import com.ichi2.anki.utils.ext.collectIn
 import com.ichi2.anki.utils.ext.collectLatestIn
 import com.ichi2.anki.utils.ext.sharedPrefs
 import com.ichi2.anki.utils.ext.showDialogFragment
+import com.ichi2.anki.utils.ext.usingStyledAttributes
 import com.ichi2.anki.utils.ext.window
 import com.ichi2.anki.workarounds.SafeWebViewLayout
 import com.ichi2.themes.Themes
+import com.ichi2.utils.customView
 import com.ichi2.utils.dp
 import com.ichi2.utils.show
 import com.ichi2.utils.stripHtml
+import com.ichi2.utils.title
 import com.squareup.seismic.ShakeDetector
 import dev.androidbroadcast.vbpd.viewBinding
 import kotlinx.coroutines.Job
@@ -207,6 +218,21 @@ class ReviewerFragment :
         }
 
         viewModel.destinationFlow.collectIn(lifecycleScope) { destination ->
+            if (destination is DeckOptionsDestination && destination.haMultipleOptions) {
+                if (destination.options.any { it.name == null }) {
+                    showSnackbar(R.string.something_wrong)
+                    return@collectIn
+                }
+                showDeckOptionsTargetDialog(destination.options) { option ->
+                    val updatedDestination =
+                        destination.copy(
+                            deckId = option.deckId,
+                            isFiltered = option.isFiltered,
+                        )
+                    startActivity(updatedDestination.toIntent(requireContext()))
+                }
+                return@collectIn
+            }
             startActivity(destination.toIntent(requireContext()))
         }
 
@@ -229,6 +255,42 @@ class ReviewerFragment :
 
         if (Prefs.keepScreenOn) {
             window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+        }
+    }
+
+    private fun showDeckOptionsTargetDialog(
+        options: List<DeckOptionEntry>,
+        onDeckSelected: (DeckOptionEntry) -> Unit,
+    ) {
+        val binding = DialogDeckOptionsSelectionBinding.inflate(layoutInflater)
+        val normalDeckNameColor: Int =
+            requireContext().usingStyledAttributes(null, intArrayOf(android.R.attr.textColor)) {
+                getColor(0, 0)
+            }
+        val dynamicDeckNameColor: Int =
+            requireContext().usingStyledAttributes(null, intArrayOf(R.attr.dynDeckColor)) {
+                getColor(0, 0)
+            }
+        binding.deckOptionsList.adapter =
+            object : ArrayAdapter<String>(
+                requireContext(),
+                R.layout.item_deck_option_selection,
+                options.map { it.name },
+            ) {
+                override fun getView(
+                    position: Int,
+                    convertView: View?,
+                    parent: ViewGroup,
+                ): View {
+                    val rowView = super.getView(position, convertView, parent) as TextView
+                    rowView.setTextColor(if (options[position].isFiltered) dynamicDeckNameColor else normalDeckNameColor)
+                    rowView.setOnClickListener { onDeckSelected(options[position]) }
+                    return rowView
+                }
+            }
+        MaterialAlertDialogBuilder(requireContext()).show {
+            title(text = TR.deckConfigWhichDeck())
+            customView(binding.root)
         }
     }
 
@@ -559,16 +621,16 @@ class ReviewerFragment :
             viewModel.stopAutoAdvance()
 
             val minutes = (timebox.secs / 60f).roundToInt()
-            val message = CollectionManager.TR.studyingCardStudiedIn(timebox.reps) + " " + CollectionManager.TR.studyingMinute(minutes)
+            val message = TR.studyingCardStudiedIn(timebox.reps) + " " + TR.studyingMinute(minutes)
 
             AlertDialog.Builder(requireContext()).show {
                 setTitle(R.string.timebox_reached_title)
                 setMessage(message)
-                setPositiveButton(CollectionManager.TR.studyingContinue()) { _, _ ->
+                setPositiveButton(TR.studyingContinue()) { _, _ ->
                     Timber.i("ReviewerFragment: Timebox 'Continue'")
                     viewModel.onPageFinished(false)
                 }
-                setNegativeButton(CollectionManager.TR.studyingFinish()) { _, _ ->
+                setNegativeButton(TR.studyingFinish()) { _, _ ->
                     Timber.i("ReviewerFragment: Timebox 'Finish'")
                     requireActivity().finish()
                 }
