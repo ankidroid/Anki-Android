@@ -40,6 +40,7 @@ import com.ichi2.anki.CrashReportData.HelpAction
 import com.ichi2.anki.CrashReportData.HelpAction.AnkiBackendLink
 import com.ichi2.anki.CrashReportData.HelpAction.OpenDeckOptions
 import com.ichi2.anki.common.annotations.UseContextParameter
+import com.ichi2.anki.dialogs.ProgressCompat
 import com.ichi2.anki.exception.StorageAccessException
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.pages.DeckOptionsDestination
@@ -417,29 +418,28 @@ suspend fun <T> Fragment.withProgress(
     block: suspend () -> T,
 ): T = requireActivity().withProgress(messageId, block)
 
-@Suppress("Deprecation") // ProgressDialog deprecation
-suspend fun <T> withProgressDialog(
+suspend fun <T> withBlockingProgress(
     context: Activity,
     onCancel: (() -> Unit)?,
     delayMillis: Long = 600,
     @StringRes manualCancelButton: Int? = null,
-    op: suspend (android.app.ProgressDialog) -> T,
+    op: suspend (ProgressCompat) -> T,
 ): T =
     coroutineScope {
         val dialog =
-            android.app.ProgressDialog(context, R.style.AppCompatProgressDialogStyle).apply {
-                setCancelable(onCancel != null)
+            ProgressCompat(context).apply {
                 if (manualCancelButton != null) {
                     setCancelable(false)
                     setButton(DialogInterface.BUTTON_NEGATIVE, context.getString(manualCancelButton)) { _, _ ->
                         Timber.i("Progress dialog cancelled via cancel button")
-                        onCancel?.let { it() }
+                        onCancel?.invoke()
                     }
                 } else {
-                    onCancel?.let {
+                    setCancelable(onCancel != null)
+                    onCancel?.let { action ->
                         setOnCancelListener {
                             Timber.i("Progress dialog cancelled via cancel listener")
-                            it()
+                            action()
                         }
                     }
                 }
@@ -454,37 +454,33 @@ suspend fun <T> withProgressDialog(
             launch {
                 delay(delayMillis)
                 if (!AnkiDroidApp.instance.progressDialogShown) {
-                    Timber.i(
-                        """Displaying progress dialog: ${delayMillis}ms elapsed; 
-                |cancellable: ${onCancel != null}; 
-                |manualCancel: ${manualCancelButton != null}
-                |
-                        """.trimMargin(),
-                    )
+                    Timber.i("Displaying progress dialog: ${delayMillis}ms elapsed")
                     dialog.show()
                     AnkiDroidApp.instance.progressDialogShown = true
                     dialogIsOurs = true
                 } else {
-                    Timber.w(
-                        """A progress dialog is already displayed, not displaying progress dialog: 
-                |cancellable: ${onCancel != null}; 
-                |manualCancel: ${manualCancelButton != null}
-                |
-                        """.trimMargin(),
-                    )
+                    Timber.w("A progress dialog is already displayed; skipping new dialog.")
                 }
             }
         try {
             op(dialog)
         } finally {
             dialogJob.cancel()
-            dismissDialogIfShowing(dialog)
+            dialog.dismiss()
             context.runOnUiThread { context.window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE) }
             if (dialogIsOurs) {
                 AnkiDroidApp.instance.progressDialogShown = false
             }
         }
     }
+
+suspend fun <T> withProgressDialog(
+    context: Activity,
+    onCancel: (() -> Unit)?,
+    delayMillis: Long = 600,
+    @StringRes manualCancelButton: Int? = null,
+    op: suspend (ProgressCompat) -> T,
+): T = withBlockingProgress(context, onCancel, delayMillis, manualCancelButton, op)
 
 private fun dismissDialogIfShowing(dialog: Dialog) {
     try {
@@ -533,7 +529,7 @@ data class ProgressContext(
 )
 
 @Suppress("Deprecation") // ProgressDialog deprecation
-private fun ProgressContext.updateDialog(dialog: android.app.ProgressDialog) {
+private fun ProgressContext.updateDialog(dialog: ProgressCompat) {
     // ideally this would show a progress bar, but MaterialDialog does not support
     // setting progress after starting with indeterminate progress, so we just use
     // this for now
