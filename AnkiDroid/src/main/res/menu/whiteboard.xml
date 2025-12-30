@@ -2,6 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/action_add_brush"
+        android:title="@string/add_brush"
+        android:icon="@drawable/ic_add"
+        app:showAsAction="never"
+        />
+    <item
         android:id="@+id/action_toggle_stylus"
         android:title="@string/stylus_mode"
         android:checkable="true"

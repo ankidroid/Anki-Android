@@ -202,17 +202,6 @@ class WhiteboardFragment :
             configureBrushButton(buttonVertical, brush, index)
             binding.brushToolbarContainerVertical.addView(buttonVertical)
         }
-
-        fun addBrushButton() =
-            MaterialButton(requireContext(), null, com.google.android.material.R.attr.materialIconButtonStyle).apply {
-                setIconResource(R.drawable.ic_add)
-                setTooltipTextCompat(getString(R.string.add_brush))
-                val color = ThemeUtils.getThemeAttrColor(requireContext(), androidx.appcompat.R.attr.colorControlNormal)
-                iconTint = ColorStateList.valueOf(color)
-                setOnClickListener { showAddColorDialog() }
-            }
-        binding.brushToolbarContainerHorizontal.addView(addBrushButton())
-        binding.brushToolbarContainerVertical.addView(addBrushButton())
     }
 
     /**
@@ -507,6 +496,7 @@ class WhiteboardFragment :
     override fun onMenuItemClick(item: MenuItem): Boolean {
         Timber.i("WhiteboardFragment::onMenuItemClick %s", item.title)
         when (item.itemId) {
+            R.id.action_add_brush -> showAddColorDialog()
             R.id.action_toggle_stylus -> {
                 item.isChecked = !item.isChecked
                 viewModel.toggleStylusOnlyMode()

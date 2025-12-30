@@ -87,12 +87,14 @@
 
             <FrameLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                >
 
                 <HorizontalScrollView
                     android:id="@+id/brush_scroll_view_horizontal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:paddingEnd="4dp"
                     android:scrollbars="none">
 
                     <LinearLayout
@@ -109,6 +111,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:visibility="gone"
+                    android:paddingBottom="4dp"
                     android:scrollbars="none">
 
                     <LinearLayout
