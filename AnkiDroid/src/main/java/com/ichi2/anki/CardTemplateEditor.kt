@@ -319,6 +319,14 @@ open class CardTemplateEditor :
         fieldNames = tempNoteType!!.notetype.fieldsNames
         // Set up the ViewPager with the sections adapter.
         mainBinding.cardTemplateEditorPager.adapter = TemplatePagerAdapter(this@CardTemplateEditor)
+
+        // Keep more fragments in memory to reduce menu flickering during tab switches (issue #18555).
+        // When switching between non-adjacent tabs, ViewPager2's default behavior destroys fragments,
+        // causing their MenuProviders to fire and create visual flicker.
+        // Capped at 7 (keeping up to 15 fragments total) to balance flicker reduction with memory usage,
+        // as templates can contain large content (JS bundles, CSS frameworks, etc.).
+        mainBinding.cardTemplateEditorPager.offscreenPageLimit = 7
+
         TabLayoutMediator(
             topBinding.slidingTabs,
             mainBinding.cardTemplateEditorPager,

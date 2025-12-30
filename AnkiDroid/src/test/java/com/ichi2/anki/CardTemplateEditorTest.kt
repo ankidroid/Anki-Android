@@ -790,7 +790,8 @@ class CardTemplateEditorTest : RobolectricTest() {
 
         val firstFragment = testEditor.currentFragment
         assertNotNull("First fragment should exist", firstFragment)
-        val firstTemplateEditText = testEditor.findViewById<EditText>(R.id.edit_text)
+        // Use fragment's view to get EditText (activity.findViewById may return wrong view with offscreenPageLimit)
+        val firstTemplateEditText = firstFragment!!.requireView().findViewById<EditText>(R.id.edit_text)
         val originalFirstContent = firstTemplateEditText.text.toString()
 
         // Navigate to second fragment (Card 2)
@@ -799,7 +800,8 @@ class CardTemplateEditorTest : RobolectricTest() {
 
         val secondFragment = testEditor.currentFragment
         assertNotNull("Second fragment should exist", secondFragment)
-        val secondTemplateEditText = testEditor.findViewById<EditText>(R.id.edit_text)
+        // Use fragment's view to get EditText (activity.findViewById may return wrong view with offscreenPageLimit)
+        val secondTemplateEditText = secondFragment!!.requireView().findViewById<EditText>(R.id.edit_text)
         val originalSecondContent = secondTemplateEditText.text.toString()
 
         // Navigate back to first fragment
@@ -838,7 +840,10 @@ class CardTemplateEditorTest : RobolectricTest() {
         testEditor.viewPager.currentItem = 1
         advanceRobolectricLooper()
 
-        val secondTemplateEditTextAfter = testEditor.findViewById<EditText>(R.id.edit_text)
+        // Use currentFragment's view to get EditText
+        val secondFragmentAfter = testEditor.currentFragment
+        assertNotNull("Second fragment should exist after navigation", secondFragmentAfter)
+        val secondTemplateEditTextAfter = secondFragmentAfter!!.requireView().findViewById<EditText>(R.id.edit_text)
         val secondContentAfter = secondTemplateEditTextAfter.text.toString()
 
         assertEquals(
