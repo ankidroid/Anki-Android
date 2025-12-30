@@ -1442,10 +1442,10 @@ open class DeckPicker :
     fun refreshState() {
         // Due to the App Introduction, this may be called before permission has been granted.
         if (syncOnResume && hasCollectionStoragePermissions()) {
+            syncOnResume = false
             Timber.i("Performing Sync on Resume")
             Permissions.requestNotificationPermissionsForSyncing(this)
             sync()
-            syncOnResume = false
         } else {
             selectNavigationItem(R.id.nav_decks)
             updateDeckList()
@@ -2043,6 +2043,7 @@ open class DeckPicker :
                     Prefs.allowSyncOnMeteredConnections = isCheckboxChecked
                 }
             }
+            refreshState()
         } else {
             doSync()
         }
