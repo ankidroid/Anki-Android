@@ -82,7 +82,8 @@ jacoco = "0.8.14"
 javaSemver = "0.10.2"
 jetbrainsAnnotations = "26.0.2-1"
 json = "20251224"
-jsoup = "1.21.2"
+# https://github.com/jhy/jsoup/releases
+jsoup = "1.22.1"
 androidTestJunit = "1.3.0"
 # https://github.com/junit-team/junit5/releases/
 junit = "6.0.1"
