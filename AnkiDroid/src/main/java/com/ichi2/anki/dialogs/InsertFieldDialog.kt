@@ -17,14 +17,19 @@
 package com.ichi2.anki.dialogs
 
 import android.os.Bundle
+import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.ichi2.anki.CardTemplateEditor
 import com.ichi2.anki.R
+import com.ichi2.anki.dialogs.InsertFieldDialogViewModel.Companion.KEY_FIELD_ITEMS
+import com.ichi2.anki.dialogs.InsertFieldDialogViewModel.Companion.KEY_REQUEST_KEY
+import com.ichi2.anki.launchCatchingTask
 import com.ichi2.utils.create
 import com.ichi2.utils.customListAdapter
 import com.ichi2.utils.negativeButton
@@ -37,7 +42,7 @@ import com.ichi2.utils.title
  * @see [CardTemplateEditor.CardTemplateFragment]
  */
 class InsertFieldDialog : DialogFragment() {
-    private lateinit var fieldList: List<String>
+    private val viewModel by viewModels<InsertFieldDialogViewModel>()
     private lateinit var requestKey: String
 
     /**
@@ -45,7 +50,6 @@ class InsertFieldDialog : DialogFragment() {
      */
     override fun onCreateDialog(savedInstanceState: Bundle?): AlertDialog {
         super.onCreate(savedInstanceState)
-        fieldList = requireArguments().getStringArrayList(KEY_FIELD_ITEMS)!!
         requestKey = requireArguments().getString(KEY_REQUEST_KEY)!!
         val adapter: RecyclerView.Adapter<*> =
             object : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -62,11 +66,12 @@ class InsertFieldDialog : DialogFragment() {
                     position: Int,
                 ) {
                     val textView = holder.itemView as TextView
-                    textView.text = fieldList[position]
-                    textView.setOnClickListener { selectFieldAndClose(textView) }
+                    val field = viewModel.fieldNames[position]
+                    textView.text = field.name
+                    textView.setOnClickListener { viewModel.selectNamedField(field) }
                 }
 
-                override fun getItemCount(): Int = fieldList.size
+                override fun getItemCount(): Int = viewModel.fieldNames.size
             }
         return AlertDialog.Builder(requireContext()).create {
             title(R.string.card_template_editor_select_field)
@@ -75,21 +80,32 @@ class InsertFieldDialog : DialogFragment() {
         }
     }
 
-    private fun selectFieldAndClose(textView: TextView) {
-        parentFragmentManager.setFragmentResult(
-            requestKey,
-            bundleOf(KEY_INSERTED_FIELD to textView.text.toString()),
-        )
-        dismiss()
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // setup flows
+        launchCatchingTask {
+            viewModel.selectedFieldFlow.collect { field ->
+                if (field == null) return@collect
+                parentFragmentManager.setFragmentResult(
+                    requestKey,
+                    bundleOf(KEY_INSERTED_FIELD to field.renderToTemplateTag()),
+                )
+                dismiss()
+            }
+        }
     }
 
     companion object {
         /**
-         * This fragment requires that a list of fields names to be passed in.
+         * A key in the extras of the Fragment Result
+         *
+         * Represents the template tag for the selected field: `{{Front}}`
          */
         const val KEY_INSERTED_FIELD = "key_inserted_field"
-        private const val KEY_FIELD_ITEMS = "key_field_items"
-        private const val KEY_REQUEST_KEY = "key_request_key"
 
         /**
          * Creates a new instance of [InsertFieldDialog]

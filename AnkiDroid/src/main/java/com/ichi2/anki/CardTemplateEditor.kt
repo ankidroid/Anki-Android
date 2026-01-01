@@ -802,13 +802,11 @@ open class CardTemplateEditor :
             }
         }
 
-        @Suppress("unused")
-        private fun insertField(fieldName: String) {
+        private fun insertField(fieldToInsert: String) {
             val start = max(binding.editText.selectionStart, 0)
             val end = max(binding.editText.selectionEnd, 0)
             // add string to editText
-            val updatedString = "{{$fieldName}}"
-            binding.editText.text!!.replace(min(start, end), max(start, end), updatedString, 0, updatedString.length)
+            binding.editText.text!!.replace(min(start, end), max(start, end), fieldToInsert, 0, fieldToInsert.length)
         }
 
         fun setCurrentEditorView(
