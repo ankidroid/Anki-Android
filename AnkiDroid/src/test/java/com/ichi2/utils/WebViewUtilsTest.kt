@@ -65,6 +65,8 @@ class WebViewUtilsTest {
             ),
             equalTo(78),
         )
+        // Link: https://www.apkmirror.com/apk/huawei/huawei-webview-2/huawei-webview-15-0-4-326-release/
+        // verified version code is 2113L for 15.0.4.326 by analyzing the manifest
         assertThat(
             "Huawei v15 with code 21311 should be allowed if UA indicates modern engine (114)",
             checkWebViewVersionComponents(
