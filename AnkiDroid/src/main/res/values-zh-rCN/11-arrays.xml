@@ -51,6 +51,8 @@
     <string name="add_to_deck_decide_by_note_type">由笔记模板决定</string>
     <!-- theme labels -->
     <string name="theme_follow_system">跟随系统</string>
+    <string name="theme_day" comment="Day/Light theme color scheme">Day</string>
+    <string name="theme_night" comment="Night/Dark theme color scheme">Night</string>
     <!-- day_theme_labels -->
     <string name="day_theme_light">亮色</string>
     <string name="day_theme_plain">平淡</string>

@@ -51,6 +51,8 @@
     <string name="add_to_deck_decide_by_note_type">குறிப்பு வகைமூலம் முடிவு செய்யுங்கள்</string>
     <!-- theme labels -->
     <string name="theme_follow_system">முறையைப் பின்பற்றவும்</string>
+    <string name="theme_day" comment="Day/Light theme color scheme">Day</string>
+    <string name="theme_night" comment="Night/Dark theme color scheme">Night</string>
     <!-- day_theme_labels -->
     <string name="day_theme_light">ஒளி</string>
     <string name="day_theme_plain">வெற்று</string>

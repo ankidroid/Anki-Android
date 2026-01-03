@@ -51,6 +51,8 @@
     <string name="add_to_deck_decide_by_note_type">Velg basert på notattype</string>
     <!-- theme labels -->
     <string name="theme_follow_system">Følg system</string>
+    <string name="theme_day" comment="Day/Light theme color scheme">Day</string>
+    <string name="theme_night" comment="Night/Dark theme color scheme">Night</string>
     <!-- day_theme_labels -->
     <string name="day_theme_light">Lys</string>
     <string name="day_theme_plain">Vanlig</string>
