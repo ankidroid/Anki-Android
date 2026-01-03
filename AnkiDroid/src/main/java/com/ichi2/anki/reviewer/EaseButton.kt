@@ -25,6 +25,7 @@ import androidx.annotation.StringRes
 import androidx.core.view.isVisible
 import anki.scheduler.CardAnswer.Rating
 import com.ichi2.anki.AbstractFlashcardViewer
+import com.ichi2.anki.R
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 
 /**
@@ -54,7 +55,42 @@ class EaseButton(
         get() = easeTimeView.text.toString()
         set(value) {
             easeTimeView.text = value
+            val easeName = easeTextView.text.toString()
+            val formattedTime = formatTimeForAccessibility(value)
+            layout.contentDescription = "$formattedTime $easeName"
         }
+
+    private fun formatTimeForAccessibility(timeString: String): String {
+        if (timeString.isBlank()) return timeString
+
+        val cleaned =
+            timeString
+                .replace(Regex("[\u200E\u200F\u202A-\u202E\u2066-\u2069<>⁨⁩]"), "")
+                .trim()
+
+        val regex = Regex("""^(\d+(?:\.\d+)?)(s|m|h|d|mo|y)$""")
+        val match = regex.find(cleaned) ?: return timeString
+
+        val (number, unit) = match.destructured
+
+        val numValue = number.toFloatOrNull() ?: return timeString
+        val quantity = numValue.toInt()
+
+        val context = layout.context
+        val unitWord =
+            when (unit) {
+                "s" -> context.resources.getQuantityString(R.plurals.time_span_seconds_plurals, quantity)
+                "m" -> context.resources.getQuantityString(R.plurals.time_span_minutes_plurals, quantity)
+                "h" -> context.resources.getQuantityString(R.plurals.time_span_hours_plurals, quantity)
+                "d" -> context.resources.getQuantityString(R.plurals.time_span_days_plurals, quantity)
+                "mo" -> context.resources.getQuantityString(R.plurals.time_span_months_plurals, quantity)
+                "y" -> context.resources.getQuantityString(R.plurals.time_span_years_plurals, quantity)
+                else -> unit
+            }
+
+        val result = "$number $unitWord"
+        return result
+    }
 
     fun hideNextReviewTime() {
         easeTimeView.visibility = View.GONE
