@@ -36,13 +36,13 @@
     <string name="toast_duplicate_field">שם זה כבר נמצא בשימוש על ידי שדה אחר</string>
     <!--Plurals-->
     <plurals name="model_browser_types_available">
-        <item quantity="one">%dסוג הערה זמין</item>
+        <item quantity="one">סוג רשומה אחד זמין</item>
         <item quantity="two">%d סוגי הערות זמינים</item>
         <item quantity="many">%d סוגי הערות זמינים</item>
         <item quantity="other">%d סוגי הערות זמינים</item>
     </plurals>
     <plurals name="model_browser_of_type">
-        <item quantity="one">%dפתק</item>
+        <item quantity="one">רשומה אחת</item>
         <item quantity="two">%dפתקים</item>
         <item quantity="many">%dפתקים</item>
         <item quantity="other">%d פתקים</item>
@@ -51,7 +51,7 @@
     <string name="model_browser_delete">מחיקת סוג רשומה</string>
     <string name="model_browser_template">עריכת קלפים</string>
     <!--Rename-->
-    <string name="rename_model">שנה את שם סוג פתק</string>
+    <string name="rename_model">שינוי שם לסוג הרשומה</string>
     <string name="rename_card_type">שינוי שם סוג הכרטיס</string>
     <!--Language Hint-->
     <string name="model_field_editor_language_hint_dialog_success_result">הגדר רמז שפה ל-%s</string>
@@ -64,7 +64,7 @@
     <string name="model_field_editor_changing">השדות מעודכנים</string>
     <string name="model_field_editor_sort_field">מיין לפי שדה</string>
     <!--Warnings-->
-    <string name="model_delete_warning">האם אתה בטוח שברצונך למחוק את סוג פתק זה?</string>
+    <string name="model_delete_warning">האם אתה בטוח שברצונך למחוק את סוג רשומה זה?</string>
     <!--
         Example output:
         Delete the note types below?

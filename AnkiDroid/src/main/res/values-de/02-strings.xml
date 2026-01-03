@@ -55,7 +55,7 @@
     <string name="CardEditorTags">Schlagwörter: %1$s</string>
     <string name="CardEditorCards">Karten: %1$s</string>
     <string name="edit_occlusions">Okklusionen bearbeiten</string>
-    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
+    <string name="paste_from_clipboard" maxLength="28">Aus Zwischenablage einfügen</string>
     <string name="tag_name">Schlagwortname</string>
     <string name="add_new_filter_tags">Schlagwörter hinzufügen/filtern</string>
     <string name="add_tag" maxLength="28">Schlagwort hinzufügen</string>
@@ -68,7 +68,7 @@
     <string name="enable_stylus" maxLength="28">Stylus Modus aktivieren</string>
     <string name="disable_stylus">Stylus Modus deaktivieren</string>
     <string name="eraser" maxLength="28">Radierer</string>
-    <string name="add_brush" maxLength="28">Farbe hinzufügen</string>
+    <string name="add_brush" maxLength="28">Pinsel hinzufügen</string>
     <string name="whiteboard_align_left" comment="Option to align the whiteboard toolbar on the left" maxLength="28">Links</string>
     <string name="whiteboard_align_bottom" comment="Option to align the whiteboard toolbar on the bottom" maxLength="28">Unten</string>
     <string name="whiteboard_align_right" comment="Option to align the whiteboard toolbar on the right" maxLength="28">Rechts</string>
@@ -98,7 +98,7 @@
     <string name="webview_crash_loop_dialog_title">Fehler beim System-WebView-Rendering</string>
     <string name="webview_crash_loop_dialog_content">System-WebView konnte die Karte »%1$s« nicht rendern.\n %2$s</string>
     <string name="slide_to_cancel" comment="Message shown when pressing the record button">Wischen zum Abbrechen</string>
-    <string name="filter_by_flags" maxLength="41">Flaggen</string>
+    <string name="filter_by_flags" maxLength="41">Fahnen</string>
     <!-- Custom study options -->
     <string name="custom_study_loading_tags">Erstelle Schlagwortliste&#8230;</string>
     <!-- Study options -->
@@ -167,7 +167,7 @@
     <string name="import_error_load_imported_database">Anki-Datenbank-Platzhalter (.anki2) werden noch nicht unterstützt. Bitte lesen Sie das Handbuch für entsprechende Anweisungen.</string>
     <string name="import_error_content_provider">Die ausgewählte Datei konnte nicht automatisch importiert werden. Lesen Sie im Handbuch, wie Sie Anki-Dateien manuell importieren können: \n %s</string>
     <string name="import_error_copy_to_cache_title">Fehler beim Zwischenspeichern</string>
-    <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">This is often caused by a bug in the app you used to select the file. Please try the following fixes:\n\n%s</string>
+    <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">Dies wird oft durch einen Fehler in der App verursacht, mit der du die Datei ausgewählt hast. Bitte versuche die folgenden Korrekturen:\n\n%s</string>
     <string name="import_interrupted">Import unterbrochen</string>
     <string name="export_ready_title">Export bereit</string>
     <string name="export_send_no_handlers">Keine Anwendungen zum Öffnen von APKG-Dateien verfügbar. Wird gespeichert &#8230;</string>
@@ -236,7 +236,7 @@
     <string name="search_decks" maxLength="28">Stapel durchsuchen</string>
     <string name="ankidroid_init_failed_webview_title">Schwerer Fehler</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid basiert auf dem System WebView, der nicht verfügbar ist. Dies kann passieren, wenn das System Aktualisierungen installiert. Bitte versuchen Sie es in ein paar Minuten erneut.\n\n%s</string>
-    <string name="ankidroid_init_failed_storage">AnkiDroid cannot access storage due to an Android error.\n\n%s</string>
+    <string name="ankidroid_init_failed_storage">AnkiDroid kann aufgrund eines Android-Fehlers nicht auf den Speicher zugreifen.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">Schriftgröße</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Werkzeug zeigen</string>
@@ -308,8 +308,8 @@
     <string name="field_editor_model_not_available">Zugriff auf die Sammlung fehlgeschlagen. Bitte versuchen Sie es erneut!</string>
     <string name="cd_manage_notetypes_add">Neuen Notiztyp hinzufügen</string>
     <plurals name="note_types_selected">
-        <item quantity="one">%d note type selected</item>
-        <item quantity="other">%d note types selected</item>
+        <item quantity="one">%d Notiztyp ausgewählt</item>
+        <item quantity="other">%d Notiztypen ausgewählt</item>
     </plurals>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">Lerne weniger</string>
@@ -332,7 +332,7 @@
     <string name="browser_options_dialog_heading">Browser Einstellungen</string>
     <string name="audio_saved">Aufnahme gespeichert</string>
     <string name="deleting_selected_notes">Lösche ausgewählte Notizen</string>
-    <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">Tippen Sie auf eine Stimme, um sie anzuhören</string>
+    <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">Tippe auf eine Stimme, um sie anzuhören</string>
     <string name="tts_voices_selected_voice_should_be_installed" comment="If a voice has been tapped, is installable but not installed, we want to inform the user that they should install it for the best experience There will also be an option to use it without downloading">Stimme sollte vor der Verwendung installiert sein</string>
     <string name="tts_voices_use_selected_voice_without_install" comment="A user has been informed that a voice should be installed before use. This is text on a snackbar button which allows them to use the voice without installing it">Trotzdem verwenden</string>
     <string name="tts_voices_playback_error_new" comment="an error occurred when playing a text to speech voice. The parameter is a technical error code such as \'ERROR_NOT_INSTALLED_YET\' or \'ERROR_NETWORK_TIMEOUT\'">Fehler in der Sprachausgabe (%s)</string>
@@ -376,7 +376,7 @@
     <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">Template als markdown kopieren</string>
     <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">Browser-erscheinungsbild bearbeiten</string>
     <string name="missing_user_action_dialog_message" comment="%s is the user action number">Benutzeraktion %s ist in diesem notiztyp nicht festgelegt. Bitte konfigurieren Sie es</string>
-    <string name="feature_not_supported_by_study_screen">This card has features that are not yet supported by the new study screen.</string>
+    <string name="feature_not_supported_by_study_screen">Diese Karte hat Funktionen, die vom neuen Lernbildschirm noch nicht unterstützt werden.</string>
     <string name="directory_inaccessible_info">Erfahren Sie hier %s mehr darüber, wie Sie den Zugriff wiederherstellen können, oder gehen Sie zu den Einstellungen, um den Sammlungsordner zu aktualisieren.</string>
     <!-- Scheduler Upgrade Required Dialog title-->
     <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">Zeitplaner-Upgrade erforderlich</string>
