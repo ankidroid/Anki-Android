@@ -166,10 +166,10 @@ open class BackupManager {
         fun parseBackupTimeString(timeString: String): Date? =
             try {
                 legacyDateFormat.parse(timeString)
-            } catch (e: ParseException) {
+            } catch (_: ParseException) {
                 try {
                     newDateFormat.parse(timeString)
-                } catch (e: ParseException) {
+                } catch (_: ParseException) {
                     null
                 }
             }
