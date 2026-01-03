@@ -26,7 +26,7 @@ import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import com.ichi2.anki.cardviewer.SingleCardSide
 import com.ichi2.anki.common.annotations.NeedsTest
-import com.ichi2.anki.i18n.iso3Code
+import com.ichi2.anki.i18n.getIso3LanguageOrNull
 import com.ichi2.anki.libanki.Card
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.DeckId
@@ -125,8 +125,8 @@ object ReadText {
                     val (validLocales, invalidLocales) =
                         availableLocales()
                             .sortedWith(compareBy { it.displayName })
-                            .map { Pair(it.iso3Code, it.displayName) }
-                            // iso3Code returns null if invalid
+                            .map { Pair(it.getIso3LanguageOrNull(), it.displayName) }
+                            // getIso3LanguageOrNull returns null if invalid
                             // we could work around this, but ReadText is deprecated
                             .partition { it.first != null }
 
