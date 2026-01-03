@@ -47,21 +47,21 @@
     <!-- Navigation drawer strings -->
     <string name="drawer_open">פתיחת תפריט</string>
     <string name="drawer_close">סגירת תפריט</string>
-    <string name="note_message">הערה נשמרה</string>
+    <string name="note_message">הרשומה נשמרה</string>
     <!-- Note editor screen -->
     <string name="CardEditorCardDeck">חפיסת כרטיסים:‏</string>
     <string name="CardEditorNoteDeck">חפיסה:‏</string>
     <string name="CardEditorModel">סוג:</string>
     <string name="CardEditorTags">תגיות: %1$s</string>
-    <string name="CardEditorCards">כרטסיות: %1$s</string>
+    <string name="CardEditorCards">כרטיסים: %1$s</string>
     <string name="edit_occlusions">ערוך חסימות</string>
     <string name="paste_from_clipboard" maxLength="28">הדבק מן הלוח</string>
     <string name="tag_name">שם התיוג</string>
     <string name="add_new_filter_tags">הוסף/סנן תגיות</string>
-    <string name="add_tag" maxLength="28">הוסף תג</string>
+    <string name="add_tag" maxLength="28">הוסף תגית</string>
     <string name="check_all_tags" maxLength="28">בחר/בטל את כל התגיות</string>
     <string name="filter_tags" maxLength="28">סנן תגיות</string>
-    <string name="no_tags">עוד לא הוספת שום תגיות</string>
+    <string name="no_tags">עוד אין תגיות</string>
     <string name="updated_version">עודקן לגירסה %s</string>
     <!-- Reviewer.kt (Study Screen) -->
     <string name="save_whiteboard" maxLength="28">שמור לוח</string>
@@ -86,7 +86,7 @@
     <string name="disable_eraser" maxLength="28">כבה מחק</string>
     <string name="hide_whiteboard" maxLength="28">הסתר לוח ציור</string>
     <string name="clear_whiteboard" maxLength="28">נקה לוח ציור</string>
-    <string name="replay_media" maxLength="28">נכון שמע שוב</string>
+    <string name="replay_media" maxLength="28">השמע שוב</string>
     <string name="leech_suspend_notification">כרטיס מסומן כעלוקה ומושעה</string>
     <string name="leech_notification">כרטיס מסומן כעלוקה</string>
     <string name="webview_crash_unknown">שגיאה לא מוכרת</string>
@@ -116,14 +116,14 @@
     <string name="note_editor_no_cards_created">לא נוצרו קלפים. יש למלא יותר שדות</string>
     <string name="note_editor_no_cards_created_all_fields">לסוג הרשומה הנוכחי אין כרטיסים. \n אנא בחר סוג רשומה אחר, או הקש על \'כרטיסים\' והוסף חלופת שדה</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">השלמת החסר פועלת רק בכרטיסים מסוג \'השלם את החסר\'</string>
-    <string name="saving_facts">שמירת רשומה</string>
+    <string name="saving_facts">שומר רשומה</string>
     <string name="saving_model">שומר סוג רשומה</string>
     <string name="save" maxLength="28">שמירה</string>
     <string name="close">סגירה</string>
     <string name="select">בחירה</string>
     <string name="field_remapping">%1$s (מתוך \"%2$s\")</string>
-    <string name="confirm_map_cards_to_nothing">קלף שממופה לכלום ימחק. אם לרשימה אין קלפים נותרים, היא תימחק. להמשיך?</string>
-    <string name="missing_note_type">לא נמצא סוג פתק</string>
+    <string name="confirm_map_cards_to_nothing">כרטיס שלא ממופה לשום דבר יימחק. אם לרשימה לא נותרו כרטיסים, היא תימחק. להמשיך?</string>
+    <string name="missing_note_type">לא נמצא סוג רשומה</string>
     <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (ריק)</string>
     <!-- Image cropper -->
     <string name="image_cropper_action_rotate" maxLength="28" comment="Action in image cropper screen">סבב</string>
@@ -145,7 +145,7 @@
         <item quantity="many">%1$d דקות</item>
         <item quantity="other">%1$d דקות</item>
     </plurals>
-    <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">קלף AnkiDroid</string>
+    <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">כרטיס AnkiDroid</string>
     <string name="note_editor_copy_note" maxLength="28">העתק רשומה</string>
     <string name="card_editor_reposition_card" comment="reposition a card in the new queue" maxLength="28">מיקום מחדש</string>
     <string name="card_editor_reset_card" maxLength="28">איפוס התקדמות</string>
@@ -157,7 +157,7 @@
     <string name="checks_action" maxLength="28">בדוק</string>
     <string name="check_db" maxLength="28">בדוק מסד הנתונים</string>
     <string name="check_media" maxLength="28">בדוק מדיה</string>
-    <string name="empty_cards" maxLength="28">כרטסיות ריקות</string>
+    <string name="empty_cards" maxLength="28">רוקן כרטיסים</string>
     <string name="unknown_type_field_warning">הקלד תשובה: שדה אינו מוכר %s</string>
     <string name="delete_deck" comment="Message on a progress bar starting a deck is being deleted.">מוחק חפיסה&#8230;</string>
     <string name="info_rate">דירוג AnkiDroid</string>
@@ -196,7 +196,7 @@
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">אפשרויות למידה</string>
     <string name="select_tts" maxLength="28">הגדר שפת TTS</string>
     <string name="custom_study" maxLength="28">אימון נוסף</string>
-    <string name="dyn_deck_desc">חפיסה זאת הינה חפיסה מיוחדת ללמידה מחוץ ללו\"ז הרגיל. הכרטיסיות יוחזרו באופן אוטומטי לחפיסותיהם המקוריות לאחר סיום הלמידה. מחיקת החפיסה תחזיר את כל הכרטסיות שנותרו בה לחפיסותיהם המקוריות.</string>
+    <string name="dyn_deck_desc">חפיסה זאת הינה חפיסה מיוחדת ללמידה מחוץ ללו\"ז הרגיל. הכרטיסים יוחזרו באופן אוטומטי לחפיסותיהם המקוריות לאחר סיום הלמידה. מחיקת החפיסה תחזיר את כל הכרטיסים שנותרו בה לחפיסותיהם המקוריות.</string>
     <string name="steps_error">שלבים חייב להיות מספר גדול יותר מ0</string>
     <string name="steps_min_error">לפחות שלב אחד נדרש</string>
     <string name="tag_editor_add_feedback">לחץ \"%2$s\" לאישור הוספת \"%1$s\"</string>
@@ -293,7 +293,7 @@
     <string name="home" maxLength="28">בית</string>
     <!-- Study Screen actions
     Each of these strings ends with a period, following the notation of Anki Desktop -->
-    <string name="card_buried">הקלף נקבר</string>
+    <string name="card_buried">הכרטיס הוטמן.</string>
     <plurals name="note_suspended">
         <item quantity="one">כרטיס %d הושעה.</item>
         <item quantity="two">%d כרטיסים הושעו.</item>
@@ -311,37 +311,37 @@
     <string name="malicious_archive_exceeds_limit">ארכיון זדוני. הגודל עולה על %1$s או מכיל יותר מ-%2$d קבצים</string>
     <string name="file_extract_exceeds_storage_space">פריסת הקובץ חורג מנפח הזיכרון הקיים</string>
     <!--  Hierarchical Tags  -->
-    <string name="expand_tag">הרחב את התג \'%s\'</string>
+    <string name="expand_tag">הרחב את התגית \'%s\'</string>
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">הגישה לאוסף נכשלה. בבקשה נסה שוב!</string>
     <string name="cd_manage_notetypes_add">הוסף סוג רשומה חדש</string>
     <plurals name="note_types_selected">
-        <item quantity="one">%d note type selected</item>
+        <item quantity="one">סוג רשומה אחד נבחר</item>
         <item quantity="two">%d note types selected</item>
         <item quantity="many">%d note types selected</item>
-        <item quantity="other">%d note types selected</item>
+        <item quantity="other">%d סוגי רשומה נבחרו</item>
     </plurals>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">למד פחות</string>
-    <string name="intro_ankidroid_tagline_two">זכור יותי</string>
+    <string name="intro_ankidroid_tagline_two">זכור יותר</string>
     <string name="intro_short_ankidroid_explanation">מתזמן הכרטיסים של אנקי חוסך זמן על ידי חיזוק הזיכרונות החלשים ביותר שלך ושימור החזקים ביותר שלך</string>
     <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">התחל</string>
     <string name="intro_sync_from_ankiweb">סנכרון מ-AnkiWeb</string>
     <!-- IntentHandler -->
     <string name="app_not_initialized_new">AnkiDroid עדיין לא אתחול. פתח את AnkiDroid ונסה שוב</string>
     <!-- Deck Creation -->
-    <string name="deck_created">חבילה שנוצרה</string>
-    <string name="deck_renamed">חבילה ששונה שמה</string>
+    <string name="deck_created">החפיסה נוצרה</string>
+    <string name="deck_renamed">שם החפיסה השתנה</string>
     <!-- Deck Deletion -->
-    <string name="deck_shortcut_doesnt_exist">חבילה נמחקה. אנא הסר את קיצור הדרך</string>
+    <string name="deck_shortcut_doesnt_exist">החפיסה נמחקה. אנא הסר את קיצור הדרך</string>
     <!-- Browser Options Dialog -->
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">כרטיסים</string>
-    <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">פתקים</string>
-    <string name="toggle_cards_notes">החלף כרטיסים/פתקים</string>
+    <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">רשומות</string>
+    <string name="toggle_cards_notes">החלף כרטיסים/רשומות</string>
     <string name="truncate_content_help">חתוך את הגובה של כל שורה בדפדפן כדי להציג רק את 3 השורות הראשונות של התוכן</string>
     <string name="browser_options_dialog_heading">אפשרויות דפדפן</string>
     <string name="audio_saved">ההקלטה נשמרה</string>
-    <string name="deleting_selected_notes">מחיקת הערות שנבחרו</string>
+    <string name="deleting_selected_notes">מוחק רשומות שנבחרו</string>
     <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">הקש על שמע כדי להאזין</string>
     <string name="tts_voices_selected_voice_should_be_installed" comment="If a voice has been tapped, is installable but not installed, we want to inform the user that they should install it for the best experience There will also be an option to use it without downloading">שמע צריך להיות מותקן לפני השימוש</string>
     <string name="tts_voices_use_selected_voice_without_install" comment="A user has been informed that a voice should be installed before use. This is text on a snackbar button which allows them to use the voice without installing it">השתמש בכל אופן</string>
@@ -358,7 +358,7 @@
     <string name="failed_to_copy">ההעתקה נכשלה</string>
     <string name="card_browser_unavailable_when_notes_mode">לא זמין במצב \'פתקים\'</string>
     <plurals name="unbury_cards_feedback">
-        <item quantity="one">כרטיס אחד %d הוצא מהטמנה</item>
+        <item quantity="one">כרטיס אחד הוצא מהטמנה</item>
         <item quantity="two">%d כרטיסים הוצאו מהטמנה</item>
         <item quantity="many">%d כרטיסים הוצאו מהטמנה</item>
         <item quantity="other">%d כרטיסים הוצאו מהטמנה</item>
@@ -372,22 +372,22 @@
     <string name="next_recording" comment="Description of a button to go to the next recording">הבא</string>
     <!--  AlertDialog in the deleteCardTemplate  -->
     <string name="orphan_note_title">לא ניתן למחוק את סוג הכרטיס</string>
-    <string name="orphan_note_message">מחיקת סוג כרטיס זה תשאיר כמה הערות ללא כרטיס.</string>
+    <string name="orphan_note_message">מחיקת סוג כרטיס זה תשאיר כמה פתקים ללא כרטיס.</string>
     <string name="voice_not_supported">קול אינו נתמך. נסה אחר או התקן מנוע קול.</string>
     <!--Keyboard shortcuts dialog-->
     <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">בוחר החפיסה</string>
     <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">מחק את החפיסה ללא אישור</string>
-    <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">עורך הערות</string>
+    <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">עורך רשומות</string>
     <string name="select_deck" comment="Description of the shortcut that opens the deck selection dialog">בחר חפיסה</string>
     <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">מחיקת סוג רשומה</string>
-    <string name="tag_editor" comment="Description of the shortcut that opens the tags dialog">עורך תג</string>
+    <string name="tag_editor" comment="Description of the shortcut that opens the tags dialog">עורך תגיות</string>
     <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">עורך תבניות כרטיסים</string>
     <string name="edit_front_template" comment="Description of the shortcut that shows the question side of the card template">ערוך תבנית קדמית</string>
     <string name="edit_back_template" comment="Description of the shortcut that shows the answer side of the card template">ערוך תבנית אחורית</string>
     <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">ערוך סגנון</string>
     <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">העתק תבנית כסימון</string>
     <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">ערוך את מראה הדפדפן</string>
-    <string name="missing_user_action_dialog_message" comment="%s is the user action number">פעולת המשתמש %s לא מוגדרת בסוג הערה זה. אנא הגדר אותו</string>
+    <string name="missing_user_action_dialog_message" comment="%s is the user action number">פעולת המשתמש %s לא מוגדרת בסוג רשומה זה. אנא הגדר אותו</string>
     <string name="feature_not_supported_by_study_screen">This card has features that are not yet supported by the new study screen.</string>
     <string name="directory_inaccessible_info">למד עוד על איך לשחזר גישה כאן %s או עבור להגדרות כדי לעדכן את תיקיית האוסף.</string>
     <!-- Scheduler Upgrade Required Dialog title-->

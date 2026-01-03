@@ -255,9 +255,9 @@
     <string name="tts_error_dialog_change_button_text">Engine ändern</string>
     <string name="tts_error_dialog_supported_voices_button_text">Spracheinstellungen</string>
     <!-- import_cache_error_resolutions -->
-    <string name="import_error_resolution_try_again">Re-import the file</string>
-    <string name="import_error_resolution_free_up_space">Ensure there is sufficient free space on your device</string>
-    <string name="import_error_resolution_check_internet">Ensure you are connected to the internet</string>
-    <string name="import_error_resolution_copy_to_device">Copy the file to your device and try again with the local file</string>
-    <string name="import_error_resolution_select_file">Open the file using your device’s file browser app</string>
+    <string name="import_error_resolution_try_again">Datei neu importieren</string>
+    <string name="import_error_resolution_free_up_space">Stelle sicher, dass genügend freier Speicherplatz auf deinem Gerät vorhanden ist</string>
+    <string name="import_error_resolution_check_internet">Stelle sicher, dass du mit dem Internet verbunden bist</string>
+    <string name="import_error_resolution_copy_to_device">Kopiere die Datei auf dein Gerät und versuche es erneut mit der lokalen Datei</string>
+    <string name="import_error_resolution_select_file">Öffne die Datei mit der Dateibrowser-App deines Geräts</string>
 </resources>

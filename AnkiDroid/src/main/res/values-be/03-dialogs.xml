@@ -68,7 +68,7 @@
     <string name="answering_error_title">Памылка базы даных</string>
     <string name="answering_error_message">Збой запісу ў калекцыю. Прычынаю можа быць пашкоджаная база даных або недахоп свабоднага месца на дыску.\n\nПаспрабуйце праверыць базу даных або аднавіць калекцыю з рэзервовай копіі. Для гэтага націсніце \"Параметры\". \n\Таксама гэта памылка можа быць выклікана самой праграмай; паведаміце пра гэта распрацоўшчыкам.</string>
     <string name="answering_error_report">Паведаміць пра памылку</string>
-    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue.</string>
+    <string name="storage_full_message">Недастаткова свабоднага месца, каб адкрыць AnkiDroid. Вызваліце крыху месца на прыладзе, каб працягнуць.</string>
     <string name="repair_deck_dialog">Вы сапраўды хочаце аднавіць базу даных?\n\nПерад спробай па яе аднаўленні, будзе створана копія ў  падпапцы \'%s\'.</string>
     <string name="intent_aedict_empty">Катэгорыя “default” нічога не змяшчае</string>
     <string name="intent_aedict_category">Для таго, каб дадаць карткі ў AnkiDroid, выдаліце ўсе катэгорыі Notepad або дадайце катэгорыю з назвай \"default\"</string>
@@ -77,7 +77,7 @@
     <string name="custom_study_forgotten">Паўтарыць забытыя карткі за апошнія некалькі дзён:</string>
     <string name="custom_study_ahead">Вывучыць на некалькі дзён наперад:</string>
     <string name="custom_study_preview">Прагледзець новыя карткі, якія дадзены за апошнія некалькі дзён:</string>
-    <string name="custom_study_tags">Select x cards from the deck:</string>
+    <string name="custom_study_tags">Выберыце х картак з калоды:</string>
     <string name="storage_full_title">Сховішча запоўнена</string>
     <string name="storage_almost_full_title">Сховішча амаль запоўнена</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Памяць запоўненая</string>
@@ -102,15 +102,15 @@
     <string name="dialog_positive_repair">Выправіць</string>
     <string name="dialog_positive_replace">Замяніць</string>
     <string name="dialog_collection_path_not_dir">Азначаны шлях не з\'яўляецца дапушчальным каталогам</string>
-    <string name="dialog_invalid_custom_certificate">The provided text does not resolve to a valid PEM-encoded X509 certificate</string>
+    <string name="dialog_invalid_custom_certificate">Прыведзены тэкст не пераўтвараецца ў дапушчальны сертыфікат X509 з кадзіраваннем PEM</string>
     <string name="dialog_invalid_custom_certificate_title">Памылка разборкі сертыфіката</string>
     <string name="dialog_updated_custom_certificate">Сертыфікат абноўлены</string>
     <!-- Media checking -->
     <string name="check_media_title">Праверыць медыяфайлы?</string>
     <string name="check_media_warning">Гэта можа заняць шмат часу ў тым выпадку, калі калекцыя медыяфайлаў надта вялікая</string>
     <string name="check_media_message">Праверка медыяфайлаў&#8230;</string>
-    <string name="check_media_adding_missing_tag">Adding tags&#8230;</string>
-    <string name="check_media_tags_added">Tags added</string>
+    <string name="check_media_adding_missing_tag">Дадаванне тэгаў&#8230;</string>
+    <string name="check_media_tags_added">Тэгі дададзены</string>
     <string name="delete_media_message">Выдаленне медыяфайлаў&#8230;</string>
     <string name="delete_media_result_title">Вынік выдалення</string>
     <plurals name="delete_media_result_message">
@@ -130,8 +130,8 @@
     <string name="multimedia_editor_failed">Памылка адкрыцця рэдактара мультымедыя</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Адхілены доступ да запісу гуку</string>
-    <string name="permission_denied">Permission denied</string>
-    <string name="recording_permission_denied_message">Microphone permission is necessary for the “Record voice” feature. Please grant it in the app settings.</string>
+    <string name="permission_denied">У доступе адмоўлена</string>
+    <string name="recording_permission_denied_message">Доступ да мікрафону патрэбны для \"Запісу голасу\". Дайце адпаведны доступ у наладах праграмы.</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">Праграма AnkiDroid абноўленая</string>
     <string name="integrity_check_startup_content">Праграма AnkiDroid абноўленая. Дадзенае абнаўленне змяшчае выпраўленні магчымых праблем з базай даных і мы раім вам запусціць яе праверку.</string>
@@ -155,7 +155,7 @@
     <string name="error_deleting_image">Памылка выдалення відарыса</string>
     <string name="failed_to_apply_background_image">Памылка ўжывання фонавага відарыса %s</string>
     <string name="background_image_too_large">Фонавы відарыс занадта вялікі</string>
-    <string name="image_max_size_allowed" comment="Consider keeping the unbreakable space after the digit">Maximum image size %d MB allowed</string>
+    <string name="image_max_size_allowed" comment="Consider keeping the unbreakable space after the digit">Максімальны памер відарыса можа складаць %d МБ</string>
     <string name="image_dimensions_too_large">Занадта вялікія памеры відарыса (%1$d × %2$d)</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
@@ -195,10 +195,10 @@
     <string name="help_dialog_exception_report_sent">Справаздача адпраўлена!</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
-        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">An automatic sync may be triggered in %d second</item>
-        <item quantity="few">An automatic sync may be triggered in %d seconds</item>
-        <item quantity="many">An automatic sync may be triggered in %d seconds</item>
-        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">An automatic sync may be triggered in %d seconds</item>
+        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">Аўтаматычная сінхранізацыя можа пачацца праз %d секунду</item>
+        <item quantity="few">Аўтаматычная сінхранізацыя можа пачацца праз %d секунды</item>
+        <item quantity="many">Аўтаматычная сінхранізацыя можа пачацца праз %d секунд</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">Аўтаматычная сінхранізацыя можа пачацца праз %d секунд</item>
     </plurals>
     <string name="metered_sync_data_warning">Ваш пастаўшчык паслуг інтэрнэту можа спаганяць грашовыя сродкі за выкарыстанне даных</string>
     <string name="deck_picker_new">Колькасць новых картак, якія можна ўбачыць за сёння ў гэтай калодзе.</string>
@@ -219,8 +219,8 @@
     <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Пазней</string>
     <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Больш не паказваць</string>
     <string name="dismiss_backup_warning_title">Папярэджанне пра страту даных</string>
-    <string name="dismiss_backup_warning_new_user">Due to Android privacy changes, your data and automated backups will be deleted from your phone if the app is uninstalled</string>
-    <string name="dismiss_backup_warning_upgrade">Due to Android privacy changes, your data and automated backups will be inaccessible if the app is uninstalled</string>
+    <string name="dismiss_backup_warning_new_user">У сувязі са змяненнямі палітыкі прыватнасці Android, пасля выдалення праграмы вашы даныя і аўтаматычныя рэзервовыя копіі будуць выдалены з вашай прылады</string>
+    <string name="dismiss_backup_warning_upgrade">У сувязі са змяненнямі палітыкі прыватнасці Android, пасля выдалення праграмы вашы даныя і аўтаматычныя рэзервовыя копіі стануць недаступны</string>
     <string name="deck_already_exists">Калода ўжо існуе</string>
     <string name="empty_deck_name">Калода не можа быць пустой</string>
     <string name="create_deck_numeric_hint">Калі ў вас ёсць праблемы з парадкам калод (напрыклад, ‘10’  калода стаіць перад ‘2’), замяніце ‘2’ на ‘02’</string>
@@ -245,10 +245,10 @@
         <item quantity="other">дзён</item>
     </plurals>
     <plurals name="set_due_date_current_interval">
-        <item quantity="one">Current interval: %d day</item>
-        <item quantity="few">Current interval: %d days</item>
-        <item quantity="many">Current interval: %d days</item>
-        <item quantity="other">Current interval: %d days</item>
+        <item quantity="one">Бягучы інтэрвал: %d дзень</item>
+        <item quantity="few">Бягучы інтэрвал: %d дні</item>
+        <item quantity="many">Бягучы інтэрвал: %d дзён</item>
+        <item quantity="other">Бягучы інтэрвал: %d дзён</item>
     </plurals>
     <string name="range_delimiter" comment="Placed between two input boxes to denote a range">–</string>
     <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">Ад</string>
@@ -271,9 +271,9 @@
     <string name="tts_error_dialog_change_button_text">Змяніць рухавік</string>
     <string name="tts_error_dialog_supported_voices_button_text">Параметры голасу</string>
     <!-- import_cache_error_resolutions -->
-    <string name="import_error_resolution_try_again">Re-import the file</string>
-    <string name="import_error_resolution_free_up_space">Ensure there is sufficient free space on your device</string>
-    <string name="import_error_resolution_check_internet">Ensure you are connected to the internet</string>
-    <string name="import_error_resolution_copy_to_device">Copy the file to your device and try again with the local file</string>
-    <string name="import_error_resolution_select_file">Open the file using your device’s file browser app</string>
+    <string name="import_error_resolution_try_again">Імпартаваць файл паўторна</string>
+    <string name="import_error_resolution_free_up_space">Пераканайцеся, што на вашай прыладзе дастаткова вольнай прасторы</string>
+    <string name="import_error_resolution_check_internet">Пераканайцеся, што ваша прылада падключана да інтэрнэту</string>
+    <string name="import_error_resolution_copy_to_device">Скапіюйце файл на сваю прыладу і паспрабуйце яшчэ раз з лакальным файлам</string>
+    <string name="import_error_resolution_select_file">Адкрыйце файл з выкарыстаннем праграмы прагляду файлаў на сваёй прыладзе</string>
 </resources>
