@@ -19,6 +19,7 @@ import anki.scheduler.CardAnswer
 import com.ichi2.anki.common.utils.ext.getIntOrNull
 import com.ichi2.anki.jsapi.Endpoint
 import com.ichi2.anki.jsapi.JsApi
+import com.ichi2.anki.jsapi.JsApiError
 import org.json.JSONObject
 
 suspend fun ReviewerViewModel.handleStudyScreenEndpoint(
@@ -35,9 +36,9 @@ suspend fun ReviewerViewModel.handleStudyScreenEndpoint(
             JsApi.success()
         }
         Endpoint.StudyScreen.ANSWER -> {
-            val ratingNumber = data?.getIntOrNull("rating") ?: return JsApi.fail("Missing rating")
+            val ratingNumber = data?.getIntOrNull("rating") ?: return JsApi.fail(JsApiError.InvalidInput, "Missing rating")
             if (ratingNumber !in 1..4) {
-                return JsApi.fail("Invalid rating")
+                return JsApi.fail(JsApiError.InvalidInput, "Invalid rating")
             }
             val rating = CardAnswer.Rating.forNumber(ratingNumber - 1)
             answerCard(rating)
@@ -45,13 +46,13 @@ suspend fun ReviewerViewModel.handleStudyScreenEndpoint(
         }
         Endpoint.StudyScreen.IS_SHOWING_ANSWER -> JsApi.success(showingAnswer.value)
         Endpoint.StudyScreen.GET_NEXT_TIME -> {
-            val ratingNumber = data?.getIntOrNull("rating") ?: return JsApi.fail("Missing rating")
+            val ratingNumber = data?.getIntOrNull("rating") ?: return JsApi.fail(JsApiError.InvalidInput, "Missing rating")
             if (ratingNumber !in 1..4) {
-                return JsApi.fail("Invalid rating")
+                return JsApi.fail(JsApiError.InvalidInput, "Invalid rating")
             }
             val rating = CardAnswer.Rating.forNumber(ratingNumber - 1)
 
-            val queueState = queueState.await() ?: return JsApi.fail("There is no card at top of the queue")
+            val queueState = queueState.await() ?: return JsApi.fail(JsApiError.FeatureNotAvailable, "There is no card at top of the queue")
 
             val nextTimes = AnswerButtonsNextTime.from(queueState)
             val nextTime =
@@ -60,12 +61,12 @@ suspend fun ReviewerViewModel.handleStudyScreenEndpoint(
                     CardAnswer.Rating.HARD -> nextTimes.hard
                     CardAnswer.Rating.GOOD -> nextTimes.good
                     CardAnswer.Rating.EASY -> nextTimes.easy
-                    CardAnswer.Rating.UNRECOGNIZED -> return JsApi.fail("Invalid rating")
+                    CardAnswer.Rating.UNRECOGNIZED -> return JsApi.fail(JsApiError.InvalidInput, "Invalid rating")
                 }
             JsApi.success(nextTime)
         }
         Endpoint.StudyScreen.GET_NEXT_TIMES -> {
-            val queueState = queueState.await() ?: return JsApi.fail("There is no card at top of the queue")
+            val queueState = queueState.await() ?: return JsApi.fail(JsApiError.FeatureNotAvailable, "There is no card at top of the queue")
             val nextTimes = AnswerButtonsNextTime.from(queueState)
             val result = listOf(nextTimes.again, nextTimes.hard, nextTimes.good, nextTimes.easy)
             JsApi.success(result)

@@ -20,23 +20,27 @@ import android.content.res.Resources
 import com.ichi2.anki.R
 
 sealed class InvalidContractException : Exception() {
+    abstract val error: JsApiError
+
     abstract fun localizedErrorMessage(resources: Resources): String
 
+    fun errorMessage(resources: Resources): String = resources.getString(R.string.js_api_error_code, error.code)
+
     class ContactError : InvalidContractException() {
-        override fun localizedErrorMessage(resources: Resources): String {
-            val errorMessage = resources.getString(R.string.js_api_error_code, INVALID_CONTACT_ERROR_CODE)
-            return resources.getString(R.string.invalid_contact_message, errorMessage)
-        }
+        override val error = JsApiError.InvalidContact
+
+        override fun localizedErrorMessage(resources: Resources): String =
+            resources.getString(R.string.invalid_contact_message, errorMessage(resources))
     }
 
     class VersionError(
         private val requestVersion: String,
         private val contact: String,
     ) : InvalidContractException() {
-        override fun localizedErrorMessage(resources: Resources): String {
-            val errorMessage = resources.getString(R.string.js_api_error_code, INVALID_VERSION_ERROR_CODE)
-            return resources.getString(R.string.invalid_js_api_version_message, requestVersion, contact, errorMessage)
-        }
+        override val error = JsApiError.InvalidVersion
+
+        override fun localizedErrorMessage(resources: Resources): String =
+            resources.getString(R.string.invalid_js_api_version_message, requestVersion, contact, errorMessage(resources))
     }
 
     class OutdatedVersion(
@@ -44,15 +48,9 @@ sealed class InvalidContractException : Exception() {
         private val requestVersion: String,
         private val contact: String,
     ) : InvalidContractException() {
-        override fun localizedErrorMessage(resources: Resources): String {
-            val errorMessage = resources.getString(R.string.js_api_error_code, OUTDATED_VERSION_ERROR_CODE)
-            return resources.getString(R.string.outdated_js_api_message, currentVersion, requestVersion, contact, errorMessage)
-        }
-    }
+        override val error = JsApiError.OutdatedVersion
 
-    companion object {
-        const val INVALID_CONTACT_ERROR_CODE = "INVALID_CONTACT"
-        const val INVALID_VERSION_ERROR_CODE = "INVALID_VERSION"
-        const val OUTDATED_VERSION_ERROR_CODE = "OUTDATED_VERSION"
+        override fun localizedErrorMessage(resources: Resources): String =
+            resources.getString(R.string.outdated_js_api_message, currentVersion, requestVersion, contact, errorMessage(resources))
     }
 }

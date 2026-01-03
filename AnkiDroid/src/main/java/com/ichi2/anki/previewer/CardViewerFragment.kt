@@ -41,6 +41,7 @@ import com.ichi2.anki.common.utils.ext.getIntOrNull
 import com.ichi2.anki.dialogs.TtsVoicesDialogFragment
 import com.ichi2.anki.jsapi.Endpoint
 import com.ichi2.anki.jsapi.JsApi
+import com.ichi2.anki.jsapi.JsApiError
 import com.ichi2.anki.jsapi.UiRequest
 import com.ichi2.anki.localizedErrorMessage
 import com.ichi2.anki.snackbar.showSnackbar
@@ -168,7 +169,7 @@ abstract class CardViewerFragment(
         if (request.endpoint is Endpoint.Android) {
             handleAndroidEndpoint(request.endpoint, request.data)
         } else {
-            JsApi.fail("Unhandled endpoint")
+            JsApi.fail(JsApiError.UnsupportedMethod, "Unhandled endpoint")
         }
 
     private fun handleAndroidEndpoint(
@@ -177,9 +178,9 @@ abstract class CardViewerFragment(
     ): ByteArray {
         return when (endpoint) {
             Endpoint.Android.SHOW_SNACKBAR -> {
-                val data = data ?: return JsApi.fail("Missing request data")
-                val text = data.optString("text") ?: return JsApi.fail("Missing text")
-                val duration = data.getIntOrNull("duration") ?: return JsApi.fail("Missing duration")
+                val data = data ?: return JsApi.fail(JsApiError.InvalidInput, "Missing request data")
+                val text = data.optString("text") ?: return JsApi.fail(JsApiError.InvalidInput, "Missing text")
+                val duration = data.getIntOrNull("duration") ?: return JsApi.fail(JsApiError.InvalidInput, "Missing duration")
                 showSnackbar(text, duration)
                 JsApi.success()
             }

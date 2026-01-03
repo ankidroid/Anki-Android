@@ -27,6 +27,7 @@ import com.ichi2.anki.jsapi.Endpoint
 import com.ichi2.anki.jsapi.InvalidContractException
 import com.ichi2.anki.jsapi.JsApi
 import com.ichi2.anki.jsapi.JsApi.getEndpoint
+import com.ichi2.anki.jsapi.JsApiError
 import com.ichi2.anki.jsapi.UiRequest
 import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.libanki.Card
@@ -190,10 +191,10 @@ abstract class CardViewerViewModel :
                 if (mediaErrorHandler.shouldShowJsApiExceptionMessage()) {
                     onJsApiError.emit(exception)
                 }
-                return JsApi.fail("Invalid contract")
+                return JsApi.fail(exception.error, "Invalid contract")
             }
 
-        val endpoint = getEndpoint(uri) ?: return JsApi.fail("Invalid endpoint")
+        val endpoint = getEndpoint(uri) ?: return JsApi.fail(JsApiError.UnsupportedMethod, "Invalid endpoint")
         return handleJsEndpoint(endpoint, requestData)
     }
 
@@ -209,7 +210,7 @@ abstract class CardViewerViewModel :
             // e.g. the fragment uses flowWithLifecycle and is at a different lifecycleState
             withTimeoutOrNull(2000L) {
                 result.await()
-            } ?: JsApi.fail("Method was not handled")
+            } ?: JsApi.fail(JsApiError.ServerError, "Took too much time to handle method")
         } else {
             JsApi.handleEndpointRequest(endpoint, data, currentCard.await())
         }

@@ -36,7 +36,6 @@ class ConstantUniquenessTest {
         assertConstantUniqueness(UniqueWorkNames::class)
         assertConstantUniqueness(ReviewerMenuSettingsRecyclerItem.Companion::class)
         assertConstantUniqueness(BrowserColumnSelectionRecyclerItem.Companion::class)
-        assertConstantUniqueness(InvalidContractException.Companion::class)
     }
 
     companion object {

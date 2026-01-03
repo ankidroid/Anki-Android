@@ -45,7 +45,8 @@ object JsApi {
     const val CURRENT_VERSION = "1.0.0"
     private const val SUCCESS_KEY = "success"
     private const val VALUE_KEY = "value"
-    private const val ERROR_KEY = "error"
+    private const val ERROR_CODE_KEY = "code"
+    private const val ERROR_MESSAGE_KEY = "message"
     const val REQUEST_PREFIX = "/jsapi/"
 
     private val tts by lazy { JavaScriptTTS() }
@@ -110,7 +111,7 @@ object JsApi {
             is Endpoint.Note -> handleNoteMethods(endpoint, data, topCard)
             is Endpoint.NoteType -> handleNoteTypeMethods(endpoint, data, topCard)
             is Endpoint.Tts -> handleTtsEndpoints(endpoint, data)
-            is Endpoint.Android, is Endpoint.StudyScreen -> fail("Method not supported")
+            is Endpoint.Android, is Endpoint.StudyScreen -> fail(JsApiError.UnsupportedMethod, "Method not supported")
         }
 
     private suspend fun handleCardMethods(
@@ -176,8 +177,8 @@ object JsApi {
                 success()
             }
             Endpoint.Card.TOGGLE_FLAG -> {
-                val requestFlag = data?.getIntOrNull("flag") ?: return fail("Missing flag")
-                if (requestFlag < 0 || requestFlag > 7) return fail("Invalid flag code")
+                val requestFlag = data?.getIntOrNull("flag") ?: return fail(JsApiError.InvalidInput, "Missing flag")
+                if (requestFlag !in 0..7) return fail(JsApiError.InvalidInput, "Invalid flag code")
 
                 val newFlag = if (requestFlag == card.userFlag()) Flag.NONE else Flag.fromCode(requestFlag)
                 undoableOp { setUserFlagForCards(listOf(card.id), newFlag) }
@@ -217,13 +218,13 @@ object JsApi {
         return when (endpoint) {
             Endpoint.Collection.UNDO -> {
                 val isUndoAvailable = withCol { undoAvailable() }
-                if (!isUndoAvailable) return fail("Undo is not available")
+                if (!isUndoAvailable) return fail(JsApiError.FeatureNotAvailable, "Undo is not available")
                 val changes = undoableOp { undo() }
                 success(changes.operation)
             }
             Endpoint.Collection.REDO -> {
                 val isRedoAvailable = withCol { redoAvailable() }
-                if (!isRedoAvailable) return fail("Redo is not available")
+                if (!isRedoAvailable) return fail(JsApiError.FeatureNotAvailable, "Redo is not available")
                 val changes = undoableOp { redo() }
                 success(changes.operation)
             }
@@ -236,12 +237,12 @@ object JsApi {
                 success(isRedoAvailable)
             }
             Endpoint.Collection.FIND_CARDS -> {
-                val search = data?.getStringOrNull("search") ?: return fail("No search query found")
+                val search = data?.getStringOrNull("search") ?: return fail(JsApiError.InvalidInput, "No search query found")
                 val ids = withCol { findCards(search) }
                 success(ids)
             }
             Endpoint.Collection.FIND_NOTES -> {
-                val search = data?.getStringOrNull("search") ?: return fail("No search query found")
+                val search = data?.getStringOrNull("search") ?: return fail(JsApiError.InvalidInput, "No search query found")
                 val ids = withCol { findNotes(search) }
                 success(ids)
             }
@@ -277,7 +278,7 @@ object JsApi {
                 success(tags)
             }
             Endpoint.Note.SET_TAGS -> {
-                val tags = data?.optString("tags") ?: return fail("Missing tags")
+                val tags = data?.optString("tags") ?: return fail(JsApiError.InvalidInput, "Missing tags")
                 undoableOp {
                     note.setTagsFromStr(this, tags)
                     updateNote(note)
@@ -299,7 +300,8 @@ object JsApi {
         val noteTypeId = data?.getLongOrNull("id")
         val noteType =
             if (noteTypeId != null) {
-                withCol { notetypes }.get(noteTypeId) ?: return fail("Found no note type with the id '$noteTypeId'")
+                withCol { notetypes }.get(noteTypeId)
+                    ?: return fail(JsApiError.InvalidInput, "Found no note type with the id '$noteTypeId'")
             } else {
                 withCol { topCard.noteType(this) }
             }
@@ -318,7 +320,7 @@ object JsApi {
         topCard: Card,
     ): ByteArray {
         val deckId = data?.getLongOrNull("id") ?: topCard.did
-        val deck = withCol { decks.get(deckId) } ?: return fail("Found no deck with the id '$deckId'")
+        val deck = withCol { decks.get(deckId) } ?: return fail(JsApiError.InvalidInput, "Found no deck with the id '$deckId'")
         return when (endpoint) {
             Endpoint.Deck.GET_ID -> success(deck.id)
             Endpoint.Deck.GET_NAME -> success(deck.name)
@@ -335,26 +337,30 @@ object JsApi {
             @JavaScriptTTS.ErrorOrSuccess result: Int,
         ) = when (result) {
             TextToSpeech.SUCCESS -> success()
-            TextToSpeech.ERROR -> fail("TTS engine error")
-            else -> fail("Unknown TTS error")
+            TextToSpeech.ERROR -> fail(JsApiError.TtsError, "TTS engine error")
+            else -> fail(JsApiError.TtsError, "Unknown TTS error")
         }
         return when (endpoint) {
             Endpoint.Tts.SPEAK -> {
-                val text = data?.optString("text") ?: return fail("Missing text")
-                val queueMode = data.getIntOrNull("queueMode") ?: return fail("Missing queueMode")
-                if (queueMode != TextToSpeech.QUEUE_FLUSH && queueMode != TextToSpeech.QUEUE_ADD) return fail("Invalid queueMode")
+                val text = data?.optString("text") ?: return fail(JsApiError.InvalidInput, "Missing text")
+                val queueMode = data.getIntOrNull("queueMode") ?: return fail(JsApiError.InvalidInput, "Missing queueMode")
+                if (queueMode != TextToSpeech.QUEUE_FLUSH &&
+                    queueMode != TextToSpeech.QUEUE_ADD
+                ) {
+                    return fail(JsApiError.InvalidInput, "Invalid queueMode")
+                }
                 ttsErrorOrSuccess(tts.speak(text, queueMode))
             }
             Endpoint.Tts.SET_LANGUAGE -> {
-                val locale = data?.optString("locale") ?: return fail("Missing locale")
+                val locale = data?.optString("locale") ?: return fail(JsApiError.InvalidInput, "Missing locale")
                 success(tts.setLanguage(locale))
             }
             Endpoint.Tts.SET_PITCH -> {
-                val pitch = data?.getDoubleOrNull("pitch") ?: return fail("Missing pitch")
+                val pitch = data?.getDoubleOrNull("pitch") ?: return fail(JsApiError.InvalidInput, "Missing pitch")
                 ttsErrorOrSuccess(tts.setPitch(pitch.toFloat()))
             }
             Endpoint.Tts.SET_SPEECH_RATE -> {
-                val speechRate = data?.getDoubleOrNull("speechRate") ?: return fail("Missing speechRate")
+                val speechRate = data?.getDoubleOrNull("speechRate") ?: return fail(JsApiError.InvalidInput, "Missing speechRate")
                 ttsErrorOrSuccess(tts.setSpeechRate(speechRate.toFloat()))
             }
             Endpoint.Tts.IS_SPEAKING -> {
@@ -388,12 +394,16 @@ object JsApi {
         return jsonObject.toString().toByteArray()
     }
 
-    fun fail(error: String): ByteArray {
-        Timber.i("JsApi fail: %s", error)
+    fun fail(
+        error: JsApiError,
+        message: String,
+    ): ByteArray {
+        Timber.i("JsApi fail %s: %s", error.code, message)
         return JSONObject()
             .apply {
                 put(SUCCESS_KEY, false)
-                put(ERROR_KEY, error)
+                put(ERROR_CODE_KEY, error.code)
+                put(ERROR_MESSAGE_KEY, message)
             }.toString()
             .toByteArray()
     }
