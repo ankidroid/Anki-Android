@@ -75,7 +75,7 @@ class ManageNoteTypesViewModel : ViewModel() {
         _state.update { oldState ->
             val matchedNoteTypes =
                 oldState.noteTypes.map {
-                    it.copy(shouldBeDisplayed = it.name.contains(query))
+                    it.copy(shouldBeDisplayed = it.name.contains(query, ignoreCase = true))
                 }
             oldState.copy(isLoading = false, noteTypes = matchedNoteTypes, searchQuery = query)
         }
