@@ -137,7 +137,7 @@ open class CardBrowser :
 
     override var fragmented: Boolean
         get() = viewModel.isFragmented
-        set(value) {
+        set(_) {
             throw UnsupportedOperationException()
         }
 
