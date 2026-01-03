@@ -22,7 +22,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.tabs.TabLayout
 import com.ichi2.anki.R
-import com.ichi2.anki.databinding.TemplatePreviewerBinding
+import com.ichi2.anki.databinding.FragmentTemplatePreviewerBinding
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
@@ -36,11 +36,11 @@ import kotlinx.coroutines.flow.onEach
 import timber.log.Timber
 
 class TemplatePreviewerFragment :
-    CardViewerFragment(R.layout.template_previewer),
+    CardViewerFragment(R.layout.fragment_template_previewer),
     BaseSnackbarBuilderProvider {
     override val viewModel: TemplatePreviewerViewModel by viewModels()
 
-    lateinit var binding: TemplatePreviewerBinding
+    lateinit var binding: FragmentTemplatePreviewerBinding
 
     override val webViewLayout: SafeWebViewLayout get() = binding.webViewLayout
 
@@ -53,7 +53,7 @@ class TemplatePreviewerFragment :
     ) {
         // binding must be set before super.onViewCreated
         // as super.onViewCreated depends on webViewLayout, which depends on the binding
-        binding = TemplatePreviewerBinding.bind(view)
+        binding = FragmentTemplatePreviewerBinding.bind(view)
 
         super.onViewCreated(view, savedInstanceState)
 

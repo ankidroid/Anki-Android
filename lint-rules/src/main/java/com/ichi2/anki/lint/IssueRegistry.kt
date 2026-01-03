@@ -21,8 +21,10 @@ import com.android.tools.lint.client.api.IssueRegistry
 import com.android.tools.lint.client.api.Vendor
 import com.android.tools.lint.detector.api.CURRENT_API
 import com.android.tools.lint.detector.api.Issue
+import com.ichi2.anki.lint.rules.ActivityLayoutPrefixDetector
 import com.ichi2.anki.lint.rules.AvoidAlertDialogUsage
 import com.ichi2.anki.lint.rules.CopyrightHeaderExists
+import com.ichi2.anki.lint.rules.DialogLayoutPrefixDetector
 import com.ichi2.anki.lint.rules.DirectCalendarInstanceUsage
 import com.ichi2.anki.lint.rules.DirectDateInstantiation
 import com.ichi2.anki.lint.rules.DirectGregorianInstantiation
@@ -32,6 +34,7 @@ import com.ichi2.anki.lint.rules.DirectSystemTimeInstantiation
 import com.ichi2.anki.lint.rules.DirectToastMakeTextUsage
 import com.ichi2.anki.lint.rules.DuplicateCrowdInStrings
 import com.ichi2.anki.lint.rules.FixedPreferencesTitleLength
+import com.ichi2.anki.lint.rules.FragmentLayoutPrefixDetector
 import com.ichi2.anki.lint.rules.HardcodedPreferenceKey
 import com.ichi2.anki.lint.rules.InvalidStringFormatDetector
 import com.ichi2.anki.lint.rules.JUnitNullAssertionDetector
@@ -42,6 +45,7 @@ import com.ichi2.anki.lint.rules.PrintStackTraceUsage
 import com.ichi2.anki.lint.rules.SentenceCaseConventions
 import com.ichi2.anki.lint.rules.TranslationTypo
 import com.ichi2.anki.lint.rules.VariableNamingDetector
+import com.ichi2.anki.lint.rules.ViewLayoutPrefixDetector
 
 class IssueRegistry : IssueRegistry() {
     // Keep this list lexicographically ordered.
@@ -49,7 +53,9 @@ class IssueRegistry : IssueRegistry() {
         get() {
             // Keep this list lexicographically ordered.
             return listOf(
+                ActivityLayoutPrefixDetector.ISSUE,
                 CopyrightHeaderExists.ISSUE,
+                DialogLayoutPrefixDetector.ISSUE,
                 DirectCalendarInstanceUsage.ISSUE,
                 DirectDateInstantiation.ISSUE,
                 DirectGregorianInstantiation.ISSUE,
@@ -58,6 +64,7 @@ class IssueRegistry : IssueRegistry() {
                 DirectSystemTimeInstantiation.ISSUE,
                 DirectToastMakeTextUsage.ISSUE,
                 DuplicateCrowdInStrings.ISSUE,
+                FragmentLayoutPrefixDetector.ISSUE,
                 HardcodedPreferenceKey.ISSUE,
                 JUnitNullAssertionDetector.ISSUE,
                 LocaleRootDetector.ISSUE,
@@ -71,6 +78,7 @@ class IssueRegistry : IssueRegistry() {
                 FixedPreferencesTitleLength.PREFERENCES_ISSUE_TITLE_LENGTH,
                 FixedPreferencesTitleLength.MENU_ISSUE_TITLE_LENGTH,
                 VariableNamingDetector.ISSUE,
+                ViewLayoutPrefixDetector.ISSUE,
                 InvalidStringFormatDetector.ISSUE,
                 AvoidAlertDialogUsage.ISSUE,
             )

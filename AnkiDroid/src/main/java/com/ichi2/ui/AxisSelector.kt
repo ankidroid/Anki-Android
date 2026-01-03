@@ -21,7 +21,7 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
 import com.ichi2.anki.R
-import com.ichi2.anki.databinding.AxisDisplayBinding
+import com.ichi2.anki.databinding.ViewAxisDisplayBinding
 import com.ichi2.anki.reviewer.Axis
 import com.ichi2.anki.reviewer.Binding
 import timber.log.Timber
@@ -30,13 +30,13 @@ import timber.log.Timber
  * Displays live values of an [Axis] (joystick/trigger), and allows selection of a binding if an
  * [extremity][AxisValueDisplay.isExtremity] has been received
  *
- * The [axisName][AxisDisplayBinding.axisName] of the Axis (AXIS_X)
+ * The [axisName][ViewAxisDisplayBinding.axisName] of the Axis (AXIS_X)
  *
  * The [value] of the Axis [-1, 1]
  *   - If a value hits an extremity, the display changes color. See [AxisValueDisplay]
  *
- * Two buttons: [selectMinExtremity][AxisDisplayBinding.selectMinExtremity] and
- *  [selectMaxExtremity][AxisDisplayBinding.selectMaxExtremity]
+ * Two buttons: [selectMinExtremity][ViewAxisDisplayBinding.selectMinExtremity] and
+ *  [selectMaxExtremity][ViewAxisDisplayBinding.selectMaxExtremity]
  *   - If an [extremity][AxisValueDisplay.isExtremity] is reached, these are activated
  *   - Calls [onExtremitySelectedListener] if tapped
  *
@@ -52,7 +52,7 @@ class AxisSelector : LinearLayout {
         defStyle,
     )
 
-    private val binding = AxisDisplayBinding.inflate(LayoutInflater.from(context), this, true)
+    private val binding = ViewAxisDisplayBinding.inflate(LayoutInflater.from(context), this, true)
 
     private var onExtremitySelectedListener: ((Binding.AxisButtonBinding) -> Unit)? = null
 

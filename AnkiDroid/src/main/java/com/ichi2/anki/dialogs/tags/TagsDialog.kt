@@ -35,7 +35,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.anki.browser.IdsFile
 import com.ichi2.anki.common.annotations.NeedsTest
-import com.ichi2.anki.databinding.TagsDialogBinding
+import com.ichi2.anki.databinding.DialogTagsBinding
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.NoteId
 import com.ichi2.anki.libanki.withCollapsedWhitespace
@@ -80,7 +80,7 @@ class TagsDialog : AnalyticsDialogFragment {
         CUSTOM_STUDY,
     }
 
-    private lateinit var binding: TagsDialogBinding
+    private lateinit var binding: DialogTagsBinding
     private var type: DialogType? = null
     private var tagsArrayAdapter: TagsArrayAdapter? = null
     private var toolbarSearchView: AccessibleSearchView? = null
@@ -175,7 +175,7 @@ class TagsDialog : AnalyticsDialogFragment {
             "filled as prefix properly. In other dialog types, long-clicking a tag behaves like a short click.",
     )
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        binding = TagsDialogBinding.inflate(layoutInflater)
+        binding = DialogTagsBinding.inflate(layoutInflater)
 
         val positiveText =
             if (type == DialogType.EDIT_TAGS) {
