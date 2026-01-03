@@ -68,7 +68,7 @@ import com.ichi2.anki.browser.registerFindReplaceHandler
 import com.ichi2.anki.browser.toCardBrowserLaunchOptions
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
-import com.ichi2.anki.databinding.CardBrowserBinding
+import com.ichi2.anki.databinding.ActivityCardBrowserBinding
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
 import com.ichi2.anki.dialogs.DiscardChangesDialog
 import com.ichi2.anki.dialogs.GradeNowDialog
@@ -143,7 +143,7 @@ open class CardBrowser :
 
     lateinit var viewModel: CardBrowserViewModel
 
-    private lateinit var binding: CardBrowserBinding
+    private lateinit var binding: ActivityCardBrowserBinding
 
     lateinit var cardBrowserFragment: CardBrowserFragment
 
@@ -165,14 +165,14 @@ open class CardBrowser :
         }
 
     // Dev option for Issue 18709
-    // TODO: Broken currently; needs R.layout.card_browser_searchview
+    // TODO: Broken currently; needs R.layout.activity_card_browser_searchview
     val useSearchView: Boolean
         get() = Prefs.devUsingCardBrowserSearchView
 
     @Suppress("unused")
     @get:LayoutRes
     private val layout: Int
-        get() = if (useSearchView) R.layout.card_browser_searchview else R.layout.card_browser
+        get() = if (useSearchView) R.layout.activity_card_browser_searchview else R.layout.activity_card_browser
 
     private var onEditCardActivityResult =
         registerForActivityResult(StartActivityForResult()) { result: ActivityResult ->
@@ -295,7 +295,7 @@ open class CardBrowser :
         }
         tagsDialogFactory = TagsDialogFactory(this).attachToActivity<TagsDialogFactory>(this)
         super.onCreate(savedInstanceState)
-        binding = CardBrowserBinding.inflate(layoutInflater)
+        binding = ActivityCardBrowserBinding.inflate(layoutInflater)
         if (!ensureStoragePermissions()) {
             return
         }

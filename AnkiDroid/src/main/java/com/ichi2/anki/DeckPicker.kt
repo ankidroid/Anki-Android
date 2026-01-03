@@ -101,9 +101,9 @@ import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.contextmenu.DeckPickerMenuContentProvider
 import com.ichi2.anki.contextmenu.MouseContextMenuHandler
+import com.ichi2.anki.databinding.ActivityHomescreenBinding
 import com.ichi2.anki.databinding.DeckPickerBinding
 import com.ichi2.anki.databinding.FloatingAddButtonBinding
-import com.ichi2.anki.databinding.HomescreenBinding
 import com.ichi2.anki.deckpicker.BITMAP_BYTES_PER_PIXEL
 import com.ichi2.anki.deckpicker.BackgroundImage
 import com.ichi2.anki.deckpicker.DeckDeletionResult
@@ -253,7 +253,7 @@ open class DeckPicker :
     CollectionPermissionScreenLauncher {
     val viewModel: DeckPickerViewModel by viewModels()
 
-    private lateinit var binding: HomescreenBinding
+    private lateinit var binding: ActivityHomescreenBinding
 
     @VisibleForTesting
     internal val deckPickerBinding: DeckPickerBinding
@@ -519,7 +519,7 @@ open class DeckPicker :
         // Then set theme and content view
         super.onCreate(savedInstanceState)
 
-        binding = HomescreenBinding.inflate(layoutInflater)
+        binding = ActivityHomescreenBinding.inflate(layoutInflater)
 
         // handle the first load: display the app introduction
         // This screen is currently better equipped to handle errors than IntroductionActivity
@@ -2073,7 +2073,7 @@ open class DeckPicker :
     /**
      * Displays [StudyOptionsFragment] in a side panel on larger devices
      *
-     * @see [HomescreenBinding.studyoptionsFragment]
+     * @see [ActivityHomescreenBinding.studyoptionsFragment]
      *
      * @return whether the panel was shown
      */
@@ -2539,5 +2539,5 @@ private fun AnkiActivity.launchCatchingRequiringOneWaySync(block: suspend () -> 
         }
     }
 
-val HomescreenBinding.studyoptionsFrame: FragmentContainerView?
+val ActivityHomescreenBinding.studyoptionsFrame: FragmentContainerView?
     get() = studyoptionsFragment

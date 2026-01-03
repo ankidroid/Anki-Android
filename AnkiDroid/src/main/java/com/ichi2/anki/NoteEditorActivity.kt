@@ -27,7 +27,7 @@ import com.ichi2.anki.NoteEditorActivity.Companion.FRAGMENT_ARGS_EXTRA
 import com.ichi2.anki.NoteEditorActivity.Companion.FRAGMENT_NAME_EXTRA
 import com.ichi2.anki.android.input.ShortcutGroup
 import com.ichi2.anki.android.input.ShortcutGroupProvider
-import com.ichi2.anki.databinding.NoteEditorBinding
+import com.ichi2.anki.databinding.ActivityNoteEditorBinding
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.noteeditor.NoteEditorFragmentDelegate
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
@@ -85,7 +85,7 @@ class NoteEditorActivity :
     val fragmented: Boolean
         get() = previewerFrame?.isVisible == true
 
-    private lateinit var binding: NoteEditorBinding
+    private lateinit var binding: ActivityNoteEditorBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
@@ -96,7 +96,7 @@ class NoteEditorActivity :
             return
         }
 
-        binding = NoteEditorBinding.inflate(layoutInflater)
+        binding = ActivityNoteEditorBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         previewerFrame = binding.previewerFrame
