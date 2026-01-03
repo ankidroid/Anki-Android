@@ -53,3 +53,20 @@ const CardType = {
 } as const;
 
 export type CardType = (typeof CardType)[keyof typeof CardType];
+
+/**
+ * Standardized error codes for API failures.
+ */
+export const ErrorCode = {
+    Unknown: "UNKNOWN",
+    ServerError: "SERVER_ERROR",
+    InvalidContact: "INVALID_CONTACT",
+    InvalidVersion: "INVALID_VERSION",
+    OutdatedVersion: "OUTDATED_VERSION",
+    UnsupportedMethod: "UNSUPPORTED_METHOD",
+    InvalidInput: "INVALID_INPUT",
+    FeatureNotAvailable: "FEATURE_NOT_AVAILABLE",
+    TtsError: "TTS_ERROR",
+} as const;
+
+export type ErrorCode = (typeof ErrorCode)[keyof typeof ErrorCode];

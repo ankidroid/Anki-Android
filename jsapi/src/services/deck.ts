@@ -26,10 +26,20 @@ export class Deck extends Service {
      * The deck ID. If null, it will represent the deck of the queue's top card.
      */
     private readonly id: DeckId | null;
+
+    /**
+     * Service for manipulating Anki deck.
+     *
+     * @param handler
+     * @param id the ID of the deck. If null, it will represent the deck
+     *  of the queue's top card. If not, it must be a positive integer.
+     *
+     * @throws {RangeError} if the provided ID is invalid.
+     */
     constructor(handler: Handler, id: DeckId | null = null) {
         super(handler);
         if (id !== null && (!Number.isInteger(id) || id <= 0)) {
-            throw new Error("Deck ID must be a positive integer.");
+            throw new RangeError("Deck ID must be a positive integer.");
         }
         this.id = id;
     }

@@ -15,6 +15,7 @@
  */
 
 import type { Contract, Result } from "./types";
+import { ErrorCode } from "./constants";
 
 /**
  * API requests handler
@@ -40,7 +41,8 @@ export class Handler {
             if (!response.ok) {
                 return {
                     success: false,
-                    error: `Request failed with status ${response.status}`,
+                    code: ErrorCode.ServerError,
+                    message: `Request failed with status ${response.status}`,
                 };
             }
 
@@ -51,13 +53,15 @@ export class Handler {
 
             return {
                 success: false,
-                error: "Invalid response format received from server",
+                code: ErrorCode.ServerError,
+                message: "Invalid response format received from server",
             };
         } catch (error) {
             const errorMessage = error instanceof Error ? error.message : "Unknown error occurred";
             return {
                 success: false,
-                error: errorMessage,
+                code: ErrorCode.Unknown,
+                message: errorMessage,
             };
         }
     }
@@ -67,7 +71,7 @@ export class Handler {
             return false;
         }
         if (!obj.success) {
-            return typeof obj.error === "string";
+            return "code" in obj && typeof obj.message === "string";
         }
         return "value" in obj;
     }

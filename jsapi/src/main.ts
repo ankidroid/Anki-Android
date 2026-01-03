@@ -70,6 +70,7 @@ export class Api {
 
     /**
      * Gets a Card instance for a specific card ID.
+     * @throws {RangeError} if the provided ID is invalid.
      */
     public getCard(id: CardId): Card {
         return new Card(this.handler, id);
@@ -77,6 +78,7 @@ export class Api {
 
     /**
      * Gets a Note instance for a specific note ID.
+     * @throws {RangeError} if the provided ID is invalid.
      */
     public getNote(id: NoteId): Note {
         return new Note(this.handler, id);
@@ -84,6 +86,7 @@ export class Api {
 
     /**
      * Gets a Deck instance for a specific deck ID.
+     * @throws {RangeError} if the provided ID is invalid.
      */
     public getDeck(id: DeckId): Deck {
         return new Deck(this.handler, id);
@@ -91,6 +94,7 @@ export class Api {
 
     /**
      * Gets a NoteType instance for a specific note type ID.
+     @throws {RangeError} if the provided ID is invalid.
      */
     public getNoteType(id: NoteTypeId): NoteType {
         return new NoteType(this.handler, id);

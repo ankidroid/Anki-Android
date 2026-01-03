@@ -10,7 +10,8 @@
         "format": "prettier --write \"src/**/*.ts\" \"scripts/**/*.ts\"",
         "lint": "eslint \"src/**/*.ts\"",
         "lint:fix": "eslint \"src/**/*.ts\" --fix",
-        "export:endpoints": "tsx scripts/export-endpoints.ts"
+        "export:endpoints": "tsx scripts/export-endpoints.ts",
+        "export:errors": "tsx scripts/export-error-codes.ts"
     },
     "devDependencies": {
         "@typescript-eslint/eslint-plugin": "^8.39.1",

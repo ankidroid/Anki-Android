@@ -26,6 +26,16 @@ export class NoteType extends Service {
      * The note type ID. If null, it will represent the note type of the queue's top card.
      */
     private readonly id: NoteTypeId | null;
+
+    /**
+     * Service for manipulating Anki note types.
+     *
+     * @param handler
+     * @param id the ID of the note type. If null, it will represent the note type
+     *  of the queue's top card. If not, it must be a positive integer.
+     *
+     * @throws {RangeError} if the provided ID is invalid.
+     */
     constructor(handler: Handler, id: NoteTypeId | null = null) {
         super(handler);
         if (id !== null && (!Number.isInteger(id) || id <= 0)) {

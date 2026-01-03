@@ -15,6 +15,7 @@
  */
 import type { Result } from "../types";
 import { Service } from "./service";
+import { ErrorCode } from "../constants";
 
 /**
  * Service for running Text-to-speech (TTS).
@@ -38,7 +39,11 @@ export class Tts extends Service {
      */
     public speak(text: string, queueMode: number): Promise<Result<void>> {
         if (queueMode !== 0 && queueMode !== 1) {
-            return Promise.resolve({ success: false, error: "Invalid queue mode." });
+            return Promise.resolve({
+                success: false,
+                code: ErrorCode.InvalidInput,
+                message: "Invalid queue mode.",
+            });
         }
         return this.request("speak", { text: text, queueMode: queueMode });
     }

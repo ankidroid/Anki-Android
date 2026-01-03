@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import type { CardType, Flag } from "../constants";
+import { type CardType, ErrorCode, type Flag } from "../constants";
 import type { CardId, DeckId, NoteId, Result, ReviewLog } from "../types";
 import { Service } from "./service";
 import type { Handler } from "../handler";
@@ -27,10 +27,20 @@ export class Card extends Service {
      * The card ID. If null, it will represent the queue's top card.
      */
     private readonly id: CardId | null;
+
+    /**
+     * Service for manipulating Anki cards.
+     *
+     * @param handler
+     * @param id the ID of the card. If null, it will represent the queue's top card.
+     *  If not, it must be a positive integer.
+     *
+     * @throws {RangeError} if the provided ID is invalid.
+     */
     constructor(handler: Handler, id: CardId | null = null) {
         super(handler);
         if (id !== null && (!Number.isInteger(id) || id <= 0)) {
-            throw new Error("Card ID must be a positive integer.");
+            throw new RangeError("Card ID must be a positive integer.");
         }
         this.id = id;
     }
@@ -243,7 +253,8 @@ export class Card extends Service {
         if (flag < 0 || flag > 7) {
             return Promise.resolve({
                 success: false,
-                error: "Flag must be an integer between 0 and 7.",
+                code: ErrorCode.InvalidInput,
+                message: "Flag must be an integer between 0 and 7.",
             });
         }
         return this.request("toggle-flag", { flag });

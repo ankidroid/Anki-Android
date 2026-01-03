@@ -27,10 +27,20 @@ export class Note extends Service {
      * The note ID. If null, it will represent the note of the queue's top card.
      */
     private readonly id: NoteId | null;
+
+    /**
+     * Service for manipulating Anki notes.
+     *
+     * @param handler
+     * @param id the ID of the note. If null, it will represent the note
+     *  of the queue's top card. If not, it must be a positive integer.
+     *
+     * @throws {RangeError} if the provided ID is invalid.
+     */
     constructor(handler: Handler, id: NoteId | null = null) {
         super(handler);
         if (id !== null && (!Number.isInteger(id) || id <= 0)) {
-            throw new Error("Note ID must be a positive integer.");
+            throw new RangeError("Note ID must be a positive integer.");
         }
         this.id = id;
     }

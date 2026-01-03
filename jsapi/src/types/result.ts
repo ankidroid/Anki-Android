@@ -14,15 +14,17 @@
  * limitations under the License.
  */
 
+import type { ErrorCode } from "../constants";
+
 /**
  * @param value The value returned by the API call.
  */
 export type Success<T> = { success: true; value: T };
 
 /**
- * @param error Error message.
+ * @param message Error message (not translated).
  */
-export type Failure = { success: false; error: string };
+export type Failure = { success: false; code: ErrorCode; message: string };
 
 /**
  * Base type for API results. TypeScript automatically discriminates
