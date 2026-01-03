@@ -51,6 +51,8 @@
     <string name="add_to_deck_decide_by_note_type">ਨੋਟ ਦੀ ਕਿਸਮ ਦੁਆਰਾ ਫੈਸਲਾ ਕਰੋ</string>
     <!-- theme labels -->
     <string name="theme_follow_system">ਸਿਸਟਮ ਦੀ ਪਾਲਣਾ ਕਰੋ</string>
+    <string name="theme_day" comment="Day/Light theme color scheme">Day</string>
+    <string name="theme_night" comment="Night/Dark theme color scheme">Night</string>
     <!-- day_theme_labels -->
     <string name="day_theme_light">ਰੋਸ਼ਨੀ</string>
     <string name="day_theme_plain">ਸਧਾਰਨ</string>
