@@ -55,7 +55,7 @@
     <string name="CardEditorTags">Etykiety: %1$s</string>
     <string name="CardEditorCards">Karty: %1$s</string>
     <string name="edit_occlusions">Edytuj okluzje</string>
-    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
+    <string name="paste_from_clipboard" maxLength="28">Wklej ze schowka</string>
     <string name="tag_name">Nazwa tagu</string>
     <string name="add_new_filter_tags">Dodaj/filtruj tagi</string>
     <string name="add_tag" maxLength="28">Dodaj tag</string>
@@ -67,7 +67,7 @@
     <string name="save_whiteboard" maxLength="28">Zapisz tablicę</string>
     <string name="enable_stylus" maxLength="28">Włącz tryb rysika</string>
     <string name="disable_stylus">Wyłącz tryb rysika</string>
-    <string name="eraser" maxLength="28">Eraser</string>
+    <string name="eraser" maxLength="28">Gumka</string>
     <string name="add_brush" maxLength="28">Add brush</string>
     <string name="whiteboard_align_left" comment="Option to align the whiteboard toolbar on the left" maxLength="28">Left</string>
     <string name="whiteboard_align_bottom" comment="Option to align the whiteboard toolbar on the bottom" maxLength="28">Bottom</string>

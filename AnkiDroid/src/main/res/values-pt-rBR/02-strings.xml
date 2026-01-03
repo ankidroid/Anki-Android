@@ -55,7 +55,7 @@
     <string name="CardEditorTags">Tags: %1$s</string>
     <string name="CardEditorCards">Cartões: %1$s</string>
     <string name="edit_occlusions">Editar Oclusões</string>
-    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
+    <string name="paste_from_clipboard" maxLength="28">Colar da área de transferência</string>
     <string name="tag_name">Nome da tag</string>
     <string name="add_new_filter_tags">Adicionar/filtrar tags</string>
     <string name="add_tag" maxLength="28">Adicionar tag</string>
@@ -167,7 +167,7 @@
     <string name="import_error_load_imported_database">Substituições do banco de dados do Anki (.anki2) não são ainda suportadas. Por favor, consulte o manual para obter instruções de substituição.</string>
     <string name="import_error_content_provider">O arquivo selecionado não pôde ser importado automaticamente pelo AnkiDroid. Por favor veja o manual do usuário para aprender a importar manualmente arquivos Anki: \n%s</string>
     <string name="import_error_copy_to_cache_title">Falha ao armazenar em cache o arquivo</string>
-    <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">This is often caused by a bug in the app you used to select the file. Please try the following fixes:\n\n%s</string>
+    <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">Isso é muitas vezes causado por uma falha no aplicativo que você usou para selecionar o arquivo. Por favor, tente as seguintes correções:\n\n%s</string>
     <string name="import_interrupted">Importação interrompida: AnkiDroid foi fechado</string>
     <string name="export_ready_title">Exportação pronta</string>
     <string name="export_send_no_handlers">Nenhum aplicativo disponível para lidar com apkg. Salvando&#8230;</string>
@@ -236,7 +236,7 @@
     <string name="search_decks" maxLength="28">Pesquisar baralhos</string>
     <string name="ankidroid_init_failed_webview_title">Erro Fatal</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid depende do System WebView que não está disponível. Isso pode acontecer se o sistema está instalando atualizações. Por favor, tente novamente em alguns minutos.\n\n%s</string>
-    <string name="ankidroid_init_failed_storage">AnkiDroid cannot access storage due to an Android error.\n\n%s</string>
+    <string name="ankidroid_init_failed_storage">AnkiDroid não pode acessar o armazenamento devido a um erro do Android.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">Tamanho da fonte</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Mostrar barra de ferramentas</string>
@@ -308,8 +308,8 @@
     <string name="field_editor_model_not_available">Não foi possível acessar a coleção. Tente novamente!</string>
     <string name="cd_manage_notetypes_add">Adicionar um novo modelo</string>
     <plurals name="note_types_selected">
-        <item quantity="one">%d note type selected</item>
-        <item quantity="other">%d note types selected</item>
+        <item quantity="one">Tipo de nota %d selecionado</item>
+        <item quantity="other">Tipos de nota %d selecionados</item>
     </plurals>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">Estude menos</string>
@@ -376,7 +376,7 @@
     <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">Copiar o modelo como markdown</string>
     <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">Editar aparência do navegador</string>
     <string name="missing_user_action_dialog_message" comment="%s is the user action number">A ação do usuário %s não está definida neste tipo de nota. Por favor, configure-a</string>
-    <string name="feature_not_supported_by_study_screen">This card has features that are not yet supported by the new study screen.</string>
+    <string name="feature_not_supported_by_study_screen">Este cartão possui funcionalidades que ainda não são suportadas pela nova tela de estudo.</string>
     <string name="directory_inaccessible_info">Aprenda mais sobre como restaurar o acesso aqui %s ou vá em opções para atualizar a pasta de coleções.</string>
     <!-- Scheduler Upgrade Required Dialog title-->
     <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">Melhoria de cronograma necessária</string>

@@ -47,7 +47,7 @@
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Адкрыць панэль</string>
     <string name="drawer_close">Закрыць панэль</string>
-    <string name="note_message">Note saved</string>
+    <string name="note_message">Нататка захавана</string>
     <!-- Note editor screen -->
     <string name="CardEditorCardDeck">Калода картак:</string>
     <string name="CardEditorNoteDeck">Калода:</string>
@@ -55,7 +55,7 @@
     <string name="CardEditorTags">Меткі: %1$s</string>
     <string name="CardEditorCards">Карткі: %1$s</string>
     <string name="edit_occlusions">Рэдагаваць аклюзіі</string>
-    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
+    <string name="paste_from_clipboard" maxLength="28">Уставіць з буфера абмену</string>
     <string name="tag_name">Назва меткі</string>
     <string name="add_new_filter_tags">Дадаць/фільтраваць меткі</string>
     <string name="add_tag" maxLength="28">Дадаць метку</string>
@@ -67,26 +67,26 @@
     <string name="save_whiteboard" maxLength="28">Захаваць дошку</string>
     <string name="enable_stylus" maxLength="28">Уключыць рэжым стылуса</string>
     <string name="disable_stylus">Адключыць рэжым стылуса</string>
-    <string name="eraser" maxLength="28">Eraser</string>
-    <string name="add_brush" maxLength="28">Add brush</string>
-    <string name="whiteboard_align_left" comment="Option to align the whiteboard toolbar on the left" maxLength="28">Left</string>
-    <string name="whiteboard_align_bottom" comment="Option to align the whiteboard toolbar on the bottom" maxLength="28">Bottom</string>
-    <string name="whiteboard_align_right" comment="Option to align the whiteboard toolbar on the right" maxLength="28">Right</string>
-    <string name="whiteboard_clear" comment="Button text to clear the whiteboard" maxLength="28">Clear</string>
-    <string name="whiteboard_more_options" comment="Tooltip of the whiteboard \'More\' button" maxLength="28">More options</string>
-    <string name="whiteboard_remove_brush_message">Are you sure you want to remove this brush from your palette?</string>
-    <string name="whiteboard_ink_eraser" comment="Title of the whiteboard Ink eraser">Ink</string>
-    <string name="whiteboard_stroke_eraser" comment="Title of the whiteboard Stroke eraser">Stroke</string>
-    <string name="stylus_mode" comment="Title of the menu item that toggles the whiteboard stylus mode" maxLength="28">Stylus mode</string>
-    <string name="cannot_remove_last_brush_message">The last brush may not be removed</string>
+    <string name="eraser" maxLength="28">Гумка</string>
+    <string name="add_brush" maxLength="28">Дадаць пэндзаль</string>
+    <string name="whiteboard_align_left" comment="Option to align the whiteboard toolbar on the left" maxLength="28">Злева</string>
+    <string name="whiteboard_align_bottom" comment="Option to align the whiteboard toolbar on the bottom" maxLength="28">Знізу</string>
+    <string name="whiteboard_align_right" comment="Option to align the whiteboard toolbar on the right" maxLength="28">Справа</string>
+    <string name="whiteboard_clear" comment="Button text to clear the whiteboard" maxLength="28">Ачысціць</string>
+    <string name="whiteboard_more_options" comment="Tooltip of the whiteboard \'More\' button" maxLength="28">Дадатковыя параметры</string>
+    <string name="whiteboard_remove_brush_message">Вы сапраўды хочаце выдаліць гэты пэндзаль з вашай палітры?</string>
+    <string name="whiteboard_ink_eraser" comment="Title of the whiteboard Ink eraser">Чарніла</string>
+    <string name="whiteboard_stroke_eraser" comment="Title of the whiteboard Stroke eraser">Штрых</string>
+    <string name="stylus_mode" comment="Title of the menu item that toggles the whiteboard stylus mode" maxLength="28">Рэжым пяра</string>
+    <string name="cannot_remove_last_brush_message">Апошні пэндзаль не можа быць выдалены</string>
     <string name="enable_whiteboard" maxLength="28">Уключыць дошку</string>
     <string name="disable_whiteboard">Адключыць дошку</string>
     <string name="show_whiteboard">Паказаць дошку</string>
-    <string name="enable_eraser" maxLength="28">Enable eraser</string>
-    <string name="disable_eraser" maxLength="28">Disable eraser</string>
+    <string name="enable_eraser" maxLength="28">Уключыць гумку</string>
+    <string name="disable_eraser" maxLength="28">Адключыць гумку</string>
     <string name="hide_whiteboard" maxLength="28">Схаваць дошку</string>
     <string name="clear_whiteboard" maxLength="28">Ачысціць дошку</string>
-    <string name="replay_media" maxLength="28">Replay media</string>
+    <string name="replay_media" maxLength="28">Паўтарыць медыя</string>
     <string name="leech_suspend_notification">Картка пазначана як надакучлівая і была прыпынена</string>
     <string name="leech_notification">Картка пазначаная як надакучлівая</string>
     <string name="webview_crash_unknown">Невядомая памылка</string>
@@ -97,10 +97,10 @@
     <string name="webview_crash_fatal">Крытычная памылка: збой апрацоўшчыка WebView. Прычына: %s</string>
     <string name="webview_crash_loop_dialog_title">Памылка апрацоўшчыка сістэмнага WebView</string>
     <string name="webview_crash_loop_dialog_content">Сістэмнаму WebView не атрымалася апрацаваць картку \'%1$s\'.\n %2$s</string>
-    <string name="slide_to_cancel" comment="Message shown when pressing the record button">Slide to cancel</string>
+    <string name="slide_to_cancel" comment="Message shown when pressing the record button">Правядзіце, каб скасаваць</string>
     <string name="filter_by_flags" maxLength="41">Сцягі</string>
     <!-- Custom study options -->
-    <string name="custom_study_loading_tags">Building list of tags&#8230;</string>
+    <string name="custom_study_loading_tags">Пабудова спіса тэгаў&#8230;</string>
     <!-- Study options -->
     <plurals name="studyoptions_buried_count">
         <item quantity="one">+%d адкладзеная</item>
@@ -108,8 +108,8 @@
         <item quantity="many">+%d адкладзеных</item>
         <item quantity="other">+%d адкладзеных</item>
     </plurals>
-    <string name="studyoptions_total_new_label">Total new cards</string>
-    <string name="studyoptions_total_label">Total cards</string>
+    <string name="studyoptions_total_new_label">Усяго новых картак</string>
+    <string name="studyoptions_total_label">Усяго картак</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card" maxLength="28">Рэдагаваць нататку</string>
     <string name="discard">Адхіліць</string>
@@ -124,12 +124,12 @@
     <string name="field_remapping">%1$s (з “%2$s”)</string>
     <string name="confirm_map_cards_to_nothing">Не супастаўленыя карткі будуць выдалены. Калі нататка не мае ніводнай карткі, то яна будзе згублена. Вы сапраўды хочаце працягнуць?</string>
     <string name="missing_note_type">Такі тып нататкі не знойдзены</string>
-    <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (empty)</string>
+    <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (пуста)</string>
     <!-- Image cropper -->
-    <string name="image_cropper_action_rotate" maxLength="28" comment="Action in image cropper screen">Rotate</string>
-    <string name="image_cropper_action_flip" maxLength="28" comment="Action in image cropper screen">Flip</string>
-    <string name="image_cropper_action_flip_horizontally" maxLength="28" comment="Submenu action in image cropper screen">Flip horizontally</string>
-    <string name="image_cropper_action_flip_vertically" maxLength="28" comment="Submenu action in image cropper screen">Flip vertically</string>
+    <string name="image_cropper_action_rotate" maxLength="28" comment="Action in image cropper screen">Павярнуць</string>
+    <string name="image_cropper_action_flip" maxLength="28" comment="Action in image cropper screen">Перавярнуць</string>
+    <string name="image_cropper_action_flip_horizontally" maxLength="28" comment="Submenu action in image cropper screen">Павярнуць гарызантальна</string>
+    <string name="image_cropper_action_flip_vertically" maxLength="28" comment="Submenu action in image cropper screen">Павярнуць вертыкальна</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">Дасягнутыя абмежаванні па часе</string>
     <plurals name="timebox_reached">
@@ -171,9 +171,9 @@
     <string name="import_error_handle_exception">Не атрымалася імпартаваць файл\n\n%s</string>
     <string name="import_error_not_apkg_extension">Назва файла \"%s\" не мае пашырэння .apkg або .colpkg</string>
     <string name="import_error_load_imported_database">Замена базы даных Anki (.anki2) пакуль не падтрымліваецца. Звярніцеся да даведніка для інструкцыі па замене.</string>
-    <string name="import_error_content_provider">The selected file couldn’t be imported automatically by AnkiDroid. Please see the user manual for how to manually import Anki files: \n%s</string>
+    <string name="import_error_content_provider">Выбраны файл немагчыма імпартаваць аўтаматычна ў праграму. Звярніцеся да даведніка карыстальніка для імпартавання файлаў Anki уручную: \n %s</string>
     <string name="import_error_copy_to_cache_title">Не атрымалася кэшыраваць файл</string>
-    <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">This is often caused by a bug in the app you used to select the file. Please try the following fixes:\n\n%s</string>
+    <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">Гэта часта з\'яўляецца прычынай памылкі ў праграме, якую вы выкарыстоўваеце для выбару файла. Паспрабуйце наступныя выпраўленні: \n\n%s</string>
     <string name="import_interrupted">Імпарт перарваны</string>
     <string name="export_ready_title">Экспартаванне выканана</string>
     <string name="export_send_no_handlers">Няма адпаведнай праграмы для апрацоўкі пакета apkg. Захаванне&#8230;</string>
@@ -213,14 +213,14 @@
     <!-- Deckpicker Background -->
     <string name="background_image_title" maxLength="41">Фон</string>
     <string name="choose_an_image" maxLength="41">Выберыце відарыс</string>
-    <string name="remove_wallpaper_image" maxLength="41">Remove background</string>
+    <string name="remove_wallpaper_image" maxLength="41">Выдаліць фон</string>
     <string name="remove_background_image">Выдаліць фон?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default" maxLength="28">Вярнуцца да прадвызначаных</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Пуста</string>
     <!-- Whiteboard eraser mode toggle message in Reviewer -->
-    <string name="white_board_eraser_enabled">Eraser mode activated</string>
-    <string name="white_board_eraser_disabled">Eraser mode deactivated</string>
+    <string name="white_board_eraser_enabled">Рэжым гумкі актываваны</string>
+    <string name="white_board_eraser_disabled">Рэжым гумкі дэактываваны</string>
     <!-- Whiteboard save image message in the Study Screen -->
     <string name="white_board_image_save_failed">Не атрымалася захаваць відарыс дошкі. %s</string>
     <string name="white_board_image_saved">Відарыс дошкі захаваны ў %s</string>
@@ -242,7 +242,7 @@
     <string name="search_decks" maxLength="28">Пошук калод</string>
     <string name="ankidroid_init_failed_webview_title">Крытычная памылка</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid выкарыстоўвае сістэмныя WebView, якія зараз недаступныя. Гэта можа здарыцца таму, што ў дадзены момант адбываюцца ўсталяванне абнаўленняў. Паспрабуйце, калі ласка, пачакаць і паўтарыць спробу праз некалькі хвілін.\n\n%s</string>
-    <string name="ankidroid_init_failed_storage">AnkiDroid cannot access storage due to an Android error.\n\n%s</string>
+    <string name="ankidroid_init_failed_storage">AnkiDroid не можа атрымаць доступ да сховішча з прычыны памылкі ў аперацыйнай сістэме.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">Памер шрыфту</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Паказаць панэль інструментаў</string>
@@ -263,7 +263,7 @@
     <string name="note_editor_image_too_large">Занадта вялікі відарыс, паспрабуйце ўставіць відарыс уручную</string>
     <string name="note_editor_video_too_large">Занадта вялікі відэафайл, паспрабуйце ўставіць відэа ўручную</string>
     <string name="note_editor_audio_too_large">Занадта вялікі аўдыяфайл, паспрабуйце ўставіць аўдыя ўручную</string>
-    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">Android backup in progress. Please try again</string>
+    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">Адбываецца рэзервовае капіяванне аперацыйнай сістэмы. Паспрабуйце яшчэ раз</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Паспрабуйце скарыстацца праграмай iManager для таго, каб дазволіць AnkiDroid дадаваць ярлыкі</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">Ваш галоўны экран не дазваляе праграме дадаваць ярлыкі</string>
     <string name="create_shortcut_error">\"Памылка дабаўлення ярлыка: %s</string>
@@ -279,7 +279,7 @@
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
     <string name="download_deck">Спампаваць калоду</string>
-    <string name="open_in_browser" comment="Label of a button inviting to open ankiweb\'s shared deck page if automated download failed">Open in browser</string>
+    <string name="open_in_browser" comment="Label of a button inviting to open ankiweb\'s shared deck page if automated download failed">Адкрыць у браўзеры</string>
     <string name="try_again">Паспрабуйце яшчэ</string>
     <string name="cancel_download">Скасаваць спампоўванне</string>
     <string name="cancel_download_question_title">Скасаваць спампоўванне?</string>
@@ -316,10 +316,10 @@
     <string name="field_editor_model_not_available">Збой атрымання доступу да калекцыі. Калі ласка, паспрабуйце яшчэ раз!</string>
     <string name="cd_manage_notetypes_add">Дадаць новы тып нататкі</string>
     <plurals name="note_types_selected">
-        <item quantity="one">%d note type selected</item>
-        <item quantity="few">%d note types selected</item>
-        <item quantity="many">%d note types selected</item>
-        <item quantity="other">%d note types selected</item>
+        <item quantity="one">Выбраны %d тып нататкі</item>
+        <item quantity="few">Выбраны %d тыпы нататкі</item>
+        <item quantity="many">Выбраны %d тыпаў нататкі</item>
+        <item quantity="other">Выбраны %d тыпаў нататкі</item>
     </plurals>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">Вучыцеся менш</string>
@@ -338,23 +338,23 @@
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Карткі</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Нататкі</string>
     <string name="toggle_cards_notes">Пераключыць Карткі/Нататкі</string>
-    <string name="truncate_content_help">Truncate the height of each row of the Browser to show only first 3 lines of content</string>
-    <string name="browser_options_dialog_heading">Browser options</string>
+    <string name="truncate_content_help">Скараціць вышыню кожнага радка браўзера для адлюстравання толькі першых 3 радкоў змесціва</string>
+    <string name="browser_options_dialog_heading">Параметры браўзера</string>
     <string name="audio_saved">Запіс захаваны</string>
     <string name="deleting_selected_notes">Выдаленне выбраных нататак</string>
-    <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">Tap a voice to listen</string>
-    <string name="tts_voices_selected_voice_should_be_installed" comment="If a voice has been tapped, is installable but not installed, we want to inform the user that they should install it for the best experience There will also be an option to use it without downloading">Voice should be installed before use</string>
-    <string name="tts_voices_use_selected_voice_without_install" comment="A user has been informed that a voice should be installed before use. This is text on a snackbar button which allows them to use the voice without installing it">Use anyway</string>
+    <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">Націсніце на голас, каб паслухаць</string>
+    <string name="tts_voices_selected_voice_should_be_installed" comment="If a voice has been tapped, is installable but not installed, we want to inform the user that they should install it for the best experience There will also be an option to use it without downloading">Перад выкарыстаннем неабходна ўсталяваць голас</string>
+    <string name="tts_voices_use_selected_voice_without_install" comment="A user has been informed that a voice should be installed before use. This is text on a snackbar button which allows them to use the voice without installing it">Усё роўна скарыстаць</string>
     <string name="tts_voices_playback_error_new" comment="an error occurred when playing a text to speech voice. The parameter is a technical error code such as \'ERROR_NOT_INSTALLED_YET\' or \'ERROR_NETWORK_TIMEOUT\'">Памылка сінтэзу маўлення (%s)</string>
     <!-- Chips should probably be in a separate file, due to the additional length req -->
-    <string name="tts_voices_chip_filter_to_internet" comment="     Filters a list of text to speech voices, to enable/disable voices which require the internet to     function.     This is on a chip control, so keep the text short, ideally one word">Internet</string>
-    <string name="tts_voices_chip_filter_to_installable_audio" comment="     Displays a list of Text to Speech voices which should be downloaded/installed before use     This is on a chip control, so keep the text short, ideally one word">Install</string>
-    <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">Failed to open text to speech settings</string>
+    <string name="tts_voices_chip_filter_to_internet" comment="     Filters a list of text to speech voices, to enable/disable voices which require the internet to     function.     This is on a chip control, so keep the text short, ideally one word">Інтэрнэт</string>
+    <string name="tts_voices_chip_filter_to_installable_audio" comment="     Displays a list of Text to Speech voices which should be downloaded/installed before use     This is on a chip control, so keep the text short, ideally one word">Усталяваць</string>
+    <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">Не ўдалося адкрыць налады сінтэзу маўлення</string>
     <string name="shared_decks_login_required">Увайдзіце, каб спампаваць больш калод</string>
     <string name="deck_description_field_hint">Апісанне</string>
-    <string name="deck_description_saved">Description updated</string>
-    <string name="format_deck_description_as_markdown">Format as Markdown</string>
-    <string name="help_button_content_description">Open help for ‘%s’</string>
+    <string name="deck_description_saved">Апісанне абноўлена</string>
+    <string name="format_deck_description_as_markdown">Фармат як Markdown</string>
+    <string name="help_button_content_description">Адкрыць даведку для ‘%s’</string>
     <string name="failed_to_copy">Не ўдалося скапіяваць</string>
     <string name="card_browser_unavailable_when_notes_mode">Недаступна ў рэжыме \"Нататка\"</string>
     <plurals name="unbury_cards_feedback">
@@ -364,8 +364,8 @@
         <item quantity="other">%d картак вернуты</item>
     </plurals>
     <string name="card_template_reposition_template" comment="move a card template to a new position" maxLength="28">Перамясціць</string>
-    <string name="previewer_next" comment="Name of the next button in the previewer" maxLength="28">Next</string>
-    <string name="previewer_back" comment="Name of the back button in the previewer" maxLength="28">Back</string>
+    <string name="previewer_next" comment="Name of the next button in the previewer" maxLength="28">Далей</string>
+    <string name="previewer_back" comment="Name of the back button in the previewer" maxLength="28">Назад</string>
     <string name="start_recording">Запіс</string>
     <string name="stop_recording">Стоп</string>
     <string name="play_recording">Прайграць</string>
@@ -387,9 +387,9 @@
     <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">Рэдагаваць стыль</string>
     <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">Капіяваць стыль як разметку</string>
     <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">Рэдагаваць выгляд браўзера</string>
-    <string name="missing_user_action_dialog_message" comment="%s is the user action number">User action %s is not set in this notetype. Please configure it</string>
-    <string name="feature_not_supported_by_study_screen">This card has features that are not yet supported by the new study screen.</string>
-    <string name="directory_inaccessible_info">Learn more about how to restore access here %s or go to settings to update collection folder.</string>
+    <string name="missing_user_action_dialog_message" comment="%s is the user action number">Карыстальніцкае дзеянне %s не зададзена ў гэтым тыпе нататкі. Сканфігурыруйце яе</string>
+    <string name="feature_not_supported_by_study_screen">У гэтай карткі ёсць функцыі, якія пакуль не падтрымліваюцца навучальным экранам.</string>
+    <string name="directory_inaccessible_info">Тут %s можна даведацца больш аб тым, як аднавіць доступ або перайдзіце ў налады для абнаўлення папкі калекцыі.</string>
     <!-- Scheduler Upgrade Required Dialog title-->
-    <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">Scheduler upgrade required</string>
+    <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">Патрабуецца абнаўленне планіроўшчыка</string>
 </resources>

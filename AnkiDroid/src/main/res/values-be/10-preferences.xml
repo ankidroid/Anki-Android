@@ -70,7 +70,7 @@
     <string name="pref_cat_advanced" maxLength="41">Дадаткова</string>
     <string name="pref_cat_workarounds" maxLength="41">Абходныя шляхі</string>
     <string name="pref_cat_plugins" maxLength="41">Плагiны</string>
-    <string name="pref_cat_editing" maxLength="41">Editing</string>
+    <string name="pref_cat_editing" maxLength="41">Рэдагаванне</string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width" maxLength="41">Шырыня штрыха</string>
     <string name="use_input_tag" maxLength="41">Уводзіць адказ на картцы</string>
@@ -84,7 +84,7 @@
     <string name="button_size" maxLength="41">Памер кнопкі адказу</string>
     <string name="card_browser_font_size" maxLength="41">Маштаб шрыфту аглядальніка картак</string>
     <string name="card_browser_hide_media" maxLength="41">Адлюстроўваць назвы файлаў</string>
-    <string name="card_browser_hide_media_summary">Display audio filenames in the card browser question/answer fields</string>
+    <string name="card_browser_hide_media_summary">Адлюстроўваць назвы аўдыяфайлаў у аглядальніку картак у палях пытанні/адказы</string>
     <string name="col_path" maxLength="41">Каталог AnkiDroid</string>
     <string name="fullscreen_review" maxLength="41">Поўнаэкранны рэжым</string>
     <string name="full_screen_off">Выключаны</string>
@@ -100,7 +100,7 @@
     <string name="gestures_summ">Прызначыць жэсты для такіх дзеянняў, як адказ і рэдагаванне картак.</string>
     <string name="gestures_corner_touch" maxLength="41">9-пунктавы дотык</string>
     <string name="gestures_corner_touch_summary">Дазволіць сэнсарныя жэсты ў вуглах экрана</string>
-    <string name="show_keyboard_shortcuts" maxLength="41">Show keyboard shortcuts</string>
+    <string name="show_keyboard_shortcuts" maxLength="41">Паказаць спалучэнні клавіш</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Поўнаэкранная панэль навігацыі</string>
     <string name="gestures_fullscreen_nav_drawer_summary">Адкрываць навігацыйную панэль пры правядзенні ўправа ў любым месцы экрана.</string>
     <string name="gestures_none" maxLength="41" comment="No gestures">Няма</string>
@@ -118,9 +118,9 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">Дотык пасярэдзіне</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Дотык ніжняга левага вугла</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Дотык ніжняга правага вугла</string>
-    <string name="gestures_two_finger_tap" maxLength="41">Two-finger tap</string>
-    <string name="gestures_three_finger_tap" maxLength="41">Three-finger tap</string>
-    <string name="gestures_four_finger_tap" maxLength="41">Four-finger tap</string>
+    <string name="gestures_two_finger_tap" maxLength="41">Націск двума пальцамі</string>
+    <string name="gestures_three_finger_tap" maxLength="41">Націск трыма пальцамі</string>
+    <string name="gestures_four_finger_tap" maxLength="41">Націск чатырма пальцамі</string>
     <string name="gestures_shake" maxLength="41">Патрасіце прыладу</string>
     <string name="card_browser_enable_external_context_menu" maxLength="41">Меню «%s»</string>
     <string name="card_browser_enable_external_context_menu_summary">Уключыць кантэкстнае меню «%s» у сістэме</string>
@@ -154,7 +154,7 @@
     <string name="notification_pref_title" maxLength="41">Апавяшчаць калі</string>
     <string name="never_notify">Ніколі не апавяшчаць</string>
     <string name="notify_when_pending">Толькі сістэмныя паведамленні</string>
-    <string name="notification_minimum_cards_due" comment="Consider keeping the unbreakable space after the digit">More than %d cards due</string>
+    <string name="notification_minimum_cards_due" comment="Consider keeping the unbreakable space after the digit">У чарзе наступная колькасць картак: %d</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Вібрацыя</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Мігаценне святлодыёда</string>
     <string name="select_locale_title">Выберыце мову</string>
@@ -174,7 +174,7 @@
     <string name="show_estimates" maxLength="41">Паказваць кнопку часу</string>
     <string name="show_estimates_summ">Паказваць наступны час паўтарэння над кнопкай адказу</string>
     <string name="show_large_answer_buttons" maxLength="41">Паказваць вялікія кнопкі адказу</string>
-    <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
+    <string name="show_large_answer_buttons_summ">Паказваць кнопкі адказу ў 2 радкі</string>
     <string name="show_top_bar" maxLength="41">Паказваць верхнюю панэль</string>
     <string name="show_top_bar_summary">Паказваць лічыльнік картак, таймер адказу, сцяжок і пазнаку на верхняй панэлі</string>
     <string name="show_progress" maxLength="41">Паказаць тое, што засталося</string>
@@ -186,10 +186,10 @@
     <string name="time_limit" maxLength="41">Абмежаванне навучальнага блока</string>
     <string name="day_offset_with_description" maxLength="41">Пачатак наступнага дня</string>
     <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
-        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">%d hour past midnight</item>
-        <item quantity="few">%d hours past midnight</item>
-        <item quantity="many">%d hours past midnight</item>
-        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">%d hours past midnight</item>
+        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">%d гадзіна пасля поўначы</item>
+        <item quantity="few">%d гадзіны пасля поўначы</item>
+        <item quantity="many">%d гадзін пасля поўначы</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">%d гадзін пасля поўначы</item>
     </plurals>
     <string name="pref_keep_screen_on" maxLength="41">Не выключаць экран</string>
     <string name="pref_keep_screen_on_summ">Адключыць час чакання экрана</string>
@@ -205,8 +205,8 @@
     <string name="reset">Скінуць</string>
     <string name="thirdparty_apps_title" maxLength="41">Праграмныя API іншых распрацоўшчыкаў</string>
     <string name="thirdparty_apps_summary">Паглядзець спіс праграм, якія выкарыстоўваць API AnkiDroid (слоўнікі, службовыя праграмы і г.д.).</string>
-    <string name="pref_controls_reviews_tab" maxLength="41" comment="Name of the tab to configure controls for the reviews screen">Reviews</string>
-    <string name="pref_controls_previews_tab" maxLength="41" comment="Name of the tab to configure controls for the previews screen">Previews</string>
+    <string name="pref_controls_reviews_tab" maxLength="41" comment="Name of the tab to configure controls for the reviews screen">Перагляды</string>
+    <string name="pref_controls_previews_tab" maxLength="41" comment="Name of the tab to configure controls for the previews screen">Перадпрагляды</string>
     <string name="toggle_backside_only" maxLength="41" comment="Control setting that toggles \'Backside only\' in the previews screen">Toggle backside only</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">Study Screen</string>
