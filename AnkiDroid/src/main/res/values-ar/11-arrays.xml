@@ -51,6 +51,8 @@
     <string name="add_to_deck_decide_by_note_type">قرر حسب نوع الملحوظة</string>
     <!-- theme labels -->
     <string name="theme_follow_system">حسب النظام</string>
+    <string name="theme_day" comment="Day/Light theme color scheme">Day</string>
+    <string name="theme_night" comment="Night/Dark theme color scheme">Night</string>
     <!-- day_theme_labels -->
     <string name="day_theme_light">ساطع</string>
     <string name="day_theme_plain">سادة</string>
