@@ -21,6 +21,17 @@ Discord is great for real-time/casual conversations. Records of the outcomes of 
 discussions should be copied to the relevant PR/issue (ideally linking to the Discord message).
  It's not expected that Discord history will be permanently retained.
 
+## AI Policy
+
+> [!CAUTION]
+> Using AI tools as a new contributor will result in moderator action.
+
+New contributors **may not** use any AI tools to produce contributions for AnkiDroid. This includes 
+ code, documentation, and GitHub comments (including spelling and grammar corrections).
+
+See our [AI policy](AI_POLICY.md) for when these restrictions are lifted from your account, and why 
+ they exist.
+
 ## Selecting an issue [[GitHub Search](https://github.com/ankidroid/Anki-Android/issues?q=is%3Aissue%20state%3Aopen)]
 
 If you are starting out with open source, we recommend starting with: [#13282: Fix Android Studio Warnings](<https://github.com/ankidroid/Anki-Android/issues/13282>).
