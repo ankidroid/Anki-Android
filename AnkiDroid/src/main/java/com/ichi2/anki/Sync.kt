@@ -70,6 +70,7 @@ fun syncAuth(): SyncAuth? {
             if (resolvedEndpoint != null) {
                 this.endpoint = resolvedEndpoint
             }
+            this.ioTimeoutSecs = Prefs.networkTimeoutSecs
         }
     }
 }

@@ -15,8 +15,9 @@
   ~  this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:search="http://schemas.android.com/apk/com.bytehamster.lib.preferencesearch"
+    xmlns:app="http://arbitrary.app.namespace/com.ichi2.anki"
+    xmlns:app1="http://schemas.android.com/apk/res-auto"
     android:title="@string/pref_cat_sync"
     android:key="@string/pref_sync_screen_key"
     xmlns:tools="http://schemas.android.com/tools">
@@ -32,7 +33,7 @@
         android:entryValues="@array/sync_media_values"
         android:key="@string/sync_fetch_media_key"
         android:title="@string/sync_fetch_missing_media"
-        app:useSimpleSummaryProvider="true"/>
+        app1:useSimpleSummaryProvider="true"/>
     <SwitchPreferenceCompat
         android:defaultValue="false"
         android:key="@string/automatic_sync_choice_key"
@@ -49,6 +50,19 @@
         android:title="@string/metered_sync_title"
         android:summary="@string/metered_sync_summary" />
     <PreferenceCategory android:title="@string/pref_cat_advanced">
+        <!-- Network timeout
+        Anki Desktop:
+        min is 30s
+        max is 99999s
+        https://github.com/ankitects/anki/blob/8f2144534bff6efedb22b7f052fba13ffe28cbc2/qt/aqt/profiles.py#L734-L735
+        https://github.com/ankitects/anki/blob/8f2144534bff6efedb22b7f052fba13ffe28cbc2/qt/aqt/forms/preferences.ui#L718-L742
+        -->
+        <com.ichi2.preferences.IncrementerNumberRangePreferenceCompat
+            android:key="@string/sync_io_timeout_secs_key"
+            android:defaultValue="60"
+            app:min="30"
+            app:max="99999"
+            tools:title="Network timeout" />
         <!-- `search:ignore` is set so that we can add this preference manually in the search index.
         We want to add it manually because we provide the summary at run time instead of build time, because it comes from the backend.
         If we didn't ignore it, searching for the title would return this preference twice.-->

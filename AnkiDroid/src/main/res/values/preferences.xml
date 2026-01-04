@@ -18,6 +18,7 @@
     <string name="pref_sync_screen_key">syncScreen</string>
     <string name="sync_account_key">syncAccount</string>
     <string name="sync_fetch_media_key">syncFetchMedia</string>
+    <string name="sync_io_timeout_secs_key">syncIoTimeoutSecs</string>
     <string name="automatic_sync_choice_key">automaticSyncMode</string>
     <string name="one_way_sync_key">one_way_sync</string>
     <string name="sync_status_badge_key">showSyncStatusBadge</string>
