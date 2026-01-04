@@ -255,6 +255,8 @@ open class PrefsRepository(
     val shouldFetchMedia: ShouldFetchMedia
         get() = getEnum(R.string.sync_fetch_media_key, ShouldFetchMedia.ALWAYS)
 
+    var networkTimeoutSecs by intPref(R.string.sync_io_timeout_secs_key, defaultValue = 60)
+
     //region Custom sync server
 
     val customSyncCertificate by stringPref(R.string.custom_sync_certificate_key)
