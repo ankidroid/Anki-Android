@@ -23,7 +23,6 @@ import android.os.Parcelable
 import android.os.Parcelable.ClassLoaderCreator
 import android.util.AttributeSet
 import android.util.SparseArray
-import android.view.AbsSavedState
 import android.view.ActionMode
 import android.view.LayoutInflater
 import android.view.View
@@ -135,10 +134,6 @@ class FieldEditLine : FrameLayout {
 
     val lastViewInTabOrder: View
         get() = binding.expandButton
-
-    fun loadState(state: AbsSavedState) {
-        onRestoreInstanceState(state)
-    }
 
     override fun dispatchSaveInstanceState(container: SparseArray<Parcelable>) {
         dispatchFreezeSelfOnly(container)
