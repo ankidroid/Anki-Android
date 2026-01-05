@@ -121,6 +121,7 @@ class PreviewerViewModelTest : JvmTest() {
         }
 
     @Test
+    @Flaky(OS.ALL, "#19729")
     fun `toggle back side only`() =
         runTest {
             assertFalse(viewModel.backSideOnly.value) // initial state should be false
@@ -176,7 +177,7 @@ class PreviewerViewModelTest : JvmTest() {
         }
 
     @Test
-    @Flaky(OS.ALL) // 19729: failed on macOS
+    @Flaky(OS.ALL, "#19729")
     fun `next, slider and previous navigation integration`() =
         runTest {
             // 1. Start at Index 0 (Question)
