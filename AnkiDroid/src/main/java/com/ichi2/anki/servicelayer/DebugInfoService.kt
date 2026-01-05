@@ -22,9 +22,7 @@ import com.ichi2.anki.BuildConfig
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CrashReportService
 import com.ichi2.utils.VersionUtils.pkgVersionName
-import com.ichi2.utils.getWebviewUserAgent
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import com.ichi2.utils.getWebViewInfo
 import org.acra.util.Installation
 import timber.log.Timber
 import net.ankiweb.rsdroid.BuildConfig as BackendBuildConfig
@@ -36,7 +34,7 @@ object DebugInfoService {
      * Note that the `FSRS` parameter can be null if the collection doesn't exist or the config is not set.
      */
     suspend fun getDebugInfo(info: Context): String {
-        val webviewUserAgent = withContext(Dispatchers.Main) { getWebviewUserAgent(info) }
+        val webviewInfo = getWebViewInfo(info)
         // isFSRSEnabled is null on startup
         val isFSRSEnabled = getFSRSStatus()
         return """
@@ -45,7 +43,7 @@ object DebugInfoService {
             Android Version = ${Build.VERSION.RELEASE} (SDK ${Build.VERSION.SDK_INT})
             ProductFlavor = ${BuildConfig.FLAVOR}
             Device Info = ${Build.MANUFACTURER} | ${Build.BRAND} | ${Build.DEVICE} | ${Build.PRODUCT} | ${Build.MODEL} | ${Build.HARDWARE}
-            Webview User Agent = $webviewUserAgent
+            WebView Info = [${webviewInfo.packageName} | ${webviewInfo.versionCode}]: ${webviewInfo.userAgent}
             ACRA UUID = ${Installation.id(info)}
             FSRS = ${BackendBuildConfig.FSRS_VERSION} (Enabled: $isFSRSEnabled)
             Crash Reports Enabled = ${isSendingCrashReports(info)}
