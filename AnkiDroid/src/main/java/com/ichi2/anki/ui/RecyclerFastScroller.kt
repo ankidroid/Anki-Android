@@ -372,6 +372,47 @@ class RecyclerFastScroller
             }
         }
 
+        override fun onTouchEvent(event: MotionEvent): Boolean {
+            return when (event.actionMasked) {
+                MotionEvent.ACTION_DOWN, MotionEvent.ACTION_MOVE -> {
+                    // Retrieve the adapter to determine item count.
+                    val adapter = recyclerView?.adapter ?: return false
+
+                    // Force the handle to be selected since the user is touching the track (the parent container) and not the handle itself.
+                    handle.isSelected = true
+
+                    // The valid scroll area is (height-handle.height), since the position of the handle is defined by it's top edge, we subtract it.
+                    val scrollableHeight = height - handle.height
+
+                    // Subtract half the handle's height and divide by 2 so the handle centers below the user's finger instead of hanging above or below.
+                    // Divide by the scrollableHeight to make sure that the handle doesn't go off the screen and we use coerceAtLeast to prevent divide by 0 errors
+                    val scrollProportion =
+                        ((event.y - handle.height / 2) / scrollableHeight.coerceAtLeast(1))
+                            .coerceIn(0f, 1f)
+
+                    // Calculates the item index we want to go to by multiplying our ScrollProportion to the item count
+                    // e.g. if we are going to 50% then 0.5*itemcount gives us the index we need.
+                    // toInt prevents decimal values, and coerceIn here makes it so when we scroll all the way to the end, we don't get an out of bounds error.
+                    val targetPosition =
+                        (scrollProportion * adapter.itemCount)
+                            .toInt()
+                            .coerceIn(0, adapter.itemCount - 1)
+
+                    try {
+                        recyclerView?.scrollToPosition(targetPosition)
+                    } catch (e: Exception) {
+                        Timber.w(e, "scrollToPosition")
+                    }
+                    true
+                }
+                MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
+                    handle.isSelected = false
+                    false
+                }
+                else -> super.onTouchEvent(event)
+            }
+        }
+
         override fun onLayout(
             changed: Boolean,
             left: Int,
