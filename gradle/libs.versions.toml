@@ -83,30 +83,31 @@ jacoco = "0.8.14"
 javaSemver = "0.10.2"
 jetbrainsAnnotations = "26.0.2-1"
 json = "20251224"
-jsoup = "1.21.2"
+# https://github.com/jhy/jsoup/releases
+jsoup = "1.22.1"
 androidTestJunit = "1.3.0"
 # https://github.com/junit-team/junit5/releases/
-junit = "6.0.1"
+junit = "6.0.2"
 # https://github.com/JetBrains/kotlin/releases/
 kotlin = '2.2.10'
 # https://github.com/Kotlin/kotlinx.serialization/releases
 kotlinxSerializationJson = "1.9.0"
 ktlintGradlePlugin = "14.0.1"
 leakcanaryAndroid = "2.14"
-lint = '31.13.2'
+lint = '32.0.0'
 material = "1.13.0"
 
 mockitoInline = "5.2.0"
-mockitoKotlin = "6.1.0"
+mockitoKotlin = "6.2.1"
 mockk = "1.14.7"
 nanohttpd = "2.3.1"
 okhttp = "5.3.2"
 # https://github.com/protocolbuffers/protobuf/releases
-protobufKotlinLite = "4.33.2"
+protobufKotlinLite = "4.33.4"
 # ../AnkiDroid/robolectricDownload.gradle may need changes - read instructions in that file
 robolectric = "4.16"
 # https://github.com/takahirom/roborazzi/releases
-roborazzi = "1.54.0"
+roborazzi = "1.56.0"
 searchpreference = "2.7.3"
 seismic = "1.0.3"
 sharedPreferencesMock = "1.2.4"

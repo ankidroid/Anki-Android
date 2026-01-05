@@ -33,3 +33,9 @@
 # Ignore unused packages
 -dontwarn javax.naming.**
 -dontwarn org.ietf.jgss.**
+
+# Ignore intended-to-be-optional re2j classes - only needed if using re2j for jsoup regex
+# jsoup safely falls back to JDK regex if re2j not on classpath, but has concrete re2j refs
+# See https://github.com/jhy/jsoup/issues/2459 - may be resolved in future, then this may be removed
+# See https://github.com/ankidroid/Anki-Android/pull/19985
+-dontwarn com.google.re2j.**
