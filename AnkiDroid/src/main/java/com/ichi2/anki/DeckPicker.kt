@@ -1425,8 +1425,15 @@ open class DeckPicker :
 
     private fun processReviewResults(resultCode: Int) {
         if (resultCode == AbstractFlashcardViewer.RESULT_NO_MORE_CARDS) {
-            CongratsPage.onReviewsCompleted(this, getColUnsafe.sched.totalCount() == 0)
-            fragment?.refreshInterface()
+            launchCatchingTask {
+                val isCollectionEmpty =
+                    withContext(Dispatchers.IO) {
+                        // reading db using coroutine
+                        withCol { sched.totalCount() == 0 }
+                    }
+                CongratsPage.onReviewsCompleted(this@DeckPicker, isCollectionEmpty)
+                fragment?.refreshInterface()
+            }
         }
     }
 
