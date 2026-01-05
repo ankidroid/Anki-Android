@@ -19,8 +19,7 @@
 ~ at developers, who are assumed to speak English.
 -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://arbitrary.app.namespace/com.ichi2.anki"
-    xmlns:app1="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:title="@string/pref_cat_dev_options"
     android:key="@string/pref_dev_options_screen_key">
     <SwitchPreferenceCompat
@@ -66,7 +65,7 @@
         <com.ichi2.preferences.IncrementerNumberRangePreferenceCompat
             android:key="@string/pref_fill_default_deck_number_key"
             android:title="Number of notes to generate"
-            app1:useSimpleSummaryProvider="true"
+            app:useSimpleSummaryProvider="true"
             android:defaultValue="200"
             app:min="1"
             />
@@ -81,14 +80,14 @@
         <com.ichi2.preferences.IncrementerNumberRangePreferenceCompat
             android:key="@string/pref_fill_collection_number_file_key"
             android:title="Number of files to generate"
-            app1:useSimpleSummaryProvider="true"
+            app:useSimpleSummaryProvider="true"
             android:defaultValue="20"
             app:min="1"
             />
         <com.ichi2.preferences.IncrementerNumberRangePreferenceCompat
             android:key="@string/pref_fill_collection_size_file_key"
             android:title="Size of the files to generate (in byte)"
-            app1:useSimpleSummaryProvider="true"
+            app:useSimpleSummaryProvider="true"
             android:defaultValue="1000000"
             app:min="1"
             />
