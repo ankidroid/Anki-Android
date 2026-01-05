@@ -20,7 +20,6 @@ import android.content.Context
 import android.text.InputType
 import android.util.AttributeSet
 import android.view.View
-import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
 import com.ichi2.anki.common.utils.ext.stringIterable
 import com.ichi2.anki.showThemedToast
@@ -105,8 +104,9 @@ class StepsPreference :
     }
 
     private fun getAllowEmptyFromAttributes(attrs: AttributeSet?): Boolean =
-        attrs?.getAttributeBooleanValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "allowEmpty", true)
-            ?: true
+        context.obtainStyledAttributes(attrs, R.styleable.StepsPreference).use {
+            it.getBoolean(R.styleable.StepsPreference_allowEmpty, true)
+        }
 
     companion object {
         /**
