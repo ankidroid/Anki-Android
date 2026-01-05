@@ -53,6 +53,7 @@ object LanguageUtils {
 
     private fun stripScriptAndExtensions(localeCodeStr: String): String {
         val hashPos = localeCodeStr.indexOf('#')
-        return if (hashPos >= 0) localeCodeStr.substring(0, hashPos) else localeCodeStr
+        // FIX: Use .take() instead of .substring()
+        return if (hashPos >= 0) localeCodeStr.take(hashPos) else localeCodeStr
     }
 }
