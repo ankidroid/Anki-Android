@@ -69,7 +69,7 @@ class FilteredDeckOptions :
             "{'search'=\"\", 'steps'=\"1 10 20\", 'order'=0}",
         )
 
-    inner class DeckPreferenceHack : AppCompatPreferenceActivity<FilteredDeckOptions.DeckPreferenceHack>.AbstractPreferenceHack() {
+    inner class DeckPreferenceHack : AppCompatPreferenceActivity<DeckPreferenceHack>.AbstractPreferenceHack() {
         var secondFilter = false
 
         override fun cacheValues() {
@@ -100,7 +100,7 @@ class FilteredDeckOptions :
             values["previewGoodSecs"] = deck.getString("previewGoodSecs")
         }
 
-        inner class Editor : AppCompatPreferenceActivity<FilteredDeckOptions.DeckPreferenceHack>.AbstractPreferenceHack.Editor() {
+        inner class Editor : AppCompatPreferenceActivity<DeckPreferenceHack>.AbstractPreferenceHack.Editor() {
             override fun commit(): Boolean {
                 Timber.d("commit() changes back to database")
                 for ((key, value) in update.valueSet()) {
