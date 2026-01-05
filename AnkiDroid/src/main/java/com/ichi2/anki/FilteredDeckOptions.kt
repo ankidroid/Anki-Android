@@ -38,8 +38,6 @@ import com.ichi2.anki.common.utils.ext.stringIterable
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.toDisplayString
-import com.ichi2.preferences.StepsPreference.Companion.convertFromJSON
-import com.ichi2.preferences.StepsPreference.Companion.convertToJSON
 import com.ichi2.themes.Themes
 import com.ichi2.ui.AppCompatPreferenceActivity
 import org.json.JSONArray
@@ -88,7 +86,7 @@ class FilteredDeckOptions :
             }
             val delays = deck.optJSONArray("delays")
             if (delays != null) {
-                values["steps"] = convertFromJSON(delays)
+                values["steps"] = convertFromStepsJSONArray(delays)
                 values["stepsOn"] = java.lang.Boolean.toString(true)
             } else {
                 values["steps"] = "1 10"
@@ -145,7 +143,7 @@ class FilteredDeckOptions :
                         "stepsOn" -> {
                             val on = value as Boolean
                             if (on) {
-                                val steps = convertToJSON(values["steps"]!!)
+                                val steps = convertStepsToJSONArray(values["steps"]!!)
                                 if (steps!!.length() > 0) {
                                     deck.put("delays", steps)
                                 }
@@ -154,7 +152,7 @@ class FilteredDeckOptions :
                             }
                         }
                         "steps" -> {
-                            deck.put("delays", convertToJSON((value as String)))
+                            deck.put("delays", convertStepsToJSONArray((value as String)))
                         }
                         "preset" -> {
                             val i: Int = (value as String).toInt()
@@ -416,6 +414,59 @@ class FilteredDeckOptions :
         ) = Intent(context, FilteredDeckOptions::class.java).apply {
             deckId?.let { putExtra(EXTRAS_DECK_ID, it) }
             searchTerms?.let { putExtra(EXTRAS_SEARCH, it) }
+        }
+
+        /**
+         * Convert steps format.
+         *
+         * @param a JSONArray representation of steps.
+         * @return The steps as a space-separated string.
+         */
+        fun convertFromStepsJSONArray(a: JSONArray): String {
+            val sb = StringBuilder()
+            for (s in a.stringIterable()) {
+                sb.append(s).append(" ")
+            }
+            return sb.toString().trim()
+        }
+
+        /**
+         * Convert steps format. For better usability, rounded floats are converted to integers (e.g., 1.0 is converted to
+         * 1).
+         *
+         * @param steps String representation of steps.
+         * @return The steps as a JSONArray or null if the steps are not valid.
+         */
+        fun convertStepsToJSONArray(steps: String): JSONArray? {
+            val stepsAr = JSONArray()
+            val stepsTrim = steps.trim()
+            if (steps.isEmpty()) {
+                return stepsAr
+            }
+            try {
+                for (s in stepsTrim.split("\\s+".toRegex()).toTypedArray()) {
+                    val d = s.toDouble()
+                    // 0 or less is not a valid step.
+                    if (d <= 0) {
+                        return null
+                    }
+                    // Use whole numbers if we can (but still allow decimals)
+                    val i = d.toInt()
+                    if (i.toDouble() == d) {
+                        stepsAr.put(i)
+                    } else {
+                        stepsAr.put(d)
+                    }
+                }
+            } catch (e: NumberFormatException) {
+                // Can't serialize float. Value likely too big/small.
+                Timber.w(e)
+                return null
+            } catch (e: JSONException) {
+                Timber.w(e)
+                return null
+            }
+            return stepsAr
         }
     }
 }
