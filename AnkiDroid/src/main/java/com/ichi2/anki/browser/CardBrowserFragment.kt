@@ -653,7 +653,7 @@ class CardBrowserFragment :
                 }
             } else {
                 val cardId = activityViewModel.queryDataForCardEdit(id)
-                requireCardBrowserActivity().openNoteEditorForCard(cardId)
+                requireCardBrowserActivity().setNoteEditorCard(cardId)
             }
         }
 
