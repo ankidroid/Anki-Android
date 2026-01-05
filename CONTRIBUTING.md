@@ -166,7 +166,7 @@ If you feel your PR is no longer reviewable because it requires significant work
 #### Label guide
 
 * **No label**
-  * Please ping a maintainer to add a '**Needs Review**' label 
+  * PRs should not be unlabeled, please ping a maintainer if this occurs. 
 * **[Needs Author Reply](https://github.com/ankidroid/Anki-Android/labels/Needs%20Author%20Reply)**
   * The PR will unlikely be looked at until requested changes are made.
 * **[Has Conflicts](https://github.com/ankidroid/Anki-Android/labels/Has%20Conflicts)**
