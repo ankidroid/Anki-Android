@@ -719,7 +719,7 @@ class NoteEditorTest : RobolectricTest() {
     ): NoteEditorFragment {
         val bundle =
             when (from) {
-                REVIEWER -> NoteEditorLauncher.EditCard(n.firstCard().id, DEFAULT).toBundle()
+                REVIEWER -> NoteEditorLauncher.EditSelection(n.firstCard().id, DEFAULT).toBundle()
                 DECK_LIST -> NoteEditorLauncher.AddNote().toBundle()
             }
         return openNoteEditorWithArgs(bundle)

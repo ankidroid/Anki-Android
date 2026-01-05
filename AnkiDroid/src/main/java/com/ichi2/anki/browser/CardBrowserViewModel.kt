@@ -168,7 +168,22 @@ class CardBrowserViewModel(
     val cardsOrNotes get() = flowOfCardsOrNotes.value
 
     // card that was clicked (not marked)
-    var currentCardId: CardId = 0
+    var currentCardId: CardId? = null
+
+    /**
+     * Computes and stores the current card ID used by the note editor.
+     */
+    suspend fun updateCurrentCardId(): CardId? {
+        currentCardId =
+            // Early return if no cards available
+            if (cards.isEmpty()) {
+                null
+            } else {
+                focusedRow?.toCardId(cardsOrNotes)
+                    ?: cards.firstOrNull()?.toCardId(cardsOrNotes)
+            }
+        return currentCardId
+    }
 
     var cardIdToBeScrolledTo: CardId? = null
         private set
@@ -332,7 +347,7 @@ class CardBrowserViewModel(
         return CardInfoDestination(firstSelectedCard, TR.currentCardBrowse())
     }
 
-    suspend fun queryDataForCardEdit(id: CardOrNoteId): CardId = id.toCardId(cardsOrNotes)
+    suspend fun queryDataForCardEdit(id: CardOrNoteId): CardId? = id.toCardId(cardsOrNotes)
 
     private suspend fun getInitialDeck(): SelectableDeck {
         // TODO: Handle the launch intent
@@ -564,8 +579,13 @@ class CardBrowserViewModel(
         }
     }
 
-    // on a row tap
-    fun openNoteEditorForCard(cardId: CardId) {
+    /**
+     * Opens the note editor for the given card.
+     *
+     * @param cardId The ID of the card to open in the note editor.
+     * Passing `null` indicates that no card is selected and will close the note editor
+     */
+    fun setNoteEditorCard(cardId: CardId?) {
         currentCardId = cardId
         if (!isFragmented) {
             endMultiSelectMode(SingleSelectCause.OpenNoteEditorActivity)
@@ -1236,7 +1256,7 @@ class CardBrowserViewModel(
 
     suspend fun queryCardIdAtPosition(index: Int): CardId = cards.queryCardIdsAt(index).first()
 
-    suspend fun querySelectedCardIdAtPosition(index: Int): CardId = selectedRows.toList()[index].toCardId(cardsOrNotes)
+    suspend fun querySelectedCardIdAtPosition(index: Int): CardId? = selectedRows.toList()[index].toCardId(cardsOrNotes)
 
     /**
      * Obtains two lists of column headings with preview data
