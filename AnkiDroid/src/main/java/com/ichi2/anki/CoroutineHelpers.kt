@@ -130,7 +130,10 @@ interface OnErrorListener {
 fun <T, U> T.launchCatchingIO(block: suspend T.() -> U): Job where T : ViewModel, T : OnErrorListener =
     viewModelScope.launchCatching(
         ioDispatcher,
-        { onError.emit(it) },
+        {
+            onError.emit(it)
+            if (throwOnShowError) throw IllegalStateException("throwOnShowError: $it")
+        },
         { block() },
     )
 
