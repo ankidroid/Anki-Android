@@ -17,6 +17,7 @@
 
 package com.ichi2.anki.multiprofile
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.test.core.app.ApplicationProvider
@@ -137,6 +138,7 @@ class ProfileContextWrapperTest {
     // --- Shared pref tests ---
 
     @Test
+    @SuppressLint("WrongConstant") // mockito eq support
     fun `getSharedPreferences prefixes name for custom profile`() {
         val wrapper = ProfileContextWrapper.create(baseContext, profileId, profileBaseDir)
         val originalName = "deck_options"
@@ -152,6 +154,7 @@ class ProfileContextWrapperTest {
     }
 
     @Test
+    @SuppressLint("WrongConstant") // mockito eq support
     fun `getSharedPreferences does not prefix name for default profile`() {
         val wrapper = ProfileContextWrapper.create(baseContext, ProfileId.DEFAULT, profileBaseDir)
         val originalName = "deck_options"
@@ -166,6 +169,7 @@ class ProfileContextWrapperTest {
     }
 
     @Test
+    @SuppressLint("WrongConstant") // mockito eq support
     fun `getSharedPreferences does not double-prefix if name is already prefixed`() {
         val wrapper = ProfileContextWrapper.create(baseContext, profileId, profileBaseDir)
         val alreadyPrefixedName = "profile_${profileId.value}_deck_options"
