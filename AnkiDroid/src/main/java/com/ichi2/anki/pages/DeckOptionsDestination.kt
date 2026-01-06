@@ -23,9 +23,15 @@ import com.ichi2.anki.FilteredDeckOptions
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.utils.Destination
 
-class DeckOptionsDestination(
-    private val deckId: DeckId,
-    private val isFiltered: Boolean,
+/**
+ * @param options the list of deck options to present to the user before going to deck options. This
+ * will contain the current deck target([deckId]) plus any other possible deck targets(ex: decks of
+ * the current studied card)
+ */
+data class DeckOptionsDestination(
+    val deckId: DeckId,
+    val isFiltered: Boolean,
+    val options: List<DeckOptionEntry> = emptyList(),
 ) : Destination {
     override fun toIntent(context: Context): Intent =
         if (isFiltered) {
@@ -52,3 +58,19 @@ class DeckOptionsDestination(
             }
     }
 }
+
+/**
+ * True if we need to show to the user a list of decks before going to the deck options, false otherwise.
+ */
+val DeckOptionsDestination.haMultipleOptions: Boolean
+    get() = options.isNotEmpty() && options.size > 1
+
+/**
+ * Information about a deck that appears in the list of possible deck targets when deck options are
+ * requested from the study screen.
+ */
+data class DeckOptionEntry(
+    val deckId: DeckId,
+    val name: String?,
+    val isFiltered: Boolean,
+)

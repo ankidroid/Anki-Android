@@ -28,14 +28,15 @@ import com.ichi2.anki.Reviewer
 import com.ichi2.anki.asyncIO
 import com.ichi2.anki.browser.BrowserDestination
 import com.ichi2.anki.cardviewer.SingleCardSide
+import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.libanki.Card
 import com.ichi2.anki.libanki.CardId
 import com.ichi2.anki.libanki.Collection
+import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.NoteId
 import com.ichi2.anki.libanki.redoLabel
-import com.ichi2.anki.libanki.sched.Counts
 import com.ichi2.anki.libanki.sched.CurrentQueueState
 import com.ichi2.anki.libanki.undoLabel
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
@@ -43,6 +44,7 @@ import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.pages.AnkiServer
 import com.ichi2.anki.pages.CardInfoDestination
+import com.ichi2.anki.pages.DeckOptionEntry
 import com.ichi2.anki.pages.DeckOptionsDestination
 import com.ichi2.anki.pages.PostRequestUri
 import com.ichi2.anki.pages.StatisticsDestination
@@ -281,13 +283,36 @@ class ReviewerViewModel(
         destinationFlow.emit(destination)
     }
 
+    @NeedsTest("verify that we show the expected deck options for the current card")
     private suspend fun emitDeckOptionsDestination() {
         val deckId = withCol { decks.getCurrentId() }
-        val isFiltered = withCol { decks.isFiltered(deckId) }
-        val destination = DeckOptionsDestination(deckId, isFiltered)
+        val card = currentCard.await()
+        // https://github.com/lukstbit/anki/blob/d24d2e33943af2361b5a9880572b30887efcf3ee/qt/aqt/deckoptions.py#L83-L100
+        val extraDeckIds = mutableListOf<DeckId>()
+        if (card.oDid != 0L && card.oDid != deckId) {
+            extraDeckIds.add(card.oDid)
+        }
+        if (card.did != deckId) {
+            extraDeckIds.add(card.did)
+        }
+        val options = getDeckSelectionOptions(listOf(deckId) + extraDeckIds)
+        val destination = DeckOptionsDestination(deckId, options[0].isFiltered, options)
         Timber.i("Launching 'deck options' for deck %d", deckId)
         destinationFlow.emit(destination)
     }
+
+    // backend sorts on dyn
+    private suspend fun getDeckSelectionOptions(dids: List<DeckId>): List<DeckOptionEntry> =
+        withCol {
+            dids
+                .map { deckId ->
+                    DeckOptionEntry(
+                        deckId = deckId,
+                        name = decks.nameIfExists(deckId),
+                        isFiltered = decks.isFiltered(deckId),
+                    )
+                }.sortedBy { it.isFiltered }
+        }
 
     private suspend fun emitBrowseDestination() {
         val deckId = withCol { decks.getCurrentId() }
