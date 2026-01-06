@@ -28,6 +28,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ichi2.anki.CardTemplateEditor
 import com.ichi2.anki.R
 import com.ichi2.anki.dialogs.InsertFieldDialogViewModel.Companion.KEY_FIELD_ITEMS
+import com.ichi2.anki.dialogs.InsertFieldDialogViewModel.Companion.KEY_INSERT_FIELD_METADATA
 import com.ichi2.anki.dialogs.InsertFieldDialogViewModel.Companion.KEY_REQUEST_KEY
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.utils.create
@@ -116,12 +117,14 @@ class InsertFieldDialog : DialogFragment() {
          */
         fun newInstance(
             fieldItems: List<String>,
+            metadata: InsertFieldMetadata,
             requestKey: String,
         ): InsertFieldDialog =
             InsertFieldDialog().apply {
                 arguments =
                     bundleOf(
                         KEY_FIELD_ITEMS to ArrayList(fieldItems),
+                        KEY_INSERT_FIELD_METADATA to metadata,
                         KEY_REQUEST_KEY to requestKey,
                     )
             }

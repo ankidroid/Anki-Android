@@ -16,12 +16,18 @@
 
 package com.ichi2.anki.dialogs
 
+import android.os.Parcelable
 import androidx.annotation.CheckResult
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import com.ichi2.anki.cardviewer.SingleCardSide
 import com.ichi2.anki.model.FieldName
+import com.ichi2.anki.model.SpecialFields
 import com.ichi2.anki.utils.ext.require
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.parcelize.Parcelize
+
+private typealias SpecialFieldModel = com.ichi2.anki.model.SpecialField
 
 /**
  * ViewModel for [InsertFieldDialog]
@@ -34,7 +40,16 @@ class InsertFieldDialogViewModel(
     /** The field names of the note type */
     val fieldNames = savedStateHandle.require<ArrayList<String>>(KEY_FIELD_ITEMS).map(::FieldName)
 
+    private val metadata = savedStateHandle.require<InsertFieldMetadata>(KEY_INSERT_FIELD_METADATA)
+
     val selectedFieldFlow = MutableStateFlow<SelectedField?>(null)
+
+    /**
+     * An ordered list of special fields which may be used
+     *
+     * @see com.ichi2.anki.model.SpecialField
+     */
+    val specialFields = SpecialFields.all(side = metadata.side)
 
     /**
      * Select a named field defined on the note type
@@ -42,6 +57,14 @@ class InsertFieldDialogViewModel(
     fun selectNamedField(fieldName: FieldName) {
         if (!fieldNames.contains(fieldName)) return
         selectedFieldFlow.value = SelectedField.NoteTypeField.from(fieldName)
+    }
+
+    /**
+     * Select a usable special field
+     */
+    fun selectSpecialField(field: SpecialFieldModel) {
+        if (!specialFields.contains(field)) return
+        selectedFieldFlow.value = SelectedField.SpecialField(model = field)
     }
 
     sealed class SelectedField {
@@ -60,6 +83,12 @@ class InsertFieldDialogViewModel(
             }
         }
 
+        class SpecialField(
+            val model: SpecialFieldModel,
+        ) : SelectedField() {
+            override fun renderToTemplateTag(): String = "{{${model.name}}}"
+        }
+
         /**
          * Renders the field for use in the Card Template
          *
@@ -71,6 +100,12 @@ class InsertFieldDialogViewModel(
 
     companion object {
         const val KEY_FIELD_ITEMS = "key_field_items"
+        const val KEY_INSERT_FIELD_METADATA = "key_field_options"
         const val KEY_REQUEST_KEY = "key_request_key"
     }
 }
+
+@Parcelize
+data class InsertFieldMetadata(
+    val side: SingleCardSide,
+) : Parcelable
