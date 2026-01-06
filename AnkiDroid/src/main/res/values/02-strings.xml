@@ -231,6 +231,13 @@
     <string name="update_js_api_version">AnkiDroid JS API update available. Contact developer %s, or view wiki</string>
     <string name="reviewer_invalid_api_version_visit_documentation">View</string>
     <string name="anki_js_error_code">(Error Code: %d)</string>
+    <string name="js_api_error_code">(Error code: %s)</string>
+    <string name="invalid_contact_message" comment="The placeholder is an error code (js_api_error_code)"
+        >The developer contact used in the AnkiDroid JS API is invalid. Fix it or ask the template author. %s</string>
+    <string name="invalid_js_api_version_message" comment="1st placeholder is the API version used by the template. 2nd is an -email or URL to contact the template developer. 3rd is an error code (js_api_error_code)"
+        >The ‘%1$s’ API version used by the template is invalid. Contact developer at %2$s. %3$s</string>
+    <string name="outdated_js_api_message" comment="1st placeholder is the API current version. 2nd is the template version. 3rd is an e-mail or URL to contact the template developer. 4th is an error code (js_api_error_code)"
+        >AnkiDroid JS API has been updated to the version %1$s. This template uses the %2$s version and may need to be updated as well to work. Contact developer at %3$s. %4$s</string>
 
     <!-- About AnkiDroid screen -->
     <string name="about_ankidroid_successfully_copied_debug_info">Copied to clipboard</string>

@@ -38,6 +38,7 @@ import androidx.appcompat.widget.ActionMenuView
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
+import androidx.core.graphics.toColorInt
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
@@ -62,6 +63,9 @@ import com.ichi2.anki.databinding.Reviewer2Binding
 import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
+import com.ichi2.anki.jsapi.Endpoint
+import com.ichi2.anki.jsapi.JsApi
+import com.ichi2.anki.jsapi.UiRequest
 import com.ichi2.anki.libanki.sched.Counts
 import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.preferences.reviewer.ViewerAction

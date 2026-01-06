@@ -50,6 +50,7 @@ class MediaErrorHandler : MediaErrorListener {
     private var hasExecuted = false
 
     private var automaticTtsFailureCount = 0
+    private var hasShownInvalidContractMessage = false
 
     override fun onError(uri: Uri): MediaErrorBehavior {
         if (uri.scheme != "file") {
@@ -154,5 +155,11 @@ class MediaErrorHandler : MediaErrorListener {
         // Maybe specifically check for APP_TTS_INIT_TIMEOUT
 
         errorHandler.invoke(error)
+    }
+
+    fun shouldShowJsApiExceptionMessage(): Boolean {
+        if (hasShownInvalidContractMessage) return false
+        hasShownInvalidContractMessage = true
+        return true
     }
 }

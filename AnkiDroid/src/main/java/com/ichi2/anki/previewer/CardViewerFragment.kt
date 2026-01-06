@@ -37,7 +37,12 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.ichi2.anki.R
 import com.ichi2.anki.ViewerResourceHandler
+import com.ichi2.anki.common.utils.ext.getIntOrNull
 import com.ichi2.anki.dialogs.TtsVoicesDialogFragment
+import com.ichi2.anki.jsapi.Endpoint
+import com.ichi2.anki.jsapi.JsApi
+import com.ichi2.anki.jsapi.JsApiError
+import com.ichi2.anki.jsapi.UiRequest
 import com.ichi2.anki.localizedErrorMessage
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.ext.collectIn
@@ -48,9 +53,11 @@ import com.ichi2.anki.workarounds.SafeWebViewClient
 import com.ichi2.anki.workarounds.SafeWebViewLayout
 import com.ichi2.compat.CompatHelper.Companion.resolveActivityCompat
 import com.ichi2.themes.Themes
+import com.ichi2.utils.NetworkUtils
 import com.ichi2.utils.show
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import org.json.JSONObject
 import timber.log.Timber
 
 abstract class CardViewerFragment(
@@ -67,6 +74,7 @@ abstract class CardViewerFragment(
     ) {
         setupWebView(savedInstanceState)
         setupErrorListeners()
+        setupJsApi()
         viewModel.eval.collectIn(lifecycleScope) { eval ->
             webViewLayout.evaluateJavascript(eval)
         }
@@ -139,6 +147,46 @@ abstract class CardViewerFragment(
         viewModel.onTtsError
             .onEach { showSnackbar(it.localizedErrorMessage(requireContext())) }
             .launchIn(lifecycleScope)
+
+        viewModel.onJsApiError.flowWithLifecycle(lifecycle).collectIn(lifecycleScope) { error ->
+            val errorMessage = error.localizedErrorMessage(resources)
+            AlertDialog
+                .Builder(requireContext())
+                .setTitle(R.string.vague_error)
+                .setMessage(errorMessage)
+                .show()
+        }
+    }
+
+    private fun setupJsApi() {
+        viewModel.apiRequestFlow.flowWithLifecycle(lifecycle).collectIn(lifecycleScope) { request ->
+            val result = handleJsUiRequest(request)
+            request.result.complete(result)
+        }
+    }
+
+    protected open fun handleJsUiRequest(request: UiRequest): ByteArray =
+        if (request.endpoint is Endpoint.Android) {
+            handleAndroidEndpoint(request.endpoint, request.data)
+        } else {
+            JsApi.fail(JsApiError.UnsupportedMethod, "Unhandled endpoint")
+        }
+
+    private fun handleAndroidEndpoint(
+        endpoint: Endpoint.Android,
+        data: JSONObject?,
+    ): ByteArray {
+        return when (endpoint) {
+            Endpoint.Android.SHOW_SNACKBAR -> {
+                val data = data ?: return JsApi.fail(JsApiError.InvalidInput, "Missing request data")
+                val text = data.optString("text") ?: return JsApi.fail(JsApiError.InvalidInput, "Missing text")
+                val duration = data.getIntOrNull("duration") ?: return JsApi.fail(JsApiError.InvalidInput, "Missing duration")
+                showSnackbar(text, duration)
+                JsApi.success()
+            }
+            Endpoint.Android.IS_SYSTEM_IN_DARK_MODE -> JsApi.success(Themes.systemIsInNightMode(requireContext()))
+            Endpoint.Android.IS_NETWORK_METERED -> JsApi.success(NetworkUtils.isActiveNetworkMetered())
+        }
     }
 
     protected open fun onCreateWebViewClient(savedInstanceState: Bundle?): CardViewerWebViewClient =
