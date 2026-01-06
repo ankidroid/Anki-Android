@@ -23,9 +23,11 @@ import androidx.lifecycle.ViewModel
 import com.ichi2.anki.cardviewer.SingleCardSide
 import com.ichi2.anki.model.FieldName
 import com.ichi2.anki.model.SpecialFields
+import com.ichi2.anki.utils.ext.asVar
 import com.ichi2.anki.utils.ext.require
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.parcelize.Parcelize
+import timber.log.Timber
 
 private typealias SpecialFieldModel = com.ichi2.anki.model.SpecialField
 
@@ -37,6 +39,11 @@ private typealias SpecialFieldModel = com.ichi2.anki.model.SpecialField
 class InsertFieldDialogViewModel(
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
+    var currentTabFlow: MutableStateFlow<Tab> =
+        savedStateHandle.getMutableStateFlow(STATE_TAB, Tab.FIELDS)
+
+    var currentTab by currentTabFlow.asVar()
+
     /** The field names of the note type */
     val fieldNames = savedStateHandle.require<ArrayList<String>>(KEY_FIELD_ITEMS).map(::FieldName)
 
@@ -55,6 +62,7 @@ class InsertFieldDialogViewModel(
      * Select a named field defined on the note type
      */
     fun selectNamedField(fieldName: FieldName) {
+        Timber.i("selected named field")
         if (!fieldNames.contains(fieldName)) return
         selectedFieldFlow.value = SelectedField.NoteTypeField.from(fieldName)
     }
@@ -63,6 +71,7 @@ class InsertFieldDialogViewModel(
      * Select a usable special field
      */
     fun selectSpecialField(field: SpecialFieldModel) {
+        Timber.i("selected special field: %s", field.name)
         if (!specialFields.contains(field)) return
         selectedFieldFlow.value = SelectedField.SpecialField(model = field)
     }
@@ -98,10 +107,20 @@ class InsertFieldDialogViewModel(
         abstract fun renderToTemplateTag(): String
     }
 
+    @Parcelize
+    enum class Tab(
+        val position: Int,
+    ) : Parcelable {
+        FIELDS(0),
+        SPECIAL(1),
+    }
+
     companion object {
         const val KEY_FIELD_ITEMS = "key_field_items"
         const val KEY_INSERT_FIELD_METADATA = "key_field_options"
         const val KEY_REQUEST_KEY = "key_request_key"
+
+        const val STATE_TAB = "state_tab"
     }
 }
 
