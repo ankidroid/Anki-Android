@@ -17,7 +17,12 @@
 package com.ichi2.anki.dialogs
 
 import androidx.lifecycle.SavedStateHandle
+import com.ichi2.anki.cardviewer.SingleCardSide
+import com.ichi2.anki.cardviewer.SingleCardSide.BACK
+import com.ichi2.anki.cardviewer.SingleCardSide.FRONT
+import com.ichi2.anki.dialogs.InsertFieldDialogViewModel.SelectedField
 import com.ichi2.anki.dialogs.InsertFieldDialogViewModel.SelectedField.NoteTypeField
+import com.ichi2.anki.model.SpecialFields
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.CoreMatchers.nullValue
 import org.hamcrest.MatcherAssert.assertThat
@@ -51,13 +56,73 @@ class InsertFieldDialogViewModelTest {
             assertThat(field.renderToTemplateTag(), equalTo("{{Front}}"))
         }
 
+    @Test
+    fun `special field ordering (Front)`() =
+        withViewModel(side = FRONT) {
+            assertThat(
+                this.specialFields,
+                equalTo(
+                    with(SpecialFields) {
+                        listOf(
+                            Deck,
+                            Subdeck,
+                            Tags,
+                            Flag,
+                            NoteType,
+                            CardTemplate,
+                            CardId,
+                        )
+                    },
+                ),
+            )
+        }
+
+    @Test
+    fun `special field ordering (Back)`() =
+        withViewModel(side = BACK) {
+            assertThat(
+                this.specialFields,
+                equalTo(
+                    with(SpecialFields) {
+                        listOf(
+                            FrontSide,
+                            Deck,
+                            Subdeck,
+                            Tags,
+                            Flag,
+                            NoteType,
+                            CardTemplate,
+                            CardId,
+                        )
+                    },
+                ),
+            )
+        }
+
+    @Test
+    fun `special field selection emits data`() =
+        withViewModel {
+            assertThat(selectedFieldFlow.value, nullValue())
+
+            selectSpecialField(SpecialFields.Deck)
+
+            val selectedField = assertNotNull(selectedFieldFlow.value)
+            val field = assertInstanceOf<SelectedField.SpecialField>(selectedField)
+            assertThat(field.renderToTemplateTag(), equalTo("{{Deck}}"))
+        }
+
     fun withViewModel(
         fieldList: List<String> = listOf("Front", "Back"),
+        side: SingleCardSide = FRONT,
         block: InsertFieldDialogViewModel.() -> Unit,
     ) {
         val savedStateHandle =
             SavedStateHandle().apply {
                 this[InsertFieldDialogViewModel.KEY_FIELD_ITEMS] = ArrayList(fieldList)
+                this[InsertFieldDialogViewModel.KEY_INSERT_FIELD_METADATA] =
+                    InsertFieldMetadata(
+                        side = side,
+                    )
             }
         withViewModel(savedStateHandle, block)
     }
