@@ -301,6 +301,33 @@ class NoteEditorTest : RobolectricTest() {
         }
 
     @Test
+    fun `changing note type preserves and restores field contents`() =
+        runTest {
+            val threeFieldNoteTypeName = "ThreeFieldType"
+            val fieldNames = arrayOf("F1", "F2", "F3")
+            addStandardNoteType(threeFieldNoteTypeName, fieldNames, "{{F1}}", "{{F2}}")
+            val threeFieldNoteType = col.notetypes.byName(threeFieldNoteTypeName)!!
+            val basicNoteType = col.notetypes.basic
+
+            withNoteEditorAdding {
+                noteType = threeFieldNoteType
+                val originalTexts = fieldNames.map { "Text for $it" }
+                originalTexts.forEachIndexed { i, text -> fields[i] = text }
+
+                noteType = basicNoteType
+
+                assertThat("Field 1 should be copied", fields[0], equalTo(originalTexts[0]))
+                assertThat("Field 2 should be copied", fields[1], equalTo(originalTexts[1]))
+
+                noteType = threeFieldNoteType
+
+                originalTexts.forEachIndexed { i, text ->
+                    assertThat("Field ${i + 1} should be restored from memory", fields[i], equalTo(text))
+                }
+            }
+        }
+
+    @Test
     fun `sticky fields do not impact current values`() =
         runTest {
             val basic = col.notetypes.basic
