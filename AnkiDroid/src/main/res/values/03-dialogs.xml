@@ -288,4 +288,8 @@ also changes the interval of the card"
     <string name="error_no_changes_to_save">No changes to save</string>
 
     <string name="choose_color">Choose color</string>
+
+    <!-- Special Fields -->
+    <string name="standard_fields_tab_header" comment="Tab header for inserting non-special fields: {{Front}}">Fields</string>
+    <string name="special_fields_tab_header" comment="Tab header for inserting special fields: {{Deck}}">Special</string>
 </resources>

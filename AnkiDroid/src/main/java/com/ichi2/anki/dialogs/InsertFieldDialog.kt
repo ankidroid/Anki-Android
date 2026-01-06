@@ -18,23 +18,35 @@ package com.ichi2.anki.dialogs
 
 import android.os.Bundle
 import android.view.View
+import android.view.View.MeasureSpec
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import com.ichi2.anki.CardTemplateEditor
 import com.ichi2.anki.R
+import com.ichi2.anki.databinding.DialogGenericRecyclerViewBinding
+import com.ichi2.anki.databinding.DialogInsertFieldBinding
 import com.ichi2.anki.dialogs.InsertFieldDialogViewModel.Companion.KEY_FIELD_ITEMS
 import com.ichi2.anki.dialogs.InsertFieldDialogViewModel.Companion.KEY_INSERT_FIELD_METADATA
 import com.ichi2.anki.dialogs.InsertFieldDialogViewModel.Companion.KEY_REQUEST_KEY
+import com.ichi2.anki.dialogs.InsertFieldDialogViewModel.Tab
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.utils.create
-import com.ichi2.utils.customListAdapter
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.title
+import dev.androidbroadcast.vbpd.viewBinding
 
 /**
  * Dialog fragment used to show the fields that the user can insert in the card editor. This
@@ -43,49 +55,55 @@ import com.ichi2.utils.title
  * @see [CardTemplateEditor.CardTemplateFragment]
  */
 class InsertFieldDialog : DialogFragment() {
+    private lateinit var binding: DialogInsertFieldBinding
     private val viewModel by viewModels<InsertFieldDialogViewModel>()
-    private lateinit var requestKey: String
+    private val requestKey
+        get() =
+            requireNotNull(requireArguments().getString(KEY_REQUEST_KEY)) {
+                KEY_REQUEST_KEY
+            }
 
     /**
      * A dialog for inserting field in card template editor
      */
     override fun onCreateDialog(savedInstanceState: Bundle?): AlertDialog {
         super.onCreate(savedInstanceState)
-        requestKey = requireArguments().getString(KEY_REQUEST_KEY)!!
-        val adapter: RecyclerView.Adapter<*> =
-            object : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-                override fun onCreateViewHolder(
-                    parent: ViewGroup,
-                    viewType: Int,
-                ): RecyclerView.ViewHolder {
-                    val root = layoutInflater.inflate(R.layout.material_dialog_list_item, parent, false)
-                    return object : RecyclerView.ViewHolder(root) {}
-                }
 
-                override fun onBindViewHolder(
-                    holder: RecyclerView.ViewHolder,
-                    position: Int,
-                ) {
-                    val textView = holder.itemView as TextView
-                    val field = viewModel.fieldNames[position]
-                    textView.text = field.name
-                    textView.setOnClickListener { viewModel.selectNamedField(field) }
-                }
-
-                override fun getItemCount(): Int = viewModel.fieldNames.size
+        binding = DialogInsertFieldBinding.inflate(layoutInflater)
+        val dialog =
+            AlertDialog.Builder(requireContext()).create {
+                title(R.string.card_template_editor_select_field)
+                negativeButton(R.string.dialog_cancel)
+                setView(binding.root)
             }
-        return AlertDialog.Builder(requireContext()).create {
-            title(R.string.card_template_editor_select_field)
-            negativeButton(R.string.dialog_cancel)
-            customListAdapter(adapter)
-        }
-    }
 
-    override fun onViewCreated(
-        view: View,
-        savedInstanceState: Bundle?,
-    ) {
-        super.onViewCreated(view, savedInstanceState)
+        binding.viewPager.adapter = InsertFieldDialogAdapter(this)
+        TabLayoutMediator(
+            binding.tabLayout,
+            binding.viewPager,
+        ) { tab: TabLayout.Tab, position: Int ->
+            val entry =
+                Tab.entries
+                    .first { it.position == position }
+
+            tab.text = entry.title
+        }.attach()
+        binding.tabLayout.selectTab(binding.tabLayout.getTabAt(viewModel.currentTab.position))
+
+        binding.viewPager.registerOnPageChangeCallback(
+            object : ViewPager2.OnPageChangeCallback() {
+                override fun onPageSelected(position: Int) {
+                    Tab.entries
+                        .first { it.position == position }
+                        .let { selectedTab ->
+                            viewModel.currentTab = selectedTab
+                        }
+                    super.onPageSelected(position)
+
+                    binding.viewPager.updateHeight(childFragmentManager)
+                }
+            },
+        )
 
         // setup flows
         launchCatchingTask {
@@ -98,6 +116,8 @@ class InsertFieldDialog : DialogFragment() {
                 dismiss()
             }
         }
+
+        return dialog
     }
 
     companion object {
@@ -129,4 +149,126 @@ class InsertFieldDialog : DialogFragment() {
                     )
             }
     }
+
+    class InsertFieldDialogAdapter(
+        fragment: Fragment,
+    ) : FragmentStateAdapter(fragment) {
+        override fun createFragment(position: Int): Fragment =
+            when (position) {
+                0 -> SelectBasicFieldFragment()
+                1 -> SelectSpecialFieldFragment()
+                else -> throw IllegalStateException("invalid position: $position")
+            }
+
+        override fun getItemCount() = 2
+    }
+
+    class SelectBasicFieldFragment : Fragment(R.layout.dialog_generic_recycler_view) {
+        val viewModel by viewModels<InsertFieldDialogViewModel>(
+            ownerProducer = { requireParentFragment() as InsertFieldDialog },
+        )
+        val binding by viewBinding(DialogGenericRecyclerViewBinding::bind)
+
+        override fun onViewCreated(
+            view: View,
+            savedInstanceState: Bundle?,
+        ) {
+            super.onViewCreated(view, savedInstanceState)
+
+            binding.root.layoutManager = LinearLayoutManager(context)
+            binding.root.adapter =
+                object : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+                    override fun onCreateViewHolder(
+                        parent: ViewGroup,
+                        viewType: Int,
+                    ): RecyclerView.ViewHolder {
+                        val root = layoutInflater.inflate(R.layout.material_dialog_list_item, parent, false)
+                        return object : RecyclerView.ViewHolder(root) {}
+                    }
+
+                    override fun onBindViewHolder(
+                        holder: RecyclerView.ViewHolder,
+                        position: Int,
+                    ) {
+                        val textView = holder.itemView as TextView
+                        val field = viewModel.fieldNames[position]
+                        textView.text = field.name
+                        textView.setOnClickListener { viewModel.selectNamedField(field) }
+                    }
+
+                    override fun getItemCount(): Int = viewModel.fieldNames.size
+                }
+        }
+    }
+
+    class SelectSpecialFieldFragment : Fragment(R.layout.dialog_generic_recycler_view) {
+        val viewModel by viewModels<InsertFieldDialogViewModel>(
+            ownerProducer = { requireParentFragment() as InsertFieldDialog },
+        )
+        val binding by viewBinding(DialogGenericRecyclerViewBinding::bind)
+
+        override fun onViewCreated(
+            view: View,
+            savedInstanceState: Bundle?,
+        ) {
+            super.onViewCreated(view, savedInstanceState)
+
+            binding.root.adapter =
+                object : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+                    override fun onCreateViewHolder(
+                        parent: ViewGroup,
+                        viewType: Int,
+                    ): RecyclerView.ViewHolder {
+                        val root = layoutInflater.inflate(R.layout.material_dialog_list_item, parent, false)
+                        return object : RecyclerView.ViewHolder(root) {}
+                    }
+
+                    override fun onBindViewHolder(
+                        holder: RecyclerView.ViewHolder,
+                        position: Int,
+                    ) {
+                        val textView = holder.itemView as TextView
+                        val field = viewModel.specialFields[position]
+                        textView.text = field.name
+                        textView.setOnClickListener { viewModel.selectSpecialField(field) }
+                    }
+
+                    override fun getItemCount(): Int = viewModel.specialFields.size
+                }
+            binding.root.layoutManager = LinearLayoutManager(context)
+        }
+    }
 }
+
+fun ViewPager2.updateHeight(fragmentManager: FragmentManager) {
+    fun getCurrentFragment(fragmentManager: FragmentManager): Fragment? {
+        val currentTag = "f$currentItem"
+        return fragmentManager.findFragmentByTag(currentTag)
+    }
+
+    post {
+        val fragment = getCurrentFragment(fragmentManager) ?: return@post
+        val recyclerView = fragment.view as? RecyclerView ?: return@post
+
+        // Measure RecyclerView height
+        recyclerView.measure(
+            MeasureSpec.makeMeasureSpec(width, MeasureSpec.EXACTLY),
+            MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED),
+        )
+
+        // Update ViewPager height
+        layoutParams.height = recyclerView.measuredHeight
+        requestLayout()
+    }
+}
+
+context(dialog: InsertFieldDialog)
+private val Tab.title: String
+    @StringRes
+    get() =
+        dialog.requireContext().getString(
+            when (this) {
+                Tab.FIELDS -> R.string.standard_fields_tab_header
+                Tab.SPECIAL -> R.string.special_fields_tab_header
+            },
+        )
