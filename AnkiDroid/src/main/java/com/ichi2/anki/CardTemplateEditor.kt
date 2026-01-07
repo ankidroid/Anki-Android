@@ -778,6 +778,10 @@ open class CardTemplateEditor :
             RenameCardTemplateDialog.showInstance(
                 requireContext(),
                 prefill = template.name,
+                existingNames =
+                    templateEditor.tempNoteType!!
+                        .notetype.templates
+                        .map { it.name },
             ) { newName ->
                 template.name = newName
                 Timber.i("updated card template name")

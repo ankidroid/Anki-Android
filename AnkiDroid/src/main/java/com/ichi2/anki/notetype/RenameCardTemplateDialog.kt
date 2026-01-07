@@ -20,6 +20,7 @@ import android.content.Context
 import androidx.appcompat.app.AlertDialog
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.R
+import com.ichi2.utils.getInputTextLayout
 import com.ichi2.utils.input
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
@@ -31,13 +32,14 @@ class RenameCardTemplateDialog {
         fun showInstance(
             context: Context,
             prefill: String,
+            existingNames: List<String>,
             block: (result: String) -> Unit,
         ) {
             AlertDialog
                 .Builder(context)
                 .show {
                     title(R.string.rename_card_type)
-                    positiveButton(R.string.dialog_ok) { }
+                    positiveButton(R.string.rename) { }
                     negativeButton(R.string.dialog_cancel)
                     setView(R.layout.dialog_generic_text_input)
                 }.input(
@@ -45,10 +47,23 @@ class RenameCardTemplateDialog {
                     displayKeyboard = true,
                     allowEmpty = false,
                     prefill = prefill,
-                    waitForPositiveButton = true,
+                    waitForPositiveButton = false,
                     callback = { dialog, result ->
-                        block(result.toString())
-                        dialog.dismiss()
+                        val text = result.toString()
+                        val isNotADuplicate = text == prefill || !existingNames.contains(text)
+                        if (isNotADuplicate) {
+                            dialog.getInputTextLayout().error = null
+                        } else {
+                            dialog.getInputTextLayout().error =
+                                context.getString(R.string.card_browser_list_my_searches_new_search_error_dup)
+                        }
+                        dialog.positiveButton.isEnabled = text.isNotEmpty() && isNotADuplicate
+                        dialog.positiveButton.setOnClickListener {
+                            if (text.isNotEmpty() && isNotADuplicate) {
+                                block(text)
+                                dialog.dismiss()
+                            }
+                        }
                     },
                 )
         }
