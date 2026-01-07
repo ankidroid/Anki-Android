@@ -40,7 +40,6 @@ import org.jetbrains.annotations.Contract
 import java.util.Locale
 import kotlin.math.min
 
-@NeedsTest("all except toTitleCase is untested")
 object StringUtils {
     /** Converts the string to where the first letter is uppercase, and the rest of the string is lowercase  */
     // TODO(low): some libAnki functions can use this instead of capitalize() alternatives
