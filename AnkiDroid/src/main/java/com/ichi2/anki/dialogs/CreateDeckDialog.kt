@@ -94,11 +94,15 @@ class CreateDeckDialog(
                 .Builder(context)
                 .show {
                     title(title)
-                    positiveButton(R.string.dialog_ok) { onPositiveButtonClicked() }
+                    positiveButton(R.string.dialog_positive_create) { onPositiveButtonClicked() }
                     negativeButton(R.string.dialog_cancel)
                     setView(R.layout.dialog_generic_text_input)
-                }.input(prefill = initialDeckName, displayKeyboard = true, waitForPositiveButton = false) { dialog, text ->
-
+                }.input(
+                    hint = CollectionManager.TR.actionsNewName(),
+                    prefill = initialDeckName,
+                    displayKeyboard = true,
+                    waitForPositiveButton = false,
+                ) { dialog, text ->
                     // defining the action of done button in ImeKeyBoard and enter button in physical keyBoard
                     val inputField = dialog.getInputField()
                     inputField.setOnEditorActionListener { _, actionId, event ->
@@ -132,7 +136,8 @@ class CreateDeckDialog(
                         dialog.positiveButton.isEnabled = false
                         return@input
                     }
-                    if (maybeDeckName != initialDeckName && deckExists(getColUnsafe, maybeDeckName)) {
+                    val isSameDeck = maybeDeckName.equals(initialDeckName, ignoreCase = true)
+                    if (!isSameDeck && deckExists(getColUnsafe, maybeDeckName)) {
                         dialog.getInputTextLayout().error = context.getString(R.string.deck_already_exists)
                         dialog.positiveButton.isEnabled = false
                         return@input
