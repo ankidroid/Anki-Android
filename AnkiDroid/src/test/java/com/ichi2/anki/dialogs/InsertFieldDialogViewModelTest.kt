@@ -122,6 +122,12 @@ class InsertFieldDialogViewModelTest {
                 this[InsertFieldDialogViewModel.KEY_INSERT_FIELD_METADATA] =
                     InsertFieldMetadata(
                         side = side,
+                        cardTemplateName = "Card Template",
+                        noteTypeName = "Note Type",
+                        tags = "tag1 tag2",
+                        cardId = 1,
+                        deck = "aa::bb",
+                        flag = 0,
                     )
             }
         withViewModel(savedStateHandle, block)

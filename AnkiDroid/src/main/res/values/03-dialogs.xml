@@ -290,4 +290,13 @@ also changes the interval of the card"
     <!-- Special Fields -->
     <string name="standard_fields_tab_header" comment="Tab header for inserting non-special fields: {{Front}}">Fields</string>
     <string name="special_fields_tab_header" comment="Tab header for inserting special fields: {{Deck}}">Special</string>
+    <string name="special_field_example_suffix"><![CDATA[: ‘<b>%1$s</b>’]]></string>
+    <string name="special_field_front_side_help">The front template content. Audio is not automatically played</string>
+    <string name="special_field_deck_help">The full deck of the card, including parent decks%s</string>
+    <string name="special_field_subdeck_help">The current deck of the card, excluding parent decks%s</string>
+    <string name="special_field_card_flag_help">Outputs ‘%1$s’, where %2$s is the flag code (%3$d\–%4$d\)</string>
+    <string name="special_field_tags_help">The tags of the note%s</string>
+    <string name="special_field_card_id_help">The ID of the card%s</string>
+    <string name="special_field_card_help">The name of the card template%s</string>
+    <string name="special_field_type_help">The name of the note type%s</string>
 </resources>

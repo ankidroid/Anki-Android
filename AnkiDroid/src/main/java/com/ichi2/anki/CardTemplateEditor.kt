@@ -544,6 +544,9 @@ open class CardTemplateEditor :
         private val cardIndex
             get() = requireArguments().getInt(CARD_INDEX)
 
+        private val templateName
+            get() = tempModel.notetype.templates[cardIndex].name
+
         val insertFieldRequestKey
             get() = "request_field_insert_$cardIndex"
 
@@ -775,17 +778,42 @@ open class CardTemplateEditor :
             "the kotlin migration made this method crash due to a recursive call when the dialog would return its data",
         )
         fun showInsertFieldDialog() {
-            templateEditor.fieldNames?.let { fieldNames ->
+            launchCatchingTask {
+                val fieldNames = templateEditor.fieldNames ?: return@launchCatchingTask
+
                 val side =
                     when (currentEditTab) {
                         EditTab.FRONT -> SingleCardSide.FRONT
                         EditTab.BACK -> SingleCardSide.BACK
                         else -> SingleCardSide.FRONT
                     }
+
+                val noteId = if (templateEditor.noteId > 0) templateEditor.noteId else null
+
+                // use the ord of the selected template, not the ord of the currently edited card
+
+                val ord =
+                    // deletions change ordinals, don't try to preview metadata if this occurs.
+                    if (tempModel.templateChanges.any {
+                            it.type == CardTemplateNotetype.ChangeType.DELETE
+                        }
+                    ) {
+                        null
+                    } else {
+                        templateEditor.ord
+                    }
+
                 val dialog =
                     InsertFieldDialog.newInstance(
                         fieldItems = fieldNames,
-                        metadata = InsertFieldMetadata(side = side),
+                        metadata =
+                            InsertFieldMetadata.query(
+                                side = side,
+                                noteId = noteId,
+                                ord = ord,
+                                cardTemplateName = templateName,
+                                noteTypeName = tempModel.notetype.name,
+                            ),
                         requestKey = insertFieldRequestKey,
                     )
                 templateEditor.showDialogFragment(dialog)
