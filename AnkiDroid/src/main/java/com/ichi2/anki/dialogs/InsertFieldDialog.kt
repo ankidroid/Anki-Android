@@ -16,17 +16,21 @@
 
 package com.ichi2.anki.dialogs
 
+import android.content.Context
 import android.os.Bundle
+import android.text.Spanned
+import android.view.LayoutInflater
 import android.view.View
-import android.view.View.MeasureSpec
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.annotation.CheckResult
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
+import androidx.core.text.HtmlCompat
+import androidx.core.text.parseAsHtml
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -35,18 +39,23 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.ichi2.anki.CardTemplateEditor
+import com.ichi2.anki.Flag
 import com.ichi2.anki.R
 import com.ichi2.anki.databinding.DialogGenericRecyclerViewBinding
 import com.ichi2.anki.databinding.DialogInsertFieldBinding
+import com.ichi2.anki.databinding.DialogInsertSpecialFieldRecyclerItemBinding
 import com.ichi2.anki.dialogs.InsertFieldDialogViewModel.Companion.KEY_FIELD_ITEMS
 import com.ichi2.anki.dialogs.InsertFieldDialogViewModel.Companion.KEY_INSERT_FIELD_METADATA
 import com.ichi2.anki.dialogs.InsertFieldDialogViewModel.Companion.KEY_REQUEST_KEY
 import com.ichi2.anki.dialogs.InsertFieldDialogViewModel.Tab
 import com.ichi2.anki.launchCatchingTask
+import com.ichi2.anki.model.SpecialField
+import com.ichi2.anki.model.SpecialFields
 import com.ichi2.utils.create
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.title
 import dev.androidbroadcast.vbpd.viewBinding
+import org.jetbrains.annotations.VisibleForTesting
 
 /**
  * Dialog fragment used to show the fields that the user can insert in the card editor. This
@@ -99,8 +108,6 @@ class InsertFieldDialog : DialogFragment() {
                             viewModel.currentTab = selectedTab
                         }
                     super.onPageSelected(position)
-
-                    binding.viewPager.updateHeight(childFragmentManager)
                 }
             },
         )
@@ -199,6 +206,11 @@ class InsertFieldDialog : DialogFragment() {
                     override fun getItemCount(): Int = viewModel.fieldNames.size
                 }
         }
+
+        override fun onResume() {
+            super.onResume()
+            this.requireView().post { requireView().requestLayout() }
+        }
     }
 
     class SelectSpecialFieldFragment : Fragment(R.layout.dialog_generic_recycler_view) {
@@ -214,52 +226,94 @@ class InsertFieldDialog : DialogFragment() {
             super.onViewCreated(view, savedInstanceState)
 
             binding.root.adapter =
-                object : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+                object : RecyclerView.Adapter<InsertFieldViewHolder>() {
                     override fun onCreateViewHolder(
                         parent: ViewGroup,
                         viewType: Int,
-                    ): RecyclerView.ViewHolder {
-                        val root = layoutInflater.inflate(R.layout.material_dialog_list_item, parent, false)
-                        return object : RecyclerView.ViewHolder(root) {}
-                    }
+                    ) = InsertFieldViewHolder(
+                        DialogInsertSpecialFieldRecyclerItemBinding.inflate(
+                            LayoutInflater.from(parent.context),
+                            parent,
+                            false,
+                        ),
+                    )
 
                     override fun onBindViewHolder(
-                        holder: RecyclerView.ViewHolder,
+                        holder: InsertFieldViewHolder,
                         position: Int,
                     ) {
-                        val textView = holder.itemView as TextView
                         val field = viewModel.specialFields[position]
-                        textView.text = field.name
-                        textView.setOnClickListener { viewModel.selectSpecialField(field) }
+
+                        holder.binding.title.text = "{{${field.name}}}"
+                        holder.binding.description.text = field.buildDescription(requireContext(), viewModel.metadata)
+                        holder.binding.root.setOnClickListener { viewModel.selectSpecialField(field) }
                     }
 
                     override fun getItemCount(): Int = viewModel.specialFields.size
                 }
             binding.root.layoutManager = LinearLayoutManager(context)
         }
+
+        override fun onResume() {
+            super.onResume()
+            // update the height of the ViewPager
+            this.requireView().post { requireView().requestLayout() }
+        }
     }
+
+    private class InsertFieldViewHolder(
+        val binding: DialogInsertSpecialFieldRecyclerItemBinding,
+    ) : RecyclerView.ViewHolder(binding.root)
 }
 
-fun ViewPager2.updateHeight(fragmentManager: FragmentManager) {
-    fun getCurrentFragment(fragmentManager: FragmentManager): Fragment? {
-        val currentTag = "f$currentItem"
-        return fragmentManager.findFragmentByTag(currentTag)
+@VisibleForTesting
+@CheckResult
+fun SpecialField.buildDescription(
+    context: Context,
+    metadata: InsertFieldMetadata,
+): Spanned {
+    fun buildSuffix(value: String?): String {
+        if (value == null) return ""
+        return context.getString(R.string.special_field_example_suffix, value)
     }
+    return when (this) {
+        SpecialFields.FrontSide -> context.getString(R.string.special_field_front_side_help)
+        SpecialFields.Deck ->
+            context.getString(R.string.special_field_deck_help, buildSuffix(metadata.deck))
 
-    post {
-        val fragment = getCurrentFragment(fragmentManager) ?: return@post
-        val recyclerView = fragment.view as? RecyclerView ?: return@post
+        SpecialFields.Subdeck ->
+            context.getString(R.string.special_field_subdeck_help, buildSuffix(metadata.subdeck))
+        SpecialFields.Flag -> {
+            val code = metadata.flag ?: "N"
+            context.getString(
+                R.string.special_field_card_flag_help,
+                if (code == "N") "flag$code" else "<b>flag$code</b>",
+                "<b>$code</b>",
+                Flag.entries.minOf { it.code },
+                Flag.entries.maxOf { it.code },
+            )
+        }
+        SpecialFields.Tags -> {
+            val tags = if (metadata.tags.isNullOrBlank()) null else metadata.tags
+            context.getString(R.string.special_field_tags_help, buildSuffix(tags))
+        }
+        SpecialFields.CardId ->
+            context.getString(R.string.special_field_card_id_help, buildSuffix(metadata.cardId?.toString()))
 
-        // Measure RecyclerView height
-        recyclerView.measure(
-            MeasureSpec.makeMeasureSpec(width, MeasureSpec.EXACTLY),
-            MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED),
-        )
+        SpecialFields.CardTemplate ->
+            context.getString(
+                R.string.special_field_card_help,
+                buildSuffix(metadata.cardTemplateName),
+            )
 
-        // Update ViewPager height
-        layoutParams.height = recyclerView.measuredHeight
-        requestLayout()
-    }
+        SpecialFields.NoteType ->
+            context.getString(
+                R.string.special_field_type_help,
+                buildSuffix(metadata.noteTypeName),
+            )
+        // this shouldn't happen
+        else -> ""
+    }.parseAsHtml(HtmlCompat.FROM_HTML_MODE_LEGACY)
 }
 
 context(dialog: InsertFieldDialog)

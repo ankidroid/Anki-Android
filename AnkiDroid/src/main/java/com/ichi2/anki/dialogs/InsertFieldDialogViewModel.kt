@@ -20,7 +20,12 @@ import android.os.Parcelable
 import androidx.annotation.CheckResult
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.cardviewer.SingleCardSide
+import com.ichi2.anki.common.utils.ellipsize
+import com.ichi2.anki.libanki.CardId
+import com.ichi2.anki.libanki.Decks
+import com.ichi2.anki.libanki.NoteId
 import com.ichi2.anki.model.FieldName
 import com.ichi2.anki.model.SpecialFields
 import com.ichi2.anki.utils.ext.asVar
@@ -47,7 +52,12 @@ class InsertFieldDialogViewModel(
     /** The field names of the note type */
     val fieldNames = savedStateHandle.require<ArrayList<String>>(KEY_FIELD_ITEMS).map(::FieldName)
 
-    private val metadata = savedStateHandle.require<InsertFieldMetadata>(KEY_INSERT_FIELD_METADATA)
+    /**
+     * State of the selected card when the screen was opened
+     *
+     * Used for providing [special fields][SpecialFields] with the output they'd produce.
+     */
+    val metadata = savedStateHandle.require<InsertFieldMetadata>(KEY_INSERT_FIELD_METADATA)
 
     val selectedFieldFlow = MutableStateFlow<SelectedField?>(null)
 
@@ -127,4 +137,63 @@ class InsertFieldDialogViewModel(
 @Parcelize
 data class InsertFieldMetadata(
     val side: SingleCardSide,
-) : Parcelable
+    val cardTemplateName: String,
+    val noteTypeName: String,
+    val tags: String?,
+    val flag: Int?,
+    val cardId: CardId?,
+    val deck: String?,
+) : Parcelable {
+    val subdeck: String?
+        get() = deck?.let { Decks.basename(it) }
+
+    companion object {
+        @CheckResult
+        suspend fun query(
+            side: SingleCardSide,
+            cardTemplateName: String,
+            noteTypeName: String,
+            noteId: NoteId?,
+            ord: Int?,
+        ): InsertFieldMetadata {
+            val note =
+                try {
+                    noteId?.let { nid -> withCol { getNote(nid) } }
+                } catch (e: Exception) {
+                    Timber.w(e, "failed to get note")
+                    null
+                }
+
+            // BUG: This is the saved tags of the note, not the currently edited tags
+            val tags =
+                note
+                    ?.tags
+                    ?.joinToString(separator = " ")
+                    // truncate, so we don't pass unbounded text into the arguments
+                    ?.ellipsize(75)
+
+            val card =
+                try {
+                    if (ord == null || note == null) {
+                        null
+                    } else {
+                        // ord can be invalid if the user has in-memory template additions
+                        withCol { note.cards(this).getOrNull(ord) }
+                    }
+                } catch (e: Exception) {
+                    Timber.w(e, "failed to get card")
+                    null
+                }
+
+            return InsertFieldMetadata(
+                side = side,
+                cardTemplateName = cardTemplateName,
+                noteTypeName = noteTypeName,
+                tags = tags,
+                cardId = card?.id,
+                flag = card?.userFlag(),
+                deck = card?.currentDeckId()?.let { did -> withCol { decks.get(did)?.name } },
+            )
+        }
+    }
+}
