@@ -35,6 +35,7 @@ class StudyScreenScreenshotTest(
     private val config: TestConfig,
 ) : ScreenshotTest() {
     init {
+        Prefs.isNewStudyScreenEnabled = true
         Prefs.toolbarPosition = config.toolbarPosition
         Prefs.showAnswerButtons = config.showAnswerButtons
         Prefs.frameStyle = config.frameStyle

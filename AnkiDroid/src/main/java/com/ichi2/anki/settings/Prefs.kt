@@ -339,7 +339,7 @@ open class PrefsRepository(
         get() = getBoolean(R.string.dev_options_enabled_by_user_key, false) || BuildConfig.DEBUG
         set(value) = putBoolean(R.string.dev_options_enabled_by_user_key, value)
 
-    val isNewStudyScreenEnabled by booleanPref(R.string.new_reviewer_options_key, false)
+    var isNewStudyScreenEnabled by booleanPref(R.string.new_reviewer_options_key, false)
 
     val devIsCardBrowserFragmented: Boolean
         get() = getBoolean(R.string.dev_card_browser_fragmented, false)
