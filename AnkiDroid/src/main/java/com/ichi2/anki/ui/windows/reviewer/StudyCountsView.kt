@@ -24,6 +24,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import com.ichi2.anki.databinding.ViewStudyCountsBinding
 import com.ichi2.anki.libanki.sched.Counts
+import com.ichi2.utils.UiUtil
 
 /**
  * Displays New, Learn, and Review counts.
@@ -47,9 +48,7 @@ class StudyCountsView : LinearLayout {
                 }
             text =
                 if (counts.activeQueue == queue) {
-                    SpannableString(newText).apply {
-                        setSpan(UnderlineSpan(), 0, length, 0)
-                    }
+                    UiUtil.underline(newText)
                 } else {
                     newText
                 }
