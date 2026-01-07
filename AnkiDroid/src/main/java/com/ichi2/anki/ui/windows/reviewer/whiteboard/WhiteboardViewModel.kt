@@ -14,6 +14,7 @@
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
 package com.ichi2.anki.ui.windows.reviewer.whiteboard
+
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.graphics.Path
@@ -26,11 +27,24 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import timber.log.Timber
+
+sealed class WhiteboardTool {
+    data class Brush(
+        val color: Int,
+        val width: Float,
+    ) : WhiteboardTool()
+
+    data class Eraser(
+        val mode: EraserMode,
+        val width: Float,
+    ) : WhiteboardTool()
+}
 
 /**
  * Represents a single drawing action on the whiteboard, such as a brush stroke or an eraser mark.
@@ -92,17 +106,60 @@ class WhiteboardViewModel(
     val inkEraserStrokeWidth = MutableStateFlow(WhiteboardRepository.DEFAULT_ERASER_WIDTH)
     val strokeEraserStrokeWidth = MutableStateFlow(WhiteboardRepository.DEFAULT_ERASER_WIDTH)
 
-    val brushColor = MutableStateFlow(Color.BLACK)
-    val activeStrokeWidth = MutableStateFlow(WhiteboardRepository.DEFAULT_STROKE_WIDTH)
     val isEraserActive = MutableStateFlow(false)
     val eraserMode = MutableStateFlow(EraserMode.INK)
     val isStylusOnlyMode = MutableStateFlow(false)
     val toolbarAlignment = MutableStateFlow(ToolbarAlignment.BOTTOM)
+    private val isStylusButtonPressed = MutableStateFlow(false)
 
-    val eraserDisplayWidth =
-        combine(eraserMode, inkEraserStrokeWidth, strokeEraserStrokeWidth) { mode, inkWidth, strokeWidth ->
-            if (mode == EraserMode.INK) inkWidth else strokeWidth
-        }.stateIn(viewModelScope, SharingStarted.Eagerly, WhiteboardRepository.DEFAULT_ERASER_WIDTH)
+    /**
+     * The current configuration of the eraser tool.
+     */
+    val eraserTool: StateFlow<WhiteboardTool.Eraser> =
+        combine(
+            eraserMode,
+            inkEraserStrokeWidth,
+            strokeEraserStrokeWidth,
+        ) { mode, inkW, strokeW ->
+            WhiteboardTool.Eraser(mode, if (mode == EraserMode.INK) inkW else strokeW)
+        }.stateIn(
+            viewModelScope,
+            SharingStarted.Eagerly,
+            WhiteboardTool.Eraser(EraserMode.INK, WhiteboardRepository.DEFAULT_ERASER_WIDTH),
+        )
+
+    /**
+     * The single source of truth for what tool is currently active.
+     * It combines the UI selection with real-time physical stylus input.
+     */
+    val effectiveTool: StateFlow<WhiteboardTool> =
+        combine(
+            isEraserActive,
+            activeBrushIndex,
+            brushes,
+            isStylusButtonPressed,
+            eraserTool,
+        ) { eraserActive, brushIndex, brushList, stylusOverride, eraserTool ->
+            when {
+                eraserActive || stylusOverride -> eraserTool
+                else -> {
+                    val brush = brushList.getOrNull(brushIndex) ?: BrushInfo(Color.BLACK, 10f)
+                    WhiteboardTool.Brush(brush.color, brush.width)
+                }
+            }
+        }.stateIn(
+            viewModelScope,
+            SharingStarted.Eagerly,
+            WhiteboardTool.Brush(Color.BLACK, WhiteboardRepository.DEFAULT_STROKE_WIDTH),
+        )
+
+    /**
+     * The color of the currently selected brush.
+     */
+    val brushColor =
+        combine(brushes, activeBrushIndex) { list, index ->
+            list.getOrNull(index)?.color ?: Color.BLACK
+        }.stateIn(viewModelScope, SharingStarted.Eagerly, Color.BLACK)
 
     private val pathsErasedInCurrentGesture = mutableListOf<DrawingAction>()
     private var pathsBeforeGesture: List<DrawingAction> = emptyList()
@@ -128,17 +185,34 @@ class WhiteboardViewModel(
     }
 
     /**
+     * Informs the ViewModel about physical stylus button state.
+     */
+    fun setStylusButtonPressed(isPressed: Boolean) {
+        isStylusButtonPressed.value = isPressed
+    }
+
+    /**
      * Adds a new completed path to the drawing history.
      */
     fun addPath(path: Path) {
-        val isPixelEraser = isEraserActive.value && eraserMode.value == EraserMode.INK
         val newAction =
-            DrawingAction(
-                path,
-                brushColor.value,
-                activeStrokeWidth.value,
-                isPixelEraser,
-            )
+            when (val tool = effectiveTool.value) {
+                is WhiteboardTool.Brush ->
+                    DrawingAction(
+                        path = path,
+                        color = tool.color,
+                        strokeWidth = tool.width,
+                        isEraser = false,
+                    )
+                is WhiteboardTool.Eraser ->
+                    DrawingAction(
+                        path = path,
+                        color = Color.TRANSPARENT,
+                        strokeWidth = tool.width,
+                        isEraser = true,
+                    )
+            }
+
         paths.update { it + newAction }
         undoStack.update { it + AddAction(newAction) }
         redoStack.value = emptyList()
@@ -160,6 +234,8 @@ class WhiteboardViewModel(
         y: Float,
     ) {
         if (paths.value.isEmpty()) return
+        val currentTool = effectiveTool.value
+        if (currentTool !is WhiteboardTool.Eraser || currentTool.mode != EraserMode.STROKE) return
 
         val remainingPaths = paths.value.toMutableList()
         var pathWasErased = false
@@ -167,7 +243,7 @@ class WhiteboardViewModel(
         val pathsToEvaluate = remainingPaths.filter { it !in pathsErasedInCurrentGesture && !it.isEraser }
 
         for (action in pathsToEvaluate) {
-            if (isPathIntersectingWithCircle(action, x, y, activeStrokeWidth.value / 2)) {
+            if (isPathIntersectingWithCircle(action, x, y, currentTool.width / 2)) {
                 remainingPaths.remove(action)
                 pathsErasedInCurrentGesture.add(action)
                 pathWasErased = true
@@ -188,15 +264,11 @@ class WhiteboardViewModel(
         cy: Float,
         eraserRadius: Float,
     ): Boolean {
-        val path = action.path
-        val pathStrokeWidth = action.strokeWidth
-
-        val pathMeasure = PathMeasure(path, false)
+        val pathMeasure = PathMeasure(action.path, false)
         val length = pathMeasure.length
         val pos = FloatArray(2)
 
-        val pathRadius = pathStrokeWidth / 2
-        val totalRadius = eraserRadius + pathRadius
+        val totalRadius = eraserRadius + action.strokeWidth / 2
         val totalRadiusSquared = totalRadius * totalRadius
 
         if (length == 0f) {
@@ -307,22 +379,15 @@ class WhiteboardViewModel(
      * Sets the active brush by its index and deactivates the eraser if it was active.
      */
     fun setActiveBrush(index: Int) {
-        val brush = brushes.value.getOrNull(index) ?: return
-
-        isEraserActive.value = false
-        activeBrushIndex.value = index
-        repository.saveLastActiveBrushIndex(index, isDarkMode)
-
-        brushColor.value = brush.color
-        activeStrokeWidth.value = brush.width
+        brushes.value.getOrNull(index)?.let {
+            isEraserActive.value = false
+            activeBrushIndex.value = index
+            repository.saveLastActiveBrushIndex(index, isDarkMode)
+        }
     }
 
-    /**
-     * Toggles the eraser tool on or off.
-     */
     fun enableEraser() {
         isEraserActive.value = true
-        activeStrokeWidth.value = eraserDisplayWidth.value
     }
 
     /**
@@ -331,14 +396,6 @@ class WhiteboardViewModel(
     fun setEraserMode(mode: EraserMode) {
         eraserMode.value = mode
         repository.eraserMode = mode
-        if (isEraserActive.value) {
-            activeStrokeWidth.value =
-                if (mode == EraserMode.INK) {
-                    inkEraserStrokeWidth.value
-                } else {
-                    strokeEraserStrokeWidth.value
-                }
-        }
     }
 
     /**
@@ -360,7 +417,6 @@ class WhiteboardViewModel(
             brushes.value = updatedBrushes
             repository.saveBrushes(updatedBrushes, isDarkMode)
         }
-        activeStrokeWidth.value = newWidth
     }
 
     @CheckResult
@@ -379,7 +435,6 @@ class WhiteboardViewModel(
 
         brushes.value = updatedBrushes
         repository.saveBrushes(brushes.value, isDarkMode)
-        brushColor.value = newColor
     }
 
     /**

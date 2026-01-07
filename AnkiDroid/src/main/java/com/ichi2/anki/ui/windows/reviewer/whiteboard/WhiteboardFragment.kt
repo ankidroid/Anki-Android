@@ -85,6 +85,7 @@ class WhiteboardFragment :
         observeViewModel(binding.whiteboardView)
 
         binding.whiteboardView.onNewPath = viewModel::addPath
+        binding.whiteboardView.onStylusButtonStateChanged = viewModel::setStylusButtonPressed
         binding.whiteboardView.onEraseGestureStart = viewModel::startPathEraseGesture
         binding.whiteboardView.onEraseGestureMove = viewModel::erasePathsAtPoint
         binding.whiteboardView.onEraseGestureEnd = viewModel::endPathEraseGesture
@@ -136,24 +137,17 @@ class WhiteboardFragment :
     private fun observeViewModel(whiteboardView: WhiteboardView) {
         viewModel.paths.onEach(whiteboardView::setHistory).launchIn(lifecycleScope)
 
-        combine(
-            viewModel.brushColor,
-            viewModel.activeStrokeWidth,
-        ) { color, width ->
-            whiteboardView.setCurrentBrush(color, width)
-        }.launchIn(lifecycleScope)
+        viewModel.effectiveTool
+            .onEach { tool ->
+                whiteboardView.setTool(tool)
+            }.launchIn(lifecycleScope)
 
         combine(
             viewModel.isEraserActive,
-            viewModel.eraserMode,
-            viewModel.eraserDisplayWidth,
-        ) { isActive, mode, width ->
-            whiteboardView.isEraserActive = isActive
-            binding.eraserButton.updateState(isActive, mode, width)
-            whiteboardView.eraserMode = mode
-            if (!isActive) {
-                eraserPopup?.dismiss()
-            }
+            viewModel.eraserTool,
+        ) { isActive, eraser ->
+            binding.eraserButton.updateState(isActive, eraser.mode, eraser.width)
+            if (!isActive) eraserPopup?.dismiss()
         }.launchIn(lifecycleScope)
 
         viewModel.brushes
@@ -377,7 +371,7 @@ class WhiteboardFragment :
         val inflater = LayoutInflater.from(requireContext())
         val eraserWidthBinding = PopupEraserOptionsBinding.inflate(inflater)
 
-        eraserWidthBinding.eraserWidthSlider.value = viewModel.eraserDisplayWidth.value
+        eraserWidthBinding.eraserWidthSlider.value = viewModel.eraserTool.value.width
         eraserWidthBinding.eraserWidthSlider.addOnChangeListener { _, value, fromUser ->
             if (fromUser) viewModel.setActiveStrokeWidth(value)
         }
