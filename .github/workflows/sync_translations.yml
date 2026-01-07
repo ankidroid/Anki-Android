@@ -3,6 +3,12 @@ name: 🌐 Sync Translations
 on:
   workflow_dispatch:
 
+# Ensure only one sync workflow runs at a time
+# Cancel any in-progress runs when a new one is triggered
+concurrency:
+  group: translation-sync
+  cancel-in-progress: true
+
 # We use a machine account PAT from secrets so workflows are triggered
 # the default token is not needed and should be fully restricted
 permissions: {}
@@ -10,7 +16,7 @@ permissions: {}
 jobs:
   sync_translations:
     name: 'Sync Translations with Crowdin'
-    timeout-minutes: 20
+    timeout-minutes: 50
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -18,6 +24,42 @@ jobs:
           token: ${{ secrets.MACHINE_ACCOUNT_PAT }}
           ref: 'main'
           fetch-depth: 0
+
+      - name: Enforce minimum 30-minute gap between syncs
+        run: |
+          echo "Checking last sync time to enforce 30-minute minimum gap..."
+          
+          # Fetch the i18n_sync branch to check last sync time
+          git fetch origin i18n_sync:i18n_sync 2>/dev/null || true
+          
+          # Get timestamp of last commit on i18n_sync (if it exists)
+          if git rev-parse --verify i18n_sync >/dev/null 2>&1; then
+            LAST_SYNC_TIME=$(git log -1 --format=%ct i18n_sync)
+            CURRENT_TIME=$(date +%s)
+            ELAPSED=$((CURRENT_TIME - LAST_SYNC_TIME))
+            REMAINING=$((1800 - ELAPSED))
+            
+            # Defensive: ensure REMAINING is never negative
+            if [ $REMAINING -lt 0 ]; then
+              REMAINING=0
+            fi
+            
+            if [ $REMAINING -gt 0 ]; then
+              MINUTES=$((REMAINING / 60))
+              SECONDS=$((REMAINING % 60))
+              echo "Last sync was $ELAPSED seconds ago."
+              echo "Waiting $MINUTES minutes and $SECONDS seconds to respect Crowdin rate limiting..."
+              echo "Sync will start at: $(date -u -d "+${REMAINING} seconds" '+%Y-%m-%d %H:%M:%S UTC')"
+              sleep $REMAINING
+            else
+              echo "Last sync was $ELAPSED seconds ago (≥30 min)."
+              echo "Proceeding immediately."
+            fi
+          else
+            echo "No previous sync found on i18n_sync branch."
+            echo "Proceeding immediately."
+          fi
+        shell: bash
 
       - name: Credential Prep
         run: |
