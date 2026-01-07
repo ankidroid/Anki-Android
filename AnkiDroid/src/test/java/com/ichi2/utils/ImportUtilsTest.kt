@@ -106,6 +106,132 @@ class ImportUtilsTest : RobolectricTest() {
         assertFalse(ImportUtils.isValidPackageName("test.docx"))
     }
 
+    @Test
+    fun emptyStringIsNotValidPackage() {
+        assertFalse(ImportUtils.isValidPackageName(""))
+    }
+
+    @Test
+    fun blankStringIsNotValidPackage() {
+        assertFalse(ImportUtils.isValidPackageName("   "))
+    }
+
+    @Test
+    fun fileWithoutExtensionIsNotValid() {
+        assertFalse(ImportUtils.isValidPackageName("collection"))
+    }
+
+    @Test
+    fun fileWithOnlyDotIsNotValid() {
+        assertFalse(ImportUtils.isValidPackageName("."))
+    }
+
+    @Test
+    fun apkgWithUppercaseExtensionIsValid() {
+        assertTrue(ImportUtils.isValidPackageName("deck.APKG"))
+    }
+
+    @Test
+    fun colpkgWithMixedCaseExtensionIsValid() {
+        assertTrue(ImportUtils.isValidPackageName("deck.ColPkg"))
+    }
+
+    @Test
+    fun apkgWithMultipleDotsInNameIsValid() {
+        assertTrue(ImportUtils.isValidPackageName("my.deck.name.apkg"))
+    }
+
+    @Test
+    fun colpkgWithMultipleDotsInNameIsValid() {
+        assertTrue(ImportUtils.isValidPackageName("my.deck.name.colpkg"))
+    }
+
+    @Test
+    fun fileWithTrailingSpacesIsNotValid() {
+        assertFalse(ImportUtils.isValidPackageName("deck.apkg "))
+    }
+
+    @Test
+    fun fileWithLeadingSpacesIsNotValid() {
+        assertFalse(ImportUtils.isValidPackageName(" deck.apkg"))
+    }
+
+    @Test
+    fun wrongExtensionIsNotValid() {
+        assertFalse(ImportUtils.isValidPackageName("deck.zip"))
+        assertFalse(ImportUtils.isValidPackageName("deck.txt"))
+        assertFalse(ImportUtils.isValidPackageName("deck.pdf"))
+    }
+
+    @Test
+    fun filenameWithSpecialCharactersIsValidIfExtensionCorrect() {
+        assertTrue(ImportUtils.isValidPackageName("deck@#$%.apkg"))
+        assertTrue(ImportUtils.isValidPackageName("deck(1).colpkg"))
+    }
+
+    @Test
+    fun veryLongFilenameWithValidExtension() {
+        val longName = "a".repeat(500) + ".apkg"
+        assertTrue(ImportUtils.isValidPackageName(longName))
+    }
+
+    @Test
+    fun filenameWithPathSeparatorsIsValidIfExtensionCorrect() {
+        assertTrue(ImportUtils.isValidPackageName("/path/to/deck.apkg"))
+        assertTrue(ImportUtils.isValidPackageName("C:\\path\\to\\deck.colpkg"))
+    }
+
+    @Test
+    fun filenameEncodingPreservesExtension() {
+        val inputFileName = "測試.apkg"
+        val actualFilePath = importValidFile(inputFileName)
+
+        assertThat("Extension should be preserved", actualFilePath, endsWith(".apkg"))
+        assertThat("Filename should be URL encoded", actualFilePath, containsString("%"))
+    }
+
+    @Test
+    fun extremelyLongUnicodeFilenameIsHandled() {
+        val inputFileName = "好".repeat(100) + ".apkg"
+        val actualFilePath = importValidFile(inputFileName)
+
+        assertThat("Should have ellipsis for truncation", actualFilePath, containsString("..."))
+        assertThat("Extension should be preserved", actualFilePath, endsWith(".apkg"))
+
+        val fileName = actualFilePath.substring(actualFilePath.lastIndexOf('/') + 1)
+        assertThat("Filename should be within limit", fileName.length, lessThanOrEqualTo(100))
+    }
+
+    @Test
+    fun mixedUnicodeAndAsciiFilename() {
+        val inputFileName = "My好Deck好.apkg"
+        val actualFilePath = importValidFile(inputFileName)
+
+        assertThat("Should preserve ASCII characters", actualFilePath, containsString("My"))
+        assertThat("Should preserve ASCII characters", actualFilePath, containsString("Deck"))
+        assertThat("Should URL encode unicode", actualFilePath, containsString("%"))
+        assertThat("Extension should be preserved", actualFilePath, endsWith(".apkg"))
+    }
+
+    @Test
+    fun filenameWithDotsAndUnicode() {
+        val inputFileName = "my.好.deck.apkg"
+        val actualFilePath = importValidFile(inputFileName)
+
+        assertThat("Extension should be preserved", actualFilePath, endsWith(".apkg"))
+        assertThat("Should contain URL encoded unicode", actualFilePath, containsString("%"))
+    }
+
+    @Test
+    fun colpkgFilenameLengthLimiting() {
+        val inputFileName = "好".repeat(50) + ".colpkg"
+        val actualFilePath = importValidFile(inputFileName)
+
+        assertThat("Extension should be preserved", actualFilePath, endsWith(".colpkg"))
+        val fileName = actualFilePath.substring(actualFilePath.lastIndexOf('/') + 1)
+        assertThat("Filename should be within limit", fileName.length, lessThanOrEqualTo(100))
+    }
+
     @CheckResult
     private fun getValidClipDataUri(fileName: String): Intent {
         val i = Intent()

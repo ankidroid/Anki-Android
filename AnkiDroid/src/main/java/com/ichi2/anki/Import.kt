@@ -49,7 +49,6 @@ fun interface ImportColpkgListener {
     fun onImportColpkg(colpkgPath: String?)
 }
 
-@NeedsTest("successful import from the app menu")
 fun AnkiActivity.onSelectedPackageToImport(data: Intent) {
     when (val importResult = ImportUtils.handleFileImport(this, data)) {
         is ImportResult.Failure ->
