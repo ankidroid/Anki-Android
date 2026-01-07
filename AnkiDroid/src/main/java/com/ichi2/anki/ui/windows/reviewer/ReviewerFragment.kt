@@ -483,7 +483,7 @@ class ReviewerFragment :
                 connect(
                     R.id.reviewer_menu_view,
                     ConstraintSet.START,
-                    R.id.counts_flow,
+                    R.id.counts_barrier,
                     ConstraintSet.END,
                 )
                 applyTo(binding.toolsLayout)
