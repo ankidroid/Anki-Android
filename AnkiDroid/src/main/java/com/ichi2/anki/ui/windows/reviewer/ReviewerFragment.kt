@@ -21,8 +21,6 @@ import android.hardware.SensorManager
 import android.net.Uri
 import android.os.Bundle
 import android.text.InputType
-import android.text.SpannableString
-import android.text.style.UnderlineSpan
 import android.view.KeyEvent
 import android.view.MenuItem
 import android.view.View
@@ -34,7 +32,7 @@ import android.widget.FrameLayout
 import android.widget.LinearLayout
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.ActionMenuView
-import androidx.constraintlayout.widget.ConstraintSet
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
 import androidx.core.view.ViewCompat
@@ -60,7 +58,6 @@ import com.ichi2.anki.databinding.Reviewer2Binding
 import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
-import com.ichi2.anki.libanki.sched.Counts
 import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.preferences.reviewer.ViewerAction
 import com.ichi2.anki.previewer.CardViewerActivity
@@ -124,9 +121,7 @@ class ReviewerFragment :
             when {
                 binding.typeAnswerContainer.isVisible -> binding.typeAnswerContainer
                 binding.answerArea.isVisible -> binding.answerArea
-                (Prefs.toolbarPosition == ToolbarPosition.BOTTOM || isBigScreen) ->
-                    binding.toolsLayout
-
+                Prefs.toolbarPosition == ToolbarPosition.BOTTOM -> binding.toolsLayout
                 else -> null
             }
     }
@@ -178,7 +173,6 @@ class ReviewerFragment :
         setupMenu()
         setupToolbarPosition()
         setupAnswerTimer()
-        setupToolbarOnBigWindows()
         setupMargins()
         setupCheckPronunciation()
         setupActions()
@@ -423,7 +417,7 @@ class ReviewerFragment :
         }
 
         val minTopPadding =
-            if (Prefs.frameStyle == FrameStyle.CARD && (isBigScreen || Prefs.toolbarPosition != ToolbarPosition.TOP)) {
+            if (Prefs.frameStyle == FrameStyle.CARD && Prefs.toolbarPosition != ToolbarPosition.TOP) {
                 8F.dp.toPx(requireContext())
             } else {
                 0
@@ -455,9 +449,27 @@ class ReviewerFragment :
             ToolbarPosition.TOP -> return
             ToolbarPosition.NONE -> binding.toolsLayout.isVisible = false
             ToolbarPosition.BOTTOM -> {
-                if (isBigScreen) return
                 binding.mainLayout.removeView(binding.toolsLayout)
                 binding.mainLayout.addView(binding.toolsLayout)
+
+                // Put the answer buttons inside the toolbar on big screens
+                if (!isBigScreen || !Prefs.showAnswerButtons) return
+                binding.bottomLayout.removeView(binding.answerArea)
+                binding.toolsLayout.addView(binding.answerArea)
+                binding.answerArea.updateLayoutParams<ConstraintLayout.LayoutParams> {
+                    width = 0
+                    matchConstraintPercentWidth = 0.6F
+                    matchConstraintMaxWidth = 480.dp.toPx(requireContext())
+                    topToTop = ConstraintLayout.LayoutParams.PARENT_ID
+                    bottomToBottom = ConstraintLayout.LayoutParams.PARENT_ID
+                    startToStart = ConstraintLayout.LayoutParams.PARENT_ID
+                    endToEnd = ConstraintLayout.LayoutParams.PARENT_ID
+                }
+                binding.reviewerMenuView.updateLayoutParams<ConstraintLayout.LayoutParams> {
+                    width = 0
+                    matchConstraintPercentWidth = 0.16F
+                    startToEnd = ConstraintLayout.LayoutParams.UNSET
+                }
             }
         }
     }
@@ -467,28 +479,9 @@ class ReviewerFragment :
      * of [Prefs.toolbarPosition], [Prefs.frameStyle] and `Hide answer buttons`
      */
     private fun setupMargins() {
-        if (Prefs.toolbarPosition == ToolbarPosition.BOTTOM) {
-            binding.complementsLayout?.showDividers =
+        if (Prefs.toolbarPosition == ToolbarPosition.BOTTOM && !isBigScreen) {
+            binding.bottomLayout.showDividers =
                 LinearLayout.SHOW_DIVIDER_MIDDLE or LinearLayout.SHOW_DIVIDER_BEGINNING
-        }
-    }
-
-    private fun setupToolbarOnBigWindows() {
-        val hideAnswerButtons = !Prefs.showAnswerButtons
-        // In big screens, let the menu expand if there are no answer buttons
-        if (hideAnswerButtons && isBigScreen) {
-            with(ConstraintSet()) {
-                clone(binding.toolsLayout)
-                clear(R.id.reviewer_menu_view, ConstraintSet.START)
-                connect(
-                    R.id.reviewer_menu_view,
-                    ConstraintSet.START,
-                    R.id.counts_barrier,
-                    ConstraintSet.END,
-                )
-                applyTo(binding.toolsLayout)
-            }
-            return
         }
     }
 
