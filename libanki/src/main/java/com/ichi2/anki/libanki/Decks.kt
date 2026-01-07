@@ -36,7 +36,6 @@ import anki.deck_config.UpdateDeckConfigsRequest
 import anki.decks.DeckTreeNode
 import anki.decks.SetDeckCollapsedRequest
 import anki.decks.copy
-import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.utils.ext.jsonObjectIterable
 import com.ichi2.anki.libanki.backend.BackendUtils
 import com.ichi2.anki.libanki.backend.BackendUtils.fromJsonBytes
@@ -479,7 +478,6 @@ class Decks(
 
     @LibAnkiAlias("decks_using_config")
     @Suppress("unused")
-    @NeedsTest("ensure that this matches upstream for dconf = 1 on corrupt decks")
     @CheckResult
     fun decksUsingConfig(config: DeckConfig): List<DeckId> {
         val dids = mutableListOf<DeckId>()
@@ -642,7 +640,6 @@ class Decks(
     }
 
     /** All existing parents of [name] */
-    @NeedsTest("implementation matches Anki's")
     @LibAnkiAlias("parents_by_name")
     fun parentsByName(name: String): List<Deck> {
         if (!name.contains("::")) {

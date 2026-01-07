@@ -26,6 +26,7 @@ import org.hamcrest.Matchers.equalTo
 import org.junit.Assert.assertThrows
 import org.junit.Test
 import org.junit.jupiter.api.assertDoesNotThrow
+import kotlin.test.DefaultAsserter.assertTrue
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
@@ -212,5 +213,324 @@ class DecksTest : InMemoryAnkiTest() {
         assertThat("filtered deck", decks.cardCount(filteredDeck, includeSubdecks = false), equalTo(1))
 
         assertThat("filtered and home deck", decks.cardCount(deckWithNoChildren, filteredDeck, includeSubdecks = false), equalTo(3))
+    }
+
+    @Test
+    fun test_decksUsingConfig() {
+        val decks = col.decks
+
+        // Create a custom deck config
+        val customConfig = decks.addConfigReturningId("Custom Config")
+        val customConfigObj = decks.getConfig(customConfig)!!
+
+        // Create multiple decks with different configs
+        val deck1 = addDeck("Deck1")
+        val deck2 = addDeck("Deck2")
+        val deck3 = addDeck("Deck3")
+        val deck4 = addDeck("Deck4")
+
+        // Assign custom config to deck1 and deck3
+        val deck1Obj = decks.getLegacy(deck1)!!
+        deck1Obj.put("conf", customConfig)
+        decks.save(deck1Obj)
+
+        val deck3Obj = decks.getLegacy(deck3)!!
+        deck3Obj.put("conf", customConfig)
+        decks.save(deck3Obj)
+
+        // deck2 and deck4 should use default config (id = 1)
+        // Get decks using the custom config
+        val decksUsingCustom = decks.decksUsingConfig(customConfigObj)
+
+        // Should return exactly deck1 and deck3
+        assertThat(decksUsingCustom.size, equalTo(2))
+        assertTrue(decksUsingCustom.contains(deck1))
+        assertTrue(decksUsingCustom.contains(deck3))
+        assertFalse(decksUsingCustom.contains(deck2))
+        assertFalse(decksUsingCustom.contains(deck4))
+
+        // Test with default config
+        val defaultConfig = decks.getConfig(1)!!
+        val decksUsingDefault = decks.decksUsingConfig(defaultConfig)
+
+        // Should include deck2, deck4, and the default deck
+        assertTrue(decksUsingDefault.contains(deck2))
+        assertTrue(decksUsingDefault.contains(deck4))
+        assertFalse(decksUsingDefault.contains(deck1))
+        assertFalse(decksUsingDefault.contains(deck3))
+    }
+
+    @Test
+    fun test_decksUsingConfig_corruptDeckWithDconf1() {
+        val decks = col.decks
+
+        // Create a custom config with id = 1 (simulating corrupt state)
+        // This tests the edge case mentioned in @NeedsTest annotation
+        val defaultConfig = decks.getConfig(1)!!
+
+        // Create several decks
+        val deck1 = addDeck("NormalDeck1")
+        val deck2 = addDeck("NormalDeck2")
+
+        // Create a custom config
+        val customConfigId = decks.addConfigReturningId("Custom")
+        val customConfig = decks.getConfig(customConfigId)!!
+
+        // Assign custom config to deck1
+        val deck1Obj = decks.getLegacy(deck1)!!
+        deck1Obj.put("conf", customConfigId)
+        decks.save(deck1Obj)
+
+        // deck2 keeps default config (dconf = 1)
+
+        // When querying for default config (id = 1), should only get decks actually using it
+        val decksWithDefaultConfig = decks.decksUsingConfig(defaultConfig)
+
+        // Should include deck2 and default deck, but NOT deck1
+        assertTrue(decksWithDefaultConfig.contains(deck2))
+        assertFalse(decksWithDefaultConfig.contains(deck1))
+
+        // When querying for custom config, should only get deck1
+        val decksWithCustomConfig = decks.decksUsingConfig(customConfig)
+        assertTrue(decksWithCustomConfig.contains(deck1))
+        assertFalse(decksWithCustomConfig.contains(deck2))
+
+        // Ensure no deck appears in both lists
+        val intersection = decksWithDefaultConfig.intersect(decksWithCustomConfig.toSet())
+        assertTrue("No deck should use multiple configs simultaneously", intersection.isEmpty())
+    }
+
+    @Test
+    fun test_decksUsingConfig_emptyResult() {
+        val decks = col.decks
+        val unusedConfigId = decks.addConfigReturningId("Unused Config")
+        val unusedConfig = decks.getConfig(unusedConfigId)!!
+        val result = decks.decksUsingConfig(unusedConfig)
+        assertThat(result.size, equalTo(0))
+    }
+
+    @Test
+    fun test_decksUsingConfig_afterConfigReassignment() {
+        val decks = col.decks
+        val config1Id = decks.addConfigReturningId("Config1")
+        val config1 = decks.getConfig(config1Id)!!
+        val config2Id = decks.addConfigReturningId("Config2")
+        val config2 = decks.getConfig(config2Id)!!
+        val deckId = addDeck("TestDeck")
+        val deck = decks.getLegacy(deckId)!!
+        deck.put("conf", config1Id)
+        decks.save(deck)
+
+        var decksWithConfig1 = decks.decksUsingConfig(config1)
+        assertTrue(decksWithConfig1.contains(deckId))
+
+        var decksWithConfig2 = decks.decksUsingConfig(config2)
+        assertFalse(decksWithConfig2.contains(deckId))
+
+        deck.put("conf", config2Id)
+        decks.save(deck)
+        decksWithConfig1 = decks.decksUsingConfig(config1)
+        assertFalse(decksWithConfig1.contains(deckId))
+        decksWithConfig2 = decks.decksUsingConfig(config2)
+        assertTrue(decksWithConfig2.contains(deckId))
+    }
+
+    @Test
+    fun test_decksUsingConfig_filteredDecksExcluded() {
+        val decks = col.decks
+        val customConfigId = decks.addConfigReturningId("Custom")
+        val customConfig = decks.getConfig(customConfigId)!!
+        val normalDeckId = addDeck("NormalDeck")
+        val normalDeck = decks.getLegacy(normalDeckId)!!
+        normalDeck.put("conf", customConfigId)
+        decks.save(normalDeck)
+        val filteredDeckId = addDynamicDeck("FilteredDeck")
+        val decksWithConfig = decks.decksUsingConfig(customConfig)
+        assertTrue(decksWithConfig.contains(normalDeckId))
+        assertFalse(decksWithConfig.contains(filteredDeckId))
+    }
+
+    @Test
+    fun test_parentsByName_noParents() {
+        val decks = col.decks
+
+        // Deck without "::" should return empty list
+        val result = decks.parentsByName("SingleDeck")
+
+        assertThat(result.size, equalTo(0))
+        assertTrue(result.isEmpty())
+    }
+
+    @Test
+    fun test_parentsByName_singleLevelParent() {
+        val decks = col.decks
+
+        // Create parent deck
+        val parentId = addDeck("Parent")
+
+        // Query for child that doesn't exist yet
+        val childName = "Parent::Child"
+        val parents = decks.parentsByName(childName)
+
+        // Should return the parent deck
+        assertThat(parents.size, equalTo(1))
+        assertEquals(parentId, parents[0].id)
+        assertEquals("Parent", parents[0].name)
+    }
+
+    @Test
+    fun test_parentsByName_multipleLevels() {
+        val decks = col.decks
+
+        // Create nested hierarchy: A -> A::B -> A::B::C
+        val deckA = addDeck("A")
+        val deckAB = addDeck("A::B")
+
+        // Query for A::B::C (which doesn't exist yet)
+        val parents = decks.parentsByName("A::B::C")
+
+        // Should return both A and A::B in order
+        assertThat(parents.size, equalTo(2))
+        assertEquals(deckA, parents[0].id)
+        assertEquals("A", parents[0].name)
+        assertEquals(deckAB, parents[1].id)
+        assertEquals("A::B", parents[1].name)
+    }
+
+    @Test
+    fun test_parentsByName_deepHierarchy() {
+        val decks = col.decks
+
+        // Create deep hierarchy: Level1 -> Level1::Level2 -> Level1::Level2::Level3
+        val level1Id = addDeck("Level1")
+        val level2Id = addDeck("Level1::Level2")
+        val level3Id = addDeck("Level1::Level2::Level3")
+
+        // Query for Level1::Level2::Level3::Level4
+        val parents = decks.parentsByName("Level1::Level2::Level3::Level4")
+
+        // Should return all three parent decks in order
+        assertThat(parents.size, equalTo(3))
+        assertEquals(level1Id, parents[0].id)
+        assertEquals("Level1", parents[0].name)
+        assertEquals(level2Id, parents[1].id)
+        assertEquals("Level1::Level2", parents[1].name)
+        assertEquals(level3Id, parents[2].id)
+        assertEquals("Level1::Level2::Level3", parents[2].name)
+    }
+
+    @Test
+    fun test_parentsByName_missingIntermediateParent() {
+        val decks = col.decks
+
+        // Create only Level1 and Level1::Level2::Level3 (skip Level1::Level2)
+        val level1Id = addDeck("Level1")
+        val level3Id = addDeck("Level1::Level2::Level3")
+
+        // Query for Level1::Level2::Level3::Level4
+        val parents = decks.parentsByName("Level1::Level2::Level3::Level4")
+
+        // Should return only the parents that exist: Level1 and Level1::Level2::Level3
+        // Level1::Level2 doesn't exist so it should be skipped
+        assertThat(parents.size, equalTo(3))
+        assertEquals(level1Id, parents[0].id)
+        assertEquals("Level1", parents[0].name)
+        assertEquals(level3Id, parents[2].id)
+        assertEquals("Level1::Level2::Level3", parents[2].name)
+    }
+
+    @Test
+    fun test_parentsByName_noExistingParents() {
+        val decks = col.decks
+
+        // Query for a nested deck where no parents exist
+        val parents = decks.parentsByName("NonExistent::Parent::Child")
+
+        // Should return empty list since no parent decks exist
+        assertThat(parents.size, equalTo(0))
+        assertTrue(parents.isEmpty())
+    }
+
+    @Test
+    fun test_parentsByName_existingDeck() {
+        val decks = col.decks
+
+        // Create full hierarchy
+        val deckA = addDeck("A")
+        val deckAB = addDeck("A::B")
+        val deckABC = addDeck("A::B::C")
+
+        // Query for existing deck A::B::C
+        val parents = decks.parentsByName("A::B::C")
+
+        // Should return parents A and A::B, but not A::B::C itself
+        assertThat(parents.size, equalTo(2))
+        assertEquals(deckA, parents[0].id)
+        assertEquals(deckAB, parents[1].id)
+        assertFalse(parents.any { it.id == deckABC })
+    }
+
+    @Test
+    fun test_parentsByName_specialCharactersInName() {
+        val decks = col.decks
+
+        // Create parent with special characters
+        val parentId = addDeck("Parent-Name_123")
+
+        // Query for child
+        val parents = decks.parentsByName("Parent-Name_123::Child")
+
+        // Should handle special characters correctly
+        assertThat(parents.size, equalTo(1))
+        assertEquals(parentId, parents[0].id)
+        assertEquals("Parent-Name_123", parents[0].name)
+    }
+
+    @Test
+    fun test_parentsByName_orderPreserved() {
+        val decks = col.decks
+
+        // Create hierarchy in specific order
+        val deck1 = addDeck("First")
+        val deck2 = addDeck("First::Second")
+        val deck3 = addDeck("First::Second::Third")
+        val deck4 = addDeck("First::Second::Third::Fourth")
+
+        // Query for deepest child
+        val parents = decks.parentsByName("First::Second::Third::Fourth::Fifth")
+
+        // Should return parents in hierarchical order from root to deepest
+        assertThat(parents.size, equalTo(4))
+        assertEquals(deck1, parents[0].id)
+        assertEquals(deck2, parents[1].id)
+        assertEquals(deck3, parents[2].id)
+        assertEquals(deck4, parents[3].id)
+        // Verify names are in correct order
+        assertEquals("First", parents[0].name)
+        assertEquals("First::Second", parents[1].name)
+        assertEquals("First::Second::Third", parents[2].name)
+        assertEquals("First::Second::Third::Fourth", parents[3].name)
+    }
+
+    @Test
+    fun test_parentsByName_emptyStringHandling() {
+        val decks = col.decks
+
+        // Edge case: empty string should not contain "::" and return empty list
+        val parents = decks.parentsByName("")
+
+        assertThat(parents.size, equalTo(0))
+        assertTrue(parents.isEmpty())
+    }
+
+    @Test
+    fun test_parentsByName_doubleColonOnly() {
+        val decks = col.decks
+
+        // Edge case: just "::" should be handled
+        val parents = decks.parentsByName("::")
+
+        // Should return empty list (or handle gracefully)
+        assertTrue(parents.isEmpty())
     }
 }
