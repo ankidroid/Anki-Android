@@ -19,7 +19,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:layout_marginHorizontal="8dp"
     >
 
@@ -42,8 +42,7 @@
         android:layout_weight="1"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="22dp"
-        android:layout_marginBottom="8dp"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:layout_marginBottom="8dp">
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
