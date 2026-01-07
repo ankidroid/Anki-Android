@@ -33,6 +33,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.ichi2.anki.AnkiActivity
+import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
 import com.ichi2.anki.databinding.ActivityManageNoteTypesBinding
@@ -45,6 +46,7 @@ import com.ichi2.anki.userAcceptsSchemaChange
 import com.ichi2.anki.utils.Destination
 import com.ichi2.ui.AccessibleSearchView
 import com.ichi2.utils.getInputField
+import com.ichi2.utils.getInputTextLayout
 import com.ichi2.utils.input
 import com.ichi2.utils.message
 import com.ichi2.utils.negativeButton
@@ -229,13 +231,21 @@ class ManageNotetypes : AnkiActivity(R.layout.activity_manage_note_types) {
                         negativeButton(R.string.dialog_cancel)
                         setView(R.layout.dialog_generic_text_input)
                     }.input(
+                        hint = CollectionManager.TR.actionsNewName(),
                         prefill = state.name,
                         waitForPositiveButton = false,
                         displayKeyboard = true,
                         callback = { dialog, text ->
+                            val input = text.toString()
                             val isNotADuplicate =
-                                !allNotetypes.map { it.name }.contains(text.toString())
-                            dialog.positiveButton.isEnabled = text.isNotEmpty() && isNotADuplicate
+                                input == state.name || !allNotetypes.map { it.name }.contains(input)
+                            dialog.positiveButton.isEnabled = input.isNotEmpty() && isNotADuplicate
+                            if (isNotADuplicate) {
+                                dialog.getInputTextLayout().error = null
+                            } else {
+                                dialog.getInputTextLayout().error =
+                                    this@ManageNotetypes.getString(R.string.card_browser_list_my_searches_new_search_error_dup)
+                            }
                         },
                     )
             // start with the button disabled as dialog shows the initial name
