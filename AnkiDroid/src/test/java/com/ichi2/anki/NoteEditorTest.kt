@@ -256,6 +256,24 @@ class NoteEditorTest : RobolectricTest() {
     }
 
     @Test
+    fun copyNoteCopiesNoteType() {
+        val originalNote = addBasicAndReversedNote()
+
+        // update the last selected note type so the test does not pass by accident
+        addBasicNote()
+
+        val editor = openNoteEditorWithArgs(NoteEditorLauncher.EditCard(originalNote.firstCard().id, DEFAULT).toBundle())
+        val copyNoteBundle = getCopyNoteIntent(editor)
+        val newNoteEditor = openNoteEditorWithArgs(copyNoteBundle)
+
+        assertThat(
+            "the note type of the copied note should be the same as the original",
+            newNoteEditor.editorNote!!.notetype.name,
+            equalTo(col.notetypes.basicAndReversed.name),
+        )
+    }
+
+    @Test
     fun stickyFieldsAreUnchangedAfterAdd() =
         runTest {
             // #6795 - newlines were converted to <br>
@@ -792,8 +810,9 @@ class NoteEditorTest : RobolectricTest() {
         }
 
         fun buildInternal(): NoteEditorFragment {
-            col.notetypes.setCurrent(notetype)
             val noteEditor = getNoteEditorAddingNote(REVIEWER)
+            advanceRobolectricLooper()
+            noteEditor.setCurrentlySelectedNoteType(notetype.id)
             advanceRobolectricLooper()
             // image occlusion does not need a first field
             if (this.firstField != null) {

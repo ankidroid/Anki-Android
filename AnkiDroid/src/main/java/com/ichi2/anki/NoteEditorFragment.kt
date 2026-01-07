@@ -153,6 +153,8 @@ import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.setupNoteTypeSpinner
+import com.ichi2.anki.utils.ext.getLongOrNull
+import com.ichi2.anki.utils.ext.indexOfOrNull
 import com.ichi2.anki.utils.ext.sharedPrefs
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.utils.ext.window
@@ -874,6 +876,12 @@ class NoteEditorFragment :
         if (addNote) {
             noteTypeSpinner!!.onItemSelectedListener = SetNoteTypeListener()
             requireAnkiActivity().setToolbarTitle(R.string.menu_add)
+
+            // if a specific note type id was provided in the arguments select it in the spinner
+            val noteTypeId: Long? = requireArguments().getLongOrNull(EXTRA_NOTE_TYPE_ID)
+            val noteTypeIdIndex: Int? = noteTypeId?.let { allNoteTypeIds?.indexOfOrNull(it) }
+            noteTypeIdIndex?.let { noteTypeSpinner?.setSelection(it) }
+
             // set information transferred by intent
             var contents: String? = null
             val tags = requireArguments().getStringArray(EXTRA_TAGS)
@@ -1620,7 +1628,8 @@ class NoteEditorFragment :
     }
 
     fun copyNote() {
-        launchNoteEditor(NoteEditorLauncher.CopyNote(deckId, fieldsText, selectedTags)) { }
+        val noteTypeId = currentlySelectedNotetype?.id ?: editorNote?.notetype?.id
+        launchNoteEditor(NoteEditorLauncher.CopyNote(deckId, fieldsText, selectedTags, noteTypeId)) { }
     }
 
     private fun launchNoteEditor(
@@ -3092,6 +3101,7 @@ class NoteEditorFragment :
         const val RELOAD_REQUIRED_EXTRA_KEY = "reloadRequired"
         const val EXTRA_IMG_OCCLUSION = "image_uri"
         const val IN_CARD_BROWSER_ACTIVITY = "inCardBrowserActivity"
+        const val EXTRA_NOTE_TYPE_ID = "NOTE_TYPE_ID"
 
         // calling activity
         enum class NoteEditorCaller(

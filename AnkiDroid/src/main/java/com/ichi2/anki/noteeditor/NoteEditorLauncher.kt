@@ -30,7 +30,9 @@ import com.ichi2.anki.NoteEditorFragment.Companion.NoteEditorCaller
 import com.ichi2.anki.browser.CardBrowserViewModel
 import com.ichi2.anki.libanki.CardId
 import com.ichi2.anki.libanki.DeckId
+import com.ichi2.anki.libanki.NoteTypeId
 import com.ichi2.anki.utils.Destination
+import com.ichi2.anki.utils.ext.bundleOfNotNull
 
 /**
  * Defines various configurations for opening the NoteEditor fragment with specific data or actions.
@@ -206,12 +208,14 @@ sealed interface NoteEditorLauncher : Destination {
         val deckId: DeckId,
         val fieldsText: String,
         val tags: List<String>? = null,
+        val noteTypeId: NoteTypeId? = null,
     ) : NoteEditorLauncher {
         override fun toBundle(): Bundle =
-            bundleOf(
+            bundleOfNotNull(
                 NoteEditorFragment.EXTRA_CALLER to NoteEditorCaller.NOTEEDITOR.value,
                 NoteEditorFragment.EXTRA_DID to deckId,
                 NoteEditorFragment.EXTRA_CONTENTS to fieldsText,
+                noteTypeId?.let { NoteEditorFragment.EXTRA_NOTE_TYPE_ID to it },
             ).also { bundle ->
                 tags?.let { tags -> bundle.putStringArray(NoteEditorFragment.EXTRA_TAGS, tags.toTypedArray()) }
             }
