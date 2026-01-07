@@ -18,8 +18,10 @@ package com.ichi2.utils
 import android.app.Dialog
 import android.graphics.Typeface
 import android.text.Spannable
+import android.text.SpannableString
 import android.text.SpannableStringBuilder
 import android.text.style.StyleSpan
+import android.text.style.UnderlineSpan
 import android.view.ViewGroup
 import android.widget.Spinner
 
@@ -29,6 +31,11 @@ object UiUtil {
         str.setSpan(StyleSpan(Typeface.BOLD), 0, s.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         return str
     }
+
+    fun underline(string: String): Spannable =
+        SpannableString(string).apply {
+            setSpan(UnderlineSpan(), 0, length, 0)
+        }
 
     fun Spinner.setSelectedValue(value: Any?) {
         for (position in 0 until this.adapter.count) {
