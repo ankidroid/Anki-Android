@@ -32,7 +32,7 @@ import com.ichi2.anki.AnkiDroidJsAPITest.Companion.getDataFromRequest
 import com.ichi2.anki.AnkiDroidJsAPITest.Companion.jsApiContract
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.cardviewer.Gesture
-import com.ichi2.anki.cardviewer.ViewerCommand.FLIP_OR_ANSWER_EASE1
+import com.ichi2.anki.cardviewer.ViewerCommand.ANSWER_AGAIN
 import com.ichi2.anki.cardviewer.ViewerCommand.MARK
 import com.ichi2.anki.common.time.MockTime
 import com.ichi2.anki.common.time.TimeManager
@@ -333,7 +333,7 @@ class ReviewerTest : RobolectricTest() {
     fun `A card is not flipped after 'mark' Issue 14656`() =
         runTest {
             startReviewer(withCards = 1).apply {
-                executeCommand(FLIP_OR_ANSWER_EASE1)
+                executeCommand(ANSWER_AGAIN)
                 assertThat("card is showing answer", isDisplayingAnswer)
                 executeCommand(MARK)
                 assertThat("card is showing answer after mark", isDisplayingAnswer)

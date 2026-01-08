@@ -237,11 +237,11 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
         val viewer: NonAbstractFlashcardViewer = getViewer(true)
 
         assertThat("Displaying question", viewer.isDisplayingAnswer, equalTo(false))
-        viewer.executeCommand(ViewerCommand.FLIP_OR_ANSWER_EASE4)
+        viewer.executeCommand(ViewerCommand.ANSWER_EASY)
 
         assertThat("Displaying answer", viewer.isDisplayingAnswer, equalTo(true))
 
-        viewer.executeCommand(ViewerCommand.FLIP_OR_ANSWER_EASE4)
+        viewer.executeCommand(ViewerCommand.ANSWER_EASY)
 
         assertThat(viewer.answered, notNullValue())
     }
@@ -267,8 +267,8 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
 
             assertThat("A note type with a language hint (japanese) should use it", viewer.hintLocale, equalTo("ja"))
 
-            viewer.executeCommand(ViewerCommand.FLIP_OR_ANSWER_EASE4)
-            viewer.executeCommand(ViewerCommand.FLIP_OR_ANSWER_EASE4)
+            viewer.executeCommand(ViewerCommand.ANSWER_EASY)
+            viewer.executeCommand(ViewerCommand.ANSWER_EASY)
 
             assertThat("A default note type should have no preference", viewer.hintLocale, nullValue())
         }

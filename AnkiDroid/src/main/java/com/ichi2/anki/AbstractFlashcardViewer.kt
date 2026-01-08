@@ -1657,22 +1657,22 @@ abstract class AbstractFlashcardViewer :
                 true
             }
 
-            ViewerCommand.FLIP_OR_ANSWER_EASE1 -> {
+            ViewerCommand.ANSWER_AGAIN -> {
                 flipOrAnswerCard(Rating.AGAIN)
                 true
             }
 
-            ViewerCommand.FLIP_OR_ANSWER_EASE2 -> {
+            ViewerCommand.ANSWER_HARD -> {
                 flipOrAnswerCard(Rating.HARD)
                 true
             }
 
-            ViewerCommand.FLIP_OR_ANSWER_EASE3 -> {
+            ViewerCommand.ANSWER_GOOD -> {
                 flipOrAnswerCard(Rating.GOOD)
                 true
             }
 
-            ViewerCommand.FLIP_OR_ANSWER_EASE4 -> {
+            ViewerCommand.ANSWER_EASY -> {
                 flipOrAnswerCard(Rating.EASY)
                 true
             }

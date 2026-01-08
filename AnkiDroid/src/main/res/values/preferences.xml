@@ -103,10 +103,10 @@
     <string name="pref_swipe_sensitivity_key">swipeSensitivity</string>
     <string name="pref_controls_tab_layout_key">controlsTabLayout</string>
     <string name="show_answer_command_key">binding_SHOW_ANSWER</string>
-    <string name="answer_again_command_key">binding_FLIP_OR_ANSWER_EASE1</string>
-    <string name="answer_hard_command_key">binding_FLIP_OR_ANSWER_EASE2</string>
-    <string name="answer_good_command_key">binding_FLIP_OR_ANSWER_EASE3</string>
-    <string name="answer_easy_command_key">binding_FLIP_OR_ANSWER_EASE4</string>
+    <string name="answer_again_command_key">binding_ANSWER_AGAIN</string>
+    <string name="answer_hard_command_key">binding_ANSWER_HARD</string>
+    <string name="answer_good_command_key">binding_ANSWER_GOOD</string>
+    <string name="answer_easy_command_key">binding_ANSWER_EASY</string>
     <string name="undo_command_key">binding_UNDO</string>
     <string name="redo_command_key">binding_REDO</string>
     <string name="edit_command_key">binding_EDIT</string>

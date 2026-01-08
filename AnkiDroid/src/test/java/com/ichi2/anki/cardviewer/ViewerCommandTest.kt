@@ -30,10 +30,10 @@ class ViewerCommandTest {
         val commandKeys =
             setOf(
                 "binding_SHOW_ANSWER",
-                "binding_FLIP_OR_ANSWER_EASE1",
-                "binding_FLIP_OR_ANSWER_EASE2",
-                "binding_FLIP_OR_ANSWER_EASE3",
-                "binding_FLIP_OR_ANSWER_EASE4",
+                "binding_ANSWER_AGAIN",
+                "binding_ANSWER_HARD",
+                "binding_ANSWER_GOOD",
+                "binding_ANSWER_EASY",
                 "binding_UNDO",
                 "binding_REDO",
                 "binding_EDIT",

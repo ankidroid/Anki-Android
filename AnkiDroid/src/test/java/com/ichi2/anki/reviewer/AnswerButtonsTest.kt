@@ -28,9 +28,9 @@ import org.junit.Test
 class AnswerButtonsTest {
     @Test
     fun checkButtons() {
-        assertThat(AGAIN.toViewerCommand(), equalTo(ViewerCommand.FLIP_OR_ANSWER_EASE1))
-        assertThat(HARD.toViewerCommand(), equalTo(ViewerCommand.FLIP_OR_ANSWER_EASE2))
-        assertThat(GOOD.toViewerCommand(), equalTo(ViewerCommand.FLIP_OR_ANSWER_EASE3))
-        assertThat(EASY.toViewerCommand(), equalTo(ViewerCommand.FLIP_OR_ANSWER_EASE4))
+        assertThat(AGAIN.toViewerCommand(), equalTo(ViewerCommand.ANSWER_AGAIN))
+        assertThat(HARD.toViewerCommand(), equalTo(ViewerCommand.ANSWER_HARD))
+        assertThat(GOOD.toViewerCommand(), equalTo(ViewerCommand.ANSWER_GOOD))
+        assertThat(EASY.toViewerCommand(), equalTo(ViewerCommand.ANSWER_EASY))
     }
 }
