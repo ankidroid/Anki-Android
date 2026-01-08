@@ -185,29 +185,29 @@ enum class ViewerAction(
                 )
             FLIP_OR_ANSWER_EASE1 ->
                 listOf(
-                    keycode(KeyEvent.KEYCODE_BUTTON_Y),
+                    keycode(KeyEvent.KEYCODE_BUTTON_Y, side = CardSide.ANSWER),
                     keycode(KeyEvent.KEYCODE_1, side = CardSide.ANSWER),
                     keycode(KeyEvent.KEYCODE_NUMPAD_1, side = CardSide.ANSWER),
                 )
             FLIP_OR_ANSWER_EASE2 ->
                 listOf(
-                    keycode(KeyEvent.KEYCODE_BUTTON_X),
+                    keycode(KeyEvent.KEYCODE_BUTTON_X, side = CardSide.ANSWER),
                     keycode(KeyEvent.KEYCODE_2, side = CardSide.ANSWER),
                     keycode(KeyEvent.KEYCODE_NUMPAD_2, side = CardSide.ANSWER),
                 )
             FLIP_OR_ANSWER_EASE3 ->
                 listOf(
-                    keycode(KeyEvent.KEYCODE_BUTTON_B),
+                    keycode(KeyEvent.KEYCODE_BUTTON_B, side = CardSide.ANSWER),
                     keycode(KeyEvent.KEYCODE_3, side = CardSide.ANSWER),
                     keycode(KeyEvent.KEYCODE_NUMPAD_3, side = CardSide.ANSWER),
-                    keycode(KeyEvent.KEYCODE_DPAD_CENTER),
-                    keycode(KeyEvent.KEYCODE_SPACE, side = CardSide.BOTH),
+                    keycode(KeyEvent.KEYCODE_DPAD_CENTER, side = CardSide.ANSWER),
+                    keycode(KeyEvent.KEYCODE_SPACE, side = CardSide.ANSWER),
                     keycode(KeyEvent.KEYCODE_ENTER, side = CardSide.ANSWER),
                     keycode(KeyEvent.KEYCODE_NUMPAD_ENTER, side = CardSide.ANSWER),
                 )
             FLIP_OR_ANSWER_EASE4 ->
                 listOf(
-                    keycode(KeyEvent.KEYCODE_BUTTON_A),
+                    keycode(KeyEvent.KEYCODE_BUTTON_A, side = CardSide.ANSWER),
                     keycode(KeyEvent.KEYCODE_4, side = CardSide.ANSWER),
                     keycode(KeyEvent.KEYCODE_NUMPAD_4, side = CardSide.ANSWER),
                 )
