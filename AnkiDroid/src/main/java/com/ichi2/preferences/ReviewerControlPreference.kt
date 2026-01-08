@@ -17,35 +17,44 @@ package com.ichi2.preferences
 
 import android.content.Context
 import android.util.AttributeSet
+import com.ichi2.anki.R
 import com.ichi2.anki.cardviewer.GestureProcessor
+import com.ichi2.anki.cardviewer.SingleCardSide
 import com.ichi2.anki.dialogs.CardSideSelectionDialog
-import com.ichi2.anki.preferences.reviewer.ViewerAction
 import com.ichi2.anki.reviewer.Binding
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.reviewer.MappableBinding.Companion.toPreferenceString
 import com.ichi2.anki.reviewer.ReviewerBinding
 import com.ichi2.anki.settings.Prefs
+import com.ichi2.anki.utils.ext.usingStyledAttributes
 
 class ReviewerControlPreference : ControlPreference {
+    private val side: SingleCardSide?
+
     @Suppress("unused")
+    constructor(context: Context) : this(context, null)
+    constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, androidx.preference.R.attr.dialogPreferenceStyle)
+    constructor(
+        context: Context,
+        attrs: AttributeSet?,
+        defStyleAttr: Int,
+    ) : this(context, attrs, defStyleAttr, android.R.attr.dialogPreferenceStyle)
     constructor(
         context: Context,
         attrs: AttributeSet?,
         defStyleAttr: Int,
         defStyleRes: Int,
-    ) : super(context, attrs, defStyleAttr, defStyleRes)
-
-    @Suppress("unused")
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
-
-    @Suppress("unused")
-    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
-
-    @Suppress("unused")
-    constructor(context: Context) : super(context)
-
-    /** The action associated to this preference */
-    private val viewerAction get() = ViewerAction.fromPreferenceKey(key)
+    ) : super(context, attrs, defStyleAttr, defStyleRes) {
+        side =
+            context.usingStyledAttributes(attrs, R.styleable.ReviewerControlPreference) {
+                val value = getInt(R.styleable.ReviewerControlPreference_cardSide, -1)
+                when (value) {
+                    0 -> SingleCardSide.FRONT
+                    1 -> SingleCardSide.BACK
+                    else -> null
+                }
+            }
+    }
 
     override val areGesturesEnabled: Boolean
         get() = Prefs.isNewStudyScreenEnabled || sharedPreferences?.getBoolean(GestureProcessor.PREF_KEY, false) ?: false
@@ -86,8 +95,8 @@ class ReviewerControlPreference : ControlPreference {
      * Otherwise, ask the user to select one or two side(s) and execute the callback on them.
      */
     private fun selectSide(callback: (c: CardSide) -> Unit) {
-        if (viewerAction == ViewerAction.SHOW_ANSWER) {
-            callback(CardSide.QUESTION)
+        if (side != null) {
+            callback(side.toCardSide())
         } else {
             CardSideSelectionDialog.displayInstance(context, callback)
         }
