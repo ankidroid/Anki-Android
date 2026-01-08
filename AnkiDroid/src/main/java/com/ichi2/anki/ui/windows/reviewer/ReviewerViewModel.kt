@@ -77,6 +77,8 @@ import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withTimeoutOrNull
 import org.intellij.lang.annotations.Language
 import timber.log.Timber
@@ -129,6 +131,7 @@ class ReviewerViewModel(
     private val autoAdvance = AutoAdvance(viewModelScope, this, currentCard)
     private val isHtmlTypeAnswerEnabled = repository.isHtmlTypeAnswerEnabled
     val answerTimer = AnswerTimer()
+    private val actionsMutex = Mutex()
 
     /**
      * A flag that determines if the SchedulingStates in CurrentQueueState are
@@ -183,40 +186,54 @@ class ReviewerViewModel(
         }
     }
 
+    fun onShowAnswer() {
+        executeAction(ViewerAction.SHOW_ANSWER)
+    }
+
+    fun answerCard(rating: Rating) {
+        val action =
+            when (rating) {
+                Rating.AGAIN -> ViewerAction.ANSWER_AGAIN
+                Rating.HARD -> ViewerAction.ANSWER_HARD
+                Rating.GOOD -> ViewerAction.ANSWER_GOOD
+                Rating.EASY -> ViewerAction.ANSWER_EASY
+                Rating.UNRECOGNIZED -> return
+            }
+        executeAction(action)
+    }
+
     /**
      * Sends an [eval] request to load the card answer, and updates components
      * with behavior specific to the `Answer` card side.
      *
      * @see showAnswer
      */
-    fun onShowAnswer() {
+    private suspend fun showAnswerInternal() {
         Timber.v("ReviewerViewModel::onShowAnswer")
-        launchCatchingIO {
-            mutationSignal.await()
+        mutationSignal.await()
 
-            val typedAnswerResult = CompletableDeferred<String>()
-            if (typeAnswerFlow.value != null) {
-                onTypedAnswerResultFlow.emit(typedAnswerResult)
-            } else {
-                typedAnswerResult.complete("")
-            }
-            typedAnswer = withTimeoutOrNull(1000L) {
-                typedAnswerResult.await()
-            } ?: ""
+        val typedAnswerResult = CompletableDeferred<String>()
+        if (typeAnswerFlow.value != null) {
+            onTypedAnswerResultFlow.emit(typedAnswerResult)
+        } else {
+            typedAnswerResult.complete("")
+        }
+        typedAnswer = withTimeoutOrNull(1000L) {
+            typedAnswerResult.await()
+        } ?: ""
 
-            updateNextTimes()
-            showAnswer()
-            loadAndPlayMedia(CardSide.ANSWER)
-            if (!autoAdvance.shouldWaitForAudio()) {
-                autoAdvance.onShowAnswer()
-            } // else wait for onMediaGroupCompleted
+        updateNextTimes()
+        showAnswer()
+        loadAndPlayMedia(CardSide.ANSWER)
+        if (!autoAdvance.shouldWaitForAudio()) {
+            autoAdvance.onShowAnswer()
+        } // else wait for onMediaGroupCompleted
 
-            if (answerTimer.state.value == AnswerTimerState.Hidden) return@launchCatchingIO
-            val did = currentCard.await().currentDeckId()
-            val stopTimerOnAnswer = withCol { decks.configDictForDeckId(did) }.stopTimerOnAnswer
-            if (stopTimerOnAnswer) {
-                answerTimer.stop()
-            }
+        if (answerTimer.state.value == AnswerTimerState.Hidden) return
+        val did = currentCard.await().currentDeckId()
+        val stopTimerOnAnswer = withCol { decks.configDictForDeckId(did) }.stopTimerOnAnswer
+        if (stopTimerOnAnswer) {
+            answerTimer.stop()
         }
     }
 
@@ -342,7 +359,7 @@ class ReviewerViewModel(
         updateCurrentCard()
     }
 
-    suspend fun buryCard() {
+    private suspend fun buryCard() {
         val cardId = currentCard.await().id
         val noteCount =
             undoableOp {
@@ -483,32 +500,30 @@ class ReviewerViewModel(
         return ByteArray(0)
     }
 
-    fun answerCard(rating: Rating) {
+    private suspend fun answerCardInternal(rating: Rating) {
         Timber.v("ReviewerViewModel::answerCard")
-        launchCatchingIO {
-            val state = queueState.await() ?: return@launchCatchingIO
-            val card = currentCard.await()
-            val answer =
-                withCol {
-                    sched.answerCard(
-                        card = card,
-                        states = state.states,
-                        rating,
-                    )
-                }
-
-            undoableOp(handler = this) { sched.answerCard(answer) }
-            answerFeedbackFlow.emit(rating)
-            savedStateHandle[KEY_PREVIOUS_CARD_ID] = card.id
-
-            val wasLeech = withCol { sched.stateIsLeech(answer.newState) }
-            if (wasLeech) {
-                withCol { card.load(this) }
-                val isSuspended = card.queue.code < 0
-                onLeech(isSuspended)
+        val state = queueState.await() ?: return
+        val card = currentCard.await()
+        val answer =
+            withCol {
+                sched.answerCard(
+                    card = card,
+                    states = state.states,
+                    rating,
+                )
             }
-            updateCurrentCard()
+
+        undoableOp(handler = this) { sched.answerCard(answer) }
+        answerFeedbackFlow.emit(rating)
+        savedStateHandle[KEY_PREVIOUS_CARD_ID] = card.id
+
+        val wasLeech = withCol { sched.stateIsLeech(answer.newState) }
+        if (wasLeech) {
+            withCol { card.load(this) }
+            val isSuspended = card.queue.code < 0
+            onLeech(isSuspended)
         }
+        updateCurrentCard()
     }
 
     // https://github.com/ankitects/anki/blob/da907053460e2b78c31199f97bbea3cf3600f0c2/qt/aqt/reviewer.py#L954
@@ -666,66 +681,68 @@ class ReviewerViewModel(
     fun executeAction(action: ViewerAction) {
         Timber.v("ReviewerViewModel::executeAction %s", action.name)
         launchCatchingIO {
-            when (action) {
-                ViewerAction.ADD_NOTE -> emitAddNoteDestination()
-                ViewerAction.CARD_INFO -> emitCardInfoDestination()
-                ViewerAction.PREVIOUS_CARD_INFO -> emitPreviousCardInfoDestination()
-                ViewerAction.DECK_OPTIONS -> emitDeckOptionsDestination()
-                ViewerAction.EDIT -> emitEditNoteDestination()
-                ViewerAction.TAG -> editNoteTags()
-                ViewerAction.DELETE -> deleteNote()
-                ViewerAction.MARK -> toggleMark()
-                ViewerAction.REDO -> redo()
-                ViewerAction.UNDO -> undo()
-                ViewerAction.RESCHEDULE_NOTE -> launchSetDueDate()
-                ViewerAction.TOGGLE_AUTO_ADVANCE -> toggleAutoAdvance()
-                ViewerAction.BURY_NOTE -> buryNote()
-                ViewerAction.BURY_CARD -> buryCard()
-                ViewerAction.SUSPEND_NOTE -> suspendNote()
-                ViewerAction.SUSPEND_CARD -> suspendCard()
-                ViewerAction.UNSET_FLAG -> setFlag(Flag.NONE)
-                ViewerAction.FLAG_RED -> setFlag(Flag.RED)
-                ViewerAction.FLAG_ORANGE -> setFlag(Flag.ORANGE)
-                ViewerAction.FLAG_BLUE -> setFlag(Flag.BLUE)
-                ViewerAction.FLAG_GREEN -> setFlag(Flag.GREEN)
-                ViewerAction.FLAG_PINK -> setFlag(Flag.PINK)
-                ViewerAction.FLAG_TURQUOISE -> setFlag(Flag.TURQUOISE)
-                ViewerAction.FLAG_PURPLE -> setFlag(Flag.PURPLE)
-                ViewerAction.TOGGLE_FLAG_RED -> toggleFlag(Flag.RED)
-                ViewerAction.TOGGLE_FLAG_ORANGE -> toggleFlag(Flag.ORANGE)
-                ViewerAction.TOGGLE_FLAG_BLUE -> toggleFlag(Flag.BLUE)
-                ViewerAction.TOGGLE_FLAG_GREEN -> toggleFlag(Flag.GREEN)
-                ViewerAction.TOGGLE_FLAG_PINK -> toggleFlag(Flag.PINK)
-                ViewerAction.TOGGLE_FLAG_TURQUOISE -> toggleFlag(Flag.TURQUOISE)
-                ViewerAction.TOGGLE_FLAG_PURPLE -> toggleFlag(Flag.PURPLE)
-                ViewerAction.SHOW_ANSWER -> if (!showingAnswer.value) onShowAnswer()
-                ViewerAction.ANSWER_AGAIN -> answerCard(Rating.AGAIN)
-                ViewerAction.ANSWER_HARD -> answerCard(Rating.HARD)
-                ViewerAction.ANSWER_GOOD -> answerCard(Rating.GOOD)
-                ViewerAction.ANSWER_EASY -> answerCard(Rating.EASY)
-                ViewerAction.SHOW_HINT -> eval.emit("ankidroid.showHint()")
-                ViewerAction.SHOW_ALL_HINTS -> eval.emit("ankidroid.showAllHints()")
-                ViewerAction.TOGGLE_WHITEBOARD -> toggleWhiteboard()
-                ViewerAction.RECORD_VOICE -> voiceRecorderEnabledFlow.emit(!voiceRecorderEnabledFlow.value)
-                ViewerAction.REPLAY_VOICE -> replayVoiceFlow.emit(Unit)
-                ViewerAction.PAGE_UP -> pageUpFlow.emit(Unit)
-                ViewerAction.PAGE_DOWN -> pageDownFlow.emit(Unit)
-                ViewerAction.EXIT -> finishResultFlow.emit(AbstractFlashcardViewer.RESULT_DEFAULT)
-                ViewerAction.USER_ACTION_1 -> userAction(1)
-                ViewerAction.USER_ACTION_2 -> userAction(2)
-                ViewerAction.USER_ACTION_3 -> userAction(3)
-                ViewerAction.USER_ACTION_4 -> userAction(4)
-                ViewerAction.USER_ACTION_5 -> userAction(5)
-                ViewerAction.USER_ACTION_6 -> userAction(6)
-                ViewerAction.USER_ACTION_7 -> userAction(7)
-                ViewerAction.USER_ACTION_8 -> userAction(8)
-                ViewerAction.USER_ACTION_9 -> userAction(9)
-                ViewerAction.SUSPEND_MENU -> suspendCard()
-                ViewerAction.BURY_MENU -> buryCard()
-                ViewerAction.STATISTICS -> destinationFlow.emit(StatisticsDestination())
-                ViewerAction.BROWSE -> emitBrowseDestination()
-                ViewerAction.PLAY_MEDIA -> replayMedia()
-                ViewerAction.FLAG_MENU -> {}
+            actionsMutex.withLock {
+                when (action) {
+                    ViewerAction.ADD_NOTE -> emitAddNoteDestination()
+                    ViewerAction.CARD_INFO -> emitCardInfoDestination()
+                    ViewerAction.PREVIOUS_CARD_INFO -> emitPreviousCardInfoDestination()
+                    ViewerAction.DECK_OPTIONS -> emitDeckOptionsDestination()
+                    ViewerAction.EDIT -> emitEditNoteDestination()
+                    ViewerAction.TAG -> editNoteTags()
+                    ViewerAction.DELETE -> deleteNote()
+                    ViewerAction.MARK -> toggleMark()
+                    ViewerAction.REDO -> redo()
+                    ViewerAction.UNDO -> undo()
+                    ViewerAction.RESCHEDULE_NOTE -> launchSetDueDate()
+                    ViewerAction.TOGGLE_AUTO_ADVANCE -> toggleAutoAdvance()
+                    ViewerAction.BURY_NOTE -> buryNote()
+                    ViewerAction.BURY_CARD -> buryCard()
+                    ViewerAction.SUSPEND_NOTE -> suspendNote()
+                    ViewerAction.SUSPEND_CARD -> suspendCard()
+                    ViewerAction.UNSET_FLAG -> setFlag(Flag.NONE)
+                    ViewerAction.FLAG_RED -> setFlag(Flag.RED)
+                    ViewerAction.FLAG_ORANGE -> setFlag(Flag.ORANGE)
+                    ViewerAction.FLAG_BLUE -> setFlag(Flag.BLUE)
+                    ViewerAction.FLAG_GREEN -> setFlag(Flag.GREEN)
+                    ViewerAction.FLAG_PINK -> setFlag(Flag.PINK)
+                    ViewerAction.FLAG_TURQUOISE -> setFlag(Flag.TURQUOISE)
+                    ViewerAction.FLAG_PURPLE -> setFlag(Flag.PURPLE)
+                    ViewerAction.TOGGLE_FLAG_RED -> toggleFlag(Flag.RED)
+                    ViewerAction.TOGGLE_FLAG_ORANGE -> toggleFlag(Flag.ORANGE)
+                    ViewerAction.TOGGLE_FLAG_BLUE -> toggleFlag(Flag.BLUE)
+                    ViewerAction.TOGGLE_FLAG_GREEN -> toggleFlag(Flag.GREEN)
+                    ViewerAction.TOGGLE_FLAG_PINK -> toggleFlag(Flag.PINK)
+                    ViewerAction.TOGGLE_FLAG_TURQUOISE -> toggleFlag(Flag.TURQUOISE)
+                    ViewerAction.TOGGLE_FLAG_PURPLE -> toggleFlag(Flag.PURPLE)
+                    ViewerAction.SHOW_ANSWER -> if (!showingAnswer.value) showAnswerInternal()
+                    ViewerAction.ANSWER_AGAIN -> answerCardInternal(Rating.AGAIN)
+                    ViewerAction.ANSWER_HARD -> answerCardInternal(Rating.HARD)
+                    ViewerAction.ANSWER_GOOD -> answerCardInternal(Rating.GOOD)
+                    ViewerAction.ANSWER_EASY -> answerCardInternal(Rating.EASY)
+                    ViewerAction.SHOW_HINT -> eval.emit("ankidroid.showHint()")
+                    ViewerAction.SHOW_ALL_HINTS -> eval.emit("ankidroid.showAllHints()")
+                    ViewerAction.TOGGLE_WHITEBOARD -> toggleWhiteboard()
+                    ViewerAction.RECORD_VOICE -> voiceRecorderEnabledFlow.emit(!voiceRecorderEnabledFlow.value)
+                    ViewerAction.REPLAY_VOICE -> replayVoiceFlow.emit(Unit)
+                    ViewerAction.PAGE_UP -> pageUpFlow.emit(Unit)
+                    ViewerAction.PAGE_DOWN -> pageDownFlow.emit(Unit)
+                    ViewerAction.EXIT -> finishResultFlow.emit(AbstractFlashcardViewer.RESULT_DEFAULT)
+                    ViewerAction.USER_ACTION_1 -> userAction(1)
+                    ViewerAction.USER_ACTION_2 -> userAction(2)
+                    ViewerAction.USER_ACTION_3 -> userAction(3)
+                    ViewerAction.USER_ACTION_4 -> userAction(4)
+                    ViewerAction.USER_ACTION_5 -> userAction(5)
+                    ViewerAction.USER_ACTION_6 -> userAction(6)
+                    ViewerAction.USER_ACTION_7 -> userAction(7)
+                    ViewerAction.USER_ACTION_8 -> userAction(8)
+                    ViewerAction.USER_ACTION_9 -> userAction(9)
+                    ViewerAction.SUSPEND_MENU -> suspendCard()
+                    ViewerAction.BURY_MENU -> buryCard()
+                    ViewerAction.STATISTICS -> destinationFlow.emit(StatisticsDestination())
+                    ViewerAction.BROWSE -> emitBrowseDestination()
+                    ViewerAction.PLAY_MEDIA -> replayMedia()
+                    ViewerAction.FLAG_MENU -> {}
+                }
             }
         }
     }
@@ -742,12 +759,12 @@ class ReviewerViewModel(
 
     override suspend fun onAutoAdvanceAction(action: AutoAdvanceAction) {
         when (action) {
-            QuestionAction.SHOW_ANSWER -> onShowAnswer()
+            QuestionAction.SHOW_ANSWER -> showAnswerInternal()
             QuestionAction.SHOW_REMINDER -> actionFeedbackFlow.emit(TR.studyingQuestionTimeElapsed())
             AnswerAction.BURY_CARD -> buryCard()
-            AnswerAction.ANSWER_AGAIN -> answerCard(Rating.AGAIN)
-            AnswerAction.ANSWER_GOOD -> answerCard(Rating.GOOD)
-            AnswerAction.ANSWER_HARD -> answerCard(Rating.HARD)
+            AnswerAction.ANSWER_AGAIN -> answerCardInternal(Rating.AGAIN)
+            AnswerAction.ANSWER_GOOD -> answerCardInternal(Rating.GOOD)
+            AnswerAction.ANSWER_HARD -> answerCardInternal(Rating.HARD)
             AnswerAction.SHOW_REMINDER -> actionFeedbackFlow.emit(TR.studyingAnswerTimeElapsed())
         }
     }
