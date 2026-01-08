@@ -40,7 +40,6 @@ import com.ichi2.anki.browser.CardBrowserColumn.REVIEWS
 import com.ichi2.anki.browser.CardBrowserColumn.SFLD
 import com.ichi2.anki.browser.CardBrowserColumn.TAGS
 import com.ichi2.anki.cardviewer.Gesture
-import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.libanki.Consts
 import com.ichi2.anki.model.CardsOrNotes
@@ -690,15 +689,69 @@ object PreferenceUpgradeService {
 
         @NeedsTest("long touch gesture is removed from preferences")
         internal class RemoveLongTouchGesture : PreferenceUpgrade(21) {
+            private val keys =
+                listOf(
+                    "binding_SHOW_ANSWER",
+                    "binding_FLIP_OR_ANSWER_EASE1",
+                    "binding_FLIP_OR_ANSWER_EASE2",
+                    "binding_FLIP_OR_ANSWER_EASE3",
+                    "binding_FLIP_OR_ANSWER_EASE4",
+                    "binding_UNDO",
+                    "binding_REDO",
+                    "binding_EDIT",
+                    "binding_MARK",
+                    "binding_BURY_CARD",
+                    "binding_SUSPEND_CARD",
+                    "binding_DELETE",
+                    "binding_PLAY_MEDIA",
+                    "binding_EXIT",
+                    "binding_BURY_NOTE",
+                    "binding_SUSPEND_NOTE",
+                    "binding_TOGGLE_FLAG_RED",
+                    "binding_TOGGLE_FLAG_ORANGE",
+                    "binding_TOGGLE_FLAG_GREEN",
+                    "binding_TOGGLE_FLAG_BLUE",
+                    "binding_TOGGLE_FLAG_PINK",
+                    "binding_TOGGLE_FLAG_TURQUOISE",
+                    "binding_TOGGLE_FLAG_PURPLE",
+                    "binding_UNSET_FLAG",
+                    "binding_PAGE_UP",
+                    "binding_PAGE_DOWN",
+                    "binding_TAG",
+                    "binding_CARD_INFO",
+                    "binding_PREVIOUS_CARD_INFO",
+                    "binding_RECORD_VOICE",
+                    "binding_SAVE_VOICE",
+                    "binding_REPLAY_VOICE",
+                    "binding_TOGGLE_WHITEBOARD",
+                    "binding_TOGGLE_ERASER",
+                    "binding_CLEAR_WHITEBOARD",
+                    "binding_CHANGE_WHITEBOARD_PEN_COLOR",
+                    "binding_SHOW_HINT",
+                    "binding_SHOW_ALL_HINTS",
+                    "binding_ADD_NOTE",
+                    "binding_RESCHEDULE_NOTE",
+                    "binding_TOGGLE_AUTO_ADVANCE",
+                    "binding_USER_ACTION_1",
+                    "binding_USER_ACTION_2",
+                    "binding_USER_ACTION_3",
+                    "binding_USER_ACTION_4",
+                    "binding_USER_ACTION_5",
+                    "binding_USER_ACTION_6",
+                    "binding_USER_ACTION_7",
+                    "binding_USER_ACTION_8",
+                    "binding_USER_ACTION_9",
+                )
+
             override fun upgrade(preferences: SharedPreferences) {
-                for (command in ViewerCommand.entries) {
-                    val value = preferences.getString(command.preferenceKey, null) ?: continue
-                    val bindings = ReviewerBinding.fromPreferenceString(value)
+                for (key in keys) {
+                    val value = preferences.getString(key, null) ?: continue
+                    val bindings = fromPreferenceString(value)
                     val unknown = bindings.filter { it.binding is Binding.UnknownBinding }
                     if (unknown.isEmpty()) continue
                     val newBindings = bindings - unknown
                     preferences.edit {
-                        putString(command.preferenceKey, newBindings.toPreferenceString())
+                        putString(key, newBindings.toPreferenceString())
                     }
                 }
             }
