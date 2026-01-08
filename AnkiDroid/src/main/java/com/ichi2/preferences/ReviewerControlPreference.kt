@@ -56,6 +56,14 @@ class ReviewerControlPreference : ControlPreference {
             }
     }
 
+    override fun getSummary(): CharSequence =
+        // Don't show the `Q:` and `A:` prefixes if the side is set
+        if (side != null) {
+            getMappableBindings().joinToString(", ") { it.binding.toDisplayString(context) }
+        } else {
+            super.getSummary()
+        }
+
     override val areGesturesEnabled: Boolean
         get() = Prefs.isNewStudyScreenEnabled || sharedPreferences?.getBoolean(GestureProcessor.PREF_KEY, false) ?: false
 
