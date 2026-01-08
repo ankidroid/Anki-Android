@@ -10,6 +10,7 @@
             android:key="@string/show_answer_command_key"
             android:title="@string/show_answer"
             android:icon="@drawable/ic_card_answer"
+            app:cardSide="question"
             />
         <com.ichi2.preferences.ReviewerControlPreference
             android:key="@string/answer_again_command_key"
