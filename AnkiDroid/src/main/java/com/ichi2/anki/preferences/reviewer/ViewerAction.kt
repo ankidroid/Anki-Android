@@ -211,8 +211,14 @@ enum class ViewerAction(
                     keycode(KeyEvent.KEYCODE_4, side = CardSide.ANSWER),
                     keycode(KeyEvent.KEYCODE_NUMPAD_4, side = CardSide.ANSWER),
                 )
+            SHOW_ANSWER -> {
+                listOf(
+                    keycode(KeyEvent.KEYCODE_SPACE, side = CardSide.QUESTION),
+                    keycode(KeyEvent.KEYCODE_ENTER, side = CardSide.QUESTION),
+                    keycode(KeyEvent.KEYCODE_NUMPAD_ENTER, side = CardSide.QUESTION),
+                )
+            }
             // No default gestures
-            SHOW_ANSWER,
             DELETE,
             CARD_INFO,
             TAG,
