@@ -80,6 +80,16 @@
         <attr name="displayValue" format="boolean"/>
     </declare-styleable>
 
+    <declare-styleable name="ReviewerControlPreference">
+        <!-- The card side the control applies to. Leave unset to let the user choose.
+             If set in an existing preference, a preference upgrade must be made to
+             remove the incompatible values. -->
+        <attr name="cardSide" format="enum">
+            <enum name="question" value="0"/>
+            <enum name="answer" value="1"/>
+        </attr>
+    </declare-styleable>
+
     <declare-styleable name="PermissionItem">
         <!-- Title of the permission -->
         <attr name="permissionTitle" format="string"/>
