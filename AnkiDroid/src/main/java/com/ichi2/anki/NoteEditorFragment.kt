@@ -112,7 +112,6 @@ import com.ichi2.anki.libanki.Note.ClozeUtils
 import com.ichi2.anki.libanki.NoteTypeId
 import com.ichi2.anki.libanki.NotetypeJson
 import com.ichi2.anki.libanki.Notetypes
-import com.ichi2.anki.libanki.Notetypes.Companion.NOT_FOUND_NOTE_TYPE
 import com.ichi2.anki.libanki.Utils
 import com.ichi2.anki.libanki.clozeNumbersInNote
 import com.ichi2.anki.model.CardStateFilter
@@ -1801,20 +1800,14 @@ class NoteEditorFragment :
     }
 
     private fun showCardTemplateEditor() {
-        val intent = Intent(requireContext(), CardTemplateEditor::class.java)
-        // Pass the note type ID
-        intent.putExtra("noteTypeId", currentlySelectedNotetype!!.id)
-        Timber.d(
-            "showCardTemplateEditor() for model %s",
-            intent.getLongExtra("noteTypeId", NOT_FOUND_NOTE_TYPE),
-        )
-        // Also pass the note id and ord if not adding new note
-        if (!addNote && currentEditedCard != null) {
-            intent.putExtra("noteId", currentEditedCard!!.nid)
-            Timber.d("showCardTemplateEditor() with note %s", currentEditedCard!!.nid)
-            intent.putExtra("ordId", currentEditedCard!!.ord)
-            Timber.d("showCardTemplateEditor() with ord %s", currentEditedCard!!.ord)
-        }
+        val intent =
+            CardTemplateEditor.getIntent(
+                requireContext(),
+                noteTypeId = currentlySelectedNotetype!!.id,
+                // Also pass the note id and ord if not adding new note
+                noteId = if (addNote) null else currentEditedCard?.nid,
+                ord = if (addNote) null else currentEditedCard?.ord,
+            )
         requestTemplateEditLauncher.launch(intent)
     }
 

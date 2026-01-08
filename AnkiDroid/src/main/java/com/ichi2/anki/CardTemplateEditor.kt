@@ -194,7 +194,7 @@ open class CardTemplateEditor :
             // get id for currently edited note (optional)
             noteId = intent.getLongExtra(EDITOR_NOTE_ID, -1L)
             // get id for currently edited template (optional)
-            startingOrdId = intent.getIntExtra("ordId", -1)
+            startingOrdId = intent.getIntExtra(EDITOR_START_ORD_ID, -1)
             tabToCursorPositions[0] = hashMapOf()
             tabToViewId[0] = R.id.front_edit
         } else {
@@ -1532,5 +1532,25 @@ open class CardTemplateEditor :
 
         @Suppress("unused")
         private const val REQUEST_CARD_BROWSER_APPEARANCE = 1
+
+        @CheckResult
+        fun getIntent(
+            context: Context,
+            noteTypeId: NoteTypeId,
+            noteId: NoteId? = null,
+            ord: CardOrdinal? = null,
+        ) = Intent(context, CardTemplateEditor::class.java)
+            .apply {
+                putExtra(EDITOR_NOTE_TYPE_ID, noteTypeId)
+                noteId?.let { putExtra(EDITOR_NOTE_ID, it) }
+                ord?.let { putExtra(EDITOR_START_ORD_ID, it) }
+
+                Timber.d(
+                    "Built intent for CardTemplateEditor; ntid: %s; nid: %s; ord: %s",
+                    noteTypeId,
+                    noteId,
+                    ord,
+                )
+            }
     }
 }
