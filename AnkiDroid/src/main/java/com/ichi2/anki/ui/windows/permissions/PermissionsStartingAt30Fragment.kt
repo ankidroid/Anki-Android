@@ -20,6 +20,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
+import androidx.core.view.isVisible
 import com.ichi2.anki.R
 import com.ichi2.utils.Permissions
 import com.ichi2.utils.Permissions.canManageExternalStorage
@@ -51,5 +52,9 @@ class PermissionsStartingAt30Fragment : PermissionsFragment(R.layout.permissions
         view
             .findViewById<PermissionsItem>(R.id.all_files_permission)
             .requestExternalStorageOnClick(accessAllFilesLauncher)
+
+        view
+            .findViewById<PermissionsItem>(R.id.internet_permission)
+            .initializeInternetPermissionItem()
     }
 }

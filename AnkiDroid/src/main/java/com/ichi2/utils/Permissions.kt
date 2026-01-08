@@ -46,7 +46,6 @@ import com.ichi2.utils.Permissions.MANAGE_EXTERNAL_STORAGE
 import com.ichi2.utils.Permissions.arePermissionsDefinedInManifest
 import com.ichi2.utils.Permissions.isExternalStorageManager
 import timber.log.Timber
-import kotlin.reflect.KMutableProperty
 
 object Permissions {
     const val MANAGE_EXTERNAL_STORAGE = "android.permission.MANAGE_EXTERNAL_STORAGE"
@@ -173,15 +172,20 @@ object Permissions {
         listOf(
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.INTERNET,
         )
 
     @RequiresApi(Build.VERSION_CODES.R)
     val externalManagerStorageAccessStartupPermissions =
         listOf(
             Manifest.permission.MANAGE_EXTERNAL_STORAGE,
+            Manifest.permission.INTERNET,
         )
 
-    val appPrivateStartupPermissions = listOf<String>()
+    val appPrivateStartupPermissions =
+        listOf(
+            Manifest.permission.INTERNET,
+        )
 
     const val RECORD_AUDIO_PERMISSION = Manifest.permission.RECORD_AUDIO
 
@@ -343,4 +347,10 @@ object Permissions {
         showThemedToast(requireContext(), message, false)
         openAppSettingsScreen()
     }
+
+    /**
+     * Returns true if the app has INTERNET permission granted.
+     */
+    fun canAccessInternet(context: Context): Boolean =
+        ContextCompat.checkSelfPermission(context, Manifest.permission.INTERNET) == PackageManager.PERMISSION_GRANTED
 }

@@ -31,6 +31,7 @@ import com.ichi2.anki.servicelayer.PreferenceUpgradeService
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService.setPreferencesUpToDate
 import com.ichi2.anki.servicelayer.ScopedStorageService.isLegacyStorage
 import com.ichi2.anki.ui.windows.permissions.NotificationsPermissionFragment
+import com.ichi2.anki.ui.windows.permissions.InternetPermissionFragment
 import com.ichi2.anki.ui.windows.permissions.PermissionsFragment
 import com.ichi2.anki.ui.windows.permissions.PermissionsStartingAt30Fragment
 import com.ichi2.anki.ui.windows.permissions.PermissionsUntil29Fragment
@@ -220,6 +221,7 @@ enum class PermissionSet(
     /** Optional. */
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     NOTIFICATIONS(listOf(Manifest.permission.POST_NOTIFICATIONS), NotificationsPermissionFragment::class.java),
+    APP_PRIVATE(Permissions.appPrivateStartupPermissions, InternetPermissionFragment::class.java),
 }
 
 /**
