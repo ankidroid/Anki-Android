@@ -38,6 +38,7 @@ import com.ichi2.testutils.common.Flaky
 import com.ichi2.testutils.common.OS
 import com.ichi2.testutils.ext.addBasicNoteWithOp
 import com.ichi2.testutils.ext.menu
+import com.ichi2.testutils.grantPermissions
 import com.ichi2.testutils.grantWritePermissions
 import com.ichi2.testutils.revokeWritePermissions
 import com.ichi2.testutils.withWritePermissions
@@ -88,6 +89,7 @@ class DeckPickerTest : RobolectricTest() {
     @Before
     fun before() {
         RuntimeEnvironment.setQualifiers(qualifiers)
+        grantPermissions(android.Manifest.permission.INTERNET)
         setIntroductionSlidesShown(true)
     }
 
