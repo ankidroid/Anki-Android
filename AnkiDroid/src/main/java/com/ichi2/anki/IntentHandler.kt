@@ -144,7 +144,6 @@ class IntentHandler : AbstractIntentHandler() {
      * has been granted (as long as AnkiDroid targeted API < 30, requested legacy storage, and has not been uninstalled since)
      *
      */
-    @NeedsTest("clicking a file in 'Files' to import")
     private fun performActionIfStorageAccessible(
         reloadIntent: Intent,
         action: String?,

@@ -173,4 +173,116 @@ class IntentHandlerTest {
         val actual = getLaunchType(intent)
         assertThat(actual, equalTo(expected))
     }
+
+    @Test
+    fun fileImport_withoutStoragePermissions_returnsFileImportLaunchType() {
+        val intent = Intent(Intent.ACTION_VIEW, "content://com.example/test.apkg".toUri())
+        val launchType = getLaunchType(intent)
+        assertThat(launchType, equalTo(LaunchType.FILE_IMPORT))
+    }
+
+    @Test
+    fun textImport_withoutStoragePermissions_returnsTextImportLaunchType() {
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.setDataAndType("content://com.example/test.csv".toUri(), "text/csv")
+        val launchType = getLaunchType(intent)
+        assertThat(launchType, equalTo(LaunchType.TEXT_IMPORT))
+    }
+
+    @Test
+    fun imageImport_withoutStoragePermissions_returnsImageImportLaunchType() {
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.setDataAndType("content://com.example/image.jpg".toUri(), "image/jpeg")
+        val launchType = getLaunchType(intent)
+        assertThat(launchType, equalTo(LaunchType.IMAGE_IMPORT))
+    }
+
+    @Test
+    fun sharedText_withoutStoragePermissions_returnsSharedTextLaunchType() {
+        val intent =
+            Intent(Intent.ACTION_SEND).apply {
+                type = "text/plain"
+                putExtra(Intent.EXTRA_TEXT, "Some text")
+            }
+        val launchType = getLaunchType(intent)
+        assertThat(launchType, equalTo(LaunchType.SHARED_TEXT))
+    }
+
+    @Test
+    fun requiresCollectionAccess_fileImportRequiresAccess() {
+        val requiresAccess = IntentHandler.requiresCollectionAccess(LaunchType.FILE_IMPORT)
+        assertThat(requiresAccess, equalTo(true))
+    }
+
+    @Test
+    fun requiresCollectionAccess_textImportRequiresAccess() {
+        val requiresAccess = IntentHandler.requiresCollectionAccess(LaunchType.TEXT_IMPORT)
+        assertThat(requiresAccess, equalTo(true))
+    }
+
+    @Test
+    fun requiresCollectionAccess_imageImportRequiresAccess() {
+        val requiresAccess = IntentHandler.requiresCollectionAccess(LaunchType.IMAGE_IMPORT)
+        assertThat(requiresAccess, equalTo(true))
+    }
+
+    @Test
+    fun requiresCollectionAccess_sharedTextRequiresAccess() {
+        val requiresAccess = IntentHandler.requiresCollectionAccess(LaunchType.SHARED_TEXT)
+        assertThat(requiresAccess, equalTo(true))
+    }
+
+    @Test
+    fun requiresCollectionAccess_syncRequiresAccess() {
+        val requiresAccess = IntentHandler.requiresCollectionAccess(LaunchType.SYNC)
+        assertThat(requiresAccess, equalTo(true))
+    }
+
+    @Test
+    fun requiresCollectionAccess_reviewRequiresAccess() {
+        val requiresAccess = IntentHandler.requiresCollectionAccess(LaunchType.REVIEW)
+        assertThat(requiresAccess, equalTo(true))
+    }
+
+    @Test
+    fun requiresCollectionAccess_defaultStartRequiresAccess() {
+        val requiresAccess = IntentHandler.requiresCollectionAccess(LaunchType.DEFAULT_START_APP_IF_NEW)
+        assertThat(requiresAccess, equalTo(true))
+    }
+
+    @Test
+    fun requiresCollectionAccess_copyDebugInfoDoesNotRequireAccess() {
+        val requiresAccess = IntentHandler.requiresCollectionAccess(LaunchType.COPY_DEBUG_INFO)
+        assertThat(requiresAccess, equalTo(false))
+    }
+
+    @Test
+    fun allLaunchTypesThatRequireCollectionAccessShouldCheckPermissions() {
+        val typesThatRequireAccess =
+            listOf(
+                LaunchType.FILE_IMPORT,
+                LaunchType.TEXT_IMPORT,
+                LaunchType.IMAGE_IMPORT,
+                LaunchType.SHARED_TEXT,
+                LaunchType.SYNC,
+                LaunchType.REVIEW,
+                LaunchType.DEFAULT_START_APP_IF_NEW,
+            )
+
+        for (launchType in typesThatRequireAccess) {
+            assertThat(
+                "LaunchType.$launchType should require collection access",
+                IntentHandler.requiresCollectionAccess(launchType),
+                equalTo(true),
+            )
+        }
+    }
+
+    @Test
+    fun copyDebugInfoLaunchType_doesNotRequireCollectionAccess() {
+        assertThat(
+            IntentHandler.requiresCollectionAccess(LaunchType.COPY_DEBUG_INFO),
+            equalTo(false),
+        )
+    }
 }
