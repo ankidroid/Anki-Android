@@ -33,11 +33,9 @@ const val TIME_DAY = 24.0 * TIME_HOUR
 // private const val TIME_MONTH = 30.0 * TIME_DAY
 // private const val TIME_YEAR = 12.0 * TIME_MONTH
 
-@NeedsTest("untested")
 fun getTimestamp(time: Time): String = SimpleDateFormat("yyyyMMddHHmmss", Locale.US).format(time.currentDate)
 
 /** Formats the time as '00:00.00' (m:s:ms), OR 00:00:00.00 (h:m:s.ms) */
-@NeedsTest("untested")
 fun Duration.formatAsString(): String {
     val milliseconds = this.inWholeMilliseconds
     val ms = milliseconds % 1000
@@ -51,11 +49,11 @@ fun Duration.formatAsString(): String {
     }
 }
 
-@NeedsTest("untested")
 fun getDayStart(time: Time): Long {
     val cal = time.calendar()
     if (cal[Calendar.HOUR_OF_DAY] < 4) {
-        cal.roll(Calendar.DAY_OF_YEAR, -1)
+        // Changed from roll() to add() to handle year boundaries correctly (e.g., Jan 1 -> Dec 31)
+        cal.add(Calendar.DAY_OF_YEAR, -1)
     }
     cal[Calendar.HOUR_OF_DAY] = 4
     cal[Calendar.MINUTE] = 0
