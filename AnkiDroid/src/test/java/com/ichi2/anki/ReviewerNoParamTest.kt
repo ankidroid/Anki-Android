@@ -312,7 +312,7 @@ class ReviewerNoParamTest : RobolectricTest() {
     /** Enables a gesture (without changing the overall setting of whether gestures are allowed)  */
     private fun enableGesture(gesture: Gesture) {
         val prefs = targetContext.sharedPrefs()
-        ViewerCommand.FLIP_OR_ANSWER_EASE1.addBinding(
+        ViewerCommand.ANSWER_AGAIN.addBinding(
             prefs,
             ReviewerBinding.fromGesture(gesture),
         )
