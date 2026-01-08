@@ -45,6 +45,7 @@ import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.libanki.Consts
 import com.ichi2.anki.model.CardsOrNotes
 import com.ichi2.anki.noteeditor.CustomToolbarButton
+import com.ichi2.anki.preferences.reviewer.ViewerAction
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.reviewer.Binding
 import com.ichi2.anki.reviewer.Binding.Companion.keyCode
@@ -53,6 +54,7 @@ import com.ichi2.anki.reviewer.FullScreenMode
 import com.ichi2.anki.reviewer.MappableBinding
 import com.ichi2.anki.reviewer.MappableBinding.Companion.toPreferenceString
 import com.ichi2.anki.reviewer.ReviewerBinding
+import com.ichi2.anki.reviewer.ReviewerBinding.Companion.fromPreferenceString
 import com.ichi2.utils.HashUtil.hashSetInit
 import timber.log.Timber
 import java.util.Locale
@@ -295,42 +297,42 @@ object PreferenceUpgradeService {
         internal class UpgradeGesturesToControls : PreferenceUpgrade(5) {
             val oldCommandValues =
                 mapOf(
-                    Pair(1, ViewerCommand.SHOW_ANSWER),
-                    Pair(2, ViewerCommand.FLIP_OR_ANSWER_EASE1),
-                    Pair(3, ViewerCommand.FLIP_OR_ANSWER_EASE2),
-                    Pair(4, ViewerCommand.FLIP_OR_ANSWER_EASE3),
-                    Pair(5, ViewerCommand.FLIP_OR_ANSWER_EASE4),
-                    Pair(8, ViewerCommand.UNDO),
-                    Pair(9, ViewerCommand.EDIT),
-                    Pair(10, ViewerCommand.MARK),
-                    Pair(12, ViewerCommand.BURY_CARD),
-                    Pair(13, ViewerCommand.SUSPEND_CARD),
-                    Pair(14, ViewerCommand.DELETE),
-                    Pair(16, ViewerCommand.PLAY_MEDIA),
-                    Pair(17, ViewerCommand.EXIT),
-                    Pair(18, ViewerCommand.BURY_NOTE),
-                    Pair(19, ViewerCommand.SUSPEND_NOTE),
-                    Pair(20, ViewerCommand.TOGGLE_FLAG_RED),
-                    Pair(21, ViewerCommand.TOGGLE_FLAG_ORANGE),
-                    Pair(22, ViewerCommand.TOGGLE_FLAG_GREEN),
-                    Pair(23, ViewerCommand.TOGGLE_FLAG_BLUE),
-                    Pair(38, ViewerCommand.TOGGLE_FLAG_PINK),
-                    Pair(39, ViewerCommand.TOGGLE_FLAG_TURQUOISE),
-                    Pair(40, ViewerCommand.TOGGLE_FLAG_PURPLE),
-                    Pair(24, ViewerCommand.UNSET_FLAG),
-                    Pair(30, ViewerCommand.PAGE_UP),
-                    Pair(31, ViewerCommand.PAGE_DOWN),
-                    Pair(32, ViewerCommand.TAG),
-                    Pair(33, ViewerCommand.CARD_INFO),
-                    Pair(35, ViewerCommand.RECORD_VOICE),
-                    Pair(36, ViewerCommand.REPLAY_VOICE),
-                    Pair(46, ViewerCommand.SAVE_VOICE),
-                    Pair(37, ViewerCommand.TOGGLE_WHITEBOARD),
-                    Pair(44, ViewerCommand.CLEAR_WHITEBOARD),
-                    Pair(45, ViewerCommand.CHANGE_WHITEBOARD_PEN_COLOR),
-                    Pair(41, ViewerCommand.SHOW_HINT),
-                    Pair(42, ViewerCommand.SHOW_ALL_HINTS),
-                    Pair(43, ViewerCommand.ADD_NOTE),
+                    Pair(1, "binding_SHOW_ANSWER"),
+                    Pair(2, "binding_FLIP_OR_ANSWER_EASE1"),
+                    Pair(3, "binding_FLIP_OR_ANSWER_EASE2"),
+                    Pair(4, "binding_FLIP_OR_ANSWER_EASE3"),
+                    Pair(5, "binding_FLIP_OR_ANSWER_EASE4"),
+                    Pair(8, "binding_UNDO"),
+                    Pair(9, "binding_EDIT"),
+                    Pair(10, "binding_MARK"),
+                    Pair(12, "binding_BURY_CARD"),
+                    Pair(13, "binding_SUSPEND_CARD"),
+                    Pair(14, "binding_DELETE"),
+                    Pair(16, "binding_PLAY_MEDIA"),
+                    Pair(17, "binding_EXIT"),
+                    Pair(18, "binding_BURY_NOTE"),
+                    Pair(19, "binding_SUSPEND_NOTE"),
+                    Pair(20, "binding_TOGGLE_FLAG_RED"),
+                    Pair(21, "binding_TOGGLE_FLAG_ORANGE"),
+                    Pair(22, "binding_TOGGLE_FLAG_GREEN"),
+                    Pair(23, "binding_TOGGLE_FLAG_BLUE"),
+                    Pair(38, "binding_TOGGLE_FLAG_PINK"),
+                    Pair(39, "binding_TOGGLE_FLAG_TURQUOISE"),
+                    Pair(40, "binding_TOGGLE_FLAG_PURPLE"),
+                    Pair(24, "binding_UNSET_FLAG"),
+                    Pair(30, "binding_PAGE_UP"),
+                    Pair(31, "binding_PAGE_DOWN"),
+                    Pair(32, "binding_TAG"),
+                    Pair(33, "binding_CARD_INFO"),
+                    Pair(35, "binding_RECORD_VOICE"),
+                    Pair(36, "binding_REPLAY_VOICE"),
+                    Pair(46, "binding_SAVE_VOICE"),
+                    Pair(37, "binding_TOGGLE_WHITEBOARD"),
+                    Pair(44, "binding_CLEAR_WHITEBOARD"),
+                    Pair(45, "binding_CHANGE_WHITEBOARD_PEN_COLOR"),
+                    Pair(41, "binding_SHOW_HINT"),
+                    Pair(42, "binding_SHOW_ALL_HINTS"),
+                    Pair(43, "binding_ADD_NOTE"),
                 )
 
             override fun upgrade(preferences: SharedPreferences) {
@@ -419,7 +421,7 @@ object PreferenceUpgradeService {
                 val asInt = pref.toIntOrNull() ?: return
                 val command = oldCommandValues[asInt] ?: return
 
-                Timber.i("Moving preference from '%s' to '%s'", oldGesturePreferenceKey, command.preferenceKey)
+                Timber.i("Moving preference from '%s' to '%s'", oldGesturePreferenceKey, command)
 
                 // add to the binding_COMMANDNAME preference
                 val mappableBinding = ReviewerBinding(binding, CardSide.BOTH)
@@ -433,10 +435,10 @@ object PreferenceUpgradeService {
                             true
                         }
                     }
-                val bindings: MutableList<MappableBinding> = ReviewerBinding.fromPreference(preferences, command)
+                val bindings: MutableList<MappableBinding> = bindingFromPreference(preferences, command)
                 addAtEnd(bindings, mappableBinding)
                 val newValue: String = bindings.toPreferenceString()
-                preferences.edit { putString(command.preferenceKey, newValue) }
+                preferences.edit { putString(command, newValue) }
             }
         }
 
@@ -516,11 +518,11 @@ object PreferenceUpgradeService {
 
         internal class RemoveAnswerRecommended : PreferenceUpgrade(12) {
             override fun upgrade(preferences: SharedPreferences) {
-                moveControlBindings(preferences, "binding_FLIP_OR_ANSWER_RECOMMENDED", ViewerCommand.FLIP_OR_ANSWER_EASE3.preferenceKey)
+                moveControlBindings(preferences, "binding_FLIP_OR_ANSWER_RECOMMENDED", "binding_FLIP_OR_ANSWER_EASE3")
                 moveControlBindings(
                     preferences,
                     "binding_FLIP_OR_ANSWER_BETTER_THAN_RECOMMENDED",
-                    ViewerCommand.FLIP_OR_ANSWER_EASE4.preferenceKey,
+                    "binding_FLIP_OR_ANSWER_EASE4",
                 )
             }
 
@@ -794,4 +796,18 @@ object PreferenceUpgradeService {
 
 object RemovedPreferences {
     const val SYNC_FETCHES_MEDIA = "syncFetchesMedia"
+}
+
+fun bindingFromPreference(
+    preferences: SharedPreferences,
+    key: String,
+): MutableList<MappableBinding> {
+    val value =
+        preferences.getString(key, null)
+            ?: return ViewerAction.entries
+                .firstOrNull { it.preferenceKey == key }
+                ?.getBindings(preferences)
+                ?.toMutableList()
+                ?: mutableListOf()
+    return fromPreferenceString(value).toMutableList()
 }

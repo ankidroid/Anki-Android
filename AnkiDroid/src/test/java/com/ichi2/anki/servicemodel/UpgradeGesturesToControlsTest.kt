@@ -18,13 +18,13 @@ package com.ichi2.anki.servicemodel
 import android.content.SharedPreferences
 import androidx.core.content.edit
 import com.ichi2.anki.RobolectricTest
-import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.reviewer.Binding.Companion.keyCode
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.reviewer.MappableBinding
 import com.ichi2.anki.reviewer.ReviewerBinding
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService.PreferenceUpgrade.Companion.UPGRADE_VERSION_PREF_KEY
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService.PreferenceUpgrade.UpgradeGesturesToControls
+import com.ichi2.anki.servicelayer.bindingFromPreference
 import com.ichi2.anki.utils.ext.addBinding
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.CoreMatchers.not
@@ -67,24 +67,24 @@ class UpgradeGesturesToControlsTest(
     @Test
     fun gesture_set_no_conflicts() {
         // assume that we have a preference set, and that it has no defaults
-        val command = ViewerCommand.SHOW_ANSWER
+        val command = "binding_SHOW_ANSWER"
         prefs.edit { putString(testData.affectedPreferenceKey, oldCommandPreferenceStrings[command]) }
 
         assertThat(prefs.contains(testData.affectedPreferenceKey), equalTo(true))
         assertThat(prefs.contains(testData.unaffectedPreferenceKey), equalTo(false))
-        assertThat("example command should have no defaults", ReviewerBinding.fromPreference(prefs, command), empty())
+        assertThat("example command should have no defaults", bindingFromPreference(prefs, command), empty())
 
         upgradeAllGestures()
 
         assertThat(
             changedKeys,
-            Matchers.containsInAnyOrder(UPGRADE_VERSION_PREF_KEY, testData.affectedPreferenceKey, command.preferenceKey),
+            Matchers.containsInAnyOrder(UPGRADE_VERSION_PREF_KEY, testData.affectedPreferenceKey, command),
         )
 
         assertThat("legacy preference removed", prefs.contains(testData.affectedPreferenceKey), equalTo(false))
-        assertThat("new preference added", prefs.contains(command.preferenceKey), equalTo(true))
+        assertThat("new preference added", prefs.contains(command), equalTo(true))
 
-        val fromPreference = ReviewerBinding.fromPreference(prefs, command)
+        val fromPreference = bindingFromPreference(prefs, command)
         assertThat(fromPreference, hasSize(1))
         val binding = fromPreference.first()
 
@@ -97,27 +97,27 @@ class UpgradeGesturesToControlsTest(
         // common path
         // if the gesture was mapped to a command which already had bindings,
         // check it is added to the list at the end
-        val command = ViewerCommand.EDIT
+        val command = "binding_EDIT"
         prefs.edit { putString(testData.affectedPreferenceKey, oldCommandPreferenceStrings[command]) }
 
         assertThat(prefs.contains(testData.affectedPreferenceKey), equalTo(true))
         assertThat(prefs.contains(testData.unaffectedPreferenceKey), equalTo(false))
-        assertThat("new preference does not exist", prefs.contains(command.preferenceKey), equalTo(false))
-        val previousCommands = ReviewerBinding.fromPreference(prefs, command)
+        assertThat("new preference does not exist", prefs.contains(command), equalTo(false))
+        val previousCommands = bindingFromPreference(prefs, command)
         assertThat("example command should have defaults", previousCommands, not(empty()))
 
         upgradeAllGestures()
 
         assertThat(
             changedKeys,
-            Matchers.containsInAnyOrder(UPGRADE_VERSION_PREF_KEY, testData.affectedPreferenceKey, command.preferenceKey),
+            Matchers.containsInAnyOrder(UPGRADE_VERSION_PREF_KEY, testData.affectedPreferenceKey, command),
         )
 
         assertThat("legacy preference removed", prefs.contains(testData.affectedPreferenceKey), equalTo(false))
-        assertThat("new preference exists", prefs.contains(command.preferenceKey), equalTo(true))
+        assertThat("new preference exists", prefs.contains(command), equalTo(true))
 
-        val currentCommands = ReviewerBinding.fromPreference(prefs, command)
-        assertThat("a binding was added to '${command.preferenceKey}'", currentCommands, hasSize(previousCommands.size + 1))
+        val currentCommands = bindingFromPreference(prefs, command)
+        assertThat("a binding was added to '$command'", currentCommands, hasSize(previousCommands.size + 1))
 
         // ensure that the order was not changed - the last element is not included in the zip
         previousCommands.zip(currentCommands).forEach {
@@ -135,15 +135,15 @@ class UpgradeGesturesToControlsTest(
         // the gestures shouldn't already be a keybind (as we've just introduced the feature)
         // but if it is, then we want to ignore it in the upgrade.
 
-        val command = ViewerCommand.EDIT
-        command.addBinding(prefs, testData.binding)
+        val command = "binding_EDIT"
+        addBinding(command, prefs, testData.binding)
 
         prefs.edit { putString(testData.affectedPreferenceKey, oldCommandPreferenceStrings[command]) }
 
         assertThat(prefs.contains(testData.affectedPreferenceKey), equalTo(true))
         assertThat(prefs.contains(testData.unaffectedPreferenceKey), equalTo(false))
-        assertThat("new preference exists", prefs.contains(command.preferenceKey), equalTo(true))
-        val previousCommands = ReviewerBinding.fromPreference(prefs, command)
+        assertThat("new preference exists", prefs.contains(command), equalTo(true))
+        val previousCommands = bindingFromPreference(prefs, command)
         assertThat("example command should have defaults", previousCommands, hasSize(2))
         assertThat(previousCommands.first(), equalTo(testData.binding))
 
@@ -156,7 +156,7 @@ class UpgradeGesturesToControlsTest(
         )
 
         assertThat("legacy preference removed", prefs.contains(testData.affectedPreferenceKey), equalTo(false))
-        assertThat("new preference still exists", prefs.contains(command.preferenceKey), equalTo(true))
+        assertThat("new preference still exists", prefs.contains(command), equalTo(true))
     }
 
     @Test
@@ -201,7 +201,7 @@ class UpgradeGesturesToControlsTest(
         private const val PREF_KEY_VOLUME_UP = "gestureVolumeUp"
         private const val PREF_KEY_VOLUME_DOWN = "gestureVolumeDown"
 
-        val oldCommandPreferenceStrings: HashMap<ViewerCommand, String> =
+        val oldCommandPreferenceStrings: HashMap<String, String> =
             hashMapOf(*UpgradeGesturesToControls().oldCommandValues.map { Pair(it.value, it.key.toString()) }.toTypedArray())
 
         private val volume_up_binding = ReviewerBinding(keyCode(KEYCODE_VOLUME_UP), CardSide.BOTH)
