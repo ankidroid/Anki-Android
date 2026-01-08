@@ -847,14 +847,14 @@ object PreferenceUpgradeService {
             }
         }
 
-        internal class UpgradeAnswerControls : PreferenceUpgrade(27) {
+        class UpgradeAnswerControls : PreferenceUpgrade(27) {
             override fun upgrade(preferences: SharedPreferences) {
-                val keys =
-                    listOf(
-                        "binding_FLIP_OR_ANSWER_EASE1",
-                        "binding_FLIP_OR_ANSWER_EASE2",
-                        "binding_FLIP_OR_ANSWER_EASE3",
-                        "binding_FLIP_OR_ANSWER_EASE4",
+                val keysMap =
+                    mapOf(
+                        "binding_FLIP_OR_ANSWER_EASE1" to "binding_ANSWER_AGAIN",
+                        "binding_FLIP_OR_ANSWER_EASE2" to "binding_ANSWER_HARD",
+                        "binding_FLIP_OR_ANSWER_EASE3" to "binding_ANSWER_GOOD",
+                        "binding_FLIP_OR_ANSWER_EASE4" to "binding_ANSWER_EASY",
                     )
                 val showAnswerBindings =
                     fromPreferenceString(
@@ -864,7 +864,7 @@ object PreferenceUpgradeService {
                         ),
                     ).toMutableList()
 
-                for (key in keys) {
+                for ((key, newKey) in keysMap.entries) {
                     val value = preferences.getString(key, null) ?: continue
                     val bindings = fromPreferenceString(value).toMutableList()
 
@@ -890,7 +890,8 @@ object PreferenceUpgradeService {
                         }
                     }
                     preferences.edit {
-                        putString(key, bindings.toPreferenceString())
+                        remove(key)
+                        putString(newKey, bindings.toPreferenceString())
                     }
                 }
                 preferences.edit {
