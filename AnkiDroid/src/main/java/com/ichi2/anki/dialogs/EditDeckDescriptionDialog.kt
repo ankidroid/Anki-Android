@@ -16,11 +16,11 @@
 
 package com.ichi2.anki.dialogs
 
-import android.app.Dialog
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
-import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -36,13 +36,9 @@ import com.ichi2.anki.databinding.DialogDeckDescriptionBinding
 import com.ichi2.anki.dialogs.EditDeckDescriptionDialogViewModel.DismissType
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.snackbar.showSnackbar
-import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.utils.AndroidUiUtils.hideKeyboard
 import com.ichi2.utils.AndroidUiUtils.setFocusAndOpenKeyboard
-import com.ichi2.utils.create
 import com.ichi2.utils.moveCursorToEnd
-import com.ichi2.utils.negativeButton
-import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
@@ -58,8 +54,6 @@ class EditDeckDescriptionDialog : DialogFragment() {
 
     private lateinit var binding: DialogDeckDescriptionBinding
 
-    private lateinit var alertDialog: AlertDialog
-
     private var isKeyboardVisible: Boolean = false
 
     private val onUnsavedChangesBackCallback =
@@ -73,37 +67,49 @@ class EditDeckDescriptionDialog : DialogFragment() {
             }
         }
 
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        this.binding = DialogDeckDescriptionBinding.inflate(layoutInflater)
-        return MaterialAlertDialogBuilder(requireContext())
-            .create {
-                setView(binding.root)
-                positiveButton(R.string.save)
-                negativeButton(R.string.close)
-            }.apply {
-                alertDialog = this
-                setOnShowListener {
-                    positiveButton.setOnClickListener { viewModel.saveAndExit() }
-                    negativeButton.setOnClickListener { viewModel.onBackRequested() }
-                }
-                setCanceledOnTouchOutside(false)
-                setCancelable(false)
-                onBackPressedDispatcher.addCallback(this, onUnsavedChangesBackCallback)
-                show()
-                setupDialogView(binding.root)
-            }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setStyle(STYLE_NO_FRAME, R.style.ThemeOverlay_AnkiDroid_AlertDialog_FullScreen)
     }
 
-    override fun setupDialog(
-        dialog: Dialog,
-        style: Int,
+    override fun onStart() {
+        super.onStart()
+        dialog?.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View {
+        binding = DialogDeckDescriptionBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
     ) {
-        super.setupDialog(dialog, style)
-        dialog.window?.let {
-            ViewCompat.setOnApplyWindowInsetsListener(it.decorView) { _, insets ->
-                isKeyboardVisible = insets.isVisible(WindowInsetsCompat.Type.ime())
-                insets
+        super.onViewCreated(view, savedInstanceState)
+        binding.toolbar.apply {
+            setNavigationIcon(R.drawable.ic_clear_white)
+            setNavigationOnClickListener { viewModel.onBackRequested() }
+            inflateMenu(R.menu.menu_deck_description)
+            setOnMenuItemClickListener { item ->
+                when (item.itemId) {
+                    R.id.action_save -> {
+                        viewModel.saveAndExit()
+                        true
+                    }
+                    else -> false
+                }
             }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, onUnsavedChangesBackCallback)
+        setupDialogView(binding.root)
+        ViewCompat.setOnApplyWindowInsetsListener(view) { _, insets ->
+            isKeyboardVisible = insets.isVisible(WindowInsetsCompat.Type.ime())
+            insets
         }
     }
 
@@ -141,9 +147,9 @@ class EditDeckDescriptionDialog : DialogFragment() {
                 .filterNotNull()
                 .collect { dismissType ->
                     when (dismissType) {
-                        DismissType.ClosedWithoutSaving -> requireActivity().dismissAllDialogFragments()
+                        DismissType.ClosedWithoutSaving -> dismiss()
                         DismissType.Saved -> {
-                            requireActivity().dismissAllDialogFragments()
+                            dismiss()
                             showSnackbar(R.string.deck_description_saved)
                             // notify DeckPicker to invalidate its toolbar menu, otherwise the undo
                             // action to revert the description change is not going to be visible
@@ -185,7 +191,9 @@ class EditDeckDescriptionDialog : DialogFragment() {
 
         lifecycleScope.launch {
             viewModel.flowOfHasChanges.collect {
-                alertDialog.positiveButton.isEnabled = it
+                val saveItem = binding.toolbar.menu.findItem(R.id.action_save)
+                saveItem.isEnabled = it
+                saveItem.icon?.alpha = if (it) 255 else 130
                 onUnsavedChangesBackCallback.isEnabled = it
             }
         }
