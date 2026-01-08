@@ -42,6 +42,7 @@ import com.ichi2.anki.browser.CardBrowserColumn.TAGS
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.libanki.Consts
+import com.ichi2.anki.libanki.utils.append
 import com.ichi2.anki.model.CardsOrNotes
 import com.ichi2.anki.noteeditor.CustomToolbarButton
 import com.ichi2.anki.preferences.reviewer.ViewerAction
@@ -135,6 +136,7 @@ object PreferenceUpgradeService {
                     yield(UpgradeHideAnswerButtons())
                     yield(UpgradeToggleBacksideOnlyControl())
                     yield(UpgradeThemes())
+                    yield(UpgradeAnswerControls())
                 }
 
             /** Returns a list of preference upgrade classes which have not been applied */
@@ -841,6 +843,58 @@ object PreferenceUpgradeService {
                             putString(KEY_NIGHT_THEME, appTheme)
                         }
                     }
+                }
+            }
+        }
+
+        internal class UpgradeAnswerControls : PreferenceUpgrade(27) {
+            override fun upgrade(preferences: SharedPreferences) {
+                val keys =
+                    listOf(
+                        "binding_FLIP_OR_ANSWER_EASE1",
+                        "binding_FLIP_OR_ANSWER_EASE2",
+                        "binding_FLIP_OR_ANSWER_EASE3",
+                        "binding_FLIP_OR_ANSWER_EASE4",
+                    )
+                val showAnswerBindings =
+                    fromPreferenceString(
+                        preferences.getString(
+                            "binding_SHOW_ANSWER",
+                            "",
+                        ),
+                    ).toMutableList()
+
+                for (key in keys) {
+                    val value = preferences.getString(key, null) ?: continue
+                    val bindings = fromPreferenceString(value).toMutableList()
+
+                    bindings.forEach { binding ->
+                        when (binding.side) {
+                            CardSide.QUESTION -> {
+                                if (!showAnswerBindings.any { it.binding == binding.binding }) {
+                                    showAnswerBindings.append(binding)
+                                }
+                                bindings.remove(binding)
+                            }
+                            CardSide.ANSWER -> {}
+                            CardSide.BOTH -> {
+                                showAnswerBindings.append(
+                                    ReviewerBinding(
+                                        binding.binding,
+                                        CardSide.QUESTION,
+                                    ),
+                                )
+                                bindings.remove(binding)
+                                bindings.append(ReviewerBinding(binding.binding, CardSide.ANSWER))
+                            }
+                        }
+                    }
+                    preferences.edit {
+                        putString(key, bindings.toPreferenceString())
+                    }
+                }
+                preferences.edit {
+                    putString("binding_SHOW_ANSWER", showAnswerBindings.toPreferenceString())
                 }
             }
         }
