@@ -173,7 +173,7 @@ abstract class AppCompatPreferenceActivity<PreferenceHack : AppCompatPreferenceA
         override fun getBoolean(
             key: String,
             defValue: Boolean,
-        ): Boolean = java.lang.Boolean.parseBoolean(this.getString(key, java.lang.Boolean.toString(defValue)))
+        ): Boolean = this.getString(key, defValue.toString()).toBoolean()
 
         override fun getFloat(
             key: String,

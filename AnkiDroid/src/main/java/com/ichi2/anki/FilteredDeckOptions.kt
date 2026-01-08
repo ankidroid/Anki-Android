@@ -89,12 +89,12 @@ class FilteredDeckOptions :
             val delays = deck.optJSONArray("delays")
             if (delays != null) {
                 values["steps"] = convertFromJSON(delays)
-                values["stepsOn"] = java.lang.Boolean.toString(true)
+                values["stepsOn"] = true.toString()
             } else {
                 values["steps"] = "1 10"
-                values["stepsOn"] = java.lang.Boolean.toString(false)
+                values["stepsOn"] = false.toString()
             }
-            values["resched"] = java.lang.Boolean.toString(deck.getBoolean("resched"))
+            values["resched"] = deck.getBoolean("resched").toString()
             values["previewAgainSecs"] = deck.getString("previewAgainSecs")
             values["previewHardSecs"] = deck.getString("previewHardSecs")
             values["previewGoodSecs"] = deck.getString("previewGoodSecs")
@@ -167,7 +167,7 @@ class FilteredDeckOptions :
                                     }
                                     if ("resched" == name) {
                                         update.put(name, presetValues.getBoolean(name))
-                                        values[name] = java.lang.Boolean.toString(presetValues.getBoolean(name))
+                                        values[name] = presetValues.getBoolean(name).toString()
                                     } else {
                                         update.put(name, presetValues.getString(name))
                                         values[name] = presetValues.getString(name)
