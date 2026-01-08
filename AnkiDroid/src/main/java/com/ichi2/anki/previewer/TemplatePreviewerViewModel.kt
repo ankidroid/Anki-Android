@@ -24,6 +24,7 @@ import com.ichi2.anki.NotetypeFile
 import com.ichi2.anki.asyncIO
 import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.libanki.Card
+import com.ichi2.anki.libanki.CardOrdinal
 import com.ichi2.anki.libanki.Consts.DEFAULT_DECK_ID
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.Note
@@ -49,16 +50,16 @@ class TemplatePreviewerViewModel(
     private val isCloze: Boolean
 
     /**
-     * identifies which of the card templates or cloze deletions it corresponds to
-     * * for card templates, values are from 0 to the number of templates minus 1
-     * * for cloze deletions, values are from 0 to max cloze index minus 1
+     * Identifies which of the card templates or cloze deletions it corresponds to
+     *
+     * @see CardOrdinal
      */
     @VisibleForTesting
-    val ordFlow: MutableStateFlow<Int>
+    val ordFlow: MutableStateFlow<CardOrdinal>
 
     private val note: Deferred<Note>
     private val templateNames: Deferred<List<String>>
-    private val clozeOrds: Deferred<List<Int>>?
+    private val clozeOrds: Deferred<List<CardOrdinal>>?
     override var currentCard: Deferred<Card>
     override val server = AnkiServer(this).also { it.start() }
 
@@ -207,7 +208,7 @@ class TemplatePreviewerViewModel(
             ordFlow.value
         }
 
-    suspend fun getSafeClozeOrd(): Int = ordFlow.value.coerceIn(0, clozeOrds!!.await().size - 1)
+    suspend fun getSafeClozeOrd(): CardOrdinal = ordFlow.value.coerceIn(0, clozeOrds!!.await().size - 1)
 
     fun updateContent(
         fields: List<String>,
@@ -271,11 +272,7 @@ class TemplatePreviewerViewModel(
 
 /**
  * @param id id of the note. Use 0 for non-created notes.
- *
- * @param ord identifies which of the card templates or cloze deletions it corresponds to
- * * for card templates, values are from 0 to the number of templates minus 1
- * * for cloze deletions, values are from 0 to max cloze index minus 1
- *
+ * @param ord See [CardOrdinal]
  * @param fillEmpty if blank fields should be replaced with placeholder content
  */
 @Parcelize
@@ -284,7 +281,7 @@ data class TemplatePreviewerArguments(
     val fields: List<String>,
     val tags: List<String>,
     val id: NoteId = 0,
-    val ord: Int = 0,
+    val ord: CardOrdinal = 0,
     val fillEmpty: Boolean = false,
     val deckId: DeckId = DEFAULT_DECK_ID,
 ) : Parcelable {

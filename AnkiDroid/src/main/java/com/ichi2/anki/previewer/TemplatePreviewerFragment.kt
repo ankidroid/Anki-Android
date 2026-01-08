@@ -24,6 +24,7 @@ import com.google.android.material.tabs.TabLayout
 import com.ichi2.anki.R
 import com.ichi2.anki.databinding.FragmentTemplatePreviewerBinding
 import com.ichi2.anki.launchCatchingTask
+import com.ichi2.anki.libanki.CardOrdinal
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.utils.ext.doOnTabSelected
@@ -145,7 +146,7 @@ class TemplatePreviewerFragment :
      *
      * @return The safe cloze ordinal number
      */
-    suspend fun getSafeClozeOrd(): Int = viewModel.getSafeClozeOrd()
+    suspend fun getSafeClozeOrd(): CardOrdinal = viewModel.getSafeClozeOrd()
 
     companion object {
         const val ARGS_KEY = "templatePreviewerArgs"

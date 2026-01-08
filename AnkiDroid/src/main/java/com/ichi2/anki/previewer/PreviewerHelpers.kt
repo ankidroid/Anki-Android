@@ -23,6 +23,7 @@ import com.google.android.material.card.MaterialCardView
 import com.google.android.material.shape.ShapeAppearanceModel
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.LanguageUtils
+import com.ichi2.anki.libanki.CardOrdinal
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.settings.enums.FrameStyle
 import com.ichi2.themes.Themes
@@ -93,7 +94,7 @@ fun stdHtml(
  * @return body classes used when showing a card
  */
 fun bodyClassForCardOrd(
-    cardOrd: Int,
+    cardOrd: CardOrdinal,
     nightMode: Boolean = Themes.isNightTheme,
 ): String = "card card${cardOrd + 1} ${bodyClass(nightMode)} mathjax-rendered"
 

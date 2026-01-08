@@ -73,6 +73,7 @@ import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
 import com.ichi2.anki.dialogs.DiscardChangesDialog
 import com.ichi2.anki.dialogs.InsertFieldDialog
+import com.ichi2.anki.libanki.CardOrdinal
 import com.ichi2.anki.libanki.CardTemplates
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.Note
@@ -148,11 +149,11 @@ open class CardTemplateEditor :
      * The inner HashMap's key is the editor window ID (e.g., R.id.front_edit).
      * The value is the cursor position within that editor window.
      */
-    private var tabToCursorPositions: HashMap<Int, HashMap<Int, Int>> = HashMap()
+    private var tabToCursorPositions: HashMap<CardOrdinal, HashMap<Int, Int>> = HashMap()
 
     // the current editor view among front/style/back
     private var tabToViewId: HashMap<Int, Int?> = HashMap()
-    private var startingOrdId = 0
+    private var startingOrdId: CardOrdinal = 0
 
     /**
      * If true, the view is split in two. The template editor appears on the leading side and the previewer on the trailing side.
