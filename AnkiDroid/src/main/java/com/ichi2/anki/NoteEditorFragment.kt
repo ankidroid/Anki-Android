@@ -100,6 +100,7 @@ import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
 import com.ichi2.anki.libanki.Card
+import com.ichi2.anki.libanki.CardOrdinal
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.Consts
 import com.ichi2.anki.libanki.DeckId
@@ -1682,7 +1683,7 @@ class NoteEditorFragment :
      * @param fields The processed note fields
      * @return The ordinal (position) of the card template to display
      */
-    suspend fun determineCardOrdinal(fields: MutableList<String>): Int {
+    suspend fun determineCardOrdinal(fields: MutableList<String>): CardOrdinal {
         val ord =
             if (editorNote!!.notetype.isCloze) {
                 val tempNote = withCol { Note.fromNotetypeId(this@withCol, editorNote!!.notetype.id) }

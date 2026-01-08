@@ -67,8 +67,12 @@ data class CardTemplate(
      */
     var name by jsonString("name")
 
-    /** The 0-based ordinal of the template */
-    val ord by jsonInt("ord")
+    /**
+     * The 0-based ordinal of the template
+     *
+     * @see CardOrdinal
+     */
+    val ord: CardOrdinal by jsonInt("ord")
 
     /**
      * Format string for the question when reviewing
@@ -107,7 +111,7 @@ data class CardTemplate(
 
     /** @see ord */
     @RustCleanup("Check JSONObject.NULL")
-    fun setOrd(value: Int?) = jsonObject.put("ord", value ?: JSONObject.NULL)
+    fun setOrd(value: CardOrdinal?) = jsonObject.put("ord", value ?: JSONObject.NULL)
 
     fun deepClone() = CardTemplate(jsonObject.deepClone())
 

@@ -28,6 +28,7 @@ import com.ichi2.anki.NoteEditorActivity.Companion.FRAGMENT_NAME_EXTRA
 import com.ichi2.anki.android.input.ShortcutGroup
 import com.ichi2.anki.android.input.ShortcutGroupProvider
 import com.ichi2.anki.databinding.ActivityNoteEditorBinding
+import com.ichi2.anki.libanki.CardOrdinal
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.noteeditor.NoteEditorFragmentDelegate
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
@@ -245,7 +246,7 @@ class NoteEditorActivity :
     private fun createPreviewerFragment(
         fields: List<String>,
         tags: List<String>,
-        ord: Int,
+        ord: CardOrdinal,
     ): TemplatePreviewerFragment {
         val args =
             TemplatePreviewerArguments(
