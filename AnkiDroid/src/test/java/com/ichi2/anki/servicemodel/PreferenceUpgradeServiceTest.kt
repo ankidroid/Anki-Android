@@ -21,9 +21,14 @@ import androidx.core.content.edit
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.libanki.Consts
 import com.ichi2.anki.noteeditor.CustomToolbarButton
 import com.ichi2.anki.preferences.sharedPrefs
+import com.ichi2.anki.reviewer.Binding
+import com.ichi2.anki.reviewer.CardSide
+import com.ichi2.anki.reviewer.MappableBinding.Companion.toPreferenceString
+import com.ichi2.anki.reviewer.ReviewerBinding
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService.PreferenceUpgrade
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService.PreferenceUpgrade.UpgradeThemes
@@ -288,5 +293,55 @@ class PreferenceUpgradeServiceTest : RobolectricTest() {
         upgrade.performUpgrade(prefs)
         assertThat(prefs.getString(UpgradeThemes.KEY_APP_THEME, null), equalTo(UpgradeThemes.THEME_NIGHT))
         assertThat(prefs.getString(UpgradeThemes.KEY_NIGHT_THEME, null), equalTo(UpgradeThemes.THEME_DARK))
+    }
+
+    @Test
+    fun upgradeAnswerControls() {
+        val questionBinding = Binding.gesture(Gesture.TAP_LEFT)
+        val answerBinding = Binding.gesture(Gesture.TAP_RIGHT)
+        val bothBinding = Binding.gesture(Gesture.SWIPE_UP)
+        val existingShowBinding = Binding.gesture(Gesture.SWIPE_DOWN)
+
+        val againBindings =
+            listOf(
+                ReviewerBinding(questionBinding, CardSide.QUESTION),
+                ReviewerBinding(answerBinding, CardSide.ANSWER),
+            )
+        val goodBindings =
+            listOf(
+                ReviewerBinding(bothBinding, CardSide.BOTH),
+            )
+        val showAnswerBindings =
+            listOf(
+                ReviewerBinding(existingShowBinding, CardSide.QUESTION),
+            )
+        prefs.edit {
+            putString("binding_FLIP_OR_ANSWER_EASE1", againBindings.toPreferenceString())
+            putString("binding_FLIP_OR_ANSWER_EASE3", goodBindings.toPreferenceString())
+            putString("binding_SHOW_ANSWER", showAnswerBindings.toPreferenceString())
+        }
+
+        PreferenceUpgrade.UpgradeAnswerControls().performUpgrade(prefs)
+
+        assertThat(prefs.contains("binding_FLIP_OR_ANSWER_EASE1"), equalTo(false))
+        assertThat(prefs.contains("binding_FLIP_OR_ANSWER_EASE3"), equalTo(false))
+
+        val newAgainBindings = ReviewerBinding.fromPreferenceString(prefs.getString("binding_ANSWER_AGAIN", ""))
+        assertThat("Should have 1 binding", newAgainBindings.size, equalTo(1))
+        assertThat(newAgainBindings[0].binding, equalTo(answerBinding))
+        assertThat(newAgainBindings[0].side, equalTo(CardSide.ANSWER))
+
+        val newGoodBindings = ReviewerBinding.fromPreferenceString(prefs.getString("binding_ANSWER_GOOD", ""))
+        assertThat("Should have 1 binding", newGoodBindings.size, equalTo(1))
+        assertThat(newGoodBindings[0].binding, equalTo(bothBinding))
+        assertThat(newGoodBindings[0].side, equalTo(CardSide.ANSWER))
+
+        val newShowBindings = ReviewerBinding.fromPreferenceString(prefs.getString("binding_SHOW_ANSWER", ""))
+        assertThat("Should have 3 bindings", newShowBindings.size, equalTo(3))
+
+        val bindings = newShowBindings.map { it.binding }
+        assertThat("Preserves SHOW_ANSWER binding", bindings.contains(existingShowBinding), equalTo(true))
+        assertThat("Migrates 'Again' question binding", bindings.contains(questionBinding), equalTo(true))
+        assertThat("Splits 'Good' Both binding to Question side", bindings.contains(bothBinding), equalTo(true))
     }
 }
