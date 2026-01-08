@@ -46,9 +46,11 @@ import com.ichi2.utils.Permissions.MANAGE_EXTERNAL_STORAGE
 import com.ichi2.utils.Permissions.arePermissionsDefinedInManifest
 import com.ichi2.utils.Permissions.isExternalStorageManager
 import timber.log.Timber
+import kotlin.reflect.KMutableProperty
 
 object Permissions {
     const val MANAGE_EXTERNAL_STORAGE = "android.permission.MANAGE_EXTERNAL_STORAGE"
+    const val INTERNET: String = Manifest.permission.INTERNET
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     val tiramisuPhotosAndVideosPermissions =
@@ -348,9 +350,7 @@ object Permissions {
         openAppSettingsScreen()
     }
 
-    /**
-     * Returns true if the app has INTERNET permission granted.
-     */
+    /** Returns true if the app has INTERNET permission granted. */
     fun canAccessInternet(context: Context): Boolean =
         ContextCompat.checkSelfPermission(context, Manifest.permission.INTERNET) == PackageManager.PERMISSION_GRANTED
 }

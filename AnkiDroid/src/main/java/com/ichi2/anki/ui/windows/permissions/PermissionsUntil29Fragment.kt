@@ -52,9 +52,7 @@ class PermissionsUntil29Fragment : PermissionsFragment(R.layout.permissions_unti
     ) {
         val storagePermission = view.findViewById<PermissionsItem>(R.id.storage_permission)
 
-        view
-            .findViewById<PermissionsItem>(R.id.internet_permission)
-            .initializeInternetPermissionItem()
+        view.findViewById<PermissionsItem>(R.id.internet_permission).initializeInternetPermissionItem()
 
         storagePermission.setOnPermissionsRequested { areAlreadyGranted ->
             if (areAlreadyGranted) return@setOnPermissionsRequested

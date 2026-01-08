@@ -30,4 +30,10 @@ class InternetPermissionFragment : PermissionsFragment(R.layout.internet_permiss
             .findViewById<PermissionsItem>(R.id.internet_permission)
             .initializeInternetPermissionItem()
     }
+
+    override fun onResume() {
+        super.onResume()
+        val isGranted = Permissions.canAccessInternet(requireContext())
+        (activity as? PermissionsActivity)?.setContinueButtonEnabled(isGranted)
+    }
 }

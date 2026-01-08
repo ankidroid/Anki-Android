@@ -29,10 +29,10 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
 import com.ichi2.anki.R
-import com.ichi2.utils.Permissions.openAppSettingsScreen
-import com.ichi2.utils.Permissions.showToastAndOpenAppSettingsScreen
 import com.ichi2.anki.showThemedToast
 import com.ichi2.utils.Permissions
+import com.ichi2.utils.Permissions.openAppSettingsScreen
+import com.ichi2.utils.Permissions.showToastAndOpenAppSettingsScreen
 import timber.log.Timber
 
 /**
@@ -49,6 +49,13 @@ abstract class PermissionsFragment(
      */
     val permissionsItems: List<PermissionsItem>
         by lazy { view?.allViews?.filterIsInstance<PermissionsItem>()?.toList() ?: emptyList() }
+
+    protected val internetLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { requestedPermission ->
+            if (!requestedPermission) {
+                showToastAndOpenAppSettingsScreen(R.string.startup_no_internet_permission)
+            }
+        }
 
     protected fun hasAllPermissions() = permissionsItems.all { it.areGranted }
 

@@ -37,7 +37,9 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.ParameterizedRobolectricTestRunner
 import org.robolectric.RuntimeEnvironment
+import org.robolectric.Shadows
 import java.io.File
+import java.util.jar.Manifest
 
 @KotlinCleanup("SPMockBuilder")
 @RunWith(ParameterizedRobolectricTestRunner::class)
@@ -61,6 +63,9 @@ class DeckPickerOnDiskTest : RobolectricTest() {
         getPreferences().edit {
             putBoolean(IntroductionActivity.INTRODUCTION_SLIDES_SHOWN, true)
         }
+
+        val shadowApp = Shadows.shadowOf(RuntimeEnvironment.getApplication())
+        shadowApp.grantPermissions(android.Manifest.permission.INTERNET)
     }
 
     @Test
