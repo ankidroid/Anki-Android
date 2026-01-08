@@ -228,8 +228,8 @@ class TagsList(
      * Initialize the tag hierarchy.
      */
     private fun prepareTagHierarchy() {
-        val allTags: List<String> = ArrayList(allTags)
-        for (tag in allTags) {
+        val originalTags = allTags.toList()
+        for (tag in originalTags) {
             addAncestors(tag)
         }
         for (tag in checkedTags) {
