@@ -243,10 +243,8 @@ else
   BUILDNAMES='A B' # For alpha releases just post a couple parallel builds
 fi
 for BUILD in $BUILDNAMES; do
-  PREFIX=""
   echo "Adding parallel build $BUILD to Github release"
-  cp AnkiDroid-"$VERSION".parallel."$BUILD".apk "$PREFIX"AnkiDroid-"$VERSION".parallel."$BUILD".apk
-  gh release upload v"$VERSION" "$PREFIX"AnkiDroid-"$VERSION".parallel."$BUILD".apk
+  gh release upload v"$VERSION" AnkiDroid-"$VERSION".parallel."$BUILD".apk
 done
 
 # For publishing the draft release and making it immutable;
