@@ -93,3 +93,15 @@ fun String.htmlEncode(): String {
     }
     return sb.toString()
 }
+
+/**
+ * Truncates the string to the given maximum length and appends an ellipsis (`…`)
+ * if the text exceeds that length.
+ *
+ * Prefer [android.text.TextUtils.ellipsize] when you have a reference to a TextView
+ */
+fun String.ellipsize(maxLength: Int): String {
+    require(maxLength > 1) { "invalid length: $maxLength" }
+    if (this.length <= maxLength) return this
+    return this.take(maxLength - 1) + "…"
+}

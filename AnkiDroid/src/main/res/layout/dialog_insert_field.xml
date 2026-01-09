@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~  Copyright (c) 2026 David Allison <davidallisongithub@gmail.com>
+  ~
+  ~  This program is free software; you can redistribute it and/or modify it under
+  ~  the terms of the GNU General Public License as published by the Free Software
+  ~  Foundation; either version 3 of the License, or (at your option) any later
+  ~  version.
+  ~
+  ~  This program is distributed in the hope that it will be useful, but WITHOUT ANY
+  ~  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+  ~  PARTICULAR PURPOSE. See the GNU General Public License for more details.
+  ~
+  ~  You should have received a copy of the GNU General Public License along with
+  ~  this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    >
+<com.google.android.material.tabs.TabLayout
+
+    android:id="@+id/tab_layout"
+    android:background="@android:color/transparent"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:tabMaxWidth="0dp"
+    app:tabGravity="fill" >
+
+    <com.google.android.material.tabs.TabItem
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/basic_fields_tab_header"
+        />
+
+    <com.google.android.material.tabs.TabItem
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/special_fields_tab_header"
+        />
+
+
+</com.google.android.material.tabs.TabLayout>
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+</LinearLayout>
