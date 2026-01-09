@@ -69,25 +69,38 @@ class ReviewerControlPreference : ControlPreference {
 
     override fun getMappableBindings(): List<ReviewerBinding> = ReviewerBinding.fromPreferenceString(value).toList()
 
-    override fun onKeySelected(binding: Binding) {
+    fun interface OnBindingSelectedListener {
+        /**
+         * Called when a binding is selected, before the side is set. This allows listeners
+         * to respond before the value is set, and potentially override it.
+         *
+         * @param binding The selected binding.
+         *
+         * @return True if the listener has consumed the event, false otherwise.
+         */
+        fun onBindingSelected(binding: Binding): Boolean
+    }
+
+    private var onBindingSelectedListener: OnBindingSelectedListener? = null
+
+    fun setOnBindingSelectedListener(listener: OnBindingSelectedListener) {
+        onBindingSelectedListener = listener
+    }
+
+    override fun onKeySelected(binding: Binding) = setBinding(binding)
+
+    override fun onGestureSelected(binding: Binding) = setBinding(binding)
+
+    override fun onAxisSelected(binding: Binding) = setBinding(binding)
+
+    fun setBinding(binding: Binding) {
+        if (onBindingSelectedListener?.onBindingSelected(binding) == true) return
         selectSide { side ->
             addBinding(binding, side)
         }
     }
 
-    override fun onGestureSelected(binding: Binding) {
-        selectSide { side ->
-            addBinding(binding, side)
-        }
-    }
-
-    override fun onAxisSelected(binding: Binding) {
-        selectSide { side ->
-            addBinding(binding, side)
-        }
-    }
-
-    private fun addBinding(
+    fun addBinding(
         binding: Binding,
         side: CardSide,
     ) {
