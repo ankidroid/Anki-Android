@@ -248,6 +248,7 @@ class DeckOptions : PageFragment() {
         webViewIsReady = true
         webViewLayout.isVisible = true
         pageLoadingIndicator.isVisible = false
+        webViewLayout.settings.setTextZoom(100)
     }
 
     companion object {
