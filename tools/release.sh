@@ -32,7 +32,7 @@ fi
 
 if [ "$(git rev-parse --abbrev-ref HEAD)" = "main" ]; then
   echo "Checking for queued PRs..."
-  if gh search prs --repo ankidroid/Anki-Android "is:pr merge-queue:queued" --json number | grep -q "number"; then
+  if gh search prs --repo ankidroid/Anki-Android "is:queued" --json number | grep -q "number"; then
     echo "Error: There are PRs in the merge queue. Please wait for them to finish before releasing."
     exit 1
   fi
