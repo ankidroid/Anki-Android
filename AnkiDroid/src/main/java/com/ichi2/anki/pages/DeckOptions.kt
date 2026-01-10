@@ -113,7 +113,6 @@ class DeckOptions : PageFragment() {
     /**
      * Callback used when a modal is opened in the webview. It requests the webview to close it.
      */
-    @NeedsTest("disabled by default")
     @NeedsTest("enabled if a modal is displayed")
     @NeedsTest("disabled if a modal is hidden")
     @NeedsTest("disabled if back button is pressed: no error")
