@@ -274,10 +274,12 @@ class CardBrowserViewModel(
      */
     val flowOfSaveSearchNamePrompt = MutableSharedFlow<String>()
 
-    var focusedRow: CardOrNoteId? = null
+    val flowOfEditorRowId = MutableStateFlow<CardOrNoteId?>(null)
+    var editorRowId: CardOrNoteId?
+        get() = if (isFragmented) flowOfEditorRowId.value else null
         set(value) {
             if (!isFragmented) return
-            field = value
+            flowOfEditorRowId.value = value
         }
 
     suspend fun queryAllSelectedCardIds() = selectedRows.queryCardIds(this.cardsOrNotes)
@@ -545,7 +547,6 @@ class CardBrowserViewModel(
             } else {
                 toggleRowSelection(rowSelection)
             }
-            focusedRow = id
         }
 
     /**
@@ -560,7 +561,6 @@ class CardBrowserViewModel(
             } else {
                 toggleRowSelection(rowSelection)
             }
-            focusedRow = id
         }
     }
 
@@ -614,9 +614,9 @@ class CardBrowserViewModel(
         // PERF: use `undoableOp(this)` & notify CardBrowser of changes
         // this does a double search
         val cardIds = queryAllSelectedCardIds()
-        // reset focused row if that row is about to be deleted
-        if (focusedRow?.cardOrNoteId in cardIds) {
-            focusedRow = null
+        // reset editor row if that row is about to be deleted
+        if (editorRowId?.cardOrNoteId in cardIds) {
+            editorRowId = null
         }
         return undoableOp { removeNotes(cardIds = cardIds) }
             .count
