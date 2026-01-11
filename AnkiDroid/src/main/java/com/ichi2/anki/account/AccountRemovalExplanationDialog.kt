@@ -1,0 +1,63 @@
+/*
+ * Copyright (c) 2025 Abhinav Varma <vabhinav12112003@gmail.com>
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 3 of the License, or (at your option) any later
+ * version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+package com.ichi2.anki.account
+import android.app.Dialog
+import android.os.Bundle
+import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
+import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.setFragmentResult
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.ichi2.anki.R
+import com.ichi2.anki.databinding.DialogAccountRemovalExplanationBinding
+import com.ichi2.anki.settings.Prefs
+import com.ichi2.utils.copyToClipboard
+import com.ichi2.utils.create
+import com.ichi2.utils.negativeButton
+import com.ichi2.utils.positiveButton
+
+class AccountRemovalExplanationDialog : DialogFragment() {
+    companion object {
+        const val REQUEST_KEY = "account_removal_explanation"
+        const val RESULT_PROCEED = "proceed"
+
+        fun newInstance() = AccountRemovalExplanationDialog()
+    }
+
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        val email = Prefs.username ?: ""
+        val binding = DialogAccountRemovalExplanationBinding.inflate(layoutInflater)
+
+        if (email.isNotEmpty()) {
+            binding.emailText.text = email
+            binding.copyEmailButton.setOnClickListener {
+                requireContext().copyToClipboard(email)
+            }
+        } else {
+            binding.emailText.isVisible = false
+            binding.copyEmailButton.isVisible = false
+        }
+
+        return MaterialAlertDialogBuilder(requireContext()).create {
+            setView(binding.root)
+            positiveButton(R.string.dialog_ok) {
+                setFragmentResult(REQUEST_KEY, bundleOf(RESULT_PROCEED to true))
+            }
+            negativeButton(R.string.dialog_cancel)
+        }
+    }
+}
