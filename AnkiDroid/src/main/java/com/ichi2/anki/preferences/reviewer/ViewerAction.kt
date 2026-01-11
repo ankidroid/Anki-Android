@@ -102,10 +102,10 @@ enum class ViewerAction(
 
     // Command only
     SHOW_ANSWER,
-    FLIP_OR_ANSWER_EASE1,
-    FLIP_OR_ANSWER_EASE2,
-    FLIP_OR_ANSWER_EASE3,
-    FLIP_OR_ANSWER_EASE4,
+    ANSWER_AGAIN,
+    ANSWER_HARD,
+    ANSWER_GOOD,
+    ANSWER_EASY,
     TOGGLE_FLAG_RED,
     TOGGLE_FLAG_ORANGE,
     TOGGLE_FLAG_GREEN,
@@ -183,36 +183,42 @@ enum class ViewerAction(
                     keycode(KeyEvent.KEYCODE_7, ctrl()),
                     keycode(KeyEvent.KEYCODE_NUMPAD_7, ctrl()),
                 )
-            FLIP_OR_ANSWER_EASE1 ->
+            ANSWER_AGAIN ->
                 listOf(
-                    keycode(KeyEvent.KEYCODE_BUTTON_Y),
+                    keycode(KeyEvent.KEYCODE_BUTTON_Y, side = CardSide.ANSWER),
                     keycode(KeyEvent.KEYCODE_1, side = CardSide.ANSWER),
                     keycode(KeyEvent.KEYCODE_NUMPAD_1, side = CardSide.ANSWER),
                 )
-            FLIP_OR_ANSWER_EASE2 ->
+            ANSWER_HARD ->
                 listOf(
-                    keycode(KeyEvent.KEYCODE_BUTTON_X),
+                    keycode(KeyEvent.KEYCODE_BUTTON_X, side = CardSide.ANSWER),
                     keycode(KeyEvent.KEYCODE_2, side = CardSide.ANSWER),
                     keycode(KeyEvent.KEYCODE_NUMPAD_2, side = CardSide.ANSWER),
                 )
-            FLIP_OR_ANSWER_EASE3 ->
+            ANSWER_GOOD ->
                 listOf(
-                    keycode(KeyEvent.KEYCODE_BUTTON_B),
+                    keycode(KeyEvent.KEYCODE_BUTTON_B, side = CardSide.ANSWER),
                     keycode(KeyEvent.KEYCODE_3, side = CardSide.ANSWER),
                     keycode(KeyEvent.KEYCODE_NUMPAD_3, side = CardSide.ANSWER),
-                    keycode(KeyEvent.KEYCODE_DPAD_CENTER),
-                    keycode(KeyEvent.KEYCODE_SPACE, side = CardSide.BOTH),
+                    keycode(KeyEvent.KEYCODE_DPAD_CENTER, side = CardSide.ANSWER),
+                    keycode(KeyEvent.KEYCODE_SPACE, side = CardSide.ANSWER),
                     keycode(KeyEvent.KEYCODE_ENTER, side = CardSide.ANSWER),
                     keycode(KeyEvent.KEYCODE_NUMPAD_ENTER, side = CardSide.ANSWER),
                 )
-            FLIP_OR_ANSWER_EASE4 ->
+            ANSWER_EASY ->
                 listOf(
-                    keycode(KeyEvent.KEYCODE_BUTTON_A),
+                    keycode(KeyEvent.KEYCODE_BUTTON_A, side = CardSide.ANSWER),
                     keycode(KeyEvent.KEYCODE_4, side = CardSide.ANSWER),
                     keycode(KeyEvent.KEYCODE_NUMPAD_4, side = CardSide.ANSWER),
                 )
+            SHOW_ANSWER -> {
+                listOf(
+                    keycode(KeyEvent.KEYCODE_SPACE, side = CardSide.QUESTION),
+                    keycode(KeyEvent.KEYCODE_ENTER, side = CardSide.QUESTION),
+                    keycode(KeyEvent.KEYCODE_NUMPAD_ENTER, side = CardSide.QUESTION),
+                )
+            }
             // No default gestures
-            SHOW_ANSWER,
             DELETE,
             CARD_INFO,
             TAG,

@@ -73,10 +73,10 @@ enum class AnswerButtons {
 
     fun toViewerCommand(): ViewerCommand =
         when (this) {
-            AGAIN -> ViewerCommand.FLIP_OR_ANSWER_EASE1
-            HARD -> ViewerCommand.FLIP_OR_ANSWER_EASE2
-            GOOD -> ViewerCommand.FLIP_OR_ANSWER_EASE3
-            EASY -> ViewerCommand.FLIP_OR_ANSWER_EASE4
+            AGAIN -> ViewerCommand.ANSWER_AGAIN
+            HARD -> ViewerCommand.ANSWER_HARD
+            GOOD -> ViewerCommand.ANSWER_GOOD
+            EASY -> ViewerCommand.ANSWER_EASY
         }
 
     companion object {

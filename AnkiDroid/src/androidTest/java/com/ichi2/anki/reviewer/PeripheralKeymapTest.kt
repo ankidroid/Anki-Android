@@ -43,7 +43,7 @@ class PeripheralKeymapTest : InstrumentedTest() {
         assertThat<List<ViewerCommand>>(processed, hasSize(1))
         assertThat(
             processed[0],
-            equalTo(ViewerCommand.FLIP_OR_ANSWER_EASE1),
+            equalTo(ViewerCommand.ANSWER_AGAIN),
         )
     }
 

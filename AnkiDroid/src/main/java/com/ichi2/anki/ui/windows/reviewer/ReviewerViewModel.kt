@@ -36,7 +36,6 @@ import com.ichi2.anki.libanki.CardId
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.NoteId
 import com.ichi2.anki.libanki.redoLabel
-import com.ichi2.anki.libanki.sched.Counts
 import com.ichi2.anki.libanki.sched.CurrentQueueState
 import com.ichi2.anki.libanki.undoLabel
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
@@ -589,15 +588,6 @@ class ReviewerViewModel(
         answerButtonsNextTimeFlow.emit(nextTimes)
     }
 
-    private fun flipOrAnswer(rating: Rating) {
-        Timber.v("ReviewerViewModel::flipOrAnswer")
-        if (showingAnswer.value) {
-            answerCard(rating)
-        } else {
-            onShowAnswer()
-        }
-    }
-
     private suspend fun editNoteTags() {
         val noteId = currentCard.await().nid
         editNoteTagsFlow.emit(noteId)
@@ -678,10 +668,10 @@ class ReviewerViewModel(
                 ViewerAction.TOGGLE_FLAG_TURQUOISE -> toggleFlag(Flag.TURQUOISE)
                 ViewerAction.TOGGLE_FLAG_PURPLE -> toggleFlag(Flag.PURPLE)
                 ViewerAction.SHOW_ANSWER -> if (!showingAnswer.value) onShowAnswer()
-                ViewerAction.FLIP_OR_ANSWER_EASE1 -> flipOrAnswer(Rating.AGAIN)
-                ViewerAction.FLIP_OR_ANSWER_EASE2 -> flipOrAnswer(Rating.HARD)
-                ViewerAction.FLIP_OR_ANSWER_EASE3 -> flipOrAnswer(Rating.GOOD)
-                ViewerAction.FLIP_OR_ANSWER_EASE4 -> flipOrAnswer(Rating.EASY)
+                ViewerAction.ANSWER_AGAIN -> answerCard(Rating.AGAIN)
+                ViewerAction.ANSWER_HARD -> answerCard(Rating.HARD)
+                ViewerAction.ANSWER_GOOD -> answerCard(Rating.GOOD)
+                ViewerAction.ANSWER_EASY -> answerCard(Rating.EASY)
                 ViewerAction.SHOW_HINT -> eval.emit("ankidroid.showHint()")
                 ViewerAction.SHOW_ALL_HINTS -> eval.emit("ankidroid.showAllHints()")
                 ViewerAction.TOGGLE_WHITEBOARD -> toggleWhiteboard()
