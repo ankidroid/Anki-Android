@@ -18,6 +18,8 @@
 package com.ichi2.preferences
 
 import android.content.Context
+import android.content.DialogInterface
+import android.text.InputType
 import android.util.AttributeSet
 import android.view.Gravity
 import android.view.View
@@ -26,6 +28,9 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.LinearLayout
 import androidx.core.widget.doAfterTextChanged
+import com.google.android.material.button.MaterialButton
+import com.google.android.material.shape.ShapeAppearanceModel
+import com.google.android.material.textfield.TextInputLayout
 import com.ichi2.anki.R
 import com.ichi2.utils.moveCursorToEnd
 import com.ichi2.utils.positiveButton
@@ -53,8 +58,18 @@ class IncrementerNumberRangePreferenceCompat :
 
     class IncrementerNumberRangeDialogFragmentCompat : NumberRangeDialogFragmentCompat() {
         private var lastValidEntry = 0
-        private lateinit var incrementButton: Button
-        private lateinit var decrementButton: Button
+        private lateinit var incrementButton: MaterialButton
+        private lateinit var decrementButton: MaterialButton
+        private lateinit var textInputLayout: TextInputLayout
+
+        // For long press increment or decrement
+        private val repeatHandler = android.os.Handler(android.os.Looper.getMainLooper())
+        private var activeRepeatRunnable: Runnable? = null
+
+        private companion object {
+            const val INITIAL_DELAY = 500L // Delay before repeat starts
+            const val REPEAT_INTERVAL = 100L // Speed of repeat (10 updates per second)
+        }
 
         // Reference to the system OK button
         private var positiveButton: Button? = null
@@ -65,29 +80,21 @@ class IncrementerNumberRangePreferenceCompat :
         override fun onBindDialogView(view: View) {
             super.onBindDialogView(view)
 
-            // Layout parameters for mEditText
-            val editTextParams =
-                LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    3.0f,
-                )
+            editText.apply {
+                gravity = Gravity.CENTER
+                inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_SIGNED
+                setTextAppearance(com.google.android.material.R.style.TextAppearance_Material3_HeadlineMedium)
 
-            lastValidEntry =
-                try {
-                    editText.text.toString().toInt()
-                } catch (nfe: NumberFormatException) {
-                    // This should not be possible but just in case, recover with a valid minimum from superclass
-                    numberRangePreference.min
-                }
-            editText.layoutParams = editTextParams
-            // Centre text inside mEditText
-            editText.gravity = Gravity.CENTER_HORIZONTAL
+                val paddingVertical = (8 * context.resources.displayMetrics.density).toInt()
+                val paddingHorizontal = (8 * context.resources.displayMetrics.density).toInt()
+                setPadding(paddingHorizontal, paddingVertical, paddingHorizontal, paddingVertical)
 
-            // Validate the final value, not individual character changes
+                background = null
+            }
+
+            textInputLayout.errorIconDrawable = null
+
             editText.doAfterTextChanged { updateButtonState() }
-
-            // Initial check to set correct button states on open
             updateButtonState()
         }
 
@@ -95,7 +102,13 @@ class IncrementerNumberRangePreferenceCompat :
             super.onStart()
             positiveButton = (dialog as? androidx.appcompat.app.AlertDialog)?.positiveButton
 
-            // Rerun validation now that we have the OK button reference
+            lastValidEntry =
+                numberRangePreference.getValidatedRangeFromInt(
+                    numberRangePreference.getValue(),
+                )
+
+            editText.setText(lastValidEntry.toString())
+            editText.moveCursorToEnd()
             updateButtonState()
         }
 
@@ -105,34 +118,145 @@ class IncrementerNumberRangePreferenceCompat :
          * Sets orientation for layout
          */
         override fun onCreateDialogView(context: Context): View {
-            val linearLayout = LinearLayout(context)
+            val density = context.resources.displayMetrics.density
 
-            incrementButton = Button(context)
-            decrementButton = Button(context)
+            val linearLayout =
+                LinearLayout(context).apply {
+                    orientation = LinearLayout.HORIZONTAL
+                    gravity = Gravity.CENTER_VERTICAL
+                    val padding = (8 * density).toInt()
+                    setPadding(padding, padding, padding, padding)
+                }
+
+            val buttonStyle = com.google.android.material.R.attr.materialIconButtonOutlinedStyle
+
+            incrementButton =
+                createStyledButton(context, buttonStyle).apply {
+                    setIconResource(R.drawable.ic_add)
+                    contentDescription = context.getString(R.string.plus_sign)
+                }
+            decrementButton =
+                createStyledButton(context, buttonStyle).apply {
+                    setIconResource(R.drawable.ic_remove)
+                    contentDescription = context.getString(R.string.minus_sign)
+                }
+
+            val buttonHeight = (64 * density).toInt()
+            val buttonWidth = (72 * density).toInt()
+            val buttonParams =
+                LinearLayout.LayoutParams(buttonWidth, buttonHeight).apply {
+                    val margin = (8 * density).toInt()
+                    marginStart = margin
+                    marginEnd = margin
+
+                    gravity = Gravity.CENTER_VERTICAL
+                }
+
             val dialogView = super.onCreateDialogView(context)!!
             val editText: EditText = dialogView.findViewById(android.R.id.edit)
             (editText.parent as ViewGroup).removeView(editText)
 
-            // Layout parameters for incrementButton and decrementButton
-            val buttonParams =
-                LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    1.0f,
-                )
+            textInputLayout =
+                TextInputLayout(context).apply {
+                    boxBackgroundMode = TextInputLayout.BOX_BACKGROUND_OUTLINE
+                    boxStrokeWidth = (1 * density).toInt()
+                    val radius = 12f * density
+                    setBoxCornerRadii(radius, radius, radius, radius)
 
-            incrementButton.setText(R.string.plus_sign)
-            decrementButton.setText(R.string.minus_sign)
-            incrementButton.layoutParams = buttonParams
-            decrementButton.layoutParams = buttonParams
+                    isErrorEnabled = true
+                    errorIconDrawable = null
+                    isHelperTextEnabled = false
+
+                    addView(editText)
+                }
+
+            val textParams =
+                LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1.0f).apply {
+                    gravity = Gravity.CENTER_VERTICAL
+                }
+
             incrementButton.setOnClickListener { updateEditText(true) }
             decrementButton.setOnClickListener { updateEditText(false) }
-            linearLayout.orientation = LinearLayout.HORIZONTAL
 
-            linearLayout.addView(decrementButton)
-            linearLayout.addView(editText)
-            linearLayout.addView(incrementButton)
+            setAutoRepeat(incrementButton, true)
+            setAutoRepeat(decrementButton, false)
+
+            linearLayout.addView(decrementButton, buttonParams)
+            linearLayout.addView(textInputLayout, textParams)
+            linearLayout.addView(incrementButton, buttonParams)
+
             return linearLayout
+        }
+
+        private fun createStyledButton(
+            context: Context,
+            styleAttr: Int,
+        ): MaterialButton =
+            MaterialButton(context, null, styleAttr).apply {
+                val density = context.resources.displayMetrics.density
+                val size = (48 * density).toInt()
+
+                setPadding(0, 0, 0, 0)
+                iconPadding = 0
+                insetTop = 0
+                insetBottom = 0
+
+                iconGravity = MaterialButton.ICON_GRAVITY_TEXT_START
+                gravity = Gravity.CENTER
+
+                iconSize = (24 * density).toInt()
+
+                layoutParams = ViewGroup.LayoutParams(size, size)
+
+                shapeAppearanceModel =
+                    ShapeAppearanceModel
+                        .builder()
+                        .setAllCornerSizes(12f * density)
+                        .build()
+            }
+
+        private fun setAutoRepeat(
+            button: View,
+            isIncrement: Boolean,
+        ) {
+            button.setOnLongClickListener {
+                val runnable =
+                    object : Runnable {
+                        override fun run() {
+                            // If the button becomes disabled (hit min/max), stop the repeat
+                            if (!button.isEnabled) {
+                                activeRepeatRunnable = null
+                                return
+                            }
+                            updateEditText(isIncrement)
+                            repeatHandler.postDelayed(this, REPEAT_INTERVAL)
+                        }
+                    }
+                activeRepeatRunnable = runnable
+                repeatHandler.postDelayed(runnable, INITIAL_DELAY)
+                true
+            }
+
+            button.setOnTouchListener { _, event ->
+                when (event.action) {
+                    android.view.MotionEvent.ACTION_UP,
+                    android.view.MotionEvent.ACTION_CANCEL,
+                    -> {
+                        activeRepeatRunnable?.let { repeatHandler.removeCallbacks(it) }
+                        activeRepeatRunnable = null
+                    }
+                }
+                false
+            }
+        }
+
+        override fun onCancel(dialog: DialogInterface) {
+            super.onCancel(dialog)
+
+            lastValidEntry =
+                numberRangePreference.getValidatedRangeFromInt(
+                    numberRangePreference.getValue(),
+                )
         }
 
         /**
@@ -141,17 +265,15 @@ class IncrementerNumberRangePreferenceCompat :
          * @param isIncrement Indicator for whether to increase or decrease the value.
          */
         private fun updateEditText(isIncrement: Boolean) {
-            var value: Int =
-                try {
-                    editText.text.toString().toInt()
-                } catch (e: NumberFormatException) {
-                    // If the user entered a non-number then incremented, restore to a good value
-                    lastValidEntry
-                }
-            value = if (isIncrement) value + 1 else value - 1
+            val current = editText.text.toString().toIntOrNull() ?: lastValidEntry
 
-            // Make sure value is within range
-            lastValidEntry = numberRangePreference.getValidatedRangeFromInt(value)
+            // Stop early if already at bounds
+            if (isIncrement && current >= numberRangePreference.max) return
+            if (!isIncrement && current <= numberRangePreference.min) return
+
+            val newValue = if (isIncrement) current + 1 else current - 1
+            lastValidEntry = numberRangePreference.getValidatedRangeFromInt(newValue)
+
             editText.setText(lastValidEntry.toString())
             editText.moveCursorToEnd()
 
@@ -172,27 +294,26 @@ class IncrementerNumberRangePreferenceCompat :
             incrementButton.isEnabled = false
             decrementButton.isEnabled = false
             positiveButton?.isEnabled = false
-            editText.error = null
+            textInputLayout.error = null
 
             when (result) {
                 ValidationResult.VALID -> {
+                    lastValidEntry = value!!
                     positiveButton?.isEnabled = true
-                    // Even if valid, we might be at the edge of the range, so update +/- buttons
-                    if (value != null) {
-                        incrementButton.isEnabled = value < numberRangePreference.max
-                        decrementButton.isEnabled = value > numberRangePreference.min
-                    }
+
+                    incrementButton.isEnabled = lastValidEntry < numberRangePreference.max
+                    decrementButton.isEnabled = lastValidEntry > numberRangePreference.min
                 }
                 ValidationResult.OVERFLOW -> {
                     decrementButton.isEnabled = true
-                    editText.error = getString(R.string.maximum_value_is, numberRangePreference.max)
+                    textInputLayout.error = getString(R.string.maximum_value_is, numberRangePreference.max)
                 }
                 ValidationResult.UNDERFLOW -> {
                     incrementButton.isEnabled = true
-                    editText.error = getString(R.string.minimum_value_is, numberRangePreference.min)
+                    textInputLayout.error = getString(R.string.minimum_value_is, numberRangePreference.min)
                 }
                 ValidationResult.INVALID -> {
-                    editText.error = getString(R.string.invalid_value)
+                    textInputLayout.error = getString(R.string.invalid_value)
                 }
                 ValidationResult.EMPTY -> {
                     // Empty input is invalid for submission, but doesn't warrant an error message yet
