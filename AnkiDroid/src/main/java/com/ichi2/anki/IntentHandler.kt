@@ -361,16 +361,26 @@ class IntentHandler : AbstractIntentHandler() {
             context: Context,
             showToast: Boolean,
         ): Boolean {
-            val granted =
-                !ScopedStorageService.isLegacyStorage(context) ||
-                    hasLegacyStorageAccessPermission(context) ||
-                    Permissions.isExternalStorageManagerCompat()
+            try {
+                val granted =
+                    !ScopedStorageService.isLegacyStorage(context) ||
+                        hasLegacyStorageAccessPermission(context) ||
+                        Permissions.isExternalStorageManagerCompat()
 
-            if (!granted && showToast) {
-                showThemedToast(context, context.getString(R.string.intent_handler_failed_no_storage_permission), false)
+                if (!granted && showToast) {
+                    showThemedToast(
+                        context,
+                        context.getString(R.string.intent_handler_failed_no_storage_permission),
+                        false,
+                    )
+                }
+
+                return granted
+            } catch (e: SystemStorageException) {
+                // Treat as not granted / not available, so callers finish cleanly
+                Timber.w(e, "Storage unavailable while checking permissions; treating as not granted")
+                return false
             }
-
-            return granted
         }
 
         @VisibleForTesting
