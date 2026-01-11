@@ -19,6 +19,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
+import com.ichi2.anki.recorder.AudioRecorder
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -52,12 +53,12 @@ class CheckPronunciationViewModel(
     private val isPlaying get() = audioPlayer.isPlaying
 
     fun onRecordingStarted() {
-        audioRecorder.startRecording()
+        audioRecorder.start()
         onCancelPlayback()
     }
 
     fun onRecordingCancelled() {
-        audioRecorder.reset()
+        audioRecorder.stop()
     }
 
     fun onRecordingCompleted() {
@@ -99,8 +100,8 @@ class CheckPronunciationViewModel(
     }
 
     private fun playCurrentFile() {
-        val file = currentFile ?: return
-        audioPlayer.play(file) {
+        val filePath = currentFile?.absolutePath ?: return
+        audioPlayer.play(filePath) {
             viewModelScope.launch {
                 playbackProgressBarMaxFlow.emit(audioPlayer.duration)
                 launchProgressBarUpdateJob()
