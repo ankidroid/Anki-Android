@@ -2413,6 +2413,27 @@ open class DeckPicker :
 
         private const val PREF_DECK_PICKER_PANE_WEIGHT = "deckPickerPaneWeight"
         private const val PREF_STUDY_OPTIONS_PANE_WEIGHT = "studyOptionsPaneWeight"
+
+        /**
+         * Builds an intent for [DeckPicker]
+         */
+        fun getIntent(
+            context: Context,
+            autoSync: Boolean = false,
+        ) = Intent(context, DeckPicker::class.java).apply {
+            if (autoSync) {
+                putExtra(INTENT_SYNC_FROM_LOGIN, true)
+            }
+        }
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        this.intent = intent
+        if (intent.hasExtra(INTENT_SYNC_FROM_LOGIN)) {
+            Timber.i("Sync requested from Login")
+            this.syncOnResume = true
+        }
     }
 
     override fun opExecuted(
