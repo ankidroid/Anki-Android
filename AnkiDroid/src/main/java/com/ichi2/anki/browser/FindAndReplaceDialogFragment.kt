@@ -17,15 +17,17 @@
 package com.ichi2.anki.browser
 
 import android.app.Dialog
+import android.content.Context
 import android.os.Bundle
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.annotation.VisibleForTesting
+import androidx.annotation.VisibleForTesting.Companion.PRIVATE
 import androidx.appcompat.app.AlertDialog
+import androidx.core.os.BundleCompat
 import androidx.core.os.bundleOf
 import androidx.core.text.HtmlCompat
 import androidx.core.view.isVisible
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResult
 import androidx.lifecycle.lifecycleScope
 import com.ichi2.anki.CardBrowser
@@ -41,6 +43,7 @@ import com.ichi2.anki.browser.FindAndReplaceDialogFragment.Companion.ARG_REPLACE
 import com.ichi2.anki.browser.FindAndReplaceDialogFragment.Companion.ARG_SEARCH
 import com.ichi2.anki.browser.FindAndReplaceDialogFragment.Companion.REQUEST_FIND_AND_REPLACE
 import com.ichi2.anki.databinding.FragmentFindReplaceBinding
+import com.ichi2.anki.libanki.NoteId
 import com.ichi2.anki.notetype.ManageNotetypes
 import com.ichi2.anki.ui.internationalization.toSentenceCase
 import com.ichi2.anki.utils.ext.setFragmentResultListener
@@ -66,7 +69,6 @@ import timber.log.Timber
  */
 // TODO desktop offers history for inputs
 class FindAndReplaceDialogFragment : AnalyticsDialogFragment() {
-    private val browserViewModel by activityViewModels<CardBrowserViewModel>()
     private lateinit var binding: FragmentFindReplaceBinding
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -107,7 +109,15 @@ class FindAndReplaceDialogFragment : AnalyticsDialogFragment() {
             (dialog as? AlertDialog)?.positiveButton?.isEnabled = false
             binding.contentViewsGroup.isVisible = false
             binding.loadingViewsGroup.isVisible = true
-            val noteIds = browserViewModel.queryAllSelectedNoteIds()
+            val idsFile =
+                requireNotNull(
+                    BundleCompat.getParcelable(
+                        requireArguments(),
+                        ARG_IDS,
+                        IdsFile::class.java,
+                    ),
+                )
+            val noteIds = idsFile.getIds()
             binding.onlySelectedNotesCheckBox.isChecked = noteIds.isNotEmpty()
             binding.onlySelectedNotesCheckBox.isEnabled = noteIds.isNotEmpty()
             val fieldsNames =
@@ -134,7 +144,7 @@ class FindAndReplaceDialogFragment : AnalyticsDialogFragment() {
     }
 
     // https://github.com/ankitects/anki/blob/64ca90934bc26ddf7125913abc9dd9de8cb30c2b/qt/aqt/browser/find_and_replace.py#L118
-    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    @VisibleForTesting(otherwise = PRIVATE)
     fun startFindReplace() {
         val search = binding.inputSearch.text
         val replacement = binding.inputReplace.text
@@ -167,6 +177,7 @@ class FindAndReplaceDialogFragment : AnalyticsDialogFragment() {
     companion object {
         const val TAG = "FindAndReplaceDialogFragment"
         const val REQUEST_FIND_AND_REPLACE = "request_find_and_replace"
+        const val ARG_IDS = " arg_ids"
         const val ARG_SEARCH = "arg_search"
         const val ARG_REPLACEMENT = "arg_replacement"
         const val ARG_FIELD = "arg_field"
@@ -185,6 +196,16 @@ class FindAndReplaceDialogFragment : AnalyticsDialogFragment() {
          * the user selected "Tags" as the field target for the find and replace action.
          */
         const val TAGS_AS_FIELD = "find_and_replace_dialog_fragment_tags_as_field"
+
+        fun newInstance(
+            context: Context,
+            noteIds: List<NoteId>,
+        ): FindAndReplaceDialogFragment {
+            val file = IdsFile(context.cacheDir, noteIds)
+            return FindAndReplaceDialogFragment().apply {
+                arguments = bundleOf(ARG_IDS to file)
+            }
+        }
     }
 }
 
