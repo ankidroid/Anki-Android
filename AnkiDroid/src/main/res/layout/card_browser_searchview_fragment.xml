@@ -119,8 +119,31 @@
         tools:hint="Search cards/notes"
         app:layout_anchor="@id/search_bar">
 
-        <!-- Content when SearchView is open -->
-        <!-- TODO: Add Saved Searches/History here  -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <!-- Toggles between 'Basic' and 'Advanced' search -->
+            <Button
+                android:id="@+id/toggle_advanced_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                style="@style/Widget.Material3.Button.TextButton.Icon"
+                tools:text="Advanced search"
+                app:icon="@drawable/ic_tune_white"
+                />
+
+            <!-- Content when SearchView is open -->
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/search_view_content_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:name="com.ichi2.anki.browser.search.StandardSearchFragment"
+                />
+
+        </LinearLayout>
 
     </com.google.android.material.search.SearchView>
 
