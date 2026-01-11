@@ -36,7 +36,7 @@ import timber.log.Timber
 // The sub-fragments (StandardSearchFragment etc...) need to be able to modify/close the
 // EditText, but should not be coupled directly to the parent SearchView.
 class CardBrowserSearchViewModel(
-    savedStateHandle: SavedStateHandle,
+    private val savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
     val advancedSearchFlow =
         savedStateHandle.getMutableStateFlow(STATE_ADVANCED_SEARCH_ENABLED, false)
@@ -83,6 +83,20 @@ class CardBrowserSearchViewModel(
         } else {
             basicSearchTextFlow.value = searchText
         }
+    }
+
+    /**
+     * Clears state when the search screen is closed without saving
+     */
+    fun resetSearchState() {
+        Timber.i("clearing temp search state")
+        advancedSearchFlow.value = false
+        basicSearchTextFlow.value = ""
+        advancedSearchTextFlow.value = ""
+
+        savedStateHandle.remove<Any>(STATE_ADVANCED_SEARCH_ENABLED)
+        savedStateHandle.remove<Any>(STATE_BASIC_SEARCH_TEXT)
+        savedStateHandle.remove<Any>(STATE_ADVANCED_SEARCH_TEXT)
     }
 
     companion object {
