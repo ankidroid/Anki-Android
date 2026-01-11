@@ -34,6 +34,7 @@ import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.openUrl
 import com.ichi2.compat.CompatHelper
+import com.ichi2.preferences.ExternalDirectorySelectionPreference
 import com.ichi2.utils.show
 import timber.log.Timber
 import java.io.File
@@ -48,7 +49,7 @@ class AdvancedSettingsFragment : SettingsFragment() {
         removeUnnecessaryAdvancedPrefs()
 
         // Check that input is valid before committing change in the collection path
-        requirePreference<EditTextPreference>(CollectionHelper.PREF_COLLECTION_PATH).apply {
+        requirePreference<ExternalDirectorySelectionPreference>(CollectionHelper.PREF_COLLECTION_PATH).apply {
             setOnPreferenceChangeListener { _, newValue: Any? ->
                 val newPath = newValue as String
                 try {
@@ -67,7 +68,7 @@ class AdvancedSettingsFragment : SettingsFragment() {
                         setTitle(R.string.dialog_collection_path_not_dir)
                         setPositiveButton(R.string.dialog_ok) { _, _ -> }
                         setNegativeButton(R.string.reset_custom_buttons) { _, _ ->
-                            text = CollectionHelper.getDefaultAnkiDroidDirectory(requireContext()).absolutePath
+                            value = CollectionHelper.getDefaultAnkiDroidDirectory(requireContext()).absolutePath
                         }
                     }
                     false
