@@ -19,6 +19,7 @@ import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.view.isVisible
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.R
 import com.ichi2.utils.Permissions
@@ -50,6 +51,9 @@ class PermissionsUntil29Fragment : PermissionsFragment(R.layout.permissions_unti
         savedInstanceState: Bundle?,
     ) {
         val storagePermission = view.findViewById<PermissionsItem>(R.id.storage_permission)
+
+        view.findViewById<PermissionsItem>(R.id.internet_permission).initializeInternetPermissionItem()
+
         storagePermission.setOnPermissionsRequested { areAlreadyGranted ->
             if (areAlreadyGranted) return@setOnPermissionsRequested
             if (userCanGrantWriteExternalStorage()) {

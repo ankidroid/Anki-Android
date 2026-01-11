@@ -27,6 +27,7 @@ import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.testutils.DbUtils
 import com.ichi2.testutils.common.Flaky
 import com.ichi2.testutils.common.OS
+import com.ichi2.testutils.grantPermissions
 import com.ichi2.utils.ResourceLoader
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
@@ -36,7 +37,9 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.ParameterizedRobolectricTestRunner
 import org.robolectric.RuntimeEnvironment
+import org.robolectric.Shadows
 import java.io.File
+import java.util.jar.Manifest
 
 @KotlinCleanup("SPMockBuilder")
 @RunWith(ParameterizedRobolectricTestRunner::class)
@@ -56,9 +59,13 @@ class DeckPickerOnDiskTest : RobolectricTest() {
     @Before
     fun before() {
         RuntimeEnvironment.setQualifiers(qualifiers)
+        grantPermissions(android.Manifest.permission.INTERNET)
         getPreferences().edit {
             putBoolean(IntroductionActivity.INTRODUCTION_SLIDES_SHOWN, true)
         }
+
+        val shadowApp = Shadows.shadowOf(RuntimeEnvironment.getApplication())
+        shadowApp.grantPermissions(android.Manifest.permission.INTERNET)
     }
 
     @Test
