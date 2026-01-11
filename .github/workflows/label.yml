@@ -3,10 +3,14 @@ name: 🛠️ Add/Remove Labels
 on:
   pull_request_target:
     types: [ opened, closed ]
+  workflow_run:
+    workflows: ["🛠️ Code Quality Checks"]
+    types:
+      - completed
 
 jobs:
   merge_job:
-    if: github.event.pull_request.merged == true
+    if: github.event_name == 'pull_request_target' && github.event.pull_request.merged == true
     permissions:
       contents: read
       pull-requests: write
@@ -72,7 +76,7 @@ jobs:
           }
 
   add_label:
-    if: (!(github.event.action == 'closed' && github.event.pull_request.merged != true)) && github.event.pull_request.merged != true && github.event.pull_request.head.ref != 'i18n_sync'
+    if: github.event_name == 'pull_request_target' && (!(github.event.action == 'closed' && github.event.pull_request.merged != true)) && github.event.pull_request.merged != true && github.event.pull_request.head.ref != 'i18n_sync'
     permissions:
       contents: read
       pull-requests: write
@@ -176,7 +180,7 @@ jobs:
             }
 
   add_new_contributor_label:
-    if: github.event.action == 'opened'
+    if: github.event_name == 'pull_request_target' && github.event.action == 'opened'
     permissions:
       contents: read
       pull-requests: write
@@ -207,9 +211,9 @@ jobs:
               labels: ['New contributor']
             })
   
-  # Add 'Needs Review' label to newly opened, non-draft PRs
+  # Add 'Needs Review' label to newly opened non-draft PRs when lint checks pass
   add_needs_review_label:
-    if: github.event.action == 'opened' && !github.event.pull_request.draft
+    if: github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'pull_request'
     permissions:
       contents: read
       pull-requests: write
@@ -218,9 +222,48 @@ jobs:
       - uses: actions/github-script@v8
         with:
           script: |
-            await github.rest.issues.addLabels({
-              issue_number: context.issue.number,
+            const prNumber = github.event.workflow_run.pull_requests[0]?.number;
+            if (!prNumber) return;
+
+            const pr = await github.rest.pulls.get({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              labels: ['Needs Review']
-            })
+              pull_number: prNumber
+            });
+
+            // Only add label if PR is not a draft
+            const hasLabel = pr.data.labels.some(l => l.name === 'Needs Review');
+
+            if (!pr.data.draft && !hasLabel) {
+              await github.rest.issues.addLabels({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: prNumber,
+                labels: ['Needs Review']
+              });
+            }
+
+  # Remove 'Needs Review' label when lint checks fail
+  remove_needs_review_label:
+    if: github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'failure' && github.event.workflow_run.event == 'pull_request'
+    permissions:
+      contents: read
+      pull-requests: write
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v8
+        with:
+          script: |
+            const prNumber = github.event.workflow_run.pull_requests[0]?.number;
+            if (!prNumber) return;
+            
+            try {
+              await github.rest.issues.removeLabel({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: prNumber,
+                name: 'Needs Review'
+              });
+            } catch (error) {
+              if (error.status !== 404) throw error;
+            }
