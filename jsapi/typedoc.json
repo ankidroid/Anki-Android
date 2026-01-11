@@ -1,0 +1,9 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "entryPoints": ["./src/**/*.ts"],
+  "out": "./docs",
+  "name": "AnkiDroid JavaScript API Documentation",
+  "readme": "./README.md",
+  "exclude": ["node_modules/**/*", "src/types/handler.ts"],
+  "theme": "default"
+}
