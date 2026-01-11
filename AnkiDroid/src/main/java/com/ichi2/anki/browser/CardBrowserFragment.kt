@@ -25,6 +25,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.annotation.LayoutRes
@@ -69,6 +70,8 @@ import com.ichi2.anki.browser.CardBrowserViewModel.ToggleSelectionState.SELECT_N
 import com.ichi2.anki.browser.RepositionCardFragment.Companion.REQUEST_REPOSITION_NEW_CARDS
 import com.ichi2.anki.browser.RepositionCardsRequest.ContainsNonNewCardsError
 import com.ichi2.anki.browser.RepositionCardsRequest.RepositionData
+import com.ichi2.anki.browser.search.AdvancedSearchFragment
+import com.ichi2.anki.browser.search.StandardSearchFragment
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.utils.android.isRobolectric
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
@@ -160,6 +163,8 @@ class CardBrowserFragment :
     private var searchView: SearchView? = null
     private var deckChip: Chip? = null
 
+    private var toggleAdvancedSearch: Button? = null
+
     @get:LayoutRes
     private val layout: Int
         get() = if (useSearchView) R.layout.card_browser_searchview_fragment else R.layout.card_browser_fragment
@@ -230,6 +235,12 @@ class CardBrowserFragment :
                 }
             }
         searchView = view.findViewById<SearchView>(R.id.search_view)
+        toggleAdvancedSearch =
+            view.findViewById<Button>(R.id.toggle_advanced_search)?.apply {
+                setOnClickListener {
+                    viewModel.toggleAdvancedSearch()
+                }
+            }
 
         setupFlows()
 
@@ -454,6 +465,33 @@ class CardBrowserFragment :
             deckChip?.text = deck?.getFullDisplayName(requireContext())
         }
 
+        fun advancedSearchChanged(inAdvancedSearch: Boolean) {
+            toggleAdvancedSearch?.text = if (inAdvancedSearch) "Basic search" else "Advanced search"
+
+            if (searchView == null) return
+
+            // switch to the correct fragment, retaining state
+            fun findOrCreate(
+                tag: String,
+                factory: () -> Fragment,
+            ): Fragment =
+                childFragmentManager.findFragmentByTag(tag) ?: factory().also {
+                    childFragmentManager
+                        .beginTransaction()
+                        .add(R.id.search_view_content_container, it, tag)
+                        .commit()
+                }
+
+            val standard = findOrCreate("STANDARD") { StandardSearchFragment() }
+            val advanced = findOrCreate("ADVANCED") { AdvancedSearchFragment() }
+
+            childFragmentManager
+                .beginTransaction()
+                .hide(if (inAdvancedSearch) standard else advanced)
+                .show(if (inAdvancedSearch) advanced else standard)
+                .commit()
+        }
+
         activityViewModel.flowOfIsTruncated.launchCollectionInLifecycleScope(::onIsTruncatedChanged)
         activityViewModel.flowOfSelectedRows.launchCollectionInLifecycleScope(::onSelectedRowsChanged)
         activityViewModel.flowOfActiveColumns.launchCollectionInLifecycleScope(::onColumnsChanged)
@@ -466,6 +504,7 @@ class CardBrowserFragment :
         viewModel.flowOfSearchForDecks.launchCollectionInLifecycleScope(::onSearchForDecks)
         activityViewModel.flowOfDeckSelection.launchCollectionInLifecycleScope(::onDeckChanged)
         activityViewModel.flowOfScrollRequest.launchCollectionInLifecycleScope(::autoScrollTo)
+        viewModel.advancedSearchFlow.launchCollectionInLifecycleScope(::advancedSearchChanged)
     }
 
     private fun setupFragmentResultListeners() {
