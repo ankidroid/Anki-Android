@@ -169,7 +169,7 @@ sealed interface NoteEditorLauncher : Destination {
      * @property animation The animation direction.
      */
     data class EditCard(
-        val cardId: CardId,
+        val cardId: CardId?,
         val animation: ActivityTransitionAnimation.Direction,
         val inCardBrowserActivity: Boolean = false,
     ) : NoteEditorLauncher {

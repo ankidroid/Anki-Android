@@ -698,18 +698,22 @@ open class CardBrowser :
         cardBrowserFragment.updateFlagForSelectedRows(flag)
     }
 
-    /** Opens the note editor for a card.
-     * We use the Card ID to specify the preview target  */
+    /**
+     * Opens the note editor for the given card.
+     *
+     * @param cardId The ID of the card to open in the note editor.
+     * Passing `null` indicates that no card is selected and will close the note editor
+     */
     @NeedsTest("note edits are saved")
     @NeedsTest("I/O edits are saved")
-    fun openNoteEditorForCard(cardId: CardId) {
-        viewModel.openNoteEditorForCard(cardId)
+    fun setNoteEditorCard(cardId: CardId?) {
+        viewModel.setNoteEditorCard(cardId)
     }
 
     /**
      * In case of selection, the first card that was selected, otherwise the first card of the list.
      */
-    private suspend fun getCardIdForNoteEditor(): CardId {
+    private suspend fun getCardIdForNoteEditor(): CardId? {
         // Just select the first one if there's a multiselect occurring.
         return if (viewModel.isInMultiSelectMode) {
             viewModel.querySelectedCardIdAtPosition(0)
@@ -728,7 +732,7 @@ open class CardBrowser :
 
             try {
                 val cardId = getCardIdForNoteEditor()
-                openNoteEditorForCard(cardId)
+                setNoteEditorCard(cardId)
             } catch (e: Exception) {
                 Timber.w(e, "Error Opening Note Editor")
                 showSnackbar(R.string.multimedia_editor_something_wrong)
@@ -1132,10 +1136,10 @@ open class CardBrowser :
             updateList()
             // Check whether deck is empty or not
             val isDeckEmpty = viewModel.rowCount == 0
+            val currentCardId = viewModel.safeGetCurrentCardId()
             // Hide note editor frame if deck is empty and fragmented
             binding.noteEditorFrame?.visibility =
-                if (fragmented && !isDeckEmpty) {
-                    viewModel.currentCardId = (viewModel.focusedRow ?: viewModel.cards[0]).toCardId(viewModel.cardsOrNotes)
+                if (fragmented && !isDeckEmpty && currentCardId != null) {
                     loadNoteEditorFragmentIfFragmented()
                     View.VISIBLE
                 } else {

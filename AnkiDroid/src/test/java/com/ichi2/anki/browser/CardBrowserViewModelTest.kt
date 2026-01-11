@@ -154,7 +154,7 @@ class CardBrowserViewModelTest : JvmTest() {
                 assertThat("Deck should be changed", col.getCard(cardId).did, equalTo(newDeck))
             }
 
-            val hasSomeDecksUnchanged = cards.any { row -> col.getCard(row.toCardId(cardsOrNotes)).did != newDeck }
+            val hasSomeDecksUnchanged = cards.any { row -> col.getCard(row.requireCardId(cardsOrNotes)).did != newDeck }
             assertThat("some decks are unchanged", hasSomeDecksUnchanged)
         }
 
@@ -633,7 +633,7 @@ class CardBrowserViewModelTest : JvmTest() {
     @Test
     fun `suspend - cards - some suspended`() =
         runViewModelTest(notes = 2) {
-            suspendCards(cards.first().toCardId(cardsOrNotes))
+            suspendCards(cards.first().requireCardId(cardsOrNotes))
             ensureOpsExecuted(1) {
                 selectAll()
                 toggleSuspendCards()
@@ -689,7 +689,7 @@ class CardBrowserViewModelTest : JvmTest() {
     fun `suspend - notes - some cards suspended`() =
         runViewModelNotesTest(notes = 2) {
             // this suspends o single cid from a nid
-            suspendCards(cards.first().toCardId(cardsOrNotes))
+            suspendCards(cards.first().requireCardId(cardsOrNotes))
             ensureOpsExecuted(1) {
                 selectAll()
                 toggleSuspendCards()
@@ -1446,6 +1446,9 @@ private fun AnkiTest.suspendCards(vararg cardIds: CardId) {
 private fun AnkiTest.suspendNote(note: Note) {
     col.sched.suspendCards(note.cardIds(col))
 }
+
+suspend fun CardOrNoteId.requireCardId(cardsOrNotes: CardsOrNotes): CardId =
+    toCardId(cardsOrNotes) ?: error("Expected card ID to be non-null for $this in $cardsOrNotes mode")
 
 val CardBrowserViewModel.column1
     get() = this.activeColumns[0]
