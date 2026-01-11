@@ -18,6 +18,7 @@ package com.ichi2.anki.browser.search
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import kotlinx.coroutines.flow.combine
 import timber.log.Timber
 
 /**
@@ -25,7 +26,7 @@ import timber.log.Timber
  *
  * Responsible for:
  *
- * - Temporary search strings
+ * - The search string (unsubmitted)
  * - Saved Searches
  * - History
  * - Advanced Search
@@ -40,6 +41,16 @@ class CardBrowserSearchViewModel(
     val advancedSearchFlow =
         savedStateHandle.getMutableStateFlow(STATE_ADVANCED_SEARCH_ENABLED, false)
 
+    private val advancedSearchTextFlow =
+        savedStateHandle.getMutableStateFlow(STATE_ADVANCED_SEARCH_TEXT, "")
+    private val basicSearchTextFlow =
+        savedStateHandle.getMutableStateFlow(STATE_BASIC_SEARCH_TEXT, "")
+
+    val searchTextFlow =
+        combine(advancedSearchFlow, basicSearchTextFlow, advancedSearchTextFlow) { displayingAdvancedSearch, basicText, advancedText ->
+            if (displayingAdvancedSearch) advancedText else basicText
+        }
+
     /**
      * Toggles between Basic and Advanced search mode
      */
@@ -48,7 +59,35 @@ class CardBrowserSearchViewModel(
         advancedSearchFlow.value = !advancedSearchFlow.value
     }
 
+    /**
+     * Appends [searchText] to the current temporary advances search text
+     */
+    fun appendAdvancedSearch(searchText: String) {
+        Timber.d("appending search text '%s'", searchText)
+        val currentValue = advancedSearchTextFlow.value
+        advancedSearchTextFlow.value +=
+            buildString {
+                if (currentValue.isNotBlank() && !currentValue.endsWith(" ")) append(' ')
+                append(searchText)
+                append(' ')
+            }
+    }
+
+    /**
+     * Called on user modification to the non-submitted search text
+     */
+    fun onSearchTextChanged(searchText: String) {
+        Timber.v("onSearchTextChanged '%s'", searchText)
+        if (advancedSearchFlow.value) {
+            advancedSearchTextFlow.value = searchText
+        } else {
+            basicSearchTextFlow.value = searchText
+        }
+    }
+
     companion object {
         private const val STATE_ADVANCED_SEARCH_ENABLED = "advancedSearch"
+        private const val STATE_BASIC_SEARCH_TEXT = "basicSearchText"
+        private const val STATE_ADVANCED_SEARCH_TEXT = "advancedSearchText"
     }
 }

@@ -34,6 +34,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.core.view.isVisible
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
@@ -110,6 +111,7 @@ import com.ichi2.anki.utils.showDialogFragmentImpl
 import com.ichi2.anki.withProgress
 import com.ichi2.utils.HandlerUtils
 import com.ichi2.utils.TagsUtil.getUpdatedTags
+import com.ichi2.utils.replaceText
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
@@ -236,7 +238,10 @@ class CardBrowserFragment :
                     requireNavigationDrawerActivity().onNavigationPressed()
                 }
             }
-        searchView = view.findViewById<SearchView>(R.id.search_view)
+        searchView =
+            view.findViewById<SearchView>(R.id.search_view)?.apply {
+                editText.doAfterTextChanged { searchViewModel.onSearchTextChanged(it.toString()) }
+            }
         toggleAdvancedSearch =
             view.findViewById<Button>(R.id.toggle_advanced_search)?.apply {
                 setOnClickListener {
@@ -492,6 +497,10 @@ class CardBrowserFragment :
             }
         }
 
+        fun onSearchViewTextChanged(text: String) {
+            searchView?.editText?.replaceText(text)
+        }
+
         activityViewModel.flowOfIsTruncated.launchCollectionInLifecycleScope(::onIsTruncatedChanged)
         activityViewModel.flowOfSelectedRows.launchCollectionInLifecycleScope(::onSelectedRowsChanged)
         activityViewModel.flowOfActiveColumns.launchCollectionInLifecycleScope(::onColumnsChanged)
@@ -505,6 +514,7 @@ class CardBrowserFragment :
         activityViewModel.flowOfDeckSelection.launchCollectionInLifecycleScope(::onDeckChanged)
         activityViewModel.flowOfScrollRequest.launchCollectionInLifecycleScope(::autoScrollTo)
         searchViewModel.advancedSearchFlow.launchCollectionInLifecycleScope(::advancedSearchChanged)
+        searchViewModel.searchTextFlow.launchCollectionInLifecycleScope(::onSearchViewTextChanged)
     }
 
     private fun setupFragmentResultListeners() {
