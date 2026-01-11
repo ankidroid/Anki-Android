@@ -22,6 +22,7 @@ import androidx.lifecycle.viewModelScope
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.model.SelectableDeck
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -32,6 +33,16 @@ class CardBrowserFragmentViewModel(
 
     val advancedSearchFlow =
         savedStateHandle.getMutableStateFlow(STATE_ADVANCED_SEARCH_ENABLED, false)
+
+    private val advancedSearchTextFlow =
+        savedStateHandle.getMutableStateFlow(STATE_ADVANCED_SEARCH_TEXT, "")
+    private val basicSearchTextFlow =
+        savedStateHandle.getMutableStateFlow(STATE_BASIC_SEARCH_TEXT, "")
+
+    val searchTextFlow =
+        combine(advancedSearchFlow, basicSearchTextFlow, advancedSearchTextFlow) { displayingAdvancedSearch, basicText, advancedText ->
+            if (displayingAdvancedSearch) advancedText else basicText
+        }
 
     @NeedsTest("default usage")
     fun openDeckSelectionDialog() =
@@ -48,7 +59,33 @@ class CardBrowserFragmentViewModel(
         advancedSearchFlow.value = !advancedSearchFlow.value
     }
 
+    /**
+     * Appends [searchText] to the current temporary advances search text
+     */
+    fun appendAdvancedSearch(searchText: String) {
+        Timber.d("appending search text '%s'", searchText)
+        advancedSearchTextFlow.value +=
+            buildString {
+                if (!advancedSearchTextFlow.value.endsWith(" ")) append(' ')
+                append(searchText)
+                append(' ')
+            }
+    }
+
+    /**
+     * Called on user modification to the temporary search text
+     */
+    fun onSearchTextChanged(searchText: String) {
+        if (advancedSearchFlow.value) {
+            advancedSearchTextFlow.value = searchText
+        } else {
+            basicSearchTextFlow.value = searchText
+        }
+    }
+
     companion object {
         private const val STATE_ADVANCED_SEARCH_ENABLED = "advancedSearch"
+        private const val STATE_BASIC_SEARCH_TEXT = "basicSearchText"
+        private const val STATE_ADVANCED_SEARCH_TEXT = "advancedSearchText"
     }
 }
