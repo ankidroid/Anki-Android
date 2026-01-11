@@ -17,6 +17,7 @@
 package com.ichi2.ui
 
 import android.content.Context
+import android.hardware.SensorManager
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
@@ -24,11 +25,13 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import com.ichi2.anki.R
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.GestureListener
 import com.ichi2.anki.dialogs.WarningDisplay
 import com.ichi2.utils.UiUtil.setSelectedValue
+import com.squareup.seismic.ShakeDetector
 import timber.log.Timber
 
 // This class exists as elements resized when adding in the spinner to GestureDisplay.kt
@@ -44,12 +47,16 @@ class GesturePicker(
     attributeSet: AttributeSet? = null,
     defStyleAttr: Int = 0,
 ) : ConstraintLayout(ctx, attributeSet, defStyleAttr),
-    WarningDisplay {
+    WarningDisplay,
+    ShakeDetector.Listener {
     private val gestureSpinner: Spinner
     private val gestureDisplay: GestureDisplay
     override val warningTextView: FixedTextView
 
     private var onGestureListener: GestureListener? = null
+    private var shakeDetector: ShakeDetector? = null
+    private val sensorManager get() = ContextCompat.getSystemService(context, SensorManager::class.java)
+    private var shakeEnabled = true
 
     init {
         val inflater = LayoutInflater.from(ctx)
@@ -120,5 +127,27 @@ class GesturePicker(
 
         override fun onNothingSelected(parent: AdapterView<*>?) {
         }
+    }
+
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        startShakeDetector()
+    }
+
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        shakeDetector?.stop()
+    }
+
+    private fun startShakeDetector() {
+        shakeDetector =
+            ShakeDetector(this).also {
+                it.start(sensorManager, SensorManager.SENSOR_DELAY_UI)
+            }
+    }
+
+    override fun hearShake() {
+        Timber.d("Shake detected in GesturePicker")
+        onGesture(Gesture.SHAKE)
     }
 }
