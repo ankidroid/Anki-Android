@@ -70,7 +70,7 @@
     <string name="card_browser_list_my_searches_new_name">Nombre para la búsqueda actual</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">No puedes guardar una búsqueda sin nombre.</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">¡El nombre ya existe!</string>
-    <string name="card_browser_list_my_searches_successful_save">Search was saved</string>
+    <string name="card_browser_list_my_searches_successful_save">Búsqueda guardada</string>
     <string name="no_note_to_edit">No hay notas que editar</string>
     <string name="card_browser_list_my_searches_remove_content">¿Elimimar \'%1$s\'?</string>
     <string name="card_browser_change_display_order" maxLength="28">Cambiar orden de presentación</string>
@@ -91,7 +91,7 @@
         <item>Por lapso</item>
         <item>Por nombre de baraja</item>
     </string-array>
-    <string name="manage_browser_column">Manage column</string>
+    <string name="manage_browser_column">Gestionar columna</string>
     <string name="no_columns_available">No hay columnas disponibles</string>
     <string name="card_browser_select_all" maxLength="28">Seleccionar todo</string>
     <string name="card_browser_select_none" maxLength="28">No seleccionar nada</string>
@@ -122,6 +122,6 @@
     <string name="user_potential_columns">Disponible</string>
     <string name="include_column">Incluir columna</string>
     <string name="exclude_column">Excluir columna</string>
-    <string name="save_changes_message">Please save your changes first</string>
+    <string name="save_changes_message">Por favor, guarda tus cambios primero</string>
     <string name="browser_find_replace_loading_fields">Recuperando nombres de campos&#8230;</string>
 </resources>

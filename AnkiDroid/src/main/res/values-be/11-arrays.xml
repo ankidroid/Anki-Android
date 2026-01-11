@@ -51,8 +51,8 @@
     <string name="add_to_deck_decide_by_note_type">Вырашаць па тыпе нататкі</string>
     <!-- theme labels -->
     <string name="theme_follow_system">Прытрымлівацца сістэмы</string>
-    <string name="theme_day" comment="Day/Light theme color scheme">Day</string>
-    <string name="theme_night" comment="Night/Dark theme color scheme">Night</string>
+    <string name="theme_day" comment="Day/Light theme color scheme">Дзень</string>
+    <string name="theme_night" comment="Night/Dark theme color scheme">Ноч</string>
     <!-- day_theme_labels -->
     <string name="day_theme_light">Светлая</string>
     <string name="day_theme_plain">Звычайная</string>
@@ -72,7 +72,7 @@
     <string name="answer_hard" maxLength="41">Складаны адказ</string>
     <string name="answer_good" maxLength="41">Добры адказ</string>
     <string name="answer_easy" maxLength="41">Просты адказ</string>
-    <string name="gesture_abort_learning" maxLength="41">Close study screen</string>
+    <string name="gesture_abort_learning" maxLength="41">Закрыць экран навучання</string>
     <string name="gesture_flag_red" maxLength="41">Пераключыць чырвоны сцяжок</string>
     <string name="gesture_flag_orange" maxLength="41">Пераключыць аранжавы сцяжок</string>
     <string name="gesture_flag_green" maxLength="41">Пераключыць зялёны сцяжок</string>
@@ -84,7 +84,7 @@
     <string name="gesture_page_up" maxLength="41">Папярэдняя старонка</string>
     <string name="gesture_page_down" maxLength="41">Наступная старонка</string>
     <string name="gesture_toggle_whiteboard" maxLength="41">Пераключыць дошку</string>
-    <string name="gesture_toggle_eraser" maxLength="41">Toggle eraser</string>
+    <string name="gesture_toggle_eraser" maxLength="41">Пераключыць гумку</string>
     <string name="gesture_show_hint" maxLength="41">Паказаць падказку</string>
     <string name="gesture_show_all_hints" maxLength="41">Паказаць усе падказкі</string>
     <string name="record_voice" maxLength="41">Запісаць голас</string>

@@ -188,7 +188,7 @@
         <item quantity="other" comment="Consider keeping the unbreakable space after the digit">%d 𐍈𐌴𐌹𐌻𐍉𐍃 𐌰𐍆𐌰𐍂 𐌼𐌹𐌳𐌾𐌰𐌽𐌰𐌷𐍄</item>
     </plurals>
     <string name="pref_keep_screen_on" maxLength="41">𐌼𐌹𐌸 𐍃𐌺𐌰𐌹𐍂𐌼𐌰 𐍃𐌺𐌴𐌹𐌽𐌰𐌽𐌳𐌹𐌽 𐌸𐌰𐌹𐍂𐌷𐍅𐌹𐍃𐌰𐌽</string>
-    <string name="pref_keep_screen_on_summ">Disable screen timeout</string>
+    <string name="pref_keep_screen_on_summ">𐍃𐌺𐌰𐌹𐍂𐌼𐌹𐍃 𐌿𐍄𐌰𐌼𐌴𐌻 𐌿𐌽𐌲𐌰𐍄𐌰𐌿𐌾𐌰𐌽</string>
     <string name="enable_api_title" maxLength="41">𐌰𐌽𐌺𐌴𐌹𐌳𐍂𐌰𐌿𐌳 𐌰𐍀𐌹 𐌲𐌰𐍅𐌰𐌿𐍂𐌺𐌾𐌰𐌽</string>
     <string name="enable_api_summary">Let other apps connect to AnkiDroid and read / write data without your intervention</string>
     <string name="custom_buttons" maxLength="41">App bar buttons</string>

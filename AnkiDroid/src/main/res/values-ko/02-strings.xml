@@ -263,9 +263,12 @@ Context | Request Context    [1]</string>
     <string name="create_shortcut_error">바로가기 생성 오류: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">대문자로 시작</string>
     <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll" maxLength="28">도구 모음 스크롤</string>
-    <!-- Symbols used as Button text in IncrementNumberRangePreference -->
+    <!-- IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
+    <string name="invalid_value" comment="Error message in IncrementerNumberRangePreference when input is not a valid number">Invalid value</string>
+    <string name="maximum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the maximum allowed value">Maximum value is %d</string>
+    <string name="minimum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the minimum allowed value">Minimum value is %d</string>
     <!-- Used for credential empty warning message -->
     <string name="invalid_email">유효한 이메일을 입력하세요.</string>
     <string name="password_empty">비밀번호를 입력하십시오</string>
@@ -344,7 +347,6 @@ Context | Request Context    [1]</string>
     <string name="format_deck_description_as_markdown">마크다운 서식</string>
     <string name="help_button_content_description">%s 도움말 열기</string>
     <string name="failed_to_copy">복사 실패</string>
-    <string name="card_browser_unavailable_when_notes_mode">\'메모\' 모드에서는 사용할 수 없습니다</string>
     <plurals name="unbury_cards_feedback">
         <item quantity="other">지금 보기된 카드 %d장</item>
     </plurals>

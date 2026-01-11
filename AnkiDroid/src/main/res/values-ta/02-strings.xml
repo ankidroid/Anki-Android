@@ -263,9 +263,12 @@
     <string name="create_shortcut_error">குறுக்குவழியைச் சேர்ப்பதில் பிழை: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">வாக்கியங்களை பெரியதாக்கு</string>
     <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll" maxLength="28">ஸ்க்ரோல் கருவிப்பட்டி</string>
-    <!-- Symbols used as Button text in IncrementNumberRangePreference -->
+    <!-- IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
+    <string name="invalid_value" comment="Error message in IncrementerNumberRangePreference when input is not a valid number">Invalid value</string>
+    <string name="maximum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the maximum allowed value">Maximum value is %d</string>
+    <string name="minimum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the minimum allowed value">Minimum value is %d</string>
     <!-- Used for credential empty warning message -->
     <string name="invalid_email">சரியான மின்னஞ்சலை உள்ளிடவும்</string>
     <string name="password_empty">கடவுச்சொல் தேவைப்படுகிறது</string>
@@ -346,7 +349,6 @@
     <string name="format_deck_description_as_markdown">Format as Markdown</string>
     <string name="help_button_content_description">Open help for ‘%s’</string>
     <string name="failed_to_copy">நகலெடுக்க முடியவில்லை</string>
-    <string name="card_browser_unavailable_when_notes_mode">\'குறிப்புகள்\' பயன்முறையில் கிடைக்கவில்லை</string>
     <plurals name="unbury_cards_feedback">
         <item quantity="one">%d அட்டை புதைக்கப்படவில்லை</item>
         <item quantity="other">%d கார்டுகள் புதைக்கப்படவில்லை</item>

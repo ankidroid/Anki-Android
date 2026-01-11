@@ -260,9 +260,12 @@
     <string name="create_shortcut_error">Gagal menambah shortcut: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">Mengkapitalkan kalimat-kalimat</string>
     <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll" maxLength="28">Gulir bilah alat</string>
-    <!-- Symbols used as Button text in IncrementNumberRangePreference -->
+    <!-- IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
+    <string name="invalid_value" comment="Error message in IncrementerNumberRangePreference when input is not a valid number">Invalid value</string>
+    <string name="maximum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the maximum allowed value">Maximum value is %d</string>
+    <string name="minimum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the minimum allowed value">Minimum value is %d</string>
     <!-- Used for credential empty warning message -->
     <string name="invalid_email">Masukkan surel yang valid</string>
     <string name="password_empty">Kata Sandi diperlukan</string>
@@ -341,7 +344,6 @@
     <string name="format_deck_description_as_markdown">Format sebagai Markdown</string>
     <string name="help_button_content_description">Buka bantuan untuk ‘%s’</string>
     <string name="failed_to_copy">Gagal menyalin</string>
-    <string name="card_browser_unavailable_when_notes_mode">Tidak tersedia dalam mode \'Catatan\'</string>
     <plurals name="unbury_cards_feedback">
         <item quantity="other">%d kartu diangkat</item>
     </plurals>

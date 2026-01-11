@@ -52,7 +52,7 @@
     <string name="model_browser_template">Змяніць карткі</string>
     <!--Rename-->
     <string name="rename_model">Перайменаваць тып нататкі</string>
-    <string name="rename_card_type">Rename card type</string>
+    <string name="rename_card_type">Перайменаваць тып карткі</string>
     <!--Language Hint-->
     <string name="model_field_editor_language_hint_dialog_success_result">Прызначыць %s у якасці мовы падказак</string>
     <!--Field Editing-->
@@ -70,12 +70,12 @@
         Delete the note types below?
         Basic, Basic (and reversed card), Cloze
      -->
-    <string name="model_delete_multiple_warning">Delete the note types below?\n %s</string>
+    <string name="model_delete_multiple_warning">Выдаліць тыпы нататак ніжэй?\n %s</string>
     <string name="field_delete_warning">Вы сапраўды хочаце выдаліць гэта поле?</string>
     <!--Model Add Suffixes-->
-    <string name="model_browser_add_add">Add: %1$s</string>
+    <string name="model_browser_add_add">Дадаць: %1$s</string>
     <!--This prefix is used for standard note types-->
-    <string name="model_browser_add_clone">Clone: %1$s</string>
+    <string name="model_browser_add_clone">Кланіраваць: %1$s</string>
     <!--Browser Appearance-->
     <string name="card_template_browser_appearance_summary">Увядзіце шаблон, які аглядальнік картак будзе выкарыстоўваць для адлюстравання вашых картак. Выкарыстоўвайце яго для адлюстравання найбольш дакладнага адказу.\n\n Шаблон для пярэдняга боку карткі\n \"Сталіца {{Country}}:\nможна сціснуць у аглядальніку картак да\n\"Сталіца: {{Country}}\"</string>
     <string name="card_template_browser_appearance_question_format">Фармат пытання</string>

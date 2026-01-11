@@ -55,7 +55,7 @@
     <string name="CardEditorTags">بەلگە: %1$s</string>
     <string name="CardEditorCards">كارتا: %1$s</string>
     <string name="edit_occlusions">دالدىلاش تەھرىر</string>
-    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
+    <string name="paste_from_clipboard" maxLength="28">چاپلاش تاختىسىدىن كۆچۈر</string>
     <string name="tag_name">بەلگە ئاتى</string>
     <string name="add_new_filter_tags">بەلگە قوش/سۈزگۈچ</string>
     <string name="add_tag" maxLength="28">بەلگە قوش</string>
@@ -167,7 +167,7 @@
     <string name="import_error_load_imported_database">Anki سانداق (.anki2) ئالماشتۇرۇشنى تېخى قوللىمايدۇ. ئالماشتۇرۇش كۆرسەتمىسىنى قوللانمىدىن كۆرۈڭ.</string>
     <string name="import_error_content_provider">تاللانغان ھۆججەتنى AnkiDroid ئۆزلۈكىدىن ئەكىرەلمەيدۇ. ئىشلەتكۈچى قوللانمىسىدىن Anki ھۆججەتنى قانداق ئەكىرىشنى كۆرۈڭ: \n%s</string>
     <string name="import_error_copy_to_cache_title">ھۆججەتنى غەملىيەلمىدى</string>
-    <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">This is often caused by a bug in the app you used to select the file. Please try the following fixes:\n\n%s</string>
+    <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">بۇ ئادەتتە سىز ھۆججەت تاللاشقا ئىشلىتىۋاتقان ئەپتىكى خاتالىق سەۋەبىدىن كېلىپ چىقىدۇ. تۆۋەندىكى ئوڭشاشنى سىناڭ:\n\n%s</string>
     <string name="import_interrupted">ئەكىرىش ئۈزۈلدى: AnkiDroid تاقالغان</string>
     <string name="export_ready_title">چىقىرىشقا تەييار</string>
     <string name="export_send_no_handlers">apkg نى بىر تەرەپ قىلىدىغان ئەپ يوق. ساقلاۋاتىدۇ&#8230;</string>
@@ -236,7 +236,7 @@
     <string name="search_decks" maxLength="28">دەستە ئىزدە</string>
     <string name="ankidroid_init_failed_webview_title">ئېغىر خاتالىق</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid سىستېمىدىكى WebView غا تايىنىدۇ ئەمما ئۇنى ئىشلەتكىلى بولمايدۇ. بۇ سىستېما يېڭىلانمىنى ئورنىتىۋاتقاندا يۈز بېرىشى مۇمكىن. بىر قانچە مىنۇتتىن كېيىن قايتا سىناڭ.\n\n%s</string>
-    <string name="ankidroid_init_failed_storage">AnkiDroid cannot access storage due to an Android error.\n\n%s</string>
+    <string name="ankidroid_init_failed_storage">Android خاتالىقى سەۋەبىدىن AnkiDroid ساقلىغۇچنى زىيارەت قىلالمايدۇ.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">خەت چوڭلۇقى</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">قورال بالداقنى كۆرسەت</string>
@@ -263,9 +263,12 @@
     <string name="create_shortcut_error">تېزلەتمە قوشۇش خاتالىقى: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">چوڭ ھەرپلىك جۈملە</string>
     <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll" maxLength="28">قورال بالداقنى دومىلات</string>
-    <!-- Symbols used as Button text in IncrementNumberRangePreference -->
+    <!-- IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
+    <string name="invalid_value" comment="Error message in IncrementerNumberRangePreference when input is not a valid number">Invalid value</string>
+    <string name="maximum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the maximum allowed value">Maximum value is %d</string>
+    <string name="minimum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the minimum allowed value">Minimum value is %d</string>
     <!-- Used for credential empty warning message -->
     <string name="invalid_email">ئىناۋەتلىك ئېلخەت ئادرېسى كىرگۈزۈلىدۇ</string>
     <string name="password_empty">ئىم زۆرۈر</string>
@@ -308,8 +311,8 @@
     <string name="field_editor_model_not_available">توپلامنى زىيارەت قىلالمىدى. قايتا سىناڭ!</string>
     <string name="cd_manage_notetypes_add">يېڭى خاتىرە تۈرى قوشىدۇ</string>
     <plurals name="note_types_selected">
-        <item quantity="one">%d note type selected</item>
-        <item quantity="other">%d note types selected</item>
+        <item quantity="one">%d خاتىرە تۈرى تاللاندى</item>
+        <item quantity="other">%d خاتىرە تۈرى تاللاندى</item>
     </plurals>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">ئازراق ئۆگىنىدۇ</string>
@@ -346,7 +349,6 @@
     <string name="format_deck_description_as_markdown">Markdown سۈپىتىدە پىچىملاندۇرىدۇ</string>
     <string name="help_button_content_description">«%s» نىڭ ياردىمىنى ئاچىدۇ</string>
     <string name="failed_to_copy">كۆچۈرەلمىدى</string>
-    <string name="card_browser_unavailable_when_notes_mode">«خاتىرە» ھالىتىدە ئىشلەتكىلى بولمايدۇ</string>
     <plurals name="unbury_cards_feedback">
         <item quantity="one">%d كارتا ئاشكارىلاندى</item>
         <item quantity="other">%d كارتا ئاشكارىلاندى</item>
@@ -376,7 +378,7 @@
     <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">قېلىپنى Markdown سۈپىتىدە كۆچۈر</string>
     <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">كارتا كۆرگۈچ كۆرۈنۈشىنى تەھرىرلەيدۇ</string>
     <string name="missing_user_action_dialog_message" comment="%s is the user action number">%s  ئىشلەتكۈچى مەشغۇلاتى خاتىرە تۈرىدە تەڭشەلمىگەن. سەپلەڭ</string>
-    <string name="feature_not_supported_by_study_screen">This card has features that are not yet supported by the new study screen.</string>
+    <string name="feature_not_supported_by_study_screen">بۇ كارتىنىڭ يېڭى ئۆگىنىش ئېكرانى قوللىمايدىغان ئىقتىدارى بار.</string>
     <string name="directory_inaccessible_info">بۇ جاي %s دىكى زىيارەتنى قانداق ئەسلىگە كەلتۈرۈش ياكى تەڭشەككە يۆتكىلىپ توپلام قىسقۇچىنى يېڭىلاش ھەققىدىكى تەپسىلاتنى كۆرۈڭ.</string>
     <!-- Scheduler Upgrade Required Dialog title-->
     <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">كۈنتەرتىپلىگۈچنى يېڭىلاش زۆرۈر</string>

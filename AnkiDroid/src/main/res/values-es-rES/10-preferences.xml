@@ -82,7 +82,7 @@
     <string name="button_size" maxLength="41">Tamaño del botón de respuesta</string>
     <string name="card_browser_font_size" maxLength="41">Escalado de fuentes del explorador</string>
     <string name="card_browser_hide_media" maxLength="41">Mostrar nombres de archivo en el navegador de tarjetas</string>
-    <string name="card_browser_hide_media_summary">Display audio filenames in the card browser question/answer fields</string>
+    <string name="card_browser_hide_media_summary">Mostrar nombres de archivos de audio en los campos de pregunta/respuesta del navegador de tarjetas</string>
     <string name="col_path" maxLength="41">Carpeta de AnkiDroid</string>
     <string name="fullscreen_review" maxLength="41">Pantalla completa</string>
     <string name="full_screen_off">Desactivado</string>
@@ -116,9 +116,9 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">Tocar el centro</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Tocar abajo a la izquierda</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Tocar abajo a la derecha</string>
-    <string name="gestures_two_finger_tap" maxLength="41">Two-finger tap</string>
-    <string name="gestures_three_finger_tap" maxLength="41">Three-finger tap</string>
-    <string name="gestures_four_finger_tap" maxLength="41">Four-finger tap</string>
+    <string name="gestures_two_finger_tap" maxLength="41">Toque con dos dedos</string>
+    <string name="gestures_three_finger_tap" maxLength="41">Toque con tres dedos</string>
+    <string name="gestures_four_finger_tap" maxLength="41">Toque con cuatro dedos</string>
     <string name="gestures_shake" maxLength="41">Agitar el dispositivo</string>
     <string name="card_browser_enable_external_context_menu" maxLength="41">Menú ‘%s’</string>
     <string name="card_browser_enable_external_context_menu_summary">Habilita globalmente el menú contextual ‘%s</string>
@@ -204,7 +204,7 @@
     <string name="pref_controls_previews_tab" maxLength="41" comment="Name of the tab to configure controls for the previews screen">Vistas previas</string>
     <string name="toggle_backside_only" maxLength="41" comment="Control setting that toggles \'Backside only\' in the previews screen">Activar/desactivar solo la parte trasera</string>
     <!-- Appearance settings -->
-    <string name="pref_cat_reviewer" maxLength="41">Study Screen</string>
+    <string name="pref_cat_reviewer" maxLength="41">Pantalla de Estudio</string>
     <string name="show_deck_title" maxLength="41">Mostrar el título del mazo</string>
     <string name="accessibility" maxLength="41">Accesibilidad</string>
     <!-- Paste clipboard image as png option -->
@@ -235,9 +235,9 @@
     <string name="misc" maxLength="41">Varios</string>
     <!-- Review reminders -->
     <string name="add_reminder" comment="Label for the add reminder button in the screen for adding and editing review reminders">Añadir recordatorio</string>
-    <string name="add_review_reminder" comment="Title of the screen for creating a new review reminder">Add review reminder</string>
-    <string name="edit_review_reminder" comment="Title of the screen for editing an existing review reminder">Edit review reminder</string>
-    <string name="you_have_no_review_reminders" comment="Text that appears in the review reminder editing screen when there are no reminders set">You have no review reminders</string>
+    <string name="add_review_reminder" comment="Title of the screen for creating a new review reminder">Añadir recordatorio de revisión</string>
+    <string name="edit_review_reminder" comment="Title of the screen for editing an existing review reminder">Editar recordatorio de revisión</string>
+    <string name="you_have_no_review_reminders" comment="Text that appears in the review reminder editing screen when there are no reminders set">No tienes recordatorios de revisión</string>
     <!-- studyoptions -->
     <string name="studyoptions_limit_select_tags">Seleccionar etiquetas</string>
     <!-- Deck configurations -->
@@ -261,7 +261,7 @@
     <string name="type_in_answer_focus" maxLength="41">Enfoque \"escribe la respuesta\"</string>
     <string name="type_in_answer_focus_summ">Enfocar automáticamente el campo \"escribir en respuesta\" en la pantalla de estudio</string>
     <!-- About -->
-    <string name="open_changelog">Open changelog</string>
+    <string name="open_changelog">Abrir registro de cambios</string>
     <string name="pref_cat_about_title" maxLength="41">Acerca de</string>
     <string name="contributors_title">Colaboradores</string>
     <string name="about_contributors_description"><![CDATA[Estos son nuestros increíbles <a href=\"%1$s\">colaboradores</a>. ¡También puedes ayudar a AnkiDroid programando, traduciendo, donando y <a href=\"%2$s\">más</a>!]]></string>
@@ -301,8 +301,8 @@
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Experimental</string>
     <string name="readtext_deprecation_warn">¡AnkiDroid ha introducido un mecanismo texto a voz mejor que es compatible con otros clientes Anki y que incluye más voces y mejoras de reproducción de idioma!\n\nPor favor actualice lo antes posible, ya que pronto se quitará esta configuración.</string>
     <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">Por favor actualice al formato de texto a voz nuevo.</string>
-    <string name="pref_fixed_port_title" maxLength="41">localStorage in Study Screen</string>
-    <string name="pref_fixed_port_summary">Enables JavaScript localStorage by using a fixed server port in the Study Screen</string>
+    <string name="pref_fixed_port_title" maxLength="41">localStorage en Pantalla de Estudio</string>
+    <string name="pref_fixed_port_summary">Activa el localStorage de JavaScript usando un puerto fijo del servidor en la Pantalla de Estudio</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Opciones de desarrollador</string>
     <string name="dev_options_enabled_pref" maxLength="41">Activar opciones de desarrollador</string>
@@ -373,7 +373,7 @@ Puedes restaurar una colección desde una copia de seguridad en el menú de la l
     <string name="hide_system_bars_navigation_bar" comment="Setting option to hide the system navigation bar (the bottom one that can go back, to home, etc)">Barra de navegación</string>
     <string name="hide_system_bars_all_bars" comment="Setting option to hide all the system bars">Todas</string>
     <string name="ignore_display_cutout" maxLength="41">Ignorar el recorte de la pantalla</string>
-    <string name="show_answer_buttons" maxLength="41">Show answer buttons</string>
+    <string name="show_answer_buttons" maxLength="41">Mostrar botones de respuesta</string>
     <string name="hide_hard_and_easy" maxLength="41">Ocultar los botones \"Difícil\" y \"Fácil\"</string>
     <string name="reviewer_frame_style" maxLength="41">Estilo del marco</string>
     <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Study Screen">Tarjeta</string>
@@ -381,13 +381,13 @@ Puedes restaurar una colección desde una copia de seguridad en el menú de la l
     <string name="reviewer_toolbar_top" maxLength="41" comment="Setting to put the toolbar on the top of the study screen">Superior</string>
     <string name="reviewer_toolbar_bottom" maxLength="41" comment="Setting to put the toolbar on the bottom of the study screen">Inferior</string>
     <string name="reviewer_toolbar_none" maxLength="41" comment="Setting to remove the toolbar from the study screen">Ninguna</string>
-    <string name="toolbar" maxLength="41">Toolbar</string>
-    <string name="toolbar_actions" maxLength="41">Toolbar actions</string>
-    <string name="toolbar_position" maxLength="28">Toolbar position</string>
-    <string name="new_study_screen" maxLength="41">New study screen</string>
-    <string name="new_study_screen_summ"><![CDATA[Improved study screen that will succeed the current one. Some features of the old screen have been changed or removed. Please report any <a href="%1$s">feedback</a> or <a href="%2$s">bugs</a>.]]></string>
+    <string name="toolbar" maxLength="41">Barra de herramientas</string>
+    <string name="toolbar_actions" maxLength="41">Acciones de la barra de herramientas</string>
+    <string name="toolbar_position" maxLength="28">Posición de la barra de herramientas</string>
+    <string name="new_study_screen" maxLength="41">Nueva pantalla de estudio</string>
+    <string name="new_study_screen_summ"><![CDATA[Pantalla de estudio mejorada que acabará sucediendo a la antigua. Algunas funcionalidades de la pantalla antigua han sido cambiadas o eliminadas. Por favor, reporta cualquier <a href="%1$s">sugerencia</a> o <a href="%2$s">fallo.]]></string>
     <string name="show_answer_feedback" maxLength="41">Show answer feedback</string>
-    <string name="screen" maxLength="41">Screen</string>
+    <string name="screen" maxLength="41">Pantalla</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">Abrir la configuración</string>
 </resources>

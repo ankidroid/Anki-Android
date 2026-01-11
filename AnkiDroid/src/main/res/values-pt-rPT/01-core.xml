@@ -114,8 +114,8 @@
     <string name="menu_search" maxLength="28">Procurar em %1$s</string>
     <string name="menu_mark_note" maxLength="28">Marcar nota</string>
     <string name="menu_unmark_note">Desmarcar nota</string>
-    <string name="menu_enable_voice_playback" maxLength="28">Activar reprodução de voz</string>
-    <string name="menu_disable_voice_playback">Desactivar reprodução de voz</string>
+    <string name="menu_enable_voice_playback" maxLength="28">Ativar reprodução de voz</string>
+    <string name="menu_disable_voice_playback">Desativar reprodução de voz</string>
     <string name="new_deck">Criar baralho</string>
     <string name="new_dynamic_deck">Criar baralho filtrado</string>
     <string name="directory_inaccessible">A diretoria AnkiDroid está inacessível</string>
