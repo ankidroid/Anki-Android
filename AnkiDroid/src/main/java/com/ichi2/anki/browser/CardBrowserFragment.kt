@@ -36,6 +36,7 @@ import androidx.core.view.MenuProvider
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
 import androidx.fragment.app.viewModels
@@ -238,9 +239,28 @@ class CardBrowserFragment :
                     requireNavigationDrawerActivity().onNavigationPressed()
                 }
             }
+
+        fun FragmentTransaction.removeByTag(tag: String): FragmentTransaction {
+            val fragment = childFragmentManager.findFragmentByTag(tag) ?: return this
+            return remove(fragment)
+        }
+
         searchView =
             view.findViewById<SearchView>(R.id.search_view)?.apply {
                 editText.doAfterTextChanged { searchViewModel.onSearchTextChanged(it.toString()) }
+                addTransitionListener { _, _, state ->
+                    if (state != SearchView.TransitionState.HIDDEN) return@addTransitionListener
+                    // clear state on hide
+                    childFragmentManager
+                        .commit {
+                            removeByTag(FRAGMENT_TAG_STANDARD)
+                            removeByTag(FRAGMENT_TAG_ADVANCED)
+                        }
+
+                    // Exiting out the SearchView should reset the state
+                    // The ViewModel remains active as it's tied to the host fragment.
+                    searchViewModel.resetSearchState()
+                }
             }
         toggleAdvancedSearch =
             view.findViewById<Button>(R.id.toggle_advanced_search)?.apply {
@@ -477,19 +497,8 @@ class CardBrowserFragment :
 
             if (searchView == null) return
 
-            // switch to the correct fragment, retaining state
-            fun findOrCreate(
-                tag: String,
-                factory: () -> Fragment,
-            ): Fragment =
-                childFragmentManager.findFragmentByTag(tag) ?: factory().also {
-                    childFragmentManager.commit {
-                        add(R.id.search_view_content_container, it, tag)
-                    }
-                }
-
-            val standard = findOrCreate("STANDARD") { StandardSearchFragment() }
-            val advanced = findOrCreate("ADVANCED") { AdvancedSearchFragment() }
+            val standard = findOrCreateSearchFragment(FRAGMENT_TAG_STANDARD) { StandardSearchFragment() }
+            val advanced = findOrCreateSearchFragment(FRAGMENT_TAG_ADVANCED) { AdvancedSearchFragment() }
 
             childFragmentManager.commit {
                 hide(if (inAdvancedSearch) standard else advanced)
@@ -1107,5 +1116,25 @@ class CardBrowserFragment :
          * since the cards are unselected when this happens
          */
         private const val CHANGE_DECK_KEY = "CHANGE_DECK"
+
+        const val FRAGMENT_TAG_STANDARD = "STANDARD"
+        const val FRAGMENT_TAG_ADVANCED = "ADVANCED"
     }
+}
+
+/**
+ * switch to a correct fragment, retaining state
+ */
+private fun Fragment.findOrCreateSearchFragment(
+    tag: String,
+    createFragment: () -> Fragment,
+): Fragment {
+    val existing = childFragmentManager.findFragmentByTag(tag)
+    if (existing != null) return existing
+
+    val created = createFragment()
+    childFragmentManager.commit {
+        add(R.id.search_view_content_container, created, tag)
+    }
+    return created
 }
