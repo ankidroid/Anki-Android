@@ -256,6 +256,24 @@ class NoteEditorTest : RobolectricTest() {
     }
 
     @Test
+    fun copyNoteCopiesNoteType() {
+        val originalNote = addBasicAndReversedNote()
+
+        // update the last selected note type so the test does not pass by accident
+        addBasicNote()
+
+        val editor = openNoteEditorWithArgs(NoteEditorLauncher.EditCard(originalNote.firstCard().id, DEFAULT).toBundle())
+        val copyNoteBundle = getCopyNoteIntent(editor)
+        val newNoteEditor = openNoteEditorWithArgs(copyNoteBundle)
+
+        assertThat(
+            "the note type of the copied note should be the same as the original",
+            newNoteEditor.editorNote!!.notetype.name,
+            equalTo(col.notetypes.basicAndReversed.name),
+        )
+    }
+
+    @Test
     fun stickyFieldsAreUnchangedAfterAdd() =
         runTest {
             // #6795 - newlines were converted to <br>
@@ -280,6 +298,33 @@ class NoteEditorTest : RobolectricTest() {
             val actual = editor.currentFieldStrings.toList()
 
             assertThat("newlines should be preserved, second field should be blanked", actual, contains(newFirstField, ""))
+        }
+
+    @Test
+    fun `changing note type preserves and restores field contents`() =
+        runTest {
+            val threeFieldNoteTypeName = "ThreeFieldType"
+            val fieldNames = arrayOf("F1", "F2", "F3")
+            addStandardNoteType(threeFieldNoteTypeName, fieldNames, "{{F1}}", "{{F2}}")
+            val threeFieldNoteType = col.notetypes.byName(threeFieldNoteTypeName)!!
+            val basicNoteType = col.notetypes.basic
+
+            withNoteEditorAdding {
+                noteType = threeFieldNoteType
+                val originalTexts = fieldNames.map { "Text for $it" }
+                originalTexts.forEachIndexed { i, text -> fields[i] = text }
+
+                noteType = basicNoteType
+
+                assertThat("Field 1 should be copied", fields[0], equalTo(originalTexts[0]))
+                assertThat("Field 2 should be copied", fields[1], equalTo(originalTexts[1]))
+
+                noteType = threeFieldNoteType
+
+                originalTexts.forEachIndexed { i, text ->
+                    assertThat("Field ${i + 1} should be restored from memory", fields[i], equalTo(text))
+                }
+            }
         }
 
     @Test
@@ -792,8 +837,9 @@ class NoteEditorTest : RobolectricTest() {
         }
 
         fun buildInternal(): NoteEditorFragment {
-            col.notetypes.setCurrent(notetype)
             val noteEditor = getNoteEditorAddingNote(REVIEWER)
+            advanceRobolectricLooper()
+            noteEditor.setCurrentlySelectedNoteType(notetype.id)
             advanceRobolectricLooper()
             // image occlusion does not need a first field
             if (this.firstField != null) {
