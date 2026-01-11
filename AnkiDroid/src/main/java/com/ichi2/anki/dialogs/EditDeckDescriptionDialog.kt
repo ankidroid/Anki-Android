@@ -18,6 +18,7 @@ package com.ichi2.anki.dialogs
 
 import android.app.Dialog
 import android.os.Bundle
+import android.view.MotionEvent
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
@@ -43,6 +44,7 @@ import com.ichi2.utils.create
 import com.ichi2.utils.moveCursorToEnd
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
+import com.ichi2.utils.rawHitTest
 import com.ichi2.utils.show
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
@@ -85,6 +87,7 @@ class EditDeckDescriptionDialog : DialogFragment() {
                 setOnShowListener {
                     positiveButton.setOnClickListener { viewModel.saveAndExit() }
                     negativeButton.setOnClickListener { viewModel.onBackRequested() }
+                    setupTouchOutsideListener()
                 }
                 setCanceledOnTouchOutside(false)
                 setCancelable(false)
@@ -104,6 +107,20 @@ class EditDeckDescriptionDialog : DialogFragment() {
                 isKeyboardVisible = insets.isVisible(WindowInsetsCompat.Type.ime())
                 insets
             }
+        }
+    }
+
+    private fun setupTouchOutsideListener() {
+        val dialogContentView =
+            alertDialog.findViewById<View>(com.google.android.material.R.id.contentPanel)
+                ?: binding.root.parent as? View
+                ?: binding.root
+
+        alertDialog.window?.decorView?.setOnTouchListener { _, event ->
+            if (event.action != MotionEvent.ACTION_DOWN) return@setOnTouchListener false
+            if (dialogContentView.rawHitTest(event)) return@setOnTouchListener false
+            viewModel.onBackRequested()
+            true
         }
     }
 
