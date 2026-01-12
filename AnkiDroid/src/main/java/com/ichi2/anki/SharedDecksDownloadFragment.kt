@@ -564,7 +564,7 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
                     unregisterReceiver()
                     isDownloadInProgress = false
                     onBackPressedCallback.isEnabled = isDownloadInProgress
-                    activity?.onBackPressedDispatcher?.onBackPressed()
+                    parentFragmentManager.popBackStack()
                 }
                 setNegativeButton(R.string.dialog_no) { _, _ ->
                     Timber.i("dismissed cancel download confirmation dialog")
