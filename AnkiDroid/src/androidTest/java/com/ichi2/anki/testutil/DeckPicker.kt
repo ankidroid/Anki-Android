@@ -61,7 +61,7 @@ fun createDeckWithUniqueName(): String {
     val testString = System.currentTimeMillis().toString()
     val deckName = "TestDeck$testString"
     onView(withId(R.id.fab_main)).perform(click())
-    onView(withId(R.id.add_deck_action)).perform(click())
+    onView(withId(R.id.add_deck_button)).perform(click())
     onView(withId(R.id.dialog_text_input)).perform(typeText(deckName))
     onView(withText(R.string.dialog_ok)).perform(click())
     return deckName

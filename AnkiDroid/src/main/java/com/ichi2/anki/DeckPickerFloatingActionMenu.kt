@@ -343,9 +343,9 @@ class DeckPickerFloatingActionMenu(
         }
 
     init {
-        val addSharedButton: FloatingActionButton = view.findViewById(R.id.add_shared_action)
-        val addDeckButton: FloatingActionButton = view.findViewById(R.id.add_deck_action)
-        val addFilteredDeckButton: FloatingActionButton = view.findViewById(R.id.add_filtered_deck_action)
+        val addSharedButton: FloatingActionButton = view.findViewById(R.id.add_shared_button)
+        val addDeckButton: FloatingActionButton = view.findViewById(R.id.add_deck_button)
+        val addFilteredDeckButton: FloatingActionButton = view.findViewById(R.id.add_filtered_deck_button)
         val addSharedLabel: TextView = view.findViewById(R.id.add_shared_label)
         val addDeckLabel: TextView = view.findViewById(R.id.add_deck_label)
         val addFilteredDeckLabel: TextView = view.findViewById(R.id.add_filtered_deck_label)
