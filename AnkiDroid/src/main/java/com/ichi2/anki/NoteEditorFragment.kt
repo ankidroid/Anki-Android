@@ -1228,6 +1228,17 @@ class NoteEditorFragment :
             return false
         }
 
+        fun fieldsEdited(): Boolean {
+            // Editing an existing note: Check to see if the fields are changed
+            if (!addNote) {
+                return editFields!!.map { it.text?.toString() } != editorNote!!.fields.toList()
+            }
+
+            if (!isFieldEdited) return false
+            // BUG: Does not account for sticky fields
+            return editFields!!.any { it.text.toString() != "" }
+        }
+
         // changed note type?
         if (!addNote && currentEditedCard != null) {
             val newNoteType = currentlySelectedNotetype
@@ -1240,18 +1251,14 @@ class NoteEditorFragment :
         if (!addNote && currentEditedCard != null && currentEditedCard!!.currentDeckId() != deckId) {
             return true
         }
+
         // changed fields?
-        if (isFieldEdited) {
-            for (value in editFields!!) {
-                if (value.text.toString() != "") {
-                    return true
-                }
-            }
-            return false
-        } else {
-            return isTagsEdited
+        if (fieldsEdited()) {
+            return true
         }
+
         // changed tags?
+        return isTagsEdited
     }
 
     private fun collectionHasLoaded(): Boolean = allNoteTypeIds != null
