@@ -15,7 +15,7 @@
         android:textAppearance="?attr/textAppearanceListItem"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/note_edit_cards"
+        app:layout_constraintEnd_toStartOf="@id/edit_cards_button"
         app:layout_constraintHorizontal_bias="0.0"
         tools:text="Basic (and reversed card)"
         />
@@ -29,14 +29,14 @@
         android:textColor="?android:attr/textColorSecondary"
         app:layout_constraintTop_toBottomOf="@id/note_name"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/note_edit_cards"
+        app:layout_constraintEnd_toStartOf="@id/edit_cards_button"
         app:layout_constraintHorizontal_bias="0.0"
         app:flow_horizontalBias="0.0"
         tools:text="912 notes"
         />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/note_edit_cards"
+        android:id="@+id/edit_cards_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:icon="@drawable/ic_edit_note"
@@ -44,11 +44,11 @@
         android:contentDescription="@string/model_browser_template"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btn_more"
+        app:layout_constraintEnd_toStartOf="@+id/more_actions_button"
         />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_more"
+        android:id="@+id/more_actions_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:icon="@drawable/ic_more_vertical"
