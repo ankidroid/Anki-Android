@@ -17,17 +17,14 @@ package com.ichi2.anki.notetype
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.CheckBox
 import android.widget.PopupMenu
-import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.button.MaterialButton
 import com.ichi2.anki.R
+import com.ichi2.anki.databinding.ItemManageNoteTypeBinding
 import com.ichi2.anki.notetype.NoteTypesAdapter.NoteTypeViewHolder
 import com.ichi2.anki.utils.ext.usingStyledAttributes
 
@@ -53,7 +50,7 @@ private val notetypeNamesAndCountDiff =
     }
 
 internal class NoteTypesAdapter(
-    context: Context,
+    private val context: Context,
     private val onItemClick: (NoteTypeItemState) -> Unit,
     private val onItemLongClick: (NoteTypeItemState) -> Unit,
     private val onItemChecked: (NoteTypeItemState, Boolean) -> Unit,
@@ -76,7 +73,7 @@ internal class NoteTypesAdapter(
         viewType: Int,
     ): NoteTypeViewHolder =
         NoteTypeViewHolder(
-            rowView = layoutInflater.inflate(R.layout.item_manage_note_type, parent, false),
+            binding = ItemManageNoteTypeBinding.inflate(layoutInflater, parent, false),
             onDelete = onDelete,
             onRename = onRename,
             onEditCards = onEditCards,
@@ -93,39 +90,34 @@ internal class NoteTypesAdapter(
     }
 
     inner class NoteTypeViewHolder(
-        private val rowView: View,
+        private val binding: ItemManageNoteTypeBinding,
         onItemClick: (NoteTypeItemState) -> Unit,
         onItemLongClick: (NoteTypeItemState) -> Unit,
         onItemChecked: (NoteTypeItemState, Boolean) -> Unit,
         onEditCards: (NoteTypeItemState) -> Unit,
         onRename: (NoteTypeItemState) -> Unit,
         onDelete: (NoteTypeItemState) -> Unit,
-    ) : RecyclerView.ViewHolder(rowView) {
+    ) : RecyclerView.ViewHolder(binding.root) {
         private val selectableItemBackground: Int =
-            rowView.context.usingStyledAttributes(null, intArrayOf(android.R.attr.selectableItemBackground)) {
+            context.usingStyledAttributes(null, intArrayOf(android.R.attr.selectableItemBackground)) {
                 getResourceId(0, 0)
             }
         private val selectedNoteTypeBackground: Int =
-            rowView.context.usingStyledAttributes(null, intArrayOf(R.attr.currentDeckBackground)) {
+            context.usingStyledAttributes(null, intArrayOf(R.attr.currentDeckBackground)) {
                 getResourceId(0, 0)
             }
-        val name: TextView = rowView.findViewById(R.id.note_name)
-        val useCount: TextView = rowView.findViewById(R.id.note_use_count)
-        private val btnEditCards: MaterialButton = rowView.findViewById(R.id.note_edit_cards)
-        private val btnMoreActions: MaterialButton = rowView.findViewById(R.id.btn_more)
-        private val checkbox: CheckBox = rowView.findViewById(R.id.checkbox)
+
         private var noteTypeItemState: NoteTypeItemState? = null
-        private val resources = rowView.context.resources
 
         init {
-            rowView.setOnClickListener { noteTypeItemState?.let(onItemClick) }
-            rowView.setOnLongClickListener {
+            itemView.setOnClickListener { noteTypeItemState?.let(onItemClick) }
+            itemView.setOnLongClickListener {
                 noteTypeItemState?.let(onItemLongClick)
                 true
             }
-            btnEditCards.setOnClickListener { noteTypeItemState?.let(onEditCards) }
-            btnMoreActions.setOnClickListener {
-                PopupMenu(rowView.context, btnMoreActions)
+            binding.editCardsButton.setOnClickListener { noteTypeItemState?.let(onEditCards) }
+            binding.moreActionsButton.setOnClickListener {
+                PopupMenu(context, binding.moreActionsButton)
                     .apply {
                         inflate(R.menu.note_types_more_actions)
                         setOnMenuItemClickListener { item ->
@@ -138,21 +130,21 @@ internal class NoteTypesAdapter(
                         }
                     }.show()
             }
-            checkbox.setOnCheckedChangeListener { _, isChecked ->
+            binding.checkbox.setOnCheckedChangeListener { _, isChecked ->
                 noteTypeItemState?.let { onItemChecked(it, isChecked) }
             }
         }
 
         fun bind(state: NoteTypeItemState) {
             this.noteTypeItemState = state
-            rowView.setBackgroundResource(if (state.isSelected) selectedNoteTypeBackground else selectableItemBackground)
-            btnEditCards.isVisible = !isInMultiSelectMode
-            btnMoreActions.isVisible = !isInMultiSelectMode
-            checkbox.isVisible = isInMultiSelectMode
-            checkbox.isChecked = isInMultiSelectMode && state.isSelected
-            name.text = state.name
-            useCount.text =
-                resources.getQuantityString(
+            itemView.setBackgroundResource(if (state.isSelected) selectedNoteTypeBackground else selectableItemBackground)
+            binding.editCardsButton.isVisible = !isInMultiSelectMode
+            binding.moreActionsButton.isVisible = !isInMultiSelectMode
+            binding.checkbox.isVisible = isInMultiSelectMode
+            binding.checkbox.isChecked = isInMultiSelectMode && state.isSelected
+            binding.noteName.text = state.name
+            binding.noteUseCount.text =
+                context.resources.getQuantityString(
                     R.plurals.model_browser_of_type,
                     state.useCount,
                     state.useCount,
