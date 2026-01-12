@@ -68,7 +68,6 @@ import com.ichi2.anki.dialogs.tags.TagsDialogListener.Companion.ON_SELECTED_TAGS
 import com.ichi2.anki.dialogs.tags.TagsDialogListener.Companion.ON_SELECTED_TAGS__SELECTED_TAGS
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.DeckId
-import com.ichi2.anki.libanki.Tags
 import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.snackbar.showSnackbar
@@ -374,7 +373,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
 
                 // Get the value selected by user
                 val n =
-                    binding.detailsEditText2.textAsIntOrNull() ?: run {
+                    userInputValue ?: run {
                         Timber.w("Non-numeric user input was provided")
                         Timber.d("value: %s", binding.detailsEditText2.text.toString())
                         allowSubmit = true
@@ -423,8 +422,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
         }
 
         binding.detailsEditText2.doAfterTextChanged {
-            val num = binding.detailsEditText2.textAsIntOrNull()
-            dialog.positiveButton.isEnabled = num != null && num != 0
+            dialog.positiveButton.isEnabled = userInputValue != null && userInputValue != 0
         }
 
         // Show soft keyboard
