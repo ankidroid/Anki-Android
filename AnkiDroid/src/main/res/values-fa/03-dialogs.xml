@@ -260,4 +260,7 @@
     <string name="import_error_resolution_check_internet">مطمئن شوید که به اینترنت متصل هستید.</string>
     <string name="import_error_resolution_copy_to_device">فایل را در دستگاه خود کپی کنید و دوباره با فایل محلی امتحان کنید.</string>
     <string name="import_error_resolution_select_file">فایل را با استفاده از برنامه مرورگر فایل دستگاه خود باز کنید.</string>
+    <!-- Post-login dialog -->
+    <string name="login_successful">Login successful</string>
+    <string name="sync_now">Sync now?</string>
 </resources>

@@ -260,4 +260,7 @@
     <string name="import_error_resolution_check_internet">Comproba que hai conexión á internet</string>
     <string name="import_error_resolution_copy_to_device">Copia o ficheiro ao teu dispositivo e téntao de novo co ficheiro local</string>
     <string name="import_error_resolution_select_file">Abre o ficheiro co explorador de ficheiros do teu dispositivo</string>
+    <!-- Post-login dialog -->
+    <string name="login_successful">Login successful</string>
+    <string name="sync_now">Sync now?</string>
 </resources>
