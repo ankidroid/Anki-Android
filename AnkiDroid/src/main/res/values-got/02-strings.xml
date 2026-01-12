@@ -263,9 +263,12 @@
     <string name="create_shortcut_error">𐌰𐌹𐍂𐌶𐌴𐌹 𐍅𐌰𐍂𐌸 𐌱𐌹𐌰𐌿𐌺𐌰𐌽 𐌼𐌰𐌿𐍂𐌲𐌿𐍅𐌹𐌲: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">Capitalize sentences</string>
     <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll" maxLength="28">Scroll toolbar</string>
-    <!-- Symbols used as Button text in IncrementNumberRangePreference -->
+    <!-- IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
+    <string name="invalid_value" comment="Error message in IncrementerNumberRangePreference when input is not a valid number">Invalid value</string>
+    <string name="maximum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the maximum allowed value">Maximum value is %d</string>
+    <string name="minimum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the minimum allowed value">Minimum value is %d</string>
     <!-- Used for credential empty warning message -->
     <string name="invalid_email">𐌴-𐌼𐌴𐌻 𐍂𐌰𐌹𐌷𐍄 𐌼𐌴𐌻𐌾𐌰𐌽</string>
     <string name="password_empty">𐍂𐌿𐌽𐌰𐍅𐌰𐌿𐍂𐌳𐌹𐍃 𐌸𐌰𐌿𐍂𐍆𐍄 𐌹𐍃𐍄</string>
@@ -346,7 +349,6 @@
     <string name="format_deck_description_as_markdown">Format as Markdown</string>
     <string name="help_button_content_description">𐌷𐌹𐌻𐍀𐌰 𐍆𐌰𐌿𐍂 \'%s\' 𐌿𐍃𐌻𐌿𐌺𐌰𐌽</string>
     <string name="failed_to_copy">𐌽𐌹 𐌼𐌰𐌷𐍄𐌰 𐌲𐌰𐌲𐌰𐌻𐌴𐌹𐌺𐍉𐌽</string>
-    <string name="card_browser_unavailable_when_notes_mode">𐌽𐌹𐍃𐍄 𐌹𐌽 \'𐌲𐌰𐌼𐌴𐌻𐌴𐌹𐌽𐍉𐍃\' 𐌼𐍉𐌳𐌰𐌿</string>
     <plurals name="unbury_cards_feedback">
         <item quantity="one">%d 𐌺𐌰𐍂𐍄𐌰 𐌿𐌽𐌽𐌰𐍅𐌹𐍃𐍄𐍂𐍉𐌳𐌰</item>
         <item quantity="other">%d 𐌺𐌰𐍂𐍄𐍉𐍃 𐌿𐌽𐌽𐌰𐍅𐌹𐍃𐍄𐍂𐍉𐌳𐌰</item>

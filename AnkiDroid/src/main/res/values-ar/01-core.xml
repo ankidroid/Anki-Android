@@ -73,9 +73,9 @@
         <item quantity="other">%d دقيقة متبقية</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new" comment="Header of the reviewer, telling the users how many minutes remains before they have seen all cards. The second parameter is the number of minutes.">
-        <item quantity="zero">بقِيَت (%1$d) ساعة و(%2$d) دقيقة</item>
-        <item quantity="one">تبقى %1$d ساعة و%2$d دقيقة</item>
-        <item quantity="two">تبقى %1$d ساعة و%2$d دقيقة</item>
+        <item quantity="zero">بقيت (%1$d) ساعة و(%2$d) دقيقة</item>
+        <item quantity="one">بقيت %1$d ساعة و%2$d دقيقة</item>
+        <item quantity="two">بقيت %1$d ساعة و%2$d دقيقة</item>
         <item quantity="few">بقيت %1$d ساعات و%2$d دقيقة</item>
         <item quantity="many">بقيت %1$d ساعة و%2$d دقيقة</item>
         <item quantity="other">بقيت %1$d ساعة و%2$d دقيقة</item>

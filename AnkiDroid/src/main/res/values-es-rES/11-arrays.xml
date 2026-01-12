@@ -51,8 +51,8 @@
     <string name="add_to_deck_decide_by_note_type">Decidir por tipo de nota</string>
     <!-- theme labels -->
     <string name="theme_follow_system">Seguir sistema</string>
-    <string name="theme_day" comment="Day/Light theme color scheme">Day</string>
-    <string name="theme_night" comment="Night/Dark theme color scheme">Night</string>
+    <string name="theme_day" comment="Day/Light theme color scheme">Día</string>
+    <string name="theme_night" comment="Night/Dark theme color scheme">Noche</string>
     <!-- day_theme_labels -->
     <string name="day_theme_light">Claro</string>
     <string name="day_theme_plain">Simple</string>
@@ -81,8 +81,8 @@
     <string name="gesture_flag_turquoise" maxLength="41">Activar/desactivar marcador turquesa</string>
     <string name="gesture_flag_purple" maxLength="41">Activar/desactivar marcador morado</string>
     <string name="gesture_flag_remove" maxLength="41">Eliminar marcador</string>
-    <string name="gesture_page_up" maxLength="41">Page up</string>
-    <string name="gesture_page_down" maxLength="41">Page down</string>
+    <string name="gesture_page_up" maxLength="41">Página arriba</string>
+    <string name="gesture_page_down" maxLength="41">Página abajo</string>
     <string name="gesture_toggle_whiteboard" maxLength="41">Activar/desactivar pizarra</string>
     <string name="gesture_toggle_eraser" maxLength="41">Activar/desactivar borrador</string>
     <string name="gesture_show_hint" maxLength="41">Mostrar pista</string>

@@ -55,7 +55,7 @@
     <string name="CardEditorTags">標籤: %1$s</string>
     <string name="CardEditorCards">卡片：%1$s</string>
     <string name="edit_occlusions">編輯遮蔽</string>
-    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
+    <string name="paste_from_clipboard" maxLength="28">從剪貼簿貼上</string>
     <string name="tag_name">標籤名稱</string>
     <string name="add_new_filter_tags">新增/篩選標籤</string>
     <string name="add_tag" maxLength="28">新增標籤</string>
@@ -260,9 +260,12 @@
     <string name="create_shortcut_error">新增捷徑時發生錯誤：%s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">大寫句子</string>
     <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll" maxLength="28">滾動工具列</string>
-    <!-- Symbols used as Button text in IncrementNumberRangePreference -->
+    <!-- IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
+    <string name="invalid_value" comment="Error message in IncrementerNumberRangePreference when input is not a valid number">數值無效</string>
+    <string name="maximum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the maximum allowed value">Maximum value is %d</string>
+    <string name="minimum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the minimum allowed value">Minimum value is %d</string>
     <!-- Used for credential empty warning message -->
     <string name="invalid_email">請輸入有效的電郵</string>
     <string name="password_empty">密碼是必填項</string>
@@ -341,7 +344,6 @@
     <string name="format_deck_description_as_markdown">Format as Markdown</string>
     <string name="help_button_content_description">Open help for ‘%s’</string>
     <string name="failed_to_copy">複製失敗</string>
-    <string name="card_browser_unavailable_when_notes_mode">在「筆記」模式中不可用</string>
     <plurals name="unbury_cards_feedback">
         <item quantity="other">取消遮蓋了 %d 張卡片</item>
     </plurals>
