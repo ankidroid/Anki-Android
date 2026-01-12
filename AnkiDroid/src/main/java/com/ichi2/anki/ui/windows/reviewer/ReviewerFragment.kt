@@ -267,8 +267,6 @@ class ReviewerFragment :
 
                     binding.typeAnswerContainer.isVisible = true
                     binding.typeAnswerEditText.apply {
-                        inputType = chooseInputType(typeInAnswer)
-
                         if (imeHintLocales != typeInAnswer.imeHintLocales) {
                             imeHintLocales = typeInAnswer.imeHintLocales
                             context?.getSystemService<InputMethodManager>()?.restartInput(this)
@@ -300,15 +298,6 @@ class ReviewerFragment :
                 }
             }
     }
-
-    /** Chooses the input type based on whether the expected answer is a number or text */
-    @VisibleForTesting
-    fun chooseInputType(typeAnswer: TypeAnswer): Int =
-        if (stripHtml(typeAnswer.expectedAnswer).matches(Regex("^-?\\d+([.,]\\d*)?$"))) {
-            InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL or InputType.TYPE_NUMBER_FLAG_SIGNED
-        } else {
-            InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS
-        }
 
     private fun resetZoom() {
         webViewLayout.settings.loadWithOverviewMode = false

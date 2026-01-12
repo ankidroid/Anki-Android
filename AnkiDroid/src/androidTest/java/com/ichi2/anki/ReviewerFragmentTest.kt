@@ -121,55 +121,6 @@ class ReviewerFragmentTest : InstrumentedTest() {
         ensureAnswerButtonsAreDisplayed()
     }
 
-    @Test
-    fun testSelectedKeyboardType() {
-        setNewReviewer()
-        closeGetStartedScreenIfExists()
-        closeBackupCollectionDialogIfExists()
-
-        val inputTypeNumber =
-            InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL or InputType.TYPE_NUMBER_FLAG_SIGNED
-        val inputTypeText = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS
-
-        val testValues: List<Pair<String, Int>> =
-            listOf(
-                "123" to inputTypeNumber,
-                "-123.45" to inputTypeNumber,
-                "123.45" to inputTypeNumber,
-                "123,45" to inputTypeNumber,
-                "<b>123</b>" to inputTypeNumber,
-                "AnkiDroid" to inputTypeText,
-                "123abc" to inputTypeText,
-                "" to inputTypeText,
-            )
-
-        testValues.forEachIndexed { index, (typedAnswer, _) ->
-            addTypedAnswerNote(answer = typedAnswer).firstCard(col).update {
-                did = col.decks.id("Default$index")
-            }
-        }
-
-        // Check decks after adding all notes to ensure that the deck list is updated with the new cards
-        testValues.forEachIndexed { index, (_, expectedInputType) ->
-            // Ensures that we are in the deckpicker screen to make reviewDeckWithName work
-            if (index > 0) onView(withId(R.id.back_button)).perform(click())
-            checkInputType(expectedInputType, index)
-        }
-    }
-
-    fun checkInputType(
-        expectedInputType: Int,
-        index: Int,
-    ) {
-        reviewDeckWithName("Default$index")
-        ensureKeyboardIsDisplayed()
-        onView(withId(R.id.type_answer_edit_text)).check { view, _ ->
-            val editText = view as TextInputEditText
-            val inputType = editText.inputType
-            assertThat(inputType, equalTo(expectedInputType))
-        }
-    }
-
     private fun clickShowAnswerAndAnswerGood() {
         clickShowAnswer()
         ensureAnswerButtonsAreDisplayed()
@@ -178,14 +129,6 @@ class ReviewerFragmentTest : InstrumentedTest() {
 
     private fun clickShowAnswer() {
         onView(withId(R.id.show_answer_button)).perform(click())
-    }
-
-    private fun ensureKeyboardIsDisplayed() {
-        onView(withId(R.id.type_answer_edit_text)).checkWithTimeout(
-            matches(isDisplayed()),
-            100,
-            30.seconds.inWholeMilliseconds,
-        )
     }
 
     private fun ensureAnswerButtonsAreDisplayed() {
