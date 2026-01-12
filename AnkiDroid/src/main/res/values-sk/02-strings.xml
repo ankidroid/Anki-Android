@@ -43,7 +43,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Otvoriť lištu</string>
     <string name="drawer_close">Zavrieť lištu</string>
@@ -197,8 +197,6 @@
     <string name="select_tts" maxLength="28">Nastaviť jazyk TTS (text na reč)</string>
     <string name="custom_study" maxLength="28">Vlastné štúdium</string>
     <string name="dyn_deck_desc">Toto je špeciálny balíček na štúdium mimo bežného plánu. Kartičky sa automaticky vrátia do svojich pôvodných balíčkov po tom, čo si ich zopakujete. Odstránením tohto balíčku zo zoznamu balíčkov sa všetky zostávajúce kartičky vrátia do svojich pôvodných balíčkov.</string>
-    <string name="steps_error">Kroky musia byť čísla väčšie ako 0</string>
-    <string name="steps_min_error">Je nutné zadať aspoň jeden krok</string>
     <string name="tag_editor_add_feedback">Ťuknite “%2$s” pre potvrdenie pridania “%1$s”</string>
     <string name="tag_editor_add_feedback_existing">Existujúci štítok “%1$s” zvolený</string>
     <!-- Time spans -->

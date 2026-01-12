@@ -43,7 +43,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Atidaryti meniu</string>
     <string name="drawer_close">Uždaryti meniu</string>
@@ -197,8 +197,6 @@
     <string name="select_tts" maxLength="28">Nustatyti skaitymo balsu kalbą</string>
     <string name="custom_study" maxLength="28">Individualus mokymasis</string>
     <string name="dyn_deck_desc">Tai yra specialus rinkinys, skirtas mokytis papildomai. Peržiūrėjus korteles, jos bus automatiškai grąžintos į savo pagrindinius rinkinius. Ištrynus šį rinkinį iš sąrašo, visos kortelės bus grąžintos į savo pradinį rinkinį.</string>
-    <string name="steps_error">Veiksmų skaičius privalo būti didesnis už 0</string>
-    <string name="steps_min_error">Reikia nurodyti bent vieną veiksmą</string>
     <string name="tag_editor_add_feedback">Norėdami pridėti „%1$s“, spauskite „%2$s“</string>
     <string name="tag_editor_add_feedback_existing">Pasirinkta esama žymė „%1$s“</string>
     <!-- Time spans -->

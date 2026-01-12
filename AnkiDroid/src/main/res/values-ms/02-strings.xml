@@ -43,7 +43,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Buka laci</string>
     <string name="drawer_close">Tutup laci</string>
@@ -188,8 +188,6 @@
     <string name="select_tts" maxLength="28">Tetapkan bahasa TTS</string>
     <string name="custom_study" maxLength="28">Ulang kaji tersuai</string>
     <string name="dyn_deck_desc">Ini merupakan dek khas untuk mengulang kaji diluar jadual biasa. Kad akan dikembalikan ke dek asal setelah disemak. Memadam dek ini daripada senarai dek akan mengembalikan baki kad ke dek asal.</string>
-    <string name="steps_error">Setiap langkah hendaklah lebih besar daripada 0</string>
-    <string name="steps_min_error">Sekurang-kurangnya satu langkah diperlukan</string>
     <string name="tag_editor_add_feedback">Sentuh “%2$s” untuk sahkan tambah “%1$s”</string>
     <string name="tag_editor_add_feedback_existing">Tag “%1$s” sedia ada dipilih</string>
     <!-- Time spans -->

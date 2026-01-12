@@ -43,7 +43,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Ḍrŏvara ughaḍā</string>
     <string name="drawer_close">Ḍrŏvara banda karā</string>
@@ -191,8 +191,6 @@
     <string name="select_tts" maxLength="28">TTS भाषा सेट करा</string>
     <string name="custom_study" maxLength="28">सानुकूल अभ्यास</string>
     <string name="dyn_deck_desc">सामान्य शेड्यूलच्या बाहेर अभ्यास करण्यासाठी हा एक विशेष डेक आहे. तुम्ही त्यांचे पुनरावलोकन केल्यानंतर कार्डे आपोआप त्यांच्या मूळ डेकवर परत येतील. डेक सूचीमधून हा डेक हटवल्याने उर्वरित सर्व कार्ड त्यांच्या मूळ डेकवर परत येतील.</string>
-    <string name="steps_error">पायऱ्यांची संख्या 0 पेक्षा मोठी असणे आवश्यक आहे</string>
-    <string name="steps_min_error">किमान एक पाऊल आवश्यक आहे</string>
     <string name="tag_editor_add_feedback">\"%1$s\" जोडण्याची पुष्टी करण्यासाठी \"%2$s\" ला स्पर्श करा</string>
     <string name="tag_editor_add_feedback_existing">\"%1$s\" विद्यमान टॅग निवडला.</string>
     <!-- Time spans -->

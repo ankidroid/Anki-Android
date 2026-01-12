@@ -43,7 +43,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Navigation drawer strings -->
     <string name="drawer_open">दराज़ खोलें</string>
     <string name="drawer_close">दराज़ बंद करें</string>
@@ -191,8 +191,6 @@
     <string name="select_tts" maxLength="28">टीटीएस भाषा सेट करता है</string>
     <string name="custom_study" maxLength="28">कस्टम अध्ययन</string>
     <string name="dyn_deck_desc">यह सामान्य समय के बाहर अध्ययन करने के लिए एक विशेष डेक है। तुम उन की समीक्षा करने के बाद कार्ड स्वचालित रूप से उनके मूल डेक को लौट जाएगा। इस डेक डेक सूची से हटाने के सभी शेष कार्ड उनके मूल डेक करने के लिए वापस आ जाएगी।</string>
-    <string name="steps_error">कदम नंबर 0 से अधिक होना चाहिए</string>
-    <string name="steps_min_error">कम से कम एक कदम की आवश्यकता है</string>
     <string name="tag_editor_add_feedback">\"%1$s\" जोड़ने की पुष्टि करने के लिए \"%2$s\" स्पर्श करें</string>
     <string name="tag_editor_add_feedback_existing">मौजूदा टैग \"%1$s\" चयनित</string>
     <!-- Time spans -->

@@ -43,7 +43,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Open drawer</string>
     <string name="drawer_close">Close drawer</string>
@@ -194,8 +194,6 @@
     <string name="select_tts" maxLength="28">Set TTS language</string>
     <string name="custom_study" maxLength="28">Studiu personalizat</string>
     <string name="dyn_deck_desc">Acesta este un pachet special pentru a studia în afara programului normal. cardurile vor fi returnate automat la pachetele lor originale după ce le revizuiti. Şterge aceast pachet din lista de pachete va returna toate cărțile rămase in pachetele lor originale.</string>
-    <string name="steps_error">Măsurile trebuie să fie numere mai mari decât 0</string>
-    <string name="steps_min_error">Cel puțin un pas este necesar</string>
     <string name="tag_editor_add_feedback">Touch “%2$s” to confirm adding “%1$s”</string>
     <string name="tag_editor_add_feedback_existing">Existing tag “%1$s” selected</string>
     <!-- Time spans -->

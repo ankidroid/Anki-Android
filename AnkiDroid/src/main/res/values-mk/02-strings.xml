@@ -43,7 +43,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Отвори фиока</string>
     <string name="drawer_close">Затфори фиока</string>
@@ -192,8 +192,6 @@
     <string name="select_tts" maxLength="28">Поставете го јазикот на TTS</string>
     <string name="custom_study" maxLength="28">Прилагодено студија</string>
     <string name="dyn_deck_desc">Ова е специјална палуба за студирање надвор од секојдневен распоред. Картичките автоматски ќе бидат вратени на нивните палуби откако ќе ги прегледате. Бришењето на овој пабула од листата на палуби ќе ги врати сите останати картички во нивната оригинална палуба.</string>
-    <string name="steps_error">Чекорите мора да бидат броеви поголеми од 0</string>
-    <string name="steps_min_error">Најмалку еден чекор е потребен</string>
     <string name="tag_editor_add_feedback">Допрете \"%2$s\" за да потврдите додавање \"%1$s\"</string>
     <string name="tag_editor_add_feedback_existing">Избрана е постоечка ознака \"%1$s\"</string>
     <!-- Time spans -->

@@ -43,7 +43,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Maak laai oop</string>
     <string name="drawer_close">Maak laai toe</string>
@@ -191,8 +191,6 @@
     <string name="select_tts" maxLength="28">Stel TTS-taal</string>
     <string name="custom_study" maxLength="28">Gepasmaakte studie</string>
     <string name="dyn_deck_desc">Dit is \'n spesiale dek vir studie buite die normale skedule. Kaartjies sal outomaties na hul oorspronklike dekke teruggestuur word nadat jy dit hersien het. Die verwydering van hierdie dek uit die deklys sal alle oorblywende kaartjies na hul oorspronklike dek terugstuur.</string>
-    <string name="steps_error">Stappe moet getalle groter as 0 wees</string>
-    <string name="steps_min_error">Ten minste een stap is nodig</string>
     <string name="tag_editor_add_feedback">Raak \"%2$s\" aan om \"%1$s\" by te voeg</string>
     <string name="tag_editor_add_feedback_existing">Bestaande etiket “%1$s” gekies</string>
     <!-- Time spans -->
