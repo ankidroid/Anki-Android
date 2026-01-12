@@ -85,7 +85,7 @@ class DrawingFragment : Fragment(R.layout.drawing_fragment) {
         val canvas = Canvas(bitmap)
 
         val backgroundColor =
-            if (Themes.currentTheme.isNightMode) {
+            if (Themes.isNightTheme) {
                 Color.BLACK
             } else {
                 Color.WHITE

@@ -16,8 +16,9 @@
 package com.ichi2.utils
 
 import android.os.Bundle
-import com.ichi2.utils.BundleUtils.getNullableLong
-import com.ichi2.utils.BundleUtils.requireLong
+import com.ichi2.anki.utils.ext.getLongOrNull
+import com.ichi2.anki.utils.ext.requireBoolean
+import com.ichi2.anki.utils.ext.requireLong
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Assert.assertEquals
@@ -39,7 +40,7 @@ class BundleUtilsTest {
 
         whenever(b.containsKey(anyString())).thenReturn(false)
 
-        val value = b.getNullableLong(KEY)
+        val value = b.getLongOrNull(KEY)
 
         verify(b, times(0)).getLong(eq(KEY))
 
@@ -55,7 +56,7 @@ class BundleUtilsTest {
 
         whenever(b.getLong(anyString())).thenReturn(expected)
 
-        val value = b.getNullableLong(KEY)
+        val value = b.getLongOrNull(KEY)
 
         verify(b).getLong(eq(KEY))
 

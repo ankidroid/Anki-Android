@@ -8,6 +8,7 @@ plugins {
     alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.keeper)
+    alias(libs.plugins.roborazzi)
     id 'idea'
 }
 
@@ -88,9 +89,9 @@ android {
         //
         // This ensures the correct ordering between the various types of releases (dev < alpha < beta < release) which is
         // needed for upgrades to be offered correctly.
-        versionCode=22400100
+        versionCode=22400102
         // If you change this to a new version, you probably also want to update .gradle/workflows/milestone.yml for the new version...
-        versionName="2.24.0alpha0"
+        versionName="2.24.0alpha2"
         minSdk = libs.versions.minSdk.get().toInteger()
 
         // After #13695: change .tests_emulator.yml
@@ -404,8 +405,8 @@ dependencies {
         localProperties.load(project.rootProject.file('local.properties').newDataInputStream())
     }
     if (localProperties['local_backend'] == "true") {
-        implementation files("../../Anki-Android-Backend/rsdroid/build/outputs/aar/rsdroid-release.aar")
-        testImplementation files("../../Anki-Android-Backend/rsdroid-testing/build/libs/rsdroid-testing.jar")
+        implementation(files(rootProject.file("../Anki-Android-Backend/rsdroid/build/outputs/aar/rsdroid-release.aar")))
+        testImplementation(files(rootProject.file("../Anki-Android-Backend/rsdroid-testing/build/libs/rsdroid-testing.jar")))
     } else {
         implementation libs.ankiBackend.backend
         testImplementation libs.ankiBackend.testing
@@ -467,6 +468,8 @@ dependencies {
         exclude module: "protobuf-lite"
     }
     testImplementation libs.androidx.work.testing
+    testImplementation libs.roborazzi
+    testImplementation libs.roborazzi.rule
     // for testing flows
     testImplementation libs.cashapp.turbine
 

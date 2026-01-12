@@ -26,7 +26,6 @@ import android.widget.EditText
 import androidx.core.content.withStyledAttributes
 import androidx.preference.EditTextPreference
 import androidx.preference.EditTextPreferenceDialogFragmentCompat
-import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.utils.getFormattedStringOrPlurals
@@ -49,8 +48,10 @@ open class NumberRangePreferenceCompat
             private set
 
         init {
-            min = attrs?.getAttributeIntValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "min", 0) ?: 0
-            max = attrs?.getAttributeIntValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "max", Int.MAX_VALUE) ?: Int.MAX_VALUE
+            context.withStyledAttributes(attrs, R.styleable.NumberRangePreferenceCompat) {
+                min = getInt(R.styleable.NumberRangePreferenceCompat_min, 0)
+                max = getInt(R.styleable.NumberRangePreferenceCompat_max, Int.MAX_VALUE)
+            }
             defaultValue = attrs?.getAttributeValue("http://schemas.android.com/apk/res/android", "defaultValue")
 
             context.withStyledAttributes(attrs, R.styleable.CustomPreference) {
@@ -124,7 +125,7 @@ open class NumberRangePreferenceCompat
         private fun getDefaultValue(): Int {
             return try {
                 return defaultValue?.toInt() ?: min
-            } catch (e: Exception) {
+            } catch (_: Exception) {
                 min
             }
         }

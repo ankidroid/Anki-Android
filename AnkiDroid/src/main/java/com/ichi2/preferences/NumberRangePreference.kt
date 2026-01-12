@@ -20,7 +20,7 @@ import android.text.InputFilter.LengthFilter
 import android.text.InputType
 import android.util.AttributeSet
 import android.view.View
-import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.R
 import timber.log.Timber
 
 @Suppress(
@@ -115,7 +115,9 @@ open class NumberRangePreference :
      * This method should only be called once from the constructor.
      */
     private fun getMinFromAttributes(attrs: AttributeSet?): Int =
-        attrs?.getAttributeIntValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "min", 0) ?: 0
+        context.obtainStyledAttributes(attrs, R.styleable.NumberRangePreference).use {
+            it.getInt(R.styleable.NumberRangePreference_min, 0)
+        }
 
     /**
      * Returns the value of the max attribute, or its default value if not specified
@@ -124,8 +126,9 @@ open class NumberRangePreference :
      * This method should only be called once from the constructor.
      */
     private fun getMaxFromAttributes(attrs: AttributeSet?): Int =
-        attrs?.getAttributeIntValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "max", Int.MAX_VALUE)
-            ?: Int.MAX_VALUE
+        context.obtainStyledAttributes(attrs, R.styleable.NumberRangePreference).use {
+            it.getInt(R.styleable.NumberRangePreference_max, Int.MAX_VALUE)
+        }
 
     /**
      * Update settings to only allow integer input and set the maximum number of digits allowed in the text field based

@@ -41,7 +41,7 @@ import com.ichi2.anki.cardviewer.Gesture.TAP_TOP_LEFT
 import com.ichi2.anki.cardviewer.Gesture.TAP_TOP_RIGHT
 import com.ichi2.anki.cardviewer.GestureListener
 import com.ichi2.anki.cardviewer.TapGestureMode
-import com.ichi2.anki.databinding.GestureDisplayBinding
+import com.ichi2.anki.databinding.ViewGestureDisplayBinding
 import com.ichi2.anki.settings.Prefs
 import timber.log.Timber
 
@@ -59,7 +59,7 @@ class GestureDisplay
         attributeSet: AttributeSet? = null,
         defStyleAttr: Int = 0,
     ) : ConstraintLayout(context, attributeSet, defStyleAttr) {
-        private val binding = GestureDisplayBinding.inflate(LayoutInflater.from(context), this)
+        private val binding = ViewGestureDisplayBinding.inflate(LayoutInflater.from(context), this)
 
         /** Converts a touch event into a call to [setGesture] */
         private val detector: GestureDetector
@@ -154,7 +154,7 @@ class GestureDisplay
          * Maps from a [Gesture] to an [ImageView].
          * @return The associated [ImageView], or null if input is null, or isn't a tap gesture
          */
-        private fun GestureDisplayBinding.tapGestureToView(gesture: Gesture?): ImageView? =
+        private fun ViewGestureDisplayBinding.tapGestureToView(gesture: Gesture?): ImageView? =
             when (gesture) {
                 TAP_TOP_LEFT -> topLeft
                 TAP_TOP -> topCenter

@@ -180,7 +180,14 @@ class DeckPickerViewModel :
 
     // HACK: dismiss a legacy progress bar
     // TODO: Replace with better progress handling for first load/corrupt collections
-    val flowOfDecksReloaded = MutableSharedFlow<Unit>(extraBufferCapacity = 1)
+    // This MutableSharedFlow has replay=1 due to a race condition between its collector being started
+    // and a possible early emission that occurs when the user is on a metered network and a dialog has to show up
+    // to ask the user if they want to trigger a sync. Normally, the spinning progress indicator is
+    // dismissed via an emission to this flow after the sync is completed, but if the metered network
+    // warning dialog appears, we should immediately refresh the UI in case the user decides not to sync.
+    // Otherwise, the progress indicator remains indefinitely. This replay=1 ensures that the collector will
+    // receive the dismissal event even if it starts after the emission.
+    val flowOfDecksReloaded = MutableSharedFlow<Unit>(extraBufferCapacity = 1, replay = 1)
 
     /**
      * Deletes the provided deck, child decks. and all cards inside.

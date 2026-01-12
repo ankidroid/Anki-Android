@@ -17,15 +17,14 @@ package com.ichi2.anki.previewer
 
 import android.os.Parcelable
 import androidx.annotation.CheckResult
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewmodel.initializer
-import androidx.lifecycle.viewmodel.viewModelFactory
+import androidx.lifecycle.SavedStateHandle
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.NotetypeFile
 import com.ichi2.anki.asyncIO
 import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.libanki.Card
+import com.ichi2.anki.libanki.CardOrdinal
 import com.ichi2.anki.libanki.Consts.DEFAULT_DECK_ID
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.Note
@@ -34,6 +33,7 @@ import com.ichi2.anki.libanki.NotetypeJson
 import com.ichi2.anki.libanki.clozeNumbersInNote
 import com.ichi2.anki.pages.AnkiServer
 import com.ichi2.anki.reviewer.CardSide
+import com.ichi2.anki.utils.ext.require
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -43,24 +43,23 @@ import org.intellij.lang.annotations.Language
 import org.jetbrains.annotations.VisibleForTesting
 
 class TemplatePreviewerViewModel(
-    arguments: TemplatePreviewerArguments,
-) : CardViewerViewModel() {
-    private val notetype = arguments.notetype
-    private val fillEmpty = arguments.fillEmpty
-    private val isCloze = notetype.isCloze
+    savedStateHandle: SavedStateHandle,
+) : CardViewerViewModel(savedStateHandle) {
+    private val notetype: NotetypeJson
+    private val fillEmpty: Boolean
+    private val isCloze: Boolean
 
     /**
-     * identifies which of the card templates or cloze deletions it corresponds to
-     * * for card templates, values are from 0 to the number of templates minus 1
-     * * for cloze deletions, values are from 0 to max cloze index minus 1
+     * Identifies which of the card templates or cloze deletions it corresponds to
+     *
+     * @see CardOrdinal
      */
     @VisibleForTesting
-    val ordFlow = MutableStateFlow(arguments.ord)
+    val ordFlow: MutableStateFlow<CardOrdinal>
 
-    @Suppress("JoinDeclarationAndAssignment")
     private val note: Deferred<Note>
     private val templateNames: Deferred<List<String>>
-    private val clozeOrds: Deferred<List<Int>>?
+    private val clozeOrds: Deferred<List<CardOrdinal>>?
     override var currentCard: Deferred<Card>
     override val server = AnkiServer(this).also { it.start() }
 
@@ -70,6 +69,12 @@ class TemplatePreviewerViewModel(
     internal val cardsWithEmptyFronts: Deferred<List<Boolean>>?
 
     init {
+        val arguments = savedStateHandle.require<TemplatePreviewerArguments>(TemplatePreviewerFragment.ARGS_KEY)
+        notetype = arguments.notetype
+        fillEmpty = arguments.fillEmpty
+        isCloze = notetype.isCloze
+        ordFlow = MutableStateFlow(arguments.ord)
+
         note =
             asyncIO {
                 withCol {
@@ -203,7 +208,7 @@ class TemplatePreviewerViewModel(
             ordFlow.value
         }
 
-    suspend fun getSafeClozeOrd(): Int = ordFlow.value.coerceIn(0, clozeOrds!!.await().size - 1)
+    suspend fun getSafeClozeOrd(): CardOrdinal = ordFlow.value.coerceIn(0, clozeOrds!!.await().size - 1)
 
     fun updateContent(
         fields: List<String>,
@@ -262,23 +267,12 @@ class TemplatePreviewerViewModel(
     companion object {
         @Language("HTML")
         private const val EMPTY_FRONT_LINK = """<a href='https://docs.ankiweb.net/templates/errors.html#front-of-card-is-blank'>"""
-
-        fun factory(arguments: TemplatePreviewerArguments): ViewModelProvider.Factory =
-            viewModelFactory {
-                initializer {
-                    TemplatePreviewerViewModel(arguments)
-                }
-            }
     }
 }
 
 /**
  * @param id id of the note. Use 0 for non-created notes.
- *
- * @param ord identifies which of the card templates or cloze deletions it corresponds to
- * * for card templates, values are from 0 to the number of templates minus 1
- * * for cloze deletions, values are from 0 to max cloze index minus 1
- *
+ * @param ord See [CardOrdinal]
  * @param fillEmpty if blank fields should be replaced with placeholder content
  */
 @Parcelize
@@ -287,7 +281,7 @@ data class TemplatePreviewerArguments(
     val fields: List<String>,
     val tags: List<String>,
     val id: NoteId = 0,
-    val ord: Int = 0,
+    val ord: CardOrdinal = 0,
     val fillEmpty: Boolean = false,
     val deckId: DeckId = DEFAULT_DECK_ID,
 ) : Parcelable {

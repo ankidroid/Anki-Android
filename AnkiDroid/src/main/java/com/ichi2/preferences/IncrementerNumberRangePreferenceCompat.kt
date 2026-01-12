@@ -25,8 +25,10 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.LinearLayout
+import androidx.core.widget.doAfterTextChanged
 import com.ichi2.anki.R
 import com.ichi2.utils.moveCursorToEnd
+import com.ichi2.utils.positiveButton
 
 /** Marker class to be used in preferences */
 class IncrementerNumberRangePreferenceCompat :
@@ -51,6 +53,11 @@ class IncrementerNumberRangePreferenceCompat :
 
     class IncrementerNumberRangeDialogFragmentCompat : NumberRangeDialogFragmentCompat() {
         private var lastValidEntry = 0
+        private lateinit var incrementButton: Button
+        private lateinit var decrementButton: Button
+
+        // Reference to the system OK button
+        private var positiveButton: Button? = null
 
         /**
          * Sets [.mEditText] width and gravity.
@@ -76,6 +83,20 @@ class IncrementerNumberRangePreferenceCompat :
             editText.layoutParams = editTextParams
             // Centre text inside mEditText
             editText.gravity = Gravity.CENTER_HORIZONTAL
+
+            // Validate the final value, not individual character changes
+            editText.doAfterTextChanged { updateButtonState() }
+
+            // Initial check to set correct button states on open
+            updateButtonState()
+        }
+
+        override fun onStart() {
+            super.onStart()
+            positiveButton = (dialog as? androidx.appcompat.app.AlertDialog)?.positiveButton
+
+            // Rerun validation now that we have the OK button reference
+            updateButtonState()
         }
 
         /**
@@ -86,8 +107,8 @@ class IncrementerNumberRangePreferenceCompat :
         override fun onCreateDialogView(context: Context): View {
             val linearLayout = LinearLayout(context)
 
-            val incrementButton = Button(context)
-            val decrementButton = Button(context)
+            incrementButton = Button(context)
+            decrementButton = Button(context)
             val dialogView = super.onCreateDialogView(context)!!
             val editText: EditText = dialogView.findViewById(android.R.id.edit)
             (editText.parent as ViewGroup).removeView(editText)
@@ -133,7 +154,84 @@ class IncrementerNumberRangePreferenceCompat :
             lastValidEntry = numberRangePreference.getValidatedRangeFromInt(value)
             editText.setText(lastValidEntry.toString())
             editText.moveCursorToEnd()
+
+            updateButtonState()
         }
+
+        /**
+         * Validates the current input and updates the state of buttons
+         *
+         * Displays specific error messages for overflow and range limits
+         */
+        private fun updateButtonState() {
+            val text = editText.text.toString()
+            val value = text.toIntOrNull()
+
+            val result = validate(text, value, numberRangePreference.min, numberRangePreference.max)
+
+            incrementButton.isEnabled = false
+            decrementButton.isEnabled = false
+            positiveButton?.isEnabled = false
+            editText.error = null
+
+            when (result) {
+                ValidationResult.VALID -> {
+                    positiveButton?.isEnabled = true
+                    // Even if valid, we might be at the edge of the range, so update +/- buttons
+                    if (value != null) {
+                        incrementButton.isEnabled = value < numberRangePreference.max
+                        decrementButton.isEnabled = value > numberRangePreference.min
+                    }
+                }
+                ValidationResult.OVERFLOW -> {
+                    decrementButton.isEnabled = true
+                    editText.error = getString(R.string.maximum_value_is, numberRangePreference.max)
+                }
+                ValidationResult.UNDERFLOW -> {
+                    incrementButton.isEnabled = true
+                    editText.error = getString(R.string.minimum_value_is, numberRangePreference.min)
+                }
+                ValidationResult.INVALID -> {
+                    editText.error = getString(R.string.invalid_value)
+                }
+                ValidationResult.EMPTY -> {
+                    // Empty input is invalid for submission, but doesn't warrant an error message yet
+                }
+            }
+        }
+    }
+
+    companion object {
+        enum class ValidationResult {
+            VALID,
+            INVALID,
+            EMPTY,
+            OVERFLOW,
+            UNDERFLOW,
+        }
+
+        /**
+         * Validation logic for the preference input.
+         *
+         * @param text The raw string from the EditText.
+         * @param value The parsed integer value (or null if parsing failed).
+         * @param min The minimum allowed value.
+         * @param max The maximum allowed value.
+         * @return A [ValidationResult] representing the state of the input.
+         */
+        fun validate(
+            text: String,
+            value: Int?,
+            min: Int,
+            max: Int,
+        ): ValidationResult =
+            when {
+                text.isEmpty() -> ValidationResult.EMPTY
+                value == null -> ValidationResult.INVALID
+                value > max -> ValidationResult.OVERFLOW
+                value < min -> ValidationResult.UNDERFLOW
+                else -> ValidationResult.VALID
+            }
     }
 
     override fun makeDialogFragment() = IncrementerNumberRangeDialogFragmentCompat()

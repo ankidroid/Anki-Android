@@ -272,24 +272,24 @@ class StudyOptionsFragment :
         try {
             // Switch on or off rebuild/empty/custom study depending on whether or not filtered deck
             if (col != null && col!!.decks.isFiltered(col!!.decks.selected())) {
-                menu.findItem(R.id.action_rebuild).isVisible = true
-                menu.findItem(R.id.action_empty).isVisible = true
-                menu.findItem(R.id.action_custom_study).isVisible = false
-                menu.findItem(R.id.action_deck_or_study_options).setTitle(R.string.menu__study_options)
+                menu.findItem(R.id.action_rebuild)?.isVisible = true
+                menu.findItem(R.id.action_empty)?.isVisible = true
+                menu.findItem(R.id.action_custom_study)?.isVisible = false
+                menu.findItem(R.id.action_deck_or_study_options)?.setTitle(R.string.menu__study_options)
             } else {
-                menu.findItem(R.id.action_rebuild).isVisible = false
-                menu.findItem(R.id.action_empty).isVisible = false
-                menu.findItem(R.id.action_custom_study).isVisible = true
-                menu.findItem(R.id.action_deck_or_study_options).setTitle(R.string.menu__deck_options)
+                menu.findItem(R.id.action_rebuild)?.isVisible = false
+                menu.findItem(R.id.action_empty)?.isVisible = false
+                menu.findItem(R.id.action_custom_study)?.isVisible = true
+                menu.findItem(R.id.action_deck_or_study_options)?.setTitle(R.string.menu__deck_options)
             }
             // Don't show custom study icon if congrats shown
             if (currentContentView == CONTENT_CONGRATS) {
-                menu.findItem(R.id.action_custom_study).isVisible = false
+                menu.findItem(R.id.action_custom_study)?.isVisible = false
             }
             // Use new review reminders system if enabled
-            menu.findItem(R.id.action_schedule_reminders).isVisible = Prefs.newReviewRemindersEnabled
+            menu.findItem(R.id.action_schedule_reminders)?.isVisible = Prefs.newReviewRemindersEnabled
             // Switch on or off unbury depending on if there are cards to unbury
-            menu.findItem(R.id.action_unbury).isVisible = col != null && col!!.sched.haveBuried()
+            menu.findItem(R.id.action_unbury)?.isVisible = col != null && col!!.sched.haveBuried()
         } catch (e: IllegalStateException) {
             if (!CollectionManager.isOpenUnsafe()) {
                 // This will allow a maximum of one invalidate menu attempt in order to workaround

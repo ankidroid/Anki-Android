@@ -47,7 +47,7 @@
     <!-- generic strings -->
     <string name="disabled">מבוטל</string>
     <plurals name="pref_summ_minutes">
-        <item quantity="one">דקה %d</item>
+        <item quantity="one">דקה אחת</item>
         <item quantity="two">%d דקות</item>
         <item quantity="many">%d דקות</item>
         <item quantity="other">%d דקות</item>
@@ -79,8 +79,8 @@
     <string name="reset_languages_summ">אפס משימות השפה (לטקסט לדיבור ולמילונים) לכל החפיסות</string>
     <string name="reset_languages_question">לאפס את כל מטלות השפה?</string>
     <string name="reset_confirmation">כל המצבים אופסו</string>
-    <string name="card_zoom" maxLength="41">התמקדות על קלף</string>
-    <string name="image_zoom" maxLength="41">הגדלת תצוגת התמונות</string>
+    <string name="card_zoom" maxLength="41">זום כרטיס</string>
+    <string name="image_zoom" maxLength="41">זום תמונה</string>
     <string name="button_size" maxLength="41">גודל כפתורי התשובה</string>
     <string name="card_browser_font_size" maxLength="41">קנה מידה להגדלת גופן הקלפים</string>
     <string name="card_browser_hide_media" maxLength="41">הצגת שמות הקבצים בדפדפן הכרטיסים</string>
@@ -233,7 +233,7 @@
     <string name="bluetooth">בלוטות\'</string>
     <string name="answer_buttons" maxLength="41">כפתורי תשובות</string>
     <string name="card" maxLength="41" comment="Generic term to refer to a card">כרטיס</string>
-    <string name="note" maxLength="41">הערה</string>
+    <string name="note" maxLength="41">רשומה</string>
     <string name="navigation" maxLength="41">ניווט</string>
     <string name="media" maxLength="41">מדיה</string>
     <string name="misc" maxLength="41">אחר</string>
@@ -343,7 +343,7 @@
     </plurals>
     <!-- Delete unused media -->
     <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">מחק קבצי מדיה שאינם בשימוש</string>
-    <string name="pref__delete_unused_media_files__summary">מחק תמונות ומדיה אחרת שאין להן קידומת _ ואין להן התייחסות באמצעות הערות</string>
+    <string name="pref__delete_unused_media_files__summary">מחק תמונות ומדיה אחרת שאין להן קידומת _ ואין להן התייחסות באמצעות רשומות</string>
     <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">מחק קבצי מדיה שאינם בשימוש</string>
     <!-- Delete backups -->
     <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">מחק גיבויים</string>

@@ -101,9 +101,9 @@ import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.contextmenu.DeckPickerMenuContentProvider
 import com.ichi2.anki.contextmenu.MouseContextMenuHandler
+import com.ichi2.anki.databinding.ActivityHomescreenBinding
 import com.ichi2.anki.databinding.DeckPickerBinding
 import com.ichi2.anki.databinding.FloatingAddButtonBinding
-import com.ichi2.anki.databinding.HomescreenBinding
 import com.ichi2.anki.deckpicker.BITMAP_BYTES_PER_PIXEL
 import com.ichi2.anki.deckpicker.BackgroundImage
 import com.ichi2.anki.deckpicker.DeckDeletionResult
@@ -187,6 +187,7 @@ import com.ichi2.utils.ImportResult
 import com.ichi2.utils.ImportUtils
 import com.ichi2.utils.NetworkUtils
 import com.ichi2.utils.NetworkUtils.isActiveNetworkMetered
+import com.ichi2.utils.Permissions
 import com.ichi2.utils.VersionUtils
 import com.ichi2.utils.cancelable
 import com.ichi2.utils.checkBoxPrompt
@@ -253,7 +254,7 @@ open class DeckPicker :
     CollectionPermissionScreenLauncher {
     val viewModel: DeckPickerViewModel by viewModels()
 
-    private lateinit var binding: HomescreenBinding
+    private lateinit var binding: ActivityHomescreenBinding
 
     @VisibleForTesting
     internal val deckPickerBinding: DeckPickerBinding
@@ -500,11 +501,6 @@ open class DeckPicker :
         }
     }
 
-    private val notificationPermissionLauncher =
-        registerForActivityResult(ActivityResultContracts.RequestPermission()) {
-            Timber.i("notification permission: %b", it)
-        }
-
     // ----------------------------------------------------------------------------
     // ANDROID ACTIVITY METHODS
     // ----------------------------------------------------------------------------
@@ -519,7 +515,7 @@ open class DeckPicker :
         // Then set theme and content view
         super.onCreate(savedInstanceState)
 
-        binding = HomescreenBinding.inflate(layoutInflater)
+        binding = ActivityHomescreenBinding.inflate(layoutInflater)
 
         // handle the first load: display the app introduction
         // This screen is currently better equipped to handle errors than IntroductionActivity
@@ -1446,9 +1442,10 @@ open class DeckPicker :
     fun refreshState() {
         // Due to the App Introduction, this may be called before permission has been granted.
         if (syncOnResume && hasCollectionStoragePermissions()) {
-            Timber.i("Performing Sync on Resume")
-            sync()
             syncOnResume = false
+            Timber.i("Performing Sync on Resume")
+            Permissions.requestNotificationPermissionsForSyncing(this)
+            sync()
         } else {
             selectNavigationItem(R.id.nav_decks)
             updateDeckList()
@@ -2023,8 +2020,6 @@ open class DeckPicker :
      * from the mSyncConflictResolutionListener if the first attempt determines that a full-sync is required.
      */
     override fun sync(conflict: ConflictResolution?) {
-        val preferences = baseContext.sharedPrefs()
-
         val hkey = Prefs.hkey
         if (hkey.isNullOrEmpty()) {
             Timber.w("User not logged in")
@@ -2032,8 +2027,6 @@ open class DeckPicker :
             showSyncErrorDialog(SyncErrorDialog.Type.DIALOG_USER_NOT_LOGGED_IN_SYNC)
             return
         }
-
-        AccountActivity.checkNotificationPermission(this, notificationPermissionLauncher)
 
         /** Nested function that makes the connection to
          * the sync server and starts syncing the data */
@@ -2050,6 +2043,7 @@ open class DeckPicker :
                     Prefs.allowSyncOnMeteredConnections = isCheckboxChecked
                 }
             }
+            refreshState()
         } else {
             doSync()
         }
@@ -2075,7 +2069,7 @@ open class DeckPicker :
     /**
      * Displays [StudyOptionsFragment] in a side panel on larger devices
      *
-     * @see [HomescreenBinding.studyoptionsFragment]
+     * @see [ActivityHomescreenBinding.studyoptionsFragment]
      *
      * @return whether the panel was shown
      */
@@ -2541,5 +2535,5 @@ private fun AnkiActivity.launchCatchingRequiringOneWaySync(block: suspend () -> 
         }
     }
 
-val HomescreenBinding.studyoptionsFrame: FragmentContainerView?
+val ActivityHomescreenBinding.studyoptionsFrame: FragmentContainerView?
     get() = studyoptionsFragment

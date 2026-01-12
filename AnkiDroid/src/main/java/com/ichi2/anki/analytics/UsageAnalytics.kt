@@ -491,6 +491,7 @@ object UsageAnalytics {
             R.string.automatic_sync_choice_key, // Automatic synchronization
             R.string.sync_status_badge_key, // Display synchronization status
             R.string.metered_sync_key, // Allow sync on metered connections
+            R.string.sync_io_timeout_secs_key, // Network timeout
             R.string.one_way_sync_key, // One-way sync
             // ******************************** Backup *************************************************
             R.string.pref_minutes_between_automatic_backups_key,

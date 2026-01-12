@@ -16,6 +16,7 @@
 
 package com.ichi2.anki
 
+import android.Manifest
 import android.content.Context
 import android.content.SharedPreferences
 import android.database.sqlite.SQLiteFullException
@@ -29,6 +30,7 @@ import com.ichi2.anki.exception.StorageAccessException
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService.setPreferencesUpToDate
 import com.ichi2.anki.servicelayer.ScopedStorageService.isLegacyStorage
+import com.ichi2.anki.ui.windows.permissions.NotificationsPermissionFragment
 import com.ichi2.anki.ui.windows.permissions.PermissionsFragment
 import com.ichi2.anki.ui.windows.permissions.PermissionsStartingAt30Fragment
 import com.ichi2.anki.ui.windows.permissions.PermissionsUntil29Fragment
@@ -213,6 +215,10 @@ enum class PermissionSet(
     EXTERNAL_MANAGER(listOf(Permissions.MANAGE_EXTERNAL_STORAGE), PermissionsStartingAt30Fragment::class.java),
 
     APP_PRIVATE(emptyList(), null),
+
+    /** Optional. */
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    NOTIFICATIONS(listOf(Manifest.permission.POST_NOTIFICATIONS), NotificationsPermissionFragment::class.java),
 }
 
 /**

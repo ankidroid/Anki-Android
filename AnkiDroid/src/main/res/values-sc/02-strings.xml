@@ -265,9 +265,12 @@
     <string name="create_shortcut_error">Errore annanghende s\'incurtzada: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">Pone in majùsculu sas fràsias</string>
     <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll" maxLength="28">Barra de iscurrimentu</string>
-    <!-- Symbols used as Button text in IncrementNumberRangePreference -->
+    <!-- IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
+    <string name="invalid_value" comment="Error message in IncrementerNumberRangePreference when input is not a valid number">Invalid value</string>
+    <string name="maximum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the maximum allowed value">Maximum value is %d</string>
+    <string name="minimum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the minimum allowed value">Minimum value is %d</string>
     <!-- Used for credential empty warning message -->
     <string name="invalid_email">Inserta un\'indiritzu de posta vàlidu</string>
     <string name="password_empty">Sa crae est netzessària</string>
@@ -348,7 +351,6 @@
     <string name="format_deck_description_as_markdown">Format as Markdown</string>
     <string name="help_button_content_description">Open help for ‘%s’</string>
     <string name="failed_to_copy">Còpia fallida</string>
-    <string name="card_browser_unavailable_when_notes_mode">No a disponimentu in sa modalidade ‘Notas’</string>
     <plurals name="unbury_cards_feedback">
         <item quantity="one">%d carta no interrada</item>
         <item quantity="other">%d cartas no interradas</item>

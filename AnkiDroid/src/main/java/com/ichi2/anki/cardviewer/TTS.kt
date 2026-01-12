@@ -24,6 +24,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.ReadText
 import com.ichi2.anki.backend.stripHTML
 import com.ichi2.anki.libanki.Card
+import com.ichi2.anki.libanki.CardOrdinal
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.TTSTag
 import com.ichi2.anki.libanki.template.TemplateFilters
@@ -47,7 +48,7 @@ class TTS {
     private fun getOrdUsingCardType(
         card: Card,
         col: Collection,
-    ): Int =
+    ): CardOrdinal =
         if (card.noteType(col).isCloze) {
             0
         } else {

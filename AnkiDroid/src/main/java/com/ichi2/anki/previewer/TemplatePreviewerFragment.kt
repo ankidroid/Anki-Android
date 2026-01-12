@@ -17,34 +17,31 @@ package com.ichi2.anki.previewer
 
 import android.os.Bundle
 import android.view.View
-import androidx.core.os.BundleCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.tabs.TabLayout
 import com.ichi2.anki.R
-import com.ichi2.anki.databinding.TemplatePreviewerBinding
+import com.ichi2.anki.databinding.FragmentTemplatePreviewerBinding
 import com.ichi2.anki.launchCatchingTask
+import com.ichi2.anki.libanki.CardOrdinal
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.utils.ext.doOnTabSelected
+import com.ichi2.anki.utils.ext.getIntOrNull
 import com.ichi2.anki.utils.ext.sharedPrefs
 import com.ichi2.anki.workarounds.SafeWebViewLayout
 import com.ichi2.themes.Themes
-import com.ichi2.utils.BundleUtils.getNullableInt
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import timber.log.Timber
 
 class TemplatePreviewerFragment :
-    CardViewerFragment(R.layout.template_previewer),
+    CardViewerFragment(R.layout.fragment_template_previewer),
     BaseSnackbarBuilderProvider {
-    override val viewModel: TemplatePreviewerViewModel by viewModels {
-        val arguments = BundleCompat.getParcelable(requireArguments(), ARGS_KEY, TemplatePreviewerArguments::class.java)!!
-        TemplatePreviewerViewModel.factory(arguments)
-    }
+    override val viewModel: TemplatePreviewerViewModel by viewModels()
 
-    lateinit var binding: TemplatePreviewerBinding
+    lateinit var binding: FragmentTemplatePreviewerBinding
 
     override val webViewLayout: SafeWebViewLayout get() = binding.webViewLayout
 
@@ -57,7 +54,7 @@ class TemplatePreviewerFragment :
     ) {
         // binding must be set before super.onViewCreated
         // as super.onViewCreated depends on webViewLayout, which depends on the binding
-        binding = TemplatePreviewerBinding.bind(view)
+        binding = FragmentTemplatePreviewerBinding.bind(view)
 
         super.onViewCreated(view, savedInstanceState)
 
@@ -76,9 +73,11 @@ class TemplatePreviewerFragment :
             binding.webViewContainer.elevation = 0F
         }
 
-        arguments?.getNullableInt(ARG_BACKGROUND_OVERRIDE_COLOR)?.let { color ->
+        arguments?.getIntOrNull(ARG_BACKGROUND_OVERRIDE_COLOR)?.let { color ->
             view.setBackgroundColor(color)
         }
+
+        binding.webViewContainer.setFrameStyle()
     }
 
     /**
@@ -147,7 +146,7 @@ class TemplatePreviewerFragment :
      *
      * @return The safe cloze ordinal number
      */
-    suspend fun getSafeClozeOrd(): Int = viewModel.getSafeClozeOrd()
+    suspend fun getSafeClozeOrd(): CardOrdinal = viewModel.getSafeClozeOrd()
 
     companion object {
         const val ARGS_KEY = "templatePreviewerArgs"

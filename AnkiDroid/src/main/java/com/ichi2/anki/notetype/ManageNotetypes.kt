@@ -177,7 +177,10 @@ class ManageNotetypes : AnkiActivity(R.layout.activity_manage_note_types) {
             val searchMenuItem =
                 findViewById<Toolbar>(R.id.toolbar).menu?.findItem(R.id.search_item)
             val searchView = searchMenuItem?.actionView as? AccessibleSearchView
-            searchView?.setQuery(state.searchQuery, false)
+            // Avoid resetting cursor position if query hasn't changed
+            if (searchView?.query.toString() != state.searchQuery) {
+                searchView?.setQuery(state.searchQuery, false)
+            }
         }
         binding.selectionToolbar.isVisible = state.isInMultiSelectMode
         val selectedCount = state.noteTypes.count { it.isSelected }

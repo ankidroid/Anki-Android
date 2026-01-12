@@ -27,9 +27,7 @@ import android.view.MenuItem
 import android.view.SubMenu
 import android.view.View
 import android.view.WindowManager
-import android.widget.BaseAdapter
 import android.widget.LinearLayout
-import android.widget.Spinner
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResult
@@ -68,7 +66,7 @@ import com.ichi2.anki.browser.registerFindReplaceHandler
 import com.ichi2.anki.browser.toCardBrowserLaunchOptions
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
-import com.ichi2.anki.databinding.CardBrowserBinding
+import com.ichi2.anki.databinding.ActivityCardBrowserBinding
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
 import com.ichi2.anki.dialogs.DiscardChangesDialog
 import com.ichi2.anki.dialogs.GradeNowDialog
@@ -137,13 +135,13 @@ open class CardBrowser :
 
     override var fragmented: Boolean
         get() = viewModel.isFragmented
-        set(value) {
+        set(_) {
             throw UnsupportedOperationException()
         }
 
     lateinit var viewModel: CardBrowserViewModel
 
-    private lateinit var binding: CardBrowserBinding
+    private lateinit var binding: ActivityCardBrowserBinding
 
     lateinit var cardBrowserFragment: CardBrowserFragment
 
@@ -165,14 +163,14 @@ open class CardBrowser :
         }
 
     // Dev option for Issue 18709
-    // TODO: Broken currently; needs R.layout.card_browser_searchview
+    // TODO: Broken currently; needs R.layout.activity_card_browser_searchview
     val useSearchView: Boolean
         get() = Prefs.devUsingCardBrowserSearchView
 
     @Suppress("unused")
     @get:LayoutRes
     private val layout: Int
-        get() = if (useSearchView) R.layout.card_browser_searchview else R.layout.card_browser
+        get() = if (useSearchView) R.layout.activity_card_browser_searchview else R.layout.activity_card_browser
 
     private var onEditCardActivityResult =
         registerForActivityResult(StartActivityForResult()) { result: ActivityResult ->
@@ -295,7 +293,7 @@ open class CardBrowser :
         }
         tagsDialogFactory = TagsDialogFactory(this).attachToActivity<TagsDialogFactory>(this)
         super.onCreate(savedInstanceState)
-        binding = CardBrowserBinding.inflate(layoutInflater)
+        binding = ActivityCardBrowserBinding.inflate(layoutInflater)
         if (!ensureStoragePermissions()) {
             return
         }
@@ -462,10 +460,6 @@ open class CardBrowser :
         }
     }
 
-    private fun refreshSubtitle() {
-        (findViewById<Spinner>(R.id.toolbar_spinner)?.adapter as? BaseAdapter)?.notifyDataSetChanged()
-    }
-
     @Suppress("UNUSED_PARAMETER")
     private fun setupFlows() {
         // provides a name for each flow receiver to improve stack traces
@@ -510,7 +504,6 @@ open class CardBrowser :
                 multiSelectOnBackPressedCallback.isEnabled = true
             } else {
                 Timber.d("end multiselect mode")
-                refreshSubtitle()
                 findViewById<TextView>(R.id.deck_name)?.isVisible = true
                 findViewById<TextView>(R.id.subtitle)?.isVisible = true
                 actionBarTitle?.visibility = View.GONE
@@ -520,11 +513,8 @@ open class CardBrowser :
             invalidateOptionsMenu()
         }
 
-        fun cardsUpdatedChanged(unit: Unit) = refreshSubtitle()
-
         fun searchStateChanged(searchState: SearchState) {
             Timber.d("search state: %s", searchState)
-            refreshSubtitle()
 
             when (searchState) {
                 Initializing -> { }
@@ -562,7 +552,6 @@ open class CardBrowser :
         viewModel.flowOfDeckId.launchCollectionInLifecycleScope(::onDeckIdChanged)
         viewModel.flowOfCanSearch.launchCollectionInLifecycleScope(::onCanSaveChanged)
         viewModel.flowOfMultiSelectModeChanged.launchCollectionInLifecycleScope(::onMultiSelectModeChanged)
-        viewModel.flowOfCardsUpdated.launchCollectionInLifecycleScope(::cardsUpdatedChanged)
         viewModel.flowOfSearchState.launchCollectionInLifecycleScope(::searchStateChanged)
         viewModel.cardSelectionEventFlow.launchCollectionInLifecycleScope(::onSelectedCardUpdated)
         viewModel.flowOfSaveSearchNamePrompt.launchCollectionInLifecycleScope(::onSaveSearchNamePrompt)
@@ -999,17 +988,6 @@ open class CardBrowser :
         }
     }
 
-    /**
-     * @return `false` if the user may proceed; `true` if a warning is shown due to being in [NOTES]
-     */
-    fun warnUserIfInNotesOnlyMode(): Boolean {
-        if (viewModel.cardsOrNotes != NOTES) return false
-        showSnackbar(R.string.card_browser_unavailable_when_notes_mode) {
-            setAction(R.string.error_handling_options) { cardBrowserFragment.showOptionsDialog() }
-        }
-        return true
-    }
-
     @NeedsTest("filter-marked query needs testing")
     @NeedsTest("filter-suspended query needs testing")
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -1200,7 +1178,6 @@ open class CardBrowser :
     private fun onSelectionChanged() {
         Timber.d("onSelectionChanged")
         updateMultiselectMenu()
-        refreshSubtitle()
     }
 
     /**
@@ -1247,7 +1224,6 @@ open class CardBrowser :
         // reload whole view
         forceRefreshSearch()
         viewModel.endMultiSelectMode(SingleSelectCause.Other)
-        refreshSubtitle()
         refreshMenuItems()
         invalidateOptionsMenu() // maybe the availability of undo changed
     }

@@ -263,9 +263,12 @@
     <string name="create_shortcut_error">ସର୍ଟ୍‌କଟ୍ ଯୋଡ଼ିବାରେ ତ୍ରୁଟି: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">ବାକ୍ୟଗୁଡ଼ିକରେ ବଡ଼ ଅକ୍ଷର କରିବା</string>
     <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll" maxLength="28">ସ୍କ୍ରୋଲ୍ ହେଉଥିବା ଉପକରଣ-ଦଣ୍ଡିକା</string>
-    <!-- Symbols used as Button text in IncrementNumberRangePreference -->
+    <!-- IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
+    <string name="invalid_value" comment="Error message in IncrementerNumberRangePreference when input is not a valid number">Invalid value</string>
+    <string name="maximum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the maximum allowed value">Maximum value is %d</string>
+    <string name="minimum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the minimum allowed value">Minimum value is %d</string>
     <!-- Used for credential empty warning message -->
     <string name="invalid_email">ଏକ ବୈଧ ଇମେଲ୍ ପ୍ରବେଶ କରନ୍ତୁ</string>
     <string name="password_empty">ପାସ୍‌ୱର୍ଡ଼ ଆଵଶ୍ୟକ ଅଟେ</string>
@@ -346,7 +349,6 @@
     <string name="format_deck_description_as_markdown">Format as Markdown</string>
     <string name="help_button_content_description">‘%s’ ପାଇଁ ସହାୟତା ଖୋଲିବା</string>
     <string name="failed_to_copy">Failed to copy</string>
-    <string name="card_browser_unavailable_when_notes_mode">‘ନୋଟ୍’ ମୋଡ୍ ରେ ଉପଲବ୍ଧ ନାହିଁ</string>
     <plurals name="unbury_cards_feedback">
         <item quantity="one">%d card unburied</item>
         <item quantity="other">%d cards unburied</item>

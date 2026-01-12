@@ -32,6 +32,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.canUserAccessDeck
 import com.ichi2.anki.common.annotations.LegacyNotifications
 import com.ichi2.anki.libanki.Decks
+import com.ichi2.anki.libanki.EpochMilliseconds
 import com.ichi2.anki.preferences.PENDING_NOTIFICATIONS_ONLY
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.reviewreminders.ReviewReminder
@@ -44,6 +45,7 @@ import com.ichi2.widget.WidgetStatus
 import net.ankiweb.rsdroid.BackendException
 import timber.log.Timber
 import kotlin.time.Duration
+import kotlin.time.Duration.Companion.days
 import kotlin.time.Duration.Companion.hours
 import kotlin.time.Duration.Companion.minutes
 import kotlin.time.Duration.Companion.seconds
@@ -94,6 +96,12 @@ class NotificationService : BroadcastReceiver() {
                 }
             }
 
+            // Cancel if the user wants notifications to only fire if no reviews have been done today AND there has been a review today
+            if (reviewReminder.onlyNotifyIfNoReviews && wasScopeReviewedToday(reviewReminder.scope)) {
+                Timber.i("Aborting notification due to onlyNotifyIfNoReviews")
+                return
+            }
+
             val dueCardsCount =
                 when (reviewReminder.scope) {
                     is ReviewReminderScope.Global -> withCol { sched.allDecksCounts() }
@@ -105,7 +113,7 @@ class NotificationService : BroadcastReceiver() {
                 }
             val dueCardsTotal = dueCardsCount.count()
             if (dueCardsTotal < reviewReminder.cardTriggerThreshold.threshold) {
-                Timber.d("Aborting notification due to threshold: $dueCardsTotal < ${reviewReminder.cardTriggerThreshold.threshold}")
+                Timber.i("Aborting notification due to threshold: $dueCardsTotal < ${reviewReminder.cardTriggerThreshold.threshold}")
                 return
             }
 
@@ -182,7 +190,7 @@ class NotificationService : BroadcastReceiver() {
 
             val manager = context.getSystemService<NotificationManager>()
             if (manager != null) {
-                Timber.d("Sending notification with ID ${reviewReminder.id.value}")
+                Timber.i("Sending notification with ID ${reviewReminder.id.value}")
                 manager.notify(REVIEW_REMINDER_NOTIFICATION_TAG, reviewReminder.id.value, builder.build())
             } else {
                 Timber.w("Failed to get NotificationManager system service, aborting review reminder notification")
@@ -213,6 +221,49 @@ class NotificationService : BroadcastReceiver() {
                 PendingIntent.FLAG_UPDATE_CURRENT,
                 false,
             )
+        }
+
+        /**
+         * Checks if a deck, or any decks, have been reviewed since the latest day cutoff.
+         * Used for the "only notify me if no reviews have been done today" review reminder feature.
+         */
+        private suspend fun wasScopeReviewedToday(scope: ReviewReminderScope): Boolean {
+            // Handles the global and deck-specific scope cases separately to avoid the need for string concatenation,
+            // thus protecting against SQL injection. Checks for existence rather than counting to increase efficiency.
+            val queryResult =
+                when (scope) {
+                    is ReviewReminderScope.Global ->
+                        withCol {
+                            val startOfToday: EpochMilliseconds = sched.dayCutoff * 1000 - 1.days.inWholeMilliseconds
+                            // For each card in the user's collection, retrieve and JOIN information about its review history
+                            // Then check if there exists at least one card with a review log entry after the start of today
+                            val query = """
+                        SELECT EXISTS (
+                            SELECT 1
+                            FROM cards
+                            JOIN revlog ON revlog.cid = cards.id
+                            WHERE revlog.id > ?
+                        )
+                    """
+                            db.queryScalar(query, startOfToday)
+                        }
+                    is ReviewReminderScope.DeckSpecific ->
+                        withCol {
+                            val startOfToday: EpochMilliseconds = sched.dayCutoff * 1000 - 1.days.inWholeMilliseconds
+                            // Essentially the same as above, but only check through cards with a deck ID matching the provided scope
+                            val query = """
+                        SELECT EXISTS (
+                            SELECT 1
+                            FROM cards
+                            JOIN revlog ON revlog.cid = cards.id
+                            WHERE revlog.id > ?
+                            AND cards.did = ?
+                        )
+                    """
+                            db.queryScalar(query, startOfToday, scope.did)
+                        }
+                }
+            return (queryResult == 1)
         }
 
         /** The id of the notification for due cards.  */

@@ -61,10 +61,12 @@ class ResizablePaneManager(
                             divider.context,
                             PointerIcon.TYPE_HORIZONTAL_DOUBLE_ARROW,
                         )
+                    divider.setBackgroundColor(dragColor)
                     true
                 }
                 MotionEvent.ACTION_HOVER_EXIT -> {
                     divider.pointerIcon = null
+                    divider.setBackgroundColor(idleColor)
                     true
                 }
                 else -> false

@@ -21,13 +21,13 @@ import android.view.LayoutInflater
 import android.view.animation.DecelerateInterpolator
 import androidx.annotation.DrawableRes
 import androidx.constraintlayout.widget.ConstraintLayout
-import com.ichi2.anki.databinding.AudioPlayViewBinding
+import com.ichi2.anki.databinding.ViewAudioPlayBinding
 
 /**
  * Simple player with a progress bar, a play button and a cancel button
  */
 class AudioPlayView : ConstraintLayout {
-    private val binding = AudioPlayViewBinding.inflate(LayoutInflater.from(context), this, true)
+    private val binding = ViewAudioPlayBinding.inflate(LayoutInflater.from(context), this, true)
 
     constructor(context: Context) : this(context, null, 0, 0)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0, 0)

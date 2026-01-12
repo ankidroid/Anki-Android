@@ -22,13 +22,13 @@ import android.provider.Settings
 import androidx.activity.result.ActivityResultLauncher
 import androidx.annotation.LayoutRes
 import androidx.annotation.RequiresApi
-import androidx.annotation.StringRes
 import androidx.core.os.bundleOf
 import androidx.core.view.allViews
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
 import com.ichi2.anki.R
-import com.ichi2.anki.showThemedToast
+import com.ichi2.utils.Permissions.openAppSettingsScreen
+import com.ichi2.utils.Permissions.showToastAndOpenAppSettingsScreen
 import timber.log.Timber
 
 /**
@@ -52,27 +52,6 @@ abstract class PermissionsFragment(
         super.onResume()
         permissionsItems.forEach { it.updateSwitchCheckedStatus() }
         setFragmentResult(PERMISSIONS_FRAGMENT_RESULT_KEY, bundleOf(HAS_ALL_PERMISSIONS_KEY to hasAllPermissions()))
-    }
-
-    /**
-     * Opens the Android settings for AnkiDroid if the device provide this feature.
-     * Lets a user grant any missing permissions which have been permanently denied
-     */
-    private fun openAppSettingsScreen() {
-        Timber.i("launching ACTION_APPLICATION_DETAILS_SETTINGS")
-        startActivity(
-            Intent(
-                Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
-                Uri.fromParts("package", requireActivity().packageName, null),
-            ),
-        )
-    }
-
-    protected fun showToastAndOpenAppSettingsScreen(
-        @StringRes message: Int,
-    ) {
-        showThemedToast(requireContext(), message, false)
-        openAppSettingsScreen()
     }
 
     /** Opens the Android 'MANAGE_ALL_FILES' page if the device provides this feature */
@@ -109,20 +88,14 @@ abstract class PermissionsFragment(
     /**
      * If these permissions are already granted, open the OS settings to allow the user to disable them, as
      * it is impossible to programmatically revoke a permission. If the permissions have not been granted,
-     * use [permissionRequestLauncher] to try and grant them. Note that [permissionRequestLauncher] also falls back
-     * to opening the OS settings if the dialog fails to show up. This may happen if the user has previously
-     * denied the permissions multiple times, selected "don't ask again" on the permissions dialog, etc.
+     * execute the callback.
      */
-    protected fun PermissionsItem.offerToGrantOrRevokeOnClick(
-        permissionRequestLauncher: ActivityResultLauncher<Array<String>>,
-        permissions: Array<String>,
-    ) {
+    protected fun PermissionsItem.revokeIfGrantedOnClickElse(callback: () -> Unit) {
         setOnPermissionsRequested { areAlreadyGranted ->
             if (areAlreadyGranted) {
-                // Offer the ability to revoke the permission
                 showToastAndOpenAppSettingsScreen(R.string.revoke_permissions)
             } else {
-                permissionRequestLauncher.launch(permissions)
+                callback()
             }
         }
     }

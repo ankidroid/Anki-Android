@@ -31,6 +31,7 @@ import androidx.lifecycle.findViewTreeLifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import com.ichi2.anki.Flag
 import com.ichi2.anki.R
+import com.ichi2.anki.databinding.ViewReviewerMenuBinding
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.utils.increaseHorizontalPaddingOfMenuIcons
 import kotlinx.coroutines.launch
@@ -54,16 +55,15 @@ class ReviewerMenuView
         defStyleAttr: Int = 0,
     ) : LinearLayout(context, attrs, defStyleAttr) {
         private val repository = ReviewerMenuRepository(context.sharedPrefs())
-        private val frontMenu: Menu
-        private val overflowMenu: Menu
+
+        private val binding = ViewReviewerMenuBinding.inflate(LayoutInflater.from(context), this, true)
+        private val frontMenu: Menu = binding.frontMenuView.menu
+        private val overflowMenu: Menu =
+            binding.overflowMenuView.menu.apply {
+                (this as? MenuBuilder)?.setOptionalIconsVisible(true)
+            }
 
         init {
-            val inflater = LayoutInflater.from(context).inflate(R.layout.reviewer_menu_view, this, true)
-            frontMenu = inflater.findViewById<ActionMenuView>(R.id.front_menu_view).menu
-            overflowMenu =
-                inflater.findViewById<ActionMenuView>(R.id.overflow_menu_view).menu.apply {
-                    (this as? MenuBuilder)?.setOptionalIconsVisible(true)
-                }
             setupMenus()
         }
 
@@ -77,8 +77,8 @@ class ReviewerMenuView
         fun findItem(id: Int): MenuItemImpl? = (frontMenu.findItem(id) ?: overflowMenu.findItem(id)) as? MenuItemImpl
 
         fun setOnMenuItemClickListener(listener: ActionMenuView.OnMenuItemClickListener) {
-            findViewById<ActionMenuView>(R.id.front_menu_view).setOnMenuItemClickListener(listener)
-            findViewById<ActionMenuView>(R.id.overflow_menu_view).setOnMenuItemClickListener(listener)
+            binding.frontMenuView.setOnMenuItemClickListener(listener)
+            binding.overflowMenuView.setOnMenuItemClickListener(listener)
         }
 
         fun addActions(

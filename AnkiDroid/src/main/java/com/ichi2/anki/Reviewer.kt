@@ -113,12 +113,14 @@ import com.ichi2.anki.scheduling.registerOnForgetHandler
 import com.ichi2.anki.servicelayer.NoteService.isMarked
 import com.ichi2.anki.servicelayer.NoteService.toggleMark
 import com.ichi2.anki.settings.Prefs
+import com.ichi2.anki.settings.enums.DayTheme
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.internationalization.toSentenceCase
 import com.ichi2.anki.ui.windows.reviewer.ReviewerFragment
 import com.ichi2.anki.utils.ext.cardStatsNoCardClean
 import com.ichi2.anki.utils.ext.currentCardStudy
 import com.ichi2.anki.utils.ext.flag
+import com.ichi2.anki.utils.ext.getLongOrNull
 import com.ichi2.anki.utils.ext.previousCardStudy
 import com.ichi2.anki.utils.ext.setUserFlagForCards
 import com.ichi2.anki.utils.ext.showDialogFragment
@@ -126,7 +128,6 @@ import com.ichi2.anki.utils.navBarNeedsScrim
 import com.ichi2.anki.utils.remainingTime
 import com.ichi2.themes.Themes
 import com.ichi2.themes.Themes.currentTheme
-import com.ichi2.utils.BundleUtils.getNullableLong
 import com.ichi2.utils.HandlerUtils.executeFunctionWithDelay
 import com.ichi2.utils.HandlerUtils.getDefaultLooper
 import com.ichi2.utils.Permissions.canRecordAudio
@@ -251,7 +252,7 @@ open class Reviewer :
         }
         startLoadingCollection()
         registerOnForgetHandler { listOf(currentCardId!!) }
-        previousCardId = savedInstanceState?.getNullableLong(KEY_PREVIOUS_CARD_ID)
+        previousCardId = savedInstanceState?.getLongOrNull(KEY_PREVIOUS_CARD_ID)
     }
 
     override fun onPause() {
@@ -1684,7 +1685,7 @@ open class Reviewer :
         }
         whiteboard.onPaintColorChangeListener =
             OnPaintColorChangeListener { color ->
-                MetaDB.storeWhiteboardPenColor(this@Reviewer, parentDid, !currentTheme.isNightMode, color)
+                MetaDB.storeWhiteboardPenColor(this@Reviewer, parentDid, currentTheme is DayTheme, color)
             }
         whiteboard.setOnTouchListener { v: View, event: MotionEvent? ->
             if (event == null) return@setOnTouchListener false

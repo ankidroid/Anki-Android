@@ -55,7 +55,7 @@
     <string name="CardEditorTags">Etykiety: %1$s</string>
     <string name="CardEditorCards">Karty: %1$s</string>
     <string name="edit_occlusions">Edytuj okluzje</string>
-    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
+    <string name="paste_from_clipboard" maxLength="28">Wklej ze schowka</string>
     <string name="tag_name">Nazwa tagu</string>
     <string name="add_new_filter_tags">Dodaj/filtruj tagi</string>
     <string name="add_tag" maxLength="28">Dodaj tag</string>
@@ -67,7 +67,7 @@
     <string name="save_whiteboard" maxLength="28">Zapisz tablicę</string>
     <string name="enable_stylus" maxLength="28">Włącz tryb rysika</string>
     <string name="disable_stylus">Wyłącz tryb rysika</string>
-    <string name="eraser" maxLength="28">Eraser</string>
+    <string name="eraser" maxLength="28">Gumka</string>
     <string name="add_brush" maxLength="28">Add brush</string>
     <string name="whiteboard_align_left" comment="Option to align the whiteboard toolbar on the left" maxLength="28">Left</string>
     <string name="whiteboard_align_bottom" comment="Option to align the whiteboard toolbar on the bottom" maxLength="28">Bottom</string>
@@ -269,9 +269,12 @@
     <string name="create_shortcut_error">Błąd dodawania skrótu: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">Automatycznie wyświetlaj zdania z dużej litery</string>
     <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll" maxLength="28">Przewijaj razem z paskiem narzędzi</string>
-    <!-- Symbols used as Button text in IncrementNumberRangePreference -->
+    <!-- IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
+    <string name="invalid_value" comment="Error message in IncrementerNumberRangePreference when input is not a valid number">Invalid value</string>
+    <string name="maximum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the maximum allowed value">Maximum value is %d</string>
+    <string name="minimum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the minimum allowed value">Minimum value is %d</string>
     <!-- Used for credential empty warning message -->
     <string name="invalid_email">Wpisz poprawny adres e-mail</string>
     <string name="password_empty">Hasło jest wymagane</string>
@@ -356,7 +359,6 @@
     <string name="format_deck_description_as_markdown">Formatuj jako Markdown</string>
     <string name="help_button_content_description">Otwórz pomoc dla \'%s\'</string>
     <string name="failed_to_copy">Kopiowanie nieudane</string>
-    <string name="card_browser_unavailable_when_notes_mode">Niedostępne w trybie \"Notatki\"</string>
     <plurals name="unbury_cards_feedback">
         <item quantity="one">%d karta odkopana</item>
         <item quantity="few">%d karty odkopane</item>

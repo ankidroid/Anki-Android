@@ -29,6 +29,19 @@ private typealias BackendCard = anki.cards.Card
 private typealias FSRSMemoryState = anki.cards.FsrsMemoryState
 
 /**
+ * Identifies the card template or cloze deletion which the card refers to.
+ *
+ * Values:
+ * - **card templates**: from 0 to [`templates.size - 1`][NotetypeJson.templates]
+ * - **cloze deletions**: `{{c1::}}` refers to ord 0. etc...
+ *
+ * Primarily used during rendering to determine the template to select, or cloze to hide.
+ *
+ * Defined as [Card.ord]
+ */
+typealias CardOrdinal = Int
+
+/**
  * A Card is the ultimate entity subject to review; it encapsulates the scheduling parameters (from which to derive
  * the next interval), the note it is derived from (from which field data is retrieved), its own ownership (which deck it
  * currently belongs to), and the retrieval of presentation elements (filled-in templates).
@@ -68,7 +81,11 @@ open class Card : Cloneable {
     var id: CardId = 0
     var nid: NoteId = 0
     var did: DeckId = 0
-    var ord = 0
+
+    /**
+     * @see CardOrdinal
+     */
+    var ord: CardOrdinal = 0
     var mod: Long = 0
     private var usn = 0
 

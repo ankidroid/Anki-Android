@@ -111,7 +111,7 @@
     <string name="check_media_warning">ייתכן שפעולה זו תארך זמן אם מדובר באוסף גדול</string>
     <string name="check_media_message">קבצי המדיה בבדיקה&#8230;</string>
     <string name="check_media_adding_missing_tag">הוספת תגיות&#8230;</string>
-    <string name="check_media_tags_added">תג התווסף</string>
+    <string name="check_media_tags_added">התגית התווספה</string>
     <string name="delete_media_message">המדיה נמחקת&#8230;</string>
     <string name="delete_media_result_title">תוצאת מחיקה</string>
     <plurals name="delete_media_result_message">
@@ -261,7 +261,7 @@
     <string name="change_cloze_number">שנה את מספר ה-Cloze</string>
     <string name="cloze_number">מספר ה-Cloze:</string>
     <string name="change_editor_mode">שנה מצב עורך</string>
-    <string name="open_note_editor">פתח את עורך הערות</string>
+    <string name="open_note_editor">פתח את עורך הרשומות</string>
     <string name="change_cloze_mode">שנה מצב Cloze</string>
     <!-- Outdated WebView dialog -->
     <string name="webview_update_message">מערכת WebView מיושנת. חלק מהתכונות לא יפעלו כהלכה. אנא עדכן אותו.\n\nגרסה מותקנת: %1$d\nגרסה מינימום נדרשת: %2$d</string>

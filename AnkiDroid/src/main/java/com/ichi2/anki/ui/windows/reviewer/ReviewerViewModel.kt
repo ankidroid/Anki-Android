@@ -16,6 +16,7 @@
 package com.ichi2.anki.ui.windows.reviewer
 
 import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.viewModelScope
 import anki.collection.OpChanges
 import anki.frontend.SetSchedulingStatesRequest
 import anki.scheduler.CardAnswer.Rating
@@ -60,10 +61,14 @@ import com.ichi2.anki.servicelayer.isSuspendNoteAvailable
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.tryRedo
 import com.ichi2.anki.tryUndo
+import com.ichi2.anki.ui.windows.reviewer.autoadvance.AnswerAction
 import com.ichi2.anki.ui.windows.reviewer.autoadvance.AutoAdvance
+import com.ichi2.anki.ui.windows.reviewer.autoadvance.AutoAdvanceAction
+import com.ichi2.anki.ui.windows.reviewer.autoadvance.QuestionAction
 import com.ichi2.anki.utils.CollectionPreferences
 import com.ichi2.anki.utils.Destination
 import com.ichi2.anki.utils.ext.answerCard
+import com.ichi2.anki.utils.ext.cardStateCustomizer
 import com.ichi2.anki.utils.ext.cardStatsNoCardClean
 import com.ichi2.anki.utils.ext.currentCardStudy
 import com.ichi2.anki.utils.ext.flag
@@ -72,7 +77,6 @@ import com.ichi2.anki.utils.ext.previousCardStudy
 import com.ichi2.anki.utils.ext.setUserFlagForCards
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.withTimeoutOrNull
@@ -80,10 +84,11 @@ import org.intellij.lang.annotations.Language
 import timber.log.Timber
 
 class ReviewerViewModel(
-    val savedStateHandle: SavedStateHandle,
-) : CardViewerViewModel(),
+    savedStateHandle: SavedStateHandle,
+) : CardViewerViewModel(savedStateHandle),
     ChangeManager.Subscriber,
-    BindingProcessor<ReviewerBinding, ViewerAction> {
+    BindingProcessor<ReviewerBinding, ViewerAction>,
+    AutoAdvance.ActionListener {
     private var queueState: Deferred<CurrentQueueState?> =
         asyncIO {
             withCol { sched.currentQueueState() }
@@ -120,9 +125,10 @@ class ReviewerViewModel(
 
     override val server: AnkiServer = AnkiServer(this, repository.getServerPort()).also { it.start() }
     private val stateMutationKey = TimeManager.time.intTimeMS().toString()
+    private val stateMutationJs: Deferred<String> = asyncIO { withCol { cardStateCustomizer } }
     private var typedAnswer = ""
 
-    private val autoAdvance = AutoAdvance(this)
+    private val autoAdvance = AutoAdvance(viewModelScope, this, currentCard)
     private val isHtmlTypeAnswerEnabled = Prefs.isHtmlTypeAnswerEnabled
     val answerTimer = AnswerTimer()
 
@@ -130,16 +136,14 @@ class ReviewerViewModel(
      * A flag that determines if the SchedulingStates in CurrentQueueState are
      * safe to persist in the database when answering a card. This is used to
      * ensure that the custom JS scheduler has persisted its SchedulingStates
-     * back to the Reviewer before we save it to the database. If the custom
-     * scheduler has not been configured, then it is safe to immediately set
-     * this to true.
+     * back to the Reviewer before we save it to the database.
      *
-     * This flag should be set to false when we show the front of the card
-     * and only set to true once we know the custom scheduler has finished its
-     * execution, or set to true immediately if the custom scheduler has not
+     * This flag should be reset when we show the front of the card
+     * and only complete once we know the custom scheduler has finished its
+     * execution, or complete immediately if the custom scheduler has not
      * been configured.
      */
-    private var statesMutated = true
+    private var mutationSignal = CompletableDeferred(Unit)
 
     val answerButtonsNextTimeFlow: MutableStateFlow<AnswerButtonsNextTime?> = MutableStateFlow(null)
     private val shouldShowNextTimes: Deferred<Boolean> =
@@ -193,9 +197,7 @@ class ReviewerViewModel(
     fun onShowAnswer() {
         Timber.v("ReviewerViewModel::onShowAnswer")
         launchCatchingIO {
-            while (!statesMutated) {
-                delay(50)
-            }
+            mutationSignal.await()
 
             val typedAnswerResult = CompletableDeferred<String>()
             if (typeAnswerFlow.value != null) {
@@ -250,7 +252,7 @@ class ReviewerViewModel(
     }
 
     fun onStateMutationCallback() {
-        statesMutated = true
+        mutationSignal.complete(Unit)
     }
 
     private suspend fun emitEditNoteDestination() {
@@ -411,13 +413,14 @@ class ReviewerViewModel(
     }
 
     private suspend fun runStateMutationHook() {
-        val state = queueState.await() ?: return
-        val js = state.customSchedulingJs
+        val js = stateMutationJs.await()
         if (js.isEmpty()) {
-            statesMutated = true
+            if (!mutationSignal.isCompleted) {
+                mutationSignal.complete(Unit)
+            }
             return
         }
-        statesMutated = false
+        mutationSignal = CompletableDeferred()
         statesMutationEvalFlow.emit(
             "anki.mutateNextCardStates('$stateMutationKey', async (states, customData, ctx) => { $js });",
         )
@@ -714,6 +717,18 @@ class ReviewerViewModel(
         if (binding.side != CardSide.BOTH && CardSide.fromAnswer(showingAnswer.value) != binding.side) return false
         executeAction(action)
         return true
+    }
+
+    override suspend fun onAutoAdvanceAction(action: AutoAdvanceAction) {
+        when (action) {
+            QuestionAction.SHOW_ANSWER -> onShowAnswer()
+            QuestionAction.SHOW_REMINDER -> actionFeedbackFlow.emit(TR.studyingQuestionTimeElapsed())
+            AnswerAction.BURY_CARD -> buryCard()
+            AnswerAction.ANSWER_AGAIN -> answerCard(Rating.AGAIN)
+            AnswerAction.ANSWER_GOOD -> answerCard(Rating.GOOD)
+            AnswerAction.ANSWER_HARD -> answerCard(Rating.HARD)
+            AnswerAction.SHOW_REMINDER -> actionFeedbackFlow.emit(TR.studyingAnswerTimeElapsed())
+        }
     }
 
     // Based in https://github.com/ankitects/anki/blob/1f95d030bbc7ebcc004ffe1e2be2a320c9fe1e94/qt/aqt/reviewer.py#L201

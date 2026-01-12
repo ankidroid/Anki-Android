@@ -22,8 +22,7 @@
 
 <!-- Reviewing Preferences -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://arbitrary.app.namespace/com.ichi2.anki"
-    xmlns:app1="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:title="@string/pref_cat_reviewing"
     android:key="@string/pref_reviewing_screen_key"
@@ -34,20 +33,20 @@
             android:valueFrom="0"
             android:valueTo="23"
             android:title="@string/day_offset_with_description"
-            app1:persistent="false"
-            app1:summaryFormat="@plurals/day_offset_summ"/>
+            app:persistent="false"
+            app:summaryFormat="@plurals/day_offset_summ"/>
         <com.ichi2.preferences.NumberRangePreferenceCompat
             android:key="@string/learn_cutoff_preference"
             android:title="@string/learn_cutoff"
             app:max="999"
             app:min="0"
-            app1:summaryFormat="@plurals/pref_summ_minutes"/>
+            app:summaryFormat="@plurals/pref_summ_minutes"/>
         <com.ichi2.preferences.NumberRangePreferenceCompat
             android:key="@string/time_limit_preference"
             android:title="@string/time_limit"
             app:max="9999"
             app:min="0"
-            app1:summaryFormat="@plurals/pref_summ_minutes"/>
+            app:summaryFormat="@plurals/pref_summ_minutes"/>
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/pref_cat_advanced">
         <SwitchPreferenceCompat

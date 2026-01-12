@@ -25,7 +25,6 @@ import android.view.KeyEvent
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
 import androidx.core.view.isVisible
@@ -50,6 +49,7 @@ import com.ichi2.anki.utils.hideKeyboard
 import com.ichi2.anki.utils.openUrl
 import com.ichi2.anki.withProgress
 import com.ichi2.ui.TextInputEditField
+import com.ichi2.utils.Permissions
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -63,11 +63,6 @@ class LoginFragment : Fragment(R.layout.my_account) {
     private lateinit var passwordLayout: TextInputLayout
     private lateinit var loginLogo: ImageView
     private lateinit var loginButton: Button
-
-    private val notificationPermissionLauncher =
-        registerForActivityResult(ActivityResultContracts.RequestPermission()) {
-            Timber.i("notification permission: %b", it)
-        }
 
     override fun onViewCreated(
         view: View,
@@ -218,14 +213,13 @@ class LoginFragment : Fragment(R.layout.my_account) {
                             activity.setResult(RESULT_OK)
                             activity.finish()
                         } else {
-                            AccountActivity.checkNotificationPermission(requireContext(), notificationPermissionLauncher)
-
                             val fragmentManager = activity.supportFragmentManager
                             fragmentManager
                                 .beginTransaction()
                                 .replace(R.id.fragment_container, LoggedInFragment())
                                 .commit()
                             fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+                            Permissions.requestNotificationPermissionsForSyncing(requireActivity())
                         }
                     }
                     is LoginState.Error -> {

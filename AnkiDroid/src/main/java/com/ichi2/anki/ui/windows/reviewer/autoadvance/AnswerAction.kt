@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2022 Brayan Oliveira <brayandso.dev@gmail.com>
+ *  Copyright (c) 2024 Brayan Oliveira <brayandso.dev@gmail.com>
  *
  *  This program is free software; you can redistribute it and/or modify it under
  *  the terms of the GNU General Public License as published by the Free Software
@@ -13,23 +13,25 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.ichi2.themes
+package com.ichi2.anki.ui.windows.reviewer.autoadvance
 
-import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.equalTo
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.EnumSource
+import com.ichi2.anki.libanki.DeckConfig
+import com.ichi2.anki.libanki.DeckConfig.Companion.ANSWER_ACTION
 
-class ThemeTest {
-    @ParameterizedTest
-    @EnumSource(value = Theme::class)
-    fun test_ofId_returns_theme(theme: Theme) {
-        assertThat(Theme.ofId(theme.id), equalTo(theme))
-    }
+enum class AnswerAction(
+    val code: Int,
+) : AutoAdvanceAction {
+    BURY_CARD(0),
+    ANSWER_AGAIN(1),
+    ANSWER_GOOD(2),
+    ANSWER_HARD(3),
+    SHOW_REMINDER(4),
+    ;
 
-    @Test
-    fun test_ofId_returns_fallback_if_id_is_invalid() {
-        assertThat(Theme.ofId("999"), equalTo(Theme.fallback))
+    companion object {
+        fun from(code: Int): AnswerAction = AnswerAction.entries.firstOrNull { it.code == code } ?: BURY_CARD
+
+        val DeckConfig.answerAction: AnswerAction
+            get() = AnswerAction.from(jsonObject.optInt(ANSWER_ACTION))
     }
 }

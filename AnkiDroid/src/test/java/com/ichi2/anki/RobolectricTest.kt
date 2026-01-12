@@ -100,7 +100,7 @@ open class RobolectricTest :
         controllersForCleanup.add(controller)
     }
 
-    /** Allows [com.ichi2.testutils.Flaky] to annotate tests in subclasses */
+    /** Allows [com.ichi2.testutils.common.Flaky] to annotate tests in subclasses */
     @get:Rule
     val ignoreFlakyTests = IgnoreFlakyTestsInCIRule()
 

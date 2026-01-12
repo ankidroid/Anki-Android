@@ -98,7 +98,7 @@ object FileUtil {
         // If we got a real file name, do a copy from it
         val inputStream: InputStream =
             try {
-                contentResolver.openInputStream(uri)!!
+                contentResolver.openInputStreamSafe(uri)!!
             } catch (e: Exception) {
                 Timber.w(e, "internalizeUri() unable to open input stream from content resolver for Uri %s", uri)
                 throw e
@@ -125,21 +125,6 @@ object FileUtil {
     fun listFiles(dir: File): Array<File> =
         dir.listFiles()
             ?: throw IOException("Failed to list the contents of '$dir'")
-
-    /**
-     * Returns a sequence containing the provided file, and its parents
-     * up to the root of the filesystem.
-     */
-    fun File.getParentsAndSelfRecursive() =
-        sequence {
-            var currentPath: File? = this@getParentsAndSelfRecursive.canonicalFile
-            while (currentPath != null) {
-                yield(currentPath)
-                currentPath = currentPath.parentFile?.canonicalFile
-            }
-        }
-
-    fun File.isDescendantOf(ancestor: File) = this.getParentsAndSelfRecursive().drop(1).contains(ancestor)
 }
 
 /**

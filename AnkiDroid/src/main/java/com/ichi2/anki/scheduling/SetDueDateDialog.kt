@@ -58,6 +58,7 @@ import com.ichi2.anki.showThemedToast
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.internationalization.toSentenceCase
 import com.ichi2.anki.utils.doOnImeHidden
+import com.ichi2.anki.utils.ext.requireBoolean
 import com.ichi2.anki.utils.openUrl
 import com.ichi2.anki.withProgress
 import com.ichi2.utils.AndroidUiUtils
@@ -66,7 +67,6 @@ import com.ichi2.utils.dp
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.neutralButton
 import com.ichi2.utils.positiveButton
-import com.ichi2.utils.requireBoolean
 import com.ichi2.utils.title
 import dev.androidbroadcast.vbpd.viewBinding
 import kotlinx.coroutines.Deferred
