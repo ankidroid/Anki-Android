@@ -32,6 +32,7 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.shape.ShapeAppearanceModel
 import com.google.android.material.textfield.TextInputLayout
 import com.ichi2.anki.R
+import com.ichi2.utils.dp
 import com.ichi2.utils.moveCursorToEnd
 import com.ichi2.utils.positiveButton
 
@@ -62,15 +63,6 @@ class IncrementerNumberRangePreferenceCompat :
         private lateinit var decrementButton: MaterialButton
         private lateinit var textInputLayout: TextInputLayout
 
-        // For long press increment or decrement
-        private val repeatHandler = android.os.Handler(android.os.Looper.getMainLooper())
-        private var activeRepeatRunnable: Runnable? = null
-
-        private companion object {
-            const val INITIAL_DELAY = 500L // Delay before repeat starts
-            const val REPEAT_INTERVAL = 100L // Speed of repeat (10 updates per second)
-        }
-
         // Reference to the system OK button
         private var positiveButton: Button? = null
 
@@ -85,9 +77,8 @@ class IncrementerNumberRangePreferenceCompat :
                 inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_SIGNED
                 setTextAppearance(com.google.android.material.R.style.TextAppearance_Material3_HeadlineMedium)
 
-                val paddingVertical = (8 * context.resources.displayMetrics.density).toInt()
-                val paddingHorizontal = (8 * context.resources.displayMetrics.density).toInt()
-                setPadding(paddingHorizontal, paddingVertical, paddingHorizontal, paddingVertical)
+                val padding = 8.dp.toPx(context)
+                setPadding(padding, padding, padding, padding)
 
                 background = null
             }
@@ -124,7 +115,7 @@ class IncrementerNumberRangePreferenceCompat :
                 LinearLayout(context).apply {
                     orientation = LinearLayout.HORIZONTAL
                     gravity = Gravity.CENTER_VERTICAL
-                    val padding = (8 * density).toInt()
+                    val padding = 8.dp.toPx(context)
                     setPadding(padding, padding, padding, padding)
                 }
 
@@ -145,7 +136,7 @@ class IncrementerNumberRangePreferenceCompat :
             val buttonWidth = (72 * density).toInt()
             val buttonParams =
                 LinearLayout.LayoutParams(buttonWidth, buttonHeight).apply {
-                    val margin = (8 * density).toInt()
+                    val margin = 8.dp.toPx(context)
                     marginStart = margin
                     marginEnd = margin
 
@@ -177,9 +168,6 @@ class IncrementerNumberRangePreferenceCompat :
 
             incrementButton.setOnClickListener { updateEditText(true) }
             decrementButton.setOnClickListener { updateEditText(false) }
-
-            setAutoRepeat(incrementButton, true)
-            setAutoRepeat(decrementButton, false)
 
             linearLayout.addView(decrementButton, buttonParams)
             linearLayout.addView(textInputLayout, textParams)
@@ -214,41 +202,6 @@ class IncrementerNumberRangePreferenceCompat :
                         .setAllCornerSizes(12f * density)
                         .build()
             }
-
-        private fun setAutoRepeat(
-            button: View,
-            isIncrement: Boolean,
-        ) {
-            button.setOnLongClickListener {
-                val runnable =
-                    object : Runnable {
-                        override fun run() {
-                            // If the button becomes disabled (hit min/max), stop the repeat
-                            if (!button.isEnabled) {
-                                activeRepeatRunnable = null
-                                return
-                            }
-                            updateEditText(isIncrement)
-                            repeatHandler.postDelayed(this, REPEAT_INTERVAL)
-                        }
-                    }
-                activeRepeatRunnable = runnable
-                repeatHandler.postDelayed(runnable, INITIAL_DELAY)
-                true
-            }
-
-            button.setOnTouchListener { _, event ->
-                when (event.action) {
-                    android.view.MotionEvent.ACTION_UP,
-                    android.view.MotionEvent.ACTION_CANCEL,
-                    -> {
-                        activeRepeatRunnable?.let { repeatHandler.removeCallbacks(it) }
-                        activeRepeatRunnable = null
-                    }
-                }
-                false
-            }
-        }
 
         override fun onCancel(dialog: DialogInterface) {
             super.onCancel(dialog)
