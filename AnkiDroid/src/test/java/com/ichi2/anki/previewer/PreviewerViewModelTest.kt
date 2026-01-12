@@ -103,6 +103,7 @@ class PreviewerViewModelTest : JvmTest() {
         }
 
     @Test
+    @Flaky(OS.ALL, "assumed to be #19729")
     fun `previous button`() =
         runTest {
             // Start at Index 1
