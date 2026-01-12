@@ -89,6 +89,7 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
     private val onBackPressedCallback =
         object : OnBackPressedCallback(isDownloadInProgress) {
             override fun handleOnBackPressed() {
+                Timber.i("back pressed")
                 showCancelConfirmationDialog()
             }
         }
@@ -162,7 +163,7 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
         downloadFile(fileToBeDownloaded)
 
         cancelButton.setOnClickListener {
-            Timber.i("Cancel download button clicked which would lead to showing of confirmation dialog")
+            Timber.i("Cancel download button clicked")
             showCancelConfirmationDialog()
         }
 
@@ -553,10 +554,12 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
     }
 
     private fun showCancelConfirmationDialog() {
+        Timber.i("displaying cancel download confirmation dialog")
         downloadCancelConfirmationDialog =
             AlertDialog.Builder(requireContext()).create {
                 setTitle(R.string.cancel_download_question_title)
                 setPositiveButton(R.string.dialog_yes) { _, _ ->
+                    Timber.i("cancelling download")
                     downloadManager.remove(downloadId)
                     unregisterReceiver()
                     isDownloadInProgress = false
@@ -564,6 +567,7 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
                     activity?.onBackPressedDispatcher?.onBackPressed()
                 }
                 setNegativeButton(R.string.dialog_no) { _, _ ->
+                    Timber.i("dismissed cancel download confirmation dialog")
                     downloadCancelConfirmationDialog?.dismiss()
                 }
             }
