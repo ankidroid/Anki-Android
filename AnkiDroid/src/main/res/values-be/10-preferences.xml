@@ -207,15 +207,15 @@
     <string name="thirdparty_apps_summary">Паглядзець спіс праграм, якія выкарыстоўваць API AnkiDroid (слоўнікі, службовыя праграмы і г.д.).</string>
     <string name="pref_controls_reviews_tab" maxLength="41" comment="Name of the tab to configure controls for the reviews screen">Перагляды</string>
     <string name="pref_controls_previews_tab" maxLength="41" comment="Name of the tab to configure controls for the previews screen">Перадпрагляды</string>
-    <string name="toggle_backside_only" maxLength="41" comment="Control setting that toggles \'Backside only\' in the previews screen">Toggle backside only</string>
+    <string name="toggle_backside_only" maxLength="41" comment="Control setting that toggles \'Backside only\' in the previews screen">Пераключаць толькі задні бок</string>
     <!-- Appearance settings -->
-    <string name="pref_cat_reviewer" maxLength="41">Study Screen</string>
+    <string name="pref_cat_reviewer" maxLength="41">Экран навучання</string>
     <string name="show_deck_title" maxLength="41">Паказваць назву калоды</string>
     <string name="accessibility" maxLength="41">Спецыяльныя магчымасці</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Устаўляць з буфера абмену відарысы як PNG</string>
     <string name="exit_via_double_tap_back" maxLength="41">Націсніце \"Назад\" двойчы для выхаду</string>
-    <string name="exit_via_double_tap_back_summ">To avoid accidentally leaving the study screen or the app</string>
+    <string name="exit_via_double_tap_back_summ">Для прадухілення выпадковага выхаду з экрана навучання або праграмы</string>
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">Дазволіць усе файлы пры імпарце медыя</string>
     <string name="media_import_allow_all_files_summ">Калі Android не распазнае файл з медыя</string>
@@ -239,10 +239,10 @@
     <string name="media" maxLength="41">Медыя</string>
     <string name="misc" maxLength="41">Рознае</string>
     <!-- Review reminders -->
-    <string name="add_reminder" comment="Label for the add reminder button in the screen for adding and editing review reminders">Add reminder</string>
-    <string name="add_review_reminder" comment="Title of the screen for creating a new review reminder">Add review reminder</string>
-    <string name="edit_review_reminder" comment="Title of the screen for editing an existing review reminder">Edit review reminder</string>
-    <string name="you_have_no_review_reminders" comment="Text that appears in the review reminder editing screen when there are no reminders set">You have no review reminders</string>
+    <string name="add_reminder" comment="Label for the add reminder button in the screen for adding and editing review reminders">Дадаць напамін</string>
+    <string name="add_review_reminder" comment="Title of the screen for creating a new review reminder">Дадаць нагадванне паўтарэння</string>
+    <string name="edit_review_reminder" comment="Title of the screen for editing an existing review reminder">Рэдагаваць нагадванне паўтарэння</string>
+    <string name="you_have_no_review_reminders" comment="Text that appears in the review reminder editing screen when there are no reminders set">У вас адсутнічаюць нагадванні паўтарэння</string>
     <!-- studyoptions -->
     <string name="studyoptions_limit_select_tags">Выберыце меткі</string>
     <!-- Deck configurations -->
@@ -264,7 +264,7 @@
     <string name="note_editor_replace_newlines" maxLength="41">Замяняць новыя радкі на HTML</string>
     <string name="note_editor_replace_newlines_summ">Змяняць у рэдактары нататак любыя выпадкі &lt;br&gt; на новыя радкі падчас рэдагавання карткі.</string>
     <string name="type_in_answer_focus" maxLength="41">Пераключацца на поле \"Увесці адказ\"</string>
-    <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the study screen</string>
+    <string name="type_in_answer_focus_summ">Аўтаматычна пераключацца на поле «Увесці адказ» у экране навучання</string>
     <!-- About -->
     <string name="open_changelog">Адкрыць спіс змен</string>
     <string name="pref_cat_about_title" maxLength="41">Аб праграме</string>
@@ -272,7 +272,7 @@
     <string name="about_contributors_description"><![CDATA[Гэта нашы ашаламляльныя <a href=\"%1$s\">удзельнікі</a>. Вы таксама можаце дапамагчы AnkiDroid з праграмаваннем, перакладамі, ахвяраваннямі і <a href=\"%2$s\">іншым</a>!]]></string>
     <string name="license">Ліцэнзія</string>
     <string name="license_description"><![CDATA[AnkiDroid выпушчаны на ўмовах ліцэнзій <a href=\"%1$s\">GPL-3.0</a> і <a href=\"%2$s\">AGPL-3.0</a>, а таксама зыходным кодам, які даступны <a href=\"%3$s\">на GitHub</a>]]></string>
-    <string name="other_licenses"><![CDATA[AnkiDroid also uses third-party libraries and icons, which are licensed under various open source <a href=\"%1$s\">licenses</a>]]></string>
+    <string name="other_licenses"><![CDATA[AnkiDroid таксама выкарыстоўвае староннія бібліятэкі і значкі, якія ліцэнзуюцца пад рознымі <a href=\"%1$s\">ліцэнзіямі</a> з адкрытым зыходным кодам]]></string>
     <string name="donate_description"><![CDATA[Вы можаце падтрымаць распрацоўку AnkiDroid <a href=\"%1$s\">ахвяраваннем</a>. Мы будзем удзячныя за любую суму.]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">Дадаць жэст</string>
@@ -281,7 +281,7 @@
     <string name="binding_add_axis">Дадаць джойсцік/кантролер руху</string>
     <string name="axis_picker_move_joystick">Перамясціць джойсцік/кантролер руху</string>
     <string name="user_actions" maxLength="41">Дзеянні карыстальніка</string>
-    <string name="user_actions_summary" maxLength="41">Trigger JavaScript from the study screen</string>
+    <string name="user_actions_summary" maxLength="41">Запусціць JavaScript з экрана з экрана навучання</string>
     <string name="user_action_1" maxLength="28">Дзеянне карыстальніка 1</string>
     <string name="user_action_2" maxLength="28">Дзеянне карыстальніка 2</string>
     <string name="user_action_3" maxLength="28">Дзеянне карыстальніка 3</string>
@@ -306,13 +306,13 @@
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Эксперыментальныя</string>
     <string name="readtext_deprecation_warn">У AnkiDroid з\'явіўся палепшаны механізм сінтэзу маўлення (TTS), які сумяшчальны з іншымі кліентамі Anki і ўключае больш галасоў і паляпшэнні пры ўзнаўленні мовы!\n\nЗнайдзіце час для абнаўлення праграмы, бо гэта налада будзе неўзабаве выдалена.</string>
     <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">Абнавіце праграму да новага сінтэзу маўлення</string>
-    <string name="pref_fixed_port_title" maxLength="41">localStorage in Study Screen</string>
-    <string name="pref_fixed_port_summary">Enables JavaScript localStorage by using a fixed server port in the Study Screen</string>
+    <string name="pref_fixed_port_title" maxLength="41">localStorage у экране навучання</string>
+    <string name="pref_fixed_port_summary">Уключае JavaScript localStorage выкарыстоўваючы фіксаваны порт сервера ў экране навучання</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Параметры распрацоўшчыка</string>
     <string name="dev_options_enabled_pref" maxLength="41">Уключыць параметры распрацоўшчыка</string>
     <string name="disable_dev_options">Адключыць параметры распрацоўшчыка</string>
-    <string name="dev_options_warning">Please be sure before enabling developer options. These options are dangerous and could break the app or corrupt your collection.\n\nNote that these options are not suited for most users and therefore are not translated, so they are in English.</string>
+    <string name="dev_options_warning">Пераканайцеся, што вам сапраўды неабходныя параметры распрацоўшчыка. Гэтыя параметры з\'яўляюцца небяспечнымі і могуць парушыць працу праграмы або пашкодзіць вашу калекцыю.\n\nЗвярніце ўвагу, што гэтыя параметры не пасуюць для большасці карыстальнікаў і таму, яны не перакладаюцца на вашу нацыянальную мову. Па гэтай прычыны, яны пішуцца толькі на англійскай мове.</string>
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->
@@ -382,21 +382,21 @@
     <string name="hide_system_bars_navigation_bar" comment="Setting option to hide the system navigation bar (the bottom one that can go back, to home, etc)">Панэль навігацыі</string>
     <string name="hide_system_bars_all_bars" comment="Setting option to hide all the system bars">Усе</string>
     <string name="ignore_display_cutout" maxLength="41">Ігнараваць выраз экрана</string>
-    <string name="show_answer_buttons" maxLength="41">Show answer buttons</string>
+    <string name="show_answer_buttons" maxLength="41">Паказваць кнопкі адказу</string>
     <string name="hide_hard_and_easy" maxLength="41">Схаваць кнопкі ‘Цяжкі’ і ‘Лёгкі’</string>
-    <string name="reviewer_frame_style" maxLength="41">Frame style</string>
-    <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Study Screen">Card</string>
-    <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Study Screen">Box</string>
-    <string name="reviewer_toolbar_top" maxLength="41" comment="Setting to put the toolbar on the top of the study screen">Top</string>
-    <string name="reviewer_toolbar_bottom" maxLength="41" comment="Setting to put the toolbar on the bottom of the study screen">Bottom</string>
-    <string name="reviewer_toolbar_none" maxLength="41" comment="Setting to remove the toolbar from the study screen">None</string>
-    <string name="toolbar" maxLength="41">Toolbar</string>
-    <string name="toolbar_actions" maxLength="41">Toolbar actions</string>
-    <string name="toolbar_position" maxLength="28">Toolbar position</string>
-    <string name="new_study_screen" maxLength="41">New study screen</string>
-    <string name="new_study_screen_summ"><![CDATA[Improved study screen that will succeed the current one. Some features of the old screen have been changed or removed. Please report any <a href="%1$s">feedback</a> or <a href="%2$s">bugs</a>.]]></string>
+    <string name="reviewer_frame_style" maxLength="41">Стыль рамкі</string>
+    <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Study Screen">Картка</string>
+    <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Study Screen">Скрынка</string>
+    <string name="reviewer_toolbar_top" maxLength="41" comment="Setting to put the toolbar on the top of the study screen">Уверсе</string>
+    <string name="reviewer_toolbar_bottom" maxLength="41" comment="Setting to put the toolbar on the bottom of the study screen">Знізу</string>
+    <string name="reviewer_toolbar_none" maxLength="41" comment="Setting to remove the toolbar from the study screen">Няма</string>
+    <string name="toolbar" maxLength="41">Панэль інструментаў</string>
+    <string name="toolbar_actions" maxLength="41">Дзеянні панэлі інструментаў</string>
+    <string name="toolbar_position" maxLength="28">Пазіцыя панэлі інструментаў</string>
+    <string name="new_study_screen" maxLength="41">Новы экран навучання</string>
+    <string name="new_study_screen_summ"><![CDATA[Палепшыць экран навучання, які заменіць бягучы. Некаторыя функцыі старога экрана былі зменены або выдалены. Адпраўляйце нам любыя <a href="%1$s">водгукі</a> або <a href="%2$s">памылкі</a>.]]></string>
     <string name="show_answer_feedback" maxLength="41">Show answer feedback</string>
-    <string name="screen" maxLength="41">Screen</string>
+    <string name="screen" maxLength="41">Экран</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">Адкрыць налады</string>
 </resources>

@@ -255,9 +255,9 @@
     <string name="tts_error_dialog_change_button_text">موتورنى ئۆزگەرت</string>
     <string name="tts_error_dialog_supported_voices_button_text">ئاۋاز تاللانما</string>
     <!-- import_cache_error_resolutions -->
-    <string name="import_error_resolution_try_again">Re-import the file</string>
-    <string name="import_error_resolution_free_up_space">Ensure there is sufficient free space on your device</string>
-    <string name="import_error_resolution_check_internet">Ensure you are connected to the internet</string>
-    <string name="import_error_resolution_copy_to_device">Copy the file to your device and try again with the local file</string>
-    <string name="import_error_resolution_select_file">Open the file using your device’s file browser app</string>
+    <string name="import_error_resolution_try_again">ھۆججەتنى قايتا ئەكىر</string>
+    <string name="import_error_resolution_free_up_space">ئۈسكۈنىڭىزدە يېتەرلىك ئەركىن بوشلۇق بولۇشىغا كاپالەتلىك قىلىڭ.</string>
+    <string name="import_error_resolution_check_internet">ئىنتېرنېتقا باغلانغانلىقىڭىزنى جەزملەڭ</string>
+    <string name="import_error_resolution_copy_to_device">ھۆججەتنى ئۈسكۈنىڭىزگە كۆچۈرۈپ ئاندىن يەرلىك ھۆججەت بىلەن سىنايدۇ</string>
+    <string name="import_error_resolution_select_file">ھۆججەتنى ئۈسكۈنىدىكى ھۆججەت باشقۇرغۇچ ئەپتە ئاچىدۇ</string>
 </resources>

@@ -166,7 +166,7 @@
     <string name="help_item_anki_manual">Manual de Anki</string>
     <string name="help_item_ankidroid_faq">Preguntas frecuentes sobre AnkiDroid</string>
     <string name="help_title_get_help">Obtener ayuda</string>
-    <string name="help_item_mailing_list">Mailing list</string>
+    <string name="help_item_mailing_list">Lista de correo</string>
     <string name="help_item_reddit">Reddit</string>
     <string name="help_item_report_bug">Reportar un error</string>
     <string name="help_title_support_ankidroid" maxLength="28">Apoya AnkiDroid</string>
@@ -183,7 +183,7 @@
     <string name="help_title_privacy">Privacidad</string>
     <string name="help_item_ankidroid_privacy_policy">Política de privacidad de AnkiDroid</string>
     <string name="help_item_ankiweb_privacy_policy">Política de privacidad de AnkiWeb</string>
-    <string name="help_item_ankiweb_terms_and_conditions">AnkiWeb terms and conditions</string>
+    <string name="help_item_ankiweb_terms_and_conditions">Términos y condiciones de AnkiWeb</string>
     <string name="help_title_send_exception">Enviar informe de resolución de problemas</string>
     <string name="help_dialog_exception_report_debounce">El informe ya fue enviado</string>
     <string name="help_dialog_exception_report_sent">¡Informe enviado!</string>
@@ -231,8 +231,8 @@
         <item quantity="other">días</item>
     </plurals>
     <plurals name="set_due_date_current_interval">
-        <item quantity="one">Current interval: %d day</item>
-        <item quantity="other">Current interval: %d days</item>
+        <item quantity="one">Intervalo actual: %d día</item>
+        <item quantity="other">Intervalo actual: %d días</item>
     </plurals>
     <string name="range_delimiter" comment="Placed between two input boxes to denote a range">–</string>
     <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">De</string>
@@ -255,9 +255,9 @@
     <string name="tts_error_dialog_change_button_text">Cambiar motor</string>
     <string name="tts_error_dialog_supported_voices_button_text">Opciones de voz</string>
     <!-- import_cache_error_resolutions -->
-    <string name="import_error_resolution_try_again">Re-import the file</string>
-    <string name="import_error_resolution_free_up_space">Ensure there is sufficient free space on your device</string>
-    <string name="import_error_resolution_check_internet">Ensure you are connected to the internet</string>
-    <string name="import_error_resolution_copy_to_device">Copy the file to your device and try again with the local file</string>
-    <string name="import_error_resolution_select_file">Open the file using your device’s file browser app</string>
+    <string name="import_error_resolution_try_again">Reimportar el archivo</string>
+    <string name="import_error_resolution_free_up_space">Asegúrate de que hay suficiente espacio libre en tu dispositivo</string>
+    <string name="import_error_resolution_check_internet">Asegúrate de estar conectado a internet</string>
+    <string name="import_error_resolution_copy_to_device">Copia el archivo a tu dispositivo e inténtalo de nuevo con el archivo local</string>
+    <string name="import_error_resolution_select_file">Abre el archivo usando la aplicación del navegador de archivos de tu dispositivo</string>
 </resources>

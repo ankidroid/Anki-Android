@@ -69,7 +69,7 @@
         <item quantity="other">%d minutos restantes</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new" comment="Header of the reviewer, telling the users how many minutes remains before they have seen all cards. The second parameter is the number of minutes.">
-        <item quantity="one">%1$d hora %2$d restante</item>
+        <item quantity="one">%1$d hour %2$d left</item>
         <item quantity="other">%1$d horas %2$d restantes</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new" comment="Header of the reviewer, telling the users how many minutes remains before they have seen all cards. The second parameter is the number of hours.">

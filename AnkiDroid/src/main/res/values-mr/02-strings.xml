@@ -263,9 +263,12 @@
     <string name="create_shortcut_error">शॉर्टकट जोडताना त्रुटी:%s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">वाक्य भांडवल करा</string>
     <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll" maxLength="28">टूलबार स्क्रोल करा</string>
-    <!-- Symbols used as Button text in IncrementNumberRangePreference -->
+    <!-- IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
+    <string name="invalid_value" comment="Error message in IncrementerNumberRangePreference when input is not a valid number">Invalid value</string>
+    <string name="maximum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the maximum allowed value">Maximum value is %d</string>
+    <string name="minimum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the minimum allowed value">Minimum value is %d</string>
     <!-- Used for credential empty warning message -->
     <string name="invalid_email">एक वैध ईमेल प्रविष्ट करा</string>
     <string name="password_empty">संकेतशब्द आवश्यक आहे</string>
@@ -346,14 +349,13 @@
     <string name="format_deck_description_as_markdown">Format as Markdown</string>
     <string name="help_button_content_description">Open help for ‘%s’</string>
     <string name="failed_to_copy">कॉपी करण्यात अयशस्वी</string>
-    <string name="card_browser_unavailable_when_notes_mode">\'नोट्स\' मोडमध्ये उपलब्ध नाही</string>
     <plurals name="unbury_cards_feedback">
         <item quantity="one">%d कार्ड अनबरी केले</item>
         <item quantity="other">%d कार्ड अनबरी केले</item>
     </plurals>
     <string name="card_template_reposition_template" comment="move a card template to a new position" maxLength="28">बदलणे</string>
-    <string name="previewer_next" comment="Name of the next button in the previewer" maxLength="28">Next</string>
-    <string name="previewer_back" comment="Name of the back button in the previewer" maxLength="28">Back</string>
+    <string name="previewer_next" comment="Name of the next button in the previewer" maxLength="28">पुढे</string>
+    <string name="previewer_back" comment="Name of the back button in the previewer" maxLength="28">पाठीमागे</string>
     <string name="start_recording">रेकॉर्ड</string>
     <string name="stop_recording">थांबा</string>
     <string name="play_recording">खेळा</string>

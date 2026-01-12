@@ -60,7 +60,7 @@
     </plurals>
     <string name="widget_add_note_button">𐌱𐌹𐌰𐌹𐌰𐌿𐌺 𐌰𐌽𐌺𐌴𐌹𐌳𐍂𐌰𐌿𐌳 𐌼𐌴𐌻𐌴𐌹𐌽 𐌽𐌹𐌿𐌾𐌰</string>
     <string name="deck_picker_widget_description" comment="Title of the Deck Picker Widget. Displayed to the user in Android\'s Widget Selection menu">𐌽𐌹𐌼𐌰𐌽𐌳𐍃 𐌺𐌰𐍂𐍄𐌰𐌷𐌿𐌶𐌳𐌹𐍃</string>
-    <string name="card_analysis_extra_widget_description">Card Analysis</string>
+    <string name="card_analysis_extra_widget_description">𐌰𐌽𐌰𐌻𐍅𐍃𐌹𐍃 𐌺𐌰𐍂𐍄𐍉</string>
     <!-- Strings to explain usage in Deck Picker and Card Analysis Widget Configuration screen -->
     <string name="select_decks_title" comment="Title for Deck Selection Dialog">𐌺𐌰𐍂𐍄𐌰𐌷𐌿𐌶𐌳𐌰 𐍅𐌰𐌻𐌾𐌰𐌽</string>
     <string name="select_deck_title" comment="Title for Deck Selection Dialog">𐌺𐌰𐍂𐍄𐌰𐌷𐌿𐌶𐌳 𐍅𐌰𐌻𐌾𐌰𐌽</string>
