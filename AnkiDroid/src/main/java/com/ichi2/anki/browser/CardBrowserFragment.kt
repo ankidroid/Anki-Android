@@ -48,10 +48,11 @@ import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.google.android.material.search.SearchBar
 import com.google.android.material.search.SearchView
 import com.google.android.material.snackbar.Snackbar
+import com.ichi2.anki.ALL_DECKS_ID
 import com.ichi2.anki.AnkiActivityProvider
 import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.CollectionManager.TR
-import com.ichi2.anki.FilteredDeckOptions
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.Flag
 import com.ichi2.anki.R
 import com.ichi2.anki.android.input.ShortcutGroup
@@ -74,7 +75,6 @@ import com.ichi2.anki.common.utils.android.isRobolectric
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.dialogs.BrowserOptionsDialog
 import com.ichi2.anki.dialogs.CardBrowserOrderDialog
-import com.ichi2.anki.dialogs.CreateDeckDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
 import com.ichi2.anki.dialogs.SimpleMessageDialog
@@ -82,6 +82,7 @@ import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
 import com.ichi2.anki.export.ExportDialogFragment
+import com.ichi2.anki.filtered.FilteredDeckOptionsFragment
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.model.CardStateFilter
@@ -322,7 +323,7 @@ class CardBrowserFragment :
                             exportSelected()
                         }
                         R.id.action_create_filtered_deck -> {
-                            showCreateFilteredDeckDialog()
+                            showFilteredDeckScreen()
                         }
                         R.id.action_find_replace -> {
                             showFindAndReplaceDialog()
@@ -784,23 +785,43 @@ class CardBrowserFragment :
         dialog.show(parentFragmentManager, "browserOptionsDialog")
     }
 
-    fun showCreateFilteredDeckDialog() {
-        val dialog = CreateDeckDialog(ankiActivity, R.string.new_deck, CreateDeckDialog.DeckDialogType.FILTERED_DECK, null)
-        dialog.onNewDeckCreated = {
-            startActivity(
-                FilteredDeckOptions.getIntent(
-                    context = requireContext(),
-                    deckId = null,
-                    searchTerms = activityViewModel.searchTerms,
-                ),
-            )
-        }
+    fun showFilteredDeckScreen() {
         launchCatchingTask {
             withProgress {
-                dialog.showFilteredDeckDialog()
+                val currentSearch = activityViewModel.searchTerms
+                // the desktop browser only adds a deck if it's directly selected while we select a
+                // deck outside of the search box. So we need to look at the current search string
+                // and manually set a deck if one is not found
+                val search =
+                    if (currentSearch.isNotEmpty()) {
+                        if (currentSearch.contains("deck:")) {
+                            currentSearch
+                        } else {
+                            "${buildDeckNameSearch()} $currentSearch"
+                        }
+                    } else {
+                        buildDeckNameSearch()
+                    }
+                val intent = FilteredDeckOptionsFragment.getIntent(requireContext(), search = search)
+                startActivity(intent)
             }
         }
     }
+
+    /**
+     * Returns a search string for the current selected deck to be used for building a filtered
+     * deck in the form of "deck:A". If the selected deck is "All Decks" then return a general deck
+     * search string.
+     */
+    private suspend fun buildDeckNameSearch(): String? =
+        if (activityViewModel.deckId == ALL_DECKS_ID) {
+            "deck:_*"
+        } else {
+            activityViewModel.deckId?.let {
+                // decks.name() returns 'no deck' if a deck doesn't exist for that did
+                "\"deck:${withCol { decks.get(it, default = true)?.name }}\""
+            }
+        }
 
     fun changeDisplayOrder() {
         showDialogFragment(

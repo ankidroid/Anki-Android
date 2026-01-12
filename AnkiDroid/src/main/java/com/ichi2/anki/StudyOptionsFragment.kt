@@ -14,7 +14,6 @@
 package com.ichi2.anki
 
 import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
 import android.text.Spanned
 import android.text.method.LinkMovementMethod
@@ -42,6 +41,7 @@ import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.backend.stripHTMLScriptAndStyleTags
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
+import com.ichi2.anki.filtered.FilteredDeckOptionsFragment
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.Decks
 import com.ichi2.anki.observability.ChangeManager
@@ -191,8 +191,7 @@ class StudyOptionsFragment :
             R.id.action_deck_or_study_options -> {
                 Timber.i("StudyOptionsFragment:: Deck or study options button pressed")
                 if (col!!.decks.isFiltered(col!!.decks.selected())) {
-                    val i = Intent(activity, FilteredDeckOptions::class.java)
-                    i.putExtra("defaultConfig", false)
+                    val i = FilteredDeckOptionsFragment.getIntent(requireActivity(), did = col!!.decks.current().id)
                     Timber.i("Opening filtered deck options")
                     onDeckOptionsActivityResult.launch(i)
                 } else {

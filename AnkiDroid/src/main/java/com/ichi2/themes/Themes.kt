@@ -28,14 +28,12 @@ import androidx.core.graphics.drawable.toDrawable
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.fragment.app.FragmentActivity
 import com.google.android.material.color.MaterialColors
-import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
 import com.ichi2.anki.settings.PrefsRepository
 import com.ichi2.anki.settings.enums.AppTheme
 import com.ichi2.anki.settings.enums.DayTheme
 import com.ichi2.anki.settings.enums.NightTheme
 import com.ichi2.anki.settings.enums.Theme
-import com.ichi2.ui.AppCompatPreferenceActivity
 
 /**
  * Helper methods to configure things related to AnkiDroid's themes
@@ -63,16 +61,7 @@ object Themes {
      * Otherwise, updates to the selected theme.
      */
     fun updateCurrentTheme(context: Context) {
-        // AppCompatPreferenceActivity's sharedPreferences is initialized
-        // after the time when the theme should be set
-        // TODO (#5019): always use the context as the parameter for getSharedPrefs
-        val prefsContext =
-            if (context is AppCompatPreferenceActivity<*>) {
-                AnkiDroidApp.instance
-            } else {
-                context
-            }
-        val prefs = PrefsRepository(prefsContext)
+        val prefs = PrefsRepository(context)
         val appTheme = prefs.appTheme
 
         val themeIsDark = (appTheme == AppTheme.FOLLOW_SYSTEM && systemIsInNightMode(context)) || appTheme == AppTheme.NIGHT

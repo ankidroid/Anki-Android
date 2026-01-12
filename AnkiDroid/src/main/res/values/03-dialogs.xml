@@ -67,6 +67,7 @@
     <string name="dialog_yes">Yes</string>
     <string name="dialog_keep">Keep</string>
     <string name="dialog_remove">Remove</string>
+    <string name="dialog_exit" comment="Label for a button which will exit/finish the current screen">Exit</string>
     <string name="dialog_continue">Continue</string>
     <string name="dialog_processing">Processing…</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Create</string>
