@@ -37,7 +37,7 @@ class ScheduleRemindersAdapter(
     private val toggleReminderEnabled: (ReviewReminderId, ReviewReminderScope) -> Unit,
     private val editReminder: (ReviewReminder) -> Unit,
 ) : ListAdapter<ReviewReminder, ScheduleRemindersAdapter.ViewHolder>(diffCallback) {
-    inner class ViewHolder(
+    class ViewHolder(
         binding: ScheduleRemindersListItemBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
         var reminder: ReviewReminder? = null
