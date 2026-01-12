@@ -293,4 +293,7 @@
     <string name="import_error_resolution_check_internet">تأكد من اتصالك بالإنترنت</string>
     <string name="import_error_resolution_copy_to_device">انسخ الملف إلى جهازك وحاول مجدداً باستخدام الملف الذي في جهازك</string>
     <string name="import_error_resolution_select_file">افتح الملف باستخدام تطبيق متصفح الملفات الخاص بجهازك</string>
+    <!-- Post-login dialog -->
+    <string name="login_successful">Login successful</string>
+    <string name="sync_now">Sync now?</string>
 </resources>

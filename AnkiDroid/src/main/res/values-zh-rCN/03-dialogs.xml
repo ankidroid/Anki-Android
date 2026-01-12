@@ -252,4 +252,7 @@
     <string name="import_error_resolution_check_internet">确保您已连接到互联网</string>
     <string name="import_error_resolution_copy_to_device">将文件复制到您的设备，然后使用本地文件重试</string>
     <string name="import_error_resolution_select_file">使用设备的文件浏览器应用打开文件</string>
+    <!-- Post-login dialog -->
+    <string name="login_successful">Login successful</string>
+    <string name="sync_now">Sync now?</string>
 </resources>

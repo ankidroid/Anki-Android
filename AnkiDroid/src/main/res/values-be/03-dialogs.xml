@@ -276,4 +276,7 @@
     <string name="import_error_resolution_check_internet">Пераканайцеся, што ваша прылада падключана да інтэрнэту</string>
     <string name="import_error_resolution_copy_to_device">Скапіюйце файл на сваю прыладу і паспрабуйце яшчэ раз з лакальным файлам</string>
     <string name="import_error_resolution_select_file">Адкрыйце файл з выкарыстаннем праграмы прагляду файлаў на сваёй прыладзе</string>
+    <!-- Post-login dialog -->
+    <string name="login_successful">Login successful</string>
+    <string name="sync_now">Sync now?</string>
 </resources>

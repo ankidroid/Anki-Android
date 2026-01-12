@@ -260,4 +260,7 @@
     <string name="import_error_resolution_check_internet">Internetga ulanganingizga ishonch hosil qiling</string>
     <string name="import_error_resolution_copy_to_device">Faylni qurilmangizga koʻchiring va mahalliy fayl bilan qaytadan urinib koʻring</string>
     <string name="import_error_resolution_select_file">Faylni qurilmangiz fayl brauzeri orqali ochish</string>
+    <!-- Post-login dialog -->
+    <string name="login_successful">Login successful</string>
+    <string name="sync_now">Sync now?</string>
 </resources>

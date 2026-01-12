@@ -260,4 +260,7 @@
     <string name="import_error_resolution_check_internet">certiĝu, ke vi estas konektita kun la interreto</string>
     <string name="import_error_resolution_copy_to_device">kopiu la dosieron al via aparato kaj reprovu elektante lokan dosieron</string>
     <string name="import_error_resolution_select_file">malfermu la dosieron per dosier-esplorilo</string>
+    <!-- Post-login dialog -->
+    <string name="login_successful">Login successful</string>
+    <string name="sync_now">Sync now?</string>
 </resources>
