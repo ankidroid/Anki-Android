@@ -43,7 +43,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Obrir el calaix</string>
     <string name="drawer_close">Tancar el calaix</string>
@@ -191,8 +191,6 @@
     <string name="select_tts" maxLength="28">Selecciona idioma per TTS</string>
     <string name="custom_study" maxLength="28">Estudi a mida</string>
     <string name="dyn_deck_desc">Es tracta d\'un paquet especial per a l\'estudi fora de la planificació normal. Després de revisar-les, les fitxes es tornaran automàticament al seus paquets originals. Si suprimiu aquest paquet de la llista de paquets, totes les fitxes tornaran al seu paquet inicial.</string>
-    <string name="steps_error">Els passos han de ser números majors que 0</string>
-    <string name="steps_min_error">Com a mínim un pas s\'exigeix</string>
     <string name="tag_editor_add_feedback">Prem \"%2$s\" per confirmar afegir \"%1$s\"</string>
     <string name="tag_editor_add_feedback_existing">Etiqueta existent \"%1$s\" seleccionada</string>
     <!-- Time spans -->

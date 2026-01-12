@@ -43,7 +43,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Navigation drawer strings -->
     <string name="drawer_open">തുറക്കുക ഡ്രോയർ</string>
     <string name="drawer_close">ഡ്രോയർ അടയ്‌ക്കുക</string>
@@ -191,8 +191,6 @@
     <string name="select_tts" maxLength="28">TTS ഭാഷ സജ്ജമാക്കുക</string>
     <string name="custom_study" maxLength="28">ഇഷ്‌ടാനുസൃത പഠനം</string>
     <string name="dyn_deck_desc">സാധാരണ ഷെഡ്യൂളിന് പുറത്ത് പഠിക്കുന്നതിനുള്ള ഒരു പ്രത്യേക ഡെക്കാണിത്. കാർഡുകൾ നിങ്ങൾ അവലോകനം ചെയ്ത ശേഷം അവയുടെ യഥാർത്ഥ ഡെക്കുകളിലേക്ക് സ്വപ്രേരിതമായി മടങ്ങും. ഡെക്ക് ലിസ്റ്റിൽ നിന്ന് ഈ ഡെക്ക് ഇല്ലാതാക്കുന്നത് ശേഷിക്കുന്ന എല്ലാ കാർഡുകളും അവയുടെ യഥാർത്ഥ ഡെക്കിലേക്ക് തിരികെ നൽകും.</string>
-    <string name="steps_error">ഘട്ടങ്ങൾ 0 ൽ കൂടുതലുള്ള അക്കങ്ങളായിരിക്കണം</string>
-    <string name="steps_min_error">കുറഞ്ഞത് ഒരു ഘട്ടമെങ്കിലും ആവശ്യമാണ്</string>
     <string name="tag_editor_add_feedback">“%1$s” ചേർക്കുന്നത് സ്ഥിരീകരിക്കുന്നതിന് “%2$s” സ്‌പർശിക്കുക.</string>
     <string name="tag_editor_add_feedback_existing">നിലവിലുള്ള ടാഗ് “%1$s” തിരഞ്ഞെടുത്തു</string>
     <!-- Time spans -->

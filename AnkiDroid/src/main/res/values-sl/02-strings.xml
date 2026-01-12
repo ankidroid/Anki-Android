@@ -43,7 +43,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Odpri predal</string>
     <string name="drawer_close">Zapri predal</string>
@@ -197,8 +197,6 @@
     <string name="select_tts" maxLength="28">Nastavi jezik TTS</string>
     <string name="custom_study" maxLength="28">Učenje po meri</string>
     <string name="dyn_deck_desc">To je poseben komplet za učenje izven običajnega urnika. Kartice bodo samodejno vrnjene v izvirne komplete, ko jih pregledate. Izbris tega kompleta s seznama bo vrnil vse preostale kartice v izvirni komplet.</string>
-    <string name="steps_error">Koraki morajo biti številke večje od 0</string>
-    <string name="steps_min_error">Zahtevan je vsaj en korak</string>
     <string name="tag_editor_add_feedback">Pritisnite \"%2$s\", da potrdite dodajanje \"%1$s\"</string>
     <string name="tag_editor_add_feedback_existing">Izbrana obstoječa oznaka \"%1$s\"</string>
     <!-- Time spans -->

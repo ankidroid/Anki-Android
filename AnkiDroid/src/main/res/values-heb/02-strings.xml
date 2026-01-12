@@ -43,7 +43,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Navigation drawer strings -->
     <string name="drawer_open">פתיחת תפריט</string>
     <string name="drawer_close">סגירת תפריט</string>
@@ -197,8 +197,6 @@
     <string name="select_tts" maxLength="28">הגדר שפת TTS</string>
     <string name="custom_study" maxLength="28">אימון נוסף</string>
     <string name="dyn_deck_desc">חפיסה זאת הינה חפיסה מיוחדת ללמידה מחוץ ללו\"ז הרגיל. הכרטיסים יוחזרו באופן אוטומטי לחפיסותיהם המקוריות לאחר סיום הלמידה. מחיקת החפיסה תחזיר את כל הכרטיסים שנותרו בה לחפיסותיהם המקוריות.</string>
-    <string name="steps_error">שלבים חייב להיות מספר גדול יותר מ0</string>
-    <string name="steps_min_error">לפחות שלב אחד נדרש</string>
     <string name="tag_editor_add_feedback">לחץ \"%2$s\" לאישור הוספת \"%1$s\"</string>
     <string name="tag_editor_add_feedback_existing">תגית קיימת \"%1$s\" נבחרה</string>
     <!-- Time spans -->

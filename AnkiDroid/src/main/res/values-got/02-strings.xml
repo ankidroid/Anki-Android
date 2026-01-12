@@ -43,7 +43,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Open drawer</string>
     <string name="drawer_close">Close drawer</string>
@@ -191,8 +191,6 @@
     <string name="select_tts" maxLength="28">𐌱𐍉𐌺𐍉-𐌳𐌿-𐍃𐍄𐌹𐌱𐌽𐌰𐌹 𐍂𐌰𐌶𐌳𐌰 𐌻𐌰𐌲𐌾𐌰𐌽</string>
     <string name="custom_study" maxLength="28">𐌰𐌽𐌸𐌰𐍂𐌰 𐌻𐌰𐌹𐍃𐌴𐌹𐌽𐍃</string>
     <string name="dyn_deck_desc">This is a special deck for studying outside of the normal schedule. Cards will be automatically returned to their original decks after you review them. Deleting this deck from the deck list will return all remaining cards to their original deck.</string>
-    <string name="steps_error">𐌲𐍂𐌴𐌳𐌴𐌹𐍃 𐍃𐌺𐌿𐌻𐌿𐌽 𐍅𐌹𐍃𐌰𐌽 𐍂𐌰𐌸𐌾𐍉𐌽𐍃 𐌼𐌰𐌽𐌰𐌲𐌹𐌶𐌴𐌹𐌽𐍃 𐌸𐌰𐌿 0</string>
-    <string name="steps_min_error">𐌼𐌰𐌹𐍃 𐌸𐌰𐌿 𐌰𐌹𐌽𐌰 𐌲𐍂𐌹𐌸𐍃 𐌱𐌹𐌽𐌰𐌷</string>
     <string name="tag_editor_add_feedback">\"%2$s\" 𐌰𐍄𐍄𐌴𐌺𐌰𐌽 𐌳𐌿 𐌲𐌰𐍄𐌿𐌻𐌲𐌾𐌰𐌽 𐌱𐌹𐌰𐌿𐌺𐌰𐌽 \"%1$s\"</string>
     <string name="tag_editor_add_feedback_existing">𐍅𐌹𐍃𐌰𐌽𐌳𐍉 𐍃𐍉𐌺𐌽𐌹𐍅𐌰𐌿𐍂𐌳 \"%1$s\" 𐌲𐌰𐍅𐌰𐌻𐌹𐌸</string>
     <!-- Time spans -->

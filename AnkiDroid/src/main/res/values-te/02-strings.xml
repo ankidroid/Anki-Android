@@ -43,7 +43,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Navigation drawer strings -->
     <string name="drawer_open">సొరుగు తెరవండి</string>
     <string name="drawer_close">సొరుగును మూసివేయండి</string>
@@ -191,8 +191,6 @@
     <string name="select_tts" maxLength="28">TTS భాషను సెట్ చేయండి</string>
     <string name="custom_study" maxLength="28">అనుకూల అధ్యయనం</string>
     <string name="dyn_deck_desc">సాధారణ షెడ్యూల్ అధ్యయనం కోసం ఇది ప్రత్యేక డెక్. స్వయంచాలకంగా కార్డ్లను వాటిని సమీక్షించి, దాని అసలు డెక్స్కు వాటిని స్వయంచాలకంగా పునరుద్ధరించండి. డెక్ జాబితా నుండి ఈ డెక్ను తొలగిస్తే మిగిలిన అన్ని కార్డులను వారి అసలు డెక్కు తిరిగి పంపుతుంది.</string>
-    <string name="steps_error">దశలు 0 కన్నా ఎక్కువ ఉండాలి</string>
-    <string name="steps_min_error">కనీసం ఒక అడుగు అవసరం</string>
     <string name="tag_editor_add_feedback">\"%1$s\" ని జోడించడాన్ని నిర్ధారించడానికి \"%2$s\" తాకండి</string>
     <string name="tag_editor_add_feedback_existing">ఇప్పటికే ఉన్న ట్యాగ్ \"%1$s\" ఎంచుకోబడింది</string>
     <!-- Time spans -->

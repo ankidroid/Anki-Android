@@ -43,7 +43,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Apri barra di navigazione</string>
     <string name="drawer_close">Chiudi barra di navigazione</string>
@@ -191,8 +191,6 @@
     <string name="select_tts" maxLength="28">Imposta lingua TTS</string>
     <string name="custom_study" maxLength="28">Studio personalizzato</string>
     <string name="dyn_deck_desc">Questo è un mazzo speciale per studiare al di fuori della pianificazione normale. Le carte ritorneranno automaticamente nel mazzo originale dopo che le hai ripetute. L\'eliminazione di questo mazzo dall\'elenco dei mazzi riporterà tutte le carte rimanenti nel loro mazzo originale.</string>
-    <string name="steps_error">I passi devono essere un numero maggiore di 0</string>
-    <string name="steps_min_error">È necessaria la presenza di almeno un passo</string>
     <string name="tag_editor_add_feedback">Tocca \"%2$s\" per confermare l\'aggiunta di \"%1$s\"</string>
     <string name="tag_editor_add_feedback_existing">Etichetta esistente \"%1$s\" selezionata</string>
     <!-- Time spans -->

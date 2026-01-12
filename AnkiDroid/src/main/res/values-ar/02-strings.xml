@@ -43,7 +43,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Navigation drawer strings -->
     <string name="drawer_open">فتح القائمة</string>
     <string name="drawer_close">أغلق القائمة</string>
@@ -203,8 +203,6 @@
     <string name="select_tts" maxLength="28">تعيين لغة تحويل النص إلى كلام</string>
     <string name="custom_study" maxLength="28">دراسة مخصصة</string>
     <string name="dyn_deck_desc">هذه رزمة خاصة للدراسة خارج الجدول المعتاد. ستعود البطاقات إلى رزمها الأصلية تلقائيًا بعد مراجعتها. يؤدي حذف هذه الرزمة من قائمة الرزم إلى إعادة كل البطاقات المتبقية إلى رزمها الأصلية.</string>
-    <string name="steps_error">يجب أن تكون الخطوات أعدادًا أكبر من الصفر</string>
-    <string name="steps_min_error">تلزمك خطوة واحدة في الأقل</string>
     <string name="tag_editor_add_feedback">انقر «%2$s» لتُأكِّد إضافة «%1$s»</string>
     <string name="tag_editor_add_feedback_existing">تم تحديد الوسم الموجود «%1$s»</string>
     <!-- Time spans -->

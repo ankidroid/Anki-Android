@@ -43,7 +43,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Mở ngăn kéo</string>
     <string name="drawer_close">Đóng ngăn kéo</string>
@@ -188,8 +188,6 @@
     <string name="select_tts" maxLength="28">Thiết lập ngôn ngữ TTS</string>
     <string name="custom_study" maxLength="28">Học theo tuỳ chọn</string>
     <string name="dyn_deck_desc">Đây là bộ thẻ đặc biệt phục vụ cho việc học ngoài lịch trình thông thường. Các thẻ sẽ tự động quay lại bộ thẻ ban đầu của chúng sau khi ôn tập. Xoá bộ thẻ này khỏi danh sách sẽ chuyển toàn bộ thẻ còn lại về bộ thẻ ban đầu của chúng.</string>
-    <string name="steps_error">Các bước phải là số lớn hơn 0</string>
-    <string name="steps_min_error">Yêu cầu phải có ít nhất một bước</string>
     <string name="tag_editor_add_feedback">Bấm \"%2$s\" để xác nhận thêm \"%1$s\"</string>
     <string name="tag_editor_add_feedback_existing">Đã chọn đuôi hiện hữu \"%1$s\"</string>
     <!-- Time spans -->

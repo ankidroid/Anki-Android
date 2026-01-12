@@ -43,7 +43,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Zijmenu openen</string>
     <string name="drawer_close">Zijmenu sluiten</string>
@@ -191,8 +191,6 @@
     <string name="select_tts" maxLength="28">TTS-taal instellen</string>
     <string name="custom_study" maxLength="28">Aangepast studeren</string>
     <string name="dyn_deck_desc">Dit is een speciale set bedoeld om buiten het normale schema te studeren. Kaarten keren onmiddellijk terug naar hun oorspronkelijke set nadat u hen overhoord heeft. Als u deze set verwijdert, keren alle overgebleven kaarten onmiddellijk terug naar hun oorspronkelijke set.</string>
-    <string name="steps_error">Aantal stappen moet hoger zijn dan 0</string>
-    <string name="steps_min_error">Ten minste één stap is vereist</string>
     <string name="tag_editor_add_feedback">Druk op  “%2$s” om het toevoegen van “%1$s” te bevestigen</string>
     <string name="tag_editor_add_feedback_existing">Bestaand label “%1$s” geselecteerd</string>
     <!-- Time spans -->

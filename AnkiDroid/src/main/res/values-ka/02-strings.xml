@@ -43,7 +43,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Navigation drawer strings -->
     <string name="drawer_open">ნავიგაციის პანელის გახსნა</string>
     <string name="drawer_close">ნავიგაციის პანელის დახურვა</string>
@@ -191,8 +191,6 @@
     <string name="select_tts" maxLength="28">ხმოვანი წამკითხველის ენის არჩევა</string>
     <string name="custom_study" maxLength="28">ინდივიდუალური სწავლა</string>
     <string name="dyn_deck_desc">ეს მიზნობრივი დასტაა, რომელიც საშუალებას გაძლევთ, ჩვეულებრივი განრიგი უგულებელყოფოთ და სურვილისამებრ ისწავლოთ. მეცადინეობის შემდეგ ბარათები საწყის დასტას ავტომატურად დაუბრუნდება. დასტის დასტების სიიდან ამოშლის შემთხვევაში ყველა დარჩენილი ბარათი შესაბამის საწყის დასტას დაუბრუნდება.</string>
-    <string name="steps_error">ნაბიჯების რაოდენობა უნდა აღემატებოდეს 0-ს</string>
-    <string name="steps_min_error">საჭიროა სულ მცირე ერთი ნაბიჯი მაინც</string>
     <string name="tag_editor_add_feedback">„%1$s-ის“ დამატების დასადასტურებლად შეეხეთ „%2$s-ს“</string>
     <string name="tag_editor_add_feedback_existing">მოინიშნა არსებული იარლიყი „%1$s“</string>
     <!-- Time spans -->

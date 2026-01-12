@@ -43,7 +43,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Atvērt izvēlni</string>
     <string name="drawer_close">Aizvērt izvēlni</string>
@@ -194,8 +194,6 @@
     <string name="select_tts" maxLength="28">Iestatīt teksta pārveidošanas runā valodu</string>
     <string name="custom_study" maxLength="28">Pielāgota mācīšanās</string>
     <string name="dyn_deck_desc">Šī ir īpaša kava, kas paredzēta papildu mācībām. Kartītes pēc to pārskatīšanas tiks automātiski atgrieztas sākotnējās kavās. Šīs kavas izdzēšana no saraksta atgriezīs atlikušās kartītes to sākotnējā kavā.</string>
-    <string name="steps_error">Soļiem ir jābūt skatiļiem, kas ir lielāki par 0</string>
-    <string name="steps_min_error">Ir nepieciešams vismaz viens solis</string>
     <string name="tag_editor_add_feedback">Pieskarties \"%2$s\", lai apstiprinātu \"%1$s\" pievienošanu</string>
     <string name="tag_editor_add_feedback_existing">Atlasīta esoša birka \"%1$s\"</string>
     <!-- Time spans -->

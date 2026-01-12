@@ -43,7 +43,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Navigation drawer strings -->
     <string name="drawer_open">ਦਰਾਜ਼ ਖੋਲ੍ਹੋ</string>
     <string name="drawer_close">ਦਰਾਜ਼ ਬੰਦ ਕਰੋ</string>
@@ -191,8 +191,6 @@
     <string name="select_tts" maxLength="28">TTS ਭਾਸ਼ਾ ਸੈੱਟ ਕਰੋ</string>
     <string name="custom_study" maxLength="28">ਕਸਟਮ ਅਧਿਐਨ</string>
     <string name="dyn_deck_desc">ਇਹ ਆਮ ਅਨੁਸੂਚੀ ਤੋਂ ਬਾਹਰ ਅਧਿਐਨ ਕਰਨ ਲਈ ਇੱਕ ਵਿਸ਼ੇਸ਼ ਡੈੱਕ ਹੈ। ਤੁਹਾਡੇ ਦੁਆਰਾ ਉਹਨਾਂ ਦੀ ਸਮੀਖਿਆ ਕਰਨ ਤੋਂ ਬਾਅਦ ਕਾਰਡ ਆਪਣੇ ਆਪ ਉਹਨਾਂ ਦੇ ਅਸਲ ਡੈੱਕ \'ਤੇ ਵਾਪਸ ਆ ਜਾਣਗੇ। ਡੈੱਕ ਸੂਚੀ ਵਿੱਚੋਂ ਇਸ ਡੈੱਕ ਨੂੰ ਮਿਟਾਉਣ ਨਾਲ ਬਾਕੀ ਸਾਰੇ ਕਾਰਡ ਉਹਨਾਂ ਦੇ ਅਸਲ ਡੈੱਕ \'ਤੇ ਵਾਪਸ ਆ ਜਾਣਗੇ।</string>
-    <string name="steps_error">ਕਦਮਾਂ ਦੀ ਗਿਣਤੀ 0 ਤੋਂ ਵੱਧ ਹੋਣੀ ਚਾਹੀਦੀ ਹੈ</string>
-    <string name="steps_min_error">ਘੱਟੋ-ਘੱਟ ਇੱਕ ਕਦਮ ਦੀ ਲੋੜ ਹੈ</string>
     <string name="tag_editor_add_feedback">\"%1$s\" ਨੂੰ ਜੋੜਨ ਦੀ ਪੁਸ਼ਟੀ ਕਰਨ ਲਈ \"%2$s\" ਨੂੰ ਛੋਹਵੋ।</string>
     <string name="tag_editor_add_feedback_existing">ਮੌਜੂਦਾ ਟੈਗ “%1$s” ਚੁਣਿਆ ਗਿਆ</string>
     <!-- Time spans -->

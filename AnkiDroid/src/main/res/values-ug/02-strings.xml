@@ -43,7 +43,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Navigation drawer strings -->
     <string name="drawer_open">يان تارتمىنى ئاچ</string>
     <string name="drawer_close">يان تارتمىنى تاقا</string>
@@ -191,8 +191,6 @@
     <string name="select_tts" maxLength="28">تېكىستتىن تىلغا تىل تەڭشىكى</string>
     <string name="custom_study" maxLength="28">ئىختىيارى ئۆگىنىش</string>
     <string name="dyn_deck_desc">بۇ ئادەتتىكى كۈنتەرتىپنىڭ سىرتىدىكى مەزمۇننى ئۆگىنىدىغان ئالاھىدە دەستە. كارتىنى تەكرارلىغاندىن كېيىن ئەسلىدىكى دەستەسىگە قايتۇرۇلىدۇ. ئەگەر دەستە تىزىمىدىن بۇ دەستە ئۆچۈرۈلسە، قېپقالغان كارتا دەسلەپكى دەستە ئورنىغا ئەسلىگە قايتۇرۇلىدۇ.</string>
-    <string name="steps_error">ئۆگىنىش باسقۇچىنىڭ قىممىتى چوقۇم 0 دىن چوڭ سان بولۇشى كېرەك</string>
-    <string name="steps_min_error">كەم دېگەندە بىر ئۆگىنىش باسقۇچىنى تاللاش كېرەك</string>
     <string name="tag_editor_add_feedback">«%2$s» نى چېكىپ «%1$s» نى قوشۇش  جەزملىنىدۇ</string>
     <string name="tag_editor_add_feedback_existing">مەۋجۇت «%1$s» بەلگە تاللاندى</string>
     <!-- Time spans -->

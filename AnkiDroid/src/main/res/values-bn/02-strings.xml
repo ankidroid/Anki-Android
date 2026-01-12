@@ -43,7 +43,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Navigation drawer strings -->
     <string name="drawer_open">ড্রয়ার খুলুন</string>
     <string name="drawer_close">ড্রয়ার বন্ধ করুন</string>
@@ -191,8 +191,6 @@
     <string name="select_tts" maxLength="28">TTS ভাষা সেট করুন</string>
     <string name="custom_study" maxLength="28">কাস্টম অধ্যয়ন</string>
     <string name="dyn_deck_desc">স্বাভাবিক সময়সূচীর বাইরে অধ্যয়ন করার জন্য এটি একটি বিশেষ ডেক। রিভিউয়ের পর কার্ডসমূহকে স্বয়ংক্রিয়ভাবে তাদের আসল ডেকসমূহে ফিরিয়ে দেয়া হবে। এই ডেকটি মুছে ফেলা হলে বাকি থাকা কার্ডগুলিকে তাদের আসল ডেকে ফিরিয়ে দেয়া হবে।</string>
-    <string name="steps_error">ধাপ 0-এর বেশি হতে হবে</string>
-    <string name="steps_min_error">অন্তত একটি পদক্ষেপ প্রয়োজন</string>
     <string name="tag_editor_add_feedback">Touch “%2$s” to confirm adding “%1$s”</string>
     <string name="tag_editor_add_feedback_existing">Existing tag “%1$s” selected</string>
     <!-- Time spans -->
