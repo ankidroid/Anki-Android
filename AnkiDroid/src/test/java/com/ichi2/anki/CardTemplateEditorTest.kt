@@ -25,11 +25,13 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CardTemplateEditor.CardTemplateFragment.CardTemplate
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.dialogs.InsertFieldDialog
+import com.ichi2.anki.libanki.CardOrdinal
 import com.ichi2.anki.libanki.NotetypeJson
 import com.ichi2.anki.libanki.testutils.ext.addNote
 import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.anki.notetype.ManageNoteTypesState.CardEditor
 import com.ichi2.anki.previewer.CardViewerActivity
+import com.ichi2.anki.previewer.TemplatePreviewerFragment
 import com.ichi2.anki.scheduling.selectTab
 import com.ichi2.testutils.assertFalse
 import com.ichi2.testutils.withSplitPaneUi
@@ -868,6 +870,16 @@ class CardTemplateEditorTest : RobolectricTest() {
             }
         }
 
+    @Test
+    fun `correct ord is previewed after tab change - tablet ui - issue 20097`() =
+        withSplitPaneUi {
+            withCardTemplateEditor(col.notetypes.basicAndReversed) {
+                selectTab(1)
+
+                assertThat(previewer.ord, equalTo(1))
+            }
+        }
+
     private fun addCardType(
         testEditor: CardTemplateEditor,
         shadowTestEditor: ShadowActivity,
@@ -962,3 +974,9 @@ fun RobolectricTest.withCardTemplateEditor(
 fun CardTemplateEditor.selectTab(index: Int) = topBinding.slidingTabs.selectTab(index)
 
 val CardTemplateEditor.selectedTabPosition: Int get() = topBinding.slidingTabs.selectedTabPosition
+
+val CardTemplateEditor.previewer: TemplatePreviewerFragment
+    get() = this.supportFragmentManager.findFragmentById(R.id.fragment_container) as TemplatePreviewerFragment
+
+val TemplatePreviewerFragment.ord: CardOrdinal
+    get() = this.viewModel.ordFlow.value
