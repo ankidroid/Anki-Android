@@ -32,7 +32,7 @@ import com.ichi2.anki.notetype.ManageNoteTypesState.CardEditor
 import com.ichi2.anki.previewer.CardViewerActivity
 import com.ichi2.anki.scheduling.selectTab
 import com.ichi2.testutils.assertFalse
-import com.ichi2.testutils.withTabletUi
+import com.ichi2.testutils.withSplitPaneUi
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert
 import org.hamcrest.MatcherAssert.assertThat
@@ -859,7 +859,7 @@ class CardTemplateEditorTest : RobolectricTest() {
 
     @Test
     fun `tab changes succeed with tablet UI - Issue 19589`() =
-        withTabletUi {
+        withSplitPaneUi {
             withCardTemplateEditor(col.notetypes.basicAndReversed) {
                 selectTab(1)
                 selectTab(0)
