@@ -232,21 +232,20 @@ open class CardTemplateEditor :
 
         topBinding.slidingTabs.doOnTabSelected { tab ->
             Timber.i("selected card index: %s", tab.position)
-            loadTemplatePreviewerFragmentIfFragmented()
+            loadTemplatePreviewerFragmentIfFragmented(tab.position)
         }
     }
 
     /**
      *  Loads or reloads [tempNoteType] in [R.id.fragment_container] if the view is fragmented. Do nothing otherwise.
      */
-    private fun loadTemplatePreviewerFragmentIfFragmented() {
+    private fun loadTemplatePreviewerFragmentIfFragmented(ord: CardOrdinal = mainBinding.cardTemplateEditorPager.currentItem) {
         if (!fragmented) {
             return
         }
         launchCatchingTask {
             val notetype = tempNoteType!!.notetype
             val notetypeFile = NotetypeFile(this@CardTemplateEditor, notetype)
-            val ord = mainBinding.cardTemplateEditorPager.currentItem
             val note = withCol { currentFragment?.getNote(this) ?: Note.fromNotetypeId(this@withCol, notetype.id) }
             val args =
                 TemplatePreviewerArguments(
