@@ -168,24 +168,7 @@ open class SafeWebViewLayout :
      */
     @MainThread
     fun safeDestroy() {
-        Timber.d("Destroying WebView")
-
-        runCatchingWithReport("safeDestroy", onlyIfSilent = true) {
-            webView.stopLoading()
-            webView.loadUrl("about:blank")
-
-            webView.webChromeClient = null
-
-            removeView(webView)
-
-            // remove listeners this class exposes
-            webView.setOnScrollChangeListener(null)
-        }
-
-        // attempt to run destroy() even if the above fails
-        runCatchingWithReport("safeDestroy", onlyIfSilent = true) {
-            webView.destroy()
-        }
+        destroyWebView(webView, this)
     }
 
     companion object {
@@ -194,6 +177,36 @@ open class SafeWebViewLayout :
                 LayoutParams.MATCH_PARENT,
                 LayoutParams.MATCH_PARENT,
             )
+
+        /**
+         * Clean up and destroy the [webView] to prevent memory leaks.
+         *
+         * Stops any loading, clears callbacks, and removes the view from its [parent].
+         */
+        fun destroyWebView(
+            webView: WebView?,
+            parent: ViewGroup? = webView?.parent as? ViewGroup,
+        ) {
+            Timber.d("Destroying WebView")
+
+            runCatchingWithReport("safeDestroy", onlyIfSilent = true) {
+                webView?.apply {
+                    stopLoading()
+                    loadUrl("about:blank")
+                    webChromeClient = null
+                    // remove listeners this class exposes
+                    setOnScrollChangeListener(null)
+                }
+
+                // remove WebView from parent view
+                parent?.removeView(webView) ?: Timber.w("WebView parent is null")
+            }
+
+            // attempt to run destroy() even if the above fails
+            runCatchingWithReport("safeDestroy", onlyIfSilent = true) {
+                webView?.destroy()
+            }
+        }
     }
 }
 
