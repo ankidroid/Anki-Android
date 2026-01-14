@@ -17,30 +17,44 @@
 package com.ichi2.anki
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.libanki.CardOrdinal
+import com.ichi2.anki.libanki.NoteTypeId
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class CardTemplateEditorViewModel : ViewModel() {
     private val _state = MutableStateFlow<CardTemplateEditorState>(CardTemplateEditorState.Loading)
     val state: StateFlow<CardTemplateEditorState> = _state.asStateFlow()
 
     /**
-     * Transitions to the Loaded state.
-     * Called internally after data is successfully loaded.
+     * Loads the notetype from the collection and transitions to Loaded state.
      */
-    internal fun onLoadComplete() {
-        _state.value = CardTemplateEditorState.Loaded()
-    }
-
-    /**
-     * Transitions to the Error state.
-     * Called internally when an error occurs.
-     */
-    internal fun onError(exception: CardTemplateEditorState.ReportableException) {
-        _state.value = CardTemplateEditorState.Error(exception)
+    fun loadNotetype(noteTypeId: NoteTypeId) {
+        Timber.d("Loading notetype with id: $noteTypeId")
+        viewModelScope.launch {
+            try {
+                val notetype =
+                    withCol {
+                        notetypes.clearCache()
+                        notetypes.get(noteTypeId)!!.deepClone()
+                    }
+                val tempNotetype = CardTemplateNotetype(notetype)
+                _state.value = CardTemplateEditorState.Loaded(tempNotetype = tempNotetype)
+                Timber.d("Notetype loaded successfully: ${notetype.name}")
+            } catch (e: Exception) {
+                Timber.e(e, "Failed to load notetype")
+                _state.value =
+                    CardTemplateEditorState.Error(
+                        CardTemplateEditorState.ReportableException(e),
+                    )
+            }
+        }
     }
 
     /**
@@ -60,11 +74,71 @@ class CardTemplateEditorViewModel : ViewModel() {
     }
 
     /**
-     * Updates the current editor view.
+     * Updates the current editor view (front/back/styling).
      * Only valid when in Loaded state.
      */
     fun setCurrentEditorView(viewType: EditorViewType) {
         updateLoadedState { it.copy(currentEditorView = viewType) }
+    }
+
+    /**
+     * Updates template content for the given ordinal and view type.
+     */
+    fun updateTemplateContent(
+        ord: CardOrdinal,
+        viewType: EditorViewType,
+        content: String,
+    ) {
+        val loadedState = _state.value as? CardTemplateEditorState.Loaded ?: return
+        val tempNotetype = loadedState.tempNotetype
+        // During ViewPager tab transitions, TextWatcher may fire with a stale ordinal
+        // (e.g. when switching from a note type with 3 templates to one with 2).
+        // The legacy code path handles the actual update, so we can safely skip here.
+        if (ord < 0 || ord >= tempNotetype.templateCount) {
+            Timber.w("updateTemplateContent: ord=$ord out of bounds (count=${tempNotetype.templateCount})")
+            return
+        }
+        val template = tempNotetype.getTemplate(ord)
+        when (viewType) {
+            EditorViewType.STYLING -> tempNotetype.css = content
+            EditorViewType.BACK -> template.afmt = content
+            EditorViewType.FRONT -> template.qfmt = content
+        }
+        tempNotetype.updateTemplate(ord, template)
+        Timber.d("Template content updated for ord=$ord, viewType=$viewType")
+    }
+
+    /**
+     * Attempts to add a new template to the notetype.
+     * Returns false if the notetype is cloze (cannot add templates).
+     */
+    fun addTemplate(): Boolean {
+        val loadedState = _state.value as? CardTemplateEditorState.Loaded ?: return false
+        val tempNotetype = loadedState.tempNotetype
+        if (tempNotetype.notetype.isCloze) {
+            Timber.w("Cannot add template to cloze notetype")
+            updateLoadedState { it.copy(message = CardTemplateEditorState.UserMessage.CantAddTemplateToDynamic) }
+            return false
+        }
+        Timber.d("Adding new template")
+        return true
+    }
+
+    /**
+     * Attempts to remove the template at the given ordinal.
+     * Returns false if this is the last template.
+     */
+    fun removeTemplate(ord: CardOrdinal): Boolean {
+        val loadedState = _state.value as? CardTemplateEditorState.Loaded ?: return false
+        val tempNotetype = loadedState.tempNotetype
+        if (tempNotetype.templateCount < 2) {
+            Timber.w("Cannot delete last template")
+            updateLoadedState { it.copy(message = CardTemplateEditorState.UserMessage.CantDeleteLastTemplate) }
+            return false
+        }
+        Timber.d("Removing template at ord=$ord")
+        tempNotetype.removeTemplate(ord)
+        return true
     }
 
     /**

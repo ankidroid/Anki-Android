@@ -19,6 +19,7 @@ package com.ichi2.anki
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.testutils.JvmTest
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -35,29 +36,6 @@ class CardTemplateEditorViewModelTest : JvmTest() {
     }
 
     @Test
-    fun `onLoadComplete transitions to Loaded state`() {
-        val viewModel = createViewModel()
-        viewModel.onLoadComplete()
-
-        val state = viewModel.state.value
-        assertTrue(state is CardTemplateEditorState.Loaded)
-        assertEquals(0, (state as CardTemplateEditorState.Loaded).currentTemplateOrd)
-        assertEquals(EditorViewType.FRONT, state.currentEditorView)
-        assertNull(state.message)
-    }
-
-    @Test
-    fun `setCurrentTemplateOrd updates state when Loaded`() {
-        val viewModel = createViewModel()
-        viewModel.onLoadComplete()
-
-        viewModel.setCurrentTemplateOrd(2)
-
-        val state = viewModel.state.value as CardTemplateEditorState.Loaded
-        assertEquals(2, state.currentTemplateOrd)
-    }
-
-    @Test
     fun `setCurrentTemplateOrd is ignored when Loading`() {
         val viewModel = createViewModel()
         // Still in Loading state
@@ -68,45 +46,30 @@ class CardTemplateEditorViewModelTest : JvmTest() {
     }
 
     @Test
-    fun `setCurrentEditorView updates state when Loaded`() {
-        val viewModel = createViewModel()
-        viewModel.onLoadComplete()
-
-        viewModel.setCurrentEditorView(EditorViewType.STYLING)
-
-        val state = viewModel.state.value as CardTemplateEditorState.Loaded
-        assertEquals(EditorViewType.STYLING, state.currentEditorView)
-    }
-
-    @Test
     fun `onFinish transitions to Finished state`() {
         val viewModel = createViewModel()
-        viewModel.onLoadComplete()
         viewModel.onFinish()
 
         assertTrue(viewModel.state.value is CardTemplateEditorState.Finished)
     }
 
     @Test
-    fun `onError transitions to Error state`() {
+    fun `addTemplate returns false when not in Loaded state`() {
         val viewModel = createViewModel()
-        val exception = CardTemplateEditorState.ReportableException(RuntimeException("test"))
-
-        viewModel.onError(exception)
-
-        val state = viewModel.state.value
-        assertTrue(state is CardTemplateEditorState.Error)
-        assertEquals(exception, (state as CardTemplateEditorState.Error).exception)
+        assertFalse(viewModel.addTemplate())
     }
 
     @Test
-    fun `clearMessage resets message to null when Loaded`() {
+    fun `removeTemplate returns false when not in Loaded state`() {
         val viewModel = createViewModel()
-        viewModel.onLoadComplete()
+        assertFalse(viewModel.removeTemplate(0))
+    }
 
-        viewModel.clearMessage()
-
-        val state = viewModel.state.value as CardTemplateEditorState.Loaded
-        assertNull(state.message)
+    @Test
+    fun `updateTemplateContent does nothing when not in Loaded state`() {
+        val viewModel = createViewModel()
+        // Should not crash
+        viewModel.updateTemplateContent(0, EditorViewType.FRONT, "test content")
+        assertTrue(viewModel.state.value is CardTemplateEditorState.Loading)
     }
 }

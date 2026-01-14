@@ -38,6 +38,8 @@ sealed class CardTemplateEditorState {
      * This is the main working state where the user is editing templates.
      */
     data class Loaded(
+        /** The notetype being edited */
+        val tempNotetype: CardTemplateNotetype,
         /** The currently selected template ordinal (0-based index) */
         val currentTemplateOrd: CardOrdinal = 0,
         /** The currently selected editor view (front/back/styling) */
@@ -46,12 +48,12 @@ sealed class CardTemplateEditorState {
         val message: UserMessage? = null,
     ) : CardTemplateEditorState()
 
-    /** Error during loading */
+    /** Error during loading or operation */
     data class Error(
         val exception: ReportableException,
     ) : CardTemplateEditorState()
 
-    /** Finished, activity should close */
+    /** Finished - activity should close */
     data object Finished : CardTemplateEditorState()
 
     /** Simple message to be shown to the user */

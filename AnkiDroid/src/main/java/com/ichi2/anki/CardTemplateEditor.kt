@@ -48,6 +48,7 @@ import androidx.core.view.isVisible
 import androidx.core.view.size
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commitNow
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -359,6 +360,8 @@ open class CardTemplateEditor :
         if (tempNoteType == null) {
             tempNoteType = CardTemplateNotetype(col.notetypes.get(noteTypeId)!!.deepClone())
             // Timber.d("onCollectionLoaded() model is %s", mTempModel.getModel().toString(2));
+            // Also load into ViewModel for future migration
+            viewModel.loadNotetype(noteTypeId)
         }
         fieldNames = tempNoteType!!.notetype.fieldsNames
         // Set up the ViewPager with the sections adapter.
@@ -576,6 +579,9 @@ open class CardTemplateEditor :
 
         private val refreshFragmentHandler = Handler(Looper.getMainLooper())
 
+        // Shared ViewModel with Activity for state management during migration
+        private val viewModel by activityViewModels<CardTemplateEditorViewModel>()
+
         // Index of this card template fragment in ViewPager
         private val cardIndex
             get() = requireArguments().getInt(CARD_INDEX)
@@ -691,10 +697,20 @@ open class CardTemplateEditor :
                     override fun afterTextChanged(arg0: Editable) {
                         refreshFragmentRunnable?.let { refreshFragmentHandler.removeCallbacks(it) }
 
+                        val content = binding.editText.text.toString()
+                        // Update via ViewModel (in-memory only, for migration)
+                        val editorViewType =
+                            when (currentEditorViewId) {
+                                R.id.styling_edit -> EditorViewType.STYLING
+                                R.id.back_edit -> EditorViewType.BACK
+                                else -> EditorViewType.FRONT
+                            }
+                        viewModel.updateTemplateContent(cardIndex, editorViewType, content)
+
                         when (currentEditorViewId) {
-                            R.id.styling_edit -> tempModel.css = binding.editText.text.toString()
-                            R.id.back_edit -> template.afmt = binding.editText.text.toString()
-                            else -> template.qfmt = binding.editText.text.toString()
+                            R.id.styling_edit -> tempModel.css = content
+                            R.id.back_edit -> template.afmt = content
+                            else -> template.qfmt = content
                         }
                         templateEditor.tempNoteType!!.updateTemplate(cardIndex, template)
                         val updateRunnable =
