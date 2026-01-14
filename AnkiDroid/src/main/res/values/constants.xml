@@ -358,4 +358,5 @@
         <item>@string/import_error_resolution_copy_to_device</item>
         <item>@string/import_error_resolution_select_file</item>
     </string-array>
+    <string name="sync_conflict_help_url">https://docs.ankiweb.net/syncing.html#conflicts</string>
 </resources>

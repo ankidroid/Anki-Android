@@ -19,9 +19,11 @@ package com.ichi2.anki.dialogs
 import android.app.Dialog
 import android.os.Bundle
 import android.os.Message
+import android.view.View
 import androidx.annotation.CheckResult
 import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.ConflictResolution
 import com.ichi2.anki.R
@@ -38,6 +40,7 @@ import com.ichi2.anki.dialogs.SyncErrorDialog.Type.DIALOG_SYNC_SANITY_ERROR_CONF
 import com.ichi2.anki.dialogs.SyncErrorDialog.Type.DIALOG_USER_NOT_LOGGED_IN_SYNC
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.anki.utils.openUrl
+import com.ichi2.utils.titleWithHelpIcon
 
 class SyncErrorDialog : AsyncDialogFragment() {
     interface SyncErrorDialogListener {
@@ -91,16 +94,38 @@ class SyncErrorDialog : AsyncDialogFragment() {
                     }.create()
             }
             DIALOG_SYNC_CONFLICT_RESOLUTION -> {
-                // Sync conflict; allow user to cancel, or choose between local and remote versions
-                dialog
-                    .setIcon(R.drawable.ic_sync_problem)
-                    .setPositiveButton(R.string.sync_conflict_keep_local_new) { _, _ ->
-                        requireSyncErrorDialogListener().showSyncErrorDialog(DIALOG_SYNC_CONFLICT_CONFIRM_KEEP_LOCAL)
-                    }.setNegativeButton(R.string.sync_conflict_keep_remote_new) { _, _ ->
-                        requireSyncErrorDialogListener().showSyncErrorDialog(DIALOG_SYNC_CONFLICT_CONFIRM_KEEP_REMOTE)
-                    }.setNeutralButton(R.string.dialog_cancel) { _, _ ->
-                        activity?.dismissAllDialogFragments()
-                    }.create()
+                val builder = MaterialAlertDialogBuilder(requireContext())
+
+                builder.setIcon(R.drawable.ic_sync_problem)
+
+                builder.titleWithHelpIcon(
+                    stringRes = R.string.sync_conflict_title_new,
+                    block =
+                        View.OnClickListener {
+                            requireContext().openUrl(
+                                getString(R.string.sync_conflict_help_url),
+                            )
+                        },
+                )
+
+                builder.setMessage(
+                    getString(R.string.sync_conflict_message_new),
+                )
+
+                builder.setNeutralButton(R.string.dialog_cancel) { _, _ ->
+                    dismiss()
+                }
+
+                builder.setPositiveButton(R.string.sync_conflict_keep_local_new) { _, _ ->
+                    requireSyncErrorDialogListener()
+                        .showSyncErrorDialog(DIALOG_SYNC_CONFLICT_CONFIRM_KEEP_LOCAL)
+                }
+                builder.setNegativeButton(R.string.sync_conflict_keep_remote_new) { _, _ ->
+                    requireSyncErrorDialogListener()
+                        .showSyncErrorDialog(DIALOG_SYNC_CONFLICT_CONFIRM_KEEP_REMOTE)
+                }
+
+                return builder.create()
             }
             DIALOG_SYNC_CONFLICT_CONFIRM_KEEP_LOCAL -> {
                 // Confirmation before pushing local collection to server after sync conflict
