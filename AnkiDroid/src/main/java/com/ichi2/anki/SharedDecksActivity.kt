@@ -35,6 +35,7 @@ import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_INDEFI
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.databinding.ActivitySharedDecksBinding
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.workarounds.SafeWebViewLayout
 import com.ichi2.utils.FileNameAndExtension
 import dev.androidbroadcast.vbpd.viewBinding
 import timber.log.Timber
@@ -264,6 +265,11 @@ class SharedDecksActivity : AnkiActivity(R.layout.activity_shared_decks) {
             onBackPressedCallback.isEnabled = false
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onDestroy() {
+        SafeWebViewLayout.destroyWebView(binding.webView)
+        super.onDestroy()
     }
 }
 
