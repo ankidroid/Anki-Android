@@ -429,6 +429,7 @@ suspend fun <T> withProgressDialog(
         val dialog =
             android.app.ProgressDialog(context, R.style.AppCompatProgressDialogStyle).apply {
                 setCancelable(onCancel != null)
+                setCanceledOnTouchOutside(false)
                 if (manualCancelButton != null) {
                     setCancelable(false)
                     setButton(DialogInterface.BUTTON_NEGATIVE, context.getString(manualCancelButton)) { _, _ ->
