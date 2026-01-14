@@ -35,6 +35,7 @@ import android.widget.LinearLayout
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.annotation.CheckResult
 import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
@@ -50,6 +51,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.commitNow
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import anki.notetypes.StockNotetype
 import anki.notetypes.StockNotetype.OriginalStockKind.ORIGINAL_STOCK_KIND_UNKNOWN_VALUE
@@ -128,6 +130,7 @@ open class CardTemplateEditor :
     AnkiActivity(R.layout.card_template_editor),
     DeckSelectionListener {
     private val binding by viewBinding(CardTemplateEditorBinding::bind)
+    private val viewModel by viewModels<CardTemplateEditorViewModel>()
 
     @VisibleForTesting
     val topBinding: CardTemplateEditorTopBinding
@@ -230,9 +233,52 @@ open class CardTemplateEditor :
         loadTemplatePreviewerFragmentIfFragmented()
         onBackPressedDispatcher.addCallback(this, displayDiscardChangesCallback)
 
+        setupStateCollection()
+
         topBinding.slidingTabs.doOnTabSelected { tab ->
             Timber.i("selected card index: %s", tab.position)
+            viewModel.setCurrentTemplateOrd(tab.position)
             loadTemplatePreviewerFragmentIfFragmented(tab.position)
+        }
+    }
+
+    private fun setupStateCollection() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.state.collect { state ->
+                    when (state) {
+                        is CardTemplateEditorState.Loading -> Unit
+                        is CardTemplateEditorState.Loaded -> {
+                            if (state.message != null) {
+                                val messageText =
+                                    when (state.message) {
+                                        CardTemplateEditorState.UserMessage.CantDeleteLastTemplate ->
+                                            getString(R.string.card_template_editor_cant_delete)
+                                        CardTemplateEditorState.UserMessage.CantAddTemplateToDynamic ->
+                                            getString(R.string.multimedia_editor_something_wrong)
+                                        CardTemplateEditorState.UserMessage.SaveSuccess ->
+                                            getString(R.string.dialog_ok)
+                                        CardTemplateEditorState.UserMessage.DeletionWouldOrphanNote ->
+                                            getString(R.string.orphan_note_message)
+                                    }
+                                showSnackbar(messageText)
+                                viewModel.clearMessage()
+                            }
+                        }
+                        is CardTemplateEditorState.InitializationError -> {
+                            AlertDialog.Builder(this@CardTemplateEditor).show {
+                                setTitle(R.string.vague_error)
+                                setMessage(state.exception.source.localizedMessage ?: getString(R.string.something_wrong))
+                                setPositiveButton(R.string.dialog_ok) { _, _ -> finish() }
+                                setCancelable(false)
+                            }
+                        }
+                        is CardTemplateEditorState.Finished -> {
+                            finish()
+                        }
+                    }
+                }
+            }
         }
     }
 
