@@ -20,6 +20,7 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import android.webkit.PermissionRequest
 import android.webkit.WebChromeClient
 import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
@@ -286,6 +287,16 @@ abstract class CardViewerFragment(
             with(WindowInsetsControllerCompat(window, window.decorView)) {
                 systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_DEFAULT
                 show(WindowInsetsCompat.Type.systemBars())
+            }
+        }
+
+        override fun onPermissionRequest(request: PermissionRequest) {
+            if (PermissionRequest.RESOURCE_AUDIO_CAPTURE in request.resources) {
+                Timber.i("Granting audio capture permission to WebView")
+                request.grant(arrayOf(PermissionRequest.RESOURCE_AUDIO_CAPTURE))
+            } else {
+                Timber.i("Denying permissions to WebView")
+                request.deny()
             }
         }
     }
