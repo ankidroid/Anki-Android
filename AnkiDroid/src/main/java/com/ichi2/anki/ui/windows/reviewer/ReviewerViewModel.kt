@@ -743,18 +743,7 @@ class ReviewerViewModel(
             if (handler == this) return@launchCatchingIO
 
             when {
-                changes.studyQueues -> updateCurrentCard()
-                changes.noteText -> {
-                    val card = currentCard.await()
-                    withCol { card.load(this) }
-                    cardMediaPlayer.loadCardAvTags(card)
-                    updateMarkIcon()
-                    if (showingAnswer.value) {
-                        showAnswer()
-                    } else {
-                        showQuestion()
-                    }
-                }
+                changes.studyQueues || changes.noteText -> updateCurrentCard()
                 changes.card -> {
                     val card = currentCard.await()
                     withCol { card.load(this) }
