@@ -286,12 +286,23 @@ class ReviewerViewModel(
         destinationFlow.emit(destination)
     }
 
+    val chooseDeckOptionsFlow = MutableSharedFlow<Pair<Long, Long>>()
+
     private suspend fun emitDeckOptionsDestination() {
-        val deckId = withCol { decks.getCurrentId() }
+        val currentDeckId = withCol { decks.getCurrentId() }
+        val cardDeckId = currentCard.await().currentDeckId()
+
+        if (currentDeckId == cardDeckId) {
+            val isFiltered = withCol { decks.isFiltered(currentDeckId) }
+            destinationFlow.emit(DeckOptionsDestination(currentDeckId, isFiltered))
+        } else {
+            chooseDeckOptionsFlow.emit(currentDeckId to cardDeckId)
+        }
+    }
+
+    suspend fun openDeckOptionsForDeck(deckId: Long) {
         val isFiltered = withCol { decks.isFiltered(deckId) }
-        val destination = DeckOptionsDestination(deckId, isFiltered)
-        Timber.i("Launching 'deck options' for deck %d", deckId)
-        destinationFlow.emit(destination)
+        destinationFlow.emit(DeckOptionsDestination(deckId, isFiltered))
     }
 
     private suspend fun emitBrowseDestination() {

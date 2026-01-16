@@ -19,6 +19,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+    <string name="choose_deck_options_title">Which deck would you like to display options for?</string>
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Open drawer</string>
     <string name="drawer_close">Close drawer</string>

@@ -315,7 +315,6 @@ class ReviewerFragment :
     }
 
     override fun onMenuItemClick(item: MenuItem): Boolean {
-        Timber.v("ReviewerFragment::onMenuItemClick %s", item)
         if (item.hasSubMenu()) return false
         val action = ViewerAction.fromId(item.itemId)
         viewModel.executeAction(action)
@@ -585,6 +584,27 @@ class ReviewerFragment :
                         flagView.isVisible = true
                     }
                 }
+            }
+        viewModel.chooseDeckOptionsFlow
+            .flowWithLifecycle(lifecycle)
+            .collectIn(lifecycleScope) { (currentDeckId, cardDeckId) ->
+                AlertDialog
+                    .Builder(requireContext())
+                    .setTitle(R.string.choose_deck_options_title)
+                    .setItems(
+                        arrayOf(
+                            currentDeckId.toString(),
+                            cardDeckId.toString(),
+                        ),
+                    ) { _, which ->
+                        val targetDeckId =
+                            if (which == 0) currentDeckId else cardDeckId
+
+                        lifecycleScope.launch {
+                            viewModel.openDeckOptionsForDeck(targetDeckId)
+                        }
+                    }.setNegativeButton(android.R.string.cancel, null)
+                    .show()
             }
     }
 
