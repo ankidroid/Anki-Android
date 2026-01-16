@@ -39,6 +39,15 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
+
+        packaging {
+            resources {
+                // testutils is not compiled into the public apk
+                excludes += "META-INF/DEPENDENCIES"
+                excludes += "META-INF/LICENSE.md"
+                excludes += "META-INF/LICENSE-notice.md"
+            }
+        }
     }
     kotlin {
         compilerOptions {
