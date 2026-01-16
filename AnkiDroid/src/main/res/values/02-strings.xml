@@ -352,6 +352,8 @@
     <string name="app_not_initialized_new">AnkiDroid is not initialized yet. Please open AnkiDroid and try again</string>
 
     <!-- Deck Creation -->
+    <string name="add_deck">Add deck</string>
+
     <string name="deck_created">Deck created</string>
     <string name="deck_renamed">Deck renamed</string>
 
