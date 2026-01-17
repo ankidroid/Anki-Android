@@ -40,8 +40,6 @@ import timber.log.Timber
 /** [View] which allows selection of a gesture either via taps/swipes, or via a [Spinner]
  * The spinner aids discoverability of [Gesture.DOUBLE_TAP]
  * as it is not explained in [GestureDisplay].
- *
- * Current use is via [com.ichi2.anki.dialogs.GestureSelectionDialogBuilder]
  */
 class GesturePicker(
     ctx: Context,
@@ -56,7 +54,6 @@ class GesturePicker(
     private var onGestureListener: GestureListener? = null
     private var shakeDetector: ShakeDetector? = null
     private val sensorManager get() = ContextCompat.getSystemService(context, SensorManager::class.java)
-    private var shakeEnabled = true
 
     init {
         val inflater = ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
