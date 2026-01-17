@@ -11,6 +11,18 @@
     android:paddingTop="24dp"
     android:paddingBottom="8dp">
 
+    <ImageView
+        android:id="@+id/dialog_icon"
+        style="?attr/materialAlertDialogTitleIconStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@android:id/title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@android:id/title"
+        android:visibility="gone"
+        tools:src="@drawable/ic_sync_problem"
+        tools:visibility="visible" />
+
     <androidx.appcompat.widget.DialogTitleView
         android:id="@android:id/title"
         android:layout_width="0dp"
@@ -18,7 +30,8 @@
         android:textAppearance="?attr/textAppearanceHeadlineSmall"
         android:textColor="?attr/colorOnSurface"
         app:layout_constraintEnd_toStartOf="@+id/help_icon"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/dialog_icon"
+        app:layout_constraintTop_toTopOf="parent"
         tools:text="Reset Card Progress" />
 
     <ImageView

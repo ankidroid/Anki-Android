@@ -36,6 +36,7 @@ import android.widget.TextView
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.widget.doOnTextChanged
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -435,8 +436,9 @@ fun AlertDialog.Builder.listItemsAndMessage(
 fun AlertDialog.Builder.titleWithHelpIcon(
     @StringRes stringRes: Int? = null,
     text: String? = null,
+    @DrawableRes iconRes: Int? = null,
     block: View.OnClickListener,
-) {
+): AlertDialog.Builder {
     // setup the view for the dialog
     val customTitleView = LayoutInflater.from(context).inflate(R.layout.alert_dialog_title_with_help, null, false)
     setCustomTitle(customTitleView)
@@ -450,11 +452,33 @@ fun AlertDialog.Builder.titleWithHelpIcon(
         titleTextView.text = text
     }
 
+    val iconView = customTitleView.findViewById<ImageView>(R.id.dialog_icon)
+    if (iconRes != null) {
+        iconView.setImageResource(iconRes)
+        iconView.visibility = View.VISIBLE
+        val params = iconView.layoutParams as ConstraintLayout.LayoutParams
+        params.marginEnd = (8 * context.resources.displayMetrics.density).toInt()
+        iconView.layoutParams = params
+        iconView.setColorFilter(Themes.getColorFromAttr(context, com.google.android.material.R.attr.colorOnSurface))
+    } else {
+        iconView.visibility = View.GONE
+        val params = titleTextView.layoutParams as ConstraintLayout.LayoutParams
+        params.startToStart = ConstraintLayout.LayoutParams.PARENT_ID
+        params.startToEnd = -1
+        params.marginStart = 0
+        titleTextView.layoutParams = params
+    }
+    customTitleView
+        .findViewById<ImageView>(
+            R.id.help_icon,
+        ).setColorFilter(Themes.getColorFromAttr(context, com.google.android.material.R.attr.colorOnSurface))
+
     // set the action when clicking the help icon
     customTitleView.findViewById<ImageView>(R.id.help_icon).setOnClickListener { v ->
         Timber.i("dialog help icon click")
         block.onClick(v)
     }
+    return this
 }
 
 /** Calls [AlertDialog.dismiss], ignoring errors */
