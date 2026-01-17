@@ -29,7 +29,6 @@ import com.ichi2.anki.Reviewer
 import com.ichi2.anki.asyncIO
 import com.ichi2.anki.browser.BrowserDestination
 import com.ichi2.anki.cardviewer.SingleCardSide
-import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.libanki.Card
 import com.ichi2.anki.libanki.CardId
@@ -122,7 +121,7 @@ class ReviewerViewModel(
     val statesMutationEvalFlow = MutableSharedFlow<String>()
 
     override val server: AnkiServer = AnkiServer(this, repository.getServerPort()).also { it.start() }
-    private val stateMutationKey = TimeManager.time.intTimeMS().toString()
+    private val stateMutationKey = repository.generateStateMutationKey()
     private val stateMutationJs: Deferred<String> = asyncIO { withCol { cardStateCustomizer } }
     private var typedAnswer = ""
 

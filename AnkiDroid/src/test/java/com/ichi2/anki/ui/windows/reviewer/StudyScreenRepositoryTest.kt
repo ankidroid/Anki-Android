@@ -25,11 +25,14 @@ import com.ichi2.anki.preferences.reviewer.ViewerAction
 import com.ichi2.anki.settings.PrefsRepository
 import io.mockk.every
 import io.mockk.mockk
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import java.net.ServerSocket
+import kotlin.test.assertNotSame
 
 class StudyScreenRepositoryTest {
     private val sharedPrefs: SharedPreferences = SPMockBuilder().createSharedPreferences()
@@ -132,4 +135,14 @@ class StudyScreenRepositoryTest {
             blockerSocket.close()
         }
     }
+
+    @Test
+    fun `generateStateMutationKey generates unique keys`() =
+        runTest {
+            val repository = StudyScreenRepository(prefs)
+            val first = repository.generateStateMutationKey()
+            delay(10)
+            val second = repository.generateStateMutationKey()
+            assertNotSame(first, second)
+        }
 }
