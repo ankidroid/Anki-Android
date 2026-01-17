@@ -15,6 +15,7 @@
  */
 package com.ichi2.anki.ui.windows.reviewer
 
+import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.preferences.reviewer.MenuDisplayType
 import com.ichi2.anki.preferences.reviewer.ReviewerMenuRepository
 import com.ichi2.anki.preferences.reviewer.ViewerAction
@@ -61,6 +62,8 @@ class StudyScreenRepository(
             0
         }
     }
+
+    fun generateStateMutationKey(): String = TimeManager.time.intTimeMS().toString()
 
     companion object {
         private const val KEY_WHITEBOARD_ENABLED = "whiteboardEnabled"
