@@ -1265,7 +1265,7 @@ class CardContentProvider : ContentProvider() {
             true
         } else {
             Timber.e(
-                "Requested deck with id %d was not found in deck list. Either the deckID provided was wrong" +
+                "Requested deck with id %d was not found in deck list. Either the deckID provided was wrong " +
                     "or the deck has been deleted in the meantime.",
                 did,
             )
