@@ -143,11 +143,15 @@
 
         </com.google.android.material.card.MaterialCardView>
 
+        <!-- The elevation should be higher than the one used by the WebView
+             container, so the voice recording button can be dragged above it -->
         <LinearLayout
             android:id="@+id/bottom_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:elevation="1dp"
+            android:clipChildren="false"
             android:showDividers="middle|beginning|end"
             android:divider="@drawable/vertical_spacer_8dp"
             android:layout_marginHorizontal="@dimen/reviewer_side_margin">
