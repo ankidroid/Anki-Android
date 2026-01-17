@@ -527,6 +527,10 @@ public object FlashCardsContract {
      *              Card column description
      * Type   | Name             | Access     | Description
      * --------------------------------------------------------------------------------------------------------------------
+     * long   | _ID              | read-only  | Row ID. This is the ID of the card. It is the same as the card ID in Anki. This
+     *        |                  |            | ID can be used for accessing the data of a card using the URI
+     *        |                  |            | "content://com.ichi2.anki.flashcards/cards/<_ID>
+     * --------------------------------------------------------------------------------------------------------------------
      * long   | NOTE_ID          | read-only  | This is the ID of the note that this row belongs to (i.e. Note._ID)
      * --------------------------------------------------------------------------------------------------------------------
      * int    | CARD_ORD         | read-only  | This is the ordinal of the card. A note has 1..n cards. The ordinal can also be
@@ -547,6 +551,14 @@ public object FlashCardsContract {
      * String | ANSWER_PURE      | read-only  | Purified version of the answer. In case the [.ANSWER] contains any additional elements
      *        |                  |            | (like a duplicate of the question) this is removed for [.ANSWER_PURE].
      *        |                  |            | Like [.ANSWER_SIMPLE] it does not contain styling information (CSS).
+     * --------------------------------------------------------------------------------------------------------------------
+     * long   | DUE              | read-only  | The due date of the card.
+     * --------------------------------------------------------------------------------------------------------------------
+     * long   | INTERVAL         | read-only  | The interval of the card.
+     * --------------------------------------------------------------------------------------------------------------------
+     * float  | EASE_FACTOR      | read-only  | The ease factor of the card.
+     * --------------------------------------------------------------------------------------------------------------------
+     * int    | REVIEWS          | read-only  | The number of reviews for the card.
      * --------------------------------------------------------------------------------------------------------------------
      * ```
      *
@@ -575,6 +587,59 @@ public object FlashCardsContract {
      * ```
      */
     public object Card {
+        /**
+         * The content:// style URI for cards. If the it is appended by the card's ID, this
+         * card can be directly accessed, e.g.
+         *
+         * ```
+         *      Uri cardUri = Uri.withAppendedPath(FlashCardsContract.Card.CONTENT_URI, cardId);
+         * ```
+         *
+         * If the URI is not appended by the card ID, it provides functions to return
+         * all the cards that match the query as defined in `selection` argument in the
+         * `query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder)` call.
+         * For queries, the `selectionArgs` parameter can contain an optional selection statement for the cards table
+         * in the sql database. E.g. "did = 12345678" could be used to limit to a particular deck ID.
+         * The `selection` parameter is an optional search string for the Anki browser. The syntax is described
+         * [in the search section of the Anki manual](https://docs.ankiweb.net/searching.html).
+         *
+         *
+         * Example for querying cards with a certain deck:
+         *
+         * ```
+         *         final Cursor cursor = cr.query(FlashCardsContract.Card.CONTENT_URI,
+         *              null,         // projection
+         *              "deck:MyDeck", // example query
+         *              null,         // selectionArgs is ignored for this URI
+         *              null          // sortOrder is ignored for this URI
+         *         );
+         * ```
+         *
+         *
+         * Example for querying cards with a certain card id with direct URI:
+         *
+         * ```
+         *          String cardId = ... // Use the known card ID
+         *          Uri cardUri = Uri.withAppendedPath(FlashCardsContract.Card.CONTENT_URI, cardId);
+         *          final Cursor cur = cr.query(cardUri,
+         *              null,  // projection
+         *              null,  // selection is ignored for this URI
+         *              null,  // selectionArgs is ignored for this URI
+         *              null   // sortOrder is ignored for this URI
+         *          );
+         * ```
+         */
+        @JvmField // required for Java API
+        public val CONTENT_URI: Uri = Uri.withAppendedPath(AUTHORITY_URI, "cards")
+
+        /**
+         * This is the ID of the card. It is the same as the card ID in Anki. This ID can be
+         * used for accessing the data of a card using the URI
+         * `content://com.ichi2.anki.flashcards/cards/<ID>`
+         */
+        @Suppress("ConstPropertyName", "ktlint:standard:backing-property-naming")
+        public const val _ID: String = "_id"
+
         /**
          * This is the ID of the note that this card belongs to (i.e. [Note._ID]).
          */
@@ -622,9 +687,30 @@ public object FlashCardsContract {
          */
         public const val ANSWER_PURE: String = "answer_pure"
 
+        /**
+         * The due date of the card.
+         */
+        public const val DUE: String = "due"
+
+        /**
+         * The interval of the card.
+         */
+        public const val INTERVAL: String = "interval"
+
+        /**
+         * The ease factor of the card.
+         */
+        public const val EASE_FACTOR: String = "ease_factor"
+
+        /**
+         * The number of reviews for the card.
+         */
+        public const val REVIEWS: String = "reviews"
+
         @JvmField // required for Java API
         public val DEFAULT_PROJECTION: Array<String> =
             arrayOf(
+                _ID,
                 NOTE_ID,
                 CARD_ORD,
                 CARD_NAME,
@@ -636,12 +722,12 @@ public object FlashCardsContract {
         /**
          * MIME type used for a card.
          */
-        public const val CONTENT_ITEM_TYPE: String = "vnd.android.cursor.item/vnd.com.ichi2.anki.card"
+        public const val CONTENT_ITEM_TYPE: String = "vnd.android.cursor.item/vnd.flashcards.card"
 
         /**
          * MIME type used for cards.
          */
-        public const val CONTENT_TYPE: String = "vnd.android.cursor.dir/vnd.com.ichi2.anki.card"
+        public const val CONTENT_TYPE: String = "vnd.android.cursor.dir/vnd.flashcards.card"
     }
 
     /**

@@ -74,6 +74,8 @@ import java.io.IOException
  * * .../notes/# (direct access to note)
  * * .../notes/#/cards (access cards of note)
  * * .../notes/#/cards/# (access specific card of note)
+ * * .../cards (search for cards)
+ * * .../cards/# (direct access to card)
  * * .../models (search for models)
  * * .../models/# (direct access to model). String id 'current' can be used in place of # for the current note type
  * * .../models/#/fields (access to field definitions of a note type)
@@ -109,6 +111,8 @@ class CardContentProvider : ContentProvider() {
         private const val DECK_SELECTED = 4001
         private const val DECKS_ID = 4002
         private const val MEDIA = 5000
+        private const val CARDS = 1100
+        private const val CARDS_ID = 1101
         private val sUriMatcher = UriMatcher(UriMatcher.NO_MATCH)
 
         /**
@@ -160,6 +164,8 @@ class CardContentProvider : ContentProvider() {
             addUri("decks/#", DECKS_ID)
             addUri("selected_deck/", DECK_SELECTED)
             addUri("media", MEDIA)
+            addUri("cards", CARDS)
+            addUri("cards/#", CARDS_ID)
 
             for (idx in sDefaultNoteProjectionDBAccess.indices) {
                 if (sDefaultNoteProjectionDBAccess[idx] == FlashCardsContract.Note._ID) {
@@ -191,6 +197,8 @@ class CardContentProvider : ContentProvider() {
             NOTE_TYPES_ID_TEMPLATES_ID -> FlashCardsContract.CardTemplate.CONTENT_ITEM_TYPE
             SCHEDULE -> FlashCardsContract.ReviewInfo.CONTENT_TYPE
             DECKS, DECK_SELECTED, DECKS_ID -> FlashCardsContract.Deck.CONTENT_TYPE
+            CARDS -> FlashCardsContract.Card.CONTENT_TYPE
+            CARDS_ID -> FlashCardsContract.Card.CONTENT_ITEM_TYPE
             else -> throw IllegalArgumentException("uri $uri is not supported")
         }
     }
@@ -253,7 +261,7 @@ class CardContentProvider : ContentProvider() {
                 val columns = projection ?: FlashCardsContract.Card.DEFAULT_PROJECTION
                 val rv = MatrixCursor(columns, 1)
                 for (currentCard: Card in currentNote.cards(col)) {
-                    addCardToCursor(currentCard, rv, col, columns)
+                    addCardRow(currentCard, rv, col, columns)
                 }
                 rv
             }
@@ -261,7 +269,7 @@ class CardContentProvider : ContentProvider() {
                 val currentCard = getCardFromUri(uri, col)
                 val columns = projection ?: FlashCardsContract.Card.DEFAULT_PROJECTION
                 val rv = MatrixCursor(columns, 1)
-                addCardToCursor(currentCard, rv, col, columns)
+                addCardRow(currentCard, rv, col, columns)
                 rv
             }
             NOTE_TYPES -> {
@@ -406,6 +414,34 @@ class CardContentProvider : ContentProvider() {
                 addDeckToCursor(id, name, counts, rv, col, columns)
                 rv
             }
+            CARDS -> {
+                // selection = Anki browser query
+                val query = selection ?: ""
+                val cardIds = col.findCards(query)
+
+                val columns = projection ?: FlashCardsContract.Card.DEFAULT_PROJECTION
+
+                val onlyId =
+                    columns.size == 1 &&
+                    columns[0] == FlashCardsContract.Card._ID
+
+                if (onlyId) {
+                    val cursor = MatrixCursor(columns, cardIds.size)
+                    cardIds.forEach { cursor.addRow(arrayOf(it)) }
+                    cursor
+                } else {
+                    buildCardCursor(cardIds, columns, col)
+                }
+            }
+            CARDS_ID -> {
+                val cardId = uri.lastPathSegment?.toLongOrNull()
+                    ?: return MatrixCursor(projection ?: FlashCardsContract.Card.DEFAULT_PROJECTION, 0)
+
+                val card = col.getCard(cardId)
+                    ?: return MatrixCursor(projection ?: FlashCardsContract.Card.DEFAULT_PROJECTION, 0)
+
+                buildSingleCardCursor(card, projection ?: FlashCardsContract.Card.DEFAULT_PROJECTION, col)
+            }
             else -> throw IllegalArgumentException("uri $uri is not supported")
         }
     }
@@ -416,6 +452,31 @@ class CardContentProvider : ContentProvider() {
             put(deck.revCount)
             put(deck.newCount)
         }
+
+    private fun buildCardCursor(
+        cardIds: List<Long>,
+        columns: Array<String>,
+        col: Collection
+    ): Cursor {
+        val cursor = MatrixCursor(columns, cardIds.size)
+
+        for (id in cardIds) {
+            val card = col.getCard(id) ?: continue
+            addCardRow(card, cursor, columns, col)
+        }
+
+        return cursor
+    }
+
+    private fun buildSingleCardCursor(
+        card: Card,
+        columns: Array<String>,
+        col: Collection
+    ): Cursor {
+        val cursor = MatrixCursor(columns, 1)
+        addCardRow(card, cursor, columns, col)
+        return cursor
+    }
 
     @SuppressLint("CheckResult")
     override fun update(
@@ -1099,33 +1160,65 @@ class CardContentProvider : ContentProvider() {
         }
     }
 
-    private fun addCardToCursor(
-        currentCard: Card,
-        rv: MatrixCursor,
-        col: Collection,
+    private fun addCardRow(
+        card: Card,
+        cursor: MatrixCursor,
         columns: Array<String>,
+        col: Collection,
     ) {
-        val cardName: String =
-            try {
-                currentCard.template(col).name
-            } catch (je: JSONException) {
-                throw IllegalArgumentException("Card is using an invalid template", je)
-            }
-        val question = currentCard.renderOutput(col).questionWithFixedSoundTags()
-        val answer = currentCard.renderOutput(col).answerWithFixedSoundTags()
-        val rb = rv.newRow()
+        val needsRender = columns.any {
+            it == FlashCardsContract.Card.QUESTION ||
+            it == FlashCardsContract.Card.ANSWER ||
+            it == FlashCardsContract.Card.QUESTION_SIMPLE ||
+            it == FlashCardsContract.Card.ANSWER_SIMPLE ||
+            it == FlashCardsContract.Card.ANSWER_PURE
+        }
+
+        val render = if (needsRender) card.renderOutput(col) else null
+
+        val row = cursor.newRow()
+
         for (column in columns) {
             when (column) {
-                FlashCardsContract.Card.NOTE_ID -> rb.add(currentCard.nid)
-                FlashCardsContract.Card.CARD_ORD -> rb.add(currentCard.ord)
-                FlashCardsContract.Card.CARD_NAME -> rb.add(cardName)
-                FlashCardsContract.Card.DECK_ID -> rb.add(currentCard.did)
-                FlashCardsContract.Card.QUESTION -> rb.add(question)
-                FlashCardsContract.Card.ANSWER -> rb.add(answer)
-                FlashCardsContract.Card.QUESTION_SIMPLE -> rb.add(currentCard.renderOutput(col).questionText)
-                FlashCardsContract.Card.ANSWER_SIMPLE -> rb.add(currentCard.renderOutput(col, false).answerText)
-                FlashCardsContract.Card.ANSWER_PURE -> rb.add(currentCard.pureAnswer(col))
-                else -> throw UnsupportedOperationException("Queue \"$column\" is unknown")
+                FlashCardsContract.Card._ID -> row.add(card.id)
+                FlashCardsContract.Card.NOTE_ID -> row.add(card.nid)
+                FlashCardsContract.Card.CARD_ORD -> row.add(card.ord)
+                FlashCardsContract.Card.DECK_ID -> row.add(card.did)
+
+                FlashCardsContract.Card.CARD_NAME ->
+                    row.add(card.template(col).name)
+
+                FlashCardsContract.Card.QUESTION ->
+                    row.add(render?.questionWithFixedSoundTags())
+
+                FlashCardsContract.Card.ANSWER ->
+                    row.add(render?.answerWithFixedSoundTags())
+
+                FlashCardsContract.Card.QUESTION_SIMPLE ->
+                    row.add(render?.questionText)
+
+                FlashCardsContract.Card.ANSWER_SIMPLE ->
+                    row.add(render?.answerText)
+
+                FlashCardsContract.Card.ANSWER_PURE ->
+                    row.add(card.pureAnswer(col))
+
+                // Scheduling
+                FlashCardsContract.Card.DUE ->
+                    row.add(card.due.toLong())
+
+                FlashCardsContract.Card.INTERVAL ->
+                    row.add(card.ivl.toLong())
+
+                FlashCardsContract.Card.EASE_FACTOR ->
+                    row.add(card.factor / 1000f)
+
+                FlashCardsContract.Card.REVIEWS ->
+                    row.add(card.reps)
+
+                else -> throw IllegalArgumentException(
+                    "Unknown column: $column"
+                )
             }
         }
     }
