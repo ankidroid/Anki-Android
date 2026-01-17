@@ -23,6 +23,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentContainerView
 import androidx.fragment.app.commit
+import com.google.android.material.tabs.TabLayout
 import com.ichi2.anki.NoteEditorActivity.Companion.FRAGMENT_ARGS_EXTRA
 import com.ichi2.anki.NoteEditorActivity.Companion.FRAGMENT_NAME_EXTRA
 import com.ichi2.anki.android.input.ShortcutGroup
@@ -38,6 +39,7 @@ import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.ui.ResizablePaneManager
+import com.ichi2.anki.utils.ext.doOnTabSelected
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import timber.log.Timber
@@ -276,7 +278,39 @@ class NoteEditorActivity :
         binding.previewerFrame?.post {
             if (!previewerFragment.isAdded) return@post
             val previewerTabLayout = binding.previewerTabLayout!!
-            previewerFragment.setupTabs(previewerTabLayout)
+            launchCatchingTask {
+                previewerFragment.setupTabs(previewerTabLayout)
+            }
+        }
+    }
+
+    /**
+     * Sets up the previewer tabs with appropriate titles and selection handling.
+     *
+     * @param tabLayout The tab layout to configure
+     */
+    private suspend fun TemplatePreviewerFragment.setupTabs(tabLayout: TabLayout) {
+        tabLayout.removeAllTabs()
+
+        val cardsWithEmptyFronts = viewModel.cardsWithEmptyFronts?.await()
+        for ((index, templateName) in viewModel.getTemplateNames().withIndex()) {
+            val tabTitle =
+                if (cardsWithEmptyFronts?.get(index) == true) {
+                    getString(R.string.card_previewer_empty_front_indicator, templateName)
+                } else {
+                    templateName
+                }
+            val newTab = tabLayout.newTab().setText(tabTitle)
+            tabLayout.addTab(newTab)
+        }
+
+        tabLayout.selectTab(tabLayout.getTabAt(viewModel.getCurrentTabIndex()))
+
+        // Remove any existing listeners to avoid duplicates
+        tabLayout.clearOnTabSelectedListeners()
+        tabLayout.doOnTabSelected { tab ->
+            Timber.v("Selected tab %d", tab.position)
+            viewModel.onTabSelected(tab.position)
         }
     }
 
