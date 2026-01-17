@@ -49,7 +49,7 @@ import kotlinx.coroutines.launch
  */
 class ReviewerMenuView : LinearLayout {
     private val repository = ReviewerMenuRepository(context.sharedPrefs())
-    private val binding = ViewReviewerMenuBinding.inflate(LayoutInflater.from(context), this, true)
+    private val binding = ViewReviewerMenuBinding.inflate(LayoutInflater.from(context), this)
     private val frontMenu: Menu = binding.frontMenuView.menu
     private val overflowMenu: Menu =
         binding.overflowMenuView.menu.apply {
