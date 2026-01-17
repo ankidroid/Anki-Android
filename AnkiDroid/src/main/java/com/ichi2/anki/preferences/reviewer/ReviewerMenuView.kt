@@ -47,100 +47,95 @@ import kotlinx.coroutines.launch
  *
  * @see [R.layout.reviewer_menu_item]
  */
-class ReviewerMenuView
-    @JvmOverloads
-    constructor(
-        context: Context,
-        attrs: AttributeSet? = null,
-        defStyleAttr: Int = 0,
-    ) : LinearLayout(context, attrs, defStyleAttr) {
-        private val repository = ReviewerMenuRepository(context.sharedPrefs())
+class ReviewerMenuView : LinearLayout {
+    private val repository = ReviewerMenuRepository(context.sharedPrefs())
+    private val binding = ViewReviewerMenuBinding.inflate(LayoutInflater.from(context), this, true)
+    private val frontMenu: Menu = binding.frontMenuView.menu
+    private val overflowMenu: Menu =
+        binding.overflowMenuView.menu.apply {
+            (this as? MenuBuilder)?.setOptionalIconsVisible(true)
+        }
 
-        private val binding = ViewReviewerMenuBinding.inflate(LayoutInflater.from(context), this, true)
-        private val frontMenu: Menu = binding.frontMenuView.menu
-        private val overflowMenu: Menu =
-            binding.overflowMenuView.menu.apply {
-                (this as? MenuBuilder)?.setOptionalIconsVisible(true)
+    constructor(context: Context) : this(context, null)
+    constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
+        setupMenus()
+    }
+
+    fun clear() {
+        frontMenu.clear()
+        overflowMenu.clear()
+    }
+
+    fun isEmpty() = frontMenu.size == 0 && overflowMenu.size == 0
+
+    fun findItem(id: Int): MenuItemImpl? = (frontMenu.findItem(id) ?: overflowMenu.findItem(id)) as? MenuItemImpl
+
+    fun setOnMenuItemClickListener(listener: ActionMenuView.OnMenuItemClickListener) {
+        binding.frontMenuView.setOnMenuItemClickListener(listener)
+        binding.overflowMenuView.setOnMenuItemClickListener(listener)
+    }
+
+    fun addActions(
+        alwaysShow: List<ViewerAction>,
+        menuOnly: List<ViewerAction>,
+    ) {
+        addActionsToMenu(frontMenu, alwaysShow, MenuItem.SHOW_AS_ACTION_ALWAYS)
+        addActionsToMenu(overflowMenu, menuOnly, MenuItem.SHOW_AS_ACTION_NEVER)
+
+        val submenuActions = ViewerAction.entries.filter { it.parentMenu != null }
+        for (action in submenuActions) {
+            val subMenu = findItem(action.parentMenu!!.menuId)?.subMenu ?: continue
+            subMenu.add(Menu.NONE, action.menuId, Menu.NONE, action.title(context))?.apply {
+                action.drawableRes?.let { setIcon(it) }
             }
-
-        init {
-            setupMenus()
-        }
-
-        fun clear() {
-            frontMenu.clear()
-            overflowMenu.clear()
-        }
-
-        fun isEmpty() = frontMenu.size == 0 && overflowMenu.size == 0
-
-        fun findItem(id: Int): MenuItemImpl? = (frontMenu.findItem(id) ?: overflowMenu.findItem(id)) as? MenuItemImpl
-
-        fun setOnMenuItemClickListener(listener: ActionMenuView.OnMenuItemClickListener) {
-            binding.frontMenuView.setOnMenuItemClickListener(listener)
-            binding.overflowMenuView.setOnMenuItemClickListener(listener)
-        }
-
-        fun addActions(
-            alwaysShow: List<ViewerAction>,
-            menuOnly: List<ViewerAction>,
-        ) {
-            addActionsToMenu(frontMenu, alwaysShow, MenuItem.SHOW_AS_ACTION_ALWAYS)
-            addActionsToMenu(overflowMenu, menuOnly, MenuItem.SHOW_AS_ACTION_NEVER)
-
-            val submenuActions = ViewerAction.entries.filter { it.parentMenu != null }
-            for (action in submenuActions) {
-                val subMenu = findItem(action.parentMenu!!.menuId)?.subMenu ?: continue
-                subMenu.add(Menu.NONE, action.menuId, Menu.NONE, action.title(context))?.apply {
-                    action.drawableRes?.let { setIcon(it) }
-                }
-            }
-        }
-
-        suspend fun setFlagTitles() {
-            val submenu = findItem(R.id.action_flag)?.subMenu ?: return
-            for ((flag, name) in Flag.queryDisplayNames()) {
-                submenu.findItem(flag.id)?.title = name
-            }
-        }
-
-        private fun addActionsToMenu(
-            menu: Menu,
-            actions: List<ViewerAction>,
-            menuActionType: Int,
-        ) {
-            val subMenus = ViewerAction.getSubMenus()
-            for (action in actions) {
-                val title = action.title(context)
-                val menuItem =
-                    if (action in subMenus) {
-                        menu.addSubMenu(Menu.NONE, action.menuId, Menu.NONE, title).item
-                    } else {
-                        menu.add(Menu.NONE, action.menuId, Menu.NONE, title)
-                    }
-                with(menuItem) {
-                    action.drawableRes?.let { setIcon(it) }
-                    setShowAsAction(menuActionType)
-                }
-            }
-        }
-
-        private fun setupMenus() {
-            val menuItems = repository.getActionsByMenuDisplayTypes(MenuDisplayType.ALWAYS, MenuDisplayType.MENU_ONLY)
-            addActions(menuItems.getValue(MenuDisplayType.ALWAYS), menuItems.getValue(MenuDisplayType.MENU_ONLY))
-
-            context.increaseHorizontalPaddingOfMenuIcons(overflowMenu)
-
-            // wait until attached to a fragment or activity to launch the coroutine to setup flags
-            viewTreeObserver.addOnGlobalLayoutListener(
-                object : OnGlobalLayoutListener {
-                    override fun onGlobalLayout() {
-                        findViewTreeLifecycleOwner()?.lifecycleScope?.launch {
-                            setFlagTitles()
-                        }
-                        viewTreeObserver.removeOnGlobalLayoutListener(this)
-                    }
-                },
-            )
         }
     }
+
+    suspend fun setFlagTitles() {
+        val submenu = findItem(R.id.action_flag)?.subMenu ?: return
+        for ((flag, name) in Flag.queryDisplayNames()) {
+            submenu.findItem(flag.id)?.title = name
+        }
+    }
+
+    private fun addActionsToMenu(
+        menu: Menu,
+        actions: List<ViewerAction>,
+        menuActionType: Int,
+    ) {
+        val subMenus = ViewerAction.getSubMenus()
+        for (action in actions) {
+            val title = action.title(context)
+            val menuItem =
+                if (action in subMenus) {
+                    menu.addSubMenu(Menu.NONE, action.menuId, Menu.NONE, title).item
+                } else {
+                    menu.add(Menu.NONE, action.menuId, Menu.NONE, title)
+                }
+            with(menuItem) {
+                action.drawableRes?.let { setIcon(it) }
+                setShowAsAction(menuActionType)
+            }
+        }
+    }
+
+    private fun setupMenus() {
+        val menuItems = repository.getActionsByMenuDisplayTypes(MenuDisplayType.ALWAYS, MenuDisplayType.MENU_ONLY)
+        addActions(menuItems.getValue(MenuDisplayType.ALWAYS), menuItems.getValue(MenuDisplayType.MENU_ONLY))
+
+        context.increaseHorizontalPaddingOfMenuIcons(overflowMenu)
+
+        // wait until attached to a fragment or activity to launch the coroutine to setup flags
+        viewTreeObserver.addOnGlobalLayoutListener(
+            object : OnGlobalLayoutListener {
+                override fun onGlobalLayout() {
+                    findViewTreeLifecycleOwner()?.lifecycleScope?.launch {
+                        setFlagTitles()
+                    }
+                    viewTreeObserver.removeOnGlobalLayoutListener(this)
+                }
+            },
+        )
+    }
+}
