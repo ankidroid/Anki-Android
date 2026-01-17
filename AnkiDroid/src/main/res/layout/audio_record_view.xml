@@ -17,13 +17,11 @@
   This file incorporates code from https://github.com/varunjohn/Audio-Recording-Animation
   under the Apache License, Version 2.0.
 -->
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:clipChildren="false"
-    android:elevation="2dp">
+    tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout"
+    >
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/recording_status_icon"
@@ -138,4 +136,4 @@
             app:srcCompat="@drawable/ic_action_mic"/>
 
     </androidx.cardview.widget.CardView>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</merge>
