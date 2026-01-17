@@ -67,7 +67,7 @@ class TemplatePreviewerFragment :
 
     /**
      * Updates the content displayed in the previewer with the provided fields and tags
-     * Only updates the webView and not the tabs
+     *
      * Should not be called for cloze deletions, since they they have dynamic ord
      *
      * @param fields The list of field values to display
