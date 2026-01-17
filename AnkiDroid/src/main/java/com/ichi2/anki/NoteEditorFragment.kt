@@ -361,6 +361,7 @@ class NoteEditorFragment :
                         closeNoteEditor()
                     } else {
                         Timber.d("onActivityResult() template edit return, in add mode, just re-display")
+                        updateCards(editorNote!!.notetype)
                     }
                 } else {
                     Timber.d("onActivityResult() template edit return - current card exists")
