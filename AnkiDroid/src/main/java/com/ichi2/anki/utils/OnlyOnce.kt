@@ -16,7 +16,9 @@
 
 package com.ichi2.anki.utils
 
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import timber.log.Timber
 
 /**
@@ -49,5 +51,24 @@ object OnlyOnce {
             Timber.v("completed $name")
             blockedFunctions.remove(name)
         }
+    }
+}
+
+/**
+ * Enforces single execution of a coroutine task
+ * if a task is running, ignore any other requests till it finishes
+ * @param scope The coroutine scope where the task is launched
+ */
+class RunOnlyOnce(
+    private val scope: CoroutineScope,
+) {
+    private var job: Job? = null
+
+    fun launch(block: suspend CoroutineScope.() -> Unit) {
+        if (job?.isActive == true) {
+            Timber.d("skipped multiple executions of job")
+            return
+        }
+        job = scope.launch(block = block)
     }
 }

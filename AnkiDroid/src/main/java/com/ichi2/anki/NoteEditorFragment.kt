@@ -153,6 +153,7 @@ import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.setupNoteTypeSpinner
+import com.ichi2.anki.utils.RunOnlyOnce
 import com.ichi2.anki.utils.ext.sharedPrefs
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.utils.ext.window
@@ -224,7 +225,7 @@ class NoteEditorFragment :
     private var changed = false
     private var isTagsEdited = false
     private var isFieldEdited = false
-
+    private var addNoteJob = RunOnlyOnce(scope = lifecycleScope)
     private var multimediaActionJob: Job? = null
 
     private val getColUnsafe: Collection
@@ -1338,7 +1339,8 @@ class NoteEditorFragment :
 
             reloadRequired = true
 
-            lifecycleScope.launch {
+            // Use addNoteJob to ignore any requests made after the initial add note request, this prevents multiple clicks from crashing the app
+            addNoteJob.launch {
                 val noteFieldsCheck = checkNoteFieldsResponse(editorNote!!)
                 if (noteFieldsCheck is NoteFieldsCheckResult.Failure) {
                     addNoteErrorMessage = noteFieldsCheck.localizedMessage ?: getString(R.string.something_wrong)
