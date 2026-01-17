@@ -155,9 +155,11 @@ tasks.register('jacocoUnitTestReport', JacocoReport) {report ->
 
 gradle.projectsEvaluated {
     // ensure test results aren't cached
-    tasks.named('testPlayDebugUnitTest') {task ->
-        task.outputs.upToDateWhen { false }
-        task.outputs.cacheIf { false }
+    tasks.configureEach { task ->
+        if (task.name == 'testPlayDebugUnitTest') {
+            task.outputs.upToDateWhen { false }
+            task.outputs.cacheIf { false }
+        }
     }
     for (module in modulesToUnitTest) {
         project(module).tasks.named('testDebugUnitTest')?.configure {task ->
