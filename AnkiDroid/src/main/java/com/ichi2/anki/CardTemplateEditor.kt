@@ -256,8 +256,7 @@ open class CardTemplateEditor :
                     tags = note.tags,
                     fillEmpty = true,
                 )
-            val backgroundColor = Themes.getColorFromAttr(this@CardTemplateEditor, R.attr.alternativeBackgroundColor)
-            val fragment = TemplatePreviewerFragment.newInstance(args, backgroundColor)
+            val fragment = TemplatePreviewerFragment.newInstance(args)
             supportFragmentManager.commitNow {
                 replace(R.id.fragment_container, fragment)
             }

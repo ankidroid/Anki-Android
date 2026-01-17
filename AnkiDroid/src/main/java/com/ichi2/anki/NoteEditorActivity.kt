@@ -38,7 +38,6 @@ import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.ui.ResizablePaneManager
-import com.ichi2.themes.Themes
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import timber.log.Timber
@@ -262,8 +261,7 @@ class NoteEditorActivity :
                 fillEmpty = false,
             )
 
-        val backgroundColor = Themes.getColorFromAttr(this@NoteEditorActivity, R.attr.alternativeBackgroundColor)
-        val previewerFragment = TemplatePreviewerFragment.newInstance(args, backgroundColor)
+        val previewerFragment = TemplatePreviewerFragment.newInstance(args)
         return previewerFragment
     }
 
