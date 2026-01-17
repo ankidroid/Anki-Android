@@ -31,6 +31,7 @@ class StudyScreenRepository(
     val isMarkShownInToolbar: Boolean
     val isFlagShownInToolbar: Boolean
     var isWhiteboardEnabled by prefs.booleanPref(KEY_WHITEBOARD_ENABLED, false)
+    val isHtmlTypeAnswerEnabled get() = prefs.isHtmlTypeAnswerEnabled
 
     init {
         val actions =
