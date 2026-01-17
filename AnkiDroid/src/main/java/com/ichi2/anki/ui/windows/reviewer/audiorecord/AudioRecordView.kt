@@ -111,6 +111,8 @@ class AudioRecordView : ConstraintLayout {
         defStyleRes: Int,
     ) : super(context, attrs, defStyleAttr, defStyleRes) {
         LayoutInflater.from(context).inflate(R.layout.audio_record_view, this, true)
+        this.clipChildren = false
+
         recordButton = findViewById(R.id.recordButton)
         recordButtonIcon = findViewById(R.id.recordIcon)
         imageViewLock = findViewById(R.id.lock_icon)
