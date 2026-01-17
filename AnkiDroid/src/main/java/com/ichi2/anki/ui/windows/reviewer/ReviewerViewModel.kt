@@ -65,7 +65,6 @@ import com.ichi2.anki.ui.windows.reviewer.autoadvance.QuestionAction
 import com.ichi2.anki.utils.CollectionPreferences
 import com.ichi2.anki.utils.Destination
 import com.ichi2.anki.utils.ext.answerCard
-import com.ichi2.anki.utils.ext.cardStateCustomizer
 import com.ichi2.anki.utils.ext.cardStatsNoCardClean
 import com.ichi2.anki.utils.ext.currentCardStudy
 import com.ichi2.anki.utils.ext.flag
@@ -122,7 +121,7 @@ class ReviewerViewModel(
 
     override val server: AnkiServer = AnkiServer(this, repository.getServerPort()).also { it.start() }
     private val stateMutationKey = repository.generateStateMutationKey()
-    private val stateMutationJs: Deferred<String> = asyncIO { withCol { cardStateCustomizer } }
+    private val stateMutationJs: Deferred<String> = asyncIO { repository.getCustomSchedulingJs() }
     private var typedAnswer = ""
 
     private val autoAdvance = AutoAdvance(viewModelScope, this, currentCard)
