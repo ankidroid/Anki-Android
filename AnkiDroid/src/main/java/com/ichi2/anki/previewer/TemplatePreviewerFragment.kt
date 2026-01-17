@@ -29,7 +29,6 @@ import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.utils.ext.doOnTabSelected
 import com.ichi2.anki.workarounds.SafeWebViewLayout
-import com.ichi2.themes.Themes
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import timber.log.Timber
@@ -89,10 +88,6 @@ class TemplatePreviewerFragment :
      */
     private suspend fun setupPreviewerTabs(tabLayout: TabLayout) {
         tabLayout.removeAllTabs()
-
-        val backgroundColor =
-            Themes.getColorFromAttr(requireContext(), R.attr.alternativeBackgroundColor)
-        tabLayout.setBackgroundColor(backgroundColor)
 
         val cardsWithEmptyFronts = viewModel.cardsWithEmptyFronts?.await()
         for ((index, templateName) in viewModel.getTemplateNames().withIndex()) {
