@@ -23,6 +23,7 @@ import com.ichi2.anki.preferences.reviewer.ViewerAction
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.settings.PrefsRepository
 import com.ichi2.anki.settings.enums.ToolbarPosition
+import com.ichi2.anki.utils.CollectionPreferences
 import com.ichi2.anki.utils.ext.cardStateCustomizer
 import timber.log.Timber
 import java.net.BindException
@@ -68,6 +69,8 @@ class StudyScreenRepository(
     fun generateStateMutationKey(): String = TimeManager.time.intTimeMS().toString()
 
     suspend fun getCustomSchedulingJs(): String = CollectionManager.withCol { cardStateCustomizer }
+
+    suspend fun getShouldShowNextTimes(): Boolean = CollectionPreferences.getShowIntervalOnButtons()
 
     companion object {
         private const val KEY_WHITEBOARD_ENABLED = "whiteboardEnabled"

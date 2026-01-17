@@ -62,7 +62,6 @@ import com.ichi2.anki.ui.windows.reviewer.autoadvance.AnswerAction
 import com.ichi2.anki.ui.windows.reviewer.autoadvance.AutoAdvance
 import com.ichi2.anki.ui.windows.reviewer.autoadvance.AutoAdvanceAction
 import com.ichi2.anki.ui.windows.reviewer.autoadvance.QuestionAction
-import com.ichi2.anki.utils.CollectionPreferences
 import com.ichi2.anki.utils.Destination
 import com.ichi2.anki.utils.ext.answerCard
 import com.ichi2.anki.utils.ext.cardStatsNoCardClean
@@ -142,10 +141,7 @@ class ReviewerViewModel(
     private var mutationSignal = CompletableDeferred(Unit)
 
     val answerButtonsNextTimeFlow: MutableStateFlow<AnswerButtonsNextTime?> = MutableStateFlow(null)
-    private val shouldShowNextTimes: Deferred<Boolean> =
-        asyncIO {
-            CollectionPreferences.getShowIntervalOnButtons()
-        }
+    private val shouldShowNextTimes = asyncIO { repository.getShouldShowNextTimes() }
 
     init {
         ChangeManager.subscribe(this)
