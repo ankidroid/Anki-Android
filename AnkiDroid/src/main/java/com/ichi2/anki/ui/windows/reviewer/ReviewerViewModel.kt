@@ -36,7 +36,6 @@ import com.ichi2.anki.libanki.CardId
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.NoteId
 import com.ichi2.anki.libanki.redoLabel
-import com.ichi2.anki.libanki.sched.Counts
 import com.ichi2.anki.libanki.sched.CurrentQueueState
 import com.ichi2.anki.libanki.undoLabel
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
@@ -58,7 +57,6 @@ import com.ichi2.anki.servicelayer.MARKED_TAG
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.anki.servicelayer.isBuryNoteAvailable
 import com.ichi2.anki.servicelayer.isSuspendNoteAvailable
-import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.tryRedo
 import com.ichi2.anki.tryUndo
 import com.ichi2.anki.ui.windows.reviewer.autoadvance.AnswerAction
@@ -129,7 +127,7 @@ class ReviewerViewModel(
     private var typedAnswer = ""
 
     private val autoAdvance = AutoAdvance(viewModelScope, this, currentCard)
-    private val isHtmlTypeAnswerEnabled = Prefs.isHtmlTypeAnswerEnabled
+    private val isHtmlTypeAnswerEnabled = repository.isHtmlTypeAnswerEnabled
     val answerTimer = AnswerTimer()
 
     /**
