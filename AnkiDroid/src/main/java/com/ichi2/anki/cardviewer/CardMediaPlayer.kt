@@ -109,10 +109,11 @@ class CardMediaPlayer : Closeable {
     /** Serializes playbacks to avoid overloading the thread pool and a potential deadlock */
     private val playbackMutex = Mutex()
 
-    private lateinit var questionAvTags: List<AvTag>
-    private lateinit var answerAvTags: List<AvTag>
+    private var questionAvTags: List<AvTag> = emptyList()
+    private var answerAvTags: List<AvTag> = emptyList()
 
-    lateinit var config: CardSoundConfig
+    var config: CardSoundConfig? = null
+        private set
 
     var isEnabled: Boolean = true
         private set
@@ -140,7 +141,13 @@ class CardMediaPlayer : Closeable {
         this.questionAvTags = renderOutput.questionAvTags
         this.answerAvTags = renderOutput.answerAvTags
 
-        if (!this::config.isInitialized || !config.appliesTo(card) || (this::config.isInitialized && autoPlay != config.autoplay)) {
+        val currentConfig = config
+        val needsConfigUpdate =
+            currentConfig == null ||
+                !currentConfig.appliesTo(card) ||
+                autoPlay != currentConfig.autoplay
+
+        if (needsConfigUpdate) {
             config = withCol { CardSoundConfig.create(this@withCol, card) }
         }
     }
@@ -151,20 +158,21 @@ class CardMediaPlayer : Closeable {
      * Does not affect playback if they are
      */
     suspend fun ensureAvTagsLoaded(card: Card) {
-        if (this::questionAvTags.isInitialized) return
+        if (config?.appliesTo(card) == true) return
 
         Timber.i("loading sounds for card %d", card.id)
         val renderOutput = withCol { card.renderOutput(this) }
         this.questionAvTags = renderOutput.questionAvTags
         this.answerAvTags = renderOutput.answerAvTags
 
-        if (!this::config.isInitialized || !config.appliesTo(card)) {
+        val currentConfig = config
+        if (currentConfig == null || !currentConfig.appliesTo(card)) {
             config = withCol { CardSoundConfig.create(this@withCol, card) }
         }
     }
 
     suspend fun autoplayAllForSide(cardSide: CardSide) {
-        if (config.autoplay) {
+        if (config?.autoplay == true) {
             playAllForSide(cardSide)
         }
     }
@@ -310,14 +318,14 @@ class CardMediaPlayer : Closeable {
         }
 
     /** Whether the provided side has available media */
-    fun hasMedia(displayAnswer: Boolean): Boolean = if (displayAnswer) answerAvTags.any() else questionAvTags.any()
+    fun hasMedia(displayAnswer: Boolean): Boolean = if (displayAnswer) answerAvTags.isNotEmpty() else questionAvTags.isNotEmpty()
 
     /**
      * Replays all sounds for [side], calling [onMediaGroupCompleted] when completed
      */
     suspend fun replayAll(side: SingleCardSide) =
         when (side) {
-            SingleCardSide.BACK -> if (config.replayQuestion) playAllForSide(CardSide.BOTH) else playAllForSide(CardSide.ANSWER)
+            SingleCardSide.BACK -> if (config?.replayQuestion == true) playAllForSide(CardSide.BOTH) else playAllForSide(CardSide.ANSWER)
             SingleCardSide.FRONT -> playAllForSide(CardSide.QUESTION)
         }
 

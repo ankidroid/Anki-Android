@@ -103,7 +103,6 @@ class PreviewerViewModelTest : JvmTest() {
         }
 
     @Test
-    @Flaky(OS.ALL, "assumed to be #19729")
     fun `previous button`() =
         runTest {
             // Start at Index 1
@@ -122,7 +121,6 @@ class PreviewerViewModelTest : JvmTest() {
         }
 
     @Test
-    @Flaky(OS.ALL, "#19729")
     fun `toggle back side only`() =
         runTest {
             assertFalse(viewModel.backSideOnly.value) // initial state should be false
@@ -178,7 +176,6 @@ class PreviewerViewModelTest : JvmTest() {
         }
 
     @Test
-    @Flaky(OS.ALL, "#19729")
     fun `next, slider and previous navigation integration`() =
         runTest {
             // 1. Start at Index 0 (Question)
