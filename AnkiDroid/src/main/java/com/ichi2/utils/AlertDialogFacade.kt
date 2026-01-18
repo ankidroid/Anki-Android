@@ -455,17 +455,23 @@ fun AlertDialog.Builder.listItemsAndMessage(
  * }
  * ```
  *
- * @param block action executed when the help icon is clicked
- *
+ * @param onHelpClick action executed when the help icon is clicked
+ * @param startIcon optional icon to display at the start of the title
  */
 fun AlertDialog.Builder.titleWithHelpIcon(
     @StringRes stringRes: Int? = null,
     text: String? = null,
-    block: View.OnClickListener,
-) {
+    @DrawableRes startIcon: Int? = null,
+    onHelpClick: View.OnClickListener,
+): AlertDialog.Builder {
     // setup the view for the dialog
     val binding = AlertDialogTitleWithHelpBinding.inflate(LayoutInflater.from(context))
     setCustomTitle(binding.root)
+
+    if (startIcon != null) {
+        binding.titleIcon.setImageResource(startIcon)
+        binding.titleIcon.visibility = View.VISIBLE
+    }
 
     // apply a custom title
     if (stringRes != null) {
@@ -477,8 +483,9 @@ fun AlertDialog.Builder.titleWithHelpIcon(
     // set the action when clicking the help icon
     binding.helpIcon.setOnClickListener { v ->
         Timber.i("dialog help icon click")
-        block.onClick(v)
+        onHelpClick.onClick(v)
     }
+    return this
 }
 
 /** Calls [AlertDialog.dismiss], ignoring errors */
