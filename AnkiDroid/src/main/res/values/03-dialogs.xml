@@ -98,7 +98,7 @@
 
     <!-- Tags Dialog Options -->
     <string name="tags_dialog_option_all_cards">All cards</string>
-    <string name="tags_dialog_option_new_cards">New</string>
+    <string name="tags_dialog_option_new_cards" comment="Name of cards that have not been reviewed ever before">New</string>
     <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">Due</string>
 
     <!-- Empty cards -->
