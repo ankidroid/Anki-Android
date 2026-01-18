@@ -429,17 +429,26 @@ fun AlertDialog.Builder.listItemsAndMessage(
  * }
  * ```
  *
- * @param block action executed when the help icon is clicked
+ * @param onHelpClick action executed when the help icon is clicked
  *
  */
 fun AlertDialog.Builder.titleWithHelpIcon(
     @StringRes stringRes: Int? = null,
     text: String? = null,
-    block: View.OnClickListener,
-) {
+    @DrawableRes icon: Int? = null,
+    onHelpClick: View.OnClickListener,
+): AlertDialog.Builder {
     // setup the view for the dialog
     val customTitleView = LayoutInflater.from(context).inflate(R.layout.alert_dialog_title_with_help, null, false)
     setCustomTitle(customTitleView)
+
+    val titleIconView = customTitleView.findViewById<ImageView>(R.id.title_icon)
+    if (icon != null) {
+        titleIconView.setImageResource(icon)
+        titleIconView.visibility = View.VISIBLE
+    } else {
+        titleIconView.visibility = View.GONE
+    }
 
     // apply a custom title
     val titleTextView = customTitleView.findViewById<TextView>(android.R.id.title)
@@ -453,8 +462,9 @@ fun AlertDialog.Builder.titleWithHelpIcon(
     // set the action when clicking the help icon
     customTitleView.findViewById<ImageView>(R.id.help_icon).setOnClickListener { v ->
         Timber.i("dialog help icon click")
-        block.onClick(v)
+        onHelpClick.onClick(v)
     }
+    return this
 }
 
 /** Calls [AlertDialog.dismiss], ignoring errors */
