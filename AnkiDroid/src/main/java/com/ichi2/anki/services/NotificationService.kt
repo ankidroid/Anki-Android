@@ -112,8 +112,11 @@ class NotificationService : BroadcastReceiver() {
                         }
                 }
             val dueCardsTotal = dueCardsCount.count()
-            if (dueCardsTotal < reviewReminder.cardTriggerThreshold.threshold) {
-                Timber.i("Aborting notification due to threshold: $dueCardsTotal < ${reviewReminder.cardTriggerThreshold.threshold}")
+            val consideredCardsCount = reviewReminder.thresholdFilter.filterCounts(dueCardsCount)
+            val consideredCardsTotal = consideredCardsCount.count()
+            Timber.i("Due cards count: $dueCardsCount, Considered cards count: $consideredCardsCount")
+            if (consideredCardsTotal < reviewReminder.cardTriggerThreshold.threshold) {
+                Timber.i("Aborting notification due to threshold: $consideredCardsTotal < ${reviewReminder.cardTriggerThreshold.threshold}")
                 return
             }
 

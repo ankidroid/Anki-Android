@@ -144,6 +144,41 @@ class StringUtilsTest {
     }
 
     @Test
+    fun partition_delimiter_found() {
+        val (before, after) = "hello%sworld".partition("%s")
+        assertThat(before, equalTo("hello"))
+        assertThat(after, equalTo("world"))
+    }
+
+    @Test
+    fun partition_delimiter_not_found() {
+        val (before, after) = "hello%1\$sworld".partition("%s")
+        assertThat(before, equalTo("hello%1\$sworld"))
+        assertThat(after, equalTo(""))
+    }
+
+    @Test
+    fun partition_delimiter_at_start() {
+        val (before, after) = "%shello".partition("%s")
+        assertThat(before, equalTo(""))
+        assertThat(after, equalTo("hello"))
+    }
+
+    @Test
+    fun partition_delimiter_at_end() {
+        val (before, after) = "hello%s".partition("%s")
+        assertThat(before, equalTo("hello"))
+        assertThat(after, equalTo(""))
+    }
+
+    @Test
+    fun partition_multiple_delimiters() {
+        val (before, after) = "one%stwo%sthree".partition("%s")
+        assertThat(before, equalTo("one"))
+        assertThat(after, equalTo("two%sthree"))
+    }
+
+    @Test
     fun htmlEncode_less_than() {
         assertThat("<".htmlEncode(), equalTo("&lt;"))
         assertThat("a<b".htmlEncode(), equalTo("a&lt;b"))

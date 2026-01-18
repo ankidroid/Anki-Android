@@ -65,6 +65,21 @@ fun emptyStringMutableList(size: Int): MutableList<String> = MutableList(size) {
 fun emptyStringArray(size: Int): Array<String> = Array(size) { "" }
 
 /**
+ * Split a string in two parts at the first occurrence of the given delimiter.
+ * If the delimiter is not found, the first part will be the original string,
+ * and the second part will be an empty string.
+ *
+ * Usage: `val (beforeArg, afterArg) = translatableStringWithArg.partition("%s")`
+ */
+fun String.partition(delimiter: String): Pair<String, String> =
+    this.split(delimiter, limit = 2).let {
+        when (it.size) {
+            2 -> Pair(it[0], it[1])
+            else -> Pair(this, "")
+        }
+    }
+
+/**
  * Html-encode the string.
  * @receiver the string to be encoded
  * @return the encoded string
