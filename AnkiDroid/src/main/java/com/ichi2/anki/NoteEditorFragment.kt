@@ -330,7 +330,6 @@ class NoteEditorFragment :
                 if (result.resultCode == RESULT_CANCELED) {
                     Timber.d("Multimedia result canceled")
                     val index = result.data?.extras?.getInt(MULTIMEDIA_RESULT_FIELD_INDEX) ?: return@NoteEditorActivityResultCallback
-                    showMultimediaBottomSheet()
                     handleMultimediaActions(index)
                     return@NoteEditorActivityResultCallback
                 }
