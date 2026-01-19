@@ -197,7 +197,7 @@ data class ReviewReminder private constructor(
     val scope: ReviewReminderScope,
     var enabled: Boolean,
     val profileID: String,
-    val onlyNotifyIfNoReviews: Boolean,
+    val onlyNotifyIfNoReviews: Boolean = false,
 ) : Parcelable,
     ReviewReminderSchema {
     companion object {
