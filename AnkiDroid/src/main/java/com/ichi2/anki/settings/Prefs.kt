@@ -407,7 +407,8 @@ open class PrefsRepository(
     val devIsCardBrowserFragmented: Boolean
         get() = getBoolean(R.string.dev_card_browser_fragmented, false)
 
-    val devUsingCardBrowserSearchView: Boolean by booleanPref(R.string.dev_card_browser_search_view, false)
+    @set:VisibleForTesting
+    var devUsingCardBrowserSearchView: Boolean by booleanPref(R.string.dev_card_browser_search_view, false)
 
     val isWebDebugEnabled: Boolean
         get() = (getBoolean(R.string.html_javascript_debugging_key, false) || BuildConfig.DEBUG) && !isRunningAsUnitTest

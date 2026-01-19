@@ -180,7 +180,7 @@ class CardBrowserFragment :
     // only usable if 'useSearchView' is set
     override var searchBar: SearchBar? = null
     private var searchView: SearchView? = null
-    private var deckChip: Chip? = null
+    private var decksChip: Chip? = null
 
     // region legacy menu handling
     var mySearchesItem: MenuItem? = null
@@ -255,8 +255,8 @@ class CardBrowserFragment :
 
         progressIndicator = view.findViewById(R.id.browser_progress)
 
-        deckChip =
-            view.findViewById<Chip>(R.id.chip_decks)?.apply {
+        decksChip =
+            view.findViewById<Chip>(R.id.decks_chip)?.apply {
                 setOnClickListener { viewModel.openDeckSelectionDialog() }
             }
         searchBar =
@@ -809,7 +809,7 @@ class CardBrowserFragment :
         }
 
         fun onDeckChanged(deck: SelectableDeck?) {
-            deckChip?.text = deck?.getFullDisplayName(requireContext())
+            decksChip?.text = deck?.getFullDisplayName(requireContext())
         }
 
         fun advancedSearchChanged(inAdvancedSearch: Boolean) {
