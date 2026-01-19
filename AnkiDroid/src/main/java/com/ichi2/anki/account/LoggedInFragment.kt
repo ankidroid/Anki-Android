@@ -79,9 +79,18 @@ class LoggedInFragment : Fragment(R.layout.my_account_logged_in) {
 
         view.findViewById<Button>(R.id.privacy_policy_button).setOnClickListener { openAnkiDroidPrivacyPolicy() }
         view.findViewById<Button>(R.id.logout_button).setOnClickListener { logout() }
-        view.findViewById<Button>(R.id.remove_account_button).setOnClickListener { openRemoveAccountScreen() }
+        view.findViewById<Button>(R.id.remove_account_button).setOnClickListener { showAccountRemovalExplanation() }
 
         loggedInLogo = view.findViewById(R.id.login_logo)
+
+        parentFragmentManager.setFragmentResultListener(
+            AccountRemovalExplanationDialog.REQUEST_KEY,
+            viewLifecycleOwner,
+        ) { _, bundle ->
+            if (bundle.getBoolean(AccountRemovalExplanationDialog.RESULT_PROCEED, false)) {
+                openRemoveAccountScreen()
+            }
+        }
     }
 
     private fun openAnkiDroidPrivacyPolicy() {
@@ -104,6 +113,11 @@ class LoggedInFragment : Fragment(R.layout.my_account_logged_in) {
      * @see RemoveAccountFragment
      * @see R.string.remove_account_url
      */
+    private fun showAccountRemovalExplanation() {
+        val dialog = AccountRemovalExplanationDialog.newInstance()
+        dialog.show(parentFragmentManager, "AccountRemovalExplanationDialog")
+    }
+
     private fun openRemoveAccountScreen() {
         Timber.i("opening 'remove account'")
         requireActivity()
