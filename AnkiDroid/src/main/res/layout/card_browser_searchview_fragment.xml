@@ -149,7 +149,6 @@
                 android:id="@+id/search_view_content_container"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:name="com.ichi2.anki.browser.search.StandardSearchFragment"
                 />
 
         </LinearLayout>

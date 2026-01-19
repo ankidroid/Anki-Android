@@ -254,6 +254,11 @@ class CardBrowserFragment :
             view.findViewById<SearchView>(R.id.search_view)?.apply {
                 editText.doAfterTextChanged { searchViewModel.onSearchTextChanged(it.toString()) }
                 addTransitionListener { _, _, state ->
+                    if (state == SearchView.TransitionState.SHOWING) {
+                        getOrCreateSearchFragment(StandardSearchFragment.TAG, ::StandardSearchFragment)
+                        return@addTransitionListener
+                    }
+
                     if (state != SearchView.TransitionState.HIDDEN) return@addTransitionListener
                     // clear state on hide
                     childFragmentManager
