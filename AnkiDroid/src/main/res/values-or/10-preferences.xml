@@ -68,9 +68,9 @@
     <string name="pref_cat_advanced" maxLength="41">ଵିକଶିତ</string>
     <string name="pref_cat_workarounds" maxLength="41">କାର୍ଯ୍ୟକ୍ଷେତ୍ର</string>
     <string name="pref_cat_plugins" maxLength="41">Plugins</string>
-    <string name="pref_cat_editing" maxLength="41">Editing</string>
+    <string name="pref_cat_editing" maxLength="41">ସମ୍ପାଦନା</string>
     <!-- preferences.xml entries-->
-    <string name="whiteboard_stroke_width" maxLength="41">ଷ୍ଟ୍ରୋକ ଓସାର</string>
+    <string name="whiteboard_stroke_width" maxLength="41">ଗାର ଓସାର</string>
     <string name="use_input_tag" maxLength="41">ପତ୍ରରେ ଉତ୍ତର ଟାଇପ୍ କରନ୍ତୁ</string>
     <string name="use_input_tag_summ">ଉତ୍ତର ଟାଇପ୍ କରିବାକୁ ପତ୍ର ଭିତରେ ଏକ ପାଠ୍ୟ ଇନପୁଟ୍ ବାକ୍ସ ବ୍ୟବହାର କରନ୍ତୁ</string>
     <string name="reset_languages" maxLength="41">ଭାଷା reset କରନ୍ତୁ</string>
@@ -116,9 +116,9 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">ମଝି କେନ୍ଦ୍ରକୁ ସ୍ପର୍ଶ କଲେ</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">ତଳ ବାମକୁ ସ୍ପର୍ଶ କଲେ</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">ତଳ ଡାହାଣକୁ ସ୍ପର୍ଶ କଲେ</string>
-    <string name="gestures_two_finger_tap" maxLength="41">Two-finger tap</string>
-    <string name="gestures_three_finger_tap" maxLength="41">Three-finger tap</string>
-    <string name="gestures_four_finger_tap" maxLength="41">Four-finger tap</string>
+    <string name="gestures_two_finger_tap" maxLength="41">ଦୁଇ-ଆଙ୍ଗୁଳି ସ୍ପର୍ଶ</string>
+    <string name="gestures_three_finger_tap" maxLength="41">ତିନି-ଆଙ୍ଗୁଳି ସ୍ପର୍ଶ</string>
+    <string name="gestures_four_finger_tap" maxLength="41">ଚାରି-ଆଙ୍ଗୁଳି ସ୍ପର୍ଶ</string>
     <string name="gestures_shake" maxLength="41">ଡିଵାଇସ୍ ଝାଙ୍କିଲେ</string>
     <string name="card_browser_enable_external_context_menu" maxLength="41">‘%s’ ମେନୁ</string>
     <string name="card_browser_enable_external_context_menu_summary">ସବୁ ଜାଗାରେ ‘%s’ ପ୍ରସଙ୍ଗ ମେନୁକୁ ସକ୍ଷମ କରିଥାଏ</string>
@@ -151,7 +151,7 @@
     <string name="notification_pref_title" maxLength="41">କେବେ ସୂଚିତ କରାଯିବ</string>
     <string name="never_notify">କଦାପି ସୂଚିତ କରନାହିଁ</string>
     <string name="notify_when_pending">ବିଚାରାଧୀନ ଵାର୍ତ୍ତା ଉପଲବ୍ଧ ଥିଲେ</string>
-    <string name="notification_minimum_cards_due" comment="Consider keeping the unbreakable space after the digit">More than %d cards due</string>
+    <string name="notification_minimum_cards_due" comment="Consider keeping the unbreakable space after the digit">%d ରୁ ଅଧିକ ପତ୍ର ବାକି</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">କମ୍ପନ</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">LED ସୂଚକ</string>
     <string name="select_locale_title">ଭାଷା ବାଛନ୍ତୁ</string>
@@ -166,7 +166,7 @@
     <string name="vertical_centering_summ">ପତ୍ରଗୁଡ଼ିକର ଵିଷୟବସ୍ତୁକୁ ଭୂଲମ୍ବ ଭାଵରେ କେନ୍ଦ୍ରିତ କରିରଖିବା</string>
     <string name="pref_double_tap_time_interval" maxLength="41">ଡବଲ୍ ଟ୍ୟାପ୍ ସମୟ ଅନ୍ତରାଳ</string>
     <string name="pref_double_tap_time_interval_summary">ଯଦି ଏହି ସମୟ ଅତିବାହିତ ହୋଇନାହିଁ ତେବେ ଉତ୍ତର ବଟନର ଦ୍ୱିତୀୟ ଟ୍ୟାପ୍ ଅଣଦେଖା କରାଯିବ। ଏହା ଆକସ୍ମିକ ଡବଲ୍ ଟ୍ୟାପ୍ ପ୍ରତିରୋଧ କରେ</string>
-    <string name="pref_show_answer_long_press_time" maxLength="41">Show answer long-press time</string>
+    <string name="pref_show_answer_long_press_time" maxLength="41">ଉତ୍ତର ଦେଖାଅ ଦୀର୍ଘ-ସ୍ପର୍ଶ ସମୟ</string>
     <string name="pref_show_answer_long_press_time_summary">Minimum pressing time before the show answer button registers a touch.</string>
     <string name="show_estimates" maxLength="41">ବଟନ୍ ସମୟ ଦେଖାଇବା</string>
     <string name="show_estimates_summ">ଉତ୍ତର ବଟନ୍‌ଗୁଡ଼ିକରେ ପରଵର୍ତ୍ତୀ ସମୀକ୍ଷା ସମୟ ଦର୍ଶାଇବା</string>
@@ -234,7 +234,7 @@
     <string name="media" maxLength="41">ମିଡ଼ିଆ</string>
     <string name="misc" maxLength="41">ଵିଵିଧ</string>
     <!-- Review reminders -->
-    <string name="add_reminder" comment="Label for the add reminder button in the screen for adding and editing review reminders">Add reminder</string>
+    <string name="add_reminder" comment="Label for the add reminder button in the screen for adding and editing review reminders">ସ୍ମାରକ ଯୋଡ଼ିବା</string>
     <string name="add_review_reminder" comment="Title of the screen for creating a new review reminder">Add review reminder</string>
     <string name="edit_review_reminder" comment="Title of the screen for editing an existing review reminder">Edit review reminder</string>
     <string name="you_have_no_review_reminders" comment="Text that appears in the review reminder editing screen when there are no reminders set">You have no review reminders</string>
@@ -270,8 +270,8 @@
     <string name="other_licenses"><![CDATA[AnkiDroid also uses third-party libraries and icons, which are licensed under various open source <a href=\"%1$s\">licenses</a>]]></string>
     <string name="donate_description"><![CDATA[ଆପଣ <a href=\"%1$s\">ଦାନ</a> କରି AnkiDroidର ବିକାଶକୁ ସମର୍ଥନ କରିପାରିବେ। ଯେକୌଣସି ରାଶି ଅତ୍ୟନ୍ତ ପ୍ରଶଂସନୀୟ ଅଟେ।]]></string>
     <!-- Controls -->
-    <string name="binding_add_gesture">ଅଙ୍ଗଭଙ୍ଗୀ ଯୋଡ଼ନ୍ତୁ</string>
-    <string name="binding_add_key">Key ଯୋଡ଼ନ୍ତୁ</string>
+    <string name="binding_add_gesture">ଅଙ୍ଗଭଙ୍ଗୀ ଯୋଡ଼ିବା</string>
+    <string name="binding_add_key">Key ଯୋଡ଼ିବା</string>
     <string name="key_picker_default_press_key">ଏକ key ଦବାନ୍ତୁ</string>
     <string name="binding_add_axis">Add joystick/motion controller</string>
     <string name="axis_picker_move_joystick">Move a joystick/motion controller</string>
@@ -389,7 +389,7 @@
     <string name="new_study_screen" maxLength="41">ନୂଆ ଅଧ୍ୟୟନ ପରଦା</string>
     <string name="new_study_screen_summ"><![CDATA[Improved study screen that will succeed the current one. Some features of the old screen have been changed or removed. Please report any <a href="%1$s">feedback</a> or <a href="%2$s">bugs</a>.]]></string>
     <string name="show_answer_feedback" maxLength="41">Show answer feedback</string>
-    <string name="screen" maxLength="41">Screen</string>
+    <string name="screen" maxLength="41">ପରଦା</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">Open settings</string>
 </resources>

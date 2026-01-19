@@ -105,7 +105,7 @@
     <string name="check_media_title">ମିଡ଼ିଆ ଯାଞ୍ଚ କରିବେ କି?</string>
     <string name="check_media_warning">ବଡ଼ ମିଡ଼ିଆ ସଂଗ୍ରହ ସହିତ ଏହା ଏକ ଦୀର୍ଘ ସମୟ ନେଇପାରେ</string>
     <string name="check_media_message">ମିଡ଼ିଆ ଯାଞ୍ଚ ଚାଲିଛି&#8230;</string>
-    <string name="check_media_adding_missing_tag">Adding tags&#8230;</string>
+    <string name="check_media_adding_missing_tag">ଟ୍ୟାଗ୍‌ ଯୋଡ଼ାଯାଉଛି&#8230;</string>
     <string name="check_media_tags_added">Tags added</string>
     <string name="delete_media_message">ମିଡ଼ିଆ ଵିଲୋପ ହେଉଛି&#8230;</string>
     <string name="delete_media_result_title">ବିଲୋପ ଫଳାଫଳ</string>
@@ -255,7 +255,7 @@
     <string name="tts_error_dialog_change_button_text">Change engine</string>
     <string name="tts_error_dialog_supported_voices_button_text">Voice options</string>
     <!-- import_cache_error_resolutions -->
-    <string name="import_error_resolution_try_again">Re-import the file</string>
+    <string name="import_error_resolution_try_again">ଫାଇଲ୍‌ଟି ପୁନଃ-ଆମଦାନି କରିବା</string>
     <string name="import_error_resolution_free_up_space">Ensure there is sufficient free space on your device</string>
     <string name="import_error_resolution_check_internet">Ensure you are connected to the internet</string>
     <string name="import_error_resolution_copy_to_device">Copy the file to your device and try again with the local file</string>

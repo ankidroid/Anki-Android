@@ -55,10 +55,10 @@
     <string name="CardEditorTags">ଟ୍ୟାଗ୍: %1$s</string>
     <string name="CardEditorCards">ପତ୍ର: %1$s</string>
     <string name="edit_occlusions">ଅନ୍ତର୍ଦ୍ଧାନ ସମ୍ପାଦନା</string>
-    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
+    <string name="paste_from_clipboard" maxLength="28">କ୍ଲିପବୋର୍ଡରୁ ଲେପନ କରିବା</string>
     <string name="tag_name">ଟ୍ୟାଗ୍ ନାମ</string>
-    <string name="add_new_filter_tags">ଟ୍ୟାଗ୍ ଯୋଡ଼ନ୍ତୁ ଅବା ଶୋଧନ କରନ୍ତୁ</string>
-    <string name="add_tag" maxLength="28">ଟ୍ୟାଗ୍ ଯୋଡ଼ନ୍ତୁ</string>
+    <string name="add_new_filter_tags">ଟ୍ୟାଗ୍ ଯୋଡ଼ିବା ଅବା ଶୋଧନ କରିବା</string>
+    <string name="add_tag" maxLength="28">ଟ୍ୟାଗ୍ ଯୋଡ଼ିବା</string>
     <string name="check_all_tags" maxLength="28">ସମସ୍ତ ଟ୍ୟାଗ୍ ଚୟନ/ଅଚୟନ କରନ୍ତୁ</string>
     <string name="filter_tags" maxLength="28">ଟ୍ୟାଗ୍ ଶୋଧନ</string>
     <string name="no_tags">ଆପଣ ଏ ଯାଏଁ କୌଣସି ଟ୍ୟାଗ ଯୋଡ଼ିନାହାନ୍ତି</string>
@@ -67,23 +67,23 @@
     <string name="save_whiteboard" maxLength="28">ଧଳାପଟା ସଂରକ୍ଷିତ କରନ୍ତୁ</string>
     <string name="enable_stylus" maxLength="28">ଷ୍ଟାଇଲସ୍ ମୋଡ୍ ସକ୍ଷମ କରିବା</string>
     <string name="disable_stylus">ଷ୍ଟାଇଲସ୍ ମୋଡ୍ ଅକ୍ଷମ କରିବା</string>
-    <string name="eraser" maxLength="28">Eraser</string>
-    <string name="add_brush" maxLength="28">Add brush</string>
-    <string name="whiteboard_align_left" comment="Option to align the whiteboard toolbar on the left" maxLength="28">Left</string>
-    <string name="whiteboard_align_bottom" comment="Option to align the whiteboard toolbar on the bottom" maxLength="28">Bottom</string>
-    <string name="whiteboard_align_right" comment="Option to align the whiteboard toolbar on the right" maxLength="28">Right</string>
+    <string name="eraser" maxLength="28">ରବର</string>
+    <string name="add_brush" maxLength="28">ତୁଳି ଯୋଡ଼ିବା</string>
+    <string name="whiteboard_align_left" comment="Option to align the whiteboard toolbar on the left" maxLength="28">ବାମ</string>
+    <string name="whiteboard_align_bottom" comment="Option to align the whiteboard toolbar on the bottom" maxLength="28">ତଳ</string>
+    <string name="whiteboard_align_right" comment="Option to align the whiteboard toolbar on the right" maxLength="28">ଡାହାଣ</string>
     <string name="whiteboard_clear" comment="Button text to clear the whiteboard" maxLength="28">Clear</string>
-    <string name="whiteboard_more_options" comment="Tooltip of the whiteboard \'More\' button" maxLength="28">More options</string>
+    <string name="whiteboard_more_options" comment="Tooltip of the whiteboard \'More\' button" maxLength="28">ଅଧିକ ବିକଳ୍ପ</string>
     <string name="whiteboard_remove_brush_message">Are you sure you want to remove this brush from your palette?</string>
-    <string name="whiteboard_ink_eraser" comment="Title of the whiteboard Ink eraser">Ink</string>
-    <string name="whiteboard_stroke_eraser" comment="Title of the whiteboard Stroke eraser">Stroke</string>
+    <string name="whiteboard_ink_eraser" comment="Title of the whiteboard Ink eraser">କାଳି</string>
+    <string name="whiteboard_stroke_eraser" comment="Title of the whiteboard Stroke eraser">ଗାର</string>
     <string name="stylus_mode" comment="Title of the menu item that toggles the whiteboard stylus mode" maxLength="28">Stylus mode</string>
     <string name="cannot_remove_last_brush_message">The last brush may not be removed</string>
     <string name="enable_whiteboard" maxLength="28">ଧଳାପଟା ସକ୍ଷମ କରନ୍ତୁ</string>
     <string name="disable_whiteboard">ଧଳାପଟା ଅକ୍ଷମ କରନ୍ତୁ</string>
     <string name="show_whiteboard">ଧଳାପଟା ଦେଖାଅ</string>
-    <string name="enable_eraser" maxLength="28">Enable eraser</string>
-    <string name="disable_eraser" maxLength="28">Disable eraser</string>
+    <string name="enable_eraser" maxLength="28">ରବର ସକ୍ଷମ କରିବା</string>
+    <string name="disable_eraser" maxLength="28">ରବର ଅକ୍ଷମ କରିବା</string>
     <string name="hide_whiteboard" maxLength="28">ଧଳାପଟା ଲୁଚାଅ</string>
     <string name="clear_whiteboard" maxLength="28">ଧଳାପଟା ସଫା କରନ୍ତୁ</string>
     <string name="replay_media" maxLength="28">Replay media</string>
@@ -156,8 +156,8 @@
     <string name="delete_deck" comment="Message on a progress bar starting a deck is being deleted.">କେରୀ ଵିଲୋପ ଚାଲିଛି&#8230;</string>
     <string name="info_rate">AnkiDroid କୁ ମୂଲ୍ୟାଙ୍କନ କରନ୍ତୁ</string>
     <string name="import_title">ଆମଦାନି ଚାଲିଛି</string>
-    <string name="import_preparing_file">Preparing file for import&#8230;</string>
-    <string name="import_message_add" comment="Adding a new deck to the collection (import)">ଯୋଡ଼ନ୍ତୁ</string>
+    <string name="import_preparing_file">ଆମଦାନି ପାଇଁ ଫାଇଲ୍‌ଟି ପ୍ରସ୍ତୁତ ହେଉଛି&#8230;</string>
+    <string name="import_message_add" comment="Adding a new deck to the collection (import)">ଯୋଡ଼ିବା</string>
     <string name="import_message_replace_confirm">ଏହା ଆପଣଙ୍କର ବିଦ୍ୟମାନ ସଂଗ୍ରହକୁ ବିଲୋପ କରିଦେଇ ଏହାକୁ %s ଫାଇଲ୍‌ର ତଥ୍ୟ ସହିତ ପ୍ରତିସ୍ଥାପିତ କରିବ</string>
     <string name="import_dialog_message_add">ସଂଗ୍ରହରେ “%s”କୁ ଯୋଡ଼ିବେ ତ? ଏହା ବହୁତ ସମୟ ନେଇପାରେ</string>
     <string name="import_log_no_apkg">ଏହା ଏକ ବୈଧ Anki package ଫାଇଲ୍ ନୁହେଁ</string>
@@ -184,7 +184,7 @@
         ]]></string>
     <string name="export_choice_share">ଅଂଶୀଦାର କରିବା</string>
     <string name="export_choice_save_to">ଏଠାରେ ସଞ୍ଚୟ କରିବା</string>
-    <string name="export_saving_exported_collection">Saving exported file&#8230;</string>
+    <string name="export_saving_exported_collection">ରପ୍ତାନି ମାରିଥିବା ଫାଇଲ୍‌ଟି ସଞ୍ଚୟ ହେଉଛି&#8230;</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="28">ଵିକଳ୍ପ</string>
     <string name="menu__deck_options" maxLength="28">କେରୀ ଵିକଳ୍ପ</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">ଅଧ୍ୟୟନ ଵିକଳ୍ପ</string>
@@ -211,8 +211,8 @@
     <string name="restore_default" maxLength="28">ଡିଫଲ୍ଟ ପୁନଃସ୍ଥାପନ କରନ୍ତୁ</string>
     <string name="reviewer_tts_cloze_spoken_replacement">ଖାଲି</string>
     <!-- Whiteboard eraser mode toggle message in Reviewer -->
-    <string name="white_board_eraser_enabled">Eraser mode activated</string>
-    <string name="white_board_eraser_disabled">Eraser mode deactivated</string>
+    <string name="white_board_eraser_enabled">ରବର ମୋଡ୍ ସକ୍ରିୟ କରାଗଲା</string>
+    <string name="white_board_eraser_disabled">ରବର ମୋଡ୍ ନିଷ୍କ୍ରିୟ କରାଗଲା</string>
     <!-- Whiteboard save image message in the Study Screen -->
     <string name="white_board_image_save_failed">ଧଳାପଟା ଛବି ସଂରକ୍ଷଣ କରିବାରେ ବିଫଳ। %s</string>
     <string name="white_board_image_saved">ଧଳାପଟା ଛବି %sରେ ସଂରକ୍ଷିତ</string>
@@ -264,9 +264,9 @@
     <!-- IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
-    <string name="invalid_value" comment="Error message in IncrementerNumberRangePreference when input is not a valid number">Invalid value</string>
-    <string name="maximum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the maximum allowed value">Maximum value is %d</string>
-    <string name="minimum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the minimum allowed value">Minimum value is %d</string>
+    <string name="invalid_value" comment="Error message in IncrementerNumberRangePreference when input is not a valid number">ଅବୈଧ ମୂଲ୍ୟ</string>
+    <string name="maximum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the maximum allowed value">ସର୍ବାଧିକ ମୂଲ୍ୟ %d ଅଟେ</string>
+    <string name="minimum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the minimum allowed value">ସର୍ବନିମ୍ନ ମୂଲ୍ୟ %d ଅଟେ</string>
     <!-- Used for credential empty warning message -->
     <string name="invalid_email">ଏକ ବୈଧ ଇମେଲ୍ ପ୍ରବେଶ କରନ୍ତୁ</string>
     <string name="password_empty">ପାସ୍‌ୱର୍ଡ଼ ଆଵଶ୍ୟକ ଅଟେ</string>
@@ -352,8 +352,8 @@
         <item quantity="other">%d cards unburied</item>
     </plurals>
     <string name="card_template_reposition_template" comment="move a card template to a new position" maxLength="28">Reposition</string>
-    <string name="previewer_next" comment="Name of the next button in the previewer" maxLength="28">Next</string>
-    <string name="previewer_back" comment="Name of the back button in the previewer" maxLength="28">Back</string>
+    <string name="previewer_next" comment="Name of the next button in the previewer" maxLength="28">ପରବର୍ତ୍ତୀ</string>
+    <string name="previewer_back" comment="Name of the back button in the previewer" maxLength="28">ପଛ</string>
     <string name="start_recording">Record</string>
     <string name="stop_recording">Stop</string>
     <string name="play_recording">ଚାଳନ କରିବା</string>
