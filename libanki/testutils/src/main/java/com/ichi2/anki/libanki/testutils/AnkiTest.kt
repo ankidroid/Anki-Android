@@ -229,6 +229,33 @@ interface AnkiTest {
         front: String = "Front",
     ): List<Note> = List(count) { addBasicNote(front = front) }
 
+    /**
+     * Adds [count] notes into the specified [queueType] of the provided deck.
+     */
+    fun addNoteToDeck(
+        deckId: DeckId,
+        count: Int = 1,
+        queueType: QueueType = QueueType.New,
+    ) = addNotes(count).forEach {
+        it.firstCard().update {
+            did = deckId
+            queue = queueType
+        }
+    }
+
+    /**
+     * Convenience method for chaining [addDeck] and [addNoteToDeck].
+     *
+     * Usage: `val deckId = addDeck("My Deck").withNote(count = 5, queueType = QueueType.New)`
+     */
+    fun DeckId.withNote(
+        count: Int = 1,
+        queueType: QueueType = QueueType.New,
+    ): DeckId =
+        this.apply {
+            addNoteToDeck(this, count = count, queueType = queueType)
+        }
+
     fun Note.moveToDeck(
         deckName: String,
         createDeckIfMissing: Boolean = true,

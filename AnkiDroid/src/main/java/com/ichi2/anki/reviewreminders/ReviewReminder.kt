@@ -22,6 +22,7 @@ import android.text.format.DateFormat
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.libanki.DeckId
+import com.ichi2.anki.libanki.sched.Counts
 import com.ichi2.anki.settings.Prefs
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
@@ -109,6 +110,31 @@ value class ReviewReminderCardTriggerThreshold(
 }
 
 /**
+ * A filter specifying which types of cards to count towards the [ReviewReminderCardTriggerThreshold].
+ *
+ * @param countNew Whether new cards are counted when checking the [ReviewReminderCardTriggerThreshold].
+ * @param countLrn Whether learning cards are counted when checking the [ReviewReminderCardTriggerThreshold].
+ * @param countRev Whether review cards are counted when checking the [ReviewReminderCardTriggerThreshold].
+ */
+@Serializable
+@Parcelize
+data class ReviewReminderThresholdFilter(
+    val countNew: Boolean = true,
+    val countLrn: Boolean = true,
+    val countRev: Boolean = true,
+) : Parcelable {
+    /**
+     * Filters the given [inputCounts] according to this filter's settings and returns the resulting [Counts].
+     */
+    fun filterCounts(inputCounts: Counts): Counts =
+        Counts(
+            new = if (countNew) inputCounts.new else 0,
+            lrn = if (countLrn) inputCounts.lrn else 0,
+            rev = if (countRev) inputCounts.rev else 0,
+        )
+}
+
+/**
  * An indicator of whether a review reminders feature is associated with every deck in the user's
  * collection or if it is associated with a single deck. For example, the [ScheduleReminders] fragment
  * can be triggered in either global or deck-specific editing mode. A [ReviewReminder] can be associated
@@ -186,6 +212,7 @@ sealed class ReviewReminderScope : Parcelable {
  * @param profileID ID representing the profile which created this review reminder, as review reminders for
  * multiple profiles might be active simultaneously.
  * @param onlyNotifyIfNoReviews If true, only notify the user if this scope has not been reviewed today yet.
+ * @param thresholdFilter See [ReviewReminderThresholdFilter].
  */
 @Serializable
 @Parcelize
@@ -198,6 +225,7 @@ data class ReviewReminder private constructor(
     var enabled: Boolean,
     val profileID: String,
     val onlyNotifyIfNoReviews: Boolean,
+    val thresholdFilter: ReviewReminderThresholdFilter,
 ) : Parcelable,
     ReviewReminderSchema {
     companion object {
@@ -213,6 +241,7 @@ data class ReviewReminder private constructor(
             enabled: Boolean = true,
             profileID: String = "",
             onlyNotifyIfNoReviews: Boolean = false,
+            thresholdFilter: ReviewReminderThresholdFilter = ReviewReminderThresholdFilter(),
         ) = ReviewReminder(
             id = ReviewReminderId.getAndIncrementNextFreeReminderId(),
             time,
@@ -221,6 +250,7 @@ data class ReviewReminder private constructor(
             enabled,
             profileID,
             onlyNotifyIfNoReviews,
+            thresholdFilter,
         )
     }
 
