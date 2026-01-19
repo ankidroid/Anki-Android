@@ -51,8 +51,8 @@
     <string name="add_to_deck_decide_by_note_type">Qayd turi boʻyicha qaror qilish</string>
     <!-- theme labels -->
     <string name="theme_follow_system">Tizimga rioya qilish</string>
-    <string name="theme_day" comment="Day/Light theme color scheme">Day</string>
-    <string name="theme_night" comment="Night/Dark theme color scheme">Night</string>
+    <string name="theme_day" comment="Day/Light theme color scheme">Kun</string>
+    <string name="theme_night" comment="Night/Dark theme color scheme">Tun</string>
     <!-- day_theme_labels -->
     <string name="day_theme_light">Yorugʻ</string>
     <string name="day_theme_plain">Oddiy</string>
