@@ -107,7 +107,7 @@ protobufKotlinLite = "4.33.4"
 # ../AnkiDroid/robolectricDownload.gradle may need changes - read instructions in that file
 robolectric = "4.16"
 # https://github.com/takahirom/roborazzi/releases
-roborazzi = "1.54.0"
+roborazzi = "1.56.0"
 searchpreference = "2.7.3"
 seismic = "1.0.3"
 sharedPreferencesMock = "1.2.4"
