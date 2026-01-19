@@ -293,7 +293,9 @@ class NoteEditorActivity :
         tabLayout.removeAllTabs()
 
         val cardsWithEmptyFronts = viewModel.cardsWithEmptyFronts?.await()
-        for ((index, templateName) in viewModel.getTemplateNames().withIndex()) {
+        val templateNames = viewModel.getTemplateNames()
+
+        for ((index, templateName) in templateNames.withIndex()) {
             val tabTitle =
                 if (cardsWithEmptyFronts?.get(index) == true) {
                     getString(R.string.card_previewer_empty_front_indicator, templateName)
@@ -304,7 +306,17 @@ class NoteEditorActivity :
             tabLayout.addTab(newTab)
         }
 
-        tabLayout.selectTab(tabLayout.getTabAt(viewModel.getCurrentTabIndex()))
+        // Ensure tab index is within valid range
+        val currentTabIndex = viewModel.getCurrentTabIndex()
+        val safeTabIndex = currentTabIndex.coerceIn(0, maxOf(0, templateNames.size - 1))
+
+        if (templateNames.isNotEmpty()) {
+            tabLayout.selectTab(tabLayout.getTabAt(safeTabIndex))
+            // Update ViewModel if index was adjusted
+            if (safeTabIndex != currentTabIndex) {
+                viewModel.onTabSelected(safeTabIndex)
+            }
+        }
 
         // Remove any existing listeners to avoid duplicates
         tabLayout.clearOnTabSelectedListeners()
