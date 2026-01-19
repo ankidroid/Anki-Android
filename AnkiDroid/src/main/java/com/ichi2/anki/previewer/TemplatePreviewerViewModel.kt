@@ -208,7 +208,10 @@ class TemplatePreviewerViewModel(
             ordFlow.value
         }
 
-    suspend fun getSafeClozeOrd(): CardOrdinal = ordFlow.value.coerceIn(0, clozeOrds!!.await().size - 1)
+    suspend fun getSafeClozeOrd(): CardOrdinal {
+        val ords = clozeOrds?.await() ?: return 0
+        return if (ords.isEmpty()) 0 else ordFlow.value.coerceIn(0, ords.size - 1)
+    }
 
     fun updateContent(
         fields: List<String>,
