@@ -43,7 +43,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer strings -->
     <string name="drawer_open">باز کردن منوی جانبی</string>
     <string name="drawer_close">بستن منوی جانبی</string>
@@ -382,4 +382,6 @@
     <string name="directory_inaccessible_info">برای کسب اطلاعات بیشتر در مورد نحوه بازیابی دسترسی اینجا %s را ببینید یا به تنظیمات بروید تا پوشه مجموعه را به‌روزرسانی کنید.</string>
     <!-- Scheduler Upgrade Required Dialog title-->
     <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">ارتقای زمان‌بند لازم است</string>
+    <!-- Whitespace is OK -->
+    <string name="list_separator" comment="The character and spacing to display between elements of a list, for example \', \' in \'Apple, Banana, Cherry" tools:ignore="TranslationTypo">, </string>
 </resources>

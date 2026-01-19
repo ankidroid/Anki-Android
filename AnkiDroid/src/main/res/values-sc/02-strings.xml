@@ -43,7 +43,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Aberi sa barra de navigatzione</string>
     <string name="drawer_close">Serra sa barra de navigatzione</string>
@@ -382,4 +382,6 @@
     <string name="directory_inaccessible_info">Impara de prus subra de comente ripristinare s\'atzessu inoghe %s o bae a sas impostatziones pro atualizare sa cartella de sas colletziones.</string>
     <!-- Scheduler Upgrade Required Dialog title-->
     <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">Scheduler upgrade required</string>
+    <!-- Whitespace is OK -->
+    <string name="list_separator" comment="The character and spacing to display between elements of a list, for example \', \' in \'Apple, Banana, Cherry" tools:ignore="TranslationTypo">, </string>
 </resources>

@@ -43,7 +43,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer strings -->
     <string name="drawer_open">메뉴 열기</string>
     <string name="drawer_close">메뉴 닫기</string>
@@ -377,4 +377,6 @@ Context | Request Context    [1]</string>
     <string name="directory_inaccessible_info">여기에서 액세스를 복원하는 방법에 대해 자세히 알아보세요 %s 또는 설정으로 이동하여 컬렉션 폴더를 업데이트하세요.</string>
     <!-- Scheduler Upgrade Required Dialog title-->
     <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">스케줄러 업데이트가 필요합니다</string>
+    <!-- Whitespace is OK -->
+    <string name="list_separator" comment="The character and spacing to display between elements of a list, for example \', \' in \'Apple, Banana, Cherry" tools:ignore="TranslationTypo">, </string>
 </resources>
