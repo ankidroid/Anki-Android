@@ -372,7 +372,7 @@ private fun Deferred<Closeable>.close(logPrefix: String) {
         try {
             this.getCompleted().close()
             Timber.d("$logPrefix closed")
-        } catch (e: CancellationException) {
+        } catch (_: CancellationException) {
             // Ignore: no value was produced, nothing to close
         } catch (e: Exception) {
             Timber.w(e, "$logPrefix close()")
