@@ -4,7 +4,6 @@ plugins {
     // Gradle plugin portal
     alias(libs.plugins.tripletPlay)
     alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.keeper)
@@ -50,6 +49,7 @@ android {
         buildConfig = true
         aidl = true
         viewBinding = true
+        resValues = true
     }
 
     if (rootProject.testReleaseBuild) {
@@ -252,12 +252,12 @@ android {
         targetCompatibility JavaVersion.VERSION_17
         coreLibraryDesugaringEnabled = true
     }
+
     kotlin {
         compilerOptions {
             jvmTarget = JvmTarget.JVM_17
         }
     }
-
 
     packagingOptions {
         resources {
@@ -316,7 +316,7 @@ tasks.register('copyTestLibIntoAndroidTest', Copy) {
     }
 }
 tasks.named('preBuild').configure { dependsOn('copyTestLibIntoAndroidTest') }
-tasks.named('runKtlintCheckOverAndroidTestSourceSet').configure { mustRunAfter('copyTestLibIntoAndroidTest') }
+tasks.named('ktlintCheck').configure { mustRunAfter('copyTestLibIntoAndroidTest') }
 
 // Issue 11078 - some emulators run, but run zero tests, and still report success
 tasks.register('assertNonzeroAndroidTests') {
