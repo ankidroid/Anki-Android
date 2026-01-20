@@ -103,6 +103,8 @@ import com.ichi2.ui.CardBrowserSearchView
 import com.ichi2.utils.AndroidUiUtils.hideKeyboard
 import com.ichi2.utils.LanguageUtil
 import com.ichi2.utils.increaseHorizontalPaddingOfOverflowMenuIcons
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import net.ankiweb.rsdroid.RustCleanup
 import timber.log.Timber
@@ -150,6 +152,8 @@ open class CardBrowser :
     private var actionBarTitle: TextView? = null
 
     private var searchView: CardBrowserSearchView? = null
+
+    private var cardSelectionJob: Job? = null
 
     lateinit var tagsDialogFactory: TagsDialogFactory
     private var searchItem: MenuItem? = null
@@ -451,15 +455,23 @@ open class CardBrowser :
         if (!fragmented) {
             return
         }
-        // Show note editor frame
-        binding.noteEditorFrame!!.isVisible = true
 
-        // If there are unsaved changes in NoteEditor then show dialog for confirmation
-        if (fragment?.hasUnsavedChanges() == true) {
-            showSaveChangesDialog(editNoteLauncher)
-        } else {
-            loadNoteEditorFragment(editNoteLauncher)
-        }
+        cardSelectionJob?.cancel()
+
+        cardSelectionJob =
+            lifecycleScope.launch {
+                delay(150)
+
+                // Show note editor frame
+                binding.noteEditorFrame!!.isVisible = true
+
+                // If there are unsaved changes in NoteEditor then show dialog for confirmation
+                if (fragment?.hasUnsavedChanges() == true) {
+                    showSaveChangesDialog(editNoteLauncher)
+                } else {
+                    loadNoteEditorFragment(editNoteLauncher)
+                }
+            }
     }
 
     @Suppress("UNUSED_PARAMETER")
