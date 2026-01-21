@@ -580,6 +580,26 @@ class CardBrowserViewModel(
         }
     }
 
+    @VisibleForTesting
+    fun onTap(
+        id: CardOrNoteId,
+        topOffset: Int = 0,
+    ) = viewModelScope.launch {
+        focusedRow = id
+        if (isInMultiSelectMode) {
+            val wasSelected = selectedRows.contains(id)
+            toggleRowSelection(RowSelection(rowId = id, topOffset = topOffset))
+            // Load NoteEditor on trailing side if card is now selected (wasn't before)
+            if (!wasSelected) {
+                currentCardId = id.toCardId(cardsOrNotes)
+                cardSelectionEventFlow.emit(Unit)
+            }
+        } else {
+            val cardId = id.toCardId(cardsOrNotes)
+            openNoteEditorForCard(cardId)
+        }
+    }
+
     // on a row tap
     fun openNoteEditorForCard(cardId: CardId) {
         currentCardId = cardId

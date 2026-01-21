@@ -638,24 +638,11 @@ class CardBrowserFragment :
         }
     }
 
-    // TODO: Move this to ViewModel and test
     @VisibleForTesting
-    fun onTap(id: CardOrNoteId) =
-        launchCatchingTask {
-            activityViewModel.focusedRow = id
-            if (activityViewModel.isInMultiSelectMode) {
-                val wasSelected = activityViewModel.selectedRows.contains(id)
-                activityViewModel.toggleRowSelection(id.toRowSelection())
-                // Load NoteEditor on trailing side if card is selected
-                if (wasSelected) {
-                    activityViewModel.currentCardId = id.toCardId(activityViewModel.cardsOrNotes)
-                    requireCardBrowserActivity().loadNoteEditorFragmentIfFragmented()
-                }
-            } else {
-                val cardId = activityViewModel.queryDataForCardEdit(id)
-                requireCardBrowserActivity().openNoteEditorForCard(cardId)
-            }
-        }
+    fun onTap(id: CardOrNoteId) {
+        val topOffset = calculateTopOffset(activityViewModel.getPositionOfId(id) ?: 0)
+        activityViewModel.onTap(id, topOffset)
+    }
 
     // TODO: This dialog should survive activity recreation
     fun showChangeDeckDialog() =
