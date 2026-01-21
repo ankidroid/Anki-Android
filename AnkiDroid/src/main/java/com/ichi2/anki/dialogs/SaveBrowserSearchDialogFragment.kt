@@ -24,6 +24,7 @@ import androidx.fragment.app.setFragmentResult
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.R
+import com.ichi2.anki.browser.search.SavedSearch
 import com.ichi2.anki.dialogs.SaveBrowserSearchDialogFragment.Companion.ARG_SEARCH_QUERY
 import com.ichi2.anki.dialogs.SaveBrowserSearchDialogFragment.Companion.ARG_SEARCH_QUERY_NAME
 import com.ichi2.anki.launchCatchingTask
@@ -112,12 +113,14 @@ fun CardBrowser.registerSaveSearchHandler() {
             )
             return@setFragmentResultListener
         }
-        val savedSearchQuery =
-            bundle.getString(ARG_SEARCH_QUERY)
-                ?: return@setFragmentResultListener
+        val toSave =
+            SavedSearch(
+                name = savedSearchName,
+                query = bundle.getString(ARG_SEARCH_QUERY) ?: return@setFragmentResultListener,
+            )
 
         launchCatchingTask {
-            val saveStatus = viewModel.saveSearch(savedSearchName, savedSearchQuery)
+            val saveStatus = viewModel.saveSearch(toSave)
             updateAfterUserSearchIsSaved(saveStatus)
         }
     }

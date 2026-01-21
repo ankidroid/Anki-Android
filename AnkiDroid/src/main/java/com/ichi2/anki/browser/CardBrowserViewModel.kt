@@ -49,6 +49,8 @@ import com.ichi2.anki.browser.CardBrowserViewModel.ToggleSelectionState.SELECT_N
 import com.ichi2.anki.browser.FindAndReplaceDialogFragment.Companion.ALL_FIELDS_AS_FIELD
 import com.ichi2.anki.browser.FindAndReplaceDialogFragment.Companion.TAGS_AS_FIELD
 import com.ichi2.anki.browser.RepositionCardsRequest.RepositionData
+import com.ichi2.anki.browser.search.SavedSearch
+import com.ichi2.anki.browser.search.SavedSearches
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.export.ExportDialogFragment.ExportType
 import com.ichi2.anki.launchCatchingIO
@@ -1009,39 +1011,14 @@ class CardBrowserViewModel(
             if (it == -1) null else it
         }
 
-    private suspend fun updateSavedSearches(func: MutableMap<String, String>.() -> Unit): Map<String, String> {
-        val filters = savedSearches().toMutableMap()
-        func(filters)
-        withCol { config.set("savedFilters", filters) }
-        return filters
-    }
+    suspend fun savedSearches(): List<SavedSearch> = SavedSearches.loadFromConfig()
 
-    suspend fun savedSearches(): Map<String, String> = withCol { config.get("savedFilters") } ?: hashMapOf()
-
-    fun savedSearchesUnsafe(col: com.ichi2.anki.libanki.Collection): Map<String, String> = col.config.get("savedFilters") ?: hashMapOf()
-
-    suspend fun removeSavedSearch(searchName: String): Map<String, String> {
-        Timber.d("removing user search")
-        return updateSavedSearches {
-            remove(searchName)
-        }
-    }
+    suspend fun removeSavedSearch(searchName: String) = SavedSearches.removeByName(searchName)
 
     @CheckResult
-    suspend fun saveSearch(
-        searchName: String,
-        searchTerms: String,
-    ): SaveSearchResult {
-        Timber.d("saving user search")
-        var alreadyExists = false
-        updateSavedSearches {
-            if (get(searchName) != null) {
-                alreadyExists = true
-            } else {
-                set(searchName, searchTerms)
-            }
-        }
-        return if (alreadyExists) SaveSearchResult.ALREADY_EXISTS else SaveSearchResult.SUCCESS
+    suspend fun saveSearch(search: SavedSearch): SaveSearchResult {
+        val (searchAdded, _) = SavedSearches.add(search)
+        return if (searchAdded) SaveSearchResult.SUCCESS else SaveSearchResult.ALREADY_EXISTS
     }
 
     /** Ignores any values before [initCompleted] is set */

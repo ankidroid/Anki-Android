@@ -58,6 +58,7 @@ import com.ichi2.anki.browser.CardBrowserViewModel.ToggleSelectionState.SELECT_A
 import com.ichi2.anki.browser.CardBrowserViewModel.ToggleSelectionState.SELECT_NONE
 import com.ichi2.anki.browser.RepositionCardsRequest.ContainsNonNewCardsError
 import com.ichi2.anki.browser.RepositionCardsRequest.RepositionData
+import com.ichi2.anki.browser.search.SavedSearch
 import com.ichi2.anki.export.ExportDialogFragment
 import com.ichi2.anki.flagCardForNote
 import com.ichi2.anki.libanki.Card
@@ -116,7 +117,17 @@ class CardBrowserViewModelTest : JvmTest() {
             }
             savedSearches().also { searches ->
                 assertThat("filters after saving", searches.size, equalTo(1))
-                assertThat("filters after saving", searches["hello"], equalTo("aa"))
+                val search = searches.single()
+                assertThat(
+                    "filters after saving",
+                    search,
+                    equalTo(
+                        SavedSearch(
+                            "hello",
+                            "aa",
+                        ),
+                    ),
+                )
             }
             removeSavedSearch("hello")
             assertThat("filters should be empty after removing", savedSearches().size, equalTo(0))
@@ -1553,3 +1564,8 @@ private fun CardBrowserViewModelTest.moveToReviewQueue(card: Card) {
         due = 50
     }
 }
+
+suspend fun CardBrowserViewModel.saveSearch(
+    title: String,
+    query: String,
+) = saveSearch(SavedSearch(title, query))
