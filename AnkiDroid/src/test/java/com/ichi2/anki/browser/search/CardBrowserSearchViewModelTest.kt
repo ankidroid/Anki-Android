@@ -81,7 +81,7 @@ class CardBrowserSearchViewModelTest : RobolectricTest() {
         withViewModel {
             closeSearchViewFlow.test {
                 expectNoEvents()
-                submitCurrentSearch("Hello")
+                submitSearch("Hello")
                 expectMostRecentItem()
             }
         }
@@ -90,8 +90,8 @@ class CardBrowserSearchViewModelTest : RobolectricTest() {
     fun `selecting search history entry`() =
         withViewModel {
             submittedSearchFlow.test {
-                submitCurrentSearch("Hello")
-                assertThat(expectMostRecentItem(), equalTo("Hello"))
+                submitSearch("Hello")
+                assertThat(expectMostRecentItem()?.toSearchString(), equalTo("Hello"))
             }
         }
 
@@ -154,11 +154,11 @@ class CardBrowserSearchViewModelTest : RobolectricTest() {
         }
 
     @Test
-    fun `submitCurrentSearch trims spaces`() =
+    fun `submitSearch trims spaces`() =
         withViewModel {
             submittedSearchFlow.test {
-                submitCurrentSearch(" aa ")
-                assertThat(expectMostRecentItem(), equalTo("aa"))
+                submitSearch(" aa ")
+                assertThat(expectMostRecentItem()?.toSearchString(), equalTo("aa"))
             }
         }
 
@@ -169,7 +169,8 @@ class CardBrowserSearchViewModelTest : RobolectricTest() {
             submittedSearchFlow.test {
                 submitSearch("")
                 assertThat(searchHistory, empty())
-                assertThat(expectMostRecentItem(), equalTo(""))
+                // matches Anki Desktop
+                assertThat(expectMostRecentItem()?.toSearchString(), equalTo("deck:*"))
             }
         }
 
@@ -311,7 +312,7 @@ class CardBrowserSearchViewModelTest : RobolectricTest() {
             submittedSearchFlow.test {
                 assertEquals(null, expectMostRecentItem())
                 submitSavedSearch(savedSearches.single())
-                assertEquals("sample query", expectMostRecentItem())
+                assertEquals("sample query", expectMostRecentItem()?.toSearchString())
             }
         }
 
@@ -378,4 +379,7 @@ val CardBrowserSearchViewModel.searchHistory get() = this.searchHistoryFlow.valu
 val CardBrowserSearchViewModel.savedSearches
     get() = savedSearchesFlow.value
 
-fun CardBrowserSearchViewModel.submitSearch(submittedText: String) = submitCurrentSearch(submittedText)
+fun CardBrowserSearchViewModel.submitSearch(submittedText: String) {
+    onSearchTextChanged(submittedText)
+    submitCurrentSearch()
+}

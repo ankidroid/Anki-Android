@@ -35,9 +35,13 @@ import net.ankiweb.rsdroid.BackendException.BackendSearchException
 value class SearchString private constructor(
     val value: String,
 ) {
+    val length get() = value.length
+
     override fun toString(): String = value
 
     companion object {
+        val EMPTY: SearchString = SearchString("")
+
         /**
          * Returns a valid search string or:
          * - A wrapped [InvalidSearchException] if the search was invalid (e.g. `and`)
