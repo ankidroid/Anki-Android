@@ -737,6 +737,7 @@ class ReviewerViewModel(
             when {
                 changes.studyQueues -> updateCurrentCard()
                 changes.noteText -> {
+                    updateCurrentCard()
                     val card = currentCard.await()
                     withCol { card.load(this) }
                     cardMediaPlayer.loadCardAvTags(card)
