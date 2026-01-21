@@ -16,13 +16,21 @@
 
 package com.ichi2.anki.browser
 
+import com.ichi2.anki.Flag
 import com.ichi2.anki.R
+import com.ichi2.anki.browser.search.CardState
+import com.ichi2.anki.libanki.DeckId
+import com.ichi2.anki.libanki.NoteTypeId
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.settings.PrefsRepository
+import kotlinx.serialization.EncodeDefault
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import timber.log.Timber
+
+private typealias Tag = String
 
 /**
  * The user's past searches in the Card Browser.
@@ -88,13 +96,37 @@ class SearchHistory(
     /**
      * An entry in the history of the card browser.
      * This is user-supplied, so may contain PII.
+     *
+     * Contains the minimal values needed for persistent serialization:
+     * Deck IDs are stored, rather than deck names. See [deckIds]
+     *
      * @see SearchHistory
      */
     // !! When updating this, consider equality in addRecent
+    // TODO: opt-in may no longer be needed in kotlinx-serialization 1.10.0
+    @OptIn(ExperimentalSerializationApi::class)
     @Serializable
     data class SearchHistoryEntry(
         @SerialName("q")
         val query: String,
+        // Use IDs so we can handle a rename.
+        // Tradeoff: a query to get the deck names is needed to produce a search string or display
+        // the selected deck name in the UI
+        @SerialName("did")
+        @EncodeDefault(EncodeDefault.Mode.NEVER)
+        val deckIds: List<DeckId> = emptyList(),
+        @SerialName("f")
+        @EncodeDefault(EncodeDefault.Mode.NEVER)
+        val flags: List<Flag> = emptyList(),
+        @SerialName("t")
+        @EncodeDefault(EncodeDefault.Mode.NEVER)
+        val tags: List<Tag> = emptyList(),
+        @SerialName("ntid")
+        @EncodeDefault(EncodeDefault.Mode.NEVER)
+        val noteTypes: List<NoteTypeId> = emptyList(),
+        @SerialName("s")
+        @EncodeDefault(EncodeDefault.Mode.NEVER)
+        val cardStates: List<CardState> = emptyList(),
     ) {
         override fun toString() = query
 
@@ -102,7 +134,9 @@ class SearchHistory(
          * Whether there is no set search - effectively a search for the default search:
          * `deck:*`
          */
-        fun isSearchEmpty() = query.isBlank()
+        fun isSearchEmpty() =
+            query.isBlank() &&
+                listOf(deckIds, flags, tags, noteTypes, cardStates).all { it.isEmpty() }
     }
 
     companion object {

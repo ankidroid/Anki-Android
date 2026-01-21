@@ -18,9 +18,13 @@ package com.ichi2.anki.browser
 
 import androidx.annotation.CheckResult
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.Flag
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.browser.SearchHistory.SearchHistoryEntry
+import com.ichi2.anki.browser.search.CardState
+import com.ichi2.anki.libanki.DeckId
+import com.ichi2.anki.libanki.NoteTypeId
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.testutils.getString
 import org.hamcrest.MatcherAssert.assertThat
@@ -118,7 +122,62 @@ class SearchHistoryTest : RobolectricTest() {
         // additional properties will be added; make sure we don't corrupt past entries
         addNumberedEntries(1)
         assertThat(readSearchHistoryRaw(), equalTo("""[{"q":"1"}]"""))
-        assertThat(history.entries.single().query, equalTo("1"))
+        with(history.entries.single()) {
+            assertThat(query, equalTo("1"))
+            assertThat(deckIds, empty())
+            assertThat(flags, empty())
+            assertThat(tags, empty())
+            assertThat(noteTypes, empty())
+            assertThat(cardStates, empty())
+        }
+    }
+
+    @Test
+    fun `v2 serialization is unchanged`() {
+        // additional properties will be added; make sure we don't corrupt past entries
+        history.addRecent(
+            SearchHistoryEntry(
+                query = "1",
+                deckIds = listOf(1, 2),
+                flags = listOf(Flag.RED, Flag.BLUE),
+                tags = listOf("Hello::World", "tag"),
+                noteTypes = listOf(3, 4),
+                cardStates =
+                    listOf(
+                        CardState.New,
+                        CardState.Learning,
+                        CardState.Review,
+                        CardState.Buried,
+                        CardState.Suspended,
+                    ),
+            ),
+        )
+        assertThat(
+            readSearchHistoryRaw(),
+            equalTo(
+                """[{"q":"1","did":[1,2],"f":[1,4],"t":["Hello::World","tag"],"ntid":[3,4],"s":[0,1,2,3,4]}]""",
+            ),
+        )
+
+        with(history.entries.single()) {
+            assertThat(query, equalTo("1"))
+            assertThat(deckIds, equalTo(listOf<DeckId>(1, 2)))
+            assertThat(flags, equalTo(listOf(Flag.RED, Flag.BLUE)))
+            assertThat(tags, equalTo(listOf("Hello::World", "tag")))
+            assertThat(noteTypes, equalTo(listOf<NoteTypeId>(3, 4)))
+            assertThat(
+                cardStates,
+                equalTo(
+                    listOf(
+                        CardState.New,
+                        CardState.Learning,
+                        CardState.Review,
+                        CardState.Buried,
+                        CardState.Suspended,
+                    ),
+                ),
+            )
+        }
     }
 
     @Test
