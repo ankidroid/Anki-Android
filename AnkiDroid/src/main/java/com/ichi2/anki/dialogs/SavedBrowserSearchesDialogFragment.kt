@@ -24,6 +24,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
+import com.ichi2.anki.browser.search.SavedSearch
+import com.ichi2.anki.browser.search.toMap
 import com.ichi2.anki.databinding.CardBrowserItemMySearchesDialogBinding
 import com.ichi2.anki.dialogs.SavedBrowserSearchesDialogFragment.Companion.ARG_SAVED_SEARCH
 import com.ichi2.anki.dialogs.SavedBrowserSearchesDialogFragment.Companion.TYPE_SEARCH_REMOVED
@@ -146,11 +148,11 @@ class SavedBrowserSearchesDialogFragment : AnalyticsDialogFragment() {
         const val ARG_TYPE = "arg_type"
         private const val ARG_SAVED_FILTERS = "arg_saved_filters"
 
-        fun newInstance(savedFilters: Map<String, String>): SavedBrowserSearchesDialogFragment =
+        fun newInstance(savedFilters: List<SavedSearch>): SavedBrowserSearchesDialogFragment =
             SavedBrowserSearchesDialogFragment().apply {
                 arguments =
                     Bundle().also {
-                        it.putSerializable(ARG_SAVED_FILTERS, HashMap(savedFilters))
+                        it.putSerializable(ARG_SAVED_FILTERS, HashMap(savedFilters.toMap()))
                     }
             }
     }

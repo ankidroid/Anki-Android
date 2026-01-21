@@ -64,6 +64,7 @@ import com.ichi2.anki.browser.IdsFile
 import com.ichi2.anki.browser.SaveSearchResult
 import com.ichi2.anki.browser.SharedPreferencesLastDeckIdRepository
 import com.ichi2.anki.browser.registerFindReplaceHandler
+import com.ichi2.anki.browser.search.savedFilters
 import com.ichi2.anki.browser.toCardBrowserLaunchOptions
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
@@ -382,16 +383,15 @@ open class CardBrowser :
                 SavedBrowserSearchesDialogFragment.TYPE_SEARCH_SELECTED -> {
                     Timber.d("Selecting saved search selection named: %s", searchName)
                     launchCatchingTask {
-                        viewModel.savedSearches()[searchName]?.also { savedSearch ->
-                            Timber.d("OnSelection using search terms: %s", savedSearch)
-                            searchForQuery(savedSearch)
-                        }
+                        val search = viewModel.savedSearches().find { it.name == searchName } ?: return@launchCatchingTask
+                        Timber.d("OnSelection using search terms: %s", search.query)
+                        searchForQuery(search.query)
                     }
                 }
                 SavedBrowserSearchesDialogFragment.TYPE_SEARCH_REMOVED -> {
                     Timber.d("Removing saved search named: %s", searchName)
                     launchCatchingTask {
-                        val updatedFilters = viewModel.removeSavedSearch(searchName)
+                        val (_, updatedFilters) = viewModel.removeSavedSearch(searchName)
                         if (updatedFilters.isEmpty()) {
                             mySearchesItem!!.isVisible = false
                         }
@@ -788,8 +788,7 @@ open class CardBrowser :
             saveSearchItem = menu.findItem(R.id.action_save_search)
             saveSearchItem?.isVisible = false // the searchview's query always starts empty.
             mySearchesItem = menu.findItem(R.id.action_list_my_searches)
-            val savedFiltersObj = viewModel.savedSearchesUnsafe(getColUnsafe)
-            mySearchesItem!!.isVisible = savedFiltersObj.isNotEmpty()
+            mySearchesItem!!.isVisible = getColUnsafe.config.savedFilters.isNotEmpty()
             searchItem = menu.findItem(R.id.action_search)
             searchItem!!.setOnActionExpandListener(
                 object : MenuItem.OnActionExpandListener {
