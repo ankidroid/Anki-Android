@@ -16,11 +16,16 @@
 
 package com.ichi2.anki.browser.search
 
+import androidx.annotation.CheckResult
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.browser.SearchHistory
 import com.ichi2.anki.browser.SearchHistory.SearchHistoryEntry
+import com.ichi2.anki.libanki.DeckNameId
+import com.ichi2.anki.libanki.NoteTypeNameID
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -71,13 +76,15 @@ class CardBrowserSearchViewModel(
 
     val closeSearchViewFlow = MutableSharedFlow<Unit>(extraBufferCapacity = 1, replay = 1)
 
-    val submittedSearchFlow = MutableStateFlow<String?>(null)
+    val submittedSearchFlow = MutableStateFlow<SearchRequest?>(null)
 
     val savedSearchesFlow = MutableStateFlow<List<SavedSearch>>(emptyList())
 
     val canManageSavedSearchesFlow = savedSearchesFlow.map { it.isNotEmpty() }
 
     val userMessageFlow = MutableSharedFlow<UserMessage?>()
+
+    val filtersFlow = MutableStateFlow(SearchFilters.EMPTY)
 
     init {
         viewModelScope.launch {
@@ -125,22 +132,22 @@ class CardBrowserSearchViewModel(
             // searches with trailing and leading spaces are equivalent
             val submittedText = submittedText.trim()
 
-            val updatedEntries =
-                searchHistoryManager.addRecent(
-                    SearchHistoryEntry(
-                        query = submittedText,
-                    ),
-                )
+            val searchToSubmit = SearchRequest(submittedText, filtersFlow.value)
+            val updatedEntries = searchHistoryManager.addRecent(searchToSubmit.toHistoryEntry())
             searchHistoryFlow.value = updatedEntries
             closeSearchViewFlow.emit(Unit)
-            submittedSearchFlow.emit(submittedText)
+            submittedSearchFlow.emit(searchToSubmit)
         }
 
-    fun selectSearchHistoryEntry(entry: SearchHistoryEntry) {
-        Timber.i("selected search history entry")
-        onSearchTextChanged(entry.query)
-        submitCurrentSearch()
-    }
+    fun selectSearchHistoryEntry(entry: SearchHistoryEntry) =
+        viewModelScope.launch {
+            Timber.i("selected search history entry")
+            onSearchTextChanged(entry.query)
+            filtersFlow.value = SearchFilters.from(entry) ?: SearchFilters.EMPTY.also {
+                Timber.w("failed to load filters from search history entry")
+            }
+            submitCurrentSearch()
+        }
 
     fun addSavedSearch(savedSearch: SavedSearch) =
         viewModelScope.launch {
@@ -211,4 +218,49 @@ class CardBrowserSearchViewModel(
         private const val STATE_BASIC_SEARCH_TEXT = "basicSearchText"
         private const val STATE_ADVANCED_SEARCH_TEXT = "advancedSearchText"
     }
+}
+
+private fun SearchRequest.toHistoryEntry() =
+    SearchHistoryEntry(
+        query = this.query.trim(),
+        deckIds = this.filters.decks.map { it.id },
+        flags = this.filters.flags,
+        tags = this.filters.tags,
+        noteTypes = this.filters.noteTypes.map { it.id },
+        cardStates = this.filters.cardStates,
+    )
+
+@VisibleForTesting
+suspend fun SearchFilters.Companion.from(entry: SearchHistoryEntry): SearchFilters? {
+    val deckNameMap: List<DeckNameId> = if (entry.deckIds.any()) withCol { decks.allNamesAndIds() } else emptyList()
+    val ntidMap: List<NoteTypeNameID> =
+        if (entry.noteTypes.any()) {
+            withCol { notetypes.allNamesAndIds() }
+                .toList()
+        } else {
+            emptyList()
+        }
+
+    return from(entry, deckNameMap, ntidMap)
+}
+
+@CheckResult
+fun SearchFilters.Companion.from(
+    entry: SearchHistoryEntry,
+    deckNameMap: List<DeckNameId>,
+    ntidMap: List<NoteTypeNameID>,
+): SearchFilters? {
+    val decks = entry.deckIds.mapNotNull { id -> deckNameMap.find { it.id == id } }
+    if (decks.size != entry.deckIds.size) return null
+
+    val noteTypes = entry.noteTypes.mapNotNull { id -> ntidMap.find { it.id == id } }
+    if (noteTypes.size != entry.noteTypes.size) return null
+
+    return SearchFilters(
+        decks = decks,
+        flags = entry.flags,
+        tags = entry.tags,
+        noteTypes = noteTypes,
+        cardStates = entry.cardStates,
+    )
 }

@@ -17,7 +17,12 @@
 package com.ichi2.anki.browser
 
 import android.content.DialogInterface
+import android.graphics.Color
 import android.os.Bundle
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.style.ForegroundColorSpan
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.Menu
@@ -30,6 +35,7 @@ import android.view.inputmethod.EditorInfo
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
+import androidx.annotation.CheckResult
 import androidx.annotation.LayoutRes
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.widget.ThemeUtils
@@ -60,6 +66,7 @@ import com.ichi2.anki.AnkiActivityProvider
 import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.getColUnsafe
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.FilteredDeckOptions
 import com.ichi2.anki.Flag
 import com.ichi2.anki.R
@@ -82,6 +89,8 @@ import com.ichi2.anki.browser.RepositionCardsRequest.RepositionData
 import com.ichi2.anki.browser.search.AdvancedSearchFragment
 import com.ichi2.anki.browser.search.CardBrowserSearchViewModel
 import com.ichi2.anki.browser.search.CardBrowserSearchViewModel.UserMessage
+import com.ichi2.anki.browser.search.SearchRequest
+import com.ichi2.anki.browser.search.SearchString
 import com.ichi2.anki.browser.search.StandardSearchFragment
 import com.ichi2.anki.browser.search.savedFilters
 import com.ichi2.anki.common.annotations.NeedsTest
@@ -848,8 +857,10 @@ class CardBrowserFragment :
             searchView?.hide()
         }
 
-        fun onSearchSubmitted(value: String) {
-            searchBar?.setText(value)
+        @NeedsTest("displayed filter")
+        fun onSearchSubmitted(value: SearchRequest) {
+            // WARN: This changes the text when the SearchView is open
+            launchCatchingTask { searchBar?.setText(value.toUserSpannable()) }
 
             Timber.i("relaying submitted search to activity")
             activityViewModel.launchSearchForCards(value, forceRefresh = false)
@@ -1501,4 +1512,28 @@ private fun Fragment.getOrCreateSearchFragment(
         add(R.id.search_view_content_container, created, tag)
     }
     return created
+}
+
+@CheckResult
+suspend fun SearchRequest.toUserSpannable(): Spannable {
+    val text = withCol { this@toUserSpannable.toSearchString() }.getOrDefault(SearchString.EMPTY)
+    return this.toUserSpannable(text)
+}
+
+@CheckResult
+fun SearchRequest.toUserSpannable(searchString: SearchString): Spannable {
+    // TODO: handle theming
+    val spannable = SpannableString(searchString.value)
+
+    // gray out the additional filters, as they're handled by chips
+    if (searchString.value.startsWith(this.query)) {
+        spannable.setSpan(
+            ForegroundColorSpan(Color.GRAY),
+            query.length,
+            searchString.length,
+            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE,
+        )
+    }
+
+    return spannable
 }
