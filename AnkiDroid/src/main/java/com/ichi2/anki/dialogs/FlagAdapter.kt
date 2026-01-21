@@ -44,7 +44,7 @@ import kotlinx.coroutines.launch
 class FlagAdapter(
     private val lifecycleScope: CoroutineScope,
 ) : ListAdapter<FlagItem, FlagAdapter.FlagViewHolder>(FlagItemDiffCallback()) {
-    inner class FlagViewHolder(
+    class FlagViewHolder(
         binding: EditFlagItemBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
         val flagImageView: ImageView = binding.icFlag
