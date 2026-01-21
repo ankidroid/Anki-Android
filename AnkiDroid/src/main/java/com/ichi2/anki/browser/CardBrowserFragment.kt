@@ -82,6 +82,7 @@ import com.ichi2.anki.browser.RepositionCardsRequest.NoRepositionableCardsError
 import com.ichi2.anki.browser.RepositionCardsRequest.RepositionData
 import com.ichi2.anki.browser.search.AdvancedSearchFragment
 import com.ichi2.anki.browser.search.CardBrowserSearchViewModel
+import com.ichi2.anki.browser.search.CardBrowserSearchViewModel.UserMessage
 import com.ichi2.anki.browser.search.StandardSearchFragment
 import com.ichi2.anki.browser.search.savedFilters
 import com.ichi2.anki.common.annotations.NeedsTest
@@ -859,6 +860,30 @@ class CardBrowserFragment :
             activityViewModel.launchSearchForCards(value, forceRefresh = false)
         }
 
+        fun onUserMessage(message: UserMessage) =
+            when (message) {
+                UserMessage.SEARCH_SAVED ->
+                    showSnackbar(
+                        R.string.card_browser_list_my_searches_successful_save,
+                        Snackbar.LENGTH_SHORT,
+                    )
+                UserMessage.SAVED_SEARCH_DUPLICATE_ADDED ->
+                    showSnackbar(
+                        R.string.card_browser_list_my_searches_new_search_error_dup,
+                        Snackbar.LENGTH_SHORT,
+                    )
+                UserMessage.SAVED_SEARCH_DELETED ->
+                    showSnackbar(
+                        R.string.card_browser_list_my_searches_successful_deleted,
+                        Snackbar.LENGTH_SHORT,
+                    )
+                UserMessage.SAVED_SEARCH_NAME_DOES_NOT_EXIST ->
+                    showSnackbar(
+                        R.string.something_wrong,
+                        Snackbar.LENGTH_SHORT,
+                    )
+            }
+
         activityViewModel.flowOfIsTruncated.launchCollectionInLifecycleScope(::onIsTruncatedChanged)
         activityViewModel.flowOfSelectedRows.launchCollectionInLifecycleScope(::onSelectedRowsChanged)
         activityViewModel.flowOfActiveColumns.launchCollectionInLifecycleScope(::onColumnsChanged)
@@ -876,6 +901,7 @@ class CardBrowserFragment :
         searchViewModel.searchTextFlow.launchCollectionInLifecycleScope(::onSearchViewTextChanged)
         searchViewModel.closeSearchViewFlow.launchCollectionInLifecycleScope(::onSearchViewClosed)
         searchViewModel.submittedSearchFlow.filterNotNull().launchCollectionInLifecycleScope(::onSearchSubmitted)
+        searchViewModel.userMessageFlow.filterNotNull().launchCollectionInLifecycleScope(::onUserMessage)
     }
 
     private fun setupFragmentResultListeners() {

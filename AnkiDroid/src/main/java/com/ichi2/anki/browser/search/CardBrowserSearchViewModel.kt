@@ -73,6 +73,18 @@ class CardBrowserSearchViewModel(
 
     val submittedSearchFlow = MutableStateFlow<String?>(null)
 
+    val savedSearchesFlow = MutableStateFlow<List<SavedSearch>>(emptyList())
+
+    val canManageSavedSearchesFlow = savedSearchesFlow.map { it.isNotEmpty() }
+
+    val userMessageFlow = MutableSharedFlow<UserMessage?>()
+
+    init {
+        viewModelScope.launch {
+            savedSearchesFlow.value = SavedSearches.loadFromConfig()
+        }
+    }
+
     /**
      * Toggles between Basic and Advanced search mode
      */
@@ -130,6 +142,49 @@ class CardBrowserSearchViewModel(
         submitCurrentSearch()
     }
 
+    fun addSavedSearch(savedSearch: SavedSearch) =
+        viewModelScope.launch {
+            Timber.i("Adding saved search")
+            val (success, newValues) = SavedSearches.add(savedSearch)
+            if (success) {
+                savedSearchesFlow.emit(newValues)
+                userMessageFlow.emit(UserMessage.SEARCH_SAVED)
+            } else {
+                userMessageFlow.emit(UserMessage.SAVED_SEARCH_DUPLICATE_ADDED)
+            }
+        }
+
+    fun deleteSavedSearch(search: SavedSearch) =
+        viewModelScope.launch {
+            val (success, values) = SavedSearches.removeByName(search.name)
+
+            Timber.d("deleted saved search: %b", success)
+
+            if (success) {
+                savedSearchesFlow.emit(values)
+                userMessageFlow.emit(UserMessage.SAVED_SEARCH_DELETED)
+            } else {
+                userMessageFlow.emit(UserMessage.SAVED_SEARCH_NAME_DOES_NOT_EXIST)
+            }
+        }
+
+    /**
+     * Submits the query in the provided saved search
+     */
+    fun submitSavedSearch(search: SavedSearch) {
+        Timber.i("selected saved search")
+        onSearchTextChanged(search.query)
+        submitCurrentSearch()
+    }
+
+    /**
+     * Replaces the current search text with the query in the provided saved search.
+     */
+    fun applySavedSearch(search: SavedSearch) {
+        Timber.i("replacing search with saved search text (not submitting)")
+        onSearchTextChanged(search.query + " ")
+    }
+
     /**
      * Clears state when the search screen is closed without saving
      */
@@ -142,6 +197,13 @@ class CardBrowserSearchViewModel(
         savedStateHandle.remove<Any>(STATE_ADVANCED_SEARCH_ENABLED)
         savedStateHandle.remove<Any>(STATE_BASIC_SEARCH_TEXT)
         savedStateHandle.remove<Any>(STATE_ADVANCED_SEARCH_TEXT)
+    }
+
+    enum class UserMessage {
+        SEARCH_SAVED,
+        SAVED_SEARCH_DUPLICATE_ADDED,
+        SAVED_SEARCH_NAME_DOES_NOT_EXIST,
+        SAVED_SEARCH_DELETED,
     }
 
     companion object {

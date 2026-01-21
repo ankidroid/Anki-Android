@@ -22,6 +22,7 @@ import app.cash.turbine.test
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.browser.SearchHistory
 import com.ichi2.anki.browser.SearchHistory.SearchHistoryEntry
+import com.ichi2.anki.browser.search.CardBrowserSearchViewModel.UserMessage
 import com.ichi2.testutils.assertFalse
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.empty
@@ -188,6 +189,174 @@ class CardBrowserSearchViewModelTest : RobolectricTest() {
             }
         }
 
+    @Test
+    fun `add saved search - success modifies saved searches`() =
+        withViewModel {
+            savedSearchesFlow.test {
+                addSavedSearch(SavedSearch("a", "b"))
+
+                val item = expectMostRecentItem().single()
+                assertEquals("a", item.name)
+                assertEquals("b", item.query)
+            }
+        }
+
+    @Test
+    fun `add saved search - success outputs message`() =
+        withViewModel {
+            userMessageFlow.test {
+                addSavedSearch(SavedSearch("a", "b"))
+                assertEquals(UserMessage.SEARCH_SAVED, expectMostRecentItem())
+            }
+        }
+
+    @Test
+    fun `add duplicate saved search  - searches are not updated`() =
+        withViewModel {
+            savedSearchesFlow.test {
+                addSavedSearch(SavedSearch("a", "b"))
+                addSavedSearch(SavedSearch("a", "aa"))
+
+                val item = expectMostRecentItem().single()
+                assertEquals("a", item.name)
+                assertEquals("b", item.query)
+            }
+        }
+
+    @Test
+    fun `add duplicate saved search - user is warned`() =
+        withViewModel {
+            addSavedSearch(SavedSearch("a", "b"))
+            userMessageFlow.test {
+                addSavedSearch(SavedSearch("a", "aa"))
+                assertEquals(UserMessage.SAVED_SEARCH_DUPLICATE_ADDED, expectMostRecentItem())
+            }
+        }
+
+    @Test
+    fun `delete a valid saved search modifies list`() =
+        withViewModel {
+            addSavedSearch(SavedSearch("a", "b"))
+
+            savedSearchesFlow.test {
+                deleteSavedSearch(savedSearches.single())
+                assertEquals(0, expectMostRecentItem().size)
+            }
+        }
+
+    @Test
+    fun `delete a valid saved search outputs a message`() =
+        withViewModel {
+            addSavedSearch(SavedSearch("a", "b"))
+
+            userMessageFlow.test {
+                deleteSavedSearch(savedSearches.single())
+                assertEquals(UserMessage.SAVED_SEARCH_DELETED, expectMostRecentItem())
+            }
+        }
+
+    @Test
+    fun `delete saved search not found`() =
+        withViewModel {
+            userMessageFlow.test {
+                deleteSavedSearch(SavedSearch("does not exist", ""))
+                assertEquals(UserMessage.SAVED_SEARCH_NAME_DOES_NOT_EXIST, expectMostRecentItem())
+            }
+        }
+
+    @Test
+    fun `submit saved search - current text is updated`() =
+        withViewModel {
+            addSavedSearch(SavedSearch("A", "sample query"))
+
+            searchTextFlow.test {
+                assertEquals("", expectMostRecentItem())
+                submitSavedSearch(savedSearches.single())
+                assertEquals("sample query", expectMostRecentItem())
+            }
+        }
+
+    @Test
+    fun `submit saved search - history is updated`() =
+        withViewModel {
+            addSavedSearch(SavedSearch("A", "sample query"))
+
+            searchHistoryFlow.test {
+                // nothing in history initially
+                assertEquals(0, expectMostRecentItem().size)
+
+                submitSavedSearch(savedSearches.single())
+                val history = expectMostRecentItem().single()
+                assertEquals("sample query", history.query)
+            }
+        }
+
+    @Test
+    fun `submit saved search - view is closed`() =
+        withViewModel {
+            addSavedSearch(SavedSearch("A", "sample query"))
+
+            closeSearchViewFlow.test {
+                expectNoEvents()
+                submitSavedSearch(savedSearches.single())
+                expectMostRecentItem()
+            }
+        }
+
+    @Test
+    fun `submit saved search - search is submitted`() =
+        withViewModel {
+            addSavedSearch(SavedSearch("A", "sample query"))
+
+            submittedSearchFlow.test {
+                assertEquals(null, expectMostRecentItem())
+                submitSavedSearch(savedSearches.single())
+                assertEquals("sample query", expectMostRecentItem())
+            }
+        }
+
+    @Test
+    fun `apply saved search - blank search is replaced with trailing space`() =
+        withViewModel {
+            addSavedSearch(SavedSearch("A", "sample query"))
+
+            searchTextFlow.test {
+                applySavedSearch(savedSearches.single())
+
+                assertEquals("sample query ", expectMostRecentItem())
+            }
+        }
+
+    @Test
+    fun `apply saved search - existing search is replaced`() =
+        withViewModel {
+            addSavedSearch(SavedSearch("A", "sample query"))
+
+            onSearchTextChanged("testing")
+            searchTextFlow.test {
+                assertEquals("testing", expectMostRecentItem())
+                applySavedSearch(savedSearches.single())
+
+                assertEquals("sample query ", expectMostRecentItem())
+            }
+        }
+
+    @Test
+    fun `saved searches can only be managed if they exist`() =
+        withViewModel {
+            canManageSavedSearchesFlow.test {
+                assertEquals(false, expectMostRecentItem())
+
+                addSavedSearch(SavedSearch("A", "sample query"))
+
+                assertEquals(true, expectMostRecentItem())
+
+                deleteSavedSearch(SavedSearch("A", "sample query"))
+
+                assertEquals(false, expectMostRecentItem())
+            }
+        }
+
     fun withViewModel(
         cardCount: Int = 1,
         block: suspend CardBrowserSearchViewModel.() -> Unit,
@@ -205,5 +374,8 @@ class CardBrowserSearchViewModelTest : RobolectricTest() {
  * @see com.ichi2.anki.browser.SearchHistory
  */
 val CardBrowserSearchViewModel.searchHistory get() = this.searchHistoryFlow.value
+
+val CardBrowserSearchViewModel.savedSearches
+    get() = savedSearchesFlow.value
 
 fun CardBrowserSearchViewModel.submitSearch(submittedText: String) = submitCurrentSearch(submittedText)
