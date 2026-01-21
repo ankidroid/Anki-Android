@@ -23,6 +23,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.annotation.VisibleForTesting
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.ichi2.anki.R
@@ -30,13 +31,16 @@ import com.ichi2.anki.browser.SearchHistory.SearchHistoryEntry
 import com.ichi2.anki.databinding.FragmentStandardSearchBinding
 import com.ichi2.anki.databinding.ViewSavedSearchItemBinding
 import com.ichi2.anki.databinding.ViewSearchHistoryItemBinding
+import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.utils.ext.launchCollectionInLifecycleScope
 import dev.androidbroadcast.vbpd.viewBinding
 
 class StandardSearchFragment : Fragment(R.layout.fragment_standard_search) {
     @VisibleForTesting
     val binding by viewBinding(FragmentStandardSearchBinding::bind)
 
-    private val viewModel: CardBrowserSearchViewModel by activityViewModels()
+    @VisibleForTesting
+    val viewModel: CardBrowserSearchViewModel by activityViewModels()
 
     override fun onViewCreated(
         view: View,
@@ -78,14 +82,20 @@ class StandardSearchFragment : Fragment(R.layout.fragment_standard_search) {
             adapter =
                 SearchHistoryAdapter(
                     context = requireContext(),
-                    searches =
-                        arrayListOf(
-                            SearchHistoryEntry("rated:1"),
-                            SearchHistoryEntry("nid:1764375217155"),
-                            SearchHistoryEntry("is:learn -is:review induction"),
-                            SearchHistoryEntry("deck:* hello AnkiDroid"),
-                        ),
+                    // TODO: Fix to take filters into account
+                    searches = viewModel.searchHistoryFlow.value.take(MAX_SEARCH_HISTORY_ENTRIES),
                 )
+            setOnItemClickListener { _, _, position, _ ->
+                viewModel.selectSearchHistoryEntry(getItemAtPosition(position) as SearchHistoryEntry)
+            }
+        }
+
+        binding.seeMore.apply {
+            setOnClickListener { showSnackbar("TODO") }
+        }
+
+        viewModel.searchHistoryAvailableFlow.launchCollectionInLifecycleScope {
+            binding.searchHistoryContainer.isVisible = it
         }
     }
 
@@ -103,6 +113,9 @@ class StandardSearchFragment : Fragment(R.layout.fragment_standard_search) {
 
     companion object {
         const val TAG = "STANDARD"
+
+        /** Limits the number of history items, so controls appear below without scrolling */
+        const val MAX_SEARCH_HISTORY_ENTRIES = 5
     }
 }
 

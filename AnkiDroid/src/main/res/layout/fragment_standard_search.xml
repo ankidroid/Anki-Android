@@ -100,36 +100,43 @@
         app:layout_constraintTop_toTopOf="@+id/chip_group" />
 
 
-
-    <com.ichi2.ui.FixedTextView
-        android:id="@+id/search_history_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingStart="16dp"
-        android:paddingBottom="8dp"
-        android:text="History"
-        app:layout_constraintTop_toBottomOf="@id/chip_group"
-        style="@style/TextAppearance.Material3.LabelLarge" />
-
-    <ListView
-        android:id="@+id/search_history"
+    <LinearLayout
+        android:id="@+id/search_history_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/search_history_label"
-        tools:layout_height="200dp"
-        tools:listitem="@layout/view_search_history_item"
-        />
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/chip_group">
 
-    <Button
-        android:id="@+id/see_more"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:paddingStart="16dp"
-        style="@style/Widget.Material3.Button.TextButton.Icon"
-        android:text="See more"
-        app:layout_constraintTop_toBottomOf="@id/search_history"
-        />
+        <com.ichi2.ui.FixedTextView
+            android:id="@+id/search_history_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="16dp"
+            android:paddingBottom="8dp"
+            android:text="History"
+            style="@style/TextAppearance.Material3.LabelLarge" />
+
+        <ListView
+            android:id="@+id/search_history"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/search_history_label"
+            tools:layout_height="200dp"
+            tools:listitem="@layout/view_search_history_item"
+            />
+
+        <Button
+            android:id="@+id/see_more"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:paddingStart="16dp"
+            style="@style/Widget.Material3.Button.TextButton.Icon"
+            android:text="See more"
+            app:layout_constraintTop_toBottomOf="@id/search_history"
+            />
+
+    </LinearLayout>
 
     <com.ichi2.ui.FixedTextView
         android:id="@+id/saved_searches_label"
@@ -151,7 +158,7 @@
         android:paddingEnd="8dp"
         app:layout_constraintBottom_toBottomOf="@id/saved_searches_label"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/see_more">
+        app:layout_constraintTop_toBottomOf="@id/search_history_container">
 
         <ImageButton
             android:id="@+id/manage_saved_searches"

@@ -19,10 +19,13 @@ package com.ichi2.anki.browser.search
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ichi2.anki.browser.SearchHistory
+import com.ichi2.anki.browser.SearchHistory.SearchHistoryEntry
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -44,6 +47,8 @@ import timber.log.Timber
 class CardBrowserSearchViewModel(
     private val savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
+    private val searchHistoryManager = SearchHistory()
+
     val advancedSearchFlow =
         savedStateHandle.getMutableStateFlow(STATE_ADVANCED_SEARCH_ENABLED, false)
 
@@ -60,6 +65,9 @@ class CardBrowserSearchViewModel(
             started = SharingStarted.Eagerly,
             initialValue = "",
         )
+
+    val searchHistoryFlow = MutableStateFlow(searchHistoryManager.entries)
+    val searchHistoryAvailableFlow = searchHistoryFlow.map { it.isNotEmpty() }
 
     val closeSearchViewFlow = MutableSharedFlow<Unit>(extraBufferCapacity = 1, replay = 1)
 
@@ -104,9 +112,23 @@ class CardBrowserSearchViewModel(
             Timber.i("submitting search")
             // searches with trailing and leading spaces are equivalent
             val submittedText = submittedText.trim()
+
+            val updatedEntries =
+                searchHistoryManager.addRecent(
+                    SearchHistoryEntry(
+                        query = submittedText,
+                    ),
+                )
+            searchHistoryFlow.value = updatedEntries
             closeSearchViewFlow.emit(Unit)
             submittedSearchFlow.emit(submittedText)
         }
+
+    fun selectSearchHistoryEntry(entry: SearchHistoryEntry) {
+        Timber.i("selected search history entry")
+        onSearchTextChanged(entry.query)
+        submitCurrentSearch()
+    }
 
     /**
      * Clears state when the search screen is closed without saving
