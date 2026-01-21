@@ -31,9 +31,17 @@ import com.ichi2.anki.browser.SearchHistory.SearchHistoryEntry
 import com.ichi2.anki.databinding.FragmentStandardSearchBinding
 import com.ichi2.anki.databinding.ViewSavedSearchItemBinding
 import com.ichi2.anki.databinding.ViewSearchHistoryItemBinding
+import com.ichi2.anki.dialogs.ManageSavedSearchAction
+import com.ichi2.anki.dialogs.SaveBrowserSearchDialogFragment
+import com.ichi2.anki.dialogs.SavedBrowserSearchesDialogFragment
+import com.ichi2.anki.dialogs.registerSaveSearchHandler
+import com.ichi2.anki.dialogs.registerSavedSearchActionHandler
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.ext.launchCollectionInLifecycleScope
 import dev.androidbroadcast.vbpd.viewBinding
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import timber.log.Timber
 
 class StandardSearchFragment : Fragment(R.layout.fragment_standard_search) {
     @VisibleForTesting
@@ -41,6 +49,24 @@ class StandardSearchFragment : Fragment(R.layout.fragment_standard_search) {
 
     @VisibleForTesting
     val viewModel: CardBrowserSearchViewModel by activityViewModels()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        registerSaveSearchHandler {
+            viewModel.addSavedSearch(it)
+        }
+        registerSavedSearchActionHandler {
+            when (it) {
+                is ManageSavedSearchAction.SelectSearch -> {
+                    viewModel.submitSavedSearch(it.search)
+                }
+                is ManageSavedSearchAction.Delete -> {
+                    viewModel.deleteSavedSearch(it.search)
+                }
+            }
+        }
+    }
 
     override fun onViewCreated(
         view: View,
@@ -73,7 +99,16 @@ class StandardSearchFragment : Fragment(R.layout.fragment_standard_search) {
 
                 val item = getItem(position)!!
 
+                fun openSavedSearchNamePrompt() {
+                    Timber.i("opening 'save search' name input dialog")
+                    val dialog =
+                        SaveBrowserSearchDialogFragment.newInstance(searchQuery = item.query)
+
+                    dialog.show(childFragmentManager, "savedSearchName")
+                }
+
                 binding.title.text = item.query
+                binding.favorite.setOnClickListener { openSavedSearchNamePrompt() }
                 return binding.root
             }
         }
@@ -100,15 +135,58 @@ class StandardSearchFragment : Fragment(R.layout.fragment_standard_search) {
     }
 
     private fun setupSavedSearches() {
-        binding.savedSearches.adapter =
+        class SavedSearchAdapter(
+            private val context: Context,
+            searches: List<SavedSearch>,
+        ) : ArrayAdapter<SavedSearch>(context, 0, searches) {
+            override fun getView(
+                position: Int,
+                convertView: View?,
+                parent: ViewGroup,
+            ): View {
+                val binding =
+                    if (convertView != null) {
+                        ViewSavedSearchItemBinding.bind(convertView)
+                    } else {
+                        ViewSavedSearchItemBinding.inflate(LayoutInflater.from(context), parent, false)
+                    }
+
+                val item = getItem(position)!!
+                binding.title.text = item.name
+                binding.content.text = item.query
+
+                binding.root.setOnClickListener { viewModel.submitSavedSearch(item) }
+                binding.insertSavedSearch.setOnClickListener { viewModel.applySavedSearch(item) }
+
+                return binding.root
+            }
+        }
+
+        val savedSearches = viewModel.savedSearchesFlow.value.toMutableList()
+        val adapter =
             SavedSearchAdapter(
                 requireContext(),
-                arrayListOf(
-                    SavedSearch("Red flag", "flag:1"),
-                    SavedSearch("Title", "search query"),
-                    SavedSearch("ya-ya, ya-ya", "blah-blah, blah-blah"),
-                ),
+                savedSearches,
             )
+        binding.savedSearches.adapter = adapter
+
+        viewModel.savedSearchesFlow.launchCollectionInLifecycleScope {
+            withContext(Dispatchers.Main) {
+                savedSearches.clear()
+                savedSearches.addAll(it)
+                adapter.notifyDataSetChanged()
+            }
+        }
+
+        viewModel.canManageSavedSearchesFlow.launchCollectionInLifecycleScope {
+            binding.manageSavedSearchesContainer.isVisible = it
+        }
+
+        binding.manageSavedSearchesContainer.setOnClickListener {
+            binding.manageSavedSearches.performClick()
+            val dialog = SavedBrowserSearchesDialogFragment.newInstance(savedSearches)
+            dialog.show(childFragmentManager, SavedBrowserSearchesDialogFragment.TAG)
+        }
     }
 
     companion object {
@@ -116,28 +194,5 @@ class StandardSearchFragment : Fragment(R.layout.fragment_standard_search) {
 
         /** Limits the number of history items, so controls appear below without scrolling */
         const val MAX_SEARCH_HISTORY_ENTRIES = 5
-    }
-}
-
-class SavedSearchAdapter(
-    private val context: Context,
-    searches: MutableList<SavedSearch>,
-) : ArrayAdapter<SavedSearch>(context, 0, searches) {
-    override fun getView(
-        position: Int,
-        convertView: View?,
-        parent: ViewGroup,
-    ): View {
-        val binding =
-            if (convertView != null) {
-                ViewSavedSearchItemBinding.bind(convertView)
-            } else {
-                ViewSavedSearchItemBinding.inflate(LayoutInflater.from(context), parent, false)
-            }
-
-        binding.title.text = getItem(position)!!.name
-        binding.content.text = getItem(position)!!.query
-
-        return binding.root
     }
 }
