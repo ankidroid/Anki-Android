@@ -125,6 +125,7 @@ import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.ui.internationalization.toSentenceCase
 import com.ichi2.anki.undoAndShowSnackbar
 import com.ichi2.anki.utils.ext.getCurrentDialogFragment
+import com.ichi2.anki.utils.ext.hasCheckedBackground
 import com.ichi2.anki.utils.ext.ifNotZero
 import com.ichi2.anki.utils.ext.launchCollectionInLifecycleScope
 import com.ichi2.anki.utils.ext.setFragmentResultListener
@@ -831,6 +832,7 @@ class CardBrowserFragment :
 
         fun onDeckChanged(deck: SelectableDeck?) {
             decksChip?.text = deck?.getFullDisplayName(requireContext())
+            decksChip?.hasCheckedBackground = (deck is SelectableDeck.Deck && deck.deckId != 0L)
         }
 
         fun advancedSearchChanged(inAdvancedSearch: Boolean) {

@@ -84,6 +84,7 @@ import com.ichi2.anki.common.utils.isRunningAsUnitTest
 import com.ichi2.anki.libanki.BrowserConfig
 import com.ichi2.anki.libanki.CardId
 import com.ichi2.anki.libanki.CardType
+import com.ichi2.anki.libanki.DeckNameId
 import com.ichi2.anki.libanki.Note
 import com.ichi2.anki.libanki.NotetypeJson
 import com.ichi2.anki.libanki.QueueType
@@ -1752,6 +1753,25 @@ class CardBrowserTest : RobolectricTest() {
 
             assertMenusEqual(expectedMenuItems, menu)
         }
+
+    @Test
+    fun `deck chip performs a search`() {
+        // The deck chip uses `DeckSelectionListener`, which uses a different code path
+        val did = addDeck("AA")
+        addDeck("BB")
+
+        addBasicNote().firstCard().update {
+            this.did = did
+        }
+
+        withBrowser(newUi = true) {
+            assertThat(viewModel.cards.isEmpty(), equalTo(true))
+
+            viewModel.setSelectedDeck(SelectableDeck.Deck(DeckNameId("AA", did)))
+
+            assertThat(viewModel.cards.isEmpty(), equalTo(false))
+        }
+    }
 
     @Test
     @Ignore("pending PR 20454")
