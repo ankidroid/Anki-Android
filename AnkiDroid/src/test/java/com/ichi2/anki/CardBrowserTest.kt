@@ -878,7 +878,8 @@ class CardBrowserTest : RobolectricTest() {
             )
             assertThat("Result should be empty", cardBrowser.viewModel.rowCount, equalTo(0))
 
-            cardBrowser.searchAllDecks().join()
+            advanceRobolectricLooper()
+            cardBrowser.searchAllDecks()
             advanceRobolectricLooper()
             assertThat("Result should contain one card", cardBrowser.viewModel.rowCount, equalTo(1))
         }
@@ -891,7 +892,7 @@ class CardBrowserTest : RobolectricTest() {
             addBasicAndReversedNote("Hello", "Anki")
 
             browserWithNoNewCards.apply {
-                searchAllDecks().join()
+                searchAllDecks()
                 advanceRobolectricLooper()
                 with(viewModel) {
                     assertThat("Result should contain 4 cards", rowCount, equalTo(4))
@@ -1901,7 +1902,7 @@ class CardBrowserTest : RobolectricTest() {
         run {
             getBrowserWithNotes(noteCount).apply {
                 if (fragmented) {
-                    viewModel.launchSearchForCards("deck:\"Default\"", forceRefresh = true)
+                    viewModel.setQuery("deck:\"Default\"", forceRefresh = true)
                     advanceRobolectricLooper()
                     assertNotNull(fragment, message = "note editor fragment")
                 }
@@ -2023,7 +2024,7 @@ val CardBrowser.columnHeadings
 
 suspend fun CardBrowser.searchCards(search: String? = null) {
     if (search != null) {
-        viewModel.launchSearchForCards(search)
+        viewModel.setQuery(search)
     } else {
         viewModel.launchSearchForCards()
     }

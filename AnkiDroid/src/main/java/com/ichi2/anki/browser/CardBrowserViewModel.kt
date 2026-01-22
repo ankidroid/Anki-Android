@@ -462,6 +462,7 @@ class CardBrowserViewModel(
 
         performSearchFlow
             .onEach {
+                Timber.d("performSearchFlow -> launching search")
                 launchSearchForCards()
             }.launchIn(viewModelScope)
 
@@ -1080,6 +1081,20 @@ class CardBrowserViewModel(
             searchRequestFlow.value.copy(
                 query = filterQuery,
             )
+        launchSearchForCards()
+    }
+
+    fun setQuery(
+        query: String,
+        forceRefresh: Boolean = true,
+    ) = viewModelScope.launch {
+        val newValue = searchRequestFlow.value.copy(query = query)
+        if (!forceRefresh && withCol { searchRequestFlow.value.toSearchString() == newValue.toSearchString() }) {
+            Timber.i("skipped duplicate search launch")
+            return@launch
+        }
+
+        searchRequestFlow.value = newValue
         launchSearchForCards()
     }
 
