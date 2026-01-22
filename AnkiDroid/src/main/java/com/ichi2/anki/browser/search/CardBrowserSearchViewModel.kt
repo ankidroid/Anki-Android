@@ -86,6 +86,14 @@ class CardBrowserSearchViewModel(
 
     val filtersFlow = MutableStateFlow(SearchFilters.EMPTY)
 
+    fun setDecksFilter(decks: List<DeckNameId>) {
+        Timber.i("set decks filter to [%s]", decks.map { it.id }.joinToString())
+        filtersFlow.value =
+            filtersFlow.value.copy(
+                decks = decks,
+            )
+    }
+
     init {
         viewModelScope.launch {
             savedSearchesFlow.value = SavedSearches.loadFromConfig()

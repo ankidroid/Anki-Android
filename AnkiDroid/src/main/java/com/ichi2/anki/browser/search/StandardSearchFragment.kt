@@ -31,19 +31,26 @@ import com.ichi2.anki.browser.SearchHistory.SearchHistoryEntry
 import com.ichi2.anki.databinding.FragmentStandardSearchBinding
 import com.ichi2.anki.databinding.ViewSavedSearchItemBinding
 import com.ichi2.anki.databinding.ViewSearchHistoryItemBinding
+import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.dialogs.ManageSavedSearchAction
 import com.ichi2.anki.dialogs.SaveBrowserSearchDialogFragment
 import com.ichi2.anki.dialogs.SavedBrowserSearchesDialogFragment
 import com.ichi2.anki.dialogs.registerSaveSearchHandler
 import com.ichi2.anki.dialogs.registerSavedSearchActionHandler
+import com.ichi2.anki.launchCatchingTask
+import com.ichi2.anki.libanki.DeckNameId
+import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.utils.ext.hasCheckedBackground
 import com.ichi2.anki.utils.ext.launchCollectionInLifecycleScope
 import dev.androidbroadcast.vbpd.viewBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 
-class StandardSearchFragment : Fragment(R.layout.fragment_standard_search) {
+class StandardSearchFragment :
+    Fragment(R.layout.fragment_standard_search),
+    DeckSelectionDialog.DeckSelectionListener {
     @VisibleForTesting
     val binding by viewBinding(FragmentStandardSearchBinding::bind)
 
@@ -76,8 +83,43 @@ class StandardSearchFragment : Fragment(R.layout.fragment_standard_search) {
 
         binding.toggleAdvancedSearch.setOnClickListener { viewModel.toggleAdvancedSearch() }
 
+        setupChips()
         setupSearchHistory()
         setupSavedSearches()
+    }
+
+    // TODO: multi-selection handling for all chips
+    private fun setupChips() {
+        binding.decksChip.setOnClickListener {
+            launchCatchingTask {
+                // TODO: see onDeckSelected
+                val decks = listOf(SelectableDeck.AllDecks) + SelectableDeck.fromCollection(includeFiltered = true)
+                val dialog =
+                    DeckSelectionDialog.newInstance(
+                        title = getString(R.string.search_deck),
+                        summaryMessage = null,
+                        keepRestoreDefaultButton = false,
+                        decks = decks,
+                    )
+                dialog.show(childFragmentManager, "selectDeck")
+            }
+        }
+
+        viewModel.filtersFlow.launchCollectionInLifecycleScope {
+            binding.decksChip.hasCheckedBackground = it.decks.any()
+
+            binding.decksChip.text = it.decks.firstOrNull()?.name ?: getString(R.string.card_browser_all_decks)
+        }
+    }
+
+    override fun onDeckSelected(deck: SelectableDeck?) {
+        val nameAndId: DeckNameId? =
+            when (deck) {
+                is SelectableDeck.AllDecks -> null
+                is SelectableDeck.Deck -> DeckNameId(deck.name, deck.deckId)
+                null -> return
+            }
+        viewModel.setDecksFilter(listOfNotNull(nameAndId))
     }
 
     private fun setupSearchHistory() {
@@ -108,6 +150,7 @@ class StandardSearchFragment : Fragment(R.layout.fragment_standard_search) {
                 }
 
                 binding.title.text = item.query
+                binding.root.setOnClickListener { viewModel.selectSearchHistoryEntry(item) }
                 binding.favorite.setOnClickListener { openSavedSearchNamePrompt() }
                 return binding.root
             }
