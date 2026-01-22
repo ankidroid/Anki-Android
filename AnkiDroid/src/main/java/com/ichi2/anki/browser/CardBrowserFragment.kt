@@ -43,7 +43,6 @@ import androidx.fragment.app.commit
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -79,7 +78,6 @@ import com.ichi2.anki.browser.search.AdvancedSearchFragment
 import com.ichi2.anki.browser.search.CardBrowserSearchViewModel
 import com.ichi2.anki.browser.search.StandardSearchFragment
 import com.ichi2.anki.common.annotations.NeedsTest
-import com.ichi2.anki.common.utils.android.isRobolectric
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.dialogs.BrowserOptionsDialog
 import com.ichi2.anki.dialogs.CardBrowserOrderDialog
@@ -108,18 +106,16 @@ import com.ichi2.anki.ui.attachFastScroller
 import com.ichi2.anki.undoAndShowSnackbar
 import com.ichi2.anki.utils.ext.getCurrentDialogFragment
 import com.ichi2.anki.utils.ext.ifNotZero
+import com.ichi2.anki.utils.ext.launchCollectionInLifecycleScope
 import com.ichi2.anki.utils.ext.setFragmentResultListener
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.utils.ext.visibleItemPositions
 import com.ichi2.anki.utils.showDialogFragmentImpl
 import com.ichi2.anki.withProgress
-import com.ichi2.utils.HandlerUtils
 import com.ichi2.utils.TagsUtil.getUpdatedTags
 import com.ichi2.utils.replaceText
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import net.ankiweb.rsdroid.Translations
 import timber.log.Timber
 
@@ -1026,21 +1022,6 @@ class CardBrowserFragment :
         RowSelection(rowId = this, topOffset = calculateTopOffset(activityViewModel.getPositionOfId(this)!!))
 
     private fun requireCardBrowserActivity(): CardBrowser = requireActivity() as CardBrowser
-
-    // TODO: Move this to an extension method once we have context parameters
-    private fun <T> Flow<T>.launchCollectionInLifecycleScope(block: suspend (T) -> Unit) {
-        lifecycleScope.launch {
-            lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                this@launchCollectionInLifecycleScope.collect {
-                    if (isRobolectric) {
-                        HandlerUtils.postOnNewHandler { runBlocking { block(it) } }
-                    } else {
-                        block(it)
-                    }
-                }
-            }
-        }
-    }
 
     /**
      * Updates the tags of selected/checked notes and saves them to the disk
