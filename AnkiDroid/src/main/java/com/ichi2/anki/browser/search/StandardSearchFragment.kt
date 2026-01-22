@@ -18,6 +18,7 @@ package com.ichi2.anki.browser.search
 
 import android.content.Context
 import android.os.Bundle
+import android.text.SpannableString
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,6 +29,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.ichi2.anki.R
 import com.ichi2.anki.browser.SearchHistory.SearchHistoryEntry
+import com.ichi2.anki.browser.search.CardBrowserSearchViewModel.SearchHistoryItems
+import com.ichi2.anki.browser.toUserSpannable
 import com.ichi2.anki.databinding.FragmentStandardSearchBinding
 import com.ichi2.anki.databinding.ViewSavedSearchItemBinding
 import com.ichi2.anki.databinding.ViewSearchHistoryItemBinding
@@ -151,10 +154,29 @@ class StandardSearchFragment :
     }
 
     private fun setupSearchHistory() {
+        class SearchHistoryItemUiModel(
+            val entry: SearchHistoryEntry,
+            val searchString: SearchString?,
+        ) {
+            // as we have the rendered SearchString, we can produce a Spannable without using the
+            // Anki collection
+            fun toSpannable() = searchString?.let { entry.toUserSpannable(it) } ?: SpannableString("")
+        }
+
+        fun buildUiModelList(historyItems: SearchHistoryItems): List<SearchHistoryItemUiModel> =
+            historyItems.entryToSearchString
+                .take(MAX_SEARCH_HISTORY_ENTRIES)
+                .map {
+                    SearchHistoryItemUiModel(
+                        entry = it.first,
+                        searchString = it.second,
+                    )
+                }
+
         class SearchHistoryAdapter(
             private val context: Context,
-            searches: List<SearchHistoryEntry>,
-        ) : ArrayAdapter<SearchHistoryEntry>(context, 0, searches) {
+            searches: List<SearchHistoryItemUiModel>,
+        ) : ArrayAdapter<SearchHistoryItemUiModel>(context, 0, searches) {
             override fun getView(
                 position: Int,
                 convertView: View?,
@@ -172,25 +194,25 @@ class StandardSearchFragment :
                 fun openSavedSearchNamePrompt() {
                     Timber.i("opening 'save search' name input dialog")
                     val dialog =
-                        SaveBrowserSearchDialogFragment.newInstance(searchQuery = item.query)
+                        SaveBrowserSearchDialogFragment.newInstance(searchQuery = item.entry.query)
 
                     dialog.show(childFragmentManager, "savedSearchName")
                 }
 
-                binding.title.text = item.query
-                binding.root.setOnClickListener { viewModel.selectSearchHistoryEntry(item) }
+                binding.title.text = item.toSpannable()
+                binding.root.setOnClickListener { viewModel.selectSearchHistoryEntry(item.entry) }
                 binding.favorite.setOnClickListener { openSavedSearchNamePrompt() }
                 return binding.root
             }
         }
 
+        val searchHistoryAdapter =
+            SearchHistoryAdapter(
+                context = requireContext(),
+                searches = buildUiModelList(viewModel.searchHistoryFlow.value),
+            )
         binding.searchHistory.apply {
-            adapter =
-                SearchHistoryAdapter(
-                    context = requireContext(),
-                    // TODO: Fix to take filters into account
-                    searches = viewModel.searchHistoryFlow.value.take(MAX_SEARCH_HISTORY_ENTRIES),
-                )
+            adapter = searchHistoryAdapter
             setOnItemClickListener { _, _, position, _ ->
                 viewModel.selectSearchHistoryEntry(getItemAtPosition(position) as SearchHistoryEntry)
             }
@@ -198,6 +220,12 @@ class StandardSearchFragment :
 
         binding.seeMore.apply {
             setOnClickListener { showSnackbar("TODO") }
+        }
+
+        // replace the data when the search history is updated
+        viewModel.searchHistoryFlow.launchCollectionInLifecycleScope {
+            searchHistoryAdapter.clear()
+            searchHistoryAdapter.addAll(buildUiModelList(it))
         }
 
         viewModel.searchHistoryAvailableFlow.launchCollectionInLifecycleScope {

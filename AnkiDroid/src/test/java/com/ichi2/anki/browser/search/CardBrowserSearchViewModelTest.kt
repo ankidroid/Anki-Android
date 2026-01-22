@@ -24,6 +24,7 @@ import com.ichi2.anki.browser.SearchHistory
 import com.ichi2.anki.browser.SearchHistory.SearchHistoryEntry
 import com.ichi2.anki.browser.search.CardBrowserSearchViewModel.UserMessage
 import com.ichi2.testutils.assertFalse
+import kotlinx.coroutines.flow.map
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.empty
 import org.hamcrest.Matchers.equalTo
@@ -66,7 +67,7 @@ class CardBrowserSearchViewModelTest : RobolectricTest() {
     @Test
     fun `search updated after submit`() =
         withViewModel {
-            searchHistoryFlow.test {
+            searchHistoryListFlow.test {
                 submitSearch("Hello")
 
                 val mostRecentItem = expectMostRecentItem()
@@ -177,7 +178,7 @@ class CardBrowserSearchViewModelTest : RobolectricTest() {
     @Test
     fun `search history - submitted searches are trimmed and deduplicated`() =
         withViewModel {
-            searchHistoryFlow.test {
+            searchHistoryListFlow.test {
                 submitSearch("aa")
                 assertThat(expectMostRecentItem(), hasSize(1))
 
@@ -282,7 +283,7 @@ class CardBrowserSearchViewModelTest : RobolectricTest() {
         withViewModel {
             addSavedSearch(SavedSearch("A", "sample query"))
 
-            searchHistoryFlow.test {
+            searchHistoryListFlow.test {
                 // nothing in history initially
                 assertEquals(0, expectMostRecentItem().size)
 
@@ -374,7 +375,15 @@ class CardBrowserSearchViewModelTest : RobolectricTest() {
 /**
  * @see com.ichi2.anki.browser.SearchHistory
  */
-val CardBrowserSearchViewModel.searchHistory get() = this.searchHistoryFlow.value
+val CardBrowserSearchViewModel.searchHistoryListFlow get() =
+    this.searchHistoryFlow.map { it.entryToSearchString.map { it.first } }
+
+/**
+ * @see com.ichi2.anki.browser.SearchHistory
+ */
+val CardBrowserSearchViewModel.searchHistory get() =
+    this.searchHistoryFlow.value.entryToSearchString
+        .map { it.first }
 
 val CardBrowserSearchViewModel.savedSearches
     get() = savedSearchesFlow.value

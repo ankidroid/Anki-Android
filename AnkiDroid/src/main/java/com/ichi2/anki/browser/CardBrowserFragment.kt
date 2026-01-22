@@ -1589,12 +1589,20 @@ suspend fun SearchRequest.toUserSpannable(): Spannable {
 }
 
 @CheckResult
-fun SearchRequest.toUserSpannable(searchString: SearchString): Spannable {
-    // TODO: handle theming
+fun SearchRequest.toUserSpannable(searchString: SearchString): Spannable = buildUserSpannable(this.query, searchString)
+
+@CheckResult
+fun SearchHistory.SearchHistoryEntry.toUserSpannable(searchString: SearchString) = buildUserSpannable(this.query, searchString)
+
+fun buildUserSpannable(
+    query: String,
+    searchString: SearchString,
+): SpannableString {
+    // TODO: handle theming, don't hardcode gray
     val spannable = SpannableString(searchString.value)
 
     // gray out the additional filters, as they're handled by chips
-    if (searchString.value.startsWith(this.query)) {
+    if (searchString.value.startsWith(query)) {
         spannable.setSpan(
             ForegroundColorSpan(Color.GRAY),
             query.length,
