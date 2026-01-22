@@ -121,6 +121,13 @@ class SearchHistoryTest : RobolectricTest() {
         assertThat(history.entries.single().query, equalTo("1"))
     }
 
+    @Test
+    fun `blank entries are not persisted`() {
+        history.addRecent(SearchHistoryEntry(""))
+        history.addRecent(SearchHistoryEntry(" "))
+        assertThat(history.entries, empty())
+    }
+
     /** Adds numbered entries from 1 to [count] inclusive */
     fun addNumberedEntries(count: Int) =
         repeat(count) {

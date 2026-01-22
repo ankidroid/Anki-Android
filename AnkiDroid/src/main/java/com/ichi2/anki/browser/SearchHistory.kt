@@ -57,6 +57,10 @@ class SearchHistory(
      */
     fun addRecent(entry: SearchHistoryEntry): List<SearchHistoryEntry> {
         val updatedEntries = entries.toMutableList()
+        if (entry.isSearchEmpty()) {
+            Timber.d("skipping updating history with no search")
+            return updatedEntries
+        }
         updatedEntries.remove(entry)
         updatedEntries.add(0, entry)
         return updatedEntries.take(maxEntries).also {
@@ -93,6 +97,12 @@ class SearchHistory(
         val query: String,
     ) {
         override fun toString() = query
+
+        /**
+         * Whether there is no set search - effectively a search for the default search:
+         * `deck:*`
+         */
+        fun isSearchEmpty() = query.isBlank()
     }
 
     companion object {
