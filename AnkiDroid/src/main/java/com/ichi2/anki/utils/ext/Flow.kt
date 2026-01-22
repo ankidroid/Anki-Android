@@ -50,7 +50,7 @@ fun <T> Flow<T>.collectIn(
 context(fragment: Fragment)
 fun <T> Flow<T>.launchCollectionInLifecycleScope(block: suspend (T) -> Unit) {
     fragment.lifecycleScope.launch {
-        fragment.lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+        fragment.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
             this@launchCollectionInLifecycleScope.collect {
                 if (isRobolectric) {
                     HandlerUtils.postOnNewHandler { runBlocking { block(it) } }
@@ -65,7 +65,7 @@ fun <T> Flow<T>.launchCollectionInLifecycleScope(block: suspend (T) -> Unit) {
 context(activity: AnkiActivity)
 fun <T> Flow<T>.launchCollectionInLifecycleScope(block: suspend (T) -> Unit) {
     activity.lifecycleScope.launch {
-        activity.lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+        activity.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
             this@launchCollectionInLifecycleScope.collect {
                 if (isRobolectric) {
                     // hack: lifecycleScope/runOnUiThread do not handle our
@@ -84,7 +84,7 @@ context(activity: AnkiActivity)
 fun <T> StateFlow<T>.launchCollectionInLifecycleScope(block: suspend (T) -> Unit) {
     activity.lifecycleScope.launch {
         var lastValue: T? = null
-        activity.lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+        activity.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
             this@launchCollectionInLifecycleScope.collect {
                 // on re-resume, an unchanged value will be emitted for a StateFlow
                 if (lastValue == value) return@collect
