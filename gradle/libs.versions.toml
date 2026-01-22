@@ -91,7 +91,7 @@ junit = "6.0.2"
 # https://github.com/JetBrains/kotlin/releases/
 kotlin = '2.2.10'
 # https://github.com/Kotlin/kotlinx.serialization/releases
-kotlinxSerializationJson = "1.9.0"
+kotlinxSerializationJson = "1.10.0"
 ktlintGradlePlugin = "14.0.1"
 leakcanaryAndroid = "2.14"
 lint = '32.0.0'
