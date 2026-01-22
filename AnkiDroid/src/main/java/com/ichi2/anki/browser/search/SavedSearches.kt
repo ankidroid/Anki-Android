@@ -32,7 +32,9 @@ import timber.log.Timber
 data class SavedSearch(
     val name: String,
     val query: String,
-)
+) {
+    fun normalize() = SavedSearch(name = this.name, query = this.query.trim())
+}
 
 /**
  * Manages saved searches (named search queries in the Card Browser)
@@ -70,7 +72,7 @@ object SavedSearches {
         Timber.i("saving user search")
         val values = loadFromConfig()
         if (values.any { it.name == savedSearch.name }) return false to values
-        val updatedValues = values + savedSearch
+        val updatedValues = values + savedSearch.normalize()
         saveToConfig(updatedValues)
         return true to loadFromConfig()
     }

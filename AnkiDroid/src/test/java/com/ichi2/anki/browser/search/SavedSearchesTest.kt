@@ -26,6 +26,7 @@ import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
+import kotlin.test.assertNotNull
 
 @RunWith(AndroidJUnit4::class)
 class SavedSearchesTest : JvmTest() {
@@ -63,6 +64,16 @@ class SavedSearchesTest : JvmTest() {
                 assertFalse(success)
                 assertThat(values, hasSize(1))
                 assertThat(values.single(), equalTo(SavedSearch("a", "b")))
+            }
+        }
+
+    @Test
+    fun `add normalizes query`() =
+        withSavedSearches {
+            add(SavedSearch("a", " b ")).also { (success, values) ->
+                assertTrue(success)
+                val value = assertNotNull(values.singleOrNull())
+                assertThat("query is trimmed", value, equalTo(SavedSearch("a", "b")))
             }
         }
 
