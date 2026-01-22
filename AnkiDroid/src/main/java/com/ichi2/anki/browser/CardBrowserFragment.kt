@@ -93,6 +93,7 @@ import com.ichi2.anki.browser.search.SearchRequest
 import com.ichi2.anki.browser.search.SearchString
 import com.ichi2.anki.browser.search.StandardSearchFragment
 import com.ichi2.anki.browser.search.savedFilters
+import com.ichi2.anki.browser.search.toDeckNameIdList
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.dialogs.BrowserOptionsDialog
@@ -138,6 +139,7 @@ import com.ichi2.anki.withProgress
 import com.ichi2.ui.CardBrowserSearchView
 import com.ichi2.utils.TagsUtil.getUpdatedTags
 import com.ichi2.utils.increaseHorizontalPaddingOfOverflowMenuIcons
+import com.ichi2.utils.moveCursorToEnd
 import com.ichi2.utils.replaceText
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.filterNotNull
@@ -293,6 +295,11 @@ class CardBrowserFragment :
                         getOrCreateSearchFragment(StandardSearchFragment.TAG, ::StandardSearchFragment)
                         return@addTransitionListener
                     }
+                    if (state == SearchView.TransitionState.SHOWN) {
+                        editText.setText(activityViewModel.searchRequestFlow.value.query)
+                        editText.moveCursorToEnd()
+                        return@addTransitionListener
+                    }
 
                     if (state != SearchView.TransitionState.HIDDEN) return@addTransitionListener
                     // clear state on hide
@@ -304,7 +311,7 @@ class CardBrowserFragment :
 
                     // Exiting out the SearchView should reset the state
                     // The ViewModel remains active as it's tied to the host fragment.
-                    searchViewModel.resetSearchState()
+                    searchViewModel.resetSearchState(activityViewModel.searchRequestFlow.value)
                 }
                 editText.setOnEditorActionListener { _, actionId, event ->
                     if (actionId == EditorInfo.IME_ACTION_SEARCH || event?.keyCode == KeyEvent.KEYCODE_ENTER) {
@@ -412,7 +419,7 @@ class CardBrowserFragment :
                                     }
 
                                     override fun onQueryTextSubmit(query: String): Boolean {
-                                        vm.launchSearchForCards(query)
+                                        vm.setQuery(query)
                                         legacySearchView!!.clearFocus()
                                         return true
                                     }
@@ -833,6 +840,7 @@ class CardBrowserFragment :
         fun onDeckChanged(deck: SelectableDeck?) {
             decksChip?.text = deck?.getFullDisplayName(requireContext())
             decksChip?.hasCheckedBackground = (deck is SelectableDeck.Deck && deck.deckId != 0L)
+            searchViewModel.setDecksFilter(deck?.toDeckNameIdList() ?: return)
         }
 
         fun advancedSearchChanged(inAdvancedSearch: Boolean) {
@@ -896,6 +904,11 @@ class CardBrowserFragment :
                     )
             }
 
+        fun onSearchRequestUpdated(search: SearchRequest) {
+            Timber.d("syncing searchview state from chip updates")
+            searchViewModel.syncState(search)
+        }
+
         activityViewModel.flowOfIsTruncated.launchCollectionInLifecycleScope(::onIsTruncatedChanged)
         activityViewModel.flowOfSelectedRows.launchCollectionInLifecycleScope(::onSelectedRowsChanged)
         activityViewModel.flowOfActiveColumns.launchCollectionInLifecycleScope(::onColumnsChanged)
@@ -914,6 +927,7 @@ class CardBrowserFragment :
         searchViewModel.closeSearchViewFlow.launchCollectionInLifecycleScope(::onSearchViewClosed)
         searchViewModel.submittedSearchFlow.filterNotNull().launchCollectionInLifecycleScope(::onSearchSubmitted)
         searchViewModel.userMessageFlow.filterNotNull().launchCollectionInLifecycleScope(::onUserMessage)
+        activityViewModel.searchRequestFlow.launchCollectionInLifecycleScope(::onSearchRequestUpdated)
     }
 
     private fun setupFragmentResultListeners() {

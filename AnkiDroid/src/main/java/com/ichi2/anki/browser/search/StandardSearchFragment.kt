@@ -113,13 +113,7 @@ class StandardSearchFragment :
     }
 
     override fun onDeckSelected(deck: SelectableDeck?) {
-        val nameAndId: DeckNameId? =
-            when (deck) {
-                is SelectableDeck.AllDecks -> null
-                is SelectableDeck.Deck -> DeckNameId(deck.name, deck.deckId)
-                null -> return
-            }
-        viewModel.setDecksFilter(listOfNotNull(nameAndId))
+        viewModel.setDecksFilter(deck?.toDeckNameIdList() ?: return)
     }
 
     private fun setupSearchHistory() {
@@ -239,3 +233,11 @@ class StandardSearchFragment :
         const val MAX_SEARCH_HISTORY_ENTRIES = 5
     }
 }
+
+fun SelectableDeck.toDeckNameIdList(): List<DeckNameId>? =
+    when (this) {
+        is SelectableDeck.AllDecks -> emptyList()
+        is SelectableDeck.Deck -> {
+            if (this.deckId == 0L) emptyList() else listOf(DeckNameId(this.name, this.deckId))
+        }
+    }

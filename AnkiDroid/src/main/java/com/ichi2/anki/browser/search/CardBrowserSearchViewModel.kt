@@ -24,6 +24,7 @@ import androidx.lifecycle.viewModelScope
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.browser.SearchHistory
 import com.ichi2.anki.browser.SearchHistory.SearchHistoryEntry
+import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.libanki.DeckNameId
 import com.ichi2.anki.libanki.NoteTypeNameID
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -76,7 +77,7 @@ class CardBrowserSearchViewModel(
 
     val closeSearchViewFlow = MutableSharedFlow<Unit>(extraBufferCapacity = 1, replay = 1)
 
-    val submittedSearchFlow = MutableStateFlow<SearchRequest?>(null)
+    val submittedSearchFlow = MutableSharedFlow<SearchRequest?>(extraBufferCapacity = 1, replay = 1)
 
     val savedSearchesFlow = MutableStateFlow<List<SavedSearch>>(emptyList())
 
@@ -203,16 +204,25 @@ class CardBrowserSearchViewModel(
     /**
      * Clears state when the search screen is closed without saving
      */
-    fun resetSearchState() {
-        Timber.i("clearing temp search state")
-        advancedSearchFlow.value = false
-        basicSearchTextFlow.value = ""
-        advancedSearchTextFlow.value = ""
+    @NeedsTest("reset")
+    fun resetSearchState(submittedSearch: SearchRequest) =
+        viewModelScope.launch {
+            Timber.i("clearing temp search state")
+            advancedSearchFlow.value = false
+            basicSearchTextFlow.value = submittedSearch.query
+            advancedSearchTextFlow.value = submittedSearch.query
+            filtersFlow.value = submittedSearch.filters
 
-        savedStateHandle.remove<Any>(STATE_ADVANCED_SEARCH_ENABLED)
-        savedStateHandle.remove<Any>(STATE_BASIC_SEARCH_TEXT)
-        savedStateHandle.remove<Any>(STATE_ADVANCED_SEARCH_TEXT)
-    }
+            savedStateHandle.remove<Any>(STATE_ADVANCED_SEARCH_ENABLED)
+            savedStateHandle.remove<Any>(STATE_BASIC_SEARCH_TEXT)
+            savedStateHandle.remove<Any>(STATE_ADVANCED_SEARCH_TEXT)
+        }
+
+    fun syncState(search: SearchRequest) =
+        viewModelScope.launch {
+            Timber.d("syncing search state")
+            submittedSearchFlow.emit(search)
+        }
 
     enum class UserMessage {
         SEARCH_SAVED,
