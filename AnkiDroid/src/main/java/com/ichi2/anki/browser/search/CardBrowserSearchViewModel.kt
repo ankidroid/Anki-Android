@@ -31,7 +31,9 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -72,7 +74,10 @@ class CardBrowserSearchViewModel(
             initialValue = "",
         )
 
-    val searchHistoryFlow = MutableStateFlow(searchHistoryManager.entries)
+    val searchHistoryFlow =
+        MutableStateFlow<SearchHistoryItems>(
+            SearchHistoryItems.Loading(searchHistoryManager.entries),
+        )
     val searchHistoryAvailableFlow = searchHistoryFlow.map { it.isNotEmpty() }
 
     val closeSearchViewFlow = MutableSharedFlow<Unit>(extraBufferCapacity = 1, replay = 1)
@@ -107,6 +112,30 @@ class CardBrowserSearchViewModel(
         viewModelScope.launch {
             savedSearchesFlow.value = SavedSearches.loadFromConfig()
         }
+
+        searchHistoryFlow
+            .onEach { history ->
+                when (history) {
+                    is SearchHistoryItems.Loaded -> return@onEach
+                    is SearchHistoryItems.Loading -> {
+                        Timber.d("rendering search history query")
+                        val deckNameMap: List<DeckNameId> = withCol { decks.allNamesAndIds() }
+                        val ntidMap: List<NoteTypeNameID> =
+                            withCol { notetypes.allNamesAndIds().toList() }
+
+                        val searchStrings =
+                            history.input.map {
+                                it to (withCol { SearchRequest.from(it, deckNameMap, ntidMap)?.toSearchString() }?.getOrNull())
+                            }
+
+                        searchHistoryFlow.emit(
+                            SearchHistoryItems.Loaded(
+                                searchStrings,
+                            ),
+                        )
+                    }
+                }
+            }.launchIn(viewModelScope)
     }
 
     /**
@@ -151,7 +180,7 @@ class CardBrowserSearchViewModel(
 
             val searchToSubmit = SearchRequest(submittedText, filtersFlow.value)
             val updatedEntries = searchHistoryManager.addRecent(searchToSubmit.toHistoryEntry())
-            searchHistoryFlow.value = updatedEntries
+            searchHistoryFlow.value = SearchHistoryItems.Loading(updatedEntries)
             closeSearchViewFlow.emit(Unit)
             submittedSearchFlow.emit(searchToSubmit)
         }
@@ -239,6 +268,22 @@ class CardBrowserSearchViewModel(
         SAVED_SEARCH_DELETED,
     }
 
+    sealed class SearchHistoryItems {
+        data class Loading(
+            val input: List<SearchHistoryEntry>,
+        ) : SearchHistoryItems() {
+            override val entryToSearchString: List<Pair<SearchHistoryEntry, SearchString?>> = input.map { it to null }
+        }
+
+        data class Loaded(
+            override val entryToSearchString: List<Pair<SearchHistoryEntry, SearchString?>>,
+        ) : SearchHistoryItems()
+
+        abstract val entryToSearchString: List<Pair<SearchHistoryEntry, SearchString?>>
+
+        fun isNotEmpty() = entryToSearchString.isNotEmpty()
+    }
+
     companion object {
         private const val STATE_ADVANCED_SEARCH_ENABLED = "advancedSearch"
         private const val STATE_BASIC_SEARCH_TEXT = "basicSearchText"
@@ -289,4 +334,14 @@ fun SearchFilters.Companion.from(
         noteTypes = noteTypes,
         cardStates = entry.cardStates,
     )
+}
+
+@CheckResult
+fun SearchRequest.Companion.from(
+    entry: SearchHistoryEntry,
+    deckNameMap: List<DeckNameId>,
+    ntidMap: List<NoteTypeNameID>,
+): SearchRequest? {
+    val filters = SearchFilters.from(entry, deckNameMap, ntidMap) ?: return null
+    return SearchRequest(entry.query, filters)
 }
