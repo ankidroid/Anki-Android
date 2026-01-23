@@ -80,7 +80,7 @@ class TagLimitFragment : DialogFragment() {
         val title =
             TR
                 .customStudySelectiveStudy()
-                .toSentenceCase(requireContext(), R.string.sentence_selective_study)
+                .toSentenceCase(R.string.sentence_selective_study)
         val dialog =
             AlertDialog
                 .Builder(requireContext())

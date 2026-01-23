@@ -861,7 +861,7 @@ open class Reviewer :
 
         // Anki Desktop Translations
         menu.findItem(R.id.action_reschedule_card).title =
-            CollectionManager.TR.actionsSetDueDate().toSentenceCase(this, R.string.sentence_set_due_date)
+            CollectionManager.TR.actionsSetDueDate().toSentenceCase(R.string.sentence_set_due_date)
 
         // Undo button
         @DrawableRes val undoIconId: Int

@@ -72,10 +72,7 @@ class FindAndReplaceDialogFragment : AnalyticsDialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         binding = FragmentFindReplaceBinding.inflate(layoutInflater)
         setupLabels()
-        val title =
-            TR
-                .browsingFindAndReplace()
-                .toSentenceCase(requireContext(), R.string.sentence_find_and_replace)
+        val title = TR.browsingFindAndReplace().toSentenceCase(R.string.sentence_find_and_replace)
         return AlertDialog
             .Builder(requireContext())
             .show {
@@ -112,12 +109,7 @@ class FindAndReplaceDialogFragment : AnalyticsDialogFragment() {
             binding.onlySelectedNotesCheckBox.isEnabled = noteIds.isNotEmpty()
             val fieldsNames =
                 buildList {
-                    add(
-                        TR.browsingAllFields().toSentenceCase(
-                            this@FindAndReplaceDialogFragment,
-                            R.string.sentence_all_fields,
-                        ),
-                    )
+                    add(TR.browsingAllFields().toSentenceCase(R.string.sentence_all_fields))
                     add(TR.editingTags())
                     addAll(withCol { fieldNamesForNoteIds(noteIds) })
                 }

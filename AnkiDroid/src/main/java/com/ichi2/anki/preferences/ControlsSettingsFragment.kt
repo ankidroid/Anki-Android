@@ -16,7 +16,6 @@
 package com.ichi2.anki.preferences
 
 import android.content.res.Configuration
-import androidx.annotation.StringRes
 import androidx.annotation.XmlRes
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.withResumed
@@ -167,10 +166,6 @@ class ControlsSettingsFragment :
             it.title = getString(R.string.gesture_flag_remove).toSentenceCase(R.string.sentence_gesture_flag_remove)
         }
     }
-
-    private fun String.toSentenceCase(
-        @StringRes resId: Int,
-    ): String = this.toSentenceCase(this@ControlsSettingsFragment, resId)
 
     private fun setupNewStudyScreenSettings() {
         if (!Prefs.isNewStudyScreenEnabled) {

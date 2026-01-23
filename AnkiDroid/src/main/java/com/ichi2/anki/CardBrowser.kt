@@ -867,15 +867,15 @@ open class CardBrowser :
         }
 
         actionBarMenu?.findItem(R.id.action_reschedule_cards)?.title =
-            TR.actionsSetDueDate().toSentenceCase(this, R.string.sentence_set_due_date)
+            TR.actionsSetDueDate().toSentenceCase(R.string.sentence_set_due_date)
 
         actionBarMenu?.findItem(R.id.action_grade_now)?.title =
-            TR.actionsGradeNow().toSentenceCase(this, R.string.sentence_grade_now)
+            TR.actionsGradeNow().toSentenceCase(R.string.sentence_grade_now)
 
         val isFindReplaceEnabled = sharedPrefs().getBoolean(getString(R.string.pref_browser_find_replace), false)
         menu.findItem(R.id.action_find_replace)?.apply {
             isVisible = isFindReplaceEnabled
-            title = TR.browsingFindAndReplace().toSentenceCase(this@CardBrowser, R.string.sentence_find_and_replace)
+            title = TR.browsingFindAndReplace().toSentenceCase(R.string.sentence_find_and_replace)
         }
 
         previewItem = menu.findItem(R.id.action_preview)
@@ -946,13 +946,13 @@ open class CardBrowser :
 
         actionBarMenu.findItem(R.id.action_flag).isVisible = viewModel.hasSelectedAnyRows()
         actionBarMenu.findItem(R.id.action_suspend_card).apply {
-            title = TR.browsingToggleSuspend().toSentenceCase(this@CardBrowser, R.string.sentence_toggle_suspend)
+            title = TR.browsingToggleSuspend().toSentenceCase(R.string.sentence_toggle_suspend)
             // TODO: I don't think this icon is necessary
             setIcon(R.drawable.ic_suspend)
             isVisible = viewModel.hasSelectedAnyRows()
         }
         actionBarMenu.findItem(R.id.action_toggle_bury).apply {
-            title = TR.browsingToggleBury().toSentenceCase(this@CardBrowser, R.string.sentence_toggle_bury)
+            title = TR.browsingToggleBury().toSentenceCase(R.string.sentence_toggle_bury)
             isVisible = viewModel.hasSelectedAnyRows()
         }
         actionBarMenu.findItem(R.id.action_mark_card).apply {

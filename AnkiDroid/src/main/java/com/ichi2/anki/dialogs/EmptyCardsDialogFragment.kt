@@ -86,11 +86,7 @@ class EmptyCardsDialogFragment : DialogFragment() {
         return AlertDialog
             .Builder(requireContext())
             .show {
-                setTitle(
-                    TR
-                        .emptyCardsWindowTitle()
-                        .toSentenceCase(context, R.string.sentence_empty_cards),
-                )
+                setTitle(TR.emptyCardsWindowTitle().toSentenceCase(R.string.sentence_empty_cards))
                 setPositiveButton(R.string.dialog_ok) { _, _ ->
                     val state = viewModel.uiState.value
                     if (state is EmptyCardsSearchResult) {

@@ -65,10 +65,7 @@ class RepositionCardFragment : DialogFragment() {
             text = TR.browsingShiftPositionOfExistingCards()
             isChecked = requireArguments().getBoolean(ARG_SHIFT)
         }
-        val title =
-            TR
-                .browsingRepositionNewCards()
-                .toSentenceCase(requireContext(), R.string.sentence_reposition_new_cards)
+        val title = TR.browsingRepositionNewCards().toSentenceCase(R.string.sentence_reposition_new_cards)
         val dialog =
             AlertDialog.Builder(requireContext()).create {
                 title(text = title)
