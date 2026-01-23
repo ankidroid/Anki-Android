@@ -80,6 +80,7 @@ import androidx.lifecycle.lifecycleScope
 import anki.config.ConfigKey
 import anki.notes.NoteFieldsCheckResponse
 import com.google.android.material.color.MaterialColors
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.CollectionManager.TR
@@ -114,6 +115,7 @@ import com.ichi2.anki.libanki.NotetypeJson
 import com.ichi2.anki.libanki.Notetypes
 import com.ichi2.anki.libanki.Utils
 import com.ichi2.anki.libanki.clozeNumbersInNote
+import com.ichi2.anki.libanki.exception.MediaSizeLimitExceededException
 import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.anki.multimedia.AudioRecordingFragment
@@ -2154,6 +2156,43 @@ class NoteEditorFragment :
         }
     }
 
+    private fun showLargeMediaFileWarning(
+        fileName: String,
+        fileSize: Long,
+        field: IField,
+        fieldEditText: FieldEditText,
+    ) {
+        val fileSizeStr =
+            android.text.format.Formatter
+                .formatShortFileSize(requireContext(), fileSize)
+
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(R.string.media_file_size_warning_title)
+            .setMessage(getString(R.string.media_file_size_warning_message, fileName, fileSizeStr))
+            .setPositiveButton(R.string.media_file_size_add_anyway) { _, _ ->
+                // USER CONFIRMED: Run the original logic but skip the check
+                lifecycleScope.launch {
+                    try {
+                        withCol {
+                            NoteService.importMediaToDirectory(this, field)
+                        }
+
+                        val formattedValue = field.formattedValue
+                        if (field.type === EFieldType.TEXT) {
+                            fieldEditText.setText(formattedValue)
+                        } else if (fieldEditText.text != null) {
+                            insertStringInField(fieldEditText, formattedValue)
+                        }
+                        changed = true
+                    } catch (e: Exception) {
+                        Timber.e(e, "Failed to add large media file after warning")
+                        showSnackbar(R.string.something_wrong)
+                    }
+                }
+            }.setNegativeButton(R.string.dialog_cancel, null)
+            .show()
+    }
+
     /**
      * Adds a media file to a specific field within the currently edited multimedia note.
      *
@@ -2172,13 +2211,21 @@ class NoteEditorFragment :
             // Import field media
             // This goes before setting formattedValue to update
             // media paths with the checksum when they have the same name
-            withCol {
-                try {
+            try {
+                withCol {
                     NoteService.importMediaToDirectory(this, field)
-                } catch (oomError: OutOfMemoryError) {
-                    // TODO: a 'retry' flow would be possible here
-                    throw Exception(oomError)
                 }
+            } catch (e: MediaSizeLimitExceededException) {
+                showLargeMediaFileWarning(
+                    e.fileName,
+                    e.fileSize,
+                    field,
+                    fieldEditText,
+                )
+                return@launchCatchingTask
+            } catch (oomError: OutOfMemoryError) {
+                // TODO: a 'retry' flow would be possible here
+                throw Exception(oomError)
             }
 
             // Completely replace text for text fields (because current text was passed in)

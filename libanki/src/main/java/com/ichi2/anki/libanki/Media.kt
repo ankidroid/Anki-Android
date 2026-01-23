@@ -23,6 +23,7 @@ import com.google.protobuf.ByteString
 import com.google.protobuf.kotlin.toByteString
 import com.ichi2.anki.libanki.Media.Companion.htmlMediaRegexps
 import com.ichi2.anki.libanki.exception.EmptyMediaException
+import com.ichi2.anki.libanki.exception.MediaSizeLimitExceededException
 import com.ichi2.anki.libanki.utils.LibAnkiAlias
 import com.ichi2.anki.libanki.utils.NotInPyLib
 import net.ankiweb.rsdroid.RustCleanup
@@ -76,6 +77,14 @@ open class Media(
     fun addFile(file: File): String {
         // fail if non-existing or empty
         if (file.length() == 0L) throw EmptyMediaException()
+
+        if (file.length() > Backend.MAX_INDIVIDUAL_MEDIA_FILE_SIZE) {
+            throw MediaSizeLimitExceededException(
+                file.name,
+                file.length(),
+                Backend.MAX_INDIVIDUAL_MEDIA_FILE_SIZE,
+            )
+        }
         return writeData(file.name, file.readBytes().toByteString())
     }
 
