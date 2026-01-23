@@ -82,7 +82,7 @@ class LoginFragment : Fragment(R.layout.my_account) {
         activity.setSupportActionBar(toolbar)
 
         activity.supportActionBar?.apply {
-            title = TR.preferencesAccount().toSentenceCase(requireContext(), R.string.sync_account)
+            title = TR.preferencesAccount().toSentenceCase(R.string.sync_account)
             setDisplayHomeAsUpEnabled(true)
             setDisplayShowHomeEnabled(true)
         }

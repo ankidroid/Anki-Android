@@ -143,7 +143,7 @@ class SetDueDateDialog : DialogFragment() {
                     text =
                         TR
                             .actionsSetDueDate()
-                            .toSentenceCase(this@SetDueDateDialog, R.string.sentence_set_due_date),
+                            .toSentenceCase(R.string.sentence_set_due_date),
                 )
                 positiveButton(R.string.dialog_ok) { launchUpdateDueDate() }
                 negativeButton(R.string.dialog_cancel)

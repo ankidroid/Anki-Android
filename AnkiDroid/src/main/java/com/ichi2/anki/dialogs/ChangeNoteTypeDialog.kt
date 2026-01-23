@@ -115,11 +115,7 @@ class ChangeNoteTypeDialog : AnalyticsDialogFragment() {
         return MaterialAlertDialogBuilder(requireContext())
             .create {
                 title(
-                    text =
-                        TR.browsingChangeNotetype().toSentenceCase(
-                            this@ChangeNoteTypeDialog,
-                            R.string.sentence_change_note_type,
-                        ),
+                    text = TR.browsingChangeNotetype().toSentenceCase(R.string.sentence_change_note_type),
                 )
                 positiveButton(R.string.dialog_ok)
                 negativeButton(R.string.dialog_cancel)

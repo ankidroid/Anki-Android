@@ -273,7 +273,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
 
         return AlertDialog
             .Builder(requireActivity())
-            .title(text = TR.actionsCustomStudy().toSentenceCase(this, R.string.sentence_custom_study))
+            .title(text = TR.actionsCustomStudy().toSentenceCase(R.string.sentence_custom_study))
             .cancelable(true)
             .customView(customMenuView)
             .create()
@@ -338,7 +338,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
         }
         val positiveBtnLabel =
             if (contextMenuOption == STUDY_TAGS) {
-                TR.customStudyChooseTags().toSentenceCase(requireContext(), R.string.sentence_choose_tags)
+                TR.customStudyChooseTags().toSentenceCase(R.string.sentence_choose_tags)
             } else {
                 getString(R.string.dialog_ok)
             }

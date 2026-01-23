@@ -29,6 +29,16 @@ import androidx.fragment.app.Fragment
  * "Toggle Suspend".toSentenceCase(R.string.sentence_toggle_suspend) // "Toggle suspend"
  * ```
  */
+context(context: Context)
+fun String.toSentenceCase(
+    @StringRes resId: Int,
+) = toSentenceCase(context, resId)
+
+context(fragment: Fragment)
+fun String.toSentenceCase(
+    @StringRes resId: Int,
+): String = toSentenceCase(fragment.requireContext(), resId)
+
 fun String.toSentenceCase(
     context: Context,
     @StringRes resId: Int,
@@ -38,8 +48,3 @@ fun String.toSentenceCase(
     if (this.lowercase() == resString.lowercase()) return resString
     return this
 }
-
-fun String.toSentenceCase(
-    fragment: Fragment,
-    @StringRes resId: Int,
-): String = toSentenceCase(fragment.requireContext(), resId)

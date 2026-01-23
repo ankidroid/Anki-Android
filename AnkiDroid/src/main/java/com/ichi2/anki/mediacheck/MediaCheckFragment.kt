@@ -66,7 +66,7 @@ class MediaCheckFragment : Fragment(R.layout.fragment_media_check) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.toolbar.apply {
-            setTitle(TR.mediaCheckCheckMediaAction().toSentenceCase(requireContext(), R.string.check_media))
+            setTitle(TR.mediaCheckCheckMediaAction().toSentenceCase(R.string.check_media))
             setNavigationOnClickListener {
                 requireActivity().onBackPressedDispatcher.onBackPressed()
             }
@@ -105,11 +105,11 @@ class MediaCheckFragment : Fragment(R.layout.fragment_media_check) {
                     menuInflater.inflate(R.menu.media_check_menu, menu)
                     menu.findItem(R.id.action_restore_trash).apply {
                         isVisible = true
-                        title = TR.mediaCheckRestoreTrash().toSentenceCase(requireContext(), R.string.sentence_restore_deleted)
+                        title = TR.mediaCheckRestoreTrash().toSentenceCase(R.string.sentence_restore_deleted)
                     }
                     menu.findItem(R.id.action_empty_trash).apply {
                         isVisible = true
-                        title = TR.mediaCheckEmptyTrash().toSentenceCase(requireContext(), R.string.sentence_empty_trash)
+                        title = TR.mediaCheckEmptyTrash().toSentenceCase(R.string.sentence_empty_trash)
                     }
                 }
 
@@ -152,7 +152,7 @@ class MediaCheckFragment : Fragment(R.layout.fragment_media_check) {
             text =
                 TR
                     .mediaCheckAddTag()
-                    .toSentenceCase(requireContext(), R.string.sentence_tag_missing)
+                    .toSentenceCase(R.string.sentence_tag_missing)
 
             setOnClickListener {
                 launchCatchingTask {
@@ -168,11 +168,7 @@ class MediaCheckFragment : Fragment(R.layout.fragment_media_check) {
         }
 
         binding.deleteUsedMediaButton.apply {
-            text =
-                TR.mediaCheckDeleteUnused().toSentenceCase(
-                    requireContext(),
-                    R.string.sentence_check_media_delete_unused,
-                )
+            text = TR.mediaCheckDeleteUnused().toSentenceCase(R.string.sentence_check_media_delete_unused)
 
             setOnClickListener {
                 deleteConfirmationDialog()

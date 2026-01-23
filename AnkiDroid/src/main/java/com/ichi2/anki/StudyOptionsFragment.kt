@@ -433,7 +433,7 @@ class StudyOptionsFragment :
             if (!isDynamic) {
                 deckInfoLayout.visibility = View.GONE
                 buttonStart.visibility = View.VISIBLE
-                buttonStart.text = TR.actionsCustomStudy().toSentenceCase(this, R.string.sentence_custom_study)
+                buttonStart.text = TR.actionsCustomStudy().toSentenceCase(R.string.sentence_custom_study)
             } else {
                 buttonStart.visibility = View.GONE
             }
