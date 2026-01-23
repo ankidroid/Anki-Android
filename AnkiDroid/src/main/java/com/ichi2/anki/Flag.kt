@@ -20,9 +20,18 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.IdRes
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.Flag.Companion.queryDisplayNames
 import com.ichi2.anki.common.utils.ext.getStringOrNull
+import kotlinx.serialization.KSerializer
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.descriptors.PrimitiveKind
+import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
+import kotlinx.serialization.descriptors.SerialDescriptor
+import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
 import org.json.JSONObject
 
+@Serializable(with = FlagSerializer::class)
 enum class Flag(
     val code: Int,
     /**
@@ -137,5 +146,23 @@ private value class FlagLabels(
 
     companion object {
         suspend fun loadFromColConfig() = FlagLabels(withCol { config.getObject("flagLabels", JSONObject()) })
+    }
+}
+
+/** Serializer for [Flag] */
+object FlagSerializer : KSerializer<Flag> {
+    override val descriptor: SerialDescriptor =
+        PrimitiveSerialDescriptor("Flag", PrimitiveKind.INT)
+
+    override fun serialize(
+        encoder: Encoder,
+        value: Flag,
+    ) {
+        encoder.encodeInt(value.code)
+    }
+
+    override fun deserialize(decoder: Decoder): Flag {
+        val code = decoder.decodeInt()
+        return Flag.fromCode(code)
     }
 }
