@@ -80,6 +80,7 @@ import com.ichi2.anki.libanki.utils.NotInPyLib
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.BackendException.BackendSearchException
 import net.ankiweb.rsdroid.RustCleanup
+import net.ankiweb.rsdroid.exceptions.BackendNotFoundException
 import timber.log.Timber
 import java.io.File
 
@@ -576,6 +577,11 @@ class Collection(
      * ***********************************************************
      */
 
+    /**
+     * Return the card with the given ID.
+     *
+     * @throws BackendNotFoundException if the card does not exist
+     */
     @CheckResult
     @LibAnkiAlias("get_card")
     fun getCard(id: CardId): Card = Card(this, id)
