@@ -18,6 +18,8 @@ package com.ichi2.anki
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.IdRes
+import anki.search.SearchNode
+import anki.search.searchNode
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.Flag.Companion.queryDisplayNames
@@ -104,6 +106,42 @@ enum class Flag(
         val labels = FlagLabels.loadFromColConfig()
         labels.updateName(this, newName)
     }
+
+    /**
+     * Creates a [SearchNode.Flag] for use in a [SearchNode].
+     *
+     * Prefer [toSearchNode] for simple [SearchNode] creation.
+     *
+     * ```kotlin
+     * val red = Flag.RED
+     * val node = searchNode { flag = red.toSearchValue() }
+     * ```
+     */
+    fun toSearchValue(): SearchNode.Flag =
+        when (this) {
+            // The protobuf value does NOT correspond to the value in the DB
+            // SearchNode.Flag.FLAG_RED == 2; Flag.RED.code == 1
+            NONE -> SearchNode.Flag.FLAG_NONE
+            RED -> SearchNode.Flag.FLAG_RED
+            ORANGE -> SearchNode.Flag.FLAG_ORANGE
+            GREEN -> SearchNode.Flag.FLAG_GREEN
+            BLUE -> SearchNode.Flag.FLAG_BLUE
+            PINK -> SearchNode.Flag.FLAG_PINK
+            TURQUOISE -> SearchNode.Flag.FLAG_TURQUOISE
+            PURPLE -> SearchNode.Flag.FLAG_PURPLE
+        }
+
+    /**
+     * Creates a [SearchNode] for building a search string.
+     *
+     * Use [toSearchValue] when generating a complex `SearchNode`
+     *
+     * ```kotlin
+     * val searchNode = Flag.RED.toSearchNode()
+     * val searchString = col.buildSearchString(listOf(searchNode))
+     * ```
+     */
+    fun toSearchNode(): SearchNode = searchNode { flag = toSearchValue() }
 
     companion object {
         fun fromCode(code: Int) = Flag.entries.first { it.code == code }
