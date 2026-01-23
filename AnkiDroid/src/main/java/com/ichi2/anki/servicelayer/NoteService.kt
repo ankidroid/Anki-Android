@@ -27,6 +27,7 @@ import com.ichi2.anki.libanki.Note
 import com.ichi2.anki.libanki.NoteTypeId
 import com.ichi2.anki.libanki.NotetypeJson
 import com.ichi2.anki.libanki.QueueType
+import com.ichi2.anki.libanki.exception.MediaSizeLimitExceededException
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote
 import com.ichi2.anki.multimediacard.fields.AudioRecordingField
 import com.ichi2.anki.multimediacard.fields.EFieldType
@@ -36,6 +37,7 @@ import com.ichi2.anki.multimediacard.fields.MediaClipField
 import com.ichi2.anki.multimediacard.fields.TextField
 import com.ichi2.anki.multimediacard.impl.MultimediaEditableNote
 import com.ichi2.anki.observability.undoableOp
+import net.ankiweb.rsdroid.Backend
 import org.json.JSONException
 import timber.log.Timber
 import java.io.File
@@ -128,7 +130,18 @@ object NoteService {
     fun importMediaToDirectory(
         col: Collection,
         field: IField,
+        skipSizeCheck: Boolean = false,
     ) {
+        val file = field.mediaFile
+
+        if (!skipSizeCheck && (file?.length() ?: 0L) > Backend.MAX_INDIVIDUAL_MEDIA_FILE_SIZE) {
+            throw MediaSizeLimitExceededException(
+                file?.name ?: "No Name",
+                file?.length() ?: 0L,
+                Backend.MAX_INDIVIDUAL_MEDIA_FILE_SIZE,
+            )
+        }
+
         val inFile =
             when (field.type) {
                 EFieldType.AUDIO_RECORDING, EFieldType.MEDIA_CLIP, EFieldType.IMAGE -> field.mediaFile
