@@ -77,14 +77,6 @@ open class Media(
     fun addFile(file: File): String {
         // fail if non-existing or empty
         if (file.length() == 0L) throw EmptyMediaException()
-
-        if (file.length() > Backend.MAX_INDIVIDUAL_MEDIA_FILE_SIZE) {
-            throw MediaSizeLimitExceededException(
-                file.name,
-                file.length(),
-                Backend.MAX_INDIVIDUAL_MEDIA_FILE_SIZE,
-            )
-        }
         return writeData(file.name, file.readBytes().toByteString())
     }
 

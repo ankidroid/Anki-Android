@@ -2163,20 +2163,22 @@ class NoteEditorFragment :
         field: IField,
         fieldEditText: FieldEditText,
     ) {
-        val sizeLimitInMB = Backend.MAX_INDIVIDUAL_MEDIA_FILE_SIZE / (1024 * 1024)
+        val limitStr =
+            android.text.format.Formatter
+                .formatShortFileSize(requireContext(), Backend.MAX_INDIVIDUAL_MEDIA_FILE_SIZE)
         val fileSizeStr =
             android.text.format.Formatter
                 .formatShortFileSize(requireContext(), fileSize)
 
-        MaterialAlertDialogBuilder(requireContext())
-            .setTitle(R.string.media_file_size_warning_title)
-            .setMessage(getString(R.string.media_file_size_warning_message, fileName, fileSizeStr, "$sizeLimitInMB MB"))
-            .setPositiveButton(R.string.media_file_size_add_anyway) { _, _ ->
-                // USER CONFIRMED: Run the original logic but skip the check
+        MaterialAlertDialogBuilder(requireContext()).show {
+            title(R.string.media_file_size_warning_title)
+            message(text = getString(R.string.media_file_size_warning_message, fileName, fileSizeStr, limitStr))
+            positiveButton(R.string.media_file_size_add_anyway) {
                 lifecycleScope.launch {
                     try {
                         withCol {
-                            NoteService.importMediaToDirectory(this, field)
+                            // Pass 'true' to the new skipSizeCheck parameter
+                            NoteService.importMediaToDirectory(this, field, skipSizeCheck = true)
                         }
 
                         val formattedValue = field.formattedValue
@@ -2191,8 +2193,9 @@ class NoteEditorFragment :
                         showSnackbar(R.string.something_wrong)
                     }
                 }
-            }.setNegativeButton(R.string.dialog_cancel, null)
-            .show()
+            }
+            negativeButton(R.string.dialog_cancel)
+        }
     }
 
     /**
