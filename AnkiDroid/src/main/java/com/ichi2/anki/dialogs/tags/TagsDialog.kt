@@ -143,6 +143,7 @@ class TagsDialog : AnalyticsDialogFragment {
         noteIds: List<NoteId> = emptyList(),
         checkedTags: ArrayList<String> = arrayListOf(),
     ): TagsDialog {
+        // TODO: checkedTags is unbounded and could exceed the bundle size
         val file = IdsFile(context.cacheDir, noteIds)
         arguments = this.arguments ?: bundleOf(
             ARG_TAGS_FILE to file,
