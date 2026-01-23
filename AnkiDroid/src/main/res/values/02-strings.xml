@@ -215,7 +215,7 @@
     <string name="white_board_eraser_disabled">Eraser mode deactivated</string>
 
     <string name="media_file_size_warning_title">Large media File</string>
-    <string name="media_file_size_warning_message">This file (%1$s, %2$s) exceeds AnkiWeb\'s 100MB limit and cannot be synced. Add anyway?</string>
+    <string name="media_file_size_warning_message">This file (%1$s, %2$s) exceeds AnkiWeb\'s (%3$s) limit and cannot be synced. Add anyway?</string>
     <string name="media_file_size_add_anyway">Add anyway</string>
 
     <!-- Whiteboard save image message in the Study Screen -->
