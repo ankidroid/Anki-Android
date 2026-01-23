@@ -48,8 +48,6 @@ import timber.log.Timber
 /**
  * Allows a user to select and reorder the visible columns for the [CardBrowser]
  *
- * As with AnkiMobile, a user may select up to 6 columns to display.
- *
  * A user may drag columns between 2 [sections][ColumnUsage]: 'Active' and 'Available'
  * A user may use the + or - buttons to quickly move an item between sections
  *
