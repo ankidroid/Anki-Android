@@ -191,6 +191,7 @@ import com.ichi2.utils.title
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import net.ankiweb.rsdroid.Backend
 import org.json.JSONArray
 import timber.log.Timber
 import java.io.File
@@ -2162,13 +2163,14 @@ class NoteEditorFragment :
         field: IField,
         fieldEditText: FieldEditText,
     ) {
+        val sizeLimitInMB = Backend.MAX_INDIVIDUAL_MEDIA_FILE_SIZE / (1024 * 1024)
         val fileSizeStr =
             android.text.format.Formatter
                 .formatShortFileSize(requireContext(), fileSize)
 
         MaterialAlertDialogBuilder(requireContext())
             .setTitle(R.string.media_file_size_warning_title)
-            .setMessage(getString(R.string.media_file_size_warning_message, fileName, fileSizeStr))
+            .setMessage(getString(R.string.media_file_size_warning_message, fileName, fileSizeStr, "$sizeLimitInMB MB"))
             .setPositiveButton(R.string.media_file_size_add_anyway) { _, _ ->
                 // USER CONFIRMED: Run the original logic but skip the check
                 lifecycleScope.launch {
