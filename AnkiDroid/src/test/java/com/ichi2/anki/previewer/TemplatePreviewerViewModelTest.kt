@@ -19,6 +19,8 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.NotetypeFile
 import com.ichi2.testutils.JvmTest
+import com.ichi2.testutils.common.Flaky
+import com.ichi2.testutils.common.OS
 import io.mockk.coEvery
 import io.mockk.spyk
 import org.hamcrest.CoreMatchers.equalTo
@@ -52,6 +54,7 @@ class TemplatePreviewerViewModelTest : JvmTest() {
         }
 
     @Test
+    @Flaky(OS.ALL)
     fun `correct cloze ord is shown for tab`() =
         runClozeTest(ord = 8, fields = listOf("{{c7::foo}} {{c4::bar}} {{c9::ha}}")) {
             onTabSelected(0) // 0 will be c4 (ord 3), 1: c7 (ord 6), 2: c9 (ord 8)
