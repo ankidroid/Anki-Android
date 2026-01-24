@@ -19,6 +19,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
+import android.view.Menu
 import android.widget.Spinner
 import android.widget.SpinnerAdapter
 import android.widget.TextView
@@ -26,6 +27,8 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.edit
 import androidx.core.os.bundleOf
 import androidx.core.view.children
+import androidx.core.view.get
+import androidx.core.view.size
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.test.espresso.Espresso.onData
@@ -91,6 +94,7 @@ import com.ichi2.anki.scheduling.ForgetCardsDialog
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService.PreferenceUpgrade.UpgradeBrowserColumns.Companion.LEGACY_COLUMN1_KEYS
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService.PreferenceUpgrade.UpgradeBrowserColumns.Companion.LEGACY_COLUMN2_KEYS
+import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.ui.internationalization.toSentenceCase
 import com.ichi2.anki.utils.ext.getCurrentDialogFragment
 import com.ichi2.anki.utils.ext.showDialogFragment
@@ -98,6 +102,7 @@ import com.ichi2.testutils.IntentAssert
 import com.ichi2.testutils.common.Flaky
 import com.ichi2.testutils.common.OS
 import com.ichi2.testutils.getSharedPrefs
+import com.ichi2.testutils.withSplitPaneUiAsync
 import io.mockk.every
 import io.mockk.mockkObject
 import io.mockk.mockkStatic
@@ -117,6 +122,7 @@ import org.hamcrest.Matchers.nullValue
 import org.hamcrest.Matchers.startsWith
 import org.junit.Assume.assumeThat
 import org.junit.Assume.assumeTrue
+import org.junit.Before
 import org.junit.Ignore
 import org.junit.Test
 import org.junit.jupiter.api.assertDoesNotThrow
@@ -137,6 +143,12 @@ import kotlin.test.fail
 
 @RunWith(AndroidJUnit4::class)
 class CardBrowserTest : RobolectricTest() {
+    @Before
+    override fun setUp() {
+        super.setUp()
+        setCardBrowserFragmented(false)
+    }
+
     @Test
     fun browserIsNotInitiallyInMultiSelectModeWithNoCards() =
         runTest {
@@ -1512,6 +1524,172 @@ class CardBrowserTest : RobolectricTest() {
         }
     }
 
+    @Test
+    fun `options menu test - standard`() =
+        withOptionsMenu(
+            OptionsMenuType(
+                fragmented = false,
+                mutliselect = false,
+            ),
+        ) {
+            val expectedMenuItems =
+                listOf(
+                    R.id.action_add_note_from_card_browser to true,
+                    R.id.action_search to true,
+                    R.id.action_save_search to false,
+                    R.id.action_list_my_searches to false,
+                    R.id.action_sort_by_size to true,
+                    R.id.action_show_marked to true,
+                    R.id.action_show_suspended to true,
+                    R.id.action_search_by_tag to true,
+                    R.id.action_search_by_flag to true,
+                    // true due to 'add note'
+                    R.id.action_undo to true,
+                    R.id.action_preview to true,
+                    R.id.action_select_all to true,
+                    R.id.action_open_options to true,
+                    R.id.action_create_filtered_deck to true,
+                    R.id.action_find_replace to false,
+                )
+
+            assertMenusEqual(expectedMenuItems, menu)
+        }
+
+    @Test
+    fun `options menu test - mutliselect`() =
+        withOptionsMenu(
+            OptionsMenuType(
+                fragmented = false,
+                mutliselect = true,
+            ),
+        ) {
+            val expectedMenuItems =
+                listOf(
+                    R.id.action_edit_note to true,
+                    R.id.action_delete_card to true,
+                    R.id.action_view_card_info to true,
+                    R.id.action_flag to true,
+                    R.id.action_mark_card to true,
+                    R.id.action_suspend_card to true,
+                    R.id.action_toggle_bury to true,
+                    R.id.action_change_note_type to true,
+                    R.id.action_change_deck to true,
+                    R.id.action_reposition_cards to true,
+                    R.id.action_reschedule_cards to true,
+                    R.id.action_edit_tags to true,
+                    R.id.action_grade_now to true,
+                    R.id.action_reset_cards_progress to true,
+                    R.id.action_preview to true,
+                    R.id.action_export_selected to true,
+                    R.id.action_undo to true,
+                    R.id.action_find_replace to false,
+                )
+
+            assertMenusEqual(expectedMenuItems, menu)
+        }
+
+    @Test
+    fun `options menu test - fragmented`() =
+        withOptionsMenu(
+            OptionsMenuType(
+                fragmented = true,
+                mutliselect = false,
+            ),
+        ) {
+            val expectedMenuItems =
+                listOf(
+                    R.id.action_add_note_from_card_browser to true,
+                    R.id.action_search to true,
+                    R.id.action_save_search to false,
+                    R.id.action_list_my_searches to false,
+                    R.id.action_sort_by_size to true,
+                    R.id.action_show_marked to true,
+                    R.id.action_show_suspended to true,
+                    R.id.action_search_by_tag to true,
+                    R.id.action_search_by_flag to true,
+                    // true due to 'add note'
+                    R.id.action_undo to true,
+                    R.id.action_preview to true,
+                    R.id.action_select_all to true,
+                    R.id.action_open_options to true,
+                    R.id.action_create_filtered_deck to true,
+                    R.id.action_find_replace to false,
+                    // Note Editor
+                    R.id.action_save to true,
+                    R.id.action_preview to true,
+                    R.id.action_add_note_from_note_editor to false,
+                    R.id.action_copy_note to true,
+                    R.id.action_font_size to true,
+                    R.id.action_capitalize to true,
+                    R.id.action_show_toolbar to true,
+                    R.id.action_scroll_toolbar to true,
+                )
+
+            assertMenusEqual(expectedMenuItems, menu)
+        }
+
+    @Test
+    fun `options menu test - fragmented mutliselect`() =
+        withOptionsMenu(
+            OptionsMenuType(
+                fragmented = true,
+                mutliselect = true,
+            ),
+        ) {
+            val expectedMenuItems =
+                listOf(
+                    // should never be enabled, the fragment handles the editing
+                    R.id.action_edit_note to false,
+                    R.id.action_delete_card to true,
+                    R.id.action_view_card_info to true,
+                    R.id.action_flag to true,
+                    R.id.action_mark_card to true,
+                    R.id.action_suspend_card to true,
+                    R.id.action_toggle_bury to true,
+                    R.id.action_change_note_type to true,
+                    R.id.action_change_deck to true,
+                    R.id.action_reposition_cards to true,
+                    R.id.action_reschedule_cards to true,
+                    R.id.action_edit_tags to true,
+                    R.id.action_grade_now to true,
+                    R.id.action_reset_cards_progress to true,
+                    R.id.action_preview to true,
+                    R.id.action_export_selected to true,
+                    R.id.action_undo to true,
+                    R.id.action_find_replace to false,
+                    // Note Editor
+                    R.id.action_save to true,
+                    R.id.action_preview to true,
+                    R.id.action_add_note_from_note_editor to false,
+                    R.id.action_copy_note to true,
+                    R.id.action_font_size to true,
+                    R.id.action_capitalize to true,
+                    R.id.action_show_toolbar to true,
+                    R.id.action_scroll_toolbar to true,
+                )
+
+            assertMenusEqual(expectedMenuItems, menu)
+        }
+
+    fun assertMenusEqual(
+        expectedMenuItems: List<Pair<Int, Boolean>>,
+        menu: Menu,
+    ) {
+        val resources = targetContext.resources
+        for ((index, expectedData) in expectedMenuItems.withIndex()) {
+            val (expectedId, expectedIsVisible) = expectedData
+            val item = assertNotNull(menu[index], "[$index]")
+            val name = resources.getResourceName(item.itemId)
+
+            val expectedResourceName = resources.getResourceName(expectedId)
+            assertEquals(expectedResourceName, name, "[$index]: resource name")
+            assertEquals(expectedId, item.itemId, "$name.itemId")
+            assertEquals(expectedIsVisible, item.isVisible, "$name.isVisible")
+        }
+
+        assertEquals(expectedMenuItems.size, menu.size, "menu size")
+    }
+
     /**
      * 3 notetypes available(named A, B and C) each with two fields.
      * Fields names follow the pattern: "${NotetypeName}field${0/1}" (ex: "Afield1").
@@ -1589,13 +1767,43 @@ class CardBrowserTest : RobolectricTest() {
     @Suppress("SameParameterValue")
     private fun withBrowser(
         noteCount: Int = 0,
+        fragmented: Boolean = false,
         block: suspend CardBrowser.() -> Unit,
     ) = runTest {
-        getBrowserWithNotes(noteCount).apply {
-            block(this)
+        suspend fun run(block: suspend () -> Unit) {
+            if (fragmented) withSplitPaneUiAsync { block() } else block()
+        }
+
+        setCardBrowserFragmented(fragmented)
+
+        run {
+            getBrowserWithNotes(noteCount).apply {
+                if (fragmented) {
+                    viewModel.launchSearchForCards("deck:\"Default\"", forceRefresh = true)
+                    advanceRobolectricLooper()
+                    assertNotNull(fragment, message = "note editor fragment")
+                }
+
+                block(this)
+            }
         }
     }
+
+    data class OptionsMenuType(
+        val fragmented: Boolean,
+        val mutliselect: Boolean,
+    )
+
+    fun withOptionsMenu(
+        type: OptionsMenuType,
+        block: suspend CardBrowser.() -> Unit,
+    ) = withBrowser(noteCount = 1, fragmented = type.fragmented) {
+        if (type.mutliselect) selectAll()
+        block()
+    }
 }
+
+fun setCardBrowserFragmented(value: Boolean) = Prefs.putBoolean(R.string.dev_card_browser_fragmented, value)
 
 private fun CardBrowser.rerenderAllCards() {
     cardBrowserFragment.cardsAdapter.notifyDataSetChanged()
@@ -1697,3 +1905,10 @@ suspend fun CardBrowser.searchCards(search: String? = null) {
 }
 
 fun CardBrowser.showFindAndReplaceDialog() = cardBrowserFragment.showFindAndReplaceDialog()
+
+suspend fun CardBrowser.selectAll() {
+    viewModel.selectAll()?.join()
+    advanceRobolectricLooper()
+}
+
+val CardBrowser.menu get() = shadowOf(this).optionsMenu!!
