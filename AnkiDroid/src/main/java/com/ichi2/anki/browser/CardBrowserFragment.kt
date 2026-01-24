@@ -23,15 +23,19 @@ import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.view.SubMenu
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.annotation.LayoutRes
 import androidx.annotation.VisibleForTesting
+import androidx.appcompat.widget.ThemeUtils
 import androidx.core.content.ContextCompat
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -51,6 +55,8 @@ import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.AnkiActivityProvider
 import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.CollectionManager.TR
+import com.ichi2.anki.CollectionManager.getColUnsafe
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.FilteredDeckOptions
 import com.ichi2.anki.Flag
 import com.ichi2.anki.R
@@ -84,6 +90,8 @@ import com.ichi2.anki.dialogs.tags.TagsDialogListener
 import com.ichi2.anki.export.ExportDialogFragment
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.DeckId
+import com.ichi2.anki.libanki.undoAvailable
+import com.ichi2.anki.libanki.undoLabel
 import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.anki.model.SortType
@@ -101,8 +109,10 @@ import com.ichi2.anki.utils.ext.ifNotZero
 import com.ichi2.anki.utils.ext.setFragmentResultListener
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.utils.ext.visibleItemPositions
+import com.ichi2.anki.utils.hideKeyboard
 import com.ichi2.anki.utils.showDialogFragmentImpl
 import com.ichi2.anki.withProgress
+import com.ichi2.ui.CardBrowserSearchView
 import com.ichi2.utils.HandlerUtils
 import com.ichi2.utils.TagsUtil.getUpdatedTags
 import kotlinx.coroutines.Job
@@ -159,6 +169,12 @@ class CardBrowserFragment :
     private var searchBar: SearchBar? = null
     private var searchView: SearchView? = null
     private var deckChip: Chip? = null
+
+    // region legacy menu handling
+    var mySearchesItem: MenuItem? = null
+    var searchItem: MenuItem? = null
+    var legacySearchView: CardBrowserSearchView? = null
+    // endregion
 
     @get:LayoutRes
     private val layout: Int
@@ -240,6 +256,164 @@ class CardBrowserFragment :
 
     private fun setupMenu() {
         val menuHost: MenuHost = requireActivity()
+
+        fun MenuItem.setupUndo() {
+            isVisible = getColUnsafe().undoAvailable()
+            title = getColUnsafe().undoLabel()
+        }
+
+        fun SubMenu.setupFlags() {
+            val flagGroupId = 1001
+            val subMenu = this
+            lifecycleScope.launch {
+                for ((flag, displayName) in Flag.queryDisplayNames()) {
+                    val item =
+                        subMenu
+                            .add(flagGroupId, flag.code, Menu.NONE, displayName)
+                            .setIcon(flag.drawableRes)
+                    if (flag == Flag.NONE) {
+                        val color = ThemeUtils.getThemeAttrColor(requireContext(), android.R.attr.colorControlNormal)
+                        item.icon?.mutate()?.setTint(color)
+                    }
+                }
+            }
+        }
+
+        // add a MenuProvider for 'no selection'
+        menuHost.addMenuProvider(
+            object : MenuProvider {
+                // fix lint issues due to line length
+                val vm get() = activityViewModel
+
+                fun isKeyboardVisible(view: View?): Boolean =
+                    view?.let {
+                        ViewCompat.getRootWindowInsets(it)?.isVisible(WindowInsetsCompat.Type.ime())
+                    } ?: false
+
+                override fun onCreateMenu(
+                    menu: Menu,
+                    menuInflater: MenuInflater,
+                ) {
+                    if (vm.isInMultiSelectMode) return
+                    Timber.d("onCreateMenu()")
+                    menuInflater.inflate(R.menu.card_browser, menu)
+                    menu.findItem(R.id.action_search_by_flag).subMenu?.setupFlags()
+                    searchItem = menu.findItem(R.id.action_search)
+                    searchItem!!.setOnActionExpandListener(
+                        object : MenuItem.OnActionExpandListener {
+                            override fun onMenuItemActionExpand(item: MenuItem): Boolean {
+                                vm.setSearchQueryExpanded(true)
+                                return true
+                            }
+
+                            override fun onMenuItemActionCollapse(item: MenuItem): Boolean {
+                                if (item.actionView == searchView) {
+                                    if (isKeyboardVisible(searchView)) {
+                                        Timber.d("keyboard is visible, hiding it")
+                                        hideKeyboard()
+                                        return false
+                                    }
+                                }
+                                vm.setSearchQueryExpanded(false)
+                                // SearchView doesn't support empty queries so we always reset the search when collapsing
+                                legacySearchView!!.setQuery("", false)
+                                vm.launchSearchForCards("")
+                                return true
+                            }
+                        },
+                    )
+                    legacySearchView =
+                        (searchItem!!.actionView as CardBrowserSearchView).apply {
+                            queryHint = resources.getString(R.string.card_browser_search_hint)
+                            setMaxWidth(Integer.MAX_VALUE)
+                            setOnQueryTextListener(
+                                object : androidx.appcompat.widget.SearchView.OnQueryTextListener {
+                                    override fun onQueryTextChange(newText: String): Boolean {
+                                        if (this@apply.ignoreValueChange) {
+                                            return true
+                                        }
+                                        vm.updateQueryText(newText)
+                                        return true
+                                    }
+
+                                    override fun onQueryTextSubmit(query: String): Boolean {
+                                        vm.launchSearchForCards(query)
+                                        legacySearchView!!.clearFocus()
+                                        return true
+                                    }
+                                },
+                            )
+                        }
+                    // Fixes #6500 - keep the search consistent if coming back from note editor
+                    // Fixes #9010 - consistent search after drawer change calls invalidateOptionsMenu
+                    if (!vm.tempSearchQuery.isNullOrEmpty() || vm.searchTerms.isNotEmpty()) {
+                        searchItem!!.expandActionView() // This calls legacySearchView.setOnSearchClickListener
+                        val toUse = if (!vm.tempSearchQuery.isNullOrEmpty()) vm.tempSearchQuery else vm.searchTerms
+                        legacySearchView!!.setQuery(toUse!!, false)
+                    }
+                    legacySearchView!!.setOnSearchClickListener {
+                        // Provide SearchView with the previous search terms
+                        legacySearchView!!.setQuery(vm.searchTerms, false)
+                    }
+                }
+
+                override fun onPrepareMenu(menu: Menu) {
+                    if (vm.isInMultiSelectMode) return
+
+                    menu.findItem(R.id.action_create_filtered_deck).title = TR.qtMiscCreateFilteredDeck()
+                    // the searchview's query always starts empty.
+                    menu.findItem(R.id.action_save_search).isVisible = false
+
+                    mySearchesItem = menu.findItem(R.id.action_list_my_searches)
+                    val savedFiltersObj = runBlocking { withCol { vm.savedSearchesUnsafe(this) } }
+                    mySearchesItem!!.isVisible = savedFiltersObj.isNotEmpty()
+
+                    menu.findItem(R.id.action_select_all)?.isVisible =
+                        vm.rowCount > 0 && vm.selectedRowCount() < vm.rowCount
+
+                    menu.findItem(R.id.action_undo).setupUndo()
+                }
+
+                @NeedsTest("filter-marked query needs testing")
+                @NeedsTest("filter-suspended query needs testing")
+                override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                    if (vm.isInMultiSelectMode) return false
+
+                    prepareForUndoableOperation()
+
+                    Flag.entries.find { it.ordinal == menuItem.itemId }?.let { flag ->
+                        launchCatchingTask { vm.setFlagFilter(flag) }
+                        return true
+                    }
+
+                    when (menuItem.itemId) {
+                        R.id.action_add_note_from_card_browser -> {
+                            requireCardBrowserActivity().addNoteFromCardBrowser()
+                            return true
+                        }
+                        R.id.action_save_search -> {
+                            vm.saveCurrentSearch()
+                            return true
+                        }
+                        R.id.action_list_my_searches -> {
+                            requireCardBrowserActivity().showSavedSearches()
+                            return true
+                        }
+                        R.id.action_undo -> {
+                            Timber.w("CardBrowser:: Undo pressed")
+                            requireCardBrowserActivity().onUndo()
+                            return true
+                        }
+                        R.id.action_preview_many -> {
+                            requireCardBrowserActivity().onPreview()
+                            return true
+                        }
+                    }
+
+                    return false
+                }
+            },
+        )
 
         menuHost.addMenuProvider(
             object : MenuProvider {
@@ -459,6 +633,10 @@ class CardBrowserFragment :
             deckChip?.text = deck?.getFullDisplayName(requireContext())
         }
 
+        fun onCanSaveChanged(canSave: Boolean) {
+            requireActivity().invalidateOptionsMenu()
+        }
+
         activityViewModel.flowOfIsTruncated.launchCollectionInLifecycleScope(::onIsTruncatedChanged)
         activityViewModel.flowOfSelectedRows.launchCollectionInLifecycleScope(::onSelectedRowsChanged)
         activityViewModel.flowOfActiveColumns.launchCollectionInLifecycleScope(::onColumnsChanged)
@@ -471,6 +649,7 @@ class CardBrowserFragment :
         viewModel.flowOfSearchForDecks.launchCollectionInLifecycleScope(::onSearchForDecks)
         activityViewModel.flowOfDeckSelection.launchCollectionInLifecycleScope(::onDeckChanged)
         activityViewModel.flowOfScrollRequest.launchCollectionInLifecycleScope(::autoScrollTo)
+        activityViewModel.flowOfCanSearch.launchCollectionInLifecycleScope(::onCanSaveChanged)
     }
 
     private fun setupFragmentResultListeners() {

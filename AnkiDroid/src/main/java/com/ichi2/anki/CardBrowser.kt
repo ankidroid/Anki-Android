@@ -37,11 +37,8 @@ import androidx.annotation.CheckResult
 import androidx.annotation.LayoutRes
 import androidx.annotation.MainThread
 import androidx.annotation.VisibleForTesting
-import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.ThemeUtils
 import androidx.core.view.MenuProvider
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.commit
 import androidx.lifecycle.ViewModelProvider
@@ -152,12 +149,12 @@ open class CardBrowser :
 
     private var actionBarTitle: TextView? = null
 
-    private var searchView: CardBrowserSearchView? = null
+    private val searchView: CardBrowserSearchView?
+        get() = cardBrowserFragment.legacySearchView
 
     lateinit var tagsDialogFactory: TagsDialogFactory
-    private var searchItem: MenuItem? = null
-    private var saveSearchItem: MenuItem? = null
-    private var mySearchesItem: MenuItem? = null
+    private val searchItem: MenuItem? get() = cardBrowserFragment.searchItem
+    private val mySearchesItem: MenuItem? get() = cardBrowserFragment.mySearchesItem
 
     // card that was clicked (not marked)
     override var currentCardId
@@ -443,141 +440,6 @@ open class CardBrowser :
             },
         )
 
-        // add a MenuProvider for 'no selection'
-        addMenuProvider(
-            object : MenuProvider {
-                override fun onCreateMenu(
-                    menu: Menu,
-                    menuInflater: MenuInflater,
-                ) {
-                    if (viewModel.isInMultiSelectMode) return
-                    Timber.d("onCreateMenu()")
-                    menuInflater.inflate(R.menu.card_browser, menu)
-                    menu.findItem(R.id.action_search_by_flag).subMenu?.setupFlags()
-                    searchItem = menu.findItem(R.id.action_search)
-                    searchItem!!.setOnActionExpandListener(
-                        object : MenuItem.OnActionExpandListener {
-                            override fun onMenuItemActionExpand(item: MenuItem): Boolean {
-                                viewModel.setSearchQueryExpanded(true)
-                                return true
-                            }
-
-                            override fun onMenuItemActionCollapse(item: MenuItem): Boolean {
-                                if (item.actionView == searchView) {
-                                    if (isKeyboardVisible(searchView)) {
-                                        Timber.d("keyboard is visible, hiding it")
-                                        hideKeyboard()
-                                        return false
-                                    }
-                                }
-                                viewModel.setSearchQueryExpanded(false)
-                                // SearchView doesn't support empty queries so we always reset the search when collapsing
-                                searchView!!.setQuery("", false)
-                                viewModel.launchSearchForCards("")
-                                return true
-                            }
-                        },
-                    )
-                    searchView =
-                        (searchItem!!.actionView as CardBrowserSearchView).apply {
-                            queryHint = resources.getString(R.string.card_browser_search_hint)
-                            setMaxWidth(Integer.MAX_VALUE)
-                            setOnQueryTextListener(
-                                object : SearchView.OnQueryTextListener {
-                                    override fun onQueryTextChange(newText: String): Boolean {
-                                        if (this@apply.ignoreValueChange) {
-                                            return true
-                                        }
-                                        viewModel.updateQueryText(newText)
-                                        return true
-                                    }
-
-                                    override fun onQueryTextSubmit(query: String): Boolean {
-                                        viewModel.launchSearchForCards(query)
-                                        searchView!!.clearFocus()
-                                        return true
-                                    }
-                                },
-                            )
-                        }
-                    // Fixes #6500 - keep the search consistent if coming back from note editor
-                    // Fixes #9010 - consistent search after drawer change calls invalidateOptionsMenu
-                    if (!viewModel.tempSearchQuery.isNullOrEmpty() || viewModel.searchTerms.isNotEmpty()) {
-                        searchItem!!.expandActionView() // This calls mSearchView.setOnSearchClickListener
-                        val toUse = if (!viewModel.tempSearchQuery.isNullOrEmpty()) viewModel.tempSearchQuery else viewModel.searchTerms
-                        searchView!!.setQuery(toUse!!, false)
-                    }
-                    searchView!!.setOnSearchClickListener {
-                        // Provide SearchView with the previous search terms
-                        searchView!!.setQuery(viewModel.searchTerms, false)
-                    }
-                }
-
-                override fun onPrepareMenu(menu: Menu) {
-                    if (viewModel.isInMultiSelectMode) return
-
-                    menu.findItem(R.id.action_create_filtered_deck).title = TR.qtMiscCreateFilteredDeck()
-                    saveSearchItem = menu.findItem(R.id.action_save_search)
-                    saveSearchItem?.isVisible = false // the searchview's query always starts empty.
-
-                    mySearchesItem = menu.findItem(R.id.action_list_my_searches)
-                    val savedFiltersObj = viewModel.savedSearchesUnsafe(getColUnsafe)
-                    mySearchesItem!!.isVisible = savedFiltersObj.isNotEmpty()
-
-                    menu.findItem(R.id.action_select_all)?.isVisible =
-                        viewModel.rowCount > 0 && viewModel.selectedRowCount() < viewModel.rowCount
-
-                    menu.findItem(R.id.action_undo).setupUndo()
-                }
-
-                @NeedsTest("filter-marked query needs testing")
-                @NeedsTest("filter-suspended query needs testing")
-                override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                    if (viewModel.isInMultiSelectMode) return false
-
-                    cardBrowserFragment.prepareForUndoableOperation()
-
-                    Flag.entries.find { it.ordinal == menuItem.itemId }?.let { flag ->
-                        launchCatchingTask { viewModel.setFlagFilter(flag) }
-                        return true
-                    }
-
-                    when (menuItem.itemId) {
-                        R.id.action_add_note_from_card_browser -> {
-                            addNoteFromCardBrowser()
-                            return true
-                        }
-                        R.id.action_save_search -> {
-                            viewModel.saveCurrentSearch()
-                            return true
-                        }
-                        R.id.action_list_my_searches -> {
-                            showSavedSearches()
-                            return true
-                        }
-                        R.id.action_undo -> {
-                            Timber.w("CardBrowser:: Undo pressed")
-                            onUndo()
-                            return true
-                        }
-                        R.id.action_preview_many -> {
-                            onPreview()
-                            return true
-                        }
-                    }
-
-                    // TODO: make better use of MenuProvider
-                    if (fragment?.onMenuItemSelected(menuItem) == true) {
-                        return true
-                    }
-                    if (fragment == null) {
-                        Timber.w("Unexpected onOptionsItemSelected call: %s", menuItem.itemId)
-                    }
-                    return false
-                }
-            },
-        )
-
         // add a MenuProvider for multi-select
         addMenuProvider(
             object : MenuProvider {
@@ -830,10 +692,6 @@ open class CardBrowser :
             updateAppBarInfo(deckId)
         }
 
-        fun onCanSaveChanged(canSave: Boolean) {
-            saveSearchItem?.isVisible = canSave
-        }
-
         fun onMultiSelectModeChanged(modeChange: ChangeMultiSelectMode) {
             if (modeChange.resultedInMultiSelect) {
                 // Turn on Multi-Select Mode so that the user can select multiple cards at once.
@@ -904,18 +762,12 @@ open class CardBrowser :
         viewModel.flowOfSelectedRows.launchCollectionInLifecycleScope(::onSelectedRowsChanged)
         viewModel.flowOfFilterQuery.launchCollectionInLifecycleScope(::onFilterQueryChanged)
         viewModel.flowOfDeckId.launchCollectionInLifecycleScope(::onDeckIdChanged)
-        viewModel.flowOfCanSearch.launchCollectionInLifecycleScope(::onCanSaveChanged)
         viewModel.flowOfMultiSelectModeChanged.launchCollectionInLifecycleScope(::onMultiSelectModeChanged)
         viewModel.flowOfSearchState.launchCollectionInLifecycleScope(::searchStateChanged)
         viewModel.cardSelectionEventFlow.launchCollectionInLifecycleScope(::onSelectedCardUpdated)
         viewModel.flowOfSaveSearchNamePrompt.launchCollectionInLifecycleScope(::onSaveSearchNamePrompt)
         viewModel.flowOfChangeNoteType.launchCollectionInLifecycleScope(::onChangeNoteType)
     }
-
-    fun isKeyboardVisible(view: View?): Boolean =
-        view?.let {
-            ViewCompat.getRootWindowInsets(it)?.isVisible(WindowInsetsCompat.Type.ime())
-        } ?: false
 
     private fun hideKeyboard() {
         Timber.d("hideKeyboard()")
@@ -1130,7 +982,7 @@ open class CardBrowser :
         }
     }
 
-    private fun showSavedSearches() {
+    fun showSavedSearches() {
         launchCatchingTask {
             val dialog =
                 SavedBrowserSearchesDialogFragment.newInstance(
@@ -1162,7 +1014,7 @@ open class CardBrowser :
         }
     }
 
-    private fun onPreview() {
+    fun onPreview() {
         launchCatchingTask {
             val intentData = viewModel.queryPreviewIntentData()
             onPreviewCardsActivityResult.launch(getPreviewIntent(intentData.currentIndex, intentData.idsFile))
@@ -1174,7 +1026,7 @@ open class CardBrowser :
         idsFile: IdsFile,
     ): Intent = PreviewerDestination(index, idsFile).toIntent(this)
 
-    private fun addNoteFromCardBrowser() {
+    fun addNoteFromCardBrowser() {
         onAddNoteActivityResult.launch(addNoteLauncher.toIntent(this))
     }
 
