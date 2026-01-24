@@ -49,7 +49,7 @@ class BundleUtilsTest {
 
     @Test
     fun test_GetNullableLong_Found_ReturnIt() {
-        val expected = Random.Default.nextLong()
+        val expected = Random.nextLong()
         val b = mock(Bundle::class.java)
 
         whenever(b.containsKey(anyString())).thenReturn(true)
@@ -76,7 +76,7 @@ class BundleUtilsTest {
 
     @Test
     fun test_RequireLong_Found_ReturnIt() {
-        val expected = Random.Default.nextLong()
+        val expected = Random.nextLong()
         val mockedBundle = mock(Bundle::class.java)
 
         whenever(mockedBundle.containsKey(anyString())).thenReturn(true)
