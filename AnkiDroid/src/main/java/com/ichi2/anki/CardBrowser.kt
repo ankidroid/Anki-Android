@@ -98,6 +98,7 @@ import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.ResizablePaneManager
 import com.ichi2.anki.ui.internationalization.toSentenceCase
+import com.ichi2.anki.utils.ext.addPrepareMenuProvider
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.ui.CardBrowserSearchView
 import com.ichi2.utils.AndroidUiUtils.hideKeyboard
@@ -155,7 +156,6 @@ open class CardBrowser :
     private var searchItem: MenuItem? = null
     private var saveSearchItem: MenuItem? = null
     private var mySearchesItem: MenuItem? = null
-    private var previewItem: MenuItem? = null
 
     // card that was clicked (not marked)
     override var currentCardId
@@ -399,6 +399,27 @@ open class CardBrowser :
                 }
                 else -> error("Unexpected saved search action: $type")
             }
+        }
+        setupMenuProvider()
+    }
+
+    fun setupMenuProvider() {
+        // Update the menu for a fragmented state
+        addPrepareMenuProvider { menu ->
+            if (!fragmented) return@addPrepareMenuProvider
+
+            /** Return the menu item with a particular identifier or `null` */
+            operator fun Menu.get(id: Int): MenuItem? = this.findItem(id)
+
+            // NoteEditorFragment: Remove save/preview note options if there are no notes
+            if (viewModel.rowCount == 0) {
+                menu[R.id.action_save]?.isVisible = false
+                menu[R.id.action_preview]?.isVisible = false
+            }
+
+            // TODO: https://github.com/ankidroid/Anki-Android/issues/20206
+            // This blocks a user from previewing all cards
+            menu[R.id.action_preview_many]?.isVisible = false
         }
     }
 
@@ -856,11 +877,6 @@ open class CardBrowser :
             showBackIcon()
             increaseHorizontalPaddingOfOverflowMenuIcons(menu)
         }
-        // Remove save note and preview note options if there are no notes
-        if (fragmented && viewModel.rowCount == 0) {
-            menu.removeItem(R.id.action_save)
-            menu.removeItem(R.id.action_preview)
-        }
         actionBarMenu?.findItem(R.id.action_undo)?.run {
             isVisible = getColUnsafe.undoAvailable()
             title = getColUnsafe.undoLabel()
@@ -878,9 +894,10 @@ open class CardBrowser :
             title = TR.browsingFindAndReplace().toSentenceCase(R.string.sentence_find_and_replace)
         }
 
-        previewItem = menu.findItem(R.id.action_preview_many)
+        menu.findItem(R.id.action_select_all)?.isVisible =
+            viewModel.rowCount > 0 && viewModel.selectedRowCount() < viewModel.rowCount
+
         onSelectionChanged()
-        refreshMenuItems()
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -924,13 +941,6 @@ open class CardBrowser :
         } else {
             super.onNavigationPressed()
         }
-    }
-
-    private fun refreshMenuItems() {
-        previewItem?.isVisible = !fragmented && viewModel.rowCount > 0
-        actionBarMenu?.findItem(R.id.action_select_all)?.isVisible =
-            viewModel.rowCount > 0 &&
-            viewModel.selectedRowCount() < viewModel.rowCount
     }
 
     private fun updateMultiselectMenu() {
@@ -1190,7 +1200,7 @@ open class CardBrowser :
                     setAction(R.string.card_browser_search_all_decks) { searchAllDecks() }
                 }
             }
-            refreshMenuItems()
+            invalidateOptionsMenu()
         }
     }
 
@@ -1200,7 +1210,7 @@ open class CardBrowser :
         Timber.d("updateList")
         updateAppBarInfo(viewModel.deckId)
         onSelectionChanged()
-        refreshMenuItems()
+        invalidateOptionsMenu()
     }
 
     @NeedsTest("select 1, check title, select 2, check title")
@@ -1253,7 +1263,6 @@ open class CardBrowser :
         // reload whole view
         forceRefreshSearch()
         viewModel.endMultiSelectMode(SingleSelectCause.Other)
-        refreshMenuItems()
         invalidateOptionsMenu() // maybe the availability of undo changed
     }
 
