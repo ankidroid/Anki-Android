@@ -516,8 +516,6 @@ open class CardBrowser :
                         viewModel.rowCount > 0 && viewModel.selectedRowCount() < viewModel.rowCount
 
                     menu.findItem(R.id.action_undo).setupUndo()
-
-                    onSelectionChanged()
                 }
 
                 @NeedsTest("filter-marked query needs testing")
@@ -600,7 +598,67 @@ open class CardBrowser :
 
                     menu.findItem(R.id.action_undo).setupUndo()
 
-                    onSelectionChanged()
+                    menu.findItem(R.id.action_flag).isVisible = viewModel.hasSelectedAnyRows()
+                    menu.findItem(R.id.action_suspend_card).apply {
+                        title = TR.browsingToggleSuspend().toSentenceCase(R.string.sentence_toggle_suspend)
+                        // TODO: I don't think this icon is necessary
+                        setIcon(R.drawable.ic_suspend)
+                        isVisible = viewModel.hasSelectedAnyRows()
+                    }
+                    menu.findItem(R.id.action_toggle_bury).apply {
+                        title = TR.browsingToggleBury().toSentenceCase(R.string.sentence_toggle_bury)
+                        isVisible = viewModel.hasSelectedAnyRows()
+                    }
+                    menu.findItem(R.id.action_mark_card).apply {
+                        title = TR.browsingToggleMark()
+                        setIcon(R.drawable.ic_star_border_white)
+                        isVisible = viewModel.hasSelectedAnyRows()
+                    }
+                    menu.findItem(R.id.action_change_deck).isVisible = viewModel.hasSelectedAnyRows()
+                    menu.findItem(R.id.action_reposition_cards).isVisible = viewModel.hasSelectedAnyRows()
+                    menu.findItem(R.id.action_grade_now).isVisible = viewModel.hasSelectedAnyRows()
+                    menu.findItem(R.id.action_reschedule_cards).isVisible = viewModel.hasSelectedAnyRows()
+                    menu.findItem(R.id.action_edit_tags).isVisible = viewModel.hasSelectedAnyRows()
+                    menu.findItem(R.id.action_reset_cards_progress).isVisible = viewModel.hasSelectedAnyRows()
+
+                    menu.findItem(R.id.action_export_selected).apply {
+                        this.title =
+                            if (viewModel.cardsOrNotes == CARDS) {
+                                resources.getQuantityString(
+                                    R.plurals.card_browser_export_cards,
+                                    viewModel.selectedRowCount(),
+                                )
+                            } else {
+                                resources.getQuantityString(
+                                    R.plurals.card_browser_export_notes,
+                                    viewModel.selectedRowCount(),
+                                )
+                            }
+                        isVisible = viewModel.hasSelectedAnyRows()
+                    }
+
+                    menu.findItem(R.id.action_edit_note).isVisible = !fragmented && canPerformMultiSelectEditNote()
+                    menu.findItem(R.id.action_view_card_info).isVisible = canPerformCardInfo()
+
+                    val deleteNoteItem =
+                        menu.findItem(R.id.action_delete_card).apply {
+                            isVisible = viewModel.hasSelectedAnyRows()
+                        }
+
+                    launchCatchingTask {
+                        deleteNoteItem.apply {
+                            this.title =
+                                resources.getQuantityString(
+                                    R.plurals.card_browser_delete_notes,
+                                    viewModel.selectedNoteCount(),
+                                )
+                        }
+                    }
+
+                    // set the number of selected rows
+                    actionBarTitle?.text = String.format(LanguageUtil.getLocaleCompat(resources), "%d", viewModel.selectedRowCount())
+                    findViewById<TextView>(R.id.deck_name)?.isVisible = !viewModel.hasSelectedAnyRows() && !viewModel.isInMultiSelectMode
+                    findViewById<TextView>(R.id.subtitle)?.isVisible = !viewModel.hasSelectedAnyRows() && !viewModel.isInMultiSelectMode
                 }
 
                 override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
@@ -1053,75 +1111,6 @@ open class CardBrowser :
         }
     }
 
-    private fun updateMultiselectMenu() {
-        Timber.d("updateMultiselectMenu()")
-        val actionBarMenu = actionBarMenu
-        if (actionBarMenu?.findItem(R.id.action_suspend_card) == null) {
-            return
-        }
-        // set the number of selected rows (only in multiselect)
-        actionBarTitle?.text = String.format(LanguageUtil.getLocaleCompat(resources), "%d", viewModel.selectedRowCount())
-        findViewById<TextView>(R.id.deck_name)?.isVisible = !viewModel.hasSelectedAnyRows() && !viewModel.isInMultiSelectMode
-        findViewById<TextView>(R.id.subtitle)?.isVisible = !viewModel.hasSelectedAnyRows() && !viewModel.isInMultiSelectMode
-
-        actionBarMenu.findItem(R.id.action_flag).isVisible = viewModel.hasSelectedAnyRows()
-        actionBarMenu.findItem(R.id.action_suspend_card).apply {
-            title = TR.browsingToggleSuspend().toSentenceCase(R.string.sentence_toggle_suspend)
-            // TODO: I don't think this icon is necessary
-            setIcon(R.drawable.ic_suspend)
-            isVisible = viewModel.hasSelectedAnyRows()
-        }
-        actionBarMenu.findItem(R.id.action_toggle_bury).apply {
-            title = TR.browsingToggleBury().toSentenceCase(R.string.sentence_toggle_bury)
-            isVisible = viewModel.hasSelectedAnyRows()
-        }
-        actionBarMenu.findItem(R.id.action_mark_card).apply {
-            title = TR.browsingToggleMark()
-            setIcon(R.drawable.ic_star_border_white)
-            isVisible = viewModel.hasSelectedAnyRows()
-        }
-        actionBarMenu.findItem(R.id.action_change_deck).isVisible = viewModel.hasSelectedAnyRows()
-        actionBarMenu.findItem(R.id.action_reposition_cards).isVisible = viewModel.hasSelectedAnyRows()
-        actionBarMenu.findItem(R.id.action_grade_now).isVisible = viewModel.hasSelectedAnyRows()
-        actionBarMenu.findItem(R.id.action_reschedule_cards).isVisible = viewModel.hasSelectedAnyRows()
-        actionBarMenu.findItem(R.id.action_edit_tags).isVisible = viewModel.hasSelectedAnyRows()
-        actionBarMenu.findItem(R.id.action_reset_cards_progress).isVisible = viewModel.hasSelectedAnyRows()
-
-        actionBarMenu.findItem(R.id.action_export_selected).apply {
-            this.title =
-                if (viewModel.cardsOrNotes == CARDS) {
-                    resources.getQuantityString(
-                        R.plurals.card_browser_export_cards,
-                        viewModel.selectedRowCount(),
-                    )
-                } else {
-                    resources.getQuantityString(
-                        R.plurals.card_browser_export_notes,
-                        viewModel.selectedRowCount(),
-                    )
-                }
-            isVisible = viewModel.hasSelectedAnyRows()
-        }
-
-        actionBarMenu.findItem(R.id.action_edit_note).isVisible = !fragmented && canPerformMultiSelectEditNote()
-        actionBarMenu.findItem(R.id.action_view_card_info).isVisible = canPerformCardInfo()
-
-        val deleteNoteItem =
-            actionBarMenu.findItem(R.id.action_delete_card).apply {
-                isVisible = viewModel.hasSelectedAnyRows()
-            }
-
-        launchCatchingTask {
-            deleteNoteItem.apply {
-                this.title =
-                    resources.getQuantityString(
-                        R.plurals.card_browser_delete_notes,
-                        viewModel.selectedNoteCount(),
-                    )
-            }
-        }
-    }
-
     fun onCardsUpdated(cardIds: List<CardId>) {
         // TODO: try to offload the cards processing in updateCardsInList() on a background thread,
         // otherwise it could hang the main thread
@@ -1259,7 +1248,7 @@ open class CardBrowser :
     @NeedsTest("select 1, check title, select 2, check title")
     private fun onSelectionChanged() {
         Timber.d("onSelectionChanged")
-        updateMultiselectMenu()
+        invalidateOptionsMenu()
     }
 
     /**
