@@ -111,11 +111,11 @@ class PreviewerViewModelTest : JvmTest() {
             viewModel.showingAnswer.value = false
 
             // Click Prev -> Should move to Index 0
-            viewModel.onPreviousButtonClick()
+            onPreviousButtonClick()
             assertEquals(0, viewModel.currentIndex.value)
 
             // Click Prev on Index 0 (Question) -> Do nothing
-            viewModel.onPreviousButtonClick()
+            onPreviousButtonClick()
             assertFalse(viewModel.showingAnswer.value)
             assertEquals(0, viewModel.currentIndex.value)
         }
@@ -125,10 +125,10 @@ class PreviewerViewModelTest : JvmTest() {
         runTest {
             assertFalse(viewModel.backSideOnly.value) // initial state should be false
 
-            viewModel.toggleBackSideOnly()
+            toggleBackSideOnly()
             assertTrue(viewModel.backSideOnly.value)
 
-            viewModel.toggleBackSideOnly()
+            toggleBackSideOnly()
             assertFalse(viewModel.backSideOnly.value)
         }
 
