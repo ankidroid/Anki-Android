@@ -241,9 +241,6 @@ open class CardBrowser :
     // TODO: Remove this and use `opChanges`
     private var reloadRequired = false
 
-    @VisibleForTesting
-    internal var actionBarMenu: Menu? = null
-
     init {
         ChangeManager.subscribe(this)
     }
@@ -455,7 +452,6 @@ open class CardBrowser :
                 ) {
                     if (viewModel.isInMultiSelectMode) return
                     Timber.d("onCreateMenu()")
-                    actionBarMenu = menu
                     menuInflater.inflate(R.menu.card_browser, menu)
                     menu.findItem(R.id.action_search_by_flag).subMenu?.setupFlags()
                     searchItem = menu.findItem(R.id.action_search)
