@@ -878,7 +878,7 @@ open class CardBrowser :
             title = TR.browsingFindAndReplace().toSentenceCase(R.string.sentence_find_and_replace)
         }
 
-        previewItem = menu.findItem(R.id.action_preview)
+        previewItem = menu.findItem(R.id.action_preview_many)
         onSelectionChanged()
         refreshMenuItems()
         return super.onCreateOptionsMenu(menu)
@@ -1050,7 +1050,7 @@ open class CardBrowser :
                 onUndo()
                 return true
             }
-            R.id.action_preview -> {
+            R.id.action_preview_many -> {
                 onPreview()
                 return true
             }
