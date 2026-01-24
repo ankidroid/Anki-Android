@@ -408,30 +408,6 @@ class CardBrowserFragment :
                             requireCardBrowserActivity().onPreview()
                             return true
                         }
-                    }
-
-                    return false
-                }
-            },
-        )
-
-        menuHost.addMenuProvider(
-            object : MenuProvider {
-                override fun onCreateMenu(
-                    menu: Menu,
-                    menuInflater: MenuInflater,
-                ) {
-                    // TODO: extract conditionally inflating the menus
-                }
-
-                override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                    Timber.d("CardBrowserFragment::onMenuItemSelected")
-                    prepareForUndoableOperation()
-                    when (menuItem.itemId) {
-                        android.R.id.home -> {
-                            activityViewModel.endMultiSelectMode(SingleSelectCause.NavigateBack)
-                            return true
-                        }
                         R.id.action_sort_by_size -> {
                             changeDisplayOrder()
                             return true
@@ -446,6 +422,41 @@ class CardBrowserFragment :
                         }
                         R.id.action_search_by_tag -> {
                             showFilterByTagsDialog()
+                            return true
+                        }
+                        R.id.action_select_all -> {
+                            activityViewModel.selectAll()
+                            return true
+                        }
+                        R.id.action_open_options -> {
+                            showOptionsDialog()
+                            return true
+                        }
+                    }
+
+                    return false
+                }
+            },
+        )
+
+        // partial 'multi-select' menu provider
+        menuHost.addMenuProvider(
+            object : MenuProvider {
+                override fun onCreateMenu(
+                    menu: Menu,
+                    menuInflater: MenuInflater,
+                ) {
+                    // TODO: extract conditionally inflating the menus
+                }
+
+                override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                    if (!activityViewModel.isInMultiSelectMode) return false
+
+                    Timber.d("CardBrowserFragment::onMenuItemSelected")
+                    prepareForUndoableOperation()
+                    when (menuItem.itemId) {
+                        android.R.id.home -> {
+                            activityViewModel.endMultiSelectMode(SingleSelectCause.NavigateBack)
                             return true
                         }
                         R.id.action_delete_card -> {
@@ -468,10 +479,6 @@ class CardBrowserFragment :
                             showChangeDeckDialog()
                             return true
                         }
-                        R.id.action_select_all -> {
-                            activityViewModel.selectAll()
-                            return true
-                        }
                         R.id.action_reset_cards_progress -> {
                             Timber.i("CardBrowserFragment:: Reset progress button pressed")
                             onResetProgress()
@@ -488,10 +495,6 @@ class CardBrowserFragment :
                         }
                         R.id.action_edit_tags -> {
                             showEditTagsDialog()
-                            return true
-                        }
-                        R.id.action_open_options -> {
-                            showOptionsDialog()
                             return true
                         }
                         R.id.action_export_selected -> {
