@@ -446,11 +446,6 @@ open class CardBrowser :
                         menu.findItem(R.id.action_search_by_flag).subMenu?.let { subMenu ->
                             setupFlags(subMenu, Mode.SINGLE_SELECT)
                         }
-                        menu.findItem(R.id.action_create_filtered_deck).title = TR.qtMiscCreateFilteredDeck()
-                        saveSearchItem = menu.findItem(R.id.action_save_search)
-                        saveSearchItem?.isVisible = false // the searchview's query always starts empty.
-                        mySearchesItem = menu.findItem(R.id.action_list_my_searches)
-                        mySearchesItem!!.isVisible = getColUnsafe.config.savedFilters.isNotEmpty()
                         searchItem = menu.findItem(R.id.action_search)
                         searchItem!!.setOnActionExpandListener(
                             object : MenuItem.OnActionExpandListener {
@@ -517,6 +512,18 @@ open class CardBrowser :
                         showBackIcon()
                         increaseHorizontalPaddingOfOverflowMenuIcons(menu)
                     }
+                }
+
+                override fun onPrepareMenu(menu: Menu) {
+                    if (!viewModel.isInMultiSelectMode) {
+                        menu.findItem(R.id.action_create_filtered_deck).title = TR.qtMiscCreateFilteredDeck()
+                        saveSearchItem = menu.findItem(R.id.action_save_search)
+                        saveSearchItem?.isVisible = false // the searchview's query always starts empty.
+
+                        mySearchesItem = menu.findItem(R.id.action_list_my_searches)
+                        mySearchesItem!!.isVisible = getColUnsafe.config.savedFilters.isNotEmpty()
+                    }
+
                     menu.findItem(R.id.action_undo)?.run {
                         isVisible = getColUnsafe.undoAvailable()
                         title = getColUnsafe.undoLabel()
