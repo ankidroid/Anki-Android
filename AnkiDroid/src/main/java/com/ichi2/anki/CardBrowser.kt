@@ -428,6 +428,24 @@ open class CardBrowser :
             }
         }
 
+        // the drawerToggle has priority over other menu items
+        addMenuProvider(
+            object : MenuProvider {
+                override fun onCreateMenu(
+                    menu: Menu,
+                    menuInflater: MenuInflater,
+                ) {
+                    if (!viewModel.isInMultiSelectMode) {
+                        restoreDrawerIcon()
+                    } else {
+                        showBackIcon()
+                    }
+                }
+
+                override fun onMenuItemSelected(menuItem: MenuItem) = drawerToggle.onOptionsItemSelected(menuItem)
+            },
+        )
+
         // add a MenuProvider for 'no selection'
         addMenuProvider(
             object : MenuProvider {
@@ -438,8 +456,6 @@ open class CardBrowser :
                     if (viewModel.isInMultiSelectMode) return
                     Timber.d("onCreateMenu()")
                     actionBarMenu = menu
-                    // restore drawer click listener and icon
-                    restoreDrawerIcon()
                     menuInflater.inflate(R.menu.card_browser, menu)
                     menu.findItem(R.id.action_search_by_flag).subMenu?.setupFlags()
                     searchItem = menu.findItem(R.id.action_search)
@@ -523,7 +539,6 @@ open class CardBrowser :
                 override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                     if (viewModel.isInMultiSelectMode) return false
 
-                    if (drawerToggle.onOptionsItemSelected(menuItem)) return true
                     cardBrowserFragment.prepareForUndoableOperation()
 
                     Flag.entries.find { it.ordinal == menuItem.itemId }?.let { flag ->
@@ -577,7 +592,6 @@ open class CardBrowser :
                     if (!viewModel.isInMultiSelectMode) return
                     menuInflater.inflate(R.menu.card_browser_multiselect, menu)
                     menu.findItem(R.id.action_flag).subMenu?.setupFlags()
-                    showBackIcon()
                     increaseHorizontalPaddingOfOverflowMenuIcons(menu)
                 }
 
@@ -663,7 +677,6 @@ open class CardBrowser :
 
                 override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                     if (!viewModel.isInMultiSelectMode) return false
-                    if (drawerToggle.onOptionsItemSelected(menuItem)) return true
                     cardBrowserFragment.prepareForUndoableOperation()
 
                     Flag.entries.find { it.ordinal == menuItem.itemId }?.let { flag ->
