@@ -23,15 +23,19 @@ import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.view.SubMenu
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.annotation.LayoutRes
 import androidx.annotation.VisibleForTesting
+import androidx.appcompat.widget.ThemeUtils
 import androidx.core.content.ContextCompat
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -51,6 +55,8 @@ import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.AnkiActivityProvider
 import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.CollectionManager.TR
+import com.ichi2.anki.CollectionManager.getColUnsafe
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.FilteredDeckOptions
 import com.ichi2.anki.Flag
 import com.ichi2.anki.R
@@ -84,7 +90,10 @@ import com.ichi2.anki.dialogs.tags.TagsDialogListener
 import com.ichi2.anki.export.ExportDialogFragment
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.DeckId
+import com.ichi2.anki.libanki.undoAvailable
+import com.ichi2.anki.libanki.undoLabel
 import com.ichi2.anki.model.CardStateFilter
+import com.ichi2.anki.model.CardsOrNotes.CARDS
 import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.anki.model.SortType
 import com.ichi2.anki.observability.ChangeManager
@@ -95,16 +104,21 @@ import com.ichi2.anki.scheduling.ForgetCardsDialog
 import com.ichi2.anki.scheduling.SetDueDateDialog
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.attachFastScroller
+import com.ichi2.anki.ui.internationalization.toSentenceCase
 import com.ichi2.anki.undoAndShowSnackbar
 import com.ichi2.anki.utils.ext.getCurrentDialogFragment
 import com.ichi2.anki.utils.ext.ifNotZero
 import com.ichi2.anki.utils.ext.setFragmentResultListener
+import com.ichi2.anki.utils.ext.sharedPrefs
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.utils.ext.visibleItemPositions
+import com.ichi2.anki.utils.hideKeyboard
 import com.ichi2.anki.utils.showDialogFragmentImpl
 import com.ichi2.anki.withProgress
+import com.ichi2.ui.CardBrowserSearchView
 import com.ichi2.utils.HandlerUtils
 import com.ichi2.utils.TagsUtil.getUpdatedTags
+import com.ichi2.utils.increaseHorizontalPaddingOfOverflowMenuIcons
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
@@ -159,6 +173,12 @@ class CardBrowserFragment :
     private var searchBar: SearchBar? = null
     private var searchView: SearchView? = null
     private var deckChip: Chip? = null
+
+    // region legacy menu handling
+    var mySearchesItem: MenuItem? = null
+    var searchItem: MenuItem? = null
+    var legacySearchView: CardBrowserSearchView? = null
+    // endregion
 
     @get:LayoutRes
     private val layout: Int
@@ -241,21 +261,155 @@ class CardBrowserFragment :
     private fun setupMenu() {
         val menuHost: MenuHost = requireActivity()
 
+        fun MenuItem.setupUndo() {
+            isVisible = getColUnsafe().undoAvailable()
+            title = getColUnsafe().undoLabel()
+        }
+
+        fun SubMenu.setupFlags() {
+            val flagGroupId = 1001
+            val subMenu = this
+            lifecycleScope.launch {
+                for ((flag, displayName) in Flag.queryDisplayNames()) {
+                    val item =
+                        subMenu
+                            .add(flagGroupId, flag.code, Menu.NONE, displayName)
+                            .setIcon(flag.drawableRes)
+                    if (flag == Flag.NONE) {
+                        val color = ThemeUtils.getThemeAttrColor(requireContext(), android.R.attr.colorControlNormal)
+                        item.icon?.mutate()?.setTint(color)
+                    }
+                }
+            }
+        }
+
+        // add a MenuProvider for 'no selection'
         menuHost.addMenuProvider(
             object : MenuProvider {
+                // fix lint issues due to line length
+                val vm get() = activityViewModel
+
+                fun isKeyboardVisible(view: View?): Boolean =
+                    view?.let {
+                        ViewCompat.getRootWindowInsets(it)?.isVisible(WindowInsetsCompat.Type.ime())
+                    } ?: false
+
                 override fun onCreateMenu(
                     menu: Menu,
                     menuInflater: MenuInflater,
                 ) {
-                    // TODO: extract conditionally inflating the menus
+                    if (vm.isInMultiSelectMode) return
+                    Timber.d("onCreateMenu()")
+                    menuInflater.inflate(R.menu.card_browser, menu)
+                    menu.findItem(R.id.action_search_by_flag).subMenu?.setupFlags()
+                    searchItem = menu.findItem(R.id.action_search)
+                    searchItem!!.setOnActionExpandListener(
+                        object : MenuItem.OnActionExpandListener {
+                            override fun onMenuItemActionExpand(item: MenuItem): Boolean {
+                                vm.setSearchQueryExpanded(true)
+                                return true
+                            }
+
+                            override fun onMenuItemActionCollapse(item: MenuItem): Boolean {
+                                if (item.actionView == searchView) {
+                                    if (isKeyboardVisible(searchView)) {
+                                        Timber.d("keyboard is visible, hiding it")
+                                        hideKeyboard()
+                                        return false
+                                    }
+                                }
+                                vm.setSearchQueryExpanded(false)
+                                // SearchView doesn't support empty queries so we always reset the search when collapsing
+                                legacySearchView!!.setQuery("", false)
+                                vm.launchSearchForCards("")
+                                return true
+                            }
+                        },
+                    )
+                    legacySearchView =
+                        (searchItem!!.actionView as CardBrowserSearchView).apply {
+                            queryHint = resources.getString(R.string.card_browser_search_hint)
+                            setMaxWidth(Integer.MAX_VALUE)
+                            setOnQueryTextListener(
+                                object : androidx.appcompat.widget.SearchView.OnQueryTextListener {
+                                    override fun onQueryTextChange(newText: String): Boolean {
+                                        if (this@apply.ignoreValueChange) {
+                                            return true
+                                        }
+                                        vm.updateQueryText(newText)
+                                        return true
+                                    }
+
+                                    override fun onQueryTextSubmit(query: String): Boolean {
+                                        vm.launchSearchForCards(query)
+                                        legacySearchView!!.clearFocus()
+                                        return true
+                                    }
+                                },
+                            )
+                        }
+                    // Fixes #6500 - keep the search consistent if coming back from note editor
+                    // Fixes #9010 - consistent search after drawer change calls invalidateOptionsMenu
+                    if (!vm.tempSearchQuery.isNullOrEmpty() || vm.searchTerms.isNotEmpty()) {
+                        searchItem!!.expandActionView() // This calls legacySearchView.setOnSearchClickListener
+                        val toUse = if (!vm.tempSearchQuery.isNullOrEmpty()) vm.tempSearchQuery else vm.searchTerms
+                        legacySearchView!!.setQuery(toUse!!, false)
+                    }
+                    legacySearchView!!.setOnSearchClickListener {
+                        // Provide SearchView with the previous search terms
+                        legacySearchView!!.setQuery(vm.searchTerms, false)
+                    }
                 }
 
+                override fun onPrepareMenu(menu: Menu) {
+                    if (vm.isInMultiSelectMode) return
+
+                    menu.findItem(R.id.action_create_filtered_deck).title = TR.qtMiscCreateFilteredDeck()
+                    // the searchview's query always starts empty.
+                    menu.findItem(R.id.action_save_search).isVisible = false
+
+                    mySearchesItem = menu.findItem(R.id.action_list_my_searches)
+                    val savedFiltersObj = runBlocking { withCol { vm.savedSearchesUnsafe(this) } }
+                    mySearchesItem!!.isVisible = savedFiltersObj.isNotEmpty()
+
+                    menu.findItem(R.id.action_select_all)?.isVisible =
+                        vm.rowCount > 0 && vm.selectedRowCount() < vm.rowCount
+
+                    menu.findItem(R.id.action_undo).setupUndo()
+                }
+
+                @NeedsTest("filter-marked query needs testing")
+                @NeedsTest("filter-suspended query needs testing")
                 override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                    Timber.d("CardBrowserFragment::onMenuItemSelected")
+                    if (vm.isInMultiSelectMode) return false
+
                     prepareForUndoableOperation()
+
+                    Flag.entries.find { it.ordinal == menuItem.itemId }?.let { flag ->
+                        launchCatchingTask { vm.setFlagFilter(flag) }
+                        return true
+                    }
+
                     when (menuItem.itemId) {
-                        android.R.id.home -> {
-                            activityViewModel.endMultiSelectMode(SingleSelectCause.NavigateBack)
+                        R.id.action_add_note_from_card_browser -> {
+                            requireCardBrowserActivity().addNoteFromCardBrowser()
+                            return true
+                        }
+                        R.id.action_save_search -> {
+                            vm.saveCurrentSearch()
+                            return true
+                        }
+                        R.id.action_list_my_searches -> {
+                            requireCardBrowserActivity().showSavedSearches()
+                            return true
+                        }
+                        R.id.action_undo -> {
+                            Timber.w("CardBrowser:: Undo pressed")
+                            requireCardBrowserActivity().onUndo()
+                            return true
+                        }
+                        R.id.action_preview_many -> {
+                            requireCardBrowserActivity().onPreview()
                             return true
                         }
                         R.id.action_sort_by_size -> {
@@ -272,6 +426,131 @@ class CardBrowserFragment :
                         }
                         R.id.action_search_by_tag -> {
                             showFilterByTagsDialog()
+                            return true
+                        }
+                        R.id.action_select_all -> {
+                            activityViewModel.selectAll()
+                            return true
+                        }
+                        R.id.action_open_options -> {
+                            showOptionsDialog()
+                            return true
+                        }
+                    }
+
+                    return false
+                }
+            },
+        )
+
+        // partial 'multi-select' menu provider
+        menuHost.addMenuProvider(
+            object : MenuProvider {
+                val vm get() = activityViewModel
+
+                private fun canPerformCardInfo(): Boolean = vm.selectedRowCount() == 1
+
+                private fun canPerformMultiSelectEditNote(): Boolean = vm.selectedRowCount() == 1
+
+                override fun onCreateMenu(
+                    menu: Menu,
+                    menuInflater: MenuInflater,
+                ) {
+                    if (!activityViewModel.isInMultiSelectMode) return
+                    menuInflater.inflate(R.menu.card_browser_multiselect, menu)
+                    menu.findItem(R.id.action_flag).subMenu?.setupFlags()
+                    requireContext().increaseHorizontalPaddingOfOverflowMenuIcons(menu)
+                }
+
+                override fun onPrepareMenu(menu: Menu) {
+                    if (!vm.isInMultiSelectMode) return
+
+                    menu.findItem(R.id.action_reschedule_cards).title =
+                        TR.actionsSetDueDate().toSentenceCase(R.string.sentence_set_due_date)
+
+                    menu.findItem(R.id.action_grade_now).title =
+                        TR.actionsGradeNow().toSentenceCase(R.string.sentence_grade_now)
+
+                    val isFindReplaceEnabled = sharedPrefs().getBoolean(getString(R.string.pref_browser_find_replace), false)
+                    menu.findItem(R.id.action_find_replace).apply {
+                        isVisible = isFindReplaceEnabled
+                        title = TR.browsingFindAndReplace().toSentenceCase(R.string.sentence_find_and_replace)
+                    }
+
+                    menu.findItem(R.id.action_undo).setupUndo()
+
+                    menu.findItem(R.id.action_flag).isVisible = vm.hasSelectedAnyRows()
+                    menu.findItem(R.id.action_suspend_card).apply {
+                        title = TR.browsingToggleSuspend().toSentenceCase(R.string.sentence_toggle_suspend)
+                        // TODO: I don't think this icon is necessary
+                        setIcon(R.drawable.ic_suspend)
+                        isVisible = vm.hasSelectedAnyRows()
+                    }
+                    menu.findItem(R.id.action_toggle_bury).apply {
+                        title = TR.browsingToggleBury().toSentenceCase(R.string.sentence_toggle_bury)
+                        isVisible = vm.hasSelectedAnyRows()
+                    }
+                    menu.findItem(R.id.action_mark_card).apply {
+                        title = TR.browsingToggleMark()
+                        setIcon(R.drawable.ic_star_border_white)
+                        isVisible = vm.hasSelectedAnyRows()
+                    }
+                    menu.findItem(R.id.action_change_deck).isVisible = vm.hasSelectedAnyRows()
+                    menu.findItem(R.id.action_reposition_cards).isVisible = vm.hasSelectedAnyRows()
+                    menu.findItem(R.id.action_grade_now).isVisible = vm.hasSelectedAnyRows()
+                    menu.findItem(R.id.action_reschedule_cards).isVisible = vm.hasSelectedAnyRows()
+                    menu.findItem(R.id.action_edit_tags).isVisible = vm.hasSelectedAnyRows()
+                    menu.findItem(R.id.action_reset_cards_progress).isVisible = vm.hasSelectedAnyRows()
+
+                    menu.findItem(R.id.action_export_selected).apply {
+                        this.title =
+                            if (vm.cardsOrNotes == CARDS) {
+                                resources.getQuantityString(
+                                    R.plurals.card_browser_export_cards,
+                                    vm.selectedRowCount(),
+                                )
+                            } else {
+                                resources.getQuantityString(
+                                    R.plurals.card_browser_export_notes,
+                                    vm.selectedRowCount(),
+                                )
+                            }
+                        isVisible = vm.hasSelectedAnyRows()
+                    }
+
+                    menu.findItem(R.id.action_edit_note).isVisible = canPerformMultiSelectEditNote()
+                    menu.findItem(R.id.action_view_card_info).isVisible = canPerformCardInfo()
+
+                    val deleteNoteItem =
+                        menu.findItem(R.id.action_delete_card).apply {
+                            isVisible = vm.hasSelectedAnyRows()
+                        }
+
+                    launchCatchingTask {
+                        deleteNoteItem.apply {
+                            this.title =
+                                resources.getQuantityString(
+                                    R.plurals.card_browser_delete_notes,
+                                    vm.selectedNoteCount(),
+                                )
+                        }
+                    }
+                }
+
+                override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                    if (!vm.isInMultiSelectMode) return false
+
+                    Timber.d("CardBrowserFragment::onMenuItemSelected")
+                    prepareForUndoableOperation()
+
+                    Flag.entries.find { it.ordinal == menuItem.itemId }?.let { flag ->
+                        updateFlagForSelectedRows(flag)
+                        return true
+                    }
+
+                    when (menuItem.itemId) {
+                        android.R.id.home -> {
+                            vm.endMultiSelectMode(SingleSelectCause.NavigateBack)
                             return true
                         }
                         R.id.action_delete_card -> {
@@ -294,10 +573,6 @@ class CardBrowserFragment :
                             showChangeDeckDialog()
                             return true
                         }
-                        R.id.action_select_all -> {
-                            activityViewModel.selectAll()
-                            return true
-                        }
                         R.id.action_reset_cards_progress -> {
                             Timber.i("CardBrowserFragment:: Reset progress button pressed")
                             onResetProgress()
@@ -314,18 +589,46 @@ class CardBrowserFragment :
                         }
                         R.id.action_edit_tags -> {
                             showEditTagsDialog()
-                        }
-                        R.id.action_open_options -> {
-                            showOptionsDialog()
+                            return true
                         }
                         R.id.action_export_selected -> {
                             exportSelected()
+                            return true
                         }
                         R.id.action_create_filtered_deck -> {
                             showCreateFilteredDeckDialog()
+                            return true
                         }
                         R.id.action_find_replace -> {
                             showFindAndReplaceDialog()
+                            return true
+                        }
+                        R.id.action_change_note_type -> {
+                            Timber.i("Menu: Change note type")
+                            vm.requestChangeNoteType()
+                            return true
+                        }
+                        R.id.action_undo -> {
+                            Timber.w("CardBrowser:: Undo pressed")
+                            requireCardBrowserActivity().onUndo()
+                            return true
+                        }
+                        R.id.action_preview_many -> {
+                            requireCardBrowserActivity().onPreview()
+                            return true
+                        }
+                        R.id.action_edit_note -> {
+                            requireCardBrowserActivity().openNoteEditorForCurrentlySelectedNote()
+                            return true
+                        }
+                        R.id.action_view_card_info -> {
+                            requireCardBrowserActivity().displayCardInfo()
+                            return true
+                        }
+                        R.id.action_grade_now -> {
+                            Timber.i("CardBrowser:: Grade now button pressed")
+                            requireCardBrowserActivity().openGradeNow()
+                            return true
                         }
                     }
                     return false
@@ -454,6 +757,10 @@ class CardBrowserFragment :
             deckChip?.text = deck?.getFullDisplayName(requireContext())
         }
 
+        fun onCanSaveChanged(canSave: Boolean) {
+            requireActivity().invalidateOptionsMenu()
+        }
+
         activityViewModel.flowOfIsTruncated.launchCollectionInLifecycleScope(::onIsTruncatedChanged)
         activityViewModel.flowOfSelectedRows.launchCollectionInLifecycleScope(::onSelectedRowsChanged)
         activityViewModel.flowOfActiveColumns.launchCollectionInLifecycleScope(::onColumnsChanged)
@@ -466,6 +773,7 @@ class CardBrowserFragment :
         viewModel.flowOfSearchForDecks.launchCollectionInLifecycleScope(::onSearchForDecks)
         activityViewModel.flowOfDeckSelection.launchCollectionInLifecycleScope(::onDeckChanged)
         activityViewModel.flowOfScrollRequest.launchCollectionInLifecycleScope(::autoScrollTo)
+        activityViewModel.flowOfCanSearch.launchCollectionInLifecycleScope(::onCanSaveChanged)
     }
 
     private fun setupFragmentResultListeners() {

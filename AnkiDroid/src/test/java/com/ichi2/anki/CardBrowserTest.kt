@@ -97,6 +97,7 @@ import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.testutils.IntentAssert
 import com.ichi2.testutils.common.Flaky
 import com.ichi2.testutils.common.OS
+import com.ichi2.testutils.ext.menu
 import com.ichi2.testutils.getSharedPrefs
 import io.mockk.every
 import io.mockk.mockkObject
@@ -1674,7 +1675,7 @@ fun CardBrowser.getVisibleRows() =
 val CardBrowser.isShowingSelectAll: Boolean
     get() {
         advanceRobolectricLooper()
-        return actionBarMenu?.findItem(R.id.action_select_all)?.isVisible == true
+        return this.menu().findItem(R.id.action_select_all)?.isVisible == true
     }
 
 val CardBrowser.columnHeadingViews
