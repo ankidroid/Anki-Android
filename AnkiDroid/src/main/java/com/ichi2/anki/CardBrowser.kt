@@ -526,7 +526,7 @@ open class CardBrowser :
                     cardBrowserFragment.prepareForUndoableOperation()
 
                     Flag.entries.find { it.ordinal == menuItem.itemId }?.let { flag ->
-                        filterByFlag(flag)
+                        launchCatchingTask { viewModel.setFlagFilter(flag) }
                         return true
                     }
 
@@ -1277,10 +1277,6 @@ open class CardBrowser :
     ) {
         cardBrowserFragment.onSelectedTags(selectedTags, indeterminateTags, stateFilter)
     }
-
-    /** Updates search terms to only show cards with selected flag.  */
-    @VisibleForTesting
-    fun filterByFlag(flag: Flag) = launchCatchingTask { viewModel.setFlagFilter(flag) }
 
     /**
      * Loads/Reloads (Updates the Q, A & etc) of cards in the [cardIds] list
