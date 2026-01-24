@@ -25,7 +25,6 @@ import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
-import android.view.SubMenu
 import android.view.View
 import android.view.WindowManager
 import android.widget.LinearLayout
@@ -37,12 +36,10 @@ import androidx.annotation.CheckResult
 import androidx.annotation.LayoutRes
 import androidx.annotation.MainThread
 import androidx.annotation.VisibleForTesting
-import androidx.appcompat.widget.ThemeUtils
 import androidx.core.view.MenuProvider
 import androidx.core.view.isVisible
 import androidx.fragment.app.commit
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import anki.collection.OpChanges
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation.Direction
@@ -81,8 +78,6 @@ import com.ichi2.anki.libanki.CardId
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.SortOrder
-import com.ichi2.anki.libanki.undoAvailable
-import com.ichi2.anki.libanki.undoLabel
 import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.model.CardsOrNotes
 import com.ichi2.anki.model.CardsOrNotes.CARDS
@@ -90,20 +85,16 @@ import com.ichi2.anki.model.CardsOrNotes.NOTES
 import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import com.ichi2.anki.observability.ChangeManager
-import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.previewer.PreviewerFragment
 import com.ichi2.anki.scheduling.registerOnForgetHandler
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.ResizablePaneManager
-import com.ichi2.anki.ui.internationalization.toSentenceCase
 import com.ichi2.anki.utils.ext.addPrepareMenuProvider
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.ui.CardBrowserSearchView
 import com.ichi2.utils.AndroidUiUtils.hideKeyboard
 import com.ichi2.utils.LanguageUtil
-import com.ichi2.utils.increaseHorizontalPaddingOfOverflowMenuIcons
-import kotlinx.coroutines.launch
 import net.ankiweb.rsdroid.RustCleanup
 import timber.log.Timber
 
@@ -281,10 +272,6 @@ open class CardBrowser :
         searchView?.setQuery(query, submit = true)
     }
 
-    private fun canPerformCardInfo(): Boolean = viewModel.selectedRowCount() == 1
-
-    private fun canPerformMultiSelectEditNote(): Boolean = viewModel.selectedRowCount() == 1
-
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
             return
@@ -400,28 +387,6 @@ open class CardBrowser :
     }
 
     fun setupMenuProvider() {
-        fun MenuItem.setupUndo() {
-            isVisible = getColUnsafe.undoAvailable()
-            title = getColUnsafe.undoLabel()
-        }
-
-        fun SubMenu.setupFlags() {
-            val flagGroupId = 1001
-            val subMenu = this
-            lifecycleScope.launch {
-                for ((flag, displayName) in Flag.queryDisplayNames()) {
-                    val item =
-                        subMenu
-                            .add(flagGroupId, flag.code, Menu.NONE, displayName)
-                            .setIcon(flag.drawableRes)
-                    if (flag == Flag.NONE) {
-                        val color = ThemeUtils.getThemeAttrColor(this@CardBrowser, android.R.attr.colorControlNormal)
-                        item.icon?.mutate()?.setTint(color)
-                    }
-                }
-            }
-        }
-
         // the drawerToggle has priority over other menu items
         addMenuProvider(
             object : MenuProvider {
@@ -447,85 +412,10 @@ open class CardBrowser :
                     menu: Menu,
                     menuInflater: MenuInflater,
                 ) {
-                    if (!viewModel.isInMultiSelectMode) return
-                    menuInflater.inflate(R.menu.card_browser_multiselect, menu)
-                    menu.findItem(R.id.action_flag).subMenu?.setupFlags()
-                    increaseHorizontalPaddingOfOverflowMenuIcons(menu)
                 }
 
                 override fun onPrepareMenu(menu: Menu) {
                     if (!viewModel.isInMultiSelectMode) return
-
-                    menu.findItem(R.id.action_reschedule_cards).title =
-                        TR.actionsSetDueDate().toSentenceCase(R.string.sentence_set_due_date)
-
-                    menu.findItem(R.id.action_grade_now).title =
-                        TR.actionsGradeNow().toSentenceCase(R.string.sentence_grade_now)
-
-                    val isFindReplaceEnabled = sharedPrefs().getBoolean(getString(R.string.pref_browser_find_replace), false)
-                    menu.findItem(R.id.action_find_replace).apply {
-                        isVisible = isFindReplaceEnabled
-                        title = TR.browsingFindAndReplace().toSentenceCase(R.string.sentence_find_and_replace)
-                    }
-
-                    menu.findItem(R.id.action_undo).setupUndo()
-
-                    menu.findItem(R.id.action_flag).isVisible = viewModel.hasSelectedAnyRows()
-                    menu.findItem(R.id.action_suspend_card).apply {
-                        title = TR.browsingToggleSuspend().toSentenceCase(R.string.sentence_toggle_suspend)
-                        // TODO: I don't think this icon is necessary
-                        setIcon(R.drawable.ic_suspend)
-                        isVisible = viewModel.hasSelectedAnyRows()
-                    }
-                    menu.findItem(R.id.action_toggle_bury).apply {
-                        title = TR.browsingToggleBury().toSentenceCase(R.string.sentence_toggle_bury)
-                        isVisible = viewModel.hasSelectedAnyRows()
-                    }
-                    menu.findItem(R.id.action_mark_card).apply {
-                        title = TR.browsingToggleMark()
-                        setIcon(R.drawable.ic_star_border_white)
-                        isVisible = viewModel.hasSelectedAnyRows()
-                    }
-                    menu.findItem(R.id.action_change_deck).isVisible = viewModel.hasSelectedAnyRows()
-                    menu.findItem(R.id.action_reposition_cards).isVisible = viewModel.hasSelectedAnyRows()
-                    menu.findItem(R.id.action_grade_now).isVisible = viewModel.hasSelectedAnyRows()
-                    menu.findItem(R.id.action_reschedule_cards).isVisible = viewModel.hasSelectedAnyRows()
-                    menu.findItem(R.id.action_edit_tags).isVisible = viewModel.hasSelectedAnyRows()
-                    menu.findItem(R.id.action_reset_cards_progress).isVisible = viewModel.hasSelectedAnyRows()
-
-                    menu.findItem(R.id.action_export_selected).apply {
-                        this.title =
-                            if (viewModel.cardsOrNotes == CARDS) {
-                                resources.getQuantityString(
-                                    R.plurals.card_browser_export_cards,
-                                    viewModel.selectedRowCount(),
-                                )
-                            } else {
-                                resources.getQuantityString(
-                                    R.plurals.card_browser_export_notes,
-                                    viewModel.selectedRowCount(),
-                                )
-                            }
-                        isVisible = viewModel.hasSelectedAnyRows()
-                    }
-
-                    menu.findItem(R.id.action_edit_note).isVisible = !fragmented && canPerformMultiSelectEditNote()
-                    menu.findItem(R.id.action_view_card_info).isVisible = canPerformCardInfo()
-
-                    val deleteNoteItem =
-                        menu.findItem(R.id.action_delete_card).apply {
-                            isVisible = viewModel.hasSelectedAnyRows()
-                        }
-
-                    launchCatchingTask {
-                        deleteNoteItem.apply {
-                            this.title =
-                                resources.getQuantityString(
-                                    R.plurals.card_browser_delete_notes,
-                                    viewModel.selectedNoteCount(),
-                                )
-                        }
-                    }
 
                     // set the number of selected rows
                     actionBarTitle?.text = String.format(LanguageUtil.getLocaleCompat(resources), "%d", viewModel.selectedRowCount())
@@ -533,54 +423,7 @@ open class CardBrowser :
                     findViewById<TextView>(R.id.subtitle)?.isVisible = !viewModel.hasSelectedAnyRows() && !viewModel.isInMultiSelectMode
                 }
 
-                override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                    if (!viewModel.isInMultiSelectMode) return false
-                    cardBrowserFragment.prepareForUndoableOperation()
-
-                    Flag.entries.find { it.ordinal == menuItem.itemId }?.let { flag ->
-                        cardBrowserFragment.updateFlagForSelectedRows(flag)
-                        return true
-                    }
-
-                    when (menuItem.itemId) {
-                        R.id.action_change_note_type -> {
-                            Timber.i("Menu: Change note type")
-                            viewModel.requestChangeNoteType()
-                            return true
-                        }
-                        R.id.action_undo -> {
-                            Timber.w("CardBrowser:: Undo pressed")
-                            onUndo()
-                            return true
-                        }
-                        R.id.action_preview_many -> {
-                            onPreview()
-                            return true
-                        }
-                        R.id.action_edit_note -> {
-                            openNoteEditorForCurrentlySelectedNote()
-                            return true
-                        }
-                        R.id.action_view_card_info -> {
-                            displayCardInfo()
-                            return true
-                        }
-                        R.id.action_grade_now -> {
-                            Timber.i("CardBrowser:: Grade now button pressed")
-                            openGradeNow()
-                            return true
-                        }
-                    }
-
-                    // TODO: make better use of MenuProvider
-                    if (fragment?.onMenuItemSelected(menuItem) == true) {
-                        return true
-                    }
-                    if (fragment == null) {
-                        Timber.w("Unexpected onOptionsItemSelected call: %s", menuItem.itemId)
-                    }
-                    return false
-                }
+                override fun onMenuItemSelected(menuItem: MenuItem) = false
             },
         )
 
@@ -932,7 +775,7 @@ open class CardBrowser :
         }
     }
 
-    private fun openNoteEditorForCurrentlySelectedNote() =
+    fun openNoteEditorForCurrentlySelectedNote() =
         launchCatchingTask {
             // Check whether the deck is empty
             if (viewModel.rowCount == 0) {
@@ -998,7 +841,7 @@ open class CardBrowser :
             GradeNowDialog.showDialog(this@CardBrowser, cardIds)
         }
 
-    private fun displayCardInfo() {
+    fun displayCardInfo() {
         launchCatchingTask {
             viewModel.queryCardInfoDestination()?.let { destination ->
                 val intent: Intent = destination.toIntent(this@CardBrowser)
