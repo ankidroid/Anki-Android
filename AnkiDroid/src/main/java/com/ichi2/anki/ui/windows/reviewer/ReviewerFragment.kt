@@ -20,7 +20,6 @@ import android.content.Intent
 import android.hardware.SensorManager
 import android.net.Uri
 import android.os.Bundle
-import android.text.InputType
 import android.view.KeyEvent
 import android.view.MenuItem
 import android.view.View
@@ -62,7 +61,6 @@ import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.preferences.reviewer.ViewerAction
 import com.ichi2.anki.previewer.CardViewerActivity
 import com.ichi2.anki.previewer.CardViewerFragment
-import com.ichi2.anki.previewer.TypeAnswer
 import com.ichi2.anki.previewer.setFrameStyle
 import com.ichi2.anki.previewer.stdHtml
 import com.ichi2.anki.reviewer.BindingMap
@@ -87,13 +85,11 @@ import com.ichi2.anki.workarounds.SafeWebViewLayout
 import com.ichi2.themes.Themes
 import com.ichi2.utils.dp
 import com.ichi2.utils.show
-import com.ichi2.utils.stripHtml
 import com.squareup.seismic.ShakeDetector
 import dev.androidbroadcast.vbpd.viewBinding
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import org.jetbrains.annotations.VisibleForTesting
 import timber.log.Timber
 import kotlin.math.max
 import kotlin.math.roundToInt
@@ -494,13 +490,12 @@ class ReviewerFragment :
 
     private fun setupWhiteboard() {
         viewModel.whiteboardEnabledFlow.flowWithLifecycle(lifecycle).collectIn(lifecycleScope) { isEnabled ->
-            childFragmentManager.commit {
-                val whiteboardFragment = childFragmentManager.findFragmentByTag(WhiteboardFragment::class.jvmName)
-                if (whiteboardFragment == null && isEnabled) {
-                    add(R.id.whiteboard_container, WhiteboardFragment::class.java, null, WhiteboardFragment::class.jvmName)
-                    return@commit
+            binding.whiteboardContainer.isVisible = isEnabled
+            val whiteboardFragment = childFragmentManager.findFragmentById(binding.whiteboardContainer.id)
+            if (whiteboardFragment == null && isEnabled) {
+                childFragmentManager.commit {
+                    add(R.id.whiteboard_container, WhiteboardFragment::class.java, null)
                 }
-                binding.whiteboardContainer.isVisible = isEnabled
             }
         }
         viewModel.onCardUpdatedFlow.collectIn(lifecycleScope) {
