@@ -692,8 +692,12 @@ class NoteEditorFragment :
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        addInstanceStateToBundle(outState)
         super.onSaveInstanceState(outState)
+        outState.putStringArray("savedFieldContents", currentFieldStrings)
+        if (currentNotetypeIsImageOcclusion()) {
+            outState.putString("imageOcclusionPath", imageOcclusionPath)
+        }
+        addInstanceStateToBundle(outState)
     }
 
     private fun addInstanceStateToBundle(savedInstanceState: Bundle) {

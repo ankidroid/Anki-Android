@@ -631,6 +631,27 @@ class NoteEditorTest : RobolectricTest() {
             }
         }
 
+    @Test
+    fun testProcessDeathPreservesContent() {
+        val noteEditor = getNoteEditorAdding(NoteType.BASIC).build()
+        noteEditor.setFieldValueFromUi(0, "Preserved Content")
+
+        // Simulate process death / recreation
+        val scenario = ActivityScenario.launchActivityForResult<NoteEditorActivity>(noteEditor.requireActivity().intent)
+        scenario.onActivity { activity ->
+            // Trigger save instance state
+            val bundle = Bundle()
+            activity.onSaveInstanceState(bundle)
+
+            // Recreate to simulate process death/recreation
+            activity.recreate()
+        }
+
+        scenario.onNoteEditor { editor ->
+            assertThat("Content should be preserved after recreation", editor.currentFieldStrings[0], equalTo("Preserved Content"))
+        }
+    }
+
     private suspend fun withNoteEditorAdding(
         from: FromScreen = FromScreen.DECK_LIST,
         block: suspend NoteEditorFragment.() -> Unit,
