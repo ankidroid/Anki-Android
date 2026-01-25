@@ -38,6 +38,7 @@ import androidx.annotation.MainThread
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.ThemeUtils
+import androidx.core.view.MenuHost
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
@@ -168,6 +169,15 @@ open class CardBrowser :
     // TODO: Broken currently; needs R.layout.activity_card_browser_searchview
     val useSearchView: Boolean
         get() = Prefs.devUsingCardBrowserSearchView
+
+    // delegate the menu to the SearchBar in the fragment
+    override val menuHost: MenuHost?
+        get() =
+            if (useSearchView) {
+                if (this::cardBrowserFragment.isInitialized) cardBrowserFragment else null
+            } else {
+                super.menuHost
+            }
 
     @Suppress("unused")
     @get:LayoutRes
