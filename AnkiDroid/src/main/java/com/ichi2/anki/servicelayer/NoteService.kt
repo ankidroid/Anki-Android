@@ -21,13 +21,13 @@ package com.ichi2.anki.servicelayer
 
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.FieldEditText
+import com.ichi2.anki.exception.MediaSizeLimitExceededException
 import com.ichi2.anki.libanki.Card
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.Note
 import com.ichi2.anki.libanki.NoteTypeId
 import com.ichi2.anki.libanki.NotetypeJson
 import com.ichi2.anki.libanki.QueueType
-import com.ichi2.anki.libanki.exception.MediaSizeLimitExceededException
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote
 import com.ichi2.anki.multimediacard.fields.AudioRecordingField
 import com.ichi2.anki.multimediacard.fields.EFieldType

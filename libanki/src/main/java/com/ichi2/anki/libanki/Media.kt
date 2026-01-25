@@ -23,7 +23,6 @@ import com.google.protobuf.ByteString
 import com.google.protobuf.kotlin.toByteString
 import com.ichi2.anki.libanki.Media.Companion.htmlMediaRegexps
 import com.ichi2.anki.libanki.exception.EmptyMediaException
-import com.ichi2.anki.libanki.exception.MediaSizeLimitExceededException
 import com.ichi2.anki.libanki.utils.LibAnkiAlias
 import com.ichi2.anki.libanki.utils.NotInPyLib
 import net.ankiweb.rsdroid.RustCleanup
