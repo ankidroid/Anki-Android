@@ -348,4 +348,9 @@ object Permissions {
         showThemedToast(requireContext(), message, false)
         openAppSettingsScreen()
     }
+
+    fun Fragment.showToastAndOpenAppSettingsScreen(message: String) {
+        showThemedToast(requireContext(), message, false)
+        openAppSettingsScreen()
+    }
 }

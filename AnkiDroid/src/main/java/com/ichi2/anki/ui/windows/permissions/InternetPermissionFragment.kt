@@ -16,18 +16,23 @@
 package com.ichi2.anki.ui.windows.permissions
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.core.view.isVisible
 import com.ichi2.anki.R
+import com.ichi2.anki.databinding.AboutLayoutBinding
+import com.ichi2.anki.databinding.InternetPermissionFragmentBinding
 import com.ichi2.utils.Permissions
+import dev.androidbroadcast.vbpd.viewBinding
 
 class InternetPermissionFragment : PermissionsFragment(R.layout.internet_permission_fragment) {
-    override fun onViewCreated(
-        view: View,
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ) {
-        view
-            .findViewById<PermissionsItem>(R.id.internet_permission)
-            .initializeInternetPermissionItem()
-    }
+    ) = InternetPermissionFragmentBinding
+        .inflate(inflater, container, false)
+        .apply { internetPermission.initializeInternetPermissionItem() }
+        .root
 }

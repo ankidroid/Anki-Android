@@ -30,8 +30,8 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
 import com.ichi2.anki.R
+import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.settings.Prefs
-import com.ichi2.anki.showThemedToast
 import com.ichi2.utils.Permissions
 import com.ichi2.utils.Permissions.openAppSettingsScreen
 import com.ichi2.utils.Permissions.requestPermissionThroughDialogOrSettings
@@ -58,12 +58,13 @@ abstract class PermissionsFragment(
     private val internetLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
             if (isGranted) {
-                // TODO: can it be internetPermissionItem.updateSwitchCheckedStatus() ?
-                permissionsItems.forEach { it.updateSwitchCheckedStatus() }
-                Timber.d("Internet permission granted")
+                // No need to explicitly do anything, onResume handles updating the UI
+                Timber.i("Internet permission granted")
             } else {
-                Timber.d("Internet permission denied")
-                showToastAndOpenAppSettingsScreen(R.string.startup_no_internet_permission)
+                Timber.i("Internet permission denied")
+                showToastAndOpenAppSettingsScreen(
+                    getString(R.string.permission_required_message, getString(R.string.internet_access_title)),
+                )
             }
         }
 
@@ -104,22 +105,24 @@ abstract class PermissionsFragment(
         }
     }
 
+    @NeedsTest("Shows the permission item when INTERNET permission is denied")
+    @NeedsTest("Hides the permission item when INTERNET permission is already granted")
     protected fun PermissionsItem.initializeInternetPermissionItem() {
         if (Permissions.hasPermission(requireContext(), Manifest.permission.INTERNET)) {
             // If internet permission is already granted (which is the case for most of devices), hide the permission item.
             this.isVisible = false
-        } else {
-            // On devices such as Xiaomi, which allow user to deny internet permissions, show internet permission item.
-            setOnPermissionsRequested { areAlreadyGranted ->
-                if (!areAlreadyGranted) {
-                    Timber.d("Requesting for internet permission")
-                    requestPermissionThroughDialogOrSettings(
-                        requireActivity(),
-                        Manifest.permission.INTERNET,
-                        Prefs::internetPermissionRequested,
-                        internetLauncher,
-                    )
-                }
+            return
+        }
+        // On devices such as Xiaomi, which allow user to deny internet permissions, show internet permission item.
+        setOnPermissionsRequested { areAlreadyGranted ->
+            if (!areAlreadyGranted) {
+                Timber.d("Requesting for internet permission")
+                requestPermissionThroughDialogOrSettings(
+                    requireActivity(),
+                    Manifest.permission.INTERNET,
+                    Prefs::internetPermissionRequested,
+                    internetLauncher,
+                )
             }
         }
     }

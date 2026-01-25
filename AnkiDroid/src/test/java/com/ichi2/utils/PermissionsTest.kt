@@ -161,7 +161,7 @@ class PermissionsTest {
     private fun verifyPermissionWasRequested() {
         assertThat("requested flag should always be true after requesting", Prefs.notificationsPermissionRequested, equalTo(true))
         verify(exactly = 1) { permissionRequestLauncher.launch(DUMMY_PERMISSION_STRING) }
-        verify(exactly = 0) { fragment.showToastAndOpenAppSettingsScreen(any()) }
+        verify(exactly = 0) { fragment.showToastAndOpenAppSettingsScreen(any<Int>()) }
     }
 
     private fun verifyOSSettingsWasOpened() {

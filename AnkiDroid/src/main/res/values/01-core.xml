@@ -216,9 +216,9 @@
     <string name="instant_card" comment="Used in the Android system context menu/share dialog to quickly create a note. This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. ">Instant card</string>
     
     <!-- Internet Permissions -->
-    <string name="internet_access_title" comment = "used for notifying user to unable internet access">Internet</string>
-    <string name="internet_access_summary">Required for the app to work</string>
-    <string name="startup_no_internet_permission">Please grant AnkiDroid the ‘Internet’ permission to continue</string>
+    <string name="internet_access_title" comment="used for notifying user to unable internet access">Internet</string>
+    <string name="permission_access_summary">Required for the app to work</string>
+    <string name="permission_required_message">Please grant AnkiDroid the ‘%s’ permission to continue</string>
 
     <!-- Multiple profile -->
     <string name="add_profile">Add profile</string>
