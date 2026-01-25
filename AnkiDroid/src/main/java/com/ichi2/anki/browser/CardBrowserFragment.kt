@@ -32,6 +32,7 @@ import androidx.annotation.LayoutRes
 import androidx.annotation.VisibleForTesting
 import androidx.core.content.ContextCompat
 import androidx.core.view.MenuHost
+import androidx.core.view.MenuHostHelper
 import androidx.core.view.MenuProvider
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
@@ -60,6 +61,7 @@ import com.ichi2.anki.Flag
 import com.ichi2.anki.R
 import com.ichi2.anki.android.input.ShortcutGroup
 import com.ichi2.anki.android.input.shortcut
+import com.ichi2.anki.android.menu.SearchBarMenuHost
 import com.ichi2.anki.browser.CardBrowserViewModel.ChangeMultiSelectMode
 import com.ichi2.anki.browser.CardBrowserViewModel.ChangeMultiSelectMode.MultiSelectCause
 import com.ichi2.anki.browser.CardBrowserViewModel.ChangeMultiSelectMode.SingleSelectCause
@@ -127,7 +129,8 @@ class CardBrowserFragment :
     Fragment(),
     AnkiActivityProvider,
     ChangeManager.Subscriber,
-    TagsDialogListener {
+    TagsDialogListener,
+    SearchBarMenuHost {
     val activityViewModel: CardBrowserViewModel by activityViewModels()
     val viewModel: CardBrowserFragmentViewModel by viewModels()
     val searchViewModel: CardBrowserSearchViewModel by activityViewModels()
@@ -164,11 +167,16 @@ class CardBrowserFragment :
         get() = requireCardBrowserActivity().useSearchView
 
     // only usable if 'useSearchView' is set
-    private var searchBar: SearchBar? = null
+    override var searchBar: SearchBar? = null
     private var searchView: SearchView? = null
     private var deckChip: Chip? = null
 
     private var toggleAdvancedSearch: Button? = null
+
+    // region SearchBarMenuHost
+    override val menuInflater: MenuInflater? get() = activity?.menuInflater
+    override val menuHostHelper = MenuHostHelper { invalidateSearchBarMenu() }
+    // endregion
 
     @get:LayoutRes
     private val layout: Int
