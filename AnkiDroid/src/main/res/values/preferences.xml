@@ -263,4 +263,6 @@
     <string name="reviewer_frame_style_key">reviewerFrameStyle</string>
     <string name="reviewer_toolbar_position_key">reviewerToolbarPosition</string>
 
+    <!-- Onboarding -->
+    <string name="internet_permission_requested_key">internetPermissionRequested</string>
 </resources>

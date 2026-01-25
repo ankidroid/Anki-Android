@@ -55,5 +55,7 @@ class PermissionsStartingAt30Fragment : PermissionsFragment(R.layout.fragment_pe
         .apply {
             allFilesPermission
                 .requestExternalStorageOnClick(accessAllFilesLauncher)
+            internetPermission
+                .initializeInternetPermissionItem()
         }.root
 }

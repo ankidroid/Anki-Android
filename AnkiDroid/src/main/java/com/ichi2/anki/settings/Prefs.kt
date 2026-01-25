@@ -329,6 +329,8 @@ open class PrefsRepository(
      */
     var recordAudioPermissionRequested by booleanPref(R.string.record_audio_permission_requested_key, false)
 
+    var internetPermissionRequested by booleanPref(R.string.internet_permission_requested_key, false)
+
     // **************************************** Reviewer **************************************** //
 
     val ignoreDisplayCutout by booleanPref(R.string.ignore_display_cutout_key, false)
