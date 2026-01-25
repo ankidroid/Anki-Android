@@ -100,6 +100,7 @@ import com.ichi2.anki.dialogs.IntegerDialog
 import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
+import com.ichi2.anki.exception.MediaSizeLimitExceededException
 import com.ichi2.anki.libanki.Card
 import com.ichi2.anki.libanki.CardOrdinal
 import com.ichi2.anki.libanki.Collection
@@ -115,7 +116,6 @@ import com.ichi2.anki.libanki.NotetypeJson
 import com.ichi2.anki.libanki.Notetypes
 import com.ichi2.anki.libanki.Utils
 import com.ichi2.anki.libanki.clozeNumbersInNote
-import com.ichi2.anki.libanki.exception.MediaSizeLimitExceededException
 import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.anki.multimedia.AudioRecordingFragment
