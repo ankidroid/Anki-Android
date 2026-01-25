@@ -80,6 +80,7 @@ import androidx.lifecycle.lifecycleScope
 import anki.config.ConfigKey
 import anki.notes.NoteFieldsCheckResponse
 import com.google.android.material.color.MaterialColors
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.CollectionManager.TR
@@ -99,6 +100,7 @@ import com.ichi2.anki.dialogs.IntegerDialog
 import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
+import com.ichi2.anki.exception.MediaSizeLimitExceededException
 import com.ichi2.anki.libanki.Card
 import com.ichi2.anki.libanki.CardOrdinal
 import com.ichi2.anki.libanki.Collection
@@ -188,6 +190,7 @@ import com.ichi2.utils.title
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import net.ankiweb.rsdroid.Backend
 import org.json.JSONArray
 import timber.log.Timber
 import java.io.File
@@ -2151,6 +2154,47 @@ class NoteEditorFragment :
         }
     }
 
+    private fun showLargeMediaFileWarning(
+        fileName: String,
+        fileSize: Long,
+        field: IField,
+        fieldEditText: FieldEditText,
+    ) {
+        val limitStr =
+            android.text.format.Formatter
+                .formatShortFileSize(requireContext(), Backend.MAX_INDIVIDUAL_MEDIA_FILE_SIZE)
+        val fileSizeStr =
+            android.text.format.Formatter
+                .formatShortFileSize(requireContext(), fileSize)
+
+        MaterialAlertDialogBuilder(requireContext()).show {
+            title(R.string.media_file_size_warning_title)
+            message(text = getString(R.string.media_file_size_warning_message, fileName, fileSizeStr, limitStr))
+            positiveButton(R.string.media_file_size_add_anyway) {
+                lifecycleScope.launch {
+                    try {
+                        withCol {
+                            // Pass 'true' to the new skipSizeCheck parameter
+                            NoteService.importMediaToDirectory(this, field, skipSizeCheck = true)
+                        }
+
+                        val formattedValue = field.formattedValue
+                        if (field.type === EFieldType.TEXT) {
+                            fieldEditText.setText(formattedValue)
+                        } else if (fieldEditText.text != null) {
+                            insertStringInField(fieldEditText, formattedValue)
+                        }
+                        changed = true
+                    } catch (e: Exception) {
+                        Timber.e(e, "Failed to add large media file after warning")
+                        showSnackbar(R.string.something_wrong)
+                    }
+                }
+            }
+            negativeButton(R.string.dialog_cancel)
+        }
+    }
+
     /**
      * Adds a media file to a specific field within the currently edited multimedia note.
      *
@@ -2169,13 +2213,21 @@ class NoteEditorFragment :
             // Import field media
             // This goes before setting formattedValue to update
             // media paths with the checksum when they have the same name
-            withCol {
-                try {
+            try {
+                withCol {
                     NoteService.importMediaToDirectory(this, field)
-                } catch (oomError: OutOfMemoryError) {
-                    // TODO: a 'retry' flow would be possible here
-                    throw Exception(oomError)
                 }
+            } catch (e: MediaSizeLimitExceededException) {
+                showLargeMediaFileWarning(
+                    e.fileName,
+                    e.fileSize,
+                    field,
+                    fieldEditText,
+                )
+                return@launchCatchingTask
+            } catch (oomError: OutOfMemoryError) {
+                // TODO: a 'retry' flow would be possible here
+                throw Exception(oomError)
             }
 
             // Completely replace text for text fields (because current text was passed in)

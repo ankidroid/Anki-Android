@@ -25,6 +25,7 @@ import com.ichi2.anki.libanki.Media.Companion.htmlMediaRegexps
 import com.ichi2.anki.libanki.exception.EmptyMediaException
 import com.ichi2.anki.libanki.utils.LibAnkiAlias
 import com.ichi2.anki.libanki.utils.NotInLibAnki
+import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.RustCleanup
 import timber.log.Timber
 import java.io.File
