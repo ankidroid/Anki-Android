@@ -328,6 +328,12 @@ class ChangeNoteTypeDialog : AnalyticsDialogFragment() {
             }
         }
 
+        override fun onResume() {
+            super.onResume()
+            // update ViewPager2 height
+            binding.root.requestLayout()
+        }
+
         fun setupFlows() {
             lifecycleScope.launch {
                 Timber.d("setupFlows: collecting outputNoteTypeFlow")
@@ -459,6 +465,12 @@ class ChangeNoteTypeDialog : AnalyticsDialogFragment() {
                     }
                 }
             }
+        }
+
+        override fun onResume() {
+            super.onResume()
+            // update ViewPager2 height
+            binding.root.requestLayout()
         }
 
         fun setupFlows() {
