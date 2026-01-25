@@ -169,11 +169,19 @@ object Permissions {
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     val tiramisuAudioPermission = Manifest.permission.READ_MEDIA_AUDIO
 
-    val legacyStorageAccessPermissions =
+    val legacyStorageAccessStartupPermissions =
         listOf(
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
         )
+
+    @RequiresApi(Build.VERSION_CODES.R)
+    val externalManagerStorageAccessStartupPermissions =
+        listOf(
+            Manifest.permission.MANAGE_EXTERNAL_STORAGE,
+        )
+
+    val appPrivateStartupPermissions = listOf<String>()
 
     const val RECORD_AUDIO_PERMISSION = Manifest.permission.RECORD_AUDIO
 

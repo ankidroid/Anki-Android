@@ -209,12 +209,12 @@ enum class PermissionSet(
     val permissions: List<String>,
     val permissionsFragment: Class<out PermissionsFragment>?,
 ) : Parcelable {
-    LEGACY_ACCESS(Permissions.legacyStorageAccessPermissions, PermissionsUntil29Fragment::class.java),
+    LEGACY_ACCESS(Permissions.legacyStorageAccessStartupPermissions, PermissionsUntil29Fragment::class.java),
 
     @RequiresApi(Build.VERSION_CODES.R)
-    EXTERNAL_MANAGER(listOf(Permissions.MANAGE_EXTERNAL_STORAGE), PermissionsStartingAt30Fragment::class.java),
+    EXTERNAL_MANAGER(Permissions.externalManagerStorageAccessStartupPermissions, PermissionsStartingAt30Fragment::class.java),
 
-    APP_PRIVATE(emptyList(), null),
+    APP_PRIVATE(Permissions.appPrivateStartupPermissions, null),
 
     /** Optional. */
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
