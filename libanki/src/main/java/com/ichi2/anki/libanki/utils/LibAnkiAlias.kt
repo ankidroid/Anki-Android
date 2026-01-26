@@ -21,6 +21,6 @@ package com.ichi2.anki.libanki.utils
  * in anki's [pylib](https://github.com/ankitects/anki/tree/main/pylib/anki)
  */
 @Retention(AnnotationRetention.SOURCE)
-annotation class LibAnkiAlias(
+internal annotation class LibAnkiAlias(
     @Suppress("unused") val alias: String,
 )
