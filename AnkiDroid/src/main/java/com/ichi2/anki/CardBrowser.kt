@@ -960,6 +960,7 @@ open class CardBrowser :
             isVisible = viewModel.hasSelectedAnyRows()
         }
         actionBarMenu.findItem(R.id.action_change_deck).isVisible = viewModel.hasSelectedAnyRows()
+        actionBarMenu.findItem(R.id.action_change_note_type).isVisible = viewModel.hasSelectedAnyRows()
         actionBarMenu.findItem(R.id.action_reposition_cards).isVisible = viewModel.hasSelectedAnyRows()
         actionBarMenu.findItem(R.id.action_grade_now).isVisible = viewModel.hasSelectedAnyRows()
         actionBarMenu.findItem(R.id.action_reschedule_cards).isVisible = viewModel.hasSelectedAnyRows()
