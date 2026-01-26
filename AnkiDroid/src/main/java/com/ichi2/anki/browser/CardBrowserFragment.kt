@@ -207,6 +207,7 @@ class CardBrowserFragment :
     private val useNewTaggingLogic get() = tagsChip != null
     private var cardStateChip: Chip? = null
     private var flagsChip: Chip? = null
+    private var sortChip: Chip? = null
 
     // region legacy menu handling
     var mySearchesItem: MenuItem? = null
@@ -303,6 +304,10 @@ class CardBrowserFragment :
                         FlagsBottomSheetFragment.createInstance().show(childFragmentManager)
                     }
                 }
+            }
+        sortChip =
+            view.findViewById<Chip>(R.id.sort_chip)?.apply {
+                setOnClickListener { changeDisplayOrder() }
             }
         searchBar =
             view.findViewById<SearchBar>(R.id.search_bar)?.apply {
@@ -766,6 +771,8 @@ class CardBrowserFragment :
             menu.findItem(R.id.action_show_marked)?.isVisible = false
             menu.findItem(R.id.action_show_suspended)?.isVisible = false
             menu.findItem(R.id.action_search_by_flag)?.isVisible = false
+            menu.findItem(R.id.action_show_suspended)?.isVisible = false
+            menu.findItem(R.id.action_sort_by_size)?.isVisible = false
         }
     }
 
@@ -981,6 +988,11 @@ class CardBrowserFragment :
             searchViewModel.syncState(search)
         }
 
+        fun reverseDirectionChanged(direction: ReverseDirection) {
+            sortChip?.scaleY = if (!direction.orderAsc) 1.0f else -1.0f
+        }
+
+        activityViewModel.reverseDirectionFlow.launchCollectionInLifecycleScope(::reverseDirectionChanged)
         activityViewModel.flowOfIsTruncated.launchCollectionInLifecycleScope(::onIsTruncatedChanged)
         activityViewModel.flowOfSelectedRows.launchCollectionInLifecycleScope(::onSelectedRowsChanged)
         activityViewModel.flowOfActiveColumns.launchCollectionInLifecycleScope(::onColumnsChanged)
