@@ -73,6 +73,15 @@
             <com.google.android.material.chip.ChipGroup
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/sort_chip"
+                    android:layout_width="36dp"
+                    android:layout_height="wrap_content"
+                    app:chipStartPadding="8dp"
+                    app:chipIconSize="22dp"
+                    app:chipIcon="@drawable/ic_sort_24" />
+
                 <com.google.android.material.chip.Chip
                     android:id="@+id/decks_chip"
                     android:layout_width="wrap_content"

@@ -194,7 +194,7 @@ class CardBrowserViewModel(
     private val sortTypeFlow = MutableStateFlow(SortType.NO_SORTING)
     val order get() = sortTypeFlow.value
 
-    private val reverseDirectionFlow = MutableStateFlow(ReverseDirection(orderAsc = false))
+    val reverseDirectionFlow = MutableStateFlow(ReverseDirection(orderAsc = false))
     val orderAsc get() = reverseDirectionFlow.value.orderAsc
 
     /**
