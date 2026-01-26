@@ -18,7 +18,7 @@ package com.ichi2.anki.libanki
 
 import anki.decks.Deck.Filtered.SearchTerm.Order
 import com.ichi2.anki.common.utils.ext.deepClonedInto
-import com.ichi2.anki.libanki.utils.NotInLibAnki
+import com.ichi2.anki.libanki.utils.NotInPyLib
 import net.ankiweb.rsdroid.Translations
 import org.json.JSONObject
 
@@ -138,7 +138,7 @@ fun Order.toDisplayString(translations: Translations) =
         Order.UNRECOGNIZED -> throw IllegalArgumentException("Can't display an unknown enum value.")
     }
 
-@NotInLibAnki
+@NotInPyLib
 internal fun Deck.confOrNull(): DeckConfigId? =
     try {
         val value = getLong("conf")

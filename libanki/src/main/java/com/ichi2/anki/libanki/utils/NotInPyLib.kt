@@ -27,4 +27,4 @@ package com.ichi2.anki.libanki.utils
     AnnotationTarget.TYPEALIAS,
 )
 @Retention(AnnotationRetention.SOURCE)
-annotation class NotInLibAnki
+annotation class NotInPyLib

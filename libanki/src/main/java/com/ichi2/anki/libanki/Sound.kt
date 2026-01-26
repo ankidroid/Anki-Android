@@ -26,7 +26,7 @@
 package com.ichi2.anki.libanki
 
 import com.ichi2.anki.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput
-import com.ichi2.anki.libanki.utils.NotInLibAnki
+import com.ichi2.anki.libanki.utils.NotInPyLib
 import org.intellij.lang.annotations.Language
 import org.jetbrains.annotations.VisibleForTesting
 import java.io.File
@@ -150,7 +150,7 @@ data class AvRef(
 }
 
 /** Similar to [File.toURI], but doesn't use the absolute file to simplify testing */
-@NotInLibAnki
+@NotInPyLib
 @VisibleForTesting
 fun getFileUri(path: String): URI {
     var p = path

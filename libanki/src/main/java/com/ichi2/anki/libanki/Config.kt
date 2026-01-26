@@ -18,7 +18,7 @@ package com.ichi2.anki.libanki
 
 import anki.config.ConfigKey
 import com.google.protobuf.kotlin.toByteStringUtf8
-import com.ichi2.anki.libanki.utils.NotInLibAnki
+import com.ichi2.anki.libanki.utils.NotInPyLib
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.Json
 import net.ankiweb.rsdroid.Backend
@@ -74,7 +74,7 @@ class Config(
         backend.setConfigString(key, value, false)
     }
 
-    @NotInLibAnki
+    @NotInPyLib
     inline fun <reified T> get(
         key: String,
         default: T,
@@ -87,7 +87,7 @@ class Config(
             null
         }
 
-    @NotInLibAnki
+    @NotInPyLib
     fun getObject(
         key: String,
         default: JSONObject,
