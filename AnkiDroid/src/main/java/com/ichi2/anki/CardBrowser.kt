@@ -177,23 +177,12 @@ open class CardBrowser :
 
     private var onEditCardActivityResult =
         registerForActivityResult(StartActivityForResult()) { result: ActivityResult ->
-            Timber.i("onEditCardActivityResult: resultCode=%d", result.resultCode)
-            if (result.resultCode == DeckPicker.RESULT_DB_ERROR) {
-                closeCardBrowser(DeckPicker.RESULT_DB_ERROR)
-                return@registerForActivityResult
-            }
-
-            // handle template edits
-
-            // in use by reviewer?
             result.data?.let {
                 if (
                     it.getBooleanExtra(NoteEditorFragment.RELOAD_REQUIRED_EXTRA_KEY, false) ||
                     it.getBooleanExtra(NoteEditorFragment.NOTE_CHANGED_EXTRA_KEY, false)
                 ) {
-                    if (reviewerCardId == currentCardId) {
-                        reloadRequired = true
-                    }
+                    forceRefreshSearch()
                 }
             }
 
@@ -230,15 +219,9 @@ open class CardBrowser :
                 )
             ) {
                 forceRefreshSearch()
-                if (reviewerCardId == currentCardId) {
-                    reloadRequired = true
-                }
             }
             invalidateOptionsMenu() // maybe the availability of undo changed
         }
-
-    // TODO: Remove this and use `opChanges`
-    private var reloadRequired = false
 
     @VisibleForTesting
     internal var actionBarMenu: Menu? = null
@@ -301,14 +284,9 @@ open class CardBrowser :
             return
         }
 
-        // set the default result
-        setResult(
-            RESULT_OK,
-            Intent().apply {
-                // Add reload flag to result intent so that schedule reset when returning to note editor
-                putExtra(NoteEditorFragment.RELOAD_REQUIRED_EXTRA_KEY, reloadRequired)
-            },
-        )
+        // Set a simple RESULT_OK. The Reviewer or calling activity will now
+        // rely on ChangeManager/OpChanges to detect if a refresh is needed.
+        setResult(RESULT_OK)
 
         val launchOptions = intent?.toCardBrowserLaunchOptions() // must be called after super.onCreate()
 
@@ -1005,10 +983,7 @@ open class CardBrowser :
         // TODO: try to offload the cards processing in updateCardsInList() on a background thread,
         // otherwise it could hang the main thread
         updateCardsInList(cardIds)
-        invalidateOptionsMenu() // maybe the availability of undo changed
-        if (cardIds.any { it == reviewerCardId }) {
-            reloadRequired = true
-        }
+        invalidateOptionsMenu()
     }
 
     @NeedsTest("filter-marked query needs testing")
@@ -1324,6 +1299,7 @@ open class CardBrowser :
             changes.noteText ||
             changes.card
         ) {
+            // We refresh the Browser's own UI
             refreshAfterUndo()
         }
     }
