@@ -25,7 +25,7 @@
         ankidroid:showAsAction="always|collapseActionView"/>
     <item
         android:id="@+id/deck_picker_dialog_action_add_deck"
-        android:icon="@drawable/ic_add_white"
+        android:icon="@drawable/ic_add"
         android:title="@string/menu_add"
         ankidroid:showAsAction="always" />
 </menu>

@@ -49,7 +49,7 @@ class DeckPickerFloatingActionMenu(
     private val addNoteIcon: Int = R.drawable.ic_add_note
 
     // Add White Icon
-    private val addWhiteIcon: Int = R.drawable.ic_add_white
+    private val addWhiteIcon: Int = R.drawable.ic_add
 
     var isFABOpen = false
 
