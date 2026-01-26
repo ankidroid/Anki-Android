@@ -99,7 +99,7 @@
         android:layout_marginBottom="32dp"
         android:layout_marginEnd="32dp"
         app:fabSize="normal"
-        app:srcCompat="@drawable/ic_add_white"
+        app:srcCompat="@drawable/ic_add"
         android:contentDescription="@string/cd_manage_notetypes_add"
         app:backgroundTint="?attr/fab_normal"
         tools:ignore="HardcodedText" />
