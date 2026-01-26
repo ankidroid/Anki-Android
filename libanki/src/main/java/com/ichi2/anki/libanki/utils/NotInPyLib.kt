@@ -16,6 +16,10 @@
 
 package com.ichi2.anki.libanki.utils
 
+/**
+ * Annotates `libAnki` functionality which is not in the upstream
+ *  [pylib](https://github.com/ankitects/anki/tree/main/pylib)
+ */
 @Target(
     AnnotationTarget.CLASS,
     AnnotationTarget.FUNCTION,
