@@ -50,7 +50,7 @@ import com.ichi2.anki.libanki.backend.BackendUtils
 import com.ichi2.anki.libanki.backend.BackendUtils.fromJsonBytes
 import com.ichi2.anki.libanki.backend.BackendUtils.toJsonBytes
 import com.ichi2.anki.libanki.utils.LibAnkiAlias
-import com.ichi2.anki.libanki.utils.NotInLibAnki
+import com.ichi2.anki.libanki.utils.NotInPyLib
 import com.ichi2.anki.libanki.utils.append
 import com.ichi2.anki.libanki.utils.index
 import com.ichi2.anki.libanki.utils.insert
@@ -285,7 +285,7 @@ class Notetypes(
     ##################################################
      */
 
-    @NotInLibAnki
+    @NotInPyLib
     fun nids(model: NotetypeJson): List<NoteId> = nids(model.id)
 
     /** Note ids for M. */
@@ -799,5 +799,5 @@ fun Collection.addNotetypeLegacy(json: ByteString): OpChangesWithId {
 fun Collection.getStockNotetype(kind: StockNotetype.Kind): NotetypeJson =
     NotetypeJson(fromJsonBytes(backend.getStockNotetypeLegacy(kind = kind)))
 
-@NotInLibAnki
+@NotInPyLib
 fun getStockNotetypeKinds(): List<StockNotetype.Kind> = StockNotetype.Kind.entries.filter { it != StockNotetype.Kind.UNRECOGNIZED }

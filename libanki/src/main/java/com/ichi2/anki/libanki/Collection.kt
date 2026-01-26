@@ -75,7 +75,7 @@ import com.ichi2.anki.libanki.exception.InvalidSearchException
 import com.ichi2.anki.libanki.sched.DummyScheduler
 import com.ichi2.anki.libanki.sched.Scheduler
 import com.ichi2.anki.libanki.utils.LibAnkiAlias
-import com.ichi2.anki.libanki.utils.NotInLibAnki
+import com.ichi2.anki.libanki.utils.NotInPyLib
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.RustCleanup
 import net.ankiweb.rsdroid.exceptions.BackendInvalidInputException
@@ -84,10 +84,10 @@ import java.io.File
 
 typealias ImportLogWithChanges = anki.import_export.ImportResponse
 
-@NotInLibAnki
+@NotInPyLib
 typealias UndoStepCounter = Int
 
-@NotInLibAnki // Literal["AND", "OR"]
+@NotInPyLib // Literal["AND", "OR"]
 enum class SearchJoiner {
     AND,
     OR,
@@ -256,7 +256,7 @@ class Collection(
         get() = db.queryLongScalar("select mod from col")
 
     @RustCleanup("remove")
-    @NotInLibAnki
+    @NotInPyLib
     val scm: Long
         get() = db.queryLongScalar("select scm from col")
 
@@ -329,7 +329,7 @@ class Collection(
         }
     }
 
-    @NotInLibAnki
+    @NotInPyLib
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     fun load() {
         notetypes = Notetypes(this)
@@ -343,7 +343,7 @@ class Collection(
      * is used so that the type does not states that an exception is
      * thrown when in fact it is never thrown.
      */
-    @NotInLibAnki
+    @NotInPyLib
     fun modSchemaNoCheck() {
         db.execute(
             "update col set scm=?, mod=?",
@@ -1201,7 +1201,7 @@ class Collection(
         backend.setWantsAbort()
     }
 
-    @NotInLibAnki
+    @NotInPyLib
     fun setWantsAbortRaw(input: ByteArray): ByteArray = backend.setWantsAbortRaw(input = input)
 
     @CheckResult
@@ -1210,7 +1210,7 @@ class Collection(
 
     /** Takes raw input from TypeScript frontend and returns suitable translations. */
     @CheckResult
-    @NotInLibAnki
+    @NotInPyLib
     fun i18nResourcesRaw(input: ByteArray): ByteArray = backend.i18nResourcesRaw(input = input)
 
     @LibAnkiAlias("abort_media_sync")
@@ -1393,60 +1393,60 @@ class Collection(
      * These methods should be blocking (e.g. `latestProgress` should directly use the backend)
      */
 
-    @NotInLibAnki
+    @NotInPyLib
     fun getImageForOcclusionRaw(input: ByteArray): ByteArray = backend.getImageForOcclusionRaw(input = input)
 
-    @NotInLibAnki
+    @NotInPyLib
     fun getImageOcclusionNoteRaw(input: ByteArray): ByteArray = backend.getImageOcclusionNoteRaw(input = input)
 
-    @NotInLibAnki
+    @NotInPyLib
     fun getImageOcclusionFieldsRaw(input: ByteArray): ByteArray = backend.getImageOcclusionFieldsRaw(input = input)
 
-    @NotInLibAnki
+    @NotInPyLib
     fun addImageOcclusionNoteRaw(input: ByteArray): ByteArray = backend.addImageOcclusionNoteRaw(input = input)
 
-    @NotInLibAnki
+    @NotInPyLib
     fun updateImageOcclusionNoteRaw(input: ByteArray): ByteArray = backend.updateImageOcclusionNoteRaw(input = input)
 
-    @NotInLibAnki
+    @NotInPyLib
     fun congratsInfoRaw(input: ByteArray): ByteArray = backend.congratsInfoRaw(input = input)
 
-    @NotInLibAnki
+    @NotInPyLib
     fun getSchedulingStatesWithContextRaw(input: ByteArray): ByteArray = backend.getSchedulingStatesWithContextRaw(input = input)
 
-    @NotInLibAnki
+    @NotInPyLib
     fun setSchedulingStatesRaw(input: ByteArray): ByteArray = backend.setSchedulingStatesRaw(input = input)
 
-    @NotInLibAnki
+    @NotInPyLib
     fun getChangeNotetypeInfoRaw(input: ByteArray): ByteArray = backend.getChangeNotetypeInfoRaw(input = input)
 
-    @NotInLibAnki
+    @NotInPyLib
     fun changeNotetypeRaw(input: ByteArray): ByteArray = backend.changeNotetypeRaw(input = input)
 
-    @NotInLibAnki
+    @NotInPyLib
     fun importJsonStringRaw(input: ByteArray): ByteArray = backend.importJsonStringRaw(input = input)
 
-    @NotInLibAnki
+    @NotInPyLib
     fun importJsonFileRaw(input: ByteArray): ByteArray = backend.importJsonFileRaw(input = input)
 
-    @NotInLibAnki
+    @NotInPyLib
     fun getIgnoredBeforeCountRaw(input: ByteArray): ByteArray = backend.getIgnoredBeforeCountRaw(input = input)
 
-    @NotInLibAnki
+    @NotInPyLib
     fun getRetentionWorkloadRaw(input: ByteArray): ByteArray = backend.getRetentionWorkloadRaw(input = input)
 
     fun simulateFsrsWorkloadRaw(input: ByteArray): ByteArray = backend.simulateFsrsWorkloadRaw(input = input)
 
-    @NotInLibAnki
+    @NotInPyLib
     fun evaluateParamsLegacyRaw(input: ByteArray): ByteArray = backend.evaluateParamsLegacyRaw(input = input)
 }
 
-@NotInLibAnki
+@NotInPyLib
 fun EmptyCardsReport.emptyCids(): List<CardId> = notesList.flatMap { it.cardIdsList }
 
 // Python code has a cardsOfNote, but not vice-versa yet
 @CheckResult
-@NotInLibAnki
+@NotInPyLib
 fun Collection.notesOfCards(cids: Iterable<CardId>): List<NoteId> =
     db.queryLongList("select distinct nid from cards where id in ${ids2str(cids)}")
 
@@ -1456,7 +1456,7 @@ fun Collection.notesOfCards(cids: Iterable<CardId>): List<NoteId> =
  * `"{{c1::A}} {{c3::B}}" => [1, 3]`
  */
 @CheckResult
-@NotInLibAnki
+@NotInPyLib
 fun Collection.clozeNumbersInNote(n: Note): List<Int> {
     // the call appears to be non-deterministic. Sort ascending
     return backend
@@ -1467,7 +1467,7 @@ fun Collection.clozeNumbersInNote(n: Note): List<Int> {
 /**
  * Given a list of potential Card Ids, return the subset which are Ids of cards in the collection
  */
-@NotInLibAnki
+@NotInPyLib
 @CheckResult
 fun Collection.filterToValidCards(cards: LongArray?): List<CardId> = db.queryLongList("select id from cards where id in " + ids2str(cards))
 
@@ -1476,7 +1476,7 @@ fun Collection.filterToValidCards(cards: LongArray?): List<CardId> = db.queryLon
  *
  * @throws UnsupportedOperationException if the collection is in-memory
  */
-@NotInLibAnki
+@NotInPyLib
 @CheckResult
 fun Collection.requireMediaFolder() = collectionFiles.requireMediaFolder()
 
@@ -1485,6 +1485,6 @@ fun Collection.requireMediaFolder() = collectionFiles.requireMediaFolder()
  *
  * (testing) `null` if the collection is in-memory
  */
-@NotInLibAnki
+@NotInPyLib
 @get:CheckResult
 val Collection.mediaFolder: File? get() = collectionFiles.mediaFolder

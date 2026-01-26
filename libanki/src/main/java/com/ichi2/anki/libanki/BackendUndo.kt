@@ -16,7 +16,7 @@
 
 package com.ichi2.anki.libanki
 
-import com.ichi2.anki.libanki.utils.NotInLibAnki
+import com.ichi2.anki.libanki.utils.NotInPyLib
 import net.ankiweb.rsdroid.RustCleanup
 import anki.collection.UndoStatus as UndoStatusProto
 
@@ -40,24 +40,24 @@ data class UndoStatus(
 }
 
 /** eg "Undo suspend card" if undo available */
-@NotInLibAnki
+@NotInPyLib
 @RustCleanup("similar to deprecated 'undo_name'")
 fun Collection.undoLabel(): String? {
     val action = undoStatus().undo
     return action?.let { tr.undoUndoAction(it) }
 }
 
-@NotInLibAnki
+@NotInPyLib
 fun Collection.undoAvailable(): Boolean {
     val status = undoStatus()
     return status.undo != null
 }
 
-@NotInLibAnki
+@NotInPyLib
 fun Collection.redoLabel(): String? {
     val action = undoStatus().redo
     return action?.let { tr.undoRedoAction(it) }
 }
 
-@NotInLibAnki
+@NotInPyLib
 fun Collection.redoAvailable(): Boolean = undoStatus().redo != null

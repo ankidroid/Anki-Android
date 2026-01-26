@@ -24,7 +24,7 @@ import com.google.protobuf.kotlin.toByteString
 import com.ichi2.anki.libanki.Media.Companion.htmlMediaRegexps
 import com.ichi2.anki.libanki.exception.EmptyMediaException
 import com.ichi2.anki.libanki.utils.LibAnkiAlias
-import com.ichi2.anki.libanki.utils.NotInLibAnki
+import com.ichi2.anki.libanki.utils.NotInPyLib
 import net.ankiweb.rsdroid.RustCleanup
 import timber.log.Timber
 import java.io.File
@@ -191,7 +191,7 @@ open class Media(
         /**
          * Given a [media regex][htmlMediaRegexps] and a match, return the captured media filename
          */
-        @NotInLibAnki
+        @NotInPyLib
         private fun Regex.extractFilename(match: MatchResult): String? {
             val index =
                 when (htmlMediaRegexps.indexOf(this)) {
