@@ -22,6 +22,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.Flag
 import com.ichi2.anki.browser.SearchHistory
 import com.ichi2.anki.browser.SearchHistory.SearchHistoryEntry
 import com.ichi2.anki.common.annotations.NeedsTest
@@ -143,6 +144,11 @@ class CardBrowserSearchViewModel(
     fun setCardStateFilter(value: List<CardState>) {
         Timber.i("updated card state filter to %s", value)
         updateFilterState { it.copy(cardStates = value) }
+    }
+
+    fun setFlagsFilter(flags: List<Flag>) {
+        Timber.i("set flags filter to %s", flags)
+        updateFilterState { it.copy(flags = flags) }
     }
 
     init {

@@ -30,6 +30,8 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.color.MaterialColors
+import com.ichi2.anki.CollectionManager.TR
+import com.ichi2.anki.Flag
 import com.ichi2.anki.R
 import com.ichi2.anki.browser.SearchHistory.SearchHistoryEntry
 import com.ichi2.anki.browser.search.CardBrowserSearchViewModel.SearchHistoryItems
@@ -140,10 +142,17 @@ class StandardSearchFragment :
             sheet.show(childFragmentManager, CardStateBottomSheetFragment.TAG)
         }
 
+        binding.flagsChip.setOnClickListener {
+            launchCatchingTask {
+                FlagsBottomSheetFragment.createInstance().show(childFragmentManager)
+            }
+        }
+
         viewModel.filtersFlow.launchCollectionInLifecycleScope {
             binding.decksChip.hasCheckedBackground = it.decks.any()
             binding.tagsChip.hasCheckedBackground = it.tags.any()
             binding.cardStateChip.hasCheckedBackground = it.cardStates.any()
+            binding.flagsChip.hasCheckedBackground = it.flags.any()
 
             binding.decksChip.text = it.decks.firstOrNull()?.name ?: getString(R.string.card_browser_all_decks)
             binding.tagsChip.text = formatChipDescription(it.tags, emptyValue = "Tags")
@@ -151,6 +160,23 @@ class StandardSearchFragment :
             binding.cardStateChip.chipIcon =
                 ContextCompat.getDrawable(requireContext(), it.cardStates.firstOrNull().iconRes)?.also { drawable ->
                     if (it.cardStates.isEmpty()) {
+                        DrawableCompat.setTint(
+                            drawable,
+                            MaterialColors.getColor(requireContext(), androidx.appcompat.R.attr.colorPrimary, 0),
+                        )
+                    }
+                }
+            binding.cardStateChip.chipIcon = ContextCompat.getDrawable(requireContext(), it.cardStates.firstOrNull().iconRes)
+
+            binding.flagsChip.text =
+                formatChipDescription(
+                    it.flags,
+                    singleValue = if (it.flags.singleOrNull() == Flag.NONE) "No Flag" else TR.browsingFlag(),
+                    nonSingleValue = TR.browsingSidebarFlags(),
+                )
+            binding.flagsChip.chipIcon =
+                ContextCompat.getDrawable(requireContext(), it.flags.firstOrNull().iconRes)?.also { drawable ->
+                    if (it.flags.isEmpty()) {
                         DrawableCompat.setTint(
                             drawable,
                             MaterialColors.getColor(requireContext(), androidx.appcompat.R.attr.colorPrimary, 0),
@@ -330,4 +356,15 @@ fun formatChipDescription(
     0 -> emptyValue
     1 -> tags.single()
     else -> "${tags.first()} +${tags.size - 1}"
+}
+
+fun <T> formatChipDescription(
+    entries: List<T>,
+    singleValue: String,
+    nonSingleValue: String,
+    // TODO: i18n
+) = when (entries.size) {
+    0 -> nonSingleValue
+    1 -> singleValue
+    else -> "$singleValue +${entries.size - 1}"
 }

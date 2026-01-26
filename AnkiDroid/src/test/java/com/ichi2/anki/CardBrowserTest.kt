@@ -1619,7 +1619,7 @@ class CardBrowserTest : RobolectricTest() {
                     R.id.action_show_marked to false,
                     R.id.action_show_suspended to false,
                     R.id.action_search_by_tag to false,
-                    R.id.action_search_by_flag to true,
+                    R.id.action_search_by_flag to false,
                     // true due to 'add note'
                     R.id.action_undo to true,
                     R.id.action_preview_many to true,
