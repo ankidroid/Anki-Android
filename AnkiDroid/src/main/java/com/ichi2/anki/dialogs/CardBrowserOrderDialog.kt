@@ -25,10 +25,10 @@ import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.anki.browser.CardBrowserViewModel
 import com.ichi2.anki.browser.ReverseDirection
-import com.ichi2.anki.model.SortType
+import com.ichi2.anki.model.LegacySortType
 
 /**
- * Allows a user to set the [SortType] and [ReverseDirection]
+ * Allows a user to set the [LegacySortType] and [ReverseDirection]
  */
 class CardBrowserOrderDialog : AnalyticsDialogFragment() {
     private val viewModel: CardBrowserViewModel by activityViewModels()

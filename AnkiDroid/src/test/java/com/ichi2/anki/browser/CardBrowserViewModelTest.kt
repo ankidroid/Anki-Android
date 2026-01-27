@@ -71,10 +71,10 @@ import com.ichi2.anki.libanki.QueueType.ManuallyBuried
 import com.ichi2.anki.libanki.QueueType.New
 import com.ichi2.anki.libanki.testutils.AnkiTest
 import com.ichi2.anki.model.CardsOrNotes
+import com.ichi2.anki.model.LegacySortType
+import com.ichi2.anki.model.LegacySortType.NO_SORTING
+import com.ichi2.anki.model.LegacySortType.SORT_FIELD
 import com.ichi2.anki.model.SelectableDeck
-import com.ichi2.anki.model.SortType
-import com.ichi2.anki.model.SortType.NO_SORTING
-import com.ichi2.anki.model.SortType.SORT_FIELD
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.anki.setFlagFilterSync
 import com.ichi2.anki.settings.Prefs
@@ -604,17 +604,17 @@ class CardBrowserViewModelTest : JvmTest() {
                 assertThat("initial direction", !orderAsc)
 
                 // changing the order performs a search & changes order
-                changeCardOrder(SortType.EASE)
+                changeCardOrder(LegacySortType.EASE)
                 expectMostRecentItem()
-                assertThat("order changed", order, equalTo(SortType.EASE))
+                assertThat("order changed", order, equalTo(LegacySortType.EASE))
                 assertThat("changed direction is the default", !orderAsc)
 
                 waitForSearchResults()
 
                 // pressing 'ease' again changes direction
-                changeCardOrder(SortType.EASE)
+                changeCardOrder(LegacySortType.EASE)
                 expectMostRecentItem()
-                assertThat("order unchanged", order, equalTo(SortType.EASE))
+                assertThat("order unchanged", order, equalTo(LegacySortType.EASE))
                 assertThat("direction is changed", orderAsc)
             }
         }
