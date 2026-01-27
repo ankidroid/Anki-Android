@@ -69,6 +69,7 @@ import com.ichi2.anki.browser.CardBrowserViewModel.ToggleSelectionState.SELECT_N
 import com.ichi2.anki.browser.RepositionCardFragment.Companion.REQUEST_REPOSITION_NEW_CARDS
 import com.ichi2.anki.browser.RepositionCardsRequest.ContainsNonNewCardsError
 import com.ichi2.anki.browser.RepositionCardsRequest.RepositionData
+import com.ichi2.anki.browser.search.SortOrderBottomSheetFragment
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.utils.android.isRobolectric
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
@@ -803,13 +804,21 @@ class CardBrowserFragment :
     }
 
     fun changeDisplayOrder() {
-        showDialogFragment(
-            // TODO: move this into the ViewModel
-            CardBrowserOrderDialog.newInstance { dialog: DialogInterface, which: Int ->
-                dialog.dismiss()
-                activityViewModel.changeCardOrder(LegacySortType.fromCardBrowserLabelIndex(which))
-            },
-        )
+        if (useSearchView) {
+            launchCatchingTask {
+                SortOrderBottomSheetFragment
+                    .createInstance(cardsOrNotes = activityViewModel.cardsOrNotes)
+                    .show(childFragmentManager)
+            }
+        } else {
+            showDialogFragment(
+                // TODO: move this into the ViewModel
+                CardBrowserOrderDialog.newInstance { dialog: DialogInterface, which: Int ->
+                    dialog.dismiss()
+                    activityViewModel.changeCardOrder(LegacySortType.fromCardBrowserLabelIndex(which))
+                },
+            )
+        }
     }
 
     fun updateFlagForSelectedRows(flag: Flag) =

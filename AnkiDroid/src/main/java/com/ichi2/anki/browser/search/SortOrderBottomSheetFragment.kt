@@ -44,6 +44,7 @@ import com.ichi2.anki.browser.getLabel
 import com.ichi2.anki.databinding.FragmentBottomSheetListBinding
 import com.ichi2.anki.databinding.ViewBrowserSortOrderBottomSheetItemBinding
 import com.ichi2.anki.model.CardsOrNotes
+import com.ichi2.anki.model.LegacySortType
 import com.ichi2.anki.model.SortType
 import com.ichi2.anki.utils.ext.behavior
 import dev.androidbroadcast.vbpd.viewBinding
@@ -187,11 +188,15 @@ class SortOrderBottomSheetFragment(
                         .map { column ->
                             // some Anki columns can't be sorted on.
                             // Display them, but mark them as unavailable
-                            val canBeSorted =
+                            var canBeSorted =
                                 when (viewModel.cardsOrNotes) {
                                     CardsOrNotes.CARDS -> column.sortingCards != Sorting.SORTING_NONE
                                     CardsOrNotes.NOTES -> column.sortingNotes != Sorting.SORTING_NONE
                                 }
+
+                            // Temporarily disable non-legacy sort types - the card browser is still
+                            // designed around legacy entries
+                            canBeSorted = canBeSorted && LegacySortType.entries.map { it.ankiSortType }.contains(column.key)
 
                             // TODO: tooltip
                             val label = column.getLabel(viewModel.cardsOrNotes)
