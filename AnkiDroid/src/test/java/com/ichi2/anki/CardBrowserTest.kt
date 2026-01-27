@@ -88,8 +88,8 @@ import com.ichi2.anki.libanki.QueueType
 import com.ichi2.anki.libanki.testutils.AnkiTest
 import com.ichi2.anki.model.CardsOrNotes.CARDS
 import com.ichi2.anki.model.CardsOrNotes.NOTES
+import com.ichi2.anki.model.LegacySortType
 import com.ichi2.anki.model.SelectableDeck
-import com.ichi2.anki.model.SortType
 import com.ichi2.anki.scheduling.ForgetCardsDialog
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService.PreferenceUpgrade.UpgradeBrowserColumns.Companion.LEGACY_COLUMN1_KEYS
@@ -506,7 +506,7 @@ class CardBrowserTest : RobolectricTest() {
             )
 
             // reverse
-            b.viewModel.changeCardOrder(SortType.SORT_FIELD)
+            b.viewModel.changeCardOrder(LegacySortType.SORT_FIELD)
 
             b.replaceSelectionWith(intArrayOf(0))
             val intentAfterReverse = b.viewModel.queryPreviewIntentData()
@@ -805,7 +805,7 @@ class CardBrowserTest : RobolectricTest() {
         )
 
         // Change the display order of the card browser
-        cardBrowserController.get().viewModel.changeCardOrder(SortType.EASE)
+        cardBrowserController.get().viewModel.changeCardOrder(LegacySortType.EASE)
 
         // Kill and restart the activity and ensure that display order is preserved
         val outBundle = Bundle()
@@ -886,9 +886,9 @@ class CardBrowserTest : RobolectricTest() {
     @Test
     fun checkDisplayOrderAfterTogglingCardsToNotes() =
         withBrowser {
-            viewModel.changeCardOrder(SortType.EASE) // order no. 7 corresponds to "cardEase"
+            viewModel.changeCardOrder(LegacySortType.EASE) // order no. 7 corresponds to "cardEase"
 
-            viewModel.changeCardOrder(SortType.EASE) // reverse the list
+            viewModel.changeCardOrder(LegacySortType.EASE) // reverse the list
 
             viewModel.setCardsOrNotes(NOTES)
             searchCards()
