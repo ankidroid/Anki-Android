@@ -17,11 +17,13 @@
 package com.ichi2.anki.model
 
 import android.content.SharedPreferences
-import androidx.core.content.edit
+import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.R
 import com.ichi2.anki.libanki.Config
 import com.ichi2.anki.libanki.SortOrder
+import com.ichi2.anki.settings.Prefs
+import com.ichi2.anki.settings.PrefsRepository
 import timber.log.Timber
 
 /**
@@ -55,18 +57,15 @@ enum class SortType(
 
     fun save(
         config: Config,
-        preferences: SharedPreferences,
+        prefs: PrefsRepository = Prefs,
     ) {
         Timber.v("update config to %s", this)
         // in the case of 'no sorting', we still need a sort type.
         // The inverse is handled in `fromCol`
         config.set("sortType", this.ankiSortType ?: SORT_FIELD.ankiSortType)
         config.set("noteSortType", this.ankiSortType ?: SORT_FIELD.ankiSortType)
-        preferences.edit {
-            // TODO: This should be changed to use the collection
-            // and have a different value for cards & notes
-            putBoolean("cardBrowserNoSorting", this@SortType == NO_SORTING)
-        }
+
+        prefs.cardBrowserNoSorting = this == NO_SORTING
     }
 
     /** Converts the [SortType] to a [SortOrder] */
@@ -76,12 +75,12 @@ enum class SortType(
         fun fromCol(
             config: Config,
             cardsOrNotes: CardsOrNotes,
-            preferences: SharedPreferences,
+            prefs: PrefsRepository = Prefs,
         ): SortType {
             val configKey = if (cardsOrNotes == CardsOrNotes.CARDS) "sortType" else "noteSortType"
             val colOrder = config.get<String>(configKey)
             val type = entries.firstOrNull { it.ankiSortType == colOrder } ?: NO_SORTING
-            if (type == SORT_FIELD && preferences.getBoolean("cardBrowserNoSorting", false)) {
+            if (type == SORT_FIELD && prefs.cardBrowserNoSorting) {
                 return NO_SORTING
             }
             return type
@@ -90,3 +89,17 @@ enum class SortType(
         fun fromCardBrowserLabelIndex(index: Int): SortType = entries.firstOrNull { it.cardBrowserLabelIndex == index } ?: NO_SORTING
     }
 }
+
+/**
+ * Whether the Card Browser should use an efficient 'no sorting' mode when displaying results
+ *
+ * **AnkiDroid Only**
+ *
+ * TODO: This should differentiate cards & notes mode
+ */
+@VisibleForTesting
+var PrefsRepository.cardBrowserNoSorting: Boolean
+    get() = getBoolean(R.string.pref_browser_no_sorting, false)
+    set(value) {
+        putBoolean(R.string.pref_browser_no_sorting, value)
+    }

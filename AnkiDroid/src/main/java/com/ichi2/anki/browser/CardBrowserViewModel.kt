@@ -73,6 +73,8 @@ import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.pages.CardInfoDestination
 import com.ichi2.anki.preferences.SharedPreferencesProvider
+import com.ichi2.anki.settings.Prefs
+import com.ichi2.anki.settings.PrefsRepository
 import com.ichi2.anki.utils.ext.currentCardBrowse
 import com.ichi2.anki.utils.ext.normalizeForSearch
 import com.ichi2.anki.utils.ext.setUserFlagForCards
@@ -136,6 +138,8 @@ class CardBrowserViewModel(
     private val manualInit: Boolean = false,
 ) : ViewModel(),
     SharedPreferencesProvider by preferences {
+    private val prefs: PrefsRepository = Prefs
+
     // TODO: abstract so we can use a `Context` and `pref_display_filenames_in_browser_key`
     val showMediaFilenames = sharedPrefs().getBoolean("card_browser_show_media_filenames", false)
 
@@ -445,7 +449,7 @@ class CardBrowserViewModel(
 
         sortTypeFlow
             .ignoreValuesFromViewModelLaunch()
-            .onEach { sortType -> withCol { sortType.save(config, sharedPrefs()) } }
+            .onEach { sortType -> withCol { sortType.save(config, prefs) } }
             .launchIn(viewModelScope)
 
         flowOfCardsOrNotes
@@ -466,7 +470,7 @@ class CardBrowserViewModel(
             flowOfCardsOrNotes.update { cardsOrNotes }
 
             withCol {
-                sortTypeFlow.update { SortType.fromCol(config, cardsOrNotes, sharedPrefs()) }
+                sortTypeFlow.update { SortType.fromCol(config, cardsOrNotes, prefs) }
                 reverseDirectionFlow.update { ReverseDirection.fromConfig(config) }
             }
             Timber.i("initCompleted")
