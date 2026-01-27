@@ -3,9 +3,22 @@
 package com.ichi2.anki.browser.search
 
 import android.content.Context
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.annotation.CheckResult
 import androidx.annotation.StringRes
+import androidx.annotation.VisibleForTesting
+import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.RecyclerView
 import anki.search.BrowserColumns.Sorting
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.ichi2.anki.R
 import com.ichi2.anki.browser.BrowserColumnKey
@@ -14,15 +27,76 @@ import com.ichi2.anki.browser.CardBrowserViewModel
 import com.ichi2.anki.browser.ColumnType
 import com.ichi2.anki.browser.getLabel
 import com.ichi2.anki.browser.humanReadableExplanation
+import com.ichi2.anki.browser.search.SortOrderBottomSheetFragment.ColumnUiModel.AnkiColumn
+import com.ichi2.anki.browser.search.ui.SortDirection
+import com.ichi2.anki.browser.search.ui.toSortDirection
+import com.ichi2.anki.databinding.FragmentBottomSheetListBinding
+import com.ichi2.anki.databinding.ViewBrowserSortOrderBottomSheetItemBinding
+import com.ichi2.anki.databinding.ViewBrowserSortOrderSectionHeaderBinding
 import com.ichi2.anki.model.CardsOrNotes
 import com.ichi2.anki.model.SortType
+import com.ichi2.anki.utils.ext.behavior
+import com.ichi2.anki.utils.ext.requireParcelable
+import dev.androidbroadcast.vbpd.viewBinding
+import timber.log.Timber
 
 private typealias Reverse = Boolean?
 
 /**
  * A [BottomSheetDialogFragment] allowing selection of the sort order of the Card Browser
+ *
+ * @param viewModelProviderFactory A factory producing a [CardBrowserViewModel]
  */
-class SortOrderBottomSheetFragment {
+class SortOrderBottomSheetFragment(
+    private val viewModelProviderFactory: ViewModelProvider.Factory = ViewModelProvider.NewInstanceFactory(),
+) : BottomSheetDialogFragment(R.layout.fragment_bottom_sheet_list) {
+    @VisibleForTesting
+    val viewModel: CardBrowserViewModel by activityViewModels { viewModelProviderFactory }
+
+    @VisibleForTesting
+    val binding by viewBinding(FragmentBottomSheetListBinding::bind)
+
+    @VisibleForTesting
+    val currentSortType: SortType
+        get() = requireArguments().requireParcelable<SortType>(ARG_CURRENT_SORT_TYPE)
+
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
+        super.onViewCreated(view, savedInstanceState)
+
+        with(binding.title) {
+            isVisible = true
+            text = getString(R.string.card_browser_change_display_order_title)
+        }
+
+        with(this.behavior) {
+            state = BottomSheetBehavior.STATE_EXPANDED
+            skipCollapsed = true
+            isDraggable = false
+        }
+
+        binding.list.adapter =
+            SortOrderHolderAdapter(
+                columns = ColumnUiModel.buildList(viewModel),
+                currentlySelectedSort = currentSortType,
+                onItemClickedListener = { sortType ->
+                    viewModel.setSortType(sortType)
+                    this@SortOrderBottomSheetFragment.dismiss()
+                },
+            )
+    }
+
+    /**
+     * Display the dialog, adding the fragment to the given [FragmentManager].
+     *
+     * @param manager The [FragmentManager] this fragment will be added to.
+     *
+     * @see BottomSheetDialogFragment.show
+     */
+    fun show(manager: FragmentManager) = this.show(manager, TAG)
+
     /**
      * An item displayed in the sort order list
      *
@@ -179,16 +253,16 @@ class SortOrderBottomSheetFragment {
                         )
                     }
 
-                // three groups: shown in the browser, sortable but hidden, unsortable
-                val selected = ankiColumnsList.filter { it.isShownInUI && it.canBeSorted }
+                // three groups: browser columns, sortable but hidden, unavailable
+                val active = ankiColumnsList.filter { it.isShownInUI && it.canBeSorted }
                 val available = ankiColumnsList.filter { !it.isShownInUI && it.canBeSorted }
                 val unavailable = ankiColumnsList.filter { !it.canBeSorted }
 
                 return buildList {
                     add(NoOrdering)
-                    if (selected.isNotEmpty()) {
+                    if (active.isNotEmpty()) {
                         add(SectionHeader(R.string.user_active_columns))
-                        addAll(selected)
+                        addAll(active)
                     }
                     if (available.isNotEmpty()) {
                         add(SectionHeader(R.string.user_potential_columns))
@@ -203,7 +277,177 @@ class SortOrderBottomSheetFragment {
         }
     }
 
+    /**
+     * @see ViewBrowserSortOrderBottomSheetItemBinding
+     */
+    @VisibleForTesting
+    inner class SortOrderHolderAdapter(
+        @VisibleForTesting
+        val columns: List<SortListItem>,
+        private val currentlySelectedSort: SortType,
+        private val onItemClickedListener: ((SortType) -> Unit) = { },
+    ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+        override fun getItemViewType(position: Int): Int =
+            when (columns[position]) {
+                is SectionHeader -> VIEW_TYPE_HEADER
+                is ColumnUiModel -> VIEW_TYPE_COLUMN
+            }
+
+        override fun onCreateViewHolder(
+            parent: ViewGroup,
+            viewType: Int,
+        ): RecyclerView.ViewHolder {
+            val inflater = LayoutInflater.from(parent.context)
+            return when (viewType) {
+                VIEW_TYPE_HEADER ->
+                    HeaderHolder(ViewBrowserSortOrderSectionHeaderBinding.inflate(inflater, parent, false))
+                else ->
+                    Holder(ViewBrowserSortOrderBottomSheetItemBinding.inflate(inflater, parent, false))
+            }
+        }
+
+        override fun onBindViewHolder(
+            holder: RecyclerView.ViewHolder,
+            position: Int,
+        ) {
+            when (holder) {
+                is HeaderHolder -> {
+                    val header = columns[position] as SectionHeader
+                    holder.binding.sectionHeader.setText(header.titleRes)
+                }
+                is Holder -> {
+                    val column = this.columns[position] as ColumnUiModel
+                    bindColumnHolder(holder, column)
+                }
+            }
+        }
+
+        private fun bindColumnHolder(
+            holder: Holder,
+            column: ColumnUiModel,
+        ) {
+            val context = holder.binding.root.context
+
+            setupAvailability(holder, available = column.available)
+
+            // highlight the current row
+            holder.binding.root.background =
+                if (column.isCurrentSortOrder()) {
+                    ContextCompat.getDrawable(context, R.drawable.background_sort_order_selected_row)
+                } else {
+                    null
+                }
+
+            // setup title/subtitle
+            holder.binding.text.text = column.getLabel(context)
+            column.getSubtitle(context, currentlySelectedSort as? SortType.CollectionOrdering).let {
+                holder.binding.subtitle.isVisible = it != null
+                holder.binding.subtitle.text = it
+            }
+
+            setupSortControls(column, holder)
+        }
+
+        private fun setupSortControls(
+            column: ColumnUiModel,
+            holder: Holder,
+        ) {
+            val pill = holder.binding.sortPill
+            val root = holder.binding.root
+
+            when (column) {
+                is AnkiColumn -> {
+                    pill.isVisible = true
+
+                    pill.columnType = column.type
+                    val sort = currentlySelectedSort as? SortType.CollectionOrdering
+                    val activeDirection: SortDirection? =
+                        if (sort != null && sort.key == column.key) sort.reverse.toSortDirection() else null
+                    pill.activeDirection = activeDirection
+                    pill.isEnabled = column.available
+                    pill.onDirectionClicked = { direction ->
+                        if (direction == activeDirection) {
+                            Timber.i("clicked active direction for %s; dismissing dialog", column)
+                            this@SortOrderBottomSheetFragment.dismiss()
+                        } else {
+                            Timber.i("sort direction clicked: %s for column %s", direction, column)
+                            onItemClickedListener(column.toSortType(direction.isReverse))
+                        }
+                    }
+                    pill.columnContentDescription = column.label
+
+                    // when tapped, select the left pill if unselected, otherwise flip the selection
+                    root.isClickable = column.available
+                    if (column.available) {
+                        root.setOnClickListener {
+                            val next = activeDirection?.flipped() ?: SortDirection.Ascending
+                            Timber.i("row tap: column=%s next=%s", column, next)
+                            onItemClickedListener(column.toSortType(next.isReverse))
+                        }
+                    } else {
+                        root.setOnClickListener(null)
+                    }
+                }
+                is ColumnUiModel.NoOrdering -> {
+                    pill.isVisible = false
+                    root.isClickable = true
+                    root.setOnClickListener {
+                        Timber.i("NoOrdering row clicked")
+                        onItemClickedListener(column.toSortType(null))
+                    }
+                }
+            }
+        }
+
+        /**
+         * Updates visibility/enabled status of a row
+         */
+        private fun setupAvailability(
+            holder: Holder,
+            available: Boolean,
+        ) {
+            holder.binding.root.isEnabled = available
+            val disabledAlpha = if (available) 1.0f else 0.4f
+            holder.binding.text.alpha = disabledAlpha
+            holder.binding.sortPill.alpha = disabledAlpha
+            // the reason for unavailability, so keep it visible
+            holder.binding.subtitle.alpha = 1.0f
+        }
+
+        private fun ColumnUiModel.isCurrentSortOrder() =
+            when (this) {
+                is ColumnUiModel.NoOrdering -> currentlySelectedSort is SortType.NoOrdering
+                is AnkiColumn ->
+                    currentlySelectedSort is SortType.CollectionOrdering &&
+                        this.key == currentlySelectedSort.key
+            }
+
+        override fun getItemCount() = columns.size
+
+        inner class Holder(
+            val binding: ViewBrowserSortOrderBottomSheetItemBinding,
+        ) : RecyclerView.ViewHolder(binding.root)
+
+        inner class HeaderHolder(
+            val binding: ViewBrowserSortOrderSectionHeaderBinding,
+        ) : RecyclerView.ViewHolder(binding.root)
+    }
+
     companion object {
         const val TAG = "SortOrderBottomSheetFragment"
+
+        const val ARG_CURRENT_SORT_TYPE = "currentSortType"
+
+        private const val VIEW_TYPE_COLUMN = 0
+        private const val VIEW_TYPE_HEADER = 1
+
+        suspend fun createInstance(cardsOrNotes: CardsOrNotes) =
+            SortOrderBottomSheetFragment().apply {
+                val sortData = SortType.build(cardsOrNotes)
+
+                Timber.i("creating SortOrderBottomSheetFragment with %s", sortData)
+
+                arguments = bundleOf(ARG_CURRENT_SORT_TYPE to sortData)
+            }
     }
 }

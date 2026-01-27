@@ -2221,3 +2221,21 @@ context(test: AnkiTest)
 private suspend fun CardBrowserViewModel.queryAllSelectedNotes() = queryAllSelectedNoteIds().map { test.col.getNote(it) }
 
 private suspend fun Note.isMarked(): Boolean = NoteService.isMarked(this)
+
+fun createCardBrowserViewModel(manualInit: Boolean = true): CardBrowserViewModel {
+    val viewModel =
+        CardBrowserViewModel(
+            lastDeckIdRepository = SharedPreferencesLastDeckIdRepository(),
+            cacheDir = createTransientDirectory(),
+            options = null,
+            preferences = AnkiDroidApp.sharedPreferencesProvider,
+            isFragmented = false,
+            manualInit = manualInit,
+            savedStateHandle = SavedStateHandle(),
+        )
+    // makes ignoreValuesFromViewModelLaunch work under test
+    if (manualInit) {
+        viewModel.manualInit()
+    }
+    return viewModel
+}
