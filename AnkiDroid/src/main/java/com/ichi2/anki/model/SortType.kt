@@ -23,6 +23,7 @@ import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
 import com.ichi2.anki.browser.BrowserColumnKey
+import com.ichi2.anki.browser.ReverseDirection
 import com.ichi2.anki.libanki.BrowserConfig
 import com.ichi2.anki.libanki.Config
 import com.ichi2.anki.libanki.SortOrder
@@ -141,6 +142,18 @@ sealed class SortType : Parcelable {
             }
         }
     }
+
+    fun toLegacy(): LegacySortType =
+        when (this) {
+            is NoOrdering -> LegacySortType.NO_SORTING
+            is CollectionOrdering -> LegacySortType.entries.firstOrNull { it.ankiSortType == this.key.value } ?: LegacySortType.NO_SORTING
+        }
+
+    fun toLegacyReverse(): ReverseDirection? =
+        when (this) {
+            is NoOrdering -> null
+            is CollectionOrdering -> ReverseDirection(orderAsc = this.reverse)
+        }
 
     companion object {
         suspend fun build(cardsOrNotes: CardsOrNotes) =
