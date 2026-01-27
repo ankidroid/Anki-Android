@@ -1518,6 +1518,9 @@ private fun AnkiTest.suspendAll() {
     }
 }
 
+/**
+ * Suspends the cards associated with the provided [Card IDs][CardId].
+ */
 private fun AnkiTest.suspendCards(vararg cardIds: CardId) {
     col.sched.suspendCards(ids = cardIds.toList())
 }
