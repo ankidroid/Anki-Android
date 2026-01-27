@@ -22,6 +22,7 @@ import com.ichi2.anki.libanki.sched.Scheduler
 import com.ichi2.anki.libanki.testutils.InMemoryAnkiTest
 import com.ichi2.anki.libanki.testutils.ext.addNote
 import com.ichi2.anki.libanki.testutils.ext.newNote
+import net.ankiweb.rsdroid.BackendException.BackendSearchException
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.contains
@@ -34,6 +35,7 @@ import org.junit.Assert.assertTrue
 import org.junit.Test
 import timber.log.Timber
 import java.util.Calendar
+import kotlin.test.assertFailsWith
 
 class FinderTest : InMemoryAnkiTest() {
     @Test
@@ -258,13 +260,11 @@ class FinderTest : InMemoryAnkiTest() {
         col.config.set("sortBackwards", true)
 
         assertTrue(latestCardIds.contains(col.findCards("", SortOrder.UseCollectionOrdering)[0]))
-        /* TODO: Port BuiltinSortKind
-           assertEquals(firstCardId,
-           col.findCards("", BuiltinSortKind.CARD_DUE, reverse=false).get(0)
-           );
-           assertNotEquals(firstCardId,
-           col.findCards("", BuiltinSortKind.CARD_DUE, reverse=true).get(0));
-         */
+
+        // BuiltinColumnSortKind
+        val cardDueColumn = requireNotNull(col.getBrowserColumn("cardDue")) { "cardDue" }
+        assertEquals(firstCardId, col.findCards("", SortOrder.BuiltinColumnSortKind(cardDueColumn, reverse = false)).first())
+        assertNotEquals(firstCardId, col.findCards("", SortOrder.BuiltinColumnSortKind(cardDueColumn, reverse = true)).first())
 
         // model
         assertEquals(3, col.findCards("note:basic").size)
@@ -296,8 +296,7 @@ class FinderTest : InMemoryAnkiTest() {
         // assertEquals(, col.findCards("helloworld", full=true).size())2
         // assertEquals(, col.findCards("back:helloworld", full=true).size()G)2
         // searching for an invalid special tag should not error
-        // TODO: ensure the search fail
-        //  assertThrows(Exception.class, () -> col.findCards("is:invalid").size());
+        assertFailsWith<BackendSearchException> { col.findCards("is:invalid") }
         // should be able to limit to parent col, no children
         var id = col.db.queryLongScalar("select id from cards limit 1")
         col.db.execute(
@@ -359,8 +358,7 @@ class FinderTest : InMemoryAnkiTest() {
         assertEquals(2, col.findCards("tag:monkey or (tag:sheep sheep)").size)
         assertEquals(1, col.findCards("tag:monkey or (tag:sheep octopus)").size)
         // flag
-        // Todo: ensure it fails
-        // assertThrows(Exception.class, () -> col.findCards("flag:12"));
+        assertFailsWith<BackendSearchException> { col.findCards("flag:12") }
     }
 
     @Test
