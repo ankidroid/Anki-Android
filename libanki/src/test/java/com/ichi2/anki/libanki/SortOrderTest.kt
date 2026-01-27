@@ -17,14 +17,16 @@
 package com.ichi2.anki.libanki
 
 import com.ichi2.anki.libanki.SortOrder.AfterSqlOrderBy
-import com.ichi2.anki.libanki.SortOrder.BuiltinSortKind
+import com.ichi2.anki.libanki.SortOrder.BuiltinColumnSortKind
+import com.ichi2.anki.libanki.SortOrder.LegacyBuiltinSortKind
 import com.ichi2.anki.libanki.SortOrder.NoOrdering
 import com.ichi2.anki.libanki.SortOrder.UseCollectionOrdering
+import com.ichi2.anki.libanki.testutils.InMemoryAnkiTest
 import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
-class SortOrderTest {
+class SortOrderTest : InMemoryAnkiTest() {
     @Test
     fun `NoOrdering toString`() {
         assertEquals("NoOrdering", NoOrdering.toString())
@@ -44,10 +46,18 @@ class SortOrderTest {
     }
 
     @Test
-    fun `BuiltinSortKind toString`() {
+    fun `LegacyBuiltinSortKind toString`() {
         assertEquals(
-            "BuiltinSortKind(value=cardDue, reverse=true)",
-            BuiltinSortKind("cardDue", reverse = true).toString(),
+            "LegacyBuiltinSortKind(value=cardDue, reverse=true)",
+            LegacyBuiltinSortKind("cardDue", reverse = true).toString(),
+        )
+    }
+
+    @Test
+    fun `BuiltinColumnSortKind toString`() {
+        assertEquals(
+            "BuiltinColumnSortKind(column=cardDue, reverse=true)",
+            BuiltinColumnSortKind(col.getBrowserColumn("cardDue")!!, reverse = true).toString(),
         )
     }
 
@@ -70,17 +80,17 @@ class SortOrderTest {
     }
 
     @Test
-    fun `BuiltinSortKind toProtoBuf`() {
+    fun `LegacyBuiltinSortKind toProtoBuf`() {
         assertEquals(
             "builtin {\n  column: \"cardDue\"\n  reverse: true\n}",
-            BuiltinSortKind("cardDue", reverse = true).toProtoString(),
+            LegacyBuiltinSortKind("cardDue", reverse = true).toProtoString(),
         )
     }
 }
 
 fun SortOrder.toProtoString() =
     this
-        .toProtoBuf()
+        .toProtoBufLegacy()
         .toString()
         .lineSequence()
         .filter { !it.startsWith("# anki.") }
