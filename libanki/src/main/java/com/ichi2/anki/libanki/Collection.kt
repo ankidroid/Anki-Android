@@ -69,7 +69,6 @@ import com.ichi2.anki.libanki.CollectionFiles.InMemory
 import com.ichi2.anki.libanki.Storage.OpenDbArgs
 import com.ichi2.anki.libanki.Utils.ids2str
 import com.ichi2.anki.libanki.backend.model.toBackendNote
-import com.ichi2.anki.libanki.backend.model.toProtoBuf
 import com.ichi2.anki.libanki.exception.ConfirmModSchemaException
 import com.ichi2.anki.libanki.exception.InvalidSearchException
 import com.ichi2.anki.libanki.sched.DummyScheduler
