@@ -997,9 +997,19 @@ class Collection(
      * ***********************************************************
      */
 
+    /**
+     * Returns all browser columns.
+     *
+     * @see getBrowserColumn
+     */
     @LibAnkiAlias("all_browser_columns")
     fun allBrowserColumns(): List<BrowserColumns.Column> = backend.allBrowserColumns()
 
+    /**
+     * Returns a browser column by key.
+     *
+     * @see allBrowserColumns
+     */
     @LibAnkiAlias("get_browser_column")
     fun getBrowserColumn(key: String): BrowserColumns.Column? {
         for (column in backend.allBrowserColumns()) {
