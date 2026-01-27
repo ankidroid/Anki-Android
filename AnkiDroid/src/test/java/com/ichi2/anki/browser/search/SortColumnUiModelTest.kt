@@ -77,7 +77,7 @@ class SortColumnUiModelTest : RobolectricTest() {
 
             val item = assertInstanceOf<ColumnUiModel.NoOrdering>(initialItem)
             assertEquals(true, item.available)
-            assertEquals("No sorting (faster)", item.getLabel(targetContext))
+            assertEquals("No sorting", item.getLabel(targetContext))
         }
 
     @Test
