@@ -16,12 +16,8 @@
 
 package com.ichi2.anki.libanki
 
-import androidx.annotation.CheckResult
-import anki.generic.Empty
 import anki.search.BrowserColumns.Column
 import anki.search.BrowserColumns.Sorting
-import anki.search.SortOrderKt.builtin
-import anki.search.sortOrder
 
 /**
  * Options for sorting in [Collection.findNotes] or [Collection.findCards]
@@ -77,45 +73,10 @@ sealed class SortOrder {
      * and support sorting cards unless [Column.getSortingCards]/[Column.getSortingNotes]
      * is set to [Sorting.SORTING_NONE]
      */
-    data class LegacyBuiltinSortKind(
-        val value: String,
-        val reverse: Boolean,
-    ) : SortOrder()
-
-    /**
-     * Sort using a column, if it supports sorting.
-     *
-     * All available columns are available through [Collection.allBrowserColumns]
-     * and support sorting cards unless [Column.getSortingCards]/[Column.getSortingNotes]
-     * is set to [Sorting.SORTING_NONE]
-     */
     class BuiltinColumnSortKind(
         val column: Column,
         val reverse: Boolean,
     ) : SortOrder() {
         override fun toString() = "BuiltinColumnSortKind(column=${column.key}, reverse=$reverse)"
     }
-
-    /**
-     * Converts to a [anki.search.SortOrder]
-     *
-     * @throws IllegalStateException if [UseCollectionOrdering] is provided
-     */
-    @CheckResult
-    internal fun toProtoBufLegacy() =
-        sortOrder {
-            when (this@SortOrder) {
-                is NoOrdering -> none = Empty.getDefaultInstance()
-                is AfterSqlOrderBy -> custom = customOrdering
-                is LegacyBuiltinSortKind ->
-                    builtin =
-                        builtin {
-                            column = value
-                            reverse = this@SortOrder.reverse
-                        }
-
-                is UseCollectionOrdering -> throw IllegalStateException(this.toString())
-                is BuiltinColumnSortKind -> throw IllegalStateException(this.toString())
-            }
-        }
 }
