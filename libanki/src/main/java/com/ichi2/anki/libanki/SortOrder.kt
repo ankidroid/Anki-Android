@@ -41,9 +41,7 @@ sealed class SortOrder {
      * order=False
      * ```
      */
-    class NoOrdering : SortOrder() {
-        override fun toString() = "NoOrdering"
-    }
+    data object NoOrdering : SortOrder()
 
     /**
      * Use the sort order stored in the collection config
@@ -55,9 +53,7 @@ sealed class SortOrder {
      * order=True
      * ```
      */
-    class UseCollectionOrdering : SortOrder() {
-        override fun toString() = "UseCollectionOrdering"
-    }
+    data object UseCollectionOrdering : SortOrder()
 
     /**
      * Text which is added after 'order by' in the sql statement.

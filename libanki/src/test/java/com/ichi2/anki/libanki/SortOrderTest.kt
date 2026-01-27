@@ -26,12 +26,12 @@ import kotlin.test.assertEquals
 class SortOrderTest {
     @Test
     fun `NoOrdering toString`() {
-        assertEquals("NoOrdering", NoOrdering().toString())
+        assertEquals("NoOrdering", NoOrdering.toString())
     }
 
     @Test
     fun `UseCollectionOrdering toString`() {
-        assertEquals("UseCollectionOrdering", UseCollectionOrdering().toString())
+        assertEquals("UseCollectionOrdering", UseCollectionOrdering.toString())
     }
 
     @Test
