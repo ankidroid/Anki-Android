@@ -16,86 +16,19 @@
 
 package com.ichi2.anki.model
 
-import android.content.SharedPreferences
 import android.os.Parcelable
 import anki.search.BrowserColumns.Column
 import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
 import com.ichi2.anki.browser.BrowserColumnKey
-import com.ichi2.anki.browser.ReverseDirection
 import com.ichi2.anki.libanki.BrowserConfig
-import com.ichi2.anki.libanki.Config
 import com.ichi2.anki.libanki.SortOrder
 import com.ichi2.anki.model.CardsOrNotes.NOTES
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.settings.PrefsRepository
 import kotlinx.parcelize.Parcelize
 import timber.log.Timber
-
-/**
- * How to sort the rows in the [CardBrowser]
- *
- * This is an adapter from our [SharedPreferences] based handling of sorting
- * to Anki's [Config]
- *
- * We can likely remove the SharedPreferences and rely entirely on Anki
- *
- * @param ankiSortType The value to be passed into Anki's "sortType" config
- * @param cardBrowserLabelIndex The index into [R.array.card_browser_order_labels]
- */
-@Suppress("unused") // 'unused' entries are iterated over by .entries
-enum class LegacySortType(
-    val ankiSortType: String?,
-    val cardBrowserLabelIndex: Int,
-) {
-    NO_SORTING(null, 0),
-    SORT_FIELD("noteFld", 1),
-    CREATED_TIME("noteCrt", 2),
-    NOTE_MODIFICATION_TIME("noteMod", 3),
-    CARD_MODIFICATION_TIME("cardMod", 4),
-    DUE_TIME("cardDue", 5),
-    INTERVAL("cardIvl", 6),
-    EASE("cardEase", 7),
-    REVIEWS("cardReps", 8),
-    LAPSES("cardLapses", 9),
-    DECK("deck", 10),
-    ;
-
-    fun save(
-        config: Config,
-        prefs: PrefsRepository = Prefs,
-    ) {
-        Timber.v("update config to %s", this)
-        // in the case of 'no sorting', we still need a sort type.
-        // The inverse is handled in `fromCol`
-        config.set("sortType", this.ankiSortType ?: SORT_FIELD.ankiSortType)
-        config.set("noteSortType", this.ankiSortType ?: SORT_FIELD.ankiSortType)
-
-        prefs.cardBrowserNoSorting = this == NO_SORTING
-    }
-
-    /** Converts the [LegacySortType] to a [SortOrder] */
-    fun toSortOrder(): SortOrder = if (this == NO_SORTING) SortOrder.NoOrdering else SortOrder.UseCollectionOrdering
-
-    companion object {
-        fun fromCol(
-            config: Config,
-            cardsOrNotes: CardsOrNotes,
-            prefs: PrefsRepository = Prefs,
-        ): LegacySortType {
-            val configKey = if (cardsOrNotes == CardsOrNotes.CARDS) "sortType" else "noteSortType"
-            val colOrder = config.get<String>(configKey)
-            val type = entries.firstOrNull { it.ankiSortType == colOrder } ?: NO_SORTING
-            if (type == SORT_FIELD && prefs.cardBrowserNoSorting) {
-                return NO_SORTING
-            }
-            return type
-        }
-
-        fun fromCardBrowserLabelIndex(index: Int): LegacySortType = entries.firstOrNull { it.cardBrowserLabelIndex == index } ?: NO_SORTING
-    }
-}
 
 /**
  * How to sort the rows in the [CardBrowser]
@@ -142,18 +75,6 @@ sealed class SortType : Parcelable {
             }
         }
     }
-
-    fun toLegacy(): LegacySortType =
-        when (this) {
-            is NoOrdering -> LegacySortType.NO_SORTING
-            is CollectionOrdering -> LegacySortType.entries.firstOrNull { it.ankiSortType == this.key.value } ?: LegacySortType.NO_SORTING
-        }
-
-    fun toLegacyReverse(): ReverseDirection? =
-        when (this) {
-            is NoOrdering -> null
-            is CollectionOrdering -> ReverseDirection(orderAsc = this.reverse)
-        }
 
     companion object {
         suspend fun build(cardsOrNotes: CardsOrNotes) =

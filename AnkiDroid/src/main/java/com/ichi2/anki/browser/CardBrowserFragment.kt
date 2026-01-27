@@ -16,7 +16,6 @@
 
 package com.ichi2.anki.browser
 
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.LayoutInflater
@@ -74,7 +73,6 @@ import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.utils.android.isRobolectric
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.dialogs.BrowserOptionsDialog
-import com.ichi2.anki.dialogs.CardBrowserOrderDialog
 import com.ichi2.anki.dialogs.CreateDeckDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
@@ -86,7 +84,6 @@ import com.ichi2.anki.export.ExportDialogFragment
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.model.CardStateFilter
-import com.ichi2.anki.model.LegacySortType
 import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.observability.undoableOp
@@ -803,23 +800,12 @@ class CardBrowserFragment :
         }
     }
 
-    fun changeDisplayOrder() {
-        if (useSearchView) {
-            launchCatchingTask {
-                SortOrderBottomSheetFragment
-                    .createInstance(cardsOrNotes = activityViewModel.cardsOrNotes)
-                    .show(childFragmentManager)
-            }
-        } else {
-            showDialogFragment(
-                // TODO: move this into the ViewModel
-                CardBrowserOrderDialog.newInstance { dialog: DialogInterface, which: Int ->
-                    dialog.dismiss()
-                    activityViewModel.changeCardOrder(LegacySortType.fromCardBrowserLabelIndex(which))
-                },
-            )
+    fun changeDisplayOrder() =
+        launchCatchingTask {
+            SortOrderBottomSheetFragment
+                .createInstance(cardsOrNotes = activityViewModel.cardsOrNotes)
+                .show(childFragmentManager)
         }
-    }
 
     fun updateFlagForSelectedRows(flag: Flag) =
         launchCatchingTask {
