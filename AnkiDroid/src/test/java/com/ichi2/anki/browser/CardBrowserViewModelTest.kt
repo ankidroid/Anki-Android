@@ -1430,19 +1430,7 @@ class CardBrowserViewModelTest : JvmTest() {
             addBasicAndReversedNote()
         }
         val viewModel =
-            CardBrowserViewModel(
-                lastDeckIdRepository = SharedPreferencesLastDeckIdRepository(),
-                cacheDir = createTransientDirectory(),
-                options = null,
-                preferences = AnkiDroidApp.sharedPreferencesProvider,
-                isFragmented = false,
-                manualInit = manualInit,
-                savedStateHandle = SavedStateHandle(),
-            )
-        // makes ignoreValuesFromViewModelLaunch work under test
-        if (manualInit) {
-            viewModel.manualInit()
-        }
+            createCardBrowserViewModel(manualInit)
         testBody(viewModel)
     }
 
@@ -1650,3 +1638,21 @@ suspend fun CardBrowserViewModel.saveSearch(
     title: String,
     query: String,
 ) = saveSearch(SavedSearch(title, query))
+
+fun createCardBrowserViewModel(manualInit: Boolean = true): CardBrowserViewModel {
+    val viewModel =
+        CardBrowserViewModel(
+            lastDeckIdRepository = SharedPreferencesLastDeckIdRepository(),
+            cacheDir = createTransientDirectory(),
+            options = null,
+            preferences = AnkiDroidApp.sharedPreferencesProvider,
+            isFragmented = false,
+            manualInit = manualInit,
+            savedStateHandle = SavedStateHandle(),
+        )
+    // makes ignoreValuesFromViewModelLaunch work under test
+    if (manualInit) {
+        viewModel.manualInit()
+    }
+    return viewModel
+}

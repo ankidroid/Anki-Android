@@ -1,0 +1,101 @@
+
+<!--
+  ~  Copyright (c) 2026 David Allison <davidallisongithub@gmail.com>
+  ~
+  ~  This program is free software; you can redistribute it and/or modify it under
+  ~  the terms of the GNU General Public License as published by the Free Software
+  ~  Foundation; either version 3 of the License, or (at your option) any later
+  ~  version.
+  ~
+  ~  This program is distributed in the hope that it will be useful, but WITHOUT ANY
+  ~  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+  ~  PARTICULAR PURPOSE. See the GNU General Public License for more details.
+  ~
+  ~  You should have received a copy of the GNU General Public License along with
+  ~  this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:minHeight="?android:attr/listPreferredItemHeightSmall"
+    android:focusable="true"
+    android:clickable="true"
+    android:paddingBottom="6dp"
+    android:layoutDirection="locale"
+    >
+
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:gravity="center_vertical"
+        android:minHeight="48dp"
+        android:paddingEnd="8dp"
+        android:paddingStart="16dp"
+        android:textAppearance="?android:textAppearanceMedium"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="Card Modified" />
+
+
+    <ImageView
+        android:id="@+id/sort_standard"
+        android:layout_width="48dp"
+        android:layout_height="match_parent"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/background_border"
+        android:backgroundTint="?attr/colorControlNormal"
+        android:padding="12dp"
+        android:src="@drawable/outline_arrow_upward_24"
+        app:layout_constraintBottom_toBottomOf="@+id/text"
+        app:layout_constraintEnd_toStartOf="@id/sort_reverse"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/sort_reverse"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/background_border"
+        android:backgroundTint="?attr/colorControlNormal"
+        android:padding="12dp"
+        android:src="@drawable/outline_arrow_downward_24"
+        app:layout_constraintBottom_toBottomOf="@+id/text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <ImageView
+        android:id="@+id/no_sort_order"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginEnd="16dp"
+        android:paddingVertical="12dp"
+        android:paddingHorizontal="40dp"
+        android:background="@drawable/background_border"
+        android:backgroundTint="?attr/colorControlNormal"
+        android:src="@drawable/outline_filter_list_off_24"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"
+        android:visibility="gone"
+        android:layout_marginTop="6dp"
+        android:layout_marginHorizontal="8dp"
+        app:layout_constraintTop_toBottomOf="@id/text"
+        tools:visibility="visible"
+        />
+</androidx.constraintlayout.widget.ConstraintLayout>
