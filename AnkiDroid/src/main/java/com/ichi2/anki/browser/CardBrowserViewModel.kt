@@ -194,7 +194,7 @@ class CardBrowserViewModel(
      *
      * @see [flowOfColumnHeadings]
      */
-    private val flowOfAllColumns = MutableSharedFlow<Map<String, BrowserColumns.Column>>()
+    val flowOfAllColumns = MutableStateFlow<Map<String, BrowserColumns.Column>>(mapOf())
 
     val flowOfActiveColumns =
         MutableStateFlow(
@@ -379,6 +379,7 @@ class CardBrowserViewModel(
 
     val flowOfColumnHeadings: StateFlow<List<ColumnHeading>> =
         combine(flowOfActiveColumns, flowOfCardsOrNotes, flowOfAllColumns) { activeColumns, cardsOrNotes, allColumns ->
+            if (allColumns.isEmpty()) return@combine emptyList()
             Timber.d("updated headings for %d columns", activeColumns.count)
             activeColumns.columns.map {
                 ColumnHeading(

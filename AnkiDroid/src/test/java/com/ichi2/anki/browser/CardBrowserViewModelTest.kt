@@ -1446,34 +1446,6 @@ class CardBrowserViewModelTest : JvmTest() {
         testBody(viewModel)
     }
 
-    private fun runViewModelTest(
-        notes: Int = 0,
-        manualInit: Boolean = true,
-        savedStateHandle: SavedStateHandle = SavedStateHandle(),
-        testBody: suspend CardBrowserViewModel.() -> Unit,
-    ) = runTest {
-        for (i in 0 until notes) {
-            addBasicNote()
-        }
-        notes.ifNotZero { count -> Timber.d("added %d notes", count) }
-        val viewModel =
-            CardBrowserViewModel(
-                lastDeckIdRepository = SharedPreferencesLastDeckIdRepository(),
-                cacheDir = createTransientDirectory(),
-                options = null,
-                preferences = AnkiDroidApp.sharedPreferencesProvider,
-                isFragmented = false,
-                manualInit = manualInit,
-                savedStateHandle = savedStateHandle,
-            )
-        // makes ignoreValuesFromViewModelLaunch work under test
-        if (manualInit) {
-            viewModel.manualInit()
-        }
-        testBody(viewModel)
-        Timber.d("end runViewModelTest")
-    }
-
     companion object {
         const val EXPECTED_SOUND = "\uD83D\uDD09david.mp3\uD83D\uDD09"
         const val EXPECTED_TTS = "\uD83D\uDCACTest\uD83D\uDCAC"
@@ -1507,6 +1479,43 @@ class CardBrowserViewModelTest : JvmTest() {
         }
     }
 }
+
+context(test: AnkiTest)
+private fun runViewModelTest(
+    notes: Int = 0,
+    manualInit: Boolean = true,
+    savedStateHandle: SavedStateHandle = SavedStateHandle(),
+    testBody: suspend CardBrowserViewModel.() -> Unit,
+) = test.runTest {
+    for (i in 0 until notes) {
+        test.addBasicNote()
+    }
+    notes.ifNotZero { count -> Timber.d("added %d notes", count) }
+    val viewModel =
+        CardBrowserViewModel(
+            lastDeckIdRepository = SharedPreferencesLastDeckIdRepository(),
+            cacheDir = createTransientDirectory(),
+            options = null,
+            preferences = AnkiDroidApp.sharedPreferencesProvider,
+            isFragmented = false,
+            manualInit = manualInit,
+            savedStateHandle = savedStateHandle,
+        )
+    // makes ignoreValuesFromViewModelLaunch work under test
+    if (manualInit) {
+        viewModel.manualInit()
+    }
+    testBody(viewModel)
+    Timber.d("end runViewModelTest")
+}
+
+context(test: AnkiTest)
+fun runCardBrowserViewModelTest(
+    notes: Int = 0,
+    manualInit: Boolean = true,
+    savedStateHandle: SavedStateHandle = SavedStateHandle(),
+    testBody: suspend CardBrowserViewModel.() -> Unit,
+) = runViewModelTest(notes, manualInit, savedStateHandle, testBody)
 
 @Suppress("SameParameterValue")
 private fun CardBrowserViewModel.selectRowsWithPositions(vararg positions: Int) {
