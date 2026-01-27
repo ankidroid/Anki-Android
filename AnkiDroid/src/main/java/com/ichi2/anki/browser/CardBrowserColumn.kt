@@ -18,7 +18,8 @@ package com.ichi2.anki.browser
 
 import anki.search.BrowserColumns
 import com.ichi2.anki.CardBrowser
-import net.ankiweb.rsdroid.Backend
+import com.ichi2.anki.model.CardsOrNotes
+import com.ichi2.anki.model.CardsOrNotes.CARDS
 
 /**
  * A column available in the [browser][CardBrowser]
@@ -126,3 +127,8 @@ enum class CardBrowserColumn(
 fun List<BrowserColumns.Column>.find(column: CardBrowserColumn): BrowserColumns.Column =
     this.firstOrNull { it.key == column.ankiColumnKey }
         ?: throw IllegalArgumentException("Invalid column: ${column.ankiColumnKey}")
+
+/**
+ * The column name: "Card Type"
+ */
+fun BrowserColumns.Column.getLabel(cardsOrNotes: CardsOrNotes): String = if (cardsOrNotes == CARDS) cardsModeLabel else notesModeLabel
