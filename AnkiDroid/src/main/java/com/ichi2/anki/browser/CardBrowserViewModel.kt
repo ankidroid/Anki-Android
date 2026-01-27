@@ -1194,8 +1194,9 @@ class CardBrowserViewModel(
                     errorMessageHandler = { error -> flowOfSearchState.emit(SearchState.Error(error)) },
                 ) {
                     flowOfSearchState.emit(SearchState.Searching)
-                    Timber.d("performing search: '%s'", query)
-                    val cards = com.ichi2.anki.searchForRows(query, order.toSortOrder(), cardsOrNotes)
+                    val sortOrder = order.toSortOrder()
+                    Timber.d("performing search: '%s'; order: %s", query, sortOrder)
+                    val cards = com.ichi2.anki.searchForRows(query, sortOrder, cardsOrNotes)
                     Timber.d("Search returned %d card(s)", cards.size)
 
                     ensureActive()
