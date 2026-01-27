@@ -22,17 +22,21 @@ package com.ichi2.anki.libanki
  *
  */
 abstract class SortOrder {
-    class NoOrdering : SortOrder()
+    class NoOrdering : SortOrder() {
+        override fun toString() = "NoOrdering"
+    }
 
     /** Based on config: sortType and sortBackwards */
-    class UseCollectionOrdering : SortOrder()
+    class UseCollectionOrdering : SortOrder() {
+        override fun toString() = "UseCollectionOrdering"
+    }
 
     /** A custom SQL string placed after "order by" */
-    class AfterSqlOrderBy(
+    data class AfterSqlOrderBy(
         val customOrdering: String,
     ) : SortOrder()
 
-    class BuiltinSortKind(
+    data class BuiltinSortKind(
         val value: String,
         val reverse: Boolean,
     ) : SortOrder()
