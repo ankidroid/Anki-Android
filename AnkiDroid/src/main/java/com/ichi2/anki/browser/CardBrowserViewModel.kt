@@ -69,6 +69,7 @@ import com.ichi2.anki.model.CardsOrNotes.CARDS
 import com.ichi2.anki.model.CardsOrNotes.NOTES
 import com.ichi2.anki.model.LegacySortType
 import com.ichi2.anki.model.SelectableDeck
+import com.ichi2.anki.model.SortType
 import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.pages.CardInfoDestination
@@ -801,6 +802,24 @@ class CardBrowserViewModel(
     suspend fun selectedNoteCount() = selectedRows.queryNoteIds(cardsOrNotes).distinct().size
 
     fun hasSelectedAllDecks(): Boolean = lastDeckId == ALL_DECKS_ID
+
+    /**
+     * Updates the [SortType] and updates the search results
+     */
+    fun setSortType(sortType: SortType) =
+        viewModelScope.launch {
+            Timber.i("setting sort type: %s", sortType)
+
+            // Temporarily update legacy flows
+            sortTypeFlow.update { sortType.toLegacy() }
+            sortType.toLegacyReverse()?.let { newValue ->
+                reverseDirectionFlow.update { newValue }
+            }
+
+            sortType.save(cardsOrNotes)
+
+            launchSearchForCards()
+        }
 
     fun changeCardOrder(which: LegacySortType) {
         val changeType =
