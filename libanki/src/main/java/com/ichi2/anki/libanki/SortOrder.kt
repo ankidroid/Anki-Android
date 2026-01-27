@@ -16,26 +16,67 @@
 
 package com.ichi2.anki.libanki
 
-/** Helper class, libAnki uses a union
+import anki.search.BrowserColumns.Column
+import anki.search.BrowserColumns.Sorting
+
+/**
+ * Options for sorting in [Collection.findNotes] or [Collection.findCards]
  *
- * https://github.com/david-allison-1/anki/blob/2296461136ada51437da076fda41cf735743c0e0/pylib/anki/collection.py#L417-L438
+ * Pylib implements this using a union, and a 'reverse' variable which only applies
+ *  if using BrowserColumns.Column:
  *
+ * ```python
+ *         order: bool | str | BrowserColumns.Column = False,
+ *         reverse: bool = False,
+ * ```
+ *
+ * https://github.com/ankitects/anki/blob/6247c92dcce0204f0e666b9e9e5355d2a15649d6/pylib/anki/collection.py#L643-L663
  */
-abstract class SortOrder {
+sealed class SortOrder {
+    /**
+     * Search results are returned with no ordering.
+     *
+     * **Python:**
+     * ```python
+     * order=False
+     * ```
+     */
     class NoOrdering : SortOrder() {
         override fun toString() = "NoOrdering"
     }
 
-    /** Based on config: sortType and sortBackwards */
+    /**
+     * Use the sort order stored in the collection config
+     *
+     * `sortType` and `sortBackwards`
+     *
+     * **Python:**
+     * ```python
+     * order=True
+     * ```
+     */
     class UseCollectionOrdering : SortOrder() {
         override fun toString() = "UseCollectionOrdering"
     }
 
-    /** A custom SQL string placed after "order by" */
+    /**
+     * Text which is added after 'order by' in the sql statement.
+     *
+     * You must add ' asc' or ' desc' to the order, as Anki will replace asc with
+     * desc and vice versa when reverse is set in the collection config, e.g.
+     * `c.ivl asc, c.due desc`.
+     * */
     data class AfterSqlOrderBy(
         val customOrdering: String,
     ) : SortOrder()
 
+    /**
+     * Sort using a column, if it supports sorting.
+     *
+     * All available columns are available through [Collection.allBrowserColumns]
+     * and support sorting cards unless [Column.getSortingCards]/[Column.getSortingNotes]
+     * is set to [Sorting.SORTING_NONE]
+     */
     data class BuiltinSortKind(
         val value: String,
         val reverse: Boolean,
