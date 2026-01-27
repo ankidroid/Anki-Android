@@ -108,8 +108,8 @@ open class OnRenderProcessGoneDelegate(
 
     @RequiresApi(Build.VERSION_CODES.O)
     protected open fun displayFatalError(detail: RenderProcessGoneDetail) {
-        if (activityIsMinimised()) {
-            Timber.d("Not showing toast - screen isn't visible")
+        if (activityIsMinimised() || target.isFinishing || target.isDestroyed) {
+            Timber.d("Not showing toast - screen isn't visible or activity is finishing")
             return
         }
         val errorMessage = target.resources.getString(R.string.webview_crash_fatal, getErrorCause(detail))
@@ -118,8 +118,8 @@ open class OnRenderProcessGoneDelegate(
 
     @RequiresApi(Build.VERSION_CODES.O)
     protected open fun displayNonFatalError(detail: RenderProcessGoneDetail) {
-        if (activityIsMinimised()) {
-            Timber.d("Not showing toast - screen isn't visible")
+        if (activityIsMinimised() || target.isFinishing || target.isDestroyed) {
+            Timber.d("Not showing toast - screen isn't visible or activity is finishing")
             return
         }
         val nonFatalError = target.resources.getString(R.string.webview_crash_nonfatal, getErrorCause(detail))
@@ -138,6 +138,10 @@ open class OnRenderProcessGoneDelegate(
         currentCardId: CardId,
         detail: RenderProcessGoneDetail,
     ) {
+        if (target.isFinishing || target.isDestroyed) {
+            Timber.d("Not showing dialog - activity is finishing or destroyed")
+            return
+        }
         val cardInformation = currentCardId.toString()
         val res = target.resources
         val errorDetails =

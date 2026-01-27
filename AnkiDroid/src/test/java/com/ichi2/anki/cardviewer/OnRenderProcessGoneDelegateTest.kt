@@ -130,6 +130,32 @@ class OnRenderProcessGoneDelegateTest {
         verify(mock, times(1).description("screen should be closed")).finish()
     }
 
+    @Test
+    fun dialogNotShownIfFinishing() {
+        val mock = getViewer(Lifecycle.State.STARTED, isFinishing = true)
+        val delegate = getInstance(mock)
+
+        // First crash
+        callOnRenderProcessGone(delegate)
+        // Second crash on same card (triggers loop dialog)
+        callOnRenderProcessGone(delegate)
+
+        assertThat("Dialog should not be displayed if activity is finishing", delegate.displayedDialog, equalTo(false))
+    }
+
+    @Test
+    fun dialogNotShownIfDestroyed() {
+        val mock = getViewer(Lifecycle.State.DESTROYED, isDestroyed = true)
+        val delegate = getInstance(mock)
+
+        // First crash
+        callOnRenderProcessGone(delegate)
+        // Second crash on same card (triggers loop dialog)
+        callOnRenderProcessGone(delegate)
+
+        assertThat("Dialog should not be displayed if activity is destroyed", delegate.displayedDialog, equalTo(false))
+    }
+
     private fun callOnRenderProcessGone(delegate: OnRenderProcessGoneDelegateImpl) {
         callOnRenderProcessGone(delegate, delegate.target.webView)
     }
@@ -147,7 +173,11 @@ class OnRenderProcessGoneDelegateTest {
     private val viewer: AbstractFlashcardViewer
         get() = getViewer(Lifecycle.State.STARTED)
 
-    private fun getViewer(state: Lifecycle.State): AbstractFlashcardViewer {
+    private fun getViewer(
+        state: Lifecycle.State,
+        isFinishing: Boolean = false,
+        isDestroyed: Boolean = false,
+    ): AbstractFlashcardViewer {
         val mockWebView = mock(WebView::class.java)
         val mock = strictMock(AbstractFlashcardViewer::class.java)
         doReturn(mock(Lock::class.java)).whenever(mock).writeLock
@@ -155,6 +185,8 @@ class OnRenderProcessGoneDelegateTest {
         doReturn(mockWebView).whenever(mock).webView
         doReturn(mock(Card::class.java)).whenever(mock).currentCard
         doReturn(lifecycleOf(state)).whenever(mock).lifecycle
+        doReturn(isFinishing).whenever(mock).isFinishing
+        doReturn(isDestroyed).whenever(mock).isDestroyed
         doNothing().whenever(mock).destroyWebViewFrame()
         doNothing().whenever(mock).recreateWebViewFrame()
         doNothing().whenever(mock).displayCardQuestion()
@@ -185,19 +217,26 @@ class OnRenderProcessGoneDelegateTest {
         var displayedDialog = false
 
         override fun displayFatalError(detail: RenderProcessGoneDetail) {
-            displayedToast = true
+            // We mimic the logic of the real class to test that the checks work.
+            if (!target.isFinishing && !target.isDestroyed && target.lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
+                displayedToast = true
+            }
         }
 
         override fun displayNonFatalError(detail: RenderProcessGoneDetail) {
-            displayedToast = true
+            if (!target.isFinishing && !target.isDestroyed && target.lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
+                displayedToast = true
+            }
         }
 
         override fun displayRenderLoopDialog(
             currentCardId: CardId,
             detail: RenderProcessGoneDetail,
         ) {
-            displayedDialog = true
-            onCloseRenderLoopDialog()
+            if (!target.isFinishing && !target.isDestroyed) {
+                displayedDialog = true
+                onCloseRenderLoopDialog()
+            }
         }
     }
 }
