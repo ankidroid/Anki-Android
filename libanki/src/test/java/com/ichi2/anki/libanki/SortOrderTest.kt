@@ -18,13 +18,11 @@ package com.ichi2.anki.libanki
 
 import com.ichi2.anki.libanki.SortOrder.AfterSqlOrderBy
 import com.ichi2.anki.libanki.SortOrder.BuiltinColumnSortKind
-import com.ichi2.anki.libanki.SortOrder.LegacyBuiltinSortKind
 import com.ichi2.anki.libanki.SortOrder.NoOrdering
 import com.ichi2.anki.libanki.SortOrder.UseCollectionOrdering
 import com.ichi2.anki.libanki.testutils.InMemoryAnkiTest
 import org.junit.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertFailsWith
 
 class SortOrderTest : InMemoryAnkiTest() {
     @Test
@@ -46,52 +44,10 @@ class SortOrderTest : InMemoryAnkiTest() {
     }
 
     @Test
-    fun `LegacyBuiltinSortKind toString`() {
-        assertEquals(
-            "LegacyBuiltinSortKind(value=cardDue, reverse=true)",
-            LegacyBuiltinSortKind("cardDue", reverse = true).toString(),
-        )
-    }
-
-    @Test
     fun `BuiltinColumnSortKind toString`() {
         assertEquals(
             "BuiltinColumnSortKind(column=cardDue, reverse=true)",
             BuiltinColumnSortKind(col.getBrowserColumn("cardDue")!!, reverse = true).toString(),
         )
     }
-
-    @Test
-    fun `NoOrdering toProtoBuf`() {
-        assertEquals("none {\n}", NoOrdering.toProtoString())
-    }
-
-    @Test
-    fun `UseCollectionOrdering toProtoBuf`() {
-        assertFailsWith<IllegalStateException> { UseCollectionOrdering.toProtoString() }
-    }
-
-    @Test
-    fun `AfterSqlOrderBy toProtoBuf`() {
-        assertEquals(
-            """custom: "c.ivl asc, c.due desc"""",
-            AfterSqlOrderBy("c.ivl asc, c.due desc").toProtoString(),
-        )
-    }
-
-    @Test
-    fun `LegacyBuiltinSortKind toProtoBuf`() {
-        assertEquals(
-            "builtin {\n  column: \"cardDue\"\n  reverse: true\n}",
-            LegacyBuiltinSortKind("cardDue", reverse = true).toProtoString(),
-        )
-    }
 }
-
-fun SortOrder.toProtoString() =
-    this
-        .toProtoBufLegacy()
-        .toString()
-        .lineSequence()
-        .filter { !it.startsWith("# anki.") }
-        .joinToString("\n")
