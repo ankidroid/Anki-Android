@@ -1362,6 +1362,7 @@ open class CardBrowser :
     }
 }
 
+@Suppress("deprecation") // legacy calls to findCards/findNotes
 suspend fun searchForRows(
     query: String,
     order: SortOrder,
@@ -1369,8 +1370,8 @@ suspend fun searchForRows(
 ): BrowserRowCollection =
     withCol {
         when (cardsOrNotes) {
-            CARDS -> findCards(query, order)
-            NOTES -> findNotes(query, order)
+            CARDS -> findCardsLegacy(query, order)
+            NOTES -> findNotesLegacy(query, order)
         }
     }.let { ids ->
         BrowserRowCollection(cardsOrNotes, ids.map { CardOrNoteId(it) }.toMutableList())
