@@ -77,6 +77,7 @@ import com.ichi2.anki.model.SortType.NO_SORTING
 import com.ichi2.anki.model.SortType.SORT_FIELD
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.anki.setFlagFilterSync
+import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.utils.ext.ifNotZero
 import com.ichi2.testutils.IntentAssert
 import com.ichi2.testutils.JvmTest
@@ -109,6 +110,11 @@ import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
 class CardBrowserViewModelTest : JvmTest() {
+    override fun setUp() {
+        super.setUp()
+        Prefs.putString(com.ichi2.anki.R.string.pref_browser_no_sorting, null)
+    }
+
     @Test
     fun `delete search history - Issue 14989`() =
         runViewModelTest {
