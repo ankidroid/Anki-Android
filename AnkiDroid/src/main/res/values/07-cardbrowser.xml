@@ -55,19 +55,6 @@
     <string name="card_browser_change_display_order_title">Choose display order</string>
     <string name="card_details_tags">Tags</string>
     <string name="card_browser_order_no_sorting">No sorting (faster)</string>
-    <string-array name="card_browser_order_labels">
-        <item>No sorting (faster)</item>
-        <item>By sort field</item>
-        <item>By created time</item>
-        <item>By note modification time</item>
-        <item>By card modification time</item>
-        <item>By due time</item>
-        <item>By interval</item>
-        <item>By ease</item>
-        <item>By reviews</item>
-        <item>By lapses</item>
-        <item>By deck name</item>
-    </string-array>
     <string name="manage_browser_column">Manage column</string>
     <string name="no_columns_available">No columns available</string>
     <string name="card_browser_select_all" maxLength="28">Select all</string>

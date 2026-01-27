@@ -53,6 +53,7 @@ import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.IntentHandler.Companion.grantedStoragePermissions
 import com.ichi2.anki.RobolectricTest.Companion.advanceRobolectricLooper
+import com.ichi2.anki.browser.BrowserColumnKey
 import com.ichi2.anki.browser.BrowserMultiColumnAdapter
 import com.ichi2.anki.browser.BrowserMultiColumnAdapter.Companion.LINES_VISIBLE_WHEN_COLLAPSED
 import com.ichi2.anki.browser.CardBrowserColumn
@@ -88,8 +89,8 @@ import com.ichi2.anki.libanki.QueueType
 import com.ichi2.anki.libanki.testutils.AnkiTest
 import com.ichi2.anki.model.CardsOrNotes.CARDS
 import com.ichi2.anki.model.CardsOrNotes.NOTES
-import com.ichi2.anki.model.LegacySortType
 import com.ichi2.anki.model.SelectableDeck
+import com.ichi2.anki.model.SortType
 import com.ichi2.anki.scheduling.ForgetCardsDialog
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService.PreferenceUpgrade.UpgradeBrowserColumns.Companion.LEGACY_COLUMN1_KEYS
@@ -486,38 +487,6 @@ class CardBrowserTest : RobolectricTest() {
             assertThat("tagged card should be returned", b.viewModel.rowCount, equalTo(1))
         }
 
-    @Test
-    @Flaky(os = OS.WINDOWS, "IllegalStateException: Card '1596783600440' not found")
-    fun previewWorksAfterSort() =
-        runTest {
-            // #7286
-            val cid1 = addBasicNote("Hello", "World").cards()[0].id
-            val cid2 = addBasicNote("Hello2", "World2").cards()[0].id
-
-            val b = browserWithNoNewCards
-
-            b.selectRowsWithPositions(0)
-            val previewIntent = b.viewModel.queryPreviewIntentData()
-            assertThat("before: index", previewIntent.currentIndex, equalTo(0))
-            assertThat(
-                "before: cards",
-                previewIntent.idsFile.getIds(),
-                equalTo(listOf(cid1, cid2)),
-            )
-
-            // reverse
-            b.viewModel.changeCardOrder(LegacySortType.SORT_FIELD)
-
-            b.replaceSelectionWith(intArrayOf(0))
-            val intentAfterReverse = b.viewModel.queryPreviewIntentData()
-            assertThat("after: index", intentAfterReverse.currentIndex, equalTo(0))
-            assertThat(
-                "after: cards",
-                intentAfterReverse.idsFile.getIds(),
-                equalTo(listOf(cid2, cid1)),
-            )
-        }
-
     /** 7420  */
     @Test
     fun addCardDeckISetIfDeckIsSelected() =
@@ -805,7 +774,12 @@ class CardBrowserTest : RobolectricTest() {
         )
 
         // Change the display order of the card browser
-        cardBrowserController.get().viewModel.changeCardOrder(LegacySortType.EASE)
+        cardBrowserController.get().viewModel.setSortType(
+            SortType.CollectionOrdering(
+                BrowserColumnKey("cardEase"),
+                reverse = true,
+            ),
+        )
 
         // Kill and restart the activity and ensure that display order is preserved
         val outBundle = Bundle()
@@ -880,29 +854,6 @@ class CardBrowserTest : RobolectricTest() {
                     assertThat("Result should contain 2 cards (one per note)", rowCount, equalTo(2))
                 }
             }
-        }
-
-    /** PR #14859  */
-    @Test
-    fun checkDisplayOrderAfterTogglingCardsToNotes() =
-        withBrowser {
-            viewModel.changeCardOrder(LegacySortType.EASE) // order no. 7 corresponds to "cardEase"
-
-            viewModel.changeCardOrder(LegacySortType.EASE) // reverse the list
-
-            viewModel.setCardsOrNotes(NOTES)
-            searchCards()
-
-            assertThat(
-                "Card Browser has the new noteSortType field",
-                col.config.get<String>("noteSortType"),
-                equalTo("cardEase"),
-            )
-            assertThat(
-                "Card Browser has the new browserNoteSortBackwards field",
-                col.config.get<Boolean>("browserNoteSortBackwards"),
-                equalTo(true),
-            )
         }
 
     data class CheckedCardResult(
@@ -1811,11 +1762,6 @@ private fun CardBrowser.rerenderAllCards() {
 }
 
 fun CardBrowser.hasSelectedCardAtPosition(i: Int): Boolean = viewModel.selectedRows.contains(viewModel.getRowAtPosition(i))
-
-fun CardBrowser.replaceSelectionWith(positions: IntArray) {
-    viewModel.selectNone()
-    selectRowsWithPositions(*positions)
-}
 
 fun CardBrowser.column1Text(row: Int): CharSequence? = getVisibleRows()[row].columnViews[0].text
 

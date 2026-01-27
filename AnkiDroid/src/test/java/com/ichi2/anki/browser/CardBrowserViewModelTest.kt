@@ -71,9 +71,6 @@ import com.ichi2.anki.libanki.QueueType.ManuallyBuried
 import com.ichi2.anki.libanki.QueueType.New
 import com.ichi2.anki.libanki.testutils.AnkiTest
 import com.ichi2.anki.model.CardsOrNotes
-import com.ichi2.anki.model.LegacySortType
-import com.ichi2.anki.model.LegacySortType.NO_SORTING
-import com.ichi2.anki.model.LegacySortType.SORT_FIELD
 import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.anki.model.SortType
 import com.ichi2.anki.servicelayer.NoteService
@@ -572,54 +569,6 @@ class CardBrowserViewModelTest : JvmTest() {
             }
         }
     }
-
-    @Test
-    fun `change card order to NO_SORTING is a no-op if done twice`() =
-        runViewModelTest {
-            flowOfSearchState.test {
-                ignoreEventsDuringViewModelInit()
-                assertThat("initial order", order, equalTo(SORT_FIELD))
-                assertThat("initial direction", !orderAsc)
-
-                // changing the order performs a search & changes order
-                changeCardOrder(NO_SORTING)
-                expectMostRecentItem()
-                assertThat("order changed", order, equalTo(NO_SORTING))
-                assertThat("changed direction", !orderAsc)
-
-                waitForSearchResults()
-
-                // pressing 'no sorting' again is a no-op
-                changeCardOrder(NO_SORTING)
-                expectNoEvents()
-                assertThat("order unchanged", order, equalTo(NO_SORTING))
-                assertThat("unchanged direction", !orderAsc)
-            }
-        }
-
-    @Test
-    fun `change direction of results`() =
-        runViewModelTest {
-            flowOfSearchState.test {
-                ignoreEventsDuringViewModelInit()
-                assertThat("initial order", order, equalTo(SORT_FIELD))
-                assertThat("initial direction", !orderAsc)
-
-                // changing the order performs a search & changes order
-                changeCardOrder(LegacySortType.EASE)
-                expectMostRecentItem()
-                assertThat("order changed", order, equalTo(LegacySortType.EASE))
-                assertThat("changed direction is the default", !orderAsc)
-
-                waitForSearchResults()
-
-                // pressing 'ease' again changes direction
-                changeCardOrder(LegacySortType.EASE)
-                expectMostRecentItem()
-                assertThat("order unchanged", order, equalTo(LegacySortType.EASE))
-                assertThat("direction is changed", orderAsc)
-            }
-        }
 
     /*
      * Note: suspension behavior has been questioned from a performance perspective and is
@@ -1354,36 +1303,6 @@ class CardBrowserViewModelTest : JvmTest() {
 
                 expectMostRecentItem()
             }
-        }
-
-    @Test
-    fun `updating sort type updates flows - no ordering`() =
-        runViewModelTest {
-            assertEquals(LegacySortType.SORT_FIELD, order)
-
-            setSortType(SortType.NoOrdering)
-
-            assertEquals(LegacySortType.NO_SORTING, order)
-        }
-
-    @Test
-    fun `updating sort type updates flows - known column`() =
-        runViewModelTest {
-            assertEquals(LegacySortType.SORT_FIELD, order)
-
-            setSortType(SortType.CollectionOrdering(BrowserColumnKey("cardDue"), true))
-
-            assertEquals(LegacySortType.DUE_TIME, order)
-        }
-
-    @Test
-    fun `updating sort type updates order`() =
-        runViewModelTest {
-            assertEquals(false, orderAsc)
-
-            setSortType(SortType.CollectionOrdering(BrowserColumnKey("cardDue"), true))
-
-            assertEquals(true, orderAsc)
         }
 
     @Test
