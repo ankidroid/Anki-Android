@@ -22,6 +22,7 @@ import com.ichi2.anki.libanki.SortOrder.NoOrdering
 import com.ichi2.anki.libanki.SortOrder.UseCollectionOrdering
 import org.junit.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
 
 class SortOrderTest {
     @Test
@@ -49,4 +50,38 @@ class SortOrderTest {
             BuiltinSortKind("cardDue", reverse = true).toString(),
         )
     }
+
+    @Test
+    fun `NoOrdering toProtoBuf`() {
+        assertEquals("none {\n}", NoOrdering.toProtoString())
+    }
+
+    @Test
+    fun `UseCollectionOrdering toProtoBuf`() {
+        assertFailsWith<IllegalStateException> { UseCollectionOrdering.toProtoString() }
+    }
+
+    @Test
+    fun `AfterSqlOrderBy toProtoBuf`() {
+        assertEquals(
+            """custom: "c.ivl asc, c.due desc"""",
+            AfterSqlOrderBy("c.ivl asc, c.due desc").toProtoString(),
+        )
+    }
+
+    @Test
+    fun `BuiltinSortKind toProtoBuf`() {
+        assertEquals(
+            "builtin {\n  column: \"cardDue\"\n  reverse: true\n}",
+            BuiltinSortKind("cardDue", reverse = true).toProtoString(),
+        )
+    }
 }
+
+fun SortOrder.toProtoString() =
+    this
+        .toProtoBuf()
+        .toString()
+        .lineSequence()
+        .filter { !it.startsWith("# anki.") }
+        .joinToString("\n")

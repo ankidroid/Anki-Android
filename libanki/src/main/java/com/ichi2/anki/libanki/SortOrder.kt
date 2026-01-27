@@ -16,8 +16,12 @@
 
 package com.ichi2.anki.libanki
 
+import androidx.annotation.CheckResult
+import anki.generic.Empty
 import anki.search.BrowserColumns.Column
 import anki.search.BrowserColumns.Sorting
+import anki.search.SortOrderKt.builtin
+import anki.search.sortOrder
 
 /**
  * Options for sorting in [Collection.findNotes] or [Collection.findCards]
@@ -77,4 +81,26 @@ sealed class SortOrder {
         val value: String,
         val reverse: Boolean,
     ) : SortOrder()
+
+    /**
+     * Converts to a [anki.search.SortOrder]
+     *
+     * @throws IllegalStateException if [UseCollectionOrdering] is provided
+     */
+    @CheckResult
+    internal fun toProtoBuf() =
+        sortOrder {
+            when (this@SortOrder) {
+                is NoOrdering -> none = Empty.getDefaultInstance()
+                is AfterSqlOrderBy -> custom = customOrdering
+                is BuiltinSortKind ->
+                    builtin =
+                        builtin {
+                            column = value
+                            reverse = this@SortOrder.reverse
+                        }
+
+                is UseCollectionOrdering -> throw IllegalStateException(this.toString())
+            }
+        }
 }
