@@ -77,10 +77,24 @@ sealed class SortOrder {
      * and support sorting cards unless [Column.getSortingCards]/[Column.getSortingNotes]
      * is set to [Sorting.SORTING_NONE]
      */
-    data class BuiltinSortKind(
+    data class LegacyBuiltinSortKind(
         val value: String,
         val reverse: Boolean,
     ) : SortOrder()
+
+    /**
+     * Sort using a column, if it supports sorting.
+     *
+     * All available columns are available through [Collection.allBrowserColumns]
+     * and support sorting cards unless [Column.getSortingCards]/[Column.getSortingNotes]
+     * is set to [Sorting.SORTING_NONE]
+     */
+    class BuiltinColumnSortKind(
+        val column: Column,
+        val reverse: Boolean,
+    ) : SortOrder() {
+        override fun toString() = "BuiltinColumnSortKind(column=${column.key}, reverse=$reverse)"
+    }
 
     /**
      * Converts to a [anki.search.SortOrder]
@@ -88,12 +102,12 @@ sealed class SortOrder {
      * @throws IllegalStateException if [UseCollectionOrdering] is provided
      */
     @CheckResult
-    internal fun toProtoBuf() =
+    internal fun toProtoBufLegacy() =
         sortOrder {
             when (this@SortOrder) {
                 is NoOrdering -> none = Empty.getDefaultInstance()
                 is AfterSqlOrderBy -> custom = customOrdering
-                is BuiltinSortKind ->
+                is LegacyBuiltinSortKind ->
                     builtin =
                         builtin {
                             column = value
@@ -101,6 +115,7 @@ sealed class SortOrder {
                         }
 
                 is UseCollectionOrdering -> throw IllegalStateException(this.toString())
+                is BuiltinColumnSortKind -> throw IllegalStateException(this.toString())
             }
         }
 }

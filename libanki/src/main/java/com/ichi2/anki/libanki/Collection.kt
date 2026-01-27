@@ -37,6 +37,7 @@ import anki.collection.OpChangesWithCount
 import anki.config.ConfigKey
 import anki.config.Preferences
 import anki.config.copy
+import anki.generic.Empty
 import anki.image_occlusion.GetImageForOcclusionResponse
 import anki.image_occlusion.GetImageOcclusionNoteResponse
 import anki.import_export.CsvMetadata
@@ -52,7 +53,9 @@ import anki.search.BrowserColumns
 import anki.search.BrowserRow
 import anki.search.SearchNode
 import anki.search.SearchNode.Group.Joiner
+import anki.search.SortOrderKt.builtin
 import anki.search.searchNode
+import anki.search.sortOrder
 import anki.stats.CardStatsResponse
 import anki.stats.CardStatsResponse.StatsRevlogEntry
 import anki.sync.MediaSyncStatusResponse
@@ -76,6 +79,7 @@ import com.ichi2.anki.libanki.sched.Scheduler
 import com.ichi2.anki.libanki.utils.LibAnkiAlias
 import com.ichi2.anki.libanki.utils.NotInPyLib
 import net.ankiweb.rsdroid.Backend
+import net.ankiweb.rsdroid.BackendException.BackendSearchException
 import net.ankiweb.rsdroid.RustCleanup
 import net.ankiweb.rsdroid.exceptions.BackendInvalidInputException
 import timber.log.Timber
@@ -780,19 +784,92 @@ class Collection(
      */
 
     /**
-     * Return a list of card ids
-     * @throws InvalidSearchException
+     * Returns [Card IDs][CardId] matching the provided search.
+     *
+     * To programmatically construct a search string, see [buildSearchString].
+     *
+     * @see SortOrder
+     * @throws BackendSearchException If the query is invalid: `and`; `flag:12` etc...
      */
     @CheckResult
-    @RustCleanup("does not match libAnki; also fix docs")
     @LibAnkiAlias("find_cards")
     fun findCards(
+        query: String,
+        order: SortOrder = SortOrder.NoOrdering,
+    ): List<CardId> {
+        val mode = buildSortMode(order, findingNotes = false)
+        return backend.searchCards(search = query, order = mode)
+    }
+
+    /**
+     * Returns [Note IDs][NoteId] matching the provided search.
+     *
+     * To programmatically construct a search string, see [buildSearchString].
+     *
+     * @see SortOrder
+     * @throws BackendSearchException If the query is invalid: `and`; `flag:12` etc...
+     */
+    @CheckResult
+    @LibAnkiAlias("find_notes")
+    fun findNotes(
+        query: String,
+        order: SortOrder = SortOrder.NoOrdering,
+    ): List<NoteId> {
+        val mode = buildSortMode(order, findingNotes = true)
+        return backend.searchNotes(search = query, order = mode)
+    }
+
+    @LibAnkiAlias("_build_sort_mode")
+    private fun buildSortMode(
+        order: SortOrder,
+        findingNotes: Boolean,
+    ): anki.search.SortOrder =
+        sortOrder {
+            fun noOrder() = buildSortMode(SortOrder.NoOrdering, findingNotes)
+            when (order) {
+                // Python: isinstance(order, str)
+                is SortOrder.AfterSqlOrderBy -> custom = order.customOrdering
+                // Python: isinstance(order, bool); order == False:
+                is SortOrder.NoOrdering -> none = Empty.getDefaultInstance()
+                // Python: isinstance(order, bool); order == True:
+                is SortOrder.UseCollectionOrdering -> {
+                    val sortKey = BrowserConfig.sortColumnKey(isNotesMode = findingNotes)
+                    val columnKey = config.get<String>(sortKey) ?: "noteFld"
+                    // slight deviation from upstream with 'noOrder' returns on nulls.
+                    val order = getBrowserColumn(columnKey) ?: return noOrder()
+                    val reverseKey = BrowserConfig.sortBackwardsKey(isNotesMode = findingNotes)
+                    val reverse = config.get<Boolean>(reverseKey) ?: false
+                    val updatedQuery = SortOrder.BuiltinColumnSortKind(order, reverse)
+                    // deviates from upstream: recursive call rather than mutating a variable
+                    return buildSortMode(updatedQuery, findingNotes)
+                }
+                is SortOrder.BuiltinColumnSortKind -> {
+                    val sort = if (findingNotes) order.column.sortingNotes else order.column.sortingCards
+                    if (sort == BrowserColumns.Sorting.SORTING_NONE) return noOrder()
+
+                    builtin =
+                        builtin {
+                            column = order.column.key
+                            reverse = order.reverse
+                        }
+                }
+                is SortOrder.LegacyBuiltinSortKind -> throw UnsupportedOperationException("use find[Cards/Notes]Legacy")
+            }
+        }
+
+    /**
+     * @see findCards
+     */
+    @CheckResult
+    @Deprecated(message = "reimplemented upstream", replaceWith = ReplaceWith("findCards"))
+    @LibAnkiAlias("find_cards")
+    fun findCardsLegacy(
         search: String,
         order: SortOrder = SortOrder.NoOrdering,
     ): List<CardId> {
         val adjustedOrder =
             if (order is SortOrder.UseCollectionOrdering) {
-                SortOrder.BuiltinSortKind(
+                SortOrder.LegacyBuiltinSortKind(
                     config.get("sortType") ?: "noteFld",
                     config.get("sortBackwards") ?: false,
                 )
@@ -800,22 +877,25 @@ class Collection(
                 order
             }
         return try {
-            backend.searchCards(search, adjustedOrder.toProtoBuf())
+            backend.searchCards(search, adjustedOrder.toProtoBufLegacy())
         } catch (e: BackendInvalidInputException) {
             throw InvalidSearchException(e)
         }
     }
 
+    /**
+     * @see findNotes
+     */
     @CheckResult
-    @RustCleanup("does not match upstream")
+    @Deprecated(message = "reimplemented upstream", replaceWith = ReplaceWith("findNotes"))
     @LibAnkiAlias("find_notes")
-    fun findNotes(
+    fun findNotesLegacy(
         query: String,
         order: SortOrder = SortOrder.NoOrdering,
     ): List<NoteId> {
         val adjustedOrder =
             if (order is SortOrder.UseCollectionOrdering) {
-                SortOrder.BuiltinSortKind(
+                SortOrder.LegacyBuiltinSortKind(
                     config.get("noteSortType") ?: "noteFld",
                     config.get("browserNoteSortBackwards") ?: false,
                 )
@@ -824,15 +904,12 @@ class Collection(
             }
         val noteIDsList =
             try {
-                backend.searchNotes(query, adjustedOrder.toProtoBuf())
+                backend.searchNotes(query, adjustedOrder.toProtoBufLegacy())
             } catch (e: BackendInvalidInputException) {
                 throw InvalidSearchException(e)
             }
         return noteIDsList
     }
-
-    // @LibAnkiAlias("_build_sort_mode")
-    // private fun buildSortMode()
 
     /**
      * @return An [OpChangesWithCount] representing the number of affected notes
