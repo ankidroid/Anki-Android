@@ -71,8 +71,8 @@ import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.model.CardsOrNotes
 import com.ichi2.anki.model.CardsOrNotes.CARDS
 import com.ichi2.anki.model.CardsOrNotes.NOTES
+import com.ichi2.anki.model.LegacySortType
 import com.ichi2.anki.model.SelectableDeck
-import com.ichi2.anki.model.SortType
 import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.pages.CardInfoDestination
@@ -196,7 +196,7 @@ class CardBrowserViewModel(
 
     val flowOfScrollRequest = MutableSharedFlow<RowSelection>()
 
-    private val sortTypeFlow = MutableStateFlow(SortType.NO_SORTING)
+    private val sortTypeFlow = MutableStateFlow(LegacySortType.NO_SORTING)
     val order get() = sortTypeFlow.value
 
     private val reverseDirectionFlow = MutableStateFlow(ReverseDirection(orderAsc = false))
@@ -492,7 +492,7 @@ class CardBrowserViewModel(
             flowOfCardsOrNotes.update { cardsOrNotes }
 
             withCol {
-                sortTypeFlow.update { SortType.fromCol(config, cardsOrNotes, prefs) }
+                sortTypeFlow.update { LegacySortType.fromCol(config, cardsOrNotes, prefs) }
                 reverseDirectionFlow.update { ReverseDirection.fromConfig(config) }
             }
             Timber.i("initCompleted")
@@ -831,12 +831,12 @@ class CardBrowserViewModel(
         searchRequestFlow.value.filters.decks
             .isEmpty()
 
-    fun changeCardOrder(which: SortType) {
+    fun changeCardOrder(which: LegacySortType) {
         val changeType =
             when {
                 which != order -> ChangeCardOrder.OrderChange(which)
                 // if the same element is selected again, reverse the order
-                which != SortType.NO_SORTING -> ChangeCardOrder.DirectionChange
+                which != LegacySortType.NO_SORTING -> ChangeCardOrder.DirectionChange
                 else -> null
             } ?: return
 
@@ -1430,7 +1430,7 @@ class CardBrowserViewModel(
 
     private sealed interface ChangeCardOrder {
         data class OrderChange(
-            val sortType: SortType,
+            val sortType: LegacySortType,
         ) : ChangeCardOrder
 
         data object DirectionChange : ChangeCardOrder
