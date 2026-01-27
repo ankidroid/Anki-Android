@@ -1525,8 +1525,6 @@ sealed class RepositionCardsRequest {
     }
 }
 
-fun BrowserColumns.Column.getLabel(cardsOrNotes: CardsOrNotes): String = if (cardsOrNotes == CARDS) cardsModeLabel else notesModeLabel
-
 /**
  * Whether the provided notes all have the same the same [note type][com.ichi2.anki.libanki.NoteTypeId]
  */
