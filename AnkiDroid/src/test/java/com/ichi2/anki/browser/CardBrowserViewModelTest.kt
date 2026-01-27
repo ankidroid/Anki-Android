@@ -2030,6 +2030,43 @@ class CardBrowserViewModelTest : JvmTest() {
     }
 }
 
+context(test: AnkiTest)
+private fun runViewModelTest(
+    notes: Int = 0,
+    manualInit: Boolean = true,
+    savedStateHandle: SavedStateHandle = SavedStateHandle(),
+    testBody: suspend CardBrowserViewModel.() -> Unit,
+) = test.runTest {
+    for (i in 0 until notes) {
+        test.addBasicNote()
+    }
+    notes.ifNotZero { count -> Timber.d("added %d notes", count) }
+    val viewModel =
+        CardBrowserViewModel(
+            lastDeckIdRepository = SharedPreferencesLastDeckIdRepository(),
+            cacheDir = createTransientDirectory(),
+            options = null,
+            preferences = AnkiDroidApp.sharedPreferencesProvider,
+            isFragmented = false,
+            manualInit = manualInit,
+            savedStateHandle = savedStateHandle,
+        )
+    // makes ignoreValuesFromViewModelLaunch work under test
+    if (manualInit) {
+        viewModel.manualInit()
+    }
+    testBody(viewModel)
+    Timber.d("end runViewModelTest")
+}
+
+context(test: AnkiTest)
+fun runCardBrowserViewModelTest(
+    notes: Int = 0,
+    manualInit: Boolean = true,
+    savedStateHandle: SavedStateHandle = SavedStateHandle(),
+    testBody: suspend CardBrowserViewModel.() -> Unit,
+) = runViewModelTest(notes, manualInit, savedStateHandle, testBody)
+
 @Suppress("SameParameterValue")
 private fun CardBrowserViewModel.selectRowsWithPositions(vararg positions: Int) {
     for (pos in positions) {
