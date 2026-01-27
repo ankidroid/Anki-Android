@@ -73,7 +73,6 @@ import com.ichi2.anki.libanki.Storage.OpenDbArgs
 import com.ichi2.anki.libanki.Utils.ids2str
 import com.ichi2.anki.libanki.backend.model.toBackendNote
 import com.ichi2.anki.libanki.exception.ConfirmModSchemaException
-import com.ichi2.anki.libanki.exception.InvalidSearchException
 import com.ichi2.anki.libanki.sched.DummyScheduler
 import com.ichi2.anki.libanki.sched.Scheduler
 import com.ichi2.anki.libanki.utils.LibAnkiAlias
@@ -81,7 +80,6 @@ import com.ichi2.anki.libanki.utils.NotInPyLib
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.BackendException.BackendSearchException
 import net.ankiweb.rsdroid.RustCleanup
-import net.ankiweb.rsdroid.exceptions.BackendInvalidInputException
 import timber.log.Timber
 import java.io.File
 
@@ -853,63 +851,8 @@ class Collection(
                             reverse = order.reverse
                         }
                 }
-                is SortOrder.LegacyBuiltinSortKind -> throw UnsupportedOperationException("use find[Cards/Notes]Legacy")
             }
         }
-
-    /**
-     * @see findCards
-     */
-    @CheckResult
-    @Deprecated(message = "reimplemented upstream", replaceWith = ReplaceWith("findCards"))
-    @LibAnkiAlias("find_cards")
-    fun findCardsLegacy(
-        search: String,
-        order: SortOrder = SortOrder.NoOrdering,
-    ): List<CardId> {
-        val adjustedOrder =
-            if (order is SortOrder.UseCollectionOrdering) {
-                SortOrder.LegacyBuiltinSortKind(
-                    config.get("sortType") ?: "noteFld",
-                    config.get("sortBackwards") ?: false,
-                )
-            } else {
-                order
-            }
-        return try {
-            backend.searchCards(search, adjustedOrder.toProtoBufLegacy())
-        } catch (e: BackendInvalidInputException) {
-            throw InvalidSearchException(e)
-        }
-    }
-
-    /**
-     * @see findNotes
-     */
-    @CheckResult
-    @Deprecated(message = "reimplemented upstream", replaceWith = ReplaceWith("findNotes"))
-    @LibAnkiAlias("find_notes")
-    fun findNotesLegacy(
-        query: String,
-        order: SortOrder = SortOrder.NoOrdering,
-    ): List<NoteId> {
-        val adjustedOrder =
-            if (order is SortOrder.UseCollectionOrdering) {
-                SortOrder.LegacyBuiltinSortKind(
-                    config.get("noteSortType") ?: "noteFld",
-                    config.get("browserNoteSortBackwards") ?: false,
-                )
-            } else {
-                order
-            }
-        val noteIDsList =
-            try {
-                backend.searchNotes(query, adjustedOrder.toProtoBufLegacy())
-            } catch (e: BackendInvalidInputException) {
-                throw InvalidSearchException(e)
-            }
-        return noteIDsList
-    }
 
     /**
      * @return An [OpChangesWithCount] representing the number of affected notes
