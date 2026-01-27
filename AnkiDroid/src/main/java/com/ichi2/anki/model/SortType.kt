@@ -70,7 +70,7 @@ enum class SortType(
     }
 
     /** Converts the [SortType] to a [SortOrder] */
-    fun toSortOrder(): SortOrder = if (this == NO_SORTING) SortOrder.NoOrdering() else SortOrder.UseCollectionOrdering()
+    fun toSortOrder(): SortOrder = if (this == NO_SORTING) SortOrder.NoOrdering else SortOrder.UseCollectionOrdering
 
     companion object {
         fun fromCol(

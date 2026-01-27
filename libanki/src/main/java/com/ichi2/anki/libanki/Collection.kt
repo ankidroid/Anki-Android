@@ -789,7 +789,7 @@ class Collection(
     @LibAnkiAlias("find_cards")
     fun findCards(
         search: String,
-        order: SortOrder = SortOrder.NoOrdering(),
+        order: SortOrder = SortOrder.NoOrdering,
     ): List<CardId> {
         val adjustedOrder =
             if (order is SortOrder.UseCollectionOrdering) {
@@ -812,7 +812,7 @@ class Collection(
     @LibAnkiAlias("find_notes")
     fun findNotes(
         query: String,
-        order: SortOrder = SortOrder.NoOrdering(),
+        order: SortOrder = SortOrder.NoOrdering,
     ): List<NoteId> {
         val adjustedOrder =
             if (order is SortOrder.UseCollectionOrdering) {
