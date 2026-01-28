@@ -30,6 +30,18 @@ You may be banned from the repository if this occurs a second time.
   template.
 * Contributions that make nontrivial use of AI tools **must** be labelled, with the tool version.
 
+### Handling Questions about AI Use
+
+If you are not sure whether a tool or workflow counts as AI usage under this policy, please ask
+**before** using it. Ask your question in a public [#ankidroid-dev](https://discord.gg/xeb7bBZVJ6) so that the answer
+helps everyone. Direct messages to mentors/reviewers about AI usage may not get a reply.
+
+If a reviewer raises concerns about AI usage in your contribution, reply clearly and honestly with
+facts. Please do not argue about the policy in PRs. Repeated arguments, hiding AI usage,
+or trying to bypass this policy may lead to moderator action.
+
+### Disclosure
+
 **Commit messages** **must** use the `Assisted-by:` 
  [git trailer](https://git-scm.com/docs/git-interpret-trailers#_description) with an explanation
  of the contributions in the description.
