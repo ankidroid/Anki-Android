@@ -41,7 +41,7 @@ import com.ichi2.anki.dialogs.showLoadingDialog
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.notetype.ManageNoteTypesState.UserMessage
 import com.ichi2.anki.snackbar.showSnackbar
-import com.ichi2.anki.userAcceptsSchemaChange
+import com.ichi2.anki.sync.userAcceptsSchemaChange
 import com.ichi2.anki.utils.Destination
 import com.ichi2.ui.AccessibleSearchView
 import com.ichi2.utils.getInputField
