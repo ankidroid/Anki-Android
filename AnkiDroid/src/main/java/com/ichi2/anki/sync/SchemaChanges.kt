@@ -48,7 +48,7 @@ fun AnkiActivity.launchCatchingRequiringOneWaySync(block: suspend () -> Unit) =
                     dialog.setArgs(message = getString(R.string.full_sync_confirmation))
                     dialog.setConfirm {
                         launchCatchingTask {
-                            withCol { modSchemaNoCheck() }
+                            withCol { modSchema(check = false) }
                             block()
                         }
                     }
@@ -77,7 +77,7 @@ suspend fun AnkiActivity.userAcceptsSchemaChange(): Boolean {
             }
         }
     if (hasAcceptedSchemaChange) {
-        withCol { modSchemaNoCheck() }
+        withCol { modSchema(check = false) }
     }
     return hasAcceptedSchemaChange
 }

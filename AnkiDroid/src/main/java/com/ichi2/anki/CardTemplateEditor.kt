@@ -1357,7 +1357,7 @@ open class CardTemplateEditor :
          */
         private fun executeWithSyncCheck(schemaChangingAction: Runnable) {
             try {
-                templateEditor.getColUnsafe.modSchema()
+                templateEditor.getColUnsafe.modSchema(check = true)
                 schemaChangingAction.run()
                 templateEditor.loadTemplatePreviewerFragmentIfFragmented()
             } catch (e: ConfirmModSchemaException) {
@@ -1366,7 +1366,7 @@ open class CardTemplateEditor :
                 d.setArgs(resources.getString(R.string.full_sync_confirmation))
                 val confirm =
                     Runnable {
-                        templateEditor.getColUnsafe.modSchemaNoCheck()
+                        templateEditor.getColUnsafe.modSchema(check = false)
                         schemaChangingAction.run()
                         templateEditor.dismissAllDialogFragments()
                     }

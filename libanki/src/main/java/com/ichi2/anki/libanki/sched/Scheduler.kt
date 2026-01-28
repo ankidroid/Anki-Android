@@ -229,7 +229,7 @@ open class Scheduler(
      * @throws com.ichi2.anki.libanki.exception.ConfirmModSchemaException
      */
     fun upgradeToV2() {
-        col.modSchema()
+        col.modSchema(check = true)
         col.backend.upgradeScheduler()
         col._loadScheduler()
     }

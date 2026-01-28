@@ -238,9 +238,9 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.note_type_field_editor) {
         fieldName ?: return
         // Name is valid, now field is added
         if (modSchemaCheck) {
-            getColUnsafe.modSchema()
+            getColUnsafe.modSchema(check = true)
         } else {
-            getColUnsafe.modSchemaNoCheck()
+            getColUnsafe.modSchema(check = false)
         }
         launchCatchingTask {
             Timber.d("doInBackgroundAddField")
@@ -259,18 +259,21 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.note_type_field_editor) {
     private fun deleteFieldDialog() {
         val confirm =
             Runnable {
-                getColUnsafe.modSchemaNoCheck()
+                getColUnsafe.modSchema(check = false)
                 deleteField()
 
                 // This ensures that the context menu closes after the field has been deleted
-                supportFragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+                supportFragmentManager.popBackStackImmediate(
+                    null,
+                    FragmentManager.POP_BACK_STACK_INCLUSIVE,
+                )
             }
 
         if (fieldsLabels.size < 2) {
             showThemedToast(this, resources.getString(R.string.toast_last_field), true)
         } else {
             try {
-                getColUnsafe.modSchema()
+                getColUnsafe.modSchema(check = true)
                 val fieldName = noteFields[currentPos].name
                 ConfirmationDialog().let {
                     it.setArgs(
@@ -342,7 +345,7 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.note_type_field_editor) {
                         c.setArgs(resources.getString(R.string.full_sync_confirmation))
                         val confirm =
                             Runnable {
-                                getColUnsafe.modSchemaNoCheck()
+                                getColUnsafe.modSchema(check = false)
                                 try {
                                     renameField()
                                 } catch (e1: ConfirmModSchemaException) {
@@ -400,7 +403,7 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.note_type_field_editor) {
 
             Timber.i("Repositioning field from %d to %d", currentPos, newPosition)
             try {
-                getColUnsafe.modSchema()
+                getColUnsafe.modSchema(check = true)
                 repositionField(newPosition - 1)
             } catch (e: ConfirmModSchemaException) {
                 e.log()
@@ -411,7 +414,7 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.note_type_field_editor) {
                 val confirm =
                     Runnable {
                         try {
-                            getColUnsafe.modSchemaNoCheck()
+                            getColUnsafe.modSchema(check = false)
                             repositionField(newPosition - 1)
                         } catch (e1: JSONException) {
                             throw RuntimeException(e1)
@@ -466,7 +469,7 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.note_type_field_editor) {
      */
     private fun sortByField() {
         try {
-            getColUnsafe.modSchema()
+            getColUnsafe.modSchema(check = true)
             launchCatchingTask { changeSortField(notetype, currentPos) }
         } catch (e: ConfirmModSchemaException) {
             e.log()
@@ -475,7 +478,7 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.note_type_field_editor) {
             c.setArgs(resources.getString(R.string.full_sync_confirmation))
             val confirm =
                 Runnable {
-                    getColUnsafe.modSchemaNoCheck()
+                    getColUnsafe.modSchema(check = false)
                     launchCatchingTask { changeSortField(notetype, currentPos) }
                 }
             c.setConfirm(confirm)
