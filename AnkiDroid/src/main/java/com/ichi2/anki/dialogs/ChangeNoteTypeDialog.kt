@@ -62,13 +62,13 @@ import com.ichi2.anki.dialogs.ConversionType.CLOZE_TO_CLOZE
 import com.ichi2.anki.dialogs.ConversionType.CLOZE_TO_REGULAR
 import com.ichi2.anki.dialogs.ConversionType.REGULAR_TO_CLOZE
 import com.ichi2.anki.dialogs.ConversionType.REGULAR_TO_REGULAR
-import com.ichi2.anki.launchCatchingRequiringOneWaySync
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.NoteId
 import com.ichi2.anki.libanki.NoteTypeId
 import com.ichi2.anki.requireAnkiActivity
 import com.ichi2.anki.showError
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.sync.launchCatchingRequiringOneWaySync
 import com.ichi2.anki.ui.BasicItemSelectedListener
 import com.ichi2.anki.ui.internationalization.toSentenceCase
 import com.ichi2.anki.utils.InitStatus
