@@ -207,7 +207,7 @@
     <string name="backup_your_collection">Backup your collection</string>
     <string name="backup_collection_message">You haven\'t backed up your collection in a while. You should do this now to prevent data loss</string>
     <string name="button_backup" maxLength="41">𐌱𐌰𐌹𐌺-𐌰𐍀</string>
-    <string name="button_disable_reminder">Disable reminder</string>
+    <string name="button_disable_reminder">𐌰𐍆𐍄𐍂𐌰𐌼𐌿𐌽𐌳 𐌿𐌽𐌻𐌰𐌲𐌾𐌰𐌽</string>
     <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">𐌱𐌹𐌸𐌴</string>
     <string name="button_do_not_show_again" comment="permanently dismisses a dialog">𐌽𐌹 𐌰𐍆𐍄𐍂𐌰 𐌱𐌰𐌽𐌳𐍅𐌾𐌰𐌽</string>
     <string name="dismiss_backup_warning_title">𐍈𐍉𐍄𐌰 𐍆𐍂𐌰𐌻𐌿𐍃𐍄𐌰𐌹𐍃 𐌳𐌰𐍄𐍉𐍃</string>
@@ -261,12 +261,12 @@
     <string name="import_error_resolution_copy_to_device">Copy the file to your device and try again with the local file</string>
     <string name="import_error_resolution_select_file">Open the file using your device’s file browser app</string>
     <!-- Post-login dialog -->
-    <string name="login_successful">Login successful</string>
+    <string name="login_successful">𐌰𐍄𐌲𐌰𐌲𐌲𐌰𐌽 𐌼𐌰𐌷𐍄𐌰</string>
     <string name="sync_now">Sync now?</string>
     <!--Change Note Type Dialog Fragment-->
     <string name="card_numbers_unchanged">Card numbers will remain unchanged</string>
     <!-- Subset of TR.changeNotetypeToFromCloze -->
     <string name="extra_cloze_deletions_removed">If changing to a regular note type, and there are more cloze deletions than available card templates, any extra cards will be removed.</string>
     <string name="different_note_types_selected">Please select notes from only one notetype.</string>
-    <string name="error_no_changes_to_save">No changes to save</string>
+    <string name="error_no_changes_to_save">𐌽𐌹 𐌹𐌽𐌼𐌰𐌹𐌳𐌴𐌹𐌽𐍉𐍃 𐌲𐌰𐍆𐌰𐍃𐍄𐌰𐌹𐌽𐌰𐌹𐍃</string>
 </resources>

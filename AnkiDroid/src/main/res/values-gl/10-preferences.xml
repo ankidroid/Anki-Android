@@ -189,8 +189,8 @@
     </plurals>
     <string name="pref_keep_screen_on" maxLength="41">Manter a pantalla acesa</string>
     <string name="pref_keep_screen_on_summ">Desactivar o tempo de espera da pantalla</string>
-    <string name="enable_api_title" maxLength="41">Activar o API do AnkiDroid</string>
-    <string name="enable_api_summary">Permite que outas aplicacións se conecten ao AnkiDroid e lean ou escriban datos sen a túa intervención</string>
+    <string name="enable_api_title" maxLength="41">Activar a API do AnkiDroid</string>
+    <string name="enable_api_summary">Permite que outras aplicacións se conecten ao AnkiDroid e lean ou escriban datos sen a túa intervención</string>
     <string name="custom_buttons" maxLength="41">Botóns da barra da aplicación</string>
     <string name="custom_buttons_summary">Personalizar que accións aparecen na barra da aplicación</string>
     <string name="custom_buttons_setting_always_show">Amosar sempre</string>

@@ -45,65 +45,65 @@
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
-    <string name="disabled">Disabled</string>
+    <string name="disabled">Onemogućeno</string>
     <plurals name="pref_summ_minutes">
         <item quantity="one">%d min</item>
-        <item quantity="few">%d mins</item>
-        <item quantity="other">%d mins</item>
+        <item quantity="few">%d min</item>
+        <item quantity="other">%d min</item>
     </plurals>
-    <string name="pref_milliseconds">%s ms</string>
+    <string name="pref_milliseconds">% ms</string>
     <!-- TODO: move to 20-search-preference so we can contribute upstream (searchpreference_no_results)-->
-    <string name="pref_search_no_results">No results</string>
+    <string name="pref_search_no_results">Nema rezultata</string>
     <!-- preferences.xml categories-->
-    <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">General</string>
-    <string name="pref_cat_studying" maxLength="41">Studying</string>
+    <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">Općenito</string>
+    <string name="pref_cat_studying" maxLength="41">Učenje</string>
     <string name="pref_cat_system_wide" maxLength="41">System-wide</string>
-    <string name="pref_cat_reviewing" maxLength="41">Reviewing</string>
-    <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sync</string>
-    <string name="pref_cat_scheduling" maxLength="41">Scheduling</string>
-    <string name="pref_cat_whiteboard" maxLength="41">Whiteboard</string>
-    <string name="pref_cat_appearance" maxLength="41">Appearance</string>
-    <string name="pref_cat_themes" maxLength="41">Themes</string>
-    <string name="pref_cat_gestures" maxLength="41">Gestures</string>
+    <string name="pref_cat_reviewing" maxLength="41">Ponavljanje</string>
+    <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sinkronizacija</string>
+    <string name="pref_cat_scheduling" maxLength="41">Raspoređivanje</string>
+    <string name="pref_cat_whiteboard" maxLength="41">Ploča</string>
+    <string name="pref_cat_appearance" maxLength="41">Izgled</string>
+    <string name="pref_cat_themes" maxLength="41">Teme</string>
+    <string name="pref_cat_gestures" maxLength="41">Geste</string>
     <string name="pref_cat_controls" maxLength="41">Controls</string>
-    <string name="pref_cat_advanced" maxLength="41">Advanced</string>
+    <string name="pref_cat_advanced" maxLength="41">Napredno</string>
     <string name="pref_cat_workarounds" maxLength="41">Workarounds</string>
     <string name="pref_cat_plugins" maxLength="41">Plugins</string>
-    <string name="pref_cat_editing" maxLength="41">Editing</string>
+    <string name="pref_cat_editing" maxLength="41">Uređivanje</string>
     <!-- preferences.xml entries-->
-    <string name="whiteboard_stroke_width" maxLength="41">Stroke width</string>
-    <string name="use_input_tag" maxLength="41">Type answer into the card</string>
-    <string name="use_input_tag_summ">Use a text input box inside the card to type in the answer</string>
-    <string name="reset_languages" maxLength="41">Reset languages</string>
+    <string name="whiteboard_stroke_width" maxLength="41">Debljina poteza</string>
+    <string name="use_input_tag" maxLength="41">Upiši odgovor u karticu</string>
+    <string name="use_input_tag_summ">Upisivanje odgovora u kućicu za tekst unutar kartice</string>
+    <string name="reset_languages" maxLength="41">Resetiraj jezike</string>
     <string name="reset_languages_summ">Reset language assignments (for text to speech and dictionaries) for all decks</string>
     <string name="reset_languages_question">Reset all language assignments?</string>
-    <string name="reset_confirmation">All states reset</string>
+    <string name="reset_confirmation">Sva stanja resetirana</string>
     <string name="card_zoom" maxLength="41">Card zoom</string>
     <string name="image_zoom" maxLength="41">Image zoom</string>
-    <string name="button_size" maxLength="41">Answer button size</string>
+    <string name="button_size" maxLength="41">Veličina gumba za odgovor</string>
     <string name="card_browser_font_size" maxLength="41">Card browser font scaling</string>
     <string name="card_browser_hide_media" maxLength="41">Display filenames in card browser</string>
     <string name="card_browser_hide_media_summary">Display audio filenames in the card browser question/answer fields</string>
-    <string name="col_path" maxLength="41">AnkiDroid directory</string>
-    <string name="fullscreen_review" maxLength="41">Fullscreen mode</string>
-    <string name="full_screen_off">Off</string>
-    <string name="full_screen_system">Hide the system bars</string>
-    <string name="full_screen_complete">Hide the system bars and answer buttons</string>
-    <string name="answer_buttons_position" maxLength="41">Answer buttons position</string>
+    <string name="col_path" maxLength="41">AnkiDroid direktorij</string>
+    <string name="fullscreen_review" maxLength="41">Prikaz na cijelom zaslonu</string>
+    <string name="full_screen_off">Ugašeno</string>
+    <string name="full_screen_system">Sakrij trake sustava</string>
+    <string name="full_screen_complete">Sakrij trake sustava i gumbe za odgovore</string>
+    <string name="answer_buttons_position" maxLength="41">Pozicije gumba za odgovore</string>
     <string-array name="answer_buttons_position_labels">
-        <item>Top</item>
-        <item>Bottom</item>
-        <item>None</item>
+        <item>Gore</item>
+        <item>Dolje</item>
+        <item>Nigdje</item>
     </string-array>
-    <string name="gestures" maxLength="41">Enable gestures</string>
-    <string name="gestures_summ">Assign gestures to actions such as answering and editing cards.</string>
+    <string name="gestures" maxLength="41">Omogući geste</string>
+    <string name="gestures_summ">Gestama dodijeli radnje kao što su odgovaranje i uređivanje kartica.</string>
     <string name="gestures_corner_touch" maxLength="41">9-point touch</string>
-    <string name="gestures_corner_touch_summary">Allow touch gestures in screen corners</string>
-    <string name="show_keyboard_shortcuts" maxLength="41">Show keyboard shortcuts</string>
+    <string name="gestures_corner_touch_summary">Dozvoli dodirne geste u kutovima ekrana</string>
+    <string name="show_keyboard_shortcuts" maxLength="41">Pokaži prečace tipkovnice</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Full screen navigation drawer</string>
     <string name="gestures_fullscreen_nav_drawer_summary">Open navigation drawer when swiped right from anywhere on the screen</string>
-    <string name="gestures_none" maxLength="41" comment="No gestures">None</string>
-    <string name="gestures_swipe_up" maxLength="41">Swipe up</string>
+    <string name="gestures_none" maxLength="41" comment="No gestures">Nijedna</string>
+    <string name="gestures_swipe_up" maxLength="41">Povuci prema gore</string>
     <string name="gestures_swipe_down" maxLength="41">Swipe down</string>
     <string name="gestures_swipe_left" maxLength="41">Swipe left</string>
     <string name="gestures_swipe_right" maxLength="41">Swipe right</string>
@@ -131,45 +131,44 @@
     <!-- Sync -->
     <string name="sync_fetch_missing_media" maxLength="41">Fetch media on sync</string>
     <string name="sync_account" maxLength="41">AnkiWeb account</string>
-    <string name="sync_account_summ_logged_out">Not logged in</string>
-    <string name="automatic_sync_choice" maxLength="41">Automatic synchronization</string>
-    <string name="automatic_sync_choice_summ">Sync automatically on app start/exit if the last sync was more than 10
-        minutes ago.</string>
-    <string name="sync_media_always" comment="Option to always fetch media when syncing">Always</string>
-    <string name="sync_media_only_unmetered">Only on unmetered connections</string>
-    <string name="sync_media_never">Never</string>
-    <string name="sync_status_badge" maxLength="41">Display synchronization status</string>
-    <string name="sync_status_badge_summ">Change the sync icon when changes can be uploaded</string>
-    <string name="metered_sync_title" maxLength="41">Allow sync on metered connections</string>
-    <string name="metered_sync_summary">If disabled, you will be warned if you try to sync on a metered connection</string>
-    <string name="backup_limits_frequency">Frequency</string>
+    <string name="sync_account_summ_logged_out">Niste prijavljeni</string>
+    <string name="automatic_sync_choice" maxLength="41">Automatska sinkronizacija</string>
+    <string name="automatic_sync_choice_summ">Automatski sinkroniziraj pri ulasku/izlasku iz aplikacije ako je zadnja sinkronizacija provedena pred više od 10 minuta.</string>
+    <string name="sync_media_always" comment="Option to always fetch media when syncing">Uvijek</string>
+    <string name="sync_media_only_unmetered">Samo na neograničenim vezama</string>
+    <string name="sync_media_never">Nikad</string>
+    <string name="sync_status_badge" maxLength="41">Prikaži status sinkronizacije</string>
+    <string name="sync_status_badge_summ">Promijeni ikonu za sinkronizaciju kad su promjene dostupne za slanje</string>
+    <string name="metered_sync_title" maxLength="41">Dopusti sinkronizaciju na ograničenim mrežama</string>
+    <string name="metered_sync_summary">Ako je isključeno, bit ćete upozoreni ako pokušate sinkronizirati na ograničenoj mreži.</string>
+    <string name="backup_limits_frequency">Učestalost</string>
     <string name="backup_limits_lifetime">Lifetime</string>
-    <string name="app_theme" maxLength="41">Theme</string>
-    <string name="day_theme" maxLength="41">Day theme</string>
-    <string name="night_theme" maxLength="41">Night theme</string>
-    <string name="language" maxLength="41">Language</string>
-    <string name="language_system">System language</string>
-    <string name="notification_pref" maxLength="41">Notifications</string>
-    <string name="notification_pref_title" maxLength="41">Notify when</string>
-    <string name="never_notify">Never notify</string>
+    <string name="app_theme" maxLength="41">Tema</string>
+    <string name="day_theme" maxLength="41">Dnevna tema</string>
+    <string name="night_theme" maxLength="41">Noćna tema</string>
+    <string name="language" maxLength="41">Jezik</string>
+    <string name="language_system">Jezik sustava</string>
+    <string name="notification_pref" maxLength="41">Obavijesti</string>
+    <string name="notification_pref_title" maxLength="41">Obavijesti me kad</string>
+    <string name="never_notify">Nikada</string>
     <string name="notify_when_pending">Pending messages available</string>
     <string name="notification_minimum_cards_due" comment="Consider keeping the unbreakable space after the digit">More than %d cards due</string>
-    <string name="notification_minimum_cards_due_vibrate" maxLength="41">Vibrate</string>
+    <string name="notification_minimum_cards_due_vibrate" maxLength="41">Vibracija</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Blink light</string>
-    <string name="select_locale_title">Select language</string>
-    <string name="software_render" maxLength="41">Disable card hardware render</string>
-    <string name="software_render_summ">Hardware render is faster but may have problems, specifically on Android 8/8.1. If you cannot see parts of the card review user interface, try this setting.</string>
-    <string name="safe_display" maxLength="41">Safe display mode</string>
+    <string name="select_locale_title">Odaberi jezik</string>
+    <string name="software_render" maxLength="41">Isključi sklopovsko iscrtavanje kartica</string>
+    <string name="software_render_summ">Sklopovsko iscrtavanje je brže no može uzrokovati probleme, posebice na Androidu 8/8.1. Ako ne možete vidjete dijelove korisničkog sučelja za ponavljanje kartica, isprobajte ovu postavku.</string>
+    <string name="safe_display" maxLength="41">Siguran način prikaza</string>
     <string name="safe_display_summ">Disable all animations and use safer method for drawing cards. E-ink devices may require this.</string>
     <string name="disable_extended_text_ui" maxLength="41">Disable Single-Field Edit Mode</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
     <string name="disable_extended_text_ui_summ">Allows \'Cloze Deletion\' context menu when in landscape mode.</string>
     <string name="vertical_centering" maxLength="41">Center align</string>
     <string name="vertical_centering_summ">Center the content of cards vertically</string>
-    <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval</string>
-    <string name="pref_double_tap_time_interval_summary">A second tap of the answer buttons will be ignored if this time has not elapsed. This prevents accidental double taps</string>
-    <string name="pref_show_answer_long_press_time" maxLength="41">Show answer long-press time</string>
-    <string name="pref_show_answer_long_press_time_summary">Minimum pressing time before the show answer button registers a touch.</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">Vremenski interval duplog dodira</string>
+    <string name="pref_double_tap_time_interval_summary">Drugi dodir gumba za odgovor će se zanemariti ako nije proteklo ovoliko vremena. Ovo sprječava nenamjerno duplo stiskanje gumba</string>
+    <string name="pref_show_answer_long_press_time" maxLength="41">Vrijeme dugog dodira za prikaz odgovora</string>
+    <string name="pref_show_answer_long_press_time_summary">Minimalna količina vremena koju je potrebno držati gumb za prikaz odgovora kako bi bio pritisnut.</string>
     <string name="show_estimates" maxLength="41">Show button time</string>
     <string name="show_estimates_summ">Show next review time on answer buttons</string>
     <string name="show_large_answer_buttons" maxLength="41">Show large answer buttons</string>
@@ -185,13 +184,13 @@
     <string name="time_limit" maxLength="41">Timebox time limit</string>
     <string name="day_offset_with_description" maxLength="41">Start of next day</string>
     <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
-        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">%d hour past midnight</item>
-        <item quantity="few">%d hours past midnight</item>
-        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">%d hours past midnight</item>
+        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">%d sat poslije ponoći</item>
+        <item quantity="few">%d sata poslije ponoći</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">%d sati poslije ponoći</item>
     </plurals>
-    <string name="pref_keep_screen_on" maxLength="41">Keep screen on</string>
-    <string name="pref_keep_screen_on_summ">Disable screen timeout</string>
-    <string name="enable_api_title" maxLength="41">Enable AnkiDroid API</string>
+    <string name="pref_keep_screen_on" maxLength="41">Držim ekran uključen</string>
+    <string name="pref_keep_screen_on_summ">Isključi vremensko ograničenje ekrana</string>
+    <string name="enable_api_title" maxLength="41">Omogući AnkiDroid API</string>
     <string name="enable_api_summary">Let other apps connect to AnkiDroid and read / write data without your intervention</string>
     <string name="custom_buttons" maxLength="41">App bar buttons</string>
     <string name="custom_buttons_summary">Customize which actions appear in the app bar</string>
@@ -209,7 +208,7 @@
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">Study Screen</string>
     <string name="show_deck_title" maxLength="41">Show deck title</string>
-    <string name="accessibility" maxLength="41">Accessibility</string>
+    <string name="accessibility" maxLength="41">Pristupačnost</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Paste clipboard images as PNG</string>
     <string name="exit_via_double_tap_back" maxLength="41">Press back twice to go back/exit</string>
@@ -230,42 +229,42 @@
     <!-- Key Bindings -->
     <string name="keyboard">Keyboard</string>
     <string name="bluetooth">Bluetooth</string>
-    <string name="answer_buttons" maxLength="41">Answer buttons</string>
-    <string name="card" maxLength="41" comment="Generic term to refer to a card">Card</string>
-    <string name="note" maxLength="41">Note</string>
-    <string name="navigation" maxLength="41">Navigation</string>
-    <string name="media" maxLength="41">Media</string>
-    <string name="misc" maxLength="41">Misc</string>
+    <string name="answer_buttons" maxLength="41">Gumbi za odgovor</string>
+    <string name="card" maxLength="41" comment="Generic term to refer to a card">Kartica</string>
+    <string name="note" maxLength="41">Bilješka</string>
+    <string name="navigation" maxLength="41">Navigacija</string>
+    <string name="media" maxLength="41">Mediji</string>
+    <string name="misc" maxLength="41">Razno</string>
     <!-- Review reminders -->
-    <string name="add_reminder" comment="Label for the add reminder button in the screen for adding and editing review reminders">Add reminder</string>
-    <string name="add_review_reminder" comment="Title of the screen for creating a new review reminder">Add review reminder</string>
-    <string name="edit_review_reminder" comment="Title of the screen for editing an existing review reminder">Edit review reminder</string>
-    <string name="you_have_no_review_reminders" comment="Text that appears in the review reminder editing screen when there are no reminders set">You have no review reminders</string>
+    <string name="add_reminder" comment="Label for the add reminder button in the screen for adding and editing review reminders">Dodaj podsjetnik</string>
+    <string name="add_review_reminder" comment="Title of the screen for creating a new review reminder">Dodaj podsjetnik za ponavljanje</string>
+    <string name="edit_review_reminder" comment="Title of the screen for editing an existing review reminder">Uredi podsjetnik za ponavljanje</string>
+    <string name="you_have_no_review_reminders" comment="Text that appears in the review reminder editing screen when there are no reminders set">Nemate podsjetnika za ponavljanje</string>
     <!-- studyoptions -->
-    <string name="studyoptions_limit_select_tags">Select tags</string>
+    <string name="studyoptions_limit_select_tags">Odaberi oznake</string>
     <!-- Deck configurations -->
-    <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">General</string>
+    <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">Općenito</string>
     <string name="deck_conf_cram_filter" maxLength="41">Filter</string>
     <string name="deck_conf_cram_search" maxLength="41" comment="Label of a text field that contains a search query.">Search</string>
     <string name="deck_conf_cram_limit" maxLength="41">Limit to</string>
     <string name="deck_conf_cram_order" maxLength="41">Cards selected by</string>
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Reschedule</string>
     <string name="deck_conf_cram_reschedule_summ">Reschedule cards based on my answers in this deck</string>
-    <string name="deck_conf_cram_filter_2_check">Enable second filter</string>
+    <string name="deck_conf_cram_filter_2_check">Omogući drugi filtar</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Define custom steps</string>
     <string name="deck_conf_cram_preview_delays" maxLength="41">Preview delays</string>
     <string name="deck_conf_cram_preview_delays_summ">Delays are in seconds. 0 returns card to original deck.</string>
     <!-- analytics options -->
-    <string name="analytics_dialog_title">Help make AnkiDroid better!</string>
-    <string name="analytics_title" maxLength="41">Share feature usage</string>
-    <string name="analytics_summ">You can contribute to AnkiDroid by helping the development team see which features people use</string>
-    <string name="note_editor_replace_newlines" maxLength="41">Replace newlines with HTML</string>
+    <string name="analytics_dialog_title">Pomozi poboljšati AnkiDroid!</string>
+    <string name="analytics_title" maxLength="41">Podijeli korištenje značajki</string>
+    <string name="analytics_summ">Možete doprinijeti AnkiDroidu tako što pomognete razvojnom timu da vidi koje značajke ljudi koriste</string>
+    <string name="note_editor_replace_newlines" maxLength="41">Zamijeni nove retka s HTML-om</string>
     <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
     <string name="type_in_answer_focus" maxLength="41">Focus ‘type in answer’</string>
     <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the study screen</string>
     <!-- About -->
     <string name="open_changelog">Open changelog</string>
-    <string name="pref_cat_about_title" maxLength="41">About</string>
+    <string name="pref_cat_about_title" maxLength="41">O programu</string>
     <string name="contributors_title">Contributors</string>
     <string name="about_contributors_description"><![CDATA[These are our awesome <a href=\"%1$s\">contributors</a>. You can help AnkiDroid too by programming, translating, donating and <a href=\"%2$s\">more</a>!]]></string>
     <string name="license">License</string>
@@ -273,9 +272,9 @@
     <string name="other_licenses"><![CDATA[AnkiDroid also uses third-party libraries and icons, which are licensed under various open source <a href=\"%1$s\">licenses</a>]]></string>
     <string name="donate_description"><![CDATA[You can support AnkiDroid\'s development by <a href=\"%1$s\">donating</a>. Any amount is deeply appreciated.]]></string>
     <!-- Controls -->
-    <string name="binding_add_gesture">Add gesture</string>
-    <string name="binding_add_key">Add key</string>
-    <string name="key_picker_default_press_key">Press a key</string>
+    <string name="binding_add_gesture">Dodaj gestu</string>
+    <string name="binding_add_key">Dodaj tipku</string>
+    <string name="key_picker_default_press_key">Pritisnite tipku</string>
     <string name="binding_add_axis">Add joystick/motion controller</string>
     <string name="axis_picker_move_joystick">Move a joystick/motion controller</string>
     <string name="user_actions" maxLength="41">User actions</string>

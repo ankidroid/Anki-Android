@@ -164,7 +164,7 @@
     <string name="import_error_load_imported_database">Pengganti basisdata Anki (.anki2) belum didukung. Harap lihat panduan untuk langkah penggantian</string>
     <string name="import_error_content_provider">Berkas yang dipilih tidak dapat diimpor secara otomatis oleh AnkiDroid. Silakan lihat panduan pengguna tentang cara mengimpor berkas Anki secara manual: \n%s</string>
     <string name="import_error_copy_to_cache_title">Gagal cache file</string>
-    <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">This is often caused by a bug in the app you used to select the file. Please try the following fixes:\n\n%s</string>
+    <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">Hal ini disebabkan oleh bug di aplikasi yang anda gunakan untuk memilih file. Silahkan coba solusi berikut: \n\n%s</string>
     <string name="import_interrupted">Impor terganggu</string>
     <string name="export_ready_title">Ekspor siap</string>
     <string name="export_send_no_handlers">Tidak ada aplikasi tersedia untuk memproses apkg. Menyimpan&#8230;</string>
@@ -261,9 +261,9 @@
     <!-- IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
-    <string name="invalid_value" comment="Error message in IncrementerNumberRangePreference when input is not a valid number">Invalid value</string>
-    <string name="maximum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the maximum allowed value">Maximum value is %d</string>
-    <string name="minimum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the minimum allowed value">Minimum value is %d</string>
+    <string name="invalid_value" comment="Error message in IncrementerNumberRangePreference when input is not a valid number">Nilai tidak valid</string>
+    <string name="maximum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the maximum allowed value">Nilai maksimum adalah %d</string>
+    <string name="minimum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the minimum allowed value">Nilai minimum adalah %d</string>
     <!-- Used for credential empty warning message -->
     <string name="invalid_email">Masukkan surel yang valid</string>
     <string name="password_empty">Kata Sandi diperlukan</string>
@@ -305,7 +305,7 @@
     <string name="field_editor_model_not_available">Gagal mengakses koleksi. Silakan coba lagi!</string>
     <string name="cd_manage_notetypes_add">Menambahkan jenis catatan baru</string>
     <plurals name="note_types_selected">
-        <item quantity="other">%d note types selected</item>
+        <item quantity="other">%d tipe catatan terpilih</item>
     </plurals>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">Belajar lebih sedikit</string>
@@ -370,7 +370,7 @@
     <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">Salin templat sebagai markdown</string>
     <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">Ubah penampilan browser</string>
     <string name="missing_user_action_dialog_message" comment="%s is the user action number">Aksi pengguna %s tidak diatur dalam jenis catatan ini. Mohon untuk dikonfigurasi.</string>
-    <string name="feature_not_supported_by_study_screen">This card has features that are not yet supported by the new study screen.</string>
+    <string name="feature_not_supported_by_study_screen">Kartu ini memiliki fitur yang belum didukung oleh layar belajar baru</string>
     <string name="directory_inaccessible_info">Pelajari lebih lanjut tentang cara mengembalikan akses di sini %s atau buka pengaturan untuk memperbarui folder koleksi.</string>
     <!-- Scheduler Upgrade Required Dialog title-->
     <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">Pembaruan scheduler diperlukan</string>

@@ -84,7 +84,7 @@
     <string name="button_size" maxLength="41">Rozmiar przycisku odpowiedzi</string>
     <string name="card_browser_font_size" maxLength="41">Skalowanie czcionki przeglądania kart</string>
     <string name="card_browser_hide_media" maxLength="41">Wyświetlaj nazwy plików w przeglądarce kart</string>
-    <string name="card_browser_hide_media_summary">Display audio filenames in the card browser question/answer fields</string>
+    <string name="card_browser_hide_media_summary">Wyświetlaj nazwy plików dźwiękowych w polach pytanie/odpowiedź w przeglądarce kart</string>
     <string name="col_path" maxLength="41">Katalog AnkiDroid</string>
     <string name="fullscreen_review" maxLength="41">Tryb pełnoekranowy</string>
     <string name="full_screen_off">Wyłączony</string>
@@ -185,10 +185,10 @@
     <string name="time_limit" maxLength="41">Ograniczenie czasu</string>
     <string name="day_offset_with_description" maxLength="41">Początek nowego dnia</string>
     <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
-        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">%d godzina</item>
+        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">%d godzina po północy</item>
         <item quantity="few">%d godziny po północy</item>
         <item quantity="many">%d godzin po północy</item>
-        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">%d hours past midnight</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">%d godzin po północy</item>
     </plurals>
     <string name="pref_keep_screen_on" maxLength="41">Utrzymuj włączony ekran</string>
     <string name="pref_keep_screen_on_summ">Zablokuj wyłącznik czasowy ekranu</string>
@@ -239,9 +239,9 @@
     <string name="misc" maxLength="41">Pozostałe</string>
     <!-- Review reminders -->
     <string name="add_reminder" comment="Label for the add reminder button in the screen for adding and editing review reminders">Dodaj przypomnienie</string>
-    <string name="add_review_reminder" comment="Title of the screen for creating a new review reminder">Add review reminder</string>
-    <string name="edit_review_reminder" comment="Title of the screen for editing an existing review reminder">Edit review reminder</string>
-    <string name="you_have_no_review_reminders" comment="Text that appears in the review reminder editing screen when there are no reminders set">You have no review reminders</string>
+    <string name="add_review_reminder" comment="Title of the screen for creating a new review reminder">Dodaj przypomnienie o powtórce</string>
+    <string name="edit_review_reminder" comment="Title of the screen for editing an existing review reminder">Edytuj przypomnienie o powtórce</string>
+    <string name="you_have_no_review_reminders" comment="Text that appears in the review reminder editing screen when there are no reminders set">Nie masz przypomnień o powtórce</string>
     <!-- studyoptions -->
     <string name="studyoptions_limit_select_tags">Wybierz etykiety</string>
     <!-- Deck configurations -->
@@ -394,7 +394,7 @@
     <string name="new_study_screen" maxLength="41">Nowy ekran nauki</string>
     <string name="new_study_screen_summ"><![CDATA[Improved study screen that will succeed the current one. Some features of the old screen have been changed or removed. Please report any <a href="%1$s">feedback</a> or <a href="%2$s">bugs</a>.]]></string>
     <string name="show_answer_feedback" maxLength="41">Show answer feedback</string>
-    <string name="screen" maxLength="41">Screen</string>
+    <string name="screen" maxLength="41">Ekran</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">Otwórz ustawienia</string>
 </resources>

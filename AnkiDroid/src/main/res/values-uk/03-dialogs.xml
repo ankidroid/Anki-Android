@@ -271,18 +271,18 @@
     <string name="tts_error_dialog_change_button_text">Змінити рушій</string>
     <string name="tts_error_dialog_supported_voices_button_text">Параметри голосу</string>
     <!-- import_cache_error_resolutions -->
-    <string name="import_error_resolution_try_again">Re-import the file</string>
-    <string name="import_error_resolution_free_up_space">Ensure there is sufficient free space on your device</string>
-    <string name="import_error_resolution_check_internet">Ensure you are connected to the internet</string>
-    <string name="import_error_resolution_copy_to_device">Copy the file to your device and try again with the local file</string>
-    <string name="import_error_resolution_select_file">Open the file using your device’s file browser app</string>
+    <string name="import_error_resolution_try_again">Знову імпортувати файл</string>
+    <string name="import_error_resolution_free_up_space">Переконайтеся, що на пристрої достатньо вільного місця</string>
+    <string name="import_error_resolution_check_internet">Впевніться, що ви підключені до Інтернету</string>
+    <string name="import_error_resolution_copy_to_device">Скопіюйте файл на пристрій і спробуйте ще раз з локальним файлом</string>
+    <string name="import_error_resolution_select_file">Відкрити файл в переглядачі файлів пристрою</string>
     <!-- Post-login dialog -->
-    <string name="login_successful">Login successful</string>
-    <string name="sync_now">Sync now?</string>
+    <string name="login_successful">Вдалося ввійти</string>
+    <string name="sync_now">Синхронізувати зараз?</string>
     <!--Change Note Type Dialog Fragment-->
-    <string name="card_numbers_unchanged">Card numbers will remain unchanged</string>
+    <string name="card_numbers_unchanged">Номери карток залишаться без змін</string>
     <!-- Subset of TR.changeNotetypeToFromCloze -->
-    <string name="extra_cloze_deletions_removed">If changing to a regular note type, and there are more cloze deletions than available card templates, any extra cards will be removed.</string>
-    <string name="different_note_types_selected">Please select notes from only one notetype.</string>
-    <string name="error_no_changes_to_save">No changes to save</string>
+    <string name="extra_cloze_deletions_removed">Якщо ви змінюєте тип запису на звичайний, а кількість пропусків Cloze більша, ніж кількість доступних шаблонів карток, то надлишкові картки будуть видалені.</string>
+    <string name="different_note_types_selected">Будь ласка, виберіть записи лише одного типу.</string>
+    <string name="error_no_changes_to_save">Немає змін для збереження</string>
 </resources>

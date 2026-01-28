@@ -77,7 +77,7 @@
         <item quantity="one" comment="Consider keeping the unbreakable space after the digit">Możesz wybrać do %d talii</item>
         <item quantity="few">Możesz wybrać do %d talii</item>
         <item quantity="many">Możesz wybrać do %d talii</item>
-        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">You can select up to %d decks.</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">Możesz wybrać do %d talii</item>
     </plurals>
     <string name="empty_widget_state" comment="To denote the widget is empty">Brakuje talii. Dotknij, aby ponownie skonfigurować.</string>
     <string name="empty_collection_state_in_widget" comment="To denote the collection is empty">Kolekcja jest pusta, użyj aplikacji do dodawania talii i skonfiguruj ponownie</string>

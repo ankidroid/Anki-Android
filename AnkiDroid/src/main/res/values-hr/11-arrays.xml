@@ -47,47 +47,47 @@
     <string name="error_reporting_choice_never_report">Nikad ne prijavljuj</string>
     <string name="error_reporting_choice_ask_user">Pitaj me</string>
     <!-- add_to_cur_labels -->
-    <string name="add_to_deck_use_current_deck">Use current deck</string>
-    <string name="add_to_deck_decide_by_note_type">Decide by note type</string>
+    <string name="add_to_deck_use_current_deck">Koristi trenutni špil</string>
+    <string name="add_to_deck_decide_by_note_type">Odluči po tipu bilješke</string>
     <!-- theme labels -->
-    <string name="theme_follow_system">Follow system</string>
-    <string name="theme_day" comment="Day/Light theme color scheme">Day</string>
-    <string name="theme_night" comment="Night/Dark theme color scheme">Night</string>
+    <string name="theme_follow_system">Kao sustav</string>
+    <string name="theme_day" comment="Day/Light theme color scheme">Dan</string>
+    <string name="theme_night" comment="Night/Dark theme color scheme">Noć</string>
     <!-- day_theme_labels -->
-    <string name="day_theme_light">Light</string>
-    <string name="day_theme_plain">Plain</string>
+    <string name="day_theme_light">Svijetlo</string>
+    <string name="day_theme_plain">Jednostavno</string>
     <!-- night_theme_labels -->
-    <string name="night_theme_black">Black</string>
-    <string name="night_theme_dark">Dark</string>
+    <string name="night_theme_black">Crno</string>
+    <string name="night_theme_dark">Tamno</string>
     <!-- html_size_code_labels -->
-    <string name="html_size_code_xx_small">xx-small</string>
-    <string name="html_size_code_x_small">x-small</string>
-    <string name="html_size_code_small">small</string>
+    <string name="html_size_code_xx_small">xx-malo</string>
+    <string name="html_size_code_x_small">x-mal</string>
+    <string name="html_size_code_small">malo</string>
     <string name="html_size_code_medium">srednje</string>
     <string name="html_size_code_large">veliko</string>
-    <string name="html_size_code_x_large">XL</string>
-    <string name="html_size_code_xx_large">XXL</string>
+    <string name="html_size_code_x_large">x-veliko</string>
+    <string name="html_size_code_xx_large">xx-veliko</string>
     <!-- gestures_labels -->
-    <string name="answer_again" maxLength="41">Odgovori ponovo</string>
-    <string name="answer_hard" maxLength="41">Teško</string>
-    <string name="answer_good" maxLength="41">Dobro</string>
-    <string name="answer_easy" maxLength="41">Lagano</string>
-    <string name="gesture_abort_learning" maxLength="41">Close study screen</string>
-    <string name="gesture_flag_red" maxLength="41">Toggle red flag</string>
-    <string name="gesture_flag_orange" maxLength="41">Toggle orange flag</string>
-    <string name="gesture_flag_green" maxLength="41">Toggle green flag</string>
-    <string name="gesture_flag_blue" maxLength="41">Toggle blue flag</string>
-    <string name="gesture_flag_pink" maxLength="41">Toggle pink flag</string>
-    <string name="gesture_flag_turquoise" maxLength="41">Toggle turquoise flag</string>
-    <string name="gesture_flag_purple" maxLength="41">Toggle purple flag</string>
-    <string name="gesture_flag_remove" maxLength="41">Remove flag</string>
+    <string name="answer_again" maxLength="41">Odgovori Ponovo</string>
+    <string name="answer_hard" maxLength="41">Odgovori Teško</string>
+    <string name="answer_good" maxLength="41">Odgovori Dobro</string>
+    <string name="answer_easy" maxLength="41">Odgovori Lako</string>
+    <string name="gesture_abort_learning" maxLength="41">Zatvori ekran za učenje</string>
+    <string name="gesture_flag_red" maxLength="41">Uključi/isključi crvenu zastavicu</string>
+    <string name="gesture_flag_orange" maxLength="41">Uključi/isključi narančastu zastavicu</string>
+    <string name="gesture_flag_green" maxLength="41">Uključi/isključi zelenu zastavicu</string>
+    <string name="gesture_flag_blue" maxLength="41">Uključi/isključi plavu zastavicu</string>
+    <string name="gesture_flag_pink" maxLength="41">Uključi/isključi ružičastu zastavicu</string>
+    <string name="gesture_flag_turquoise" maxLength="41">Uključi/isključi tirkiznu zastavicu</string>
+    <string name="gesture_flag_purple" maxLength="41">Uključi/isključi ljubičastu zastavicu</string>
+    <string name="gesture_flag_remove" maxLength="41">Ukloni zastavicu</string>
     <string name="gesture_page_up" maxLength="41">Stranica gore</string>
     <string name="gesture_page_down" maxLength="41">Stranica dolje</string>
-    <string name="gesture_toggle_whiteboard" maxLength="41">Toggle whiteboard</string>
-    <string name="gesture_toggle_eraser" maxLength="41">Toggle eraser</string>
+    <string name="gesture_toggle_whiteboard" maxLength="41">Uključi/isključi ploču</string>
+    <string name="gesture_toggle_eraser" maxLength="41">Uključi/isključi gumicu</string>
     <string name="gesture_show_hint" maxLength="41">Pokaži savjet</string>
     <string name="gesture_show_all_hints" maxLength="41">Pokaži sve savjete</string>
     <string name="record_voice" maxLength="41">Snimi glas</string>
-    <string name="replay_voice" maxLength="41">Replay voice</string>
+    <string name="replay_voice" maxLength="41">Ponovno reproduciraj zvuk</string>
     <string name="save_voice" maxLength="41">Spremi snimku</string>
 </resources>
