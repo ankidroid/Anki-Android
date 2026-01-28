@@ -68,7 +68,7 @@ class SyncSettingsFragment : SettingsFragment() {
                     setMessage(TR.preferencesOnNextSyncForceChangesIn())
                     setPositiveButton(R.string.dialog_ok) { _, _ ->
                         launchCatchingTask {
-                            withCol { modSchemaNoCheck() }
+                            withCol { modSchema(check = false) }
                             showSnackbar(R.string.one_way_sync_confirmation, Snackbar.LENGTH_SHORT)
                         }
                     }

@@ -1728,7 +1728,7 @@ open class DeckPicker :
         if (recommendOneWaySync) {
             recommendOneWaySync = false
             try {
-                getColUnsafe.modSchema()
+                getColUnsafe.modSchema(check = true)
             } catch (e: ConfirmModSchemaException) {
                 Timber.w("Forcing one-way sync")
                 e.log()
@@ -2475,7 +2475,7 @@ class OneWaySyncDialog(
         val confirm =
             Runnable {
                 // Bypass the check once the user confirms
-                CollectionManager.getColUnsafe().modSchemaNoCheck()
+                CollectionManager.getColUnsafe().modSchema(check = false)
             }
         dialog.setConfirm(confirm)
         dialog.setArgs(message)
