@@ -164,7 +164,7 @@ import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
-import com.ichi2.anki.sync.launchCatchingRequiringOneWaySync
+import com.ichi2.anki.sync.launchCatchingRequiringOneWaySyncDiscardUndo
 import com.ichi2.anki.ui.ResizablePaneManager
 import com.ichi2.anki.ui.animations.fadeIn
 import com.ichi2.anki.ui.animations.fadeOut
@@ -688,7 +688,7 @@ open class DeckPicker :
             SchedulerUpgradeDialog(
                 activity = this,
                 onUpgrade = {
-                    launchCatchingRequiringOneWaySync {
+                    launchCatchingRequiringOneWaySyncDiscardUndo {
                         this@DeckPicker.withProgress { withCol { sched.upgradeToV2() } }
                         showThemedToast(this@DeckPicker, TR.schedulingUpdateDone(), false)
                     }
