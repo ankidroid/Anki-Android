@@ -44,237 +44,237 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="check_db_title">Check database?</string>
-    <string name="check_db_warning">This may take a long time</string>
-    <string name="contextmenu_deckpicker_delete_deck" maxLength="28">Delete deck</string>
-    <string name="delete_deck_title">Delete deck?</string>
+    <string name="check_db_title">Provjeriti bazu podataka?</string>
+    <string name="check_db_warning">Ovo može dugo potrajati</string>
+    <string name="contextmenu_deckpicker_delete_deck" maxLength="28">Izbriši špil</string>
+    <string name="delete_deck_title">Izbrisati špil?</string>
     <plurals name="delete_deck_message">
-        <item quantity="one">Delete all cards in %1$s? It contains %2$d card</item>
-        <item quantity="few">Delete all cards in %1$s? It contains %2$d cards</item>
-        <item quantity="other">Delete all cards in %1$s? It contains %2$d cards</item>
+        <item quantity="one">Izbrisati sve kartice u %1$s? On sadrži %2$d karticu</item>
+        <item quantity="few">Izbrisati sve kartice u %1$s? On sadrži %2$d kartice</item>
+        <item quantity="other">Izbrisati sve kartice u %1$s? On sadrži %2$d kartica</item>
     </plurals>
-    <string name="delete_cram_deck_message">Delete filtered deck %s and send all cards back to their original decks?</string>
-    <string name="no_tts_available_message">No text-to-speech language available</string>
-    <string name="tts_no_tts">Don’t speak</string>
+    <string name="delete_cram_deck_message">Izbrisati filtrirani špil %s i poslati sve kartice nazad u njihove originalne špilove?</string>
+    <string name="no_tts_available_message">Nije dostupan nijedan jezika za sintezu govora</string>
+    <string name="tts_no_tts">Bez govora</string>
     <string name="reposition_card_not_new_error">Only new cards can be repositioned</string>
-    <string name="reset_card_dialog_title">Reset card progress</string>
+    <string name="reset_card_dialog_title">Resetiraj napredak kartice</string>
     <plurals name="reset_cards_dialog_acknowledge">
-        <item quantity="one">%d card reset</item>
-        <item quantity="few">%d cards reset</item>
-        <item quantity="other">%d cards reset</item>
+        <item quantity="one">%d kartica resetirana</item>
+        <item quantity="few">%d kartice resetirane</item>
+        <item quantity="other">%d kartica resetirano</item>
     </plurals>
-    <string name="answering_error_title">Database error</string>
-    <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
-    <string name="answering_error_report">Report error</string>
-    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue.</string>
-    <string name="repair_deck_dialog">Do you really want to try to repair the database?\n\nBefore starting the attempt, a copy will be created in subfolder “%s”.</string>
-    <string name="intent_aedict_empty">Category “default” is empty</string>
-    <string name="intent_aedict_category">To add cards to AnkiDroid remove all Notepad categories or add one named “default”</string>
-    <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
-    <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
-    <string name="custom_study_forgotten">Review cards forgotten in last x days:</string>
-    <string name="custom_study_ahead">Review ahead by x days:</string>
-    <string name="custom_study_preview">Preview new cards added in the last x days:</string>
-    <string name="custom_study_tags">Select x cards from the deck:</string>
-    <string name="storage_full_title">Storage full</string>
-    <string name="storage_almost_full_title">Storage almost full</string>
-    <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">No space</string>
-    <string name="no_space_to_downgrade_content" tools:ignore="UnusedResources">AnkiDroid needs %s free storage space to continue. Please clear some space</string>
-    <string name="restore_backup_title">Restore backup?</string>
-    <string name="restore_backup">Your collection will be replaced with an older copy. Any unsaved progress will be lost.</string>
-    <string name="restore_backup_choose_another">Choose another</string>
-    <string name="dialog_cancel">Cancel</string>
-    <string name="dialog_ok">OK</string>
-    <string name="dialog_confirm" tools:ignore="UnusedResources">Confirm</string>
+    <string name="answering_error_title">Greška baze podataka</string>
+    <string name="answering_error_message">Pisanje u kolekciju nije uspjelo. Baza podataka mogla bi biti neispravna ili možda nema dovoljno slobodnog prostora na disku.\n\nAko se ovo češće događa, provjerite bazu podataka, popravite kolekciju ili je obnovite iz sigurnosne kopije. Pritisnite \"opcije\" za to.\n\Ili bi mogla biti programska greška u AnkiDroidu; prijavite grešku kako bismo je mogli provjeriti.</string>
+    <string name="answering_error_report">Prijavi grešku</string>
+    <string name="storage_full_message">Nema dovoljno slobodnog prostora za pohranu da se otvori AnkiDroid. Oslobodite prostora kako biste nastavili.</string>
+    <string name="repair_deck_dialog">Želite li zaista opraviti bazu podataka?\n\nPrije započinjanja pokušaja, kopija će biti stvorena u podmapi “%s”.</string>
+    <string name="intent_aedict_empty">Kategorija “zadano” je prazna</string>
+    <string name="intent_aedict_category">Uklonite sve kategorije notesa kako biste dodali kartice u AnkiDroid ili dodajte jednu s nazivom “default”</string>
+    <string name="custom_study_new_extend">Povećaj/umanji (“-3”) današnji limit novih kartica za</string>
+    <string name="custom_study_rev_extend">Povećaj/umanji (“-3”) današnji limit kartica ponavljanja za</string>
+    <string name="custom_study_forgotten">Kartice ponavljanja zaboravljene u zadnjih x dana:</string>
+    <string name="custom_study_ahead">Ponavljaj x dana unaprijed:</string>
+    <string name="custom_study_preview">Pregledaj nove kartice dodane u zadnjih x dana:</string>
+    <string name="custom_study_tags">Odaberi x kartica iz špila:</string>
+    <string name="storage_full_title">Pohrana je puna</string>
+    <string name="storage_almost_full_title">Pohrana je skoro puna</string>
+    <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Nema mjesta</string>
+    <string name="no_space_to_downgrade_content" tools:ignore="UnusedResources">AnkiDroid zahtijeva %s slobodnog prostora za pohranu kako bi nastavio. Očistite malo prostora</string>
+    <string name="restore_backup_title">Obnoviti sigurnosnu kopiju?</string>
+    <string name="restore_backup">Vaša kolekcija će biti zamijenjena starijom kopijom. Izgubit ćete sav napredak koji nije spremljen.</string>
+    <string name="restore_backup_choose_another">Odaberi drugi</string>
+    <string name="dialog_cancel">Otkaži</string>
+    <string name="dialog_ok">U redu</string>
+    <string name="dialog_confirm" tools:ignore="UnusedResources">Potvrdi</string>
     <string name="dialog_no">Ne</string>
     <string name="dialog_yes">Da</string>
-    <string name="dialog_keep">Keep</string>
-    <string name="dialog_remove">Remove</string>
-    <string name="dialog_continue">Continue</string>
-    <string name="dialog_processing">Processing&#8230;</string>
-    <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Create</string>
-    <string name="dialog_positive_delete" maxLength="28">Delete</string>
+    <string name="dialog_keep">Zadrži</string>
+    <string name="dialog_remove">Ukloni</string>
+    <string name="dialog_continue">Nastavi</string>
+    <string name="dialog_processing">Obrađivanje&#8230;</string>
+    <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Stvori</string>
+    <string name="dialog_positive_delete" maxLength="28">Izbriši</string>
     <!-- Currently unsued, should be useful in the future -->
-    <string name="dialog_positive_disable" tools:ignore="UnusedResources">Disable</string>
+    <string name="dialog_positive_disable" tools:ignore="UnusedResources">Onemogući</string>
     <string name="dialog_positive_overwrite">Overwrite</string>
-    <string name="dialog_positive_repair">Repair</string>
-    <string name="dialog_positive_replace">Replace</string>
-    <string name="dialog_collection_path_not_dir">The path specified wasn’t a valid directory</string>
-    <string name="dialog_invalid_custom_certificate">The provided text does not resolve to a valid PEM-encoded X509 certificate</string>
-    <string name="dialog_invalid_custom_certificate_title">Error parsing certificate</string>
-    <string name="dialog_updated_custom_certificate">Certificate updated</string>
+    <string name="dialog_positive_repair">Popravi</string>
+    <string name="dialog_positive_replace">Zamijeni</string>
+    <string name="dialog_collection_path_not_dir">Zadani put nije bio valjana mapa</string>
+    <string name="dialog_invalid_custom_certificate">Navedeni tekst se na razrješava u valjani PEM-kodirani X509 certifikat</string>
+    <string name="dialog_invalid_custom_certificate_title">Greška u parsiranju certifikata</string>
+    <string name="dialog_updated_custom_certificate">Certifikat ažuriran</string>
     <!-- Media checking -->
-    <string name="check_media_title">Check media?</string>
-    <string name="check_media_warning">This may take a long time with large media collections</string>
-    <string name="check_media_message">Checking media&#8230;</string>
-    <string name="check_media_adding_missing_tag">Adding tags&#8230;</string>
-    <string name="check_media_tags_added">Tags added</string>
-    <string name="delete_media_message">Deleting media&#8230;</string>
-    <string name="delete_media_result_title">Deletion result</string>
+    <string name="check_media_title">Provjeriti medije?</string>
+    <string name="check_media_warning">Ovo kod velikij medijskih kolekcija može dugo potrajati</string>
+    <string name="check_media_message">Provjera medija&#8230;</string>
+    <string name="check_media_adding_missing_tag">Dodavanje oznaka&#8230;</string>
+    <string name="check_media_tags_added">Oznake dodane</string>
+    <string name="delete_media_message">Brisanje medija&#8230;</string>
+    <string name="delete_media_result_title">Rezultat brisanja</string>
     <plurals name="delete_media_result_message">
-        <item quantity="one">%d file deleted</item>
-        <item quantity="few">%d files deleted</item>
-        <item quantity="other">%d files deleted</item>
+        <item quantity="one">%d datoteka izbrisana</item>
+        <item quantity="few">%d datoteke izbrisane</item>
+        <item quantity="other">%d datoteka izbrisano</item>
     </plurals>
     <!-- Tags Dialog Options -->
-    <string name="tags_dialog_option_all_cards">All cards</string>
-    <string name="tags_dialog_option_new_cards">New</string>
+    <string name="tags_dialog_option_all_cards">Sve kartice</string>
+    <string name="tags_dialog_option_new_cards">Novo</string>
     <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">Due</string>
     <!-- Empty cards -->
-    <string name="emtpy_cards_finding">Finding empty cards&#8230;</string>
+    <string name="emtpy_cards_finding">Traženje praznih kartica&#8230;</string>
     <!-- Multimedia - Edit Field Activity -->
-    <string name="multimedia_editor_audio_permission_refused">Could not obtain microphone permission.</string>
-    <string name="multimedia_editor_failed">Failed to open Multimedia Editor</string>
+    <string name="multimedia_editor_audio_permission_refused">Nije bilo moguće dobiti dopuštenje za mikrofon.</string>
+    <string name="multimedia_editor_failed">Greška pri otvaranju uređivača multimedije</string>
     <!-- Multimedia - Audio View -->
-    <string name="multimedia_editor_audio_permission_denied">Audio recording permission denied</string>
-    <string name="permission_denied">Permission denied</string>
-    <string name="recording_permission_denied_message">Microphone permission is necessary for the “Record voice” feature. Please grant it in the app settings.</string>
+    <string name="multimedia_editor_audio_permission_denied">Dopuštenje za snimanje zvuka je odbijeno</string>
+    <string name="permission_denied">Dopuštenje odbijeno</string>
+    <string name="recording_permission_denied_message">Dopuštenje mikrofona je potrebno za funkcionalnost \"Snimi glas\". Odobrite ga u postavkama.</string>
     <!-- Database Integrity Check -->
-    <string name="integrity_check_startup_title">AnkiDroid Upgraded</string>
-    <string name="integrity_check_startup_content">AnkiDroid has been upgraded. This upgrade includes fixes for possible database problems, and we advise you to run check database now.</string>
-    <string name="integrity_check_continue_anyway">Continue Anyway</string>
-    <string name="integrity_check_insufficient_space">Check Database uses a large amount of temporary storage.\n\nIt is strongly recommended that you have at least %s free space on your device before continuing.</string>
-    <string name="integrity_check_insufficient_space_extra_content">\n\nYou currently have %s free.</string>
+    <string name="integrity_check_startup_title">AnkiDroid ažuriran</string>
+    <string name="integrity_check_startup_content">AnkiDroid je ažuriran. Ovo ažuriranje uključuje popravke mogućih problema s bazom podataka, preporučamo da sad pokrenete provjeru baze podataka.</string>
+    <string name="integrity_check_continue_anyway">Svejedno nastavi</string>
+    <string name="integrity_check_insufficient_space">Provjera baze podataka koristi veliku količinu privremenog prostora za prohranu.\n\nSnažno preporučamo da osigurate barem %s slobodnog prostora na uređaju prije nastavka.</string>
+    <string name="integrity_check_insufficient_space_extra_content">\n\nTrenutno imate %s slobodno.</string>
     <!-- Card Browser -->
     <!-- AbstractFlashCardViewer -->
-    <string name="card_viewer_url_decode_error">Error decoding data from card</string>
+    <string name="card_viewer_url_decode_error">Greška pri dekodiranju podataka s kartice</string>
     <!-- Deck Options -->
     <!-- Database Errors-->
-    <string name="database_locked_title">Database Locked</string>
-    <string name="database_locked_summary">The AnkiDroid database is in use by another application. Please close the other application then reopen AnkiDroid.</string>
-    <string name="incompatible_database_version_title">Incompatible Database Version</string>
-    <string name="incompatible_database_version_summary">The database is a more advanced version than this version of AnkiDroid can work with. Upgrade AnkiDroid or downgrade the database to open it\n\nSupported version: %1$d\nDatabase version: %2$d\n\nThe following restore options will overwrite your current collection, possibly with a compatible database version:</string>
+    <string name="database_locked_title">Baza podataka zaključana</string>
+    <string name="database_locked_summary">Druga aplikacija koristi AnkiDroid bazu podataka. Zatvorite drugu aplikaciju ze zatim ponovno otvorite AnkiDroid.</string>
+    <string name="incompatible_database_version_title">Nekompatibilna verzija baze podataka</string>
+    <string name="incompatible_database_version_summary">Verzija baze podataka je naprednija od one s kojom trenutna verzija AnkiDroida može rukovati. Ažurirajte AnkiDroid ili smanjite verziju baze podataka kako biste je otvorili\n\nPodržana verzija:%1$d\nVerzija baze podataka: %2$d\n\nSljedeće postavke za obnovu će pregaziti vašu trenutnu kolekciju, potencijalno s kompatibilnom verzijom baze podatka:</string>
     <!-- Deck Picker Background-->
-    <string name="background_image_applied">Background image applied</string>
-    <string name="background_image_removed">Background image removed</string>
-    <string name="no_image_selected">No image selected</string>
-    <string name="error_selecting_image">Error selecting image. Please see manual. %s</string>
-    <string name="error_deleting_image">Error deleting image</string>
-    <string name="failed_to_apply_background_image">Failed to apply background image %s</string>
-    <string name="background_image_too_large">Deck Picker background too large</string>
-    <string name="image_max_size_allowed" comment="Consider keeping the unbreakable space after the digit">Maximum image size %d MB allowed</string>
-    <string name="image_dimensions_too_large">Image dimensions are too large (%1$d × %2$d)</string>
+    <string name="background_image_applied">Pozadinska slika primijenjena</string>
+    <string name="background_image_removed">Pozadinska slika uklonjena</string>
+    <string name="no_image_selected">Nije odabrana nijedna slika</string>
+    <string name="error_selecting_image">Greška pri odabiru slike. Pogledajte priručnik. %s</string>
+    <string name="error_deleting_image">Greška pri brisanju slike</string>
+    <string name="failed_to_apply_background_image">Greška pri primjeni pozadinske slike %s</string>
+    <string name="background_image_too_large">Pozadina birača špila je prevelika</string>
+    <string name="image_max_size_allowed" comment="Consider keeping the unbreakable space after the digit">Maksimalna dopuštena veličina slike %d MB</string>
+    <string name="image_dimensions_too_large">Dimenzije slike su prevelike (%1$d × %2$d)</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
-    <string name="intent_handler_failed_no_storage_permission">Missing required storage permission. Please grant storage permission then retry your action.</string>
+    <string name="intent_handler_failed_no_storage_permission">Nedostaje dopuštenje za pohranu. Odobrite dopuštenje za pohranu te pokušajte ponovno.</string>
     <!-- Boot Service -->
     <string name="boot_service_failed_to_schedule_notifications">Failed to schedule reminders</string>
     <string name="boot_service_too_many_notifications">Too many reminders scheduled. Some will not appear</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title_new">Set Language</string>
+    <string name="locale_selection_dialog_title_new">Postavi jezik</string>
     <string name="locale_selection_dialog_summary">Some multilingual keyboards, such as GBoard support changing language when editing text\n\nPlease request the “setImeHintLocales” feature from your keyboard manufacturer if your keyboard does not change language.</string>
     <!-- Help Dialog -->
-    <string name="help_title_using_ankidroid">Using AnkiDroid</string>
-    <string name="help_item_ankidroid_manual">AnkiDroid manual</string>
-    <string name="help_item_anki_manual">Anki manual</string>
+    <string name="help_title_using_ankidroid">Korištenje AnkiDroida</string>
+    <string name="help_item_ankidroid_manual">AnkiDroid priručnik</string>
+    <string name="help_item_anki_manual">Anki priručnik</string>
     <string name="help_item_ankidroid_faq">AnkiDroid FAQ</string>
-    <string name="help_title_get_help">Get help</string>
-    <string name="help_item_mailing_list">Mailing list</string>
+    <string name="help_title_get_help">Zatraži pomoć</string>
+    <string name="help_item_mailing_list">Mailing lista</string>
     <string name="help_item_reddit">Reddit</string>
-    <string name="help_item_report_bug">Report a bug</string>
-    <string name="help_title_support_ankidroid" maxLength="28">Support AnkiDroid</string>
-    <string name="help_item_support_opencollective_donate">Donate</string>
-    <string name="help_item_support_develop_ankidroid">Develop</string>
-    <string name="help_item_support_rate_ankidroid">Rate</string>
-    <string name="help_item_support_other_ankidroid">Other</string>
-    <string name="multimedia_editor_trans_translate">Translate</string>
-    <string name="help_title_community">Community</string>
-    <string name="help_item_anki_forums">Anki forums</string>
+    <string name="help_item_report_bug">Prijavi grešku</string>
+    <string name="help_title_support_ankidroid" maxLength="28">Podrži AnkiDroid</string>
+    <string name="help_item_support_opencollective_donate">Doniraj</string>
+    <string name="help_item_support_develop_ankidroid">Razvijaj</string>
+    <string name="help_item_support_rate_ankidroid">Ocijeni</string>
+    <string name="help_item_support_other_ankidroid">Ostalo</string>
+    <string name="multimedia_editor_trans_translate">Prevedi</string>
+    <string name="help_title_community">Zajednica</string>
+    <string name="help_item_anki_forums">Anki forumi</string>
     <string name="help_item_discord">Discord</string>
     <string name="help_item_facebook">Facebook</string>
     <string name="help_item_twitter">Twitter</string>
-    <string name="help_title_privacy">Privacy</string>
-    <string name="help_item_ankidroid_privacy_policy">AnkiDroid privacy policy</string>
-    <string name="help_item_ankiweb_privacy_policy">AnkiWeb privacy policy</string>
-    <string name="help_item_ankiweb_terms_and_conditions">AnkiWeb terms and conditions</string>
-    <string name="help_title_send_exception">Send troubleshooting report</string>
-    <string name="help_dialog_exception_report_debounce">Report already submitted</string>
-    <string name="help_dialog_exception_report_sent">Report was sent!</string>
+    <string name="help_title_privacy">Privatnost</string>
+    <string name="help_item_ankidroid_privacy_policy">AnkiDroid polica privatnosti</string>
+    <string name="help_item_ankiweb_privacy_policy">AnkiWeb polica privatnosti</string>
+    <string name="help_item_ankiweb_terms_and_conditions">AnkiWeb uvjeti i odredbe</string>
+    <string name="help_title_send_exception">Pošalji izvješće o otklanjanju poteškoća</string>
+    <string name="help_dialog_exception_report_debounce">Izvješće već predano</string>
+    <string name="help_dialog_exception_report_sent">Izvješće poslano!</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
-        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">An automatic sync may be triggered in %d second</item>
-        <item quantity="few">An automatic sync may be triggered in %d seconds</item>
-        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">An automatic sync may be triggered in %d seconds</item>
+        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">Automatska sinkronizacije se može okinuti za %d sekundu</item>
+        <item quantity="few">Automatska sinkronizacije se može okinuti za %d sekunde</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">Automatska sinkronizacije se može okinuti za %d sekundi</item>
     </plurals>
-    <string name="metered_sync_data_warning">Your internet provider may charge money for data use</string>
-    <string name="deck_picker_new">Number of new cards to see today in this deck.</string>
+    <string name="metered_sync_data_warning">Vaš pružatelj internetske usluge može naplatiti korištenje podataka</string>
+    <string name="deck_picker_new">Broj novih kartica koje će se danas vidjeti u ovom špilu</string>
     <string name="deck_picker_rev">Number of cards due today in this deck.</string>
-    <string name="deck_picker_lrn">Number of cards in learning in this deck.</string>
+    <string name="deck_picker_lrn">Broj kartica u ovom špilu koje su u učenju</string>
     <!-- This description is valid fos
     sched V2. For V1, it was counting the number of repetitions of cards in learning. This approximation is acceptable
     for the sake of simplicity and because V1 will leave.-->
-    <string name="deck_picker_counts">Open the deck overview page containing the number of cards to see today.</string>
-    <string name="import_deck_package">Deck package (.apkg)</string>
-    <string name="import_collection_package">Collection package (.colpkg)</string>
-    <string name="import_csv">Text file (.txt, .csv)</string>
+    <string name="deck_picker_counts">Otvorite stranicu za pregled špila koja sadrži broj kartica koje će se danas vidjeti</string>
+    <string name="import_deck_package">Paket špila (.apkg)</string>
+    <string name="import_collection_package">Paket kolekcije (.colpkg)</string>
+    <string name="import_csv">Tekstualna datoteka (.txt, .csv)</string>
     <!-- scoped storage -->
-    <string name="backup_your_collection">Backup your collection</string>
-    <string name="backup_collection_message">You haven\'t backed up your collection in a while. You should do this now to prevent data loss</string>
-    <string name="button_backup" maxLength="41">Backup</string>
-    <string name="button_disable_reminder">Disable reminder</string>
-    <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Later</string>
-    <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Don\'t show again</string>
-    <string name="dismiss_backup_warning_title">Data loss warning</string>
-    <string name="dismiss_backup_warning_new_user">Due to Android privacy changes, your data and automated backups will be deleted from your phone if the app is uninstalled</string>
-    <string name="dismiss_backup_warning_upgrade">Due to Android privacy changes, your data and automated backups will be inaccessible if the app is uninstalled</string>
-    <string name="deck_already_exists">Deck already exists</string>
-    <string name="empty_deck_name">Deck name cannot be empty</string>
-    <string name="create_deck_numeric_hint">If you have deck ordering issues (e.g. ‘10’ appears before ‘2’), replace ‘2’ with ‘02’</string>
+    <string name="backup_your_collection">Izradite sigurnosnu kopiju svoje kolekcije</string>
+    <string name="backup_collection_message">Već neko vrijeme niste izradili sigurnosnu kopiju Vaše kolekcije. Trebali biste to sad učiniti kako biste spriječili gubitak podataka</string>
+    <string name="button_backup" maxLength="41">Napravi kopiju</string>
+    <string name="button_disable_reminder">Onemogući podsjetnik</string>
+    <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Kasnije</string>
+    <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Ne prikazuj ponovno</string>
+    <string name="dismiss_backup_warning_title">Upozorenje o gubitku podataka</string>
+    <string name="dismiss_backup_warning_new_user">Zbog promjena oko privatnosti u Androidu, vaši podaci i automatske sigurnosne kopije bit će izbrisane s Vašeg uređaja ako se aplikacija deinstalira</string>
+    <string name="dismiss_backup_warning_upgrade">Zbog promjena oko privatnosti u Androidu, vaši podaci i automatske sigurnosne kopije bit će nedostupne ako se aplikacija deinstalira</string>
+    <string name="deck_already_exists">Špil već postoji</string>
+    <string name="empty_deck_name">Naziv špila ne smije biti prazan</string>
+    <string name="create_deck_numeric_hint">Ako imate problema s poretkom unutar špila (npr. ‘10’ se pojavljuje prije ‘2’), zamijenite ‘2’ s ‘02’</string>
     <!-- Set Due Date -->
-    <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Set interval to same value</string>
+    <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Postavi interval na istu vrijednost</string>
     <plurals name="set_due_date_single_day_label" comment="a date control is provided afterwards">
-        <item quantity="one">Show card in</item>
-        <item quantity="few">Show cards in</item>
-        <item quantity="other">Show cards in</item>
+        <item quantity="one">Pokaži karticu za</item>
+        <item quantity="few">Pokaži kartice za</item>
+        <item quantity="other">Pokaži kartice za</item>
     </plurals>
     <plurals name="set_due_date_range_label" comment="a date control is provided afterwards">
-        <item quantity="one">Show card in range</item>
-        <item quantity="few">Show cards in range</item>
-        <item quantity="other">Show cards in range</item>
+        <item quantity="one">Pokaži karticu u rasponu</item>
+        <item quantity="few">Pokaži kartice u rasponu</item>
+        <item quantity="other">Pokaži kartice u rasponu</item>
     </plurals>
     <plurals name="set_due_date_label_suffix" comment="a suffix on a text field allowing a user to enter a number of days">
-        <item quantity="one">day</item>
-        <item quantity="few">days</item>
-        <item quantity="other">days</item>
+        <item quantity="one">dan</item>
+        <item quantity="few">dana</item>
+        <item quantity="other">dana</item>
     </plurals>
     <plurals name="set_due_date_current_interval">
-        <item quantity="one">Current interval: %d day</item>
-        <item quantity="few">Current interval: %d days</item>
-        <item quantity="other">Current interval: %d days</item>
+        <item quantity="one">Trenutni interval: %d dan</item>
+        <item quantity="few">Trenutni interval: %d dana</item>
+        <item quantity="other">Trenutni interval: %d dana</item>
     </plurals>
     <string name="range_delimiter" comment="Placed between two input boxes to denote a range">–</string>
-    <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">From</string>
-    <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">To</string>
+    <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">Od</string>
+    <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">Do</string>
     <!-- Instant Note Editor -->
-    <string name="cloze_note_required">Cloze Type Note Required</string>
-    <string name="cloze_not_found_message">No Cloze type note found, open the Note Editor or try again after adding a Cloze type note.</string>
-    <string name="open">Open</string>
-    <string name="change_cloze_number">Change cloze number</string>
-    <string name="cloze_number">Cloze number:</string>
-    <string name="change_editor_mode">Change editor mode</string>
-    <string name="open_note_editor">Open note editor</string>
-    <string name="change_cloze_mode">Change cloze mode</string>
+    <string name="cloze_note_required">Potrebna bilješka tipa na nadopunjavanje</string>
+    <string name="cloze_not_found_message">Nije pronađena bilješka na nadopunjavanje, otvorite uređivač bilješki ili pokušajte ponovno nakon dodavanja bilješke na nadopunjavanje.</string>
+    <string name="open">Otvori</string>
+    <string name="change_cloze_number">Promijeni broj nadopunjavanja</string>
+    <string name="cloze_number">Broj nadopunjavanja:</string>
+    <string name="change_editor_mode">Promijeni način rada uređivača</string>
+    <string name="open_note_editor">Otvori uređivač bilješki</string>
+    <string name="change_cloze_mode">Promijeni način nadopunjavanja</string>
     <!-- Outdated WebView dialog -->
-    <string name="webview_update_message">The system WebView is outdated. Some features won’t work correctly. Please update it.\n\nInstalled version: %1$d\nMinimum required version: %2$d</string>
-    <string name="compress">Compress</string>
+    <string name="webview_update_message">System WebView nije ažuran. Neke značajke neće točno funkcionirati. Ažurirajte ga.\n\nInstalirana verzija: %1$d\nMinimalna potrebna verzija: %2$d</string>
+    <string name="compress">Sažmi</string>
     <!-- Tts playback error dialog -->
-    <string name="tts_error_dialog_title">Language not supported</string>
-    <string name="tts_error_dialog_reason_text">The text to speech engine <b>%1$s</b> does not support the following language: <b>%2$s</b></string>
-    <string name="tts_error_dialog_change_button_text">Change engine</string>
-    <string name="tts_error_dialog_supported_voices_button_text">Voice options</string>
+    <string name="tts_error_dialog_title">Jezik nije podržan</string>
+    <string name="tts_error_dialog_reason_text">Pogon za sintezu govora <b>%1$s</b> ne podržava sljedeći jezik: <b>%2$s</b></string>
+    <string name="tts_error_dialog_change_button_text">Promijeni pogon</string>
+    <string name="tts_error_dialog_supported_voices_button_text">Postavke glasa</string>
     <!-- import_cache_error_resolutions -->
-    <string name="import_error_resolution_try_again">Re-import the file</string>
-    <string name="import_error_resolution_free_up_space">Ensure there is sufficient free space on your device</string>
-    <string name="import_error_resolution_check_internet">Ensure you are connected to the internet</string>
-    <string name="import_error_resolution_copy_to_device">Copy the file to your device and try again with the local file</string>
-    <string name="import_error_resolution_select_file">Open the file using your device’s file browser app</string>
+    <string name="import_error_resolution_try_again">Ponovno uvezi datoteku</string>
+    <string name="import_error_resolution_free_up_space">Osigurajte da imate dovoljno slobodnog prostora na Vašem uređaju</string>
+    <string name="import_error_resolution_check_internet">Osigurajte da ste povezani na internet</string>
+    <string name="import_error_resolution_copy_to_device">Kopirajte datoteku na Vaš uređaj i pokušajte ponovno s lokalnom datotekom</string>
+    <string name="import_error_resolution_select_file">Otvorite datoteku koristeći preglednik datoteka na Vašem uređaju</string>
     <!-- Post-login dialog -->
-    <string name="login_successful">Login successful</string>
-    <string name="sync_now">Sync now?</string>
+    <string name="login_successful">Prijava uspješna</string>
+    <string name="sync_now">Sinkronizirati sada?</string>
     <!--Change Note Type Dialog Fragment-->
-    <string name="card_numbers_unchanged">Card numbers will remain unchanged</string>
+    <string name="card_numbers_unchanged">Brojevi kartice neće se promijeniti</string>
     <!-- Subset of TR.changeNotetypeToFromCloze -->
-    <string name="extra_cloze_deletions_removed">If changing to a regular note type, and there are more cloze deletions than available card templates, any extra cards will be removed.</string>
-    <string name="different_note_types_selected">Please select notes from only one notetype.</string>
-    <string name="error_no_changes_to_save">No changes to save</string>
+    <string name="extra_cloze_deletions_removed">Ako se mijenja u tip obične bilješke, a postoji više nadopunjavanja nego dostupnih predložaka kartica, sve kartice viška bit će uklonjene.</string>
+    <string name="different_note_types_selected">Odaberite bilješke iz samo jednog tipa bilješke.</string>
+    <string name="error_no_changes_to_save">Nema promjena za spremiti</string>
 </resources>

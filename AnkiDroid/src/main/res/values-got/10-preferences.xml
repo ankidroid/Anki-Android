@@ -163,8 +163,8 @@
     <string name="disable_extended_text_ui" maxLength="41">Disable Single-Field Edit Mode</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
     <string name="disable_extended_text_ui_summ">Allows \'Cloze Deletion\' context menu when in landscape mode.</string>
-    <string name="vertical_centering" maxLength="41">Center align</string>
-    <string name="vertical_centering_summ">Center the content of cards vertically</string>
+    <string name="vertical_centering" maxLength="41">𐌻𐌰𐌲𐌾𐌰𐌽 𐌹𐌽 𐌼𐌹𐌳𐌿𐌼𐌰𐌹</string>
+    <string name="vertical_centering_summ">𐍅𐌰𐌹𐌷𐍄𐍃 𐍇𐌰𐍂𐍄𐍉 𐌹𐌽 𐌷𐌰𐌿𐌷𐌴𐌹𐌽 𐌻𐌰𐌲𐌾𐌰𐌽</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval</string>
     <string name="pref_double_tap_time_interval_summary">A second tap of the answer buttons will be ignored if this time has not elapsed. This prevents accidental double taps</string>
     <string name="pref_show_answer_long_press_time" maxLength="41">𐌰𐌽𐌳𐌰𐌷𐌰𐍆𐍄 𐌱𐌰𐌽𐌳𐍅𐌾𐌰𐌽 𐌸𐌴𐌹𐌷𐍃𐌹𐍃 𐌻𐌰𐌲𐌲𐌰𐌹 𐍄𐌴𐌷𐍄𐌰𐌹</string>
@@ -275,7 +275,7 @@
     <string name="binding_add_gesture">𐍄𐌰𐌹𐌺𐌽 𐌱𐌹𐌰𐌿𐌺𐌰𐌽</string>
     <string name="binding_add_key">𐌱𐍉𐌺𐌰 𐌱𐌹𐌰𐌿𐌺𐌰𐌽</string>
     <string name="key_picker_default_press_key">𐌱𐍉𐌺𐌰𐌹 𐌰𐍄𐍄𐌴𐌺𐌰𐌽</string>
-    <string name="binding_add_axis">Add joystick/motion controller</string>
+    <string name="binding_add_axis">𐍃𐍄𐌹𐌿𐍂𐌹 𐌳𐌰𐌿𐌹𐍃𐍄𐌹𐌺/𐍅𐌰𐌲𐌴𐌹𐌽𐌰𐌹𐍃 𐌱𐌹𐌰𐌿𐌺𐌰𐌽</string>
     <string name="axis_picker_move_joystick">Move a joystick/motion controller</string>
     <string name="user_actions" maxLength="41">𐍄𐍉𐌾𐌰 𐌱𐍂𐌿𐌺𐌾𐌹𐌽𐍃</string>
     <string name="user_actions_summary" maxLength="41">𐌱𐌰𐌹𐍂𐌷𐍄𐌾𐌰𐌽 𐌾𐌰𐌱𐌰𐍃𐌺𐍂𐌹𐍀𐍄 𐍃𐌺𐌰𐌹𐍂𐌼𐌹𐍃 𐌻𐌰𐌹𐍃𐌴𐌹𐌽𐌰𐌹𐍃</string>
@@ -378,7 +378,7 @@
     <string name="ignore_display_cutout" maxLength="41">Ignore display cutout</string>
     <string name="show_answer_buttons" maxLength="41">𐌰𐌽𐌳𐌰𐌷𐌰𐍆𐍄𐌰𐌹𐍃 𐌷𐌰𐌿𐌱𐌹𐌳𐌹𐌻𐍉𐌽𐍃 𐌱𐌰𐌽𐌳𐍅𐌾𐌰𐌽</string>
     <string name="hide_hard_and_easy" maxLength="41">\'𐌿𐌽𐌰𐌶𐌴𐍄\' 𐌾𐌰𐌷 \'𐌰𐌶𐌴𐍄\' 𐌷𐌰𐌿𐌱𐌹𐌳𐌹𐌻𐍉𐌽𐍃 𐌰𐍆𐍆𐌹𐌻𐌷𐌰𐌽</string>
-    <string name="reviewer_frame_style" maxLength="41">Frame style</string>
+    <string name="reviewer_frame_style" maxLength="41">𐌷𐌹𐍅𐌹 𐌷𐍂𐌰𐌼𐍉𐍃</string>
     <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Study Screen">𐌺𐌰𐍂𐍄𐌰</string>
     <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Study Screen">𐌰𐍂𐌺𐌰</string>
     <string name="reviewer_toolbar_top" maxLength="41" comment="Setting to put the toolbar on the top of the study screen">𐌸𐌰𐍄𐌰 𐌰𐌿𐌷𐌿𐌼𐌹𐍃𐍄𐍉</string>

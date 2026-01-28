@@ -169,7 +169,7 @@
     <string name="card_template_browser_appearance_title">𐍅𐌻𐌹𐍄𐍃 𐌱𐍂𐌰𐍅𐍃𐌰𐌹𐍂𐍃</string>
     <!-- card Info -->
     <string name="card_info_title" maxLength="28">𐌺𐌿𐌽𐌸𐌹 𐌺𐌰𐍂𐍄𐍉𐍃</string>
-    <string name="previous_card_info_title" maxLength="28">Previous card info</string>
+    <string name="previous_card_info_title" maxLength="28">𐌰𐍆𐍄𐌿𐌼𐌹𐍃𐍄𐌰𐍄𐌰 𐌺𐌿𐌽𐌸𐌹 𐍇𐌰𐍂𐍄𐍉𐍃</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">𐌳𐌿 𐌰𐌽𐌺𐌴𐌹𐌳𐍂𐌰𐌿𐌳 𐌳𐌰𐍄𐌰𐌱𐌿𐍃𐌰 𐌰𐌽𐌰𐌺𐌿𐌽𐌽𐌰𐌽 𐌾𐌰𐌷 𐌼𐌴𐌻𐌾𐌰𐌽</string>
     <string name="read_write_permission_description">𐌰𐍄𐌲𐌰𐌲𐌲 𐌹𐌽 𐍅𐌹𐍃𐌰𐌽𐌳𐌴𐌹𐌽𐍃 𐌼𐌴𐌻𐌴𐌹𐌽𐌹𐌽𐍃, 𐌺𐌰𐍂𐍄𐍉𐍃, 𐌷𐌰𐌹𐌳𐌿𐌽𐍃 𐌼𐌴𐌻𐌴𐌹𐌽𐍉, 𐌾𐌰𐌷 𐌺𐌰𐍂𐍄𐌰𐌷𐌿𐌶𐌳𐌰, 𐌾𐌰𐌷 𐌽𐌹𐌿𐌾𐌰 𐍃𐌺𐌰𐍀𐌾𐌰𐌽</string>

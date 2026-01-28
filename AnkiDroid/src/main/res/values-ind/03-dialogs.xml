@@ -49,7 +49,7 @@
     <string name="contextmenu_deckpicker_delete_deck" maxLength="28">Hapus dek</string>
     <string name="delete_deck_title">Hapus Dek?</string>
     <plurals name="delete_deck_message">
-        <item quantity="other">Delete all cards in %1$s? It contains %2$d cards</item>
+        <item quantity="other">Hapus semua kartu di %1$s? Terdapat kartu %2$d didalamnya</item>
     </plurals>
     <string name="delete_cram_deck_message">Delete filtered deck %s and send all cards back to their original decks?</string>
     <string name="no_tts_available_message">Tidak ada bahasa teks-ke-ucapan tersedia</string>

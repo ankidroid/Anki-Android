@@ -52,7 +52,7 @@
     <string name="help" maxLength="28" comment="Title of the help menu and button to open it.">Pomoc</string>
     <!-- The last entry "Support ankidroid" is in 03-dialogs.-->
     <!-- Entries of the "attach" in the "add card" view. -->
-    <string name="drawing" comment="Menu entry to create a drawing to attach to a card. Also a title.">rysunek</string>
+    <string name="drawing" comment="Menu entry to create a drawing to attach to a card. Also a title.">Rysunek</string>
     <!-- Entries of the Support ankidroid menu. -->
     <string name="send_feedback" comment="Menu entry in the \'Help&gt;Support ankidroid\' menu, that opens the web page explaining how to send feedback.">Prześlij opinię</string>
     <!-- Study Options-->
@@ -179,7 +179,7 @@
     <string name="card_template_browser_appearance_title">Wygląd przeglądarki</string>
     <!-- card Info -->
     <string name="card_info_title" maxLength="28">Informacje o karcie</string>
-    <string name="previous_card_info_title" maxLength="28">Previous card info</string>
+    <string name="previous_card_info_title" maxLength="28">Informacje o poprz. karcie</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Odczyt i zapis do bazy danych AnkiDroid</string>
     <string name="read_write_permission_description">dostęp do istniejących notatek, kart, typów notatek i talii, a także tworzenia istniejących</string>
@@ -218,10 +218,10 @@
     <string name="heading_required_permissions" comment="Heading for the section of required permissions that the app needs to function, shown in the permissions explanation screen.">Wymagane</string>
     <string name="heading_optional_permissions" comment="Heading for the section of optional permissions that the app needs to function, shown in the permissions explanation screen.">Opcjonalne</string>
     <string name="manually_grant_permissions" comment="Pop-up message that is shown to the user when they want to grant an app permission that must be granted via the OS settings screen.">To zezwolenie musisz nadać ręcznie w ustawieniach</string>
-    <string name="revoke_permissions" comment="Pop-up message that is shown to the user when they are revoking an app permission.">This permission must be manually revoked from Settings</string>
+    <string name="revoke_permissions" comment="Pop-up message that is shown to the user when they are revoking an app permission.">To uprawnienie musi zostać odwołane ręcznie w ustawieniach</string>
     <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Usuń konto</string>
     <!-- Instant Note Editor -->
     <string name="instant_card" comment="Used in the Android system context menu/share dialog to quickly create a note. This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. ">Szybka karta</string>
     <!-- Multiple profile -->
-    <string name="add_profile">Add profile</string>
+    <string name="add_profile">Dodaj profil</string>
 </resources>

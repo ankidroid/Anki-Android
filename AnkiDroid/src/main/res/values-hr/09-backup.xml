@@ -44,25 +44,25 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="backup_deck_no_storage_left">Backup not saved. Not enough space left on your storage. Lower the backup depth or remove some other files.</string>
-    <string name="storage_warning" comment="Consider keeping the unbreakable space after the digit">Less than %d MB space on your storage left.\nFree some space to avoid data loss.</string>
-    <string name="backup_restore" maxLength="28">Restore from backup</string>
-    <string name="backup_new_collection">New collection</string>
-    <string name="backup_del_collection">Delete collection and create new one</string>
-    <string name="backup_del_collection_question">Delete the collection and create a new one? This will drop all your learning progress and delete all cards.</string>
-    <string name="backup_one_way_sync_from_server">One-way sync from server</string>
-    <string name="backup_full_sync_from_server_question">Overwrite your collection with the one from AnkiWeb? This will drop all your learning progress and added information since your last sync.</string>
-    <string name="error_handling_title">Error handling</string>
-    <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">Options</string>
-    <string name="backup_retry_opening">Retry opening</string>
-    <string name="backup_error_menu_repair">Repair database</string>
+    <string name="backup_deck_no_storage_left">Sigurnosna kopija nije spremljena. Nedovoljno prostora u pohrani. Smanjite dubinu sigurnosnih kopija ili uklonite neke druge datoteke.</string>
+    <string name="storage_warning" comment="Consider keeping the unbreakable space after the digit">Preostalo je manje od %d MB u prostoru za pohranu.\nOslobodite mjesta kako biste spriječili gubitak podataka.</string>
+    <string name="backup_restore" maxLength="28">Obnovi iz sigurnosne kopije</string>
+    <string name="backup_new_collection">Nova kolekcija</string>
+    <string name="backup_del_collection">Izbriši kolekciju i napravi novu</string>
+    <string name="backup_del_collection_question">Izbrisati kolekciju i napraviti novu? Ovo će odbaciti sav Vaš napredak učenja i izbrisati sve kartice.</string>
+    <string name="backup_one_way_sync_from_server">Sinkronizacija u jednom smjeru s poslužitelja</string>
+    <string name="backup_full_sync_from_server_question">Zamijeniti vašu kolekciju s onom s AnkiWeba? Ovo će odbaciti vaš napredak učenja i informacije dodane od zadnje sinkronizacije.</string>
+    <string name="error_handling_title">Rukovanje pogreškom</string>
+    <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">Opcije</string>
+    <string name="backup_retry_opening">Pokušaj ponovno otvoriti</string>
+    <string name="backup_error_menu_repair">Popravi bazu podataka</string>
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
-    <string name="backup_repair_deck_progress">Repairing database&#8230;</string>
-    <string name="backup_invalid_file_error">The selected backup file was invalid</string>
-    <string name="backup_restore_select_title">Select backup to restore</string>
-    <string name="backup_restore_no_backups">No backups available on this device. If you have backups on your desktop computer, copy them manually into your AnkiDroid folder.</string>
-    <string name="open_collection_failed_title">Collection not opened</string>
-    <string name="corrupt_db_message">Your collection has become corrupted.\n\nTouch “options” to restore from a backup, or if that doesn’t work, see the following instructions for manually repairing the database:\n%1$s</string>
-    <string name="access_collection_failed_message">An error occurred while accessing your collection. It may have been caused by a harmless bug, or there may be a problem with it. \n\nTry running check database, or restoring from backup by pressing the “options” button. If you continue to see this message, please file a bug report:\n%1$s</string>
-    <string name="deck_repair_error">Collection couldn’t be repaired</string>
+    <string name="backup_repair_deck_progress">Popravljanje baze podataka&#8230;</string>
+    <string name="backup_invalid_file_error">Odabrana datoteka sigurnosne kopije nije ispravna</string>
+    <string name="backup_restore_select_title">Odaberite sigurnosnu kopiju za obnovu</string>
+    <string name="backup_restore_no_backups">Na uređaju nema dostupnih sigurnosnih kopija. Ako imate sigurnosne kopije na stolnom računalu, ručno ih kopirajte u Vašu AnkiDroid mapu.</string>
+    <string name="open_collection_failed_title">Kolekcija nije otvorena</string>
+    <string name="corrupt_db_message">Vaša kolekcija se oštetila.\n\nPritisnite \"opcije\" kako biste obnovili iz sigurnosne kopije. Ako to ne funkcionira, pogledajte upute za ručni popravak baze podataka: \n%1$s</string>
+    <string name="access_collection_failed_message">Došlo je do greške pri pristupu Vašoj kolekciji. Možda je to samo bezazlena greška u programu, a možda postoji problem s Vašom kolekcijom. \n\nPokušajte pokrenuti provjeru baze podataka ili obnoviti iz sigurnosne kopije pritiskom na gumb \"opcije\". Ako se ova greška nastavi, podnesite izvještaj o grešci: \n%1$s</string>
+    <string name="deck_repair_error">Kolekcija nije mogla biti popravljena</string>
 </resources>

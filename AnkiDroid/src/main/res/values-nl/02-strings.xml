@@ -47,7 +47,7 @@
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Zijmenu openen</string>
     <string name="drawer_close">Zijmenu sluiten</string>
-    <string name="note_message">Note saved</string>
+    <string name="note_message">Notitie opgeslagen</string>
     <!-- Note editor screen -->
     <string name="CardEditorCardDeck">Kaartenset:</string>
     <string name="CardEditorNoteDeck">Set:</string>
@@ -55,7 +55,7 @@
     <string name="CardEditorTags">Kenmerken: %1$s</string>
     <string name="CardEditorCards">Kaarten: %1$s</string>
     <string name="edit_occlusions">Occlusies bewerken</string>
-    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
+    <string name="paste_from_clipboard" maxLength="28">Plakken uit klembord</string>
     <string name="tag_name">Labelnaam</string>
     <string name="add_new_filter_tags">Labels toevoegen/filteren</string>
     <string name="add_tag" maxLength="28">Label toevoegen</string>
@@ -67,26 +67,26 @@
     <string name="save_whiteboard" maxLength="28">Schrijfbord opslaan</string>
     <string name="enable_stylus" maxLength="28">Stylus schrijven inschakelen</string>
     <string name="disable_stylus">Stylus schrijven uitschakelen</string>
-    <string name="eraser" maxLength="28">Eraser</string>
+    <string name="eraser" maxLength="28">Gom</string>
     <string name="add_brush" maxLength="28">Add brush</string>
-    <string name="whiteboard_align_left" comment="Option to align the whiteboard toolbar on the left" maxLength="28">Left</string>
-    <string name="whiteboard_align_bottom" comment="Option to align the whiteboard toolbar on the bottom" maxLength="28">Bottom</string>
-    <string name="whiteboard_align_right" comment="Option to align the whiteboard toolbar on the right" maxLength="28">Right</string>
-    <string name="whiteboard_clear" comment="Button text to clear the whiteboard" maxLength="28">Clear</string>
-    <string name="whiteboard_more_options" comment="Tooltip of the whiteboard \'More\' button" maxLength="28">More options</string>
-    <string name="whiteboard_remove_brush_message">Are you sure you want to remove this brush from your palette?</string>
-    <string name="whiteboard_ink_eraser" comment="Title of the whiteboard Ink eraser">Ink</string>
-    <string name="whiteboard_stroke_eraser" comment="Title of the whiteboard Stroke eraser">Stroke</string>
-    <string name="stylus_mode" comment="Title of the menu item that toggles the whiteboard stylus mode" maxLength="28">Stylus mode</string>
+    <string name="whiteboard_align_left" comment="Option to align the whiteboard toolbar on the left" maxLength="28">Links</string>
+    <string name="whiteboard_align_bottom" comment="Option to align the whiteboard toolbar on the bottom" maxLength="28">Onderaan</string>
+    <string name="whiteboard_align_right" comment="Option to align the whiteboard toolbar on the right" maxLength="28">Rechts</string>
+    <string name="whiteboard_clear" comment="Button text to clear the whiteboard" maxLength="28">Wissen</string>
+    <string name="whiteboard_more_options" comment="Tooltip of the whiteboard \'More\' button" maxLength="28">Meer opties</string>
+    <string name="whiteboard_remove_brush_message">Weet je zeker dat je deze borstel uit je palet wilt verwijderen?</string>
+    <string name="whiteboard_ink_eraser" comment="Title of the whiteboard Ink eraser">Inkt</string>
+    <string name="whiteboard_stroke_eraser" comment="Title of the whiteboard Stroke eraser">Lijndikte</string>
+    <string name="stylus_mode" comment="Title of the menu item that toggles the whiteboard stylus mode" maxLength="28">Stylus modus</string>
     <string name="cannot_remove_last_brush_message">The last brush may not be removed</string>
     <string name="enable_whiteboard" maxLength="28">Whiteboard inschakelen</string>
     <string name="disable_whiteboard">Whiteboard uitschakelen</string>
     <string name="show_whiteboard">Toon het schrijfbord</string>
-    <string name="enable_eraser" maxLength="28">Enable eraser</string>
-    <string name="disable_eraser" maxLength="28">Disable eraser</string>
+    <string name="enable_eraser" maxLength="28">Schakel gom in</string>
+    <string name="disable_eraser" maxLength="28">Schakel gom uit</string>
     <string name="hide_whiteboard" maxLength="28">Verberg het schrijfbord</string>
     <string name="clear_whiteboard" maxLength="28">Schrijfbord schoonvegen</string>
-    <string name="replay_media" maxLength="28">Replay media</string>
+    <string name="replay_media" maxLength="28">Media opnieuw afspelen</string>
     <string name="leech_suspend_notification">Kaart gemarkeerd als moeilijk en uitgesteld</string>
     <string name="leech_notification">Kaart gemarkeerd als moeilijk</string>
     <string name="webview_crash_unknown">Onbekende fout</string>
@@ -97,7 +97,7 @@
     <string name="webview_crash_fatal">Fatale fout: WebView renderer is gecrasht. Oorzaak: %s</string>
     <string name="webview_crash_loop_dialog_title">Systeem WebView Rendering Mislukking.</string>
     <string name="webview_crash_loop_dialog_content">Systeem WebView kon de kaart \'%1$s\' niet renderen.\n%2$s</string>
-    <string name="slide_to_cancel" comment="Message shown when pressing the record button">Slide to cancel</string>
+    <string name="slide_to_cancel" comment="Message shown when pressing the record button">Veeg om te annuleren</string>
     <string name="filter_by_flags" maxLength="41">Vlaggen</string>
     <!-- Custom study options -->
     <string name="custom_study_loading_tags">Building list of tags&#8230;</string>
@@ -124,8 +124,8 @@
     <string name="missing_note_type">Geen notitietype gevonden</string>
     <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (leeg)</string>
     <!-- Image cropper -->
-    <string name="image_cropper_action_rotate" maxLength="28" comment="Action in image cropper screen">Rotate</string>
-    <string name="image_cropper_action_flip" maxLength="28" comment="Action in image cropper screen">Flip</string>
+    <string name="image_cropper_action_rotate" maxLength="28" comment="Action in image cropper screen">Draaien</string>
+    <string name="image_cropper_action_flip" maxLength="28" comment="Action in image cropper screen">Omdraaien</string>
     <string name="image_cropper_action_flip_horizontally" maxLength="28" comment="Submenu action in image cropper screen">Flip horizontally</string>
     <string name="image_cropper_action_flip_vertically" maxLength="28" comment="Submenu action in image cropper screen">Flip vertically</string>
     <!-- Timebox -->
@@ -234,7 +234,7 @@
     <string name="search_decks" maxLength="28">Sets doorzoeken</string>
     <string name="ankidroid_init_failed_webview_title">Onherstelbare fout</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid berust op de System WebView die niet beschikbaar is. Dit kan gebeuren als het systeem bezig is met het installeren van updates. Probeer opnieuw na enkele minuten.\n\n%s</string>
-    <string name="ankidroid_init_failed_storage">AnkiDroid cannot access storage due to an Android error.\n\n%s</string>
+    <string name="ankidroid_init_failed_storage">AnkiDroid heeft geen toegang tot opslag vanwege een Android fout.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">Lettergrootte</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Werkbalk weergeven</string>
@@ -264,9 +264,9 @@
     <!-- IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
-    <string name="invalid_value" comment="Error message in IncrementerNumberRangePreference when input is not a valid number">Invalid value</string>
-    <string name="maximum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the maximum allowed value">Maximum value is %d</string>
-    <string name="minimum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the minimum allowed value">Minimum value is %d</string>
+    <string name="invalid_value" comment="Error message in IncrementerNumberRangePreference when input is not a valid number">Ongeldige waarde</string>
+    <string name="maximum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the maximum allowed value">Maximale waarde is %d</string>
+    <string name="minimum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the minimum allowed value">Minimale waarde is %d</string>
     <!-- Used for credential empty warning message -->
     <string name="invalid_email">Voer een geldig e-mailadres in</string>
     <string name="password_empty">Wachtwoord is vereist</string>
@@ -274,7 +274,7 @@
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
     <string name="download_deck">Set downloaden</string>
-    <string name="open_in_browser" comment="Label of a button inviting to open ankiweb\'s shared deck page if automated download failed">Open in browser</string>
+    <string name="open_in_browser" comment="Label of a button inviting to open ankiweb\'s shared deck page if automated download failed">Openen in de browser</string>
     <string name="try_again">Probeer nogmaals</string>
     <string name="cancel_download">Annuleer download</string>
     <string name="cancel_download_question_title">Annuleer download?</string>
@@ -309,8 +309,8 @@
     <string name="field_editor_model_not_available">Toegang tot verzameling mislukt. Probeer het opnieuw!</string>
     <string name="cd_manage_notetypes_add">Nieuw notitietype toevoegen</string>
     <plurals name="note_types_selected">
-        <item quantity="one">%d note type selected</item>
-        <item quantity="other">%d note types selected</item>
+        <item quantity="one">%d notitietype geselecteerd</item>
+        <item quantity="other">%d notitietypes geselecteerd</item>
     </plurals>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">Studeer minder</string>
@@ -340,10 +340,10 @@
     <!-- Chips should probably be in a separate file, due to the additional length req -->
     <string name="tts_voices_chip_filter_to_internet" comment="     Filters a list of text to speech voices, to enable/disable voices which require the internet to     function.     This is on a chip control, so keep the text short, ideally one word">Internet</string>
     <string name="tts_voices_chip_filter_to_installable_audio" comment="     Displays a list of Text to Speech voices which should be downloaded/installed before use     This is on a chip control, so keep the text short, ideally one word">Installeer</string>
-    <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">Failed to open text to speech settings</string>
+    <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">Tekst-naar-spraak-instellingen kunnen niet worden geopend</string>
     <string name="shared_decks_login_required">Log in om meer sets te downloaden</string>
     <string name="deck_description_field_hint">Beschrijving</string>
-    <string name="deck_description_saved">Description updated</string>
+    <string name="deck_description_saved">Beschrijving bijgewerkt</string>
     <string name="format_deck_description_as_markdown">Format as Markdown</string>
     <string name="help_button_content_description">Open help for ‘%s’</string>
     <string name="failed_to_copy">Kopiëren mislukt</string>
