@@ -23,6 +23,7 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
 import com.ichi2.anki.dialogs.ConfirmationDialog
 import com.ichi2.anki.launchCatchingTask
+import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.exception.ConfirmModSchemaException
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.utils.message
@@ -31,6 +32,32 @@ import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
+
+/**
+ * [launchCatchingTask], showing a one-way sync dialog: [R.string.full_sync_confirmation]
+ *
+ * @param block calls a backend method which unconditionally performs a schema change,
+ *  such as [Collection.changeNotetypeRaw]
+ */
+fun AnkiActivity.launchCatchingRequiringOneWaySync(block: suspend () -> Unit) =
+    launchCatchingTask {
+        if (withCol { !schemaChanged() }) {
+            // .also is used to ensure the activity is used as context
+            val confirmModSchemaDialog =
+                ConfirmationDialog().also { dialog ->
+                    dialog.setArgs(message = getString(R.string.full_sync_confirmation))
+                    dialog.setConfirm {
+                        launchCatchingTask {
+                            block()
+                        }
+                    }
+                }
+            showDialogFragment(confirmModSchemaDialog)
+            return@launchCatchingTask
+        }
+        // TODO: use context(SchemaChangedConfirmed) after bug #20247 is fixed (upstream-issue)
+        block()
+    }
 
 /**
  * [launchCatchingTask], showing a one-way sync dialog: [R.string.full_sync_confirmation]
