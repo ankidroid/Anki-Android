@@ -316,8 +316,6 @@ class ChangeNoteTypeViewModel(
             Timber.d("Field map: %s", fieldChangeMap)
             Timber.d("Card map: %s", templateChangeMap)
 
-            withCol { modSchema(check = true) }
-
             val changes =
                 changeNoteTypeOfNotes(
                     noteIds = noteIds,
