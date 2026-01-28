@@ -21,6 +21,18 @@ Discord is great for real-time/casual conversations. Records of the outcomes of 
 discussions should be copied to the relevant PR/issue (ideally linking to the Discord message).
  It's not expected that Discord history will be permanently retained.
 
+## Google Summer of Code (GSoC)
+
+GSoC contributors are expected to operate with a high degree of independence. Please read our 
+[GSoC Wiki](https://github.com/ankidroid/Anki-Android/wiki/Google-Summer-of-Code) for more contribution instructions. Mentors are available to
+provide guidance, feedback, and review rather than step-by-step instructions. Before asking questions, you are expected to read relevant
+documentation, search existing issues/PRs, and make a concrete attempt to understand the problem.
+
+We receive a high volume of GSoC-related questions during the application period. To keep the project
+sustainable, general questions should be asked in public channels [#ankidroid-dev](https://discord.gg/xeb7bBZVJ6) and be
+clear, specific, and actionable. Repeated questions, direct messages to mentors, or requests for
+individual evaluation or proposal feedback may be ignored. Your ability to communicate clearly and work independently is an important part of how proposals are evaluated.
+
 ## AI Policy
 
 > [!CAUTION]
