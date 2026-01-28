@@ -120,20 +120,27 @@ class DB(
         return results
     }
 
+    /**
+     * Execute a single SQL statement that does not return data.
+     *
+     * This method discards the undo and study queues unless the statement is a `SELECT`.
+     */
     fun execute(
         sql: String,
         vararg `object`: Any?,
     ) {
-        val s = sql.trim().lowercase()
-        // mark modified?
-        for (mo in MOD_SQL_STATEMENTS) {
-            if (s.startsWith(mo)) {
-                break
-            }
+        // permalink: https://github.com/ankitects/anki/blob/83c615cc7f9aef3c336936fa797671965538f89c/rslib/src/backend/dbproxy.rs#L170-L178
+        if (!sql.lowercase().trim().startsWith("select")) {
+            Timber.i("clearing undo and study queues")
         }
         database.execSQL(sql, `object`)
     }
 
+    /**
+     * Executes a collection of ';'-delimited SQL statements which do not return data.
+     *
+     * This method discards the undo and study queues unless all statements are `SELECT`.
+     */
     @KotlinCleanup("""Use Kotlin string. Change split so that there is no empty string after last ";".""")
     fun executeScript(sql: String) {
         val queries = sql.split(";")
