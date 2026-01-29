@@ -683,6 +683,16 @@ class Collection(
         backend.removeNotes(noteIds = emptyList(), cardIds = cardIds)
     }
 
+    /**
+     * Returns all card IDs linked to the given note.
+     *
+     * IMPORTANT:
+     * A note may not always have cards.
+     *
+     * This can happen in cases like:
+     * - The note type has no card templates (empty cards).
+     * - Cards were deleted but the note still exists (orphaned notes).
+     */
     @CheckResult
     @LibAnkiAlias("card_ids_of_note")
     fun cardIdsOfNote(nid: NoteId): List<CardId> = backend.cardsOfNote(nid = nid)
