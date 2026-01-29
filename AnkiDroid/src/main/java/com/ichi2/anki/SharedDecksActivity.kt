@@ -29,10 +29,10 @@ import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.activity.OnBackPressedCallback
+import androidx.annotation.VisibleForTesting
 import androidx.core.os.bundleOf
 import androidx.fragment.app.commit
 import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_INDEFINITE
-import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.databinding.ActivitySharedDecksBinding
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.workarounds.SafeWebViewLayout
@@ -68,7 +68,8 @@ class SharedDecksActivity : AnkiActivity(R.layout.activity_shared_decks) {
      * History should not be cleared before the page finishes loading otherwise there would be
      * an extra entry in the history since the previous page would not get cleared.
      */
-    private val webViewClient =
+    @VisibleForTesting
+    internal val webViewClient =
         object : WebViewClient() {
             private var redirectTimes = 0
 
@@ -134,7 +135,6 @@ class SharedDecksActivity : AnkiActivity(R.layout.activity_shared_decks) {
                     }
                 }
 
-            @NeedsTest("A user is not redirected to login/signup if they are logged in to AnkiWeb")
             override fun onReceivedHttpError(
                 view: WebView?,
                 request: WebResourceRequest?,
