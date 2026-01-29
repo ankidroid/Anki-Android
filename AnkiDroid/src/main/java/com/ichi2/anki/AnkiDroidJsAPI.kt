@@ -458,7 +458,7 @@ open class AnkiDroidJsAPI(
         withContext(Dispatchers.Main) {
             val cards =
                 try {
-                    searchForRows(apiContract.cardSuppliedData, SortOrder.UseCollectionOrdering(), CardsOrNotes.CARDS)
+                    searchForRows(apiContract.cardSuppliedData, SortOrder.UseCollectionOrdering, CardsOrNotes.CARDS)
                         .map { withCol { getCard(it.cardOrNoteId) } }
                 } catch (exc: Exception) {
                     activity.webView!!.evaluateJavascript(
