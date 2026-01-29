@@ -60,7 +60,7 @@ androidxViewpager2 = "1.1.0"
 # https://developer.android.com/jetpack/androidx/releases/webkit
 androidxWebkit = "1.15.0"
 # https://developer.android.com/jetpack/androidx/releases/work
-androidxWork = "2.11.0"
+androidxWork = "2.11.1"
 # https://github.com/ankidroid/Anki-Android-Backend/
 ankiBackend = '0.1.63-anki25.09.2'
 autoService = "1.1.1"
