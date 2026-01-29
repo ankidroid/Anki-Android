@@ -631,12 +631,45 @@ class NoteEditorTest : RobolectricTest() {
             }
         }
 
+    @Test
+    fun `hasUnsavedChanges - note is unchanged`() =
+        withNoteEditorEditing(addBasicNote("hello world")) {
+            this.setField(0, "hello world")
+            assertFalse(hasUnsavedChanges())
+        }
+
+    @Test
+    fun `hasUnsavedChanges - note is changed`() =
+        withNoteEditorEditing(addBasicNote("hello world")) {
+            this.setField(0, "hi")
+            assertTrue(hasUnsavedChanges())
+        }
+
+    @Test
+    fun `hasUnsavedChanges - note contained a newline`() =
+        withNoteEditorEditing(addBasicNote("hello\nworld")) {
+            assertFalse(hasUnsavedChanges())
+        }
+
+    @Test
+    fun `hasUnsavedChanges - note contained a HTML newline - 20174`() =
+        withNoteEditorEditing(addBasicNote("hello<br>world")) {
+            assertFalse(hasUnsavedChanges())
+        }
+
     private suspend fun withNoteEditorAdding(
         from: FromScreen = FromScreen.DECK_LIST,
         block: suspend NoteEditorFragment.() -> Unit,
     ) {
         val editor = getNoteEditorAddingNote(from)
         editor.block()
+    }
+
+    private fun withNoteEditorEditing(
+        note: Note,
+        block: suspend NoteEditorFragment.() -> Unit,
+    ) = runTest {
+        block(getNoteEditorEditingExistingBasicNote(note, from = REVIEWER))
     }
 
     private fun moveToDynamicDeck(note: Note): DeckId {
