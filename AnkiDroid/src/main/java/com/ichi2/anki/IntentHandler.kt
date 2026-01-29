@@ -19,7 +19,10 @@ package com.ichi2.anki
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.os.Message
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
@@ -54,6 +57,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.io.File
+import java.time.Duration
+import java.time.Instant
 import kotlin.math.max
 import kotlin.math.min
 
@@ -67,54 +72,81 @@ import kotlin.math.min
 class IntentHandler : AbstractIntentHandler() {
     override fun onCreate(savedInstanceState: Bundle?) {
         // Note: This is our entry point from the launcher with intent: android.intent.action.MAIN
-        super.onCreate(savedInstanceState)
-        val intent = intent
-        Timber.v(intent.toString())
-        val reloadIntent = Intent(this, DeckPicker::class.java)
-        reloadIntent.setDataAndType(getIntent().data, getIntent().type)
-        val action = intent.action
-        // #6157 - We want to block actions that need permissions we don't have, but not the default case
-        // as this requires nothing
-        val runIfStoragePermissions = { runnable: () -> Unit -> performActionIfStorageAccessible(reloadIntent, action) { runnable() } }
-        val launchType = getLaunchType(intent)
-        // TODO block the UI with some kind of ProgressDialog instead of cancelling the sync work
-        if (requiresCollectionAccess(launchType)) {
-            // # 18899
-            if (WorkManager.isInitialized()) {
-                SyncWorker.cancel(this)
-            }
+
+        val handleScreen = { delay: Long ->
+            Handler(Looper.getMainLooper()).postDelayed({
+                val intent = intent
+                Timber.v(intent.toString())
+                val reloadIntent = Intent(this, DeckPicker::class.java)
+                reloadIntent.setDataAndType(getIntent().data, getIntent().type)
+                val action = intent.action
+                // #6157 - We want to block actions that need permissions we don't have, but not the default case
+                // as this requires nothing
+                val runIfStoragePermissions = { runnable: () -> Unit ->
+                    performActionIfStorageAccessible(reloadIntent, action) { runnable() }
+                }
+                val launchType = getLaunchType(intent)
+                // TODO block the UI with some kind of ProgressDialog instead of cancelling the sync work
+                if (requiresCollectionAccess(launchType)) {
+                    // # 18899
+                    if (WorkManager.isInitialized()) {
+                        SyncWorker.cancel(this)
+                    }
+                }
+                when (launchType) {
+                    LaunchType.FILE_IMPORT ->
+                        runIfStoragePermissions {
+                            handleFileImport(fileIntent, reloadIntent, action)
+                            finish()
+                        }
+                    LaunchType.TEXT_IMPORT ->
+                        runIfStoragePermissions {
+                            onSelectedCsvForImport(fileIntent)
+                            finish()
+                        }
+                    LaunchType.IMAGE_IMPORT ->
+                        runIfStoragePermissions {
+                            handleImageImport(intent)
+                            finish()
+                        }
+                    LaunchType.SHARED_TEXT ->
+                        runIfStoragePermissions {
+                            handleSharedText(intent)
+                            finish()
+                        }
+                    LaunchType.SYNC -> runIfStoragePermissions { handleSyncIntent(reloadIntent, action) }
+                    LaunchType.REVIEW -> runIfStoragePermissions { handleReviewIntent(reloadIntent, intent) }
+                    LaunchType.DEFAULT_START_APP_IF_NEW -> {
+                        Timber.d("onCreate() performing default action")
+                        launchDeckPickerIfNoOtherTasks(reloadIntent)
+                    }
+                    LaunchType.COPY_DEBUG_INFO -> {
+                        copyDebugInfoToClipboard(intent)
+                        finish()
+                    }
+                }
+            }, delay)
         }
-        when (launchType) {
-            LaunchType.FILE_IMPORT ->
-                runIfStoragePermissions {
-                    handleFileImport(fileIntent, reloadIntent, action)
-                    finish()
-                }
-            LaunchType.TEXT_IMPORT ->
-                runIfStoragePermissions {
-                    onSelectedCsvForImport(fileIntent)
-                    finish()
-                }
-            LaunchType.IMAGE_IMPORT ->
-                runIfStoragePermissions {
-                    handleImageImport(intent)
-                    finish()
-                }
-            LaunchType.SHARED_TEXT ->
-                runIfStoragePermissions {
-                    handleSharedText(intent)
-                    finish()
-                }
-            LaunchType.SYNC -> runIfStoragePermissions { handleSyncIntent(reloadIntent, action) }
-            LaunchType.REVIEW -> runIfStoragePermissions { handleReviewIntent(reloadIntent, intent) }
-            LaunchType.DEFAULT_START_APP_IF_NEW -> {
-                Timber.d("onCreate() performing default action")
-                launchDeckPickerIfNoOtherTasks(reloadIntent)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            splashScreen.setOnExitAnimationListener { splashScreenView ->
+                val animationDuration = splashScreenView.iconAnimationDuration
+                val animationStart = splashScreenView.iconAnimationStart
+
+                Timber.v("duration: ${animationDuration?.toMillis()} start: $animationStart")
+                val remainingDuration =
+                    if (animationDuration != null && animationStart != null) {
+                        (animationDuration - Duration.between(animationStart, Instant.now())).toMillis().coerceAtLeast(0L)
+                    } else {
+                        0L
+                    }
+                Timber.v("remainDuration: $remainingDuration")
+                handleScreen(remainingDuration)
             }
-            LaunchType.COPY_DEBUG_INFO -> {
-                copyDebugInfoToClipboard(intent)
-                finish()
-            }
+            super.onCreate(savedInstanceState)
+        } else {
+            super.onCreate(savedInstanceState)
+            handleScreen(0L) // No delay for older Android versions
         }
     }
 
