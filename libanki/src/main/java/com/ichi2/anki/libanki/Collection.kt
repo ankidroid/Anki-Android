@@ -337,14 +337,14 @@ class Collection(
         config = Config(backend)
     }
 
-    /** Mark schema modified to force a full
-     * sync, but with the confirmation checking function disabled This
-     * is equivalent to `modSchema(False)` in Anki. A distinct method
-     * is used so that the type does not states that an exception is
-     * thrown when in fact it is never thrown.
+    /**
+     * Marks the schema as modified to cause a one-way sync.
+     *
+     * **This method discards the undo and study queues when returning successfully**
      */
-    @NotInPyLib
-    fun modSchemaNoCheck() {
+    @LibAnkiAlias("set_schema_modified")
+    @RustCleanup("Anki only sets scm, not mod")
+    fun setSchemaModified() {
         db.execute(
             "update col set scm=?, mod=?",
             TimeManager.time.intTimeMS(),
@@ -352,23 +352,31 @@ class Collection(
         )
     }
 
-    /** Mark schema modified to cause a one-way sync.
-     * ConfirmModSchemaException will be thrown if the user needs to be prompted to confirm the action.
-     * If the user chooses to confirm then modSchemaNoCheck should be called, after which the exception can
-     * be safely ignored, and the outer code called again.
+    /**
+     * Marks the schema as modified to cause a one-way sync, throwing [ConfirmModSchemaException]
+     * when [check] is `true` and a one-way sync was not previously required
+     * (the schema was not previously modified).
      *
-     * @throws ConfirmModSchemaException
+     * **This method discards the undo and study queues when returning successfully**
+     * ([check] == `false` OR [check] == `true` and the schema was previously modified).
+     *
+     * @param check whether to throw [ConfirmModSchemaException] if the schema is unchanged.
+     * Use `false` after catching the exception and obtaining user consent.
+     *
+     * @throws ConfirmModSchemaException if the schema is currently unchanged and [check] is `true`
      */
     @LibAnkiAlias("mod_schema")
-    fun modSchema() {
+    fun modSchema(check: Boolean) {
         if (!schemaChanged()) {
-            /* In Android we can't show a dialog which blocks the main UI thread
-             Therefore we can't wait for the user to confirm if they want to do
-             a one-way sync here, and we instead throw an exception asking the outer
-             code to handle the user's choice */
-            throw ConfirmModSchemaException()
+            if (check) {
+                /* In Android we can't show a dialog which blocks the main UI thread
+                   Therefore we can't wait for the user to confirm if they want to do
+                   a one-way sync here, and we instead throw an exception asking the outer
+                   code to handle the user's choice */
+                throw ConfirmModSchemaException()
+            }
         }
-        modSchemaNoCheck()
+        setSchemaModified()
     }
 
     /** `true` if schema changed since last sync. */

@@ -171,7 +171,7 @@ class ContentProviderTest : InstrumentedTest() {
             col.decks.count(),
         )
         // Delete test note type
-        col.modSchemaNoCheck()
+        col.modSchema(check = false)
         removeAllNoteTypesByName(col, BASIC_NOTE_TYPE_NAME)
         removeAllNoteTypesByName(col, TEST_NOTE_TYPE_NAME)
     }
@@ -642,7 +642,7 @@ class ContentProviderTest : InstrumentedTest() {
             }
         } finally {
             // Delete the note type (this will force a full-sync)
-            col.modSchemaNoCheck()
+            col.modSchema(check = false)
             try {
                 val noteType = col.notetypes.get(noteTypeId)
                 assertNotNull("Check note type", noteType)
