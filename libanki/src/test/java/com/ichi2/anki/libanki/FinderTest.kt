@@ -48,7 +48,7 @@ class FinderTest : InMemoryAnkiTest() {
         val manuallyBuriedCard = buryManually(col.sched, toAnswer.id)
 
         // perform the search
-        val buriedCards = col.findCards(searchQuery, SortOrder.NoOrdering())
+        val buriedCards = col.findCards(searchQuery, SortOrder.NoOrdering)
 
         // assert
         assertThat(
@@ -218,7 +218,7 @@ class FinderTest : InMemoryAnkiTest() {
                 col
                     .findCards(
                         "front:*",
-                        SortOrder.UseCollectionOrdering(),
+                        SortOrder.UseCollectionOrdering,
                     ).last(),
             ),
         )
@@ -227,19 +227,19 @@ class FinderTest : InMemoryAnkiTest() {
                 col
                     .findCards(
                         "",
-                        SortOrder.UseCollectionOrdering(),
+                        SortOrder.UseCollectionOrdering,
                     ).last(),
             ),
         )
         col.config.set("sortType", "noteFld")
 
-        assertEquals(catCard.id, col.findCards("", SortOrder.UseCollectionOrdering())[0])
+        assertEquals(catCard.id, col.findCards("", SortOrder.UseCollectionOrdering)[0])
         assertTrue(
             latestCardIds.contains(
                 col
                     .findCards(
                         "",
-                        SortOrder.UseCollectionOrdering(),
+                        SortOrder.UseCollectionOrdering,
                     ).last(),
             ),
         )
@@ -250,14 +250,14 @@ class FinderTest : InMemoryAnkiTest() {
                 col
                     .findCards(
                         "",
-                        SortOrder.UseCollectionOrdering(),
+                        SortOrder.UseCollectionOrdering,
                     ).last(),
             ),
         )
-        assertEquals(firstCardId, col.findCards("", SortOrder.UseCollectionOrdering())[0])
+        assertEquals(firstCardId, col.findCards("", SortOrder.UseCollectionOrdering)[0])
         col.config.set("sortBackwards", true)
 
-        assertTrue(latestCardIds.contains(col.findCards("", SortOrder.UseCollectionOrdering())[0]))
+        assertTrue(latestCardIds.contains(col.findCards("", SortOrder.UseCollectionOrdering)[0]))
         /* TODO: Port BuiltinSortKind
            assertEquals(firstCardId,
            col.findCards("", BuiltinSortKind.CARD_DUE, reverse=false).get(0)
