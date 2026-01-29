@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!--
   ~  Copyright (c) 2026 David Allison <davidallisongithub@gmail.com>
   ~
@@ -14,7 +13,9 @@
   ~  You should have received a copy of the GNU General Public License along with
   ~  this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
-<resources>
-    <string name="pref_browser_search_history">browser_search_history</string>
-    <string name="pref_browser_no_sorting">cardBrowserNoSorting</string>
-</resources>
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android" android:height="24dp" android:tint="?attr/colorControlNormal" android:viewportHeight="960" android:viewportWidth="960" android:width="24dp">
+      
+    <path android:fillColor="@android:color/white" android:pathData="M440,160L440,647L216,423L160,480L480,800L800,480L744,423L520,647L520,160L440,160Z"/>
+    
+</vector>

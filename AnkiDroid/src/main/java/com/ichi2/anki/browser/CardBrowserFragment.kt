@@ -16,7 +16,6 @@
 
 package com.ichi2.anki.browser
 
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.LayoutInflater
@@ -69,11 +68,11 @@ import com.ichi2.anki.browser.CardBrowserViewModel.ToggleSelectionState.SELECT_N
 import com.ichi2.anki.browser.RepositionCardFragment.Companion.REQUEST_REPOSITION_NEW_CARDS
 import com.ichi2.anki.browser.RepositionCardsRequest.ContainsNonNewCardsError
 import com.ichi2.anki.browser.RepositionCardsRequest.RepositionData
+import com.ichi2.anki.browser.search.SortOrderBottomSheetFragment
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.utils.android.isRobolectric
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.dialogs.BrowserOptionsDialog
-import com.ichi2.anki.dialogs.CardBrowserOrderDialog
 import com.ichi2.anki.dialogs.CreateDeckDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
@@ -86,7 +85,6 @@ import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.model.SelectableDeck
-import com.ichi2.anki.model.SortType
 import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.requireAnkiActivity
@@ -802,15 +800,12 @@ class CardBrowserFragment :
         }
     }
 
-    fun changeDisplayOrder() {
-        showDialogFragment(
-            // TODO: move this into the ViewModel
-            CardBrowserOrderDialog.newInstance { dialog: DialogInterface, which: Int ->
-                dialog.dismiss()
-                activityViewModel.changeCardOrder(SortType.fromCardBrowserLabelIndex(which))
-            },
-        )
-    }
+    fun changeDisplayOrder() =
+        launchCatchingTask {
+            SortOrderBottomSheetFragment
+                .createInstance(cardsOrNotes = activityViewModel.cardsOrNotes)
+                .show(childFragmentManager)
+        }
 
     fun updateFlagForSelectedRows(flag: Flag) =
         launchCatchingTask {

@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2023 David Allison <davidallisongithub@gmail.com>
+ *  Copyright (c) 2026 David Allison <davidallisongithub@gmail.com>
  *
  *  This program is free software; you can redistribute it and/or modify it under
  *  the terms of the GNU General Public License as published by the Free Software
@@ -16,23 +16,29 @@
 
 package com.ichi2.anki.browser
 
-import com.ichi2.anki.libanki.Config
-import timber.log.Timber
+import android.os.Parcelable
+import anki.search.BrowserColumns
+import com.ichi2.anki.libanki.Collection
+import kotlinx.parcelize.Parcelize
 
 /**
- * Whether searches should be reversed
+ * The key defining a column in the Card Browser: [BrowserColumns.Column.key]
+ *
+ * Example: `noteFld`
+ *
+ * @see Collection.getBrowserColumn
+ * @see Collection.allBrowserColumns
+ * @see Collection.loadBrowserCardColumns
+ * @see Collection.loadBrowserNoteColumns
+ * @see Collection.setBrowserCardColumns
+ * @see Collection.setBrowserNoteColumns
  */
-data class ReverseDirection(
-    val orderAsc: Boolean,
-) {
-    // TODO: This likely needs to handle 'CardsOrNotes'
-    fun updateConfig(config: Config) {
-        Timber.v("update config to %s", this)
-        config.set("sortBackwards", orderAsc)
-        config.set("browserNoteSortBackwards", orderAsc)
-    }
-
+@JvmInline
+@Parcelize
+value class BrowserColumnKey(
+    val value: String,
+) : Parcelable {
     companion object {
-        fun fromConfig(config: Config): ReverseDirection = ReverseDirection(orderAsc = config.get("sortBackwards") ?: false)
+        fun from(column: BrowserColumns.Column) = BrowserColumnKey(column.key)
     }
 }
