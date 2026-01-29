@@ -71,12 +71,14 @@ import com.ichi2.anki.libanki.QueueType.ManuallyBuried
 import com.ichi2.anki.libanki.QueueType.New
 import com.ichi2.anki.libanki.testutils.AnkiTest
 import com.ichi2.anki.model.CardsOrNotes
+import com.ichi2.anki.model.LegacySortType
+import com.ichi2.anki.model.LegacySortType.NO_SORTING
+import com.ichi2.anki.model.LegacySortType.SORT_FIELD
 import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.anki.model.SortType
-import com.ichi2.anki.model.SortType.NO_SORTING
-import com.ichi2.anki.model.SortType.SORT_FIELD
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.anki.setFlagFilterSync
+import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.utils.ext.ifNotZero
 import com.ichi2.testutils.IntentAssert
 import com.ichi2.testutils.JvmTest
@@ -103,12 +105,18 @@ import timber.log.Timber
 import java.io.File
 import kotlin.io.path.createTempDirectory
 import kotlin.io.path.pathString
+import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
 class CardBrowserViewModelTest : JvmTest() {
+    override fun setUp() {
+        super.setUp()
+        Prefs.putString(com.ichi2.anki.R.string.pref_browser_no_sorting, null)
+    }
+
     @Test
     fun `delete search history - Issue 14989`() =
         runViewModelTest {
@@ -598,17 +606,17 @@ class CardBrowserViewModelTest : JvmTest() {
                 assertThat("initial direction", !orderAsc)
 
                 // changing the order performs a search & changes order
-                changeCardOrder(SortType.EASE)
+                changeCardOrder(LegacySortType.EASE)
                 expectMostRecentItem()
-                assertThat("order changed", order, equalTo(SortType.EASE))
+                assertThat("order changed", order, equalTo(LegacySortType.EASE))
                 assertThat("changed direction is the default", !orderAsc)
 
                 waitForSearchResults()
 
                 // pressing 'ease' again changes direction
-                changeCardOrder(SortType.EASE)
+                changeCardOrder(LegacySortType.EASE)
                 expectMostRecentItem()
-                assertThat("order unchanged", order, equalTo(SortType.EASE))
+                assertThat("order unchanged", order, equalTo(LegacySortType.EASE))
                 assertThat("direction is changed", orderAsc)
             }
         }
@@ -1336,6 +1344,67 @@ class CardBrowserViewModelTest : JvmTest() {
             }
         }
 
+    @Test
+    fun `updating sort type launches search`() =
+        runViewModelTest {
+            flowOfSearchState.test {
+                expectNoEvents()
+
+                setSortType(SortType.NoOrdering)
+
+                expectMostRecentItem()
+            }
+        }
+
+    @Test
+    fun `updating sort type updates flows - no ordering`() =
+        runViewModelTest {
+            assertEquals(LegacySortType.SORT_FIELD, order)
+
+            setSortType(SortType.NoOrdering)
+
+            assertEquals(LegacySortType.NO_SORTING, order)
+        }
+
+    @Test
+    fun `updating sort type updates flows - known column`() =
+        runViewModelTest {
+            assertEquals(LegacySortType.SORT_FIELD, order)
+
+            setSortType(SortType.CollectionOrdering(BrowserColumnKey("cardDue"), true))
+
+            assertEquals(LegacySortType.DUE_TIME, order)
+        }
+
+    @Test
+    fun `updating sort type updates order`() =
+        runViewModelTest {
+            assertEquals(false, orderAsc)
+
+            setSortType(SortType.CollectionOrdering(BrowserColumnKey("cardDue"), true))
+
+            assertEquals(true, orderAsc)
+        }
+
+    @Test
+    fun `sort type integration test`() {
+        val firstId = addBasicNote("a").firstCard().id
+        addBasicNote("b")
+        val lastId = addBasicNote("c").firstCard().id
+
+        runViewModelTest {
+            assertEquals(firstId, this.cards[0].cardOrNoteId)
+
+            setSortType(SortType.CollectionOrdering(BrowserColumnKey("noteFld"), reverse = true))
+
+            assertEquals(lastId, this.cards[0].cardOrNoteId)
+
+            setSortType(SortType.CollectionOrdering(BrowserColumnKey("noteFld"), reverse = false))
+
+            assertEquals(firstId, this.cards[0].cardOrNoteId)
+        }
+    }
+
     private fun assertDate(str: String?) {
         // 2025-01-09 @ 18:06
         assertNotNull(str)
@@ -1512,6 +1581,9 @@ private fun AnkiTest.suspendAll() {
     }
 }
 
+/**
+ * Suspends the cards associated with the provided [Card IDs][CardId].
+ */
 private fun AnkiTest.suspendCards(vararg cardIds: CardId) {
     col.sched.suspendCards(ids = cardIds.toList())
 }
