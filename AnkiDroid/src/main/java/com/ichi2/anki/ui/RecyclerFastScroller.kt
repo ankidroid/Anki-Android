@@ -61,8 +61,10 @@ import androidx.core.view.GravityCompat
 import androidx.core.view.ViewCompat
 import androidx.interpolator.view.animation.FastOutLinearInInterpolator
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.color.MaterialColors
+import com.ichi2.anki.utils.ext.wholeAndFraction
 import com.ichi2.anki.utils.postDelayed
 import com.ichi2.utils.dp
 import com.ichi2.utils.isRtl
@@ -180,84 +182,6 @@ class RecyclerFastScroller
                         animator!!.start()
                     }
                 }
-
-            handle.setOnTouchListener(
-                object : OnTouchListener {
-                    // The bar height when the drag started - used to handle bar resizing mid-drag
-                    private var initialBarHeight = 0f
-
-                    // The last touch Y position (in bar coordinates), adjusted for bar height changes
-                    private var lastPressedYAdjustedToInitial = 0f
-                    private var lastAppBarLayoutOffset = 0
-
-                    override fun onTouch(
-                        v: View,
-                        event: MotionEvent,
-                    ): Boolean {
-                        val recyclerView = requireNotNull(recyclerView) { "recyclerView" }
-                        val recyclerViewAdapter = recyclerView.adapter
-                        if (recyclerViewAdapter == null || recyclerViewAdapter.itemCount == 0) return false
-
-                        onHandleTouchListener?.onTouch(v, event)
-                        when (event.actionMasked) {
-                            MotionEvent.ACTION_DOWN -> {
-                                handle.isPressed = true
-                                recyclerView.stopScroll()
-
-                                var nestedScrollAxis = ViewCompat.SCROLL_AXIS_NONE
-                                nestedScrollAxis = nestedScrollAxis or ViewCompat.SCROLL_AXIS_VERTICAL
-
-                                recyclerView.startNestedScroll(nestedScrollAxis)
-
-                                initialBarHeight = bar.height.toFloat()
-                                lastPressedYAdjustedToInitial = event.y + handle.y + bar.y
-                                lastAppBarLayoutOffset = appBarLayoutOffset
-                            }
-                            MotionEvent.ACTION_MOVE -> {
-                                // Calculate touch position in bar coordinates
-                                val newHandlePressedY = event.y + handle.y + bar.y
-                                val barHeight = bar.height
-                                // Adjust for any bar height changes since drag started
-                                val newHandlePressedYAdjustedToInitial =
-                                    newHandlePressedY + (initialBarHeight - barHeight)
-
-                                // Delta-based scrolling: scroll by the change in finger position,
-                                // not the absolute position. This ensures the handle "sticks" to
-                                // where the user grabbed it, rather than jumping
-                                val deltaY = newHandlePressedYAdjustedToInitial - lastPressedYAdjustedToInitial
-                                // Convert finger movement to scroll pixels:
-                                // (finger movement / bar height) gives the proportion of the bar moved,
-                                // multiply by scroll range to get pixels to scroll
-                                val scrollPixels =
-                                    (
-                                        (deltaY / initialBarHeight) *
-                                            recyclerView.computeVerticalScrollRange()
-                                    ).toInt()
-
-                                try {
-                                    recyclerView.scrollBy(0, scrollPixels + lastAppBarLayoutOffset - appBarLayoutOffset)
-                                } catch (e: Exception) {
-                                    Timber.w(e, "scrollBy")
-                                }
-
-                                lastPressedYAdjustedToInitial = newHandlePressedYAdjustedToInitial
-                                lastAppBarLayoutOffset = appBarLayoutOffset
-                            }
-                            MotionEvent.ACTION_UP -> {
-                                lastPressedYAdjustedToInitial = -1f
-
-                                recyclerView.stopNestedScroll()
-
-                                handle.isPressed = false
-                                postAutoHide()
-                            }
-                        }
-
-                        return true
-                    }
-                },
-            )
-
             translationX = hiddenTranslationX.toFloat()
         }
 
@@ -384,14 +308,42 @@ class RecyclerFastScroller
             }
         }
 
+        /**
+         * The current scroll progress as a value between 0.0 and 1.0.
+         */
+        private var pendingScrollProportion = 0f
+
+        // Task that converts handle position into scroll command
+        private val scrollTask =
+            Runnable {
+                val lm = recyclerView?.layoutManager as? LinearLayoutManager ?: return@Runnable
+                val adapter = recyclerView?.adapter ?: return@Runnable
+
+                try {
+                    // Calculate the exact target including the decimal
+                    val (targetIndex, fraction) = (pendingScrollProportion.toDouble() * adapter.itemCount).wholeAndFraction()
+                    // Estimate height using the first visible view, this is a heuristic
+                    val estimatedHeight = recyclerView?.getChildAt(0)?.height ?: 0
+
+                    // Calculate the offset by pushing the item up by the fraction of its height
+                    // e.g. If at 99.9%, push the last card up by 90% of its height so we can see the bottom.
+                    val offset = -(fraction * estimatedHeight).toInt()
+                    lm.scrollToPositionWithOffset(targetIndex.toInt(), offset)
+                } catch (e: Exception) {
+                    Timber.w(e, "scrollToPosition")
+                }
+            }
+
         override fun onTouchEvent(event: MotionEvent): Boolean {
             return when (event.actionMasked) {
                 MotionEvent.ACTION_DOWN, MotionEvent.ACTION_MOVE -> {
                     // Retrieve the adapter to determine item count.
                     val adapter = recyclerView?.adapter ?: return false
 
+                    if (adapter.itemCount == 0) return false
+
                     // Force the handle to be selected since the user is touching the track (the parent container) and not the handle itself.
-                    handle.isSelected = true
+                    handle.isPressed = true
 
                     // The valid scroll area is (height-handle.height), since the position of the handle is defined by it's top edge, we subtract it.
                     val scrollableHeight = height - handle.height
@@ -401,7 +353,7 @@ class RecyclerFastScroller
                     val scrollProportion =
                         ((event.y - handle.height / 2) / scrollableHeight.coerceAtLeast(1))
                             .coerceIn(0f, 1f)
-
+                    pendingScrollProportion = scrollProportion
                     // Calculates the item index we want to go to by multiplying our ScrollProportion to the item count
                     // e.g. if we are going to 50% then 0.5*itemcount gives us the index we need.
                     // toInt prevents decimal values, and coerceIn here makes it so when we scroll all the way to the end, we don't get an out of bounds error.
@@ -411,14 +363,24 @@ class RecyclerFastScroller
                             .coerceIn(0, adapter.itemCount - 1)
 
                     try {
-                        recyclerView?.scrollToPosition(targetPosition)
+                        (recyclerView?.layoutManager as? LinearLayoutManager)
+                            ?.scrollToPositionWithOffset(targetPosition, 0)
+                            ?: recyclerView?.scrollToPosition(targetPosition)
                     } catch (e: Exception) {
                         Timber.w(e, "scrollToPosition")
                     }
+
+                    // destroys any redundant calls to the scrolltask and sets a small delay to improve performance
+                    recyclerView?.removeCallbacks(scrollTask)
+                    recyclerView?.postDelayed(scrollTask, 20.milliseconds)
                     true
                 }
                 MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
                     handle.isSelected = false
+                    if (recyclerView != null) {
+                        recyclerView?.let { removeCallbacks(scrollTask) }
+                        scrollTask.run()
+                    }
                     false
                 }
                 else -> super.onTouchEvent(event)
