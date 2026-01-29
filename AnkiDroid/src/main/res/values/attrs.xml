@@ -76,6 +76,14 @@
         <attr name="displayValue" format="boolean"/>
     </declare-styleable>
 
+    <declare-styleable name="ReviewerControlPreference">
+        <attr name="cardSide" format="enum">
+            <enum name="question" value="0" />
+            <enum name="answer" value="1" />
+            <enum name="both" value="2" />
+        </attr>
+    </declare-styleable>
+
     <declare-styleable name="PermissionItem">
         <!-- Title of the permission -->
         <attr name="permissionTitle" format="string"/>

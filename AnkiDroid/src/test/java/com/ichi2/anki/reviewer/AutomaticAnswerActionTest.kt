@@ -45,9 +45,9 @@ class AutomaticAnswerActionTest {
     fun testExecute() {
         assertExecuteReturns(BURY_CARD, ViewerCommand.BURY_CARD)
 
-        assertExecuteReturns(ANSWER_AGAIN, ViewerCommand.FLIP_OR_ANSWER_EASE1)
-        assertExecuteReturns(ANSWER_HARD, ViewerCommand.FLIP_OR_ANSWER_EASE2)
-        assertExecuteReturns(ANSWER_GOOD, ViewerCommand.FLIP_OR_ANSWER_EASE3)
+        assertExecuteReturns(ANSWER_AGAIN, ViewerCommand.ANSWER_AGAIN)
+        assertExecuteReturns(ANSWER_HARD, ViewerCommand.ANSWER_HARD)
+        assertExecuteReturns(ANSWER_GOOD, ViewerCommand.ANSWER_GOOD)
     }
 
     private fun assertExecuteReturns(
