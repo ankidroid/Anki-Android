@@ -36,3 +36,21 @@ fun withQualifier(
         RuntimeEnvironment.setQualifiers(qualifiers)
     }
 }
+
+/** [block] runs with a runtime qualifier emulating a split-pane display */
+suspend fun withSplitPaneUiAsync(block: suspend () -> Unit) = withQualifierAsync("sw700dp", block)
+
+suspend fun withQualifierAsync(
+    newQualifier: String,
+    block: suspend () -> Unit,
+) {
+    val qualifiers = RuntimeEnvironment.getQualifiers()
+    try {
+        Timber.d("Adding '$newQualifier' to qualifiers $qualifiers")
+        RuntimeEnvironment.setQualifiers("+$newQualifier")
+        block()
+    } finally {
+        Timber.d("Resetting qualifiers to $qualifiers")
+        RuntimeEnvironment.setQualifiers(qualifiers)
+    }
+}
