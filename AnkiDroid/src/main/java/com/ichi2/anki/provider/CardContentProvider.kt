@@ -56,10 +56,12 @@ import com.ichi2.anki.libanki.TemplateManager.TemplateRenderContext.TemplateRend
 import com.ichi2.anki.libanki.Utils
 import com.ichi2.anki.libanki.exception.ConfirmModSchemaException
 import com.ichi2.anki.libanki.exception.EmptyMediaException
+import com.ichi2.anki.libanki.exception.InvalidSearchException
 import com.ichi2.anki.libanki.sched.DeckNode
 import com.ichi2.utils.FileUtil
 import com.ichi2.utils.FileUtil.internalizeUri
 import com.ichi2.utils.Permissions.arePermissionsDefinedInManifest
+import net.ankiweb.rsdroid.BackendException
 import net.ankiweb.rsdroid.exceptions.BackendDeckIsFilteredException
 import org.json.JSONArray
 import org.json.JSONException
@@ -83,6 +85,8 @@ import java.io.IOException
  * * .../decks/# (access the specified deck)
  * * .../selected_deck (access the currently selected deck)
  * * .../media (add media files to anki collection.media)
+ * * .../cards (search for cards)
+ * * .../cards/# (direct access to card)
  *
  * Note that unlike Android's contact providers:
  *
@@ -90,6 +94,10 @@ import java.io.IOException
  *  * it's not possible to access cards of a note without providing the note's ID
  *
  */
+
+// TODO: Consider streaming Cursor results instead of materializing all rows
+//  to avoid potential OOM for large queries.
+//  Tracked in: https://github.com/ankidroid/Anki-Android/issues/20253
 class CardContentProvider : ContentProvider() {
     companion object {
         // URI types
@@ -109,6 +117,8 @@ class CardContentProvider : ContentProvider() {
         private const val DECK_SELECTED = 4001
         private const val DECKS_ID = 4002
         private const val MEDIA = 5000
+        private const val CARDS = 6000
+        private const val CARD_ID = 6001
         private val sUriMatcher = UriMatcher(UriMatcher.NO_MATCH)
 
         /**
@@ -160,6 +170,8 @@ class CardContentProvider : ContentProvider() {
             addUri("decks/#", DECKS_ID)
             addUri("selected_deck/", DECK_SELECTED)
             addUri("media", MEDIA)
+            addUri("cards", CARDS)
+            addUri("cards/#", CARD_ID)
 
             for (idx in sDefaultNoteProjectionDBAccess.indices) {
                 if (sDefaultNoteProjectionDBAccess[idx] == FlashCardsContract.Note._ID) {
@@ -191,6 +203,8 @@ class CardContentProvider : ContentProvider() {
             NOTE_TYPES_ID_TEMPLATES_ID -> FlashCardsContract.CardTemplate.CONTENT_ITEM_TYPE
             SCHEDULE -> FlashCardsContract.ReviewInfo.CONTENT_TYPE
             DECKS, DECK_SELECTED, DECKS_ID -> FlashCardsContract.Deck.CONTENT_TYPE
+            CARDS -> FlashCardsContract.Card.CONTENT_TYPE
+            CARD_ID -> FlashCardsContract.Card.CONTENT_ITEM_TYPE
             else -> throw IllegalArgumentException("uri $uri is not supported")
         }
     }
@@ -404,6 +418,50 @@ class CardContentProvider : ContentProvider() {
                 val rv = MatrixCursor(columns, 1)
                 val counts = JSONArray(listOf(col.sched.counts()))
                 addDeckToCursor(id, name, counts, rv, col, columns)
+                rv
+            }
+            CARDS -> {
+                // Search for cards using Anki browser syntax
+                val columns = projection ?: FlashCardsContract.Card.DEFAULT_PROJECTION
+                val query = selection ?: ""
+
+                val cardIds =
+                    try {
+                        col.findCards(query)
+                    } catch (e: BackendException.BackendSearchException) {
+                        throw IllegalArgumentException(
+                            "Invalid Anki search query: \"$query\"",
+                            e,
+                        )
+                    }
+
+                // Fast path: Only if _id is requested
+                val onlyRequestingId = columns.singleOrNull() == FlashCardsContract.Card._ID
+
+                if (onlyRequestingId) {
+                    // Return IDs without fetching card objects
+                    val rv = MatrixCursor(columns, cardIds.size)
+                    for (cardId in cardIds) {
+                        rv.newRow().add(cardId)
+                    }
+                    rv
+                } else {
+                    // Get all requested fields
+                    val rv = MatrixCursor(columns, cardIds.size)
+                    for (cardId in cardIds) {
+                        val card = col.getCard(cardId)
+                        addCardToCursor(card, rv, col, columns)
+                    }
+                    rv
+                }
+            }
+            CARD_ID -> {
+                // Direct access to specific card by ID
+                val cardId = uri.pathSegments[1].toLong()
+                val columns = projection ?: FlashCardsContract.Card.DEFAULT_PROJECTION
+                val rv = MatrixCursor(columns, 1)
+                val card = col.getCard(cardId)
+                addCardToCursor(card, rv, col, columns)
                 rv
             }
             else -> throw IllegalArgumentException("uri $uri is not supported")
@@ -1116,6 +1174,7 @@ class CardContentProvider : ContentProvider() {
         val rb = rv.newRow()
         for (column in columns) {
             when (column) {
+                FlashCardsContract.Card._ID -> rb.add(currentCard.id)
                 FlashCardsContract.Card.NOTE_ID -> rb.add(currentCard.nid)
                 FlashCardsContract.Card.CARD_ORD -> rb.add(currentCard.ord)
                 FlashCardsContract.Card.CARD_NAME -> rb.add(cardName)
