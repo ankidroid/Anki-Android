@@ -149,6 +149,7 @@ import com.ichi2.anki.previewer.TemplatePreviewerArguments
 import com.ichi2.anki.previewer.TemplatePreviewerPage
 import com.ichi2.anki.servicelayer.LanguageHintService.languageHint
 import com.ichi2.anki.servicelayer.NoteService
+import com.ichi2.anki.servicelayer.NoteService.convertToHtmlNewline
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
@@ -1233,7 +1234,10 @@ class NoteEditorFragment :
         fun fieldsEdited(): Boolean {
             // Editing an existing note: Check to see if the fields are changed
             if (!addNote) {
-                return editFields!!.map { it.text?.toString() } != editorNote!!.fields.toList()
+                fun normalizeNewlines(s: String) = convertToHtmlNewline(s, replaceNewlines = true)
+                val currentStrings = editFields!!.map { it.text?.toString() ?: "" }
+                val originalStrings = editorNote!!.fields.toList()
+                return currentStrings.map(::normalizeNewlines) != originalStrings.map(::normalizeNewlines)
             }
 
             if (!isFieldEdited) return false
