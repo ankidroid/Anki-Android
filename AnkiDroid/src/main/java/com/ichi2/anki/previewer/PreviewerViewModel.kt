@@ -42,10 +42,11 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.update
 import timber.log.Timber
 
-class PreviewerViewModel(
+open class PreviewerViewModel(
     savedStateHandle: SavedStateHandle,
 ) : CardViewerViewModel(savedStateHandle),
     ChangeManager.Subscriber {
+    private var isRecreating = false
     val currentIndex =
         savedStateHandle.getMutableStateFlow(
             KEY_CURRENT_INDEX,
@@ -85,11 +86,15 @@ class PreviewerViewModel(
 
     /** Call this after the webView has finished loading the page */
     @NeedsTest("16302 - a sound-only card on the back/flipped with 'don't keep activities'")
-    @NeedsTest("16302 - on config changes, sound continues to play")
     override fun onPageFinished(isAfterRecreation: Boolean) {
         launchCatchingIO {
             if (isAfterRecreation) {
-                showCard(showAnswerOnReload)
+                isRecreating = true
+                try {
+                    showCard(showAnswerOnReload)
+                } finally {
+                    isRecreating = false
+                }
                 // isAfterRecreation can either mean:
                 // * after config change (ViewModel exists)
                 // * after recreation (ViewModel did not exist)
@@ -245,6 +250,20 @@ class PreviewerViewModel(
         } else {
             TypeAnswer.removeTags(text)
         }
+
+    override suspend fun showQuestion() {
+        if (!isRecreating) {
+            cardMediaPlayer.stop()
+        }
+        super.showQuestion()
+    }
+
+    override suspend fun showAnswer() {
+        if (!isRecreating) {
+            cardMediaPlayer.stop()
+        }
+        super.showAnswer()
+    }
 
     override fun opExecuted(
         changes: OpChanges,
