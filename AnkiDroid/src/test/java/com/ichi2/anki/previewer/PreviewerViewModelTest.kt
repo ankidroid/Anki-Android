@@ -19,15 +19,18 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.Flag
 import com.ichi2.anki.browser.IdsFile
+import com.ichi2.anki.cardviewer.CardMediaPlayer
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.anki.utils.ext.flag
 import com.ichi2.testutils.JvmTest
 import com.ichi2.testutils.common.Flaky
 import com.ichi2.testutils.common.OS
 import io.mockk.coEvery
+import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.spyk
+import io.mockk.verify
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.advanceUntilIdle
@@ -42,7 +45,13 @@ import org.junit.runner.RunWith
 class PreviewerViewModelTest : JvmTest() {
     private val idsFile: IdsFile = mockk()
 
+    private class InstrumentedPreviewerViewModel(
+        savedStateHandle: SavedStateHandle,
+        override val cardMediaPlayer: CardMediaPlayer,
+    ) : PreviewerViewModel(savedStateHandle)
+
     private lateinit var viewModel: PreviewerViewModel
+    private lateinit var mockMediaPlayer: CardMediaPlayer
 
     private fun TestScope.onNextButtonClick() {
         viewModel.onNextButtonClick()
@@ -79,9 +88,9 @@ class PreviewerViewModelTest : JvmTest() {
                 set(PreviewerFragment.CARD_IDS_FILE_ARG, idsFile)
             }
 
-        viewModel = spyk(PreviewerViewModel(savedStateHandle))
-        // the default implementation requires the Collection media directory,
-        // which needs Robolectric with CollectionStorageMode.IN_MEMORY_WITH_MEDIA or ON_DISK
+        mockMediaPlayer = mockk(relaxed = true)
+        viewModel = spyk(InstrumentedPreviewerViewModel(savedStateHandle, mockMediaPlayer))
+
         coEvery { viewModel.prepareCardTextForDisplay(any()) } answers { firstArg() }
     }
 
@@ -269,5 +278,27 @@ class PreviewerViewModelTest : JvmTest() {
             // 3. Valid input still works (Input 2 -> Index 1)
             onSliderChange(sliderPosition = 2)
             assertEquals("Index should update for valid input", 1, viewModel.currentIndex.value)
+        }
+
+    @Test
+    fun `audio stops when changing sides`() =
+        runTest {
+            viewModel.onPageFinished(false)
+            viewModel.showingAnswer.value = false
+
+            // 1. Next Button (Question -> Answer)
+            onNextButtonClick()
+            coVerify(atLeast = 1) { mockMediaPlayer.stop() }
+
+            // Reset mocks
+            io.mockk.clearMocks(mockMediaPlayer, answers = false, recordedCalls = true, childMocks = false)
+
+            onPreviousButtonClick()
+            coVerify(atLeast = 1) { mockMediaPlayer.stop() }
+
+            io.mockk.clearMocks(mockMediaPlayer, answers = false, recordedCalls = true, childMocks = false)
+
+            toggleBackSideOnly()
+            coVerify(atLeast = 1) { mockMediaPlayer.stop() }
         }
 }

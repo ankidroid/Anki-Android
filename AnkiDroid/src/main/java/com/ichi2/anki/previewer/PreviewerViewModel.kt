@@ -43,9 +43,10 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import timber.log.Timber
 
-class PreviewerViewModel(
+open class PreviewerViewModel(
     savedStateHandle: SavedStateHandle,
 ) : CardViewerViewModel(savedStateHandle),
     ChangeManager.Subscriber {
@@ -115,9 +116,11 @@ class PreviewerViewModel(
         launchCatchingIO {
             backSideOnly.emit(!backSideOnly.value)
             if (!backSideOnly.value && showingAnswer.value) {
+                stopAudio()
                 showQuestion()
                 cardMediaPlayer.autoplayAllForSide(CardSide.QUESTION)
             } else if (backSideOnly.value && !showingAnswer.value) {
+                stopAudio()
                 showAnswer()
                 cardMediaPlayer.autoplayAllForSide(CardSide.ANSWER)
             }
@@ -158,6 +161,7 @@ class PreviewerViewModel(
     fun onNextButtonClick() {
         launchCatchingIO {
             if (!showingAnswer.value && !backSideOnly.value) {
+                stopAudio()
                 showAnswer()
                 cardMediaPlayer.autoplayAllForSide(CardSide.ANSWER)
             } else {
@@ -175,6 +179,7 @@ class PreviewerViewModel(
             if (currentIndex.value > 0) {
                 currentIndex.update { it - 1 }
             } else if (showingAnswer.value && !backSideOnly.value) {
+                stopAudio()
                 showQuestion()
             }
         }
@@ -269,6 +274,10 @@ class PreviewerViewModel(
                 }
             }
         }
+    }
+
+    private fun stopAudio() {
+        viewModelScope.launch { cardMediaPlayer.stop() }
     }
 
     companion object {
