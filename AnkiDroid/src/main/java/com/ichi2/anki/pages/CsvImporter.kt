@@ -37,6 +37,8 @@ class CsvImporter : PageFragment() {
         "import-csv$filePath"
     }
 
+    override fun requiresModernWebView() = true
+
     override fun onCreateWebViewClient(savedInstanceState: Bundle?): PageWebViewClient {
         // the back callback is only enabled when import is running and showing progress
         val backCallback =
