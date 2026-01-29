@@ -35,8 +35,8 @@
 package com.ichi2.anki.common.utils
 
 import com.ichi2.anki.common.annotations.DuplicatedCode
-import com.ichi2.anki.common.annotations.NeedsTest
 import org.jetbrains.annotations.Contract
+import java.text.BreakIterator
 import java.util.Locale
 import kotlin.math.min
 
@@ -92,4 +92,44 @@ fun String.htmlEncode(): String {
         }
     }
     return sb.toString()
+}
+
+/**
+ * Truncates the string to the given maximum length and appends an ellipsis (`…`)
+ * if the text exceeds that length.
+ *
+ * Prefer [android.text.TextUtils.ellipsize] when you have a reference to a TextView
+ *
+ * @param ellipsizeAfter when to ellipsize the text.
+ *  `ellipsizeAfter = 2` returns converts `"foo"` to `"fo…"`
+ *
+ *  @throws IllegalStateException if [`ellipsizeAfter`][ellipsizeAfter]` <= 0`
+ */
+fun String.ellipsize(
+    ellipsizeAfter: Int,
+    locale: Locale = Locale.ROOT,
+): String {
+    require(ellipsizeAfter > 0) { "invalid length: $ellipsizeAfter" }
+    if (this.length <= ellipsizeAfter) return this
+    val lastIndex = this.indexOfLastGraphemeCluster(maxChars = ellipsizeAfter, locale)
+    return this.take(lastIndex) + "…"
+}
+
+private fun String.indexOfLastGraphemeCluster(
+    maxChars: Int,
+    locale: Locale,
+): Int {
+    val iterator = BreakIterator.getCharacterInstance(locale)
+    iterator.setText(this)
+
+    var end = iterator.first()
+    var lastSafe = end
+
+    while (end != BreakIterator.DONE) {
+        if (end > maxChars) return lastSafe
+        lastSafe = end
+        end = iterator.next()
+    }
+
+    return lastSafe
 }

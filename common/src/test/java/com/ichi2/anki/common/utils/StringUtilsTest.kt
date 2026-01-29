@@ -24,6 +24,7 @@ import org.junit.Test
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Assertions.assertTrue
+import kotlin.test.assertFailsWith
 
 /** Test of [toTitleCase] */
 class StringUtilsTest {
@@ -200,5 +201,45 @@ class StringUtilsTest {
         val result = "&<>".htmlEncode()
         assertThat(result, equalTo("&amp;&lt;&gt;"))
         assertFalse(result.contains("&amp;lt;"))
+    }
+
+    @Test
+    fun ellipsize_input_greater_than_threshold() {
+        val expected = "Hello1"
+        assertThat(expected.ellipsize(ellipsizeAfter = 5), equalTo("Hello…"))
+    }
+
+    @Test
+    fun ellipsize_input_equal_to_threshold() {
+        val expected = "Hello"
+        assertThat(expected.ellipsize(ellipsizeAfter = 5), equalTo("Hello"))
+    }
+
+    @Test
+    fun ellipsize_input_less_than_threshold() {
+        val expected = "Hi"
+        assertThat(expected.ellipsize(ellipsizeAfter = 5), equalTo("Hi"))
+    }
+
+    @Test
+    fun ellipsize_blank_input() {
+        assertThat("".ellipsize(ellipsizeAfter = 1), equalTo(""))
+    }
+
+    @Test
+    fun ellipsize_input_invalid_threshold() {
+        assertFailsWith<IllegalArgumentException> { "hello".ellipsize(0) }
+        assertFailsWith<IllegalArgumentException> { "hello".ellipsize(-1) }
+    }
+
+    @Test
+    fun ellipsize_emoji_is_not_split() {
+        val input = "Brazil\uD83C\uDDE7\uD83C\uDDF7"
+        assertThat(input.ellipsize(6), equalTo("Brazil…"))
+        assertThat(input.ellipsize(7), equalTo("Brazil…"))
+        assertThat(input.ellipsize(8), equalTo("Brazil…"))
+        assertThat(input.ellipsize(9), equalTo("Brazil…"))
+        assertThat(input.ellipsize(10), equalTo("Brazil\uD83C\uDDE7\uD83C\uDDF7"))
+        assertThat(input + " ".ellipsize(11), equalTo("Brazil\uD83C\uDDE7\uD83C\uDDF7 "))
     }
 }
