@@ -152,6 +152,7 @@ import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.sync.userAcceptsSchemaChange
 import com.ichi2.anki.ui.setupNoteTypeSpinner
 import com.ichi2.anki.utils.RunOnlyOnce
 import com.ichi2.anki.utils.ext.sharedPrefs
