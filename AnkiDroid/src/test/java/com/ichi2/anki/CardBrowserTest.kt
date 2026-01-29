@@ -798,7 +798,11 @@ class CardBrowserTest : RobolectricTest() {
         // Kill and restart the activity and ensure that display order is preserved
         val outBundle = Bundle()
         cardBrowserController.saveInstanceState(outBundle)
-        cardBrowserController.pause().stop().destroy()
+        cardBrowserController.pause().stop()
+        // fix Robolectric bug with launchCollectionInLifecycleScope
+        // method running after onStart without context
+        advanceRobolectricLooper()
+        cardBrowserController.destroy()
         cardBrowserController =
             Robolectric
                 .buildActivity(CardBrowser::class.java)
