@@ -45,6 +45,7 @@ import org.jetbrains.annotations.VisibleForTesting
 class TemplatePreviewerViewModel(
     savedStateHandle: SavedStateHandle,
 ) : CardViewerViewModel(savedStateHandle) {
+    override val cardMediaPlayer by lazy { createCardMediaPlayer() }
     private val notetype: NotetypeJson
     private val fillEmpty: Boolean
     private val isCloze: Boolean

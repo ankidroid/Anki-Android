@@ -84,6 +84,7 @@ class ReviewerViewModel(
     ChangeManager.Subscriber,
     BindingProcessor<ReviewerBinding, ViewerAction>,
     AutoAdvance.ActionListener {
+    override val cardMediaPlayer by lazy { createCardMediaPlayer() }
     private var queueState: Deferred<CurrentQueueState?> =
         asyncIO {
             withCol { sched.currentQueueState() }
