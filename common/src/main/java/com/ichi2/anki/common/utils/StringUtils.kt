@@ -35,7 +35,6 @@
 package com.ichi2.anki.common.utils
 
 import com.ichi2.anki.common.annotations.DuplicatedCode
-import com.ichi2.anki.common.annotations.NeedsTest
 import org.jetbrains.annotations.Contract
 import java.util.Locale
 import kotlin.math.min
@@ -54,8 +53,22 @@ object StringUtils {
 
 fun String.trimToLength(maxLength: Int): String = this.substring(0, min(this.length, maxLength))
 
-fun String.lastIndexOfOrNull(c: Char): Int? =
-    when (val index = this.lastIndexOf(c)) {
+fun String.indexOfOrNull(
+    c: Char,
+    startIndex: Int = 0,
+    ignoreCase: Boolean = false,
+): Int? =
+    when (val index = this.indexOf(c, startIndex, ignoreCase)) {
+        -1 -> null
+        else -> index
+    }
+
+fun String.lastIndexOfOrNull(
+    c: Char,
+    startIndex: Int = lastIndex,
+    ignoreCase: Boolean = false,
+): Int? =
+    when (val index = this.lastIndexOf(c, startIndex, ignoreCase)) {
         -1 -> null
         else -> index
     }
