@@ -391,6 +391,15 @@ class WhiteboardFragment :
         return true
     }
 
+    /**
+     * Sets a listener to when the whiteboard is scrolled vertically,
+     * which can happen by scrolling with two fingers, or with just one
+     * if the `Stylus mode` is enabled.
+     */
+    fun setOnScrollByListener(listener: OnScrollByListener) {
+        binding.whiteboardView.setOnScrollByListener(listener)
+    }
+
     fun resetCanvas() = viewModel.reset()
 
     /**

@@ -114,6 +114,13 @@ open class SafeWebViewLayout :
     fun destroy() = webView.destroy()
 
     @MainThread
+    fun scrollVerticallyBy(y: Int) {
+        if (webView.canScrollVertically(y)) {
+            webView.scrollBy(0, y)
+        }
+    }
+
+    @MainThread
     fun createPrintDocumentAdapter(documentName: String) = webView.createPrintDocumentAdapter(documentName)
 
     override fun setOnScrollChangeListener(l: OnScrollChangeListener?) = webView.setOnScrollChangeListener(l)
