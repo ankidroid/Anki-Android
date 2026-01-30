@@ -20,6 +20,7 @@ import android.util.AttributeSet
 import com.ichi2.anki.R
 import com.ichi2.anki.cardviewer.GestureProcessor
 import com.ichi2.anki.dialogs.CardSideSelectionDialog
+import com.ichi2.anki.preferences.allPreferences
 import com.ichi2.anki.reviewer.Binding
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.reviewer.MappableBinding.Companion.toPreferenceString
@@ -68,6 +69,13 @@ open class ReviewerControlPreference : ControlPreference {
         get() = Prefs.isNewStudyScreenEnabled || sharedPreferences?.getBoolean(GestureProcessor.PREF_KEY, false) ?: false
 
     override fun getMappableBindings(): List<ReviewerBinding> = ReviewerBinding.fromPreferenceString(value).toList()
+
+    override fun getRelatedPreferences(): List<ReviewerControlPreference> =
+        preferenceManager.preferenceScreen
+            .allPreferences()
+            .filter {
+                it::class == ReviewerControlPreference::class
+            }.filterIsInstance<ReviewerControlPreference>()
 
     fun interface OnBindingSelectedListener {
         /**

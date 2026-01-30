@@ -204,12 +204,19 @@ open class ControlPreference :
     }
 
     /**
-     * Checks if any other [ControlPreference] in the `preferenceScreen`
+     * @return a list of preferences related to the same context or screen.
+     */
+    protected open fun getRelatedPreferences(): List<ControlPreference> =
+        preferenceManager.preferenceScreen.allPreferences().filterIsInstance<ControlPreference>()
+
+    /**
+     * Checks if any other related preference
      * has the given [binding] assigned to.
+     *
+     * @see getRelatedPreferences
      */
     protected fun getPreferenceAssignedTo(binding: Binding): ControlPreference? {
-        for (pref in preferenceManager.preferenceScreen.allPreferences()) {
-            if (pref !is ControlPreference) continue
+        for (pref in getRelatedPreferences()) {
             val bindings = pref.getMappableBindings().map { it.binding }
             if (binding in bindings) {
                 return pref
