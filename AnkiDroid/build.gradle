@@ -245,6 +245,18 @@ android {
                 freeCompilerArgs.add("-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi")
             }
         }
+        unitTests {
+            all { test ->
+                test.useJUnitPlatform {
+                    // ./gradlew testFullDebugUnitTest -Pscreenshot
+                    if (project.hasProperty("screenshot")) {
+                        includeTags "com.ichi2.anki.ScreenshotTestCategory"
+                    } else {
+                        excludeTags "com.ichi2.anki.ScreenshotTestCategory"
+                    }
+                }
+            }
+        }
     }
 
     compileOptions {
