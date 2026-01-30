@@ -855,8 +855,8 @@ open class CardBrowser :
             showBackIcon()
             increaseHorizontalPaddingOfOverflowMenuIcons(menu)
         }
-        // Remove save note and preview note options if there are no notes
-        if (fragmented && viewModel.rowCount == 0) {
+        // Remove save note and preview note options if there are no notes or in fragmented mode
+        if (fragmented || viewModel.rowCount == 0) {
             menu.removeItem(R.id.action_save)
             menu.removeItem(R.id.action_preview)
         }
