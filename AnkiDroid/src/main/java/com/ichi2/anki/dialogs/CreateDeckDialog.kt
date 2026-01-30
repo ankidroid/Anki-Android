@@ -71,6 +71,21 @@ class CreateDeckDialog(
     private val getColUnsafe
         get() = CollectionManager.getColUnsafe()
 
+    /**
+     * Resource ID for the dialog's positive action button text.
+     *
+     * Uses "Rename" for rename deck dialogs and "Create" for all other deck-related dialogs.
+     */
+    private val positiveButtonTextRes =
+        when (deckDialogType) {
+            DeckDialogType.RENAME_DECK -> R.string.rename
+
+            DeckDialogType.DECK,
+            DeckDialogType.SUB_DECK,
+            DeckDialogType.FILTERED_DECK,
+            -> R.string.dialog_positive_create
+        }
+
     suspend fun showFilteredDeckDialog() {
         Timber.i("CreateDeckDialog::showFilteredDeckDialog")
         initialDeckName =
@@ -94,7 +109,7 @@ class CreateDeckDialog(
                 .Builder(context)
                 .show {
                     title(title)
-                    positiveButton(getPositiveButtonTextRes(deckDialogType)) {
+                    positiveButton(positiveButtonTextRes) {
                         onPositiveButtonClicked()
                     }
                     negativeButton(R.string.dialog_cancel)
@@ -292,22 +307,6 @@ class CreateDeckDialog(
             showThemedToast(context, message, duration == Snackbar.LENGTH_SHORT)
         }
     }
-
-    /**
-     * Returns the string resource for the dialog's positive action button
-     * based on the deck dialog type.
-     *
-     * Uses explicit action labels (e.g., "Create", "Rename") instead of "OK"
-     * to comply with Material 2 dialog guidelines.
-     *
-     * @param deckDialogType DeckDialogType indicating the purpose of the dialog
-     * @return Int String resource ID for the positive action button text
-     */
-    fun getPositiveButtonTextRes(deckDialogType: DeckDialogType): Int =
-        when (deckDialogType) {
-            DeckDialogType.RENAME_DECK -> R.string.rename
-            else -> R.string.dialog_positive_create
-        }
 }
 
 // to not match times. Example: "12:34:56"
