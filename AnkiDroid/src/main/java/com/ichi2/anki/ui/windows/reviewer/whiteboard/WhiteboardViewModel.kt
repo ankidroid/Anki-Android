@@ -24,6 +24,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
+import com.ichi2.anki.common.utils.ext.indexOfOrNull
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
@@ -226,12 +227,9 @@ class WhiteboardViewModel(
         if (pathsErasedInCurrentGesture.isNotEmpty()) {
             val removedWithIndices =
                 pathsErasedInCurrentGesture.mapNotNull { removedAction ->
-                    val index = pathsBeforeGesture.indexOf(removedAction)
-                    if (index != -1) {
-                        Pair(index, removedAction)
-                    } else {
-                        null
-                    }
+                    pathsBeforeGesture
+                        .indexOfOrNull(removedAction)
+                        ?.let { Pair(it, removedAction) }
                 }
             val action = RemoveAction(removedWithIndices)
             undoStack.update { it + action }
