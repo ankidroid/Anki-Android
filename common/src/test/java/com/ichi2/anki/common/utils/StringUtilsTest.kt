@@ -111,6 +111,28 @@ class StringUtilsTest {
     }
 
     @Test
+    fun indexOfOrNull_not_found() {
+        assertNull("hello".indexOfOrNull('z'))
+        assertNull("".indexOfOrNull('a'))
+    }
+
+    @Test
+    fun indexOfOrNull_found_at_start() {
+        assertThat("hello".indexOfOrNull('h'), equalTo(0))
+    }
+
+    @Test
+    fun indexOfOrNull_found_at_end() {
+        assertThat("hello".indexOfOrNull('o'), equalTo(4))
+    }
+
+    @Test
+    fun indexOfOrNull_multiple_occurrences() {
+        assertThat("banana".indexOfOrNull('a'), equalTo(1))
+        assertThat("aaa".indexOfOrNull('a'), equalTo(0))
+    }
+
+    @Test
     fun emptyStringMutableList_correct_size() {
         val list = emptyStringMutableList(5)
         assertThat(list.size, equalTo(5))

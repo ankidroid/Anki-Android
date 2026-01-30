@@ -16,6 +16,7 @@
 
 package com.ichi2.anki
 
+import com.ichi2.anki.common.utils.indexOfOrNull
 import java.util.Locale
 
 object LanguageUtils {
@@ -52,7 +53,7 @@ object LanguageUtils {
     }
 
     private fun stripScriptAndExtensions(localeCodeStr: String): String {
-        val hashPos = localeCodeStr.indexOf('#')
-        return if (hashPos >= 0) localeCodeStr.substring(0, hashPos) else localeCodeStr
+        val hashPos = localeCodeStr.indexOfOrNull('#') ?: return localeCodeStr
+        return localeCodeStr.take(hashPos)
     }
 }
