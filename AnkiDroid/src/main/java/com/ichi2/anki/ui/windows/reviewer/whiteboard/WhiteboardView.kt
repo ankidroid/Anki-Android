@@ -26,8 +26,10 @@ import android.graphics.PorterDuffXfermode
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import android.view.ViewConfiguration
 import androidx.core.graphics.createBitmap
 import com.ichi2.anki.R
+import kotlin.math.abs
 
 /**
  * A custom view for the whiteboard that handles drawing and touch events.
@@ -36,18 +38,14 @@ class WhiteboardView : View {
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
     constructor(context: Context) : this(context, null)
 
-    // Callbacks for user actions
     var onNewPath: ((Path) -> Unit)? = null
     var onEraseGestureStart: (() -> Unit)? = null
     var onEraseGestureMove: ((Float, Float) -> Unit)? = null
     var onEraseGestureEnd: (() -> Unit)? = null
-
-    // Public properties for tool state
     var isEraserActive: Boolean = false
     var eraserMode: EraserMode = EraserMode.INK
     var isStylusOnlyMode: Boolean = false
 
-    // Internal drawing state
     private val currentPath = Path()
     private val currentPaint =
         Paint().apply {
@@ -67,6 +65,15 @@ class WhiteboardView : View {
     private val canvasPaint = Paint(Paint.DITHER_FLAG)
 
     private var hasMoved = false
+    private var isDrawing = false
+    private val multiTouchDetector =
+        MultiTouchDetector(
+            touchSlop = ViewConfiguration.get(context).scaledTouchSlop,
+        )
+
+    fun setOnScrollByListener(listener: OnScrollByListener) {
+        multiTouchDetector.setOnScrollByListener(listener)
+    }
 
     /**
      * Recreates the drawing buffer when the view size changes.
@@ -107,6 +114,14 @@ class WhiteboardView : View {
      * Ignores finger input if stylus-only mode is enabled.
      */
     override fun onTouchEvent(event: MotionEvent): Boolean {
+        if (event.pointerCount == 2) {
+            isDrawing = false
+            currentPath.reset()
+            invalidate()
+
+            return multiTouchDetector.onTouchEvent(event)
+        }
+
         if (isStylusOnlyMode && event.getToolType(0) != MotionEvent.TOOL_TYPE_STYLUS) {
             return false
         }
@@ -117,6 +132,7 @@ class WhiteboardView : View {
 
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
+                isDrawing = true
                 hasMoved = false
                 currentPath.moveTo(touchX, touchY)
                 if (isPathEraser) {
@@ -126,6 +142,8 @@ class WhiteboardView : View {
                 invalidate()
             }
             MotionEvent.ACTION_MOVE -> {
+                if (!isDrawing) return false
+
                 hasMoved = true
                 currentPath.lineTo(touchX, touchY)
                 if (isPathEraser) {
@@ -134,6 +152,8 @@ class WhiteboardView : View {
                 invalidate()
             }
             MotionEvent.ACTION_UP -> {
+                if (!isDrawing) return false
+
                 if (isPathEraser) {
                     onEraseGestureEnd?.invoke()
                 } else {
@@ -146,6 +166,7 @@ class WhiteboardView : View {
                 }
                 // Reset the path for the next gesture
                 currentPath.reset()
+                isDrawing = false
                 invalidate()
             }
             else -> return false
@@ -201,5 +222,81 @@ class WhiteboardView : View {
             bufferCanvas.drawPath(action.path, tempPaint)
         }
         invalidate()
+    }
+}
+
+fun interface OnScrollByListener {
+    /**
+     * @param y the amount of pixels to scroll vertically.
+     * @see [View.scrollBy]
+     */
+    fun onVerticalScrollBy(y: Int)
+}
+
+/**
+ * Detects multi-finger touch and scroll gestures and triggers a callback with the vertical delta.
+ * TODO Improve detection when lifting a finger up then down again
+ */
+class MultiTouchDetector(
+    /** Distance in pixels a touch can wander before we think the user is scrolling */
+    private val touchSlop: Int,
+) {
+    private var startX: Float = 0f
+    private var startY: Float = 0f
+    private var currentX: Float = 0f
+    private var currentY: Float = 0f
+    private var isWithinTapTolerance: Boolean = false
+    private var onScrollByListener: OnScrollByListener? = null
+
+    fun setOnScrollByListener(listener: OnScrollByListener) {
+        onScrollByListener = listener
+    }
+
+    /**
+     * Processes the motion event.
+     * @return True if the event was handled (consumed), False otherwise.
+     */
+    fun onTouchEvent(event: MotionEvent): Boolean {
+        if (event.pointerCount != 2) return false
+
+        return when (event.actionMasked) {
+            MotionEvent.ACTION_POINTER_DOWN -> {
+                reinitialize(event)
+                true
+            }
+            MotionEvent.ACTION_MOVE -> tryScroll(event)
+            else -> false
+        }
+    }
+
+    private fun reinitialize(event: MotionEvent) {
+        isWithinTapTolerance = true
+        startX = (event.getX(0) + event.getX(1)) / 2f
+        startY = (event.getY(0) + event.getY(1)) / 2f
+    }
+
+    private fun updatePositions(event: MotionEvent): Boolean {
+        currentX = (event.getX(0) + event.getX(1)) / 2f
+        currentY = (event.getY(0) + event.getY(1)) / 2f
+
+        val dx = abs(startX - currentX)
+        val dy = abs(startY - currentY)
+        if (dx >= touchSlop || dy >= touchSlop) {
+            isWithinTapTolerance = false
+        }
+        return true
+    }
+
+    private fun tryScroll(event: MotionEvent): Boolean {
+        if (!updatePositions(event) || isWithinTapTolerance) {
+            return false
+        }
+        val dy = (startY - currentY).toInt()
+        if (dy != 0) {
+            onScrollByListener?.onVerticalScrollBy(dy)
+            startX = currentX
+            startY = currentY
+        }
+        return true
     }
 }
