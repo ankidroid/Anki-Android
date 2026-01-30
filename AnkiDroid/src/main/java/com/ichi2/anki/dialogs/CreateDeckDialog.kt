@@ -71,21 +71,6 @@ class CreateDeckDialog(
     private val getColUnsafe
         get() = CollectionManager.getColUnsafe()
 
-    /**
-     * Resource ID for the dialog's positive action button text.
-     *
-     * Uses "Rename" for rename deck dialogs and "Create" for all other deck-related dialogs.
-     */
-    private val positiveButtonTextRes =
-        when (deckDialogType) {
-            DeckDialogType.RENAME_DECK -> R.string.rename
-
-            DeckDialogType.DECK,
-            DeckDialogType.SUB_DECK,
-            DeckDialogType.FILTERED_DECK,
-            -> R.string.dialog_positive_create
-        }
-
     suspend fun showFilteredDeckDialog() {
         Timber.i("CreateDeckDialog::showFilteredDeckDialog")
         initialDeckName =
@@ -109,6 +94,17 @@ class CreateDeckDialog(
                 .Builder(context)
                 .show {
                     title(title)
+                    // Resource ID for the dialog's positive action button text.
+                    // Uses "Rename" for rename deck dialogs and "Create" for all other deck-related dialogs.
+                    val positiveButtonTextRes =
+                        when (deckDialogType) {
+                            DeckDialogType.RENAME_DECK -> R.string.rename
+
+                            DeckDialogType.DECK,
+                            DeckDialogType.SUB_DECK,
+                            DeckDialogType.FILTERED_DECK,
+                            -> R.string.dialog_positive_create
+                        }
                     positiveButton(positiveButtonTextRes) {
                         onPositiveButtonClicked()
                     }
