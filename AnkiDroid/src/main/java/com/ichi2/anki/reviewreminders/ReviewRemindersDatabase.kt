@@ -100,13 +100,14 @@ object ReviewRemindersDatabase {
     /**
      * Current [ReviewReminder] schema version. Whenever [ReviewReminder] is modified, this integer MUST be incremented.
      *
-     * Version 1: 3 August 2025
+     * Version 1: 3 August 2025 - Initial version
+     * Version 2: 25 January 2026 - Added [ReviewReminder.onlyNotifyIfNoReviews]
      *
      * @see [oldReviewReminderSchemasForMigration]
      * @see [ReviewReminder]
      */
     @VisibleForTesting
-    var schemaVersion = ReviewReminderSchemaVersion(1)
+    var schemaVersion = ReviewReminderSchemaVersion(2)
 
     /**
      * A map of all old [ReviewReminderSchema]s that [ReviewRemindersDatabase.performSchemaMigration] will attempt to migrate old
@@ -123,7 +124,8 @@ object ReviewRemindersDatabase {
     @VisibleForTesting
     var oldReviewReminderSchemasForMigration: Map<ReviewReminderSchemaVersion, KClass<out ReviewReminderSchema>> =
         mapOf(
-            ReviewReminderSchemaVersion(1) to ReviewReminder::class, // Most up to date version
+            ReviewReminderSchemaVersion(1) to ReviewReminderSchemaV1::class,
+            ReviewReminderSchemaVersion(2) to ReviewReminder::class, // Most up to date version
         )
 
     /**
@@ -207,6 +209,7 @@ object ReviewRemindersDatabase {
         jsonString: String,
         deckKeyForMigrationPurposes: String,
     ): HashMap<ReviewReminderId, ReviewReminder> {
+        Timber.v("Decoding review reminders JSON string: $jsonString")
         val storedReviewRemindersMap = Json.decodeFromString<StoredReviewRemindersMap>(jsonString)
         return if (storedReviewRemindersMap.version.value != schemaVersion.value) {
             performSchemaMigration(
@@ -340,7 +343,8 @@ value class ReviewReminderSchemaVersion(
  * @see [ReviewRemindersDatabase.performSchemaMigration].
  * @see [ReviewReminder]
  */
-interface ReviewReminderSchema {
+@Serializable
+sealed interface ReviewReminderSchema {
     /**
      * All review reminders must have an identifying ID.
      * This is necessary to facilitate migrations. See the implementation of [ReviewRemindersDatabase.performSchemaMigration] for details.
@@ -351,4 +355,99 @@ interface ReviewReminderSchema {
      * Transforms this [ReviewReminderSchema] to the next version of the [ReviewReminderSchema].
      */
     fun migrate(): ReviewReminderSchema
+}
+
+/**
+ * Version 1 of [ReviewReminderSchema]. Updated to Version 2 by adding [ReviewReminder.onlyNotifyIfNoReviews].
+ */
+@Serializable
+data class ReviewReminderSchemaV1(
+    override val id: ReviewReminderId,
+    val time: ReviewReminderTime,
+    val cardTriggerThreshold: ReviewReminderCardTriggerThreshold,
+    val scope: ReviewReminderScope,
+    var enabled: Boolean,
+    val profileID: String,
+    val onlyNotifyIfNoReviews: Boolean = false,
+) : ReviewReminderSchema {
+    override fun migrate(): ReviewReminderSchema =
+        ReviewReminder.createReviewReminder(
+            time = time,
+            cardTriggerThreshold = cardTriggerThreshold,
+            scope = scope,
+            enabled = enabled,
+            profileID = profileID,
+            onlyNotifyIfNoReviews = onlyNotifyIfNoReviews,
+        )
+}
+
+/**
+ * Schema migration settings for testing purposes.
+ * Consult this as an example of how to save old schemas and define their [ReviewReminderSchema.migrate] methods.
+ */
+object TestingReviewReminderMigrationSettings {
+    /**
+     * A sample old review reminder schema. Perhaps this was how the [ReviewReminder] data class was originally implemented.
+     * We would like to test the code that checks if review reminders stored on the device adhere to an old, outdated schema.
+     * In particular, does the code correctly migrate the serialized data class strings to the updated, current version of [ReviewReminder]?
+     */
+    @Serializable
+    data class ReviewReminderTestSchemaVersionOne(
+        override val id: ReviewReminderId,
+        val hour: Int,
+        val minute: Int,
+        val cardTriggerThreshold: Int,
+        val did: DeckId,
+        val enabled: Boolean = true,
+    ) : ReviewReminderSchema {
+        override fun migrate(): ReviewReminderSchema =
+            ReviewReminderTestSchemaVersionTwo(
+                id = this.id,
+                time = VersionTwoDataClasses.ReviewReminderTime(hour, minute),
+                snoozeAmount = 1,
+                cardTriggerThreshold = this.cardTriggerThreshold,
+                did = this.did,
+                enabled = enabled,
+            )
+    }
+
+    /**
+     * Here's an example of how you can handle renamed fields in a data class stored as part of a [ReviewReminder].
+     * Otherwise, there's a namespace collision with [ReviewReminderTime].
+     *
+     * This class will be serialized into "ReviewReminderTime(timeHour=#, timeMinute=#)", which otherwise might conflict
+     * with the updated definition of [ReviewReminderTime], which is serialized as "ReviewReminderTime(hour=#, minute=#)".
+     * When we read the outdated schema from the disk, we need to tell the deserializer that it is reading a
+     * [VersionTwoDataClasses.ReviewReminderTime] rather than a [ReviewReminderTime], even though the names are the same.
+     *
+     * @see ReviewReminderTestSchemaVersionTwo
+     */
+    object VersionTwoDataClasses {
+        @Serializable
+        data class ReviewReminderTime(
+            val timeHour: Int,
+            val timeMinute: Int,
+        )
+    }
+
+    /**
+     * Another example of an old review reminder schema. See [ReviewReminderTestSchemaVersionOne] for more details.
+     */
+    @Serializable
+    data class ReviewReminderTestSchemaVersionTwo(
+        override val id: ReviewReminderId,
+        val time: VersionTwoDataClasses.ReviewReminderTime,
+        val snoozeAmount: Int,
+        val cardTriggerThreshold: Int,
+        val did: DeckId,
+        val enabled: Boolean = true,
+    ) : ReviewReminderSchema {
+        override fun migrate(): ReviewReminder =
+            ReviewReminder.createReviewReminder(
+                time = ReviewReminderTime(this.time.timeHour, this.time.timeMinute),
+                cardTriggerThreshold = ReviewReminderCardTriggerThreshold(this.cardTriggerThreshold),
+                scope = if (this.did == -1L) ReviewReminderScope.Global else ReviewReminderScope.DeckSpecific(this.did),
+                enabled = enabled,
+            )
+    }
 }
