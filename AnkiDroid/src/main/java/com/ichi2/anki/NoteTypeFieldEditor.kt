@@ -196,7 +196,7 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.note_type_field_editor) {
             AlertDialog.Builder(this).show {
                 customView(view = fieldNameInput, paddingStart = 64, paddingEnd = 64, paddingTop = 32)
                 title(R.string.model_field_editor_add)
-                positiveButton(R.string.dialog_ok) {
+                positiveButton(R.string.menu_add) {
                     // Name is valid, now field is added
                     val fieldName = uniqueName(fieldNameInput)
                     try {

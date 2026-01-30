@@ -94,7 +94,9 @@ class CreateDeckDialog(
                 .Builder(context)
                 .show {
                     title(title)
-                    positiveButton(R.string.dialog_ok) { onPositiveButtonClicked() }
+                    positiveButton(getPositiveButtonTextRes(deckDialogType)) {
+                        onPositiveButtonClicked()
+                    }
                     negativeButton(R.string.dialog_cancel)
                     setView(R.layout.dialog_generic_text_input)
                 }.input(prefill = initialDeckName, displayKeyboard = true, waitForPositiveButton = false) { dialog, text ->
@@ -290,6 +292,22 @@ class CreateDeckDialog(
             showThemedToast(context, message, duration == Snackbar.LENGTH_SHORT)
         }
     }
+
+    /**
+     * Returns the string resource for the dialog's positive action button
+     * based on the deck dialog type.
+     *
+     * Uses explicit action labels (e.g., "Create", "Rename") instead of "OK"
+     * to comply with Material 2 dialog guidelines.
+     *
+     * @param deckDialogType DeckDialogType indicating the purpose of the dialog
+     * @return Int String resource ID for the positive action button text
+     */
+    fun getPositiveButtonTextRes(deckDialogType: DeckDialogType): Int =
+        when (deckDialogType) {
+            DeckDialogType.RENAME_DECK -> R.string.rename
+            else -> R.string.dialog_positive_create
+        }
 }
 
 // to not match times. Example: "12:34:56"
