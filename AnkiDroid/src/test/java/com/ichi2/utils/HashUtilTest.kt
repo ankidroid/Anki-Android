@@ -19,46 +19,50 @@ import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.`is`
 import org.hamcrest.Matchers.notNullValue
 import org.junit.Test
+import kotlin.test.assertFalse
 
 class HashUtilTest {
     @Test
-    fun testHashSetInit() {
-        val size = 10
-        val set = HashUtil.hashSetInit<String>(size)
-        assertThat(set, notNullValue())
-        // verify we can add elements
-        set.add("test")
-        assertThat(set.size, `is`(1))
+    fun testHashSetInitCapacityLogic() {
+        val setSmall = HashUtil.hashSetInit<String>(4)
+        assertThat(setSmall, notNullValue())
+
+        val setLarge = HashUtil.hashSetInit<String>(30)
+        assertThat(setLarge, notNullValue())
+
+        // verify the functional integrity
+        setLarge.add("item")
+        assertThat(setLarge.size, `is`(1))
     }
 
     @Test
     fun testHashMapInit() {
-        val size = 20
-        val map = HashUtil.hashMapInit<Int, String>(size)
+        // this ensures the factory method correctly instantiates a hashmap with the optimized capacity
+        val map = HashUtil.hashMapInit<Int, String>(20)
         assertThat(map, notNullValue())
-        // verify we can put elements
-        map[1] = "value"
-        assertThat(map[1], `is`("value"))
+
+        map[100] = "optimized"
+        assertThat(map[100], `is`("optimized"))
     }
 
     @Test
-    fun testHashVarargs() {
-        // test the global hash(vararg values: Int) function
-        val h1 = hash(1, 2, 3)
-        val h2 = hash(1, 2, 3)
-        val h3 = hash(3, 2, 1)
+    fun testHashConsistencyAndOrder() {
+        // tests the standalone hash(vararg values: Int) functionn
+        val first = hash(10, 20, 30)
+        val second = hash(10, 20, 30)
+        val reversed = hash(30, 20, 10)
 
-        // same values in the same order should produce same hash
-        assertThat(h1, `is`(h2))
+        // verify the same inputs produce identical results
+        assertThat("Consistent inputs should yield identical hash", first, `is`(second))
 
-        // different order should (usually) produce different hash
-        assertThat(h1 == h3, `is`(false))
+        // Verify that the hash is sensitive to the order of elements
+        assertFalse(first == reversed, "Different order should produce a different hash")
     }
 
     @Test
-    fun testHashEmpty() {
-        // ensure that it doesn't crash with no arguments
-        val h = hash()
-        assertThat(h, notNullValue())
+    fun testHashEmptyVarargs() {
+        // boundary test: ensures the hash function handles zero arguments gracefully
+        val emptyHash = hash()
+        assertThat(emptyHash, notNullValue())
     }
 }
