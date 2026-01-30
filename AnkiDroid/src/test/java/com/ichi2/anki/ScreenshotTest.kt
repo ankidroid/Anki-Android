@@ -15,10 +15,14 @@
  */
 package com.ichi2.anki
 
+import org.junit.experimental.categories.Category
 import org.robolectric.annotation.GraphicsMode
+
+interface ScreenshotTestCategory
 
 /**
  * Base class for [roborazzi](https://github.com/takahirom/roborazzi) screenshot tests
  */
+@Category(ScreenshotTestCategory::class)
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
-open class ScreenshotTest : RobolectricTest()
+abstract class ScreenshotTest : RobolectricTest()

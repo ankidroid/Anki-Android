@@ -23,13 +23,11 @@ import com.ichi2.anki.previewer.CardViewerActivity
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.settings.enums.FrameStyle
 import com.ichi2.anki.settings.enums.ToolbarPosition
-import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.ParameterizedRobolectricTestRunner
 import org.robolectric.RuntimeEnvironment
 
-@Ignore("screenshots tests should be separated from the general unit tests task")
 @RunWith(ParameterizedRobolectricTestRunner::class)
 class StudyScreenScreenshotTest(
     private val config: TestConfig,
