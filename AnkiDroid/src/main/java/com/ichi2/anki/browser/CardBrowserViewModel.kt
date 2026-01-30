@@ -52,6 +52,7 @@ import com.ichi2.anki.browser.RepositionCardsRequest.RepositionData
 import com.ichi2.anki.browser.search.SavedSearch
 import com.ichi2.anki.browser.search.SavedSearches
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.common.utils.ext.indexOfOrNull
 import com.ichi2.anki.export.ExportDialogFragment.ExportType
 import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.libanki.Card
@@ -1006,10 +1007,7 @@ class CardBrowserViewModel(
 
     fun getRowAtPosition(position: Int) = cards[position]
 
-    fun getPositionOfId(id: CardOrNoteId) =
-        cards.indexOf(id).let {
-            if (it == -1) null else it
-        }
+    fun getPositionOfId(id: CardOrNoteId) = cards.indexOfOrNull(id)
 
     suspend fun savedSearches(): List<SavedSearch> = SavedSearches.loadFromConfig()
 
