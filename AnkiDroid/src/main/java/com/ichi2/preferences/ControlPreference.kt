@@ -39,6 +39,7 @@ import com.ichi2.anki.reviewer.Binding
 import com.ichi2.anki.reviewer.MappableBinding
 import com.ichi2.anki.reviewer.MappableBinding.Companion.toPreferenceString
 import com.ichi2.ui.AxisPicker
+import com.ichi2.ui.GesturePicker
 import com.ichi2.ui.KeyPicker
 import com.ichi2.utils.create
 import com.ichi2.utils.customView
@@ -108,11 +109,13 @@ open class ControlPreference :
 
     override fun makeDialogFragment(): DialogFragment = ControlPreferenceDialogFragment()
 
+    protected open fun createGesturePicker(): GesturePicker = GestureSelectionDialogUtils.getGesturePicker(context)
+
     fun showGesturePickerDialog() {
         AlertDialog.Builder(context).show {
             setTitle(title)
             setIcon(icon)
-            val gesturePicker = GestureSelectionDialogUtils.getGesturePicker(context)
+            val gesturePicker = createGesturePicker()
             positiveButton(R.string.dialog_ok) {
                 val gesture = gesturePicker.getGesture() ?: return@positiveButton
                 val binding = Binding.GestureInput(gesture)
@@ -177,7 +180,7 @@ open class ControlPreference :
         dialog.show()
     }
 
-    private fun warnIfUsedOrClearWarning(
+    protected fun warnIfUsedOrClearWarning(
         binding: Binding,
         warningDisplay: WarningDisplay,
     ) {

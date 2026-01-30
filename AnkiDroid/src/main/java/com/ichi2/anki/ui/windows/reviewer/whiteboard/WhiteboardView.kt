@@ -71,6 +71,10 @@ class WhiteboardView : View {
             touchSlop = ViewConfiguration.get(context).scaledTouchSlop,
         )
 
+    fun setOnMultiTouchListener(listener: OnMultiTouchListener) {
+        multiTouchDetector.setOnMultiTouchListener(listener)
+    }
+
     fun setOnScrollByListener(listener: OnScrollByListener) {
         multiTouchDetector.setOnScrollByListener(listener)
     }
@@ -114,7 +118,7 @@ class WhiteboardView : View {
      * Ignores finger input if stylus-only mode is enabled.
      */
     override fun onTouchEvent(event: MotionEvent): Boolean {
-        if (event.pointerCount == 2) {
+        if (event.pointerCount >= 2) {
             isDrawing = false
             currentPath.reset()
             invalidate()
@@ -233,9 +237,15 @@ fun interface OnScrollByListener {
     fun onVerticalScrollBy(y: Int)
 }
 
+fun interface OnMultiTouchListener {
+    /**
+     * @param pointerCount the amount of simultaneous touches
+     */
+    fun onMultiTouch(pointerCount: Int)
+}
+
 /**
  * Detects multi-finger touch and scroll gestures and triggers a callback with the vertical delta.
- * TODO Improve detection when lifting a finger up then down again
  */
 class MultiTouchDetector(
     /** Distance in pixels a touch can wander before we think the user is scrolling */
@@ -247,9 +257,14 @@ class MultiTouchDetector(
     private var currentY: Float = 0f
     private var isWithinTapTolerance: Boolean = false
     private var onScrollByListener: OnScrollByListener? = null
+    private var onMultiTouchListener: OnMultiTouchListener? = null
 
     fun setOnScrollByListener(listener: OnScrollByListener) {
         onScrollByListener = listener
+    }
+
+    fun setOnMultiTouchListener(listener: OnMultiTouchListener) {
+        onMultiTouchListener = listener
     }
 
     /**
@@ -257,11 +272,19 @@ class MultiTouchDetector(
      * @return True if the event was handled (consumed), False otherwise.
      */
     fun onTouchEvent(event: MotionEvent): Boolean {
-        if (event.pointerCount != 2) return false
+        if (event.pointerCount < 2) return false
 
         return when (event.actionMasked) {
             MotionEvent.ACTION_POINTER_DOWN -> {
                 reinitialize(event)
+                true
+            }
+            MotionEvent.ACTION_POINTER_UP -> {
+                if (isWithinTapTolerance) {
+                    onMultiTouchListener?.onMultiTouch(event.pointerCount)
+                    // Prevent cascading events (e.g., 3-finger tap triggering 3 then 2)
+                    isWithinTapTolerance = false
+                }
                 true
             }
             MotionEvent.ACTION_MOVE -> tryScroll(event)
