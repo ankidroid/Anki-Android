@@ -25,6 +25,9 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.ichi2.anki.common.utils.ext.indexOfOrNull
+import com.ichi2.anki.preferences.reviewer.WhiteboardAction
+import com.ichi2.anki.reviewer.BindingProcessor
+import com.ichi2.anki.reviewer.ReviewerBinding
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
@@ -77,7 +80,8 @@ data class ClearAction(
  */
 class WhiteboardViewModel(
     private val repository: WhiteboardRepository,
-) : ViewModel() {
+) : ViewModel(),
+    BindingProcessor<ReviewerBinding, WhiteboardAction> {
     // State for drawing history and undo/redo
     val paths = MutableStateFlow<List<DrawingAction>>(emptyList())
     private val undoStack = MutableStateFlow<List<UndoableAction>>(emptyList())
@@ -326,6 +330,17 @@ class WhiteboardViewModel(
     }
 
     /**
+     * Toggles between the eraser and the last active brush.
+     */
+    fun toggleEraser() {
+        if (isEraserActive.value) {
+            setActiveBrush(activeBrushIndex.value)
+        } else {
+            enableEraser()
+        }
+    }
+
+    /**
      * Sets the eraser mode (pixel or path).
      */
     fun setEraserMode(mode: EraserMode) {
@@ -451,6 +466,19 @@ class WhiteboardViewModel(
         clearCanvas()
         undoStack.value = emptyList()
         redoStack.value = emptyList()
+    }
+
+    override fun processAction(
+        action: WhiteboardAction,
+        binding: ReviewerBinding,
+    ): Boolean {
+        when (action) {
+            WhiteboardAction.TOGGLE_ERASER -> toggleEraser()
+            WhiteboardAction.CLEAR -> clearCanvas()
+            WhiteboardAction.UNDO -> undo()
+            WhiteboardAction.REDO -> redo()
+        }
+        return true
     }
 
     companion object {

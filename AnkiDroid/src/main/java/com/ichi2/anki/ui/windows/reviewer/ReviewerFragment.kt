@@ -111,6 +111,7 @@ class ReviewerFragment :
     private lateinit var bindingMap: BindingMap<ReviewerBinding, ViewerAction>
     private var shakeDetector: ShakeDetector? = null
     private val sensorManager get() = ContextCompat.getSystemService(requireContext(), SensorManager::class.java)
+    private val whiteboardFragment get() = childFragmentManager.findFragmentByTag(WhiteboardFragment::class.jvmName) as? WhiteboardFragment
     private val isBigScreen: Boolean get() = resources.configuration.smallestScreenWidthDp >= 720
     private var webviewHasFocus = false
 
@@ -309,7 +310,7 @@ class ReviewerFragment :
         ) {
             return false
         }
-        return bindingMap.onKeyDown(event)
+        return whiteboardFragment?.dispatchKeyEvent(event) == true || bindingMap.onKeyDown(event)
     }
 
     override fun onMenuItemClick(item: MenuItem): Boolean {
@@ -321,7 +322,9 @@ class ReviewerFragment :
     }
 
     override fun hearShake() {
-        bindingMap.onGesture(Gesture.SHAKE)
+        if (whiteboardFragment?.onScreenShake() != true) {
+            bindingMap.onGesture(Gesture.SHAKE)
+        }
     }
 
     private fun setupBindings() {
@@ -509,7 +512,6 @@ class ReviewerFragment :
         )
         viewModel.whiteboardEnabledFlow.flowWithLifecycle(lifecycle).collectIn(lifecycleScope) { isEnabled ->
             binding.whiteboardContainer.isVisible = isEnabled
-            val whiteboardFragment = childFragmentManager.findFragmentById(binding.whiteboardContainer.id)
             if (whiteboardFragment == null && isEnabled) {
                 childFragmentManager.commit {
                     add(R.id.whiteboard_container, WhiteboardFragment::class.java, null, WhiteboardFragment::class.jvmName)
@@ -517,8 +519,7 @@ class ReviewerFragment :
             }
         }
         viewModel.onCardUpdatedFlow.collectIn(lifecycleScope) {
-            val whiteboardFragment = childFragmentManager.findFragmentById(binding.whiteboardContainer.id)
-            (whiteboardFragment as? WhiteboardFragment)?.resetCanvas()
+            whiteboardFragment?.resetCanvas()
         }
     }
 
