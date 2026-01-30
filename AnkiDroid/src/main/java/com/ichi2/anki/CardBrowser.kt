@@ -177,6 +177,15 @@ open class CardBrowser :
 
     private var onEditCardActivityResult =
         registerForActivityResult(StartActivityForResult()) { result: ActivityResult ->
+            Timber.i("onEditCardActivityResult: resultCode=%d", result.resultCode)
+            if (result.resultCode == DeckPicker.RESULT_DB_ERROR) {
+                closeCardBrowser(DeckPicker.RESULT_DB_ERROR)
+                return@registerForActivityResult
+            }
+
+            // handle template edits
+
+            // in use by reviewer?
             result.data?.let {
                 if (
                     it.getBooleanExtra(NoteEditorFragment.RELOAD_REQUIRED_EXTRA_KEY, false) ||
@@ -1222,7 +1231,7 @@ open class CardBrowser :
         updateList()
     }
 
-    private fun refreshAfterUndo() {
+    private fun refreshBrowserUI() {
         hideProgressBar()
         // reload whole view
         forceRefreshSearch()
@@ -1300,7 +1309,7 @@ open class CardBrowser :
             changes.card
         ) {
             // We refresh the Browser's own UI
-            refreshAfterUndo()
+            refreshBrowserUI()
         }
     }
 
