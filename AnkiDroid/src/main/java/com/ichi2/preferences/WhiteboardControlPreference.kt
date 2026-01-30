@@ -17,6 +17,7 @@ package com.ichi2.preferences
 
 import android.content.Context
 import android.util.AttributeSet
+import com.ichi2.anki.preferences.allPreferences
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.ui.GesturePicker
 import com.ichi2.ui.WhiteboardGesturePicker
@@ -40,4 +41,7 @@ class WhiteboardControlPreference : ReviewerControlPreference {
     ) : super(context, attrs, defStyleAttr, defStyleRes)
 
     override fun createGesturePicker(): GesturePicker = WhiteboardGesturePicker(context)
+
+    override fun getRelatedPreferences(): List<WhiteboardControlPreference> =
+        preferenceManager.preferenceScreen.allPreferences().filterIsInstance<WhiteboardControlPreference>()
 }
