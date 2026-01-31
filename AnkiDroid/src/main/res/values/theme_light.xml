@@ -12,7 +12,7 @@
         <item name="colorOnPrimaryContainer">@color/white</item> <!-- FAB icons -->
 
         <item name="colorSurfaceContainerHighest">?attr/colorSurfaceContainer</item>
-        <item name="colorSurfaceContainerHigh">?android:attr/colorBackground</item>
+        <item name="colorSurfaceContainerHigh">#E4F5FD</item>
         <item name="colorSurfaceContainer">#0F03A9F4</item>
         <item name="colorSurfaceContainerLow">?android:attr/colorBackground</item>
 

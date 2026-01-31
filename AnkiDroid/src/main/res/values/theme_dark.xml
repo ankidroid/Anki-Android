@@ -26,7 +26,7 @@
         <item name="android:windowBackground">@color/material_theme_grey</item>
 
         <item name="colorSurfaceContainerHighest">?attr/colorSurfaceContainer</item>
-        <item name="colorSurfaceContainerHigh">?android:attr/colorBackground</item>
+        <item name="colorSurfaceContainerHigh">#424C54</item>
         <item name="colorSurfaceContainer">#0F42A5F5</item>
         <item name="colorSurfaceContainerLow">?android:attr/colorBackground</item>
         <!-- Widget colors -->

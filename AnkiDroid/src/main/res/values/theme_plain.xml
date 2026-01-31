@@ -12,6 +12,7 @@
         <item name="colorPrimaryDark">@color/theme_plain_primary_dark</item>
         <item name="colorAccent">@color/theme_plain_accent</item>
         <item name="colorSurfaceContainer">#0F9E9E9E</item>
+        <item name="colorSurfaceContainerHigh">#F4F4F4</item>
         <item name="android:textColor">@color/text_color_light</item>
         <item name="android:textColorSecondary">@color/text_color_secondary_light</item>
         <item name="preferenceCategoryTitleTextColor">?attr/colorAccent</item>
