@@ -386,9 +386,9 @@ open class PrefsRepository(
      * True in case [BuildConfig.DEBUG] is true
      * or if the user has enabled it with the secret on [com.ichi2.anki.preferences.AboutFragment]
      */
-    var isDevOptionsEnabled: Boolean
-        get() = getBoolean(R.string.dev_options_enabled_by_user_key, false) || BuildConfig.DEBUG
-        set(value) = putBoolean(R.string.dev_options_enabled_by_user_key, value)
+    var isDeveloperOptionsEnabled: Boolean
+        get() = getBoolean(R.string.developer_options_enabled_by_user_key, false) || BuildConfig.DEBUG
+        set(value) = putBoolean(R.string.developer_options_enabled_by_user_key, value)
 
     var isNewStudyScreenEnabled by booleanPref(R.string.new_reviewer_options_key, false)
 
