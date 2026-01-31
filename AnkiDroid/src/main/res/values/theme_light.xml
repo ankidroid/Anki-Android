@@ -163,6 +163,10 @@
 
         <!-- HTML 'blue' -->
         <item name="clozeColor">#0000FF</item>
+
+        <item name="incrementerButtonBackground">@color/white</item>
+        <item name="incrementerInputBackground">@color/material_blue_grey_050</item>
+        <item name="incrementerIconColor">@color/material_light_blue_700</item>
     </style>
 
     <style name="Theme_Light" parent="Base.Theme.Light"/>
