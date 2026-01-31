@@ -385,6 +385,8 @@ open class PrefsRepository(
      * Whether developer options should be shown to the user.
      * True in case [BuildConfig.DEBUG] is true
      * or if the user has enabled it with the secret on [com.ichi2.anki.preferences.AboutFragment]
+     *
+     * @see com.ichi2.anki.preferences.DeveloperOptionsFragment
      */
     var isDeveloperOptionsEnabled: Boolean
         get() = getBoolean(R.string.developer_options_enabled_by_user_key, false) || BuildConfig.DEBUG
