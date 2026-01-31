@@ -132,10 +132,10 @@
     </com.ichi2.preferences.HeaderPreference>
 
     <com.ichi2.preferences.HeaderPreference
-        android:key="@string/pref_dev_options_screen_key"
+        android:key="@string/pref_developer_options_screen_key"
         android:title="@string/pref_cat_dev_options"
         android:icon="@drawable/ic_code"
-        android:fragment="com.ichi2.anki.preferences.DevOptionsFragment"
+        android:fragment="com.ichi2.anki.preferences.DeveloperOptionsFragment"
         app:isPreferenceVisible="false">
     </com.ichi2.preferences.HeaderPreference>
     <!-- About -->

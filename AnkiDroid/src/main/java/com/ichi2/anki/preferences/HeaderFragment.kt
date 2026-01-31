@@ -55,8 +55,8 @@ class HeaderFragment : SettingsFragment() {
             }
         }
 
-        requirePreference<Preference>(R.string.pref_dev_options_screen_key)
-            .isVisible = Prefs.isDevOptionsEnabled
+        requirePreference<Preference>(R.string.pref_developer_options_screen_key)
+            .isVisible = Prefs.isDeveloperOptionsEnabled
 
         requirePreference<HeaderPreference>(R.string.pref_review_reminders_screen_key)
             .setOnPreferenceClickListener {
@@ -201,11 +201,11 @@ class HeaderFragment : SettingsFragment() {
             // so they should be searchable based on the same conditions
 
             // From [HeaderFragment.onCreatePreferences]
-            if (Prefs.isDevOptionsEnabled) {
-                searchConfiguration.index(R.xml.preferences_dev_options)
-                // From [DevOptionsFragment.initSubscreen]
+            if (Prefs.isDeveloperOptionsEnabled) {
+                searchConfiguration.index(R.xml.preferences_developer_options)
+                // From [DeveloperOptionsFragment.initSubscreen]
                 if (BuildConfig.DEBUG) {
-                    searchConfiguration.ignorePreference(activity.getString(R.string.dev_options_enabled_by_user_key))
+                    searchConfiguration.ignorePreference(activity.getString(R.string.developer_options_enabled_by_user_key))
                 }
             }
 
@@ -258,7 +258,7 @@ class HeaderFragment : SettingsFragment() {
                 is BackupLimitsSettingsFragment -> R.string.pref_backup_limits_screen_key
                 is AdvancedSettingsFragment -> R.string.pref_advanced_screen_key
                 is ReviewerOptionsFragment, is ReviewerMenuSettingsFragment -> R.string.new_reviewer_options_key
-                is DevOptionsFragment -> R.string.pref_dev_options_screen_key
+                is DeveloperOptionsFragment -> R.string.pref_developer_options_screen_key
                 is AboutFragment -> R.string.about_screen_key
                 is SwitchProfilesFragment -> R.string.pref_switch_profile_screen_key
                 else -> null

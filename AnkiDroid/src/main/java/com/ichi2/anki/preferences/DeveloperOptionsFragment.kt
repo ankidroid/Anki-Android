@@ -48,14 +48,14 @@ import java.io.File
  * Fragment exclusive to DEBUG builds which can be used
  * to add options useful for developers or WIP features.
  */
-class DevOptionsFragment : SettingsFragment() {
+class DeveloperOptionsFragment : SettingsFragment() {
     override val preferenceResource: Int
-        get() = R.xml.preferences_dev_options
+        get() = R.xml.preferences_developer_options
     override val analyticsScreenNameConstant: String
         get() = "prefs.dev_options"
 
     override fun initSubscreen() {
-        setupEnableDevOptions()
+        setupEnableDeveloperOptions()
         // Make it possible to test crash reporting
         requirePreference<Preference>(R.string.pref_trigger_crash_key).setOnPreferenceClickListener {
             // If we don't delete the limiter data, our test crash may not go through,
@@ -201,15 +201,15 @@ class DevOptionsFragment : SettingsFragment() {
      * Ensure that the preference is searchable or not
      * based on the same condition at [HeaderFragment.configureSearchBar]
      */
-    private fun setupEnableDevOptions() {
-        val enableDevOptionsPref =
-            requirePreference<SwitchPreferenceCompat>(R.string.dev_options_enabled_by_user_key)
+    private fun setupEnableDeveloperOptions() {
+        val enableDeveloperOptionsPref =
+            requirePreference<SwitchPreferenceCompat>(R.string.developer_options_enabled_by_user_key)
 
         if (BuildConfig.DEBUG) {
-            enableDevOptionsPref.isVisible = false
+            enableDeveloperOptionsPref.isVisible = false
         } else {
-            enableDevOptionsPref.setOnPreferenceChangeListener { _, _ ->
-                showDisableDevOptionsDialog()
+            enableDeveloperOptionsPref.setOnPreferenceChangeListener { _, _ ->
+                showDisableDeveloperOptionsDialog()
                 false
             }
         }
@@ -284,11 +284,11 @@ class DevOptionsFragment : SettingsFragment() {
     /**
      * Shows dialog to confirm if developer options should be disabled
      */
-    private fun showDisableDevOptionsDialog() {
+    private fun showDisableDeveloperOptionsDialog() {
         AlertDialog.Builder(requireContext()).show {
             setTitle(R.string.disable_dev_options)
             setPositiveButton(R.string.dialog_ok) { _, _ ->
-                Prefs.isDevOptionsEnabled = false
+                Prefs.isDeveloperOptionsEnabled = false
                 parentFragmentManager.popBackStack()
                 ActivityCompat.recreate(requireActivity())
             }

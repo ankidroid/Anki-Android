@@ -217,7 +217,7 @@
     <string name="notifications_permission_requested_key">notificationsPermissionRequested</string>
     <string name="record_audio_permission_requested_key">recordAudioPermissionRequested</string>
     <!-- Developer options -->
-    <string name="pref_dev_options_screen_key">devOptionsKey</string>
+    <string name="pref_developer_options_screen_key">devOptionsKey</string>
     <string name="pref_trigger_crash_key">trigger_crash_preference</string>
     <string name="pref_analytics_debug_key">analytics_debug_preference</string>
     <string name="pref_set_database_path_debug_key">debug_set_database_path</string>
@@ -227,7 +227,7 @@
     <string name="new_reviewer_options_key">newReviewerOptions</string>
     <string name="pref_browser_find_replace">browserFindReplace</string>
     <string name="pref_new_review_reminders">newReviewReminders</string>
-    <string name="dev_options_enabled_by_user_key">devOptionsEnabledByUser</string>
+    <string name="developer_options_enabled_by_user_key">devOptionsEnabledByUser</string>
     <string name="pref_cat_wip_key">workInProgressDevOptions</string>
     <string name="reviewer_port_pref_key">reviewerPort</string>
     <string name="use_fixed_port_pref_key">useFixedPort</string>
