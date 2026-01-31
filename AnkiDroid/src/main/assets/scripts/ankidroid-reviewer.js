@@ -185,7 +185,7 @@ function taFocus() {
 }
 
 function showAnswer() {
-    window.location.href = "signal:show_answer";
+    window.location.href = "ankidroid://show-answer";
 }
 function buttonAnswerEase1() {
     window.location.href = "signal:answer_ease1";
