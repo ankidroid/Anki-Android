@@ -30,6 +30,7 @@ import android.widget.PopupWindow
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.view.menu.MenuBuilder
 import androidx.appcompat.widget.PopupMenu
+import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -374,6 +375,10 @@ class WhiteboardFragment :
         }
     }
 
+    private fun hideToolbar() {
+        binding.whiteboardToolbar.isVisible = false
+    }
+
     override fun onMenuItemClick(item: MenuItem): Boolean {
         Timber.i("WhiteboardFragment::onMenuItemClick %s", item.title)
         when (item.itemId) {
@@ -382,6 +387,7 @@ class WhiteboardFragment :
                 item.isChecked = !item.isChecked
                 viewModel.toggleStylusOnlyMode()
             }
+            R.id.action_hide_toolbar -> hideToolbar()
             R.id.action_align_left -> viewModel.setToolbarAlignment(ToolbarAlignment.LEFT)
             R.id.action_align_bottom -> viewModel.setToolbarAlignment(ToolbarAlignment.BOTTOM)
             R.id.action_align_right -> viewModel.setToolbarAlignment(ToolbarAlignment.RIGHT)

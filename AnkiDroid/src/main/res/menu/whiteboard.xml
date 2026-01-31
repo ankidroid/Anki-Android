@@ -14,6 +14,12 @@
         app:showAsAction="never"
         />
     <item
+        android:id="@+id/action_hide_toolbar"
+        android:title="@string/hide_toolbar"
+        android:icon="@drawable/ic_hide"
+        app:showAsAction="never"
+        />
+    <item
         android:id="@+id/action_toggle_stylus"
         android:title="@string/stylus_mode"
         android:checkable="true"
