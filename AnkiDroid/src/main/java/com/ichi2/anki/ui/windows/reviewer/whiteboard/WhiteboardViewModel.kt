@@ -99,6 +99,7 @@ class WhiteboardViewModel(
     val eraserMode = MutableStateFlow(EraserMode.INK)
     val isStylusOnlyMode = MutableStateFlow(false)
     val toolbarAlignment = MutableStateFlow(ToolbarAlignment.BOTTOM)
+    val isToolbarShown = MutableStateFlow(true)
 
     val eraserDisplayWidth =
         combine(eraserMode, inkEraserStrokeWidth, strokeEraserStrokeWidth) { mode, inkWidth, strokeWidth ->
@@ -120,6 +121,7 @@ class WhiteboardViewModel(
         eraserMode.value = repository.eraserMode
         isStylusOnlyMode.value = repository.stylusOnlyMode
         toolbarAlignment.value = repository.toolbarAlignment
+        isToolbarShown.value = repository.isToolbarShown
 
         val lastActiveIndex = repository.loadLastActiveBrushIndex(isDarkMode)
 
@@ -429,6 +431,16 @@ class WhiteboardViewModel(
         if (toolbarAlignment.value != alignment) {
             toolbarAlignment.value = alignment
             repository.toolbarAlignment = alignment
+        }
+    }
+
+    /**
+     * Sets the toolbar visibility.
+     */
+    fun setIsToolbarShown(isShown: Boolean) {
+        if (isToolbarShown.value != isShown) {
+            isToolbarShown.value = isShown
+            repository.isToolbarShown = isShown
         }
     }
 

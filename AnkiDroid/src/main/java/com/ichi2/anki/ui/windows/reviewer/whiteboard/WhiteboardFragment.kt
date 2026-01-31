@@ -30,7 +30,6 @@ import android.widget.PopupWindow
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.view.menu.MenuBuilder
 import androidx.appcompat.widget.PopupMenu
-import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -143,6 +142,10 @@ class WhiteboardFragment :
 
         viewModel.canUndo.onEach { toolbar.undoButton.isEnabled = it }.launchIn(lifecycleScope)
         viewModel.canRedo.onEach { toolbar.redoButton.isEnabled = it }.launchIn(lifecycleScope)
+
+        binding.whiteboardToolbar.onToolbarVisibilityChanged = { isShown ->
+            viewModel.setIsToolbarShown(isShown)
+        }
     }
 
     /**
@@ -197,6 +200,15 @@ class WhiteboardFragment :
             .onEach { alignment ->
                 toolbar.setAlignment(alignment)
                 updateToolbarPosition(alignment)
+            }.launchIn(lifecycleScope)
+
+        viewModel.isToolbarShown
+            .onEach { isShown ->
+                if (isShown) {
+                    showToolbar()
+                } else {
+                    hideToolbar()
+                }
             }.launchIn(lifecycleScope)
     }
 
@@ -375,8 +387,16 @@ class WhiteboardFragment :
         }
     }
 
+    private fun showToolbar() {
+        binding.whiteboardToolbar.post {
+            binding.whiteboardToolbar.show()
+        }
+    }
+
     private fun hideToolbar() {
-        binding.whiteboardToolbar.isVisible = false
+        binding.whiteboardToolbar.post {
+            binding.whiteboardToolbar.hide()
+        }
     }
 
     override fun onMenuItemClick(item: MenuItem): Boolean {
@@ -387,7 +407,7 @@ class WhiteboardFragment :
                 item.isChecked = !item.isChecked
                 viewModel.toggleStylusOnlyMode()
             }
-            R.id.action_hide_toolbar -> hideToolbar()
+            R.id.action_hide_toolbar -> viewModel.setIsToolbarShown(false)
             R.id.action_align_left -> viewModel.setToolbarAlignment(ToolbarAlignment.LEFT)
             R.id.action_align_bottom -> viewModel.setToolbarAlignment(ToolbarAlignment.BOTTOM)
             R.id.action_align_right -> viewModel.setToolbarAlignment(ToolbarAlignment.RIGHT)
