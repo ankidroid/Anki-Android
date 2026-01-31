@@ -61,6 +61,11 @@ object SavedSearches {
     suspend fun saveToConfig(values: List<SavedSearch>) = withCol { config.savedFilters = values }
 
     /**
+     * Returns a saved search with a given name (case sensitive)
+     */
+    suspend fun byName(name: String) = loadFromConfig().find { it.name == name }
+
+    /**
      * Adds a saved search to the Anki collection config
      *
      * @return a pair: `false` if a search with the given name already exists,
