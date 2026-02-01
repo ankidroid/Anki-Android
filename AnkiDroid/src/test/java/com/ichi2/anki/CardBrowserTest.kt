@@ -207,6 +207,19 @@ class CardBrowserTest : RobolectricTest() {
         }
 
     @Test
+    @Ignore("20279")
+    fun `can select deck with escaped name - issue 20279`() {
+        val deckId = addDeck("test\\s")
+        withBrowser(noteCount = 1) {
+            val selectableDeck = SelectableDeck.Deck(deckId, "test\\s")
+
+            this.onDeckSelected(selectableDeck)
+
+            assertDoesNotThrow { advanceRobolectricLooper() }
+        }
+    }
+
+    @Test
     @Flaky(os = OS.WINDOWS, "Index 0 out of bounds for length 0")
     fun browserIsInMultiSelectModeWhenSelectingOne() {
         val browser = browserWithMultipleNotes
