@@ -173,7 +173,7 @@ class TagsDialog : AnalyticsDialogFragment {
 
     @NeedsTest(
         "In EDIT_TAGS dialog, long-clicking a tag should open the add tag dialog with the clicked tag" +
-            "filled as prefix properly. In other dialog types, long-clicking a tag behaves like a short click.",
+            " filled as prefix properly. In other dialog types, long-clicking a tag behaves like a short click.",
     )
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         binding = DialogTagsBinding.inflate(layoutInflater)
