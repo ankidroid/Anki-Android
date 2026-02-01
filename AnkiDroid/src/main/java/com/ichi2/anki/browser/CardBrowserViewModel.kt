@@ -51,6 +51,7 @@ import com.ichi2.anki.browser.FindAndReplaceDialogFragment.Companion.TAGS_AS_FIE
 import com.ichi2.anki.browser.RepositionCardsRequest.RepositionData
 import com.ichi2.anki.browser.search.SavedSearch
 import com.ichi2.anki.browser.search.SavedSearches
+import com.ichi2.anki.browser.search.SearchString
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.utils.ext.indexOfOrNull
 import com.ichi2.anki.export.ExportDialogFragment.ExportType
@@ -1191,10 +1192,11 @@ class CardBrowserViewModel(
                 launchCatchingIO(
                     errorMessageHandler = { error -> flowOfSearchState.emit(SearchState.Error(error)) },
                 ) {
+                    val searchString = withCol { SearchString.fromUserInput(query) }.getOrThrow()
                     flowOfSearchState.emit(SearchState.Searching)
                     val sortOrder = order.toSortOrder()
                     Timber.d("performing search: '%s'; order: %s", query, sortOrder)
-                    val cards = com.ichi2.anki.searchForRows(query, sortOrder, cardsOrNotes)
+                    val cards = com.ichi2.anki.searchForRows(searchString, sortOrder, cardsOrNotes)
                     Timber.d("Search returned %d card(s)", cards.size)
 
                     ensureActive()

@@ -64,6 +64,9 @@ import com.ichi2.anki.browser.IdsFile
 import com.ichi2.anki.browser.SaveSearchResult
 import com.ichi2.anki.browser.SharedPreferencesLastDeckIdRepository
 import com.ichi2.anki.browser.registerFindReplaceHandler
+import com.ichi2.anki.browser.search.SearchString
+import com.ichi2.anki.browser.search.findCards
+import com.ichi2.anki.browser.search.findNotes
 import com.ichi2.anki.browser.search.savedFilters
 import com.ichi2.anki.browser.toCardBrowserLaunchOptions
 import com.ichi2.anki.common.annotations.NeedsTest
@@ -1362,7 +1365,7 @@ open class CardBrowser :
 }
 
 suspend fun searchForRows(
-    query: String,
+    query: SearchString,
     order: SortOrder,
     cardsOrNotes: CardsOrNotes,
 ): BrowserRowCollection =

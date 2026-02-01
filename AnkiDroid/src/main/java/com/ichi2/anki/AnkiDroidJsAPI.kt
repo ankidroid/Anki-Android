@@ -33,6 +33,7 @@ import com.ichi2.anki.AnkiDroidJsAPIConstants.ANKI_JS_ERROR_CODE_SUSPEND_CARD
 import com.ichi2.anki.AnkiDroidJsAPIConstants.ANKI_JS_ERROR_CODE_SUSPEND_NOTE
 import com.ichi2.anki.AnkiDroidJsAPIConstants.flagCommands
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.browser.search.SearchString
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.utils.ext.stringIterable
@@ -458,7 +459,8 @@ open class AnkiDroidJsAPI(
         withContext(Dispatchers.Main) {
             val cards =
                 try {
-                    searchForRows(apiContract.cardSuppliedData, SortOrder.UseCollectionOrdering, CardsOrNotes.CARDS)
+                    val searchString = withCol { SearchString.fromUserInput(apiContract.cardSuppliedData) }.getOrThrow()
+                    searchForRows(searchString, SortOrder.UseCollectionOrdering, CardsOrNotes.CARDS)
                         .map { withCol { getCard(it.cardOrNoteId) } }
                 } catch (exc: Exception) {
                     activity.webView!!.evaluateJavascript(
