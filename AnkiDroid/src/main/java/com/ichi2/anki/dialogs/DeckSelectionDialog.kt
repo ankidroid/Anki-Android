@@ -328,7 +328,8 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
             val isDeckViewable = isViewable(deck)
             holder.itemView.isVisible = isDeckViewable
             if (isDeckViewable) {
-                holder.setDeck(SelectableDeck.Deck(deck.did, deck.fullDeckName))
+                val model = if (deck.did == ALL_DECKS_ID) SelectableDeck.AllDecks else SelectableDeck.Deck(deck.did, deck.fullDeckName)
+                holder.setDeck(model)
             }
             setDeckExpander(holder.expander, holder.indentView, deck)
         }

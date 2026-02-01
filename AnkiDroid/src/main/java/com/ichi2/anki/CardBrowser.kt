@@ -486,8 +486,6 @@ open class CardBrowser :
         }
 
         fun onDeckIdChanged(deckId: DeckId?) {
-            if (deckId == null) return
-            // this handles ALL_DECKS_ID
             updateAppBarInfo(deckId)
         }
 
@@ -593,7 +591,7 @@ open class CardBrowser :
         registerReceiver()
 
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
-        updateAppBarInfo(viewModel.deckId ?: ALL_DECKS_ID)
+        updateAppBarInfo(viewModel.deckId)
     }
 
     override fun onKeyUp(
@@ -1336,11 +1334,12 @@ open class CardBrowser :
      * Sets the selected deck name and current selection count based on [numberOfCardsOrNoteShown]
      */
     private fun updateAppBarInfo(deckId: DeckId?) {
-        if (deckId == null || useSearchView) return
+        if (useSearchView) return
         findViewById<TextView>(R.id.subtitle)?.text = numberOfCardsOrNoteShown
         launchCatchingTask {
             val deckName =
                 when (deckId) {
+                    null -> getString(R.string.card_browser_all_decks)
                     ALL_DECKS_ID -> getString(R.string.card_browser_all_decks)
                     else -> withCol { decks.getLegacy(deckId)?.name }
                 }
