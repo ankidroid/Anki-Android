@@ -76,6 +76,7 @@ import com.ichi2.anki.browser.FindAndReplaceDialogFragment.Companion.TAGS_AS_FIE
 import com.ichi2.anki.browser.column1
 import com.ichi2.anki.browser.selectRowAtPosition
 import com.ichi2.anki.browser.setColumn
+import com.ichi2.anki.browser.setSelectedDeck
 import com.ichi2.anki.browser.toRowSelection
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.utils.isRunningAsUnitTest
@@ -207,7 +208,6 @@ class CardBrowserTest : RobolectricTest() {
         }
 
     @Test
-    @Ignore("20279")
     fun `can select deck with escaped name - issue 20279`() {
         val deckId = addDeck("test\\s")
         withBrowser(noteCount = 1) {
