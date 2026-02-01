@@ -1437,14 +1437,14 @@ open class CardBrowser :
 }
 
 suspend fun searchForRows(
-    query: SearchString,
+    search: SearchString,
     order: SortOrder,
     cardsOrNotes: CardsOrNotes,
 ): BrowserRowCollection =
     withCol {
         when (cardsOrNotes) {
-            CARDS -> findCards(query, order)
-            NOTES -> findNotes(query, order)
+            CARDS -> findCards(search, order)
+            NOTES -> findNotes(search, order)
         }
     }.let { ids ->
         BrowserRowCollection(cardsOrNotes, ids.map { CardOrNoteId(it) }.toMutableList())
