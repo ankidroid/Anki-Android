@@ -349,12 +349,7 @@ class WhiteboardFragment :
             }
         }
 
-        eraserWidthBinding.clearButton.setOnClickListener {
-            viewModel.clearCanvas()
-            eraserPopup?.dismiss()
-        }
-
-        eraserPopup = PopupWindow(eraserWidthBinding.root, 360.dp.toPx(requireContext()), ViewGroup.LayoutParams.WRAP_CONTENT, true)
+        eraserPopup = PopupWindow(eraserWidthBinding.root, 280.dp.toPx(requireContext()), ViewGroup.LayoutParams.WRAP_CONTENT, true)
         eraserPopup?.elevation = 8f
         eraserPopup?.setOnDismissListener {
             binding.whiteboardToolbar.updateSelection(viewModel.activeBrushIndex.value, viewModel.isEraserActive.value)
@@ -390,6 +385,7 @@ class WhiteboardFragment :
             R.id.action_align_left -> viewModel.setToolbarAlignment(ToolbarAlignment.LEFT)
             R.id.action_align_bottom -> viewModel.setToolbarAlignment(ToolbarAlignment.BOTTOM)
             R.id.action_align_right -> viewModel.setToolbarAlignment(ToolbarAlignment.RIGHT)
+            R.id.action_clear -> viewModel.clearCanvas()
             else -> return false
         }
         return true

@@ -2,23 +2,20 @@
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="360dp"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     style="@style/CardView.ViewerStyle">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:layout_margin="8dp">
 
         <com.google.android.material.button.MaterialButtonToggleGroup
             android:id="@+id/eraser_mode_toggle_group"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            app:layout_constraintEnd_toStartOf="@id/clear_button"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             app:selectionRequired="true"
             app:singleSelection="true"
             tools:checkedButton="@id/eraser_mode_ink">
@@ -26,7 +23,7 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/eraser_mode_ink"
                 style="?attr/materialButtonOutlinedStyle"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:backgroundTint="@color/selector_tool_background"
@@ -37,7 +34,7 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/eraser_mode_stroke"
                 style="?attr/materialButtonOutlinedStyle"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:backgroundTint="@color/selector_tool_background"
@@ -46,20 +43,6 @@
                 app:iconGravity="textStart" />
         </com.google.android.material.button.MaterialButtonToggleGroup>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/clear_button"
-            style="?attr/materialButtonOutlinedStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/whiteboard_clear"
-            android:textColor="?android:textColor"
-            app:icon="@drawable/ic_clear_white"
-            app:iconGravity="textStart"
-            app:iconTint="?attr/colorControlNormal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-
         <com.google.android.material.slider.Slider
             android:id="@+id/eraser_width_slider"
             android:layout_width="match_parent"
@@ -67,9 +50,8 @@
             android:stepSize="5.0"
             android:valueFrom="5.0"
             android:valueTo="200.0"
-            app:layout_constraintTop_toBottomOf="@id/eraser_mode_toggle_group"
             app:thumbHeight="24dp"
             app:tickVisible="false" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 </com.google.android.material.card.MaterialCardView>
 
