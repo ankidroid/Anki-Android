@@ -278,7 +278,7 @@ object ImportUtils {
                     Timber.d("Filename was longer than %d, shortening", FILE_NAME_SHORTENING_THRESHOLD)
                     // take 90 instead of 100 so we don't get the extension
                     val substringLength = FILE_NAME_SHORTENING_THRESHOLD - 10
-                    val shortenedFileName = encoded.substring(0, substringLength) + "..." + getExtension(fileName)
+                    val shortenedFileName = encoded.take(substringLength) + "..." + getExtension(fileName)
                     Timber.d("Shortened filename '%s' to '%s'", fileName, shortenedFileName)
                     // if we don't decode, % is double-encoded
                     URLDecoder.decode(shortenedFileName, "UTF-8")
