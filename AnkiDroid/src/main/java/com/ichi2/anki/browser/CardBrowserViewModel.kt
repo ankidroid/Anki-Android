@@ -51,6 +51,7 @@ import com.ichi2.anki.browser.FindAndReplaceDialogFragment.Companion.TAGS_AS_FIE
 import com.ichi2.anki.browser.RepositionCardsRequest.RepositionData
 import com.ichi2.anki.browser.search.SavedSearch
 import com.ichi2.anki.browser.search.SavedSearches
+import com.ichi2.anki.browser.search.SearchRequest
 import com.ichi2.anki.browser.search.SearchString
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.utils.ext.indexOfOrNull
@@ -59,6 +60,7 @@ import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.libanki.Card
 import com.ichi2.anki.libanki.CardId
 import com.ichi2.anki.libanki.CardType
+import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.NoteId
 import com.ichi2.anki.libanki.QueueType
@@ -76,7 +78,6 @@ import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.pages.CardInfoDestination
 import com.ichi2.anki.preferences.SharedPreferencesProvider
 import com.ichi2.anki.utils.ext.currentCardBrowse
-import com.ichi2.anki.utils.ext.normalizeForSearch
 import com.ichi2.anki.utils.ext.setUserFlagForCards
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Job
@@ -156,10 +157,6 @@ class CardBrowserViewModel(
 
     val searchTerms: String
         get() = flowOfSearchTerms.value
-
-    @VisibleForTesting
-    var restrictOnDeck: String = ""
-        private set
 
     /** text in the search box (potentially unsubmitted) */
     // this does not currently bind to the value in the UI and is only used for posting
@@ -312,37 +309,45 @@ class CardBrowserViewModel(
     val lastDeckId: DeckId?
         get() = lastDeckIdRepository.lastDeckId
 
-    suspend fun setSelectedDeck(deck: SelectableDeck) =
-        when (deck) {
-            is SelectableDeck.AllDecks -> setSelectedDeck(ALL_DECKS_ID)
-            is SelectableDeck.Deck -> setSelectedDeck(deck.deckId)
-        }
+    fun setSelectedDeck(deck: SelectableDeck) {
+        Timber.i("setting deck: %s", deck)
 
-    // TODO: Replace with setSelectedDeck(selectableDeck)
-    suspend fun setSelectedDeck(deckId: DeckId) {
-        Timber.i("setting deck: %d", deckId)
-        lastDeckIdRepository.lastDeckId = deckId
-        restrictOnDeck =
-            if (deckId == ALL_DECKS_ID) {
-                ""
-            } else {
-                val deckName = withCol { decks.name(deckId) }
-                // Escape any quotes in the deck name to prevent search syntax errors
-                val escapedDeckName = deckName.replace("\"", "\\\"")
-                "deck:\"$escapedDeckName\""
+        lastDeckIdRepository.lastDeckId =
+            when (deck) {
+                is SelectableDeck.AllDecks -> ALL_DECKS_ID
+                is SelectableDeck.Deck -> deck.deckId
             }
-        flowOfDeckId.update { deckId }
+
+        val deckFilter =
+            when (deck) {
+                is SelectableDeck.AllDecks -> emptyList()
+                is SelectableDeck.Deck -> listOf(deck.toDeckNameId())
+            }
+
+        searchRequestFlow.value = searchRequestFlow.value.copyFilters { it.copy(decks = deckFilter) }
     }
 
+    val searchRequestFlow = MutableStateFlow(SearchRequest(query = ""))
+
     // TODO: replace with flowOfDeckSelection
-    val flowOfDeckId = MutableStateFlow(lastDeckId)
-    val deckId get() = flowOfDeckId.value
+    val flowOfDeckId =
+        searchRequestFlow.map {
+            it.filters.decks
+                .firstOrNull()
+                ?.id
+        }
+
+    val deckId: DeckId?
+        get() =
+            searchRequestFlow.value.filters.decks
+                .firstOrNull()
+                ?.id
 
     val flowOfDeckSelection =
         flowOfDeckId.map { did ->
             when (did) {
                 ALL_DECKS_ID -> return@map SelectableDeck.AllDecks
-                null -> return@map null
+                null -> return@map SelectableDeck.AllDecks
                 else -> return@map SelectableDeck.Deck.fromId(did)
             }
         }
@@ -798,7 +803,9 @@ class CardBrowserViewModel(
 
     suspend fun selectedNoteCount() = selectedRows.queryNoteIds(cardsOrNotes).distinct().size
 
-    fun hasSelectedAllDecks(): Boolean = lastDeckId == ALL_DECKS_ID
+    fun hasSelectedAllDecks(): Boolean =
+        searchRequestFlow.value.filters.decks
+            .isEmpty()
 
     fun changeCardOrder(which: SortType) {
         val changeType =
@@ -1023,9 +1030,16 @@ class CardBrowserViewModel(
     /** Ignores any values before [initCompleted] is set */
     private fun <T> Flow<T>.ignoreValuesFromViewModelLaunch(): Flow<T> = this.filter { initCompleted }
 
+    /**
+     * Sets the filter query (legacy): 'is:suspended'
+     */
     private suspend fun setFilterQuery(filterQuery: String) {
         this.flowOfFilterQuery.emit(filterQuery)
-        launchSearchForCards(filterQuery)
+        this.searchRequestFlow.value =
+            searchRequestFlow.value.copy(
+                query = filterQuery,
+            )
+        launchSearchForCards()
     }
 
     /**
@@ -1146,23 +1160,31 @@ class CardBrowserViewModel(
      * @param forceRefresh if `true`, perform a search even if the search query is unchanged
      */
     fun launchSearchForCards(
-        searchQuery: String,
+        query: String,
         forceRefresh: Boolean = true,
-    ) {
-        if (!forceRefresh && searchTerms == searchQuery) {
-            Timber.d("skipping duplicate search: forceRefresh is false")
-            return
-        }
-        flowOfSearchTerms.value =
-            if (shouldIgnoreAccents) {
-                searchQuery.normalizeForSearch()
-            } else {
-                searchQuery
-            }
+    ) = launchSearchForCards(
+        searchRequestFlow.value.copy(query = query),
+        forceRefresh,
+    )
 
-        viewModelScope.launch {
-            launchSearchForCards()
+    /**
+     * @param forceRefresh if `true`, perform a search even if the search query is unchanged
+     */
+    fun launchSearchForCards(
+        searchRequest: SearchRequest,
+        forceRefresh: Boolean,
+    ) = viewModelScope.launch {
+        Timber.d("launching search [new syntax]: '%s'", searchRequest)
+
+        context(_: Collection)
+        fun SearchRequest.asSearchString(): SearchString? = this.toSearchString().getOrNull()
+        if (!forceRefresh && withCol { searchRequestFlow.value.asSearchString() == searchRequest.asSearchString() }) {
+            Timber.d("skipping duplicate search: forceRefresh is false")
+            return@launch
         }
+
+        searchRequestFlow.value = searchRequest
+        launchSearchForCards()
     }
 
     /**
@@ -1180,22 +1202,15 @@ class CardBrowserViewModel(
             // update the UI while we're searching
             clearCardsList()
 
-            val query: String =
-                if (searchTerms.contains("deck:")) {
-                    "($searchTerms)"
-                } else {
-                    if ("" != searchTerms) "$restrictOnDeck($searchTerms)" else restrictOnDeck
-                }
-
             searchJob?.cancel()
             searchJob =
                 launchCatchingIO(
                     errorMessageHandler = { error -> flowOfSearchState.emit(SearchState.Error(error)) },
                 ) {
-                    val searchString = withCol { SearchString.fromUserInput(query) }.getOrThrow()
+                    val searchString = withCol { searchRequestFlow.value.toSearchString().getOrThrow() }
                     flowOfSearchState.emit(SearchState.Searching)
                     val sortOrder = order.toSortOrder()
-                    Timber.d("performing search: '%s'; order: %s", query, sortOrder)
+                    Timber.d("performing search: '%s'; order: %s", searchString, sortOrder)
                     val cards = com.ichi2.anki.searchForRows(searchString, sortOrder, cardsOrNotes)
                     Timber.d("Search returned %d card(s)", cards.size)
 
