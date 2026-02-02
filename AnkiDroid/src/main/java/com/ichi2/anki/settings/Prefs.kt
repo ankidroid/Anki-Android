@@ -296,6 +296,14 @@ open class PrefsRepository(
      */
     var reminderNotifsRequestShown by booleanPref(R.string.reminder_notifs_request_shown_key, defaultValue = false)
 
+    /**
+     * A list of all recent deserialization errors that have occurred when trying to load review reminders from storage.
+     * For example, review reminders are deserialized and have their alarms scheduled when the device starts, but
+     * if the deserialization process fails and no valid migrations are available, the error can be put into this string
+     * so that the next time the user opens the app, an error dialog can be shown to inform them of the issue.
+     */
+    var reviewReminderDeserializationErrors by stringPref(R.string.review_reminder_deserialization_errors_key)
+
     // *************************************** Permissions ************************************** //
 
     // Flags for whether the system UI dialog for requesting certain permissions has been shown before.
