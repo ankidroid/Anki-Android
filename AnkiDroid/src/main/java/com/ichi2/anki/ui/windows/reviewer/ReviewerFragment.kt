@@ -494,7 +494,7 @@ class ReviewerFragment :
             val whiteboardFragment = childFragmentManager.findFragmentById(binding.whiteboardContainer.id)
             if (whiteboardFragment == null && isEnabled) {
                 childFragmentManager.commit {
-                    add(R.id.whiteboard_container, WhiteboardFragment::class.java, null)
+                    add(R.id.whiteboard_container, WhiteboardFragment::class.java, null, WhiteboardFragment::class.jvmName)
                 }
             }
         }
