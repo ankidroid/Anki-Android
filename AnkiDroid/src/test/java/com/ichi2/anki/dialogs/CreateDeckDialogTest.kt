@@ -17,10 +17,15 @@
 
 package com.ichi2.anki.dialogs
 
+import android.os.Looper
+import android.view.View
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.edit
 import androidx.lifecycle.Lifecycle
 import androidx.test.core.app.ActivityScenario
+import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.IntroductionActivity
@@ -29,10 +34,12 @@ import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.dialogs.CreateDeckDialog.DeckDialogType
 import com.ichi2.anki.dialogs.utils.input
 import com.ichi2.anki.libanki.DeckId
+import com.ichi2.testutils.getString
 import com.ichi2.utils.getInputTextLayout
 import com.ichi2.utils.positiveButton
 import okhttp3.internal.closeQuietly
 import org.hamcrest.CoreMatchers.equalTo
+import org.hamcrest.CoreMatchers.notNullValue
 import org.hamcrest.CoreMatchers.nullValue
 import org.hamcrest.Matcher
 import org.hamcrest.MatcherAssert.assertThat
@@ -40,6 +47,8 @@ import org.hamcrest.Matchers.hasItem
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
+import org.robolectric.Shadows.shadowOf
+import org.robolectric.shadows.ShadowToast
 import java.util.concurrent.atomic.AtomicInteger
 import java.util.concurrent.atomic.AtomicReference
 import kotlin.coroutines.resume
@@ -303,6 +312,243 @@ class CreateDeckDialogTest : RobolectricTest() {
 
         assertThat("final duplicate deck is created", allDeckNames(), hasItem("$duplicatedName${"+".repeat(10)}"))
         createDeck(duplicatedName, expectedReturnValue = false)
+    }
+
+    @Test
+    fun displayFeedbackWithNonActivityContext() {
+        // Get application context (non-Activity)
+        val appContext = targetContext.applicationContext
+        val message = "Toast feedback message"
+
+        // Create dialog with non-Activity context
+        val createDeckDialog = CreateDeckDialog(appContext, R.string.new_deck, DeckDialogType.DECK, null)
+
+        // When displayFeedback is called with non-Activity context
+        createDeckDialog.displayFeedback(message, Snackbar.LENGTH_SHORT)
+
+        // Then verify a Toast is shown instead
+        assertThat(ShadowToast.getTextOfLatestToast(), equalTo(message))
+        assertThat(ShadowToast.shownToastCount(), equalTo(1))
+    }
+
+    @Test
+    fun displayFeedbackShowsSnackbarWhenContextIsActivity() {
+        activityScenario.onActivity { activity: DeckPicker ->
+            val message = "Action successful"
+            val createDeckDialog =
+                CreateDeckDialog(
+                    activity,
+                    R.string.new_deck,
+                    DeckDialogType.DECK,
+                    null,
+                )
+
+            // Call displayFeedback
+            createDeckDialog.displayFeedback(message)
+
+            // IMPORTANT: Advance the looper to process posted messages
+            shadowOf(Looper.getMainLooper()).idle()
+
+            // Now find Snackbar in view hierarchy
+            val rootView = activity.window.decorView
+            val snackbarTextView =
+                rootView.findViewById<TextView>(
+                    com.google.android.material.R.id.snackbar_text,
+                )
+
+            // Verify Snackbar is shown
+            assertThat("Snackbar should be displayed", snackbarTextView, notNullValue())
+            assertThat("Message should match", snackbarTextView.text.toString(), equalTo(message))
+        }
+    }
+
+    @Test
+    fun displayFeedbackWithShortDurationShowsToast() {
+        val appContext = targetContext.applicationContext
+        val message = "Quick notification"
+        val createDeckDialog =
+            CreateDeckDialog(
+                appContext,
+                R.string.new_deck,
+                DeckDialogType.DECK,
+                null,
+            )
+
+        createDeckDialog.displayFeedback(message, Snackbar.LENGTH_SHORT)
+
+        assertThat(ShadowToast.getTextOfLatestToast(), equalTo(message))
+        assertThat(ShadowToast.getLatestToast().duration, equalTo(Toast.LENGTH_SHORT))
+    }
+
+    @Test
+    fun displayFeedbackWithLongDurationShowsToast() {
+        val appContext = targetContext.applicationContext
+        val message = "Long notification message"
+        val createDeckDialog =
+            CreateDeckDialog(
+                appContext,
+                R.string.new_deck,
+                DeckDialogType.DECK,
+                null,
+            )
+
+        createDeckDialog.displayFeedback(message, Snackbar.LENGTH_LONG)
+
+        assertThat(ShadowToast.getTextOfLatestToast(), equalTo(message))
+        assertThat(ShadowToast.getLatestToast().duration, equalTo(Toast.LENGTH_LONG))
+    }
+
+    @Test
+    fun displayFeedbackWithEmptyMessageShowsToast() {
+        val appContext = targetContext.applicationContext
+        val message = ""
+        val createDeckDialog =
+            CreateDeckDialog(
+                appContext,
+                R.string.new_deck,
+                DeckDialogType.DECK,
+                null,
+            )
+
+        createDeckDialog.displayFeedback(message)
+
+        assertThat(ShadowToast.getTextOfLatestToast(), equalTo(message))
+        assertThat(ShadowToast.shownToastCount(), equalTo(1))
+    }
+
+    @Test
+    fun displayFeedbackMultipleToastsInSequence() {
+        val appContext = targetContext.applicationContext
+        val createDeckDialog =
+            CreateDeckDialog(
+                appContext,
+                R.string.new_deck,
+                DeckDialogType.DECK,
+                null,
+            )
+
+        createDeckDialog.displayFeedback("First message")
+        createDeckDialog.displayFeedback("Second message")
+        createDeckDialog.displayFeedback("Third message")
+
+        assertThat(ShadowToast.shownToastCount(), equalTo(3))
+        assertThat(ShadowToast.getTextOfLatestToast(), equalTo("Third message"))
+    }
+
+    @Test
+    fun displayFeedbackMultipleSnackbarsInSequence() {
+        activityScenario.onActivity { activity: DeckPicker ->
+            val createDeckDialog =
+                CreateDeckDialog(
+                    activity,
+                    R.string.new_deck,
+                    DeckDialogType.DECK,
+                    null,
+                )
+
+            createDeckDialog.displayFeedback("First snackbar")
+            shadowOf(Looper.getMainLooper()).idle()
+
+            createDeckDialog.displayFeedback("Second snackbar")
+            shadowOf(Looper.getMainLooper()).idle()
+
+            val snackbarTextView =
+                activity.window.decorView.findViewById<TextView>(
+                    com.google.android.material.R.id.snackbar_text,
+                )
+
+            assertThat(snackbarTextView, notNullValue())
+            assertThat(snackbarTextView.text.toString(), equalTo("Second snackbar"))
+        }
+    }
+
+    @Test
+    fun displayFeedbackAfterDeckCreationSuccess() {
+        activityScenario.onActivity { activity: DeckPicker ->
+            val deckName = "Test Deck"
+            val successMessage = getString(R.string.deck_created)
+            val createDeckDialog =
+                CreateDeckDialog(
+                    activity,
+                    R.string.new_deck,
+                    DeckDialogType.DECK,
+                    null,
+                )
+
+            // Simulate successful deck creation
+            createDeckDialog.onNewDeckCreated = { _: DeckId ->
+                createDeckDialog.displayFeedback(successMessage)
+            }
+
+            createDeckDialog.createDeck(deckName)
+            shadowOf(Looper.getMainLooper()).idle()
+
+            val snackbarTextView =
+                activity.window.decorView.findViewById<TextView>(
+                    com.google.android.material.R.id.snackbar_text,
+                )
+
+            assertThat(snackbarTextView, notNullValue())
+            assertThat(snackbarTextView.text.toString(), equalTo(successMessage))
+        }
+    }
+
+    @Test
+    fun displayFeedbackAfterDeckRenameSuccess() {
+        activityScenario.onActivity { activity: DeckPicker ->
+            val oldName = "Old Deck"
+            val newName = "New Deck"
+            val successMessage = getString(R.string.deck_renamed)
+            val createDeckDialog =
+                CreateDeckDialog(
+                    activity,
+                    R.string.new_deck,
+                    DeckDialogType.RENAME_DECK,
+                    null,
+                )
+
+            createDeckDialog.deckName = oldName
+            createDeckDialog.onNewDeckCreated = { _: DeckId ->
+                createDeckDialog.displayFeedback(successMessage)
+            }
+
+            createDeckDialog.renameDeck(newName)
+            shadowOf(Looper.getMainLooper()).idle()
+
+            val snackbarTextView =
+                activity.window.decorView.findViewById<TextView>(
+                    com.google.android.material.R.id.snackbar_text,
+                )
+
+            assertThat(snackbarTextView, notNullValue())
+            assertThat(snackbarTextView.text.toString(), equalTo(successMessage))
+        }
+    }
+
+    @Test
+    fun displayFeedbackSnackbarIsVisibleToUser() {
+        activityScenario.onActivity { activity: DeckPicker ->
+            val message = "Visible to user"
+            val createDeckDialog =
+                CreateDeckDialog(
+                    activity,
+                    R.string.new_deck,
+                    DeckDialogType.DECK,
+                    null,
+                )
+
+            createDeckDialog.displayFeedback(message)
+            shadowOf(Looper.getMainLooper()).idle()
+
+            val snackbarTextView =
+                activity.window.decorView.findViewById<TextView>(
+                    com.google.android.material.R.id.snackbar_text,
+                )
+
+            assertThat(snackbarTextView, notNullValue())
+            assertThat(snackbarTextView.visibility, equalTo(View.VISIBLE))
+            assertThat(snackbarTextView.isShown, equalTo(true))
+        }
     }
 
     /**
