@@ -16,7 +16,7 @@
 package com.ichi2.anki.exception
 
 class MediaSizeLimitExceededException(
-    val fileName: String,
-    val fileSize: Long,
+    val fileName: String?,
+    val fileSize: Long?,
     val limit: Long,
 ) : Exception("Media size limit exceeded: $fileName ($fileSize > $limit)")

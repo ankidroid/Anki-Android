@@ -134,10 +134,12 @@ object NoteService {
     ) {
         val file = field.mediaFile
 
+        // We use > because the backend allows files exactly equal to the limit
+        // References: rslib/src/zip.rs and rslib/src/upload.rs checks "if size > MAX_..."
         if (!skipSizeCheck && (file?.length() ?: 0L) > Backend.MAX_INDIVIDUAL_MEDIA_FILE_SIZE) {
             throw MediaSizeLimitExceededException(
-                file?.name ?: "No Name",
-                file?.length() ?: 0L,
+                file?.name,
+                file?.length(),
                 Backend.MAX_INDIVIDUAL_MEDIA_FILE_SIZE,
             )
         }

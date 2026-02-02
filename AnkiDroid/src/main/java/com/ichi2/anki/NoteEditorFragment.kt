@@ -2157,42 +2157,55 @@ class NoteEditorFragment :
         }
     }
 
-    private fun showLargeMediaFileWarning(
-        fileName: String,
-        fileSize: Long,
+    private fun performAddMedia(
+        index: Int,
         field: IField,
-        fieldEditText: FieldEditText,
+        skipSizeCheck: Boolean,
+    ) {
+        launchCatchingTask {
+            try {
+                withCol {
+                    NoteService.importMediaToDirectory(this, field, skipSizeCheck = skipSizeCheck)
+                }
+
+                // Update UI
+                val fieldEditText = editFields!![index]
+                val formattedValue = field.formattedValue
+                if (field.type === EFieldType.TEXT) {
+                    fieldEditText.setText(formattedValue)
+                } else if (fieldEditText.text != null) {
+                    insertStringInField(fieldEditText, formattedValue)
+                }
+                changed = true
+            } catch (e: MediaSizeLimitExceededException) {
+                showLargeMediaFileWarning(e.fileName, e.fileSize) {
+                    performAddMedia(index, field, skipSizeCheck = true)
+                }
+            } catch (oomError: OutOfMemoryError) {
+                throw Exception(oomError)
+            }
+        }
+    }
+
+    private fun showLargeMediaFileWarning(
+        fileName: String?,
+        fileSize: Long?,
+        onForceAdd: () -> Unit,
     ) {
         val limitStr =
             android.text.format.Formatter
                 .formatShortFileSize(requireContext(), Backend.MAX_INDIVIDUAL_MEDIA_FILE_SIZE)
         val fileSizeStr =
-            android.text.format.Formatter
-                .formatShortFileSize(requireContext(), fileSize)
+            fileSize?.let {
+                android.text.format.Formatter
+                    .formatShortFileSize(context, it)
+            } ?: "?"
 
         MaterialAlertDialogBuilder(requireContext()).show {
             title(R.string.media_file_size_warning_title)
             message(text = getString(R.string.media_file_size_warning_message, fileName, fileSizeStr, limitStr))
             positiveButton(R.string.media_file_size_add_anyway) {
-                lifecycleScope.launch {
-                    try {
-                        withCol {
-                            // Pass 'true' to the new skipSizeCheck parameter
-                            NoteService.importMediaToDirectory(this, field, skipSizeCheck = true)
-                        }
-
-                        val formattedValue = field.formattedValue
-                        if (field.type === EFieldType.TEXT) {
-                            fieldEditText.setText(formattedValue)
-                        } else if (fieldEditText.text != null) {
-                            insertStringInField(fieldEditText, formattedValue)
-                        }
-                        changed = true
-                    } catch (e: Exception) {
-                        Timber.e(e, "Failed to add large media file after warning")
-                        showSnackbar(R.string.something_wrong)
-                    }
-                }
+                onForceAdd()
             }
             negativeButton(R.string.dialog_cancel)
         }
@@ -2208,40 +2221,8 @@ class NoteEditorFragment :
         index: Int,
         field: IField,
     ) {
-        launchCatchingTask {
-            val note = getCurrentMultimediaEditableNote()
-            note.setField(index, field)
-            val fieldEditText = editFields!![index]
-
-            // Import field media
-            // This goes before setting formattedValue to update
-            // media paths with the checksum when they have the same name
-            try {
-                withCol {
-                    NoteService.importMediaToDirectory(this, field)
-                }
-            } catch (e: MediaSizeLimitExceededException) {
-                showLargeMediaFileWarning(
-                    e.fileName,
-                    e.fileSize,
-                    field,
-                    fieldEditText,
-                )
-                return@launchCatchingTask
-            } catch (oomError: OutOfMemoryError) {
-                // TODO: a 'retry' flow would be possible here
-                throw Exception(oomError)
-            }
-
-            // Completely replace text for text fields (because current text was passed in)
-            val formattedValue = field.formattedValue
-            if (field.type === EFieldType.TEXT) {
-                fieldEditText.setText(formattedValue)
-            } else if (fieldEditText.text != null) {
-                insertStringInField(fieldEditText, formattedValue)
-            }
-            changed = true
-        }
+        // Initial call checks size (skipSizeCheck = false)
+        performAddMedia(index, field, skipSizeCheck = false)
     }
 
     private fun onPaste(
