@@ -55,8 +55,8 @@
     </plurals>
     <string name="card_browser_all_decks">Kõik kaardipakid</string>
     <plurals name="card_browser_delete_notes">
-        <item quantity="one">Delete note</item>
-        <item quantity="other">Delete notes</item>
+        <item quantity="one">Kustuta märkus</item>
+        <item quantity="other">Kustuta märkused</item>
     </plurals>
     <string name="card_browser_change_deck" maxLength="28">Change deck</string>
     <string name="delete_card_title">Kustutada märge?</string>
@@ -69,8 +69,8 @@
     <string name="card_browser_list_my_searches_title">Choose a saved search</string>
     <string name="card_browser_list_my_searches_new_name">Name for the current search</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">You can’t save a search without a name</string>
-    <string name="card_browser_list_my_searches_new_search_error_dup">Name exists</string>
-    <string name="card_browser_list_my_searches_successful_save">Search was saved</string>
+    <string name="card_browser_list_my_searches_new_search_error_dup">Nimi on olemas</string>
+    <string name="card_browser_list_my_searches_successful_save">Otsing salvestati</string>
     <string name="no_note_to_edit">No note to edit</string>
     <string name="card_browser_list_my_searches_remove_content">Delete “%1$s”?</string>
     <string name="card_browser_change_display_order" maxLength="28">Kuvamise järjestuse muutmine</string>
@@ -116,10 +116,10 @@
     <string name="edit_tags_dialog" comment="Description of the shortcut that opens the edit tags dialog">Edit tags dialog</string>
     <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">Show order dialog</string>
     <!-- Manage columns dialog -->
-    <string name="browse_manage_columns_main_heading">Columns</string>
+    <string name="browse_manage_columns_main_heading">Veerud</string>
     <string name="browse_manage_columns">Manage columns</string>
-    <string name="user_active_columns">Active</string>
-    <string name="user_potential_columns">Available</string>
+    <string name="user_active_columns">Aktiivne</string>
+    <string name="user_potential_columns">Saadaval</string>
     <string name="include_column">Include column</string>
     <string name="exclude_column">Exclude column</string>
     <string name="save_changes_message">Please save your changes first</string>
