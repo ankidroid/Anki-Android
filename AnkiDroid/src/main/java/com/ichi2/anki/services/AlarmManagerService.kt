@@ -224,7 +224,7 @@ class AlarmManagerService : BroadcastReceiver() {
             Timber.d("scheduleAllEnabledReviewReminderNotifications")
             val allReviewRemindersAsMap =
                 ReviewRemindersDatabase.getAllAppWideReminders() + ReviewRemindersDatabase.getAllDeckSpecificReminders()
-            val enabledReviewReminders = allReviewRemindersAsMap.values.filter { it.enabled }
+            val enabledReviewReminders = allReviewRemindersAsMap.getRemindersList().filter { it.enabled }
             for (reviewReminder in enabledReviewReminders) {
                 scheduleReviewReminderNotification(context, reviewReminder)
             }
@@ -277,6 +277,7 @@ class AlarmManagerService : BroadcastReceiver() {
          * To extend the notifications created by AnkiDroid, add more functionality to the body of this method.
          */
         fun scheduleAllNotifications(context: Context) {
+            // currently, the only scheduled notifications supported by AnkiDroid are review reminder notifications
             scheduleAllEnabledReviewReminderNotifications(context)
         }
 

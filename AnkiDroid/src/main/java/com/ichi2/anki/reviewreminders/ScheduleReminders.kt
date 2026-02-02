@@ -101,7 +101,7 @@ class ScheduleReminders :
      * use [triggerUIUpdate]. Note that editing this map does not also automatically write to the database.
      * Writing to the database must be done separately.
      */
-    private lateinit var reminders: HashMap<ReviewReminderId, ReviewReminder>
+    private lateinit var reminders: ReviewReminderGroup
 
     /**
      * Retrieving deck names for a given deck ID in [retrieveDeckNameFromID] requires a call to the collection.
@@ -188,11 +188,11 @@ class ScheduleReminders :
             catchDatabaseExceptions {
                 when (val scope = scheduleRemindersScope) {
                     is ReviewReminderScope.Global -> {
-                        HashMap(ReviewRemindersDatabase.getAllAppWideReminders() + ReviewRemindersDatabase.getAllDeckSpecificReminders())
+                        ReviewRemindersDatabase.getAllAppWideReminders() + ReviewRemindersDatabase.getAllDeckSpecificReminders()
                     }
                     is ReviewReminderScope.DeckSpecific -> ReviewRemindersDatabase.getRemindersForDeck(scope.did)
                 }
-            } ?: hashMapOf()
+            } ?: ReviewReminderGroup()
         triggerUIUpdate()
         Timber.d("Database review reminders successfully loaded")
     }
@@ -267,9 +267,10 @@ class ScheduleReminders :
      * [ReviewRemindersDatabase.editAllAppWideReminders] which deletes the given review reminder.
      */
     private fun deleteReminder(reminder: ReviewReminder) =
-        { reminders: HashMap<ReviewReminderId, ReviewReminder> ->
-            reminders.remove(reminder.id)
-            reminders
+        { reminders: ReviewReminderGroup ->
+            reminders.apply {
+                remove(reminder.id)
+            }
         }
 
     /**
@@ -278,9 +279,22 @@ class ScheduleReminders :
      * exists or inserts it if it doesn't (an "upsert" operation)
      */
     private fun upsertReminder(reminder: ReviewReminder) =
-        { reminders: HashMap<ReviewReminderId, ReviewReminder> ->
-            reminders[reminder.id] = reminder
-            reminders
+        { reminders: ReviewReminderGroup ->
+            reminders.apply {
+                this[reminder.id] = reminder
+            }
+        }
+
+    /**
+     * Lambda that can be fed into [ReviewRemindersDatabase.editRemindersForDeck] or
+     * [ReviewRemindersDatabase.editAllAppWideReminders] which toggles whether the given review reminder
+     * is enabled.
+     */
+    private fun toggleReminder(reminder: ReviewReminder) =
+        { reminders: ReviewReminderGroup ->
+            reminders.apply {
+                toggleEnabled(reminder.id)
+            }
         }
 
     /**
@@ -368,19 +382,12 @@ class ScheduleReminders :
         val reminder = reminders[id] ?: return
         val newState = !reminder.enabled
 
-        val performToggle:
-            (HashMap<ReviewReminderId, ReviewReminder>) -> Map<ReviewReminderId, ReviewReminder> =
-            { reminders ->
-                reminders[id]?.enabled = newState
-                reminders
-            }
-
         // Update database
         launchCatchingTask {
             catchDatabaseExceptions {
                 when (scope) {
-                    is ReviewReminderScope.Global -> ReviewRemindersDatabase.editAllAppWideReminders(performToggle)
-                    is ReviewReminderScope.DeckSpecific -> ReviewRemindersDatabase.editRemindersForDeck(scope.did, performToggle)
+                    is ReviewReminderScope.Global -> ReviewRemindersDatabase.editAllAppWideReminders(toggleReminder(reminder))
+                    is ReviewReminderScope.DeckSpecific -> ReviewRemindersDatabase.editRemindersForDeck(scope.did, toggleReminder(reminder))
                 }
             }
         }
@@ -424,7 +431,7 @@ class ScheduleReminders :
 
     /**
      * [AddEditReminderDialog] requires a [DeckSelectionDialog.DeckSelectionListener] to catch changes to
-     * the [com.ichi2.anki.DeckSpinnerSelection]. However, [AddEditReminderDialog] is removed from the
+     * the [DeckSelectionDialog]. However, [AddEditReminderDialog] is removed from the
      * fragment stack when the [DeckSelectionDialog] appears, so we set [ScheduleReminders] as the listener
      * and forward data to [AddEditReminderDialog] when a deck is selected.
      */
@@ -445,7 +452,7 @@ class ScheduleReminders :
     private fun triggerUIUpdate() {
         val listToDisplay =
             reminders
-                .values
+                .getRemindersList()
                 .sortedBy { it.time.toSecondsFromMidnight() }
                 .toList()
         adapter.submitList(listToDisplay)

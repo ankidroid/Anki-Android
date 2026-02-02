@@ -28,7 +28,6 @@ import kotlinx.serialization.serializer
 import org.hamcrest.Description
 import org.hamcrest.Matcher
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.anEmptyMap
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.hasItem
 import org.hamcrest.Matchers.not
@@ -49,8 +48,9 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
     private val did1 = 12345L
     private val did2 = 67890L
 
+    private val emptyReminderGroup = ReviewReminderGroup()
     private val dummyDeckSpecificRemindersForDeckOne =
-        mapOf(
+        ReviewReminderGroup(
             ReviewReminderId(0) to
                 ReviewReminder.createReviewReminder(
                     ReviewReminderTime(9, 0),
@@ -66,7 +66,7 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
                 ),
         )
     private val dummyDeckSpecificRemindersForDeckTwo =
-        mapOf(
+        ReviewReminderGroup(
             ReviewReminderId(2) to
                 ReviewReminder.createReviewReminder(
                     ReviewReminderTime(10, 30),
@@ -82,7 +82,7 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
                 ),
         )
     private val dummyAppWideReminders =
-        mapOf(
+        ReviewReminderGroup(
             ReviewReminderId(4) to
                 ReviewReminder.createReviewReminder(
                     ReviewReminderTime(9, 0),
@@ -108,9 +108,9 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
     }
 
     @Test
-    fun `getRemindersForDeck should return empty map when no reminders exist`() {
+    fun `getRemindersForDeck should return empty group when no reminders exist`() {
         val reminders = ReviewRemindersDatabase.getRemindersForDeck(did1)
-        assertThat(reminders, anEmptyMap())
+        assertThat(reminders, equalTo(emptyReminderGroup))
     }
 
     @Test
@@ -121,9 +121,9 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
     }
 
     @Test
-    fun `getAllDeckSpecificReminders should return empty map when no reminders exist`() {
+    fun `getAllDeckSpecificReminders should return empty group when no reminders exist`() {
         val reminders = ReviewRemindersDatabase.getAllDeckSpecificReminders()
-        assertThat(reminders, anEmptyMap())
+        assertThat(reminders, equalTo(emptyReminderGroup))
     }
 
     @Test
@@ -138,9 +138,9 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
     }
 
     @Test
-    fun `getAllAppWideReminders should return empty map when no reminders exist`() {
+    fun `getAllAppWideReminders should return empty group when no reminders exist`() {
         val reminders = ReviewRemindersDatabase.getAllAppWideReminders()
-        assertThat(reminders, anEmptyMap())
+        assertThat(reminders, equalTo(emptyReminderGroup))
     }
 
     @Test
@@ -151,7 +151,7 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
     }
 
     @Test(expected = SerializationException::class)
-    fun `getRemindersForDeck should throw SerializationException if JSON string for StoredReviewReminder is corrupted`() {
+    fun `getRemindersForDeck should throw SerializationException if JSON string for StoredReviewReminderGroup is corrupted`() {
         ReviewRemindersDatabase.remindersSharedPrefs.edit {
             putString(ReviewRemindersDatabase.DECK_SPECIFIC_KEY + did1, "corrupted_and_invalid_json_string")
         }
@@ -159,8 +159,8 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
     }
 
     @Test(expected = IllegalArgumentException::class)
-    fun `getRemindersForDeck should throw IllegalArgumentException if JSON string is not a StoredReviewReminder`() {
-        val randomObject = Pair("not a map of", "review reminders")
+    fun `getRemindersForDeck should throw IllegalArgumentException if JSON string is not a StoredReviewReminderGroup`() {
+        val randomObject = Pair("not a group of", "review reminders")
         ReviewRemindersDatabase.remindersSharedPrefs.edit {
             putString(ReviewRemindersDatabase.DECK_SPECIFIC_KEY + did1, Json.encodeToString(randomObject))
         }
@@ -169,19 +169,19 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
 
     @Test(expected = SerializationException::class)
     fun `getRemindersForDeck should throw SerializationException if JSON string for review reminder is corrupted`() {
-        val corruptedStoredReviewReminder =
-            ReviewRemindersDatabase.StoredReviewRemindersMap(
+        val corruptedStoredReviewReminderGroup =
+            ReviewRemindersDatabase.StoredReviewReminderGroup(
                 ReviewRemindersDatabase.schemaVersion,
                 "corrupted_and_invalid_json_string",
             )
         ReviewRemindersDatabase.remindersSharedPrefs.edit {
-            putString(ReviewRemindersDatabase.DECK_SPECIFIC_KEY + did1, Json.encodeToString(corruptedStoredReviewReminder))
+            putString(ReviewRemindersDatabase.DECK_SPECIFIC_KEY + did1, Json.encodeToString(corruptedStoredReviewReminderGroup))
         }
         ReviewRemindersDatabase.getRemindersForDeck(did1)
     }
 
     @Test(expected = SerializationException::class)
-    fun `getAllAppWideReminders should throw SerializationException if JSON string for StoredReviewReminder is corrupted`() {
+    fun `getAllAppWideReminders should throw SerializationException if JSON string for StoredReviewReminderGroup is corrupted`() {
         ReviewRemindersDatabase.remindersSharedPrefs.edit {
             putString(ReviewRemindersDatabase.APP_WIDE_KEY, "corrupted_and_invalid_json_string")
         }
@@ -189,8 +189,8 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
     }
 
     @Test(expected = IllegalArgumentException::class)
-    fun `getAllAppWideReminders should throw IllegalArgumentException if JSON string is not a StoredReviewReminder`() {
-        val randomObject = Pair("not a map of", "review reminders")
+    fun `getAllAppWideReminders should throw IllegalArgumentException if JSON string is not a StoredReviewReminderGroup`() {
+        val randomObject = Pair("not a group of", "review reminders")
         ReviewRemindersDatabase.remindersSharedPrefs.edit {
             putString(ReviewRemindersDatabase.APP_WIDE_KEY, Json.encodeToString(randomObject))
         }
@@ -199,19 +199,19 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
 
     @Test(expected = SerializationException::class)
     fun `getAllAppWideReminders should throw SerializationException if JSON string for review reminder is corrupted`() {
-        val corruptedStoredReviewReminder =
-            ReviewRemindersDatabase.StoredReviewRemindersMap(
+        val corruptedStoredReviewReminderGroup =
+            ReviewRemindersDatabase.StoredReviewReminderGroup(
                 ReviewRemindersDatabase.schemaVersion,
                 "corrupted_and_invalid_json_string",
             )
         ReviewRemindersDatabase.remindersSharedPrefs.edit {
-            putString(ReviewRemindersDatabase.APP_WIDE_KEY, Json.encodeToString(corruptedStoredReviewReminder))
+            putString(ReviewRemindersDatabase.APP_WIDE_KEY, Json.encodeToString(corruptedStoredReviewReminderGroup))
         }
         ReviewRemindersDatabase.getAllAppWideReminders()
     }
 
     @Test(expected = SerializationException::class)
-    fun `getAllDeckSpecificReminders should throw SerializationException if JSON string for StoredReviewReminder is corrupted`() {
+    fun `getAllDeckSpecificReminders should throw SerializationException if JSON string for StoredReviewReminderGroup is corrupted`() {
         ReviewRemindersDatabase.remindersSharedPrefs.edit {
             putString(ReviewRemindersDatabase.DECK_SPECIFIC_KEY + did1, "corrupted_and_invalid_json_string")
         }
@@ -219,8 +219,8 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
     }
 
     @Test(expected = IllegalArgumentException::class)
-    fun `getAllDeckSpecificReminders should throw IllegalArgumentException if JSON string is not a StoredReviewReminder`() {
-        val randomObject = Pair("not a map of", "review reminders")
+    fun `getAllDeckSpecificReminders should throw IllegalArgumentException if JSON string is not a StoredReviewReminderGroup`() {
+        val randomObject = Pair("not a group of", "review reminders")
         ReviewRemindersDatabase.remindersSharedPrefs.edit {
             putString(ReviewRemindersDatabase.DECK_SPECIFIC_KEY + did1, Json.encodeToString(randomObject))
         }
@@ -229,13 +229,13 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
 
     @Test(expected = SerializationException::class)
     fun `getAllDeckSpecificReminders should throw SerializationException if JSON string for review reminder is corrupted`() {
-        val corruptedStoredReviewReminder =
-            ReviewRemindersDatabase.StoredReviewRemindersMap(
+        val corruptedStoredReviewReminderGroup =
+            ReviewRemindersDatabase.StoredReviewReminderGroup(
                 ReviewRemindersDatabase.schemaVersion,
                 "corrupted_and_invalid_json_string",
             )
         ReviewRemindersDatabase.remindersSharedPrefs.edit {
-            putString(ReviewRemindersDatabase.DECK_SPECIFIC_KEY + did1, Json.encodeToString(corruptedStoredReviewReminder))
+            putString(ReviewRemindersDatabase.DECK_SPECIFIC_KEY + did1, Json.encodeToString(corruptedStoredReviewReminderGroup))
         }
         ReviewRemindersDatabase.getAllDeckSpecificReminders()
     }
@@ -243,9 +243,9 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
     @Test
     fun `editRemindersForDeck should delete SharedPreferences key if no reminders are returned`() {
         ReviewRemindersDatabase.editRemindersForDeck(did1) { dummyDeckSpecificRemindersForDeckOne }
-        ReviewRemindersDatabase.editRemindersForDeck(did1) { emptyMap() }
+        ReviewRemindersDatabase.editRemindersForDeck(did1) { ReviewReminderGroup() }
         val attemptedRetrieval = ReviewRemindersDatabase.getRemindersForDeck(did1)
-        assertThat(attemptedRetrieval, anEmptyMap())
+        assertThat(attemptedRetrieval, equalTo(emptyReminderGroup))
         assertThat(
             ReviewRemindersDatabase.remindersSharedPrefs.all.keys,
             not(hasItem(ReviewRemindersDatabase.DECK_SPECIFIC_KEY + did1)),
@@ -255,13 +255,28 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
     @Test
     fun `editAllAppWideReminders should delete SharedPreferences key if no reminders are returned`() {
         ReviewRemindersDatabase.editAllAppWideReminders { dummyAppWideReminders }
-        ReviewRemindersDatabase.editAllAppWideReminders { emptyMap() }
+        ReviewRemindersDatabase.editAllAppWideReminders { ReviewReminderGroup() }
         val attemptedRetrieval = ReviewRemindersDatabase.getAllAppWideReminders()
-        assertThat(attemptedRetrieval, anEmptyMap())
+        assertThat(attemptedRetrieval, equalTo(emptyReminderGroup))
         assertThat(
             ReviewRemindersDatabase.remindersSharedPrefs.all.keys,
             not(hasItem(ReviewRemindersDatabase.APP_WIDE_KEY)),
         )
+    }
+
+    @Test(expected = IllegalArgumentException::class)
+    fun `editAllAppWideReminders with deck specific reminders should throw IllegalArgumentException`() {
+        ReviewRemindersDatabase.editAllAppWideReminders { dummyDeckSpecificRemindersForDeckOne }
+    }
+
+    @Test(expected = IllegalArgumentException::class)
+    fun `editRemindersForDeck with app wide reminders should throw IllegalArgumentException`() {
+        ReviewRemindersDatabase.editRemindersForDeck(did1) { dummyAppWideReminders }
+    }
+
+    @Test(expected = IllegalArgumentException::class)
+    fun `editRemindersForDeck with reminders for different deck should throw IllegalArgumentException`() {
+        ReviewRemindersDatabase.editRemindersForDeck(did1) { dummyDeckSpecificRemindersForDeckTwo }
     }
 
     /**
@@ -347,9 +362,9 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
             }
             """.trimIndent()
 
-        val storedReviewRemindersMap = Json.decodeFromString<ReviewRemindersDatabase.StoredReviewRemindersMap>(rawString)
+        val storedReviewReminderGroup = Json.decodeFromString<ReviewRemindersDatabase.StoredReviewReminderGroup>(rawString)
         val mapSerializer = MapSerializer(ReviewReminderId.serializer(), ReviewReminder.serializer())
-        Json.decodeFromString(mapSerializer, storedReviewRemindersMap.remindersMapJson)
+        Json.decodeFromString(mapSerializer, storedReviewReminderGroup.remindersMapJson)
     }
 
     /**
@@ -424,7 +439,7 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
 
             val inputMap = casesInScope.associate { it.input.id to it.input }
             val packagedInput =
-                ReviewRemindersDatabase.StoredReviewRemindersMap(
+                ReviewRemindersDatabase.StoredReviewReminderGroup(
                     version,
                     Json.encodeToString(mapSerializer, inputMap),
                 )
@@ -452,11 +467,11 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
             // We ignore ID because the migration process will generate new review reminders from scratch during the migration
             // ID is a private, inaccessible property
             // Instead, we only check that the ID matches the key in the map; all other properties can be compared normally
-            retrievedReminders.forEach { (id, reminder) ->
+            retrievedReminders.forEach { id, reminder ->
                 assertThat(id, equalTo(reminder.id))
             }
             assertThat(
-                retrievedReminders.values,
+                retrievedReminders.getRemindersList(),
                 containsEqualReviewRemindersInAnyOrderIgnoringId(
                     casesInScope.map { it.expectedOutput },
                 ),

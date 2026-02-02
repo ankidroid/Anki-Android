@@ -31,7 +31,9 @@ import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.common.time.MockTime
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.reviewreminders.ReviewReminder
+import com.ichi2.anki.reviewreminders.ReviewReminderGroup
 import com.ichi2.anki.reviewreminders.ReviewReminderId
+import com.ichi2.anki.reviewreminders.ReviewReminderScope
 import com.ichi2.anki.reviewreminders.ReviewReminderTime
 import com.ichi2.anki.reviewreminders.ReviewRemindersDatabase
 import io.mockk.every
@@ -138,18 +140,26 @@ class AlarmManagerServiceTest : RobolectricTest() {
         runTest {
             val did1 = addDeck("Deck1")
             val did2 = addDeck("Deck2")
-            val reminder1 = ReviewReminder.createReviewReminder(time = ReviewReminderTime(9, 0))
-            val reminder2 = ReviewReminder.createReviewReminder(time = ReviewReminderTime(10, 0))
+            val reminder1 =
+                ReviewReminder.createReviewReminder(
+                    time = ReviewReminderTime(9, 0),
+                    scope = ReviewReminderScope.DeckSpecific(did1),
+                )
+            val reminder2 =
+                ReviewReminder.createReviewReminder(
+                    time = ReviewReminderTime(10, 0),
+                    scope = ReviewReminderScope.DeckSpecific(did2),
+                )
             val reminder3 = ReviewReminder.createReviewReminder(time = ReviewReminderTime(11, 0))
             val disabledReminder =
                 ReviewReminder.createReviewReminder(
                     time = ReviewReminderTime(11, 0),
                     enabled = false,
                 )
-            ReviewRemindersDatabase.editRemindersForDeck(did1) { mapOf(ReviewReminderId(0) to reminder1) }
-            ReviewRemindersDatabase.editRemindersForDeck(did2) { mapOf(ReviewReminderId(1) to reminder2) }
+            ReviewRemindersDatabase.editRemindersForDeck(did1) { ReviewReminderGroup(ReviewReminderId(0) to reminder1) }
+            ReviewRemindersDatabase.editRemindersForDeck(did2) { ReviewReminderGroup(ReviewReminderId(1) to reminder2) }
             ReviewRemindersDatabase.editAllAppWideReminders {
-                mapOf(
+                ReviewReminderGroup(
                     ReviewReminderId(2) to reminder3,
                     ReviewReminderId(3) to disabledReminder,
                 )
