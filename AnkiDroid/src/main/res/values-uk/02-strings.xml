@@ -84,7 +84,7 @@
     <string name="show_whiteboard">Показати дошку</string>
     <string name="enable_eraser" maxLength="28">Увімкнути гумку</string>
     <string name="disable_eraser" maxLength="28">Вимкнути гумку</string>
-    <string name="hide_whiteboard" maxLength="28">Заховати дошку</string>
+    <string name="hide_whiteboard" maxLength="28">Сховати дошку</string>
     <string name="clear_whiteboard" maxLength="28">Очистити дошку</string>
     <string name="replay_media" maxLength="28">Відтворити медіафайл</string>
     <string name="leech_suspend_notification">Картку позначено як набридливу і призупинено</string>
