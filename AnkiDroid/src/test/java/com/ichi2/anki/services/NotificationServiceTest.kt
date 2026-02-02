@@ -30,6 +30,7 @@ import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.reviewreminders.ReviewReminder
 import com.ichi2.anki.reviewreminders.ReviewReminderCardTriggerThreshold
+import com.ichi2.anki.reviewreminders.ReviewReminderGroup
 import com.ichi2.anki.reviewreminders.ReviewReminderId
 import com.ichi2.anki.reviewreminders.ReviewReminderScope
 import com.ichi2.anki.reviewreminders.ReviewReminderTime
@@ -82,13 +83,13 @@ class NotificationServiceTest : RobolectricTest() {
 
     private fun createAndSaveDummyDeckSpecificReminder(did: DeckId): ReviewReminder {
         val reviewReminder = createTestReminder(deckId = did, thresholdInt = 1)
-        ReviewRemindersDatabase.editRemindersForDeck(did) { mapOf(ReviewReminderId(0) to reviewReminder) }
+        ReviewRemindersDatabase.editRemindersForDeck(did) { ReviewReminderGroup(ReviewReminderId(0) to reviewReminder) }
         return reviewReminder
     }
 
     private fun createAndSaveDummyAppWideReminder(): ReviewReminder {
         val reviewReminder = createTestReminder(thresholdInt = 1)
-        ReviewRemindersDatabase.editAllAppWideReminders { mapOf(ReviewReminderId(1) to reviewReminder) }
+        ReviewRemindersDatabase.editAllAppWideReminders { ReviewReminderGroup(ReviewReminderId(1) to reviewReminder) }
         return reviewReminder
     }
 
@@ -111,8 +112,8 @@ class NotificationServiceTest : RobolectricTest() {
             }
             val reviewReminderDeckSpecific = createTestReminder(deckId = did1, thresholdInt = 3)
             val reviewReminderAppWide = createTestReminder(thresholdInt = 3)
-            ReviewRemindersDatabase.editRemindersForDeck(did1) { mapOf(ReviewReminderId(0) to reviewReminderDeckSpecific) }
-            ReviewRemindersDatabase.editAllAppWideReminders { mapOf(ReviewReminderId(1) to reviewReminderAppWide) }
+            ReviewRemindersDatabase.editRemindersForDeck(did1) { ReviewReminderGroup(ReviewReminderId(0) to reviewReminderDeckSpecific) }
+            ReviewRemindersDatabase.editAllAppWideReminders { ReviewReminderGroup(ReviewReminderId(1) to reviewReminderAppWide) }
 
             triggerDummyReminderNotification(reviewReminderDeckSpecific)
             triggerDummyReminderNotification(reviewReminderAppWide)
@@ -191,8 +192,8 @@ class NotificationServiceTest : RobolectricTest() {
             col.sched.answerCard(col.sched.card!!, CardAnswer.Rating.GOOD)
             val reviewReminderDeckSpecific = createTestReminder(deckId = did1, thresholdInt = 1, onlyNotifyIfNoReviews = true)
             val reviewReminderAppWide = createTestReminder(thresholdInt = 1, onlyNotifyIfNoReviews = true)
-            ReviewRemindersDatabase.editRemindersForDeck(did1) { mapOf(ReviewReminderId(0) to reviewReminderDeckSpecific) }
-            ReviewRemindersDatabase.editAllAppWideReminders { mapOf(ReviewReminderId(1) to reviewReminderAppWide) }
+            ReviewRemindersDatabase.editRemindersForDeck(did1) { ReviewReminderGroup(ReviewReminderId(0) to reviewReminderDeckSpecific) }
+            ReviewRemindersDatabase.editAllAppWideReminders { ReviewReminderGroup(ReviewReminderId(1) to reviewReminderAppWide) }
 
             triggerDummyReminderNotification(reviewReminderDeckSpecific)
             triggerDummyReminderNotification(reviewReminderAppWide)
@@ -208,8 +209,8 @@ class NotificationServiceTest : RobolectricTest() {
             }
             val reviewReminderDeckSpecific = createTestReminder(deckId = did1, thresholdInt = 1, onlyNotifyIfNoReviews = true)
             val reviewReminderAppWide = createTestReminder(thresholdInt = 1, onlyNotifyIfNoReviews = true)
-            ReviewRemindersDatabase.editRemindersForDeck(did1) { mapOf(ReviewReminderId(0) to reviewReminderDeckSpecific) }
-            ReviewRemindersDatabase.editAllAppWideReminders { mapOf(ReviewReminderId(1) to reviewReminderAppWide) }
+            ReviewRemindersDatabase.editRemindersForDeck(did1) { ReviewReminderGroup(ReviewReminderId(0) to reviewReminderDeckSpecific) }
+            ReviewRemindersDatabase.editAllAppWideReminders { ReviewReminderGroup(ReviewReminderId(1) to reviewReminderAppWide) }
 
             triggerDummyReminderNotification(reviewReminderDeckSpecific)
             triggerDummyReminderNotification(reviewReminderAppWide)
@@ -240,8 +241,8 @@ class NotificationServiceTest : RobolectricTest() {
 
             val reviewReminderDeckSpecific = createTestReminder(deckId = did1, thresholdInt = 1, onlyNotifyIfNoReviews = true)
             val reviewReminderAppWide = createTestReminder(thresholdInt = 1, onlyNotifyIfNoReviews = true)
-            ReviewRemindersDatabase.editRemindersForDeck(did1) { mapOf(ReviewReminderId(0) to reviewReminderDeckSpecific) }
-            ReviewRemindersDatabase.editAllAppWideReminders { mapOf(ReviewReminderId(1) to reviewReminderAppWide) }
+            ReviewRemindersDatabase.editRemindersForDeck(did1) { ReviewReminderGroup(ReviewReminderId(0) to reviewReminderDeckSpecific) }
+            ReviewRemindersDatabase.editAllAppWideReminders { ReviewReminderGroup(ReviewReminderId(1) to reviewReminderAppWide) }
 
             triggerDummyReminderNotification(reviewReminderDeckSpecific)
             triggerDummyReminderNotification(reviewReminderAppWide)
@@ -365,8 +366,8 @@ class NotificationServiceTest : RobolectricTest() {
             }
             val reviewReminderOne = createTestReminder(deckId = did1, thresholdInt = 1)
             val reviewReminderTwo = createTestReminder(deckId = did2, thresholdInt = 1)
-            ReviewRemindersDatabase.editRemindersForDeck(did1) { mapOf(ReviewReminderId(0) to reviewReminderOne) }
-            ReviewRemindersDatabase.editRemindersForDeck(did2) { mapOf(ReviewReminderId(1) to reviewReminderTwo) }
+            ReviewRemindersDatabase.editRemindersForDeck(did1) { ReviewReminderGroup(ReviewReminderId(0) to reviewReminderOne) }
+            ReviewRemindersDatabase.editRemindersForDeck(did2) { ReviewReminderGroup(ReviewReminderId(1) to reviewReminderTwo) }
 
             val slotOne = slot<Notification>()
             val slotTwo = slot<Notification>()
