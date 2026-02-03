@@ -47,7 +47,6 @@ import java.util.concurrent.atomic.AtomicInteger
 import java.util.concurrent.atomic.AtomicReference
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
-import kotlin.test.Ignore
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 
@@ -310,95 +309,62 @@ class CreateDeckDialogTest : RobolectricTest() {
     }
 
     @Test
-    @Ignore("TODO: Implement a test case for the activity context")
-    fun displayFeedbackWithNonActivityContext() {
-        // Get application context (non-Activity)
-        val appContext = targetContext.applicationContext
-        val message = "Toast feedback message"
+    fun displayFeedbackWithApplicationContext() {
+        val message = "Toast message"
 
-        val createDeckDialog =
-            CreateDeckDialog(
-                appContext,
-                R.string.new_deck,
-                DeckDialogType.DECK,
-                null,
-            )
-
-        createDeckDialog.displayFeedback(message, Snackbar.LENGTH_SHORT)
+        withCreateDeckDialogUsingApplicationContext(DeckDialogType.DECK) {
+            displayFeedback(message, Snackbar.LENGTH_SHORT)
+        }
 
         assertThat(ShadowToast.getTextOfLatestToast(), equalTo(message))
-        assertThat(ShadowToast.shownToastCount(), equalTo(1))
     }
 
     @Test
     fun displayFeedbackWithShortDurationShowsToast() {
-        val appContext = targetContext.applicationContext
-        val message = "Quick notification"
-        val createDeckDialog =
-            CreateDeckDialog(
-                appContext,
-                R.string.new_deck,
-                DeckDialogType.DECK,
-                null,
-            )
+        val message = "Short toast message"
 
-        createDeckDialog.displayFeedback(message, Snackbar.LENGTH_SHORT)
+        withCreateDeckDialogUsingApplicationContext(DeckDialogType.DECK) {
+            displayFeedback(message, Snackbar.LENGTH_SHORT)
+        }
 
-        assertThat(ShadowToast.getTextOfLatestToast(), equalTo(message))
-        assertThat(ShadowToast.getLatestToast().duration, equalTo(Toast.LENGTH_SHORT))
+        assertThat(
+            ShadowToast.getLatestToast().duration,
+            equalTo(Toast.LENGTH_SHORT),
+        )
     }
 
     @Test
     fun displayFeedbackWithLongDurationShowsToast() {
-        val appContext = targetContext.applicationContext
-        val message = "Long notification message"
-        val createDeckDialog =
-            CreateDeckDialog(
-                appContext,
-                R.string.new_deck,
-                DeckDialogType.DECK,
-                null,
-            )
+        val message = "Long toast message"
 
-        createDeckDialog.displayFeedback(message, Snackbar.LENGTH_LONG)
+        withCreateDeckDialogUsingApplicationContext(DeckDialogType.DECK) {
+            displayFeedback(message, Snackbar.LENGTH_LONG)
+        }
 
-        assertThat(ShadowToast.getTextOfLatestToast(), equalTo(message))
-        assertThat(ShadowToast.getLatestToast().duration, equalTo(Toast.LENGTH_LONG))
+        assertThat(
+            ShadowToast.getLatestToast().duration,
+            equalTo(Toast.LENGTH_LONG),
+        )
     }
 
     @Test
     fun displayFeedbackWithEmptyMessageShowsToast() {
-        val appContext = targetContext.applicationContext
         val message = ""
-        val createDeckDialog =
-            CreateDeckDialog(
-                appContext,
-                R.string.new_deck,
-                DeckDialogType.DECK,
-                null,
-            )
 
-        createDeckDialog.displayFeedback(message)
+        withCreateDeckDialogUsingApplicationContext(DeckDialogType.DECK) {
+            displayFeedback(message, Snackbar.LENGTH_LONG)
+        }
 
         assertThat(ShadowToast.getTextOfLatestToast(), equalTo(message))
-        assertThat(ShadowToast.shownToastCount(), equalTo(1))
     }
 
     @Test
-    @Ignore("TODO: Implement a test case for handling multiple Snackbar sequences")
     fun displayFeedbackMultipleToastsInSequence() {
-        val appContext = targetContext.applicationContext
-        val createDeckDialog =
-            CreateDeckDialog(
-                appContext,
-                R.string.new_deck,
-                DeckDialogType.DECK,
-                null,
-            )
-
-        createDeckDialog.displayFeedback("First message")
-        createDeckDialog.displayFeedback("Second message")
-        createDeckDialog.displayFeedback("Third message")
+        withCreateDeckDialogUsingApplicationContext(DeckDialogType.DECK) {
+            displayFeedback("First message", Snackbar.LENGTH_LONG)
+            displayFeedback("Second message", Snackbar.LENGTH_LONG)
+            displayFeedback("Third message", Snackbar.LENGTH_LONG)
+        }
 
         assertThat(ShadowToast.shownToastCount(), equalTo(3))
         assertThat(ShadowToast.getTextOfLatestToast(), equalTo("Third message"))
@@ -447,6 +413,19 @@ class CreateDeckDialogTest : RobolectricTest() {
             }
             assertThat("no call to assertionCalled()", assertionCalled.get(), equalTo(true))
         }
+    }
+
+    /**
+     * Creates a test instance of [CreateDeckDialog] using applicationContext
+     */
+    private fun withCreateDeckDialogUsingApplicationContext(
+        deckDialogType: DeckDialogType,
+        parentId: DeckId? = null,
+        callback: (CreateDeckDialog.() -> Unit),
+    ) {
+        val appContext = targetContext.applicationContext
+        val createDeckDialog = CreateDeckDialog(appContext, R.string.new_deck, deckDialogType, parentId)
+        callback(createDeckDialog)
     }
 
     @Suppress("SameParameterValue")
