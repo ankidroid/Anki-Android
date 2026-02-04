@@ -23,7 +23,6 @@ import androidx.annotation.CheckResult
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import anki.card_rendering.EmptyCardsReport
-import anki.collection.OpChanges
 import anki.decks.SetDeckCollapsedRequest
 import anki.i18n.GeneratedTranslations
 import anki.sync.SyncStatusResponse
@@ -40,7 +39,6 @@ import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.configureRenderingMode
 import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.libanki.CardId
-import com.ichi2.anki.libanki.Consts
 import com.ichi2.anki.libanki.Consts.DEFAULT_DECK_ID
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.Decks
@@ -208,7 +206,7 @@ class DeckPickerViewModel :
             val changes = undoableOp { decks.remove(listOf(did)) }
             // After deletion: decks.current() reverts to Default, necessitating `focusedDeck`
             // to match and avoid unnecessary scrolls in `renderPage()`.
-            focusedDeck = Consts.DEFAULT_DECK_ID
+            focusedDeck = DEFAULT_DECK_ID
 
             deckDeletedNotification.emit(
                 DeckDeletionResult(deckName = deckName, cardsDeleted = changes.count),
@@ -314,7 +312,7 @@ class DeckPickerViewModel :
 
     fun unburyDeck(deckId: DeckId) =
         launchCatchingIO {
-            undoableOp<OpChanges> { sched.unburyDeck(deckId) }
+            undoableOp { sched.unburyDeck(deckId) }
         }
 
     fun scheduleReviewReminders(deckId: DeckId) =
@@ -534,8 +532,7 @@ class DeckPickerViewModel :
      */
     suspend fun fetchSyncIconState(): SyncIconState {
         if (!Prefs.displaySyncStatus) return SyncIconState.Normal
-        val auth = syncAuth()
-        if (auth == null) return SyncIconState.NotLoggedIn
+        val auth = syncAuth() ?: return SyncIconState.NotLoggedIn
         return try {
             // Use CollectionManager to ensure that this doesn't block 'deck count' tasks
             // throws if a .colpkg import or similar occurs just before this call

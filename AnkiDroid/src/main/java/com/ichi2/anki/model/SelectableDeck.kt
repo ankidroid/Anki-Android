@@ -18,7 +18,6 @@ package com.ichi2.anki.model
 
 import android.content.Context
 import android.os.Parcelable
-import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
 import com.ichi2.anki.libanki.DeckId
@@ -76,8 +75,7 @@ sealed class SelectableDeck : Parcelable {
          * @return all [SelectableDecks][SelectableDeck] in the collection satisfying the filter
          */
         suspend fun fromCollection(includeFiltered: Boolean): List<Deck> =
-            CollectionManager
-                .withCol { decks.allNamesAndIds(includeFiltered = includeFiltered) }
+            withCol { decks.allNamesAndIds(includeFiltered = includeFiltered) }
                 .map { nameAndId -> Deck(nameAndId) }
     }
 }

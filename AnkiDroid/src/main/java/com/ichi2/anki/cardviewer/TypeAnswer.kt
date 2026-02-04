@@ -160,7 +160,7 @@ class TypeAnswer(
             // shouldOverrideUrlLoading() in createWebView() in this file.
 
             append(
-                """<center>
+                """<div style="text-align: center;">
 <input type="text" name="typed" id="typeans" data-focus="$autoFocus" onfocus="taFocus();" oninput='taChange(this);' onKeyPress="return taKey(this, event)" autocomplete="off" """,
             )
             // We have to watch out. For the preview we don’t know the font or font size. Skip those there. (Anki
@@ -172,7 +172,7 @@ class TypeAnswer(
                     .append(size)
                     .append("px;\" ")
             }
-            append(">\n</center>\n")
+            append(">\n</div>\n")
         } else {
             append("<span id=\"typeans\" class=\"typePrompt")
             append("\">........</span>")
@@ -255,7 +255,7 @@ class TypeAnswer(
                 val colonColonIndex = groupOne.indexOf("::")
                 if (colonColonIndex > -1) {
                     // Cut out the hint.
-                    groupOne = groupOne.substring(0, colonColonIndex)
+                    groupOne = groupOne.take(colonColonIndex)
                 }
                 matches.add(groupOne)
             }
