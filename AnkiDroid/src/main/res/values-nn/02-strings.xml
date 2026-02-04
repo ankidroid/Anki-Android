@@ -78,33 +78,33 @@
     <string name="whiteboard_ink_eraser" comment="Title of the whiteboard Ink eraser">Ink</string>
     <string name="whiteboard_stroke_eraser" comment="Title of the whiteboard Stroke eraser">Stroke</string>
     <string name="stylus_mode" comment="Title of the menu item that toggles the whiteboard stylus mode" maxLength="28">Stylus mode</string>
-    <string name="cannot_remove_last_brush_message">The last brush may not be removed</string>
-    <string name="enable_whiteboard" maxLength="28">Aktiver tavle</string>
-    <string name="disable_whiteboard">Deaktiver tavle</string>
-    <string name="show_whiteboard">Vis tavle</string>
-    <string name="enable_eraser" maxLength="28">Enable eraser</string>
-    <string name="disable_eraser" maxLength="28">Disable eraser</string>
+    <string name="cannot_remove_last_brush_message">Det siste streket kan ikkje verta fjerna</string>
+    <string name="enable_whiteboard" maxLength="28">Slå på tavla</string>
+    <string name="disable_whiteboard">Slå av tavla</string>
+    <string name="show_whiteboard">Syn tavla</string>
+    <string name="enable_eraser" maxLength="28">Slå på suddgummi</string>
+    <string name="disable_eraser" maxLength="28">Slå av suddgummi</string>
     <string name="hide_whiteboard" maxLength="28">Skjul tavle</string>
-    <string name="clear_whiteboard" maxLength="28">Rens tavle</string>
+    <string name="clear_whiteboard" maxLength="28">Tøm tavla</string>
     <string name="replay_media" maxLength="28">Spel av på nytt</string>
-    <string name="leech_suspend_notification">Kort merket som igle og suspendert</string>
-    <string name="leech_notification">Kort merket som igle</string>
+    <string name="leech_suspend_notification">Kort markert som igle og suspendert</string>
+    <string name="leech_notification">Kort markert som igle</string>
     <string name="webview_crash_unknown">Ukjend feil</string>
-    <string name="webview_crash_unknwon_detailed">Dette skyldes en intern feil i WebView.</string>
+    <string name="webview_crash_unknwon_detailed">Dette skuldast ein intern feil i WebView.</string>
     <string name="webview_crash_oom">Tomt for minne</string>
-    <string name="webview_crash_oom_details">WebView ble avsluttet av systemet. Dette skjer vanligvis når programmet går tom for minne, som regel på grunn av store skrifttyper eller media.</string>
+    <string name="webview_crash_oom_details">WebViewen vart avslutta av systemet. Dette hender vanlegvis når applikasjonen går tom for minne, gjerne på grunn av store skrifttypar eller medium.</string>
     <string name="webview_crash_nonfatal">WebView renderer krasjet. Årsak: %s</string>
     <string name="webview_crash_fatal">Kritisk feil: WebView-avspiller krasjet. Årsak: %s</string>
     <string name="webview_crash_loop_dialog_title">System WebView Rendering Failure</string>
     <string name="webview_crash_loop_dialog_content">System WebView failed to render card \'%1$s\'.\n %2$s</string>
-    <string name="slide_to_cancel" comment="Message shown when pressing the record button">Slide to cancel</string>
+    <string name="slide_to_cancel" comment="Message shown when pressing the record button">Drag for å bryta av</string>
     <string name="filter_by_flags" maxLength="41">Flagg</string>
     <!-- Custom study options -->
-    <string name="custom_study_loading_tags">Building list of tags&#8230;</string>
+    <string name="custom_study_loading_tags">Byggjer opp taggliste&#8230;</string>
     <!-- Study options -->
     <plurals name="studyoptions_buried_count">
-        <item quantity="one">+%d buried</item>
-        <item quantity="other">+%d buried</item>
+        <item quantity="one">+%d gravlagt</item>
+        <item quantity="other">+%d gravlagde</item>
     </plurals>
     <string name="studyoptions_total_new_label">Total new cards</string>
     <string name="studyoptions_total_label">Total cards</string>
