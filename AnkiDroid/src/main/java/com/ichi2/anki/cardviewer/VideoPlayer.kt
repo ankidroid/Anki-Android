@@ -59,6 +59,7 @@ class VideoPlayer(
                        var video = videos[i];
                        if (video.attributes['data-file'].value == "${fileNameToFind.htmlEncode()}") {
                            console.log("playing video: " + video.attributes['data-play'].value);
+                           video.currentTime = 0;
                            video.play();
                            break;
                        }
