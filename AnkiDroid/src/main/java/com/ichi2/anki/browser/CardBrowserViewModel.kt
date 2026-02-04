@@ -68,12 +68,15 @@ import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.model.CardsOrNotes
 import com.ichi2.anki.model.CardsOrNotes.CARDS
 import com.ichi2.anki.model.CardsOrNotes.NOTES
+import com.ichi2.anki.model.LegacySortType
 import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.anki.model.SortType
 import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.pages.CardInfoDestination
 import com.ichi2.anki.preferences.SharedPreferencesProvider
+import com.ichi2.anki.settings.Prefs
+import com.ichi2.anki.settings.PrefsRepository
 import com.ichi2.anki.utils.ext.currentCardBrowse
 import com.ichi2.anki.utils.ext.normalizeForSearch
 import com.ichi2.anki.utils.ext.setUserFlagForCards
@@ -137,6 +140,8 @@ class CardBrowserViewModel(
     private val manualInit: Boolean = false,
 ) : ViewModel(),
     SharedPreferencesProvider by preferences {
+    private val prefs: PrefsRepository = Prefs
+
     // TODO: abstract so we can use a `Context` and `pref_display_filenames_in_browser_key`
     val showMediaFilenames = sharedPrefs().getBoolean("card_browser_show_media_filenames", false)
 
@@ -179,7 +184,7 @@ class CardBrowserViewModel(
 
     val flowOfScrollRequest = MutableSharedFlow<RowSelection>()
 
-    private val sortTypeFlow = MutableStateFlow(SortType.NO_SORTING)
+    private val sortTypeFlow = MutableStateFlow(LegacySortType.NO_SORTING)
     val order get() = sortTypeFlow.value
 
     private val reverseDirectionFlow = MutableStateFlow(ReverseDirection(orderAsc = false))
@@ -446,7 +451,7 @@ class CardBrowserViewModel(
 
         sortTypeFlow
             .ignoreValuesFromViewModelLaunch()
-            .onEach { sortType -> withCol { sortType.save(config, sharedPrefs()) } }
+            .onEach { sortType -> withCol { sortType.save(config, prefs) } }
             .launchIn(viewModelScope)
 
         flowOfCardsOrNotes
@@ -467,7 +472,7 @@ class CardBrowserViewModel(
             flowOfCardsOrNotes.update { cardsOrNotes }
 
             withCol {
-                sortTypeFlow.update { SortType.fromCol(config, cardsOrNotes, sharedPrefs()) }
+                sortTypeFlow.update { LegacySortType.fromCol(config, cardsOrNotes, prefs) }
                 reverseDirectionFlow.update { ReverseDirection.fromConfig(config) }
             }
             Timber.i("initCompleted")
@@ -799,12 +804,30 @@ class CardBrowserViewModel(
 
     fun hasSelectedAllDecks(): Boolean = lastDeckId == ALL_DECKS_ID
 
-    fun changeCardOrder(which: SortType) {
+    /**
+     * Updates the [SortType] and updates the search results
+     */
+    fun setSortType(sortType: SortType) =
+        viewModelScope.launch {
+            Timber.i("setting sort type: %s", sortType)
+
+            // Temporarily update legacy flows
+            sortTypeFlow.update { sortType.toLegacy() }
+            sortType.toLegacyReverse()?.let { newValue ->
+                reverseDirectionFlow.update { newValue }
+            }
+
+            sortType.save(cardsOrNotes)
+
+            launchSearchForCards()
+        }
+
+    fun changeCardOrder(which: LegacySortType) {
         val changeType =
             when {
                 which != order -> ChangeCardOrder.OrderChange(which)
                 // if the same element is selected again, reverse the order
-                which != SortType.NO_SORTING -> ChangeCardOrder.DirectionChange
+                which != LegacySortType.NO_SORTING -> ChangeCardOrder.DirectionChange
                 else -> null
             } ?: return
 
@@ -1373,7 +1396,7 @@ class CardBrowserViewModel(
 
     private sealed interface ChangeCardOrder {
         data class OrderChange(
-            val sortType: SortType,
+            val sortType: LegacySortType,
         ) : ChangeCardOrder
 
         data object DirectionChange : ChangeCardOrder

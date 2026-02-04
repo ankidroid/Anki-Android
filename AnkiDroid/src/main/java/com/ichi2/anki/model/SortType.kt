@@ -17,11 +17,20 @@
 package com.ichi2.anki.model
 
 import android.content.SharedPreferences
-import androidx.core.content.edit
+import android.os.Parcelable
+import anki.search.BrowserColumns.Column
 import com.ichi2.anki.CardBrowser
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
+import com.ichi2.anki.browser.BrowserColumnKey
+import com.ichi2.anki.browser.ReverseDirection
+import com.ichi2.anki.libanki.BrowserConfig
 import com.ichi2.anki.libanki.Config
 import com.ichi2.anki.libanki.SortOrder
+import com.ichi2.anki.model.CardsOrNotes.NOTES
+import com.ichi2.anki.settings.Prefs
+import com.ichi2.anki.settings.PrefsRepository
+import kotlinx.parcelize.Parcelize
 import timber.log.Timber
 
 /**
@@ -36,7 +45,7 @@ import timber.log.Timber
  * @param cardBrowserLabelIndex The index into [R.array.card_browser_order_labels]
  */
 @Suppress("unused") // 'unused' entries are iterated over by .entries
-enum class SortType(
+enum class LegacySortType(
     val ankiSortType: String?,
     val cardBrowserLabelIndex: Int,
 ) {
@@ -55,38 +64,146 @@ enum class SortType(
 
     fun save(
         config: Config,
-        preferences: SharedPreferences,
+        prefs: PrefsRepository = Prefs,
     ) {
         Timber.v("update config to %s", this)
         // in the case of 'no sorting', we still need a sort type.
         // The inverse is handled in `fromCol`
         config.set("sortType", this.ankiSortType ?: SORT_FIELD.ankiSortType)
         config.set("noteSortType", this.ankiSortType ?: SORT_FIELD.ankiSortType)
-        preferences.edit {
-            // TODO: This should be changed to use the collection
-            // and have a different value for cards & notes
-            putBoolean("cardBrowserNoSorting", this@SortType == NO_SORTING)
-        }
+
+        prefs.cardBrowserNoSorting = this == NO_SORTING
     }
 
-    /** Converts the [SortType] to a [SortOrder] */
+    /** Converts the [LegacySortType] to a [SortOrder] */
     fun toSortOrder(): SortOrder = if (this == NO_SORTING) SortOrder.NoOrdering else SortOrder.UseCollectionOrdering
 
     companion object {
         fun fromCol(
             config: Config,
             cardsOrNotes: CardsOrNotes,
-            preferences: SharedPreferences,
-        ): SortType {
+            prefs: PrefsRepository = Prefs,
+        ): LegacySortType {
             val configKey = if (cardsOrNotes == CardsOrNotes.CARDS) "sortType" else "noteSortType"
             val colOrder = config.get<String>(configKey)
             val type = entries.firstOrNull { it.ankiSortType == colOrder } ?: NO_SORTING
-            if (type == SORT_FIELD && preferences.getBoolean("cardBrowserNoSorting", false)) {
+            if (type == SORT_FIELD && prefs.cardBrowserNoSorting) {
                 return NO_SORTING
             }
             return type
         }
 
-        fun fromCardBrowserLabelIndex(index: Int): SortType = entries.firstOrNull { it.cardBrowserLabelIndex == index } ?: NO_SORTING
+        fun fromCardBrowserLabelIndex(index: Int): LegacySortType = entries.firstOrNull { it.cardBrowserLabelIndex == index } ?: NO_SORTING
     }
+}
+
+/**
+ * How to sort the rows in the [CardBrowser]
+ *
+ * A parcelable subset of the [SortOrders][SortOrder] which AnkiDroid supports
+ *
+ * [NoOrdering] is not supported by the upstream browser.
+ * See: [Prefs.cardBrowserNoSorting]
+ *
+ * Other properties are stored in the collection config and synced:
+ * [getBrowserColumnKey], [getSortBackwards]; [BrowserConfig]
+ */
+@Parcelize
+sealed class SortType : Parcelable {
+    /**
+     * @see SortOrder.NoOrdering
+     */
+    data object NoOrdering : SortType()
+
+    /**
+     * @see SortOrder.UseCollectionOrdering
+     * @see SortOrder.BuiltinColumnSortKind
+     */
+    data class CollectionOrdering(
+        val key: BrowserColumnKey,
+        val reverse: Boolean,
+    ) : SortType()
+
+    suspend fun save(cardsOrNotes: CardsOrNotes) {
+        Timber.i("saving %s", this)
+
+        when (this) {
+            is NoOrdering -> Prefs.cardBrowserNoSorting = true
+            is CollectionOrdering -> {
+                val isNotesMode = cardsOrNotes == NOTES
+
+                val sortKey = BrowserConfig.sortColumnKey(isNotesMode)
+                val reverseKey = BrowserConfig.sortBackwardsKey(isNotesMode)
+
+                withCol { config.set(sortKey, this@SortType.key.value) }
+                withCol { config.set(reverseKey, this@SortType.reverse) }
+
+                Prefs.cardBrowserNoSorting = false
+            }
+        }
+    }
+
+    fun toLegacy(): LegacySortType =
+        when (this) {
+            is NoOrdering -> LegacySortType.NO_SORTING
+            is CollectionOrdering -> LegacySortType.entries.firstOrNull { it.ankiSortType == this.key.value } ?: LegacySortType.NO_SORTING
+        }
+
+    fun toLegacyReverse(): ReverseDirection? =
+        when (this) {
+            is NoOrdering -> null
+            is CollectionOrdering -> ReverseDirection(orderAsc = this.reverse)
+        }
+
+    companion object {
+        suspend fun build(cardsOrNotes: CardsOrNotes) =
+            when (Prefs.cardBrowserNoSorting) {
+                true -> NoOrdering
+                false -> {
+                    val browserColumnKey = getBrowserColumnKey(cardsOrNotes)
+                    val browserColumn: Column? = withCol { getBrowserColumn(browserColumnKey) }
+
+                    if (browserColumn == null) {
+                        NoOrdering
+                    } else {
+                        val reverse = getSortBackwards(cardsOrNotes)
+                        val key = BrowserColumnKey.from(browserColumn)
+                        CollectionOrdering(key = key, reverse = reverse)
+                    }
+                }
+            }
+
+        fun buildSortOrder(): SortOrder =
+            when (Prefs.cardBrowserNoSorting) {
+                true -> SortOrder.NoOrdering
+                false -> SortOrder.UseCollectionOrdering
+            }
+    }
+}
+
+/**
+ * Whether the Card Browser should use an efficient 'no sorting' mode when displaying results
+ *
+ * **AnkiDroid Only**
+ *
+ * TODO: This should differentiate cards & notes mode
+ */
+var PrefsRepository.cardBrowserNoSorting: Boolean
+    get() = getBoolean(R.string.pref_browser_no_sorting, false)
+    set(value) {
+        putBoolean(R.string.pref_browser_no_sorting, value)
+    }
+
+private suspend fun getBrowserColumnKey(cardsOrNotes: CardsOrNotes): String {
+    val isNotesMode = cardsOrNotes == NOTES
+    val sortKey = BrowserConfig.sortColumnKey(isNotesMode)
+
+    return withCol { config.get<String>(sortKey) } ?: "noteFld"
+}
+
+private suspend fun getSortBackwards(cardsOrNotes: CardsOrNotes): Boolean {
+    val isNotesMode = cardsOrNotes == NOTES
+    val sortKey = BrowserConfig.sortBackwardsKey(isNotesMode)
+
+    return withCol { config.get<Boolean>(sortKey) } ?: false
 }
