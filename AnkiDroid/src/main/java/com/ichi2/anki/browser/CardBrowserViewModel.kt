@@ -88,7 +88,6 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.combineTransform
-import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.flattenMerge
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.launchIn
@@ -179,18 +178,12 @@ class CardBrowserViewModel(
 
     val flowOfScrollRequest = MutableSharedFlow<RowSelection>()
 
-    private val sortTypeFlow = MutableStateFlow(SortType.NO_SORTING)
-    val order get() = sortTypeFlow.value
-
-    private val reverseDirectionFlow = MutableStateFlow(ReverseDirection(orderAsc = false))
-    val orderAsc get() = reverseDirectionFlow.value.orderAsc
-
     /**
      * A map from column backend key to backend column definition
      *
      * @see [flowOfColumnHeadings]
      */
-    private val flowOfAllColumns = MutableSharedFlow<Map<String, BrowserColumns.Column>>()
+    val flowOfAllColumns = MutableStateFlow<Map<String, BrowserColumns.Column>>(mapOf())
 
     val flowOfActiveColumns =
         MutableStateFlow(
@@ -375,6 +368,7 @@ class CardBrowserViewModel(
 
     val flowOfColumnHeadings: StateFlow<List<ColumnHeading>> =
         combine(flowOfActiveColumns, flowOfCardsOrNotes, flowOfAllColumns) { activeColumns, cardsOrNotes, allColumns ->
+            if (allColumns.isEmpty()) return@combine emptyList()
             Timber.d("updated headings for %d columns", activeColumns.count)
             activeColumns.columns.map {
                 ColumnHeading(
@@ -439,16 +433,6 @@ class CardBrowserViewModel(
                 launchSearchForCards()
             }.launchIn(viewModelScope)
 
-        reverseDirectionFlow
-            .ignoreValuesFromViewModelLaunch()
-            .onEach { newValue -> withCol { newValue.updateConfig(config) } }
-            .launchIn(viewModelScope)
-
-        sortTypeFlow
-            .ignoreValuesFromViewModelLaunch()
-            .onEach { sortType -> withCol { sortType.save(config, sharedPrefs()) } }
-            .launchIn(viewModelScope)
-
         flowOfCardsOrNotes
             .onEach { cardsOrNotes ->
                 Timber.d("loading columns for %s mode", cardsOrNotes)
@@ -466,10 +450,6 @@ class CardBrowserViewModel(
             val cardsOrNotes = withCol { CardsOrNotes.fromCollection(this@withCol) }
             flowOfCardsOrNotes.update { cardsOrNotes }
 
-            withCol {
-                sortTypeFlow.update { SortType.fromCol(config, cardsOrNotes, sharedPrefs()) }
-                reverseDirectionFlow.update { ReverseDirection.fromConfig(config) }
-            }
             Timber.i("initCompleted")
 
             if (!manualInit) {
@@ -799,30 +779,17 @@ class CardBrowserViewModel(
 
     fun hasSelectedAllDecks(): Boolean = lastDeckId == ALL_DECKS_ID
 
-    fun changeCardOrder(which: SortType) {
-        val changeType =
-            when {
-                which != order -> ChangeCardOrder.OrderChange(which)
-                // if the same element is selected again, reverse the order
-                which != SortType.NO_SORTING -> ChangeCardOrder.DirectionChange
-                else -> null
-            } ?: return
+    /**
+     * Updates the [SortType] and updates the search results
+     */
+    fun setSortType(sortType: SortType) =
+        viewModelScope.launch {
+            Timber.i("setting sort type: %s", sortType)
 
-        Timber.i("updating order: %s", changeType)
+            sortType.save(cardsOrNotes)
 
-        when (changeType) {
-            is ChangeCardOrder.OrderChange -> {
-                sortTypeFlow.update { which }
-                reverseDirectionFlow.update { ReverseDirection(orderAsc = false) }
-                launchSearchForCards()
-            }
-            ChangeCardOrder.DirectionChange -> {
-                reverseDirectionFlow.update { ReverseDirection(orderAsc = !orderAsc) }
-                cards.reverse()
-                viewModelScope.launch { flowOfSearchState.emit(SearchState.Completed) }
-            }
+            launchSearchForCards()
         }
-    }
 
     /**
      * Updates the backend with a new collection of columns
@@ -1019,9 +986,6 @@ class CardBrowserViewModel(
         return if (searchAdded) SaveSearchResult.SUCCESS else SaveSearchResult.ALREADY_EXISTS
     }
 
-    /** Ignores any values before [initCompleted] is set */
-    private fun <T> Flow<T>.ignoreValuesFromViewModelLaunch(): Flow<T> = this.filter { initCompleted }
-
     private suspend fun setFilterQuery(filterQuery: String) {
         this.flowOfFilterQuery.emit(filterQuery)
         launchSearchForCards(filterQuery)
@@ -1192,7 +1156,7 @@ class CardBrowserViewModel(
                     errorMessageHandler = { error -> flowOfSearchState.emit(SearchState.Error(error)) },
                 ) {
                     flowOfSearchState.emit(SearchState.Searching)
-                    val sortOrder = order.toSortOrder()
+                    val sortOrder = SortType.buildSortOrder()
                     Timber.d("performing search: '%s'; order: %s", query, sortOrder)
                     val cards = com.ichi2.anki.searchForRows(query, sortOrder, cardsOrNotes)
                     Timber.d("Search returned %d card(s)", cards.size)
@@ -1370,14 +1334,6 @@ class CardBrowserViewModel(
         val wasBuried: Boolean,
         val count: Int,
     )
-
-    private sealed interface ChangeCardOrder {
-        data class OrderChange(
-            val sortType: SortType,
-        ) : ChangeCardOrder
-
-        data object DirectionChange : ChangeCardOrder
-    }
 
     sealed class ChangeMultiSelectMode : Parcelable {
         val resultedInMultiSelect: Boolean get() =

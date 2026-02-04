@@ -73,10 +73,9 @@ import com.ichi2.anki.libanki.testutils.AnkiTest
 import com.ichi2.anki.model.CardsOrNotes
 import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.anki.model.SortType
-import com.ichi2.anki.model.SortType.NO_SORTING
-import com.ichi2.anki.model.SortType.SORT_FIELD
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.anki.setFlagFilterSync
+import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.utils.ext.ifNotZero
 import com.ichi2.testutils.IntentAssert
 import com.ichi2.testutils.JvmTest
@@ -103,12 +102,18 @@ import timber.log.Timber
 import java.io.File
 import kotlin.io.path.createTempDirectory
 import kotlin.io.path.pathString
+import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
 class CardBrowserViewModelTest : JvmTest() {
+    override fun setUp() {
+        super.setUp()
+        Prefs.putString(com.ichi2.anki.R.string.pref_browser_no_sorting, null)
+    }
+
     @Test
     fun `delete search history - Issue 14989`() =
         runViewModelTest {
@@ -564,54 +569,6 @@ class CardBrowserViewModelTest : JvmTest() {
             }
         }
     }
-
-    @Test
-    fun `change card order to NO_SORTING is a no-op if done twice`() =
-        runViewModelTest {
-            flowOfSearchState.test {
-                ignoreEventsDuringViewModelInit()
-                assertThat("initial order", order, equalTo(SORT_FIELD))
-                assertThat("initial direction", !orderAsc)
-
-                // changing the order performs a search & changes order
-                changeCardOrder(NO_SORTING)
-                expectMostRecentItem()
-                assertThat("order changed", order, equalTo(NO_SORTING))
-                assertThat("changed direction", !orderAsc)
-
-                waitForSearchResults()
-
-                // pressing 'no sorting' again is a no-op
-                changeCardOrder(NO_SORTING)
-                expectNoEvents()
-                assertThat("order unchanged", order, equalTo(NO_SORTING))
-                assertThat("unchanged direction", !orderAsc)
-            }
-        }
-
-    @Test
-    fun `change direction of results`() =
-        runViewModelTest {
-            flowOfSearchState.test {
-                ignoreEventsDuringViewModelInit()
-                assertThat("initial order", order, equalTo(SORT_FIELD))
-                assertThat("initial direction", !orderAsc)
-
-                // changing the order performs a search & changes order
-                changeCardOrder(SortType.EASE)
-                expectMostRecentItem()
-                assertThat("order changed", order, equalTo(SortType.EASE))
-                assertThat("changed direction is the default", !orderAsc)
-
-                waitForSearchResults()
-
-                // pressing 'ease' again changes direction
-                changeCardOrder(SortType.EASE)
-                expectMostRecentItem()
-                assertThat("order unchanged", order, equalTo(SortType.EASE))
-                assertThat("direction is changed", orderAsc)
-            }
-        }
 
     /*
      * Note: suspension behavior has been questioned from a performance perspective and is
@@ -1336,6 +1293,37 @@ class CardBrowserViewModelTest : JvmTest() {
             }
         }
 
+    @Test
+    fun `updating sort type launches search`() =
+        runViewModelTest {
+            flowOfSearchState.test {
+                expectNoEvents()
+
+                setSortType(SortType.NoOrdering)
+
+                expectMostRecentItem()
+            }
+        }
+
+    @Test
+    fun `sort type integration test`() {
+        val firstId = addBasicNote("a").firstCard().id
+        addBasicNote("b")
+        val lastId = addBasicNote("c").firstCard().id
+
+        runViewModelTest {
+            assertEquals(firstId, this.cards[0].cardOrNoteId)
+
+            setSortType(SortType.CollectionOrdering(BrowserColumnKey("noteFld"), reverse = true))
+
+            assertEquals(lastId, this.cards[0].cardOrNoteId)
+
+            setSortType(SortType.CollectionOrdering(BrowserColumnKey("noteFld"), reverse = false))
+
+            assertEquals(firstId, this.cards[0].cardOrNoteId)
+        }
+    }
+
     private fun assertDate(str: String?) {
         // 2025-01-09 @ 18:06
         assertNotNull(str)
@@ -1361,48 +1349,8 @@ class CardBrowserViewModelTest : JvmTest() {
             addBasicAndReversedNote()
         }
         val viewModel =
-            CardBrowserViewModel(
-                lastDeckIdRepository = SharedPreferencesLastDeckIdRepository(),
-                cacheDir = createTransientDirectory(),
-                options = null,
-                preferences = AnkiDroidApp.sharedPreferencesProvider,
-                isFragmented = false,
-                manualInit = manualInit,
-                savedStateHandle = SavedStateHandle(),
-            )
-        // makes ignoreValuesFromViewModelLaunch work under test
-        if (manualInit) {
-            viewModel.manualInit()
-        }
+            createCardBrowserViewModel(manualInit)
         testBody(viewModel)
-    }
-
-    private fun runViewModelTest(
-        notes: Int = 0,
-        manualInit: Boolean = true,
-        savedStateHandle: SavedStateHandle = SavedStateHandle(),
-        testBody: suspend CardBrowserViewModel.() -> Unit,
-    ) = runTest {
-        for (i in 0 until notes) {
-            addBasicNote()
-        }
-        notes.ifNotZero { count -> Timber.d("added %d notes", count) }
-        val viewModel =
-            CardBrowserViewModel(
-                lastDeckIdRepository = SharedPreferencesLastDeckIdRepository(),
-                cacheDir = createTransientDirectory(),
-                options = null,
-                preferences = AnkiDroidApp.sharedPreferencesProvider,
-                isFragmented = false,
-                manualInit = manualInit,
-                savedStateHandle = savedStateHandle,
-            )
-        // makes ignoreValuesFromViewModelLaunch work under test
-        if (manualInit) {
-            viewModel.manualInit()
-        }
-        testBody(viewModel)
-        Timber.d("end runViewModelTest")
     }
 
     companion object {
@@ -1438,6 +1386,43 @@ class CardBrowserViewModelTest : JvmTest() {
         }
     }
 }
+
+context(test: AnkiTest)
+private fun runViewModelTest(
+    notes: Int = 0,
+    manualInit: Boolean = true,
+    savedStateHandle: SavedStateHandle = SavedStateHandle(),
+    testBody: suspend CardBrowserViewModel.() -> Unit,
+) = test.runTest {
+    for (i in 0 until notes) {
+        test.addBasicNote()
+    }
+    notes.ifNotZero { count -> Timber.d("added %d notes", count) }
+    val viewModel =
+        CardBrowserViewModel(
+            lastDeckIdRepository = SharedPreferencesLastDeckIdRepository(),
+            cacheDir = createTransientDirectory(),
+            options = null,
+            preferences = AnkiDroidApp.sharedPreferencesProvider,
+            isFragmented = false,
+            manualInit = manualInit,
+            savedStateHandle = savedStateHandle,
+        )
+    // makes ignoreValuesFromViewModelLaunch work under test
+    if (manualInit) {
+        viewModel.manualInit()
+    }
+    testBody(viewModel)
+    Timber.d("end runViewModelTest")
+}
+
+context(test: AnkiTest)
+fun runCardBrowserViewModelTest(
+    notes: Int = 0,
+    manualInit: Boolean = true,
+    savedStateHandle: SavedStateHandle = SavedStateHandle(),
+    testBody: suspend CardBrowserViewModel.() -> Unit,
+) = runViewModelTest(notes, manualInit, savedStateHandle, testBody)
 
 @Suppress("SameParameterValue")
 private fun CardBrowserViewModel.selectRowsWithPositions(vararg positions: Int) {
@@ -1512,6 +1497,9 @@ private fun AnkiTest.suspendAll() {
     }
 }
 
+/**
+ * Suspends the cards associated with the provided [Card IDs][CardId].
+ */
 private fun AnkiTest.suspendCards(vararg cardIds: CardId) {
     col.sched.suspendCards(ids = cardIds.toList())
 }
@@ -1569,3 +1557,21 @@ suspend fun CardBrowserViewModel.saveSearch(
     title: String,
     query: String,
 ) = saveSearch(SavedSearch(title, query))
+
+fun createCardBrowserViewModel(manualInit: Boolean = true): CardBrowserViewModel {
+    val viewModel =
+        CardBrowserViewModel(
+            lastDeckIdRepository = SharedPreferencesLastDeckIdRepository(),
+            cacheDir = createTransientDirectory(),
+            options = null,
+            preferences = AnkiDroidApp.sharedPreferencesProvider,
+            isFragmented = false,
+            manualInit = manualInit,
+            savedStateHandle = SavedStateHandle(),
+        )
+    // makes ignoreValuesFromViewModelLaunch work under test
+    if (manualInit) {
+        viewModel.manualInit()
+    }
+    return viewModel
+}
