@@ -2193,10 +2193,11 @@ class NoteEditorFragment :
         fileSize: Long,
         onForceAdd: () -> Unit,
     ) {
-        val fileSizeStr = fileSize.bytes.toShortString(requireContext())
-        val limitStr = Backend.MAX_INDIVIDUAL_MEDIA_FILE_SIZE.bytes.toShortString(requireContext())
+        val context = requireContext()
+        val fileSizeStr = fileSize.bytes.toShortString(context)
+        val limitStr = Backend.MAX_INDIVIDUAL_MEDIA_FILE_SIZE.bytes.toShortString(context)
 
-        MaterialAlertDialogBuilder(requireContext()).show {
+        MaterialAlertDialogBuilder(context).show {
             title(R.string.media_file_size_warning_title)
             message(text = getString(R.string.media_file_size_warning_message, fileName, fileSizeStr, limitStr))
             positiveButton(R.string.media_file_size_add_anyway) {
