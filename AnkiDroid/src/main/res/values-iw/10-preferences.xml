@@ -395,6 +395,8 @@
     <string name="new_study_screen_summ"><![CDATA[מסך לימוד משופר שיחליף את המסך הנוכחי. חלק מהתכונות של המסך הישן שונו או הוסרו. אנא דווחו על כל <a href="%1$s">משוב</a> או <a href="%2$s">באג</a>.]]></string>
     <string name="show_answer_feedback" maxLength="41">הצג משוב על התשובה</string>
     <string name="screen" maxLength="41">מסך</string>
+    <string name="only_answer" maxLength="41" comment="Configuration of the \'Answer\' commands to only answer the card">Only answer</string>
+    <string name="flip_and_answer" maxLength="41" comment="Configuration of the \'Answer\' commands to answer the card if on the answer side, and flip it if on the question side">Flip and answer</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">פתח הגדרות</string>
 </resources>

@@ -388,6 +388,8 @@
     <string name="new_study_screen_summ"><![CDATA[Oʻrganish ekrani takomillashtirildi va joriy ekranni almashtiradi. Eski ekranning baʼzi xususiyatlari oʻzgartirildi yoki oʻchirildi. Iltimos, <a href="%1$s">fikr-mulohazalaringiz</a> yoki <a href="%2$s">baglar</a> haqida xabar bering.]]></string>
     <string name="show_answer_feedback" maxLength="41">Javob firk-mulohazalarini koʻrsatish</string>
     <string name="screen" maxLength="41">Ekran</string>
+    <string name="only_answer" maxLength="41" comment="Configuration of the \'Answer\' commands to only answer the card">Only answer</string>
+    <string name="flip_and_answer" maxLength="41" comment="Configuration of the \'Answer\' commands to answer the card if on the answer side, and flip it if on the question side">Flip and answer</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">Sozlamalarni ochish</string>
 </resources>

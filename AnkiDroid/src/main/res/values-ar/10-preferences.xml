@@ -402,6 +402,8 @@
     <string name="new_study_screen_summ"><![CDATA[شاشة الدراسة المحسنة التي ستُستبدل بالشاشة الحالية. تم تغيير أو حذف بعض ميزات الشاشة القديمة. نرجو أن تُبَلِّغنا <a href="%1$s">برأيك</a> أو عن أي <a href="%2$s">خلل</a> تجده.]]></string>
     <string name="show_answer_feedback" maxLength="41">إظهار توكيد الإجابة</string>
     <string name="screen" maxLength="41">شاشة</string>
+    <string name="only_answer" maxLength="41" comment="Configuration of the \'Answer\' commands to only answer the card">Only answer</string>
+    <string name="flip_and_answer" maxLength="41" comment="Configuration of the \'Answer\' commands to answer the card if on the answer side, and flip it if on the question side">Flip and answer</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">فتح الإعدادات</string>
 </resources>

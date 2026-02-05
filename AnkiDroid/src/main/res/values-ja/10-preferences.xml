@@ -386,6 +386,8 @@
     <string name="new_study_screen_summ"><![CDATA[現行の学習画面の後継となる、改良された学習画面。現行画面のいくつかの機能は変更または削除されました。ぜひ<a href="%1$s">ご意見・ご感想</a>をお寄せください。<a href="%2$s">不具合</a>がある場合もお知らせいただければ幸いです。]]></string>
     <string name="show_answer_feedback" maxLength="41">回答選択時にフィードバック（目印）を表示</string>
     <string name="screen" maxLength="41">画面枠</string>
+    <string name="only_answer" maxLength="41" comment="Configuration of the \'Answer\' commands to only answer the card">Only answer</string>
+    <string name="flip_and_answer" maxLength="41" comment="Configuration of the \'Answer\' commands to answer the card if on the answer side, and flip it if on the question side">Flip and answer</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">設定画面を開く</string>
 </resources>

@@ -396,6 +396,8 @@
     <string name="new_study_screen_summ"><![CDATA[Покращений екран навчання, який замінить теперішній. Деякі функції старого екрану були змінені або видалені. Будь ласка, надсилайте нам будь-які <a href="%1$s">відгуки</a> або <a href="%2$s">помилки</a>.]]></string>
     <string name="show_answer_feedback" maxLength="41">Показувати фідбек відповіді</string>
     <string name="screen" maxLength="41">Екран</string>
+    <string name="only_answer" maxLength="41" comment="Configuration of the \'Answer\' commands to only answer the card">Only answer</string>
+    <string name="flip_and_answer" maxLength="41" comment="Configuration of the \'Answer\' commands to answer the card if on the answer side, and flip it if on the question side">Flip and answer</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">Відкрити налаштування</string>
 </resources>

@@ -381,6 +381,8 @@ Vi povas restarigi el sekurkopio aŭ elporti vian kolekton per la menuo de listo
     <string name="new_study_screen_summ"><![CDATA[Plibonigita lernada ekrano, kiu anstataŭigos la nunan. Kelkaj ebloj de la malnova ekrano estas ŝanĝitaj aŭ forigitaj. Bonvolu sendi <a href="%1$s">rimarkojn</a> aŭ raporti <a href="%2$s">erarojn</a>.]]></string>
     <string name="show_answer_feedback" maxLength="41">Montri movbildon de respondo</string>
     <string name="screen" maxLength="41">Ekrano</string>
+    <string name="only_answer" maxLength="41" comment="Configuration of the \'Answer\' commands to only answer the card">Only answer</string>
+    <string name="flip_and_answer" maxLength="41" comment="Configuration of the \'Answer\' commands to answer the card if on the answer side, and flip it if on the question side">Flip and answer</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">Malfermi agordojn</string>
 </resources>
