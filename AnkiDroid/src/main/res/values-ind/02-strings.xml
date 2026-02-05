@@ -72,7 +72,6 @@
     <string name="whiteboard_align_left" comment="Option to align the whiteboard toolbar on the left" maxLength="28">Kiri</string>
     <string name="whiteboard_align_bottom" comment="Option to align the whiteboard toolbar on the bottom" maxLength="28">Bawah</string>
     <string name="whiteboard_align_right" comment="Option to align the whiteboard toolbar on the right" maxLength="28">Kanan</string>
-    <string name="whiteboard_clear" comment="Button text to clear the whiteboard" maxLength="28">Bersihkan</string>
     <string name="whiteboard_more_options" comment="Tooltip of the whiteboard \'More\' button" maxLength="28">Pilihan lainnya</string>
     <string name="whiteboard_remove_brush_message">Apakah Anda yakin ingin menghapus kuas ini dari palet Anda?</string>
     <string name="whiteboard_ink_eraser" comment="Title of the whiteboard Ink eraser">Tinta</string>

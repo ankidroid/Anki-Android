@@ -72,7 +72,6 @@
     <string name="whiteboard_align_left" comment="Option to align the whiteboard toolbar on the left" maxLength="28">چپ</string>
     <string name="whiteboard_align_bottom" comment="Option to align the whiteboard toolbar on the bottom" maxLength="28">پایین</string>
     <string name="whiteboard_align_right" comment="Option to align the whiteboard toolbar on the right" maxLength="28">راست</string>
-    <string name="whiteboard_clear" comment="Button text to clear the whiteboard" maxLength="28">پاک کن</string>
     <string name="whiteboard_more_options" comment="Tooltip of the whiteboard \'More\' button" maxLength="28">گزینه های بیشتر</string>
     <string name="whiteboard_remove_brush_message">آیا مطمئن هستید که می‌خواهید این قلم‌مو را از پالت خود حذف کنید؟</string>
     <string name="whiteboard_ink_eraser" comment="Title of the whiteboard Ink eraser">جوهر</string>

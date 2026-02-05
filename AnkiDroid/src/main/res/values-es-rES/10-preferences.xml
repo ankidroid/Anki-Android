@@ -388,6 +388,8 @@ Puedes restaurar una colección desde una copia de seguridad en el menú de la l
     <string name="new_study_screen_summ"><![CDATA[Pantalla de estudio mejorada que acabará sucediendo a la antigua. Algunas funcionalidades de la pantalla antigua han sido cambiadas o eliminadas. Por favor, reporta cualquier <a href="%1$s">sugerencia</a> o <a href="%2$s">fallo.]]></string>
     <string name="show_answer_feedback" maxLength="41">Show answer feedback</string>
     <string name="screen" maxLength="41">Pantalla</string>
+    <string name="only_answer" maxLength="41" comment="Configuration of the \'Answer\' commands to only answer the card">Only answer</string>
+    <string name="flip_and_answer" maxLength="41" comment="Configuration of the \'Answer\' commands to answer the card if on the answer side, and flip it if on the question side">Flip and answer</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">Abrir la configuración</string>
 </resources>

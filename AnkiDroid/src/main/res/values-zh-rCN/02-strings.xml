@@ -72,7 +72,6 @@
     <string name="whiteboard_align_left" comment="Option to align the whiteboard toolbar on the left" maxLength="28">左</string>
     <string name="whiteboard_align_bottom" comment="Option to align the whiteboard toolbar on the bottom" maxLength="28">底部</string>
     <string name="whiteboard_align_right" comment="Option to align the whiteboard toolbar on the right" maxLength="28">右</string>
-    <string name="whiteboard_clear" comment="Button text to clear the whiteboard" maxLength="28">清空</string>
     <string name="whiteboard_more_options" comment="Tooltip of the whiteboard \'More\' button" maxLength="28">更多选项</string>
     <string name="whiteboard_remove_brush_message">您确定要从您的调色板中删除此笔刷吗？</string>
     <string name="whiteboard_ink_eraser" comment="Title of the whiteboard Ink eraser">墨水</string>

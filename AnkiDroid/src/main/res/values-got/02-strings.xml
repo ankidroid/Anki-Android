@@ -72,7 +72,6 @@
     <string name="whiteboard_align_left" comment="Option to align the whiteboard toolbar on the left" maxLength="28">𐌰𐍆 𐌷𐌻𐌴𐌹𐌳𐌿𐌼𐌴𐌹𐌽</string>
     <string name="whiteboard_align_bottom" comment="Option to align the whiteboard toolbar on the bottom" maxLength="28">𐌸𐌰𐍄𐌰 𐌷𐌽𐌰𐌹𐍅𐌹𐍃𐍄𐍉</string>
     <string name="whiteboard_align_right" comment="Option to align the whiteboard toolbar on the right" maxLength="28">𐌰𐍆 𐍄𐌰𐌹𐌷𐍃𐍅𐍉𐌽</string>
-    <string name="whiteboard_clear" comment="Button text to clear the whiteboard" maxLength="28">𐌰𐍆𐌷𐍂𐌰𐌹𐌽𐌾𐌰𐌽</string>
     <string name="whiteboard_more_options" comment="Tooltip of the whiteboard \'More\' button" maxLength="28">𐌼𐌰𐌷𐍄𐌴𐌹𐍃 𐌼𐌰𐌽𐌰𐌲𐌹𐌶𐌴𐌹𐌽𐍃</string>
     <string name="whiteboard_remove_brush_message">Are you sure you want to remove this brush from your palette?</string>
     <string name="whiteboard_ink_eraser" comment="Title of the whiteboard Ink eraser">𐍃𐍅𐌰𐍂𐍄𐌹𐍃</string>
