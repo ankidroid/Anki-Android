@@ -132,13 +132,13 @@ object NoteService {
         field: IField,
         skipSizeCheck: Boolean = false,
     ) {
-        val file = field.mediaFile
+        val file = field.mediaFile ?: return
 
         // https://github.com/ankitects/anki/blob/5d9d864514b9a4ac7d4688fac390c22db91d4abe/rslib/src/sync/media/upload.rs#L87
-        if (!skipSizeCheck && (file?.length() ?: 0L) > Backend.MAX_INDIVIDUAL_MEDIA_FILE_SIZE) {
+        if (!skipSizeCheck && file.length() > Backend.MAX_INDIVIDUAL_MEDIA_FILE_SIZE) {
             throw MediaSizeLimitExceededException(
-                file?.name,
-                file?.length(),
+                file.name,
+                file.length(),
                 Backend.MAX_INDIVIDUAL_MEDIA_FILE_SIZE,
             )
         }

@@ -101,6 +101,7 @@ import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
 import com.ichi2.anki.exception.MediaSizeLimitExceededException
+import com.ichi2.anki.exception.bytes
 import com.ichi2.anki.libanki.Card
 import com.ichi2.anki.libanki.CardOrdinal
 import com.ichi2.anki.libanki.Collection
@@ -2188,18 +2189,12 @@ class NoteEditorFragment :
     }
 
     private fun showLargeMediaFileWarning(
-        fileName: String?,
-        fileSize: Long?,
+        fileName: String,
+        fileSize: Long,
         onForceAdd: () -> Unit,
     ) {
-        val limitStr =
-            android.text.format.Formatter
-                .formatShortFileSize(requireContext(), Backend.MAX_INDIVIDUAL_MEDIA_FILE_SIZE)
-        val fileSizeStr =
-            fileSize?.let {
-                android.text.format.Formatter
-                    .formatShortFileSize(context, it)
-            } ?: "?"
+        val fileSizeStr = fileSize.bytes.toShortString(requireContext())
+        val limitStr = Backend.MAX_INDIVIDUAL_MEDIA_FILE_SIZE.bytes.toShortString(requireContext())
 
         MaterialAlertDialogBuilder(requireContext()).show {
             title(R.string.media_file_size_warning_title)
@@ -2221,7 +2216,6 @@ class NoteEditorFragment :
         index: Int,
         field: IField,
     ) {
-        // Initial call checks size (skipSizeCheck = false)
         performAddMedia(index, field, skipSizeCheck = false)
     }
 
