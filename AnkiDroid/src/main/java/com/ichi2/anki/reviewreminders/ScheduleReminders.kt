@@ -34,7 +34,6 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.anki.CrashReportData.Companion.toCrashReportData
 import com.ichi2.anki.R
 import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.canUserAccessDeck
@@ -45,7 +44,6 @@ import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.anki.services.AlarmManagerService
 import com.ichi2.anki.settings.Prefs
-import com.ichi2.anki.showError
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
@@ -54,7 +52,6 @@ import com.ichi2.anki.withProgress
 import com.ichi2.utils.Permissions
 import com.ichi2.utils.Permissions.requestPermissionThroughDialogOrSettings
 import dev.androidbroadcast.vbpd.viewBinding
-import kotlinx.serialization.SerializationException
 import timber.log.Timber
 
 /**
@@ -518,28 +515,14 @@ class ScheduleReminders :
          */
         const val DECK_SELECTION_RESULT_REQUEST_KEY = "reminder_deck_selection_result_request_key"
 
-        private const val SERIALIZATION_ERROR_MESSAGE =
-            "Something went wrong. A serialization error was encountered while working with review reminders."
-        private const val DATA_TYPE_ERROR_MESSAGE =
-            "Something went wrong. An unexpected data type was found while working with review reminders."
-
         /**
-         * Wrapper for database access.
-         * Shows an error dialog if [SerializationException]s or [IllegalArgumentException]s are thrown.
+         * Wrapper for database access in this fragment.
+         * Shows an error dialog via [ReviewRemindersDatabase.checkDeserializationErrors] if there are deserialization errors.
          * Shows a progress dialog if database access takes a long time.
          */
-        private suspend fun <T> Fragment.catchDatabaseExceptions(block: () -> T): T? =
-            try {
-                Timber.d("Attempting ReviewRemindersDatabase operation")
-                withProgress { block() }
-            } catch (e: SerializationException) {
-                Timber.e("JSON Serialization error occurred")
-                requireContext().showError("$SERIALIZATION_ERROR_MESSAGE: $e", e.toCrashReportData(requireContext()))
-                null
-            } catch (e: IllegalArgumentException) {
-                Timber.e("JSON Illegal argument exception occurred")
-                requireContext().showError("$DATA_TYPE_ERROR_MESSAGE: $e", e.toCrashReportData(requireContext()))
-                null
+        private suspend fun <T> Fragment.catchDatabaseExceptions(block: suspend () -> T): T? =
+            withProgress { block() }.also {
+                ReviewRemindersDatabase.checkDeserializationErrors(requireContext())
             }
 
         /**

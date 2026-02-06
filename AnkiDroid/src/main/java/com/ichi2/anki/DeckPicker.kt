@@ -154,6 +154,7 @@ import com.ichi2.anki.preferences.AdvancedSettingsFragment
 import com.ichi2.anki.preferences.PreferencesActivity
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.receiver.SdCardReceiver
+import com.ichi2.anki.reviewreminders.ReviewRemindersDatabase
 import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
@@ -588,6 +589,10 @@ open class DeckPicker :
         shortAnimDuration = resources.getInteger(android.R.integer.config_shortAnimTime)
 
         checkWebviewVersion(this)
+
+        // If a review reminder deserialization error has recently occurred
+        // (ex. on app boot, when the app opened, etc.), inform the user via a dialog
+        ReviewRemindersDatabase.checkDeserializationErrors(this)
 
         setFragmentResultListener(REQUEST_KEY) { _, bundle ->
             when (CustomStudyAction.fromBundle(bundle)) {
