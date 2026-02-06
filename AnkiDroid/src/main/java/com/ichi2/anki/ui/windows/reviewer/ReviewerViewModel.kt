@@ -156,14 +156,12 @@ class ReviewerViewModel(
             updateNextTimes()
         }
         cardMediaPlayer.setOnMediaGroupCompletedListener {
-            launchCatchingIO {
-                if (!autoAdvance.shouldWaitForAudio()) return@launchCatchingIO
+            if (!autoAdvance.shouldWaitForAudio()) return@setOnMediaGroupCompletedListener
 
-                if (showingAnswer.value) {
-                    autoAdvance.onShowAnswer()
-                } else {
-                    autoAdvance.onShowQuestion()
-                }
+            if (showingAnswer.value) {
+                autoAdvance.onShowAnswer()
+            } else {
+                autoAdvance.onShowQuestion()
             }
         }
     }
