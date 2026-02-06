@@ -85,6 +85,7 @@
     <string name="disable_eraser" maxLength="28">Disable eraser</string>
     <string name="hide_whiteboard" maxLength="28">Vhā\'iṭabōrḍa lapavā</string>
     <string name="clear_whiteboard" maxLength="28">Vhā\'īṭabōrḍa sāpha karā</string>
+    <string name="hide_toolbar" maxLength="28">Hide toolbar</string>
     <string name="replay_media" maxLength="28">Replay media</string>
     <string name="leech_suspend_notification">Kārḍa līka asē cinhāṅkita kēlē āhē āṇi nilambita kēlē āhē</string>
     <string name="leech_notification">Kārḍa jaḷū mhaṇūna cinhāṅkita</string>

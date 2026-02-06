@@ -85,6 +85,7 @@
     <string name="disable_eraser" maxLength="28">Nonaktifkan penghapus</string>
     <string name="hide_whiteboard" maxLength="28">Sembunyikan whiteboard</string>
     <string name="clear_whiteboard" maxLength="28">Bersihkan whiteboard</string>
+    <string name="hide_toolbar" maxLength="28">Hide toolbar</string>
     <string name="replay_media" maxLength="28">Putar ulang media</string>
     <string name="leech_suspend_notification">Kartu ditandai sebagai lintah dan ditunda</string>
     <string name="leech_notification">Kartu ditandai sebagai lintah</string>

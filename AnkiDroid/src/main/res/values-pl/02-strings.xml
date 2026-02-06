@@ -85,6 +85,7 @@
     <string name="disable_eraser" maxLength="28">Wyłącz gumkę</string>
     <string name="hide_whiteboard" maxLength="28">Ukryj tablicę</string>
     <string name="clear_whiteboard" maxLength="28">Wyczyść tablicę</string>
+    <string name="hide_toolbar" maxLength="28">Hide toolbar</string>
     <string name="replay_media" maxLength="28">Odtwórz multimedia</string>
     <string name="leech_suspend_notification">Karta oznaczona jako pijawka i zawieszona</string>
     <string name="leech_notification">Karta oznaczona jako pijawka</string>

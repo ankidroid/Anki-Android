@@ -85,6 +85,7 @@
     <string name="disable_eraser" maxLength="28">Disable eraser</string>
     <string name="hide_whiteboard" maxLength="28">ವೈಟ್‌ಬೋರ್ಡ್ ಮರೆಮಾಡಿ</string>
     <string name="clear_whiteboard" maxLength="28">ವೈಟ್‌ಬೋರ್ಡ್ ತೆರವುಗೊಳಿಸಿ</string>
+    <string name="hide_toolbar" maxLength="28">Hide toolbar</string>
     <string name="replay_media" maxLength="28">Replay media</string>
     <string name="leech_suspend_notification">ಕಾರ್ಡ್ ಅನ್ನು ಲೀಚ್ ಎಂದು ಗುರುತಿಸಲಾಗಿದೆ ಮತ್ತು ಅಮಾನತುಗೊಳಿಸಲಾಗಿದೆ</string>
     <string name="leech_notification">ಕಾರ್ಡ್ ಅನ್ನು ಲೀಚ್ ಎಂದು ಗುರುತಿಸಲಾಗಿದೆ</string>

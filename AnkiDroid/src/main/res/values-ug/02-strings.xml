@@ -85,6 +85,7 @@
     <string name="disable_eraser" maxLength="28">ئۆچۈرگۈچنى چەكلە</string>
     <string name="hide_whiteboard" maxLength="28">ئاق دوسكىنى يوشۇر</string>
     <string name="clear_whiteboard" maxLength="28">ئاق دوسكىنى تازىلا</string>
+    <string name="hide_toolbar" maxLength="28">Hide toolbar</string>
     <string name="replay_media" maxLength="28">ۋاسىتىنى قايتا قوي</string>
     <string name="leech_suspend_notification">كارتىغا ئۇنتۇلغاق ۋە كېچىكتۈرۈلگەن بەلگىسى قويۇلغان</string>
     <string name="leech_notification">كارتىغا ئۇنتۇلغاق دەپ بەلگىسى قويۇلغان</string>

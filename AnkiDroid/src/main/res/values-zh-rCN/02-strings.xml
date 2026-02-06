@@ -85,6 +85,7 @@
     <string name="disable_eraser" maxLength="28">禁用擦除</string>
     <string name="hide_whiteboard" maxLength="28">隐藏白板</string>
     <string name="clear_whiteboard" maxLength="28">清空白板</string>
+    <string name="hide_toolbar" maxLength="28">Hide toolbar</string>
     <string name="replay_media" maxLength="28">重播媒体</string>
     <string name="leech_suspend_notification">卡片被标记为「记忆难点」并暂停复习</string>
     <string name="leech_notification">卡片被标记为「记忆难点」</string>

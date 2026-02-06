@@ -85,6 +85,7 @@
     <string name="disable_eraser" maxLength="28">Tắt tẩy</string>
     <string name="hide_whiteboard" maxLength="28">Ẩn bảng viết</string>
     <string name="clear_whiteboard" maxLength="28">Xoá bảng viết</string>
+    <string name="hide_toolbar" maxLength="28">Hide toolbar</string>
     <string name="replay_media" maxLength="28">Chơi lại media</string>
     <string name="leech_suspend_notification">Thẻ được đánh dấu là thẻ khó và đã tạm dừng</string>
     <string name="leech_notification">Thẻ được đánh dấu là thẻ khó</string>
