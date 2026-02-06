@@ -21,7 +21,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
 import kotlinx.serialization.InternalSerializationApi
 import kotlinx.serialization.KSerializer
-import kotlinx.serialization.SerializationException
 import kotlinx.serialization.builtins.MapSerializer
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.serializer
@@ -150,94 +149,146 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
         assertThat(storedReminders, equalTo(dummyAppWideReminders))
     }
 
-    @Test(expected = SerializationException::class)
-    fun `getRemindersForDeck should throw SerializationException if JSON string for StoredReviewReminderGroup is corrupted`() {
+    /**
+     * Helper function to test how the database handles corrupted JSON strings.
+     * It should delete only the accessed ones, not throw an exception, and return an empty reminder group.
+     *
+     * @param corruptedValue the corrupted JSON string to be inserted into SharedPreferences for did1, did2, and the app-wide key
+     * @param expectedDeletedKeys the set of keys that should no longer be in SharedPreferences after the access
+     * @param access a lambda that accesses either deck-specific or app-wide reminders, which should trigger the deletion of the corrupted keys
+     */
+    private fun corruptedRemindersTest(
+        corruptedValue: String,
+        expectedDeletedKeys: Set<String>,
+        inputKeys: Set<String> =
+            setOf(
+                ReviewRemindersDatabase.DECK_SPECIFIC_KEY + did1,
+                ReviewRemindersDatabase.DECK_SPECIFIC_KEY + did2,
+                ReviewRemindersDatabase.APP_WIDE_KEY,
+            ),
+        access: () -> ReviewReminderGroup,
+    ) {
         ReviewRemindersDatabase.remindersSharedPrefs.edit {
-            putString(ReviewRemindersDatabase.DECK_SPECIFIC_KEY + did1, "corrupted_and_invalid_json_string")
+            inputKeys.forEach { key ->
+                putString(key, corruptedValue)
+            }
         }
-        ReviewRemindersDatabase.getRemindersForDeck(did1)
+        val reminders = access()
+        assertThat(reminders, equalTo(emptyReminderGroup))
+        val remainingKeys = ReviewRemindersDatabase.remindersSharedPrefs.all.keys
+        assertThat(remainingKeys + expectedDeletedKeys, equalTo(inputKeys))
     }
 
-    @Test(expected = IllegalArgumentException::class)
-    fun `getRemindersForDeck should throw IllegalArgumentException if JSON string is not a StoredReviewReminderGroup`() {
-        val randomObject = Pair("not a group of", "review reminders")
-        ReviewRemindersDatabase.remindersSharedPrefs.edit {
-            putString(ReviewRemindersDatabase.DECK_SPECIFIC_KEY + did1, Json.encodeToString(randomObject))
+    @Test
+    fun `getRemindersForDeck should delete reminders if JSON string for StoredReviewReminderGroup is corrupted`() {
+        corruptedRemindersTest(
+            corruptedValue = "corrupted_and_invalid_json_string",
+            expectedDeletedKeys = setOf(ReviewRemindersDatabase.DECK_SPECIFIC_KEY + did1),
+        ) {
+            ReviewRemindersDatabase.getRemindersForDeck(did1)
         }
-        ReviewRemindersDatabase.getRemindersForDeck(did1)
     }
 
-    @Test(expected = SerializationException::class)
-    fun `getRemindersForDeck should throw SerializationException if JSON string for review reminder is corrupted`() {
-        val corruptedStoredReviewReminderGroup =
-            ReviewRemindersDatabase.StoredReviewReminderGroup(
-                ReviewRemindersDatabase.schemaVersion,
-                "corrupted_and_invalid_json_string",
-            )
-        ReviewRemindersDatabase.remindersSharedPrefs.edit {
-            putString(ReviewRemindersDatabase.DECK_SPECIFIC_KEY + did1, Json.encodeToString(corruptedStoredReviewReminderGroup))
+    @Test
+    fun `getRemindersForDeck should delete reminders if JSON string is not a StoredReviewReminderGroup`() {
+        corruptedRemindersTest(
+            corruptedValue = Json.encodeToString(Pair("not a group of", "review reminders")),
+            expectedDeletedKeys = setOf(ReviewRemindersDatabase.DECK_SPECIFIC_KEY + did2),
+        ) {
+            ReviewRemindersDatabase.getRemindersForDeck(did2)
         }
-        ReviewRemindersDatabase.getRemindersForDeck(did1)
     }
 
-    @Test(expected = SerializationException::class)
-    fun `getAllAppWideReminders should throw SerializationException if JSON string for StoredReviewReminderGroup is corrupted`() {
-        ReviewRemindersDatabase.remindersSharedPrefs.edit {
-            putString(ReviewRemindersDatabase.APP_WIDE_KEY, "corrupted_and_invalid_json_string")
+    @Test
+    fun `getRemindersForDeck should delete reminders if JSON string for review reminder is corrupted`() {
+        corruptedRemindersTest(
+            corruptedValue =
+                Json.encodeToString(
+                    ReviewRemindersDatabase.StoredReviewReminderGroup(
+                        ReviewRemindersDatabase.schemaVersion,
+                        "corrupted_and_invalid_json_string",
+                    ),
+                ),
+            expectedDeletedKeys = setOf(ReviewRemindersDatabase.DECK_SPECIFIC_KEY + did1),
+        ) {
+            ReviewRemindersDatabase.getRemindersForDeck(did1)
         }
-        ReviewRemindersDatabase.getAllAppWideReminders()
     }
 
-    @Test(expected = IllegalArgumentException::class)
-    fun `getAllAppWideReminders should throw IllegalArgumentException if JSON string is not a StoredReviewReminderGroup`() {
-        val randomObject = Pair("not a group of", "review reminders")
-        ReviewRemindersDatabase.remindersSharedPrefs.edit {
-            putString(ReviewRemindersDatabase.APP_WIDE_KEY, Json.encodeToString(randomObject))
+    @Test
+    fun `getAllAppWideReminders should delete reminders if JSON string for StoredReviewReminderGroup is corrupted`() {
+        corruptedRemindersTest(
+            corruptedValue = "corrupted_and_invalid_json_string",
+            expectedDeletedKeys = setOf(ReviewRemindersDatabase.APP_WIDE_KEY),
+        ) {
+            ReviewRemindersDatabase.getAllAppWideReminders()
         }
-        ReviewRemindersDatabase.getAllAppWideReminders()
     }
 
-    @Test(expected = SerializationException::class)
-    fun `getAllAppWideReminders should throw SerializationException if JSON string for review reminder is corrupted`() {
-        val corruptedStoredReviewReminderGroup =
-            ReviewRemindersDatabase.StoredReviewReminderGroup(
-                ReviewRemindersDatabase.schemaVersion,
-                "corrupted_and_invalid_json_string",
-            )
-        ReviewRemindersDatabase.remindersSharedPrefs.edit {
-            putString(ReviewRemindersDatabase.APP_WIDE_KEY, Json.encodeToString(corruptedStoredReviewReminderGroup))
+    @Test
+    fun `getAllAppWideReminders should delete reminders if JSON string is not a StoredReviewReminderGroup`() {
+        corruptedRemindersTest(
+            corruptedValue = Json.encodeToString(Pair("not a group of", "review reminders")),
+            expectedDeletedKeys = setOf(ReviewRemindersDatabase.APP_WIDE_KEY),
+        ) {
+            ReviewRemindersDatabase.getAllAppWideReminders()
         }
-        ReviewRemindersDatabase.getAllAppWideReminders()
     }
 
-    @Test(expected = SerializationException::class)
-    fun `getAllDeckSpecificReminders should throw SerializationException if JSON string for StoredReviewReminderGroup is corrupted`() {
-        ReviewRemindersDatabase.remindersSharedPrefs.edit {
-            putString(ReviewRemindersDatabase.DECK_SPECIFIC_KEY + did1, "corrupted_and_invalid_json_string")
+    @Test
+    fun `getAllAppWideReminders should delete reminders if JSON string for review reminder is corrupted`() {
+        corruptedRemindersTest(
+            corruptedValue =
+                Json.encodeToString(
+                    ReviewRemindersDatabase.StoredReviewReminderGroup(
+                        ReviewRemindersDatabase.schemaVersion,
+                        "corrupted_and_invalid_json_string",
+                    ),
+                ),
+            expectedDeletedKeys = setOf(ReviewRemindersDatabase.APP_WIDE_KEY),
+        ) {
+            ReviewRemindersDatabase.getAllAppWideReminders()
         }
-        ReviewRemindersDatabase.getAllDeckSpecificReminders()
     }
 
-    @Test(expected = IllegalArgumentException::class)
-    fun `getAllDeckSpecificReminders should throw IllegalArgumentException if JSON string is not a StoredReviewReminderGroup`() {
-        val randomObject = Pair("not a group of", "review reminders")
-        ReviewRemindersDatabase.remindersSharedPrefs.edit {
-            putString(ReviewRemindersDatabase.DECK_SPECIFIC_KEY + did1, Json.encodeToString(randomObject))
+    @Test
+    fun `getAllDeckSpecificReminders should delete reminders if JSON string for StoredReviewReminderGroup is corrupted`() {
+        corruptedRemindersTest(
+            corruptedValue = "corrupted_and_invalid_json_string",
+            expectedDeletedKeys = setOf(ReviewRemindersDatabase.DECK_SPECIFIC_KEY + did1, ReviewRemindersDatabase.DECK_SPECIFIC_KEY + did2),
+        ) {
+            ReviewRemindersDatabase.getAllDeckSpecificReminders()
         }
-        ReviewRemindersDatabase.getAllDeckSpecificReminders()
     }
 
-    @Test(expected = SerializationException::class)
-    fun `getAllDeckSpecificReminders should throw SerializationException if JSON string for review reminder is corrupted`() {
-        val corruptedStoredReviewReminderGroup =
-            ReviewRemindersDatabase.StoredReviewReminderGroup(
-                ReviewRemindersDatabase.schemaVersion,
-                "corrupted_and_invalid_json_string",
-            )
-        ReviewRemindersDatabase.remindersSharedPrefs.edit {
-            putString(ReviewRemindersDatabase.DECK_SPECIFIC_KEY + did1, Json.encodeToString(corruptedStoredReviewReminderGroup))
+    @Test
+    fun `getAllDeckSpecificReminders should delete reminders if JSON string is not a StoredReviewReminderGroup`() {
+        corruptedRemindersTest(
+            corruptedValue = Json.encodeToString(Pair("not a group of", "review reminders")),
+            expectedDeletedKeys = setOf(ReviewRemindersDatabase.DECK_SPECIFIC_KEY + did1, ReviewRemindersDatabase.DECK_SPECIFIC_KEY + did2),
+        ) {
+            ReviewRemindersDatabase.getAllDeckSpecificReminders()
         }
-        ReviewRemindersDatabase.getAllDeckSpecificReminders()
+    }
+
+    @Test
+    fun `getAllDeckSpecificReminders should delete reminders if JSON string for review reminder is corrupted`() {
+        corruptedRemindersTest(
+            corruptedValue =
+                Json.encodeToString(
+                    ReviewRemindersDatabase.StoredReviewReminderGroup(
+                        ReviewRemindersDatabase.schemaVersion,
+                        "corrupted_and_invalid_json_string",
+                    ),
+                ),
+            expectedDeletedKeys =
+                setOf(
+                    ReviewRemindersDatabase.DECK_SPECIFIC_KEY + did1,
+                    ReviewRemindersDatabase.DECK_SPECIFIC_KEY + did2,
+                ),
+        ) {
+            ReviewRemindersDatabase.getAllDeckSpecificReminders()
+        }
     }
 
     @Test
