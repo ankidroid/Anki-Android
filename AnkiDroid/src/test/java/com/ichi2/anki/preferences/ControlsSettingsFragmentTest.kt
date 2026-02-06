@@ -27,9 +27,15 @@ class ControlsSettingsFragmentTest : RobolectricTest() {
     @Test
     fun `XML keys match the Enum keys`() {
         for (screen in ControlPreferenceScreen.entries) {
-            val xmlKeys = PreferenceTestUtils.getKeysFromXml(targetContext, screen.xmlRes, excludeCategories = true).toMutableList()
-            xmlKeys.remove("binding_BROWSE")
-            xmlKeys.remove("binding_STATISTICS")
+            val xmlKeys =
+                PreferenceTestUtils.getKeysFromXml(targetContext, screen.xmlRes, excludeCategories = true).toMutableList().apply {
+                    remove("binding_BROWSE")
+                    remove("binding_STATISTICS")
+                    remove("binding_whiteboard_UNDO")
+                    remove("binding_whiteboard_REDO")
+                    remove("binding_whiteboard_CLEAR")
+                    remove("binding_whiteboard_TOGGLE_ERASER")
+                }
             val enumKeys = screen.getActions().map { it.preferenceKey }
 
             assertThat(xmlKeys, HamcrestUtils.containsInAnyOrder(enumKeys))
