@@ -16,7 +16,6 @@
 
 package com.ichi2.anki.dialogs
 
-
 import android.app.Dialog
 import android.os.Bundle
 import android.os.Message
@@ -40,7 +39,6 @@ import com.ichi2.anki.dialogs.SyncErrorDialog.Type.DIALOG_USER_NOT_LOGGED_IN_SYN
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.anki.utils.openUrl
 import com.ichi2.utils.titleWithHelpIcon
-
 
 class SyncErrorDialog : AsyncDialogFragment() {
     interface SyncErrorDialogListener {
@@ -68,8 +66,11 @@ class SyncErrorDialog : AsyncDialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         super.onCreate(savedInstanceState)
-        val dialog = AlertDialog.Builder(requireContext())
-            .setMessage(message)
+
+        val dialog =
+            AlertDialog
+                .Builder(requireContext())
+                .setMessage(message)
 
         // Add help icon for sync conflict resolution dialog
         if (dialogType == DIALOG_SYNC_CONFLICT_RESOLUTION) {
