@@ -29,7 +29,6 @@ import android.view.View
 import android.view.ViewConfiguration
 import androidx.core.graphics.createBitmap
 import com.ichi2.anki.R
-import kotlin.math.abs
 
 /**
  * A custom view for the whiteboard that handles drawing and touch events.
@@ -226,100 +225,5 @@ class WhiteboardView : View {
             bufferCanvas.drawPath(action.path, tempPaint)
         }
         invalidate()
-    }
-}
-
-fun interface OnScrollByListener {
-    /**
-     * @param y the amount of pixels to scroll vertically.
-     * @see [View.scrollBy]
-     */
-    fun onVerticalScrollBy(y: Int)
-}
-
-fun interface OnMultiTouchListener {
-    /**
-     * @param pointerCount the amount of simultaneous touches
-     */
-    fun onMultiTouch(pointerCount: Int)
-}
-
-/**
- * Detects multi-finger touch and scroll gestures and triggers a callback with the vertical delta.
- */
-class MultiTouchDetector(
-    /** Distance in pixels a touch can wander before we think the user is scrolling */
-    private val touchSlop: Int,
-) {
-    private var startX: Float = 0f
-    private var startY: Float = 0f
-    private var currentX: Float = 0f
-    private var currentY: Float = 0f
-    private var isWithinTapTolerance: Boolean = false
-    private var onScrollByListener: OnScrollByListener? = null
-    private var onMultiTouchListener: OnMultiTouchListener? = null
-
-    fun setOnScrollByListener(listener: OnScrollByListener) {
-        onScrollByListener = listener
-    }
-
-    fun setOnMultiTouchListener(listener: OnMultiTouchListener) {
-        onMultiTouchListener = listener
-    }
-
-    /**
-     * Processes the motion event.
-     * @return True if the event was handled (consumed), False otherwise.
-     */
-    fun onTouchEvent(event: MotionEvent): Boolean {
-        if (event.pointerCount < 2) return false
-
-        return when (event.actionMasked) {
-            MotionEvent.ACTION_POINTER_DOWN -> {
-                reinitialize(event)
-                true
-            }
-            MotionEvent.ACTION_POINTER_UP -> {
-                if (isWithinTapTolerance) {
-                    onMultiTouchListener?.onMultiTouch(event.pointerCount)
-                    // Prevent cascading events (e.g., 3-finger tap triggering 3 then 2)
-                    isWithinTapTolerance = false
-                }
-                true
-            }
-            MotionEvent.ACTION_MOVE -> tryScroll(event)
-            else -> false
-        }
-    }
-
-    private fun reinitialize(event: MotionEvent) {
-        isWithinTapTolerance = true
-        startX = (event.getX(0) + event.getX(1)) / 2f
-        startY = (event.getY(0) + event.getY(1)) / 2f
-    }
-
-    private fun updatePositions(event: MotionEvent): Boolean {
-        currentX = (event.getX(0) + event.getX(1)) / 2f
-        currentY = (event.getY(0) + event.getY(1)) / 2f
-
-        val dx = abs(startX - currentX)
-        val dy = abs(startY - currentY)
-        if (dx >= touchSlop || dy >= touchSlop) {
-            isWithinTapTolerance = false
-        }
-        return true
-    }
-
-    private fun tryScroll(event: MotionEvent): Boolean {
-        if (!updatePositions(event) || isWithinTapTolerance) {
-            return false
-        }
-        val dy = (startY - currentY).toInt()
-        if (dy != 0) {
-            onScrollByListener?.onVerticalScrollBy(dy)
-            startX = currentX
-            startY = currentY
-        }
-        return true
     }
 }
