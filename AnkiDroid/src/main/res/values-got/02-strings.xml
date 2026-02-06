@@ -85,6 +85,7 @@
     <string name="disable_eraser" maxLength="28">𐌰𐍆𐌷𐍂𐌰𐌹𐌽𐌾𐍉𐌽 𐌿𐌽𐌲𐌰𐍄𐌰𐌿𐌾𐌰𐌽</string>
     <string name="hide_whiteboard" maxLength="28">𐍈𐌴𐌹𐍄𐌰𐌱𐌰𐌿𐍂𐌳 𐌰𐍆𐍆𐌹𐌻𐌷𐌰𐌽</string>
     <string name="clear_whiteboard" maxLength="28">𐍈𐌴𐌹𐍄𐌰𐌱𐌰𐌿𐍂𐌳 𐌰𐍆𐌷𐍂𐌰𐌹𐌽𐌾𐌰𐌽</string>
+    <string name="hide_toolbar" maxLength="28">Hide toolbar</string>
     <string name="replay_media" maxLength="28">𐌰𐍆𐍄𐍂𐌰𐍃𐍀𐌹𐌻𐍉𐌽𐍃 𐌼𐌰𐌹𐌳𐌾𐌰</string>
     <string name="leech_suspend_notification">Card marked as leech and suspended</string>
     <string name="leech_notification">Card marked as leech</string>

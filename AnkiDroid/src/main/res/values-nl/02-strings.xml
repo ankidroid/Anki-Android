@@ -85,6 +85,7 @@
     <string name="disable_eraser" maxLength="28">Schakel gom uit</string>
     <string name="hide_whiteboard" maxLength="28">Verberg het schrijfbord</string>
     <string name="clear_whiteboard" maxLength="28">Schrijfbord schoonvegen</string>
+    <string name="hide_toolbar" maxLength="28">Hide toolbar</string>
     <string name="replay_media" maxLength="28">Media opnieuw afspelen</string>
     <string name="leech_suspend_notification">Kaart gemarkeerd als moeilijk en uitgesteld</string>
     <string name="leech_notification">Kaart gemarkeerd als moeilijk</string>

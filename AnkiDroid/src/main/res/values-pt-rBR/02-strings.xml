@@ -85,6 +85,7 @@
     <string name="disable_eraser" maxLength="28">Desativar borracha</string>
     <string name="hide_whiteboard" maxLength="28">Ocultar quadro</string>
     <string name="clear_whiteboard" maxLength="28">Limpar quadro</string>
+    <string name="hide_toolbar" maxLength="28">Hide toolbar</string>
     <string name="replay_media" maxLength="28">Repetição de mídia</string>
     <string name="leech_suspend_notification">Cartão marcado como sanguessuga e suspenso</string>
     <string name="leech_notification">Cartão marcado como sanguessuga</string>

@@ -85,6 +85,7 @@
     <string name="disable_eraser" maxLength="28">ରବର ଅକ୍ଷମ କରିବା</string>
     <string name="hide_whiteboard" maxLength="28">ଧଳାପଟା ଲୁଚାଅ</string>
     <string name="clear_whiteboard" maxLength="28">ଧଳାପଟା ସଫା କରନ୍ତୁ</string>
+    <string name="hide_toolbar" maxLength="28">Hide toolbar</string>
     <string name="replay_media" maxLength="28">Replay media</string>
     <string name="leech_suspend_notification">ପତ୍ର ଜୋକ (leech) ବୋଲି ଚିନ୍ହିତ ହୋଇ ନିଲମ୍ବିତ ହେଇଛି</string>
     <string name="leech_notification">ପତ୍ର ଜୋକ (leech) ବୋଲି ଚିନ୍ହିତ ହେଇଛି</string>

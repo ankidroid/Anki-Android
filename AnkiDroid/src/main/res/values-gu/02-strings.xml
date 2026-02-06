@@ -85,6 +85,7 @@
     <string name="disable_eraser" maxLength="28">Disable eraser</string>
     <string name="hide_whiteboard" maxLength="28">વ્હાઇટબોર્ડ છુપાવો</string>
     <string name="clear_whiteboard" maxLength="28">વ્હાઇટબોર્ડ સાફ કરો</string>
+    <string name="hide_toolbar" maxLength="28">Hide toolbar</string>
     <string name="replay_media" maxLength="28">Replay media</string>
     <string name="leech_suspend_notification">જળો તરીકે ચિહ્નિત અને સસ્પેન્ડેડ કાર્ડ</string>
     <string name="leech_notification">લીચ તરીકે ચિહ્નિત થયેલ કાર્ડ</string>

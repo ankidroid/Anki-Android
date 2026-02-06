@@ -85,6 +85,7 @@
     <string name="disable_eraser" maxLength="28">지우개 비활성화</string>
     <string name="hide_whiteboard" maxLength="28">화이트 보드 숨기기</string>
     <string name="clear_whiteboard" maxLength="28">화이트 보드 지우기</string>
+    <string name="hide_toolbar" maxLength="28">Hide toolbar</string>
     <string name="replay_media" maxLength="28">미디어 다시 재생</string>
     <string name="leech_suspend_notification">카드에 leech 태그를 붙이고 비활성 시키기</string>
     <string name="leech_notification">카드에 leech 태그를 붙임</string>

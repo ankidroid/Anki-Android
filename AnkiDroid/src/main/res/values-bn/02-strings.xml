@@ -85,6 +85,7 @@
     <string name="disable_eraser" maxLength="28">Disable eraser</string>
     <string name="hide_whiteboard" maxLength="28">হোয়াইটবোর্ড আড়াল করুন</string>
     <string name="clear_whiteboard" maxLength="28">হোয়াইটবোর্ড পরিষ্কার করুন</string>
+    <string name="hide_toolbar" maxLength="28">Hide toolbar</string>
     <string name="replay_media" maxLength="28">Replay media</string>
     <string name="leech_suspend_notification">কার্ডটি লীচ হিসেবে চিহ্নিত হয়েছে এবং স্থগিত  হয়েছে</string>
     <string name="leech_notification">কার্ডটি লীচ হিসেবে চিহ্নিত হয়েছে</string>

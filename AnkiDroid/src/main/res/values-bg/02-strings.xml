@@ -85,6 +85,7 @@
     <string name="disable_eraser" maxLength="28">Деактивиране на гумичка</string>
     <string name="hide_whiteboard" maxLength="28">Скрий бялатадъска</string>
     <string name="clear_whiteboard" maxLength="28">Изчисти бялатадъска</string>
+    <string name="hide_toolbar" maxLength="28">Hide toolbar</string>
     <string name="replay_media" maxLength="28">Повторение на медия</string>
     <string name="leech_suspend_notification">Карта, маркирана като залепена и спряна</string>
     <string name="leech_notification">Карта, маркирана като залепена</string>

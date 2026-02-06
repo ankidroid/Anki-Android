@@ -85,6 +85,7 @@
     <string name="disable_eraser" maxLength="28">Malaktivigi forviŝilon</string>
     <string name="hide_whiteboard" maxLength="28">Kaŝi skribtabulon</string>
     <string name="clear_whiteboard" maxLength="28">Forviŝi skribtabulon</string>
+    <string name="hide_toolbar" maxLength="28">Hide toolbar</string>
     <string name="replay_media" maxLength="28">Reludi aŭdvidaĵon</string>
     <string name="leech_suspend_notification">Karto markita kiel forgesema kaj kaŝita</string>
     <string name="leech_notification">Karto markita kiel forgesema</string>

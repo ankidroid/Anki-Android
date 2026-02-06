@@ -85,6 +85,7 @@
     <string name="disable_eraser" maxLength="28">Απενεργοποίηση γόμας</string>
     <string name="hide_whiteboard" maxLength="28">Απόκρυψη πίνακα</string>
     <string name="clear_whiteboard" maxLength="28">Καθαρίσμός πίνακα</string>
+    <string name="hide_toolbar" maxLength="28">Hide toolbar</string>
     <string name="replay_media" maxLength="28">Επανάληψη πολυμέσων</string>
     <string name="leech_suspend_notification">Η κάρτα χαρακτηρίστηκε βδέλλα και αναστάλθηκε</string>
     <string name="leech_notification">Κάρτα σημαδεμένη ως βδέλλα</string>

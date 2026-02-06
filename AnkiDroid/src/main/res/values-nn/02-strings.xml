@@ -85,6 +85,7 @@
     <string name="disable_eraser" maxLength="28">Slå av suddgummi</string>
     <string name="hide_whiteboard" maxLength="28">Skjul tavle</string>
     <string name="clear_whiteboard" maxLength="28">Tøm tavla</string>
+    <string name="hide_toolbar" maxLength="28">Hide toolbar</string>
     <string name="replay_media" maxLength="28">Spel av på nytt</string>
     <string name="leech_suspend_notification">Kort markert som igle og suspendert</string>
     <string name="leech_notification">Kort markert som igle</string>
