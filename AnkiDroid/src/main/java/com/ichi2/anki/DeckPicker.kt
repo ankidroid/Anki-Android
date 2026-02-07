@@ -164,6 +164,7 @@ import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.sync.launchCatchingRequiringOneWaySyncDiscardUndo
 import com.ichi2.anki.ui.ResizablePaneManager
 import com.ichi2.anki.ui.animations.fadeIn
 import com.ichi2.anki.ui.animations.fadeOut
@@ -687,7 +688,7 @@ open class DeckPicker :
             SchedulerUpgradeDialog(
                 activity = this,
                 onUpgrade = {
-                    launchCatchingRequiringOneWaySync {
+                    launchCatchingRequiringOneWaySyncDiscardUndo {
                         this@DeckPicker.withProgress { withCol { sched.upgradeToV2() } }
                         showThemedToast(this@DeckPicker, TR.schedulingUpdateDone(), false)
                     }
@@ -1728,7 +1729,7 @@ open class DeckPicker :
         if (recommendOneWaySync) {
             recommendOneWaySync = false
             try {
-                getColUnsafe.modSchema()
+                getColUnsafe.modSchema(check = true)
             } catch (e: ConfirmModSchemaException) {
                 Timber.w("Forcing one-way sync")
                 e.log()
@@ -2475,7 +2476,7 @@ class OneWaySyncDialog(
         val confirm =
             Runnable {
                 // Bypass the check once the user confirms
-                CollectionManager.getColUnsafe().modSchemaNoCheck()
+                CollectionManager.getColUnsafe().modSchema(check = false)
             }
         dialog.setConfirm(confirm)
         dialog.setArgs(message)
@@ -2492,31 +2493,6 @@ class OneWaySyncDialog(
         fun fromMessage(message: Message): DialogHandlerMessage = OneWaySyncDialog(message.data.getString("message"))
     }
 }
-
-/**
- * [launchCatchingTask], showing a one-way sync dialog: [R.string.full_sync_confirmation]
- */
-fun AnkiActivity.launchCatchingRequiringOneWaySync(block: suspend () -> Unit) =
-    launchCatchingTask {
-        try {
-            block()
-        } catch (e: ConfirmModSchemaException) {
-            e.log()
-
-            // .also is used to ensure the activity is used as context
-            val confirmModSchemaDialog =
-                ConfirmationDialog().also { dialog ->
-                    dialog.setArgs(message = getString(R.string.full_sync_confirmation))
-                    dialog.setConfirm {
-                        launchCatchingTask {
-                            withCol { modSchemaNoCheck() }
-                            block()
-                        }
-                    }
-                }
-            showDialogFragment(confirmModSchemaDialog)
-        }
-    }
 
 val ActivityHomescreenBinding.studyoptionsFrame: FragmentContainerView?
     get() = studyoptionsFragment
