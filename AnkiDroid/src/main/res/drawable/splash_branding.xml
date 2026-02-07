@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:width="200dp"
+        android:height="80dp"
+        android:drawable="@android:color/transparent"
+        android:gravity="center" />
+    <item
+        android:drawable="@drawable/ankidroid_txt"
+        android:height="31.9dp"
+        android:width="200dp"
+        android:gravity="center" />
+</layer-list>
