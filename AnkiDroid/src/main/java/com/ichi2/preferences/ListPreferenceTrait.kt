@@ -68,7 +68,7 @@ interface ListPreferenceTrait : DialogFragmentProvider {
     var listValue: String
 
     data class Entry(
-        val key: String,
+        val key: CharSequence,
         val value: String,
     )
 
