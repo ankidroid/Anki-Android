@@ -189,6 +189,8 @@ class ReviewerViewModel(
     fun onShowAnswer() {
         Timber.v("ReviewerViewModel::onShowAnswer")
         launchCatchingIO {
+            val wasEnabled = autoAdvance.isEnabled
+            if (wasEnabled) autoAdvance.isEnabled = false
             mutationSignal.await()
 
             val typedAnswerResult = CompletableDeferred<String>()
@@ -204,6 +206,7 @@ class ReviewerViewModel(
             updateNextTimes()
             showAnswer()
             loadAndPlayMedia(CardSide.ANSWER)
+            if (wasEnabled) autoAdvance.isEnabled = true
             if (!autoAdvance.shouldWaitForAudio()) {
                 autoAdvance.onShowAnswer()
             } // else wait for onMediaGroupCompleted
