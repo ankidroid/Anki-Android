@@ -285,4 +285,5 @@
     <string name="extra_cloze_deletions_removed">Якщо ви змінюєте тип запису на звичайний, а кількість пропусків Cloze більша, ніж кількість доступних шаблонів карток, то надлишкові картки будуть видалені.</string>
     <string name="different_note_types_selected">Будь ласка, виберіть записи лише одного типу.</string>
     <string name="error_no_changes_to_save">Немає змін для збереження</string>
+    <string name="choose_color">Choose color</string>
 </resources>

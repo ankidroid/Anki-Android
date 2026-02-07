@@ -269,4 +269,5 @@
     <string name="extra_cloze_deletions_removed">If changing to a regular note type, and there are more cloze deletions than available card templates, any extra cards will be removed.</string>
     <string name="different_note_types_selected">Please select notes from only one notetype.</string>
     <string name="error_no_changes_to_save">No changes to save</string>
+    <string name="choose_color">Choose color</string>
 </resources>
