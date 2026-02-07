@@ -26,6 +26,8 @@ import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
+import kotlin.test.assertNotNull
+import kotlin.test.assertNull
 
 @RunWith(AndroidJUnit4::class)
 class SavedSearchesTest : JvmTest() {
@@ -67,6 +69,16 @@ class SavedSearchesTest : JvmTest() {
         }
 
     @Test
+    fun `add normalizes query`() =
+        withSavedSearches {
+            add(SavedSearch("a", " b ")).also { (success, values) ->
+                assertTrue(success)
+                val value = assertNotNull(values.singleOrNull())
+                assertThat("query is trimmed", value, equalTo(SavedSearch("a", "b")))
+            }
+        }
+
+    @Test
     fun `remove by name - found`() =
         withSavedSearches {
             add("a")
@@ -92,6 +104,27 @@ class SavedSearchesTest : JvmTest() {
             add("b")
             clear()
             assertThat(loadFromConfig(), empty())
+        }
+
+    @Test
+    fun `byName - search`() =
+        withSavedSearches {
+            add("a")
+            assertThat(byName("a"), equalTo(SavedSearch("a", "a")))
+        }
+
+    @Test
+    fun `byName - case sensitive search`() =
+        withSavedSearches {
+            add("A")
+            add("a")
+            assertThat(byName("a"), equalTo(SavedSearch("a", "a")))
+        }
+
+    @Test
+    fun `byName - not found returns null`() =
+        withSavedSearches {
+            assertNull(byName("a"))
         }
 
     private fun withSavedSearches(block: suspend SavedSearches.() -> Unit) =

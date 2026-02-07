@@ -32,7 +32,9 @@ import timber.log.Timber
 data class SavedSearch(
     val name: String,
     val query: String,
-)
+) {
+    fun normalize() = SavedSearch(name = this.name, query = this.query.trim())
+}
 
 /**
  * Manages saved searches (named search queries in the Card Browser)
@@ -59,6 +61,11 @@ object SavedSearches {
     suspend fun saveToConfig(values: List<SavedSearch>) = withCol { config.savedFilters = values }
 
     /**
+     * Returns a saved search with a given name (case sensitive)
+     */
+    suspend fun byName(name: String) = loadFromConfig().find { it.name == name }
+
+    /**
      * Adds a saved search to the Anki collection config
      *
      * @return a pair: `false` if a search with the given name already exists,
@@ -70,7 +77,7 @@ object SavedSearches {
         Timber.i("saving user search")
         val values = loadFromConfig()
         if (values.any { it.name == savedSearch.name }) return false to values
-        val updatedValues = values + savedSearch
+        val updatedValues = values + savedSearch.normalize()
         saveToConfig(updatedValues)
         return true to loadFromConfig()
     }
