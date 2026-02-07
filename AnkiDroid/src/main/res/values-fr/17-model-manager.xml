@@ -66,7 +66,7 @@
         Delete the note types below?
         Basic, Basic (and reversed card), Cloze
      -->
-    <string name="model_delete_multiple_warning">Delete the note types below?\n %s</string>
+    <string name="model_delete_multiple_warning">Supprimer les types de note ci-dessous ?\n %s</string>
     <string name="field_delete_warning">Voulez-vous vraiment supprimer ce champ ?</string>
     <!--Model Add Suffixes-->
     <string name="model_browser_add_add">Ajouter : %1$s</string>
