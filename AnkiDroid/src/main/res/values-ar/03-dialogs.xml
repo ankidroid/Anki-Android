@@ -302,4 +302,5 @@
     <string name="extra_cloze_deletions_removed">عند التغيير إلى نوع ملحوظات عادي، إذا كان عدد الفراغات أكبر من عدد القوالب، فإن بطاقات ملء الفراغات الإضافية ستُحذف.</string>
     <string name="different_note_types_selected">رجاءًا اختر ملحوظات ذات نوع واحد.</string>
     <string name="error_no_changes_to_save">ما من تغييرات لتُحفظ</string>
+    <string name="choose_color">Choose color</string>
 </resources>

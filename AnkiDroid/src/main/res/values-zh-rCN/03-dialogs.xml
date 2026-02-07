@@ -261,4 +261,5 @@
     <string name="extra_cloze_deletions_removed">如果更改到普通笔记类型，并且相对于可用的卡片模板，有更多的填充测验删除，任何额外的卡片将被删除。</string>
     <string name="different_note_types_selected">请只从一个笔记类型中选择笔记。</string>
     <string name="error_no_changes_to_save">没有要保存的更改</string>
+    <string name="choose_color">Choose color</string>
 </resources>

@@ -269,4 +269,5 @@
     <string name="extra_cloze_deletions_removed">Se cambias a un tipo de nota básica, e hai máis ocos que modelos de tarxetas dispoñíbeis, as tarxetas a maiores serán eliminadas.</string>
     <string name="different_note_types_selected">Selecciona notas pertencentes a un só tipo de nota</string>
     <string name="error_no_changes_to_save">Non hai cambios a gardar</string>
+    <string name="choose_color">Choose color</string>
 </resources>

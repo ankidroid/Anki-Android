@@ -269,4 +269,5 @@
     <string name="extra_cloze_deletions_removed">Se vi ŝanĝos nototipon al baza kaj estos pli da truoj en teksto ol nombro da disponeblaj ŝablonoj, ĉiuj superfluaj kartoj estos forigitaj.</string>
     <string name="different_note_types_selected">Elektu notojn de nur unu nototipo.</string>
     <string name="error_no_changes_to_save">Neniu ŝanĝo por konservi</string>
+    <string name="choose_color">Choose color</string>
 </resources>
