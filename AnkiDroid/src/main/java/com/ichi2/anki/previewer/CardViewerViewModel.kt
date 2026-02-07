@@ -56,13 +56,14 @@ abstract class CardViewerViewModel(
 
     val showingAnswer = savedStateHandle.getMutableStateFlow(KEY_SHOWING_ANSWER, false)
 
-    protected val cardMediaPlayer =
+    protected open val cardMediaPlayer by lazy {
         CardMediaPlayer(
             javascriptEvaluator = { launchCatchingIO { eval.emit(it) } },
             mediaErrorListener = mediaErrorHandler,
         ).also {
             addCloseable(it)
         }
+    }
     abstract var currentCard: Deferred<Card>
 
     abstract val server: AnkiServer
