@@ -21,6 +21,7 @@ package com.ichi2.anki.servicelayer
 
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.FieldEditText
+import com.ichi2.anki.exception.MediaSizeLimitExceededException
 import com.ichi2.anki.libanki.Card
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.Note
@@ -36,6 +37,7 @@ import com.ichi2.anki.multimediacard.fields.MediaClipField
 import com.ichi2.anki.multimediacard.fields.TextField
 import com.ichi2.anki.multimediacard.impl.MultimediaEditableNote
 import com.ichi2.anki.observability.undoableOp
+import net.ankiweb.rsdroid.Backend
 import org.json.JSONException
 import timber.log.Timber
 import java.io.File
@@ -128,7 +130,19 @@ object NoteService {
     fun importMediaToDirectory(
         col: Collection,
         field: IField,
+        skipSizeCheck: Boolean = false,
     ) {
+        val file = field.mediaFile ?: return
+
+        // https://github.com/ankitects/anki/blob/5d9d864514b9a4ac7d4688fac390c22db91d4abe/rslib/src/sync/media/upload.rs#L87
+        if (!skipSizeCheck && file.length() > Backend.MAX_INDIVIDUAL_MEDIA_FILE_SIZE) {
+            throw MediaSizeLimitExceededException(
+                file.name,
+                file.length(),
+                Backend.MAX_INDIVIDUAL_MEDIA_FILE_SIZE,
+            )
+        }
+
         val inFile =
             when (field.type) {
                 EFieldType.AUDIO_RECORDING, EFieldType.MEDIA_CLIP, EFieldType.IMAGE -> field.mediaFile
