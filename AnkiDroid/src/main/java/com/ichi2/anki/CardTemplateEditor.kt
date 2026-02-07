@@ -62,6 +62,7 @@ import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.android.input.ShortcutGroup
 import com.ichi2.anki.android.input.shortcut
+import com.ichi2.anki.cardviewer.SingleCardSide
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.databinding.CardTemplateEditorBinding
@@ -73,6 +74,7 @@ import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
 import com.ichi2.anki.dialogs.DiscardChangesDialog
 import com.ichi2.anki.dialogs.InsertFieldDialog
+import com.ichi2.anki.dialogs.InsertFieldMetadata
 import com.ichi2.anki.libanki.CardOrdinal
 import com.ichi2.anki.libanki.CardTemplates
 import com.ichi2.anki.libanki.Collection
@@ -155,6 +157,14 @@ open class CardTemplateEditor :
     // the current editor view among front/style/back
     private var tabToViewId: HashMap<Int, Int?> = HashMap()
     private var startingOrdId: CardOrdinal = 0
+
+    /**
+     * The ordinal of the current template being edited
+     *
+     * Valid for use in [tempNoteType]
+     */
+    private val ord: Int
+        get() = mainBinding.cardTemplateEditorPager.currentItem
 
     /**
      * If true, the view is split in two. The template editor appears on the leading side and the previewer on the trailing side.
@@ -372,8 +382,7 @@ open class CardTemplateEditor :
             return
         }
 
-        val ordinal = mainBinding.cardTemplateEditorPager.currentItem
-        val template = tempNoteType!!.getTemplate(ordinal)
+        val template = tempNoteType!!.getTemplate(ord)
         val templateName = template.name
 
         if (deck != null && getColUnsafe.decks.isFiltered(deck.deckId)) {
@@ -468,7 +477,7 @@ open class CardTemplateEditor :
     val currentFragment: CardTemplateFragment?
         get() =
             try {
-                supportFragmentManager.findFragmentByTag("f" + mainBinding.cardTemplateEditorPager.currentItem) as CardTemplateFragment?
+                supportFragmentManager.findFragmentByTag("f" + ord) as CardTemplateFragment?
             } catch (e: Exception) {
                 Timber.w("Failed to get current fragment")
                 null
@@ -536,10 +545,22 @@ open class CardTemplateEditor :
         private val cardIndex
             get() = requireArguments().getInt(CARD_INDEX)
 
+        private val templateName
+            get() = tempModel.notetype.templates[cardIndex].name
+
         val insertFieldRequestKey
             get() = "request_field_insert_$cardIndex"
 
         var currentEditorViewId = 0
+
+        private val currentEditTab: EditTab?
+            get() =
+                when (currentEditorViewId) {
+                    R.id.front_edit -> EditTab.FRONT
+                    R.id.back_edit -> EditTab.BACK
+                    R.id.styling_edit -> EditTab.STYLING
+                    else -> null
+                }
 
         private lateinit var templateEditor: CardTemplateEditor
         lateinit var tempModel: CardTemplateNotetype
@@ -647,9 +668,10 @@ open class CardTemplateEditor :
                     override fun afterTextChanged(arg0: Editable) {
                         refreshFragmentRunnable?.let { refreshFragmentHandler.removeCallbacks(it) }
 
-                        when (currentEditorViewId) {
-                            R.id.styling_edit -> tempModel.css = binding.editText.text.toString()
-                            R.id.back_edit -> template.afmt = binding.editText.text.toString()
+                        when (currentEditTab) {
+                            EditTab.STYLING -> tempModel.css = binding.editText.text.toString()
+                            EditTab.BACK -> template.afmt = binding.editText.text.toString()
+                            EditTab.FRONT -> template.qfmt = binding.editText.text.toString()
                             else -> template.qfmt = binding.editText.text.toString()
                         }
                         templateEditor.tempNoteType!!.updateTemplate(cardIndex, template)
@@ -757,8 +779,44 @@ open class CardTemplateEditor :
             "the kotlin migration made this method crash due to a recursive call when the dialog would return its data",
         )
         fun showInsertFieldDialog() {
-            templateEditor.fieldNames?.let { fieldNames ->
-                val dialog = InsertFieldDialog.newInstance(fieldNames, insertFieldRequestKey)
+            launchCatchingTask {
+                val fieldNames = templateEditor.fieldNames ?: return@launchCatchingTask
+
+                val side =
+                    when (currentEditTab) {
+                        EditTab.FRONT -> SingleCardSide.FRONT
+                        EditTab.BACK -> SingleCardSide.BACK
+                        else -> SingleCardSide.FRONT
+                    }
+
+                val noteId = if (templateEditor.noteId > 0) templateEditor.noteId else null
+
+                // use the ord of the selected template, not the ord of the currently edited card
+
+                val ord =
+                    // deletions change ordinals, don't try to preview metadata if this occurs.
+                    if (tempModel.templateChanges.any {
+                            it.type == CardTemplateNotetype.ChangeType.DELETE
+                        }
+                    ) {
+                        null
+                    } else {
+                        templateEditor.ord
+                    }
+
+                val dialog =
+                    InsertFieldDialog.newInstance(
+                        fieldItems = fieldNames,
+                        metadata =
+                            InsertFieldMetadata.query(
+                                side = side,
+                                noteId = noteId,
+                                ord = ord,
+                                cardTemplateName = templateName,
+                                noteTypeName = tempModel.notetype.name,
+                            ),
+                        requestKey = insertFieldRequestKey,
+                    )
                 templateEditor.showDialogFragment(dialog)
             }
         }
@@ -772,7 +830,7 @@ open class CardTemplateEditor :
                 Timber.w("attempted to rename a dynamic note type")
                 return
             }
-            val ordinal = templateEditor.mainBinding.cardTemplateEditorPager.currentItem
+            val ordinal = templateEditor.ord
             val template = templateEditor.tempNoteType!!.getTemplate(ordinal)
 
             RenameCardTemplateDialog.showInstance(
@@ -797,19 +855,17 @@ open class CardTemplateEditor :
                 templateEditor.mainBinding.cardTemplateEditorPager.adapter!!
                     .itemCount,
             ) { newPosition ->
-                val currentPosition = templateEditor.mainBinding.cardTemplateEditorPager.currentItem
+                val currentPosition = templateEditor.ord
                 Timber.w("moving card template %d to %d", currentPosition, newPosition)
                 TODO("CardTemplateNotetype is a complex class and requires significant testing")
             }
         }
 
-        @Suppress("unused")
-        private fun insertField(fieldName: String) {
+        private fun insertField(fieldToInsert: String) {
             val start = max(binding.editText.selectionStart, 0)
             val end = max(binding.editText.selectionEnd, 0)
             // add string to editText
-            val updatedString = "{{$fieldName}}"
-            binding.editText.text!!.replace(min(start, end), max(start, end), updatedString, 0, updatedString.length)
+            binding.editText.text!!.replace(min(start, end), max(start, end), fieldToInsert, 0, fieldToInsert.length)
         }
 
         fun setCurrentEditorView(
@@ -865,7 +921,7 @@ open class CardTemplateEditor :
         fun deleteCardTemplate() {
             templateEditor.lifecycleScope.launch {
                 val tempModel = templateEditor.tempNoteType
-                val ordinal = templateEditor.mainBinding.cardTemplateEditorPager.currentItem
+                val ordinal = templateEditor.ord
                 val template = tempModel!!.getTemplate(ordinal)
                 // Don't do anything if only one template
                 if (tempModel.templateCount < 2) {
@@ -916,12 +972,11 @@ open class CardTemplateEditor :
                 return
             }
             // Show confirmation dialog
-            val ordinal = templateEditor.mainBinding.cardTemplateEditorPager.currentItem
             // isOrdinalPendingAdd method will check if there are any new card types added or not,
             // if TempModel has new card type then numAffectedCards will be 0 by default.
             val numAffectedCards =
-                if (!CardTemplateNotetype.isOrdinalPendingAdd(templateEditor.tempNoteType!!, ordinal)) {
-                    templateEditor.getColUnsafe.notetypes.tmplUseCount(templateEditor.tempNoteType!!.notetype, ordinal)
+                if (!CardTemplateNotetype.isOrdinalPendingAdd(templateEditor.tempNoteType!!, templateEditor.ord)) {
+                    templateEditor.getColUnsafe.notetypes.tmplUseCount(templateEditor.tempNoteType!!.notetype, templateEditor.ord)
                 } else {
                     0
                 }
@@ -1117,9 +1172,7 @@ open class CardTemplateEditor :
                 try {
                     val tempModel = templateEditor.tempNoteType
                     val template: BackendCardTemplate =
-                        tempModel!!.getTemplate(
-                            templateEditor.mainBinding.cardTemplateEditorPager.currentItem,
-                        )
+                        tempModel!!.getTemplate(templateEditor.ord)
                     CardTemplate(
                         front = template.qfmt,
                         back = template.afmt,
@@ -1162,13 +1215,12 @@ open class CardTemplateEditor :
             launchCatchingTask {
                 val notetype = templateEditor.tempNoteType!!.notetype
                 val notetypeFile = NotetypeFile(requireContext(), notetype)
-                val ord = templateEditor.mainBinding.cardTemplateEditorPager.currentItem
                 val note = withCol { getNote(this) ?: Note.fromNotetypeId(this@withCol, notetype.id) }
                 val args =
                     TemplatePreviewerArguments(
                         notetypeFile = notetypeFile,
                         id = note.id,
-                        ord = ord,
+                        ord = templateEditor.ord,
                         fields = note.fields,
                         tags = note.tags,
                         fillEmpty = true,
@@ -1197,8 +1249,7 @@ open class CardTemplateEditor :
 
         private fun getCurrentTemplateName(tempModel: CardTemplateNotetype): String =
             try {
-                val ordinal = templateEditor.mainBinding.cardTemplateEditorPager.currentItem
-                val template = tempModel.getTemplate(ordinal)
+                val template = tempModel.getTemplate(templateEditor.ord)
                 template.name
             } catch (e: Exception) {
                 Timber.w(e, "Failed to get name for template")
@@ -1507,6 +1558,12 @@ open class CardTemplateEditor :
                 return f
             }
         }
+    }
+
+    enum class EditTab {
+        FRONT,
+        BACK,
+        STYLING,
     }
 
     companion object {

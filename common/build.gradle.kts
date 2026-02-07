@@ -60,4 +60,5 @@ dependencies {
     testImplementation(libs.junit.platform.launcher)
     androidTestImplementation(libs.androidx.test.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    testImplementation(kotlin("test"))
 }
