@@ -164,12 +164,12 @@ sealed interface NoteEditorLauncher : Destination {
     }
 
     /**
-     * Represents editing a card in the NoteEditor.
-     * @property cardId The ID of the card to edit.
+     * Opens the NoteEditor for the current selection (card or note).
+     * @property cardId The selected card ID, or null when editing a note.
      * @property animation The animation direction.
      */
-    data class EditCard(
-        val cardId: CardId,
+    data class EditSelection(
+        val cardId: CardId?,
         val animation: ActivityTransitionAnimation.Direction,
         val inCardBrowserActivity: Boolean = false,
     ) : NoteEditorLauncher {
