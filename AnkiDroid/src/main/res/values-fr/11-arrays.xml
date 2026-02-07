@@ -51,8 +51,8 @@
     <string name="add_to_deck_decide_by_note_type">Décider par type de note</string>
     <!-- theme labels -->
     <string name="theme_follow_system">Suivre le système</string>
-    <string name="theme_day" comment="Day/Light theme color scheme">Day</string>
-    <string name="theme_night" comment="Night/Dark theme color scheme">Night</string>
+    <string name="theme_day" comment="Day/Light theme color scheme">Jour</string>
+    <string name="theme_night" comment="Night/Dark theme color scheme">Nuit</string>
     <!-- day_theme_labels -->
     <string name="day_theme_light">Lumineux</string>
     <string name="day_theme_plain">Clair</string>

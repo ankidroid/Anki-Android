@@ -255,18 +255,18 @@
     <string name="tts_error_dialog_change_button_text">Changer le moteur</string>
     <string name="tts_error_dialog_supported_voices_button_text">Options de voix</string>
     <!-- import_cache_error_resolutions -->
-    <string name="import_error_resolution_try_again">Re-import the file</string>
-    <string name="import_error_resolution_free_up_space">Ensure there is sufficient free space on your device</string>
-    <string name="import_error_resolution_check_internet">Ensure you are connected to the internet</string>
-    <string name="import_error_resolution_copy_to_device">Copy the file to your device and try again with the local file</string>
-    <string name="import_error_resolution_select_file">Open the file using your device’s file browser app</string>
+    <string name="import_error_resolution_try_again">Ré-importer le fichier</string>
+    <string name="import_error_resolution_free_up_space">Assurez-vous qu\'il y a suffisamment d\'espace libre sur votre appareil</string>
+    <string name="import_error_resolution_check_internet">Assurez-vous que vous êtes connecté à Internet</string>
+    <string name="import_error_resolution_copy_to_device">Copiez le fichier sur votre appareil et réessayez avec le fichier local</string>
+    <string name="import_error_resolution_select_file">Ouvrez le fichier à l\'aide de l\'application de gestionnaire de fichiers de votre appareil</string>
     <!-- Post-login dialog -->
-    <string name="login_successful">Login successful</string>
-    <string name="sync_now">Sync now?</string>
+    <string name="login_successful">Connexion réussie</string>
+    <string name="sync_now">Synchroniser maintenant ?</string>
     <!--Change Note Type Dialog Fragment-->
-    <string name="card_numbers_unchanged">Card numbers will remain unchanged</string>
+    <string name="card_numbers_unchanged">Les numéros de carte ne changeront pas</string>
     <!-- Subset of TR.changeNotetypeToFromCloze -->
     <string name="extra_cloze_deletions_removed">If changing to a regular note type, and there are more cloze deletions than available card templates, any extra cards will be removed.</string>
-    <string name="different_note_types_selected">Please select notes from only one notetype.</string>
-    <string name="error_no_changes_to_save">No changes to save</string>
+    <string name="different_note_types_selected">Veuillez sélectionner des notes d\'un seul type de notes.</string>
+    <string name="error_no_changes_to_save">Aucune modification à enregistrer</string>
 </resources>

@@ -85,7 +85,7 @@
     <string name="disable_eraser" maxLength="28">Désactiver l\'efface</string>
     <string name="hide_whiteboard" maxLength="28">Masquer le tableau blanc</string>
     <string name="clear_whiteboard" maxLength="28">Effacer le tableau blanc</string>
-    <string name="hide_toolbar" maxLength="28">Hide toolbar</string>
+    <string name="hide_toolbar" maxLength="28">Masquer la barre d\'outils</string>
     <string name="replay_media" maxLength="28">Rejouer la vidéo</string>
     <string name="leech_suspend_notification">Carte marquée comme sangsue et suspendue</string>
     <string name="leech_notification">Carte marquée « encombrante »</string>
@@ -167,7 +167,7 @@
     <string name="import_error_load_imported_database">Les remplacements de la base de données Anki (.anki2) ne sont pas pris en charge. Veuillez voir le guide d’utilisation pour les instructions de remplacement.</string>
     <string name="import_error_content_provider">Le fichier sélectionné n’a pas pu être importé automatiquement par AnkiDroid. Veuillez consulter le manuel de l’utilisateur pour savoir comment importer manuellement des fichiers de Anki : \n %s</string>
     <string name="import_error_copy_to_cache_title">Échec de la mise en cache du fichier</string>
-    <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">This is often caused by a bug in the app you used to select the file. Please try the following fixes:\n\n%s</string>
+    <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">Ceci est souvent causé par un bug dans l\'application utilisée pour sélectionner le fichier. Veuillez essayer les corrections suivantes :\n\n%s</string>
     <string name="import_interrupted">Importation interrompue : AnkiDroid a fermé</string>
     <string name="export_ready_title">Exportation prête</string>
     <string name="export_send_no_handlers">Aucune application disponible pour ouvrir le fichier APKG. Sauvegarde&#8230;</string>
@@ -234,7 +234,7 @@
     <string name="search_decks" maxLength="28">Rechercher dans les paquets</string>
     <string name="ankidroid_init_failed_webview_title">Erreur fatale</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid s\'appuie sur la WebView du système qui n\'est pas disponible. Ceci peut se produire si le système installe des mises à jour. Veuillez réessayer dans quelques minutes.\n\n%s</string>
-    <string name="ankidroid_init_failed_storage">AnkiDroid cannot access storage due to an Android error.\n\n%s</string>
+    <string name="ankidroid_init_failed_storage">AnkiDroid ne peut pas accéder au stockage en raison d\'une erreur Android.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">Taille de la police</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Afficher la barre d\'outils</string>
@@ -264,9 +264,9 @@
     <!-- IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
-    <string name="invalid_value" comment="Error message in IncrementerNumberRangePreference when input is not a valid number">Invalid value</string>
-    <string name="maximum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the maximum allowed value">Maximum value is %d</string>
-    <string name="minimum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the minimum allowed value">Minimum value is %d</string>
+    <string name="invalid_value" comment="Error message in IncrementerNumberRangePreference when input is not a valid number">Valeur non valide</string>
+    <string name="maximum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the maximum allowed value">La valeur maximale est %d</string>
+    <string name="minimum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the minimum allowed value">La valeur minimale est %d</string>
     <!-- Used for credential empty warning message -->
     <string name="invalid_email">Saisir un email valide</string>
     <string name="password_empty">Mot de passe requis</string>
