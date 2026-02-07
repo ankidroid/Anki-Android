@@ -1,14 +1,17 @@
 // noinspection MissingCopyrightHeader #8659
 package com.ichi2.anki
 
+import android.Manifest.permission.INTERNET
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.IntentCompat
 import androidx.core.content.edit
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.view.children
@@ -29,6 +32,8 @@ import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.settings.Prefs
+import com.ichi2.anki.ui.windows.permissions.PermissionsActivity
+import com.ichi2.anki.ui.windows.permissions.PermissionsActivity.Companion.PERMISSIONS_SET_EXTRA
 import com.ichi2.anki.utils.Destination
 import com.ichi2.anki.utils.ext.defaultConfig
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
@@ -38,8 +43,10 @@ import com.ichi2.testutils.common.Flaky
 import com.ichi2.testutils.common.OS
 import com.ichi2.testutils.ext.addBasicNoteWithOp
 import com.ichi2.testutils.ext.menu
+import com.ichi2.testutils.grantPermissions
 import com.ichi2.testutils.grantWritePermissions
 import com.ichi2.testutils.revokeWritePermissions
+import com.ichi2.testutils.withDeniedPermissions
 import com.ichi2.testutils.withWritePermissions
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.containsInAnyOrder
@@ -64,6 +71,7 @@ import org.robolectric.ParameterizedRobolectricTestRunner
 import org.robolectric.Robolectric
 import org.robolectric.RuntimeEnvironment
 import org.robolectric.Shadows
+import org.robolectric.Shadows.shadowOf
 import org.robolectric.shadows.ShadowDialog
 import org.robolectric.shadows.ShadowLooper
 import timber.log.Timber
@@ -672,6 +680,26 @@ class DeckPickerTest : RobolectricTest() {
             block()
         } finally {
             disableNullCollection()
+        }
+
+    @Test
+    fun `when INTERNET is denied, PermissionsActivity is shown`() =
+        runTest {
+            withDeniedPermissions(INTERNET) {
+                deckPicker {
+                    val intent = assertNotNull(shadowOf(this@deckPicker).nextStartedActivity)
+
+                    assertThat(
+                        intent.component?.shortClassName,
+                        equalTo(PermissionsActivity::class.java.name),
+                    )
+
+                    val extra = IntentCompat.getParcelableExtra(intent, PERMISSIONS_SET_EXTRA, PermissionSet::class.java)
+
+                    assertNotNull(extra)
+                    assertThat(extra.permissions, equalTo(listOf(INTERNET)))
+                }
+            }
         }
 
     enum class CollectionType(

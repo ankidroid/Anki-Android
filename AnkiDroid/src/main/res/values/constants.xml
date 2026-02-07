@@ -343,6 +343,7 @@
     </string-array>
 
     <string name="manage_external_storage_permission">android.permission.MANAGE_EXTERNAL_STORAGE</string>
+    <string name="manage_internet_permission">android.permission.INTERNET</string>
     <string-array name="legacy_storage_permissions">
         <item>android.permission.READ_EXTERNAL_STORAGE</item>
         <item>android.permission.WRITE_EXTERNAL_STORAGE</item>
