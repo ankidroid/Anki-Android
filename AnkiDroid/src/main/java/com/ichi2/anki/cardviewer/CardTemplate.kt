@@ -66,7 +66,7 @@ class CardTemplate(
         val classIndex = template.indexOf(classDelim)
         val contentIndex = template.indexOf(contentDelim)
         try {
-            preStyle = template.substring(0, styleIndex)
+            preStyle = template.take(styleIndex)
             preScript = template.substring(styleIndex + styleDelim.length, scriptIndex)
             preClass = template.substring(scriptIndex + scriptDelim.length, classIndex)
             preContent = template.substring(classIndex + classDelim.length, contentIndex)

@@ -149,4 +149,4 @@ fun <T : JSONObjectHolder> JSONContainer<T>.insert(
 fun <T : JSONObjectHolder> len(templates: JSONContainer<T>) = templates.jsonArray.length()
 
 // Changed signature from `copy.deepcopy(clone_from)`
-fun DeckConfig.deepClone() = this.copy(this.jsonObject.deepClone())
+fun DeckConfig.deepClone() = this.copy(jsonObject = this.jsonObject.deepClone())

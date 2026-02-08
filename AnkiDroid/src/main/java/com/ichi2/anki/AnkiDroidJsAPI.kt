@@ -249,7 +249,7 @@ open class AnkiDroidJsAPI(
             "setCardDue" -> {
                 try {
                     val days = apiParams.toInt()
-                    if (days < 0 || days > 9999) {
+                    if (days !in 0..9999) {
                         showDeveloperContact(ANKI_JS_ERROR_CODE_SET_DUE, apiContract.cardSuppliedDeveloperContact)
                         return@withContext convertToByteArray(apiContract, false)
                     }

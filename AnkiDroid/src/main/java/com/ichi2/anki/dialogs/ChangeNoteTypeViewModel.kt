@@ -442,7 +442,7 @@ class ChangeNoteTypeViewModel(
             keysToMapToNothing.forEach { updatedMap[it] = null }
         }
 
-        updatedMap.put(outputTemplateIndex, updatedValue)
+        updatedMap[outputTemplateIndex] = updatedValue
 
         templateChangeMapFlow.value = updatedMap
     }

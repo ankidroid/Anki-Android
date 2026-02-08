@@ -64,9 +64,9 @@ internal object Utils {
             // pad checksum to 40 bytes, as is done in the main AnkiDroid code
             if (result.length < 40) {
                 val zeroes = "0000000000000000000000000000000000000000"
-                result = zeroes.substring(0, zeroes.length - result.length) + result
+                result = zeroes.take(zeroes.length - result.length) + result
             }
-            java.lang.Long.valueOf(result.substring(0, 8), 16)
+            java.lang.Long.valueOf(result.take(8), 16)
         } catch (e: Exception) {
             // This is guaranteed to never happen
             throw IllegalStateException(
