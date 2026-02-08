@@ -15,21 +15,14 @@
  */
 package com.ichi2.anki.widget
 
-import android.content.Context
-import android.view.ContextThemeWrapper
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
-import com.ichi2.anki.deckpicker.DisplayDeckNode
+import com.ichi2.anki.deckpicker.DeckFilters
 import com.ichi2.anki.deckpicker.filterAndFlattenDisplay
-import com.ichi2.anki.widgets.DeckAdapter
-import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.robolectric.shadows.ShadowLooper
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
-import kotlin.test.fail
 
 @RunWith(AndroidJUnit4::class)
 class DeckAdapterTest : RobolectricTest() {
@@ -41,7 +34,7 @@ class DeckAdapterTest : RobolectricTest() {
 
         val node =
             col.sched.deckDueTree().filterAndFlattenDisplay(
-                null,
+                DeckFilters.create(""),
                 deck1Id,
             )
 

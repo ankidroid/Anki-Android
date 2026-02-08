@@ -74,6 +74,16 @@ fun String.lastIndexOfOrNull(
         else -> index
     }
 
+fun String.lastIndexOfOrNull(
+    s: String,
+    startIndex: Int = lastIndex,
+    ignoreCase: Boolean = false,
+): Int? =
+    when (val index = this.lastIndexOf(s, startIndex, ignoreCase)) {
+        -1 -> null
+        else -> index
+    }
+
 fun emptyStringMutableList(size: Int): MutableList<String> = MutableList(size) { "" }
 
 fun emptyStringArray(size: Int): Array<String> = Array(size) { "" }
