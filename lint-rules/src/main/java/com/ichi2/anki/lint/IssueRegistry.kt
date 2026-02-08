@@ -38,6 +38,7 @@ import com.ichi2.anki.lint.rules.FragmentLayoutPrefixDetector
 import com.ichi2.anki.lint.rules.HardcodedPreferenceKey
 import com.ichi2.anki.lint.rules.InvalidStringFormatDetector
 import com.ichi2.anki.lint.rules.JUnitNullAssertionDetector
+import com.ichi2.anki.lint.rules.LayoutPrefixDetector
 import com.ichi2.anki.lint.rules.LocaleRootDetector
 import com.ichi2.anki.lint.rules.NonPositionalFormatSubstitutions
 import com.ichi2.anki.lint.rules.OpenInputStreamSafeDetector
@@ -53,6 +54,7 @@ class IssueRegistry : IssueRegistry() {
         get() {
             // Keep this list lexicographically ordered.
             return listOf(
+                LayoutPrefixDetector.ISSUE,
                 ActivityLayoutPrefixDetector.ISSUE,
                 CopyrightHeaderExists.ISSUE,
                 DialogLayoutPrefixDetector.ISSUE,
