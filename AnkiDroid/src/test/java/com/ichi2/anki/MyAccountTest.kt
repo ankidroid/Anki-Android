@@ -27,7 +27,7 @@ import junit.framework.TestCase.assertFalse
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import kotlin.test.assertTrue
+import kotlin.test.assertEquals
 
 @RunWith(AndroidJUnit4::class)
 class MyAccountTest : RobolectricTest() {
@@ -49,7 +49,7 @@ class MyAccountTest : RobolectricTest() {
             fragment.view?.findViewById<TextInputEditText>(R.id.password)?.setText(testPassword)
 
             val loginButton = fragment.view?.findViewById<Button>(R.id.login_button)
-            assertTrue(loginButton?.isEnabled == true)
+            assertEquals(loginButton?.isEnabled, true)
         }
     }
 

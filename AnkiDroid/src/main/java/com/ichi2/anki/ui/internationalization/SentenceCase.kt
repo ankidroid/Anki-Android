@@ -45,6 +45,6 @@ fun String.toSentenceCase(
 ): String {
     val resString = context.getString(resId)
     // lowercase both for the comparison: sentence case doesn't mean all words are lowercase
-    if (this.lowercase() == resString.lowercase()) return resString
+    if (this.equals(resString, ignoreCase = true)) return resString
     return this
 }

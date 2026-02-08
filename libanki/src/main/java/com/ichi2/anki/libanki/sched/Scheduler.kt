@@ -61,6 +61,7 @@ import net.ankiweb.rsdroid.RustCleanup
 import timber.log.Timber
 import kotlin.math.ceil
 import kotlin.math.max
+import kotlin.math.roundToLong
 
 /**
  * A parameter for [Scheduler.setDueDate]
@@ -650,7 +651,7 @@ open class Scheduler(
             toRelrn = failures
         } while (toRelrn > 1)
         val futureRelrnTotal = relrnTime * futureReps
-        return Math.round((newTotal + relrnTotal + revTotal + futureRelrnTotal) / 60000).toInt()
+        return ((newTotal + relrnTotal + revTotal + futureRelrnTotal) / 60000).roundToLong().toInt()
     }
 
     /** Used only by V1/V2, and unit tests.

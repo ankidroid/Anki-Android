@@ -131,7 +131,7 @@ object Utils {
         // not 32.
         if (result.length < 40) {
             val zeroes = "0000000000000000000000000000000000000000"
-            result = zeroes.substring(0, zeroes.length - result.length) + result
+            result = zeroes.take(zeroes.length - result.length) + result
         }
         return result
     }

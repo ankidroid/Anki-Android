@@ -534,8 +534,7 @@ class DeckPickerViewModel :
      */
     suspend fun fetchSyncIconState(): SyncIconState {
         if (!Prefs.displaySyncStatus) return SyncIconState.Normal
-        val auth = syncAuth()
-        if (auth == null) return SyncIconState.NotLoggedIn
+        val auth = syncAuth() ?: return SyncIconState.NotLoggedIn
         return try {
             // Use CollectionManager to ensure that this doesn't block 'deck count' tasks
             // throws if a .colpkg import or similar occurs just before this call

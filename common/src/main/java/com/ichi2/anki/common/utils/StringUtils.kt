@@ -47,7 +47,7 @@ object StringUtils {
         if (s == null) return null
         if (s.isBlank()) return s
 
-        return s.substring(0, 1).uppercase(Locale.getDefault()) + s.substring(1).lowercase(Locale.getDefault())
+        return s[0].uppercase(Locale.getDefault()) + s.substring(1).lowercase(Locale.getDefault())
     }
 }
 
