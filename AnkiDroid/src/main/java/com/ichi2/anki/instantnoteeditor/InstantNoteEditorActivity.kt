@@ -621,7 +621,7 @@ class InstantNoteEditorActivity :
 
         if (start != -1 && end != -1) {
             val newText =
-                text.substring(0, start) + "{{c$incrementNumber::$word}}" + text.substring(end)
+                text.take(start) + "{{c$incrementNumber::$word}}" + text.substring(end)
 
             textBox.setText(newText)
             textBox.setSelection(start + "{{c$incrementNumber::".length)

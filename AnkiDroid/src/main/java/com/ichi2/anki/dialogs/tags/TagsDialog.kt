@@ -452,7 +452,7 @@ class TagsDialog : AnalyticsDialogFragment {
                 }
                 var previousColonsCnt = 0
                 if (dest != null) {
-                    val previousPart = dest.substring(0, destStart)
+                    val previousPart = dest.take(destStart)
                     if (previousPart.endsWith("::")) {
                         previousColonsCnt = 2
                     } else if (previousPart.endsWith(":")) {

@@ -214,8 +214,7 @@ class AddEditReminderDialog : DialogFragment() {
                 Pair(Consts.DEFAULT_DECK_ID, withCol { decks.name(Consts.DEFAULT_DECK_ID) })
             }
 
-        val currentlySelectedDeckID = viewModel.deckSelected.value
-        return when (currentlySelectedDeckID) {
+        return when (val currentlySelectedDeckID = viewModel.deckSelected.value) {
             ALL_DECKS_ID -> Pair(ALL_DECKS_ID, getString(R.string.card_browser_all_decks))
             Consts.DEFAULT_DECK_ID -> getFallbackSelection()
             null -> getFallbackSelection()

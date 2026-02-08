@@ -255,7 +255,7 @@ class TypeAnswer(
                 val colonColonIndex = groupOne.indexOf("::")
                 if (colonColonIndex > -1) {
                     // Cut out the hint.
-                    groupOne = groupOne.substring(0, colonColonIndex)
+                    groupOne = groupOne.take(colonColonIndex)
                 }
                 matches.add(groupOne)
             }

@@ -390,11 +390,8 @@ class StudyOptionsFragment :
             Timber.e("StudyOptionsFragment.mRefreshFragmentListener :: can't refresh")
             return
         }
-        val studyOptionsView = view
         // #5506 If we have no view, short circuit all UI logic
-        if (studyOptionsView == null) {
-            return
-        }
+        val studyOptionsView = view ?: return
 
         val col =
             col

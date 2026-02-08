@@ -204,7 +204,7 @@ sealed interface Binding {
              */
             fun parse(s: String): Pair<ModifierKeys, String> {
                 val plusIndex = s.lastIndexOfOrNull('+') ?: return Pair(none(), s)
-                val modifiers = fromString(s.substring(0, plusIndex + 1))
+                val modifiers = fromString(s.take(plusIndex + 1))
                 return Pair(modifiers, s.substring(plusIndex + 1))
             }
 
