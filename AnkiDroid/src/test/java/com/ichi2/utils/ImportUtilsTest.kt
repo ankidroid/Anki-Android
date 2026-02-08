@@ -63,7 +63,7 @@ class ImportUtilsTest : RobolectricTest() {
         assertThat(actualFilePath, containsString("..."))
         // Obtain the filename from the path
         assertThat(actualFilePath, containsString("%E5%A5%BD"))
-        val fileName = actualFilePath.substring(actualFilePath.indexOf("%E5%A5%BD"))
+        val fileName = actualFilePath.substringAfter("%E5%A5%BD")
         assertThat(fileName.length, lessThanOrEqualTo(100))
     }
 
