@@ -16,9 +16,15 @@
 
 package com.ichi2.anki.utils.ext
 
+import android.R.attr.name
+import android.annotation.SuppressLint
+import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.libanki.Deck
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.Decks
+import com.ichi2.anki.libanki.sched.DeckNode
+import java.util.Locale
+import kotlin.collections.any
 
 fun Decks.update(
     did: DeckId,
