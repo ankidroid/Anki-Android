@@ -1,0 +1,38 @@
+name: Label PR on CI Failure
+
+on:
+  workflow_run:
+    workflows:
+      - Lint
+      - Unit Tests
+      - Emulator Tests
+      - CodeQL
+    types:
+      - completed
+
+permissions:
+  pull-requests: write
+  contents: read
+
+jobs:
+  label-pr:
+    if: ${{ github.event.workflow_run.event == 'pull_request' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Get PR number
+        id: pr
+        run: |
+          echo "PR_NUMBER=${{ github.event.workflow_run.pull_requests[0].number }}" >> $GITHUB_OUTPUT
+
+      - name: Add label if CI failed
+        if: ${{ github.event.workflow_run.conclusion == 'failure' }}
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.issues.addLabels({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: ${{ steps.pr.outputs.PR_NUMBER }},
+              labels: ['Needs Author Reply']
+            })
