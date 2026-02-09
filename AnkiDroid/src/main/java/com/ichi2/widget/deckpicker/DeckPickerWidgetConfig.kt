@@ -216,7 +216,7 @@ class DeckPickerWidgetConfig :
     }
 
     override val baseSnackbarBuilder: SnackbarBuilder = {
-        anchorView = binding.fabWidgetDeckPicker
+        anchorView = binding.fabWidgetDeckPicker.takeIf { it.isVisible }
     }
 
     /**
