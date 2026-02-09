@@ -374,3 +374,38 @@ object ReviewRemindersDatabase {
         }
     }
 }
+
+/**
+ * Lambda that can be fed into [ReviewRemindersDatabase.editRemindersForDeck] or
+ * [ReviewRemindersDatabase.editAllAppWideReminders] which deletes the given review reminder.
+ */
+fun deleteReminder(reminder: ReviewReminder) =
+    { reminders: ReviewReminderGroup ->
+        reminders.apply {
+            remove(reminder.id)
+        }
+    }
+
+/**
+ * Lambda that can be fed into [ReviewRemindersDatabase.editRemindersForDeck] or
+ * [ReviewRemindersDatabase.editAllAppWideReminders] which updates the given review reminder if it
+ * exists or inserts it if it doesn't (an "upsert" operation)
+ */
+fun upsertReminder(reminder: ReviewReminder) =
+    { reminders: ReviewReminderGroup ->
+        reminders.apply {
+            this[reminder.id] = reminder
+        }
+    }
+
+/**
+ * Lambda that can be fed into [ReviewRemindersDatabase.editRemindersForDeck] or
+ * [ReviewRemindersDatabase.editAllAppWideReminders] which toggles whether the given review reminder
+ * is enabled.
+ */
+fun toggleReminder(reminder: ReviewReminder) =
+    { reminders: ReviewReminderGroup ->
+        reminders.apply {
+            toggleEnabled(reminder.id)
+        }
+    }

@@ -260,41 +260,6 @@ class ScheduleReminders :
     }
 
     /**
-     * Lambda that can be fed into [ReviewRemindersDatabase.editRemindersForDeck] or
-     * [ReviewRemindersDatabase.editAllAppWideReminders] which deletes the given review reminder.
-     */
-    private fun deleteReminder(reminder: ReviewReminder) =
-        { reminders: ReviewReminderGroup ->
-            reminders.apply {
-                remove(reminder.id)
-            }
-        }
-
-    /**
-     * Lambda that can be fed into [ReviewRemindersDatabase.editRemindersForDeck] or
-     * [ReviewRemindersDatabase.editAllAppWideReminders] which updates the given review reminder if it
-     * exists or inserts it if it doesn't (an "upsert" operation)
-     */
-    private fun upsertReminder(reminder: ReviewReminder) =
-        { reminders: ReviewReminderGroup ->
-            reminders.apply {
-                this[reminder.id] = reminder
-            }
-        }
-
-    /**
-     * Lambda that can be fed into [ReviewRemindersDatabase.editRemindersForDeck] or
-     * [ReviewRemindersDatabase.editAllAppWideReminders] which toggles whether the given review reminder
-     * is enabled.
-     */
-    private fun toggleReminder(reminder: ReviewReminder) =
-        { reminders: ReviewReminderGroup ->
-            reminders.apply {
-                toggleEnabled(reminder.id)
-            }
-        }
-
-    /**
      * Update the RecyclerView with the new or modified reminder.
      * @see handleAddEditDialogResult
      */
