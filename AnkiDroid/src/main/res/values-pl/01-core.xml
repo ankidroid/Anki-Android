@@ -123,23 +123,23 @@
     <string name="menu_enable_voice_playback" maxLength="28">Włącz odtwarzanie głosu</string>
     <string name="menu_disable_voice_playback">Wyłącz odtwarzanie dźwięku</string>
     <string name="new_deck">Stwórz talię</string>
-    <string name="new_dynamic_deck">Stwórz filtrowaną talię</string>
+    <string name="new_dynamic_deck">Stwórz talię filtrowaną</string>
     <string name="directory_inaccessible">Katalog AnkiDroid jest niedostępny</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
-    <string name="startup_no_storage_permission">Proszę przyznać AnkiDroid uprawnienie \"Pamięć\" by kontynuować</string>
-    <string name="rebuild_filtered_deck">Przebudowa filtrowanej talii&#8230;</string>
+    <string name="startup_no_storage_permission">Przyznaj  AnkiDroid uprawnienie \"Pamięć\" by kontynuować</string>
+    <string name="rebuild_filtered_deck">Przebudowa talii filtrowanej&#8230;</string>
     <string name="rebuild_cram_label" maxLength="28">Odbuduj</string>
     <string name="empty_cram_label" maxLength="28">Wyczyść</string>
-    <string name="create_subdeck">Utwórz sub-talie</string>
-    <string name="empty_filtered_deck">Opróżnienie filtrowanej talii&#8230;</string>
-    <string name="search_deck" comment="Deck search for selecting it">Przeszukaj talię</string>
+    <string name="create_subdeck">Utwórz talię podrzedną</string>
+    <string name="empty_filtered_deck">Opróżnienie talii filtrowanej&#8230;</string>
+    <string name="search_deck" comment="Deck search for selecting it">Szukaj talii</string>
     <string name="empty_deck">Ta talia jest pusta</string>
     <string name="invalid_deck_name">Nieprawidłowa nazwa talii</string>
     <string name="studyoptions_congrats_finished">Gratulacje! Zakończono powtórki na dziś.</string>
-    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Talia na razie skończona! %s</string>
+    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Zakończono powtórki na dziś! %s</string>
     <string name="studyoptions_no_cards_due">Nie ma żadnych kart do przejrzenia.</string>
     <string name="sd_card_not_mounted">Urządzenie pamięci masowej nie zostało zamontowane</string>
     <string name="button_sync" comment="Text of the sync button" maxLength="28">Synchronizuj</string>
@@ -153,13 +153,13 @@
     <string name="nothing">Nic</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Typ karty</string>
-    <string name="card_template_editor_front">Szablon przedni</string>
-    <string name="card_template_editor_back">Szablon tylny</string>
+    <string name="card_template_editor_front">Szablon przodu</string>
+    <string name="card_template_editor_back">Szablon tyłu</string>
     <string name="card_template_editor_styling" maxLength="28">Styl</string>
     <string name="card_template_editor_menu_card_browser_appearance" maxLength="28">Wygląd przeglądarki kart</string>
     <string name="card_template_editor_deck_override" maxLength="28">Nadpisanie talii</string>
-    <string name="card_template_editor_insert_field" maxLength="28">wstaw pole</string>
-    <string name="card_template_editor_select_field">wybierz pole</string>
+    <string name="card_template_editor_insert_field" maxLength="28">Wstaw pole</string>
+    <string name="card_template_editor_select_field">Wybierz pole</string>
     <string name="card_template_editor_cant_delete">Wymagany jest przynajmniej jeden typ karty.</string>
     <plurals name="card_template_editor_confirm_add">
         <item quantity="one">Spowoduje to utworzenie %1$d karty. Kontynuować?</item>
@@ -182,7 +182,7 @@
     <string name="previous_card_info_title" maxLength="28">Informacje o poprz. karcie</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Odczyt i zapis do bazy danych AnkiDroid</string>
-    <string name="read_write_permission_description">dostęp do istniejących notatek, kart, typów notatek i talii, a także tworzenia istniejących</string>
+    <string name="read_write_permission_description">dostęp do istniejących notatek, kart, typów notatek i talii, a także tworzenia nowych</string>
     <!-- Context Menu -->
     <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Przeglądarka kart</string>
     <string name="context_menu_anki_card_label">Karta Anki</string>
@@ -190,14 +190,14 @@
     <string name="sync_conflict_message_new">Kolekcje nie mogą zostać połączone.\nKtórą kolekcję chcesz zachować?</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
     <string name="sync_conflict_keep_remote_new" comment="Select AnkiWeb files to keep while syncing">AnkiWeb</string>
-    <string name="sync_conflict_remote_confirm_new">Czy zastąpić twoją kolekcję AnkiDroid kolekcją z twojego AnkiWeb?</string>
-    <string name="sync_conflict_local_confirm_new">Czy zastąpić twoją kolekcję AnkiWeb kolekcją z twojego AnkiDroid?</string>
-    <string name="sync_conflict_title_new">Wybierz kolekcje którą chcesz zachować</string>
+    <string name="sync_conflict_remote_confirm_new">Czy zastąpić twoją kolekcję AnkiDroid kolekcją z AnkiWeb?</string>
+    <string name="sync_conflict_local_confirm_new">Czy zastąpić twoją kolekcję AnkiWeb kolekcją z AnkiDroid?</string>
+    <string name="sync_conflict_title_new">Wybierz kolekcję, którą chcesz zachować</string>
     <string name="sync_conflict_replace_title">Zastąp kolekcję</string>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">Nie można zapisać do lub utworzyć pliku %s</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Niedostępna kolekcja</string>
-    <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Nie możemy uzyskać dostępu do Twojej kolekcji po odinstalowaniu AnkiDroid ze względu na zmianę w polityce sklepu Play\n\nTwoje dane są bezpieczne i mogą zostać przywrócone. Znajduje się w\n%s\n\nWybierz jedną z opcji poniżej, aby je przywrócić:</string>
+    <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Nie możemy uzyskać dostępu do Twojej kolekcji po odinstalowaniu AnkiDroid ze względu na zmianę w polityce sklepu Play\n\nTwoje dane są bezpieczne i mogą zostać przywrócone. Znajdują się w\n%s\n\nWybierz jedną z opcji poniżej, aby je przywrócić:</string>
     <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">System Android usunął uprawnienie AnkiDroid do %1$s z powodu długiego czasu nieaktywności aplikacji.\n\n Twoje dane są bezpieczne i mogą zostać przywrócone. Znajdują się w katalogu: \n%2$s\n\n Wybierz jedną z opcji poniżej by kontynuować:</string>
     <string name="restore_data_from_ankiweb">Przywróć z AnkiWeb (zalecane)</string>
     <string name="install_non_play_store_ankidroid_recommended">Przywróć dostęp do folderu (zalecane)</string>
@@ -214,10 +214,10 @@
     <string name="image_occlusion">Okluzja obrazu</string>
     <string name="microphone" comment="Title of the microphone permission in the permissions explanation screen.">Mikrofon</string>
     <string name="microphone_permission_explanation" comment="Description explaining why AnkiDroid needs the microphone permission, shown on the permissions explanation screen.">Pozwala na dodawanie dźwięków do kart oraz włącza je podczas przeglądania</string>
-    <string name="notifications_permission_explanation" comment="Description explaining why AnkiDroid needs the notification permission.">Włącza synchronizację mediów w tle oraz pozwala na tworzenie przypomnień o przegląd</string>
+    <string name="notifications_permission_explanation" comment="Description explaining why AnkiDroid needs the notification permission.">Włącza synchronizację mediów w tle oraz pozwala na tworzenie przypomnień o powtórkach</string>
     <string name="heading_required_permissions" comment="Heading for the section of required permissions that the app needs to function, shown in the permissions explanation screen.">Wymagane</string>
     <string name="heading_optional_permissions" comment="Heading for the section of optional permissions that the app needs to function, shown in the permissions explanation screen.">Opcjonalne</string>
-    <string name="manually_grant_permissions" comment="Pop-up message that is shown to the user when they want to grant an app permission that must be granted via the OS settings screen.">To zezwolenie musisz nadać ręcznie w ustawieniach</string>
+    <string name="manually_grant_permissions" comment="Pop-up message that is shown to the user when they want to grant an app permission that must be granted via the OS settings screen.">To zezwolenie musi zostać nadane ręcznie w ustawieniach</string>
     <string name="revoke_permissions" comment="Pop-up message that is shown to the user when they are revoking an app permission.">To uprawnienie musi zostać odwołane ręcznie w ustawieniach</string>
     <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Usuń konto</string>
     <!-- Instant Note Editor -->

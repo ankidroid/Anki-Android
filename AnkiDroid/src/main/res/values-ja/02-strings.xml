@@ -85,7 +85,7 @@
     <string name="disable_eraser" maxLength="28">消しゴム機能をオフ</string>
     <string name="hide_whiteboard" maxLength="28">ホワイトボードを隠す</string>
     <string name="clear_whiteboard" maxLength="28">ホワイトボードの内容を消去</string>
-    <string name="hide_toolbar" maxLength="28">Hide toolbar</string>
+    <string name="hide_toolbar" maxLength="28">ツールバーを非表示</string>
     <string name="replay_media" maxLength="28">音声・動画を再生</string>
     <string name="leech_suspend_notification">このカードに \"leech\"  (苦戦、忘却多発) というタグを付け、学習を休止しました</string>
     <string name="leech_notification">このカードに \"leech\" (苦戦、忘却多発) というタグを付けました</string>
@@ -261,7 +261,7 @@
     <!-- IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
-    <string name="invalid_value" comment="Error message in IncrementerNumberRangePreference when input is not a valid number">Invalid value</string>
+    <string name="invalid_value" comment="Error message in IncrementerNumberRangePreference when input is not a valid number">無効な値です</string>
     <string name="maximum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the maximum allowed value">Maximum value is %d</string>
     <string name="minimum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the minimum allowed value">Minimum value is %d</string>
     <!-- Used for credential empty warning message -->

@@ -85,7 +85,7 @@
     <string name="disable_eraser" maxLength="28">تعطيل الممحاة</string>
     <string name="hide_whiteboard" maxLength="28">إخفاء السبورة</string>
     <string name="clear_whiteboard" maxLength="28">محو السَّبورة</string>
-    <string name="hide_toolbar" maxLength="28">Hide toolbar</string>
+    <string name="hide_toolbar" maxLength="28">إخفاء شريط الأدوات</string>
     <string name="replay_media" maxLength="28">إعادة تشغيل الوسائط</string>
     <string name="leech_suspend_notification">عُلِّمت البطاقة كمستعصية وعُلِّقت</string>
     <string name="leech_notification">عُلِّمت البطاقة كمستعصية</string>

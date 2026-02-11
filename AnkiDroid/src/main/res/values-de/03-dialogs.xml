@@ -261,7 +261,7 @@
     <string name="import_error_resolution_copy_to_device">Kopiere die Datei auf dein Gerät und versuche es erneut mit der lokalen Datei</string>
     <string name="import_error_resolution_select_file">Öffne die Datei mit der Dateibrowser-App deines Geräts</string>
     <!-- Post-login dialog -->
-    <string name="login_successful">Login successful</string>
+    <string name="login_successful">Anmeldung erfolgreich</string>
     <string name="sync_now">Sync now?</string>
     <!--Change Note Type Dialog Fragment-->
     <string name="card_numbers_unchanged">Card numbers will remain unchanged</string>

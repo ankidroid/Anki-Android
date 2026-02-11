@@ -84,7 +84,7 @@
     <string name="button_size" maxLength="41">Масштаб кнопок ответа</string>
     <string name="card_browser_font_size" maxLength="41">Масштаб шрифта в списке карточек</string>
     <string name="card_browser_hide_media" maxLength="41">Показывать имена файлов</string>
-    <string name="card_browser_hide_media_summary">Display audio filenames in the card browser question/answer fields</string>
+    <string name="card_browser_hide_media_summary">Отображать имена аудио файлов в полях вопроса или ответа в списке карточек</string>
     <string name="col_path" maxLength="41">Папка AnkiDroid</string>
     <string name="fullscreen_review" maxLength="41">Полноэкранный режим</string>
     <string name="full_screen_off">Выкл.</string>
@@ -153,7 +153,7 @@
     <string name="notification_pref_title" maxLength="41">Какие показывать</string>
     <string name="never_notify">Никакие</string>
     <string name="notify_when_pending">Только важные</string>
-    <string name="notification_minimum_cards_due" comment="Consider keeping the unbreakable space after the digit">More than %d cards due</string>
+    <string name="notification_minimum_cards_due" comment="Consider keeping the unbreakable space after the digit">Больше чем %d карточек к просмотру</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Вибросигнал</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Мерцание светодиода</string>
     <string name="select_locale_title">Выберите язык</string>
@@ -238,9 +238,9 @@
     <string name="misc" maxLength="41">Разное</string>
     <!-- Review reminders -->
     <string name="add_reminder" comment="Label for the add reminder button in the screen for adding and editing review reminders">Добавить напоминание</string>
-    <string name="add_review_reminder" comment="Title of the screen for creating a new review reminder">Add review reminder</string>
-    <string name="edit_review_reminder" comment="Title of the screen for editing an existing review reminder">Edit review reminder</string>
-    <string name="you_have_no_review_reminders" comment="Text that appears in the review reminder editing screen when there are no reminders set">You have no review reminders</string>
+    <string name="add_review_reminder" comment="Title of the screen for creating a new review reminder">Добавить напоминание о повторении</string>
+    <string name="edit_review_reminder" comment="Title of the screen for editing an existing review reminder">Редактировать напоминания о повторении</string>
+    <string name="you_have_no_review_reminders" comment="Text that appears in the review reminder editing screen when there are no reminders set">У Вас нет напоминаний о повторении</string>
     <!-- studyoptions -->
     <string name="studyoptions_limit_select_tags">Выберите метки</string>
     <!-- Deck configurations -->
@@ -262,7 +262,7 @@
     <string name="note_editor_replace_newlines" maxLength="41">Заменять перенос строк на HTML</string>
     <string name="note_editor_replace_newlines_summ">Заменяет &lt;br&gt; в редакторе записей на перенос строки</string>
     <string name="type_in_answer_focus" maxLength="41">Переключать на «Ввести ответ»</string>
-    <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the study screen</string>
+    <string name="type_in_answer_focus_summ">Автоматически фокусироваться на поле \"Ввести ответ\" на экране обучения</string>
     <!-- About -->
     <string name="open_changelog">Показать список изменений</string>
     <string name="pref_cat_about_title" maxLength="41">О программе</string>
@@ -270,7 +270,7 @@
     <string name="about_contributors_description"><![CDATA[Это наши потрясающие <a href=\"%1$s\">участники</a>. Вы также можете помочь AnkiDroid программируя, делая переводы, пожертвования <a href=\"%2$s\">и другое</a>!]]></string>
     <string name="license">Лицензия</string>
     <string name="license_description"><![CDATA[AnkiDroid выпущен на условиях лицензий <a href=\"%1$s\">GPL-3.0</a> и <a href=\"%2$s\">AGPL-3.0</a> с исходным кодом <a href=\"%3$s\">на GitHub</a>]]></string>
-    <string name="other_licenses"><![CDATA[AnkiDroid also uses third-party libraries and icons, which are licensed under various open source <a href=\"%1$s\">licenses</a>]]></string>
+    <string name="other_licenses"><![CDATA[AnkiDroid также использует сторонние библиотеки и иконки, которые лицензированы под различными лицензиями <a href=\"%1$s\">с открытым исходным кодом</a>]]></string>
     <string name="donate_description"><![CDATA[Вы можете поддержать развитие AnkiDroid, <a href=\"%1$s\">пожертвованием</a>. Любая сумма сильно поможет.]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">Добавить жест</string>
@@ -279,7 +279,7 @@
     <string name="binding_add_axis">Добавить джойстик/контроллер движения</string>
     <string name="axis_picker_move_joystick">Переместить джойстик/контроллер движения</string>
     <string name="user_actions" maxLength="41">Пользовательские действия</string>
-    <string name="user_actions_summary" maxLength="41">Trigger JavaScript from the study screen</string>
+    <string name="user_actions_summary" maxLength="41">Запустить JavaScript на экране обучения</string>
     <string name="user_action_1" maxLength="28">Пользовательское действие 1</string>
     <string name="user_action_2" maxLength="28">Пользовательское действие 2</string>
     <string name="user_action_3" maxLength="28">Пользовательское действие 3</string>
@@ -304,13 +304,13 @@
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Экспериментальная</string>
     <string name="readtext_deprecation_warn">У AnkiDroid появился более совершенный механизм TTS, который совместим с другими клиентами Anki и содержит больше голосов и улучшения в воспроизведении языков.\n\nПожалуйста, обновитесь как можно скорее, так как эта настройка скоро будет удалена.</string>
     <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">Пожалуйста, обновитесь до нового формата преобразования текста в речь</string>
-    <string name="pref_fixed_port_title" maxLength="41">localStorage in Study Screen</string>
-    <string name="pref_fixed_port_summary">Enables JavaScript localStorage by using a fixed server port in the Study Screen</string>
+    <string name="pref_fixed_port_title" maxLength="41">localStorage на экране обучения</string>
+    <string name="pref_fixed_port_summary">Включить локальное хранилище JavaScript с помощью фиксированного порта сервера на экране обучения</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Настройки разработчика</string>
     <string name="dev_options_enabled_pref" maxLength="41">Включить параметры для разработчиков</string>
     <string name="disable_dev_options">Отключить настройки разработчика</string>
-    <string name="dev_options_warning">Please be sure before enabling developer options. These options are dangerous and could break the app or corrupt your collection.\n\nNote that these options are not suited for most users and therefore are not translated, so they are in English.</string>
+    <string name="dev_options_warning">Пожалуйста, убедитесь, что вы знаете что делаете перед включением параметров разработчика. Эти параметры являются опасными и могут нарушить работу приложения или повредить вашу коллекцию.\n\nОбратите внимание, что эти параметры не подходят для большинства пользователей и поэтому не переведены, а представлены на английском языке.</string>
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->
@@ -390,11 +390,11 @@
     <string name="toolbar_actions" maxLength="41">Действия на панели</string>
     <string name="toolbar_position" maxLength="28">Расположение панели</string>
     <string name="new_study_screen" maxLength="41">Новый экран обучения</string>
-    <string name="new_study_screen_summ"><![CDATA[Improved study screen that will succeed the current one. Some features of the old screen have been changed or removed. Please report any <a href="%1$s">feedback</a> or <a href="%2$s">bugs</a>.]]></string>
+    <string name="new_study_screen_summ"><![CDATA[Улучшенный экран обучения, который заменит текущий. Некоторые функции старого экрана обучения были изменены или удалены. Пожалуйста, сообщайте о любых <a href="%1$s">отзывах</a> или <a href="%2$s">ошибках</a>.]]></string>
     <string name="show_answer_feedback" maxLength="41">Показать обратную связь по ответу</string>
     <string name="screen" maxLength="41">Экран</string>
-    <string name="only_answer" maxLength="41" comment="Configuration of the \'Answer\' commands to only answer the card">Only answer</string>
-    <string name="flip_and_answer" maxLength="41" comment="Configuration of the \'Answer\' commands to answer the card if on the answer side, and flip it if on the question side">Flip and answer</string>
+    <string name="only_answer" maxLength="41" comment="Configuration of the \'Answer\' commands to only answer the card">Только ответ</string>
+    <string name="flip_and_answer" maxLength="41" comment="Configuration of the \'Answer\' commands to answer the card if on the answer side, and flip it if on the question side">Перевернуть и ответить</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">Открыть настройки</string>
 </resources>
