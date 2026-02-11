@@ -73,7 +73,7 @@ import com.ichi2.anki.browser.CardBrowserViewModel.ToggleSelectionState
 import com.ichi2.anki.browser.CardBrowserViewModel.ToggleSelectionState.SELECT_ALL
 import com.ichi2.anki.browser.CardBrowserViewModel.ToggleSelectionState.SELECT_NONE
 import com.ichi2.anki.browser.RepositionCardFragment.Companion.REQUEST_REPOSITION_NEW_CARDS
-import com.ichi2.anki.browser.RepositionCardsRequest.ContainsNonNewCardsError
+import com.ichi2.anki.browser.RepositionCardsRequest.NoRepositionableCardsError
 import com.ichi2.anki.browser.RepositionCardsRequest.RepositionData
 import com.ichi2.anki.browser.search.AdvancedSearchFragment
 import com.ichi2.anki.browser.search.CardBrowserSearchViewModel
@@ -786,8 +786,8 @@ class CardBrowserFragment :
         Timber.i("CardBrowser:: Reposition button pressed")
         launchCatchingTask {
             when (val repositionCardsResult = activityViewModel.prepareToRepositionCards()) {
-                is ContainsNonNewCardsError -> {
-                    // Only new cards may be repositioned (If any non-new found show error dialog and return false)
+                is NoRepositionableCardsError -> {
+                    // No selected cards can be repositioned
                     showDialogFragment(
                         SimpleMessageDialog.newInstance(
                             title = getString(R.string.vague_error),

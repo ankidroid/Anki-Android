@@ -981,10 +981,23 @@ class CardBrowserViewModel(
     @NeedsTest("verify behavior for repositioning with 'Randomize order'")
     suspend fun prepareToRepositionCards(): RepositionCardsRequest {
         val selectedCardIds = queryAllSelectedCardIds()
-        // Only new cards may be repositioned (If any non-new found show error dialog and return false)
-        if (selectedCardIds.any { withCol { getCard(it).queue != QueueType.New } }) {
-            return RepositionCardsRequest.ContainsNonNewCardsError
+
+        // Separate repositionable and non-repositionable cards.
+        // TODO: Add a timeout for this card-by-card scan on very large selections.
+        val (repositionableIds, skippedIds) =
+            withCol {
+                selectedCardIds.partition { cardId ->
+                    canRepositionCard(getCard(cardId))
+                }
+            }
+
+        // If no cards can be repositioned, return error
+        if (repositionableIds.isEmpty()) {
+            return RepositionCardsRequest.NoRepositionableCardsError
         }
+
+        // The full partition already ran, so this value is exact for now.
+        val unsupportedCardCount = UnsupportedCardCount.Count(skippedIds.size)
 
         // query obtained from Anki Desktop
         // https://github.com/ankitects/anki/blob/1fb1cbbf85c48a54c05cb4442b1b424a529cac60/qt/aqt/operations/scheduling.py#L117
@@ -1003,6 +1016,7 @@ class CardBrowserViewModel(
                     max = max,
                     random = defaults.random,
                     shift = defaults.shift,
+                    unsupportedCardCount = unsupportedCardCount,
                 )
             }
         } catch (e: Exception) {
@@ -1012,6 +1026,7 @@ class CardBrowserViewModel(
             return RepositionData(
                 min = null,
                 max = null,
+                unsupportedCardCount = unsupportedCardCount,
             )
         }
     }
@@ -1027,6 +1042,7 @@ class CardBrowserViewModel(
         shift: Boolean,
     ): Int {
         val ids = queryAllSelectedCardIds()
+
         Timber.d("repositioning %d cards to %d", ids.size, position)
         return undoableOp {
             sched.sortCards(cids = ids, position, step = step, shuffle = shuffle, shift = shift)
@@ -1532,16 +1548,41 @@ class IdsFile(
     }
 }
 
-sealed class RepositionCardsRequest {
-    /** Only new cards may be repositioned */
-    data object ContainsNonNewCardsError : RepositionCardsRequest()
+/**
+ * Determines if a card can be repositioned.
+ *
+ * Mirrors Anki upstream logic in `set_new_position()`: https://github.com/ankitects/anki/blob/967992304627bb2bc690afd70b28760f09c2a021/rslib/src/scheduler/new.rs#L65-L80
+ * - if `card.type == CardType.New`, it's repositionable
+ * - otherwise, if `card.queue == QueueType.New`, it's repositionable
+ *
+ * @param card The card to check
+ * @return true if the card can be repositioned, false otherwise
+ */
+private fun canRepositionCard(card: Card): Boolean = card.type == CardType.New || card.queue == QueueType.New
 
-    /** Should contain queue top & bottom positions. Null on error */
+/** Count of selected cards that cannot be repositioned. */
+sealed interface UnsupportedCardCount {
+    data class Count(
+        val value: Int,
+    ) : UnsupportedCardCount
+
+    /** Used when we short-circuit the scan (for example, after timeout). */
+    data object Undetermined : UnsupportedCardCount
+}
+
+sealed class RepositionCardsRequest {
+    /** None of the selected cards can be repositioned */
+    data object NoRepositionableCardsError : RepositionCardsRequest()
+
+    /** Should contain queue top & bottom positions. Null on error.
+     * `unsupportedCardCount` uses [UnsupportedCardCount.Undetermined] when scan is short-circuited.
+     */
     class RepositionData(
         val min: Int?,
         val max: Int?,
         val random: Boolean = false,
         val shift: Boolean = false,
+        val unsupportedCardCount: UnsupportedCardCount = UnsupportedCardCount.Count(0),
     ) : RepositionCardsRequest() {
         val queueTop: Int?
         val queueBottom: Int?

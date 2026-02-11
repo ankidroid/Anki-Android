@@ -275,6 +275,12 @@ interface AnkiTest {
         return this
     }
 
+    /** Helper method to suspend all cards of a note */
+    fun Note.suspendAll(): Note {
+        col.sched.suspendCards(cardIds(col))
+        return this
+    }
+
     fun NotetypeJson.createClone(): NotetypeJson {
         val targetNotetype = requireNotNull(col.notetypes.byName(name)) { "could not find note type '$name'" }
         val newNotetype =
