@@ -954,7 +954,8 @@ class CardBrowserViewModel(
     suspend fun prepareToRepositionCards(): RepositionCardsRequest {
         val selectedCardIds = queryAllSelectedCardIds()
         // Only new cards may be repositioned (If any non-new found show error dialog and return false)
-        if (selectedCardIds.any { withCol { getCard(it).queue != QueueType.New } }) {
+        // Allow suspended cards that were never reviewed (CardType.New) to be repositioned
+        if (selectedCardIds.any { withCol { !canRepositionCard(getCard(it)) } }) {
             return RepositionCardsRequest.ContainsNonNewCardsError
         }
 
@@ -1494,6 +1495,23 @@ class IdsFile(
             }
     }
 }
+
+/**
+ * Determines if a card can be repositioned.
+ *
+ * A card can be repositioned if it's:
+ * - Currently a new card (QueueType.New), OR
+ * - A suspended card that was never reviewed (QueueType.Suspended + CardType.New)
+ *
+ * @param card The card to check
+ * @return true if the card can be repositioned, false otherwise
+ */
+private fun canRepositionCard(card: Card): Boolean =
+    when (card.queue) {
+        QueueType.New -> true
+        QueueType.Suspended -> card.type == CardType.New
+        else -> false
+    }
 
 sealed class RepositionCardsRequest {
     /** Only new cards may be repositioned */
