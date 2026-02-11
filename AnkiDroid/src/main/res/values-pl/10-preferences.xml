@@ -57,11 +57,11 @@
     <string name="pref_search_no_results">Brak wyników</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">Ogólne</string>
-    <string name="pref_cat_studying" maxLength="41">Ustawienia nauki</string>
+    <string name="pref_cat_studying" maxLength="41">Nauka</string>
     <string name="pref_cat_system_wide" maxLength="41">Ogólnosystemowe</string>
-    <string name="pref_cat_reviewing" maxLength="41">Przegląd</string>
+    <string name="pref_cat_reviewing" maxLength="41">Powtórki</string>
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Synchronizacja</string>
-    <string name="pref_cat_scheduling" maxLength="41">Harmonogram</string>
+    <string name="pref_cat_scheduling" maxLength="41">Planowanie</string>
     <string name="pref_cat_whiteboard" maxLength="41">Tablica</string>
     <string name="pref_cat_appearance" maxLength="41">Wygląd</string>
     <string name="pref_cat_themes" maxLength="41">Motywy</string>
@@ -77,10 +77,10 @@
     <string name="use_input_tag_summ">Użyj pola tekstowego na karcie do wprowadzenia odpowiedzi</string>
     <string name="reset_languages" maxLength="41">Zresetuj język</string>
     <string name="reset_languages_summ">Zresetuj przypisania języka (dla czytania tekstu i dla słowników) dla wszystkich talii</string>
-    <string name="reset_languages_question">Reset wszystkich ustawień języków?</string>
+    <string name="reset_languages_question">Zresetować wszystkie przypisania języka?</string>
     <string name="reset_confirmation">Zresetuj wszystkie ustawienia</string>
     <string name="card_zoom" maxLength="41">Powiększenie karty</string>
-    <string name="image_zoom" maxLength="41">Powiększenie obrazów/grafiki</string>
+    <string name="image_zoom" maxLength="41">Powiększenie obrazów</string>
     <string name="button_size" maxLength="41">Rozmiar przycisku odpowiedzi</string>
     <string name="card_browser_font_size" maxLength="41">Skalowanie czcionki przeglądania kart</string>
     <string name="card_browser_hide_media" maxLength="41">Wyświetlaj nazwy plików w przeglądarce kart</string>
@@ -123,16 +123,16 @@
     <string name="gestures_four_finger_tap" maxLength="41">Pacnięcie czterema palcami</string>
     <string name="gestures_shake" maxLength="41">Potrząśnij urządzeniem</string>
     <string name="card_browser_enable_external_context_menu" maxLength="41">Menu „%s”</string>
-    <string name="card_browser_enable_external_context_menu_summary">Włącza menu kontekstowe „%s”globalne</string>
+    <string name="card_browser_enable_external_context_menu_summary">Włącza menu kontekstowe „%s”globalnie</string>
     <string name="double_scrolling_gap" maxLength="41">Podwójne przewijanie</string>
     <string name="double_scrolling_gap_summ">Podwójny skok suwaka na eReaderze</string>
     <string name="swipe_sensitivity" maxLength="41">Czułość przy przewijaniu</string>
     <string name="tts" maxLength="41">Przetwarzanie tekstu na mowę</string>
-    <string name="tts_summ">Odczytuje pytanie i odpowiedź jeżeli nie dołączono pliku dźwiękowego</string>
+    <string name="tts_summ">Odczytuje pytanie i odpowiedź, jeżeli nie dołączono pliku dźwiękowego</string>
     <!-- Sync -->
     <string name="sync_fetch_missing_media" maxLength="41">Pobierz media przy synchronizacji</string>
     <string name="sync_account" maxLength="41">Konto AnkiWeb</string>
-    <string name="sync_account_summ_logged_out">Nie zalogowany</string>
+    <string name="sync_account_summ_logged_out">Nie zalogowano</string>
     <string name="automatic_sync_choice" maxLength="41">Synchronizacja automatyczna</string>
     <string name="automatic_sync_choice_summ">Synchronizuj automatycznie podczas startu/zamykania aplikacji, jeżeli od ostatniej synchronizacji minęło ponad 10 minut.</string>
     <string name="sync_media_always" comment="Option to always fetch media when syncing">Zawsze</string>
@@ -153,25 +153,25 @@
     <string name="notification_pref_title" maxLength="41">Powiadamiaj gdy</string>
     <string name="never_notify">Nigdy nie powiadamiaj</string>
     <string name="notify_when_pending">Dostępne oczekujące wiadomości</string>
-    <string name="notification_minimum_cards_due" comment="Consider keeping the unbreakable space after the digit">Wymagane ponad %d kart</string>
+    <string name="notification_minimum_cards_due" comment="Consider keeping the unbreakable space after the digit">Więcej niż  %d kart oczekuje</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Wibracje</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Migotanie</string>
     <string name="select_locale_title">Wybór języka</string>
     <string name="software_render" maxLength="41">Wyłącz renderowanie sprzętowe kart</string>
-    <string name="software_render_summ">Renderowanie sprzętowe jest szybsze, lecz mogą pojawić się problemy, zwłaszcza na Androidzie 8/8.1. Jeżeli nie widzisz części interfejsu przeglądarki, spróbuj tego ustawienia.</string>
+    <string name="software_render_summ">Renderowanie sprzętowe jest szybsze, lecz mogą pojawić się problemy, zwłaszcza na Androidzie 8/8.1. Jeżeli nie widzisz części interfejsu przy powtarzaniu kart, spróbuj tego ustawienia.</string>
     <string name="safe_display" maxLength="41">Tryb bezpiecznego wyświetlania</string>
     <string name="safe_display_summ">Wyłącz wszystkie animacje i użyj bezpieczniejszej metody rysowania kart. Urządzenia E-ink mogą tego wymagać.</string>
     <string name="disable_extended_text_ui" maxLength="41">Wyłącz tryb edycji pojedynczego pola</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
     <string name="disable_extended_text_ui_summ">Zezwala na menu kontekstowe luk do wypełnienia w trybie poziomym.</string>
     <string name="vertical_centering" maxLength="41">Wycentruj</string>
-    <string name="vertical_centering_summ">Wycentruj w pionie zawartość kart</string>
+    <string name="vertical_centering_summ">Wycentruj  zawartość kart w pionie</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Interwał czasu podwójnego dotknięcia</string>
-    <string name="pref_double_tap_time_interval_summary">Drugie dotknięcie przycisków odpowiedzi zostanie zignorowane jeśli od poprzedniego nie upłynął ustawiony czas. Zapobiega to przypadkowym podwójnym dotknięciom</string>
-    <string name="pref_show_answer_long_press_time" maxLength="41">Pokaż czas długiego przytrzymania odpowiedzi</string>
+    <string name="pref_double_tap_time_interval_summary">Drugie dotknięcie przycisków odpowiedzi zostanie zignorowane, jeśli od poprzedniego nie upłynął ustawiony czas. Zapobiega to przypadkowym podwójnym dotknięciom</string>
+    <string name="pref_show_answer_long_press_time" maxLength="41">Pokaż odpowiedź - czas długiego naciśnięcia</string>
     <string name="pref_show_answer_long_press_time_summary">Minimalny czas naciśnięcia, zanim przycisk odpowiedzi odpowie na dotknięcie.</string>
     <string name="show_estimates" maxLength="41">Pokaż czas przy przyciskach</string>
-    <string name="show_estimates_summ">Pokazuj czas kolejnej powtórki nad przyciskami odpowiedzi</string>
+    <string name="show_estimates_summ">Pokazuj czas kolejnej powtórki na przyciskach odpowiedzi</string>
     <string name="show_large_answer_buttons" maxLength="41">Pokaż duże przyciski odpowiedzi</string>
     <string name="show_large_answer_buttons_summ">Pokaż przycisk odpowiedzi w 2 wierszach</string>
     <string name="show_top_bar" maxLength="41">Pokaż górny pasek</string>
@@ -193,22 +193,22 @@
     <string name="pref_keep_screen_on" maxLength="41">Utrzymuj włączony ekran</string>
     <string name="pref_keep_screen_on_summ">Zablokuj wyłącznik czasowy ekranu</string>
     <string name="enable_api_title" maxLength="41">Zezwól na AnkiDroid API</string>
-    <string name="enable_api_summary">Pozwól innym aplikacjom na podłączanie do AnkiDroid i zapisywanie i odczyt danych bez Twojej ingerencji</string>
+    <string name="enable_api_summary">Pozwól innym aplikacjom na podłączanie do AnkiDroid i zapisywanie oraz odczyt danych bez Twojej ingerencji</string>
     <string name="custom_buttons" maxLength="41">Przyciski paska aplikacji</string>
     <string name="custom_buttons_summary">Ustaw, które akcje pokażą się na pasku aplikacji</string>
     <string name="custom_buttons_setting_always_show">Zawsze pokazuj</string>
-    <string name="custom_buttons_setting_if_room">Pokaż jeśli jest miejsce</string>
+    <string name="custom_buttons_setting_if_room">Pokaż, jeśli jest miejsce</string>
     <string name="custom_buttons_setting_menu_only">Tylko w menu</string>
     <string name="reset_custom_buttons" maxLength="41">Resetuj do domyślnych</string>
-    <string name="reset_settings_to_default">Przywróć domyślne ustawienia</string>
+    <string name="reset_settings_to_default">Przywróć ustawienia domyślne</string>
     <string name="reset">Zresetuj</string>
     <string name="thirdparty_apps_title" maxLength="41">API aplikacji stron trzecich</string>
-    <string name="thirdparty_apps_summary">Zobacz listę aplikacji, które używają API AnkiDroid takie jak słowniki, narzędzia.</string>
+    <string name="thirdparty_apps_summary">Zobacz listę aplikacji, które używają API AnkiDroid takie jak słowniki lub narzędzia.</string>
     <string name="pref_controls_reviews_tab" maxLength="41" comment="Name of the tab to configure controls for the reviews screen">Powtórki</string>
     <string name="pref_controls_previews_tab" maxLength="41" comment="Name of the tab to configure controls for the previews screen">Podgląd</string>
     <string name="toggle_backside_only" maxLength="41" comment="Control setting that toggles \'Backside only\' in the previews screen">Przełącz tylko do tyłu</string>
     <!-- Appearance settings -->
-    <string name="pref_cat_reviewer" maxLength="41">Ekran badania</string>
+    <string name="pref_cat_reviewer" maxLength="41">Ekran nauki</string>
     <string name="show_deck_title" maxLength="41">Pokaż tytuł talii</string>
     <string name="accessibility" maxLength="41">Ułatwienia dostępu</string>
     <!-- Paste clipboard image as png option -->
@@ -243,25 +243,25 @@
     <string name="edit_review_reminder" comment="Title of the screen for editing an existing review reminder">Edytuj przypomnienie o powtórce</string>
     <string name="you_have_no_review_reminders" comment="Text that appears in the review reminder editing screen when there are no reminders set">Nie masz przypomnień o powtórce</string>
     <!-- studyoptions -->
-    <string name="studyoptions_limit_select_tags">Wybierz etykiety</string>
+    <string name="studyoptions_limit_select_tags">Wybierz tagi</string>
     <!-- Deck configurations -->
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">Ogólne</string>
     <string name="deck_conf_cram_filter" maxLength="41">Filtrowanie</string>
     <string name="deck_conf_cram_search" maxLength="41" comment="Label of a text field that contains a search query.">Szukaj</string>
     <string name="deck_conf_cram_limit" maxLength="41">Ogranicz do</string>
     <string name="deck_conf_cram_order" maxLength="41">Karty wybrane przez</string>
-    <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Kolejkuj ponownie</string>
-    <string name="deck_conf_cram_reschedule_summ">Kolejkuj karty ponownie bazując na moich odpowiedziach w tej talii</string>
+    <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Zmień plan</string>
+    <string name="deck_conf_cram_reschedule_summ">Zmień plan kart bazując na odpowiedziach w tej talii</string>
     <string name="deck_conf_cram_filter_2_check">Włącz drugi filtr</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Zdefiniuj własne kroki</string>
-    <string name="deck_conf_cram_preview_delays" maxLength="41">Podgląd opóźnień</string>
-    <string name="deck_conf_cram_preview_delays_summ">Opóźnienia są w sekundach. 0 zwraca kartę do oryginalnej talii.</string>
+    <string name="deck_conf_cram_preview_delays" maxLength="41">Podgląd przerw</string>
+    <string name="deck_conf_cram_preview_delays_summ">Przerwy podane są w sekundach. 0 zwraca kartę do oryginalnej talii.</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">Pomóż ulepszyć AnkiDroid!</string>
     <string name="analytics_title" maxLength="41">Udostępnij użycie aplikacji</string>
     <string name="analytics_summ">Możesz ulepszyć AnkiDroid, pomagając zespołowi programistów zobaczyć jakie funkcje są najczęściej używane</string>
     <string name="note_editor_replace_newlines" maxLength="41">Zastąp nowe wiersze przez HTML</string>
-    <string name="note_editor_replace_newlines_summ">W Edytorze Notatek zmień wszelkie przykłady &lt;br&gt; na nowy wiersz kiedy karta jest edytowana.</string>
+    <string name="note_editor_replace_newlines_summ">W Edytorze Notatek zmień wszelkie przykłady &lt;br&gt; na nowy wiersz, gdy  karta jest edytowana.</string>
     <string name="type_in_answer_focus" maxLength="41">Zaznacz pole „podaj odpowiedź”</string>
     <string name="type_in_answer_focus_summ">Automatycznie zaznaczaj pole „podaj odpowiedź” w przeglądarce</string>
     <!-- About -->
@@ -271,15 +271,15 @@
     <string name="about_contributors_description"><![CDATA[To są nasi wspaniali <a href=\"%1$s\">współtwórcy</a>. Możesz również pomóc AnkiDroid poprzez programowanie, tłumaczenie, darowiznę i <a href=\"%2$s\">więcej</a>!]]></string>
     <string name="license">Licencja</string>
     <string name="license_description"><![CDATA[AnkiDroid jest wydawany na licencji <a href=\"%1$s\">GPL-3.0</a> i <a href=\"%2$s\">AGPL-3.0</a> z kodem źródłowym dostępnym <a href=\"%3$s\">na GitHubie</a>]]></string>
-    <string name="other_licenses"><![CDATA[AnkiDroid używa również bibliotek i ikon firm trzecich, które są licencjonowane na podstawie licencji open source <a href=\"%1$s\">licencji</a>]]></string>
-    <string name="donate_description"><![CDATA[Możesz wspierać rozwój AnkiDroida <a href=\"%1$s\">darowizną</a>. Jesteśmy wdzięczni za każdą kwotę.]]></string>
+    <string name="other_licenses"><![CDATA[AnkiDroid używa również bibliotek i ikon firm trzecich, które są licencjonowane na podstawie <a href=\"%1$s\">licencji</a> open source ]]></string>
+    <string name="donate_description"><![CDATA[Możesz wspierać rozwój AnkiDroid <a href=\"%1$s\">darowizną</a>. Jesteśmy wdzięczni za każdą kwotę.]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">Dodaj gest</string>
     <string name="binding_add_key">Dodaj klawisz</string>
     <string name="key_picker_default_press_key">Naciśnij klawisz</string>
-    <string name="binding_add_axis">Dodaj sterownik joystick/ruchu</string>
-    <string name="axis_picker_move_joystick">Dodaj sterownik joystick/ruchu</string>
-    <string name="user_actions" maxLength="41">Działania użytkownika</string>
+    <string name="binding_add_axis">Dodaj joystick/kontroler ruchowy</string>
+    <string name="axis_picker_move_joystick">Porusz joystickiem/kontrolerem ruchowym</string>
+    <string name="user_actions" maxLength="41">Akcje użytkownika</string>
     <string name="user_actions_summary" maxLength="41">Wyzwalaj JavaScript z ekranu nauki</string>
     <string name="user_action_1" maxLength="28">Akcja użytkownika 1</string>
     <string name="user_action_2" maxLength="28">Akcja użytkownika 2</string>
@@ -304,14 +304,14 @@
     <!-- Advanced -->
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Eksperymentalne</string>
     <string name="readtext_deprecation_warn">AnkiDroid wprowadził lepszy mechanizm TTS, który jest kompatybilny z innymi klientami Anki i zawiera więcej głosów i ulepszeń w odtwarzaniu języków!\n\nZaktualizuj tak szybko jak to możliwe, ponieważ to ustawienie wkrótce zniknie</string>
-    <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">Uaktualnij do nowego formatu tekstu do mowy</string>
-    <string name="pref_fixed_port_title" maxLength="41">Lokalizacja na ekranie badania</string>
+    <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">Uaktualnij do nowego formatu przetwarzania tekstu na mowę</string>
+    <string name="pref_fixed_port_title" maxLength="41">localStorage na ekranie nauki</string>
     <string name="pref_fixed_port_summary">Włącza pamięć lokalną JavaScript używając stałego portu serwera na ekranie nauki</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Ustawienia programisty</string>
     <string name="dev_options_enabled_pref" maxLength="41">Włącz opcje dla programistów</string>
     <string name="disable_dev_options">Wyłącz opcje dla programistów</string>
-    <string name="dev_options_warning">Przed włączeniem opcji deweloperskich upewnij się, że wiesz co robisz. Te opcje są niebezpieczne i mogą zniszczyć aplikację lub uszkodzić kolekcję.\n\nZauważ, że te opcje nie są odpowiednie dla większości użytkowników i dlatego nie są przetłumaczone, więc są w języku angielskim.</string>
+    <string name="dev_options_warning">Przed włączeniem opcji dla programistów  upewnij się, że wiesz co robisz. Te opcje są niebezpieczne i mogą uszkodzić aplikację lub uszkodzić kolekcję.\n\nZauważ, że te opcje nie są odpowiednie dla większości użytkowników i dlatego nie są przetłumaczone, więc są w języku angielskim.</string>
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->
@@ -320,7 +320,7 @@
         AnkiDroid rozpocznie usuwanie niektórych z nich, aby zwolnić miejsce na dysku.
         <br><br>
         Zauważ, że pliki multimedialne nie wchodzą w skład są kopii zapasowej.
-        Aby być bezpiecznym, synchronizuj swoją kolekcję lub wykonaj kopię zapasową – eksport.
+        Dla bezpieczeństwa synchronizuj swoją kolekcję lub wykonaj kopię zapasową – eksport.
         <br><br>
         Możesz przywrócić z kopię zapasową i eksportować swoją kolekcję w menu listy talii.
     ]]></string>
@@ -343,7 +343,7 @@
     </plurals>
     <!-- Delete unused media -->
     <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">Usuń nieużywane pliki multimedialne</string>
-    <string name="pref__delete_unused_media_files__summary">Usuń obrazy i inne media, które nie są poprzedzone _ i nie są odwoływane przez żadne notatki</string>
+    <string name="pref__delete_unused_media_files__summary">Usuń obrazy i inne media, które nie są poprzedzone _ i nie ma do nich odwołań w żadnych notatkach</string>
     <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">Usuń nieużywane pliki multimedialne</string>
     <!-- Delete backups -->
     <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">Usuń kopie zapasowe</string>
@@ -387,16 +387,16 @@
     <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Study Screen">Pudełko</string>
     <string name="reviewer_toolbar_top" maxLength="41" comment="Setting to put the toolbar on the top of the study screen">Góra</string>
     <string name="reviewer_toolbar_bottom" maxLength="41" comment="Setting to put the toolbar on the bottom of the study screen">Dół</string>
-    <string name="reviewer_toolbar_none" maxLength="41" comment="Setting to remove the toolbar from the study screen">Próżnica</string>
+    <string name="reviewer_toolbar_none" maxLength="41" comment="Setting to remove the toolbar from the study screen">Brak</string>
     <string name="toolbar" maxLength="41">Pasek narzędzi</string>
     <string name="toolbar_actions" maxLength="41">Akcje paska narzędzi</string>
     <string name="toolbar_position" maxLength="28">Pozycja paska narzędzi</string>
     <string name="new_study_screen" maxLength="41">Nowy ekran nauki</string>
-    <string name="new_study_screen_summ"><![CDATA[Improved study screen that will succeed the current one. Some features of the old screen have been changed or removed. Please report any <a href="%1$s">feedback</a> or <a href="%2$s">bugs</a>.]]></string>
-    <string name="show_answer_feedback" maxLength="41">Show answer feedback</string>
+    <string name="new_study_screen_summ"><![CDATA[Ulepszony ekran nauki, który zastąpi obecny. Niektóre funkcje starego ekranu zostały zmienione lub usunięte. Prosimy o zgłaszanie  <a href="%1$s">opinii</a> lub <a href="%2$s">błędów</a>.]]></string>
+    <string name="show_answer_feedback" maxLength="41">Pokaż reakcję odpowiedzi</string>
     <string name="screen" maxLength="41">Ekran</string>
-    <string name="only_answer" maxLength="41" comment="Configuration of the \'Answer\' commands to only answer the card">Only answer</string>
-    <string name="flip_and_answer" maxLength="41" comment="Configuration of the \'Answer\' commands to answer the card if on the answer side, and flip it if on the question side">Flip and answer</string>
+    <string name="only_answer" maxLength="41" comment="Configuration of the \'Answer\' commands to only answer the card">Tylko odpowiedź</string>
+    <string name="flip_and_answer" maxLength="41" comment="Configuration of the \'Answer\' commands to answer the card if on the answer side, and flip it if on the question side">Odwróć i odpowiedz</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">Otwórz ustawienia</string>
 </resources>

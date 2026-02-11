@@ -55,7 +55,7 @@
     <string name="CardEditorTags">Метки: %1$s</string>
     <string name="CardEditorCards">Карточки: %1$s</string>
     <string name="edit_occlusions">Править скрытие</string>
-    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
+    <string name="paste_from_clipboard" maxLength="28">Вставить из буфера обмена</string>
     <string name="tag_name">Название метки</string>
     <string name="add_new_filter_tags">Добавить/отфильтровать метки</string>
     <string name="add_tag" maxLength="28">Добавить метку</string>
@@ -76,7 +76,7 @@
     <string name="whiteboard_remove_brush_message">Вы уверены, что хотите удалить эту кисть?</string>
     <string name="whiteboard_ink_eraser" comment="Title of the whiteboard Ink eraser">Чернила</string>
     <string name="whiteboard_stroke_eraser" comment="Title of the whiteboard Stroke eraser">Штрих</string>
-    <string name="stylus_mode" comment="Title of the menu item that toggles the whiteboard stylus mode" maxLength="28">Stylus mode</string>
+    <string name="stylus_mode" comment="Title of the menu item that toggles the whiteboard stylus mode" maxLength="28">Режим стилей</string>
     <string name="cannot_remove_last_brush_message">The last brush may not be removed</string>
     <string name="enable_whiteboard" maxLength="28">Включить доску</string>
     <string name="disable_whiteboard">Отключить доску</string>
@@ -85,7 +85,7 @@
     <string name="disable_eraser" maxLength="28">Отключить ластик</string>
     <string name="hide_whiteboard" maxLength="28">Скрыть доску</string>
     <string name="clear_whiteboard" maxLength="28">Стереть с доски</string>
-    <string name="hide_toolbar" maxLength="28">Hide toolbar</string>
+    <string name="hide_toolbar" maxLength="28">Скрыть панель инструментов</string>
     <string name="replay_media" maxLength="28">Повторить медиа</string>
     <string name="leech_suspend_notification">Карточка помечена как приставучая и исключена</string>
     <string name="leech_notification">Карточка помечена как приставучая</string>
@@ -240,7 +240,7 @@
     <string name="search_decks" maxLength="28">Найти колоду</string>
     <string name="ankidroid_init_failed_webview_title">Критическая ошибка</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid использует системный WebView, который сейчас не доступен. Это может произойти, если система устанавливает обновления. Повторите попытку через несколько минут.\n\n%s</string>
-    <string name="ankidroid_init_failed_storage">AnkiDroid cannot access storage due to an Android error.\n\n%s</string>
+    <string name="ankidroid_init_failed_storage">AnkiDroid не может получить доступ к хранилищу из-за ошибки Android.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">Размер шрифта</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Показать панель инструментов</string>
@@ -270,9 +270,9 @@
     <!-- IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
-    <string name="invalid_value" comment="Error message in IncrementerNumberRangePreference when input is not a valid number">Invalid value</string>
-    <string name="maximum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the maximum allowed value">Maximum value is %d</string>
-    <string name="minimum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the minimum allowed value">Minimum value is %d</string>
+    <string name="invalid_value" comment="Error message in IncrementerNumberRangePreference when input is not a valid number">Недопустимое значение</string>
+    <string name="maximum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the maximum allowed value">Максимальное значение - %d</string>
+    <string name="minimum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the minimum allowed value">Минимальное значение - %d</string>
     <!-- Used for credential empty warning message -->
     <string name="invalid_email">Введите допустимую почту</string>
     <string name="password_empty">Требуется пароль</string>
@@ -317,10 +317,10 @@
     <string name="field_editor_model_not_available">Не удалось получить доступ к коллекции. Попробуйте еще раз.</string>
     <string name="cd_manage_notetypes_add">Добавить новый тип записи</string>
     <plurals name="note_types_selected">
-        <item quantity="one">%d note type selected</item>
-        <item quantity="few">%d note types selected</item>
-        <item quantity="many">%d note types selected</item>
-        <item quantity="other">%d note types selected</item>
+        <item quantity="one">%d тип записи выбран</item>
+        <item quantity="few">%d типа записей выбрано</item>
+        <item quantity="many">%d типов записей выбрано</item>
+        <item quantity="other">%d типов записей выбрано</item>
     </plurals>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">Учиться эффективнее</string>
@@ -388,7 +388,7 @@
     <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">Копировать шаблон как markdown</string>
     <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">Изменить вид браузера</string>
     <string name="missing_user_action_dialog_message" comment="%s is the user action number">В этом блокноте не задано действие пользователя %s. Пожалуйста, настройте его</string>
-    <string name="feature_not_supported_by_study_screen">This card has features that are not yet supported by the new study screen.</string>
+    <string name="feature_not_supported_by_study_screen">Эта карта имеет функции, которые еще не поддерживаются новым экраном обучения.</string>
     <string name="directory_inaccessible_info">Узнайте больше о том, как восстановить доступ здесь %s или перейдите к настройкам для обновления папки коллекции.</string>
     <!-- Scheduler Upgrade Required Dialog title-->
     <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">Требуется обновление расписания</string>

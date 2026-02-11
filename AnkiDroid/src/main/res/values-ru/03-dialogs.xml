@@ -275,16 +275,16 @@
     <string name="import_error_resolution_try_again">Повторите импорт файла</string>
     <string name="import_error_resolution_free_up_space">Убедитесь что на устройстве достаточно свободного места</string>
     <string name="import_error_resolution_check_internet">Убедитесь что вы подключены к Интернету</string>
-    <string name="import_error_resolution_copy_to_device">Copy the file to your device and try again with the local file</string>
-    <string name="import_error_resolution_select_file">Open the file using your device’s file browser app</string>
+    <string name="import_error_resolution_copy_to_device">Скопируйте файл на ваше устройство и повторите попытку с локальным файлом</string>
+    <string name="import_error_resolution_select_file">Открыть файл с помощью файлового менеджера вашего устройства</string>
     <!-- Post-login dialog -->
-    <string name="login_successful">Login successful</string>
-    <string name="sync_now">Sync now?</string>
+    <string name="login_successful">Вход выполнен успешно</string>
+    <string name="sync_now">Синхронизировать сейчас?</string>
     <!--Change Note Type Dialog Fragment-->
-    <string name="card_numbers_unchanged">Card numbers will remain unchanged</string>
+    <string name="card_numbers_unchanged">Номера карт останутся без изменений</string>
     <!-- Subset of TR.changeNotetypeToFromCloze -->
     <string name="extra_cloze_deletions_removed">If changing to a regular note type, and there are more cloze deletions than available card templates, any extra cards will be removed.</string>
-    <string name="different_note_types_selected">Please select notes from only one notetype.</string>
+    <string name="different_note_types_selected">Пожалуйста, выберите записи только одного типа.</string>
     <string name="error_no_changes_to_save">Нет изменений для сохранения</string>
-    <string name="choose_color">Choose color</string>
+    <string name="choose_color">Выберите цвет</string>
 </resources>

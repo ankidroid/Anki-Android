@@ -142,8 +142,8 @@
     <string name="backup_limits_frequency">頻度</string>
     <string name="backup_limits_lifetime">保管期間</string>
     <string name="app_theme" maxLength="41">テーマ</string>
-    <string name="day_theme" maxLength="41">ライトモードのテーマ</string>
-    <string name="night_theme" maxLength="41">ダークモードのテーマ</string>
+    <string name="day_theme" maxLength="41">ライト テーマ</string>
+    <string name="night_theme" maxLength="41">ダーク テーマ</string>
     <string name="language" maxLength="41">言語</string>
     <string name="language_system">システム言語</string>
     <string name="notification_pref" maxLength="41">通知</string>

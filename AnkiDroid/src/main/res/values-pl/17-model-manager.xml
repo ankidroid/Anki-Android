@@ -77,7 +77,7 @@
     <!--This prefix is used for standard note types-->
     <string name="model_browser_add_clone">Sklonuj: %1$s</string>
     <!--Browser Appearance-->
-    <string name="card_template_browser_appearance_summary">Wprowadź szablon, który przeglądarka kart będzie używała do wyświetlania twoich kart. Możesz użyć tego by wyświetlać bardziej zwięzłe odpowiedzi.\n\nSzablon \n\"Stolicą kraju {{Country}} jest:\"\nmoże być skrócony w przeglądarce kart do\n\"Stolica: {{Country}}\"</string>
+    <string name="card_template_browser_appearance_summary">Wprowadź szablon, który przeglądarka kart będzie używała do wyświetlania twoich kart. Możesz użyć tego, by wyświetlać bardziej zwięzłe odpowiedzi.\n\nSzablon \n\"Stolicą kraju {{Country}} jest:\"\nmoże być skrócony w przeglądarce kart do\n\"Stolica: {{Country}}\"</string>
     <string name="card_template_browser_appearance_question_format">Format pytania</string>
     <string name="card_template_browser_appearance_answer_format">Format odpowiedzi</string>
     <string name="card_template_browser_appearance_restore_default_dialog">Przywrócić wartości domyślne?</string>
@@ -87,6 +87,6 @@
     <string name="card_template_editor_deck_override_off">Nadpisywanie talii (wyłączone)</string>
     <string name="model_manager_deck_override_added_message">Ustaw domyślną talię ‘%1$s’ jako ‘%2$s’</string>
     <string name="model_manager_deck_override_removed_message">Usunięto domyślną talię dla  ‘%s’</string>
-    <string name="deck_override_explanation">Wybierz talię by wstawić do niej nowe karty  ‘%s’</string>
+    <string name="deck_override_explanation">Wybierz talię, by wstawić do niej nowe karty  ‘%s’</string>
     <string name="deck_picker_dialog_filter_decks" maxLength="28">Filtruj talie</string>
 </resources>

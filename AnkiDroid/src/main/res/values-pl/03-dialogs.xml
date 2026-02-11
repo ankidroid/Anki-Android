@@ -44,10 +44,10 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="check_db_title">Sprawdź bazę danych</string>
-    <string name="check_db_warning">To może zająć dużo czasu.</string>
+    <string name="check_db_title">Sprawdzić bazę danych?</string>
+    <string name="check_db_warning">To może zająć dłuższą chwilę</string>
     <string name="contextmenu_deckpicker_delete_deck" maxLength="28">Skasuj talię</string>
-    <string name="delete_deck_title">Skasuj talię</string>
+    <string name="delete_deck_title">Usunąć talię?</string>
     <plurals name="delete_deck_message">
         <item quantity="one">Usunąć wszystkie karty z %1$s? Jest tam %2$d karta</item>
         <item quantity="few">Usunąć wszystkie karty z %1$s? Są tam %2$d karty</item>
@@ -71,13 +71,13 @@
     <string name="storage_full_message">Nie ma wystarczającej ilości wolnego miejsca, aby otworzyć AnkiDroid. Zwolnij trochę miejsca, aby kontynuować.</string>
     <string name="repair_deck_dialog">Czy na pewno chcesz próbować naprawić bazę danych? \n\nPrzed próbą naprawy zostanie utworzona kopia w katalogu \'%s\'.</string>
     <string name="intent_aedict_empty">Kategoria \'Domyślne\' jest pusta</string>
-    <string name="intent_aedict_category">Aby dodać karty AnkiDroid usuń wszystkie kategorie Notatnika lub dodaj jedną o nazwie \'default\'</string>
+    <string name="intent_aedict_category">Aby dodać karty do AnkiDroid, usuń wszystkie kategorie Notatnika lub dodaj jedną o nazwie \'Domyślne\'</string>
     <string name="custom_study_new_extend">Zwiększ/zmniejsz (“-3”) dzisiejszy limit nowych kart</string>
-    <string name="custom_study_rev_extend">Zwiększ/zmniejsz (“-3”) dzisiejszy limit przeglądanych kart</string>
+    <string name="custom_study_rev_extend">Zwiększ/zmniejsz (“-3”) dzisiejszy limit powtórek</string>
     <string name="custom_study_forgotten">Przejrzyj zapomniane karty z ostatnich x dni:</string>
-    <string name="custom_study_ahead">Przejrzyj z wyprzedzeniem x dni:</string>
+    <string name="custom_study_ahead">Powtórz z wyprzedzeniem x dni:</string>
     <string name="custom_study_preview">Podgląd nowych kart dodanych w ostatnich x dniach:</string>
-    <string name="custom_study_tags">Wybierz losowo x kart z talii:</string>
+    <string name="custom_study_tags">Wybierz x kart z talii:</string>
     <string name="storage_full_title">Pamięć jest pełna</string>
     <string name="storage_almost_full_title">Pamięć jest prawie pełna</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Brak miejsca</string>
@@ -109,8 +109,8 @@
     <string name="check_media_title">Sprawdzić media?</string>
     <string name="check_media_warning">To może trwać bardzo długo przy dużych kolekcjach</string>
     <string name="check_media_message">Sprawdzanie mediów&#8230;</string>
-    <string name="check_media_adding_missing_tag">Dodawanie etykiet&#8230;</string>
-    <string name="check_media_tags_added">Etykiety dodane</string>
+    <string name="check_media_adding_missing_tag">Dodawanie tagów&#8230;</string>
+    <string name="check_media_tags_added">Tagi dodane</string>
     <string name="delete_media_message">Usuwanie mediów&#8230;</string>
     <string name="delete_media_result_title">Wynik usuwania</string>
     <plurals name="delete_media_result_message">
@@ -131,7 +131,7 @@
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Nie uzyskano uprawnienia do nagrywania dźwięków</string>
     <string name="permission_denied">Brak uprawnień</string>
-    <string name="recording_permission_denied_message">Microphone permission is necessary for the “Record voice” feature. Please grant it in the app settings.</string>
+    <string name="recording_permission_denied_message">Uprawnienia do mikrofonu są niezbędne dla funkcji \"Nagrywanie głosu\". Przyznaj je w ustawieniach aplikacji.</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid został zaktualizowany</string>
     <string name="integrity_check_startup_content">AnkiDroid został zaktualizowany. Ta aktualizacja zawiera poprawki dotyczące ewentualnych problemów z bazą danych. Zalecamy teraz sprawdzenie bazy danych.</string>
@@ -146,12 +146,12 @@
     <string name="database_locked_title">Baza danych zablokowana</string>
     <string name="database_locked_summary">Baza danych AnkiDroid jest teraz używana przez inną aplikację. Zamknij drugą aplikację, a następnie ponownie otwórz AnkiDroid.</string>
     <string name="incompatible_database_version_title">Niekompatybilna wersja bazy danych</string>
-    <string name="incompatible_database_version_summary">Baza danych jest wersji wyżej niż najwyższa obsługiwana przez AnkiDroid. Zaktualizuj AnkiDroid lub przywróć poprzednią wersję bazy danych by kontynuować. Obsługiwana wersja: %1$d\nObecna wersja: %2$d\nPoniższe opcje przywracania nadpiszą twoją obecną kolekcję, prawdopodobnie kompatybilną wersją</string>
+    <string name="incompatible_database_version_summary">Baza danych jest w wersji wyższejej niż najwyższa obsługiwana przez AnkiDroid. Zaktualizuj AnkiDroid lub przywróć poprzednią wersję bazy danych, by kontynuować. Obsługiwana wersja: %1$d\nwersja bazy danych: %2$d\nPoniższe opcje przywracania nadpiszą twoją obecną kolekcję, prawdopodobnie kompatybilną wersją</string>
     <!-- Deck Picker Background-->
     <string name="background_image_applied">Ustawiono obraz w tle</string>
     <string name="background_image_removed">Obraz w tle usunięty</string>
     <string name="no_image_selected">Nie wybrano żadnego obrazu</string>
-    <string name="error_selecting_image">Wystąpił błąd podczas wybierania obrazu. Proszę sprawdzić podręcznik użytkownika. %s</string>
+    <string name="error_selecting_image">Wystąpił błąd podczas wybierania obrazu. Sprawdź podręcznik użytkownika. %s</string>
     <string name="error_deleting_image">Błąd podczas usuwania obrazu</string>
     <string name="failed_to_apply_background_image">Nie udało się ustawić obrazu w tle%s</string>
     <string name="background_image_too_large">Tło ekranu wyboru talii zbyt duże</string>
@@ -159,7 +159,7 @@
     <string name="image_dimensions_too_large">Rozmiary obrazu są zbyt duże (%1$d × %2$d)</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
-    <string name="intent_handler_failed_no_storage_permission">Brak wymaganych uprawnień do przechowywania danych. Proszę przyznać uprawnienia do pamięci, a następnie ponowić próbę.</string>
+    <string name="intent_handler_failed_no_storage_permission">Brak wymaganych uprawnień do przechowywania danych. Przyznaj uprawnienia do pamięci, a następnie ponów próbę.</string>
     <!-- Boot Service -->
     <string name="boot_service_failed_to_schedule_notifications">Nie udało się ustawić przypomnień</string>
     <string name="boot_service_too_many_notifications">Ustawiono zbyt dużo przypomnień. Niektóre się nie pojawią</string>
@@ -198,12 +198,12 @@
         <item quantity="one" comment="Consider keeping the unbreakable space after the digit">Automatyczna synchronizacja może zostać uruchomiona za %d sekundę</item>
         <item quantity="few">Automatyczna synchronizacja może zostać uruchomiona za %d sekundy</item>
         <item quantity="many">Automatyczna synchronizacja może zostać uruchomiona za %d sekund</item>
-        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">An automatic sync may be triggered in %d seconds</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">Automatyczna synchronizacja może zostać uruchomiona za %d sekund</item>
     </plurals>
     <string name="metered_sync_data_warning">Twój dostawca Internetu może pobierać opłaty za korzystanie z danych</string>
     <string name="deck_picker_new">Liczba nowych kart do zobaczenia dziś w tej talii.</string>
     <string name="deck_picker_rev">Liczba kart do powtórki na dziś w tej talii.</string>
-    <string name="deck_picker_lrn">Liczba kart w uczeniu się w tej talii.</string>
+    <string name="deck_picker_lrn">Liczba kart w fazie nauki w tej talii.</string>
     <!-- This description is valid fos
     sched V2. For V1, it was counting the number of repetitions of cards in learning. This approximation is acceptable
     for the sake of simplicity and because V1 will leave.-->
@@ -213,7 +213,7 @@
     <string name="import_csv">Plik tekstowy (.txt, .csv)</string>
     <!-- scoped storage -->
     <string name="backup_your_collection">Utwórz kopię zapasową swojej kolekcji</string>
-    <string name="backup_collection_message">Nie wykonałeś kopii zapasowej swojej kolekcji przez jakiś czas. Powinieneś to zrobić teraz, aby zapobiec utracie danych</string>
+    <string name="backup_collection_message">Nie wykonałeś kopii zapasowej swojej kolekcji od pewnego czasu. Powinieneś to zrobić teraz, aby zapobiec utracie danych</string>
     <string name="button_backup" maxLength="41">Kopia zapasowa</string>
     <string name="button_disable_reminder">Wyłącz przypomnienie</string>
     <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Później</string>
@@ -225,7 +225,7 @@
     <string name="empty_deck_name">Nazwa talii nie może być pusta</string>
     <string name="create_deck_numeric_hint">W przypadku wystąpienia problemów związanych z kolejnością talii (np. „10” pojawia się przed „2”), „2” należy zastąpić „02”.</string>
     <!-- Set Due Date -->
-    <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Ustaw interwał na tę samą wartość</string>
+    <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Ustaw przerwę na tę samą wartość</string>
     <plurals name="set_due_date_single_day_label" comment="a date control is provided afterwards">
         <item quantity="one">Pokaż kartę za</item>
         <item quantity="few">Pokaż karty za</item>
@@ -248,20 +248,20 @@
         <item quantity="one">Aktualna przerwa: %d dzień</item>
         <item quantity="few">Aktualna przerwa: %d dni</item>
         <item quantity="many">Aktualna przerwa: %d dni</item>
-        <item quantity="other">Current interval: %d days</item>
+        <item quantity="other">Aktualna przerwa: %d dni</item>
     </plurals>
     <string name="range_delimiter" comment="Placed between two input boxes to denote a range">–</string>
     <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">Od</string>
     <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">Do</string>
     <!-- Instant Note Editor -->
     <string name="cloze_note_required">Wymagana Notatka typu \"Luka\"</string>
-    <string name="cloze_not_found_message">Nie znaleziono notatki typu Cloze, otwórz edytor notatek lub spróbuj ponownie po dodaniu notatki typu Cloze.</string>
+    <string name="cloze_not_found_message">Nie znaleziono notatki typu Luka, otwórz edytor notatek lub spróbuj ponownie po dodaniu notatki typu Luka.</string>
     <string name="open">Otwórz</string>
-    <string name="change_cloze_number">Zmień numer zamykający</string>
-    <string name="cloze_number">Numer zamknięcia:</string>
+    <string name="change_cloze_number">Zmień numer luki</string>
+    <string name="cloze_number">Numer luki:</string>
     <string name="change_editor_mode">Zmień tryb edytora</string>
     <string name="open_note_editor">Otwórz edytor notatek</string>
-    <string name="change_cloze_mode">Zmień numer zamykający</string>
+    <string name="change_cloze_mode">Zmień rodzaj luki</string>
     <!-- Outdated WebView dialog -->
     <string name="webview_update_message">System WebView jest nieaktualny. Niektóre funkcje nie będą działać poprawnie. Zaktualizuj go.\n\nZainstalowana wersja: %1$d\nMinimalna wymagana wersja: %2$d</string>
     <string name="compress">Kompresuj</string>
@@ -271,19 +271,19 @@
     <string name="tts_error_dialog_change_button_text">Zmień silnik</string>
     <string name="tts_error_dialog_supported_voices_button_text">Opcje głosów</string>
     <!-- import_cache_error_resolutions -->
-    <string name="import_error_resolution_try_again">Re-import the file</string>
-    <string name="import_error_resolution_free_up_space">Ensure there is sufficient free space on your device</string>
-    <string name="import_error_resolution_check_internet">Ensure you are connected to the internet</string>
-    <string name="import_error_resolution_copy_to_device">Copy the file to your device and try again with the local file</string>
-    <string name="import_error_resolution_select_file">Open the file using your device’s file browser app</string>
+    <string name="import_error_resolution_try_again">Zaimportuj plik ponownie</string>
+    <string name="import_error_resolution_free_up_space">Upewnij się, że na urządzeniu jest wystarczająco dużo wolnego miejsca</string>
+    <string name="import_error_resolution_check_internet">Upewnij się, że jesteś połączony z Internetem</string>
+    <string name="import_error_resolution_copy_to_device">Skopiuj plik do urządzenia i spróbuj ponownie z plikiem lokalnym</string>
+    <string name="import_error_resolution_select_file">Otwórz plik za pomocą przeglądarki plików twojego urządzenia</string>
     <!-- Post-login dialog -->
-    <string name="login_successful">Login successful</string>
-    <string name="sync_now">Sync now?</string>
+    <string name="login_successful">Zalogowano pomyślnie</string>
+    <string name="sync_now">Synchronizować teraz?</string>
     <!--Change Note Type Dialog Fragment-->
-    <string name="card_numbers_unchanged">Card numbers will remain unchanged</string>
+    <string name="card_numbers_unchanged">Numery kart pozostaną niezmienione</string>
     <!-- Subset of TR.changeNotetypeToFromCloze -->
-    <string name="extra_cloze_deletions_removed">If changing to a regular note type, and there are more cloze deletions than available card templates, any extra cards will be removed.</string>
-    <string name="different_note_types_selected">Please select notes from only one notetype.</string>
-    <string name="error_no_changes_to_save">No changes to save</string>
-    <string name="choose_color">Choose color</string>
+    <string name="extra_cloze_deletions_removed">Przy zmianie  zwykły typ notatki i większej liczbie luk do wypełnienia niż dostępnych szablonów karty, wszystkie dodatkowe karty zostaną usunięte.</string>
+    <string name="different_note_types_selected">Wybierz  notatki z tylko jednego typu notatki.</string>
+    <string name="error_no_changes_to_save">Brak zmian do zapisania</string>
+    <string name="choose_color">Wybierz kolor</string>
 </resources>

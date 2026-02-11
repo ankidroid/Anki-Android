@@ -85,7 +85,7 @@
     <string name="disable_eraser" maxLength="28">Desactivar borrador</string>
     <string name="hide_whiteboard" maxLength="28">Ocultar encerado</string>
     <string name="clear_whiteboard" maxLength="28">Limpar encerado</string>
-    <string name="hide_toolbar" maxLength="28">Hide toolbar</string>
+    <string name="hide_toolbar" maxLength="28">Ocultar a barra de ferramentas</string>
     <string name="replay_media" maxLength="28">Reproducir multimedia</string>
     <string name="leech_suspend_notification">Tarxeta marcada como sambesuga e suspendida</string>
     <string name="leech_notification">Tarxeta marcada como sambesuga</string>
