@@ -106,13 +106,14 @@ abstract class PageFragment(
         savedInstanceState: Bundle?,
     ) {
         val ankiActivity = requireActivity() as AnkiActivity
+        server = AnkiServer(this).also { it.start() }
+        webViewLayout = view.findViewById(R.id.webview_layout)
+
         if (requiresModernWebView() && checkWebviewVersion(ankiActivity)) {
             Timber.w("${this::class.simpleName} requires modern WebView (Chrome 90+), aborting load")
             ankiActivity.onBackPressedDispatcher.onBackPressed()
             return
         }
-        server = AnkiServer(this).also { it.start() }
-        webViewLayout = view.findViewById(R.id.webview_layout)
 
         view.findViewById<MaterialToolbar>(R.id.toolbar)?.setNavigationOnClickListener {
             requireActivity().onBackPressedDispatcher.onBackPressed()

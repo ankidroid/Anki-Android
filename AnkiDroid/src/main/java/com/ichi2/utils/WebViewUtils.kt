@@ -34,8 +34,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 
-internal const val OLDEST_WORKING_WEBVIEW_VERSION_CODE = 443000000L
-internal const val OLDEST_WORKING_WEBVIEW_VERSION = 90
+internal const val OLDEST_WORKING_WEBVIEW_VERSION_CODE = 418306960L
+internal const val OLDEST_WORKING_WEBVIEW_VERSION = 85
 
 /**
  * Shows a dialog if the current WebView version is older than the last supported version.
@@ -44,7 +44,7 @@ fun checkWebviewVersion(activity: AnkiActivity): Boolean {
     val userVisibleCode = getChromeLikeWebViewVersionIfOutdated(activity) ?: return false
 
     // Provide guidance to the user if the WebView is outdated
-    val webviewPackageInfo = getAndroidSystemWebViewPackageInfo(activity.packageManager)
+    val webviewPackageInfo = WebViewCompat.getCurrentWebViewPackage(activity)
     val legacyWebViewPackageInfo = getLegacyWebViewPackageInfo(activity.packageManager)
     // TODO modify the alert dialog text to handle the usage of developer builds for system WebView
     if (legacyWebViewPackageInfo != null) {
@@ -80,7 +80,7 @@ fun getWebviewUserAgent(context: Context): String? {
  */
 private fun getChromeLikeWebViewVersionIfOutdated(activity: AnkiActivity): Int? {
     // If we cannot get the package information at all, return null
-    val webviewPackageInfo = getAndroidSystemWebViewPackageInfo(activity.packageManager) ?: return null
+    val webviewPackageInfo = WebViewCompat.getCurrentWebViewPackage(activity) ?: return null
     val webviewVersion =
         webviewPackageInfo.versionName ?: run {
             Timber.w("Failed to obtain WebView version")
