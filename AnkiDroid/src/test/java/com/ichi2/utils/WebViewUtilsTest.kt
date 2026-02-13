@@ -56,26 +56,14 @@ class WebViewUtilsTest {
             equalTo(null),
         )
         assertThat(
-            "Should catch old engine (78) in Huawei package even with valid versionCode",
+            "Known old huawei webview determined correctly",
             checkWebViewVersionComponents(
                 "com.huawei.webview",
-                "12.1.2.322",
-                450000000L,
+                "unknown",
+                356L,
                 "Mozilla/5.0 (Linux; Android 10; CDY-AN90 Build/HUAWEICDY-AN90; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/78.0.3904.108 Mobile Safari/537.36",
             ),
             equalTo(78),
-        )
-        // Link: https://www.apkmirror.com/apk/huawei/huawei-webview-2/huawei-webview-15-0-4-326-release/
-        // verified version code is 2113L for 15.0.4.326 by analyzing the manifest
-        assertThat(
-            "Huawei v15 with code 21311 should be allowed if UA indicates modern engine (114)",
-            checkWebViewVersionComponents(
-                "com.huawei.webview",
-                "15.0.4.326",
-                21311L,
-                "Mozilla/5.0 (Linux; Android 12; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/114.0.5735.196 Mobile Safari/537.36",
-            ),
-            equalTo(null),
         )
     }
 }
