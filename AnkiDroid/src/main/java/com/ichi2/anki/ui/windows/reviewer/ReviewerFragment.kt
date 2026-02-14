@@ -20,6 +20,8 @@ import android.content.Intent
 import android.hardware.SensorManager
 import android.net.Uri
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.KeyEvent
 import android.view.MenuItem
 import android.view.View
@@ -272,6 +274,31 @@ class ReviewerFragment :
                         if (autoFocusTypeAnswer) {
                             requestFocus()
                         }
+
+                        addTextChangedListener(
+                            object : TextWatcher {
+                                override fun afterTextChanged(s: Editable?) {
+                                    if (s.isNullOrEmpty()) return
+
+                                    val imm = context.getSystemService(InputMethodManager::class.java)
+                                    imm?.restartInput(this@apply)
+                                }
+
+                                override fun beforeTextChanged(
+                                    s: CharSequence?,
+                                    start: Int,
+                                    count: Int,
+                                    after: Int,
+                                ) {}
+
+                                override fun onTextChanged(
+                                    s: CharSequence?,
+                                    start: Int,
+                                    before: Int,
+                                    count: Int,
+                                ) {}
+                            },
+                        )
                     }
                 }
             }
