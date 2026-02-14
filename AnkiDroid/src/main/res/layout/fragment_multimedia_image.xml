@@ -31,11 +31,11 @@
             android:layout_marginHorizontal="8dp"
             android:layout_height="0dp"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/image_size_textview"
+            app:layout_constraintBottom_toTopOf="@id/image_file_size"
             style="@style/CardView.ViewerStyle" >
 
             <WebView
-                android:id="@+id/multimedia_webview"
+                android:id="@+id/multimedia_web_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
 
@@ -49,7 +49,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/imageview_container"
             android:gravity="center"
-            android:id="@+id/image_size_textview"
+            android:id="@+id/image_file_size"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
@@ -61,7 +61,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/image_size_textview"
+            app:layout_constraintTop_toBottomOf="@id/image_file_size"
             android:text="@string/multimedia_editor_field_editing_done"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

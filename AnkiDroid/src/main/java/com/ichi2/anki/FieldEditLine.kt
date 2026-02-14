@@ -23,7 +23,6 @@ import android.os.Parcelable
 import android.os.Parcelable.ClassLoaderCreator
 import android.util.AttributeSet
 import android.util.SparseArray
-import android.view.AbsSavedState
 import android.view.ActionMode
 import android.view.LayoutInflater
 import android.view.View
@@ -33,7 +32,7 @@ import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.os.ParcelCompat
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
-import com.ichi2.anki.databinding.CardMultimediaEditlineBinding
+import com.ichi2.anki.databinding.ViewCardMultimediaEditlineBinding
 import com.ichi2.compat.setTooltipTextCompat
 import com.ichi2.ui.AnimationUtil.collapseView
 import com.ichi2.ui.AnimationUtil.expandView
@@ -41,7 +40,7 @@ import java.util.Locale
 
 @KotlinCleanup("replace _name with `field`")
 class FieldEditLine : FrameLayout {
-    val binding = CardMultimediaEditlineBinding.inflate(LayoutInflater.from(context), this, true)
+    val binding = ViewCardMultimediaEditlineBinding.inflate(LayoutInflater.from(context), this, true)
     private var _name: String? = null
     private var expansionState = ExpansionState.EXPANDED
 
@@ -135,10 +134,6 @@ class FieldEditLine : FrameLayout {
 
     val lastViewInTabOrder: View
         get() = binding.expandButton
-
-    fun loadState(state: AbsSavedState) {
-        onRestoreInstanceState(state)
-    }
 
     override fun dispatchSaveInstanceState(container: SparseArray<Parcelable>) {
         dispatchFreezeSelfOnly(container)

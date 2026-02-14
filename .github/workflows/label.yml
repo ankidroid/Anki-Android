@@ -206,3 +206,21 @@ jobs:
               repo: context.repo.repo,
               labels: ['New contributor']
             })
+  
+  # Add 'Needs Review' label to newly opened, non-draft PRs
+  add_needs_review_label:
+    if: github.event.action == 'opened' && !github.event.pull_request.draft
+    permissions:
+      contents: read
+      pull-requests: write
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v8
+        with:
+          script: |
+            await github.rest.issues.addLabels({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels: ['Needs Review']
+            })

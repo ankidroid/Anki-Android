@@ -67,8 +67,8 @@
     <string name="pref_cat_controls" maxLength="41">Controls</string>
     <string name="pref_cat_advanced" maxLength="41">Advanced</string>
     <string name="pref_cat_workarounds" maxLength="41">Workarounds</string>
-    <string name="pref_cat_plugins" maxLength="41">Plugins</string>
-    <string name="pref_cat_editing" maxLength="41">Editing</string>
+    <string name="pref_cat_plugins" maxLength="41">Pluginad</string>
+    <string name="pref_cat_editing" maxLength="41">Muutmine</string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width" maxLength="41">Joone laius</string>
     <string name="use_input_tag" maxLength="41">Kirjuta vastus kaarti</string>
@@ -92,7 +92,7 @@
     <string-array name="answer_buttons_position_labels">
         <item>Ülal</item>
         <item>All</item>
-        <item>None</item>
+        <item>Puudub</item>
     </string-array>
     <string name="gestures" maxLength="41">Luba žestid</string>
     <string name="gestures_summ">Assign gestures to actions such as answering and editing cards.</string>
@@ -101,7 +101,7 @@
     <string name="show_keyboard_shortcuts" maxLength="41">Show keyboard shortcuts</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Full screen navigation drawer</string>
     <string name="gestures_fullscreen_nav_drawer_summary">Open navigation drawer when swiped right from anywhere on the screen</string>
-    <string name="gestures_none" maxLength="41" comment="No gestures">None</string>
+    <string name="gestures_none" maxLength="41" comment="No gestures">Pole</string>
     <string name="gestures_swipe_up" maxLength="41">Swipe up</string>
     <string name="gestures_swipe_down" maxLength="41">Swipe down</string>
     <string name="gestures_swipe_left" maxLength="41">Swipe left</string>
@@ -390,6 +390,8 @@
     <string name="new_study_screen_summ"><![CDATA[Improved study screen that will succeed the current one. Some features of the old screen have been changed or removed. Please report any <a href="%1$s">feedback</a> or <a href="%2$s">bugs</a>.]]></string>
     <string name="show_answer_feedback" maxLength="41">Show answer feedback</string>
     <string name="screen" maxLength="41">Screen</string>
+    <string name="only_answer" maxLength="41" comment="Configuration of the \'Answer\' commands to only answer the card">Only answer</string>
+    <string name="flip_and_answer" maxLength="41" comment="Configuration of the \'Answer\' commands to answer the card if on the answer side, and flip it if on the question side">Flip and answer</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">Open settings</string>
 </resources>

@@ -66,7 +66,7 @@
         Delete the note types below?
         Basic, Basic (and reversed card), Cloze
      -->
-    <string name="model_delete_multiple_warning">Delete the note types below?\n %s</string>
+    <string name="model_delete_multiple_warning">Poistetaanko seuraavat muistiinpanotyypit?\n %s</string>
     <string name="field_delete_warning">Oletko varma, että haluat poistaa tämän kentän?</string>
     <!--Model Add Suffixes-->
     <string name="model_browser_add_add">Lisää: %1$s</string>

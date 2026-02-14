@@ -72,7 +72,6 @@
     <string name="whiteboard_align_left" comment="Option to align the whiteboard toolbar on the left" maxLength="28">Solda</string>
     <string name="whiteboard_align_bottom" comment="Option to align the whiteboard toolbar on the bottom" maxLength="28">Altda</string>
     <string name="whiteboard_align_right" comment="Option to align the whiteboard toolbar on the right" maxLength="28">Sağda</string>
-    <string name="whiteboard_clear" comment="Button text to clear the whiteboard" maxLength="28">Təmizlə</string>
     <string name="whiteboard_more_options" comment="Tooltip of the whiteboard \'More\' button" maxLength="28">Daha çox seçim</string>
     <string name="whiteboard_remove_brush_message">Are you sure you want to remove this brush from your palette?</string>
     <string name="whiteboard_ink_eraser" comment="Title of the whiteboard Ink eraser">Ink</string>
@@ -86,6 +85,7 @@
     <string name="disable_eraser" maxLength="28">Pozanı deaktiv et</string>
     <string name="hide_whiteboard" maxLength="28">Lövhəni gizlət</string>
     <string name="clear_whiteboard" maxLength="28">Lövhəni təmizlə</string>
+    <string name="hide_toolbar" maxLength="28">Hide toolbar</string>
     <string name="replay_media" maxLength="28">Medianı yenidən oynat</string>
     <string name="leech_suspend_notification">Card marked as leech and suspended</string>
     <string name="leech_notification">Card marked as leech</string>
@@ -191,8 +191,6 @@
     <string name="select_tts" maxLength="28">Set TTS language</string>
     <string name="custom_study" maxLength="28">Custom study</string>
     <string name="dyn_deck_desc">This is a special deck for studying outside of the normal schedule. Cards will be automatically returned to their original decks after you review them. Deleting this deck from the deck list will return all remaining cards to their original deck.</string>
-    <string name="steps_error">Steps must be numbers greater than 0</string>
-    <string name="steps_min_error">At least one step is required</string>
     <string name="tag_editor_add_feedback">Touch “%2$s” to confirm adding “%1$s”</string>
     <string name="tag_editor_add_feedback_existing">Existing tag “%1$s” selected</string>
     <!-- Time spans -->
@@ -263,9 +261,12 @@
     <string name="create_shortcut_error">Error adding shortcut: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">Capitalize sentences</string>
     <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll" maxLength="28">Scroll toolbar</string>
-    <!-- Symbols used as Button text in IncrementNumberRangePreference -->
+    <!-- IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
+    <string name="invalid_value" comment="Error message in IncrementerNumberRangePreference when input is not a valid number">Invalid value</string>
+    <string name="maximum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the maximum allowed value">Maximum value is %d</string>
+    <string name="minimum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the minimum allowed value">Minimum value is %d</string>
     <!-- Used for credential empty warning message -->
     <string name="invalid_email">Enter a valid email</string>
     <string name="password_empty">Password is required</string>
@@ -346,7 +347,6 @@
     <string name="format_deck_description_as_markdown">Format as Markdown</string>
     <string name="help_button_content_description">Open help for ‘%s’</string>
     <string name="failed_to_copy">Failed to copy</string>
-    <string name="card_browser_unavailable_when_notes_mode">Unavailable in ‘Notes’ mode</string>
     <plurals name="unbury_cards_feedback">
         <item quantity="one">%d card unburied</item>
         <item quantity="other">%d cards unburied</item>
@@ -380,4 +380,6 @@
     <string name="directory_inaccessible_info">Learn more about how to restore access here %s or go to settings to update collection folder.</string>
     <!-- Scheduler Upgrade Required Dialog title-->
     <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">Scheduler upgrade required</string>
+    <!-- Whitespace is OK -->
+    <string name="list_separator" comment="The character and spacing to display between elements of a list, for example \', \' in \'Apple, Banana, Cherry" tools:ignore="TranslationTypo">, </string>
 </resources>

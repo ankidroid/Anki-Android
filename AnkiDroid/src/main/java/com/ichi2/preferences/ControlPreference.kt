@@ -20,15 +20,14 @@ import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
 import android.util.AttributeSet
-import android.view.View
 import android.widget.ArrayAdapter
-import android.widget.ListView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import androidx.fragment.app.DialogFragment
 import androidx.preference.DialogPreference
 import androidx.preference.PreferenceFragmentCompat
 import com.ichi2.anki.R
+import com.ichi2.anki.databinding.ControlPreferenceBinding
 import com.ichi2.anki.dialogs.GestureSelectionDialogUtils
 import com.ichi2.anki.dialogs.GestureSelectionDialogUtils.onGestureChanged
 import com.ichi2.anki.dialogs.KeySelectionDialogUtils
@@ -232,21 +231,21 @@ class ControlPreferenceDialogFragment : DialogFragment() {
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val view = requireActivity().layoutInflater.inflate(R.layout.control_preference, null)
+        val binding = ControlPreferenceBinding.inflate(requireActivity().layoutInflater)
 
-        setupAddBindingDialogs(view)
-        setupRemoveControlEntries(view)
+        setupAddBindingDialogs(binding)
+        setupRemoveControlEntries(binding)
 
         return AlertDialog.Builder(requireContext()).create {
             setTitle(preference.title)
             setIcon(preference.icon)
-            customView(view, paddingTop = 16.dp.toPx(context))
+            customView(binding.root, paddingTop = 16.dp.toPx(context))
             negativeButton(R.string.dialog_cancel)
         }
     }
 
-    private fun setupAddBindingDialogs(view: View) {
-        view.findViewById<View>(R.id.add_gesture).apply {
+    private fun setupAddBindingDialogs(binding: ControlPreferenceBinding) {
+        binding.addGesture.apply {
             setOnClickListener {
                 preference.showGesturePickerDialog()
                 dismiss()
@@ -254,29 +253,28 @@ class ControlPreferenceDialogFragment : DialogFragment() {
             isVisible = preference.areGesturesEnabled
         }
 
-        view.findViewById<View>(R.id.add_key).setOnClickListener {
+        binding.addKey.setOnClickListener {
             preference.showKeyPickerDialog()
             dismiss()
         }
 
-        view.findViewById<View>(R.id.add_axis).setOnClickListener {
+        binding.addAxis.setOnClickListener {
             preference.showAddAxisDialog()
             dismiss()
         }
     }
 
-    private fun setupRemoveControlEntries(view: View) {
+    private fun setupRemoveControlEntries(binding: ControlPreferenceBinding) {
         val bindings = preference.getMappableBindings().toMutableList()
-        val listView = view.findViewById<ListView>(R.id.list_view)
         if (bindings.isEmpty()) {
-            listView.isVisible = false
+            binding.listView.isVisible = false
             return
         }
         val titles =
             bindings.map {
                 getString(R.string.binding_remove_binding, it.toDisplayString(requireContext()))
             }
-        listView.apply {
+        binding.listView.apply {
             adapter = ArrayAdapter(requireContext(), R.layout.control_preference_list_item, titles)
             setOnItemClickListener { _, _, index, _ ->
                 bindings.removeAt(index)

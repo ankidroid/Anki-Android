@@ -74,10 +74,10 @@
     <string name="deck_removed_from_widget" comment="Snackbar when deck is removed from widget">Калода выдалена</string>
     <string name="deck_already_selected_message" comment="Snackbar when user try to select the same deck again">Гэта калода ўжо выбрана</string>
     <plurals name="deck_limit_reached">
-        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">You can select up to %d deck.</item>
-        <item quantity="few">You can select up to %d decks.</item>
-        <item quantity="many">You can select up to %d decks.</item>
-        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">You can select up to %d decks.</item>
+        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">Вы можаце выбраць да %d калоды.</item>
+        <item quantity="few">Вы можаце выбраць да %d калод.</item>
+        <item quantity="many">Вы можаце выбраць да %d калод.</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">Вы можаце выбраць да %d калод.</item>
     </plurals>
     <string name="empty_widget_state" comment="To denote the widget is empty">Прапушчаная калода. Націсніце, каб паўторна сканфігурыраваць</string>
     <string name="empty_collection_state_in_widget" comment="To denote the collection is empty">Пустая калекцыя. Скарыстайцеся праграмай, каб дадаць калоды. Пасля завяршэння працэсу сканфігурыруйце паўторна.</string>

@@ -29,7 +29,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.appbar.MaterialToolbar
 import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
@@ -38,16 +37,16 @@ import com.ichi2.anki.browser.BrowserColumnSelectionRecyclerItem.UsageItem
 import com.ichi2.anki.browser.ColumnUsage.ACTIVE
 import com.ichi2.anki.browser.ColumnUsage.AVAILABLE
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.databinding.BrowserColumnsSelectionBinding
 import com.ichi2.anki.dialogs.DiscardChangesDialog
 import com.ichi2.anki.model.CardsOrNotes
 import com.ichi2.anki.snackbar.showSnackbar
+import dev.androidbroadcast.vbpd.viewBinding
 import kotlinx.coroutines.runBlocking
 import timber.log.Timber
 
 /**
  * Allows a user to select and reorder the visible columns for the [CardBrowser]
- *
- * As with AnkiMobile, a user may select up to 6 columns to display.
  *
  * A user may drag columns between 2 [sections][ColumnUsage]: 'Active' and 'Available'
  * A user may use the + or - buttons to quickly move an item between sections
@@ -67,12 +66,12 @@ import timber.log.Timber
 class BrowserColumnSelectionFragment : DialogFragment(R.layout.browser_columns_selection) {
     private val viewModel: CardBrowserViewModel by activityViewModels()
 
+    private val binding by viewBinding(BrowserColumnsSelectionBinding::bind)
+
     lateinit var columnAdapter: BrowserColumnSelectionAdapter
 
     /** The columns which were selected when this dialog was opened */
     private lateinit var initiallySelectedColumns: List<CardBrowserColumn>
-
-    private lateinit var toolbar: MaterialToolbar
 
     private val onBackPressedDispatcher
         get() = (dialog as ComponentDialog).onBackPressedDispatcher
@@ -121,10 +120,9 @@ class BrowserColumnSelectionFragment : DialogFragment(R.layout.browser_columns_s
 
                 Pair(getSavedList(STATE_ACTIVE), getSavedList(STATE_AVAILABLE))
             }
-        setupRecyclerView(view, active, available)
+        setupRecyclerView(active, available)
 
-        this.toolbar = view.findViewById(R.id.toolbar)
-        toolbar.setOnMenuItemClickListener { menuItem ->
+        binding.toolbar.setOnMenuItemClickListener { menuItem ->
             Timber.d("menu item click: %s", menuItem.title)
             when (menuItem.itemId) {
                 R.id.action_save_columns -> {
@@ -147,7 +145,7 @@ class BrowserColumnSelectionFragment : DialogFragment(R.layout.browser_columns_s
                 else -> false
             }
         }
-        toolbar.setNavigationOnClickListener {
+        binding.toolbar.setNavigationOnClickListener {
             Timber.d("navigation up clicked")
             onBackPressedDispatcher.onBackPressed()
         }
@@ -164,7 +162,6 @@ class BrowserColumnSelectionFragment : DialogFragment(R.layout.browser_columns_s
     }
 
     private fun setupRecyclerView(
-        view: View,
         active: List<ColumnWithSample>,
         available: List<ColumnWithSample>,
     ) {
@@ -221,7 +218,7 @@ class BrowserColumnSelectionFragment : DialogFragment(R.layout.browser_columns_s
             },
         )
 
-        view.findViewById<RecyclerView>(R.id.recycler_view).apply {
+        binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(requireContext())
             this.adapter = columnAdapter
             itemTouchHelper.attachToRecyclerView(this)

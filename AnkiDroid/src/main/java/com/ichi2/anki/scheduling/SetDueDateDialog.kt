@@ -57,6 +57,8 @@ import com.ichi2.anki.servicelayer.getFSRSStatus
 import com.ichi2.anki.showThemedToast
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.internationalization.toSentenceCase
+import com.ichi2.anki.utils.doOnImeHidden
+import com.ichi2.anki.utils.ext.requireBoolean
 import com.ichi2.anki.utils.openUrl
 import com.ichi2.anki.withProgress
 import com.ichi2.utils.AndroidUiUtils
@@ -65,7 +67,6 @@ import com.ichi2.utils.dp
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.neutralButton
 import com.ichi2.utils.positiveButton
-import com.ichi2.utils.requireBoolean
 import com.ichi2.utils.title
 import dev.androidbroadcast.vbpd.viewBinding
 import kotlinx.coroutines.Deferred
@@ -142,7 +143,7 @@ class SetDueDateDialog : DialogFragment() {
                     text =
                         TR
                             .actionsSetDueDate()
-                            .toSentenceCase(this@SetDueDateDialog, R.string.sentence_set_due_date),
+                            .toSentenceCase(R.string.sentence_set_due_date),
                 )
                 positiveButton(R.string.dialog_ok) { launchUpdateDueDate() }
                 negativeButton(R.string.dialog_cancel)
@@ -430,7 +431,10 @@ private fun AnkiActivity.updateDueDate(
             return@asyncCatching null
         }
         Timber.d("updated %d cards", cardsUpdated)
-        showSnackbar(TR.schedulingSetDueDateDone(cardsUpdated), Snackbar.LENGTH_SHORT)
+        // Ensure the snackbar doesn't appear in the middle of the screen
+        doOnImeHidden {
+            showSnackbar(TR.schedulingSetDueDateDone(cardsUpdated), Snackbar.LENGTH_SHORT)
+        }
         return@asyncCatching cardsUpdated
     }
 

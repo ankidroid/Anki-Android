@@ -26,17 +26,17 @@ import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
 import com.ichi2.anki.browser.BrowserColumnSelectionFragment
 import com.ichi2.anki.browser.CardBrowserViewModel
-import com.ichi2.anki.databinding.BrowserOptionsDialogBinding
+import com.ichi2.anki.databinding.DialogBrowserOptionsBinding
 import com.ichi2.anki.model.CardsOrNotes
 import com.ichi2.utils.create
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
 import timber.log.Timber
 
-class BrowserOptionsDialog : AppCompatDialogFragment(R.layout.browser_options_dialog) {
+class BrowserOptionsDialog : AppCompatDialogFragment(R.layout.dialog_browser_options) {
     private val viewModel: CardBrowserViewModel by activityViewModels()
 
-    private lateinit var binding: BrowserOptionsDialogBinding
+    private lateinit var binding: DialogBrowserOptionsBinding
 
     /** The unsaved value of [CardsOrNotes] */
     private val dialogCardsOrNotes: CardsOrNotes
@@ -84,7 +84,7 @@ class BrowserOptionsDialog : AppCompatDialogFragment(R.layout.browser_options_di
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        binding = BrowserOptionsDialogBinding.inflate(layoutInflater)
+        binding = DialogBrowserOptionsBinding.inflate(layoutInflater)
 
         if (cardsOrNotes == CardsOrNotes.CARDS) {
             binding.selectCardsMode.isChecked = true

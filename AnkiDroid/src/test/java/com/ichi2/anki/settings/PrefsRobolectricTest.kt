@@ -42,7 +42,6 @@ import kotlin.reflect.KVisibility
 import kotlin.reflect.full.createType
 import kotlin.reflect.full.isSubtypeOf
 import kotlin.reflect.full.memberProperties
-import kotlin.sequences.map
 import kotlin.test.assertContains
 import kotlin.test.assertEquals
 
@@ -77,7 +76,7 @@ class PrefsRobolectricTest : RobolectricTest() {
     @Test
     fun `all default values match the preference XMLs`() {
         val keysAndDefaultValues = getKeysAndDefaultValues()
-        val devOptionsKeys = PreferenceTestUtils.getDevOptionsKeys(targetContext)
+        val developerOptionsKeys = PreferenceTestUtils.getDeveloperOptionsKeys(targetContext)
         val prefs =
             PreferenceTestUtils
                 .getAllPreferencesFragments(targetContext)
@@ -89,7 +88,7 @@ class PrefsRobolectricTest : RobolectricTest() {
                 .associate { PreferenceTestUtils.attrValueToString(it["key"]!!, targetContext) to it["defaultValue"] }
 
         for ((key, defaultValue) in keysAndDefaultValues.entries) {
-            if (key !in prefs || key in devOptionsKeys) continue
+            if (key !in prefs || key in developerOptionsKeys) continue
             val prefsDefaultValue = prefs.getValue(key)
             assertThat("The default value of '$key' matches the preference XML", defaultValue.toString(), equalTo(prefsDefaultValue))
         }

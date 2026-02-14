@@ -136,7 +136,15 @@ class SetDueDateDialogTest : RobolectricTest() {
     }
 }
 
-fun TabLayout.selectTab(index: Int) = selectTab(getTabAt(index))
+/**
+ * Selects a tab by index
+ *
+ * @throws IllegalArgumentException if index is invalid
+ */
+fun TabLayout.selectTab(index: Int) =
+    requireNotNull(getTabAt(index))
+        { "Tab $index not found" }
+        .also { tab -> selectTab(tab) }
 
 fun SetDueDateDialog.selectTab(index: Int) {
     val tabLayout = dialog!!.findViewById<TabLayout>(R.id.tab_layout)

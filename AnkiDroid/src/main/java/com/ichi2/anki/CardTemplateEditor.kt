@@ -73,6 +73,7 @@ import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
 import com.ichi2.anki.dialogs.DiscardChangesDialog
 import com.ichi2.anki.dialogs.InsertFieldDialog
+import com.ichi2.anki.libanki.CardOrdinal
 import com.ichi2.anki.libanki.CardTemplates
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.Note
@@ -136,8 +137,9 @@ open class CardTemplateEditor :
     internal val mainBinding: CardTemplateEditorMainBinding
         get() = binding.templateEditor
 
+    // TODO: see if it is feasible to use mockk to cause a crash
+    @VisibleForTesting
     var tempNoteType: CardTemplateNotetype? = null
-        private set
     private var fieldNames: List<String>? = null
     private var noteTypeId: NoteTypeId = 0
     private var noteId: NoteId = 0
@@ -148,11 +150,11 @@ open class CardTemplateEditor :
      * The inner HashMap's key is the editor window ID (e.g., R.id.front_edit).
      * The value is the cursor position within that editor window.
      */
-    private var tabToCursorPositions: HashMap<Int, HashMap<Int, Int>> = HashMap()
+    private var tabToCursorPositions: HashMap<CardOrdinal, HashMap<Int, Int>> = HashMap()
 
     // the current editor view among front/style/back
     private var tabToViewId: HashMap<Int, Int?> = HashMap()
-    private var startingOrdId = 0
+    private var startingOrdId: CardOrdinal = 0
 
     /**
      * If true, the view is split in two. The template editor appears on the leading side and the previewer on the trailing side.
@@ -193,7 +195,7 @@ open class CardTemplateEditor :
             // get id for currently edited note (optional)
             noteId = intent.getLongExtra(EDITOR_NOTE_ID, -1L)
             // get id for currently edited template (optional)
-            startingOrdId = intent.getIntExtra("ordId", -1)
+            startingOrdId = intent.getIntExtra(EDITOR_START_ORD_ID, -1)
             tabToCursorPositions[0] = hashMapOf()
             tabToViewId[0] = R.id.front_edit
         } else {
@@ -231,21 +233,20 @@ open class CardTemplateEditor :
 
         topBinding.slidingTabs.doOnTabSelected { tab ->
             Timber.i("selected card index: %s", tab.position)
-            loadTemplatePreviewerFragmentIfFragmented()
+            loadTemplatePreviewerFragmentIfFragmented(tab.position)
         }
     }
 
     /**
      *  Loads or reloads [tempNoteType] in [R.id.fragment_container] if the view is fragmented. Do nothing otherwise.
      */
-    private fun loadTemplatePreviewerFragmentIfFragmented() {
+    private fun loadTemplatePreviewerFragmentIfFragmented(ord: CardOrdinal = mainBinding.cardTemplateEditorPager.currentItem) {
         if (!fragmented) {
             return
         }
         launchCatchingTask {
             val notetype = tempNoteType!!.notetype
             val notetypeFile = NotetypeFile(this@CardTemplateEditor, notetype)
-            val ord = mainBinding.cardTemplateEditorPager.currentItem
             val note = withCol { currentFragment?.getNote(this) ?: Note.fromNotetypeId(this@withCol, notetype.id) }
             val args =
                 TemplatePreviewerArguments(
@@ -256,8 +257,7 @@ open class CardTemplateEditor :
                     tags = note.tags,
                     fillEmpty = true,
                 )
-            val backgroundColor = Themes.getColorFromAttr(this@CardTemplateEditor, R.attr.alternativeBackgroundColor)
-            val fragment = TemplatePreviewerFragment.newInstance(args, backgroundColor)
+            val fragment = TemplatePreviewerFragment.newInstance(args)
             supportFragmentManager.commitNow {
                 replace(R.id.fragment_container, fragment)
             }
@@ -319,6 +319,14 @@ open class CardTemplateEditor :
         fieldNames = tempNoteType!!.notetype.fieldsNames
         // Set up the ViewPager with the sections adapter.
         mainBinding.cardTemplateEditorPager.adapter = TemplatePagerAdapter(this@CardTemplateEditor)
+
+        // Keep more fragments in memory to reduce menu flickering during tab switches (issue #18555).
+        // When switching between non-adjacent tabs, ViewPager2's default behavior destroys fragments,
+        // causing their MenuProviders to fire and create visual flicker.
+        // Capped at 7 (keeping up to 15 fragments total) to balance flicker reduction with memory usage,
+        // as templates can contain large content (JS bundles, CSS frameworks, etc.).
+        mainBinding.cardTemplateEditorPager.offscreenPageLimit = 7
+
         TabLayoutMediator(
             topBinding.slidingTabs,
             mainBinding.cardTemplateEditorPager,
@@ -920,7 +928,6 @@ open class CardTemplateEditor :
             confirmAddCards(templateEditor.tempNoteType!!.notetype, numAffectedCards)
         }
 
-        @NeedsTest("Ensure save button is enabled in case of exception")
         fun saveNoteType(): Boolean {
             if (noteTypeHasChanged()) {
                 val confirmButton = templateEditor.findViewById<View>(R.id.action_confirm)
@@ -1350,7 +1357,7 @@ open class CardTemplateEditor :
          */
         private fun executeWithSyncCheck(schemaChangingAction: Runnable) {
             try {
-                templateEditor.getColUnsafe.modSchema()
+                templateEditor.getColUnsafe.modSchema(check = true)
                 schemaChangingAction.run()
                 templateEditor.loadTemplatePreviewerFragmentIfFragmented()
             } catch (e: ConfirmModSchemaException) {
@@ -1359,7 +1366,7 @@ open class CardTemplateEditor :
                 d.setArgs(resources.getString(R.string.full_sync_confirmation))
                 val confirm =
                     Runnable {
-                        templateEditor.getColUnsafe.modSchemaNoCheck()
+                        templateEditor.getColUnsafe.modSchema(check = false)
                         schemaChangingAction.run()
                         templateEditor.dismissAllDialogFragments()
                     }
@@ -1523,5 +1530,25 @@ open class CardTemplateEditor :
 
         @Suppress("unused")
         private const val REQUEST_CARD_BROWSER_APPEARANCE = 1
+
+        @CheckResult
+        fun getIntent(
+            context: Context,
+            noteTypeId: NoteTypeId,
+            noteId: NoteId? = null,
+            ord: CardOrdinal? = null,
+        ) = Intent(context, CardTemplateEditor::class.java)
+            .apply {
+                putExtra(EDITOR_NOTE_TYPE_ID, noteTypeId)
+                noteId?.let { putExtra(EDITOR_NOTE_ID, it) }
+                ord?.let { putExtra(EDITOR_START_ORD_ID, it) }
+
+                Timber.d(
+                    "Built intent for CardTemplateEditor; ntid: %s; nid: %s; ord: %s",
+                    noteTypeId,
+                    noteId,
+                    ord,
+                )
+            }
     }
 }

@@ -17,7 +17,7 @@
 package com.ichi2.anki.libanki
 
 import com.ichi2.anki.common.json.JSONContainer
-import com.ichi2.anki.libanki.utils.NotInLibAnki
+import com.ichi2.anki.libanki.utils.NotInPyLib
 import org.json.JSONArray
 import org.json.JSONObject
 
@@ -27,7 +27,7 @@ import org.json.JSONObject
  * @see NotetypeJson.templates
  */
 @JvmInline
-@NotInLibAnki
+@NotInPyLib
 value class CardTemplates(
     override val jsonArray: JSONArray,
 ) : JSONContainer<CardTemplate> {

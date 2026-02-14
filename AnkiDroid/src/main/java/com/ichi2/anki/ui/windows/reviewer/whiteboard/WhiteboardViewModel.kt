@@ -24,6 +24,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
+import com.ichi2.anki.common.utils.ext.indexOfOrNull
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
@@ -98,6 +99,7 @@ class WhiteboardViewModel(
     val eraserMode = MutableStateFlow(EraserMode.INK)
     val isStylusOnlyMode = MutableStateFlow(false)
     val toolbarAlignment = MutableStateFlow(ToolbarAlignment.BOTTOM)
+    val isToolbarShown = MutableStateFlow(true)
 
     val eraserDisplayWidth =
         combine(eraserMode, inkEraserStrokeWidth, strokeEraserStrokeWidth) { mode, inkWidth, strokeWidth ->
@@ -119,6 +121,7 @@ class WhiteboardViewModel(
         eraserMode.value = repository.eraserMode
         isStylusOnlyMode.value = repository.stylusOnlyMode
         toolbarAlignment.value = repository.toolbarAlignment
+        isToolbarShown.value = repository.isToolbarShown
 
         val lastActiveIndex = repository.loadLastActiveBrushIndex(isDarkMode)
 
@@ -226,12 +229,9 @@ class WhiteboardViewModel(
         if (pathsErasedInCurrentGesture.isNotEmpty()) {
             val removedWithIndices =
                 pathsErasedInCurrentGesture.mapNotNull { removedAction ->
-                    val index = pathsBeforeGesture.indexOf(removedAction)
-                    if (index != -1) {
-                        Pair(index, removedAction)
-                    } else {
-                        null
-                    }
+                    pathsBeforeGesture
+                        .indexOfOrNull(removedAction)
+                        ?.let { Pair(it, removedAction) }
                 }
             val action = RemoveAction(removedWithIndices)
             undoStack.update { it + action }
@@ -431,6 +431,16 @@ class WhiteboardViewModel(
         if (toolbarAlignment.value != alignment) {
             toolbarAlignment.value = alignment
             repository.toolbarAlignment = alignment
+        }
+    }
+
+    /**
+     * Sets the toolbar visibility.
+     */
+    fun setIsToolbarShown(isShown: Boolean) {
+        if (isToolbarShown.value != isShown) {
+            isToolbarShown.value = isShown
+            repository.isToolbarShown = isShown
         }
     }
 

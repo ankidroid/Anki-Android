@@ -72,12 +72,12 @@ import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.internationalization.toSentenceCase
+import com.ichi2.anki.utils.ext.bundleOfNotNull
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
+import com.ichi2.anki.utils.ext.getIntOrNull
 import com.ichi2.anki.utils.ext.sharedPrefs
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.withProgress
-import com.ichi2.utils.BundleUtils.getNullableInt
-import com.ichi2.utils.bundleOfNotNull
 import com.ichi2.utils.cancelable
 import com.ichi2.utils.coMeasureTime
 import com.ichi2.utils.customView
@@ -136,7 +136,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
      * otherwise, the [ContextMenuOption] representing the current sub-dialog
      */
     private val selectedSubDialog: ContextMenuOption?
-        get() = requireArguments().getNullableInt(ARG_SUB_DIALOG_ID)?.let { ContextMenuOption.entries[it] }
+        get() = requireArguments().getIntOrNull(ARG_SUB_DIALOG_ID)?.let { ContextMenuOption.entries[it] }
 
     private val userInputValue: Int?
         get() = binding.detailsEditText2.textAsIntOrNull()
@@ -273,7 +273,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
 
         return AlertDialog
             .Builder(requireActivity())
-            .title(text = TR.actionsCustomStudy().toSentenceCase(this, R.string.sentence_custom_study))
+            .title(text = TR.actionsCustomStudy().toSentenceCase(R.string.sentence_custom_study))
             .cancelable(true)
             .customView(customMenuView)
             .create()
@@ -338,7 +338,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
         }
         val positiveBtnLabel =
             if (contextMenuOption == STUDY_TAGS) {
-                TR.customStudyChooseTags().toSentenceCase(requireContext(), R.string.sentence_choose_tags)
+                TR.customStudyChooseTags().toSentenceCase(R.string.sentence_choose_tags)
             } else {
                 getString(R.string.dialog_ok)
             }
@@ -373,7 +373,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
 
                 // Get the value selected by user
                 val n =
-                    binding.detailsEditText2.textAsIntOrNull() ?: run {
+                    userInputValue ?: run {
                         Timber.w("Non-numeric user input was provided")
                         Timber.d("value: %s", binding.detailsEditText2.text.toString())
                         allowSubmit = true
@@ -386,19 +386,33 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
                     launchCatchingTask {
                         val nids =
                             withCol {
-                                val currentDeckname = decks.name(viewModel.deckId)
-                                val search = SearchNode.newBuilder().setDeck(currentDeckname).build()
-                                val query = buildSearchString(listOf(search))
-                                findNotes(query)
+                                val currentDeckName = decks.name(viewModel.deckId)
+                                // this allows us to skip the tag selection dialog entirely
+                                // if there are no tags available to choose from in this deck
+                                val searchNodes =
+                                    buildList {
+                                        add(SearchNode.newBuilder().setDeck(currentDeckName).build())
+                                        add(
+                                            SearchNode
+                                                .newBuilder()
+                                                .setNegated(SearchNode.newBuilder().setTag("none").build())
+                                                .build(),
+                                        )
+                                    }
+                                findNotes(buildSearchString(searchNodes))
                             }
+                        // skip tag selection if there's no tags to select
+                        if (nids.isEmpty()) {
+                            launchCustomStudy(contextMenuOption, n)
+                            return@launchCatchingTask
+                        }
                         if (isAdded) {
-                            val tagsDialog =
-                                TagsDialog().withArguments(
+                            TagsDialog()
+                                .withArguments(
                                     requireContext(),
                                     TagsDialog.DialogType.CUSTOM_STUDY,
                                     nids,
-                                )
-                            tagsDialog.show(parentFragmentManager, "TagsDialog")
+                                ).show(parentFragmentManager, "TagsDialog")
                         }
                     }
                     return@setOnClickListener
@@ -408,8 +422,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
         }
 
         binding.detailsEditText2.doAfterTextChanged {
-            val num = binding.detailsEditText2.textAsIntOrNull()
-            dialog.positiveButton.isEnabled = num != null && num != 0
+            dialog.positiveButton.isEnabled = userInputValue != null && userInputValue != 0
         }
 
         // Show soft keyboard

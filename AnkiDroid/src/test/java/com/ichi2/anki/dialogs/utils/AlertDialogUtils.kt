@@ -47,7 +47,7 @@ val AlertDialog.message
 
 val AlertDialog.ankiListView
     get() =
-        requireNotNull(this.listView ?: findViewById(R.id.dialog_list_view)) { "ankiListView not found" }
+        requireNotNull(this.listView ?: findViewById(R.id.list_view)) { "ankiListView not found" }
 
 fun AlertDialog.performPositiveClick() {
     // This exists as callOnClick did not call the listener

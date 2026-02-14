@@ -72,7 +72,6 @@
     <string name="whiteboard_align_left" comment="Option to align the whiteboard toolbar on the left" maxLength="28">Left</string>
     <string name="whiteboard_align_bottom" comment="Option to align the whiteboard toolbar on the bottom" maxLength="28">Bottom</string>
     <string name="whiteboard_align_right" comment="Option to align the whiteboard toolbar on the right" maxLength="28">Right</string>
-    <string name="whiteboard_clear" comment="Button text to clear the whiteboard" maxLength="28">Clear</string>
     <string name="whiteboard_more_options" comment="Tooltip of the whiteboard \'More\' button" maxLength="28">More options</string>
     <string name="whiteboard_remove_brush_message">Are you sure you want to remove this brush from your palette?</string>
     <string name="whiteboard_ink_eraser" comment="Title of the whiteboard Ink eraser">Ink</string>
@@ -86,6 +85,7 @@
     <string name="disable_eraser" maxLength="28">Disable eraser</string>
     <string name="hide_whiteboard" maxLength="28">ਵ੍ਹਾਈਟਬੋਰਡ ਨੂੰ ਲੁਕਾਓ</string>
     <string name="clear_whiteboard" maxLength="28">ਵ੍ਹਾਈਟਬੋਰਡ ਨੂੰ ਸਾਫ਼ ਕਰੋ</string>
+    <string name="hide_toolbar" maxLength="28">Hide toolbar</string>
     <string name="replay_media" maxLength="28">Replay media</string>
     <string name="leech_suspend_notification">ਕਾਰਡ ਨੂੰ ਲੀਚ ਕੀਤੇ ਅਤੇ ਮੁਅੱਤਲ ਵਜੋਂ ਚਿੰਨ੍ਹਿਤ ਕੀਤਾ ਗਿਆ ਸੀ</string>
     <string name="leech_notification">ਲੀਚ ਵਜੋਂ ਚਿੰਨ੍ਹਿਤ ਕਾਰਡ</string>
@@ -191,8 +191,6 @@
     <string name="select_tts" maxLength="28">TTS ਭਾਸ਼ਾ ਸੈੱਟ ਕਰੋ</string>
     <string name="custom_study" maxLength="28">ਕਸਟਮ ਅਧਿਐਨ</string>
     <string name="dyn_deck_desc">ਇਹ ਆਮ ਅਨੁਸੂਚੀ ਤੋਂ ਬਾਹਰ ਅਧਿਐਨ ਕਰਨ ਲਈ ਇੱਕ ਵਿਸ਼ੇਸ਼ ਡੈੱਕ ਹੈ। ਤੁਹਾਡੇ ਦੁਆਰਾ ਉਹਨਾਂ ਦੀ ਸਮੀਖਿਆ ਕਰਨ ਤੋਂ ਬਾਅਦ ਕਾਰਡ ਆਪਣੇ ਆਪ ਉਹਨਾਂ ਦੇ ਅਸਲ ਡੈੱਕ \'ਤੇ ਵਾਪਸ ਆ ਜਾਣਗੇ। ਡੈੱਕ ਸੂਚੀ ਵਿੱਚੋਂ ਇਸ ਡੈੱਕ ਨੂੰ ਮਿਟਾਉਣ ਨਾਲ ਬਾਕੀ ਸਾਰੇ ਕਾਰਡ ਉਹਨਾਂ ਦੇ ਅਸਲ ਡੈੱਕ \'ਤੇ ਵਾਪਸ ਆ ਜਾਣਗੇ।</string>
-    <string name="steps_error">ਕਦਮਾਂ ਦੀ ਗਿਣਤੀ 0 ਤੋਂ ਵੱਧ ਹੋਣੀ ਚਾਹੀਦੀ ਹੈ</string>
-    <string name="steps_min_error">ਘੱਟੋ-ਘੱਟ ਇੱਕ ਕਦਮ ਦੀ ਲੋੜ ਹੈ</string>
     <string name="tag_editor_add_feedback">\"%1$s\" ਨੂੰ ਜੋੜਨ ਦੀ ਪੁਸ਼ਟੀ ਕਰਨ ਲਈ \"%2$s\" ਨੂੰ ਛੋਹਵੋ।</string>
     <string name="tag_editor_add_feedback_existing">ਮੌਜੂਦਾ ਟੈਗ “%1$s” ਚੁਣਿਆ ਗਿਆ</string>
     <!-- Time spans -->
@@ -263,9 +261,12 @@
     <string name="create_shortcut_error">ਸ਼ਾਰਟਕੱਟ ਜੋੜਨ ਵਿੱਚ ਤਰੁੱਟੀ: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">ਵਾਕਾਂ ਨੂੰ ਵੱਡਾ ਕਰੋ</string>
     <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll" maxLength="28">ਸਕ੍ਰੋਲ ਟੂਲਬਾਰ</string>
-    <!-- Symbols used as Button text in IncrementNumberRangePreference -->
+    <!-- IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
+    <string name="invalid_value" comment="Error message in IncrementerNumberRangePreference when input is not a valid number">Invalid value</string>
+    <string name="maximum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the maximum allowed value">Maximum value is %d</string>
+    <string name="minimum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the minimum allowed value">Minimum value is %d</string>
     <!-- Used for credential empty warning message -->
     <string name="invalid_email">ਇੱਕ ਵੈਧ ਈਮੇਲ ਦਾਖਲ ਕਰੋ</string>
     <string name="password_empty">ਪਾਸਵਰਡ ਲੋੜੀਂਦਾ ਹੈ</string>
@@ -346,7 +347,6 @@
     <string name="format_deck_description_as_markdown">Format as Markdown</string>
     <string name="help_button_content_description">Open help for ‘%s’</string>
     <string name="failed_to_copy">ਕਾਪੀ ਕਰਨਾ ਅਸਫਲ ਰਿਹਾ</string>
-    <string name="card_browser_unavailable_when_notes_mode">\'ਨੋਟਸ\' ਮੋਡ ਵਿੱਚ ਉਪਲਬਧ ਨਹੀਂ ਹੈ</string>
     <plurals name="unbury_cards_feedback">
         <item quantity="one">%d ਕਾਰਡ ਹਸਤਾਖਰਿਤ ਨਹੀਂ ਕੀਤਾ ਗਿਆ</item>
         <item quantity="other">%d ਕਾਰਡ ਅਣਦਫਨ ਕੀਤੇ ਗਏ</item>
@@ -380,4 +380,6 @@
     <string name="directory_inaccessible_info">ਇੱਥੇ %s ਪਹੁੰਚ ਨੂੰ ਕਿਵੇਂ ਬਹਾਲ ਕਰਨਾ ਹੈ ਬਾਰੇ ਹੋਰ ਜਾਣੋ ਜਾਂ ਸੰਗ੍ਰਹਿ ਫੋਲਡਰ ਨੂੰ ਅੱਪਡੇਟ ਕਰਨ ਲਈ ਸੈਟਿੰਗਾਂ \'ਤੇ ਜਾਓ।</string>
     <!-- Scheduler Upgrade Required Dialog title-->
     <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">Scheduler upgrade required</string>
+    <!-- Whitespace is OK -->
+    <string name="list_separator" comment="The character and spacing to display between elements of a list, for example \', \' in \'Apple, Banana, Cherry" tools:ignore="TranslationTypo">, </string>
 </resources>

@@ -301,8 +301,8 @@
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Kokeellinen</string>
     <string name="readtext_deprecation_warn">AnkiDroid on ottanut käyttöön paremman TTS-mekanismin, joka on yhteensopiva muiden Anki-ohjelmien kanssa ja sisältää enemmän ääniä ja parannuksia kielentoistoon!\n\nPäivitä mahdollisimman pian, sillä tämä asetus poistetaan pian.</string>
     <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">Päivitä uuteen tekstistä puheeksi -formaattiin</string>
-    <string name="pref_fixed_port_title" maxLength="41">localStorage in Study Screen</string>
-    <string name="pref_fixed_port_summary">Ottaa JavaScript localStoragen käyttöön kiinteällä palvelinportilla opiskeluruudussa</string>
+    <string name="pref_fixed_port_title" maxLength="41">Käytä localStoragea opiskelunäkymässä</string>
+    <string name="pref_fixed_port_summary">Ottaa JavaScriptin localStoragen käyttöön kiinteällä palvelinportilla opiskelunäkymässä</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Kehittäjän asetukset</string>
     <string name="dev_options_enabled_pref" maxLength="41">Ota kehittäjän asetukset käyttöön</string>
@@ -389,6 +389,8 @@
     <string name="new_study_screen_summ"><![CDATA[Parannettu opiskeluruutu, joka korvaa nykyisen. Joitakin vanhan ruudun ominaisuuksia on muutettu tai poistettu. Anna <a href="%1$s">palautetta</a> tai <a href="%2$s">ilmoita virheistä</a>.]]></string>
     <string name="show_answer_feedback" maxLength="41">Näytä vastauksen palaute</string>
     <string name="screen" maxLength="41">Näyttö</string>
+    <string name="only_answer" maxLength="41" comment="Configuration of the \'Answer\' commands to only answer the card">Only answer</string>
+    <string name="flip_and_answer" maxLength="41" comment="Configuration of the \'Answer\' commands to answer the card if on the answer side, and flip it if on the question side">Flip and answer</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">Avaa asetukset</string>
 </resources>

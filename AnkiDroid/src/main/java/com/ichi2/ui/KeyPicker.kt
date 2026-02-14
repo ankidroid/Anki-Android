@@ -19,9 +19,7 @@ package com.ichi2.ui
 import android.content.Context
 import android.view.KeyEvent
 import android.view.LayoutInflater
-import android.view.View
-import android.widget.TextView
-import com.ichi2.anki.R
+import com.ichi2.anki.databinding.DialogKeyPickerBinding
 import com.ichi2.anki.dialogs.WarningDisplay
 import com.ichi2.anki.reviewer.Binding
 import timber.log.Timber
@@ -33,19 +31,19 @@ typealias KeyCode = Int
  * This does not yet support bluetooth headsets.
  */
 class KeyPicker(
-    val rootLayout: View,
+    private val viewBinding: DialogKeyPickerBinding,
 ) : WarningDisplay {
-    private val textView: TextView = rootLayout.findViewById(R.id.key_picker_selected_key)
+    val rootLayout = viewBinding.root
 
-    override val warningTextView: FixedTextView = rootLayout.findViewById(R.id.warning)
+    override val warningTextView: FixedTextView = viewBinding.warning
 
     private val context: Context get() = rootLayout.context
 
     private var text: String
         set(value) {
-            textView.text = value
+            viewBinding.selectedKey.text = value
         }
-        get() = textView.text.toString()
+        get() = viewBinding.selectedKey.text.toString()
 
     private var onBindingChangedListener: ((Binding) -> Unit)? = null
     private var isValidKeyCode: ((KeyCode) -> Boolean)? = null
@@ -80,14 +78,15 @@ class KeyPicker(
     }
 
     init {
-        textView.requestFocus()
-        textView.setOnKeyListener { _, _, event -> dispatchKeyEvent(event) }
+        viewBinding.selectedKey.requestFocus()
+        viewBinding.selectedKey.setOnKeyListener { _, _, event -> dispatchKeyEvent(event) }
     }
 
     companion object {
         fun inflate(context: Context): KeyPicker {
-            val layout = LayoutInflater.from(context).inflate(R.layout.dialog_key_picker, null)
-            return KeyPicker(layout)
+            val layoutInflater = LayoutInflater.from(context)
+            val binding = DialogKeyPickerBinding.inflate(layoutInflater)
+            return KeyPicker(binding)
         }
     }
 }

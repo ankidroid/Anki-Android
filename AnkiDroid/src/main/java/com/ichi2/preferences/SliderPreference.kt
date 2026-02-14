@@ -87,7 +87,7 @@ class SliderPreference(
             if (field == value) {
                 return
             }
-            if (value < valueFrom || value > valueTo) {
+            if (value !in valueFrom..valueTo) {
                 throw IllegalArgumentException("value $value should be between the min of $valueFrom and max of $valueTo")
             }
             field = value

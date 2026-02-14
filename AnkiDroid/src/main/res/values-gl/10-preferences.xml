@@ -189,8 +189,8 @@
     </plurals>
     <string name="pref_keep_screen_on" maxLength="41">Manter a pantalla acesa</string>
     <string name="pref_keep_screen_on_summ">Desactivar o tempo de espera da pantalla</string>
-    <string name="enable_api_title" maxLength="41">Activar o API do AnkiDroid</string>
-    <string name="enable_api_summary">Permite que outas aplicacións se conecten ao AnkiDroid e lean ou escriban datos sen a túa intervención</string>
+    <string name="enable_api_title" maxLength="41">Activar a API do AnkiDroid</string>
+    <string name="enable_api_summary">Permite que outras aplicacións se conecten ao AnkiDroid e lean ou escriban datos sen a túa intervención</string>
     <string name="custom_buttons" maxLength="41">Botóns da barra da aplicación</string>
     <string name="custom_buttons_summary">Personalizar que accións aparecen na barra da aplicación</string>
     <string name="custom_buttons_setting_always_show">Amosar sempre</string>
@@ -389,6 +389,8 @@
     <string name="new_study_screen_summ"><![CDATA[Esta pantalla de estudo mellorada substituirá a actual. Algunhas funcións da versión anterior foron cambiadas ou eliminadas. Por favor, informa de calquera <a href="%1$s">suxestión</a> ou <a href="%2$s">erro</a>]]></string>
     <string name="show_answer_feedback" maxLength="41">Amosar explicación da resposta</string>
     <string name="screen" maxLength="41">Pantalla</string>
+    <string name="only_answer" maxLength="41" comment="Configuration of the \'Answer\' commands to only answer the card">Só responder</string>
+    <string name="flip_and_answer" maxLength="41" comment="Configuration of the \'Answer\' commands to answer the card if on the answer side, and flip it if on the question side">Voltear e responder</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">Abrir configuración</string>
 </resources>

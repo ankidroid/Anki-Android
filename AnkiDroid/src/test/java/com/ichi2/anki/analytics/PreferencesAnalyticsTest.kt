@@ -31,13 +31,13 @@ import kotlin.test.assertNull
 @RunWith(AndroidJUnit4::class)
 @Config(application = EmptyApplication::class)
 class PreferencesAnalyticsTest : RobolectricTest() {
-    private val devOptionsKeys = PreferenceTestUtils.getDevOptionsKeys(targetContext)
+    private val developerOptionsKeys = PreferenceTestUtils.getDeveloperOptionsKeys(targetContext)
 
     /** All preference keys besides dev options */
     private val allKeys =
         PreferenceTestUtils
             .getAllPreferenceKeys(targetContext)
-            .subtract(devOptionsKeys)
+            .subtract(developerOptionsKeys)
 
     private val reportableKeys = UsageAnalytics.reportablePrefKeys.toStringResourceSet()
 
@@ -148,14 +148,14 @@ class PreferencesAnalyticsTest : RobolectricTest() {
     }
 
     @Test
-    fun `Dev options changes must not be reported`() {
-        val devOptionsKeys = PreferenceTestUtils.getKeysFromXml(targetContext, R.xml.preferences_dev_options)
-        val devOptionsAtReportList = reportableKeys.intersect(devOptionsKeys.toSet())
+    fun `Developer options changes must not be reported`() {
+        val developerOptionsKeys = PreferenceTestUtils.getKeysFromXml(targetContext, R.xml.preferences_developer_options)
+        val developerOptionsAtReportList = reportableKeys.intersect(developerOptionsKeys.toSet())
 
         assertThat(
             "dev options keys must not be in the `reportableKeys` list" +
-                ": $devOptionsAtReportList",
-            devOptionsAtReportList.isEmpty(),
+                ": $developerOptionsAtReportList",
+            developerOptionsAtReportList.isEmpty(),
         )
     }
 

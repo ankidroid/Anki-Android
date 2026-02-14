@@ -25,13 +25,10 @@ import android.text.TextUtils
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.MotionEvent
-import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.ColorInt
-import androidx.annotation.IdRes
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.widget.ThemeUtils
 import androidx.core.graphics.drawable.toDrawable
@@ -42,9 +39,11 @@ import com.ichi2.anki.AnkiDroidApp.Companion.sharedPrefs
 import com.ichi2.anki.Flag
 import com.ichi2.anki.R
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.common.utils.ext.replaceWith
+import com.ichi2.anki.databinding.BrowserColumnCellBinding
+import com.ichi2.anki.databinding.CardItemBrowserBinding
 import com.ichi2.anki.utils.android.darkenColor
 import com.ichi2.anki.utils.android.lightenColorAbsolute
-import com.ichi2.anki.utils.ext.findViewById
 import com.ichi2.themes.Themes
 import com.ichi2.utils.removeChildren
 import net.ankiweb.rsdroid.BackendException
@@ -76,11 +75,9 @@ class BrowserMultiColumnAdapter(
     private var originalTextSize = -1.0f
 
     inner class MultiColumnViewHolder(
-        holder: View,
-    ) : RecyclerView.ViewHolder(holder) {
+        private val binding: CardItemBrowserBinding,
+    ) : RecyclerView.ViewHolder(binding.root) {
         var id: CardOrNoteId? = null
-        private val mainView = findViewById<LinearLayout>(R.id.card_item_browser)
-        private val checkBoxView = findViewById<CheckBox>(R.id.card_checkbox)
 
         val columnViews = mutableListOf<TextView>()
 
@@ -89,24 +86,16 @@ class BrowserMultiColumnAdapter(
                 if (field == value) return
                 field = value
                 // remove the past set of columns
-                mainView.removeChildren { it !is CheckBox }
-                columnViews.clear()
+                binding.root.removeChildren { it !is CheckBox }
 
                 val layoutInflater = LayoutInflater.from(context)
 
-                // inflates and returns the inflated view
-                fun inflate(
-                    @IdRes id: Int,
-                ) = layoutInflater.inflate(id, mainView, false).apply {
-                    mainView.addView(this)
-                }
-
                 // recreate the columns and the dividers
-                (1..value).map { index ->
-                    inflate(R.layout.browser_column_cell).apply {
-                        columnViews.add(this as TextView)
-                    }
-                }
+                columnViews.replaceWith(
+                    (1..value).map { index ->
+                        BrowserColumnCellBinding.inflate(layoutInflater, binding.root, true).root
+                    },
+                )
 
                 columnViews.forEach { it.setupTextSize() }
             }
@@ -133,7 +122,7 @@ class BrowserMultiColumnAdapter(
                 }
                 return@setOnTouchListener false
             }
-            checkBoxView.setOnClickListener {
+            binding.rowSelectedCheckBox.setOnClickListener {
                 id?.let { id ->
                     Timber.d("Tapped on checkbox: %s", id)
                     onTap(id)
@@ -153,18 +142,18 @@ class BrowserMultiColumnAdapter(
             } ?: false
 
         fun setInMultiSelect(inMultiSelect: Boolean) {
-            checkBoxView.isVisible = inMultiSelect
+            binding.rowSelectedCheckBox.isVisible = inMultiSelect
         }
 
         fun setIsSelected(value: RowIsSelected) {
-            checkBoxView.isChecked = value
+            binding.rowSelectedCheckBox.isChecked = value
         }
 
         @NeedsTest("17731 - maybe check all activities load in dark mode, at least check this code")
         fun setColor(
             @ColorInt color: Int,
         ) {
-            val nightMode = Themes.currentTheme.isNightMode
+            val nightMode = Themes.isNightTheme
             val pressedColor: Int
             val focusedColor: Int
 
@@ -244,11 +233,9 @@ class BrowserMultiColumnAdapter(
         parent: ViewGroup,
         viewType: Int,
     ): MultiColumnViewHolder {
-        val view =
-            LayoutInflater
-                .from(parent.context)
-                .inflate(R.layout.card_item_browser, parent, false)
-        return MultiColumnViewHolder(view)
+        val layoutInflater = LayoutInflater.from(context)
+        val binding = CardItemBrowserBinding.inflate(layoutInflater, parent, false)
+        return MultiColumnViewHolder(binding)
     }
 
     override fun getItemCount(): Int = rowCollection.size

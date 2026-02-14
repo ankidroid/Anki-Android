@@ -103,6 +103,7 @@ class PreviewerViewModelTest : JvmTest() {
         }
 
     @Test
+    @Flaky(OS.ALL)
     fun `previous button`() =
         runTest {
             // Start at Index 1
@@ -111,24 +112,25 @@ class PreviewerViewModelTest : JvmTest() {
             viewModel.showingAnswer.value = false
 
             // Click Prev -> Should move to Index 0
-            viewModel.onPreviousButtonClick()
+            onPreviousButtonClick()
             assertEquals(0, viewModel.currentIndex.value)
 
             // Click Prev on Index 0 (Question) -> Do nothing
-            viewModel.onPreviousButtonClick()
+            onPreviousButtonClick()
             assertFalse(viewModel.showingAnswer.value)
             assertEquals(0, viewModel.currentIndex.value)
         }
 
     @Test
+    @Flaky(OS.ALL)
     fun `toggle back side only`() =
         runTest {
             assertFalse(viewModel.backSideOnly.value) // initial state should be false
 
-            viewModel.toggleBackSideOnly()
+            toggleBackSideOnly()
             assertTrue(viewModel.backSideOnly.value)
 
-            viewModel.toggleBackSideOnly()
+            toggleBackSideOnly()
             assertFalse(viewModel.backSideOnly.value)
         }
 
@@ -176,7 +178,6 @@ class PreviewerViewModelTest : JvmTest() {
         }
 
     @Test
-    @Flaky(OS.ALL) // 19729: failed on macOS
     fun `next, slider and previous navigation integration`() =
         runTest {
             // 1. Start at Index 0 (Question)

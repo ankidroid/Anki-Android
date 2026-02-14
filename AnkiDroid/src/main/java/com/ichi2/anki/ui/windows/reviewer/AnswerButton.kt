@@ -24,41 +24,39 @@ import com.google.android.material.button.MaterialButton
 import com.ichi2.anki.R
 import com.ichi2.anki.utils.ext.usingStyledAttributes
 
-class AnswerButton
-    @JvmOverloads
-    constructor(
-        context: Context,
-        attrs: AttributeSet? = null,
-        defStyleAttr: Int = com.google.android.material.R.attr.materialButtonStyle,
-    ) : MaterialButton(context, attrs, defStyleAttr) {
-        private val easeName: String =
+class AnswerButton : MaterialButton {
+    private val easeName: String
+
+    constructor(context: Context) : this(context, null)
+    constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, com.google.android.material.R.attr.materialButtonStyle)
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
+        easeName =
             context.usingStyledAttributes(attrs, R.styleable.AnswerButton) {
                 requireNotNull(getString(R.styleable.AnswerButton_easeName)) {
                     "app:easeName value not set"
                 }
             }
 
-        init {
-            val nextTime =
-                context.usingStyledAttributes(attrs, R.styleable.AnswerButton) {
-                    getString(R.styleable.AnswerButton_nextTime)
-                }
+        val nextTime =
+            context.usingStyledAttributes(attrs, R.styleable.AnswerButton) {
+                getString(R.styleable.AnswerButton_nextTime)
+            }
 
-            setNextTime(nextTime)
-        }
-
-        fun setNextTime(nextTime: String?) {
-            text =
-                if (nextTime != null) {
-                    buildSpannedString {
-                        inSpans(RelativeSizeSpan(0.8F)) {
-                            append(nextTime)
-                        }
-                        append("\n")
-                        append(easeName)
-                    }
-                } else {
-                    easeName
-                }
-        }
+        setNextTime(nextTime)
     }
+
+    fun setNextTime(nextTime: String?) {
+        text =
+            if (nextTime != null) {
+                buildSpannedString {
+                    inSpans(RelativeSizeSpan(0.8F)) {
+                        append(nextTime)
+                    }
+                    append("\n")
+                    append(easeName)
+                }
+            } else {
+                easeName
+            }
+    }
+}

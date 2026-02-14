@@ -72,7 +72,6 @@
     <string name="whiteboard_align_left" comment="Option to align the whiteboard toolbar on the left" maxLength="28">Left</string>
     <string name="whiteboard_align_bottom" comment="Option to align the whiteboard toolbar on the bottom" maxLength="28">Bottom</string>
     <string name="whiteboard_align_right" comment="Option to align the whiteboard toolbar on the right" maxLength="28">Right</string>
-    <string name="whiteboard_clear" comment="Button text to clear the whiteboard" maxLength="28">Clear</string>
     <string name="whiteboard_more_options" comment="Tooltip of the whiteboard \'More\' button" maxLength="28">More options</string>
     <string name="whiteboard_remove_brush_message">Are you sure you want to remove this brush from your palette?</string>
     <string name="whiteboard_ink_eraser" comment="Title of the whiteboard Ink eraser">Ink</string>
@@ -86,6 +85,7 @@
     <string name="disable_eraser" maxLength="28">Disable eraser</string>
     <string name="hide_whiteboard" maxLength="28">વ્હાઇટબોર્ડ છુપાવો</string>
     <string name="clear_whiteboard" maxLength="28">વ્હાઇટબોર્ડ સાફ કરો</string>
+    <string name="hide_toolbar" maxLength="28">Hide toolbar</string>
     <string name="replay_media" maxLength="28">Replay media</string>
     <string name="leech_suspend_notification">જળો તરીકે ચિહ્નિત અને સસ્પેન્ડેડ કાર્ડ</string>
     <string name="leech_notification">લીચ તરીકે ચિહ્નિત થયેલ કાર્ડ</string>
@@ -191,8 +191,6 @@
     <string name="select_tts" maxLength="28">TTS ભાષા સેટ કરો</string>
     <string name="custom_study" maxLength="28">કસ્ટમ અભ્યાસ</string>
     <string name="dyn_deck_desc">સામાન્ય સમયપત્રકની બહાર અભ્યાસ કરવા માટે આ એક ખાસ ડેક છે. તમે તેમની સમીક્ષા કર્યા પછી કાર્ડ્સ આપમેળે તેમના મૂળ ડેક પર પાછા આવશે. ડેક સૂચિમાંથી આ ડેકને કાઢી નાખવાથી બાકીના તમામ કાર્ડ્સ તેમના મૂળ ડેક પર પાછા આવશે.</string>
-    <string name="steps_error">પગલાંની સંખ્યા 0 કરતાં મોટી હોવી જોઈએ</string>
-    <string name="steps_min_error">ઓછામાં ઓછું એક પગલું જરૂરી છે</string>
     <string name="tag_editor_add_feedback">\"%1$s\" ઉમેરવાની પુષ્ટિ કરવા માટે \"%2$s\" ને ટચ કરો</string>
     <string name="tag_editor_add_feedback_existing">હાલનું ટૅગ “%1$s” પસંદ કર્યું</string>
     <!-- Time spans -->
@@ -263,9 +261,12 @@
     <string name="create_shortcut_error">શૉર્ટકટ ઉમેરવામાં ભૂલ: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">વાક્યોને કેપિટલાઇઝ કરો</string>
     <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll" maxLength="28">ટૂલબારને સ્ક્રોલ કરો</string>
-    <!-- Symbols used as Button text in IncrementNumberRangePreference -->
+    <!-- IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
+    <string name="invalid_value" comment="Error message in IncrementerNumberRangePreference when input is not a valid number">Invalid value</string>
+    <string name="maximum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the maximum allowed value">Maximum value is %d</string>
+    <string name="minimum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the minimum allowed value">Minimum value is %d</string>
     <!-- Used for credential empty warning message -->
     <string name="invalid_email">માન્ય ઇમેઇલ દાખલ કરો</string>
     <string name="password_empty">પાસવર્ડ અનિવાર્ય છે</string>
@@ -346,7 +347,6 @@
     <string name="format_deck_description_as_markdown">Format as Markdown</string>
     <string name="help_button_content_description">Open help for ‘%s’</string>
     <string name="failed_to_copy">કૉપિ કરવામાં નિષ્ફળ</string>
-    <string name="card_browser_unavailable_when_notes_mode">\'નોટ્સ\' મોડમાં અનુપલબ્ધ</string>
     <plurals name="unbury_cards_feedback">
         <item quantity="one">%d કાર્ડ અનબરી</item>
         <item quantity="other">%d કાર્ડ અનબરી</item>
@@ -380,4 +380,6 @@
     <string name="directory_inaccessible_info">Learn more about how to restore access here %s or go to settings to update collection folder.</string>
     <!-- Scheduler Upgrade Required Dialog title-->
     <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">Scheduler upgrade required</string>
+    <!-- Whitespace is OK -->
+    <string name="list_separator" comment="The character and spacing to display between elements of a list, for example \', \' in \'Apple, Banana, Cherry" tools:ignore="TranslationTypo">, </string>
 </resources>

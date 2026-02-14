@@ -100,3 +100,29 @@ val Locale.iso3Code: String?
             // example: MissingResourceException: Couldn't find 3-letter language code for cz
             null
         }
+
+/**
+ * Returns a three-letter abbreviation of this locale's language, or `null` if a three-letter
+ * language abbreviation is not available for this locale.
+ *
+ * WARN: This is lossy, as the two-letter-code was usable.
+ *
+ * If the language matches an ISO 639-1 two-letter code, the corresponding ISO 639-2/T three-letter
+ * lowercase code is returned.
+ *
+ * The ISO 639-2 language codes can be found on-line, see "Codes for the Representation of Names of
+ * Languages Part 2: Alpha-3 Code".
+ *
+ * If the locale specifies a three-letter language, the language is returned as is.
+ *
+ * If the locale does not specify a language the empty string is returned.
+ */
+fun Locale.getIso3LanguageOrNull(): String? =
+    try {
+        // use Java-style 'get' methods; `val` properties are badly named: 'isO3Language'
+        this.getISO3Language()
+    } catch (_: Exception) {
+        // MissingResourceException can be thrown, in which case return null
+        // example: MissingResourceException: Couldn't find 3-letter language code for cz
+        null
+    }

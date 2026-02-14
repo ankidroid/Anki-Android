@@ -21,7 +21,7 @@ import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.IntroductionActivity
 
 fun disableIntroductionSlide() {
-    AnkiDroidApp.Companion.sharedPrefs().edit {
-        putBoolean(IntroductionActivity.Companion.INTRODUCTION_SLIDES_SHOWN, true)
+    AnkiDroidApp.sharedPrefs().edit {
+        putBoolean(IntroductionActivity.INTRODUCTION_SLIDES_SHOWN, true)
     }
 }

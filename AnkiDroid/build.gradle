@@ -8,6 +8,7 @@ plugins {
     alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.keeper)
+    alias(libs.plugins.roborazzi)
     id 'idea'
 }
 
@@ -88,9 +89,9 @@ android {
         //
         // This ensures the correct ordering between the various types of releases (dev < alpha < beta < release) which is
         // needed for upgrades to be offered correctly.
-        versionCode=22400100
+        versionCode=22400105
         // If you change this to a new version, you probably also want to update .gradle/workflows/milestone.yml for the new version...
-        versionName="2.24.0alpha0"
+        versionName="2.24.0alpha5"
         minSdk = libs.versions.minSdk.get().toInteger()
 
         // After #13695: change .tests_emulator.yml
@@ -242,6 +243,18 @@ android {
         kotlin {
             compilerOptions {
                 freeCompilerArgs.add("-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi")
+            }
+        }
+        unitTests {
+            all { test ->
+                test.useJUnitPlatform {
+                    // ./gradlew testFullDebugUnitTest -Pscreenshot
+                    if (project.hasProperty("screenshot")) {
+                        includeTags "com.ichi2.anki.ScreenshotTestCategory"
+                    } else {
+                        excludeTags "com.ichi2.anki.ScreenshotTestCategory"
+                    }
+                }
             }
         }
     }
@@ -404,8 +417,8 @@ dependencies {
         localProperties.load(project.rootProject.file('local.properties').newDataInputStream())
     }
     if (localProperties['local_backend'] == "true") {
-        implementation files("../../Anki-Android-Backend/rsdroid/build/outputs/aar/rsdroid-release.aar")
-        testImplementation files("../../Anki-Android-Backend/rsdroid-testing/build/libs/rsdroid-testing.jar")
+        implementation(files(rootProject.file("../Anki-Android-Backend/rsdroid/build/outputs/aar/rsdroid-release.aar")))
+        testImplementation(files(rootProject.file("../Anki-Android-Backend/rsdroid-testing/build/libs/rsdroid-testing.jar")))
     } else {
         implementation libs.ankiBackend.backend
         testImplementation libs.ankiBackend.testing
@@ -427,7 +440,7 @@ dependencies {
     implementation libs.jsoup
     implementation libs.java.semver // For AnkiDroid JS API Versioning
     implementation libs.drakeet.drawer
-    implementation libs.colorpicker
+    implementation libs.skydoves.colorpickerview
     implementation libs.kotlin.reflect
     implementation libs.kotlin.test
     implementation libs.search.preference
@@ -467,6 +480,8 @@ dependencies {
         exclude module: "protobuf-lite"
     }
     testImplementation libs.androidx.work.testing
+    testImplementation libs.roborazzi
+    testImplementation libs.roborazzi.rule
     // for testing flows
     testImplementation libs.cashapp.turbine
 

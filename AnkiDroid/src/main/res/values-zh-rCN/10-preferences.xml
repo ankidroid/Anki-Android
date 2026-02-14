@@ -386,6 +386,8 @@
     <string name="new_study_screen_summ"><![CDATA[完善了新学习屏，它会取代当前的学习屏。旧屏幕的一些功能已经更改或删除。请报告任何<a href="%1$s">反馈</a>或<a href="%2$s">故障</a>。]]></string>
     <string name="show_answer_feedback" maxLength="41">显示回答反馈</string>
     <string name="screen" maxLength="41">屏幕</string>
+    <string name="only_answer" maxLength="41" comment="Configuration of the \'Answer\' commands to only answer the card">仅回答</string>
+    <string name="flip_and_answer" maxLength="41" comment="Configuration of the \'Answer\' commands to answer the card if on the answer side, and flip it if on the question side">翻转和回答</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">打开设置</string>
 </resources>

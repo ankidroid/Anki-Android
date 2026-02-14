@@ -469,6 +469,8 @@ class DeckPickerTest : RobolectricTest() {
         deckPicker {
             val didA = addDeck("Deck 1")
             supportFragmentManager.selectContextMenuOption(DeckPickerContextMenuOption.CREATE_SHORTCUT, didA)
+            // Wait for the shortcut creation to complete
+            ShadowLooper.runUiThreadTasksIncludingDelayedTasks()
             assertEquals(
                 "Deck 1",
                 ShortcutManagerCompat.getShortcuts(this, ShortcutManagerCompat.FLAG_MATCH_PINNED).first().shortLabel,

@@ -72,7 +72,6 @@
     <string name="whiteboard_align_left" comment="Option to align the whiteboard toolbar on the left" maxLength="28">Kiri</string>
     <string name="whiteboard_align_bottom" comment="Option to align the whiteboard toolbar on the bottom" maxLength="28">Bawah</string>
     <string name="whiteboard_align_right" comment="Option to align the whiteboard toolbar on the right" maxLength="28">Kanan</string>
-    <string name="whiteboard_clear" comment="Button text to clear the whiteboard" maxLength="28">Bersihkan</string>
     <string name="whiteboard_more_options" comment="Tooltip of the whiteboard \'More\' button" maxLength="28">Pilihan lainnya</string>
     <string name="whiteboard_remove_brush_message">Apakah Anda yakin ingin menghapus kuas ini dari palet Anda?</string>
     <string name="whiteboard_ink_eraser" comment="Title of the whiteboard Ink eraser">Tinta</string>
@@ -86,6 +85,7 @@
     <string name="disable_eraser" maxLength="28">Nonaktifkan penghapus</string>
     <string name="hide_whiteboard" maxLength="28">Sembunyikan whiteboard</string>
     <string name="clear_whiteboard" maxLength="28">Bersihkan whiteboard</string>
+    <string name="hide_toolbar" maxLength="28">Hide toolbar</string>
     <string name="replay_media" maxLength="28">Putar ulang media</string>
     <string name="leech_suspend_notification">Kartu ditandai sebagai lintah dan ditunda</string>
     <string name="leech_notification">Kartu ditandai sebagai lintah</string>
@@ -164,7 +164,7 @@
     <string name="import_error_load_imported_database">Pengganti basisdata Anki (.anki2) belum didukung. Harap lihat panduan untuk langkah penggantian</string>
     <string name="import_error_content_provider">Berkas yang dipilih tidak dapat diimpor secara otomatis oleh AnkiDroid. Silakan lihat panduan pengguna tentang cara mengimpor berkas Anki secara manual: \n%s</string>
     <string name="import_error_copy_to_cache_title">Gagal cache file</string>
-    <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">This is often caused by a bug in the app you used to select the file. Please try the following fixes:\n\n%s</string>
+    <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">Hal ini disebabkan oleh bug di aplikasi yang anda gunakan untuk memilih file. Silahkan coba solusi berikut: \n\n%s</string>
     <string name="import_interrupted">Impor terganggu</string>
     <string name="export_ready_title">Ekspor siap</string>
     <string name="export_send_no_handlers">Tidak ada aplikasi tersedia untuk memproses apkg. Menyimpan&#8230;</string>
@@ -188,8 +188,6 @@
     <string name="select_tts" maxLength="28">Tetapkan bahasa TTS</string>
     <string name="custom_study" maxLength="28">Belajar kustom</string>
     <string name="dyn_deck_desc">Ini adalah dek khusus untuk belajar di luar jadwal normal. Kartu akan otomatis dikembalikan ke dek aslinya setelah Anda mengulasnya. Menghapus dek ini dari daftar dek akan mengembalikan semua kartu yang tersisa ke dek aslinya.</string>
-    <string name="steps_error">Langkah-langkah harus lebih besar dari 0</string>
-    <string name="steps_min_error">Setidaknya satu langkah diperlukan</string>
     <string name="tag_editor_add_feedback">Sentuh “%2$s” untuk konfirmasi menambah “%1$s”</string>
     <string name="tag_editor_add_feedback_existing">Tag “%1$s” dipilih</string>
     <!-- Time spans -->
@@ -260,9 +258,12 @@
     <string name="create_shortcut_error">Gagal menambah shortcut: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">Mengkapitalkan kalimat-kalimat</string>
     <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll" maxLength="28">Gulir bilah alat</string>
-    <!-- Symbols used as Button text in IncrementNumberRangePreference -->
+    <!-- IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
+    <string name="invalid_value" comment="Error message in IncrementerNumberRangePreference when input is not a valid number">Nilai tidak valid</string>
+    <string name="maximum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the maximum allowed value">Nilai maksimum adalah %d</string>
+    <string name="minimum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the minimum allowed value">Nilai minimum adalah %d</string>
     <!-- Used for credential empty warning message -->
     <string name="invalid_email">Masukkan surel yang valid</string>
     <string name="password_empty">Kata Sandi diperlukan</string>
@@ -304,7 +305,7 @@
     <string name="field_editor_model_not_available">Gagal mengakses koleksi. Silakan coba lagi!</string>
     <string name="cd_manage_notetypes_add">Menambahkan jenis catatan baru</string>
     <plurals name="note_types_selected">
-        <item quantity="other">%d note types selected</item>
+        <item quantity="other">%d tipe catatan terpilih</item>
     </plurals>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">Belajar lebih sedikit</string>
@@ -341,7 +342,6 @@
     <string name="format_deck_description_as_markdown">Format sebagai Markdown</string>
     <string name="help_button_content_description">Buka bantuan untuk ‘%s’</string>
     <string name="failed_to_copy">Gagal menyalin</string>
-    <string name="card_browser_unavailable_when_notes_mode">Tidak tersedia dalam mode \'Catatan\'</string>
     <plurals name="unbury_cards_feedback">
         <item quantity="other">%d kartu diangkat</item>
     </plurals>
@@ -370,8 +370,10 @@
     <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">Salin templat sebagai markdown</string>
     <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">Ubah penampilan browser</string>
     <string name="missing_user_action_dialog_message" comment="%s is the user action number">Aksi pengguna %s tidak diatur dalam jenis catatan ini. Mohon untuk dikonfigurasi.</string>
-    <string name="feature_not_supported_by_study_screen">This card has features that are not yet supported by the new study screen.</string>
+    <string name="feature_not_supported_by_study_screen">Kartu ini memiliki fitur yang belum didukung oleh layar belajar baru</string>
     <string name="directory_inaccessible_info">Pelajari lebih lanjut tentang cara mengembalikan akses di sini %s atau buka pengaturan untuk memperbarui folder koleksi.</string>
     <!-- Scheduler Upgrade Required Dialog title-->
     <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">Pembaruan scheduler diperlukan</string>
+    <!-- Whitespace is OK -->
+    <string name="list_separator" comment="The character and spacing to display between elements of a list, for example \', \' in \'Apple, Banana, Cherry" tools:ignore="TranslationTypo">, </string>
 </resources>

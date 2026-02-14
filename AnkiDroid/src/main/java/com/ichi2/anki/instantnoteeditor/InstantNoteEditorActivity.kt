@@ -17,6 +17,7 @@
 
 package com.ichi2.anki.instantnoteeditor
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -28,8 +29,6 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.widget.EditText
-import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
@@ -37,7 +36,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.button.MaterialButton
-import com.google.android.material.chip.ChipGroup
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.ichi2.anki.AnkiActivity
@@ -46,6 +44,9 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.CustomActionModeCallback
 import com.ichi2.anki.R
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
+import com.ichi2.anki.databinding.ActivityInstantNoteEditorBinding
+import com.ichi2.anki.databinding.DialogInstantEditorBinding
+import com.ichi2.anki.databinding.InstantEditorFieldLayoutBinding
 import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.dialogs.DiscardChangesDialog
 import com.ichi2.anki.launchCatchingTask
@@ -57,7 +58,6 @@ import com.ichi2.anki.showThemedToast
 import com.ichi2.anki.startDeckSelection
 import com.ichi2.anki.withProgress
 import com.ichi2.themes.setTransparentBackground
-import com.ichi2.ui.FixedTextView
 import com.ichi2.utils.AndroidUiUtils.hideKeyboard
 import com.ichi2.utils.AssetHelper.TEXT_PLAIN
 import com.ichi2.utils.message
@@ -66,6 +66,7 @@ import com.ichi2.utils.positiveButton
 import com.ichi2.utils.rawHitTest
 import com.ichi2.utils.show
 import com.ichi2.utils.title
+import dev.androidbroadcast.vbpd.viewBinding
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -77,26 +78,26 @@ import timber.log.Timber
  * uses a custom dialog layout and a transparent activity theme to achieve the functionality.
  **/
 class InstantNoteEditorActivity :
-    AnkiActivity(),
+    AnkiActivity(R.layout.activity_instant_note_editor),
     DeckSelectionDialog.DeckSelectionListener {
     private val viewModel: InstantEditorViewModel by viewModels()
 
-    private var dialogView: View? = null
+    /**
+     * The [androidx.viewbinding.ViewBinding] of the dialog if the activity is in a valid state
+     */
+    // TODO: extract the dialog so dialogBinding is not nullable
+    @SuppressLint("ActivityLayoutPrefix") // not an activity
+    private var dialogBinding: DialogInstantEditorBinding? = null
+
+    private val binding by viewBinding(ActivityInstantNoteEditorBinding::bind)
 
     private val editMode: EditMode
         get() = viewModel.editorMode.value
 
     private val updatedTextKey = "updatedText"
 
-    private lateinit var editModeButton: MaterialButton
-
-    private var editFieldsLayout: LinearLayout? = null
     private lateinit var clozeEditTextField: TextInputEditText
-    private lateinit var warningTextField: FixedTextView
     private lateinit var instantAlertDialog: AlertDialog
-    private lateinit var clozeChipGroup: ChipGroup
-    private lateinit var singleTapLayout: LinearLayout
-    private lateinit var singleTapLayoutTitle: FixedTextView
 
     /** Gets the actual cloze field text value **/
     private val clozeFieldText: String?
@@ -120,7 +121,7 @@ class InstantNoteEditorActivity :
         setTransparentBackground()
         enableEdgeToEdge()
 
-        setContentView(R.layout.activity_instant_note_editor)
+        setViewBinding(binding)
 
         onBackPressedDispatcher.addCallback(this, dialogBackCallback)
 
@@ -177,8 +178,7 @@ class InstantNoteEditorActivity :
                 launchCatchingTask {
                     withProgress {
                         val selectedDeckName = withCol { decks.name(did) }
-                        instantAlertDialog.findViewById<TextView>(R.id.note_deck_name)?.text =
-                            selectedDeckName
+                        dialogBinding?.noteDeckName?.text = selectedDeckName
                     }
                 }
             }
@@ -197,39 +197,34 @@ class InstantNoteEditorActivity :
 
     fun showDialog() {
         Timber.d("Showing Instant Note Editor dialog")
-        val dialogView =
-            layoutInflater.inflate(R.layout.instant_editor_dialog, null).also { dv ->
-                dialogView = dv
+        val dialogBinding =
+            DialogInstantEditorBinding.inflate(layoutInflater).also { binding ->
+                dialogBinding = binding
             }
-        editFieldsLayout = dialogView.findViewById(R.id.editor_fields_layout)
-        editModeButton = dialogView.findViewById(R.id.switch_edit_mode_button)
-        dialogView.findViewById<MaterialButton>(R.id.open_note_editor)?.setOnClickListener {
+
+        dialogBinding.openNoteEditor.setOnClickListener {
             openNoteEditor()
         }
-        warningTextField = dialogView.findViewById(R.id.warning_text)
-        handleClozeMode(dialogView.findViewById(R.id.increment_cloze_button))
-        clozeChipGroup = dialogView.findViewById(R.id.cloze_text_chip_group)
-        singleTapLayout = dialogView.findViewById(R.id.single_tap_layout)
-        singleTapLayoutTitle = dialogView.findViewById(R.id.chip_layout_title)
+        handleClozeMode(dialogBinding.incrementClozeButton)
 
-        val editFields = createEditFields(this, viewModel.currentlySelectedNotetype.value)
+        val editFields = createEditFields(this, dialogBinding, viewModel.currentlySelectedNotetype.value)
 
         Timber.d("Adding edit text fields to the dialog")
         for (editField in editFields) {
-            editFieldsLayout?.addView(editField)
+            this.dialogBinding?.editorFieldsLayout?.addView(editField)
         }
 
-        setLayoutVisibility()
+        setLayoutVisibility(dialogBinding)
 
         instantAlertDialog =
             AlertDialog.Builder(this).show {
-                setView(dialogView)
+                setView(dialogBinding.root)
                 setCancelable(false)
                 setFinishOnTouchOutside(false)
-                dialogView.findViewById<LinearLayout>(R.id.spinner_layout).setOnClickListener {
+                dialogBinding.spinnerLayout.setOnClickListener {
                     startDeckSelection(all = false, filtered = false)
                 }
-                dialogView.findViewById<MaterialButton>(R.id.action_save_note)?.setOnClickListener {
+                dialogBinding.actionSaveNote.setOnClickListener {
                     Timber.d("Save note button pressed")
                     checkAndSave()
                 }
@@ -246,8 +241,8 @@ class InstantNoteEditorActivity :
             }
 
         // consume the touch event outside the dialog
-        dialogView.rootView.userClickOutsideDialog(
-            exclude = instantAlertDialog.findViewById(R.id.instant_add_editor_root)!!,
+        dialogBinding.root.rootView.userClickOutsideDialog(
+            exclude = dialogBinding.root,
         )
     }
 
@@ -259,6 +254,7 @@ class InstantNoteEditorActivity :
     @KotlinCleanup("notetypeJson -> non-null")
     private fun createEditFields(
         context: Context,
+        dialogBinding: DialogInstantEditorBinding,
         notetypeJson: NotetypeJson?,
     ): List<View> {
         val editLines: MutableList<View> = mutableListOf()
@@ -267,34 +263,30 @@ class InstantNoteEditorActivity :
         var clozeFieldsSet = false
 
         for (field in notetypeJson!!.fields) {
-            // Inflate the existing layout
-            val inflater = LayoutInflater.from(context)
-            val existingLayout = inflater.inflate(R.layout.instant_editor_field_layout, null)
-
-            val textInputLayout =
-                existingLayout.findViewById<TextInputLayout>(R.id.edit_text_layout)
-            val textInputEditText =
-                existingLayout.findViewById<TextInputEditText>(R.id.edit_field_text)
+            val fieldBinding = InstantEditorFieldLayoutBinding.inflate(LayoutInflater.from(context))
 
             val name = field.name
-            textInputLayout.hint = name
+            fieldBinding.editTextLayout.hint = name
 
             Timber.d("Populating the cloze edit text fields")
             // Anki allows multiple cloze fields, we pick the first field
             if (clozeFields.contains(name) && !clozeFieldsSet) {
-                setupClozeFields(textInputEditText)
-                singleTapLayoutTitle.text = name
-                setupChipGroup(viewModel, clozeChipGroup)
+                setupClozeFields(dialogBinding, fieldBinding.editFieldText)
+                dialogBinding.chipLayoutTitle.text = name
+                setupChipGroup(viewModel, dialogBinding.clozeTextChipGroup)
                 clozeFieldsSet = true
             }
 
-            editLines.add(existingLayout)
+            editLines.add(fieldBinding.root)
         }
         return editLines
     }
 
     /** Sets the copied text to the cloze field and enable the single tap gesture for that field**/
-    private fun setupClozeFields(textBox: TextInputEditText) {
+    private fun setupClozeFields(
+        dialogBinding: DialogInstantEditorBinding,
+        textBox: TextInputEditText,
+    ) {
         clozeEditTextField = textBox
         lifecycleScope.launch {
             viewModel.actualClozeFieldText.collectLatest { text ->
@@ -303,48 +295,48 @@ class InstantNoteEditorActivity :
             }
         }
 
-        editFieldsLayout?.visibility = View.GONE
+        dialogBinding.editorFieldsLayout.visibility = View.GONE
 
         enableErrorMessage()
 
         setActionModeCallback(textBox)
 
-        editModeButton.setOnClickListener {
+        dialogBinding.switchEditModeButton.setOnClickListener {
             viewModel.setClozeFieldText(textBox.text.toString())
             when (editMode) {
                 EditMode.ADVANCED -> {
                     clozeEditTextField.hideKeyboard()
                     textBox.setText(clozeFieldText)
                     viewModel.setEditorMode(EditMode.SINGLE_TAP)
-                    editModeButton.setIconResource(R.drawable.ic_mode_edit_white)
+                    dialogBinding.switchEditModeButton.setIconResource(R.drawable.ic_mode_edit_white)
 
-                    singleTapLayout.visibility = View.VISIBLE
-                    setupChipGroup(viewModel, clozeChipGroup)
-                    editFieldsLayout?.visibility = View.GONE
+                    dialogBinding.singleTapLayout.visibility = View.VISIBLE
+                    setupChipGroup(viewModel, dialogBinding.clozeTextChipGroup)
+                    dialogBinding.editorFieldsLayout.visibility = View.GONE
 
                     viewModel.setClozeFieldText(textBox.text.toString())
                 }
 
                 EditMode.SINGLE_TAP -> {
-                    editModeButton.setIconResource(R.drawable.ic_touch)
+                    dialogBinding.switchEditModeButton.setIconResource(R.drawable.ic_touch)
                     viewModel.setEditorMode(EditMode.ADVANCED)
 
-                    singleTapLayout.visibility = View.GONE
-                    editFieldsLayout?.visibility = View.VISIBLE
+                    dialogBinding.singleTapLayout.visibility = View.GONE
+                    dialogBinding.editorFieldsLayout.visibility = View.VISIBLE
                 }
             }
         }
     }
 
-    private fun setLayoutVisibility() {
+    private fun setLayoutVisibility(dialogBinding: DialogInstantEditorBinding) {
         when (editMode) {
             EditMode.SINGLE_TAP -> {
-                singleTapLayout.visibility = View.VISIBLE
-                editFieldsLayout?.visibility = View.GONE
+                dialogBinding.singleTapLayout.visibility = View.VISIBLE
+                dialogBinding.editorFieldsLayout.visibility = View.GONE
             }
             EditMode.ADVANCED -> {
-                singleTapLayout.visibility = View.GONE
-                editFieldsLayout?.visibility = View.VISIBLE
+                dialogBinding.singleTapLayout.visibility = View.GONE
+                dialogBinding.editorFieldsLayout.visibility = View.VISIBLE
             }
         }
     }
@@ -426,7 +418,7 @@ class InstantNoteEditorActivity :
     private fun extractFieldValues() {
         val editTextValues = mutableListOf<String>()
 
-        editFieldsLayout?.let { layout ->
+        dialogBinding?.editorFieldsLayout?.let { layout ->
             for (i in 0 until layout.childCount) {
                 val childView = layout.getChildAt(i)
 
@@ -499,7 +491,7 @@ class InstantNoteEditorActivity :
             .onEach { errorMessage ->
                 when (errorMessage) {
                     null -> {
-                        warningTextField.visibility = View.INVISIBLE
+                        dialogBinding?.warningText?.visibility = View.INVISIBLE
                     }
 
                     TR.addingYouHaveAClozeDeletionNote() -> {
@@ -507,8 +499,8 @@ class InstantNoteEditorActivity :
                     }
 
                     else -> {
-                        warningTextField.visibility = View.VISIBLE
-                        warningTextField.text = errorMessage
+                        dialogBinding?.warningText?.visibility = View.VISIBLE
+                        dialogBinding?.warningText?.text = errorMessage
                     }
                 }
             }.launchIn(lifecycleScope)

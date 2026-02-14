@@ -81,7 +81,7 @@ class AxisPicker : ConstraintLayout {
 
         // when adding the first control, we want to make the
         // available axes visible, so the user can see their current values
-        binding.availableAxesContainer.visibility = View.VISIBLE
+        binding.availableAxesContainer.visibility = VISIBLE
         // we also want to hide the TextView, but we can't make it invisible as it's
         // providing our input events. Blanking the text has the same effect
         binding.selectedAxisTextView.text = ""

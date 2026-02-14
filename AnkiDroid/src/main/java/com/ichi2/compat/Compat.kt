@@ -264,4 +264,9 @@ interface Compat {
 
     @Suppress("PropertyName")
     val AXIS_GESTURE_SCROLL_Y_DISTANCE: Int
+
+    /**
+     * Returns the character to use when separating a list; `, ` in English
+     */
+    fun getListSeparator(context: Context): String
 }

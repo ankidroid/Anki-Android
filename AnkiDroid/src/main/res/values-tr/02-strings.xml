@@ -72,7 +72,6 @@
     <string name="whiteboard_align_left" comment="Option to align the whiteboard toolbar on the left" maxLength="28">Sol</string>
     <string name="whiteboard_align_bottom" comment="Option to align the whiteboard toolbar on the bottom" maxLength="28">Alt</string>
     <string name="whiteboard_align_right" comment="Option to align the whiteboard toolbar on the right" maxLength="28">Sağ</string>
-    <string name="whiteboard_clear" comment="Button text to clear the whiteboard" maxLength="28">Temizle</string>
     <string name="whiteboard_more_options" comment="Tooltip of the whiteboard \'More\' button" maxLength="28">Daha fazla seçenek</string>
     <string name="whiteboard_remove_brush_message">Bu fırçayı paletinizden kaldırmak istediğinize emin misiniz?</string>
     <string name="whiteboard_ink_eraser" comment="Title of the whiteboard Ink eraser">Mürekkep</string>
@@ -86,6 +85,7 @@
     <string name="disable_eraser" maxLength="28">Silgiyi devre dışı bırak</string>
     <string name="hide_whiteboard" maxLength="28">Yazı tahtasını gizle</string>
     <string name="clear_whiteboard" maxLength="28">Yazı tahtasını temizle</string>
+    <string name="hide_toolbar" maxLength="28">Hide toolbar</string>
     <string name="replay_media" maxLength="28">Medyayı yeniden oynat</string>
     <string name="leech_suspend_notification">Kart asalak olarak işaretlenip askıya alınmış</string>
     <string name="leech_notification">Kart asalak olarak işaretlenmiş</string>
@@ -191,8 +191,6 @@
     <string name="select_tts" maxLength="28">Metin okuma dilini ayarla</string>
     <string name="custom_study" maxLength="28">Kişisel çalışma</string>
     <string name="dyn_deck_desc">Bu normal programın dışında çalışmak için özel bir deste. Kartlar çalışıldıktan sonra otomatik olarak kendi destelerine geri dönecekler. Bu desteyi deste listesinden silmek kalan bütün kartları kendi destelerine geri döndürecek.</string>
-    <string name="steps_error">Adım 0\'dan büyük bir sayı olmalıdır</string>
-    <string name="steps_min_error">En az bir adım gerekiyor</string>
     <string name="tag_editor_add_feedback">\"%1$s\" eklemek için buna dokunun: \"%2$s\"</string>
     <string name="tag_editor_add_feedback_existing">Varolan bir etiketi seçtiniz: \"%1$s\"</string>
     <!-- Time spans -->
@@ -263,9 +261,12 @@
     <string name="create_shortcut_error">Kısayolu eklerken hata: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">Cümlelerin baş harflerini büyült</string>
     <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll" maxLength="28">Araç çubuğunu kaydır</string>
-    <!-- Symbols used as Button text in IncrementNumberRangePreference -->
+    <!-- IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
+    <string name="invalid_value" comment="Error message in IncrementerNumberRangePreference when input is not a valid number">Invalid value</string>
+    <string name="maximum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the maximum allowed value">Maximum value is %d</string>
+    <string name="minimum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the minimum allowed value">Minimum value is %d</string>
     <!-- Used for credential empty warning message -->
     <string name="invalid_email">Geçerli bir e-posta girin</string>
     <string name="password_empty">Parola gereklidir</string>
@@ -346,7 +347,6 @@
     <string name="format_deck_description_as_markdown">Markdown olarak formatla</string>
     <string name="help_button_content_description">\"%s\" için yardımı aç</string>
     <string name="failed_to_copy">Kopyalanamadı</string>
-    <string name="card_browser_unavailable_when_notes_mode">\"Notlar\" modunda kullanılamıyor</string>
     <plurals name="unbury_cards_feedback">
         <item quantity="one">%d kart çıkarıldı</item>
         <item quantity="other">%d kart çıkarıldı</item>
@@ -376,8 +376,10 @@
     <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">Şablonu markdown olarak kopyala</string>
     <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">Tarayıcı görünümünü düzenle</string>
     <string name="missing_user_action_dialog_message" comment="%s is the user action number">%s kullanıcı eylemi bu not türünde belirlenmemiş. Lütfen eylemi ayarlayın</string>
-    <string name="feature_not_supported_by_study_screen">This card has features that are not yet supported by the new study screen.</string>
+    <string name="feature_not_supported_by_study_screen">Bu kart, yeni çalışma ekranı tarafından henüz desteklenmeyen özellikleri bulunduruyor.</string>
     <string name="directory_inaccessible_info">Erişimin nasıl yeniden sağlanıldığına dair daha fazlasını burda %s öğrenin ya da koleksiyon klasörünü değiştirmek için ayarlara gidin.</string>
     <!-- Scheduler Upgrade Required Dialog title-->
     <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">Zamanlayıcı güncellemesi gerekiyor</string>
+    <!-- Whitespace is OK -->
+    <string name="list_separator" comment="The character and spacing to display between elements of a list, for example \', \' in \'Apple, Banana, Cherry" tools:ignore="TranslationTypo">, </string>
 </resources>

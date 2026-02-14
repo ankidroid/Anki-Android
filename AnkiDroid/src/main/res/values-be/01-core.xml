@@ -215,13 +215,13 @@
     <string name="microphone" comment="Title of the microphone permission in the permissions explanation screen.">Мікрафон</string>
     <string name="microphone_permission_explanation" comment="Description explaining why AnkiDroid needs the microphone permission, shown on the permissions explanation screen.">Дазваляе вам дадаваць гукі ў картку і прайграваць голас пры паўтарэнні</string>
     <string name="notifications_permission_explanation" comment="Description explaining why AnkiDroid needs the notification permission.">Уключае фонавую сінхранізацыю медыяфайлаў і дазваляе вам ствараць нагадванні пра навучанне</string>
-    <string name="heading_required_permissions" comment="Heading for the section of required permissions that the app needs to function, shown in the permissions explanation screen.">Required</string>
-    <string name="heading_optional_permissions" comment="Heading for the section of optional permissions that the app needs to function, shown in the permissions explanation screen.">Optional</string>
-    <string name="manually_grant_permissions" comment="Pop-up message that is shown to the user when they want to grant an app permission that must be granted via the OS settings screen.">This permission must be manually granted from Settings</string>
-    <string name="revoke_permissions" comment="Pop-up message that is shown to the user when they are revoking an app permission.">This permission must be manually revoked from Settings</string>
+    <string name="heading_required_permissions" comment="Heading for the section of required permissions that the app needs to function, shown in the permissions explanation screen.">Абавязкова</string>
+    <string name="heading_optional_permissions" comment="Heading for the section of optional permissions that the app needs to function, shown in the permissions explanation screen.">Неабавязкова</string>
+    <string name="manually_grant_permissions" comment="Pop-up message that is shown to the user when they want to grant an app permission that must be granted via the OS settings screen.">Гэтыя дазволы неабходна ўручную выдаць з налад</string>
+    <string name="revoke_permissions" comment="Pop-up message that is shown to the user when they are revoking an app permission.">Гэтыя дазволы неабходна ўручную адкліканы з налад</string>
     <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Выдаліць уліковы запіс</string>
     <!-- Instant Note Editor -->
     <string name="instant_card" comment="Used in the Android system context menu/share dialog to quickly create a note. This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. ">Імгненнае дабаўленне карткі</string>
     <!-- Multiple profile -->
-    <string name="add_profile">Add profile</string>
+    <string name="add_profile">Дадаць профіль</string>
 </resources>

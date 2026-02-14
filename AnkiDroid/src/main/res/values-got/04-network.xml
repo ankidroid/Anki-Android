@@ -73,7 +73,7 @@
     <string name="col_synced_media_in_background">Collection synced. Media is being synced in the background.</string>
     <string name="sync_corrupt_database">𐌳𐌰𐍄𐌰𐌷𐌿𐌶𐌳 𐌸𐌴𐌹𐌽 𐌱𐍂𐌹𐌺𐌰𐌽 𐌹𐍃𐍄. 𐌱𐌹𐌳𐌾𐌰𐌼 𐌸𐌿𐌺, 𐌽𐌰𐍃𐌴𐌹 𐍆𐌰𐌿𐍂𐌸𐌹𐌶𐌴𐌹 𐌺𐌹𐌿𐍃𐌰𐌹𐍃 𐌰𐍆𐍄𐍂𐌰 𐌲𐌰𐌲𐌰𐌻𐌴𐌹𐌺𐍉𐌽.\n\n𐍃𐌰𐌹𐍈 %s 𐌼𐌰𐌹𐌶𐌹𐌽 𐌺𐌿𐌽𐌸𐌾𐌰 𐌱𐌹 𐌽𐌰𐍃𐌴𐌹𐌽 𐌳𐌰𐍄𐌰𐌷𐌿𐌶𐌳𐌹𐍃 𐌸𐌴𐌹𐌽𐌹𐍃.</string>
     <!-- Please run ‘Check database’ before syncing -->
-    <string name="sync_sanity_local">Local</string>
+    <string name="sync_sanity_local">𐍃𐍄𐌰𐌳𐌰𐌷𐍃</string>
     <string name="sync_sanity_remote">𐍆𐌰𐌹𐍂𐍂𐌰</string>
     <string name="one_way_sync_title" maxLength="41">One-way sync</string>
     <string name="one_way_sync_confirmation">One way sync requested</string>

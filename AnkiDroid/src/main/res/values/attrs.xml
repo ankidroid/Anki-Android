@@ -25,7 +25,8 @@
 
     <!-- Custom preferences -->
     <attr name="allowEmpty" format="boolean" />
-
+    <attr name="min" format="integer" />
+    <attr name="max" format="integer" />
 
     <declare-styleable name="CustomPreference">
         <!-- Whether the preference should automatically set its summary to the value saved for the
@@ -35,6 +36,20 @@
              The placeholder is replaced by the preference value, and it must be only one placeholder.
              If the preference value is updated, the summary is automatically updated as well. -->
         <attr name="summaryFormat" format="string"/>
+    </declare-styleable>
+
+    <declare-styleable name="NumberRangePreference">
+        <attr name="min"/>
+        <attr name="max"/>
+    </declare-styleable>
+
+    <declare-styleable name="StepsPreference">
+        <attr name="allowEmpty"/>
+    </declare-styleable>
+
+    <declare-styleable name="NumberRangePreferenceCompat">
+        <attr name="min"/>
+        <attr name="max"/>
     </declare-styleable>
 
     <declare-styleable name="HtmlHelpPreference">
@@ -53,12 +68,26 @@
         <attr name="helpLink" format="string"/>
     </declare-styleable>
 
+    <attr name="incrementerButtonBackground" format="color|reference" />
+    <attr name="incrementerInputBackground" format="color|reference" />
+    <attr name="incrementerIconColor" format="color|reference" />
+
     <declare-styleable name="SliderPreference">
         <!-- Format string to be used as template to display the value
              There must be ONLY ONE placeholder, which will be replaced by the preference value -->
         <attr name="displayFormat" format="boolean"/>
         <!-- Whether to show the value adjacent to the slider -->
         <attr name="displayValue" format="boolean"/>
+    </declare-styleable>
+
+    <declare-styleable name="ReviewerControlPreference">
+        <!-- The card side the control applies to. Leave unset to let the user choose.
+             If set in an existing preference, a preference upgrade must be made to
+             remove the incompatible values. -->
+        <attr name="cardSide" format="enum">
+            <enum name="question" value="0"/>
+            <enum name="answer" value="1"/>
+        </attr>
     </declare-styleable>
 
     <declare-styleable name="PermissionItem">
@@ -135,6 +164,10 @@
     <attr name="hardBackgroundColor" format="color"/>
     <attr name="goodBackgroundColor" format="color"/>
     <attr name="easyBackgroundColor" format="color"/>
+    <attr name="againIconColor" format="color"/>
+    <attr name="hardIconColor" format="color"/>
+    <attr name="goodIconColor" format="color"/>
+    <attr name="easyIconColor" format="color"/>
     <!-- Card Browser Colors -->
     <attr name="cardBrowserDivider" format="color"/>
     <!-- Study Screen other colors -->
@@ -177,6 +210,8 @@
     <attr name="snackbarBackgroundTintColor" format="color"/>
     <attr name="dialogBackground" format="color"/>
     <attr name="snackbarButtonTextColor" format="color"/>
+
+    <attr name="clozeColor" format="color" />
 
     <declare-styleable name="CheckBoxTriStates">
         <attr name="cycle_checked_to_indeterminate" format="boolean" />

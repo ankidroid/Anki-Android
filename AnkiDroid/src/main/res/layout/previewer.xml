@@ -44,7 +44,7 @@
             >
 
             <com.ichi2.anki.workarounds.SafeWebViewLayout
-                android:id="@+id/webview_layout"
+                android:id="@+id/web_view_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
@@ -66,7 +66,7 @@
             />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/show_previous"
+            android:id="@+id/previous_button"
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="48dp"
             android:layout_height="wrap_content"
@@ -80,15 +80,15 @@
             android:id="@+id/progress_indicator"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toEndOf="@id/show_previous"
-            app:layout_constraintEnd_toStartOf="@id/show_next"
+            app:layout_constraintStart_toEndOf="@id/previous_button"
+            app:layout_constraintEnd_toStartOf="@id/next_button"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/slider"
             tools:text="421/732"
             android:gravity="center_horizontal" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/show_next"
+            android:id="@+id/next_button"
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="48dp"
             android:layout_height="wrap_content"

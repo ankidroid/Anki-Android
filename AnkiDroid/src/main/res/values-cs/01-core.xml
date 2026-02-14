@@ -60,7 +60,7 @@
     <!-- DeckPicker.kt -->
     <string name="expand" comment="In the deck picker: accessibility label of the buttons that display the subdecks of a deck.">Rozbalit</string>
     <string name="collapse" comment="In the deck picker: accessibility label of the buttons that hide the subdecks of a deck.">Sbalit</string>
-    <string name="menu_import" comment="Title of the import page and the button to open it." maxLength="28">Import</string>
+    <string name="menu_import" comment="Title of the import page and the button to open it." maxLength="28">Importovat</string>
     <string name="no_cards_placeholder_title" comment="Text shown the first time AnkiDroid is opened, to explain to the user why they can\'t yet review.">Kolekce je prázdná</string>
     <string name="no_cards_placeholder_description" comment="Text shown the first time AnkiDroid is opened, to explain what should be their first action.">Začněte přidávat karty\npoužitím ikony +</string>
     <!-- Reviewer -->

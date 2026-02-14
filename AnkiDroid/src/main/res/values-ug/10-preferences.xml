@@ -390,6 +390,8 @@
     <string name="new_study_screen_summ"><![CDATA[ياخشىلانغان ئۆگىنىش ئېكرانى ھازىرقىنىڭ ئورنىنى ئالىدۇ. كونا ئېكراندىكى بەزى ئىقتىدارلار ئۆزگەردى ياكى چىقىرىۋېتىلدى. <a href="%1$s">قايتۇرما ئىنكاس</a> ياكى <a href="%2$s">كەمتۈك</a> دوكلاتى يوللاڭ.]]></string>
     <string name="show_answer_feedback" maxLength="41">جاۋاب قايتۇرما ئىنكاسىنى كۆرسىتىدۇ</string>
     <string name="screen" maxLength="41">ئېكران</string>
+    <string name="only_answer" maxLength="41" comment="Configuration of the \'Answer\' commands to only answer the card">Only answer</string>
+    <string name="flip_and_answer" maxLength="41" comment="Configuration of the \'Answer\' commands to answer the card if on the answer side, and flip it if on the question side">Flip and answer</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">تەڭشەكنى ئاچ</string>
 </resources>

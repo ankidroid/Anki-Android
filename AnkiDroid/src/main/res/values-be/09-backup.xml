@@ -45,7 +45,7 @@
 -->
 <resources>
     <string name="backup_deck_no_storage_left">Рэзервовая копія  не захавана. У сховішчы не засталося вольнага месца. Паменшыце глыбіню рэзервавання або выдаліце непатрэбныя файлы.</string>
-    <string name="storage_warning" comment="Consider keeping the unbreakable space after the digit">Less than %d MB space on your storage left.\nFree some space to avoid data loss.</string>
+    <string name="storage_warning" comment="Consider keeping the unbreakable space after the digit">У вашым сховішчы засталося менш за %d МБ.\nВызваліце крыху месца, каб пазбегнуць страты даных.</string>
     <string name="backup_restore" maxLength="28">Аднавіць з рэзервовай копіі</string>
     <string name="backup_new_collection">Новая калекцыя</string>
     <string name="backup_del_collection">Выдаліць калекцыю і стварыць новую</string>

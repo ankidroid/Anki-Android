@@ -21,7 +21,6 @@ import android.content.res.ColorStateList
 import android.graphics.Paint
 import android.util.TypedValue
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
@@ -29,6 +28,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.materialswitch.MaterialSwitch
 import com.ichi2.anki.R
+import com.ichi2.anki.databinding.ScheduleRemindersListItemBinding
 import com.ichi2.anki.libanki.DeckId
 
 class ScheduleRemindersAdapter(
@@ -37,25 +37,23 @@ class ScheduleRemindersAdapter(
     private val toggleReminderEnabled: (ReviewReminderId, ReviewReminderScope) -> Unit,
     private val editReminder: (ReviewReminder) -> Unit,
 ) : ListAdapter<ReviewReminder, ScheduleRemindersAdapter.ViewHolder>(diffCallback) {
-    inner class ViewHolder(
-        holder: View,
-    ) : RecyclerView.ViewHolder(holder) {
+    class ViewHolder(
+        binding: ScheduleRemindersListItemBinding,
+    ) : RecyclerView.ViewHolder(binding.root) {
         var reminder: ReviewReminder? = null
-        val context: Context = holder.context
-        val deckTextView: TextView = holder.findViewById(R.id.reminders_list_deck_text)
-        val timeTextView: TextView = holder.findViewById(R.id.reminders_list_time_text)
-        val switchView: MaterialSwitch = holder.findViewById(R.id.reminders_list_switch)
+        val context: Context = binding.root.context
+        val deckTextView: TextView = binding.remindersListDeckText
+        val timeTextView: TextView = binding.remindersListTimeText
+        val switchView: MaterialSwitch = binding.remindersListSwitch
     }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
     ): ViewHolder {
-        val view =
-            LayoutInflater
-                .from(parent.context)
-                .inflate(R.layout.schedule_reminders_list_item, parent, false)
-        return ViewHolder(view)
+        val inflater = LayoutInflater.from(parent.context)
+        val binding = ScheduleRemindersListItemBinding.inflate(inflater, parent, false)
+        return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(

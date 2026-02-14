@@ -41,7 +41,6 @@ import com.ichi2.anki.utils.ext.isCompactWidth
 import com.ichi2.anki.utils.ext.removeFragmentFromContainer
 import com.ichi2.anki.utils.ext.showDialogFragment
 import timber.log.Timber
-import kotlin.getValue
 
 class LoggedInFragment : Fragment(R.layout.my_account_logged_in) {
     // if the 'remove account' fragment is open, close it first
@@ -67,7 +66,7 @@ class LoggedInFragment : Fragment(R.layout.my_account_logged_in) {
         activity.setSupportActionBar(toolbar)
 
         activity.supportActionBar?.apply {
-            title = TR.preferencesAccount().toSentenceCase(requireContext(), R.string.sync_account)
+            title = TR.preferencesAccount().toSentenceCase(R.string.sync_account)
             setDisplayHomeAsUpEnabled(true)
             setDisplayShowHomeEnabled(true)
         }

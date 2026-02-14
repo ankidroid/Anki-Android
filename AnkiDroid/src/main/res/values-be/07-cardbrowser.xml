@@ -76,7 +76,7 @@
     <string name="card_browser_list_my_searches_new_name">Назва запыту пошуку</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">Нельга захаваць пошук без назвы</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">Такая назва ўжо існуе</string>
-    <string name="card_browser_list_my_searches_successful_save">Search was saved</string>
+    <string name="card_browser_list_my_searches_successful_save">Пошук захаваны</string>
     <string name="no_note_to_edit">Няма нататак для рэдагавання</string>
     <string name="card_browser_list_my_searches_remove_content">Выдаліць \"%1$s\"?</string>
     <string name="card_browser_change_display_order" maxLength="28">Змяніць парадак адлюстравання</string>
@@ -95,10 +95,10 @@
         <item>Па лёгкасці</item>
         <item>Па паўтарэннях</item>
         <item>Па памылках</item>
-        <item>By deck name</item>
+        <item>Па назве калоды</item>
     </string-array>
-    <string name="manage_browser_column">Manage column</string>
-    <string name="no_columns_available">No columns available</string>
+    <string name="manage_browser_column">Кіраванне слупком</string>
+    <string name="no_columns_available">Няма даступных слупкоў</string>
     <string name="card_browser_select_all" maxLength="28">Выбраць усё</string>
     <string name="card_browser_select_none" maxLength="28">Адмяніць выбар</string>
     <string name="card_browser_no_cards_in_deck">У калодзе \'%s\' не знойдзена картак</string>
@@ -128,12 +128,12 @@
     <string name="edit_tags_dialog" comment="Description of the shortcut that opens the edit tags dialog">Рэдагаваць дыялогавае акно з тэгамі</string>
     <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">Паказаць дыялогавае акно заказу</string>
     <!-- Manage columns dialog -->
-    <string name="browse_manage_columns_main_heading">Columns</string>
-    <string name="browse_manage_columns">Manage columns</string>
-    <string name="user_active_columns">Active</string>
-    <string name="user_potential_columns">Available</string>
-    <string name="include_column">Include column</string>
-    <string name="exclude_column">Exclude column</string>
-    <string name="save_changes_message">Please save your changes first</string>
-    <string name="browser_find_replace_loading_fields">Retrieving fields names&#8230;</string>
+    <string name="browse_manage_columns_main_heading">Слупкі</string>
+    <string name="browse_manage_columns">Кіраванне слупкамі</string>
+    <string name="user_active_columns">Актыўныя</string>
+    <string name="user_potential_columns">Даступныя</string>
+    <string name="include_column">Уключыць слупок</string>
+    <string name="exclude_column">Выключыць слупок</string>
+    <string name="save_changes_message">Спачатку захавайце свае змяненні</string>
+    <string name="browser_find_replace_loading_fields">Атрыманне палёў з назвамі&#8230;</string>
 </resources>

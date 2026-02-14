@@ -35,7 +35,7 @@
         app:layout_constraintTop_toBottomOf="@id/queue_limits_label">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/start_input"
+            android:id="@+id/start_input_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawablePadding="8dp"
@@ -60,7 +60,7 @@
         app:layout_constraintEnd_toEndOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/step_input"
+            android:id="@+id/step_input_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawablePadding="8dp"

@@ -30,6 +30,7 @@
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tab_layout"
+            android:background="@android:color/transparent"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

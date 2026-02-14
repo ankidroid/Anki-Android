@@ -78,6 +78,12 @@ import com.ichi2.anki.api.Ease
  * notes/<note_id>/cards/<ord> | NoteCard `ord` (with ord = 0... num_cards-1) belonging to note `note_id` as high level data (Deck name, question, answer).
  *                             | Supports update(), query(). For code examples see class description of [Card].
  * --------------------------------------------------------------------------------------------------------------------
+ * cards                       | All cards as high level data (Deck name, question, answer).
+ *                             | Supports query(). For code examples see class description of [Card].
+ * --------------------------------------------------------------------------------------------------------------------
+ * cards/<ord>                 | Card `ord` (with ord = 0... num_cards-1) as high level data (Deck name, question, answer).
+ *                             | Supports update(), query(). For code examples see class description of [Card].
+ * --------------------------------------------------------------------------------------------------------------------
  * models                      | All note types as JSONObjects.
  *                             | Supports query(). For code examples see class description of [Model].
  * --------------------------------------------------------------------------------------------------------------------
@@ -576,6 +582,12 @@ public object FlashCardsContract {
      */
     public object Card {
         /**
+         * The ID of the card in the Anki database.
+         */
+        @Suppress("ConstPropertyName", "ktlint:standard:backing-property-naming")
+        public const val _ID: String = "_id"
+
+        /**
          * This is the ID of the note that this card belongs to (i.e. [Note._ID]).
          */
         public const val NOTE_ID: String = "note_id"
@@ -622,9 +634,17 @@ public object FlashCardsContract {
          */
         public const val ANSWER_PURE: String = "answer_pure"
 
+        /**
+         * The content:// style URI for cards. Can be used to search for cards or access specific cards.
+         * For examples on how to use the URI for queries see the overview in [FlashCardsContract].
+         */
+        @JvmField // required for Java API
+        public val CONTENT_URI: Uri = Uri.withAppendedPath(AUTHORITY_URI, "cards")
+
         @JvmField // required for Java API
         public val DEFAULT_PROJECTION: Array<String> =
             arrayOf(
+                _ID,
                 NOTE_ID,
                 CARD_ORD,
                 CARD_NAME,

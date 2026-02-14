@@ -37,6 +37,7 @@ import anki.collection.OpChangesWithCount
 import anki.config.ConfigKey
 import anki.config.Preferences
 import anki.config.copy
+import anki.generic.Empty
 import anki.image_occlusion.GetImageForOcclusionResponse
 import anki.image_occlusion.GetImageOcclusionNoteResponse
 import anki.import_export.CsvMetadata
@@ -52,7 +53,9 @@ import anki.search.BrowserColumns
 import anki.search.BrowserRow
 import anki.search.SearchNode
 import anki.search.SearchNode.Group.Joiner
+import anki.search.SortOrderKt.builtin
 import anki.search.searchNode
+import anki.search.sortOrder
 import anki.stats.CardStatsResponse
 import anki.stats.CardStatsResponse.StatsRevlogEntry
 import anki.sync.MediaSyncStatusResponse
@@ -69,25 +72,24 @@ import com.ichi2.anki.libanki.CollectionFiles.InMemory
 import com.ichi2.anki.libanki.Storage.OpenDbArgs
 import com.ichi2.anki.libanki.Utils.ids2str
 import com.ichi2.anki.libanki.backend.model.toBackendNote
-import com.ichi2.anki.libanki.backend.model.toProtoBuf
 import com.ichi2.anki.libanki.exception.ConfirmModSchemaException
-import com.ichi2.anki.libanki.exception.InvalidSearchException
 import com.ichi2.anki.libanki.sched.DummyScheduler
 import com.ichi2.anki.libanki.sched.Scheduler
 import com.ichi2.anki.libanki.utils.LibAnkiAlias
-import com.ichi2.anki.libanki.utils.NotInLibAnki
+import com.ichi2.anki.libanki.utils.NotInPyLib
 import net.ankiweb.rsdroid.Backend
+import net.ankiweb.rsdroid.BackendException.BackendSearchException
 import net.ankiweb.rsdroid.RustCleanup
-import net.ankiweb.rsdroid.exceptions.BackendInvalidInputException
+import net.ankiweb.rsdroid.exceptions.BackendNotFoundException
 import timber.log.Timber
 import java.io.File
 
 typealias ImportLogWithChanges = anki.import_export.ImportResponse
 
-@NotInLibAnki
+@NotInPyLib
 typealias UndoStepCounter = Int
 
-@NotInLibAnki // Literal["AND", "OR"]
+@NotInPyLib // Literal["AND", "OR"]
 enum class SearchJoiner {
     AND,
     OR,
@@ -256,7 +258,7 @@ class Collection(
         get() = db.queryLongScalar("select mod from col")
 
     @RustCleanup("remove")
-    @NotInLibAnki
+    @NotInPyLib
     val scm: Long
         get() = db.queryLongScalar("select scm from col")
 
@@ -329,7 +331,7 @@ class Collection(
         }
     }
 
-    @NotInLibAnki
+    @NotInPyLib
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     fun load() {
         notetypes = Notetypes(this)
@@ -337,14 +339,14 @@ class Collection(
         config = Config(backend)
     }
 
-    /** Mark schema modified to force a full
-     * sync, but with the confirmation checking function disabled This
-     * is equivalent to `modSchema(False)` in Anki. A distinct method
-     * is used so that the type does not states that an exception is
-     * thrown when in fact it is never thrown.
+    /**
+     * Marks the schema as modified to cause a one-way sync.
+     *
+     * **This method discards the undo and study queues when returning successfully**
      */
-    @NotInLibAnki
-    fun modSchemaNoCheck() {
+    @LibAnkiAlias("set_schema_modified")
+    @RustCleanup("Anki only sets scm, not mod")
+    fun setSchemaModified() {
         db.execute(
             "update col set scm=?, mod=?",
             TimeManager.time.intTimeMS(),
@@ -352,23 +354,31 @@ class Collection(
         )
     }
 
-    /** Mark schema modified to cause a one-way sync.
-     * ConfirmModSchemaException will be thrown if the user needs to be prompted to confirm the action.
-     * If the user chooses to confirm then modSchemaNoCheck should be called, after which the exception can
-     * be safely ignored, and the outer code called again.
+    /**
+     * Marks the schema as modified to cause a one-way sync, throwing [ConfirmModSchemaException]
+     * when [check] is `true` and a one-way sync was not previously required
+     * (the schema was not previously modified).
      *
-     * @throws ConfirmModSchemaException
+     * **This method discards the undo and study queues when returning successfully**
+     * ([check] == `false` OR [check] == `true` and the schema was previously modified).
+     *
+     * @param check whether to throw [ConfirmModSchemaException] if the schema is unchanged.
+     * Use `false` after catching the exception and obtaining user consent.
+     *
+     * @throws ConfirmModSchemaException if the schema is currently unchanged and [check] is `true`
      */
     @LibAnkiAlias("mod_schema")
-    fun modSchema() {
+    fun modSchema(check: Boolean) {
         if (!schemaChanged()) {
-            /* In Android we can't show a dialog which blocks the main UI thread
-             Therefore we can't wait for the user to confirm if they want to do
-             a one-way sync here, and we instead throw an exception asking the outer
-             code to handle the user's choice */
-            throw ConfirmModSchemaException()
+            if (check) {
+                /* In Android we can't show a dialog which blocks the main UI thread
+                   Therefore we can't wait for the user to confirm if they want to do
+                   a one-way sync here, and we instead throw an exception asking the outer
+                   code to handle the user's choice */
+                throw ConfirmModSchemaException()
+            }
         }
-        modSchemaNoCheck()
+        setSchemaModified()
     }
 
     /** `true` if schema changed since last sync. */
@@ -575,6 +585,11 @@ class Collection(
      * ***********************************************************
      */
 
+    /**
+     * Return the card with the given ID.
+     *
+     * @throws BackendNotFoundException if the card does not exist
+     */
     @CheckResult
     @LibAnkiAlias("get_card")
     fun getCard(id: CardId): Card = Card(this, id)
@@ -781,59 +796,77 @@ class Collection(
      */
 
     /**
-     * Return a list of card ids
-     * @throws InvalidSearchException
+     * Returns [Card IDs][CardId] matching the provided search.
+     *
+     * To programmatically construct a search string, see [buildSearchString].
+     *
+     * @see SortOrder
+     * @throws BackendSearchException If the query is invalid: `and`; `flag:12` etc...
      */
     @CheckResult
-    @RustCleanup("does not match libAnki; also fix docs")
     @LibAnkiAlias("find_cards")
     fun findCards(
-        search: String,
-        order: SortOrder = SortOrder.NoOrdering(),
+        query: String,
+        order: SortOrder = SortOrder.NoOrdering,
     ): List<CardId> {
-        val adjustedOrder =
-            if (order is SortOrder.UseCollectionOrdering) {
-                SortOrder.BuiltinSortKind(
-                    config.get("sortType") ?: "noteFld",
-                    config.get("sortBackwards") ?: false,
-                )
-            } else {
-                order
-            }
-        return try {
-            backend.searchCards(search, adjustedOrder.toProtoBuf())
-        } catch (e: BackendInvalidInputException) {
-            throw InvalidSearchException(e)
-        }
+        val mode = buildSortMode(order, findingNotes = false)
+        return backend.searchCards(search = query, order = mode)
     }
 
+    /**
+     * Returns [Note IDs][NoteId] matching the provided search.
+     *
+     * To programmatically construct a search string, see [buildSearchString].
+     *
+     * @see SortOrder
+     * @throws BackendSearchException If the query is invalid: `and`; `flag:12` etc...
+     */
     @CheckResult
-    @RustCleanup("does not match upstream")
     @LibAnkiAlias("find_notes")
     fun findNotes(
         query: String,
-        order: SortOrder = SortOrder.NoOrdering(),
+        order: SortOrder = SortOrder.NoOrdering,
     ): List<NoteId> {
-        val adjustedOrder =
-            if (order is SortOrder.UseCollectionOrdering) {
-                SortOrder.BuiltinSortKind(
-                    config.get("noteSortType") ?: "noteFld",
-                    config.get("browserNoteSortBackwards") ?: false,
-                )
-            } else {
-                order
-            }
-        val noteIDsList =
-            try {
-                backend.searchNotes(query, adjustedOrder.toProtoBuf())
-            } catch (e: BackendInvalidInputException) {
-                throw InvalidSearchException(e)
-            }
-        return noteIDsList
+        val mode = buildSortMode(order, findingNotes = true)
+        return backend.searchNotes(search = query, order = mode)
     }
 
-    // @LibAnkiAlias("_build_sort_mode")
-    // private fun buildSortMode()
+    @LibAnkiAlias("_build_sort_mode")
+    private fun buildSortMode(
+        order: SortOrder,
+        findingNotes: Boolean,
+    ): anki.search.SortOrder =
+        sortOrder {
+            fun noOrder() = buildSortMode(SortOrder.NoOrdering, findingNotes)
+            when (order) {
+                // Python: isinstance(order, str)
+                is SortOrder.AfterSqlOrderBy -> custom = order.customOrdering
+                // Python: isinstance(order, bool); order == False:
+                is SortOrder.NoOrdering -> none = Empty.getDefaultInstance()
+                // Python: isinstance(order, bool); order == True:
+                is SortOrder.UseCollectionOrdering -> {
+                    val sortKey = BrowserConfig.sortColumnKey(isNotesMode = findingNotes)
+                    val columnKey = config.get<String>(sortKey) ?: "noteFld"
+                    // slight deviation from upstream with 'noOrder' returns on nulls.
+                    val order = getBrowserColumn(columnKey) ?: return noOrder()
+                    val reverseKey = BrowserConfig.sortBackwardsKey(isNotesMode = findingNotes)
+                    val reverse = config.get<Boolean>(reverseKey) ?: false
+                    val updatedQuery = SortOrder.BuiltinColumnSortKind(order, reverse)
+                    // deviates from upstream: recursive call rather than mutating a variable
+                    return buildSortMode(updatedQuery, findingNotes)
+                }
+                is SortOrder.BuiltinColumnSortKind -> {
+                    val sort = if (findingNotes) order.column.sortingNotes else order.column.sortingCards
+                    if (sort == BrowserColumns.Sorting.SORTING_NONE) return noOrder()
+
+                    builtin =
+                        builtin {
+                            column = order.column.key
+                            reverse = order.reverse
+                        }
+                }
+            }
+        }
 
     /**
      * @return An [OpChangesWithCount] representing the number of affected notes
@@ -998,9 +1031,19 @@ class Collection(
      * ***********************************************************
      */
 
+    /**
+     * Returns all browser columns.
+     *
+     * @see getBrowserColumn
+     */
     @LibAnkiAlias("all_browser_columns")
     fun allBrowserColumns(): List<BrowserColumns.Column> = backend.allBrowserColumns()
 
+    /**
+     * Returns a browser column by key.
+     *
+     * @see allBrowserColumns
+     */
     @LibAnkiAlias("get_browser_column")
     fun getBrowserColumn(key: String): BrowserColumns.Column? {
         for (column in backend.allBrowserColumns()) {
@@ -1201,7 +1244,7 @@ class Collection(
         backend.setWantsAbort()
     }
 
-    @NotInLibAnki
+    @NotInPyLib
     fun setWantsAbortRaw(input: ByteArray): ByteArray = backend.setWantsAbortRaw(input = input)
 
     @CheckResult
@@ -1210,7 +1253,7 @@ class Collection(
 
     /** Takes raw input from TypeScript frontend and returns suitable translations. */
     @CheckResult
-    @NotInLibAnki
+    @NotInPyLib
     fun i18nResourcesRaw(input: ByteArray): ByteArray = backend.i18nResourcesRaw(input = input)
 
     @LibAnkiAlias("abort_media_sync")
@@ -1393,60 +1436,60 @@ class Collection(
      * These methods should be blocking (e.g. `latestProgress` should directly use the backend)
      */
 
-    @NotInLibAnki
+    @NotInPyLib
     fun getImageForOcclusionRaw(input: ByteArray): ByteArray = backend.getImageForOcclusionRaw(input = input)
 
-    @NotInLibAnki
+    @NotInPyLib
     fun getImageOcclusionNoteRaw(input: ByteArray): ByteArray = backend.getImageOcclusionNoteRaw(input = input)
 
-    @NotInLibAnki
+    @NotInPyLib
     fun getImageOcclusionFieldsRaw(input: ByteArray): ByteArray = backend.getImageOcclusionFieldsRaw(input = input)
 
-    @NotInLibAnki
+    @NotInPyLib
     fun addImageOcclusionNoteRaw(input: ByteArray): ByteArray = backend.addImageOcclusionNoteRaw(input = input)
 
-    @NotInLibAnki
+    @NotInPyLib
     fun updateImageOcclusionNoteRaw(input: ByteArray): ByteArray = backend.updateImageOcclusionNoteRaw(input = input)
 
-    @NotInLibAnki
+    @NotInPyLib
     fun congratsInfoRaw(input: ByteArray): ByteArray = backend.congratsInfoRaw(input = input)
 
-    @NotInLibAnki
+    @NotInPyLib
     fun getSchedulingStatesWithContextRaw(input: ByteArray): ByteArray = backend.getSchedulingStatesWithContextRaw(input = input)
 
-    @NotInLibAnki
+    @NotInPyLib
     fun setSchedulingStatesRaw(input: ByteArray): ByteArray = backend.setSchedulingStatesRaw(input = input)
 
-    @NotInLibAnki
+    @NotInPyLib
     fun getChangeNotetypeInfoRaw(input: ByteArray): ByteArray = backend.getChangeNotetypeInfoRaw(input = input)
 
-    @NotInLibAnki
+    @NotInPyLib
     fun changeNotetypeRaw(input: ByteArray): ByteArray = backend.changeNotetypeRaw(input = input)
 
-    @NotInLibAnki
+    @NotInPyLib
     fun importJsonStringRaw(input: ByteArray): ByteArray = backend.importJsonStringRaw(input = input)
 
-    @NotInLibAnki
+    @NotInPyLib
     fun importJsonFileRaw(input: ByteArray): ByteArray = backend.importJsonFileRaw(input = input)
 
-    @NotInLibAnki
+    @NotInPyLib
     fun getIgnoredBeforeCountRaw(input: ByteArray): ByteArray = backend.getIgnoredBeforeCountRaw(input = input)
 
-    @NotInLibAnki
+    @NotInPyLib
     fun getRetentionWorkloadRaw(input: ByteArray): ByteArray = backend.getRetentionWorkloadRaw(input = input)
 
     fun simulateFsrsWorkloadRaw(input: ByteArray): ByteArray = backend.simulateFsrsWorkloadRaw(input = input)
 
-    @NotInLibAnki
+    @NotInPyLib
     fun evaluateParamsLegacyRaw(input: ByteArray): ByteArray = backend.evaluateParamsLegacyRaw(input = input)
 }
 
-@NotInLibAnki
+@NotInPyLib
 fun EmptyCardsReport.emptyCids(): List<CardId> = notesList.flatMap { it.cardIdsList }
 
 // Python code has a cardsOfNote, but not vice-versa yet
 @CheckResult
-@NotInLibAnki
+@NotInPyLib
 fun Collection.notesOfCards(cids: Iterable<CardId>): List<NoteId> =
     db.queryLongList("select distinct nid from cards where id in ${ids2str(cids)}")
 
@@ -1456,7 +1499,7 @@ fun Collection.notesOfCards(cids: Iterable<CardId>): List<NoteId> =
  * `"{{c1::A}} {{c3::B}}" => [1, 3]`
  */
 @CheckResult
-@NotInLibAnki
+@NotInPyLib
 fun Collection.clozeNumbersInNote(n: Note): List<Int> {
     // the call appears to be non-deterministic. Sort ascending
     return backend
@@ -1467,7 +1510,7 @@ fun Collection.clozeNumbersInNote(n: Note): List<Int> {
 /**
  * Given a list of potential Card Ids, return the subset which are Ids of cards in the collection
  */
-@NotInLibAnki
+@NotInPyLib
 @CheckResult
 fun Collection.filterToValidCards(cards: LongArray?): List<CardId> = db.queryLongList("select id from cards where id in " + ids2str(cards))
 
@@ -1476,7 +1519,7 @@ fun Collection.filterToValidCards(cards: LongArray?): List<CardId> = db.queryLon
  *
  * @throws UnsupportedOperationException if the collection is in-memory
  */
-@NotInLibAnki
+@NotInPyLib
 @CheckResult
 fun Collection.requireMediaFolder() = collectionFiles.requireMediaFolder()
 
@@ -1485,6 +1528,6 @@ fun Collection.requireMediaFolder() = collectionFiles.requireMediaFolder()
  *
  * (testing) `null` if the collection is in-memory
  */
-@NotInLibAnki
+@NotInPyLib
 @get:CheckResult
 val Collection.mediaFolder: File? get() = collectionFiles.mediaFolder

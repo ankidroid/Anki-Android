@@ -37,7 +37,7 @@ class RenameCardTemplateDialog {
                 .Builder(context)
                 .show {
                     title(R.string.rename_card_type)
-                    positiveButton(R.string.dialog_ok) { }
+                    positiveButton(R.string.rename) { }
                     negativeButton(R.string.dialog_cancel)
                     setView(R.layout.dialog_generic_text_input)
                 }.input(

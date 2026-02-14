@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:alpha="0.38" android:color="?android:attr/textColorSecondary" android:state_enabled="false"/>
+    <item android:color="?attr/incrementerIconColor" android:state_enabled="true"/>
+    <item android:color="?attr/incrementerIconColor"/>
+</selector>

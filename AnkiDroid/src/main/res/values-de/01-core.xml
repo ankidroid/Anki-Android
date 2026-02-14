@@ -169,7 +169,7 @@
     <string name="card_template_browser_appearance_title">Aussehen der Kartenübersicht</string>
     <!-- card Info -->
     <string name="card_info_title" maxLength="28">Karteninfos</string>
-    <string name="previous_card_info_title" maxLength="28">Previous card info</string>
+    <string name="previous_card_info_title" maxLength="28">Vorherige Karteninfo</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">AnkiDroid-Datenbank lesen und schreiben</string>
     <string name="read_write_permission_description">Zugriff auf bereits vorhandene Notizen, Karten, Notiztypen und Stapel, sowie deren Neuerstellung</string>
@@ -187,7 +187,7 @@
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">Die Datei %s kann nicht erstellt oder überschrieben werden</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Unzugängliche Sammlung</string>
-    <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Wir können nicht auf ihre Sammlung zugreifen, da eine PlayStore-Richtlinie geändert wurde, nachdem AnkiDroid deinstalliert wurde.\n\nIhre Daten sind sicher und können wiederhergestellt werden. Sie befinden sich hier: \n%s\n\nWähle unten eine Wiederherstellungsmöglichkeit aus:</string>
+    <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Wir können nicht auf deine Sammlung zugreifen, da eine PlayStore-Richtlinie geändert wurde, nachdem AnkiDroid deinstalliert wurde.\n\nDeine Daten sind sicher und können wiederhergestellt werden. Sie befinden sich hier: \n%s\n\nWähle unten eine Wiederherstellungsmöglichkeit aus:</string>
     <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android hat aufgrund von App-Inaktivität den Zugriff von AnkiDroid auf %1$s entfernt \n\nDeine Daten sind sicher und können wiederhergestellt werden. Sie befinden sich hier: \n%2$s\n\nWähle unten eine Möglichkeit aus, um sie wiederherzustellen:</string>
     <string name="restore_data_from_ankiweb">Von AnkiWeb wiederherstellen (empfohlen)</string>
     <string name="install_non_play_store_ankidroid_recommended">Ordnerzugriff wiederherstellen (empfohlen)</string>
@@ -200,7 +200,7 @@
     <string name="permissions_screen_optional_headline" comment="Explains that there are optional permissions that can be granted to AnkiDroid.">AnkiDroid funktioniert am besten mit diesen Berechtigungen</string>
     <string name="storage_access_title">Speicherzugang</string>
     <string name="storage_access_summary">Speichert Ihre Sammlung an einem sicheren Ort, der nicht gelöscht wird, wenn die App deinstalliert wird</string>
-    <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after. See [android.permission.MANAGE_EXTERNAL_STORAGE] on https://developer.android.com/training/data-storage/manage-all-files for context.">Zugang zu allen Daten</string>
+    <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after. See [android.permission.MANAGE_EXTERNAL_STORAGE] on https://developer.android.com/training/data-storage/manage-all-files for context.">Zugriff auf alle Dateien</string>
     <string name="image_occlusion">Bildverdeckung</string>
     <string name="microphone" comment="Title of the microphone permission in the permissions explanation screen.">Mikrofon</string>
     <string name="microphone_permission_explanation" comment="Description explaining why AnkiDroid needs the microphone permission, shown on the permissions explanation screen.">Ermöglicht es Ton zu Karten hinzuzufügen und diesen beim Lernen der Karten abzuspielen</string>
@@ -209,9 +209,9 @@
     <string name="heading_optional_permissions" comment="Heading for the section of optional permissions that the app needs to function, shown in the permissions explanation screen.">Optional</string>
     <string name="manually_grant_permissions" comment="Pop-up message that is shown to the user when they want to grant an app permission that must be granted via the OS settings screen.">Diese Berechtigung muss manuell von den Einstellungen aus gewährt werden</string>
     <string name="revoke_permissions" comment="Pop-up message that is shown to the user when they are revoking an app permission.">Diese Berechtigung muss manuell, aus den Einstellungen, widerrufen werden</string>
-    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Konto entfernen</string>
+    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Konto löschen</string>
     <!-- Instant Note Editor -->
     <string name="instant_card" comment="Used in the Android system context menu/share dialog to quickly create a note. This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. ">Sofortige Karte</string>
     <!-- Multiple profile -->
-    <string name="add_profile">Add profile</string>
+    <string name="add_profile">Profil hinzufügen</string>
 </resources>

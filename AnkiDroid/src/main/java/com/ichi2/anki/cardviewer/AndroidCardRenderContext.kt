@@ -20,6 +20,7 @@ import android.content.Context
 import androidx.annotation.CheckResult
 import anki.config.ConfigKey
 import com.ichi2.anki.libanki.Card
+import com.ichi2.anki.libanki.CardOrdinal
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput
 import com.ichi2.anki.libanki.template.MathJax
@@ -67,7 +68,7 @@ class AndroidCardRenderContext(
 
     private fun render(
         content: String,
-        ord: Int,
+        ord: CardOrdinal,
     ): RenderedCard {
         val requiresMathjax = MathJax.textContainsMathjax(content)
 

@@ -12,6 +12,7 @@
         <item name="colorPrimaryDark">@color/theme_plain_primary_dark</item>
         <item name="colorAccent">@color/theme_plain_accent</item>
         <item name="colorSurfaceContainer">#0F9E9E9E</item>
+        <item name="colorSurfaceContainerHigh">#F4F4F4</item>
         <item name="android:textColor">@color/text_color_light</item>
         <item name="android:textColorSecondary">@color/text_color_secondary_light</item>
         <item name="preferenceCategoryTitleTextColor">?attr/colorAccent</item>
@@ -33,6 +34,10 @@
         <item name="hardBackgroundColor">@color/material_grey_300</item>
         <item name="goodBackgroundColor">@color/material_grey_300</item>
         <item name="easyBackgroundColor">@color/material_grey_300</item>
+        <item name="againIconColor">@color/material_red_900</item>
+        <item name="hardIconColor">#B33800</item>
+        <item name="goodIconColor">@color/material_green_900</item>
+        <item name="easyIconColor">@color/material_light_blue_900</item>
         <!-- Study Screen button drawables -->
         <item name="showAnswerButtonBackground">@color/theme_plain_primary</item>
         <item name="showAnswerColor">@color/theme_plain_primary</item>
@@ -80,6 +85,9 @@
         <item name="dialogBackground">@color/white</item>
         <item name="progressDialogButtonTextColor">@color/theme_plain_primary</item>
 
+        <item name="incrementerButtonBackground">@color/white</item>
+        <item name="incrementerInputBackground">@color/theme_plain_primary_light</item>
+        <item name="incrementerIconColor">@color/theme_plain_primary_dark</item>
     </style>
 
     <style name="Theme_Light.Plain" parent="Base.Theme.Light.Plain"/>

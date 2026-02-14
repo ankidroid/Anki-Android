@@ -72,7 +72,6 @@
     <string name="whiteboard_align_left" comment="Option to align the whiteboard toolbar on the left" maxLength="28">Left</string>
     <string name="whiteboard_align_bottom" comment="Option to align the whiteboard toolbar on the bottom" maxLength="28">Bottom</string>
     <string name="whiteboard_align_right" comment="Option to align the whiteboard toolbar on the right" maxLength="28">Right</string>
-    <string name="whiteboard_clear" comment="Button text to clear the whiteboard" maxLength="28">Clear</string>
     <string name="whiteboard_more_options" comment="Tooltip of the whiteboard \'More\' button" maxLength="28">More options</string>
     <string name="whiteboard_remove_brush_message">Are you sure you want to remove this brush from your palette?</string>
     <string name="whiteboard_ink_eraser" comment="Title of the whiteboard Ink eraser">Ink</string>
@@ -86,6 +85,7 @@
     <string name="disable_eraser" maxLength="28">Disable eraser</string>
     <string name="hide_whiteboard" maxLength="28">వైట్బోర్డ్ని దాచిపెట్టు</string>
     <string name="clear_whiteboard" maxLength="28">క్లియర్ వైట్బోర్డ్</string>
+    <string name="hide_toolbar" maxLength="28">Hide toolbar</string>
     <string name="replay_media" maxLength="28">Replay media</string>
     <string name="leech_suspend_notification">కార్డ్ జ్వాల మరియు సస్పెండ్ గా గుర్తించబడింది</string>
     <string name="leech_notification">కార్డు లీచ్గా గుర్తించబడింది</string>
@@ -191,8 +191,6 @@
     <string name="select_tts" maxLength="28">TTS భాషను సెట్ చేయండి</string>
     <string name="custom_study" maxLength="28">అనుకూల అధ్యయనం</string>
     <string name="dyn_deck_desc">సాధారణ షెడ్యూల్ అధ్యయనం కోసం ఇది ప్రత్యేక డెక్. స్వయంచాలకంగా కార్డ్లను వాటిని సమీక్షించి, దాని అసలు డెక్స్కు వాటిని స్వయంచాలకంగా పునరుద్ధరించండి. డెక్ జాబితా నుండి ఈ డెక్ను తొలగిస్తే మిగిలిన అన్ని కార్డులను వారి అసలు డెక్కు తిరిగి పంపుతుంది.</string>
-    <string name="steps_error">దశలు 0 కన్నా ఎక్కువ ఉండాలి</string>
-    <string name="steps_min_error">కనీసం ఒక అడుగు అవసరం</string>
     <string name="tag_editor_add_feedback">\"%1$s\" ని జోడించడాన్ని నిర్ధారించడానికి \"%2$s\" తాకండి</string>
     <string name="tag_editor_add_feedback_existing">ఇప్పటికే ఉన్న ట్యాగ్ \"%1$s\" ఎంచుకోబడింది</string>
     <!-- Time spans -->
@@ -263,9 +261,12 @@
     <string name="create_shortcut_error">సత్వరమార్గాన్ని జోడించడంలో లోపం: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">వాక్యాలను క్యాపిటలైజ్ చేయండి</string>
     <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll" maxLength="28">స్క్రోల్ టూల్‌బార్</string>
-    <!-- Symbols used as Button text in IncrementNumberRangePreference -->
+    <!-- IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
+    <string name="invalid_value" comment="Error message in IncrementerNumberRangePreference when input is not a valid number">Invalid value</string>
+    <string name="maximum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the maximum allowed value">Maximum value is %d</string>
+    <string name="minimum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the minimum allowed value">Minimum value is %d</string>
     <!-- Used for credential empty warning message -->
     <string name="invalid_email">చెల్లుబాటు అయ్యే ఇమెయిల్ను నమోదు చేయండి</string>
     <string name="password_empty">పాస్‌వర్డ్ అవసరం</string>
@@ -346,7 +347,6 @@
     <string name="format_deck_description_as_markdown">Format as Markdown</string>
     <string name="help_button_content_description">Open help for ‘%s’</string>
     <string name="failed_to_copy">కాపీ చేయడంలో విఫలమైంది</string>
-    <string name="card_browser_unavailable_when_notes_mode">\'నోట్స్\' మోడ్‌లో అందుబాటులో లేదు</string>
     <plurals name="unbury_cards_feedback">
         <item quantity="one">%d కార్డ్ పాతిపెట్టబడలేదు</item>
         <item quantity="other">%d కార్డ్‌లు పాతిపెట్టబడలేదు</item>
@@ -380,4 +380,6 @@
     <string name="directory_inaccessible_info">ఇక్కడ యాక్సెస్‌ని ఎలా పునరుద్ధరించాలనే దాని గురించి మరింత తెలుసుకోండి %s లేదా సేకరణ ఫోల్డర్‌ని నవీకరించడానికి సెట్టింగ్‌లకు వెళ్లండి.</string>
     <!-- Scheduler Upgrade Required Dialog title-->
     <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">Scheduler upgrade required</string>
+    <!-- Whitespace is OK -->
+    <string name="list_separator" comment="The character and spacing to display between elements of a list, for example \', \' in \'Apple, Banana, Cherry" tools:ignore="TranslationTypo">, </string>
 </resources>

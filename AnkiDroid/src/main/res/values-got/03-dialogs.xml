@@ -142,12 +142,12 @@
     <string name="incompatible_database_version_title">𐌿𐌽𐌲𐌰𐍄𐌹𐌻 𐌳𐌰𐍄𐌰𐌷𐌿𐌶𐌳𐌹𐍃 𐌿𐍃𐌼𐌴𐍂𐌹</string>
     <string name="incompatible_database_version_summary">The database is a more advanced version than this version of AnkiDroid can work with. Upgrade AnkiDroid or downgrade the database to open it\n\nSupported version: %1$d\nDatabase version: %2$d\n\nThe following restore options will overwrite your current collection, possibly with a compatible database version:</string>
     <!-- Deck Picker Background-->
-    <string name="background_image_applied">Background image applied</string>
-    <string name="background_image_removed">Background image removed</string>
+    <string name="background_image_applied">𐌷𐌹𐌽𐌳𐌰𐍂𐌲𐍂𐌿𐌽𐌳𐌰𐌿𐍃 𐍆𐍂𐌹𐍃𐌰𐌷𐍄𐍃 𐌱𐍂𐌿𐌷𐍄𐌰</string>
+    <string name="background_image_removed">𐌷𐌹𐌽𐌳𐌰𐍂𐌲𐍂𐌿𐌽𐌳𐌰𐌿𐍃 𐍆𐍂𐌹𐍃𐌰𐌷𐍄𐍃 𐌿𐍃𐌽𐌿𐌼𐌰𐌽𐌰</string>
     <string name="no_image_selected">𐌽𐌹 𐍆𐍂𐌹𐍃𐌰𐌷𐍄𐍃 𐌲𐌰𐍅𐌰𐌻𐌹𐌳𐌰</string>
     <string name="error_selecting_image">𐌰𐌹𐍂𐌶𐌴𐌹 𐍅𐌰𐍂𐌸 𐍅𐌰𐌻𐌾𐌰𐌽 𐍆𐍂𐌹𐍃𐌰𐌷𐍄. 𐌱𐌹𐌳𐌾𐌰𐌼 𐌸𐌿𐌺, 𐍃𐌰𐌹 𐌷𐌰𐌽𐌳𐌿𐌱𐍉𐌺𐍉𐍃. %s</string>
     <string name="error_deleting_image">𐌰𐌹𐍂𐌶𐌴𐌹 𐍅𐌰𐍂𐌸 𐌿𐍃𐌵𐌹𐍃𐍄𐌾𐌰𐌽 𐍆𐍂𐌹𐍃𐌰𐌷𐍄𐌰𐌹</string>
-    <string name="failed_to_apply_background_image">Failed to apply background image %s</string>
+    <string name="failed_to_apply_background_image">𐌽𐌹 𐌼𐌰𐌷𐍄𐌰 𐌷𐌹𐌽𐌳𐌰𐍂𐌲𐍂𐌿𐌽𐌳𐌰𐌿𐍃 𐍆𐍂𐌹𐍃𐌰𐌷𐍄𐌰𐌹 %s 𐌱𐍂𐌿𐌺𐌾𐌰𐌽</string>
     <string name="background_image_too_large">Deck Picker background too large</string>
     <string name="image_max_size_allowed" comment="Consider keeping the unbreakable space after the digit">𐍃𐍉 𐌼𐌰𐌹𐍃𐍄𐍉 𐌼𐌹𐌺𐌹𐌻𐌴𐌹 𐍆𐍂𐌹𐍃𐌰𐌷𐍄𐌰𐌹𐍃 %d 𐌼𐌱 𐌰𐌽𐌳𐌻𐌴𐍄𐌰𐌳𐌰</string>
     <string name="image_dimensions_too_large">Image dimensions are too large (%1$d × %2$d)</string>
@@ -207,7 +207,7 @@
     <string name="backup_your_collection">Backup your collection</string>
     <string name="backup_collection_message">You haven\'t backed up your collection in a while. You should do this now to prevent data loss</string>
     <string name="button_backup" maxLength="41">𐌱𐌰𐌹𐌺-𐌰𐍀</string>
-    <string name="button_disable_reminder">Disable reminder</string>
+    <string name="button_disable_reminder">𐌰𐍆𐍄𐍂𐌰𐌼𐌿𐌽𐌳 𐌿𐌽𐌻𐌰𐌲𐌾𐌰𐌽</string>
     <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">𐌱𐌹𐌸𐌴</string>
     <string name="button_do_not_show_again" comment="permanently dismisses a dialog">𐌽𐌹 𐌰𐍆𐍄𐍂𐌰 𐌱𐌰𐌽𐌳𐍅𐌾𐌰𐌽</string>
     <string name="dismiss_backup_warning_title">𐍈𐍉𐍄𐌰 𐍆𐍂𐌰𐌻𐌿𐍃𐍄𐌰𐌹𐍃 𐌳𐌰𐍄𐍉𐍃</string>
@@ -260,4 +260,14 @@
     <string name="import_error_resolution_check_internet">Ensure you are connected to the internet</string>
     <string name="import_error_resolution_copy_to_device">Copy the file to your device and try again with the local file</string>
     <string name="import_error_resolution_select_file">Open the file using your device’s file browser app</string>
+    <!-- Post-login dialog -->
+    <string name="login_successful">𐌰𐍄𐌲𐌰𐌲𐌲𐌰𐌽 𐌼𐌰𐌷𐍄𐌰</string>
+    <string name="sync_now">Sync now?</string>
+    <!--Change Note Type Dialog Fragment-->
+    <string name="card_numbers_unchanged">Card numbers will remain unchanged</string>
+    <!-- Subset of TR.changeNotetypeToFromCloze -->
+    <string name="extra_cloze_deletions_removed">If changing to a regular note type, and there are more cloze deletions than available card templates, any extra cards will be removed.</string>
+    <string name="different_note_types_selected">Please select notes from only one notetype.</string>
+    <string name="error_no_changes_to_save">𐌽𐌹 𐌹𐌽𐌼𐌰𐌹𐌳𐌴𐌹𐌽𐍉𐍃 𐌲𐌰𐍆𐌰𐍃𐍄𐌰𐌹𐌽𐌰𐌹𐍃</string>
+    <string name="choose_color">Choose color</string>
 </resources>

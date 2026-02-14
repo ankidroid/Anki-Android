@@ -22,7 +22,6 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.LinearLayout
 import android.widget.ListView
-import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.os.BundleCompat
 import androidx.core.os.bundleOf
@@ -30,6 +29,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import com.ichi2.anki.R
+import com.ichi2.anki.databinding.ItemColumnSelectionBinding
 import com.ichi2.utils.dp
 import com.ichi2.utils.setPaddingRelative
 import kotlinx.coroutines.launch
@@ -74,17 +74,22 @@ class ColumnSelectionDialogFragment : DialogFragment() {
                     convertView: View?,
                     parent: ViewGroup,
                 ): View {
-                    val view = convertView ?: layoutInflater.inflate(R.layout.item_column_selection, parent, false)
+                    val binding =
+                        if (convertView != null) {
+                            ItemColumnSelectionBinding.bind(convertView)
+                        } else {
+                            ItemColumnSelectionBinding.inflate(layoutInflater, parent, false)
+                        }
 
                     val column = getItem(position)
 
-                    view.findViewById<TextView>(R.id.column_title).text =
+                    binding.columnTitle.text =
                         column?.label ?: getString(R.string.no_columns_available)
 
-                    view.findViewById<TextView>(R.id.column_example).text =
+                    binding.columnExample.text =
                         if (column?.sampleValue.isNullOrBlank()) "-" else column.sampleValue
 
-                    return view
+                    return binding.root
                 }
             }
         listView.adapter = adapter

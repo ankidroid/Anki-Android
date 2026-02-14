@@ -5,15 +5,17 @@ import com.slack.keeper.optInToKeeper
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.gradle.internal.jvm.Jvm
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.jlleitschuh.gradle.ktlint.KtlintExtension
 import java.nio.file.Files
 import java.nio.file.Paths
 import java.nio.file.StandardOpenOption
+import java.util.Properties
 import kotlin.math.max
 import kotlin.system.exitProcess
 import kotlin.time.Duration.Companion.milliseconds
 
 
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
+// Top-level build file where you can add configuration options common to all subprojects/modules.
 plugins {
     alias(libs.plugins.android.application) apply false
     alias(libs.plugins.android.library) apply false
@@ -25,19 +27,19 @@ plugins {
     alias(libs.plugins.keeper) apply false
 }
 
-val localProperties = java.util.Properties()
+val localProperties = Properties()
 if (project.rootProject.file("local.properties").exists()) {
     localProperties.load(project.rootProject.file("local.properties").inputStream())
 }
 val fatalWarnings = localProperties["fatal_warnings"] != "false"
 
 // can't be obtained inside 'subprojects'
-val ktlintVersion = libs.versions.ktlint.get()
+val ktlintVersion: String? = libs.versions.ktlint.get()
 
 // Here we extract per-module "best practices" settings to a single top-level evaluation
 subprojects {
     apply(plugin = "org.jlleitschuh.gradle.ktlint")
-    configure<org.jlleitschuh.gradle.ktlint.KtlintExtension> {
+    configure<KtlintExtension> {
         version.set(ktlintVersion)
     }
 
@@ -87,9 +89,9 @@ subprojects {
 
         /*
         Related to ExperimentalCoroutinesApi: this opt-in is added to enable usage of experimental
-        coroutines API, this targets all project modules with the exception of the "api" module,
-        which doesn't use coroutines so the annotation isn't not available. This would normally
-        result in a warning but we treat warnings as errors.
+        coroutines API, this targets all project modules except the "api" module,
+        which doesn't use coroutines so the annotation isn't available. This would normally
+        result in a warning, but we treat warnings as errors.
         (see https://youtrack.jetbrains.com/issue/KT-28777/Using-experimental-coroutines-api-causes-unresolved-dependency)
          */
         tasks.withType(KotlinCompile::class.java).configureEach {
@@ -111,7 +113,7 @@ subprojects {
 }
 
 val jvmVersion = Jvm.current().javaVersion?.majorVersion.parseIntOrDefault(defaultValue = 0)
-val minSdk = libs.versions.minSdk.get()
+val minSdk: String? = libs.versions.minSdk.get()
 val jvmVersionLowerBound = 21
 val jvmVersionUpperBound = 25
 if (jvmVersion !in jvmVersionLowerBound..jvmVersionUpperBound) {
@@ -134,7 +136,7 @@ if (jvmVersion !in jvmVersionLowerBound..jvmVersionUpperBound) {
     exitProcess(1)
 }
 
-val ciBuild by extra(System.getenv("CI") == "true") // works for Travis CI or Github Actions
+val ciBuild by extra(System.getenv("CI") == "true") // true when running on GitHub Actions
 // allows for -Dpre-dex=false to be set
 val preDexEnabled by extra("true" == System.getProperty("pre-dex", "true"))
 // allows for universal APKs to be generated

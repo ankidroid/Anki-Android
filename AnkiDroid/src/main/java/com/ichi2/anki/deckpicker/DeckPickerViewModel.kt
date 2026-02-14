@@ -36,12 +36,14 @@ import com.ichi2.anki.InitialActivity
 import com.ichi2.anki.OnErrorListener
 import com.ichi2.anki.PermissionSet
 import com.ichi2.anki.browser.BrowserDestination
+import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.configureRenderingMode
 import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.libanki.CardId
 import com.ichi2.anki.libanki.Consts
 import com.ichi2.anki.libanki.Consts.DEFAULT_DECK_ID
 import com.ichi2.anki.libanki.DeckId
+import com.ichi2.anki.libanki.Decks
 import com.ichi2.anki.libanki.sched.DeckNode
 import com.ichi2.anki.libanki.undoAvailable
 import com.ichi2.anki.libanki.undoLabel
@@ -124,7 +126,7 @@ class DeckPickerViewModel :
                 data = tree.filterAndFlattenDisplay(filter, currentDeckId),
                 hasSubDecks = tree.children.any { it.children.any() },
             )
-        }
+        }.stateIn(viewModelScope, SharingStarted.Eagerly, initialValue = FlattenedDeckList.empty)
 
     /**
      * @see deleteDeck
@@ -134,6 +136,9 @@ class DeckPickerViewModel :
     val emptyCardsNotification = MutableSharedFlow<EmptyCardsResult>(extraBufferCapacity = 1)
     val flowOfDestination = MutableSharedFlow<Destination>(extraBufferCapacity = 1)
     override val onError = MutableSharedFlow<String>(extraBufferCapacity = 1)
+    val flowOfExportDeck = MutableSharedFlow<DeckId>()
+    val flowOfCreateShortcut = MutableSharedFlow<ShortcutData>()
+    val flowOfDisableShortcuts = MutableSharedFlow<List<String>>()
 
     /**
      * A notification that the study counts have changed
@@ -180,7 +185,14 @@ class DeckPickerViewModel :
 
     // HACK: dismiss a legacy progress bar
     // TODO: Replace with better progress handling for first load/corrupt collections
-    val flowOfDecksReloaded = MutableSharedFlow<Unit>(extraBufferCapacity = 1)
+    // This MutableSharedFlow has replay=1 due to a race condition between its collector being started
+    // and a possible early emission that occurs when the user is on a metered network and a dialog has to show up
+    // to ask the user if they want to trigger a sync. Normally, the spinning progress indicator is
+    // dismissed via an emission to this flow after the sync is completed, but if the metered network
+    // warning dialog appears, we should immediately refresh the UI in case the user decides not to sync.
+    // Otherwise, the progress indicator remains indefinitely. This replay=1 ensures that the collector will
+    // receive the dismissal event even if it starts after the emission.
+    val flowOfDecksReloaded = MutableSharedFlow<Unit>(extraBufferCapacity = 1, replay = 1)
 
     /**
      * Deletes the provided deck, child decks. and all cards inside.
@@ -247,6 +259,20 @@ class DeckPickerViewModel :
             Timber.i("empty filtered deck %s", deckId)
             withCol { decks.select(deckId) }
             undoableOp { sched.emptyFilteredDeck(decks.selected()) }
+            flowOfDeckCountsChanged.emit(Unit)
+        }
+
+    /**
+     * Rebuilds a filtered deck with its current filter settings
+     */
+    @CheckResult
+    fun rebuildFilteredDeck(deckId: DeckId): Job =
+        viewModelScope.launch {
+            Timber.i("rebuilding filtered deck %s", deckId)
+            withCol {
+                decks.select(deckId)
+                sched.rebuildFilteredDeck(decks.selected())
+            }
             flowOfDeckCountsChanged.emit(Unit)
         }
 
@@ -382,6 +408,63 @@ class DeckPickerViewModel :
                 }
             }
             flowOfRefreshDeckList.emit(Unit)
+        }
+
+    /**
+     * Requests export for the specified deck
+     */
+    fun exportDeck(deckId: DeckId) =
+        launchCatchingIO {
+            flowOfExportDeck.emit(deckId)
+        }
+
+    /**
+     * Find the position of a deck in the flattened deck list.
+     * If the deck is a child of a collapsed deck, returns the position of the parent deck.
+     * Returns 0 if the deck is not found.
+     */
+    fun findDeckPosition(deckId: DeckId): Int {
+        val currentDeckList = flowOfDeckList.value.data
+        currentDeckList.forEachIndexed { index, treeNode ->
+            if (treeNode.did == deckId) {
+                return index
+            }
+        }
+
+        // If the deck is not in our list, search using the immediate parent
+        val collapsedDeck = dueTree?.find(deckId) ?: return 0
+        val parent = collapsedDeck.parent?.get() ?: return 0
+        return findDeckPosition(parent.did)
+    }
+
+    /**
+     * Prepares data for creating a deck shortcut
+     */
+    fun createIcon(deckId: DeckId) =
+        launchCatchingIO {
+            val (shortLabel, longLabel) =
+                withCol {
+                    val fullName = decks.name(deckId)
+                    Pair(
+                        Decks.basename(fullName),
+                        fullName,
+                    )
+                }
+            flowOfCreateShortcut.emit(
+                ShortcutData(
+                    deckId = deckId,
+                    shortLabel = shortLabel,
+                    longLabel = longLabel,
+                ),
+            )
+        }
+
+    /** Disables the shortcut of the deck and the children belonging to it.*/
+    @NeedsTest("ensure collapsed decks are also deleted")
+    fun disableDeckAndChildrenShortcuts(deckId: DeckId) =
+        launchCatchingIO {
+            val deckTreeDids = dueTree?.find(deckId)?.map { it.did.toString() } ?: emptyList()
+            flowOfDisableShortcuts.emit(deckTreeDids)
         }
 
     sealed class StartupResponse {
@@ -558,6 +641,17 @@ data class EmptyCardsResult(
 }
 
 fun DeckNode.onlyHasDefaultDeck() = children.singleOrNull()?.did == DEFAULT_DECK_ID
+
+/**
+ * Data for creating a deck shortcut
+ * @param shortLabel the basename of the deck (e.g., "Verbs" for "Language::English::Verbs")
+ * @param longLabel the full deck name (e.g., "Language::English::Verbs")
+ */
+data class ShortcutData(
+    val deckId: DeckId,
+    val shortLabel: String,
+    val longLabel: String,
+)
 
 enum class SyncIconState {
     Normal,

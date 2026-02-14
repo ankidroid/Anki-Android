@@ -51,6 +51,8 @@
     <string name="add_to_deck_decide_by_note_type">Tentukan melalui jenis nota</string>
     <!-- theme labels -->
     <string name="theme_follow_system">Ikuti sistem</string>
+    <string name="theme_day" comment="Day/Light theme color scheme">Day</string>
+    <string name="theme_night" comment="Night/Dark theme color scheme">Night</string>
     <!-- day_theme_labels -->
     <string name="day_theme_light">Terang</string>
     <string name="day_theme_plain">Biasa</string>

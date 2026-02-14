@@ -56,6 +56,15 @@ fun remainingTime(
         res.getQuantityString(R.plurals.reviewer_window_title, timeX, timeX)
         // It used to be minutes only. So the word "minutes" is not
         // explicitly written in the resource name.
+        /*
+         * NOTE:
+         * The reviewer ETA intentionally omits the "minutes" unit when displaying
+         * values such as "4 hours 12".
+         * Android plural resources support only a single quantity, but this ETA
+         * combines two quantities (hours and minutes). Adding a second unit would
+         * break proper internationalization.
+         * See PR #20033, issues #5626 and #5829.
+         */
     } else if (timeSeconds < TIME_DAY_LONG) {
         timeX = (timeSeconds / TIME_HOUR_LONG).toInt()
         remainingSeconds = (timeSeconds % TIME_HOUR_LONG).toInt()

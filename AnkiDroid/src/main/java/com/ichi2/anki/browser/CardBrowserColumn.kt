@@ -18,7 +18,8 @@ package com.ichi2.anki.browser
 
 import anki.search.BrowserColumns
 import com.ichi2.anki.CardBrowser
-import net.ankiweb.rsdroid.Backend
+import com.ichi2.anki.model.CardsOrNotes
+import com.ichi2.anki.model.CardsOrNotes.CARDS
 
 /**
  * A column available in the [browser][CardBrowser]
@@ -126,3 +127,32 @@ enum class CardBrowserColumn(
 fun List<BrowserColumns.Column>.find(column: CardBrowserColumn): BrowserColumns.Column =
     this.firstOrNull { it.key == column.ankiColumnKey }
         ?: throw IllegalArgumentException("Invalid column: ${column.ankiColumnKey}")
+
+/**
+ * The column name: "Card Type"
+ */
+fun BrowserColumns.Column.getLabel(cardsOrNotes: CardsOrNotes): String = if (cardsOrNotes == CARDS) cardsModeLabel else notesModeLabel
+
+/**
+ * An optional tooltip for a column.
+ *
+ * This can be lengthy:
+ *
+ * ```
+ * // Card Modified
+ * "The last time changes were made to a card, including reviews, flags and deck changes"
+ * ```
+ *
+ * https://github.com/ankitects/anki/blob/6247c92dcce0204f0e666b9e9e5355d2a15649d6/rslib/src/browser_table.rs#L192-L211
+ */
+@Suppress("unused")
+fun BrowserColumns.Column.getTooltip(cardsOrNotes: CardsOrNotes): String? =
+    (
+        if (cardsOrNotes ==
+            CARDS
+        ) {
+            cardsModeTooltip
+        } else {
+            notesModeTooltip
+        }
+    ).ifEmpty { null }

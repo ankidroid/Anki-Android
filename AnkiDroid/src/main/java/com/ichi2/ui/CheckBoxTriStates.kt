@@ -19,7 +19,6 @@ import android.content.Context
 import android.os.Parcel
 import android.os.Parcelable
 import android.util.AttributeSet
-import android.widget.CompoundButton.OnCheckedChangeListener
 import androidx.appcompat.widget.AppCompatCheckBox
 import com.ichi2.anki.R
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup

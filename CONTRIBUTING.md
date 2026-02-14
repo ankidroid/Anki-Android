@@ -21,6 +21,29 @@ Discord is great for real-time/casual conversations. Records of the outcomes of 
 discussions should be copied to the relevant PR/issue (ideally linking to the Discord message).
  It's not expected that Discord history will be permanently retained.
 
+## Google Summer of Code (GSoC)
+
+GSoC contributors are expected to operate with a high degree of independence. Please read our 
+[GSoC Wiki](https://github.com/ankidroid/Anki-Android/wiki/Google-Summer-of-Code) for more contribution instructions. Mentors are available to
+provide guidance, feedback, and review rather than step-by-step instructions. Before asking questions, you are expected to read relevant
+documentation, search existing issues/PRs, and make a concrete attempt to understand the problem.
+
+We receive a high volume of GSoC-related questions during the application period. To keep the project
+sustainable, general questions should be asked in public channels [#ankidroid-dev](https://discord.gg/xeb7bBZVJ6) and be
+clear, specific, and actionable. Repeated questions, direct messages to mentors, or requests for
+individual evaluation or proposal feedback may be ignored. Your ability to communicate clearly and work independently is an important part of how proposals are evaluated.
+
+## AI Policy
+
+> [!CAUTION]
+> Using AI tools as a new contributor will result in moderator action.
+
+New contributors **may not** use any AI tools to produce contributions for AnkiDroid. This includes 
+ code, documentation, and GitHub comments (including spelling and grammar corrections).
+
+See our [AI policy](AI_POLICY.md) for when these restrictions are lifted from your account, and why 
+ they exist.
+
 ## Selecting an issue [[GitHub Search](https://github.com/ankidroid/Anki-Android/issues?q=is%3Aissue%20state%3Aopen)]
 
 If you are starting out with open source, we recommend starting with: [#13282: Fix Android Studio Warnings](<https://github.com/ankidroid/Anki-Android/issues/13282>).
@@ -155,7 +178,7 @@ If you feel your PR is no longer reviewable because it requires significant work
 #### Label guide
 
 * **No label**
-  * Please ping a maintainer to add a '**Needs Review**' label 
+  * PRs should not be unlabeled, please ping a maintainer if this occurs. 
 * **[Needs Author Reply](https://github.com/ankidroid/Anki-Android/labels/Needs%20Author%20Reply)**
   * The PR will unlikely be looked at until requested changes are made.
 * **[Has Conflicts](https://github.com/ankidroid/Anki-Android/labels/Has%20Conflicts)**

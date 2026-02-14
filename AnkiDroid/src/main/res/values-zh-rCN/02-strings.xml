@@ -72,7 +72,6 @@
     <string name="whiteboard_align_left" comment="Option to align the whiteboard toolbar on the left" maxLength="28">左</string>
     <string name="whiteboard_align_bottom" comment="Option to align the whiteboard toolbar on the bottom" maxLength="28">底部</string>
     <string name="whiteboard_align_right" comment="Option to align the whiteboard toolbar on the right" maxLength="28">右</string>
-    <string name="whiteboard_clear" comment="Button text to clear the whiteboard" maxLength="28">清空</string>
     <string name="whiteboard_more_options" comment="Tooltip of the whiteboard \'More\' button" maxLength="28">更多选项</string>
     <string name="whiteboard_remove_brush_message">您确定要从您的调色板中删除此笔刷吗？</string>
     <string name="whiteboard_ink_eraser" comment="Title of the whiteboard Ink eraser">墨水</string>
@@ -86,6 +85,7 @@
     <string name="disable_eraser" maxLength="28">禁用擦除</string>
     <string name="hide_whiteboard" maxLength="28">隐藏白板</string>
     <string name="clear_whiteboard" maxLength="28">清空白板</string>
+    <string name="hide_toolbar" maxLength="28">Hide toolbar</string>
     <string name="replay_media" maxLength="28">重播媒体</string>
     <string name="leech_suspend_notification">卡片被标记为「记忆难点」并暂停复习</string>
     <string name="leech_notification">卡片被标记为「记忆难点」</string>
@@ -188,8 +188,6 @@
     <string name="select_tts" maxLength="28">设置 TTS 语言</string>
     <string name="custom_study" maxLength="28">自定义学习</string>
     <string name="dyn_deck_desc">这是一个在计划外学习的特殊牌组，卡片在复习后会自动返回原来的牌组。\n在牌组列表中删除此牌组也将会把所有卡片都移回原来的牌组。</string>
-    <string name="steps_error">间隔必须是大于 0 的数字</string>
-    <string name="steps_min_error">至少需要一个间隔</string>
     <string name="tag_editor_add_feedback">点击「%2$s」以确认添加「%1$s」</string>
     <string name="tag_editor_add_feedback_existing">已选中 %1$s</string>
     <!-- Time spans -->
@@ -260,9 +258,12 @@
     <string name="create_shortcut_error">添加快捷方式时出错：%s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">大写句子</string>
     <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll" maxLength="28">滚动工具栏</string>
-    <!-- Symbols used as Button text in IncrementNumberRangePreference -->
+    <!-- IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
+    <string name="invalid_value" comment="Error message in IncrementerNumberRangePreference when input is not a valid number">无效的值</string>
+    <string name="maximum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the maximum allowed value">最大值为 %d</string>
+    <string name="minimum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the minimum allowed value">最小值为 %d</string>
     <!-- Used for credential empty warning message -->
     <string name="invalid_email">输入有效的电子邮件地址</string>
     <string name="password_empty">密码是必填项</string>
@@ -341,7 +342,6 @@
     <string name="format_deck_description_as_markdown">转换为 Markdown 格式</string>
     <string name="help_button_content_description">打开 ‘%s’ 的帮助</string>
     <string name="failed_to_copy">复制失败</string>
-    <string name="card_browser_unavailable_when_notes_mode">在“笔记”模式中不可用</string>
     <plurals name="unbury_cards_feedback">
         <item quantity="other">取消遮盖了 %d 张卡片</item>
     </plurals>
@@ -374,4 +374,6 @@
     <string name="directory_inaccessible_info">要了解有关如何恢复访问权限的更多信息，请访问此处 %s，或前往设置更新集合文件夹。</string>
     <!-- Scheduler Upgrade Required Dialog title-->
     <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">需要升级调度程序</string>
+    <!-- Whitespace is OK -->
+    <string name="list_separator" comment="The character and spacing to display between elements of a list, for example \', \' in \'Apple, Banana, Cherry" tools:ignore="TranslationTypo">、</string>
 </resources>

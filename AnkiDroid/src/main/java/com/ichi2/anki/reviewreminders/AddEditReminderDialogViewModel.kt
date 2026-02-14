@@ -89,26 +89,40 @@ class AddEditReminderDialogViewModel(
         )
     val cardTriggerThreshold: LiveData<Int> = _cardTriggerThreshold
 
+    private val _onlyNotifyIfNoReviews =
+        MutableLiveData(
+            when (dialogMode) {
+                is AddEditReminderDialog.DialogMode.Add -> INITIAL_ONLY_NOTIFY_IF_NO_REVIEWS
+                is AddEditReminderDialog.DialogMode.Edit -> dialogMode.reminderToBeEdited.onlyNotifyIfNoReviews
+            },
+        )
+    val onlyNotifyIfNoReviews: LiveData<Boolean> = _onlyNotifyIfNoReviews
+
     private val _advancedSettingsOpen = MutableLiveData(INITIAL_ADVANCED_SETTINGS_OPEN)
     val advancedSettingsOpen: LiveData<Boolean> = _advancedSettingsOpen
 
     fun setTime(time: ReviewReminderTime) {
-        Timber.d("Updated time to %s", time)
+        Timber.i("Updated time to %s", time)
         _time.value = time
     }
 
     fun setDeckSelected(deckId: DeckId) {
-        Timber.d("Updated deck selected to %s", deckId)
+        Timber.i("Updated deck selected to %s", deckId)
         _deckSelected.value = deckId
     }
 
     fun setCardTriggerThreshold(threshold: Int) {
-        Timber.d("Updated card trigger threshold to %s", threshold)
+        Timber.i("Updated card trigger threshold to %s", threshold)
         _cardTriggerThreshold.value = threshold
     }
 
+    fun toggleOnlyNotifyIfNoReviews() {
+        Timber.i("Toggled onlyNotifyIfNoReviews from %s", _onlyNotifyIfNoReviews.value)
+        _onlyNotifyIfNoReviews.value = !(_onlyNotifyIfNoReviews.value ?: false)
+    }
+
     fun toggleAdvancedSettingsOpen() {
-        Timber.d("Toggled advanced settings open from %s", _advancedSettingsOpen.value)
+        Timber.i("Toggled advanced settings open from %s", _advancedSettingsOpen.value)
         _advancedSettingsOpen.value = !(_advancedSettingsOpen.value ?: false)
     }
 
@@ -136,6 +150,7 @@ class AddEditReminderDialogViewModel(
                     is AddEditReminderDialog.DialogMode.Add -> true
                     is AddEditReminderDialog.DialogMode.Edit -> dialogMode.reminderToBeEdited.enabled
                 },
+            onlyNotifyIfNoReviews = onlyNotifyIfNoReviews.value ?: INITIAL_ONLY_NOTIFY_IF_NO_REVIEWS,
         )
 
     companion object {
@@ -147,6 +162,13 @@ class AddEditReminderDialogViewModel(
          * This is an Int because that is what the EditText's inputType is.
          */
         private const val INITIAL_CARD_THRESHOLD: Int = 1
+
+        /**
+         * The default value for whether a notification should only be fired if no reviews have been done today
+         * for the corresponding deck / all decks. Since this is set to false, the default behaviour is that
+         * notifications will always be sent, regardless of whether reviews have been done today.
+         */
+        private const val INITIAL_ONLY_NOTIFY_IF_NO_REVIEWS = false
 
         /**
          * Whether the advanced settings dropdown is initially open.

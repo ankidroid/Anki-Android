@@ -72,7 +72,6 @@
     <string name="whiteboard_align_left" comment="Option to align the whiteboard toolbar on the left" maxLength="28">Chap</string>
     <string name="whiteboard_align_bottom" comment="Option to align the whiteboard toolbar on the bottom" maxLength="28">Past</string>
     <string name="whiteboard_align_right" comment="Option to align the whiteboard toolbar on the right" maxLength="28">Oʻng</string>
-    <string name="whiteboard_clear" comment="Button text to clear the whiteboard" maxLength="28">Tozalash</string>
     <string name="whiteboard_more_options" comment="Tooltip of the whiteboard \'More\' button" maxLength="28">Boshqa parametrlar</string>
     <string name="whiteboard_remove_brush_message">Rostdan ham bu choʻtkani palitradan olib tashlamoqchimisiz?</string>
     <string name="whiteboard_ink_eraser" comment="Title of the whiteboard Ink eraser">Siyoh</string>
@@ -86,6 +85,7 @@
     <string name="disable_eraser" maxLength="28">Oʻchirgʻichni oʻchirish</string>
     <string name="hide_whiteboard" maxLength="28">Yozuv taxtasini yashirish</string>
     <string name="clear_whiteboard" maxLength="28">Yozuv taxtasini tozalash</string>
+    <string name="hide_toolbar" maxLength="28">Hide toolbar</string>
     <string name="replay_media" maxLength="28">Mediani qayta ijro etish</string>
     <string name="leech_suspend_notification">Karta yopishqoq deb belgilandi va toʻxtatildi</string>
     <string name="leech_notification">Karta yopishqoq deb belgilandi</string>
@@ -191,8 +191,6 @@
     <string name="select_tts" maxLength="28">TTS tilini sozlash</string>
     <string name="custom_study" maxLength="28">Maxsus oʻrganish</string>
     <string name="dyn_deck_desc">Bu odatiy kun tartibidan tashqarida oʻqish uchun maxsus dasta. Koʻrib chiqilganidan soʻng kartalar avtomatik ravishda oʻzining asl dastalariga qaytariladi. Ushbu dastani dastalar roʻyxatidan oʻchirib tashlasangiz, qolgan barcha kartalar oʻzining asl dastalariga qaytariladi.</string>
-    <string name="steps_error">Bosqichlar soni 0 dan katta boʻlishi kerak</string>
-    <string name="steps_min_error">Kamida bitta bosqich talab qilinadi</string>
     <string name="tag_editor_add_feedback">“%1$s” qoʻshishni tasdiqlash uchun “%2$s” tugmasini bosing</string>
     <string name="tag_editor_add_feedback_existing">Mavjud boʻlgan “%1$s” tegi tanlandi</string>
     <!-- Time spans -->
@@ -263,9 +261,12 @@
     <string name="create_shortcut_error">Yorliq qoʻshishda xatolik: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">Jumlalar bosh harf bilan</string>
     <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll" maxLength="28">Asboblar panelini aylantirish</string>
-    <!-- Symbols used as Button text in IncrementNumberRangePreference -->
+    <!-- IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
+    <string name="invalid_value" comment="Error message in IncrementerNumberRangePreference when input is not a valid number">Yaroqsiz qiymat</string>
+    <string name="maximum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the maximum allowed value">Maksimal qiymat %d</string>
+    <string name="minimum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the minimum allowed value">Minimal qiymat %d</string>
     <!-- Used for credential empty warning message -->
     <string name="invalid_email">Yaroqli e-pochta manzilini kiriting</string>
     <string name="password_empty">Parol talab etiladi</string>
@@ -346,7 +347,6 @@
     <string name="format_deck_description_as_markdown">Markdown sifatida formatlash</string>
     <string name="help_button_content_description">‘%s’ uchun yordamni ochish</string>
     <string name="failed_to_copy">Nusxa olib boʻlmadi</string>
-    <string name="card_browser_unavailable_when_notes_mode">‘Qaydlar’ rejimida ishlatib boʻlmaydi</string>
     <plurals name="unbury_cards_feedback">
         <item quantity="one">%d ta koʻmilgan karta chiqarildi</item>
         <item quantity="other">%d ta koʻmilgan karta chiqarildi</item>
@@ -380,4 +380,6 @@
     <string name="directory_inaccessible_info">Bu yerda %s ruxsatni tiklash haqida koʻproq bilib oling yoki toʻplam jildini yangilash uchun sozlamalarga oʻting.</string>
     <!-- Scheduler Upgrade Required Dialog title-->
     <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">Rejalashtiruvchini yuksaltirish kerak</string>
+    <!-- Whitespace is OK -->
+    <string name="list_separator" comment="The character and spacing to display between elements of a list, for example \', \' in \'Apple, Banana, Cherry" tools:ignore="TranslationTypo">, </string>
 </resources>

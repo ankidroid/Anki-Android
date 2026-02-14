@@ -72,7 +72,6 @@
     <string name="whiteboard_align_left" comment="Option to align the whiteboard toolbar on the left" maxLength="28">Vlevo</string>
     <string name="whiteboard_align_bottom" comment="Option to align the whiteboard toolbar on the bottom" maxLength="28">Dole</string>
     <string name="whiteboard_align_right" comment="Option to align the whiteboard toolbar on the right" maxLength="28">Vpravo</string>
-    <string name="whiteboard_clear" comment="Button text to clear the whiteboard" maxLength="28">Vymazat</string>
     <string name="whiteboard_more_options" comment="Tooltip of the whiteboard \'More\' button" maxLength="28">Další možnosti</string>
     <string name="whiteboard_remove_brush_message">Jste si jisti, že chcete odstranit tento štětec z vaší palety?</string>
     <string name="whiteboard_ink_eraser" comment="Title of the whiteboard Ink eraser">Inkoust</string>
@@ -86,6 +85,7 @@
     <string name="disable_eraser" maxLength="28">Zakázat gumování</string>
     <string name="hide_whiteboard" maxLength="28">Skrýt tabuli</string>
     <string name="clear_whiteboard" maxLength="28">Smazat tabuli</string>
+    <string name="hide_toolbar" maxLength="28">Hide toolbar</string>
     <string name="replay_media" maxLength="28">Přehrát multimédia</string>
     <string name="leech_suspend_notification">Karta označena jako pijavice a vyřazena</string>
     <string name="leech_notification">Karta byla označena jako pijavice</string>
@@ -197,8 +197,6 @@
     <string name="select_tts" maxLength="28">Nastavit jazyk TTS</string>
     <string name="custom_study" maxLength="28">Vlastní studium</string>
     <string name="dyn_deck_desc">Toto je speciální balíček pro studium mimo normální plán. Karty se po opakování automaticky vrátí do svých původních balíčků. Odstraněním tohoto balíčku ze seznamu se všechny zbývající karty vrátí do svých původních balíčků.</string>
-    <string name="steps_error">Kroky musí být čísla větší než 0</string>
-    <string name="steps_min_error">Je požadován alespoň jeden krok</string>
     <string name="tag_editor_add_feedback">Klepněte na „%2$s“, abyste potvrdili přidání „%1$s“</string>
     <string name="tag_editor_add_feedback_existing">Vybrán stávající štítek „%1$s“</string>
     <!-- Time spans -->
@@ -269,9 +267,12 @@
     <string name="create_shortcut_error">Chyba při přidávání zástupce: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">Velká počáteční písmena</string>
     <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll" maxLength="28">Posouvat nástrojovou lištu</string>
-    <!-- Symbols used as Button text in IncrementNumberRangePreference -->
+    <!-- IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
+    <string name="invalid_value" comment="Error message in IncrementerNumberRangePreference when input is not a valid number">Invalid value</string>
+    <string name="maximum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the maximum allowed value">Maximum value is %d</string>
+    <string name="minimum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the minimum allowed value">Minimum value is %d</string>
     <!-- Used for credential empty warning message -->
     <string name="invalid_email">Zadejte platný e-mail</string>
     <string name="password_empty">Je požadováno heslo</string>
@@ -356,7 +357,6 @@
     <string name="format_deck_description_as_markdown">Formátovat jako Markdown</string>
     <string name="help_button_content_description">Otevřít nápovědu pro „%s“</string>
     <string name="failed_to_copy">Kopírování se nezdařilo</string>
-    <string name="card_browser_unavailable_when_notes_mode">Nedostupné v režimu „Poznámky“</string>
     <plurals name="unbury_cards_feedback">
         <item quantity="one">Zrušeno přeskočení %d karty</item>
         <item quantity="few">Zrušeno přeskočení %d karet</item>
@@ -388,8 +388,10 @@
     <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">Kopírovat šablonu v markdown</string>
     <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">Upravit vzhled prohlížeče</string>
     <string name="missing_user_action_dialog_message" comment="%s is the user action number">Akce uživatele %s není v tomto typu poznámky nastavena. Nakonfigurujte ji prosím</string>
-    <string name="feature_not_supported_by_study_screen">Tato karta využívá funkcí, které ještě nejsou podporovány novým studijním zobrazením.</string>
+    <string name="feature_not_supported_by_study_screen">Tato karta využívá funkce, které ještě nejsou podporovány novou obrazovkou učení.</string>
     <string name="directory_inaccessible_info">Další informace o tom, jak obnovit přístup zde %s nebo přejděte do nastavení a aktualizujte složku s kolekcí.</string>
     <!-- Scheduler Upgrade Required Dialog title-->
     <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">Je vyžadována aktualizace plánovače</string>
+    <!-- Whitespace is OK -->
+    <string name="list_separator" comment="The character and spacing to display between elements of a list, for example \', \' in \'Apple, Banana, Cherry" tools:ignore="TranslationTypo">, </string>
 </resources>

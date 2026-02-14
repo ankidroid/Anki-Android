@@ -72,7 +72,6 @@
     <string name="whiteboard_align_left" comment="Option to align the whiteboard toolbar on the left" maxLength="28">Maldekstre</string>
     <string name="whiteboard_align_bottom" comment="Option to align the whiteboard toolbar on the bottom" maxLength="28">Sube</string>
     <string name="whiteboard_align_right" comment="Option to align the whiteboard toolbar on the right" maxLength="28">Dekstre</string>
-    <string name="whiteboard_clear" comment="Button text to clear the whiteboard" maxLength="28">Forviŝi</string>
     <string name="whiteboard_more_options" comment="Tooltip of the whiteboard \'More\' button" maxLength="28">Pliaj agordoj</string>
     <string name="whiteboard_remove_brush_message">Ĉu vi certe volas forigi tiun ĉi panikon el via paletro?</string>
     <string name="whiteboard_ink_eraser" comment="Title of the whiteboard Ink eraser">Forviŝi</string>
@@ -86,6 +85,7 @@
     <string name="disable_eraser" maxLength="28">Malaktivigi forviŝilon</string>
     <string name="hide_whiteboard" maxLength="28">Kaŝi skribtabulon</string>
     <string name="clear_whiteboard" maxLength="28">Forviŝi skribtabulon</string>
+    <string name="hide_toolbar" maxLength="28">Kaŝi ilastrion</string>
     <string name="replay_media" maxLength="28">Reludi aŭdvidaĵon</string>
     <string name="leech_suspend_notification">Karto markita kiel forgesema kaj kaŝita</string>
     <string name="leech_notification">Karto markita kiel forgesema</string>
@@ -191,8 +191,6 @@
     <string name="select_tts" maxLength="28">Agordi lingvon por parolsintezilo</string>
     <string name="custom_study" maxLength="28">Propra lernado</string>
     <string name="dyn_deck_desc">Tio ĉi estas speciala kartaro por lerni ekster la norma lern-plano. Kartoj aŭtomate revenos al originalaj kartaroj post ripeti ilin. Forigi tiun ĉi kartaron el la listo de kartaroj redonos ĉiujn restantajn kartojn al originalaj kartaroj.</string>
-    <string name="steps_error">Nombro da paŝoj estu pli granda ol 0</string>
-    <string name="steps_min_error">Almenaŭ unu paŝo estas postulata</string>
     <string name="tag_editor_add_feedback">Frapetu “%2$s” por konfirmi aldoni “%1$s”</string>
     <string name="tag_editor_add_feedback_existing">Elektis ekzistan etikedon “%1$s”</string>
     <!-- Time spans -->
@@ -263,9 +261,12 @@
     <string name="create_shortcut_error">Eraro dum krei fenestraĵon: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">Majuskligi frazojn</string>
     <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll" maxLength="28">Rulumi en ilarstrio</string>
-    <!-- Symbols used as Button text in IncrementNumberRangePreference -->
+    <!-- IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
+    <string name="invalid_value" comment="Error message in IncrementerNumberRangePreference when input is not a valid number">Malĝusta valoro</string>
+    <string name="maximum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the maximum allowed value">Maksimuma valoro estas %d</string>
+    <string name="minimum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the minimum allowed value">Minimuma valoro estas %d</string>
     <!-- Used for credential empty warning message -->
     <string name="invalid_email">Enigu ĝustan retpoŝtan adreson</string>
     <string name="password_empty">Pasvorto estas postulata</string>
@@ -346,7 +347,6 @@
     <string name="format_deck_description_as_markdown">Aranĝi kiel Markdown</string>
     <string name="help_button_content_description">Malfermi helpon pri “%s”</string>
     <string name="failed_to_copy">Malsukcesis kopii</string>
-    <string name="card_browser_unavailable_when_notes_mode">Nedisponebla en reĝimo “notoj”</string>
     <plurals name="unbury_cards_feedback">
         <item quantity="one">%d karto malkaŝita.</item>
         <item quantity="other">%d kartoj malkaŝitaj.</item>
@@ -376,8 +376,10 @@
     <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">Kopii ŝablonon kiel Markdown</string>
     <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">Redakti aspekton de kart-foliumilo</string>
     <string name="missing_user_action_dialog_message" comment="%s is the user action number">La ago de uzanto “%s” ne estas agordita por tiu ĉi nototipo. Agordu ĝin.</string>
-    <string name="feature_not_supported_by_study_screen">This card has features that are not yet supported by the new study screen.</string>
+    <string name="feature_not_supported_by_study_screen">Tiu ĉi karto havas trajtojn, kiuj ankoraŭ ne estas subtenataj de la nova lernada ekrano.</string>
     <string name="directory_inaccessible_info">Sciiĝu pli pri kiel restarigi aliron ĉe %s aŭ malfermu agordojn kaj ŝanĝu la dosierujon por kolekto.</string>
     <!-- Scheduler Upgrade Required Dialog title-->
     <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">Necesas promocii planilon</string>
+    <!-- Whitespace is OK -->
+    <string name="list_separator" comment="The character and spacing to display between elements of a list, for example \', \' in \'Apple, Banana, Cherry" tools:ignore="TranslationTypo">, </string>
 </resources>

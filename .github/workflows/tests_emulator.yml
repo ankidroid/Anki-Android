@@ -15,6 +15,9 @@ on:
       - 'gh-readonly-queue/**'
   merge_group:
 
+permissions:
+  contents: read
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
@@ -133,7 +136,7 @@ jobs:
         # Repo limit is 10GB; branch caches are independent; branches may read default branch cache.
         # We don't want branches to evict main branch snapshot, so save on main, read-only all else
       - name: AVD cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         id: avd-cache
         with:
           path: |
@@ -219,21 +222,21 @@ jobs:
             ./gradlew uninstallAll jacocoAndroidTestReport --daemon
 
       - name: Upload Test Report
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         if: always()
         with:
           name: ${{ matrix.api-level }}-${{ matrix.arch }}-${{matrix.target}}-${{matrix.first-boot-delay}}-${{matrix.iteration}}-jacocoAndroidTestReport
           path: ~/work/Anki-Android/Anki-Android/AnkiDroid/build/reports/jacoco/
 
       - name: Upload Emulator Log
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         if: always()
         with:
           name: ${{ matrix.api-level }}-${{ matrix.arch }}-${{matrix.target}}-${{matrix.first-boot-delay}}-${{matrix.iteration}}-adb_logs
           path: adb-log.txt
 
       - name: Upload Emulator Screen Record
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         if: always()
         with:
           name: ${{ matrix.api-level }}-${{ matrix.arch }}-${{matrix.target}}-${{matrix.first-boot-delay}}-${{matrix.iteration}}-adb_video

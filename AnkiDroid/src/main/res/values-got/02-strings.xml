@@ -55,7 +55,7 @@
     <string name="CardEditorTags">𐍃𐍉𐌺𐌽𐌹𐍅𐌰𐌿𐍂𐌳𐌰: %1$s</string>
     <string name="CardEditorCards">𐌺𐌰𐍂𐍄𐍉𐍃: %1$s</string>
     <string name="edit_occlusions">Edit Occlusions</string>
-    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
+    <string name="paste_from_clipboard" maxLength="28">𐌰𐍆 𐌺𐍂𐌰𐌼𐍀𐌰𐌱𐌰𐌿𐍂𐌳𐌰 𐌲𐌰𐌲𐌰𐌻𐌴𐌹𐌺𐍉𐌽</string>
     <string name="tag_name">𐌽𐌰𐌼𐍉 𐍃𐍉𐌺𐌽𐌹𐍅𐌰𐌿𐍂𐌳𐌹𐍃</string>
     <string name="add_new_filter_tags">𐍃𐍉𐌺𐌽𐌹𐍅𐌰𐌿𐍂𐌳𐌰 𐌰𐌽𐌰𐌰𐌿𐌺𐌰𐌽/𐍃𐌴𐌹𐍈𐌰𐌽</string>
     <string name="add_tag" maxLength="28">𐍃𐍉𐌺𐌽𐌹𐍅𐌰𐌿𐍂𐌳 𐌱𐌹𐌰𐌿𐌺𐌰𐌽</string>
@@ -72,7 +72,6 @@
     <string name="whiteboard_align_left" comment="Option to align the whiteboard toolbar on the left" maxLength="28">𐌰𐍆 𐌷𐌻𐌴𐌹𐌳𐌿𐌼𐌴𐌹𐌽</string>
     <string name="whiteboard_align_bottom" comment="Option to align the whiteboard toolbar on the bottom" maxLength="28">𐌸𐌰𐍄𐌰 𐌷𐌽𐌰𐌹𐍅𐌹𐍃𐍄𐍉</string>
     <string name="whiteboard_align_right" comment="Option to align the whiteboard toolbar on the right" maxLength="28">𐌰𐍆 𐍄𐌰𐌹𐌷𐍃𐍅𐍉𐌽</string>
-    <string name="whiteboard_clear" comment="Button text to clear the whiteboard" maxLength="28">𐌰𐍆𐌷𐍂𐌰𐌹𐌽𐌾𐌰𐌽</string>
     <string name="whiteboard_more_options" comment="Tooltip of the whiteboard \'More\' button" maxLength="28">𐌼𐌰𐌷𐍄𐌴𐌹𐍃 𐌼𐌰𐌽𐌰𐌲𐌹𐌶𐌴𐌹𐌽𐍃</string>
     <string name="whiteboard_remove_brush_message">Are you sure you want to remove this brush from your palette?</string>
     <string name="whiteboard_ink_eraser" comment="Title of the whiteboard Ink eraser">𐍃𐍅𐌰𐍂𐍄𐌹𐍃</string>
@@ -86,6 +85,7 @@
     <string name="disable_eraser" maxLength="28">𐌰𐍆𐌷𐍂𐌰𐌹𐌽𐌾𐍉𐌽 𐌿𐌽𐌲𐌰𐍄𐌰𐌿𐌾𐌰𐌽</string>
     <string name="hide_whiteboard" maxLength="28">𐍈𐌴𐌹𐍄𐌰𐌱𐌰𐌿𐍂𐌳 𐌰𐍆𐍆𐌹𐌻𐌷𐌰𐌽</string>
     <string name="clear_whiteboard" maxLength="28">𐍈𐌴𐌹𐍄𐌰𐌱𐌰𐌿𐍂𐌳 𐌰𐍆𐌷𐍂𐌰𐌹𐌽𐌾𐌰𐌽</string>
+    <string name="hide_toolbar" maxLength="28">Hide toolbar</string>
     <string name="replay_media" maxLength="28">𐌰𐍆𐍄𐍂𐌰𐍃𐍀𐌹𐌻𐍉𐌽𐍃 𐌼𐌰𐌹𐌳𐌾𐌰</string>
     <string name="leech_suspend_notification">Card marked as leech and suspended</string>
     <string name="leech_notification">Card marked as leech</string>
@@ -110,7 +110,7 @@
     <string name="studyoptions_total_label">𐌰𐌻𐌻𐍉𐍃 𐌺𐌰𐍂𐍄𐍉𐍃</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card" maxLength="28">𐌼𐌴𐌻𐌴𐌹𐌽 𐌹𐌽𐌼𐌰𐌹𐌳𐌾𐌰𐌽</string>
-    <string name="discard">Discard</string>
+    <string name="discard">𐌿𐍃𐌵𐌹𐍃𐍄𐌾𐌰𐌽</string>
     <string name="note_editor_no_cards_created">𐌽𐌹 𐌺𐌰𐍂𐍄𐍉𐍃 𐌲𐌰𐍃𐌺𐌰𐍀𐌰𐌽𐍉𐍃. 𐌱𐌹𐌳𐌾𐌰𐌼 𐌸𐌿𐌺, 𐌼𐌴𐌻𐌴𐌹 𐌹𐌽 𐍅𐌰𐌹𐍂𐌸𐌰𐌼 𐌼𐌰𐌽𐌰𐌲𐌹𐌶𐌰𐌹𐌼</string>
     <string name="note_editor_no_cards_created_all_fields">𐍃𐍉 𐌼𐌴𐌻𐌴𐌹𐌽𐍃 𐌰𐌽𐌳𐍅𐌰𐌹𐍂𐌸𐌰 𐌽𐌹 𐌲𐌰𐍄𐌰𐍅𐌹𐌳𐌰 𐌺𐌰𐍂𐍄𐍉𐍃 𐌰𐌻𐌻𐌹𐍃.\n𐌱𐌹𐌳𐌾𐌰𐌼 𐌸𐌿𐌺, 𐍅𐌰𐌻𐌴𐌹 𐌰𐌽𐌸𐌰𐍂𐌰𐌽𐌰 𐌼𐌴𐌻𐌴𐌹𐌽𐌰𐌹𐍃 𐌷𐌰𐌹𐌳𐌿, 𐌸𐌰𐌿 𐌺𐌻𐌹𐌺𐌴𐌹 \'𐌺𐌰𐍂𐍄𐍉𐍃\' 𐌾𐌰𐌷 𐌱𐌹𐌰𐌹𐌰𐌿𐌺 𐌹𐌽𐌼𐌰𐌹𐌳𐌴𐌹𐌽 𐍅𐌰𐌹𐍂𐌸𐌹𐍃.</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
@@ -126,8 +126,8 @@
     <!-- Image cropper -->
     <string name="image_cropper_action_rotate" maxLength="28" comment="Action in image cropper screen">𐌿𐍃𐍅𐌰𐌽𐌳𐌾𐌰𐌽</string>
     <string name="image_cropper_action_flip" maxLength="28" comment="Action in image cropper screen">𐍅𐌰𐌽𐌳𐌾𐌰𐌽</string>
-    <string name="image_cropper_action_flip_horizontally" maxLength="28" comment="Submenu action in image cropper screen">Flip horizontally</string>
-    <string name="image_cropper_action_flip_vertically" maxLength="28" comment="Submenu action in image cropper screen">Flip vertically</string>
+    <string name="image_cropper_action_flip_horizontally" maxLength="28" comment="Submenu action in image cropper screen">𐌹𐌽 𐌱𐍂𐌰𐌹𐌳𐌴𐌹𐌽 𐌹𐌽𐍅𐌰𐌽𐌳𐌾𐌰𐌽</string>
+    <string name="image_cropper_action_flip_vertically" maxLength="28" comment="Submenu action in image cropper screen">𐌹𐌽 𐌷𐌰𐌿𐌷𐌴𐌹𐌽 𐌹𐌽𐍅𐌰𐌽𐌳𐌾𐌰𐌽</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">𐌸𐌴𐌹𐌷𐍃𐌰𐌰𐍂𐌺𐌰 𐌰𐌽𐌰𐌵𐌰𐌼</string>
     <plurals name="timebox_reached">
@@ -160,7 +160,7 @@
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">𐌱𐌹𐌰𐌿𐌺𐌰𐌽</string>
     <string name="import_message_replace_confirm">𐌸𐌰𐍄𐌰 𐌿𐍃𐌵𐌹𐍃𐍄𐌴𐌹𐌸 𐍅𐌹𐍃𐌰𐌽𐌳𐌴𐌹𐌽 𐌷𐌿𐌶𐌳𐌰 𐌸𐌴𐌹𐌽𐌰𐌼𐌼𐌰 𐌾𐌰𐌷 𐌼𐌹𐌸𐍃𐌰𐍄𐌴𐌹𐌸 𐌼𐌹𐌸 𐌳𐌰𐍄𐌰𐌹 𐍆𐌰𐌾𐌻𐌹𐍃 %s</string>
     <string name="import_dialog_message_add">\"%s\" 𐌱𐌹𐌰𐌿𐌺𐌰𐌽 𐌳𐌿 𐌷𐌿𐌶𐌳𐌰? 𐌸𐌰𐍄𐌰 𐌼𐌰𐌲 𐌻𐌰𐌲𐌲 𐌼𐌴𐌻 𐍅𐌰𐌹𐍂𐌸𐌰𐌽</string>
-    <string name="import_log_no_apkg">This isn’t a valid Anki package file</string>
+    <string name="import_log_no_apkg">𐍀𐌰𐌺𐌺𐌿𐍆𐌰𐌾𐌻 𐌲𐌰𐍂𐌰𐌹𐌷𐍄 𐌰𐌽𐌺𐌴𐌹𐌽𐍃 𐌽𐌹𐍃𐍄</string>
     <string name="import_title_error" comment="Title of error dialog">𐌰𐌹𐍂𐌶𐌴𐌹</string>
     <string name="import_error_handle_exception">𐌽𐌹 𐌼𐌰𐌷𐍄𐌰 𐌹𐌽𐌽𐌰𐍄𐌱𐌰𐌹𐍂𐌰𐌽 𐍆𐌰𐌾𐌻\n\n%s</string>
     <string name="import_error_not_apkg_extension">𐌽𐌰𐌼𐍉 𐍆𐌰𐌾𐌻𐌹𐍃 \"%s\" 𐌽𐌹 𐌷𐌰𐌱𐌰𐌹𐌸 .apkg þau .colpkg 𐌿𐍆𐌸𐌰𐌽𐌴𐌹𐌽</string>
@@ -170,11 +170,11 @@
     <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">This is often caused by a bug in the app you used to select the file. Please try the following fixes:\n\n%s</string>
     <string name="import_interrupted">Import interrupted: AnkiDroid was closed</string>
     <string name="export_ready_title">𐌿𐍄𐌱𐌰𐌿𐍂 𐌼𐌰𐌽𐍅𐌹𐌸 𐌹𐍃𐍄</string>
-    <string name="export_send_no_handlers">No applications available to handle apkg. Saving&#8230;</string>
-    <string name="export_save_apkg_successful">Successfully saved Anki package</string>
-    <string name="export_save_apkg_unsuccessful">Save Anki package failed</string>
-    <string name="export_share_title">Send Anki package using</string>
-    <string name="export_email_subject">AnkiDroid exported flashcards: %s</string>
+    <string name="export_send_no_handlers">𐌽𐌹 𐍃𐌹𐌽𐌳 𐌰𐍀𐍀𐌻𐌴𐌹𐌺𐌰𐍄𐌾𐍉𐌽𐍃 𐌰𐍀𐌺𐌲 𐌳𐌿 𐍅𐌰𐌿𐍂𐌺𐌾𐌰𐌽. 𐌲𐌰𐍆𐌰𐍃𐍄𐌰𐌽𐌳𐍃&#8230;</string>
+    <string name="export_save_apkg_successful">𐌲𐌰𐍆𐌰𐍃𐍄𐌰𐌹𐌳𐌰 𐍀𐌰𐌺𐌺𐌿 𐌰𐌽𐌺𐌴𐌹𐌽𐍃 𐍅𐌰𐌹𐌻𐌰</string>
+    <string name="export_save_apkg_unsuccessful">𐌽𐌹 𐌼𐌰𐌷𐍄𐌰 𐍀𐌰𐌺𐌺𐌿 𐌰𐌽𐌺𐌴𐌹𐌽𐍃 𐌲𐌰𐍆𐌰𐍃𐍄𐌰𐌽</string>
+    <string name="export_share_title">𐍀𐌰𐌺𐌺𐌿 𐌰𐌽𐌺𐌴𐌹𐌽𐍃 𐍃𐌰𐌽𐌳𐌾𐌰𐌽 𐌱𐍂𐌿𐌺𐌾𐌰𐌽𐌳𐍃</string>
+    <string name="export_email_subject">𐌰𐌽𐌺𐌴𐌹𐌳𐍂𐌰𐌿𐌳 𐌿𐍄𐌱𐌰𐍂 𐌻𐌰𐌿𐌷𐌰𐍄𐌴𐌹𐌽𐌰𐌹𐍃 𐍇𐌰𐍂𐍄𐍉𐍃: %s</string>
     <string name="export_email_text"><![CDATA[        Hi!
         <br/><br/>
         This is an Anki flashcards deck sent from AnkiDroid[1].
@@ -191,8 +191,6 @@
     <string name="select_tts" maxLength="28">𐌱𐍉𐌺𐍉-𐌳𐌿-𐍃𐍄𐌹𐌱𐌽𐌰𐌹 𐍂𐌰𐌶𐌳𐌰 𐌻𐌰𐌲𐌾𐌰𐌽</string>
     <string name="custom_study" maxLength="28">𐌰𐌽𐌸𐌰𐍂𐌰 𐌻𐌰𐌹𐍃𐌴𐌹𐌽𐍃</string>
     <string name="dyn_deck_desc">This is a special deck for studying outside of the normal schedule. Cards will be automatically returned to their original decks after you review them. Deleting this deck from the deck list will return all remaining cards to their original deck.</string>
-    <string name="steps_error">𐌲𐍂𐌴𐌳𐌴𐌹𐍃 𐍃𐌺𐌿𐌻𐌿𐌽 𐍅𐌹𐍃𐌰𐌽 𐍂𐌰𐌸𐌾𐍉𐌽𐍃 𐌼𐌰𐌽𐌰𐌲𐌹𐌶𐌴𐌹𐌽𐍃 𐌸𐌰𐌿 0</string>
-    <string name="steps_min_error">𐌼𐌰𐌹𐍃 𐌸𐌰𐌿 𐌰𐌹𐌽𐌰 𐌲𐍂𐌹𐌸𐍃 𐌱𐌹𐌽𐌰𐌷</string>
     <string name="tag_editor_add_feedback">\"%2$s\" 𐌰𐍄𐍄𐌴𐌺𐌰𐌽 𐌳𐌿 𐌲𐌰𐍄𐌿𐌻𐌲𐌾𐌰𐌽 𐌱𐌹𐌰𐌿𐌺𐌰𐌽 \"%1$s\"</string>
     <string name="tag_editor_add_feedback_existing">𐍅𐌹𐍃𐌰𐌽𐌳𐍉 𐍃𐍉𐌺𐌽𐌹𐍅𐌰𐌿𐍂𐌳 \"%1$s\" 𐌲𐌰𐍅𐌰𐌻𐌹𐌸</string>
     <!-- Time spans -->
@@ -221,7 +219,7 @@
     <string name="title_whiteboard_editor" maxLength="28">𐌹𐌽𐌼𐌰𐌹𐌳𐌾𐍉 𐍈𐌴𐌹𐍄𐌰𐌱𐌰𐌿𐍂𐌳𐌹𐍃</string>
     <string name="user_is_a_robot">Detected automated test. If you are a human, contact AnkiDroid support</string>
     <!-- JS api -->
-    <string name="api_version_developer_contact">This card uses unsupported AnkiDroid features. Contact developer %1$s, or view the wiki. %2$s</string>
+    <string name="api_version_developer_contact">𐍃𐍉 𐍇𐌰𐍂𐍄𐌰 𐌳𐌰𐌹𐌻𐌹𐌽𐍃 𐌿𐌽𐍃𐍄𐍉𐌳𐌹𐌳𐍉𐍃 𐌰𐌽𐌺𐌴𐌹𐌳𐍂𐌰𐌿𐌳𐍃 𐌷𐌰𐌱𐌰𐌹𐌸. 𐍂𐍉𐌳𐌴𐌹 𐌳𐌿 𐌰𐌽𐌳𐍅𐌰𐌹𐌱𐌾𐌰𐌽𐌳 %1$s, 𐌰𐌹𐌸𐌸𐌰𐌿 𐍃𐌰𐌹 𐍅𐌹𐌺𐌹. %2$s</string>
     <string name="invalid_json_data">𐌺𐌰𐍂𐍄𐌰 𐌲𐌰𐍆 𐌳𐌰𐍄𐌰 𐌿𐌽𐍂𐌰𐌹𐌷𐍄𐌰. %s</string>
     <string name="valid_js_api_version">Invalid AnkiDroid JS API version. Contact developer %s, or view wiki</string>
     <string name="update_js_api_version">AnkiDroid JS API update available. Contact developer %s, or view wiki</string>
@@ -263,9 +261,12 @@
     <string name="create_shortcut_error">𐌰𐌹𐍂𐌶𐌴𐌹 𐍅𐌰𐍂𐌸 𐌱𐌹𐌰𐌿𐌺𐌰𐌽 𐌼𐌰𐌿𐍂𐌲𐌿𐍅𐌹𐌲: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">Capitalize sentences</string>
     <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll" maxLength="28">Scroll toolbar</string>
-    <!-- Symbols used as Button text in IncrementNumberRangePreference -->
+    <!-- IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
+    <string name="invalid_value" comment="Error message in IncrementerNumberRangePreference when input is not a valid number">𐍅𐌰𐌹𐍂𐌸 𐌿𐌽𐍂𐌰𐌹𐌷𐍄</string>
+    <string name="maximum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the maximum allowed value">𐌼𐌰𐌹𐍃𐍄𐌰𐍄𐌰 𐍅𐌰𐌹𐍂𐌸 𐌹𐍃𐍄 %d</string>
+    <string name="minimum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the minimum allowed value">𐌼𐌹𐌽𐌽𐌹𐍃𐍄𐌰𐍄𐌰 𐍅𐌰𐌹𐍂𐌸 𐌹𐍃𐍄 %d</string>
     <!-- Used for credential empty warning message -->
     <string name="invalid_email">𐌴-𐌼𐌴𐌻 𐍂𐌰𐌹𐌷𐍄 𐌼𐌴𐌻𐌾𐌰𐌽</string>
     <string name="password_empty">𐍂𐌿𐌽𐌰𐍅𐌰𐌿𐍂𐌳𐌹𐍃 𐌸𐌰𐌿𐍂𐍆𐍄 𐌹𐍃𐍄</string>
@@ -346,7 +347,6 @@
     <string name="format_deck_description_as_markdown">Format as Markdown</string>
     <string name="help_button_content_description">𐌷𐌹𐌻𐍀𐌰 𐍆𐌰𐌿𐍂 \'%s\' 𐌿𐍃𐌻𐌿𐌺𐌰𐌽</string>
     <string name="failed_to_copy">𐌽𐌹 𐌼𐌰𐌷𐍄𐌰 𐌲𐌰𐌲𐌰𐌻𐌴𐌹𐌺𐍉𐌽</string>
-    <string name="card_browser_unavailable_when_notes_mode">𐌽𐌹𐍃𐍄 𐌹𐌽 \'𐌲𐌰𐌼𐌴𐌻𐌴𐌹𐌽𐍉𐍃\' 𐌼𐍉𐌳𐌰𐌿</string>
     <plurals name="unbury_cards_feedback">
         <item quantity="one">%d 𐌺𐌰𐍂𐍄𐌰 𐌿𐌽𐌽𐌰𐍅𐌹𐍃𐍄𐍂𐍉𐌳𐌰</item>
         <item quantity="other">%d 𐌺𐌰𐍂𐍄𐍉𐍃 𐌿𐌽𐌽𐌰𐍅𐌹𐍃𐍄𐍂𐍉𐌳𐌰</item>
@@ -380,4 +380,6 @@
     <string name="directory_inaccessible_info">𐌸𐌿𐌺 𐌼𐌰𐌹𐍃 𐌻𐌰𐌹𐍃𐌾𐌰𐌽 𐌳𐌿 𐌽𐌰𐍃𐌾𐌰𐌽 𐌰𐍄𐌲𐌰𐌲𐌲 𐌷𐌴𐍂 %s 𐌸𐌰𐌿 𐌲𐌰𐌲𐌲 𐌳𐌿 𐌻𐌰𐌲𐌴𐌹𐌽𐌹𐌼 𐌰𐍆𐍄𐍂𐌰𐌰𐌽𐌰𐌽𐌹𐌿𐌾𐌰𐌽 𐍃𐍄𐌰𐌸 𐌷𐌿𐌶𐌳𐌹𐍃.</string>
     <!-- Scheduler Upgrade Required Dialog title-->
     <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">Scheduler upgrade required</string>
+    <!-- Whitespace is OK -->
+    <string name="list_separator" comment="The character and spacing to display between elements of a list, for example \', \' in \'Apple, Banana, Cherry" tools:ignore="TranslationTypo">, </string>
 </resources>

@@ -51,6 +51,8 @@
     <string name="add_to_deck_decide_by_note_type">नोट प्रकाराद्वारे निर्णय घ्या</string>
     <!-- theme labels -->
     <string name="theme_follow_system">प्रणालीचे अनुसरण करा</string>
+    <string name="theme_day" comment="Day/Light theme color scheme">Day</string>
+    <string name="theme_night" comment="Night/Dark theme color scheme">Night</string>
     <!-- day_theme_labels -->
     <string name="day_theme_light">प्रकाश</string>
     <string name="day_theme_plain">साधा</string>

@@ -72,7 +72,6 @@
     <string name="whiteboard_align_left" comment="Option to align the whiteboard toolbar on the left" maxLength="28">Izquierda</string>
     <string name="whiteboard_align_bottom" comment="Option to align the whiteboard toolbar on the bottom" maxLength="28">Abajo</string>
     <string name="whiteboard_align_right" comment="Option to align the whiteboard toolbar on the right" maxLength="28">Derecha</string>
-    <string name="whiteboard_clear" comment="Button text to clear the whiteboard" maxLength="28">Limpiar</string>
     <string name="whiteboard_more_options" comment="Tooltip of the whiteboard \'More\' button" maxLength="28">Más opciones</string>
     <string name="whiteboard_remove_brush_message">¿Está seguro que quiere eliminar este pincel de la paleta?</string>
     <string name="whiteboard_ink_eraser" comment="Title of the whiteboard Ink eraser">Tinta</string>
@@ -86,6 +85,7 @@
     <string name="disable_eraser" maxLength="28">Desactivar borrador</string>
     <string name="hide_whiteboard" maxLength="28">Ocultar pizarra</string>
     <string name="clear_whiteboard" maxLength="28">Limpiar pizarra</string>
+    <string name="hide_toolbar" maxLength="28">Hide toolbar</string>
     <string name="replay_media" maxLength="28">Reproducir media</string>
     <string name="leech_suspend_notification">Tarjeta marcada como sanguijuela y suspendida</string>
     <string name="leech_notification">Tarjeta marcada como sanguijuela</string>
@@ -112,7 +112,7 @@
     <string name="cardeditor_title_edit_card" maxLength="28">Editar nota</string>
     <string name="discard">Borrar</string>
     <string name="note_editor_no_cards_created">No se han creado tarjetas. Por favor, rellena más campos</string>
-    <string name="note_editor_no_cards_created_all_fields">El tipo de nota actual no produjo ninguna tarjeta.\nPor favor, elije otro tipo de nota o haz clic en \"Tarjetas\" y añade un sustituto de campo</string>
+    <string name="note_editor_no_cards_created_all_fields">El tipo de nota actual no produjo ninguna tarjeta.\nPor favor, seleccione otro tipo de nota o haz clic en \"Tarjetas\" y añade un sustituto de campo</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Las preguntas anidadas sólo funcionarán en un tipo de nota de Pregunta anidada (Cloze)</string>
     <string name="saving_facts">Guardando nota</string>
     <string name="saving_model">Guardando tipo de nota</string>
@@ -167,7 +167,7 @@
     <string name="import_error_load_imported_database">Los reemplazos de la base de datos de Anki (.anki2) aún no están soportados. Consulta el manual para obtener instrucciones de reemplazo.</string>
     <string name="import_error_content_provider">AnkiDroid no ha podido importar automáticamente el archivo seleccionado. Por favor, lea el manual de usuario sobre como importar manualmente Anki files: \n %s</string>
     <string name="import_error_copy_to_cache_title">Error al almacenar el archivo en caché</string>
-    <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">This is often caused by a bug in the app you used to select the file. Please try the following fixes:\n\n%s</string>
+    <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">Esto suele estar causado por un error en la app que has usado para seleccionar el archivo. Por favor, intenta los siguientes arreglos:\n\n%s</string>
     <string name="import_interrupted">Importación interrumpida: AnkiDroid se cerró</string>
     <string name="export_ready_title">Exportación preparada</string>
     <string name="export_send_no_handlers">No hay aplicaciones disponibles para manejar apkg. Guardando&#8230;</string>
@@ -191,8 +191,6 @@
     <string name="select_tts" maxLength="28">Establecer idioma TTS</string>
     <string name="custom_study" maxLength="28">Estudio personalizado</string>
     <string name="dyn_deck_desc">Éste es un mazo especial para estudiar aparte del programa habitual. Las cartas se devolverán automáticamente a sus mazos originales después de que las revises. Borrar este mazo de la lista de mazos devolverá todas las cartas restantes a su mazo original.</string>
-    <string name="steps_error">Los pasos deben ser un número mayor que 0</string>
-    <string name="steps_min_error">Se requiere al menos un paso</string>
     <string name="tag_editor_add_feedback">Tocar \"%2$s\" para confirmar la adición de \"%1$s\"</string>
     <string name="tag_editor_add_feedback_existing">Etiqueta existente \"%1$s\" seleccionada</string>
     <!-- Time spans -->
@@ -263,9 +261,12 @@
     <string name="create_shortcut_error">Error al añadir acceso directo: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">Poner en mayúsculas las oraciones</string>
     <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll" maxLength="28">Barra de herramientas de estilo</string>
-    <!-- Symbols used as Button text in IncrementNumberRangePreference -->
+    <!-- IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
+    <string name="invalid_value" comment="Error message in IncrementerNumberRangePreference when input is not a valid number">Invalid value</string>
+    <string name="maximum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the maximum allowed value">Maximum value is %d</string>
+    <string name="minimum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the minimum allowed value">Minimum value is %d</string>
     <!-- Used for credential empty warning message -->
     <string name="invalid_email">Introduce un correo electrónico válido</string>
     <string name="password_empty">La contraseña es requerida</string>
@@ -308,8 +309,8 @@
     <string name="field_editor_model_not_available">Error al acceder a la colección. ¡Por favor, vuelve a intentarlo!</string>
     <string name="cd_manage_notetypes_add">Añadir un nuevo tipo de nota</string>
     <plurals name="note_types_selected">
-        <item quantity="one">%d note type selected</item>
-        <item quantity="other">%d note types selected</item>
+        <item quantity="one">Tipo de nota %d seleccionado</item>
+        <item quantity="other">Tipo de notas %d seleccionado</item>
     </plurals>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">Estudia menos</string>
@@ -343,10 +344,9 @@
     <string name="shared_decks_login_required">Por favor, inicia sesión para descargar más mazos</string>
     <string name="deck_description_field_hint">Descripción</string>
     <string name="deck_description_saved">Descripción actualizada</string>
-    <string name="format_deck_description_as_markdown">Format as Markdown</string>
+    <string name="format_deck_description_as_markdown">Formatear como Markdown</string>
     <string name="help_button_content_description">Abrir ayuda para \'%s\'</string>
     <string name="failed_to_copy">Error al copiar</string>
-    <string name="card_browser_unavailable_when_notes_mode">No disponible en modo \'Notas\'</string>
     <plurals name="unbury_cards_feedback">
         <item quantity="one">%d tarjeta desenterrada</item>
         <item quantity="other">%d tarjetas desenterradas</item>
@@ -376,8 +376,10 @@
     <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">Copiar plantilla como markdown</string>
     <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">Editar apariencia del navegador</string>
     <string name="missing_user_action_dialog_message" comment="%s is the user action number">La acción del usuario %s no está establecida en este tipo de notas. Por favor, configúrala</string>
-    <string name="feature_not_supported_by_study_screen">This card has features that are not yet supported by the new study screen.</string>
+    <string name="feature_not_supported_by_study_screen">Esta tarjeta tiene características que aún no están soportadas por la nueva pantalla de estudio.</string>
     <string name="directory_inaccessible_info">Obtén más información sobre cómo restaurar el acceso aquí %s o ve a la configuración para actualizar la carpeta de colección.</string>
     <!-- Scheduler Upgrade Required Dialog title-->
-    <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">Scheduler upgrade required</string>
+    <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">Actualización del programador requerida</string>
+    <!-- Whitespace is OK -->
+    <string name="list_separator" comment="The character and spacing to display between elements of a list, for example \', \' in \'Apple, Banana, Cherry" tools:ignore="TranslationTypo">, </string>
 </resources>

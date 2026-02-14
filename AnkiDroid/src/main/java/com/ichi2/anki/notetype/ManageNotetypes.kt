@@ -41,7 +41,7 @@ import com.ichi2.anki.dialogs.showLoadingDialog
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.notetype.ManageNoteTypesState.UserMessage
 import com.ichi2.anki.snackbar.showSnackbar
-import com.ichi2.anki.userAcceptsSchemaChange
+import com.ichi2.anki.sync.userAcceptsSchemaChange
 import com.ichi2.anki.utils.Destination
 import com.ichi2.ui.AccessibleSearchView
 import com.ichi2.utils.getInputField
@@ -177,7 +177,10 @@ class ManageNotetypes : AnkiActivity(R.layout.activity_manage_note_types) {
             val searchMenuItem =
                 findViewById<Toolbar>(R.id.toolbar).menu?.findItem(R.id.search_item)
             val searchView = searchMenuItem?.actionView as? AccessibleSearchView
-            searchView?.setQuery(state.searchQuery, false)
+            // Avoid resetting cursor position if query hasn't changed
+            if (searchView?.query.toString() != state.searchQuery) {
+                searchView?.setQuery(state.searchQuery, false)
+            }
         }
         binding.selectionToolbar.isVisible = state.isInMultiSelectMode
         val selectedCount = state.noteTypes.count { it.isSelected }

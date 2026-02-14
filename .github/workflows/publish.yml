@@ -8,6 +8,10 @@ on:
         required: false
         type: string
 
+# We do a checkout using provided github token, but the rest of the activity
+# is from a token from secrets in order to push tags / make releases etc
+permissions:
+  contents: read
 
 # We want concurrency control to allow multiple runs, but serially
 # Otherwise if you run two publishes that upload to google at same time
@@ -25,7 +29,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - uses: actions/cache@v4
+      - uses: actions/cache@v5
         name: Gradle Cache
         with:
           path: ~/.gradle/caches

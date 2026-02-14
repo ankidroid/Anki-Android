@@ -49,13 +49,17 @@ import com.ichi2.anki.browser.CardBrowserViewModel.ToggleSelectionState.SELECT_N
 import com.ichi2.anki.browser.FindAndReplaceDialogFragment.Companion.ALL_FIELDS_AS_FIELD
 import com.ichi2.anki.browser.FindAndReplaceDialogFragment.Companion.TAGS_AS_FIELD
 import com.ichi2.anki.browser.RepositionCardsRequest.RepositionData
+import com.ichi2.anki.browser.search.SavedSearch
+import com.ichi2.anki.browser.search.SavedSearches
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.common.utils.ext.indexOfOrNull
 import com.ichi2.anki.export.ExportDialogFragment.ExportType
 import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.libanki.Card
 import com.ichi2.anki.libanki.CardId
 import com.ichi2.anki.libanki.CardType
 import com.ichi2.anki.libanki.DeckId
+import com.ichi2.anki.libanki.NoteId
 import com.ichi2.anki.libanki.QueueType
 import com.ichi2.anki.libanki.QueueType.ManuallyBuried
 import com.ichi2.anki.libanki.QueueType.SiblingBuried
@@ -70,6 +74,8 @@ import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.pages.CardInfoDestination
 import com.ichi2.anki.preferences.SharedPreferencesProvider
+import com.ichi2.anki.settings.Prefs
+import com.ichi2.anki.settings.PrefsRepository
 import com.ichi2.anki.utils.ext.currentCardBrowse
 import com.ichi2.anki.utils.ext.normalizeForSearch
 import com.ichi2.anki.utils.ext.setUserFlagForCards
@@ -133,6 +139,8 @@ class CardBrowserViewModel(
     private val manualInit: Boolean = false,
 ) : ViewModel(),
     SharedPreferencesProvider by preferences {
+    private val prefs: PrefsRepository = Prefs
+
     // TODO: abstract so we can use a `Context` and `pref_display_filenames_in_browser_key`
     val showMediaFilenames = sharedPrefs().getBoolean("card_browser_show_media_filenames", false)
 
@@ -267,6 +275,8 @@ class CardBrowserViewModel(
      */
     val flowOfCardStateChanged = MutableSharedFlow<Unit>()
 
+    val flowOfChangeNoteType = MutableSharedFlow<ChangeNoteTypeResponse>()
+
     /**
      * Opens a prompt for the user to input a saved search name
      *
@@ -283,6 +293,19 @@ class CardBrowserViewModel(
     suspend fun queryAllSelectedCardIds() = selectedRows.queryCardIds(this.cardsOrNotes)
 
     suspend fun queryAllSelectedNoteIds() = selectedRows.queryNoteIds(this.cardsOrNotes)
+
+    fun requestChangeNoteType() =
+        viewModelScope.launch {
+            val noteIds = queryAllSelectedNoteIds()
+            Timber.i("requestChangeNoteType: querying %d selected notes", noteIds.size)
+            flowOfChangeNoteType.emit(
+                when {
+                    noteIds.isEmpty() -> ChangeNoteTypeResponse.NoSelection
+                    !noteIds.allOfSameNoteType() -> ChangeNoteTypeResponse.MixedSelection
+                    else -> ChangeNoteTypeResponse.ChangeNoteType.from(noteIds)
+                },
+            )
+        }
 
     @VisibleForTesting
     internal suspend fun queryAllCardIds() = cards.queryCardIds()
@@ -427,7 +450,7 @@ class CardBrowserViewModel(
 
         sortTypeFlow
             .ignoreValuesFromViewModelLaunch()
-            .onEach { sortType -> withCol { sortType.save(config, sharedPrefs()) } }
+            .onEach { sortType -> withCol { sortType.save(config, prefs) } }
             .launchIn(viewModelScope)
 
         flowOfCardsOrNotes
@@ -448,7 +471,7 @@ class CardBrowserViewModel(
             flowOfCardsOrNotes.update { cardsOrNotes }
 
             withCol {
-                sortTypeFlow.update { SortType.fromCol(config, cardsOrNotes, sharedPrefs()) }
+                sortTypeFlow.update { SortType.fromCol(config, cardsOrNotes, prefs) }
                 reverseDirectionFlow.update { ReverseDirection.fromConfig(config) }
             }
             Timber.i("initCompleted")
@@ -988,44 +1011,16 @@ class CardBrowserViewModel(
 
     fun getRowAtPosition(position: Int) = cards[position]
 
-    fun getPositionOfId(id: CardOrNoteId) =
-        cards.indexOf(id).let {
-            if (it == -1) null else it
-        }
+    fun getPositionOfId(id: CardOrNoteId) = cards.indexOfOrNull(id)
 
-    private suspend fun updateSavedSearches(func: MutableMap<String, String>.() -> Unit): Map<String, String> {
-        val filters = savedSearches().toMutableMap()
-        func(filters)
-        withCol { config.set("savedFilters", filters) }
-        return filters
-    }
+    suspend fun savedSearches(): List<SavedSearch> = SavedSearches.loadFromConfig()
 
-    suspend fun savedSearches(): Map<String, String> = withCol { config.get("savedFilters") } ?: hashMapOf()
-
-    fun savedSearchesUnsafe(col: com.ichi2.anki.libanki.Collection): Map<String, String> = col.config.get("savedFilters") ?: hashMapOf()
-
-    suspend fun removeSavedSearch(searchName: String): Map<String, String> {
-        Timber.d("removing user search")
-        return updateSavedSearches {
-            remove(searchName)
-        }
-    }
+    suspend fun removeSavedSearch(searchName: String) = SavedSearches.removeByName(searchName)
 
     @CheckResult
-    suspend fun saveSearch(
-        searchName: String,
-        searchTerms: String,
-    ): SaveSearchResult {
-        Timber.d("saving user search")
-        var alreadyExists = false
-        updateSavedSearches {
-            if (get(searchName) != null) {
-                alreadyExists = true
-            } else {
-                set(searchName, searchTerms)
-            }
-        }
-        return if (alreadyExists) SaveSearchResult.ALREADY_EXISTS else SaveSearchResult.SUCCESS
+    suspend fun saveSearch(search: SavedSearch): SaveSearchResult {
+        val (searchAdded, _) = SavedSearches.add(search)
+        return if (searchAdded) SaveSearchResult.SUCCESS else SaveSearchResult.ALREADY_EXISTS
     }
 
     /** Ignores any values before [initCompleted] is set */
@@ -1201,8 +1196,9 @@ class CardBrowserViewModel(
                     errorMessageHandler = { error -> flowOfSearchState.emit(SearchState.Error(error)) },
                 ) {
                     flowOfSearchState.emit(SearchState.Searching)
-                    Timber.d("performing search: '%s'", query)
-                    val cards = com.ichi2.anki.searchForRows(query, order.toSortOrder(), cardsOrNotes)
+                    val sortOrder = order.toSortOrder()
+                    Timber.d("performing search: '%s'; order: %s", query, sortOrder)
+                    val cards = com.ichi2.anki.searchForRows(query, sortOrder, cardsOrNotes)
                     Timber.d("Search returned %d card(s)", cards.size)
 
                     ensureActive()
@@ -1349,6 +1345,25 @@ class CardBrowserViewModel(
     enum class ToggleSelectionState {
         SELECT_ALL,
         SELECT_NONE,
+    }
+
+    sealed interface ChangeNoteTypeResponse {
+        data object NoSelection : ChangeNoteTypeResponse
+
+        data object MixedSelection : ChangeNoteTypeResponse
+
+        @ConsistentCopyVisibility
+        data class ChangeNoteType private constructor(
+            val noteIds: List<NoteId>,
+        ) : ChangeNoteTypeResponse {
+            companion object {
+                @CheckResult
+                fun from(ids: List<NoteId>): ChangeNoteType {
+                    require(ids.isNotEmpty()) { "a non-empty list must be provided" }
+                    return ChangeNoteType(ids.distinct())
+                }
+            }
+        }
     }
 
     /**
@@ -1513,7 +1528,15 @@ sealed class RepositionCardsRequest {
     }
 }
 
-fun BrowserColumns.Column.getLabel(cardsOrNotes: CardsOrNotes): String = if (cardsOrNotes == CARDS) cardsModeLabel else notesModeLabel
+/**
+ * Whether the provided notes all have the same the same [note type][com.ichi2.anki.libanki.NoteTypeId]
+ */
+private suspend fun List<NoteId>.allOfSameNoteType(): Boolean {
+    val noteIds = this
+    return withCol { notetypes.nids(getNote(noteIds.first()).noteTypeId) }.toSet().let { set ->
+        noteIds.all { set.contains(it) }
+    }
+}
 
 @Parcelize
 data class ColumnHeading(

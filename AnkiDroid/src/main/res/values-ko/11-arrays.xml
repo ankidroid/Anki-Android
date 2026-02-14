@@ -51,6 +51,8 @@
     <string name="add_to_deck_decide_by_note_type">노트 형식에 따라 결정</string>
     <!-- theme labels -->
     <string name="theme_follow_system">시스템 설정</string>
+    <string name="theme_day" comment="Day/Light theme color scheme">Day</string>
+    <string name="theme_night" comment="Night/Dark theme color scheme">Night</string>
     <!-- day_theme_labels -->
     <string name="day_theme_light">밝음</string>
     <string name="day_theme_plain">플레인</string>

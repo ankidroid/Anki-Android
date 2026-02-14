@@ -26,9 +26,12 @@ import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.pm.PackageInfoCompat
+import androidx.webkit.WebViewCompat
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 
 internal const val OLDEST_WORKING_WEBVIEW_VERSION_CODE = 418306960L
@@ -121,6 +124,33 @@ fun checkWebViewVersionComponents(
 
     return null
 }
+
+data class WebViewInfo(
+    val userAgent: String?,
+    val packageName: String?,
+    val versionCode: Long?,
+)
+
+/**
+ * Retrieves [WebViewInfo] containing the current User Agent and system WebView package details.
+ *
+ * It is called on the main thread because [WebViewCompat.getCurrentWebViewPackage]
+ * and [getWebviewUserAgent] require main thread access to the WebView system.
+ *
+ * It does not throw; if the WebView provider is missing or an error occurs
+ * during retrieval, a [WebViewInfo] object with null values is returned.
+ *
+ * @return A [WebViewInfo] object with WebView package details.
+ */
+suspend fun getWebViewInfo(context: Context): WebViewInfo =
+    withContext(Dispatchers.Main) {
+        val packageInfo = runCatching { WebViewCompat.getCurrentWebViewPackage(context) }.getOrNull()
+        WebViewInfo(
+            userAgent = getWebviewUserAgent(context),
+            packageName = packageInfo?.packageName,
+            versionCode = runCatching { packageInfo?.let { PackageInfoCompat.getLongVersionCode(it) } }.getOrNull(),
+        )
+    }
 
 private fun showOutdatedWebViewDialog(
     activity: AnkiActivity,

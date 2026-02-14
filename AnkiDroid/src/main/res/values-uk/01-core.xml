@@ -141,7 +141,7 @@
     <string name="studyoptions_congrats_finished">Вітаємо! На сьогодні це все.</string>
     <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Колоду завершено! %s</string>
     <string name="studyoptions_no_cards_due">Не залишилось карток на перегляд</string>
-    <string name="sd_card_not_mounted">Пристрій зберігання не підключено</string>
+    <string name="sd_card_not_mounted">Пристрій зберігання не під\'єднано</string>
     <string name="button_sync" comment="Text of the sync button" maxLength="28">Синхронізувати</string>
     <string name="cancel_sync_confirm" tools:ignore="UnusedResources">Ви хочете скасувати синхронізацію?</string>
     <string name="continue_sync" tools:ignore="UnusedResources">Продовжити синхронізацію</string>
@@ -178,11 +178,11 @@
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Зовнішній вигляд переглядача</string>
     <!-- card Info -->
-    <string name="card_info_title" maxLength="28">Інформація про картку</string>
-    <string name="previous_card_info_title" maxLength="28">Previous card info</string>
+    <string name="card_info_title" maxLength="28">Дані картки</string>
+    <string name="previous_card_info_title" maxLength="28">Дані попередньої картки</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Читати й записувати в базу даних AnkiDroid</string>
-    <string name="read_write_permission_description">Доступ до наявних карток, колод, записів та їх типів, а також створення нових</string>
+    <string name="read_write_permission_description">доступ до наявних карток, колод, записів та їх типів, а також створення нових</string>
     <!-- Context Menu -->
     <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Переглядач карток</string>
     <string name="context_menu_anki_card_label">Anki картка</string>
@@ -223,5 +223,5 @@
     <!-- Instant Note Editor -->
     <string name="instant_card" comment="Used in the Android system context menu/share dialog to quickly create a note. This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. ">Миттєве додання картки</string>
     <!-- Multiple profile -->
-    <string name="add_profile">Add profile</string>
+    <string name="add_profile">Додати профіль</string>
 </resources>

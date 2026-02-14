@@ -40,9 +40,9 @@
 -->
 <resources>
     <!-- Main editor popup menu items -->
-    <string name="multimedia_editor_popup_image">ପ୍ରତିଛଵି ଯୋଡ଼ନ୍ତୁ</string>
-    <string name="multimedia_editor_popup_audio_clip">ଅଡ଼ିଓ କ୍ଲିପ୍ ଯୋଡ଼ନ୍ତୁ</string>
-    <string name="multimedia_editor_popup_video_clip">ଵିଡ଼ିଓ କ୍ଲିପ୍ ଯୋଡ଼ନ୍ତୁ</string>
+    <string name="multimedia_editor_popup_image">ପ୍ରତିଛଵି ଯୋଡ଼ିବା</string>
+    <string name="multimedia_editor_popup_audio_clip">ଅଡ଼ିଓ କ୍ଲିପ୍ ଯୋଡ଼ିବା</string>
+    <string name="multimedia_editor_popup_video_clip">ଵିଡ଼ିଓ କ୍ଲିପ୍ ଯୋଡ଼ିବା</string>
     <string name="multimedia_editor_popup_audio">ଅଡ଼ିଓ ରେକର୍ଡ କର</string>
     <string name="multimedia_editor_popup_cloze">କ୍ଲୋଜ୍ ବିଲୋପ</string>
     <!-- Field editing general -->

@@ -12,7 +12,7 @@
         <item name="colorOnPrimaryContainer">@color/white</item> <!-- FAB icons -->
 
         <item name="colorSurfaceContainerHighest">?attr/colorSurfaceContainer</item>
-        <item name="colorSurfaceContainerHigh">?android:attr/colorBackground</item>
+        <item name="colorSurfaceContainerHigh">#E4F5FD</item>
         <item name="colorSurfaceContainer">#0F03A9F4</item>
         <item name="colorSurfaceContainerLow">?android:attr/colorBackground</item>
 
@@ -78,6 +78,10 @@
         <item name="hardBackgroundColor">#FFE0B2</item>
         <item name="goodBackgroundColor">#C8E6C9</item>
         <item name="easyBackgroundColor">@color/material_light_blue_100</item>
+        <item name="againIconColor">?againTextColor</item>
+        <item name="hardIconColor">?hardTextColor</item>
+        <item name="goodIconColor">?goodTextColor</item>
+        <item name="easyIconColor">?easyTextColor</item>
         <!-- Study Screen button drawables -->
         <item name="showAnswerButtonBackground">@color/material_blue_700</item>
         <item name="showAnswerColor">@color/material_blue_grey_700</item>
@@ -156,6 +160,13 @@
         <item name="tabStyle">@style/Widget.MaterialComponents.TabLayout</item>
 
         <item name="bottomSheetDialogTheme">@style/ThemeOverlay.App.BottomSheetDialog</item>
+
+        <!-- HTML 'blue' -->
+        <item name="clozeColor">#0000FF</item>
+
+        <item name="incrementerButtonBackground">@color/white</item>
+        <item name="incrementerInputBackground">@color/material_blue_grey_050</item>
+        <item name="incrementerIconColor">@color/material_light_blue_700</item>
     </style>
 
     <style name="Theme_Light" parent="Base.Theme.Light"/>

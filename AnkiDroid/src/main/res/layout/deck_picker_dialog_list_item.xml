@@ -24,9 +24,9 @@
     android:orientation="horizontal"
     android:paddingStart="1dp"
     android:paddingEnd="@dimen/deck_picker_right_padding"
-    tools:showIn="@layout/deck_picker_dialog">
+    tools:showIn="@layout/dialog_deck_picker">
     <ImageButton
-        android:id="@+id/deckpicker_indent"
+        android:id="@+id/indent"
         android:minWidth="0dp"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
@@ -39,7 +39,7 @@
         android:orientation="horizontal"
         android:gravity="center_vertical">
         <ImageButton
-            android:id="@+id/deckpicker_expander"
+            android:id="@+id/expander"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:minWidth="48dp"
@@ -49,7 +49,7 @@
             />
 
         <com.ichi2.ui.FixedTextView
-            android:id="@+id/deckpicker_name"
+            android:id="@+id/deck_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="?android:attr/listPreferredItemHeight"

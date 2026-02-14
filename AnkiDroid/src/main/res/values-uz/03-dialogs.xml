@@ -260,4 +260,14 @@
     <string name="import_error_resolution_check_internet">Internetga ulanganingizga ishonch hosil qiling</string>
     <string name="import_error_resolution_copy_to_device">Faylni qurilmangizga koʻchiring va mahalliy fayl bilan qaytadan urinib koʻring</string>
     <string name="import_error_resolution_select_file">Faylni qurilmangiz fayl brauzeri orqali ochish</string>
+    <!-- Post-login dialog -->
+    <string name="login_successful">Muvaffaqiyatli kirdingiz</string>
+    <string name="sync_now">Hozir sinxronlaysizmi?</string>
+    <!--Change Note Type Dialog Fragment-->
+    <string name="card_numbers_unchanged">Card numbers will remain unchanged</string>
+    <!-- Subset of TR.changeNotetypeToFromCloze -->
+    <string name="extra_cloze_deletions_removed">If changing to a regular note type, and there are more cloze deletions than available card templates, any extra cards will be removed.</string>
+    <string name="different_note_types_selected">Please select notes from only one notetype.</string>
+    <string name="error_no_changes_to_save">No changes to save</string>
+    <string name="choose_color">Choose color</string>
 </resources>

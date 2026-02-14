@@ -26,18 +26,15 @@ import android.util.AttributeSet
 import android.view.GestureDetector
 import android.view.LayoutInflater
 import android.view.MotionEvent
-import android.view.View
 import android.view.animation.AnimationUtils
 import android.view.animation.LinearInterpolator
 import android.view.animation.OvershootInterpolator
-import android.widget.Chronometer
-import android.widget.ImageView
-import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.ThemeUtils
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.util.TypedValueCompat
 import androidx.core.view.isVisible
 import com.ichi2.anki.R
+import com.ichi2.anki.databinding.ViewAudioRecordBinding
 import com.ichi2.compat.CompatHelper
 import com.ichi2.compat.USAGE_TOUCH
 import com.ichi2.utils.Permissions
@@ -58,16 +55,7 @@ import kotlin.time.Duration.Companion.milliseconds
  * It also displays a recording icon and time
  */
 class AudioRecordView : ConstraintLayout {
-    // region Views
-    private val recordButton: View
-    private val recordButtonIcon: ImageView
-    private val lockArrow: View
-    private val imageViewLock: View
-    private val recordDisplayIcon: AppCompatImageView
-    private val layoutSlideCancel: View
-    private val layoutLock: View
-    private val chronometer: Chronometer
-    // endregion
+    private val binding = ViewAudioRecordBinding.inflate(LayoutInflater.from(context), this)
 
     // region Animations
     private val animBlink = AnimationUtils.loadAnimation(context, R.anim.blink)
@@ -110,15 +98,8 @@ class AudioRecordView : ConstraintLayout {
         defStyleAttr: Int,
         defStyleRes: Int,
     ) : super(context, attrs, defStyleAttr, defStyleRes) {
-        LayoutInflater.from(context).inflate(R.layout.audio_record_view, this, true)
-        recordButton = findViewById(R.id.recordButton)
-        recordButtonIcon = findViewById(R.id.recordIcon)
-        imageViewLock = findViewById(R.id.lock_icon)
-        lockArrow = findViewById(R.id.lock_arrow_icon)
-        chronometer = findViewById(R.id.chronometer)
-        layoutSlideCancel = findViewById(R.id.layout_slide_cancel)
-        layoutLock = findViewById(R.id.layoutLock)
-        recordDisplayIcon = findViewById(R.id.recording_status_icon)
+        this.clipChildren = false
+
         cancelOffset = max((resources.displayMetrics.widthPixels * 0.25f), 60f * dp)
         cancelFadeOffset = cancelOffset * 0.8f
         lockOffset = max((resources.displayMetrics.heightPixels * 0.25f), 80f * dp)
@@ -159,7 +140,7 @@ class AudioRecordView : ConstraintLayout {
                             return true
                         }
                         startRecording()
-                        recordButton
+                        binding.recordButton
                             .animate()
                             .scaleX(1.25f)
                             .scaleY(1.25f)
@@ -183,7 +164,7 @@ class AudioRecordView : ConstraintLayout {
                     }
                 },
             )
-        recordButton.setOnTouchListener(gestureListener)
+        binding.recordButton.setOnTouchListener(gestureListener)
     }
 
     private val gestureListener =
@@ -246,14 +227,14 @@ class AudioRecordView : ConstraintLayout {
     private fun translateY(y: Float) {
         if (y < -lockOffset) {
             lock()
-            recordButton.translationY = 0f
+            binding.recordButton.translationY = 0f
             return
         }
 
-        layoutLock.visibility = VISIBLE
-        recordButton.translationY = y
-        layoutLock.translationY = y / 2
-        recordButton.translationX = 0f
+        binding.layoutLock.visibility = VISIBLE
+        binding.recordButton.translationY = y
+        binding.layoutLock.translationY = y / 2
+        binding.recordButton.translationX = 0f
     }
 
     /**
@@ -264,23 +245,23 @@ class AudioRecordView : ConstraintLayout {
     private fun translateX(x: Float) {
         if (x < -cancelOffset) {
             cancel()
-            recordButton.translationX = 0f
-            layoutSlideCancel.translationX = 0f
+            binding.recordButton.translationX = 0f
+            binding.layoutSlideCancel.translationX = 0f
             return
         }
 
         val alpha = (cancelFadeOffset - abs(x)) / cancelFadeOffset
-        layoutSlideCancel.alpha = alpha.coerceIn(0f, 1f)
+        binding.layoutSlideCancel.alpha = alpha.coerceIn(0f, 1f)
 
-        recordButton.translationX = x
-        layoutSlideCancel.translationX = x
-        layoutLock.translationY = 0f
-        recordButton.translationY = 0f
+        binding.recordButton.translationX = x
+        binding.layoutSlideCancel.translationX = x
+        binding.layoutLock.translationY = 0f
+        binding.recordButton.translationY = 0f
 
-        if (abs(x) < recordButton.width / 2) {
-            layoutLock.visibility = VISIBLE
+        if (abs(x) < binding.recordButton.width / 2) {
+            binding.layoutLock.visibility = VISIBLE
         } else {
-            layoutLock.visibility = GONE
+            binding.layoutLock.visibility = GONE
         }
     }
 
@@ -292,7 +273,7 @@ class AudioRecordView : ConstraintLayout {
     }
 
     private fun showCancelAndLockSliders() {
-        recordButton
+        binding.recordButton
             .animate()
             .scaleX(1.8f)
             .scaleY(1.8f)
@@ -300,46 +281,46 @@ class AudioRecordView : ConstraintLayout {
             .setInterpolator(OvershootInterpolator())
             .start()
 
-        layoutLock.visibility = VISIBLE
-        layoutSlideCancel.visibility = VISIBLE
-        lockArrow.startAnimation(animJumpFast)
-        imageViewLock.startAnimation(animJump)
+        binding.layoutLock.visibility = VISIBLE
+        binding.layoutSlideCancel.visibility = VISIBLE
+        binding.lockArrowIcon.startAnimation(animJumpFast)
+        binding.lockIcon.startAnimation(animJump)
     }
 
     /**
      * Sets the visibility of the record timer and icon to [isVisible]
      */
     fun setRecordDisplayVisibility(isVisible: Boolean) {
-        chronometer.isVisible = isVisible
-        recordDisplayIcon.isVisible = isVisible
+        binding.chronometer.isVisible = isVisible
+        binding.recordingDisplayIcon.isVisible = isVisible
     }
 
     private fun displayRunningRecord() {
         setRecordDisplayVisibility(true)
 
-        recordDisplayIcon.setColorFilter(recordEnabledColor)
-        recordDisplayIcon.startAnimation(animBlink)
+        binding.recordingDisplayIcon.setColorFilter(recordEnabledColor)
+        binding.recordingDisplayIcon.startAnimation(animBlink)
 
-        chronometer.base = if (chronometerBase > 0) chronometerBase else SystemClock.elapsedRealtime()
-        chronometer.isEnabled = true
-        chronometer.start()
+        binding.chronometer.base = if (chronometerBase > 0) chronometerBase else SystemClock.elapsedRealtime()
+        binding.chronometer.isEnabled = true
+        binding.chronometer.start()
     }
 
     private fun lock() {
         state = ViewState.LOCKED
         stopTrackingAction = true
 
-        recordButtonIcon.setImageResource(R.drawable.ic_stop)
-        recordButton.animate().cancel()
-        recordButton.scaleX = 1f
-        recordButton.scaleY = 1f
+        binding.recordIcon.setImageResource(R.drawable.ic_stop)
+        binding.recordButton.animate().cancel()
+        binding.recordButton.scaleX = 1f
+        binding.recordButton.scaleY = 1f
 
-        recordButton.setOnTouchListener(null)
-        recordButton.setOnClickListener {
+        binding.recordButton.setOnTouchListener(null)
+        binding.recordButton.setOnClickListener {
             stopRecording(RecordingBehavior.LOCK)
         }
-        layoutSlideCancel.visibility = GONE
-        layoutLock.visibility = GONE
+        binding.layoutSlideCancel.visibility = GONE
+        binding.layoutLock.visibility = GONE
     }
 
     private fun cancel() {
@@ -352,7 +333,7 @@ class AudioRecordView : ConstraintLayout {
 
         val animateRelease = outcome == RecordingBehavior.RELEASE
         reset(animate = animateRelease)
-        chronometer.stop()
+        binding.chronometer.stop()
 
         when (outcome) {
             RecordingBehavior.CANCEL -> {
@@ -373,12 +354,12 @@ class AudioRecordView : ConstraintLayout {
         lastY = 0f
         chronometerBase = 0
 
-        recordButtonIcon.setImageResource(R.drawable.ic_action_mic)
-        recordButton.setOnClickListener(null)
-        recordButton.setOnTouchListener(gestureListener)
+        binding.recordIcon.setImageResource(R.drawable.ic_action_mic)
+        binding.recordButton.setOnClickListener(null)
+        binding.recordButton.setOnTouchListener(gestureListener)
 
         if (animate) {
-            recordButton
+            binding.recordButton
                 .animate()
                 .scaleX(1f)
                 .scaleY(1f)
@@ -388,39 +369,39 @@ class AudioRecordView : ConstraintLayout {
                 .setInterpolator(LinearInterpolator())
                 .start()
         } else {
-            recordButton.animate().cancel()
-            recordButton.scaleX = 1f
-            recordButton.scaleY = 1f
-            recordButton.translationX = 0f
-            recordButton.translationY = 0f
+            binding.recordButton.animate().cancel()
+            binding.recordButton.scaleX = 1f
+            binding.recordButton.scaleY = 1f
+            binding.recordButton.translationX = 0f
+            binding.recordButton.translationY = 0f
         }
 
-        layoutSlideCancel.visibility = GONE
-        layoutLock.visibility = GONE
-        chronometer.visibility = INVISIBLE
-        recordDisplayIcon.visibility = INVISIBLE
+        binding.layoutSlideCancel.visibility = GONE
+        binding.layoutLock.visibility = GONE
+        binding.chronometer.visibility = INVISIBLE
+        binding.recordingDisplayIcon.visibility = INVISIBLE
 
         // Reset the translation of the sliders to ensure they start from the correct position next time
-        layoutLock.translationY = 0f
-        layoutSlideCancel.translationX = 0f
-        layoutSlideCancel.alpha = 1f
+        binding.layoutLock.translationY = 0f
+        binding.layoutSlideCancel.translationX = 0f
+        binding.layoutSlideCancel.alpha = 1f
 
         setRecordDisplayVisibility(true)
-        chronometer.base = SystemClock.elapsedRealtime()
-        chronometer.isEnabled = false
-        recordDisplayIcon.setColorFilter(recordDisabledColor)
-        recordDisplayIcon.clearAnimation()
-        lockArrow.clearAnimation()
-        imageViewLock.clearAnimation()
+        binding.chronometer.base = SystemClock.elapsedRealtime()
+        binding.chronometer.isEnabled = false
+        binding.recordingDisplayIcon.setColorFilter(recordDisabledColor)
+        binding.recordingDisplayIcon.clearAnimation()
+        binding.lockArrowIcon.clearAnimation()
+        binding.lockIcon.clearAnimation()
     }
 
     /**
      * Immediately stops all actions and animations, and returns the view to its initial state.
      */
     fun forceReset() {
-        chronometer.stop()
-        recordButton.clearAnimation()
-        recordDisplayIcon.clearAnimation()
+        binding.chronometer.stop()
+        binding.recordButton.clearAnimation()
+        binding.recordingDisplayIcon.clearAnimation()
         reset(animate = false)
     }
 
@@ -428,7 +409,7 @@ class AudioRecordView : ConstraintLayout {
         val superState = super.onSaveInstanceState()
         val savedState = SavedState(superState)
         savedState.state = state
-        savedState.chronometerBase = chronometer.base
+        savedState.chronometerBase = binding.chronometer.base
         return savedState
     }
 

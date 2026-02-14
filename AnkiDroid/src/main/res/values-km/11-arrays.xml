@@ -51,6 +51,8 @@
     <string name="add_to_deck_decide_by_note_type">សម្រេចដោយប្រភេទរបស់កំណត់ត្រា</string>
     <!-- theme labels -->
     <string name="theme_follow_system">ធ្វើតាមប្រព័ន្ធ</string>
+    <string name="theme_day" comment="Day/Light theme color scheme">Day</string>
+    <string name="theme_night" comment="Night/Dark theme color scheme">Night</string>
     <!-- day_theme_labels -->
     <string name="day_theme_light">ភ្លឺ</string>
     <string name="day_theme_plain">Plain</string>

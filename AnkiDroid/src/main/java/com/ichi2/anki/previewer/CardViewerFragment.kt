@@ -92,7 +92,7 @@ abstract class CardViewerFragment(
     protected open fun onLoadInitialHtml(): String =
         stdHtml(
             context = requireContext(),
-            nightMode = Themes.currentTheme.isNightMode,
+            nightMode = Themes.isNightTheme,
         )
 
     private fun setupWebView(savedInstanceState: Bundle?) {

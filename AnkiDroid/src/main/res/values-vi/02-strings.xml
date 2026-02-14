@@ -72,7 +72,6 @@
     <string name="whiteboard_align_left" comment="Option to align the whiteboard toolbar on the left" maxLength="28">Left</string>
     <string name="whiteboard_align_bottom" comment="Option to align the whiteboard toolbar on the bottom" maxLength="28">Bottom</string>
     <string name="whiteboard_align_right" comment="Option to align the whiteboard toolbar on the right" maxLength="28">Right</string>
-    <string name="whiteboard_clear" comment="Button text to clear the whiteboard" maxLength="28">Clear</string>
     <string name="whiteboard_more_options" comment="Tooltip of the whiteboard \'More\' button" maxLength="28">More options</string>
     <string name="whiteboard_remove_brush_message">Are you sure you want to remove this brush from your palette?</string>
     <string name="whiteboard_ink_eraser" comment="Title of the whiteboard Ink eraser">Ink</string>
@@ -86,6 +85,7 @@
     <string name="disable_eraser" maxLength="28">Tắt tẩy</string>
     <string name="hide_whiteboard" maxLength="28">Ẩn bảng viết</string>
     <string name="clear_whiteboard" maxLength="28">Xoá bảng viết</string>
+    <string name="hide_toolbar" maxLength="28">Hide toolbar</string>
     <string name="replay_media" maxLength="28">Chơi lại media</string>
     <string name="leech_suspend_notification">Thẻ được đánh dấu là thẻ khó và đã tạm dừng</string>
     <string name="leech_notification">Thẻ được đánh dấu là thẻ khó</string>
@@ -188,8 +188,6 @@
     <string name="select_tts" maxLength="28">Thiết lập ngôn ngữ TTS</string>
     <string name="custom_study" maxLength="28">Học theo tuỳ chọn</string>
     <string name="dyn_deck_desc">Đây là bộ thẻ đặc biệt phục vụ cho việc học ngoài lịch trình thông thường. Các thẻ sẽ tự động quay lại bộ thẻ ban đầu của chúng sau khi ôn tập. Xoá bộ thẻ này khỏi danh sách sẽ chuyển toàn bộ thẻ còn lại về bộ thẻ ban đầu của chúng.</string>
-    <string name="steps_error">Các bước phải là số lớn hơn 0</string>
-    <string name="steps_min_error">Yêu cầu phải có ít nhất một bước</string>
     <string name="tag_editor_add_feedback">Bấm \"%2$s\" để xác nhận thêm \"%1$s\"</string>
     <string name="tag_editor_add_feedback_existing">Đã chọn đuôi hiện hữu \"%1$s\"</string>
     <!-- Time spans -->
@@ -260,9 +258,12 @@
     <string name="create_shortcut_error">Không thể thêm shortcut: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">Viết hoa các câu</string>
     <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll" maxLength="28">Scroll toolbar</string>
-    <!-- Symbols used as Button text in IncrementNumberRangePreference -->
+    <!-- IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
+    <string name="invalid_value" comment="Error message in IncrementerNumberRangePreference when input is not a valid number">Invalid value</string>
+    <string name="maximum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the maximum allowed value">Maximum value is %d</string>
+    <string name="minimum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the minimum allowed value">Minimum value is %d</string>
     <!-- Used for credential empty warning message -->
     <string name="invalid_email">Nhập email hợp lệ</string>
     <string name="password_empty">Bắt buộc có mật khẩu</string>
@@ -341,7 +342,6 @@
     <string name="format_deck_description_as_markdown">Định dạng dưới dạng Markdown</string>
     <string name="help_button_content_description">Mở trợ giúp cho ‘%s’</string>
     <string name="failed_to_copy">Không sao chép được</string>
-    <string name="card_browser_unavailable_when_notes_mode">Không khả dụng ở chế độ ‘Ghi chú’</string>
     <plurals name="unbury_cards_feedback">
         <item quantity="other">%d thẻ chưa được ẩn</item>
     </plurals>
@@ -374,4 +374,6 @@
     <string name="directory_inaccessible_info">Tìm hiểu thêm về cách khôi phục quyền truy cập tại %s hoặc vào cài đặt để cập nhật thư mục bộ sưu tập.</string>
     <!-- Scheduler Upgrade Required Dialog title-->
     <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">Yêu cầu nâng cấp bộ lập lịch</string>
+    <!-- Whitespace is OK -->
+    <string name="list_separator" comment="The character and spacing to display between elements of a list, for example \', \' in \'Apple, Banana, Cherry" tools:ignore="TranslationTypo">, </string>
 </resources>

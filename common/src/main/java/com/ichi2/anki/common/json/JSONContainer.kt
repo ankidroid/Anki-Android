@@ -56,6 +56,12 @@ interface JSONContainer<T : JSONObjectHolder> : Iterable<T> {
     }
 
     fun length() = jsonArray.length()
+
+    val size: Int
+        get() = length()
+
+    val indices: IntRange
+        get() = this.toList().indices
 }
 
 fun JSONObjectHolder.jsonBoolean(key: String) = JsonBooleanDelegate(jsonObject, key)

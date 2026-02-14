@@ -55,7 +55,7 @@
     <string name="CardEditorTags">標籤: %1$s</string>
     <string name="CardEditorCards">卡片：%1$s</string>
     <string name="edit_occlusions">編輯遮蔽</string>
-    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
+    <string name="paste_from_clipboard" maxLength="28">從剪貼簿貼上</string>
     <string name="tag_name">標籤名稱</string>
     <string name="add_new_filter_tags">新增/篩選標籤</string>
     <string name="add_tag" maxLength="28">新增標籤</string>
@@ -72,7 +72,6 @@
     <string name="whiteboard_align_left" comment="Option to align the whiteboard toolbar on the left" maxLength="28">靠左</string>
     <string name="whiteboard_align_bottom" comment="Option to align the whiteboard toolbar on the bottom" maxLength="28">底部</string>
     <string name="whiteboard_align_right" comment="Option to align the whiteboard toolbar on the right" maxLength="28">右</string>
-    <string name="whiteboard_clear" comment="Button text to clear the whiteboard" maxLength="28">清除</string>
     <string name="whiteboard_more_options" comment="Tooltip of the whiteboard \'More\' button" maxLength="28">更多選項</string>
     <string name="whiteboard_remove_brush_message">你確定要從你的調色盤中移除此筆刷嗎？</string>
     <string name="whiteboard_ink_eraser" comment="Title of the whiteboard Ink eraser">墨</string>
@@ -86,6 +85,7 @@
     <string name="disable_eraser" maxLength="28">橡皮擦已停用</string>
     <string name="hide_whiteboard" maxLength="28">隱藏白板</string>
     <string name="clear_whiteboard" maxLength="28">清除白板</string>
+    <string name="hide_toolbar" maxLength="28">Hide toolbar</string>
     <string name="replay_media" maxLength="28">重新播放媒體</string>
     <string name="leech_suspend_notification">卡片已擱置，同時標為榨時卡</string>
     <string name="leech_notification">卡片標為榨時卡</string>
@@ -188,8 +188,6 @@
     <string name="select_tts" maxLength="28">設定 TTS 語言</string>
     <string name="custom_study" maxLength="28">自訂學習</string>
     <string name="dyn_deck_desc">這是專門用來進行額外學習進度的牌組。卡片在你複習完以後會自動回歸原本的牌組。如果在牌組列表中刪除這個牌組，其他剩下的卡片也會回歸它們原本的牌組。</string>
-    <string name="steps_error">步驟必須是大於 0 的數字</string>
-    <string name="steps_min_error">至少需要一步</string>
     <string name="tag_editor_add_feedback">輕觸 \"%2$s\" 確認新增 \"%1$s\"</string>
     <string name="tag_editor_add_feedback_existing">現有標籤 \"%1$s\" 已選擇</string>
     <!-- Time spans -->
@@ -260,9 +258,12 @@
     <string name="create_shortcut_error">新增捷徑時發生錯誤：%s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">大寫句子</string>
     <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll" maxLength="28">滾動工具列</string>
-    <!-- Symbols used as Button text in IncrementNumberRangePreference -->
+    <!-- IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
+    <string name="invalid_value" comment="Error message in IncrementerNumberRangePreference when input is not a valid number">數值無效</string>
+    <string name="maximum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the maximum allowed value">Maximum value is %d</string>
+    <string name="minimum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the minimum allowed value">Minimum value is %d</string>
     <!-- Used for credential empty warning message -->
     <string name="invalid_email">請輸入有效的電郵</string>
     <string name="password_empty">密碼是必填項</string>
@@ -341,7 +342,6 @@
     <string name="format_deck_description_as_markdown">Format as Markdown</string>
     <string name="help_button_content_description">Open help for ‘%s’</string>
     <string name="failed_to_copy">複製失敗</string>
-    <string name="card_browser_unavailable_when_notes_mode">在「筆記」模式中不可用</string>
     <plurals name="unbury_cards_feedback">
         <item quantity="other">取消遮蓋了 %d 張卡片</item>
     </plurals>
@@ -374,4 +374,6 @@
     <string name="directory_inaccessible_info">Learn more about how to restore access here %s or go to settings to update collection folder.</string>
     <!-- Scheduler Upgrade Required Dialog title-->
     <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">Scheduler upgrade required</string>
+    <!-- Whitespace is OK -->
+    <string name="list_separator" comment="The character and spacing to display between elements of a list, for example \', \' in \'Apple, Banana, Cherry" tools:ignore="TranslationTypo">, </string>
 </resources>

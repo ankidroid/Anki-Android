@@ -15,15 +15,13 @@
  */
 package com.ichi2.anki.ui.windows.reviewer.autoadvance
 
-import anki.scheduler.CardAnswer.Rating
-import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.asyncIO
-import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.libanki.Card
-import com.ichi2.anki.reviewer.AutomaticAnswerAction
-import com.ichi2.anki.ui.windows.reviewer.ReviewerViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 /**
  * Implementation of the `Auto Advance` deck options
@@ -36,8 +34,18 @@ import kotlinx.coroutines.delay
  * @see AutoAdvanceSettings
  */
 class AutoAdvance(
-    val viewModel: ReviewerViewModel,
+    private val scope: CoroutineScope,
+    private val listener: ActionListener,
+    initialCard: Deferred<Card>,
 ) {
+    /**
+     * Listens to the `Auto Advance` actions set in Deck options,
+     * which can be either a [QuestionAction] or a [AnswerAction].
+     */
+    fun interface ActionListener {
+        suspend fun onAutoAdvanceAction(action: AutoAdvanceAction)
+    }
+
     var isEnabled = false
         set(value) {
             field = value
@@ -49,9 +57,8 @@ class AutoAdvance(
     private var answerActionJob: Job? = null
 
     private var settings =
-        viewModel.asyncIO {
-            val card = viewModel.currentCard.await()
-            AutoAdvanceSettings.createInstance(card.currentDeckId())
+        scope.asyncIO {
+            AutoAdvanceSettings.createInstance(initialCard.await().currentDeckId())
         }
 
     private suspend fun durationToShowQuestionFor() = settings.await().durationToShowQuestionFor
@@ -72,7 +79,7 @@ class AutoAdvance(
     fun onCardChange(card: Card) {
         cancelQuestionAndAnswerActionJobs()
         settings =
-            viewModel.asyncIO {
+            scope.asyncIO {
                 AutoAdvanceSettings.createInstance(card.currentDeckId())
             }
     }
@@ -82,12 +89,9 @@ class AutoAdvance(
         if (!durationToShowQuestionFor().isPositive() || !isEnabled) return
 
         questionActionJob =
-            viewModel.launchCatchingIO {
+            scope.launch {
                 delay(durationToShowQuestionFor())
-                when (questionAction()) {
-                    QuestionAction.SHOW_ANSWER -> viewModel.onShowAnswer()
-                    QuestionAction.SHOW_REMINDER -> showReminder(TR.studyingQuestionTimeElapsed())
-                }
+                listener.onAutoAdvanceAction(questionAction())
             }
     }
 
@@ -96,21 +100,9 @@ class AutoAdvance(
         if (!durationToShowAnswerFor().isPositive() || !isEnabled) return
 
         answerActionJob =
-            viewModel.launchCatchingIO {
+            scope.launch {
                 delay(durationToShowAnswerFor())
-                when (answerAction()) {
-                    AutomaticAnswerAction.BURY_CARD -> viewModel.buryCard()
-                    AutomaticAnswerAction.ANSWER_AGAIN -> viewModel.answerCard(Rating.AGAIN)
-                    AutomaticAnswerAction.ANSWER_HARD -> viewModel.answerCard(Rating.HARD)
-                    AutomaticAnswerAction.ANSWER_GOOD -> viewModel.answerCard(Rating.GOOD)
-                    AutomaticAnswerAction.SHOW_REMINDER -> showReminder(TR.studyingAnswerTimeElapsed())
-                }
+                listener.onAutoAdvanceAction(answerAction())
             }
-    }
-
-    private fun showReminder(message: String) {
-        viewModel.launchCatchingIO {
-            viewModel.actionFeedbackFlow.emit(message)
-        }
     }
 }

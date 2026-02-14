@@ -53,7 +53,7 @@
     </plurals>
     <plurals name="card_browser_subtitle_notes_mode">
         <item quantity="one">%d notatka pokazana</item>
-        <item quantity="few">%d notatek pokazanych</item>
+        <item quantity="few">%d notatki pokazane</item>
         <item quantity="many">%d notatek pokazanych</item>
         <item quantity="other">%d notatek pokazanych</item>
     </plurals>
@@ -65,10 +65,10 @@
         <item quantity="other">Usuń notatki</item>
     </plurals>
     <string name="card_browser_change_deck" maxLength="28">Zmień talię</string>
-    <string name="delete_card_title">Usuń notatkę</string>
-    <string name="card_browser_show_marked" maxLength="28">Odfiltruj zaznaczone</string>
-    <string name="card_browser_show_suspended" maxLength="28">Odfiltruj zawieszone</string>
-    <string name="card_browser_search_by_tag" maxLength="28">Filtruj po etykiecie</string>
+    <string name="delete_card_title">Usunąć notatkę?</string>
+    <string name="card_browser_show_marked" maxLength="28">Filtruj zaznaczone</string>
+    <string name="card_browser_show_suspended" maxLength="28">Filtruj zawieszone</string>
+    <string name="card_browser_search_by_tag" maxLength="28">Filtruj po tagu</string>
     <string name="card_browser_search_by_flag" maxLength="28">Filtruj po fladze</string>
     <string name="card_browser_list_my_searches" maxLength="28">Moje wyszukiwania</string>
     <string name="card_browser_list_my_searches_save" maxLength="28">Zapisz wyszukiwanie</string>
@@ -83,7 +83,7 @@
     <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">Szukaj</string>
     <string name="card_browser_cram_search" maxLength="28" comment="Menu entry to start a search.">Szukaj</string>
     <string name="card_browser_change_display_order_title">Wybierz kolejność wyświetlania</string>
-    <string name="card_details_tags">Etykiety</string>
+    <string name="card_details_tags">Tagi</string>
     <string-array name="card_browser_order_labels">
         <item>Bez sortowania (szybciej)</item>
         <item>Wg pola wyszukiwania</item>
@@ -95,14 +95,14 @@
         <item>Wg łatwości</item>
         <item>Wg powtórek</item>
         <item>Wg pomyłek</item>
-        <item>Według nazwy talii</item>
+        <item>Wg nazwy talii</item>
     </string-array>
     <string name="manage_browser_column">Zarządzaj kolumną</string>
     <string name="no_columns_available">Brak dostępnych kolumn</string>
     <string name="card_browser_select_all" maxLength="28">Zaznacz wszystko</string>
     <string name="card_browser_select_none" maxLength="28">Anuluj wybór</string>
     <string name="card_browser_no_cards_in_deck">Nie znaleziono kart w talii „%s”</string>
-    <string name="card_browser_search_all_decks">Szukaj w wszystkich taliach</string>
+    <string name="card_browser_search_all_decks">Szukaj we wszystkich taliach</string>
     <string name="card_browser_unknown_deck_name">Nieznany</string>
     <string name="card_browser_truncate" comment="allows users to show less of a field value">Przytnij zawartość</string>
     <string name="set_due_date_hintText" comment="plural set_due_date_label_suffix is used for parameters, parameter 1 is the plural for 0, parameter 2 is the plural for 1">Dzisiaj jest „0 %1$s”, jutro jest „1 %2$s”, itd&#8230;</string>

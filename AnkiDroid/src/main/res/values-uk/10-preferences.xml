@@ -173,7 +173,7 @@
     <string name="pref_show_answer_long_press_time_summary">Мінімальний час натискання для того, щоби кнопка відповіді зареєструвала дотик.</string>
     <string name="show_estimates" maxLength="41">Показувати час кнопки</string>
     <string name="show_estimates_summ">Показувати час наступного повторення над кнопками відповіді</string>
-    <string name="show_large_answer_buttons" maxLength="41">Показувати великі кнопки відповіді</string>
+    <string name="show_large_answer_buttons" maxLength="41">Показувати великі кнопки відповідей</string>
     <string name="show_large_answer_buttons_summ">Показувати кнопку відповіді в 2 рядках</string>
     <string name="show_top_bar" maxLength="41">Показувати верхню панель</string>
     <string name="show_top_bar_summary">Показувати кількість карток, таймер відповіді, прапорець і позначку у верхній панелі</string>
@@ -379,10 +379,10 @@
     <string name="hide_system_bars_none" comment="Setting option to not hide any of the system bars">Не приховувати</string>
     <string name="hide_system_bars_status_bar" comment="Setting option to hide the system status bar (the top one with clock, battery status, etc)">Рядок стану</string>
     <string name="hide_system_bars_navigation_bar" comment="Setting option to hide the system navigation bar (the bottom one that can go back, to home, etc)">Панель навігації</string>
-    <string name="hide_system_bars_all_bars" comment="Setting option to hide all the system bars">Всі</string>
+    <string name="hide_system_bars_all_bars" comment="Setting option to hide all the system bars">Все</string>
     <string name="ignore_display_cutout" maxLength="41">Ігнорувати виріз дисплею</string>
-    <string name="show_answer_buttons" maxLength="41">Показувати кнопки відповіді</string>
-    <string name="hide_hard_and_easy" maxLength="41">Приховати кнопки \'Важко\' і \'Легко\'</string>
+    <string name="show_answer_buttons" maxLength="41">Показувати кнопки відповідей</string>
+    <string name="hide_hard_and_easy" maxLength="41">Сховати кнопки \'Важко\' і \'Легко\'</string>
     <string name="reviewer_frame_style" maxLength="41">Стиль рамки</string>
     <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Study Screen">Картка</string>
     <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Study Screen">Квадратна</string>
@@ -396,6 +396,8 @@
     <string name="new_study_screen_summ"><![CDATA[Покращений екран навчання, який замінить теперішній. Деякі функції старого екрану були змінені або видалені. Будь ласка, надсилайте нам будь-які <a href="%1$s">відгуки</a> або <a href="%2$s">помилки</a>.]]></string>
     <string name="show_answer_feedback" maxLength="41">Показувати фідбек відповіді</string>
     <string name="screen" maxLength="41">Екран</string>
+    <string name="only_answer" maxLength="41" comment="Configuration of the \'Answer\' commands to only answer the card">Only answer</string>
+    <string name="flip_and_answer" maxLength="41" comment="Configuration of the \'Answer\' commands to answer the card if on the answer side, and flip it if on the question side">Flip and answer</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">Відкрити налаштування</string>
 </resources>

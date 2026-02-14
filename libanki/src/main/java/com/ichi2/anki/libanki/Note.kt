@@ -25,7 +25,7 @@ import com.ichi2.anki.common.utils.emptyStringArray
 import com.ichi2.anki.libanki.Consts.DEFAULT_DECK_ID
 import com.ichi2.anki.libanki.backend.model.toBackendNote
 import com.ichi2.anki.libanki.utils.LibAnkiAlias
-import com.ichi2.anki.libanki.utils.NotInLibAnki
+import com.ichi2.anki.libanki.utils.NotInPyLib
 import java.util.regex.Pattern
 
 @KotlinCleanup("lots to do")
@@ -101,7 +101,7 @@ class Note : Cloneable {
         fMap = Notetypes.fieldMap(notetype)
     }
 
-    @NotInLibAnki
+    @NotInPyLib
     fun numberOfCards(col: Collection): Int = cardIds(col).size
 
     fun cardIds(col: Collection): List<Long> = col.cardIdsOfNote(nid = id)
@@ -148,7 +148,7 @@ class Note : Cloneable {
 
     /** The first card, assuming it exists. */
     @CheckResult
-    @NotInLibAnki
+    @NotInPyLib
     fun firstCard(col: Collection): Card =
         col.getCard(
             col.db.queryLongScalar(
@@ -208,7 +208,7 @@ class Note : Cloneable {
     @LibAnkiAlias("__contains__")
     operator fun contains(key: String): Boolean = fMap!!.containsKey(key)
 
-    @NotInLibAnki
+    @NotInPyLib
     fun setField(
         index: Int,
         value: String,

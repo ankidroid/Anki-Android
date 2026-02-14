@@ -187,7 +187,7 @@ SCRIPT_DIR=$(dirname "$(readlink -f "$0")")
 # Read the content of the markdown file using the absolute path
 RELEASE_NOTES="$SCRIPT_DIR/release-description.md"
 echo "Creating new Github release"
-gh release create v"$VERSION" --title "AnkiDroid $VERSION" -F "$RELEASE_NOTES" $RELEASE_TYPE
+gh release create v"$VERSION" --title "AnkiDroid $VERSION" -F "$RELEASE_NOTES" $RELEASE_TYPE --draft
 
 echo "Sleeping 30s to make sure the release exists, see issue 11746"
 sleep 30
@@ -243,8 +243,15 @@ else
   BUILDNAMES='A B' # For alpha releases just post a couple parallel builds
 fi
 for BUILD in $BUILDNAMES; do
-  PREFIX=""
   echo "Adding parallel build $BUILD to Github release"
-  cp AnkiDroid-"$VERSION".parallel."$BUILD".apk "$PREFIX"AnkiDroid-"$VERSION".parallel."$BUILD".apk
-  gh release upload v"$VERSION" "$PREFIX"AnkiDroid-"$VERSION".parallel."$BUILD".apk
+  gh release upload v"$VERSION" AnkiDroid-"$VERSION".parallel."$BUILD".apk
 done
+
+# For publishing the draft release and making it immutable;
+echo "Publishing release (making it immutable)"
+if ! gh release edit v"$VERSION" --draft=false;
+then
+  echo "Failed to publish release"
+  exit 1
+fi
+echo "Release published successfully"

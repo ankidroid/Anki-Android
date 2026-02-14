@@ -62,19 +62,19 @@
         <item quantity="other">Preostalo %d minuta</item>
     </plurals>
     <string name="widget_add_note_button">Dodaj novu AnkiDroid bilješku</string>
-    <string name="deck_picker_widget_description" comment="Title of the Deck Picker Widget. Displayed to the user in Android\'s Widget Selection menu">Deck Picker</string>
-    <string name="card_analysis_extra_widget_description">Card Analysis</string>
+    <string name="deck_picker_widget_description" comment="Title of the Deck Picker Widget. Displayed to the user in Android\'s Widget Selection menu">Izbor špila</string>
+    <string name="card_analysis_extra_widget_description">Analiza kartica</string>
     <!-- Strings to explain usage in Deck Picker and Card Analysis Widget Configuration screen -->
-    <string name="select_decks_title" comment="Title for Deck Selection Dialog">Select decks</string>
-    <string name="select_deck_title" comment="Title for Deck Selection Dialog">Select a deck</string>
-    <string name="no_selected_deck_placeholder_title" comment="Placeholder title when no decks are selected">Select decks to display in the widget. Select decks with the + icon.</string>
-    <string name="deck_removed_from_widget" comment="Snackbar when deck is removed from widget">Deck removed</string>
-    <string name="deck_already_selected_message" comment="Snackbar when user try to select the same deck again">This deck is already selected</string>
+    <string name="select_decks_title" comment="Title for Deck Selection Dialog">Odaberi špilove</string>
+    <string name="select_deck_title" comment="Title for Deck Selection Dialog">Odaberi špil</string>
+    <string name="no_selected_deck_placeholder_title" comment="Placeholder title when no decks are selected">Odaberite špilove koji će se prikazati u widgetu. Špilovi se odabiru pomoću + ikone.</string>
+    <string name="deck_removed_from_widget" comment="Snackbar when deck is removed from widget">Špil uklonjen</string>
+    <string name="deck_already_selected_message" comment="Snackbar when user try to select the same deck again">Ovaj špil je već odabran</string>
     <plurals name="deck_limit_reached">
-        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">You can select up to %d deck.</item>
-        <item quantity="few">You can select up to %d decks.</item>
-        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">You can select up to %d decks.</item>
+        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">Možete odabrati do %d špil.</item>
+        <item quantity="few">Možete odabrati do %d špila.</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">Možete odabrati do %d špilova.</item>
     </plurals>
-    <string name="empty_widget_state" comment="To denote the widget is empty">Missing deck. Tap to reconfigure.</string>
-    <string name="empty_collection_state_in_widget" comment="To denote the collection is empty">Collection is empty, use app to add decks then reconfigure</string>
+    <string name="empty_widget_state" comment="To denote the widget is empty">Nedostaje špil. Pritisnite za postavljanje.</string>
+    <string name="empty_collection_state_in_widget" comment="To denote the collection is empty">Kolekcija je prazna, ponovno postavite špilove putem aplikacije</string>
 </resources>

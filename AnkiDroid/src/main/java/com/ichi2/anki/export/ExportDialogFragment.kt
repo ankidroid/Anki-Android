@@ -19,9 +19,6 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.CheckBox
-import android.widget.FrameLayout
-import android.widget.Spinner
 import android.widget.TextView
 import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
@@ -37,7 +34,6 @@ import anki.generic.Empty
 import anki.import_export.ExportLimit
 import anki.import_export.exportLimit
 import anki.notes.noteIds
-import com.google.android.material.progressindicator.CircularProgressIndicator
 import com.ichi2.anki.ALL_DECKS_ID
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.withCol
@@ -45,6 +41,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.time.getTimestamp
+import com.ichi2.anki.databinding.DialogExportOptionsBinding
 import com.ichi2.anki.exportApkgPackage
 import com.ichi2.anki.exportCollectionPackage
 import com.ichi2.anki.exportSelectedCards
@@ -64,55 +61,39 @@ import java.io.File
  * Intended to replicate the desktop UI.
  */
 class ExportDialogFragment : DialogFragment() {
-    private lateinit var exportTypeSelector: Spinner
-    private lateinit var deckSelector: Spinner
-    private lateinit var loadingIndicator: CircularProgressIndicator
-    private lateinit var selectedLabel: TextView
-    private lateinit var decksSelectorContainer: FrameLayout
-    private lateinit var collectionIncludeMedia: CheckBox
-    private lateinit var apkgIncludeSchedule: CheckBox
-    private lateinit var apkgIncludeDeckConfigs: CheckBox
-    private lateinit var apkgIncludeMedia: CheckBox
-    private lateinit var notesIncludeHtml: CheckBox
-    private lateinit var notesIncludeTags: CheckBox
-    private lateinit var notesIncludeDeckName: CheckBox
-    private lateinit var notesIncludeNotetypeName: CheckBox
-    private lateinit var notesIncludeUniqueIdentifier: CheckBox
-    private lateinit var cardsIncludeHtml: CheckBox
-    private lateinit var apkgExportLegacyCheckbox: CheckBox
-    private lateinit var collectionExportLegacyCheckbox: CheckBox
+    private lateinit var binding: DialogExportOptionsBinding
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val dialogView =
-            requireActivity().layoutInflater.inflate(R.layout.dialog_export_options, null).apply {
-                initializeCommonUi()
-                initializeCollectionExportUi()
-                initializeApkgExportUi()
-                initializeNotesExportUi()
-                initializeCardsExportUi()
-            }
+        binding = DialogExportOptionsBinding.inflate(requireActivity().layoutInflater, null, false)
+        binding.apply {
+            initializeCommonUi()
+            initializeCollectionExportUi()
+            initializeApkgExportUi()
+            initializeNotesExportUi()
+            initializeCardsExportUi()
+        }
         val extraDid = arguments?.getLong(ARG_DECK_ID, -1) // 0 is for "All decks"
         val extraType: ExportType? = arguments?.getSerializableCompat(ARG_TYPE)
         initializeDecks(extraDid)
         // start with the option for exporting a collection like on desktop unless we received a
         // deck id or a type of selection(plus selected ids), in this case preselect apkg export
         if ((extraDid != null && extraDid != -1L) || extraType != null) {
-            exportTypeSelector.setSelection(ExportConfiguration.Apkg.index)
-            showExtrasOptionsFor(dialogView, ExportConfiguration.Apkg)
+            binding.exportTypeSelector.setSelection(ExportConfiguration.Apkg.index)
+            showExtrasOptionsFor(ExportConfiguration.Apkg)
         } else {
-            exportTypeSelector.setSelection(ExportConfiguration.Collection.index)
-            showExtrasOptionsFor(dialogView, ExportConfiguration.Collection)
+            binding.exportTypeSelector.setSelection(ExportConfiguration.Collection.index)
+            showExtrasOptionsFor(ExportConfiguration.Collection)
         }
         return AlertDialog
             .Builder(requireActivity())
-            .setView(dialogView)
+            .setView(binding.root)
             .negativeButton(R.string.dialog_cancel)
             .positiveButton(R.string.dialog_ok) {
-                val selectedIndex = exportTypeSelector.selectedItemPosition
+                val selectedIndex = binding.exportTypeSelector.selectedItemPosition
                 // just to be safe, if not exporting a collection and the decks spinner is not
                 // enabled(the user was really fast or fetching the decks is delayed for some
                 // reason) then simply return
-                if (selectedIndex != 0 && !deckSelector.isEnabled) return@positiveButton
+                if (selectedIndex != 0 && !binding.deckSelector.isEnabled) return@positiveButton
                 when (ExportConfiguration.from(selectedIndex)) {
                     ExportConfiguration.Collection -> handleCollectionExport()
                     ExportConfiguration.Apkg -> handleAnkiPackageExport()
@@ -129,7 +110,7 @@ class ExportDialogFragment : DialogFragment() {
      */
     private fun findDeckPosition(did: DeckId): Int {
         var position = 0
-        val adapter = deckSelector.adapter as DeckDisplayAdapter
+        val adapter = binding.deckSelector.adapter as DeckDisplayAdapter
         while (position < adapter.count) {
             if (adapter.getItem(position).id == did) {
                 return position
@@ -147,7 +128,7 @@ class ExportDialogFragment : DialogFragment() {
      */
     private fun initializeDecks(selectedDeck: DeckId? = null) {
         lifecycleScope.launch {
-            deckSelector.isEnabled = false
+            binding.deckSelector.isEnabled = false
             // add "All decks" option on first position to replicate desktop
             val allDecks =
                 mutableListOf(
@@ -157,7 +138,7 @@ class ExportDialogFragment : DialogFragment() {
                     ),
                 )
             allDecks.addAll(withCol { decks.allNamesAndIds(false) })
-            deckSelector.adapter =
+            binding.deckSelector.adapter =
                 DeckDisplayAdapter(
                     requireContext(),
                     android.R.layout.simple_spinner_item,
@@ -166,150 +147,108 @@ class ExportDialogFragment : DialogFragment() {
                     setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                 }
             if (selectedDeck != null) {
-                deckSelector.setSelection(findDeckPosition(selectedDeck))
+                binding.deckSelector.setSelection(findDeckPosition(selectedDeck))
             }
-            loadingIndicator.isVisible = false
-            deckSelector.isEnabled = true
+            binding.loadingDecksIndicator.isVisible = false
+            binding.deckSelector.isEnabled = true
         }
     }
 
-    private fun View.initializeCommonUi(): Unit =
+    private fun DialogExportOptionsBinding.initializeCommonUi(): Unit =
         with(CollectionManager.TR) {
             // parse the backend text for these labels as html because they contain html bold tags
-            findViewById<TextView>(R.id.export_label_type).text =
+            exportLabelType.text =
                 HtmlCompat.fromHtml(exportingExportFormat(), HtmlCompat.FROM_HTML_MODE_LEGACY)
-            findViewById<TextView>(R.id.export_label_include).text =
+            exportLabelInclude.text =
                 HtmlCompat.fromHtml(exportingInclude(), HtmlCompat.FROM_HTML_MODE_LEGACY)
-            exportTypeSelector =
-                findViewById<Spinner>(R.id.export_type_selector).apply {
-                    val exportTypesAdapter =
-                        ArrayAdapter(
-                            requireActivity(),
-                            android.R.layout.simple_spinner_item,
-                            listOf(
-                                "${exportingAnkiCollectionPackage()} (.colpkg)",
-                                "${exportingAnkiDeckPackage()} (.apkg)",
-                                "${exportingNotesInPlainText()} (.txt)",
-                                "${exportingCardsInPlainText()} (.txt)",
-                            ),
-                        ).apply { setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item) }
-                    adapter = exportTypesAdapter
-                    onItemSelectedListener =
-                        BasicItemSelectedListener { position, _ ->
-                            showExtrasOptionsFor(this@initializeCommonUi, ExportConfiguration.from(position))
-                        }
-                }
-            selectedLabel =
-                findViewById<TextView>(R.id.selected_label).apply { text = exportingSelectedNotes() }
-            loadingIndicator = findViewById(R.id.loading_decks_indicator)
-            deckSelector = findViewById(R.id.decks_selector)
-            decksSelectorContainer = findViewById(R.id.decks_selector_container)
+            exportTypeSelector.apply {
+                val exportTypesAdapter =
+                    ArrayAdapter(
+                        requireActivity(),
+                        android.R.layout.simple_spinner_item,
+                        listOf(
+                            "${exportingAnkiCollectionPackage()} (.colpkg)",
+                            "${exportingAnkiDeckPackage()} (.apkg)",
+                            "${exportingNotesInPlainText()} (.txt)",
+                            "${exportingCardsInPlainText()} (.txt)",
+                        ),
+                    ).apply { setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item) }
+                adapter = exportTypesAdapter
+                onItemSelectedListener =
+                    BasicItemSelectedListener { position, _ ->
+                        showExtrasOptionsFor(ExportConfiguration.from(position))
+                    }
+            }
+            selectedLabel.text = exportingSelectedNotes()
         }
 
     /**
      * Initializes the views representing the extra options available when exporting a collection.
      */
     @NeedsTest("Checkbox value is provided to the correct export functions (true/false)")
-    private fun View.initializeCollectionExportUi() =
+    private fun DialogExportOptionsBinding.initializeCollectionExportUi() =
         with(CollectionManager.TR) {
-            collectionIncludeMedia =
-                findViewById<CheckBox>(R.id.export_extras_collection_media).apply {
-                    text = exportingIncludeMedia()
-                }
-            collectionExportLegacyCheckbox =
-                findViewById<CheckBox>(R.id.export_legacy_checkbox_collection).apply {
-                    text = exportingSupportOlderAnkiVersions()
-                }
+            collectionIncludeMedia.text = exportingIncludeMedia()
+            collectionExportLegacy.text = exportingSupportOlderAnkiVersions()
         }
 
     /**
      * Initializes the views representing the extra options available when exporting an Anki package.
      */
     @NeedsTest("Checkbox value is provided to the correct export functions (true/false)")
-    private fun View.initializeApkgExportUi() =
+    private fun DialogExportOptionsBinding.initializeApkgExportUi() =
         with(CollectionManager.TR) {
-            apkgIncludeMedia =
-                findViewById<CheckBox>(R.id.export_apkg_media).apply {
-                    text = exportingIncludeMedia()
-                }
-            apkgIncludeDeckConfigs =
-                findViewById<CheckBox>(R.id.export_apkg_deck_configs).apply {
-                    text = exportingIncludeDeckConfigs()
-                }
-            apkgIncludeSchedule =
-                findViewById<CheckBox>(R.id.export_apkg_schedule).apply {
-                    text = exportingIncludeSchedulingInformation()
-                }
-            apkgExportLegacyCheckbox =
-                findViewById<CheckBox>(R.id.export_legacy_checkbox_apkg).apply {
-                    text = exportingSupportOlderAnkiVersions()
-                }
+            apkgIncludeMedia.text = exportingIncludeMedia()
+            apkgIncludeDeckConfigs.text = exportingIncludeDeckConfigs()
+            apkgIncludeSchedule.text = exportingIncludeSchedulingInformation()
+            apkgExportLegacy.text = exportingSupportOlderAnkiVersions()
         }
 
     /**
      * Initializes the views representing the extra options available when exporting notes.
      */
-    private fun View.initializeNotesExportUi() =
+    private fun DialogExportOptionsBinding.initializeNotesExportUi() =
         with(CollectionManager.TR) {
-            notesIncludeHtml =
-                findViewById<CheckBox>(R.id.notes_include_html).apply {
-                    text = exportingIncludeHtmlAndMediaReferences()
-                }
-            notesIncludeTags =
-                findViewById<CheckBox>(R.id.notes_include_tags).apply { text = exportingIncludeTags() }
-            notesIncludeDeckName =
-                findViewById<CheckBox>(R.id.notes_include_deck_name).apply {
-                    text = exportingIncludeDeck()
-                }
-            notesIncludeNotetypeName =
-                findViewById<CheckBox>(R.id.notes_include_notetype_name).apply {
-                    text = exportingIncludeNotetype()
-                }
-            notesIncludeUniqueIdentifier =
-                findViewById<CheckBox>(R.id.notes_include_unique_identifier).apply {
-                    text = exportingIncludeGuid()
-                }
+            notesIncludeHtml.text = exportingIncludeHtmlAndMediaReferences()
+            notesIncludeTags.text = exportingIncludeTags()
+            notesIncludeDeckName.text = exportingIncludeDeck()
+            notesIncludeNotetypeName.text = exportingIncludeNotetype()
+            notesIncludeUniqueIdentifier.text = exportingIncludeGuid()
         }
 
     /**
      * Initializes the views representing the extra options available when exporting cards.
      */
-    private fun View.initializeCardsExportUi() =
+    private fun DialogExportOptionsBinding.initializeCardsExportUi() =
         with(CollectionManager.TR) {
-            cardsIncludeHtml =
-                findViewById<CheckBox>(R.id.cards_include_html).apply {
-                    text = exportingIncludeHtmlAndMediaReferences()
-                }
+            cardsIncludeHtml.text = exportingIncludeHtmlAndMediaReferences()
         }
 
     /**
      * Displays the view containing the export extra options for the requested export type.
      */
-    private fun showExtrasOptionsFor(
-        container: View,
-        targetConfig: ExportConfiguration,
-    ) {
+    private fun showExtrasOptionsFor(targetConfig: ExportConfiguration) {
         // if we export as collection there's no deck/selected items to choose from
         if (targetConfig.layoutId == R.id.export_extras_collection) {
-            decksSelectorContainer.isVisible = false
-            selectedLabel.isVisible = false
+            binding.decksSelectorContainer.isVisible = false
+            binding.selectedLabel.isVisible = false
         } else {
             if (arguments?.getSerializableCompat<ExportType>(ARG_TYPE) != null) {
-                decksSelectorContainer.isVisible = false
-                selectedLabel.isVisible = true
+                binding.decksSelectorContainer.isVisible = false
+                binding.selectedLabel.isVisible = true
             } else {
-                decksSelectorContainer.isVisible = true
-                selectedLabel.isVisible = false
+                binding.decksSelectorContainer.isVisible = true
+                binding.selectedLabel.isVisible = false
             }
         }
         ExportConfiguration.entries.forEach { config ->
-            container.findViewById<View>(config.layoutId).isVisible = config.layoutId == targetConfig.layoutId
+            binding.root.findViewById<View>(config.layoutId).isVisible = config.layoutId == targetConfig.layoutId
         }
     }
 
     private fun handleCollectionExport() {
-        val includeMedia = collectionIncludeMedia.isChecked
-        val legacy = collectionExportLegacyCheckbox.isChecked
+        val includeMedia = binding.collectionIncludeMedia.isChecked
+        val legacy = binding.collectionExportLegacy.isChecked
         val exportPath =
             File(
                 getExportRootFile(),
@@ -319,10 +258,6 @@ class ExportDialogFragment : DialogFragment() {
     }
 
     private fun handleAnkiPackageExport() {
-        val includeSchedule = apkgIncludeSchedule.isChecked
-        val includeDeckConfigs = apkgIncludeDeckConfigs.isChecked
-        val includeMedia = apkgIncludeMedia.isChecked
-        val legacy = apkgExportLegacyCheckbox.isChecked
         val limits = buildExportLimit()
         var packagePrefix = getNonCollectionNamePrefix()
         // files can't have `/` in their names
@@ -334,11 +269,11 @@ class ExportDialogFragment : DialogFragment() {
             ).path
         requireAnkiActivity().exportApkgPackage(
             exportPath = exportPath,
-            withScheduling = includeSchedule,
-            withDeckConfigs = includeDeckConfigs,
-            withMedia = includeMedia,
+            withScheduling = binding.apkgIncludeSchedule.isChecked,
+            withDeckConfigs = binding.apkgIncludeDeckConfigs.isChecked,
+            withMedia = binding.apkgIncludeMedia.isChecked,
             limit = limits,
-            legacy = legacy,
+            legacy = binding.apkgExportLegacy.isChecked,
         )
     }
 
@@ -350,15 +285,10 @@ class ExportDialogFragment : DialogFragment() {
         when (arguments?.getSerializableCompat<ExportType>(ARG_TYPE)) {
             ExportType.Notes, ExportType.Cards -> CollectionManager.TR.exportingSelectedNotes()
             // notes/cards weren't selected so export the chosen deck(s)
-            null -> (deckSelector.adapter as DeckDisplayAdapter).getItem(deckSelector.selectedItemPosition).name
+            null -> (binding.deckSelector.adapter as DeckDisplayAdapter).getItem(binding.deckSelector.selectedItemPosition).name
         }
 
     private fun handleNotesInPlainTextExport() {
-        val includeHtml = notesIncludeHtml.isChecked
-        val includeTags = notesIncludeTags.isChecked
-        val includeDeckName = notesIncludeDeckName.isChecked
-        val includeNotetype = notesIncludeNotetypeName.isChecked
-        val includeUniqueIdentifier = notesIncludeUniqueIdentifier.isChecked
         val exportLimit = buildExportLimit()
         val exportPath =
             File(
@@ -367,17 +297,16 @@ class ExportDialogFragment : DialogFragment() {
             ).path
         requireAnkiActivity().exportSelectedNotes(
             exportPath = exportPath,
-            withHtml = includeHtml,
-            withTags = includeTags,
-            withDeck = includeDeckName,
-            withNotetype = includeNotetype,
-            withGuid = includeUniqueIdentifier,
+            withHtml = binding.notesIncludeHtml.isChecked,
+            withTags = binding.notesIncludeTags.isChecked,
+            withDeck = binding.notesIncludeDeckName.isChecked,
+            withNotetype = binding.notesIncludeNotetypeName.isChecked,
+            withGuid = binding.notesIncludeUniqueIdentifier.isChecked,
             limit = exportLimit,
         )
     }
 
     private fun handleCardsInPlainTextExport() {
-        val includeHtml = cardsIncludeHtml.isChecked
         val exportLimit = buildExportLimit()
         val exportPath =
             File(
@@ -386,7 +315,7 @@ class ExportDialogFragment : DialogFragment() {
             ).path
         requireAnkiActivity().exportSelectedCards(
             exportPath = exportPath,
-            withHtml = includeHtml,
+            withHtml = binding.cardsIncludeHtml.isChecked,
             limit = exportLimit,
         )
     }
@@ -418,8 +347,8 @@ class ExportDialogFragment : DialogFragment() {
             // notes/cards weren't selected so export the chosen decks
             null -> {
                 val deckNameId =
-                    (deckSelector.adapter as DeckDisplayAdapter)
-                        .getItem(deckSelector.selectedItemPosition)
+                    (binding.deckSelector.adapter as DeckDisplayAdapter)
+                        .getItem(binding.deckSelector.selectedItemPosition)
                 if (deckNameId.id == ALL_DECKS_ID) {
                     exportLimit { this.wholeCollection = Empty.getDefaultInstance() }
                 } else {

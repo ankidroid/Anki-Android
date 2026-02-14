@@ -28,7 +28,6 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import androidx.preference.Preference
-import com.google.android.material.appbar.MaterialToolbar
 import com.ichi2.anki.BackupManager
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.withCol
@@ -244,7 +243,7 @@ class ManageSpaceFragment : SettingsFragment() {
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        view.findViewById<MaterialToolbar>(R.id.toolbar).apply {
+        binding.toolbar.apply {
             title = getString(R.string.pref__manage_space__screen_title)
         }
     }

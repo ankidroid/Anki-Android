@@ -109,12 +109,12 @@ fun Activity.showSnackbar(
     text: CharSequence,
     duration: Int = Snackbar.LENGTH_LONG,
     snackbarBuilder: SnackbarBuilder? = null,
-) {
+): Snackbar? {
     val view: View? = findViewById(R.id.root_layout) as? CoordinatorLayout
 
     if (view != null) {
         val baseSnackbarBuilder = (this as? BaseSnackbarBuilderProvider)?.baseSnackbarBuilder
-        view.showSnackbar(text, duration) {
+        return view.showSnackbar(text, duration) {
             baseSnackbarBuilder?.invoke(this)
             snackbarBuilder?.invoke(this)
             Timber.d("displayed snackbar: '%s'", text)
@@ -129,6 +129,7 @@ fun Activity.showSnackbar(
         } else {
             Timber.e(errorMessage)
             showThemedToast(this, text, false)
+            return null
         }
     }
 }
@@ -198,7 +199,7 @@ fun View.showSnackbar(
     text: CharSequence,
     duration: Int = Snackbar.LENGTH_LONG,
     snackbarBuilder: SnackbarBuilder? = null,
-) {
+): Snackbar {
     val snackbar = Snackbar.make(this, text, duration)
     snackbar.setMaxLines(4)
     snackbar.behavior = SwipeDismissBehaviorFix()
@@ -227,6 +228,7 @@ fun View.showSnackbar(
     }
 
     snackbar.show()
+    return snackbar
 }
 
 /**
@@ -259,9 +261,9 @@ fun Fragment.showSnackbar(
     text: CharSequence,
     duration: Int = Snackbar.LENGTH_LONG,
     snackbarBuilder: SnackbarBuilder? = null,
-) {
+): Snackbar? {
     val baseSnackbarBuilder = (this as? BaseSnackbarBuilderProvider)?.baseSnackbarBuilder
-    requireActivity().showSnackbar(text, duration) {
+    return requireActivity().showSnackbar(text, duration) {
         baseSnackbarBuilder?.invoke(this)
         snackbarBuilder?.invoke(this)
         Timber.d("displayed snackbar: '%s'", text)

@@ -74,7 +74,7 @@ class LocaleRootDetector :
         object : UElementHandler() {
             override fun visitCallExpression(node: UCallExpression) {
                 node.valueArguments.forEach { arg ->
-                    if (isLocaleRootUsage(arg as? UExpression)) {
+                    if (isLocaleRootUsage(arg)) {
                         context.report(
                             ISSUE,
                             arg,

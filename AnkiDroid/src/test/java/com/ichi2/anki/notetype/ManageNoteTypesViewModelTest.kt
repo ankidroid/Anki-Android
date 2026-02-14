@@ -160,6 +160,20 @@ class ManageNoteTypesViewModelTest : RobolectricTest() {
         }
 
     @Test
+    fun `filtering is case insensitive`() =
+        runTest {
+            val testName = "MixedCaseName"
+            addStandardNoteType(testName, arrayOf("front", "back"), "", "")
+            val viewModel = ManageNoteTypesViewModel()
+            viewModel.filter("mixedcasename")
+            val currentlyDisplayed =
+                viewModel.state.value.noteTypes
+                    .filter { it.shouldBeDisplayed }
+            assertThat(currentlyDisplayed, hasSize(1))
+            assertThat(currentlyDisplayed.map { it.name }, hasItems(testName))
+        }
+
+    @Test
     fun `removal failure in multiple selection returns expected exception`() =
         runTest {
             mockkStatic(Collection::removeNotetype)

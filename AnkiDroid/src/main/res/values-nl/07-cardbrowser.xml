@@ -75,7 +75,7 @@
     <string name="card_browser_list_my_searches_remove_content">Verwijder “%1$s”?</string>
     <string name="card_browser_change_display_order" maxLength="28">Weergavevolgorde wijzigen</string>
     <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">Zoeken</string>
-    <string name="card_browser_cram_search" maxLength="28" comment="Menu entry to start a search.">Search</string>
+    <string name="card_browser_cram_search" maxLength="28" comment="Menu entry to start a search.">Zoeken</string>
     <string name="card_browser_change_display_order_title">Kies weergavevolgorde</string>
     <string name="card_details_tags">Labels</string>
     <string-array name="card_browser_order_labels">
@@ -91,8 +91,8 @@
         <item>Op missers</item>
         <item>By deck name</item>
     </string-array>
-    <string name="manage_browser_column">Manage column</string>
-    <string name="no_columns_available">No columns available</string>
+    <string name="manage_browser_column">Kolom beheren</string>
+    <string name="no_columns_available">Geen kolommen beschikbaar</string>
     <string name="card_browser_select_all" maxLength="28">Alles selecteren</string>
     <string name="card_browser_select_none" maxLength="28">Niets selecteren</string>
     <string name="card_browser_no_cards_in_deck">Geen kaarten gevonden in leerset ‘%s</string>
@@ -116,12 +116,12 @@
     <string name="edit_tags_dialog" comment="Description of the shortcut that opens the edit tags dialog">Edit tags dialog</string>
     <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">Show order dialog</string>
     <!-- Manage columns dialog -->
-    <string name="browse_manage_columns_main_heading">Columns</string>
-    <string name="browse_manage_columns">Manage columns</string>
-    <string name="user_active_columns">Active</string>
-    <string name="user_potential_columns">Available</string>
-    <string name="include_column">Include column</string>
-    <string name="exclude_column">Exclude column</string>
-    <string name="save_changes_message">Please save your changes first</string>
+    <string name="browse_manage_columns_main_heading">Kolommen</string>
+    <string name="browse_manage_columns">Kolommen beheren</string>
+    <string name="user_active_columns">Actief</string>
+    <string name="user_potential_columns">Beschikbaar</string>
+    <string name="include_column">Kolom opnemen</string>
+    <string name="exclude_column">Kolom uitsluiten</string>
+    <string name="save_changes_message">Sla uw wijzigingen eerst op</string>
     <string name="browser_find_replace_loading_fields">Retrieving fields names&#8230;</string>
 </resources>

@@ -72,7 +72,6 @@
     <string name="whiteboard_align_left" comment="Option to align the whiteboard toolbar on the left" maxLength="28">چپ</string>
     <string name="whiteboard_align_bottom" comment="Option to align the whiteboard toolbar on the bottom" maxLength="28">پایین</string>
     <string name="whiteboard_align_right" comment="Option to align the whiteboard toolbar on the right" maxLength="28">راست</string>
-    <string name="whiteboard_clear" comment="Button text to clear the whiteboard" maxLength="28">پاک کن</string>
     <string name="whiteboard_more_options" comment="Tooltip of the whiteboard \'More\' button" maxLength="28">گزینه های بیشتر</string>
     <string name="whiteboard_remove_brush_message">آیا مطمئن هستید که می‌خواهید این قلم‌مو را از پالت خود حذف کنید؟</string>
     <string name="whiteboard_ink_eraser" comment="Title of the whiteboard Ink eraser">جوهر</string>
@@ -86,6 +85,7 @@
     <string name="disable_eraser" maxLength="28">غیرفعال‌کردن پاک‌کن</string>
     <string name="hide_whiteboard" maxLength="28">پنهان کردن تخته سفید</string>
     <string name="clear_whiteboard" maxLength="28">پاک کردن تخته سفید</string>
+    <string name="hide_toolbar" maxLength="28">Hide toolbar</string>
     <string name="replay_media" maxLength="28">بازپخش رسانه</string>
     <string name="leech_suspend_notification">کارت به عنوان مزاحم مشخص و تعلیق شده است</string>
     <string name="leech_notification">کارت به عنوان مزاحم مشخص شده است</string>
@@ -191,8 +191,6 @@
     <string name="select_tts" maxLength="28">تنظیم زبان تبدیل متن به صدا TTS</string>
     <string name="custom_study" maxLength="28">مطالعه بر اساس تنظیمات دلخواه</string>
     <string name="dyn_deck_desc">این یک دسته ویژه برای مطالعه در خارج از زمان‌بندی عادی می باشد.بعد از مرور کارتها آنها به‌طور خودکار به دسته های اصلی برگردانده خواهد شد.حذف کردن این دسته از لیست دسته ها سبب می شود که همه کارتهای باقیمانده نیز به دسته اصلی برگردانده شود.</string>
-    <string name="steps_error">مراحل باید با اعداد بزرگتر از 0 شماره گذاری گردند</string>
-    <string name="steps_min_error">حداقل یک مرحله لازم است</string>
     <string name="tag_editor_add_feedback">برای تایید افزودن \"%1$s\" روی \"%2$s\" ضربه بزنید</string>
     <string name="tag_editor_add_feedback_existing">برچسب موجود \"%1$s\" انتخاب شده است</string>
     <!-- Time spans -->
@@ -265,9 +263,12 @@
     <string name="create_shortcut_error">خطا در افزودن میانبُر: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">جملات را با حروف بزرگ بنویس</string>
     <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll" maxLength="28">پیمایش نوار ابزار</string>
-    <!-- Symbols used as Button text in IncrementNumberRangePreference -->
+    <!-- IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
+    <string name="invalid_value" comment="Error message in IncrementerNumberRangePreference when input is not a valid number">Invalid value</string>
+    <string name="maximum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the maximum allowed value">Maximum value is %d</string>
+    <string name="minimum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the minimum allowed value">Minimum value is %d</string>
     <!-- Used for credential empty warning message -->
     <string name="invalid_email">لطفا یک آدرس ایمیل معتبر وارد کنید</string>
     <string name="password_empty">رمز عبور لازم است</string>
@@ -348,7 +349,6 @@
     <string name="format_deck_description_as_markdown">به فرمت مارک‌داون درآور</string>
     <string name="help_button_content_description">راهنمای «%s» را باز کن</string>
     <string name="failed_to_copy">کپی کردن ناموفق بود</string>
-    <string name="card_browser_unavailable_when_notes_mode">در حالت \'یادداشت‌ها\' در دسترس نیست</string>
     <plurals name="unbury_cards_feedback">
         <item quantity="one">%d کارت از حالت مخفی خارج شد</item>
         <item quantity="other">%d کارت از حالت مخفی خارج شد</item>
@@ -382,4 +382,6 @@
     <string name="directory_inaccessible_info">برای کسب اطلاعات بیشتر در مورد نحوه بازیابی دسترسی اینجا %s را ببینید یا به تنظیمات بروید تا پوشه مجموعه را به‌روزرسانی کنید.</string>
     <!-- Scheduler Upgrade Required Dialog title-->
     <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">ارتقای زمان‌بند لازم است</string>
+    <!-- Whitespace is OK -->
+    <string name="list_separator" comment="The character and spacing to display between elements of a list, for example \', \' in \'Apple, Banana, Cherry" tools:ignore="TranslationTypo">, </string>
 </resources>

@@ -26,9 +26,7 @@ import android.widget.EditText
 import androidx.core.content.withStyledAttributes
 import androidx.preference.EditTextPreference
 import androidx.preference.EditTextPreferenceDialogFragmentCompat
-import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
-import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.utils.getFormattedStringOrPlurals
 import timber.log.Timber
 
@@ -49,8 +47,10 @@ open class NumberRangePreferenceCompat
             private set
 
         init {
-            min = attrs?.getAttributeIntValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "min", 0) ?: 0
-            max = attrs?.getAttributeIntValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "max", Int.MAX_VALUE) ?: Int.MAX_VALUE
+            context.withStyledAttributes(attrs, R.styleable.NumberRangePreferenceCompat) {
+                min = getInt(R.styleable.NumberRangePreferenceCompat_min, 0)
+                max = getInt(R.styleable.NumberRangePreferenceCompat_max, Int.MAX_VALUE)
+            }
             defaultValue = attrs?.getAttributeValue("http://schemas.android.com/apk/res/android", "defaultValue")
 
             context.withStyledAttributes(attrs, R.styleable.CustomPreference) {
@@ -124,7 +124,7 @@ open class NumberRangePreferenceCompat
         private fun getDefaultValue(): Int {
             return try {
                 return defaultValue?.toInt() ?: min
-            } catch (e: Exception) {
+            } catch (_: Exception) {
                 min
             }
         }
@@ -186,7 +186,6 @@ open class NumberRangePreferenceCompat
                 super.onBindDialogView(view)
             }
 
-            @NeedsTest("value is set to preference previous value if text is blank")
             override fun onDialogClosed(positiveResult: Boolean) {
                 // don't change the value if the dialog was cancelled or closed without any text
                 if (!positiveResult || editText.text.isEmpty()) {

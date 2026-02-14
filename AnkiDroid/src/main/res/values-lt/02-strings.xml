@@ -72,7 +72,6 @@
     <string name="whiteboard_align_left" comment="Option to align the whiteboard toolbar on the left" maxLength="28">Left</string>
     <string name="whiteboard_align_bottom" comment="Option to align the whiteboard toolbar on the bottom" maxLength="28">Bottom</string>
     <string name="whiteboard_align_right" comment="Option to align the whiteboard toolbar on the right" maxLength="28">Right</string>
-    <string name="whiteboard_clear" comment="Button text to clear the whiteboard" maxLength="28">Clear</string>
     <string name="whiteboard_more_options" comment="Tooltip of the whiteboard \'More\' button" maxLength="28">More options</string>
     <string name="whiteboard_remove_brush_message">Are you sure you want to remove this brush from your palette?</string>
     <string name="whiteboard_ink_eraser" comment="Title of the whiteboard Ink eraser">Ink</string>
@@ -86,6 +85,7 @@
     <string name="disable_eraser" maxLength="28">Disable eraser</string>
     <string name="hide_whiteboard" maxLength="28">Slėpti rašymo lentą</string>
     <string name="clear_whiteboard" maxLength="28">Išvalyti lentą</string>
+    <string name="hide_toolbar" maxLength="28">Hide toolbar</string>
     <string name="replay_media" maxLength="28">Replay media</string>
     <string name="leech_suspend_notification">Kortelė pažymėta kaip sunkiai įsimenama, todėl buvo atidėta</string>
     <string name="leech_notification">Kortelė buvo pažymėta kaip sunkiai įsimenama</string>
@@ -197,8 +197,6 @@
     <string name="select_tts" maxLength="28">Nustatyti skaitymo balsu kalbą</string>
     <string name="custom_study" maxLength="28">Individualus mokymasis</string>
     <string name="dyn_deck_desc">Tai yra specialus rinkinys, skirtas mokytis papildomai. Peržiūrėjus korteles, jos bus automatiškai grąžintos į savo pagrindinius rinkinius. Ištrynus šį rinkinį iš sąrašo, visos kortelės bus grąžintos į savo pradinį rinkinį.</string>
-    <string name="steps_error">Veiksmų skaičius privalo būti didesnis už 0</string>
-    <string name="steps_min_error">Reikia nurodyti bent vieną veiksmą</string>
     <string name="tag_editor_add_feedback">Norėdami pridėti „%1$s“, spauskite „%2$s“</string>
     <string name="tag_editor_add_feedback_existing">Pasirinkta esama žymė „%1$s“</string>
     <!-- Time spans -->
@@ -269,9 +267,12 @@
     <string name="create_shortcut_error">Klaida pridedant nuorodą: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">Sakinių rašymas didžiąja raide</string>
     <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll" maxLength="28">Slinkimo įrankių juosta</string>
-    <!-- Symbols used as Button text in IncrementNumberRangePreference -->
+    <!-- IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
+    <string name="invalid_value" comment="Error message in IncrementerNumberRangePreference when input is not a valid number">Invalid value</string>
+    <string name="maximum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the maximum allowed value">Maximum value is %d</string>
+    <string name="minimum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the minimum allowed value">Minimum value is %d</string>
     <!-- Used for credential empty warning message -->
     <string name="invalid_email">Įveskite galiojantį el. pašto adresą</string>
     <string name="password_empty">Reikalingas slaptažodis</string>
@@ -356,7 +357,6 @@
     <string name="format_deck_description_as_markdown">Format as Markdown</string>
     <string name="help_button_content_description">Open help for ‘%s’</string>
     <string name="failed_to_copy">Nepavyko nukopijuoti</string>
-    <string name="card_browser_unavailable_when_notes_mode">Negalima naudoti \"Pastabų\" režimu</string>
     <plurals name="unbury_cards_feedback">
         <item quantity="one">%d card unburied</item>
         <item quantity="few">%d cards unburied</item>
@@ -392,4 +392,6 @@
     <string name="directory_inaccessible_info">Sužinokite daugiau apie tai, kaip atkurti prieigą, čia %s arba eikite į nustatymus ir atnaujinkite kolekcijos aplanką.</string>
     <!-- Scheduler Upgrade Required Dialog title-->
     <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">Scheduler upgrade required</string>
+    <!-- Whitespace is OK -->
+    <string name="list_separator" comment="The character and spacing to display between elements of a list, for example \', \' in \'Apple, Banana, Cherry" tools:ignore="TranslationTypo">, </string>
 </resources>

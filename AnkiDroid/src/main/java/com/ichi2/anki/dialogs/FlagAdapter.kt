@@ -31,8 +31,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import com.ichi2.anki.Flag
-import com.ichi2.anki.R
-import com.ichi2.anki.utils.ext.findViewById
+import com.ichi2.anki.databinding.EditFlagItemBinding
 import com.ichi2.utils.moveCursorToEnd
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -45,27 +44,27 @@ import kotlinx.coroutines.launch
 class FlagAdapter(
     private val lifecycleScope: CoroutineScope,
 ) : ListAdapter<FlagItem, FlagAdapter.FlagViewHolder>(FlagItemDiffCallback()) {
-    inner class FlagViewHolder(
-        itemView: View,
-    ) : RecyclerView.ViewHolder(itemView) {
-        val flagImageView: ImageView = findViewById(R.id.ic_flag)
-        val flagNameText: TextView = findViewById(R.id.flag_name)
-        val flagNameEdit: TextInputEditText = findViewById(R.id.flag_name_edit_text)
-        val editButton: MaterialButton = findViewById(R.id.action_edit_flag)
-        val saveButton: MaterialButton = findViewById(R.id.action_save_flag_name)
-        val cancelButton: MaterialButton = findViewById(R.id.action_cancel_flag_rename)
+    class FlagViewHolder(
+        binding: EditFlagItemBinding,
+    ) : RecyclerView.ViewHolder(binding.root) {
+        val flagImageView: ImageView = binding.icFlag
+        val flagNameText: TextView = binding.flagName
+        val flagNameEdit: TextInputEditText = binding.flagNameEditText
+        val editButton: MaterialButton = binding.actionEditFlag
+        val saveButton: MaterialButton = binding.actionSaveFlagName
+        val cancelButton: MaterialButton = binding.actionCancelFlagRename
 
-        val flagNameViewLayout: LinearLayout = findViewById(R.id.flag_name_view_layout)
-        val flagNameEditLayout: LinearLayout = findViewById(R.id.edit_flag_name_layout)
+        val flagNameViewLayout: LinearLayout = binding.flagNameViewLayout
+        val flagNameEditLayout: LinearLayout = binding.editFlagNameLayout
     }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
     ): FlagViewHolder {
-        val view =
-            LayoutInflater.from(parent.context).inflate(R.layout.edit_flag_item, parent, false)
-        return FlagViewHolder(view)
+        val inflater = LayoutInflater.from(parent.context)
+        val binding = EditFlagItemBinding.inflate(inflater, parent, false)
+        return FlagViewHolder(binding)
     }
 
     override fun onBindViewHolder(

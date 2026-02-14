@@ -163,8 +163,8 @@
     <string name="disable_extended_text_ui" maxLength="41">Disable Single-Field Edit Mode</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
     <string name="disable_extended_text_ui_summ">Allows \'Cloze Deletion\' context menu when in landscape mode.</string>
-    <string name="vertical_centering" maxLength="41">Center align</string>
-    <string name="vertical_centering_summ">Center the content of cards vertically</string>
+    <string name="vertical_centering" maxLength="41">𐌻𐌰𐌲𐌾𐌰𐌽 𐌹𐌽 𐌼𐌹𐌳𐌿𐌼𐌰𐌹</string>
+    <string name="vertical_centering_summ">𐍅𐌰𐌹𐌷𐍄𐍃 𐍇𐌰𐍂𐍄𐍉 𐌹𐌽 𐌷𐌰𐌿𐌷𐌴𐌹𐌽 𐌻𐌰𐌲𐌾𐌰𐌽</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval</string>
     <string name="pref_double_tap_time_interval_summary">A second tap of the answer buttons will be ignored if this time has not elapsed. This prevents accidental double taps</string>
     <string name="pref_show_answer_long_press_time" maxLength="41">𐌰𐌽𐌳𐌰𐌷𐌰𐍆𐍄 𐌱𐌰𐌽𐌳𐍅𐌾𐌰𐌽 𐌸𐌴𐌹𐌷𐍃𐌹𐍃 𐌻𐌰𐌲𐌲𐌰𐌹 𐍄𐌴𐌷𐍄𐌰𐌹</string>
@@ -188,7 +188,7 @@
         <item quantity="other" comment="Consider keeping the unbreakable space after the digit">%d 𐍈𐌴𐌹𐌻𐍉𐍃 𐌰𐍆𐌰𐍂 𐌼𐌹𐌳𐌾𐌰𐌽𐌰𐌷𐍄</item>
     </plurals>
     <string name="pref_keep_screen_on" maxLength="41">𐌼𐌹𐌸 𐍃𐌺𐌰𐌹𐍂𐌼𐌰 𐍃𐌺𐌴𐌹𐌽𐌰𐌽𐌳𐌹𐌽 𐌸𐌰𐌹𐍂𐌷𐍅𐌹𐍃𐌰𐌽</string>
-    <string name="pref_keep_screen_on_summ">Disable screen timeout</string>
+    <string name="pref_keep_screen_on_summ">𐍃𐌺𐌰𐌹𐍂𐌼𐌹𐍃 𐌿𐍄𐌰𐌼𐌴𐌻 𐌿𐌽𐌲𐌰𐍄𐌰𐌿𐌾𐌰𐌽</string>
     <string name="enable_api_title" maxLength="41">𐌰𐌽𐌺𐌴𐌹𐌳𐍂𐌰𐌿𐌳 𐌰𐍀𐌹 𐌲𐌰𐍅𐌰𐌿𐍂𐌺𐌾𐌰𐌽</string>
     <string name="enable_api_summary">Let other apps connect to AnkiDroid and read / write data without your intervention</string>
     <string name="custom_buttons" maxLength="41">App bar buttons</string>
@@ -275,7 +275,7 @@
     <string name="binding_add_gesture">𐍄𐌰𐌹𐌺𐌽 𐌱𐌹𐌰𐌿𐌺𐌰𐌽</string>
     <string name="binding_add_key">𐌱𐍉𐌺𐌰 𐌱𐌹𐌰𐌿𐌺𐌰𐌽</string>
     <string name="key_picker_default_press_key">𐌱𐍉𐌺𐌰𐌹 𐌰𐍄𐍄𐌴𐌺𐌰𐌽</string>
-    <string name="binding_add_axis">Add joystick/motion controller</string>
+    <string name="binding_add_axis">𐍃𐍄𐌹𐌿𐍂𐌹 𐌳𐌰𐌿𐌹𐍃𐍄𐌹𐌺/𐍅𐌰𐌲𐌴𐌹𐌽𐌰𐌹𐍃 𐌱𐌹𐌰𐌿𐌺𐌰𐌽</string>
     <string name="axis_picker_move_joystick">Move a joystick/motion controller</string>
     <string name="user_actions" maxLength="41">𐍄𐍉𐌾𐌰 𐌱𐍂𐌿𐌺𐌾𐌹𐌽𐍃</string>
     <string name="user_actions_summary" maxLength="41">𐌱𐌰𐌹𐍂𐌷𐍄𐌾𐌰𐌽 𐌾𐌰𐌱𐌰𐍃𐌺𐍂𐌹𐍀𐍄 𐍃𐌺𐌰𐌹𐍂𐌼𐌹𐍃 𐌻𐌰𐌹𐍃𐌴𐌹𐌽𐌰𐌹𐍃</string>
@@ -378,7 +378,7 @@
     <string name="ignore_display_cutout" maxLength="41">Ignore display cutout</string>
     <string name="show_answer_buttons" maxLength="41">𐌰𐌽𐌳𐌰𐌷𐌰𐍆𐍄𐌰𐌹𐍃 𐌷𐌰𐌿𐌱𐌹𐌳𐌹𐌻𐍉𐌽𐍃 𐌱𐌰𐌽𐌳𐍅𐌾𐌰𐌽</string>
     <string name="hide_hard_and_easy" maxLength="41">\'𐌿𐌽𐌰𐌶𐌴𐍄\' 𐌾𐌰𐌷 \'𐌰𐌶𐌴𐍄\' 𐌷𐌰𐌿𐌱𐌹𐌳𐌹𐌻𐍉𐌽𐍃 𐌰𐍆𐍆𐌹𐌻𐌷𐌰𐌽</string>
-    <string name="reviewer_frame_style" maxLength="41">Frame style</string>
+    <string name="reviewer_frame_style" maxLength="41">𐌷𐌹𐍅𐌹 𐌷𐍂𐌰𐌼𐍉𐍃</string>
     <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Study Screen">𐌺𐌰𐍂𐍄𐌰</string>
     <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Study Screen">𐌰𐍂𐌺𐌰</string>
     <string name="reviewer_toolbar_top" maxLength="41" comment="Setting to put the toolbar on the top of the study screen">𐌸𐌰𐍄𐌰 𐌰𐌿𐌷𐌿𐌼𐌹𐍃𐍄𐍉</string>
@@ -391,6 +391,8 @@
     <string name="new_study_screen_summ"><![CDATA[Improved study screen that will succeed the current one. Some features of the old screen have been changed or removed. Please report any <a href="%1$s">feedback</a> or <a href="%2$s">bugs</a>.]]></string>
     <string name="show_answer_feedback" maxLength="41">𐌰𐌽𐌳𐌰𐌷𐌰𐍆𐍄𐌰𐌹𐍃 𐌷𐌹𐌻𐍀𐌰 𐌱𐌰𐌽𐌳𐍅𐌾𐌰𐌽</string>
     <string name="screen" maxLength="41">𐍃𐌺𐌰𐌹𐍂𐌼𐍃</string>
+    <string name="only_answer" maxLength="41" comment="Configuration of the \'Answer\' commands to only answer the card">Only answer</string>
+    <string name="flip_and_answer" maxLength="41" comment="Configuration of the \'Answer\' commands to answer the card if on the answer side, and flip it if on the question side">Flip and answer</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">𐌻𐌰𐌲𐌴𐌹𐌽𐌹𐌽𐍃 𐌿𐍃𐌻𐌿𐌺𐌰𐌽</string>
 </resources>

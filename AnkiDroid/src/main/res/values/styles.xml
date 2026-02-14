@@ -222,6 +222,7 @@
     <style name="ThemeOverlay.AnkiDroid.AlertDialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
         <item name="dialogCornerRadius">@dimen/m3_alert_dialog_corner_size</item>
         <item name="materialAlertDialogBodyTextStyle">@style/AnkiDroid.AlertDialog.Body.Text</item>
+        <item name="android:windowBackground">@drawable/material_dialog_background</item>
     </style>
 
     <style name="ThemeOverlay.AnkiDroid.AlertDialog.FullScreen" parent="ThemeOverlay.AnkiDroid.AlertDialog">

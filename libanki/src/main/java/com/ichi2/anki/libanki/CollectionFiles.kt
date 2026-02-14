@@ -18,7 +18,7 @@
 package com.ichi2.anki.libanki
 
 import androidx.annotation.VisibleForTesting
-import com.ichi2.anki.libanki.utils.NotInLibAnki
+import com.ichi2.anki.libanki.utils.NotInPyLib
 import java.io.File
 
 /**
@@ -26,7 +26,7 @@ import java.io.File
  *
  * When testing, some of these are unavailable (collection uses `:memory:`)
  */
-@NotInLibAnki
+@NotInPyLib
 sealed class CollectionFiles {
     /** The 'standard' collection which AnkiDroid uses */
     class FolderBasedCollection(

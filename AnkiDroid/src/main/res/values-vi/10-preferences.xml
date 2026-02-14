@@ -385,6 +385,8 @@
     <string name="new_study_screen_summ"><![CDATA[Màn hình học tập đã được cải tiến sẽ thay thế màn hình hiện tại. Một số tính năng của màn hình cũ đã được thay đổi hoặc loại bỏ. Vui lòng gửi <a href="%1$s">phản hồi</a> hoặc <a href="%2$s">báo lỗi</a> nếu có.]]></string>
     <string name="show_answer_feedback" maxLength="41">Show answer feedback</string>
     <string name="screen" maxLength="41">Screen</string>
+    <string name="only_answer" maxLength="41" comment="Configuration of the \'Answer\' commands to only answer the card">Only answer</string>
+    <string name="flip_and_answer" maxLength="41" comment="Configuration of the \'Answer\' commands to answer the card if on the answer side, and flip it if on the question side">Flip and answer</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">Mở cài đặt</string>
 </resources>

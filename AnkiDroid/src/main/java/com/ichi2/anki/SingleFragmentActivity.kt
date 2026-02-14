@@ -26,6 +26,8 @@ import com.ichi2.anki.SingleFragmentActivity.Companion.getIntent
 import com.ichi2.anki.android.input.ShortcutGroup
 import com.ichi2.anki.android.input.ShortcutGroupProvider
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyAction
+import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
+import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.ui.windows.managespace.ManageSpaceActivity
 import com.ichi2.anki.utils.ext.setFragmentResultListener
 import com.ichi2.themes.setTransparentStatusBar
@@ -43,7 +45,13 @@ import kotlin.reflect.jvm.jvmName
  *
  * [getIntent] can be used as an easy way to build a [SingleFragmentActivity]
  */
-open class SingleFragmentActivity : AnkiActivity(R.layout.single_fragment_activity) {
+open class SingleFragmentActivity :
+    AnkiActivity(R.layout.single_fragment_activity),
+    BaseSnackbarBuilderProvider {
+    // delegate to the fragment in all cases
+    override val baseSnackbarBuilder: SnackbarBuilder
+        get() = (fragment as? BaseSnackbarBuilderProvider)?.baseSnackbarBuilder ?: { }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
             return

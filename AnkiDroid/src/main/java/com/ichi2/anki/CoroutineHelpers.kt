@@ -20,6 +20,7 @@ import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.content.DialogInterface
+import android.database.sqlite.SQLiteDatabaseCorruptException
 import android.net.Uri
 import android.view.WindowManager
 import android.view.WindowManager.BadTokenException
@@ -33,25 +34,22 @@ import androidx.lifecycle.coroutineScope
 import androidx.lifecycle.viewModelScope
 import anki.collection.Progress
 import com.ichi2.anki.CollectionManager.TR
-import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.CrashReportData.Companion.throwIfDialogUnusable
 import com.ichi2.anki.CrashReportData.Companion.toCrashReportData
 import com.ichi2.anki.CrashReportData.HelpAction
 import com.ichi2.anki.CrashReportData.HelpAction.AnkiBackendLink
 import com.ichi2.anki.CrashReportData.HelpAction.OpenDeckOptions
 import com.ichi2.anki.common.annotations.UseContextParameter
+import com.ichi2.anki.dialogs.DatabaseErrorDialog
 import com.ichi2.anki.exception.StorageAccessException
-import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.pages.DeckOptionsDestination
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.openUrl
 import com.ichi2.utils.create
 import com.ichi2.utils.message
-import com.ichi2.utils.negativeButton
 import com.ichi2.utils.neutralButton
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.setupEnterKeyHandler
-import com.ichi2.utils.show
 import com.ichi2.utils.title
 import kotlinx.coroutines.CancellableContinuation
 import kotlinx.coroutines.CancellationException
@@ -79,8 +77,6 @@ import org.jetbrains.annotations.VisibleForTesting
 import timber.log.Timber
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
-import kotlin.coroutines.resume
-import kotlin.coroutines.suspendCoroutine
 import kotlin.time.Duration
 
 /** Overridable reference to [Dispatchers.IO]. Useful if tests can't use it */
@@ -130,7 +126,10 @@ interface OnErrorListener {
 fun <T, U> T.launchCatchingIO(block: suspend T.() -> U): Job where T : ViewModel, T : OnErrorListener =
     viewModelScope.launchCatching(
         ioDispatcher,
-        { onError.emit(it) },
+        {
+            onError.emit(it)
+            if (throwOnShowError) throw IllegalStateException("throwOnShowError: $it")
+        },
         { block() },
     )
 
@@ -203,6 +202,12 @@ suspend fun <T> FragmentActivity.runCatching(
                 Timber.e(exc, errorMessage)
                 if (callerTrace != null) Timber.e(callerTrace)
                 showError(exc.localizedMessage!!, exc.toCrashReportData(this))
+            }
+            is SQLiteDatabaseCorruptException -> {
+                Timber.e(exc, errorMessage)
+                DatabaseErrorDialog.databaseCorruptFlag = true
+                if (callerTrace != null) Timber.e(callerTrace)
+                DatabaseErrorDialog.ShowDatabaseErrorDialog.fromMessage(CollectionLoadingErrorDialog().toMessage())
             }
             else -> {
                 Timber.e(exc, errorMessage)
@@ -553,53 +558,6 @@ private fun ProgressContext.updateDialog(dialog: android.app.ProgressDialog) {
         } ?: ""
     @Suppress("Deprecation") // ProgressDialog deprecation
     dialog.setMessage(text + progressText)
-}
-
-/**
- * If a one-way sync is not already required, confirm the user wishes to proceed.
- * If the user agrees, the schema is bumped and the routine will return true.
- * On false, calling routine should abort.
- */
-suspend fun AnkiActivity.userAcceptsSchemaChange(col: Collection): Boolean {
-    if (col.schemaChanged()) {
-        return true
-    }
-    return suspendCoroutine { coroutine ->
-        AlertDialog.Builder(this).show {
-            message(text = col.tr.deckConfigWillRequireFullSync()) // generic message
-            positiveButton(R.string.dialog_ok) {
-                col.modSchemaNoCheck()
-                coroutine.resume(true)
-            }
-            negativeButton(R.string.dialog_cancel) { coroutine.resume(false) }
-            setOnCancelListener { coroutine.resume(false) }
-        }
-    }
-}
-
-/**
- * Returns whether we are allowed to change the schema.
- *
- * If changing the schema would require the next sync to be a full sync, and it's not already required, ask
- * the user whether or not they still allow the schema change.
- */
-suspend fun AnkiActivity.userAcceptsSchemaChange(): Boolean {
-    if (withCol { schemaChanged() }) {
-        return true
-    }
-    val hasAcceptedSchemaChange =
-        suspendCoroutine { coroutine ->
-            AlertDialog.Builder(this).show {
-                message(text = TR.deckConfigWillRequireFullSync().replace("\\s+".toRegex(), " "))
-                positiveButton(R.string.dialog_ok) { coroutine.resume(true) }
-                negativeButton(R.string.dialog_cancel) { coroutine.resume(false) }
-                setOnCancelListener { coroutine.resume(false) }
-            }
-        }
-    if (hasAcceptedSchemaChange) {
-        withCol { modSchemaNoCheck() }
-    }
-    return hasAcceptedSchemaChange
 }
 
 /**

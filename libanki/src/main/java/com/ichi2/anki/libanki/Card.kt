@@ -22,11 +22,24 @@ import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.utils.ext.ifZero
 import com.ichi2.anki.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput
 import com.ichi2.anki.libanki.utils.LibAnkiAlias
-import com.ichi2.anki.libanki.utils.NotInLibAnki
+import com.ichi2.anki.libanki.utils.NotInPyLib
 import net.ankiweb.rsdroid.RustCleanup
 
 private typealias BackendCard = anki.cards.Card
 private typealias FSRSMemoryState = anki.cards.FsrsMemoryState
+
+/**
+ * Identifies the card template or cloze deletion which the card refers to.
+ *
+ * Values:
+ * - **card templates**: from 0 to [`templates.size - 1`][NotetypeJson.templates]
+ * - **cloze deletions**: `{{c1::}}` refers to ord 0. etc...
+ *
+ * Primarily used during rendering to determine the template to select, or cloze to hide.
+ *
+ * Defined as [Card.ord]
+ */
+typealias CardOrdinal = Int
 
 /**
  * A Card is the ultimate entity subject to review; it encapsulates the scheduling parameters (from which to derive
@@ -61,14 +74,18 @@ open class Card : Cloneable {
     var timerStarted: Long = 0L
 
     // Record time spent reviewing in MS in order to restore when resuming.
-    @NotInLibAnki
+    @NotInPyLib
     private var elapsedTime: Long = 0
 
     @set:VisibleForTesting
     var id: CardId = 0
     var nid: NoteId = 0
     var did: DeckId = 0
-    var ord = 0
+
+    /**
+     * @see CardOrdinal
+     */
+    var ord: CardOrdinal = 0
     var mod: Long = 0
     private var usn = 0
 
@@ -263,7 +280,7 @@ open class Card : Cloneable {
      * Use this method whenever a review session (activity) has been paused. Use the resumeTimer()
      * method when the session resumes to start counting review time again.
      */
-    @NotInLibAnki
+    @NotInPyLib
     fun stopTimer() {
         elapsedTime = TimeManager.time.intTimeMS() - timerStarted
     }
@@ -276,7 +293,7 @@ open class Card : Cloneable {
      * the reviewer and *must* be called on resume before any calls to timeTaken(col) take place
      * or the result of timeTaken(col) will be wrong.
      */
-    @NotInLibAnki
+    @NotInPyLib
     fun resumeTimer() {
         timerStarted = TimeManager.time.intTimeMS() - elapsedTime
     }
@@ -293,7 +310,7 @@ open class Card : Cloneable {
     @LibAnkiAlias("autoplay")
     fun autoplay(col: Collection): Boolean = col.decks.configDictForDeckId(currentDeckId()).autoplay
 
-    @NotInLibAnki
+    @NotInPyLib
     public override fun clone(): Card =
         try {
             super.clone() as Card
@@ -350,7 +367,7 @@ open class Card : Cloneable {
 
     companion object {
         /** A list of class members to skip in the [toString] representation */
-        @NotInLibAnki // inlined in pylib: 'description'
+        @NotInPyLib // inlined in pylib: 'description'
         val SKIP_PRINT: Set<String> =
             HashSet(
                 listOf(
@@ -367,7 +384,7 @@ open class Card : Cloneable {
         /**
          * Returns [flags] with the 3 first bits set as in [flag]
          */
-        @NotInLibAnki
+        @NotInPyLib
         fun setFlagInInt(
             flags: Int,
             flag: Int,

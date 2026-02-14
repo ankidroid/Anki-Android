@@ -72,7 +72,6 @@
     <string name="whiteboard_align_left" comment="Option to align the whiteboard toolbar on the left" maxLength="28">Esquerda</string>
     <string name="whiteboard_align_bottom" comment="Option to align the whiteboard toolbar on the bottom" maxLength="28">Embaixo</string>
     <string name="whiteboard_align_right" comment="Option to align the whiteboard toolbar on the right" maxLength="28">Dereita</string>
-    <string name="whiteboard_clear" comment="Button text to clear the whiteboard" maxLength="28">Limpar</string>
     <string name="whiteboard_more_options" comment="Tooltip of the whiteboard \'More\' button" maxLength="28">Máis opcións</string>
     <string name="whiteboard_remove_brush_message">Tes a certeza de querer eliminar este pincel da túa paleta?</string>
     <string name="whiteboard_ink_eraser" comment="Title of the whiteboard Ink eraser">Tinta</string>
@@ -86,6 +85,7 @@
     <string name="disable_eraser" maxLength="28">Desactivar borrador</string>
     <string name="hide_whiteboard" maxLength="28">Ocultar encerado</string>
     <string name="clear_whiteboard" maxLength="28">Limpar encerado</string>
+    <string name="hide_toolbar" maxLength="28">Ocultar a barra de ferramentas</string>
     <string name="replay_media" maxLength="28">Reproducir multimedia</string>
     <string name="leech_suspend_notification">Tarxeta marcada como sambesuga e suspendida</string>
     <string name="leech_notification">Tarxeta marcada como sambesuga</string>
@@ -191,8 +191,6 @@
     <string name="select_tts" maxLength="28">Definir idioma TTS</string>
     <string name="custom_study" maxLength="28">Estudo personalizado</string>
     <string name="dyn_deck_desc">Esta é unha baralla especial para estudar fóra da programación normal. As tarxetas devolveranse ás súas barallas despois de revisalas. Eliminando esta baralla da listaxe devólvense as tarxetas restantes á súa baralla orixinal.</string>
-    <string name="steps_error">Os pasos teñen que ser números maiores de 0</string>
-    <string name="steps_min_error">É preciso polo menos un paso</string>
     <string name="tag_editor_add_feedback">Toca sobre \"%2$s\" para confirmar a adición de \"%1$s\"</string>
     <string name="tag_editor_add_feedback_existing">Etiqueta existente \"%1$s\" seleccionada</string>
     <!-- Time spans -->
@@ -263,9 +261,12 @@
     <string name="create_shortcut_error">Erro ao engadir atallo: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">Comezar frases con maiúscula</string>
     <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll" maxLength="28">Barra ferramentas deslizábel</string>
-    <!-- Symbols used as Button text in IncrementNumberRangePreference -->
+    <!-- IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
+    <string name="invalid_value" comment="Error message in IncrementerNumberRangePreference when input is not a valid number">O valor non é válido</string>
+    <string name="maximum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the maximum allowed value">O valor máximo é %d</string>
+    <string name="minimum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the minimum allowed value">O valor mínimo é %d</string>
     <!-- Used for credential empty warning message -->
     <string name="invalid_email">Insire un correo electrónico válido</string>
     <string name="password_empty">O contrasinal é obrigatorio</string>
@@ -346,7 +347,6 @@
     <string name="format_deck_description_as_markdown">Dar formato Markdown</string>
     <string name="help_button_content_description">Abrir axuda para \"%s\"</string>
     <string name="failed_to_copy">Non se puido copiar</string>
-    <string name="card_browser_unavailable_when_notes_mode">Non dispoñíbel en modo \'Notas\'</string>
     <plurals name="unbury_cards_feedback">
         <item quantity="one">%d tarxeta desagochada</item>
         <item quantity="other">%d tarxetas desagochadas</item>
@@ -380,4 +380,6 @@
     <string name="directory_inaccessible_info">Obtén máis información sobre como restaurar o acceso aquí %s ou ve á configuración para actualizar o cartafol da colección.</string>
     <!-- Scheduler Upgrade Required Dialog title-->
     <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">Cómpre actualizar o programador</string>
+    <!-- Whitespace is OK -->
+    <string name="list_separator" comment="The character and spacing to display between elements of a list, for example \', \' in \'Apple, Banana, Cherry" tools:ignore="TranslationTypo">, </string>
 </resources>
