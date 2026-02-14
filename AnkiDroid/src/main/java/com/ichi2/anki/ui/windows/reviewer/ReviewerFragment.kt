@@ -29,6 +29,7 @@ import android.view.inputmethod.InputMethodManager
 import android.webkit.WebView
 import android.widget.FrameLayout
 import android.widget.LinearLayout
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.ActionMenuView
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -49,10 +50,12 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import anki.scheduler.CardAnswer.Rating
+import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.DispatchKeyEventListener
 import com.ichi2.anki.Flag
 import com.ichi2.anki.R
+import com.ichi2.anki.android.back.exitViaDoubleTapBackCallback
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.common.utils.android.isRobolectric
 import com.ichi2.anki.databinding.Reviewer2Binding
@@ -158,9 +161,14 @@ class ReviewerFragment :
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-
+        val ankiActivity = requireActivity() as? AnkiActivity
+        val dispatcher = requireActivity().onBackPressedDispatcher
+        val doubleBackCallback = ankiActivity?.exitViaDoubleTapBackCallback()
+        if (doubleBackCallback != null) {
+            dispatcher.addCallback(viewLifecycleOwner, doubleBackCallback)
+        }
         binding.backButton.setOnClickListener {
-            requireActivity().finish()
+            dispatcher.onBackPressed()
         }
 
         setupBindings()
