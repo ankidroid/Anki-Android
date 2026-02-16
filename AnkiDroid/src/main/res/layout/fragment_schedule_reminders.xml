@@ -53,7 +53,7 @@
                     android:layout_gravity="center_horizontal"
                     app:srcCompat="@drawable/outline_notifications_off_24" />
 
-                <com.ichi2.ui.FixedTextView
+                <com.google.android.material.textview.MaterialTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
