@@ -29,7 +29,7 @@
             android:textStyle="bold"
             tools:text="12:00 a.m." />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/reminders_list_deck_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

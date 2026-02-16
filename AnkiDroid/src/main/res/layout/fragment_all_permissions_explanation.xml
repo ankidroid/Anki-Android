@@ -8,7 +8,7 @@
     android:orientation="vertical"
     tools:context=".ui.windows.permissions.AllPermissionsExplanationFragment">
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/heading_required_permissions"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -29,7 +29,7 @@
         tools:visibility="visible"
         />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/heading_optional_permissions"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
