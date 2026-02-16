@@ -107,12 +107,13 @@ object ReviewRemindersDatabase {
      *
      * Version 1: 3 August 2025 - Initial version
      * Version 2: 25 January 2026 - Added [ReviewReminder.onlyNotifyIfNoReviews]
+     * Version 3: 8 February 2026 - Added [ReviewReminder.latestNotifTime]
      *
      * @see [oldReviewReminderSchemasForMigration]
      * @see [ReviewReminder]
      */
     @VisibleForTesting
-    var schemaVersion = ReviewReminderSchemaVersion(2)
+    var schemaVersion = ReviewReminderSchemaVersion(3)
 
     /**
      * A map of all old [ReviewReminderSchema]s that [ReviewRemindersDatabase.performSchemaMigration] will attempt to migrate old
@@ -130,7 +131,8 @@ object ReviewRemindersDatabase {
     var oldReviewReminderSchemasForMigration: Map<ReviewReminderSchemaVersion, KClass<out ReviewReminderSchema>> =
         mapOf(
             ReviewReminderSchemaVersion(1) to ReviewReminderSchemaV1::class,
-            ReviewReminderSchemaVersion(2) to ReviewReminder::class, // Most up to date version
+            ReviewReminderSchemaVersion(2) to ReviewReminderSchemaV2::class,
+            ReviewReminderSchemaVersion(3) to ReviewReminder::class, // Most up to date version
         )
 
     /**
