@@ -19,6 +19,7 @@ package com.ichi2.anki.reviewreminders
 import androidx.core.content.edit
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.libanki.EpochMilliseconds
 import kotlinx.serialization.InternalSerializationApi
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.builtins.MapSerializer
@@ -331,23 +332,27 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
     }
 
     /**
-     * When review reminders are migrated to the new schema, the reminders' IDs will be recreated from scratch.
-     * Thus, validation that our tests succeeded should ignore [ReviewReminder.id].
+     * When review reminders are migrated to the new schema, the reminders' IDs and latestNotifTimes will be recreated from scratch.
+     * Thus, validation that our tests succeeded should ignore these fields.
      * This custom Hamcrest matcher performs this validation using reflection.
      */
-    private fun containsEqualReviewRemindersInAnyOrderIgnoringId(expected: Collection<ReviewReminder>): Matcher<Iterable<ReviewReminder>> =
+    private fun containsEqualReviewRemindersExcludingVolatileFields(
+        expected: Collection<ReviewReminder>,
+    ): Matcher<Iterable<ReviewReminder>> =
         object : TypeSafeMatcher<Iterable<ReviewReminder>>() {
             override fun describeTo(description: Description) {
                 description.appendValue(expected)
             }
 
             override fun matchesSafely(actual: Iterable<ReviewReminder>): Boolean {
+                val volatileFields = setOf("id", "latestNotifTime")
+
                 val expectedSet =
                     expected
                         .map { e ->
                             ReviewReminder::class
                                 .memberProperties
-                                .filterNot { it.name == "id" }
+                                .filterNot { it.name in volatileFields }
                                 .associateWith { it.get(e) }
                         }.toSet()
 
@@ -356,7 +361,7 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
                         .map { a ->
                             ReviewReminder::class
                                 .memberProperties
-                                .filterNot { it.name == "id" }
+                                .filterNot { it.name in volatileFields }
                                 .associateWith { it.get(a) }
                         }.toSet()
 
@@ -374,14 +379,14 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
      */
     @Test
     fun `current schema version points to ReviewReminder`() {
-        assertThat(ReviewRemindersDatabase.schemaVersion.value, equalTo(2))
+        assertThat(ReviewRemindersDatabase.schemaVersion.value, equalTo(3))
         assertThat(
             ReviewRemindersDatabase
                 .oldReviewReminderSchemasForMigration
                 .keys
                 .last()
                 .value,
-            equalTo(2),
+            equalTo(3),
         )
         assertThat(
             ReviewRemindersDatabase
@@ -408,8 +413,8 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
         val rawString =
             """
             {
-              "version":2,
-              "remindersMapJson":"{\"0\":{\"id\":0,\"time\":{\"hour\":9,\"minute\":0},\"cardTriggerThreshold\":5,\"scope\":{\"type\":\"com.ichi2.anki.reviewreminders.ReviewReminderScope.DeckSpecific\",\"did\":12345},\"enabled\":false,\"profileID\":\"\",\"onlyNotifyIfNoReviews\":false},\"1\":{\"id\":1,\"time\":{\"hour\":10,\"minute\":30},\"cardTriggerThreshold\":10,\"scope\":{\"type\":\"com.ichi2.anki.reviewreminders.ReviewReminderScope.DeckSpecific\",\"did\":12345},\"enabled\":true,\"profileID\":\"\",\"onlyNotifyIfNoReviews\":false}}"
+            "version":3,
+            "remindersMapJson":"{\"22\":{\"id\":22,\"time\":{\"hour\":14,\"minute\":16},\"cardTriggerThreshold\":1,\"scope\":{\"type\":\"com.ichi2.anki.reviewreminders.ReviewReminderScope.Global\"},\"enabled\":true,\"latestNotifTime\":1771193761002,\"profileID\":\"\",\"onlyNotifyIfNoReviews\":false}}"
             }
             """.trimIndent()
 
@@ -434,6 +439,7 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
                 "cardTriggerThreshold" to ReviewReminderCardTriggerThreshold::class,
                 "scope" to ReviewReminderScope::class,
                 "enabled" to Boolean::class,
+                "latestNotifTime" to EpochMilliseconds::class,
                 "profileID" to String::class,
                 "onlyNotifyIfNoReviews" to Boolean::class,
             )
@@ -523,7 +529,7 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
             }
             assertThat(
                 retrievedReminders.getRemindersList(),
-                containsEqualReviewRemindersInAnyOrderIgnoringId(
+                containsEqualReviewRemindersExcludingVolatileFields(
                     casesInScope.map { it.expectedOutput },
                 ),
             )
@@ -676,6 +682,56 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
                         time = ReviewReminderTime(10, 30),
                         cardTriggerThreshold = ReviewReminderCardTriggerThreshold(10),
                         scope = ReviewReminderScope.Global,
+                        enabled = false,
+                        profileID = "",
+                        onlyNotifyIfNoReviews = true,
+                    ),
+            ),
+        )
+    }
+
+    @Test
+    fun `review reminder v2 to v3 migration works`() {
+        assertMigrationsWork(
+            MigrationTestCase(
+                inputVersion = ReviewReminderSchemaVersion(2),
+                input =
+                    ReviewReminderSchemaV2(
+                        id = ReviewReminderId(0),
+                        time = ReviewReminderTime(10, 30),
+                        cardTriggerThreshold = ReviewReminderCardTriggerThreshold(10),
+                        scope = ReviewReminderScope.Global,
+                        enabled = true,
+                        profileID = "",
+                        onlyNotifyIfNoReviews = false,
+                    ),
+                expectedOutput =
+                    ReviewReminder.createReviewReminder(
+                        time = ReviewReminderTime(10, 30),
+                        cardTriggerThreshold = ReviewReminderCardTriggerThreshold(10),
+                        scope = ReviewReminderScope.Global,
+                        enabled = true,
+                        profileID = "",
+                        onlyNotifyIfNoReviews = false,
+                    ),
+            ),
+            MigrationTestCase(
+                inputVersion = ReviewReminderSchemaVersion(2),
+                input =
+                    ReviewReminderSchemaV2(
+                        id = ReviewReminderId(1),
+                        time = ReviewReminderTime(12, 0),
+                        cardTriggerThreshold = ReviewReminderCardTriggerThreshold(20),
+                        scope = ReviewReminderScope.DeckSpecific(did2),
+                        enabled = false,
+                        profileID = "",
+                        onlyNotifyIfNoReviews = true,
+                    ),
+                expectedOutput =
+                    ReviewReminder.createReviewReminder(
+                        time = ReviewReminderTime(12, 0),
+                        cardTriggerThreshold = ReviewReminderCardTriggerThreshold(20),
+                        scope = ReviewReminderScope.DeckSpecific(did2),
                         enabled = false,
                         profileID = "",
                         onlyNotifyIfNoReviews = true,

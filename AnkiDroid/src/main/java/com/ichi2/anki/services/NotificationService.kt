@@ -20,6 +20,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import androidx.annotation.VisibleForTesting
 import androidx.core.app.NotificationCompat
 import androidx.core.app.PendingIntentCompat
 import androidx.core.content.getSystemService
@@ -37,6 +38,8 @@ import com.ichi2.anki.preferences.PENDING_NOTIFICATIONS_ONLY
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.reviewreminders.ReviewReminder
 import com.ichi2.anki.reviewreminders.ReviewReminderScope
+import com.ichi2.anki.reviewreminders.ReviewRemindersDatabase
+import com.ichi2.anki.reviewreminders.upsertReminder
 import com.ichi2.anki.runGloballyWithTimeout
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.utils.ext.allDecksCounts
@@ -71,7 +74,8 @@ class NotificationService : BroadcastReceiver() {
         /**
          * Extra key for sending a review reminder as an extra to this broadcast receiver.
          */
-        private const val EXTRA_REVIEW_REMINDER = "notification_service_review_reminder"
+        @VisibleForTesting
+        const val EXTRA_REVIEW_REMINDER = "notification_service_review_reminder"
 
         /**
          * Timeout for the process of sending a review reminder notification.
@@ -417,8 +421,20 @@ class NotificationService : BroadcastReceiver() {
                 ) ?: return
             Timber.d("onReceive: ${reviewReminder.id}")
 
-            // Schedule the next instance of this review reminder notification if this is a recurring notification
+            // If this is a recurring notification...
             if (action == NotificationServiceAction.ScheduleRecurringNotifications.actionString) {
+                // Record this latest routine notification-firing attempt's timestamp
+                reviewReminder.updateLatestNotifTime()
+                when (val scope = reviewReminder.scope) {
+                    is ReviewReminderScope.DeckSpecific ->
+                        ReviewRemindersDatabase.editRemindersForDeck(
+                            scope.did,
+                            upsertReminder(reviewReminder),
+                        )
+                    is ReviewReminderScope.Global -> ReviewRemindersDatabase.editAllAppWideReminders(upsertReminder(reviewReminder))
+                }
+
+                // Schedule the next routine notification-firing
                 Timber.d("Scheduling next review reminder notification")
                 AlarmManagerService.scheduleReviewReminderNotification(context, reviewReminder)
             }

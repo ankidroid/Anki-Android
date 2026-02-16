@@ -22,13 +22,16 @@ import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import androidx.annotation.VisibleForTesting
 import androidx.core.app.PendingIntentCompat
 import androidx.core.content.getSystemService
 import androidx.core.os.BundleCompat
 import com.ichi2.anki.R
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.reviewreminders.ReviewReminder
+import com.ichi2.anki.reviewreminders.ReviewReminderScope
 import com.ichi2.anki.reviewreminders.ReviewRemindersDatabase
+import com.ichi2.anki.reviewreminders.upsertReminder
 import com.ichi2.anki.showThemedToast
 import timber.log.Timber
 import java.util.Calendar
@@ -65,7 +68,8 @@ class AlarmManagerService : BroadcastReceiver() {
          * by at much this amount of time. We set it to 10 minutes, which is the minimum allowable duration
          * according to [the docs](https://developer.android.com/reference/android/app/AlarmManager).
          */
-        private val WINDOW_LENGTH_MS: Long = 10.minutes.inWholeMilliseconds
+        @VisibleForTesting
+        val WINDOW_LENGTH_MS: Long = 10.minutes.inWholeMilliseconds
 
         /**
          * Shows error messages if an error occurs when scheduling review reminders via AlarmManager.
@@ -132,6 +136,11 @@ class AlarmManagerService : BroadcastReceiver() {
          * Queues a review reminder to have its notification fired at its specified time. Does not check
          * if the review reminder is enabled or not, the caller must handle this.
          *
+         * If the review reminder has failed to fire a notification at its most recent specified time for some
+         * reason (ex. if the device was off, or if the OS delayed the notification for some reason),
+         * a notification will be fired immediately and no alarm will be immediately scheduled, as the
+         * notification should automatically trigger the scheduling of the next alarm.
+         *
          * Note that this only schedules the next upcoming notification, using [AlarmManager.setWindow]
          * rather than [AlarmManager.setRepeating]. This is because [AlarmManager.setRepeating] sometimes
          * postpones alarm firings for long periods of time, with intervals as long as one hour observed
@@ -164,6 +173,13 @@ class AlarmManagerService : BroadcastReceiver() {
                 ) ?: return
             Timber.v("Pending intent for ${reviewReminder.id} is $pendingIntent")
 
+            if (reviewReminder.shouldImmediatelyFire()) {
+                immediatelyFireNotification(context, reviewReminder)
+                // Once the notification has fired, it will automatically trigger the setting of the next alarm
+                // so we can return immediately
+                return
+            }
+
             val currentTimestamp = TimeManager.time.calendar()
             val alarmTimestamp = currentTimestamp.clone() as Calendar
             alarmTimestamp.apply {
@@ -184,6 +200,37 @@ class AlarmManagerService : BroadcastReceiver() {
                 )
                 Timber.d("Successfully scheduled review reminder notifications for ${reviewReminder.id}")
             }
+        }
+
+        /**
+         * Immediately fires a review reminder notification for a review reminder, which in turn then schedules the next notification.
+         * Used when a review reminder's notification has been delayed and failed to fire for some reason.
+         */
+        private fun immediatelyFireNotification(
+            context: Context,
+            reviewReminder: ReviewReminder,
+        ) {
+            Timber.d("Review reminder ${reviewReminder.id} should have fired already, sending notification immediately")
+
+            // Immediately (redundantly) record this latest routine notification-firing attempt's timestamp
+            // to prevent this from being triggered multiple times in rapid succession
+            reviewReminder.updateLatestNotifTime()
+            when (val scope = reviewReminder.scope) {
+                is ReviewReminderScope.DeckSpecific ->
+                    ReviewRemindersDatabase.editRemindersForDeck(
+                        scope.did,
+                        upsertReminder(reviewReminder),
+                    )
+                is ReviewReminderScope.Global -> ReviewRemindersDatabase.editAllAppWideReminders(upsertReminder(reviewReminder))
+            }
+
+            val immediateNotificationIntent =
+                NotificationService.getIntent(
+                    context,
+                    reviewReminder,
+                    NotificationService.NotificationServiceAction.ScheduleRecurringNotifications,
+                )
+            context.sendBroadcast(immediateNotificationIntent)
         }
 
         /**
