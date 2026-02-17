@@ -36,6 +36,7 @@ import androidx.lifecycle.lifecycleScope
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
 import com.ichi2.anki.SingleFragmentActivity
+import com.ichi2.anki.common.utils.android.getColorFromAttr
 import com.ichi2.anki.databinding.FragmentMediaCheckBinding
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.ui.internationalization.sentenceCase
@@ -131,11 +132,19 @@ class MediaCheckFragment : Fragment(R.layout.fragment_media_check) {
     }
 
     private fun updateWebView(report: String) {
+        val backgroundColor = getColorFromAttr(requireContext(), android.R.attr.colorBackground)
+        val textColor = getColorFromAttr(requireContext(), android.R.attr.textColorPrimary)
+
+        val backgroundColorHex = String.format("#%06X", 0xFFFFFF and backgroundColor)
+        val textColorHex = String.format("#%06X", 0xFFFFFF and textColor)
+
         val html =
             """
             <html>
                 <body style="
-                      padding: 0px 8px;
+                    background-color: $backgroundColorHex;
+                    color: $textColorHex;
+                    padding: 0px 8px;
                     font-size:14px;
                     white-space: pre-wrap;">$report
                 </body>
