@@ -21,7 +21,10 @@ import android.content.res.ColorStateList
 import android.view.KeyEvent
 import android.view.MotionEvent
 import android.view.View
+import android.view.accessibility.AccessibilityEvent
 import android.widget.LinearLayout
+import androidx.core.view.ViewCompat
+import androidx.core.view.accessibility.AccessibilityNodeInfoCompat
 import com.google.android.material.color.MaterialColors
 import com.ichi2.anki.databinding.ActivityHomescreenBinding
 import com.ichi2.anki.databinding.FloatingAddButtonBinding
@@ -65,6 +68,7 @@ class DeckPickerFloatingActionMenu(
         linearLayout.alpha = 0.5f
         studyOptionsFrame?.let { it.alpha = 0.5f }
         isFABOpen = true
+        setOptionFocusable(true)
         if (deckPicker.animationEnabled()) {
             // Show with animation
             binding.addSharedLayout.visibility = View.VISIBLE
@@ -131,13 +135,21 @@ class DeckPickerFloatingActionMenu(
                 setImageResource(addNoteIcon)
             }
         }
+        // Post the focus request to ensure the view is ready to receive it.
+        binding.addSharedButton.post {
+            binding.addNoteLabel.requestFocus()
+            binding.addNoteLabel.sendAccessibilityEvent(
+                AccessibilityEvent.TYPE_VIEW_FOCUSED,
+            )
+        }
+        updateAccessibilityState()
     }
 
     /**
      * This function takes a parameter which decides if we want to apply the rise and shrink animation
      * for FAB or not.
      *
-     * Case 1: When the FAB is already opened and we close it by pressing the back button then we need to show
+     * Case 1: When the FAB is already opened, and we close it by pressing the back button then we need to show
      * the rise and shrink animation and get back to the FAB with `+` icon.
      *
      * Case 2: When the user opens the side navigation drawer (without touching the FAB). In that case we don't
@@ -149,6 +161,7 @@ class DeckPickerFloatingActionMenu(
             linearLayout.alpha = 1f
             studyOptionsFrame?.let { it.alpha = 1f }
             isFABOpen = false
+            setOptionFocusable(false)
             binding.fabBGLayout.visibility = View.GONE
             binding.addNoteLabel.visibility = View.GONE
             if (deckPicker.animationEnabled()) {
@@ -238,6 +251,7 @@ class DeckPickerFloatingActionMenu(
             linearLayout.alpha = 1f
             studyOptionsFrame?.let { it.alpha = 1f }
             isFABOpen = false
+            setOptionFocusable(false)
             binding.fabBGLayout.visibility = View.GONE
             binding.addNoteLabel.visibility = View.GONE
             if (deckPicker.animationEnabled()) {
@@ -314,6 +328,58 @@ class DeckPickerFloatingActionMenu(
                 binding.fabMain.setImageResource(addWhiteIcon)
             }
         }
+        updateAccessibilityState()
+    }
+
+    private fun updateAccessibilityState() {
+        if (isFABOpen) {
+            // When the menu is OPEN, the action is to close it.
+            binding.fabMain.contentDescription = context.getString(R.string.menu_add_note)
+            ViewCompat.replaceAccessibilityAction(
+                binding.fabMain,
+                AccessibilityNodeInfoCompat.AccessibilityActionCompat.ACTION_CLICK,
+                context.getString(R.string.menu_add_note),
+            ) { _, _ ->
+                addNote()
+                true
+            }
+        } else {
+            // When the menu is CLOSED, the action is to open it.
+            binding.fabMain.contentDescription = context.getString(R.string.toggle_fab_menu)
+            ViewCompat.replaceAccessibilityAction(
+                binding.fabMain,
+                AccessibilityNodeInfoCompat.AccessibilityActionCompat.ACTION_CLICK,
+                context.getString(R.string.toggle_fab_menu),
+            ) { _, _ ->
+                showFloatingActionMenu()
+                true
+            }
+        }
+    }
+
+    private fun setOptionFocusable(isFocusable: Boolean) {
+        val importance =
+            if (isFocusable) {
+                View.IMPORTANT_FOR_ACCESSIBILITY_YES
+            } else {
+                View.IMPORTANT_FOR_ACCESSIBILITY_NO_HIDE_DESCENDANTS
+            }
+
+        val views =
+            listOf(
+                binding.addDeckButton,
+                binding.addDeckLabel,
+                binding.addFilteredDeckButton,
+                binding.addFilteredDeckLabel,
+                binding.addSharedButton,
+                binding.addSharedLabel,
+                binding.addNoteLabel,
+            )
+
+        views.forEach {
+            it.isFocusable = isFocusable
+            it.importantForAccessibility = importance
+        }
     }
 
     fun showFloatingActionButton() {
@@ -321,6 +387,7 @@ class DeckPickerFloatingActionMenu(
             Timber.i("DeckPicker:: showFloatingActionButton()")
             binding.fabMain.visibility = View.VISIBLE
         }
+        updateAccessibilityState()
     }
 
     fun hideFloatingActionButton() {
@@ -328,6 +395,7 @@ class DeckPickerFloatingActionMenu(
             Timber.i("DeckPicker:: hideFloatingActionButton()")
             binding.fabMain.visibility = View.GONE
         }
+        updateAccessibilityState()
     }
 
     private fun createActivationKeyListener(
@@ -346,6 +414,7 @@ class DeckPickerFloatingActionMenu(
         }
 
     init {
+        setOptionFocusable(false)
         binding.fabMain.setOnTouchListener(
             object : DoubleTapListener(context) {
                 override fun onDoubleTap(e: MotionEvent?) {
@@ -358,6 +427,7 @@ class DeckPickerFloatingActionMenu(
                     if (!isFABOpen) {
                         showFloatingActionMenu()
                     } else {
+                        closeFloatingActionMenu(true)
                         addNote()
                     }
                 }
