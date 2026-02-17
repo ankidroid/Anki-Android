@@ -925,9 +925,9 @@ abstract class AbstractFlashcardViewer :
         }
         flipCardLayout = findViewById(R.id.flashcard_layout_flip)
         flipCardLayout?.let { layout ->
-            if (minimalClickSpeed == 0) {
-                layout.setOnClickListener(flipCardListener)
-            } else {
+            layout.setOnClickListener(flipCardListener)
+
+            if (minimalClickSpeed > 0) {
                 val handler = Handler(Looper.getMainLooper())
                 layout.setOnTouchListener { view, event ->
                     when (event.action) {
@@ -937,19 +937,19 @@ abstract class AbstractFlashcardViewer :
                             }, minimalClickSpeed.toLong())
 
                             showMinimalClickHint()
-                            false
+                            true
                         }
 
                         MotionEvent.ACTION_MOVE -> {
                             if (!view.isTouchWithinBounds(event)) {
                                 handler.removeCallbacksAndMessages(null)
                             }
-                            false
+                            true
                         }
 
                         MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL, MotionEvent.ACTION_HOVER_ENTER -> {
                             handler.removeCallbacksAndMessages(null)
-                            false
+                            true
                         }
 
                         else -> false
