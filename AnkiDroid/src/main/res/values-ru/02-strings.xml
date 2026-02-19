@@ -77,7 +77,7 @@
     <string name="whiteboard_ink_eraser" comment="Title of the whiteboard Ink eraser">Чернила</string>
     <string name="whiteboard_stroke_eraser" comment="Title of the whiteboard Stroke eraser">Штрих</string>
     <string name="stylus_mode" comment="Title of the menu item that toggles the whiteboard stylus mode" maxLength="28">Режим стилей</string>
-    <string name="cannot_remove_last_brush_message">The last brush may not be removed</string>
+    <string name="cannot_remove_last_brush_message">Последнее повторение не может быть удалено</string>
     <string name="enable_whiteboard" maxLength="28">Включить доску</string>
     <string name="disable_whiteboard">Отключить доску</string>
     <string name="show_whiteboard">Показать доску</string>
@@ -173,7 +173,7 @@
     <string name="import_error_load_imported_database">Замена базы данных Anki (.anki2) пока не поддерживается. Смотрите руководство для инструкций по замене.</string>
     <string name="import_error_content_provider">Этот файл не получится импортировать автоматически. См. руководство, чтобы импортировать Anki-файлы вручную: \n %s</string>
     <string name="import_error_copy_to_cache_title">Не удалось кэшировать файл</string>
-    <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">This is often caused by a bug in the app you used to select the file. Please try the following fixes:\n\n%s</string>
+    <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">Часто это вызвано ошибкой в приложении, которое вы использовали для выбора файла. Пожалуйста, попробуйте следующие исправления:\n\n%s</string>
     <string name="import_interrupted">Импорт прерван</string>
     <string name="export_ready_title">Экспорт готов</string>
     <string name="export_send_no_handlers">Нет приложений для чтения файлов apkg. Сохраняется&#8230;</string>

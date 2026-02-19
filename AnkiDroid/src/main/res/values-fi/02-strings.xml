@@ -85,7 +85,7 @@
     <string name="disable_eraser" maxLength="28">Poista pyyhin käytöstä</string>
     <string name="hide_whiteboard" maxLength="28">Piilota kirjoitustaulu</string>
     <string name="clear_whiteboard" maxLength="28">Tyhjennä kirjoitustaulu</string>
-    <string name="hide_toolbar" maxLength="28">Hide toolbar</string>
+    <string name="hide_toolbar" maxLength="28">Piilota työkalupalkki</string>
     <string name="replay_media" maxLength="28">Uudelleentoista media</string>
     <string name="leech_suspend_notification">Kortti on merkitty resurssisyöpöksi ja hyllytetty</string>
     <string name="leech_notification">Kortti on merkitty resurssisyöpöksi</string>
