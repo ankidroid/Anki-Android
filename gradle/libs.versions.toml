@@ -81,7 +81,7 @@ hamcrest = "3.0"
 imageCropper = "4.7.0"
 jacoco = "0.8.14"
 javaSemver = "0.10.2"
-jetbrainsAnnotations = "26.0.2-1"
+jetbrainsAnnotations = "26.1.0"
 json = "20251224"
 # https://github.com/jhy/jsoup/releases
 jsoup = "1.22.1"
