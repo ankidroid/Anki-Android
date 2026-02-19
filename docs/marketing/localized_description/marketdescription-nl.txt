@@ -1,4 +1,4 @@
-Onthoud alles met AnkiDroid!
+Leer alles met AnkiDroid!
 
 AnkiDroid stelt u in staat om op een efficiënte manier woordjes te leren, door u flitskaarten te tonen vlak voordat u ze zou vergeten. It is fully compatible with the spaced repetition software Anki (including synchronization), which is available for Windows, Linux and macOS.
 
