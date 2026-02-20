@@ -257,7 +257,7 @@ class Toolbar : FrameLayout {
                         .windowManager
                         .currentWindowMetrics
                 val insets: Insets =
-                    windowMetrics.getWindowInsets().getInsetsIgnoringVisibility(
+                    windowMetrics.windowInsets.getInsetsIgnoringVisibility(
                         WindowInsets.Type.navigationBars()
                             or WindowInsets.Type.displayCutout(),
                     )
