@@ -51,7 +51,7 @@ fun AnkiActivity.exitViaDoubleTapBackCallback(): OnBackPressedCallback =
         // PreferenceManager uses weak references, so we need our own strong reference which
         // will go out of scope
         callback.strongListenerReference =
-            OnSharedPreferenceChangeListener { prefs, key ->
+            OnSharedPreferenceChangeListener { _, key ->
                 if (key == getString(R.string.exit_via_double_tap_back_key)) {
                     callback.isEnabled =
                         Prefs.exitViaDoubleTapBack.also {
