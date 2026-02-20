@@ -233,7 +233,7 @@ abstract class AppCompatPreferenceActivity<PreferenceHack : AppCompatPreferenceA
         // HACK: PreferenceActivity does not have a back dispatcher
         // on API <= 32, onKeyDown is called; on API 33+, this is needed
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            getOnBackInvokedDispatcher().registerOnBackInvokedCallback(PRIORITY_OVERLAY) {
+            onBackInvokedDispatcher.registerOnBackInvokedCallback(PRIORITY_OVERLAY) {
                 tryCloseWithResult()
             }
         }
