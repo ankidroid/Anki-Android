@@ -866,9 +866,10 @@ object PreferenceUpgradeService {
 
                 for ((key, newKey) in keysMap.entries) {
                     val value = preferences.getString(key, null) ?: continue
-                    val bindings = fromPreferenceString(value).toMutableList()
+                    val currentBindings = fromPreferenceString(value).toMutableList()
+                    val bindings = currentBindings.toMutableList()
 
-                    bindings.forEach { binding ->
+                    currentBindings.forEach { binding ->
                         when (binding.side) {
                             CardSide.QUESTION -> {
                                 if (!showAnswerBindings.any { it.binding == binding.binding }) {
