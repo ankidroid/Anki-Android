@@ -22,7 +22,6 @@ import android.util.AttributeSet
 import android.view.GestureDetector
 import android.view.LayoutInflater
 import android.view.MotionEvent
-import android.view.View
 import android.widget.ImageView
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.ichi2.anki.cardviewer.Gesture
@@ -122,7 +121,7 @@ class GestureDisplay
         }
 
         /**
-         * Sets the "swipe" view to the provided swipe (or none if the gesture is null or non-swipe])
+         * Sets the "swipe" view to the provided swipe (or none if the gesture is null or non-swipe)
          * Only works on API 25+ due to issues with layer-list
          */
         private fun handleSwipeChange(gesture: Gesture?) {
@@ -174,8 +173,8 @@ class GestureDisplay
         private fun setTapGestureMode(tapGestureMode: TapGestureMode) {
             val ninePointVisibility =
                 when (tapGestureMode) {
-                    TapGestureMode.FOUR_POINT -> View.GONE
-                    TapGestureMode.NINE_POINT -> View.VISIBLE
+                    TapGestureMode.FOUR_POINT -> GONE
+                    TapGestureMode.NINE_POINT -> VISIBLE
                 }
 
             NINE_POINT_TAP_GESTURES.forEach { gesture ->
