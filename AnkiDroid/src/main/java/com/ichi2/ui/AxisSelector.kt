@@ -40,7 +40,7 @@ import timber.log.Timber
  *   - If an [extremity][AxisValueDisplay.isExtremity] is reached, these are activated
  *   - Calls [onExtremitySelectedListener] if tapped
  *
- * @see R.layout.axis_display
+ * @see R.layout.view_axis_display
  * @see AxisValueDisplay
  */
 class AxisSelector : LinearLayout {
