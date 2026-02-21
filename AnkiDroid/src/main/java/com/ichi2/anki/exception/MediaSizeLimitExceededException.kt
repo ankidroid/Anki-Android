@@ -17,16 +17,9 @@ package com.ichi2.anki.exception
 
 import android.content.Context
 
-@JvmInline
-value class Bytes(
-    val bytes: Long,
-) {
-    fun toShortString(context: Context): String =
-        android.text.format.Formatter
-            .formatShortFileSize(context, this.bytes)
-}
-
-val Long.bytes get() = Bytes(this)
+fun Long.toBytesShortString(context: Context): String =
+    android.text.format.Formatter
+        .formatShortFileSize(context, this)
 
 class MediaSizeLimitExceededException(
     val fileName: String,

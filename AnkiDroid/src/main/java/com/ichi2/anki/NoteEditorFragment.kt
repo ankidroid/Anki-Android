@@ -101,7 +101,7 @@ import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
 import com.ichi2.anki.exception.MediaSizeLimitExceededException
-import com.ichi2.anki.exception.bytes
+import com.ichi2.anki.exception.toBytesShortString
 import com.ichi2.anki.libanki.Card
 import com.ichi2.anki.libanki.CardOrdinal
 import com.ichi2.anki.libanki.Collection
@@ -2194,8 +2194,8 @@ class NoteEditorFragment :
         onForceAdd: () -> Unit,
     ) {
         val context = requireContext()
-        val fileSizeStr = fileSize.bytes.toShortString(context)
-        val limitStr = Backend.MAX_INDIVIDUAL_MEDIA_FILE_SIZE.bytes.toShortString(context)
+        val fileSizeStr = fileSize.toBytesShortString(context)
+        val limitStr = Backend.MAX_INDIVIDUAL_MEDIA_FILE_SIZE.toBytesShortString(context)
 
         MaterialAlertDialogBuilder(context).show {
             title(R.string.media_file_size_warning_title)
