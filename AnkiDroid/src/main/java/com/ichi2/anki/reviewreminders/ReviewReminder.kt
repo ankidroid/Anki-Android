@@ -22,6 +22,7 @@ import android.text.format.DateFormat
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.libanki.DeckId
+import com.ichi2.anki.libanki.EpochMilliseconds
 import com.ichi2.anki.settings.Prefs
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
@@ -185,6 +186,9 @@ sealed class ReviewReminderScope : Parcelable {
  * @param enabled Whether the review reminder's notifications are active or disabled.
  * @param profileID ID representing the profile which created this review reminder, as review reminders for
  * multiple profiles might be active simultaneously.
+ * @param latestNotifTime The time at which this review reminder last attempted to fire a routine daily (non-snooze)
+ * notification, in epoch milliseconds, or the time at which it was created if no notification has ever been fired.
+ * See [shouldImmediatelyFire].
  * @param onlyNotifyIfNoReviews If true, only notify the user if this scope has not been reviewed today yet.
  */
 @Serializable
@@ -196,8 +200,9 @@ data class ReviewReminder private constructor(
     val cardTriggerThreshold: ReviewReminderCardTriggerThreshold,
     val scope: ReviewReminderScope,
     var enabled: Boolean,
+    var latestNotifTime: EpochMilliseconds,
     val profileID: String,
-    val onlyNotifyIfNoReviews: Boolean = false,
+    val onlyNotifyIfNoReviews: Boolean,
 ) : Parcelable,
     ReviewReminderSchema {
     companion object {
@@ -219,9 +224,40 @@ data class ReviewReminder private constructor(
             cardTriggerThreshold,
             scope,
             enabled,
+            latestNotifTime = TimeManager.time.calendar().timeInMillis,
             profileID,
             onlyNotifyIfNoReviews,
         )
+    }
+
+    /**
+     * Updates [latestNotifTime] to the current time.
+     * This should be called whenever this review reminder attempts to fire a routine daily (non-snooze) notification.
+     */
+    fun updateLatestNotifTime() {
+        latestNotifTime = TimeManager.time.calendar().timeInMillis
+    }
+
+    /**
+     * Checks if this review reminder has tried to fire a routine daily (non-snooze) notification in the time between
+     * its latest scheduled firing time and now. If not, this method returns true, indicating that a notification
+     * should be immediately fired for this review reminder.
+     */
+    fun shouldImmediatelyFire(): Boolean {
+        val (hour, minute) = this.time
+
+        val currentTimestamp = TimeManager.time.calendar()
+        val latestScheduledTimestamp = currentTimestamp.clone() as Calendar
+        latestScheduledTimestamp.apply {
+            set(Calendar.HOUR_OF_DAY, hour)
+            set(Calendar.MINUTE, minute)
+            set(Calendar.SECOND, 0)
+            if (after(currentTimestamp)) {
+                add(Calendar.DAY_OF_YEAR, -1)
+            }
+        }
+
+        return latestNotifTime < latestScheduledTimestamp.timeInMillis
     }
 
     /**

@@ -30,26 +30,47 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.common.time.MockTime
 import com.ichi2.anki.common.time.TimeManager
+import com.ichi2.anki.libanki.EpochMilliseconds
 import com.ichi2.anki.reviewreminders.ReviewReminder
-import com.ichi2.anki.reviewreminders.ReviewReminderId
+import com.ichi2.anki.reviewreminders.ReviewReminderScope
 import com.ichi2.anki.reviewreminders.ReviewReminderTime
 import com.ichi2.anki.reviewreminders.ReviewRemindersDatabase
+import com.ichi2.anki.services.NotificationService.Companion.EXTRA_REVIEW_REMINDER
+import com.ichi2.testutils.ext.storeReminders
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkStatic
 import io.mockk.unmockkAll
 import io.mockk.verify
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.equalTo
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.util.Calendar
+import kotlin.time.Duration.Companion.days
 import kotlin.time.Duration.Companion.minutes
 
 @RunWith(AndroidJUnit4::class)
 class AlarmManagerServiceTest : RobolectricTest() {
     companion object {
-        private val mockTime = MockTime(2024, 0, 1, 12, 0, 0, 0, 0)
+        /**
+         * Set the mock time to a consistent date and a specific time: noon in the local time zone (not UTC! this is required because
+         * the subject-under-test calculates times based on the local time zone, hence the convoluted construction of this mock).
+         */
+        private val mockTime =
+            MockTime(
+                initTime =
+                    MockTime(2024, 0, 1, 0, 0, 0, 0, 0)
+                        .calendar()
+                        .apply {
+                            set(Calendar.HOUR_OF_DAY, 12)
+                            set(Calendar.MINUTE, 0)
+                            set(Calendar.SECOND, 0)
+                        }.timeInMillis,
+                step = 0,
+            )
     }
 
     private lateinit var context: Context
@@ -65,7 +86,10 @@ class AlarmManagerServiceTest : RobolectricTest() {
         notificationManager = mockk(relaxed = true)
         every { context.getSystemService<AlarmManager>() } returns alarmManager
         every { context.getSystemService<NotificationManager>() } returns notificationManager
+
         reviewReminder = ReviewReminder.createReviewReminder(time = ReviewReminderTime(20, 0))
+        reviewReminder.latestNotifTime = mockTime.intTimeMS() // Ensure the reminder is ready to have its future instance scheduled
+
         TimeManager.resetWith(mockTime)
         ReviewRemindersDatabase.remindersSharedPrefs.edit { clear() }
     }
@@ -89,7 +113,7 @@ class AlarmManagerServiceTest : RobolectricTest() {
             alarmManager.setWindow(
                 AlarmManager.RTC_WAKEUP,
                 expectedSchedulingTime.timeInMillis,
-                10.minutes.inWholeMilliseconds,
+                AlarmManagerService.WINDOW_LENGTH_MS,
                 any(),
             )
         }
@@ -109,7 +133,7 @@ class AlarmManagerServiceTest : RobolectricTest() {
             alarmManager.setWindow(
                 AlarmManager.RTC_WAKEUP,
                 expectedSchedulingTime.timeInMillis,
-                10.minutes.inWholeMilliseconds,
+                AlarmManagerService.WINDOW_LENGTH_MS,
                 any(),
             )
         }
@@ -133,30 +157,192 @@ class AlarmManagerServiceTest : RobolectricTest() {
         verify { alarmManager.cancel(pendingIntent) }
     }
 
+    /**
+     * A single test case for alarm scheduling testing.
+     * @see scheduleAllNotificationsTest
+     */
+    private data class ScheduleAllNotificationsTestCase(
+        val reminder: ReviewReminder,
+        val shouldImmediatelySetAlarm: Boolean,
+        val shouldImmediatelyFireNotif: Boolean,
+        val latestNotifTime: EpochMilliseconds? = null,
+    )
+
+    /**
+     * Helper function that tries scheduling multiple reminders and verifies the outcome for each.
+     */
+    private fun scheduleAllNotificationsTest(vararg testCases: ScheduleAllNotificationsTestCase) {
+        require(testCases.map { it.reminder.time }.toSet().size == testCases.size) {
+            "All test cases must have unique reminder times to facilitate alarm scheduling verification"
+        }
+
+        testCases.forEach { case ->
+            if (case.latestNotifTime != null) {
+                case.reminder.latestNotifTime = case.latestNotifTime
+            }
+        }
+        val previousLatestNotifTimes = testCases.associate { it.reminder.id to it.reminder.latestNotifTime }
+
+        ReviewRemindersDatabase.storeReminders(*testCases.map { it.reminder }.toTypedArray())
+        val currentTimestamp = mockTime.calendar().clone() as Calendar
+
+        AlarmManagerService.scheduleAllNotifications(context)
+
+        testCases.forEach { case ->
+            val expectedSchedulingTime = mockTime.calendar().clone() as Calendar
+            expectedSchedulingTime.apply {
+                set(Calendar.HOUR_OF_DAY, case.reminder.time.hour)
+                set(Calendar.MINUTE, case.reminder.time.minute)
+                set(Calendar.SECOND, 0)
+                if (before(currentTimestamp)) {
+                    add(Calendar.DAY_OF_YEAR, 1)
+                }
+            }
+
+            val alarmSettingCallsExpected = if (case.shouldImmediatelySetAlarm) 1 else 0
+            verify(exactly = alarmSettingCallsExpected) {
+                alarmManager.setWindow(
+                    AlarmManager.RTC_WAKEUP,
+                    expectedSchedulingTime.timeInMillis,
+                    10.minutes.inWholeMilliseconds,
+                    any(),
+                )
+            }
+        }
+
+        val (testCasesWithFiring, testCasesWithoutFiring) = testCases.partition { it.shouldImmediatelyFireNotif }
+        val expectedFired = testCasesWithFiring.map { it.reminder }.toSet()
+        val expectedNotFired = testCasesWithoutFiring.map { it.reminder }.toSet()
+
+        val capturedIntents = mutableListOf<Intent>()
+        verify(exactly = expectedFired.size) {
+            context.sendBroadcast(capture(capturedIntents))
+        }
+        val actuallyFired =
+            capturedIntents
+                .map { intent ->
+                    BundleCompat.getParcelable(
+                        intent.extras!!,
+                        EXTRA_REVIEW_REMINDER,
+                        ReviewReminder::class.java,
+                    )!!
+                }.toSet()
+        val actuallyFiredIds = actuallyFired.map { it.id }.toSet()
+        val notFired = testCases.map { it.reminder }.filterNot { it.id in actuallyFiredIds }.toSet()
+
+        // The actually fired reminders have a modified latestNotifTime, so we can't directly compare the reminder objects
+        assertThat((actuallyFired + notFired).map { it.id }.toSet(), equalTo(testCases.map { it.reminder.id }.toSet()))
+        assertThat(expectedFired.map { it.id }.toSet(), equalTo(actuallyFired.map { it.id }.toSet()))
+
+        // But we can compare unfired reminders directly since they should be unchanged
+        assertThat(expectedNotFired, equalTo(notFired))
+
+        // Validate latestNotifTime has changed for fired reminders
+        val expectedFiredCreationTimes = expectedFired.associate { it.id to previousLatestNotifTimes[it.id]!! }
+        val notificationTimes = actuallyFired.associate { it.id to it.latestNotifTime }
+        assertThat(expectedFiredCreationTimes.keys.toSet(), equalTo(notificationTimes.keys.toSet()))
+        expectedFiredCreationTimes.forEach { (id, createdAt) ->
+            val notifTime = notificationTimes[id]!!
+            assertThat(notifTime > createdAt, equalTo(true))
+        }
+
+        // Validate stored reminders
+        val stored = ReviewRemindersDatabase.getAllAppWideReminders() + ReviewRemindersDatabase.getAllDeckSpecificReminders()
+        val (storedFired, storedNotFired) = stored.getRemindersList().partition { it.id in actuallyFired.map { r -> r.id } }
+        assertThat(storedFired.toSet(), equalTo(actuallyFired))
+        assertThat(storedNotFired.toSet(), equalTo(notFired))
+    }
+
     @Test
     fun `scheduleAllNotifications schedules reminders for all enabled reminders in database`() =
         runTest {
             val did1 = addDeck("Deck1")
             val did2 = addDeck("Deck2")
-            val reminder1 = ReviewReminder.createReviewReminder(time = ReviewReminderTime(9, 0))
-            val reminder2 = ReviewReminder.createReviewReminder(time = ReviewReminderTime(10, 0))
-            val reminder3 = ReviewReminder.createReviewReminder(time = ReviewReminderTime(11, 0))
-            val disabledReminder =
-                ReviewReminder.createReviewReminder(
-                    time = ReviewReminderTime(11, 0),
-                    enabled = false,
-                )
-            ReviewRemindersDatabase.editRemindersForDeck(did1) { mapOf(ReviewReminderId(0) to reminder1) }
-            ReviewRemindersDatabase.editRemindersForDeck(did2) { mapOf(ReviewReminderId(1) to reminder2) }
-            ReviewRemindersDatabase.editAllAppWideReminders {
-                mapOf(
-                    ReviewReminderId(2) to reminder3,
-                    ReviewReminderId(3) to disabledReminder,
-                )
-            }
+            scheduleAllNotificationsTest(
+                ScheduleAllNotificationsTestCase(
+                    reminder =
+                        ReviewReminder.createReviewReminder(
+                            time = ReviewReminderTime(9, 0),
+                            scope = ReviewReminderScope.DeckSpecific(did1),
+                        ),
+                    shouldImmediatelySetAlarm = true,
+                    shouldImmediatelyFireNotif = false,
+                ),
+                ScheduleAllNotificationsTestCase(
+                    reminder =
+                        ReviewReminder.createReviewReminder(
+                            time = ReviewReminderTime(10, 0),
+                            scope = ReviewReminderScope.DeckSpecific(did2),
+                        ),
+                    shouldImmediatelySetAlarm = true,
+                    shouldImmediatelyFireNotif = false,
+                ),
+                ScheduleAllNotificationsTestCase(
+                    reminder =
+                        ReviewReminder.createReviewReminder(
+                            time = ReviewReminderTime(11, 0),
+                        ),
+                    shouldImmediatelySetAlarm = true,
+                    shouldImmediatelyFireNotif = false,
+                ),
+                ScheduleAllNotificationsTestCase(
+                    reminder =
+                        ReviewReminder.createReviewReminder(
+                            time = ReviewReminderTime(12, 0),
+                            enabled = false,
+                        ),
+                    shouldImmediatelySetAlarm = false,
+                    shouldImmediatelyFireNotif = false,
+                ),
+            )
+        }
 
-            AlarmManagerService.scheduleAllNotifications(context)
-            verify(exactly = 3) { alarmManager.setWindow(AlarmManager.RTC_WAKEUP, any(), 10.minutes.inWholeMilliseconds, any()) }
+    @Test
+    fun `scheduleAllNotifications immediately fires notification for reminders which missed scheduled firings`() =
+        runTest {
+            val did1 = addDeck("Deck1")
+            scheduleAllNotificationsTest(
+                ScheduleAllNotificationsTestCase(
+                    reminder =
+                        ReviewReminder.createReviewReminder(
+                            time = ReviewReminderTime(11, 58), // Last scheduled at 2 minutes earlier
+                            scope = ReviewReminderScope.DeckSpecific(did1),
+                        ),
+                    shouldImmediatelySetAlarm = false,
+                    shouldImmediatelyFireNotif = true, // Should fire immediately, because...
+                    latestNotifTime = mockTime.intTimeMS() - 10.minutes.inWholeMilliseconds, // ...latest firing was 10 minutes ago
+                ),
+                ScheduleAllNotificationsTestCase(
+                    reminder =
+                        ReviewReminder.createReviewReminder(
+                            time = ReviewReminderTime(11, 59), // Last scheduled at 1 minute earlier
+                            scope = ReviewReminderScope.Global,
+                        ),
+                    shouldImmediatelySetAlarm = true,
+                    shouldImmediatelyFireNotif = false, // Should not fire immediately, because...
+                    latestNotifTime = mockTime.intTimeMS(), // ...a notification just fired
+                ),
+                ScheduleAllNotificationsTestCase(
+                    reminder =
+                        ReviewReminder.createReviewReminder(
+                            time = ReviewReminderTime(12, 1), // Last scheduled almost a full day ago
+                            scope = ReviewReminderScope.Global,
+                        ),
+                    shouldImmediatelySetAlarm = true,
+                    shouldImmediatelyFireNotif = false, // Should not fire immediately, because...
+                    latestNotifTime = mockTime.intTimeMS() - 10.minutes.inWholeMilliseconds, // ...latest firing was 10 minutes ago
+                ),
+                ScheduleAllNotificationsTestCase(
+                    reminder =
+                        ReviewReminder.createReviewReminder(
+                            time = ReviewReminderTime(12, 2), // Last scheduled almost a full day ago
+                            scope = ReviewReminderScope.DeckSpecific(did1),
+                        ),
+                    shouldImmediatelySetAlarm = false,
+                    shouldImmediatelyFireNotif = true, // Should fire immediately, because...
+                    latestNotifTime = mockTime.intTimeMS() - 2.days.inWholeMilliseconds, // ...latest firing was 2 days ago
+                ),
+            )
         }
 
     @Test
@@ -173,7 +359,7 @@ class AlarmManagerServiceTest : RobolectricTest() {
             alarmManager.setWindow(
                 AlarmManager.RTC_WAKEUP,
                 mockTime.intTimeMS() + 5.minutes.inWholeMilliseconds,
-                10.minutes.inWholeMilliseconds,
+                AlarmManagerService.WINDOW_LENGTH_MS,
                 any(),
             )
         }
