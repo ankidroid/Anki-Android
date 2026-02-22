@@ -43,6 +43,9 @@
     <string name="no_cards_placeholder_title" comment="Text shown the first time AnkiDroid is opened, to explain to the user why they can't yet review.">Collection is empty</string>
     <string name="no_cards_placeholder_description" comment="Text shown the first time AnkiDroid is opened, to explain what should be their first action.">Start adding cards\nusing the + icon.</string>
 
+    <!-- Floating Action Button Accessibility -->
+    <string name="toggle_fab_menu" comment="Accessibility action to open the Floating Action Button menu">Toggle FAB menu</string>
+
     <!-- Reviewer -->
     <plurals name="reviewer_window_title" comment="Header of the reviewer, telling the users how many minutes remains before they have seen all cards.">
         <item quantity="one">%d minute left</item>
