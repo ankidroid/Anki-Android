@@ -82,7 +82,7 @@
     <string name="button_size" maxLength="41">Grootte antwoordknop</string>
     <string name="card_browser_font_size" maxLength="41">Lettertypegrootte van de kaartenbrowser</string>
     <string name="card_browser_hide_media" maxLength="41">Bestandsnamen in kaartenbrowser weergeven</string>
-    <string name="card_browser_hide_media_summary">Display audio filenames in the card browser question/answer fields</string>
+    <string name="card_browser_hide_media_summary">Namen van audiobestanden in de vraag/antwoord velden van de kaartenbrowser weergeven</string>
     <string name="col_path" maxLength="41">AnkiDroid directory</string>
     <string name="fullscreen_review" maxLength="41">Volledig schermmodus</string>
     <string name="full_screen_off">Uit</string>
@@ -116,9 +116,9 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">Druk midden rechts</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Druk linksonder</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Druk rechtsonder</string>
-    <string name="gestures_two_finger_tap" maxLength="41">Two-finger tap</string>
-    <string name="gestures_three_finger_tap" maxLength="41">Three-finger tap</string>
-    <string name="gestures_four_finger_tap" maxLength="41">Four-finger tap</string>
+    <string name="gestures_two_finger_tap" maxLength="41">Tik met twee vingers</string>
+    <string name="gestures_three_finger_tap" maxLength="41">Tik met drie vingers</string>
+    <string name="gestures_four_finger_tap" maxLength="41">Tik met vier vingers</string>
     <string name="gestures_shake" maxLength="41">Schud apparaat</string>
     <string name="card_browser_enable_external_context_menu" maxLength="41">‘%s’ menu</string>
     <string name="card_browser_enable_external_context_menu_summary">Schakelt het contextmenu \' \'%s\' overal in</string>
@@ -235,9 +235,9 @@
     <string name="misc" maxLength="41">Diversen</string>
     <!-- Review reminders -->
     <string name="add_reminder" comment="Label for the add reminder button in the screen for adding and editing review reminders">Herinnering toevoegen</string>
-    <string name="add_review_reminder" comment="Title of the screen for creating a new review reminder">Add review reminder</string>
-    <string name="edit_review_reminder" comment="Title of the screen for editing an existing review reminder">Edit review reminder</string>
-    <string name="you_have_no_review_reminders" comment="Text that appears in the review reminder editing screen when there are no reminders set">You have no review reminders</string>
+    <string name="add_review_reminder" comment="Title of the screen for creating a new review reminder">Overhoringsherinnering toevoegen</string>
+    <string name="edit_review_reminder" comment="Title of the screen for editing an existing review reminder">Overhoringsherinnering bewerken</string>
+    <string name="you_have_no_review_reminders" comment="Text that appears in the review reminder editing screen when there are no reminders set">U heeft geen overhoringsherinneringen</string>
     <!-- studyoptions -->
     <string name="studyoptions_limit_select_tags">Selecteer Tags</string>
     <!-- Deck configurations -->

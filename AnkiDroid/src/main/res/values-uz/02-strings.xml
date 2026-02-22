@@ -85,7 +85,7 @@
     <string name="disable_eraser" maxLength="28">Oʻchirgʻichni oʻchirish</string>
     <string name="hide_whiteboard" maxLength="28">Yozuv taxtasini yashirish</string>
     <string name="clear_whiteboard" maxLength="28">Yozuv taxtasini tozalash</string>
-    <string name="hide_toolbar" maxLength="28">Hide toolbar</string>
+    <string name="hide_toolbar" maxLength="28">Asboblar panelini yashirish</string>
     <string name="replay_media" maxLength="28">Mediani qayta ijro etish</string>
     <string name="leech_suspend_notification">Karta yopishqoq deb belgilandi va toʻxtatildi</string>
     <string name="leech_notification">Karta yopishqoq deb belgilandi</string>
