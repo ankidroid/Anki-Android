@@ -40,8 +40,8 @@ open class BackupManager {
             Regex("(?:collection|backup)-((\\d{4})-(\\d{2})-(\\d{2})-(\\d{2})[.-](\\d{2}))(?:\\.\\d{2})?.colpkg")
         }
 
-        private val legacyDateFormat = SimpleDateFormat("yyyy-MM-dd-HH-mm")
-        private val newDateFormat = SimpleDateFormat("yyyy-MM-dd-HH.mm")
+        private val legacyDateFormat = SimpleDateFormat("yyyy-MM-dd-HH-mm", Locale.US)
+        private val newDateFormat = SimpleDateFormat("yyyy-MM-dd-HH.mm", Locale.US)
 
         fun getBackupDirectory(ankidroidDir: File): File {
             val directory = File(ankidroidDir, BACKUP_SUFFIX)
@@ -51,7 +51,7 @@ open class BackupManager {
             return directory
         }
 
-        fun getBackupDirectoryFromCollection(col: File): String = getBackupDirectory(col.parentFile!!).absolutePath
+        fun getBackupDirectoryFromCollection(col: File): String = getBackupDirectory(col.parentFile ?: col).absolutePath
 
         private fun getBrokenDirectory(ankidroidDir: File): File {
             val directory = File(ankidroidDir, BROKEN_COLLECTIONS_SUFFIX)
@@ -121,12 +121,12 @@ open class BackupManager {
                         "-corrupt-%tF.anki2",
                     value,
                 )
-            var movedFile = File(getBrokenDirectory(colFile.parentFile!!), movedFilename)
+            var movedFile = File(getBrokenDirectory(colFile.parentFile ?: colFile), movedFilename)
             var i = 1
             while (movedFile.exists()) {
                 movedFile =
                     File(
-                        getBrokenDirectory(colFile.parentFile!!),
+                        getBrokenDirectory(colFile.parentFile ?: colFile),
                         movedFilename.replace(
                             ".anki2",
                             "-$i.anki2",
@@ -141,10 +141,10 @@ open class BackupManager {
             if (moveConnectedFilesToo) {
                 // move all connected files (like journals, directories...) too
                 val colName = colFile.name
-                val directory = File(colFile.parent!!)
-                for (f in directory.listFiles()!!) {
+                val directory = colFile.parentFile ?: return false
+                for (f in directory.listFiles().orEmpty()) {
                     if (f.name.startsWith(colName) &&
-                        !f.renameTo(File(getBrokenDirectory(colFile.parentFile!!), f.name.replace(colName, movedFilename)))
+                        !f.renameTo(File(getBrokenDirectory(directory), f.name.replace(colName, movedFilename)))
                     ) {
                         return false
                     }
@@ -184,7 +184,7 @@ open class BackupManager {
          * in order of creation.
          */
         fun getBackups(colFile: File): Array<File> {
-            val files = getBackupDirectory(colFile.parentFile!!).listFiles() ?: arrayOf()
+            val files = getBackupDirectory(colFile.parentFile ?: colFile).listFiles().orEmpty()
             val backups =
                 files
                     .mapNotNull { file ->
@@ -220,7 +220,7 @@ open class BackupManager {
         fun removeDir(dir: File): Boolean {
             if (dir.isDirectory) {
                 val files = dir.listFiles()
-                for (aktFile in files!!) {
+                for (aktFile in files.orEmpty()) {
                     removeDir(aktFile)
                 }
             }
