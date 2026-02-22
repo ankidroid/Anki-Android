@@ -1137,10 +1137,11 @@ class CardBrowserViewModelTest : JvmTest() {
             val deckWithQuotes = addDeck("Test\"Quotes\"In\"Deck")
             setSelectedDeck(deckWithQuotes)
 
+            val searchString = requireNotNull(with(col) { searchRequestFlow.value.toSearchString() })
             assertThat(
                 "Quotes in deck name should be escaped with backslashes",
-                restrictOnDeck,
-                equalTo("deck:\"Test\\\"Quotes\\\"In\\\"Deck\""),
+                searchString.getOrThrow().value,
+                equalTo("deck:Test\\\"Quotes\\\"In\\\"Deck"),
             )
         }
 
@@ -1599,3 +1600,8 @@ suspend fun CardBrowserViewModel.saveSearch(
     title: String,
     query: String,
 ) = saveSearch(SavedSearch(title, query))
+
+suspend fun CardBrowserViewModel.setSelectedDeck(targetDid: DeckId) {
+    val deck = SelectableDeck.fromCollection(includeFiltered = false).single { it.deckId == targetDid }
+    setSelectedDeck(deck)
+}

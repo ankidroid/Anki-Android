@@ -39,6 +39,8 @@ sealed class SelectableDeck : Parcelable {
     ) : SelectableDeck() {
         constructor(d: DeckNameId) : this(d.id, d.name)
 
+        fun toDeckNameId() = DeckNameId(name = name, id = deckId)
+
         companion object {
             suspend fun fromId(id: DeckId): Deck = Deck(deckId = id, name = withCol { decks.name(id) })
         }
