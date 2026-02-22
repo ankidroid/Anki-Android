@@ -26,10 +26,12 @@ import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.progressindicator.CircularProgressIndicator
+import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.R
 import com.ichi2.anki.workarounds.OnWebViewRecreatedListener
 import com.ichi2.anki.workarounds.SafeWebViewLayout
 import com.ichi2.themes.Themes
+import com.ichi2.utils.checkWebviewVersion
 import timber.log.Timber
 
 /**
@@ -64,6 +66,8 @@ abstract class PageFragment(
 
     protected open fun onWebViewCreated() { }
 
+    protected open fun requiresModernWebView(): Boolean = false
+
     /**
      * When the webview calls `BridgeCommand("foo")`, the PageFragment execute `bridgeCommands["foo"]`.
      * By default, only bridge command is allowed, subclasses must redefine it if they expect bridge commands.
@@ -73,6 +77,7 @@ abstract class PageFragment(
     /**
      * Ensures that [pageWebViewClient] can receive `bridgeCommand` requests and execute the command from [bridgeCommands].
      */
+
     private fun setupBridgeCommand(pageWebViewClient: PageWebViewClient) {
         if (bridgeCommands.isEmpty()) {
             return
@@ -100,13 +105,19 @@ abstract class PageFragment(
         view: View,
         savedInstanceState: Bundle?,
     ) {
+        val ankiActivity = requireActivity() as AnkiActivity
         server = AnkiServer(this).also { it.start() }
         webViewLayout = view.findViewById(R.id.webview_layout)
+
+        if (requiresModernWebView() && checkWebviewVersion(ankiActivity)) {
+            Timber.w("${this::class.simpleName} requires modern WebView (Chrome 90+), aborting load")
+            ankiActivity.onBackPressedDispatcher.onBackPressed()
+            return
+        }
 
         view.findViewById<MaterialToolbar>(R.id.toolbar)?.setNavigationOnClickListener {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
-
         setupWebView(savedInstanceState)
     }
 
