@@ -995,6 +995,30 @@ class CardBrowserViewModelTest : JvmTest() {
     }
 
     @Test
+    fun `reposition - suspended new card`() {
+        repeat(2) { addBasicNote("New") }
+
+        runViewModelTest {
+            selectAll()
+
+            val cardId = queryAllSelectedCardIds().first()
+            col.sched.suspendCards(listOf(cardId))
+            val card = col.getCard(cardId)
+
+            assertThat("Card should be suspended", card.queue, equalTo(QueueType.Suspended))
+            assertThat("Card should still be new type", card.type, equalTo(CardType.New))
+
+            val repositionResult = prepareToRepositionCards()
+
+            // Should succeed because it's still a New card, even though suspended
+            assertInstanceOf<RepositionData>(repositionResult, "suspended new card should be repositionable").apply {
+                assertThat("queueTop", queueTop, equalTo(1))
+                assertThat("queueBottom", queueBottom, equalTo(2))
+            }
+        }
+    }
+
+    @Test
     fun `preview - no notes`() {
         // add a card: a preview should
         addBasicNote("Hello", "").firstCard().update {
