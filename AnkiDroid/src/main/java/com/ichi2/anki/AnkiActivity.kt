@@ -46,8 +46,11 @@ import androidx.core.app.ShareCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.core.net.toUri
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.viewbinding.ViewBinding
@@ -105,7 +108,8 @@ open class AnkiActivity(
     @LayoutRes contentLayoutId: Int? = null,
 ) : AppCompatActivity(contentLayoutId ?: 0),
     ShortcutGroupProvider,
-    AnkiActivityProvider {
+    AnkiActivityProvider,
+    MenuHost {
     /**
      * Receiver that informs us when a broadcast listen in [broadcastsActions] is received.
      *
@@ -874,6 +878,55 @@ open class AnkiActivity(
         }
         return true
     }
+
+    // region MenuHost delegation
+
+    // This only supports delegation of menus defined using MenuProvider, not `onCreateOptionsMenu`
+    //
+    // When delegating a MenuHost to a fragment, the fragment is attached after `super.onCreate`
+    // of the activity.
+    //
+    // As the activity calls `addMenuProvider` inside `super.onCreate()`, the fragment would not be
+    //  initialized
+    //
+    // Calls to activity.addMenuProvider are done after the fragment is initialized
+    // so this delegation works as long as the activity is using `onCreateOptionsMenu`
+
+    protected open val menuHost: MenuHost? = null
+
+    override fun addMenuProvider(provider: MenuProvider) {
+        menuHost?.addMenuProvider(provider) ?: super.addMenuProvider(provider)
+    }
+
+    override fun addMenuProvider(
+        provider: MenuProvider,
+        owner: LifecycleOwner,
+    ) {
+        menuHost?.addMenuProvider(provider, owner) ?: super.addMenuProvider(provider, owner)
+    }
+
+    override fun addMenuProvider(
+        provider: MenuProvider,
+        owner: LifecycleOwner,
+        state: Lifecycle.State,
+    ) {
+        menuHost?.addMenuProvider(provider, owner, state) ?: super.addMenuProvider(provider, owner, state)
+    }
+
+    override fun removeMenuProvider(provider: MenuProvider) {
+        menuHost?.removeMenuProvider(provider) ?: super.removeMenuProvider(provider)
+    }
+
+    override fun invalidateMenu() {
+        menuHost?.invalidateMenu() ?: super.invalidateMenu()
+    }
+
+    override fun invalidateOptionsMenu() {
+        super.invalidateOptionsMenu()
+        menuHost?.invalidateMenu()
+    }
+
+    // endregion
 
     companion object {
         /** Extra key to set the finish animation of an activity  */
