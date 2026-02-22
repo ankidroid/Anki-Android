@@ -29,9 +29,12 @@ import android.view.WindowManager
 import android.widget.LinearLayout
 import android.widget.ScrollView
 import android.widget.TextView
+import androidx.annotation.CheckResult
 import androidx.annotation.LayoutRes
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.progressindicator.LinearProgressIndicator
@@ -45,6 +48,7 @@ import com.ichi2.anki.multimedia.audio.AudioRecordingController.RecordingState.A
 import com.ichi2.anki.multimedia.audio.AudioRecordingController.RecordingState.ImmediatePlayback
 import com.ichi2.anki.multimediacard.AudioRecorder
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote
+import com.ichi2.anki.recorder.AudioTimer
 import com.ichi2.anki.showThemedToast
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.OnHoldListener
@@ -56,6 +60,8 @@ import com.ichi2.compat.USAGE_TOUCH
 import com.ichi2.ui.FixedTextView
 import com.ichi2.utils.Permissions.canRecordAudio
 import com.ichi2.utils.UiUtil
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import timber.log.Timber
 import java.io.File
 import java.io.IOException
@@ -72,8 +78,7 @@ class AudioRecordingController(
     val linearLayout: LinearLayout? = null,
     val viewModel: MultimediaViewModel? = null,
     val note: IMultimediaEditableNote? = null,
-) : AudioTimer.OnTimerTickListener,
-    AudioTimer.OnAudioTickListener {
+) {
     private lateinit var audioRecorder: AudioRecorder
     private var state: RecordingState = AppendToRecording.CLEARED
 
@@ -203,7 +208,7 @@ class AudioRecordingController(
 
         setUpMediaPlayer()
 
-        audioTimer = AudioTimer(this, this)
+        audioTimer = setupAudioTimer(context)
 
         // if the recorder is in the 'cleared' state
         // holding the 'record' button should start a recording
@@ -308,6 +313,39 @@ class AudioRecordingController(
                 },
             )
         }
+    }
+
+    @CheckResult
+    private fun setupAudioTimer(context: Context): AudioTimer {
+        fun onRecordingTimerTick(duration: Duration) {
+            if (isPlaying && !isRecording) {
+                val elapsed = audioPlayer?.elapsed ?: Duration.ZERO
+                audioProgressBar.progress = elapsed.inWholeMilliseconds.toInt()
+                audioTimeView?.text = elapsed.formatAsString()
+            } else {
+                audioTimeView?.text = duration.formatAsString()
+                audioProgressBar.progress = 0
+            }
+        }
+
+        fun onRecordingAudioTick() {
+            try {
+                if (isRecording) {
+                    val maxAmplitude = audioRecorder.maxAmplitude() / 10
+                    audioWaveform.addAmplitude(maxAmplitude.toFloat())
+                }
+            } catch (e: IllegalStateException) {
+                Timber.d(e, "Audio recorder interrupted")
+            }
+        }
+
+        return AudioTimer(
+            scope =
+                (context as? LifecycleOwner)?.lifecycleScope
+                    ?: CoroutineScope(Dispatchers.Main),
+            onTimerTick = ::onRecordingTimerTick,
+            onAudioTick = ::onRecordingAudioTick,
+        )
     }
 
     private fun setUpMediaPlayer() {
@@ -472,7 +510,7 @@ class AudioRecordingController(
         } catch (e: Exception) {
             Timber.w(e)
         }
-        audioTimer = AudioTimer(this, this)
+        audioTimer = setupAudioTimer(context)
     }
 
     private fun prepareAudioPlayer() {
@@ -696,31 +734,6 @@ class AudioRecordingController(
             clearRecording()
         } else {
             discardAudio()
-        }
-    }
-
-    override fun onTimerTick(duration: Duration) {
-        if (isPlaying && !isRecording) {
-            // This may remain at 0 for a few hundred ms while the audio player starts
-            // BUG: It takes 300ms from elapsed == duration -> onCompletionListener being called
-            // probably best to move onCompletionListener to here
-            val elapsed = audioPlayer!!.elapsed
-            audioProgressBar.progress = elapsed.inWholeMilliseconds.toInt()
-            audioTimeView?.text = elapsed.formatAsString()
-        } else {
-            audioTimeView?.text = duration.formatAsString()
-            audioProgressBar.progress = 0
-        }
-    }
-
-    override fun onAudioTick() {
-        try {
-            if (isRecording) {
-                val maxAmplitude = audioRecorder.maxAmplitude() / 10
-                audioWaveform.addAmplitude(maxAmplitude.toFloat())
-            }
-        } catch (e: IllegalStateException) {
-            Timber.d(e, "Audio recorder interrupted")
         }
     }
 
