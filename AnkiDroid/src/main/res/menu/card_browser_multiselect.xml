@@ -79,7 +79,7 @@
 
     <!-- TODO: ankidroid:showAsAction="ifRoom" once 'no hamburger' padding issues are resolved -->
     <item
-        android:id="@+id/action_preview"
+        android:id="@+id/action_preview_many"
         android:title="@string/card_editor_preview_card"
         android:icon="@drawable/ic_remove_red_eye_white"
     />
