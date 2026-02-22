@@ -41,14 +41,14 @@ import timber.log.Timber
  * The spinner aids discoverability of [Gesture.DOUBLE_TAP]
  * as it is not explained in [GestureDisplay].
  */
-class GesturePicker(
+open class GesturePicker(
     ctx: Context,
     attributeSet: AttributeSet? = null,
     defStyleAttr: Int = 0,
 ) : ConstraintLayout(ctx, attributeSet, defStyleAttr),
     WarningDisplay,
     ShakeDetector.Listener {
-    private val binding: ViewGesturePickerBinding
+    protected val binding: ViewGesturePickerBinding
     override val warningTextView get() = binding.warning
 
     private var onGestureListener: GestureListener? = null
@@ -89,7 +89,7 @@ class GesturePicker(
 
     private fun allGestures(): List<GestureWrapper> = (listOf(null) + availableGestures()).map(this::GestureWrapper).toList()
 
-    private fun availableGestures() = binding.gestureDisplay.availableValues()
+    protected open fun availableGestures() = binding.gestureDisplay.availableValues()
 
     inner class GestureWrapper(
         val gesture: Gesture?,

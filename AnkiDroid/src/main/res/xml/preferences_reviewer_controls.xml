@@ -205,6 +205,28 @@
             android:title="@string/gesture_toggle_whiteboard"
             android:icon="@drawable/ic_enable_whiteboard"
             />
+        <!-- New study screen -->
+        <com.ichi2.preferences.WhiteboardControlPreference
+            android:key="@string/pref_key_whiteboard_toggle_eraser"
+            android:title="@string/gesture_toggle_eraser"
+            android:icon="@drawable/ic_eraser"
+            />
+        <com.ichi2.preferences.WhiteboardControlPreference
+            android:key="@string/pref_key_whiteboard_undo"
+            android:title="@string/undo"
+            android:icon="@drawable/ic_undo_white"
+            />
+        <com.ichi2.preferences.WhiteboardControlPreference
+            android:key="@string/pref_key_whiteboard_redo"
+            android:title="@string/redo"
+            android:icon="@drawable/ic_redo"
+            />
+        <com.ichi2.preferences.WhiteboardControlPreference
+            android:key="@string/pref_key_whiteboard_clear"
+            android:title="@string/clear_whiteboard"
+            android:icon="@drawable/ic_clear_white"
+            />
+        <!-- Legacy study screen -->
         <com.ichi2.preferences.ReviewerControlPreference
             android:key="@string/toggle_eraser_command_key"
             android:title="@string/gesture_toggle_eraser"
