@@ -43,8 +43,8 @@ import com.ichi2.anki.multimedia.AudioVideoFragment
 import com.ichi2.anki.multimedia.MultimediaViewModel
 import com.ichi2.anki.multimedia.audio.AudioRecordingController.RecordingState.AppendToRecording
 import com.ichi2.anki.multimedia.audio.AudioRecordingController.RecordingState.ImmediatePlayback
-import com.ichi2.anki.multimediacard.AudioRecorder
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote
+import com.ichi2.anki.recorder.AudioRecorder
 import com.ichi2.anki.showThemedToast
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.OnHoldListener
@@ -124,7 +124,7 @@ class AudioRecordingController(
         @LayoutRes controllerLayout: Int,
     ) {
         this.state = initialState
-        audioRecorder = AudioRecorder()
+        audioRecorder = AudioRecorder(context)
         if (inEditField) {
             val origAudioPath = viewModel?.currentMultimediaPath?.value
             var bExist = false
@@ -526,13 +526,13 @@ class AudioRecordingController(
                 when {
                     isRecordingPaused -> resumeRecording()
                     isRecording -> pauseRecorder()
-                    isCleared -> startRecording(context, tempAudioPath!!)
-                    else -> startRecording(context, tempAudioPath!!)
+                    isCleared -> startRecording(tempAudioPath!!)
+                    else -> startRecording(tempAudioPath!!)
                 }
             }
             is ImmediatePlayback -> {
                 when (state as ImmediatePlayback) {
-                    ImmediatePlayback.CLEARED -> startRecording(context, tempAudioPath!!)
+                    ImmediatePlayback.CLEARED -> startRecording(tempAudioPath!!)
                     // end recording, allow a user to play or clear
                     ImmediatePlayback.RECORDING_IN_PROGRESS -> toggleSave(vibrate = false)
                     // stop -> playing
@@ -605,13 +605,10 @@ class AudioRecordingController(
         }
     }
 
-    private fun startRecording(
-        context: Context,
-        audioPath: File,
-    ) {
+    private fun startRecording(audioPath: File) {
         Timber.i("starting recording")
         try {
-            audioRecorder.startRecording(context, audioPath)
+            audioRecorder.start(audioPath)
             isRecording = true
             audioTimer.start()
             setUiState(state.recording())
@@ -630,7 +627,7 @@ class AudioRecordingController(
     fun stopAndSaveRecording() {
         audioTimer.stop()
         try {
-            audioRecorder.stopRecording()
+            audioRecorder.stop()
         } catch (e: RuntimeException) {
             Timber.i(e, "Recording stop failed, this happens if stop was hit immediately after start")
             showThemedToast(context, context.resources.getString(R.string.multimedia_editor_audio_view_recording_failed), true)
@@ -662,19 +659,19 @@ class AudioRecordingController(
         vibrate(20.milliseconds)
         audioTimer.stop()
         setUiState(state.clear())
-        audioRecorder.stopRecording()
+        audioRecorder.stop()
         viewModel?.updateCurrentMultimediaPath(null)
         tempAudioPath = generateTempAudioFile(context).also { tempAudioPath = it }
         isRecording = false
     }
 
     fun onFocusLost() {
-        audioRecorder.release()
+        audioRecorder.stop()
         audioPlayer!!.release()
     }
 
     fun onDestroy() {
-        audioRecorder.release()
+        audioRecorder.close()
     }
 
     // when answer button is clicked in reviewer
@@ -716,7 +713,7 @@ class AudioRecordingController(
     override fun onAudioTick() {
         try {
             if (isRecording) {
-                val maxAmplitude = audioRecorder.maxAmplitude() / 10
+                val maxAmplitude = audioRecorder.getMaxAmplitude() / 10
                 audioWaveform.addAmplitude(maxAmplitude.toFloat())
             }
         } catch (e: IllegalStateException) {
