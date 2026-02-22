@@ -29,10 +29,12 @@ import com.ichi2.anki.Reviewer
 import com.ichi2.anki.asyncIO
 import com.ichi2.anki.browser.BrowserDestination
 import com.ichi2.anki.cardviewer.SingleCardSide
+import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.libanki.Card
 import com.ichi2.anki.libanki.CardId
 import com.ichi2.anki.libanki.Collection
+import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.NoteId
 import com.ichi2.anki.libanki.redoLabel
 import com.ichi2.anki.libanki.sched.CurrentQueueState
@@ -43,6 +45,7 @@ import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.pages.AnkiServer
 import com.ichi2.anki.pages.CardInfoDestination
 import com.ichi2.anki.pages.DeckOptionsDestination
+import com.ichi2.anki.pages.DeckOptionsEntry
 import com.ichi2.anki.pages.PostRequestUri
 import com.ichi2.anki.pages.StatisticsDestination
 import com.ichi2.anki.preferences.reviewer.ViewerAction
@@ -278,12 +281,47 @@ class ReviewerViewModel(
         destinationFlow.emit(destination)
     }
 
+    @NeedsTest("verify that we show the proper deck option targets for the current card")
     private suspend fun emitDeckOptionsDestination() {
         val deckId = withCol { decks.getCurrentId() }
-        val isFiltered = withCol { decks.isFiltered(deckId) }
-        val destination = DeckOptionsDestination(deckId, isFiltered)
+        val card = currentCard.await()
+        val options = getDeckOptionsTargets(deckId, card)
+        val isFiltered = options.first { it.deckId == deckId }.isFiltered
+        val destination = DeckOptionsDestination(deckId, isFiltered, options)
         Timber.i("Launching 'deck options' for deck %d", deckId)
         destinationFlow.emit(destination)
+    }
+
+    /**
+     *  Builds the valid(all [DeckOptionsEntry] that have a proper deck name) list of
+     *  [DeckOptionsEntry] from which the user can select one to see its deck options.
+     *  @param currentDeckId the [DeckId] of the currently selected deck
+     *  @param card current card shown in the study screen
+     *  See https://github.com/ankitects/anki/blob/b8884bac72aa50fa1189fe0a5079a71574bc5043/qt/aqt/deckoptions.py#L83-L100
+     *  for backend implementation and ordering of the entries.
+     */
+    private suspend fun getDeckOptionsTargets(
+        currentDeckId: DeckId,
+        card: Card,
+    ): List<DeckOptionsEntry> {
+        val extraDeckIds = mutableListOf(currentDeckId)
+        if (card.oDid != 0L && card.oDid != currentDeckId) {
+            extraDeckIds.add(card.oDid)
+        }
+        if (card.did != currentDeckId) {
+            extraDeckIds.add(card.did)
+        }
+        return withCol {
+            extraDeckIds
+                .map { deckId ->
+                    DeckOptionsEntry(
+                        deckId = deckId,
+                        name = decks.nameIfExists(deckId),
+                        isFiltered = decks.isFiltered(deckId),
+                    )
+                }.filter { it.name != null }
+                .sortedBy { it.isFiltered }
+        }
     }
 
     private suspend fun emitBrowseDestination() {
