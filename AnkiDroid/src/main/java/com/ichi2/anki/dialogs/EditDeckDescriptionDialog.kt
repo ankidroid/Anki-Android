@@ -40,6 +40,7 @@ import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.utils.AndroidUiUtils.hideKeyboard
 import com.ichi2.utils.AndroidUiUtils.setFocusAndOpenKeyboard
 import com.ichi2.utils.create
+import com.ichi2.utils.handleOutsideTouch
 import com.ichi2.utils.moveCursorToEnd
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
@@ -85,6 +86,7 @@ class EditDeckDescriptionDialog : DialogFragment() {
                 setOnShowListener {
                     positiveButton.setOnClickListener { viewModel.saveAndExit() }
                     negativeButton.setOnClickListener { viewModel.onBackRequested() }
+                    handleOutsideTouch(binding) { viewModel.onBackRequested() }
                 }
                 setCanceledOnTouchOutside(false)
                 setCancelable(false)
