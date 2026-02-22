@@ -258,6 +258,7 @@ open class AnkiDroidJsAPI(
                     }
                     return@withContext convertToByteArray(apiContract, true)
                 } catch (e: NumberFormatException) {
+                    Timber.w(e, "setCardDue::Exception")
                     showDeveloperContact(ANKI_JS_ERROR_CODE_SET_DUE, apiContract.cardSuppliedDeveloperContact)
                     return@withContext convertToByteArray(apiContract, false)
                 }
@@ -461,6 +462,7 @@ open class AnkiDroidJsAPI(
                     searchForRows(apiContract.cardSuppliedData, SortOrder.UseCollectionOrdering, CardsOrNotes.CARDS)
                         .map { withCol { getCard(it.cardOrNoteId) } }
                 } catch (exc: Exception) {
+                    Timber.w(exc, "ankiSearchCardWithCallback::Exception")
                     activity.webView!!.evaluateJavascript(
                         "console.log('${context.getString(R.string.search_card_js_api_no_results)}')",
                         null,

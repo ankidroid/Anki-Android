@@ -38,7 +38,7 @@ import kotlin.test.assertFailsWith
 
 /**
  * Allows to test with CompatV24 (originally 21, thus the class name) and V26.
- * In particular it allows to test version of the code that uses [Files] and [Path] classes.
+ * In particular it allows to test version of the code that uses [java.nio.file.Files] and [java.nio.file.Path] classes.
  * And versions that must restrict themselves to [File].
  */
 @RunWith(Parameterized::class)
@@ -94,7 +94,7 @@ abstract class Test21And26 {
         val compat: Compat,
     ) {
         /**
-         * This run test, ensuring that [newDirectoryStream] throws on [directory].
+         * This run test, ensuring that [java.nio.file.Files.newDirectoryStream] throws on [directory].
          * This is useful in the case where we can't directly access the directory or compat
          */
         fun <T> runWithPermissionDenied(test: () -> T): T = runUsingCompat(compat, test)
@@ -122,9 +122,9 @@ abstract class Test21And26 {
     }
 
     /**
-     * Create a directory [directory]. Ensures that [directory.hasFile] returns [null],
+     * Create a directory `directory`. Ensures that `directory.hasFile` returns `null`,
      * which simulates to simulate https://github.com/ankidroid/Anki-Android/issues/10358.
-     * Also ensure that [Files.newDirectoryStream] fails on this directory.
+     * Also ensure that [java.nio.file.Files.newDirectoryStream] fails on this directory.
      */
     @SuppressLint("NewApi") // File.toPath = only called if sending API 26
     fun createPermissionDenied(): PermissionDenied {
