@@ -59,6 +59,7 @@ import com.ichi2.testutils.ProductionCollectionManager
 import com.ichi2.testutils.common.FailOnUnhandledExceptionRule
 import com.ichi2.testutils.common.IgnoreFlakyTestsInCIRule
 import com.ichi2.testutils.filter
+import com.ichi2.testutils.grantPermissions
 import com.ichi2.utils.InMemorySQLiteOpenHelperFactory
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
@@ -173,6 +174,9 @@ open class RobolectricTest :
 
         // BUG: We do not reset the MetaDB
         MetaDB.closeDB()
+
+        // https://github.com/ankidroid/Anki-Android/pull/19004#discussion_r2739833965
+        grantPermissions(Manifest.permission.INTERNET)
     }
 
     protected open fun useLegacyHelper(): Boolean = false

@@ -15,19 +15,26 @@
  */
 package com.ichi2.anki.ui.windows.permissions
 
+import android.Manifest
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.provider.Settings
 import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.LayoutRes
 import androidx.annotation.RequiresApi
 import androidx.core.os.bundleOf
 import androidx.core.view.allViews
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
 import com.ichi2.anki.R
+import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.settings.Prefs
+import com.ichi2.utils.Permissions
 import com.ichi2.utils.Permissions.openAppSettingsScreen
+import com.ichi2.utils.Permissions.requestPermissionThroughDialogOrSettings
 import com.ichi2.utils.Permissions.showToastAndOpenAppSettingsScreen
 import timber.log.Timber
 
@@ -47,6 +54,19 @@ abstract class PermissionsFragment(
         by lazy { view?.allViews?.filterIsInstance<PermissionsItem>()?.toList() ?: emptyList() }
 
     protected fun hasAllPermissions() = permissionsItems.all { it.areGranted }
+
+    private val internetLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+            if (isGranted) {
+                // No need to explicitly do anything, onResume handles updating the UI
+                Timber.i("Internet permission granted")
+            } else {
+                Timber.i("Internet permission denied")
+                showToastAndOpenAppSettingsScreen(
+                    getString(R.string.permission_required_message, getString(R.string.internet_access_title)),
+                )
+            }
+        }
 
     override fun onResume() {
         super.onResume()
@@ -82,6 +102,28 @@ abstract class PermissionsFragment(
     protected fun PermissionsItem.requestExternalStorageOnClick(launcher: ActivityResultLauncher<Intent>) {
         setOnPermissionsRequested { areAlreadyGranted ->
             if (!areAlreadyGranted) launcher.showManageAllFilesScreen()
+        }
+    }
+
+    @NeedsTest("Shows the permission item when INTERNET permission is denied")
+    @NeedsTest("Hides the permission item when INTERNET permission is already granted")
+    protected fun PermissionsItem.initializeInternetPermissionItem() {
+        if (Permissions.hasPermission(requireContext(), Manifest.permission.INTERNET)) {
+            // If internet permission is already granted (which is the case for most of devices), hide the permission item.
+            this.isVisible = false
+            return
+        }
+        // On devices such as Xiaomi, which allow user to deny internet permissions, show internet permission item.
+        setOnPermissionsRequested { areAlreadyGranted ->
+            if (!areAlreadyGranted) {
+                Timber.d("Requesting for internet permission")
+                requestPermissionThroughDialogOrSettings(
+                    requireActivity(),
+                    Manifest.permission.INTERNET,
+                    Prefs::internetPermissionRequested,
+                    internetLauncher,
+                )
+            }
         }
     }
 

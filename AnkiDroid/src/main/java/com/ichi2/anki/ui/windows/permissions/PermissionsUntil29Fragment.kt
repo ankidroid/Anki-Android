@@ -54,6 +54,7 @@ class PermissionsUntil29Fragment : PermissionsFragment(R.layout.fragment_permiss
     ) = FragmentPermissionsUntil29Binding
         .inflate(inflater, container, false)
         .apply {
+            internetPermission.initializeInternetPermissionItem()
             storagePermission.setOnPermissionsRequested { areAlreadyGranted ->
                 if (areAlreadyGranted) return@setOnPermissionsRequested
                 if (userCanGrantWriteExternalStorage()) {

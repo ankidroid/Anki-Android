@@ -27,6 +27,7 @@ import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.testutils.DbUtils
 import com.ichi2.testutils.common.Flaky
 import com.ichi2.testutils.common.OS
+import com.ichi2.testutils.grantPermissions
 import com.ichi2.utils.ResourceLoader
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
