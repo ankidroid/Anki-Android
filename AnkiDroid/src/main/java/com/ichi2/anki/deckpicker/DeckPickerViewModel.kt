@@ -89,7 +89,7 @@ class DeckPickerViewModel :
         }
 
     /** User filter of the deck list. Shown as a search in the UI */
-    private val flowOfCurrentDeckFilter = MutableStateFlow("")
+    private val flowOfCurrentDeckFilter = MutableStateFlow(DeckFilters.create(""))
 
     /**
      * Keep track of which deck was last given focus in the deck list. If we find that this value
@@ -390,7 +390,7 @@ class DeckPickerViewModel :
 
     fun updateDeckFilter(filterText: String) {
         Timber.d("filter: %s", filterText)
-        flowOfCurrentDeckFilter.value = filterText
+        flowOfCurrentDeckFilter.value = DeckFilters.create(filterText)
     }
 
     fun toggleDeckExpand(deckId: DeckId) =

@@ -18,8 +18,10 @@
 package com.ichi2.anki.libanki
 
 import anki.decks.deckTreeNode
+import com.ichi2.anki.deckpicker.DeckFilters
 import com.ichi2.anki.deckpicker.filterAndFlattenDisplay
 import com.ichi2.anki.libanki.sched.DeckNode
+import org.apache.commons.collections4.map.ListOrderedMap
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
@@ -68,7 +70,7 @@ class DeckNodeTest {
         val math = makeNode("Math", 2, 2, collapsed = true, children = listOf(algebra))
         val science = makeNode("Science", 1, 1, children = listOf(math))
 
-        val results = math.filterAndFlatten(null)
+        val results = math.filterAndFlatten("")
         assertEquals(1, results.size)
         assertEquals("Math", results[0].lastDeckNameComponent)
     }
@@ -98,6 +100,31 @@ class DeckNodeTest {
     }
 
     @Test
+    fun `search for deck with correct parent shows appropriate decks`() {
+        // Science::Math::Algebra::Group
+        val analysis = makeNode("Analysis", 4, 4)
+        val group = makeNode("Group", 4, 4)
+        val algebra = makeNode("Algebra", 3, 3, children = listOf(group, analysis))
+        val math = makeNode("Math", 2, 2, collapsed = false, children = listOf(algebra))
+        val science = makeNode("Science", 1, 1, children = listOf(math))
+
+        val results = science.filterAndFlatten("th::al")
+        assertEquals(listOf("Science", "Math", "Algebra", "Group", "Analysis"), results.map { it.lastDeckNameComponent })
+    }
+
+    @Test
+    fun `search for deck with incorrect parent shows no deck`() {
+        // Science::Math::Algebra::Group
+        val group = makeNode("Group", 4, 4)
+        val algebra = makeNode("Algebra", 3, 3, children = listOf(group))
+        val math = makeNode("Math", 2, 2, collapsed = false, children = listOf(algebra))
+        val science = makeNode("Science", 1, 1, children = listOf(math))
+
+        val results = science.filterAndFlatten("science::al")
+        assertEquals(listOf<String>(), results.map { it.lastDeckNameComponent })
+    }
+
+    @Test
     fun `search for non-existent path pattern returns no results`() {
         // Science::Math::Algebra::Group
         val group = makeNode("Group", 4, 4)
@@ -105,9 +132,30 @@ class DeckNodeTest {
         val math = makeNode("Math", 2, 2, collapsed = false, children = listOf(algebra))
         val science = makeNode("Science", 1, 1, children = listOf(math))
 
-        val results = science.filterAndFlatten("th::alg")
+        val results = science.filterAndFlatten("foo")
         assertEquals(emptyList<String>(), results.map { it.lastDeckNameComponent })
+    }
+
+    @Test
+    fun `search for multiple-term`() {
+        // Science::Math::Algebra::Group
+        val mathGroup = makeNode("Group", 4, 4)
+        val algebra = makeNode("Algebra", 3, 3, children = listOf(mathGroup))
+        val math = makeNode("Math", 2, 2, collapsed = false, children = listOf(algebra))
+        val chemistryGroup = makeNode("Group", deckId = 6, level = 3)
+        val chemistry = makeNode("Chemistry", deckId = 7, level = 2, children = listOf(chemistryGroup))
+        val science = makeNode("Science", 1, 1, children = listOf(math, chemistry))
+
+        val results = science.filterAndFlatten("ma gr")
+        // Chemistry::group should not be found
+        assertEquals(listOf<String>("Science", "Math", "Algebra", "Group"), results.map { it.lastDeckNameComponent })
+        val results2 = science.filterAndFlatten("ist gr")
+        // Chemistry::group should not be found
+        assertEquals(listOf<String>("Science", "Chemistry", "Group"), results2.map { it.lastDeckNameComponent })
     }
 }
 
-fun DeckNode.filterAndFlatten(filter: CharSequence?) = this.filterAndFlattenDisplay(filter, selectedDeckId = 1337).map { it.deckNode }
+fun DeckNode.filterAndFlatten(filter: CharSequence) =
+    this.filterAndFlattenDisplay(DeckFilters.create(filter), selectedDeckId = 1337).map {
+        it.deckNode
+    }
