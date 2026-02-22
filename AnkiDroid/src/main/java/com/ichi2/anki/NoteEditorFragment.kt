@@ -80,6 +80,7 @@ import androidx.lifecycle.lifecycleScope
 import anki.config.ConfigKey
 import anki.notes.NoteFieldsCheckResponse
 import com.google.android.material.color.MaterialColors
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.CollectionManager.TR
@@ -99,6 +100,8 @@ import com.ichi2.anki.dialogs.IntegerDialog
 import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
+import com.ichi2.anki.exception.MediaSizeLimitExceededException
+import com.ichi2.anki.exception.toBytesShortString
 import com.ichi2.anki.libanki.Card
 import com.ichi2.anki.libanki.CardOrdinal
 import com.ichi2.anki.libanki.Collection
@@ -190,6 +193,7 @@ import com.ichi2.utils.title
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import net.ankiweb.rsdroid.Backend
 import org.json.JSONArray
 import timber.log.Timber
 import java.io.File
@@ -2155,6 +2159,55 @@ class NoteEditorFragment :
         }
     }
 
+    private fun performAddMedia(
+        index: Int,
+        field: IField,
+        skipSizeCheck: Boolean,
+    ) {
+        launchCatchingTask {
+            try {
+                withCol {
+                    NoteService.importMediaToDirectory(this, field, skipSizeCheck = skipSizeCheck)
+                }
+
+                // Update UI
+                val fieldEditText = editFields!![index]
+                val formattedValue = field.formattedValue
+                if (field.type === EFieldType.TEXT) {
+                    fieldEditText.setText(formattedValue)
+                } else if (fieldEditText.text != null) {
+                    insertStringInField(fieldEditText, formattedValue)
+                }
+                changed = true
+            } catch (e: MediaSizeLimitExceededException) {
+                showLargeMediaFileWarning(e.fileName, e.fileSize) {
+                    performAddMedia(index, field, skipSizeCheck = true)
+                }
+            } catch (oomError: OutOfMemoryError) {
+                throw Exception(oomError)
+            }
+        }
+    }
+
+    private fun showLargeMediaFileWarning(
+        fileName: String,
+        fileSize: Long,
+        onForceAdd: () -> Unit,
+    ) {
+        val context = requireContext()
+        val fileSizeStr = fileSize.toBytesShortString(context)
+        val limitStr = Backend.MAX_INDIVIDUAL_MEDIA_FILE_SIZE.toBytesShortString(context)
+
+        MaterialAlertDialogBuilder(context).show {
+            title(R.string.media_file_size_warning_title)
+            message(text = getString(R.string.media_file_size_warning_message, fileName, fileSizeStr, limitStr))
+            positiveButton(R.string.media_file_size_add_anyway) {
+                onForceAdd()
+            }
+            negativeButton(R.string.dialog_cancel)
+        }
+    }
+
     /**
      * Adds a media file to a specific field within the currently edited multimedia note.
      *
@@ -2165,32 +2218,7 @@ class NoteEditorFragment :
         index: Int,
         field: IField,
     ) {
-        launchCatchingTask {
-            val note = getCurrentMultimediaEditableNote()
-            note.setField(index, field)
-            val fieldEditText = editFields!![index]
-
-            // Import field media
-            // This goes before setting formattedValue to update
-            // media paths with the checksum when they have the same name
-            withCol {
-                try {
-                    NoteService.importMediaToDirectory(this, field)
-                } catch (oomError: OutOfMemoryError) {
-                    // TODO: a 'retry' flow would be possible here
-                    throw Exception(oomError)
-                }
-            }
-
-            // Completely replace text for text fields (because current text was passed in)
-            val formattedValue = field.formattedValue
-            if (field.type === EFieldType.TEXT) {
-                fieldEditText.setText(formattedValue)
-            } else if (fieldEditText.text != null) {
-                insertStringInField(fieldEditText, formattedValue)
-            }
-            changed = true
-        }
+        performAddMedia(index, field, skipSizeCheck = false)
     }
 
     private fun onPaste(
