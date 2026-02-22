@@ -77,6 +77,7 @@ import java.util.Locale
 open class DeckSelectionDialog : AnalyticsDialogFragment() {
     private lateinit var binding: DialogDeckPickerBinding
     private var dialog: AlertDialog? = null
+    private lateinit var decksAdapter: DecksArrayAdapter
     private lateinit var expandImage: Drawable
     private lateinit var collapseImage: Drawable
     private lateinit var decksRoot: DeckNode
@@ -113,9 +114,9 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
         val dividerItemDecoration = DividerItemDecoration(binding.list.context, DividerItemDecoration.VERTICAL)
         binding.list.addItemDecoration(dividerItemDecoration)
         val decks: List<SelectableDeck> = getDeckNames(arguments)
-        val adapter = DecksArrayAdapter(decks)
-        binding.list.adapter = adapter
-        adjustToolbar(binding.root, adapter)
+        decksAdapter = DecksArrayAdapter(decks)
+        binding.list.adapter = decksAdapter
+        adjustToolbar(binding.root, decksAdapter)
         dialog =
             AlertDialog.Builder(requireActivity()).create {
                 negativeButton(R.string.dialog_cancel)
@@ -239,13 +240,26 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
 
     var deckCreationListener: DeckCreationListener? = null
 
+    private val keepOpen: Boolean
+        get() = requireArguments().getBoolean(KEEP_OPEN)
+
     /**
      * Same action as pressing on the deck in the list. I.e. send the deck to listener and close the dialog.
+     * When [keepOpen] is true, the dialog stays open and removes the selected deck from the list.
      */
     protected fun selectDeckAndClose(deck: SelectableDeck) {
         Timber.d("selected deck '%s'", deck)
         onDeckSelected(deck)
-        dialog!!.dismiss()
+        if (keepOpen) {
+            if (deck is SelectableDeck.Deck) {
+                decksAdapter.removeDeck(deck.deckId)
+            }
+            if (decksAdapter.itemCount == 0) {
+                dialog?.dismiss()
+            }
+        } else {
+            dialog!!.dismiss()
+        }
     }
 
     protected fun displayErrorAndCancel() {
@@ -306,6 +320,11 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
             currentlyDisplayedDecks.clear()
             currentlyDisplayedDecks.addAll(allDecksList.filter(::isViewable))
             notifyDataSetChanged()
+        }
+
+        fun removeDeck(deckId: DeckId) {
+            allDecksList.removeAll { it.did == deckId }
+            updateCurrentlyDisplayedDecks()
         }
 
         private val allDecksList = ArrayList<DeckNode>()
@@ -437,6 +456,7 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
         private const val TITLE = "title"
         private const val KEEP_RESTORE_DEFAULT_BUTTON = "keepRestoreDefaultButton"
         private const val DECK_NAMES = "deckNames"
+        private const val KEEP_OPEN = "keepOpen"
 
         /**
          * A dialog which handles selecting a deck
@@ -446,6 +466,7 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
             summaryMessage: String?,
             keepRestoreDefaultButton: Boolean,
             decks: List<SelectableDeck>,
+            keepOpen: Boolean = false,
         ): DeckSelectionDialog {
             val f = DeckSelectionDialog()
             val args = Bundle()
@@ -453,6 +474,7 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
             args.putString(TITLE, title)
             args.putBoolean(KEEP_RESTORE_DEFAULT_BUTTON, keepRestoreDefaultButton)
             args.putParcelableArrayList(DECK_NAMES, ArrayList(decks))
+            args.putBoolean(KEEP_OPEN, keepOpen)
             f.arguments = args
             return f
         }
