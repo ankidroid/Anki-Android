@@ -179,12 +179,24 @@ abstract class CardViewerFragment(
                 viewModel.onPageFinished(isAfterRecreation = savedInstanceState != null)
             }
             hasLoaded = true
+            // Reset per-side snackbar state to match old screen behavior
+            viewModel.mediaErrorHandler.onCardSideChange()
         }
 
         override fun shouldOverrideUrlLoading(
             view: WebView,
             request: WebResourceRequest,
         ): Boolean = handleUrl(view, request.url)
+
+        override fun onReceivedError(
+            view: WebView,
+            request: WebResourceRequest,
+            error: WebResourceError,
+        ) {
+            viewModel.mediaErrorHandler.processFailure(request) { filename: String ->
+                showMediaErrorSnackbar(filename)
+            }
+        }
 
         protected open fun handleUrl(
             webView: WebView,
@@ -239,16 +251,6 @@ abstract class CardViewerFragment(
                 }
             } catch (t: Throwable) {
                 Timber.w("Unable to parse intent uri: %s because: %s", url, t.message)
-            }
-        }
-
-        override fun onReceivedError(
-            view: WebView,
-            request: WebResourceRequest,
-            error: WebResourceError,
-        ) {
-            viewModel.mediaErrorHandler.processFailure(request) { filename: String ->
-                showMediaErrorSnackbar(filename)
             }
         }
     }

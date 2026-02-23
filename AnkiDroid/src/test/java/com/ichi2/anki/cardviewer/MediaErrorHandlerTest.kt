@@ -31,9 +31,6 @@ import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
 import java.io.File
 
-// PERF:
-// Theoretically should be able to get away with not using this, but it requires WebResourceRequest (easy to mock)
-// and URLUtil.guessFileName (static - likely harder)
 @RunWith(AndroidJUnit4::class)
 @Config(application = EmptyApplication::class)
 class MediaErrorHandlerTest {
@@ -120,9 +117,7 @@ class MediaErrorHandlerTest {
         // Tests that the third call to processMissingSound is ignored
         val handler = defaultHandler()
         processMissingMedia(File("example.wav"), handler)
-        sut.onCardSideChange()
         processMissingMedia(File("example2.wav"), handler)
-        sut.onCardSideChange()
         processMissingMedia(File("example3.wav"), handler)
         assertThat(timesCalled, equalTo(2))
         assertThat(fileNames, contains("example.wav", "example2.wav"))
@@ -130,17 +125,17 @@ class MediaErrorHandlerTest {
 
     @Test
     fun testMissingSound_ExceptionCaught() {
-        assertDoesNotThrow { processMissingMedia(File("example.wav")) { throw RuntimeException("expected") } }
+        assertDoesNotThrow {
+            processMissingMedia(File("example.wav")) { throw RuntimeException("expected") }
+        }
     }
 
     private fun getValidRequest(fileName: String): WebResourceRequest {
-        // actual URL on Android 9
         val url = "http://127.0.0.1:40001/$fileName"
         return getWebResourceRequest(url)
     }
 
     private fun getInvalidRequest(fileName: String): WebResourceRequest {
-        // no collection.media in the URL
         val url = "file:///storage/emulated/0/AnkiDroid/$fileName"
         return getWebResourceRequest(url)
     }
