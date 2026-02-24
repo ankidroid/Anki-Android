@@ -148,6 +148,7 @@ abstract class CardViewerViewModel(
     protected open suspend fun showAnswer() {
         Timber.v("showAnswer()")
         showingAnswer.emit(true)
+        mediaErrorHandler.onCardSideChange()
 
         val card = currentCard.await()
         val answerData = withCol { card.answer(this) }
