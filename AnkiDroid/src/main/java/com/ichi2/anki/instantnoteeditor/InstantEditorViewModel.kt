@@ -180,6 +180,30 @@ class InstantEditorViewModel :
             }
     }
 
+    /** Sync cloze counter with actual text.
+     When shared text already contains {{cX::}}, we must detect existing indices and start from max + 1.
+     Also update intClozeList so undo/reset logic works correctly. */
+    private fun syncClozeState(text: String?) {
+        if (text.isNullOrEmpty()) {
+            intClozeList.clear()
+            _currentClozeNumber.value = 1
+            return
+        }
+
+        val existingNumbers =
+            clozePattern
+                .findAll(text)
+                .mapNotNull { it.groups[2]?.value?.toIntOrNull() }
+                .toList()
+
+        // Sync the list of indices
+        intClozeList.clear()
+        intClozeList.addAll(existingNumbers)
+
+        // Set the next cloze number to max + 1
+        _currentClozeNumber.value = (existingNumbers.maxOrNull() ?: 0) + 1
+    }
+
     /**
      * Retrieves all cloze text fields from the current editor note's note type.
      *
@@ -206,6 +230,7 @@ class InstantEditorViewModel :
 
     fun setClozeFieldText(text: String?) {
         _actualClozeFieldText.value = text
+        syncClozeState(text) // Keep internal list of cloze indices(intClozeList) aligned with actual clozes in text
     }
 
     /**
@@ -233,10 +258,15 @@ class InstantEditorViewModel :
 
         val clozeText: String?
 
-        val clozeNumber = currentClozeNumber
-        if (currentClozeMode.value == InstantNoteEditorActivity.ClozeMode.INCREMENT) {
-            incrementClozeNumber()
-        }
+        val clozeNumber =
+            if (currentClozeMode.value == InstantNoteEditorActivity.ClozeMode.INCREMENT) {
+                val number = currentClozeNumber
+                incrementClozeNumber()
+                number
+            } else {
+                intClozeList.maxOrNull() ?: 1
+            }
+
         intClozeList.add(clozeNumber)
 
         // Extract the first, second, and third regex groups from the matcher
@@ -379,18 +409,13 @@ class InstantEditorViewModel :
     }
 
     fun toggleClozeMode() {
-        val newMode =
+        _currentClozeMode.value =
             when (_currentClozeMode.value) {
-                InstantNoteEditorActivity.ClozeMode.INCREMENT -> {
-                    decrementClozeNumber()
+                InstantNoteEditorActivity.ClozeMode.INCREMENT ->
                     InstantNoteEditorActivity.ClozeMode.NO_INCREMENT
-                }
-                InstantNoteEditorActivity.ClozeMode.NO_INCREMENT -> {
-                    incrementClozeNumber()
+                InstantNoteEditorActivity.ClozeMode.NO_INCREMENT ->
                     InstantNoteEditorActivity.ClozeMode.INCREMENT
-                }
             }
-        _currentClozeMode.value = newMode
     }
 }
 
