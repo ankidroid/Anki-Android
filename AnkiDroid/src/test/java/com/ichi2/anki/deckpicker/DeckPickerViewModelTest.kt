@@ -35,6 +35,7 @@ import org.hamcrest.Matchers.equalTo
 import org.junit.Test
 import org.junit.runner.RunWith
 import timber.log.Timber
+import kotlin.test.assertEquals
 
 /** Test of [DeckPickerViewModel] */
 @RunWith(AndroidJUnit4::class)
@@ -182,5 +183,29 @@ class DeckPickerViewModelTest : RobolectricTest() {
 
     companion object {
         private const val EXPECTED_CARDS: Int = 3
+    }
+
+    @Test
+    fun `ensure collapsed decks are also deleted`() {
+        runTest {
+            val deckIdA = addDeck("A")
+            val subDeckIdA1 = addDeck("A::A1")
+            val subDeckIdA2 = addDeck("A::A2")
+            // add other decks as well as control
+            addDeck("B")
+            addDeck("B:B1")
+            viewModel.flowOfDisableShortcuts.test {
+                viewModel.reloadDeckCounts().join()
+                viewModel.disableDeckAndChildrenShortcuts(deckIdA)
+                val actual = awaitItem()
+                val expected =
+                    listOf(
+                        deckIdA.toString(),
+                        subDeckIdA1.toString(),
+                        subDeckIdA2.toString(),
+                    )
+                assertEquals(expected, actual)
+            }
+        }
     }
 }
