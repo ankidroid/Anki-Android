@@ -83,20 +83,23 @@ class SyncMediaWorker(
                 monitorProgress(backend)
             }
         } catch (cancellationException: CancellationException) {
-            Timber.w(cancellationException)
+            Timber.w(cancellationException, "SyncMediaWorker cancelled (user tapped Cancel or WorkManager cancelled)")
+            notificationManager?.cancel(NotificationId.SYNC_MEDIA)
+            Timber.d("SyncMediaWorker: progress notification cancelled after worker cancellation")
             cancelMediaSync(CollectionManager.getBackend())
             throw cancellationException
         } catch (throwable: Throwable) {
-            Timber.w(throwable)
+            Timber.w(throwable, "SyncMediaWorker failed")
             notify {
                 setContentTitle(CollectionManager.TR.syncMediaFailed())
                 throwable.localizedMessage?.let { message ->
                     setContentText(message)
                 }
             }
+            Timber.d("SyncMediaWorker: showing failure notification")
             return Result.failure()
         }
-        Timber.d("SyncMediaWorker: cancelling notification")
+        Timber.d("SyncMediaWorker: cancelling progress notification (sync completed)")
         notificationManager?.cancel(NotificationId.SYNC_MEDIA)
 
         Timber.d("SyncMediaWorker: success")
