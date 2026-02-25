@@ -460,7 +460,6 @@ class DeckPickerViewModel :
         }
 
     /** Disables the shortcut of the deck and the children belonging to it.*/
-    @NeedsTest("ensure collapsed decks are also deleted")
     fun disableDeckAndChildrenShortcuts(deckId: DeckId) =
         launchCatchingIO {
             val deckTreeDids = dueTree?.find(deckId)?.map { it.did.toString() } ?: emptyList()
