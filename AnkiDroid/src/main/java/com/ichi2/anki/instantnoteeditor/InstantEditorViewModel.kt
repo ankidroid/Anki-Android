@@ -180,9 +180,7 @@ class InstantEditorViewModel :
             }
     }
 
-    /** Sync cloze counter with actual text.
-     When shared text already contains {{cX::}}, we must detect existing indices and start from max + 1.
-     Also update intClozeList so undo/reset logic works correctly. */
+    /** Make cloze counter and intClozeList consistent with actual text.  */
     private fun syncClozeState(text: String?) {
         if (text.isNullOrEmpty()) {
             intClozeList.clear()
@@ -190,18 +188,18 @@ class InstantEditorViewModel :
             return
         }
 
-        val existingNumbers =
-            clozePattern
-                .findAll(text)
-                .mapNotNull { it.groups[2]?.value?.toIntOrNull() }
-                .toList()
-
-        // Sync the list of indices
         intClozeList.clear()
-        intClozeList.addAll(existingNumbers)
 
-        // Set the next cloze number to max + 1
-        _currentClozeNumber.value = (existingNumbers.maxOrNull() ?: 0) + 1
+        var max = 0
+        clozePattern.findAll(text).forEach {
+            val value = it.groups[2]?.value?.toIntOrNull()
+            if (value != null) {
+                intClozeList.add(value)
+                if (value > max) max = value
+            }
+        }
+
+        _currentClozeNumber.value = max + 1
     }
 
     /**
