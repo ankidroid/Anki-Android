@@ -24,6 +24,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.widget.doAfterTextChanged
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
@@ -131,6 +132,14 @@ class EditDeckDescriptionDialog : DialogFragment() {
                     // FIXME: the upstream string unexpectedly contains newlines
                     setMessage(TR.deckConfigDescriptionNewHandlingHint().replace("\n", " ").replace("  ", " "))
                 }
+            }
+        }
+
+        with(binding.deckDescriptionInput) {
+            doAfterTextChanged {
+                // avoid an additional layout pass in the same frame as
+                // TextInputLayout's internal requestLayout(), which causes shaking
+                (this.parent as? View)?.post { requestLayout() }
             }
         }
 
