@@ -22,6 +22,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.os.BundleCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
@@ -372,6 +373,8 @@ class TagsDialog : AnalyticsDialogFragment {
      * @param prefixTag: The tag to be prefilled into the EditText section. A trailing '::' will be appended.
      */
     @NeedsTest("The prefixTag should be prefilled properly")
+    @NeedsTest("Entering an existing tag should show an error and disable the OK button")
+    @NeedsTest("Entering a new valid tag should clear the error and enable the OK button")
     private fun createAddTagDialog(prefixTag: String?) {
         val addTagDialog =
             AlertDialog
@@ -396,6 +399,46 @@ class TagsDialog : AnalyticsDialogFragment {
             inputET.setText("$prefixTag ")
         }
         inputET.moveCursorToEnd()
+        val positiveButton =
+            addTagDialog.getButton(AlertDialog.BUTTON_POSITIVE)
+
+        positiveButton.isEnabled = false
+
+        val textInputLayout =
+            inputET.parent?.parent
+                as? com.google.android.material.textfield.TextInputLayout
+
+        inputET.doAfterTextChanged { text ->
+
+            val rawTag = text?.toString()?.trim()
+
+            if (rawTag.isNullOrEmpty()) {
+                textInputLayout?.error = null
+                positiveButton.isEnabled = false
+                return@doAfterTextChanged
+            }
+
+            lifecycleScope.launch {
+                val tags = viewModel.tags.await()
+
+                val normalized =
+                    TagsUtil.getUniformedTag(rawTag)
+
+                val exists =
+                    tags.contains(normalized)
+
+                if (exists) {
+                    textInputLayout?.error =
+                        getString(R.string.tag_already_exists)
+
+                    positiveButton.isEnabled = false
+                } else {
+                    textInputLayout?.error = null
+
+                    positiveButton.isEnabled = true
+                }
+            }
+        }
         addTagDialog.show()
     }
 
