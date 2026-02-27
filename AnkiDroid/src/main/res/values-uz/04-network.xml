@@ -52,12 +52,12 @@
     <string name="menu_get_shared_decks">Dasta yuklab olish</string>
     <string name="connection_error_message">Tarmoq xatoligi yuz berdi</string>
     <string name="not_logged_in_title">AnkiWebʼga kirish</string>
-    <string name="login_create_account_message">Bulut sinxronizatsiya xizmatidan foydalanish uchun uchinchi tomonning hisobiga kirishingiz kerak. Hisobni keyingi bosqichda yaratishingiz mumkin.</string>
+    <string name="login_create_account_message">Bulut sinxronizatsiya xizmatidan foydalanish uchun uchinchi tomonning akkauntiga kirishingiz kerak. Akkauntni keyingi bosqichda yaratishingiz mumkin.</string>
     <!-- MyAccount.kt -->
     <string name="username">E-pochta manzili</string>
     <string name="password">Parol</string>
     <string name="log_in">Kirish</string>
-    <string name="sign_up_description">AnkiWeb hisobingiz yoʻqmi? U bepul!</string>
+    <string name="sign_up_description">AnkiWeb akkauntingiz yoʻqmi? U bepul!</string>
     <string name="sign_up_not_affiliated">Eslatma: AnkiWeb AnkiDroid bilan bogʻliq emas</string>
     <string name="sign_up">Roʻyxatdan oʻtish</string>
     <string name="logged_as">Shu orqali tizimga kirgansiz</string>

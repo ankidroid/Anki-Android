@@ -97,7 +97,7 @@
     <string name="edit_deck_description" comment="edit the deck description">Tavsifini tahrirlash</string>
     <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings" maxLength="28">Qoʻshish</string>
     <string name="menu_add_note" maxLength="28">Qayd qoʻshish</string>
-    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Hisobni sinxronlash</string>
+    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Akkauntni sinxronlash</string>
     <string name="menu_dismiss_note" maxLength="41">Yashirish / Oʻchirish</string>
     <string name="menu_bury_card" maxLength="28">Kartani koʻmish</string>
     <string name="menu_bury_note" maxLength="28">Qaydni koʻmish</string>
@@ -209,7 +209,7 @@
     <string name="heading_optional_permissions" comment="Heading for the section of optional permissions that the app needs to function, shown in the permissions explanation screen.">Ixtiyoriy</string>
     <string name="manually_grant_permissions" comment="Pop-up message that is shown to the user when they want to grant an app permission that must be granted via the OS settings screen.">Bu ruxsatni sozlamalarda qoʻlda yoqishingiz kerak</string>
     <string name="revoke_permissions" comment="Pop-up message that is shown to the user when they are revoking an app permission.">Bu ruxsatni sozlamalarda qoʻlda oʻchirishingiz kerak</string>
-    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Hisobni oʻchirish</string>
+    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Akkauntni oʻchirish</string>
     <!-- Instant Note Editor -->
     <string name="instant_card" comment="Used in the Android system context menu/share dialog to quickly create a note. This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. ">Karta yaratish</string>
     <!-- Multiple profile -->

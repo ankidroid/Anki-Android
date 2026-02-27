@@ -85,7 +85,7 @@
     <string name="disable_eraser" maxLength="28">ئۆچۈرگۈچنى چەكلە</string>
     <string name="hide_whiteboard" maxLength="28">ئاق دوسكىنى يوشۇر</string>
     <string name="clear_whiteboard" maxLength="28">ئاق دوسكىنى تازىلا</string>
-    <string name="hide_toolbar" maxLength="28">Hide toolbar</string>
+    <string name="hide_toolbar" maxLength="28">قورال بالداقنى يوشۇر</string>
     <string name="replay_media" maxLength="28">ۋاسىتىنى قايتا قوي</string>
     <string name="leech_suspend_notification">كارتىغا ئۇنتۇلغاق ۋە كېچىكتۈرۈلگەن بەلگىسى قويۇلغان</string>
     <string name="leech_notification">كارتىغا ئۇنتۇلغاق دەپ بەلگىسى قويۇلغان</string>
@@ -264,9 +264,9 @@
     <!-- IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
-    <string name="invalid_value" comment="Error message in IncrementerNumberRangePreference when input is not a valid number">Invalid value</string>
-    <string name="maximum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the maximum allowed value">Maximum value is %d</string>
-    <string name="minimum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the minimum allowed value">Minimum value is %d</string>
+    <string name="invalid_value" comment="Error message in IncrementerNumberRangePreference when input is not a valid number">قىممىتى ئىناۋەتسىز</string>
+    <string name="maximum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the maximum allowed value">ئەڭ چوڭ قىممىتى %d</string>
+    <string name="minimum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the minimum allowed value">ئەڭ كىچىك قىممىتى %d</string>
     <!-- Used for credential empty warning message -->
     <string name="invalid_email">ئىناۋەتلىك ئېلخەت ئادرېسى كىرگۈزۈلىدۇ</string>
     <string name="password_empty">ئىم زۆرۈر</string>
@@ -381,5 +381,5 @@
     <!-- Scheduler Upgrade Required Dialog title-->
     <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">كۈنتەرتىپلىگۈچنى يېڭىلاش زۆرۈر</string>
     <!-- Whitespace is OK -->
-    <string name="list_separator" comment="The character and spacing to display between elements of a list, for example \', \' in \'Apple, Banana, Cherry" tools:ignore="TranslationTypo">, </string>
+    <string name="list_separator" comment="The character and spacing to display between elements of a list, for example \', \' in \'Apple, Banana, Cherry" tools:ignore="TranslationTypo">، </string>
 </resources>
