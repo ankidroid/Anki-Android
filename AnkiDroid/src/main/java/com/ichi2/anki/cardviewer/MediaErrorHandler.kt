@@ -117,21 +117,13 @@ class MediaErrorHandler : MediaErrorListener {
         file: File,
         onFailure: (String) -> Unit,
     ) {
-        // We want this to trigger more than once on the same side - as the user is in control of pressing "play"
-        // and we want to provide feedback
-        // The UX of the snackbar is annoying, as it obscures the content. Assume that if a user ignores it twice, they don't care.
         if (missingMediaCount >= MAX_DISPLAY_TIMES) return
 
         try {
-            val fileName = file.name
-            onFailure.invoke(fileName)
-            if (!hasExecuted) {
-                missingMediaCount++
-            }
+            onFailure.invoke(file.name)
+            missingMediaCount++
         } catch (e: Exception) {
             Timber.w(e, "Failed to notify UI of media failure")
-        } finally {
-            hasExecuted = true
         }
     }
 

@@ -114,7 +114,6 @@ class MediaErrorHandlerTest {
 
     @Test
     fun testThirdSoundIsIgnored() {
-        // Tests that the third call to processMissingSound is ignored
         val handler = defaultHandler()
         processMissingMedia(File("example.wav"), handler)
         processMissingMedia(File("example2.wav"), handler)
