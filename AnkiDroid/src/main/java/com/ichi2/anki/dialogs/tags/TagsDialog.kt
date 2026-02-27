@@ -22,6 +22,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.os.BundleCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
@@ -386,17 +387,66 @@ class TagsDialog : AnalyticsDialogFragment {
                     inputType = InputType.TYPE_CLASS_TEXT,
                     displayKeyboard = true,
                 ) { d: AlertDialog?, input: CharSequence ->
+
                     addTag(input.toString())
                     d?.dismiss()
                 }
+
         val inputET = addTagDialog.getInputField()
+
         inputET.filters = arrayOf(addTagFilter)
+
         if (!prefixTag.isNullOrEmpty()) {
-            // utilize the addTagFilter to append '::' properly by appending a space to prefixTag
             inputET.setText("$prefixTag ")
+            inputET.moveCursorToEnd()
         }
-        inputET.moveCursorToEnd()
-        addTagDialog.show()
+
+        val positiveButton =
+            addTagDialog.getButton(AlertDialog.BUTTON_POSITIVE)
+
+        positiveButton.isEnabled = false
+
+        // SAFE WAY TO FIND TextInputLayout
+        val textInputLayout =
+            generateSequence(inputET.parent) { (it as? View)?.parent }
+                .filterIsInstance<com.google.android.material.textfield.TextInputLayout>()
+                .firstOrNull()
+
+        inputET.doAfterTextChanged { text ->
+
+            val rawTag = text?.toString()?.trim()
+
+            if (rawTag.isNullOrEmpty()) {
+                textInputLayout?.error = null
+                positiveButton.isEnabled = false
+
+                return@doAfterTextChanged
+            }
+
+            lifecycleScope.launch {
+                val tags = viewModel.tags.await()
+
+                val normalized =
+                    TagsUtil.getUniformedTag(rawTag)
+
+                val exists =
+                    tags.contains(normalized)
+
+                if (exists) {
+                    textInputLayout?.error =
+                        getString(
+                            R.string.tag_already_exists,
+                            normalized,
+                        )
+
+                    positiveButton.isEnabled = false
+                } else {
+                    textInputLayout?.error = null
+
+                    positiveButton.isEnabled = true
+                }
+            }
+        }
     }
 
     @VisibleForTesting
