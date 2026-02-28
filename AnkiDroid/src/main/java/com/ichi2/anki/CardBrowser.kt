@@ -84,7 +84,7 @@ import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.SortOrder
 import com.ichi2.anki.libanki.undoAvailable
-import com.ichi2.anki.libanki.undoLabel
+import com.ichi2.anki.ui.internationalization.undoLabelToSentenceCase
 import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.model.CardsOrNotes
 import com.ichi2.anki.model.CardsOrNotes.CARDS
@@ -866,7 +866,11 @@ open class CardBrowser :
         }
         actionBarMenu?.findItem(R.id.action_undo)?.run {
             isVisible = getColUnsafe.undoAvailable()
-            title = getColUnsafe.undoLabel()
+            title = getColUnsafe.undoLabel()?.let { label ->
+                label.removePrefix("Undo ").let { action ->
+                    undoLabelToSentenceCase(this@CardBrowser, action)
+                }
+            }
         }
 
         actionBarMenu?.findItem(R.id.action_reschedule_cards)?.title =
