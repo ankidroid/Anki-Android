@@ -524,7 +524,7 @@ open class AnkiActivity(
         try {
             showDialogFragment(newFragment)
         } catch (e: IllegalStateException) {
-            Timber.w("failed to show fragment, activity is likely paused. Sending notification")
+            Timber.w(e, "failed to show fragment, activity is likely paused. Sending notification")
             // Store a persistent message to SharedPreferences instructing AnkiDroid to show dialog
             DialogHandler.storeMessage(newFragment.dialogHandlerMessage?.toMessage())
             // Show a basic notification to the user in the notification bar in the meantime
@@ -760,7 +760,7 @@ open class AnkiActivity(
             try {
                 FileProvider.getUriForFile(this, authority, attachment)
             } catch (e: IllegalArgumentException) {
-                Timber.e("Could not generate a valid URI for the apkg file")
+                Timber.e(e, "Could not generate a valid URI for the apkg file")
                 showThemedToast(this, resources.getString(R.string.apk_share_error), false)
                 return
             }
@@ -819,7 +819,7 @@ open class AnkiActivity(
         try {
             saveFileLauncher.launch(saveIntent)
         } catch (ex: ActivityNotFoundException) {
-            Timber.w("No activity found to handle saveExportFile request")
+            Timber.w(ex, "No activity found to handle saveExportFile request")
             showSnackbar(R.string.activity_start_failed)
         }
     }
