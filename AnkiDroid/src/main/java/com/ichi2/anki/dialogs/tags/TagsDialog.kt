@@ -387,7 +387,6 @@ class TagsDialog : AnalyticsDialogFragment {
                     inputType = InputType.TYPE_CLASS_TEXT,
                     displayKeyboard = true,
                 ) { d: AlertDialog?, input: CharSequence ->
-
                     addTag(input.toString())
                     d?.dismiss()
                 }
@@ -397,20 +396,20 @@ class TagsDialog : AnalyticsDialogFragment {
         inputET.filters = arrayOf(addTagFilter)
 
         if (!prefixTag.isNullOrEmpty()) {
+            // utilize the addTagFilter to append '::' properly by appending a space to prefixTag
             inputET.setText("$prefixTag ")
-            inputET.moveCursorToEnd()
         }
+
+        inputET.moveCursorToEnd()
 
         val positiveButton =
             addTagDialog.getButton(AlertDialog.BUTTON_POSITIVE)
 
         positiveButton.isEnabled = false
 
-        // SAFE WAY TO FIND TextInputLayout
         val textInputLayout =
-            generateSequence(inputET.parent) { (it as? View)?.parent }
-                .filterIsInstance<com.google.android.material.textfield.TextInputLayout>()
-                .firstOrNull()
+            inputET.parent?.parent
+                as? com.google.android.material.textfield.TextInputLayout
 
         inputET.doAfterTextChanged { text ->
 
@@ -419,7 +418,6 @@ class TagsDialog : AnalyticsDialogFragment {
             if (rawTag.isNullOrEmpty()) {
                 textInputLayout?.error = null
                 positiveButton.isEnabled = false
-
                 return@doAfterTextChanged
             }
 
@@ -434,10 +432,7 @@ class TagsDialog : AnalyticsDialogFragment {
 
                 if (exists) {
                     textInputLayout?.error =
-                        getString(
-                            R.string.tag_already_exists,
-                            normalized,
-                        )
+                        getString(R.string.tag_already_exists)
 
                     positiveButton.isEnabled = false
                 } else {
@@ -447,6 +442,7 @@ class TagsDialog : AnalyticsDialogFragment {
                 }
             }
         }
+        addTagDialog.show()
     }
 
     @VisibleForTesting
