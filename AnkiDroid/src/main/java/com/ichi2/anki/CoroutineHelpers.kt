@@ -539,17 +539,28 @@ data class ProgressContext(
     var progress: Progress,
     var text: String = "",
     /** If set, shows a progress bar with `current` of `max` complete. */
-    var amount: Pair<Int, Int>? = null,
+    var amount: Amount? = null,
 ) {
     @Suppress("Deprecation") // ProgressDialog deprecation
     fun updateDialog(dialog: android.app.ProgressDialog) {
         val message =
             listOfNotNull(
                 text,
-                amount?.let { "${it.first}/$${it.second}" },
+                amount?.let { "${it.current}/$${it.max}" },
             ).joinToString(" ")
         dialog.setMessage(message)
     }
+
+    /**
+     * Represents a progress value and a maximum limit.
+     *
+     * @see ProgressContext
+     */
+    // values are 'Long' as this can represent bytes.
+    data class Amount(
+        val current: Long,
+        val max: Long,
+    )
 }
 
 /**

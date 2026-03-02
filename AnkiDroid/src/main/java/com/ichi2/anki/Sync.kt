@@ -18,6 +18,7 @@ package com.ichi2.anki
 
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
+import anki.collection.Progress
 import anki.sync.SyncAuth
 import anki.sync.SyncCollectionResponse
 import anki.sync.syncAuth
@@ -216,9 +217,11 @@ private suspend fun handleNormalSync(
 
 private fun fullDownloadProgress(title: String): ProgressContext.() -> Unit =
     {
+        fun Progress.FullSync.toAmount() = ProgressContext.Amount(transferred.toLong(), total.toLong())
+
         text = title
         if (progress.hasFullSync() && progress.fullSync.total > 0) {
-            amount = progress.fullSync.run { Pair(transferred, total) }
+            amount = progress.fullSync.toAmount()
         }
     }
 
