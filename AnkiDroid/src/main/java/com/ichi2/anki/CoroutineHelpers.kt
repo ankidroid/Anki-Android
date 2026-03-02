@@ -22,6 +22,7 @@ import android.content.Context
 import android.content.DialogInterface
 import android.database.sqlite.SQLiteDatabaseCorruptException
 import android.net.Uri
+import android.text.format.Formatter
 import android.view.WindowManager
 import android.view.WindowManager.BadTokenException
 import androidx.annotation.StringRes
@@ -358,7 +359,7 @@ suspend fun <T> Backend.withProgress(
  * flashes of a dialog.
  */
 suspend fun <T> FragmentActivity.withProgress(
-    progressContext: ProgressContext = ProgressContext(Progress.getDefaultInstance()),
+    progressContext: ProgressContext = ProgressContext(),
     extractProgress: ProgressContext.() -> Unit,
     onCancel: ((Backend) -> Unit)? = { it.setWantsAbort() },
     @StringRes manualCancelButton: Int? = null,
@@ -536,19 +537,37 @@ private suspend fun ProgressContext.monitorProgress(
  * that can be written to in order to update the UI.
  */
 data class ProgressContext(
-    var progress: Progress,
+    var progress: Progress = Progress.getDefaultInstance(),
     var text: String = "",
     /** If set, shows a progress bar with `current` of `max` complete. */
     var amount: Amount? = null,
+    val formatAmount: (Amount) -> String = { (current, max) -> "$current/$max" },
 ) {
     @Suppress("Deprecation") // ProgressDialog deprecation
     fun updateDialog(dialog: android.app.ProgressDialog) {
         val message =
             listOfNotNull(
                 text,
-                amount?.let { "${it.current}/$${it.max}" },
+                amount?.let { formatAmount(it) },
             ).joinToString(" ")
         dialog.setMessage(message)
+    }
+
+    companion object {
+        /**
+         * A [com.ichi2.anki.ProgressContext] which formats progress as bytes:
+         *
+         * `28 MB/141 MB`
+         */
+        fun ofBytes(context: Context) =
+            ProgressContext(
+                formatAmount = { (current, max) ->
+                    // replace spaces with NBSP so newlines are handled better
+                    val curStr = Formatter.formatShortFileSize(context, current).replace(' ', '\u00A0')
+                    val maxStr = Formatter.formatShortFileSize(context, max).replace(' ', '\u00A0')
+                    "$curStr/$maxStr"
+                },
+            )
     }
 
     /**
