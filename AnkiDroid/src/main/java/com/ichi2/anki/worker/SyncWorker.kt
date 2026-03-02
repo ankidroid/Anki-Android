@@ -96,12 +96,11 @@ class SyncWorker(
             }
         val shouldSyncMedia = inputData.getBoolean(SYNC_MEDIA_KEY, false)
 
-        return try {
+        try {
             syncCollection(auth, shouldSyncMedia)
-            Timber.d("SyncWorker: success")
-            setLastSyncTimeToNow()
-            Result.success()
         } catch (cancellationException: CancellationException) {
+            Timber.w(cancellationException)
+            notificationManager?.cancel(NotificationId.SYNC)
             cancelSync(CollectionManager.getBackend())
             throw cancellationException
         } catch (throwable: Throwable) {
@@ -112,11 +111,14 @@ class SyncWorker(
                     setContentText(message)
                 }
             }
-            Result.failure()
-        } finally {
-            Timber.d("SyncWorker: cancelling notification")
-            notificationManager?.cancel(NotificationId.SYNC)
+            return Result.failure()
         }
+        Timber.d("SyncWorker: cancelling notification")
+        notificationManager?.cancel(NotificationId.SYNC)
+
+        Timber.d("SyncWorker: success")
+        setLastSyncTimeToNow()
+        return Result.success()
     }
 
     private suspend fun syncCollection(
