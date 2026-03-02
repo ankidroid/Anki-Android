@@ -216,8 +216,8 @@ private suspend fun handleNormalSync(
 
 private fun fullDownloadProgress(title: String): ProgressContext.() -> Unit =
     {
-        if (progress.hasFullSync()) {
-            text = title
+        text = title
+        if (progress.hasFullSync() && progress.fullSync.total > 0) {
             amount = progress.fullSync.run { Pair(transferred, total) }
         }
     }
