@@ -171,7 +171,6 @@ import com.ichi2.utils.show
 import com.ichi2.utils.title
 import com.squareup.seismic.ShakeDetector
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.runBlocking
 import timber.log.Timber
 import java.io.File
 import java.io.UnsupportedEncodingException
@@ -1448,13 +1447,12 @@ abstract class AbstractFlashcardViewer :
 
     private fun updateCard(content: RenderedCard) {
         Timber.d("updateCard()")
-        // TODO: This doesn't need to be blocking
-        runBlocking {
+        launchCatchingTask {
             cardMediaPlayer.loadCardAvTags(currentCard!!)
+            cardContent = content.html
+            fillFlashcard()
+            playMedia(false) // Play media if appropriate
         }
-        cardContent = content.html
-        fillFlashcard()
-        playMedia(false) // Play media if appropriate
     }
 
     /**
