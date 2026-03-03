@@ -723,8 +723,8 @@ class NoteEditorFragment :
         editOcclusionsButton = requireView().findViewById(R.id.EditOcclusionsButton)
         imageSelectionForOcclusionContainer = requireView().findViewById(R.id.ImageSelectionForOcclusionContainer)
         imageSelectionForOcclusionLabel = requireView().findViewById(R.id.ImageSelectionForOcclusionLabel)
-        cameraForOcclusionButton = requireView().findViewById<Button>(R.id.CameraForOcclusionButton)
-        galleryForOcclusionButton = requireView().findViewById<Button>(R.id.GalleryForOcclusionButton)
+        cameraForOcclusionButton = requireView().findViewById(R.id.CameraForOcclusionButton)
+        galleryForOcclusionButton = requireView().findViewById(R.id.GalleryForOcclusionButton)
         pasteOcclusionImageButton = requireView().findViewById(R.id.PasteImageForOcclusionButton)
 
         try {
@@ -1334,7 +1334,6 @@ class NoteEditorFragment :
     @NeedsTest("14664: 'first field must not be empty' no longer applies after saving the note")
     @KotlinCleanup("fix !! on oldNoteType/newNoteType")
     suspend fun saveNote() {
-        val res = resources
         if (selectedTags == null) {
             selectedTags = ArrayList(0)
         }
@@ -1658,7 +1657,7 @@ class NoteEditorFragment :
     fun prepareNoteFields(): MutableList<String> {
         val convertNewlines = shouldReplaceNewlines()
 
-        fun String?.toFieldText(): String = NoteService.convertToHtmlNewline(this.toString(), convertNewlines)
+        fun String?.toFieldText(): String = convertToHtmlNewline(this.toString(), convertNewlines)
 
         return editFields?.mapTo(mutableListOf()) { it.fieldText.toFieldText() } ?: mutableListOf()
     }
@@ -2702,7 +2701,7 @@ class NoteEditorFragment :
 
     private fun updateField(field: FieldEditText?): Boolean {
         val fieldContent = field!!.text?.toString() ?: ""
-        val correctedFieldContent = NoteService.convertToHtmlNewline(fieldContent, shouldReplaceNewlines())
+        val correctedFieldContent = convertToHtmlNewline(fieldContent, shouldReplaceNewlines())
         if (editorNote!!.values()[field.ord] != correctedFieldContent) {
             editorNote!!.values()[field.ord] = correctedFieldContent
             return true
