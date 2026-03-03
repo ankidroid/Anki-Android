@@ -92,6 +92,7 @@ import com.ichi2.anki.android.input.shortcut
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.common.utils.ext.ifZero
+import com.ichi2.anki.dialogs.ChangeNoteTypeDialog
 import com.ichi2.anki.dialogs.ConfirmationDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
 import com.ichi2.anki.dialogs.DiscardChangesDialog
@@ -919,6 +920,21 @@ class NoteEditorFragment :
             if (caller == NoteEditorCaller.ADD_IMAGE) lifecycleScope.launch { handleImageIntent(intent) }
         } else {
             noteTypeSpinner!!.onItemSelectedListener = EditNoteTypeListener()
+            // Intercept spinner clicks to launch ChangeNoteTypeDialog instead of spinner dropdown
+            noteTypeSpinner!!.setOnTouchListener { _, event ->
+                if (event.action == android.view.MotionEvent.ACTION_UP) {
+                    launchChangeNoteTypeDialog()
+                }
+                true
+            }
+            parentFragmentManager.setFragmentResultListener(
+                ChangeNoteTypeDialog.REQUEST_KEY_NOTE_TYPE_CHANGED,
+                viewLifecycleOwner,
+            ) { _, _ ->
+                Timber.i("ChangeNoteTypeDialog completed, closing NoteEditor")
+                reloadRequired = true
+                closeNoteEditorAfterSave()
+            }
             requireAnkiActivity().setTitle(R.string.cardeditor_title_edit_card)
         }
         requireView().findViewById<View>(R.id.CardEditorTagButton).setOnClickListener {
@@ -1097,7 +1113,11 @@ class NoteEditorFragment :
                 }
             KeyEvent.KEYCODE_N ->
                 if (event.isCtrlPressed && noteTypeSpinner != null) {
-                    noteTypeSpinner!!.performClick()
+                    if (!addNote) {
+                        launchChangeNoteTypeDialog()
+                    } else {
+                        noteTypeSpinner!!.performClick()
+                    }
                     return true
                 }
             KeyEvent.KEYCODE_T ->
@@ -1439,6 +1459,17 @@ class NoteEditorFragment :
         isFieldEdited = false
         isTagsEdited = false
         closeNoteEditor()
+    }
+
+    /**
+     * Launches the [ChangeNoteTypeDialog] for the current note being edited.
+     * Used in edit mode when the user taps the note type spinner.
+     */
+    private fun launchChangeNoteTypeDialog() {
+        val noteId = editorNote?.id ?: return
+        Timber.i("Launching ChangeNoteTypeDialog for note %d", noteId)
+        val dialog = ChangeNoteTypeDialog.newInstance(listOf(noteId))
+        showDialogFragment(dialog)
     }
 
     /**
