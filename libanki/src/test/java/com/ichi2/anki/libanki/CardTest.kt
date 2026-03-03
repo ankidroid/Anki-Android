@@ -284,8 +284,7 @@ class CardTest : InMemoryAnkiTest() {
         assertEquals(expectedTimeLimit, timeLimit)
 
         // Verify it's using currentDeckId() by checking it matches original deck's config, not filtered deck's
-        val configDictForDeckId = col.decks.configDictForDeckId(filteredDeckId)
-        // Both decks share the same config, so verify we're looking at the right deck ID
+        // Both decks share the same config, so verify we're looking at     the right deck ID
         assertEquals(originalDeckId, card.currentDeckId())
         assertNotEquals(filteredDeckId, card.currentDeckId())
     }

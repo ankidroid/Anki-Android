@@ -66,7 +66,6 @@ class DeckNodeTest {
         val group = makeNode("Group", 4, 4)
         val algebra = makeNode("Algebra", 3, 3, children = listOf(group))
         val math = makeNode("Math", 2, 2, collapsed = true, children = listOf(algebra))
-        val science = makeNode("Science", 1, 1, children = listOf(math))
 
         val results = math.filterAndFlatten(null)
         assertEquals(1, results.size)
