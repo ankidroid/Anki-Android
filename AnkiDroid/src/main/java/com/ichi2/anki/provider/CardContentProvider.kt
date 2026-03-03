@@ -810,6 +810,7 @@ class CardContentProvider : ContentProvider() {
         }
         Timber.d("bulkInsertNotes: %d items.\n%s", valuesArr.size, getLogMessage("bulkInsert", null))
 
+        val cardsToUpdate = ArrayList<Card>()
         var result = 0
         for (i in valuesArr.indices) {
             val values: ContentValues = valuesArr[i]
@@ -840,10 +841,12 @@ class CardContentProvider : ContentProvider() {
             col.addNote(newNote, deckId)
             for (card: Card in newNote.cards(col)) {
                 card.did = deckId
-                col.updateCard(card)
+                cardsToUpdate.add(card)
             }
             result++
         }
+
+        col.updateCards(cardsToUpdate)
 
         return result
     }
