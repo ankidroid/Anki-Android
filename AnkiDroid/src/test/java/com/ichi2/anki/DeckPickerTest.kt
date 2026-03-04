@@ -661,6 +661,17 @@ class DeckPickerTest : RobolectricTest() {
             )
         }
 
+    @Test
+    fun `startup response is cleared after handling so it does not re-run on resume`() =
+        deckPicker {
+            ShadowLooper.runUiThreadTasksIncludingDelayedTasks()
+            assertThat(
+                "startup response cleared after handling so it does not re-run on resume",
+                viewModel.flowOfStartupResponse.value,
+                nullValue(),
+            )
+        }
+
     /**
      * Emulates a null collection and a `BackendDbLockedException`
      *
