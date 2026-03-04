@@ -163,7 +163,7 @@ export async function updateI18nFiles() {
         // but this comment hopefully clarifies for the reader that BCP47 / ISO-639-2 3-letter language tags do work in practice.
         //
         // The codes are not case-sensitive; the r prefix is used to distinguish the region portion. You cannot specify a region alone.
-        let androidLanguages = [];
+        let androidLanguages: string[];
         const languageCode = language.split("-", 1)[0];
         if (LOCALIZED_REGIONS.includes(languageCode)) {
             androidLanguages = [language.replace("-", "-r")]; // zh-CN becomes zh-rCN
