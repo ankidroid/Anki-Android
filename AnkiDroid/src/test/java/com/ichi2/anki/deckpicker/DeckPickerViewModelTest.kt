@@ -147,6 +147,15 @@ class DeckPickerViewModelTest : RobolectricTest() {
         }
     }
 
+    @Test
+    fun `consumeStartupResponse clears the current value`() {
+        runTest {
+            viewModel.flowOfStartupResponse.value = DeckPickerViewModel.StartupResponse.Success
+            viewModel.consumeStartupResponse()
+            assertThat("startup response is cleared after consumption", viewModel.flowOfStartupResponse.value, equalTo(null))
+        }
+    }
+
     /**
      * Creates a note with 3 cards, all empty
      *
