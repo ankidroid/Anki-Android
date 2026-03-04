@@ -797,14 +797,14 @@ open class DeckPicker :
             Timber.d("onStartupResponse: %s", response)
             when (response) {
                 is StartupResponse.RequestPermissions -> {
-                    viewModel.consumeStartupResponse()
+                    viewModel.flowOfStartupResponse.value = null // Prevent duplicate permission screen launches
                     permissionScreenLauncher.launch(
                         PermissionsActivity.getIntent(this, response.requiredPermissions),
                     )
                 }
 
                 is StartupResponse.Success -> {
-                    viewModel.consumeStartupResponse()
+                    viewModel.flowOfStartupResponse.value = null // Prevent duplicate startup on re-resume
                     showStartupScreensAndDialogs(sharedPrefs(), 0)
 
                     if (tryShowStudyOptionsPanel()) {

@@ -79,13 +79,6 @@ class DeckPickerViewModel :
     OnErrorListener {
     val flowOfStartupResponse = MutableStateFlow<StartupResponse?>(null)
 
-    /**
-     * Clears the current startup response so it is only handled once.
-     */
-    fun consumeStartupResponse() {
-        flowOfStartupResponse.value = null
-    }
-
     private val flowOfDeckDueTree = MutableStateFlow<DeckNode?>(null)
 
     /** The root of the tree displaying all decks */
