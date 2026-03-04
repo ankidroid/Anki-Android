@@ -2,28 +2,11 @@
 package com.ichi2.anki
 
 import com.ichi2.anki.libanki.Card
-import com.ichi2.anki.libanki.Collection
-import com.ichi2.anki.libanki.Note
-import com.ichi2.utils.HashUtil.hashSetInit
 
 /**
  * Utilities for working on multiple cards
  */
 object CardUtils {
-    /**
-     * @return List of corresponding notes without duplicates, even if the input list has multiple cards of the same note.
-     */
-    fun getNotes(
-        col: Collection,
-        cards: kotlin.collections.Collection<Card>,
-    ): Set<Note> {
-        val notes: MutableSet<Note> = hashSetInit(cards.size)
-        for (card in cards) {
-            notes.add(card.note(col))
-        }
-        return notes
-    }
-
     /**
      * Returns the deck ID of the given [Card].
      *
