@@ -31,6 +31,9 @@
     <string name="tts_no_tts">Don’t speak</string>
 
     <string name="reposition_card_not_new_error">Only new cards can be repositioned</string>
+    <string name="reposition_complete">Reposition Complete</string>
+    <string name="reposition_summary_message">%1$d cards have been repositioned. %2$d cards were skipped because they are not new.</string>
+    <string name="reposition_summary_undetermined">%1$d cards have been repositioned. Some cards were skipped because they are not new.</string>
     <string name="reset_card_dialog_title">Reset card progress</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%d card reset</item>

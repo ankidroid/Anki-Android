@@ -57,6 +57,7 @@ import com.ichi2.anki.browser.CardBrowserViewModel.RowSelection
 import com.ichi2.anki.browser.CardBrowserViewModel.ToggleSelectionState.SELECT_ALL
 import com.ichi2.anki.browser.CardBrowserViewModel.ToggleSelectionState.SELECT_NONE
 import com.ichi2.anki.browser.RepositionCardsRequest.ContainsNonNewCardsError
+import com.ichi2.anki.browser.RepositionCardsRequest.MixedSelection
 import com.ichi2.anki.browser.RepositionCardsRequest.RepositionData
 import com.ichi2.anki.browser.search.SavedSearch
 import com.ichi2.anki.export.ExportDialogFragment
@@ -964,7 +965,7 @@ class CardBrowserViewModelTest : JvmTest() {
             assertThat("2 selected rows", selectedRows.size, equalTo(2))
 
             val repositionResult = prepareToRepositionCards()
-            assertInstanceOf<ContainsNonNewCardsError>(repositionResult, "new cards error")
+            assertInstanceOf<MixedSelection>(repositionResult, "mixed selection error")
         }
     }
 
@@ -1015,6 +1016,20 @@ class CardBrowserViewModelTest : JvmTest() {
                 assertThat("queueTop", queueTop, equalTo(1))
                 assertThat("queueBottom", queueBottom, equalTo(2))
             }
+        }
+    }
+
+    @Test
+    fun `reposition - all non new cards`() {
+        addRevBasicNoteDueToday("Review1", "Today")
+        addRevBasicNoteDueToday("Review2", "Today")
+
+        runViewModelTest {
+            selectAll()
+            assertThat("2 selected rows", selectedRows.size, equalTo(2))
+
+            val repositionResult = prepareToRepositionCards()
+            assertInstanceOf<ContainsNonNewCardsError>(repositionResult, "all non-new cards error")
         }
     }
 

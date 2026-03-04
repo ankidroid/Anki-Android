@@ -68,6 +68,7 @@ import com.ichi2.anki.browser.CardBrowserViewModel.ToggleSelectionState.SELECT_A
 import com.ichi2.anki.browser.CardBrowserViewModel.ToggleSelectionState.SELECT_NONE
 import com.ichi2.anki.browser.RepositionCardFragment.Companion.REQUEST_REPOSITION_NEW_CARDS
 import com.ichi2.anki.browser.RepositionCardsRequest.ContainsNonNewCardsError
+import com.ichi2.anki.browser.RepositionCardsRequest.MixedSelection
 import com.ichi2.anki.browser.RepositionCardsRequest.RepositionData
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.utils.android.isRobolectric
@@ -159,6 +160,9 @@ class CardBrowserFragment :
     private var searchBar: SearchBar? = null
     private var searchView: SearchView? = null
     private var deckChip: Chip? = null
+
+    /** Stores mixed selection info when reposition dialog is shown */
+    private var pendingMixedSelection: MixedSelection? = null
 
     @get:LayoutRes
     private val layout: Int
@@ -730,6 +734,28 @@ class CardBrowserFragment :
                     )
                     return@launchCatchingTask
                 }
+                is MixedSelection -> {
+                    // Show confirmation dialog for mixed selection
+                    val repositionData = repositionCardsResult.repositionData
+                    val top = repositionData.queueTop
+                    val bottom = repositionData.queueBottom
+                    if (top == null || bottom == null) {
+                        showSnackbar(R.string.something_wrong)
+                        return@launchCatchingTask
+                    }
+
+                    // Store the mixed selection info for later display
+                    pendingMixedSelection = repositionCardsResult
+
+                    val repositionDialog =
+                        RepositionCardFragment.newInstance(
+                            queueTop = top,
+                            queueBottom = bottom,
+                            random = repositionData.random,
+                            shift = repositionData.shift,
+                        )
+                    showDialogFragment(repositionDialog)
+                }
                 is RepositionData -> {
                     val top = repositionCardsResult.queueTop
                     val bottom = repositionCardsResult.queueBottom
@@ -925,9 +951,44 @@ class CardBrowserFragment :
                     shift = shift,
                 )
             }
-        showSnackbar(
-            TR.browsingChangedNewPosition(count),
-            Snackbar.LENGTH_SHORT,
+
+        // Check if this was a mixed selection and show summary dialog
+        val mixedSelection = pendingMixedSelection
+        if (mixedSelection != null) {
+            pendingMixedSelection = null
+            showRepositionSummaryDialog(
+                repositionedCount = count,
+                skippedCount = mixedSelection.skippedCount,
+            )
+        } else {
+            showSnackbar(
+                TR.browsingChangedNewPosition(count),
+                Snackbar.LENGTH_SHORT,
+            )
+        }
+    }
+
+    private fun showRepositionSummaryDialog(
+        repositionedCount: Int,
+        skippedCount: Int?,
+    ) {
+        val message =
+            if (skippedCount != null) {
+                getString(
+                    R.string.reposition_summary_message,
+                    repositionedCount,
+                    skippedCount,
+                )
+            } else {
+                getString(R.string.reposition_summary_undetermined, repositionedCount)
+            }
+
+        showDialogFragment(
+            SimpleMessageDialog.newInstance(
+                title = getString(R.string.reposition_complete),
+                message = message,
+                reload = false,
+            ),
         )
     }
 

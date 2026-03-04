@@ -157,6 +157,9 @@ class CardBrowserViewModel(
 
     val flowOfSearchTerms = MutableStateFlow("")
 
+    /** Stores repositionable card IDs when mixed selection is handled */
+    private var repositionableCardIds: List<CardId> = emptyList()
+
     val searchTerms: String
         get() = flowOfSearchTerms.value
 
@@ -953,30 +956,57 @@ class CardBrowserViewModel(
     @NeedsTest("verify behavior for repositioning with 'Randomize order'")
     suspend fun prepareToRepositionCards(): RepositionCardsRequest {
         val selectedCardIds = queryAllSelectedCardIds()
-        // Only new cards may be repositioned (If any non-new found show error dialog and return false)
-        // Allow suspended cards that were never reviewed (CardType.New) to be repositioned
-        if (selectedCardIds.any { withCol { !canRepositionCard(getCard(it)) } }) {
+
+        // Separate repositionable and non-repositionable cards
+        val (repositionableIds, skippedIds) =
+            withCol {
+                selectedCardIds.partition { cardId ->
+                    canRepositionCard(getCard(cardId))
+                }
+            }
+
+        // If no cards can be repositioned, return error
+        if (repositionableIds.isEmpty()) {
             return RepositionCardsRequest.ContainsNonNewCardsError
         }
+
+        // Determine if we should use exact counts or undetermined based on selection size
+        val useExactCounts = selectedCardIds.size < 1000
+
+        // Store the repositionable IDs for later use
+        repositionableCardIds = repositionableIds
 
         // query obtained from Anki Desktop
         // https://github.com/ankitects/anki/blob/1fb1cbbf85c48a54c05cb4442b1b424a529cac60/qt/aqt/operations/scheduling.py#L117
         try {
-            return withCol {
-                val (min, max) =
-                    db
-                        .query("select min(due), max(due) from cards where type=? and odid=0", CardType.New.code)
-                        .use {
-                            it.moveToNext()
-                            Pair(max(0, it.getInt(0)), it.getInt(1))
-                        }
-                val defaults = sched.repositionDefaults()
-                RepositionData(
-                    min = min,
-                    max = max,
-                    random = defaults.random,
-                    shift = defaults.shift,
+            val repositionData =
+                withCol {
+                    val (min, max) =
+                        db
+                            .query("select min(due), max(due) from cards where type=? and odid=0", CardType.New.code)
+                            .use {
+                                it.moveToNext()
+                                Pair(max(0, it.getInt(0)), it.getInt(1))
+                            }
+                    val defaults = sched.repositionDefaults()
+                    RepositionData(
+                        min = min,
+                        max = max,
+                        random = defaults.random,
+                        shift = defaults.shift,
+                    )
+                }
+
+            // Return appropriate response based on whether we have skipped cards
+            return if (skippedIds.isNotEmpty()) {
+                val skippedCount = if (useExactCounts) skippedIds.size else null
+                RepositionCardsRequest.MixedSelection(
+                    repositionableCount = repositionableIds.size,
+                    skippedCount = skippedCount,
+                    repositionData = repositionData,
                 )
+            } else {
+                repositionData
             }
         } catch (e: Exception) {
             // TODO: Remove this once we've verified no production errors
@@ -999,11 +1029,19 @@ class CardBrowserViewModel(
         shuffle: Boolean,
         shift: Boolean,
     ): Int {
-        val ids = queryAllSelectedCardIds()
+        // Use stored repositionable IDs if available (for mixed selections), otherwise use all selected
+        val ids = repositionableCardIds.ifEmpty { queryAllSelectedCardIds() }
+
         Timber.d("repositioning %d cards to %d", ids.size, position)
-        return undoableOp {
-            sched.sortCards(cids = ids, position, step = step, shuffle = shuffle, shift = shift)
-        }.count
+        val result =
+            undoableOp {
+                sched.sortCards(cids = ids, position, step = step, shuffle = shuffle, shift = shift)
+            }
+
+        // Clear the stored repositionable IDs after use
+        repositionableCardIds = emptyList()
+
+        return result.count
     }
 
     /** Returns the number of rows of the current result set  */
@@ -1514,6 +1552,13 @@ private fun canRepositionCard(card: Card): Boolean =
     }
 
 sealed class RepositionCardsRequest {
+    /** Mixed selection - some cards can be repositioned, some cannot */
+    data class MixedSelection(
+        val repositionableCount: Int,
+        val skippedCount: Int?, // null = undetermined (for huge selections or slow analysis)
+        val repositionData: RepositionData,
+    ) : RepositionCardsRequest()
+
     /** Only new cards may be repositioned */
     data object ContainsNonNewCardsError : RepositionCardsRequest()
 
