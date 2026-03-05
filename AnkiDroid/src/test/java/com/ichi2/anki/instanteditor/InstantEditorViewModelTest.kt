@@ -213,6 +213,21 @@ class InstantEditorViewModelTest : RobolectricTest() {
             assertEquals(word, cleanWord)
         }
 
+    @Test
+    fun `cloze numbering continues from existing clozes`() =
+        runViewModelTest {
+            val text =
+                "This is the {{c1::first cloze}}. " +
+                    "This should be the {{c2::second cloze}}. " +
+                    "Similarly, this one as {{c3::third cloze}}."
+
+            setClozeFieldText(text)
+
+            val result = buildClozeText("fourth")
+
+            assertEquals("{{c4::fourth}}", result)
+        }
+
     private fun runViewModelTest(
         initViewModel: () -> InstantEditorViewModel = { InstantEditorViewModel() },
         testBody: suspend InstantEditorViewModel.() -> Unit,
