@@ -91,25 +91,31 @@
             tools:hint="Search cards/notes"
             tools:menu="@menu/card_browser" />
 
-        <com.google.android.material.chip.ChipGroup
+
+        <HorizontalScrollView
+            android:id="@+id/chip_group"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:scrollbars="horizontal"
             android:layout_marginTop="-8dp"
             android:paddingHorizontal="16dp"
             app:layout_scrollFlags="scroll|enterAlways">
 
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chip_decks"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:chipIcon="@drawable/ic_cards_star"
-                android:maxLines="1"
-                android:ellipsize="middle"
+            <com.google.android.material.chip.ChipGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_decks"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:chipIcon="@drawable/ic_cards_star"
+                    android:maxLines="1"
+                    android:ellipsize="middle"
 
-                tools:text="All Decks"
-                />
-        </com.google.android.material.chip.ChipGroup>
-
+                    tools:text="All Decks"
+                    />
+            </com.google.android.material.chip.ChipGroup>
+        </HorizontalScrollView>
     </com.google.android.material.appbar.AppBarLayout>
 
     <com.google.android.material.search.SearchView
