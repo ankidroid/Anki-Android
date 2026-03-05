@@ -17,6 +17,7 @@
 
 package com.ichi2.anki.instantnoteeditor
 
+import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -26,6 +27,7 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.NoteFieldsCheckResult
 import com.ichi2.anki.OnErrorListener
 import com.ichi2.anki.checkNoteFieldsResponse
+import com.ichi2.anki.common.utils.ext.replaceWith
 import com.ichi2.anki.instantnoteeditor.InstantNoteEditorActivity.DialogType
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.Note
@@ -181,6 +183,18 @@ class InstantEditorViewModel :
     }
 
     /**
+     * Extracts the cloze ordinals from text (if any).
+     *
+     * `"{{c2::text}} {{c1::more}}"` => `[2, 1]`
+     */
+    @CheckResult
+    private fun getClozeOrdinals(text: String): List<Int> =
+        clozePattern
+            .findAll(text)
+            .mapNotNull { it.groups[2]?.value?.toIntOrNull() }
+            .toList()
+
+    /**
      * Retrieves all cloze text fields from the current editor note's note type.
      *
      * This method accesses the `editorNote` property to fetch its associated note type
@@ -206,6 +220,8 @@ class InstantEditorViewModel :
 
     fun setClozeFieldText(text: String?) {
         _actualClozeFieldText.value = text
+        intClozeList.replaceWith(getClozeOrdinals(text ?: ""))
+        _currentClozeNumber.value = (intClozeList.maxOrNull() ?: 0) + 1
     }
 
     /**
