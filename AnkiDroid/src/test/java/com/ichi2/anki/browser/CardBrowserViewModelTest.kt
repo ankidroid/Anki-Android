@@ -56,8 +56,7 @@ import com.ichi2.anki.browser.CardBrowserViewModel.Companion.STATE_MULTISELECT_V
 import com.ichi2.anki.browser.CardBrowserViewModel.RowSelection
 import com.ichi2.anki.browser.CardBrowserViewModel.ToggleSelectionState.SELECT_ALL
 import com.ichi2.anki.browser.CardBrowserViewModel.ToggleSelectionState.SELECT_NONE
-import com.ichi2.anki.browser.RepositionCardsRequest.ContainsNonNewCardsError
-import com.ichi2.anki.browser.RepositionCardsRequest.MixedSelection
+import com.ichi2.anki.browser.RepositionCardsRequest.NoRepositionableCardsError
 import com.ichi2.anki.browser.RepositionCardsRequest.RepositionData
 import com.ichi2.anki.browser.search.SavedSearch
 import com.ichi2.anki.export.ExportDialogFragment
@@ -965,7 +964,17 @@ class CardBrowserViewModelTest : JvmTest() {
             assertThat("2 selected rows", selectedRows.size, equalTo(2))
 
             val repositionResult = prepareToRepositionCards()
-            assertInstanceOf<MixedSelection>(repositionResult, "mixed selection error")
+            assertInstanceOf<RepositionData>(repositionResult, "mixed selection should still return reposition data").apply {
+                val unsupported =
+                    assertInstanceOf<UnsupportedCardCount.Count>(
+                        unsupportedCardCount,
+                        "unsupported card count should be exact",
+                    )
+                assertThat("unsupported card count", unsupported.value, equalTo(1))
+            }
+
+            val count = repositionSelectedRows(position = 50, step = 1, shuffle = false, shift = false)
+            assertThat("only new cards should be repositioned", count, equalTo(1))
         }
     }
 
@@ -997,17 +1006,17 @@ class CardBrowserViewModelTest : JvmTest() {
 
     @Test
     fun `reposition - suspended new card`() {
-        repeat(2) { addBasicNote("New") }
+        addBasicNote("New").suspendAll()
+        addBasicNote("New")
 
         runViewModelTest {
             selectAll()
 
-            val cardId = queryAllSelectedCardIds().first()
-            col.sched.suspendCards(listOf(cardId))
-            val card = col.getCard(cardId)
-
-            assertThat("Card should be suspended", card.queue, equalTo(QueueType.Suspended))
-            assertThat("Card should still be new type", card.type, equalTo(CardType.New))
+            val cards = queryAllSelectedCardIds().map(col::getCard)
+            assertTrue("at least one card is suspended") { cards.any { it.queue == QueueType.Suspended } }
+            assertTrue("all suspended cards are still new type") {
+                cards.filter { it.queue == QueueType.Suspended }.all { it.type == CardType.New }
+            }
 
             val repositionResult = prepareToRepositionCards()
 
@@ -1029,7 +1038,7 @@ class CardBrowserViewModelTest : JvmTest() {
             assertThat("2 selected rows", selectedRows.size, equalTo(2))
 
             val repositionResult = prepareToRepositionCards()
-            assertInstanceOf<ContainsNonNewCardsError>(repositionResult, "all non-new cards error")
+            assertInstanceOf<NoRepositionableCardsError>(repositionResult, "all non-new cards error")
         }
     }
 
