@@ -1016,12 +1016,9 @@ class CardBrowserViewModel(
         val ids = queryAllSelectedCardIds()
 
         Timber.d("repositioning %d cards to %d", ids.size, position)
-        val result =
-            undoableOp {
-                sched.sortCards(cids = ids, position, step = step, shuffle = shuffle, shift = shift)
-            }
-
-        return result.count
+        return undoableOp {
+            sched.sortCards(cids = ids, position, step = step, shuffle = shuffle, shift = shift)
+        }.count
     }
 
     /** Returns the number of rows of the current result set  */
@@ -1517,7 +1514,7 @@ class IdsFile(
 /**
  * Determines if a card can be repositioned.
  *
- * Mirrors Anki upstream logic in `set_new_position()`: https://github.com/ankitects/anki/blob/main/rslib/src/card/mod.rs
+ * Mirrors Anki upstream logic in `set_new_position()`: https://github.com/ankitects/anki/blob/967992304627bb2bc690afd70b28760f09c2a021/rslib/src/scheduler/new.rs#L65-L80
  * - if `card.type == CardType.New`, it's repositionable
  * - otherwise, if `card.queue == QueueType.New`, it's repositionable
  *

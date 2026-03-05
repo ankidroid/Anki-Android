@@ -925,7 +925,6 @@ class CardBrowserFragment :
                     shift = shift,
                 )
             }
-
         showSnackbar(
             TR.browsingChangedNewPosition(count),
             Snackbar.LENGTH_SHORT,
