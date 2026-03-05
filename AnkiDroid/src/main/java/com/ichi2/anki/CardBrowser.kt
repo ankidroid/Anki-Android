@@ -377,6 +377,7 @@ open class CardBrowser :
         startLoadingCollection()
 
         setupFlows()
+        setupNewSearchView()
         registerOnForgetHandler { viewModel.queryAllSelectedCardIds() }
         registerSaveSearchHandler()
 
@@ -414,6 +415,11 @@ open class CardBrowser :
                 else -> error("Unexpected saved search action: $type")
             }
         }
+    }
+
+    private fun setupNewSearchView() {
+        if (!useSearchView) return
+        supportActionBar?.hide()
     }
 
     override fun setupBackPressedCallbacks() {
