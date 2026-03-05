@@ -17,13 +17,37 @@
 package com.ichi2.anki.browser.search
 
 import androidx.lifecycle.SavedStateHandle
+import androidx.test.ext.junit.runners.AndroidJUnit4
 import app.cash.turbine.test
-import kotlinx.coroutines.test.runTest
+import com.ichi2.anki.RobolectricTest
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.equalTo
 import org.junit.Test
+import org.junit.runner.RunWith
 import kotlin.test.assertEquals
 
 /** Tests for [CardBrowserSearchViewModel] */
-class CardBrowserSearchViewModelTest {
+@RunWith(AndroidJUnit4::class) // PERF: only required for `Prefs`
+class CardBrowserSearchViewModelTest : RobolectricTest() {
+    @Test
+    fun `search closed after submit`() =
+        withViewModel {
+            closeSearchViewFlow.test {
+                expectNoEvents()
+                submitCurrentSearch("Hello")
+                expectMostRecentItem()
+            }
+        }
+
+    @Test
+    fun `selecting search history entry`() =
+        withViewModel {
+            submittedSearchFlow.test {
+                submitCurrentSearch("Hello")
+                assertThat(expectMostRecentItem(), equalTo("Hello"))
+            }
+        }
+
     @Test
     fun `appendAdvancedSearch appends spacing`() =
         withViewModel {
@@ -57,19 +81,6 @@ class CardBrowserSearchViewModelTest {
         }
 
     @Test
-    fun `toggleAdvancedSearch updates flow`() =
-        withViewModel {
-            searchTextFlow.test {
-                expectMostRecentItem()
-                expectNoEvents()
-
-                toggleAdvancedSearch()
-
-                expectMostRecentItem()
-            }
-        }
-
-    @Test
     fun `text can be updated when a different screen is selected`() =
         withViewModel {
             searchTextFlow.test {
@@ -95,9 +106,24 @@ class CardBrowserSearchViewModelTest {
             }
         }
 
-    fun withViewModel(block: suspend CardBrowserSearchViewModel.() -> Unit) =
-        runTest {
-            val viewModel = CardBrowserSearchViewModel(SavedStateHandle())
-            block(viewModel)
+    @Test
+    fun `submitCurrentSearch trims spaces`() =
+        withViewModel {
+            submittedSearchFlow.test {
+                submitCurrentSearch(" aa ")
+                assertThat(expectMostRecentItem(), equalTo("aa"))
+            }
         }
+
+    fun withViewModel(
+        cardCount: Int = 1,
+        block: suspend CardBrowserSearchViewModel.() -> Unit,
+    ) = runTest {
+        addNotes(count = cardCount)
+        block(
+            CardBrowserSearchViewModel(
+                SavedStateHandle(),
+            ),
+        )
+    }
 }

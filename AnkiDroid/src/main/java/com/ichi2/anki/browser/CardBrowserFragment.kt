@@ -26,6 +26,7 @@ import android.view.MenuItem
 import android.view.SubMenu
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
@@ -129,6 +130,7 @@ import com.ichi2.utils.TagsUtil.getUpdatedTags
 import com.ichi2.utils.increaseHorizontalPaddingOfOverflowMenuIcons
 import com.ichi2.utils.replaceText
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
 import net.ankiweb.rsdroid.Translations
 import timber.log.Timber
@@ -179,7 +181,9 @@ class CardBrowserFragment :
 
     // only usable if 'useSearchView' is set
     override var searchBar: SearchBar? = null
-    private var searchView: SearchView? = null
+
+    @VisibleForTesting
+    internal var searchView: SearchView? = null
     private var decksChip: Chip? = null
 
     // region legacy menu handling
@@ -291,6 +295,14 @@ class CardBrowserFragment :
                     // Exiting out the SearchView should reset the state
                     // The ViewModel remains active as it's tied to the host fragment.
                     searchViewModel.resetSearchState()
+                }
+                editText.setOnEditorActionListener { _, actionId, event ->
+                    if (actionId == EditorInfo.IME_ACTION_SEARCH || event?.keyCode == KeyEvent.KEYCODE_ENTER) {
+                        searchViewModel.submitCurrentSearch()
+                        true
+                    } else {
+                        false
+                    }
                 }
             }
         toggleAdvancedSearch =
@@ -836,6 +848,17 @@ class CardBrowserFragment :
             saveSearchItem?.isVisible = canSave
         }
 
+        fun onSearchViewClosed(value: Unit) {
+            searchView?.hide()
+        }
+
+        fun onSearchSubmitted(value: String) {
+            searchBar?.setText(value)
+
+            Timber.i("relaying submitted search to activity")
+            activityViewModel.launchSearchForCards(value, forceRefresh = false)
+        }
+
         activityViewModel.flowOfIsTruncated.launchCollectionInLifecycleScope(::onIsTruncatedChanged)
         activityViewModel.flowOfSelectedRows.launchCollectionInLifecycleScope(::onSelectedRowsChanged)
         activityViewModel.flowOfActiveColumns.launchCollectionInLifecycleScope(::onColumnsChanged)
@@ -851,6 +874,8 @@ class CardBrowserFragment :
         activityViewModel.flowOfCanSearch.launchCollectionInLifecycleScope(::onCanSaveChanged)
         searchViewModel.advancedSearchFlow.launchCollectionInLifecycleScope(::advancedSearchChanged)
         searchViewModel.searchTextFlow.launchCollectionInLifecycleScope(::onSearchViewTextChanged)
+        searchViewModel.closeSearchViewFlow.launchCollectionInLifecycleScope(::onSearchViewClosed)
+        searchViewModel.submittedSearchFlow.filterNotNull().launchCollectionInLifecycleScope(::onSearchSubmitted)
     }
 
     private fun setupFragmentResultListeners() {

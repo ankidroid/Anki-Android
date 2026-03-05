@@ -16,18 +16,11 @@
 
 package com.ichi2.anki.browser.search
 
-import android.content.Intent
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Lifecycle
-import androidx.test.core.app.ActivityScenario
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.browser.SearchHistory
-import com.ichi2.anki.settings.Prefs
-import org.hamcrest.CoreMatchers.equalTo
-import org.hamcrest.MatcherAssert.assertThat
-import org.junit.After
+import com.ichi2.anki.browser.withCardBrowserFragment
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -40,13 +33,6 @@ class StandardSearchFragmentTest : RobolectricTest() {
     override fun setUp() {
         super.setUp()
         SearchHistory().clear()
-
-        Prefs.devUsingCardBrowserSearchView = true
-    }
-
-    @After
-    fun after() {
-        Prefs.devUsingCardBrowserSearchView = false
     }
 
     @Test
@@ -57,23 +43,9 @@ class StandardSearchFragmentTest : RobolectricTest() {
     }
 
     fun withFragment(block: StandardSearchFragment.() -> Unit) =
-        runTest {
-            val cardBrowserIntent = Intent(targetContext, CardBrowser::class.java)
-
-            ActivityScenario.launch<CardBrowser>(cardBrowserIntent).use { scenario ->
-                scenario.moveToState(Lifecycle.State.RESUMED)
-
-                scenario.onActivity { browser ->
-                    assertThat("Activity is not finishing", !browser.isFinishing)
-                    assertThat(browser.useSearchView, equalTo(true))
-
-                    val browserFragment = browser.cardBrowserFragment
-
-                    val targetFragment = browserFragment.requireChildFragment<StandardSearchFragment>(StandardSearchFragment.TAG)
-
-                    block(targetFragment)
-                }
-            }
+        withCardBrowserFragment(useSearchView = true) {
+            val targetFragment = requireChildFragment<StandardSearchFragment>(StandardSearchFragment.TAG)
+            block(targetFragment)
         }
 }
 
