@@ -180,6 +180,28 @@ class InstantEditorViewModel :
             }
     }
 
+    /** Make cloze counter and intClozeList consistent with actual text.  */
+    private fun syncClozeState(text: String?) {
+        if (text.isNullOrEmpty()) {
+            intClozeList.clear()
+            _currentClozeNumber.value = 1
+            return
+        }
+
+        intClozeList.clear()
+
+        var max = 0
+        clozePattern.findAll(text).forEach {
+            val value = it.groups[2]?.value?.toIntOrNull()
+            if (value != null) {
+                intClozeList.add(value)
+                if (value > max) max = value
+            }
+        }
+
+        _currentClozeNumber.value = max + 1
+    }
+
     /**
      * Retrieves all cloze text fields from the current editor note's note type.
      *
@@ -206,6 +228,7 @@ class InstantEditorViewModel :
 
     fun setClozeFieldText(text: String?) {
         _actualClozeFieldText.value = text
+        syncClozeState(text) // Keep internal list of cloze indices(intClozeList) aligned with actual clozes in text
     }
 
     /**
@@ -233,10 +256,15 @@ class InstantEditorViewModel :
 
         val clozeText: String?
 
-        val clozeNumber = currentClozeNumber
-        if (currentClozeMode.value == InstantNoteEditorActivity.ClozeMode.INCREMENT) {
-            incrementClozeNumber()
-        }
+        val clozeNumber =
+            if (currentClozeMode.value == InstantNoteEditorActivity.ClozeMode.INCREMENT) {
+                val number = currentClozeNumber
+                incrementClozeNumber()
+                number
+            } else {
+                intClozeList.maxOrNull() ?: 1
+            }
+
         intClozeList.add(clozeNumber)
 
         // Extract the first, second, and third regex groups from the matcher
@@ -379,18 +407,13 @@ class InstantEditorViewModel :
     }
 
     fun toggleClozeMode() {
-        val newMode =
+        _currentClozeMode.value =
             when (_currentClozeMode.value) {
-                InstantNoteEditorActivity.ClozeMode.INCREMENT -> {
-                    decrementClozeNumber()
+                InstantNoteEditorActivity.ClozeMode.INCREMENT ->
                     InstantNoteEditorActivity.ClozeMode.NO_INCREMENT
-                }
-                InstantNoteEditorActivity.ClozeMode.NO_INCREMENT -> {
-                    incrementClozeNumber()
+                InstantNoteEditorActivity.ClozeMode.NO_INCREMENT ->
                     InstantNoteEditorActivity.ClozeMode.INCREMENT
-                }
             }
-        _currentClozeMode.value = newMode
     }
 }
 
