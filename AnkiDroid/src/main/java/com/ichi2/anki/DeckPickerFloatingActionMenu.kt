@@ -18,10 +18,14 @@ package com.ichi2.anki
 import android.animation.Animator
 import android.content.Context
 import android.content.res.ColorStateList
+import android.os.Bundle
 import android.view.KeyEvent
 import android.view.MotionEvent
 import android.view.View
 import android.widget.LinearLayout
+import androidx.core.view.AccessibilityDelegateCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.accessibility.AccessibilityNodeInfoCompat
 import com.google.android.material.color.MaterialColors
 import com.ichi2.anki.databinding.ActivityHomescreenBinding
 import com.ichi2.anki.databinding.FloatingAddButtonBinding
@@ -346,6 +350,28 @@ class DeckPickerFloatingActionMenu(
         }
 
     init {
+        ViewCompat.setAccessibilityDelegate(
+            binding.fabMain,
+            object : AccessibilityDelegateCompat() {
+                override fun performAccessibilityAction(
+                    host: View,
+                    action: Int,
+                    args: Bundle?,
+                ): Boolean {
+                    if (action == AccessibilityNodeInfoCompat.ACTION_CLICK) {
+                        Timber.d("FAB main button: TalkBack CLICK action performed")
+                        if (!isFABOpen) {
+                            showFloatingActionMenu()
+                        } else {
+                            addNote()
+                        }
+                        return true
+                    }
+                    return super.performAccessibilityAction(host, action, args)
+                }
+            },
+        )
+
         binding.fabMain.setOnTouchListener(
             object : DoubleTapListener(context) {
                 override fun onDoubleTap(e: MotionEvent?) {
