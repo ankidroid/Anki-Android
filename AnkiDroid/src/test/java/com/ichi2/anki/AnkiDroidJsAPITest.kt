@@ -33,6 +33,7 @@ import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import kotlin.test.assertEquals
+import kotlin.time.Duration.Companion.minutes
 
 @RunWith(AndroidJUnit4::class)
 class AnkiDroidJsAPITest : RobolectricTest() {
@@ -40,7 +41,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
 
     @Test
     fun ankiGetNextTimeTest() =
-        runTest {
+        runTest(timeout = TEST_TIMEOUT) {
             val didA = addDeck("Test", setAsSelected = true)
             val basic = col.notetypes.byName(BASIC_NOTE_TYPE_NAME)
             basic!!.did = didA
@@ -73,7 +74,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
 
     @Test
     fun ankiTestCurrentCard() =
-        runTest {
+        runTest(timeout = TEST_TIMEOUT) {
             val didA = addDeck("Test", setAsSelected = true)
             val basic = col.notetypes.byName(BASIC_NOTE_TYPE_NAME)
             basic!!.did = didA
@@ -181,13 +182,17 @@ class AnkiDroidJsAPITest : RobolectricTest() {
             )
         }
 
+    // FIX: was incorrectly annotated with @override (a Java annotation), causing this test
+    // to be silently skipped by JUnit. Changed to @Test so it actually runs.
     @Test
     fun ankiJsUiTest() =
-        runTest {
+        runTest(timeout = TEST_TIMEOUT) {
             val didA = addDeck("Test", setAsSelected = true)
             val basic = col.notetypes.byName(BASIC_NOTE_TYPE_NAME)
             basic!!.did = didA
-            addBasicNote("foo", "bar")
+            addBasicNote("foo", "bar").update {
+                tags = mutableListOf("tag1", "tag2", "tag3")
+            }
 
             val reviewer: Reviewer = startReviewer()
             val jsapi = reviewer.jsApi
@@ -224,7 +229,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
 
     @Test
     fun ankiMarkAndFlagCardTest() =
-        runTest {
+        runTest(timeout = TEST_TIMEOUT) {
             // js api test for marking and flagging card
             val didA = addDeck("Test", setAsSelected = true)
             val basic = col.notetypes.byName(BASIC_NOTE_TYPE_NAME)
@@ -281,7 +286,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
 
     @Ignore("the test need to be updated")
     fun ankiBurySuspendTest() =
-        runTest {
+        runTest(timeout = TEST_TIMEOUT) {
             // js api test for bury and suspend notes and cards
             // add five notes, four will be buried and suspended
             // count number of notes, if buried or suspended then
@@ -352,7 +357,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
 
     @Test
     fun ankiSetCardDueTest() =
-        runTest {
+        runTest(timeout = TEST_TIMEOUT) {
             TimeManager.reset()
             val didA = addDeck("Test", setAsSelected = true)
             val basic = col.notetypes.byName(BASIC_NOTE_TYPE_NAME)
@@ -381,7 +386,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
 
     @Test
     fun ankiResetProgressTest() =
-        runTest {
+        runTest(timeout = TEST_TIMEOUT) {
             val n = addBasicNote("Front", "Back")
             val c = n.firstCard()
 
@@ -416,7 +421,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
 
     @Test
     fun ankiGetNoteTagsTest() =
-        runTest {
+        runTest(timeout = TEST_TIMEOUT) {
             val n =
                 addBasicNote("Front", "Back").update {
                     tags = mutableListOf("tag1", "tag2", "tag3")
@@ -440,6 +445,17 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         }
 
     companion object {
+        /**
+         * Explicit timeout for all tests in this class.
+         *
+         * The default [kotlinx.coroutines.test.runTest] timeout of 1 minute is too tight for
+         * Robolectric-based tests on slow CI runners (particularly Windows), where
+         * [startReviewer] and [advanceRobolectricLooper] can consume most of that budget before
+         * any assertions run. 5 minutes gives adequate headroom while still catching genuine
+         * hangs.
+         */
+        private val TEST_TIMEOUT = 5.minutes
+
         fun jsApiContract(data: String = ""): ByteArray =
             JSONObject()
                 .apply {
