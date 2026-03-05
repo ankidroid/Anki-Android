@@ -18,7 +18,13 @@ package com.ichi2.anki.browser.search
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import timber.log.Timber
 
 /**
@@ -49,7 +55,15 @@ class CardBrowserSearchViewModel(
     val searchTextFlow =
         combine(advancedSearchFlow, basicSearchTextFlow, advancedSearchTextFlow) { displayingAdvancedSearch, basicText, advancedText ->
             if (displayingAdvancedSearch) advancedText else basicText
-        }
+        }.stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.Eagerly,
+            initialValue = "",
+        )
+
+    val closeSearchViewFlow = MutableSharedFlow<Unit>(extraBufferCapacity = 1, replay = 1)
+
+    val submittedSearchFlow = MutableStateFlow<String?>(null)
 
     /**
      * Toggles between Basic and Advanced search mode
@@ -84,6 +98,15 @@ class CardBrowserSearchViewModel(
             basicSearchTextFlow.value = searchText
         }
     }
+
+    fun submitCurrentSearch(submittedText: String = searchTextFlow.value) =
+        viewModelScope.launch {
+            Timber.i("submitting search")
+            // searches with trailing and leading spaces are equivalent
+            val submittedText = submittedText.trim()
+            closeSearchViewFlow.emit(Unit)
+            submittedSearchFlow.emit(submittedText)
+        }
 
     /**
      * Clears state when the search screen is closed without saving
