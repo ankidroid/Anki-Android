@@ -15,38 +15,6 @@
         android:orientation="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" >
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_scrollFlags="scroll|enterAlways">
-
-
-            <ImageButton
-                android:id="@+id/toggle_row_selections"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:src="@drawable/ic_select_all_white"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                app:tint="?attr/colorControlNormal"
-                />
-
-
-            <LinearLayout
-                android:id="@+id/browser_column_headings"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:longClickable="true">
-            </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:background="@drawable/browser_heading_bottom_divider"
-            />
-
         <com.google.android.material.progressindicator.LinearProgressIndicator
             android:id="@+id/browser_progress"
             android:layout_width="match_parent"
@@ -117,6 +85,40 @@
                     />
             </com.google.android.material.chip.ChipGroup>
         </HorizontalScrollView>
+
+        <!-- column headers & select all/none -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_scrollFlags="scroll|enterAlways">
+
+
+            <ImageButton
+                android:id="@+id/toggle_row_selections"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/ic_select_all_white"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                app:tint="?attr/colorControlNormal"
+                />
+
+
+            <LinearLayout
+                android:id="@+id/browser_column_headings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:longClickable="true">
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@drawable/browser_heading_bottom_divider"
+            />
+
     </com.google.android.material.appbar.AppBarLayout>
 
     <com.google.android.material.search.SearchView
