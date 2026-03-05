@@ -135,9 +135,13 @@ class PreviewerFragment :
             valueTo = cardsCount.toFloat()
             addOnSliderTouchListener(
                 object : Slider.OnSliderTouchListener {
-                    override fun onStartTrackingTouch(slider: Slider) {}
+                    override fun onStartTrackingTouch(slider: Slider) {
+                        slider.parent.requestDisallowInterceptTouchEvent(true)
+                    }
 
                     override fun onStopTrackingTouch(slider: Slider) {
+                        slider.parent.requestDisallowInterceptTouchEvent(false)
+
                         viewModel.onSliderChange(slider.value.toInt())
                     }
                 },
