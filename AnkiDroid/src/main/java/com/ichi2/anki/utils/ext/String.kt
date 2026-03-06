@@ -22,6 +22,9 @@ import java.util.regex.Pattern
 
 private val DIACRITICAL_MARKS_PATTERN = Pattern.compile("\\p{InCombiningDiacriticalMarks}+")
 
+/** Matches `tag:` + quoted or unquoted value. Left verbatim so backend matches tags exactly. */
+private val TAG_SEGMENT_PATTERN = Pattern.compile("tag:(?:\"[^\"]*\"|[^\\s\\)]+)")
+
 /**
  * Normalizes the given string by removing diacritical marks (accents) to enable accent-insensitive searches.
  *
@@ -41,4 +44,24 @@ private val DIACRITICAL_MARKS_PATTERN = Pattern.compile("\\p{InCombiningDiacriti
 fun String.normalizeForSearch(): String {
     val normalized = Normalizer.normalize(this, Normalizer.Form.NFD)
     return DIACRITICAL_MARKS_PATTERN.matcher(normalized).replaceAll("")
+}
+
+/**
+ * Normalizes query for accent-insensitive search but keeps `tag:...` segments unchanged
+ * (backend matches tags literally). Uses [normalizeForSearch] only outside tag segments.
+ *
+ * @receiver Raw search query (e.g. `café ("tag:être")`).
+ * @return Query with accents removed except inside `tag:...`.
+ */
+fun String.normalizeForSearchPreservingTags(): String {
+    val matcher = TAG_SEGMENT_PATTERN.matcher(this)
+    val sb = StringBuilder(length)
+    var cursor = 0
+    while (matcher.find()) {
+        sb.append(substring(cursor, matcher.start()).normalizeForSearch())
+        sb.append(matcher.group())
+        cursor = matcher.end()
+    }
+    sb.append(substring(cursor).normalizeForSearch())
+    return sb.toString()
 }

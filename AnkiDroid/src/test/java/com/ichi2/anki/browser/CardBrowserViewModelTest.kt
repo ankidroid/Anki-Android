@@ -19,11 +19,13 @@ package com.ichi2.anki.browser
 import androidx.core.content.edit
 import androidx.lifecycle.SavedStateHandle
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import anki.config.ConfigKey
 import app.cash.turbine.TurbineTestContext
 import app.cash.turbine.test
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.CollectionManager
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.Flag
 import com.ichi2.anki.NoteEditorActivity
 import com.ichi2.anki.NoteEditorFragment
@@ -70,6 +72,7 @@ import com.ichi2.anki.libanki.QueueType
 import com.ichi2.anki.libanki.QueueType.ManuallyBuried
 import com.ichi2.anki.libanki.QueueType.New
 import com.ichi2.anki.libanki.testutils.AnkiTest
+import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.model.CardsOrNotes
 import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.anki.model.SortType
@@ -1357,6 +1360,21 @@ class CardBrowserViewModelTest : JvmTest() {
             )
             for (cardId in cardIds) {
                 assertNotNull(col.getCard(cardId))
+            }
+        }
+
+    @Test
+    fun `accented tags are searchable if ignoring accents - Issue 20409`() =
+        runTest {
+            addBasicNote().update { tags = mutableListOf("être") }
+            withCol { config.setBool(ConfigKey.Bool.IGNORE_ACCENTS_IN_SEARCH, true) }
+            runViewModelTest(notes = 0) {
+                flowOfSearchState.test {
+                    filterByTags(listOf("être"), CardStateFilter.ALL_CARDS)
+                    assertThat(awaitItem(), equalTo(CardBrowserViewModel.SearchState.Searching))
+                    assertThat(awaitItem(), equalTo(CardBrowserViewModel.SearchState.Completed))
+                    assertThat(rowCount, equalTo(1))
+                }
             }
         }
 

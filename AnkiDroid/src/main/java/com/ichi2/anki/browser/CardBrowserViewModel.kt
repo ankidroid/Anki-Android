@@ -77,7 +77,7 @@ import com.ichi2.anki.preferences.SharedPreferencesProvider
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.settings.PrefsRepository
 import com.ichi2.anki.utils.ext.currentCardBrowse
-import com.ichi2.anki.utils.ext.normalizeForSearch
+import com.ichi2.anki.utils.ext.normalizeForSearchPreservingTags
 import com.ichi2.anki.utils.ext.setUserFlagForCards
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Job
@@ -1178,7 +1178,7 @@ class CardBrowserViewModel(
         }
         flowOfSearchTerms.value =
             if (shouldIgnoreAccents) {
-                searchQuery.normalizeForSearch()
+                searchQuery.normalizeForSearchPreservingTags()
             } else {
                 searchQuery
             }

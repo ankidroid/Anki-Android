@@ -18,6 +18,7 @@
 package com.ichi2.anki.browser
 
 import com.ichi2.anki.utils.ext.normalizeForSearch
+import com.ichi2.anki.utils.ext.normalizeForSearchPreservingTags
 import org.junit.Assert.assertEquals
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
@@ -36,5 +37,19 @@ class StringNormalizationTest {
         expected: String,
     ) {
         assertEquals(expected, input.normalizeForSearch())
+    }
+
+    @ParameterizedTest
+    @CsvSource(
+        "café tag:foo, cafe tag:foo",
+        "tag:être, tag:être",
+        "(\"tag:être\" or \"tag:foo\"), (\"tag:être\" or \"tag:foo\")",
+        "résumé tag:naïve, resume tag:naïve",
+    )
+    fun `test normalizeForSearchPreservingTags preserves tag segments`(
+        input: String,
+        expected: String,
+    ) {
+        assertEquals(expected, input.normalizeForSearchPreservingTags())
     }
 }
