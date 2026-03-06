@@ -32,7 +32,7 @@ class DeckPickerBackupNoSpaceLeftDialog : AnalyticsDialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): AlertDialog {
         super.onCreate(savedInstanceState)
         val res = resources
-        val space = BackupManager.getFreeDiscSpace(CollectionHelper.getCollectionPath(requireActivity()))
+        val space = BackupManager.getFreeDiskSpace(CollectionHelper.getCollectionPath(requireActivity()))
         return AlertDialog
             .Builder(requireContext())
             .create {

@@ -40,9 +40,6 @@ open class BackupManager {
             Regex("(?:collection|backup)-((\\d{4})-(\\d{2})-(\\d{2})-(\\d{2})[.-](\\d{2}))(?:\\.\\d{2})?.colpkg")
         }
 
-        private val legacyDateFormat = SimpleDateFormat("yyyy-MM-dd-HH-mm")
-        private val newDateFormat = SimpleDateFormat("yyyy-MM-dd-HH.mm")
-
         fun getBackupDirectory(ankidroidDir: File): File {
             val directory = File(ankidroidDir, BACKUP_SUFFIX)
             if (!directory.isDirectory && !directory.mkdirs()) {
@@ -61,12 +58,12 @@ open class BackupManager {
             return directory
         }
 
-        fun enoughDiscSpace(path: File): Boolean = getFreeDiscSpace(path) >= MIN_FREE_SPACE * 1024 * 1024
+        fun enoughDiskSpace(path: File): Boolean = getFreeDiskSpace(path) >= MIN_FREE_SPACE * 1024 * 1024
 
         /**
-         * Get free disc space in bytes from path to Collection
+         * Get free disk space in bytes from path to Collection
          */
-        fun getFreeDiscSpace(file: File): Long = getFreeDiskSpace(file, (MIN_FREE_SPACE * 1024 * 1024).toLong())
+        fun getFreeDiskSpace(file: File): Long = getFreeDiskSpace(file, (MIN_FREE_SPACE * 1024 * 1024).toLong())
 
         /**
          * Run the sqlite3 command-line-tool (if it exists) on the collection to dump to a text file
@@ -82,7 +79,7 @@ open class BackupManager {
             col.close()
 
             // repair file
-            val execString = "sqlite3 $colPath .dump | sqlite3 $colPath.tmp"
+            val execString = "sqlite3 \"$colPath\" .dump | sqlite3 \"$colPath.tmp\""
             Timber.i("repairCollection - Execute: %s", execString)
             try {
                 val cmd = arrayOf("/system/bin/sh", "-c", execString)
@@ -142,7 +139,7 @@ open class BackupManager {
                 // move all connected files (like journals, directories...) too
                 val colName = colFile.name
                 val directory = File(colFile.parent!!)
-                for (f in directory.listFiles()!!) {
+                for (f in directory.listFiles().orEmpty()) {
                     if (f.name.startsWith(colName) &&
                         !f.renameTo(File(getBrokenDirectory(colFile.parentFile!!), f.name.replace(colName, movedFilename)))
                     ) {
@@ -163,8 +160,10 @@ open class BackupManager {
         /**
          * @return date in string if it matches backup naming pattern or null if not
          */
-        fun parseBackupTimeString(timeString: String): Date? =
-            try {
+        fun parseBackupTimeString(timeString: String): Date? {
+            val legacyDateFormat = SimpleDateFormat("yyyy-MM-dd-HH-mm", Locale.US)
+            val newDateFormat = SimpleDateFormat("yyyy-MM-dd-HH.mm", Locale.US)
+            return try {
                 legacyDateFormat.parse(timeString)
             } catch (_: ParseException) {
                 try {
@@ -173,6 +172,7 @@ open class BackupManager {
                     null
                 }
             }
+        }
 
         /**
          * @return date in fileName if it matches backup naming pattern or null if not
@@ -184,7 +184,7 @@ open class BackupManager {
          * in order of creation.
          */
         fun getBackups(colFile: File): Array<File> {
-            val files = getBackupDirectory(colFile.parentFile!!).listFiles() ?: arrayOf()
+            val files = getBackupDirectory(colFile.parentFile!!).listFiles().orEmpty()
             val backups =
                 files
                     .mapNotNull { file ->
@@ -219,8 +219,8 @@ open class BackupManager {
 
         fun removeDir(dir: File): Boolean {
             if (dir.isDirectory) {
-                val files = dir.listFiles()
-                for (aktFile in files!!) {
+                val files = dir.listFiles().orEmpty()
+                for (aktFile in files) {
                     removeDir(aktFile)
                 }
             }
@@ -235,13 +235,13 @@ open class BackupManager {
  * in format such as "02 Nov 2022" instead of "11/2/22" or "2/11/22", which can be confusing.
  */
 class LocalizedUnambiguousBackupTimeFormatter {
-    private val formatter =
-        SimpleDateFormat(
-            DateFormat.getBestDateTimePattern(Locale.getDefault(), "dd MMM yyyy HH:mm"),
-        )
-
     fun getTimeOfBackupAsText(file: File): String {
         val backupDate = BackupManager.getBackupDate(file.name) ?: return file.name
+        val formatter =
+            SimpleDateFormat(
+                DateFormat.getBestDateTimePattern(Locale.getDefault(), "dd MMM yyyy HH:mm"),
+                Locale.getDefault(),
+            )
         return formatter.format(backupDate)
     }
 }
