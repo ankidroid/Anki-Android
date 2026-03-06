@@ -36,6 +36,8 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
 import java.io.File
+import kotlin.test.assertFalse
+import kotlin.test.assertNotNull
 import kotlin.test.junit5.JUnit5Asserter.assertNotNull
 
 @RunWith(AndroidJUnit4::class)
@@ -141,5 +143,50 @@ class AudioRecorderTest : RobolectricTest() {
 
         assertEquals(customFile.absolutePath, audioRecorder.currentFile?.absolutePath)
         verify { mockMediaRecorder.setOutputFile(customFile.absolutePath) }
+    }
+
+    @Test
+    fun `stop should delete temp file if not kept`() {
+        val audioRecorder = createRecorder()
+        audioRecorder.start()
+
+        val tempFile = audioRecorder.currentFile
+        assertTrue("Temp file should exist", tempFile?.exists() ?: false)
+
+        audioRecorder.stop(keepFile = false)
+        assertFalse(tempFile?.exists() ?: true)
+    }
+
+    @Test
+    fun `close() while recording temp file should delete the file`() {
+        val audioRecorder = createRecorder()
+        audioRecorder.start()
+        val tempFile = audioRecorder.currentFile
+
+        assertTrue("Temp file should exist", tempFile?.exists() ?: false)
+
+        audioRecorder.close()
+
+        assertFalse(tempFile?.exists() ?: true, "Temp file should be cleaned up on close")
+        verify { mockMediaRecorder.release() }
+    }
+
+    @Test
+    fun `recording after a failed stop should still work and clean up`() {
+        every { mockMediaRecorder.stop() } throws RuntimeException("stop failed")
+
+        val audioRecorder = createRecorder()
+        audioRecorder.start()
+        val firstFile = audioRecorder.currentFile
+
+        audioRecorder.stop()
+
+        assertFalse(firstFile?.exists() ?: true, "File should be deleted if recorder.stop() fails")
+        assertFalse(audioRecorder.isRecording)
+
+        // Ensure we can start again immediately
+        audioRecorder.start()
+        assertTrue(audioRecorder.isRecording)
+        assertNotNull(audioRecorder.currentFile)
     }
 }
