@@ -228,6 +228,37 @@ class InstantEditorViewModelTest : RobolectricTest() {
             assertEquals("{{c4::fourth}}", result)
         }
 
+    @Test
+    fun `removing a cloze does not reset numbering`() =
+        runViewModelTest {
+            val text = "{{c1::a}} {{c2::b}} {{c3::c}}"
+
+            setClozeFieldText(text)
+
+            val words = getWordsFromFieldText().toMutableList()
+
+            words[1] = buildClozeText(words[1]) // remove c2
+
+            val result = buildClozeText("d")
+
+            assertEquals("{{c4::d}}", result)
+        }
+
+    @Test
+    fun `toggling cloze mode does not reset numbering`() =
+        runViewModelTest {
+            val text = "{{c1::a}} {{c2::b}} {{c3::c}}"
+
+            setClozeFieldText(text)
+
+            toggleClozeMode() // switch mode
+            toggleClozeMode() // switch back
+
+            val result = buildClozeText("d")
+
+            assertEquals("{{c4::d}}", result)
+        }
+
     private fun runViewModelTest(
         initViewModel: () -> InstantEditorViewModel = { InstantEditorViewModel() },
         testBody: suspend InstantEditorViewModel.() -> Unit,
