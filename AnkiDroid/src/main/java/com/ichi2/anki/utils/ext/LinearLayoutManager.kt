@@ -35,3 +35,8 @@ val LinearLayoutManager.visibleItemPositions: IntRange
         }
         return first..last
     }
+
+/**
+ * Returns true if the position is currently visible.
+ */
+fun LinearLayoutManager.positionIsVisible(position: Int): Boolean = position in visibleItemPositions
