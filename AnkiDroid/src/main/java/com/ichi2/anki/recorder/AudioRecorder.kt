@@ -41,6 +41,7 @@ class AudioRecorder(
     private val context: Context,
 ) : Closeable {
     private var recorder: MediaRecorder? = null
+    private var isTempFile = false
 
     /**
      * Indicates whether the recorder is currently capturing audio.
@@ -67,6 +68,7 @@ class AudioRecorder(
         Timber.i("AudioRecorder::startRecording (isRecording %b)", isRecording)
         if (isRecording) return
 
+        isTempFile = file == null
         val target = file ?: createTempFile() ?: return
         currentFile = target
 
@@ -125,18 +127,27 @@ class AudioRecorder(
 
     /**
      * Stops the recording and updates state.
+     * @param keepFile If false, deletes the file (only if it was a temp file).
      */
-    fun stop() {
+    fun stop(keepFile: Boolean = true) {
         if (!isRecording) return
 
         try {
             recorder?.stop()
         } catch (e: RuntimeException) {
             Timber.w(e, "Failed to stop recorder: likely called too soon after start")
-            currentFile?.delete()
-            currentFile = null
+            deleteCurrentFile()
         } finally {
             isRecording = false
+
+            if (!keepFile && isTempFile) {
+                deleteCurrentFile()
+            }
+
+            if (!keepFile) {
+                currentFile = null
+            }
+            isTempFile = false
         }
     }
 
@@ -181,8 +192,23 @@ class AudioRecorder(
      * Should be called in `onDestroy()` or when the class is no longer needed.
      */
     override fun close() {
-        stop()
-        recorder?.release()
-        recorder = null
+        try {
+            if (isRecording) {
+                // If closing while recording, we assume it's an abort
+                stop(keepFile = !isTempFile)
+            }
+        } finally {
+            recorder?.release()
+            recorder = null
+        }
+    }
+
+    private fun deleteCurrentFile() {
+        val file = currentFile ?: return
+        if (file.exists() && !file.delete()) {
+            Timber.w("Failed to delete temporary recording file: ${file.absolutePath}")
+        } else {
+            Timber.d("Deleted temporary recording file")
+        }
     }
 }
