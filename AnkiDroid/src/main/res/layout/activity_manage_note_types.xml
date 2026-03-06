@@ -41,53 +41,54 @@
             />
 
         <!-- TODO Use FloatingToolbar once the theme is made to use the proper colors -->
-        <LinearLayout
-            android:id="@+id/selection_toolbar"
+        <HorizontalScrollView
+            android:id="@+id/selection_toolbar_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:background="@drawable/note_types_selection_background"
-            android:paddingHorizontal="16dp"
-            android:paddingVertical="4dp"
             android:layout_marginBottom="32dp"
+            android:scrollbars="none"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent">
 
-            <com.ichi2.ui.FixedTextView
-                android:id="@+id/selected_label"
+            <LinearLayout
+                android:id="@+id/selection_toolbar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:textColor="?attr/colorOnPrimary"
-                android:textAppearance="?textAppearanceBodyMediumEmphasized"
-                tools:text="5 note types selected"
-                />
+                android:orientation="horizontal"
+                android:background="@drawable/note_types_selection_background"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="4dp">
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_delete_selection"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:icon="@drawable/ic_delete"
-                style="@style/Widget.Material3.Button.IconButton"
-                app:iconTint="@color/white"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/btn_more"
-                />
+                <com.ichi2.ui.FixedTextView
+                    android:id="@+id/selected_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:textColor="?attr/colorOnPrimary"
+                    android:textAppearance="?textAppearanceBodyMediumEmphasized"
+                    tools:text="5 note types selected"
+                    />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_clear_selection"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:icon="@drawable/ic_clear_white"
-                style="@style/Widget.Material3.Button.IconButton"
-                app:iconTint="@color/white"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/btn_more"
-                />
-        </LinearLayout>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_delete_selection"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:icon="@drawable/ic_delete"
+                    style="@style/Widget.Material3.Button.IconButton"
+                    app:iconTint="@color/white"
+                    />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_clear_selection"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:icon="@drawable/ic_clear_white"
+                    style="@style/Widget.Material3.Button.IconButton"
+                    app:iconTint="@color/white"
+                    />
+            </LinearLayout>
+        </HorizontalScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!-- Floating Action Button for adding new note types -->

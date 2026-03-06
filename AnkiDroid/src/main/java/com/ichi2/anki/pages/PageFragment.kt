@@ -119,6 +119,8 @@ abstract class PageFragment(
                 displayZoomControls = false
                 builtInZoomControls = true
                 setSupportZoom(true)
+                useWideViewPort = true
+                loadWithOverviewMode = true
             }
             setWebViewClient(pageWebViewClient)
             setWebChromeClient(PageChromeClient())
