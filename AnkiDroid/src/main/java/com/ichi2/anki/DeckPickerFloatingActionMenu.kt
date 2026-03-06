@@ -63,9 +63,11 @@ class DeckPickerFloatingActionMenu(
     val isFragmented: Boolean
         get() = studyOptionsFrame != null
 
+    @Suppress("DEPRECATION")
     private fun showFloatingActionMenu() {
         toggleListener?.onBeginToggle(isOpening = true)
         deckPicker.activeSnackBar?.dismiss()
+        binding.fabMain.announceForAccessibility(context.getString(R.string.fab_menu_opened))
         linearLayout.alpha = 0.5f
         studyOptionsFrame?.let { it.alpha = 0.5f }
         isFABOpen = true
@@ -147,8 +149,10 @@ class DeckPickerFloatingActionMenu(
      * Case 2: When the user opens the side navigation drawer (without touching the FAB). In that case we don't
      * want to show any type of rise and shrink animation for the FAB so we put the value `false` for the parameter.
      */
+    @Suppress("DEPRECATION")
     fun closeFloatingActionMenu(applyRiseAndShrinkAnimation: Boolean) {
         toggleListener?.onBeginToggle(isOpening = false)
+        binding.fabMain.announceForAccessibility(context.getString(R.string.fab_menu_closed))
         if (applyRiseAndShrinkAnimation) {
             linearLayout.alpha = 1f
             studyOptionsFrame?.let { it.alpha = 1f }
