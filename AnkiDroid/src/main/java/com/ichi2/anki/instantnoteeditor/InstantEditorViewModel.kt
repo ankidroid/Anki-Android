@@ -17,6 +17,7 @@
 
 package com.ichi2.anki.instantnoteeditor
 
+import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -26,6 +27,7 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.NoteFieldsCheckResult
 import com.ichi2.anki.OnErrorListener
 import com.ichi2.anki.checkNoteFieldsResponse
+import com.ichi2.anki.common.utils.ext.replaceWith
 import com.ichi2.anki.instantnoteeditor.InstantNoteEditorActivity.DialogType
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.Note
@@ -180,27 +182,17 @@ class InstantEditorViewModel :
             }
     }
 
-    /** Make cloze counter and intClozeList consistent with actual text.  */
-    private fun syncClozeState(text: String?) {
-        if (text.isNullOrEmpty()) {
-            intClozeList.clear()
-            _currentClozeNumber.value = 1
-            return
-        }
-
-        intClozeList.clear()
-
-        var max = 0
-        clozePattern.findAll(text).forEach {
-            val value = it.groups[2]?.value?.toIntOrNull()
-            if (value != null) {
-                intClozeList.add(value)
-                if (value > max) max = value
-            }
-        }
-
-        _currentClozeNumber.value = max + 1
-    }
+    /**
+     +     * Extracts the cloze ordinals from text (if any).
+     +     *
+     +     * `"{{c2::text}} {{c1::more}}"` => `[2, 1]`
+     +     */
+    @CheckResult
+    private fun getClozeOrdinals(text: String): List<Int> =
+        clozePattern
+            .findAll(text)
+            .mapNotNull { it.groups[2]?.value?.toIntOrNull() }
+            .toList()
 
     /**
      * Retrieves all cloze text fields from the current editor note's note type.
@@ -228,7 +220,8 @@ class InstantEditorViewModel :
 
     fun setClozeFieldText(text: String?) {
         _actualClozeFieldText.value = text
-        syncClozeState(text) // Keep internal list of cloze indices(intClozeList) aligned with actual clozes in text
+        intClozeList.replaceWith(getClozeOrdinals(text ?: ""))
+        _currentClozeNumber.value = (intClozeList.maxOrNull() ?: 0) + 1
     }
 
     /**
@@ -256,15 +249,10 @@ class InstantEditorViewModel :
 
         val clozeText: String?
 
-        val clozeNumber =
-            if (currentClozeMode.value == InstantNoteEditorActivity.ClozeMode.INCREMENT) {
-                val number = currentClozeNumber
-                incrementClozeNumber()
-                number
-            } else {
-                intClozeList.maxOrNull() ?: 1
-            }
-
+        val clozeNumber = currentClozeNumber
+        if (currentClozeMode.value == InstantNoteEditorActivity.ClozeMode.INCREMENT) {
+            incrementClozeNumber()
+        }
         intClozeList.add(clozeNumber)
 
         // Extract the first, second, and third regex groups from the matcher
@@ -407,13 +395,18 @@ class InstantEditorViewModel :
     }
 
     fun toggleClozeMode() {
-        _currentClozeMode.value =
+        val newMode =
             when (_currentClozeMode.value) {
-                InstantNoteEditorActivity.ClozeMode.INCREMENT ->
+                InstantNoteEditorActivity.ClozeMode.INCREMENT -> {
+                    decrementClozeNumber()
                     InstantNoteEditorActivity.ClozeMode.NO_INCREMENT
-                InstantNoteEditorActivity.ClozeMode.NO_INCREMENT ->
+                }
+                InstantNoteEditorActivity.ClozeMode.NO_INCREMENT -> {
+                    incrementClozeNumber()
                     InstantNoteEditorActivity.ClozeMode.INCREMENT
+                }
             }
+        _currentClozeMode.value = newMode
     }
 }
 
