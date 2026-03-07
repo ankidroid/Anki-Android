@@ -97,7 +97,12 @@ class DeckPickerTest : RobolectricTest() {
         // but Android lifecycle callback (onCreate) have not yet executed.
         DeckPicker()
 
-        assertDoesNotThrow { ChangeManager.notifySubscribers(opChanges { studyQueues = true }, null) }
+        assertDoesNotThrow {
+            ChangeManager.notifySubscribers(
+                opChanges { studyQueues = true },
+                null,
+            )
+        }
     }
 
     @Test
@@ -143,7 +148,8 @@ class DeckPickerTest : RobolectricTest() {
         whenever(editor.remove(DeckPickerViewModel.UPGRADE_VERSION_KEY)).thenReturn(updated)
         ActivityScenario.launch(DeckPicker::class.java).use { scenario ->
             scenario.onActivity { deckPicker: DeckPicker ->
-                val previousVersion = deckPicker.viewModel.getPreviousVersion(preferences, newVersion)
+                val previousVersion =
+                    deckPicker.viewModel.getPreviousVersion(preferences, newVersion)
                 assertEquals(40, previousVersion)
             }
         }
@@ -167,7 +173,8 @@ class DeckPickerTest : RobolectricTest() {
         whenever(editor.remove(DeckPickerViewModel.UPGRADE_VERSION_KEY)).thenReturn(updated)
         ActivityScenario.launch(DeckPicker::class.java).use { scenario ->
             scenario.onActivity { deckPicker: DeckPicker ->
-                val previousVersion = deckPicker.viewModel.getPreviousVersion(preferences, newVersion)
+                val previousVersion =
+                    deckPicker.viewModel.getPreviousVersion(preferences, newVersion)
                 assertEquals(prevVersion.toLong(), previousVersion)
             }
         }
@@ -186,7 +193,8 @@ class DeckPickerTest : RobolectricTest() {
         whenever(preferences.edit()).thenReturn(editor)
         ActivityScenario.launch(DeckPicker::class.java).use { scenario ->
             scenario.onActivity { deckPicker: DeckPicker ->
-                val previousVersion = deckPicker.viewModel.getPreviousVersion(preferences, newVersion)
+                val previousVersion =
+                    deckPicker.viewModel.getPreviousVersion(preferences, newVersion)
                 assertEquals(prevVersion, previousVersion)
             }
         }
@@ -377,15 +385,24 @@ class DeckPickerTest : RobolectricTest() {
         deckPicker {
             val didA = addDeck("Deck 1")
 
-            supportFragmentManager.selectContextMenuOption(DeckPickerContextMenuOption.RENAME_DECK, didA)
+            supportFragmentManager.selectContextMenuOption(
+                DeckPickerContextMenuOption.RENAME_DECK,
+                didA,
+            )
             assertDialogTitleEquals("Rename deck")
             dismissAllDialogFragments()
 
-            supportFragmentManager.selectContextMenuOption(DeckPickerContextMenuOption.CREATE_SUBDECK, didA)
+            supportFragmentManager.selectContextMenuOption(
+                DeckPickerContextMenuOption.CREATE_SUBDECK,
+                didA,
+            )
             assertDialogTitleEquals("Create subdeck")
             dismissAllDialogFragments()
 
-            supportFragmentManager.selectContextMenuOption(DeckPickerContextMenuOption.CUSTOM_STUDY, didA)
+            supportFragmentManager.selectContextMenuOption(
+                DeckPickerContextMenuOption.CUSTOM_STUDY,
+                didA,
+            )
             assertDialogTitleEquals("Custom study")
             dismissAllDialogFragments()
 
@@ -432,27 +449,47 @@ class DeckPickerTest : RobolectricTest() {
             val didA = addDeck("Deck 1")
             val didDynamicA = addDynamicDeck("Deck Dynamic 1")
 
-            val noteEditor = selectContextMenuOptionForActivity(DeckPickerContextMenuOption.ADD_CARD, didA)
+            val noteEditor =
+                selectContextMenuOptionForActivity(DeckPickerContextMenuOption.ADD_CARD, didA)
             assertEquals("com.ichi2.anki.NoteEditorActivity", noteEditor.component!!.className)
             onBackPressedDispatcher.onBackPressed()
 
-            val browser = selectContextMenuOptionForActivity(DeckPickerContextMenuOption.BROWSE_CARDS, didA)
+            val browser =
+                selectContextMenuOptionForActivity(DeckPickerContextMenuOption.BROWSE_CARDS, didA)
             assertEquals("com.ichi2.anki.CardBrowser", browser.component!!.className)
             onBackPressedDispatcher.onBackPressed()
 
             // select deck options for a normal deck
-            val deckOptionsNormal = selectContextMenuOptionForActivity(DeckPickerContextMenuOption.DECK_OPTIONS, didA)
-            assertEquals("com.ichi2.anki.SingleFragmentActivity", deckOptionsNormal.component!!.className)
+            val deckOptionsNormal =
+                selectContextMenuOptionForActivity(DeckPickerContextMenuOption.DECK_OPTIONS, didA)
+            assertEquals(
+                "com.ichi2.anki.SingleFragmentActivity",
+                deckOptionsNormal.component!!.className,
+            )
             onBackPressedDispatcher.onBackPressed()
 
             // select deck options for a dynamic deck
-            val deckOptionsDynamic = selectContextMenuOptionForActivity(DeckPickerContextMenuOption.DECK_OPTIONS, didDynamicA)
-            assertEquals("com.ichi2.anki.FilteredDeckOptions", deckOptionsDynamic.component!!.className)
+            val deckOptionsDynamic =
+                selectContextMenuOptionForActivity(
+                    DeckPickerContextMenuOption.DECK_OPTIONS,
+                    didDynamicA,
+                )
+            assertEquals(
+                "com.ichi2.anki.FilteredDeckOptions",
+                deckOptionsDynamic.component!!.className,
+            )
             onBackPressedDispatcher.onBackPressed()
 
             Prefs.newReviewRemindersEnabled = true
-            val scheduleReminders = selectContextMenuOptionForActivity(DeckPickerContextMenuOption.SCHEDULE_REMINDERS, didA)
-            assertEquals("com.ichi2.anki.SingleFragmentActivity", scheduleReminders.component!!.className)
+            val scheduleReminders =
+                selectContextMenuOptionForActivity(
+                    DeckPickerContextMenuOption.SCHEDULE_REMINDERS,
+                    didA,
+                )
+            assertEquals(
+                "com.ichi2.anki.SingleFragmentActivity",
+                scheduleReminders.component!!.className,
+            )
             onBackPressedDispatcher.onBackPressed()
         }
 
@@ -460,20 +497,32 @@ class DeckPickerTest : RobolectricTest() {
     fun `ContextMenu deletes deck when selecting DELETE_DECK`() =
         deckPicker {
             val didA = addDeck("Deck 1")
-            supportFragmentManager.selectContextMenuOption(DeckPickerContextMenuOption.DELETE_DECK, didA)
-            assertThat(getColUnsafe.decks.allNamesAndIds().map { it.id }, not(containsInAnyOrder(didA)))
+            supportFragmentManager.selectContextMenuOption(
+                DeckPickerContextMenuOption.DELETE_DECK,
+                didA,
+            )
+            assertThat(
+                getColUnsafe.decks.allNamesAndIds().map { it.id },
+                not(containsInAnyOrder(didA)),
+            )
         }
 
     @Test
     fun `ContextMenu creates deck shortcut when selecting CREATE_SHORTCUT`() =
         deckPicker {
             val didA = addDeck("Deck 1")
-            supportFragmentManager.selectContextMenuOption(DeckPickerContextMenuOption.CREATE_SHORTCUT, didA)
+            supportFragmentManager.selectContextMenuOption(
+                DeckPickerContextMenuOption.CREATE_SHORTCUT,
+                didA,
+            )
             // Wait for the shortcut creation to complete
             ShadowLooper.runUiThreadTasksIncludingDelayedTasks()
             assertEquals(
                 "Deck 1",
-                ShortcutManagerCompat.getShortcuts(this, ShortcutManagerCompat.FLAG_MATCH_PINNED).first().shortLabel,
+                ShortcutManagerCompat
+                    .getShortcuts(this, ShortcutManagerCompat.FLAG_MATCH_PINNED)
+                    .first()
+                    .shortLabel,
             )
         }
 
@@ -493,7 +542,10 @@ class DeckPickerTest : RobolectricTest() {
             advanceRobolectricLooper()
             assertEquals(1, visibleDeckCount)
             assertTrue(getColUnsafe.sched.haveBuried(), "Deck should have buried cards")
-            supportFragmentManager.selectContextMenuOption(DeckPickerContextMenuOption.UNBURY, deckId)
+            supportFragmentManager.selectContextMenuOption(
+                DeckPickerContextMenuOption.UNBURY,
+                deckId,
+            )
             kotlin.test.assertFalse(getColUnsafe.sched.haveBuried())
         }
 
@@ -508,14 +560,21 @@ class DeckPickerTest : RobolectricTest() {
             getColUnsafe.sched.rebuildFilteredDeck(deckId)
             assertTrue(allCardsInSameDeck(cardIds, deckId))
             updateDeckList()
+            advanceRobolectricLooper()
             assertEquals(1, visibleDeckCount)
 
-            supportFragmentManager.selectContextMenuOption(DeckPickerContextMenuOption.CUSTOM_STUDY_EMPTY, deckId) // Empty
+            supportFragmentManager.selectContextMenuOption(
+                DeckPickerContextMenuOption.CUSTOM_STUDY_EMPTY,
+                deckId,
+            ) // Empty
 
             assertTrue(allCardsInSameDeck(cardIds, 1))
 
-            supportFragmentManager.selectContextMenuOption(DeckPickerContextMenuOption.CUSTOM_STUDY_REBUILD, deckId) // Rebuild
-
+            supportFragmentManager.selectContextMenuOption(
+                DeckPickerContextMenuOption.CUSTOM_STUDY_REBUILD,
+                deckId,
+            ) // Rebuild
+            advanceRobolectricLooper()
             assertTrue(allCardsInSameDeck(cardIds, deckId))
         }
 
