@@ -48,6 +48,7 @@ object AppLoadedFromBackupWorkaround {
         if (AnkiDroidApp.isInitialized) {
             return false
         }
+        // TODO: Timber likely does not work on this path - maybe add a check in IntentHandler
 
         // #7630: Can be triggered with `adb shell bmgr restore com.ichi2.anki` after AnkiDroid settings are changed.
         // Application.onCreate() is not called if:
