@@ -23,23 +23,30 @@
 
 <merge xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <!-- Flashcard display area -->
     <FrameLayout
         android:layout_gravity="center"
         android:id="@+id/flashcard"
         android:layout_margin="0dip"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
+    <!-- Touch layer for gesture detection - FIXED to not cover slider/buttons -->
     <FrameLayout
         android:layout_gravity="center"
         android:id="@+id/touch_layer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="0dip"
+        android:layout_marginBottom="120dp"
         android:longClickable="true" />
+
+    <!-- Whiteboard editor layer -->
     <FrameLayout
         android:layout_gravity="center"
         android:id="@+id/whiteboard"
         android:layout_margin="0dip"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
 </merge>

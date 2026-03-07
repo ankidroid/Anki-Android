@@ -636,6 +636,24 @@ abstract class AbstractFlashcardViewer :
     }
 
     /**
+     * Disable the gesture detector to prevent gesture conflicts with slider
+     */
+    fun disableGestureDetector() {
+        gestureDetector = null
+        isXScrolling = false
+    }
+
+    /**
+     * Re-enable the gesture detector after slider interaction
+     */
+    fun enableGestureDetector() {
+        if (this::gestureDetectorImpl.isInitialized) {
+            gestureDetector = GestureDetector(this, gestureDetectorImpl)
+        }
+        isXScrolling = false
+    }
+
+    /**
      * If the activity is [RESUMED], or is called from [onResume] then execute the pending
      * operations in [refreshRequired].
      *

@@ -21,6 +21,7 @@ import android.os.Bundle
 import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
+import android.view.MotionEvent
 import android.view.View
 import androidx.appcompat.widget.Toolbar
 import androidx.core.os.bundleOf
@@ -29,6 +30,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.slider.Slider
+import com.ichi2.anki.AbstractFlashcardViewer
 import com.ichi2.anki.DispatchKeyEventListener
 import com.ichi2.anki.Flag
 import com.ichi2.anki.R
@@ -130,22 +132,31 @@ class PreviewerFragment :
             binding.slider.visibility = View.GONE
             binding.progressIndicator.visibility = View.GONE
         }
-
         binding.slider.apply {
             valueTo = cardsCount.toFloat()
+
             addOnSliderTouchListener(
                 object : Slider.OnSliderTouchListener {
                     override fun onStartTrackingTouch(slider: Slider) {
-                        slider.parent.requestDisallowInterceptTouchEvent(true)
                     }
 
                     override fun onStopTrackingTouch(slider: Slider) {
-                        slider.parent.requestDisallowInterceptTouchEvent(false)
-
                         viewModel.onSliderChange(slider.value.toInt())
                     }
                 },
             )
+
+            addOnChangeListener { _, value, fromUser ->
+                if (fromUser) {
+                    val displayIndex = value.toInt()
+                    binding.progressIndicator.text =
+                        getString(
+                            R.string.preview_progress_bar_text,
+                            displayIndex,
+                            cardsCount,
+                        )
+                }
+            }
         }
 
         lifecycleScope.launch {
