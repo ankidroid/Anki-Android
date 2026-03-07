@@ -73,7 +73,10 @@ object AppLoadedFromBackupWorkaround {
         Themes.setTheme(this)
         // Avoids a SuperNotCalledException
         activitySuperOnCreate(savedInstanceState)
-        finish()
+        // Process.killProcess is a hard kill. I suspect that some Android OSes leave has the app in
+        // an invalid state after this occurs (meaning Application.onCreate is not called).
+        // Before killProcess, gracefully kill the app, removing it from the recents list
+        finishAndRemoveTask()
 
         // If we don't kill the process, the backup is not "done" and reopening the app show the same message.
         Thread {
