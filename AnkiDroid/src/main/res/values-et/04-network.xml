@@ -49,37 +49,37 @@
     <string name="sync_error">Sünkroonimise viga</string>
     <string name="vague_error" comment="Network error dialog title">Viga</string>
     <string name="retry">Proovi uuesti</string>
-    <string name="menu_get_shared_decks">Get shared decks</string>
+    <string name="menu_get_shared_decks">Hangi ühiskasutusega kaardipakke</string>
     <string name="connection_error_message">Ilmnest võrgutõrge.</string>
-    <string name="not_logged_in_title">Log in to AnkiWeb</string>
-    <string name="login_create_account_message">You must log in to a third party account to use the cloud sync service. You can create one in the next step.</string>
+    <string name="not_logged_in_title">Logi sisse AnkiWebi</string>
+    <string name="login_create_account_message">Pilvega sünkroonimise teenuse kasutamiseks on sul vaja kolmanda osapoole kontot. Saad selle omale luua järgmises etapis.</string>
     <!-- MyAccount.kt -->
     <string name="username">E-posti aadress</string>
     <string name="password">Parool</string>
     <string name="log_in">Logi sisse</string>
-    <string name="sign_up_description">Don’t have an AnkiWeb account? It’s free!</string>
-    <string name="sign_up_not_affiliated">Note: AnkiWeb is not affiliated with AnkiDroid</string>
+    <string name="sign_up_description">Kas sul pole veel AnkiWebi kontot? See on tasuta!</string>
+    <string name="sign_up_not_affiliated">Märkus: AnkiWeb pole kuidagi seotud AnkiDroidiga</string>
     <string name="sign_up">Loo konto</string>
     <string name="logged_as">Logitud sisse kui</string>
     <string name="log_out">Logi välja</string>
     <string name="reset_password">Lähtesta salasõna</string>
-    <string name="lost_mail_instructions">Forgot Email?</string>
-    <string name="sign_in">Signing in</string>
+    <string name="lost_mail_instructions">Unustasid meili?</string>
+    <string name="sign_in">Sisse logimine</string>
     <!-- AndroidManifest.xml -->
-    <string name="deckpreferences_title">Options for XXX</string>
+    <string name="deckpreferences_title">Valikud XXX jaoks</string>
     <string name="sync_title">Sünkroonimine</string>
-    <string name="sync_log_uploading_message">Full sync from local</string>
-    <string name="sync_database_acknowledge">Collection synchronized</string>
-    <string name="col_synced_media_in_background">Collection synced. Media is being synced in the background.</string>
-    <string name="sync_corrupt_database">Your database is corrupt. Please fix it before trying again to sync.\n\nSee %s for information about repairing your database.</string>
+    <string name="sync_log_uploading_message">Täielik sünkroonimine kohalikust kaustast</string>
+    <string name="sync_database_acknowledge">Kogu on sünkroonitud</string>
+    <string name="col_synced_media_in_background">Kogu on sünkroonitud. Meediat sünkroonitakse taustal.</string>
+    <string name="sync_corrupt_database">Sinu andmebaas on vigane. Palun paranda see enne, kui proovid uuesti sünkroonimist.\n\nVaata infot andmebaasi parandamise kohta siit %s.</string>
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">Kohalik</string>
     <string name="sync_sanity_remote">Eemal asuv</string>
-    <string name="one_way_sync_title" maxLength="41">One-way sync</string>
-    <string name="one_way_sync_confirmation">One way sync requested</string>
-    <string name="full_sync_confirmation">The requested change will require a full upload of the database when you next synchronize your collection. If you have reviews or other changes waiting on another device that haven’t been synchronized here yet, they will be lost. Continue?</string>
-    <string name="full_sync_confirmation_upgrade">Due to a bug in the previously installed version of AnkiDroid, it’s recommended to force a full sync.</string>
+    <string name="one_way_sync_title" maxLength="41">Ühesuunaline sünkroonimine</string>
+    <string name="one_way_sync_confirmation">Küsiti ühesuunalist sünkroonimist</string>
+    <string name="full_sync_confirmation">Nõutud muudatus nõuab sinu andmebaase täielikku üleslaadimist sinu kogu järgmise sünkroonimise ajal. Kui sul on kontrollimisi või muid muudatusi, mis ootavad teisest seadmest sünkroonimist, siis need muudatused lähevad kasuma. Kas jätkan?</string>
+    <string name="full_sync_confirmation_upgrade">Kuna eelmises paigaldatud AnkiDroidi versioonis oli viga, siis soovitame teha jõuga kogu sünkroonimine.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title_one_way_sync">Sync (one-way)</string>
-    <string name="sync_menu_title_no_account">Sync (log in)</string>
+    <string name="sync_menu_title_one_way_sync">Sünk (ühesuunaline)</string>
+    <string name="sync_menu_title_no_account">Sünk (logi sisse)</string>
 </resources>

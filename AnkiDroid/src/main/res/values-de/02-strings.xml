@@ -85,7 +85,7 @@
     <string name="disable_eraser" maxLength="28">Radierer deaktivieren</string>
     <string name="hide_whiteboard" maxLength="28">Whiteboard ausblenden</string>
     <string name="clear_whiteboard" maxLength="28">Whiteboard säubern</string>
-    <string name="hide_toolbar" maxLength="28">Hide toolbar</string>
+    <string name="hide_toolbar" maxLength="28">Toolbar verstecken</string>
     <string name="replay_media" maxLength="28">Medien erneut abspielen</string>
     <string name="leech_suspend_notification">Karte als Lernbremse markiert und ausgeschlossen</string>
     <string name="leech_notification">Karte als Lernbremse markiert</string>
@@ -264,9 +264,9 @@
     <!-- IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
-    <string name="invalid_value" comment="Error message in IncrementerNumberRangePreference when input is not a valid number">Invalid value</string>
-    <string name="maximum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the maximum allowed value">Maximum value is %d</string>
-    <string name="minimum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the minimum allowed value">Minimum value is %d</string>
+    <string name="invalid_value" comment="Error message in IncrementerNumberRangePreference when input is not a valid number">Ungültiger Wert</string>
+    <string name="maximum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the maximum allowed value">Höchstwert beträgt %d</string>
+    <string name="minimum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the minimum allowed value">Mindestwert beträgt %d</string>
     <!-- Used for credential empty warning message -->
     <string name="invalid_email">Geben Sie eine gültige E-Mail ein</string>
     <string name="password_empty">Das Passwort ist erforderlich</string>

@@ -158,8 +158,8 @@
     <string name="import_title">Import qilish</string>
     <string name="import_preparing_file">Fayl import uchun tayyorlanmoqda&#8230;</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Qoʻshish</string>
-    <string name="import_message_replace_confirm">Bu sizda mavjud boʻlgan toʻplamingizni oʻchiradi va uni %s fayl maʼlumotlari bilan almashtiradi</string>
-    <string name="import_dialog_message_add">“%s” toʻplamga qoʻshilsinmi? Bu koʻp vaqt olishi mumkin</string>
+    <string name="import_message_replace_confirm">Bu sizda mavjud boʻlgan kolleksiyangizni oʻchiradi va uni %s fayl maʼlumotlari bilan almashtiradi</string>
+    <string name="import_dialog_message_add">“%s” kolleksiyaga qoʻshilsinmi? Bu koʻp vaqt olishi mumkin</string>
     <string name="import_log_no_apkg">Bu yaroqli Anki paket fayli emas</string>
     <string name="import_title_error" comment="Title of error dialog">Xatolik</string>
     <string name="import_error_handle_exception">Faylni import qilib boʻlmadi\n\n%s</string>
@@ -306,7 +306,7 @@
     <!--  Hierarchical Tags  -->
     <string name="expand_tag">\'%s\' tegini yoyish</string>
     <!-- Manage note types -->
-    <string name="field_editor_model_not_available">Toʻplamni ochib boʻlmadi. Iltimos, qayta urinib koʻring!</string>
+    <string name="field_editor_model_not_available">Kolleksiyani ochib boʻlmadi. Iltimos, qayta urinib koʻring!</string>
     <string name="cd_manage_notetypes_add">Yangi qayd turini qoʻshish</string>
     <plurals name="note_types_selected">
         <item quantity="one">%d ta qayd turi tanlandi</item>
@@ -377,9 +377,9 @@
     <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">Karta brauzer koʻrinishini oʻzgartirish</string>
     <string name="missing_user_action_dialog_message" comment="%s is the user action number">%s foydalanuvchi amali bu qayd turida sozlanmagan. Iltimos, uni sozlang</string>
     <string name="feature_not_supported_by_study_screen">Ushbu kartada yangi oʻrganish ekrani tomonidan hali qoʻllab-quvvatlanmaydigan funksiyalar mavjud.</string>
-    <string name="directory_inaccessible_info">Bu yerda %s ruxsatni tiklash haqida koʻproq bilib oling yoki toʻplam jildini yangilash uchun sozlamalarga oʻting.</string>
+    <string name="directory_inaccessible_info">Bu yerda %s ruxsatni tiklash haqida koʻproq bilib oling yoki kolleksiya jildini yangilash uchun sozlamalarga oʻting.</string>
     <!-- Scheduler Upgrade Required Dialog title-->
-    <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">Rejalashtiruvchini yuksaltirish kerak</string>
+    <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">Rejalashtiruvchini yangilash kerak</string>
     <!-- Whitespace is OK -->
     <string name="list_separator" comment="The character and spacing to display between elements of a list, for example \', \' in \'Apple, Banana, Cherry" tools:ignore="TranslationTypo">, </string>
 </resources>
