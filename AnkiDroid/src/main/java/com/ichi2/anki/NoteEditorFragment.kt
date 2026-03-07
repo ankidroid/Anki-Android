@@ -2152,7 +2152,7 @@ class NoteEditorFragment :
 
         // Process successful result only if field has data
         if (field.type != EFieldType.TEXT || field.mediaFile != null) {
-            addMediaFileToField(index, field)
+            performAddMedia(index, field, skipSizeCheck = false)
         } else {
             Timber.i("field imagePath and audioPath are both null")
         }
@@ -2205,19 +2205,6 @@ class NoteEditorFragment :
             }
             negativeButton(R.string.dialog_cancel)
         }
-    }
-
-    /**
-     * Adds a media file to a specific field within the currently edited multimedia note.
-     *
-     * @param index The index of the field within the note to update.
-     * @param field The `IField` object representing the media file and its details.
-     */
-    private fun addMediaFileToField(
-        index: Int,
-        field: IField,
-    ) {
-        performAddMedia(index, field, skipSizeCheck = false)
     }
 
     private fun onPaste(
