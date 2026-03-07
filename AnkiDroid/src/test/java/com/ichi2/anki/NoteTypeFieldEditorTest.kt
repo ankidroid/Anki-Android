@@ -108,12 +108,18 @@ class NoteTypeFieldEditorTest(
 
                     // start ModelFieldEditor activity
                     val intent = Intent()
-                    intent.putExtra(NoteTypeFieldEditor.EXTRA_NOTETYPE_NAME, noteTypeName)
-                    intent.putExtra(NoteTypeFieldEditor.EXTRA_NOTETYPE_ID, col.notetypes.idForName(noteTypeName)!!)
+                    intent.putExtra(
+                        _root_ide_package_.com.ichi2.anki.notetype.fieldeditor.NoteTypeFieldEditor.EXTRA_NOTETYPE_NAME,
+                        noteTypeName,
+                    )
+                    intent.putExtra(
+                        _root_ide_package_.com.ichi2.anki.notetype.fieldeditor.NoteTypeFieldEditor.EXTRA_NOTETYPE_ID,
+                        col.notetypes.idForName(noteTypeName)!!,
+                    )
                     val noteTypeFieldEditor =
                         startActivityNormallyOpenCollectionWithIntent(
                             this@NoteTypeFieldEditorTest,
-                            NoteTypeFieldEditor::class.java,
+                            _root_ide_package_.com.ichi2.anki.notetype.fieldeditor.NoteTypeFieldEditor::class.java,
                             intent,
                         )
                     when (fieldOperationType) {
