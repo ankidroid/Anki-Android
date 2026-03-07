@@ -182,6 +182,7 @@ import com.ichi2.utils.MapUtil
 import com.ichi2.utils.NoteFieldDecorator
 import com.ichi2.utils.TextViewUtil
 import com.ichi2.utils.configureView
+import com.ichi2.utils.iconAttr
 import com.ichi2.utils.message
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.neutralButton
@@ -2199,6 +2200,7 @@ class NoteEditorFragment :
 
         MaterialAlertDialogBuilder(context).show {
             title(R.string.media_file_size_warning_title)
+            iconAttr(R.drawable.ic_warning)
             message(text = getString(R.string.media_file_size_warning_message, fileName, fileSizeStr, limitStr))
             positiveButton(R.string.media_file_size_add_anyway) {
                 onForceAdd()
