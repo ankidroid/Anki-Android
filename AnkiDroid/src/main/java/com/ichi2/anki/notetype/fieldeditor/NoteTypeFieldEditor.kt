@@ -18,22 +18,18 @@ package com.ichi2.anki.notetype.fieldeditor
 
 import android.content.Context
 import android.os.Bundle
-import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
-import android.widget.EditText
 import androidx.activity.viewModels
 import androidx.annotation.VisibleForTesting
-import androidx.appcompat.app.AlertDialog
 import androidx.core.os.BundleCompat
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.snackbar.Snackbar
-import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.databinding.ItemNotetypeFieldBinding
@@ -47,23 +43,15 @@ import com.ichi2.anki.dialogs.NoteTypeFieldEditorContextMenu.NoteTypeFieldEditor
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.exception.ConfirmModSchemaException
+import com.ichi2.anki.showThemedToast
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.sync.userAcceptsSchemaChange
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.anki.utils.ext.setCompoundDrawablesRelativeWithIntrinsicBoundsKt
 import com.ichi2.anki.utils.ext.setFragmentResultListener
 import com.ichi2.anki.utils.ext.showDialogFragment
-import com.ichi2.ui.FixedEditText
-import com.ichi2.utils.customView
-import com.ichi2.utils.getInputField
-import com.ichi2.utils.input
-import com.ichi2.utils.moveCursorToEnd
-import com.ichi2.utils.negativeButton
-import com.ichi2.utils.positiveButton
-import com.ichi2.utils.show
-import com.ichi2.utils.title
 import dev.androidbroadcast.vbpd.viewBinding
 import kotlinx.coroutines.launch
-import org.json.JSONException
 import timber.log.Timber
 import java.util.Locale
 
@@ -71,9 +59,6 @@ import java.util.Locale
 class NoteTypeFieldEditor : com.ichi2.anki.AnkiActivity(R.layout.note_type_field_editor) {
     private val binding by viewBinding(NoteTypeFieldEditorBinding::bind)
     val viewModel by viewModels<NoteTypeFieldEditorViewModel>()
-
-    // Position of the current field selected
-    private var fieldNameInput: EditText? = null
 
     // ----------------------------------------------------------------------------
     // ANDROID METHODS
@@ -84,7 +69,6 @@ class NoteTypeFieldEditor : com.ichi2.anki.AnkiActivity(R.layout.note_type_field
         }
         super.onCreate(savedInstanceState)
         setContentView(R.layout.note_type_field_editor)
-        enableToolbar()
         binding.notetypeName.text = intent.getStringExtra(EXTRA_NOTETYPE_NAME)
         startLoadingCollection()
         setFragmentResultListener(REQUEST_HINT_LOCALE_SELECTION) { _, bundle ->
@@ -142,10 +126,9 @@ class NoteTypeFieldEditor : com.ichi2.anki.AnkiActivity(R.layout.note_type_field
      * @param fieldNameInput Editor to get the input
      * @return The value to use, or null in case of failure
      */
-    private fun uniqueName(fieldNameInput: EditText): String? {
+    private fun uniqueName(name: String): String? {
         var input =
-            fieldNameInput.text
-                .toString()
+            name
                 .replace("[\\n\\r{}:\"]".toRegex(), "")
         // The number of #, ^, /, space, tab, starting the input
         var offset = 0
@@ -157,7 +140,7 @@ class NoteTypeFieldEditor : com.ichi2.anki.AnkiActivity(R.layout.note_type_field
         }
         input = input.substring(offset).trim()
         if (input.isEmpty()) {
-            _root_ide_package_.com.ichi2.anki.showThemedToast(
+            showThemedToast(
                 this,
                 resources.getString(R.string.toast_empty_name),
                 true,
@@ -167,7 +150,7 @@ class NoteTypeFieldEditor : com.ichi2.anki.AnkiActivity(R.layout.note_type_field
         if (viewModel.state.value.fieldsLabels
                 .any { input == it }
         ) {
-            _root_ide_package_.com.ichi2.anki.showThemedToast(
+            showThemedToast(
                 this,
                 resources.getString(R.string.toast_duplicate_field),
                 true,
@@ -181,114 +164,55 @@ class NoteTypeFieldEditor : com.ichi2.anki.AnkiActivity(R.layout.note_type_field
      * Creates a dialog to create a field
      */
     private fun addFieldDialog() {
-        fieldNameInput =
-            FixedEditText(this).apply {
-                focusWithKeyboard()
-            }
-        fieldNameInput?.let { fieldNameInput ->
-            fieldNameInput.isSingleLine = true
-            AlertDialog.Builder(this).show {
-                customView(view = fieldNameInput, paddingStart = 64, paddingEnd = 64, paddingTop = 32)
-                title(R.string.model_field_editor_add)
-                positiveButton(R.string.menu_add) {
-                    // Name is valid, now field is added
-                    val fieldName = uniqueName(fieldNameInput)
-                    try {
-                        addField(fieldName, true)
-                    } catch (e: ConfirmModSchemaException) {
-                        e.log()
-
-                        // Create dialogue to for schema change
-                        val c = ConfirmationDialog()
-                        c.setArgs(resources.getString(R.string.full_sync_confirmation))
-                        val confirm =
-                            Runnable {
-                                try {
-                                    addField(fieldName, false)
-                                } catch (e1: ConfirmModSchemaException) {
-                                    e1.log()
-                                    // This should never be thrown
-                                }
-                            }
-                        c.setConfirm(confirm)
-                        this@NoteTypeFieldEditor.showDialogFragment(c)
-                    }
-                    getColUnsafe.notetypes.update(viewModel.state.value.notetype)
-                    initialize()
-                }
-                negativeButton(R.string.dialog_cancel)
+        val addFieldDialog = AddNewNoteTypeField(this)
+        addFieldDialog.showAddNewNoteTypeFieldDialog { name ->
+            launchCatchingTask {
+                val validName = uniqueName(name)
+                val isConfirmed = userAcceptsSchemaChange()
+                if (!isConfirmed) return@launchCatchingTask
+                viewModel.add(name)
             }
         }
-    }
-
-    /**
-     * Adds a field with the given name
-     */
-    @Throws(ConfirmModSchemaException::class)
-    private fun addField(
-        fieldName: String?,
-        modSchemaCheck: Boolean,
-    ) {
-        fieldName ?: return
-        // Name is valid, now field is added
-        if (modSchemaCheck) {
-            getColUnsafe.modSchema(check = true)
-        } else {
-            getColUnsafe.modSchema(check = false)
-        }
-        viewModel.add(fieldName)
     }
 
     /*
      * Creates a dialog to delete the currently selected field
      */
     private fun deleteFieldDialog() {
-        val confirm =
-            Runnable {
-                getColUnsafe.modSchema(check = false)
-                deleteField()
-
-                // This ensures that the context menu closes after the field has been deleted
-                supportFragmentManager.popBackStackImmediate(
-                    null,
-                    FragmentManager.POP_BACK_STACK_INCLUSIVE,
-                )
-            }
-
         if (viewModel.state.value.fieldsLabels.size < 2) {
-            _root_ide_package_.com.ichi2.anki.showThemedToast(
+            showThemedToast(
                 this,
                 resources.getString(R.string.toast_last_field),
                 true,
             )
-        } else {
-            try {
-                getColUnsafe.modSchema(check = true)
-                val fieldName =
-                    viewModel.state.value.noteFields[viewModel.state.value.currentPos]
-                        .name
-                ConfirmationDialog().let {
-                    it.setArgs(
-                        title = fieldName,
-                        message = resources.getString(R.string.field_delete_warning),
+            return
+        }
+
+        val fieldName =
+            viewModel.state.value.noteFields[viewModel.state.value.currentPos]
+                .name
+        ConfirmationDialog().let {
+            it.setArgs(
+                title = fieldName,
+                message = resources.getString(R.string.field_delete_warning),
+            )
+            it.setConfirm {
+                launchCatchingTask {
+                    val isConfirmed = userAcceptsSchemaChange()
+                    if (!isConfirmed) return@launchCatchingTask
+
+                    val field = viewModel.state.value.noteFields[viewModel.state.value.currentPos]
+                    viewModel.delete(field)
+
+                    // This ensures that the context menu closes after the field has been deleted
+                    supportFragmentManager.popBackStackImmediate(
+                        null,
+                        FragmentManager.POP_BACK_STACK_INCLUSIVE,
                     )
-                    it.setConfirm(confirm)
-                    showDialogFragment(it)
-                }
-            } catch (e: ConfirmModSchemaException) {
-                e.log()
-                ConfirmationDialog().let {
-                    it.setConfirm(confirm)
-                    it.setArgs(resources.getString(R.string.full_sync_confirmation))
-                    showDialogFragment(it)
                 }
             }
+            showDialogFragment(it)
         }
-    }
-
-    private fun deleteField() {
-        val field = viewModel.state.value.noteFields[viewModel.state.value.currentPos]
-        viewModel.delete(field)
     }
 
     /*
@@ -296,42 +220,15 @@ class NoteTypeFieldEditor : com.ichi2.anki.AnkiActivity(R.layout.note_type_field
      * Processing time is constant
      */
     private fun renameFieldDialog() {
-        fieldNameInput = FixedEditText(this).apply { focusWithKeyboard() }
-        fieldNameInput?.let { fieldNameInput ->
-            fieldNameInput.isSingleLine = true
-            fieldNameInput.setText(viewModel.state.value.fieldsLabels[viewModel.state.value.currentPos])
-            fieldNameInput.moveCursorToEnd()
-            AlertDialog.Builder(this).show {
-                customView(view = fieldNameInput, paddingStart = 64, paddingEnd = 64, paddingTop = 32)
-                title(R.string.model_field_editor_rename)
-                positiveButton(R.string.rename) {
-                    if (uniqueName(fieldNameInput) == null) {
-                        return@positiveButton
-                    }
-                    // Field is valid, now rename
-                    try {
-                        renameField()
-                    } catch (e: ConfirmModSchemaException) {
-                        e.log()
-
-                        // Handler mod schema confirmation
-                        val c = ConfirmationDialog()
-                        c.setArgs(resources.getString(R.string.full_sync_confirmation))
-                        val confirm =
-                            Runnable {
-                                getColUnsafe.modSchema(check = false)
-                                try {
-                                    renameField()
-                                } catch (e1: ConfirmModSchemaException) {
-                                    e1.log()
-                                    // This should never be thrown
-                                }
-                            }
-                        c.setConfirm(confirm)
-                        this@NoteTypeFieldEditor.showDialogFragment(c)
-                    }
-                }
-                negativeButton(R.string.dialog_cancel)
+        val field = viewModel.state.value.noteFields[viewModel.state.value.currentPos]
+        val renameFieldDialog = RenameNoteTypeField(this@NoteTypeFieldEditor, field.name)
+        renameFieldDialog.showRenameNoteTypeFieldDialog { name ->
+            val field = viewModel.state.value.noteFields[viewModel.state.value.currentPos]
+            launchCatchingTask {
+                val validName = uniqueName(name)
+                val isConfirmed = userAcceptsSchemaChange()
+                if (!isConfirmed) return@launchCatchingTask
+                viewModel.rename(field, name)
             }
         }
     }
@@ -340,104 +237,27 @@ class NoteTypeFieldEditor : com.ichi2.anki.AnkiActivity(R.layout.note_type_field
      * Displays a dialog to allow the user to reposition a field within a list.
      */
     private fun repositionFieldDialog() {
-        /**
-         * Shows an input dialog for selecting a new position.
-         *
-         * @param numberOfTemplates The total number of available positions.
-         * @param result A lambda function that receives the validated new position as an integer.
-         */
-        fun showDialog(
-            numberOfTemplates: Int,
-            result: (Int) -> Unit,
-        ) {
-            AlertDialog
-                .Builder(this)
-                .show {
-                    positiveButton(R.string.dialog_ok) {
-                        val input = (it as AlertDialog).getInputField()
-                        result(input.text.toString().toInt())
-                    }
-                    negativeButton(R.string.dialog_cancel)
-                    setMessage(TR.fieldsNewPosition1(numberOfTemplates))
-                    setView(R.layout.dialog_generic_text_input)
-                }.input(
-                    prefill = (viewModel.state.value.currentPos + 1).toString(),
-                    inputType = InputType.TYPE_CLASS_NUMBER,
-                    displayKeyboard = true,
-                    waitForPositiveButton = false,
-                ) { dialog, text: CharSequence ->
-                    val number = text.toString().toIntOrNull()
-                    dialog.positiveButton.isEnabled = number != null && number in 1..numberOfTemplates
-                }
-        }
-
-        // handle repositioning
-        showDialog(viewModel.state.value.fieldsLabels.size) { newPosition ->
-            if (newPosition == viewModel.state.value.currentPos + 1) return@showDialog
-
-            Timber.i("Repositioning field from %d to %d", viewModel.state.value.currentPos, newPosition)
-            try {
-                getColUnsafe.modSchema(check = true)
-                repositionField(newPosition - 1)
-            } catch (e: ConfirmModSchemaException) {
-                e.log()
-
-                // Handle mod schema confirmation
-                val c = ConfirmationDialog()
-                c.setArgs(resources.getString(R.string.full_sync_confirmation))
-                val confirm =
-                    Runnable {
-                        try {
-                            getColUnsafe.modSchema(check = false)
-                            repositionField(newPosition - 1)
-                        } catch (e1: JSONException) {
-                            throw RuntimeException(e1)
-                        }
-                    }
-                c.setConfirm(confirm)
-                this@NoteTypeFieldEditor.showDialogFragment(c)
+        val repositionFieldDialog = RepositionTypeField(this@NoteTypeFieldEditor, viewModel.state.value.fieldsLabels.size)
+        repositionFieldDialog.showRepositionNoteTypeFieldDialog { position ->
+            launchCatchingTask {
+                val isConfirmed = userAcceptsSchemaChange()
+                if (!isConfirmed) return@launchCatchingTask
+                Timber.i("Repositioning field from %d to %d", viewModel.state.value.currentPos, position)
+                val field = viewModel.state.value.noteFields[viewModel.state.value.currentPos]
+                viewModel.reposition(field, position)
             }
         }
-    }
-
-    private fun repositionField(index: Int) {
-        viewModel.reposition(viewModel.state.value.noteFields[viewModel.state.value.currentPos], index)
-    }
-
-    /*
-     * Renames the current field
-     */
-    @Throws(ConfirmModSchemaException::class)
-    private fun renameField() {
-        val fieldLabel = uniqueName(fieldNameInput!!) ?: return
-        val field = viewModel.state.value.noteFields[viewModel.state.value.currentPos]
-        viewModel.rename(field, fieldLabel)
     }
 
     /*
      * Changes the sort field (that displays in card browser) to the current field
      */
     private fun sortByField() {
-        try {
-            getColUnsafe.modSchema(check = true)
-            launchCatchingTask { changeSortField(viewModel.state.value.currentPos) }
-        } catch (e: ConfirmModSchemaException) {
-            e.log()
-            // Handler mMod schema confirmation
-            val c = ConfirmationDialog()
-            c.setArgs(resources.getString(R.string.full_sync_confirmation))
-            val confirm =
-                Runnable {
-                    getColUnsafe.modSchema(check = false)
-                    launchCatchingTask { changeSortField(viewModel.state.value.currentPos) }
-                }
-            c.setConfirm(confirm)
-            this@NoteTypeFieldEditor.showDialogFragment(c)
+        launchCatchingTask {
+            val isConfirmed = userAcceptsSchemaChange()
+            if (!isConfirmed) return@launchCatchingTask
+            viewModel.changeSort(viewModel.state.value.currentPos)
         }
-    }
-
-    private suspend fun changeSortField(idx: Int) {
-        viewModel.changeSort(idx)
     }
 
     fun handleAction(contextMenuAction: NoteTypeFieldEditorContextMenuAction) {
@@ -474,16 +294,17 @@ class NoteTypeFieldEditor : com.ichi2.anki.AnkiActivity(R.layout.note_type_field
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     @Throws(ConfirmModSchemaException::class)
-    fun addField(fieldNameInput: EditText) {
-        val fieldName = uniqueName(fieldNameInput)
-        addField(fieldName, true)
+    fun addField(name: String) {
+        val fieldName = uniqueName(name) ?: return
+        viewModel.add(fieldName)
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     @Throws(ConfirmModSchemaException::class)
-    fun renameField(fieldNameInput: EditText?) {
-        this.fieldNameInput = fieldNameInput
-        renameField()
+    fun renameField(name: String) {
+        val fieldLabel = uniqueName(name) ?: return
+        val field = viewModel.state.value.noteFields[viewModel.state.value.currentPos]
+        viewModel.rename(field, fieldLabel)
     }
 
     /*
