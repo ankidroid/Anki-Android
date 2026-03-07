@@ -41,6 +41,7 @@ import com.ichi2.utils.customView
 import com.ichi2.utils.moveCursorToEnd
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
+import com.ichi2.utils.show
 
 class AddNewNotesType(
     private val activity: ManageNotetypes,
@@ -75,9 +76,9 @@ class AddNewNotesType(
         val dialog =
             AlertDialog
                 .Builder(activity)
-                .apply {
+                .show {
                     customView(binding.root, paddingStart = 32, paddingEnd = 32, paddingTop = 64, paddingBottom = 64)
-                    positiveButton(R.string.dialog_ok) { _ ->
+                    positiveButton(R.string.menu_add) { _ ->
                         val newName = binding.notetypeNewName.text.toString()
                         val selectedPosition = binding.notetypeNewType.selectedItemPosition
                         if (selectedPosition == AdapterView.INVALID_POSITION) return@positiveButton
@@ -89,7 +90,7 @@ class AddNewNotesType(
                         }
                     }
                     negativeButton(R.string.dialog_cancel)
-                }.show()
+                }
         dialog.initializeViewsWith(allOptions, currentNames)
     }
 
