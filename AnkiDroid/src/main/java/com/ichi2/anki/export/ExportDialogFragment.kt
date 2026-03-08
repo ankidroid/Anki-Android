@@ -38,7 +38,6 @@ import com.ichi2.anki.ALL_DECKS_ID
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
-import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.time.getTimestamp
 import com.ichi2.anki.databinding.DialogExportOptionsBinding
@@ -185,7 +184,6 @@ class ExportDialogFragment : DialogFragment() {
     /**
      * Initializes the views representing the extra options available when exporting a collection.
      */
-    @NeedsTest("Checkbox value is provided to the correct export functions (true/false)")
     private fun DialogExportOptionsBinding.initializeCollectionExportUi() =
         with(CollectionManager.TR) {
             collectionIncludeMedia.text = exportingIncludeMedia()
@@ -195,7 +193,6 @@ class ExportDialogFragment : DialogFragment() {
     /**
      * Initializes the views representing the extra options available when exporting an Anki package.
      */
-    @NeedsTest("Checkbox value is provided to the correct export functions (true/false)")
     private fun DialogExportOptionsBinding.initializeApkgExportUi() =
         with(CollectionManager.TR) {
             apkgIncludeMedia.text = exportingIncludeMedia()
