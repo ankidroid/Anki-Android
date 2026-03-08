@@ -1616,7 +1616,7 @@ class CardBrowserTest : RobolectricTest() {
                     R.id.action_save_search to false,
                     R.id.action_list_my_searches to false,
                     R.id.action_sort_by_size to true,
-                    R.id.action_show_marked to true,
+                    R.id.action_show_marked to false,
                     R.id.action_show_suspended to true,
                     R.id.action_search_by_tag to false,
                     R.id.action_search_by_flag to true,
