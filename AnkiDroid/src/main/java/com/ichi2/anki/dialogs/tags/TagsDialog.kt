@@ -390,18 +390,13 @@ class TagsDialog : AnalyticsDialogFragment {
                     addTag(input.toString())
                     d?.dismiss()
                 }
-
         val inputET = addTagDialog.getInputField()
-
         inputET.filters = arrayOf(addTagFilter)
-
         if (!prefixTag.isNullOrEmpty()) {
             // utilize the addTagFilter to append '::' properly by appending a space to prefixTag
             inputET.setText("$prefixTag ")
         }
-
         inputET.moveCursorToEnd()
-
         val positiveButton =
             addTagDialog.getButton(AlertDialog.BUTTON_POSITIVE)
 
