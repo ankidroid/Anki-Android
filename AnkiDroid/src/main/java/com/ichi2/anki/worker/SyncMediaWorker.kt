@@ -84,6 +84,7 @@ class SyncMediaWorker(
             }
         } catch (cancellationException: CancellationException) {
             Timber.w(cancellationException)
+            notificationManager?.cancel(NotificationId.SYNC_MEDIA)
             cancelMediaSync(CollectionManager.getBackend())
             throw cancellationException
         } catch (throwable: Throwable) {

@@ -99,6 +99,8 @@ class SyncWorker(
         try {
             syncCollection(auth, shouldSyncMedia)
         } catch (cancellationException: CancellationException) {
+            Timber.w(cancellationException)
+            notificationManager?.cancel(NotificationId.SYNC)
             cancelSync(CollectionManager.getBackend())
             throw cancellationException
         } catch (throwable: Throwable) {
