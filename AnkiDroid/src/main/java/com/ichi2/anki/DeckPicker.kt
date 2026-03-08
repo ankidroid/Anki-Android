@@ -804,6 +804,7 @@ open class DeckPicker :
                 }
 
                 is StartupResponse.Success -> {
+                    viewModel.flowOfStartupResponse.value = null // Prevent duplicate startup on re-resume
                     showStartupScreensAndDialogs(sharedPrefs(), 0)
 
                     if (tryShowStudyOptionsPanel()) {
