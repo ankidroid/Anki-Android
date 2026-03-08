@@ -68,6 +68,7 @@ import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Shadows
+import org.robolectric.shadows.ShadowLooper.runUiThreadTasksIncludingDelayedTasks
 import timber.log.Timber
 import kotlin.test.junit5.JUnit5Asserter.assertNotNull
 
@@ -246,31 +247,27 @@ class ReviewerTest : RobolectricTest() {
                     addBasicNote("2", "bar").firstCard(),
                     addBasicNote("3", "bar").firstCard(),
                 )
-            advanceRobolectricLooper()
-
             val reviewer = startReviewer()
-
-            advanceRobolectricLooper()
 
             equalFirstField(cards[0], reviewer.currentCard!!)
             reviewer.answerCard(Rating.AGAIN)
-            advanceRobolectricLooper()
+            runUiThreadTasksIncludingDelayedTasks()
 
             equalFirstField(cards[1], reviewer.currentCard!!)
             reviewer.answerCard(Rating.AGAIN)
-            advanceRobolectricLooper()
+            runUiThreadTasksIncludingDelayedTasks()
 
             undo(reviewer)
-            advanceRobolectricLooper()
 
             equalFirstField(cards[1], reviewer.currentCard!!)
             reviewer.answerCard(Rating.GOOD)
-            advanceRobolectricLooper()
+            runUiThreadTasksIncludingDelayedTasks()
 
             equalFirstField(cards[2], reviewer.currentCard!!)
             time.addM(2)
             reviewer.answerCard(Rating.GOOD)
-            advanceRobolectricLooper()
+            runUiThreadTasksIncludingDelayedTasks()
+
             equalFirstField(
                 cards[0],
                 reviewer.currentCard!!,
@@ -359,14 +356,17 @@ class ReviewerTest : RobolectricTest() {
             val nonDefaultDeck = addDeck("Hello")
             assertThat("first card is shown", this.cardContent, containsString("One"))
             flipOrAnswerCard(Rating.GOOD)
+            advanceRobolectricLooper()
             // answer good, 'Rating.GOOD' should now be < 10m
             assertThat("initial time is 10m", this.getCardDataForJsApi().nextTime3, equalTo("<\u206810\u2069m"))
             flipOrAnswerCard(Rating.GOOD)
+            advanceRobolectricLooper()
             assertThat("next card is shown", this.cardContent, containsString("Two"))
 
             undoableOp { col.setDeck(listOf(currentCard!!.id), nonDefaultDeck) }
-
+            advanceRobolectricLooper()
             flipOrAnswerCard(Rating.GOOD)
+            advanceRobolectricLooper()
             assertThat("buttons should be updated", this.getCardDataForJsApi().nextTime3, equalTo("\u20681\u2069d"))
             assertThat("content should be updated", this.cardContent, containsString("One"))
         }
@@ -403,6 +403,7 @@ class ReviewerTest : RobolectricTest() {
 
     private fun undo(reviewer: Reviewer) {
         reviewer.undo()
+        runUiThreadTasksIncludingDelayedTasks()
     }
 
     @Suppress("SameParameterValue")
@@ -439,14 +440,14 @@ class ReviewerTest : RobolectricTest() {
 
         r.answerCard(Rating.GOOD)
 
-        advanceRobolectricLooper()
+        runUiThreadTasksIncludingDelayedTasks()
     }
 
     private fun assertCurrentOrdIs(
         r: Reviewer,
         i: Int,
     ) {
-        advanceRobolectricLooper()
+        runUiThreadTasksIncludingDelayedTasks()
         val ord = r.currentCard!!.ord
 
         assertThat("Unexpected card ord", ord + 1, equalTo(i))

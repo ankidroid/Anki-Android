@@ -102,9 +102,11 @@ open class MockTime(
             milliseconds: Int = 0,
         ): Long {
             val timeZone = TimeZone.getTimeZone("GMT")
-            val gregorianCalendar: Calendar = GregorianCalendar(year, month, date, hourOfDay, minute, second)
-            gregorianCalendar.timeZone = timeZone
-            gregorianCalendar[Calendar.MILLISECOND] = milliseconds
+            val gregorianCalendar: Calendar =
+                GregorianCalendar(timeZone).apply {
+                    set(year, month, date, hourOfDay, minute, second)
+                    set(Calendar.MILLISECOND, milliseconds)
+                }
             return gregorianCalendar.timeInMillis
         }
     }

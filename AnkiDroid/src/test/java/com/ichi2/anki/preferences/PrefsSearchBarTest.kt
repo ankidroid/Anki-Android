@@ -59,10 +59,10 @@ class PrefsSearchBarTest : RobolectricTest() {
 
         // Join both lists
         val allResIds =
-            filesResIds
-                .plus(prefItemsResIds)
-                .distinct() as List<Int>
-
+            (filesResIds + prefItemsResIds)
+                .filterIsInstance<Int>()
+                .filter { it != 0 }
+                .distinct()
         // Check if all indexed XML resIDs lead to the correct fragments on getFragmentFromXmlRes
         for (resId in allResIds) {
             val fragment = getFragmentFromXmlRes(resId)

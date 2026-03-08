@@ -44,6 +44,7 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.util.Calendar
+import java.util.TimeZone
 import kotlin.time.Duration.Companion.minutes
 
 @RunWith(AndroidJUnit4::class)
@@ -60,6 +61,7 @@ class AlarmManagerServiceTest : RobolectricTest() {
     @Before
     override fun setUp() {
         super.setUp()
+        TimeZone.setDefault(TimeZone.getTimeZone("UTC"))
         context = mockk(relaxed = true)
         alarmManager = mockk(relaxed = true)
         notificationManager = mockk(relaxed = true)
