@@ -56,7 +56,7 @@
     <string name="no_tts_available_message">No text-to-speech language available</string>
     <string name="tts_no_tts">Ära räägi</string>
     <string name="reposition_card_not_new_error">Only new cards can be repositioned</string>
-    <string name="reset_card_dialog_title">Reset card progress</string>
+    <string name="reset_card_dialog_title">Nulli kaardi edenemine</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%d card reset</item>
         <item quantity="other">%d cards reset</item>
@@ -76,7 +76,7 @@
     <string name="custom_study_tags">Select x cards from the deck:</string>
     <string name="storage_full_title">Storage full</string>
     <string name="storage_almost_full_title">Storage almost full</string>
-    <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">No space</string>
+    <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Tühikut pole</string>
     <string name="no_space_to_downgrade_content" tools:ignore="UnusedResources">AnkiDroid needs %s free storage space to continue. Please clear some space</string>
     <string name="restore_backup_title">Taastada varundus?</string>
     <string name="restore_backup">Your collection will be replaced with an older copy. Any unsaved progress will be lost.</string>
@@ -84,12 +84,12 @@
     <string name="dialog_cancel">Loobu</string>
     <string name="dialog_ok">OK</string>
     <string name="dialog_confirm" tools:ignore="UnusedResources">Kinnita</string>
-    <string name="dialog_no">No</string>
+    <string name="dialog_no">Ei</string>
     <string name="dialog_yes">Jah</string>
-    <string name="dialog_keep">Keep</string>
-    <string name="dialog_remove">Remove</string>
+    <string name="dialog_keep">Säilita</string>
+    <string name="dialog_remove">Eemalda</string>
     <string name="dialog_continue">Jätka</string>
-    <string name="dialog_processing">Processing&#8230;</string>
+    <string name="dialog_processing">Töötlemine&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Loo</string>
     <string name="dialog_positive_delete" maxLength="28">Kustuta</string>
     <!-- Currently unsued, should be useful in the future -->
@@ -100,36 +100,36 @@
     <string name="dialog_collection_path_not_dir">The path specified wasn’t a valid directory</string>
     <string name="dialog_invalid_custom_certificate">The provided text does not resolve to a valid PEM-encoded X509 certificate</string>
     <string name="dialog_invalid_custom_certificate_title">Error parsing certificate</string>
-    <string name="dialog_updated_custom_certificate">Certificate updated</string>
+    <string name="dialog_updated_custom_certificate">Sertifikaat on uuendatud</string>
     <!-- Media checking -->
-    <string name="check_media_title">Check media?</string>
+    <string name="check_media_title">Kontrollida meediat?</string>
     <string name="check_media_warning">This may take a long time with large media collections</string>
-    <string name="check_media_message">Checking media&#8230;</string>
-    <string name="check_media_adding_missing_tag">Adding tags&#8230;</string>
-    <string name="check_media_tags_added">Tags added</string>
-    <string name="delete_media_message">Deleting media&#8230;</string>
-    <string name="delete_media_result_title">Deletion result</string>
+    <string name="check_media_message">Meedia kontrollimine&#8230;</string>
+    <string name="check_media_adding_missing_tag">Siltide lisamine&#8230;</string>
+    <string name="check_media_tags_added">Sildid on lisatud</string>
+    <string name="delete_media_message">Meedia kustutamine&#8230;</string>
+    <string name="delete_media_result_title">Tulemuse kustutamine</string>
     <plurals name="delete_media_result_message">
-        <item quantity="one">%d file deleted</item>
-        <item quantity="other">%d files deleted</item>
+        <item quantity="one">%d fail kustutatud</item>
+        <item quantity="other">%d faili kustutatud</item>
     </plurals>
     <!-- Tags Dialog Options -->
-    <string name="tags_dialog_option_all_cards">All cards</string>
+    <string name="tags_dialog_option_all_cards">Kõik kaardid</string>
     <string name="tags_dialog_option_new_cards">Uus</string>
     <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">Tähtaeg</string>
     <!-- Empty cards -->
-    <string name="emtpy_cards_finding">Finding empty cards&#8230;</string>
+    <string name="emtpy_cards_finding">Tühjade kaartide otsimine&#8230;</string>
     <!-- Multimedia - Edit Field Activity -->
     <string name="multimedia_editor_audio_permission_refused">Could not obtain microphone permission.</string>
-    <string name="multimedia_editor_failed">Failed to open Multimedia Editor</string>
+    <string name="multimedia_editor_failed">Multimeedia toimetaja avamine ebaõnnestus</string>
     <!-- Multimedia - Audio View -->
-    <string name="multimedia_editor_audio_permission_denied">Audio recording permission denied</string>
+    <string name="multimedia_editor_audio_permission_denied">Heli salvestamise õiguseid pole antud</string>
     <string name="permission_denied">Juurdepääs keelatud</string>
     <string name="recording_permission_denied_message">Microphone permission is necessary for the “Record voice” feature. Please grant it in the app settings.</string>
     <!-- Database Integrity Check -->
-    <string name="integrity_check_startup_title">AnkiDroid Upgraded</string>
+    <string name="integrity_check_startup_title">AnkiDroid on uuendatud</string>
     <string name="integrity_check_startup_content">AnkiDroid has been upgraded. This upgrade includes fixes for possible database problems, and we advise you to run check database now.</string>
-    <string name="integrity_check_continue_anyway">Continue Anyway</string>
+    <string name="integrity_check_continue_anyway">Jätka sellegipoolest</string>
     <string name="integrity_check_insufficient_space">Check Database uses a large amount of temporary storage.\n\nIt is strongly recommended that you have at least %s free space on your device before continuing.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nYou currently have %s free.</string>
     <!-- Card Browser -->
@@ -137,20 +137,20 @@
     <string name="card_viewer_url_decode_error">Error decoding data from card</string>
     <!-- Deck Options -->
     <!-- Database Errors-->
-    <string name="database_locked_title">Database Locked</string>
+    <string name="database_locked_title">Andmebaas on lukustatud</string>
     <string name="database_locked_summary">The AnkiDroid database is in use by another application. Please close the other application then reopen AnkiDroid.</string>
-    <string name="incompatible_database_version_title">Incompatible Database Version</string>
+    <string name="incompatible_database_version_title">Mitteühilduvad andmebaasi versioonid</string>
     <string name="incompatible_database_version_summary">The database is a more advanced version than this version of AnkiDroid can work with. Upgrade AnkiDroid or downgrade the database to open it\n\nSupported version: %1$d\nDatabase version: %2$d\n\nThe following restore options will overwrite your current collection, possibly with a compatible database version:</string>
     <!-- Deck Picker Background-->
-    <string name="background_image_applied">Background image applied</string>
-    <string name="background_image_removed">Background image removed</string>
+    <string name="background_image_applied">Taustapilt on lisatud</string>
+    <string name="background_image_removed">Taustapilt on eemaldatud</string>
     <string name="no_image_selected">Ühtegi pilti pole valitud</string>
     <string name="error_selecting_image">Error selecting image. Please see manual. %s</string>
     <string name="error_deleting_image">Viga pildi kustutamisel</string>
     <string name="failed_to_apply_background_image">Failed to apply background image %s</string>
     <string name="background_image_too_large">Deck Picker background too large</string>
-    <string name="image_max_size_allowed" comment="Consider keeping the unbreakable space after the digit">Maximum image size %d MB allowed</string>
-    <string name="image_dimensions_too_large">Image dimensions are too large (%1$d × %2$d)</string>
+    <string name="image_max_size_allowed" comment="Consider keeping the unbreakable space after the digit">Maksimaalne lubatud pildi suurus on %d MB</string>
+    <string name="image_dimensions_too_large">Pildi mõõdud on liiga suured (%1$d × %2$d)</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
     <string name="intent_handler_failed_no_storage_permission">Missing required storage permission. Please grant storage permission then retry your action.</string>
@@ -161,32 +161,32 @@
     <string name="locale_selection_dialog_title_new">Määra keel</string>
     <string name="locale_selection_dialog_summary">Some multilingual keyboards, such as GBoard support changing language when editing text\n\nPlease request the “setImeHintLocales” feature from your keyboard manufacturer if your keyboard does not change language.</string>
     <!-- Help Dialog -->
-    <string name="help_title_using_ankidroid">Using AnkiDroid</string>
-    <string name="help_item_ankidroid_manual">AnkiDroid manual</string>
-    <string name="help_item_anki_manual">Anki manual</string>
-    <string name="help_item_ankidroid_faq">AnkiDroid FAQ</string>
-    <string name="help_title_get_help">Get help</string>
-    <string name="help_item_mailing_list">Mailing list</string>
+    <string name="help_title_using_ankidroid">AnkiDroidi kasutamine</string>
+    <string name="help_item_ankidroid_manual">AnkiDroidi juhend</string>
+    <string name="help_item_anki_manual">Anki juhend</string>
+    <string name="help_item_ankidroid_faq">AnkiDroidi KKK</string>
+    <string name="help_title_get_help">Küsi abi</string>
+    <string name="help_item_mailing_list">Meililist</string>
     <string name="help_item_reddit">Reddit</string>
-    <string name="help_item_report_bug">Report a bug</string>
-    <string name="help_title_support_ankidroid" maxLength="28">Support AnkiDroid</string>
+    <string name="help_item_report_bug">Teata veast</string>
+    <string name="help_title_support_ankidroid" maxLength="28">Toeta AnkiDroidi</string>
     <string name="help_item_support_opencollective_donate">Anneta</string>
     <string name="help_item_support_develop_ankidroid">Arendamine</string>
     <string name="help_item_support_rate_ankidroid">Hinda</string>
     <string name="help_item_support_other_ankidroid">Muu</string>
     <string name="multimedia_editor_trans_translate">Tõlgi</string>
     <string name="help_title_community">Kogukond</string>
-    <string name="help_item_anki_forums">Anki forums</string>
+    <string name="help_item_anki_forums">Anki foorum</string>
     <string name="help_item_discord">Discord</string>
     <string name="help_item_facebook">Facebook</string>
     <string name="help_item_twitter">Twitter</string>
     <string name="help_title_privacy">Privaatsus</string>
-    <string name="help_item_ankidroid_privacy_policy">AnkiDroid privacy policy</string>
-    <string name="help_item_ankiweb_privacy_policy">AnkiWeb privacy policy</string>
-    <string name="help_item_ankiweb_terms_and_conditions">AnkiWeb terms and conditions</string>
+    <string name="help_item_ankidroid_privacy_policy">AnkiDroidi privaatsuspoliitika</string>
+    <string name="help_item_ankiweb_privacy_policy">AnkiDroidi privaatsuspoliitika</string>
+    <string name="help_item_ankiweb_terms_and_conditions">AnkiWebi kasutustingimused</string>
     <string name="help_title_send_exception">Send troubleshooting report</string>
-    <string name="help_dialog_exception_report_debounce">Report already submitted</string>
-    <string name="help_dialog_exception_report_sent">Report was sent!</string>
+    <string name="help_dialog_exception_report_debounce">Aruanne on juba saadetud</string>
+    <string name="help_dialog_exception_report_sent">Aruanne on saadetud!</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="one" comment="Consider keeping the unbreakable space after the digit">An automatic sync may be triggered in %d second</item>
@@ -200,14 +200,14 @@
     sched V2. For V1, it was counting the number of repetitions of cards in learning. This approximation is acceptable
     for the sake of simplicity and because V1 will leave.-->
     <string name="deck_picker_counts">Open the deck overview page containing the number of cards to see today.</string>
-    <string name="import_deck_package">Deck package (.apkg)</string>
-    <string name="import_collection_package">Collection package (.colpkg)</string>
-    <string name="import_csv">Text file (.txt, .csv)</string>
+    <string name="import_deck_package">Kaardipaki fail (.apkg)</string>
+    <string name="import_collection_package">Kogu pakk (.colpkg)</string>
+    <string name="import_csv">Tekstifail (.txt, .csv)</string>
     <!-- scoped storage -->
-    <string name="backup_your_collection">Backup your collection</string>
+    <string name="backup_your_collection">Varunda oma kogu</string>
     <string name="backup_collection_message">You haven\'t backed up your collection in a while. You should do this now to prevent data loss</string>
     <string name="button_backup" maxLength="41">Varundus</string>
-    <string name="button_disable_reminder">Disable reminder</string>
+    <string name="button_disable_reminder">Lülita meeldetuletus välja</string>
     <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Hiljem</string>
     <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Ära näita uuesti</string>
     <string name="dismiss_backup_warning_title">Andmekao hoiatus</string>
@@ -223,20 +223,20 @@
         <item quantity="other">Show cards in</item>
     </plurals>
     <plurals name="set_due_date_range_label" comment="a date control is provided afterwards">
-        <item quantity="one">Show card in range</item>
-        <item quantity="other">Show cards in range</item>
+        <item quantity="one">Näita kaarti vahemikus</item>
+        <item quantity="other">Näita kaarte vahemikus</item>
     </plurals>
     <plurals name="set_due_date_label_suffix" comment="a suffix on a text field allowing a user to enter a number of days">
-        <item quantity="one">day</item>
-        <item quantity="other">days</item>
+        <item quantity="one">päev</item>
+        <item quantity="other">päeva</item>
     </plurals>
     <plurals name="set_due_date_current_interval">
-        <item quantity="one">Current interval: %d day</item>
-        <item quantity="other">Current interval: %d days</item>
+        <item quantity="one">Praegune intervall: %d päev</item>
+        <item quantity="other">Praegune intervall: %d päeva</item>
     </plurals>
     <string name="range_delimiter" comment="Placed between two input boxes to denote a range">–</string>
-    <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">From</string>
-    <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">To</string>
+    <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">Alates</string>
+    <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">Kuni</string>
     <!-- Instant Note Editor -->
     <string name="cloze_note_required">Cloze Type Note Required</string>
     <string name="cloze_not_found_message">No Cloze type note found, open the Note Editor or try again after adding a Cloze type note.</string>
@@ -248,26 +248,26 @@
     <string name="change_cloze_mode">Change cloze mode</string>
     <!-- Outdated WebView dialog -->
     <string name="webview_update_message">The system WebView is outdated. Some features won’t work correctly. Please update it.\n\nInstalled version: %1$d\nMinimum required version: %2$d</string>
-    <string name="compress">Compress</string>
+    <string name="compress">Tihenda</string>
     <!-- Tts playback error dialog -->
-    <string name="tts_error_dialog_title">Language not supported</string>
+    <string name="tts_error_dialog_title">Keel pole toetatud</string>
     <string name="tts_error_dialog_reason_text">The text to speech engine <b>%1$s</b> does not support the following language: <b>%2$s</b></string>
-    <string name="tts_error_dialog_change_button_text">Change engine</string>
-    <string name="tts_error_dialog_supported_voices_button_text">Voice options</string>
+    <string name="tts_error_dialog_change_button_text">Muuda mootorit</string>
+    <string name="tts_error_dialog_supported_voices_button_text">Heli valikud</string>
     <!-- import_cache_error_resolutions -->
-    <string name="import_error_resolution_try_again">Re-import the file</string>
-    <string name="import_error_resolution_free_up_space">Ensure there is sufficient free space on your device</string>
-    <string name="import_error_resolution_check_internet">Ensure you are connected to the internet</string>
-    <string name="import_error_resolution_copy_to_device">Copy the file to your device and try again with the local file</string>
-    <string name="import_error_resolution_select_file">Open the file using your device’s file browser app</string>
+    <string name="import_error_resolution_try_again">IMpordi fail uuesti</string>
+    <string name="import_error_resolution_free_up_space">Veendu, et sinu seadmeks oleks piisavalt vaba ruumi</string>
+    <string name="import_error_resolution_check_internet">Veendu, et sul oleks internetiühendus</string>
+    <string name="import_error_resolution_copy_to_device">Kopeeri fail oma seadmesse ja proovi siis uuesti kohaliku failiga</string>
+    <string name="import_error_resolution_select_file">Ava fail kasutades seadme failide rakendust</string>
     <!-- Post-login dialog -->
-    <string name="login_successful">Login successful</string>
-    <string name="sync_now">Sync now?</string>
+    <string name="login_successful">Sisselogimine õnnestus</string>
+    <string name="sync_now">Sünkroonida kohe?</string>
     <!--Change Note Type Dialog Fragment-->
-    <string name="card_numbers_unchanged">Card numbers will remain unchanged</string>
+    <string name="card_numbers_unchanged">Kaardi numbreid ei muudeta</string>
     <!-- Subset of TR.changeNotetypeToFromCloze -->
     <string name="extra_cloze_deletions_removed">If changing to a regular note type, and there are more cloze deletions than available card templates, any extra cards will be removed.</string>
     <string name="different_note_types_selected">Please select notes from only one notetype.</string>
-    <string name="error_no_changes_to_save">No changes to save</string>
-    <string name="choose_color">Choose color</string>
+    <string name="error_no_changes_to_save">Pole muudatusi mida salvestada</string>
+    <string name="choose_color">Vali värv</string>
 </resources>

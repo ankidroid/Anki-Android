@@ -47,32 +47,32 @@
     <string name="error_reporting_choice_never_report">Ära teata</string>
     <string name="error_reporting_choice_ask_user">Küsi mult</string>
     <!-- add_to_cur_labels -->
-    <string name="add_to_deck_use_current_deck">Use current deck</string>
+    <string name="add_to_deck_use_current_deck">Kasuta praegust kaardipakki</string>
     <string name="add_to_deck_decide_by_note_type">Otsusta märketüübi järgi</string>
     <!-- theme labels -->
-    <string name="theme_follow_system">Follow system</string>
-    <string name="theme_day" comment="Day/Light theme color scheme">Day</string>
-    <string name="theme_night" comment="Night/Dark theme color scheme">Night</string>
+    <string name="theme_follow_system">Järgi süsteemi</string>
+    <string name="theme_day" comment="Day/Light theme color scheme">Päev</string>
+    <string name="theme_night" comment="Night/Dark theme color scheme">Öö</string>
     <!-- day_theme_labels -->
-    <string name="day_theme_light">Light</string>
-    <string name="day_theme_plain">Plain</string>
+    <string name="day_theme_light">Hele</string>
+    <string name="day_theme_plain">Lihtne</string>
     <!-- night_theme_labels -->
-    <string name="night_theme_black">Black</string>
-    <string name="night_theme_dark">Dark</string>
+    <string name="night_theme_black">Must</string>
+    <string name="night_theme_dark">Tume</string>
     <!-- html_size_code_labels -->
-    <string name="html_size_code_xx_small">xx-small</string>
-    <string name="html_size_code_x_small">x-small</string>
-    <string name="html_size_code_small">small</string>
-    <string name="html_size_code_medium">medium</string>
-    <string name="html_size_code_large">large</string>
-    <string name="html_size_code_x_large">x-large</string>
-    <string name="html_size_code_xx_large">xx-large</string>
+    <string name="html_size_code_xx_small">xx-väike</string>
+    <string name="html_size_code_x_small">x-väike</string>
+    <string name="html_size_code_small">väike</string>
+    <string name="html_size_code_medium">keskmine</string>
+    <string name="html_size_code_large">suur</string>
+    <string name="html_size_code_x_large">x-suur</string>
+    <string name="html_size_code_xx_large">xx-suur</string>
     <!-- gestures_labels -->
-    <string name="answer_again" maxLength="41">Answer again</string>
-    <string name="answer_hard" maxLength="41">Answer hard</string>
-    <string name="answer_good" maxLength="41">Answer good</string>
-    <string name="answer_easy" maxLength="41">Answer easy</string>
-    <string name="gesture_abort_learning" maxLength="41">Close study screen</string>
+    <string name="answer_again" maxLength="41">Vasta uuesti</string>
+    <string name="answer_hard" maxLength="41">Raske vastus</string>
+    <string name="answer_good" maxLength="41">Hea vastus</string>
+    <string name="answer_easy" maxLength="41">Lihtne vastus</string>
+    <string name="gesture_abort_learning" maxLength="41">Sulge õppimise leht</string>
     <string name="gesture_flag_red" maxLength="41">Toggle red flag</string>
     <string name="gesture_flag_orange" maxLength="41">Toggle orange flag</string>
     <string name="gesture_flag_green" maxLength="41">Toggle green flag</string>
@@ -83,11 +83,11 @@
     <string name="gesture_flag_remove" maxLength="41">Remove flag</string>
     <string name="gesture_page_up" maxLength="41">Page up</string>
     <string name="gesture_page_down" maxLength="41">Page down</string>
-    <string name="gesture_toggle_whiteboard" maxLength="41">Toggle whiteboard</string>
-    <string name="gesture_toggle_eraser" maxLength="41">Toggle eraser</string>
-    <string name="gesture_show_hint" maxLength="41">Show hint</string>
-    <string name="gesture_show_all_hints" maxLength="41">Show all hints</string>
-    <string name="record_voice" maxLength="41">Record voice</string>
-    <string name="replay_voice" maxLength="41">Replay voice</string>
-    <string name="save_voice" maxLength="41">Save recording</string>
+    <string name="gesture_toggle_whiteboard" maxLength="41">Tahvli näitamine</string>
+    <string name="gesture_toggle_eraser" maxLength="41">Kustutaja lülitamine</string>
+    <string name="gesture_show_hint" maxLength="41">Näita vihjet</string>
+    <string name="gesture_show_all_hints" maxLength="41">Näita kõiki vihjeid</string>
+    <string name="record_voice" maxLength="41">Salvesta heli</string>
+    <string name="replay_voice" maxLength="41">Taasesita heli</string>
+    <string name="save_voice" maxLength="41">Talleta salvestus</string>
 </resources>
