@@ -44,6 +44,7 @@ import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.databinding.DeckPickerDialogListItemBinding
 import com.ichi2.anki.databinding.DialogDeckPickerBinding
+import com.ichi2.anki.deckpicker.DeckFilters
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DecksArrayAdapter.DecksFilter
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.DeckId
@@ -376,13 +377,16 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
         override fun getFilter(): Filter = DecksFilter()
 
         private inner class DecksFilter : TypedFilter<DeckNode>(allDecksList) {
+            /**
+             * Returns all the deck nodes of [items] that contains every pattern of the constraints.
+             * In the constraints, patterns are separated by any whitespace character.
+             */
             override fun filterResults(
                 constraint: CharSequence,
                 items: List<DeckNode>,
-            ): List<DeckNode> {
-                val filterPattern = constraint.toString().lowercase(Locale.getDefault()).trim()
-                return items.filter {
-                    it.fullDeckName.lowercase(Locale.getDefault()).contains(filterPattern)
+            ) = DeckFilters.create(constraint).let { deckFilters ->
+                items.filter { node ->
+                    deckFilters.accept(node.fullDeckName)
                 }
             }
 
