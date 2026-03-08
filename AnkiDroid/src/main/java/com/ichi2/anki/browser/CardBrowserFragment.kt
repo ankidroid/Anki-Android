@@ -94,8 +94,8 @@ import com.ichi2.anki.export.ExportDialogFragment
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.model.CardStateFilter
+import com.ichi2.anki.model.LegacySortType
 import com.ichi2.anki.model.SelectableDeck
-import com.ichi2.anki.model.SortType
 import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.requireAnkiActivity
@@ -873,7 +873,7 @@ class CardBrowserFragment :
             // TODO: move this into the ViewModel
             CardBrowserOrderDialog.newInstance { dialog: DialogInterface, which: Int ->
                 dialog.dismiss()
-                activityViewModel.changeCardOrder(SortType.fromCardBrowserLabelIndex(which))
+                activityViewModel.changeCardOrder(LegacySortType.fromCardBrowserLabelIndex(which))
             },
         )
     }
