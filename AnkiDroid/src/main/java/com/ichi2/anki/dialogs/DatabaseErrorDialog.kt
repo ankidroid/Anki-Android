@@ -151,8 +151,8 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
             DIALOG_ERROR_HANDLING -> {
                 // The user has asked to see repair options; allow them to choose one of the repair options or go back
                 // to the previous dialog
-                val options = ArrayList<String>(7)
-                val values = ArrayList<ErrorHandlingEntries>(7)
+                val options = ArrayList<String>(8)
+                val values = ArrayList<ErrorHandlingEntries>(8)
                 if (!requireAnkiActivity().colIsOpenUnsafe()) {
                     // retry
                     options.add(res.getString(R.string.backup_retry_opening))
@@ -171,6 +171,23 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     options.add(res.getString(R.string.backup_one_way_sync_from_server))
                     values.add(ErrorHandlingEntries.ONE_WAY)
                 }
+
+                val activity = requireActivity()
+                val shouldOfferResetToDefaultDirectory =
+                    try {
+                        val currentDir = CollectionHelper.getCurrentAnkiDroidDirectory(activity)
+                        val defaultDir = CollectionHelper.getDefaultAnkiDroidDirectory(activity)
+                        currentDir.absolutePath != defaultDir.absolutePath
+                    } catch (e: SystemStorageException) {
+                        Timber.w(e, "Failed to determine whether to offer reset-to-default directory option")
+                        false
+                    }
+
+                if (shouldOfferResetToDefaultDirectory) {
+                    options.add(res.getString(R.string.backup_use_default_folder))
+                    values.add(ErrorHandlingEntries.RESET_TO_DEFAULT_DIRECTORY)
+                }
+
                 // delete old collection and build new one
                 options.add(res.getString(R.string.backup_del_collection))
                 values.add(ErrorHandlingEntries.NEW)
@@ -198,6 +215,18 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                             }
                             ErrorHandlingEntries.ONE_WAY -> {
                                 showDatabaseErrorDialog(DIALOG_ONE_WAY_SYNC_FROM_SERVER)
+                                return@listItems
+                            }
+                            ErrorHandlingEntries.RESET_TO_DEFAULT_DIRECTORY -> {
+                                try {
+                                    val defaultDir = CollectionHelper.getDefaultAnkiDroidDirectory(activity)
+                                    CollectionManager.closeCollectionBlocking()
+                                    CollectionHelper.resetAnkiDroidDirectory(activity, defaultDir)
+                                    closeCollectionAndFinish()
+                                } catch (e: SystemStorageException) {
+                                    Timber.w(e, "Failed to reset AnkiDroid directory to default")
+                                    showDatabaseErrorDialog(DIALOG_LOAD_FAILED)
+                                }
                                 return@listItems
                             }
                             ErrorHandlingEntries.NEW -> {
@@ -747,6 +776,7 @@ private enum class ErrorHandlingEntries {
     REPAIR,
     RESTORE,
     ONE_WAY,
+    RESET_TO_DEFAULT_DIRECTORY,
     NEW,
     DEBUG_INFO,
 }
