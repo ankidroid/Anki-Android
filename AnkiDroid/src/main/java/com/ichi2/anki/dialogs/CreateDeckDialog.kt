@@ -49,7 +49,6 @@ import timber.log.Timber
  *
  * required property: [onNewDeckCreated]. Called on successful creation of a deck
  */
-@NeedsTest("Ensure a toast is shown on a successful action")
 class CreateDeckDialog(
     private val context: Context,
     private val title: Int,
@@ -293,7 +292,7 @@ class CreateDeckDialog(
         shownDialog?.dismiss()
     }
 
-    private fun displayFeedback(
+    fun displayFeedback(
         message: String,
         duration: Int = Snackbar.LENGTH_SHORT,
     ) {
