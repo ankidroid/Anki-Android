@@ -1,0 +1,34 @@
+name: Build Bisect APK
+
+permissions: 
+    contents: read
+on:
+    workflow_dispatch:
+        inputs:
+            commit_hash:
+                description: 'The commit hash to build'
+                required: true
+                type: string
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps: 
+            - name: Checkout specific commit
+              uses: actions/checkout@v4
+              with: 
+                ref: ${{ inputs.commit_hash }}
+
+            - name: Set up Java
+              uses: actions/setup-java@v4
+              with:
+                distribution: 'temurin'
+                java-version: '21'
+
+            - name: Build bisect APK
+              run: ./gradlew assembleFullRelease -PcustomSuffix=.bisect -PcustomName="Anki Bisect"
+            - name: Upload APK Artifact
+              uses: actions/upload-artifact@v4
+              with:
+                name: bisect-apk
+                path: AnkiDroid/build/outputs/apk/full/release/*.apk
