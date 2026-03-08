@@ -231,6 +231,7 @@ private suspend fun handleDownload(
     deckPicker.withProgress(
         extractProgress = fullDownloadProgress(TR.syncDownloadingFromAnkiweb()),
         onCancel = ::cancelSync,
+        manualCancelButton = R.string.dialog_cancel,
     ) {
         withCol {
             try {
@@ -264,6 +265,7 @@ private suspend fun handleUpload(
     deckPicker.withProgress(
         extractProgress = fullDownloadProgress(TR.syncUploadingToAnkiweb()),
         onCancel = ::cancelSync,
+        manualCancelButton = R.string.dialog_cancel,
     ) {
         withCol {
             close(downgrade = false, forFullSync = true)
