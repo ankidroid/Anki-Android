@@ -134,7 +134,8 @@ object NoteService {
     ) {
         val file = field.mediaFile ?: return
 
-        // https://github.com/ankitects/anki/blob/5d9d864514b9a4ac7d4688fac390c22db91d4abe/rslib/src/sync/media/upload.rs#L87
+        // > is the correct check: https://github.com/ankitects/anki/blob/5d9d864514b9a4ac7d4688fac390c22db91d4abe/rslib/src/sync/media/upload.rs#L87
+        // TODO: Move this check to the backend
         if (!skipSizeCheck && file.length() > Backend.MAX_INDIVIDUAL_MEDIA_FILE_SIZE) {
             throw MediaSizeLimitExceededException(
                 file.name,

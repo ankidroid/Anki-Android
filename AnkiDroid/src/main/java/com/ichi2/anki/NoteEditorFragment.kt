@@ -2180,9 +2180,14 @@ class NoteEditorFragment :
                 }
                 changed = true
             } catch (e: MediaSizeLimitExceededException) {
-                showLargeMediaFileWarning(e.fileName, e.fileSize) {
-                    performAddMedia(index, field, skipSizeCheck = true)
-                }
+                showLargeMediaFileWarning(
+                    e.fileName,
+                    e.fileSize,
+                    onForceAdd = {
+                        // Recursive call to bypass the size check if the user wants to add anyway
+                        performAddMedia(index, field, skipSizeCheck = true)
+                    },
+                )
             } catch (oomError: OutOfMemoryError) {
                 throw Exception(oomError)
             }
@@ -2202,10 +2207,10 @@ class NoteEditorFragment :
             title(R.string.media_file_size_warning_title)
             iconAttr(R.drawable.ic_warning)
             message(text = getString(R.string.media_file_size_warning_message, fileName, fileSizeStr, limitStr))
-            positiveButton(R.string.media_file_size_add_anyway) {
+            positiveButton(R.string.dialog_cancel)
+            negativeButton(R.string.media_file_size_add_anyway) {
                 onForceAdd()
             }
-            negativeButton(R.string.dialog_cancel)
         }
     }
 
