@@ -450,5 +450,7 @@ opening the system text to speech settings fails">Failed to open text to speech 
 
     <!-- Whitespace is OK -->
     <string name="list_separator" comment="The character and spacing to display between elements of a list, for example ', ' in 'Apple, Banana, Cherry" tools:ignore="TranslationTypo">, </string>
+    <!-- Accessibility -->
+    <string name="fab_menu_opened">Menu opened</string>
+    <string name="fab_menu_closed">Menu closed</string>
 </resources>
-
