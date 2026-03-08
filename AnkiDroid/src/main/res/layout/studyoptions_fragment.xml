@@ -108,7 +108,7 @@
                         app:barrierDirection="end"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        app:constraint_referenced_ids="studyoptions_learning_count_label, studyoptions_review_count_label, studyoptions_new_count_label"/>
+                        app:constraint_referenced_ids="studyoptions_learning_count_label, studyoptions_review_count_label, studyoptions_new_count_label, studyoptions_total_new_label, studyoptions_total_label"/>
 
                     <TextView
                         android:id="@+id/studyoptions_new_count"
