@@ -1234,7 +1234,10 @@ class NoteEditorFragment :
         fun fieldsEdited(): Boolean {
             // Editing an existing note: Check to see if the fields are changed
             if (!addNote) {
-                fun normalizeNewlines(s: String) = convertToHtmlNewline(s, replaceNewlines = true)
+                fun normalizeNewlines(s: String) =
+                    convertToHtmlNewline(s, replaceNewlines = true)
+                        .replace("<br(\\s*/*)>".toRegex(), "<br>")
+
                 val currentStrings = editFields!!.map { it.text?.toString() ?: "" }
                 val originalStrings = editorNote!!.fields.toList()
                 return currentStrings.map(::normalizeNewlines) != originalStrings.map(::normalizeNewlines)

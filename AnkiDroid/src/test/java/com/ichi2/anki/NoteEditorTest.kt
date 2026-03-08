@@ -657,6 +657,12 @@ class NoteEditorTest : RobolectricTest() {
             assertFalse(hasUnsavedChanges())
         }
 
+    @Test
+    fun `hasUnsavedChanges - note contained a legacy HTML newline`() =
+        withNoteEditorEditing(addBasicNote("hello<br />world")) {
+            assertFalse(hasUnsavedChanges())
+        }
+
     private suspend fun withNoteEditorAdding(
         from: FromScreen = FromScreen.DECK_LIST,
         block: suspend NoteEditorFragment.() -> Unit,
