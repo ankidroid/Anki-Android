@@ -47,7 +47,7 @@ class RepositionCardFragment : DialogFragment() {
         binding.queueLimitsLabel.text =
             """
             ${TR.browsingQueueTop(requireArguments().getInt(ARG_QUEUE_TOP))}
-            ${TR.browsingQueueTop(requireArguments().getInt(ARG_QUEUE_BOTTOM))} 
+            ${TR.browsingQueueBottom(requireArguments().getInt(ARG_QUEUE_BOTTOM))}
             """.trimIndent()
         binding.startInputLayout.hint =
             TR.browsingStartPosition().removeSuffix(":")
