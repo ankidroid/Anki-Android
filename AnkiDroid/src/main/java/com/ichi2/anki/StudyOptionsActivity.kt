@@ -29,6 +29,7 @@ import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyAction.Co
 import com.ichi2.anki.libanki.undoAvailable
 import com.ichi2.anki.libanki.undoLabel
 import com.ichi2.anki.observability.ChangeManager
+import com.ichi2.anki.ui.internationalization.undoLabelToSentenceCase
 import com.ichi2.anki.utils.ext.setFragmentResultListener
 import com.ichi2.ui.RtlCompliantActionProvider
 import kotlinx.coroutines.launch
@@ -131,9 +132,15 @@ class StudyOptionsActivity :
         lifecycleScope.launch {
             val newUndoState =
                 withCol {
+                    val rawLabel = undoLabel()
+                    val sentenceCaseLabel = rawLabel?.let { label ->
+                        label.removePrefix("Undo ").let { action ->
+                            undoLabelToSentenceCase(this@StudyOptionsActivity, action)
+                        }
+                    }
                     UndoState(
                         hasAction = undoAvailable(),
-                        label = undoLabel(),
+                        label = sentenceCaseLabel,
                     )
                 }
             if (undoState != newUndoState) {
