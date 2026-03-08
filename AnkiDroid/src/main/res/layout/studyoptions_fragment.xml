@@ -119,7 +119,7 @@
                         android:layout_marginStart="8dp"
                         android:textColor="?attr/newCountColor"
                         android:layout_height="wrap_content"
-                        tools:text="234"/>
+                        tools:text="88"/>
 
                     <TextView
                         android:id="@+id/studyoptions_new_bury"
@@ -131,7 +131,7 @@
                         android:layout_marginStart="8dp"
                         android:layout_height="wrap_content"
                         android:textColor="?attr/buryCountColor"
-                        tools:text="+4"/>
+                        tools:text="+4 buried"/>
 
                     <TextView
                         android:id="@+id/studyoptions_learning_count"
@@ -141,7 +141,7 @@
                         android:layout_marginStart="8dp"
                         android:layout_height="wrap_content"
                         android:textColor="?attr/learnCountColor"
-                        tools:text="3443"/>
+                        tools:text="3"/>
 
                     <TextView
                         android:id="@+id/studyoptions_learning_bury"
@@ -152,7 +152,7 @@
                         android:layout_marginStart="8dp"
                         android:layout_height="wrap_content"
                         android:textColor="?attr/buryCountColor"
-                        tools:text="+23"/>
+                        tools:text="+23 buried"/>
 
                     <TextView
                         android:id="@+id/studyoptions_review_count"
@@ -162,7 +162,7 @@
                         android:layout_marginStart="8dp"
                         android:layout_height="wrap_content"
                         android:textColor="?attr/reviewCountColor"
-                        tools:text="15"/>
+                        tools:text="104"/>
 
                     <TextView
                         android:id="@+id/studyoptions_review_bury"
@@ -173,7 +173,7 @@
                         android:layout_marginStart="8dp"
                         android:layout_height="wrap_content"
                         android:textColor="?attr/buryCountColor"
-                        tools:text="+105"/>
+                        tools:text="+20 buried"/>
 
                     <TextView
                         android:id="@+id/studyoptions_total_new_label"
@@ -193,7 +193,7 @@
                         app:layout_constraintBottom_toBottomOf="@id/studyoptions_total_new_label"
                         android:layout_marginStart="8dp"
                         android:layout_height="wrap_content"
-                        tools:text="2341"/>
+                        tools:text="16597"/>
 
                     <TextView
                         android:id="@+id/studyoptions_total_label"
@@ -213,7 +213,7 @@
                         app:layout_constraintBottom_toBottomOf="@id/studyoptions_total_label"
                         android:layout_marginStart="8dp"
                         android:layout_height="wrap_content"
-                        tools:text="781"/>
+                        tools:text="22177"/>
 
                     <androidx.constraintlayout.widget.Group
                         android:id="@+id/group_counts"
