@@ -40,11 +40,14 @@ internal const val OLDEST_WORKING_WEBVIEW_VERSION = 85
 /**
  * Shows a dialog if the current WebView version is older than the last supported version.
  */
-fun checkWebviewVersion(activity: AnkiActivity) {
-    val userVisibleCode = getChromeLikeWebViewVersionIfOutdated(activity) ?: return
+fun checkWebviewVersion(
+    activity: AnkiActivity,
+    minimumWebViewVersion: Int = OLDEST_WORKING_WEBVIEW_VERSION,
+): Boolean {
+    val userVisibleCode = getChromeLikeWebViewVersionIfOutdated(activity, minimumWebViewVersion) ?: return false
 
     // Provide guidance to the user if the WebView is outdated
-    val webviewPackageInfo = getAndroidSystemWebViewPackageInfo(activity.packageManager)
+    val webviewPackageInfo = WebViewCompat.getCurrentWebViewPackage(activity)
     val legacyWebViewPackageInfo = getLegacyWebViewPackageInfo(activity.packageManager)
     // TODO modify the alert dialog text to handle the usage of developer builds for system WebView
     if (legacyWebViewPackageInfo != null) {
@@ -54,6 +57,7 @@ fun checkWebviewVersion(activity: AnkiActivity) {
         Timber.w("WebView is outdated. %s: %s", webviewPackageInfo?.packageName, webviewPackageInfo?.versionName)
         showOutdatedWebViewDialog(activity, userVisibleCode, R.string.link_webview_update)
     }
+    return true
 }
 
 @MainThread
@@ -77,16 +81,25 @@ fun getWebviewUserAgent(context: Context): String? {
  * Returns a Chrome-like WebView version if it is outdated, otherwise null if
  * cannot be determined at all or if okay
  */
-private fun getChromeLikeWebViewVersionIfOutdated(activity: AnkiActivity): Int? {
+private fun getChromeLikeWebViewVersionIfOutdated(
+    activity: AnkiActivity,
+    minimumWebViewVersion: Int,
+): Int? {
     // If we cannot get the package information at all, return null
-    val webviewPackageInfo = getAndroidSystemWebViewPackageInfo(activity.packageManager) ?: return null
+    val webviewPackageInfo = WebViewCompat.getCurrentWebViewPackage(activity) ?: return null
     val webviewVersion =
         webviewPackageInfo.versionName ?: run {
             Timber.w("Failed to obtain WebView version")
             return null
         }
     val versionCode = PackageInfoCompat.getLongVersionCode(webviewPackageInfo)
-    return checkWebViewVersionComponents(webviewPackageInfo.packageName, webviewVersion, versionCode, getWebviewUserAgent(activity))
+    return checkWebViewVersionComponents(
+        webviewPackageInfo.packageName,
+        webviewVersion,
+        versionCode,
+        getWebviewUserAgent(activity),
+        minimumWebViewVersion,
+    )
 }
 
 @VisibleForTesting
@@ -95,7 +108,24 @@ fun checkWebViewVersionComponents(
     webviewVersion: String,
     versionCode: Long,
     userAgent: String?,
+    minimumWebViewVersion: Int = OLDEST_WORKING_WEBVIEW_VERSION,
 ): Int? {
+    // Sometimes the webview version code appears too old, and the package name does as well,
+    // but it's a webview that advertises modern capabilities via User-Agent in "Chrome" section
+    // Our warning is purely advisory, so, let's let those through if User-Agent looks okay
+    userAgent?.let {
+        val chromeRegex = """Chrome/(\d+)""".toRegex()
+        val matchResult = chromeRegex.find(userAgent)?.groupValues?.get(1)
+        matchResult?.toInt()?.let {
+            if (it >= minimumWebViewVersion) {
+                // If the User-Agent says we are modern, trust it and skip further checks.
+                return null
+            } else {
+                // If the User-Agent is explicitly below the floor, return it immediately.
+                return it
+            }
+        }
+    }
     // Checking the version code works for most webview packages
     if (versionCode >= OLDEST_WORKING_WEBVIEW_VERSION_CODE) {
         Timber.d(
@@ -106,23 +136,7 @@ fun checkWebViewVersionComponents(
         )
         return null
     }
-
-    // Sometimes the webview version code appears too old, and the package name does as well,
-    // but it's a webview that advertises modern capabilities via User-Agent in "Chrome" section
-    // Our warning is purely advisory, so, let's let those through if User-Agent looks okay
-    userAgent?.let {
-        val chromeRegex = """Chrome/(\d+)""".toRegex()
-        val matchResult = chromeRegex.find(userAgent)?.groupValues?.get(1)
-        matchResult?.toInt()?.let {
-            if (it < OLDEST_WORKING_WEBVIEW_VERSION) {
-                // If we got here, even the User-Agent says it's incompatible, return something
-                // potentially useful to the user as a browser version
-                return it
-            }
-        }
-    }
-
-    return null
+    return webviewVersion.split('.').firstOrNull()?.toIntOrNull()
 }
 
 data class WebViewInfo(
@@ -171,26 +185,6 @@ private fun getLegacyWebViewPackageInfo(packageManager: PackageManager): Package
     } catch (_: PackageManager.NameNotFoundException) {
         null
     }
-
-/**
- * Returns a [PackageInfo] from the current system WebView, or `null` if unavailable
- */
-private fun getAndroidSystemWebViewPackageInfo(packageManager: PackageManager): PackageInfo? {
-    fun getPackage(packageName: String): PackageInfo? =
-        try {
-            packageManager.getPackageInfo(packageName, 0)
-        } catch (_: PackageManager.NameNotFoundException) {
-            null
-        }
-
-    // The WebView is called com.android.webview by default.
-    // Partner devices which ship with Google applications ship the Google-specific version
-    // of the WebView called com.google.android.webview.
-    // https://issues.chromium.org/issues/40419837#comment10
-
-    return getPackage("com.google.android.webview")
-        ?: getPackage("com.android.webview") // com.android.webview is used on API 24
-}
 
 /**
  * Enables debugging of web contents (HTML / CSS / JavaScript)

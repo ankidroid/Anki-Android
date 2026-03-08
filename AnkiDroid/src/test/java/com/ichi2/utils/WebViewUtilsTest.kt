@@ -55,5 +55,15 @@ class WebViewUtilsTest {
             ),
             equalTo(null),
         )
+        assertThat(
+            "Known old huawei webview determined correctly",
+            checkWebViewVersionComponents(
+                "com.huawei.webview",
+                "unknown",
+                356L,
+                "Mozilla/5.0 (Linux; Android 10; CDY-AN90 Build/HUAWEICDY-AN90; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/78.0.3904.108 Mobile Safari/537.36",
+            ),
+            equalTo(78),
+        )
     }
 }
