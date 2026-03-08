@@ -74,12 +74,10 @@ open class BackupManager {
          *
          * @return whether the repair was successful
          */
-        fun repairCollection(col: Collection): Boolean {
-            val colFile = col.colDb
+        fun repairCollection(colFile: File): Boolean {
             val colPath = colFile.absolutePath
             val time = TimeManager.time
-            Timber.i("BackupManager - RepairCollection - Closing Collection")
-            col.close()
+            Timber.i("BackupManager - RepairCollection")
 
             // repair file
             val execString = "sqlite3 $colPath .dump | sqlite3 $colPath.tmp"
