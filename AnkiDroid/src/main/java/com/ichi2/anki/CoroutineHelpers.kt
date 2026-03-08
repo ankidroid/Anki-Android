@@ -436,6 +436,7 @@ suspend fun <T> withProgressDialog(
                 setCancelable(onCancel != null)
                 if (manualCancelButton != null) {
                     setCancelable(false)
+                    setCanceledOnTouchOutside(false)
                     setButton(DialogInterface.BUTTON_NEGATIVE, context.getString(manualCancelButton)) { _, _ ->
                         Timber.i("Progress dialog cancelled via cancel button")
                         onCancel?.let { it() }
