@@ -17,6 +17,8 @@
 
 package com.ichi2.anki.multiprofile
 
+import java.util.UUID
+
 /**
  * A type-safe identifier for a user profile.
  */
@@ -26,6 +28,15 @@ value class ProfileId(
 ) {
     companion object {
         val DEFAULT = ProfileId("default")
+
+        /**
+         * Generates a new, random Profile ID strictly adhering to the format "p_" + 8 hex chars.
+         */
+        fun generate(): ProfileId {
+            // "p_" prefix ensures folder safety (no collision with reserved words) and
+            // substring(0, 8) gives enough entropy for local profiles
+            return ProfileId("p_" + UUID.randomUUID().toString().substring(0, 8))
+        }
     }
 
     fun isDefault(): Boolean = this == DEFAULT
