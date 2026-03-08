@@ -17,6 +17,7 @@ package com.ichi2.anki.previewer
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Rect
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.Menu
@@ -24,6 +25,8 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.widget.Toolbar
 import androidx.core.os.bundleOf
+import androidx.core.view.ViewCompat
+import androidx.core.view.doOnLayout
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
@@ -133,9 +136,15 @@ class PreviewerFragment :
 
         binding.slider.apply {
             valueTo = cardsCount.toFloat()
+            doOnLayout {
+                updateSliderGestureExclusion(this)
+            }
+            addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ ->
+                updateSliderGestureExclusion(this)
+            }
             addOnSliderTouchListener(
                 object : Slider.OnSliderTouchListener {
-                    override fun onStartTrackingTouch(slider: Slider) {}
+                    override fun onStartTrackingTouch(slider: Slider) = Unit
 
                     override fun onStopTrackingTouch(slider: Slider) {
                         viewModel.onSliderChange(slider.value.toInt())
@@ -182,6 +191,13 @@ class PreviewerFragment :
         binding.webviewContainer.setFrameStyle()
 
         bindingMap = BindingMap(sharedPrefs(), PreviewerAction.entries, this)
+    }
+
+    private fun updateSliderGestureExclusion(slider: Slider) {
+        ViewCompat.setSystemGestureExclusionRects(
+            slider,
+            listOf(Rect(0, 0, slider.width, slider.height)),
+        )
     }
 
     private fun setupFlagMenu(menu: Menu) {
