@@ -805,7 +805,9 @@ open class DeckPicker :
                 }
 
                 is StartupResponse.Success -> {
-                    viewModel.flowOfStartupResponse.value = null // Prevent duplicate startup on re-resume
+                    // Set flowOfStartupResponse to null after handling so it isn't re-emitted on resume.
+                    // Must stay here: clearing in ViewModel would break cold start (collector is only active at RESUMED).
+                    viewModel.flowOfStartupResponse.value = null
                     showStartupScreensAndDialogs(sharedPrefs(), 0)
 
                     if (tryShowStudyOptionsPanel()) {
