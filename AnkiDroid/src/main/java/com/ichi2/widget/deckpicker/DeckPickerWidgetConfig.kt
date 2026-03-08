@@ -154,8 +154,6 @@ class DeckPickerWidgetConfig :
 
         setupDoneButton()
 
-        // TODO: Implement multi-select functionality so that user can select desired decks in once.
-        // TODO: Implement a functionality to hide already selected deck.
         binding.fabWidgetDeckPicker.setOnClickListener {
             showDeckSelectionDialog()
         }
@@ -302,10 +300,10 @@ class DeckPickerWidgetConfig :
         }
     }
 
-    /** Asynchronously displays the list of deck in the selection dialog. */
+    /** Displays the deck selection dialog, filtering out already-selected decks. */
     private fun showDeckSelectionDialog() {
         lifecycleScope.launch {
-            val decks = fetchDecks()
+            val decks = fetchDecks().filter { it.deckId !in deckAdapter.deckIds }
             displayDeckSelectionDialog(decks)
         }
     }
@@ -324,8 +322,13 @@ class DeckPickerWidgetConfig :
                 summaryMessage = null,
                 keepRestoreDefaultButton = false,
                 decks = decks,
+                keepOpen = true,
             )
-        dialog.show(supportFragmentManager, "DeckSelectionDialog")
+        dialog.show(supportFragmentManager, DECK_SELECTION_DIALOG_TAG)
+    }
+
+    private fun dismissDeckSelectionDialog() {
+        (supportFragmentManager.findFragmentByTag(DECK_SELECTION_DIALOG_TAG) as? DeckSelectionDialog)?.dismiss()
     }
 
     /** Called when a deck is selected from the deck selection dialog. */
@@ -338,31 +341,27 @@ class DeckPickerWidgetConfig :
         val isDeckAlreadySelected = deckAdapter.deckIds.contains(deck.deckId)
 
         if (isDeckAlreadySelected) {
-            // TODO: Eventually, ensure that the user can't select a deck that is already selected.
             showSnackbar(getString(R.string.deck_already_selected_message))
             return
         }
 
-        // Check if the deck is being added to a fully occupied selection
         if (deckAdapter.itemCount >= MAX_DECKS_ALLOWED) {
-            // Snackbar will only be shown when adding the 5th deck
             if (deckAdapter.itemCount == MAX_DECKS_ALLOWED) {
                 showSnackbar(resources.getQuantityString(R.plurals.deck_limit_reached, MAX_DECKS_ALLOWED, MAX_DECKS_ALLOWED))
             }
-            // The FAB visibility should be handled in updateFabVisibility()
-        } else {
-            // Add the deck and update views
-            deckAdapter.addDeck(deck)
-            updateViewVisibility()
-            updateFabVisibility()
-            setupDoneButton()
-            hasUnsavedChanges = true
-            setUnsavedChanges(true)
+            return
+        }
 
-            // Show snackbar if the deck is the 5th deck
-            if (deckAdapter.itemCount == MAX_DECKS_ALLOWED) {
-                showSnackbar(resources.getQuantityString(R.plurals.deck_limit_reached, MAX_DECKS_ALLOWED, MAX_DECKS_ALLOWED))
-            }
+        deckAdapter.addDeck(deck)
+        updateViewVisibility()
+        updateFabVisibility()
+        setupDoneButton()
+        hasUnsavedChanges = true
+        setUnsavedChanges(true)
+
+        if (deckAdapter.itemCount == MAX_DECKS_ALLOWED) {
+            showSnackbar(resources.getQuantityString(R.plurals.deck_limit_reached, MAX_DECKS_ALLOWED, MAX_DECKS_ALLOWED))
+            dismissDeckSelectionDialog()
         }
     }
 
@@ -459,9 +458,7 @@ class DeckPickerWidgetConfig :
         }
 
     companion object {
-        /**
-         * Maximum number of decks allowed in the widget.
-         */
         private const val MAX_DECKS_ALLOWED = 5
+        private const val DECK_SELECTION_DIALOG_TAG = "DeckSelectionDialog"
     }
 }
