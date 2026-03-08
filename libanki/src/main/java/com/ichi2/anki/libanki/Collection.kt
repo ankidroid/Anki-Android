@@ -941,6 +941,7 @@ class Collection(
      * and [SearchNode]
      * @throws IllegalArgumentException if [stringsOrSearchNodes] is empty or it has entries which
      * aren't a [String] or a [SearchNode]
+     * @throws BackendSearchException if the search is invalid (`and` as a query; `flag:12`)
      */
     // TODO consider implementing a custom dsl for this method, see comments in #19677
     @LibAnkiAlias("build_search_string")
