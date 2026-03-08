@@ -104,16 +104,21 @@ private class GradeNowListAdapter(
         position: Int,
         convertView: View?,
         parent: ViewGroup,
-    ): View =
-        convertView ?: GradeNowListItemBinding
-            .inflate(LayoutInflater.from(context), parent, false)
-            .also { binding ->
-                val grade = getItem(position)!!
-                binding.gradeTextView.apply {
-                    text = grade.getLabel()
-                    setCompoundDrawablesRelativeWithIntrinsicBoundsKt(start = grade.iconRes)
-                }
-            }.root
+    ): View {
+        val binding =
+            if (convertView != null) {
+                GradeNowListItemBinding.bind(convertView)
+            } else {
+                GradeNowListItemBinding.inflate(LayoutInflater.from(context), parent, false)
+            }
+
+        val grade = getItem(position)!!
+        binding.gradeTextView.apply {
+            text = grade.getLabel()
+            setCompoundDrawablesRelativeWithIntrinsicBoundsKt(start = grade.iconRes)
+        }
+        return binding.root
+    }
 }
 
 private enum class Grade(
