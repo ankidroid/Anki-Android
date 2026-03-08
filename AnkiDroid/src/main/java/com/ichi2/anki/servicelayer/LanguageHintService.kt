@@ -48,6 +48,23 @@ object LanguageHintService {
         Timber.i("Set field locale to %s", selectedLocale)
     }
 
+    fun clearLanguageHintForField(
+        notetypes: Notetypes,
+        notetype: NotetypeJson,
+        fieldPos: Int,
+    ) {
+        val field = notetype.getField(fieldPos)
+        field.languageHint = null
+        notetypes.save(notetype)
+
+        Timber.i("Clear field locale")
+    }
+
+    fun compareLanguage(
+        locale1: Locale,
+        locale2: Locale,
+    ) = locale1.toLanguageTag() == locale2.toLanguageTag()
+
     fun EditText.applyLanguageHint(languageHint: LanguageHint?) {
         this.imeHintLocales = if (languageHint != null) LocaleList(languageHint) else null
     }

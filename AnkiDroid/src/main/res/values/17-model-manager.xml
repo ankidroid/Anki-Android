@@ -38,6 +38,7 @@
 
     <!--Language Hint-->
     <string name="model_field_editor_language_hint_dialog_success_result">Set language hint to %s</string>
+    <string name="model_field_editor_language_hint_dialog_cleared_result">Cleared language hint</string>
 
     <!--Field Editing-->
     <string name="model_field_editor_add" maxLength="28">Add field</string>

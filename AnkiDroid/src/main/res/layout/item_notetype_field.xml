@@ -8,29 +8,68 @@
     android:minHeight="?android:attr/listPreferredItemHeight"
     android:background="?attr/selectableItemBackground">
 
-    <com.ichi2.ui.FixedTextView
-        android:id="@+id/field_name"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:drawableTint="?attr/colorControlNormal"
-        android:layout_gravity="start|center_vertical"
-        android:textAppearance="?attr/textAppearanceListItem"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btn_actions"
-        app:layout_constraintHorizontal_chainStyle="spread_inside"
-        android:layout_marginEnd="4dp"
-        tools:drawableEnd="@drawable/ic_sort"
-        tools:text="Field name" />
-
     <ImageView
-        android:id="@+id/btn_actions"
+        android:id="@+id/filed_drag_handle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ic_menu_24"
+        />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/field_edit_layout"
+        android:imeOptions="actionDone"
+        app:endIconMode="clear_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingStart="24dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/filed_drag_handle"
+        app:layout_constraintEnd_toStartOf="@+id/field_sort_button"
+        android:gravity="center_vertical">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/field_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawablePadding="8dp"
+            android:singleLine="true"
+            android:maxLines="1" />
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/field_sort_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:icon="@drawable/ic_sort"
+        style="@style/Widget.Material3.Button.IconButton"
+        app:iconTint="@color/edit_field_icon_button_tint"
+        app:backgroundTint="@android:color/transparent"
+        android:checkable="true"
+        app:toggleCheckedStateOnClick="false"
+        android:tooltipText="@string/model_field_editor_sort_field"
+        android:contentDescription="@string/model_field_editor_sort_field"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/field_language_button"
+        />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/field_language_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:icon="@drawable/ic_edit_keyboard"
+        style="@style/Widget.Material3.Button.IconButton"
+        app:iconTint="@color/edit_field_icon_button_tint"
+        app:backgroundTint="@android:color/transparent"
+        android:checkable="true"
+        app:toggleCheckedStateOnClick="false"
+        android:tooltipText="@string/model_field_editor_language_hint"
+        android:contentDescription="@string/model_field_editor_language_hint"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_more_vertical"
         />
 </androidx.constraintlayout.widget.ConstraintLayout>

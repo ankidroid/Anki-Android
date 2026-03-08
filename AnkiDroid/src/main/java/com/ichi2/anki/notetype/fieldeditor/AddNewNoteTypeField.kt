@@ -3,7 +3,6 @@ package com.ichi2.anki.notetype.fieldeditor
 import androidx.appcompat.app.AlertDialog
 import com.ichi2.anki.R
 import com.ichi2.anki.launchCatchingTask
-import com.ichi2.anki.sync.userAcceptsSchemaChange
 import com.ichi2.ui.FixedEditText
 import com.ichi2.utils.customView
 import com.ichi2.utils.negativeButton
@@ -23,10 +22,6 @@ class AddNewNoteTypeField(
 
         activity.apply {
             launchCatchingTask {
-                val confirmation = userAcceptsSchemaChange()
-                if (!confirmation) {
-                    return@launchCatchingTask
-                }
                 AlertDialog
                     .Builder(activity)
                     .show {
