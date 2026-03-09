@@ -24,6 +24,8 @@ import android.widget.LinearLayout
 import androidx.core.content.edit
 import com.ichi2.anki.R
 import timber.log.Timber
+import kotlin.math.abs
+import kotlin.math.roundToInt
 
 /**
  * Helper class to manage resizable panes in a X-large layouts
@@ -41,11 +43,23 @@ class ResizablePaneManager(
     private val dragColor: Int = divider.context.getColor(R.color.drag_divider_color),
     private val idleColor: Int = divider.context.getColor(R.color.idle_divider_color),
 ) {
+    private var isResizable: Boolean = true
+
     init {
         setupResizableDivider()
     }
 
-    private fun setupResizableDivider() {
+    fun refreshState(fragmented: Boolean) {
+        if (!fragmented) {
+            removeResizableDivider()
+        } else if (!isResizable) {
+            setupResizableDivider()
+        }
+    }
+
+    fun setupResizableDivider() {
+        divider.visibility = View.VISIBLE
+        isResizable = true
         // Load saved weights if available
         loadSavedWeights()
 
@@ -108,7 +122,6 @@ class ResizablePaneManager(
                         // Clamp the new weight for the left pane
                         // Ensures it's not too small and not too large (leaving space for the other pane's minWeight)
                         newLeftWeight = newLeftWeight.coerceIn(minWeight, sumOfInitialWeights - minWeight)
-
                         val newRightWeight = sumOfInitialWeights - newLeftWeight
 
                         // Apply the new weights
@@ -160,4 +173,18 @@ class ResizablePaneManager(
             Timber.w(e, "Failed to load saved pane weights")
         }
     }
+
+    fun removeResizableDivider() {
+        val leftParams = leftPane.layoutParams as LinearLayout.LayoutParams
+        val rightParams = rightPane.layoutParams as LinearLayout.LayoutParams
+        leftParams.weight = 1.0f
+        rightParams.weight = 0f
+        divider.visibility = View.GONE
+        leftPane.layoutParams = leftParams
+        rightPane.layoutParams = rightParams
+        parentLayout.requestLayout()
+        isResizable = false
+    }
+
+    fun isResizable(): Boolean = isResizable
 }
