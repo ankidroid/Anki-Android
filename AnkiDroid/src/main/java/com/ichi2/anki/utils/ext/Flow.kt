@@ -87,8 +87,8 @@ fun <T> StateFlow<T>.launchCollectionInLifecycleScope(block: suspend (T) -> Unit
         activity.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
             this@launchCollectionInLifecycleScope.collect {
                 // on re-resume, an unchanged value will be emitted for a StateFlow
-                if (lastValue == value) return@collect
-                lastValue = value
+                if (lastValue == it) return@collect
+                lastValue = it
                 if (isRobolectric) {
                     HandlerUtils.postOnNewHandler { runBlocking { block(it) } }
                 } else {
