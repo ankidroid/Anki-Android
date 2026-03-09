@@ -247,6 +247,7 @@ class ManageNoteTypesViewModel : ViewModel() {
         }
         viewModelScope.launch {
             val errors = mutableMapOf<NoteTypeItemState, Throwable>()
+            val lastStep = withCol { addCustomUndoEntry(TR.actionsUpdateNotetype()) }
             noteTypesToDelete.forEach { noteType ->
                 undoableOp<OpChanges> {
                     safeRemoveNoteType(noteType.id)
@@ -256,6 +257,9 @@ class ManageNoteTypesViewModel : ViewModel() {
                         }.onSuccess { return@undoableOp it }
                     OpChanges.getDefaultInstance()
                 }
+            }
+            undoableOp {
+                mergeUndoEntries(lastStep)
             }
             // look through any errors we might have and remove from our list of note types the ones
             // that were in noteTypesToDelete but not in errors map(which presumably weren't deleted)

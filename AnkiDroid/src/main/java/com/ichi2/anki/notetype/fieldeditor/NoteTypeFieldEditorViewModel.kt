@@ -3,15 +3,22 @@ package com.ichi2.anki.notetype.fieldeditor
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ichi2.anki.CollectionManager.getColUnsafe
+import anki.collection.OpChanges
+import anki.collection.copy
+import anki.notetypes.Notetype
+import anki.notetypes.copy
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.common.utils.ext.indexOfOrNull
-import com.ichi2.anki.libanki.NotetypeJson
+import com.ichi2.anki.libanki.Collection
+import com.ichi2.anki.libanki.NoteTypeId
+import com.ichi2.anki.libanki.UndoStepCounter
+import com.ichi2.anki.libanki.backend.BackendUtils.toJsonBytes
+import com.ichi2.anki.libanki.getNotetype
+import com.ichi2.anki.libanki.updateNotetype
 import com.ichi2.anki.notetype.fieldeditor.NoteTypeFieldEditor.Companion.EXTRA_NOTETYPE_ID
+import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.servicelayer.LanguageHint
-import com.ichi2.anki.servicelayer.LanguageHintService.clearLanguageHintForField
 import com.ichi2.anki.servicelayer.LanguageHintService.languageHint
-import com.ichi2.anki.servicelayer.LanguageHintService.setLanguageHintForField
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -25,16 +32,17 @@ class NoteTypeFieldEditorViewModel(
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
     val noteTypeId = savedStateHandle.get<Long>(EXTRA_NOTETYPE_ID) ?: 0
+    var undoStepCounter: UndoStepCounter? = null
     private val _state by lazy {
         MutableStateFlow(
             NoteTypeFieldEditorState(
-                fields = getColUnsafe().notetypes.get(noteTypeId)!!.data,
+                fields = emptyList(),
             ),
         )
     }
     val state: StateFlow<NoteTypeFieldEditorState> = _state.asStateFlow()
 
-    fun initialize() {
+    init {
         viewModelScope.launch {
             forceRefresh()
         }
@@ -46,64 +54,49 @@ class NoteTypeFieldEditorViewModel(
      */
     fun add(name: String) {
         Timber.d("doInBackgroundAddField")
-
         viewModelScope.launch {
-            runCatching {
-                withCol {
-                    val notetype = notetypes.get(noteTypeId)!!
-                    notetypes.addField(notetype, notetypes.newField(name))
-                    notetypes.save(notetype)
-                }
-            }.fold(
-                onSuccess = { _state.updateData { this@updateData.add(NoteTypeFieldRowData(name = name)) } },
-                onFailure = { forceRefresh() },
-            )
+            mergeUndoableOp {
+                safeAddField(noteTypeId, name)
+                    .onSuccess { smartRefresh() }
+                    .onFailure { forceRefresh() }
+                    .getOrDefault(OpChanges.getDefaultInstance())
+            }
         }
     }
 
     /**
      * Rename the existing field with the given name
-     * @param pos the position of the field to rename
+     * @param position the position of the field to rename
      * @param name the name of the field, which must be unique, not empty, addowed to the notetype
      */
     fun rename(
-        pos: Int,
+        position: Int,
         name: String,
     ) {
         Timber.d("doInBackgroundRenameField")
         viewModelScope.launch {
-            runCatching {
-                withCol {
-                    val notetype = notetypes.get(noteTypeId)!!
-                    val field = notetype.fields[pos]
-                    notetypes.renameField(notetype, field, name)
-                    notetypes.save(notetype)
-                }
-            }.fold(
-                onSuccess = { _state.updateData { this[pos] = this[pos].copy(name = name) } },
-                onFailure = { forceRefresh() },
-            )
+            mergeUndoableOp {
+                safeRenameField(noteTypeId, position, name)
+                    .onSuccess { smartRefresh() }
+                    .onFailure { forceRefresh() }
+                    .getOrDefault(OpChanges.getDefaultInstance())
+            }
         }
     }
 
     /**
      * Delete the existing field with the given name
-     * @param pos the position of the field to delete
+     * @param position the position of the field to delete
      */
-    fun delete(pos: Int) {
+    fun delete(position: Int) {
         Timber.d("doInBackgroundDeleteField")
         viewModelScope.launch {
-            runCatching {
-                withCol {
-                    val notetype = notetypes.get(noteTypeId)!!
-                    val field = notetype.fields[pos]
-                    notetypes.removeField(notetype, field)
-                    notetypes.save(notetype)
-                }
-            }.fold(
-                onSuccess = { _state.updateData { removeAt(pos) } },
-                onFailure = { forceRefresh() },
-            )
+            mergeUndoableOp {
+                safeDeleteField(noteTypeId, position)
+                    .onSuccess { smartRefresh() }
+                    .onFailure { forceRefresh() }
+                    .getOrDefault(OpChanges.getDefaultInstance())
+            }
         }
     }
 
@@ -114,23 +107,12 @@ class NoteTypeFieldEditorViewModel(
     fun changeSort(position: Int) {
         Timber.d("doInBackgroundChangeSortField")
         viewModelScope.launch {
-            runCatching {
-                withCol {
-                    val notetype = notetypes.get(noteTypeId)!!
-                    val oldSortPosition = notetype.sortf
-                    notetypes.setSortIndex(notetype, position)
-                    notetypes.save(notetype)
-                    return@withCol oldSortPosition
-                }
-            }.fold(
-                onSuccess = { oldPosition ->
-                    _state.updateData {
-                        this[oldPosition] = this[oldPosition].copy(isOrder = false)
-                        this[position] = this[position].copy(isOrder = true)
-                    }
-                },
-                onFailure = { forceRefresh() },
-            )
+            mergeUndoableOp {
+                safeChangeSort(noteTypeId, position)
+                    .onSuccess { smartRefresh() }
+                    .onFailure { forceRefresh() }
+                    .getOrDefault(OpChanges.getDefaultInstance())
+            }
         }
     }
 
@@ -170,17 +152,12 @@ class NoteTypeFieldEditorViewModel(
         Timber.d("doInBackgroundRepositionField")
         Timber.i("Repositioning field from %d to %d", oldPosition, newPosition)
         viewModelScope.launch {
-            runCatching {
-                withCol {
-                    val notetype = notetypes.get(noteTypeId)!!
-                    val field = notetype.fields[oldPosition]
-                    notetypes.repositionField(notetype, field, newPosition)
-                    notetypes.save(notetype)
-                }
-            }.fold(
-                onSuccess = { smartRefresh() },
-                onFailure = { forceRefresh() },
-            )
+            mergeUndoableOp {
+                safeReposition(noteTypeId, oldPosition, newPosition)
+                    .onSuccess { smartRefresh() }
+                    .onFailure { forceRefresh() }
+                    .getOrDefault(OpChanges.getDefaultInstance())
+            }
         }
     }
 
@@ -196,19 +173,15 @@ class NoteTypeFieldEditorViewModel(
         locale: LanguageHint?,
     ) {
         viewModelScope.launch {
-            runCatching {
-                withCol {
-                    val notetype = notetypes.get(noteTypeId)!!
-                    if (locale != null) {
-                        setLanguageHintForField(notetypes, notetype, position, locale)
-                    } else {
-                        clearLanguageHintForField(notetypes, notetype, position)
+            mergeUndoableOp {
+                safeChangeLanguageHint(noteTypeId, position, locale)
+                    .onSuccess { smartRefresh() }
+                    .onFailure { forceRefresh() }
+                    .getOrDefault(OpChanges.getDefaultInstance())
+                    .copy {
+                        notetype = true
                     }
-                }
-            }.fold(
-                onSuccess = { _state.updateData { this[position] = this[position].copy(locale = locale) } },
-                onFailure = { forceRefresh() },
-            )
+            }
         }
     }
 
@@ -222,7 +195,13 @@ class NoteTypeFieldEditorViewModel(
      */
     fun forceRefresh(position: Int) {
         viewModelScope.launch {
-            _state.updateData { this[position] = this[position].copy(uuid = UUID.randomUUID().toString()) }
+            _state.update {
+                val list = it.fields.toMutableList()
+                list.apply {
+                    this[position] = this[position].copy(uuid = UUID.randomUUID().toString())
+                }
+                it.copy(fields = list.toList())
+            }
         }
     }
 
@@ -235,25 +214,27 @@ class NoteTypeFieldEditorViewModel(
      * @see NoteTypeFieldEditorViewModel.forceRefresh(Int)
      * @see NoteTypeFieldEditorViewModel.forceRefresh()
      */
-    suspend fun smartRefresh() {
-        val oldData = state.value.fields
-        val newData = withCol { notetypes.get(noteTypeId)!! }.data
-        val oldDataNameList = oldData.map { it.name }
-        val newNamedDataIndex = newData.indexOfOrNull { !oldDataNameList.contains(it.name) }
-        val isRenamed = oldData.size == newData.size && newNamedDataIndex != null
-        val updateData =
-            newData.mapIndexed { index, new ->
-                if (isRenamed && index == newNamedDataIndex) {
-                    // when renamed, index is not changed.
-                    val renamedDataIndex = newNamedDataIndex
-                    // succeed to the previous uuid referring to index
-                    new.copy(uuid = oldData[renamedDataIndex].uuid)
-                } else {
-                    // succeed to the previous uuid referring to name
-                    new.copy(uuid = oldData.firstOrNull { it.name == new.name }?.uuid ?: UUID.randomUUID().toString())
+    fun smartRefresh() {
+        viewModelScope.launch {
+            val oldData = state.value.fields
+            val newData = withCol { obtainData() }
+            val oldDataNameList = oldData.map { it.name }
+            val newNamedDataIndex = newData.indexOfOrNull { !oldDataNameList.contains(it.name) }
+            val isRenamed = oldData.size == newData.size && newNamedDataIndex != null
+            val updateData =
+                newData.mapIndexed { index, new ->
+                    if (isRenamed && index == newNamedDataIndex) {
+                        // when renamed, index is not changed.
+                        val renamedDataIndex = newNamedDataIndex
+                        // succeed to the previous uuid referring to index
+                        new.copy(uuid = oldData[renamedDataIndex].uuid)
+                    } else {
+                        // succeed to the previous uuid referring to name
+                        new.copy(uuid = oldData.firstOrNull { it.name == new.name }?.uuid ?: UUID.randomUUID().toString())
+                    }
                 }
-            }
-        _state.update { oldState -> oldState.copy(fields = updateData) }
+            _state.update { oldState -> oldState.copy(fields = updateData) }
+        }
     }
 
     /**
@@ -263,26 +244,153 @@ class NoteTypeFieldEditorViewModel(
      * @see NoteTypeFieldEditorViewModel.forceRefresh(Int)
      * @see NoteTypeFieldEditorViewModel.smartRefresh()
      */
-    suspend fun forceRefresh() {
-        val data = withCol { notetypes.get(noteTypeId)!! }.data
-        _state.update { oldState -> oldState.copy(fields = data) }
+    fun forceRefresh() {
+        viewModelScope.launch {
+            _state.update { oldValue ->
+                val data = withCol { obtainData() }
+                oldValue.copy(fields = data)
+            }
+        }
     }
 
-    private fun MutableStateFlow<NoteTypeFieldEditorState>.updateData(edit: MutableList<NoteTypeFieldRowData>.() -> Unit) =
-        update {
-            val fields = it.fields.toMutableList()
-            edit.invoke(fields)
-            it.copy(fields = fields.toList())
+    private suspend fun <T : Any> mergeUndoableOp(block: Collection.() -> T) {
+        if (undoStepCounter == null) {
+            withCol {
+                undoStepCounter = addCustomUndoEntry(tr.actionsUpdateNotetype())
+            }
         }
+        undoableOp {
+            block()
+        }
+        val step = undoStepCounter ?: return
+        undoableOp {
+            mergeUndoEntries(step)
+        }
+    }
 
-    private val NotetypeJson.data: List<NoteTypeFieldRowData> get() {
-        val sortF = sortf
-        return fields.mapIndexed { index, it ->
-            NoteTypeFieldRowData(
-                name = it.name,
-                isOrder = index == sortF,
-                locale = it.languageHint,
-            )
+    private fun Collection.obtainData(): List<NoteTypeFieldRowData> {
+        val langugageMap =
+            notetypes.get(noteTypeId)!!.fields.associate {
+                it.name to it.languageHint
+            }
+        return getNotetype(noteTypeId).run {
+            val sortF = config.sortFieldIdx
+            fieldsList.mapIndexed { index, it ->
+                NoteTypeFieldRowData(
+                    name = it.name,
+                    isOrder = index == sortF,
+                    locale = langugageMap.getOrDefault(it.name, null),
+                )
+            }
         }
+    }
+
+    private fun Collection.safeAddField(
+        ntid: NoteTypeId,
+        newName: String,
+    ) = runCatching {
+        val notetype =
+            getNotetype(ntid).copy {
+                fields.apply {
+                    val field =
+                        Notetype.Field
+                            .newBuilder()
+                            .setName(newName)
+                            .build()
+                    add(field)
+                }
+            }
+        updateNotetype(notetype)
+    }
+
+    private fun Collection.safeRenameField(
+        ntid: NoteTypeId,
+        position: Int,
+        newName: String,
+    ) = runCatching {
+        val notetype =
+            getNotetype(ntid).copy {
+                fields.apply {
+                    val field = this[position]
+                    this[position] = field.copy { name = newName }
+                }
+            }
+        updateNotetype(notetype)
+    }
+
+    private fun Collection.safeDeleteField(
+        ntid: NoteTypeId,
+        position: Int,
+    ) = runCatching {
+        val notetype =
+            getNotetype(ntid).copy {
+                fields.apply {
+                    val list = this.toMutableList().apply { removeAt(position) }.toList()
+                    clear()
+                    addAll(list)
+                }
+            }
+        updateNotetype(notetype)
+    }
+
+    private fun Collection.safeReposition(
+        ntid: NoteTypeId,
+        oldPosition: Int,
+        newPosition: Int,
+    ) = runCatching {
+        val notetype =
+            getNotetype(ntid).copy {
+                fields.apply {
+                    val list =
+                        this
+                            .toMutableList()
+                            .apply {
+                                val field = this.removeAt(oldPosition)
+                                this.add(newPosition, field)
+                            }.toList()
+                    clear()
+                    addAll(list)
+                }
+            }
+        updateNotetype(notetype)
+    }
+
+    private fun Collection.safeChangeSort(
+        ntid: NoteTypeId,
+        position: Int,
+    ) = runCatching {
+        val notetype =
+            getNotetype(ntid).copy {
+                val newConfig = configOrNull ?: Notetype.Config.newBuilder().build()
+                config = newConfig.copy { sortFieldIdx = position }
+            }
+        updateNotetype(notetype)
+    }
+
+    private fun Collection.safeChangeLanguageHint(
+        ntid: NoteTypeId,
+        position: Int,
+        selectedLocale: LanguageHint?,
+    ) = runCatching {
+        // notetypes.save(notetype) (which call addOrUpdateNotetype()) will delete OpChanges, so we need to convert Field to Notetype.Field
+        val notetypeJson = notetypes.get(ntid)!!
+        val field = notetypeJson.getField(position)
+        field.languageHint = selectedLocale
+
+        val notetype =
+            getNotetype(ntid).copy {
+                fields.apply {
+                    val list =
+                        this
+                            .toMutableList()
+                            .apply {
+                                this[position] = Notetype.Field.parseFrom(toJsonBytes(field))
+                            }.toList()
+                    clear()
+                    addAll(list)
+                }
+            }
+        Timber.i("Set field locale to %s", selectedLocale)
+        updateNotetype(notetype)
     }
 }
