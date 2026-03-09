@@ -64,7 +64,7 @@ class NoteTypeFieldEditor : com.ichi2.anki.AnkiActivity(R.layout.note_type_field
     private val binding by viewBinding(NoteTypeFieldEditorBinding::bind)
     val viewModel by viewModels<NoteTypeFieldEditorViewModel>()
 
-    private val adapter by lazy {
+    private val adapter: NoteFieldAdapter by lazy {
         val listener =
             object : NoteFieldAdapter.ItemChangeListener {
                 override fun onNameChanged(
@@ -79,7 +79,7 @@ class NoteTypeFieldEditor : com.ichi2.anki.AnkiActivity(R.layout.note_type_field
                             viewModel.rename(position, validName)
                         } else {
                             // clear temporary edittext changes
-                            viewModel.forceRefresh(position)
+                            adapter.notifyItemChanged(position)
                         }
                     }
                 }
@@ -97,10 +97,6 @@ class NoteTypeFieldEditor : com.ichi2.anki.AnkiActivity(R.layout.note_type_field
                         viewModel.state.value.fields[position]
                             .locale
                     localeHintDialog(locale, position)
-                }
-
-                override fun onDeleted(position: Int) {
-                    deleteFieldDialog(position)
                 }
             }
         return@lazy NoteFieldAdapter(listener)
@@ -130,6 +126,8 @@ class NoteTypeFieldEditor : com.ichi2.anki.AnkiActivity(R.layout.note_type_field
                     val position = viewHolder.bindingAdapterPosition
                     if (position != RecyclerView.NO_POSITION) {
                         deleteFieldDialog(position)
+                        // reset transitionX whether the field is deleted or not
+                        viewHolder.bindingAdapter?.notifyItemChanged(position)
                     }
                 }
 
@@ -297,10 +295,7 @@ class NoteTypeFieldEditor : com.ichi2.anki.AnkiActivity(R.layout.note_type_field
                     val isConfirmed = userAcceptsSchemaChange()
                     if (isConfirmed) {
                         viewModel.delete(position)
-                    } else {
-                        viewModel.forceRefresh(position)
                     }
-
                     // This ensures that the context menu closes after the field has been deleted
                     supportFragmentManager.popBackStackImmediate(
                         null,
@@ -308,10 +303,6 @@ class NoteTypeFieldEditor : com.ichi2.anki.AnkiActivity(R.layout.note_type_field
                     )
                 }
             }
-            it.setCancel {
-                viewModel.forceRefresh(position)
-            }
-            it.isCancelable = false
             showDialogFragment(it)
         }
     }
@@ -493,7 +484,5 @@ private class NoteFieldAdapter(
         fun onSortChanged(position: Int)
 
         fun onLocaleChangeRequested(position: Int)
-
-        fun onDeleted(position: Int)
     }
 }
