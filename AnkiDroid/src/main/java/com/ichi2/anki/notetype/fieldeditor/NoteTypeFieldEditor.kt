@@ -18,10 +18,12 @@ package com.ichi2.anki.notetype.fieldeditor
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import androidx.activity.viewModels
 import androidx.annotation.VisibleForTesting
+import androidx.appcompat.app.AlertDialog
 import androidx.core.os.BundleCompat
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
@@ -53,7 +55,11 @@ import com.ichi2.anki.utils.ext.getIntOrNull
 import com.ichi2.anki.utils.ext.setFragmentResultListener
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.utils.hideKeyboard
+import com.ichi2.utils.message
 import com.ichi2.utils.moveCursorToEnd
+import com.ichi2.utils.positiveButton
+import com.ichi2.utils.show
+import com.ichi2.utils.title
 import dev.androidbroadcast.vbpd.viewBinding
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -210,8 +216,26 @@ class NoteTypeFieldEditor : com.ichi2.anki.AnkiActivity(R.layout.note_type_field
             }
         }
     }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.notetype_field_editor, menu)
+
+        menu.findItem(R.id.notetype_field_note).setOnMenuItemClickListener {
+            AlertDialog
+                .Builder(this)
+                .show {
+                    setIcon(R.drawable.ic_dialog_info)
+                    title(R.string.model_field_editor_note_title)
+                    message(R.string.model_field_editor_note_description)
+                    positiveButton(R.string.dialog_ok)
+                }
+            true
+        }
+        return true
+    }
+
     // ----------------------------------------------------------------------------
-    // CONTEXT MENU DIALOGUES
+    // ACTION DIALOGUES
     // ----------------------------------------------------------------------------
 
     /**

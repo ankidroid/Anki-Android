@@ -48,6 +48,8 @@
     <string name="model_field_editor_reposition_menu">Reposition field</string>
     <string name="model_field_editor_changing">Updating fields</string>
     <string name="model_field_editor_sort_field">Sort by this field</string>
+    <string name="model_field_editor_note_title">Note</string>
+    <string name="model_field_editor_note_description">Changes on this screen can be undone via the deck-picker menu. Note that language settings cannot be undone due to limitations in Anki and AnkiDroid\'s backend integration.</string>
 
 
     <!--Warnings-->
