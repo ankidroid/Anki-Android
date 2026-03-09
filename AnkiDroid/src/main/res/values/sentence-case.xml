@@ -20,11 +20,6 @@ As only English uses Title Case [https://en.wikipedia.org/wiki/Letter_case#], we
 constant overrides to transform string to sentence case
 
 https://github.com/ankidroid/Anki-Android/issues/15760
-
-TODO:
-col.undoLabel()
-col.redoLabel()
-undoActionUndone()
 -->
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="DuplicateCrowdInStrings">
     <string name="sentence_toggle_suspend">Toggle suspend</string>
@@ -57,4 +52,121 @@ undoActionUndone()
     <string name="sentence_card_stats_current_card_browse">Current card (browse)</string>
     <string name="sentence_card_stats_previous_card_study">Previous card (study)</string>
     <string name="sentence_actions_previous_card_info">Previous card info</string>
+
+    <!-- Undo/Redo strings - Issue #15760 -->
+    <string name="sentence_undo_empty_cards">Undo empty cards</string>
+    <string name="sentence_undo_custom_study">Undo custom study</string>
+    <string name="sentence_undo_set_due_date">Undo set due date</string>
+    <string name="sentence_undo_suspend_card">Undo suspend card</string>
+    <string name="sentence_undo_answer_card">Undo answer card</string>
+    <string name="sentence_undo_add_deck">Undo add deck</string>
+    <string name="sentence_undo_add_note">Undo add note</string>
+    <string name="sentence_undo_update_tag">Undo update tag</string>
+    <string name="sentence_undo_update_note">Undo update note</string>
+    <string name="sentence_undo_update_card">Undo update card</string>
+    <string name="sentence_undo_update_deck">Undo update deck</string>
+    <string name="sentence_undo_reset_card">Undo reset card</string>
+    <string name="sentence_undo_build_deck">Undo build deck</string>
+    <string name="sentence_undo_add_notetype">Undo add note type</string>
+    <string name="sentence_undo_remove_notetype">Undo remove note type</string>
+    <string name="sentence_undo_update_notetype">Undo update note type</string>
+    <string name="sentence_undo_update_config">Undo update config</string>
+    <string name="sentence_undo_card_info">Undo card info</string>
+    <string name="sentence_undo_previous_card_info">Undo previous card info</string>
+    <string name="sentence_undo_set_flag">Undo set flag</string>
+    <string name="sentence_undo_auto_advance">Undo auto advance</string>
+    <string name="sentence_undo_bury_card">Undo bury card</string>
+    <string name="sentence_undo_bury_note">Undo bury note</string>
+    <string name="sentence_undo_unbury_unsuspend">Undo unbury/unsuspend</string>
+    <string name="sentence_undo_rename">Undo rename</string>
+    <string name="sentence_undo_reposition">Undo reposition</string>
+    <string name="sentence_undo_forget_card">Undo forget card</string>
+    <string name="sentence_undo_toggle_load_balancer">Undo toggle load balancer</string>
+
+    <string name="sentence_redo_empty_cards">Redo empty cards</string>
+    <string name="sentence_redo_custom_study">Redo custom study</string>
+    <string name="sentence_redo_set_due_date">Redo set due date</string>
+    <string name="sentence_redo_suspend_card">Redo suspend card</string>
+    <string name="sentence_redo_answer_card">Redo answer card</string>
+    <string name="sentence_redo_add_deck">Redo add deck</string>
+    <string name="sentence_redo_add_note">Redo add note</string>
+    <string name="sentence_redo_update_tag">Redo update tag</string>
+    <string name="sentence_redo_update_note">Redo update note</string>
+    <string name="sentence_redo_update_card">Redo update card</string>
+    <string name="sentence_redo_update_deck">Redo update deck</string>
+    <string name="sentence_redo_reset_card">Redo reset card</string>
+    <string name="sentence_redo_build_deck">Redo build deck</string>
+    <string name="sentence_redo_add_notetype">Redo add note type</string>
+    <string name="sentence_redo_remove_notetype">Redo remove note type</string>
+    <string name="sentence_redo_update_notetype">Redo update note type</string>
+    <string name="sentence_redo_update_config">Redo update config</string>
+    <string name="sentence_redo_card_info">Redo card info</string>
+    <string name="sentence_redo_previous_card_info">Redo previous card info</string>
+    <string name="sentence_redo_set_flag">Redo set flag</string>
+    <string name="sentence_redo_auto_advance">Redo auto advance</string>
+    <string name="sentence_redo_bury_card">Redo bury card</string>
+    <string name="sentence_redo_bury_note">Redo bury note</string>
+    <string name="sentence_redo_unbury_unsuspend">Redo unbury/unsuspend</string>
+    <string name="sentence_redo_rename">Redo rename</string>
+    <string name="sentence_redo_reposition">Redo reposition</string>
+    <string name="sentence_redo_forget_card">Redo forget card</string>
+    <string name="sentence_redo_toggle_load_balancer">Redo toggle load balancer</string>
+
+    <string name="sentence_empty_cards_undone">Empty cards undone</string>
+    <string name="sentence_custom_study_undone">Custom study undone</string>
+    <string name="sentence_set_due_date_undone">Set due date undone</string>
+    <string name="sentence_suspend_card_undone">Suspend card undone</string>
+    <string name="sentence_answer_card_undone">Answer card undone</string>
+    <string name="sentence_add_deck_undone">Add deck undone</string>
+    <string name="sentence_add_note_undone">Add note undone</string>
+    <string name="sentence_update_tag_undone">Update tag undone</string>
+    <string name="sentence_update_note_undone">Update note undone</string>
+    <string name="sentence_update_card_undone">Update card undone</string>
+    <string name="sentence_update_deck_undone">Update deck undone</string>
+    <string name="sentence_reset_card_undone">Reset card undone</string>
+    <string name="sentence_build_deck_undone">Build deck undone</string>
+    <string name="sentence_add_notetype_undone">Add note type undone</string>
+    <string name="sentence_remove_notetype_undone">Remove note type undone</string>
+    <string name="sentence_update_notetype_undone">Update note type undone</string>
+    <string name="sentence_update_config_undone">Update config undone</string>
+    <string name="sentence_card_info_undone">Card info undone</string>
+    <string name="sentence_previous_card_info_undone">Previous card info undone</string>
+    <string name="sentence_set_flag_undone">Set flag undone</string>
+    <string name="sentence_auto_advance_undone">Auto advance undone</string>
+    <string name="sentence_bury_card_undone">Bury card undone</string>
+    <string name="sentence_bury_note_undone">Bury note undone</string>
+    <string name="sentence_unbury_unsuspend_undone">Unbury/unsuspend undone</string>
+    <string name="sentence_rename_undone">Rename undone</string>
+    <string name="sentence_reposition_undone">Reposition undone</string>
+    <string name="sentence_forget_card_undone">Forget card undone</string>
+    <string name="sentence_toggle_load_balancer_undone">Toggle load balancer undone</string>
+
+    <string name="sentence_empty_cards_redone">Empty cards redone</string>
+    <string name="sentence_custom_study_redone">Custom study redone</string>
+    <string name="sentence_set_due_date_redone">Set due date redone</string>
+    <string name="sentence_suspend_card_redone">Suspend card redone</string>
+    <string name="sentence_answer_card_redone">Answer card redone</string>
+    <string name="sentence_add_deck_redone">Add deck redone</string>
+    <string name="sentence_add_note_redone">Add note redone</string>
+    <string name="sentence_update_tag_redone">Update tag redone</string>
+    <string name="sentence_update_note_redone">Update note redone</string>
+    <string name="sentence_update_card_redone">Update card redone</string>
+    <string name="sentence_update_deck_redone">Update deck redone</string>
+    <string name="sentence_reset_card_redone">Reset card redone</string>
+    <string name="sentence_build_deck_redone">Build deck redone</string>
+    <string name="sentence_add_notetype_redone">Add note type redone</string>
+    <string name="sentence_remove_notetype_redone">Remove note type redone</string>
+    <string name="sentence_update_notetype_redone">Update note type redone</string>
+    <string name="sentence_update_config_redone">Update config redone</string>
+    <string name="sentence_card_info_redone">Card info redone</string>
+    <string name="sentence_previous_card_info_redone">Previous card info redone</string>
+    <string name="sentence_set_flag_redone">Set flag redone</string>
+    <string name="sentence_auto_advance_redone">Auto advance redone</string>
+    <string name="sentence_bury_card_redone">Bury card redone</string>
+    <string name="sentence_bury_note_redone">Bury note redone</string>
+    <string name="sentence_unbury_unsuspend_redone">Unbury/unsuspend redone</string>
+    <string name="sentence_rename_redone">Rename redone</string>
+    <string name="sentence_reposition_redone">Reposition redone</string>
+    <string name="sentence_forget_card_redone">Forget card redone</string>
+    <string name="sentence_toggle_load_balancer_redone">Toggle load balancer redone</string>
 </resources>

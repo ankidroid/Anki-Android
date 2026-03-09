@@ -75,11 +75,9 @@ import com.ichi2.anki.libanki.CardId
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.QueueType
 import com.ichi2.anki.libanki.redoAvailable
-import com.ichi2.anki.libanki.redoLabel
 import com.ichi2.anki.libanki.sched.Counts
 import com.ichi2.anki.libanki.sched.CurrentQueueState
 import com.ichi2.anki.libanki.undoAvailable
-import com.ichi2.anki.libanki.undoLabel
 import com.ichi2.anki.multimedia.audio.AudioRecordingController
 import com.ichi2.anki.multimedia.audio.AudioRecordingController.Companion.generateTempAudioFile
 import com.ichi2.anki.multimedia.audio.AudioRecordingController.Companion.isAudioRecordingSaved
@@ -98,6 +96,8 @@ import com.ichi2.anki.reviewer.AnswerButtons.Companion.getTextColors
 import com.ichi2.anki.reviewer.AnswerTimer
 import com.ichi2.anki.reviewer.AutomaticAnswerAction
 import com.ichi2.anki.reviewer.Binding
+import com.ichi2.anki.ui.internationalization.redoLabelToSentenceCase
+import com.ichi2.anki.ui.internationalization.undoLabelToSentenceCase
 import com.ichi2.anki.reviewer.BindingMap
 import com.ichi2.anki.reviewer.BindingProcessor
 import com.ichi2.anki.reviewer.CardMarker
@@ -897,7 +897,11 @@ open class Reviewer :
 
                 if (getColUnsafe.undoAvailable()) {
                     // set the undo title to a named action ('Undo Answer Card' etc...)
-                    undoIcon.title = getColUnsafe.undoLabel()
+                    undoIcon.title = getColUnsafe.undoLabel()?.let { label ->
+                        label.removePrefix("Undo ").let { action ->
+                            undoLabelToSentenceCase(this@Reviewer, action)
+                        }
+                    }
                 } else {
                     // In this case, there is no object word for the verb, "Undo",
                     // so in some languages such as Japanese, which have pre/post-positional particle with the object,
@@ -914,7 +918,11 @@ open class Reviewer :
 
             menu.findItem(R.id.action_redo)?.apply {
                 if (getColUnsafe.redoAvailable()) {
-                    title = getColUnsafe.redoLabel()
+                    title = getColUnsafe.redoLabel()?.let { label ->
+                        label.removePrefix("Redo ").let { action ->
+                            redoLabelToSentenceCase(this@Reviewer, action)
+                        }
+                    }
                     iconAlpha = Themes.ALPHA_ICON_ENABLED_LIGHT
                     isEnabled = true
                 } else {

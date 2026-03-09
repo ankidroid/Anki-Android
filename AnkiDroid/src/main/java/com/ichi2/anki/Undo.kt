@@ -16,6 +16,7 @@
 
 package com.ichi2.anki
 
+import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import anki.collection.OpChangesAfterUndo
@@ -25,8 +26,10 @@ import com.ichi2.anki.libanki.redoAvailable
 import com.ichi2.anki.libanki.undoAvailable
 import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.ui.internationalization.undoneMessageToSentenceCase
+import com.ichi2.anki.ui.internationalization.redoneMessageToSentenceCase
 
-suspend fun tryUndo(): String {
+suspend fun tryUndo(context: Context): String {
     val changes =
         undoableOp {
             if (undoAvailable()) {
@@ -38,11 +41,13 @@ suspend fun tryUndo(): String {
     return if (changes.operation.isEmpty()) {
         TR.actionsNothingToUndo()
     } else {
-        TR.undoActionUndone(changes.operation)
+        // Convert "{Action} undone" to sentence case (e.g., "Empty cards undone")
+        val message = TR.undoActionUndone(changes.operation)
+        undoneMessageToSentenceCase(context, changes.operation)
     }
 }
 
-suspend fun tryRedo(): String {
+suspend fun tryRedo(context: Context): String {
     val changes =
         undoableOp {
             if (redoAvailable()) {
@@ -54,14 +59,15 @@ suspend fun tryRedo(): String {
     return if (changes.operation.isEmpty()) {
         TR.actionsNothingToRedo()
     } else {
-        TR.undoRedoAction(changes.operation)
+        // Convert "Redo {Action}" to sentence case (e.g., "Redo empty cards")
+        redoneMessageToSentenceCase(context, changes.operation)
     }
 }
 
 /** If there's an action pending in the review queue, undo it and show a snackbar */
 suspend fun FragmentActivity.undoAndShowSnackbar(duration: Int = Snackbar.LENGTH_SHORT) {
     withProgress {
-        val text = tryUndo()
+        val text = tryUndo(this@undoAndShowSnackbar)
         showSnackbar(text, duration)
     }
 }
@@ -73,7 +79,7 @@ suspend fun Fragment.undoAndShowSnackbar(duration: Int = Snackbar.LENGTH_SHORT) 
 
 suspend fun FragmentActivity.redoAndShowSnackbar(duration: Int = Snackbar.LENGTH_SHORT) {
     withProgress {
-        val text = tryRedo()
+        val text = tryRedo(this@redoAndShowSnackbar)
         showSnackbar(text, duration)
     }
 }

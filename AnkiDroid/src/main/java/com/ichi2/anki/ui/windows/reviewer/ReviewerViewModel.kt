@@ -15,6 +15,7 @@
  */
 package com.ichi2.anki.ui.windows.reviewer
 
+import android.content.Context
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import anki.collection.OpChanges
@@ -22,6 +23,7 @@ import anki.frontend.SetSchedulingStatesRequest
 import anki.scheduler.CardAnswer.Rating
 import com.ichi2.anki.AbstractFlashcardViewer
 import com.ichi2.anki.AbstractFlashcardViewer.Companion.RESULT_NO_MORE_CARDS
+import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.Flag
@@ -382,12 +384,14 @@ class ReviewerViewModel(
 
     private suspend fun undo() {
         Timber.v("ReviewerViewModel::undo")
-        actionFeedbackFlow.emit(tryUndo())
+        val context = AnkiDroidApp.instance.applicationContext
+        actionFeedbackFlow.emit(tryUndo(context))
     }
 
     private suspend fun redo() {
         Timber.v("ReviewerViewModel::redo")
-        actionFeedbackFlow.emit(tryRedo())
+        val context = AnkiDroidApp.instance.applicationContext
+        actionFeedbackFlow.emit(tryRedo(context))
     }
 
     private suspend fun userAction(
@@ -606,8 +610,23 @@ class ReviewerViewModel(
 
     private suspend fun updateUndoAndRedoLabels() {
         Timber.v("ReviewerViewModel::updateUndoAndRedoLabels")
-        undoLabelFlow.emit(withCol { undoLabel() })
-        redoLabelFlow.emit(withCol { redoLabel() })
+        val context = AnkiDroidApp.instance.applicationContext
+        undoLabelFlow.emit(
+            withCol { undoLabel() }?.let { label ->
+                // Extract action name from "Undo {Action}" format
+                label.removePrefix("Undo ").let { action ->
+                    com.ichi2.anki.ui.internationalization.undoLabelToSentenceCase(context, action)
+                }
+            }
+        )
+        redoLabelFlow.emit(
+            withCol { redoLabel() }?.let { label ->
+                // Extract action name from "Redo {Action}" format
+                label.removePrefix("Redo ").let { action ->
+                    com.ichi2.anki.ui.internationalization.redoLabelToSentenceCase(context, action)
+                }
+            }
+        )
     }
 
     private suspend fun updateNextTimes() {

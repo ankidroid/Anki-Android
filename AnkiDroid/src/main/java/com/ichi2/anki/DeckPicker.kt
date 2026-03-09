@@ -148,7 +148,7 @@ import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.exception.ConfirmModSchemaException
 import com.ichi2.anki.libanki.sched.DeckNode
 import com.ichi2.anki.libanki.undoAvailable
-import com.ichi2.anki.libanki.undoLabel
+import com.ichi2.anki.ui.internationalization.undoLabelToSentenceCase
 import com.ichi2.anki.mediacheck.MediaCheckFragment
 import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.pages.AnkiPackageImporterFragment
@@ -704,9 +704,15 @@ open class DeckPicker :
         fun onUndoUpdated(a: Unit) {
             launchCatchingTask {
                 withOpenColOrNull {
+                    val rawUndoLabel = undoLabel()
+                    val sentenceCaseLabel = rawUndoLabel?.let { label ->
+                        label.removePrefix("Undo ").let { action ->
+                            undoLabelToSentenceCase(this@DeckPicker, action)
+                        }
+                    }
                     optionsMenuState =
                         optionsMenuState?.copy(
-                            undoLabel = undoLabel(),
+                            undoLabel = sentenceCaseLabel,
                             undoAvailable = undoAvailable(),
                         )
                 }
