@@ -23,7 +23,6 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import androidx.appcompat.widget.AppCompatImageView
 import com.ichi2.anki.R
-import com.ichi2.utils.HandlerUtils
 
 class AnswerFeedbackView : AppCompatImageView {
     constructor(context: Context) : this(context, null)
