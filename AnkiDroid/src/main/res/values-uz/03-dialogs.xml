@@ -62,7 +62,7 @@
         <item quantity="other">%d ta karta qayta tiklandi</item>
     </plurals>
     <string name="answering_error_title">Maʼlumotlar bazasida xatolik</string>
-    <string name="answering_error_message">Toʻplamga yozib boʻlmadi. Maʼlumotlar bazasi buzilgan yoki diskda yetarlicha boʻsh joy boʻlmasligi mumkin.\n\nAgar bu tez-tez sodir boʻladigan boʻlsa, maʼlumotlar bazasini tekshirib koʻring, toʻplamni tuzatib koʻring yoki zaxiradan tiklang. Buning uchun “Parametrlar” tugmasini bosing.\n\Yoki bu AnkiDroid bagi ham boʻlishi mumkin; Buni tekshirishimiz uchun xatolik haqida xabar bering.</string>
+    <string name="answering_error_message">Kolleksiyaga yozib boʻlmadi. Maʼlumotlar bazasi buzilgan yoki diskda yetarlicha boʻsh joy boʻlmasligi mumkin.\n\nAgar bu tez-tez sodir boʻladigan boʻlsa, maʼlumotlar bazasini tekshirib koʻring, kolleksiyani tuzatib koʻring yoki zaxiradan tiklang. Buning uchun “Parametrlar” tugmasini bosing.\n\Yoki bu AnkiDroid bagi ham boʻlishi mumkin; Buni tekshirishimiz uchun xatolik haqida xabar bering.</string>
     <string name="answering_error_report">Xatolik haqida xabar berish</string>
     <string name="storage_full_message">AnkiDroidʼni ochish uchun yetarlicha boʻsh joy mavjud emas. Davom etish uchun qurilmangizda biroz joy boʻshating.</string>
     <string name="repair_deck_dialog">Rostdan ham maʼlumotlar bazasini tuzatmoqchimisiz?\n\nUrinishni boshlashdan oldin uni nusxasi “%s” ostjildiga koʻchiriladi.</string>
@@ -79,7 +79,7 @@
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Boʻsh joy yoʻq</string>
     <string name="no_space_to_downgrade_content" tools:ignore="UnusedResources">AnkiDroid davom etishi uchun saqlash xotirasida %s boʻsh joy kerak. Iltimos, biroz joy boʻshating</string>
     <string name="restore_backup_title">Zaxiradan tiklansinmi?</string>
-    <string name="restore_backup">Toʻplamingiz eski nusxa bilan almashtiriladi. Har qanday saqlanmagan progressingiz yoʻqoladi.</string>
+    <string name="restore_backup">Kolleksiyangiz eski nusxa bilan almashtiriladi. Har qanday saqlanmagan progressingiz yoʻqoladi.</string>
     <string name="restore_backup_choose_another">Boshqasini tanlash</string>
     <string name="dialog_cancel">Bekor qilish</string>
     <string name="dialog_ok">OK</string>
@@ -140,7 +140,7 @@
     <string name="database_locked_title">Maʼlumotlar bazasi qulflandi</string>
     <string name="database_locked_summary">AnkiDroid maʼlumotlar bazasi boshqa dastur tomonidan foydalanilmoqda. Iltimos, oʻsha ilovani yoping va AnkiDroidʼni boshqatdan oching.</string>
     <string name="incompatible_database_version_title">Mos kelmaydigan maʼlumotlar bazasi versiyasi</string>
-    <string name="incompatible_database_version_summary">Maʼlumotlar bazasi versiyasi AnkiDroid ishlay oladigan versiyadan ancha yuqori. Ochish uchun AnkiDroidʼni yangilang yoki maʼlumotlar baza versiyasini tushiring\n\nQoʻllab-quvvatlanadigan versiya: %1$d\nMaʼlumotlar bazasi versiyasi: %2$d\n\nQuyidagi tiklash variantlar mavjud toʻplamingizni mos keladigan maʼlumotlar bazasi versiyasi bilan qayta yozishi mumkin:</string>
+    <string name="incompatible_database_version_summary">Maʼlumotlar bazasi versiyasi AnkiDroid ishlay oladigan versiyadan ancha yuqori. Ochish uchun AnkiDroidʼni yangilang yoki maʼlumotlar baza versiyasini tushiring\n\nQoʻllab-quvvatlanadigan versiya: %1$d\nMaʼlumotlar bazasi versiyasi: %2$d\n\nQuyidagi tiklash variantlar mavjud kolleksiyangizni mos keladigan maʼlumotlar bazasi versiyasi bilan qayta yozishi mumkin:</string>
     <!-- Deck Picker Background-->
     <string name="background_image_applied">Orqa fon rasmi qoʻllandi</string>
     <string name="background_image_removed">Orqa fon rasmi olib tashlandi</string>
@@ -169,7 +169,7 @@
     <string name="help_item_mailing_list">E-pochta roʻyxati</string>
     <string name="help_item_reddit">Reddit</string>
     <string name="help_item_report_bug">Bug haqida xabar berish</string>
-    <string name="help_title_support_ankidroid" maxLength="28">AnkiDroidʼga yordam bering</string>
+    <string name="help_title_support_ankidroid" maxLength="28">AnkiDroidʼga koʻmaklashish</string>
     <string name="help_item_support_opencollective_donate">Xayriya qilish</string>
     <string name="help_item_support_develop_ankidroid">Dasturlash</string>
     <string name="help_item_support_rate_ankidroid">Baho berish</string>
@@ -201,11 +201,11 @@
     for the sake of simplicity and because V1 will leave.-->
     <string name="deck_picker_counts">Bugungi kartalar sonini koʻrish uchun dasta umumiy maʼlumotlar sahifasini oching.</string>
     <string name="import_deck_package">Dasta paketi (.apkg)</string>
-    <string name="import_collection_package">Toʻplam paketi (.colpkg)</string>
+    <string name="import_collection_package">Kolleksiya paketi (.colpkg)</string>
     <string name="import_csv">Matn fayl (.txt, .csv)</string>
     <!-- scoped storage -->
-    <string name="backup_your_collection">Toʻplamingizni zaxiralang</string>
-    <string name="backup_collection_message">Toʻplamingizni uzoq vaqt zaxiralamadingiz. Maʼlumotlar yoʻqolishini oldini olish uchun buni hozir qilishingiz kerak.</string>
+    <string name="backup_your_collection">Kolleksiyangizni zaxiralang</string>
+    <string name="backup_collection_message">Kolleksiyangizni uzoq vaqt zaxiralamadingiz. Maʼlumotlar yoʻqolishini oldini olish uchun buni hozir qilishingiz kerak.</string>
     <string name="button_backup" maxLength="41">Zaxiralash</string>
     <string name="button_disable_reminder">Eslatmani oʻchirish</string>
     <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Keyinroq</string>
@@ -217,7 +217,7 @@
     <string name="empty_deck_name">Dasta nomi boʻsh boʻlishi mumkin emas</string>
     <string name="create_deck_numeric_hint">Agar dastani tartiblashda muammoga duch kelsangiz (masalan ‘10’ ‘2’dan oldin kelsa), ‘2’ni ‘02’ bilan almashtiring</string>
     <!-- Set Due Date -->
-    <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Oraligʻni bir xil qiymatga sozlash</string>
+    <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Intervalni bir xil qiymatga sozlash</string>
     <plurals name="set_due_date_single_day_label" comment="a date control is provided afterwards">
         <item quantity="one">Kartani shunchadan keyin koʻrsat</item>
         <item quantity="other">Kartalarni shunchadan keyin koʻrsat</item>
@@ -231,8 +231,8 @@
         <item quantity="other">kun</item>
     </plurals>
     <plurals name="set_due_date_current_interval">
-        <item quantity="one">Joriy vaqt oraligʻi: %d kun</item>
-        <item quantity="other">Joriy vaqt oraligʻi: %d kun</item>
+        <item quantity="one">Joriy interval: %d kun</item>
+        <item quantity="other">Joriy interval: %d kun</item>
     </plurals>
     <string name="range_delimiter" comment="Placed between two input boxes to denote a range">–</string>
     <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">Kamida</string>

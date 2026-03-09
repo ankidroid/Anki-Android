@@ -46,82 +46,82 @@
 <resources>
     <!-- CardBrowser -->
     <plurals name="card_browser_subtitle">
-        <item quantity="one">%d card shown</item>
-        <item quantity="other">%d cards shown</item>
+        <item quantity="one">Näidatakse %d kaart</item>
+        <item quantity="other">Näidatakse %d kaarti</item>
     </plurals>
     <plurals name="card_browser_subtitle_notes_mode">
-        <item quantity="one">%d note shown</item>
-        <item quantity="other">%d notes shown</item>
+        <item quantity="one">Näidatakse %d märkust</item>
+        <item quantity="other">Näidatakse %d märkust</item>
     </plurals>
     <string name="card_browser_all_decks">Kõik kaardipakid</string>
     <plurals name="card_browser_delete_notes">
         <item quantity="one">Kustuta märkus</item>
         <item quantity="other">Kustuta märkused</item>
     </plurals>
-    <string name="card_browser_change_deck" maxLength="28">Change deck</string>
+    <string name="card_browser_change_deck" maxLength="28">Muuda kaardipakki</string>
     <string name="delete_card_title">Kustutada märge?</string>
-    <string name="card_browser_show_marked" maxLength="28">Filter marked</string>
+    <string name="card_browser_show_marked" maxLength="28">Filtreeri märgitud</string>
     <string name="card_browser_show_suspended" maxLength="28">Filter suspended</string>
     <string name="card_browser_search_by_tag" maxLength="28">Filtreeri sildi järgi</string>
     <string name="card_browser_search_by_flag" maxLength="28">Filter by flag</string>
-    <string name="card_browser_list_my_searches" maxLength="28">My searches</string>
+    <string name="card_browser_list_my_searches" maxLength="28">Minu otsingud</string>
     <string name="card_browser_list_my_searches_save" maxLength="28">Salvesta otsing</string>
-    <string name="card_browser_list_my_searches_title">Choose a saved search</string>
-    <string name="card_browser_list_my_searches_new_name">Name for the current search</string>
-    <string name="card_browser_list_my_searches_new_search_error_empty_name">You can’t save a search without a name</string>
+    <string name="card_browser_list_my_searches_title">Vali salvestatud otsing</string>
+    <string name="card_browser_list_my_searches_new_name">Praeguse otsingu nimi</string>
+    <string name="card_browser_list_my_searches_new_search_error_empty_name">Otsingut ei saa ilma nimeta salvestada</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">Nimi on olemas</string>
     <string name="card_browser_list_my_searches_successful_save">Otsing salvestati</string>
-    <string name="no_note_to_edit">No note to edit</string>
-    <string name="card_browser_list_my_searches_remove_content">Delete “%1$s”?</string>
+    <string name="no_note_to_edit">Pole märkust, mida muuta</string>
+    <string name="card_browser_list_my_searches_remove_content">Kas kustutada “%1$s”?</string>
     <string name="card_browser_change_display_order" maxLength="28">Kuvamise järjestuse muutmine</string>
-    <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">Search</string>
-    <string name="card_browser_cram_search" maxLength="28" comment="Menu entry to start a search.">Search</string>
+    <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">Otsi</string>
+    <string name="card_browser_cram_search" maxLength="28" comment="Menu entry to start a search.">Otsi</string>
     <string name="card_browser_change_display_order_title">Valige kuvamisjärjestus</string>
     <string name="card_details_tags">Sildid</string>
     <string-array name="card_browser_order_labels">
         <item>Ilma sorteerimiseta (kiirem)</item>
-        <item>By sort field</item>
+        <item>Sorteerimise välja järgi</item>
         <item>Loomisaja järgi</item>
-        <item>By note modification time</item>
-        <item>By card modification time</item>
-        <item>By due time</item>
-        <item>By interval</item>
-        <item>By ease</item>
-        <item>By reviews</item>
+        <item>Märkuse muutmise aja järgi</item>
+        <item>Kaardi muutmise aja järgi</item>
+        <item>Tähtaja järgi</item>
+        <item>Instervalli järgi</item>
+        <item>Raskuse järgi</item>
+        <item>Ülevaatamiste järgi</item>
         <item>By lapses</item>
-        <item>By deck name</item>
+        <item>Kaardipaki nime järgi</item>
     </string-array>
-    <string name="manage_browser_column">Manage column</string>
-    <string name="no_columns_available">No columns available</string>
+    <string name="manage_browser_column">Halda veergusid</string>
+    <string name="no_columns_available">Veergusid pole saadaval</string>
     <string name="card_browser_select_all" maxLength="28">Vali kõik</string>
     <string name="card_browser_select_none" maxLength="28">Valikud maha</string>
-    <string name="card_browser_no_cards_in_deck">No cards found in deck ‘%s’</string>
-    <string name="card_browser_search_all_decks">Search all decks</string>
-    <string name="card_browser_unknown_deck_name">Unknown</string>
-    <string name="card_browser_truncate" comment="allows users to show less of a field value">Truncate content</string>
-    <string name="set_due_date_hintText" comment="plural set_due_date_label_suffix is used for parameters, parameter 1 is the plural for 0, parameter 2 is the plural for 1">Today is ‘0 %1$s’, tomorrow is ‘1 %2$s’, etc&#8230;</string>
+    <string name="card_browser_no_cards_in_deck">Kaardipakist ‘%s’ ei leitud ühtegi kaarti</string>
+    <string name="card_browser_search_all_decks">Otsi kõikidest kaardipakkidest</string>
+    <string name="card_browser_unknown_deck_name">Tundmatu</string>
+    <string name="card_browser_truncate" comment="allows users to show less of a field value">Lühenda sisu</string>
+    <string name="set_due_date_hintText" comment="plural set_due_date_label_suffix is used for parameters, parameter 1 is the plural for 0, parameter 2 is the plural for 1">Täna on ‘0 %1$s’, homme on ‘1 %2$s’, jne&#8230;</string>
     <plurals name="card_browser_export_cards">
-        <item quantity="one">Export card</item>
-        <item quantity="other">Export cards</item>
+        <item quantity="one">Ekspordi kaart</item>
+        <item quantity="other">Ekspordi kaardid</item>
     </plurals>
     <plurals name="card_browser_export_notes">
-        <item quantity="one">Export note</item>
-        <item quantity="other">Export notes</item>
+        <item quantity="one">Ekspordi märkus</item>
+        <item quantity="other">Ekspordi märkused</item>
     </plurals>
     <plurals name="card_browser_cards_deleted">
-        <item quantity="one">%d card deleted</item>
-        <item quantity="other">%d cards deleted</item>
+        <item quantity="one">%d kaart kustutatud</item>
+        <item quantity="other">%d kaarti kustutatud</item>
     </plurals>
     <!--Keyboard shortcuts dialog-->
-    <string name="edit_tags_dialog" comment="Description of the shortcut that opens the edit tags dialog">Edit tags dialog</string>
-    <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">Show order dialog</string>
+    <string name="edit_tags_dialog" comment="Description of the shortcut that opens the edit tags dialog">Siltide muutmise dialoog</string>
+    <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">Näita järjekorra dialoogi</string>
     <!-- Manage columns dialog -->
     <string name="browse_manage_columns_main_heading">Veerud</string>
-    <string name="browse_manage_columns">Manage columns</string>
+    <string name="browse_manage_columns">Halda veergusid</string>
     <string name="user_active_columns">Aktiivne</string>
     <string name="user_potential_columns">Saadaval</string>
-    <string name="include_column">Include column</string>
-    <string name="exclude_column">Exclude column</string>
-    <string name="save_changes_message">Please save your changes first</string>
-    <string name="browser_find_replace_loading_fields">Retrieving fields names&#8230;</string>
+    <string name="include_column">Kaasa veerg</string>
+    <string name="exclude_column">Jäta veerg välja</string>
+    <string name="save_changes_message">Palun salvesta esmalt oma muudatused</string>
+    <string name="browser_find_replace_loading_fields">Välja nimede hankimine&#8230;</string>
 </resources>

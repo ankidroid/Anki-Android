@@ -62,7 +62,7 @@
     <string name="pref_cat_scheduling" maxLength="41">Rejalashtirish</string>
     <string name="pref_cat_whiteboard" maxLength="41">Yozuv taxtasi</string>
     <string name="pref_cat_appearance" maxLength="41">Koʻrinishi</string>
-    <string name="pref_cat_themes" maxLength="41">Mavzular</string>
+    <string name="pref_cat_themes" maxLength="41">Temalar</string>
     <string name="pref_cat_gestures" maxLength="41">Qoʻl ishoralari</string>
     <string name="pref_cat_controls" maxLength="41">Boshqaruvlar</string>
     <string name="pref_cat_advanced" maxLength="41">Kengaytirilgan</string>
@@ -142,9 +142,9 @@
     <string name="metered_sync_summary">Agar oʻchirilgan boʻlsa, tarifli ulanishda sinxronlashga harakat qilsangiz, siz ogohlantirilasiz</string>
     <string name="backup_limits_frequency">Chastota</string>
     <string name="backup_limits_lifetime">Saqlash davri</string>
-    <string name="app_theme" maxLength="41">Mavzu</string>
-    <string name="day_theme" maxLength="41">Kunduzgi mavzu</string>
-    <string name="night_theme" maxLength="41">Tungi mavzu</string>
+    <string name="app_theme" maxLength="41">Tema</string>
+    <string name="day_theme" maxLength="41">Kunduzgi tema</string>
+    <string name="night_theme" maxLength="41">Tungi tema</string>
     <string name="language" maxLength="41">Til</string>
     <string name="language_system">Tizim tili</string>
     <string name="notification_pref" maxLength="41">Bildirishnomalar</string>
@@ -164,7 +164,7 @@
     <string name="disable_extended_text_ui_summ">Albom (gorizontal) rejimida \'Boʻshliqni toʻldirish\' kontekst menyusini yoqish</string>
     <string name="vertical_centering" maxLength="41">Markazga tenglashtirish</string>
     <string name="vertical_centering_summ">Kartalar tarkibini vertikal ravishda markazga tekislash</string>
-    <string name="pref_double_tap_time_interval" maxLength="41">Ikki marta bosish oraligʻi</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">Ikki marta bosish intervali</string>
     <string name="pref_double_tap_time_interval_summary">Agar bu vaqt oʻtmagan boʻlsa, javob tugmasini ikkinchi marta bosish eʼtiborga olinmaydi. Bu tasodifiy ikki marta bosishni oldini oladi</string>
     <string name="pref_show_answer_long_press_time" maxLength="41">Javob koʻrsatish uchun uzoq bosish vaqti</string>
     <string name="pref_show_answer_long_press_time_summary">Javobni koʻrsatish tugmasi bosishni aniqlaguncha bosishning minimal vaqti</string>
@@ -192,8 +192,8 @@
     <string name="enable_api_summary">Boshqa ilovalarga AnkiDroidʼga ulanishib sizning aralashuvingizsiz maʼlumotlarni oʻqish/yozishga ruxsat berish</string>
     <string name="custom_buttons" maxLength="41">Ilova paneli tugmalari</string>
     <string name="custom_buttons_summary">Ilova panelida qaysi amallar koʻrsatilishini moslashtiring</string>
-    <string name="custom_buttons_setting_always_show">Har doim koʻrsatilsin</string>
-    <string name="custom_buttons_setting_if_room">Joy boʻlsa koʻrsatilsin</string>
+    <string name="custom_buttons_setting_always_show">Har doim koʻrsatiladi</string>
+    <string name="custom_buttons_setting_if_room">Joy boʻlsa koʻrsatiladi</string>
     <string name="custom_buttons_setting_menu_only">Faqat menyuda</string>
     <string name="reset_custom_buttons" maxLength="41">Birlamchiga qaytarish</string>
     <string name="reset_settings_to_default">Sozlamalarni birlamchiga qaytarish</string>
@@ -307,18 +307,18 @@
     <string name="pref_cat_dev_options" maxLength="41">Dasturchi parametrlari</string>
     <string name="dev_options_enabled_pref" maxLength="41">Dasturchi parametrlarini yoqish</string>
     <string name="disable_dev_options">Dasturchi parametrlarini oʻchirish</string>
-    <string name="dev_options_warning">Iltimos, dasturchi parametrlarini yoqishdan oldin ishonch hosil qiling. Bu parametrlar xavfli boʻlib, ilovani yoki toʻplamingizni buzishi mumkin.\n\nEsda tutingki, bu parametrlar koʻpchilik foydalanuvchilar uchun moʻljallanmagan va shuning uchun tarjima qilinmaydi, shuning uchun ular ingliz tilida.</string>
+    <string name="dev_options_warning">Iltimos, dasturchi parametrlarini yoqishdan oldin ishonch hosil qiling. Bu parametrlar xavfli boʻlib, ilovani yoki kolleksiyangizni buzishi mumkin.\n\nEsda tutingki, bu parametrlar koʻpchilik foydalanuvchilar uchun moʻljallanmagan va shuning uchun tarjima qilinmaydi, shuning uchun ular ingliz tilida.</string>
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->
-    <string name="pref__backups_help__summary"><![CDATA[        AnkiDroid vaqti-vaqti bilana toʻplamingizni zaxiralaydi.
+    <string name="pref__backups_help__summary"><![CDATA[        AnkiDroid vaqti-vaqti bilana kolleksiyangizni zaxiralaydi.
         Agar zaxira nusxalari ikki kundan oshgan boʻlsa,
         AnkiDroid diskda boʻsh joy boʻshatish uchun ularni baʻzilarini oʻchirib tashlaydi.
         <br><br>
         Eʼtibor bering, media fayllar zaxiralanmaydi.
-        Amin boʻlish uchun toʻplamingizni vaqti-vaqti bilan sinxronlang yoki uni zaxira nusxalarini eksport qiling.
+        Amin boʻlish uchun kolleksiyangizni vaqti-vaqti bilan sinxronlang yoki uni zaxira nusxalarini eksport qiling.
         <br><br>
-        Dastalar roʻyxati menyusida, zaxiradan qayta tiklashingiz va toʻplamingizni eksport qilishingiz mumkin.]]></string>
+        Dastalar roʻyxati menyusida, zaxiradan qayta tiklashingiz va kolleksiyangizni eksport qilishingiz mumkin.]]></string>
     <string name="pref__minutes_between_automatic_backups__title" maxLength="41">Avtomatik zaxiralashlar orasidagi vaqt (daqiqa)</string>
     <string name="pref__daily_backups_to_keep__title" maxLength="41">Har kun saqlanadigan zaxiralar soni</string>
     <string name="pref__weekly_backups_to_keep__title" maxLength="41">Har hafta saqlanadigan zaxiralar soni</string>
@@ -343,16 +343,16 @@
     <string name="dialog__delete_backups__title" comment="Title for a dialog where you can choose backups to delete">Zaxiralarni oʻchirish</string>
     <string name="progress__deleting_backups">Zaxiralar oʻchirilmoqda&#8230;</string>
     <!-- Delete collection -->
-    <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">Toʻplamni oʻchirish</string>
-    <string name="pref__delete_collection__summary">Toʻplam, media fayllar va zaxiralarni oʻchirish. Ilova sozlamalari oʻchirilmaydi.</string>
-    <string name="dialog__delete_collection__title" comment="Confirmation dialog title">Toʻplamni oʻchirish</string>
-    <string name="dialog__delete_collection__message" comment="“Close the window” here refers to the activity that the user is currently seeing.        When the collection is deleted, we exit the process, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Rostdan ham toʻplamingiz, media fayllaringiz va zaxiralaringiz oʻchirmoqchimisiz?\n\nQayd: bu amal oynani yopadi.</string>
-    <string name="progress__deleting_collection">Toʻplam oʻchirilmoqda</string>
+    <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">Kolleksiyani oʻchirish</string>
+    <string name="pref__delete_collection__summary">Kolleksiya, media fayllar va zaxiralarni oʻchirish. Ilova sozlamalari oʻchirilmaydi.</string>
+    <string name="dialog__delete_collection__title" comment="Confirmation dialog title">Kolleksiya oʻchirish</string>
+    <string name="dialog__delete_collection__message" comment="“Close the window” here refers to the activity that the user is currently seeing.        When the collection is deleted, we exit the process, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Kolleksiyangiz, media fayllaringiz va zaxiralaringizni rostdan ham oʻchirmoqchimisiz?\n\nQayd: bu amal oynani yopadi.</string>
+    <string name="progress__deleting_collection">Kolleksiya oʻchirilmoqda</string>
     <!-- Delete everything -->
     <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">Barchasini oʻchirish</string>
-    <string name="pref__delete_everything__summary">Toʻplam, media fayllar zaxiralar va sozlamalarni oʻchirish</string>
+    <string name="pref__delete_everything__summary">Kolleksiya, media fayllar zaxiralar va sozlamalarni oʻchirish</string>
     <string name="dialog__delete_everything__title" comment="Confirmation dialog title">Barchasini oʻchirish</string>
-    <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Rostdan ham barcha maʼlumotlarni oʻchirmoqchimisiz? Bunga toʻplamingiz, media fayllaringiz, zaxiralaringiz va sozlamalaringiz ham kiradi.\n\nQayd: bu amal oynani yopadi.</string>
+    <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Rostdan ham barcha maʼlumotlarni oʻchirmoqchimisiz? Bunga kolleksiyangiz, media fayllaringiz, zaxiralaringiz va sozlamalaringiz ham kiradi.\n\nQayd: bu amal oynani yopadi.</string>
     <!-- Delete app data -->
     <string name="pref__delete_app_data__title" maxLength="41" comment="Preference title">Ilova maʼlumotlarini oʻchirish</string>
     <string name="pref__delete_app_data__summary">Sozlamalar va boshqa ilova maʼlumotlarini oʻchirish</string>
@@ -362,11 +362,11 @@
          ##### Generic preference summaries & snackbars that are shown on preference click #####
          ####################################################################################### -->
     <string name="pref__etc__summary__fetching" comment="Generic preference summary to be shown when the value is being fetched">&#8230;</string>
-    <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">Toʻplam mavjud emas</string>
+    <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">Kolleksiya mavjud emas</string>
     <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">Xatolik yuz berdi</string>
     <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">Maʼlumotlar olinmoqda&#8230;</string>
     <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">Hisoblanmoqda&#8230;</string>
-    <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">Toʻplam mavjud emas</string>
+    <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">Kolleksiya mavjud emas</string>
     <string name="hide_system_bars" maxLength="41" comment="Title of a setting that allows to hide the system bars">Tizim panellarini yashirish</string>
     <string name="hide_system_bars_none" comment="Setting option to not hide any of the system bars">Hech qaysi</string>
     <string name="hide_system_bars_status_bar" comment="Setting option to hide the system status bar (the top one with clock, battery status, etc)">Holat qatori</string>
