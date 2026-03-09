@@ -16,6 +16,8 @@
 
 package com.ichi2.anki.utils.ext
 
+import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -66,3 +68,29 @@ inline fun <reified T : DialogFragment> FragmentActivity.getCurrentDialogFragmen
  * `null` if the type does not match, or if a dialog has not been shown
  */
 inline fun <reified T : DialogFragment> Fragment.getCurrentDialogFragment(): T? = requireActivity().getCurrentDialogFragment()
+
+/**
+ * Executes [block] after all fragments have executed `onViewCreated`
+ */
+fun FragmentActivity.onAllFragmentsLoaded(block: () -> Unit) {
+    supportFragmentManager.registerFragmentLifecycleCallbacks(
+        object : FragmentManager.FragmentLifecycleCallbacks() {
+            override fun onFragmentViewCreated(
+                fm: FragmentManager,
+                f: Fragment,
+                v: View,
+                savedInstanceState: Bundle?,
+            ) {
+                super.onFragmentViewCreated(fm, f, v, savedInstanceState)
+                if (supportFragmentManager.fragments.all { it.view != null }) {
+                    try {
+                        block()
+                    } finally {
+                        supportFragmentManager.unregisterFragmentLifecycleCallbacks(this)
+                    }
+                }
+            }
+        },
+        true,
+    )
+}
