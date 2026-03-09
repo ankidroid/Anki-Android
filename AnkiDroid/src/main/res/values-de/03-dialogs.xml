@@ -262,12 +262,12 @@
     <string name="import_error_resolution_select_file">Öffne die Datei mit der Dateibrowser-App deines Geräts</string>
     <!-- Post-login dialog -->
     <string name="login_successful">Anmeldung erfolgreich</string>
-    <string name="sync_now">Sync now?</string>
+    <string name="sync_now">Jetzt synchronisieren?</string>
     <!--Change Note Type Dialog Fragment-->
-    <string name="card_numbers_unchanged">Card numbers will remain unchanged</string>
+    <string name="card_numbers_unchanged">Kartennummern bleiben unverändert</string>
     <!-- Subset of TR.changeNotetypeToFromCloze -->
-    <string name="extra_cloze_deletions_removed">If changing to a regular note type, and there are more cloze deletions than available card templates, any extra cards will be removed.</string>
-    <string name="different_note_types_selected">Please select notes from only one notetype.</string>
-    <string name="error_no_changes_to_save">No changes to save</string>
-    <string name="choose_color">Choose color</string>
+    <string name="extra_cloze_deletions_removed">Wenn Sie zu einem regulären Notiztyp wechseln und es mehr Cloze-Löschungen als verfügbare Kartenvorlagen gibt, werden alle zusätzlichen Karten entfernt.</string>
+    <string name="different_note_types_selected">Bitte wählen Sie Notizen aus nur einem Notiztyp aus.</string>
+    <string name="error_no_changes_to_save">Keine Änderungen zum Speichern</string>
+    <string name="choose_color">Farbe wählen</string>
 </resources>

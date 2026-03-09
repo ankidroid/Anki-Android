@@ -47,11 +47,11 @@
     <string name="backup_deck_no_storage_left">Zaxira saqlanmadi. Xotirada yetarli joy qolmadi. Zaxira chuqurligini pasaytiring yoki boshqa fayllarni oʻchiring.</string>
     <string name="storage_warning" comment="Consider keeping the unbreakable space after the digit">Xotirangizda %d MBdan kam joy qoldi.\nMaʼlumotlar yoʻqolishining oldini olish uchun biroz joy boʻshating.</string>
     <string name="backup_restore" maxLength="28">Zaxira nusxasidan tiklash</string>
-    <string name="backup_new_collection">Yangi toʻplam</string>
-    <string name="backup_del_collection">Toʻplamni oʻchirib yangisini yaratish</string>
-    <string name="backup_del_collection_question">Toʻplamni oʻchirib yangisi yaratmoqchimisiz? Barcha oʻrganish progressingizni yoʻqotasiz va barcha kartalarni oʻchiradi.</string>
+    <string name="backup_new_collection">Yangi kolleksiya</string>
+    <string name="backup_del_collection">Kolleksiyani oʻchirib yangisini yaratish</string>
+    <string name="backup_del_collection_question">Kolleksiyani oʻchirib yangisi yaratmoqchimisiz? Barcha oʻrganish progressingizni yoʻqotasiz va barcha kartalarni oʻchiradi.</string>
     <string name="backup_one_way_sync_from_server">Serverdan bir tomonlama sinxronlash</string>
-    <string name="backup_full_sync_from_server_question">Toʻplamingiz AnkiWeb toʻplami bilan almashtirilsinmi? Oxirgi sinxronizatsiyadan keyingi barcha oʻrganish progressingiz va qoʻshilgan maʼlumotlaringiz yoʻqoladi.</string>
+    <string name="backup_full_sync_from_server_question">Kolleksiyangiz AnkiWeb kolleksiyasi bilan almashtirilsinmi? Oxirgi sinxronizatsiyadan keyingi barcha oʻrganish progressingiz va qoʻshilgan maʼlumotlaringiz yoʻqoladi.</string>
     <string name="error_handling_title">Xatolikni bartaraf qilish</string>
     <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">Parametrlar</string>
     <string name="backup_retry_opening">Ochishni qayta urinib koʻrish</string>
@@ -61,8 +61,8 @@
     <string name="backup_invalid_file_error">Tanlangan zaxira fayli yaroqsiz</string>
     <string name="backup_restore_select_title">Qayta tiklash uchun zaxira faylini tanlang</string>
     <string name="backup_restore_no_backups">Bu qurilmada zaxira nusxalari mavjud emas. Agar  kompyuteringizda zaxira nusxalari bo\'lsa, ularni qoʻlda AnkiDroid jildiga ko\'chiring.</string>
-    <string name="open_collection_failed_title">Toʻplam ochilmadi</string>
-    <string name="corrupt_db_message">Toʻplamingiz buzilgan.\n\nZaxiradan tiklash uchun “Parametrlar” tugmasini bosing. Agar ishlamasa, maʼlumotlar bazasini qoʻlda tuzatish boʻyicha quyidagi koʻrsatmalarga murojaat qiling:\n%1$s</string>
-    <string name="access_collection_failed_message">Toʻplamingizga kirishda xatolik yuz berdi. Bunga zararsiz bag sabab boʻlgan boʻlishi mumkin yoki u bilan bogʻliq muammo boʻlishi ham mumkin. \n\nMaʼlumotlar bazasini tekshirib koʻring yoki “Parametrlar” tugmasini bosib zaxiradan tiklang. Agar bu xabarni ko‘rishda davom etsangiz, bag haqida xabar yuboring:\n%1$s</string>
-    <string name="deck_repair_error">Toʻplamni tuzatib boʻlmadi</string>
+    <string name="open_collection_failed_title">Kolleksiya ochilmadi</string>
+    <string name="corrupt_db_message">Kolleksiyangiz buzilgan.\n\nZaxiradan tiklash uchun “Parametrlar” tugmasini bosing. Agar ishlamasa, maʼlumotlar bazasini qoʻlda tuzatish boʻyicha quyidagi koʻrsatmalarga murojaat qiling:\n%1$s</string>
+    <string name="access_collection_failed_message">Kolleksiyangizga kirishda xatolik yuz berdi. Bunga zararsiz bag sabab boʻlgan boʻlishi mumkin yoki u bilan bogʻliq muammo boʻlishi ham mumkin. \n\nMaʼlumotlar bazasini tekshirib koʻring yoki “Parametrlar” tugmasini bosib zaxiradan tiklang. Agar bu xabarni ko‘rishda davom etsangiz, bag haqida xabar yuboring:\n%1$s</string>
+    <string name="deck_repair_error">Kolleksiyani tuzatib boʻlmadi</string>
 </resources>

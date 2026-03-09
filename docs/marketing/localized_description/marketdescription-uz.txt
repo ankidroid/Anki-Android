@@ -24,7 +24,7 @@ Anki Desktop orqali yoki toʻgʻridan-toʻgʻri AnkiDroid orqali material qoʻsh
 • karta muharriri/qoʻshuvchisi
 • karta brauzeri
 • planshetga moslashtirilgan
-• mavjud toʻplam fayllarini import qilish (Anki Desktop orqali)
+• mavjud kolleksiya fayllarini import qilish (Anki Desktop orqali)
 • Kartalarni lugʻat kabi boshqa ilovalardan niyat bilan qoʻshing
 • shriftni moslashtirish
 • toʻliq zaxiralash tizimi

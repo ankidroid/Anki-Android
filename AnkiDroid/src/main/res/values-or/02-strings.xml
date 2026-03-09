@@ -357,7 +357,7 @@
     <string name="start_recording">Record</string>
     <string name="stop_recording">Stop</string>
     <string name="play_recording">ଚାଳନ କରିବା</string>
-    <string name="next_recording" comment="Description of a button to go to the next recording">Next</string>
+    <string name="next_recording" comment="Description of a button to go to the next recording">ପରବର୍ତ୍ତୀ</string>
     <!--  AlertDialog in the deleteCardTemplate  -->
     <string name="orphan_note_title">Cannot Delete Card Type</string>
     <string name="orphan_note_message">Deleting this card type will leave some notes without any cards.</string>

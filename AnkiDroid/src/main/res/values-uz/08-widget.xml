@@ -72,5 +72,5 @@
         <item quantity="other" comment="Consider keeping the unbreakable space after the digit">%d ta dastagacha tanlashingiz mumkin</item>
     </plurals>
     <string name="empty_widget_state" comment="To denote the widget is empty">Dasta mavjud emas. Sozlash uchun bosing.</string>
-    <string name="empty_collection_state_in_widget" comment="To denote the collection is empty">Toʻplam boʻsh, dastalarni qoʻshish uchun ilovani ishlating va qayta sozlang</string>
+    <string name="empty_collection_state_in_widget" comment="To denote the collection is empty">Kolleksiya boʻsh, dastalarni qoʻshish uchun ilovani ishlating va qayta sozlang</string>
 </resources>

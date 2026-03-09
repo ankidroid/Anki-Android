@@ -107,7 +107,7 @@
     <string name="menu_suspend" maxLength="28">ନିଲମ୍ବନ କରନ୍ତୁ</string>
     <string name="menu_delete_note" maxLength="28">ନୋଟ୍ ଵିଲୋପ କରିବା</string>
     <string name="menu_flag" maxLength="41">ପତାକା</string>
-    <string name="rename_flag">Rename flags</string>
+    <string name="rename_flag">ପତାକାର ନାମ ବଦଳାଇବା</string>
     <string name="menu_flag_card" maxLength="28">ପତ୍ରକୁ ଏକ ପତାକା ନ୍ୟସ୍ତ କରନ୍ତୁ</string>
     <string name="menu_edit_tags" maxLength="28">ଟ୍ୟାଗ୍ ସମ୍ପାଦନା</string>
     <string name="delete_note_message">ଆପଣ ପ୍ରକୃତରେ ଏହି ନୋଟ୍ ଏଵଂ ଏହାର ସମସ୍ତ ପତ୍ର ଵିଲୋପ କରିବାକୁ ଚାହୁଁଛନ୍ତି କି?\n%s</string>
