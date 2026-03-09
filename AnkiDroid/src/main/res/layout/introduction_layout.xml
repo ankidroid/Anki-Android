@@ -67,7 +67,7 @@
 
     <com.ichi2.ui.FixedTextView
         android:id="@+id/remember_more"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:paddingBottom="8dp"
         android:text="@string/intro_ankidroid_tagline_two"
