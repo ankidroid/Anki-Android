@@ -132,8 +132,8 @@ class TagLimitFragment : DialogFragment() {
     override fun onStart() {
         super.onStart()
         lifecycleScope.launch {
-            binding.loadingViews?.isVisible = true
-            binding.contentViews?.isVisible = false
+            binding.loadingViews.isVisible = true
+            binding.contentViews.isVisible = false
             val customStudyDefaults = withCol { sched.customStudyDefaults(deckId) }
             binding.requireOneOrMoreCheckBox.isChecked =
                 customStudyDefaults.tagsList.any { tag -> tag.include }
@@ -143,8 +143,8 @@ class TagLimitFragment : DialogFragment() {
                 }
             tagsIncludedAdapter.tags = tags.toMutableList() // make a copy
             tagsExcludedAdapter.tags = tags.toMutableList() // make a copy
-            binding.loadingViews?.isVisible = false
-            binding.contentViews?.isVisible = true
+            binding.loadingViews.isVisible = false
+            binding.contentViews.isVisible = true
         }
     }
 
