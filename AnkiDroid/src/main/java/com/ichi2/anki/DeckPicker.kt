@@ -28,7 +28,6 @@ package com.ichi2.anki
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.content.res.Configuration
 import android.database.SQLException
 import android.graphics.PixelFormat
 import android.graphics.drawable.Drawable
@@ -158,14 +157,12 @@ import com.ichi2.anki.preferences.AdvancedSettingsFragment
 import com.ichi2.anki.preferences.PreferencesActivity
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.receiver.SdCardReceiver
-import com.ichi2.anki.servicelayer.PreferenceUpgradeService
 import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.sync.launchCatchingRequiringOneWaySyncDiscardUndo
-import com.ichi2.anki.ui.ResizablePaneManager
 import com.ichi2.anki.ui.animations.fadeIn
 import com.ichi2.anki.ui.animations.fadeOut
 import com.ichi2.anki.ui.windows.permissions.PermissionsActivity
@@ -177,6 +174,7 @@ import com.ichi2.anki.utils.ext.launchCollectionInLifecycleScope
 import com.ichi2.anki.utils.ext.positionIsVisible
 import com.ichi2.anki.utils.ext.setFragmentResultListener
 import com.ichi2.anki.utils.ext.showDialogFragment
+import com.ichi2.anki.utils.isWindowCompact
 import com.ichi2.anki.utils.runWithOOMCheck
 import com.ichi2.anki.widgets.DeckAdapter
 import com.ichi2.anki.worker.SyncMediaWorker
@@ -267,9 +265,7 @@ open class DeckPicker :
         get() = deckPickerBinding.floatingActionButton
 
     override var fragmented: Boolean
-        get() =
-            resources.configuration.screenLayout and Configuration.SCREENLAYOUT_SIZE_MASK ==
-                Configuration.SCREENLAYOUT_SIZE_XLARGE
+        get() = binding.deckpickerContainer.isResizable
         set(_) = throw UnsupportedOperationException()
 
     // Short animation duration from system
@@ -598,6 +594,10 @@ open class DeckPicker :
                     }
             }
 
+        binding.deckpickerContainer.addOnUIChangedListener {
+            invalidateOptionsMenu()
+        }
+
         shortAnimDuration = resources.getInteger(android.R.integer.config_shortAnimTime)
 
         checkWebviewVersion(this)
@@ -755,7 +755,7 @@ open class DeckPicker :
         }
 
         fun onResizingDividerVisibilityChanged(isVisible: Boolean) {
-            binding.resizingDivider?.isVisible = isVisible
+            binding.resizingDivider.isVisible = isVisible
         }
 
         fun onCardsDueChanged(dueCount: Int?) {
@@ -773,7 +773,7 @@ open class DeckPicker :
 
         fun onStudyOptionsVisibilityChanged(collectionHasNoCards: Boolean) {
             invalidateOptionsMenu()
-            binding.studyoptionsFrame?.isVisible = !collectionHasNoCards
+            binding.studyoptionsFrame.isVisible = !collectionHasNoCards
         }
 
         fun onDeckListChanged(deckList: FlattenedDeckList) {
@@ -817,18 +817,9 @@ open class DeckPicker :
                     viewModel.flowOfStartupResponse.value = null
                     showStartupScreensAndDialogs(sharedPrefs(), 0)
 
-                    if (tryShowStudyOptionsPanel()) {
-                        ResizablePaneManager(
-                            parentLayout = requireNotNull(binding.deckpickerXlView) { "deckpickerXlView" },
-                            divider = requireNotNull(binding.resizingDivider) { "resizingDivider" },
-                            leftPane = deckPickerBinding.root,
-                            rightPane = requireNotNull(binding.studyoptionsFragment) { "studyoptionsFragment" },
-                            sharedPrefs = Prefs.getUiConfig(this),
-                            leftPaneWeightKey = PREF_DECK_PICKER_PANE_WEIGHT,
-                            rightPaneWeightKey = PREF_STUDY_OPTIONS_PANE_WEIGHT,
-                        )
-                    }
+                    tryShowStudyOptionsPanel()
                 }
+
                 is StartupResponse.FatalError -> handleStartupFailure(response.failure)
             }
         }
@@ -2091,9 +2082,9 @@ open class DeckPicker :
      * @return whether the panel was shown
      */
     private fun tryShowStudyOptionsPanel(): Boolean {
-        val containerId = binding.studyoptionsFragment?.id ?: return false
+        if (!fragmented) return false
         supportFragmentManager.commit {
-            replace(containerId, StudyOptionsFragment())
+            replace(binding.studyoptionsFragment.id, StudyOptionsFragment())
         }
         return true
     }
@@ -2397,9 +2388,6 @@ open class DeckPicker :
         private const val AUTOMATIC_SYNC_MINIMAL_INTERVAL_IN_MINUTES: Long = 10
         private const val SWIPE_TO_SYNC_TRIGGER_DISTANCE = 400
 
-        private const val PREF_DECK_PICKER_PANE_WEIGHT = "deckPickerPaneWeight"
-        private const val PREF_STUDY_OPTIONS_PANE_WEIGHT = "studyOptionsPaneWeight"
-
         /**
          * Builds an intent for [DeckPicker]
          */
@@ -2505,5 +2493,5 @@ class OneWaySyncDialog(
     }
 }
 
-val ActivityHomescreenBinding.studyoptionsFrame: FragmentContainerView?
+val ActivityHomescreenBinding.studyoptionsFrame: FragmentContainerView
     get() = studyoptionsFragment
