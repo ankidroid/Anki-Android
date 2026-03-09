@@ -244,20 +244,20 @@
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">Размер шрифта</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Показать панель инструментов</string>
-    <string name="format_insert_bold">Жирным</string>
-    <string name="format_insert_italic">Курсивом</string>
-    <string name="format_insert_underline">Подчеркнуть</string>
-    <string name="insert_horizontal_line">Вставить линейку</string>
-    <string name="insert_heading">Вставить заголовок</string>
-    <string name="format_font_size">Изменить размер шрифта</string>
-    <string name="insert_mathjax">Вставить уравнение MathJax</string>
+    <string name="format_insert_bold">Format as bold</string>
+    <string name="format_insert_italic">Format as italic</string>
+    <string name="format_insert_underline">Format as underline</string>
+    <string name="insert_horizontal_line">Insert horizontal line</string>
+    <string name="insert_heading">Insert heading</string>
+    <string name="format_font_size">Change font size</string>
+    <string name="insert_mathjax">Insert MathJax equation</string>
     <string name="note_editor_toolbar_icon">Текст на кнопке</string>
-    <string name="before_text">HTML перед выделением</string>
-    <string name="after_text">HTML после выделения</string>
-    <string name="add_toolbar_item">Создать элемент панели инструментов</string>
-    <string name="edit_toolbar_item">Изменить элемент панели</string>
+    <string name="before_text">HTML before selection</string>
+    <string name="after_text">HTML after selection</string>
+    <string name="add_toolbar_item">Create toolbar item</string>
+    <string name="edit_toolbar_item">Edit toolbar item</string>
     <string name="toolbar_item_explain_edit_or_remove">Введите HTML, который будет вставлен до и после выделенного текста.\n\nНажмите и удерживайте элемент панели инструментов, чтобы изменить или удалить его.</string>
-    <string name="remove_toolbar_item">Удалить элемент панели инструментов?</string>
+    <string name="remove_toolbar_item">Remove toolbar item?</string>
     <string name="note_editor_image_too_large">Изображение слишком большое. Вставьте изображение вручную</string>
     <string name="note_editor_video_too_large">Видео слишком большое. Вставьте видео вручную</string>
     <string name="note_editor_audio_too_large">Аудио слишком большое. Вставьте аудио вручную</string>

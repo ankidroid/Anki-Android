@@ -238,20 +238,20 @@
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">Lettergrootte</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Wys nutsbalk</string>
-    <string name="format_insert_bold">Formateer as Vetgedruk</string>
-    <string name="format_insert_italic">Formateer as Kursief</string>
-    <string name="format_insert_underline">Formateer as Onderstreep</string>
-    <string name="insert_horizontal_line">Voeg Horisontale Lyn In</string>
-    <string name="insert_heading">Voeg Opskrif In</string>
-    <string name="format_font_size">Verander Lettergrootte</string>
-    <string name="insert_mathjax">Voeg MathJax-Vergelyking In</string>
+    <string name="format_insert_bold">Format as bold</string>
+    <string name="format_insert_italic">Format as italic</string>
+    <string name="format_insert_underline">Format as underline</string>
+    <string name="insert_horizontal_line">Insert horizontal line</string>
+    <string name="insert_heading">Insert heading</string>
+    <string name="format_font_size">Change font size</string>
+    <string name="insert_mathjax">Insert MathJax equation</string>
     <string name="note_editor_toolbar_icon">Knoppie teks</string>
-    <string name="before_text">HTML Voor Seleksie</string>
-    <string name="after_text">HTML Na Seleksie</string>
-    <string name="add_toolbar_item">Skep Nutsbalk-item</string>
-    <string name="edit_toolbar_item">Wysig Nutsbalk-item</string>
+    <string name="before_text">HTML before selection</string>
+    <string name="after_text">HTML after selection</string>
+    <string name="add_toolbar_item">Create toolbar item</string>
+    <string name="edit_toolbar_item">Edit toolbar item</string>
     <string name="toolbar_item_explain_edit_or_remove">Voer HTML in om voor en na die geselekteerde teks ingevoeg te word\n\nDruk lank op \'n nutsbalk-item om dit te wysig of te verwyder</string>
-    <string name="remove_toolbar_item">Verwyder Nutsbalk-item?</string>
+    <string name="remove_toolbar_item">Remove toolbar item?</string>
     <string name="note_editor_image_too_large">Die beeld is te groot, voeg asseblief die beeld handmatig in</string>
     <string name="note_editor_video_too_large">Die videolêer is te groot, voeg asseblief die video handmatig in</string>
     <string name="note_editor_audio_too_large">Die klanklêer is te groot, voeg asseblief die klank handmatig in</string>

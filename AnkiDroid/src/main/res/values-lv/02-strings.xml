@@ -241,20 +241,20 @@
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">Burtu lielums</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Rādīt rīkjoslu</string>
-    <string name="format_insert_bold">Treknraksts</string>
-    <string name="format_insert_italic">Slīpraksts</string>
-    <string name="format_insert_underline">Pasvītrojums</string>
-    <string name="insert_horizontal_line">Ievietot līmenisku līniju</string>
-    <string name="insert_heading">Ievietot virsrakstu</string>
-    <string name="format_font_size">Mainīt burtu lielumu</string>
-    <string name="insert_mathjax">Ievietot MathJax vienādojumu</string>
+    <string name="format_insert_bold">Format as bold</string>
+    <string name="format_insert_italic">Format as italic</string>
+    <string name="format_insert_underline">Format as underline</string>
+    <string name="insert_horizontal_line">Insert horizontal line</string>
+    <string name="insert_heading">Insert heading</string>
+    <string name="format_font_size">Change font size</string>
+    <string name="insert_mathjax">Insert MathJax equation</string>
     <string name="note_editor_toolbar_icon">Pogas teksts</string>
-    <string name="before_text">HTML pirms iezīmējuma</string>
-    <string name="after_text">HTML aiz iezīmējuma</string>
-    <string name="add_toolbar_item">Izveidot rīkjoslas vienumu</string>
-    <string name="edit_toolbar_item">Labot rīkjoslas vienumu</string>
+    <string name="before_text">HTML before selection</string>
+    <string name="after_text">HTML after selection</string>
+    <string name="add_toolbar_item">Create toolbar item</string>
+    <string name="edit_toolbar_item">Edit toolbar item</string>
     <string name="toolbar_item_explain_edit_or_remove">Jāievada HTML, ko ievietot pirms un pēc iezīmētā teksta\n\nRīkjoslas vienums ilgi jāpiespiež, lai to labotu vai noņemtu</string>
-    <string name="remove_toolbar_item">Noņemt rīkjoslas vienumu?</string>
+    <string name="remove_toolbar_item">Remove toolbar item?</string>
     <string name="note_editor_image_too_large">Attēls ir pārāk liels, lūgums pašrocīgi ievietot attēlu</string>
     <string name="note_editor_video_too_large">Video datne ir pārāk liela, lūgums pašrocīgi ievietot video</string>
     <string name="note_editor_audio_too_large">Skaņu datne ir pārāk liela, lūgums ievietot skaņu pašrocīgi</string>

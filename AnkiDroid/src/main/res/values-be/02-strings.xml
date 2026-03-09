@@ -244,20 +244,20 @@
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">Памер шрыфту</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Паказаць панэль інструментаў</string>
-    <string name="format_insert_bold">Фарматаваць як тоўсты</string>
-    <string name="format_insert_italic">Фарматаваць як курсіў</string>
-    <string name="format_insert_underline">Фарматаваць як падкрэслены</string>
-    <string name="insert_horizontal_line">Уставіць гарызантальную лінію</string>
-    <string name="insert_heading">Уставіць загаловак</string>
-    <string name="format_font_size">Змяніць памер шрыфту</string>
-    <string name="insert_mathjax">Уставіць ураўненне MathJax</string>
+    <string name="format_insert_bold">Format as bold</string>
+    <string name="format_insert_italic">Format as italic</string>
+    <string name="format_insert_underline">Format as underline</string>
+    <string name="insert_horizontal_line">Insert horizontal line</string>
+    <string name="insert_heading">Insert heading</string>
+    <string name="format_font_size">Change font size</string>
+    <string name="insert_mathjax">Insert MathJax equation</string>
     <string name="note_editor_toolbar_icon">Тэкст кнопкі</string>
-    <string name="before_text">HTML перад вылучэннем</string>
-    <string name="after_text">HTML пасля вылучэння</string>
-    <string name="add_toolbar_item">Стварыць элемент панэлі інструментаў</string>
-    <string name="edit_toolbar_item">Рэдагаваць элемент панэлі інструментаў</string>
+    <string name="before_text">HTML before selection</string>
+    <string name="after_text">HTML after selection</string>
+    <string name="add_toolbar_item">Create toolbar item</string>
+    <string name="edit_toolbar_item">Edit toolbar item</string>
     <string name="toolbar_item_explain_edit_or_remove">Увядзіце HTML, які будзе ўстаўлены да і пасля вылучанага тэксту\n\nДоўгі націск на элемент панэлі інструментаў дазволіць адрэдагаваць або выдаліць яго</string>
-    <string name="remove_toolbar_item">Выдаліць элемент панэлі інструментаў?</string>
+    <string name="remove_toolbar_item">Remove toolbar item?</string>
     <string name="note_editor_image_too_large">Занадта вялікі відарыс, паспрабуйце ўставіць відарыс уручную</string>
     <string name="note_editor_video_too_large">Занадта вялікі відэафайл, паспрабуйце ўставіць відэа ўручную</string>
     <string name="note_editor_audio_too_large">Занадта вялікі аўдыяфайл, паспрабуйце ўставіць аўдыя ўручную</string>

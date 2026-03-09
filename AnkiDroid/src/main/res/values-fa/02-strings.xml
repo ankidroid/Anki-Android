@@ -240,20 +240,20 @@
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">اندازه فونت</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">نمایش نوار ابزار</string>
-    <string name="format_insert_bold">قالب‌بندی پررنگ</string>
-    <string name="format_insert_italic">قالب‌بندی کج (ایتالیک)</string>
-    <string name="format_insert_underline">قالب‌بندی خط‌ زیرین</string>
-    <string name="insert_horizontal_line">افزودن خط افقی</string>
-    <string name="insert_heading">افزودن سربرگ</string>
-    <string name="format_font_size">تغییر اندازۀ قلم</string>
-    <string name="insert_mathjax">افزودن معادله MathJax</string>
+    <string name="format_insert_bold">Format as bold</string>
+    <string name="format_insert_italic">Format as italic</string>
+    <string name="format_insert_underline">Format as underline</string>
+    <string name="insert_horizontal_line">Insert horizontal line</string>
+    <string name="insert_heading">Insert heading</string>
+    <string name="format_font_size">Change font size</string>
+    <string name="insert_mathjax">Insert MathJax equation</string>
     <string name="note_editor_toolbar_icon">نوشته دکمه</string>
-    <string name="before_text">کد HTML قبل از نوشته</string>
-    <string name="after_text">کد HTML بعد از نوشته</string>
-    <string name="add_toolbar_item">ساخت مورد نوار‌ابزاری</string>
-    <string name="edit_toolbar_item">ویرایش دکمه نوارابزاری</string>
+    <string name="before_text">HTML before selection</string>
+    <string name="after_text">HTML after selection</string>
+    <string name="add_toolbar_item">Create toolbar item</string>
+    <string name="edit_toolbar_item">Edit toolbar item</string>
     <string name="toolbar_item_explain_edit_or_remove">کد HTMLای که میخواهید قبل و بعد نوشته‌تان قرار بگیرد را وارد کنید\n\nبرای ویرایش یا حذف هریک از دکمه‌های نوارابزار، آنرا نگه دارید</string>
-    <string name="remove_toolbar_item">حذف دکمه نوارابزاری؟</string>
+    <string name="remove_toolbar_item">Remove toolbar item?</string>
     <string name="note_editor_image_too_large">عکس زیادی بزرگ است، لطفا عکس را دستی وارد کنید</string>
     <string name="note_editor_video_too_large">فایل ویدیو زیادی بزرگ است، لطفا ویدیو را دستی وارد کنید</string>
     <string name="note_editor_audio_too_large">فایل صدا زیادی بزرگ است، لطفا صدا را دستی وارد کنید</string>

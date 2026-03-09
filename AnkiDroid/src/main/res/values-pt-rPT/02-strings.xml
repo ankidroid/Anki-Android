@@ -238,20 +238,20 @@
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">Tamanho da letra</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Mostrar Barra de Ferramentas</string>
-    <string name="format_insert_bold">Colocar em Negrito</string>
-    <string name="format_insert_italic">Colocar em Itálico</string>
-    <string name="format_insert_underline">Colocar como Sublinhado</string>
-    <string name="insert_horizontal_line">Inserir linha horizontal</string>
-    <string name="insert_heading">Inserir Cabeçalho</string>
-    <string name="format_font_size">Alterar o tamanho de letra</string>
-    <string name="insert_mathjax">Inserir equações MathJax</string>
+    <string name="format_insert_bold">Format as bold</string>
+    <string name="format_insert_italic">Format as italic</string>
+    <string name="format_insert_underline">Format as underline</string>
+    <string name="insert_horizontal_line">Insert horizontal line</string>
+    <string name="insert_heading">Insert heading</string>
+    <string name="format_font_size">Change font size</string>
+    <string name="insert_mathjax">Insert MathJax equation</string>
     <string name="note_editor_toolbar_icon">Texto do botão</string>
-    <string name="before_text">O HTML antes da selecção</string>
-    <string name="after_text">O HTML depois da selecção</string>
-    <string name="add_toolbar_item">Criar uma entrada para a Barra de Ferramentas</string>
-    <string name="edit_toolbar_item">Editar entrada para a Barra de Ferramentas</string>
+    <string name="before_text">HTML before selection</string>
+    <string name="after_text">HTML after selection</string>
+    <string name="add_toolbar_item">Create toolbar item</string>
+    <string name="edit_toolbar_item">Edit toolbar item</string>
     <string name="toolbar_item_explain_edit_or_remove">Introduza o HTML a ser inserido antes e depois do texto seleccionado.\n\nPressione durante algum tempo sobre uma das entradas na Barra de Ferramentas para a editar ou remover.</string>
-    <string name="remove_toolbar_item">Remover entrada da Barra de Ferramentas?</string>
+    <string name="remove_toolbar_item">Remove toolbar item?</string>
     <string name="note_editor_image_too_large">A imagem é demasiado grande, por favor insira-a manualmente.</string>
     <string name="note_editor_video_too_large">O vídeo é demasiado grande, por favor insira-o manualmente.</string>
     <string name="note_editor_audio_too_large">O ficheiro de áudio é demasiado grande, por favor insira-o manualmente.</string>

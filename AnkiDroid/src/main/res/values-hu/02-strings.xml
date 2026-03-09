@@ -238,20 +238,20 @@
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">Betűméret</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Eszköztár megjelenítése</string>
-    <string name="format_insert_bold">Félkövér</string>
-    <string name="format_insert_italic">Dőlt</string>
-    <string name="format_insert_underline">Aláhúzott</string>
-    <string name="insert_horizontal_line">Vízszintes vonal beszúrása</string>
-    <string name="insert_heading">Címsor beszúrása</string>
-    <string name="format_font_size">Betűméret módosítása</string>
-    <string name="insert_mathjax">MathJax egyenlet beszúrása</string>
+    <string name="format_insert_bold">Format as bold</string>
+    <string name="format_insert_italic">Format as italic</string>
+    <string name="format_insert_underline">Format as underline</string>
+    <string name="insert_horizontal_line">Insert horizontal line</string>
+    <string name="insert_heading">Insert heading</string>
+    <string name="format_font_size">Change font size</string>
+    <string name="insert_mathjax">Insert MathJax equation</string>
     <string name="note_editor_toolbar_icon">Gombfelirat</string>
-    <string name="before_text">Kiválasztás előtti HTML</string>
-    <string name="after_text">Kiválasztás utáni HTML</string>
-    <string name="add_toolbar_item">Eszköztár Elem létrehozása</string>
-    <string name="edit_toolbar_item">Eszköztár Elem szerkesztés</string>
+    <string name="before_text">HTML before selection</string>
+    <string name="after_text">HTML after selection</string>
+    <string name="add_toolbar_item">Create toolbar item</string>
+    <string name="edit_toolbar_item">Edit toolbar item</string>
     <string name="toolbar_item_explain_edit_or_remove">Add meg a HTML-t, amit a kiválasztott szöveg elé és mögé beszúr. \n\nHosszan nyomd az eszköztár elemét szerkesztéshez vagy törléshez</string>
-    <string name="remove_toolbar_item">Törlöd ezt az Eszköztár Elemet?</string>
+    <string name="remove_toolbar_item">Remove toolbar item?</string>
     <string name="note_editor_image_too_large">The image is too large, please insert the image manually</string>
     <string name="note_editor_video_too_large">The video file is too large, please insert the video manually</string>
     <string name="note_editor_audio_too_large">The audio file is too large, please insert the audio manually</string>

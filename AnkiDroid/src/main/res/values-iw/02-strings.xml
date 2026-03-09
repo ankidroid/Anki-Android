@@ -244,20 +244,20 @@
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">גודל גופן</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">הצגת סרגל הכלים</string>
-    <string name="format_insert_bold">לעצב כמודגש</string>
-    <string name="format_insert_italic">לעצב כנטוי</string>
-    <string name="format_insert_underline">לעצב עם קו תחתי</string>
-    <string name="insert_horizontal_line">הוספת קו אופקי</string>
-    <string name="insert_heading">הוספת כותרת</string>
-    <string name="format_font_size">שינוי גודל הגופן</string>
-    <string name="insert_mathjax">הוספת משוואת MathJax</string>
+    <string name="format_insert_bold">Format as bold</string>
+    <string name="format_insert_italic">Format as italic</string>
+    <string name="format_insert_underline">Format as underline</string>
+    <string name="insert_horizontal_line">Insert horizontal line</string>
+    <string name="insert_heading">Insert heading</string>
+    <string name="format_font_size">Change font size</string>
+    <string name="insert_mathjax">Insert MathJax equation</string>
     <string name="note_editor_toolbar_icon">טקסט הלחצן</string>
-    <string name="before_text">HTML לפני הבחירה</string>
-    <string name="after_text">HTML אחרי הבחירה</string>
-    <string name="add_toolbar_item">יצירת פריט סרגל כלים</string>
-    <string name="edit_toolbar_item">עריכת פריט סרגל כלים</string>
+    <string name="before_text">HTML before selection</string>
+    <string name="after_text">HTML after selection</string>
+    <string name="add_toolbar_item">Create toolbar item</string>
+    <string name="edit_toolbar_item">Edit toolbar item</string>
     <string name="toolbar_item_explain_edit_or_remove">הזן HTML שיוכנס לפני ואחרי הטקסט שנבחר \n\n לחץ לחיצה ארוכה על פריט בסרגל הכלים כדי לערוך או להסיר אותו</string>
-    <string name="remove_toolbar_item">להסיר פריט סרגל כלים?</string>
+    <string name="remove_toolbar_item">Remove toolbar item?</string>
     <string name="note_editor_image_too_large">התמונה גדולה מדי, אנא הכנס אותה באופן ידני</string>
     <string name="note_editor_video_too_large">קובץ הווידאו גדול מדי, אנא הכנס אותו באופן ידני</string>
     <string name="note_editor_audio_too_large">קובץ השמע גדול מדי, אנא הכנס אותו באופן ידני</string>

@@ -238,20 +238,20 @@
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">ტექსტის ზომა</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">ინსტრუმენტების პანელის ჩვენება</string>
-    <string name="format_insert_bold">ტექსტის გასქელება</string>
-    <string name="format_insert_italic">ტექსტის წაქცევა</string>
-    <string name="format_insert_underline">ტექსტის გახაზვა</string>
-    <string name="insert_horizontal_line">ჰორიზონტალური ხაზის ჩასმა</string>
-    <string name="insert_heading">სათაურის ჩასმა</string>
-    <string name="format_font_size">შრიფტის ზომის შეცვლა</string>
-    <string name="insert_mathjax">MathJax-განტოლების ჩასმა</string>
+    <string name="format_insert_bold">Format as bold</string>
+    <string name="format_insert_italic">Format as italic</string>
+    <string name="format_insert_underline">Format as underline</string>
+    <string name="insert_horizontal_line">Insert horizontal line</string>
+    <string name="insert_heading">Insert heading</string>
+    <string name="format_font_size">Change font size</string>
+    <string name="insert_mathjax">Insert MathJax equation</string>
     <string name="note_editor_toolbar_icon">ღილაკის ტექსტი</string>
-    <string name="before_text">HTML მონიშნულის წინ</string>
-    <string name="after_text">HTML მონიშნულის შემდეგ</string>
-    <string name="add_toolbar_item">ხელსაწყოთა ზოლის ელემენტის შექმნა</string>
-    <string name="edit_toolbar_item">ხელსაწყოთა ზოლის ელემენტის რედაქტირება</string>
+    <string name="before_text">HTML before selection</string>
+    <string name="after_text">HTML after selection</string>
+    <string name="add_toolbar_item">Create toolbar item</string>
+    <string name="edit_toolbar_item">Edit toolbar item</string>
     <string name="toolbar_item_explain_edit_or_remove">შეიყვანეთ მონიშნული ტექსტის ორივე ბოლოს ჩასასმელი HTML-კოდი\n\nხელსაწყოთა ზოლს დიდი ხნით დააჭირეთ, რათა დაარედაქტიროთ ან წაშალოთ</string>
-    <string name="remove_toolbar_item">ამოიშალოს ხელსაწყოთა ზოლის ელემენტი?</string>
+    <string name="remove_toolbar_item">Remove toolbar item?</string>
     <string name="note_editor_image_too_large">სურათი ზედმეტად დიდია. გთხოვთ, სურათი ხელით ჩაამატოთ</string>
     <string name="note_editor_video_too_large">The video file is too large, please insert the video manually</string>
     <string name="note_editor_audio_too_large">The audio file is too large, please insert the audio manually</string>

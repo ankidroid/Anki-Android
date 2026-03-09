@@ -239,20 +239,20 @@
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">حرف کا سائز</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">ٹول بار دکھائیں</string>
-    <string name="format_insert_bold">بولڈ کے طور پر فارمیٹ کریں۔</string>
-    <string name="format_insert_italic">اٹالک کے طور پر فارمیٹ کریں۔</string>
-    <string name="format_insert_underline">انڈر لائن کے بطور فارمیٹ کریں۔</string>
-    <string name="insert_horizontal_line">افقی لائن داخل کریں۔</string>
-    <string name="insert_heading">سرخی داخل کریں۔</string>
-    <string name="format_font_size">فونٹ کا سائز تبدیل کریں۔</string>
-    <string name="insert_mathjax">MathJax مساوات داخل کریں۔</string>
+    <string name="format_insert_bold">Format as bold</string>
+    <string name="format_insert_italic">Format as italic</string>
+    <string name="format_insert_underline">Format as underline</string>
+    <string name="insert_horizontal_line">Insert horizontal line</string>
+    <string name="insert_heading">Insert heading</string>
+    <string name="format_font_size">Change font size</string>
+    <string name="insert_mathjax">Insert MathJax equation</string>
     <string name="note_editor_toolbar_icon">بٹن کا متن</string>
-    <string name="before_text">انتخاب سے پہلے ایچ ٹی ایم ایل</string>
-    <string name="after_text">انتخاب کے بعد ایچ ٹی ایم ایل</string>
-    <string name="add_toolbar_item">ٹول بار آئٹم بنائیں</string>
-    <string name="edit_toolbar_item">ٹول بار آئٹم میں ترمیم کریں۔</string>
+    <string name="before_text">HTML before selection</string>
+    <string name="after_text">HTML after selection</string>
+    <string name="add_toolbar_item">Create toolbar item</string>
+    <string name="edit_toolbar_item">Edit toolbar item</string>
     <string name="toolbar_item_explain_edit_or_remove">منتخب کردہ متن سے پہلے اور بعد میں داخل کرنے کے لیے HTML درج کریں\n\nٹول بار آئٹم میں ترمیم کرنے یا اسے ہٹانے کے لیے دیر تک دبائیں</string>
-    <string name="remove_toolbar_item">ٹول بار آئٹم کو ہٹائیں؟</string>
+    <string name="remove_toolbar_item">Remove toolbar item?</string>
     <string name="note_editor_image_too_large">تصویر بہت بڑی ہے، براہ کرم دستی طور پر تصویر داخل کریں۔</string>
     <string name="note_editor_video_too_large">ویڈیو فائل بہت بڑی ہے، براہ کرم ویڈیو کو دستی طور پر داخل کریں۔</string>
     <string name="note_editor_audio_too_large">آڈیو فائل بہت بڑی ہے، براہ کرم آڈیو کو دستی طور پر داخل کریں۔</string>

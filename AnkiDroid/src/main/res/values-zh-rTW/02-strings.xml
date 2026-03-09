@@ -235,20 +235,20 @@
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">字型大小</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">顯示工具列</string>
-    <string name="format_insert_bold">格式化為粗體</string>
-    <string name="format_insert_italic">格式化為斜體</string>
-    <string name="format_insert_underline">格式化為底線</string>
-    <string name="insert_horizontal_line">插入水平線</string>
-    <string name="insert_heading">插入標題</string>
-    <string name="format_font_size">變更字型大小</string>
-    <string name="insert_mathjax">插入 MathJax 方程式</string>
+    <string name="format_insert_bold">Format as bold</string>
+    <string name="format_insert_italic">Format as italic</string>
+    <string name="format_insert_underline">Format as underline</string>
+    <string name="insert_horizontal_line">Insert horizontal line</string>
+    <string name="insert_heading">Insert heading</string>
+    <string name="format_font_size">Change font size</string>
+    <string name="insert_mathjax">Insert MathJax equation</string>
     <string name="note_editor_toolbar_icon">按鈕文字</string>
-    <string name="before_text">選取內容前的 HTML</string>
-    <string name="after_text">選取內容後的 HTML</string>
-    <string name="add_toolbar_item">建立工具列項目</string>
-    <string name="edit_toolbar_item">編輯工具列項目</string>
+    <string name="before_text">HTML before selection</string>
+    <string name="after_text">HTML after selection</string>
+    <string name="add_toolbar_item">Create toolbar item</string>
+    <string name="edit_toolbar_item">Edit toolbar item</string>
     <string name="toolbar_item_explain_edit_or_remove">請在選取文字的前後出入要添加的HTML碼\n\n長按工具列項目以編輯或移除</string>
-    <string name="remove_toolbar_item">是否移除工具列項目？</string>
+    <string name="remove_toolbar_item">Remove toolbar item?</string>
     <string name="note_editor_image_too_large">此圖像太大，無法貼上，請手動插入</string>
     <string name="note_editor_video_too_large">影片太大，無法貼上，請手動插入</string>
     <string name="note_editor_audio_too_large">此音訊檔太大，無法貼上，請手動插入</string>

@@ -244,20 +244,20 @@
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">Šrifto dydis</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Rodyti įrankių juostą</string>
-    <string name="format_insert_bold">Paryškintas formatas</string>
-    <string name="format_insert_italic">Formatas kaip kursyvas</string>
-    <string name="format_insert_underline">Pabraukta</string>
-    <string name="insert_horizontal_line">Įterpti horizontalią liniją</string>
-    <string name="insert_heading">Įterpti antraštę</string>
-    <string name="format_font_size">Šrifto dydžio keitimas</string>
-    <string name="insert_mathjax">Įterpti \"MathJax\" lygtį</string>
+    <string name="format_insert_bold">Format as bold</string>
+    <string name="format_insert_italic">Format as italic</string>
+    <string name="format_insert_underline">Format as underline</string>
+    <string name="insert_horizontal_line">Insert horizontal line</string>
+    <string name="insert_heading">Insert heading</string>
+    <string name="format_font_size">Change font size</string>
+    <string name="insert_mathjax">Insert MathJax equation</string>
     <string name="note_editor_toolbar_icon">Mygtuko tekstas</string>
-    <string name="before_text">HTML prieš pasirinkimą</string>
-    <string name="after_text">HTML po pasirinkimo</string>
-    <string name="add_toolbar_item">Sukurti įrankių juostos elementą</string>
-    <string name="edit_toolbar_item">Redaguoti įrankių juostos elementą</string>
+    <string name="before_text">HTML before selection</string>
+    <string name="after_text">HTML after selection</string>
+    <string name="add_toolbar_item">Create toolbar item</string>
+    <string name="edit_toolbar_item">Edit toolbar item</string>
     <string name="toolbar_item_explain_edit_or_remove">Įveskite HTML, kuris bus įterptas prieš ir po pasirinkto teksto\n\nSpauskite įrankių juostos elementą, kad jį redaguotumėte arba pašalintumėte</string>
-    <string name="remove_toolbar_item">Ar pašalinti įrankių juostos elementą?</string>
+    <string name="remove_toolbar_item">Remove toolbar item?</string>
     <string name="note_editor_image_too_large">Vaizdas yra per didelis, įdėkite jį rankiniu būdu</string>
     <string name="note_editor_video_too_large">Vaizdo failas yra per didelis, įdėkite vaizdo įrašą rankiniu būdu</string>
     <string name="note_editor_audio_too_large">Garso failas yra per didelis, įdėkite garso įrašą rankiniu būdu</string>
