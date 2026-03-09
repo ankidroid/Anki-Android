@@ -24,10 +24,10 @@
         "typescript": "^5.9.3"
     },
     "devDependencies": {
-        "@eslint/eslintrc": "^3.3.4",
+        "@eslint/eslintrc": "^3.3.5",
         "@eslint/js": "^9.39.2",
         "@types/jest": "^30.0.0",
-        "@types/node": "^25.3.3",
+        "@types/node": "^25.3.5",
         "@typescript-eslint/eslint-plugin": "^8.56.1",
         "@typescript-eslint/parser": "^8.56.1",
         "eslint": "^9.39.2",
