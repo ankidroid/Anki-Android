@@ -79,9 +79,7 @@ class NoteTypeFieldEditor : com.ichi2.anki.AnkiActivity(R.layout.note_type_field
                 ) {
                     launchCatchingTask {
                         val validName = uniqueName(name)
-                        val isValidName = validName != null
-                        val isConfirmed = isValidName && userAcceptsSchemaChange()
-                        if (isConfirmed) {
+                        if (validName != null) {
                             viewModel.rename(position, validName)
                         } else {
                             // clear temporary edittext changes
@@ -159,13 +157,7 @@ class NoteTypeFieldEditor : com.ichi2.anki.AnkiActivity(R.layout.note_type_field
                         dragFromPosition != dragToPosition
                     ) {
                         launchCatchingTask {
-                            val isConfirmed = userAcceptsSchemaChange()
-                            if (isConfirmed) {
-                                viewModel.reposition(dragFromPosition, dragToPosition)
-                            } else {
-                                // clear list order changes
-                                viewModel.smartRefresh()
-                            }
+                            viewModel.reposition(dragFromPosition, dragToPosition)
                         }
                     }
 
@@ -316,10 +308,7 @@ class NoteTypeFieldEditor : com.ichi2.anki.AnkiActivity(R.layout.note_type_field
             )
             it.setConfirm {
                 launchCatchingTask {
-                    val isConfirmed = userAcceptsSchemaChange()
-                    if (isConfirmed) {
-                        viewModel.delete(position)
-                    }
+                    viewModel.delete(position)
                     // This ensures that the context menu closes after the field has been deleted
                     supportFragmentManager.popBackStackImmediate(
                         null,
