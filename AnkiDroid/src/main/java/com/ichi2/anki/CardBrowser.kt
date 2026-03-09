@@ -105,6 +105,7 @@ import com.ichi2.anki.ui.ResizablePaneManager
 import com.ichi2.anki.ui.internationalization.toSentenceCase
 import com.ichi2.anki.utils.ext.addPrepareMenuProvider
 import com.ichi2.anki.utils.ext.launchCollectionInLifecycleScope
+import com.ichi2.anki.utils.ext.onAllFragmentsLoaded
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.ui.CardBrowserSearchView
 import com.ichi2.utils.AndroidUiUtils.hideKeyboard
@@ -604,23 +605,26 @@ open class CardBrowser :
         )
 
         // Update the menu for a fragmented state
-        addPrepareMenuProvider { menu ->
-            if (!fragmented) return@addPrepareMenuProvider
+        // Added last so all changes take priority
+        onAllFragmentsLoaded {
+            addPrepareMenuProvider { menu ->
+                if (!fragmented) return@addPrepareMenuProvider
 
-            /** Return the menu item with a particular identifier or `null` */
-            operator fun Menu.get(id: Int): MenuItem? = this.findItem(id)
+                /** Return the menu item with a particular identifier or `null` */
+                operator fun Menu.get(id: Int): MenuItem? = this.findItem(id)
 
-            // NoteEditorFragment: Remove save/preview note options if there are no notes
-            if (viewModel.rowCount == 0) {
-                menu[R.id.action_save]?.isVisible = false
-                menu[R.id.action_preview]?.isVisible = false
+                // NoteEditorFragment: Remove save/preview note options if there are no notes
+                if (viewModel.rowCount == 0) {
+                    menu[R.id.action_save]?.isVisible = false
+                    menu[R.id.action_preview]?.isVisible = false
+                }
+
+                menu[R.id.action_edit_note]?.isVisible = false
+
+                // TODO: https://github.com/ankidroid/Anki-Android/issues/20206
+                // This blocks a user from previewing all cards
+                menu[R.id.action_preview_many]?.isVisible = false
             }
-
-            menu[R.id.action_edit_note]?.isVisible = false
-
-            // TODO: https://github.com/ankidroid/Anki-Android/issues/20206
-            // This blocks a user from previewing all cards
-            menu[R.id.action_preview_many]?.isVisible = false
         }
     }
 
