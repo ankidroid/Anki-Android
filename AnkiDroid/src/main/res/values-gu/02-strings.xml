@@ -238,20 +238,20 @@
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">અક્ષર ની જાડાઈ</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">ટૂલબાર બતાવો</string>
-    <string name="format_insert_bold">બોલ્ડ તરીકે ફોર્મેટ કરો</string>
-    <string name="format_insert_italic">ઇટાલિક તરીકે ફોર્મેટ કરો</string>
-    <string name="format_insert_underline">અન્ડરલાઇન તરીકે ફોર્મેટ કરો</string>
-    <string name="insert_horizontal_line">આડી રેખા દાખલ કરો</string>
-    <string name="insert_heading">શીર્ષક દાખલ કરો</string>
-    <string name="format_font_size">ફોન્ટનું કદ બદલો</string>
-    <string name="insert_mathjax">MathJax સમીકરણ દાખલ કરો</string>
+    <string name="format_insert_bold">Format as bold</string>
+    <string name="format_insert_italic">Format as italic</string>
+    <string name="format_insert_underline">Format as underline</string>
+    <string name="insert_horizontal_line">Insert horizontal line</string>
+    <string name="insert_heading">Insert heading</string>
+    <string name="format_font_size">Change font size</string>
+    <string name="insert_mathjax">Insert MathJax equation</string>
     <string name="note_editor_toolbar_icon">બટન ટેક્સ્ટ</string>
-    <string name="before_text">પસંદગી પહેલાં HTML</string>
-    <string name="after_text">પસંદગી પછી HTML</string>
-    <string name="add_toolbar_item">ટૂલબાર આઇટમ બનાવો</string>
-    <string name="edit_toolbar_item">ટૂલબાર આઇટમ સંપાદિત કરો</string>
+    <string name="before_text">HTML before selection</string>
+    <string name="after_text">HTML after selection</string>
+    <string name="add_toolbar_item">Create toolbar item</string>
+    <string name="edit_toolbar_item">Edit toolbar item</string>
     <string name="toolbar_item_explain_edit_or_remove">પસંદ કરેલ ટેક્સ્ટ પહેલાં અને પછી દાખલ કરવા માટે HTML દાખલ કરો\n\nટૂલબાર આઇટમને સંપાદિત કરવા અથવા દૂર કરવા માટે તેને લાંબા સમય સુધી દબાવો</string>
-    <string name="remove_toolbar_item">ટૂલબાર આઇટમ દૂર કરીએ?</string>
+    <string name="remove_toolbar_item">Remove toolbar item?</string>
     <string name="note_editor_image_too_large">படம் மிகவும் பெரிதாக உள்ளது, படத்தை கைமுறையாக செருகவும்</string>
     <string name="note_editor_video_too_large">வீடியோ கோப்பு மிகவும் பெரியதாக உள்ளது, வீடியோவை கைமுறையாக செருகவும்</string>
     <string name="note_editor_audio_too_large">ઓડિયો ફાઇલ ખૂબ મોટી છે, મહેરબાની કરીને ઓડિયો ફાઇલ જાતે ઉમેરો</string>

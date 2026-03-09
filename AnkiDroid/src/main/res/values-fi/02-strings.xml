@@ -238,20 +238,20 @@
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">Fonttikoko</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Näytä työkalupalkki</string>
-    <string name="format_insert_bold">Muotoile lihavoiduksi</string>
-    <string name="format_insert_italic">Muotoile kursiiviksi</string>
-    <string name="format_insert_underline">Muotoile alleviivaukseksi</string>
-    <string name="insert_horizontal_line">Lisää vaakaviiva</string>
-    <string name="insert_heading">Lisää otsikko</string>
-    <string name="format_font_size">Muuta fonttikokoa</string>
-    <string name="insert_mathjax">Lisää MathJax-yhtälö</string>
+    <string name="format_insert_bold">Format as bold</string>
+    <string name="format_insert_italic">Format as italic</string>
+    <string name="format_insert_underline">Format as underline</string>
+    <string name="insert_horizontal_line">Insert horizontal line</string>
+    <string name="insert_heading">Insert heading</string>
+    <string name="format_font_size">Change font size</string>
+    <string name="insert_mathjax">Insert MathJax equation</string>
     <string name="note_editor_toolbar_icon">Painikkeen teksti</string>
-    <string name="before_text">HTML ennen valintaa</string>
-    <string name="after_text">HTML valinnan jälkeen</string>
-    <string name="add_toolbar_item">Lisää työkalupalkin kohde</string>
-    <string name="edit_toolbar_item">Muokkaa työkalupalkin kohdetta</string>
+    <string name="before_text">HTML before selection</string>
+    <string name="after_text">HTML after selection</string>
+    <string name="add_toolbar_item">Create toolbar item</string>
+    <string name="edit_toolbar_item">Edit toolbar item</string>
     <string name="toolbar_item_explain_edit_or_remove">Kirjoita HTML, joka lisätään ennen ja jälkeen valitun tekstin\n\nPaina työkalupalkin kohdetta pitkään muokataksesi sitä tai poistaaksesi sen</string>
-    <string name="remove_toolbar_item">Poistetaanko työkalupalkin kohde?</string>
+    <string name="remove_toolbar_item">Remove toolbar item?</string>
     <string name="note_editor_image_too_large">Kuva on liian suuri, aseta kuva käsin</string>
     <string name="note_editor_video_too_large">Videotiedosto on liian suuri, aseta video käsin</string>
     <string name="note_editor_audio_too_large">Äänitiedosto on liian suuri, aseta ääni käsin</string>

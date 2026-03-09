@@ -238,20 +238,20 @@
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">Teckenstorlek</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Visa verktygsfält</string>
-    <string name="format_insert_bold">Formatera som fetstil</string>
-    <string name="format_insert_italic">Formatera som kursiv</string>
-    <string name="format_insert_underline">Formatera som understruken</string>
-    <string name="insert_horizontal_line">Infoga horisontell linje</string>
-    <string name="insert_heading">Infoga rubrik</string>
-    <string name="format_font_size">Ändra teckenstorlek</string>
-    <string name="insert_mathjax">Infoga MathJax ekvation</string>
+    <string name="format_insert_bold">Format as bold</string>
+    <string name="format_insert_italic">Format as italic</string>
+    <string name="format_insert_underline">Format as underline</string>
+    <string name="insert_horizontal_line">Insert horizontal line</string>
+    <string name="insert_heading">Insert heading</string>
+    <string name="format_font_size">Change font size</string>
+    <string name="insert_mathjax">Insert MathJax equation</string>
     <string name="note_editor_toolbar_icon">Knapptext</string>
-    <string name="before_text">HTML före markering</string>
-    <string name="after_text">HTML efter markering</string>
-    <string name="add_toolbar_item">Skapa objekt i verktygsfältet</string>
-    <string name="edit_toolbar_item">Redigera objekt i verktygsfältet</string>
+    <string name="before_text">HTML before selection</string>
+    <string name="after_text">HTML after selection</string>
+    <string name="add_toolbar_item">Create toolbar item</string>
+    <string name="edit_toolbar_item">Edit toolbar item</string>
     <string name="toolbar_item_explain_edit_or_remove">Ange HTML som ska infogas före och efter den markerade texten\n\nTryck länge på ett verktyg för att redigera eller ta bort det</string>
-    <string name="remove_toolbar_item">Ta bort objekt från verktygsfältet?</string>
+    <string name="remove_toolbar_item">Remove toolbar item?</string>
     <string name="note_editor_image_too_large">Bilden är för stor, lägg till bilden manuellt</string>
     <string name="note_editor_video_too_large">Videofilen är för stor, lägg till videon manuellt</string>
     <string name="note_editor_audio_too_large">Ljudfilen är för stor, lägg till ljudet manuellt</string>

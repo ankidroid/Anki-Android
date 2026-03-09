@@ -238,20 +238,20 @@ Context | Request Context    [1]</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">글꼴 크기</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">도구 모음 표시</string>
-    <string name="format_insert_bold">굵게</string>
-    <string name="format_insert_italic">기울임꼴</string>
-    <string name="format_insert_underline">밑줄</string>
-    <string name="insert_horizontal_line">밑줄 긋기</string>
-    <string name="insert_heading">제목 삽입</string>
-    <string name="format_font_size">글꼴 크기 변경</string>
-    <string name="insert_mathjax">MathJax 수식 삽입</string>
+    <string name="format_insert_bold">Format as bold</string>
+    <string name="format_insert_italic">Format as italic</string>
+    <string name="format_insert_underline">Format as underline</string>
+    <string name="insert_horizontal_line">Insert horizontal line</string>
+    <string name="insert_heading">Insert heading</string>
+    <string name="format_font_size">Change font size</string>
+    <string name="insert_mathjax">Insert MathJax equation</string>
     <string name="note_editor_toolbar_icon">버튼 텍스트</string>
-    <string name="before_text">선택 전 HTML</string>
-    <string name="after_text">선택 후 HTML</string>
-    <string name="add_toolbar_item">도구 모음 항목 만들기</string>
-    <string name="edit_toolbar_item">도구 모음 항목 편집</string>
+    <string name="before_text">HTML before selection</string>
+    <string name="after_text">HTML after selection</string>
+    <string name="add_toolbar_item">Create toolbar item</string>
+    <string name="edit_toolbar_item">Edit toolbar item</string>
     <string name="toolbar_item_explain_edit_or_remove">선택된 텍스트 앞뒤로 삽입할 HTML을 입력해주십시오\n\n도구 모음 항목을 길게 눌러 편집 또는 제거합니다.</string>
-    <string name="remove_toolbar_item">도구 모음 항목을 지울까요?</string>
+    <string name="remove_toolbar_item">Remove toolbar item?</string>
     <string name="note_editor_image_too_large">이미지가 너무 큽니다. 수동으로 넣어 주세요.</string>
     <string name="note_editor_video_too_large">영상 파일이 너무 큽니다. 수동으로 넣어 주세요.</string>
     <string name="note_editor_audio_too_large">오디오 파일이 너무 큽니다. 수동으로 넣어 주세요.</string>

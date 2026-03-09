@@ -238,20 +238,20 @@
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">𐌼𐌹𐌺𐌹𐌻𐌴𐌹 𐍆𐌰𐌿𐌽𐍄𐌹𐍃</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">𐍄𐍉𐌻𐌰-𐌰𐌽𐍃 𐌱𐌰𐌽𐌳𐍅𐌾𐌰𐌽</string>
-    <string name="format_insert_bold">𐌷𐌹𐍅𐌹 𐌹𐍃𐍄 𐌱𐌰𐌻𐌸</string>
-    <string name="format_insert_italic">𐌷𐌹𐍅𐌹 𐌹𐍃𐍄 𐌹𐍄𐌰𐌻𐌹𐍃𐌺</string>
-    <string name="format_insert_underline">𐌷𐌹𐍅𐌹 𐌹𐍃𐍄 𐌿𐍆𐍃𐍄𐍂𐌹𐌺𐍃</string>
-    <string name="insert_horizontal_line">𐍃𐍄𐍂𐌹𐌺𐍃 𐌷𐌰𐌿𐍂𐌴𐌹𐌶𐍉𐌽𐍃 𐌱𐌹𐌰𐌿𐌺𐌰𐌽</string>
-    <string name="insert_heading">𐌷𐌰𐌿𐌱𐌹𐌳𐌾𐌰𐌽 𐌹𐌽𐌻𐌰𐌲𐌾𐌰𐌽</string>
-    <string name="format_font_size">𐌼𐌹𐌺𐌹𐌻𐌴𐌹𐌽 𐍆𐌰𐌿𐌽𐍄𐌹𐍃 𐌹𐌽𐌼𐌰𐌹𐌳𐌾𐌰𐌽</string>
-    <string name="insert_mathjax">MathJax 𐌹𐌱𐌽𐌰𐍃𐍃𐌿 𐌱𐌹𐌰𐌿𐌺𐌰𐌽</string>
+    <string name="format_insert_bold">Format as bold</string>
+    <string name="format_insert_italic">Format as italic</string>
+    <string name="format_insert_underline">Format as underline</string>
+    <string name="insert_horizontal_line">Insert horizontal line</string>
+    <string name="insert_heading">Insert heading</string>
+    <string name="format_font_size">Change font size</string>
+    <string name="insert_mathjax">Insert MathJax equation</string>
     <string name="note_editor_toolbar_icon">𐌱𐍉𐌺𐍉 𐌷𐌰𐌿𐌱𐌹𐌳𐌹𐌻𐍉</string>
-    <string name="before_text">HTML 𐍆𐌰𐌿𐍂 𐍅𐌰𐌻𐌴𐌹𐌽</string>
-    <string name="after_text">HTML 𐌰𐍆𐌰𐍂 𐍅𐌰𐌻𐌴𐌹𐌽𐌰𐌹</string>
-    <string name="add_toolbar_item">𐍅𐌰𐌹𐌷𐍄 𐍄𐍉𐌻𐌰-𐌰𐌽𐍃𐌹𐍃 𐌲𐌰𐍄𐌰𐌿𐌾𐌰𐌽</string>
-    <string name="edit_toolbar_item">𐍄𐍉𐌻𐌰-𐌰𐌽𐍃𐌹𐍃 𐍅𐌰𐌹𐌷𐍄 𐌹𐌽𐌼𐌰𐌹𐌳𐌾𐌰𐌽</string>
+    <string name="before_text">HTML before selection</string>
+    <string name="after_text">HTML after selection</string>
+    <string name="add_toolbar_item">Create toolbar item</string>
+    <string name="edit_toolbar_item">Edit toolbar item</string>
     <string name="toolbar_item_explain_edit_or_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to edit or remove it</string>
-    <string name="remove_toolbar_item">𐍄𐍉𐌻𐌰-𐌰𐌽𐍃𐌹𐍃 𐍅𐌰𐌹𐌷𐍄 𐌿𐍃𐌽𐌹𐌼𐌰𐌽?</string>
+    <string name="remove_toolbar_item">Remove toolbar item?</string>
     <string name="note_editor_image_too_large">𐍆𐍂𐌹𐍃𐌰𐌷𐍄𐍃 𐌼𐌹𐌺𐌹𐌻𐌰 𐌹𐌽 𐌿𐍆𐌰𐍂𐌰𐍃𐍃𐌰𐌿 𐌹𐍃𐍄, 𐌱𐌹𐌳𐌾𐌰𐌼 𐌸𐌿𐌺 𐌹𐌽𐌻𐌰𐌲𐌴𐌹 𐌸𐍉 𐍆𐍂𐌹𐍃𐌰𐌷𐍄 𐌼𐌰𐌽𐌽𐌰𐍅𐌰𐌿𐍂𐌷𐍄𐌰𐌱𐌰</string>
     <string name="note_editor_video_too_large">𐌸𐌰𐍄𐌰 𐍆𐌰𐌾𐌻 𐌵𐌹𐍅𐌰𐍆𐍂𐌹𐍃𐌰𐌷𐍄𐌰𐌹𐍃 𐌿𐍆𐌰𐍂𐌼𐌹𐌺𐌹𐌻 𐌹𐍃𐍄, 𐌱𐌹𐌳𐌾𐌰𐌼 𐌸𐌿𐌺 𐌹𐌽𐌻𐌰𐌲𐌾𐌰𐌽 𐌵𐌹𐍅𐌰𐍆𐍂𐌹𐍃𐌰𐌷𐍄 𐌷𐌰𐌽𐌳𐌿𐍅𐌰𐌿𐍂𐌷𐍄𐌰𐌱𐌰</string>
     <string name="note_editor_audio_too_large">𐌸𐌰𐍄𐌰 𐍆𐌰𐌾𐌻 𐌰𐍅𐌳𐌾𐍉𐌽𐍃 𐌿𐍆𐌰𐍂𐌼𐌹𐌺𐌹𐌻 𐌹𐍃𐍄, 𐌱𐌹𐌳𐌾𐌰𐌼 𐌸𐌿𐌺 𐌹𐌽𐌻𐌰𐌲𐌾𐌰𐌽 𐌰𐍅𐌳𐌾𐍉𐌽 𐌷𐌰𐌽𐌳𐌿𐍅𐌰𐌿𐍂𐌷𐍄𐌰𐌱𐌰</string>

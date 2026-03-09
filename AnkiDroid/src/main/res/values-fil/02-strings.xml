@@ -238,20 +238,20 @@
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">Laki ng font</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Ipakita ang toolbar</string>
-    <string name="format_insert_bold">I-bold</string>
-    <string name="format_insert_italic">I-italic</string>
-    <string name="format_insert_underline">Salungguhitan</string>
-    <string name="insert_horizontal_line">Lagyan ng Pahalang na Linya</string>
-    <string name="insert_heading">Lagyan ng Pamuhatan</string>
-    <string name="format_font_size">Palitan ang Laki ng Font</string>
-    <string name="insert_mathjax">Lagyan ng MathJax na Ekwasyon</string>
+    <string name="format_insert_bold">Format as bold</string>
+    <string name="format_insert_italic">Format as italic</string>
+    <string name="format_insert_underline">Format as underline</string>
+    <string name="insert_horizontal_line">Insert horizontal line</string>
+    <string name="insert_heading">Insert heading</string>
+    <string name="format_font_size">Change font size</string>
+    <string name="insert_mathjax">Insert MathJax equation</string>
     <string name="note_editor_toolbar_icon">Teksto ng Pindutan</string>
-    <string name="before_text">HTML Bago ang Pinili</string>
-    <string name="after_text">HTML Pagkatapos ang Pinili</string>
-    <string name="add_toolbar_item">Gumawa ng Toolbar Item</string>
-    <string name="edit_toolbar_item">Baguhin ang Toolbar Item</string>
+    <string name="before_text">HTML before selection</string>
+    <string name="after_text">HTML after selection</string>
+    <string name="add_toolbar_item">Create toolbar item</string>
+    <string name="edit_toolbar_item">Edit toolbar item</string>
     <string name="toolbar_item_explain_edit_or_remove">Magtala ng HTML na ilalagay bago at pagkatapos ng piniling teksto\n\nIdiin ang toolbar item upang baguhin o tanggalin ito</string>
-    <string name="remove_toolbar_item">Tanggalin ang Toolbar Item?</string>
+    <string name="remove_toolbar_item">Remove toolbar item?</string>
     <string name="note_editor_image_too_large">Ang larawan ay masyadong malaki, pakilagay ang larawan nang mano-mano</string>
     <string name="note_editor_video_too_large">Ang video file ay masyadong malaki, pakilagay ang video nang mano-mano</string>
     <string name="note_editor_audio_too_large">Ang audio file ay masyadong malaki, pakilagay ang audio nang mano-mano</string>

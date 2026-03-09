@@ -235,20 +235,20 @@
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">Ukuran font</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Tampilkan toolbar</string>
-    <string name="format_insert_bold">Atur sebagai bold</string>
-    <string name="format_insert_italic">Atur sebagai italic</string>
-    <string name="format_insert_underline">Atur sebagai garis bawah</string>
-    <string name="insert_horizontal_line">Tambahkan garis horizontal</string>
-    <string name="insert_heading">Tambahkan heading</string>
-    <string name="format_font_size">Ubah Ukuran Font</string>
-    <string name="insert_mathjax">Masukkan rumus MathJax</string>
+    <string name="format_insert_bold">Format as bold</string>
+    <string name="format_insert_italic">Format as italic</string>
+    <string name="format_insert_underline">Format as underline</string>
+    <string name="insert_horizontal_line">Insert horizontal line</string>
+    <string name="insert_heading">Insert heading</string>
+    <string name="format_font_size">Change font size</string>
+    <string name="insert_mathjax">Insert MathJax equation</string>
     <string name="note_editor_toolbar_icon">Teks tombol</string>
-    <string name="before_text">HTML Sebelum Pilihan</string>
-    <string name="after_text">HTML Sesudah Pilihan</string>
-    <string name="add_toolbar_item">Buat Item Toolbar</string>
-    <string name="edit_toolbar_item">Ubah Item Toolbar</string>
+    <string name="before_text">HTML before selection</string>
+    <string name="after_text">HTML after selection</string>
+    <string name="add_toolbar_item">Create toolbar item</string>
+    <string name="edit_toolbar_item">Edit toolbar item</string>
     <string name="toolbar_item_explain_edit_or_remove">Masukkan HTML untuk dimasukkan sebelum dan sesudah teks\n\n yang telah dipilih. Tekan toolbar item beberapa saat untuk mencopotnya.</string>
-    <string name="remove_toolbar_item">Copot Item Toolbar?</string>
+    <string name="remove_toolbar_item">Remove toolbar item?</string>
     <string name="note_editor_image_too_large">Gambar ini terlalu besar, mohon masukkan gambar secara manual</string>
     <string name="note_editor_video_too_large">File video terlalu besar, mohon masukkan video secara manual</string>
     <string name="note_editor_audio_too_large">File audio terlalu besar, mohon masukkan audio secara manual</string>

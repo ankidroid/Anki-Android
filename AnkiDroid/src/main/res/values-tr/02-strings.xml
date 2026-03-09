@@ -238,20 +238,20 @@
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">Yazı tipi boyutu</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Araç çubuğunu göster</string>
-    <string name="format_insert_bold">Kalın olarak biçimlendir</string>
-    <string name="format_insert_italic">İtalik olarak biçimlendir</string>
-    <string name="format_insert_underline">Altı çizili olarak biçimlendir</string>
-    <string name="insert_horizontal_line">Yatay Çizgi ekle</string>
-    <string name="insert_heading">Başlık ekle</string>
-    <string name="format_font_size">Yazı Tipi Boyutunu Değiştir</string>
-    <string name="insert_mathjax">MathJax denklemi ekle</string>
+    <string name="format_insert_bold">Format as bold</string>
+    <string name="format_insert_italic">Format as italic</string>
+    <string name="format_insert_underline">Format as underline</string>
+    <string name="insert_horizontal_line">Insert horizontal line</string>
+    <string name="insert_heading">Insert heading</string>
+    <string name="format_font_size">Change font size</string>
+    <string name="insert_mathjax">Insert MathJax equation</string>
     <string name="note_editor_toolbar_icon">Düğme yazısı</string>
-    <string name="before_text">Seçimden önce HTML</string>
-    <string name="after_text">Seçimden sonra HTML</string>
-    <string name="add_toolbar_item">Araç Çubuğu Öğesi Oluştur</string>
-    <string name="edit_toolbar_item">Araç Çubuğu Öğesini Düzenle</string>
+    <string name="before_text">HTML before selection</string>
+    <string name="after_text">HTML after selection</string>
+    <string name="add_toolbar_item">Create toolbar item</string>
+    <string name="edit_toolbar_item">Edit toolbar item</string>
     <string name="toolbar_item_explain_edit_or_remove">Seçili yazıdan önce ve sonra eklenecek HTML girin\n\nBir araç çubuğu öğesini değiştirmek ya da kaldırmak için basılı tutun</string>
-    <string name="remove_toolbar_item">Araç Çubuğu Öğesi Silinsin Mi?</string>
+    <string name="remove_toolbar_item">Remove toolbar item?</string>
     <string name="note_editor_image_too_large">Bu resim fazla büyük, lütfen resmi elle ekleyin</string>
     <string name="note_editor_video_too_large">Bu video dosyası fazla büyük, lütfen videoyu elle ekleyin</string>
     <string name="note_editor_audio_too_large">Bu ses dosyası fazla büyük, lütfen sesi elle ekleyin</string>

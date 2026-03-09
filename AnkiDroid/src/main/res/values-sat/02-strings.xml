@@ -238,20 +238,20 @@
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">ᱪᱤᱠᱤ ᱢᱟᱯ</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">ᱴᱩᱞᱵᱟᱨ ᱫᱮᱠᱷᱟᱣᱢᱮ</string>
-    <string name="format_insert_bold">ᱵᱚᱞ-ᱰ ᱛᱮ ᱥᱮᱴ ᱢᱮ</string>
-    <string name="format_insert_italic">ᱤᱴᱟᱞᱤᱠ ᱛᱮ ᱥᱮᱴ ᱢᱮ</string>
-    <string name="format_insert_underline">ᱜᱟᱨᱞᱟᱭᱤᱱ ᱛᱮ ᱥᱮᱴ ᱢᱮ</string>
-    <string name="insert_horizontal_line">ᱜᱤᱛᱤᱡᱽ ᱞᱟᱭᱤᱱ ᱠᱷᱟᱲ ᱢᱮ</string>
-    <string name="insert_heading">ᱦᱮᱰᱤᱝ ᱵᱚᱞᱚ ᱪᱷᱚᱭ ᱢᱮ</string>
-    <string name="format_font_size">ᱯᱪᱤᱠᱤ ᱢᱟᱯ ᱵᱚᱫᱚᱞ ᱢᱮ</string>
-    <string name="insert_mathjax">MathJax ᱤᱠᱣᱨᱥᱚᱱ ᱵᱚᱞᱚ ᱪᱷᱚᱭ ᱢᱮ</string>
+    <string name="format_insert_bold">Format as bold</string>
+    <string name="format_insert_italic">Format as italic</string>
+    <string name="format_insert_underline">Format as underline</string>
+    <string name="insert_horizontal_line">Insert horizontal line</string>
+    <string name="insert_heading">Insert heading</string>
+    <string name="format_font_size">Change font size</string>
+    <string name="insert_mathjax">Insert MathJax equation</string>
     <string name="note_editor_toolbar_icon">ᱵᱩᱛᱟᱹᱢ ᱚᱞ</string>
-    <string name="before_text">HTML ᱢᱟᱲᱟᱝ ᱵᱟᱪᱷᱟᱣ</string>
-    <string name="after_text">HTML ᱞᱟᱦᱟᱛᱮᱭᱟᱜ ᱵᱟᱪᱷᱟᱣ</string>
-    <string name="add_toolbar_item">ᱴᱩᱞᱵᱟᱨ ᱡᱤᱱᱤᱥ ᱛᱮᱭᱟᱨ</string>
-    <string name="edit_toolbar_item">ᱦᱟᱹᱛᱤᱭᱟᱹᱨ ᱡᱤᱱᱤᱥ ᱥᱟᱯᱲᱟᱣ ᱢᱮ</string>
+    <string name="before_text">HTML before selection</string>
+    <string name="after_text">HTML after selection</string>
+    <string name="add_toolbar_item">Create toolbar item</string>
+    <string name="edit_toolbar_item">Edit toolbar item</string>
     <string name="toolbar_item_explain_edit_or_remove">ᱵᱟᱪᱷᱟᱣ ᱟᱠᱟᱱ ᱴᱮᱠᱥᱴ ᱨᱮᱱᱟᱜ ᱯᱩᱭᱞᱩ ᱟᱨ ᱛᱟᱭᱚᱢ ᱨᱮ ᱥᱮᱞᱮᱫᱚᱜ ᱞᱟᱹᱜᱤᱫ HTML ᱮᱢᱢᱢᱮ\n\nᱥᱟᱯᱲᱟᱣ ᱥᱮ ᱦᱮᱡ ᱞᱟᱹᱜᱤᱫ ᱢᱤᱫ ᱴᱩᱞᱵᱟᱨ ᱮᱢᱮᱰᱤᱴ ᱟᱹᱰᱤ ᱫᱷᱟᱣ ᱞᱤᱱ ᱢᱮ</string>
-    <string name="remove_toolbar_item">ᱴᱩᱞᱵᱟᱨ ᱡᱤᱱᱤᱥ ᱚᱪᱚᱜᱽ ᱟᱢ ᱥᱮ?</string>
+    <string name="remove_toolbar_item">Remove toolbar item?</string>
     <string name="note_editor_image_too_large">ᱪᱤᱛᱟᱹᱨ ᱫᱚ ᱟᱹᱰᱤ ᱢᱟᱨᱟᱝ ᱠᱟᱱᱟ, ᱫᱟᱭᱟ ᱠᱟᱛᱮ ᱪᱤᱛᱟᱹᱨ ᱥᱮᱞᱮᱫ ᱢᱮ</string>
     <string name="note_editor_video_too_large">ᱵᱷᱤᱰᱤᱭᱳ ᱯᱷᱤᱞᱤᱢ ᱫᱚ ᱟᱹᱰᱤ ᱢᱟᱨᱟᱝ ᱠᱟᱱᱟ, ᱫᱟᱭᱟᱠᱟᱛᱮ ᱵᱷᱤᱰᱤᱭᱳ ᱥᱮᱞᱮᱫᱽ ᱢᱮ</string>
     <string name="note_editor_audio_too_large">ᱚᱰᱤᱭᱚ ᱯᱷᱤᱞ ᱫᱚ ᱟᱹᱰᱤ ᱢᱟᱨᱟᱝ ᱠᱟᱱᱟ, ᱫᱟᱭᱟ ᱠᱟᱛᱮ ᱚᱰᱤᱭᱚ ᱥᱮᱞᱮᱫ ᱢᱮ</string>

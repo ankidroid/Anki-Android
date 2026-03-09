@@ -238,20 +238,20 @@
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">ଫଣ୍ଟ ଆକାର</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">ଉପକରଣ-ଦଣ୍ଡିକା ଦେଖାଇବା</string>
-    <string name="format_insert_bold">ଅକ୍ଷରକୁ ଗାଢ଼ କରନ୍ତୁ</string>
-    <string name="format_insert_italic">ଇଟାଲିକ୍ ଭାବରେ ଫର୍ମାଟ୍ କରନ୍ତୁ</string>
-    <string name="format_insert_underline">ଲେଖା ତଳେ ଗାର ଦିଅନ୍ତୁ</string>
-    <string name="insert_horizontal_line">ଭୂସମାନ୍ତର ଗାର ସନ୍ନିବେଶ କରନ୍ତୁ</string>
-    <string name="insert_heading">ଶୀର୍ଷଲେଖ ସନ୍ନିବେଶ କରନ୍ତୁ</string>
-    <string name="format_font_size">ଫଣ୍ଟ ଆକାର ପରିବର୍ତ୍ତନ କରିବା</string>
-    <string name="insert_mathjax">MathJax ସମୀକରଣ ସନ୍ନିବେଶ କରନ୍ତୁ</string>
+    <string name="format_insert_bold">Format as bold</string>
+    <string name="format_insert_italic">Format as italic</string>
+    <string name="format_insert_underline">Format as underline</string>
+    <string name="insert_horizontal_line">Insert horizontal line</string>
+    <string name="insert_heading">Insert heading</string>
+    <string name="format_font_size">Change font size</string>
+    <string name="insert_mathjax">Insert MathJax equation</string>
     <string name="note_editor_toolbar_icon">ବଟନ୍ ର ନା‍ଁ</string>
-    <string name="before_text">ଚୟନ ପୂର୍ବର HTML</string>
-    <string name="after_text">ଚୟନ ପରର HTML</string>
-    <string name="add_toolbar_item">ଉପକରଣ-ଦଣ୍ଡିକାର ଆଇଟମ୍ ସୃଷ୍ଟି କରିବା</string>
-    <string name="edit_toolbar_item">ଉପକରଣ-ଦଣ୍ଡିକା ସମ୍ପାଦନା</string>
+    <string name="before_text">HTML before selection</string>
+    <string name="after_text">HTML after selection</string>
+    <string name="add_toolbar_item">Create toolbar item</string>
+    <string name="edit_toolbar_item">Edit toolbar item</string>
     <string name="toolbar_item_explain_edit_or_remove">ମନୋନୀତ ପାଠ୍ୟ ପୂର୍ବରୁ ଏବଂ ପରେ ସନ୍ନିବେଶ କରିବା ଲାଗି HTML ପ୍ରବେଶ କରନ୍ତୁ\n\nଗୋଟିଏ ଉପକରଣ-ଦଣ୍ଡିକାର ଆଇଟମ୍ କୁ ସମ୍ପାଦନ ବା ହଟାଇବା ପାଇଁ ତା\' ଉପରେ ଲମ୍ବା ସ୍ପର୍ଶ କରନ୍ତୁ</string>
-    <string name="remove_toolbar_item">ଉପକରଣ-ଦଣ୍ଡିକାର ଆଇଟମ୍ ହଟାଇବେ?</string>
+    <string name="remove_toolbar_item">Remove toolbar item?</string>
     <string name="note_editor_image_too_large">The image is too large, please insert the image manually</string>
     <string name="note_editor_video_too_large">ଵିଡ଼ିଓ ଫାଇଲ୍‌ଟି ଅତ୍ୟଧିକ ବଡ଼ ଅଟେ, ଦୟାକରି ହସ୍ତକୃତ ଭାବେ ଵିଡ଼ିଓଟିକୁ ସନ୍ନିବେଶ କରନ୍ତୁ</string>
     <string name="note_editor_audio_too_large">ଅଡ଼ିଓ ଫାଇଲ୍‌ଟି ଅତ୍ୟଧିକ ବଡ଼ ଅଟେ, ଦୟାକରି ହସ୍ତକୃତ ଭାବେ ଅଡ଼ିଓଟିକୁ ସନ୍ନିବେଶ କରନ୍ତୁ</string>

@@ -235,20 +235,20 @@
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">字体大小</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">显示工具栏</string>
-    <string name="format_insert_bold">粗体格式</string>
-    <string name="format_insert_italic">斜体格式</string>
-    <string name="format_insert_underline">下划线格式</string>
-    <string name="insert_horizontal_line">插入水平线</string>
-    <string name="insert_heading">插入标题</string>
-    <string name="format_font_size">更改字体大小</string>
-    <string name="insert_mathjax">插入 MathJax 方程</string>
+    <string name="format_insert_bold">Format as bold</string>
+    <string name="format_insert_italic">Format as italic</string>
+    <string name="format_insert_underline">Format as underline</string>
+    <string name="insert_horizontal_line">Insert horizontal line</string>
+    <string name="insert_heading">Insert heading</string>
+    <string name="format_font_size">Change font size</string>
+    <string name="insert_mathjax">Insert MathJax equation</string>
     <string name="note_editor_toolbar_icon">按钮文本</string>
-    <string name="before_text">选择文本前的 HTML</string>
-    <string name="after_text">选择文本后的 HTML</string>
-    <string name="add_toolbar_item">创建工具栏项</string>
-    <string name="edit_toolbar_item">编辑工具栏项</string>
+    <string name="before_text">HTML before selection</string>
+    <string name="after_text">HTML after selection</string>
+    <string name="add_toolbar_item">Create toolbar item</string>
+    <string name="edit_toolbar_item">Edit toolbar item</string>
     <string name="toolbar_item_explain_edit_or_remove">输入要在选定文本之前和之后插入的 HTML\n\n 长按工具栏项目来编辑或删除它</string>
-    <string name="remove_toolbar_item">删除工具栏项目？</string>
+    <string name="remove_toolbar_item">Remove toolbar item?</string>
     <string name="note_editor_image_too_large">图片过大，请手动插入图像</string>
     <string name="note_editor_video_too_large">视频文件太大，请手动插入视频</string>
     <string name="note_editor_audio_too_large">音频文件太大，请手动插入音频</string>

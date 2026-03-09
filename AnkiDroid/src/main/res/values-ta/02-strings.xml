@@ -238,20 +238,20 @@
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">எழுத்துரு அளவு</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">கருவிப்பட்டியைக் காட்டு</string>
-    <string name="format_insert_bold">தடிமனாக வடிவமைக்கவும்</string>
-    <string name="format_insert_italic">சாய்வாக வடிவமைக்கவும்</string>
-    <string name="format_insert_underline">அண்டர்லைன் ஆக வடிவமைக்கவும்</string>
-    <string name="insert_horizontal_line">கிடைமட்ட கோட்டைச் செருகவும்</string>
-    <string name="insert_heading">தலைப்பைச் செருகவும்</string>
-    <string name="format_font_size">எழுத்துரு அளவை மாற்றவும்</string>
-    <string name="insert_mathjax">MathJax சமன்பாட்டைச் செருகவும்</string>
+    <string name="format_insert_bold">Format as bold</string>
+    <string name="format_insert_italic">Format as italic</string>
+    <string name="format_insert_underline">Format as underline</string>
+    <string name="insert_horizontal_line">Insert horizontal line</string>
+    <string name="insert_heading">Insert heading</string>
+    <string name="format_font_size">Change font size</string>
+    <string name="insert_mathjax">Insert MathJax equation</string>
     <string name="note_editor_toolbar_icon">பட்டன் உரை</string>
-    <string name="before_text">தேர்வுக்கு முன் HTML</string>
-    <string name="after_text">HTML தேர்வுக்குப் பிறகு</string>
-    <string name="add_toolbar_item">கருவிப்பட்டி உருப்படியை உருவாக்கவும்</string>
-    <string name="edit_toolbar_item">கருவிப்பட்டி உருப்படியைத் திருத்து</string>
+    <string name="before_text">HTML before selection</string>
+    <string name="after_text">HTML after selection</string>
+    <string name="add_toolbar_item">Create toolbar item</string>
+    <string name="edit_toolbar_item">Edit toolbar item</string>
     <string name="toolbar_item_explain_edit_or_remove">தேர்ந்தெடுக்கப்பட்ட உரைக்கு முன்னும் பின்னும் செருகுவதற்கு HTML ஐ உள்ளிடவும்\n\n கருவிப்பட்டி உருப்படியைத் திருத்த அல்லது அகற்ற நீண்ட நேரம் அழுத்தவும்</string>
-    <string name="remove_toolbar_item">கருவிப்பட்டி உருப்படியை அகற்றவா?</string>
+    <string name="remove_toolbar_item">Remove toolbar item?</string>
     <string name="note_editor_image_too_large">படம் மிகவும் பெரிதாக உள்ளது, படத்தை கைமுறையாக செருகவும்</string>
     <string name="note_editor_video_too_large">வீடியோ கோப்பு மிகவும் பெரியதாக உள்ளது, வீடியோவை கைமுறையாக செருகவும்</string>
     <string name="note_editor_audio_too_large">ஆடியோ கோப்பு மிகவும் பெரியதாக உள்ளது, ஆடியோவை கைமுறையாக செருகவும்</string>

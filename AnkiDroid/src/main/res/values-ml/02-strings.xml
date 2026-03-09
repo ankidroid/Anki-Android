@@ -238,20 +238,20 @@
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">അക്ഷര വലിപ്പം</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">ടൂൾബാർ കാണിക്കുക</string>
-    <string name="format_insert_bold">Format as Bold</string>
-    <string name="format_insert_italic">Format as Italic</string>
-    <string name="format_insert_underline">Format as Underline</string>
-    <string name="insert_horizontal_line">Insert Horizontal Line</string>
-    <string name="insert_heading">Insert Heading</string>
-    <string name="format_font_size">Change Font Size</string>
-    <string name="insert_mathjax">Insert MathJax Equation</string>
+    <string name="format_insert_bold">Format as bold</string>
+    <string name="format_insert_italic">Format as italic</string>
+    <string name="format_insert_underline">Format as underline</string>
+    <string name="insert_horizontal_line">Insert horizontal line</string>
+    <string name="insert_heading">Insert heading</string>
+    <string name="format_font_size">Change font size</string>
+    <string name="insert_mathjax">Insert MathJax equation</string>
     <string name="note_editor_toolbar_icon">ബട്ടൺ ടെക്സ്റ്റ്</string>
-    <string name="before_text">തിരഞ്ഞെടുക്കുന്നതിന് മുമ്പുള്ള HTML</string>
-    <string name="after_text">തിരഞ്ഞെടുത്തതിന് ശേഷം HTML</string>
-    <string name="add_toolbar_item">ടൂൾബാർ ഇനം സൃഷ്ടിക്കുക</string>
-    <string name="edit_toolbar_item">ടൂൾബാർ ഇനം എഡിറ്റ് ചെയ്യുക</string>
+    <string name="before_text">HTML before selection</string>
+    <string name="after_text">HTML after selection</string>
+    <string name="add_toolbar_item">Create toolbar item</string>
+    <string name="edit_toolbar_item">Edit toolbar item</string>
     <string name="toolbar_item_explain_edit_or_remove">തിരഞ്ഞെടുത്ത വാചകത്തിന് മുമ്പും ശേഷവും ചേർക്കുന്നതിന് HTML നൽകുക\n\nഒരു ടൂൾബാർ ഇനം എഡിറ്റ് ചെയ്യാനോ നീക്കം ചെയ്യാനോ ദീർഘനേരം അമർത്തുക</string>
-    <string name="remove_toolbar_item">ടൂൾബാർ ഇനം നീക്കം ചെയ്യണോ?</string>
+    <string name="remove_toolbar_item">Remove toolbar item?</string>
     <string name="note_editor_image_too_large">ചിത്രം വളരെ വലുതാണ്, ചിത്രം നേരിട്ട് ചേർക്കുക</string>
     <string name="note_editor_video_too_large">വീഡിയോ ഫയൽ വളരെ വലുതാണ്, വീഡിയോ നേരിട്ട് ചേർക്കുക</string>
     <string name="note_editor_audio_too_large">ഓഡിയോ ഫയൽ വളരെ വലുതാണ്, ഓഡിയോ നേരിട്ട് ചേർക്കുക</string>

@@ -235,20 +235,20 @@
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">フォントサイズ</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">ツールバーを表示</string>
-    <string name="format_insert_bold">太字</string>
-    <string name="format_insert_italic">斜体</string>
-    <string name="format_insert_underline">下線</string>
-    <string name="insert_horizontal_line">横罫線</string>
-    <string name="insert_heading">見出し</string>
-    <string name="format_font_size">フォントサイズ変更</string>
-    <string name="insert_mathjax">MathJax式を挿入</string>
+    <string name="format_insert_bold">Format as bold</string>
+    <string name="format_insert_italic">Format as italic</string>
+    <string name="format_insert_underline">Format as underline</string>
+    <string name="insert_horizontal_line">Insert horizontal line</string>
+    <string name="insert_heading">Insert heading</string>
+    <string name="format_font_size">Change font size</string>
+    <string name="insert_mathjax">Insert MathJax equation</string>
     <string name="note_editor_toolbar_icon">ボタンに表示する文字</string>
-    <string name="before_text">選択文字列の前のHTML</string>
-    <string name="after_text">選択文字列の後のHTML</string>
-    <string name="add_toolbar_item">ツールバーアイテムを作成</string>
-    <string name="edit_toolbar_item">アイテムを編集</string>
+    <string name="before_text">HTML before selection</string>
+    <string name="after_text">HTML after selection</string>
+    <string name="add_toolbar_item">Create toolbar item</string>
+    <string name="edit_toolbar_item">Edit toolbar item</string>
     <string name="toolbar_item_explain_edit_or_remove">選択した文字列の前後に挿入するHTMLをそれぞれ入力してください\n\n作成したツールバーアイテムを編集または削除したい場合は、そのアイテムのボタンを長押ししてください</string>
-    <string name="remove_toolbar_item">このツールバーアイテムを削除しますか？</string>
+    <string name="remove_toolbar_item">Remove toolbar item?</string>
     <string name="note_editor_image_too_large">画像が大きすぎます。手動で画像を挿入してください</string>
     <string name="note_editor_video_too_large">動画ファイルが大きすぎます。手動で動画を挿入してください</string>
     <string name="note_editor_audio_too_large">音声ファイルが大きすぎます。手動で音声を挿入してください</string>
