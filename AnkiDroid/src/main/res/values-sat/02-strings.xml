@@ -120,7 +120,6 @@
     <string name="close">ᱵᱚᱫᱽ</string>
     <string name="select">ᱵᱟᱪᱷᱟᱣ</string>
     <string name="field_remapping">%1$s (“%2$s” ᱠᱷᱚᱱ)</string>
-    <string name="confirm_map_cards_to_nothing">ᱡᱟᱷᱟᱭ ᱠᱟᱰ ᱵᱟᱭ ᱢᱮᱯ ᱠᱚᱜᱼᱟ ᱚᱱᱟ ᱠᱟᱲ ᱫᱚ ᱜᱮᱫ ᱜᱤᱰᱤᱜᱼᱟ ᱾ ᱡᱚᱫᱤ ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱨᱮ ᱠᱟᱰ ᱵᱟᱝ ᱛᱟᱦᱮᱱᱟ ᱠᱷᱟᱱ ᱪᱮᱫ ᱢᱟᱱᱮ ᱵᱟᱝ ᱛᱟᱦᱮᱱᱟ ᱾ ᱢᱤᱫ ᱞᱮᱛᱟᱲ ᱥᱮᱱᱟᱢ ᱠᱟᱱᱟ?</string>
     <string name="missing_note_type">ᱪᱮᱫ ᱞᱮᱠᱟᱱ ᱱᱳᱴ ᱠᱚ ᱧᱟᱢ ᱟᱠᱟᱱᱟ</string>
     <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (empty)</string>
     <!-- Image cropper -->

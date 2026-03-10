@@ -122,7 +122,6 @@
     <string name="close">Закрыць</string>
     <string name="select">Выбраць</string>
     <string name="field_remapping">%1$s (з “%2$s”)</string>
-    <string name="confirm_map_cards_to_nothing">Не супастаўленыя карткі будуць выдалены. Калі нататка не мае ніводнай карткі, то яна будзе згублена. Вы сапраўды хочаце працягнуць?</string>
     <string name="missing_note_type">Такі тып нататкі не знойдзены</string>
     <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (пуста)</string>
     <!-- Image cropper -->

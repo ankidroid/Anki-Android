@@ -144,7 +144,6 @@
     <string name="syncing_media">Synkroniserer medier</string>
     <string name="export_deck" maxLength="28">Eksportér stak</string>
     <string name="export_collection">Eksportér samling</string>
-    <string name="nothing">Intet</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Korttyper</string>
     <string name="card_template_editor_front">Forsideskabelon</string>

@@ -144,7 +144,6 @@
     <string name="syncing_media">Meedia sünkroonimine</string>
     <string name="export_deck" maxLength="28">Ekspordi kaardipakk</string>
     <string name="export_collection">Ekspordi kogu</string>
-    <string name="nothing">Mitte midagi</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Kaarditüübid</string>
     <string name="card_template_editor_front">Esikülje mall</string>

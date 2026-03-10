@@ -120,7 +120,6 @@
     <string name="close">بند کریں</string>
     <string name="select">منتخب کریں</string>
     <string name="field_remapping">%1$s (\"%2$s\" سے)</string>
-    <string name="confirm_map_cards_to_nothing">کسی بھی کارڈ کو کچھ بھی نہیں پر میپ کیا جائے گا حذف کر دیا جائے گا۔ اگر کسی نوٹ میں کوئی کارڈ باقی نہیں ہے، تو وہ کھو جائے گا۔ کیا آپ واقعی جاری رکھنا چاہتے ہیں؟</string>
     <string name="missing_note_type">نوٹ کی کوئی قسم نہیں ملی</string>
     <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (empty)</string>
     <!-- Image cropper -->

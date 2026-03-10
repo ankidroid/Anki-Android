@@ -120,7 +120,6 @@
     <string name="close">დახურვა</string>
     <string name="select">არჩევა</string>
     <string name="field_remapping">%1$s (\"%2$s\"-დან)</string>
-    <string name="confirm_map_cards_to_nothing">ყველა ბარათი რომელიც არაფერთანაა დაკავშირებული წაიშლება. თუ შენიშვნას არ აქვს შერჩენილი ბარათები ის დაიკარგება. დარწმუნებული ხართ, რომ გსურთ გაგრძელება?</string>
     <string name="missing_note_type">შენიშვნის ტიპი ვერ მოიძებნა</string>
     <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (ცარიელი)</string>
     <!-- Image cropper -->

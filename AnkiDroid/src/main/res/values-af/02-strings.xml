@@ -120,7 +120,6 @@
     <string name="close">Maak toe</string>
     <string name="select">Kies</string>
     <string name="field_remapping">%1$s (van \"%2$s\")</string>
-    <string name="confirm_map_cards_to_nothing">Enige kaarte wat aan niks gekoppel is nie, sal verwyder word. As \'n nota geen oorblywende kaarte het nie, sal dit verlore gaan. Is jy seker jy wil voortgaan?</string>
     <string name="missing_note_type">Geen nota tipe gevind nie</string>
     <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (empty)</string>
     <!-- Image cropper -->

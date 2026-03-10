@@ -142,7 +142,6 @@
     <string name="syncing_media">正在使媒體同步</string>
     <string name="export_deck" maxLength="28">匯出牌組</string>
     <string name="export_collection">匯出集合</string>
-    <string name="nothing">無</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">卡片種類</string>
     <string name="card_template_editor_front">正面樣本</string>

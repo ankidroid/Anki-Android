@@ -151,7 +151,6 @@
     <string name="syncing_media">מסנכרן מדיה</string>
     <string name="export_deck" maxLength="28">ייצוא חפיסה</string>
     <string name="export_collection">ייצא אוסף</string>
-    <string name="nothing">ריק</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">סוגי כרטיסים</string>
     <string name="card_template_editor_front">תבנית קדמית</string>

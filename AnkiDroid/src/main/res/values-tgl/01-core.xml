@@ -144,7 +144,6 @@
     <string name="syncing_media">Syncing media</string>
     <string name="export_deck" maxLength="28">I-eksport ang deck</string>
     <string name="export_collection">Export collection</string>
-    <string name="nothing">Wala</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Mga uri ng baraha</string>
     <string name="card_template_editor_front">Harap na template</string>

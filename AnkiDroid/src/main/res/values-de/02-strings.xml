@@ -120,7 +120,6 @@
     <string name="close">Schließen</string>
     <string name="select">Auswählen</string>
     <string name="field_remapping">%1$s (von »%2$s«)</string>
-    <string name="confirm_map_cards_to_nothing">Alle leeren Karten werden gelöscht. Sind sämtliche Karten einer Notiz gelöscht, wird diese ebenfalls entfernt. Fortfahren?</string>
     <string name="missing_note_type">Kein Notiztyp gefunden</string>
     <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (leer)</string>
     <!-- Image cropper -->

@@ -144,7 +144,6 @@
     <string name="syncing_media">Συγχρονισμός πολυμέσων</string>
     <string name="export_deck" maxLength="28">Εξαγωγή τράπουλας</string>
     <string name="export_collection">Εξαγωγή συλλογής</string>
-    <string name="nothing">Τίποτε</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Τύποι κάρτας</string>
     <string name="card_template_editor_front">Μπροστινό πρότυπο</string>

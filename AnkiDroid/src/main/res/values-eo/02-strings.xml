@@ -120,7 +120,6 @@
     <string name="close">Fermi</string>
     <string name="select">Elekti</string>
     <string name="field_remapping">%1$s (de “%2$s”)</string>
-    <string name="confirm_map_cards_to_nothing">Ĉiuj senasignitaj kartoj estos forigitaj. Se noto ne havas restajn kartojn, ĝi ankaŭ perdiĝos. Ĉu vi certe volas pluigi?</string>
     <string name="missing_note_type">Ne trovis nototipon</string>
     <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (malplena)</string>
     <!-- Image cropper -->

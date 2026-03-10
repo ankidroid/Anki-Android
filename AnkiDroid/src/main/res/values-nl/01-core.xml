@@ -144,7 +144,6 @@
     <string name="syncing_media">Media synchroniseren</string>
     <string name="export_deck" maxLength="28">Leerset exporteren</string>
     <string name="export_collection">Verzameling exporteren</string>
-    <string name="nothing">Niets</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Kaarttypes</string>
     <string name="card_template_editor_front">Voorkantssjabloon</string>

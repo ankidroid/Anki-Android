@@ -122,7 +122,6 @@
     <string name="close">Закрити</string>
     <string name="select">Вибрати</string>
     <string name="field_remapping">%1$s (з\"%2$s\")</string>
-    <string name="confirm_map_cards_to_nothing">Картки, які не прив\'язані, будуть видалені. Якщо запис не має жодної картки, то запис буде втрачено. Ви хочете продовжити?</string>
     <string name="missing_note_type">Жодного типу записів не знайдено</string>
     <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (порожня)</string>
     <!-- Image cropper -->

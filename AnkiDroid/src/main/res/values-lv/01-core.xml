@@ -147,7 +147,6 @@
     <string name="syncing_media">Vienādo informācijas nesējus</string>
     <string name="export_deck" maxLength="28">Izgūt kavu</string>
     <string name="export_collection">Izgūt krājumu</string>
-    <string name="nothing">Nekas</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Kartīšu veidi</string>
     <string name="card_template_editor_front">Priekšpuses veidne</string>

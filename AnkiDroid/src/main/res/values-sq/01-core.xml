@@ -144,7 +144,6 @@
     <string name="syncing_media">Media po sinkronizohet</string>
     <string name="export_deck" maxLength="28">Kuvertë eksporti</string>
     <string name="export_collection">Export collection</string>
-    <string name="nothing">Asgjë</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Llojet e kartave</string>
     <string name="card_template_editor_front">Modeli i përparmë</string>

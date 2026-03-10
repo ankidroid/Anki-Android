@@ -120,7 +120,6 @@
     <string name="close">𐌻𐌿𐌺𐌰𐌽</string>
     <string name="select">𐍅𐌰𐌻𐌾𐌰𐌽</string>
     <string name="field_remapping">%1$s (𐍆𐍂𐌰𐌼 \'%2$s\')</string>
-    <string name="confirm_map_cards_to_nothing">Any cards mapped to nothing will be deleted. If a note has no remaining cards, it will be lost. Are you sure you want to continue?</string>
     <string name="missing_note_type">𐌽𐌹 𐌱𐌹𐌲𐌰𐍄 𐌷𐌰𐌹𐌳𐌿 𐌼𐌴𐌻𐌴𐌹𐌽𐌰𐌹𐍃</string>
     <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (𐌻𐌰𐌿𐍃)</string>
     <!-- Image cropper -->

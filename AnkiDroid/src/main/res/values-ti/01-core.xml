@@ -144,7 +144,6 @@
     <string name="syncing_media">Syncing media</string>
     <string name="export_deck" maxLength="28">ባይታ ስደድ</string>
     <string name="export_collection">Export collection</string>
-    <string name="nothing">የለን</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">ዓይነት ካርድ</string>
     <string name="card_template_editor_front">ቅድመ ባይታ</string>

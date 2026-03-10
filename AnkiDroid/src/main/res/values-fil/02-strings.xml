@@ -120,7 +120,6 @@
     <string name="close">Isara</string>
     <string name="select">Piliin</string>
     <string name="field_remapping">%1$s (mula sa \"%2$s\")</string>
-    <string name="confirm_map_cards_to_nothing">Ang anumang mga kard na nakabalangkas sa wala ay matatanggal. Kung ang isang tala ay walang natitirang mga kard, ito ay mawawala. Sigurado ka bang gusto mong magpatuloy?</string>
     <string name="missing_note_type">Walang mahanap na uri ng tala</string>
     <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (empty)</string>
     <!-- Image cropper -->

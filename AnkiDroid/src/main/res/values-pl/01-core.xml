@@ -150,7 +150,6 @@
     <string name="syncing_media">Synchronizowanie mediów</string>
     <string name="export_deck" maxLength="28">Eksportuj talię</string>
     <string name="export_collection">Eksportuj kolekcję</string>
-    <string name="nothing">Nic</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Typ karty</string>
     <string name="card_template_editor_front">Szablon przodu</string>

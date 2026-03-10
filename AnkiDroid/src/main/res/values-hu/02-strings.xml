@@ -120,7 +120,6 @@
     <string name="close">Bezárás</string>
     <string name="select">Kiválasztás</string>
     <string name="field_remapping">%1$s (az “%2$s”)</string>
-    <string name="confirm_map_cards_to_nothing">Az összes üres kártyát töröljük. Ha a jegyzet összes kártyája törlődik, akkor ez is eltávolításra kerül. Folytatod?</string>
     <string name="missing_note_type">No note type found</string>
     <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (üres)</string>
     <!-- Image cropper -->

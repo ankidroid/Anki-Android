@@ -150,7 +150,6 @@
     <string name="syncing_media">Синхронизация медиафайлов</string>
     <string name="export_deck" maxLength="28">Экспортировать колоду</string>
     <string name="export_collection">Экспортировать коллекцию</string>
-    <string name="nothing">Ничего</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Типы карточек</string>
     <string name="card_template_editor_front">Шаблон лица</string>

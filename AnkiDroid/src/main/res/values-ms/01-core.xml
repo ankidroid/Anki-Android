@@ -141,7 +141,6 @@
     <string name="syncing_media">Syncing media</string>
     <string name="export_deck" maxLength="28">Eksport dek</string>
     <string name="export_collection">Export collection</string>
-    <string name="nothing">Tiada</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Jenis kad</string>
     <string name="card_template_editor_front">Templat hadapan</string>

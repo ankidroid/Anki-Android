@@ -120,7 +120,6 @@
     <string name="close">Yopish</string>
     <string name="select">Tanlash</string>
     <string name="field_remapping">%1$s (“%2$s” dan)</string>
-    <string name="confirm_map_cards_to_nothing">Hech narsaga mos kelmaydigan kartalar oʻchiriladi. Agar qaydda boshqa kartalar qolmasa, u yoʻqoladi. Rostdan ham davom ettirmoqchimisiz?</string>
     <string name="missing_note_type">Qayd turi topilmadi</string>
     <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (boʻsh)</string>
     <!-- Image cropper -->

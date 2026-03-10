@@ -120,7 +120,6 @@
     <string name="close">بستن</string>
     <string name="select">انتخاب</string>
     <string name="field_remapping">%1$s (از \"%2$s\")</string>
-    <string name="confirm_map_cards_to_nothing">هرکارتی که با هیچ چیز پیوند نخورده باشد حذف خواهد شد. اگر یک یادداشت هیچ کارت باقی مانده ای نداشته باشد، از دست خواهد رفت. ادامه می دهید؟</string>
     <string name="missing_note_type">نوع یادداشتی یافت نشد</string>
     <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (خالی)</string>
     <!-- Image cropper -->

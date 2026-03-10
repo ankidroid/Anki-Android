@@ -150,7 +150,6 @@
     <string name="syncing_media">Synchronizace multimédií</string>
     <string name="export_deck" maxLength="28">Export balíčku</string>
     <string name="export_collection">Exportovat kolekci</string>
-    <string name="nothing">Nic</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Typ karet</string>
     <string name="card_template_editor_front">Šablona líce</string>

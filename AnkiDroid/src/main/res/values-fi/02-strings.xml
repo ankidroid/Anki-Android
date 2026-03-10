@@ -120,7 +120,6 @@
     <string name="close">Sulje</string>
     <string name="select">Valitse</string>
     <string name="field_remapping">%1$s (”%2$s”:sta)</string>
-    <string name="confirm_map_cards_to_nothing">Kortit, joita ei ole liitetty mihinkään, poistetaan. Jos muistiinpanoon ei liity jäljelle jääviä kortteja, se katoaa. Oletko varma, että haluat jatkaa?</string>
     <string name="missing_note_type">Muistiinpanotyyppejä ei löytynyt</string>
     <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (tyhjä)</string>
     <!-- Image cropper -->

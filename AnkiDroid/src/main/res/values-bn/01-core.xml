@@ -144,7 +144,6 @@
     <string name="syncing_media">মিডিয়া সিঙ্ক হচ্ছে</string>
     <string name="export_deck" maxLength="28">ডেক রপ্তানি করুন</string>
     <string name="export_collection">রপ্তানি সংগ্রহ</string>
-    <string name="nothing">কিছুই না</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">কার্ডের ধরন</string>
     <string name="card_template_editor_front">সম্মুখ খসড়া</string>

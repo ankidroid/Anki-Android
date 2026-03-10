@@ -120,7 +120,6 @@
     <string name="close">Sluiten</string>
     <string name="select">Selecteren</string>
     <string name="field_remapping">%1$s (van “%2$s”)</string>
-    <string name="confirm_map_cards_to_nothing">De kaarten toegewezen aan niets zullen worden verwijderd. Als een memo resterende kaarten heeft, zullen zij verloren gaan. Weet u zeker dat u wilt doorgaan?</string>
     <string name="missing_note_type">Geen notitietype gevonden</string>
     <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (leeg)</string>
     <!-- Image cropper -->

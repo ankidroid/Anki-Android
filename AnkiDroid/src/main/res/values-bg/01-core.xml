@@ -144,7 +144,6 @@
     <string name="syncing_media">Синхронизиране на медията</string>
     <string name="export_deck" maxLength="28">Експортиране на тесте</string>
     <string name="export_collection">Експортирай колекцията</string>
-    <string name="nothing">Нищо</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Видове карта</string>
     <string name="card_template_editor_front">Лицев шаблон</string>

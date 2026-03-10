@@ -141,7 +141,6 @@
     <string name="syncing_media">同步媒体中</string>
     <string name="export_deck" maxLength="28">导出牌组</string>
     <string name="export_collection">导出集合</string>
-    <string name="nothing">无</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">卡片类型</string>
     <string name="card_template_editor_front">正面</string>

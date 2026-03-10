@@ -141,7 +141,6 @@
     <string name="syncing_media">メディアを同期中</string>
     <string name="export_deck" maxLength="28">デッキをエクスポート</string>
     <string name="export_collection">コレクションをエクスポート</string>
-    <string name="nothing">なし</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">カードタイプ</string>
     <string name="card_template_editor_front">表面のテンプレート</string>

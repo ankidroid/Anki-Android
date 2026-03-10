@@ -150,7 +150,6 @@
     <string name="syncing_media">Įrašai sinchronizuojami</string>
     <string name="export_deck" maxLength="28">Eksportuoti rinkinį</string>
     <string name="export_collection">Eksportuoti kolekciją</string>
-    <string name="nothing">Nieko</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Kortelių tipai</string>
     <string name="card_template_editor_front">Priekinė pusė</string>

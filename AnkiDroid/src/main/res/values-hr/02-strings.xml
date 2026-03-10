@@ -121,7 +121,6 @@
     <string name="close">Zatvori</string>
     <string name="select">Odaberi</string>
     <string name="field_remapping">%1$s (od“%2$s”)</string>
-    <string name="confirm_map_cards_to_nothing">Sve kartice koje nisu ni sa čim povezani bit će izbrisane. Ako bilješka nema nijednu preostalu karticu, bit će izgubljena. Jeste li sigurno da želite nastaviti?</string>
     <string name="missing_note_type">Nije pronađen nijedan tip bilješke</string>
     <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (prazno)</string>
     <!-- Image cropper -->

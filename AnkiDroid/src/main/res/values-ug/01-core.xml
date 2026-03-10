@@ -144,7 +144,6 @@
     <string name="syncing_media">ۋاسىتە قەدەمداشلاۋاتىدۇ</string>
     <string name="export_deck" maxLength="28">دەستە چىقار</string>
     <string name="export_collection">توپلامنى چىقار</string>
-    <string name="nothing">يوق</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">كارتا تۈرى</string>
     <string name="card_template_editor_front">ئالدى قېلىپ</string>

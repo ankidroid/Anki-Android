@@ -122,7 +122,6 @@
     <string name="close">Zapri</string>
     <string name="select">Izberi</string>
     <string name="field_remapping">%1$s (od \"%2$s\")</string>
-    <string name="confirm_map_cards_to_nothing">Vse kartice, ki so preslikane v nič, bodo izbrisane. Če zapisek nima preostalih kartic, bo izgubljen. Ali res želite nadaljevati?</string>
     <string name="missing_note_type">No note type found</string>
     <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (empty)</string>
     <!-- Image cropper -->

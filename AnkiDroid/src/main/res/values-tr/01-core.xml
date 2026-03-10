@@ -144,7 +144,6 @@
     <string name="syncing_media">Medya senkronize ediliyor</string>
     <string name="export_deck" maxLength="28">Desteyi dışarı aktar</string>
     <string name="export_collection">Koleksiyonu dışarı aktar</string>
-    <string name="nothing">Hiçbir şey</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Kart türleri</string>
     <string name="card_template_editor_front">Ön şablon</string>

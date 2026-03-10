@@ -144,7 +144,6 @@
     <string name="syncing_media">Média szinkronizálása</string>
     <string name="export_deck" maxLength="28">Pakli exportálása</string>
     <string name="export_collection">Gyűjtemény exportálása</string>
-    <string name="nothing">Semmi</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Kártyatípusok</string>
     <string name="card_template_editor_front">Sablon az első oldalhoz</string>

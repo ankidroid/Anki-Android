@@ -120,7 +120,6 @@
     <string name="close">അടയ്‌ക്കുക</string>
     <string name="select">തിരഞ്ഞെടുക്കുക</string>
     <string name="field_remapping">%1$s (“%2$s” ൽ നിന്ന്)</string>
-    <string name="confirm_map_cards_to_nothing">ഒന്നുമില്ലാതെ മാപ്പുചെയ്ത ഏത് കാർഡുകളും ഇല്ലാതാക്കപ്പെടും. ഒരു കുറിപ്പിന് ശേഷിക്കുന്ന കാർഡുകളില്ലെങ്കിൽ, അത് നഷ്‌ടപ്പെടും. തുടരണമെന്ന് നിങ്ങൾക്ക് ഉറപ്പാണോ?</string>
     <string name="missing_note_type">നോട്ട് തരങ്ങളൊന്നും കണ്ടെത്തിയില്ല</string>
     <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (empty)</string>
     <!-- Image cropper -->

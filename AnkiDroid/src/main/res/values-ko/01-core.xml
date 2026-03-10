@@ -141,7 +141,6 @@
     <string name="syncing_media">미디어 동기화 중</string>
     <string name="export_deck" maxLength="28">덱 내보내기</string>
     <string name="export_collection">컬렉션 내보내기</string>
-    <string name="nothing">없음</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">카드 유형</string>
     <string name="card_template_editor_front">앞장 템플릿</string>

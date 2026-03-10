@@ -122,7 +122,6 @@
     <string name="close">Закрыть</string>
     <string name="select">Выбрать</string>
     <string name="field_remapping">%1$s (из «%2$s»)</string>
-    <string name="confirm_map_cards_to_nothing">Несопоставленные карты будут удалены. Записи, оставшиеся без карт, будут утеряны. Продолжить?</string>
     <string name="missing_note_type">Не найден тип записи</string>
     <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (пусто)</string>
     <!-- Image cropper -->

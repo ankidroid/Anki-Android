@@ -144,7 +144,6 @@
     <string name="syncing_media">सिंकिंग मीडिया</string>
     <string name="export_deck" maxLength="28">निर्यात डेक</string>
     <string name="export_collection">निर्यात संग्रह</string>
-    <string name="nothing">कुछ नहीं</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">कार्ड के प्रकार</string>
     <string name="card_template_editor_front">फ्रंट टेम्पलेट</string>

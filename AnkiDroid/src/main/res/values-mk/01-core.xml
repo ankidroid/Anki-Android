@@ -144,7 +144,6 @@
     <string name="syncing_media">Syncing media</string>
     <string name="export_deck" maxLength="28">Извозна deck</string>
     <string name="export_collection">Export collection</string>
-    <string name="nothing">Ништо</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Типови на картички</string>
     <string name="card_template_editor_front">Преден образец</string>
