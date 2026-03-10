@@ -120,7 +120,6 @@
     <string name="close">Затвори</string>
     <string name="select">Избери</string>
     <string name="field_remapping">%1$s (од “%2$s“)</string>
-    <string name="confirm_map_cards_to_nothing">Сите неодбележани картички да бидат избришани. Ако белешката нема преостанати картички, таа ќе биде изгубена. Дали сте сигурни дека сакате да продолжите?</string>
     <string name="missing_note_type">No note type found</string>
     <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (empty)</string>
     <!-- Image cropper -->

@@ -119,7 +119,6 @@
     <string name="close">關閉</string>
     <string name="select">選擇</string>
     <string name="field_remapping">%1$s (來自「%2$s」)</string>
-    <string name="confirm_map_cards_to_nothing">空白卡片會被刪除，而筆記如果沒有在卡片上也會遺失。你確定要繼續嗎？</string>
     <string name="missing_note_type">未找到筆記類型</string>
     <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s（空白）</string>
     <!-- Image cropper -->

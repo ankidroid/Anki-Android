@@ -144,7 +144,6 @@
     <string name="syncing_media">મીડિયા સમન્વયિત કરી રહ્યું છે</string>
     <string name="export_deck" maxLength="28">નિકાસ ડેક</string>
     <string name="export_collection">નિકાસ સંગ્રહ</string>
-    <string name="nothing">કંઈ નહીં</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">કાર્ડ પ્રકારો</string>
     <string name="card_template_editor_front">ફ્રન્ટ ટેમ્પલેટ</string>

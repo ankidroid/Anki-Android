@@ -120,7 +120,6 @@
     <string name="close">Banda</string>
     <string name="select">Nivaḍā</string>
     <string name="field_remapping">%1$s(Pāsūna \"%2$s\")</string>
-    <string name="confirm_map_cards_to_nothing">Kāhīhī na kēlēlyā kōṇatyāhī kārḍānnā haṭavilē jā\'īla. Ṭīpakaḍē urvarita kārḍa nasalyāsa tō gamāvalā jā\'īla. Āpalyālā khātrī āhē kī āpaṇa surū ṭhēvū icchitā?</string>
     <string name="missing_note_type">नोट प्रकार आढळला नाही</string>
     <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (empty)</string>
     <!-- Image cropper -->

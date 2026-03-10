@@ -122,7 +122,6 @@
     <string name="close">Uždaryti</string>
     <string name="select">Pažymėti</string>
     <string name="field_remapping">%1$s (nuo “%2$s”)</string>
-    <string name="confirm_map_cards_to_nothing">Bet kokios tuščios kortelės bus ištrintos. Jei užrašas neturės susijusių kortelių, jis bus ištrintas. Ar tikrai norite tęsti?</string>
     <string name="missing_note_type">Nerastas joks užrašo tipas</string>
     <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (tuščia)</string>
     <!-- Image cropper -->

@@ -147,7 +147,6 @@
     <string name="syncing_media">Sincronizare media</string>
     <string name="export_deck" maxLength="28">Exportați pachetul</string>
     <string name="export_collection">Exportă colecția</string>
-    <string name="nothing">Nimic</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Tipuri de cartonașe</string>
     <string name="card_template_editor_front">Șablon față</string>

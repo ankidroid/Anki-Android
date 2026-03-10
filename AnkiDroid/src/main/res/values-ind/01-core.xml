@@ -141,7 +141,6 @@
     <string name="syncing_media">Sinkronisasi media</string>
     <string name="export_deck" maxLength="28">Ekspor dek</string>
     <string name="export_collection">Ekspor koleksi</string>
-    <string name="nothing">Tidak ada</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Tipe kartu</string>
     <string name="card_template_editor_front">Templat depan</string>

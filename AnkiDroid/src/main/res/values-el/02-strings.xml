@@ -120,7 +120,6 @@
     <string name="close">Κλείσιμο</string>
     <string name="select">Επιλέξτε</string>
     <string name="field_remapping">%1$s (από “%2$s”)</string>
-    <string name="confirm_map_cards_to_nothing">Kάρτες χωρίς αντιστοίχιση θα διαγραφούν. Αν μια σημείωση δεν έχει εναπομείναντες κάρτες, θα χαθεί. Είστε σίγουροι ότι θέλετε να συνεχίσετε;</string>
     <string name="missing_note_type">Δεν βρέθηκε τύπος σημείωσης</string>
     <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (κενό)</string>
     <!-- Image cropper -->

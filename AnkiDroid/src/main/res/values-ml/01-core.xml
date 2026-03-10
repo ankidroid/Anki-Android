@@ -144,7 +144,6 @@
     <string name="syncing_media">മീഡിയ സമന്വയിപ്പിക്കുന്നു</string>
     <string name="export_deck" maxLength="28">കയറ്റുമതി ഡെക്ക്</string>
     <string name="export_collection">കയറ്റുമതി ശേഖരം</string>
-    <string name="nothing">ഒന്നുമില്ല</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">കാർഡ് തരങ്ങൾ</string>
     <string name="card_template_editor_front">ഫ്രണ്ട് ടെംപ്ലേറ്റ്</string>

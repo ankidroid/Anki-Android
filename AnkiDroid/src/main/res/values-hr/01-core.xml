@@ -147,7 +147,6 @@
     <string name="syncing_media">Sinkronizacija medija</string>
     <string name="export_deck" maxLength="28">Izvezi skupinu</string>
     <string name="export_collection">Izvezi kolekciju</string>
-    <string name="nothing">Ništa</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Vrste kartica</string>
     <string name="card_template_editor_front">Prednji predložak</string>

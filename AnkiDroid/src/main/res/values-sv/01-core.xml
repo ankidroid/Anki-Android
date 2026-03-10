@@ -144,7 +144,6 @@
     <string name="syncing_media">Synkroniserar media</string>
     <string name="export_deck" maxLength="28">Exportera kortlek</string>
     <string name="export_collection">Exportera samling</string>
-    <string name="nothing">Inget</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Korttyper</string>
     <string name="card_template_editor_front">Kortmall för framsida</string>

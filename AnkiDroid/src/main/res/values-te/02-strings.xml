@@ -120,7 +120,6 @@
     <string name="close">మూయుట</string>
     <string name="select">ఎంచుకోండి</string>
     <string name="field_remapping">%1$s (from “%2$s”)</string>
-    <string name="confirm_map_cards_to_nothing">ఏదైనా మ్యాప్ చేసిన కార్డ్లు తొలగించబడతాయి. గమనికకు మిగిలిన కార్డులు లేకుంటే, అది కోల్పోతుంది. మీరు ఖచ్చితంగా కొనసాగించాలనుకుంటున్నారా?</string>
     <string name="missing_note_type">గమనిక రకం కనుగొనబడలేదు</string>
     <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (empty)</string>
     <!-- Image cropper -->

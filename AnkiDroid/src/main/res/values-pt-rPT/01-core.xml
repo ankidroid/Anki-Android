@@ -144,7 +144,6 @@
     <string name="syncing_media">A sincronizar ficheiros de multimédia</string>
     <string name="export_deck" maxLength="28">Exportar baralho</string>
     <string name="export_collection">Exportar Colecção</string>
-    <string name="nothing">Nada</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Tipos de ficha</string>
     <string name="card_template_editor_front">Modelo da frente</string>

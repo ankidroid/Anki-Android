@@ -119,7 +119,6 @@
     <string name="close">Ябу</string>
     <string name="select">Сайлау</string>
     <string name="field_remapping">%1$s (\"%2$s\"дан)</string>
-    <string name="confirm_map_cards_to_nothing">Бернәрсәгә дә бәйләнмәгән кәртләр сөртелер. Кәртсез калган язулар югалыр. Дәвам итәргә телисезме?</string>
     <string name="missing_note_type">No note type found</string>
     <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (empty)</string>
     <!-- Image cropper -->

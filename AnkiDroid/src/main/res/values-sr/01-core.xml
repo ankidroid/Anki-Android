@@ -147,7 +147,6 @@
     <string name="syncing_media">У току је синхронизација медија&#8230;</string>
     <string name="export_deck" maxLength="28">Извози шпил</string>
     <string name="export_collection">Извези колекцију</string>
-    <string name="nothing">Ништа</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Типови картица</string>
     <string name="card_template_editor_front">Предњи шаблон</string>

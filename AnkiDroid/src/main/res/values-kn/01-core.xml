@@ -144,7 +144,6 @@
     <string name="syncing_media">ಮಾಧ್ಯಮವನ್ನು ಸಿಂಕ್ ಮಾಡಲಾಗುತ್ತಿದೆ</string>
     <string name="export_deck" maxLength="28">ರಫ್ತು ಡೆಕ್</string>
     <string name="export_collection">Export collection</string>
-    <string name="nothing">ಏನೂ ಇಲ್ಲ</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">ಕಾರ್ಡ್ ಪ್ರಕಾರಗಳು</string>
     <string name="card_template_editor_front">ಮುಂಭಾಗದ ಟೆಂಪ್ಲೇಟ್</string>

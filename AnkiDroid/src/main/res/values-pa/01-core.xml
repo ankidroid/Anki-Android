@@ -144,7 +144,6 @@
     <string name="syncing_media">ਮੀਡੀਆ ਨੂੰ ਸਿੰਕ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ</string>
     <string name="export_deck" maxLength="28">ਨਿਰਯਾਤ ਡੈੱਕ</string>
     <string name="export_collection">ਨਿਰਯਾਤ ਸੰਗ੍ਰਹਿ</string>
-    <string name="nothing">ਕੁਝ ਨਹੀਂ</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">ਕਾਰਡ ਦੀਆਂ ਕਿਸਮਾਂ</string>
     <string name="card_template_editor_front">ਫਰੰਟ ਟੈਂਪਲੇਟ</string>

@@ -144,7 +144,6 @@
     <string name="syncing_media">Synkroniserer medium</string>
     <string name="export_deck" maxLength="28">Før ut kortleiken</string>
     <string name="export_collection">Eksporter samling</string>
-    <string name="nothing">Ingenting</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Kortslag</string>
     <string name="card_template_editor_front">Framsidemal</string>

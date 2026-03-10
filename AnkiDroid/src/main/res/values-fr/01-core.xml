@@ -144,7 +144,6 @@
     <string name="syncing_media">Synchronisation des médias</string>
     <string name="export_deck" maxLength="28">Exporter le paquet</string>
     <string name="export_collection">Exporter la collection</string>
-    <string name="nothing">Rien</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Types de cartes</string>
     <string name="card_template_editor_front">Modèle du recto</string>

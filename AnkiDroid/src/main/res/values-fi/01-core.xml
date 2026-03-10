@@ -144,7 +144,6 @@
     <string name="syncing_media">Synkronoidaan mediaa</string>
     <string name="export_deck" maxLength="28">Vie pakka</string>
     <string name="export_collection">Vie kokoelma</string>
-    <string name="nothing">Ei mitään</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Korttityyppi</string>
     <string name="card_template_editor_front">Etumalli</string>

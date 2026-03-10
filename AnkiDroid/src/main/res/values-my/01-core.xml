@@ -146,7 +146,6 @@
     <string name="syncing_media">Syncing media</string>
     <string name="export_deck" maxLength="28">Export deck</string>
     <string name="export_collection">Export collection</string>
-    <string name="nothing">Nothing</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Card types</string>
     <string name="card_template_editor_front">Front template</string>

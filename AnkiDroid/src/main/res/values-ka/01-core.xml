@@ -144,7 +144,6 @@
     <string name="syncing_media">მედიაფაილების სინქრონიზაცია</string>
     <string name="export_deck" maxLength="28">დასტის ექსპორტი</string>
     <string name="export_collection">კოლექციის ექსპორტი</string>
-    <string name="nothing">არაფერი</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">ბარათის ტიპები</string>
     <string name="card_template_editor_front">წინა შაბლონი</string>

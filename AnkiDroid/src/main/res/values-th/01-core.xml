@@ -141,7 +141,6 @@
     <string name="syncing_media">กำลังซิงค์มีเดีย</string>
     <string name="export_deck" maxLength="28">ส่งออกสำรับ</string>
     <string name="export_collection">Export collection</string>
-    <string name="nothing">ไม่มี</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">ชนิดบัตรคำ</string>
     <string name="card_template_editor_front">แม่แบบด้านหน้า</string>

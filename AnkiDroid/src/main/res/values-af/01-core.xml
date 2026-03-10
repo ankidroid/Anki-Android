@@ -144,7 +144,6 @@
     <string name="syncing_media">Sinkronisering van media</string>
     <string name="export_deck" maxLength="28">Voer pak uit</string>
     <string name="export_collection">Uitvoer versameling</string>
-    <string name="nothing">Niks</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Kaarttipes</string>
     <string name="card_template_editor_front">Voorste sjabloon</string>

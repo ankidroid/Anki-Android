@@ -124,7 +124,6 @@
     <string name="close">أغلق</string>
     <string name="select">حدد</string>
     <string name="field_remapping">%1$s (من «%2$s»)</string>
-    <string name="confirm_map_cards_to_nothing">ستُحذف البطاقات غير المُوزعة. ستُحذف أي ملحوظة ليس لها بطاقات.  أواثق أنك ترغب بذلك؟</string>
     <string name="missing_note_type">لا يوجد نوع ملحوظات</string>
     <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (فارغ)</string>
     <!-- Image cropper -->

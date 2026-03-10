@@ -119,7 +119,6 @@
     <string name="close">Tutup</string>
     <string name="select">Pilih</string>
     <string name="field_remapping">%1$s (dari “%2$s”)</string>
-    <string name="confirm_map_cards_to_nothing">Semua kartu yang yang dibuat kosong akan dihapus. Jika catatan tidak memiliki sisa kartu, kartu tersebut akan hilang. Apa kamu yakin?</string>
     <string name="missing_note_type">Tidak ada jenis catatan yang ditemukan</string>
     <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (kosong)</string>
     <!-- Image cropper -->

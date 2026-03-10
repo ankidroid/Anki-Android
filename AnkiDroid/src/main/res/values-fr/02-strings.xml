@@ -120,7 +120,6 @@
     <string name="close">Fermer</string>
     <string name="select">Sélectionner</string>
     <string name="field_remapping">%1$s (de « %2$s »)</string>
-    <string name="confirm_map_cards_to_nothing">Toute carte sans connexion sera effacée. Si une note n’a aucune carte restante, elle sera perdue. Êtes-vous sûr de vouloir continuer ?</string>
     <string name="missing_note_type">Aucun type de note trouvé</string>
     <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (vide)</string>
     <!-- Image cropper -->

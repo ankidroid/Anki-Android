@@ -144,7 +144,6 @@
     <string name="syncing_media">మీడియాను సమకాలీకరించడం</string>
     <string name="export_deck" maxLength="28">ఎగుమతి డెక్</string>
     <string name="export_collection">ఎగుమతి సేకరణ</string>
-    <string name="nothing">ఏమీ</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">కార్డ్ రకాలు</string>
     <string name="card_template_editor_front">ముందు టెంప్లేట్</string>

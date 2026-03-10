@@ -120,7 +120,6 @@
     <string name="close">বন্ধ কর</string>
     <string name="select">বেছে নাও</string>
     <string name="field_remapping">%1$s (“%2$s” থেকে)</string>
-    <string name="confirm_map_cards_to_nothing">ম্যাপিং বিহীন কার্ডগুলি মুছে ফেলা হবে। কোনও নোটে যদি আর কার্ড বাকি না থাকে তবে সেটাও মুছে যাবে। আপনি কি চালিয়ে যেতে চান?</string>
     <string name="missing_note_type">নোট টাইপ খুঁজে পাওয়া যাই নি</string>
     <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (empty)</string>
     <!-- Image cropper -->

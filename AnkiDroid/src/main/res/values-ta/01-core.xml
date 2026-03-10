@@ -144,7 +144,6 @@
     <string name="syncing_media">மீடியாவை ஒத்திசைக்கிறது</string>
     <string name="export_deck" maxLength="28">ஏற்றுமதி டெக்</string>
     <string name="export_collection">ஏற்றுமதி சேகரிப்பு</string>
-    <string name="nothing">எதுவும் இல்லை</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">அட்டை வகைகள்</string>
     <string name="card_template_editor_front">முன் வார்ப்புரு</string>

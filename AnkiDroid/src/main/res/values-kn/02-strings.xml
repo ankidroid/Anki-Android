@@ -120,7 +120,6 @@
     <string name="close">ಹತ್ತಿರ</string>
     <string name="select">ಆರಿಸಿ</string>
     <string name="field_remapping">%1$s (“%2$s” ನಿಂದ)</string>
-    <string name="confirm_map_cards_to_nothing">ಯಾವುದಕ್ಕೂ ಮ್ಯಾಪ್ ಮಾಡದ ಯಾವುದೇ ಕಾರ್ಡ್‌ಗಳನ್ನು ಅಳಿಸಲಾಗುತ್ತದೆ. ಟಿಪ್ಪಣಿಯಲ್ಲಿ ಉಳಿದ ಕಾರ್ಡ್‌ಗಳಿಲ್ಲದಿದ್ದರೆ, ಅದು ಕಳೆದುಹೋಗುತ್ತದೆ. ನೀವು ಮುಂದುವರಿಯಲು ಖಚಿತವಾಗಿ ಬಯಸುವಿರಾ?</string>
     <string name="missing_note_type">ಯಾವುದೇ ಟಿಪ್ಪಣಿ ಪ್ರಕಾರ ಕಂಡುಬಂದಿಲ್ಲ</string>
     <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (empty)</string>
     <!-- Image cropper -->

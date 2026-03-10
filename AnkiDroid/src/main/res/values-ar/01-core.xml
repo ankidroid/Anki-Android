@@ -156,7 +156,6 @@
     <string name="syncing_media">تتم مزامنة الوسائط</string>
     <string name="export_deck" maxLength="28">تصدير الرِزمة</string>
     <string name="export_collection">صدِّر المجموعة</string>
-    <string name="nothing">فارغ</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">أنواع البطاقات</string>
     <string name="card_template_editor_front">القالب الأمامي</string>

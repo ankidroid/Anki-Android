@@ -141,7 +141,6 @@
     <string name="syncing_media">Đồng bộ hóa đa phương tiện</string>
     <string name="export_deck" maxLength="28">Xuất bộ thẻ</string>
     <string name="export_collection">Xuất bộ sưu tập</string>
-    <string name="nothing">Không có gì</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Các loại thẻ</string>
     <string name="card_template_editor_front">Mẫu định dạng mặt trước</string>

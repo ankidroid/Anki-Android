@@ -144,7 +144,6 @@
     <string name="syncing_media">ମିଡ଼ିଆ ସୀଙ୍କ୍ ଚାଲିଛି</string>
     <string name="export_deck" maxLength="28">କେରୀ ରପ୍ତାନି କରିବା</string>
     <string name="export_collection">ସଂଗ୍ରହ ରପ୍ତାନି କରିବା</string>
-    <string name="nothing">କିଛି ନାହିଁ</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">ପତ୍ର ପ୍ରକାର</string>
     <string name="card_template_editor_front">ସାମ୍ନା ଟେମ୍ପଲେଟ୍</string>

@@ -144,7 +144,6 @@
     <string name="syncing_media">Synchronisiere Medien</string>
     <string name="export_deck" maxLength="28">Stapel exportieren</string>
     <string name="export_collection">Sammlung exportieren</string>
-    <string name="nothing">Nichts</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Kartentypen</string>
     <string name="card_template_editor_front">Vorlage für Vorderseite</string>

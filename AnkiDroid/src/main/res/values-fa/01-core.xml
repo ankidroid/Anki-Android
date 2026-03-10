@@ -144,7 +144,6 @@
     <string name="syncing_media">در حال همگام‌سازی رسانه‌ها</string>
     <string name="export_deck" maxLength="28">صدور دسته</string>
     <string name="export_collection">صدور مجموعه</string>
-    <string name="nothing">هیچ</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">انواع کارت</string>
     <string name="card_template_editor_front">قالب جلو</string>

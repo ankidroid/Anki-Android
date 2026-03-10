@@ -144,7 +144,6 @@
     <string name="syncing_media">𐌲𐌰𐌻𐌴𐌹𐌺𐍉𐌽𐌳𐍉 𐌼𐌰𐌹𐌳𐌾𐌰</string>
     <string name="export_deck" maxLength="28">𐌿𐍄𐌱𐌰𐌹𐍂 𐌺𐌰𐍂𐍄𐌰𐌷𐌿𐌶𐌳</string>
     <string name="export_collection">𐌿𐍄𐌱𐌰𐌹𐍂 𐌷𐌿𐌶𐌳</string>
-    <string name="nothing">𐌽𐌹 𐍅𐌰𐌹𐌷𐍄𐍃</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">𐌺𐌰𐍂𐍄𐌰𐌷𐌰𐌹𐌳𐌾𐌿𐍃</string>
     <string name="card_template_editor_front">𐍆𐍂𐌿𐌼𐌰𐍅𐌻𐌹𐍄𐍃</string>

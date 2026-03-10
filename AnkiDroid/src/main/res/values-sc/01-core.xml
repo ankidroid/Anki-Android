@@ -147,7 +147,6 @@
     <string name="syncing_media">Sincronizende sos mèdios</string>
     <string name="export_deck" maxLength="28">Esporta su matzu</string>
     <string name="export_collection">Esporta sa colletzione</string>
-    <string name="nothing">Nudda</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Castas de cartas</string>
     <string name="card_template_editor_front">Mollu de su fronte</string>

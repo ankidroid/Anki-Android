@@ -119,7 +119,6 @@
     <string name="close">Đóng</string>
     <string name="select">Chọn</string>
     <string name="field_remapping">%1$s (từ \"%2$s\")</string>
-    <string name="confirm_map_cards_to_nothing">Bất kỳ thẻ nào không được gán sẽ bị xoá. Nếu một ghi chú không có thẻ nào kèm theo, nó sẽ bị mất. Có chắc là bạn muốn tiếp tục?</string>
     <string name="missing_note_type">Không tìm thấy loại ghi chú nào</string>
     <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (trống)</string>
     <!-- Image cropper -->

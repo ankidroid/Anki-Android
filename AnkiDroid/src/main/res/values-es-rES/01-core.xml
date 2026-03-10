@@ -144,7 +144,6 @@
     <string name="syncing_media">Sincronizando archivos multimedia</string>
     <string name="export_deck" maxLength="28">Exportar mazo</string>
     <string name="export_collection">Exportar colección</string>
-    <string name="nothing">Nada</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Tipos de tarjeta</string>
     <string name="card_template_editor_front">Plantilla del anverso</string>

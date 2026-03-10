@@ -120,7 +120,6 @@
     <string name="close">Fechar</string>
     <string name="select">Selecionar</string>
     <string name="field_remapping">%1$s (de \"%2$s\")</string>
-    <string name="confirm_map_cards_to_nothing">Serão eliminadas quaisquer fichas mapeadas para nada. Se uma nota não tiver fichas restantes, esta estará perdida. Tem certeza que deseja continuar?</string>
     <string name="missing_note_type">Tipo de nota não encontrado</string>
     <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (vazio)</string>
     <!-- Image cropper -->

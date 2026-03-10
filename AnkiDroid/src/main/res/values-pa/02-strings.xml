@@ -120,7 +120,6 @@
     <string name="close">ਬੰਦ ਕਰ ਦਿਓ</string>
     <string name="select">ਚੁਣੋ</string>
     <string name="field_remapping">%1$s (“%2$s” ਤੋਂ)</string>
-    <string name="confirm_map_cards_to_nothing">ਕਿਸੇ ਵੀ ਕਾਰਡ ਨੂੰ ਕੁਝ ਵੀ ਨਹੀਂ ਨਾਲ ਮੈਪ ਕੀਤਾ ਜਾਵੇਗਾ ਮਿਟਾ ਦਿੱਤਾ ਜਾਵੇਗਾ। ਜੇਕਰ ਕਿਸੇ ਨੋਟ ਵਿੱਚ ਕੋਈ ਕਾਰਡ ਨਹੀਂ ਬਚਿਆ ਹੈ, ਤਾਂ ਇਹ ਗੁੰਮ ਹੋ ਜਾਵੇਗਾ। ਕੀ ਤੁਸੀਂ ਯਕੀਨੀ ਤੌਰ \'ਤੇ ਜਾਰੀ ਰੱਖਣਾ ਚਾਹੁੰਦੇ ਹੋ?</string>
     <string name="missing_note_type">ਕੋਈ ਨੋਟ ਕਿਸਮ ਨਹੀਂ ਮਿਲੀ</string>
     <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (empty)</string>
     <!-- Image cropper -->

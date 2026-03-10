@@ -144,7 +144,6 @@
     <string name="syncing_media">میڈیا کی مطابقت پذیری</string>
     <string name="export_deck" maxLength="28">ڈیک برآمد کریں</string>
     <string name="export_collection">ایکسپورٹ کلیکشن</string>
-    <string name="nothing">کچھ بھی نہیں</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">کارڈ کی اقسام</string>
     <string name="card_template_editor_front">سامنے کا سانچا</string>
