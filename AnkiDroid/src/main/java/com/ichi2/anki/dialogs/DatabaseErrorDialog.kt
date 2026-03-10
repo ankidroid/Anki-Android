@@ -178,7 +178,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                         val currentDir = CollectionHelper.getCurrentAnkiDroidDirectory(activity)
                         val defaultDir = CollectionHelper.getDefaultAnkiDroidDirectory(activity)
                         currentDir.absolutePath != defaultDir.absolutePath
-                    } catch (e: SystemStorageException) {
+                    } catch (e: Throwable) {
                         Timber.w(e, "Failed to determine whether to offer reset-to-default directory option")
                         false
                     }
@@ -223,7 +223,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                                     CollectionManager.closeCollectionBlocking()
                                     CollectionHelper.resetAnkiDroidDirectory(activity, defaultDir)
                                     closeCollectionAndFinish()
-                                } catch (e: SystemStorageException) {
+                                } catch (e: Throwable) {
                                     Timber.w(e, "Failed to reset AnkiDroid directory to default")
                                     showDatabaseErrorDialog(DIALOG_LOAD_FAILED)
                                 }
