@@ -1,0 +1,10 @@
+e4156ca716 Fix FAB accessibility issue with TalkBack
+cd6454ec6d Fix processMissingMedia to correctly limit snackbar to 2 times
+d066013d66 Fix: Limit missing media snackbar to 2 times in new study screen
+7a7f9aedcc Bumped version to 2.24.0alpha6
+891d88f110 Fix(WhiteBoard): Prevent eraser integer display wrapping
+ffd30e8b34 Updated strings from Crowdin
+5fbbe83676 refactor: use MaterialTextView for review reminders UI
+d293f158c9 Updated strings from Crowdin
+9e5137e449 fix: crash when showing snackbar after removing deck in widget config
+7946cc74c5 Test: DatabaseCorruptDialogTest
