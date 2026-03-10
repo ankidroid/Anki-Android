@@ -35,7 +35,7 @@
         android:background="@android:color/transparent" />
     <LinearLayout
         android:id="@+id/deck_name_linear_layout"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_toEndOf="@+id/indent_view"
         android:layout_toStartOf="@+id/counts_layout"
@@ -55,8 +55,7 @@
             android:minHeight="48dp"
             android:background="@color/transparent"
             android:gravity="start|center_vertical"
-            android:maxLines="2"
-            android:ellipsize="end"
+            android:ellipsize="none"
             android:textColor="?android:textColorPrimary"
             android:textSize="20sp"
             android:textStyle="bold"
