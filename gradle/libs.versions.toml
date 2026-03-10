@@ -66,7 +66,7 @@ ankiBackend = '0.1.63-anki25.09.2'
 autoService = "1.1.1"
 autoServiceAnnotations = "1.1.1"
 # https://github.com/skydoves/ColorPickerView/releases
-colorPickerView = "2.3.0"
+colorPickerView = "2.4.0"
 # https://commons.apache.org/proper/commons-collections/changes.html
 commonsCollections4 = "4.5.0"
 # https://commons.apache.org/proper/commons-compress/changes-report.html
