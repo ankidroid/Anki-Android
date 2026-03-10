@@ -17,30 +17,30 @@
     "author": "AnkiDroid Open Source Team",
     "license": "GPL-3.0",
     "dependencies": {
-        "@crowdin/crowdin-api-client": "^1.52.0",
+        "@crowdin/crowdin-api-client": "^1.55.1",
         "axios": "^1.15.0",
-        "dotenv": "^17.3.1",
+        "dotenv": "^17.4.2",
         "extract-zip": "^2.0.1",
-        "typescript": "^5.9.3"
+        "typescript": "^6.0.2"
     },
     "devDependencies": {
-        "@eslint/eslintrc": "^3.3.4",
-        "@eslint/js": "^9.39.2",
+        "@eslint/eslintrc": "^3.3.5",
+        "@eslint/js": "^10.0.1",
         "@types/jest": "^30.0.0",
-        "@types/node": "^25.3.3",
-        "@typescript-eslint/eslint-plugin": "^8.56.1",
-        "@typescript-eslint/parser": "^8.56.1",
-        "eslint": "^9.39.2",
+        "@types/node": "^25.6.0",
+        "@typescript-eslint/eslint-plugin": "^8.58.1",
+        "@typescript-eslint/parser": "^8.58.1",
+        "eslint": "^10.2.0",
         "eslint-config-prettier": "^10.1.8",
         "eslint-config-standard": "^17.1.0",
         "eslint-plugin-import": "^2.32.0",
         "eslint-plugin-n": "^17.24.0",
         "eslint-plugin-promise": "^7.2.1",
-        "globals": "^17.4.0",
-        "jest": "^30.2.0",
-        "prettier": "^3.8.1",
-        "ts-jest": "^29.4.6",
+        "globals": "^17.5.0",
+        "jest": "^30.3.0",
+        "prettier": "^3.8.2",
+        "ts-jest": "^29.4.9",
         "ts-node": "^10.9.2"
     },
-    "packageManager": "yarn@4.10.3"
+    "packageManager": "yarn@4.13.0"
 }

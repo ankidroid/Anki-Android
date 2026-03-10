@@ -22,11 +22,11 @@ androidGradlePlugin = "8.13.2"
 # https://developer.android.com/jetpack/androidx/releases/activity
 androidxActivity = "1.12.4"
 # https://developer.android.com/jetpack/androidx/releases/annotation
-androidxAnnotation = "1.9.1"
+androidxAnnotation = "1.10.0"
 # https://developer.android.com/jetpack/androidx/releases/appcompat
 androidxAppCompat = "1.7.1"
 # https://developer.android.com/jetpack/androidx/releases/browser
-androidxBrowser = "1.9.0"
+androidxBrowser = "1.10.0"
 # https://developer.android.com/jetpack/androidx/releases/constraintlayout
 androidxConstraintlayout = "2.2.1"
 # https://developer.android.com/jetpack/androidx/releases/core
@@ -42,7 +42,7 @@ androidxLifecycleProcess = "2.10.0"
 # https://developer.android.com/jetpack/androidx/releases/media
 androidxMedia = "1.7.1"
 # https://developer.android.com/jetpack/androidx/releases/media3
-androidxMedia3 = "1.9.2"
+androidxMedia3 = "1.10.0"
 # https://developer.android.com/jetpack/androidx/releases/preference
 androidxPreferenceKtx = "1.2.1"
 # https://developer.android.com/jetpack/androidx/releases/recyclerview
@@ -60,13 +60,13 @@ androidxViewpager2 = "1.1.0"
 # https://developer.android.com/jetpack/androidx/releases/webkit
 androidxWebkit = "1.15.0"
 # https://developer.android.com/jetpack/androidx/releases/work
-androidxWork = "2.11.1"
+androidxWork = "2.11.2"
 # https://github.com/ankidroid/Anki-Android-Backend/
 ankiBackend = '0.1.64-anki25.09.2'
 autoService = "1.1.1"
 autoServiceAnnotations = "1.1.1"
 # https://github.com/skydoves/ColorPickerView/releases
-colorPickerView = "2.3.0"
+colorPickerView = "2.4.0"
 # https://commons.apache.org/proper/commons-collections/changes.html
 commonsCollections4 = "4.5.0"
 # https://commons.apache.org/proper/commons-compress/changes-report.html
@@ -92,19 +92,19 @@ junit = "6.0.3"
 # https://github.com/JetBrains/kotlin/releases/
 kotlin = '2.3.10'
 # https://github.com/Kotlin/kotlinx.serialization/releases
-kotlinxSerializationJson = "1.10.0"
-ktlintGradlePlugin = "14.1.0"
+kotlinxSerializationJson = "1.11.0"
+ktlintGradlePlugin = "14.2.0"
 leakcanaryAndroid = "2.14"
-lint = '32.1.0'
+lint = '32.1.1'
 material = "1.13.0"
 
 mockitoInline = "5.2.0"
-mockitoKotlin = "6.2.3"
+mockitoKotlin = "6.3.0"
 mockk = "1.14.9"
 nanohttpd = "2.3.1"
 okhttp = "5.3.2"
 # https://github.com/protocolbuffers/protobuf/releases
-protobufKotlinLite = "4.34.0"
+protobufKotlinLite = "4.34.1"
 # ../AnkiDroid/robolectricDownload.gradle may need changes - read instructions in that file
 robolectric = "4.16.1"
 # https://github.com/takahirom/roborazzi/releases

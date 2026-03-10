@@ -16,7 +16,7 @@ jobs:
 
     steps:
       - name: Check for conflicts and label conflict
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           script: |
             // Helper function for retrying GitHub API calls
