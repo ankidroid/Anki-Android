@@ -161,7 +161,6 @@ object ImportUtils {
             }
         }
 
-        @NeedsTest("Check file name is absolute")
         fun getFileCachedCopy(
             context: Context,
             uri: Uri,
