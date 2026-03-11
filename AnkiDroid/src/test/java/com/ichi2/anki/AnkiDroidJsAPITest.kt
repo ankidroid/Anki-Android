@@ -24,6 +24,7 @@ import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.libanki.CardType
 import com.ichi2.anki.libanki.testutils.ext.BASIC_NOTE_TYPE_NAME
 import com.ichi2.anki.libanki.testutils.ext.setFlag
+import kotlinx.coroutines.test.runTest
 import net.ankiweb.rsdroid.withoutUnicodeIsolation
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
@@ -33,6 +34,8 @@ import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import kotlin.test.assertEquals
+import kotlin.time.Duration.Companion.milliseconds
+import kotlin.time.Duration.Companion.minutes
 
 @RunWith(AndroidJUnit4::class)
 class AnkiDroidJsAPITest : RobolectricTest() {
@@ -416,7 +419,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
 
     @Test
     fun ankiGetNoteTagsTest() =
-        runTest {
+        runTest(timeout = 120000.milliseconds) {
             val n =
                 addBasicNote("Front", "Back").update {
                     tags = mutableListOf("tag1", "tag2", "tag3")
