@@ -157,11 +157,6 @@ class CardBrowserViewModel(
 
     val flowOfSearchState = MutableSharedFlow<SearchState>()
 
-    val flowOfSearchTerms = MutableStateFlow("")
-
-    val searchTerms: String
-        get() = flowOfSearchTerms.value
-
     /** text in the search box (potentially unsubmitted) */
     // this does not currently bind to the value in the UI and is only used for posting
     val flowOfFilterQuery = MutableSharedFlow<String>()
@@ -348,6 +343,12 @@ class CardBrowserViewModel(
 
     val searchRequestFlow = MutableStateFlow(SearchRequest(query = ""))
 
+    var searchTerms
+        get() = searchRequestFlow.value.query
+        private set(value) {
+            searchRequestFlow.value = searchRequestFlow.value.copy(query = value)
+        }
+
     // TODO: replace with flowOfDeckSelection
     val flowOfDeckId =
         searchRequestFlow.map {
@@ -444,14 +445,14 @@ class CardBrowserViewModel(
         var selectAllDecks = false
         when (options) {
             is CardBrowserLaunchOptions.SystemContextMenu -> {
-                flowOfSearchTerms.value = options.search.toString()
+                searchTerms = options.search.toString()
             }
             is CardBrowserLaunchOptions.SearchQueryJs -> {
-                flowOfSearchTerms.value = options.search
+                searchTerms = options.search
                 selectAllDecks = options.allDecks
             }
             is CardBrowserLaunchOptions.DeepLink -> {
-                flowOfSearchTerms.value = options.search
+                searchTerms = options.search
             }
             is CardBrowserLaunchOptions.ScrollToCard -> {
                 cardIdToBeScrolledTo = options.cardId
