@@ -904,9 +904,6 @@ open class CardBrowser :
         onAddNoteActivityResult.launch(addNoteLauncher.toIntent(this))
     }
 
-    private val reviewerCardId: CardId
-        get() = intent.getLongExtra("currentCard", -1)
-
     public override fun onSaveInstanceState(outState: Bundle) {
         // Save current search terms
         outState.putString("mSearchTerms", viewModel.searchTerms)
