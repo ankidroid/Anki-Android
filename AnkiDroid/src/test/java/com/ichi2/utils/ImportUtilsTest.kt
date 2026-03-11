@@ -30,10 +30,12 @@ import org.hamcrest.Matchers.containsString
 import org.hamcrest.Matchers.endsWith
 import org.hamcrest.Matchers.lessThanOrEqualTo
 import org.hamcrest.Matchers.not
+import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
+import java.io.File
 
 @RunWith(AndroidJUnit4::class)
 class ImportUtilsTest : RobolectricTest() {
@@ -74,6 +76,14 @@ class ImportUtilsTest : RobolectricTest() {
 
         // COULD_BE_BETTER: Strip off the file path
         return testFileImporter.cacheFileName
+    }
+
+    @Test
+    fun getFileCachedCopyReturnsAbsolutePath() {
+        val filename = "spaced filename.apkg"
+        val expectedFilepath = File(targetContext.cacheDir, filename).absolutePath
+        val actualFilepath = TestFileImporter(filename).getFileCachedCopy(targetContext, "dummy".toUri())
+        assertEquals(expectedFilepath, actualFilepath)
     }
 
     @Test
