@@ -46,7 +46,8 @@ import net.ankiweb.rsdroid.exceptions.BackendDeckIsFilteredException
 import timber.log.Timber
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
-import kotlin.time.Duration.Companion.milliseconds
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.seconds
 
 /**
  * marker interface for classes which contain tests and access the Anki collection
@@ -348,10 +349,13 @@ interface AnkiTest {
      * A fix for this might require either wrapping all tests in runTest(),
      * or finding some other way to isolate the coroutine and non-coroutine tests
      * on separate threads/processes.
+     *
+     * @param dispatchTimeout The test fails with an AssertionError if not completed within this
+     * time
      * */
     fun runTest(
         context: CoroutineContext = EmptyCoroutineContext,
-        dispatchTimeoutMs: Long = 60_000L,
+        dispatchTimeout: Duration = DEFAULT_TEST_TIMEOUT,
         times: Int = 1,
         testBody: suspend TestScope.() -> Unit,
     ) {
@@ -360,7 +364,7 @@ interface AnkiTest {
         setupTestDispatcher(dispatcher)
         repeat(times) {
             if (times != 1) Timber.d("------ Executing test $it/$times ------")
-            kotlinx.coroutines.test.runTest(context, dispatchTimeoutMs.milliseconds) {
+            kotlinx.coroutines.test.runTest(context, dispatchTimeout) {
                 runTestInner(testBody)
             }
         }
@@ -385,3 +389,11 @@ interface AnkiTest {
      */
     fun NotetypeJson.proto(): Notetype = col.getNotetype(this.id)
 }
+
+/**
+ * The default timeout for tests. An [AssertionError] is thrown if execution takes longer than this
+ * time.
+ *
+ * Do not change this, instead determine why a test is taking longer than a minute.
+ */
+val DEFAULT_TEST_TIMEOUT: Duration = 60.seconds
