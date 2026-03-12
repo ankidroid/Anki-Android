@@ -17,13 +17,14 @@
 package com.ichi2.anki.notetype.fieldeditor
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import androidx.activity.addCallback
 import androidx.activity.viewModels
-import androidx.annotation.VisibleForTesting
-import androidx.appcompat.app.AlertDialog
 import androidx.core.os.BundleCompat
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
@@ -34,19 +35,19 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
+import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.databinding.ItemNotetypeFieldBinding
 import com.ichi2.anki.databinding.NoteTypeFieldEditorBinding
 import com.ichi2.anki.dialogs.ConfirmationDialog
+import com.ichi2.anki.dialogs.DiscardChangesDialog
 import com.ichi2.anki.dialogs.LocaleSelectionDialog
 import com.ichi2.anki.dialogs.LocaleSelectionDialog.Companion.KEY_SELECTED_FIELD_POSITION
 import com.ichi2.anki.dialogs.LocaleSelectionDialog.Companion.KEY_SELECTED_LOCALE
 import com.ichi2.anki.dialogs.LocaleSelectionDialog.Companion.REQUEST_HINT_LOCALE_SELECTION
 import com.ichi2.anki.launchCatchingTask
-import com.ichi2.anki.libanki.exception.ConfirmModSchemaException
 import com.ichi2.anki.showThemedToast
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.sync.userAcceptsSchemaChange
@@ -55,11 +56,7 @@ import com.ichi2.anki.utils.ext.getIntOrNull
 import com.ichi2.anki.utils.ext.setFragmentResultListener
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.utils.hideKeyboard
-import com.ichi2.utils.message
 import com.ichi2.utils.moveCursorToEnd
-import com.ichi2.utils.positiveButton
-import com.ichi2.utils.show
-import com.ichi2.utils.title
 import dev.androidbroadcast.vbpd.viewBinding
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -78,20 +75,12 @@ class NoteTypeFieldEditor : com.ichi2.anki.AnkiActivity(R.layout.note_type_field
                     name: String,
                 ) {
                     launchCatchingTask {
-                        val validName = uniqueName(name)
-                        if (validName != null) {
-                            viewModel.rename(position, validName)
-                        } else {
-                            // clear temporary edittext changes
-                            adapter.notifyItemChanged(position)
-                        }
+                        viewModel.rename(position, name)
                     }
                 }
 
                 override fun onSortChanged(position: Int) {
                     launchCatchingTask {
-                        val isConfirmed = userAcceptsSchemaChange()
-                        if (!isConfirmed) return@launchCatchingTask
                         viewModel.changeSort(position)
                     }
                 }
@@ -185,7 +174,7 @@ class NoteTypeFieldEditor : com.ichi2.anki.AnkiActivity(R.layout.note_type_field
                 )
             val fieldPosition = bundle.getIntOrNull(KEY_SELECTED_FIELD_POSITION)
             if (fieldPosition != null) {
-                addFieldLocaleHint(fieldPosition, selectedLocale)
+                viewModel.setLanguageHint(fieldPosition, selectedLocale)
             }
             dismissAllDialogFragments()
         }
@@ -200,10 +189,53 @@ class NoteTypeFieldEditor : com.ichi2.anki.AnkiActivity(R.layout.note_type_field
             touchHelper.attachToRecyclerView(this@apply)
         }
         binding.btnAdd.setOnClickListener { addFieldDialog() }
+        onBackPressedDispatcher.addCallback(this) {
+            val unsavedChange = adapter.unsavedChange
+            if (unsavedChange != null) {
+                viewModel.updateByUuid(unsavedChange)
+            }
+            viewModel.requestDiscardChangesAndClose()
+        }
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.state.collect {
-                    adapter.submitList(it.fields)
+                viewModel.state.collect { state ->
+                    adapter.submitList(state.fields)
+                    when (state.action) {
+                        is NoteTypeFieldEditorState.Action.Undoable -> {
+                            val message = getString(state.action.resId, *state.action.formatArgs.toTypedArray())
+
+                            showUndoSnackbar(message)
+                        }
+                        is NoteTypeFieldEditorState.Action.Error ->
+                            CrashReportService.sendExceptionReport(
+                                state.action.e.source,
+                                NoteTypeFieldEditor::class.java.simpleName,
+                            )
+                        is NoteTypeFieldEditorState.Action.Rejected ->
+                            showThemedToast(
+                                this@NoteTypeFieldEditor,
+                                getString(state.action.resId),
+                                true,
+                            )
+                        is NoteTypeFieldEditorState.Action.SaveRequested ->
+                            showSaveChangesDialog(state.action.isNotUndoable, state.action.isSchemaChanges)
+                        NoteTypeFieldEditorState.Action.DiscardRequested ->
+                            showDiscardChangesDialog()
+                        is NoteTypeFieldEditorState.Action.Close -> {
+                            if (state.action.resId != null) {
+                                showThemedToast(
+                                    this@NoteTypeFieldEditor,
+                                    getString(state.action.resId),
+                                    true,
+                                )
+                            }
+                            finish()
+                        }
+                        NoteTypeFieldEditorState.Action.None -> { }
+                    }
+                    if (state.action != NoteTypeFieldEditorState.Action.None) {
+                        viewModel.resetAction()
+                    }
                 }
             }
         }
@@ -211,16 +243,12 @@ class NoteTypeFieldEditor : com.ichi2.anki.AnkiActivity(R.layout.note_type_field
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.notetype_field_editor, menu)
-
-        menu.findItem(R.id.notetype_field_note).setOnMenuItemClickListener {
-            AlertDialog
-                .Builder(this)
-                .show {
-                    setIcon(R.drawable.ic_dialog_info)
-                    title(R.string.model_field_editor_note_title)
-                    message(R.string.model_field_editor_note_description)
-                    positiveButton(R.string.dialog_ok)
-                }
+        menu.findItem(R.id.action_save).setOnMenuItemClickListener {
+            val unsavedChange = adapter.unsavedChange
+            if (unsavedChange != null) {
+                viewModel.updateByUuid(unsavedChange)
+            }
+            viewModel.requestSaveAndClose()
             true
         }
         return true
@@ -231,56 +259,66 @@ class NoteTypeFieldEditor : com.ichi2.anki.AnkiActivity(R.layout.note_type_field
     // ----------------------------------------------------------------------------
 
     /**
-     * Clean the input field or explain why it's rejected
-     * @param name the input
-     * @return The value to use, or null in case of failure
+     * shows a snackbar with the recent change label and an undo action
      */
-    private fun uniqueName(name: String): String? {
-        var input =
-            name
-                .replace("[\\n\\r{}:\"]".toRegex(), "")
-        // The number of #, ^, /, space, tab, starting the input
-        var offset = 0
-        while (offset < input.length) {
-            if (!listOf('#', '^', '/', ' ', '\t').contains(input[offset])) {
-                break
+    fun showUndoSnackbar(message: String) {
+        showSnackbar(message) {
+            setAnchorView(findViewById(R.id.btn_add))
+            isAnchorViewLayoutListenerEnabled = true
+            setAction(R.string.undo) {
+                launchCatchingTask {
+                    viewModel.undo()
+                }
             }
-            offset++
         }
-        input = input.substring(offset).trim()
-        if (input.isEmpty()) {
-            showThemedToast(
-                this,
-                resources.getString(R.string.toast_empty_name),
-                true,
-            )
-            return null
-        }
-        if (viewModel.state.value.fields
-                .any { input == it.name }
-        ) {
-            showThemedToast(
-                this,
-                resources.getString(R.string.toast_duplicate_field),
-                true,
-            )
-            return null
-        }
-        return input
     }
 
-    /*
+    /**
+     * shows a dialog to discard the changes
+     */
+    fun showDiscardChangesDialog() {
+        DiscardChangesDialog.showDialog(
+            this,
+            positiveMethod = {
+                viewModel.requestDiscardChangesAndClose(true)
+            },
+        )
+    }
+
+    /**
+     * shows a dialog to save the changes
+     */
+    fun showSaveChangesDialog(
+        isNotUndoable: Boolean,
+        schemaChanges: Boolean,
+    ) {
+        val save: () -> Unit = {
+            launchCatchingTask {
+                if (!schemaChanges || userAcceptsSchemaChange()) {
+                    viewModel.requestSaveAndClose(true)
+                }
+            }
+        }
+        if (isNotUndoable) {
+            val confirmationDialog =
+                ConfirmationDialog().apply {
+                    setArgs(this@NoteTypeFieldEditor.getString(R.string.model_field_editor_save_not_undoable))
+                    setConfirm {
+                        save()
+                    }
+                }
+            showDialogFragment(confirmationDialog)
+        } else {
+            save()
+        }
+    }
+
+    /**
      * Creates a dialog to create a field
      */
     private fun addFieldDialog() {
-        val addFieldDialog = AddNewNoteTypeField(this)
-        addFieldDialog.showAddNewNoteTypeFieldDialog { name ->
-            launchCatchingTask {
-                val validName = uniqueName(name)
-                val isConfirmed = validName != null && userAcceptsSchemaChange()
-                if (!isConfirmed) return@launchCatchingTask
-                viewModel.add(validName)
-            }
+        AddNewNoteTypeField(this).showAddNewNoteTypeFieldDialog { name ->
+            viewModel.add(name = name)
         }
     }
 
@@ -333,46 +371,6 @@ class NoteTypeFieldEditor : com.ichi2.anki.AnkiActivity(R.layout.note_type_field
         showDialogFragment(LocaleSelectionDialog.newInstance(position, locale))
     }
 
-    /**
-     * Sets the Locale Hint of the field to the provided value.
-     * This allows some keyboard (GBoard) to change language
-     * @param position the position of the field
-     * @param selectedLocale the selected locale
-     */
-    private fun addFieldLocaleHint(
-        position: Int,
-        selectedLocale: Locale?,
-    ) {
-        viewModel.languageHint(position, selectedLocale)
-        val format =
-            if (selectedLocale != null) {
-                getString(
-                    R.string.model_field_editor_language_hint_dialog_success_result,
-                    selectedLocale.displayName,
-                )
-            } else {
-                getString(R.string.model_field_editor_language_hint_dialog_cleared_result)
-            }
-        showSnackbar(format, Snackbar.LENGTH_SHORT)
-    }
-
-    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    @Throws(ConfirmModSchemaException::class)
-    fun addField(name: String) {
-        val fieldName = uniqueName(name) ?: return
-        viewModel.add(fieldName)
-    }
-
-    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    @Throws(ConfirmModSchemaException::class)
-    fun renameField(
-        position: Int,
-        name: String,
-    ) {
-        val fieldLabel = uniqueName(name) ?: return
-        viewModel.rename(position, fieldLabel)
-    }
-
     companion object {
         const val EXTRA_NOTETYPE_NAME = "extra_notetype_name"
         const val EXTRA_NOTETYPE_ID = "extra_notetype_id"
@@ -397,8 +395,20 @@ private class NoteFieldAdapter(
         holder.bind(getItem(position))
     }
 
+    override fun onViewDetachedFromWindow(holder: NoteFieldViewHolder) {
+        holder.detached()
+    }
+
     override fun onViewRecycled(holder: NoteFieldViewHolder) {
         holder.recycled()
+    }
+
+    private var _unsavedChange: NoteTypeFieldRowData? = null
+
+    val unsavedChange: NoteTypeFieldRowData? get() {
+        val change = _unsavedChange
+        _unsavedChange = null
+        return change
     }
 
     companion object {
@@ -438,26 +448,58 @@ private class NoteFieldAdapter(
                         listener.onLocaleChangeRequested(position)
                     }
                 }
-                fieldEdit.setOnFocusChangeListener { v, hasFocus ->
-                    if (!hasFocus) {
-                        v.hideKeyboard()
+                fieldEdit.apply {
+                    setOnFocusChangeListener { v, _ ->
+                        moveCursorToEnd()
+                        hideKeyboard()
                         val position = bindingAdapterPosition
                         if (position != RecyclerView.NO_POSITION) {
-                            val name = (v as TextInputEditText).text?.toString().orEmpty()
-                            val oldName = (bindingAdapter as NoteFieldAdapter).getItem(position).name
-                            if (name.isNotBlank() && name != oldName) {
+                            val name = (v as TextInputEditText).text?.toString()
+                            if (!name.isNullOrBlank()) {
                                 listener.onNameChanged(position, name)
+                                _unsavedChange = null
                             } else {
-                                v.setText(oldName)
+                                setText((bindingAdapter as NoteFieldAdapter).getItem(bindingAdapterPosition).name)
                             }
                         }
                     }
-                }
-                fieldEdit.setOnEditorActionListener { _, actionId, _ ->
-                    if (actionId == EditorInfo.IME_ACTION_DONE) {
-                        root.requestFocus()
+                    setOnEditorActionListener { _, actionId, _ ->
+                        if (actionId == EditorInfo.IME_ACTION_DONE) {
+                            root.requestFocus()
+                        }
+                        false
                     }
-                    true
+                    addTextChangedListener(
+                        object : TextWatcher {
+                            override fun beforeTextChanged(
+                                s: CharSequence?,
+                                start: Int,
+                                count: Int,
+                                end: Int,
+                            ) {
+                            }
+
+                            override fun onTextChanged(
+                                s: CharSequence?,
+                                start: Int,
+                                count: Int,
+                                end: Int,
+                            ) {
+                                if (bindingAdapterPosition != RecyclerView.NO_POSITION) {
+                                    val unsavedChange =
+                                        (bindingAdapter as NoteFieldAdapter)
+                                            .getItem(
+                                                bindingAdapterPosition,
+                                            ).copy(
+                                                name = s?.toString().orEmpty(),
+                                            )
+                                    _unsavedChange = unsavedChange
+                                }
+                            }
+
+                            override fun afterTextChanged(s: Editable?) { }
+                        },
+                    )
                 }
                 fieldEditLayout.setEndIconOnClickListener {
                     val position = bindingAdapterPosition
@@ -472,18 +514,20 @@ private class NoteFieldAdapter(
 
         fun bind(item: NoteTypeFieldRowData) {
             binding.apply {
-                fieldEdit.setText(item.name)
+                if (fieldEdit.text.toString() != item.name) {
+                    fieldEdit.setText(item.name)
+                }
+                fieldEditLayout.isEndIconVisible = false
                 fieldSortButton.isChecked = item.isOrder
                 fieldLanguageButton.isChecked = item.locale != null
             }
         }
 
+        fun detached() {
+            binding.fieldEdit.clearFocus()
+        }
+
         fun recycled() {
-            binding.fieldEdit.apply {
-                setText("")
-                clearFocus()
-            }
-            binding.fieldEditLayout.clearFocus()
             binding.root.translationX = 0f
         }
     }

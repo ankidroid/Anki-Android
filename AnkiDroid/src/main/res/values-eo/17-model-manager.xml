@@ -50,13 +50,13 @@
     <string name="rename_model">Alinomi nototipon</string>
     <string name="rename_card_type">Alinomi kartotipon</string>
     <!--Language Hint-->
-    <string name="model_field_editor_language_hint_dialog_success_result">Agordi lingvon de sugestoj al %s</string>
+    <string name="model_field_editor_language_hint_success_result">Agordi lingvon de sugestoj al %s</string>
     <!--Field Editing-->
     <string name="model_field_editor_add" maxLength="28">Aldoni kampon</string>
     <string name="model_field_editor_delete">Forigi kampon</string>
     <string name="model_field_editor_rename">Alinomi kampon</string>
     <string name="model_field_editor_language_hint">Agordi lingvon de klavaraj sugestoj</string>
-    <string name="model_field_editor_reposition_menu">Repozicii kampon</string>
+    <string name="model_field_editor_reposition">Repozicii kampon</string>
     <string name="model_field_editor_changing">Ĝisdatigado de kampoj</string>
     <string name="model_field_editor_sort_field">Ordigi laŭ tiu kampo</string>
     <!--Warnings-->

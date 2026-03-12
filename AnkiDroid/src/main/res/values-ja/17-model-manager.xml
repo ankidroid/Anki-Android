@@ -48,13 +48,13 @@
     <string name="rename_model">ノートタイプの名前を変更</string>
     <string name="rename_card_type">カードタイプの名前を変更</string>
     <!--Language Hint-->
-    <string name="model_field_editor_language_hint_dialog_success_result">%s をキーボード言語に設定しました</string>
+    <string name="model_field_editor_language_hint_success_result">%s をキーボード言語に設定しました</string>
     <!--Field Editing-->
     <string name="model_field_editor_add" maxLength="28">フィールドを追加</string>
     <string name="model_field_editor_delete">削除</string>
     <string name="model_field_editor_rename">名前を変更</string>
     <string name="model_field_editor_language_hint">キーボード言語を設定</string>
-    <string name="model_field_editor_reposition_menu">配置順序を変更</string>
+    <string name="model_field_editor_reposition">配置順序を変更</string>
     <string name="model_field_editor_changing">フィールドを更新</string>
     <string name="model_field_editor_sort_field">ブラウザでのソートフィールド（見出し・並べ替え用項目）に指定</string>
     <!--Warnings-->

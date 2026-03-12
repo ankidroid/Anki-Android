@@ -13,11 +13,10 @@
   this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:ankidroid="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/notetype_field_note"
-        android:title="@string/model_field_editor_note_title"
-        android:icon="@drawable/ic_dialog_info"
-        app:showAsAction="ifRoom|collapseActionView"
-        />
+        android:id="@+id/action_save"
+        android:icon="@drawable/ic_done_white"
+        android:title="@string/save"
+        ankidroid:showAsAction="always"/>
 </menu>

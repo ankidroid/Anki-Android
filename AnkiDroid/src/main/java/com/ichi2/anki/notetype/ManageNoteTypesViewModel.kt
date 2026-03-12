@@ -23,6 +23,7 @@ import androidx.lifecycle.viewModelScope
 import anki.collection.OpChanges
 import anki.notetypes.Notetype
 import anki.notetypes.copy
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.exception.CombinedException
 import com.ichi2.anki.libanki.Collection

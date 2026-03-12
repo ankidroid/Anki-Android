@@ -50,13 +50,13 @@
     <string name="rename_model">𐌼𐌴𐌻𐌴𐌹𐌽𐌰𐌹𐍃 𐌺𐌹𐌽𐌸 𐌰𐍆𐍄𐍂𐌰𐌷𐌰𐌹𐍄𐌰𐌽</string>
     <string name="rename_card_type">𐌺𐌹𐌽𐌸 𐌺𐌰𐍂𐍄𐍉𐍃 𐌰𐍆𐍄𐍂𐌰𐌷𐌰𐌹𐍄𐌰𐌽</string>
     <!--Language Hint-->
-    <string name="model_field_editor_language_hint_dialog_success_result">𐌷𐌹𐌻𐍀𐌰 𐍂𐌰𐌶𐌳𐍉𐍃 𐌻𐌰𐌲𐌾𐌰𐌽 𐌳𐌿 %s</string>
+    <string name="model_field_editor_language_hint_success_result">𐌷𐌹𐌻𐍀𐌰 𐍂𐌰𐌶𐌳𐍉𐍃 𐌻𐌰𐌲𐌾𐌰𐌽 𐌳𐌿 %s</string>
     <!--Field Editing-->
     <string name="model_field_editor_add" maxLength="28">𐍅𐌰𐌹𐍂𐌸 𐌱𐌹𐌰𐌿𐌺𐌰𐌽</string>
     <string name="model_field_editor_delete">𐍅𐌰𐌹𐍂𐌸𐌰 𐌿𐍃𐌵𐌹𐍃𐍄𐌾𐌰𐌽</string>
     <string name="model_field_editor_rename">𐍅𐌰𐌹𐍂𐌸 𐌰𐍆𐍄𐍂𐌰𐌷𐌰𐌹𐍄𐌰𐌽</string>
     <string name="model_field_editor_language_hint">𐌱𐍉𐌺𐌰𐌱𐌰𐌿𐍂𐌳𐌹𐍃 𐌷𐌹𐌻𐍀𐌰 𐍂𐌰𐌶𐌳𐍉 𐌻𐌰𐌲𐌾𐌰𐌽</string>
-    <string name="model_field_editor_reposition_menu">Reposition field</string>
+    <string name="model_field_editor_reposition">Reposition field</string>
     <string name="model_field_editor_changing">𐌰𐍆𐍄𐍂𐌰𐌰𐌽𐌰𐌽𐌹𐌿𐌾𐌰𐌽𐌳𐌰 𐍅𐌰𐌹𐍂𐌸𐌰</string>
     <string name="model_field_editor_sort_field">Sort by this field</string>
     <!--Warnings-->

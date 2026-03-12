@@ -39,25 +39,13 @@ object LanguageHintService {
         notetypes: Notetypes,
         notetype: NotetypeJson,
         fieldPos: Int,
-        selectedLocale: Locale,
+        selectedLocale: Locale?,
     ) {
         val field = notetype.getField(fieldPos)
         field.languageHint = selectedLocale
         notetypes.save(notetype)
 
         Timber.i("Set field locale to %s", selectedLocale)
-    }
-
-    fun clearLanguageHintForField(
-        notetypes: Notetypes,
-        notetype: NotetypeJson,
-        fieldPos: Int,
-    ) {
-        val field = notetype.getField(fieldPos)
-        field.languageHint = null
-        notetypes.save(notetype)
-
-        Timber.i("Clear field locale")
     }
 
     fun compareLanguage(

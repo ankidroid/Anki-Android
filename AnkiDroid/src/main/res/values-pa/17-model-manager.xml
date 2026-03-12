@@ -50,13 +50,13 @@
     <string name="rename_model">ਨੋਟ ਦੀ ਕਿਸਮ ਦਾ ਨਾਮ ਬਦਲੋ</string>
     <string name="rename_card_type">Rename card type</string>
     <!--Language Hint-->
-    <string name="model_field_editor_language_hint_dialog_success_result">ਭਾਸ਼ਾ ਸੰਕੇਤਕ ਨੂੰ %s \'ਤੇ ਸੈੱਟ ਕਰੋ</string>
+    <string name="model_field_editor_language_hint_success_result">ਭਾਸ਼ਾ ਸੰਕੇਤਕ ਨੂੰ %s \'ਤੇ ਸੈੱਟ ਕਰੋ</string>
     <!--Field Editing-->
     <string name="model_field_editor_add" maxLength="28">ਖੇਤਰ ਸ਼ਾਮਲ ਕਰੋ</string>
     <string name="model_field_editor_delete">ਖੇਤਰ ਮਿਟਾਓ</string>
     <string name="model_field_editor_rename">ਖੇਤਰ ਦਾ ਨਾਮ ਬਦਲੋ</string>
     <string name="model_field_editor_language_hint">ਕੀਬੋਰਡ ਭਾਸ਼ਾ ਸੰਕੇਤ ਸੈੱਟ ਕਰੋ</string>
-    <string name="model_field_editor_reposition_menu">ਰੀਪੋਜੀਸ਼ਨ ਫੀਲਡ</string>
+    <string name="model_field_editor_reposition">ਰੀਪੋਜੀਸ਼ਨ ਫੀਲਡ</string>
     <string name="model_field_editor_changing">ਖੇਤਰਾਂ ਨੂੰ ਅੱਪਡੇਟ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ</string>
     <string name="model_field_editor_sort_field">ਇਸ ਖੇਤਰ ਦੁਆਰਾ ਕ੍ਰਮਬੱਧ ਕਰੋ</string>
     <!--Warnings-->

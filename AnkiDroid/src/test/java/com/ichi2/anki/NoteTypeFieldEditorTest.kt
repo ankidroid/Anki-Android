@@ -21,9 +21,11 @@ import android.content.Intent
 import android.view.ContextThemeWrapper
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
+import androidx.lifecycle.lifecycleScope
 import com.ichi2.anki.libanki.exception.ConfirmModSchemaException
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
+import kotlinx.coroutines.launch
 import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers
 import org.junit.Test
@@ -125,8 +127,11 @@ class NoteTypeFieldEditorTest(
                             intent,
                         )
                     when (fieldOperationType) {
-                        FieldOperationType.ADD_FIELD -> noteTypeFieldEditor.addField(fieldName)
-                        FieldOperationType.RENAME_FIELD -> noteTypeFieldEditor.renameField(position, fieldName)
+                        FieldOperationType.ADD_FIELD -> noteTypeFieldEditor.viewModel.add(name = fieldName)
+                        FieldOperationType.RENAME_FIELD -> noteTypeFieldEditor.viewModel.rename(position, fieldName)
+                    }
+                    noteTypeFieldEditor.lifecycleScope.launch {
+                        noteTypeFieldEditor.viewModel.save()
                     }
                 } catch (exception: ConfirmModSchemaException) {
                     throw RuntimeException(exception)

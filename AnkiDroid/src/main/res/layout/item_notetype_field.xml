@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingHorizontal="16dp"
-    android:minHeight="?android:attr/listPreferredItemHeight"
-    android:background="?attr/selectableItemBackground">
+    android:minHeight="?android:attr/listPreferredItemHeight">
 
     <ImageView
         android:id="@+id/filed_drag_handle"
@@ -29,7 +28,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/filed_drag_handle"
         app:layout_constraintEnd_toStartOf="@+id/field_sort_button"
-        android:gravity="center_vertical">
+        android:gravity="center">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/field_edit"

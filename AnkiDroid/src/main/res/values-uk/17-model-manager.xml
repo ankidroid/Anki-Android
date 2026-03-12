@@ -54,13 +54,13 @@
     <string name="rename_model">Перейменувати тип запису</string>
     <string name="rename_card_type">Перейменувати тип картки</string>
     <!--Language Hint-->
-    <string name="model_field_editor_language_hint_dialog_success_result">Встановити %s як мову підказок</string>
+    <string name="model_field_editor_language_hint_success_result">Встановити %s як мову підказок</string>
     <!--Field Editing-->
     <string name="model_field_editor_add" maxLength="28">Додати поле</string>
     <string name="model_field_editor_delete">Видалити поле</string>
     <string name="model_field_editor_rename">Перейменувати поле</string>
     <string name="model_field_editor_language_hint">Встановлення мови підказок клавіатури</string>
-    <string name="model_field_editor_reposition_menu">Перемістити поле</string>
+    <string name="model_field_editor_reposition">Перемістити поле</string>
     <string name="model_field_editor_changing">Оновлення полів</string>
     <string name="model_field_editor_sort_field">Сортувати за цим полем</string>
     <!--Warnings-->

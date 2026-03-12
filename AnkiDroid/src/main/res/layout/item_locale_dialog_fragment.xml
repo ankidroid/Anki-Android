@@ -43,7 +43,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/field_check"
+        app:srcCompat="@drawable/ic_done"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         app:tint="?attr/colorControlNormal"

@@ -48,13 +48,13 @@
     <string name="rename_model">เปลี่ยนชื่อรูปแบบโน๊ต</string>
     <string name="rename_card_type">Rename card type</string>
     <!--Language Hint-->
-    <string name="model_field_editor_language_hint_dialog_success_result">Set language hint to %s</string>
+    <string name="model_field_editor_language_hint_success_result">Set language hint to %s</string>
     <!--Field Editing-->
     <string name="model_field_editor_add" maxLength="28">Add field</string>
     <string name="model_field_editor_delete">Delete field</string>
     <string name="model_field_editor_rename">Rename field</string>
     <string name="model_field_editor_language_hint">Set keyboard language hint</string>
-    <string name="model_field_editor_reposition_menu">Reposition field</string>
+    <string name="model_field_editor_reposition">Reposition field</string>
     <string name="model_field_editor_changing">Updating fields</string>
     <string name="model_field_editor_sort_field">Sort by this field</string>
     <!--Warnings-->
