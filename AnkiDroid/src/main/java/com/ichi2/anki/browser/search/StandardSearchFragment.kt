@@ -37,12 +37,17 @@ import com.ichi2.anki.dialogs.SaveBrowserSearchDialogFragment
 import com.ichi2.anki.dialogs.SavedBrowserSearchesDialogFragment
 import com.ichi2.anki.dialogs.registerSaveSearchHandler
 import com.ichi2.anki.dialogs.registerSavedSearchActionHandler
+import com.ichi2.anki.dialogs.tags.TagsDialog
+import com.ichi2.anki.dialogs.tags.TagsDialogFactory
+import com.ichi2.anki.dialogs.tags.TagsDialogListener
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.DeckNameId
+import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.ext.hasCheckedBackground
 import com.ichi2.anki.utils.ext.launchCollectionInLifecycleScope
+import com.ichi2.anki.utils.ext.showDialogFragment
 import dev.androidbroadcast.vbpd.viewBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -50,15 +55,20 @@ import timber.log.Timber
 
 class StandardSearchFragment :
     Fragment(R.layout.fragment_standard_search),
-    DeckSelectionDialog.DeckSelectionListener {
+    DeckSelectionDialog.DeckSelectionListener,
+    TagsDialogListener {
     @VisibleForTesting
     val binding by viewBinding(FragmentStandardSearchBinding::bind)
 
     @VisibleForTesting
     val viewModel: CardBrowserSearchViewModel by activityViewModels()
 
+    private lateinit var tagsDialogFactory: TagsDialogFactory
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        tagsDialogFactory = TagsDialogFactory(this).attachToActivity<TagsDialogFactory>(requireActivity())
 
         registerSaveSearchHandler {
             viewModel.addSavedSearch(it)
@@ -105,15 +115,39 @@ class StandardSearchFragment :
             }
         }
 
+        binding.tagsChip.setOnClickListener {
+            // see onSelectedTags
+            launchCatchingTask {
+                val dialog =
+                    tagsDialogFactory.newTagsDialog().withArguments(
+                        context = requireContext(),
+                        type = TagsDialog.DialogType.FILTER_BY_TAG,
+                        noteIds = emptyList(),
+                        checkedTags = ArrayList(viewModel.filtersFlow.value.tags),
+                    )
+                showDialogFragment(dialog)
+            }
+        }
+
         viewModel.filtersFlow.launchCollectionInLifecycleScope {
             binding.decksChip.hasCheckedBackground = it.decks.any()
+            binding.tagsChip.hasCheckedBackground = it.tags.any()
 
             binding.decksChip.text = it.decks.firstOrNull()?.name ?: getString(R.string.card_browser_all_decks)
+            binding.tagsChip.text = formatChipDescription(it.tags, emptyValue = "Tags")
         }
     }
 
     override fun onDeckSelected(deck: SelectableDeck?) {
         viewModel.setDecksFilter(deck?.toDeckNameIdList() ?: return)
+    }
+
+    override fun onSelectedTags(
+        selectedTags: List<String>,
+        indeterminateTags: List<String>,
+        stateFilter: CardStateFilter,
+    ) {
+        viewModel.setTagsFilter(selectedTags)
     }
 
     private fun setupSearchHistory() {
@@ -241,3 +275,12 @@ fun SelectableDeck.toDeckNameIdList(): List<DeckNameId>? =
             if (this.deckId == 0L) emptyList() else listOf(DeckNameId(this.name, this.deckId))
         }
     }
+
+fun formatChipDescription(
+    tags: List<String>,
+    emptyValue: String,
+) = when (tags.size) {
+    0 -> emptyValue
+    1 -> tags.single()
+    else -> "${tags.first()} +${tags.size - 1}"
+}

@@ -83,6 +83,17 @@
 
                     tools:text="All Decks"
                     />
+
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/tags_chip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:chipIcon="@drawable/ic_label_outline"
+                        android:maxLines="1"
+                        android:ellipsize="middle"
+                        tools:text="Tags"
+                        />
             </com.google.android.material.chip.ChipGroup>
         </HorizontalScrollView>
 
