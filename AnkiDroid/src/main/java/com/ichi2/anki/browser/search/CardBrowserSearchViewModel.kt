@@ -95,6 +95,14 @@ class CardBrowserSearchViewModel(
             )
     }
 
+    fun setTagsFilter(tags: List<String>) {
+        Timber.i("set tags filter to %d tags", tags.size)
+        filtersFlow.value =
+            filtersFlow.value.copy(
+                tags = tags,
+            )
+    }
+
     init {
         viewModelScope.launch {
             savedSearchesFlow.value = SavedSearches.loadFromConfig()

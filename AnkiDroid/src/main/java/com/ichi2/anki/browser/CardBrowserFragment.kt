@@ -92,6 +92,7 @@ import com.ichi2.anki.browser.search.CardBrowserSearchViewModel.UserMessage
 import com.ichi2.anki.browser.search.SearchRequest
 import com.ichi2.anki.browser.search.SearchString
 import com.ichi2.anki.browser.search.StandardSearchFragment
+import com.ichi2.anki.browser.search.formatChipDescription
 import com.ichi2.anki.browser.search.savedFilters
 import com.ichi2.anki.browser.search.toDeckNameIdList
 import com.ichi2.anki.common.annotations.NeedsTest
@@ -197,6 +198,8 @@ class CardBrowserFragment :
     @VisibleForTesting
     internal var searchView: SearchView? = null
     private var decksChip: Chip? = null
+    private var tagsChip: Chip? = null
+    private val useNewTaggingLogic get() = tagsChip != null
 
     // region legacy menu handling
     var mySearchesItem: MenuItem? = null
@@ -274,6 +277,10 @@ class CardBrowserFragment :
         decksChip =
             view.findViewById<Chip>(R.id.decks_chip)?.apply {
                 setOnClickListener { viewModel.openDeckSelectionDialog() }
+            }
+        tagsChip =
+            view.findViewById<Chip>(R.id.tags_chip)?.apply {
+                setOnClickListener { showFilterByTagsDialog() }
             }
         searchBar =
             view.findViewById<SearchBar>(R.id.search_bar)?.apply {
@@ -906,6 +913,8 @@ class CardBrowserFragment :
 
         fun onSearchRequestUpdated(search: SearchRequest) {
             Timber.d("syncing searchview state from chip updates")
+            tagsChip?.text = formatChipDescription(search.filters.tags, emptyValue = "Tags")
+            tagsChip?.hasCheckedBackground = search.filters.tags.any()
             searchViewModel.syncState(search)
         }
 
@@ -1334,6 +1343,14 @@ class CardBrowserFragment :
                     context = requireContext(),
                     type = TagsDialog.DialogType.FILTER_BY_TAG,
                     noteIds = emptyList(),
+                    checkedTags =
+                        if (useNewTaggingLogic) {
+                            ArrayList(
+                                activityViewModel.searchRequestFlow.value.filters.tags,
+                            )
+                        } else {
+                            ArrayList()
+                        },
                 )
             showDialogFragment(dialog)
         }
@@ -1470,7 +1487,18 @@ class CardBrowserFragment :
         selectedTags: List<String>,
         cardState: CardStateFilter,
     ) = launchCatchingTask {
-        activityViewModel.filterByTags(selectedTags, cardState)
+        if (useNewTaggingLogic) {
+            val updatedSearch =
+                activityViewModel.searchRequestFlow.value.copy(
+                    filters =
+                        activityViewModel.searchRequestFlow.value.filters.copy(
+                            tags = selectedTags,
+                        ),
+                )
+            activityViewModel.launchSearchForCards(updatedSearch, forceRefresh = false)
+        } else {
+            activityViewModel.filterByTags(selectedTags, cardState)
+        }
     }
 
     fun prepareForUndoableOperation() {
