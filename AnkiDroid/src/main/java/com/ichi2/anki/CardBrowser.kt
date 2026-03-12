@@ -964,6 +964,11 @@ open class CardBrowser :
                 }
             }
             invalidateOptionsMenu()
+            // HACK: required now we use MenuProvider for searches
+            // this causes a very brief flicker, as we call `setQuery` to restore the menu state
+            searchView?.post {
+                searchView?.clearFocus()
+            }
         }
     }
 
