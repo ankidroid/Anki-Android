@@ -258,6 +258,7 @@ class CardBrowserSearchViewModel(
     fun syncState(search: SearchRequest) =
         viewModelScope.launch {
             Timber.d("syncing search state")
+            filtersFlow.emit(search.filters)
             submittedSearchFlow.emit(search)
         }
 

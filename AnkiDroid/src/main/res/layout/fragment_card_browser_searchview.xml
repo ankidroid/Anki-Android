@@ -94,6 +94,16 @@
                         android:ellipsize="middle"
                         tools:text="Tags"
                         />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/card_state_chip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:chipIcon="@drawable/ic_card_state_default"
+                        android:maxLines="1"
+                        android:ellipsize="middle"
+                        tools:text="State"
+                        />
             </com.google.android.material.chip.ChipGroup>
         </HorizontalScrollView>
 

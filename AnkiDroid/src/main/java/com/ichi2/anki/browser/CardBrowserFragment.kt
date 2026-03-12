@@ -40,6 +40,7 @@ import androidx.annotation.LayoutRes
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.widget.ThemeUtils
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuHostHelper
 import androidx.core.view.MenuProvider
@@ -58,6 +59,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import anki.collection.OpChanges
 import com.google.android.material.chip.Chip
+import com.google.android.material.color.MaterialColors
 import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.google.android.material.search.SearchBar
 import com.google.android.material.search.SearchView
@@ -89,10 +91,12 @@ import com.ichi2.anki.browser.RepositionCardsRequest.RepositionData
 import com.ichi2.anki.browser.search.AdvancedSearchFragment
 import com.ichi2.anki.browser.search.CardBrowserSearchViewModel
 import com.ichi2.anki.browser.search.CardBrowserSearchViewModel.UserMessage
+import com.ichi2.anki.browser.search.CardStateBottomSheetFragment
 import com.ichi2.anki.browser.search.SearchRequest
 import com.ichi2.anki.browser.search.SearchString
 import com.ichi2.anki.browser.search.StandardSearchFragment
 import com.ichi2.anki.browser.search.formatChipDescription
+import com.ichi2.anki.browser.search.iconRes
 import com.ichi2.anki.browser.search.savedFilters
 import com.ichi2.anki.browser.search.toDeckNameIdList
 import com.ichi2.anki.common.annotations.NeedsTest
@@ -201,6 +205,7 @@ class CardBrowserFragment :
     private var decksChip: Chip? = null
     private var tagsChip: Chip? = null
     private val useNewTaggingLogic get() = tagsChip != null
+    private var cardStateChip: Chip? = null
 
     // region legacy menu handling
     var mySearchesItem: MenuItem? = null
@@ -282,6 +287,13 @@ class CardBrowserFragment :
         tagsChip =
             view.findViewById<Chip>(R.id.tags_chip)?.apply {
                 setOnClickListener { showFilterByTagsDialog() }
+            }
+        cardStateChip =
+            view.findViewById<Chip>(R.id.card_state_chip)?.apply {
+                setOnClickListener {
+                    val fragment = CardStateBottomSheetFragment()
+                    fragment.show(childFragmentManager, CardStateBottomSheetFragment.TAG)
+                }
             }
         searchBar =
             view.findViewById<SearchBar>(R.id.search_bar)?.apply {
@@ -742,6 +754,7 @@ class CardBrowserFragment :
             menu.findItem(R.id.action_save_search)?.isVisible = false
             menu.findItem(R.id.action_search_by_tag)?.isVisible = false
             menu.findItem(R.id.action_show_marked)?.isVisible = false
+            menu.findItem(R.id.action_show_suspended)?.isVisible = false
         }
     }
 
@@ -928,8 +941,20 @@ class CardBrowserFragment :
 
         fun onSearchRequestUpdated(search: SearchRequest) {
             Timber.d("syncing searchview state from chip updates")
-            tagsChip?.text = formatChipDescription(search.filters.tags, emptyValue = "Tags")
-            tagsChip?.hasCheckedBackground = search.filters.tags.any()
+            val filters = search.filters
+
+            tagsChip?.text = formatChipDescription(filters.tags, emptyValue = "Tags")
+            tagsChip?.hasCheckedBackground = filters.tags.any()
+
+            cardStateChip?.text = formatChipDescription(filters.cardStates.map { it.label }, emptyValue = "Card state")
+            cardStateChip?.chipIcon =
+                ContextCompat.getDrawable(requireContext(), filters.cardStates.firstOrNull().iconRes)?.also {
+                    if (filters.cardStates.isEmpty()) {
+                        DrawableCompat.setTint(it, MaterialColors.getColor(requireContext(), androidx.appcompat.R.attr.colorPrimary, 0))
+                    }
+                }
+            cardStateChip?.hasCheckedBackground = filters.cardStates.any()
+
             searchViewModel.syncState(search)
         }
 
