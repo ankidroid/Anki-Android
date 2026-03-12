@@ -72,12 +72,12 @@
 
 
             <com.google.android.material.chip.Chip
-                android:id="@+id/states_chip"
+                android:id="@+id/card_state_chip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="middle"
                 android:maxLines="1"
-                app:chipIcon="@drawable/ic_cards_star"
+                app:chipIcon="@drawable/ic_card_state_default"
 
                 android:text="Card state" />
 
