@@ -37,7 +37,7 @@
     <string name="rename_card_type">Rename card type</string>
 
     <!--Language Hint-->
-    <string name="model_field_editor_language_hint_success_result">Set language hint for ‘%1$s’ to ‘%2$s’</string>
+    <string name="model_field_editor_language_hint_success_result">Set language hint for ‘%2$s’ to ‘%1$s’</string>
     <string name="model_field_editor_language_hint_cleared_success_result">Cleared language hint for ‘%1$s’</string>
     <!--Field Editing-->
     <string name="model_field_editor_add" maxLength="28">Add field</string>
