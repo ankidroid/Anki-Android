@@ -184,6 +184,7 @@ class CardBrowserFragment :
     var mySearchesItem: MenuItem? = null
     var searchItem: MenuItem? = null
     var legacySearchView: CardBrowserSearchView? = null
+    private var saveSearchItem: MenuItem? = null
     // endregion
 
     private var toggleAdvancedSearch: Button? = null
@@ -405,14 +406,16 @@ class CardBrowserFragment :
                         // Provide SearchView with the previous search terms
                         legacySearchView!!.setQuery(vm.searchTerms, false)
                     }
+
+                    saveSearchItem = menu.findItem(R.id.action_save_search)
                 }
 
                 override fun onPrepareMenu(menu: Menu) {
                     if (vm.isInMultiSelectMode) return
 
                     menu.findItem(R.id.action_create_filtered_deck).title = TR.qtMiscCreateFilteredDeck()
-                    // the searchview's query always starts empty.
-                    menu.findItem(R.id.action_save_search).isVisible = false
+
+                    saveSearchItem?.isVisible = legacySearchView?.query?.isNotEmpty() != false
 
                     mySearchesItem = menu.findItem(R.id.action_list_my_searches)
                     mySearchesItem!!.isVisible = getColUnsafe().config.savedFilters.isNotEmpty()
@@ -820,7 +823,9 @@ class CardBrowserFragment :
         }
 
         fun onCanSaveChanged(canSave: Boolean) {
-            requireActivity().invalidateOptionsMenu()
+            // while using the Material 2 SearchView, invalidating the menu causes a keyboard
+            // flicker, so update the state directly.
+            saveSearchItem?.isVisible = canSave
         }
 
         activityViewModel.flowOfIsTruncated.launchCollectionInLifecycleScope(::onIsTruncatedChanged)

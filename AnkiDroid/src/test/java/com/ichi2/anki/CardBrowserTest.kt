@@ -1618,7 +1618,8 @@ class CardBrowserTest : RobolectricTest() {
                 listOf(
                     R.id.action_add_note_from_card_browser to true,
                     R.id.action_search to true,
-                    R.id.action_save_search to false,
+                    // 'deck:"Default"' may occur
+                    R.id.action_save_search to null,
                     R.id.action_list_my_searches to false,
                     R.id.action_sort_by_size to true,
                     R.id.action_show_marked to true,
@@ -1690,11 +1691,11 @@ class CardBrowserTest : RobolectricTest() {
         }
 
     fun assertMenusEqual(
-        expectedMenuItems: List<Pair<Int, Boolean>>,
+        expectedMenuItems: List<Pair<Int, Boolean?>>,
         menu: Menu,
     ) {
         val resources = targetContext.resources
-        for ((index, expectedData) in expectedMenuItems.withIndex()) {
+        for ((index, expectedData) in expectedMenuItems.withIndex().filter { it.value.second != null }) {
             val (expectedId, expectedIsVisible) = expectedData
             val item = assertNotNull(menu[index], "[$index]")
             val name = resources.getResourceName(item.itemId)
