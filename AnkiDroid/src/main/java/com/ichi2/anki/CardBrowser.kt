@@ -166,7 +166,6 @@ open class CardBrowser :
 
     lateinit var tagsDialogFactory: TagsDialogFactory
     private val searchItem: MenuItem? get() = cardBrowserFragment.searchItem
-    private var saveSearchItem: MenuItem? = null
     private val mySearchesItem: MenuItem? get() = cardBrowserFragment.mySearchesItem
 
     // card that was clicked (not marked)
