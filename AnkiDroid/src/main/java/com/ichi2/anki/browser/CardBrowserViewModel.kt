@@ -1170,6 +1170,7 @@ class CardBrowserViewModel(
     }
 
     fun removeUnsubmittedInput() {
+        Timber.i("clearing unsubmitted input")
         searchQueryInputFlow.update { null }
     }
 
