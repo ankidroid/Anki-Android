@@ -72,7 +72,7 @@ class MultiTouchDetector(
         startY = (event.getY(0) + event.getY(1)) / 2f
     }
 
-    private fun updatePositions(event: MotionEvent): Boolean {
+    private fun updatePositions(event: MotionEvent) {
         currentX = (event.getX(0) + event.getX(1)) / 2f
         currentY = (event.getY(0) + event.getY(1)) / 2f
 
@@ -81,11 +81,11 @@ class MultiTouchDetector(
         if (dx >= touchSlop || dy >= touchSlop) {
             isWithinTapTolerance = false
         }
-        return true
     }
 
     private fun tryScroll(event: MotionEvent): Boolean {
-        if (!updatePositions(event) || isWithinTapTolerance) {
+        updatePositions(event)
+        if (isWithinTapTolerance) {
             return false
         }
         val dy = (startY - currentY).toInt()
