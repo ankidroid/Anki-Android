@@ -39,7 +39,7 @@ class CardBrowserFragmentTest : RobolectricTest() {
     fun `searchView EditText submit via IME_ACTION_SEARCH`() =
         withCardBrowserFragment(useSearchView = true) {
             searchViewModel.submittedSearchFlow.test {
-                expectMostRecentItem()
+                searchViewModel.isScreenOpenFlow.value = true
                 searchView!!.editText.onEditorAction(IME_ACTION_SEARCH)
                 expectMostRecentItem()
             }
@@ -49,7 +49,7 @@ class CardBrowserFragmentTest : RobolectricTest() {
     fun `searchView EditText submit via KEYCODE_ENTER`() =
         withCardBrowserFragment(useSearchView = true) {
             searchViewModel.submittedSearchFlow.test {
-                expectMostRecentItem()
+                searchViewModel.isScreenOpenFlow.value = true
                 searchView!!.editText.dispatchKeyEvent(KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_ENTER))
                 expectMostRecentItem()
             }

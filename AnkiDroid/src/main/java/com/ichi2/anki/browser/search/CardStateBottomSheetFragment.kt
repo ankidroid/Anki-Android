@@ -26,10 +26,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.ichi2.anki.R
-import com.ichi2.anki.browser.CardBrowserViewModel
 import com.ichi2.anki.databinding.FragmentBottomSheetListBinding
 import com.ichi2.anki.databinding.ItemBrowserFilterBottomSheetBinding
-import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.utils.ext.behavior
 import dev.androidbroadcast.vbpd.viewBinding
 
@@ -37,7 +35,7 @@ import dev.androidbroadcast.vbpd.viewBinding
  * A [BottomSheetDialogFragment] allowing selection of 0-many [CardState]s
  */
 class CardStateBottomSheetFragment : BottomSheetDialogFragment(R.layout.fragment_bottom_sheet_list) {
-    private val viewModel: CardBrowserViewModel by activityViewModels()
+    private val viewModel: CardBrowserSearchViewModel by activityViewModels()
     private val binding by viewBinding(FragmentBottomSheetListBinding::bind)
 
     val adapter = HolderAdapter(CardState.entries)
@@ -54,7 +52,7 @@ class CardStateBottomSheetFragment : BottomSheetDialogFragment(R.layout.fragment
             isDraggable = false
         }
 
-        adapter.checkedItems.addAll(viewModel.searchRequestFlow.value.filters.cardStates)
+        adapter.checkedItems.addAll(viewModel.filtersFlow.value.cardStates)
         adapter.onItemCheckedListener = { _ ->
             onItemsSelected(adapter.checkedItems)
         }
@@ -73,21 +71,9 @@ class CardStateBottomSheetFragment : BottomSheetDialogFragment(R.layout.fragment
     }
 
     fun onItemsSelected(states: Set<CardState>) {
-        // TODO: This is the main issue; when the search is open, this shouldn't perform a search
-        // TODO: Move this to the SearchViewModel, and have that model know the open/close status
-
         // TODO: Should state should be a set? This may affect the summary.
 
-        launchCatchingTask {
-            val updatedSearch =
-                viewModel.searchRequestFlow.value.copy(
-                    filters =
-                        viewModel.searchRequestFlow.value.filters.copy(
-                            cardStates = states.toList(),
-                        ),
-                )
-            viewModel.launchSearchForCards(updatedSearch, forceRefresh = false)
-        }
+        viewModel.setCardStateFilter(states.toList())
     }
 
     class HolderAdapter(
