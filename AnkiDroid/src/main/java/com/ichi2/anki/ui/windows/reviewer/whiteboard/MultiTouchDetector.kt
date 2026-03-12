@@ -29,6 +29,12 @@ class MultiTouchDetector(
     private var startY: Float = 0f
     private var currentX: Float = 0f
     private var currentY: Float = 0f
+
+    private var startX0: Float = 0f
+    private var startY0: Float = 0f
+    private var startX1: Float = 0f
+    private var startY1: Float = 0f
+
     private var isWithinTapTolerance: Boolean = false
     private var onScrollByListener: OnScrollByListener? = null
     private var onMultiTouchListener: OnMultiTouchListener? = null
@@ -68,19 +74,31 @@ class MultiTouchDetector(
 
     private fun reinitialize(event: MotionEvent) {
         isWithinTapTolerance = true
-        startX = (event.getX(0) + event.getX(1)) / 2f
-        startY = (event.getY(0) + event.getY(1)) / 2f
+
+        startX0 = event.getX(0)
+        startY0 = event.getY(0)
+        startX1 = event.getX(1)
+        startY1 = event.getY(1)
+
+        startX = (startX0 + startX1) / 2f
+        startY = (startY0 + startY1) / 2f
     }
 
     private fun updatePositions(event: MotionEvent) {
+        // Check if any individual finger exceeded the touch slop
+        if (isWithinTapTolerance) {
+            val dx0 = abs(startX0 - event.getX(0))
+            val dy0 = abs(startY0 - event.getY(0))
+            val dx1 = abs(startX1 - event.getX(1))
+            val dy1 = abs(startY1 - event.getY(1))
+
+            if (dx0 >= touchSlop || dy0 >= touchSlop || dx1 >= touchSlop || dy1 >= touchSlop) {
+                isWithinTapTolerance = false
+            }
+        }
+
         currentX = (event.getX(0) + event.getX(1)) / 2f
         currentY = (event.getY(0) + event.getY(1)) / 2f
-
-        val dx = abs(startX - currentX)
-        val dy = abs(startY - currentY)
-        if (dx >= touchSlop || dy >= touchSlop) {
-            isWithinTapTolerance = false
-        }
     }
 
     private fun tryScroll(event: MotionEvent): Boolean {
