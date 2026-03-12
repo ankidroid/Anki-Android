@@ -52,8 +52,6 @@ import timber.log.Timber
  * @see net.ankiweb.rsdroid.Backend.gradeNow
  */
 // TODO: handle rotation, via a DialogFragment with IdsFile handling or Fragment Result API
-@NeedsTest("UI test for this dialog")
-@NeedsTest("Menu only displayed if cards selected")
 @NeedsTest("Suspended card handling")
 object GradeNowDialog {
     fun showDialog(
