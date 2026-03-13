@@ -32,7 +32,7 @@ sealed interface NoteTypeFieldOperation {
     ) : NoteTypeFieldOperation {
         override val isUndoable = true
 
-        override val isSchemaChange = false
+        override val isSchemaChange = true
     }
 
     data class ChangeSort(
