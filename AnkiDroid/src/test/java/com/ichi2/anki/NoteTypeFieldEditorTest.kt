@@ -128,7 +128,12 @@ class NoteTypeFieldEditorTest(
                         )
                     when (fieldOperationType) {
                         FieldOperationType.ADD_FIELD -> noteTypeFieldEditor.viewModel.add(name = fieldName)
-                        FieldOperationType.RENAME_FIELD -> noteTypeFieldEditor.viewModel.rename(position, fieldName)
+                        FieldOperationType.RENAME_FIELD ->
+                            noteTypeFieldEditor.viewModel.rename(
+                                position,
+                                fieldName,
+                                false,
+                            )
                     }
                     noteTypeFieldEditor.lifecycleScope.launch {
                         noteTypeFieldEditor.viewModel.save()
