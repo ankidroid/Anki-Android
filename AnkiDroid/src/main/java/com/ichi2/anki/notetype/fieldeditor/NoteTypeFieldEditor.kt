@@ -127,7 +127,6 @@ class NoteTypeFieldEditor : com.ichi2.anki.AnkiActivity(R.layout.note_type_field
                     if (position != RecyclerView.NO_POSITION) {
                         deleteFieldDialog(position, adapter.getItem(position).name)
                         // reset transitionX whether the field is deleted or not
-                        viewHolder.bindingAdapter?.notifyItemChanged(position)
                     }
                 }
 
@@ -346,6 +345,10 @@ class NoteTypeFieldEditor : com.ichi2.anki.AnkiActivity(R.layout.note_type_field
                     FragmentManager.POP_BACK_STACK_INCLUSIVE,
                 )
             }
+            it.setCancel {
+                viewModel.refreshAt(position)
+            }
+            it.isCancelable = false
             showDialogFragment(it)
         }
     }
@@ -372,7 +375,7 @@ class NoteTypeFieldEditor : com.ichi2.anki.AnkiActivity(R.layout.note_type_field
 private class NoteFieldAdapter(
     private val listener: ItemChangeListener,
 ) : RecyclerView.Adapter<NoteFieldAdapter.NoteFieldViewHolder>() {
-    val items = mutableListOf<NoteTypeFieldRowData>()
+    var items = emptyList<NoteTypeFieldRowData>()
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -406,21 +409,17 @@ private class NoteFieldAdapter(
 
     override fun getItemCount() = items.size
 
-    override fun onViewRecycled(holder: NoteFieldViewHolder) {
-        holder.recycled()
-    }
-
     suspend fun submitList(list: List<NoteTypeFieldRowData>) =
         withContext(Dispatchers.Main) {
+            val oldList = items.toList()
             Timber.d("submitList: $items $list")
             val diffResult =
                 withContext(Dispatchers.Default) {
-                    val diffUtil = NoteTypeFieldDiffUtil(items.toList(), list)
+                    val diffUtil = NoteTypeFieldDiffUtil(oldList, list)
                     val result = DiffUtil.calculateDiff(diffUtil)
-                    items.clear()
-                    items.addAll(list)
                     return@withContext result
                 }
+            items = list
             diffResult.dispatchUpdatesTo(this@NoteFieldAdapter)
         }
 
@@ -428,8 +427,12 @@ private class NoteFieldAdapter(
         oldPosition: Int,
         newPosition: Int,
     ) {
-        val field = items.removeAt(oldPosition)
-        items.add(newPosition, field)
+        items =
+            buildList {
+                addAll(items)
+                val field = removeAt(oldPosition)
+                add(newPosition, field)
+            }
         notifyItemMoved(oldPosition, newPosition)
     }
 
@@ -555,6 +558,7 @@ private class NoteFieldAdapter(
             payload: Set<NoteTypeFieldDiffUtil.Payload> = NoteTypeFieldDiffUtil.Payload.entriesSet,
         ) {
             Timber.d("bind: $item at $bindingAdapterPosition ")
+            binding.root.translationX = 0f
             binding.apply {
                 if (payload.contains(NoteTypeFieldDiffUtil.Payload.Rename) && item.name != fieldEdit.text?.toString().orEmpty()) {
                     Timber.d("field edittext: ${fieldEdit.text} to ${item.name} at $bindingAdapterPosition")
@@ -567,10 +571,6 @@ private class NoteFieldAdapter(
                     fieldLanguageButton.isChecked = item.locale != null
                 }
             }
-        }
-
-        fun recycled() {
-            binding.root.translationX = 0f
         }
 
         fun setText(name: String) {

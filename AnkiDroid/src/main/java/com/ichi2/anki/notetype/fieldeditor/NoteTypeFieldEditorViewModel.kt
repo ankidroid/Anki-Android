@@ -329,6 +329,21 @@ class NoteTypeFieldEditorViewModel(
     }
 
     /**
+     * Refreshes the uuid of the field at the given position
+     *
+     * This is used to force a UI update for a specific item even when its data
+     * hasn't logically changed.
+     * @param position the position of the field
+     */
+    fun refreshAt(position: Int) {
+        _state.update { oldValue ->
+            val fields = oldValue.fields.toMutableList()
+            fields.temporaryUpdateUuid(position)
+            return@update oldValue.copy(fields = fields.toList())
+        }
+    }
+
+    /**
      * Obtains the field list from [Collection] and refresh the state
      */
     fun refresh() {
