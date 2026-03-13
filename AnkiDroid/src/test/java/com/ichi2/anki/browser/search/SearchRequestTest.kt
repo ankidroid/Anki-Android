@@ -19,8 +19,8 @@ package com.ichi2.anki.browser.search
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.Flag
 import com.ichi2.anki.browser.SearchHistory.SearchHistoryEntry
-import com.ichi2.anki.browser.search.SearchFilters.NoteTypeNameId
 import com.ichi2.anki.libanki.DeckNameId
+import com.ichi2.anki.libanki.NoteTypeNameID
 import com.ichi2.anki.libanki.exception.InvalidSearchException
 import com.ichi2.anki.libanki.testutils.AnkiTest
 import com.ichi2.testutils.EmptyApplication
@@ -88,7 +88,7 @@ class SearchRequestTest : JvmTest() {
                     decks = listOf(DeckNameId("Default", 1), DeckNameId("Custom", 2)),
                     flags = listOf(Flag.RED, Flag.BLUE),
                     tags = listOf("Hello::World", "tag"),
-                    noteTypes = listOf(SearchFilters.NoteTypeNameId("Basic", 3), SearchFilters.NoteTypeNameId("Advanced", 4)),
+                    noteTypes = listOf(NoteTypeNameID("Basic", 3), NoteTypeNameID("Advanced", 4)),
                     cardStates =
                         listOf(
                             CardState.New,
@@ -116,7 +116,7 @@ class SearchRequestTest : JvmTest() {
                     listOf(
                         col.notetypes.basic,
                         col.notetypes.cloze,
-                    ).map(NoteTypeNameId::fromNoteTypeJson),
+                    ).map { NoteTypeNameID.fromNoteTypeJson(it) },
             )
         }
     }

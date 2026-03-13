@@ -67,7 +67,10 @@ import timber.log.Timber
 class NoteTypeNameID(
     val name: String,
     val id: NoteTypeId,
-)
+) {
+    // support extension
+    companion object
+}
 
 class Notetypes(
     val col: Collection,
