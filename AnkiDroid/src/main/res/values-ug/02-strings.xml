@@ -192,6 +192,7 @@
     <string name="dyn_deck_desc">بۇ ئادەتتىكى كۈنتەرتىپنىڭ سىرتىدىكى مەزمۇننى ئۆگىنىدىغان ئالاھىدە دەستە. كارتىنى تەكرارلىغاندىن كېيىن ئەسلىدىكى دەستەسىگە قايتۇرۇلىدۇ. ئەگەر دەستە تىزىمىدىن بۇ دەستە ئۆچۈرۈلسە، قېپقالغان كارتا دەسلەپكى دەستە ئورنىغا ئەسلىگە قايتۇرۇلىدۇ.</string>
     <string name="tag_editor_add_feedback">«%2$s» نى چېكىپ «%1$s» نى قوشۇش  جەزملىنىدۇ</string>
     <string name="tag_editor_add_feedback_existing">مەۋجۇت «%1$s» بەلگە تاللاندى</string>
+    <string name="tag_already_exists">Tag already exists</string>
     <!-- Time spans -->
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">apkg ھۆججەتنى ھەمبەھىرلەش خاتالىقى</string>

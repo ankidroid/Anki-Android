@@ -129,7 +129,7 @@
     <string name="empty_cram_label" maxLength="28">Kiürít</string>
     <string name="create_subdeck">Alcsoportok létrehozása</string>
     <string name="empty_filtered_deck">Szűrt pakli kiürítése</string>
-    <string name="search_deck" comment="Deck search for selecting it">Paklik keresése</string>
+    <string name="search_deck" comment="Deck search for selecting it">Deck search</string>
     <string name="empty_deck">Ez a pakli üres</string>
     <string name="invalid_deck_name">Érvénytelen paklinév</string>
     <string name="studyoptions_congrats_finished">Congratulations! You have finished for today.</string>

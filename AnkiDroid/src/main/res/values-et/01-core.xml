@@ -129,7 +129,7 @@
     <string name="empty_cram_label" maxLength="28">Tühi</string>
     <string name="create_subdeck">Loo alakaardipakk</string>
     <string name="empty_filtered_deck">Tühjendan filtritud kaardipakki&#8230;</string>
-    <string name="search_deck" comment="Deck search for selecting it">Otsi kaardipakki</string>
+    <string name="search_deck" comment="Deck search for selecting it">Deck search</string>
     <string name="empty_deck">See kaardipakk on tühi</string>
     <string name="invalid_deck_name">Vigane kaardipaki nimi</string>
     <string name="studyoptions_congrats_finished">Palju õnne! Sa oled tänseks lõpetanud.</string>

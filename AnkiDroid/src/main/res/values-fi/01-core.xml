@@ -129,7 +129,7 @@
     <string name="empty_cram_label" maxLength="28">Tyhjä</string>
     <string name="create_subdeck">Luo johdannais pakka</string>
     <string name="empty_filtered_deck">Tyhjennetään suodatettu pakka&#8230;</string>
-    <string name="search_deck" comment="Deck search for selecting it">Hae pakkaa</string>
+    <string name="search_deck" comment="Deck search for selecting it">Deck search</string>
     <string name="empty_deck">Tämä pakka on tyhjä</string>
     <string name="invalid_deck_name">Virheellinen pakan nimi</string>
     <string name="studyoptions_congrats_finished">Onnittelut! Homma hoidettu tämän päivän osalta.</string>

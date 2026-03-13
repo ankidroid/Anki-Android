@@ -129,7 +129,7 @@
     <string name="empty_cram_label" maxLength="28">Svuota</string>
     <string name="create_subdeck">Crea sottomazzo</string>
     <string name="empty_filtered_deck">Svuotamento del mazzo filtrato in corso&#8230;</string>
-    <string name="search_deck" comment="Deck search for selecting it">Ricerca mazzo</string>
+    <string name="search_deck" comment="Deck search for selecting it">Deck search</string>
     <string name="empty_deck">Questo mazzo è vuoto</string>
     <string name="invalid_deck_name">Nome mazzo non valido</string>
     <string name="studyoptions_congrats_finished">Congratulazioni! Per oggi hai finito.</string>

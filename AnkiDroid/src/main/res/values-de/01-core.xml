@@ -129,7 +129,7 @@
     <string name="empty_cram_label" maxLength="28">Leeren</string>
     <string name="create_subdeck">Unterstapel erstellen</string>
     <string name="empty_filtered_deck">Gefilterter Stapel wird geleert &#8230;</string>
-    <string name="search_deck" comment="Deck search for selecting it">Stapelsuche</string>
+    <string name="search_deck" comment="Deck search for selecting it">Deck search</string>
     <string name="empty_deck">Dieser Stapel ist leer</string>
     <string name="invalid_deck_name">Ungültiger Stapelname</string>
     <string name="studyoptions_congrats_finished">Glückwunsch! Das war alles für heute.</string>

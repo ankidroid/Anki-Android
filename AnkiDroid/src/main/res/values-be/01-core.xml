@@ -135,7 +135,7 @@
     <string name="empty_cram_label" maxLength="28">Ачысціць</string>
     <string name="create_subdeck">Стварыць падкалоду</string>
     <string name="empty_filtered_deck">Ачыстка фільтраванай калоды&#8230;</string>
-    <string name="search_deck" comment="Deck search for selecting it">Пошук калоды</string>
+    <string name="search_deck" comment="Deck search for selecting it">Deck search</string>
     <string name="empty_deck">Гэта калода пустая</string>
     <string name="invalid_deck_name">Памылковая назва калоды</string>
     <string name="studyoptions_congrats_finished">Віншуем! На сёння ўсе карткі вывучаны.</string>

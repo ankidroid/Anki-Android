@@ -135,7 +135,7 @@
     <string name="empty_cram_label" maxLength="28">Vyprázdniť</string>
     <string name="create_subdeck">Vytvoriť podbalíček</string>
     <string name="empty_filtered_deck">Vyprázdňujem filtrovaný balíček&#8230;</string>
-    <string name="search_deck" comment="Deck search for selecting it">Vyhľadávanie v balíčku</string>
+    <string name="search_deck" comment="Deck search for selecting it">Deck search</string>
     <string name="empty_deck">Tento balíček je prázdny</string>
     <string name="invalid_deck_name">Neplatný názov balíčka</string>
     <string name="studyoptions_congrats_finished">Congratulations! You have finished for today.</string>

@@ -198,6 +198,7 @@
     <string name="dyn_deck_desc">To je poseben komplet za učenje izven običajnega urnika. Kartice bodo samodejno vrnjene v izvirne komplete, ko jih pregledate. Izbris tega kompleta s seznama bo vrnil vse preostale kartice v izvirni komplet.</string>
     <string name="tag_editor_add_feedback">Pritisnite \"%2$s\", da potrdite dodajanje \"%1$s\"</string>
     <string name="tag_editor_add_feedback_existing">Izbrana obstoječa oznaka \"%1$s\"</string>
+    <string name="tag_already_exists">Tag already exists</string>
     <!-- Time spans -->
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Napaka pri deljenju datoteke apkg</string>

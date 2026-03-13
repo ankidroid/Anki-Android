@@ -129,7 +129,7 @@
     <string name="empty_cram_label" maxLength="28">Vide</string>
     <string name="create_subdeck">Créer un sous-paquet</string>
     <string name="empty_filtered_deck">Vidage du paquet filtré&#8230;</string>
-    <string name="search_deck" comment="Deck search for selecting it">Recherche de paquet</string>
+    <string name="search_deck" comment="Deck search for selecting it">Deck search</string>
     <string name="empty_deck">Ce paquet est vide</string>
     <string name="invalid_deck_name">Nom de paquet invalide</string>
     <string name="studyoptions_congrats_finished">Félicitations ! Vous avez terminé pour aujourd\'hui.</string>

@@ -129,7 +129,7 @@
     <string name="empty_cram_label" maxLength="28">Boş</string>
     <string name="create_subdeck">Alt dəstə yarat</string>
     <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
-    <string name="search_deck" comment="Deck search for selecting it">Dəstə axtar</string>
+    <string name="search_deck" comment="Deck search for selecting it">Deck search</string>
     <string name="empty_deck">Bu dəstə boşdur</string>
     <string name="invalid_deck_name">Etibarsız kart adı</string>
     <string name="studyoptions_congrats_finished">Congratulations! You have finished for today.</string>

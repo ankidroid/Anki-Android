@@ -126,7 +126,7 @@
     <string name="empty_cram_label" maxLength="28">Dọn trống</string>
     <string name="create_subdeck">Tạo bộ thẻ phụ</string>
     <string name="empty_filtered_deck">Đang làm trống các bộ thẻ đã lọc</string>
-    <string name="search_deck" comment="Deck search for selecting it">Tìm kiếm bộ thẻ</string>
+    <string name="search_deck" comment="Deck search for selecting it">Deck search</string>
     <string name="empty_deck">Bộ thẻ này rỗng</string>
     <string name="invalid_deck_name">Tên bộ thẻ không hợp lệ</string>
     <string name="studyoptions_congrats_finished">Chúc mừng! Bạn đã hoàn thành hết cho hôm nay.</string>

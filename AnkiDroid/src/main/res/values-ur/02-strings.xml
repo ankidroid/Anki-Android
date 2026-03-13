@@ -193,6 +193,7 @@
 یہ عام شیڈول سے ہٹ کر مطالعہ کرنے کے لیے ایک خاص ڈیک ہے۔آپ کے ان کا جائزہ لینے کے بعد کارڈز خود بخود ان کے اصل ڈیک پر واپس آ جائیں گے۔ڈیک کی فہرست سے اس ڈیک کو حذف کرنے سے باقی تمام کارڈز ان کے اصل ڈیک پر واپس آجائیں گے۔</string>
     <string name="tag_editor_add_feedback">\"%1$s\" کو شامل کرنے کی تصدیق کرنے کے لیے \"%2$s\" کو ٹچ کریں</string>
     <string name="tag_editor_add_feedback_existing">موجودہ ٹیگ \"%1$s\" کو منتخب کیا گیا۔</string>
+    <string name="tag_already_exists">Tag already exists</string>
     <!-- Time spans -->
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">apkg فائل کا اشتراک کرنے میں خرابی۔</string>

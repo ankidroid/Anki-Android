@@ -129,7 +129,7 @@
     <string name="empty_cram_label" maxLength="28">Դատարկ</string>
     <string name="create_subdeck">Ստեղծել ենթակապուկ</string>
     <string name="empty_filtered_deck">Զտված կապուկը դատարկվում է&#8230;</string>
-    <string name="search_deck" comment="Deck search for selecting it">Կապուկների որոնում</string>
+    <string name="search_deck" comment="Deck search for selecting it">Deck search</string>
     <string name="empty_deck">Այս կապուկը դատարկ է</string>
     <string name="invalid_deck_name">Կապուկի անվավեր անվանում</string>
     <string name="studyoptions_congrats_finished">Congratulations! You have finished for today.</string>

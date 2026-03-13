@@ -129,7 +129,7 @@
     <string name="empty_cram_label" maxLength="28">Празно</string>
     <string name="create_subdeck">Създай подтесте</string>
     <string name="empty_filtered_deck">Изпразване на филтрирано тесте&#8230;</string>
-    <string name="search_deck" comment="Deck search for selecting it">Потърси тесте</string>
+    <string name="search_deck" comment="Deck search for selecting it">Deck search</string>
     <string name="empty_deck">Това тесте е празно</string>
     <string name="invalid_deck_name">Невалидно име на тесте</string>
     <string name="studyoptions_congrats_finished">Поздравления! Приключихте за днес</string>

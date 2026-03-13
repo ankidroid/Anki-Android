@@ -129,7 +129,7 @@
     <string name="empty_cram_label" maxLength="28">Töm</string>
     <string name="create_subdeck">Skapa underkortlek</string>
     <string name="empty_filtered_deck">Tömmer filtrerad kortlek&#8230;</string>
-    <string name="search_deck" comment="Deck search for selecting it">Kortlekssökning</string>
+    <string name="search_deck" comment="Deck search for selecting it">Deck search</string>
     <string name="empty_deck">Den här kortleken är tom</string>
     <string name="invalid_deck_name">Ogiltigt kortleksnamn</string>
     <string name="studyoptions_congrats_finished">Grattis! Du har blivit klar för idag.</string>
