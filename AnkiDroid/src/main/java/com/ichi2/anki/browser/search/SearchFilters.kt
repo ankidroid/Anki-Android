@@ -18,7 +18,7 @@ package com.ichi2.anki.browser.search
 
 import com.ichi2.anki.Flag
 import com.ichi2.anki.libanki.DeckNameId
-import com.ichi2.anki.libanki.NoteTypeId
+import com.ichi2.anki.libanki.NoteTypeNameID
 import com.ichi2.anki.libanki.NotetypeJson
 
 /**
@@ -30,7 +30,7 @@ data class SearchFilters(
     val decks: List<DeckNameId>,
     val flags: List<Flag>,
     val tags: List<String>,
-    val noteTypes: List<NoteTypeNameId>,
+    val noteTypes: List<NoteTypeNameID>,
     val cardStates: List<CardState>,
 ) {
     /**
@@ -39,15 +39,6 @@ data class SearchFilters(
      * For example: the list contains [decks] if a deck filter is set
      */
     val activeFilters by lazy { listOf(decks, flags, tags, noteTypes, cardStates).filter { it.isNotEmpty() } }
-
-    data class NoteTypeNameId(
-        val name: String,
-        val id: NoteTypeId,
-    ) {
-        companion object {
-            fun fromNoteTypeJson(noteTypeJson: NotetypeJson) = NoteTypeNameId(noteTypeJson.name, noteTypeJson.id)
-        }
-    }
 
     companion object {
         /** An instance of [SearchFilters] with no [active filters][SearchFilters.activeFilters] */
@@ -61,7 +52,7 @@ data class SearchFilters(
             decks: List<DeckNameId> = emptyList(),
             flags: List<Flag> = emptyList(),
             tags: List<String> = emptyList(),
-            noteTypes: List<NoteTypeNameId> = emptyList(),
+            noteTypes: List<NoteTypeNameID> = emptyList(),
             cardStates: List<CardState> = emptyList(),
         ) = SearchFilters(
             decks = decks,
@@ -72,3 +63,5 @@ data class SearchFilters(
         )
     }
 }
+
+fun NoteTypeNameID.Companion.fromNoteTypeJson(noteTypeJson: NotetypeJson) = NoteTypeNameID(noteTypeJson.name, noteTypeJson.id)
