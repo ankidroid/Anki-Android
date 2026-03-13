@@ -26,13 +26,13 @@ import org.junit.Test
 class SearchFiltersTest {
     @Test
     fun `activeFilters is empty by default`() {
-        val filters = SearchFilters()
+        val filters = SearchFilters.EMPTY
         assertThat(filters.activeFilters, empty())
     }
 
     @Test
     fun `activeFilters is non-empty if a filter is set`() {
-        val filters = SearchFilters(decks = listOf(DeckNameId("Default", 1)))
+        val filters = SearchFilters.partial(decks = listOf(DeckNameId("Default", 1)))
         assertThat(filters.activeFilters, not(empty()))
     }
 }

@@ -50,7 +50,7 @@ class SearchRequestTest : JvmTest() {
 
     @Test
     fun `search string generation - filter only`() {
-        val entry = SearchRequest(query = "", filters = SearchFilters(decks = col.decks.allNamesAndIds()))
+        val entry = SearchRequest(query = "", filters = SearchFilters.partial(decks = col.decks.allNamesAndIds()))
         assertThat(entry.toValidSearchString(), equalTo("deck:Default"))
     }
 
