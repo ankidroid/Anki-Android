@@ -129,7 +129,7 @@
     <string name="empty_cram_label" maxLength="28">تخلیه</string>
     <string name="create_subdeck">ایجاد زیردسته</string>
     <string name="empty_filtered_deck">درحال تخلیه دسته‌ی کارت فیلتر شده&#8230;</string>
-    <string name="search_deck" comment="Deck search for selecting it">جستجوی دسته‌ها</string>
+    <string name="search_deck" comment="Deck search for selecting it">Deck search</string>
     <string name="empty_deck">این دسته خالی است</string>
     <string name="invalid_deck_name">نام دسته نامعتبر است</string>
     <string name="studyoptions_congrats_finished">تبریک! امروز کارتان تمام شد.</string>

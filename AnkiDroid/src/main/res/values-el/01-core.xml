@@ -129,7 +129,7 @@
     <string name="empty_cram_label" maxLength="28">Άδειασμα</string>
     <string name="create_subdeck">Δημιουργία υποτράπουλας</string>
     <string name="empty_filtered_deck">Άδειασμα φιλτραρισμένης τράπουλας&#8230;</string>
-    <string name="search_deck" comment="Deck search for selecting it">Αναζήτηση</string>
+    <string name="search_deck" comment="Deck search for selecting it">Deck search</string>
     <string name="empty_deck">Αυτή η τράπουλα είναι κενή</string>
     <string name="invalid_deck_name">Μη έγκυρο όνομα</string>
     <string name="studyoptions_congrats_finished">Συγχαρητήρια! Τελειώσατε για σήμερα.</string>

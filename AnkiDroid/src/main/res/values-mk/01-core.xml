@@ -129,7 +129,7 @@
     <string name="empty_cram_label" maxLength="28">Празно</string>
     <string name="create_subdeck">Направи подшпил</string>
     <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
-    <string name="search_deck" comment="Deck search for selecting it">Deck Search</string>
+    <string name="search_deck" comment="Deck search for selecting it">Deck search</string>
     <string name="empty_deck">Овој deck е празен</string>
     <string name="invalid_deck_name">Невалидно име за шпил</string>
     <string name="studyoptions_congrats_finished">Congratulations! You have finished for today.</string>

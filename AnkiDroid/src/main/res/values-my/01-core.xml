@@ -131,7 +131,7 @@
 ဘာမှမရှိဘူး</string>
     <string name="create_subdeck">လုပ်ငန်းအသစ်ဖန်တီး</string>
     <string name="empty_filtered_deck">ထပ်ဆင့်လုပ်ငန်းကိုဖျက်ပစ်နေသည်</string>
-    <string name="search_deck" comment="Deck search for selecting it">Deck ရှာ</string>
+    <string name="search_deck" comment="Deck search for selecting it">Deck search</string>
     <string name="empty_deck">ဒီ Deck က ဗလာကြီး</string>
     <string name="invalid_deck_name">မကိုက်ညီသော deck နာမည်</string>
     <string name="studyoptions_congrats_finished">ဂုဏ်ယူပါတယ်! မင်းသင်တာ ဒီတနေ့စာ ပြီးဆုံးသွားပါပြီ။</string>

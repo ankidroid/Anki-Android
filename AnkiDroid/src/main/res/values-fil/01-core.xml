@@ -129,7 +129,7 @@
     <string name="empty_cram_label" maxLength="28">Walang laman</string>
     <string name="create_subdeck">Gumawa ng subdeck</string>
     <string name="empty_filtered_deck">Inaalisan ng laman ang nasala na deck&#8230;</string>
-    <string name="search_deck" comment="Deck search for selecting it">Maghanap ng Deck</string>
+    <string name="search_deck" comment="Deck search for selecting it">Deck search</string>
     <string name="empty_deck">Ang deck na ito ay walang laman</string>
     <string name="invalid_deck_name">Hindi wasto ang pangalan ng deck</string>
     <string name="studyoptions_congrats_finished">Mahusay! Nakatapos ka para sa araw na ito.</string>

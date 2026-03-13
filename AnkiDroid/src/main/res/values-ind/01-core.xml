@@ -126,7 +126,7 @@
     <string name="empty_cram_label" maxLength="28">Kosong</string>
     <string name="create_subdeck">Buat subdek</string>
     <string name="empty_filtered_deck">Mengosongkan dek yang telah difilter</string>
-    <string name="search_deck" comment="Deck search for selecting it">Pencarian Dek</string>
+    <string name="search_deck" comment="Deck search for selecting it">Deck search</string>
     <string name="empty_deck">Dek ini kosong</string>
     <string name="invalid_deck_name">Nama dek tidak valid</string>
     <string name="studyoptions_congrats_finished">Selamat! Anda telah selesai untuk hari ini.</string>

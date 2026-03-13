@@ -129,7 +129,7 @@
     <string name="empty_cram_label" maxLength="28">ଖାଲି</string>
     <string name="create_subdeck">ଉପ-କେରୀ ସୃଷ୍ଟି କରିବା</string>
     <string name="empty_filtered_deck">ଶୋଧିତ କେରୀ ଖାଲି କରାଚାଲିଛି&#8230;</string>
-    <string name="search_deck" comment="Deck search for selecting it">କେରୀ ସନ୍ଧାନ</string>
+    <string name="search_deck" comment="Deck search for selecting it">Deck search</string>
     <string name="empty_deck">କେରୀଟି ଖାଲି ଅଛି</string>
     <string name="invalid_deck_name">ଅବୈଧ କେରୀ ନାମ</string>
     <string name="studyoptions_congrats_finished">ଅଭିନନ୍ଦନ! ଆପଣ ଆଜି ପାଇଁ ସବୁ ସାରିଛନ୍ତି।</string>

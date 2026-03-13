@@ -198,6 +198,7 @@
     <string name="dyn_deck_desc">Гэта спецыяльная калода для навучання па-за межамі звыклага графіка. Пасля паўтору, карткі будуць аўтаматычна вяртацца ў сваю першапачатковую калоду. Выдаленне гэтай калоды верне ўсе карткі ў іх першапачатковую калоду.</string>
     <string name="tag_editor_add_feedback">Націсніце “%2$s”, каб пацвердзіць даданне “%1$s”</string>
     <string name="tag_editor_add_feedback_existing">Выбрана існуючая метка \"%1$s\"</string>
+    <string name="tag_already_exists">Tag already exists</string>
     <!-- Time spans -->
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Памылка агульнага доступу да файла apkg</string>

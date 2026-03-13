@@ -129,7 +129,7 @@
     <string name="empty_cram_label" maxLength="28">ಖಾಲಿ</string>
     <string name="create_subdeck">ಉಪ ಸಂಗ್ರಹವನ್ನು ರಚಿಸಿ</string>
     <string name="empty_filtered_deck">ಫಿಲ್ಟರ್ ಮಾಡಿದ ಡೆಕ್ ಅನ್ನು ಖಾಲಿ ಮಾಡಲಾಗುತ್ತಿದೆ&#8230;</string>
-    <string name="search_deck" comment="Deck search for selecting it">ಡೆಕ್ ಹುಡುಕಾಟ</string>
+    <string name="search_deck" comment="Deck search for selecting it">Deck search</string>
     <string name="empty_deck">ಈ ಡೆಕ್ ಖಾಲಿಯಾಗಿದೆ</string>
     <string name="invalid_deck_name">ಅಮಾನ್ಯ ಡೆಕ್ ಹೆಸರು</string>
     <string name="studyoptions_congrats_finished">Congratulations! You have finished for today.</string>

@@ -192,6 +192,7 @@ Context | Request Context    [1]</string>
     <string name="dyn_deck_desc">이것은 평상시 일정 이상으로 학습하기 위한 특별한 카드 덱입니다. 카드들은 복습 후 자동으로 원래의 카드 덱으로 돌아가게 됩니다. 카드 덱 목록에서 이 카드 덱을 지운다면 남아 있는 모든 카드는 원래의 카드 덱으로 돌아가게 됩니다.</string>
     <string name="tag_editor_add_feedback">\"%1$s\" 추가를 확인하려면 \"%2$s\" 누르세요</string>
     <string name="tag_editor_add_feedback_existing">기존 태그 \"%1$s\" 선택됨</string>
+    <string name="tag_already_exists">Tag already exists</string>
     <!-- Time spans -->
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Apkg 파일 공유 오류</string>

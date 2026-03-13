@@ -198,6 +198,7 @@
     <string name="dyn_deck_desc">Toto je špeciálny balíček na štúdium mimo bežného plánu. Kartičky sa automaticky vrátia do svojich pôvodných balíčkov po tom, čo si ich zopakujete. Odstránením tohto balíčku zo zoznamu balíčkov sa všetky zostávajúce kartičky vrátia do svojich pôvodných balíčkov.</string>
     <string name="tag_editor_add_feedback">Ťuknite “%2$s” pre potvrdenie pridania “%1$s”</string>
     <string name="tag_editor_add_feedback_existing">Existujúci štítok “%1$s” zvolený</string>
+    <string name="tag_already_exists">Tag already exists</string>
     <!-- Time spans -->
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Chyba pri zdieľaní apkg súboru</string>

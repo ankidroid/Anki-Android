@@ -135,7 +135,7 @@
     <string name="empty_cram_label" maxLength="28">Wyczyść</string>
     <string name="create_subdeck">Utwórz talię podrzedną</string>
     <string name="empty_filtered_deck">Opróżnienie talii filtrowanej&#8230;</string>
-    <string name="search_deck" comment="Deck search for selecting it">Szukaj talii</string>
+    <string name="search_deck" comment="Deck search for selecting it">Deck search</string>
     <string name="empty_deck">Ta talia jest pusta</string>
     <string name="invalid_deck_name">Nieprawidłowa nazwa talii</string>
     <string name="studyoptions_congrats_finished">Gratulacje! Zakończono powtórki na dziś.</string>

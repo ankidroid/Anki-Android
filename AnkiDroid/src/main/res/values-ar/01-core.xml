@@ -141,7 +141,7 @@
     <string name="empty_cram_label" maxLength="28">إفراغ</string>
     <string name="create_subdeck">إنشاء رِزمة فرعية</string>
     <string name="empty_filtered_deck">يتم إفراغ الرزمة المفروزة&#8230;</string>
-    <string name="search_deck" comment="Deck search for selecting it">البحث عن رزمة</string>
+    <string name="search_deck" comment="Deck search for selecting it">Deck search</string>
     <string name="empty_deck">هذه الرزمة فارغة</string>
     <string name="invalid_deck_name">اسم رزمة غير صالح</string>
     <string name="studyoptions_congrats_finished">مبروك! لقد أتممت مهامَّك لهذا اليوم.</string>

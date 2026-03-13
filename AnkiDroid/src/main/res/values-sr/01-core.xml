@@ -132,7 +132,7 @@
     <string name="empty_cram_label" maxLength="28">Очисти</string>
     <string name="create_subdeck">Креирај подсет</string>
     <string name="empty_filtered_deck">Испразњује се филтрирани сет&#8230;</string>
-    <string name="search_deck" comment="Deck search for selecting it">Претрага сетова</string>
+    <string name="search_deck" comment="Deck search for selecting it">Deck search</string>
     <string name="empty_deck">Овај шпил је празан</string>
     <string name="invalid_deck_name">Неисправно име сета</string>
     <string name="studyoptions_congrats_finished">Браво! То је све за данас.</string>

@@ -129,7 +129,7 @@
     <string name="empty_cram_label" maxLength="28">Hustu</string>
     <string name="create_subdeck">Create subdeck</string>
     <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
-    <string name="search_deck" comment="Deck search for selecting it">Deck Search</string>
+    <string name="search_deck" comment="Deck search for selecting it">Deck search</string>
     <string name="empty_deck">Sorta hau hutsik dago</string>
     <string name="invalid_deck_name">Invalid deck name</string>
     <string name="studyoptions_congrats_finished">Congratulations! You have finished for today.</string>
