@@ -21,6 +21,7 @@ import android.text.InputType
 import android.util.AttributeSet
 import android.view.View
 import com.ichi2.anki.R
+import com.ichi2.anki.utils.ext.usingStyledAttributes
 import timber.log.Timber
 
 @Suppress(
@@ -115,8 +116,8 @@ open class NumberRangePreference :
      * This method should only be called once from the constructor.
      */
     private fun getMinFromAttributes(attrs: AttributeSet?): Int =
-        context.obtainStyledAttributes(attrs, R.styleable.NumberRangePreference).use {
-            it.getInt(R.styleable.NumberRangePreference_min, 0)
+        context.usingStyledAttributes(attrs, R.styleable.NumberRangePreference) {
+            getInt(R.styleable.NumberRangePreference_min, 0)
         }
 
     /**
@@ -126,8 +127,8 @@ open class NumberRangePreference :
      * This method should only be called once from the constructor.
      */
     private fun getMaxFromAttributes(attrs: AttributeSet?): Int =
-        context.obtainStyledAttributes(attrs, R.styleable.NumberRangePreference).use {
-            it.getInt(R.styleable.NumberRangePreference_max, Int.MAX_VALUE)
+        context.usingStyledAttributes(attrs, R.styleable.NumberRangePreference) {
+            getInt(R.styleable.NumberRangePreference_max, Int.MAX_VALUE)
         }
 
     /**
