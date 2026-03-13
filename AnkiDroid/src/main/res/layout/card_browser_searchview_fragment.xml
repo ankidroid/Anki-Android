@@ -91,6 +91,8 @@
                     android:ellipsize="middle"
 
                     tools:text="All Decks"
+                    tools:checkable="true"
+                    tools:checked="true"
                     />
 
 

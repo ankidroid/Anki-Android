@@ -16,6 +16,7 @@
 
 package com.ichi2.anki.utils.ext
 
+import com.google.android.material.R.attr.colorSecondaryContainer
 import com.google.android.material.chip.Chip
 
 /**
@@ -23,6 +24,8 @@ import com.google.android.material.chip.Chip
  *
  * Like [Chip.isChecked], for a chip with [Chip.isCheckable] set to `false` so user taps do not
  * modify the visuals state
+ *
+ * The color is set to [colorSecondaryContainer]
  */
 var Chip.hasCheckedBackground: Boolean
     get() = this.isChecked
