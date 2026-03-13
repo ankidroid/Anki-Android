@@ -27,11 +27,11 @@ import com.ichi2.anki.libanki.NotetypeJson
  * As a UI model: the display names of the filters are provided, as well as IDs
  */
 data class SearchFilters(
-    val decks: List<DeckNameId> = emptyList(),
-    val flags: List<Flag> = emptyList(),
-    val tags: List<String> = emptyList(),
-    val noteTypes: List<NoteTypeNameId> = emptyList(),
-    val cardStates: List<CardState> = emptyList(),
+    val decks: List<DeckNameId>,
+    val flags: List<Flag>,
+    val tags: List<String>,
+    val noteTypes: List<NoteTypeNameId>,
+    val cardStates: List<CardState>,
 ) {
     /**
      * A list of filters which are using non-default values
@@ -49,6 +49,26 @@ data class SearchFilters(
         }
     }
 
-    // support extensions on the type
-    companion object
+    companion object {
+        /** An instance of [SearchFilters] with no [active filters][SearchFilters.activeFilters] */
+        val EMPTY = partial()
+
+        /**
+         * Creates a [SearchFilters] instance, providing only a subset of filters
+         */
+        // exists so the primary constructor calls break if a parameter is added
+        fun partial(
+            decks: List<DeckNameId> = emptyList(),
+            flags: List<Flag> = emptyList(),
+            tags: List<String> = emptyList(),
+            noteTypes: List<NoteTypeNameId> = emptyList(),
+            cardStates: List<CardState> = emptyList(),
+        ) = SearchFilters(
+            decks = decks,
+            flags = flags,
+            tags = tags,
+            noteTypes = noteTypes,
+            cardStates = cardStates,
+        )
+    }
 }

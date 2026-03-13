@@ -29,7 +29,7 @@ import com.ichi2.anki.libanki.SearchJoiner
  */
 data class SearchRequest(
     val query: String,
-    val filters: SearchFilters = SearchFilters(),
+    val filters: SearchFilters = SearchFilters.EMPTY,
 ) {
     /**
      * Syntactic sugar for using [copy], to modify [filters]
