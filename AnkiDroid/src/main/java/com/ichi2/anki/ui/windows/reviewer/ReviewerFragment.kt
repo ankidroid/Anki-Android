@@ -608,7 +608,11 @@ class ReviewerFragment :
                     if (flag == Flag.NONE) {
                         flagView.isVisible = false
                     } else {
-                        flagView.setImageDrawable(ContextCompat.getDrawable(requireContext(), flag.drawableRes))
+                        val drawable = ContextCompat.getDrawable(requireContext(), flag.drawableRes)?.mutate()
+                        flag.iconColorRes?.let { colorRes ->
+                            drawable?.setTint(ContextCompat.getColor(requireContext(), colorRes))
+                        }
+                        flagView.setImageDrawable(drawable)
                         flagView.isVisible = true
                     }
                 }

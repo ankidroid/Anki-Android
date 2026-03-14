@@ -17,6 +17,7 @@ package com.ichi2.anki.ui.windows.reviewer
 
 import android.view.Menu
 import androidx.appcompat.view.menu.SubMenuBuilder
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.coroutineScope
@@ -41,8 +42,9 @@ fun ReviewerMenuView.setup(
 
     viewModel.flagFlow
         .flowWithLifecycle(lifecycle)
-        .collectLatestIn(lifecycle.coroutineScope) { flagCode ->
-            findItem(ViewerAction.FLAG_MENU.menuId)?.setPaddedIcon(context, flagCode.drawableRes)
+        .collectLatestIn(lifecycle.coroutineScope) { flag ->
+            val tint = flag.iconColorRes?.let { ContextCompat.getColor(context, it) }
+            findItem(ViewerAction.FLAG_MENU.menuId)?.setPaddedIcon(context, flag.drawableRes, tint = tint)
         }
 
     val markItem = findItem(ViewerAction.MARK.menuId)
