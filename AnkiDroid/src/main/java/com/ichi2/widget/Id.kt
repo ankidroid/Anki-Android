@@ -18,6 +18,7 @@ package com.ichi2.widget
 import android.appwidget.AppWidgetManager
 import android.content.ComponentName
 import android.content.Intent
+import android.os.Bundle
 import android.widget.RemoteViews
 import androidx.annotation.CheckResult
 import com.ichi2.widget.AppWidgetId.Companion.INVALID_APPWIDGET_ID
@@ -40,12 +41,13 @@ value class AppWidgetId(
          * @see AppWidgetManager.EXTRA_APPWIDGET_ID
          */
         @CheckResult
-        fun Intent.getAppWidgetId() = AppWidgetId(getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID))
+        fun Intent.getAppWidgetId(): AppWidgetId =
+            AppWidgetId(getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID))
 
         /**
          * Sets the [`EXTRA_APPWIDGET_ID`][AppWidgetManager.EXTRA_APPWIDGET_ID] for the intent
          */
-        fun Intent.updateWidget(appWidgetId: AppWidgetId) = putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId.id)
+        fun Intent.updateWidget(appWidgetId: AppWidgetId): Intent = putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId.id)
 
         /**
          * A sentinel value that the AppWidget manager will never return as a appWidgetId.
@@ -80,7 +82,7 @@ value class AppWidgetIds(
  * This method will only work when called from the uid that owns the AppWidget provider.
  *
  * The total Bitmap memory used by the RemoteViews object cannot exceed that required to
- * fill the screen 1.5 times, ie. (screen width x screen height x 4 x 1.5) bytes.
+ * fill the screen 1.5 times, i.e. (screen width x screen height x 4 x 1.5) bytes.
  *
  * @param appWidgetId      The AppWidget instance for which to set the RemoteViews.
  * @param views         The RemoteViews object to show.
@@ -104,7 +106,7 @@ fun AppWidgetManager.updateAppWidget(
  * This method will only work when called from the uid that owns the AppWidget provider.
  *
  * The total Bitmap memory used by the RemoteViews object cannot exceed that required to
- * fill the screen 1.5 times, ie. (screen width x screen height x 4 x 1.5) bytes.
+ * fill the screen 1.5 times, i.e. (screen width x screen height x 4 x 1.5) bytes.
  *
  * @param appWidgetIds The AppWidget instances for which to set the RemoteViews.
  * @param views The RemoteViews object to show.
@@ -137,4 +139,4 @@ fun AppWidgetManager.getAppWidgetIdsEx(provider: ComponentName): AppWidgetIds = 
  * @param id The AppWidget instance for which to set the RemoteViews.
  * @return The options associated with the given widget instance.
  */
-fun AppWidgetManager.getAppWidgetOptions(id: AppWidgetId) = getAppWidgetOptions(id.id)
+fun AppWidgetManager.getAppWidgetOptions(id: AppWidgetId): Bundle = getAppWidgetOptions(id.id)

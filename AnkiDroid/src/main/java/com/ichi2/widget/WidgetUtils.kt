@@ -26,7 +26,7 @@ import android.content.Context
  */
 
 fun getAppWidgetManager(context: Context): AppWidgetManager? {
-    // The call returns null on a Supernote A5X, but as the underlying platform call is in Java,
+    // The call returns null on a Super note A5X, but as the underlying platform call is in Java,
     // the result is assumed to be non-null in Kotlin
     return AppWidgetManager.getInstance(context)
 }

@@ -98,7 +98,7 @@ abstract class AnalyticsWidgetProvider : AppWidgetProvider() {
     /**
      * Override this method to implement Widget functionality
      *
-     * Called when the [AnalyticsWidgetProvider] is asked to provide [RemoteViews] for a set of Widgets AND the Anki collection is accessible.
+     * Called when the [AnalyticsWidgetProvider] is asked to provide [android.widget.RemoteViews] for a set of Widgets AND the Anki collection is accessible.
      *
      * @see AppWidgetProvider.onUpdate
      *
