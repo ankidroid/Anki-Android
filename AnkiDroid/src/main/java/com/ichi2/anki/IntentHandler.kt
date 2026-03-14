@@ -357,7 +357,7 @@ class IntentHandler : AbstractIntentHandler() {
          *
          * @throws SystemStorageException if `getExternalFilesDir` returns null
          */
-        fun grantedStoragePermissions(
+         fun grantedStoragePermissions(
             context: Context,
             showToast: Boolean,
         ): Boolean {

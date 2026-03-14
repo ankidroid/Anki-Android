@@ -34,7 +34,7 @@
         ankidroid:showAsAction="ifRoom"
         android:id="@+id/action_mark_card"
         android:icon="@drawable/ic_star_border_white"
-        tools:title="Toggle Mark"/>
+        tools:title="Toggle mark"/>
 
 
     <item

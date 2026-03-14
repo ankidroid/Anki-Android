@@ -67,7 +67,7 @@
             <item
                 android:id="@id/flag_none"
                 android:icon="@drawable/ic_flag_lightgrey"
-                tools:title="No Flag"/>
+                tools:title="No flag"/>
             <item
                 android:id="@id/flag_red"
                 tools:title="Red"
