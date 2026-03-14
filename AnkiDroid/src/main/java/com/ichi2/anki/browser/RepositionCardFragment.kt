@@ -71,7 +71,7 @@ class RepositionCardFragment : DialogFragment() {
                 title(text = title)
                 customView(binding.root)
                 negativeButton(R.string.dialog_cancel)
-                positiveButton(R.string.dialog_ok) {
+                positiveButton(R.string.reposition) {
                     val position =
                         binding.startInputEditText.textAsIntOrNull() ?: return@positiveButton
                     val step =
@@ -88,11 +88,40 @@ class RepositionCardFragment : DialogFragment() {
                 }
             }
 
+        // Disable OK button if either field is empty
+        val positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+        val updateButtonState = {
+            val startText = binding.startInputEditText.text?.toString() ?: ""
+            val stepText = binding.stepInputEditText.text?.toString() ?: ""
+            positiveButton.isEnabled = startText.isNotEmpty() && stepText.isNotEmpty()
+        }
+        
+        binding.startInputEditText.addTextChangedListener(object : android.text.TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: android.text.Editable?) {
+                updateButtonState()
+            }
+        })
+        
+        binding.stepInputEditText.addTextChangedListener(object : android.text.TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: android.text.Editable?) {
+                updateButtonState()
+            }
+        })
+
         // Only automatically show the keyboard in portrait mode
         // In landscape mode, the keyboard would take up too much screen space and hide the dialog
         val isPortrait = resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT
         if (isPortrait) {
             dialog.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
+        }
+
+        // Initial button state check
+        dialog.setOnShowListener {
+            updateButtonState()
         }
 
         return dialog
