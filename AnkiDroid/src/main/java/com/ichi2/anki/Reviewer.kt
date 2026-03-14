@@ -851,11 +851,17 @@ open class Reviewer :
         if (flagIcon != null) {
             if (currentCard != null) {
                 val flag = currentCard!!.flag
-                flagIcon.setIcon(flag.drawableRes)
-                if (flag == Flag.NONE && actionButtons.status.flagsIsOverflown()) {
-                    val flagColor = ThemeUtils.getThemeAttrColor(this, android.R.attr.colorControlNormal)
-                    flagIcon.icon?.mutate()?.setTint(flagColor)
+                val drawable = ContextCompat.getDrawable(this, flag.drawableRes)?.mutate()
+                val tint =
+                    if (flag == Flag.NONE && actionButtons.status.flagsIsOverflown()) {
+                        ThemeUtils.getThemeAttrColor(this, android.R.attr.colorControlNormal)
+                    } else {
+                        flag.iconColorRes?.let { ContextCompat.getColor(this, it) }
+                    }
+                if (tint != null) {
+                    drawable?.setTint(tint)
                 }
+                flagIcon.icon = drawable
             }
         }
 
@@ -1031,7 +1037,20 @@ open class Reviewer :
     private fun setupFlags(subMenu: SubMenu) {
         lifecycleScope.launch {
             for ((flag, displayName) in Flag.queryDisplayNames()) {
-                subMenu.findItem(flag.id).title = displayName
+                val item = subMenu.findItem(flag.id)
+                item.title = displayName
+                val drawable = ContextCompat.getDrawable(this@Reviewer, flag.drawableRes)?.mutate()
+                val tint =
+                    if (flag == Flag.NONE) {
+                        ThemeUtils.getThemeAttrColor(this@Reviewer, android.R.attr.colorControlNormal)
+                    } else {
+                        flag.iconColorRes?.let { ContextCompat.getColor(this@Reviewer, it) }
+                    }
+                if (tint != null) {
+                    drawable?.setTint(tint)
+                }
+                item.icon = drawable
+
                 flagItemIds.add(flag.id)
             }
         }
