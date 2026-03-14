@@ -19,6 +19,7 @@ package com.ichi2.anki.scheduling
 import android.app.Dialog
 import android.content.res.Configuration
 import android.os.Bundle
+import android.text.InputFilter
 import android.view.KeyEvent
 import android.view.View
 import android.view.ViewGroup
@@ -290,6 +291,8 @@ class SetDueDateDialog : DialogFragment() {
             super.onViewCreated(view, savedInstanceState)
             binding.setDueDateSingleDayInputLayout.apply {
                 editText!!.apply {
+                    filters = arrayOf(InputFilter.LengthFilter(5))
+
                     viewModel.nextSingleDayDueDate?.let { value -> setText(value.toString()) }
                     doOnTextChanged { text, _, _, _ ->
                         val currentValue = text?.toString()?.toIntOrNull()
@@ -354,6 +357,8 @@ class SetDueDateDialog : DialogFragment() {
             super.onViewCreated(view, savedInstanceState)
             binding.dateRangeStartLayout.apply {
                 editText!!.apply {
+                    filters = arrayOf(InputFilter.LengthFilter(5))
+
                     viewModel.dateRange.start?.let { start -> setText(start.toString()) }
                     doOnTextChanged { text, _, _, _ ->
                         val value = text.toString().toIntOrNull()
@@ -370,6 +375,7 @@ class SetDueDateDialog : DialogFragment() {
             }
             binding.dateRangeEndLayout.apply {
                 editText!!.apply {
+                    filters = arrayOf(InputFilter.LengthFilter(5))
                     doOnTextChanged { text, _, _, _ ->
                         val value = text.toString().toIntOrNull()
                         viewModel.setNextDateRangeEnd(value)
