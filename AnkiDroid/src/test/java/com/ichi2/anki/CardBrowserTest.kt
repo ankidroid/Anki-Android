@@ -1745,7 +1745,6 @@ class CardBrowserTest : RobolectricTest() {
     }
 
     @Test
-    @Ignore("pending PR 20454")
     fun `options menu - new ui - no notes`() =
         withOptionsMenu(
             OptionsMenuType(
@@ -1778,7 +1777,6 @@ class CardBrowserTest : RobolectricTest() {
         }
 
     @Test
-    @Ignore("pending PR 20454")
     fun `options menu - new ui - add is first if no results`() =
         withOptionsMenu(
             OptionsMenuType(
