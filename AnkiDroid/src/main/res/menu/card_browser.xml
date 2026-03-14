@@ -58,15 +58,18 @@
 
     <item
         android:id="@+id/action_select_all"
+        android:icon="@drawable/ic_select_all_white"
         android:title="@string/card_browser_select_all"/>
 
     <item
         android:id="@+id/action_open_options"
+        android:icon="@drawable/ic_settings_black"
         android:title="@string/study_options"
         ankidroid:showAsAction="never"/>
 
     <item
         android:id="@+id/action_create_filtered_deck"
+        android:icon="@drawable/ic_add_filtered_deck"
         ankidroid:showAsAction="never"
         tools:title="Create filtered deck..."
         />
