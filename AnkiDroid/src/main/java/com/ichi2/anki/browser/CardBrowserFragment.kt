@@ -38,6 +38,7 @@ import android.widget.TextView
 import androidx.annotation.CheckResult
 import androidx.annotation.LayoutRes
 import androidx.annotation.VisibleForTesting
+import androidx.appcompat.view.menu.MenuBuilder
 import androidx.appcompat.widget.ThemeUtils
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
@@ -765,6 +766,11 @@ class CardBrowserFragment :
         // searchview specific logic
         menuHost.addPrepareMenuProvider { menu ->
             if (!useSearchView) return@addPrepareMenuProvider
+
+            // icons have been added for all 'unselected' items
+            if (!activityViewModel.isInMultiSelectMode) {
+                (menu as? MenuBuilder)?.setOptionalIconsVisible(true)
+            }
 
             // reorder 'preview' to appear before 'add'
             val preview = menu.findItem(R.id.action_preview_many)
