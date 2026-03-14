@@ -30,6 +30,7 @@ import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.reviewreminders.ReviewReminder
 import com.ichi2.anki.reviewreminders.ReviewRemindersDatabase
 import com.ichi2.anki.showThemedToast
+import kotlinx.serialization.SerializationException
 import timber.log.Timber
 import java.util.Calendar
 import kotlin.time.Duration
@@ -223,7 +224,25 @@ class AlarmManagerService : BroadcastReceiver() {
         private fun scheduleAllEnabledReviewReminderNotifications(context: Context) {
             Timber.d("scheduleAllEnabledReviewReminderNotifications")
             val allReviewRemindersAsMap =
-                ReviewRemindersDatabase.getAllAppWideReminders() + ReviewRemindersDatabase.getAllDeckSpecificReminders()
+                try {
+                    ReviewRemindersDatabase.getAllAppWideReminders() + ReviewRemindersDatabase.getAllDeckSpecificReminders()
+                } catch (e: SerializationException) {
+                    Timber.w(e, "Failed to read review reminders from storage")
+                    try {
+                        showThemedToast(context, context.getString(R.string.boot_service_review_reminders_corrupt), false)
+                    } catch (toastException: Exception) {
+                        Timber.w(toastException, "Failed to show review reminders corrupt toast")
+                    }
+                    return
+                } catch (e: IllegalArgumentException) {
+                    Timber.w(e, "Failed to read review reminders from storage")
+                    try {
+                        showThemedToast(context, context.getString(R.string.boot_service_review_reminders_corrupt), false)
+                    } catch (toastException: Exception) {
+                        Timber.w(toastException, "Failed to show review reminders corrupt toast")
+                    }
+                    return
+                }
             val enabledReviewReminders = allReviewRemindersAsMap.values.filter { it.enabled }
             for (reviewReminder in enabledReviewReminders) {
                 scheduleReviewReminderNotification(context, reviewReminder)

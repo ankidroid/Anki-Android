@@ -34,6 +34,7 @@ import com.ichi2.anki.reviewreminders.ReviewReminder
 import com.ichi2.anki.reviewreminders.ReviewReminderId
 import com.ichi2.anki.reviewreminders.ReviewReminderTime
 import com.ichi2.anki.reviewreminders.ReviewRemindersDatabase
+import com.ichi2.anki.showThemedToast
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkStatic
@@ -158,6 +159,21 @@ class AlarmManagerServiceTest : RobolectricTest() {
             AlarmManagerService.scheduleAllNotifications(context)
             verify(exactly = 3) { alarmManager.setWindow(AlarmManager.RTC_WAKEUP, any(), 10.minutes.inWholeMilliseconds, any()) }
         }
+
+    @Test
+    fun `scheduleAllNotifications does not crash and shows toast when review reminder data is corrupt`() {
+        mockkStatic("com.ichi2.anki.UIUtilsKt")
+        every { showThemedToast(any(), any<String>(), any()) } returns Unit
+
+        ReviewRemindersDatabase.remindersSharedPrefs.edit {
+            putString(ReviewRemindersDatabase.APP_WIDE_KEY, "not valid json at all")
+        }
+
+        AlarmManagerService.scheduleAllNotifications(context)
+
+        verify(exactly = 0) { alarmManager.setWindow(any(), any(), any(), any()) }
+        verify(exactly = 1) { showThemedToast(any(), any<String>(), false) }
+    }
 
     @Test
     fun `onReceive schedules snoozed notification and cancels clicked notification`() {
