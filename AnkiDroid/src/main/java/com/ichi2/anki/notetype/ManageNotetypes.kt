@@ -236,8 +236,16 @@ class ManageNotetypes : AnkiActivity(R.layout.activity_manage_note_types) {
                         waitForPositiveButton = false,
                         displayKeyboard = true,
                         callback = { dialog, text ->
+                            val textInputLayout = dialog.findViewById<com.google.android.material.textfield.TextInputLayout>(R.id.dialog_text_input_layout)
                             val isNotADuplicate =
                                 !allNotetypes.map { it.name }.contains(text.toString())
+                            
+                            if (!isNotADuplicate && text.isNotEmpty()) {
+                                textInputLayout?.error = getString(R.string.note_type_already_exists)
+                            } else {
+                                textInputLayout?.error = null
+                            }
+                            
                             dialog.positiveButton.isEnabled = text.isNotEmpty() && isNotADuplicate
                         },
                     )

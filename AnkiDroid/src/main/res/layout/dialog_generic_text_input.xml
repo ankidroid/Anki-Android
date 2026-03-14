@@ -26,7 +26,8 @@
     android:paddingEnd="32dp"
     android:paddingBottom="4dp"
     app:errorEnabled="true"
-    android:paddingTop="16dp">
+    android:paddingTop="16dp"
+    android:hint="@string/name">
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/dialog_text_input"

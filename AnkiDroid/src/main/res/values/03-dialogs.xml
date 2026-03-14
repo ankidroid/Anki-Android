@@ -62,6 +62,8 @@
 
     <string name="dialog_cancel">Cancel</string>
     <string name="dialog_ok">OK</string>
+    <string name="name">Name</string>
+    <string name="note_type_already_exists">Note type already exists</string>
     <string name="dialog_confirm" tools:ignore="UnusedResources">Confirm</string>
     <string name="dialog_no">No</string>
     <string name="dialog_yes">Yes</string>
