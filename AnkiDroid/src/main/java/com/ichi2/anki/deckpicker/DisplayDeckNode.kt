@@ -17,7 +17,6 @@
 
 package com.ichi2.anki.deckpicker
 
-import android.annotation.SuppressLint
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.sched.DeckNode
@@ -79,33 +78,27 @@ data class DisplayDeckNode private constructor(
 /** Convert the tree into a flat list of [DisplayDeckNode]s, where matching decks and the children/parents
  * are included. Decks inside collapsed decks are not considered. */
 fun DeckNode.filterAndFlattenDisplay(
-    filter: CharSequence?,
+    filter: DeckFilters,
     selectedDeckId: DeckId,
 ): List<DisplayDeckNode> {
-    val filterPattern =
-        if (filter.isNullOrBlank()) {
-            null
-        } else {
-            filter.toString().lowercase(Locale.getDefault()).trim()
-        }
     val list = mutableListOf<DisplayDeckNode>()
-    filterAndFlattenDisplayInner(filterPattern, list, parentMatched = false, selectedDeckId)
+    filterAndFlattenDisplayInner(filter, list, parentMatched = false, selectedDeckId)
     return list
 }
 
 private fun DeckNode.filterAndFlattenDisplayInner(
-    filter: CharSequence?,
+    filter: DeckFilters,
     list: MutableList<DisplayDeckNode>,
     parentMatched: Boolean,
     selectedDeckId: DeckId,
 ) {
-    if (!isSyntheticDeck && (nameMatchesFilter((filter)) || parentMatched)) {
+    if (!isSyntheticDeck && (filter.accept(fullDeckName) || parentMatched)) {
         this.addVisibleToList(list, matchesSearchOrChild = true, selectedDeckId)
         return
     }
 
     // When searching, ignore collapsed state and always search children
-    val searching = filter != null
+    val searching = filter.searching()
     if (collapsed && !searching) {
         return
     }
@@ -149,14 +142,5 @@ fun DeckNode.addVisibleToList(list: MutableList<DeckNode>) {
         for (child in children) {
             child.addVisibleToList(list)
         }
-    }
-}
-
-@SuppressLint("LocaleRootUsage")
-private fun DeckNode.nameMatchesFilter(filter: CharSequence?): Boolean {
-    return if (filter == null) {
-        true
-    } else {
-        return node.name.lowercase(Locale.getDefault()).contains(filter) || node.name.lowercase(Locale.ROOT).contains(filter)
     }
 }
