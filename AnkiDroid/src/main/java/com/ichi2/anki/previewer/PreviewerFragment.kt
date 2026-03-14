@@ -24,6 +24,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.ViewCompat
 import androidx.core.view.doOnLayout
@@ -124,7 +125,13 @@ class PreviewerFragment :
             viewModel.flag
                 .flowWithLifecycle(lifecycle)
                 .collectLatest { flag ->
-                    menu.findItem(R.id.action_flag).setIcon(flag.drawableRes)
+                    val item = menu.findItem(R.id.action_flag)
+                    val drawable = ContextCompat.getDrawable(requireContext(), flag.drawableRes)?.mutate()
+                    val tint = flag.iconColorRes?.let { ContextCompat.getColor(requireContext(), it) }
+                    if (tint != null) {
+                        drawable?.setTint(tint)
+                    }
+                    item.icon = drawable
                 }
         }
 
@@ -204,9 +211,13 @@ class PreviewerFragment :
         val submenu = menu.findItem(R.id.action_flag).subMenu
         lifecycleScope.launch {
             for ((flag, name) in Flag.queryDisplayNames()) {
-                submenu
-                    ?.add(Menu.NONE, flag.id, Menu.NONE, name)
-                    ?.setIcon(flag.drawableRes)
+                val item = submenu?.add(Menu.NONE, flag.id, Menu.NONE, name)
+                val drawable = ContextCompat.getDrawable(requireContext(), flag.drawableRes)?.mutate()
+                val tint = flag.iconColorRes?.let { ContextCompat.getColor(requireContext(), it) }
+                if (tint != null) {
+                    drawable?.setTint(tint)
+                }
+                item?.setIcon(drawable)
             }
         }
     }

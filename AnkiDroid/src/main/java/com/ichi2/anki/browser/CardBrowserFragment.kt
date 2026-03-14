@@ -317,14 +317,18 @@ class CardBrowserFragment :
             val subMenu = this
             lifecycleScope.launch {
                 for ((flag, displayName) in Flag.queryDisplayNames()) {
-                    val item =
-                        subMenu
-                            .add(flagGroupId, flag.code, Menu.NONE, displayName)
-                            .setIcon(flag.drawableRes)
-                    if (flag == Flag.NONE) {
-                        val color = ThemeUtils.getThemeAttrColor(requireContext(), android.R.attr.colorControlNormal)
-                        item.icon?.mutate()?.setTint(color)
+                    val item = subMenu.add(flagGroupId, flag.code, Menu.NONE, displayName)
+                    val drawable = ContextCompat.getDrawable(requireContext(), flag.drawableRes)?.mutate()
+                    val tint =
+                        if (flag == Flag.NONE) {
+                            ThemeUtils.getThemeAttrColor(requireContext(), android.R.attr.colorControlNormal)
+                        } else {
+                            flag.iconColorRes?.let { ContextCompat.getColor(requireContext(), it) }
+                        }
+                    if (tint != null) {
+                        drawable?.setTint(tint)
                     }
+                    item.icon = drawable
                 }
             }
         }
