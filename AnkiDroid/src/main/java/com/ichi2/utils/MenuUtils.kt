@@ -69,9 +69,13 @@ fun MenuItem.setPaddedIcon(
     context: Context,
     @DrawableRes drawableResId: Int,
     horizontalPaddingDp: Float = DEFAULT_HORIZONTAL_PADDING,
+    tint: Int? = null,
 ) {
     val padding = horizontalPaddingDp.dp.toPx(context)
-    val drawable = ContextCompat.getDrawable(context, drawableResId)
+    val drawable = ContextCompat.getDrawable(context, drawableResId)?.mutate()
+    if (tint != null) {
+        drawable?.setTint(tint)
+    }
     icon = InsetDrawable(drawable, padding, 0, padding, 0)
 }
 

@@ -19,6 +19,7 @@ package com.ichi2.anki.reviewer
 import android.view.View
 import android.widget.ImageView
 import androidx.annotation.DrawableRes
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import com.ichi2.anki.Flag
 import com.ichi2.anki.R
@@ -46,7 +47,14 @@ class CardMarker(
     fun displayFlag(flag: Flag) {
         when (flag) {
             Flag.RED, Flag.BLUE, Flag.GREEN, Flag.ORANGE, Flag.PINK, Flag.PURPLE, Flag.TURQUOISE -> {
-                setFlagView(flag.drawableRes)
+                val context = flagView.context
+                val drawable = ContextCompat.getDrawable(context, flag.drawableRes)?.mutate()
+                val tint = flag.iconColorRes?.let { ContextCompat.getColor(context, it) }
+                if (tint != null) {
+                    drawable?.setTint(tint)
+                }
+                flagView.setImageDrawable(drawable)
+                flagView.visibility = View.VISIBLE
             }
             Flag.NONE -> flagView.visibility = View.INVISIBLE
         }
