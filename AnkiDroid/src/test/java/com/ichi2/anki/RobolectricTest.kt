@@ -22,6 +22,7 @@ import android.app.Application
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.res.Resources
 import android.os.Looper
 import android.widget.TextView
 import androidx.annotation.CallSuper
@@ -299,6 +300,8 @@ open class RobolectricTest :
 
     val targetContext: Context
         get() = ApplicationProvider.getApplicationContext()
+
+    val resources: Resources get() = targetContext.resources
 
     /**
      * Returns an instance of [SharedPreferences] using the test context

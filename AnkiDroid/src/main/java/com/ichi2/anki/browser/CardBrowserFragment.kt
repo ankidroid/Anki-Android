@@ -762,8 +762,16 @@ class CardBrowserFragment :
             viewLifecycleOwner,
         )
 
+        // searchview specific logic
         menuHost.addPrepareMenuProvider { menu ->
             if (!useSearchView) return@addPrepareMenuProvider
+
+            // reorder 'preview' to appear before 'add'
+            val preview = menu.findItem(R.id.action_preview_many)
+            if (activityViewModel.cards.size > 0) {
+                preview?.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
+            }
+
             menu.findItem(R.id.action_search)?.isVisible = false
             menu.findItem(R.id.action_list_my_searches)?.isVisible = false
             menu.findItem(R.id.action_save_search)?.isVisible = false
