@@ -423,6 +423,9 @@ class CardBrowserFragment :
                     menu.findItem(R.id.action_select_all)?.isVisible =
                         vm.rowCount > 0 && vm.selectedRowCount() < vm.rowCount
 
+                    menu.findItem(R.id.action_preview_many)?.isVisible =
+                        vm.rowCount > 0
+
                     menu.findItem(R.id.action_undo).setupUndo()
                 }
 
