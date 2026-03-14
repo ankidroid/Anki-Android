@@ -26,7 +26,6 @@ import android.view.inputmethod.EditorInfo
 import androidx.activity.addCallback
 import androidx.activity.viewModels
 import androidx.core.os.BundleCompat
-import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -125,8 +124,7 @@ class NoteTypeFieldEditor : com.ichi2.anki.AnkiActivity(R.layout.note_type_field
                 ) {
                     val position = viewHolder.bindingAdapterPosition
                     if (position != RecyclerView.NO_POSITION) {
-                        deleteFieldDialog(position, adapter.getItem(position).name)
-                        // reset transitionX whether the field is deleted or not
+                        viewModel.delete(position)
                     }
                 }
 
@@ -321,35 +319,6 @@ class NoteTypeFieldEditor : com.ichi2.anki.AnkiActivity(R.layout.note_type_field
     private fun addFieldDialog() {
         AddNewNoteTypeField(this).showAddNewNoteTypeFieldDialog { name ->
             viewModel.add(name = name)
-        }
-    }
-
-    /**
-     * Creates a dialog to delete the field
-     * @param position the position of the field
-     */
-    private fun deleteFieldDialog(
-        position: Int,
-        fieldName: String,
-    ) {
-        ConfirmationDialog().let {
-            it.setArgs(
-                title = fieldName,
-                message = resources.getString(R.string.field_delete_warning),
-            )
-            it.setConfirm {
-                viewModel.delete(position)
-                // This ensures that the context menu closes after the field has been deleted
-                supportFragmentManager.popBackStackImmediate(
-                    null,
-                    FragmentManager.POP_BACK_STACK_INCLUSIVE,
-                )
-            }
-            it.setCancel {
-                viewModel.refreshAt(position)
-            }
-            it.isCancelable = false
-            showDialogFragment(it)
         }
     }
 

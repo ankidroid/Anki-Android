@@ -48,7 +48,6 @@
     <string name="rename_model">Đổi tên loại ghi chú</string>
     <string name="rename_card_type">Đổi tên loại thẻ</string>
     <!--Language Hint-->
-    <string name="model_field_editor_language_hint_success_result">Đặt gợi ý ngôn ngữ thành %s</string>
     <!--Field Editing-->
     <string name="model_field_editor_add" maxLength="28">Thêm trường</string>
     <string name="model_field_editor_delete">Xóa trường</string>
@@ -65,7 +64,6 @@
         Basic, Basic (and reversed card), Cloze
      -->
     <string name="model_delete_multiple_warning">Delete the note types below?\n %s</string>
-    <string name="field_delete_warning">Bạn có chắc chắn muốn xóa trường này không?</string>
     <!--Model Add Suffixes-->
     <string name="model_browser_add_add">Thêm: %1$s</string>
     <!--This prefix is used for standard note types-->

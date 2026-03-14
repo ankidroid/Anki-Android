@@ -54,7 +54,6 @@
     <string name="rename_model">שינוי שם לסוג הרשומה</string>
     <string name="rename_card_type">שינוי שם סוג הכרטיס</string>
     <!--Language Hint-->
-    <string name="model_field_editor_language_hint_success_result">הגדר רמז שפה ל-%s</string>
     <!--Field Editing-->
     <string name="model_field_editor_add" maxLength="28">הוספת שדה</string>
     <string name="model_field_editor_delete">מחיקת שדה</string>
@@ -71,7 +70,6 @@
         Basic, Basic (and reversed card), Cloze
      -->
     <string name="model_delete_multiple_warning">Delete the note types below?\n %s</string>
-    <string name="field_delete_warning">למחוק את השדה הזה?</string>
     <!--Model Add Suffixes-->
     <string name="model_browser_add_add">הוספה: %1$s</string>
     <!--This prefix is used for standard note types-->

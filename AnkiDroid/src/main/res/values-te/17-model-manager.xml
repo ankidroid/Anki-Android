@@ -50,7 +50,6 @@
     <string name="rename_model">గమనిక రకం పేరు మార్చండి</string>
     <string name="rename_card_type">Rename card type</string>
     <!--Language Hint-->
-    <string name="model_field_editor_language_hint_success_result">భాష సూచనను %sకి సెట్ చేయండి</string>
     <!--Field Editing-->
     <string name="model_field_editor_add" maxLength="28">ఫీల్డ్ను జోడించండి</string>
     <string name="model_field_editor_delete">ఫీల్డ్ను తొలగించు</string>
@@ -67,7 +66,6 @@
         Basic, Basic (and reversed card), Cloze
      -->
     <string name="model_delete_multiple_warning">Delete the note types below?\n %s</string>
-    <string name="field_delete_warning">మీరు ఖచ్చితంగా ఈ ఫీల్డ్ని తొలగించాలనుకుంటున్నారా?</string>
     <!--Model Add Suffixes-->
     <string name="model_browser_add_add">Add: %1$s</string>
     <!--This prefix is used for standard note types-->

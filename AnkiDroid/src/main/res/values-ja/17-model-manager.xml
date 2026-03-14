@@ -48,7 +48,6 @@
     <string name="rename_model">ノートタイプの名前を変更</string>
     <string name="rename_card_type">カードタイプの名前を変更</string>
     <!--Language Hint-->
-    <string name="model_field_editor_language_hint_success_result">%s をキーボード言語に設定しました</string>
     <!--Field Editing-->
     <string name="model_field_editor_add" maxLength="28">フィールドを追加</string>
     <string name="model_field_editor_delete">削除</string>
@@ -65,7 +64,6 @@
         Basic, Basic (and reversed card), Cloze
      -->
     <string name="model_delete_multiple_warning">下記のノートタイプを削除してもよろしいですか？\n%s</string>
-    <string name="field_delete_warning">このフィールドを削除します。本当によろしいですか？</string>
     <!--Model Add Suffixes-->
     <string name="model_browser_add_add">追加: %1$s</string>
     <!--This prefix is used for standard note types-->

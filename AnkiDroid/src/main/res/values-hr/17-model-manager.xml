@@ -52,7 +52,6 @@
     <string name="rename_model">Preimenuj tip bilješke</string>
     <string name="rename_card_type">Preimenuj tip kartice</string>
     <!--Language Hint-->
-    <string name="model_field_editor_language_hint_success_result">Postavi jezik polja na %s</string>
     <!--Field Editing-->
     <string name="model_field_editor_add" maxLength="28">Dodaj polje</string>
     <string name="model_field_editor_delete">Izbriši polje</string>
@@ -69,7 +68,6 @@
         Basic, Basic (and reversed card), Cloze
      -->
     <string name="model_delete_multiple_warning">Izbrisati niže navedene tipove bilješki?\n %s</string>
-    <string name="field_delete_warning">Jeste li sigurni da želite izbrisati ovo polje?</string>
     <!--Model Add Suffixes-->
     <string name="model_browser_add_add">Dodaj: %1$s</string>
     <!--This prefix is used for standard note types-->

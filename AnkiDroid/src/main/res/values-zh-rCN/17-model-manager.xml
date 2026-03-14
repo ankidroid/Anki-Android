@@ -48,7 +48,6 @@
     <string name="rename_model">重命名笔记模板</string>
     <string name="rename_card_type">重命名卡牌类型</string>
     <!--Language Hint-->
-    <string name="model_field_editor_language_hint_success_result">设置语言提示为 %s</string>
     <!--Field Editing-->
     <string name="model_field_editor_add" maxLength="28">添加字段</string>
     <string name="model_field_editor_delete">删除字段</string>
@@ -65,7 +64,6 @@
         Basic, Basic (and reversed card), Cloze
      -->
     <string name="model_delete_multiple_warning">删除以下笔记模板？\n %s</string>
-    <string name="field_delete_warning">是否确定删除此字段？</string>
     <!--Model Add Suffixes-->
     <string name="model_browser_add_add">添加：%1$s</string>
     <!--This prefix is used for standard note types-->

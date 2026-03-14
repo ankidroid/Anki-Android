@@ -54,7 +54,6 @@
     <string name="rename_model">Pervadinti užrašo tipą</string>
     <string name="rename_card_type">Rename card type</string>
     <!--Language Hint-->
-    <string name="model_field_editor_language_hint_success_result">Nustatyti kalbos užuominą į %s</string>
     <!--Field Editing-->
     <string name="model_field_editor_add" maxLength="28">Pridėti laukelį</string>
     <string name="model_field_editor_delete">Ištrinti laukelį</string>
@@ -71,7 +70,6 @@
         Basic, Basic (and reversed card), Cloze
      -->
     <string name="model_delete_multiple_warning">Delete the note types below?\n %s</string>
-    <string name="field_delete_warning">Ar tikrai norite ištrinti šį laukelį?</string>
     <!--Model Add Suffixes-->
     <string name="model_browser_add_add">Pridėti: %1$s</string>
     <!--This prefix is used for standard note types-->

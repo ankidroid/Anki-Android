@@ -48,7 +48,6 @@
     <string name="rename_model">노트 유형 이름 바꾸기</string>
     <string name="rename_card_type">카드 유형 이름 바꾸기</string>
     <!--Language Hint-->
-    <string name="model_field_editor_language_hint_success_result">키보드 언어 힌트를 %s로 설정하기</string>
     <!--Field Editing-->
     <string name="model_field_editor_add" maxLength="28">필드 추가하기</string>
     <string name="model_field_editor_delete">필드 삭제하기</string>
@@ -65,7 +64,6 @@
         Basic, Basic (and reversed card), Cloze
      -->
     <string name="model_delete_multiple_warning">Delete the note types below?\n %s</string>
-    <string name="field_delete_warning">이 필드를 삭제하시겠습니까?</string>
     <!--Model Add Suffixes-->
     <string name="model_browser_add_add">추가: %1$s</string>
     <!--This prefix is used for standard note types-->

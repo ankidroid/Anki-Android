@@ -50,7 +50,6 @@
     <string name="rename_model">Nimeä muistiinpanotyyppi uudelleen</string>
     <string name="rename_card_type">Uudelleennimeä korttityyppi</string>
     <!--Language Hint-->
-    <string name="model_field_editor_language_hint_success_result">Aseta kielen vihjeeksi %s</string>
     <!--Field Editing-->
     <string name="model_field_editor_add" maxLength="28">Lisää kenttä</string>
     <string name="model_field_editor_delete">Poista kenttä</string>
@@ -67,7 +66,6 @@
         Basic, Basic (and reversed card), Cloze
      -->
     <string name="model_delete_multiple_warning">Poistetaanko seuraavat muistiinpanotyypit?\n %s</string>
-    <string name="field_delete_warning">Oletko varma, että haluat poistaa tämän kentän?</string>
     <!--Model Add Suffixes-->
     <string name="model_browser_add_add">Lisää: %1$s</string>
     <!--This prefix is used for standard note types-->

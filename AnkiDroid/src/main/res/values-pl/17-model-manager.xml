@@ -54,7 +54,6 @@
     <string name="rename_model">Zmień nazwę typu notatki</string>
     <string name="rename_card_type">Zmień nazwę typu karty</string>
     <!--Language Hint-->
-    <string name="model_field_editor_language_hint_success_result">Ustaw podpowiedź językową na %s</string>
     <!--Field Editing-->
     <string name="model_field_editor_add" maxLength="28">Dodaj pole</string>
     <string name="model_field_editor_delete">Usuń pole</string>
@@ -71,7 +70,6 @@
         Basic, Basic (and reversed card), Cloze
      -->
     <string name="model_delete_multiple_warning">Usunąć poniższe typy notatek?\n %s</string>
-    <string name="field_delete_warning">Czy na pewno chcesz usunąć to pole?</string>
     <!--Model Add Suffixes-->
     <string name="model_browser_add_add">Dodaj: %1$s</string>
     <!--This prefix is used for standard note types-->

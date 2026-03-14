@@ -88,7 +88,7 @@ class NoteTypeFieldEditorViewModel(
                 _state.update { oldValue ->
                     val fields = oldValue.fields.toMutableList()
                     fields.temporaryAdd(position, validName)
-                    val action = NoteTypeFieldEditorState.Action.Undoable(R.string.model_field_editor_add_success_result, listOf(validName))
+                    val action = NoteTypeFieldEditorState.Action.None
                     return@update oldValue.copy(fields = fields.toList(), action = action)
                 }
                 val operation = NoteTypeFieldOperation.Add(position, validName)
@@ -162,10 +162,7 @@ class NoteTypeFieldEditorViewModel(
                     val fields = oldValue.fields.toMutableList()
                     fields.temporaryRename(position, result.name)
                     val action =
-                        NoteTypeFieldEditorState.Action.Undoable(
-                            R.string.model_field_editor_rename_success_result,
-                            arrayListOf(oldName, result.name),
-                        )
+                        NoteTypeFieldEditorState.Action.None
                     _state.value = oldValue.copy(fields = fields.toList(), action = action)
                 }
                 is UniqueNameResult.Failure -> {
@@ -236,17 +233,9 @@ class NoteTypeFieldEditorViewModel(
         Timber.d("reposition $oldPosition to $newPosition")
         _state.update { oldValue ->
             val fields = oldValue.fields.toMutableList()
-            val name = oldValue.fields[oldPosition].name
             fields.temporaryReposition(oldPosition, newPosition)
             val action =
-                NoteTypeFieldEditorState.Action.Undoable(
-                    R.string.model_field_editor_reposition_success_result,
-                    arrayListOf(
-                        name,
-                        oldPosition + 1,
-                        newPosition + 1,
-                    ),
-                )
+                NoteTypeFieldEditorState.Action.None
             return@update oldValue.copy(fields = fields.toList(), action = action)
         }
         val operation = NoteTypeFieldOperation.Reposition(oldPosition, newPosition)
@@ -266,7 +255,6 @@ class NoteTypeFieldEditorViewModel(
         Timber.d("changeSort to $position")
         val fields = _state.value.fields
         val oldPosition = fields.indexOfFirst { it.isOrder }
-        val name = fields[position].name
         if (oldPosition == position) {
             val action = NoteTypeFieldEditorState.Action.None
             _state.value = _state.value.copy(action = action)
@@ -275,7 +263,7 @@ class NoteTypeFieldEditorViewModel(
         _state.update { oldValue ->
             val list = fields.toMutableList()
             list.temporaryChangeSort(position)
-            val action = NoteTypeFieldEditorState.Action.Undoable(R.string.model_field_editor_sort_field_success_result, arrayListOf(name))
+            val action = NoteTypeFieldEditorState.Action.None
             return@update oldValue.copy(fields = list.toList(), action = action)
         }
         val operation = NoteTypeFieldOperation.ChangeSort(oldPosition, position)
@@ -306,18 +294,9 @@ class NoteTypeFieldEditorViewModel(
             return
         }
         _state.update { oldValue ->
-            val name = oldValue.fields[position].name
             val fields = oldValue.fields.toMutableList()
             fields.temporarySetLanguageHint(position, locale)
-            val action =
-                if (locale != null) {
-                    NoteTypeFieldEditorState.Action.Undoable(
-                        R.string.model_field_editor_language_hint_success_result,
-                        listOf(locale.displayName, name),
-                    )
-                } else {
-                    NoteTypeFieldEditorState.Action.Undoable(R.string.model_field_editor_language_hint_cleared_success_result, listOf(name))
-                }
+            val action = NoteTypeFieldEditorState.Action.None
             return@update oldValue.copy(fields = fields.toList(), action = action)
         }
         val operation = NoteTypeFieldOperation.LanguageHint(position, oldLocale, locale)
@@ -325,21 +304,6 @@ class NoteTypeFieldEditorViewModel(
             val mutableStack = it.toMutableList()
             mutableStack.add(operation)
             return@update mutableStack.toList()
-        }
-    }
-
-    /**
-     * Refreshes the uuid of the field at the given position
-     *
-     * This is used to force a UI update for a specific item even when its data
-     * hasn't logically changed.
-     * @param position the position of the field
-     */
-    fun refreshAt(position: Int) {
-        _state.update { oldValue ->
-            val fields = oldValue.fields.toMutableList()
-            fields.temporaryUpdateUuid(position)
-            return@update oldValue.copy(fields = fields.toList())
         }
     }
 

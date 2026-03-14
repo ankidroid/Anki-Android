@@ -50,7 +50,6 @@
     <string name="rename_model">Alinomi nototipon</string>
     <string name="rename_card_type">Alinomi kartotipon</string>
     <!--Language Hint-->
-    <string name="model_field_editor_language_hint_success_result">Agordi lingvon de sugestoj al %s</string>
     <!--Field Editing-->
     <string name="model_field_editor_add" maxLength="28">Aldoni kampon</string>
     <string name="model_field_editor_delete">Forigi kampon</string>
@@ -67,7 +66,6 @@
         Basic, Basic (and reversed card), Cloze
      -->
     <string name="model_delete_multiple_warning">Ĉu forigi nototipojn listigitajn sube?\n%s</string>
-    <string name="field_delete_warning">Ĉu vi efektive volas forigi tiun kampon?</string>
     <!--Model Add Suffixes-->
     <string name="model_browser_add_add">Aldoni: %1$s</string>
     <!--This prefix is used for standard note types-->

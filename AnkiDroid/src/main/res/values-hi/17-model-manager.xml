@@ -50,7 +50,6 @@
     <string name="rename_model">नोट के प्रकार का नाम बदलें</string>
     <string name="rename_card_type">Rename card type</string>
     <!--Language Hint-->
-    <string name="model_field_editor_language_hint_success_result">भाषा संकेत के रूप में %s सेट करें</string>
     <!--Field Editing-->
     <string name="model_field_editor_add" maxLength="28">फ़ील्ड जोड़ें</string>
     <string name="model_field_editor_delete">फ़ील्ड मिटाएँ</string>
@@ -67,7 +66,6 @@
         Basic, Basic (and reversed card), Cloze
      -->
     <string name="model_delete_multiple_warning">Delete the note types below?\n %s</string>
-    <string name="field_delete_warning">क्या आप सचमुच इस फ़ील्ड को मिटाना चाहते हैं?</string>
     <!--Model Add Suffixes-->
     <string name="model_browser_add_add">Add: %1$s</string>
     <!--This prefix is used for standard note types-->

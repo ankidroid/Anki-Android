@@ -48,7 +48,6 @@
     <string name="rename_model">重新命名筆記類型</string>
     <string name="rename_card_type">重命名卡片種類</string>
     <!--Language Hint-->
-    <string name="model_field_editor_language_hint_success_result">將語言提示設為%s</string>
     <!--Field Editing-->
     <string name="model_field_editor_add" maxLength="28">新增欄位</string>
     <string name="model_field_editor_delete">刪除欄位</string>
@@ -65,7 +64,6 @@
         Basic, Basic (and reversed card), Cloze
      -->
     <string name="model_delete_multiple_warning">Delete the note types below?\n %s</string>
-    <string name="field_delete_warning">你確定要刪除此欄位嗎？</string>
     <!--Model Add Suffixes-->
     <string name="model_browser_add_add">添加：%1$s</string>
     <!--This prefix is used for standard note types-->

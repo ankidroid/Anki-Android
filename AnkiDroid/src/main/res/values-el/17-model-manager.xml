@@ -50,7 +50,6 @@
     <string name="rename_model">Μετονομασία τύπου σημείωσης</string>
     <string name="rename_card_type">Μετονομασία τύπου κάρτας</string>
     <!--Language Hint-->
-    <string name="model_field_editor_language_hint_success_result">Ορισμός γλώσσας υποδείξεων σε %s</string>
     <!--Field Editing-->
     <string name="model_field_editor_add" maxLength="28">Προσθήκη πεδίου</string>
     <string name="model_field_editor_delete">Διαγραφή πεδίου</string>
@@ -67,7 +66,6 @@
         Basic, Basic (and reversed card), Cloze
      -->
     <string name="model_delete_multiple_warning">Delete the note types below?\n %s</string>
-    <string name="field_delete_warning">Θέλετε σίγουρα να διαγράψετε αυτό το πεδίο;</string>
     <!--Model Add Suffixes-->
     <string name="model_browser_add_add">Προσθήκη: %1$s</string>
     <!--This prefix is used for standard note types-->

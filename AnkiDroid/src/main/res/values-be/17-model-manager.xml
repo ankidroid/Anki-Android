@@ -54,7 +54,6 @@
     <string name="rename_model">Перайменаваць тып нататкі</string>
     <string name="rename_card_type">Перайменаваць тып карткі</string>
     <!--Language Hint-->
-    <string name="model_field_editor_language_hint_success_result">Прызначыць %s у якасці мовы падказак</string>
     <!--Field Editing-->
     <string name="model_field_editor_add" maxLength="28">Дадаць поле</string>
     <string name="model_field_editor_delete">Выдаліць поле</string>
@@ -71,7 +70,6 @@
         Basic, Basic (and reversed card), Cloze
      -->
     <string name="model_delete_multiple_warning">Выдаліць тыпы нататак ніжэй?\n %s</string>
-    <string name="field_delete_warning">Вы сапраўды хочаце выдаліць гэта поле?</string>
     <!--Model Add Suffixes-->
     <string name="model_browser_add_add">Дадаць: %1$s</string>
     <!--This prefix is used for standard note types-->

@@ -50,7 +50,6 @@
     <string name="rename_model">Not türünün adını değiştir</string>
     <string name="rename_card_type">Kart türünün ismini değiştir</string>
     <!--Language Hint-->
-    <string name="model_field_editor_language_hint_success_result">Dil ipucunu %s olarak ayarla</string>
     <!--Field Editing-->
     <string name="model_field_editor_add" maxLength="28">Alan ekle</string>
     <string name="model_field_editor_delete">Alanı sil</string>
@@ -67,7 +66,6 @@
         Basic, Basic (and reversed card), Cloze
      -->
     <string name="model_delete_multiple_warning">Aşağıdaki not türleri silinsin mi?\n %s</string>
-    <string name="field_delete_warning">Bu alanı silmek istediğinize emin misiniz?</string>
     <!--Model Add Suffixes-->
     <string name="model_browser_add_add">Ekle: %1$s</string>
     <!--This prefix is used for standard note types-->

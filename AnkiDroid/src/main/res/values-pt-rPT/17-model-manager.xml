@@ -50,7 +50,6 @@
     <string name="rename_model">Renomear tipo de nota</string>
     <string name="rename_card_type">Renomeie o tipo de ficha</string>
     <!--Language Hint-->
-    <string name="model_field_editor_language_hint_success_result">Definir a língua associada como %s</string>
     <!--Field Editing-->
     <string name="model_field_editor_add" maxLength="28">Adicionar campo</string>
     <string name="model_field_editor_delete">Eliminar campo</string>
@@ -67,7 +66,6 @@
         Basic, Basic (and reversed card), Cloze
      -->
     <string name="model_delete_multiple_warning">Delete the note types below?\n %s</string>
-    <string name="field_delete_warning">Tem a certeza que pretende eliminar este campo?</string>
     <!--Model Add Suffixes-->
     <string name="model_browser_add_add">Adicionar: %1$s</string>
     <!--This prefix is used for standard note types-->

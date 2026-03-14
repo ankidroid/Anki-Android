@@ -52,7 +52,6 @@
     <string name="rename_model">Pārdēvēt piezīmju veidu</string>
     <string name="rename_card_type">Rename card type</string>
     <!--Language Hint-->
-    <string name="model_field_editor_language_hint_success_result">Iestatīt valodas norādi %s</string>
     <!--Field Editing-->
     <string name="model_field_editor_add" maxLength="28">Pievienot lauku</string>
     <string name="model_field_editor_delete">Izdzēst lauku</string>
@@ -69,7 +68,6 @@
         Basic, Basic (and reversed card), Cloze
      -->
     <string name="model_delete_multiple_warning">Delete the note types below?\n %s</string>
-    <string name="field_delete_warning">Vai tiešām izdzēst šo lauku?</string>
     <!--Model Add Suffixes-->
     <string name="model_browser_add_add">Pievienot: %1$s</string>
     <!--This prefix is used for standard note types-->

@@ -54,7 +54,6 @@
     <string name="rename_model">Premenovať typ poznámok</string>
     <string name="rename_card_type">Rename card type</string>
     <!--Language Hint-->
-    <string name="model_field_editor_language_hint_success_result">Nastaviť jazykový tip na %s</string>
     <!--Field Editing-->
     <string name="model_field_editor_add" maxLength="28">Pridať pole</string>
     <string name="model_field_editor_delete">Vymazať pole</string>
@@ -71,7 +70,6 @@
         Basic, Basic (and reversed card), Cloze
      -->
     <string name="model_delete_multiple_warning">Delete the note types below?\n %s</string>
-    <string name="field_delete_warning">Skutočne si prajete odstrániť toto pole?</string>
     <!--Model Add Suffixes-->
     <string name="model_browser_add_add">Add: %1$s</string>
     <!--This prefix is used for standard note types-->
