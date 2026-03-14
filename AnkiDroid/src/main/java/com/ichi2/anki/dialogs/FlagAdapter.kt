@@ -23,6 +23,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
+import androidx.core.content.ContextCompat
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
@@ -73,7 +74,12 @@ class FlagAdapter(
     ) {
         val flagItem = getItem(position)
 
-        holder.flagImageView.setImageResource(flagItem.icon)
+        val context = holder.flagImageView.context
+        val drawable = ContextCompat.getDrawable(context, flagItem.icon)?.mutate()
+        flagItem.flag.iconColorRes?.let { colorRes ->
+            drawable?.setTint(ContextCompat.getColor(context, colorRes))
+        }
+        holder.flagImageView.setImageDrawable(drawable)
 
         holder.flagNameEditLayout.visibility = View.GONE
 
