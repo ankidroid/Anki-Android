@@ -8,7 +8,8 @@
      * height between 50 and 800
      * width 120 and 800 -->
 
-<!-- TODO: Use updatePeriodMillis instead of the 10-minute alarm for simpler widget updates.-->
+<!-- Note: It was suggested to use updatePeriodMillis but it has a minimum of 30 mins enforced by the android
+     which is too infrequent for due card count, and used a 10 minutes alarm as it was intended.-->
 
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
     android:initialKeyguardLayout="@layout/widget_deck_picker_large"

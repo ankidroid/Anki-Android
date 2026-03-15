@@ -101,8 +101,8 @@ fun setRecurringAlarm(
 
     alarmManager.setRepeating(
         AlarmManager.ELAPSED_REALTIME,
-        SystemClock.elapsedRealtime() + 1.minutes.inWholeMilliseconds,
-        1.minutes.inWholeMilliseconds,
+        SystemClock.elapsedRealtime() + 10.minutes.inWholeMilliseconds,
+        10.minutes.inWholeMilliseconds,
         newPendingIntent,
     )
 }
