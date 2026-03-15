@@ -150,7 +150,7 @@
     <string name="info_rate">Rate AnkiDroid</string>
     <string name="import_title">Importing</string>
     <string name="import_preparing_file">Preparing file for import&#8230;</string>
-    <string name="import_message_add" comment="Adding a new deck to the collection (import)">Add</string>
+    <string name="import_message_add" comment="Adding a new deck to the collection (import); same label as generic add">Add</string>
     <string name="import_message_replace_confirm">This will delete your existing collection and replace it with the data of file %s</string>
     <string name="import_dialog_message_add">Add “%s” to collection? This may take a long time</string>
     <string name="import_log_no_apkg">This isn’t a valid Anki package file</string>
@@ -336,6 +336,7 @@
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">Failed to access collection. Please try again!</string>
     <string name="cd_manage_notetypes_add">Add a new note type</string>
+    <string name="note_type_already_exists">Note type already exists</string>
     <plurals name="note_types_selected">
         <item quantity="one">%d note type selected</item>
         <item quantity="other">%d note types selected</item>
