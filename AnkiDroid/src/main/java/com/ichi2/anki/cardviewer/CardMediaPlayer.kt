@@ -127,9 +127,9 @@ class CardMediaPlayer : Closeable {
     var playAvTagsJob: Job? = null
     val isPlaying get() = playAvTagsJob != null
 
-    private var onMediaGroupCompleted: (() -> Unit)? = null
+    private var onMediaGroupCompleted: (suspend () -> Unit)? = null
 
-    fun setOnMediaGroupCompletedListener(listener: (() -> Unit)?) {
+    fun setOnMediaGroupCompletedListener(listener: (suspend () -> Unit)?) {
         onMediaGroupCompleted = listener
     }
 
