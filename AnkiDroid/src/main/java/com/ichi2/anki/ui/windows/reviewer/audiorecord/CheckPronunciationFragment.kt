@@ -49,7 +49,7 @@ class CheckPronunciationFragment : Fragment(R.layout.check_pronunciation_fragmen
             if (!isGranted) {
                 AlertDialog.Builder(requireContext()).show {
                     setTitle(R.string.permission_denied)
-                    setMessage(R.string.recording_permission_denied_message)
+                    setMessage(R.string.microphone_permission_denied_message)
                     setPositiveButton(R.string.dialog_ok) { _, _ ->
                         val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
                         val uri = Uri.fromParts("package", requireContext().packageName, null)

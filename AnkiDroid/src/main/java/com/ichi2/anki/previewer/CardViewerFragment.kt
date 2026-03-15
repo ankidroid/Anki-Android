@@ -15,20 +15,24 @@
  */
 package com.ichi2.anki.previewer
 
+import android.Manifest
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import android.webkit.PermissionRequest
 import android.webkit.WebChromeClient
 import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import android.widget.FrameLayout
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.CallSuper
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AlertDialog
+import androidx.core.app.ActivityCompat
 import androidx.core.net.toUri
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
@@ -39,6 +43,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.ViewerResourceHandler
 import com.ichi2.anki.dialogs.TtsVoicesDialogFragment
 import com.ichi2.anki.localizedErrorMessage
+import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.ext.collectIn
 import com.ichi2.anki.utils.ext.packageManager
@@ -48,6 +53,8 @@ import com.ichi2.anki.workarounds.SafeWebViewClient
 import com.ichi2.anki.workarounds.SafeWebViewLayout
 import com.ichi2.compat.CompatHelper.Companion.resolveActivityCompat
 import com.ichi2.themes.Themes
+import com.ichi2.utils.Permissions
+import com.ichi2.utils.Permissions.openAppSettingsScreen
 import com.ichi2.utils.show
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -59,6 +66,37 @@ abstract class CardViewerFragment(
     OnWebViewRecreatedListener {
     abstract val viewModel: CardViewerViewModel
     protected abstract val webViewLayout: SafeWebViewLayout
+
+    private var pendingWebViewPermissionRequest: PermissionRequest? = null
+
+    private val microphonePermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+            Prefs.allowTemplatesToRecordAudio = isGranted
+
+            if (isGranted) {
+                Timber.i("Granting audio capture permission to WebView")
+                pendingWebViewPermissionRequest?.grant(arrayOf(PermissionRequest.RESOURCE_AUDIO_CAPTURE))
+            } else {
+                Timber.i("Denying audio capture permission to WebView")
+                pendingWebViewPermissionRequest?.deny()
+
+                // Only ask to go to app settings if the permission dialog
+                // is no longer shown after repeated denials
+                if (ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(), Manifest.permission.RECORD_AUDIO)) {
+                    return@registerForActivityResult
+                }
+
+                AlertDialog.Builder(requireContext()).show {
+                    setTitle(R.string.permission_denied)
+                    setMessage(R.string.microphone_permission_denied_message)
+                    setPositiveButton(R.string.dialog_ok) { _, _ ->
+                        openAppSettingsScreen()
+                    }
+                    setNegativeButton(R.string.dialog_cancel, null)
+                }
+            }
+            pendingWebViewPermissionRequest = null
+        }
 
     @CallSuper
     override fun onViewCreated(
@@ -286,6 +324,39 @@ abstract class CardViewerFragment(
             with(WindowInsetsControllerCompat(window, window.decorView)) {
                 systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_DEFAULT
                 show(WindowInsetsCompat.Type.systemBars())
+            }
+        }
+
+        override fun onPermissionRequest(request: PermissionRequest) {
+            if (PermissionRequest.RESOURCE_AUDIO_CAPTURE !in request.resources) {
+                Timber.i("Denying permissions to WebView")
+                request.deny()
+                return
+            }
+
+            fun grantRequest() = request.grant(arrayOf(PermissionRequest.RESOURCE_AUDIO_CAPTURE))
+
+            val canRecordAudio = Permissions.canRecordAudio(requireContext())
+            if (canRecordAudio && Prefs.allowTemplatesToRecordAudio) {
+                Timber.i("Granting audio capture permission to WebView")
+                grantRequest()
+                return
+            }
+
+            AlertDialog.Builder(requireContext()).show {
+                setMessage(R.string.template_is_trying_to_record_audio)
+                setPositiveButton(R.string.dialog_allow) { _, _ ->
+                    if (canRecordAudio) {
+                        Prefs.allowTemplatesToRecordAudio = true
+                        grantRequest()
+                    } else {
+                        pendingWebViewPermissionRequest = request
+                        microphonePermissionLauncher.launch(Manifest.permission.RECORD_AUDIO)
+                    }
+                }
+                setNegativeButton(R.string.dialog_cancel) { _, _ ->
+                    request.deny()
+                }
             }
         }
     }

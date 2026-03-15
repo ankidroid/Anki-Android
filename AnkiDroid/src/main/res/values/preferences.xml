@@ -231,6 +231,7 @@
     <string name="pref_cat_wip_key">workInProgressDevOptions</string>
     <string name="reviewer_port_pref_key">reviewerPort</string>
     <string name="use_fixed_port_pref_key">useFixedPort</string>
+    <string name="pref_allow_template_audio_recording">allowTemplateAudioRecording</string>
     <string name="dev_card_browser_fragmented">cardBrowserFragmented</string>
     <string name="dev_card_browser_search_view">cardBrowserSearchView</string>
     <string name="dev_open_tts_voices">openTtsVoices</string>
