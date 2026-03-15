@@ -1,38 +1,31 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:paddingHorizontal="16dp"
-    android:minHeight="?android:attr/listPreferredItemHeight"
-    android:orientation="horizontal">
+    android:minHeight="?android:attr/listPreferredItemHeight">
+    <!--
+      (56dp edit text box height) / 2 + 5dp top margin = 33dp
+    -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/edit_box_center_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="33dp" />
 
     <ImageView
         android:id="@+id/field_drag_handle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
         app:srcCompat="@drawable/ic_menu_24"
+        app:layout_constraintBottom_toBottomOf="@id/edit_box_center_guideline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/edit_box_center_guideline"
         />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/field_edit_layout"
-        android:imeOptions="actionDone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingStart="24dp"
-        android:layout_weight="1"
-        android:layout_gravity="center"
-        android:gravity="center">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/field_edit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawablePadding="8dp"
-            android:singleLine="true"
-            android:maxLines="1" />
-    </com.google.android.material.textfield.TextInputLayout>
     <com.google.android.material.button.MaterialButton
         android:id="@+id/field_sort_button"
         android:layout_width="wrap_content"
@@ -45,7 +38,9 @@
         app:toggleCheckedStateOnClick="false"
         android:tooltipText="@string/model_field_editor_sort_field"
         android:contentDescription="@string/model_field_editor_sort_field"
-        android:layout_gravity="center" />
+        app:layout_constraintBottom_toBottomOf="@id/edit_box_center_guideline"
+        app:layout_constraintEnd_toStartOf="@+id/field_language_button"
+        app:layout_constraintTop_toTopOf="@id/edit_box_center_guideline" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/field_language_button"
@@ -59,5 +54,29 @@
         app:toggleCheckedStateOnClick="false"
         android:tooltipText="@string/model_field_editor_language_hint"
         android:contentDescription="@string/model_field_editor_language_hint"
-        android:layout_gravity="center" />
-</LinearLayout>
+        app:layout_constraintBottom_toBottomOf="@id/edit_box_center_guideline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/edit_box_center_guideline" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/field_edit_layout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        app:endIconMode="clear_text"
+        app:layout_constraintEnd_toStartOf="@+id/field_sort_button"
+        app:layout_constraintStart_toEndOf="@+id/field_drag_handle"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:helperText="@string/toast_empty_name">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/field_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawablePadding="8dp"
+            android:imeOptions="actionDone"
+            android:maxLines="1"
+            android:singleLine="true" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

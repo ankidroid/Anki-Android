@@ -17,8 +17,6 @@
 package com.ichi2.anki.notetype.fieldeditor
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.ViewGroup
@@ -26,6 +24,7 @@ import android.view.inputmethod.EditorInfo
 import androidx.activity.addCallback
 import androidx.activity.viewModels
 import androidx.core.os.BundleCompat
+import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -54,6 +53,7 @@ import com.ichi2.anki.utils.ext.getIntOrNull
 import com.ichi2.anki.utils.ext.setFragmentResultListener
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.utils.hideKeyboard
+import com.ichi2.utils.FieldUtil
 import com.ichi2.utils.moveCursorToEnd
 import dev.androidbroadcast.vbpd.viewBinding
 import kotlinx.coroutines.Dispatchers
@@ -188,12 +188,16 @@ class NoteTypeFieldEditor : com.ichi2.anki.AnkiActivity(R.layout.note_type_field
         }
 
         binding.fields.apply {
-            setHasFixedSize(true)
             layoutManager = LinearLayoutManager(this@NoteTypeFieldEditor)
             adapter = this@NoteTypeFieldEditor.adapter
             touchHelper.attachToRecyclerView(this@apply)
         }
-        binding.btnAdd.setOnClickListener { addFieldDialog() }
+        binding.btnAdd.setOnClickListener {
+            val existingNameList =
+                viewModel.state.value.fields
+                    .map { it.name.savedName }
+            addFieldDialog(existingNameList)
+        }
         onBackPressedDispatcher.addCallback(this) {
             viewModel.requestDiscardChangesAndClose()
         }
@@ -316,8 +320,8 @@ class NoteTypeFieldEditor : com.ichi2.anki.AnkiActivity(R.layout.note_type_field
     /**
      * Creates a dialog to create a field
      */
-    private fun addFieldDialog() {
-        AddNewNoteTypeField(this).showAddNewNoteTypeFieldDialog { name ->
+    private fun addFieldDialog(existingNameList: List<String>) {
+        AddNewNoteTypeField(this, existingNameList).showAddNewNoteTypeFieldDialog { name ->
             viewModel.add(name = name)
         }
     }
@@ -432,7 +436,7 @@ private class NoteFieldAdapter(
             Timber.d("payload: $oldItemPosition, $newItemPosition")
             Timber.d("payload: $oldItem, $newItem")
             return when {
-                oldItem.name != newItem.name -> Payload.Rename
+                oldItem.displayName != newItem.displayName -> Payload.Rename
                 oldItem.isOrder != newItem.isOrder -> Payload.Sort
                 oldItem.locale != newItem.locale -> Payload.Locale
                 else -> super.getChangePayload(oldItemPosition, newItemPosition)
@@ -496,28 +500,16 @@ private class NoteFieldAdapter(
                         }
                     }
                     addTextChangedListener(
-                        object : TextWatcher {
-                            override fun beforeTextChanged(
-                                s: CharSequence?,
-                                start: Int,
-                                count: Int,
-                                end: Int,
-                            ) {
-                            }
-
-                            override fun onTextChanged(
-                                s: CharSequence?,
-                                start: Int,
-                                count: Int,
-                                end: Int,
-                            ) {
-                            }
-
-                            override fun afterTextChanged(s: Editable?) {
-                                save()
-                            }
+                        afterTextChanged = {
+                            save()
                         },
                     )
+                }
+                fieldEditLayout.setEndIconOnClickListener {
+                    val position = bindingAdapterPosition
+                    if (position == RecyclerView.NO_POSITION) return@setEndIconOnClickListener
+                    val name = getItem(position).name.savedName
+                    setText(name)
                 }
             }
         }
@@ -529,9 +521,13 @@ private class NoteFieldAdapter(
             Timber.d("bind: $item at $bindingAdapterPosition ")
             binding.root.translationX = 0f
             binding.apply {
-                if (payload.contains(NoteTypeFieldDiffUtil.Payload.Rename) && item.name != fieldEdit.text?.toString().orEmpty()) {
+                if (payload.contains(NoteTypeFieldDiffUtil.Payload.Rename)) {
                     Timber.d("field edittext: ${fieldEdit.text} to ${item.name} at $bindingAdapterPosition")
-                    setText(item.name)
+                    if (item.displayName != fieldEdit.text?.toString().orEmpty()) {
+                        setText(item.displayName)
+                    }
+                    setEndIconVisible()
+                    setError()
                 }
                 if (payload.contains(NoteTypeFieldDiffUtil.Payload.Sort)) {
                     fieldSortButton.isChecked = item.isOrder
@@ -547,6 +543,50 @@ private class NoteFieldAdapter(
                 setText(name)
                 if (hasFocus()) {
                     moveCursorToEnd()
+                }
+            }
+        }
+
+        fun setEndIconVisible() {
+            val position = bindingAdapterPosition
+            if (position == RecyclerView.NO_POSITION) return
+            val item = getItem(position)
+            binding.fieldEditLayout.isEndIconVisible =
+                item.displayName != item.name.savedName && item.displayName.isNotBlank()
+        }
+
+        fun setError() {
+            val position = bindingAdapterPosition
+            if (position == RecyclerView.NO_POSITION) return
+            val item = getItem(position)
+            binding.fieldEditLayout.apply {
+                when (val result = item.name.valid) {
+                    is FieldUtil.UniqueNameResult.Success -> {
+                        if (item.displayName != result.name) {
+                            helperText =
+                                binding.root.resources.getString(
+                                    R.string.model_field_editor_auto_rename,
+                                    result.name,
+                                )
+                            error = null
+                        } else {
+                            helperText = null
+                            error = null
+                        }
+                        isErrorEnabled = false
+                    }
+
+                    FieldUtil.UniqueNameResult.Failure.DuplicateName -> {
+                        helperText = null
+                        error = binding.root.resources.getString(R.string.toast_duplicate_field)
+                    }
+
+                    FieldUtil.UniqueNameResult.Failure.EmptyName -> {
+                        // Differs from the add operation
+                        helperText = binding.root.resources.getString(R.string.toast_empty_name)
+                        error = null
+                        isErrorEnabled = false
+                    }
                 }
             }
         }

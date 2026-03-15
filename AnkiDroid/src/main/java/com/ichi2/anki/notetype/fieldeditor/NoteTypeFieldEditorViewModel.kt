@@ -1,6 +1,5 @@
 package com.ichi2.anki.notetype.fieldeditor
 
-import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -22,20 +21,17 @@ import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.servicelayer.LanguageHint
 import com.ichi2.anki.servicelayer.LanguageHintService
 import com.ichi2.anki.servicelayer.LanguageHintService.languageHint
+import com.ichi2.utils.FieldUtil
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import net.ankiweb.rsdroid.BackendException
-import org.jetbrains.annotations.Contract
 import timber.log.Timber
 import java.util.UUID
-import kotlin.contracts.ExperimentalContracts
-import kotlin.contracts.InvocationKind
-import kotlin.contracts.contract
 
 class NoteTypeFieldEditorViewModel(
     savedStateHandle: SavedStateHandle,
@@ -49,21 +45,7 @@ class NoteTypeFieldEditorViewModel(
     private val hasUndoableOperation get() = fieldsEditOperationStack.value.any { !it.isUndoable }
     private val _state = MutableStateFlow(NoteTypeFieldEditorState(fields = emptyList()))
 
-    /**
-     * The pair of the field uuid and the new name which is pending confirmation
-     */
-    private val pendingRename = MutableStateFlow("" to "")
-    val state: Flow<NoteTypeFieldEditorState> =
-        _state.combine(pendingRename) { state, (uuid, name) ->
-            Timber.d("current state: $state")
-            val mutableFields = state.fields.toMutableList()
-            val pos = mutableFields.indexOfFirst { it.uuid == uuid }
-            if (pos != NO_POSITION) {
-                Timber.d("pending rename: override ${mutableFields[pos].name} to $name")
-                mutableFields[pos] = mutableFields[pos].copy(name = name)
-            }
-            return@combine state.copy(fields = mutableFields.toList())
-        }
+    val state: StateFlow<NoteTypeFieldEditorState> = _state.asStateFlow()
 
     init {
         viewModelScope.launch {
@@ -82,27 +64,33 @@ class NoteTypeFieldEditorViewModel(
     ) {
         Timber.d("addOperationStackAddField")
         Timber.d("add $name at $position")
-        uniqueName(name = name).fold(
-            onSuccess = { validName ->
+        val nameList = _state.value.fields.map { it.name.savedName }
+        when (val result = FieldUtil.uniqueName(nameList = nameList, newName = name)) {
+            is FieldUtil.UniqueNameResult.Success -> {
                 val position = if (position == NO_POSITION) _state.value.fields.lastIndex + 1 else position
                 _state.update { oldValue ->
                     val fields = oldValue.fields.toMutableList()
-                    fields.temporaryAdd(position, validName)
+                    val name =
+                        NoteTypeFieldRowData.Name(
+                            savedName = result.name,
+                            editingName = null,
+                            valid = result,
+                        )
+                    fields.temporaryAdd(position, name)
                     val action = NoteTypeFieldEditorState.Action.None
                     return@update oldValue.copy(fields = fields.toList(), action = action)
                 }
-                val operation = NoteTypeFieldOperation.Add(position, validName)
+                val operation = NoteTypeFieldOperation.Add(position, result.name)
                 fieldsEditOperationStack.update {
                     val mutableStack = it.toMutableList()
                     mutableStack.add(operation)
                     return@update mutableStack.toList()
                 }
-            },
-            onFailure = { resId ->
-                val action = NoteTypeFieldEditorState.Action.Rejected(resId)
-                _state.value = _state.value.copy(action = action)
-            },
-        )
+            }
+
+            FieldUtil.UniqueNameResult.Failure.DuplicateName -> TODO()
+            FieldUtil.UniqueNameResult.Failure.EmptyName -> TODO()
+        }
     }
 
     /**
@@ -122,7 +110,7 @@ class NoteTypeFieldEditorViewModel(
         Timber.d("isEditing: $isEditing")
         val mutableStack = fieldsEditOperationStack.value.toMutableList()
         while (true) {
-            // remove previous rename operation
+            // remove previous rename operations
             val last = mutableStack.lastOrNull()
             if (last is NoteTypeFieldOperation.Rename && last.position == position) {
                 mutableStack.removeAt(mutableStack.lastIndex)
@@ -134,47 +122,50 @@ class NoteTypeFieldEditorViewModel(
         val oldValue = _state.value
         val oldField = oldValue.fields[position]
         val oldName = oldField.name
-        val result = uniqueName(position, name)
+        val nameList = _state.value.fields.map { it.name.savedName }
+        val result = FieldUtil.uniqueName(nameList, position, name)
 
         Timber.d("rename $oldName to $name at $position")
-        pendingRename.value = oldField.uuid to name
-        if (isEditing) {
-            if (result is UniqueNameResult.Success && oldName == result.name) {
-                val operation = NoteTypeFieldOperation.Rename(position, oldName, result.name)
-                mutableStack.add(operation)
-            }
-            fieldsEditOperationStack.value = mutableStack.toList()
 
-            val action = NoteTypeFieldEditorState.Action.None
-            _state.value = oldValue.copy(action = action)
-        } else {
-            pendingRename.value = "" to ""
-            when (result) {
-                is UniqueNameResult.Success -> {
-                    if (oldName == result.name) {
-                        Timber.d("rename cancelled at $position")
-                        return
+        when (result) {
+            is FieldUtil.UniqueNameResult.Success -> {
+                val fields = oldValue.fields.toMutableList()
+                val newName =
+                    if (isEditing) {
+                        oldName.copy(editingName = name, valid = result)
+                    } else {
+                        oldName.copy(savedName = result.name, editingName = null, valid = result)
                     }
-                    val operation = NoteTypeFieldOperation.Rename(position, oldName, result.name)
-                    mutableStack.add(operation)
-                    fieldsEditOperationStack.value = mutableStack.toList()
+                fields.temporaryRename(position, newName)
+                val action =
+                    NoteTypeFieldEditorState.Action.None
+                _state.value = oldValue.copy(fields = fields.toList(), action = action)
 
-                    val fields = oldValue.fields.toMutableList()
-                    fields.temporaryRename(position, result.name)
-                    val action =
+                if (oldName.savedName == result.name) return
+
+                val operation =
+                    NoteTypeFieldOperation.Rename(position, oldName.savedName, result.name)
+                mutableStack.add(operation)
+                fieldsEditOperationStack.value = mutableStack.toList()
+            }
+
+            is FieldUtil.UniqueNameResult.Failure -> {
+                Timber.d("rename failed due to $result at $position")
+                val fields = oldValue.fields.toMutableList()
+                val newName =
+                    if (isEditing) {
+                        oldName.copy(editingName = name, valid = result)
+                    } else {
+                        oldName.copy(editingName = null, valid = result)
+                    }
+                fields.temporaryRename(position, newName)
+                val action =
+                    if (isEditing) {
                         NoteTypeFieldEditorState.Action.None
-                    _state.value = oldValue.copy(fields = fields.toList(), action = action)
-                }
-                is UniqueNameResult.Failure -> {
-                    Timber.d("rename failed due to $result at $position")
-                    val action =
-                        if (oldName == name) {
-                            NoteTypeFieldEditorState.Action.None
-                        } else {
-                            NoteTypeFieldEditorState.Action.Rejected(result.resId)
-                        }
-                    _state.value = oldValue.copy(action = action)
-                }
+                    } else {
+                        NoteTypeFieldEditorState.Action.Rejected(result.resId)
+                    }
+                _state.value = oldValue.copy(fields = fields.toList(), action = action)
             }
         }
     }
@@ -207,7 +198,7 @@ class NoteTypeFieldEditorViewModel(
             val action =
                 NoteTypeFieldEditorState.Action.Undoable(
                     R.string.model_field_editor_delete_success_result,
-                    arrayListOf(fieldData.name),
+                    arrayListOf(fieldData.name.savedName),
                 )
             return@update oldValue.copy(fields = fields.toList(), action = action)
         }
@@ -327,7 +318,7 @@ class NoteTypeFieldEditorViewModel(
 
     private fun MutableList<NoteTypeFieldRowData>.temporaryAdd(
         position: Int = NO_POSITION,
-        name: String,
+        name: NoteTypeFieldRowData.Name,
     ) {
         val newField = NoteTypeFieldRowData(name = name)
         if (position != NO_POSITION) {
@@ -339,7 +330,7 @@ class NoteTypeFieldEditorViewModel(
 
     private fun MutableList<NoteTypeFieldRowData>.temporaryRename(
         position: Int,
-        newName: String,
+        newName: NoteTypeFieldRowData.Name,
     ) {
         val field = this[position]
         this[position] = field.copy(name = newName)
@@ -383,39 +374,6 @@ class NoteTypeFieldEditorViewModel(
     }
 
     /**
-     * Cleans the input field or explain why it's rejected
-     * @param position the position of the field
-     * @param name the input
-     * @return the result UniqueNameResult.Success which contains the unique name or UniqueNameResult.Failure which contains string resource id of the reason why it's rejected
-     *
-     */
-    private fun uniqueName(
-        position: Int = NO_POSITION,
-        name: String,
-    ): UniqueNameResult {
-        var input =
-            name
-                .replace("[\\n\\r{}:\"]".toRegex(), "")
-        // The number of #, ^, /, space, tab, starting the input
-        var offset = 0
-        while (offset < input.length) {
-            if (!listOf('#', '^', '/', ' ', '\t').contains(input[offset])) {
-                break
-            }
-            offset++
-        }
-        input = input.substring(offset).trim()
-        if (input.isEmpty()) {
-            return UniqueNameResult.Failure.EmptyName
-        }
-        val otherFields = _state.value.fields.filterIndexed { index, _ -> index != position }
-        if (otherFields.any { it.name == input }) {
-            return UniqueNameResult.Failure.DuplicateName
-        }
-        return UniqueNameResult.Success(input)
-    }
-
-    /**
      * Undo the last unsaved change
      */
     fun undo() {
@@ -434,8 +392,15 @@ class NoteTypeFieldEditorViewModel(
                 when (undoOperation) {
                     is NoteTypeFieldOperation.Add ->
                         temporaryDelete(undoOperation.position)
-                    is NoteTypeFieldOperation.Rename ->
-                        temporaryRename(undoOperation.position, undoOperation.oldName)
+                    is NoteTypeFieldOperation.Rename -> {
+                        val name =
+                            NoteTypeFieldRowData.Name(
+                                savedName = undoOperation.oldName,
+                                editingName = null,
+                                valid = FieldUtil.UniqueNameResult.Success(undoOperation.oldName),
+                            )
+                        temporaryRename(undoOperation.position, name)
+                    }
                     is NoteTypeFieldOperation.Reposition ->
                         temporaryReposition(undoOperation.newPosition, undoOperation.oldPosition)
                     is NoteTypeFieldOperation.ChangeSort ->
@@ -622,8 +587,14 @@ class NoteTypeFieldEditorViewModel(
         return getNotetype(ntid).run {
             val sortF = config.sortFieldIdx
             fieldsList.mapIndexed { index, it ->
+                val name =
+                    NoteTypeFieldRowData.Name(
+                        savedName = it.name,
+                        editingName = null,
+                        valid = FieldUtil.UniqueNameResult.Success(it.name),
+                    )
                 NoteTypeFieldRowData(
-                    name = it.name,
+                    name = name,
                     isOrder = index == sortF,
                     locale = languageMap.getOrDefault(it.name, null),
                 )
@@ -749,41 +720,5 @@ class NoteTypeFieldEditorViewModel(
 
     private companion object {
         private const val NO_POSITION = -1
-    }
-
-    private sealed class UniqueNameResult {
-        data class Success(
-            /**
-             * The unique name of the field
-             */
-            val name: String,
-        ) : UniqueNameResult()
-
-        sealed class Failure(
-            /**
-             * The string resource id of the reason why the name is rejected
-             */
-            @StringRes val resId: Int,
-        ) : UniqueNameResult() {
-            object EmptyName : Failure(R.string.toast_empty_name)
-
-            object DuplicateName : Failure(R.string.toast_duplicate_field)
-        }
-
-        @OptIn(ExperimentalContracts::class)
-        @Contract
-        fun fold(
-            onSuccess: (String) -> Unit,
-            onFailure: (resId: Int) -> Unit,
-        ) {
-            contract {
-                callsInPlace(onSuccess, InvocationKind.AT_MOST_ONCE)
-                callsInPlace(onFailure, InvocationKind.AT_MOST_ONCE)
-            }
-            when (this) {
-                is Success -> onSuccess(name)
-                is Failure -> onFailure(resId)
-            }
-        }
     }
 }
