@@ -249,7 +249,7 @@ internal fun selectAnkiDroidFolder(
     return if (canManageExternalStorage) {
         AnkiDroidFolder.PublicFolder(PermissionSet.EXTERNAL_MANAGER)
     } else {
-        return AnkiDroidFolder.AppPrivateFolder
+        AnkiDroidFolder.AppPrivateFolder
     }
 }
 

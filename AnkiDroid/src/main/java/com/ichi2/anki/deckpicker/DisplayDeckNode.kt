@@ -153,10 +153,9 @@ fun DeckNode.addVisibleToList(list: MutableList<DeckNode>) {
 }
 
 @SuppressLint("LocaleRootUsage")
-private fun DeckNode.nameMatchesFilter(filter: CharSequence?): Boolean {
-    return if (filter == null) {
+private fun DeckNode.nameMatchesFilter(filter: CharSequence?): Boolean =
+    if (filter == null) {
         true
     } else {
-        return node.name.lowercase(Locale.getDefault()).contains(filter) || node.name.lowercase(Locale.ROOT).contains(filter)
+        node.name.lowercase(Locale.getDefault()).contains(filter) || node.name.lowercase(Locale.ROOT).contains(filter)
     }
-}
