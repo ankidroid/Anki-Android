@@ -22,6 +22,7 @@ import android.view.ContextThemeWrapper
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import com.ichi2.anki.libanki.exception.ConfirmModSchemaException
+import com.ichi2.anki.notetype.fieldeditor.NoteTypeFieldEditor
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
 import org.hamcrest.MatcherAssert
@@ -105,6 +106,7 @@ class NoteTypeFieldEditorTest(
             positiveButton(text = "") {
                 try {
                     val noteTypeName = "Basic"
+                    val fieldName = fieldNameInput.text.toString()
 
                     // start ModelFieldEditor activity
                     val intent = Intent()
@@ -117,11 +119,8 @@ class NoteTypeFieldEditorTest(
                             intent,
                         )
                     when (fieldOperationType) {
-                        FieldOperationType.ADD_FIELD -> noteTypeFieldEditor.addField(fieldNameInput)
-                        FieldOperationType.RENAME_FIELD ->
-                            noteTypeFieldEditor.renameField(
-                                fieldNameInput,
-                            )
+                        FieldOperationType.ADD_FIELD -> noteTypeFieldEditor.addField(fieldName)
+                        FieldOperationType.RENAME_FIELD -> noteTypeFieldEditor.renameField(fieldName)
                     }
                 } catch (exception: ConfirmModSchemaException) {
                     throw RuntimeException(exception)

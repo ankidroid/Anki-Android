@@ -32,7 +32,6 @@ import com.ichi2.anki.IntentHandler.Companion.getReviewDeckIntent
 import com.ichi2.anki.IntentHandler2
 import com.ichi2.anki.IntroductionActivity
 import com.ichi2.anki.NoteEditorActivity
-import com.ichi2.anki.NoteTypeFieldEditor
 import com.ichi2.anki.Reviewer
 import com.ichi2.anki.SharedDecksActivity
 import com.ichi2.anki.SingleFragmentActivity
@@ -41,6 +40,7 @@ import com.ichi2.anki.account.AccountActivity
 import com.ichi2.anki.instantnoteeditor.InstantNoteEditorActivity
 import com.ichi2.anki.multimedia.MultimediaActivity
 import com.ichi2.anki.notetype.ManageNotetypes
+import com.ichi2.anki.notetype.fieldeditor.NoteTypeFieldEditor
 import com.ichi2.anki.preferences.PreferencesActivity
 import com.ichi2.anki.previewer.CardViewerActivity
 import com.ichi2.anki.ui.windows.managespace.ManageSpaceActivity
