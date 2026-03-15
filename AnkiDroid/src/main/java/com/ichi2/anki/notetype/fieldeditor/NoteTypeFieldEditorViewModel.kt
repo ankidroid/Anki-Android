@@ -138,7 +138,14 @@ class NoteTypeFieldEditorViewModel(
                     }
                 fields.temporaryRename(position, newName)
                 val action =
-                    NoteTypeFieldEditorState.Action.None
+                    if (isEditing) {
+                        NoteTypeFieldEditorState.Action.None
+                    } else {
+                        NoteTypeFieldEditorState.Action.Undoable(
+                            resId = R.string.model_field_editor_rename_success_result,
+                            formatArgs = arrayListOf(oldName.savedName, result.name),
+                        )
+                    }
                 _state.value = oldValue.copy(fields = fields.toList(), action = action)
 
                 if (oldName.savedName == result.name) return

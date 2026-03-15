@@ -48,6 +48,7 @@
     <string name="model_field_editor_changing">Updating fields</string>
     <string name="model_field_editor_sort_field">Sort by this field</string>
     <string name="model_field_editor_delete_success_result">Deleted ‘%1$s’</string>
+    <string name="model_field_editor_rename_success_result">Renamed ‘%1$s’ to ‘%2$s’</string>
     <string name="model_field_editor_save_success_result">Saved changes successfully</string>
     <string name="model_field_editor_discard_success_result">Discarded changes</string>
     <string name="model_field_editor_save_not_undoable">These changes cannot be undone. Are you sure you wish to save these changes?</string>
