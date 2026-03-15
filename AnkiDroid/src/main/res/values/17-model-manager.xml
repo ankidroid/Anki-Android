@@ -42,7 +42,7 @@
     <string name="model_field_editor_name">Field name</string>
     <string name="model_field_editor_delete">Delete field</string>
     <string name="model_field_editor_rename">Rename field</string>
-    <string name="model_field_editor_auto_rename">Name contained invalid characters; saved as ‘%1$s’</string>
+    <string name="model_field_editor_auto_rename">Name contains invalid characters; will be saved as ‘%1$s’</string>
     <string name="model_field_editor_language_hint">Set keyboard language hint</string>
     <string name="model_field_editor_reposition">Reposition field</string>
     <string name="model_field_editor_changing">Updating fields</string>
