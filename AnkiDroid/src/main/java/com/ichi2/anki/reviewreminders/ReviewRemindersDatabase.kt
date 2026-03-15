@@ -21,8 +21,10 @@ import android.content.SharedPreferences
 import androidx.annotation.VisibleForTesting
 import androidx.core.content.edit
 import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.libanki.DeckId
-import com.ichi2.anki.reviewreminders.ReviewRemindersDatabase.StoredReviewRemindersMap
+import com.ichi2.anki.settings.Prefs
+import com.ichi2.anki.showError
 import kotlinx.serialization.InternalSerializationApi
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.SerializationException
@@ -68,20 +70,20 @@ object ReviewRemindersDatabase {
     /**
      * Key in SharedPreferences for retrieving deck-specific reminders.
      * Should have deck ID appended to its end, ex. "deck_12345".
-     * Its value is a HashMap<[ReviewReminderId], [ReviewReminder]> serialized as a JSON String.
+     * Its value is a [ReviewReminderGroup] serialized as a JSON String.
      */
     @VisibleForTesting
     const val DECK_SPECIFIC_KEY = "deck_"
 
     /**
      * Key in SharedPreferences for retrieving app-wide reminders.
-     * Its value is a HashMap<[ReviewReminderId], [ReviewReminder]> serialized as a JSON String.
+     * Its value is a [ReviewReminderGroup] serialized as a JSON String.
      */
     @VisibleForTesting
     const val APP_WIDE_KEY = "app_wide"
 
     /**
-     * The form in which HashMap<[ReviewReminderId], [ReviewReminder]> are actually written to SharedPreferences.
+     * The form in which [ReviewReminderGroup] are actually written to SharedPreferences.
      * This allows us to check the version of [ReviewReminder] stored before trying to deserialize the JSON string,
      * allowing us to carefully handle schema migration. Otherwise, if an older version of [ReviewReminder] is encoded
      * and we try to decode it into a newer form of [ReviewReminder], an error will be thrown.
@@ -89,10 +91,13 @@ object ReviewRemindersDatabase {
      * We assume that the version is accurate; e.x. if the version is 3, then the [ReviewReminder] stored is indeed
      * of schema version 3. This should be safe to assume since writing this data class to SharedPreferences is an
      * atomic operation.
+     *
+     * @param version The version of the [remindersMapJson] which is stored.
+     * @param remindersMapJson The stored [ReviewReminderGroup]'s underlying hashmap as a serialized JSON string.
      */
     @Serializable
     @VisibleForTesting
-    data class StoredReviewRemindersMap(
+    data class StoredReviewReminderGroup(
         val version: ReviewReminderSchemaVersion,
         val remindersMapJson: String,
     )
@@ -100,13 +105,15 @@ object ReviewRemindersDatabase {
     /**
      * Current [ReviewReminder] schema version. Whenever [ReviewReminder] is modified, this integer MUST be incremented.
      *
-     * Version 1: 3 August 2025
+     * Version 1: 3 August 2025 - Initial version
+     * Version 2: 25 January 2026 - Added [ReviewReminder.onlyNotifyIfNoReviews]
+     * Version 3: 8 February 2026 - Added [ReviewReminder.latestNotifTime]
      *
      * @see [oldReviewReminderSchemasForMigration]
      * @see [ReviewReminder]
      */
     @VisibleForTesting
-    var schemaVersion = ReviewReminderSchemaVersion(1)
+    var schemaVersion = ReviewReminderSchemaVersion(3)
 
     /**
      * A map of all old [ReviewReminderSchema]s that [ReviewRemindersDatabase.performSchemaMigration] will attempt to migrate old
@@ -123,7 +130,9 @@ object ReviewRemindersDatabase {
     @VisibleForTesting
     var oldReviewReminderSchemasForMigration: Map<ReviewReminderSchemaVersion, KClass<out ReviewReminderSchema>> =
         mapOf(
-            ReviewReminderSchemaVersion(1) to ReviewReminder::class, // Most up to date version
+            ReviewReminderSchemaVersion(1) to ReviewReminderSchemaV1::class,
+            ReviewReminderSchemaVersion(2) to ReviewReminderSchemaV2::class,
+            ReviewReminderSchemaVersion(3) to ReviewReminder::class, // Most up to date version
         )
 
     /**
@@ -136,26 +145,26 @@ object ReviewRemindersDatabase {
      * dynamically via [oldReviewReminderSchemasForMigration] rather than at compile-time.
      * The possible schemas to deserialize from are inputted dynamically so that unit tests are possible.
      *
-     * @param encodedReviewRemindersKey The key with which the [encodedReviewRemindersMap] is stored in SharedPreferences,
+     * @param encodedReviewReminderKey The key with which the [encodedReviewReminderGroup] is stored in SharedPreferences,
      * used for writing the migrated map back into SharedPreferences.
-     * @param encodedReviewRemindersMap The encoded review reminders map to migrate.
-     * @param fromVersion The schema version of [encodedReviewRemindersMap].
+     * @param encodedReviewReminderGroup The encoded review reminders map to migrate.
+     * @param fromVersion The schema version of [encodedReviewReminderGroup].
      * @param toVersion The schema version of the new review reminders map.
      *
      * @throws SerializationException If the [fromVersion] is less than 1 or greater than [schemaVersion], or if the
-     * [encodedReviewRemindersMap] is not a valid JSON string, or if the final result of migration is somehow not a [ReviewReminder].
-     * @throws IllegalArgumentException If the [encodedReviewRemindersMap] is not actually of version [fromVersion],
+     * [encodedReviewReminderGroup] is not a valid JSON string, or if the final result of migration is somehow not a [ReviewReminder].
+     * @throws IllegalArgumentException If the [encodedReviewReminderGroup] is not actually of version [fromVersion],
      * or if the [fromVersion] is not in [oldReviewReminderSchemasForMigration].
      *
      * @see [ReviewReminder]
      */
     @OptIn(InternalSerializationApi::class)
     private fun performSchemaMigration(
-        encodedReviewRemindersKey: String,
-        encodedReviewRemindersMap: String,
+        encodedReviewReminderKey: String,
+        encodedReviewReminderGroup: String,
         fromVersion: ReviewReminderSchemaVersion,
         toVersion: ReviewReminderSchemaVersion = schemaVersion,
-    ): HashMap<ReviewReminderId, ReviewReminder> {
+    ): ReviewReminderGroup {
         Timber.i("Beginning migration from $fromVersion to $toVersion")
         if (fromVersion.value < 1 ||
             fromVersion.value > toVersion.value
@@ -168,7 +177,7 @@ object ReviewRemindersDatabase {
             oldReviewReminderSchemasForMigration[fromVersion]
                 ?: throw IllegalArgumentException("Review reminder schema version not found: $fromVersion")
         val mapDeserializer = MapSerializer(ReviewReminderId.serializer(), oldSchema.serializer())
-        val mapDecoded = Json.decodeFromString(mapDeserializer, encodedReviewRemindersMap)
+        val mapDecoded = Json.decodeFromString(mapDeserializer, encodedReviewReminderGroup)
 
         // Migrate step by step
         var currentMap = mapDecoded
@@ -185,99 +194,134 @@ object ReviewRemindersDatabase {
         }
 
         // Write to SharedPreferences, then return deserialized map
-        val finalMap =
-            currentMap.mapValues { (_, value) ->
-                value as? ReviewReminder ?: throw SerializationException("Expected ReviewReminder, got ${value::class.qualifiedName}")
-            }
-        val jsonString = encodeJson(finalMap)
+        val finalGroup =
+            ReviewReminderGroup(
+                currentMap.mapValues { (_, value) ->
+                    value as? ReviewReminder ?: throw SerializationException("Expected ReviewReminder, got ${value::class.qualifiedName}")
+                },
+            )
         remindersSharedPrefs.edit {
-            putString(encodedReviewRemindersKey, jsonString)
+            putString(encodedReviewReminderKey, encodeJson(finalGroup))
         }
-        return HashMap(finalMap)
+        return finalGroup
     }
 
     /**
-     * Decode an encoded HashMap<[ReviewReminderId], [ReviewReminder]> JSON string which has been stored as a [StoredReviewRemindersMap].
-     * @see Json.decodeFromString
-     * @throws SerializationException If the stored string is not a valid JSON string.
-     * @throws IllegalArgumentException If the decoded reminders map is not a HashMap<[ReviewReminderId], [ReviewReminder]>,
+     * Decode an encoded [ReviewReminderGroup] JSON string which has been stored as a [StoredReviewReminderGroup].
+     * Deletes the stored review reminders and returns an empty [ReviewReminderGroup] if deserialization fails
      * and no valid schema migrations exist.
+     *
+     * @see Json.decodeFromString
      */
     private fun decodeJson(
         jsonString: String,
-        deckKeyForMigrationPurposes: String,
-    ): HashMap<ReviewReminderId, ReviewReminder> {
-        val storedReviewRemindersMap = Json.decodeFromString<StoredReviewRemindersMap>(jsonString)
-        return if (storedReviewRemindersMap.version.value != schemaVersion.value) {
-            performSchemaMigration(
-                deckKeyForMigrationPurposes,
-                storedReviewRemindersMap.remindersMapJson,
-                storedReviewRemindersMap.version,
-                schemaVersion,
-            )
-        } else {
-            Json.decodeFromString<HashMap<ReviewReminderId, ReviewReminder>>(storedReviewRemindersMap.remindersMapJson)
+        jsonStringKey: String,
+    ): ReviewReminderGroup {
+        Timber.v("Decoding review reminders JSON string: $jsonString")
+        try {
+            val storedReviewReminderGroup = Json.decodeFromString<StoredReviewReminderGroup>(jsonString)
+            return if (storedReviewReminderGroup.version.value != schemaVersion.value) {
+                performSchemaMigration(
+                    jsonStringKey,
+                    storedReviewReminderGroup.remindersMapJson,
+                    storedReviewReminderGroup.version,
+                    schemaVersion,
+                )
+            } else {
+                ReviewReminderGroup(storedReviewReminderGroup.remindersMapJson)
+            }
+        } catch (e: Exception) {
+            when (e) {
+                is SerializationException,
+                is IllegalArgumentException,
+                -> {
+                    // Log error, it will be displayed to the user either immediately if the app is open or when they next open the app if not
+                    val errorString = "Encountered (${e.message}) while parsing $jsonString"
+                    Prefs.reviewReminderDeserializationErrors = Prefs.reviewReminderDeserializationErrors.orEmpty() + "[$errorString]"
+                    Timber.e(e, errorString)
+                    CrashReportService.sendExceptionReport(
+                        e,
+                        origin = "ReviewRemindersDatabase:decodeJson",
+                        additionalInfo = jsonString,
+                    )
+
+                    // Delete corrupted value, then return an empty group
+                    remindersSharedPrefs.edit { remove(jsonStringKey) }
+                    return ReviewReminderGroup()
+                }
+                else -> throw e
+            }
         }
     }
 
     /**
-     * Encode a Map<[ReviewReminderId], [ReviewReminder]> as a [StoredReviewRemindersMap] JSON string.
+     * Encode a [ReviewReminderGroup] as a [StoredReviewReminderGroup] JSON string.
+     *
      * @see Json.encodeToString
-     * @throws SerializationException If the stored string is somehow not a valid JSON string, even though the input parameter is type-checked.
      */
-    private fun encodeJson(reminders: Map<ReviewReminderId, ReviewReminder>): String =
-        Json.encodeToString(StoredReviewRemindersMap.serializer(), StoredReviewRemindersMap(schemaVersion, Json.encodeToString(reminders)))
+    private fun encodeJson(reminders: ReviewReminderGroup): String =
+        Json.encodeToString(StoredReviewReminderGroup.serializer(), StoredReviewReminderGroup(schemaVersion, reminders.serializeToString()))
 
     /**
      * Get the [ReviewReminder]s for a specific key.
-     * @throws SerializationException If the value associated with this key is not valid JSON string.
-     * @throws IllegalArgumentException If the decoded reminders map is not a HashMap<[ReviewReminderId], [ReviewReminder]>.
+     * Deletes the stored review reminders and returns an empty [ReviewReminderGroup] if deserialization fails
+     * and no valid schema migrations exist.
      */
-    private fun getRemindersForKey(key: String): HashMap<ReviewReminderId, ReviewReminder> {
-        val jsonString = remindersSharedPrefs.getString(key, null) ?: return hashMapOf()
-        return decodeJson(jsonString, deckKeyForMigrationPurposes = key)
+    private fun getRemindersForKey(key: String): ReviewReminderGroup {
+        val jsonString = remindersSharedPrefs.getString(key, null) ?: return ReviewReminderGroup()
+        return decodeJson(jsonString, jsonStringKey = key)
     }
 
     /**
      * Get the [ReviewReminder]s for a specific deck.
-     * @throws SerializationException If the reminders map has not been stored in SharedPreferences as a valid JSON string.
-     * @throws IllegalArgumentException If the decoded reminders map is not a HashMap<[ReviewReminderId], [ReviewReminder]>.
+     * Deletes the stored review reminders and returns an empty [ReviewReminderGroup] if deserialization fails
+     * and no valid schema migrations exist.
      */
-    fun getRemindersForDeck(did: DeckId): HashMap<ReviewReminderId, ReviewReminder> = getRemindersForKey(DECK_SPECIFIC_KEY + did)
+    fun getRemindersForDeck(did: DeckId): ReviewReminderGroup = getRemindersForKey(DECK_SPECIFIC_KEY + did)
 
     /**
      * Get the app-wide [ReviewReminder]s.
-     * @throws SerializationException If the reminders map has not been stored in SharedPreferences as a valid JSON string.
-     * @throws IllegalArgumentException If the decoded reminders map is not a HashMap<[ReviewReminderId], [ReviewReminder]>.
+     * Deletes the stored review reminders and returns an empty [ReviewReminderGroup] if deserialization fails
+     * and no valid schema migrations exist.
      */
-    fun getAllAppWideReminders(): HashMap<ReviewReminderId, ReviewReminder> = getRemindersForKey(APP_WIDE_KEY)
+    fun getAllAppWideReminders(): ReviewReminderGroup = getRemindersForKey(APP_WIDE_KEY)
 
     /**
      * Get all [ReviewReminder]s that are associated with a specific deck, all in a single flattened map.
-     * @throws SerializationException If the reminders maps have not been stored in SharedPreferences as valid JSON strings.
-     * @throws IllegalArgumentException If the decoded reminders maps are not instances of HashMap<[ReviewReminderId], [ReviewReminder]>.
+     * If the stored review reminders for any specific deck fail to deserialize and no valid schema migrations exist,
+     * those reminders are deleted and not included in the resulting [ReviewReminderGroup].
      */
-    fun getAllDeckSpecificReminders(): HashMap<ReviewReminderId, ReviewReminder> =
+    fun getAllDeckSpecificReminders(): ReviewReminderGroup =
         remindersSharedPrefs
             .all
             .filterKeys { it.startsWith(DECK_SPECIFIC_KEY) }
-            .flatMap { (key, value) -> decodeJson(value.toString(), deckKeyForMigrationPurposes = key).entries }
-            .associateTo(hashMapOf()) { it.toPair() }
+            .map { (key, value) -> decodeJson(value.toString(), jsonStringKey = key) }
+            .mergeAll()
 
     /**
-     * Edit the [ReviewReminder]s for a specific key. Deletes the review reminders map for this key if, after the editing operation,
-     * no review reminders remain.
+     * Edit the [ReviewReminder]s for a specific key.
+     * Deletes the review reminders map for this key if, after the editing operation, no review reminders remain.
+     * If the stored review reminders for any specific deck fail to deserialize and no valid schema migrations exist,
+     * those reminders are deleted and not included in the resulting [ReviewReminderGroup].
+     *
      * @param key
-     * @param reminderEditor A lambda that takes the current map and returns the updated map.
-     * @throws SerializationException If the current reminders map has not been stored in SharedPreferences as a valid JSON string.
-     * @throws IllegalArgumentException If the decoded current reminders map is not a HashMap<[ReviewReminderId], [ReviewReminder]>.
+     * @param editor A lambda that takes the current map and returns the updated map.
+     * @param expectedScope The expected scope of all review reminders in the resulting map.
+     *
+     * @throws IllegalArgumentException If the result of applying the [editor] contains review reminders of a scope other than [expectedScope].
      */
     private fun editRemindersForKey(
         key: String,
-        reminderEditor: (HashMap<ReviewReminderId, ReviewReminder>) -> Map<ReviewReminderId, ReviewReminder>,
+        editor: ReviewReminderGroupEditor,
+        expectedScope: ReviewReminderScope,
     ) {
         val existingReminders = getRemindersForKey(key)
-        val updatedReminders = reminderEditor(existingReminders)
+        val updatedReminders = editor(existingReminders)
+
+        require(updatedReminders.getRemindersList().all { it.scope == expectedScope }) {
+            "Tried to write review reminders of an unexpected, incompatible scope to scope: $expectedScope"
+        }
+
         remindersSharedPrefs.edit {
             if (updatedReminders.isEmpty()) {
                 remove(key)
@@ -289,66 +333,81 @@ object ReviewRemindersDatabase {
 
     /**
      * Edit the [ReviewReminder]s for a specific deck.
-     * This assumes the resulting map contains only reminders of scope [ReviewReminderScope.DeckSpecific].
+     *
      * @param did
-     * @param reminderEditor A lambda that takes the current map and returns the updated map.
-     * @throws SerializationException If the current reminders map has not been stored in SharedPreferences as a valid JSON string.
-     * @throws IllegalArgumentException If the decoded current reminders map is not a HashMap<[ReviewReminderId], [ReviewReminder]>.
+     * @param editor A lambda that takes the current map and returns the updated map.
+     *
+     * @throws IllegalArgumentException If the result of applying the [editor] contains review reminders
+     * of a scope other than [ReviewReminderScope.DeckSpecific].
      */
     fun editRemindersForDeck(
         did: DeckId,
-        reminderEditor: (HashMap<ReviewReminderId, ReviewReminder>) -> Map<ReviewReminderId, ReviewReminder>,
-    ) = editRemindersForKey(DECK_SPECIFIC_KEY + did, reminderEditor)
+        editor: ReviewReminderGroupEditor,
+    ) = editRemindersForKey(DECK_SPECIFIC_KEY + did, editor, ReviewReminderScope.DeckSpecific(did))
 
     /**
      * Edit the app-wide [ReviewReminder]s.
-     * This assumes the resulting map contains only reminders of scope [ReviewReminderScope.Global].
-     * @param reminderEditor A lambda that takes the current map and returns the updated map.
-     * @throws SerializationException If the current reminders map has not been stored in SharedPreferences as a valid JSON string.
-     * @throws IllegalArgumentException If the decoded current reminders map is not a HashMap<[ReviewReminderId], [ReviewReminder]>.
+     *
+     * @param editor A lambda that takes the current map and returns the updated map.
+     *
+     * @throws IllegalArgumentException If the result of applying the [editor] contains review reminders
+     * of a scope other than [ReviewReminderScope.Global].
      */
-    fun editAllAppWideReminders(reminderEditor: (HashMap<ReviewReminderId, ReviewReminder>) -> Map<ReviewReminderId, ReviewReminder>) =
-        editRemindersForKey(APP_WIDE_KEY, reminderEditor)
-}
+    fun editAllAppWideReminders(editor: ReviewReminderGroupEditor) = editRemindersForKey(APP_WIDE_KEY, editor, ReviewReminderScope.Global)
 
-/**
- * Inline value class for review reminder schema versions.
- * @see [StoredReviewRemindersMap]
- * @see [ReviewReminder]
- */
-@JvmInline
-@Serializable
-value class ReviewReminderSchemaVersion(
-    val value: Int,
-) {
-    init {
-        require(value >= 1) { "Review reminder schema version must be >= 1" }
-        // We do not check that it is <= SCHEMA_VERSION here because then declaring SCHEMA_VERSION would be circular
+    /**
+     * Shows an error message dialog if a review reminder deserialization error has recently happened.
+     * Checks if a deserialization error has recently occurred by checking if anything is present in
+     * [Prefs.reviewReminderDeserializationErrors], emptying the preference after reading it.
+     *
+     * @param context A valid themed context (ie. not applicationContext) to display the error dialog in.
+     */
+    fun checkDeserializationErrors(context: Context) {
+        Prefs.reviewReminderDeserializationErrors?.let { errorString ->
+            if (errorString.isNotEmpty()) {
+                context.showError(
+                    message =
+                        "An error occurred while loading your review reminders, corrupted reminders have been deleted. " +
+                            "Details:\n\n$errorString",
+                    crashReportData = null, // Crash reports are sent when the error is first encountered
+                )
+                Prefs.reviewReminderDeserializationErrors = ""
+            }
+        }
     }
 }
 
 /**
- * When [ReviewReminder] is updated by a developer, implement this interface in a new data class which
- * has the same fields as the old version of [ReviewReminder], then implement the [migrate] method which
- * transforms old [ReviewReminder]s to new [ReviewReminder]s. Also ensure that the previous [ReviewReminderSchema]
- * in the migration version chain ([ReviewRemindersDatabase.oldReviewReminderSchemasForMigration]) has its [migrate] method
- * edited to return instances of the newly-created [ReviewReminderSchema]. Then, increment [ReviewRemindersDatabase.schemaVersion].
- *
- * Data classes implementing this interface should be marked as @Serializable. Any new types defined for ReviewReminderSchemas
- * should also be marked as @Serializable.
- *
- * @see [ReviewRemindersDatabase.performSchemaMigration].
- * @see [ReviewReminder]
+ * Lambda that can be fed into [ReviewRemindersDatabase.editRemindersForDeck] or
+ * [ReviewRemindersDatabase.editAllAppWideReminders] which deletes the given review reminder.
  */
-interface ReviewReminderSchema {
-    /**
-     * All review reminders must have an identifying ID.
-     * This is necessary to facilitate migrations. See the implementation of [ReviewRemindersDatabase.performSchemaMigration] for details.
-     */
-    val id: ReviewReminderId
+fun deleteReminder(reminder: ReviewReminder) =
+    { reminders: ReviewReminderGroup ->
+        reminders.apply {
+            remove(reminder.id)
+        }
+    }
 
-    /**
-     * Transforms this [ReviewReminderSchema] to the next version of the [ReviewReminderSchema].
-     */
-    fun migrate(): ReviewReminderSchema
-}
+/**
+ * Lambda that can be fed into [ReviewRemindersDatabase.editRemindersForDeck] or
+ * [ReviewRemindersDatabase.editAllAppWideReminders] which updates the given review reminder if it
+ * exists or inserts it if it doesn't (an "upsert" operation)
+ */
+fun upsertReminder(reminder: ReviewReminder) =
+    { reminders: ReviewReminderGroup ->
+        reminders.apply {
+            this[reminder.id] = reminder
+        }
+    }
+
+/**
+ * Lambda that can be fed into [ReviewRemindersDatabase.editRemindersForDeck] or
+ * [ReviewRemindersDatabase.editAllAppWideReminders] which toggles whether the given review reminder
+ * is enabled.
+ */
+fun toggleReminder(reminder: ReviewReminder) =
+    { reminders: ReviewReminderGroup ->
+        reminders.apply {
+            toggleEnabled(reminder.id)
+        }
+    }

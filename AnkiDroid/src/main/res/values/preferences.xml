@@ -213,6 +213,7 @@
     <string name="pref_review_reminders_screen_key">reviewRemindersScreen</string>
     <string name="review_reminders_next_free_id">reviewRemindersNextFreeId</string>
     <string name="reminder_notifs_request_shown_key">reminderNotifsRequestShown</string>
+    <string name="review_reminder_deserialization_errors_key">reviewReminderDeserializationErrors</string>
     <!-- Notifications -->
     <string name="notifications_permission_requested_key">notificationsPermissionRequested</string>
     <string name="record_audio_permission_requested_key">recordAudioPermissionRequested</string>
