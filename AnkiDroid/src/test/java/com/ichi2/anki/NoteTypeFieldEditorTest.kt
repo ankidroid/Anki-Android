@@ -106,6 +106,7 @@ class NoteTypeFieldEditorTest(
             positiveButton(text = "") {
                 try {
                     val noteTypeName = "Basic"
+                    val fieldName = fieldNameInput.text.toString()
 
                     // start ModelFieldEditor activity
                     val intent = Intent()
@@ -118,11 +119,8 @@ class NoteTypeFieldEditorTest(
                             intent,
                         )
                     when (fieldOperationType) {
-                        FieldOperationType.ADD_FIELD -> noteTypeFieldEditor.addField(fieldNameInput)
-                        FieldOperationType.RENAME_FIELD ->
-                            noteTypeFieldEditor.renameField(
-                                fieldNameInput,
-                            )
+                        FieldOperationType.ADD_FIELD -> noteTypeFieldEditor.addField(fieldName)
+                        FieldOperationType.RENAME_FIELD -> noteTypeFieldEditor.renameField(fieldName)
                     }
                 } catch (exception: ConfirmModSchemaException) {
                     throw RuntimeException(exception)
