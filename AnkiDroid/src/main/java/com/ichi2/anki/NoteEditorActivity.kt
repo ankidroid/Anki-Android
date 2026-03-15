@@ -19,7 +19,6 @@ package com.ichi2.anki
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentContainerView
 import androidx.fragment.app.commit
@@ -35,10 +34,8 @@ import com.ichi2.anki.noteeditor.NoteEditorFragmentDelegate
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import com.ichi2.anki.previewer.TemplatePreviewerArguments
 import com.ichi2.anki.previewer.TemplatePreviewerFragment
-import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
-import com.ichi2.anki.ui.ResizablePaneManager
 import com.ichi2.anki.utils.ext.doOnTabSelected
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -83,11 +80,10 @@ class NoteEditorActivity :
      * Automatically cancelled when the lifecycle scope is destroyed, preventing memory leaks.
      */
     private var refreshPreviewerJob: Job? = null
+    private lateinit var binding: ActivityNoteEditorBinding
 
     val fragmented: Boolean
-        get() = previewerFrame?.isVisible == true
-
-    private lateinit var binding: ActivityNoteEditorBinding
+        get() = binding.noteEditorContainer.isResizable
 
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
@@ -97,7 +93,6 @@ class NoteEditorActivity :
         if (!ensureStoragePermissions()) {
             return
         }
-
         binding = ActivityNoteEditorBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -136,24 +131,19 @@ class NoteEditorActivity :
             onBackPressedDispatcher.onBackPressed()
         }
 
+        binding.noteEditorContainer.addOnUIChangedListener {
+            Timber.d("Rakshit: NoteEditor:: UI changed")
+            invalidateOptionsMenu()
+            if (fragmented) {
+                loadNoteEditorPreviewer(false)
+            }
+        }
+
         if (fragmented) {
             // Defer previewer loading to avoid blocking onCreate
-            binding.previewerFrame!!.post {
+            binding.previewerFrame.post {
                 loadNoteEditorPreviewer(true)
             }
-            val parentLayout = binding.noteEditorXlView!!
-            val divider = binding.noteEditorResizingDivider!!
-            val noteEditorPane = binding.noteEditorFragmentFrame
-            val previewerPane = binding.previewerFrameLayout!!
-            ResizablePaneManager(
-                parentLayout = parentLayout,
-                divider = divider,
-                leftPane = noteEditorPane,
-                rightPane = previewerPane,
-                sharedPrefs = Prefs.getUiConfig(this),
-                leftPaneWeightKey = PREF_NOTE_EDITOR_PANE_WEIGHT,
-                rightPaneWeightKey = PREF_PREVIEWER_PANE_WEIGHT,
-            )
         }
 
         startLoadingCollection()
@@ -275,9 +265,9 @@ class NoteEditorActivity :
      */
     private fun configurePreviewerTabs(previewerFragment: TemplatePreviewerFragment) {
         // Post to ensure the fragment is attached before accessing its viewModel
-        binding.previewerFrame?.post {
+        binding.previewerFrame.post {
             if (!previewerFragment.isAdded) return@post
-            val previewerTabLayout = binding.previewerTabLayout!!
+            val previewerTabLayout = binding.previewerTabLayout
             launchCatchingTask {
                 previewerFragment.setupTabs(previewerTabLayout)
             }
@@ -383,11 +373,6 @@ class NoteEditorActivity :
         const val FRAGMENT_ARGS_EXTRA = "fragmentArgs"
         const val FRAGMENT_NAME_EXTRA = "fragmentName"
         const val FRAGMENT_TAG = "NoteEditorFragmentTag"
-
-        // Keys for saving pane weights in SharedPreferences
-        private const val PREF_NOTE_EDITOR_PANE_WEIGHT = "noteEditorPaneWeight"
-        private const val PREF_PREVIEWER_PANE_WEIGHT = "previewerPaneWeight"
-
         private val REFRESH_NOTE_EDITOR_PREVIEW_DELAY = 100.milliseconds
 
         /**

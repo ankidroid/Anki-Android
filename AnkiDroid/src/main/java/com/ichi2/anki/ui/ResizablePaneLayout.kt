@@ -1,3 +1,19 @@
+/*
+ *  Copyright (c) 2026 Rakshit Rajendra <rrakzhit@gmail.com>
+ *
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 3 of the License, or (at your option) any later
+ *  version.
+ *
+ *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
+ *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.ichi2.anki.ui
 
 import android.content.Context
@@ -27,7 +43,7 @@ class ResizablePaneLayout
         private val sharedPrefs: SharedPreferences = Prefs.getUiConfig(context)
         private var leftPaneWeightKey: String? = null
         private var rightPaneWeightKey: String? = null
-        private val minWeight: Float = 0.2f
+        private val minWeight: Float = 0.5f
         private val dragColor: Int = context.getColor(R.color.drag_divider_color)
         private val idleColor: Int = context.getColor(R.color.idle_divider_color)
 
@@ -43,7 +59,7 @@ class ResizablePaneLayout
 
         private var wasFragmented = fragmented
         private var onUIChange: (() -> Unit)? = null
-        var isResizable = fragmented
+        var isResizable = false
             private set
 
         init {
@@ -74,7 +90,6 @@ class ResizablePaneLayout
             leftPane = getChildAt(0)
             divider = getChildAt(1)
             rightPane = getChildAt(2)
-
             refreshState(fragmented)
         }
 
@@ -108,10 +123,8 @@ class ResizablePaneLayout
         }
 
         // Refreshes state of the UI based on the current state of the view
-        // Public method to be allowed to call from outside
-        fun refreshState(isFragmented: Boolean?) {
-            val final = isFragmented ?: fragmented
-            if (!final) {
+        fun refreshState(isFragmented: Boolean = fragmented) {
+            if (!isFragmented) {
                 removeResizableDivider()
             } else if (!isResizable) {
                 setupResizableDivider()
@@ -228,14 +241,21 @@ class ResizablePaneLayout
                 val rightParams = rightPane.layoutParams as LayoutParams
 
                 // Load saved weights from SharedPreferences
-                val savedLeftWeight = if (leftPaneWeightKey != null) sharedPrefs.getFloat(leftPaneWeightKey, leftParams.weight) else 0.5f
+                val savedLeftWeight =
+                    if (leftPaneWeightKey !=
+                        null
+                    ) {
+                        sharedPrefs.getFloat(leftPaneWeightKey, leftParams.weight)
+                    } else {
+                        leftParams.weight
+                    }
                 val savedRightWeight =
                     if (rightPaneWeightKey !=
                         null
                     ) {
                         sharedPrefs.getFloat(rightPaneWeightKey, rightParams.weight)
                     } else {
-                        0.5f
+                        rightParams.weight
                     }
 
                 // Apply the saved weights
