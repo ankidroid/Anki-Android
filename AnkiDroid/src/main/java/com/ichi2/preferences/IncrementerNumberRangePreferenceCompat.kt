@@ -81,7 +81,7 @@ class IncrementerNumberRangePreferenceCompat :
         override fun onStart() {
             super.onStart()
             positiveButton = (dialog as? androidx.appcompat.app.AlertDialog)?.positiveButton
-
+            positiveButton?.setText(R.string.save)
             // Rerun validation now that we have the OK button reference
             updateButtonState()
         }
