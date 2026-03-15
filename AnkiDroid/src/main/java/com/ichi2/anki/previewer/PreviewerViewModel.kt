@@ -22,6 +22,7 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.Flag
 import com.ichi2.anki.asyncIO
 import com.ichi2.anki.browser.IdsFile
+import com.ichi2.anki.cardviewer.CardMediaPlayer
 import com.ichi2.anki.cardviewer.SingleCardSide
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.launchCatchingIO
@@ -41,12 +42,14 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import timber.log.Timber
 
-class PreviewerViewModel(
+open class PreviewerViewModel(
     savedStateHandle: SavedStateHandle,
 ) : CardViewerViewModel(savedStateHandle),
     ChangeManager.Subscriber {
+    override val cardMediaPlayer by lazy { createCardMediaPlayer() }
     val currentIndex =
         savedStateHandle.getMutableStateFlow(
             KEY_CURRENT_INDEX,
@@ -243,6 +246,16 @@ class PreviewerViewModel(
         } else {
             TypeAnswer.removeTags(text)
         }
+
+    override suspend fun showQuestion() {
+        cardMediaPlayer.stop()
+        super.showQuestion()
+    }
+
+    override suspend fun showAnswer() {
+        cardMediaPlayer.stop()
+        super.showAnswer()
+    }
 
     override fun opExecuted(
         changes: OpChanges,
