@@ -36,8 +36,7 @@
 
     <string name="create_new_deck">New deck</string>
     <string name="create_new_sub_deck">New sub deck</string>
-    <string name="rename_deck_">New deck name</string>
-    <string name="filter_deck"></string>
+    <string name="filter_deck">Filter deck</string>
 
     <string name="tag_name">Tag name</string>
     <string name="add_new_filter_tags">Add/filter tags</string>
