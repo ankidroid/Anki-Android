@@ -52,6 +52,7 @@
     </plurals>
 
     <string name="check_db_title">Check database?</string>
+    <string name="card_type_already_exists">Card type already exists</string>
     <string name="check_db_warning">This may take a long time</string>
     <string name="contextmenu_deckpicker_delete_deck" maxLength="28">Delete deck</string>
 
@@ -97,7 +98,6 @@
 
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Create</string>
     <string name="dialog_positive_delete" maxLength="28">Delete</string>
-    <string name="card_type_already_exists">Card type already exists</string>
     <string name="dialog_positive_disable" tools:ignore="UnusedResources">Disable</string>
     <string name="dialog_positive_overwrite">Overwrite</string>
 
