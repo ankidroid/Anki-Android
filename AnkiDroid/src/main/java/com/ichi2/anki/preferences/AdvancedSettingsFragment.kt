@@ -15,10 +15,13 @@
  */
 package com.ichi2.anki.preferences
 
+import android.Manifest
 import android.content.ComponentName
 import android.content.Intent
 import android.content.pm.PackageManager
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
+import androidx.core.app.ActivityCompat
 import androidx.preference.EditTextPreference
 import androidx.preference.Preference
 import androidx.preference.SwitchPreferenceCompat
@@ -34,6 +37,8 @@ import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.openUrl
 import com.ichi2.compat.CompatHelper
+import com.ichi2.utils.Permissions
+import com.ichi2.utils.Permissions.openAppSettingsScreen
 import com.ichi2.utils.show
 import timber.log.Timber
 import java.io.File
@@ -43,6 +48,25 @@ class AdvancedSettingsFragment : SettingsFragment() {
         get() = R.xml.preferences_advanced
     override val analyticsScreenNameConstant: String
         get() = "prefs.advanced"
+
+    private val microphonePermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
+            if (isGranted) return@registerForActivityResult
+
+            findPreference<SwitchPreferenceCompat>(R.string.pref_allow_template_audio_recording)?.isChecked = false
+            if (ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(), Manifest.permission.RECORD_AUDIO)) {
+                return@registerForActivityResult
+            }
+
+            AlertDialog.Builder(requireContext()).show {
+                setTitle(R.string.permission_denied)
+                setMessage(R.string.microphone_permission_denied_message)
+                setPositiveButton(R.string.dialog_ok) { _, _ ->
+                    openAppSettingsScreen()
+                }
+                setNegativeButton(R.string.dialog_cancel, null)
+            }
+        }
 
     override fun initSubscreen() {
         removeUnnecessaryAdvancedPrefs()
@@ -106,6 +130,15 @@ class AdvancedSettingsFragment : SettingsFragment() {
                 setNegativeButton(R.string.dialog_cancel) { _, _ -> }
             }
             false
+        }
+
+        requirePreference<SwitchPreferenceCompat>(R.string.pref_allow_template_audio_recording).apply {
+            isChecked = isChecked && Permissions.canRecordAudio(requireContext())
+            setOnPreferenceChangeListener {
+                if (!Permissions.canRecordAudio(requireContext())) {
+                    microphonePermissionLauncher.launch(Manifest.permission.RECORD_AUDIO)
+                }
+            }
         }
 
         /*

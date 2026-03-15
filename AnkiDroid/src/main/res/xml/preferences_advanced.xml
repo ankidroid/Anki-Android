@@ -89,6 +89,10 @@
                 android:summary="@string/media_import_allow_all_files_summ"
                 android:title="@string/media_import_allow_all_files" />
             <SwitchPreferenceCompat
+                android:title="@string/allow_templates_to_record_audio"
+                android:key="@string/pref_allow_template_audio_recording"
+                android:defaultValue="false"/>
+            <SwitchPreferenceCompat
                 android:title="@string/pref_fixed_port_title"
                 android:key="@string/use_fixed_port_pref_key"
                 android:summary="@string/pref_fixed_port_summary"
