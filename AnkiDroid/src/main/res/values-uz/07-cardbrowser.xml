@@ -80,7 +80,7 @@
     <string name="card_details_tags">Teglar</string>
     <string-array name="card_browser_order_labels">
         <item>Tartibsiz (tezroq)</item>
-        <item>Saralash maydoni boʻyicha</item>
+        <item>Tartiblash maydoni boʻyicha</item>
         <item>Yaratilgan vaqti boʻyicha</item>
         <item>Qayd oʻzgartirilgan vaqti boʻyicha</item>
         <item>Karta oʻzgartirilgan vaqti boʻyicha</item>

@@ -192,7 +192,7 @@
     <string name="dyn_deck_desc">Bu odatiy kun tartibidan tashqarida oʻqish uchun maxsus dasta. Koʻrib chiqilganidan soʻng kartalar avtomatik ravishda oʻzining asl dastalariga qaytariladi. Ushbu dastani dastalar roʻyxatidan oʻchirib tashlasangiz, qolgan barcha kartalar oʻzining asl dastalariga qaytariladi.</string>
     <string name="tag_editor_add_feedback">“%1$s” qoʻshishni tasdiqlash uchun “%2$s” tugmasini bosing</string>
     <string name="tag_editor_add_feedback_existing">Mavjud boʻlgan “%1$s” tegi tanlandi</string>
-    <string name="tag_already_exists">Tag already exists</string>
+    <string name="tag_already_exists">Teg allaqachon mavjud</string>
     <!-- Time spans -->
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">apkg faylni ulashishda xatolik yuz berdi</string>

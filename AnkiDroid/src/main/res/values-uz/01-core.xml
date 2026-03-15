@@ -129,7 +129,7 @@
     <string name="empty_cram_label" maxLength="28">Boʻsh</string>
     <string name="create_subdeck">Ichki dasta yaratish</string>
     <string name="empty_filtered_deck">Filtrlangan dasta boʻshatilmoqda&#8230;</string>
-    <string name="search_deck" comment="Deck search for selecting it">Deck search</string>
+    <string name="search_deck" comment="Deck search for selecting it">Dastani qidirish</string>
     <string name="empty_deck">Bu dasta boʻsh</string>
     <string name="invalid_deck_name">Dastaning nomi yaroqsiz</string>
     <string name="studyoptions_congrats_finished">Tabriklaymiz! Bugungini bitirdingiz.</string>

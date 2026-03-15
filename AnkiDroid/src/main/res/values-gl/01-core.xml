@@ -129,7 +129,7 @@
     <string name="empty_cram_label" maxLength="28">Baleirar</string>
     <string name="create_subdeck">Crear baralla secundaria</string>
     <string name="empty_filtered_deck">Baleirando baralla filtrada&#8230;</string>
-    <string name="search_deck" comment="Deck search for selecting it">Deck search</string>
+    <string name="search_deck" comment="Deck search for selecting it">Buscar baralla</string>
     <string name="empty_deck">Esta baralla está baleira</string>
     <string name="invalid_deck_name">O nome da baralla non é valido</string>
     <string name="studyoptions_congrats_finished">Parabéns! Remataches por hoxe.</string>

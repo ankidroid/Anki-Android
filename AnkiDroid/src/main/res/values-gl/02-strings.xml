@@ -192,7 +192,7 @@
     <string name="dyn_deck_desc">Esta é unha baralla especial para estudar fóra da programación normal. As tarxetas devolveranse ás súas barallas despois de revisalas. Eliminando esta baralla da listaxe devólvense as tarxetas restantes á súa baralla orixinal.</string>
     <string name="tag_editor_add_feedback">Toca sobre \"%2$s\" para confirmar a adición de \"%1$s\"</string>
     <string name="tag_editor_add_feedback_existing">Etiqueta existente \"%1$s\" seleccionada</string>
-    <string name="tag_already_exists">Tag already exists</string>
+    <string name="tag_already_exists">Esta etiqueta xa existe</string>
     <!-- Time spans -->
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Produciuse un erro ao compartir o ficheiro apkg</string>
@@ -238,20 +238,20 @@
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">Tamaño da letra</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Amosar barra de ferramentas</string>
-    <string name="format_insert_bold">Format as bold</string>
-    <string name="format_insert_italic">Format as italic</string>
-    <string name="format_insert_underline">Format as underline</string>
-    <string name="insert_horizontal_line">Insert horizontal line</string>
-    <string name="insert_heading">Insert heading</string>
-    <string name="format_font_size">Change font size</string>
-    <string name="insert_mathjax">Insert MathJax equation</string>
+    <string name="format_insert_bold">Aplicar letra grosa</string>
+    <string name="format_insert_italic">Aplicar cursiva</string>
+    <string name="format_insert_underline">Aplicar subliñado</string>
+    <string name="insert_horizontal_line">Inserir liña horizontal</string>
+    <string name="insert_heading">Inserir cabeceira</string>
+    <string name="format_font_size">Cambiar tamaño da letra</string>
+    <string name="insert_mathjax">Inserir ecuación en formato MathJax</string>
     <string name="note_editor_toolbar_icon">Texto do botón</string>
-    <string name="before_text">HTML before selection</string>
-    <string name="after_text">HTML after selection</string>
-    <string name="add_toolbar_item">Create toolbar item</string>
-    <string name="edit_toolbar_item">Edit toolbar item</string>
+    <string name="before_text">HTML antes da selección</string>
+    <string name="after_text">HTML despois da selección</string>
+    <string name="add_toolbar_item">Crear elemento da barra de ferramentas</string>
+    <string name="edit_toolbar_item">Editar elemento da barra de ferramentas</string>
     <string name="toolbar_item_explain_edit_or_remove">Insire o HTML para introducir antes e despois do texto seleccionado\n\nMantén premido un botón da barra de ferramentas para editalo ou eliminalo</string>
-    <string name="remove_toolbar_item">Remove toolbar item?</string>
+    <string name="remove_toolbar_item">Eliminar elemento da barra de ferramentas?</string>
     <string name="note_editor_image_too_large">A imaxe é moi grande. Insire a imaxe manualmente</string>
     <string name="note_editor_video_too_large">O ficheiro de vídeo é moi grande. Insire o vídeo manualmente</string>
     <string name="note_editor_audio_too_large">O ficheiro de audio é moi grande. Insire o audio manualmente</string>
