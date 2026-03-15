@@ -112,6 +112,18 @@ class CreateDeckDialog(
                     setView(R.layout.dialog_generic_text_input)
                 }.input(prefill = initialDeckName, displayKeyboard = true, waitForPositiveButton = false) { dialog, text ->
 
+                    val textInputLayout = dialog.getInputTextLayout()
+
+                    val hintRes =
+                        when (deckDialogType) {
+                            DeckDialogType.DECK -> R.string.create_new_deck
+                            DeckDialogType.SUB_DECK -> R.string.create_new_sub_deck
+                            DeckDialogType.RENAME_DECK -> R.string.rename_deck
+                            DeckDialogType.FILTERED_DECK -> R.string.filter_deck
+                        }
+
+                    textInputLayout.hint = context.getString(hintRes)
+
                     // defining the action of done button in ImeKeyBoard and enter button in physical keyBoard
                     val inputField = dialog.getInputField()
                     inputField.setOnEditorActionListener { _, actionId, event ->
@@ -121,16 +133,10 @@ class CreateDeckDialog(
                                     onPositiveButtonClicked()
                                 }
                                 text.isBlank() -> {
-                                    dialog.getInputTextLayout().showSnackbar(
-                                        context.getString(R.string.empty_deck_name),
-                                        Snackbar.LENGTH_SHORT,
-                                    )
+                                    displayFeedback(context.getString(R.string.empty_deck_name))
                                 }
                                 else -> {
-                                    dialog.getInputTextLayout().showSnackbar(
-                                        context.getString(R.string.deck_already_exists),
-                                        Snackbar.LENGTH_SHORT,
-                                    )
+                                    displayFeedback(context.getString(R.string.deck_already_exists))
                                 }
                             }
                             true
