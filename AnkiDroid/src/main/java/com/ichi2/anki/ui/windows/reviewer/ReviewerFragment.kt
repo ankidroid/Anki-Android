@@ -54,6 +54,7 @@ import com.ichi2.anki.DispatchKeyEventListener
 import com.ichi2.anki.Flag
 import com.ichi2.anki.R
 import com.ichi2.anki.cardviewer.Gesture
+import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.utils.android.isRobolectric
 import com.ichi2.anki.databinding.Reviewer2Binding
 import com.ichi2.anki.dialogs.showDeckOptionsSelectionDialog
@@ -113,6 +114,7 @@ class ReviewerFragment :
     private lateinit var bindingMap: BindingMap<ReviewerBinding, ViewerAction>
     private var shakeDetector: ShakeDetector? = null
     private val sensorManager get() = ContextCompat.getSystemService(requireContext(), SensorManager::class.java)
+    private val whiteboardFragment get() = childFragmentManager.findFragmentByTag(WhiteboardFragment::class.jvmName) as? WhiteboardFragment
     private val isBigScreen: Boolean get() = resources.configuration.smallestScreenWidthDp >= 720
     private var webviewHasFocus = false
 
@@ -316,6 +318,7 @@ class ReviewerFragment :
         webViewLayout.settings.loadWithOverviewMode = true
     }
 
+    @NeedsTest("Whiteboard takes priority on key events")
     override fun dispatchKeyEvent(event: KeyEvent): Boolean {
         if (webviewHasFocus ||
             event.action != KeyEvent.ACTION_DOWN ||
@@ -323,7 +326,7 @@ class ReviewerFragment :
         ) {
             return false
         }
-        return bindingMap.onKeyDown(event)
+        return whiteboardFragment?.dispatchKeyEvent(event) == true || bindingMap.onKeyDown(event)
     }
 
     override fun onMenuItemClick(item: MenuItem): Boolean {
@@ -334,8 +337,11 @@ class ReviewerFragment :
         return true
     }
 
+    @NeedsTest("Whiteboard takes priority on shake events")
     override fun hearShake() {
-        bindingMap.onGesture(Gesture.SHAKE)
+        if (whiteboardFragment?.onScreenShake() != true) {
+            bindingMap.onGesture(Gesture.SHAKE)
+        }
     }
 
     private fun setupBindings() {
@@ -523,7 +529,6 @@ class ReviewerFragment :
         )
         viewModel.whiteboardEnabledFlow.flowWithLifecycle(lifecycle).collectIn(lifecycleScope) { isEnabled ->
             binding.whiteboardContainer.isVisible = isEnabled
-            val whiteboardFragment = childFragmentManager.findFragmentById(binding.whiteboardContainer.id)
             if (whiteboardFragment == null && isEnabled) {
                 childFragmentManager.commit {
                     add(R.id.whiteboard_container, WhiteboardFragment::class.java, null, WhiteboardFragment::class.jvmName)
@@ -531,8 +536,7 @@ class ReviewerFragment :
             }
         }
         viewModel.onCardUpdatedFlow.collectIn(lifecycleScope) {
-            val whiteboardFragment = childFragmentManager.findFragmentById(binding.whiteboardContainer.id)
-            (whiteboardFragment as? WhiteboardFragment)?.resetCanvas()
+            whiteboardFragment?.resetCanvas()
         }
     }
 
