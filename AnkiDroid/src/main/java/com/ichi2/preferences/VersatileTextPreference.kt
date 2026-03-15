@@ -67,6 +67,7 @@ open class VersatileTextPreferenceDialogFragment : EditTextPreferenceDialogFragm
     override fun onBindDialogView(contentView: View) {
         editText = contentView.findViewById(android.R.id.edit)!!
         editText.inputType = versatileTextPreference.referenceEditText.inputType
+        editText.setBackgroundResource(com.ichi2.anki.R.drawable.edittext_border)
 
         super.onBindDialogView(contentView)
 
@@ -84,5 +85,10 @@ open class VersatileTextPreferenceDialogFragment : EditTextPreferenceDialogFragm
                     }
             })
         }
+    }
+
+    override fun onPrepareDialogBuilder(builder: AlertDialog.Builder) {
+        super.onPrepareDialogBuilder(builder)
+        builder.setPositiveButton(com.ichi2.anki.R.string.save, this)
     }
 }
