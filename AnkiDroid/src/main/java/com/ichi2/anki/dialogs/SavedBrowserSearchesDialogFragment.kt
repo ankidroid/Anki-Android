@@ -168,7 +168,7 @@ fun CardBrowser.registerSavedSearchActionHandler(action: (Int, String?) -> Unit)
         this,
     ) { _, bundle ->
         val type = bundle.getInt(SavedBrowserSearchesDialogFragment.ARG_TYPE)
-        val searchName = bundle.getString(SavedBrowserSearchesDialogFragment.ARG_SAVED_SEARCH)
+        val searchName = bundle.getString(ARG_SAVED_SEARCH)
         Timber.d("On user saved search selection named: %s", searchName)
         action(type, searchName)
     }
