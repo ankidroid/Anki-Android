@@ -8,7 +8,6 @@
      * height between 50 and 800
      * width 120 and 800 -->
 
-<!-- TODO: Use updatePeriodMillis instead of the 10-minute alarm for simpler widget updates.-->
 
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
     android:initialKeyguardLayout="@layout/widget_deck_picker_large"

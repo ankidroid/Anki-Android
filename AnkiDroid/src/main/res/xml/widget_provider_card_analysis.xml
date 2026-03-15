@@ -6,8 +6,6 @@
      * height between 56 and 800
      * width 84 and 800 -->
 
-<!-- TODO: Use updatePeriodMillis instead of the 10-minute alarm for simpler widget updates.-->
-
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
     android:initialKeyguardLayout="@layout/widget_card_analysis"
     android:initialLayout="@layout/widget_card_analysis"
