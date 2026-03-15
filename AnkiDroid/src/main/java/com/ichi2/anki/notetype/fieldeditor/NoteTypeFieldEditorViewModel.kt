@@ -87,9 +87,11 @@ class NoteTypeFieldEditorViewModel(
                     return@update mutableStack.toList()
                 }
             }
-
-            FieldUtil.UniqueNameResult.Failure.DuplicateName -> TODO()
-            FieldUtil.UniqueNameResult.Failure.EmptyName -> TODO()
+            is FieldUtil.UniqueNameResult.Failure -> {
+                Timber.d("add failed due to $result")
+                val action = NoteTypeFieldEditorState.Action.Rejected(result.resId)
+                _state.value = _state.value.copy(action = action)
+            }
         }
     }
 
