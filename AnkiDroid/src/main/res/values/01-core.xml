@@ -217,4 +217,8 @@
 
     <!-- Multiple profile -->
     <string name="add_profile">Add profile</string>
+
+    <!-- Non-FatalStartup Failure -->
+    <string name="startup_error_title">Some features couldn\'t load</string>
+    <string name="startup_error_message">The following features failed to start:\n\n%1$s\n\nPlease restart the app. If this continues, contact support.</string>
 </resources>

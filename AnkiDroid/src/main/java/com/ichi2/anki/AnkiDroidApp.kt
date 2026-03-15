@@ -84,6 +84,8 @@ open class AnkiDroidApp :
     /** An exception if AnkiDroidApp fails to load  */
     private var fatalInitializationError: FatalInitializationError? = null
 
+    private val nonFatalInitializationErrors = mutableListOf<NonFatalInitializationError>()
+
     @LegacyNotifications("The widget triggers notifications by posting null to this, but we plan to stop relying on the widget")
     private val notifications = MutableLiveData<Void?>()
 
@@ -98,6 +100,10 @@ open class AnkiDroidApp :
      */
     @KotlinCleanup("analytics can be moved to attachBaseContext()")
     override fun onCreate() {
+        val startupTimer = System.currentTimeMillis()
+
+        fun elapsed() = "${System.currentTimeMillis() - startupTimer}ms"
+
         try {
             Os.setenv("PLATFORM", syncPlatform(), false)
             // enable debug logging of sync actions
@@ -135,6 +141,7 @@ open class AnkiDroidApp :
         ChangeManager.subscribe(this)
 
         CrashReportService.initialize(this)
+        Timber.plant(ProductionCrashReportingTree()) // or whichever applies
         val logType = LogType.value
         when (logType) {
             LogType.DEBUG -> Timber.plant(DebugTree())
@@ -147,17 +154,20 @@ open class AnkiDroidApp :
             LeakCanaryConfiguration.disable()
         }
         Timber.tag(TAG)
+        Timber.d("STARTUP [${elapsed()}] logging ready")
         Timber.d("Startup - Application Start")
         Timber.i("Timber config: $logType")
 
         // analytics after ACRA, they both install UncaughtExceptionHandlers but Analytics chains while ACRA does not
         UsageAnalytics.initialize(this)
+        Timber.d("STARTUP [${elapsed()}] analytics done")
         if (BuildConfig.DEBUG) {
             UsageAnalytics.setDryRun(true)
         }
 
         // Last in the UncaughtExceptionHandlers chain is our filter service
         ThrowableFilterService.initialize()
+        Timber.d("STARTUP [${elapsed()}] throwable filter done")
 
         applicationScope.launch {
             Timber.i("AnkiDroidApp: listing debug info")
@@ -189,6 +199,7 @@ open class AnkiDroidApp :
         setupNotificationChannels(applicationContext)
 
         makeBackendUsable(this)
+        Timber.d("STARTUP [${elapsed()}] ← CHECK THIS ONE - backend ready")
 
         // Configure WebView to allow file scheme pages to access cookies.
         if (!acceptFileSchemeCookies()) {
@@ -200,14 +211,36 @@ open class AnkiDroidApp :
         LanguageUtil.setDefaultBackendLanguages()
 
         initializeAnkiDroidDirectory()
+        Timber.d("STARTUP [${elapsed()}] ← CHECK THIS ONE - directory ready")
 
         if (Prefs.newReviewRemindersEnabled) {
             Timber.i("Setting review reminder notifications if they have not already been set")
-            AlarmManagerService.scheduleAllNotifications(applicationContext)
+            try {
+                AlarmManagerService.scheduleAllNotifications(applicationContext)
+            } catch (e: Exception) {
+                Timber.e(e, "Failed to schedule review reminder notifications")
+                nonFatalInitializationErrors.add(
+                    NonFatalInitializationError(
+                        componentName = "Review Reminders",
+                        exception = e,
+                    ),
+                )
+                // App continues — reminders won't work but nothing else breaks
+            }
         } else {
-            // Register for notifications
-            Timber.i("AnkiDroidApp: Starting Services")
-            notifications.observeForever { NotificationService.triggerNotificationFor(this) }
+            try {
+                notifications.observeForever {
+                    NotificationService.triggerNotificationFor(this)
+                }
+            } catch (e: Exception) {
+                Timber.e(e, "Failed to register notification observer")
+                nonFatalInitializationErrors.add(
+                    NonFatalInitializationError(
+                        componentName = "Notifications",
+                        exception = e,
+                    ),
+                )
+            }
         }
 
         // listen for day rollover: time + timezone changes
@@ -262,8 +295,12 @@ open class AnkiDroidApp :
 
         activityAgnosticDialogs = ActivityAgnosticDialogs.register(this)
         TtsVoices.launchBuildLocalesJob()
+        Timber.d("STARTUP [${elapsed()}] tts voices job launched")
         // enable {{tts-voices:}} field filter
         TtsVoicesFieldFilter.ensureApplied()
+        Timber.d("STARTUP [${elapsed()}] tts field filter done")
+
+        Timber.d("STARTUP [${elapsed()}] TOTAL - onCreate complete")
     }
 
     /**
@@ -519,6 +556,9 @@ open class AnkiDroidApp :
         /** (optional) set if an unrecoverable error occurs during Application startup */
         val fatalError: FatalInitializationError?
             get() = instance.fatalInitializationError
+
+        val nonFatalStartupErrors: List<NonFatalInitializationError>
+            get() = instance.nonFatalInitializationErrors
     }
 }
 
@@ -549,3 +589,13 @@ sealed class FatalInitializationError {
                 is StorageError -> error.infoUri?.toUri()
             }
 }
+
+/**
+ * Errors which occurred during startup that are recoverable -
+ * the app can continue, but some features may be unavailable.
+ * The user should be notified so they can report the issue.
+ */
+data class NonFatalInitializationError(
+    val componentName: String,
+    val exception: Exception,
+)

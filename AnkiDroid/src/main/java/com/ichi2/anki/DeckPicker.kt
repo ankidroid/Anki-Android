@@ -646,6 +646,7 @@ open class DeckPicker :
         )
 
         setupFlows()
+        showNonFatalStartupErrors()
     }
 
     override fun setupBackPressedCallbacks() {
@@ -1001,6 +1002,36 @@ open class DeckPicker :
             is StartupFailure.InitializationError -> FatalErrorDialog.build(this, failure).show()
             is DiskFull -> displayNoStorageError()
             is DBError -> displayDatabaseFailure(CustomExceptionData.fromException(failure.exception))
+        }
+    }
+
+    /**
+     * Shows a dialog informing the user of any nonfatal errors that occurred during app startup.
+     * These are errors where the app can continue running, but some features may be unavailable.
+     *
+     * Also reports each error to the crash reporting service so developers are notified.
+     *
+     * @see AnkiDroidApp.nonFatalStartupErrors
+     * @see NonFatalInitializationError
+     */
+    private fun showNonFatalStartupErrors() {
+        val errors = AnkiDroidApp.nonFatalStartupErrors
+        if (errors.isEmpty()) return
+
+        errors.forEach { error ->
+            Timber.e(error.exception, "NonFatal startup error: ${error.componentName}")
+            CrashReportService.sendExceptionReport(
+                error.exception,
+                "NonFatalStartupError: ${error.componentName}",
+            )
+        }
+
+        val errorList = errors.joinToString("\n") { "  • ${it.componentName}" }
+
+        AlertDialog.Builder(this).show {
+            title(R.string.startup_error_title)
+            message(text = getString(R.string.startup_error_message, errorList))
+            positiveButton(R.string.dialog_ok)
         }
     }
 
