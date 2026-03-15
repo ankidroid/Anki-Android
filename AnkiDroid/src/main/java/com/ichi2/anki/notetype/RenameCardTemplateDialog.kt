@@ -18,9 +18,11 @@ package com.ichi2.anki.notetype
 
 import android.content.Context
 import androidx.appcompat.app.AlertDialog
+import androidx.core.widget.doOnTextChanged
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.R
-import com.ichi2.utils.input
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
@@ -31,26 +33,53 @@ class RenameCardTemplateDialog {
         fun showInstance(
             context: Context,
             prefill: String,
+            existingNames: List<String>,
             block: (result: String) -> Unit,
         ) {
-            AlertDialog
-                .Builder(context)
-                .show {
-                    title(R.string.rename_card_type)
-                    positiveButton(R.string.rename) { }
-                    negativeButton(R.string.dialog_cancel)
-                    setView(R.layout.dialog_generic_text_input)
-                }.input(
-                    hint = CollectionManager.TR.actionsNewName(),
-                    displayKeyboard = true,
-                    allowEmpty = false,
-                    prefill = prefill,
-                    waitForPositiveButton = true,
-                    callback = { dialog, result ->
-                        block(result.toString())
-                        dialog.dismiss()
-                    },
-                )
+            val dialog =
+                AlertDialog
+                    .Builder(context)
+                    .show {
+                        title(R.string.rename_card_type)
+                        positiveButton(R.string.rename) { }
+                        negativeButton(R.string.dialog_cancel)
+                        setView(R.layout.dialog_generic_text_input)
+                    }
+
+            val textInputLayout =
+                dialog.findViewById<TextInputLayout>(R.id.dialog_text_input_layout)
+
+            val editText =
+                dialog.findViewById<TextInputEditText>(R.id.dialog_text_input)
+
+            val renameButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+
+            // Set initial hint and prefill
+            textInputLayout?.hint = CollectionManager.TR.actionsNewName().removeSuffix(":")
+            editText?.setText(prefill)
+
+            // Validation
+            editText?.doOnTextChanged { text, _, _, _ ->
+
+                val newName = text.toString().trim()
+
+                if (existingNames.any { it.equals(newName, ignoreCase = true) }) {
+                    textInputLayout?.error =
+                        context.getString(R.string.card_type_already_exists)
+
+                    renameButton.isEnabled = false
+                } else {
+                    textInputLayout?.error = null
+                    renameButton.isEnabled = true
+                }
+            }
+
+            renameButton.setOnClickListener {
+                val newName = editText?.text?.toString()?.trim() ?: return@setOnClickListener
+
+                block(newName)
+                dialog.dismiss()
+            }
         }
     }
 }
