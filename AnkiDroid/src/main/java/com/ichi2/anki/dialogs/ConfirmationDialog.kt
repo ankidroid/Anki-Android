@@ -34,6 +34,12 @@ class ConfirmationDialog : DialogFragment() {
     private var confirm = Runnable {} // Do nothing by default
     private var cancel = Runnable {} // Do nothing by default
 
+    fun setPositiveButtonText(text: String) {
+        val args = arguments ?: Bundle()
+        args.putString("positiveButtonText", text)
+        arguments = args
+    }
+
     fun setArgs(message: String?) {
         setArgs("", message)
     }
@@ -60,12 +66,19 @@ class ConfirmationDialog : DialogFragment() {
         super.onCreate(savedInstanceState)
         val res = requireActivity().resources
         val title = requireArguments().getString("title")
+
         return AlertDialog.Builder(requireContext()).create {
             title(text = (if ("" == title) res.getString(R.string.app_name) else title)!!)
             message(text = requireArguments().getString("message")!!)
-            positiveButton(R.string.dialog_ok) {
+
+            val positiveText = requireArguments().getString("positiveButtonText")
+
+            positiveButton(
+                text = positiveText ?: getString(R.string.dialog_ok),
+            ) {
                 confirm.run()
             }
+
             negativeButton(R.string.dialog_cancel) {
                 cancel.run()
             }
