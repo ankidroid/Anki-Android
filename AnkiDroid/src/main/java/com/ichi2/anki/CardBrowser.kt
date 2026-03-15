@@ -144,7 +144,7 @@ open class CardBrowser :
         }
 
     override fun onDeckSelected(deck: SelectableDeck?) {
-        deck?.let { deck -> launchCatchingTask { viewModel.setSelectedDeck(deck) } }
+        deck?.let { deck -> viewModel.setSelectedDeck(deck) }
     }
 
     override var fragmented: Boolean
@@ -912,7 +912,7 @@ open class CardBrowser :
     public override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
         viewModel.onReinit()
-        viewModel.launchSearchForCards(
+        viewModel.setQuery(
             savedInstanceState.getString("mSearchTerms", ""),
             forceRefresh = false,
         )
@@ -920,7 +920,7 @@ open class CardBrowser :
 
     private fun forceRefreshSearch(useSearchTextValue: Boolean = false) {
         if (useSearchTextValue && searchView != null) {
-            viewModel.launchSearchForCards(searchView!!.query.toString())
+            viewModel.setQuery(searchView!!.query.toString())
         } else {
             viewModel.launchSearchForCards()
         }
@@ -1030,11 +1030,8 @@ open class CardBrowser :
         invalidateOptionsMenu() // maybe the availability of undo changed
     }
 
-    fun searchAllDecks() =
-        launchCatchingTask {
-            // all we need to do is select all decks
-            viewModel.setSelectedDeck(SelectableDeck.AllDecks)
-        }
+    // all we need to do is select all decks
+    fun searchAllDecks() = viewModel.setSelectedDeck(SelectableDeck.AllDecks)
 
     /**
      * Returns the current deck name, "All Decks" if all decks are selected, or "Unknown"

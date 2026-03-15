@@ -73,8 +73,17 @@
             <com.google.android.material.chip.ChipGroup
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <com.google.android.material.chip.Chip
-                    android:id="@+id/chip_decks"
+                    android:id="@+id/sort_chip"
+                    android:layout_width="36dp"
+                    android:layout_height="wrap_content"
+                    app:chipStartPadding="8dp"
+                    app:chipIconSize="22dp"
+                    app:chipIcon="@drawable/ic_sort_24" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/decks_chip"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:chipIcon="@drawable/ic_cards_star"
@@ -82,7 +91,40 @@
                     android:ellipsize="middle"
 
                     tools:text="All Decks"
+                    tools:checkable="true"
+                    tools:checked="true"
                     />
+
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/tags_chip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:chipIcon="@drawable/ic_label_outline"
+                        android:maxLines="1"
+                        android:ellipsize="middle"
+                        tools:text="Tags"
+                        />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/card_state_chip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:chipIcon="@drawable/ic_card_state_default"
+                        android:maxLines="1"
+                        android:ellipsize="middle"
+                        tools:text="State"
+                        />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/flags_chip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:chipIcon="@drawable/ic_flag_transparent"
+                        android:maxLines="1"
+                        android:ellipsize="middle"
+                        tools:text="Flags"
+                        />
             </com.google.android.material.chip.ChipGroup>
         </HorizontalScrollView>
 
@@ -132,17 +174,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-
-            <!-- Toggles between 'Basic' and 'Advanced' search -->
-            <Button
-                android:id="@+id/toggle_advanced_search"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                style="@style/Widget.Material3.Button.TextButton.Icon"
-                tools:text="Advanced search"
-                app:icon="@drawable/ic_tune_white"
-                />
 
             <!-- Content when SearchView is open -->
             <androidx.fragment.app.FragmentContainerView

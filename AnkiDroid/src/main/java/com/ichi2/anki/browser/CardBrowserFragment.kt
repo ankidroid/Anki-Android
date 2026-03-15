@@ -17,7 +17,12 @@
 package com.ichi2.anki.browser
 
 import android.content.DialogInterface
+import android.graphics.Color
 import android.os.Bundle
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.style.ForegroundColorSpan
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.Menu
@@ -26,13 +31,17 @@ import android.view.MenuItem
 import android.view.SubMenu
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
+import androidx.annotation.CheckResult
 import androidx.annotation.LayoutRes
 import androidx.annotation.VisibleForTesting
+import androidx.appcompat.view.menu.MenuBuilder
 import androidx.appcompat.widget.ThemeUtils
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuHostHelper
 import androidx.core.view.MenuProvider
@@ -51,6 +60,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import anki.collection.OpChanges
 import com.google.android.material.chip.Chip
+import com.google.android.material.color.MaterialColors
 import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.google.android.material.search.SearchBar
 import com.google.android.material.search.SearchView
@@ -59,6 +69,7 @@ import com.ichi2.anki.AnkiActivityProvider
 import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.getColUnsafe
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.FilteredDeckOptions
 import com.ichi2.anki.Flag
 import com.ichi2.anki.R
@@ -80,7 +91,14 @@ import com.ichi2.anki.browser.RepositionCardsRequest.NoRepositionableCardsError
 import com.ichi2.anki.browser.RepositionCardsRequest.RepositionData
 import com.ichi2.anki.browser.search.AdvancedSearchFragment
 import com.ichi2.anki.browser.search.CardBrowserSearchViewModel
+import com.ichi2.anki.browser.search.CardBrowserSearchViewModel.UserMessage
+import com.ichi2.anki.browser.search.CardStateBottomSheetFragment
+import com.ichi2.anki.browser.search.FlagsBottomSheetFragment
+import com.ichi2.anki.browser.search.SearchRequest
+import com.ichi2.anki.browser.search.SearchString
 import com.ichi2.anki.browser.search.StandardSearchFragment
+import com.ichi2.anki.browser.search.formatChipDescription
+import com.ichi2.anki.browser.search.iconRes
 import com.ichi2.anki.browser.search.savedFilters
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
@@ -112,7 +130,9 @@ import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.attachFastScroller
 import com.ichi2.anki.ui.internationalization.toSentenceCase
 import com.ichi2.anki.undoAndShowSnackbar
+import com.ichi2.anki.utils.ext.addPrepareMenuProvider
 import com.ichi2.anki.utils.ext.getCurrentDialogFragment
+import com.ichi2.anki.utils.ext.hasCheckedBackground
 import com.ichi2.anki.utils.ext.ifNotZero
 import com.ichi2.anki.utils.ext.launchCollectionInLifecycleScope
 import com.ichi2.anki.utils.ext.setFragmentResultListener
@@ -125,8 +145,10 @@ import com.ichi2.anki.withProgress
 import com.ichi2.ui.CardBrowserSearchView
 import com.ichi2.utils.TagsUtil.getUpdatedTags
 import com.ichi2.utils.increaseHorizontalPaddingOfOverflowMenuIcons
+import com.ichi2.utils.moveCursorToEnd
 import com.ichi2.utils.replaceText
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
 import net.ankiweb.rsdroid.Translations
 import timber.log.Timber
@@ -177,8 +199,15 @@ class CardBrowserFragment :
 
     // only usable if 'useSearchView' is set
     override var searchBar: SearchBar? = null
-    private var searchView: SearchView? = null
-    private var deckChip: Chip? = null
+
+    @VisibleForTesting
+    internal var searchView: SearchView? = null
+    private var decksChip: Chip? = null
+    private var tagsChip: Chip? = null
+    private val useNewTaggingLogic get() = tagsChip != null
+    private var cardStateChip: Chip? = null
+    private var flagsChip: Chip? = null
+    private var sortChip: Chip? = null
 
     // region legacy menu handling
     var mySearchesItem: MenuItem? = null
@@ -253,9 +282,32 @@ class CardBrowserFragment :
 
         progressIndicator = view.findViewById(R.id.browser_progress)
 
-        deckChip =
-            view.findViewById<Chip>(R.id.chip_decks)?.apply {
+        decksChip =
+            view.findViewById<Chip>(R.id.decks_chip)?.apply {
                 setOnClickListener { viewModel.openDeckSelectionDialog() }
+            }
+        tagsChip =
+            view.findViewById<Chip>(R.id.tags_chip)?.apply {
+                setOnClickListener { showFilterByTagsDialog() }
+            }
+        cardStateChip =
+            view.findViewById<Chip>(R.id.card_state_chip)?.apply {
+                setOnClickListener {
+                    val fragment = CardStateBottomSheetFragment()
+                    fragment.show(childFragmentManager, CardStateBottomSheetFragment.TAG)
+                }
+            }
+        flagsChip =
+            view.findViewById<Chip>(R.id.flags_chip)?.apply {
+                setOnClickListener {
+                    launchCatchingTask {
+                        FlagsBottomSheetFragment.createInstance().show(childFragmentManager)
+                    }
+                }
+            }
+        sortChip =
+            view.findViewById<Chip>(R.id.sort_chip)?.apply {
+                setOnClickListener { changeDisplayOrder() }
             }
         searchBar =
             view.findViewById<SearchBar>(R.id.search_bar)?.apply {
@@ -275,6 +327,12 @@ class CardBrowserFragment :
                 addTransitionListener { _, _, state ->
                     if (state == SearchView.TransitionState.SHOWING) {
                         getOrCreateSearchFragment(StandardSearchFragment.TAG, ::StandardSearchFragment)
+                        searchViewModel.isScreenOpenFlow.value = true
+                        return@addTransitionListener
+                    }
+                    if (state == SearchView.TransitionState.SHOWN) {
+                        editText.setText(activityViewModel.searchRequestFlow.value.query)
+                        editText.moveCursorToEnd()
                         return@addTransitionListener
                     }
 
@@ -288,7 +346,15 @@ class CardBrowserFragment :
 
                     // Exiting out the SearchView should reset the state
                     // The ViewModel remains active as it's tied to the host fragment.
-                    searchViewModel.resetSearchState()
+                    searchViewModel.resetSearchState(activityViewModel.searchRequestFlow.value)
+                }
+                editText.setOnEditorActionListener { _, actionId, event ->
+                    if (actionId == EditorInfo.IME_ACTION_SEARCH || event?.keyCode == KeyEvent.KEYCODE_ENTER) {
+                        searchViewModel.submitCurrentSearch()
+                        true
+                    } else {
+                        false
+                    }
                 }
             }
         toggleAdvancedSearch =
@@ -306,7 +372,7 @@ class CardBrowserFragment :
     }
 
     private fun setupMenu() {
-        val menuHost: MenuHost = requireActivity()
+        val menuHost: MenuHost = requireCardBrowserActivity()
 
         fun MenuItem.setupUndo() {
             isVisible = getColUnsafe().undoAvailable()
@@ -349,62 +415,67 @@ class CardBrowserFragment :
                     Timber.d("onCreateMenu()")
                     menuInflater.inflate(R.menu.card_browser, menu)
                     menu.findItem(R.id.action_search_by_flag).subMenu?.setupFlags()
-                    searchItem = menu.findItem(R.id.action_search)
-                    searchItem!!.setOnActionExpandListener(
-                        object : MenuItem.OnActionExpandListener {
-                            override fun onMenuItemActionExpand(item: MenuItem): Boolean {
-                                vm.setSearchQueryExpanded(true)
-                                return true
-                            }
 
-                            override fun onMenuItemActionCollapse(item: MenuItem): Boolean {
-                                if (item.actionView == searchView) {
-                                    if (isKeyboardVisible(searchView)) {
-                                        Timber.d("keyboard is visible, hiding it")
-                                        hideKeyboard()
-                                        return false
-                                    }
+                    if (!useSearchView) {
+                        searchItem = menu.findItem(R.id.action_search)
+                        searchItem!!.setOnActionExpandListener(
+                            object : MenuItem.OnActionExpandListener {
+                                override fun onMenuItemActionExpand(item: MenuItem): Boolean {
+                                    vm.setSearchQueryExpanded(true)
+                                    return true
                                 }
-                                vm.setSearchQueryExpanded(false)
-                                // SearchView doesn't support empty queries so we always reset the search when collapsing
-                                legacySearchView!!.setQuery("", false)
-                                vm.launchSearchForCards("")
-                                return true
-                            }
-                        },
-                    )
-                    legacySearchView =
-                        (searchItem!!.actionView as CardBrowserSearchView).apply {
-                            queryHint = resources.getString(R.string.card_browser_search_hint)
-                            setMaxWidth(Integer.MAX_VALUE)
-                            setOnQueryTextListener(
-                                object : androidx.appcompat.widget.SearchView.OnQueryTextListener {
-                                    override fun onQueryTextChange(newText: String): Boolean {
-                                        if (this@apply.ignoreValueChange) {
+
+                                override fun onMenuItemActionCollapse(item: MenuItem): Boolean {
+                                    if (item.actionView == searchView) {
+                                        if (isKeyboardVisible(searchView)) {
+                                            Timber.d("keyboard is visible, hiding it")
+                                            hideKeyboard()
+                                            return false
+                                        }
+                                    }
+                                    vm.setSearchQueryExpanded(false)
+                                    // SearchView doesn't support empty queries so we always reset the search when collapsing
+                                    legacySearchView!!.setQuery("", false)
+                                    vm.setQuery("")
+                                    return true
+                                }
+                            },
+                        )
+                        legacySearchView =
+                            (searchItem!!.actionView as CardBrowserSearchView).apply {
+                                queryHint = resources.getString(R.string.card_browser_search_hint)
+                                setMaxWidth(Integer.MAX_VALUE)
+                                setOnQueryTextListener(
+                                    object :
+                                        androidx.appcompat.widget.SearchView.OnQueryTextListener {
+                                        override fun onQueryTextChange(newText: String): Boolean {
+                                            if (this@apply.ignoreValueChange) {
+                                                return true
+                                            }
+                                            vm.updateQueryText(newText)
                                             return true
                                         }
-                                        vm.updateQueryText(newText)
-                                        return true
-                                    }
 
-                                    override fun onQueryTextSubmit(query: String): Boolean {
-                                        vm.launchSearchForCards(query)
-                                        legacySearchView!!.clearFocus()
-                                        return true
-                                    }
-                                },
-                            )
+                                        override fun onQueryTextSubmit(query: String): Boolean {
+                                            vm.setQuery(query)
+                                            legacySearchView!!.clearFocus()
+                                            return true
+                                        }
+                                    },
+                                )
+                            }
+                        // Fixes #6500 - keep the search consistent if coming back from note editor
+                        // Fixes #9010 - consistent search after drawer change calls invalidateOptionsMenu
+                        if (!vm.tempSearchQuery.isNullOrEmpty() || vm.searchTerms.isNotEmpty()) {
+                            searchItem!!.expandActionView() // This calls legacySearchView.setOnSearchClickListener
+                            val toUse =
+                                if (!vm.tempSearchQuery.isNullOrEmpty()) vm.tempSearchQuery else vm.searchTerms
+                            legacySearchView!!.setQuery(toUse!!, false)
                         }
-                    // Fixes #6500 - keep the search consistent if coming back from note editor
-                    // Fixes #9010 - consistent search after drawer change calls invalidateOptionsMenu
-                    if (!vm.tempSearchQuery.isNullOrEmpty() || vm.searchTerms.isNotEmpty()) {
-                        searchItem!!.expandActionView() // This calls legacySearchView.setOnSearchClickListener
-                        val toUse = if (!vm.tempSearchQuery.isNullOrEmpty()) vm.tempSearchQuery else vm.searchTerms
-                        legacySearchView!!.setQuery(toUse!!, false)
-                    }
-                    legacySearchView!!.setOnSearchClickListener {
-                        // Provide SearchView with the previous search terms
-                        legacySearchView!!.setQuery(vm.searchTerms, false)
+                        legacySearchView!!.setOnSearchClickListener {
+                            // Provide SearchView with the previous search terms
+                            legacySearchView!!.setQuery(vm.searchTerms, false)
+                        }
                     }
 
                     saveSearchItem = menu.findItem(R.id.action_save_search)
@@ -687,6 +758,32 @@ class CardBrowserFragment :
             },
             viewLifecycleOwner,
         )
+
+        // searchview specific logic
+        menuHost.addPrepareMenuProvider { menu ->
+            if (!useSearchView) return@addPrepareMenuProvider
+
+            // icons have been added for all 'unselected' items
+            if (!activityViewModel.isInMultiSelectMode) {
+                (menu as? MenuBuilder)?.setOptionalIconsVisible(true)
+            }
+
+            // reorder 'preview' to appear before 'add'
+            val preview = menu.findItem(R.id.action_preview_many)
+            if (activityViewModel.cards.size > 0) {
+                preview?.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
+            }
+
+            menu.findItem(R.id.action_search)?.isVisible = false
+            menu.findItem(R.id.action_list_my_searches)?.isVisible = false
+            menu.findItem(R.id.action_save_search)?.isVisible = false
+            menu.findItem(R.id.action_search_by_tag)?.isVisible = false
+            menu.findItem(R.id.action_show_marked)?.isVisible = false
+            menu.findItem(R.id.action_show_suspended)?.isVisible = false
+            menu.findItem(R.id.action_search_by_flag)?.isVisible = false
+            menu.findItem(R.id.action_show_suspended)?.isVisible = false
+            menu.findItem(R.id.action_sort_by_size)?.isVisible = false
+        }
     }
 
     override fun onDestroyView() {
@@ -803,10 +900,6 @@ class CardBrowserFragment :
             showDialogFragmentImpl(childFragmentManager, dialog)
         }
 
-        fun onDeckChanged(deck: SelectableDeck?) {
-            deckChip?.text = deck?.getFullDisplayName(requireContext())
-        }
-
         fun advancedSearchChanged(inAdvancedSearch: Boolean) {
             toggleAdvancedSearch?.text = if (inAdvancedSearch) "Basic search" else "Advanced search"
 
@@ -831,6 +924,85 @@ class CardBrowserFragment :
             saveSearchItem?.isVisible = canSave
         }
 
+        fun onSearchViewClosed(value: Unit) {
+            searchView?.hide()
+        }
+
+        @NeedsTest("displayed filter")
+        fun onSearchSubmitted(value: SearchRequest) {
+            // WARN: This changes the text when the SearchView is open
+            launchCatchingTask { searchBar?.setText(value.toUserSpannable()) }
+
+            Timber.i("relaying submitted search to activity")
+            activityViewModel.launchSearchForCards(value, forceRefresh = false)
+        }
+
+        fun onUserMessage(message: UserMessage) =
+            when (message) {
+                UserMessage.SEARCH_SAVED ->
+                    showSnackbar(
+                        R.string.card_browser_list_my_searches_successful_save,
+                        Snackbar.LENGTH_SHORT,
+                    )
+                UserMessage.SAVED_SEARCH_DUPLICATE_ADDED ->
+                    showSnackbar(
+                        R.string.card_browser_list_my_searches_new_search_error_dup,
+                        Snackbar.LENGTH_SHORT,
+                    )
+                UserMessage.SAVED_SEARCH_DELETED ->
+                    showSnackbar(
+                        R.string.card_browser_list_my_searches_successful_deleted,
+                        Snackbar.LENGTH_SHORT,
+                    )
+                UserMessage.SAVED_SEARCH_NAME_DOES_NOT_EXIST ->
+                    showSnackbar(
+                        R.string.something_wrong,
+                        Snackbar.LENGTH_SHORT,
+                    )
+            }
+
+        fun onSearchRequestUpdated(search: SearchRequest) {
+            Timber.d("syncing searchview state from chip updates")
+            val filters = search.filters
+
+            decksChip?.text = filters.decks.firstOrNull()?.name ?: getString(R.string.card_browser_all_decks)
+            decksChip?.hasCheckedBackground = filters.decks.any()
+
+            tagsChip?.text = formatChipDescription(filters.tags, emptyValue = "Tags")
+            tagsChip?.hasCheckedBackground = filters.tags.any()
+
+            cardStateChip?.text = formatChipDescription(filters.cardStates.map { it.label }, emptyValue = "Card state")
+            cardStateChip?.chipIcon =
+                ContextCompat.getDrawable(requireContext(), filters.cardStates.firstOrNull().iconRes)?.also {
+                    if (filters.cardStates.isEmpty()) {
+                        DrawableCompat.setTint(it, MaterialColors.getColor(requireContext(), androidx.appcompat.R.attr.colorPrimary, 0))
+                    }
+                }
+            cardStateChip?.hasCheckedBackground = filters.cardStates.any()
+
+            // Flags: Use the icon/checked state to explain what the filter is.
+            flagsChip?.text =
+                formatChipDescription(
+                    entries = filters.flags,
+                    singleValue = if (filters.flags.singleOrNull() == Flag.NONE) "No Flag" else TR.browsingFlag(),
+                    nonSingleValue = TR.browsingSidebarFlags(),
+                )
+            flagsChip?.chipIcon =
+                ContextCompat.getDrawable(requireContext(), filters.flags.firstOrNull().iconRes)?.also {
+                    if (filters.flags.isEmpty()) {
+                        DrawableCompat.setTint(it, MaterialColors.getColor(requireContext(), androidx.appcompat.R.attr.colorPrimary, 0))
+                    }
+                }
+            flagsChip?.hasCheckedBackground = filters.flags.any()
+
+            searchViewModel.syncState(search)
+        }
+
+        fun reverseDirectionChanged(direction: ReverseDirection) {
+            sortChip?.scaleY = if (!direction.orderAsc) 1.0f else -1.0f
+        }
+
+        activityViewModel.reverseDirectionFlow.launchCollectionInLifecycleScope(::reverseDirectionChanged)
         activityViewModel.flowOfIsTruncated.launchCollectionInLifecycleScope(::onIsTruncatedChanged)
         activityViewModel.flowOfSelectedRows.launchCollectionInLifecycleScope(::onSelectedRowsChanged)
         activityViewModel.flowOfActiveColumns.launchCollectionInLifecycleScope(::onColumnsChanged)
@@ -841,11 +1013,14 @@ class CardBrowserFragment :
         activityViewModel.flowOfCardStateChanged.launchCollectionInLifecycleScope(::onCardsMarkedEvent)
         activityViewModel.flowOfToggleSelectionState.launchCollectionInLifecycleScope(::onToggleSelectionStateUpdated)
         viewModel.flowOfSearchForDecks.launchCollectionInLifecycleScope(::onSearchForDecks)
-        activityViewModel.flowOfDeckSelection.launchCollectionInLifecycleScope(::onDeckChanged)
         activityViewModel.flowOfScrollRequest.launchCollectionInLifecycleScope(::autoScrollTo)
         activityViewModel.flowOfCanSearch.launchCollectionInLifecycleScope(::onCanSaveChanged)
         searchViewModel.advancedSearchFlow.launchCollectionInLifecycleScope(::advancedSearchChanged)
         searchViewModel.searchTextFlow.launchCollectionInLifecycleScope(::onSearchViewTextChanged)
+        searchViewModel.closeSearchViewFlow.launchCollectionInLifecycleScope(::onSearchViewClosed)
+        searchViewModel.submittedSearchFlow.filterNotNull().launchCollectionInLifecycleScope(::onSearchSubmitted)
+        searchViewModel.userMessageFlow.filterNotNull().launchCollectionInLifecycleScope(::onUserMessage)
+        activityViewModel.searchRequestFlow.launchCollectionInLifecycleScope(::onSearchRequestUpdated)
     }
 
     private fun setupFragmentResultListeners() {
@@ -1232,6 +1407,14 @@ class CardBrowserFragment :
                     context = requireContext(),
                     type = TagsDialog.DialogType.FILTER_BY_TAG,
                     noteIds = emptyList(),
+                    checkedTags =
+                        if (useNewTaggingLogic) {
+                            ArrayList(
+                                activityViewModel.searchRequestFlow.value.filters.tags,
+                            )
+                        } else {
+                            ArrayList()
+                        },
                 )
             showDialogFragment(dialog)
         }
@@ -1368,7 +1551,18 @@ class CardBrowserFragment :
         selectedTags: List<String>,
         cardState: CardStateFilter,
     ) = launchCatchingTask {
-        activityViewModel.filterByTags(selectedTags, cardState)
+        if (useNewTaggingLogic) {
+            val updatedSearch =
+                activityViewModel.searchRequestFlow.value.copy(
+                    filters =
+                        activityViewModel.searchRequestFlow.value.filters.copy(
+                            tags = selectedTags,
+                        ),
+                )
+            activityViewModel.launchSearchForCards(updatedSearch, forceRefresh = false)
+        } else {
+            activityViewModel.filterByTags(selectedTags, cardState)
+        }
     }
 
     fun prepareForUndoableOperation() {
@@ -1450,4 +1644,36 @@ private fun Fragment.getOrCreateSearchFragment(
         add(R.id.search_view_content_container, created, tag)
     }
     return created
+}
+
+@CheckResult
+suspend fun SearchRequest.toUserSpannable(): Spannable {
+    val text = withCol { this@toUserSpannable.toSearchString() }.getOrDefault(SearchString.EMPTY)
+    return this.toUserSpannable(text)
+}
+
+@CheckResult
+fun SearchRequest.toUserSpannable(searchString: SearchString): Spannable = buildUserSpannable(this.query, searchString)
+
+@CheckResult
+fun SearchHistory.SearchHistoryEntry.toUserSpannable(searchString: SearchString) = buildUserSpannable(this.query, searchString)
+
+fun buildUserSpannable(
+    query: String,
+    searchString: SearchString,
+): SpannableString {
+    // TODO: handle theming, don't hardcode gray
+    val spannable = SpannableString(searchString.value)
+
+    // gray out the additional filters, as they're handled by chips
+    if (searchString.value.startsWith(query)) {
+        spannable.setSpan(
+            ForegroundColorSpan(Color.GRAY),
+            query.length,
+            searchString.length,
+            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE,
+        )
+    }
+
+    return spannable
 }

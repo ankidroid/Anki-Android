@@ -16,11 +16,355 @@
 
 package com.ichi2.anki.browser.search
 
+import android.content.Context
+import android.os.Bundle
+import android.text.SpannableString
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import androidx.annotation.VisibleForTesting
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.DrawableCompat
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import com.google.android.material.color.MaterialColors
+import com.ichi2.anki.CollectionManager.TR
+import com.ichi2.anki.Flag
 import com.ichi2.anki.R
+import com.ichi2.anki.browser.SearchHistory.SearchHistoryEntry
+import com.ichi2.anki.browser.search.CardBrowserSearchViewModel.SearchHistoryItems
+import com.ichi2.anki.browser.toUserSpannable
+import com.ichi2.anki.databinding.FragmentStandardSearchBinding
+import com.ichi2.anki.databinding.ViewSavedSearchItemBinding
+import com.ichi2.anki.databinding.ViewSearchHistoryItemBinding
+import com.ichi2.anki.dialogs.DeckSelectionDialog
+import com.ichi2.anki.dialogs.ManageSavedSearchAction
+import com.ichi2.anki.dialogs.SaveBrowserSearchDialogFragment
+import com.ichi2.anki.dialogs.SavedBrowserSearchesDialogFragment
+import com.ichi2.anki.dialogs.registerSaveSearchHandler
+import com.ichi2.anki.dialogs.registerSavedSearchActionHandler
+import com.ichi2.anki.dialogs.tags.TagsDialog
+import com.ichi2.anki.dialogs.tags.TagsDialogFactory
+import com.ichi2.anki.dialogs.tags.TagsDialogListener
+import com.ichi2.anki.launchCatchingTask
+import com.ichi2.anki.libanki.DeckNameId
+import com.ichi2.anki.model.CardStateFilter
+import com.ichi2.anki.model.SelectableDeck
+import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.utils.ext.hasCheckedBackground
+import com.ichi2.anki.utils.ext.launchCollectionInLifecycleScope
+import com.ichi2.anki.utils.ext.showDialogFragment
+import dev.androidbroadcast.vbpd.viewBinding
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import timber.log.Timber
 
-class StandardSearchFragment : Fragment(R.layout.fragment_standard_search) {
+class StandardSearchFragment :
+    Fragment(R.layout.fragment_standard_search),
+    DeckSelectionDialog.DeckSelectionListener,
+    TagsDialogListener {
+    @VisibleForTesting
+    val binding by viewBinding(FragmentStandardSearchBinding::bind)
+
+    @VisibleForTesting
+    val viewModel: CardBrowserSearchViewModel by activityViewModels()
+
+    private lateinit var tagsDialogFactory: TagsDialogFactory
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        tagsDialogFactory = TagsDialogFactory(this).attachToActivity<TagsDialogFactory>(requireActivity())
+
+        registerSaveSearchHandler {
+            viewModel.addSavedSearch(it)
+        }
+        registerSavedSearchActionHandler {
+            when (it) {
+                is ManageSavedSearchAction.SelectSearch -> {
+                    viewModel.submitSavedSearch(it.search)
+                }
+                is ManageSavedSearchAction.Delete -> {
+                    viewModel.deleteSavedSearch(it.search)
+                }
+            }
+        }
+    }
+
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.toggleAdvancedSearch.setOnClickListener { viewModel.toggleAdvancedSearch() }
+
+        setupChips()
+        setupSearchHistory()
+        setupSavedSearches()
+    }
+
+    // TODO: multi-selection handling for all chips
+    private fun setupChips() {
+        binding.decksChip.setOnClickListener {
+            launchCatchingTask {
+                // TODO: see onDeckSelected
+                val decks = listOf(SelectableDeck.AllDecks) + SelectableDeck.fromCollection(includeFiltered = true)
+                val dialog =
+                    DeckSelectionDialog.newInstance(
+                        title = getString(R.string.search_deck),
+                        summaryMessage = null,
+                        keepRestoreDefaultButton = false,
+                        decks = decks,
+                    )
+                dialog.show(childFragmentManager, "selectDeck")
+            }
+        }
+
+        binding.tagsChip.setOnClickListener {
+            // see onSelectedTags
+            launchCatchingTask {
+                val dialog =
+                    tagsDialogFactory.newTagsDialog().withArguments(
+                        context = requireContext(),
+                        type = TagsDialog.DialogType.FILTER_BY_TAG,
+                        noteIds = emptyList(),
+                        checkedTags = ArrayList(viewModel.filtersFlow.value.tags),
+                    )
+                showDialogFragment(dialog)
+            }
+        }
+
+        binding.cardStateChip.setOnClickListener {
+            val sheet = CardStateBottomSheetFragment()
+            sheet.show(childFragmentManager, CardStateBottomSheetFragment.TAG)
+        }
+
+        binding.flagsChip.setOnClickListener {
+            launchCatchingTask {
+                FlagsBottomSheetFragment.createInstance().show(childFragmentManager)
+            }
+        }
+
+        viewModel.filtersFlow.launchCollectionInLifecycleScope {
+            binding.decksChip.hasCheckedBackground = it.decks.any()
+            binding.tagsChip.hasCheckedBackground = it.tags.any()
+            binding.cardStateChip.hasCheckedBackground = it.cardStates.any()
+            binding.flagsChip.hasCheckedBackground = it.flags.any()
+
+            binding.decksChip.text = it.decks.firstOrNull()?.name ?: getString(R.string.card_browser_all_decks)
+            binding.tagsChip.text = formatChipDescription(it.tags, emptyValue = "Tags")
+            binding.cardStateChip.text = formatChipDescription(it.cardStates.map { it.label }, emptyValue = "Card state")
+            binding.cardStateChip.chipIcon =
+                ContextCompat.getDrawable(requireContext(), it.cardStates.firstOrNull().iconRes)?.also { drawable ->
+                    if (it.cardStates.isEmpty()) {
+                        DrawableCompat.setTint(
+                            drawable,
+                            MaterialColors.getColor(requireContext(), androidx.appcompat.R.attr.colorPrimary, 0),
+                        )
+                    }
+                }
+            binding.cardStateChip.chipIcon = ContextCompat.getDrawable(requireContext(), it.cardStates.firstOrNull().iconRes)
+
+            binding.flagsChip.text =
+                formatChipDescription(
+                    it.flags,
+                    singleValue = if (it.flags.singleOrNull() == Flag.NONE) "No Flag" else TR.browsingFlag(),
+                    nonSingleValue = TR.browsingSidebarFlags(),
+                )
+            binding.flagsChip.chipIcon =
+                ContextCompat.getDrawable(requireContext(), it.flags.firstOrNull().iconRes)?.also { drawable ->
+                    if (it.flags.isEmpty()) {
+                        DrawableCompat.setTint(
+                            drawable,
+                            MaterialColors.getColor(requireContext(), androidx.appcompat.R.attr.colorPrimary, 0),
+                        )
+                    }
+                }
+        }
+    }
+
+    override fun onDeckSelected(deck: SelectableDeck?) {
+        viewModel.setDecksFilter(deck?.toDeckNameIdList() ?: return)
+    }
+
+    override fun onSelectedTags(
+        selectedTags: List<String>,
+        indeterminateTags: List<String>,
+        stateFilter: CardStateFilter,
+    ) {
+        viewModel.setTagsFilter(selectedTags)
+    }
+
+    private fun setupSearchHistory() {
+        class SearchHistoryItemUiModel(
+            val entry: SearchHistoryEntry,
+            val searchString: SearchString?,
+        ) {
+            // as we have the rendered SearchString, we can produce a Spannable without using the
+            // Anki collection
+            fun toSpannable() = searchString?.let { entry.toUserSpannable(it) } ?: SpannableString("")
+        }
+
+        fun buildUiModelList(historyItems: SearchHistoryItems): List<SearchHistoryItemUiModel> =
+            historyItems.entryToSearchString
+                .take(MAX_SEARCH_HISTORY_ENTRIES)
+                .map {
+                    SearchHistoryItemUiModel(
+                        entry = it.first,
+                        searchString = it.second,
+                    )
+                }
+
+        class SearchHistoryAdapter(
+            private val context: Context,
+            searches: List<SearchHistoryItemUiModel>,
+        ) : ArrayAdapter<SearchHistoryItemUiModel>(context, 0, searches) {
+            override fun getView(
+                position: Int,
+                convertView: View?,
+                parent: ViewGroup,
+            ): View {
+                val binding =
+                    if (convertView != null) {
+                        ViewSearchHistoryItemBinding.bind(convertView)
+                    } else {
+                        ViewSearchHistoryItemBinding.inflate(LayoutInflater.from(context), parent, false)
+                    }
+
+                val item = getItem(position)!!
+
+                fun openSavedSearchNamePrompt() {
+                    Timber.i("opening 'save search' name input dialog")
+                    val dialog =
+                        SaveBrowserSearchDialogFragment.newInstance(searchQuery = item.entry.query)
+
+                    dialog.show(childFragmentManager, "savedSearchName")
+                }
+
+                binding.title.text = item.toSpannable()
+                binding.root.setOnClickListener { viewModel.selectSearchHistoryEntry(item.entry) }
+                binding.favorite.setOnClickListener { openSavedSearchNamePrompt() }
+                return binding.root
+            }
+        }
+
+        val searchHistoryAdapter =
+            SearchHistoryAdapter(
+                context = requireContext(),
+                searches = buildUiModelList(viewModel.searchHistoryFlow.value),
+            )
+        binding.searchHistory.apply {
+            adapter = searchHistoryAdapter
+            setOnItemClickListener { _, _, position, _ ->
+                viewModel.selectSearchHistoryEntry(getItemAtPosition(position) as SearchHistoryEntry)
+            }
+        }
+
+        binding.seeMore.apply {
+            setOnClickListener { showSnackbar("TODO") }
+        }
+
+        // replace the data when the search history is updated
+        viewModel.searchHistoryFlow.launchCollectionInLifecycleScope {
+            searchHistoryAdapter.clear()
+            searchHistoryAdapter.addAll(buildUiModelList(it))
+        }
+
+        viewModel.searchHistoryAvailableFlow.launchCollectionInLifecycleScope {
+            binding.searchHistoryContainer.isVisible = it
+        }
+    }
+
+    private fun setupSavedSearches() {
+        class SavedSearchAdapter(
+            private val context: Context,
+            searches: List<SavedSearch>,
+        ) : ArrayAdapter<SavedSearch>(context, 0, searches) {
+            override fun getView(
+                position: Int,
+                convertView: View?,
+                parent: ViewGroup,
+            ): View {
+                val binding =
+                    if (convertView != null) {
+                        ViewSavedSearchItemBinding.bind(convertView)
+                    } else {
+                        ViewSavedSearchItemBinding.inflate(LayoutInflater.from(context), parent, false)
+                    }
+
+                val item = getItem(position)!!
+                binding.title.text = item.name
+                binding.content.text = item.query
+
+                binding.root.setOnClickListener { viewModel.submitSavedSearch(item) }
+                binding.insertSavedSearch.setOnClickListener { viewModel.applySavedSearch(item) }
+
+                return binding.root
+            }
+        }
+
+        val savedSearches = viewModel.savedSearchesFlow.value.toMutableList()
+        val adapter =
+            SavedSearchAdapter(
+                requireContext(),
+                savedSearches,
+            )
+        binding.savedSearches.adapter = adapter
+
+        viewModel.savedSearchesFlow.launchCollectionInLifecycleScope {
+            withContext(Dispatchers.Main) {
+                savedSearches.clear()
+                savedSearches.addAll(it)
+                adapter.notifyDataSetChanged()
+            }
+        }
+
+        viewModel.canManageSavedSearchesFlow.launchCollectionInLifecycleScope {
+            binding.manageSavedSearchesContainer.isVisible = it
+        }
+
+        binding.manageSavedSearchesContainer.setOnClickListener {
+            binding.manageSavedSearches.performClick()
+            val dialog = SavedBrowserSearchesDialogFragment.newInstance(savedSearches)
+            dialog.show(childFragmentManager, SavedBrowserSearchesDialogFragment.TAG)
+        }
+    }
+
     companion object {
         const val TAG = "STANDARD"
+
+        /** Limits the number of history items, so controls appear below without scrolling */
+        const val MAX_SEARCH_HISTORY_ENTRIES = 5
     }
+}
+
+fun SelectableDeck.toDeckNameIdList(): List<DeckNameId>? =
+    when (this) {
+        is SelectableDeck.AllDecks -> emptyList()
+        is SelectableDeck.Deck -> {
+            if (this.deckId == 0L) emptyList() else listOf(DeckNameId(this.name, this.deckId))
+        }
+    }
+
+fun formatChipDescription(
+    tags: List<String>,
+    emptyValue: String,
+) = when (tags.size) {
+    0 -> emptyValue
+    1 -> tags.single()
+    else -> "${tags.first()} +${tags.size - 1}"
+}
+
+fun <T> formatChipDescription(
+    entries: List<T>,
+    singleValue: String,
+    nonSingleValue: String,
+    // TODO: i18n
+) = when (entries.size) {
+    0 -> nonSingleValue
+    1 -> singleValue
+    else -> "$singleValue +${entries.size - 1}"
 }

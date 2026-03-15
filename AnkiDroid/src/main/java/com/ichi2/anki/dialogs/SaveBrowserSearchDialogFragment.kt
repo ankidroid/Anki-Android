@@ -20,6 +20,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.CardBrowser
@@ -45,6 +46,7 @@ import timber.log.Timber
  */
 class SaveBrowserSearchDialogFragment : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        // TODO: validation on duplicate name (case sensitive)
         val searchQuery =
             requireArguments().getString(ARG_SEARCH_QUERY) ?: error("Missing search query")
         return AlertDialog
@@ -123,5 +125,34 @@ fun CardBrowser.registerSaveSearchHandler() {
             val saveStatus = viewModel.saveSearch(toSave)
             updateAfterUserSearchIsSaved(saveStatus)
         }
+    }
+}
+
+/**
+ * Registers a fragment result listener, [onSaveSearch] should handle creating the requested
+ * saved search
+ */
+fun Fragment.registerSaveSearchHandler(onSaveSearch: (SavedSearch) -> Unit) {
+    childFragmentManager.setFragmentResultListener(
+        SaveBrowserSearchDialogFragment.REQUEST_SAVE_SEARCH,
+        this,
+    ) { _, bundle ->
+        val savedSearchName =
+            bundle.getString(ARG_SEARCH_QUERY_NAME)
+        if (savedSearchName.isNullOrEmpty()) {
+            showSnackbar(
+                R.string.card_browser_list_my_searches_new_search_error_empty_name,
+                Snackbar.LENGTH_SHORT,
+            )
+            return@setFragmentResultListener
+        }
+
+        val savedSearch =
+            SavedSearch(
+                name = savedSearchName,
+                query = bundle.getString(ARG_SEARCH_QUERY) ?: return@setFragmentResultListener,
+            )
+
+        onSaveSearch(savedSearch)
     }
 }
