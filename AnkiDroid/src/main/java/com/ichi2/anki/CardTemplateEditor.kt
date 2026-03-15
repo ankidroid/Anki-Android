@@ -89,6 +89,7 @@ import com.ichi2.anki.libanki.getStockNotetype
 import com.ichi2.anki.libanki.getStockNotetypeKinds
 import com.ichi2.anki.libanki.utils.append
 import com.ichi2.anki.model.SelectableDeck
+import com.ichi2.anki.notetype.CardTypeName
 import com.ichi2.anki.notetype.RenameCardTypeDialog
 import com.ichi2.anki.notetype.RepositionCardTemplateDialog
 import com.ichi2.anki.observability.undoableOp
@@ -834,11 +835,19 @@ open class CardTemplateEditor :
             val ordinal = templateEditor.ord
             val template = templateEditor.tempNoteType!!.getTemplate(ordinal)
 
+            // obtain the current names (potentially unsaved)
+            val existingNames =
+                templateEditor.tempNoteType!!
+                    .notetype.templates
+                    .map { CardTypeName.fromString(it.name) }
+
             RenameCardTypeDialog.showInstance(
                 requireContext(),
                 prefill = template.name,
+                currentName = CardTypeName.fromString(template.name),
+                existingNames = existingNames,
             ) { newName ->
-                template.name = newName
+                template.name = newName.value
                 Timber.i("updated card template name")
                 Timber.d("updated name of template %d to '%s'", ordinal, newName)
 
