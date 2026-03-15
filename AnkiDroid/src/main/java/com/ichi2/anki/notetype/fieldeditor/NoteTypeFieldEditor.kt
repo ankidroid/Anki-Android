@@ -25,14 +25,17 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.EditText
+import androidx.activity.viewModels
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.core.os.BundleCompat
 import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.CollectionManager.TR
-import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.databinding.ItemNotetypeFieldBinding
@@ -45,10 +48,7 @@ import com.ichi2.anki.dialogs.NoteTypeFieldEditorContextMenu.Companion.newInstan
 import com.ichi2.anki.dialogs.NoteTypeFieldEditorContextMenu.NoteTypeFieldEditorContextMenuAction
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.Collection
-import com.ichi2.anki.libanki.Fields
-import com.ichi2.anki.libanki.NotetypeJson
 import com.ichi2.anki.libanki.exception.ConfirmModSchemaException
-import com.ichi2.anki.servicelayer.LanguageHintService.setLanguageHintForField
 import com.ichi2.anki.showThemedToast
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
@@ -66,7 +66,7 @@ import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
 import com.ichi2.utils.title
 import dev.androidbroadcast.vbpd.viewBinding
-import org.json.JSONArray
+import kotlinx.coroutines.launch
 import org.json.JSONException
 import timber.log.Timber
 import java.util.Locale
@@ -74,23 +74,10 @@ import java.util.Locale
 @NeedsTest("perform one action, then another")
 class NoteTypeFieldEditor : AnkiActivity(R.layout.note_type_field_editor) {
     private val binding by viewBinding(NoteTypeFieldEditorBinding::bind)
+    val viewModel by viewModels<NoteTypeFieldEditorViewModel>()
 
     // Position of the current field selected
-    private var currentPos = 0
     private var fieldNameInput: EditText? = null
-
-    // Backing field for [notetype]. Not with _ because it's only allowed for public field.
-    private var notetypeBackup: NotetypeJson? = null
-    private var notetype: NotetypeJson
-        get() = notetypeBackup!!
-        set(value) {
-            notetypeBackup = value
-        }
-
-    private lateinit var fieldsLabels: List<String>
-
-    // WARN: this should be lateinit, but this can't yet be done on an inline class
-    private var noteFields: Fields = Fields(JSONArray())
 
     // ----------------------------------------------------------------------------
     // ANDROID METHODS
@@ -143,14 +130,18 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.note_type_field_editor) {
             finish()
             return
         }
-        notetype = collectionModel
-        noteFields = notetype.fields
-        fieldsLabels = notetype.fieldsNames
-        binding.fields.adapter = NoteFieldAdapter(this, fieldNamesWithKind())
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.state.collect {
+                    binding.fields.adapter =
+                        NoteFieldAdapter(this@NoteTypeFieldEditor, fieldNamesWithKind())
+                }
+            }
+        }
         binding.fields.onItemClickListener =
             AdapterView.OnItemClickListener { _, _, position: Int, _ ->
-                showDialogFragment(newInstance(fieldsLabels[position]))
-                currentPos = position
+                showDialogFragment(newInstance(viewModel.state.value.fieldsLabels[position]))
+                viewModel.updateCurrentPosition(position)
             }
         binding.btnAdd.setOnClickListener { addFieldDialog() }
     }
@@ -181,6 +172,7 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.note_type_field_editor) {
             showThemedToast(this, resources.getString(R.string.toast_empty_name), true)
             return null
         }
+        val fieldsLabels = viewModel.state.value.fieldsLabels
         if (fieldsLabels.any { input == it }) {
             showThemedToast(this, resources.getString(R.string.toast_duplicate_field), true)
             return null
@@ -224,7 +216,7 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.note_type_field_editor) {
                         c.setConfirm(confirm)
                         this@NoteTypeFieldEditor.showDialogFragment(c)
                     }
-                    getColUnsafe.notetypes.update(notetype)
+                    getColUnsafe.notetypes.update(viewModel.state.value.notetype)
                     initialize()
                 }
                 negativeButton(R.string.dialog_cancel)
@@ -248,13 +240,9 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.note_type_field_editor) {
             getColUnsafe.modSchema(check = false)
         }
         launchCatchingTask {
-            Timber.d("doInBackgroundAddField")
-            withProgress {
-                withCol {
-                    notetypes.addFieldModChanged(notetype, notetypes.newField(fieldName))
-                }
+            withProgress(message = getString(R.string.model_field_editor_changing)) {
+                viewModel.add(fieldName)
             }
-            initialize()
         }
     }
 
@@ -274,12 +262,14 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.note_type_field_editor) {
                 )
             }
 
-        if (fieldsLabels.size < 2) {
+        if (viewModel.state.value.fieldsLabels.size < 2) {
             showThemedToast(this, resources.getString(R.string.toast_last_field), true)
         } else {
             try {
                 getColUnsafe.modSchema(check = true)
-                val fieldName = noteFields[currentPos].name
+                val fieldName =
+                    viewModel.state.value.noteFields[viewModel.state.value.currentPos]
+                        .name
                 ConfirmationDialog().let {
                     it.setArgs(
                         title = fieldName,
@@ -300,24 +290,10 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.note_type_field_editor) {
     }
 
     private fun deleteField() {
+        val field = viewModel.state.value.noteFields[viewModel.state.value.currentPos]
         launchCatchingTask {
-            Timber.d("doInBackGroundDeleteField")
             withProgress(message = getString(R.string.model_field_editor_changing)) {
-                val result =
-                    withCol {
-                        try {
-                            notetypes.remFieldLegacy(notetype, noteFields[currentPos])
-                            true
-                        } catch (e: ConfirmModSchemaException) {
-                            // Should never be reached
-                            e.log()
-                            false
-                        }
-                    }
-                if (!result) {
-                    closeActivity()
-                }
-                initialize()
+                viewModel.delete(field)
             }
         }
     }
@@ -330,7 +306,7 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.note_type_field_editor) {
         fieldNameInput = FixedEditText(this).apply { focusWithKeyboard() }
         fieldNameInput?.let { fieldNameInput ->
             fieldNameInput.isSingleLine = true
-            fieldNameInput.setText(fieldsLabels[currentPos])
+            fieldNameInput.setText(viewModel.state.value.fieldsLabels[viewModel.state.value.currentPos])
             fieldNameInput.moveCursorToEnd()
             AlertDialog.Builder(this).show {
                 customView(view = fieldNameInput, paddingStart = 64, paddingEnd = 64, paddingTop = 32)
@@ -392,7 +368,7 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.note_type_field_editor) {
                     setMessage(TR.fieldsNewPosition1(numberOfTemplates))
                     setView(R.layout.dialog_generic_text_input)
                 }.input(
-                    prefill = (currentPos + 1).toString(),
+                    prefill = (viewModel.state.value.currentPos + 1).toString(),
                     inputType = InputType.TYPE_CLASS_NUMBER,
                     displayKeyboard = true,
                     waitForPositiveButton = false,
@@ -403,10 +379,14 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.note_type_field_editor) {
         }
 
         // handle repositioning
-        showDialog(fieldsLabels.size) { newPosition ->
-            if (newPosition == currentPos + 1) return@showDialog
+        showDialog(viewModel.state.value.fieldsLabels.size) { newPosition ->
+            if (newPosition == viewModel.state.value.currentPos + 1) return@showDialog
 
-            Timber.i("Repositioning field from %d to %d", currentPos, newPosition)
+            Timber.i(
+                "Repositioning field from %d to %d",
+                viewModel.state.value.currentPos,
+                newPosition,
+            )
             try {
                 getColUnsafe.modSchema(check = true)
                 repositionField(newPosition - 1)
@@ -434,22 +414,10 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.note_type_field_editor) {
     private fun repositionField(index: Int) {
         launchCatchingTask {
             withProgress(message = getString(R.string.model_field_editor_changing)) {
-                val result =
-                    withCol {
-                        Timber.d("doInBackgroundRepositionField")
-                        try {
-                            notetypes.moveFieldLegacy(notetype, noteFields[currentPos], index)
-                            true
-                        } catch (e: ConfirmModSchemaException) {
-                            e.log()
-                            // Should never be reached
-                            false
-                        }
-                    }
-                if (!result) {
-                    closeActivity()
-                }
-                initialize()
+                viewModel.reposition(
+                    viewModel.state.value.noteFields[viewModel.state.value.currentPos],
+                    index,
+                )
             }
         }
     }
@@ -459,14 +427,13 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.note_type_field_editor) {
      */
     @Throws(ConfirmModSchemaException::class)
     private fun renameField() {
-        val fieldLabel =
-            fieldNameInput!!
-                .text
-                .toString()
-                .replace("[\\n\\r]".toRegex(), "")
-        val field = noteFields[currentPos]
-        getColUnsafe.notetypes.renameFieldLegacy(notetype, field, fieldLabel)
-        initialize()
+        val fieldLabel = uniqueName(fieldNameInput!!) ?: return
+        val field = viewModel.state.value.noteFields[viewModel.state.value.currentPos]
+        launchCatchingTask {
+            withProgress(message = getString(R.string.model_field_editor_changing)) {
+                viewModel.rename(field, fieldLabel)
+            }
+        }
     }
 
     /*
@@ -475,7 +442,7 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.note_type_field_editor) {
     private fun sortByField() {
         try {
             getColUnsafe.modSchema(check = true)
-            launchCatchingTask { changeSortField(notetype, currentPos) }
+            launchCatchingTask { changeSortField(viewModel.state.value.currentPos) }
         } catch (e: ConfirmModSchemaException) {
             e.log()
             // Handler mMod schema confirmation
@@ -484,29 +451,19 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.note_type_field_editor) {
             val confirm =
                 Runnable {
                     getColUnsafe.modSchema(check = false)
-                    launchCatchingTask { changeSortField(notetype, currentPos) }
+                    launchCatchingTask { changeSortField(viewModel.state.value.currentPos) }
                 }
             c.setConfirm(confirm)
             this@NoteTypeFieldEditor.showDialogFragment(c)
         }
     }
 
-    private suspend fun changeSortField(
-        notetype: NotetypeJson,
-        idx: Int,
-    ) {
-        withProgress(resources.getString(R.string.model_field_editor_changing)) {
-            withCol {
-                Timber.d("doInBackgroundChangeSortField")
-                notetypes.setSortIndex(notetype, idx)
-                notetypes.save(notetype)
+    private suspend fun changeSortField(idx: Int) {
+        withProgress(message = getString(R.string.model_field_editor_changing)) {
+            withProgress(message = getString(R.string.model_field_editor_changing)) {
+                viewModel.changeSort(idx)
             }
         }
-        initialize()
-    }
-
-    private fun closeActivity() {
-        finish()
     }
 
     fun handleAction(contextMenuAction: NoteTypeFieldEditorContextMenuAction) {
@@ -530,7 +487,11 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.note_type_field_editor) {
      * This allows some keyboard (GBoard) to change language
      */
     private fun addFieldLocaleHint(selectedLocale: Locale) {
-        setLanguageHintForField(getColUnsafe.notetypes, notetype, currentPos, selectedLocale)
+        launchCatchingTask {
+            withProgress(message = getString(R.string.model_field_editor_changing)) {
+                viewModel.languageHint(selectedLocale)
+            }
+        }
         val format = getString(R.string.model_field_editor_language_hint_dialog_success_result, selectedLocale.displayName)
         showSnackbar(format, Snackbar.LENGTH_SHORT)
         initialize()
@@ -554,11 +515,11 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.note_type_field_editor) {
      * Returns a list of field names with their kind
      * So far the only kind is SORT, which defines the field upon which notes could be sorted
      */
-    private fun fieldNamesWithKind(): List<Pair<String, NodetypeKind>> =
-        fieldsLabels.mapIndexed { index, fieldName ->
+    private fun fieldNamesWithKind(): List<Pair<String, NotetypeKind>> =
+        viewModel.state.value.fieldsLabels.mapIndexed { index, fieldName ->
             Pair(
                 fieldName,
-                if (index == notetype.sortf) NodetypeKind.SORT else NodetypeKind.UNDEFINED,
+                if (index == viewModel.state.value.notetype.sortf) NotetypeKind.SORT else NotetypeKind.UNDEFINED,
             )
         }
 
@@ -568,15 +529,15 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.note_type_field_editor) {
     }
 }
 
-enum class NodetypeKind {
+enum class NotetypeKind {
     SORT,
     UNDEFINED,
 }
 
 internal class NoteFieldAdapter(
     private val context: Context,
-    labels: List<Pair<String, NodetypeKind>>,
-) : ArrayAdapter<Pair<String, NodetypeKind>>(context, 0, labels) {
+    labels: List<Pair<String, NotetypeKind>>,
+) : ArrayAdapter<Pair<String, NotetypeKind>>(context, 0, labels) {
     override fun getView(
         position: Int,
         convertView: View?,
@@ -595,8 +556,8 @@ internal class NoteFieldAdapter(
             binding.fieldName.setCompoundDrawablesRelativeWithIntrinsicBoundsKt(
                 end =
                     when (kind) {
-                        NodetypeKind.SORT -> R.drawable.ic_sort
-                        NodetypeKind.UNDEFINED -> 0
+                        NotetypeKind.SORT -> R.drawable.ic_sort
+                        NotetypeKind.UNDEFINED -> 0
                     },
             )
         }
