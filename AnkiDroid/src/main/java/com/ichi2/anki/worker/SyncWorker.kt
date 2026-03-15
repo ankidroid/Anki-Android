@@ -99,19 +99,23 @@ class SyncWorker(
         try {
             syncCollection(auth, shouldSyncMedia)
         } catch (cancellationException: CancellationException) {
+            Timber.w(cancellationException, "SyncWorker cancelled (user tapped Cancel or WorkManager cancelled)")
+            notificationManager?.cancel(NotificationId.SYNC)
+            Timber.d("SyncWorker: progress notification cancelled after worker cancellation")
             cancelSync(CollectionManager.getBackend())
             throw cancellationException
         } catch (throwable: Throwable) {
-            Timber.w(throwable)
+            Timber.w(throwable, "SyncWorker failed")
             notify {
                 setContentTitle(applicationContext.getString(R.string.sync_error))
                 throwable.localizedMessage?.let { message ->
                     setContentText(message)
                 }
             }
+            Timber.d("SyncWorker: showing failure notification")
             return Result.failure()
         }
-        Timber.d("SyncWorker: cancelling notification")
+        Timber.d("SyncWorker: cancelling progress notification (sync completed)")
         notificationManager?.cancel(NotificationId.SYNC)
 
         Timber.d("SyncWorker: success")
