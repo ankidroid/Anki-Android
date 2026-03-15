@@ -18,10 +18,14 @@ package com.ichi2.anki
 import android.animation.Animator
 import android.content.Context
 import android.content.res.ColorStateList
+import android.os.Bundle
 import android.view.KeyEvent
 import android.view.MotionEvent
 import android.view.View
 import android.widget.LinearLayout
+import androidx.core.view.AccessibilityDelegateCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.accessibility.AccessibilityNodeInfoCompat
 import com.google.android.material.color.MaterialColors
 import com.ichi2.anki.databinding.ActivityHomescreenBinding
 import com.ichi2.anki.databinding.FloatingAddButtonBinding
@@ -59,9 +63,11 @@ class DeckPickerFloatingActionMenu(
     val isFragmented: Boolean
         get() = studyOptionsFrame != null
 
+    @Suppress("DEPRECATION")
     private fun showFloatingActionMenu() {
         toggleListener?.onBeginToggle(isOpening = true)
         deckPicker.activeSnackBar?.dismiss()
+        binding.fabMain.announceForAccessibility(context.getString(R.string.fab_menu_opened))
         linearLayout.alpha = 0.5f
         studyOptionsFrame?.let { it.alpha = 0.5f }
         isFABOpen = true
@@ -143,8 +149,10 @@ class DeckPickerFloatingActionMenu(
      * Case 2: When the user opens the side navigation drawer (without touching the FAB). In that case we don't
      * want to show any type of rise and shrink animation for the FAB so we put the value `false` for the parameter.
      */
+    @Suppress("DEPRECATION")
     fun closeFloatingActionMenu(applyRiseAndShrinkAnimation: Boolean) {
         toggleListener?.onBeginToggle(isOpening = false)
+        binding.fabMain.announceForAccessibility(context.getString(R.string.fab_menu_closed))
         if (applyRiseAndShrinkAnimation) {
             linearLayout.alpha = 1f
             studyOptionsFrame?.let { it.alpha = 1f }
@@ -346,6 +354,28 @@ class DeckPickerFloatingActionMenu(
         }
 
     init {
+        ViewCompat.setAccessibilityDelegate(
+            binding.fabMain,
+            object : AccessibilityDelegateCompat() {
+                override fun performAccessibilityAction(
+                    host: View,
+                    action: Int,
+                    args: Bundle?,
+                ): Boolean {
+                    if (action == AccessibilityNodeInfoCompat.ACTION_CLICK) {
+                        Timber.d("FAB main button: TalkBack CLICK action performed")
+                        if (!isFABOpen) {
+                            showFloatingActionMenu()
+                        } else {
+                            addNote()
+                        }
+                        return true
+                    }
+                    return super.performAccessibilityAction(host, action, args)
+                }
+            },
+        )
+
         binding.fabMain.setOnTouchListener(
             object : DoubleTapListener(context) {
                 override fun onDoubleTap(e: MotionEvent?) {
