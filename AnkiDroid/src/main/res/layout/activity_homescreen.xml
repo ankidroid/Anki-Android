@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/root_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -10,8 +11,30 @@
 
         <include layout="@layout/toolbar" />
 
-        <include
-            android:id="@+id/deck_picker_pane"
-            layout="@layout/deck_picker" />
+        <com.ichi2.anki.ui.ResizablePaneLayout
+            android:id="@+id/deckpicker_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="?android:attr/colorBackground"
+            android:orientation="horizontal"
+            app:leftWeightKey="deckPickerPaneWeight"
+            app:rightWeightKey="studyOptionsPaneWeight">
+            <include layout="@layout/deck_picker"
+                android:id="@+id/deck_picker_pane"
+                android:layout_width="1dip"
+                android:layout_weight="3"
+                android:layout_height="match_parent"/>
+
+            <com.ichi2.anki.ui.ResizingDivider
+                android:id="@+id/resizing_divider"
+                android:layout_width="8dp"
+                android:layout_height="match_parent" />
+
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/studyoptions_fragment"
+                android:layout_weight="2"
+                android:layout_width="1dip"
+                android:layout_height="match_parent"/>
+        </com.ichi2.anki.ui.ResizablePaneLayout>
     </LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
