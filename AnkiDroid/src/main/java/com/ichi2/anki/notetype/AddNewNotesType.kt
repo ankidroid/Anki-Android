@@ -21,6 +21,7 @@ import android.view.WindowManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AlertDialog
+import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import anki.notetypes.StockNotetype
 import anki.notetypes.copy
@@ -76,8 +77,9 @@ class AddNewNotesType(
             AlertDialog
                 .Builder(activity)
                 .apply {
+                    setTitle(R.string.cd_manage_notetypes_add)
                     customView(binding.root, paddingStart = 32, paddingEnd = 32, paddingTop = 64, paddingBottom = 64)
-                    positiveButton(R.string.dialog_ok) { _ ->
+                    positiveButton(R.string.dialog_add) { _ ->
                         val newName = binding.notetypeNewName.text.toString()
                         val selectedPosition = binding.notetypeNewType.selectedItemPosition
                         if (selectedPosition == AdapterView.INVALID_POSITION) return@positiveButton
@@ -101,9 +103,9 @@ class AddNewNotesType(
         val clonePrefixStr = context.resources.getString(R.string.model_browser_add_clone)
         binding.notetypeNewName.addTextChangedListener { editableText ->
             val currentName = editableText?.toString() ?: ""
-            positiveButton.isEnabled =
-                currentName.isNotEmpty() &&
-                !currentNames.contains(currentName)
+            val isDuplicate = currentNames.contains(currentName)
+            positiveButton.isEnabled = currentName.isNotEmpty() && !isDuplicate
+            binding.notetypeNameError.isVisible = isDuplicate
         }
         binding.notetypeNewType.apply {
             onItemSelectedListener =
