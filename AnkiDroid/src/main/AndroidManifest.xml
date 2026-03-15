@@ -366,7 +366,7 @@
             android:exported="false"
             />
         <activity
-            android:name=".NoteTypeFieldEditor"
+            android:name=".notetype.fieldeditor.NoteTypeFieldEditor"
             android:label="@string/model_editor_label"
             android:configChanges="keyboardHidden|orientation|screenSize"
             />
