@@ -833,9 +833,16 @@ open class CardTemplateEditor :
             val ordinal = templateEditor.ord
             val template = templateEditor.tempNoteType!!.getTemplate(ordinal)
 
+            val existingNames =
+                templateEditor.tempNoteType!!
+                    .notetype.templates
+                    .map { it.name }
+                    .filter { it != template.name }
+
             RenameCardTemplateDialog.showInstance(
                 requireContext(),
                 prefill = template.name,
+                existingNames = existingNames,
             ) { newName ->
                 template.name = newName
                 Timber.i("updated card template name")
@@ -1360,7 +1367,8 @@ open class CardTemplateEditor :
                     numAffectedCards,
                     tmpl.jsonObject.optString("name"),
                 )
-            d.setArgs(msg)
+            d.setArgs("Delete card type", msg)
+            d.setPositiveButtonText("Delete")
 
             val deleteCard = Runnable { deleteTemplate(tmpl, notetype) }
             val confirm = Runnable { executeWithSyncCheck(deleteCard) }
@@ -1378,6 +1386,7 @@ open class CardTemplateEditor :
             numAffectedCards: Int,
         ) {
             val d = ConfirmationDialog()
+
             val msg =
                 String.format(
                     resources.getQuantityString(
@@ -1386,7 +1395,8 @@ open class CardTemplateEditor :
                     ),
                     numAffectedCards,
                 )
-            d.setArgs(msg)
+            d.setArgs("Add card type", msg)
+            d.setPositiveButtonText("Add")
 
             val addCard = Runnable { addNewTemplate(notetype) }
             val confirm = Runnable { executeWithSyncCheck(addCard) }
