@@ -45,7 +45,8 @@ class TagsList(
     private val checkedTags: MutableSet<String> = TreeSet(java.lang.String.CASE_INSENSITIVE_ORDER)
 
     /**
-     * A Set containing the tags with indeterminate state
+     * A Set containing the tags with indeterminate state.
+     * For a tag to be in indeterminate state it should be present in checkedTags and also in uncheckedTags.
      */
     private val indeterminateTags: MutableSet<String>
 
