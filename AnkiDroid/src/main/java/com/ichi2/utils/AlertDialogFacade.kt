@@ -311,6 +311,7 @@ fun AlertDialog.input(
     maxLength: Int? = null,
     displayKeyboard: Boolean = false,
     waitForPositiveButton: Boolean = true,
+    validator: ((String) -> String?)? = null,
     callback: (AlertDialog, CharSequence) -> Unit,
 ): AlertDialog {
     // Builder.setView() may not be called before show()
@@ -325,35 +326,46 @@ fun AlertDialog.input(
 
         inputType?.let { this.inputType = it }
 
-        if (!waitForPositiveButton) {
-            doOnTextChanged { text, _, _, _ ->
-                callback(this@input, text ?: "")
+        doOnTextChanged { text, _, _, _ ->
+
+            val input = text?.toString() ?: ""
+
+            val error = validator?.invoke(input)
+
+            if (error != null) {
+                this@input.getInputTextLayout().error = error
+                this@input.positiveButton.isEnabled = false
+            } else {
+                this@input.getInputTextLayout().error = null
+
+                val allow =
+                    if (!allowEmpty) {
+                        input.isNotEmpty()
+                    } else {
+                        true
+                    }
+
+                this@input.positiveButton.isEnabled = allow
             }
-        } else {
-            positiveButton.setOnClickListener { callback(this@input, this.text.toString()) }
+
+            if (!waitForPositiveButton) {
+                callback(this@input, input)
+            }
         }
 
-        if (!allowEmpty) {
-            // this is called after callback() so allowEmpty takes priority
-            doOnTextChanged { text, _, _, _ ->
-                if (waitForPositiveButton) {
-                    // this is the only validation filter we apply - toggle on or off
-                    this@input.positiveButton.isEnabled = !text.isNullOrEmpty()
-                } else if (text.isNullOrEmpty()) {
-                    // potentially other filters in `waitForPositiveButton`.
-                    // WARN: this could be buggy as it does not toggle the button back on
-                    this@input.positiveButton.isEnabled = false
-                }
+        if (waitForPositiveButton) {
+            positiveButton.setOnClickListener {
+                callback(this@input, this.text.toString())
             }
         }
 
         maxLength?.let { filters += InputFilter.LengthFilter(it) }
 
         requestFocus()
-        // this calls callback(this, prefill). positiveButton may be disabled if there's no prefill
         setText(prefill)
         moveCursorToEnd()
     }
+
     return this
 }
 
