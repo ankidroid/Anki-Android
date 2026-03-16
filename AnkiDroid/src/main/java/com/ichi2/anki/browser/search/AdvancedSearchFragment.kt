@@ -31,6 +31,7 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.ichi2.anki.R
 import com.ichi2.anki.browser.CardBrowserFragmentViewModel
+import com.ichi2.anki.browser.search.AdvancedSearchFragment.OptionType.InsertExample
 import com.ichi2.anki.databinding.DialogGenericRecyclerViewBinding
 import com.ichi2.anki.databinding.FragmentAdvancedSearchBinding
 import com.ichi2.anki.databinding.ItemAdvancedSearchBinding
@@ -56,10 +57,20 @@ class AdvancedSearchFragment : Fragment(R.layout.fragment_advanced_search) {
     private val viewModel: CardBrowserSearchViewModel by activityViewModels()
 
     @Parcelize
+    sealed class OptionType : Parcelable {
+        data class InsertExample(
+            val example: String,
+        ) : OptionType()
+    }
+
+    @Parcelize
     data class OptionData(
         val title: String,
         val example: String,
-    ) : Parcelable
+        val type: OptionType,
+    ) : Parcelable {
+        constructor(title: String, example: String) : this(title, example, InsertExample(example))
+    }
 
     data class TabData(
         val title: String,
@@ -245,6 +256,12 @@ class AdvancedSearchFragment : Fragment(R.layout.fragment_advanced_search) {
                     ),
                 )
 
+        fun onOptionSelected(optionData: OptionData) {
+            when (optionData.type) {
+                is InsertExample -> viewModel.appendAdvancedSearch(optionData.example)
+            }
+        }
+
         private val viewModel: CardBrowserSearchViewModel by activityViewModels()
 
         override fun onViewCreated(
@@ -277,7 +294,7 @@ class AdvancedSearchFragment : Fragment(R.layout.fragment_advanced_search) {
                         holder.binding.sample.text = data[position].example
 
                         holder.binding.root.setOnClickListener {
-                            viewModel.appendAdvancedSearch(data[position].example)
+                            onOptionSelected(data[position])
                         }
                     }
 
