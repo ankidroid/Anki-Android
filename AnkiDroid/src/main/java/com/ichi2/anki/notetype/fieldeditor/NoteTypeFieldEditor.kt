@@ -1,6 +1,7 @@
 /*
  * Copyright (c) 2015 Ryan Annis <squeenix@live.ca>
  * Copyright (c) 2015 Timothy Rae <perceptualchaos2@gmail.com>
+ * Copyright (c) 2026 S-H-Y-A <s_h_y_a2803@outlook.jp>
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software

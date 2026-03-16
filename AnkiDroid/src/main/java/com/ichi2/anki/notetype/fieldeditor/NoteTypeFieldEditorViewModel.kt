@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Neel Doshi <neeldoshi147@gmail.com>
+ * Copyright (c) 2026 S-H-Y-A <s_h_y_a2803@outlook.jp>
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
