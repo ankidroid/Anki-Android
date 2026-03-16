@@ -88,7 +88,10 @@ class AddNewNotesType(
                     )
                     // Compare names case-insensitively and after trim to prevent duplicates like "Basic" vs " basic "
                     positiveButton(text = TR.actionsAdd()) { _ ->
-                        val newName = binding.notetypeNewName.text.toString().trim()
+                        val newName =
+                            binding.notetypeNewName.text
+                                .toString()
+                                .trim()
                         val selectedPosition = binding.notetypeNewType.selectedItemPosition
                         if (selectedPosition == AdapterView.INVALID_POSITION) return@positiveButton
                         val selectedOption = allOptions[selectedPosition]
@@ -116,7 +119,7 @@ class AddNewNotesType(
                     ?.trim()
                     .orEmpty()
             val isDuplicate =
-            currentNames.any { it.equals(currentName, ignoreCase = true) }
+                currentNames.any { it.equals(currentName, ignoreCase = true) }
             positiveButton.isEnabled = currentName.isNotEmpty() && !isDuplicate
             binding.notetypeNameContainer.error =
                 if (isDuplicate) context.getString(R.string.note_type_already_exists) else null
