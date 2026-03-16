@@ -110,10 +110,13 @@ class AddNewNotesType(
         val addPrefixStr = context.resources.getString(R.string.model_browser_add_add)
         val clonePrefixStr = context.resources.getString(R.string.model_browser_add_clone)
         binding.notetypeNewName.addTextChangedListener { editableText ->
-            val currentName = editableText?.toString()
-                ?.trim()
-                .orEmpty()
-            val isDuplicate = currentNames.any { it.equals(currentName, ignoreCase = true) }
+            val currentName =
+                editableText
+                    ?.toString()
+                    ?.trim()
+                    .orEmpty()
+            val isDuplicate =
+            currentNames.any { it.equals(currentName, ignoreCase = true) }
             positiveButton.isEnabled = currentName.isNotEmpty() && !isDuplicate
             binding.notetypeNameContainer.error =
                 if (isDuplicate) context.getString(R.string.note_type_already_exists) else null
