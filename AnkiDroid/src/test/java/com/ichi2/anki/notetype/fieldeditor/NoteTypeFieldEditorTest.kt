@@ -14,13 +14,15 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ichi2.anki
+package com.ichi2.anki.notetype.fieldeditor
 
 import android.content.DialogInterface
 import android.content.Intent
 import android.view.ContextThemeWrapper
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
+import com.ichi2.anki.R
+import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.libanki.exception.ConfirmModSchemaException
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show

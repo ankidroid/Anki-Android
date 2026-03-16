@@ -23,8 +23,8 @@ import anki.notetypes.Notetype
 import anki.notetypes.NotetypeNameIdUseCount
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.CardTemplateEditor
-import com.ichi2.anki.NoteTypeFieldEditor
 import com.ichi2.anki.libanki.NoteTypeId
+import com.ichi2.anki.notetype.fieldeditor.NoteTypeFieldEditor
 import com.ichi2.anki.utils.Destination
 
 /** Encapsulates the entire state for [ManageNotetypes] */
