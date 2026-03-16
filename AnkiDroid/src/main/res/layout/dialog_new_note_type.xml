@@ -4,7 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    >
 
     <TextView
         android:text="Type"
@@ -21,8 +22,7 @@
         android:id="@+id/notetype_name_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Name"
-        tools:ignore="HardcodedText"
+        android:hint="@string/note_type_name_label"
         app:boxBackgroundMode="outline">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -32,11 +32,4 @@
             android:inputType="text" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <TextView
-        android:id="@+id/notetype_name_error"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/note_type_already_exists"
-        android:textColor="?attr/colorError"
-        android:visibility="gone" />
 </LinearLayout>

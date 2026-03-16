@@ -356,7 +356,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
                     paddingEnd = horizontalPadding,
                     paddingTop = verticalPadding,
                     paddingBottom = verticalPadding,
-                ).positiveButton(text = positiveBtnLabel, click = null)
+                ).positiveButton(text = positiveBtnLabel)
                 .negativeButton(R.string.dialog_cancel) {
                     requireActivity().dismissAllDialogFragments()
                 }.create()

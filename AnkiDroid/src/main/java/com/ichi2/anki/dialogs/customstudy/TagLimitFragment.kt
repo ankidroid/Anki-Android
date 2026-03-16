@@ -87,7 +87,7 @@ class TagLimitFragment : DialogFragment() {
                 .title(text = title)
                 .customView(binding.root)
                 .negativeButton(R.string.dialog_cancel)
-                .positiveButton(R.string.dialog_ok, null)
+                .positiveButton(R.string.dialog_ok)
                 .create()
 
         var allowSubmit = true

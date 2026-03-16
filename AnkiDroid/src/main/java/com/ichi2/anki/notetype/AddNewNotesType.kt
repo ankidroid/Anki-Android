@@ -21,10 +21,10 @@ import android.view.WindowManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AlertDialog
-import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import anki.notetypes.StockNotetype
 import anki.notetypes.copy
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
 import com.ichi2.anki.common.time.TimeManager
@@ -39,6 +39,7 @@ import com.ichi2.anki.libanki.getNotetypeNames
 import com.ichi2.anki.libanki.getStockNotetype
 import com.ichi2.anki.withProgress
 import com.ichi2.utils.customView
+import com.ichi2.utils.dp
 import com.ichi2.utils.moveCursorToEnd
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
@@ -78,9 +79,16 @@ class AddNewNotesType(
                 .Builder(activity)
                 .apply {
                     setTitle(R.string.cd_manage_notetypes_add)
-                    customView(binding.root, paddingStart = 32, paddingEnd = 32, paddingTop = 64, paddingBottom = 64)
-                    positiveButton(R.string.dialog_add) { _ ->
-                        val newName = binding.notetypeNewName.text.toString()
+                    customView(
+                        binding.root,
+                        paddingStart = 24.dp.toPx(activity),
+                        paddingEnd = 24.dp.toPx(activity),
+                        paddingTop = 24.dp.toPx(activity),
+                        paddingBottom = 24.dp.toPx(activity),
+                    )
+                    // Compare names case-insensitively and after trim to prevent duplicates like "Basic" vs " basic "
+                    positiveButton(text = TR.actionsAdd()) { _ ->
+                        val newName = binding.notetypeNewName.text.toString().trim()
                         val selectedPosition = binding.notetypeNewType.selectedItemPosition
                         if (selectedPosition == AdapterView.INVALID_POSITION) return@positiveButton
                         val selectedOption = allOptions[selectedPosition]
@@ -102,10 +110,13 @@ class AddNewNotesType(
         val addPrefixStr = context.resources.getString(R.string.model_browser_add_add)
         val clonePrefixStr = context.resources.getString(R.string.model_browser_add_clone)
         binding.notetypeNewName.addTextChangedListener { editableText ->
-            val currentName = editableText?.toString() ?: ""
-            val isDuplicate = currentNames.contains(currentName)
+            val currentName = editableText?.toString()
+                ?.trim()
+                .orEmpty()
+            val isDuplicate = currentNames.any { it.equals(currentName, ignoreCase = true) }
             positiveButton.isEnabled = currentName.isNotEmpty() && !isDuplicate
-            binding.notetypeNameError.isVisible = isDuplicate
+            binding.notetypeNameContainer.error =
+                if (isDuplicate) context.getString(R.string.note_type_already_exists) else null
         }
         binding.notetypeNewType.apply {
             onItemSelectedListener =
