@@ -15,6 +15,7 @@
  */
 package com.ichi2.anki.notetype.fieldeditor
 
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -135,6 +136,7 @@ class NoteTypeFieldEditorViewModel(
         initialize()
     }
 
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     suspend fun refreshNoteTypes() {
         val notetype = withCol { notetypes.get(noteTypeId)!! }
         state.value =
