@@ -34,6 +34,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.ichi2.anki.AnkiActivity
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
 import com.ichi2.anki.databinding.ActivityManageNoteTypesBinding
@@ -46,6 +47,7 @@ import com.ichi2.anki.sync.userAcceptsSchemaChange
 import com.ichi2.anki.utils.Destination
 import com.ichi2.ui.AccessibleSearchView
 import com.ichi2.utils.getInputField
+import com.ichi2.utils.getInputTextLayout
 import com.ichi2.utils.input
 import com.ichi2.utils.message
 import com.ichi2.utils.negativeButton
@@ -240,14 +242,29 @@ class ManageNotetypes : AnkiActivity(R.layout.activity_manage_note_types) {
                         negativeButton(R.string.dialog_cancel)
                         setView(R.layout.dialog_generic_text_input)
                     }.input(
+                        hint = TR.deckConfigNamePrompt(),
                         prefill = state.name,
                         waitForPositiveButton = false,
                         displayKeyboard = true,
                         callback = { dialog, text ->
-                            val currentName = text.toString().trim()
-                            val isNotADuplicate =
-                                !allNotetypes.map { it.name }.contains(currentName)
-                            dialog.positiveButton.isEnabled = currentName.isNotEmpty() && isNotADuplicate
+                            val inputStr = text.toString().trim()
+
+                            val isDuplicate = allNotetypes.any { it.name.equals(inputStr, ignoreCase = true) }
+
+                            val isUnchanged = inputStr == state.name
+
+                            if (inputStr.isBlank()) {
+                                dialog.getInputTextLayout().error = null
+                                dialog.positiveButton.isEnabled = false
+                                return@input
+                            } else if (isDuplicate && !isUnchanged) {
+                                dialog.getInputTextLayout().error = getString(R.string.error_name_exists)
+                                dialog.positiveButton.isEnabled = false
+                                return@input
+                            }
+
+                            dialog.getInputTextLayout().error = null
+                            dialog.positiveButton.isEnabled = !isUnchanged
                         },
                     )
             // start with the button disabled as dialog shows the initial name
