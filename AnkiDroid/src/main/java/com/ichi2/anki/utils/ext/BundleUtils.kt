@@ -17,6 +17,7 @@
 package com.ichi2.anki.utils.ext
 
 import android.os.Bundle
+import androidx.core.os.BundleCompat
 import androidx.core.os.bundleOf
 
 /**
@@ -48,6 +49,20 @@ fun Bundle.requireLong(key: String): Long {
 }
 
 /**
+ * Retrieves a [String] value from a [Bundle] using a key, throws if not found
+ *
+ * @param key A string key
+ * @return the value associated with [key]
+ * @throws IllegalStateException If [key] does not exist in the bundle
+ */
+fun Bundle.requireString(key: String): String {
+    if (!this.containsKey(key)) {
+        throw IllegalStateException("key: '$key' not found")
+    }
+    return requireNotNull(getString(key)) { "String in '$key' was null" }
+}
+
+/**
  * Retrieves a [Int] value from a [Bundle] using a key, returns null if not found
  *
  * can be null to support nullable bundles like [androidx.fragment.app.Fragment.getArguments]
@@ -71,6 +86,25 @@ fun Bundle.getIntOrNull(key: String): Int? =
 fun Bundle.requireBoolean(key: String): Boolean {
     check(containsKey(key)) { "key: '$key' not found" }
     return getBoolean(key)
+}
+
+/**
+ * Returns the value associated with the given key
+
+ * **Note:** if the expected value is not a class provided by the Android platform, you
+ * must call [Bundle.setClassLoader] with the proper [ClassLoader]
+ * first. Otherwise, this method might throw an exception or return `null`
+ *
+ * Compatibility behavior:
+ *
+ * - SDK 34 and above, this method matches platform behavior.
+ * - SDK 33 and below, the object type is checked after deserialization.
+ */
+inline fun <reified T> Bundle.requireParcelable(key: String): T {
+    check(containsKey(key)) { "key: '$key' not found" }
+    return requireNotNull(BundleCompat.getParcelable(this, key, T::class.java)) {
+        "Parcelable in '$key' was null"
+    }
 }
 
 /**
