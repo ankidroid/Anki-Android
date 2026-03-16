@@ -30,10 +30,18 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.ichi2.anki.R
+import com.ichi2.anki.browser.search.AdvancedSearchFieldsTab.FieldSearch
+import com.ichi2.anki.browser.search.AdvancedSearchFragment.OptionData
+import com.ichi2.anki.browser.search.AdvancedSearchFragment.OptionType
 import com.ichi2.anki.browser.search.AdvancedSearchFragment.OptionType.InsertExample
 import com.ichi2.anki.databinding.DialogGenericRecyclerViewBinding
 import com.ichi2.anki.databinding.FragmentAdvancedSearchBinding
 import com.ichi2.anki.databinding.ItemAdvancedSearchBinding
+import com.ichi2.anki.dialogs.FieldSelectionDialog
+import com.ichi2.anki.dialogs.FieldSelectionDialog.Companion.registerFieldSelectionHandler
+import com.ichi2.anki.launchCatchingTask
+import com.ichi2.anki.model.ResultType
+import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.openUrl
 import dev.androidbroadcast.vbpd.viewBinding
 import kotlinx.parcelize.Parcelize
@@ -60,6 +68,10 @@ class AdvancedSearchFragment : Fragment(R.layout.fragment_advanced_search) {
         data class InsertExample(
             val example: String,
         ) : OptionType()
+
+        data class SelectField(
+            val resultType: ResultType,
+        ) : OptionType()
     }
 
     @Parcelize
@@ -80,15 +92,10 @@ class AdvancedSearchFragment : Fragment(R.layout.fragment_advanced_search) {
         listOf(
             TabData(
                 "Fields",
-                listOf(
-                    OptionData("Search a named field", "field:*text*"),
-                    OptionData("Search a named field (exact text match)", "field:text"),
-                    OptionData("Search a field with a space in the name", "\"a field:text\""),
-                    OptionData("Notes with an empty field", "field:"),
-                    OptionData("Notes with a non-empty field", "field:_*"),
-                    OptionData("Notes with a field (empty or non-empty)", "field:*"),
-                    OptionData("Search multiple fields", "fi*ld:text"),
-                ),
+                AdvancedSearchFieldsTab.options.toOptionData() +
+                    listOf(
+                        OptionData("Search multiple fields", "fi*ld:text"),
+                    ),
             ),
             // TODO: Find tag without subtags?
             TabData(
@@ -209,6 +216,33 @@ class AdvancedSearchFragment : Fragment(R.layout.fragment_advanced_search) {
             ),
         )
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        setupFieldRequestListeners()
+    }
+
+    /**
+     * Sets up listeners for [FieldSelectionDialog]
+     *
+     * @see AdvancedSearchFieldsTab
+     * @see registerFieldSelectionHandler
+     */
+    private fun setupFieldRequestListeners() {
+        childFragmentManager.registerFieldSelectionHandler { resultType, fieldName ->
+            val fieldSearch =
+                AdvancedSearchFieldsTab.options[resultType] ?: run {
+                    Timber.w("resultType '%s' was unhandled", resultType)
+                    showSnackbar(R.string.something_wrong)
+                    return@registerFieldSelectionHandler
+                }
+            launchCatchingTask {
+                val searchString = fieldSearch.buildSearchString(fieldName)
+                viewModel.appendAdvancedSearch(searchString)
+            }
+        }
+    }
+
     override fun onViewCreated(
         view: View,
         savedInstanceState: Bundle?,
@@ -258,6 +292,11 @@ class AdvancedSearchFragment : Fragment(R.layout.fragment_advanced_search) {
         fun onOptionSelected(optionData: OptionData) {
             when (optionData.type) {
                 is InsertExample -> viewModel.appendAdvancedSearch(optionData.example)
+                is OptionType.SelectField ->
+                    launchCatchingTask {
+                        val dialog = FieldSelectionDialog.createInstance(optionData.type.resultType)
+                        dialog.show(parentFragmentManager, FieldSelectionDialog.TAG)
+                    }
             }
         }
 
@@ -322,3 +361,12 @@ class AdvancedSearchFragment : Fragment(R.layout.fragment_advanced_search) {
         const val TAG = "ADVANCED"
     }
 }
+
+private fun Map<ResultType, FieldSearch>.toOptionData(): List<OptionData> =
+    this.map {
+        OptionData(
+            title = it.value.title,
+            example = it.value.example,
+            type = OptionType.SelectField(it.key),
+        )
+    }
