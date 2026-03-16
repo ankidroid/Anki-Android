@@ -27,9 +27,6 @@ import androidx.activity.viewModels
 import androidx.annotation.VisibleForTesting
 import androidx.core.os.BundleCompat
 import androidx.fragment.app.FragmentManager
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.R
@@ -49,12 +46,12 @@ import com.ichi2.anki.showThemedToast
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.sync.userAcceptsSchemaChange
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
+import com.ichi2.anki.utils.ext.launchCollectionInLifecycleScope
 import com.ichi2.anki.utils.ext.setCompoundDrawablesRelativeWithIntrinsicBoundsKt
 import com.ichi2.anki.utils.ext.setFragmentResultListener
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.withProgress
 import dev.androidbroadcast.vbpd.viewBinding
-import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.util.Locale
 
@@ -114,17 +111,14 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.note_type_field_editor) {
             finish()
             return
         }
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.state.collect {
-                    binding.fields.adapter =
-                        NoteFieldAdapter(this@NoteTypeFieldEditor, fieldNamesWithKind())
-                }
-            }
+        viewModel.state.launchCollectionInLifecycleScope {
+            binding.fields.adapter =
+                NoteFieldAdapter(this@NoteTypeFieldEditor, fieldNamesWithKind())
         }
         binding.fields.onItemClickListener =
             AdapterView.OnItemClickListener { _, _, position: Int, _ ->
-                showDialogFragment(newInstance(viewModel.state.value.fieldsLabels[position]))
+                val label = viewModel.state.value.fieldsLabels[position]
+                showDialogFragment(newInstance(label))
                 viewModel.updateCurrentPosition(position)
             }
         binding.btnAdd.setOnClickListener { addFieldDialog() }
@@ -191,9 +185,8 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.note_type_field_editor) {
             return
         }
 
-        val fieldName =
-            viewModel.state.value.noteFields[viewModel.state.value.currentPos]
-                .name
+        val position = viewModel.state.value.currentPos
+        val fieldName = viewModel.state.value.fieldsLabels[position]
         ConfirmationDialog().let {
             it.setArgs(
                 title = fieldName,
@@ -204,8 +197,7 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.note_type_field_editor) {
                     val isConfirmed = userAcceptsSchemaChange()
                     if (!isConfirmed) return@launchCatchingTask
 
-                    val field = viewModel.state.value.noteFields[viewModel.state.value.currentPos]
-                    viewModel.delete(field)
+                    viewModel.delete(position)
 
                     // This ensures that the context menu closes after the field has been deleted
                     supportFragmentManager.popBackStackImmediate(
@@ -223,15 +215,15 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.note_type_field_editor) {
      * Processing time is constant
      */
     private fun renameFieldDialog() {
-        val field = viewModel.state.value.noteFields[viewModel.state.value.currentPos]
-        val renameFieldDialog = RenameNoteTypeField(this@NoteTypeFieldEditor, field.name)
+        val position = viewModel.state.value.currentPos
+        val name = viewModel.state.value.fieldsLabels[position]
+        val renameFieldDialog = RenameNoteTypeField(this@NoteTypeFieldEditor, name)
         renameFieldDialog.showRenameNoteTypeFieldDialog { name ->
-            val field = viewModel.state.value.noteFields[viewModel.state.value.currentPos]
             launchCatchingTask {
                 val validName = uniqueName(name) ?: return@launchCatchingTask
                 val isConfirmed = userAcceptsSchemaChange()
                 if (!isConfirmed) return@launchCatchingTask
-                viewModel.rename(field, validName)
+                viewModel.rename(position, validName)
             }
         }
     }
@@ -246,8 +238,8 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.note_type_field_editor) {
                 val isConfirmed = userAcceptsSchemaChange()
                 if (!isConfirmed) return@launchCatchingTask
                 Timber.i("Repositioning field from %d to %d", viewModel.state.value.currentPos, position)
-                val field = viewModel.state.value.noteFields[viewModel.state.value.currentPos]
-                viewModel.reposition(field, position)
+                val position = viewModel.state.value.currentPos
+                viewModel.reposition(position, position)
             }
         }
     }
@@ -259,7 +251,8 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.note_type_field_editor) {
         launchCatchingTask {
             val isConfirmed = userAcceptsSchemaChange()
             if (!isConfirmed) return@launchCatchingTask
-            viewModel.changeSort(viewModel.state.value.currentPos)
+            val position = viewModel.state.value.currentPos
+            viewModel.changeSort(position)
         }
     }
 
@@ -286,7 +279,8 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.note_type_field_editor) {
     private fun addFieldLocaleHint(selectedLocale: Locale) {
         launchCatchingTask {
             withProgress(message = getString(R.string.model_field_editor_changing)) {
-                viewModel.languageHint(selectedLocale)
+                val position = viewModel.state.value.currentPos
+                viewModel.languageHint(position, selectedLocale)
             }
         }
         val format = getString(R.string.model_field_editor_language_hint_dialog_success_result, selectedLocale.displayName)
@@ -307,9 +301,9 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.note_type_field_editor) {
     @Throws(ConfirmModSchemaException::class)
     fun renameField(name: String) {
         val fieldLabel = uniqueName(name) ?: return
-        val field = viewModel.state.value.noteFields[viewModel.state.value.currentPos]
+        val position = viewModel.state.value.currentPos
         launchCatchingTask {
-            viewModel.rename(field, fieldLabel)
+            viewModel.rename(position, fieldLabel)
         }
     }
 
@@ -321,7 +315,7 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.note_type_field_editor) {
         viewModel.state.value.fieldsLabels.mapIndexed { index, fieldName ->
             Pair(
                 fieldName,
-                if (index == viewModel.state.value.notetype.sortf) NotetypeKind.SORT else NotetypeKind.UNDEFINED,
+                if (index == viewModel.state.value.sortf) NotetypeKind.SORT else NotetypeKind.UNDEFINED,
             )
         }
 
