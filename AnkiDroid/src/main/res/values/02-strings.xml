@@ -33,7 +33,9 @@
     <string name="CardEditorCards">Cards: %1$s</string>
     <string name="edit_occlusions">Edit Occlusions</string>
     <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
-
+    <string name="deck_name">Deck name</string>
+    <string name="sub_deck_name">Subdeck name</string>
+    <string name="new_deck_name">New Deck name</string>
     <string name="tag_name">Tag name</string>
     <string name="add_new_filter_tags">Add/filter tags</string>
     <string name="add_tag" maxLength="28">Add tag</string>

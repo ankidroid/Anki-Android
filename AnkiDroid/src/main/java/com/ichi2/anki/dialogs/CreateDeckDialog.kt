@@ -94,53 +94,52 @@ class CreateDeckDialog(
                 .Builder(context)
                 .show {
                     title(title)
-                    // Resource ID for the dialog's positive action button text.
-                    // Uses "Rename" for rename deck dialogs and "Create" for all other deck-related dialogs.
                     val positiveButtonTextRes =
                         when (deckDialogType) {
                             DeckDialogType.RENAME_DECK -> R.string.rename
-
                             DeckDialogType.DECK,
                             DeckDialogType.SUB_DECK,
                             DeckDialogType.FILTERED_DECK,
                             -> R.string.dialog_positive_create
                         }
-                    positiveButton(positiveButtonTextRes) {
-                        onPositiveButtonClicked()
-                    }
+                    positiveButton(positiveButtonTextRes) { onPositiveButtonClicked() }
                     negativeButton(R.string.dialog_cancel)
                     setView(R.layout.dialog_generic_text_input)
                 }.input(prefill = initialDeckName, displayKeyboard = true, waitForPositiveButton = false) { dialog, text ->
 
-                    // defining the action of done button in ImeKeyBoard and enter button in physical keyBoard
+                    // --- Dynamic Hint for 3 different dialogs ---
+                    val inputLayout = dialog.getInputTextLayout()
+                    when (deckDialogType) {
+                        DeckDialogType.DECK -> inputLayout.hint = context.getString(R.string.deck_name)
+                        DeckDialogType.SUB_DECK -> inputLayout.hint = context.getString(R.string.sub_deck_name)
+                        DeckDialogType.RENAME_DECK -> inputLayout.hint = context.getString(R.string.new_deck_name)
+                        DeckDialogType.FILTERED_DECK -> inputLayout.hint = context.getString(R.string.deck_name)
+                    }
+                    // --- End Dynamic Hint ---
+
                     val inputField = dialog.getInputField()
                     inputField.setOnEditorActionListener { _, actionId, event ->
                         if (actionId == EditorInfo.IME_ACTION_DONE || event?.keyCode == KeyEvent.KEYCODE_ENTER) {
                             when {
-                                dialog.positiveButton.isEnabled -> {
-                                    onPositiveButtonClicked()
-                                }
-                                text.isBlank() -> {
+                                dialog.positiveButton.isEnabled -> onPositiveButtonClicked()
+                                text.isBlank() ->
                                     dialog.getInputTextLayout().showSnackbar(
                                         context.getString(R.string.empty_deck_name),
                                         Snackbar.LENGTH_SHORT,
                                     )
-                                }
-                                else -> {
+                                else ->
                                     dialog.getInputTextLayout().showSnackbar(
                                         context.getString(R.string.deck_already_exists),
                                         Snackbar.LENGTH_SHORT,
                                     )
-                                }
                             }
                             true
                         } else {
                             false
                         }
                     }
-                    // we need the fully-qualified name for subdecks
+
                     val maybeDeckName = fullyQualifyDeckName(dialogText = text)
-                    // if the name is empty, it seems distracting to show an error
                     if (maybeDeckName == null || !Decks.isValidDeckName(maybeDeckName)) {
                         dialog.positiveButton.isEnabled = false
                         return@input
@@ -153,14 +152,8 @@ class CreateDeckDialog(
                     dialog.getInputTextLayout().error = null
                     dialog.positiveButton.isEnabled = true
 
-                    // Users expect the ordering [1, 2, 10], but get [1, 10, 2]
-                    // To fix: they need [01, 02, 10]. Show a hint to help them
                     dialog.getInputTextLayout().helperText =
-                        if (text.containsNumberLargerThanNine()) {
-                            context.getString(R.string.create_deck_numeric_hint)
-                        } else {
-                            null
-                        }
+                        if (text.containsNumberLargerThanNine()) context.getString(R.string.create_deck_numeric_hint) else null
                 }
         shownDialog = dialog
         return dialog
