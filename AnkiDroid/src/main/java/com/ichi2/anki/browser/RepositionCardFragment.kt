@@ -18,9 +18,11 @@ package com.ichi2.anki.browser
 import android.app.Dialog
 import android.content.res.Configuration
 import android.os.Bundle
+import android.text.InputFilter
 import android.view.WindowManager
 import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.setFragmentResult
 import com.ichi2.anki.CardBrowser
@@ -57,6 +59,14 @@ class RepositionCardFragment : DialogFragment() {
         binding.startInputEditText.requestFocus()
         binding.startInputEditText.selectAll()
 
+        // Match upstream Anki UI limits:
+        // - Start position: max 6 digits
+        // - Step size: max 4 digits
+        // Backend accepts uint32 values (scheduler.proto), but UI is intentionally
+        // restricted to match upstream behavior and prevent unrealistic inputs.
+        binding.startInputEditText.filters = arrayOf(InputFilter.LengthFilter(6))
+        binding.stepInputEditText.filters = arrayOf(InputFilter.LengthFilter(4))
+
         binding.randomizeOrderCheck.apply {
             text = TR.browsingRandomizeOrder()
             isChecked = requireArguments().getBoolean(ARG_RANDOM)
@@ -71,7 +81,7 @@ class RepositionCardFragment : DialogFragment() {
                 title(text = title)
                 customView(binding.root)
                 negativeButton(R.string.dialog_cancel)
-                positiveButton(R.string.dialog_ok) {
+                positiveButton(text = TR.actionsReposition()) {
                     val position =
                         binding.startInputEditText.textAsIntOrNull() ?: return@positiveButton
                     val step =
@@ -87,6 +97,32 @@ class RepositionCardFragment : DialogFragment() {
                     )
                 }
             }
+
+        dialog.setOnShowListener {
+            val repositionButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+
+            val editTexts =
+                listOf(
+                    binding.startInputEditText,
+                    binding.stepInputEditText,
+                )
+
+            val validate = {
+                repositionButton.isEnabled =
+                    editTexts.all {
+                        it.text
+                            ?.toString()
+                            ?.trim()
+                            ?.isNotEmpty() == true
+                    }
+            }
+
+            validate()
+
+            editTexts.forEach {
+                it.doOnTextChanged { _, _, _, _ -> validate() }
+            }
+        }
 
         // Only automatically show the keyboard in portrait mode
         // In landscape mode, the keyboard would take up too much screen space and hide the dialog
