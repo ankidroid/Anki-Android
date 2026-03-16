@@ -30,7 +30,6 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.ichi2.anki.R
-import com.ichi2.anki.browser.CardBrowserFragmentViewModel
 import com.ichi2.anki.browser.search.AdvancedSearchFragment.OptionType.InsertExample
 import com.ichi2.anki.databinding.DialogGenericRecyclerViewBinding
 import com.ichi2.anki.databinding.FragmentAdvancedSearchBinding
@@ -239,7 +238,7 @@ class AdvancedSearchFragment : Fragment(R.layout.fragment_advanced_search) {
     /**
      * Displays a list of Advanced Search items with a name and an example
      *
-     * Selecting a list item results in a call to [CardBrowserFragmentViewModel.appendAdvancedSearch]
+     * Selecting a list item results in a call to [CardBrowserSearchViewModel.appendAdvancedSearch]
      *
      * @see OptionData
      */
