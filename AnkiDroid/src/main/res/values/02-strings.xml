@@ -455,5 +455,9 @@ opening the system text to speech settings fails">Failed to open text to speech 
 
     <!-- Whitespace is OK -->
     <string name="list_separator" comment="The character and spacing to display between elements of a list, for example ', ' in 'Apple, Banana, Cherry" tools:ignore="TranslationTypo">, </string>
+
+    <!-- Other errors -->
+    <!-- Similar to TR.qtMiscNameExists(): "Name exists." -->
+    <string name="error_name_exists">Name already exists</string>
 </resources>
 

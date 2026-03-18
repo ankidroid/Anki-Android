@@ -24,6 +24,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.widget.addTextChangedListener
 import anki.notetypes.StockNotetype
 import anki.notetypes.copy
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
 import com.ichi2.anki.common.time.TimeManager
@@ -36,8 +37,10 @@ import com.ichi2.anki.libanki.backend.BackendUtils
 import com.ichi2.anki.libanki.getNotetype
 import com.ichi2.anki.libanki.getNotetypeNames
 import com.ichi2.anki.libanki.getStockNotetype
+import com.ichi2.anki.ui.internationalization.toSentenceCase
 import com.ichi2.anki.withProgress
 import com.ichi2.utils.customView
+import com.ichi2.utils.dp
 import com.ichi2.utils.moveCursorToEnd
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
@@ -76,8 +79,15 @@ class AddNewNotesType(
             AlertDialog
                 .Builder(activity)
                 .apply {
-                    customView(binding.root, paddingStart = 32, paddingEnd = 32, paddingTop = 64, paddingBottom = 64)
-                    positiveButton(R.string.dialog_ok) { _ ->
+                    setTitle(TR.notetypesAddNoteType().toSentenceCase(activity, R.string.sentence_add_note_type))
+                    customView(
+                        binding.root,
+                        paddingStart = 24.dp.toPx(activity),
+                        paddingEnd = 24.dp.toPx(activity),
+                        paddingTop = 24.dp.toPx(activity),
+                        paddingBottom = 0,
+                    )
+                    positiveButton(R.string.dialog_add) { _ ->
                         val newName =
                             binding.notetypeNewName.text
                                 .toString()
@@ -103,11 +113,22 @@ class AddNewNotesType(
     ) {
         val addPrefixStr = context.resources.getString(R.string.model_browser_add_add)
         val clonePrefixStr = context.resources.getString(R.string.model_browser_add_clone)
+
+        binding.notetypeTypeLabel.text = TR.notetypesType()
+        binding.notetypeNewNameLayout.hint = TR.deckConfigNamePrompt()
+
         binding.notetypeNewName.addTextChangedListener { editableText ->
             val currentName = editableText?.toString()?.trim() ?: ""
-            positiveButton.isEnabled =
-                currentName.isNotEmpty() &&
-                !currentNames.contains(currentName)
+            val alreadyExists = currentNames.any { it.equals(currentName, true) }
+
+            binding.notetypeNewNameLayout.error =
+                if (alreadyExists) {
+                    context.getString(R.string.error_name_exists)
+                } else {
+                    null
+                }
+
+            positiveButton.isEnabled = currentName.isNotEmpty() && !alreadyExists
         }
         binding.notetypeNewType.apply {
             onItemSelectedListener =
