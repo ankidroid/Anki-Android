@@ -45,76 +45,76 @@
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer strings -->
-    <string name="drawer_open">Open drawer</string>
-    <string name="drawer_close">Close drawer</string>
-    <string name="note_message">Note saved</string>
+    <string name="drawer_open">เปิดแถบเมนูข้าง</string>
+    <string name="drawer_close">ปิดแถบเมนูข้าง</string>
+    <string name="note_message">บันทึกโน้ตเรียบร้อยแล้ว</string>
     <!-- Note editor screen -->
-    <string name="CardEditorCardDeck">Card deck:</string>
-    <string name="CardEditorNoteDeck">Deck:</string>
-    <string name="CardEditorModel">Type:</string>
-    <string name="CardEditorTags">Tags: %1$s</string>
+    <string name="CardEditorCardDeck">สำรับบัตรคำ:</string>
+    <string name="CardEditorNoteDeck">สำรับ:</string>
+    <string name="CardEditorModel">ชนิด:</string>
+    <string name="CardEditorTags">ป้ายกำกับ: %1$s</string>
     <string name="CardEditorCards">การ์ด: %1$s</string>
-    <string name="edit_occlusions">Edit Occlusions</string>
-    <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
+    <string name="edit_occlusions">แก้ไขส่วนปิดบัง (Image Occlusion)</string>
+    <string name="paste_from_clipboard" maxLength="28">วางจากคลิปบอร์ด</string>
     <string name="tag_name">ชื่อเเท็ก</string>
-    <string name="add_new_filter_tags">Add/filter tags</string>
+    <string name="add_new_filter_tags">เพิ่ม/กรองป้ายกำกับ</string>
     <string name="add_tag" maxLength="28">เพิ่มเเท็ก</string>
-    <string name="check_all_tags" maxLength="28">Check/uncheck all tags</string>
-    <string name="filter_tags" maxLength="28">Filter tags</string>
+    <string name="check_all_tags" maxLength="28">เลือก/ไม่เลือกป้ายกำกับทั้งหมด</string>
+    <string name="filter_tags" maxLength="28">กรองป้ายกำกับ</string>
     <string name="no_tags">คุณยังไม่เพิ่มแท็ก</string>
     <string name="updated_version">อัปเดตเป็นเวอร์ชั่น %s</string>
     <!-- Reviewer.kt (Study Screen) -->
     <string name="save_whiteboard" maxLength="28">บันทึกกระดาน</string>
-    <string name="enable_stylus" maxLength="28">Enable stylus writing</string>
-    <string name="disable_stylus">Disable stylus writing</string>
-    <string name="eraser" maxLength="28">Eraser</string>
-    <string name="add_brush" maxLength="28">Add brush</string>
-    <string name="whiteboard_align_left" comment="Option to align the whiteboard toolbar on the left" maxLength="28">Left</string>
-    <string name="whiteboard_align_bottom" comment="Option to align the whiteboard toolbar on the bottom" maxLength="28">Bottom</string>
-    <string name="whiteboard_align_right" comment="Option to align the whiteboard toolbar on the right" maxLength="28">Right</string>
-    <string name="whiteboard_more_options" comment="Tooltip of the whiteboard \'More\' button" maxLength="28">More options</string>
-    <string name="whiteboard_remove_brush_message">Are you sure you want to remove this brush from your palette?</string>
-    <string name="whiteboard_ink_eraser" comment="Title of the whiteboard Ink eraser">Ink</string>
-    <string name="whiteboard_stroke_eraser" comment="Title of the whiteboard Stroke eraser">Stroke</string>
-    <string name="stylus_mode" comment="Title of the menu item that toggles the whiteboard stylus mode" maxLength="28">Stylus mode</string>
-    <string name="cannot_remove_last_brush_message">The last brush may not be removed</string>
-    <string name="enable_whiteboard" maxLength="28">Enable whiteboard</string>
-    <string name="disable_whiteboard">Disable whiteboard</string>
-    <string name="show_whiteboard">Show whiteboard</string>
-    <string name="enable_eraser" maxLength="28">Enable eraser</string>
-    <string name="disable_eraser" maxLength="28">Disable eraser</string>
-    <string name="hide_whiteboard" maxLength="28">Hide whiteboard</string>
-    <string name="clear_whiteboard" maxLength="28">Clear whiteboard</string>
-    <string name="hide_toolbar" maxLength="28">Hide toolbar</string>
-    <string name="replay_media" maxLength="28">Replay media</string>
-    <string name="leech_suspend_notification">Card marked as leech and suspended</string>
-    <string name="leech_notification">Card marked as leech</string>
+    <string name="enable_stylus" maxLength="28">เปิดใช้งานการเขียนด้วยสไตลัส</string>
+    <string name="disable_stylus">ปิดใช้งานการเขียนด้วยสไตลัส</string>
+    <string name="eraser" maxLength="28">ยางลบ</string>
+    <string name="add_brush" maxLength="28">เพิ่มแปรง</string>
+    <string name="whiteboard_align_left" comment="Option to align the whiteboard toolbar on the left" maxLength="28">ซ้าย</string>
+    <string name="whiteboard_align_bottom" comment="Option to align the whiteboard toolbar on the bottom" maxLength="28">ล่าง</string>
+    <string name="whiteboard_align_right" comment="Option to align the whiteboard toolbar on the right" maxLength="28">ขวา</string>
+    <string name="whiteboard_more_options" comment="Tooltip of the whiteboard \'More\' button" maxLength="28">ตัวเลือกเพิ่มเติม</string>
+    <string name="whiteboard_remove_brush_message">คุณแน่ใจหรือไม่ว่าต้องการลบแปรงนี้ออกจากพาเลท?</string>
+    <string name="whiteboard_ink_eraser" comment="Title of the whiteboard Ink eraser">หมึก</string>
+    <string name="whiteboard_stroke_eraser" comment="Title of the whiteboard Stroke eraser">เส้น</string>
+    <string name="stylus_mode" comment="Title of the menu item that toggles the whiteboard stylus mode" maxLength="28">โหมดสไตลัส</string>
+    <string name="cannot_remove_last_brush_message">ไม่สามารถลบแปรงอันสุดท้ายออกได้</string>
+    <string name="enable_whiteboard" maxLength="28">เปิดใช้งานไวท์บอร์ด</string>
+    <string name="disable_whiteboard">ปิดใช้งานไวท์บอร์ด</string>
+    <string name="show_whiteboard">แสดงไวท์บอร์ด</string>
+    <string name="enable_eraser" maxLength="28">เปิดใช้งานยางลบ</string>
+    <string name="disable_eraser" maxLength="28">ปิดใช้งานยางลบ</string>
+    <string name="hide_whiteboard" maxLength="28">ซ่อนไวท์บอร์ด</string>
+    <string name="clear_whiteboard" maxLength="28">ล้างไวท์บอร์ด</string>
+    <string name="hide_toolbar" maxLength="28">ซ่อนแถบเครื่องมือ</string>
+    <string name="replay_media" maxLength="28">เล่นสื่อซ้ำ</string>
+    <string name="leech_suspend_notification">บัตรคำถูกทำเครื่องหมายเป็น \"ปลิง\" และถูกระงับแล้ว</string>
+    <string name="leech_notification">บัตรคำถูกทำเครื่องหมายเป็น \"ปลิง\"</string>
     <string name="webview_crash_unknown">ข้อผิดพลาดไม่ทราบสาเหตุ</string>
-    <string name="webview_crash_unknwon_detailed">This was caused by an internal error in the WebView</string>
+    <string name="webview_crash_unknwon_detailed">สิ่งนี้เกิดจากข้อผิดพลาดภายในของ WebView</string>
     <string name="webview_crash_oom">หน่วยความจำเต็ม</string>
-    <string name="webview_crash_oom_details">The WebView was terminated by the system. This typically happens when the application runs out of memory, often due to large fonts or media.</string>
-    <string name="webview_crash_nonfatal">WebView renderer crashed. Cause: %s</string>
-    <string name="webview_crash_fatal">Fatal Error: WebView renderer crashed. Cause: %s</string>
-    <string name="webview_crash_loop_dialog_title">System WebView Rendering Failure</string>
-    <string name="webview_crash_loop_dialog_content">System WebView failed to render card \'%1$s\'.\n %2$s</string>
-    <string name="slide_to_cancel" comment="Message shown when pressing the record button">Slide to cancel</string>
-    <string name="filter_by_flags" maxLength="41">Flags</string>
+    <string name="webview_crash_oom_details">WebView ถูกปิดโดยระบบ มักเกิดขึ้นเมื่อแอปหน่วยความจำเต็ม\nซึ่งบ่อยครั้งเกิดจากฟอนต์หรือสื่อที่มีขนาดใหญ่เกินไป</string>
+    <string name="webview_crash_nonfatal">ตัวเรนเดอร์ WebView ล่ม สาเหตุ: %s</string>
+    <string name="webview_crash_fatal">ข้อผิดพลาดร้ายแรง: ตัวเรนเดอร์ WebView ล่ม สาเหตุ: %s</string>
+    <string name="webview_crash_loop_dialog_title">การเรนเดอร์ System WebView ล้มเหลว</string>
+    <string name="webview_crash_loop_dialog_content">System WebView ไม่สามารถเรนเดอร์บัตรคำ \'%1$s\' ได้\n %2$s</string>
+    <string name="slide_to_cancel" comment="Message shown when pressing the record button">สไลด์เพื่อยกเลิก</string>
+    <string name="filter_by_flags" maxLength="41">ธง</string>
     <!-- Custom study options -->
-    <string name="custom_study_loading_tags">Building list of tags&#8230;</string>
+    <string name="custom_study_loading_tags">กำลังสร้างรายการป้ายกำกับ&#8230;</string>
     <!-- Study options -->
     <plurals name="studyoptions_buried_count">
-        <item quantity="other">+%d buried</item>
+        <item quantity="other">ซ่อนไว้ %d รายการ</item>
     </plurals>
     <string name="studyoptions_total_new_label">ยอดรวมของการ์ดใหม่</string>
     <string name="studyoptions_total_label">ยอดรวมของการ์ด</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card" maxLength="28">แก้ไขโน้ต</string>
     <string name="discard">ยกเลิก</string>
-    <string name="note_editor_no_cards_created">No cards created. Please fill in more fields</string>
-    <string name="note_editor_no_cards_created_all_fields">The current note type did not produce any cards.\nPlease choose another note type, or click ‘Cards’ and add a field substitution</string>
-    <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
+    <string name="note_editor_no_cards_created">ไม่มีการสร้างบัตรคำ กรุณากรอกข้อมูลในช่องอื่นๆ เพิ่มเติม</string>
+    <string name="note_editor_no_cards_created_all_fields">ชนิดโน้ตปัจจุบันไม่สามารถสร้างบัตรคำได้\nกรุณาเลือกชนิดโน้ตอื่น หรือคลิก \'บัตรคำ\' เพื่อเพิ่มการแทนที่ช่องข้อมูล</string>
+    <string name="note_editor_insert_cloze_no_cloze_note_type">การเติมคำในช่องว่าง (Cloze) จะใช้ได้กับชนิดโน้ตแบบ Cloze เท่านั้น</string>
     <string name="saving_facts">กำลังบันทึกโน้ต</string>
-    <string name="saving_model">Saving note type</string>
+    <string name="saving_model">กำลังบันทึกชนิดโน้ต</string>
     <string name="save" maxLength="28">บันทึก</string>
     <string name="close">ปิด</string>
     <string name="select">เลือก</string>

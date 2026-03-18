@@ -192,7 +192,7 @@
     <string name="dyn_deck_desc">Ceci est un paquet pour l\'étude en dehors des horaires normaux. Les cartes reviendront automatiquement à leur paquet d\'origine après leur révision. La suppression de ce paquet remettra toutes les cartes restantes dans leur paquet d\'origine.</string>
     <string name="tag_editor_add_feedback">Appuyez sur « %2$s » pour confirmer l\'addition de « %1$s »</string>
     <string name="tag_editor_add_feedback_existing">Étiquette existante «%1$s» sélectionnée</string>
-    <string name="tag_already_exists">Tag already exists</string>
+    <string name="tag_already_exists">Le mot-clé existe déjà</string>
     <!-- Time spans -->
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Erreur lors du partage du fichier apkg</string>
@@ -238,11 +238,11 @@
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">Taille de la police</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Afficher la barre d\'outils</string>
-    <string name="format_insert_bold">Format as bold</string>
-    <string name="format_insert_italic">Format as italic</string>
-    <string name="format_insert_underline">Format as underline</string>
-    <string name="insert_horizontal_line">Insert horizontal line</string>
-    <string name="insert_heading">Insert heading</string>
+    <string name="format_insert_bold">Formater en gras</string>
+    <string name="format_insert_italic">Formater en italique</string>
+    <string name="format_insert_underline">Souligner</string>
+    <string name="insert_horizontal_line">Insérer une ligne horizontale</string>
+    <string name="insert_heading">Insérer un entête</string>
     <string name="format_font_size">Change font size</string>
     <string name="insert_mathjax">Insert MathJax equation</string>
     <string name="note_editor_toolbar_icon">Texte du bouton</string>

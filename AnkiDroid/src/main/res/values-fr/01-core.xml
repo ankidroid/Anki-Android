@@ -129,7 +129,7 @@
     <string name="empty_cram_label" maxLength="28">Vide</string>
     <string name="create_subdeck">Créer un sous-paquet</string>
     <string name="empty_filtered_deck">Vidage du paquet filtré&#8230;</string>
-    <string name="search_deck" comment="Deck search for selecting it">Deck search</string>
+    <string name="search_deck" comment="Deck search for selecting it">Chercher un deck</string>
     <string name="empty_deck">Ce paquet est vide</string>
     <string name="invalid_deck_name">Nom de paquet invalide</string>
     <string name="studyoptions_congrats_finished">Félicitations ! Vous avez terminé pour aujourd\'hui.</string>
@@ -213,8 +213,8 @@
     <string name="instant_card" comment="Used in the Android system context menu/share dialog to quickly create a note. This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. ">Carte instantanée</string>
     <!-- Internet Permissions -->
     <string name="internet_access_title" comment="used for notifying user to unable internet access">Internet</string>
-    <string name="permission_access_summary">Required for the app to work</string>
-    <string name="permission_required_message">Please grant AnkiDroid the ‘%s’ permission to continue</string>
+    <string name="permission_access_summary">Requis pour que l\'application fonctionne</string>
+    <string name="permission_required_message">Veuillez accorder à AnkiDroid la permission «%s» pour continuer</string>
     <!-- Multiple profile -->
     <string name="add_profile">Ajouter un profil</string>
 </resources>
