@@ -33,6 +33,7 @@ import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.BackupManager
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.CollectionManager
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.ConflictResolution
 import com.ichi2.anki.DatabaseRestorationListener
 import com.ichi2.anki.DeckPicker
@@ -64,6 +65,7 @@ import com.ichi2.anki.libanki.Consts
 import com.ichi2.anki.requireAnkiActivity
 import com.ichi2.anki.servicelayer.DebugInfoService
 import com.ichi2.anki.showImportDialog
+import com.ichi2.anki.ui.internationalization.toSentenceCase
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.utils.UiUtil.makeBold
 import com.ichi2.utils.cancelable
@@ -298,7 +300,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
             DIALOG_CONFIRM_DATABASE_CHECK -> {
                 // Confirmation dialog for database check
                 alertDialog.show {
-                    title(R.string.check_db_title)
+                    title(text = TR.databaseCheckTitle().toSentenceCase(R.string.sentence_check_db))
                     message(text = message)
                     positiveButton(R.string.dialog_ok) {
                         requireDeckPicker().integrityCheck()
@@ -608,7 +610,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 DIALOG_REPAIR_COLLECTION -> res().getString(R.string.dialog_positive_repair)
                 DIALOG_RESTORE_BACKUP -> res().getString(R.string.backup_restore)
                 DIALOG_NEW_COLLECTION -> res().getString(R.string.backup_new_collection)
-                DIALOG_CONFIRM_DATABASE_CHECK -> res().getString(R.string.check_db_title)
+                DIALOG_CONFIRM_DATABASE_CHECK -> TR.databaseCheckTitle().toSentenceCase(res(), R.string.sentence_check_db)
                 DIALOG_CONFIRM_RESTORE_BACKUP -> res().getString(R.string.restore_backup_title)
                 DIALOG_ONE_WAY_SYNC_FROM_SERVER -> res().getString(R.string.backup_one_way_sync_from_server)
                 DIALOG_DB_LOCKED -> res().getString(R.string.database_locked_title)

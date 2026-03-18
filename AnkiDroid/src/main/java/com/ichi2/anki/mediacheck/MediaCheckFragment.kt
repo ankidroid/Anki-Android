@@ -66,7 +66,7 @@ class MediaCheckFragment : Fragment(R.layout.fragment_media_check) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.toolbar.apply {
-            setTitle(TR.mediaCheckCheckMediaAction().toSentenceCase(R.string.check_media))
+            setTitle(TR.mediaCheckWindowTitle().toSentenceCase(R.string.sentence_check_media))
             setNavigationOnClickListener {
                 requireActivity().onBackPressedDispatcher.onBackPressed()
             }

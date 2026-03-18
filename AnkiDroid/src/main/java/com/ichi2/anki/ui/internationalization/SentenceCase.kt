@@ -17,6 +17,7 @@
 package com.ichi2.anki.ui.internationalization
 
 import android.content.Context
+import android.content.res.Resources
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 
@@ -44,6 +45,16 @@ fun String.toSentenceCase(
     @StringRes resId: Int,
 ): String {
     val resString = context.getString(resId)
+    // lowercase both for the comparison: sentence case doesn't mean all words are lowercase
+    if (this.equals(resString, ignoreCase = true)) return resString
+    return this
+}
+
+fun String.toSentenceCase(
+    resources: Resources,
+    @StringRes resId: Int,
+): String {
+    val resString = resources.getString(resId)
     // lowercase both for the comparison: sentence case doesn't mean all words are lowercase
     if (this.equals(resString, ignoreCase = true)) return resString
     return this

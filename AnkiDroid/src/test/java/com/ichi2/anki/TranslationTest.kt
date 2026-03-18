@@ -355,10 +355,6 @@ class TranslationTest : RobolectricTest() {
                 "Bury note", // R.string.menu_bury_note | TR.studyingBuryNote()
                 "Card info", // R.string.card_info_title | TR.actionsCardInfo()
                 "Change deck", // R.string.card_browser_change_deck | TR.browsingChangeDeck()
-                "Check database", // R.string.check_db | TR.databaseCheckTitle()
-                "Check media", // R.string.check_media
-                // TR.mediaCheckCheckMediaAction()
-                // TR.mediaCheckWindowTitle()
                 "Copy debug info", // R.string.feedback_copy_debug
                 // TR.aboutCopyDebugInfo()
                 // TR.errorsCopyDebugInfoButton()

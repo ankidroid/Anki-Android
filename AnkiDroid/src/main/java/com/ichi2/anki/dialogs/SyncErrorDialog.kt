@@ -23,6 +23,7 @@ import androidx.annotation.CheckResult
 import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
 import com.ichi2.anki.AnkiActivity
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.ConflictResolution
 import com.ichi2.anki.R
 import com.ichi2.anki.dialogs.SyncErrorDialog.Type.DIALOG_CONNECTION_ERROR
@@ -36,6 +37,7 @@ import com.ichi2.anki.dialogs.SyncErrorDialog.Type.DIALOG_SYNC_SANITY_ERROR
 import com.ichi2.anki.dialogs.SyncErrorDialog.Type.DIALOG_SYNC_SANITY_ERROR_CONFIRM_KEEP_LOCAL
 import com.ichi2.anki.dialogs.SyncErrorDialog.Type.DIALOG_SYNC_SANITY_ERROR_CONFIRM_KEEP_REMOTE
 import com.ichi2.anki.dialogs.SyncErrorDialog.Type.DIALOG_USER_NOT_LOGGED_IN_SYNC
+import com.ichi2.anki.ui.internationalization.toSentenceCase
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.anki.utils.openUrl
 import com.ichi2.utils.titleWithHelpIcon
@@ -153,7 +155,7 @@ class SyncErrorDialog : AsyncDialogFragment() {
             }
             DIALOG_MEDIA_SYNC_ERROR -> {
                 dialog
-                    .setPositiveButton(R.string.check_media) { _, _ ->
+                    .setPositiveButton(TR.mediaCheckCheckMediaAction().toSentenceCase(R.string.sentence_check_media)) { _, _ ->
                         requireSyncErrorDialogListener().mediaCheck()
                         activity?.dismissAllDialogFragments()
                     }.setNegativeButton(R.string.dialog_cancel) { _, _ -> }
@@ -169,7 +171,7 @@ class SyncErrorDialog : AsyncDialogFragment() {
             }
             DIALOG_SYNC_BASIC_CHECK_ERROR -> {
                 dialog
-                    .setPositiveButton(R.string.check_db) { _, _ ->
+                    .setPositiveButton(TR.databaseCheckTitle().toSentenceCase(R.string.sentence_check_db)) { _, _ ->
                         requireSyncErrorDialogListener().integrityCheck()
                         activity?.dismissAllDialogFragments()
                     }.setNegativeButton(R.string.dialog_cancel) { _, _ -> }

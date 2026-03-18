@@ -25,14 +25,16 @@
         android:title="@string/checks_action"
         ankidroid:showAsAction="never">
         <menu>
+            <!-- TR.databaseCheckTitle() -->
             <item
                 android:id="@+id/action_check_database"
                 android:menuCategory="secondary"
-                android:title="@string/check_db"/>
+                tools:title="Check database"/>
+            <!-- TR.mediaCheckCheckMediaAction() -->
             <item
                 android:id="@+id/action_check_media"
                 android:menuCategory="secondary"
-                android:title="@string/check_media"/>
+                tools:title="Check media"/>
             <item
                 android:id="@+id/action_empty_cards"
                 android:menuCategory="secondary"
