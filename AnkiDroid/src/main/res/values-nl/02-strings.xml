@@ -54,7 +54,7 @@
     <string name="CardEditorModel">Type:</string>
     <string name="CardEditorTags">Kenmerken: %1$s</string>
     <string name="CardEditorCards">Kaarten: %1$s</string>
-    <string name="edit_occlusions">Occlusies bewerken</string>
+    <string name="edit_occlusions">Edit occlusions</string>
     <string name="paste_from_clipboard" maxLength="28">Plakken uit klembord</string>
     <string name="tag_name">Labelnaam</string>
     <string name="add_new_filter_tags">Labels toevoegen/filteren</string>
@@ -208,7 +208,7 @@
     <string name="remove_wallpaper_image" maxLength="41">Verwijder achtergrond</string>
     <string name="remove_background_image">Achtergrond verwijderen?</string>
     <!-- Card Template Browser Appearance -->
-    <string name="restore_default" maxLength="28">Herstel Standaardinstellingen</string>
+    <string name="restore_default" maxLength="28">Restore default</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Leeg</string>
     <!-- Whiteboard eraser mode toggle message in Reviewer -->
     <string name="white_board_eraser_enabled">Wis-modus geactiveerd</string>
@@ -328,7 +328,7 @@
     <!-- Browser Options Dialog -->
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Kaarten</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Opmerkingen</string>
-    <string name="toggle_cards_notes">Kaarten/notities in-/uitschakelen</string>
+    <string name="toggle_cards_notes">Toggle cards/notes</string>
     <string name="truncate_content_help">Kort de hoogte van elke rij van de browser af om alleen de eerste 3 regels inhoud weer te geven</string>
     <string name="browser_options_dialog_heading">Browseropties</string>
     <string name="audio_saved">Opname opgeslagen</string>
@@ -344,7 +344,7 @@
     <string name="shared_decks_login_required">Log in om meer sets te downloaden</string>
     <string name="deck_description_field_hint">Beschrijving</string>
     <string name="deck_description_saved">Beschrijving bijgewerkt</string>
-    <string name="format_deck_description_as_markdown">Format as Markdown</string>
+    <string name="format_deck_description_as_markdown">Format as markdown</string>
     <string name="help_button_content_description">Open help for ‘%s’</string>
     <string name="failed_to_copy">Kopiëren mislukt</string>
     <plurals name="unbury_cards_feedback">
@@ -359,7 +359,7 @@
     <string name="play_recording">Afspelen</string>
     <string name="next_recording" comment="Description of a button to go to the next recording">Volgende</string>
     <!--  AlertDialog in the deleteCardTemplate  -->
-    <string name="orphan_note_title">Kan kaarttype niet verwijderen</string>
+    <string name="orphan_note_title">Cannot delete card type</string>
     <string name="orphan_note_message">Als je dit kaarttype verwijdert, zullen sommige notities geen kaarten meer hebben.</string>
     <string name="voice_not_supported">Stem niet ondersteund. Kies een andere of installeer een stempakket.</string>
     <!--Keyboard shortcuts dialog-->

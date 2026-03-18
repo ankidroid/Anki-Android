@@ -54,7 +54,7 @@
     <string name="CardEditorModel">ಮಾದರಿ:</string>
     <string name="CardEditorTags">ಟ್ಯಾಗ್ಗಳು:%1$s</string>
     <string name="CardEditorCards">ಕಾರ್ಡ್‌ಗಳು: %1$s</string>
-    <string name="edit_occlusions">ಮುಚ್ಚುವಿಕೆಯನ್ನು ಸಂಪಾದಿಸಿ</string>
+    <string name="edit_occlusions">Edit occlusions</string>
     <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
     <string name="tag_name">ಟ್ಯಾಗ್ ಹೆಸರು</string>
     <string name="add_new_filter_tags">ಟ್ಯಾಗ್‌ಗಳನ್ನು ಸೇರಿಸಿ / ಫಿಲ್ಟರ್ ಮಾಡಿ</string>
@@ -208,7 +208,7 @@
     <string name="remove_wallpaper_image" maxLength="41">Remove background</string>
     <string name="remove_background_image">ಹಿನ್ನೆಲೆ ತೆಗೆದುಹಾಕುವುದೇ?</string>
     <!-- Card Template Browser Appearance -->
-    <string name="restore_default" maxLength="28">ಡೀಫಾಲ್ಟ್ ಅನ್ನು ಮರುಸ್ಥಾಪಿಸಿ</string>
+    <string name="restore_default" maxLength="28">Restore default</string>
     <string name="reviewer_tts_cloze_spoken_replacement">ಖಾಲಿ</string>
     <!-- Whiteboard eraser mode toggle message in Reviewer -->
     <string name="white_board_eraser_enabled">Eraser mode activated</string>
@@ -328,7 +328,7 @@
     <!-- Browser Options Dialog -->
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">ಕಾರ್ಡ್‌ಗಳು</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">ಟಿಪ್ಪಣಿಗಳು</string>
-    <string name="toggle_cards_notes">ಕಾರ್ಡ್‌ಗಳು/ನೋಟುಗಳನ್ನು ಟಾಗಲ್ ಮಾಡಿ</string>
+    <string name="toggle_cards_notes">Toggle cards/notes</string>
     <string name="truncate_content_help">Truncate the height of each row of the Browser to show only first 3 lines of content</string>
     <string name="browser_options_dialog_heading">Browser options</string>
     <string name="audio_saved">ರೆಕಾರ್ಡಿಂಗ್ ಅನ್ನು ಉಳಿಸಲಾಗಿದೆ</string>
@@ -344,7 +344,7 @@
     <string name="shared_decks_login_required">ಹೆಚ್ಚಿನ ಡೆಕ್‌ಗಳನ್ನು ಡೌನ್‌ಲೋಡ್ ಮಾಡಲು ದಯವಿಟ್ಟು ಲಾಗ್ ಇನ್ ಮಾಡಿ</string>
     <string name="deck_description_field_hint">ವಿವರಣೆ</string>
     <string name="deck_description_saved">Description updated</string>
-    <string name="format_deck_description_as_markdown">Format as Markdown</string>
+    <string name="format_deck_description_as_markdown">Format as markdown</string>
     <string name="help_button_content_description">Open help for ‘%s’</string>
     <string name="failed_to_copy">ನಕಲಿಸಲು ವಿಫಲವಾಗಿದೆ</string>
     <plurals name="unbury_cards_feedback">
@@ -359,7 +359,7 @@
     <string name="play_recording">ಪ್ಲೇ ಮಾಡಿ</string>
     <string name="next_recording" comment="Description of a button to go to the next recording">ಮುಂದೆ</string>
     <!--  AlertDialog in the deleteCardTemplate  -->
-    <string name="orphan_note_title">Cannot Delete Card Type</string>
+    <string name="orphan_note_title">Cannot delete card type</string>
     <string name="orphan_note_message">Deleting this card type will leave some notes without any cards.</string>
     <string name="voice_not_supported">Voice not supported. Try another or install a voice engine.</string>
     <!--Keyboard shortcuts dialog-->

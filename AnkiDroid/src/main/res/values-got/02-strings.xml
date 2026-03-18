@@ -54,7 +54,7 @@
     <string name="CardEditorModel">𐌺𐌹𐌽𐌸𐍃:</string>
     <string name="CardEditorTags">𐍃𐍉𐌺𐌽𐌹𐍅𐌰𐌿𐍂𐌳𐌰: %1$s</string>
     <string name="CardEditorCards">𐌺𐌰𐍂𐍄𐍉𐍃: %1$s</string>
-    <string name="edit_occlusions">Edit Occlusions</string>
+    <string name="edit_occlusions">Edit occlusions</string>
     <string name="paste_from_clipboard" maxLength="28">𐌰𐍆 𐌺𐍂𐌰𐌼𐍀𐌰𐌱𐌰𐌿𐍂𐌳𐌰 𐌲𐌰𐌲𐌰𐌻𐌴𐌹𐌺𐍉𐌽</string>
     <string name="tag_name">𐌽𐌰𐌼𐍉 𐍃𐍉𐌺𐌽𐌹𐍅𐌰𐌿𐍂𐌳𐌹𐍃</string>
     <string name="add_new_filter_tags">𐍃𐍉𐌺𐌽𐌹𐍅𐌰𐌿𐍂𐌳𐌰 𐌰𐌽𐌰𐌰𐌿𐌺𐌰𐌽/𐍃𐌴𐌹𐍈𐌰𐌽</string>
@@ -208,7 +208,7 @@
     <string name="remove_wallpaper_image" maxLength="41">𐌷𐌹𐌽𐌳𐌰𐍂𐌲𐍂𐌿𐌽𐌳𐌿 𐌿𐍃𐌽𐌹𐌼𐌰𐌽</string>
     <string name="remove_background_image">𐌷𐌹𐌽𐌳𐌰𐍂𐌲𐍂𐌿𐌽𐌳𐌿 𐌿𐍃𐌽𐌹𐌼𐌰𐌽?</string>
     <!-- Card Template Browser Appearance -->
-    <string name="restore_default" maxLength="28">𐌱𐌹𐌿𐌷𐍄 𐌽𐌰𐍃𐌾𐌰𐌽</string>
+    <string name="restore_default" maxLength="28">Restore default</string>
     <string name="reviewer_tts_cloze_spoken_replacement">𐌱𐌻𐌰𐌲𐌺</string>
     <!-- Whiteboard eraser mode toggle message in Reviewer -->
     <string name="white_board_eraser_enabled">𐌰𐍆𐍈𐌰𐌹𐍂𐌱𐌰𐌽𐌳𐌹𐍃 𐌼𐍉𐌳𐌿𐍃 𐌹𐌽𐌻𐌰𐌲𐌹𐌸𐍃</string>
@@ -328,7 +328,7 @@
     <!-- Browser Options Dialog -->
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">𐌺𐌰𐍂𐍄𐍉𐍃</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">𐌼𐌴𐌻𐌴𐌹𐌽𐍉𐍃</string>
-    <string name="toggle_cards_notes">𐌺𐌰𐍂𐍄𐍉𐍃/𐌼𐌴𐌻𐌴𐌹𐌽𐌹𐌽𐍃 𐌹𐌽𐌼𐌰𐌹𐌳𐌾𐌰𐌽</string>
+    <string name="toggle_cards_notes">Toggle cards/notes</string>
     <string name="truncate_content_help">Truncate the height of each row of the Browser to show only first 3 lines of content</string>
     <string name="browser_options_dialog_heading">𐌼𐌰𐌷𐍄𐌴𐌹𐍃 𐌱𐍂𐌰𐍅𐍃𐌰𐌹𐍂𐍃</string>
     <string name="audio_saved">𐌲𐌰𐌼𐌰𐌿𐌳𐌴𐌹𐌽 𐌲𐌰𐍆𐌰𐍃𐍄𐌰𐌹𐌳𐌰</string>
@@ -344,7 +344,7 @@
     <string name="shared_decks_login_required">𐌱𐌹𐌳𐌾𐌰𐌼 𐌸𐌿𐌺, 𐌰𐍄𐌲𐌰𐌲𐌲 𐌳𐌿 𐌰𐍄𐌳𐍂𐌰𐌲𐌰𐌽 𐌺𐌰𐍂𐍄𐌰𐌷𐌿𐌶𐌳𐌰 𐌼𐌰𐌽𐌰𐌲𐌹𐌶𐍉𐌽𐌰</string>
     <string name="deck_description_field_hint">𐌲𐌰𐍃𐌺𐌴𐌹𐍂𐌴𐌹𐌽𐍃</string>
     <string name="deck_description_saved">Description updated</string>
-    <string name="format_deck_description_as_markdown">Format as Markdown</string>
+    <string name="format_deck_description_as_markdown">Format as markdown</string>
     <string name="help_button_content_description">𐌷𐌹𐌻𐍀𐌰 𐍆𐌰𐌿𐍂 \'%s\' 𐌿𐍃𐌻𐌿𐌺𐌰𐌽</string>
     <string name="failed_to_copy">𐌽𐌹 𐌼𐌰𐌷𐍄𐌰 𐌲𐌰𐌲𐌰𐌻𐌴𐌹𐌺𐍉𐌽</string>
     <plurals name="unbury_cards_feedback">
@@ -359,7 +359,7 @@
     <string name="play_recording">𐍃𐍀𐌹𐌻𐍉𐌽</string>
     <string name="next_recording" comment="Description of a button to go to the next recording">𐌹𐍆𐍄𐌿𐌼𐌹𐌽</string>
     <!--  AlertDialog in the deleteCardTemplate  -->
-    <string name="orphan_note_title">𐌽𐌹 𐌼𐌰𐌲 𐌿𐍃𐌽𐌹𐌼𐌰𐌽 𐌷𐌰𐌹𐌳𐌿 𐌺𐌰𐍂𐍄𐍉</string>
+    <string name="orphan_note_title">Cannot delete card type</string>
     <string name="orphan_note_message">𐌸𐌹𐌶𐌰𐌹 𐌺𐌹𐌽𐌸𐌰𐌹 𐌺𐌰𐍂𐍄𐍉 𐌿𐍃𐌵𐌹𐍃𐍄𐌾𐌰𐌽 𐌱𐌹𐌻𐌴𐌹𐌸𐌹𐌸 𐍃𐌿𐌼𐌰𐌹𐌼 𐌼𐌴𐌻𐌴𐌹𐌽𐍉 𐌹𐌽𐌿𐌷 𐌺𐌰𐍂𐍄𐍉𐍃 𐌰𐌻𐌻𐌹𐍃.</string>
     <string name="voice_not_supported">𐍃𐍄𐌹𐌱𐌽𐌰 𐌽𐌹 𐍃𐍄𐍉𐌳𐌹𐌳𐌰. 𐍃𐍉𐌺𐌴𐌹 𐌰𐌽𐌸𐌰𐍂 𐌸𐌰𐌿 𐌲𐌰𐍃𐌿𐌻𐌴𐌹 𐌰𐌹𐌽𐌳𐌶𐌹𐌽 𐍃𐍄𐌹𐌱𐌽𐍉𐍃.</string>
     <!--Keyboard shortcuts dialog-->

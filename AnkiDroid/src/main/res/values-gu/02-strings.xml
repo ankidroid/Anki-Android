@@ -54,7 +54,7 @@
     <string name="CardEditorModel">પ્રકાર:</string>
     <string name="CardEditorTags">ટૅગ્સ: %1$s</string>
     <string name="CardEditorCards">કાર્ડ્સ: %1$s</string>
-    <string name="edit_occlusions">અવરોધો સંપાદિત કરો</string>
+    <string name="edit_occlusions">Edit occlusions</string>
     <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
     <string name="tag_name">ટૅગ નામ</string>
     <string name="add_new_filter_tags">ટૅગ્સ ઉમેરો/ફિલ્ટર કરો</string>
@@ -208,7 +208,7 @@
     <string name="remove_wallpaper_image" maxLength="41">બેકગ્રાઉડ હટાવો</string>
     <string name="remove_background_image">પૃષ્ઠભૂમિ દૂર કરીએ?</string>
     <!-- Card Template Browser Appearance -->
-    <string name="restore_default" maxLength="28">મૂળભૂત પુનઃસ્થાપિત</string>
+    <string name="restore_default" maxLength="28">Restore default</string>
     <string name="reviewer_tts_cloze_spoken_replacement">ખાલી</string>
     <!-- Whiteboard eraser mode toggle message in Reviewer -->
     <string name="white_board_eraser_enabled">Eraser mode activated</string>
@@ -328,7 +328,7 @@
     <!-- Browser Options Dialog -->
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">કાર્ડ</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">નોંધો</string>
-    <string name="toggle_cards_notes">કાર્ડ્સ/નોટ્સ ટૉગલ કરો</string>
+    <string name="toggle_cards_notes">Toggle cards/notes</string>
     <string name="truncate_content_help">Truncate the height of each row of the Browser to show only first 3 lines of content</string>
     <string name="browser_options_dialog_heading">બ્રાઉઝર ઓપ્શન્સ</string>
     <string name="audio_saved">રેકોર્ડિંગ સાચવ્યું</string>
@@ -344,7 +344,7 @@
     <string name="shared_decks_login_required">વધુ ડેક ડાઉનલોડ કરવા માટે કૃપા કરીને લૉગ ઇન કરો</string>
     <string name="deck_description_field_hint">વર્ણન</string>
     <string name="deck_description_saved">Description updated</string>
-    <string name="format_deck_description_as_markdown">Format as Markdown</string>
+    <string name="format_deck_description_as_markdown">Format as markdown</string>
     <string name="help_button_content_description">Open help for ‘%s’</string>
     <string name="failed_to_copy">કૉપિ કરવામાં નિષ્ફળ</string>
     <plurals name="unbury_cards_feedback">
@@ -359,7 +359,7 @@
     <string name="play_recording">પ્લે</string>
     <string name="next_recording" comment="Description of a button to go to the next recording">આગલું</string>
     <!--  AlertDialog in the deleteCardTemplate  -->
-    <string name="orphan_note_title">அட்டை வகையை நீக்க முடியாது</string>
+    <string name="orphan_note_title">Cannot delete card type</string>
     <string name="orphan_note_message">இந்த கார்டு வகையை நீக்கினால் சில குறிப்புகள் கார்டு இல்லாமல் இருக்கும்.</string>
     <string name="voice_not_supported">குரல் மெமோ ஆதரிக்கப்படுகிறது. மற்றொரு குரல் இயந்திரத்தை நிறுவ முயற்சிக்கவும்.</string>
     <!--Keyboard shortcuts dialog-->

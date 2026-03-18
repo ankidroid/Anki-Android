@@ -54,7 +54,7 @@
     <string name="CardEditorModel">Тып:</string>
     <string name="CardEditorTags">Меткі: %1$s</string>
     <string name="CardEditorCards">Карткі: %1$s</string>
-    <string name="edit_occlusions">Рэдагаваць аклюзіі</string>
+    <string name="edit_occlusions">Edit occlusions</string>
     <string name="paste_from_clipboard" maxLength="28">Уставіць з буфера абмену</string>
     <string name="tag_name">Назва меткі</string>
     <string name="add_new_filter_tags">Дадаць/фільтраваць меткі</string>
@@ -214,7 +214,7 @@
     <string name="remove_wallpaper_image" maxLength="41">Выдаліць фон</string>
     <string name="remove_background_image">Выдаліць фон?</string>
     <!-- Card Template Browser Appearance -->
-    <string name="restore_default" maxLength="28">Вярнуцца да прадвызначаных</string>
+    <string name="restore_default" maxLength="28">Restore default</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Пуста</string>
     <!-- Whiteboard eraser mode toggle message in Reviewer -->
     <string name="white_board_eraser_enabled">Рэжым гумкі актываваны</string>
@@ -338,7 +338,7 @@
     <!-- Browser Options Dialog -->
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Карткі</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Нататкі</string>
-    <string name="toggle_cards_notes">Пераключыць Карткі/Нататкі</string>
+    <string name="toggle_cards_notes">Toggle cards/notes</string>
     <string name="truncate_content_help">Скараціць вышыню кожнага радка браўзера для адлюстравання толькі першых 3 радкоў змесціва</string>
     <string name="browser_options_dialog_heading">Параметры браўзера</string>
     <string name="audio_saved">Запіс захаваны</string>
@@ -354,7 +354,7 @@
     <string name="shared_decks_login_required">Увайдзіце, каб спампаваць больш калод</string>
     <string name="deck_description_field_hint">Апісанне</string>
     <string name="deck_description_saved">Апісанне абноўлена</string>
-    <string name="format_deck_description_as_markdown">Фармат як Markdown</string>
+    <string name="format_deck_description_as_markdown">Format as markdown</string>
     <string name="help_button_content_description">Адкрыць даведку для ‘%s’</string>
     <string name="failed_to_copy">Не ўдалося скапіяваць</string>
     <plurals name="unbury_cards_feedback">
@@ -371,7 +371,7 @@
     <string name="play_recording">Прайграць</string>
     <string name="next_recording" comment="Description of a button to go to the next recording">Далей</string>
     <!--  AlertDialog in the deleteCardTemplate  -->
-    <string name="orphan_note_title">Немагчыма выдаліць тып карткі</string>
+    <string name="orphan_note_title">Cannot delete card type</string>
     <string name="orphan_note_message">Выдаленне гэтага тыпу карткі пакіне некаторыя нататкі без ніводнай карткі.</string>
     <string name="voice_not_supported">Падтрымка голасу адсутнічае. Паспрабуйце іншы рухавік голасу або пераўсталюйце бягучы.</string>
     <!--Keyboard shortcuts dialog-->

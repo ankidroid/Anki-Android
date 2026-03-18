@@ -54,7 +54,7 @@
     <string name="CardEditorModel">笔记模板：</string>
     <string name="CardEditorTags">标签：%1$s</string>
     <string name="CardEditorCards">卡片：%1$s</string>
-    <string name="edit_occlusions">编辑闭合</string>
+    <string name="edit_occlusions">Edit occlusions</string>
     <string name="paste_from_clipboard" maxLength="28">从剪贴板中粘贴</string>
     <string name="tag_name">标签</string>
     <string name="add_new_filter_tags">添加/过滤标签</string>
@@ -205,7 +205,7 @@
     <string name="remove_wallpaper_image" maxLength="41">删除背景</string>
     <string name="remove_background_image">去除背景</string>
     <!-- Card Template Browser Appearance -->
-    <string name="restore_default" maxLength="28">恢复初始设置</string>
+    <string name="restore_default" maxLength="28">Restore default</string>
     <string name="reviewer_tts_cloze_spoken_replacement">空白</string>
     <!-- Whiteboard eraser mode toggle message in Reviewer -->
     <string name="white_board_eraser_enabled">擦除模式已激活</string>
@@ -323,7 +323,7 @@
     <!-- Browser Options Dialog -->
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">卡片</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">笔记</string>
-    <string name="toggle_cards_notes">切换卡片/笔记</string>
+    <string name="toggle_cards_notes">Toggle cards/notes</string>
     <string name="truncate_content_help">缩短浏览器每行的高度，只显示前三行内容</string>
     <string name="browser_options_dialog_heading">浏览器选项</string>
     <string name="audio_saved">录音已保存</string>
@@ -339,7 +339,7 @@
     <string name="shared_decks_login_required">请登录以下载更多牌组</string>
     <string name="deck_description_field_hint">描述</string>
     <string name="deck_description_saved">描述已更新</string>
-    <string name="format_deck_description_as_markdown">转换为 Markdown 格式</string>
+    <string name="format_deck_description_as_markdown">Format as markdown</string>
     <string name="help_button_content_description">打开 ‘%s’ 的帮助</string>
     <string name="failed_to_copy">复制失败</string>
     <plurals name="unbury_cards_feedback">
@@ -353,7 +353,7 @@
     <string name="play_recording">播放</string>
     <string name="next_recording" comment="Description of a button to go to the next recording">下一个录音</string>
     <!--  AlertDialog in the deleteCardTemplate  -->
-    <string name="orphan_note_title">无法删除卡片类型</string>
+    <string name="orphan_note_title">Cannot delete card type</string>
     <string name="orphan_note_message">删除此卡片类型将留使一些附注没有任何卡片。</string>
     <string name="voice_not_supported">语音不支持。请尝试另一个或安装一个语音引擎。</string>
     <!--Keyboard shortcuts dialog-->

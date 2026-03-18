@@ -54,7 +54,7 @@
     <string name="CardEditorModel">Тип:</string>
     <string name="CardEditorTags">Метки: %1$s</string>
     <string name="CardEditorCards">Карточки: %1$s</string>
-    <string name="edit_occlusions">Править скрытие</string>
+    <string name="edit_occlusions">Edit occlusions</string>
     <string name="paste_from_clipboard" maxLength="28">Вставить из буфера обмена</string>
     <string name="tag_name">Название метки</string>
     <string name="add_new_filter_tags">Добавить/отфильтровать метки</string>
@@ -214,7 +214,7 @@
     <string name="remove_wallpaper_image" maxLength="41">Удалить фон</string>
     <string name="remove_background_image">Удалить фон?</string>
     <!-- Card Template Browser Appearance -->
-    <string name="restore_default" maxLength="28">Сбросить настройки</string>
+    <string name="restore_default" maxLength="28">Restore default</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Пусто</string>
     <!-- Whiteboard eraser mode toggle message in Reviewer -->
     <string name="white_board_eraser_enabled">Режим ластика включен</string>
@@ -338,7 +338,7 @@
     <!-- Browser Options Dialog -->
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Карточки</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Записи</string>
-    <string name="toggle_cards_notes">Карточки — записи</string>
+    <string name="toggle_cards_notes">Toggle cards/notes</string>
     <string name="truncate_content_help">Показывать только 3 строки в каждом ряду</string>
     <string name="browser_options_dialog_heading">Параметры списка карточек</string>
     <string name="audio_saved">Запись сохранена</string>
@@ -354,7 +354,7 @@
     <string name="shared_decks_login_required">Пожалуйста, войдите, чтобы скачать больше колод</string>
     <string name="deck_description_field_hint">Описание</string>
     <string name="deck_description_saved">Описание обновлено</string>
-    <string name="format_deck_description_as_markdown">Форматировать как Markdown</string>
+    <string name="format_deck_description_as_markdown">Format as markdown</string>
     <string name="help_button_content_description">Открыть справку для ‘%s’</string>
     <string name="failed_to_copy">Не удалось скопировать</string>
     <plurals name="unbury_cards_feedback">
@@ -371,7 +371,7 @@
     <string name="play_recording">Играть</string>
     <string name="next_recording" comment="Description of a button to go to the next recording">След.</string>
     <!--  AlertDialog in the deleteCardTemplate  -->
-    <string name="orphan_note_title">Не удается удалить тип карточек</string>
+    <string name="orphan_note_title">Cannot delete card type</string>
     <string name="orphan_note_message">Удаление этого типа карточек оставит некоторые записи без карточек.</string>
     <string name="voice_not_supported">Этот голос не поддерживается. Попробуйте другой или установите голосовой движок.</string>
     <!--Keyboard shortcuts dialog-->

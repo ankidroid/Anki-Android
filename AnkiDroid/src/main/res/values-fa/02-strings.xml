@@ -54,7 +54,7 @@
     <string name="CardEditorModel">نوع:</string>
     <string name="CardEditorTags">برچسب ها: %1$s</string>
     <string name="CardEditorCards">کارت‌ها: %1$s</string>
-    <string name="edit_occlusions">ویرایش پوشانده ها</string>
+    <string name="edit_occlusions">Edit occlusions</string>
     <string name="paste_from_clipboard" maxLength="28">جای گذاری از کیبورد</string>
     <string name="tag_name">نام برچسب</string>
     <string name="add_new_filter_tags">افزودن/فیلترکردن برچسب‌ها</string>
@@ -208,7 +208,7 @@
     <string name="remove_wallpaper_image" maxLength="41">حذف نسخه های پشتیبان</string>
     <string name="remove_background_image">حذف پس‌زمینه؟</string>
     <!-- Card Template Browser Appearance -->
-    <string name="restore_default" maxLength="28">بازنشانی پیش‌فرض</string>
+    <string name="restore_default" maxLength="28">Restore default</string>
     <string name="reviewer_tts_cloze_spoken_replacement">خالی</string>
     <!-- Whiteboard eraser mode toggle message in Reviewer -->
     <string name="white_board_eraser_enabled">پاک‌کن فعال شد</string>
@@ -330,7 +330,7 @@
     <!-- Browser Options Dialog -->
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">کارتها</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">یادداشت‌ها</string>
-    <string name="toggle_cards_notes">تغییر کارت‌ها/یادداشت‌ها</string>
+    <string name="toggle_cards_notes">Toggle cards/notes</string>
     <string name="truncate_content_help">ارتفاع هر ردیف از مرورگر را کوتاه کن تا فقط ۳ خط اول محتوا نشان داده شود</string>
     <string name="browser_options_dialog_heading">تنظیمات مرورگر</string>
     <string name="audio_saved">مورد ضبط شده ذخیره شد</string>
@@ -346,7 +346,7 @@
     <string name="shared_decks_login_required">لطفا وارد حساب کاربری خود شوید که دسته های بیشتری را دانلود کنید</string>
     <string name="deck_description_field_hint">توضیحات</string>
     <string name="deck_description_saved">توضیح به‌روز شد</string>
-    <string name="format_deck_description_as_markdown">به فرمت مارک‌داون درآور</string>
+    <string name="format_deck_description_as_markdown">Format as markdown</string>
     <string name="help_button_content_description">راهنمای «%s» را باز کن</string>
     <string name="failed_to_copy">کپی کردن ناموفق بود</string>
     <plurals name="unbury_cards_feedback">
@@ -361,7 +361,7 @@
     <string name="play_recording">پخش</string>
     <string name="next_recording" comment="Description of a button to go to the next recording">بعدی</string>
     <!--  AlertDialog in the deleteCardTemplate  -->
-    <string name="orphan_note_title">نمیتوان نوع کارت را حذف کرد</string>
+    <string name="orphan_note_title">Cannot delete card type</string>
     <string name="orphan_note_message">حذف این نوع کارت باعث بی کارت شدن بعضی یادداشت ها می شود</string>
     <string name="voice_not_supported">صدای انتخاب شده همایت شده نیست. یکی دیگر را انتخاب کنید یا یک موتور صدا نصب کنید.</string>
     <!--Keyboard shortcuts dialog-->

@@ -54,7 +54,7 @@
     <string name="CardEditorModel">Tür:</string>
     <string name="CardEditorTags">Etiketler: %1$s</string>
     <string name="CardEditorCards">Kartlar: %1$s</string>
-    <string name="edit_occlusions">Örtüleri Düzenle</string>
+    <string name="edit_occlusions">Edit occlusions</string>
     <string name="paste_from_clipboard" maxLength="28">Panodan yapıştır</string>
     <string name="tag_name">Etiket adı</string>
     <string name="add_new_filter_tags">Etiket ekle/filtrele</string>
@@ -208,7 +208,7 @@
     <string name="remove_wallpaper_image" maxLength="41">Arkaplanı kaldır</string>
     <string name="remove_background_image">Arkaplan kaldırılsın mı?</string>
     <!-- Card Template Browser Appearance -->
-    <string name="restore_default" maxLength="28">Varsayılana Dön</string>
+    <string name="restore_default" maxLength="28">Restore default</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Boş</string>
     <!-- Whiteboard eraser mode toggle message in Reviewer -->
     <string name="white_board_eraser_enabled">Silgi modu etkinleştirildi</string>
@@ -328,7 +328,7 @@
     <!-- Browser Options Dialog -->
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Kartlar</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Notlar</string>
-    <string name="toggle_cards_notes">Kartları/Notları Aç/Kapat</string>
+    <string name="toggle_cards_notes">Toggle cards/notes</string>
     <string name="truncate_content_help">Tarayıcının her satırının yüksekliğini içeriğin sadece ilk 3 satırını gösterecek şekilde sınırla</string>
     <string name="browser_options_dialog_heading">Tarayıcı seçenekleri</string>
     <string name="audio_saved">Alınan kayıtlar kaydedildi.</string>
@@ -344,7 +344,7 @@
     <string name="shared_decks_login_required">Daha fazla deste indirmek için lütfen giriş yapın</string>
     <string name="deck_description_field_hint">Açıklama</string>
     <string name="deck_description_saved">Açıklama güncellendi</string>
-    <string name="format_deck_description_as_markdown">Markdown olarak formatla</string>
+    <string name="format_deck_description_as_markdown">Format as markdown</string>
     <string name="help_button_content_description">\"%s\" için yardımı aç</string>
     <string name="failed_to_copy">Kopyalanamadı</string>
     <plurals name="unbury_cards_feedback">
@@ -359,7 +359,7 @@
     <string name="play_recording">Oynat</string>
     <string name="next_recording" comment="Description of a button to go to the next recording">Sonraki</string>
     <!--  AlertDialog in the deleteCardTemplate  -->
-    <string name="orphan_note_title">Kart Türü Silinemiyor</string>
+    <string name="orphan_note_title">Cannot delete card type</string>
     <string name="orphan_note_message">Bu kart türünü silmek bazı notları kartsız bırakacak.</string>
     <string name="voice_not_supported">Seslendirme desteklenmiyor. Başka bir seslendirme motoru deneyin ya da bir tane yükleyin.</string>
     <!--Keyboard shortcuts dialog-->

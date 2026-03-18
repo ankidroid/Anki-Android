@@ -54,7 +54,7 @@
     <string name="CardEditorModel">النوع:</string>
     <string name="CardEditorTags">الوسوم: %1$s</string>
     <string name="CardEditorCards">البطاقات: %1$s</string>
-    <string name="edit_occlusions">تحرير الصور المُعَمَّاة</string>
+    <string name="edit_occlusions">Edit occlusions</string>
     <string name="paste_from_clipboard" maxLength="28">لصق من الحافظة</string>
     <string name="tag_name">اسم الوسم</string>
     <string name="add_new_filter_tags">إضافة وفرز الوسوم</string>
@@ -220,7 +220,7 @@
     <string name="remove_wallpaper_image" maxLength="41">إزالة الخلفية</string>
     <string name="remove_background_image">هل تريد إزالة الخلفية؟</string>
     <!-- Card Template Browser Appearance -->
-    <string name="restore_default" maxLength="28">استعادة الافتراضي</string>
+    <string name="restore_default" maxLength="28">Restore default</string>
     <string name="reviewer_tts_cloze_spoken_replacement">فارغ</string>
     <!-- Whiteboard eraser mode toggle message in Reviewer -->
     <string name="white_board_eraser_enabled">تم تفعيل وضع الممحاة</string>
@@ -348,7 +348,7 @@
     <!-- Browser Options Dialog -->
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">بطاقات</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">ملحوظات</string>
-    <string name="toggle_cards_notes">تبديل عرض البطاقات/الملحوظات</string>
+    <string name="toggle_cards_notes">Toggle cards/notes</string>
     <string name="truncate_content_help">يقتطع كل صف في المتصفح لتظهر أول 3 سطور من المحتوى فقط</string>
     <string name="browser_options_dialog_heading">خيارات المتصفح</string>
     <string name="audio_saved">تم حفظ التسجيل</string>
@@ -364,7 +364,7 @@
     <string name="shared_decks_login_required">الرجاء تسجيل الدخول لتنزيل المزيد من المجموعات</string>
     <string name="deck_description_field_hint">الوصف</string>
     <string name="deck_description_saved">تم تعديل الوصف</string>
-    <string name="format_deck_description_as_markdown">تنسيق كـ Markdown</string>
+    <string name="format_deck_description_as_markdown">Format as markdown</string>
     <string name="help_button_content_description">مساعدة حول «%s»</string>
     <string name="failed_to_copy">فشل النسخ</string>
     <plurals name="unbury_cards_feedback">
@@ -383,7 +383,7 @@
     <string name="play_recording">تشغيل</string>
     <string name="next_recording" comment="Description of a button to go to the next recording">التالي</string>
     <!--  AlertDialog in the deleteCardTemplate  -->
-    <string name="orphan_note_title">لا يمكنك حذف البطاقات من هذا النوع</string>
+    <string name="orphan_note_title">Cannot delete card type</string>
     <string name="orphan_note_message">حذف هذا النوع من البطاقات سيترك بعض الملحوظات بدون أي بطاقة.</string>
     <string name="voice_not_supported">الصوت غير مدعوم. جرب صوتًا آخر أو نصب محركًا صوتيًا.</string>
     <!--Keyboard shortcuts dialog-->

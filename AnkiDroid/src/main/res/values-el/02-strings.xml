@@ -54,7 +54,7 @@
     <string name="CardEditorModel">Τύπος:</string>
     <string name="CardEditorTags">Ετικέτες:%1$s</string>
     <string name="CardEditorCards">Κάρτες %1$s</string>
-    <string name="edit_occlusions">Επεξεργασία αποκρύψεων</string>
+    <string name="edit_occlusions">Edit occlusions</string>
     <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
     <string name="tag_name">Όνομα ετικέτας</string>
     <string name="add_new_filter_tags">Προσθήκη/φιλτράρισμα ετικετών</string>
@@ -208,7 +208,7 @@
     <string name="remove_wallpaper_image" maxLength="41">Κατάργηση παρασκηνίου</string>
     <string name="remove_background_image">Αφαίρεση ταπετσαρίας;</string>
     <!-- Card Template Browser Appearance -->
-    <string name="restore_default" maxLength="28">Επαναφορά προεπιλογής</string>
+    <string name="restore_default" maxLength="28">Restore default</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Κενό</string>
     <!-- Whiteboard eraser mode toggle message in Reviewer -->
     <string name="white_board_eraser_enabled">Eraser mode activated</string>
@@ -328,7 +328,7 @@
     <!-- Browser Options Dialog -->
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Κάρτες</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Σημειώσεις</string>
-    <string name="toggle_cards_notes">Εναλλαγή Καρτών/Σημειώσεων</string>
+    <string name="toggle_cards_notes">Toggle cards/notes</string>
     <string name="truncate_content_help">Truncate the height of each row of the Browser to show only first 3 lines of content</string>
     <string name="browser_options_dialog_heading">Επιλογές προγράμματος περιήγησης</string>
     <string name="audio_saved">Η ηχογράφηση αποθηκεύτηκε</string>
@@ -344,7 +344,7 @@
     <string name="shared_decks_login_required">Παρακαλώ συνδεθείτε για να κατεβάσετε περισσότερες τράπουλες</string>
     <string name="deck_description_field_hint">Περιγραφή</string>
     <string name="deck_description_saved">Description updated</string>
-    <string name="format_deck_description_as_markdown">Format as Markdown</string>
+    <string name="format_deck_description_as_markdown">Format as markdown</string>
     <string name="help_button_content_description">Open help for ‘%s’</string>
     <string name="failed_to_copy">Αποτυχία αντιγραφής</string>
     <plurals name="unbury_cards_feedback">
@@ -359,7 +359,7 @@
     <string name="play_recording">Αναπαραγωγή</string>
     <string name="next_recording" comment="Description of a button to go to the next recording">Επόμενο</string>
     <!--  AlertDialog in the deleteCardTemplate  -->
-    <string name="orphan_note_title">Αδυναμία διαγραφής τύπου κάρτας</string>
+    <string name="orphan_note_title">Cannot delete card type</string>
     <string name="orphan_note_message">Διαγράφοντας αυτόν τον τύπο κάρτας θα αφήσετε κάποιες σημειώσεις χωρίς κάρτες.</string>
     <string name="voice_not_supported">Η φωνή δεν υποστηρίζεται. Δοκιμάστε μια άλλη ή εγκαταστήστε μια μηχανή φωνής.</string>
     <!--Keyboard shortcuts dialog-->

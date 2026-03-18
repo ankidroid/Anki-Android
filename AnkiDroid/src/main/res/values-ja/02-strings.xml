@@ -54,7 +54,7 @@
     <string name="CardEditorModel">ノートタイプ:</string>
     <string name="CardEditorTags">タグ: %1$s</string>
     <string name="CardEditorCards">カード: %1$s</string>
-    <string name="edit_occlusions">画像穴埋め問題を編集</string>
+    <string name="edit_occlusions">Edit occlusions</string>
     <string name="paste_from_clipboard" maxLength="28">クリップボードから貼り付け</string>
     <string name="tag_name">タグ名</string>
     <string name="add_new_filter_tags">タグフィルター / 新規タグ追加</string>
@@ -205,7 +205,7 @@
     <string name="remove_wallpaper_image" maxLength="41">画像を背景から削除</string>
     <string name="remove_background_image">背景画像を削除しますか？</string>
     <!-- Card Template Browser Appearance -->
-    <string name="restore_default" maxLength="28">既定値に戻す</string>
+    <string name="restore_default" maxLength="28">Restore default</string>
     <string name="reviewer_tts_cloze_spoken_replacement">空白</string>
     <!-- Whiteboard eraser mode toggle message in Reviewer -->
     <string name="white_board_eraser_enabled">消しゴム機能をオンにしました</string>
@@ -323,7 +323,7 @@
     <!-- Browser Options Dialog -->
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">カード</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">ノート</string>
-    <string name="toggle_cards_notes">カード /ノート の切り替え</string>
+    <string name="toggle_cards_notes">Toggle cards/notes</string>
     <string name="truncate_content_help">リスト画面において、カードまたはノートの内容の表示を１件につき３行までに制限します</string>
     <string name="browser_options_dialog_heading">ブラウザ オプション</string>
     <string name="audio_saved">録音を保存しました</string>
@@ -339,7 +339,7 @@
     <string name="shared_decks_login_required">さらにデッキをダウンロードするにはログインしてください</string>
     <string name="deck_description_field_hint">デッキ説明文</string>
     <string name="deck_description_saved">説明を更新しました</string>
-    <string name="format_deck_description_as_markdown">Markdown形式でフォーマット</string>
+    <string name="format_deck_description_as_markdown">Format as markdown</string>
     <string name="help_button_content_description">「%s」のヘルプを開く</string>
     <string name="failed_to_copy">コピーに失敗しました</string>
     <plurals name="unbury_cards_feedback">
@@ -353,7 +353,7 @@
     <string name="play_recording">再生</string>
     <string name="next_recording" comment="Description of a button to go to the next recording">次へ</string>
     <!--  AlertDialog in the deleteCardTemplate  -->
-    <string name="orphan_note_title">カードタイプを削除できません</string>
+    <string name="orphan_note_title">Cannot delete card type</string>
     <string name="orphan_note_message">このカードタイプを削除すると、カードが無いノートが生じます。</string>
     <string name="voice_not_supported">読み上げ音声がサポートされていません。別の音声を試すか、音声エンジンをインストールしてください。</string>
     <!--Keyboard shortcuts dialog-->

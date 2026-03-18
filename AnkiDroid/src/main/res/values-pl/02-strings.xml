@@ -54,7 +54,7 @@
     <string name="CardEditorModel">Typ:</string>
     <string name="CardEditorTags">Tagi: %1$s</string>
     <string name="CardEditorCards">Karty: %1$s</string>
-    <string name="edit_occlusions">Edytuj okluzje</string>
+    <string name="edit_occlusions">Edit occlusions</string>
     <string name="paste_from_clipboard" maxLength="28">Wklej ze schowka</string>
     <string name="tag_name">Nazwa tagu</string>
     <string name="add_new_filter_tags">Dodaj/filtruj tagi</string>
@@ -214,7 +214,7 @@
     <string name="remove_wallpaper_image" maxLength="41">Usuń tło</string>
     <string name="remove_background_image">Usunąć tło?</string>
     <!-- Card Template Browser Appearance -->
-    <string name="restore_default" maxLength="28">Przywróć domyślne</string>
+    <string name="restore_default" maxLength="28">Restore default</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Pusto</string>
     <!-- Whiteboard eraser mode toggle message in Reviewer -->
     <string name="white_board_eraser_enabled">Tryb gumkowania aktywowany</string>
@@ -338,7 +338,7 @@
     <!-- Browser Options Dialog -->
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Karty</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Notatki</string>
-    <string name="toggle_cards_notes">Przełącz karty/notatki</string>
+    <string name="toggle_cards_notes">Toggle cards/notes</string>
     <string name="truncate_content_help">Przycinaj wysokość każdego wiersza przeglądarki, aby pokazać tylko pierwsze 3 linie treści</string>
     <string name="browser_options_dialog_heading">Opcje przeglądarki</string>
     <string name="audio_saved">Nagranie zapisane</string>
@@ -354,7 +354,7 @@
     <string name="shared_decks_login_required">Zaloguj się, aby pobrać więcej talii</string>
     <string name="deck_description_field_hint">Opis</string>
     <string name="deck_description_saved">Opis zaktualizowany</string>
-    <string name="format_deck_description_as_markdown">Formatuj jako Markdown</string>
+    <string name="format_deck_description_as_markdown">Format as markdown</string>
     <string name="help_button_content_description">Otwórz pomoc dla \'%s\'</string>
     <string name="failed_to_copy">Kopiowanie nieudane</string>
     <plurals name="unbury_cards_feedback">
@@ -371,7 +371,7 @@
     <string name="play_recording">Odtwórz</string>
     <string name="next_recording" comment="Description of a button to go to the next recording">Dalej</string>
     <!--  AlertDialog in the deleteCardTemplate  -->
-    <string name="orphan_note_title">Nie można usunąć typu karty</string>
+    <string name="orphan_note_title">Cannot delete card type</string>
     <string name="orphan_note_message">Usunięcie tej karty spowoduje pozostawienie niektórych notatek bez żadnej karty.</string>
     <string name="voice_not_supported">Głos nie jest obsługiwany. Spróbuj użyć innego lub zainstaluj silnik głosowy.</string>
     <!--Keyboard shortcuts dialog-->

@@ -54,7 +54,7 @@
     <string name="CardEditorModel">Tipo:</string>
     <string name="CardEditorTags">Etiquetas: %1$s</string>
     <string name="CardEditorCards">Tarxetas: %1$s</string>
-    <string name="edit_occlusions">Editar oclusións</string>
+    <string name="edit_occlusions">Edit occlusions</string>
     <string name="paste_from_clipboard" maxLength="28">Pegar dende o portapapeis</string>
     <string name="tag_name">Nome da etiqueta</string>
     <string name="add_new_filter_tags">Engadir/Filtrar etiquetas</string>
@@ -208,7 +208,7 @@
     <string name="remove_wallpaper_image" maxLength="41">Retirar fondo</string>
     <string name="remove_background_image">Retirar fondo?</string>
     <!-- Card Template Browser Appearance -->
-    <string name="restore_default" maxLength="28">Restablecer predefinidos</string>
+    <string name="restore_default" maxLength="28">Restore default</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Baleiro</string>
     <!-- Whiteboard eraser mode toggle message in Reviewer -->
     <string name="white_board_eraser_enabled">Modo borrador activado</string>
@@ -328,7 +328,7 @@
     <!-- Browser Options Dialog -->
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Tarxetas</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Notas</string>
-    <string name="toggle_cards_notes">Alternar tarxetas/notas</string>
+    <string name="toggle_cards_notes">Toggle cards/notes</string>
     <string name="truncate_content_help">Fixa a altura de cada fila do Explorador para amosar unicamente as 3 primeiras liñas de contido</string>
     <string name="browser_options_dialog_heading">Opcións do explorador</string>
     <string name="audio_saved">Gravación gardada</string>
@@ -344,7 +344,7 @@
     <string name="shared_decks_login_required">Inicia sesión para descargar máis barallas</string>
     <string name="deck_description_field_hint">Descrición</string>
     <string name="deck_description_saved">Actualizouse a descrición</string>
-    <string name="format_deck_description_as_markdown">Dar formato Markdown</string>
+    <string name="format_deck_description_as_markdown">Format as markdown</string>
     <string name="help_button_content_description">Abrir axuda para \"%s\"</string>
     <string name="failed_to_copy">Non se puido copiar</string>
     <plurals name="unbury_cards_feedback">
@@ -359,7 +359,7 @@
     <string name="play_recording">Reproducir</string>
     <string name="next_recording" comment="Description of a button to go to the next recording">Seguinte</string>
     <!--  AlertDialog in the deleteCardTemplate  -->
-    <string name="orphan_note_title">Non se puido eliminar o tipo de tarxeta</string>
+    <string name="orphan_note_title">Cannot delete card type</string>
     <string name="orphan_note_message">Eliminando este tipo de tarxeta deixarás algunhas notas sen tarxetas</string>
     <string name="voice_not_supported">A voz non é compatíbel. Proba outra ou instala un motor de voz.</string>
     <!--Keyboard shortcuts dialog-->

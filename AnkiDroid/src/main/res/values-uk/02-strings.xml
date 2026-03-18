@@ -54,7 +54,7 @@
     <string name="CardEditorModel">Тип:</string>
     <string name="CardEditorTags">Теги: %1$s</string>
     <string name="CardEditorCards">Картки: %1$s</string>
-    <string name="edit_occlusions">Редагувати оклюзії</string>
+    <string name="edit_occlusions">Edit occlusions</string>
     <string name="paste_from_clipboard" maxLength="28">Вставити з буферу обміну</string>
     <string name="tag_name">Назва позначки</string>
     <string name="add_new_filter_tags">Додати/фільтрувати теги</string>
@@ -214,7 +214,7 @@
     <string name="remove_wallpaper_image" maxLength="41">Видалити фон</string>
     <string name="remove_background_image">Видалити задній фон?</string>
     <!-- Card Template Browser Appearance -->
-    <string name="restore_default" maxLength="28">Відновити «Типове»</string>
+    <string name="restore_default" maxLength="28">Restore default</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Порожня</string>
     <!-- Whiteboard eraser mode toggle message in Reviewer -->
     <string name="white_board_eraser_enabled">Режим гумки активовано</string>
@@ -338,7 +338,7 @@
     <!-- Browser Options Dialog -->
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Картки</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Записи</string>
-    <string name="toggle_cards_notes">Перемкнути картки/записи</string>
+    <string name="toggle_cards_notes">Toggle cards/notes</string>
     <string name="truncate_content_help">Скоротити висоту кожного рядка переглядача, щоб було видно лише перші 3 рядки вмісту</string>
     <string name="browser_options_dialog_heading">Параметри переглядача карток</string>
     <string name="audio_saved">Запис аудіо збережено</string>
@@ -354,7 +354,7 @@
     <string name="shared_decks_login_required">Ввійдіть, будь ласка, до акаунту, щоб завантажити більше колод</string>
     <string name="deck_description_field_hint">Опис</string>
     <string name="deck_description_saved">Опис оновлено</string>
-    <string name="format_deck_description_as_markdown">Форматувати як Markdown</string>
+    <string name="format_deck_description_as_markdown">Format as markdown</string>
     <string name="help_button_content_description">Відкрити допомогу для ‘%s’</string>
     <string name="failed_to_copy">Не вдалося скопіювати</string>
     <plurals name="unbury_cards_feedback">
@@ -371,7 +371,7 @@
     <string name="play_recording">Відтворити</string>
     <string name="next_recording" comment="Description of a button to go to the next recording">Наступний</string>
     <!--  AlertDialog in the deleteCardTemplate  -->
-    <string name="orphan_note_title">Неможливо видалити тип картки</string>
+    <string name="orphan_note_title">Cannot delete card type</string>
     <string name="orphan_note_message">Якщо видалити цей тип картки, деякі записи залишаться без карток.</string>
     <string name="voice_not_supported">Голос не підтримується. Спробуйте інший або встановіть голосовий рушій.</string>
     <!--Keyboard shortcuts dialog-->

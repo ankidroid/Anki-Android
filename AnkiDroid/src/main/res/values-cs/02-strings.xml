@@ -54,7 +54,7 @@
     <string name="CardEditorModel">Typ poznámky:</string>
     <string name="CardEditorTags">Štítky: %1$s</string>
     <string name="CardEditorCards">Karty: %1$s</string>
-    <string name="edit_occlusions">Upravit okluze</string>
+    <string name="edit_occlusions">Edit occlusions</string>
     <string name="paste_from_clipboard" maxLength="28">Vložit ze schránky</string>
     <string name="tag_name">Název štítku</string>
     <string name="add_new_filter_tags">Přidat/Filtrovat štítky</string>
@@ -214,7 +214,7 @@
     <string name="remove_wallpaper_image" maxLength="41">Odebrat pozadí</string>
     <string name="remove_background_image">Odebrat pozadí?</string>
     <!-- Card Template Browser Appearance -->
-    <string name="restore_default" maxLength="28">Obnovit výchozí</string>
+    <string name="restore_default" maxLength="28">Restore default</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Prázdné</string>
     <!-- Whiteboard eraser mode toggle message in Reviewer -->
     <string name="white_board_eraser_enabled">Režim gumování povolen</string>
@@ -338,7 +338,7 @@
     <!-- Browser Options Dialog -->
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Karty</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Poznámky</string>
-    <string name="toggle_cards_notes">Přepnout karty/poznámky</string>
+    <string name="toggle_cards_notes">Toggle cards/notes</string>
     <string name="truncate_content_help">Zkrátit výšku každého řádku prohlížeče, aby se zobrazily pouze první 3 řádky obsahu</string>
     <string name="browser_options_dialog_heading">Možnosti prohlížeče</string>
     <string name="audio_saved">Nahrávka uložena</string>
@@ -354,7 +354,7 @@
     <string name="shared_decks_login_required">Prosím přihlaste se, abyste mohli stáhnout více balíčků</string>
     <string name="deck_description_field_hint">Popisek</string>
     <string name="deck_description_saved">Popis aktualizován</string>
-    <string name="format_deck_description_as_markdown">Formátovat jako Markdown</string>
+    <string name="format_deck_description_as_markdown">Format as markdown</string>
     <string name="help_button_content_description">Otevřít nápovědu pro „%s“</string>
     <string name="failed_to_copy">Kopírování se nezdařilo</string>
     <plurals name="unbury_cards_feedback">
@@ -371,7 +371,7 @@
     <string name="play_recording">Přehrát</string>
     <string name="next_recording" comment="Description of a button to go to the next recording">Další</string>
     <!--  AlertDialog in the deleteCardTemplate  -->
-    <string name="orphan_note_title">Typ karty nelze odstranit</string>
+    <string name="orphan_note_title">Cannot delete card type</string>
     <string name="orphan_note_message">Smazání tohoto typu karty zanechá některé poznámky bez jakýchkoliv karet.</string>
     <string name="voice_not_supported">Hlas není podporován. Zkuste jiný nebo nainstalujte hlasový modul.</string>
     <!--Keyboard shortcuts dialog-->

@@ -54,7 +54,7 @@
     <string name="CardEditorModel">قسم:</string>
     <string name="CardEditorTags">ٹیگز: %1$s</string>
     <string name="CardEditorCards">کارڈ: %1$s</string>
-    <string name="edit_occlusions">مواقع میں ترمیم کریں</string>
+    <string name="edit_occlusions">Edit occlusions</string>
     <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
     <string name="tag_name">ٹیگ کا نام</string>
     <string name="add_new_filter_tags">شامل/فلٹر کریں ٹیگ</string>
@@ -209,7 +209,7 @@
     <string name="remove_wallpaper_image" maxLength="41">Remove background</string>
     <string name="remove_background_image">پس منظر ہٹائیں؟</string>
     <!-- Card Template Browser Appearance -->
-    <string name="restore_default" maxLength="28">ڈیفالٹ بحال کریں۔</string>
+    <string name="restore_default" maxLength="28">Restore default</string>
     <string name="reviewer_tts_cloze_spoken_replacement">خالی</string>
     <!-- Whiteboard eraser mode toggle message in Reviewer -->
     <string name="white_board_eraser_enabled">Eraser mode activated</string>
@@ -329,7 +329,7 @@
     <!-- Browser Options Dialog -->
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">کارڈز</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">نوٹس</string>
-    <string name="toggle_cards_notes">ٹوگل کارڈز/نوٹس</string>
+    <string name="toggle_cards_notes">Toggle cards/notes</string>
     <string name="truncate_content_help">Truncate the height of each row of the Browser to show only first 3 lines of content</string>
     <string name="browser_options_dialog_heading">Browser options</string>
     <string name="audio_saved">ریکارڈنگ محفوظ ہو گئی</string>
@@ -345,7 +345,7 @@
     <string name="shared_decks_login_required">مزید ڈیک ڈاؤن لوڈ کرنے کے لیے براہ کرم لاگ ان کریں</string>
     <string name="deck_description_field_hint">تفصیل</string>
     <string name="deck_description_saved">Description updated</string>
-    <string name="format_deck_description_as_markdown">Format as Markdown</string>
+    <string name="format_deck_description_as_markdown">Format as markdown</string>
     <string name="help_button_content_description">Open help for ‘%s’</string>
     <string name="failed_to_copy">کاپی کرنے میں ناکام</string>
     <plurals name="unbury_cards_feedback">
@@ -360,7 +360,7 @@
     <string name="play_recording">چلائیں</string>
     <string name="next_recording" comment="Description of a button to go to the next recording">اگلے</string>
     <!--  AlertDialog in the deleteCardTemplate  -->
-    <string name="orphan_note_title">کارڈ کی قسم کو حذف نہیں کیا جا سکتا</string>
+    <string name="orphan_note_title">Cannot delete card type</string>
     <string name="orphan_note_message">اس کارڈ کی قسم کو حذف کرنے سے کچھ نوٹ بغیر کسی کارڈ کے رہ جائیں گے۔</string>
     <string name="voice_not_supported">آواز تعاون یافتہ نہیں ہے۔ دوسرا آزمائیں یا صوتی انجن انسٹال کریں۔</string>
     <!--Keyboard shortcuts dialog-->

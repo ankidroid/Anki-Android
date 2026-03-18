@@ -54,7 +54,7 @@
     <string name="CardEditorModel">Typ:</string>
     <string name="CardEditorTags">Schlagwörter: %1$s</string>
     <string name="CardEditorCards">Karten: %1$s</string>
-    <string name="edit_occlusions">Okklusionen bearbeiten</string>
+    <string name="edit_occlusions">Edit occlusions</string>
     <string name="paste_from_clipboard" maxLength="28">Aus Zwischenablage einfügen</string>
     <string name="tag_name">Schlagwortname</string>
     <string name="add_new_filter_tags">Schlagwörter hinzufügen/filtern</string>
@@ -208,7 +208,7 @@
     <string name="remove_wallpaper_image" maxLength="41">Hintergrund entfernen</string>
     <string name="remove_background_image">Hintergrund entfernen?</string>
     <!-- Card Template Browser Appearance -->
-    <string name="restore_default" maxLength="28">Standard wiederherstellen</string>
+    <string name="restore_default" maxLength="28">Restore default</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Auslassung</string>
     <!-- Whiteboard eraser mode toggle message in Reviewer -->
     <string name="white_board_eraser_enabled">Radier-Modus aktiviert</string>
@@ -328,7 +328,7 @@
     <!-- Browser Options Dialog -->
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Karten</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Notizen</string>
-    <string name="toggle_cards_notes">Karten/Notizen umschalten</string>
+    <string name="toggle_cards_notes">Toggle cards/notes</string>
     <string name="truncate_content_help">Die Höhe jeder Zeile der Kartenübersicht anpassen, sodass nur die ersten 3 Zeilen des Inhalts zu sehen sind.</string>
     <string name="browser_options_dialog_heading">Browser Einstellungen</string>
     <string name="audio_saved">Aufnahme gespeichert</string>
@@ -344,7 +344,7 @@
     <string name="shared_decks_login_required">Bitte melde dich an, um weitere Stapel herunterzuladen</string>
     <string name="deck_description_field_hint">Beschreibung</string>
     <string name="deck_description_saved">Beschreibung aktualisiert</string>
-    <string name="format_deck_description_as_markdown">Als Markdown formatieren</string>
+    <string name="format_deck_description_as_markdown">Format as markdown</string>
     <string name="help_button_content_description">Hilfe für ‘%s ’ öffnen</string>
     <string name="failed_to_copy">Kopieren fehlgeschlagen</string>
     <plurals name="unbury_cards_feedback">
@@ -359,7 +359,7 @@
     <string name="play_recording">Play</string>
     <string name="next_recording" comment="Description of a button to go to the next recording">Weiter</string>
     <!--  AlertDialog in the deleteCardTemplate  -->
-    <string name="orphan_note_title">Kartentyp kann nicht gelöscht werden</string>
+    <string name="orphan_note_title">Cannot delete card type</string>
     <string name="orphan_note_message">Das Löschen dieses Kartentyps wird einige Notizen ohne Karten hinterlassen.</string>
     <string name="voice_not_supported">Stimme nicht unterstützt. Versuchen Sie eine andere oder installieren Sie eine Sprach-Engine.</string>
     <!--Keyboard shortcuts dialog-->
