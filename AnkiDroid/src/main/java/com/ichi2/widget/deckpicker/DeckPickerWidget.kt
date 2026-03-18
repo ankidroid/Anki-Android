@@ -130,7 +130,16 @@ class DeckPickerWidget : AnalyticsWidgetProvider() {
         ) {
             remoteViews.removeAllViews(R.id.deckCollection)
             val deckData = getDeckNamesAndStats(deckIds.toList())
-            for (deck in deckData) {
+
+            val options = appWidgetManager.getAppWidgetOptions(appWidgetId.id)
+            val minHeight = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT)
+            val maxDecks =
+                when {
+                    minHeight < 80 -> 2
+                    else -> deckData.size
+                }
+
+            for (deck in deckData.take(maxDecks)) {
                 val deckView = RemoteViews(context.packageName, R.layout.widget_item_deck_main)
 
                 remoteViews.setViewVisibility(R.id.empty_widget, View.GONE)
@@ -337,7 +346,18 @@ class DeckPickerWidget : AnalyticsWidgetProvider() {
                 }
             }
             AppWidgetManager.ACTION_APPWIDGET_OPTIONS_CHANGED -> {
-                // TODO: #17151: not yet handled. Exists to stop ACRA errors
+                val appWidgetId = intent.getAppWidgetId()
+                if (appWidgetId == INVALID_APPWIDGET_ID) return
+                val selectedDeckIds =
+                    widgetPreferences
+                        .getSelectedDeckIdsFromPreferences(appWidgetId)
+                if (selectedDeckIds.isEmpty()) return
+                updateWidget(
+                    context,
+                    AppWidgetManager.getInstance(context),
+                    appWidgetId,
+                    selectedDeckIds,
+                )
             }
             AppWidgetManager.ACTION_APPWIDGET_ENABLED -> {
                 Timber.d("Widget enabled")
