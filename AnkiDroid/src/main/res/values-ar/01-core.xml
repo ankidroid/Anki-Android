@@ -141,7 +141,7 @@
     <string name="empty_cram_label" maxLength="28">إفراغ</string>
     <string name="create_subdeck">إنشاء رِزمة فرعية</string>
     <string name="empty_filtered_deck">يتم إفراغ الرزمة المفروزة&#8230;</string>
-    <string name="search_deck" comment="Deck search for selecting it">Deck search</string>
+    <string name="search_deck" comment="Deck search for selecting it">بحث عن رِزمة</string>
     <string name="empty_deck">هذه الرزمة فارغة</string>
     <string name="invalid_deck_name">اسم رزمة غير صالح</string>
     <string name="studyoptions_congrats_finished">مبروك! لقد أتممت مهامَّك لهذا اليوم.</string>
@@ -232,9 +232,9 @@
     <!-- Instant Note Editor -->
     <string name="instant_card" comment="Used in the Android system context menu/share dialog to quickly create a note. This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. ">بطاقة فورية</string>
     <!-- Internet Permissions -->
-    <string name="internet_access_title" comment="used for notifying user to unable internet access">Internet</string>
-    <string name="permission_access_summary">Required for the app to work</string>
-    <string name="permission_required_message">Please grant AnkiDroid the ‘%s’ permission to continue</string>
+    <string name="internet_access_title" comment="used for notifying user to unable internet access">إنترنت</string>
+    <string name="permission_access_summary">مطلوب لعمل التطبيق</string>
+    <string name="permission_required_message">من فضلك امنح آنكي درويد إذن «%s» لكي تستمر</string>
     <!-- Multiple profile -->
     <string name="add_profile">إضافة مِلَفّ شخصي</string>
 </resources>

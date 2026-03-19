@@ -261,8 +261,8 @@
     <string name="import_error_resolution_copy_to_device">Copia el archivo a tu dispositivo e inténtalo de nuevo con el archivo local</string>
     <string name="import_error_resolution_select_file">Abre el archivo usando la aplicación del navegador de archivos de tu dispositivo</string>
     <!-- Post-login dialog -->
-    <string name="login_successful">Login successful</string>
-    <string name="sync_now">Sync now?</string>
+    <string name="login_successful">Sesión iniciada correctamente</string>
+    <string name="sync_now">¿Sincronizar ahora?</string>
     <!--Change Note Type Dialog Fragment-->
     <string name="card_numbers_unchanged">Card numbers will remain unchanged</string>
     <!-- Subset of TR.changeNotetypeToFromCloze -->

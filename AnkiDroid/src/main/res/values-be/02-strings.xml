@@ -54,7 +54,7 @@
     <string name="CardEditorModel">Тып:</string>
     <string name="CardEditorTags">Меткі: %1$s</string>
     <string name="CardEditorCards">Карткі: %1$s</string>
-    <string name="edit_occlusions">Edit occlusions</string>
+    <string name="edit_occlusions">Рэдагаваць аклюзіі</string>
     <string name="paste_from_clipboard" maxLength="28">Уставіць з буфера абмену</string>
     <string name="tag_name">Назва меткі</string>
     <string name="add_new_filter_tags">Дадаць/фільтраваць меткі</string>
@@ -198,7 +198,7 @@
     <string name="dyn_deck_desc">Гэта спецыяльная калода для навучання па-за межамі звыклага графіка. Пасля паўтору, карткі будуць аўтаматычна вяртацца ў сваю першапачатковую калоду. Выдаленне гэтай калоды верне ўсе карткі ў іх першапачатковую калоду.</string>
     <string name="tag_editor_add_feedback">Націсніце “%2$s”, каб пацвердзіць даданне “%1$s”</string>
     <string name="tag_editor_add_feedback_existing">Выбрана існуючая метка \"%1$s\"</string>
-    <string name="tag_already_exists">Tag already exists</string>
+    <string name="tag_already_exists">Метка ўжо існуе</string>
     <!-- Time spans -->
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Памылка агульнага доступу да файла apkg</string>
@@ -214,7 +214,7 @@
     <string name="remove_wallpaper_image" maxLength="41">Выдаліць фон</string>
     <string name="remove_background_image">Выдаліць фон?</string>
     <!-- Card Template Browser Appearance -->
-    <string name="restore_default" maxLength="28">Restore default</string>
+    <string name="restore_default" maxLength="28">Аднавіць па змаўчанні</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Пуста</string>
     <!-- Whiteboard eraser mode toggle message in Reviewer -->
     <string name="white_board_eraser_enabled">Рэжым гумкі актываваны</string>
@@ -244,20 +244,20 @@
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">Памер шрыфту</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Паказаць панэль інструментаў</string>
-    <string name="format_insert_bold">Format as bold</string>
-    <string name="format_insert_italic">Format as italic</string>
-    <string name="format_insert_underline">Format as underline</string>
-    <string name="insert_horizontal_line">Insert horizontal line</string>
-    <string name="insert_heading">Insert heading</string>
-    <string name="format_font_size">Change font size</string>
-    <string name="insert_mathjax">Insert MathJax equation</string>
+    <string name="format_insert_bold">Фарматаваць як паўтлусты</string>
+    <string name="format_insert_italic">Фарматаваць як нахілены</string>
+    <string name="format_insert_underline">Фарматаваць як падкрэслены</string>
+    <string name="insert_horizontal_line">Уставіць гарызантальную лінію</string>
+    <string name="insert_heading">Уставіць загаловак</string>
+    <string name="format_font_size">Змяніць памер шрыфту</string>
+    <string name="insert_mathjax">Уставіць ураўненне MathJax</string>
     <string name="note_editor_toolbar_icon">Тэкст кнопкі</string>
-    <string name="before_text">HTML before selection</string>
-    <string name="after_text">HTML after selection</string>
-    <string name="add_toolbar_item">Create toolbar item</string>
-    <string name="edit_toolbar_item">Edit toolbar item</string>
+    <string name="before_text">HTML перад вылучэннем</string>
+    <string name="after_text">HTML пасля вылучэння</string>
+    <string name="add_toolbar_item">Стварыць элемент панэлі інструментаў</string>
+    <string name="edit_toolbar_item">Рэдагаваць элемент панэлі інструментаў</string>
     <string name="toolbar_item_explain_edit_or_remove">Увядзіце HTML, які будзе ўстаўлены да і пасля вылучанага тэксту\n\nДоўгі націск на элемент панэлі інструментаў дазволіць адрэдагаваць або выдаліць яго</string>
-    <string name="remove_toolbar_item">Remove toolbar item?</string>
+    <string name="remove_toolbar_item">Выдаліць элемент панэлі інструментаў?</string>
     <string name="note_editor_image_too_large">Занадта вялікі відарыс, паспрабуйце ўставіць відарыс уручную</string>
     <string name="note_editor_video_too_large">Занадта вялікі відэафайл, паспрабуйце ўставіць відэа ўручную</string>
     <string name="note_editor_audio_too_large">Занадта вялікі аўдыяфайл, паспрабуйце ўставіць аўдыя ўручную</string>
@@ -338,7 +338,7 @@
     <!-- Browser Options Dialog -->
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Карткі</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Нататкі</string>
-    <string name="toggle_cards_notes">Toggle cards/notes</string>
+    <string name="toggle_cards_notes">Пераключыць Карткі/Нататкі</string>
     <string name="truncate_content_help">Скараціць вышыню кожнага радка браўзера для адлюстравання толькі першых 3 радкоў змесціва</string>
     <string name="browser_options_dialog_heading">Параметры браўзера</string>
     <string name="audio_saved">Запіс захаваны</string>
@@ -354,7 +354,7 @@
     <string name="shared_decks_login_required">Увайдзіце, каб спампаваць больш калод</string>
     <string name="deck_description_field_hint">Апісанне</string>
     <string name="deck_description_saved">Апісанне абноўлена</string>
-    <string name="format_deck_description_as_markdown">Format as markdown</string>
+    <string name="format_deck_description_as_markdown">Фарматаваць як Markdown</string>
     <string name="help_button_content_description">Адкрыць даведку для ‘%s’</string>
     <string name="failed_to_copy">Не ўдалося скапіяваць</string>
     <plurals name="unbury_cards_feedback">
@@ -371,7 +371,7 @@
     <string name="play_recording">Прайграць</string>
     <string name="next_recording" comment="Description of a button to go to the next recording">Далей</string>
     <!--  AlertDialog in the deleteCardTemplate  -->
-    <string name="orphan_note_title">Cannot delete card type</string>
+    <string name="orphan_note_title">Немагчыма выдаліць тып карткі</string>
     <string name="orphan_note_message">Выдаленне гэтага тыпу карткі пакіне некаторыя нататкі без ніводнай карткі.</string>
     <string name="voice_not_supported">Падтрымка голасу адсутнічае. Паспрабуйце іншы рухавік голасу або пераўсталюйце бягучы.</string>
     <!--Keyboard shortcuts dialog-->

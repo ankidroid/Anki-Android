@@ -54,7 +54,7 @@
     <string name="CardEditorModel">النوع:</string>
     <string name="CardEditorTags">الوسوم: %1$s</string>
     <string name="CardEditorCards">البطاقات: %1$s</string>
-    <string name="edit_occlusions">Edit occlusions</string>
+    <string name="edit_occlusions">تحرير الصور المُعَمَّاة</string>
     <string name="paste_from_clipboard" maxLength="28">لصق من الحافظة</string>
     <string name="tag_name">اسم الوسم</string>
     <string name="add_new_filter_tags">إضافة وفرز الوسوم</string>
@@ -204,7 +204,7 @@
     <string name="dyn_deck_desc">هذه رزمة خاصة للدراسة خارج الجدول المعتاد. ستعود البطاقات إلى رزمها الأصلية تلقائيًا بعد مراجعتها. يؤدي حذف هذه الرزمة من قائمة الرزم إلى إعادة كل البطاقات المتبقية إلى رزمها الأصلية.</string>
     <string name="tag_editor_add_feedback">انقر «%2$s» لتُأكِّد إضافة «%1$s»</string>
     <string name="tag_editor_add_feedback_existing">تم تحديد الوسم الموجود «%1$s»</string>
-    <string name="tag_already_exists">Tag already exists</string>
+    <string name="tag_already_exists">الوسم موجود</string>
     <!-- Time spans -->
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">حدث خطأ أثناء مشاركة ملف «apkg»</string>
@@ -220,7 +220,7 @@
     <string name="remove_wallpaper_image" maxLength="41">إزالة الخلفية</string>
     <string name="remove_background_image">هل تريد إزالة الخلفية؟</string>
     <!-- Card Template Browser Appearance -->
-    <string name="restore_default" maxLength="28">Restore default</string>
+    <string name="restore_default" maxLength="28">استعادة الافتراضي</string>
     <string name="reviewer_tts_cloze_spoken_replacement">فارغ</string>
     <!-- Whiteboard eraser mode toggle message in Reviewer -->
     <string name="white_board_eraser_enabled">تم تفعيل وضع الممحاة</string>
@@ -250,20 +250,20 @@
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">حجم الخط</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">إظهار شريط الأدوات</string>
-    <string name="format_insert_bold">Format as bold</string>
-    <string name="format_insert_italic">Format as italic</string>
-    <string name="format_insert_underline">Format as underline</string>
-    <string name="insert_horizontal_line">Insert horizontal line</string>
-    <string name="insert_heading">Insert heading</string>
-    <string name="format_font_size">Change font size</string>
-    <string name="insert_mathjax">Insert MathJax equation</string>
+    <string name="format_insert_bold">تعريض</string>
+    <string name="format_insert_italic">إمالة</string>
+    <string name="format_insert_underline">إضافة خطٍ سفلي</string>
+    <string name="insert_horizontal_line">إدراج خطٍ أفقي</string>
+    <string name="insert_heading">إدراج عنوان</string>
+    <string name="format_font_size">تغيير حجم الخط</string>
+    <string name="insert_mathjax">إدراج معادلة «MathJax»</string>
     <string name="note_editor_toolbar_icon">نص الزر</string>
-    <string name="before_text">HTML before selection</string>
-    <string name="after_text">HTML after selection</string>
-    <string name="add_toolbar_item">Create toolbar item</string>
-    <string name="edit_toolbar_item">Edit toolbar item</string>
+    <string name="before_text">HTML قبل التحديد</string>
+    <string name="after_text">HTML بعد التحديد</string>
+    <string name="add_toolbar_item">إضافة أداة إلى شريط الأدوات</string>
+    <string name="edit_toolbar_item">تعديل الأداة</string>
     <string name="toolbar_item_explain_edit_or_remove">أدخل الـ«HTML» الذي سيُدرج قبل النص المحدد وبعده\n\nإضغط ضغطة مطولة على هذه الأداة في شريط الأدوات لتعديلها أو حذفها</string>
-    <string name="remove_toolbar_item">Remove toolbar item?</string>
+    <string name="remove_toolbar_item">أتود حذف هذه الأداة؟</string>
     <string name="note_editor_image_too_large">الصورة كبيرة جدًا للصق، يرجى إدخال الصورة يدويًا</string>
     <string name="note_editor_video_too_large">مِلَفّ الفيديو كبير جدًا، يرجى إدخال الفيديو يدويًا</string>
     <string name="note_editor_audio_too_large">المِلَفّ الصوتي كبير جدًا، يرجى إدخال الصوت يدويًا</string>
@@ -348,7 +348,7 @@
     <!-- Browser Options Dialog -->
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">بطاقات</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">ملحوظات</string>
-    <string name="toggle_cards_notes">Toggle cards/notes</string>
+    <string name="toggle_cards_notes">تبديل عرض البطاقات/الملحوظات</string>
     <string name="truncate_content_help">يقتطع كل صف في المتصفح لتظهر أول 3 سطور من المحتوى فقط</string>
     <string name="browser_options_dialog_heading">خيارات المتصفح</string>
     <string name="audio_saved">تم حفظ التسجيل</string>
@@ -364,7 +364,7 @@
     <string name="shared_decks_login_required">الرجاء تسجيل الدخول لتنزيل المزيد من المجموعات</string>
     <string name="deck_description_field_hint">الوصف</string>
     <string name="deck_description_saved">تم تعديل الوصف</string>
-    <string name="format_deck_description_as_markdown">Format as markdown</string>
+    <string name="format_deck_description_as_markdown">تنسيق كـ Markdown</string>
     <string name="help_button_content_description">مساعدة حول «%s»</string>
     <string name="failed_to_copy">فشل النسخ</string>
     <plurals name="unbury_cards_feedback">
@@ -383,7 +383,7 @@
     <string name="play_recording">تشغيل</string>
     <string name="next_recording" comment="Description of a button to go to the next recording">التالي</string>
     <!--  AlertDialog in the deleteCardTemplate  -->
-    <string name="orphan_note_title">Cannot delete card type</string>
+    <string name="orphan_note_title">لا يمكنك حذف البطاقات من هذا النوع</string>
     <string name="orphan_note_message">حذف هذا النوع من البطاقات سيترك بعض الملحوظات بدون أي بطاقة.</string>
     <string name="voice_not_supported">الصوت غير مدعوم. جرب صوتًا آخر أو نصب محركًا صوتيًا.</string>
     <!--Keyboard shortcuts dialog-->

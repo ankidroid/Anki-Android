@@ -54,7 +54,7 @@
     <string name="CardEditorModel">Turi:</string>
     <string name="CardEditorTags">Teglar: %1$s</string>
     <string name="CardEditorCards">Kartalar: %1$s</string>
-    <string name="edit_occlusions">Edit occlusions</string>
+    <string name="edit_occlusions">Rasm toʻsiqlarini tahrirlash</string>
     <string name="paste_from_clipboard" maxLength="28">Buferdan qoʻyish</string>
     <string name="tag_name">Teg nomi</string>
     <string name="add_new_filter_tags">Teglar qoʻshish/filtrlash</string>
@@ -208,7 +208,7 @@
     <string name="remove_wallpaper_image" maxLength="41">Orqa fonni olib tashlash</string>
     <string name="remove_background_image">Orqa fonni olib tashlamoqchimisiz?</string>
     <!-- Card Template Browser Appearance -->
-    <string name="restore_default" maxLength="28">Restore default</string>
+    <string name="restore_default" maxLength="28">Birlamchiga qaytarish</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Boʻshliq</string>
     <!-- Whiteboard eraser mode toggle message in Reviewer -->
     <string name="white_board_eraser_enabled">Oʻchirgʻich rejimi yoqildi</string>
@@ -328,7 +328,7 @@
     <!-- Browser Options Dialog -->
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Kartalar</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Qaydlar</string>
-    <string name="toggle_cards_notes">Toggle cards/notes</string>
+    <string name="toggle_cards_notes">Karta/qaydlar almashtirish</string>
     <string name="truncate_content_help">Karta brauzerini har bir qator balandligini faqat dastlabki 3 ta tarkib qatorini koʻrsatish uchun qisqartirish</string>
     <string name="browser_options_dialog_heading">Karta brauzeri parametrlari</string>
     <string name="audio_saved">Ovoz yozuvi saqlandi</string>
@@ -344,7 +344,7 @@
     <string name="shared_decks_login_required">Koʻproq dasta yuklab olish uchun, iltimos, tizimga kiring</string>
     <string name="deck_description_field_hint">Tavsif</string>
     <string name="deck_description_saved">Tavsif yangilandi</string>
-    <string name="format_deck_description_as_markdown">Format as markdown</string>
+    <string name="format_deck_description_as_markdown">Markdown sifatida formatlash</string>
     <string name="help_button_content_description">‘%s’ uchun yordamni ochish</string>
     <string name="failed_to_copy">Nusxa olib boʻlmadi</string>
     <plurals name="unbury_cards_feedback">
@@ -359,7 +359,7 @@
     <string name="play_recording">Ijro etish</string>
     <string name="next_recording" comment="Description of a button to go to the next recording">Keyingi</string>
     <!--  AlertDialog in the deleteCardTemplate  -->
-    <string name="orphan_note_title">Cannot delete card type</string>
+    <string name="orphan_note_title">Karta turini oʻchirib boʻlmaydi</string>
     <string name="orphan_note_message">Ushbu karta turini oʻchirib tashlash baʼzi qaydlar kartasiz qolishiga olib keladi.</string>
     <string name="voice_not_supported">Ovoz qoʻllab-quvvatlanmaydi. Boshqasini sinab koʻring yoki ovoz dvijogini oʻrnating.</string>
     <!--Keyboard shortcuts dialog-->

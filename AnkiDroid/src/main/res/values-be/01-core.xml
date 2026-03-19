@@ -65,8 +65,8 @@
     <string name="no_cards_placeholder_description" comment="Text shown the first time AnkiDroid is opened, to explain what should be their first action.">Пачніце дадаваць карткі\nз дапамогай значка \"+\"</string>
     <!-- Reviewer -->
     <plurals name="reviewer_window_title" comment="Header of the reviewer, telling the users how many minutes remains before they have seen all cards.">
-        <item quantity="one">Засталася %d хвіліна</item>
-        <item quantity="few">Засталося %d хвіліны</item>
+        <item quantity="one">Засталося %d хвілін</item>
+        <item quantity="few">Засталося %d хвілін</item>
         <item quantity="many">Засталося %d хвілін</item>
         <item quantity="other">Засталося %d хвілін</item>
     </plurals>
@@ -135,7 +135,7 @@
     <string name="empty_cram_label" maxLength="28">Ачысціць</string>
     <string name="create_subdeck">Стварыць падкалоду</string>
     <string name="empty_filtered_deck">Ачыстка фільтраванай калоды&#8230;</string>
-    <string name="search_deck" comment="Deck search for selecting it">Deck search</string>
+    <string name="search_deck" comment="Deck search for selecting it">Пошук калоды</string>
     <string name="empty_deck">Гэта калода пустая</string>
     <string name="invalid_deck_name">Памылковая назва калоды</string>
     <string name="studyoptions_congrats_finished">Віншуем! На сёння ўсе карткі вывучаны.</string>
@@ -222,9 +222,9 @@
     <!-- Instant Note Editor -->
     <string name="instant_card" comment="Used in the Android system context menu/share dialog to quickly create a note. This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. ">Імгненнае дабаўленне карткі</string>
     <!-- Internet Permissions -->
-    <string name="internet_access_title" comment="used for notifying user to unable internet access">Internet</string>
-    <string name="permission_access_summary">Required for the app to work</string>
-    <string name="permission_required_message">Please grant AnkiDroid the ‘%s’ permission to continue</string>
+    <string name="internet_access_title" comment="used for notifying user to unable internet access">Інтэрнэт</string>
+    <string name="permission_access_summary">Абавязкова, каб праграма працавала</string>
+    <string name="permission_required_message">Дазвольце AnkiDroid атрымаць доступ ‘%s’, каб працягнуць</string>
     <!-- Multiple profile -->
     <string name="add_profile">Дадаць профіль</string>
 </resources>

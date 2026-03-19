@@ -54,7 +54,7 @@
     <string name="CardEditorModel">Tipo:</string>
     <string name="CardEditorTags">Etikedoj: %1$s</string>
     <string name="CardEditorCards">Kartoj: %1$s</string>
-    <string name="edit_occlusions">Edit occlusions</string>
+    <string name="edit_occlusions">Redakti vualojn</string>
     <string name="paste_from_clipboard" maxLength="28">Alglui el tondujo</string>
     <string name="tag_name">Nomo de etikedo</string>
     <string name="add_new_filter_tags">Aldoni/filtri etikedojn</string>
@@ -192,7 +192,7 @@
     <string name="dyn_deck_desc">Tio ĉi estas speciala kartaro por lerni ekster la norma lern-plano. Kartoj aŭtomate revenos al originalaj kartaroj post ripeti ilin. Forigi tiun ĉi kartaron el la listo de kartaroj redonos ĉiujn restantajn kartojn al originalaj kartaroj.</string>
     <string name="tag_editor_add_feedback">Frapetu “%2$s” por konfirmi aldoni “%1$s”</string>
     <string name="tag_editor_add_feedback_existing">Elektis ekzistan etikedon “%1$s”</string>
-    <string name="tag_already_exists">Tag already exists</string>
+    <string name="tag_already_exists">Etikedo jam ekzistas</string>
     <!-- Time spans -->
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Eraro dum kunhavigado de apkg-dosiero</string>
@@ -208,7 +208,7 @@
     <string name="remove_wallpaper_image" maxLength="41">Forigi fonon</string>
     <string name="remove_background_image">Ĉu forigi fonon?</string>
     <!-- Card Template Browser Appearance -->
-    <string name="restore_default" maxLength="28">Restore default</string>
+    <string name="restore_default" maxLength="28">Restarigi implicitajn</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Malplena</string>
     <!-- Whiteboard eraser mode toggle message in Reviewer -->
     <string name="white_board_eraser_enabled">Reĝimo “forviŝilo” aktiva</string>
@@ -238,12 +238,12 @@
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">Grando de tiparo</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Montri ilarstrion</string>
-    <string name="format_insert_bold">Format as bold</string>
-    <string name="format_insert_italic">Format as italic</string>
-    <string name="format_insert_underline">Format as underline</string>
-    <string name="insert_horizontal_line">Insert horizontal line</string>
-    <string name="insert_heading">Insert heading</string>
-    <string name="format_font_size">Change font size</string>
+    <string name="format_insert_bold">Aranĝi kiel grasan</string>
+    <string name="format_insert_italic">Aranĝi kiel kursivan</string>
+    <string name="format_insert_underline">Aranĝi kiel substrekitan</string>
+    <string name="insert_horizontal_line">Enmeti horizontalan linion</string>
+    <string name="insert_heading">Enmeti kapon</string>
+    <string name="format_font_size">Ŝanĝi grandon de tiparo</string>
     <string name="insert_mathjax">Insert MathJax equation</string>
     <string name="note_editor_toolbar_icon">Teksto de butono</string>
     <string name="before_text">HTML before selection</string>
