@@ -129,6 +129,9 @@ data class DeckConfig(
         override val jsonObject: JSONObject,
     ) : JSONObjectHolder {
         @VisibleForTesting
+        var perDay by jsonInt("perDay")
+
+        @VisibleForTesting
         var delays by jsonArray("delays")
 
         @VisibleForTesting

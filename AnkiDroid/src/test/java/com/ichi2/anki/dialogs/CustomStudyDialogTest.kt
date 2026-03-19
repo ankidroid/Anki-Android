@@ -33,7 +33,6 @@ import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
-import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyDefaults.Companion.toDomainModel
@@ -126,7 +125,6 @@ class CustomStudyDialogTest : RobolectricTest() {
         }
 
     @Test
-    @NeedsTest("previous value for 'increase review card limit' is suggested")
     fun `previous value for 'increase new card limit' is suggested`() {
         // add cards to be sure we can extend successfully. Needs to be > 20
         repeat(23) {
@@ -160,6 +158,40 @@ class CustomStudyDialogTest : RobolectricTest() {
         ) {
             onSubscreenEditText()
                 .check(matches(withText(newExtendByValue.toString())))
+        }
+    }
+
+    @Test
+    fun `previous value for 'increase review card limit' is suggested`() {
+        // Reduce review limit to 0, so we can successfully extend with just 1 review card.
+        updateDeckConfig(Consts.DEFAULT_DECK_ID) { rev.perDay = 0 }
+        addRevBasicNoteDueToday("Review", "Today")
+
+        val reviewExtendByValue = 1
+        assertThat("'review' default value", defaultsOfDefaultDeck.extendReview.initialValue, equalTo(0))
+
+        // Extend reviews by 'reviewExtendByValue'.
+        withCustomStudyFragment(
+            args = argumentsDisplayingSubscreen(ContextMenuOption.EXTEND_REV),
+        ) { dialogFragment: CustomStudyDialog ->
+            onSubscreenEditText()
+                .perform(replaceText(reviewExtendByValue.toString()))
+            dialogFragment.submitSubscreenData()
+        }
+
+        // Ensure backend is updated.
+        assertThat(
+            "'review' updated value",
+            defaultsOfDefaultDeck.extendReview.initialValue,
+            equalTo(reviewExtendByValue),
+        )
+
+        // Ensure 'reviewExtendByValue' is used in our UI.
+        withCustomStudyFragment(
+            args = argumentsDisplayingSubscreen(ContextMenuOption.EXTEND_REV),
+        ) {
+            onSubscreenEditText()
+                .check(matches(withText(reviewExtendByValue.toString())))
         }
     }
 
