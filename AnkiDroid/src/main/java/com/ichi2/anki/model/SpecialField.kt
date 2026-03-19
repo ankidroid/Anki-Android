@@ -54,6 +54,8 @@ object SpecialFields {
      * * 0 - unset
      * * 1 - RED etc...
      *
+     * The integer part uses Arabic numerals (0-9) on all locales.
+     *
      * @see com.ichi2.anki.Flag.code
      */
     val Flag = SpecialField("CardFlag")

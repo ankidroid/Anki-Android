@@ -286,11 +286,11 @@ fun SpecialField.buildDescription(
         SpecialFields.Flag -> {
             val code = metadata.flag ?: "N"
             context.getString(
-                R.string.special_field_card_flag_help,
+                R.string.special_field_flag_help,
                 if (code == "N") "flag$code" else "<b>flag$code</b>",
                 "<b>$code</b>",
-                Flag.entries.minOf { it.code },
-                Flag.entries.maxOf { it.code },
+                Flag.entries.minOf { it.code }.toString(),
+                Flag.entries.maxOf { it.code }.toString(),
             )
         }
         SpecialFields.Tags -> {

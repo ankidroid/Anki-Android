@@ -25,6 +25,7 @@ import com.ichi2.testutils.EmptyApplication
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.CoreMatchers.not
 import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.containsString
 import org.hamcrest.Matchers.emptyString
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -93,6 +94,18 @@ class InsertFieldDialogTest : RobolectricTest() {
                 metadata.copy(flag = 3),
             ),
             equalTo("Outputs ‘flag3’, where 3 is the flag code (0–7)"),
+        )
+    }
+
+    @Test
+    @Config(qualifiers = "ar")
+    fun `{{CardFlag}} description in arabic`() {
+        // this was previously outputting '(0–7)' in Eastern Arabic numerals
+        assertThat(
+            SpecialFields.Flag.buildDescription(
+                metadata.copy(flag = 3),
+            ),
+            containsString("(0–7)"),
         )
     }
 
