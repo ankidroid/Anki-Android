@@ -133,9 +133,12 @@ class DeckPickerWidget : AnalyticsWidgetProvider() {
 
             val options = appWidgetManager.getAppWidgetOptions(appWidgetId.id)
             val minHeight = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT)
+
             val maxDecks =
                 when {
-                    minHeight < 80 -> 2
+                    minHeight <= 65 -> 2
+                    minHeight <= 100 -> 3
+                    minHeight <= 150 -> 4
                     else -> deckData.size
                 }
 
