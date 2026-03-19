@@ -23,8 +23,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
 import androidx.core.widget.doAfterTextChanged
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
 import com.ichi2.anki.databinding.DialogIncrementerPreferenceBinding
+import com.ichi2.anki.ui.NonLeadingZeroInputFilter
 import com.ichi2.utils.moveCursorToEnd
 import com.ichi2.utils.positiveButton
 
@@ -70,7 +72,7 @@ class IncrementerNumberRangePreferenceCompat :
                     // This should not be possible but just in case, recover with a valid minimum from superclass
                     numberRangePreference.min
                 }
-
+            editText.filters += NonLeadingZeroInputFilter
             // Validate the final value, not individual character changes
             editText.doAfterTextChanged { updateButtonState() }
 
@@ -81,7 +83,8 @@ class IncrementerNumberRangePreferenceCompat :
         override fun onStart() {
             super.onStart()
             positiveButton = (dialog as? androidx.appcompat.app.AlertDialog)?.positiveButton
-            positiveButton?.setText(R.string.save)
+            positiveButton?.text = TR.actionsSave()
+
             // Rerun validation now that we have the OK button reference
             updateButtonState()
         }
