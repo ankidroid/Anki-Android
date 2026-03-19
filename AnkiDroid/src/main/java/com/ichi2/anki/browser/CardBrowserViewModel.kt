@@ -31,7 +31,6 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import anki.collection.OpChanges
 import anki.collection.OpChangesWithCount
-import anki.config.ConfigKey
 import anki.search.BrowserColumns
 import anki.search.BrowserRow
 import com.ichi2.anki.ALL_DECKS_ID
@@ -80,6 +79,7 @@ import com.ichi2.anki.preferences.SharedPreferencesProvider
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.settings.PrefsRepository
 import com.ichi2.anki.utils.ext.currentCardBrowse
+import com.ichi2.anki.utils.ext.ignoreAccentsInSearch
 import com.ichi2.anki.utils.ext.setUserFlagForCards
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Job
@@ -482,7 +482,7 @@ class CardBrowserViewModel(
             }.launchIn(viewModelScope)
 
         viewModelScope.launch {
-            shouldIgnoreAccents = withCol { config.getBool(ConfigKey.Bool.IGNORE_ACCENTS_IN_SEARCH) }
+            shouldIgnoreAccents = withCol { config.ignoreAccentsInSearch }
 
             val initialDeckId = if (selectAllDecks) SelectableDeck.AllDecks else getInitialDeck()
             // PERF: slightly inefficient if the source was lastDeckId
@@ -699,7 +699,7 @@ class CardBrowserViewModel(
         Timber.d("Setting ignore accent in search to: $value")
         viewModelScope.launch {
             shouldIgnoreAccents = value
-            withCol { config.setBool(ConfigKey.Bool.IGNORE_ACCENTS_IN_SEARCH, value) }
+            withCol { config.ignoreAccentsInSearch = value }
         }
     }
 
