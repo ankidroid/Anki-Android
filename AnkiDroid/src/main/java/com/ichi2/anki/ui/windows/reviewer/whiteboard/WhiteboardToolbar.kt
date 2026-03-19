@@ -16,6 +16,7 @@
 package com.ichi2.anki.ui.windows.reviewer.whiteboard
 
 import android.content.Context
+import android.graphics.Rect
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -23,6 +24,9 @@ import android.view.View
 import android.view.ViewConfiguration
 import android.view.animation.DecelerateInterpolator
 import android.widget.LinearLayout
+import androidx.core.view.ViewCompat
+import androidx.core.view.marginLeft
+import androidx.core.view.marginRight
 import androidx.core.view.updateLayoutParams
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ichi2.anki.databinding.ViewWhiteboardToolbarBinding
@@ -65,6 +69,32 @@ class WhiteboardToolbar : LinearLayout {
     var onBrushClick: ((view: View, index: Int) -> Unit)? = null
     var onBrushLongClick: ((index: Int) -> Unit)? = null
     var onToolbarVisibilityChanged: ((isShown: Boolean) -> Unit)? = null
+
+    /**
+     * Disables gesture swipe of docked whiteboard toolbar on the side on layout change
+     * While this code does attempt to set exclusion rect when ToolbarAlignment.BOTTOM,
+     *  no effect occurs as bottom screen gestures cannot be opted out of
+     * https://developer.android.com/develop/ui/views/touch-and-input/gestures/gesturenav#kotlin
+     */
+    private val boundingBox: Rect = Rect()
+    private val exclusions = listOf(boundingBox)
+
+    override fun onLayout(
+        changed: Boolean,
+        left: Int,
+        top: Int,
+        right: Int,
+        bottom: Int,
+    ) {
+        super.onLayout(changed, left, top, right, bottom)
+        if (!changed) return
+        when (currentAlignment) {
+            ToolbarAlignment.LEFT -> boundingBox.set(left - marginLeft, top, right, bottom)
+            ToolbarAlignment.RIGHT -> boundingBox.set(left, top, right + marginRight, bottom)
+            ToolbarAlignment.BOTTOM -> boundingBox.set(0, 0, 0, 0)
+        }
+        ViewCompat.setSystemGestureExclusionRects(this, exclusions)
+    }
 
     /**
      * Updates the internal layout based on the toolbar alignment.
