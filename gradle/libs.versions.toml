@@ -99,7 +99,7 @@ lint = '32.1.0'
 material = "1.13.0"
 
 mockitoInline = "5.2.0"
-mockitoKotlin = "6.2.3"
+mockitoKotlin = "6.3.0"
 mockk = "1.14.9"
 nanohttpd = "2.3.1"
 okhttp = "5.3.2"
