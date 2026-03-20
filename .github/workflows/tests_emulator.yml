@@ -148,7 +148,7 @@ jobs:
 
       - name: Warm Gradle Cache
         # This makes sure we fetch gradle network resources with a retry
-        uses: nick-fields/retry@v3
+        uses: nick-fields/retry@v4
         with:
           timeout_minutes: 15
           retry_wait_seconds: 60
