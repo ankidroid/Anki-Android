@@ -86,6 +86,7 @@
     <string name="dialog_yes">Ya</string>
     <string name="dialog_keep">Simpan</string>
     <string name="dialog_remove">Hapus</string>
+    <string name="dialog_exit" comment="Label for a button which will exit/finish the current screen">Exit</string>
     <string name="dialog_continue">Lanjut</string>
     <string name="dialog_processing">Memproses&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Buat</string>

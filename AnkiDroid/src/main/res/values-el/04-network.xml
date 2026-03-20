@@ -66,7 +66,6 @@
     <string name="lost_mail_instructions">Ξεχάσατε το email σας;</string>
     <string name="sign_in">Σύνδεση</string>
     <!-- AndroidManifest.xml -->
-    <string name="deckpreferences_title">Επιλογές για XXX</string>
     <string name="sync_title">Συγχρονισμός</string>
     <string name="sync_log_uploading_message">Πλήρης συγχρονισμός από το τοπικό</string>
     <string name="sync_database_acknowledge">Η συλλογή συγχρονίστηκε</string>

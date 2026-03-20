@@ -66,7 +66,6 @@
     <string name="lost_mail_instructions">Forgot Email?</string>
     <string name="sign_in">Signing in</string>
     <!-- AndroidManifest.xml -->
-    <string name="deckpreferences_title">Mga pagpipilian para sa XXX</string>
     <string name="sync_title">Pagsisingkronisa</string>
     <string name="sync_log_uploading_message">Buong pag-sisingkronisa mula sa lokal</string>
     <string name="sync_database_acknowledge">Na-isingkronisa na ang koleksyon</string>

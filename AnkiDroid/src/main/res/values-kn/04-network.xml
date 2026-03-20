@@ -66,7 +66,6 @@
     <string name="lost_mail_instructions">ಇಮೇಲ್ ಮರೆತಿರುವಿರಾ?</string>
     <string name="sign_in">ಸೈನ್ ಇನ್ ಮಾಡಲಾಗುತ್ತಿದೆ</string>
     <!-- AndroidManifest.xml -->
-    <string name="deckpreferences_title">XXX ಗಾಗಿ ಆಯ್ಕೆಗಳು</string>
     <string name="sync_title">ಸಿಂಕ್ರೊನೈಸೇಶನ್</string>
     <string name="sync_log_uploading_message">ಸ್ಥಳೀಯದಿಂದ ಪೂರ್ಣ ಸಿಂಕ್</string>
     <string name="sync_database_acknowledge">ಸಂಗ್ರಹವನ್ನು ಸಿಂಕ್ರೊನೈಸ್ ಮಾಡಲಾಗಿದೆ</string>

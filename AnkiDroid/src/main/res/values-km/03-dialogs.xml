@@ -86,6 +86,7 @@
     <string name="dialog_yes">បាទ/ចាស</string>
     <string name="dialog_keep">រក្សាទុក</string>
     <string name="dialog_remove">ដកចេញ</string>
+    <string name="dialog_exit" comment="Label for a button which will exit/finish the current screen">Exit</string>
     <string name="dialog_continue">បន្ត</string>
     <string name="dialog_processing">Processing&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">បង្កើត</string>

@@ -242,16 +242,7 @@
     <string name="studyoptions_limit_select_tags">Selecione Tags</string>
     <!-- Deck configurations -->
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">Geral</string>
-    <string name="deck_conf_cram_filter" maxLength="41">Filtro</string>
     <string name="deck_conf_cram_search" maxLength="41" comment="Label of a text field that contains a search query.">Pesquisa</string>
-    <string name="deck_conf_cram_limit" maxLength="41">Limitar para</string>
-    <string name="deck_conf_cram_order" maxLength="41">Cartões selecionados por</string>
-    <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Remarcar</string>
-    <string name="deck_conf_cram_reschedule_summ">Reagendar cards baseado em minhas respostas no baralho</string>
-    <string name="deck_conf_cram_filter_2_check">Ativar segundo filtro</string>
-    <string name="deck_conf_cram_steps_summ" maxLength="41">Definir passos personalizados</string>
-    <string name="deck_conf_cram_preview_delays" maxLength="41">Pré-visualização de atrasos</string>
-    <string name="deck_conf_cram_preview_delays_summ">Atrasos estão em segundos. 0 retorna o cartão ao baralho original.</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">Ajude a tornar o AnkiDroid melhor!</string>
     <string name="analytics_title" maxLength="41">Compartilhar funções de uso</string>

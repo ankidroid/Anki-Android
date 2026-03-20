@@ -66,7 +66,6 @@
     <string name="lost_mail_instructions">E-pochtangizni unutdingizmi?</string>
     <string name="sign_in">Tizimga kirilmoqda</string>
     <!-- AndroidManifest.xml -->
-    <string name="deckpreferences_title">XXX parametrlari</string>
     <string name="sync_title">Sinxronizatsiya</string>
     <string name="sync_log_uploading_message">Qurilmadan toʻliq sinxronizatsiya</string>
     <string name="sync_database_acknowledge">Kolleksiya sinxronlandi</string>

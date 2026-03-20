@@ -247,16 +247,7 @@
     <string name="studyoptions_limit_select_tags">Оберіть теги</string>
     <!-- Deck configurations -->
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">Загальні</string>
-    <string name="deck_conf_cram_filter" maxLength="41">Фільтр</string>
     <string name="deck_conf_cram_search" maxLength="41" comment="Label of a text field that contains a search query.">Пошук</string>
-    <string name="deck_conf_cram_limit" maxLength="41">Обмежити до</string>
-    <string name="deck_conf_cram_order" maxLength="41">Картки вибрані за</string>
-    <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Перепланувати</string>
-    <string name="deck_conf_cram_reschedule_summ">Перепланувати картки на основі моїх відповідей в цій колоді</string>
-    <string name="deck_conf_cram_filter_2_check">Увімкнути другий фільтр</string>
-    <string name="deck_conf_cram_steps_summ" maxLength="41">Задати власні кроки</string>
-    <string name="deck_conf_cram_preview_delays" maxLength="41">Затримка попереднього перегляду</string>
-    <string name="deck_conf_cram_preview_delays_summ">Затримка в секундах. 0 повертає картку до початкової колоди.</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">Допоможіть зробити AnkiDroid кращим!</string>
     <string name="analytics_title" maxLength="41">Поділитися інформацією про використання функцій</string>

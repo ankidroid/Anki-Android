@@ -100,6 +100,10 @@
 %2$s</string>
     <string name="slide_to_cancel" comment="Message shown when pressing the record button">밀어서 취소</string>
     <string name="filter_by_flags" maxLength="41">플래그</string>
+    <!-- filtered deck options -->
+    <string name="filtered_option_delay_again">Delay for again</string>
+    <string name="filtered_option_delay_hard">Delay for hard</string>
+    <string name="filtered_option_delay_good">Delay for good</string>
     <!-- Custom study options -->
     <string name="custom_study_loading_tags">태그 목록 작성 중&#8230;</string>
     <!-- Study options -->

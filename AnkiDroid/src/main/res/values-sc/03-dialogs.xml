@@ -93,6 +93,7 @@
     <string name="dialog_yes">Eja</string>
     <string name="dialog_keep">Mantene</string>
     <string name="dialog_remove">Boga</string>
+    <string name="dialog_exit" comment="Label for a button which will exit/finish the current screen">Exit</string>
     <string name="dialog_continue">Sighi</string>
     <string name="dialog_processing">Protzessende&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Crea</string>

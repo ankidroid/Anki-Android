@@ -242,16 +242,7 @@
     <string name="studyoptions_limit_select_tags">انتخاب برچسبها</string>
     <!-- Deck configurations -->
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">عمومی</string>
-    <string name="deck_conf_cram_filter" maxLength="41">فیلتر</string>
     <string name="deck_conf_cram_search" maxLength="41" comment="Label of a text field that contains a search query.">جستجو</string>
-    <string name="deck_conf_cram_limit" maxLength="41">محدود به</string>
-    <string name="deck_conf_cram_order" maxLength="41">کارت های انتخاب شده بر اساس</string>
-    <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">برنا مه ریزی مجدد</string>
-    <string name="deck_conf_cram_reschedule_summ">برنامه ریزی مجدد کارتها براساس جوابهای من در این دسته</string>
-    <string name="deck_conf_cram_filter_2_check">فیلتر دوم را فعال کن</string>
-    <string name="deck_conf_cram_steps_summ" maxLength="41">تعریف مراحل سفارشی</string>
-    <string name="deck_conf_cram_preview_delays" maxLength="41">پیش‌نمایش تأخیرها</string>
-    <string name="deck_conf_cram_preview_delays_summ">تأخیرها به ثانیه هستند. 0 کارت را به دسته کارت اصلی برمی‌گرداند.</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">کمک به بهتر شدن AnkiDroid!</string>
     <string name="analytics_title" maxLength="41">به اشتراک گذاشتن ویژگی‌های مورد استفاده</string>

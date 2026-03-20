@@ -66,7 +66,6 @@
     <string name="lost_mail_instructions">Glemt e-mail?</string>
     <string name="sign_in">Logger på</string>
     <!-- AndroidManifest.xml -->
-    <string name="deckpreferences_title">Indstillinger for XXX</string>
     <string name="sync_title">Synkronisering</string>
     <string name="sync_log_uploading_message">Fuld synkronisering fra lokalt lager</string>
     <string name="sync_database_acknowledge">Samling synkroniseret</string>

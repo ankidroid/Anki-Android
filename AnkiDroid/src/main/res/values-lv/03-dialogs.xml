@@ -90,6 +90,7 @@
     <string name="dialog_yes">Jā</string>
     <string name="dialog_keep">Paturēt</string>
     <string name="dialog_remove">Noņemt</string>
+    <string name="dialog_exit" comment="Label for a button which will exit/finish the current screen">Exit</string>
     <string name="dialog_continue">Turpināt</string>
     <string name="dialog_processing">Apstrādā&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Izveidot</string>

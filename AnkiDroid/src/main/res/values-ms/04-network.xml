@@ -66,7 +66,6 @@
     <string name="lost_mail_instructions">Terlupa E-mel?</string>
     <string name="sign_in">Signing in</string>
     <!-- AndroidManifest.xml -->
-    <string name="deckpreferences_title">Tetapan bagi XXX</string>
     <string name="sync_title">Penyegerakan</string>
     <string name="sync_log_uploading_message">Penyegerakan penuh daripada tempatan</string>
     <string name="sync_database_acknowledge">Koleksi telah disegerakkan</string>

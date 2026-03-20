@@ -88,6 +88,7 @@
     <string name="dialog_yes">জি</string>
     <string name="dialog_keep">রাখা</string>
     <string name="dialog_remove">অপসারণ</string>
+    <string name="dialog_exit" comment="Label for a button which will exit/finish the current screen">Exit</string>
     <string name="dialog_continue">চালিয়ে যান</string>
     <string name="dialog_processing">প্রক্রিয়া করা হচ্ছে&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">তৈরি</string>

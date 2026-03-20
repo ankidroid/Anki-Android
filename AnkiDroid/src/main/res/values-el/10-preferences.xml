@@ -243,16 +243,7 @@
     <string name="studyoptions_limit_select_tags">Επιλογή Ετικετών</string>
     <!-- Deck configurations -->
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">Γενικά</string>
-    <string name="deck_conf_cram_filter" maxLength="41">Φίλτρο</string>
     <string name="deck_conf_cram_search" maxLength="41" comment="Label of a text field that contains a search query.">Αναζήτηση</string>
-    <string name="deck_conf_cram_limit" maxLength="41">Περιορισμός κατά</string>
-    <string name="deck_conf_cram_order" maxLength="41">Κάρτες επιλεγμένες κατά</string>
-    <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Επαναπρογραμματισμός</string>
-    <string name="deck_conf_cram_reschedule_summ">Επαναπρογραμματισμός καρτών με βάση τις απαντήσεις μου σε αυτή την τράπουλα</string>
-    <string name="deck_conf_cram_filter_2_check">Ενεργοποίηση δεύτερου φίλτρου</string>
-    <string name="deck_conf_cram_steps_summ" maxLength="41">Ορισμός προσαρμοσμένων βημάτων</string>
-    <string name="deck_conf_cram_preview_delays" maxLength="41">Προεπισκόπηση καθυστερήσεων</string>
-    <string name="deck_conf_cram_preview_delays_summ">Οι καθυστερήσεις είναι σε δευτερόλεπτα. Το 0 επιστρέφει την κάρτα στην αρχική τράπουλα.</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">Βοηθήστε μας να βελτιώσουμε το AnkiDroid!</string>
     <string name="analytics_title" maxLength="41">Share feature usage</string>

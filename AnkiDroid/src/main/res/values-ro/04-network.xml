@@ -66,7 +66,6 @@
     <string name="lost_mail_instructions">Ai uitat email-ul?</string>
     <string name="sign_in">Signing in</string>
     <!-- AndroidManifest.xml -->
-    <string name="deckpreferences_title">Opţiuni pentru XXX</string>
     <string name="sync_title">Sincronizare</string>
     <string name="sync_log_uploading_message">Sincronizare completă din local</string>
     <string name="sync_database_acknowledge">Colecție sincronizată</string>

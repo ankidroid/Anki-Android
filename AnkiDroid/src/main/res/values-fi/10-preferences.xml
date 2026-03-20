@@ -242,16 +242,7 @@
     <string name="studyoptions_limit_select_tags">Valitse tunnisteet</string>
     <!-- Deck configurations -->
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">Yleistä</string>
-    <string name="deck_conf_cram_filter" maxLength="41">Suodatin</string>
     <string name="deck_conf_cram_search" maxLength="41" comment="Label of a text field that contains a search query.">Haku</string>
-    <string name="deck_conf_cram_limit" maxLength="41">Rajoita</string>
-    <string name="deck_conf_cram_order" maxLength="41">Valitse kortit käyttäen sääntöä</string>
-    <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Aikatauluta uudelleen</string>
-    <string name="deck_conf_cram_reschedule_summ">Aikatauluta kortit tämän pakan vastausten perusteella</string>
-    <string name="deck_conf_cram_filter_2_check">Ota käyttöön toinen suodatin</string>
-    <string name="deck_conf_cram_steps_summ" maxLength="41">Määritä mukautetut oppimisaskeleet</string>
-    <string name="deck_conf_cram_preview_delays" maxLength="41">Esikatselujen viiveet</string>
-    <string name="deck_conf_cram_preview_delays_summ">Viivästykset ovat sekunneissa. 0 palauttaa kortin alkuperäiseen pakkaan.</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">Auta parantamaan AnkiDroidia!</string>
     <string name="analytics_title" maxLength="41">Jaa tietoja käyttämistäsi ominaisuuksista</string>

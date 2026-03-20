@@ -242,16 +242,7 @@
     <string name="studyoptions_limit_select_tags">იარლიყების მონიშვნა</string>
     <!-- Deck configurations -->
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">ზოგადი</string>
-    <string name="deck_conf_cram_filter" maxLength="41">ფილტრი</string>
     <string name="deck_conf_cram_search" maxLength="41" comment="Label of a text field that contains a search query.">ძებნა</string>
-    <string name="deck_conf_cram_limit" maxLength="41">ლიმიტი</string>
-    <string name="deck_conf_cram_order" maxLength="41">Cards selected by</string>
-    <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">გადადება</string>
-    <string name="deck_conf_cram_reschedule_summ">Reschedule cards based on my answers in this deck</string>
-    <string name="deck_conf_cram_filter_2_check">მეორე ფილტრის გააქტიურება</string>
-    <string name="deck_conf_cram_steps_summ" maxLength="41">ინდივიდუალური ნაბიჯების განსაზღვრა</string>
-    <string name="deck_conf_cram_preview_delays" maxLength="41">გადადებულების წინასწარ ნახვა</string>
-    <string name="deck_conf_cram_preview_delays_summ">გადადებები წამებშია ნაჩვენები. 0-ით ბარათი საწყის დასტას დაუბრუნდება.</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">მოგვეხმარეთ AnkiDroid-ის გაუმჯობესებაში!</string>
     <string name="analytics_title" maxLength="41">ფუნქციათა მოხმარების მონაცემთა გაზიარება</string>

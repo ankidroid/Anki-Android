@@ -66,7 +66,6 @@
     <string name="lost_mail_instructions">Ĉu vi forgesis la retpoŝtadreson?</string>
     <string name="sign_in">Aliĝado</string>
     <!-- AndroidManifest.xml -->
-    <string name="deckpreferences_title">Agordoj por XXX</string>
     <string name="sync_title">Samtempigo</string>
     <string name="sync_log_uploading_message">Plena samtempigo al la servilo</string>
     <string name="sync_database_acknowledge">Kolekto estas samtempigita</string>

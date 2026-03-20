@@ -92,6 +92,7 @@
     <string name="dialog_yes">Tak</string>
     <string name="dialog_keep">Zachowaj</string>
     <string name="dialog_remove">Usuń</string>
+    <string name="dialog_exit" comment="Label for a button which will exit/finish the current screen">Exit</string>
     <string name="dialog_continue">Kontynuuj</string>
     <string name="dialog_processing">Przetwarzanie&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Utwórz</string>

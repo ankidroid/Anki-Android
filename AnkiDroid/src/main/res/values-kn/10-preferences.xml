@@ -241,16 +241,7 @@
     <string name="studyoptions_limit_select_tags">ಟ್ಯಾಗ್‌ಗಳನ್ನು ಆಯ್ಕೆಮಾಡಿ</string>
     <!-- Deck configurations -->
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">ಸಾಮಾನ್ಯ</string>
-    <string name="deck_conf_cram_filter" maxLength="41">ಫಿಲ್ಟರ್</string>
     <string name="deck_conf_cram_search" maxLength="41" comment="Label of a text field that contains a search query.">ಇದಕ್ಕಾಗಿ ಹುಡುಕು</string>
-    <string name="deck_conf_cram_limit" maxLength="41">ಗೆ ಮಿತಿ</string>
-    <string name="deck_conf_cram_order" maxLength="41">Cards selected by</string>
-    <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">ಮರುಹೊಂದಿಸಿ</string>
-    <string name="deck_conf_cram_reschedule_summ">ಈ ಡೆಕ್‌ನಲ್ಲಿರುವ ನನ್ನ ಉತ್ತರಗಳನ್ನು ಆಧರಿಸಿ ಕಾರ್ಡ್‌ಗಳನ್ನು ಮರುಹೊಂದಿಸಿ</string>
-    <string name="deck_conf_cram_filter_2_check">ಎರಡನೇ ಫಿಲ್ಟರ್ ಅನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಿ</string>
-    <string name="deck_conf_cram_steps_summ" maxLength="41">ಕಸ್ಟಮ್ ಹಂತಗಳನ್ನು ವಿವರಿಸಿ</string>
-    <string name="deck_conf_cram_preview_delays" maxLength="41">ಪೂರ್ವವೀಕ್ಷಣೆ ವಿಳಂಬಗಳು</string>
-    <string name="deck_conf_cram_preview_delays_summ">ವಿಳಂಬಗಳು ಸೆಕೆಂಡುಗಳಲ್ಲಿ. 0 ಕಾರ್ಡ್ ಅನ್ನು ಮೂಲ ಡೆಕ್‌ಗೆ ಹಿಂತಿರುಗಿಸುತ್ತದೆ.</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">AnkiDroid ಅನ್ನು ಉತ್ತಮಗೊಳಿಸಲು ಸಹಾಯ ಮಾಡಿ!</string>
     <string name="analytics_title" maxLength="41">ವೈಶಿಷ್ಟ್ಯದ ಬಳಕೆಯನ್ನು ಹಂಚಿಕೊಳ್ಳಿ</string>

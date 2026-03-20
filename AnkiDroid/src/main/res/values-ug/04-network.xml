@@ -66,7 +66,6 @@
     <string name="lost_mail_instructions">ئېلخەت ئۇنۇتۇلدىمۇ؟</string>
     <string name="sign_in">تىزىمغا كىرىۋاتىدۇ</string>
     <!-- AndroidManifest.xml -->
-    <string name="deckpreferences_title">XXX تاللانما</string>
     <string name="sync_title">قەدەمداشلاش</string>
     <string name="sync_log_uploading_message">يەرلىكتىن تولۇق قەدەمداشلاش</string>
     <string name="sync_database_acknowledge">توپلام قەدەمداشلاندى</string>

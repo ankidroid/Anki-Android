@@ -66,7 +66,6 @@
     <string name="lost_mail_instructions">Забравен имейл?</string>
     <string name="sign_in">Signing in</string>
     <!-- AndroidManifest.xml -->
-    <string name="deckpreferences_title">Опции за ХХХ</string>
     <string name="sync_title">Синхронизиране</string>
     <string name="sync_log_uploading_message">Пълно синхронизиране от местни</string>
     <string name="sync_database_acknowledge">Колекцията синхронизирана</string>

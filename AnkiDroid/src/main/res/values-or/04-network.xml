@@ -66,7 +66,6 @@
     <string name="lost_mail_instructions">ଇମେଲ୍ ଭୁଲିଗଲେ କି?</string>
     <string name="sign_in">Signing in</string>
     <!-- AndroidManifest.xml -->
-    <string name="deckpreferences_title">XXX ପାଇଁ ବିକଳ୍ପଗୁଡ଼ିକ</string>
     <string name="sync_title">ସୀଙ୍କ୍ରୋନାଇଜେଶନ୍</string>
     <string name="sync_log_uploading_message">ସ୍ଥାନୀୟ ଠାରୁ ପୂର୍ଣ୍ଣ ସୀଙ୍କ୍ କରାଗଲା</string>
     <string name="sync_database_acknowledge">ସଂଗ୍ରହ ସୀଙ୍କ୍ରୋନାଇଜ୍ ହୋଇଛି</string>

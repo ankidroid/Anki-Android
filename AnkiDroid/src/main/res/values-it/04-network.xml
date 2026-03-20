@@ -66,7 +66,6 @@
     <string name="lost_mail_instructions">Indirizzo dimenticato?</string>
     <string name="sign_in">Accesso in corso</string>
     <!-- AndroidManifest.xml -->
-    <string name="deckpreferences_title">Opzioni per XXX</string>
     <string name="sync_title">Sincronizzazione</string>
     <string name="sync_log_uploading_message">Sincronizzazione completa da locale</string>
     <string name="sync_database_acknowledge">Collezione sincronizzata</string>

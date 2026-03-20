@@ -243,16 +243,7 @@
     <string name="studyoptions_limit_select_tags">ট্যাগ নির্বাচন করুন</string>
     <!-- Deck configurations -->
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">সাধারণ</string>
-    <string name="deck_conf_cram_filter" maxLength="41">ফিল্টার</string>
     <string name="deck_conf_cram_search" maxLength="41" comment="Label of a text field that contains a search query.">অনুসন্ধান</string>
-    <string name="deck_conf_cram_limit" maxLength="41">সীমিত</string>
-    <string name="deck_conf_cram_order" maxLength="41">দ্বারা নির্বাচিত কার্ড</string>
-    <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">পুনঃনির্ধারণ</string>
-    <string name="deck_conf_cram_reschedule_summ">এই ডেকে আমার উত্তরগুলির উপর ভিত্তি করে কার্ডগুলি পুনরায় বরাদ্দ করুন৷</string>
-    <string name="deck_conf_cram_filter_2_check">দ্বিতীয় ফিল্টার সক্রিয় করুন</string>
-    <string name="deck_conf_cram_steps_summ" maxLength="41">কাস্টম পদক্ষেপ সংজ্ঞায়িত করুন</string>
-    <string name="deck_conf_cram_preview_delays" maxLength="41">প্রিভিউ বিলম্ব</string>
-    <string name="deck_conf_cram_preview_delays_summ">বিলম্ব সেকেন্ডে হয়। 0 আসল ডেকে কার্ড ফেরত দেয়।</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">AnkiDroid আরও ভাল করতে সাহায্য করুন!</string>
     <string name="analytics_title" maxLength="41">বৈশিষ্ট্য ব্যবহার শেয়ার করুন</string>

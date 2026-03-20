@@ -239,16 +239,7 @@
     <string name="studyoptions_limit_select_tags">태그 선택하기</string>
     <!-- Deck configurations -->
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">일반</string>
-    <string name="deck_conf_cram_filter" maxLength="41">필터</string>
     <string name="deck_conf_cram_search" maxLength="41" comment="Label of a text field that contains a search query.">검색</string>
-    <string name="deck_conf_cram_limit" maxLength="41">한도</string>
-    <string name="deck_conf_cram_order" maxLength="41">선택된 카드</string>
-    <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">기한 변경하기</string>
-    <string name="deck_conf_cram_reschedule_summ">이 덱에서 내 대답에 따라 기한이 변경된 카드</string>
-    <string name="deck_conf_cram_filter_2_check">2번째 필터 적용하기</string>
-    <string name="deck_conf_cram_steps_summ" maxLength="41">맞춤 단계 설정하기</string>
-    <string name="deck_conf_cram_preview_delays" maxLength="41">미리보기 딜레이</string>
-    <string name="deck_conf_cram_preview_delays_summ">지연 시간은 초 단위입니다. 0을 입력하면 카드를 원래 덱으로 되돌립니다.</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">AnkiDroid를 개선하는데 도움을 주세요!</string>
     <string name="analytics_title" maxLength="41">기능 사용 공유하기</string>

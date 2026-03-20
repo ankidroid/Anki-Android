@@ -88,6 +88,7 @@
     <string name="dialog_yes">Ja</string>
     <string name="dialog_keep">Hou</string>
     <string name="dialog_remove">Verwyder</string>
+    <string name="dialog_exit" comment="Label for a button which will exit/finish the current screen">Exit</string>
     <string name="dialog_continue">Gaan voort</string>
     <string name="dialog_processing">Verwerk tans&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Skep</string>

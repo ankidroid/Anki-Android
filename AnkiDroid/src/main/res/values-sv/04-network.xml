@@ -66,7 +66,6 @@
     <string name="lost_mail_instructions">Glömt e-post?</string>
     <string name="sign_in">Loggar in</string>
     <!-- AndroidManifest.xml -->
-    <string name="deckpreferences_title">Alternativ för XXX</string>
     <string name="sync_title">Synkronisering</string>
     <string name="sync_log_uploading_message">Fullständig synkronisering från lokal sida</string>
     <string name="sync_database_acknowledge">Samling synkroniserad</string>

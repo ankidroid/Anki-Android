@@ -240,16 +240,7 @@
     <string name="studyoptions_limit_select_tags">選擇標籤</string>
     <!-- Deck configurations -->
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">一般</string>
-    <string name="deck_conf_cram_filter" maxLength="41">篩選器</string>
     <string name="deck_conf_cram_search" maxLength="41" comment="Label of a text field that contains a search query.">搜尋</string>
-    <string name="deck_conf_cram_limit" maxLength="41">上限為</string>
-    <string name="deck_conf_cram_order" maxLength="41">Cards selected by</string>
-    <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">重新排程</string>
-    <string name="deck_conf_cram_reschedule_summ">依據我在本牌組的回答狀況來重新排程卡片</string>
-    <string name="deck_conf_cram_filter_2_check">開啟第二個過濾器</string>
-    <string name="deck_conf_cram_steps_summ" maxLength="41">設定自訂步數</string>
-    <string name="deck_conf_cram_preview_delays" maxLength="41">預覽延遲</string>
-    <string name="deck_conf_cram_preview_delays_summ">延遲以秒為單位。0 會將卡片送回原來的卡組。</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">幫助 AnkiDroid 做得更好！</string>
     <string name="analytics_title" maxLength="41">分享功能使用方式</string>

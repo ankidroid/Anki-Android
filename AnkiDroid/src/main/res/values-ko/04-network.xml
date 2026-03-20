@@ -66,7 +66,6 @@
     <string name="lost_mail_instructions">이메일을 잊으셨나요?</string>
     <string name="sign_in">로그인 중</string>
     <!-- AndroidManifest.xml -->
-    <string name="deckpreferences_title">XXX 옵션</string>
     <string name="sync_title">동기화</string>
     <string name="sync_log_uploading_message">기기 기준 전체 동기화</string>
     <string name="sync_database_acknowledge">컬렉션 동기화됨</string>

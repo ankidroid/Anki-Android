@@ -66,7 +66,6 @@
     <string name="lost_mail_instructions">Esqueceu-se do e-mail?</string>
     <string name="sign_in">A iniciar sessão</string>
     <!-- AndroidManifest.xml -->
-    <string name="deckpreferences_title">Opções para XXX</string>
     <string name="sync_title">Sincronização</string>
     <string name="sync_log_uploading_message">Sincronização completa a partir dos dados locais</string>
     <string name="sync_database_acknowledge">Coleção sincronizada</string>

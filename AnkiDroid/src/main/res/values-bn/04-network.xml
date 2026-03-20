@@ -66,7 +66,6 @@
     <string name="lost_mail_instructions">ইমেইল ভুলে গেছেন?</string>
     <string name="sign_in">সাইন ইন করা হচ্ছে</string>
     <!-- AndroidManifest.xml -->
-    <string name="deckpreferences_title">Options for XXX</string>
     <string name="sync_title">সিঙ্ক্রোনাইজেশন</string>
     <string name="sync_log_uploading_message">স্থানীয় থেকে সম্পূর্ণ সিঙ্ক</string>
     <string name="sync_database_acknowledge">সংগ্রহ সিঙ্ক্রোনাইজ করা হয়</string>

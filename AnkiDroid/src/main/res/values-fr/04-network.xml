@@ -66,7 +66,6 @@
     <string name="lost_mail_instructions">Adresse oubliée ?</string>
     <string name="sign_in">S\'inscrire</string>
     <!-- AndroidManifest.xml -->
-    <string name="deckpreferences_title">Options pour XXX</string>
     <string name="sync_title">Synchronisation</string>
     <string name="sync_log_uploading_message">Synchronisation complète depuis la version locale</string>
     <string name="sync_database_acknowledge">Collection synchronisée</string>

@@ -242,16 +242,7 @@
     <string name="studyoptions_limit_select_tags">ടാഗ് തിരഞ്ഞെടുക്കുക</string>
     <!-- Deck configurations -->
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">പൊതുവായ</string>
-    <string name="deck_conf_cram_filter" maxLength="41">ഫിൽട്ടർ ചെയ്യുക</string>
     <string name="deck_conf_cram_search" maxLength="41" comment="Label of a text field that contains a search query.">തിരയുക</string>
-    <string name="deck_conf_cram_limit" maxLength="41">പരിമിതപ്പെടുത്തുക</string>
-    <string name="deck_conf_cram_order" maxLength="41">Cards selected by</string>
-    <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">വീണ്ടും ഷെഡ്യൂൾ ചെയ്യുക</string>
-    <string name="deck_conf_cram_reschedule_summ">ഈ ഡെക്കിലെ എൻ്റെ ഉത്തരങ്ങളെ അടിസ്ഥാനമാക്കി കാർഡുകൾ വീണ്ടും ഷെഡ്യൂൾ ചെയ്യുക</string>
-    <string name="deck_conf_cram_filter_2_check">രണ്ടാമത്തെ ഫിൽട്ടർ പ്രവർത്തനക്ഷമമാക്കുക</string>
-    <string name="deck_conf_cram_steps_summ" maxLength="41">ഇഷ്ടാനുസൃത ഘട്ടങ്ങൾ നിർവ്വചിക്കുക</string>
-    <string name="deck_conf_cram_preview_delays" maxLength="41">പ്രിവ്യൂ കാലതാമസം</string>
-    <string name="deck_conf_cram_preview_delays_summ">സെക്കൻ്റുകൾക്കുള്ളിലാണ് കാലതാമസം. 0 കാർഡ് യഥാർത്ഥ ഡെക്കിലേക്ക് തിരികെ നൽകുന്നു.</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">AnkiDroid മികച്ചതാക്കാൻ സഹായിക്കൂ!</string>
     <string name="analytics_title" maxLength="41">സവിശേഷത ഉപയോഗം പങ്കിടുക</string>

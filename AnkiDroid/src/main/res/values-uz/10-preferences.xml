@@ -242,16 +242,7 @@
     <string name="studyoptions_limit_select_tags">Teglarni tanlash</string>
     <!-- Deck configurations -->
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">Umumiy</string>
-    <string name="deck_conf_cram_filter" maxLength="41">Filtr</string>
     <string name="deck_conf_cram_search" maxLength="41" comment="Label of a text field that contains a search query.">Qidirish</string>
-    <string name="deck_conf_cram_limit" maxLength="41">Kartalar soni</string>
-    <string name="deck_conf_cram_order" maxLength="41">Karta tanlash usuli</string>
-    <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Qayta rejalashtirish</string>
-    <string name="deck_conf_cram_reschedule_summ">Ushbu dastadagi javoblarim asosida kartalarni qayta rejalashtirish</string>
-    <string name="deck_conf_cram_filter_2_check">Ikkinchi filtrni yoqish</string>
-    <string name="deck_conf_cram_steps_summ" maxLength="41">Bosqichlarni moslashtirish</string>
-    <string name="deck_conf_cram_preview_delays" maxLength="41">Kechikishni koʻrish</string>
-    <string name="deck_conf_cram_preview_delays_summ">Kechikishlar soniyalarda. 0 kartani asl dastaga qaytaradi.</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">AnkiDroidʼni yaxshilashga yordamlashing!</string>
     <string name="analytics_title" maxLength="41">Funksiyalarni ishlatishimni ulashish</string>

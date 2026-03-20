@@ -66,7 +66,6 @@
     <string name="lost_mail_instructions">هل نسيت بريدك الإلكتروني؟</string>
     <string name="sign_in">جار تسجيل الدخول</string>
     <!-- AndroidManifest.xml -->
-    <string name="deckpreferences_title">خيارات س س س</string>
     <string name="sync_title">المزامنة</string>
     <string name="sync_log_uploading_message">مزامنة كاملة من القرص المحلي</string>
     <string name="sync_database_acknowledge">تمت مزامنة المجموعة</string>

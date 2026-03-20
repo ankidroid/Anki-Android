@@ -66,7 +66,6 @@
     <string name="lost_mail_instructions">ای میل بھول گئے؟</string>
     <string name="sign_in">Signing in</string>
     <!-- AndroidManifest.xml -->
-    <string name="deckpreferences_title">XXX کے لیے اختیارات</string>
     <string name="sync_title">ہم وقت سازی</string>
     <string name="sync_log_uploading_message">مقامی سے مکمل مطابقت پذیری۔</string>
     <string name="sync_database_acknowledge">مجموعہ مطابقت پذیر</string>

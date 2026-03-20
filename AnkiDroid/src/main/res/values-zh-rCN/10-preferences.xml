@@ -240,16 +240,7 @@
     <string name="studyoptions_limit_select_tags">选择标签</string>
     <!-- Deck configurations -->
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">常规</string>
-    <string name="deck_conf_cram_filter" maxLength="41">筛选器</string>
     <string name="deck_conf_cram_search" maxLength="41" comment="Label of a text field that contains a search query.">搜索</string>
-    <string name="deck_conf_cram_limit" maxLength="41">限制至</string>
-    <string name="deck_conf_cram_order" maxLength="41">卡片选择标准</string>
-    <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">重新安排学习进度</string>
-    <string name="deck_conf_cram_reschedule_summ">按当前牌组的回答重排卡牌</string>
-    <string name="deck_conf_cram_filter_2_check">启用第二筛选器</string>
-    <string name="deck_conf_cram_steps_summ" maxLength="41">自定义学习间隔</string>
-    <string name="deck_conf_cram_preview_delays" maxLength="41">预览延迟</string>
-    <string name="deck_conf_cram_preview_delays_summ">延迟时间以秒为单位。0返回卡牌到原始牌组。</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">帮助改进 AnkiDroid！</string>
     <string name="analytics_title" maxLength="41">分享软件使用情况</string>

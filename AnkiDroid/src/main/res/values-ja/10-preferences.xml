@@ -240,16 +240,7 @@
     <string name="studyoptions_limit_select_tags">タグを選択</string>
     <!-- Deck configurations -->
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">一般</string>
-    <string name="deck_conf_cram_filter" maxLength="41">フィルター</string>
     <string name="deck_conf_cram_search" maxLength="41" comment="Label of a text field that contains a search query.">抽出条件</string>
-    <string name="deck_conf_cram_limit" maxLength="41">抽出件数の上限</string>
-    <string name="deck_conf_cram_order" maxLength="41">抽出の順序</string>
-    <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">スケジュールを変更</string>
-    <string name="deck_conf_cram_reschedule_summ">回答結果を元のデッキでのスケジュールに反映させます</string>
-    <string name="deck_conf_cram_filter_2_check">２番目のフィルターを有効にする</string>
-    <string name="deck_conf_cram_steps_summ" maxLength="41">独自の習得ステップを設定</string>
-    <string name="deck_conf_cram_preview_delays" maxLength="41">再表示までの間隔</string>
-    <string name="deck_conf_cram_preview_delays_summ">「回答後にそのカードを再表示するまでの時間の間隔」を秒単位で指定します。0とした場合、再表示を希望していないと解釈し、回答後にそのカードを元のデッキに戻します</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">機能向上のためご協力ください</string>
     <string name="analytics_title" maxLength="41">設定の情報提供を許可する</string>

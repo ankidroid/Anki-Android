@@ -66,7 +66,6 @@
     <string name="lost_mail_instructions">დაგავიწყდათ ელფოსტა?</string>
     <string name="sign_in">შესვლა</string>
     <!-- AndroidManifest.xml -->
-    <string name="deckpreferences_title">პარამეტრები XXX-სათვის</string>
     <string name="sync_title">სინქრონიზაცია</string>
     <string name="sync_log_uploading_message">სრული სინქრონიზაცია ლოკალურიდან</string>
     <string name="sync_database_acknowledge">კოლექციის სინქრონიზაცია წარმატებით განხორციელდა</string>

@@ -66,7 +66,6 @@
     <string name="lost_mail_instructions">Forgot Email?</string>
     <string name="sign_in">Signing in</string>
     <!-- AndroidManifest.xml -->
-    <string name="deckpreferences_title">XXX көйләүләрдә</string>
     <string name="sync_title">Synchronization</string>
     <string name="sync_log_uploading_message">Full sync from local</string>
     <string name="sync_database_acknowledge">Collection synchronized</string>

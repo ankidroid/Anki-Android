@@ -242,16 +242,7 @@
     <string name="studyoptions_limit_select_tags">Välj etiketter</string>
     <!-- Deck configurations -->
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">Allmänt</string>
-    <string name="deck_conf_cram_filter" maxLength="41">Filter</string>
     <string name="deck_conf_cram_search" maxLength="41" comment="Label of a text field that contains a search query.">Sök</string>
-    <string name="deck_conf_cram_limit" maxLength="41">Begränsa till</string>
-    <string name="deck_conf_cram_order" maxLength="41">Cards selected by</string>
-    <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Omplanera</string>
-    <string name="deck_conf_cram_reschedule_summ">Omplanera kort baserat på mina svar i denna kortlek</string>
-    <string name="deck_conf_cram_filter_2_check">Aktivera sekundär filter</string>
-    <string name="deck_conf_cram_steps_summ" maxLength="41">Definiera anpassade steg</string>
-    <string name="deck_conf_cram_preview_delays" maxLength="41">Förhandsgranska fördröjning</string>
-    <string name="deck_conf_cram_preview_delays_summ">Fördröjning anges i sekunder. 0 återsänder kort till originalkortleken.</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">Hjälp till att förbättra AnkiDroid!</string>
     <string name="analytics_title" maxLength="41">Dela funktionsanvändning</string>

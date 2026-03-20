@@ -242,16 +242,7 @@
     <string name="studyoptions_limit_select_tags">Seletziona sas etichetas</string>
     <!-- Deck configurations -->
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">Generale</string>
-    <string name="deck_conf_cram_filter" maxLength="41">Filtru</string>
     <string name="deck_conf_cram_search" maxLength="41" comment="Label of a text field that contains a search query.">Chirca</string>
-    <string name="deck_conf_cram_limit" maxLength="41">Lìmita a</string>
-    <string name="deck_conf_cram_order" maxLength="41">Cartas seletzionadas pro</string>
-    <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Torra a pranificare</string>
-    <string name="deck_conf_cram_reschedule_summ">Torra a pranificare sas cartas in base a sas rispostas meas in custu matzu</string>
-    <string name="deck_conf_cram_filter_2_check">Abìlita su de duos filtru</string>
-    <string name="deck_conf_cram_steps_summ" maxLength="41">Dislinda sos passos personalizados</string>
-    <string name="deck_conf_cram_preview_delays" maxLength="41">Ritardos de anteprima</string>
-    <string name="deck_conf_cram_preview_delays_summ">Sos ritardos sunt in segundos. 0 torrat sa carta a su matzu originale.</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">Agiuda·nos a megiorare AnkiDroid!</string>
     <string name="analytics_title" maxLength="41">Cumpartzi s\'impreu de sas funtzionalidades</string>

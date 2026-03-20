@@ -66,7 +66,6 @@
     <string name="lost_mail_instructions">שכחת את הדוא\"ל?</string>
     <string name="sign_in">מתחבר</string>
     <!-- AndroidManifest.xml -->
-    <string name="deckpreferences_title">אפשרויות עבור XXX</string>
     <string name="sync_title">סנכרון</string>
     <string name="sync_log_uploading_message">סנכרון מלא מהמקומי</string>
     <string name="sync_database_acknowledge">האוסף סונכרן</string>

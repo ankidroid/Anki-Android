@@ -66,7 +66,6 @@
     <string name="lost_mail_instructions">忘記了電郵地址？</string>
     <string name="sign_in">登入中</string>
     <!-- AndroidManifest.xml -->
-    <string name="deckpreferences_title">XXX 的選項</string>
     <string name="sync_title">同步</string>
     <string name="sync_log_uploading_message">由本地端完整同步</string>
     <string name="sync_database_acknowledge">集合同步完成</string>

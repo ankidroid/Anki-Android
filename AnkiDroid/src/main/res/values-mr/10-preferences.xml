@@ -241,16 +241,7 @@
     <string name="studyoptions_limit_select_tags">टॅग निवडा</string>
     <!-- Deck configurations -->
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">सामान्य</string>
-    <string name="deck_conf_cram_filter" maxLength="41">फिल्टर करा</string>
     <string name="deck_conf_cram_search" maxLength="41" comment="Label of a text field that contains a search query.">शोधा</string>
-    <string name="deck_conf_cram_limit" maxLength="41">मर्यादित</string>
-    <string name="deck_conf_cram_order" maxLength="41">Cards selected by</string>
-    <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">रीशेड्यूल</string>
-    <string name="deck_conf_cram_reschedule_summ">या डेकमधील माझ्या उत्तरावर आधारित कार्ड रीशेड्यूल करा</string>
-    <string name="deck_conf_cram_filter_2_check">दुसरा फिल्टर सक्षम करा</string>
-    <string name="deck_conf_cram_steps_summ" maxLength="41">सानुकूल चरण परिभाषित करा</string>
-    <string name="deck_conf_cram_preview_delays" maxLength="41">पूर्वावलोकन विलंब</string>
-    <string name="deck_conf_cram_preview_delays_summ">विलंब काही सेकंद आहे. 0 कार्ड मूळ डेकवर परत करते.</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">AnkiDroid अधिक चांगले करण्यात मदत करा!</string>
     <string name="analytics_title" maxLength="41">वैशिष्ट्याचा वापर सामायिक करा</string>

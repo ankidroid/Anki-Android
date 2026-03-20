@@ -243,16 +243,7 @@
     <string name="studyoptions_limit_select_tags">Seleccionar etiquetas</string>
     <!-- Deck configurations -->
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">Xeral</string>
-    <string name="deck_conf_cram_filter" maxLength="41">Filtrar</string>
     <string name="deck_conf_cram_search" maxLength="41" comment="Label of a text field that contains a search query.">Buscar</string>
-    <string name="deck_conf_cram_limit" maxLength="41">Limitar a</string>
-    <string name="deck_conf_cram_order" maxLength="41">Tarxetas seleccionadas por</string>
-    <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Reprogramar</string>
-    <string name="deck_conf_cram_reschedule_summ">Reprogramar tarxetas en base ás miñas respostas nesta baralla</string>
-    <string name="deck_conf_cram_filter_2_check">Activar segundo filtro</string>
-    <string name="deck_conf_cram_steps_summ" maxLength="41">Definir pasos personalizados</string>
-    <string name="deck_conf_cram_preview_delays" maxLength="41">Previsualizar atrasos</string>
-    <string name="deck_conf_cram_preview_delays_summ">Os atrasos están en segundos. 0 devolve a tarxeta á baralla orixinal</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">Axuda a mellorar AnkiDroid!</string>
     <string name="analytics_title" maxLength="41">Compartir o uso das funcións</string>

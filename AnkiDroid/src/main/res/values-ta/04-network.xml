@@ -66,7 +66,6 @@
     <string name="lost_mail_instructions">உங்கள் மின்னஞ்சலை மறந்துவிட்டீர்களா?</string>
     <string name="sign_in">நான் உள்நுழைகிறேன்</string>
     <!-- AndroidManifest.xml -->
-    <string name="deckpreferences_title">XXX க்கான விருப்பங்கள்</string>
     <string name="sync_title">ஒருங்கிணை</string>
     <string name="sync_log_uploading_message">உள்ளூரிலிருந்து முழு ஒத்திசைவு</string>
     <string name="sync_database_acknowledge">சேகரிப்பு ஒத்திசைக்கப்பட்டது</string>

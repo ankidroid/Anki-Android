@@ -66,7 +66,6 @@
     <string name="lost_mail_instructions">ਈਮੇਲ ਭੁੱਲ ਗਏ ਹੋ?</string>
     <string name="sign_in">ਸਾਈਨ ਇਨ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ</string>
     <!-- AndroidManifest.xml -->
-    <string name="deckpreferences_title">XXX ਲਈ ਵਿਕਲਪ</string>
     <string name="sync_title">ਸਮਕਾਲੀਕਰਨ</string>
     <string name="sync_log_uploading_message">ਸਥਾਨਕ ਤੋਂ ਪੂਰਾ ਸਿੰਕ</string>
     <string name="sync_database_acknowledge">ਸਮਕਾਲੀ ਸੰਗ੍ਰਹਿ</string>

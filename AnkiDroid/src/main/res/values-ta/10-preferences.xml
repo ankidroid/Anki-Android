@@ -242,16 +242,7 @@
     <string name="studyoptions_limit_select_tags">குறிச்சொற்களைத் தேர்ந்தெடுக்கவும்</string>
     <!-- Deck configurations -->
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">பொது</string>
-    <string name="deck_conf_cram_filter" maxLength="41">வடிகட்டி</string>
     <string name="deck_conf_cram_search" maxLength="41" comment="Label of a text field that contains a search query.">தேடு</string>
-    <string name="deck_conf_cram_limit" maxLength="41">வரம்பு</string>
-    <string name="deck_conf_cram_order" maxLength="41">மூலம் தேர்ந்தெடுக்கப்பட்ட கார்டுகள்</string>
-    <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">மறு அட்டவணை</string>
-    <string name="deck_conf_cram_reschedule_summ">இந்த டெக்கில் எனது பதில்களின் அடிப்படையில் கார்டுகளை மீண்டும் திட்டமிடுங்கள்</string>
-    <string name="deck_conf_cram_filter_2_check">இரண்டாவது வடிகட்டியை இயக்கவும்</string>
-    <string name="deck_conf_cram_steps_summ" maxLength="41">தனிப்பயன் படிகளை வரையறுக்கவும்</string>
-    <string name="deck_conf_cram_preview_delays" maxLength="41">முன்னோட்ட தாமதங்கள்</string>
-    <string name="deck_conf_cram_preview_delays_summ">நொடிகளில் தாமதம். 0 கார்டு அசல் டெக்கிற்கு திரும்பும்.</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">AnkiDroid ஐ மேம்படுத்த உதவுங்கள்!</string>
     <string name="analytics_title" maxLength="41">பகிர்வு அம்சம்</string>

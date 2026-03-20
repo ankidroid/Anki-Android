@@ -66,7 +66,6 @@
     <string name="lost_mail_instructions">ईमेल भूल गए?</string>
     <string name="sign_in">इन कर रहे हैं</string>
     <!-- AndroidManifest.xml -->
-    <string name="deckpreferences_title">XXX के लिए विकल्प</string>
     <string name="sync_title">समकालन</string>
     <string name="sync_log_uploading_message">स्थानीय से पूर्ण सिंक्रनाइज़ेशन</string>
     <string name="sync_database_acknowledge">संग्रह सिंक्रनाइज़</string>

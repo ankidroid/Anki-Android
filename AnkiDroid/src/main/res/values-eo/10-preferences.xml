@@ -238,16 +238,7 @@
     <string name="studyoptions_limit_select_tags">Elekti etikedojn</string>
     <!-- Deck configurations -->
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">Ĝeneralaj</string>
-    <string name="deck_conf_cram_filter" maxLength="41">Filtri</string>
     <string name="deck_conf_cram_search" maxLength="41" comment="Label of a text field that contains a search query.">Serĉi</string>
-    <string name="deck_conf_cram_limit" maxLength="41">Limigi al</string>
-    <string name="deck_conf_cram_order" maxLength="41">Kartoj elektitaj laŭ</string>
-    <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Replani</string>
-    <string name="deck_conf_cram_reschedule_summ">Replani karton surbaze de miaj respondoj en tiu ĉi kartaro</string>
-    <string name="deck_conf_cram_filter_2_check">Aktivigi duan filtrilon</string>
-    <string name="deck_conf_cram_steps_summ" maxLength="41">Difini proprajn paŝojn</string>
-    <string name="deck_conf_cram_preview_delays" maxLength="41">Intertempoj por antaŭripeto</string>
-    <string name="deck_conf_cram_preview_delays_summ">Intertempoj estas en sekundoj. La valoro “0” movas karton reen al originala kartaro.</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">Helpu, ke AnkiDroid fariĝos pli bona!</string>
     <string name="analytics_title" maxLength="41">Kunhavigi uzadon de eblaĵoj</string>

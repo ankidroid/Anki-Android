@@ -66,7 +66,6 @@
     <string name="lost_mail_instructions">Nakalimutan ang email?</string>
     <string name="sign_in">Naglo-login</string>
     <!-- AndroidManifest.xml -->
-    <string name="deckpreferences_title">Mga opsiyon para sa XXX</string>
     <string name="sync_title">Pag-synchronize</string>
     <string name="sync_log_uploading_message">Buong pag-sync mula sa lokal</string>
     <string name="sync_database_acknowledge">Nai-sync na ang mga koleksyon</string>

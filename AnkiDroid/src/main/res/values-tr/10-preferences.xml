@@ -242,16 +242,7 @@
     <string name="studyoptions_limit_select_tags">Etiketleri Seçin</string>
     <!-- Deck configurations -->
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">Genel</string>
-    <string name="deck_conf_cram_filter" maxLength="41">Filtre</string>
     <string name="deck_conf_cram_search" maxLength="41" comment="Label of a text field that contains a search query.">Arama</string>
-    <string name="deck_conf_cram_limit" maxLength="41">Sınırla</string>
-    <string name="deck_conf_cram_order" maxLength="41">Kart seçim sırası</string>
-    <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Yeniden planlama</string>
-    <string name="deck_conf_cram_reschedule_summ">Bu destedeki cevaplarıma göre kartları yeniden planlama</string>
-    <string name="deck_conf_cram_filter_2_check">İkinci filtreyi etkinleştir</string>
-    <string name="deck_conf_cram_steps_summ" maxLength="41">Kendi adımlarınızı tanımlayın</string>
-    <string name="deck_conf_cram_preview_delays" maxLength="41">Gecikmeleri önizle</string>
-    <string name="deck_conf_cram_preview_delays_summ">Gecikmeler saniye cinsindendir. 0, kartı orijinal destesine döndürür.</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">AnkiDroid\'in iyileştirilmesine yardım et!</string>
     <string name="analytics_title" maxLength="41">Özellik kullanımını paylaş</string>

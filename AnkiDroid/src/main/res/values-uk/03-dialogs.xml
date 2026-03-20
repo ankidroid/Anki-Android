@@ -92,6 +92,7 @@
     <string name="dialog_yes">Так</string>
     <string name="dialog_keep">Залишити</string>
     <string name="dialog_remove">Видалити</string>
+    <string name="dialog_exit" comment="Label for a button which will exit/finish the current screen">Exit</string>
     <string name="dialog_continue">Продовжити</string>
     <string name="dialog_processing">Обробка&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Створити</string>

@@ -243,16 +243,7 @@
     <string name="studyoptions_limit_select_tags">𐍃𐍉𐌺𐌽𐌹𐍅𐌰𐌿𐍂𐌳𐌰 𐍅𐌰𐌻𐌾𐌰𐌽</string>
     <!-- Deck configurations -->
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">𐌲𐌰𐌼𐌰𐌹𐌽</string>
-    <string name="deck_conf_cram_filter" maxLength="41">𐍆𐌹𐌻𐍄𐍂</string>
     <string name="deck_conf_cram_search" maxLength="41" comment="Label of a text field that contains a search query.">𐍃𐍉𐌺𐌽𐍃</string>
-    <string name="deck_conf_cram_limit" maxLength="41">𐌼𐌰𐍂𐌺𐌰 𐌳𐌿</string>
-    <string name="deck_conf_cram_order" maxLength="41">𐌺𐌰𐍂𐍄𐍉𐍃 𐌲𐌰𐍅𐌰𐌻𐌹𐌳𐍉𐍃 𐍆𐍂𐌰𐌼</string>
-    <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">𐌰𐍆𐍄𐍂𐌰 𐌲𐌰𐍂𐌴𐌷𐍃𐌽 𐌲𐌰𐍄𐌰𐌿𐌾𐌰𐌽</string>
-    <string name="deck_conf_cram_reschedule_summ">Reschedule cards based on my answers in this deck</string>
-    <string name="deck_conf_cram_filter_2_check">Enable second filter</string>
-    <string name="deck_conf_cram_steps_summ" maxLength="41">Define custom steps</string>
-    <string name="deck_conf_cram_preview_delays" maxLength="41">𐌻𐌰𐍄𐌴𐌹𐌽𐌹𐌽𐍃 𐍆𐌰𐌿𐍂𐌰𐍃𐌰𐌹𐍈𐌰𐌽</string>
-    <string name="deck_conf_cram_preview_delays_summ">Delays are in seconds. 0 returns card to original deck.</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">𐌷𐌹𐌻𐍀 𐌰𐌽𐌺𐌴𐌹𐌳𐍂𐌰𐌿𐌳𐍃 𐌲𐌰𐌱𐍉𐍄𐌾𐌰𐌽!</string>
     <string name="analytics_title" maxLength="41">Share feature usage</string>

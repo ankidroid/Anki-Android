@@ -243,16 +243,7 @@
     <string name="studyoptions_limit_select_tags">بەلگە تاللىنىدۇ</string>
     <!-- Deck configurations -->
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">ئادەتتىكى</string>
-    <string name="deck_conf_cram_filter" maxLength="41">سۈزگۈچ</string>
     <string name="deck_conf_cram_search" maxLength="41" comment="Label of a text field that contains a search query.">ئىزدە</string>
-    <string name="deck_conf_cram_limit" maxLength="41">چېكى</string>
-    <string name="deck_conf_cram_order" maxLength="41">كارتا تاللاش ئۇسۇلى</string>
-    <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">قايتا كۈنتەرتىپلە</string>
-    <string name="deck_conf_cram_reschedule_summ">بۇ دەستىدىكى جاۋاب بېرىش ئەھۋالىمغا ئاساسەن كارتىنى قايتىدىن كۈنتەرتىپكە تىزىدۇ</string>
-    <string name="deck_conf_cram_filter_2_check">ئىككىنچى سۈزگۈچنى قوزغات</string>
-    <string name="deck_conf_cram_steps_summ" maxLength="41">ئىختىيارى ئۆگىنىش ئارىلىقى</string>
-    <string name="deck_conf_cram_preview_delays" maxLength="41">ئالدىن كۆزىتىشنى كېچىكتۈرۈش</string>
-    <string name="deck_conf_cram_preview_delays_summ">بىر نەچچە سېكۇنت كېچىكىدۇ.  0 كارتىنى ئەسلى دەستىگە قايتۇرىدۇ.</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">AnkiDroid نى ياخشىلاشقا ياردەملىشىڭ!</string>
     <string name="analytics_title" maxLength="41">ئىقتىدار ئىشلىتىشنى ھەمبەھىرلەيدۇ</string>
