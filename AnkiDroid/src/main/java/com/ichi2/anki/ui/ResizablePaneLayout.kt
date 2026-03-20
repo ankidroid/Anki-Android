@@ -29,10 +29,7 @@ import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.utils.isWindowCompact
 import timber.log.Timber
 
-/**
- * Helper class to manage resizable panes in a X-large layouts
- * Allows for dragging to resize panes and saves the pane states in SharedPreferences
- */
+// Replaces ResizablePaneManager and removes any need of custom setup in activity and provides method when UI is changed
 class ResizablePaneLayout
     @JvmOverloads
     constructor(

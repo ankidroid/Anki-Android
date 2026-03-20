@@ -95,7 +95,9 @@ import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.previewer.TemplatePreviewerArguments
 import com.ichi2.anki.previewer.TemplatePreviewerFragment
 import com.ichi2.anki.previewer.TemplatePreviewerPage
+import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.ui.ResizablePaneManager
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.anki.utils.ext.doOnTabSelected
 import com.ichi2.anki.utils.ext.showDialogFragment
@@ -168,8 +170,7 @@ open class CardTemplateEditor :
      * If true, the view is split in two. The template editor appears on the leading side and the previewer on the trailing side.
      * This occurs when the screen size is large
      */
-    private val fragmented
-        get() = binding.cardTemplateEditorContainer.isResizable
+    private var fragmented = false
     val displayDiscardChangesCallback =
         object : OnBackPressedCallback(false) {
             override fun handleOnBackPressed() {
@@ -216,15 +217,24 @@ open class CardTemplateEditor :
             tempNoteType = CardTemplateNotetype.fromBundle(savedInstanceState)
         }
 
+        fragmented = binding.fragmentContainer?.isVisible == true
+
         setNavigationBarColor(R.attr.alternativeBackgroundColor)
 
         // Disable the home icon
         enableToolbar()
         startLoadingCollection()
 
-        binding.cardTemplateEditorContainer.addOnUIChangedListener {
-            invalidateOptionsMenu()
-            loadTemplatePreviewerFragmentIfFragmented()
+        if (fragmented) {
+            ResizablePaneManager(
+                parentLayout = requireNotNull(binding.cardTemplateEditorXlView) { "cardTemplateEditorXlView" },
+                divider = requireNotNull(binding.cardTemplateEditorResizingDivider) { "cardTemplateEditorResizingDivider" },
+                leftPane = requireNotNull(binding.templateEditor.root) { "templateEditor.root" },
+                rightPane = requireNotNull(binding.fragmentContainer) { "fragmentContainer" },
+                sharedPrefs = Prefs.getUiConfig(this),
+                leftPaneWeightKey = PREF_TEMPLATE_EDITOR_PANE_WEIGHT,
+                rightPaneWeightKey = PREF_TEMPLATE_PREVIEWER_PANE_WEIGHT,
+            )
         }
 
         // Open TemplatePreviewerFragment if in fragmented mode
@@ -1564,6 +1574,10 @@ open class CardTemplateEditor :
         private const val EDITOR_NOTE_ID = "noteId"
         private const val EDITOR_START_ORD_ID = "ordId"
         private const val CARD_INDEX = "card_ord"
+
+        // Keys for saving pane weights in SharedPreferences
+        private const val PREF_TEMPLATE_EDITOR_PANE_WEIGHT = "cardTemplateEditorPaneWeight"
+        private const val PREF_TEMPLATE_PREVIEWER_PANE_WEIGHT = "cardTemplatePreviewerPaneWeight"
 
         // Time to wait before refreshing the previewer
         private val REFRESH_PREVIEW_DELAY = 1.seconds
