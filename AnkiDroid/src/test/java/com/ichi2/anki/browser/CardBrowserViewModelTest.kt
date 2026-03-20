@@ -70,6 +70,7 @@ import com.ichi2.anki.libanki.QueueType
 import com.ichi2.anki.libanki.QueueType.ManuallyBuried
 import com.ichi2.anki.libanki.QueueType.New
 import com.ichi2.anki.libanki.testutils.AnkiTest
+import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.model.CardsOrNotes
 import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.anki.model.SortType
@@ -79,6 +80,7 @@ import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.anki.setFlagFilterSync
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.utils.ext.ifNotZero
+import com.ichi2.anki.utils.ext.ignoreAccentsInSearch
 import com.ichi2.testutils.IntentAssert
 import com.ichi2.testutils.JvmTest
 import com.ichi2.testutils.createTransientDirectory
@@ -1408,6 +1410,49 @@ class CardBrowserViewModelTest : JvmTest() {
                 assertNotNull(col.getCard(cardId))
             }
         }
+
+    @Test
+    fun `accented tags are searchable if ignoring accents`() {
+        addBasicNote().update { tags = mutableListOf("être") }
+        addBasicNote("hello").update { tags = mutableListOf("être") }
+        addBasicNote("hêllo").update { tags = mutableListOf("être") }
+
+        col.config.ignoreAccentsInSearch = true
+
+        runViewModelTest {
+            filterByTags(listOf("être"), CardStateFilter.ALL_CARDS)
+
+            assertThat(searchTerms, equalTo("tag:être"))
+            assertThat("all tagged cards are returned", rowCount, equalTo(3))
+
+            updateQueryText("tag:être hêllo")
+            launchSearchForCards(tempSearchQuery!!)
+            assertThat("input is unchanged", searchTerms, equalTo("tag:être hêllo"))
+        }
+    }
+
+    @Test
+    fun `ignoring accents behavior`() {
+        // when ignoring accents, either 'hello' or 'hêllo' match.
+        addBasicNote("hello")
+        addBasicNote("hêllo")
+
+        col.config.ignoreAccentsInSearch = true
+
+        runViewModelTest {
+            updateQueryText("hêllo")
+            launchSearchForCards(tempSearchQuery!!)
+
+            assertThat("hello and hêllo are matched", rowCount, equalTo(2))
+            assertThat("input is unchanged", searchTerms, equalTo("hêllo"))
+
+            updateQueryText("hello")
+            launchSearchForCards(tempSearchQuery!!)
+
+            assertThat("hello and hêllo are matched", rowCount, equalTo(2))
+            assertThat("input is unchanged", searchTerms, equalTo("hello"))
+        }
+    }
 
     private fun assertDate(str: String?) {
         // 2025-01-09 @ 18:06
