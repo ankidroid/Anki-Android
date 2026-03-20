@@ -43,6 +43,8 @@ import com.ichi2.utils.dp
 import com.ichi2.utils.moveCursorToEnd
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
+import com.ichi2.utils.show
+import com.ichi2.utils.title
 
 class AddNewNotesType(
     private val activity: ManageNotetypes,
@@ -77,8 +79,7 @@ class AddNewNotesType(
         val dialog =
             AlertDialog
                 .Builder(activity)
-                .apply {
-                    setTitle(R.string.cd_manage_notetypes_add)
+                .show {
                     customView(
                         binding.root,
                         paddingStart = 24.dp.toPx(activity),
@@ -102,7 +103,7 @@ class AddNewNotesType(
                         }
                     }
                     negativeButton(R.string.dialog_cancel)
-                }.show()
+                }
         dialog.initializeViewsWith(allOptions, currentNames)
     }
 

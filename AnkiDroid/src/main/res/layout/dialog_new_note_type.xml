@@ -4,24 +4,35 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
 
     <TextView
-        android:text="Type"
+        android:id="@+id/notetypeTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/cd_manage_notetypes_add"
+        android:textAppearance="?attr/textAppearanceHeadlineMedium" />
+
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Type"
+        android:textAppearance="?attr/textAppearanceBodyMedium"
+        android:textColor="?attr/colorOnSurfaceVariant"
         tools:ignore="HardcodedText" />
 
     <Spinner
         android:id="@+id/notetype_new_type"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/notetype_name_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:hint="@string/note_type_name_label"
         app:boxBackgroundMode="outline">
 
