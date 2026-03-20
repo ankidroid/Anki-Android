@@ -55,7 +55,7 @@ fun Duration.formatAsString(): String {
 fun getDayStart(time: Time): Long {
     val cal = time.calendar()
     if (cal[Calendar.HOUR_OF_DAY] < 4) {
-        cal.roll(Calendar.DAY_OF_YEAR, -1)
+        cal.add(Calendar.DAY_OF_YEAR, -1)
     }
     cal[Calendar.HOUR_OF_DAY] = 4
     cal[Calendar.MINUTE] = 0
