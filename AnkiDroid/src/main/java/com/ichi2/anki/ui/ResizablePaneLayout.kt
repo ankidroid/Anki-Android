@@ -29,7 +29,12 @@ import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.utils.isWindowCompact
 import timber.log.Timber
 
-// Replaces ResizablePaneManager and removes any need of custom setup in activity and provides method when UI is changed
+/**
+ * Helper class to manage resizable panes in a X-large layouts
+ * Allows for dragging to resize panes and saves the pane states in SharedPreferences
+ * This layout should only have 3 children. One left pane, one divider view and one right pane.
+ * Additionally both the pane layouts should have a default weight.
+ */
 class ResizablePaneLayout
     @JvmOverloads
     constructor(
@@ -273,13 +278,6 @@ class ResizablePaneLayout
         }
 
         private fun removeResizableDivider() {
-            val leftParams = leftPane.layoutParams as LayoutParams
-            val rightParams = rightPane.layoutParams as LayoutParams
-            leftParams.weight = 1.0f
-            rightParams.weight = 0f
-            leftPane.layoutParams = leftParams
-            rightPane.layoutParams = rightParams
-
             divider.visibility = GONE
             rightPane.visibility = GONE
 
