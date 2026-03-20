@@ -50,6 +50,7 @@ import com.ichi2.anki.browser.FindAndReplaceDialogFragment.Companion.TAGS_AS_FIE
 import com.ichi2.anki.browser.RepositionCardsRequest.RepositionData
 import com.ichi2.anki.browser.search.SavedSearch
 import com.ichi2.anki.browser.search.SavedSearches
+import com.ichi2.anki.browser.search.SearchFilters
 import com.ichi2.anki.browser.search.SearchRequest
 import com.ichi2.anki.browser.search.SearchString
 import com.ichi2.anki.common.annotations.NeedsTest
@@ -1119,13 +1120,15 @@ class CardBrowserViewModel(
         selectedTags: List<String>,
         cardState: CardStateFilter,
     ) {
-        val sb = StringBuilder(cardState.toSearch)
-        // join selectedTags as "tag:$tag" with " or " between them
-        val tagsConcat = selectedTags.joinToString(" or ") { tag -> "\"tag:$tag\"" }
-        if (selectedTags.isNotEmpty()) {
-            sb.append("($tagsConcat)") // Only if we added anything to the tag list
-        }
-        setFilterQuery(sb.toString())
+        val searchString =
+            withCol {
+                SearchRequest(
+                    query = cardState.toSearch,
+                    filters = SearchFilters.EMPTY.copy(tags = selectedTags),
+                ).toSearchString()
+            }.getOrThrow()
+
+        setFilterQuery(searchString.value)
     }
 
     /** Previewing */
