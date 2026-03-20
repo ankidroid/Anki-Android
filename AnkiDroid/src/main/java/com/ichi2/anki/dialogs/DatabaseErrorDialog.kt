@@ -65,6 +65,7 @@ import com.ichi2.anki.libanki.Consts
 import com.ichi2.anki.requireAnkiActivity
 import com.ichi2.anki.servicelayer.DebugInfoService
 import com.ichi2.anki.showImportDialog
+import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.ui.internationalization.toSentenceCase
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.utils.UiUtil.makeBold
@@ -300,7 +301,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
             DIALOG_CONFIRM_DATABASE_CHECK -> {
                 // Confirmation dialog for database check
                 alertDialog.show {
-                    title(text = TR.databaseCheckTitle().toSentenceCase(R.string.sentence_check_db))
+                    title(text = TR.sentenceCase.checkDatabase)
                     message(text = message)
                     positiveButton(R.string.dialog_ok) {
                         requireDeckPicker().integrityCheck()

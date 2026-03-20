@@ -49,9 +49,9 @@ class SentenceCaseTest : RobolectricTest() {
                 TR.cardTemplatesRestoreToDefault().toSentenceCase(this, R.string.sentence_restore_to_default),
                 equalTo("Restore to default"),
             )
-            assertThat(TR.databaseCheckTitle().toSentenceCase(this, R.string.sentence_check_db), equalTo("Check database"))
-            assertThat(TR.mediaCheckWindowTitle().toSentenceCase(this, R.string.sentence_check_media), equalTo("Check media"))
-            assertThat(TR.mediaCheckCheckMediaAction().toSentenceCase(this, R.string.sentence_check_media), equalTo("Check media"))
+            assertThat(TR.sentenceCase.checkDatabase, equalTo("Check database"))
+            assertThat(TR.sentenceCase.checkMediaTitle, equalTo("Check media"))
+            assertThat(TR.sentenceCase.checkMediaAction, equalTo("Check media"))
 
             assertThat("syncMediaLogTitle", TR.syncMediaLogTitle(), equalTo("Media Sync Log"))
             assertThat(

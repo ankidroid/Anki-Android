@@ -20,6 +20,9 @@ import android.content.Context
 import android.content.res.Resources
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
+import anki.i18n.GeneratedTranslations
+import com.ichi2.anki.CollectionManager.TR
+import com.ichi2.anki.R
 
 // Functions for handling a move from 'Title Case' in Anki Desktop to 'Sentence case' in AnkiDroid
 
@@ -59,3 +62,38 @@ fun String.toSentenceCase(
     if (this.equals(resString, ignoreCase = true)) return resString
     return this
 }
+
+/**
+ * Provides properties converting from Anki Desktop's 'Title Case' strings to AnkiDroid's
+ * 'Sentence case' strings.
+ *
+ * Sentence case is a material design guideline
+ */
+// TODO: Expand for all past properties
+object SentenceCase {
+    context(_: Context)
+    val checkDatabase get() = TR.databaseCheckTitle().toSentenceCase(R.string.sentence_check_db)
+
+    context(_: Fragment)
+    val checkDatabase get() = TR.databaseCheckTitle().toSentenceCase(R.string.sentence_check_db)
+
+    context(_: Context)
+    val checkMediaTitle get() = TR.mediaCheckWindowTitle().toSentenceCase(R.string.sentence_check_media)
+
+    context(_: Fragment)
+    val checkMediaTitle get() = TR.mediaCheckWindowTitle().toSentenceCase(R.string.sentence_check_media)
+
+    context(_: Context)
+    val checkMediaAction get() = TR.mediaCheckCheckMediaAction().toSentenceCase(R.string.sentence_check_media)
+    context(_: Fragment)
+    val checkMediaAction get() = TR.mediaCheckCheckMediaAction().toSentenceCase(R.string.sentence_check_media)
+}
+
+/**
+ * Provides properties converting from Anki Desktop's 'Title Case' strings to AnkiDroid's
+ * 'Sentence case' strings.
+ *
+ * Sentence case is a material design guideline
+ */
+@Suppress("UnusedReceiverParameter")
+val GeneratedTranslations.sentenceCase get() = SentenceCase

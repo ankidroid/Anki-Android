@@ -164,7 +164,7 @@ import com.ichi2.anki.sync.launchCatchingRequiringOneWaySyncDiscardUndo
 import com.ichi2.anki.ui.ResizablePaneManager
 import com.ichi2.anki.ui.animations.fadeIn
 import com.ichi2.anki.ui.animations.fadeOut
-import com.ichi2.anki.ui.internationalization.toSentenceCase
+import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.ui.windows.permissions.PermissionsActivity
 import com.ichi2.anki.utils.Destination
 import com.ichi2.anki.utils.ShortcutUtils
@@ -1144,8 +1144,8 @@ open class DeckPicker :
         toolbarSearchView?.maxWidth = Integer.MAX_VALUE
 
         menu.findItem(R.id.action_export_collection)?.title = TR.actionsExport()
-        menu.findItem(R.id.action_check_database)?.title = TR.databaseCheckTitle().toSentenceCase(R.string.sentence_check_db)
-        menu.findItem(R.id.action_check_media)?.title = TR.mediaCheckCheckMediaAction().toSentenceCase(R.string.sentence_check_media)
+        menu.findItem(R.id.action_check_database)?.title = TR.sentenceCase.checkDatabase
+        menu.findItem(R.id.action_check_media)?.title = TR.sentenceCase.checkMediaAction
         setupMediaSyncMenuItem(menu)
         // redraw menu synchronously to avoid flicker
         updateMenuFromState(menu)
@@ -1402,7 +1402,7 @@ open class DeckPicker :
     private fun showMediaCheckDialog() {
         Timber.i("showing media check dialog")
         AlertDialog.Builder(this).show {
-            title(text = TR.mediaCheckWindowTitle().toSentenceCase(R.string.sentence_check_media))
+            title(text = TR.sentenceCase.checkMediaTitle)
             message(text = getString(R.string.check_media_warning))
             positiveButton(R.string.dialog_ok) {
                 Timber.i("Starting media check")
@@ -1879,7 +1879,7 @@ open class DeckPicker :
         if (status.shouldWarnOnIntegrityCheck()) {
             Timber.d("Displaying File Size confirmation")
             AlertDialog.Builder(this).show {
-                title(text = TR.databaseCheckTitle().toSentenceCase(R.string.sentence_check_db))
+                title(text = TR.sentenceCase.checkDatabase)
                 message(text = status.getWarningDetails(this@DeckPicker))
                 positiveButton(R.string.integrity_check_continue_anyway) {
                     performIntegrityCheck()
@@ -2252,14 +2252,14 @@ open class DeckPicker :
                     shortcut("/", R.string.deck_conf_cram_search),
                     shortcut("S", Translations::decksStudyDeck),
                     shortcut("T", R.string.open_statistics),
-                    shortcut("C", { databaseCheckTitle().toSentenceCase(R.string.sentence_check_db) }),
+                    shortcut("C") { this.sentenceCase.checkDatabase },
                     shortcut("D", R.string.new_deck),
                     shortcut("F", R.string.new_dynamic_deck),
                     if (fragmented) shortcut("DEL", R.string.contextmenu_deckpicker_delete_deck) else null,
                     if (fragmented) shortcut("Shift+DEL", R.string.delete_deck_without_confirmation) else null,
                     if (fragmented) shortcut("R", R.string.rename_deck) else null,
                     shortcut("P", R.string.open_settings),
-                    shortcut("M", { mediaCheckCheckMediaAction().toSentenceCase(R.string.sentence_check_media) }),
+                    shortcut("M") { this.sentenceCase.checkMediaAction },
                     shortcut("Ctrl+E", R.string.export_collection),
                     shortcut("Ctrl+Shift+I", R.string.menu_import),
                     shortcut("Ctrl+Shift+N", R.string.model_browser_label),
