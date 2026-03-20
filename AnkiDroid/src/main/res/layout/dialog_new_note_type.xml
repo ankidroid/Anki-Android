@@ -11,15 +11,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/cd_manage_notetypes_add"
-        android:textAppearance="?attr/textAppearanceHeadlineMedium" />
+        android:textAppearance="?attr/textAppearanceHeadlineSmall" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Type"
-        android:textAppearance="?attr/textAppearanceBodyMedium"
-        android:textColor="?attr/colorOnSurfaceVariant"
         tools:ignore="HardcodedText" />
 
     <Spinner
