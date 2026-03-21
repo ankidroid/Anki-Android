@@ -414,7 +414,8 @@ class CardBrowserFragment :
                 override fun onPrepareMenu(menu: Menu) {
                     if (vm.isInMultiSelectMode) return
 
-                    menu.findItem(R.id.action_create_filtered_deck).title = TR.qtMiscCreateFilteredDeck()
+                    // qtMiscCreateFilteredDeck() contains QT Accelerators ('&') in Belarusian
+                    menu.findItem(R.id.action_create_filtered_deck).title = getString(R.string.new_dynamic_deck)
 
                     saveSearchItem?.isVisible = legacySearchView?.query?.isNotEmpty() != false
 
