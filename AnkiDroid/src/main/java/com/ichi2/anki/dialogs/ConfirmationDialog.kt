@@ -34,23 +34,23 @@ class ConfirmationDialog : DialogFragment() {
     private var confirm = Runnable {} // Do nothing by default
     private var cancel = Runnable {} // Do nothing by default
 
-    fun setPositiveButtonText(text: String) {
-        val args = arguments ?: Bundle()
-        args.putString("positiveButtonText", text)
-        arguments = args
-    }
-
     fun setArgs(message: String?) {
-        setArgs("", message)
+        setArgs(
+            title = "",
+            message = message,
+            positiveButtonText = null,
+        )
     }
 
     fun setArgs(
         title: String?,
         message: String?,
+        positiveButtonText: String? = null,
     ) {
-        val args = Bundle()
-        args.putString("message", message)
+        val args = arguments ?: Bundle()
         args.putString("title", title)
+        args.putString("message", message)
+        args.putString("positiveButtonText", positiveButtonText)
         arguments = args
     }
 

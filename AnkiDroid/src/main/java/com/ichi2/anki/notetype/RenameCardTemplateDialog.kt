@@ -34,31 +34,29 @@ class RenameCardTemplateDialog {
             existingNames: List<String>,
             block: (result: String) -> Unit,
         ) {
-            val dialog =
-                AlertDialog
-                    .Builder(context)
-                    .show {
-                        title(R.string.rename_card_type)
-                        positiveButton(R.string.rename) { }
-                        negativeButton(R.string.dialog_cancel)
-                        setView(R.layout.dialog_generic_text_input)
-                    }
-            dialog.input(
-                hint = CollectionManager.TR.actionsNewName().removeSuffix(":"),
-                prefill = prefill,
-                allowEmpty = false,
-                validator = { text ->
-                    if (existingNames.any { it.equals(text.trim(), ignoreCase = true) }) {
-                        context.getString(R.string.card_type_already_exists)
-                    } else {
-                        null
-                    }
-                },
-            ) { dialog, result ->
+            AlertDialog
+                .Builder(context)
+                .show {
+                    title(R.string.rename_card_type)
+                    positiveButton(R.string.rename) { }
+                    negativeButton(R.string.dialog_cancel)
+                    setView(R.layout.dialog_generic_text_input)
+                }.input(
+                    hint = CollectionManager.TR.actionsNewName().removeSuffix(":"),
+                    prefill = prefill,
+                    allowEmpty = false,
+                    validator = { text ->
+                        if (existingNames.any { it.equals(text.trim(), ignoreCase = true) }) {
+                            context.getString(R.string.name_already_exists)
+                        } else {
+                            null
+                        }
+                    },
+                ) { dialog, result ->
 
-                block(result.toString().trim())
-                dialog.dismiss()
-            }
+                    block(result.toString().trim())
+                    dialog.dismiss()
+                }
         }
     }
 }

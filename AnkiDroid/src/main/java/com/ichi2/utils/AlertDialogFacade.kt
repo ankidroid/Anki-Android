@@ -51,6 +51,7 @@ import timber.log.Timber
 
 /** Wraps [DialogInterface.OnClickListener] as we don't need the `which` parameter */
 typealias DialogInterfaceListener = (DialogInterface) -> Unit
+typealias ValidationMessage = String?
 
 fun DialogInterfaceListener.toClickListener(): OnClickListener = OnClickListener { dialog: DialogInterface, _ -> this(dialog) }
 
@@ -311,7 +312,7 @@ fun AlertDialog.input(
     maxLength: Int? = null,
     displayKeyboard: Boolean = false,
     waitForPositiveButton: Boolean = true,
-    validator: ((String) -> String?)? = null,
+    validator: ((String) -> ValidationMessage)? = null,
     callback: (AlertDialog, CharSequence) -> Unit,
 ): AlertDialog {
     // Builder.setView() may not be called before show()
@@ -330,25 +331,20 @@ fun AlertDialog.input(
 
             val input = text?.toString() ?: ""
 
-            val error = validator?.invoke(input)
+            val isEmptyInvalid = !allowEmpty && input.isEmpty()
+            val validationError = validator?.invoke(input)
 
-            if (error != null) {
-                this@input.getInputTextLayout().error = error
-                this@input.positiveButton.isEnabled = false
-            } else {
-                this@input.getInputTextLayout().error = null
+            val error =
+                when {
+                    isEmptyInvalid -> null
+                    validationError != null -> validationError
+                    else -> null
+                }
 
-                val allow =
-                    if (!allowEmpty) {
-                        input.isNotEmpty()
-                    } else {
-                        true
-                    }
+            this@input.getInputTextLayout().error = error
+            this@input.positiveButton.isEnabled = error == null
 
-                this@input.positiveButton.isEnabled = allow
-            }
-
-            if (!waitForPositiveButton) {
+            if (!waitForPositiveButton && error == null) {
                 callback(this@input, input)
             }
         }

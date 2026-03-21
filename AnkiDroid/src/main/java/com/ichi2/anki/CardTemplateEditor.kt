@@ -1367,8 +1367,11 @@ open class CardTemplateEditor :
                     numAffectedCards,
                     tmpl.jsonObject.optString("name"),
                 )
-            d.setArgs("Delete card type", msg)
-            d.setPositiveButtonText("Delete")
+            d.setArgs(
+                title = getString(R.string.delete_card_template),
+                message = msg,
+                positiveButtonText = getString(R.string.dialog_positive_delete),
+            )
 
             val deleteCard = Runnable { deleteTemplate(tmpl, notetype) }
             val confirm = Runnable { executeWithSyncCheck(deleteCard) }
@@ -1395,8 +1398,11 @@ open class CardTemplateEditor :
                     ),
                     numAffectedCards,
                 )
-            d.setArgs("Add card type", msg)
-            d.setPositiveButtonText("Add")
+            d.setArgs(
+                title = getString(R.string.add_card_template),
+                message = msg,
+                positiveButtonText = getString(R.string.menu_add),
+            )
 
             val addCard = Runnable { addNewTemplate(notetype) }
             val confirm = Runnable { executeWithSyncCheck(addCard) }
