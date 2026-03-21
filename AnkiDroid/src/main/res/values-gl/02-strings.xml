@@ -100,9 +100,9 @@
     <string name="slide_to_cancel" comment="Message shown when pressing the record button">Esvara para cancelar</string>
     <string name="filter_by_flags" maxLength="41">Bandeiras</string>
     <!-- filtered deck options -->
-    <string name="filtered_option_delay_again">Delay for again</string>
-    <string name="filtered_option_delay_hard">Delay for hard</string>
-    <string name="filtered_option_delay_good">Delay for good</string>
+    <string name="filtered_option_delay_again">Retardo para de novo</string>
+    <string name="filtered_option_delay_hard">Retardo para difícil</string>
+    <string name="filtered_option_delay_good">Retardo para ben</string>
     <!-- Custom study options -->
     <string name="custom_study_loading_tags">Creando lista de etiquetas&#8230;</string>
     <!-- Study options -->

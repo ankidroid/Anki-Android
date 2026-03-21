@@ -54,7 +54,7 @@
     <string name="CardEditorModel">Тип:</string>
     <string name="CardEditorTags">Теги: %1$s</string>
     <string name="CardEditorCards">Картки: %1$s</string>
-    <string name="edit_occlusions">Edit occlusions</string>
+    <string name="edit_occlusions">Редагувати оклюзії</string>
     <string name="paste_from_clipboard" maxLength="28">Вставити з буферу обміну</string>
     <string name="tag_name">Назва позначки</string>
     <string name="add_new_filter_tags">Додати/фільтрувати теги</string>
@@ -85,7 +85,7 @@
     <string name="disable_eraser" maxLength="28">Вимкнути гумку</string>
     <string name="hide_whiteboard" maxLength="28">Сховати дошку</string>
     <string name="clear_whiteboard" maxLength="28">Очистити дошку</string>
-    <string name="hide_toolbar" maxLength="28">Hide toolbar</string>
+    <string name="hide_toolbar" maxLength="28">Приховати головну панель</string>
     <string name="replay_media" maxLength="28">Відтворити медіафайл</string>
     <string name="leech_suspend_notification">Картку позначено як набридливу і призупинено</string>
     <string name="leech_notification">Картку позначено як набридливу</string>
@@ -100,9 +100,9 @@
     <string name="slide_to_cancel" comment="Message shown when pressing the record button">Проведіть, щоб скасувати</string>
     <string name="filter_by_flags" maxLength="41">Прапорці</string>
     <!-- filtered deck options -->
-    <string name="filtered_option_delay_again">Delay for again</string>
-    <string name="filtered_option_delay_hard">Delay for hard</string>
-    <string name="filtered_option_delay_good">Delay for good</string>
+    <string name="filtered_option_delay_again">Затримка «Знову»</string>
+    <string name="filtered_option_delay_hard">Затримка «Важко»</string>
+    <string name="filtered_option_delay_good">Затримка  «Добре»</string>
     <!-- Custom study options -->
     <string name="custom_study_loading_tags">Створюється список тегів&#8230;</string>
     <!-- Study options -->
@@ -202,7 +202,7 @@
     <string name="dyn_deck_desc">Це спеціальна колода для навчання поза межами нормального графіку. Картки будуть автоматично повернуті до своїх колод після повторення. Видалення цієї колоди поверне всі карточки до своїх колод.</string>
     <string name="tag_editor_add_feedback">Натисніть \"%2$s\", аби підтвердити додавання \"%1$s\"</string>
     <string name="tag_editor_add_feedback_existing">Обрано наявну позначку \"%1$s\"</string>
-    <string name="tag_already_exists">Tag already exists</string>
+    <string name="tag_already_exists">Тег уже існує</string>
     <!-- Time spans -->
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Помилка поширення файлу apkg</string>
@@ -218,7 +218,7 @@
     <string name="remove_wallpaper_image" maxLength="41">Видалити фон</string>
     <string name="remove_background_image">Видалити задній фон?</string>
     <!-- Card Template Browser Appearance -->
-    <string name="restore_default" maxLength="28">Restore default</string>
+    <string name="restore_default" maxLength="28">Скидання за замовчуванням</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Порожня</string>
     <!-- Whiteboard eraser mode toggle message in Reviewer -->
     <string name="white_board_eraser_enabled">Режим гумки активовано</string>
@@ -248,20 +248,20 @@
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">Розмір шрифту</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Показувати панель інструментів</string>
-    <string name="format_insert_bold">Format as bold</string>
-    <string name="format_insert_italic">Format as italic</string>
-    <string name="format_insert_underline">Format as underline</string>
-    <string name="insert_horizontal_line">Insert horizontal line</string>
-    <string name="insert_heading">Insert heading</string>
-    <string name="format_font_size">Change font size</string>
-    <string name="insert_mathjax">Insert MathJax equation</string>
+    <string name="format_insert_bold">Форматувати як жирний</string>
+    <string name="format_insert_italic">Форматувати як курсив</string>
+    <string name="format_insert_underline">Форматувати як підкреслений</string>
+    <string name="insert_horizontal_line">Вставити горизонтальну лінію</string>
+    <string name="insert_heading">Вставити заголовок</string>
+    <string name="format_font_size">Змінити розмір шрифту</string>
+    <string name="insert_mathjax">Вставити рівняння MathJax</string>
     <string name="note_editor_toolbar_icon">Текст кнопки</string>
-    <string name="before_text">HTML before selection</string>
-    <string name="after_text">HTML after selection</string>
-    <string name="add_toolbar_item">Create toolbar item</string>
-    <string name="edit_toolbar_item">Edit toolbar item</string>
+    <string name="before_text">HTML перед виділенням</string>
+    <string name="after_text">HTML після виділення</string>
+    <string name="add_toolbar_item">Створити елемент панелі інструментів</string>
+    <string name="edit_toolbar_item">Редагувати елемент панелі інструментів</string>
     <string name="toolbar_item_explain_edit_or_remove">Введіть HTML, який буде вставлений до і після виділеного тексту\n\nДовго натискайте на елемент панелі інструментів, щоб його редагувати або видалити</string>
-    <string name="remove_toolbar_item">Remove toolbar item?</string>
+    <string name="remove_toolbar_item">Видалити елемент панелі інструментів?</string>
     <string name="note_editor_image_too_large">Зображення завелике, будь ласка, вставте зображення вручну</string>
     <string name="note_editor_video_too_large">Відеофайл завеликий, будь ласка, вставте відео вручну</string>
     <string name="note_editor_audio_too_large">Аудіофайл завеликий, будь ласка, вставте аудіо вручну</string>
@@ -342,7 +342,7 @@
     <!-- Browser Options Dialog -->
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Картки</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Записи</string>
-    <string name="toggle_cards_notes">Toggle cards/notes</string>
+    <string name="toggle_cards_notes">Перемкнути картки/записи</string>
     <string name="truncate_content_help">Скоротити висоту кожного рядка переглядача, щоб було видно лише перші 3 рядки вмісту</string>
     <string name="browser_options_dialog_heading">Параметри переглядача карток</string>
     <string name="audio_saved">Запис аудіо збережено</string>
@@ -358,7 +358,7 @@
     <string name="shared_decks_login_required">Ввійдіть, будь ласка, до акаунту, щоб завантажити більше колод</string>
     <string name="deck_description_field_hint">Опис</string>
     <string name="deck_description_saved">Опис оновлено</string>
-    <string name="format_deck_description_as_markdown">Format as markdown</string>
+    <string name="format_deck_description_as_markdown">Відформатувати як розмітку</string>
     <string name="help_button_content_description">Відкрити допомогу для ‘%s’</string>
     <string name="failed_to_copy">Не вдалося скопіювати</string>
     <plurals name="unbury_cards_feedback">
@@ -375,7 +375,7 @@
     <string name="play_recording">Відтворити</string>
     <string name="next_recording" comment="Description of a button to go to the next recording">Наступний</string>
     <!--  AlertDialog in the deleteCardTemplate  -->
-    <string name="orphan_note_title">Cannot delete card type</string>
+    <string name="orphan_note_title">Неможливо видалити тип картки</string>
     <string name="orphan_note_message">Якщо видалити цей тип картки, деякі записи залишаться без карток.</string>
     <string name="voice_not_supported">Голос не підтримується. Спробуйте інший або встановіть голосовий рушій.</string>
     <!--Keyboard shortcuts dialog-->

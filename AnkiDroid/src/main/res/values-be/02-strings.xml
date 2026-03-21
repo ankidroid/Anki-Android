@@ -76,7 +76,7 @@
     <string name="whiteboard_remove_brush_message">Вы сапраўды хочаце выдаліць гэты пэндзаль з вашай палітры?</string>
     <string name="whiteboard_ink_eraser" comment="Title of the whiteboard Ink eraser">Чарніла</string>
     <string name="whiteboard_stroke_eraser" comment="Title of the whiteboard Stroke eraser">Штрых</string>
-    <string name="stylus_mode" comment="Title of the menu item that toggles the whiteboard stylus mode" maxLength="28">Рэжым пяра</string>
+    <string name="stylus_mode" comment="Title of the menu item that toggles the whiteboard stylus mode" maxLength="28">Рэжым стылуса</string>
     <string name="cannot_remove_last_brush_message">Апошні пэндзаль не можа быць выдалены</string>
     <string name="enable_whiteboard" maxLength="28">Уключыць дошку</string>
     <string name="disable_whiteboard">Адключыць дошку</string>
@@ -100,11 +100,11 @@
     <string name="slide_to_cancel" comment="Message shown when pressing the record button">Правядзіце, каб скасаваць</string>
     <string name="filter_by_flags" maxLength="41">Сцягі</string>
     <!-- filtered deck options -->
-    <string name="filtered_option_delay_again">Delay for again</string>
-    <string name="filtered_option_delay_hard">Delay for hard</string>
-    <string name="filtered_option_delay_good">Delay for good</string>
+    <string name="filtered_option_delay_again">Затрымка для Зноў</string>
+    <string name="filtered_option_delay_hard">Затрымка для Цяжка</string>
+    <string name="filtered_option_delay_good">Затрымка для Добра</string>
     <!-- Custom study options -->
-    <string name="custom_study_loading_tags">Пабудова спіса тэгаў&#8230;</string>
+    <string name="custom_study_loading_tags">Пабудова спіса метак&#8230;</string>
     <!-- Study options -->
     <plurals name="studyoptions_buried_count">
         <item quantity="one">+%d адкладзеная</item>
@@ -174,7 +174,7 @@
     <string name="import_error_handle_exception">Не атрымалася імпартаваць файл\n\n%s</string>
     <string name="import_error_not_apkg_extension">Назва файла \"%s\" не мае пашырэння .apkg або .colpkg</string>
     <string name="import_error_load_imported_database">Замена базы даных Anki (.anki2) пакуль не падтрымліваецца. Звярніцеся да даведніка для інструкцыі па замене.</string>
-    <string name="import_error_content_provider">Выбраны файл немагчыма імпартаваць аўтаматычна ў праграму. Звярніцеся да даведніка карыстальніка для імпартавання файлаў Anki уручную: \n %s</string>
+    <string name="import_error_content_provider">Выбраны файл немагчыма імпартаваць аўтаматычна ў праграму. Звярніцеся да даведніка карыстальніка для імпартавання файлаў Anki уручную: \n%s</string>
     <string name="import_error_copy_to_cache_title">Не атрымалася кэшыраваць файл</string>
     <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">Гэта часта з\'яўляецца прычынай памылкі ў праграме, якую вы выкарыстоўваеце для выбару файла. Паспрабуйце наступныя выпраўленні: \n\n%s</string>
     <string name="import_interrupted">Імпарт перарваны</string>

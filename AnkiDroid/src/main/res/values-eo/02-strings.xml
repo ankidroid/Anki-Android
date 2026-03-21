@@ -248,14 +248,14 @@
     <string name="insert_horizontal_line">Enmeti horizontalan linion</string>
     <string name="insert_heading">Enmeti kapon</string>
     <string name="format_font_size">Ŝanĝi grandon de tiparo</string>
-    <string name="insert_mathjax">Insert MathJax equation</string>
+    <string name="insert_mathjax">Enmeti ekvacion MathJax</string>
     <string name="note_editor_toolbar_icon">Teksto de butono</string>
-    <string name="before_text">HTML before selection</string>
-    <string name="after_text">HTML after selection</string>
-    <string name="add_toolbar_item">Create toolbar item</string>
-    <string name="edit_toolbar_item">Edit toolbar item</string>
+    <string name="before_text">HTML antaŭ elektaĵo</string>
+    <string name="after_text">HTML post elektaĵo</string>
+    <string name="add_toolbar_item">Krei elementon de ilarstrio</string>
+    <string name="edit_toolbar_item">Redakti elementon de ilarstrio</string>
     <string name="toolbar_item_explain_edit_or_remove">Enigu HTML-kodon, kiu estos aldonita antaŭ kaj post la elektita teksto\n\nFrapetadu elementon de ilarstrio por redakti aŭ forigi ĝin</string>
-    <string name="remove_toolbar_item">Remove toolbar item?</string>
+    <string name="remove_toolbar_item">Ĉu forigi elementon de ilarstrio?</string>
     <string name="note_editor_image_too_large">La bildo estas tro granda, enmetu la bildon permane</string>
     <string name="note_editor_video_too_large">La filmeto estas tro granda enmetu la filmeton permane</string>
     <string name="note_editor_audio_too_large">La sonaĵo estas tro granda, enmetu la sonaĵon permane</string>
@@ -332,7 +332,7 @@
     <!-- Browser Options Dialog -->
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Kartoj</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Notoj</string>
-    <string name="toggle_cards_notes">Toggle cards/notes</string>
+    <string name="toggle_cards_notes">Baskuligi kartojn/notojn</string>
     <string name="truncate_content_help">Senpintigi alton de ĉiu vico de la foliumilo por montri nur 3 unuajn liniojn de enhavo</string>
     <string name="browser_options_dialog_heading">Agordoj pri foliumilo</string>
     <string name="audio_saved">Sonaĵo konservita</string>
@@ -348,7 +348,7 @@
     <string name="shared_decks_login_required">Ensalutu por elŝuti pliajn kartarojn</string>
     <string name="deck_description_field_hint">Priskribo</string>
     <string name="deck_description_saved">Priskribo aktualigita</string>
-    <string name="format_deck_description_as_markdown">Format as markdown</string>
+    <string name="format_deck_description_as_markdown">Aranĝi kiel Markdown</string>
     <string name="help_button_content_description">Malfermi helpon pri “%s”</string>
     <string name="failed_to_copy">Malsukcesis kopii</string>
     <plurals name="unbury_cards_feedback">
@@ -363,7 +363,7 @@
     <string name="play_recording">Ludi</string>
     <string name="next_recording" comment="Description of a button to go to the next recording">Antaŭen</string>
     <!--  AlertDialog in the deleteCardTemplate  -->
-    <string name="orphan_note_title">Cannot delete card type</string>
+    <string name="orphan_note_title">Ne povis forigi tiun ĉi kartotipon</string>
     <string name="orphan_note_message">Forigi tiun ĉi kartotipon kaŭzos, ke kelkaj notoj havos neniun karton.</string>
     <string name="voice_not_supported">Voĉo ne estas subtenata. Elektu alian aŭ instalu parolsintezilon.</string>
     <!--Keyboard shortcuts dialog-->

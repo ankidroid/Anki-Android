@@ -100,9 +100,9 @@
     <string name="slide_to_cancel" comment="Message shown when pressing the record button">Bekor qilish uchun suring</string>
     <string name="filter_by_flags" maxLength="41">Bayroqlar</string>
     <!-- filtered deck options -->
-    <string name="filtered_option_delay_again">Delay for again</string>
-    <string name="filtered_option_delay_hard">Delay for hard</string>
-    <string name="filtered_option_delay_good">Delay for good</string>
+    <string name="filtered_option_delay_again">“Qaytadan” uchun kechikish</string>
+    <string name="filtered_option_delay_hard">“Qiyin” uchun kechikish</string>
+    <string name="filtered_option_delay_good">“Yaxshi” uchun kechikish</string>
     <!-- Custom study options -->
     <string name="custom_study_loading_tags">Teglar roʻyxati qurilmoqda</string>
     <!-- Study options -->

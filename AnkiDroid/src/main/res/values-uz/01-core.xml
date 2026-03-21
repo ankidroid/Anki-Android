@@ -77,7 +77,7 @@
         <item quantity="other">%1$d kun %2$d soat qoldi</item>
     </plurals>
     <string name="type_answer_hint" comment="In the reviewer. When the user use note type with hint. It\'s the default content of the text field in which the user is invited to type their answer. It disappears as soon as the user start to type.">Javobni yozish</string>
-    <string name="show_answer" maxLength="41" comment="When displaying the question side of a card. This is the label of a button that display the answer side.">Javobni koʻrsatish</string>
+    <string name="show_answer" maxLength="41" comment="When displaying the question side of a card. This is the label of a button that display the answer side.">Javobini koʻrish</string>
     <string name="hide_answer" comment="In the previewer, when the answer side is displayed. This is the label of the button that sends back to the question side.">Javobni berkitish</string>
     <string name="ease_button_again" maxLength="41" comment="In the reviewer, in the answer side. Label of the button that request the card to be shown again soon.">Qaytadan</string>
     <string name="ease_button_hard" maxLength="41" comment="In the reviewer, in the answer side. Label of the button that used by the user to state finding the correct answer was hard.">Qiyin</string>

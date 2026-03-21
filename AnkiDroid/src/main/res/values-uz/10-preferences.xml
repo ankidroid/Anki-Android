@@ -255,11 +255,11 @@
     <string name="open_changelog">Oʻzgarishlar roʻyxatini ochish</string>
     <string name="pref_cat_about_title" maxLength="41">AnkiDroid haqida</string>
     <string name="contributors_title">Hissa qoʻshganlar</string>
-    <string name="about_contributors_description"><![CDATA[Bular ilovamizga hissa qoʻshgan ajoyib <a href=\"%1$s\">odamlar</a>. Siz ham AnkiDroidʼga dasturlash, tarjima qilish, ehson qilish va <a href=\"%2$s\">boshqa yoʻllar</a> orqali yordam berishingiz mumkin!]]></string>
+    <string name="about_contributors_description"><![CDATA[Bular bizning ajoyib <a href=\"%1$s\">hissa qoʻshuvchilarimiz</a>. Siz ham dasturlash, tarjima qilish, xayriya qilish va <a href=\"%2$s\">boshqa yoʻllar</a> orqali AnkiDroidʼga yordam berishingiz mumkin!]]></string>
     <string name="license">Litsenziya</string>
-    <string name="license_description"><![CDATA[AnkiDroid <a href=\"%1$s\">GPL-3.0</a> va <a href=\"%2$s\">AGPL-3.0</a> litsenziyalari ostida chiqarilgan, manba kodi <a href=\"%3$s\">GitHub</a>da mavjud]]></string>
-    <string name="other_licenses"><![CDATA[AnkiDroid shuningdek, turli xil ochiq manba <a href=\"%1$s\">litsenziyalar</a> ostida litsenziyalangan uchinchi tomon kutubxonalari va piktogrammalaridan foydalanadi.]]></string>
-    <string name="donate_description"><![CDATA[<a href=\"%1$s\">Xayriya qilish</a> orqali AnkiDroidʼni rivojini qoʻllab-quvvatlashingiz mumkin. Miqdori qancha boʻlishidan qatʼiy nazar, chuqur minnatdorchilik bildiramiz.]]></string>
+    <string name="license_description"><![CDATA[AnkiDroid <a href=\"%1$s\">GPL-3.0</a> va <a href=\"%2$s\">AGPL-3.0</a> litsenziyalari ostida chiqarilgan, dastur kodi <a href=\"%3$s\">GitHubda</a> mavjud]]></string>
+    <string name="other_licenses"><![CDATA[AnkiDroid, shuningdek, turli ochiq kodli <a href=\"%1$s\">litsenziyalar</a> asosida tarqatilgan uchinchi tomon kutubxonalari va piktogrammalaridan foydalanadi.]]></string>
+    <string name="donate_description"><![CDATA[<a href=\"%1$s\">Xayriya qilish</a> orqali AnkiDroid rivojini qoʻllab-quvvatlashingiz mumkin. Har qanday miqdordagi yordam yuksak qadrlanadi.]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">Qoʻl ishorasini qoʻshish</string>
     <string name="binding_add_key">Tugma qoʻshish</string>

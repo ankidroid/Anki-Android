@@ -88,7 +88,7 @@
     <string name="dialog_yes">Ha</string>
     <string name="dialog_keep">Qoldirish</string>
     <string name="dialog_remove">Olib tashlash</string>
-    <string name="dialog_exit" comment="Label for a button which will exit/finish the current screen">Exit</string>
+    <string name="dialog_exit" comment="Label for a button which will exit/finish the current screen">Chiqish</string>
     <string name="dialog_continue">Davom etish</string>
     <string name="dialog_processing">Ishlamoqda&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Yaratish</string>

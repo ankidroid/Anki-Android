@@ -86,7 +86,7 @@
     <string name="dialog_yes">是</string>
     <string name="dialog_keep">保留</string>
     <string name="dialog_remove">移除</string>
-    <string name="dialog_exit" comment="Label for a button which will exit/finish the current screen">Exit</string>
+    <string name="dialog_exit" comment="Label for a button which will exit/finish the current screen">退出</string>
     <string name="dialog_continue">继续</string>
     <string name="dialog_processing">处理中&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">创建</string>
@@ -264,15 +264,15 @@
     <string name="error_no_changes_to_save">没有要保存的更改</string>
     <string name="choose_color">选择颜色</string>
     <!-- Special Fields -->
-    <string name="standard_fields_tab_header" comment="Tab header for inserting non-special fields: {{Front}}">Fields</string>
-    <string name="special_fields_tab_header" comment="Tab header for inserting special fields: {{Deck}}">Special</string>
+    <string name="standard_fields_tab_header" comment="Tab header for inserting non-special fields: {{Front}}">字段</string>
+    <string name="special_fields_tab_header" comment="Tab header for inserting special fields: {{Deck}}">特殊</string>
     <string name="special_field_example_suffix"><![CDATA[: ‘<b>%1$s</b>’]]></string>
-    <string name="special_field_front_side_help">The front template content. Audio is not automatically played</string>
-    <string name="special_field_deck_help">The full deck of the card, including parent decks%s</string>
-    <string name="special_field_subdeck_help">The current deck of the card, excluding parent decks%s</string>
-    <string name="special_field_card_flag_help">Outputs ‘%1$s’, where %2$s is the flag code (%3$d\–%4$d\)</string>
-    <string name="special_field_tags_help">The tags of the note%s</string>
-    <string name="special_field_card_id_help">The ID of the card%s</string>
-    <string name="special_field_card_help">The name of the card template%s</string>
-    <string name="special_field_type_help">The name of the note type%s</string>
+    <string name="special_field_front_side_help">前台模板内容。音频不自动播放</string>
+    <string name="special_field_deck_help">卡片的完整牌组，包括上级牌组 %s</string>
+    <string name="special_field_subdeck_help">卡片的当前牌组，不包括上级牌组 %s</string>
+    <string name="special_field_card_flag_help">输出 ‘%1$s’, 其中 %2$s 是标记码 (%3$d\–%4$d\)</string>
+    <string name="special_field_tags_help">笔记%s的标签</string>
+    <string name="special_field_card_id_help">卡片%s的ID</string>
+    <string name="special_field_card_help">卡片模板%s 的名称</string>
+    <string name="special_field_type_help">笔记类型%s的名称</string>
 </resources>
