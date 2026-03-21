@@ -25,7 +25,7 @@
         app:iconGravity="textStart"
         app:iconPadding="0dp"
         app:iconSize="24dp"
-        app:iconTint="@color/selector_incrementer_icon"
+        app:iconTint="@color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/text_input_layout"
         app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full" />
@@ -76,7 +76,7 @@
         app:iconGravity="textStart"
         app:iconPadding="0dp"
         app:iconSize="24dp"
-        app:iconTint="@color/selector_incrementer_icon"
+        app:iconTint="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/text_input_layout"
         app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full" />
