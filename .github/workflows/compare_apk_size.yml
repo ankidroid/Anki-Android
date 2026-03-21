@@ -56,7 +56,7 @@ jobs:
 
       - name: Assemble PR APK
         # This makes sure we fetch gradle network resources with a retry
-        uses: nick-invision/retry@v3
+        uses: nick-fields/retry@v3
         with:
           timeout_minutes: 10
           retry_wait_seconds: 60
@@ -73,7 +73,7 @@ jobs:
 
       - name: Assemble Baseline APK
         # This makes sure we fetch gradle network resources with a retry
-        uses: nick-invision/retry@v3
+        uses: nick-fields/retry@v3
         with:
           timeout_minutes: 10
           retry_wait_seconds: 60
