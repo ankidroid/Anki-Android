@@ -69,7 +69,6 @@
     </declare-styleable>
 
     <attr name="incrementerButtonBackground" format="color|reference" />
-    <attr name="incrementerInputBackground" format="color|reference" />
     <attr name="incrementerIconColor" format="color|reference" />
 
     <declare-styleable name="SliderPreference">

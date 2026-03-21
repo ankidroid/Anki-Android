@@ -172,7 +172,6 @@
         <item name="bottomSheetDialogTheme">@style/ThemeOverlay.App.BottomSheetDialog</item>
 
         <item name="incrementerButtonBackground">@color/material_theme_grey</item>
-        <item name="incrementerInputBackground">@color/material_theme_grey</item>
         <item name="incrementerIconColor">@color/material_blue_400</item>
     </style>
 

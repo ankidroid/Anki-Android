@@ -123,7 +123,6 @@
         <item name="clozeColor">#ADD8E6</item>
 
         <item name="incrementerButtonBackground">@color/material_blue_grey_900</item>
-        <item name="incrementerInputBackground">@color/theme_black_primary</item>
         <item name="incrementerIconColor">@color/material_blue_400</item>
     </style>
 

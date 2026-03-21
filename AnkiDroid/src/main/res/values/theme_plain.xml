@@ -86,7 +86,6 @@
         <item name="progressDialogButtonTextColor">@color/theme_plain_primary</item>
 
         <item name="incrementerButtonBackground">@color/white</item>
-        <item name="incrementerInputBackground">@color/theme_plain_primary_light</item>
         <item name="incrementerIconColor">@color/theme_plain_primary_dark</item>
     </style>
 
