@@ -23,7 +23,6 @@ import android.widget.TextView
 import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AlertDialog
-import androidx.core.os.BundleCompat
 import androidx.core.os.bundleOf
 import androidx.core.text.HtmlCompat
 import androidx.core.view.isVisible
@@ -328,18 +327,16 @@ class ExportDialogFragment : DialogFragment() {
         when (arguments?.getSerializableCompat<ExportType>(ARG_TYPE)) {
             ExportType.Notes -> {
                 val selectedNotesIds =
-                    arguments?.let {
-                        BundleCompat.getParcelableArrayList(it, ARG_EXPORTED_IDS, Long::class.java)
-                    } ?: error("Requested export for selected notes but no notes ids were passed in!")
+                    arguments?.getLongArray(ARG_EXPORTED_IDS)
+                        ?: error("Requested export for selected notes but no notes ids were passed in!")
                 exportLimit { noteIds = noteIds { this.noteIds.addAll(selectedNotesIds.toList()) } }
             }
 
             ExportType.Cards -> {
                 val selectedCardIds =
-                    arguments?.let {
-                        BundleCompat.getParcelableArrayList(it, ARG_EXPORTED_IDS, Long::class.java)
-                    } ?: error("Requested export for selected cards but no cards ids were passed in!")
-                exportLimit { cardIds = cardIds { this.cids.addAll(selectedCardIds) } }
+                    arguments?.getLongArray(ARG_EXPORTED_IDS)
+                        ?: error("Requested export for selected cards but no cards ids were passed in!")
+                exportLimit { cardIds = cardIds { this.cids.addAll(selectedCardIds.toList()) } }
             }
             // notes/cards weren't selected so export the chosen decks
             null -> {
@@ -446,10 +443,10 @@ class ExportDialogFragment : DialogFragment() {
             ids: List<Long>,
         ) = ExportDialogFragment().apply {
             arguments =
-                bundleOf(
-                    ARG_TYPE to type,
-                    ARG_EXPORTED_IDS to ids,
-                )
+                Bundle().apply {
+                    putSerializable(ARG_TYPE, type)
+                    putLongArray(ARG_EXPORTED_IDS, ids.toLongArray())
+                }
         }
     }
 }
