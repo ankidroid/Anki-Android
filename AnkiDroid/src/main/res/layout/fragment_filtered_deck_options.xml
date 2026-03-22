@@ -360,5 +360,7 @@
         app:layout_constraintTop_toBottomOf="@id/scroll_view"
         app:flow_verticalBias="1.0"
         app:layout_goneMarginBottom="8dp"
+        android:visibility="gone"
+        tools:visibility="visible"
         />
 </androidx.constraintlayout.widget.ConstraintLayout>

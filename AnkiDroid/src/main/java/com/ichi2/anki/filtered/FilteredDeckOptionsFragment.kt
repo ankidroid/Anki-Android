@@ -151,6 +151,7 @@ class FilteredDeckOptionsFragment : Fragment(R.layout.fragment_filtered_deck_opt
 
     private fun bindState(state: FilteredDeckOptions) {
         binding.loadingIndicator.isVisible = false
+        binding.btnShowExcludedCards.isVisible = true
         binding.scrollView.isVisible = true
         binding.toolbar.title = state.name
         binding.deckNameInput.setTextIfChanged(state.name)
