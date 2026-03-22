@@ -169,6 +169,7 @@ class FilteredDeckOptionsFragment : Fragment(R.layout.fragment_filtered_deck_opt
         binding.rescheduleDelayHardLayout.setupRescheduleDelay(state, RescheduleDelay.Hard)
         binding.rescheduleDelayGoodInput.setTextIfChanged(state.delayGood)
         binding.rescheduleDelayGoodLayout.setupRescheduleDelay(state, RescheduleDelay.Good)
+        binding.rescheduleInfoLabel.isVisible = !state.shouldReschedule
 
         // setup filter#2
         if (binding.switchSecondFilter.isChecked != state.isSecondFilterEnabled) {
