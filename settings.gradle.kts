@@ -17,4 +17,4 @@ dependencyResolutionManagement {
     }
 }
 
-include(":lint-rules", ":api", ":AnkiDroid", ":testlib", ":common", ":libanki", ":libanki:testutils", ":vbpd")
+include(":lint-rules", ":api", ":AnkiDroid", ":common", ":libanki", ":libanki:testutils", ":vbpd")

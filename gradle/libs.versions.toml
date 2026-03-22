@@ -6,7 +6,7 @@ compileSdk = "36"
 # devices *if* you also change AnkiDroid/build.gradle play { retain {} } block
 # to include the version codes of the last released version for the older
 # minSdk. It is critical to update those version codes when you change this.
-minSdk = "24"  # also in testlib/build.gradle.kts
+minSdk = "24"
 
 targetSdk = "35"  # affects which SDKs download in ../robolectricDownloader.gradle
 acra = '5.13.1'

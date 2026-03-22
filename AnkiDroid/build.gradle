@@ -174,8 +174,6 @@ android {
      * Product Flavors are used for Amazon App Store and Google Play Store.
      * This is because we cannot use Camera Permissions in Amazon App Store (for FireTv etc...)
      * Therefore, different AndroidManifest for Camera Permissions is used in Amazon flavor.
-     *
-     * This flavor block must stay in sync with the same block in testlib/build.gradle.kts
      */
     flavorDimensions += "appStore"
     productFlavors {
@@ -259,6 +257,15 @@ android {
         }
     }
 
+    // https://docs.gradle.org/current/userguide/java_testing.html#sec:java_test_fixtures
+    // https://developer.android.com/build/releases/agp-7-2-0-release-notes#test-fixtures
+    // ⚠️ There was an in-IDE warning: "Kotlin is not configured" when editing the testFixtures
+    // files. I ended up ignoring the warning after the 'Configure' button in Android Studio
+    // added dependencies but didn't fix the issue.
+    testFixtures {
+        enable = true
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
@@ -320,15 +327,6 @@ tasks.register('installGitHook', Copy) {
 // to run manually: `./gradlew installGitHook`
 tasks.named('preBuild').configure { dependsOn('installGitHook') }
 
-tasks.register('copyTestLibIntoAndroidTest', Copy) {
-    into new File(rootProject.rootDir, 'AnkiDroid/src/androidTest/java/com/ichi2/testutils')
-    from new File(rootProject.rootDir, 'testlib/src/main/java/com/ichi2/testutils')
-    into ('common') {
-        from 'common'
-    }
-}
-tasks.named('preBuild').configure { dependsOn('copyTestLibIntoAndroidTest') }
-tasks.named('runKtlintCheckOverAndroidTestSourceSet').configure { mustRunAfter('copyTestLibIntoAndroidTest') }
 
 // Issue 11078 - some emulators run, but run zero tests, and still report success
 tasks.register('assertNonzeroAndroidTests') {
@@ -352,9 +350,17 @@ afterEvaluate {
     tasks.named("connectedPlay${rootProject.androidTestVariantName}AndroidTest").configure {
         finalizedBy('assertNonzeroAndroidTests')
     }
-    tasks.named("packagePlay${rootProject.androidTestVariantName}AndroidTest").configure {
-        // Issue 17520 - ensures testlib is built
-        dependsOn(":testlib:assemblePlay${rootProject.androidTestVariantName}")
+
+    // AGP bug: when testFixtures is enabled on an application module, the androidTest R8 task's
+    // TESTED_CODE scope only includes the app's dependency artifacts, not the app's own compiled
+    // classes. This causes R8 to report "Missing class" errors for all app classes referenced from
+    // androidTest code. Work around by adding the app classes as referenced (library) input.
+    if (testReleaseBuild) {
+        tasks.named("minifyPlayReleaseAndroidTestWithR8").configure {
+            referencedClasses.from(
+                files("build/intermediates/compile_app_classes_jar/playRelease/bundlePlayReleaseClassesToCompileJar/classes.jar")
+            )
+        }
     }
 }
 
@@ -450,7 +456,6 @@ dependencies {
     // build via AnkiDroidApp.
     implementation libs.leakcanary.android
 
-    testImplementation project(':testlib')
     testImplementation project(":libanki:testutils")
 
     // A path for a testing library which provide Parameterized Test
@@ -485,10 +490,6 @@ dependencies {
     // for testing flows
     testImplementation libs.cashapp.turbine
 
-    // we should depend directly on the common testlib for androidTest, but we cannot
-    // until coverage-breaking issue is fixed https://issuetracker.google.com/issues/332746900
-    // androidTestImplementation project(':testlib')
-
     // May need a resolution strategy for support libs to our versions
     androidTestImplementation libs.androidx.espresso.core
     androidTestImplementation(libs.androidx.espresso.contrib) {
@@ -505,4 +506,14 @@ dependencies {
     implementation libs.androidx.media3.exoplayer
     implementation libs.androidx.media3.exoplayer.dash
     implementation libs.androidx.media3.ui
+
+    // ---- testFixtures setup ----
+    testFixturesImplementation libs.kotlin.stdlib
+    testFixturesImplementation libs.jakewharton.timber
+    testFixturesImplementation libs.hamcrest
+    testFixturesImplementation libs.androidx.test.junit
+    // Required so the ExperimentalCoroutinesApi opt-in (applied globally) doesn't cause
+    // an "unresolved" warning, which is treated as an error due to allWarningsAsErrors
+    testFixturesImplementation libs.kotlinx.coroutines.core
+
 }
