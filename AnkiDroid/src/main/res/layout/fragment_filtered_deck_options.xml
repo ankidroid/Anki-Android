@@ -157,23 +157,21 @@
                     />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/filter_cards_input_layout"
-                style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+            <TextView
+                android:id="@+id/filter_cards_label"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                tools:hint="Cards selected by">
+                android:layout_marginTop="8dp"
+                android:textAppearance="@style/TextAppearance.Material3.LabelLarge"
+                tools:text="Cards selected by"
+                />
 
-                <com.google.android.material.textfield.MaterialAutoCompleteTextView
-                    android:id="@+id/filter_cards_input"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textFilter"
-                    app:dropDownBackgroundTint="?android:attr/colorBackground"
-                    tools:text="Random"
-                    />
-            </com.google.android.material.textfield.TextInputLayout>
+            <Spinner
+                android:id="@+id/filter_cards"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="48dp"
+                />
 
             <!-- Material3Fix after colorSurface* are fixed look into using one here -->
             <com.google.android.material.materialswitch.MaterialSwitch
@@ -231,24 +229,23 @@
                     />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/second_filter_cards_input_layout"
-                style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+            <TextView
+                android:id="@+id/second_filter_cards_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:visibility="gone"
+                android:textAppearance="@style/TextAppearance.Material3.LabelLarge"
+                tools:text="Cards selected by"
+                />
+
+            <Spinner
+                android:id="@+id/second_filter_cards"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
-                android:layout_marginTop="4dp"
-                tools:hint="Cards selected by">
-
-                <com.google.android.material.textfield.MaterialAutoCompleteTextView
-                    android:id="@+id/second_filter_cards_input"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textFilter"
-                    app:dropDownBackgroundTint="?android:attr/colorBackground"
-                    tools:text="Order due"
-                    />
-            </com.google.android.material.textfield.TextInputLayout>
+                android:minHeight="48dp"
+                />
 
             <com.ichi2.ui.FixedTextView
                 android:id="@+id/options_label"

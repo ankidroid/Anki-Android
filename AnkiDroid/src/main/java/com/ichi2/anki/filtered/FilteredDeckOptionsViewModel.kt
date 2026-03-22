@@ -156,7 +156,12 @@ class FilteredDeckOptionsViewModel(
     fun onSecondFilterStatusChange(isEnabled: Boolean) {
         Timber.i("Second filter status is changing to $isEnabled")
         if (currentState().isSecondFilterEnabled == isEnabled) return
-        updateCurrentState { copy(isSecondFilterEnabled = isEnabled) }
+        updateCurrentState {
+            copy(
+                isSecondFilterEnabled = isEnabled,
+                filter2State = filter2State ?: SearchTermState(),
+            )
+        }
     }
 
     fun onRescheduleChange(isEnabled: Boolean) {

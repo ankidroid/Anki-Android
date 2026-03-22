@@ -18,6 +18,10 @@ package com.ichi2.anki.filtered
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import anki.decks.Deck
+import anki.decks.DeckKt.FilteredKt.searchTerm
+import anki.decks.DeckKt.filtered
+import anki.decks.filteredDeckForUpdate
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.Flag
 import com.ichi2.anki.RobolectricTest
@@ -250,6 +254,38 @@ class FilteredDeckOptionsViewModelTest : RobolectricTest() {
                 // hiding the second filter still allows building(first filter is correct)
                 onSecondFilterStatusChange(false)
                 assertTrue(current.isBuildingAllowed)
+            }
+        }
+
+    @Test
+    fun `a deck without a second filter gets a new fresh filter state when second filter is enabled`() =
+        runTest {
+            addDeck("A", true)
+            addNoteToDeckA { flagCardForNote(this, Flag.RED) }
+            addNoteToDeckA { flagCardForNote(this, Flag.GREEN) }
+            // setup only the first filter
+            val data =
+                filteredDeckForUpdate {
+                    id = 0
+                    name = "filtered"
+                    config =
+                        filtered {
+                            searchTerms.add(
+                                searchTerm {
+                                    search = "flag:1"
+                                    limit = 5
+                                    order =
+                                        Deck.Filtered.SearchTerm.Order
+                                            .forNumber(1)
+                                },
+                            )
+                        }
+                }
+            val changes = withCol { sched.addOrUpdateFilteredDeck(data) }
+            withViewModel(changes.id) {
+                assertNull(current.filter2State)
+                onSecondFilterStatusChange(true)
+                assertNotNull(current.filter2State)
             }
         }
 
