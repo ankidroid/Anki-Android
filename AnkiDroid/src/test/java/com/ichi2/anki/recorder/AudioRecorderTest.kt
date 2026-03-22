@@ -20,7 +20,7 @@ package com.ichi2.anki.recorder
 import android.media.MediaRecorder
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
-import com.ichi2.compat.CompatHelper
+import com.ichi2.anki.compat.CompatHelper
 import com.ichi2.testutils.EmptyApplication
 import io.mockk.clearAllMocks
 import io.mockk.every

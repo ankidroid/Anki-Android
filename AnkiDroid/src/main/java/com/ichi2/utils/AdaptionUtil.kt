@@ -28,11 +28,11 @@ import android.os.Build
 import android.provider.Settings
 import androidx.core.net.toUri
 import com.ichi2.anki.AnkiDroidApp
-import com.ichi2.compat.CompatHelper.Companion.getPackageInfoCompat
-import com.ichi2.compat.CompatHelper.Companion.queryIntentActivitiesCompat
-import com.ichi2.compat.MATCH_DEFAULT_ONLY
-import com.ichi2.compat.PackageInfoFlagsCompat
-import com.ichi2.compat.ResolveInfoFlagsCompat
+import com.ichi2.anki.compat.CompatHelper.Companion.getPackageInfoCompat
+import com.ichi2.anki.compat.CompatHelper.Companion.queryIntentActivitiesCompat
+import com.ichi2.anki.compat.MATCH_DEFAULT_ONLY
+import com.ichi2.anki.compat.PackageInfoFlagsCompat
+import com.ichi2.anki.compat.ResolveInfoFlagsCompat
 import timber.log.Timber
 import java.util.Locale
 

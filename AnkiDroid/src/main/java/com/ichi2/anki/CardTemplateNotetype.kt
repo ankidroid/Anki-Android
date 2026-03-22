@@ -23,12 +23,12 @@ import android.os.Parcelable
 import androidx.core.os.bundleOf
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.compat.CompatHelper.Companion.compat
+import com.ichi2.anki.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.anki.libanki.CardTemplate
 import com.ichi2.anki.libanki.NoteTypeId
 import com.ichi2.anki.libanki.NotetypeJson
 import com.ichi2.anki.observability.undoableOp
-import com.ichi2.compat.CompatHelper.Companion.compat
-import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import timber.log.Timber
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream

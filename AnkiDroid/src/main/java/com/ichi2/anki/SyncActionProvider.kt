@@ -24,7 +24,7 @@ import android.view.View
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.core.view.isVisible
 import com.google.android.material.progressindicator.LinearProgressIndicator
-import com.ichi2.compat.setTooltipTextCompat
+import com.ichi2.anki.compat.setTooltipTextCompat
 import com.ichi2.ui.RtlCompliantActionProvider.Companion.unwrapContext
 
 class SyncActionProvider(

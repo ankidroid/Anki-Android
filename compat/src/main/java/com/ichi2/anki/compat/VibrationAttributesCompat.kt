@@ -29,7 +29,7 @@
  *
  *     https://cs.android.com/android/platform/superproject/main/+/main:frameworks/base/core/java/android/os/VibrationAttributes.java;drc=6f9cf7514746523065939f370106cc770f39c2a6
  */
-package com.ichi2.compat
+package com.ichi2.anki.compat
 
 import androidx.annotation.IntDef
 

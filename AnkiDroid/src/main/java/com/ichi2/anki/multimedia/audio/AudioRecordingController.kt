@@ -39,6 +39,9 @@ import com.ichi2.anki.R
 import com.ichi2.anki.Reviewer
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.time.formatAsString
+import com.ichi2.anki.compat.Compat
+import com.ichi2.anki.compat.CompatHelper.Companion.compat
+import com.ichi2.anki.compat.USAGE_TOUCH
 import com.ichi2.anki.multimedia.AudioVideoFragment
 import com.ichi2.anki.multimedia.MultimediaViewModel
 import com.ichi2.anki.multimedia.audio.AudioRecordingController.RecordingState.AppendToRecording
@@ -50,9 +53,6 @@ import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.OnHoldListener
 import com.ichi2.anki.ui.setOnHoldListener
 import com.ichi2.anki.utils.elapsed
-import com.ichi2.compat.Compat
-import com.ichi2.compat.CompatHelper.Companion.compat
-import com.ichi2.compat.USAGE_TOUCH
 import com.ichi2.ui.FixedTextView
 import com.ichi2.utils.Permissions.canRecordAudio
 import com.ichi2.utils.UiUtil

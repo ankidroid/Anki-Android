@@ -27,6 +27,7 @@ import android.os.Parcelable
 import androidx.annotation.CheckResult
 import androidx.annotation.RequiresApi
 import androidx.core.content.edit
+import com.ichi2.anki.compat.CompatHelper.Companion.sdkVersion
 import com.ichi2.anki.dialogs.DatabaseErrorDialog
 import com.ichi2.anki.exception.StorageAccessException
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService
@@ -37,7 +38,6 @@ import com.ichi2.anki.ui.windows.permissions.NotificationsPermissionFragment
 import com.ichi2.anki.ui.windows.permissions.PermissionsFragment
 import com.ichi2.anki.ui.windows.permissions.PermissionsStartingAt30Fragment
 import com.ichi2.anki.ui.windows.permissions.PermissionsUntil29Fragment
-import com.ichi2.compat.CompatHelper.Companion.sdkVersion
 import com.ichi2.utils.Permissions
 import com.ichi2.utils.VersionUtils.pkgVersionName
 import kotlinx.parcelize.Parcelize

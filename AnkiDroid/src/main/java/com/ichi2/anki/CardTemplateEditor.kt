@@ -65,6 +65,7 @@ import com.ichi2.anki.android.input.shortcut
 import com.ichi2.anki.cardviewer.SingleCardSide
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
+import com.ichi2.anki.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.anki.databinding.ActivityCardTemplateEditorBinding
 import com.ichi2.anki.databinding.FragmentCardTemplateEditorTemplateBinding
 import com.ichi2.anki.databinding.IncludeCardTemplateEditorMainBinding
@@ -103,7 +104,6 @@ import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.anki.utils.ext.doOnTabSelected
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.utils.postDelayed
-import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.themes.Themes
 import com.ichi2.utils.copyToClipboard
 import com.ichi2.utils.dp

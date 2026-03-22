@@ -111,6 +111,8 @@ import com.ichi2.anki.cardviewer.ViewerRefresh
 import com.ichi2.anki.cardviewer.handledGamepadKeyDown
 import com.ichi2.anki.cardviewer.handledGamepadKeyUp
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.compat.CompatHelper.Companion.resolveActivityCompat
+import com.ichi2.anki.compat.ResolveInfoFlagsCompat
 import com.ichi2.anki.dialogs.TtsPlaybackErrorDialog
 import com.ichi2.anki.dialogs.TtsVoicesDialogFragment
 import com.ichi2.anki.dialogs.tags.TagsDialog
@@ -156,8 +158,6 @@ import com.ichi2.anki.utils.OnlyOnce.Method.ANSWER_CARD
 import com.ichi2.anki.utils.OnlyOnce.preventSimultaneousExecutions
 import com.ichi2.anki.utils.ext.isTouchWithinBounds
 import com.ichi2.anki.utils.ext.showDialogFragment
-import com.ichi2.compat.CompatHelper.Companion.resolveActivityCompat
-import com.ichi2.compat.ResolveInfoFlagsCompat
 import com.ichi2.themes.Themes
 import com.ichi2.themes.Themes.getResFromAttr
 import com.ichi2.ui.FixedEditText

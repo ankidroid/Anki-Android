@@ -37,11 +37,11 @@ import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.SharedDecksActivity.Companion.DOWNLOAD_FILE
+import com.ichi2.anki.compat.CompatHelper.Companion.getSerializableCompat
+import com.ichi2.anki.compat.CompatHelper.Companion.registerReceiverCompat
 import com.ichi2.anki.databinding.FragmentSharedDecksDownloadBinding
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.openUrl
-import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
-import com.ichi2.compat.CompatHelper.Companion.registerReceiverCompat
 import com.ichi2.utils.ImportUtils
 import com.ichi2.utils.create
 import dev.androidbroadcast.vbpd.viewBinding

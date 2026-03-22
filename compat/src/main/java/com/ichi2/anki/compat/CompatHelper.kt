@@ -13,7 +13,7 @@
  * You should have received a copy of the GNU General Public License along with
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.ichi2.compat
+package com.ichi2.anki.compat
 
 import android.annotation.SuppressLint
 import android.content.BroadcastReceiver
@@ -32,8 +32,8 @@ import android.view.KeyEvent.KEYCODE_PAGE_UP
 import android.view.View
 import androidx.appcompat.widget.TooltipCompat
 import androidx.core.content.ContextCompat
-import com.ichi2.compat.CompatHelper.Companion.compat
-import com.ichi2.compat.CompatHelper.Companion.resolveActivityCompat
+import com.ichi2.anki.compat.CompatHelper.Companion.compat
+import com.ichi2.anki.compat.CompatHelper.Companion.resolveActivityCompat
 import java.io.Serializable
 
 /**

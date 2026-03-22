@@ -26,11 +26,11 @@ import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.anki.browser.search.SavedSearch
 import com.ichi2.anki.browser.search.toMap
+import com.ichi2.anki.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.anki.databinding.ItemSavedSearchBinding
 import com.ichi2.anki.dialogs.SavedBrowserSearchesDialogFragment.Companion.ARG_SAVED_SEARCH
 import com.ichi2.anki.dialogs.SavedBrowserSearchesDialogFragment.Companion.TYPE_SEARCH_REMOVED
 import com.ichi2.anki.dialogs.SavedBrowserSearchesDialogFragment.Companion.TYPE_SEARCH_SELECTED
-import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.utils.customListAdapter
 import com.ichi2.utils.message
 import com.ichi2.utils.negativeButton

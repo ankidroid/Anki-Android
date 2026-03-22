@@ -37,6 +37,8 @@ import androidx.media3.exoplayer.ExoPlayer
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.compat.CompatHelper
+import com.ichi2.anki.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.anki.databinding.FragmentAudioVideoBinding
 import com.ichi2.anki.multimedia.AudioVideoFragment.MediaOption.AUDIO_CLIP
 import com.ichi2.anki.multimedia.AudioVideoFragment.MediaOption.VIDEO_CLIP
@@ -45,8 +47,6 @@ import com.ichi2.anki.multimedia.MultimediaActivity.Companion.MULTIMEDIA_RESULT
 import com.ichi2.anki.multimedia.MultimediaActivity.Companion.MULTIMEDIA_RESULT_FIELD_INDEX
 import com.ichi2.anki.multimedia.MultimediaUtils.createCachedFile
 import com.ichi2.anki.utils.ext.sharedPrefs
-import com.ichi2.compat.CompatHelper
-import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.utils.ExceptionUtil.executeSafe
 import com.ichi2.utils.FileUtil
 import com.ichi2.utils.openInputStreamSafe

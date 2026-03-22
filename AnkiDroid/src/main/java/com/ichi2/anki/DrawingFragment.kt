@@ -28,11 +28,11 @@ import androidx.core.graphics.createBitmap
 import androidx.fragment.app.Fragment
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.time.getTimestamp
+import com.ichi2.anki.compat.CompatHelper
 import com.ichi2.anki.databinding.FragmentDrawingBinding
 import com.ichi2.anki.dialogs.DiscardChangesDialog
 import com.ichi2.anki.ui.windows.reviewer.whiteboard.WhiteboardFragment
 import com.ichi2.anki.ui.windows.reviewer.whiteboard.WhiteboardView
-import com.ichi2.compat.CompatHelper
 import com.ichi2.themes.Themes
 import dev.androidbroadcast.vbpd.viewBinding
 

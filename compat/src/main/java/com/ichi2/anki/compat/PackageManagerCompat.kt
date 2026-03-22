@@ -32,7 +32,7 @@
  *     https://cs.android.com/android/platform/superproject/+/master:frameworks/base/core/java/android/content/pm/PackageManager.java;l=4955-4982;drc=6b291909ea085cc451201ce0e3da961f96523b45
  */
 
-package com.ichi2.compat
+package com.ichi2.anki.compat
 
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageInfo

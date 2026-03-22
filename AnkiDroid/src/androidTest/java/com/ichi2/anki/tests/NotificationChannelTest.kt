@@ -24,8 +24,8 @@ import androidx.test.filters.SdkSuppress
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.Channel
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
+import com.ichi2.anki.compat.CompatHelper.Companion.sdkVersion
 import com.ichi2.anki.testutil.GrantStoragePermission
-import com.ichi2.compat.CompatHelper.Companion.sdkVersion
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.greaterThanOrEqualTo
 import org.junit.Before

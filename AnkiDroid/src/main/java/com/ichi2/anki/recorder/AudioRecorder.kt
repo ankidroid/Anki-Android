@@ -24,7 +24,7 @@ package com.ichi2.anki.recorder
 
 import android.content.Context
 import android.media.MediaRecorder
-import com.ichi2.compat.CompatHelper
+import com.ichi2.anki.compat.CompatHelper
 import timber.log.Timber
 import java.io.Closeable
 import java.io.File

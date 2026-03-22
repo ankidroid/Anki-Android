@@ -30,7 +30,7 @@ import java.io.IOException
 import java.nio.file.NotDirectoryException
 import kotlin.test.assertFailsWith
 
-/** Tests for [Compat.hasFiles] */
+/** Tests for [com.ichi2.anki.compat.Compat.hasFiles] */
 class CompatHasFilesTest : Test21And26() {
     @Test
     fun has_files_with_file() {

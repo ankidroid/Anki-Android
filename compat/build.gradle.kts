@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.ichi2.compat"
+    namespace = "com.ichi2.anki.compat"
     compileSdk =
         libs.versions.compileSdk
             .get()

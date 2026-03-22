@@ -32,8 +32,8 @@ import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.os.ParcelCompat
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
+import com.ichi2.anki.compat.setTooltipTextCompat
 import com.ichi2.anki.databinding.ViewCardMultimediaEditlineBinding
-import com.ichi2.compat.setTooltipTextCompat
 import com.ichi2.ui.AnimationUtil.collapseView
 import com.ichi2.ui.AnimationUtil.expandView
 import java.util.Locale

@@ -17,6 +17,9 @@
 package com.ichi2.compat
 
 import android.annotation.SuppressLint
+import com.ichi2.anki.compat.BaseCompat
+import com.ichi2.anki.compat.Compat
+import com.ichi2.anki.compat.CompatV26
 import com.ichi2.testutils.createTransientDirectory
 import com.ichi2.testutils.createTransientFile
 import com.ichi2.testutils.withTempFile
@@ -31,7 +34,7 @@ import java.io.FileNotFoundException
 import java.io.IOException
 import kotlin.test.assertFailsWith
 
-/** Tests for [Compat.deleteFile] */
+/** Tests for [com.ichi2.anki.compat.Compat.deleteFile] */
 @RunWith(Parameterized::class)
 class CompatDeleteFileTest(
     val compat: Compat,

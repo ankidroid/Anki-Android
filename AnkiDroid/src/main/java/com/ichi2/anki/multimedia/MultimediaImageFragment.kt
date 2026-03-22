@@ -43,6 +43,7 @@ import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.DrawingFragment
 import com.ichi2.anki.R
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.anki.databinding.FragmentMultimediaImageBinding
 import com.ichi2.anki.multimedia.MultimediaActivity.Companion.EXTRA_MEDIA_OPTIONS
 import com.ichi2.anki.multimedia.MultimediaActivity.Companion.MULTIMEDIA_RESULT
@@ -55,7 +56,6 @@ import com.ichi2.anki.multimedia.MultimediaUtils.createNewCacheImageFile
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.ext.convertToString
 import com.ichi2.anki.utils.ext.toBase64Png
-import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.imagecropper.ImageCropper
 import com.ichi2.imagecropper.ImageCropper.Companion.CROP_IMAGE_RESULT
 import com.ichi2.utils.BitmapUtil

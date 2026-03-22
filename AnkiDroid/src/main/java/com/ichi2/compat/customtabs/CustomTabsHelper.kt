@@ -19,12 +19,12 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import androidx.browser.customtabs.CustomTabsService
 import androidx.core.net.toUri
+import com.ichi2.anki.compat.CompatHelper.Companion.queryIntentActivitiesCompat
+import com.ichi2.anki.compat.CompatHelper.Companion.resolveActivityCompat
+import com.ichi2.anki.compat.CompatHelper.Companion.resolveServiceCompat
+import com.ichi2.anki.compat.GET_RESOLVED_FILTER
+import com.ichi2.anki.compat.ResolveInfoFlagsCompat
 import com.ichi2.anki.runCatchingWithReport
-import com.ichi2.compat.CompatHelper.Companion.queryIntentActivitiesCompat
-import com.ichi2.compat.CompatHelper.Companion.resolveActivityCompat
-import com.ichi2.compat.CompatHelper.Companion.resolveServiceCompat
-import com.ichi2.compat.GET_RESOLVED_FILTER
-import com.ichi2.compat.ResolveInfoFlagsCompat
 import timber.log.Timber
 
 /**

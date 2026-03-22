@@ -36,8 +36,8 @@ import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.IntentHandler
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.UsageAnalytics
+import com.ichi2.anki.compat.CompatHelper.Companion.registerReceiverCompat
 import com.ichi2.anki.preferences.sharedPrefs
-import com.ichi2.compat.CompatHelper.Companion.registerReceiverCompat
 import timber.log.Timber
 import kotlin.math.sqrt
 

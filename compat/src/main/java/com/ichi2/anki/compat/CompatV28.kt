@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2023 David Allison <davidallisongithub@gmail.com>
+ *  Copyright (c) 2025 David Allison <davidallisongithub@gmail.com>
  *
  *  This program is free software; you can redistribute it and/or modify it under
  *  the terms of the GNU General Public License as published by the Free Software
@@ -14,21 +14,14 @@
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ichi2.compat
+package com.ichi2.anki.compat
 
-import android.speech.tts.UtteranceProgressListener
-import timber.log.Timber
+import android.os.Parcel
 
-abstract class UtteranceProgressListenerCompat : UtteranceProgressListener() {
-    abstract override fun onError(
-        utteranceId: String?,
-        errorCode: Int,
-    )
-
-    @Suppress("DeprecatedCallableAddReplaceWith")
-    @Deprecated("")
-    override fun onError(utteranceId: String?) {
-        // required for UtteranceProgressListener, but also deprecated
-        Timber.e("onError(string) should not have been called")
-    }
+// writeBoolean requires API level 29
+fun Parcel.writeBooleanCompat(value: Boolean) {
+    writeByte(if (value) 1 else 0)
 }
+
+// readBoolean requires API level 29
+fun Parcel.readBooleanCompat() = readByte() != 0.toByte()

@@ -26,13 +26,13 @@ import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
 import com.ichi2.anki.common.time.TimeManager
+import com.ichi2.anki.compat.CompatHelper.Companion.getPackageInfoCompat
+import com.ichi2.anki.compat.PackageInfoFlagsCompat
 import com.ichi2.anki.isLoggedIn
 import com.ichi2.anki.millisecondsSinceLastSync
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.servicelayer.ScopedStorageService.collectionWillBeMadeInaccessibleAfterUninstall
 import com.ichi2.anki.servicelayer.ScopedStorageService.userIsPromptedToDeleteCollectionOnUninstall
-import com.ichi2.compat.CompatHelper.Companion.getPackageInfoCompat
-import com.ichi2.compat.PackageInfoFlagsCompat
 import com.ichi2.utils.Permissions
 import com.ichi2.utils.cancelable
 import com.ichi2.utils.checkBoxPrompt
