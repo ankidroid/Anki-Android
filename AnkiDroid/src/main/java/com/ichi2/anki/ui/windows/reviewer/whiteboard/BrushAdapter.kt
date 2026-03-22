@@ -69,7 +69,7 @@ class BrushAdapter(
         viewType: Int,
     ): BrushViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val itemView = inflater.inflate(R.layout.button_color_brush, parent, false)
+        val itemView = inflater.inflate(R.layout.item_button_color_brush, parent, false)
         return BrushViewHolder(itemView)
     }
 

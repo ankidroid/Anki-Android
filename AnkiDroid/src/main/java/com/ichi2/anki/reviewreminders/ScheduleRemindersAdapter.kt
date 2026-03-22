@@ -28,7 +28,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.materialswitch.MaterialSwitch
 import com.ichi2.anki.R
-import com.ichi2.anki.databinding.ScheduleRemindersListItemBinding
+import com.ichi2.anki.databinding.ItemScheduleRemindersBinding
 import com.ichi2.anki.libanki.DeckId
 
 class ScheduleRemindersAdapter(
@@ -38,7 +38,7 @@ class ScheduleRemindersAdapter(
     private val editReminder: (ReviewReminder) -> Unit,
 ) : ListAdapter<ReviewReminder, ScheduleRemindersAdapter.ViewHolder>(diffCallback) {
     class ViewHolder(
-        binding: ScheduleRemindersListItemBinding,
+        binding: ItemScheduleRemindersBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
         var reminder: ReviewReminder? = null
         val context: Context = binding.root.context
@@ -52,7 +52,7 @@ class ScheduleRemindersAdapter(
         viewType: Int,
     ): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val binding = ScheduleRemindersListItemBinding.inflate(inflater, parent, false)
+        val binding = ItemScheduleRemindersBinding.inflate(inflater, parent, false)
         return ViewHolder(binding)
     }
 

@@ -27,7 +27,7 @@ import com.ichi2.anki.OnContextAndLongClickListener
 import com.ichi2.anki.OnContextAndLongClickListener.Companion.setOnContextAndLongClickListener
 import com.ichi2.anki.R
 import com.ichi2.anki.common.annotations.NeedsTest
-import com.ichi2.anki.databinding.TagsItemListDialogBinding
+import com.ichi2.anki.databinding.ItemTagBinding
 import com.ichi2.ui.CheckBoxTriStates
 import com.ichi2.ui.CheckBoxTriStates.State.CHECKED
 import com.ichi2.ui.CheckBoxTriStates.State.INDETERMINATE
@@ -47,7 +47,7 @@ class TagsArrayAdapter(
 ) : RecyclerView.Adapter<TagsArrayAdapter.ViewHolder>(),
     Filterable {
     class ViewHolder(
-        val binding: TagsItemListDialogBinding,
+        val binding: ItemTagBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
         internal lateinit var node: TagTreeNode
 
@@ -240,7 +240,7 @@ class TagsArrayAdapter(
         parent: ViewGroup,
         viewType: Int,
     ): ViewHolder {
-        val binding = TagsItemListDialogBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ItemTagBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         val vh = ViewHolder(binding)
         // clicking the checkbox toggles the tag's check state
         binding.checkBoxView.setOnClickListener {

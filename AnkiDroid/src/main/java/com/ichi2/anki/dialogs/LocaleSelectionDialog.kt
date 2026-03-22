@@ -115,7 +115,7 @@ class LocaleSelectionDialog : AnalyticsDialogFragment() {
             viewType: Int,
         ) = TextViewHolder(
             layoutInflater
-                .inflate(R.layout.locale_dialog_fragment_textview, parent, false) as TextView,
+                .inflate(R.layout.item_locale, parent, false) as TextView,
         )
 
         override fun onBindViewHolder(

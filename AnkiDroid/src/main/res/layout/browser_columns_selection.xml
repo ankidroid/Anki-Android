@@ -41,5 +41,5 @@
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:listitem="@layout/browser_columns_selection_entry"/>
+        tools:listitem="@layout/item_browser_columns_entry"/>
 </LinearLayout>

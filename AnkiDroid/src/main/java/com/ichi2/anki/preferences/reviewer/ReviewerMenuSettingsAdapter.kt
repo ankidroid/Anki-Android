@@ -20,8 +20,8 @@ import android.view.MotionEvent
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ichi2.anki.R
-import com.ichi2.anki.databinding.ReviewerMenuDisplayTypeBinding
-import com.ichi2.anki.databinding.ReviewerMenuItemBinding
+import com.ichi2.anki.databinding.ItemReviewerMenuBinding
+import com.ichi2.anki.databinding.ItemReviewerMenuDisplayTypeBinding
 
 /**
  * Provides bindings from menu items and display types (headings) to [RecyclerView] views
@@ -46,11 +46,11 @@ class ReviewerMenuSettingsAdapter(
         val inflater = LayoutInflater.from(parent.context)
         return when (viewType) {
             ReviewerMenuSettingsRecyclerItem.ACTION_VIEW_TYPE -> {
-                val binding = ReviewerMenuItemBinding.inflate(inflater, parent, false)
+                val binding = ItemReviewerMenuBinding.inflate(inflater, parent, false)
                 ActionViewHolder(binding)
             }
             ReviewerMenuSettingsRecyclerItem.DISPLAY_TYPE_VIEW_TYPE -> {
-                val binding = ReviewerMenuDisplayTypeBinding.inflate(inflater, parent, false)
+                val binding = ItemReviewerMenuDisplayTypeBinding.inflate(inflater, parent, false)
                 DisplayTypeViewHolder(binding)
             }
             else -> throw IllegalArgumentException("Unexpected viewType")
@@ -78,9 +78,9 @@ class ReviewerMenuSettingsAdapter(
         this.onDragHandleTouchedListener = listener
     }
 
-    /** @see [R.layout.reviewer_menu_item] */
+    /** @see [R.layout.item_reviewer_menu] */
     private inner class ActionViewHolder(
-        private val binding: ReviewerMenuItemBinding,
+        private val binding: ItemReviewerMenuBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(action: ViewerAction) {
             binding.title.text = action.title(itemView.context)
@@ -95,9 +95,9 @@ class ReviewerMenuSettingsAdapter(
         }
     }
 
-    /** @see [R.layout.reviewer_menu_display_type] */
+    /** @see [R.layout.item_reviewer_menu_display_type] */
     private class DisplayTypeViewHolder(
-        private val binding: ReviewerMenuDisplayTypeBinding,
+        private val binding: ItemReviewerMenuDisplayTypeBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(displayCategory: MenuDisplayType) {
             binding.title.setText(displayCategory.title)

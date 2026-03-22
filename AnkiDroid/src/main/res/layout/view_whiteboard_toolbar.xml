@@ -78,7 +78,7 @@
                 android:layout_height="wrap_content"
                 android:overScrollMode="never"
                 android:scrollbars="none"
-                tools:listitem="@layout/button_color_brush"
+                tools:listitem="@layout/item_button_color_brush"
                 />
 
         </LinearLayout>

@@ -26,8 +26,8 @@ import com.ichi2.anki.R
 import com.ichi2.anki.browser.BrowserColumnSelectionRecyclerItem.ColumnItem
 import com.ichi2.anki.browser.BrowserColumnSelectionRecyclerItem.UsageItem
 import com.ichi2.anki.browser.ColumnUsage.AVAILABLE
-import com.ichi2.anki.databinding.BrowserColumnsSelectionEntryBinding
-import com.ichi2.anki.databinding.BrowserColumnsSelectionHeadingBinding
+import com.ichi2.anki.databinding.ItemBrowserColumnsEntryBinding
+import com.ichi2.anki.databinding.ItemBrowserColumnsHeadingBinding
 import java.util.Collections
 
 class BrowserColumnSelectionAdapter(
@@ -68,10 +68,10 @@ class BrowserColumnSelectionAdapter(
         val inflater = LayoutInflater.from(parent.context)
         return when (viewType) {
             BrowserColumnSelectionRecyclerItem.COLUMN_VIEW_TYPE ->
-                ColumnViewHolder(BrowserColumnsSelectionEntryBinding.inflate(inflater, parent, false))
+                ColumnViewHolder(ItemBrowserColumnsEntryBinding.inflate(inflater, parent, false))
 
             BrowserColumnSelectionRecyclerItem.USAGE_VIEW_TYPE -> {
-                UsageViewHolder(BrowserColumnsSelectionHeadingBinding.inflate(inflater, parent, false))
+                UsageViewHolder(ItemBrowserColumnsHeadingBinding.inflate(inflater, parent, false))
             }
             else -> throw IllegalArgumentException("Unexpected viewType")
         }
@@ -130,10 +130,10 @@ class BrowserColumnSelectionAdapter(
     }
 
     /**
-     * @see R.layout.browser_columns_selection_entry
+     * @see R.layout.item_browser_columns_entry
      */
     private inner class ColumnViewHolder(
-        private val binding: BrowserColumnsSelectionEntryBinding,
+        private val binding: ItemBrowserColumnsEntryBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(column: ColumnWithSample) {
             column.label.let { binding.columnTitle.text = it }
@@ -163,9 +163,9 @@ class BrowserColumnSelectionAdapter(
         }
     }
 
-    /** @see [R.layout.browser_columns_selection_heading] */
+    /** @see [R.layout.item_browser_columns_heading] */
     private class UsageViewHolder(
-        private val binding: BrowserColumnsSelectionHeadingBinding,
+        private val binding: ItemBrowserColumnsHeadingBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(columnUsage: ColumnUsage) {
             binding.title.text = itemView.context.getString(columnUsage.titleRes)

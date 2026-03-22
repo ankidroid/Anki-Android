@@ -43,7 +43,7 @@ import com.ichi2.anki.Flag
 import com.ichi2.anki.R
 import com.ichi2.anki.databinding.DialogGenericRecyclerViewBinding
 import com.ichi2.anki.databinding.DialogInsertFieldBinding
-import com.ichi2.anki.databinding.DialogInsertSpecialFieldRecyclerItemBinding
+import com.ichi2.anki.databinding.ItemInsertSpecialFieldBinding
 import com.ichi2.anki.dialogs.InsertFieldDialogViewModel.Companion.KEY_FIELD_ITEMS
 import com.ichi2.anki.dialogs.InsertFieldDialogViewModel.Companion.KEY_INSERT_FIELD_METADATA
 import com.ichi2.anki.dialogs.InsertFieldDialogViewModel.Companion.KEY_REQUEST_KEY
@@ -189,7 +189,7 @@ class InsertFieldDialog : DialogFragment() {
                         parent: ViewGroup,
                         viewType: Int,
                     ): RecyclerView.ViewHolder {
-                        val root = layoutInflater.inflate(R.layout.material_dialog_list_item, parent, false)
+                        val root = layoutInflater.inflate(R.layout.item_material_dialog, parent, false)
                         return object : RecyclerView.ViewHolder(root) {}
                     }
 
@@ -231,7 +231,7 @@ class InsertFieldDialog : DialogFragment() {
                         parent: ViewGroup,
                         viewType: Int,
                     ) = InsertFieldViewHolder(
-                        DialogInsertSpecialFieldRecyclerItemBinding.inflate(
+                        ItemInsertSpecialFieldBinding.inflate(
                             LayoutInflater.from(parent.context),
                             parent,
                             false,
@@ -262,7 +262,7 @@ class InsertFieldDialog : DialogFragment() {
     }
 
     private class InsertFieldViewHolder(
-        val binding: DialogInsertSpecialFieldRecyclerItemBinding,
+        val binding: ItemInsertSpecialFieldBinding,
     ) : RecyclerView.ViewHolder(binding.root)
 }
 

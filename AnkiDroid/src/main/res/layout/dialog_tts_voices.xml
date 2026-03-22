@@ -156,7 +156,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/dialog_tts_voices_voice"
+        tools:listitem="@layout/item_tts_voice"
         tools:visibility="gone"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

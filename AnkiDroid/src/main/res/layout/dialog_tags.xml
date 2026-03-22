@@ -70,7 +70,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@id/options_group"
         android:layout_below="@id/toolbar"
-        tools:listitem="@layout/tags_item_list_dialog" />
+        tools:listitem="@layout/item_tag" />
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="wrap_content"

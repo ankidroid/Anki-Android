@@ -42,8 +42,8 @@ import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
-import com.ichi2.anki.databinding.DeckPickerDialogListItemBinding
 import com.ichi2.anki.databinding.DialogDeckPickerBinding
+import com.ichi2.anki.databinding.ItemDeckPickerDialogBinding
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DecksArrayAdapter.DecksFilter
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.DeckId
@@ -257,7 +257,7 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
     ) : RecyclerView.Adapter<DecksArrayAdapter.ViewHolder>(),
         Filterable {
         inner class ViewHolder(
-            private val binding: DeckPickerDialogListItemBinding,
+            private val binding: ItemDeckPickerDialogBinding,
         ) : RecyclerView.ViewHolder(binding.root) {
             private var currentDeck: SelectableDeck? = null
 
@@ -316,7 +316,7 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
             viewType: Int,
         ): ViewHolder {
             val layoutInflater = LayoutInflater.from(context)
-            val binding = DeckPickerDialogListItemBinding.inflate(layoutInflater, parent, false)
+            val binding = ItemDeckPickerDialogBinding.inflate(layoutInflater, parent, false)
             return ViewHolder(binding)
         }
 

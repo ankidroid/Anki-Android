@@ -307,9 +307,9 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
                 setAdapter(
                     ArrayAdapter(
                         requireActivity(),
-                        R.layout.multiline_spinner_item,
+                        R.layout.item_multiline_spinner,
                         entries,
-                    ).apply { setDropDownViewResource(R.layout.multiline_spinner_item) },
+                    ).apply { setDropDownViewResource(R.layout.item_multiline_spinner) },
                 )
                 setText(entries[selectedIndex], false)
             }

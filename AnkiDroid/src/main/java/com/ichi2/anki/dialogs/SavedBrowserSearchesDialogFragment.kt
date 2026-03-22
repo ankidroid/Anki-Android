@@ -26,7 +26,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.anki.browser.search.SavedSearch
 import com.ichi2.anki.browser.search.toMap
-import com.ichi2.anki.databinding.CardBrowserItemMySearchesDialogBinding
+import com.ichi2.anki.databinding.ItemSavedSearchBinding
 import com.ichi2.anki.dialogs.SavedBrowserSearchesDialogFragment.Companion.ARG_SAVED_SEARCH
 import com.ichi2.anki.dialogs.SavedBrowserSearchesDialogFragment.Companion.TYPE_SEARCH_REMOVED
 import com.ichi2.anki.dialogs.SavedBrowserSearchesDialogFragment.Companion.TYPE_SEARCH_SELECTED
@@ -108,7 +108,7 @@ class SavedBrowserSearchesDialogFragment : AnalyticsDialogFragment() {
             parent: ViewGroup,
             viewType: Int,
         ): SavedSearchesViewHolder {
-            val binding = CardBrowserItemMySearchesDialogBinding.inflate(layoutInflater, parent, false)
+            val binding = ItemSavedSearchBinding.inflate(layoutInflater, parent, false)
             return SavedSearchesViewHolder(binding)
         }
 
@@ -127,7 +127,7 @@ class SavedBrowserSearchesDialogFragment : AnalyticsDialogFragment() {
     }
 
     private class SavedSearchesViewHolder(
-        val binding: CardBrowserItemMySearchesDialogBinding,
+        val binding: ItemSavedSearchBinding,
     ) : RecyclerView.ViewHolder(binding.root)
 
     companion object {

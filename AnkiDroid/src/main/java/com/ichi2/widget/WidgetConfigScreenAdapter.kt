@@ -21,7 +21,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.common.utils.ext.indexOfOrNull
-import com.ichi2.anki.databinding.WidgetItemDeckConfigBinding
+import com.ichi2.anki.databinding.ItemWidgetDeckConfigBinding
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.model.SelectableDeck
 import kotlinx.coroutines.CoroutineScope
@@ -45,7 +45,7 @@ class WidgetConfigScreenAdapter(
     val deckIds: List<Long> get() = decks.map { it.deckId }
 
     class DeckViewHolder(
-        val binding: WidgetItemDeckConfigBinding,
+        val binding: ItemWidgetDeckConfigBinding,
     ) : RecyclerView.ViewHolder(binding.root)
 
     /** Creates and inflates the view for each item in the RecyclerView
@@ -57,7 +57,7 @@ class WidgetConfigScreenAdapter(
         viewType: Int,
     ): DeckViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        return DeckViewHolder(WidgetItemDeckConfigBinding.inflate(layoutInflater, parent, false))
+        return DeckViewHolder(ItemWidgetDeckConfigBinding.inflate(layoutInflater, parent, false))
     }
 
     override fun onBindViewHolder(

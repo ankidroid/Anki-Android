@@ -28,7 +28,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
 import com.ichi2.anki.common.annotations.NeedsTest
-import com.ichi2.anki.databinding.GradeNowListItemBinding
+import com.ichi2.anki.databinding.ItemGradeNowBinding
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.CardId
 import com.ichi2.anki.observability.undoableOp
@@ -97,7 +97,7 @@ object GradeNowDialog {
 private class GradeNowListAdapter(
     context: Context,
     grades: List<Grade>,
-) : ArrayAdapter<Grade>(context, R.layout.grade_now_list_item, grades) {
+) : ArrayAdapter<Grade>(context, R.layout.item_grade_now, grades) {
     override fun getView(
         position: Int,
         convertView: View?,
@@ -105,9 +105,9 @@ private class GradeNowListAdapter(
     ): View {
         val binding =
             if (convertView != null) {
-                GradeNowListItemBinding.bind(convertView)
+                ItemGradeNowBinding.bind(convertView)
             } else {
-                GradeNowListItemBinding.inflate(LayoutInflater.from(context), parent, false)
+                ItemGradeNowBinding.inflate(LayoutInflater.from(context), parent, false)
             }
 
         val grade = getItem(position)!!

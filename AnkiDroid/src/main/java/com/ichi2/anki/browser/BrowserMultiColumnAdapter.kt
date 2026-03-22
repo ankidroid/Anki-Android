@@ -41,7 +41,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.utils.ext.replaceWith
 import com.ichi2.anki.databinding.BrowserColumnCellBinding
-import com.ichi2.anki.databinding.CardItemBrowserBinding
+import com.ichi2.anki.databinding.ItemCardBrowserBinding
 import com.ichi2.anki.utils.android.darkenColor
 import com.ichi2.anki.utils.android.lightenColorAbsolute
 import com.ichi2.themes.Themes
@@ -57,7 +57,7 @@ typealias RowIsSelected = Boolean
  *
  * This has two states: regular and multi-select
  *
- * @see R.layout.card_item_browser
+ * @see R.layout.item_card_browser
  */
 class BrowserMultiColumnAdapter(
     private val context: Context,
@@ -75,7 +75,7 @@ class BrowserMultiColumnAdapter(
     private var originalTextSize = -1.0f
 
     inner class MultiColumnViewHolder(
-        private val binding: CardItemBrowserBinding,
+        private val binding: ItemCardBrowserBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
         var id: CardOrNoteId? = null
 
@@ -234,7 +234,7 @@ class BrowserMultiColumnAdapter(
         viewType: Int,
     ): MultiColumnViewHolder {
         val layoutInflater = LayoutInflater.from(context)
-        val binding = CardItemBrowserBinding.inflate(layoutInflater, parent, false)
+        val binding = ItemCardBrowserBinding.inflate(layoutInflater, parent, false)
         return MultiColumnViewHolder(binding)
     }
 

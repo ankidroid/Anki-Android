@@ -45,7 +45,7 @@ import kotlinx.coroutines.launch
  *
  * It also initializes itself, which makes possible to see it in Android Studio layout previews.
  *
- * @see [R.layout.reviewer_menu_item]
+ * @see [R.layout.item_reviewer_menu]
  */
 class ReviewerMenuView : LinearLayout {
     private val repository = ReviewerMenuRepository(context.sharedPrefs())

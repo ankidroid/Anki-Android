@@ -31,7 +31,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import com.ichi2.anki.Flag
-import com.ichi2.anki.databinding.EditFlagItemBinding
+import com.ichi2.anki.databinding.ItemEditFlagBinding
 import com.ichi2.utils.moveCursorToEnd
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -45,7 +45,7 @@ class FlagAdapter(
     private val lifecycleScope: CoroutineScope,
 ) : ListAdapter<FlagItem, FlagAdapter.FlagViewHolder>(FlagItemDiffCallback()) {
     class FlagViewHolder(
-        binding: EditFlagItemBinding,
+        binding: ItemEditFlagBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
         val flagImageView: ImageView = binding.icFlag
         val flagNameText: TextView = binding.flagName
@@ -63,7 +63,7 @@ class FlagAdapter(
         viewType: Int,
     ): FlagViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val binding = EditFlagItemBinding.inflate(inflater, parent, false)
+        val binding = ItemEditFlagBinding.inflate(inflater, parent, false)
         return FlagViewHolder(binding)
     }
 

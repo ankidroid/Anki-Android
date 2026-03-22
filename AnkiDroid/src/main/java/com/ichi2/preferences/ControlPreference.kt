@@ -285,7 +285,7 @@ class ControlPreferenceDialogFragment : DialogFragment() {
                 getString(R.string.binding_remove_binding, it.toDisplayString(requireContext()))
             }
         binding.listView.apply {
-            adapter = ArrayAdapter(requireContext(), R.layout.control_preference_list_item, titles)
+            adapter = ArrayAdapter(requireContext(), R.layout.item_control_preference, titles)
             setOnItemClickListener { _, _, index, _ ->
                 bindings.removeAt(index)
                 preference.value = bindings.toPreferenceString()

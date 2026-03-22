@@ -33,7 +33,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.browser.CardBrowserFragmentViewModel
 import com.ichi2.anki.databinding.DialogGenericRecyclerViewBinding
 import com.ichi2.anki.databinding.FragmentAdvancedSearchBinding
-import com.ichi2.anki.databinding.ViewAdvancedSearchListItemBinding
+import com.ichi2.anki.databinding.ItemAdvancedSearchBinding
 import com.ichi2.anki.utils.openUrl
 import dev.androidbroadcast.vbpd.viewBinding
 import kotlinx.parcelize.Parcelize
@@ -261,7 +261,7 @@ class AdvancedSearchFragment : Fragment(R.layout.fragment_advanced_search) {
                         viewType: Int,
                     ): ViewHolder {
                         val binding =
-                            ViewAdvancedSearchListItemBinding.inflate(
+                            ItemAdvancedSearchBinding.inflate(
                                 layoutInflater,
                                 parent,
                                 false,
@@ -286,7 +286,7 @@ class AdvancedSearchFragment : Fragment(R.layout.fragment_advanced_search) {
         }
 
         class ViewHolder(
-            val binding: ViewAdvancedSearchListItemBinding,
+            val binding: ItemAdvancedSearchBinding,
         ) : RecyclerView.ViewHolder(binding.root)
 
         companion object {

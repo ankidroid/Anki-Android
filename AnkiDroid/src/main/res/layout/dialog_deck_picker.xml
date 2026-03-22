@@ -52,5 +52,5 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/summary"
         android:scrollbars="vertical"
-        tools:listitem="@layout/deck_picker_dialog_list_item" />
+        tools:listitem="@layout/item_deck_picker_dialog" />
 </RelativeLayout>

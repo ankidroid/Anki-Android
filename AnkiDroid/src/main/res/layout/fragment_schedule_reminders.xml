@@ -36,7 +36,7 @@
                 android:paddingBottom="84dp"
                 android:scrollbars="vertical"
                 android:contentDescription="List of scheduled review reminders"
-                tools:listitem="@layout/schedule_reminders_list_item"
+                tools:listitem="@layout/item_schedule_reminders"
                 tools:ignore="HardcodedText" />
 
             <LinearLayout
