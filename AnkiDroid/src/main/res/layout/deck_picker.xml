@@ -92,7 +92,7 @@
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
     </LinearLayout>
 
-    <include layout="@layout/anki_progress"/>
+    <include layout="@layout/include_anki_progress"/>
     <include
         android:id="@+id/floating_action_button"
         layout="@layout/floating_add_button"/>

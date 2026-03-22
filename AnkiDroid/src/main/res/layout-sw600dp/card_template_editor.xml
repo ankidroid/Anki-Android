@@ -11,7 +11,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <include layout="@layout/card_template_editor_top"
+        <include layout="@layout/include_card_template_editor_top"
             android:id="@+id/template_editor_top" />
 
         <LinearLayout
@@ -21,7 +21,7 @@
             android:layout_weight="1"
             android:orientation="horizontal">
 
-            <include layout="@layout/card_template_editor_main"
+            <include layout="@layout/include_card_template_editor_main"
                 android:id="@+id/template_editor"
                 android:layout_width="1dp"
                 android:layout_weight="3"

@@ -5,5 +5,5 @@
                                            android:layout_width="match_parent"
                                            android:layout_height="match_parent"
                                            android:fitsSystemWindows="true">
-    <include layout="@layout/navigation_drawer" />
+    <include layout="@layout/include_navigation_drawer" />
 </androidx.drawerlayout.widget.ClosableDrawerLayout>

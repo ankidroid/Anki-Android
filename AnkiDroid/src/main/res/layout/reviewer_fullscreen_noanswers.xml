@@ -1,5 +1,4 @@
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/root_layout"
+<androidx.coordinatorlayout.widget.CoordinatorLayout android:id="@+id/root_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:focusableInTouchMode="true"
@@ -10,12 +9,12 @@
         android:layout_height="match_parent">
         <!-- Main content that takes up the fullscreen -->
         <include
-            layout="@layout/reviewer_mic_tool_bar"
+            layout="@layout/include_reviewer_mic_tool_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
         <include
-            layout="@layout/reviewer_flashcard_fullscreen_noanswers"
+            layout="@layout/include_reviewer_flashcard_fullscreen_noanswers"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <!-- Controls that are overlaid over the main content when the user interrupts immersive mode -->
@@ -25,18 +24,18 @@
             android:layout_height="match_parent"
             android:fitsSystemWindows="true">
 
-            <include layout="@layout/toolbar"/>
-            <include layout="@layout/reviewer_topbar"
+            <include layout="@layout/include_toolbar"/>
+            <include layout="@layout/include_reviewer_topbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/toolbar"/>
             <include
-                layout="@layout/reviewer_whiteboard_editor"
+                layout="@layout/include_reviewer_whiteboard_editor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_above="@+id/bottom_area_layout"/>
-            <include layout="@layout/reviewer_answer_buttons"/>
+            <include layout="@layout/include_reviewer_answer_buttons"/>
 
         </RelativeLayout>
     </RelativeLayout>

@@ -12,34 +12,34 @@
         android:id="@+id/front_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <include layout="@layout/toolbar"/>
+        <include layout="@layout/include_toolbar"/>
 
         <include
-            layout="@layout/reviewer_topbar"
+            layout="@layout/include_reviewer_topbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/toolbar" />
 
         <include
-            layout="@layout/reviewer_mic_tool_bar"
+            layout="@layout/include_reviewer_mic_tool_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/top_bar" />
 
         <include
-            layout="@layout/reviewer_flashcard"
+            layout="@layout/include_reviewer_flashcard"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/mic_tool_bar_layer" />
 
         <include
-            layout="@layout/reviewer_whiteboard_editor"
+            layout="@layout/include_reviewer_whiteboard_editor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_above="@+id/bottom_area_layout"/>
 
-        <include layout="@layout/reviewer_answer_buttons"
+        <include layout="@layout/include_reviewer_answer_buttons"
             tools:layout_width="match_parent"
             tools:layout_height="wrap_content"
             tools:layout_alignParentBottom="true"/>

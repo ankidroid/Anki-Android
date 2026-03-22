@@ -67,8 +67,8 @@ import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.databinding.CardTemplateEditorBinding
 import com.ichi2.anki.databinding.CardTemplateEditorItemBinding
-import com.ichi2.anki.databinding.CardTemplateEditorMainBinding
-import com.ichi2.anki.databinding.CardTemplateEditorTopBinding
+import com.ichi2.anki.databinding.IncludeCardTemplateEditorMainBinding
+import com.ichi2.anki.databinding.IncludeCardTemplateEditorTopBinding
 import com.ichi2.anki.dialogs.ConfirmationDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
@@ -132,11 +132,11 @@ open class CardTemplateEditor :
     private val binding by viewBinding(CardTemplateEditorBinding::bind)
 
     @VisibleForTesting
-    val topBinding: CardTemplateEditorTopBinding
+    val topBinding: IncludeCardTemplateEditorTopBinding
         get() = binding.templateEditorTop
 
     @VisibleForTesting
-    internal val mainBinding: CardTemplateEditorMainBinding
+    internal val mainBinding: IncludeCardTemplateEditorMainBinding
         get() = binding.templateEditor
 
     // TODO: see if it is feasible to use mockk to cause a crash

@@ -13,10 +13,10 @@
         android:orientation="vertical">
 
         <include android:id="@+id/template_editor_top"
-            layout="@layout/card_template_editor_top"/>
+            layout="@layout/include_card_template_editor_top"/>
 
         <include android:id="@+id/template_editor"
-            layout="@layout/card_template_editor_main" />
+            layout="@layout/include_card_template_editor_main" />
 
     </LinearLayout>
 

@@ -8,7 +8,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <include layout="@layout/toolbar" />
+        <include layout="@layout/include_toolbar" />
 
         <include
             android:id="@+id/deck_picker_pane"

@@ -28,7 +28,7 @@
         android:layout_centerVertical="true"
         android:orientation="vertical" >
 
-        <include layout="@layout/toolbar" />
+        <include layout="@layout/include_toolbar" />
 
         <RelativeLayout
             android:layout_width="match_parent"

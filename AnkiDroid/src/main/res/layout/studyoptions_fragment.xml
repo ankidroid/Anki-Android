@@ -232,5 +232,5 @@
             </LinearLayout>
         </ScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>
-    <include layout="@layout/anki_progress"/>
+    <include layout="@layout/include_anki_progress"/>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
