@@ -267,6 +267,10 @@ interface Compat {
 
     /**
      * Returns the character to use when separating a list; `, ` in English
+     * @param fallback The fallback separator to use on API levels below 26
      */
-    fun getListSeparator(context: Context): String
+    fun getListSeparator(
+        context: Context,
+        fallback: String,
+    ): String
 }

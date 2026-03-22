@@ -280,8 +280,11 @@ open class BaseCompat : Compat {
     @Suppress("ktlint:standard:property-naming")
     override val AXIS_GESTURE_PINCH_SCALE_FACTOR: Int = 52
 
-    // Until API 26, use the string resource
-    override fun getListSeparator(context: Context): String = context.getString(com.ichi2.anki.R.string.list_separator)
+    // Until API 26, use the provided fallback
+    override fun getListSeparator(
+        context: Context,
+        fallback: String,
+    ): String = fallback
 }
 
 typealias CompatV24 = BaseCompat

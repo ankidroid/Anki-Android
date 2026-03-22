@@ -23,6 +23,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.ConfigurationCompat
 import androidx.fragment.app.Fragment
 import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.R
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.compat.CompatHelper
 import net.ankiweb.rsdroid.BackendFactory
@@ -379,5 +380,6 @@ object LanguageUtil {
      * Returns the character to use when separating a list; `, ` in English
      * Uses ListFormatter on API 26+ to dynamically get the locale-specific separator
      */
-    fun getListSeparator(context: Context): String = CompatHelper.compat.getListSeparator(context)
+    fun getListSeparator(context: Context): String =
+        CompatHelper.compat.getListSeparator(context, context.getString(R.string.list_separator))
 }

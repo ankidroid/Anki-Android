@@ -141,7 +141,10 @@ open class CompatV26 : CompatV24() {
     }
 
     // API 26+: Use ListFormatter to dynamically get the locale-specific separator
-    override fun getListSeparator(context: Context): String {
+    override fun getListSeparator(
+        context: Context,
+        fallback: String,
+    ): String {
         val formatter = ListFormatter.getInstance()
         // Format a list with 3 dummy items
         val formatted = formatter.format("A", "B", "C")
