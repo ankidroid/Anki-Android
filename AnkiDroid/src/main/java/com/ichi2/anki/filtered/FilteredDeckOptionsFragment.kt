@@ -19,6 +19,7 @@ package com.ichi2.anki.filtered
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.text.InputFilter
 import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
@@ -83,6 +84,9 @@ class FilteredDeckOptionsFragment : Fragment(R.layout.fragment_filtered_deck_opt
                 }
             }
         }
+        // backend allows at most 5 digits
+        binding.filterLimitInput.filters = arrayOf(InputFilter.LengthFilter(5))
+        binding.secondFilterLimitInput.filters = arrayOf(InputFilter.LengthFilter(5))
         bindLabels()
         bindListeners()
         viewLifecycleOwner.lifecycleScope.launch {
@@ -152,14 +156,18 @@ class FilteredDeckOptionsFragment : Fragment(R.layout.fragment_filtered_deck_opt
         binding.deckNameInput.setTextIfChanged(state.name)
         binding.checkBoxAllowEmpty.setCheckedIfChanged(state.allowEmpty)
         binding.btnBuild.text = if (state.id == null) TR.decksBuild() else TR.actionsRebuild()
-        binding.btnBuild.isEnabled = !state.isBuildingBrowserSearch
+        binding.btnBuild.isEnabled = state.isBuildingAllowed
         binding.loadingIndicatorBuilding.isVisible = state.isBuildingBrowserSearch
         // setup filter#1
         val filter1State = state.filter1State
         binding.filterSearchInput.setTextIfChanged(filter1State.search)
         binding.filterLimitInput.setTextIfChanged(filter1State.limit)
         binding.filterLimitInputLayout.error =
-            if (filter1State.limit.toIntOrNull() == null) TR.errorsInvalidInputEmpty() else null
+            when (state.filter1State.error) {
+                SearchInputError.Empty -> getString(R.string.empty_cram_label)
+                SearchInputError.NotANumber -> TR.errorsInvalidInputEmpty()
+                null -> null
+            }
         binding.filterCardsInput.setAdapterIfChanged(state.cardOptions, filter1State.index)
         // rescheduling (done here because in filter 2 setup we might exit early)
         binding.checkBoxReschedule.setCheckedIfChanged(state.shouldReschedule)
@@ -182,7 +190,11 @@ class FilteredDeckOptionsFragment : Fragment(R.layout.fragment_filtered_deck_opt
         binding.secondFilterSearchInput.setTextIfChanged(filter2State.search)
         binding.secondFilterLimitInput.setTextIfChanged(filter2State.limit)
         binding.secondFilterLimitInputLayout.error =
-            if (filter2State.limit.toIntOrNull() == null) TR.errorsInvalidInputEmpty() else null
+            when (state.filter2State.error) {
+                SearchInputError.Empty -> getString(R.string.empty_cram_label)
+                SearchInputError.NotANumber -> TR.errorsInvalidInputEmpty()
+                null -> null
+            }
         binding.secondFilterCardsInput.setAdapterIfChanged(state.cardOptions, filter2State.index)
     }
 

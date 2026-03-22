@@ -95,13 +95,28 @@ data class FilteredDeckOptions(
 ) : Parcelable,
     FilteredDeckOptionsState
 
+/** True if the user is allowed to build/rebuild, false otherwise */
+val FilteredDeckOptions.isBuildingAllowed: Boolean
+    get() {
+        val hasNoInputErrors =
+            filter1State.error == null && !(isSecondFilterEnabled && filter2State?.error != null)
+        return !isBuildingBrowserSearch && hasNoInputErrors
+    }
+
 /** State for each filter (currently two with the second one being optional). */
 @Parcelize
 data class SearchTermState(
     val search: String = "",
     val limit: String = "100",
     val index: Int = 0,
+    /** If not null, there's an error related to the text entered */
+    val error: SearchInputError? = null,
 ) : Parcelable
+
+enum class SearchInputError {
+    Empty,
+    NotANumber,
+}
 
 /** Type of custom delays the user can set. */
 enum class RescheduleDelay {

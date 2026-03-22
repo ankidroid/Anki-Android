@@ -36,6 +36,7 @@ import org.junit.jupiter.api.assertNotNull
 import org.junit.jupiter.api.assertNull
 import org.junit.runner.RunWith
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
@@ -195,6 +196,60 @@ class FilteredDeckOptionsViewModelTest : RobolectricTest() {
                 assertThat(currentState.browserQuery, equalTo("deck:A flag:1"))
                 clearSearchInBrowser()
                 assertNull((state.value as FilteredDeckOptions).browserQuery)
+            }
+        }
+
+    @Test
+    fun `invalid limit inputs produce expected state`() =
+        runTest {
+            withViewModel {
+                onLimitChange(FilterIndex.First, "1")
+                assertNull(current.filter1State.error)
+                onLimitChange(FilterIndex.First, "")
+                assertThat(current.filter1State.error, equalTo(SearchInputError.Empty))
+                onLimitChange(FilterIndex.First, "abc")
+                assertThat(current.filter1State.error, equalTo(SearchInputError.NotANumber))
+                onSecondFilterStatusChange(true)
+                onLimitChange(FilterIndex.Second, "1")
+                assertNull(current.filter2State?.error)
+                onLimitChange(FilterIndex.Second, "")
+                assertThat(current.filter2State?.error, equalTo(SearchInputError.Empty))
+                onLimitChange(FilterIndex.Second, "abc")
+                assertThat(current.filter2State?.error, equalTo(SearchInputError.NotANumber))
+            }
+        }
+
+    @Test
+    fun `invalid limit prevents building or rebuilding`() =
+        runTest {
+            withViewModel {
+                // first filter limit input has error
+                assertTrue(current.isBuildingAllowed)
+                onLimitChange(FilterIndex.First, "")
+                assertThat(current.filter1State.error, equalTo(SearchInputError.Empty))
+                assertFalse(current.isBuildingAllowed)
+                // enabling the second filter still disables building
+                onSecondFilterStatusChange(true)
+                assertFalse(current.isBuildingAllowed)
+                // error on a second filter limit error keeps the building disabled
+                onLimitChange(FilterIndex.Second, "")
+                assertThat(current.filter2State?.error, equalTo(SearchInputError.Empty))
+                assertFalse(current.isBuildingAllowed)
+                // fixing only first filter limit input still has the building disabled
+                onLimitChange(FilterIndex.First, "1")
+                assertNull(current.filter1State.error)
+                assertFalse(current.isBuildingAllowed)
+                // hiding the second filter(while having an error) enables building
+                onSecondFilterStatusChange(false)
+                assertTrue(current.isBuildingAllowed)
+                // enabling the second filter and fixing the limit error allows building
+                onSecondFilterStatusChange(true)
+                assertFalse(current.isBuildingAllowed)
+                onLimitChange(FilterIndex.Second, "1")
+                assertTrue(current.isBuildingAllowed)
+                // hiding the second filter still allows building(first filter is correct)
+                onSecondFilterStatusChange(false)
+                assertTrue(current.isBuildingAllowed)
             }
         }
 

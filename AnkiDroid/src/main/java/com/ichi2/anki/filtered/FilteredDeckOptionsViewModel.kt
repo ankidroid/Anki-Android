@@ -108,8 +108,14 @@ class FilteredDeckOptionsViewModel(
         limit: String,
     ) {
         Timber.i("Filtered deck filter($index) limit changing to $limit")
+        val inputError =
+            when {
+                limit.isBlank() -> SearchInputError.Empty
+                limit.toIntOrNull() == null -> SearchInputError.NotANumber
+                else -> null
+            }
         if (limit == currentFilterState(index)?.limit) return
-        updateCurrentFilterState(index) { copy(limit = limit) }
+        updateCurrentFilterState(index) { copy(limit = limit, error = inputError) }
     }
 
     fun onCardsOptionsChange(
