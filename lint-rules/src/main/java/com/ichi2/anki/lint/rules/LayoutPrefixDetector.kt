@@ -41,10 +41,6 @@ class LayoutPrefixDetector : LayoutDetector() {
         // undecided(?): "include_" prefix for layouts that will be included in other layouts => include_toolbar.xml
         if (layoutFileName.startsWith("include_")) return
 
-        // TODO: decide on this to enforce or fix
-        // undecided(?): "widget_" prefix for layouts that will be used by widgets => widget_card_analysis.xml
-        if (layoutFileName.startsWith("widget_")) return
-
         // TODO: fix these and remove this check
         if (layoutFileName in TEMPORARILY_IGNORED) return
 
@@ -91,6 +87,8 @@ class LayoutPrefixDetector : LayoutDetector() {
                 "view_",
                 // layouts used by items in an adapter => item_locale.xml
                 "item_",
+                // layouts used by widgets
+                "widget_",
             )
 
         /**
