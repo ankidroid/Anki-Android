@@ -153,7 +153,9 @@ class FilteredDeckOptionsFragment : Fragment(R.layout.fragment_filtered_deck_opt
         binding.loadingIndicator.isVisible = false
         binding.btnShowExcludedCards.isVisible = true
         binding.scrollView.isVisible = true
-        binding.toolbar.title = state.name
+        // vs. desktop we don't use TR.actionsOptionsFor(name) because it doesn't fit (showing just
+        // the deck name is also done for the normal deck options screen so we are consistent)
+        binding.toolbar.title = state.title
         binding.deckNameInput.setTextIfChanged(state.name)
         binding.checkBoxAllowEmpty.setCheckedIfChanged(state.allowEmpty)
         binding.btnBuild.text = if (state.id == null) TR.decksBuild() else TR.actionsRebuild()

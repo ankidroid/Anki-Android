@@ -352,6 +352,7 @@ class FilteredDeckOptionsViewModel(
             // backend uses 0 for creating a new filtered deck, but we use null instead
             id = this.id.takeIf { it != 0L },
             name = this.name,
+            title = this.name,
             shouldReschedule = this.config.reschedule,
             allowEmpty = this.allowEmpty,
             cardOptions = cardsOptions,

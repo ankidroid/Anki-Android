@@ -54,6 +54,11 @@ data class FilteredDeckOptions(
     /** Name of the filtered deck, initial name with the following format: "Filtered deck HH:mm" */
     val name: String = "",
     /**
+     * String used as the title of the filtered options screen. Similar to [name], this will be the
+     * name we get when first loading the deck data and will not change for the lifetime of the screen.
+     */
+    val title: String = "",
+    /**
      * Flag indicating if cards will be rescheduled based on the answers in this filtered deck. If
      * false the view will present options for custom delays.
      */
