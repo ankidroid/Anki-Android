@@ -32,6 +32,8 @@ import android.view.KeyEvent.KEYCODE_PAGE_UP
 import android.view.View
 import androidx.appcompat.widget.TooltipCompat
 import androidx.core.content.ContextCompat
+import com.ichi2.compat.CompatHelper.Companion.compat
+import com.ichi2.compat.CompatHelper.Companion.resolveActivityCompat
 import java.io.Serializable
 
 /**
