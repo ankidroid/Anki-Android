@@ -16,6 +16,7 @@
 
 package com.ichi2.anki.model
 
+import com.ichi2.anki.compat.hasFiles
 import com.ichi2.compat.Test21And26
 import com.ichi2.testutils.HamcrestUtils.containsInAnyOrder
 import com.ichi2.testutils.withTempFile
