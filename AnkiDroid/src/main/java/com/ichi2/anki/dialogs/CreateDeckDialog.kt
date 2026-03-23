@@ -24,6 +24,7 @@ import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.CollectionManager
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.libanki.Collection
@@ -78,6 +79,14 @@ class CreateDeckDialog(
         }
 
     fun showDialog(): AlertDialog {
+        val textInputHint =
+            when (deckDialogType) {
+                DeckDialogType.RENAME_DECK -> TR.actionsNewName().dropLastWhile { it == ':' }
+
+                DeckDialogType.DECK,
+                DeckDialogType.SUB_DECK,
+                -> TR.actionsName().dropLastWhile { it == ':' }
+            }
         val dialog =
             AlertDialog
                 .Builder(context)
@@ -98,28 +107,19 @@ class CreateDeckDialog(
                     }
                     negativeButton(R.string.dialog_cancel)
                     setView(R.layout.dialog_generic_text_input)
-                }.input(prefill = initialDeckName, displayKeyboard = true, waitForPositiveButton = false) { dialog, text ->
+                }.input(
+                    hint = textInputHint,
+                    prefill = initialDeckName,
+                    displayKeyboard = true,
+                    waitForPositiveButton = false,
+                ) { dialog, text ->
 
                     // defining the action of done button in ImeKeyBoard and enter button in physical keyBoard
                     val inputField = dialog.getInputField()
                     inputField.setOnEditorActionListener { _, actionId, event ->
                         if (actionId == EditorInfo.IME_ACTION_DONE || event?.keyCode == KeyEvent.KEYCODE_ENTER) {
-                            when {
-                                dialog.positiveButton.isEnabled -> {
-                                    onPositiveButtonClicked()
-                                }
-                                text.isBlank() -> {
-                                    dialog.getInputTextLayout().showSnackbar(
-                                        context.getString(R.string.empty_deck_name),
-                                        Snackbar.LENGTH_SHORT,
-                                    )
-                                }
-                                else -> {
-                                    dialog.getInputTextLayout().showSnackbar(
-                                        context.getString(R.string.deck_already_exists),
-                                        Snackbar.LENGTH_SHORT,
-                                    )
-                                }
+                            if (dialog.positiveButton.isEnabled) {
+                                onPositiveButtonClicked()
                             }
                             true
                         } else {
@@ -134,7 +134,7 @@ class CreateDeckDialog(
                         return@input
                     }
                     if (!maybeDeckName.equals(initialDeckName, ignoreCase = true) && deckExists(getColUnsafe, maybeDeckName)) {
-                        dialog.getInputTextLayout().error = context.getString(R.string.deck_already_exists)
+                        dialog.getInputTextLayout().error = context.getString(R.string.error_name_exists)
                         dialog.positiveButton.isEnabled = false
                         return@input
                     }
