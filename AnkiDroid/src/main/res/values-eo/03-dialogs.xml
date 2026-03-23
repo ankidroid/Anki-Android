@@ -278,9 +278,9 @@
     <string name="special_field_front_side_help">Enhavo de fronta ŝablono. Sono ne estos aŭtomate ludata.</string>
     <string name="special_field_deck_help">La plena kartaro de la karto, ampleksante superajn kartarojn%s</string>
     <string name="special_field_subdeck_help">La nuna kartaro de la karto, ekskluzivante superajn kartarojn%s</string>
-    <string name="special_field_card_flag_help">Outputs ‘%1$s’, where %2$s is the flag code (%3$d\–%4$d\)</string>
-    <string name="special_field_tags_help">The tags of the note%s</string>
-    <string name="special_field_card_id_help">The ID of the card%s</string>
-    <string name="special_field_card_help">The name of the card template%s</string>
-    <string name="special_field_type_help">The name of the note type%s</string>
+    <string name="special_field_card_flag_help">Eligas “%1$s”, kie %2$s estas kodo de flago (%3$d – %4$d)</string>
+    <string name="special_field_tags_help">Etikedoj por la noto%s</string>
+    <string name="special_field_card_id_help">Identigilo de la karto%s</string>
+    <string name="special_field_card_help">Nomo de ŝablono de la karto%s</string>
+    <string name="special_field_type_help">Nomo de la nototipo%s</string>
 </resources>

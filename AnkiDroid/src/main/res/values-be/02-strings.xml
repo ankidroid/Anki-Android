@@ -294,11 +294,11 @@
     <string name="download_failed">Памылка пры спампоўцы</string>
     <string name="deck_download_progress_message">Можаце карыстацца іншымі праграмамі падчас спампоўвання</string>
     <string name="check_network">Калі ласка, праверце падключэнне да інтэрнэту</string>
-    <string name="external_storage_unavailable">Спампоўванне абарвана, бо знешняе сховішча недаступна.</string>
+    <string name="external_storage_unavailable">Спампоўванне абарвана, бо знешняе сховішча недаступна</string>
     <string name="home" maxLength="28">Галоўная</string>
     <!-- Study Screen actions
     Each of these strings ends with a period, following the notation of Anki Desktop -->
-    <string name="card_buried">Адкладзеная картка.</string>
+    <string name="card_buried">Картка адкладзена.</string>
     <plurals name="note_suspended">
         <item quantity="one">Прыпынена %d картка.</item>
         <item quantity="few">Прыпынены %d карткі.</item>
@@ -316,7 +316,7 @@
     <string name="malicious_archive_exceeds_limit">Шкодны архіў. Памер перавышае %1$s або змяшчае больш %2$d файлаў</string>
     <string name="file_extract_exceeds_storage_space">Памер файла перавышае аб\'ём памяці</string>
     <!--  Hierarchical Tags  -->
-    <string name="expand_tag">Разгарнуць тэг \'%s\'</string>
+    <string name="expand_tag">Разгарнуць метку \'%s\'</string>
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">Збой атрымання доступу да калекцыі. Калі ласка, паспрабуйце яшчэ раз!</string>
     <string name="cd_manage_notetypes_add">Дадаць новы тып нататкі</string>
@@ -328,8 +328,8 @@
     </plurals>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">Вучыцеся менш</string>
-    <string name="intro_ankidroid_tagline_two">А запамінайце больш</string>
-    <string name="intro_short_ankidroid_explanation">Запланаваныя карткі Anki ашчаджаюць час узмацняючы вашу ненадзейную памяць і трымаюць яе ў тонусе</string>
+    <string name="intro_ankidroid_tagline_two">Запамінайце больш</string>
+    <string name="intro_short_ankidroid_explanation">Запланаваныя карткі Anki ашчаджаюць час узмацняючы вашы слабейшыя ўспаміны і трымаюць вас у тонусе</string>
     <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Пачаць працу</string>
     <string name="intro_sync_from_ankiweb">Сінхранізаваць з AnkiWeb</string>
     <!-- IntentHandler -->
@@ -343,7 +343,7 @@
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Карткі</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Нататкі</string>
     <string name="toggle_cards_notes">Пераключыць Карткі/Нататкі</string>
-    <string name="truncate_content_help">Скараціць вышыню кожнага радка браўзера для адлюстравання толькі першых 3 радкоў змесціва</string>
+    <string name="truncate_content_help">Скараціць вышыню кожнага радка браўзера для адлюстравання толькі першых 3 радкоў змесціва</string>
     <string name="browser_options_dialog_heading">Параметры браўзера</string>
     <string name="audio_saved">Запіс захаваны</string>
     <string name="deleting_selected_notes">Выдаленне выбраных нататак</string>

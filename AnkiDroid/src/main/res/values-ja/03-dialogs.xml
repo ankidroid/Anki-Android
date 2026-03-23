@@ -248,9 +248,9 @@
     <string name="tts_error_dialog_change_button_text">エンジンを変更</string>
     <string name="tts_error_dialog_supported_voices_button_text">読み上げオプション</string>
     <!-- import_cache_error_resolutions -->
-    <string name="import_error_resolution_try_again">Re-import the file</string>
-    <string name="import_error_resolution_free_up_space">Ensure there is sufficient free space on your device</string>
-    <string name="import_error_resolution_check_internet">Ensure you are connected to the internet</string>
+    <string name="import_error_resolution_try_again">もう一度ファイルをインポートしてください</string>
+    <string name="import_error_resolution_free_up_space">あなたのデバイスに十分な空きがあることを確認してください</string>
+    <string name="import_error_resolution_check_internet">インターネットに接続されていることを確認してください</string>
     <string name="import_error_resolution_copy_to_device">Copy the file to your device and try again with the local file</string>
     <string name="import_error_resolution_select_file">Open the file using your device’s file browser app</string>
     <!-- Post-login dialog -->
