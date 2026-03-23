@@ -225,8 +225,6 @@ open class Reviewer :
             FlashCardViewerResultCallback(),
         )
 
-    private val flagItemIds = mutableSetOf<Int>()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
             return
@@ -1032,7 +1030,6 @@ open class Reviewer :
         lifecycleScope.launch {
             for ((flag, displayName) in Flag.queryDisplayNames()) {
                 subMenu.findItem(flag.id).title = displayName
-                flagItemIds.add(flag.id)
             }
         }
     }
@@ -1816,6 +1813,8 @@ open class Reviewer :
 
         /** Default (500ms) time for action snackbars, such as undo, bury and suspend */
         const val ACTION_SNACKBAR_TIME = 500
+
+        private val flagItemIds: Set<Int> = Flag.entries.map { it.id }.toSet()
 
         fun getIntent(context: Context): Intent =
             if (Prefs.isNewStudyScreenEnabled) {
