@@ -78,7 +78,11 @@ class AddNewNotesType(
                 .apply {
                     customView(binding.root, paddingStart = 32, paddingEnd = 32, paddingTop = 64, paddingBottom = 64)
                     positiveButton(R.string.dialog_ok) { _ ->
-                        val newName = binding.notetypeNewName.text.toString()
+                        val newName =
+                            binding.notetypeNewName.text
+                                .toString()
+                                .trim()
+                        if (newName.isEmpty()) return@positiveButton
                         val selectedPosition = binding.notetypeNewType.selectedItemPosition
                         if (selectedPosition == AdapterView.INVALID_POSITION) return@positiveButton
                         val selectedOption = allOptions[selectedPosition]
@@ -100,7 +104,7 @@ class AddNewNotesType(
         val addPrefixStr = context.resources.getString(R.string.model_browser_add_add)
         val clonePrefixStr = context.resources.getString(R.string.model_browser_add_clone)
         binding.notetypeNewName.addTextChangedListener { editableText ->
-            val currentName = editableText?.toString() ?: ""
+            val currentName = editableText?.toString()?.trim() ?: ""
             positiveButton.isEnabled =
                 currentName.isNotEmpty() &&
                 !currentNames.contains(currentName)
