@@ -34,6 +34,7 @@ import com.ichi2.anki.preferences.PENDING_NOTIFICATIONS_ONLY
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.showThemedToast
+import com.ichi2.widget.restoreRecurringAlarms
 import timber.log.Timber
 import java.util.Calendar
 
@@ -79,6 +80,8 @@ class BootService : BroadcastReceiver() {
             catchAlarmManagerErrors(context) { scheduleNotification(TimeManager.time, context) }
             failedToShowNotifications = false
         }
+
+        restoreRecurringAlarms(context)
         wasRun = true
     }
 

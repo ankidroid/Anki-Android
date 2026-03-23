@@ -18,6 +18,8 @@ package com.ichi2.widget
 
 import android.appwidget.AppWidgetManager
 import android.content.Context
+import com.ichi2.widget.cardanalysis.CardAnalysisWidget
+import com.ichi2.widget.deckpicker.DeckPickerWidget
 
 /**
  * @return An [AppWidgetManager] for the provided context, or `null`
@@ -34,3 +36,15 @@ fun getAppWidgetManager(context: Context): AppWidgetManager? {
 /** Whether 'Material You' dynamic color should be used for widgets */
 val disableMaterialYouDynamicColor: Boolean
     get() = true
+
+val RECURRING_WIDGETS =
+    listOf(
+        DeckPickerWidget::class.java,
+        CardAnalysisWidget::class.java,
+    )
+
+val NON_RECURRING_WIDGETS =
+    listOf(
+        AddNoteWidget::class.java,
+        AnkiDroidWidgetSmall::class.java,
+    )
