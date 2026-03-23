@@ -162,7 +162,7 @@ class CardBrowserViewModelTest : JvmTest() {
             val newDeck = addDeck("World")
             selectDefaultDeck()
 
-            for (i in 0 until 5) {
+            repeat(5) {
                 addBasicAndReversedNote()
             }
             setCardsOrNotes(CardsOrNotes.NOTES)
@@ -777,10 +777,6 @@ class CardBrowserViewModelTest : JvmTest() {
             assertThat("selection is now marked", queryAllSelectedNotes().all { it.isMarked() })
         }
 
-    private suspend fun CardBrowserViewModel.queryAllSelectedNotes() = queryAllSelectedNoteIds().map { col.getNote(it) }
-
-    private suspend fun Note.isMarked(): Boolean = NoteService.isMarked(this)
-
     @Test
     fun `changing note types changes columns`() =
         runViewModelTest {
@@ -1235,7 +1231,7 @@ class CardBrowserViewModelTest : JvmTest() {
                 )
             }
 
-            @Suppress("UNUSED_VARIABLE")
+            @Suppress("UNUSED_VARIABLE", "unused")
             val unused = updateActiveColumns(listOf(CARD, DECK, SFLD, DUE, FSRS_STABILITY), cardsOrNotes)
 
             previewColumnHeadings(cardsOrNotes).also { columns ->
@@ -1556,7 +1552,7 @@ class CardBrowserViewModelTest : JvmTest() {
         testBody: suspend CardBrowserViewModel.() -> Unit,
     ) = runTest {
         CardsOrNotes.NOTES.saveToCollection(col)
-        for (i in 0 until notes) {
+        repeat(notes) {
             // ensure 1 note = 2 cards
             addBasicAndReversedNote()
         }
@@ -1584,7 +1580,7 @@ class CardBrowserViewModelTest : JvmTest() {
         options: CardBrowserLaunchOptions? = null,
         testBody: suspend CardBrowserViewModel.() -> Unit,
     ) = runTest {
-        for (i in 0 until notes) {
+        repeat(notes) {
             addBasicNote()
         }
         notes.ifNotZero { count -> Timber.d("added %d notes", count) }
@@ -1668,7 +1664,7 @@ private fun CardBrowserViewModel.selectRowsWithPositions(vararg positions: Int) 
 private fun <T> TurbineTestContext<T>.ignoreEventsDuringViewModelInit() {
     try {
         expectMostRecentItem()
-    } catch (e: AssertionError) {
+    } catch (_: AssertionError) {
         // explicitly ignored: no items
     }
 }
@@ -1792,3 +1788,8 @@ suspend fun CardBrowserViewModel.setSelectedDeck(targetDid: DeckId) {
     val deck = SelectableDeck.fromCollection(includeFiltered = false).single { it.deckId == targetDid }
     setSelectedDeck(deck)
 }
+
+context(test: AnkiTest)
+private suspend fun CardBrowserViewModel.queryAllSelectedNotes() = queryAllSelectedNoteIds().map { test.col.getNote(it) }
+
+private suspend fun Note.isMarked(): Boolean = NoteService.isMarked(this)
