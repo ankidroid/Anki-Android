@@ -12,7 +12,7 @@ import { Credentials } from "@crowdin/crowdin-api-client";
 import { createDirIfNotExisting } from "./update";
 
 import dotenv from "dotenv";
-dotenv.config({ path: path.join(__dirname, "../.env") });
+dotenv.config({ path: path.join(__dirname, "../.env"), quiet: true });
 
 const CROWDIN_APIv2_PAT = process.env.CROWDIN_APIv2_PAT ?? "";
 
