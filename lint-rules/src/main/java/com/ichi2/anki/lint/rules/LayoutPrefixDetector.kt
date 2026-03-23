@@ -37,9 +37,6 @@ class LayoutPrefixDetector : LayoutDetector() {
     ) {
         val layoutFileName = context.file.name
 
-        // TODO: fix these and remove this check
-        if (layoutFileName in TEMPORARILY_IGNORED) return
-
         if (!ENFORCED_PREFIXES.any { prefix -> layoutFileName.startsWith(prefix) }) {
             context.report(
                 ISSUE,
@@ -91,16 +88,8 @@ class LayoutPrefixDetector : LayoutDetector() {
                 "preference_",
                 // layouts used by Anki HTML pages
                 "page_",
-            )
-
-        /**
-         * TODO Go over the entries in the list and fix. Some of the files require further
-         *  discussions on names conventions.
-         */
-        val TEMPORARILY_IGNORED =
-            listOf(
-                "popup_brush_options.xml",
-                "popup_eraser_options.xml",
+                // layouts used inside PopupWindow
+                "popup_",
             )
     }
 }
