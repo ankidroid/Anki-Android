@@ -24,7 +24,7 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
 import com.ichi2.anki.R
-import com.ichi2.anki.databinding.IntroductionLayoutBinding
+import com.ichi2.anki.databinding.FragmentIntroductionBinding
 import com.ichi2.anki.introduction.SetupCollectionFragment.CollectionSetupOption.DeckPickerWithNewCollection
 import com.ichi2.anki.introduction.SetupCollectionFragment.CollectionSetupOption.SyncFromExistingAccount
 import dev.androidbroadcast.vbpd.viewBinding
@@ -42,8 +42,8 @@ import kotlinx.parcelize.Parcelize
  * for example: selecting a 'safe' folder using scoped storage, which would not have been deleted
  * if the app is uninstalled.
  */
-class SetupCollectionFragment : Fragment(R.layout.introduction_layout) {
-    val binding by viewBinding(IntroductionLayoutBinding::bind)
+class SetupCollectionFragment : Fragment(R.layout.fragment_introduction) {
+    val binding by viewBinding(FragmentIntroductionBinding::bind)
 
     override fun onViewCreated(
         view: View,

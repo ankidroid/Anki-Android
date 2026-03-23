@@ -41,7 +41,7 @@ class ExtendedPreferenceCategory
         private val helpLink: String?
 
         init {
-            layoutResource = R.layout.extended_category
+            layoutResource = R.layout.preference_extended_category
             context.usingStyledAttributes(attrs, R.styleable.ExtendedPreferenceCategory) {
                 helpLink = getString(R.styleable.ExtendedPreferenceCategory_helpLink)
             }

@@ -37,7 +37,7 @@ import com.ichi2.anki.browser.BrowserColumnSelectionRecyclerItem.UsageItem
 import com.ichi2.anki.browser.ColumnUsage.ACTIVE
 import com.ichi2.anki.browser.ColumnUsage.AVAILABLE
 import com.ichi2.anki.common.annotations.NeedsTest
-import com.ichi2.anki.databinding.BrowserColumnsSelectionBinding
+import com.ichi2.anki.databinding.DialogBrowserColumnsSelectionBinding
 import com.ichi2.anki.dialogs.DiscardChangesDialog
 import com.ichi2.anki.model.CardsOrNotes
 import com.ichi2.anki.snackbar.showSnackbar
@@ -63,10 +63,10 @@ import timber.log.Timber
 @NeedsTest("dismissing: save changes dialog")
 @NeedsTest("dismissing via 'save_columns'")
 @NeedsTest("instance state restoration")
-class BrowserColumnSelectionFragment : DialogFragment(R.layout.browser_columns_selection) {
+class BrowserColumnSelectionFragment : DialogFragment(R.layout.dialog_browser_columns_selection) {
     private val viewModel: CardBrowserViewModel by activityViewModels()
 
-    private val binding by viewBinding(BrowserColumnsSelectionBinding::bind)
+    private val binding by viewBinding(DialogBrowserColumnsSelectionBinding::bind)
 
     lateinit var columnAdapter: BrowserColumnSelectionAdapter
 

@@ -24,7 +24,7 @@ import androidx.annotation.RequiresApi
 import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResult
 import com.ichi2.anki.R
-import com.ichi2.anki.databinding.NotificationsPermissionBinding
+import com.ichi2.anki.databinding.FragmentNotificationsPermissionBinding
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.utils.Permissions
 import com.ichi2.utils.Permissions.requestPermissionThroughDialogOrSettings
@@ -41,8 +41,8 @@ import timber.log.Timber
  *   Used for review reminder notifications.
  */
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
-class NotificationsPermissionFragment : PermissionsFragment(R.layout.notifications_permission) {
-    private val binding by viewBinding(NotificationsPermissionBinding::bind)
+class NotificationsPermissionFragment : PermissionsFragment(R.layout.fragment_notifications_permission) {
+    private val binding by viewBinding(FragmentNotificationsPermissionBinding::bind)
 
     /**
      * Launches the OS dialog for requesting notification permissions.

@@ -49,6 +49,7 @@ import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.Consts
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.model.SelectableDeck
+import com.ichi2.anki.reviewreminders.AddEditReminderDialog.Companion.getInstance
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.startDeckSelection
@@ -105,7 +106,7 @@ class AddEditReminderDialog : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         super.onCreateDialog(savedInstanceState)
-        contentView = layoutInflater.inflate(R.layout.add_edit_reminder_dialog, null)
+        contentView = layoutInflater.inflate(R.layout.dialog_add_edit_reminder, null)
         Timber.d("dialog mode: %s", dialogMode.toString())
 
         val dialogBuilder =

@@ -580,7 +580,7 @@ abstract class AbstractFlashcardViewer :
         super.setupBackPressedCallbacks()
     }
 
-    protected open fun getContentViewAttr(fullscreenMode: FullScreenMode): Int = R.layout.reviewer
+    protected open fun getContentViewAttr(fullscreenMode: FullScreenMode): Int = R.layout.activity_reviewer
 
     @get:VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
     val isFullscreen: Boolean

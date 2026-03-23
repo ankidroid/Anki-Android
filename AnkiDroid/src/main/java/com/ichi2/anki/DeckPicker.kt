@@ -102,8 +102,8 @@ import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.contextmenu.DeckPickerMenuContentProvider
 import com.ichi2.anki.contextmenu.MouseContextMenuHandler
 import com.ichi2.anki.databinding.ActivityHomescreenBinding
-import com.ichi2.anki.databinding.DeckPickerBinding
-import com.ichi2.anki.databinding.FloatingAddButtonBinding
+import com.ichi2.anki.databinding.IncludeDeckPickerBinding
+import com.ichi2.anki.databinding.IncludeFloatingAddButtonBinding
 import com.ichi2.anki.deckpicker.BITMAP_BYTES_PER_PIXEL
 import com.ichi2.anki.deckpicker.BackgroundImage
 import com.ichi2.anki.deckpicker.DeckDeletionResult
@@ -261,9 +261,9 @@ open class DeckPicker :
     private lateinit var binding: ActivityHomescreenBinding
 
     @VisibleForTesting
-    internal val deckPickerBinding: DeckPickerBinding
+    internal val deckPickerBinding: IncludeDeckPickerBinding
         get() = binding.deckPickerPane
-    private val floatingActionButtonBinding: FloatingAddButtonBinding
+    private val floatingActionButtonBinding: IncludeFloatingAddButtonBinding
         get() = deckPickerBinding.floatingActionButton
 
     override var fragmented: Boolean

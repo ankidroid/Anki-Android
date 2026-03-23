@@ -145,7 +145,7 @@ abstract class NavigationDrawerActivity(
 
     @get:LayoutRes
     private val navigationDrawerLayout: Int
-        get() = if (fitsSystemWindows()) R.layout.navigation_drawer_layout else R.layout.navigation_drawer_layout_fullscreen
+        get() = if (fitsSystemWindows()) R.layout.activity_navigation_drawer else R.layout.activity_navigation_drawer_fullscreen
 
     /** Whether android:fitsSystemWindows="true" should be applied to the navigation drawer  */
     protected open fun fitsSystemWindows(): Boolean = true

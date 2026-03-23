@@ -16,7 +16,7 @@
             android:layout_height="match_parent"
             android:background="?android:attr/colorBackground"
             android:orientation="horizontal">
-            <include layout="@layout/deck_picker"
+            <include layout="@layout/include_deck_picker"
                 android:id="@+id/deck_picker_pane"
                 android:layout_width="1dip"
                 android:layout_weight="3"

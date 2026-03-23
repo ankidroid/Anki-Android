@@ -25,19 +25,19 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.R
-import com.ichi2.anki.databinding.PreferencesReviewerMenuBinding
+import com.ichi2.anki.databinding.FragmentPreferencesReviewerMenuBinding
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.ext.sharedPrefs
 import dev.androidbroadcast.vbpd.viewBinding
 import kotlinx.coroutines.launch
 
 class ReviewerMenuSettingsFragment :
-    Fragment(R.layout.preferences_reviewer_menu),
+    Fragment(R.layout.fragment_preferences_reviewer_menu),
     OnClearViewListener<ReviewerMenuSettingsRecyclerItem>,
     ActionMenuView.OnMenuItemClickListener {
     private lateinit var repository: ReviewerMenuRepository
 
-    private val binding by viewBinding(PreferencesReviewerMenuBinding::bind)
+    private val binding by viewBinding(FragmentPreferencesReviewerMenuBinding::bind)
 
     override fun onViewCreated(
         view: View,

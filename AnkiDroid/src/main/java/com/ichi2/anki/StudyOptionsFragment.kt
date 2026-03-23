@@ -110,7 +110,7 @@ class StudyOptionsFragment :
         savedInstanceState: Bundle?,
     ): View? {
         Timber.i("onCreateView()")
-        val studyOptionsView = inflater.inflate(R.layout.studyoptions_fragment, container, false)
+        val studyOptionsView = inflater.inflate(R.layout.fragment_study_options, container, false)
         fragmented = requireActivity().javaClass != StudyOptionsActivity::class.java
         initAllContentViews(studyOptionsView)
         refreshInterface()

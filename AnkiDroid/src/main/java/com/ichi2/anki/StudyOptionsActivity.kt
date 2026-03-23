@@ -38,7 +38,7 @@ import timber.log.Timber
  * Hosts [StudyOptionsFragment] when non-fragmented
  */
 class StudyOptionsActivity :
-    AnkiActivity(R.layout.studyoptions),
+    AnkiActivity(R.layout.activity_study_options),
     ChangeManager.Subscriber {
     private var undoState = UndoState()
 

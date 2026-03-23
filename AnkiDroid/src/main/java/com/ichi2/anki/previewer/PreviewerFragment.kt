@@ -37,7 +37,7 @@ import com.ichi2.anki.Flag
 import com.ichi2.anki.R
 import com.ichi2.anki.browser.IdsFile
 import com.ichi2.anki.common.annotations.NeedsTest
-import com.ichi2.anki.databinding.PreviewerBinding
+import com.ichi2.anki.databinding.FragmentPreviewerBinding
 import com.ichi2.anki.previewer.PreviewerFragment.Companion.CARD_IDS_FILE_ARG
 import com.ichi2.anki.reviewer.BindingMap
 import com.ichi2.anki.reviewer.BindingProcessor
@@ -53,13 +53,13 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class PreviewerFragment :
-    CardViewerFragment(R.layout.previewer),
+    CardViewerFragment(R.layout.fragment_previewer),
     Toolbar.OnMenuItemClickListener,
     BaseSnackbarBuilderProvider,
     DispatchKeyEventListener,
     BindingProcessor<MappableBinding, PreviewerAction> {
     override val viewModel: PreviewerViewModel by viewModels()
-    private val binding by viewBinding(PreviewerBinding::bind)
+    private val binding by viewBinding(FragmentPreviewerBinding::bind)
     override val webViewLayout: SafeWebViewLayout get() = binding.webViewLayout
 
     override val baseSnackbarBuilder: SnackbarBuilder

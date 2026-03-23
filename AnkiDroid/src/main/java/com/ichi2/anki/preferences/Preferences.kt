@@ -55,7 +55,7 @@ import kotlin.reflect.KClass
 import kotlin.reflect.jvm.jvmName
 
 class PreferencesFragment :
-    Fragment(R.layout.preferences),
+    Fragment(R.layout.fragment_preferences),
     PreferenceFragmentCompat.OnPreferenceStartFragmentCallback,
     SearchPreferenceResultListener {
     /**

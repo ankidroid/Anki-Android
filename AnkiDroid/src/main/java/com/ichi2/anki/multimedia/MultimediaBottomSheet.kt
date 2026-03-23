@@ -25,7 +25,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.ichi2.anki.R
 import com.ichi2.anki.common.annotations.NeedsTest
-import com.ichi2.anki.databinding.BottomsheetMultimediaBinding
+import com.ichi2.anki.databinding.FragmentBottomsheetMultimediaBinding
 import com.ichi2.anki.multimedia.MultimediaBottomSheet.MultimediaAction.OPEN_CAMERA
 import com.ichi2.anki.multimedia.MultimediaBottomSheet.MultimediaAction.OPEN_DRAWING
 import com.ichi2.anki.multimedia.MultimediaBottomSheet.MultimediaAction.SELECT_AUDIO_FILE
@@ -38,10 +38,10 @@ import dev.androidbroadcast.vbpd.viewBinding
  * A BottomSheetDialogFragment class that provides options for selecting multimedia actions.
  */
 @NeedsTest("Test to ensure correct option is selected")
-class MultimediaBottomSheet : BottomSheetDialogFragment(R.layout.bottomsheet_multimedia) {
+class MultimediaBottomSheet : BottomSheetDialogFragment(R.layout.fragment_bottomsheet_multimedia) {
     private val viewModel: MultimediaViewModel by activityViewModels()
 
-    private val binding by viewBinding(BottomsheetMultimediaBinding::bind)
+    private val binding by viewBinding(FragmentBottomsheetMultimediaBinding::bind)
 
     override fun onViewCreated(
         view: View,

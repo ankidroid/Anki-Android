@@ -29,7 +29,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.ichi2.anki.R
-import com.ichi2.anki.databinding.CheckPronunciationFragmentBinding
+import com.ichi2.anki.databinding.FragmentCheckPronunciationBinding
 import com.ichi2.anki.ui.windows.reviewer.ReviewerViewModel
 import com.ichi2.anki.utils.ext.collectIn
 import com.ichi2.utils.show
@@ -38,11 +38,11 @@ import dev.androidbroadcast.vbpd.viewBinding
 /**
  * Integrates [AudioRecordView] with [AudioPlayView] to play the recorded audios.
  */
-class CheckPronunciationFragment : Fragment(R.layout.check_pronunciation_fragment) {
+class CheckPronunciationFragment : Fragment(R.layout.fragment_check_pronunciation) {
     private val viewModel: CheckPronunciationViewModel by viewModels()
     private val studyScreenViewModel: ReviewerViewModel by viewModels({ requireParentFragment() })
 
-    private val binding by viewBinding(CheckPronunciationFragmentBinding::bind)
+    private val binding by viewBinding(FragmentCheckPronunciationBinding::bind)
 
     private val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->

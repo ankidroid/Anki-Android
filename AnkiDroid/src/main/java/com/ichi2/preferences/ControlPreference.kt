@@ -27,7 +27,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.preference.DialogPreference
 import androidx.preference.PreferenceFragmentCompat
 import com.ichi2.anki.R
-import com.ichi2.anki.databinding.ControlPreferenceBinding
+import com.ichi2.anki.databinding.DialogControlPreferenceBinding
 import com.ichi2.anki.dialogs.GestureSelectionDialogUtils
 import com.ichi2.anki.dialogs.GestureSelectionDialogUtils.onGestureChanged
 import com.ichi2.anki.dialogs.KeySelectionDialogUtils
@@ -241,7 +241,7 @@ class ControlPreferenceDialogFragment : DialogFragment() {
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val binding = ControlPreferenceBinding.inflate(requireActivity().layoutInflater)
+        val binding = DialogControlPreferenceBinding.inflate(requireActivity().layoutInflater)
 
         setupAddBindingDialogs(binding)
         setupRemoveControlEntries(binding)
@@ -254,7 +254,7 @@ class ControlPreferenceDialogFragment : DialogFragment() {
         }
     }
 
-    private fun setupAddBindingDialogs(binding: ControlPreferenceBinding) {
+    private fun setupAddBindingDialogs(binding: DialogControlPreferenceBinding) {
         binding.addGesture.apply {
             setOnClickListener {
                 preference.showGesturePickerDialog()
@@ -274,7 +274,7 @@ class ControlPreferenceDialogFragment : DialogFragment() {
         }
     }
 
-    private fun setupRemoveControlEntries(binding: ControlPreferenceBinding) {
+    private fun setupRemoveControlEntries(binding: DialogControlPreferenceBinding) {
         val bindings = preference.getMappableBindings().toMutableList()
         if (bindings.isEmpty()) {
             binding.listView.isVisible = false

@@ -213,7 +213,7 @@ const val CALLER_KEY = "caller"
 @KotlinCleanup("see if we can lateinit")
 @NeedsTest("19733")
 class NoteEditorFragment :
-    Fragment(R.layout.note_editor_fragment),
+    Fragment(R.layout.fragment_note_editor),
     DeckSelectionListener,
     TagsDialogListener,
     BaseSnackbarBuilderProvider,
@@ -2589,7 +2589,7 @@ class NoteEditorFragment :
                 }.negativeButton(R.string.dialog_cancel)
 
     private fun displayAddToolbarDialog() {
-        val v = layoutInflater.inflate(R.layout.note_editor_toolbar_add_custom_item, null)
+        val v = layoutInflater.inflate(R.layout.dialog_note_editor_toolbar_add_custom_item, null)
         toolbarDialog.show {
             title(R.string.add_toolbar_item)
             setView(v)
@@ -2603,7 +2603,7 @@ class NoteEditorFragment :
     }
 
     private fun displayEditToolbarDialog(currentButton: CustomToolbarButton) {
-        val view = layoutInflater.inflate(R.layout.note_editor_toolbar_edit_custom_item, null)
+        val view = layoutInflater.inflate(R.layout.dialog_note_editor_toolbar_edit_custom_item, null)
         val etIcon = view.findViewById<EditText>(R.id.note_editor_toolbar_item_icon)
         val et = view.findViewById<EditText>(R.id.note_editor_toolbar_before)
         val et2 = view.findViewById<EditText>(R.id.note_editor_toolbar_after)

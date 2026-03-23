@@ -50,7 +50,7 @@ import timber.log.Timber
  */
 @NeedsTest("pressing 'back' on this screen closes it")
 class RemoveAccountFragment :
-    Fragment(R.layout.page_fragment),
+    Fragment(R.layout.fragment_page),
     OnWebViewRecreatedListener {
     private lateinit var webViewLayout: SafeWebViewLayout
 

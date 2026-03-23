@@ -31,7 +31,7 @@ import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.RecyclerView
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
-import com.ichi2.anki.databinding.LocaleSelectionDialogBinding
+import com.ichi2.anki.databinding.DialogLocaleSelectionBinding
 import com.ichi2.anki.dialogs.LocaleSelectionDialog.LocaleListAdapter.TextViewHolder
 import com.ichi2.anki.servicelayer.LanguageHintService
 import com.ichi2.ui.AccessibleSearchView
@@ -55,7 +55,7 @@ class LocaleSelectionDialog : AnalyticsDialogFragment() {
                 ::sendSelectionResult,
             )
 
-        val binding = LocaleSelectionDialogBinding.inflate(layoutInflater)
+        val binding = DialogLocaleSelectionBinding.inflate(layoutInflater)
         binding.localeDialogSelectionList.adapter = localeAdapter
         binding.localeDialogSelectionToolbar.setupMenuWith(localeAdapter)
         return AlertDialog.Builder(requireContext()).show {

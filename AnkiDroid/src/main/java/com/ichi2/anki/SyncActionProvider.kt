@@ -46,7 +46,7 @@ class SyncActionProvider(
 
     override fun onCreateActionView(forItem: MenuItem): View {
         val inflater = LayoutInflater.from(context)
-        val view = inflater.inflate(R.layout.sync_progress_layout, null)
+        val view = inflater.inflate(R.layout.view_sync_progress_layout, null)
 
         progressIndicator = view.findViewById(R.id.progress_indicator)
         syncButton =

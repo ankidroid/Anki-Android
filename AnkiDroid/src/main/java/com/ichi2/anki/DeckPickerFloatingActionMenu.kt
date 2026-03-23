@@ -24,7 +24,7 @@ import android.view.View
 import android.widget.LinearLayout
 import com.google.android.material.color.MaterialColors
 import com.ichi2.anki.databinding.ActivityHomescreenBinding
-import com.ichi2.anki.databinding.FloatingAddButtonBinding
+import com.ichi2.anki.databinding.IncludeFloatingAddButtonBinding
 import com.ichi2.anki.ui.DoubleTapListener
 import com.ichi2.anki.utils.AnimationUtils.areSystemAnimationsEnabled
 import timber.log.Timber
@@ -35,7 +35,7 @@ class DeckPickerFloatingActionMenu(
     private val deckPicker: DeckPicker,
 ) {
     // TODO: refactor this to decouple with Homescreen & DeckPicker
-    private val binding: FloatingAddButtonBinding = homescreenBinding.deckPickerPane.floatingActionButton
+    private val binding: IncludeFloatingAddButtonBinding = homescreenBinding.deckPickerPane.floatingActionButton
 
     /** Layout deck_picker.xml is attached here */
     private val linearLayout: LinearLayout = homescreenBinding.deckPickerPane.deckpickerView

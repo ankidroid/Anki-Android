@@ -61,7 +61,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
-class LoginFragment : Fragment(R.layout.my_account) {
+class LoginFragment : Fragment(R.layout.fragment_my_account) {
     private val viewModel: LoginViewModel by viewModels()
 
     private lateinit var username: TextInputEditText

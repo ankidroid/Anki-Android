@@ -65,8 +65,8 @@ import com.ichi2.anki.android.input.shortcut
 import com.ichi2.anki.cardviewer.SingleCardSide
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
-import com.ichi2.anki.databinding.CardTemplateEditorBinding
-import com.ichi2.anki.databinding.CardTemplateEditorItemBinding
+import com.ichi2.anki.databinding.ActivityCardTemplateEditorBinding
+import com.ichi2.anki.databinding.FragmentCardTemplateEditorTemplateBinding
 import com.ichi2.anki.databinding.IncludeCardTemplateEditorMainBinding
 import com.ichi2.anki.databinding.IncludeCardTemplateEditorTopBinding
 import com.ichi2.anki.dialogs.ConfirmationDialog
@@ -128,9 +128,9 @@ private typealias BackendCardTemplate = com.ichi2.anki.libanki.CardTemplate
  */
 @KotlinCleanup("lateinit wherever possible")
 open class CardTemplateEditor :
-    AnkiActivity(R.layout.card_template_editor),
+    AnkiActivity(R.layout.activity_card_template_editor),
     DeckSelectionListener {
-    private val binding by viewBinding(CardTemplateEditorBinding::bind)
+    private val binding by viewBinding(ActivityCardTemplateEditorBinding::bind)
 
     @VisibleForTesting
     val topBinding: IncludeCardTemplateEditorTopBinding
@@ -536,9 +536,9 @@ open class CardTemplateEditor :
                 R.string.card_template_editor_group,
             )
 
-    class CardTemplateFragment : Fragment(R.layout.card_template_editor_item) {
+    class CardTemplateFragment : Fragment(R.layout.fragment_card_template_editor_template) {
         @VisibleForTesting
-        internal val binding by viewBinding(CardTemplateEditorItemBinding::bind)
+        internal val binding by viewBinding(FragmentCardTemplateEditorTemplateBinding::bind)
 
         private val refreshFragmentHandler = Handler(Looper.getMainLooper())
 

@@ -42,7 +42,7 @@ import com.ichi2.anki.utils.ext.removeFragmentFromContainer
 import com.ichi2.anki.utils.ext.showDialogFragment
 import timber.log.Timber
 
-class LoggedInFragment : Fragment(R.layout.my_account_logged_in) {
+class LoggedInFragment : Fragment(R.layout.fragment_my_account_logged_in) {
     // if the 'remove account' fragment is open, close it first
     private val onRemoveAccountBackCallback =
         object : OnBackPressedCallback(false) {

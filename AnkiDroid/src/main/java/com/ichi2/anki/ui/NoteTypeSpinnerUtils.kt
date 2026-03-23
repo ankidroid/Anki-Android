@@ -39,7 +39,7 @@ fun setupNoteTypeSpinner(
         ).apply {
             // The resource passed to the constructor is normally used for both the spinner view
             // and the dropdown list. This keeps the former and overrides the latter.
-            setDropDownViewResource(R.layout.spinner_dropdown_item_with_radio)
+            setDropDownViewResource(R.layout.item_spinner_dropdown_with_radio)
         }
 
     return sortedModels.map { it.id }

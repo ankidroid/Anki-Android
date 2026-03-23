@@ -41,8 +41,8 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import com.google.android.material.textfield.TextInputLayout
 import com.ichi2.anki.R
-import com.ichi2.anki.databinding.AlertDialogCheckboxBinding
-import com.ichi2.anki.databinding.AlertDialogTitleWithHelpBinding
+import com.ichi2.anki.databinding.DialogAlertDialogCheckboxBinding
+import com.ichi2.anki.databinding.DialogAlertDialogTitleWithHelpBinding
 import com.ichi2.anki.databinding.DialogGenericRecyclerViewBinding
 import com.ichi2.anki.databinding.DialogListviewMessageBinding
 import com.ichi2.themes.Themes
@@ -208,7 +208,7 @@ fun AlertDialog.Builder.checkBoxPrompt(
     if (stringRes == null && text == null) {
         throw IllegalArgumentException("either `stringRes` or `text` must be set")
     }
-    val binding = AlertDialogCheckboxBinding.inflate(LayoutInflater.from(context))
+    val binding = DialogAlertDialogCheckboxBinding.inflate(LayoutInflater.from(context))
     val checkBox = binding.checkbox
 
     val checkBoxLabel = if (stringRes != null) context.getString(stringRes) else text
@@ -465,7 +465,7 @@ fun AlertDialog.Builder.titleWithHelpIcon(
     onHelpClick: View.OnClickListener,
 ): AlertDialog.Builder {
     // setup the view for the dialog
-    val binding = AlertDialogTitleWithHelpBinding.inflate(LayoutInflater.from(context))
+    val binding = DialogAlertDialogTitleWithHelpBinding.inflate(LayoutInflater.from(context))
     setCustomTitle(binding.root)
 
     if (startIcon != null) {

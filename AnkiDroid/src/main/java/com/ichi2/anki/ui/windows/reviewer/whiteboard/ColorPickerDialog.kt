@@ -112,7 +112,7 @@ fun Context.showColorPickerDialog(
  */
 private class BubbleFlag(
     context: Context?,
-) : FlagView(context, R.layout.colorpicker_flag_bubble) {
+) : FlagView(context, R.layout.view_colorpicker_flag_bubble) {
     val alphaTileView: AlphaTileView = findViewById(R.id.flag_color_layout)
 
     override fun onRefresh(colorEnvelope: ColorEnvelope) {

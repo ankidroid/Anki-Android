@@ -197,7 +197,7 @@ class CardBrowserFragment :
 
     @get:LayoutRes
     private val layout: Int
-        get() = if (useSearchView) R.layout.card_browser_searchview_fragment else R.layout.card_browser_fragment
+        get() = if (useSearchView) R.layout.fragment_card_browser_searchview else R.layout.fragment_card_browser
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -760,7 +760,7 @@ class CardBrowserFragment :
             val layoutInflater = LayoutInflater.from(browserColumnHeadings.context)
             for (column in columnCollection) {
                 Timber.d("setting up column %s", column)
-                val columnView = layoutInflater.inflate(R.layout.browser_column_heading, browserColumnHeadings, false) as TextView
+                val columnView = layoutInflater.inflate(R.layout.view_browser_column_heading, browserColumnHeadings, false) as TextView
 
                 columnView.text = column.label
 

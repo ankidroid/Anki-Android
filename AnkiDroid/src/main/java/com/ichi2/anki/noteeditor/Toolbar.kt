@@ -98,7 +98,7 @@ class Toolbar : FrameLayout {
     ) : super(context, attrs, defStyleAttr, defStyleRes)
 
     init {
-        LayoutInflater.from(context).inflate(R.layout.note_editor_toolbar, this, true)
+        LayoutInflater.from(context).inflate(R.layout.view_note_editor_toolbar, this, true)
         stringPaint =
             Paint(Paint.ANTI_ALIAS_FLAG).apply {
                 textSize = 24.dp.toPx(context).toFloat()

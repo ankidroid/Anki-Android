@@ -31,7 +31,7 @@ class ControlsTabPreference
         defStyleRes: Int = androidx.preference.R.style.Preference,
     ) : Preference(context, attrs, defStyleAttr, defStyleRes) {
         init {
-            layoutResource = R.layout.controls_tab_layout
+            layoutResource = R.layout.preference_controls_tab
         }
 
         private var tabLayout: TabLayout? = null

@@ -36,7 +36,7 @@ import timber.log.Timber
  * Base class for displaying Anki HTML pages
  */
 abstract class PageFragment(
-    @LayoutRes contentLayoutId: Int = R.layout.page_fragment,
+    @LayoutRes contentLayoutId: Int = R.layout.fragment_page,
 ) : Fragment(contentLayoutId),
     PostRequestHandler,
     OnWebViewRecreatedListener {

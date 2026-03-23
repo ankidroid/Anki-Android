@@ -28,7 +28,7 @@ import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.BuildConfig
 import com.ichi2.anki.Info
 import com.ichi2.anki.R
-import com.ichi2.anki.databinding.AboutLayoutBinding
+import com.ichi2.anki.databinding.FragmentAboutBinding
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.requireAnkiActivity
 import com.ichi2.anki.scheduling.Fsrs
@@ -47,8 +47,8 @@ import java.util.Date
 import java.util.Locale
 import net.ankiweb.rsdroid.BuildConfig as BackendBuildConfig
 
-class AboutFragment : Fragment(R.layout.about_layout) {
-    private val binding by viewBinding(AboutLayoutBinding::bind)
+class AboutFragment : Fragment(R.layout.fragment_about) {
+    private val binding by viewBinding(FragmentAboutBinding::bind)
 
     override fun onViewCreated(
         view: View,

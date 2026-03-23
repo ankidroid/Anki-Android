@@ -191,7 +191,7 @@
                 android:layout_gravity="center_horizontal"
                 android:elevation="2dp"
                 android:visibility="gone"
-                tools:layout="@layout/check_pronunciation_fragment" />
+                tools:layout="@layout/fragment_check_pronunciation" />
 
             <com.ichi2.anki.ui.windows.reviewer.AnswerAreaView
                 android:id="@+id/answer_area"

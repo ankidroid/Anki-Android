@@ -52,10 +52,10 @@ import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CrashReportData.Companion.toCrashReportData
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
-import com.ichi2.anki.databinding.ChangeNoteTypeDialogBinding
+import com.ichi2.anki.databinding.DialogChangeNoteTypeBinding
 import com.ichi2.anki.databinding.DialogFieldsBinding
 import com.ichi2.anki.databinding.DialogTemplatesBinding
-import com.ichi2.anki.databinding.TabLayoutIconOnEndBinding
+import com.ichi2.anki.databinding.ViewTabLayoutIconOnEndBinding
 import com.ichi2.anki.dialogs.ChangeNoteTypeDialog.SelectTemplateFragment.Layout.Standard
 import com.ichi2.anki.dialogs.ChangeNoteTypeDialog.SelectTemplateFragment.Layout.WithWarning
 import com.ichi2.anki.dialogs.ConversionType.CLOZE_TO_CLOZE
@@ -110,7 +110,7 @@ class ChangeNoteTypeDialog : AnalyticsDialogFragment() {
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val binding = ChangeNoteTypeDialogBinding.inflate(LayoutInflater.from(requireContext()))
+        val binding = DialogChangeNoteTypeBinding.inflate(LayoutInflater.from(requireContext()))
 
         return MaterialAlertDialogBuilder(requireContext())
             .create {
@@ -161,13 +161,13 @@ class ChangeNoteTypeDialog : AnalyticsDialogFragment() {
         }
     }
 
-    private fun setupChangeNoteTypeDialog(binding: ChangeNoteTypeDialogBinding) {
+    private fun setupChangeNoteTypeDialog(binding: DialogChangeNoteTypeBinding) {
         Timber.d("setting up dialog")
         setupNoteTypeSpinner(binding)
         setupViewPagerAndTabs(binding)
     }
 
-    private fun setupNoteTypeSpinner(binding: ChangeNoteTypeDialogBinding) {
+    private fun setupNoteTypeSpinner(binding: DialogChangeNoteTypeBinding) {
         binding.destNoteTypeSpinner.apply {
             adapter = createNoteTypeAdapter()
 
@@ -225,11 +225,11 @@ class ChangeNoteTypeDialog : AnalyticsDialogFragment() {
         }.apply {
             // The resource passed to the constructor is normally used for both the spinner view
             // and the dropdown list. This keeps the former and overrides the latter.
-            setDropDownViewResource(R.layout.spinner_dropdown_item_with_radio)
+            setDropDownViewResource(R.layout.item_spinner_dropdown_with_radio)
         }
     }
 
-    private fun setupViewPagerAndTabs(binding: ChangeNoteTypeDialogBinding) {
+    private fun setupViewPagerAndTabs(binding: DialogChangeNoteTypeBinding) {
         val viewPager = binding.changeNoteTypePager
         viewPager.adapter = ChangeNoteTypeStateAdapter(this@ChangeNoteTypeDialog)
         viewPager.registerOnPageChangeCallback(
@@ -253,7 +253,7 @@ class ChangeNoteTypeDialog : AnalyticsDialogFragment() {
         viewPager: ViewPager2,
     ): TabLayoutMediator =
         TabLayoutMediator(tabLayout, viewPager) { tab: TabLayout.Tab, position: Int ->
-            val binding = TabLayoutIconOnEndBinding.inflate(LayoutInflater.from(tabLayout.context), tabLayout, false)
+            val binding = ViewTabLayoutIconOnEndBinding.inflate(LayoutInflater.from(tabLayout.context), tabLayout, false)
             when (position) {
                 0 -> {
                     binding.tabIcon.setImageResource(R.drawable.ic_mode_edit_white)
@@ -407,7 +407,7 @@ class ChangeNoteTypeDialog : AnalyticsDialogFragment() {
                             ).apply {
                                 // The resource passed to the constructor is normally used for both the spinner view
                                 // and the dropdown list. This keeps the former and overrides the latter.
-                                this.setDropDownViewResource(R.layout.spinner_dropdown_item_with_radio)
+                                this.setDropDownViewResource(R.layout.item_spinner_dropdown_with_radio)
                             }
 
                         val selectionIndex = viewModel.fieldChangeMap[spinnerIndex] ?: fieldSpinnerOptions.lastIndex
@@ -594,7 +594,7 @@ class ChangeNoteTypeDialog : AnalyticsDialogFragment() {
                             ).apply {
                                 // The resource passed to the constructor is normally used for both the spinner view
                                 // and the dropdown list. This keeps the former and overrides the latter.
-                                setDropDownViewResource(R.layout.spinner_dropdown_item_with_radio)
+                                setDropDownViewResource(R.layout.item_spinner_dropdown_with_radio)
                             }
 
                         val selectionIndex = viewModel.templateChangeMap[spinnerIndex] ?: templateSpinnerOptions.lastIndex

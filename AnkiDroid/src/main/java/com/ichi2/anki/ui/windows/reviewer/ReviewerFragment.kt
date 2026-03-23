@@ -56,7 +56,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.utils.android.isRobolectric
-import com.ichi2.anki.databinding.Reviewer2Binding
+import com.ichi2.anki.databinding.FragmentReviewerBinding
 import com.ichi2.anki.dialogs.showDeckOptionsSelectionDialog
 import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory
@@ -101,14 +101,14 @@ import kotlin.math.roundToInt
 import kotlin.reflect.jvm.jvmName
 
 class ReviewerFragment :
-    CardViewerFragment(R.layout.reviewer2),
+    CardViewerFragment(R.layout.fragment_reviewer),
     BaseSnackbarBuilderProvider,
     ActionMenuView.OnMenuItemClickListener,
     DispatchKeyEventListener,
     TagsDialogListener,
     ShakeDetector.Listener {
     override val viewModel: ReviewerViewModel by viewModels()
-    private val binding by viewBinding(Reviewer2Binding::bind)
+    private val binding by viewBinding(FragmentReviewerBinding::bind)
 
     override val webViewLayout: SafeWebViewLayout get() = binding.webViewLayout
     private lateinit var bindingMap: BindingMap<ReviewerBinding, ViewerAction>

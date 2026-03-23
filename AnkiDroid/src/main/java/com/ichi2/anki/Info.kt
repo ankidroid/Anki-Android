@@ -26,7 +26,7 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.activity.OnBackPressedCallback
-import com.ichi2.anki.databinding.InfoBinding
+import com.ichi2.anki.databinding.ActivityInfoBinding
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
@@ -48,9 +48,9 @@ private const val CHANGE_LOG_URL = "https://docs.ankidroid.org/changelog.html"
  * Typically for the AnkiDroid changelog
  */
 class Info :
-    AnkiActivity(R.layout.info),
+    AnkiActivity(R.layout.activity_info),
     BaseSnackbarBuilderProvider {
-    private val binding by viewBinding(InfoBinding::bind)
+    private val binding by viewBinding(ActivityInfoBinding::bind)
 
     override val baseSnackbarBuilder: SnackbarBuilder = {
         anchorView = binding.buttons

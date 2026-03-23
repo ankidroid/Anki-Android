@@ -38,7 +38,7 @@ import kotlin.reflect.jvm.jvmName
 
 /**
  * Activity aimed to host a fragment on the entire screen.
- * For that, it uses [R.layout.single_fragment_activity], which has only a [FragmentContainerView]
+ * For that, it uses [R.layout.activity_single_fragment], which has only a [FragmentContainerView]
  *
  * Useful to avoid creating a Activity for every new screen
  * while being able to reuse the fragment on other places.
@@ -46,7 +46,7 @@ import kotlin.reflect.jvm.jvmName
  * [getIntent] can be used as an easy way to build a [SingleFragmentActivity]
  */
 open class SingleFragmentActivity :
-    AnkiActivity(R.layout.single_fragment_activity),
+    AnkiActivity(R.layout.activity_single_fragment),
     BaseSnackbarBuilderProvider {
     // delegate to the fragment in all cases
     override val baseSnackbarBuilder: SnackbarBuilder

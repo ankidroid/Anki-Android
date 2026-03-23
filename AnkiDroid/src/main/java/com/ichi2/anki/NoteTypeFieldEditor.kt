@@ -33,8 +33,8 @@ import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.databinding.ActivityNoteTypeFieldEditorBinding
 import com.ichi2.anki.databinding.ItemNotetypeFieldBinding
-import com.ichi2.anki.databinding.NoteTypeFieldEditorBinding
 import com.ichi2.anki.dialogs.ConfirmationDialog
 import com.ichi2.anki.dialogs.LocaleSelectionDialog
 import com.ichi2.anki.dialogs.LocaleSelectionDialog.Companion.KEY_SELECTED_LOCALE
@@ -67,8 +67,8 @@ import timber.log.Timber
 import java.util.Locale
 
 @NeedsTest("perform one action, then another")
-class NoteTypeFieldEditor : AnkiActivity(R.layout.note_type_field_editor) {
-    private val binding by viewBinding(NoteTypeFieldEditorBinding::bind)
+class NoteTypeFieldEditor : AnkiActivity(R.layout.activity_note_type_field_editor) {
+    private val binding by viewBinding(ActivityNoteTypeFieldEditorBinding::bind)
 
     // Position of the current field selected
     private var currentPos = 0
@@ -95,7 +95,7 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.note_type_field_editor) {
             return
         }
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.note_type_field_editor)
+        setContentView(R.layout.activity_note_type_field_editor)
         enableToolbar()
         binding.notetypeName.text = intent.getStringExtra(EXTRA_NOTETYPE_NAME)
         startLoadingCollection()

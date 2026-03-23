@@ -30,6 +30,6 @@ abstract class AbstractIntentHandler : Activity() {
         super.onCreate(savedInstanceState)
         Themes.setTheme(this)
         disableXiaomiForceDarkMode(this)
-        setContentView(R.layout.progress_bar)
+        setContentView(R.layout.activity_progress_bar)
     }
 }

@@ -12,6 +12,6 @@
 
         <include
             android:id="@+id/deck_picker_pane"
-            layout="@layout/deck_picker" />
+            layout="@layout/include_deck_picker" />
     </LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

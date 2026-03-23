@@ -364,9 +364,9 @@ open class Reviewer :
 
     override fun getContentViewAttr(fullscreenMode: FullScreenMode): Int =
         when (fullscreenMode) {
-            FullScreenMode.BUTTONS_ONLY -> R.layout.reviewer_fullscreen
-            FullScreenMode.FULLSCREEN_ALL_GONE -> R.layout.reviewer_fullscreen_noanswers
-            FullScreenMode.BUTTONS_AND_MENU -> R.layout.reviewer
+            FullScreenMode.BUTTONS_ONLY -> R.layout.activity_reviewer_fullscreen
+            FullScreenMode.FULLSCREEN_ALL_GONE -> R.layout.activity_reviewer_fullscreen_noanswers
+            FullScreenMode.BUTTONS_AND_MENU -> R.layout.activity_reviewer
         }
 
     public override fun fitsSystemWindows(): Boolean = !fullscreenMode.isFullScreenReview()

@@ -47,8 +47,8 @@ import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
 import com.ichi2.anki.asyncCatching
 import com.ichi2.anki.databinding.DialogSetDueDateBinding
-import com.ichi2.anki.databinding.SetDueDateRangeBinding
-import com.ichi2.anki.databinding.SetDueDateSingleBinding
+import com.ichi2.anki.databinding.FragmentSetDueDateRangeBinding
+import com.ichi2.anki.databinding.FragmentSetDueDateSingleBinding
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.CardId
 import com.ichi2.anki.libanki.sched.Scheduler
@@ -279,10 +279,10 @@ class SetDueDateDialog : DialogFragment() {
         override fun getItemCount() = 2
     }
 
-    class SelectSingleDateFragment : Fragment(R.layout.set_due_date_single) {
+    class SelectSingleDateFragment : Fragment(R.layout.fragment_set_due_date_single) {
         private val viewModel: SetDueDateViewModel by activityViewModels<SetDueDateViewModel>()
 
-        private val binding by viewBinding(SetDueDateSingleBinding::bind)
+        private val binding by viewBinding(FragmentSetDueDateSingleBinding::bind)
 
         override fun onViewCreated(
             view: View,
@@ -345,10 +345,10 @@ class SetDueDateDialog : DialogFragment() {
     /**
      * Allows a user to select a start and end date
      */
-    class SelectDateRangeFragment : Fragment(R.layout.set_due_date_range) {
+    class SelectDateRangeFragment : Fragment(R.layout.fragment_set_due_date_range) {
         private val viewModel: SetDueDateViewModel by activityViewModels<SetDueDateViewModel>()
 
-        private val binding by viewBinding(SetDueDateRangeBinding::bind)
+        private val binding by viewBinding(FragmentSetDueDateRangeBinding::bind)
 
         override fun onViewCreated(
             view: View,
