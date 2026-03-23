@@ -80,6 +80,7 @@ import com.ichi2.anki.preferences.SharedPreferencesProvider
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.settings.PrefsRepository
 import com.ichi2.anki.utils.ext.currentCardBrowse
+import com.ichi2.anki.utils.ext.getCardOrNull
 import com.ichi2.anki.utils.ext.ignoreAccentsInSearch
 import com.ichi2.anki.utils.ext.setUserFlagForCards
 import kotlinx.coroutines.Deferred
@@ -1237,7 +1238,6 @@ class CardBrowserViewModel(
      * @see com.ichi2.anki.searchForRows
      */
     @NeedsTest("Invalid searches are handled. For instance: 'and'")
-    @NeedsTest("card id is scrolled")
     fun launchSearchForCards(cardOrNoteIdsToSelect: List<CardOrNoteId> = emptyList()) {
         if (!initCompleted) return
 
@@ -1264,17 +1264,17 @@ class CardBrowserViewModel(
                 }
 
             viewModelScope.launch {
+                val targetId = cardIdToBeScrolledTo ?: return@launch
                 searchJob?.join()
-                cardIdToBeScrolledTo?.let { targetId ->
-                    val rowId =
-                        if (cardsOrNotes == CARDS) {
-                            CardOrNoteId(targetId)
-                        } else {
-                            val nid = withCol { getCard(targetId) }.nid
-                            CardOrNoteId(nid)
-                        }
-                    flowOfScrollRequest.emit(RowSelection(rowId, topOffset = 0))
-                }
+                cardIdToBeScrolledTo = null
+                // validate targetId, even if in cards mode
+                val card =
+                    withCol { getCardOrNull(targetId) } ?: run {
+                        Timber.w("Unable to find card %d", targetId)
+                        return@launch
+                    }
+                val rowId = CardOrNoteId.fromCard(card, cardsOrNotes)
+                flowOfScrollRequest.emit(RowSelection(rowId, topOffset = 0))
             }
         }
     }

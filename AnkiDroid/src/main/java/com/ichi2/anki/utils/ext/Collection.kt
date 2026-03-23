@@ -19,6 +19,8 @@ import androidx.annotation.CheckResult
 import anki.collection.OpChangesWithCount
 import anki.config.ConfigKey
 import com.ichi2.anki.Flag
+import com.ichi2.anki.libanki.Card
+import com.ichi2.anki.libanki.CardId
 import com.ichi2.anki.libanki.Collection
 
 /** Change the flag color of the specified cards. */
@@ -36,3 +38,6 @@ var Collection.cardStateCustomizer: String
     set(value) {
         config.setString(ConfigKey.String.CARD_STATE_CUSTOMIZER, value)
     }
+
+/** @see Collection.getCard */
+fun Collection.getCardOrNull(id: CardId): Card? = runCatching { getCard(id) }.getOrNull()

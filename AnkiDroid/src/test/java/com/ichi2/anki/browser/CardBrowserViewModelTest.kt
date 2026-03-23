@@ -47,6 +47,7 @@ import com.ichi2.anki.browser.CardBrowserColumn.REVIEWS
 import com.ichi2.anki.browser.CardBrowserColumn.SFLD
 import com.ichi2.anki.browser.CardBrowserColumn.TAGS
 import com.ichi2.anki.browser.CardBrowserLaunchOptions.DeepLink
+import com.ichi2.anki.browser.CardBrowserLaunchOptions.ScrollToCard
 import com.ichi2.anki.browser.CardBrowserLaunchOptions.SystemContextMenu
 import com.ichi2.anki.browser.CardBrowserViewModel.ChangeMultiSelectMode
 import com.ichi2.anki.browser.CardBrowserViewModel.ChangeMultiSelectMode.MultiSelectCause
@@ -101,6 +102,7 @@ import org.hamcrest.Matchers.lessThan
 import org.hamcrest.Matchers.not
 import org.hamcrest.Matchers.nullValue
 import org.junit.Test
+import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertInstanceOf
 import org.junit.runner.RunWith
 import timber.log.Timber
@@ -847,6 +849,62 @@ class CardBrowserViewModelTest : JvmTest() {
             ensureOpWithHandler(this) { deleteSelectedNotes() }
         }
 
+    /** @see <a href="https://github.com/ankidroid/Anki-Android/issues/20556">#20556</a> */
+    @Test
+    fun `delete note - no crash when cardIdToBeScrolledTo is deleted in NOTES mode`() {
+        val cardId = addBasicNote().firstCard().id
+        runViewModelNotesTest(notes = 1, options = ScrollToCard(cardId)) {
+            selectAll()
+            deleteSelectedNotes()
+
+            assertThat("card should be deleted", col.cardCount(), equalTo(0))
+
+            assertDoesNotThrow { launchSearchForCards() }
+        }
+    }
+
+    @Test
+    fun `cardIdToBeScrolledTo is cleared after first scroll`() {
+        val cardId = addBasicNote().firstCard().id
+        runViewModelTest(notes = 1, options = ScrollToCard(cardId)) {
+            assertThat(
+                "cardIdToBeScrolledTo should be cleared after initial scroll",
+                cardIdToBeScrolledTo,
+                nullValue(),
+            )
+        }
+    }
+
+    @Test
+    fun `valid scrollRequest if cardIdToBeScrolledTo is valid`() {
+        val cardId = addBasicNote().firstCard().id
+        runViewModelTest(options = ScrollToCard(cardId), initMode = InitMode.MANUAL) {
+            flowOfScrollRequest.test {
+                manualInit()
+                val cardId = expectMostRecentItem().rowId.cardOrNoteId
+                assertThat("A valid cardId is produced", cardId, equalTo(cardId))
+            }
+        }
+    }
+
+    @Test
+    fun `no ScrollRequest if cardIdToBeScrolledTo is invalid`() {
+        runViewModelTest(options = ScrollToCard(1234), initMode = InitMode.MANUAL) {
+            flowOfScrollRequest.test {
+                manualInit()
+                expectNoEvents()
+                assertThat("cardIdToBeScrolledTo is null if invalid", cardIdToBeScrolledTo, nullValue())
+            }
+        }
+    }
+
+    @Test
+    fun `no crash if cardIdToBeScrolledTo is invalid - NOTES mode`() {
+        runViewModelNotesTest(options = ScrollToCard(1234)) {
+            assertThat("cardIdToBeScrolledTo is null if invalid", cardIdToBeScrolledTo, nullValue())
+        }
+    }
+
     @Test
     fun `notes - search for marked`() =
         runTest {
@@ -1318,14 +1376,14 @@ class CardBrowserViewModelTest : JvmTest() {
     fun `multiselect checked state is restored`() {
         val handle = SavedStateHandle()
         var idOfSelectedRow: CardOrNoteId? = null
-        runViewModelTest(savedStateHandle = handle, notes = 2, manualInit = false) {
+        runViewModelTest(savedStateHandle = handle, notes = 2, initMode = InitMode.NO_DELAY) {
             selectRowAtPosition(1)
             idOfSelectedRow = selectedRows.single()
             // HACK: easiest way to add it to the bundle. This is called on destruction
             handle[STATE_MULTISELECT_VALUES] = generateExpensiveSavedState()
         }
 
-        runViewModelTest(savedStateHandle = handle, manualInit = false) {
+        runViewModelTest(savedStateHandle = handle, initMode = InitMode.NO_DELAY) {
             assertThat("row is still selected", selectedRows, hasSize(1))
             assertThat("same row is selected", selectedRows.single(), equalTo(idOfSelectedRow))
         }
@@ -1493,7 +1551,8 @@ class CardBrowserViewModelTest : JvmTest() {
 
     private fun runViewModelNotesTest(
         notes: Int = 0,
-        manualInit: Boolean = true,
+        initMode: InitMode = InitMode.AUTOMATIC,
+        options: CardBrowserLaunchOptions? = null,
         testBody: suspend CardBrowserViewModel.() -> Unit,
     ) = runTest {
         CardsOrNotes.NOTES.saveToCollection(col)
@@ -1505,14 +1564,14 @@ class CardBrowserViewModelTest : JvmTest() {
             CardBrowserViewModel(
                 lastDeckIdRepository = SharedPreferencesLastDeckIdRepository(),
                 cacheDir = createTransientDirectory(),
-                options = null,
+                options = options,
                 preferences = AnkiDroidApp.sharedPreferencesProvider,
                 isFragmented = false,
-                manualInit = manualInit,
+                manualInit = initMode == InitMode.MANUAL || initMode == InitMode.AUTOMATIC,
                 savedStateHandle = SavedStateHandle(),
             )
         // makes ignoreValuesFromViewModelLaunch work under test
-        if (manualInit) {
+        if (initMode == InitMode.AUTOMATIC) {
             viewModel.manualInit()
         }
         testBody(viewModel)
@@ -1520,8 +1579,9 @@ class CardBrowserViewModelTest : JvmTest() {
 
     private fun runViewModelTest(
         notes: Int = 0,
-        manualInit: Boolean = true,
+        initMode: InitMode = InitMode.AUTOMATIC,
         savedStateHandle: SavedStateHandle = SavedStateHandle(),
+        options: CardBrowserLaunchOptions? = null,
         testBody: suspend CardBrowserViewModel.() -> Unit,
     ) = runTest {
         for (i in 0 until notes) {
@@ -1532,14 +1592,14 @@ class CardBrowserViewModelTest : JvmTest() {
             CardBrowserViewModel(
                 lastDeckIdRepository = SharedPreferencesLastDeckIdRepository(),
                 cacheDir = createTransientDirectory(),
-                options = null,
+                options = options,
                 preferences = AnkiDroidApp.sharedPreferencesProvider,
                 isFragmented = false,
-                manualInit = manualInit,
+                manualInit = initMode == InitMode.MANUAL || initMode == InitMode.AUTOMATIC,
                 savedStateHandle = savedStateHandle,
             )
         // makes ignoreValuesFromViewModelLaunch work under test
-        if (manualInit) {
+        if (initMode == InitMode.AUTOMATIC) {
             viewModel.manualInit()
         }
         testBody(viewModel)
@@ -1577,6 +1637,17 @@ class CardBrowserViewModelTest : JvmTest() {
                 invokeInitialSearch()
             }
         }
+    }
+
+    enum class InitMode {
+        /** init { } runs as normal */
+        NO_DELAY,
+
+        /** init { } is delayed, via a call to [CardBrowserViewModel.manualInit] is called */
+        AUTOMATIC,
+
+        /** init is not run, and a manual invocation of [CardBrowserViewModel.manualInit] is necessary */
+        MANUAL,
     }
 }
 

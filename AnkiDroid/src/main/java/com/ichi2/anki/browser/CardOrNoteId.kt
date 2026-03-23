@@ -18,6 +18,7 @@ package com.ichi2.anki.browser
 
 import android.os.Parcelable
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.libanki.Card
 import com.ichi2.anki.libanki.CardId
 import com.ichi2.anki.libanki.NoteId
 import com.ichi2.anki.model.CardsOrNotes
@@ -51,4 +52,11 @@ value class CardOrNoteId(
             // (empty templates, orphaned notes, etc).
             CardsOrNotes.NOTES -> withCol { cardIdsOfNote(cardOrNoteId).firstOrNull() }
         }
+
+    companion object {
+        fun fromCard(
+            card: Card,
+            cardsOrNotes: CardsOrNotes,
+        ): CardOrNoteId = CardOrNoteId(if (cardsOrNotes == CardsOrNotes.CARDS) card.id else card.nid)
+    }
 }
