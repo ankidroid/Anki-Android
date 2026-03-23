@@ -89,6 +89,8 @@ class LayoutPrefixDetector : LayoutDetector() {
                 "widget_",
                 // layouts used by preferences
                 "preference_",
+                // layouts used by Anki HTML pages
+                "page_",
             )
 
         /**
@@ -99,8 +101,6 @@ class LayoutPrefixDetector : LayoutDetector() {
             listOf(
                 "popup_brush_options.xml",
                 "popup_eraser_options.xml",
-                "image_occlusion.xml",
-                "statistics.xml",
             )
     }
 }

@@ -58,7 +58,7 @@ import timber.log.Timber
  * @see ImageOcclusion.getIntent
  */
 class ImageOcclusion :
-    PageFragment(R.layout.image_occlusion),
+    PageFragment(R.layout.page_image_occlusion),
     DeckSelectionDialog.DeckSelectionListener {
     private val viewModel: ImageOcclusionViewModel by viewModels()
     private lateinit var deckNameView: TextView

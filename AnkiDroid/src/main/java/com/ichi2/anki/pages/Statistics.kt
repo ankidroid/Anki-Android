@@ -25,7 +25,7 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.time.getTimestamp
-import com.ichi2.anki.databinding.StatisticsBinding
+import com.ichi2.anki.databinding.PageStatisticsBinding
 import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.model.SelectableDeck
@@ -34,10 +34,10 @@ import com.ichi2.anki.withProgress
 import dev.androidbroadcast.vbpd.viewBinding
 
 class Statistics :
-    PageFragment(R.layout.statistics),
+    PageFragment(R.layout.page_statistics),
     DeckSelectionDialog.DeckSelectionListener {
     override val pagePath: String = "graphs"
-    private val binding by viewBinding(StatisticsBinding::bind)
+    private val binding by viewBinding(PageStatisticsBinding::bind)
 
     @Suppress("deprecation", "API35 properly handle edge-to-edge")
     override fun onViewCreated(
