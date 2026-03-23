@@ -87,6 +87,8 @@ class LayoutPrefixDetector : LayoutDetector() {
                 "item_",
                 // layouts used by widgets
                 "widget_",
+                // layouts used by preferences
+                "preference_",
             )
 
         /**
@@ -97,13 +99,6 @@ class LayoutPrefixDetector : LayoutDetector() {
             listOf(
                 "popup_brush_options.xml",
                 "popup_eraser_options.xml",
-                "preference_controls_tab.xml",
-                "preference_controls_tab.xml",
-                "preference_extended_category.xml",
-                "preference_material_switch_widget.xml",
-                "preference_slider.xml",
-                "preference_widget_switch_with_separator.xml",
-                "preference_widget_text.xml",
                 "image_occlusion.xml",
                 "statistics.xml",
             )
