@@ -20,7 +20,6 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.annotation.CheckResult
 import com.ichi2.anki.reviewer.Binding.KeyBinding
-import com.ichi2.utils.hash
 import timber.log.Timber
 import java.util.Objects
 

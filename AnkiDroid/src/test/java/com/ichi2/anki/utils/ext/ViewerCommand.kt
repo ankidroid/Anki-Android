@@ -18,10 +18,8 @@ package com.ichi2.anki.utils.ext
 import android.content.SharedPreferences
 import androidx.core.content.edit
 import com.ichi2.anki.cardviewer.ViewerCommand
-import com.ichi2.anki.preferences.reviewer.ViewerAction
 import com.ichi2.anki.reviewer.MappableBinding
 import com.ichi2.anki.reviewer.MappableBinding.Companion.toPreferenceString
-import com.ichi2.anki.reviewer.ReviewerBinding.Companion.fromPreferenceString
 import com.ichi2.anki.servicelayer.bindingFromPreference
 
 fun ViewerCommand.addBinding(

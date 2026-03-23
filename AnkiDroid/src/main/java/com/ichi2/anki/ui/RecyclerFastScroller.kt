@@ -58,7 +58,6 @@ import android.widget.FrameLayout
 import androidx.annotation.IdRes
 import androidx.core.graphics.drawable.toDrawable
 import androidx.core.view.GravityCompat
-import androidx.core.view.ViewCompat
 import androidx.interpolator.view.animation.FastOutLinearInInterpolator
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import androidx.recyclerview.widget.LinearLayoutManager

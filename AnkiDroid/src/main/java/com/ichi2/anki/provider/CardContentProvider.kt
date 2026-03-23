@@ -56,7 +56,6 @@ import com.ichi2.anki.libanki.TemplateManager.TemplateRenderContext.TemplateRend
 import com.ichi2.anki.libanki.Utils
 import com.ichi2.anki.libanki.exception.ConfirmModSchemaException
 import com.ichi2.anki.libanki.exception.EmptyMediaException
-import com.ichi2.anki.libanki.exception.InvalidSearchException
 import com.ichi2.anki.libanki.sched.DeckNode
 import com.ichi2.utils.FileUtil
 import com.ichi2.utils.FileUtil.internalizeUri

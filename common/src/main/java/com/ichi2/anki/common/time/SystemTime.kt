@@ -15,8 +15,6 @@
  */
 package com.ichi2.anki.common.time
 
-import com.ichi2.anki.common.time.Time
-
 class SystemTime : Time() {
     override fun intTimeMS(): Long = System.currentTimeMillis()
 }

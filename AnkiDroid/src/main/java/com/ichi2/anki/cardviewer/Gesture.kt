@@ -19,8 +19,6 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.os.Build
 import com.ichi2.anki.R
-import com.ichi2.anki.cardviewer.TapGestureMode.FOUR_POINT
-import com.ichi2.anki.cardviewer.TapGestureMode.NINE_POINT
 
 /**
  * https://www.fileformat.info/info/unicode/char/235d/index.htm (similar to a finger)

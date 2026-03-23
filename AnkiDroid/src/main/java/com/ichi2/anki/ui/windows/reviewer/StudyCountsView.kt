@@ -16,8 +16,6 @@
 package com.ichi2.anki.ui.windows.reviewer
 
 import android.content.Context
-import android.text.SpannableString
-import android.text.style.UnderlineSpan
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout

@@ -17,7 +17,6 @@ package com.ichi2.anki.utils
 
 import timber.log.Timber
 import java.lang.reflect.Field
-import kotlin.reflect.jvm.isAccessible
 
 /**
  * @param fieldName name of the field
