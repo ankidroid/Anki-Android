@@ -268,11 +268,11 @@
     <string name="special_fields_tab_header" comment="Tab header for inserting special fields: {{Deck}}">特殊</string>
     <string name="special_field_example_suffix"><![CDATA[: ‘<b>%1$s</b>’]]></string>
     <string name="special_field_front_side_help">前台模板内容。音频不自动播放</string>
-    <string name="special_field_deck_help">卡片的完整牌组，包括上级牌组 %s</string>
-    <string name="special_field_subdeck_help">卡片的当前牌组，不包括上级牌组 %s</string>
-    <string name="special_field_card_flag_help">输出 ‘%1$s’, 其中 %2$s 是标记码 (%3$d\–%4$d\)</string>
-    <string name="special_field_tags_help">笔记%s的标签</string>
-    <string name="special_field_card_id_help">卡片%s的ID</string>
-    <string name="special_field_card_help">卡片模板%s 的名称</string>
-    <string name="special_field_type_help">笔记类型%s的名称</string>
+    <string name="special_field_deck_help" comment="%s: either blank or \' %s\'">卡片的完整牌组，包括上级牌组 %s</string>
+    <string name="special_field_subdeck_help" comment="%s: either blank or \' %s\'">卡片的当前牌组，不包括上级牌组 %s</string>
+    <string name="special_field_flag_help">Outputs ‘%1$s’, where %2$s is the flag code (%3$s\–%4$s\)</string>
+    <string name="special_field_tags_help" comment="%s: either blank or \' %s\'">笔记%s的标签</string>
+    <string name="special_field_card_id_help" comment="%s: either blank or \' %s\'">卡片%s的ID</string>
+    <string name="special_field_card_help" comment="%s: either blank or \' %s\'">卡片模板%s 的名称</string>
+    <string name="special_field_type_help" comment="%s: either blank or \' %s\'">笔记类型%s的名称</string>
 </resources>
