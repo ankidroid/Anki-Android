@@ -56,6 +56,23 @@ suspend fun ensureOpsExecuted(
     fail("ChangeManager: expected $count calls; ${ChangeManager.subscriberCount} subscribers")
 }
 
+/**
+ * Ensures that [ChangeManager.notifySubscribers] is called with [handler] as the handler
+ */
+suspend fun ensureOpWithHandler(
+    handler: Any,
+    block: suspend () -> Unit,
+) {
+    val handlerAccessor = ExtractOpHandler()
+    ChangeManager.subscribe(handlerAccessor)
+    block()
+    if (handlerAccessor.handler === handler) {
+        Timber.d("ensureOpWithHandler: success")
+        return
+    }
+    fail("ChangeManager: expected handler to be $handler, but was ${handlerAccessor.handler}")
+}
+
 // used to ensure a strong reference to the subscription is held
 private class ChangeCounter : ChangeManager.Subscriber {
     private var changes = 0
@@ -68,5 +85,17 @@ private class ChangeCounter : ChangeManager.Subscriber {
     ) {
         Timber.d("ChangeManager op detected")
         this.changes++
+    }
+}
+
+private class ExtractOpHandler : ChangeManager.Subscriber {
+    var handler: Any? = null
+        private set
+
+    override fun opExecuted(
+        changes: OpChanges,
+        handler: Any?,
+    ) {
+        this.handler = handler
     }
 }

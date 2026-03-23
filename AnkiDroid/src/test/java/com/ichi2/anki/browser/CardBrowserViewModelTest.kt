@@ -85,6 +85,7 @@ import com.ichi2.testutils.IntentAssert
 import com.ichi2.testutils.JvmTest
 import com.ichi2.testutils.createTransientDirectory
 import com.ichi2.testutils.ensureNoOpsExecuted
+import com.ichi2.testutils.ensureOpWithHandler
 import com.ichi2.testutils.ensureOpsExecuted
 import com.ichi2.testutils.ext.reopenWithLanguage
 import com.ichi2.testutils.mockIt
@@ -106,6 +107,7 @@ import timber.log.Timber
 import java.io.File
 import kotlin.io.path.createTempDirectory
 import kotlin.io.path.pathString
+import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
@@ -822,6 +824,27 @@ class CardBrowserViewModelTest : JvmTest() {
             assertThat("1 note deleted - 2 cards deleted", col.cardCount(), equalTo(2))
             assertThat("no selection after", selectedRowCount(), equalTo(0))
             assertThat("one row removed", rowCount, equalTo(1))
+        }
+
+    @Test
+    fun `delete note - flowOfCardsUpdated emits`() =
+        runViewModelTest(notes = 2) {
+            selectRowsWithPositions(0)
+
+            flowOfCardsUpdated.test {
+                expectNoEvents()
+                assertEquals(1, deleteSelectedNotes(), "1 note deleted")
+                awaitItem()
+            }
+        }
+
+    @Test
+    fun `delete note - handler passed to undoableOp prevents double refresh`() =
+        runViewModelTest(notes = 2) {
+            selectRowsWithPositions(0)
+
+            // flowOfCardsUpdated already performs a refresh
+            ensureOpWithHandler(this) { deleteSelectedNotes() }
         }
 
     @Test
