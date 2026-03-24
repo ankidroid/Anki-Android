@@ -47,7 +47,7 @@ class RenameCardTypeDialog {
                     prefill = prefill,
                     waitForPositiveButton = true,
                     callback = { dialog, result ->
-                        block(result.toString())
+                        block(result.toString().trim())
                         dialog.dismiss()
                     },
                 )
