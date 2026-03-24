@@ -41,7 +41,7 @@ class RenameCardTypeDialog {
                     negativeButton(R.string.dialog_cancel)
                     setView(R.layout.dialog_generic_text_input)
                 }.input(
-                    hint = CollectionManager.TR.actionsNewName(),
+                    hint = CollectionManager.TR.actionsNewName().removeSuffix(":"),
                     displayKeyboard = true,
                     allowEmpty = false,
                     prefill = prefill,
