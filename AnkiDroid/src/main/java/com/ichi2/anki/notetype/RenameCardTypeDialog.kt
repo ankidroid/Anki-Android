@@ -26,7 +26,7 @@ import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
 import com.ichi2.utils.title
 
-class RenameCardTemplateDialog {
+class RenameCardTypeDialog {
     companion object {
         fun showInstance(
             context: Context,
