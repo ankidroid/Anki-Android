@@ -40,9 +40,9 @@ class ConfirmationDialog : DialogFragment() {
 
     private val title: String
         get() =
-            requireNotNull(requireArguments().getString(ARG_TITLE)) {
-                ARG_TITLE
-            }.ifEmpty { requireActivity().getString(R.string.app_name) }
+            requireArguments()
+                .getString(ARG_TITLE)
+                .ifNullOrEmpty { requireActivity().getString(R.string.app_name) }
 
     private val positiveButtonText: String
         get() =
@@ -101,9 +101,7 @@ class ConfirmationDialog : DialogFragment() {
         private const val ARG_MESSAGE = "message"
 
         /**
-         * The dialog title (required)
-         *
-         * Use the empty string for the app name (AnkiDroid)
+         * Optional dialog title. Default: [R.string.app_name]
          */
         private const val ARG_TITLE = "title"
 
