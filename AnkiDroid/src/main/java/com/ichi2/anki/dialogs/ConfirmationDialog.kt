@@ -56,7 +56,7 @@ class ConfirmationDialog : DialogFragment() {
     /**
      * Sets the message to display. Using [R.string.app_name] as the title.
      */
-    fun setArgs(message: String?) {
+    fun setArgs(message: String) {
         setArgs(
             title = "",
             message = message,
@@ -66,7 +66,7 @@ class ConfirmationDialog : DialogFragment() {
 
     fun setArgs(
         title: String?,
-        message: String?,
+        message: String,
         positiveButtonText: String? = null,
     ) {
         arguments =
