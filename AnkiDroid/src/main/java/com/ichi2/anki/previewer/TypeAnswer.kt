@@ -55,7 +55,7 @@ class TypeAnswer private constructor(
 
         @Language("HTML")
         val repl = """<div style="font-family: '$font'; font-size: ${fontSize}px">$answerComparison</div>"""
-        return typeAnsRe.replace(text, repl)
+        return typeAnsRe.replace(text, Regex.escapeReplacement(repl))
     }
 
     companion object {
