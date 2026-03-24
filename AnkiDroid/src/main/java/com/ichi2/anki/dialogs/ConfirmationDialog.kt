@@ -20,6 +20,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import com.ichi2.anki.R
+import com.ichi2.anki.utils.ext.ifNullOrEmpty
 import com.ichi2.utils.create
 import com.ichi2.utils.message
 import com.ichi2.utils.negativeButton
@@ -31,12 +32,30 @@ import com.ichi2.utils.title
  * Create a new instance, call setArgs(...), setConfirm(), and setCancel() then show it via the fragment manager as usual.
  */
 class ConfirmationDialog : DialogFragment() {
-    private val positiveButtonText: String?
-        get() = requireArguments().getString(ARG_POSITIVE_BUTTON_TEXT)
+    private val message: String
+        get() =
+            requireNotNull(requireArguments().getString(ARG_MESSAGE)) {
+                ARG_MESSAGE
+            }
+
+    private val title: String
+        get() =
+            requireNotNull(requireArguments().getString(ARG_TITLE)) {
+                ARG_TITLE
+            }.ifEmpty { requireActivity().getString(R.string.app_name) }
+
+    private val positiveButtonText: String
+        get() =
+            requireArguments()
+                .getString(ARG_POSITIVE_BUTTON_TEXT)
+                .ifNullOrEmpty { getString(R.string.dialog_ok) }
 
     private var confirm = Runnable {} // Do nothing by default
     private var cancel = Runnable {} // Do nothing by default
 
+    /**
+     * Sets the message to display. Using [R.string.app_name] as the title.
+     */
     fun setArgs(message: String?) {
         setArgs(
             title = "",
@@ -52,8 +71,8 @@ class ConfirmationDialog : DialogFragment() {
     ) {
         arguments =
             Bundle().apply {
-                putString("title", title)
-                putString("message", message)
+                putString(ARG_MESSAGE, message)
+                putString(ARG_TITLE, title)
                 putString(ARG_POSITIVE_BUTTON_TEXT, positiveButtonText)
             }
     }
@@ -68,21 +87,27 @@ class ConfirmationDialog : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): AlertDialog {
         super.onCreate(savedInstanceState)
-        val res = requireActivity().resources
-        val title = requireArguments().getString("title")
+
         return AlertDialog.Builder(requireContext()).create {
-            title(text = (if ("" == title) res.getString(R.string.app_name) else title)!!)
-            message(text = requireArguments().getString("message")!!)
-            positiveButton(text = positiveButtonText ?: getString(R.string.dialog_ok)) {
-                confirm.run()
-            }
-            negativeButton(R.string.dialog_cancel) {
-                cancel.run()
-            }
+            title(text = title)
+            message(text = message)
+            positiveButton(text = positiveButtonText) { confirm.run() }
+            negativeButton(R.string.dialog_cancel) { cancel.run() }
         }
     }
 
     companion object {
+        /** The dialog message (required) */
+        private const val ARG_MESSAGE = "message"
+
+        /**
+         * The dialog title (required)
+         *
+         * Use the empty string for the app name (AnkiDroid)
+         */
+        private const val ARG_TITLE = "title"
+
+        /** Optional text for the positive button. Default: "OK" */
         private const val ARG_POSITIVE_BUTTON_TEXT = "positiveButtonText"
     }
 }
