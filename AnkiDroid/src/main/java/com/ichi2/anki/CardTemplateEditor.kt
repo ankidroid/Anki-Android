@@ -1364,6 +1364,7 @@ open class CardTemplateEditor :
             d.setArgs(
                 title = getString(R.string.delete_card_type),
                 message = msg,
+                positiveButtonText = getString(R.string.dialog_positive_delete),
             )
 
             val deleteCard = Runnable { deleteTemplate(tmpl, notetype) }
@@ -1393,6 +1394,7 @@ open class CardTemplateEditor :
             d.setArgs(
                 title = getString(R.string.add_card_type),
                 message = msg,
+                positiveButtonText = getString(R.string.menu_add),
             )
 
             val addCard = Runnable { addNewTemplate(notetype) }

@@ -31,21 +31,31 @@ import com.ichi2.utils.title
  * Create a new instance, call setArgs(...), setConfirm(), and setCancel() then show it via the fragment manager as usual.
  */
 class ConfirmationDialog : DialogFragment() {
+    private val positiveButtonText: String?
+        get() = requireArguments().getString(ARG_POSITIVE_BUTTON_TEXT)
+
     private var confirm = Runnable {} // Do nothing by default
     private var cancel = Runnable {} // Do nothing by default
 
     fun setArgs(message: String?) {
-        setArgs("", message)
+        setArgs(
+            title = "",
+            message = message,
+            positiveButtonText = null,
+        )
     }
 
     fun setArgs(
         title: String?,
         message: String?,
+        positiveButtonText: String? = null,
     ) {
-        val args = Bundle()
-        args.putString("message", message)
-        args.putString("title", title)
-        arguments = args
+        arguments =
+            Bundle().apply {
+                putString("title", title)
+                putString("message", message)
+                putString(ARG_POSITIVE_BUTTON_TEXT, positiveButtonText)
+            }
     }
 
     fun setConfirm(confirm: Runnable) {
@@ -63,12 +73,16 @@ class ConfirmationDialog : DialogFragment() {
         return AlertDialog.Builder(requireContext()).create {
             title(text = (if ("" == title) res.getString(R.string.app_name) else title)!!)
             message(text = requireArguments().getString("message")!!)
-            positiveButton(R.string.dialog_ok) {
+            positiveButton(text = positiveButtonText ?: getString(R.string.dialog_ok)) {
                 confirm.run()
             }
             negativeButton(R.string.dialog_cancel) {
                 cancel.run()
             }
         }
+    }
+
+    companion object {
+        private const val ARG_POSITIVE_BUTTON_TEXT = "positiveButtonText"
     }
 }
