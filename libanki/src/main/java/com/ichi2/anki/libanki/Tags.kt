@@ -85,13 +85,21 @@ class Tags(
      * ***********************************************************
      */
 
-    /** Rename provided tag and its children, returning number of changed notes. */
+    /**
+     * Rename a given tag and its children on all notes that reference it.
+     *
+     * @return [OpChangesWithCount] containing the number of affected notes.
+     */
     fun rename(
         old: String,
         new: String,
     ): OpChangesWithCount = col.backend.renameTags(currentPrefix = old, newPrefix = new)
 
-    /** Remove the provided tag(s) and their children from notes and the tag list. */
+    /**
+     * Remove the provided tag(s) and their children from notes and the tag list.
+     *
+     * @return [OpChangesWithCount] containing the number of affected notes.
+     */
     fun remove(spaceSeparatedTags: String): OpChangesWithCount = col.backend.removeTags(`val` = spaceSeparatedTags)
 
     /**
