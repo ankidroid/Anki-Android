@@ -176,7 +176,7 @@
     <string name="import_error_load_imported_database">Замена базы даных Anki (.anki2) пакуль не падтрымліваецца. Звярніцеся да даведніка для інструкцыі па замене.</string>
     <string name="import_error_content_provider">Выбраны файл немагчыма імпартаваць аўтаматычна ў праграму. Звярніцеся да даведніка карыстальніка для імпартавання файлаў Anki уручную: \n%s</string>
     <string name="import_error_copy_to_cache_title">Не атрымалася кэшыраваць файл</string>
-    <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">Гэта часта з\'яўляецца прычынай памылкі ў праграме, якую вы выкарыстоўваеце для выбару файла. Паспрабуйце наступныя выпраўленні: \n\n%s</string>
+    <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">Гэта часта выклікана памылкай у праграме, якую вы выкарыстоўваеце для выбару файла. Паспрабуйце наступныя выпраўленні:\n\n%s</string>
     <string name="import_interrupted">Імпарт перарваны</string>
     <string name="export_ready_title">Экспартаванне выканана</string>
     <string name="export_send_no_handlers">Няма адпаведнай праграмы для апрацоўкі пакета apkg. Захаванне&#8230;</string>
@@ -184,10 +184,10 @@
     <string name="export_save_apkg_unsuccessful">Памылка захавання пакета Anki</string>
     <string name="export_share_title">Адправіць пакет Anki з выкарыстаннем</string>
     <string name="export_email_subject">AnkiDroid экспартаваў калоды картак для запамінання: %s</string>
-    <string name="export_email_text"><![CDATA[        Добры дзень!
+    <string name="export_email_text"><![CDATA[        Вітанкі!
         <br/><br/>
         Гэта калода картак Anki была адпраўлена з праграмы AnkiDroid[1].
-        Паспрабуйце адкрыць яе з дапамогай адной з версій праграмы Anki[2] і атрымаць асалоду ад лёгкага і эфектыўнага навучання!<br/><br/>
+        Паспрабуйце адкрыць яе з дапамогай адной з версій праграмы Anki[2] і атрымайце асалоду ад лёгкага і эфектыўнага навучання!<br/><br/>
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
@@ -214,7 +214,7 @@
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
     <string name="background_image_title" maxLength="41">Фон</string>
-    <string name="choose_an_image" maxLength="41">Выберыце відарыс</string>
+    <string name="choose_an_image" maxLength="41">Выбраць відарыс</string>
     <string name="remove_wallpaper_image" maxLength="41">Выдаліць фон</string>
     <string name="remove_background_image">Выдаліць фон?</string>
     <!-- Card Template Browser Appearance -->
@@ -236,7 +236,7 @@
     <string name="reviewer_invalid_api_version_visit_documentation">Выгляд</string>
     <string name="anki_js_error_code">(Код памылкі: %d)</string>
     <!-- About AnkiDroid screen -->
-    <string name="about_ankidroid_successfully_copied_debug_info">Скапіяваць у буфер абмену</string>
+    <string name="about_ankidroid_successfully_copied_debug_info">Скапіявана ў буфер абмену</string>
     <string name="about_ankidroid_error_copy_debug_info">Памылка капіявання адладачнай інфармацыі ў буфер абмену</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Памылка змесціва карткі: немагчыма загрузіць ‘%s’</string>
@@ -244,7 +244,7 @@
     <string name="search_decks" maxLength="28">Пошук калод</string>
     <string name="ankidroid_init_failed_webview_title">Крытычная памылка</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid выкарыстоўвае сістэмныя WebView, якія зараз недаступныя. Гэта можа здарыцца таму, што ў дадзены момант адбываюцца ўсталяванне абнаўленняў. Паспрабуйце, калі ласка, пачакаць і паўтарыць спробу праз некалькі хвілін.\n\n%s</string>
-    <string name="ankidroid_init_failed_storage">AnkiDroid не можа атрымаць доступ да сховішча з прычыны памылкі ў аперацыйнай сістэме.\n\n%s</string>
+    <string name="ankidroid_init_failed_storage">AnkiDroid не можа атрымаць доступ да сховішча з-за памылкі ў аперацыйнай сістэме.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">Памер шрыфту</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Паказаць панэль інструментаў</string>
@@ -291,7 +291,7 @@
     <string name="downloading_file">Спампоўванне %s</string>
     <string name="import_deck">Імпартаваць калоду</string>
     <string name="something_wrong">Нешта пайшло не так, калі ласка, паспрабуйце яшчэ раз</string>
-    <string name="download_failed">Памылка пры спампоўцы</string>
+    <string name="download_failed">Памылка спампоўкі</string>
     <string name="deck_download_progress_message">Можаце карыстацца іншымі праграмамі падчас спампоўвання</string>
     <string name="check_network">Калі ласка, праверце падключэнне да інтэрнэту</string>
     <string name="external_storage_unavailable">Спампоўванне абарвана, бо знешняе сховішча недаступна</string>

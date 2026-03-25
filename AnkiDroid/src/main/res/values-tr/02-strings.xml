@@ -196,7 +196,7 @@
     <string name="dyn_deck_desc">Bu normal programın dışında çalışmak için özel bir deste. Kartlar çalışıldıktan sonra otomatik olarak kendi destelerine geri dönecekler. Bu desteyi deste listesinden silmek kalan bütün kartları kendi destelerine geri döndürecek.</string>
     <string name="tag_editor_add_feedback">\"%1$s\" eklemek için buna dokunun: \"%2$s\"</string>
     <string name="tag_editor_add_feedback_existing">Varolan bir etiketi seçtiniz: \"%1$s\"</string>
-    <string name="tag_already_exists">Tag already exists</string>
+    <string name="tag_already_exists">Etiket hâlihazırda var</string>
     <!-- Time spans -->
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Apkg dosyasını paylaşırken hata</string>
@@ -212,7 +212,7 @@
     <string name="remove_wallpaper_image" maxLength="41">Arkaplanı kaldır</string>
     <string name="remove_background_image">Arkaplan kaldırılsın mı?</string>
     <!-- Card Template Browser Appearance -->
-    <string name="restore_default" maxLength="28">Restore default</string>
+    <string name="restore_default" maxLength="28">Varsayılana döndür</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Boş</string>
     <!-- Whiteboard eraser mode toggle message in Reviewer -->
     <string name="white_board_eraser_enabled">Silgi modu etkinleştirildi</string>
@@ -332,7 +332,7 @@
     <!-- Browser Options Dialog -->
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Kartlar</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Notlar</string>
-    <string name="toggle_cards_notes">Toggle cards/notes</string>
+    <string name="toggle_cards_notes">Kartları/notları aç/kapat</string>
     <string name="truncate_content_help">Tarayıcının her satırının yüksekliğini içeriğin sadece ilk 3 satırını gösterecek şekilde sınırla</string>
     <string name="browser_options_dialog_heading">Tarayıcı seçenekleri</string>
     <string name="audio_saved">Alınan kayıtlar kaydedildi.</string>
@@ -348,7 +348,7 @@
     <string name="shared_decks_login_required">Daha fazla deste indirmek için lütfen giriş yapın</string>
     <string name="deck_description_field_hint">Açıklama</string>
     <string name="deck_description_saved">Açıklama güncellendi</string>
-    <string name="format_deck_description_as_markdown">Format as markdown</string>
+    <string name="format_deck_description_as_markdown">Markdown olarak formatla</string>
     <string name="help_button_content_description">\"%s\" için yardımı aç</string>
     <string name="failed_to_copy">Kopyalanamadı</string>
     <plurals name="unbury_cards_feedback">
@@ -363,7 +363,7 @@
     <string name="play_recording">Oynat</string>
     <string name="next_recording" comment="Description of a button to go to the next recording">Sonraki</string>
     <!--  AlertDialog in the deleteCardTemplate  -->
-    <string name="orphan_note_title">Cannot delete card type</string>
+    <string name="orphan_note_title">Kart türü silinemiyor</string>
     <string name="orphan_note_message">Bu kart türünü silmek bazı notları kartsız bırakacak.</string>
     <string name="voice_not_supported">Seslendirme desteklenmiyor. Başka bir seslendirme motoru deneyin ya da bir tane yükleyin.</string>
     <!--Keyboard shortcuts dialog-->
