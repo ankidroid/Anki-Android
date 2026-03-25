@@ -38,7 +38,7 @@ class WhiteboardView : View {
     constructor(context: Context) : this(context, null)
 
     var onNewPath: ((Path) -> Unit)? = null
-    var onEraseGestureStart: (() -> Unit)? = null
+    var onEraseGestureStart: ((Float, Float) -> Unit)? = null
     var onEraseGestureMove: ((Float, Float) -> Unit)? = null
     var onEraseGestureEnd: (() -> Unit)? = null
     var isEraserActive: Boolean = false
@@ -139,8 +139,7 @@ class WhiteboardView : View {
                 hasMoved = false
                 currentPath.moveTo(touchX, touchY)
                 if (isPathEraser) {
-                    onEraseGestureStart?.invoke()
-                    onEraseGestureMove?.invoke(touchX, touchY)
+                    onEraseGestureStart?.invoke(touchX, touchY)
                 }
                 invalidate()
             }
