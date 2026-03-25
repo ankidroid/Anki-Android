@@ -12,8 +12,8 @@ import androidx.core.content.edit
 import androidx.core.content.pm.PackageInfoCompat
 import androidx.webkit.WebViewCompat
 import com.ichi2.anki.analytics.AnkiDroidCrashReportDialog
-import com.ichi2.anki.analytics.UsageAnalytics
-import com.ichi2.anki.analytics.UsageAnalytics.sendAnalyticsException
+import com.ichi2.anki.analytics.AnkiDroidUsageAnalytics
+import com.ichi2.anki.analytics.AnkiDroidUsageAnalytics.sendAnalyticsException
 import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.common.crashreporting.CrashReporter
 import com.ichi2.anki.common.crashreporting.CrashReporter.Companion.FEEDBACK_REPORT_ALWAYS
@@ -149,7 +149,7 @@ private object AcraCrashReporter : CrashReporter {
 
     /**
      * Use this method to initialize the ACRA CoreConfigurationBuilder in Application.onCreate().
-     * The ACRA process needs a WebView for optimal UsageAnalytics values but it can't have the same
+     * The ACRA process needs a WebView for optimal AnkiDroidUsageAnalytics values but it can't have the same
      * data directory. Analytics falls back to a sensible default if this is not set.
      */
     @JvmStatic
@@ -325,7 +325,7 @@ private object AcraCrashReporter : CrashReporter {
         // If the user changed error reporting, make sure future reports have a chance to post
         deleteLimiterData(ctx)
         // We also need to re-chain our UncaughtExceptionHandlers
-        UsageAnalytics.reInitialize()
+        AnkiDroidUsageAnalytics.reinitialize(ctx.applicationContext)
         ThrowableFilterService.reInitialize()
     }
 

@@ -18,9 +18,11 @@ package com.ichi2.anki.dialogs
 
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.edit
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
-import com.ichi2.anki.analytics.UsageAnalytics
+import com.ichi2.anki.analytics.AnkiDroidUsageAnalytics
+import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.utils.cancelable
 import com.ichi2.utils.checkBoxPrompt
@@ -38,7 +40,11 @@ class DeckPickerAnalyticsOptInDialog : AnalyticsDialogFragment() {
             message(R.string.analytics_summ)
             checkBoxPrompt(R.string.analytics_title, isCheckedDefault = false) {}
             positiveButton(R.string.dialog_continue) {
-                UsageAnalytics.isEnabled = (it as AlertDialog).getCheckBoxPrompt().isChecked
+                val isOptedIn = (it as AlertDialog).getCheckBoxPrompt().isChecked
+                requireContext().sharedPrefs().edit {
+                    putBoolean(AnkiDroidUsageAnalytics.ANALYTICS_OPTIN_KEY, isOptedIn)
+                }
+
                 activity?.dismissAllDialogFragments()
             }
             cancelable(true)

@@ -26,7 +26,7 @@ import timber.log.Timber
  *
  * The default test behavior is to suppress an exception
  *
- * This rule replaces both UsageAnalytics and ACRA, ensuring a failure is reported
+ * This rule replaces both AnkiDroidUsageAnalytics and ACRA, ensuring a failure is reported
  *
  * When applying this rule, it SHOULD be applied after Application.onCreate, otherwise the exception
  * handlers will override it

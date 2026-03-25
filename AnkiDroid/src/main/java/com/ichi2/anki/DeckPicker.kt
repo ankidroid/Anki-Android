@@ -84,7 +84,7 @@ import com.ichi2.anki.InitialActivity.StartupFailure.FutureAnkidroidVersion
 import com.ichi2.anki.InitialActivity.StartupFailure.SDCardNotMounted
 import com.ichi2.anki.IntentHandler.Companion.intentToReviewDeckFromShortcuts
 import com.ichi2.anki.account.AccountActivity
-import com.ichi2.anki.analytics.UsageAnalytics
+import com.ichi2.anki.analytics.AnkiDroidUsageAnalytics
 import com.ichi2.anki.android.back.exitViaDoubleTapBackCallback
 import com.ichi2.anki.android.input.ShortcutGroup
 import com.ichi2.anki.android.input.shortcut
@@ -1726,7 +1726,7 @@ open class DeckPicker :
         } else if (skip < 2 && !InitialActivity.isLatestVersion(preferences)) {
             Timber.i("AnkiDroid is being updated and a collection already exists.")
             // The user might appreciate us now, see if they will help us get better?
-            if (!preferences.contains(UsageAnalytics.ANALYTICS_OPTIN_KEY)) {
+            if (!preferences.contains(AnkiDroidUsageAnalytics.ANALYTICS_OPTIN_KEY)) {
                 displayAnalyticsOptInDialog()
             }
 
