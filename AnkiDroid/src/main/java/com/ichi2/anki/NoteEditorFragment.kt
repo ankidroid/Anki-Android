@@ -341,6 +341,7 @@ class NoteEditorFragment :
             NoteEditorActivityResultCallback {
                 // Note type can change regardless of exit type - update ourselves and CardBrowser
                 reloadRequired = true
+                val previousFieldNames = editorNote!!.notetype.fieldsNames.toList()
                 editorNote!!.notetype = getColUnsafe.notetypes.get(editorNote!!.noteTypeId)!!
                 if (currentEditedCard == null ||
                     !editorNote!!
@@ -355,6 +356,7 @@ class NoteEditorFragment :
                         Timber.d("onActivityResult() template edit return - current card is gone, close note editor")
                         showSnackbar(getString(R.string.template_for_current_card_deleted))
                         closeNoteEditor()
+                        return@NoteEditorActivityResultCallback
                     } else {
                         Timber.d("onActivityResult() template edit return, in add mode, just re-display")
                         updateCards(editorNote!!.notetype)
@@ -369,6 +371,7 @@ class NoteEditorFragment :
                     editorNote = currentEditedCard!!.note // update the NoteEditor's working note reference
                     updateCards(editorNote!!.notetype)
                 }
+                repopulateFieldsIfChanged(previousFieldNames)
             },
         )
 
@@ -2855,6 +2858,14 @@ class NoteEditorFragment :
         noteTypeSpinner!!.setSelection(position)
     }
 
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    fun reloadEditorNote(
+        note: Note,
+        changeType: FieldChangeType = FieldChangeType.changeFieldCount(shouldReplaceNewlines()),
+    ) {
+        setNote(note, changeType)
+    }
+
     /**
      * Whether sticky fields are currently being loaded. In this card, don't consider the text changed.
      */
@@ -2891,6 +2902,20 @@ class NoteEditorFragment :
         ) {
             // do nothing
         }
+    }
+
+    @VisibleForTesting
+    fun repopulateFieldsIfChanged(previousFieldNames: List<String>) {
+        val newFieldNames = editorNote!!.notetype.fieldsNames.toList()
+        if (newFieldNames != previousFieldNames) {
+            Timber.d(
+                "Note type fields changed from %s to %s, repopulating edit fields",
+                previousFieldNames,
+                newFieldNames,
+            )
+            populateEditFields(FieldChangeType.changeFieldCount(shouldReplaceNewlines()))
+        }
+        updateToolbar()
     }
 
     companion object {

@@ -663,6 +663,75 @@ class NoteEditorTest : RobolectricTest() {
             assertFalse(hasUnsavedChanges())
         }
 
+    @Test
+    fun `restoring notetype to stock updates field count in editor`() =
+        runTest {
+            val notetype = col.notetypes.byName("Basic")!!
+            col.notetypes.addFieldModChanged(notetype, col.notetypes.newField("Extra"))
+            col.notetypes.update(notetype)
+            col.notetypes.clearCache()
+
+            val note = col.newNote(notetype)
+            note.setField(0, "Front")
+            note.setField(1, "Back")
+            note.setField(2, "Extra")
+            col.addNote(note, col.decks.id("Default"))
+
+            val editor = getNoteEditorEditingExistingBasicNote(note, REVIEWER)
+            advanceRobolectricLooper()
+            assertThat(editor.editFields!!.size, equalTo(3))
+
+            // simulate restoreNotetypeToStock: backend drops back to 2 fields
+            col.notetypes.remFieldLegacy(notetype, notetype.fields.last())
+            col.notetypes.update(notetype)
+            col.notetypes.clearCache()
+
+            val previousFieldNames =
+                editor.editorNote!!
+                    .notetype.fieldsNames
+                    .toList()
+
+            val reloadedNote = col.getNote(note.id)
+            reloadedNote.fields = reloadedNote.fields.take(reloadedNote.notetype.fields.size).toMutableList()
+            val newNote =
+                com.ichi2.anki.libanki
+                    .Note(col, reloadedNote.id)
+
+            editor.reloadEditorNote(newNote)
+            editor.repopulateFieldsIfChanged(previousFieldNames)
+            advanceRobolectricLooper()
+
+            assertThat(
+                "Field count should match restored notetype",
+                editor.editFields!!.size,
+                equalTo(2),
+            )
+        }
+
+    @Test
+    fun `returning from template editor without field changes does not repopulate fields`() =
+        runTest {
+            val note = addBasicNote("Front", "Back")
+            val editor = getNoteEditorEditingExistingBasicNote(note, REVIEWER)
+            advanceRobolectricLooper()
+
+            val originalRef = editor.editFields
+            val previousFieldNames =
+                editor.editorNote!!
+                    .notetype.fieldsNames
+                    .toList()
+
+            editor.repopulateFieldsIfChanged(previousFieldNames)
+            advanceRobolectricLooper()
+
+            assertThat(editor.editFields!!.size, equalTo(2))
+            assertThat(
+                "editFields reference must not change when fields are unchanged",
+                editor.editFields,
+                equalTo(originalRef),
+            )
+        }
+
     private suspend fun withNoteEditorAdding(
         from: FromScreen = FromScreen.DECK_LIST,
         block: suspend NoteEditorFragment.() -> Unit,

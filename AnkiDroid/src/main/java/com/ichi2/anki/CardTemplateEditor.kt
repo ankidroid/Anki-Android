@@ -1057,12 +1057,16 @@ open class CardTemplateEditor :
         private suspend fun restoreNotetypeToStock(kind: StockNotetype.Kind? = null) {
             val nid = notetypeId { ntid = tempModel.noteTypeId }
             undoableOp { notetypes.restoreNotetypeToStock(nid, kind) }
-            onModelSaved()
+            requireActivity().setResult(
+                RESULT_OK,
+                Intent().putExtra(EXTRA_NOTETYPE_FIELDS_CHANGED, true),
+            )
             showThemedToast(
                 requireContext(),
                 TR.cardTemplatesRestoredToDefault(),
                 shortLength = false,
             )
+            onModelSaved()
         }
 
         /**
@@ -1587,6 +1591,9 @@ open class CardTemplateEditor :
 
         @Suppress("unused")
         private const val REQUEST_CARD_BROWSER_APPEARANCE = 1
+
+        // True if the notetype's fields were changed
+        const val EXTRA_NOTETYPE_FIELDS_CHANGED = "noteTypeFieldsChanged"
 
         @CheckResult
         fun getIntent(
