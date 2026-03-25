@@ -609,6 +609,60 @@ public object FlashCardsContract {
         public const val DECK_ID: String = "deck_id"
 
         /**
+         * The stored Anki repetition count for this card.
+         *
+         * Counts how many times Anki has recorded this card as answered during study. The Anki
+         * manual's
+         * [`prop:reps`](https://docs.ankiweb.net/searching.html#card-properties) search uses the
+         * same stored counter. New cards typically start at 0.
+         *
+         * This provider exposes the backend value as-is; exact effects of manual operations such as
+         * rescheduling depend on Anki's scheduler/backend behavior.
+         */
+        public const val REPS: String = "reps"
+
+        /**
+         * The stored Anki lapse count for this card.
+         *
+         * Counts how many times Anki has recorded this card as lapsed. In Anki's manual, a
+         * [lapse](https://docs.ankiweb.net/deck-options.html#lapses) is pressing Again on a review
+         * card, and [`prop:lapses`](https://docs.ankiweb.net/searching.html#card-properties)
+         * searches this same stored counter.
+         *
+         * This provider exposes the backend value as-is.
+         */
+        public const val LAPSES: String = "lapses"
+
+        /**
+         * The stored Anki card type code: the card's learning or review stage.
+         *
+         * See also [Anki's card states](https://docs.ankiweb.net/getting-started.html#card-states).
+         *
+         * Think of this as a simple state machine that affects how the card is scheduled when it
+         * is answered. A card typically moves `0 -> 1 -> 2`; if a review card lapses, it
+         * typically moves `2 -> 3 -> 2`.
+         *
+         * * `0` = new
+         * * `1` = learning
+         * * `2` = review
+         * * `3` = relearning
+         *
+         * Other values should be treated as unknown.
+         */
+        public const val TYPE: String = "type"
+
+        /**
+         * The stored original deck id for this card.
+         *
+         * For cards in filtered decks, Anki keeps a link to the card's
+         * [home deck](https://docs.ankiweb.net/filtered-decks.html#home-decks).
+         *
+         * * If the card is currently in a filtered deck, this is the deck id the card came from.
+         * * If the card is not currently in a filtered deck, this value is 0.
+         */
+        public const val ORIGINAL_DECK_ID: String = "original_deck_id"
+
+        /**
          * The question for this card.
          */
         public const val QUESTION: String = "question"

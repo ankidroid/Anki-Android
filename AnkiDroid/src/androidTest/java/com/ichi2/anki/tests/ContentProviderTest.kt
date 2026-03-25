@@ -392,6 +392,158 @@ class ContentProviderTest : InstrumentedTest() {
     }
 
     @Test
+    fun testQueryCardReps() {
+        val noteId = createdNotes.first().lastPathSegment!!.toLong()
+        val note = col.getNote(noteId)
+        val card = note.cards(col).single()
+        val expectedReps = 7
+
+        card.update {
+            reps = expectedReps
+        }
+
+        val cursor =
+            checkNotNull(
+                contentResolver.query(
+                    FlashCardsContract.Card.CONTENT_URI,
+                    arrayOf(FlashCardsContract.Card.REPS),
+                    "cid:${card.id}",
+                    null,
+                    null,
+                ),
+            ) { "cursor from /cards" }
+
+        cursor.use {
+            assertEquals(1, it.count)
+            assertTrue(it.moveToFirst())
+            assertEquals(listOf(FlashCardsContract.Card.REPS), it.columnNames.toList())
+            assertEquals(expectedReps, it.getInt(it.getColumnIndex(FlashCardsContract.Card.REPS)))
+        }
+    }
+
+    @Test
+    fun testQueryCardLapses() {
+        val noteId = createdNotes.first().lastPathSegment!!.toLong()
+        val noteUri = Uri.withAppendedPath(FlashCardsContract.Note.CONTENT_URI, noteId.toString())
+        val noteCardsUri = Uri.withAppendedPath(noteUri, "cards")
+        val card = col.getNote(noteId).cards(col).single()
+        val expectedLapses = 3
+
+        card.update {
+            lapses = expectedLapses
+        }
+
+        val cursor =
+            checkNotNull(
+                contentResolver.query(
+                    noteCardsUri,
+                    arrayOf(FlashCardsContract.Card.LAPSES),
+                    null,
+                    null,
+                    null,
+                ),
+            ) { "cursor from /notes/#/cards" }
+
+        cursor.use {
+            assertEquals(1, it.count)
+            assertTrue(it.moveToFirst())
+            assertEquals(listOf(FlashCardsContract.Card.LAPSES), it.columnNames.toList())
+            assertEquals(expectedLapses, it.getInt(it.getColumnIndex(FlashCardsContract.Card.LAPSES)))
+        }
+    }
+
+    @Test
+    fun testQueryCardType() {
+        val noteId = createdNotes.first().lastPathSegment!!.toLong()
+        val card = col.getNote(noteId).cards(col).single()
+        val expectedType = 2
+        val cardUri =
+            Uri.withAppendedPath(
+                FlashCardsContract.Card.CONTENT_URI,
+                card.id.toString(),
+            )
+
+        card.moveToReviewQueue()
+
+        val cursor =
+            checkNotNull(
+                contentResolver.query(
+                    cardUri,
+                    arrayOf(FlashCardsContract.Card.TYPE),
+                    null,
+                    null,
+                    null,
+                ),
+            ) { "cursor from /cards/#" }
+
+        cursor.use {
+            assertEquals(1, it.count)
+            assertTrue(it.moveToFirst())
+            assertEquals(listOf(FlashCardsContract.Card.TYPE), it.columnNames.toList())
+            assertEquals(expectedType, it.getInt(it.getColumnIndex(FlashCardsContract.Card.TYPE)))
+        }
+    }
+
+    @Test
+    fun testQueryCardOriginalDeckId() {
+        val noteId = createdNotes.first().lastPathSegment!!.toLong()
+        val noteUri = Uri.withAppendedPath(FlashCardsContract.Note.CONTENT_URI, noteId.toString())
+        val noteCardsUri = Uri.withAppendedPath(noteUri, "cards")
+        val card = col.getNote(noteId).cards(col).single()
+        val expectedOriginalDeckId = testDeckIds[0]
+        val noteCardUri = Uri.withAppendedPath(noteCardsUri, card.ord.toString())
+
+        card.update {
+            oDid = expectedOriginalDeckId
+        }
+
+        val cursor =
+            checkNotNull(
+                contentResolver.query(
+                    noteCardUri,
+                    arrayOf(FlashCardsContract.Card.ORIGINAL_DECK_ID),
+                    null,
+                    null,
+                    null,
+                ),
+            ) { "cursor from /notes/#/cards/#" }
+
+        cursor.use {
+            assertEquals(1, it.count)
+            assertTrue(it.moveToFirst())
+            assertEquals(listOf(FlashCardsContract.Card.ORIGINAL_DECK_ID), it.columnNames.toList())
+            assertEquals(
+                expectedOriginalDeckId,
+                it.getLong(it.getColumnIndex(FlashCardsContract.Card.ORIGINAL_DECK_ID)),
+            )
+        }
+    }
+
+    @Test
+    fun testQueryCardDefaultProjectionOmitsRawProperties() {
+        val noteId = createdNotes.first().lastPathSegment!!.toLong()
+        val card = col.getNote(noteId).cards(col).single()
+        val cardUri =
+            Uri.withAppendedPath(
+                FlashCardsContract.Card.CONTENT_URI,
+                card.id.toString(),
+            )
+
+        val cursor =
+            checkNotNull(contentResolver.query(cardUri, null, null, null, null)) {
+                "cursor from default projection query"
+            }
+
+        cursor.use {
+            assertTrue(it.moveToFirst())
+            assertEquals(-1, it.getColumnIndex(FlashCardsContract.Card.TYPE))
+            assertEquals(-1, it.getColumnIndex(FlashCardsContract.Card.REPS))
+            assertEquals(-1, it.getColumnIndex(FlashCardsContract.Card.LAPSES))
+            assertEquals(-1, it.getColumnIndex(FlashCardsContract.Card.ORIGINAL_DECK_ID))
+        }
+    }
+
+    @Test
     fun testQueryCardsRoot_returnsCards() {
         val cursor =
             contentResolver.query(
