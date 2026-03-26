@@ -83,6 +83,7 @@
     <string name="restore_backup_choose_another">ਕੋਈ ਹੋਰ ਚੁਣੋ</string>
     <string name="dialog_cancel">ਰੱਦ ਕਰੋ</string>
     <string name="dialog_ok">ٹھیک اے</string>
+    <string name="dialog_add" comment="Positive dialog action button label to add \'something\'">Add</string>
     <string name="dialog_confirm" tools:ignore="UnusedResources">ਪੁਸ਼ਟੀ ਕਰੋ</string>
     <string name="dialog_no">نہیں</string>
     <string name="dialog_yes">ਹਾ</string>

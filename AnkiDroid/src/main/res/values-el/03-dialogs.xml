@@ -83,6 +83,7 @@
     <string name="restore_backup_choose_another">Επιλέξτε ένα άλλο</string>
     <string name="dialog_cancel">Ακύρωση</string>
     <string name="dialog_ok">OK</string>
+    <string name="dialog_add" comment="Positive dialog action button label to add \'something\'">Add</string>
     <string name="dialog_confirm" tools:ignore="UnusedResources">Επιβεβαίωση</string>
     <string name="dialog_no">Όχι</string>
     <string name="dialog_yes">Ναι</string>

@@ -83,6 +83,7 @@
     <string name="restore_backup_choose_another">انتخاب دیگری</string>
     <string name="dialog_cancel">لغو</string>
     <string name="dialog_ok">تایید</string>
+    <string name="dialog_add" comment="Positive dialog action button label to add \'something\'">Add</string>
     <string name="dialog_confirm" tools:ignore="UnusedResources">تایید</string>
     <string name="dialog_no">خیر</string>
     <string name="dialog_yes">بله</string>

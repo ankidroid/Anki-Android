@@ -81,6 +81,7 @@
     <string name="restore_backup_choose_another">រើសផ្សេងទៀត</string>
     <string name="dialog_cancel">បោះបង់</string>
     <string name="dialog_ok">OK</string>
+    <string name="dialog_add" comment="Positive dialog action button label to add \'something\'">Add</string>
     <string name="dialog_confirm" tools:ignore="UnusedResources">បញ្ជាក់</string>
     <string name="dialog_no">ទេ</string>
     <string name="dialog_yes">បាទ/ចាស</string>

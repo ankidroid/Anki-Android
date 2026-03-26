@@ -83,6 +83,7 @@
     <string name="restore_backup_choose_another">இன்னொன்றைத் தேர்ந்தெடுங்கள்</string>
     <string name="dialog_cancel">ரத்து செய்</string>
     <string name="dialog_ok">சரி</string>
+    <string name="dialog_add" comment="Positive dialog action button label to add \'something\'">Add</string>
     <string name="dialog_confirm" tools:ignore="UnusedResources">உறுதிப்படுத்தவும்</string>
     <string name="dialog_no">இல்லை</string>
     <string name="dialog_yes">ஆம்</string>

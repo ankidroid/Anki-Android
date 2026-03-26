@@ -81,6 +81,7 @@
     <string name="restore_backup_choose_another">Choose another</string>
     <string name="dialog_cancel">Баш тарту</string>
     <string name="dialog_ok">OK</string>
+    <string name="dialog_add" comment="Positive dialog action button label to add \'something\'">Add</string>
     <string name="dialog_confirm" tools:ignore="UnusedResources">Раслау</string>
     <string name="dialog_no">Юк</string>
     <string name="dialog_yes">Әйе</string>

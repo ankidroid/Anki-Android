@@ -83,6 +83,7 @@
     <string name="restore_backup_choose_another">Zgjidhni një tjetër</string>
     <string name="dialog_cancel">Anulo</string>
     <string name="dialog_ok">Ne rregull</string>
+    <string name="dialog_add" comment="Positive dialog action button label to add \'something\'">Add</string>
     <string name="dialog_confirm" tools:ignore="UnusedResources">Konfirmo</string>
     <string name="dialog_no">Jo</string>
     <string name="dialog_yes">Po</string>

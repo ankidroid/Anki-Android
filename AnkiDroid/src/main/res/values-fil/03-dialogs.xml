@@ -83,6 +83,7 @@
     <string name="restore_backup_choose_another">Pumili ng iba pa</string>
     <string name="dialog_cancel">Kanselahin</string>
     <string name="dialog_ok">OK</string>
+    <string name="dialog_add" comment="Positive dialog action button label to add \'something\'">Add</string>
     <string name="dialog_confirm" tools:ignore="UnusedResources">Kumpirmahin</string>
     <string name="dialog_no">Hindi</string>
     <string name="dialog_yes">Oo</string>

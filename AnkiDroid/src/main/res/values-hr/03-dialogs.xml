@@ -85,6 +85,7 @@
     <string name="restore_backup_choose_another">Odaberi drugi</string>
     <string name="dialog_cancel">Otkaži</string>
     <string name="dialog_ok">U redu</string>
+    <string name="dialog_add" comment="Positive dialog action button label to add \'something\'">Add</string>
     <string name="dialog_confirm" tools:ignore="UnusedResources">Potvrdi</string>
     <string name="dialog_no">Ne</string>
     <string name="dialog_yes">Da</string>

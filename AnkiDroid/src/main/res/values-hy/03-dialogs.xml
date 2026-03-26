@@ -83,6 +83,7 @@
     <string name="restore_backup_choose_another">Choose another</string>
     <string name="dialog_cancel">Չեղարկել</string>
     <string name="dialog_ok">Լավ</string>
+    <string name="dialog_add" comment="Positive dialog action button label to add \'something\'">Add</string>
     <string name="dialog_confirm" tools:ignore="UnusedResources">Հաստատել</string>
     <string name="dialog_no">Ոչ</string>
     <string name="dialog_yes">այո</string>
