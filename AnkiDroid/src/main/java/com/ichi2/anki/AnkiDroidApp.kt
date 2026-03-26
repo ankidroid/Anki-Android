@@ -164,20 +164,13 @@ open class AnkiDroidApp :
         // Last in the UncaughtExceptionHandlers chain is our filter service
         ThrowableFilterService.initialize()
 
-        applicationScope.launch {
-            Timber.i("AnkiDroidApp: listing debug info")
-            Timber.i(DebugInfoService.getDebugInfo(this@AnkiDroidApp))
-        }
+        setup("performStartupLogging") { dependency(acra) { performStartupLogging() } }
 
         // Stop after analytics and logging are initialised.
         if (isAcraSenderProcess()) {
             Timber.d("Skipping AnkiDroidApp.onCreate from ACRA sender process")
             return
         }
-        if (AdaptionUtil.isUserATestClient) {
-            showThemedToast(this.applicationContext, getString(R.string.user_is_a_robot), false)
-        }
-
         setup("setupContextMenus") { setupContextMenus() }
         setup("makeBackendUsable") { makeBackendUsable(this) }
         setup("setupNotifications") { setupNotifications() }
@@ -195,6 +188,21 @@ open class AnkiDroidApp :
         setup("setupLifecycleLogging") { setupLifecycleLogging() }
         activityAgnosticDialogs = ActivityAgnosticDialogs.register(this)
         setup("setupTextToSpeech") { setupTextToSpeech() }
+    }
+
+    context(_: CrashReportingContext)
+    private fun performStartupLogging() {
+        applicationScope.launch {
+            Timber.i("AnkiDroidApp: listing debug info")
+            Timber.i(DebugInfoService.getDebugInfo(this@AnkiDroidApp))
+        }
+
+        // skip logging if we're under ACRA
+        if (CrashReportService.isProperServiceProcess()) return
+
+        if (AdaptionUtil.isUserATestClient) {
+            showThemedToast(this.applicationContext, getString(R.string.user_is_a_robot), false)
+        }
     }
 
     /**
