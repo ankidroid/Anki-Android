@@ -29,6 +29,7 @@ import android.os.Bundle
 import android.os.Environment
 import android.system.Os
 import android.webkit.CookieManager
+import android.webkit.WebView
 import androidx.annotation.VisibleForTesting
 import androidx.core.net.toUri
 import androidx.fragment.app.FragmentActivity
@@ -177,17 +178,14 @@ open class AnkiDroidApp :
             showThemedToast(this.applicationContext, getString(R.string.user_is_a_robot), false)
         }
 
-        setup("setupWebView") { setupWebView() }
         setup("setupContextMenus") { setupContextMenus() }
         setup("makeBackendUsable") { makeBackendUsable(this) }
         setup("setupNotifications") { setupNotifications() }
         setup("setupBackendChangeManager") { setupBackendChangeManager() }
-
         // Probe WebView availability before any other init touches it (#5794).
-        if (!checkWebViewAvailable()) {
+        if ((setup("setupWebView") { setupWebView() }) != true) {
             return
         }
-
         // Forget the last deck that was used in the CardBrowser
         CardBrowser.clearLastDeckId()
         val anki = AnkiContext.apply { setup("setupBackend") { setupAnkiBackend() } }
@@ -227,8 +225,15 @@ open class AnkiDroidApp :
         LanguageUtil.setDefaultBackendLanguages()
     }
 
-    private fun setupWebView() {
+    /**
+     * @return whether [WebView] is usable
+     * [fatalInitializationError] is set otherwise
+     */
+    private fun setupWebView(): Boolean {
+        // TODO: duplicated logging
         setWebContentsDebuggingEnabled(Prefs.isWebDebugEnabled)
+
+        return checkWebViewAvailable()
     }
 
     // crash reporting should be initialized before logging
