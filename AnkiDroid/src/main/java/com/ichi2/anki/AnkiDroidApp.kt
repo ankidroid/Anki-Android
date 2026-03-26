@@ -102,33 +102,24 @@ open class AnkiDroidApp :
     var progressDialogShown = false
 
     /**
-     * Executes a setup method: [block], logging execution time. [onFailure] determines if a thrown
-     * exception is rethrown (default: rethrow)
+     * Executes a setup method: [block], logging execution time.
+     * Exceptions are logged and rethrown.
      *
      * @param methodName Method name, used for logging.
-     * @param onFailure Processes an exception thrown by [block]. Return `null` to swallow
      * @param block The method to execute and return
-     *
-     * @return The result of [block], or `null` if an exception is thrown and is not swallowed by
-     * [onFailure].
      */
     // 'inline fun' so logs use the correct context
     inline fun <T> setup(
         methodName: String,
-        crossinline onFailure: ((Exception) -> Exception?) = { it },
         crossinline block: () -> T,
-    ): T? {
-        // TODO: #20168 warn users of non-fatal component errors rather than crashing
+    ): T {
+        // TODO: #20168 warn users of non-fatal component errors rather than rethrowing
         try {
             return measureTime(methodName = methodName) { block() }
         } catch (e: Exception) {
             // NOTE: this can be called before Timber is initialized
             Timber.w(e, "failed to execute $methodName")
-            onFailure.invoke(e)?.let { exceptionToThrow ->
-                throw exceptionToThrow
-            }
-
-            return null
+            throw e
         }
     }
 
@@ -137,9 +128,9 @@ open class AnkiDroidApp :
      */
     @KotlinCleanup("analytics can be moved to attachBaseContext()")
     override fun onCreate() {
-        setup("initAnkiBackend", onFailure = { null }) { initAnkiBackend(debugTraceSqlCalls = false) }
+        runCatching { setup("initAnkiBackend") { initAnkiBackend(debugTraceSqlCalls = false) } }
         super.onCreate()
-        if ((setup("setupAnkiDroidApp") { setupAnkiDroidApp() }) != true) {
+        if (!setup("setupAnkiDroidApp") { setupAnkiDroidApp() }) {
             return // instance.resources is invalid
         }
         val acra = CrashReportingContext.apply { initializeAcraCrashReporter() }
@@ -162,7 +153,7 @@ open class AnkiDroidApp :
         setup("setupAppLifecycleObserver") { setupAppLifecycleObserver() }
         setup("setupBackendChangeManager") { setupBackendChangeManager() }
         // Probe WebView availability before any other init touches it (#5794).
-        if ((setup("setupWebView") { setupWebView() }) != true) {
+        if (!setup("setupWebView") { setupWebView() }) {
             return
         }
         // Forget the last deck that was used in the CardBrowser
