@@ -197,6 +197,10 @@ open class AnkiDroidApp :
         restoreRecurringAlarms(this)
         setup("setupLifecycleLogging") { setupLifecycleLogging() }
         activityAgnosticDialogs = ActivityAgnosticDialogs.register(this)
+        setup("setupTextToSpeech") { setupTextToSpeech() }
+    }
+
+    private fun setupTextToSpeech() {
         TtsVoices.launchBuildLocalesJob()
         // enable {{tts-voices:}} field filter
         TtsVoicesFieldFilter.ensureApplied()
