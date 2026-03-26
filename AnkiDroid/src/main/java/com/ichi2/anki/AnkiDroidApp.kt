@@ -193,14 +193,19 @@ open class AnkiDroidApp :
         CardBrowser.clearLastDeckId()
         val anki = AnkiContext.apply { setup("setupBackend") { setupAnkiBackend() } }
         setup("initializeAnkiDroidDirectory") { dependency(anki) { initializeAnkiDroidDirectory() } }
-        // listen for day rollover: time + timezone changes
-        DayRolloverHandler.listenForRolloverEvents(this)
+        setup("setupDayRollover") { dependency(anki) { setupDayRollover() } }
         restoreRecurringAlarms(this)
         setup("setupLifecycleLogging") { setupLifecycleLogging() }
         activityAgnosticDialogs = ActivityAgnosticDialogs.register(this)
         TtsVoices.launchBuildLocalesJob()
         // enable {{tts-voices:}} field filter
         TtsVoicesFieldFilter.ensureApplied()
+    }
+
+    /** listen for day rollover: time + timezone changes */
+    context(_: AnkiContext)
+    private fun setupDayRollover() {
+        DayRolloverHandler.listenForRolloverEvents(this)
     }
 
     private fun setupAnkiBackend() {
