@@ -178,8 +178,7 @@ open class AnkiDroidApp :
             showThemedToast(this.applicationContext, getString(R.string.user_is_a_robot), false)
         }
 
-        setWebContentsDebuggingEnabled(Prefs.isWebDebugEnabled)
-
+        setup("setupWebView") { setupWebView() }
         setup("setupContextMenus") { setupContextMenus() }
         setup("makeBackendUsable") { makeBackendUsable(this) }
         setup("setupNotifications") { setupNotifications() }
@@ -202,6 +201,10 @@ open class AnkiDroidApp :
         TtsVoices.launchBuildLocalesJob()
         // enable {{tts-voices:}} field filter
         TtsVoicesFieldFilter.ensureApplied()
+    }
+
+    private fun setupWebView() {
+        setWebContentsDebuggingEnabled(Prefs.isWebDebugEnabled)
     }
 
     // crash reporting should be initialized before logging
