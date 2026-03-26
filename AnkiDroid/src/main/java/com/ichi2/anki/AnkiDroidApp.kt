@@ -36,6 +36,8 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ProcessLifecycleOwner
 import anki.collection.OpChanges
+import com.ichi2.anki.AnkiDroidApp.Companion.instance
+import com.ichi2.anki.AnkiDroidApp.Companion.isInitialized
 import com.ichi2.anki.AnkiDroidApp.Companion.makeBackendUsable
 import com.ichi2.anki.AnkiDroidApp.Companion.sharedPreferencesTestingOverride
 import com.ichi2.anki.analytics.UsageAnalytics
@@ -142,16 +144,9 @@ open class AnkiDroidApp :
     override fun onCreate() {
         setup("initAnkiBackend", onFailure = { null }) { initAnkiBackend(debugTraceSqlCalls = false) }
         super.onCreate()
-        if (isInitialized) {
-            Timber.i("onCreate() called multiple times")
-            // 5887 - fix crash.
-            if (instance.resources == null) {
-                Timber.w("Skipping re-initialisation - no resources. Maybe uninstalling app?")
-                return
-            }
+        if ((setup("setupAnkiDroidApp") { setupAnkiDroidApp() }) != true) {
+            return // instance.resources is invalid
         }
-        instance = this
-
         val acra = CrashReportingContext.apply { initializeAcraCrashReporter() }
         setup("setupLogging") { dependency(acra) { setupLogging() } }
         setup("setupUsageAnalytics") { dependency(acra) { setupUsageAnalytics() } }
@@ -184,6 +179,26 @@ open class AnkiDroidApp :
         setup("setupLifecycleLogging") { setupLifecycleLogging() }
         activityAgnosticDialogs = ActivityAgnosticDialogs.register(this)
         setup("setupTextToSpeech") { setupTextToSpeech() }
+    }
+
+    /**
+     * Sets [isInitialized] to `true` ([instance] != null)
+     *
+     * [onCreate] can be called multiple times due to ACRA using a separate sender process
+     *
+     * @return false if `instance.resources` is unusable
+     */
+    private fun setupAnkiDroidApp(): Boolean {
+        if (isInitialized) {
+            Timber.i("onCreate() called multiple times")
+            // 5887 - fix crash.
+            if (instance.resources == null) {
+                Timber.w("Skipping re-initialisation - no resources. Maybe uninstalling app?")
+                return false
+            }
+        }
+        instance = this
+        return true
     }
 
     private fun setupAppLifecycleObserver() {
