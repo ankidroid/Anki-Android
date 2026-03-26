@@ -424,13 +424,6 @@ open class AnkiDroidApp :
          */
         fun sharedPrefs() = sharedPreferencesTestingOverride ?: instance.sharedPrefs()
 
-        /**
-         * The latest package version number that included important changes to the database integrity check routine. All
-         * collections being upgraded to (or after) this version must run an integrity check as it will contain fixes that
-         * all collections should have.
-         */
-        const val CHECK_DB_AT_VERSION = 21000172
-
         /** HACK: Whether an exception report has been thrown - TODO: Rewrite an ACRA Listener to do this  */
         @VisibleForTesting
         var sentExceptionReportHack = false

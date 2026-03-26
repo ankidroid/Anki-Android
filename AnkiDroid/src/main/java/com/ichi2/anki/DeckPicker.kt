@@ -189,7 +189,6 @@ import com.ichi2.utils.NetworkUtils
 import com.ichi2.utils.NetworkUtils.isActiveNetworkMetered
 import com.ichi2.utils.Permissions
 import com.ichi2.utils.VersionUtils
-import com.ichi2.utils.cancelable
 import com.ichi2.utils.checkBoxPrompt
 import com.ichi2.utils.checkWebviewVersion
 import com.ichi2.utils.configureView
@@ -1771,42 +1770,8 @@ open class DeckPicker :
                 }
             preferences.edit { putLong(DeckPickerViewModel.UPGRADE_VERSION_KEY, current) }
 
-            // Check if preference upgrade or database check required, otherwise go to new feature screen
-            val upgradeDbVersion = AnkiDroidApp.CHECK_DB_AT_VERSION
-
-            // Specifying a checkpoint in the future is not supported, please don't do it!
-            if (current < upgradeDbVersion) {
-                Timber.e("Invalid value for CHECK_DB_AT_VERSION")
-                postSnackbar("Invalid value for CHECK_DB_AT_VERSION")
-                onFinishedStartup()
-                return
-            }
-
-            // Skip full DB check if the basic check is OK
-            // TODO: remove this variable if we really want to do the full db check on every user
-            val skipDbCheck = false
-            // if (previous < upgradeDbVersion && getCol().basicCheck()) {
-            //    skipDbCheck = true;
-            // }
             val upgradedPreferences = InitialActivity.upgradePreferences(this, previous)
             // Integrity check loads asynchronously and then restart deck picker when finished
-            if (!skipDbCheck && previous < upgradeDbVersion) {
-                Timber.i("showStartupScreensAndDialogs() running integrityCheck()")
-                // #5852 - since we may have a warning about disk space, we don't want to force a check database
-                // and show a warning before the user knows what is happening.
-                AlertDialog.Builder(this).show {
-                    title(R.string.integrity_check_startup_title)
-                    message(R.string.integrity_check_startup_content)
-                    positiveButton(R.string.check_db) {
-                        integrityCheck()
-                    }
-                    negativeButton(R.string.close) {
-                        ActivityCompat.recreate(this@DeckPicker)
-                    }
-                    cancelable(false)
-                }
-                return
-            }
             if (upgradedPreferences) {
                 Timber.i("Updated preferences with no integrity check - restarting activity")
                 // If integrityCheck() doesn't occur, but we did update preferences we should restart DeckPicker to
