@@ -196,7 +196,7 @@ open class AnkiDroidApp :
         setup("setupContextMenus") { setupContextMenus() }
         setupNotificationChannels(applicationContext)
 
-        makeBackendUsable(this)
+        setup("makeBackendUsable") { makeBackendUsable(this) }
 
         // Probe WebView availability before any other init touches it (#5794).
         if (!checkWebViewAvailable()) {
