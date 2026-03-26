@@ -118,6 +118,7 @@ open class AnkiDroidApp :
         crossinline onFailure: ((Exception) -> Exception?) = { it },
         crossinline block: () -> T,
     ): T? {
+        // TODO: #20168 warn users of non-fatal component errors rather than crashing
         try {
             return measureTime(methodName = methodName) { block() }
         } catch (e: Exception) {
