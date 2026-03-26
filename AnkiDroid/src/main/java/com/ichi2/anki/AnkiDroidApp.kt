@@ -194,9 +194,8 @@ open class AnkiDroidApp :
         setWebContentsDebuggingEnabled(Prefs.isWebDebugEnabled)
 
         setup("setupContextMenus") { setupContextMenus() }
-        setupNotificationChannels(applicationContext)
-
         setup("makeBackendUsable") { makeBackendUsable(this) }
+        setup("setupNotifications") { setupNotifications() }
 
         // Probe WebView availability before any other init touches it (#5794).
         if (!checkWebViewAvailable()) {
@@ -208,6 +207,18 @@ open class AnkiDroidApp :
         LanguageUtil.setDefaultBackendLanguages()
 
         setup("initializeAnkiDroidDirectory") { initializeAnkiDroidDirectory() }
+        // listen for day rollover: time + timezone changes
+        DayRolloverHandler.listenForRolloverEvents(this)
+        restoreRecurringAlarms(this)
+        setup("setupLifecycleLogging") { setupLifecycleLogging() }
+        activityAgnosticDialogs = ActivityAgnosticDialogs.register(this)
+        TtsVoices.launchBuildLocalesJob()
+        // enable {{tts-voices:}} field filter
+        TtsVoicesFieldFilter.ensureApplied()
+    }
+
+    private fun setupNotifications() {
+        setupNotificationChannels(applicationContext)
 
         val context = this.withAppLocale()
         if (Prefs.newReviewRemindersEnabled) {
@@ -218,15 +229,6 @@ open class AnkiDroidApp :
             Timber.i("AnkiDroidApp: Starting Services")
             notifications.observeForever { NotificationService.triggerNotificationFor(context) }
         }
-
-        // listen for day rollover: time + timezone changes
-        DayRolloverHandler.listenForRolloverEvents(this)
-        restoreRecurringAlarms(this)
-        setup("setupLifecycleLogging") { setupLifecycleLogging() }
-        activityAgnosticDialogs = ActivityAgnosticDialogs.register(this)
-        TtsVoices.launchBuildLocalesJob()
-        // enable {{tts-voices:}} field filter
-        TtsVoicesFieldFilter.ensureApplied()
     }
 
     /**
