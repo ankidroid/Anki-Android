@@ -207,7 +207,7 @@ open class AnkiDroidApp :
         CardBrowser.clearLastDeckId()
         LanguageUtil.setDefaultBackendLanguages()
 
-        initializeAnkiDroidDirectory()
+        setup("initializeAnkiDroidDirectory") { initializeAnkiDroidDirectory() }
 
         val context = this.withAppLocale()
         if (Prefs.newReviewRemindersEnabled) {
