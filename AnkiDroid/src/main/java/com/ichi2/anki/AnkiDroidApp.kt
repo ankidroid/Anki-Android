@@ -34,6 +34,7 @@ import androidx.core.net.toUri
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.MutableLiveData
 import anki.collection.OpChanges
+import com.ichi2.anki.AnkiDroidApp.Companion.makeBackendUsable
 import com.ichi2.anki.AnkiDroidApp.Companion.sharedPreferencesTestingOverride
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.browser.SharedPreferencesLastDeckIdRepository
@@ -190,9 +191,8 @@ open class AnkiDroidApp :
 
         // Forget the last deck that was used in the CardBrowser
         CardBrowser.clearLastDeckId()
-        LanguageUtil.setDefaultBackendLanguages()
-
-        setup("initializeAnkiDroidDirectory") { initializeAnkiDroidDirectory() }
+        val anki = AnkiContext.apply { setup("setupBackend") { setupAnkiBackend() } }
+        setup("initializeAnkiDroidDirectory") { dependency(anki) { initializeAnkiDroidDirectory() } }
         // listen for day rollover: time + timezone changes
         DayRolloverHandler.listenForRolloverEvents(this)
         restoreRecurringAlarms(this)
@@ -201,6 +201,10 @@ open class AnkiDroidApp :
         TtsVoices.launchBuildLocalesJob()
         // enable {{tts-voices:}} field filter
         TtsVoicesFieldFilter.ensureApplied()
+    }
+
+    private fun setupAnkiBackend() {
+        LanguageUtil.setDefaultBackendLanguages()
     }
 
     private fun setupWebView() {
@@ -354,6 +358,7 @@ open class AnkiDroidApp :
      * In most cases the Anki Backend now creates the collection and [initializeAnkiDroidDirectory]
      *  is called on startup of the activity.
      */
+    context(_: AnkiContext)
     private fun initializeAnkiDroidDirectory() {
         // #13207: `getCurrentAnkiDroidDirectory` failing is an unconditional be a fatal error
         // TODO: For now, a null getExternalFilesDir, but a valid AnkiDroid Directory in prefs
@@ -447,6 +452,15 @@ open class AnkiDroidApp :
             Timber.d("No relevant changes to update the widget")
         }
     }
+
+    /**
+     * Initialization for the Anki Backend has completed:
+     * - [initAnkiBackend] - platform environment variables/logging
+     * - [makeBackendUsable] - load rsdroid.so
+     * - [setupAnkiBackend] - i18n is set up
+     */
+
+    object AnkiContext
 
     object CrashReportingContext
 
