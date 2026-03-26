@@ -123,25 +123,23 @@ open class CardBrowser :
         get() = createAddNoteLauncher(viewModel)
 
     /**
-     * Provides an instance of NoteEditorLauncher for editing a note
+     * Provides an instance of NoteEditorLauncher for editing the current selection.
      */
-    private val editNoteLauncher: NoteEditorLauncher?
-        get() {
-            val cardId = viewModel.currentCardId
-            if (cardId == null) {
-                Timber.w("EditSelection skipped: no card selected")
-                return null
-            }
+    private suspend fun editNoteLauncher(): NoteEditorLauncher? {
+        val cardIds = viewModel.getCardIdsForNoteEditor()
 
-            return NoteEditorLauncher
-                .EditSelection(
-                    cardId,
-                    Direction.DEFAULT,
-                    fragmented,
-                ).also {
-                    Timber.i("editNoteLauncher: %s", it)
-                }
+        if (cardIds.isEmpty()) {
+            Timber.w("EditSelection skipped: card list is empty")
+            return null
         }
+
+        return NoteEditorLauncher
+            .EditSelection(
+                cardIds = cardIds,
+                animation = Direction.DEFAULT,
+                inCardBrowserActivity = fragmented,
+            )
+    }
 
     override fun onDeckSelected(deck: SelectableDeck?) {
         deck?.let { deck -> launchCatchingTask { viewModel.setSelectedDeck(deck) } }
@@ -519,14 +517,14 @@ open class CardBrowser :
     /**
      * Loads the NoteEditor fragment in container if the view is x-large.
      */
-    fun loadNoteEditorFragmentIfFragmented() {
+    suspend fun loadNoteEditorFragmentIfFragmented() {
         if (!fragmented) {
             return
         }
         // Show note editor frame
         binding.noteEditorFrame!!.isVisible = true
 
-        val launcher = editNoteLauncher ?: return
+        val launcher = editNoteLauncher() ?: return
         // If there are unsaved changes in NoteEditor then show dialog for confirmation
         if (fragment?.hasUnsavedChanges() == true) {
             showSaveChangesDialog(launcher)
@@ -601,11 +599,13 @@ open class CardBrowser :
         }
 
         fun onSelectedCardUpdated(unit: Unit) {
-            if (fragmented) {
-                loadNoteEditorFragmentIfFragmented()
-            } else {
-                editNoteLauncher?.let {
-                    onEditCardActivityResult.launch(it.toIntent(this))
+            launchCatchingTask {
+                if (fragmented) {
+                    loadNoteEditorFragmentIfFragmented()
+                } else {
+                    editNoteLauncher()?.let {
+                        onEditCardActivityResult.launch(it.toIntent(this@CardBrowser))
+                    }
                 }
             }
         }

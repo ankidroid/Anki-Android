@@ -304,6 +304,28 @@ class CardBrowserViewModel(
 
     suspend fun queryAllSelectedNoteIds() = selectedRows.queryNoteIds(this.cardsOrNotes)
 
+    /**
+     * Returns the list of Card IDs that should be updated.
+     *
+     * In 'Notes' mode, this includes all cards of the current note (sibling cards).
+     * In 'Cards' mode, this returns only the selected cards.
+     */
+    suspend fun getCardIdsForNoteEditor(): List<CardId> {
+        val cardId = currentCardId ?: return emptyList()
+
+        return if (cardsOrNotes == NOTES) {
+            withCol {
+                getCard(cardId).note(this).cardIds(this)
+            }
+        } else {
+            if (isInMultiSelectMode) {
+                queryAllSelectedCardIds()
+            } else {
+                listOf(cardId)
+            }
+        }
+    }
+
     fun requestChangeNoteType() =
         viewModelScope.launch {
             val noteIds = queryAllSelectedNoteIds()

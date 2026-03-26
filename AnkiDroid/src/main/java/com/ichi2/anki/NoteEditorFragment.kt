@@ -99,6 +99,7 @@ import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
 import com.ichi2.anki.libanki.Card
+import com.ichi2.anki.libanki.CardId
 import com.ichi2.anki.libanki.CardOrdinal
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.Consts
@@ -300,6 +301,10 @@ class NoteEditorFragment :
 
     private val noteEditorActivity
         get() = requireAnkiActivity() as? NoteEditorActivity
+
+    // List of affected cards (siblings) when editing notes.
+    private val cardIdsFromArguments: LongArray?
+        get() = arguments?.getLongArray(EXTRA_CARD_IDS)
 
     /**
      * Whether this is displayed in a fragment view.
@@ -1374,7 +1379,10 @@ class NoteEditorFragment :
             // changed did? this has to be done first as remFromDyn() involves a direct write to the database
             if (currentEditedCard != null && currentEditedCard!!.currentDeckId() != deckId) {
                 reloadRequired = true
-                undoableOp { setDeck(listOf(currentEditedCard!!.id), deckId) }
+
+                val cardIdsToMove = getAffectedCards()
+                undoableOp { setDeck(cardIdsToMove, deckId) }
+
                 // refresh the card object to reflect the database changes from above
                 currentEditedCard!!.load(getColUnsafe)
                 // also reload the note object
@@ -1382,7 +1390,8 @@ class NoteEditorFragment :
                 // then set the card ID to the new deck
                 currentEditedCard!!.did = deckId
                 modified = true
-                Timber.d("deck ID updated to '%d'", deckId)
+
+                Timber.d("deck ID updated to '%d' for %d card(s) of note %d", deckId, cardIdsToMove.size, editorNote!!.id)
             }
             // now load any changes to the fields from the form
             for (f in editFields!!) {
@@ -1418,6 +1427,24 @@ class NoteEditorFragment :
             return
         }
         delegate?.onNoteSaved()
+    }
+
+    /**
+     * Returns the list of Card IDs that should be affected by bulk operations.
+     * For example deck changes.
+     *
+     * This list is determined by the caller (e.g., Card Browser) and passed
+     * via arguments.
+     *
+     * When the list is not provided, we use the current card.
+     */
+    private fun getAffectedCards(): List<CardId> {
+        val ids = cardIdsFromArguments
+        return if (ids != null && ids.isNotEmpty()) {
+            ids.toList()
+        } else {
+            listOf(currentEditedCard!!.id)
+        }
     }
 
     private fun closeNoteEditorAfterSave() {
@@ -2920,6 +2947,7 @@ class NoteEditorFragment :
         const val RELOAD_REQUIRED_EXTRA_KEY = "reloadRequired"
         const val EXTRA_IMG_OCCLUSION = "image_uri"
         const val IN_CARD_BROWSER_ACTIVITY = "inCardBrowserActivity"
+        const val EXTRA_CARD_IDS = "EXTRA_CARD_IDS"
 
         // calling activity
         enum class NoteEditorCaller(

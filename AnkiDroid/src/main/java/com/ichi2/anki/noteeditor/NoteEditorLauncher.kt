@@ -165,18 +165,22 @@ sealed interface NoteEditorLauncher : Destination {
 
     /**
      * Opens the NoteEditor for the current selection (card or note).
-     * @property cardId The selected card ID, or null when editing a note.
+     * @property cardIds The selected card ID when editing a card, or the IDs of cards of the same note when editing a note.
      * @property animation The animation direction.
+     * @property inCardBrowserActivity True if opened within Card Browser Activity.
      */
     data class EditSelection(
-        val cardId: CardId?,
+        val cardIds: List<CardId>,
         val animation: ActivityTransitionAnimation.Direction,
         val inCardBrowserActivity: Boolean = false,
     ) : NoteEditorLauncher {
         override fun toBundle(): Bundle =
             bundleOf(
                 NoteEditorFragment.EXTRA_CALLER to NoteEditorCaller.EDIT.value,
-                NoteEditorFragment.EXTRA_CARD_ID to cardId,
+                // To handle single card selection
+                NoteEditorFragment.EXTRA_CARD_ID to cardIds.first(),
+                // To handle multi select and note edit
+                NoteEditorFragment.EXTRA_CARD_IDS to cardIds.toLongArray(),
                 AnkiActivity.FINISH_ANIMATION_EXTRA to animation as Parcelable,
                 NoteEditorFragment.IN_CARD_BROWSER_ACTIVITY to inCardBrowserActivity,
             )
