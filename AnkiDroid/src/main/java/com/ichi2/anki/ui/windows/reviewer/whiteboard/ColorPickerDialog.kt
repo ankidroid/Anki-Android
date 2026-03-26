@@ -17,8 +17,12 @@
 package com.ichi2.anki.ui.windows.reviewer.whiteboard
 
 import android.content.Context
+import android.os.Build
 import android.view.Choreographer
+import android.widget.FrameLayout
 import androidx.annotation.ColorInt
+import androidx.core.view.updateLayoutParams
+import androidx.core.view.updatePadding
 import com.ichi2.anki.R
 import com.ichi2.utils.Dp
 import com.ichi2.utils.dp
@@ -59,7 +63,24 @@ fun Context.showColorPickerDialog(
             // default position, resulting in an incorrect displayed color.
             colorPickerView.post { colorPickerView.setInitialColor(initialColor) }
             // Bubble showing the selected color
-            colorPickerView.flagView = BubbleFlag(this@showColorPickerDialog)
+            val bubbleFlag = BubbleFlag(this@showColorPickerDialog)
+            colorPickerView.flagView = bubbleFlag
+            // TODO on these lower Android versions the view clipping fails and we end up with a
+            //  square(standard view shape) instead of the expected circle so we update the
+            //  positioning values so the square sis smaller and is centered in the background pin
+            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.R) {
+                bubbleFlag
+                    .findViewById<FrameLayout>(R.id.flag_color_layout_wrapper)
+                    .updatePadding(
+                        10.dp.toPx(this@showColorPickerDialog),
+                        7.dp.toPx(this@showColorPickerDialog),
+                        10.dp.toPx(this@showColorPickerDialog),
+                    )
+                bubbleFlag.alphaTileView.updateLayoutParams {
+                    this.width = 12.dp.toPx(this@showColorPickerDialog)
+                    this.height = 12.dp.toPx(this@showColorPickerDialog)
+                }
+            }
             setTitle(R.string.choose_color)
             setPositiveButton(R.string.dialog_ok, onPositiveCallback)
             negativeButton(R.string.dialog_cancel)
