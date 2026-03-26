@@ -156,8 +156,6 @@ open class AnkiDroidApp :
         }
         instance = this
 
-        // Ensures any change is propagated to widgets
-        ChangeManager.subscribe(this)
         val acra = CrashReportingContext.apply { initializeAcraCrashReporter() }
         setup("setupLogging") { dependency(acra) { setupLogging() } }
         setup("setupUsageAnalytics") { dependency(acra) { setupUsageAnalytics() } }
@@ -183,6 +181,7 @@ open class AnkiDroidApp :
         setup("setupContextMenus") { setupContextMenus() }
         setup("makeBackendUsable") { makeBackendUsable(this) }
         setup("setupNotifications") { setupNotifications() }
+        setup("setupBackendChangeManager") { setupBackendChangeManager() }
 
         // Probe WebView availability before any other init touches it (#5794).
         if (!checkWebViewAvailable()) {
@@ -198,6 +197,18 @@ open class AnkiDroidApp :
         setup("setupLifecycleLogging") { setupLifecycleLogging() }
         activityAgnosticDialogs = ActivityAgnosticDialogs.register(this)
         setup("setupTextToSpeech") { setupTextToSpeech() }
+    }
+
+    /**
+     * Ensures any changes in the backend are propagated to:
+     *
+     * - widgets
+     *
+     * @see opExecuted
+     * @see ChangeManager
+     */
+    private fun setupBackendChangeManager() {
+        ChangeManager.subscribe(this)
     }
 
     private fun setupTextToSpeech() {
@@ -466,6 +477,7 @@ open class AnkiDroidApp :
      * Initialization for the Anki Backend has completed:
      * - [initAnkiBackend] - platform environment variables/logging
      * - [makeBackendUsable] - load rsdroid.so
+     * - [setupBackendChangeManager]
      * - [setupAnkiBackend] - i18n is set up
      */
 
