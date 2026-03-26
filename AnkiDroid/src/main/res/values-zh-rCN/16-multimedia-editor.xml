@@ -75,4 +75,7 @@
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">字段目录</string>
     <string name="crop_image_size_notice">图片太大，无法被裁剪编辑器处理。请调整大小并重试！</string>
     <string name="reselect" maxLength="28">重新选择</string>
+    <string name="waveform_button_description">Show audio waveform</string>
+    <string name="field_content_description">Show field content</string>
+    <string name="delete_audio_button_description">Delete recording</string>
 </resources>

@@ -75,4 +75,7 @@
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">محتويات الحقل</string>
     <string name="crop_image_size_notice">الصورة تفوق تحمل محرر الإقتصاص. من فضلك، غير حجم الصورة وحاول مجددًا!</string>
     <string name="reselect" maxLength="28">إعادة الاختيار</string>
+    <string name="waveform_button_description">Show audio waveform</string>
+    <string name="field_content_description">Show field content</string>
+    <string name="delete_audio_button_description">Delete recording</string>
 </resources>

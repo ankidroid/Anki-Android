@@ -75,4 +75,7 @@
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Contingut del camp</string>
     <string name="crop_image_size_notice">The image is too big to be handled by the crop editor. Please resize it and try again!</string>
     <string name="reselect" maxLength="28">Torna a seleccionar</string>
+    <string name="waveform_button_description">Show audio waveform</string>
+    <string name="field_content_description">Show field content</string>
+    <string name="delete_audio_button_description">Delete recording</string>
 </resources>
