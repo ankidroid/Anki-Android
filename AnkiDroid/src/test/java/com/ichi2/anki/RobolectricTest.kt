@@ -27,8 +27,6 @@ import android.widget.TextView
 import androidx.annotation.CallSuper
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.edit
-import androidx.sqlite.db.SupportSQLiteOpenHelper
-import androidx.sqlite.db.framework.FrameworkSQLiteOpenHelperFactory
 import androidx.test.core.app.ApplicationProvider
 import androidx.work.Configuration
 import androidx.work.testing.SynchronousExecutor
@@ -60,7 +58,6 @@ import com.ichi2.testutils.common.FailOnUnhandledExceptionRule
 import com.ichi2.testutils.common.IgnoreFlakyTestsInCIRule
 import com.ichi2.testutils.filter
 import com.ichi2.testutils.grantPermissions
-import com.ichi2.utils.InMemorySQLiteOpenHelperFactory
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.TestDispatcher
@@ -178,16 +175,6 @@ open class RobolectricTest :
         // https://github.com/ankidroid/Anki-Android/pull/19004#discussion_r2739833965
         grantPermissions(Manifest.permission.INTERNET)
     }
-
-    protected open fun useLegacyHelper(): Boolean = false
-
-    protected fun getHelperFactory(): SupportSQLiteOpenHelper.Factory =
-        if (getCollectionStorageMode() != ON_DISK) {
-            Timber.w("Using in-memory database for test. Collection should not be re-opened")
-            InMemorySQLiteOpenHelperFactory()
-        } else {
-            FrameworkSQLiteOpenHelperFactory()
-        }
 
     @After
     @CallSuper
