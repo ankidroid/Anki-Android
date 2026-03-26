@@ -119,6 +119,7 @@ class HeaderFragment : SettingsFragment() {
                         .indexItem()
                         .withKey(activity.getString(R.string.pref_review_reminders_screen_key))
                         .withTitle("Review reminders")
+                        .withResId(R.xml.preference_headers)
                 } else {
                     index(R.xml.preferences_notifications)
                 }
