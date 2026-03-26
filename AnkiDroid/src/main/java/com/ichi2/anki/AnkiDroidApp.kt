@@ -132,12 +132,6 @@ open class AnkiDroidApp :
         }
     }
 
-    /** ensures that [block] is called in the context of [receiver] */
-    inline fun <T, R> dependency(
-        receiver: T,
-        block: T.() -> R,
-    ): R = receiver.block()
-
     /**
      * On application creation.
      */
@@ -149,13 +143,13 @@ open class AnkiDroidApp :
             return // instance.resources is invalid
         }
         val acra = CrashReportingContext.apply { initializeAcraCrashReporter() }
-        setup("setupLogging") { dependency(acra) { setupLogging() } }
-        setup("setupUsageAnalytics") { dependency(acra) { setupUsageAnalytics() } }
+        setup("setupLogging") { with(acra) { setupLogging() } }
+        setup("setupUsageAnalytics") { with(acra) { setupUsageAnalytics() } }
 
         // Last in the UncaughtExceptionHandlers chain is our filter service
         ThrowableFilterService.initialize()
 
-        setup("performStartupLogging") { dependency(acra) { performStartupLogging() } }
+        setup("performStartupLogging") { with(acra) { performStartupLogging() } }
 
         // Stop after analytics and logging are initialised.
         if (isAcraSenderProcess()) {
@@ -174,8 +168,8 @@ open class AnkiDroidApp :
         // Forget the last deck that was used in the CardBrowser
         CardBrowser.clearLastDeckId()
         val anki = AnkiContext.apply { setup("setupBackend") { setupAnkiBackend() } }
-        setup("initializeAnkiDroidDirectory") { dependency(anki) { initializeAnkiDroidDirectory() } }
-        setup("setupDayRollover") { dependency(anki) { setupDayRollover() } }
+        setup("initializeAnkiDroidDirectory") { with(anki) { initializeAnkiDroidDirectory() } }
+        setup("setupDayRollover") { with(anki) { setupDayRollover() } }
         restoreRecurringAlarms(this)
         setup("setupLifecycleLogging") { setupLifecycleLogging() }
         activityAgnosticDialogs = ActivityAgnosticDialogs.register(this)
