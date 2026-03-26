@@ -158,21 +158,7 @@ open class AnkiDroidApp :
         // Ensures any change is propagated to widgets
         ChangeManager.subscribe(this)
         val acra = CrashReportingContext.apply { initializeAcraCrashReporter() }
-        val logType = LogType.value
-        when (logType) {
-            LogType.DEBUG -> Timber.plant(DebugTree())
-            LogType.ROBOLECTRIC -> Timber.plant(RobolectricDebugTree())
-            LogType.PRODUCTION -> Timber.plant(ProductionCrashReportingTree())
-        }
-        if (BuildConfig.ENABLE_LEAK_CANARY) {
-            LeakCanaryConfiguration.setInitialConfigFor(this)
-        } else {
-            LeakCanaryConfiguration.disable()
-        }
-        Timber.tag(TAG)
-        Timber.d("Startup - Application Start")
-        Timber.i("Timber config: $logType")
-
+        setup("setupLogging") { dependency(acra) { setupLogging() } }
         setup("setupUsageAnalytics") { dependency(acra) { setupUsageAnalytics() } }
 
         // Last in the UncaughtExceptionHandlers chain is our filter service
@@ -216,6 +202,25 @@ open class AnkiDroidApp :
         TtsVoices.launchBuildLocalesJob()
         // enable {{tts-voices:}} field filter
         TtsVoicesFieldFilter.ensureApplied()
+    }
+
+    // crash reporting should be initialized before logging
+    context(_: CrashReportingContext)
+    private fun setupLogging() {
+        val logType = LogType.value
+        when (logType) {
+            LogType.DEBUG -> Timber.plant(DebugTree())
+            LogType.ROBOLECTRIC -> Timber.plant(RobolectricDebugTree())
+            LogType.PRODUCTION -> Timber.plant(ProductionCrashReportingTree())
+        }
+        if (BuildConfig.ENABLE_LEAK_CANARY) {
+            LeakCanaryConfiguration.setInitialConfigFor(this)
+        } else {
+            LeakCanaryConfiguration.disable()
+        }
+        Timber.tag(TAG)
+        Timber.d("Startup - Application Start")
+        Timber.i("Timber config: $logType")
     }
 
     // analytics after ACRA, they both install UncaughtExceptionHandlers but Analytics chains while ACRA does not
