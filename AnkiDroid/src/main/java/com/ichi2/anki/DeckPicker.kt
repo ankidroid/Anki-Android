@@ -33,7 +33,6 @@ import android.database.SQLException
 import android.graphics.PixelFormat
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.os.Message
 import android.text.util.Linkify
 import android.view.KeyEvent
 import android.view.Menu
@@ -58,7 +57,6 @@ import androidx.core.content.edit
 import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat
-import androidx.core.os.bundleOf
 import androidx.core.util.component1
 import androidx.core.util.component2
 import androidx.core.view.MenuItemCompat
@@ -117,7 +115,6 @@ import com.ichi2.anki.deckpicker.ShortcutData
 import com.ichi2.anki.deckpicker.SyncIconState
 import com.ichi2.anki.dialogs.AsyncDialogFragment
 import com.ichi2.anki.dialogs.BackupPromptDialog
-import com.ichi2.anki.dialogs.ConfirmationDialog
 import com.ichi2.anki.dialogs.CreateDeckDialog
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.CustomExceptionData
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType
@@ -146,7 +143,6 @@ import com.ichi2.anki.filtered.FilteredDeckOptionsFragment
 import com.ichi2.anki.introduction.CollectionPermissionScreenLauncher
 import com.ichi2.anki.introduction.hasCollectionStoragePermissions
 import com.ichi2.anki.libanki.DeckId
-import com.ichi2.anki.libanki.exception.ConfirmModSchemaException
 import com.ichi2.anki.libanki.sched.DeckNode
 import com.ichi2.anki.libanki.undoAvailable
 import com.ichi2.anki.libanki.undoLabel
@@ -212,7 +208,6 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import net.ankiweb.rsdroid.Translations
-import org.json.JSONException
 import timber.log.Timber
 import java.io.File
 
@@ -283,9 +278,6 @@ open class DeckPicker :
     private lateinit var mouseContextMenuHandler: MouseContextMenuHandler
 
     private lateinit var floatingActionMenu: DeckPickerFloatingActionMenu
-
-    // flag asking user to do a full sync which is used in upgrade path
-    private var recommendOneWaySync = false
 
     var activeSnackBar: Snackbar? = null
     private val activeSnackbarCallback =
@@ -1726,31 +1718,9 @@ open class DeckPicker :
      * Automatic sync
      */
     private fun onFinishedStartup() {
-        // Force a one-way sync if flag was set in upgrade path, asking the user to confirm if necessary
-        if (recommendOneWaySync) {
-            recommendOneWaySync = false
-            try {
-                getColUnsafe.modSchema(check = true)
-            } catch (e: ConfirmModSchemaException) {
-                Timber.w("Forcing one-way sync")
-                e.log()
-                // If libanki determines it's necessary to confirm the one-way sync then show a confirmation dialog
-                // We have to show the dialog via the DialogHandler since this method is called via an async task
-                val res = resources
-                val message =
-                    """
-                    ${res.getString(R.string.full_sync_confirmation_upgrade)}
-                    
-                    ${res.getString(R.string.full_sync_confirmation)}
-                    """.trimIndent()
-
-                dialogHandler.sendMessage(OneWaySyncDialog(message).toMessage())
-            }
-        } else {
-            launchCatchingTask {
-                if (!automaticSync()) {
-                    BackupPromptDialog.showIfAvailable(this@DeckPicker)
-                }
+        launchCatchingTask {
+            if (!automaticSync()) {
+                BackupPromptDialog.showIfAvailable(this@DeckPicker)
             }
         }
     }
@@ -1800,38 +1770,6 @@ open class DeckPicker :
                     current
                 }
             preferences.edit { putLong(DeckPickerViewModel.UPGRADE_VERSION_KEY, current) }
-            // Delete the media database made by any version before 2.3 beta due to upgrade errors.
-            // It is rebuilt on the next sync or media check
-            if (previous < 20300200) {
-                Timber.i("Deleting media database")
-                val mediaDb = File(CollectionHelper.getCurrentAnkiDroidDirectory(this), "collection.media.ad.db2")
-                if (mediaDb.exists()) {
-                    mediaDb.delete()
-                }
-            }
-            // Recommend the user to do a full-sync if they're upgrading from before 2.3.1beta8
-            if (previous < 20301208) {
-                Timber.i("Recommend the user to do a full-sync")
-                recommendOneWaySync = true
-            }
-
-            // Fix "font-family" definition in templates created by AnkiDroid before 2.6alpha23
-            if (previous < 20600123) {
-                Timber.i("Fixing font-family definition in templates")
-                try {
-                    val notetypes = getColUnsafe.notetypes
-                    for (noteType in notetypes.all()) {
-                        val css = noteType.css
-                        @Suppress("SpellCheckingInspection")
-                        if (css.contains("font-familiy")) {
-                            noteType.css = css.replace("font-familiy", "font-family")
-                            notetypes.save(noteType)
-                        }
-                    }
-                } catch (e: JSONException) {
-                    Timber.e(e, "Failed to upgrade css definitions.")
-                }
-            }
 
             // Check if preference upgrade or database check required, otherwise go to new feature screen
             val upgradeDbVersion = AnkiDroidApp.CHECK_DB_AT_VERSION
@@ -2463,36 +2401,6 @@ class CollectionLoadingErrorDialog :
     }
 
     override fun toMessage() = emptyMessage(this.what)
-}
-
-class OneWaySyncDialog(
-    val message: String?,
-) : DialogHandlerMessage(
-        which = WhichDialogHandler.MSG_SHOW_ONE_WAY_SYNC_DIALOG,
-        analyticName = "OneWaySyncDialog",
-    ) {
-    override fun handleAsyncMessage(activity: AnkiActivity) {
-        // Confirmation dialog for one-way sync
-        val dialog = ConfirmationDialog()
-        val confirm =
-            Runnable {
-                // Bypass the check once the user confirms
-                CollectionManager.getColUnsafe().modSchema(check = false)
-            }
-        dialog.setConfirm(confirm)
-        dialog.setArgs(message)
-        activity.showDialogFragment(dialog)
-    }
-
-    override fun toMessage(): Message =
-        Message.obtain().apply {
-            what = this@OneWaySyncDialog.what
-            data = bundleOf("message" to message)
-        }
-
-    companion object {
-        fun fromMessage(message: Message): DialogHandlerMessage = OneWaySyncDialog(message.data.getString("message"))
-    }
 }
 
 val ActivityHomescreenBinding.studyoptionsFrame: FragmentContainerView?
