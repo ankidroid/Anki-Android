@@ -34,6 +34,7 @@ import androidx.annotation.VisibleForTesting
 import androidx.core.net.toUri
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ProcessLifecycleOwner
 import anki.collection.OpChanges
 import com.ichi2.anki.AnkiDroidApp.Companion.makeBackendUsable
 import com.ichi2.anki.AnkiDroidApp.Companion.sharedPreferencesTestingOverride
@@ -141,12 +142,6 @@ open class AnkiDroidApp :
     override fun onCreate() {
         setup("initAnkiBackend", onFailure = { null }) { initAnkiBackend(debugTraceSqlCalls = false) }
         super.onCreate()
-        val appLifecycleObserver = AppLifecycleObserver(applicationContext)
-
-        androidx.lifecycle.ProcessLifecycleOwner
-            .get()
-            .lifecycle
-            .addObserver(appLifecycleObserver)
         if (isInitialized) {
             Timber.i("onCreate() called multiple times")
             // 5887 - fix crash.
@@ -174,6 +169,7 @@ open class AnkiDroidApp :
         setup("setupContextMenus") { setupContextMenus() }
         setup("makeBackendUsable") { makeBackendUsable(this) }
         setup("setupNotifications") { setupNotifications() }
+        setup("setupAppLifecycleObserver") { setupAppLifecycleObserver() }
         setup("setupBackendChangeManager") { setupBackendChangeManager() }
         // Probe WebView availability before any other init touches it (#5794).
         if ((setup("setupWebView") { setupWebView() }) != true) {
@@ -188,6 +184,15 @@ open class AnkiDroidApp :
         setup("setupLifecycleLogging") { setupLifecycleLogging() }
         activityAgnosticDialogs = ActivityAgnosticDialogs.register(this)
         setup("setupTextToSpeech") { setupTextToSpeech() }
+    }
+
+    private fun setupAppLifecycleObserver() {
+        val appLifecycleObserver = AppLifecycleObserver(applicationContext)
+
+        ProcessLifecycleOwner
+            .get()
+            .lifecycle
+            .addObserver(appLifecycleObserver)
     }
 
     context(_: CrashReportingContext)
