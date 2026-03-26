@@ -64,6 +64,7 @@ import com.ichi2.utils.ExceptionUtil
 import com.ichi2.utils.LanguageUtil
 import com.ichi2.utils.LanguageUtil.withAppLocale
 import com.ichi2.utils.Permissions
+import com.ichi2.utils.measureTime
 import com.ichi2.utils.setWebContentsDebuggingEnabled
 import com.ichi2.widget.cardanalysis.CardAnalysisWidget
 import com.ichi2.widget.deckpicker.DeckPickerWidget
@@ -96,23 +97,41 @@ open class AnkiDroidApp :
     var progressDialogShown = false
 
     /**
+     * Executes a setup method: [block], logging execution time. [onFailure] determines if a thrown
+     * exception is rethrown (default: rethrow)
+     *
+     * @param methodName Method name, used for logging.
+     * @param onFailure Processes an exception thrown by [block]. Return `null` to swallow
+     * @param block The method to execute and return
+     *
+     * @return The result of [block], or `null` if an exception is thrown and is not swallowed by
+     * [onFailure].
+     */
+    // 'inline fun' so logs use the correct context
+    inline fun <T> setup(
+        methodName: String,
+        crossinline onFailure: ((Exception) -> Exception?) = { it },
+        crossinline block: () -> T,
+    ): T? {
+        try {
+            return measureTime(methodName = methodName) { block() }
+        } catch (e: Exception) {
+            // NOTE: this can be called before Timber is initialized
+            Timber.w(e, "failed to execute $methodName")
+            onFailure.invoke(e)?.let { exceptionToThrow ->
+                throw exceptionToThrow
+            }
+
+            return null
+        }
+    }
+
+    /**
      * On application creation.
      */
     @KotlinCleanup("analytics can be moved to attachBaseContext()")
     override fun onCreate() {
-        try {
-            Os.setenv("PLATFORM", syncPlatform(), false)
-            // enable debug logging of sync actions
-            if (BuildConfig.DEBUG) {
-                Os.setenv("RUST_LOG", "info,anki::sync=debug,anki::media=debug,fsrs=error", false)
-            }
-        } catch (_: Exception) {
-        }
-        // Uncomment the following lines to see a log of all SQL statements
-        // executed by the backend. The log may be delayed by 100ms, so you should not
-        // assume than a given SQL statement has run after a Timber.* line just
-        // because the SQL statement appeared later.
-        //   Os.setenv("TRACESQL", "1", false);
+        setup("initAnkiBackend", onFailure = { null }) { initAnkiBackend(debugTraceSqlCalls = false) }
         super.onCreate()
         val appLifecycleObserver = AppLifecycleObserver(applicationContext)
 
@@ -269,6 +288,26 @@ open class AnkiDroidApp :
         TtsVoices.launchBuildLocalesJob()
         // enable {{tts-voices:}} field filter
         TtsVoicesFieldFilter.ensureApplied()
+    }
+
+    /**
+     * @param debugTraceSqlCalls Log all SQL statements executed by the backend.
+     * **Warning** The log may be delayed by 100ms, so you should not assume than a given SQL
+     * statement has run after a Timber.* line just because the SQL statement appeared later.
+     */
+    private fun initAnkiBackend(
+        @Suppress("SameParameterValue") debugTraceSqlCalls: Boolean = false,
+    ) {
+        // Note: This method runs before logs are enabled.
+        Os.setenv("PLATFORM", syncPlatform(), false)
+        // enable debug logging of sync actions
+        if (BuildConfig.DEBUG) {
+            Os.setenv("RUST_LOG", "info,anki::sync=debug,anki::media=debug,fsrs=error", false)
+        }
+
+        if (debugTraceSqlCalls) {
+            Os.setenv("TRACESQL", "1", false)
+        }
     }
 
     /**
