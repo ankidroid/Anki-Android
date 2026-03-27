@@ -72,9 +72,9 @@
     <string name="model_browser_add_clone">拷貝：%1$s</string>
     <!--Browser Appearance-->
     <string name="card_template_browser_appearance_summary">輸入卡片瀏覽器將用於展示你的卡片的模板。以此顯示更簡潔的答案。\n\n一種正面模板\n“{{國家}}的首都是：”\n會被卡片瀏覽器壓縮為\n“首都：{{國家}}”</string>
-    <string name="card_template_browser_appearance_question_format">問題格式</string>
-    <string name="card_template_browser_appearance_answer_format">回答格式</string>
-    <string name="card_template_browser_appearance_restore_default_dialog">是否恢復預設值？</string>
+    <string name="card_template_browser_appearance_question_format">Question format</string>
+    <string name="card_template_browser_appearance_answer_format">Answer format</string>
+    <string name="card_template_browser_appearance_restore_default_dialog">Are you sure you want to restore the browser appearance to default?</string>
     <string name="card_template_browser_appearance_saving_note">這些變更將在卡片模板被儲存時套用</string>
     <!-- Deck Override -->
     <string name="card_template_editor_deck_override_on">牌組覆蓋 (啟用)</string>

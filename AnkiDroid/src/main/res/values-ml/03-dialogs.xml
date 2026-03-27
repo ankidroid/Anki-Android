@@ -84,6 +84,7 @@
     <string name="dialog_cancel">റദ്ദാക്കുക</string>
     <string name="dialog_ok">ശരി</string>
     <string name="dialog_add" comment="Positive dialog action button label to add \'something\'">Add</string>
+    <string name="restore">Restore</string>
     <string name="dialog_confirm" tools:ignore="UnusedResources">സ്ഥിരീകരിക്കുക</string>
     <string name="dialog_no">No (വേണ്ട)</string>
     <string name="dialog_yes">അതെ</string>

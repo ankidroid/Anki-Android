@@ -56,7 +56,6 @@
     <string name="CardEditorCards">Kaarte: %1$s</string>
     <string name="edit_occlusions">Edit occlusions</string>
     <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
-    <string name="tag_name">Etiket Naam</string>
     <string name="add_new_filter_tags">Voeg/filter etikette</string>
     <string name="add_tag" maxLength="28">Voeg etiket by</string>
     <string name="check_all_tags" maxLength="28">Merk/ontmerk alle etikette</string>
@@ -210,7 +209,7 @@
     <string name="background_image_title" maxLength="41">Agtergrond</string>
     <string name="choose_an_image" maxLength="41">Kies beeld</string>
     <string name="remove_wallpaper_image" maxLength="41">Remove background</string>
-    <string name="remove_background_image">Verwyder agtergrond?</string>
+    <string name="remove_background_image">Are you sure you wish to remove the background?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default" maxLength="28">Restore default</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Leeg</string>

@@ -74,9 +74,9 @@
     <string name="model_browser_add_clone">Κλώνος: %1$s</string>
     <!--Browser Appearance-->
     <string name="card_template_browser_appearance_summary">Εισάγετε το πρότυπο που θα χρησιμοποιήσει ο περιηγητής της κάρτας για την εμφάνιση των καρτών σας. Χρησιμοποιήστε αυτό για να εμφανίσετε μια πιο συνοπτική απάντηση.\n\nΈνα μπροστινό πρότυπο του\n“Η πρωτεύουσα του {{Country}} είναι:”\nθα μπορούσε να συμπιεστεί στον περιηγητή της κάρτας σε\n“Capital: {{Country}}”</string>
-    <string name="card_template_browser_appearance_question_format">Μορφή ερώτησης</string>
-    <string name="card_template_browser_appearance_answer_format">Μορφή απάντησης</string>
-    <string name="card_template_browser_appearance_restore_default_dialog">Επαναφορά Προκαθορισμένων Τιμών;</string>
+    <string name="card_template_browser_appearance_question_format">Question format</string>
+    <string name="card_template_browser_appearance_answer_format">Answer format</string>
+    <string name="card_template_browser_appearance_restore_default_dialog">Are you sure you want to restore the browser appearance to default?</string>
     <string name="card_template_browser_appearance_saving_note">Αυτές οι αλλαγές εφαρμόζονται όταν το πρότυπο της κάρτας αποθηκεύεται</string>
     <!-- Deck Override -->
     <string name="card_template_editor_deck_override_on">Αντικατάσταση τράπουλας (ενεργή)</string>

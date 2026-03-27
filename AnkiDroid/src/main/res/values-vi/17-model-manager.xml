@@ -72,9 +72,9 @@
     <string name="model_browser_add_clone">Nhân bản: %1$s</string>
     <!--Browser Appearance-->
     <string name="card_template_browser_appearance_summary">Nhập mẫu mà trình duyệt thẻ sẽ sử dụng để hiển thị thẻ của bạn. Sử dụng tùy chọn này để hiển thị câu trả lời ngắn gọn hơn.\n\nMẫu trước của thẻ\n“Thủ đô của {{Country}} là:” \ncó thể được nén trong trình duyệt thẻ thành\n“Thủ đô: {{Country}}”</string>
-    <string name="card_template_browser_appearance_question_format">Định dạng câu hỏi</string>
-    <string name="card_template_browser_appearance_answer_format">Định dạng câu trả lời</string>
-    <string name="card_template_browser_appearance_restore_default_dialog">Khôi phục giá trị mặc định?</string>
+    <string name="card_template_browser_appearance_question_format">Question format</string>
+    <string name="card_template_browser_appearance_answer_format">Answer format</string>
+    <string name="card_template_browser_appearance_restore_default_dialog">Are you sure you want to restore the browser appearance to default?</string>
     <string name="card_template_browser_appearance_saving_note">Những thay đổi này được áp dụng khi mẫu thẻ được lưu</string>
     <!-- Deck Override -->
     <string name="card_template_editor_deck_override_on">Ghi đè bộ thẻ (bật)</string>

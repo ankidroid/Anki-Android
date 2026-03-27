@@ -84,6 +84,7 @@
     <string name="dialog_cancel">İptal</string>
     <string name="dialog_ok">Tamam</string>
     <string name="dialog_add" comment="Positive dialog action button label to add \'something\'">Add</string>
+    <string name="restore">Restore</string>
     <string name="dialog_confirm" tools:ignore="UnusedResources">Onayla</string>
     <string name="dialog_no">Hayır</string>
     <string name="dialog_yes">Evet</string>

@@ -74,9 +74,9 @@
     <string name="model_browser_add_clone">Clone: %1$s</string>
     <!--Browser Appearance-->
     <string name="card_template_browser_appearance_summary">ನಿಮ್ಮ ಕಾರ್ಡ್‌ಗಳನ್ನು ಪ್ರದರ್ಶಿಸಲು ಕಾರ್ಡ್ ಬ್ರೌಸರ್ ಬಳಸುವ ಟೆಂಪ್ಲೇಟ್ ಅನ್ನು ನಮೂದಿಸಿ. ಹೆಚ್ಚು ಸಂಕ್ಷಿಪ್ತ ಉತ್ತರವನ್ನು ಪ್ರದರ್ಶಿಸಲು ಇದನ್ನು ಬಳಸಿ.\n\n\n“{{Country}} Capital:”\nನ ಮುಂಭಾಗದ ಟೆಂಪ್ಲೇಟ್ ಅನ್ನು \n“ಕ್ಯಾಪಿಟಲ್: {{Country}}” ಗೆ ಕಾರ್ಡ್ ಬ್ರೌಸರ್‌ನಲ್ಲಿ ಸಂಕುಚಿತಗೊಳಿಸಬಹುದು.</string>
-    <string name="card_template_browser_appearance_question_format">ಪ್ರಶ್ನೆ ಸ್ವರೂಪ</string>
-    <string name="card_template_browser_appearance_answer_format">ಉತ್ತರ ಸ್ವರೂಪ</string>
-    <string name="card_template_browser_appearance_restore_default_dialog">ಡೀಫಾಲ್ಟ್ ಮೌಲ್ಯಗಳನ್ನು ಮರುಸ್ಥಾಪಿಸುವುದೇ?</string>
+    <string name="card_template_browser_appearance_question_format">Question format</string>
+    <string name="card_template_browser_appearance_answer_format">Answer format</string>
+    <string name="card_template_browser_appearance_restore_default_dialog">Are you sure you want to restore the browser appearance to default?</string>
     <string name="card_template_browser_appearance_saving_note">ಕಾರ್ಡ್ ಟೆಂಪ್ಲೇಟ್ ಅನ್ನು ಉಳಿಸಿದಾಗ ಈ ಬದಲಾವಣೆಗಳನ್ನು ಅನ್ವಯಿಸಲಾಗುತ್ತದೆ</string>
     <!-- Deck Override -->
     <string name="card_template_editor_deck_override_on">ಡೆಕ್ ಓವರ್‌ರೈಡ್ (ಆನ್)</string>

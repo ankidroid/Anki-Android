@@ -74,9 +74,9 @@
     <string name="model_browser_add_clone">Clone: %1$s</string>
     <!--Browser Appearance-->
     <string name="card_template_browser_appearance_summary">கார்டு உலாவி உங்கள் கார்டுகளைக் காண்பிக்கப் பயன்படுத்தும் டெம்ப்ளேட்டை உள்ளிடவும். இன்னும் சுருக்கமான பதிலைக் காண்பிக்க இதைப் பயன்படுத்தவும்.\n\n\n“{{நாட்டின்}} தலைநகரம்:”\nஇன் முன் டெம்ப்ளேட்டை அட்டை உலாவியில்\n“மூலதனம்: {{Country}}” என்று சுருக்கலாம்.</string>
-    <string name="card_template_browser_appearance_question_format">கேள்வி வடிவம்</string>
-    <string name="card_template_browser_appearance_answer_format">பதில் வடிவம்</string>
-    <string name="card_template_browser_appearance_restore_default_dialog">இயல்புநிலை மதிப்புகளை மீட்டெடுக்கவா?</string>
+    <string name="card_template_browser_appearance_question_format">Question format</string>
+    <string name="card_template_browser_appearance_answer_format">Answer format</string>
+    <string name="card_template_browser_appearance_restore_default_dialog">Are you sure you want to restore the browser appearance to default?</string>
     <string name="card_template_browser_appearance_saving_note">கார்டு டெம்ப்ளேட் சேமிக்கப்படும்போது இந்த மாற்றங்கள் பயன்படுத்தப்படும்</string>
     <!-- Deck Override -->
     <string name="card_template_editor_deck_override_on">டெக் ஓவர்ரைடு (ஆன்)</string>

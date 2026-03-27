@@ -74,9 +74,9 @@
     <string name="model_browser_add_clone">Kloni: %1$s</string>
     <!--Browser Appearance-->
     <string name="card_template_browser_appearance_summary">Enigu la ŝablonon, kiu estos uzata de la kart‑foliumilo por vidigi kartojn. Uzu tion ĉi por vidigi pli koncizan respondon.\n\nEkzemple  la antaŭa ŝablono de\n\n“La ĉefurbo de {{Country}} estas:”\npovus esti mallongigita al\n“Ĉefurbo: {{Country}}”</string>
-    <string name="card_template_browser_appearance_question_format">Formo de demando</string>
-    <string name="card_template_browser_appearance_answer_format">Formo de respondo</string>
-    <string name="card_template_browser_appearance_restore_default_dialog">Ĉu restarigi implicitajn valorojn?</string>
+    <string name="card_template_browser_appearance_question_format">Question format</string>
+    <string name="card_template_browser_appearance_answer_format">Answer format</string>
+    <string name="card_template_browser_appearance_restore_default_dialog">Are you sure you want to restore the browser appearance to default?</string>
     <string name="card_template_browser_appearance_saving_note">Tiu ĉi ŝanĝoj aplikos kiam la ŝablono de karto estos konservita</string>
     <!-- Deck Override -->
     <string name="card_template_editor_deck_override_on">Superskribi kartaron (ŝaltita)</string>

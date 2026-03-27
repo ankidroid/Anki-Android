@@ -74,9 +74,9 @@
     <string name="model_browser_add_clone">Clone: %1$s</string>
     <!--Browser Appearance-->
     <string name="card_template_browser_appearance_summary">ᱪᱷᱟᱸᱪ ᱠᱚ ᱮᱢᱟᱱ ᱚᱞ ᱢᱮ, ᱠᱟᱰ ᱵᱨᱟᱩᱡᱚᱨ ᱟᱢᱟᱜ ᱠᱟᱰ ᱫᱮᱠᱷᱟᱣ ᱛᱟᱢᱟᱭ ᱾ ᱛᱷᱤᱠ ᱛᱮᱞᱟ ᱫᱮᱠᱷᱟᱣ ᱞᱟᱹᱜᱤᱫ ᱱᱚᱶᱟ ᱵᱮᱵᱷᱟᱨ ᱢᱮ ᱾ \n\n ᱫᱚ \n ᱨᱮᱭᱟᱜ ᱯᱩᱭᱞᱩ ᱪᱷᱟᱸᱪ ᱠᱟᱱᱟ “{{Country}}ᱼᱟᱜ ᱨᱟᱡᱜᱟᱲ ᱫᱚᱺ”\nᱫᱚ ᱠᱟᱰ ᱵᱨᱟᱩᱡᱚᱨ ᱨᱮ ᱠᱷᱟᱴᱚ ᱫᱟᱲᱮᱼᱟᱜ ᱟᱢ \n“ᱫᱤᱥᱚᱢᱺ {{Country}}”</string>
-    <string name="card_template_browser_appearance_question_format">ᱠᱩᱠᱞᱤ ᱛᱮᱞᱟ ᱠᱩᱞ</string>
-    <string name="card_template_browser_appearance_answer_format">ᱛᱮᱞᱟ ᱛᱮᱭᱟᱨ ᱠᱩᱞ</string>
-    <string name="card_template_browser_appearance_restore_default_dialog">ᱢᱚᱱᱮ ᱛᱮᱭᱟᱜ ᱢᱩᱞ ᱫᱩᱦᱲᱟᱹ ᱫᱚᱦᱚ?</string>
+    <string name="card_template_browser_appearance_question_format">Question format</string>
+    <string name="card_template_browser_appearance_answer_format">Answer format</string>
+    <string name="card_template_browser_appearance_restore_default_dialog">Are you sure you want to restore the browser appearance to default?</string>
     <string name="card_template_browser_appearance_saving_note">ᱠᱟᱰ ᱪᱷᱟᱸᱪ ᱠᱚ ᱥᱟᱱᱪᱟᱣ ᱞᱮᱠᱷᱟᱱ ᱱᱚᱶᱟ ᱠᱚ ᱵᱤᱫᱚᱞ ᱛᱟᱦᱮᱱᱟ ᱾</string>
     <!-- Deck Override -->
     <string name="card_template_editor_deck_override_on">ᱰᱮᱠ ᱚᱣᱟᱹᱨᱨᱟᱭᱮᱰ (ᱚᱱ)</string>

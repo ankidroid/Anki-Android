@@ -56,7 +56,6 @@
     <string name="CardEditorCards">카드: %1$s</string>
     <string name="edit_occlusions">Edit occlusions</string>
     <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
-    <string name="tag_name">태그 이름</string>
     <string name="add_new_filter_tags">태그 추가/필터링</string>
     <string name="add_tag" maxLength="28">태그 추가</string>
     <string name="check_all_tags" maxLength="28">모든 태그 선택/취소</string>
@@ -210,7 +209,7 @@ Context | Request Context    [1]</string>
     <string name="background_image_title" maxLength="41">배경</string>
     <string name="choose_an_image" maxLength="41">이미지 선택</string>
     <string name="remove_wallpaper_image" maxLength="41">배경 제거하기</string>
-    <string name="remove_background_image">배경을 제거하시겠습니까?</string>
+    <string name="remove_background_image">Are you sure you wish to remove the background?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default" maxLength="28">Restore default</string>
     <string name="reviewer_tts_cloze_spoken_replacement">공백</string>

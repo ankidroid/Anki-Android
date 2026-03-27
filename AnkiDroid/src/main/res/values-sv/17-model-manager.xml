@@ -74,9 +74,9 @@
     <string name="model_browser_add_clone">Clone: %1$s</string>
     <!--Browser Appearance-->
     <string name="card_template_browser_appearance_summary">Ange den mall som kortbläddraren kommer att använda för att visa dina kort. Använd detta för att visa ett mer koncist svar.\n\nEn framsidomall \n“Huvudstaden i {{Country}} är:”\nkan i kortbläddraren komprimeras till\n“Huvudstad: {{Country}}”</string>
-    <string name="card_template_browser_appearance_question_format">Frågeformat</string>
-    <string name="card_template_browser_appearance_answer_format">Svarsformat</string>
-    <string name="card_template_browser_appearance_restore_default_dialog">Återställ standardvärden?</string>
+    <string name="card_template_browser_appearance_question_format">Question format</string>
+    <string name="card_template_browser_appearance_answer_format">Answer format</string>
+    <string name="card_template_browser_appearance_restore_default_dialog">Are you sure you want to restore the browser appearance to default?</string>
     <string name="card_template_browser_appearance_saving_note">Dessa ändringar tillämpas när kortmallen sparas</string>
     <!-- Deck Override -->
     <string name="card_template_editor_deck_override_on">Kortleksöverskrivning (på)</string>

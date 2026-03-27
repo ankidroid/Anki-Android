@@ -72,9 +72,9 @@
     <string name="model_browser_add_clone">Clone: %1$s</string>
     <!--Browser Appearance-->
     <string name="card_template_browser_appearance_summary">Masukkan templat yang penelusur kartu akan gunakan untuk menampilkan kartumu. Gunakan ini untuk menampilkan jawaban yang lebih ringkas.\n\nContoh: templat depan\n“Ibukota {{Negara}} adalah:”\nbisa diringkas lagi di penelusur kartu menjadi\n“Ibukota: {{Negara}}”</string>
-    <string name="card_template_browser_appearance_question_format">Format pertanyaan</string>
-    <string name="card_template_browser_appearance_answer_format">Format jawaban</string>
-    <string name="card_template_browser_appearance_restore_default_dialog">Kembalikan ke nilai awal?</string>
+    <string name="card_template_browser_appearance_question_format">Question format</string>
+    <string name="card_template_browser_appearance_answer_format">Answer format</string>
+    <string name="card_template_browser_appearance_restore_default_dialog">Are you sure you want to restore the browser appearance to default?</string>
     <string name="card_template_browser_appearance_saving_note">Perubahan ini akan diterapkan saat templat kartu disimpan</string>
     <!-- Deck Override -->
     <string name="card_template_editor_deck_override_on">Paksa lokasi dek (nyala)</string>

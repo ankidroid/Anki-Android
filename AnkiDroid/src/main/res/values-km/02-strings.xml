@@ -56,7 +56,6 @@
     <string name="CardEditorCards">Cards: %1$s</string>
     <string name="edit_occlusions">Edit occlusions</string>
     <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
-    <string name="tag_name">ឈ្មោះស្លាក</string>
     <string name="add_new_filter_tags">Add/filter tags</string>
     <string name="add_tag" maxLength="28">បន្ថែមស្លាក</string>
     <string name="check_all_tags" maxLength="28">Check/uncheck all tags</string>
@@ -207,7 +206,7 @@
     <string name="background_image_title" maxLength="41">ផ្ទៃខាងក្រោយ</string>
     <string name="choose_an_image" maxLength="41">ជ្រើសរើសរូបភាព</string>
     <string name="remove_wallpaper_image" maxLength="41">Remove background</string>
-    <string name="remove_background_image">ដកផ្ទៃខាងក្រោយចេញ?</string>
+    <string name="remove_background_image">Are you sure you wish to remove the background?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default" maxLength="28">Restore default</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Blank</string>

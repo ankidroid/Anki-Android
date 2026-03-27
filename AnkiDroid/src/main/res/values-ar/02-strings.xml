@@ -56,7 +56,6 @@
     <string name="CardEditorCards">البطاقات: %1$s</string>
     <string name="edit_occlusions">تحرير الصور المُعَمَّاة</string>
     <string name="paste_from_clipboard" maxLength="28">لصق من الحافظة</string>
-    <string name="tag_name">اسم الوسم</string>
     <string name="add_new_filter_tags">إضافة وفرز الوسوم</string>
     <string name="add_tag" maxLength="28">إضافة وسم</string>
     <string name="check_all_tags" maxLength="28">تحديد/إلغاء تحديد كل الوسوم</string>
@@ -222,7 +221,7 @@
     <string name="background_image_title" maxLength="41">الخلفية</string>
     <string name="choose_an_image" maxLength="41">اختيار صورة</string>
     <string name="remove_wallpaper_image" maxLength="41">إزالة الخلفية</string>
-    <string name="remove_background_image">هل تريد إزالة الخلفية؟</string>
+    <string name="remove_background_image">Are you sure you wish to remove the background?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default" maxLength="28">استعادة الافتراضي</string>
     <string name="reviewer_tts_cloze_spoken_replacement">فارغ</string>

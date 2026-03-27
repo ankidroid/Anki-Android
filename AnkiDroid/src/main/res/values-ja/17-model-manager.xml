@@ -72,9 +72,9 @@
     <string name="model_browser_add_clone">複製: %1$s</string>
     <!--Browser Appearance-->
     <string name="card_template_browser_appearance_summary">カードブラウザでカードをリスト表示する際に使用するテンプレートを設定できます。これを利用すると、内容をより簡潔に表示することができます。\n\n例えば、\n「 {{Country}} の首都はどこですか？」\nという内容の表面テンプレートについて、\n「 {{Country}} の首都」\nという、リストの質問欄用のテンプレートを設定することによって、「フランス の首都」「ドイツ の首都」のように、カード表面の内容をコンパクトに示すことができます。</string>
-    <string name="card_template_browser_appearance_question_format">質問欄テンプレート</string>
-    <string name="card_template_browser_appearance_answer_format">解答欄テンプレート</string>
-    <string name="card_template_browser_appearance_restore_default_dialog">既定値を復元しますか？</string>
+    <string name="card_template_browser_appearance_question_format">Question format</string>
+    <string name="card_template_browser_appearance_answer_format">Answer format</string>
+    <string name="card_template_browser_appearance_restore_default_dialog">Are you sure you want to restore the browser appearance to default?</string>
     <string name="card_template_browser_appearance_saving_note">この画面での変更は、一つ手前の画面でカードテンプレートを保存した後にカードブラウザに適用されます。</string>
     <!-- Deck Override -->
     <string name="card_template_editor_deck_override_on">デッキ選択を上書き (指定済み)</string>

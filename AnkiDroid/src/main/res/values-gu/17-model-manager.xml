@@ -74,9 +74,9 @@
     <string name="model_browser_add_clone">Clone: %1$s</string>
     <!--Browser Appearance-->
     <string name="card_template_browser_appearance_summary">કાર્ડ બ્રાઉઝર તમારા કાર્ડ પ્રદર્શિત કરવા માટે ઉપયોગ કરશે તે ટેમ્પલેટ દાખલ કરો. વધુ સંક્ષિપ્ત જવાબ પ્રદર્શિત કરવા માટે આનો ઉપયોગ કરો.\n\n\"{{Country}} ની રાજધાની છે:\"\n\"રાજધાની: {{Country}}\"માં સંકુચિત કરી શકાય છે.</string>
-    <string name="card_template_browser_appearance_question_format">પ્રશ્ન ફોર્મેટ</string>
-    <string name="card_template_browser_appearance_answer_format">જવાબ ફોર્મેટ</string>
-    <string name="card_template_browser_appearance_restore_default_dialog">ડિફૉલ્ટ મૂલ્યો પુનઃસ્થાપિત કરીએ?</string>
+    <string name="card_template_browser_appearance_question_format">Question format</string>
+    <string name="card_template_browser_appearance_answer_format">Answer format</string>
+    <string name="card_template_browser_appearance_restore_default_dialog">Are you sure you want to restore the browser appearance to default?</string>
     <string name="card_template_browser_appearance_saving_note">જ્યારે કાર્ડ ટેમ્પલેટ સાચવવામાં આવે ત્યારે આ ફેરફારો લાગુ થાય છે</string>
     <!-- Deck Override -->
     <string name="card_template_editor_deck_override_on">ડેક ઓવરરાઇડ (ચાલુ)</string>

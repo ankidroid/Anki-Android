@@ -74,9 +74,9 @@
     <string name="model_browser_add_clone">Clonar: %1$s</string>
     <!--Browser Appearance-->
     <string name="card_template_browser_appearance_summary">Introduza o modelo que vai ser utilizado para apresentar as suas fichas. Utilize isto para apresentar uma resposta mais concisa.\n\nUm modelo para a frente da ficha\n\"A capital do {{país}} é:\"\npode ser reduzida para\n\"Capital: {{País}}\"</string>
-    <string name="card_template_browser_appearance_question_format">Formato de Pergunta</string>
-    <string name="card_template_browser_appearance_answer_format">Formato de Resposta</string>
-    <string name="card_template_browser_appearance_restore_default_dialog">Restaurar os valores predefinidos?</string>
+    <string name="card_template_browser_appearance_question_format">Question format</string>
+    <string name="card_template_browser_appearance_answer_format">Answer format</string>
+    <string name="card_template_browser_appearance_restore_default_dialog">Are you sure you want to restore the browser appearance to default?</string>
     <string name="card_template_browser_appearance_saving_note">Estas alterações vão ser aplicadas quando o modelo da ficha for guardado.</string>
     <!-- Deck Override -->
     <string name="card_template_editor_deck_override_on">Substituição de baralho (activa)</string>

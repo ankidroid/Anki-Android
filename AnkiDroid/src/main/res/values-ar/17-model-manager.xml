@@ -82,9 +82,9 @@
     <string name="model_browser_add_clone">نسخ: %1$s</string>
     <!--Browser Appearance-->
     <string name="card_template_browser_appearance_summary">أدخل القالب الذي سيستخدمه متصفح البطاقات لعرض بطاقاتك. استخدم هذا لعرض جواب مختصر.\n\nيمكن اختصار قالب أمامي يحتوي على «عاصمة {{Country}} هي:»\nفي متصفح البطاقات بـ «عاصمة: {{Country}}»</string>
-    <string name="card_template_browser_appearance_question_format">صيغة السؤال</string>
-    <string name="card_template_browser_appearance_answer_format">صيغة الجواب</string>
-    <string name="card_template_browser_appearance_restore_default_dialog">هل تريد استعادة القيم الافتراضية؟</string>
+    <string name="card_template_browser_appearance_question_format">Question format</string>
+    <string name="card_template_browser_appearance_answer_format">Answer format</string>
+    <string name="card_template_browser_appearance_restore_default_dialog">Are you sure you want to restore the browser appearance to default?</string>
     <string name="card_template_browser_appearance_saving_note">تُطبَّق هذه التغييرات عند حفظ قالب البطاقة</string>
     <!-- Deck Override -->
     <string name="card_template_editor_deck_override_on">غَلْب الرزم (مفعل)</string>

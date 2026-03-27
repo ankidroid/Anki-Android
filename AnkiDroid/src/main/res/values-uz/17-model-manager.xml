@@ -74,9 +74,9 @@
     <string name="model_browser_add_clone">Nusxala: %1$s</string>
     <!--Browser Appearance-->
     <string name="card_template_browser_appearance_summary">Karta brauzeri kartalaringizni koʻrsatish uchun foydalanadigan shablonni kiriting. Qisqaroq javob koʻsatish uchun bundan foydalaning.\n\n“{{Mamlakat}}ning poytaxti:”ning oldi taraf shabloni\nkarta brauzerida\n“Poytaxti: {{Mamlakat}}” qilib qisqartirish mumkin.</string>
-    <string name="card_template_browser_appearance_question_format">Savol formati</string>
-    <string name="card_template_browser_appearance_answer_format">Javob formati</string>
-    <string name="card_template_browser_appearance_restore_default_dialog">Birlamchi qiymatlar qayta tiklansinmi?</string>
+    <string name="card_template_browser_appearance_question_format">Question format</string>
+    <string name="card_template_browser_appearance_answer_format">Answer format</string>
+    <string name="card_template_browser_appearance_restore_default_dialog">Are you sure you want to restore the browser appearance to default?</string>
     <string name="card_template_browser_appearance_saving_note">Ushbu oʻzgarishlar karta shabloni oʻzgarganda qoʻllanadi</string>
     <!-- Deck Override -->
     <string name="card_template_editor_deck_override_on">Dastani oʻzgartirish (yoniq)</string>

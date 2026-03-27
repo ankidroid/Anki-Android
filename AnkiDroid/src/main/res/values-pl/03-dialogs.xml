@@ -88,6 +88,7 @@
     <string name="dialog_cancel">Anuluj</string>
     <string name="dialog_ok">OK</string>
     <string name="dialog_add" comment="Positive dialog action button label to add \'something\'">Add</string>
+    <string name="restore">Restore</string>
     <string name="dialog_confirm" tools:ignore="UnusedResources">Potwierdź</string>
     <string name="dialog_no">Nie</string>
     <string name="dialog_yes">Tak</string>

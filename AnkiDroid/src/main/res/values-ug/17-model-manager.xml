@@ -74,9 +74,9 @@
     <string name="model_browser_add_clone">نۇسخىلا: %1$s</string>
     <!--Browser Appearance-->
     <string name="card_template_browser_appearance_summary">كارتا كۆرگۈچ كارتىڭىزنى كۆرسىتىشكە ئىشلىتىدىغان قېلىپنى كىرگۈزۈڭ. بۇنى ئىشلىتىپ تېخىمۇ كۆپ قىسقا جاۋابنى كۆرسىتىدۇ.\n\nقېلىپتىكى «The capital of {{Country}} is:» كارتا كۆرگۈچتە «Capital: {{Country}}» غا قىسقارتىلىشى مۇمكىن</string>
-    <string name="card_template_browser_appearance_question_format">سوئال پىچىمى</string>
-    <string name="card_template_browser_appearance_answer_format">جاۋاب پىچىمى</string>
-    <string name="card_template_browser_appearance_restore_default_dialog">كۈڭۈلدىكى قىممەتنى ئەسلىگە قايتۇرامدۇ؟</string>
+    <string name="card_template_browser_appearance_question_format">Question format</string>
+    <string name="card_template_browser_appearance_answer_format">Answer format</string>
+    <string name="card_template_browser_appearance_restore_default_dialog">Are you sure you want to restore the browser appearance to default?</string>
     <string name="card_template_browser_appearance_saving_note">كارتا قېلىپى ساقلانغاندا بۇ ئۆزگىرىشلەرنى قوللىنىدۇ</string>
     <!-- Deck Override -->
     <string name="card_template_editor_deck_override_on">دەستە قاپلاش (ئوچۇق)</string>

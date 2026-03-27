@@ -74,9 +74,9 @@
     <string name="model_browser_add_clone">Clone: %1$s</string>
     <!--Browser Appearance-->
     <string name="card_template_browser_appearance_summary">మీ కార్డ్‌లను ప్రదర్శించడానికి కార్డ్ బ్రౌజర్ ఉపయోగించే టెంప్లేట్‌ను నమోదు చేయండి. మరింత సంక్షిప్త సమాధానాన్ని ప్రదర్శించడానికి దీన్ని ఉపయోగించండి.\n\n\n బ్రౌజర్‌లో “{{Country}} రాజధాని:”\n ముందు ఉన్న టెంప్లేట్ కార్డ్ “క్యాపిటల్: {{Country}}”కి కుదించబడుతుంది.</string>
-    <string name="card_template_browser_appearance_question_format">ప్రశ్న ఫార్మాట్</string>
-    <string name="card_template_browser_appearance_answer_format">జవాబు ఫార్మాట్</string>
-    <string name="card_template_browser_appearance_restore_default_dialog">డిఫాల్ట్ విలువలను పునరుద్ధరించాలా?</string>
+    <string name="card_template_browser_appearance_question_format">Question format</string>
+    <string name="card_template_browser_appearance_answer_format">Answer format</string>
+    <string name="card_template_browser_appearance_restore_default_dialog">Are you sure you want to restore the browser appearance to default?</string>
     <string name="card_template_browser_appearance_saving_note">కార్డ్ టెంప్లేట్ సేవ్ చేయబడినప్పుడు ఈ మార్పులు వర్తిస్తాయి</string>
     <!-- Deck Override -->
     <string name="card_template_editor_deck_override_on">డెక్ ఓవర్‌రైడ్ (ఆన్)</string>

@@ -86,6 +86,7 @@
     <string name="dialog_cancel">Atcelt</string>
     <string name="dialog_ok">Labi</string>
     <string name="dialog_add" comment="Positive dialog action button label to add \'something\'">Add</string>
+    <string name="restore">Restore</string>
     <string name="dialog_confirm" tools:ignore="UnusedResources">Apstiprināt</string>
     <string name="dialog_no">Nē</string>
     <string name="dialog_yes">Jā</string>

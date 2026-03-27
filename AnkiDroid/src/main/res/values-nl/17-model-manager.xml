@@ -74,9 +74,9 @@
     <string name="model_browser_add_clone">Kloon: %1$s</string>
     <!--Browser Appearance-->
     <string name="card_template_browser_appearance_summary">Voer het sjabloon in dat de kaartenbrowser zal gebruiken om uw kaarten weer te geven. Gebruik dit om een beknopter antwoord weer te geven.\n\nEen sjabloon voor\n“De hoofdstad van {{Country}} is:”\nzou in de kaartenbrowser verkleind kunnen worden naar\n“Hoofdstad: {{Country}}”</string>
-    <string name="card_template_browser_appearance_question_format">Vraagformaat</string>
-    <string name="card_template_browser_appearance_answer_format">Antwoordformaat</string>
-    <string name="card_template_browser_appearance_restore_default_dialog">Standaardwaarden herstellen?</string>
+    <string name="card_template_browser_appearance_question_format">Question format</string>
+    <string name="card_template_browser_appearance_answer_format">Answer format</string>
+    <string name="card_template_browser_appearance_restore_default_dialog">Are you sure you want to restore the browser appearance to default?</string>
     <string name="card_template_browser_appearance_saving_note">Deze wijzigingen worden toegepast wanneer het kaartsjabloon wordt opgeslagen</string>
     <!-- Deck Override -->
     <string name="card_template_editor_deck_override_on">Set overschrijven (aan)</string>

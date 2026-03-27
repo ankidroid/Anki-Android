@@ -74,9 +74,9 @@
     <string name="model_browser_add_clone">𐌲𐌰𐌲𐌰𐌻𐌴𐌹𐌺𐍉𐌽𐍃: %1$s</string>
     <!--Browser Appearance-->
     <string name="card_template_browser_appearance_summary">Enter the template that the card browser will use to display your cards. Use this to display a more concise answer.\n\nA front template of\n“The capital of {{Country}} is:”\ncould be compressed in the card browser to\n“Capital: {{Country}}”</string>
-    <string name="card_template_browser_appearance_question_format">𐌷𐌰𐌹𐌳𐌿𐍃 𐍃𐍉𐌺𐌽𐌰𐌹𐍃</string>
-    <string name="card_template_browser_appearance_answer_format">𐌷𐌰𐌹𐌳𐌿𐍃 𐌰𐌽𐌳𐌰𐌷𐌰𐍆𐍄𐌰𐌹𐍃</string>
-    <string name="card_template_browser_appearance_restore_default_dialog">𐌱𐌹𐌿𐌷𐍄𐌰 𐍅𐌰𐌹𐍂𐌸𐌰 𐌽𐌰𐍃𐌾𐌰𐌽?</string>
+    <string name="card_template_browser_appearance_question_format">Question format</string>
+    <string name="card_template_browser_appearance_answer_format">Answer format</string>
+    <string name="card_template_browser_appearance_restore_default_dialog">Are you sure you want to restore the browser appearance to default?</string>
     <string name="card_template_browser_appearance_saving_note">𐌸𐍉𐍃 𐌹𐌽𐌼𐌰𐌹𐌳𐌴𐌹𐌽𐍉𐍃 𐌲𐌰𐌻𐌰𐌲𐌾𐌰𐌽𐌳𐌰 𐌾𐌰𐌱𐌰𐌹 𐌲𐌰𐍆𐌰𐍃𐍄𐌰𐌳𐌰 𐍆𐌰𐌿𐍂𐌰𐌼𐌴𐌻𐌴𐌹𐌽𐍃 𐌺𐌰𐍂𐍄𐍉</string>
     <!-- Deck Override -->
     <string name="card_template_editor_deck_override_on">𐌿𐍆𐌰𐍂𐌼𐌴𐌻𐌴𐌹𐌽𐍃 𐌺𐌰𐍂𐍄𐌰𐌷𐌿𐌶𐌳𐌹𐍃 (𐌰𐌽𐌰)</string>

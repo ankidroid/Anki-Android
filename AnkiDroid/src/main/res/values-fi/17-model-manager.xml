@@ -74,9 +74,9 @@
     <string name="model_browser_add_clone">Monista: %1$s</string>
     <!--Browser Appearance-->
     <string name="card_template_browser_appearance_summary">Anna malli, jota korttiselain käyttää korttien näyttämiseen. Käytä tätä, jos haluat näyttää tiiviimmän vastauksen.\n\nEtupuolen malli\n \"Maan {{Maa}} pääkaupunki on:\"\nvoitaisiin tiivistää korttiselaimessa muotoon\n \"Pääkaupunki: {{Maa}}\"</string>
-    <string name="card_template_browser_appearance_question_format">Kysymyksen muoto</string>
-    <string name="card_template_browser_appearance_answer_format">Vastauksen muoto</string>
-    <string name="card_template_browser_appearance_restore_default_dialog">Palautetaanko oletusarvot?</string>
+    <string name="card_template_browser_appearance_question_format">Question format</string>
+    <string name="card_template_browser_appearance_answer_format">Answer format</string>
+    <string name="card_template_browser_appearance_restore_default_dialog">Are you sure you want to restore the browser appearance to default?</string>
     <string name="card_template_browser_appearance_saving_note">Nämä muutokset otetaan käyttöön, kun korttimalli tallennetaan</string>
     <!-- Deck Override -->
     <string name="card_template_editor_deck_override_on">Pakan ohitus (päällä)</string>

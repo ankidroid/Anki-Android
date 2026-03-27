@@ -74,9 +74,9 @@
     <string name="model_browser_add_clone">Clone: %1$s</string>
     <!--Browser Appearance-->
     <string name="card_template_browser_appearance_summary">Enter the template that the card browser will use to display your cards. Use this to display a more concise answer.\n\nA front template of\n“The capital of {{Country}} is:”\ncould be compressed in the card browser to\n“Capital: {{Country}}”</string>
-    <string name="card_template_browser_appearance_question_format">প্রশ্ন বিন্যাস</string>
-    <string name="card_template_browser_appearance_answer_format">উত্তর বিন্যাস</string>
-    <string name="card_template_browser_appearance_restore_default_dialog">ডিফল্ট মান পুনরুদ্ধার করবেন?</string>
+    <string name="card_template_browser_appearance_question_format">Question format</string>
+    <string name="card_template_browser_appearance_answer_format">Answer format</string>
+    <string name="card_template_browser_appearance_restore_default_dialog">Are you sure you want to restore the browser appearance to default?</string>
     <string name="card_template_browser_appearance_saving_note">কার্ড টেমপ্লেট সংরক্ষণ করা হলে এই পরিবর্তনগুলি প্রয়োগ করা হয়</string>
     <!-- Deck Override -->
     <string name="card_template_editor_deck_override_on">ডেক ওভাররাইড (চালু)</string>

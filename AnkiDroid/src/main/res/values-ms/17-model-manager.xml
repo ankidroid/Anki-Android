@@ -72,9 +72,9 @@
     <string name="model_browser_add_clone">Clone: %1$s</string>
     <!--Browser Appearance-->
     <string name="card_template_browser_appearance_summary">Masukkan templat yang pencari kad akan guna untuk tunjukkan kad anda. Gunakannya untuk memaparkan jawapan lebih ringkas.\n\nTemplat hadapan\n“Ibu negara {{Country}} adalah:”\nboleh diringkaskan dalam pencari kad kepada\n“Ibu negara: {{Country}}”</string>
-    <string name="card_template_browser_appearance_question_format">Format Soalan</string>
-    <string name="card_template_browser_appearance_answer_format">Format Jawapan</string>
-    <string name="card_template_browser_appearance_restore_default_dialog">Pulih Nilai Lalai?</string>
+    <string name="card_template_browser_appearance_question_format">Question format</string>
+    <string name="card_template_browser_appearance_answer_format">Answer format</string>
+    <string name="card_template_browser_appearance_restore_default_dialog">Are you sure you want to restore the browser appearance to default?</string>
     <string name="card_template_browser_appearance_saving_note">Perubahan ini diterapkan apabila templat kad disimpan</string>
     <!-- Deck Override -->
     <string name="card_template_editor_deck_override_on">Dek pencelah (hidup)</string>

@@ -74,9 +74,9 @@
     <string name="model_browser_add_clone">Clone: %1$s</string>
     <!--Browser Appearance-->
     <string name="card_template_browser_appearance_summary">ਉਹ ਟੈਂਪਲੇਟ ਦਾਖਲ ਕਰੋ ਜਿਸਦੀ ਵਰਤੋਂ ਕਾਰਡ ਬ੍ਰਾਊਜ਼ਰ ਤੁਹਾਡੇ ਕਾਰਡਾਂ ਨੂੰ ਪ੍ਰਦਰਸ਼ਿਤ ਕਰਨ ਲਈ ਕਰੇਗਾ। ਹੋਰ ਸੰਖੇਪ ਜਵਾਬ ਦਿਖਾਉਣ ਲਈ ਇਸਦੀ ਵਰਤੋਂ ਕਰੋ।\n\n“{{Country}} ਦੀ ਰਾਜਧਾਨੀ ਹੈ:”\n\n“ਰਾਜਧਾਨੀ: {{Country}}” ਵਿੱਚ ਸਮੇਟਿਆ ਜਾ ਸਕਦਾ ਹੈ।</string>
-    <string name="card_template_browser_appearance_question_format">ਪ੍ਰਸ਼ਨ ਫਾਰਮੈਟ</string>
-    <string name="card_template_browser_appearance_answer_format">ਜਵਾਬ ਫਾਰਮੈਟ</string>
-    <string name="card_template_browser_appearance_restore_default_dialog">ਕੀ ਪੂਰਵ-ਨਿਰਧਾਰਤ ਮੁੱਲਾਂ ਨੂੰ ਰੀਸਟੋਰ ਕਰਨਾ ਹੈ?</string>
+    <string name="card_template_browser_appearance_question_format">Question format</string>
+    <string name="card_template_browser_appearance_answer_format">Answer format</string>
+    <string name="card_template_browser_appearance_restore_default_dialog">Are you sure you want to restore the browser appearance to default?</string>
     <string name="card_template_browser_appearance_saving_note">ਇਹ ਬਦਲਾਅ ਉਦੋਂ ਲਾਗੂ ਹੁੰਦੇ ਹਨ ਜਦੋਂ ਕਾਰਡ ਟੈਮਪਲੇਟ ਨੂੰ ਸੁਰੱਖਿਅਤ ਕੀਤਾ ਜਾਂਦਾ ਹੈ</string>
     <!-- Deck Override -->
     <string name="card_template_editor_deck_override_on">ਡੈੱਕ ਓਵਰਰਾਈਡ (ਚਾਲੂ)</string>

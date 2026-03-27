@@ -79,9 +79,9 @@
                                              “Sa capitale de {{Country}} est:”\n
                                              si diat pòdere cumprimire in su navigadore de cartas comente\n
                                              “Capitale: {{Country}}”</string>
-    <string name="card_template_browser_appearance_question_format">Formadu de sa pregunta</string>
-    <string name="card_template_browser_appearance_answer_format">Formadu de sa risposta</string>
-    <string name="card_template_browser_appearance_restore_default_dialog">Ripristinare sos valores predefinidos?</string>
+    <string name="card_template_browser_appearance_question_format">Question format</string>
+    <string name="card_template_browser_appearance_answer_format">Answer format</string>
+    <string name="card_template_browser_appearance_restore_default_dialog">Are you sure you want to restore the browser appearance to default?</string>
     <string name="card_template_browser_appearance_saving_note">Custas modìficas s\'ant a aplicare cando s\'at a sarvare su mollu de carta</string>
     <!-- Deck Override -->
     <string name="card_template_editor_deck_override_on">Subraiscritura de su matzu (alluta)</string>

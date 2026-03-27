@@ -74,9 +74,9 @@
     <string name="model_browser_add_clone">Clonar: %1$s</string>
     <!--Browser Appearance-->
     <string name="card_template_browser_appearance_summary">Insire o modelo que o explorador de tarxetas empregará para amosar as túas tarxetas. Usa isto para amosar unha resposta máis concisa.\n\nO modelo anverso de\n“A capital de {{Country}} é:”\npodería comprimirse no explorador de tarxetas a\n“Capital: {{Country}}”</string>
-    <string name="card_template_browser_appearance_question_format">Formato da pregunta</string>
-    <string name="card_template_browser_appearance_answer_format">Formato da resposta</string>
-    <string name="card_template_browser_appearance_restore_default_dialog">Restaurar os valores por defecto?</string>
+    <string name="card_template_browser_appearance_question_format">Question format</string>
+    <string name="card_template_browser_appearance_answer_format">Answer format</string>
+    <string name="card_template_browser_appearance_restore_default_dialog">Are you sure you want to restore the browser appearance to default?</string>
     <string name="card_template_browser_appearance_saving_note">Estes cambios aplicaranse ao gardar o modelo de tarxeta</string>
     <!-- Deck Override -->
     <string name="card_template_editor_deck_override_on">Antepoñer baralla (activado)</string>

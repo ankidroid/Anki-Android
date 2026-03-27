@@ -56,7 +56,6 @@
     <string name="CardEditorCards">Címkék: %1$s</string>
     <string name="edit_occlusions">Edit occlusions</string>
     <string name="paste_from_clipboard" maxLength="28">Paste from clipboard</string>
-    <string name="tag_name">Címke neve</string>
     <string name="add_new_filter_tags">Címkék hozzáadása/szűrése</string>
     <string name="add_tag" maxLength="28">Címke hozzáadása</string>
     <string name="check_all_tags" maxLength="28">Címkék jelölése ki/be</string>
@@ -210,7 +209,7 @@
     <string name="background_image_title" maxLength="41">Háttér</string>
     <string name="choose_an_image" maxLength="41">Válasszon egy képet</string>
     <string name="remove_wallpaper_image" maxLength="41">Háttérkép eltávolítása</string>
-    <string name="remove_background_image">Eltávolítja a háttérképet?</string>
+    <string name="remove_background_image">Are you sure you wish to remove the background?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default" maxLength="28">Restore default</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Üres</string>

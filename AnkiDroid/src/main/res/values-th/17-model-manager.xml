@@ -72,9 +72,9 @@
     <string name="model_browser_add_clone">คัดลอก: %1$s</string>
     <!--Browser Appearance-->
     <string name="card_template_browser_appearance_summary">ระบุรูปแบบที่หน้าดูการ์ดจะใช้แสดงผลการ์ดของคุณ ใช้ส่วนนี้เพื่อให้แสดงคำตอบที่กระชับยิ่งขึ้น\n\nตัวอย่างเช่น รูปแบบหน้าการ์ด:\n“เมืองหลวงของ {{Country}} คือ:”\nสามารถย่อให้เหลือเพียงในหน้าดูการ์ดว่า\n“เมืองหลวง: {{Country}}”</string>
-    <string name="card_template_browser_appearance_question_format">รูปแบบคำถาม</string>
-    <string name="card_template_browser_appearance_answer_format">รูปแบบคำตอบ</string>
-    <string name="card_template_browser_appearance_restore_default_dialog">คืนค่าเริ่มต้นใช่หรือไม่?</string>
+    <string name="card_template_browser_appearance_question_format">Question format</string>
+    <string name="card_template_browser_appearance_answer_format">Answer format</string>
+    <string name="card_template_browser_appearance_restore_default_dialog">Are you sure you want to restore the browser appearance to default?</string>
     <string name="card_template_browser_appearance_saving_note">การเปลี่ยนแปลงเหล่านี้จะมีผลเมื่อบันทึกรูปแบบการ์ดแล้ว</string>
     <!-- Deck Override -->
     <string name="card_template_editor_deck_override_on">ล็อกสำรับ (เปิด)</string>

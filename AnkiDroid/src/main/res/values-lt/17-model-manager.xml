@@ -78,9 +78,9 @@
     <string name="model_browser_add_clone">Dubliuota: %1$s</string>
     <!--Browser Appearance-->
     <string name="card_template_browser_appearance_summary">Įveskite šabloną, kurį kortelių naršyklė naudos jūsų kortelėms rodyti. Naudokite jį, jei norite rodyti glaustesnį atsakymą.\n\nŠabloną, kurio pavadinimas yra \n\"{{Šalies}} sostinė yra:\"\nkad kortelių naršyklėje būtų galima suspausti į \n \"Sostinė: {{Šalis}}\"</string>
-    <string name="card_template_browser_appearance_question_format">Klausimo formatas</string>
-    <string name="card_template_browser_appearance_answer_format">Atsakymo formatas</string>
-    <string name="card_template_browser_appearance_restore_default_dialog">Ar atkurti pradines vertes?</string>
+    <string name="card_template_browser_appearance_question_format">Question format</string>
+    <string name="card_template_browser_appearance_answer_format">Answer format</string>
+    <string name="card_template_browser_appearance_restore_default_dialog">Are you sure you want to restore the browser appearance to default?</string>
     <string name="card_template_browser_appearance_saving_note">Šie pakeitimai taikomi, kai kortelės šablonas išsaugomas.</string>
     <!-- Deck Override -->
     <string name="card_template_editor_deck_override_on">Kortelių rinkinio perrašymas įjungta (on)</string>

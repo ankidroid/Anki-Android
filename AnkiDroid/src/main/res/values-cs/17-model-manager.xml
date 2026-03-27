@@ -78,9 +78,9 @@
     <string name="model_browser_add_clone">Klonovat: %1$s</string>
     <!--Browser Appearance-->
     <string name="card_template_browser_appearance_summary">Zadejte šablonu, kterou bude prohlížeč karet používat k zobrazení vašich karet. Použijte tuto možnost, abyste zobrazili stručnější odpovědi.\n\nŠablona líce\n„Hlavní město země {{Country}} je:“\nmůže být zestručněna v prohlížeči karet na\n„Hlavní město: {{Country}}“</string>
-    <string name="card_template_browser_appearance_question_format">Formát otázky</string>
-    <string name="card_template_browser_appearance_answer_format">Formát odpovědi</string>
-    <string name="card_template_browser_appearance_restore_default_dialog">Obnovit výchozí hodnoty?</string>
+    <string name="card_template_browser_appearance_question_format">Question format</string>
+    <string name="card_template_browser_appearance_answer_format">Answer format</string>
+    <string name="card_template_browser_appearance_restore_default_dialog">Are you sure you want to restore the browser appearance to default?</string>
     <string name="card_template_browser_appearance_saving_note">Tyto změny se použijí při ukládání šablony karty</string>
     <!-- Deck Override -->
     <string name="card_template_editor_deck_override_on">Přepsat balíček (zapnuto)</string>

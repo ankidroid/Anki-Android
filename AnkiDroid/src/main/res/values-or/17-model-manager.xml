@@ -74,9 +74,9 @@
     <string name="model_browser_add_clone">Clone: %1$s</string>
     <!--Browser Appearance-->
     <string name="card_template_browser_appearance_summary">ଆପଣଙ୍କ ପତ୍ର ପ୍ରଦର୍ଶନ କରିବା ପାଇଁ ପତ୍ର ବ୍ରାଉଜର୍ ବ୍ୟବହାର କରୁଥିବା ଟେମ୍ପଲେଟ୍ ପ୍ରବେଶ କରନ୍ତୁ। ଅଧିକ ସଂକ୍ଷିପ୍ତ ଉତ୍ତର ପ୍ରଦର୍ଶନ କରିବା ପାଇଁ ଏହାକୁ ବ୍ୟବହାର କରନ୍ତୁ।\n\nଏକ ସାମ୍ନା ଟେମ୍ପଲେଟ୍\n“{{Country}} ର ରାଜଧାନୀ ହେଉଛି:”\nକୁ ପତ୍ର ବ୍ରାଉଜର୍‌ରେ \n“ରାଜଧାନୀ: {{Country}}” କୁ ସଙ୍କୋଚନ କରାଯାଇପାରିବ</string>
-    <string name="card_template_browser_appearance_question_format">ପ୍ରଶ୍ନ ଶୈଳୀ</string>
-    <string name="card_template_browser_appearance_answer_format">ଉତ୍ତର ଶୈଳୀ</string>
-    <string name="card_template_browser_appearance_restore_default_dialog">ଡିଫଲ୍ଟ ମୂଲ୍ୟଗୁଡିକ ପୁନରୁଦ୍ଧାର କରିବେ?</string>
+    <string name="card_template_browser_appearance_question_format">Question format</string>
+    <string name="card_template_browser_appearance_answer_format">Answer format</string>
+    <string name="card_template_browser_appearance_restore_default_dialog">Are you sure you want to restore the browser appearance to default?</string>
     <string name="card_template_browser_appearance_saving_note">ପତ୍ର ଟେମ୍ପଲେଟ୍ ସଂରକ୍ଷଣ ହେବା ପରେ ଏହି ପରିବର୍ତ୍ତନଗୁଡ଼ିକ ପ୍ରୟୋଗ କରାଯାଏ</string>
     <!-- Deck Override -->
     <string name="card_template_editor_deck_override_on">କେରୀ ନବଳେଖନ (ଚାଲୁ)</string>

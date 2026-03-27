@@ -74,9 +74,9 @@
     <string name="model_browser_add_clone">Clone: %1$s</string>
     <!--Browser Appearance-->
     <string name="card_template_browser_appearance_summary">Írja be a mintát, amit a kártya böngésző használni fog, hogy megjelenítse a kártyákat. Használja ezt, hogy tömörebb választ kapjon.\n\nAz első oldali sablonon található \n\"{{Country}} fővárosa:\"\na kártya böngészőben tömörítve így néz ki\n\"Főváros: {{Country}}\"</string>
-    <string name="card_template_browser_appearance_question_format">Kérdés formátuma</string>
-    <string name="card_template_browser_appearance_answer_format">Válasz formátuma</string>
-    <string name="card_template_browser_appearance_restore_default_dialog">Vissza akarja állítani az eredeti értékeket?</string>
+    <string name="card_template_browser_appearance_question_format">Question format</string>
+    <string name="card_template_browser_appearance_answer_format">Answer format</string>
+    <string name="card_template_browser_appearance_restore_default_dialog">Are you sure you want to restore the browser appearance to default?</string>
     <string name="card_template_browser_appearance_saving_note">Ezek a változtatások a sablon mentésénél lépnek életbe</string>
     <!-- Deck Override -->
     <string name="card_template_editor_deck_override_on">Pakli felülírása (be)</string>

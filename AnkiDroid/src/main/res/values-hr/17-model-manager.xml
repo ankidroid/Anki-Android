@@ -76,9 +76,9 @@
     <string name="model_browser_add_clone">Kloniraj: %1$s</string>
     <!--Browser Appearance-->
     <string name="card_template_browser_appearance_summary">Unesite predložak koji će preglednik kartica koristiti za prikaz Vaših kartica. Koristite ga za sažetiji prikaz odgovora.\n\nPredložak prednje strane\n“Glavni grad {{Country}} je:”\nse u pregledniku kartica može sažeti na \n“Gl. grad: {{Country}}”</string>
-    <string name="card_template_browser_appearance_question_format">Format pitanja</string>
-    <string name="card_template_browser_appearance_answer_format">Format odgovora</string>
-    <string name="card_template_browser_appearance_restore_default_dialog">Vratiti zadane vrijednosti?</string>
+    <string name="card_template_browser_appearance_question_format">Question format</string>
+    <string name="card_template_browser_appearance_answer_format">Answer format</string>
+    <string name="card_template_browser_appearance_restore_default_dialog">Are you sure you want to restore the browser appearance to default?</string>
     <string name="card_template_browser_appearance_saving_note">Ove promjene se primjenjuju pri spremanju predloška kartice</string>
     <!-- Deck Override -->
     <string name="card_template_editor_deck_override_on">Deck override (on)</string>
