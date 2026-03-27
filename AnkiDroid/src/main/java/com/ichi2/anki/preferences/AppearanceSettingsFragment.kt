@@ -36,6 +36,7 @@ import com.ichi2.anki.utils.CollectionPreferences
 import com.ichi2.themes.Themes
 import com.ichi2.themes.Themes.systemIsInNightMode
 import com.ichi2.themes.Themes.updateCurrentTheme
+import com.ichi2.utils.message
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
