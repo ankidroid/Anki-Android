@@ -211,8 +211,6 @@
     <string name="dismiss_backup_warning_title">데이터 손실 경고</string>
     <string name="dismiss_backup_warning_new_user">Android의 개인정보 보호 정책 변경으로 인해, 앱을 삭제하면 데이터와 자동 백업이 휴대폰에서 삭제됩니다</string>
     <string name="dismiss_backup_warning_upgrade">Android의 개인정보 보호 정책 변경으로 인해, 앱을 삭제하면 데이터와 자동 백업에 접근할 수 없게 됩니다</string>
-    <string name="deck_already_exists">덱이 이미 존재합니다</string>
-    <string name="empty_deck_name">덱 이름은 공백일 수 없습니다</string>
     <string name="create_deck_numeric_hint">덱 정렬에 문제가 있다면 (\'10\'이 \'2\' 앞에 올 때) \'2\'를 \'02\'로 교체하세요</string>
     <!-- Set Due Date -->
     <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">간격을 같은 값으로 설정</string>

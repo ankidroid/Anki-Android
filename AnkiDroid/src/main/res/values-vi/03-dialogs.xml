@@ -211,8 +211,6 @@
     <string name="dismiss_backup_warning_title">Cảnh báo mất dữ liệu</string>
     <string name="dismiss_backup_warning_new_user">Do các thay đổi về quyền riêng tư của Android, dữ liệu và bản sao lưu tự động của bạn sẽ bị xoá khỏi điện thoại nếu ứng dụng bị gỡ cài đặt</string>
     <string name="dismiss_backup_warning_upgrade">Do các thay đổi về quyền riêng tư của Android, dữ liệu và bản sao lưu tự động của bạn sẽ không thể truy cập được nếu ứng dụng bị gỡ cài đặt.</string>
-    <string name="deck_already_exists">Bộ thẻ đã tồn tại</string>
-    <string name="empty_deck_name">Tên bộ thẻ không được để trống</string>
     <string name="create_deck_numeric_hint">If you have deck ordering issues (e.g. ‘10’ appears before ‘2’), replace ‘2’ with ‘02’</string>
     <!-- Set Due Date -->
     <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Đặt chu kỳ cùng một giá trị</string>

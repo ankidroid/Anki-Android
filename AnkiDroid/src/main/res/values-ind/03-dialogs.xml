@@ -211,8 +211,6 @@
     <string name="dismiss_backup_warning_title">Peringatan kehilangan data</string>
     <string name="dismiss_backup_warning_new_user">Karena perubahan kebijakan privasi Android, data dan cadangan otomatis Anda akan dihapus dari ponsel Anda jika aplikasi dihapus.</string>
     <string name="dismiss_backup_warning_upgrade">Karena perubahan kebijakan privasi Android, data dan cadangan otomatis Anda akan tidak dapat diakses jika aplikasi dihapus.</string>
-    <string name="deck_already_exists">Dek sudah ada</string>
-    <string name="empty_deck_name">Nama dek tidak boleh kosong</string>
     <string name="create_deck_numeric_hint">Jika Anda mengalami permasalahan urutan kartu (misalnya ‘10’ muncul sebelum ‘2’), ganti ‘2’ dengan ‘02’</string>
     <!-- Set Due Date -->
     <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Atur interval menjadi nilai yang sama</string>

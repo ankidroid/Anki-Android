@@ -219,8 +219,6 @@
     <string name="dismiss_backup_warning_title">Upozorenje o gubitku podataka</string>
     <string name="dismiss_backup_warning_new_user">Zbog promjena oko privatnosti u Androidu, vaši podaci i automatske sigurnosne kopije bit će izbrisane s Vašeg uređaja ako se aplikacija deinstalira</string>
     <string name="dismiss_backup_warning_upgrade">Zbog promjena oko privatnosti u Androidu, vaši podaci i automatske sigurnosne kopije bit će nedostupne ako se aplikacija deinstalira</string>
-    <string name="deck_already_exists">Špil već postoji</string>
-    <string name="empty_deck_name">Naziv špila ne smije biti prazan</string>
     <string name="create_deck_numeric_hint">Ako imate problema s poretkom unutar špila (npr. ‘10’ se pojavljuje prije ‘2’), zamijenite ‘2’ s ‘02’</string>
     <!-- Set Due Date -->
     <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Postavi interval na istu vrijednost</string>

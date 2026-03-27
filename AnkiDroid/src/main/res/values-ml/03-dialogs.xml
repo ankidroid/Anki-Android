@@ -215,8 +215,6 @@
     <string name="dismiss_backup_warning_title">ഡാറ്റ നഷ്ടം മുന്നറിയിപ്പ്</string>
     <string name="dismiss_backup_warning_new_user">Due to Android privacy changes, your data and automated backups will be deleted from your phone if the app is uninstalled</string>
     <string name="dismiss_backup_warning_upgrade">Due to Android privacy changes, your data and automated backups will be inaccessible if the app is uninstalled</string>
-    <string name="deck_already_exists">ഡെക്ക് ഇതിനകം നിലവിലുണ്ട്</string>
-    <string name="empty_deck_name">ഡെക്കിൻ്റെ പേര് ശൂന്യമാക്കാൻ കഴിയില്ല</string>
     <string name="create_deck_numeric_hint">നിങ്ങൾക്ക് ഡെക്ക് ഓർഡർ ചെയ്യുന്നതിൽ പ്രശ്‌നങ്ങളുണ്ടെങ്കിൽ (ഉദാ. \'10\' \'2\' ന് മുമ്പ് ദൃശ്യമാകുന്നു), \'2\' മാറ്റി \'02\'</string>
     <!-- Set Due Date -->
     <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">ഇടവേള അതേ മൂല്യത്തിലേക്ക് സജ്ജമാക്കുക</string>

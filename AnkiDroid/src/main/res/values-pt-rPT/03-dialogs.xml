@@ -215,8 +215,6 @@
     <string name="dismiss_backup_warning_title">Aviso de Perda de Dados</string>
     <string name="dismiss_backup_warning_new_user">Dadas as alterações às definições de privacidade do Android, os seus dados e cópias de segurança serão apagados do seu telemóvel, se desinstalar a aplicação.</string>
     <string name="dismiss_backup_warning_upgrade">Dadas as alterações às definições de privacidade do Android, os seus dados e cópias de segurança serão inacessíveis se desinstalar a aplicação.</string>
-    <string name="deck_already_exists">Este baralho já existe</string>
-    <string name="empty_deck_name">O nome do baralho não pode estar vazio</string>
     <string name="create_deck_numeric_hint">Se tem problemas de ordenação com o seu baralho (e.g. o ‘10’ aparece antes do ‘2’), substitua o ‘2’ por ‘02’</string>
     <!-- Set Due Date -->
     <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Atribuir o mesmo valor ao intervalo</string>

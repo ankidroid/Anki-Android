@@ -223,8 +223,6 @@
     <string name="dismiss_backup_warning_title">Įspėjimas apie duomenų praradimą</string>
     <string name="dismiss_backup_warning_new_user">Dėl \"Android\" privatumo pakeitimų jūsų duomenys ir automatinės atsarginės kopijos bus ištrinti iš telefono, jei programa bus pašalinta.</string>
     <string name="dismiss_backup_warning_upgrade">Dėl \"Android\" privatumo pakeitimų jūsų duomenys ir automatinės atsarginės kopijos bus neprieinamos, jei programa bus pašalinta.</string>
-    <string name="deck_already_exists">Toks rinkinys jau yra</string>
-    <string name="empty_deck_name">Rinkinio pavadinimas negali būti tuščias</string>
     <string name="create_deck_numeric_hint">Jei kyla problemų dėl denio eiliškumo (pvz., \"10\" atsiranda prieš \"2\"), pakeiskite \"2\" į \"02\".</string>
     <!-- Set Due Date -->
     <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Nustatykite tą pačią intervalo vertę</string>

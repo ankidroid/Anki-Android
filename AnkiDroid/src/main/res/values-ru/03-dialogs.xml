@@ -224,8 +224,6 @@
     <string name="dismiss_backup_warning_title">Внимание: потеря данных</string>
     <string name="dismiss_backup_warning_new_user">В связи с изменениями конфиденциальности Android, при удалении приложения ваши данные и автоматизированные резервные копии будут удалены с вашего телефона</string>
     <string name="dismiss_backup_warning_upgrade">В связи с изменениями конфиденциальности Android, после удалении приложения ваши данные и автоматизированные резервные копии будут недоступны</string>
-    <string name="deck_already_exists">Колода уже существует</string>
-    <string name="empty_deck_name">Название колоды не может быть пустым</string>
     <string name="create_deck_numeric_hint">Если у вас возникли проблемы с сортировкой колоды (например, \'10\' появляется перед \'2\'), замените \'2\' на \'02\'</string>
     <!-- Set Due Date -->
     <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Задать то же значение интервалу</string>

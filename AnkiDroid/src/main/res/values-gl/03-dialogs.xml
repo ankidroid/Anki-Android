@@ -215,8 +215,6 @@
     <string name="dismiss_backup_warning_title">Aviso de perda de datos</string>
     <string name="dismiss_backup_warning_new_user">Debido aos cambios de privacidade do Android, eliminaranse do teu teléfono os teus datos e as copias de seguranza automáticas se desinstalas a aplicación</string>
     <string name="dismiss_backup_warning_upgrade">Debido aos cambios de privacidade do Android, perderás o acceso aos teus datos e as copias de seguranza automáticas se desinstalas a aplicación</string>
-    <string name="deck_already_exists">A baralla xa existe</string>
-    <string name="empty_deck_name">O nome da baralla non pode estar baleiro</string>
     <string name="create_deck_numeric_hint">Se tes problemas ao arranxar a baralla (por exemplo, \'10\' aparece antes que \'2\'), substitúe \'2\' por \'02\'</string>
     <!-- Set Due Date -->
     <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Establecer intervalo ao mesmo valor</string>

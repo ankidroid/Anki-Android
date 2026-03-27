@@ -229,8 +229,6 @@
     <string name="dismiss_backup_warning_title">Avisu de pèrdida de datos</string>
     <string name="dismiss_backup_warning_new_user">Due to Android privacy changes, your data and automated backups will be deleted from your phone if the app is uninstalled</string>
     <string name="dismiss_backup_warning_upgrade">Due to Android privacy changes, your data and automated backups will be inaccessible if the app is uninstalled</string>
-    <string name="deck_already_exists">Su matzu esistit giai</string>
-    <string name="empty_deck_name">Su nùmene de su matzu non podet èssere bòidu</string>
     <string name="create_deck_numeric_hint">Si tenes problemas de òrdine de su matzu (a es. ‘10’ aparit in antis de ‘2’), remplasa ‘2’ cun ‘02’</string>
     <!-- Set Due Date -->
     <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Imposta s\'intervallu a su matessi valore</string>

@@ -215,8 +215,6 @@
     <string name="dismiss_backup_warning_title">Maʼlumotlar yoʻqolishi haqida ogohlantirish</string>
     <string name="dismiss_backup_warning_new_user">Android maxfiyligidagi oʻzgarishlar tufayli ilovani oʻchirib tashlasangiz, maʼlumotlaringiz va avtomatik zahira nusxalari ham oʻchiriladi.</string>
     <string name="dismiss_backup_warning_upgrade">Android maxfiyligidagi oʻzgarishlar tufayli ilovani oʻchirib tashlasangiz, maʼlumotlaringiz va avtomatik zahira nusxalarini ochish imkoni boʻlmaydi.</string>
-    <string name="deck_already_exists">Dasta allaqachon mavjud</string>
-    <string name="empty_deck_name">Dasta nomi boʻsh boʻlishi mumkin emas</string>
     <string name="create_deck_numeric_hint">Agar dastani tartiblashda muammoga duch kelsangiz (masalan ‘10’ ‘2’dan oldin kelsa), ‘2’ni ‘02’ bilan almashtiring</string>
     <!-- Set Due Date -->
     <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Intervalni bir xil qiymatga sozlash</string>

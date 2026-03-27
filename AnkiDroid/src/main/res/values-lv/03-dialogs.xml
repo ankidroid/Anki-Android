@@ -219,8 +219,6 @@
     <string name="dismiss_backup_warning_title">Datu zuduma brīdinājums</string>
     <string name="dismiss_backup_warning_new_user">Android privātuma izmaiņu dēļ dati un automātiskās rezerves kopijas tiks izdzēstas no tālruņa, ja lietotne tiks noņemta.</string>
     <string name="dismiss_backup_warning_upgrade">Android privātuma izmaiņu dēļ nevarēs piekļūt datiem un automātiskajām rezerves kopijām, ja lietotne tiks noņemta.</string>
-    <string name="deck_already_exists">Kava jau pastāv</string>
-    <string name="empty_deck_name">Kavas nosaukums nevar būt tukšs</string>
     <string name="create_deck_numeric_hint">Ja tiek piedzīvotas nebūšanas ar kavas kārtošanu (piemēram, \"10\" parādās pirms \"2\"), \"2\" jāaizstāj ar \"02\".</string>
     <!-- Set Due Date -->
     <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Istatīt starplaiku ar tādu pašu vērtību</string>

@@ -215,8 +215,6 @@
     <string name="dismiss_backup_warning_title">سانلىق-مەلۇمات يوقۇلۇش ئاگاھلاندۇرۇشى</string>
     <string name="dismiss_backup_warning_new_user">Android شەخسىيەت تۈزۈمى ئۆزگەرگەنلىكتىن، ئەگەر ئەپ ئۆچۈرۈلسە، سانلىق مەلۇماتىڭىز ۋە ئۆزلۈكىدىن زاپاسلانغانلار تېلېفونىڭىزدىن ئۆچۈرۈلىدۇ</string>
     <string name="dismiss_backup_warning_upgrade">Android شەخسىيەت تۈزۈمى ئۆزگەرگەنلىكتىن، ئەگەر ئەپ ئۆچۈرۈلسە، سانلىق مەلۇماتىڭىز ۋە ئۆزلۈكىدىن زاپاسلانغانلارنى زىيارەت قىلغىلى بولمايدۇ</string>
-    <string name="deck_already_exists">دەستە مەۋجۇت</string>
-    <string name="empty_deck_name">دەستە ئىسمى بوش قالمايدۇ</string>
     <string name="create_deck_numeric_hint">ئەگەر دەستە تەرتىپ مەسىلىسى بولسا (مەسىلەن، «10»«2»)دىن ئىلگىرى كۆرۈنسە، «2» نى «02» گە ئالماشتۇرۇڭ)</string>
     <!-- Set Due Date -->
     <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">ئارىلىقنى ئوخشاش قىممەتكە تەڭشەڭ</string>

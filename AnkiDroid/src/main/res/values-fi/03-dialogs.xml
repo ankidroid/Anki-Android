@@ -215,8 +215,6 @@
     <string name="dismiss_backup_warning_title">Varoitus tietojen menettämisestä</string>
     <string name="dismiss_backup_warning_new_user">Androidin tietosuojamuutosten vuoksi tietosi ja automaattiset varmuuskopiot poistetaan laitteestasi, jos poistat sovelluksen.</string>
     <string name="dismiss_backup_warning_upgrade">Androidin tietosuojamuutosten vuoksi et pääse käsiksi tietoihisi tai automaattisiin varmuuskopioihin, jos poistat sovelluksen.</string>
-    <string name="deck_already_exists">Pakka on jo olemassa</string>
-    <string name="empty_deck_name">Pakan nimi ei voi olla tyhjä</string>
     <string name="create_deck_numeric_hint">Jos pakan järjestyksen kanssa onongelmia (esim. ”10” näkyy ennen ”2”:a), korvaa ”2” merkinnällä ”02”.</string>
     <!-- Set Due Date -->
     <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Aseta aikaväli samaan arvoon</string>

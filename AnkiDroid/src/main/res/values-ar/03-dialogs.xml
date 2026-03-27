@@ -231,8 +231,6 @@
     <string name="dismiss_backup_warning_title">تحذير فقدان البيانات</string>
     <string name="dismiss_backup_warning_new_user">نتيجة لتغييرات في سياسة أندرويد الخصوصية، سيتم حذف بياناتك والنسخ الإحتياطية التلقائية من هاتفك إذا حُذف التطبيق</string>
     <string name="dismiss_backup_warning_upgrade">نتيجة لتغييرات في سياسة أندرويد الخصوصية، ستكون غير قابل للوصول إلى بياناتك والنسخ الإحتياطية التلقائية إذا حُذف التطبيق</string>
-    <string name="deck_already_exists">هذه الرزمة موجودة بالفعل</string>
-    <string name="empty_deck_name">لا يمكن أن يكون إسم الرمزة خاليًا</string>
     <string name="create_deck_numeric_hint">إذا كنت تواجه مصاعب في ترتيب الرزم (كأن تظهر «١٠» قبل «٢»)، إستبدل «٢» ب «٠٢»</string>
     <!-- Set Due Date -->
     <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">إجعل الفاصل نفس القيمة</string>

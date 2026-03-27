@@ -215,8 +215,6 @@
     <string name="dismiss_backup_warning_title">Risque de perte de données</string>
     <string name="dismiss_backup_warning_new_user">En raison des changements de confidentialité d\'Android, vos données et vos sauvegardes automatiques seront supprimées de votre téléphone si l\'application est désinstallée.</string>
     <string name="dismiss_backup_warning_upgrade">En raison des changements de confidentialité d\'Android, vos données et vos sauvegardes automatiques seront inaccessibles si l\'application est désinstallée.</string>
-    <string name="deck_already_exists">Le paquet existe déjà</string>
-    <string name="empty_deck_name">Le nom du paquet ne peut pas être vide</string>
     <string name="create_deck_numeric_hint">Si vous avez des problèmes de tri des paquets (par exemple, ‘10’ apparaît avant ‘2’), remplacez ‘2’ par ‘02’</string>
     <!-- Set Due Date -->
     <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Définir l’intervalle à la même valeur</string>
