@@ -35,6 +35,7 @@ import anki.import_export.exportLimit
 import anki.notes.noteIds
 import com.ichi2.anki.ALL_DECKS_ID
 import com.ichi2.anki.CollectionManager
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
 import com.ichi2.anki.common.time.TimeManager
@@ -84,7 +85,7 @@ class ExportDialogFragment : DialogFragment() {
         }
         return AlertDialog
             .Builder(requireActivity())
-            .setTitle(R.string.export_dialog_title)
+            .setTitle(TR.actionsExport())
             .setView(binding.root)
             .negativeButton(R.string.dialog_cancel)
             .positiveButton(R.string.dialog_ok) {

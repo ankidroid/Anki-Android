@@ -17,6 +17,7 @@ import androidx.fragment.app.testing.launchFragment
 import androidx.test.espresso.Espresso.onData
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.action.ViewActions.scrollTo
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.RootMatchers.isDialog
 import androidx.test.espresso.matcher.ViewMatchers.isChecked
@@ -92,6 +93,7 @@ class ExportDialogFragmentTest : RobolectricTest() {
 
             onView(withId(R.id.apkg_export_legacy))
                 .inRoot(isDialog())
+                .perform(scrollTo())
                 .check(matches(isDisplayed()))
                 .check(matches(withText(TR.exportingSupportOlderAnkiVersions())))
                 .check(matches(not(isChecked())))
@@ -125,6 +127,7 @@ class ExportDialogFragmentTest : RobolectricTest() {
                 .perform(click())
             onView(withId(R.id.apkg_export_legacy))
                 .inRoot(isDialog())
+                .perform(scrollTo())
                 .check(matches(isDisplayed()))
             onView(withId(R.id.apkg_export_legacy))
                 .inRoot(isDialog())
