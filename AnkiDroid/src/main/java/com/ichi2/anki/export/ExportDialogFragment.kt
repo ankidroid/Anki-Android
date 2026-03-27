@@ -84,6 +84,7 @@ class ExportDialogFragment : DialogFragment() {
         }
         return AlertDialog
             .Builder(requireActivity())
+            .setTitle(R.string.export_dialog_title)
             .setView(binding.root)
             .negativeButton(R.string.dialog_cancel)
             .positiveButton(R.string.dialog_ok) {

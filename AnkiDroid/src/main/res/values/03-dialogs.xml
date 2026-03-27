@@ -85,6 +85,9 @@
     <string name="dialog_invalid_custom_certificate_title">Error parsing certificate</string>
     <string name="dialog_updated_custom_certificate">Certificate updated</string>
 
+    <!-- Export dialog -->
+    <string name="export_dialog_title">Export</string>
+
     <!-- Media checking -->
     <string name="check_media_title">Check media?</string>
     <string name="check_media_warning">This may take a long time with large media collections</string>

@@ -111,7 +111,8 @@ class AppearanceSettingsFragment : SettingsFragment() {
 
     private fun showRemoveBackgroundImageDialog() {
         AlertDialog.Builder(requireContext()).show {
-            title(R.string.remove_background_image)
+            title(R.string.remove_wallpaper_image)
+            message(R.string.remove_background_image)
             positiveButton(R.string.dialog_remove) {
                 if (BackgroundImage.remove(requireContext())) {
                     showSnackbar(R.string.background_image_removed)
