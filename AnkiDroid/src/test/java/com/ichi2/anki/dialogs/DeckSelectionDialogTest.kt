@@ -51,4 +51,34 @@ class DeckSelectionDialogTest : RobolectricTest() {
         assertEquals(dialogTitle, dialog.arguments?.getString("title"))
         assertEquals(summaryMessage, dialog.arguments?.getString("summaryMessage"))
     }
+
+    @Test
+    fun `decks are sorted alphabetically in main list`() {
+        val unsorted =
+            listOf(
+                SelectableDeck.Deck(3L, "Zebra"),
+                SelectableDeck.Deck(1L, "Apple"),
+                SelectableDeck.Deck(2L, "Mango"),
+            )
+        val sorted = unsorted.sortedWith(compareBy { it.name.lowercase() })
+
+        assertEquals("Apple", sorted[0].name)
+        assertEquals("Mango", sorted[1].name)
+        assertEquals("Zebra", sorted[2].name)
+    }
+
+    @Test
+    fun `deck sorting is case insensitive`() {
+        val unsorted =
+            listOf(
+                SelectableDeck.Deck(1L, "zebra"),
+                SelectableDeck.Deck(2L, "Apple"),
+                SelectableDeck.Deck(3L, "mango"),
+            )
+        val sorted = unsorted.sortedWith(compareBy { it.name.lowercase() })
+
+        assertEquals("Apple", sorted[0].name)
+        assertEquals("mango", sorted[1].name)
+        assertEquals("zebra", sorted[2].name)
+    }
 }

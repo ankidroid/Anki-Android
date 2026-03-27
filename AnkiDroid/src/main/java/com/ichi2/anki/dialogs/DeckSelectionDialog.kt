@@ -113,7 +113,13 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
         val dividerItemDecoration = DividerItemDecoration(binding.list.context, DividerItemDecoration.VERTICAL)
         binding.list.addItemDecoration(dividerItemDecoration)
         val decks: List<SelectableDeck> = getDeckNames(arguments)
-        val adapter = DecksArrayAdapter(decks)
+
+        val sortedDecks =
+            decks.sortedWith(
+                compareBy { it.getDisplayName(requireContext()).lowercase(Locale.getDefault()) },
+            )
+
+        val adapter = DecksArrayAdapter(sortedDecks)
         binding.list.adapter = adapter
         adjustToolbar(binding.root, adapter)
         dialog =
