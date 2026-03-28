@@ -16,13 +16,16 @@
 
 package com.ichi2.anki.reviewreminders
 
+import android.Manifest
 import android.app.ActivityManager
+import android.app.AlarmManager
 import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
 import android.os.PowerManager
 import androidx.core.content.getSystemService
 import com.ichi2.utils.Permissions
+import com.ichi2.utils.Permissions.arePermissionsDefinedInAnkiDroidManifest
 
 /**
  * The battery optimization state applied to the app.
@@ -67,5 +70,12 @@ class ReminderTroubleshootingRepository(
             }
         }
         return BatteryOptimizationState.Optimized
+    }
+
+    fun isExactAlarmPermissionGranted(): Boolean? {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) return null
+        if (!context.arePermissionsDefinedInAnkiDroidManifest(Manifest.permission.SCHEDULE_EXACT_ALARM)) return null
+        val alarmManager = context.getSystemService<AlarmManager>() ?: return null
+        return alarmManager.canScheduleExactAlarms()
     }
 }

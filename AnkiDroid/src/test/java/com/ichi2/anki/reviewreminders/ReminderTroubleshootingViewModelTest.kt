@@ -17,6 +17,7 @@
 package com.ichi2.anki.reviewreminders
 
 import com.ichi2.anki.reviewreminders.TroubleshootingCheck.DoNotDisturbOff
+import com.ichi2.anki.reviewreminders.TroubleshootingCheck.ExactAlarmPermission
 import com.ichi2.anki.reviewreminders.TroubleshootingCheck.NotificationPermission
 import com.ichi2.anki.reviewreminders.TroubleshootingCheck.UnrestrictedOptimizationEnabled
 import com.ichi2.testutils.TestException
@@ -125,6 +126,33 @@ class ReminderTroubleshootingViewModelTest {
         assertThat(viewModel.batteryOptimizationResult, equalTo(CheckResult.Failed))
     }
 
+    @Test
+    fun `exact alarm permission passed when granted`() {
+        val repo = mockRepository(exactAlarmPermission = true)
+        val viewModel = ReminderTroubleshootingViewModel(repo)
+
+        assertThat(viewModel.exactAlarmPermissionResult, equalTo(CheckResult.Passed))
+    }
+
+    @Test
+    fun `exact alarm permission warning when not granted`() {
+        val repo = mockRepository(exactAlarmPermission = false)
+        val viewModel = ReminderTroubleshootingViewModel(repo)
+
+        assertThat(viewModel.exactAlarmPermissionResult, equalTo(CheckResult.Warning))
+    }
+
+    @Test
+    fun `exact alarm permission unavailable when not in manifest`() {
+        val repo =
+            mockRepository().also {
+                every { it.isExactAlarmPermissionGranted() } returns null
+            }
+        val viewModel = ReminderTroubleshootingViewModel(repo)
+
+        assertThat(viewModel.exactAlarmPermissionResult, equalTo(CheckResult.Unavailable))
+    }
+
     // The `when` below will fail to compile if a new TroubleshootingCheck is added,
     // reminding you to add it to this test and to ReminderTroubleshootingState.checks
     @Test
@@ -136,29 +164,33 @@ class ReminderTroubleshootingViewModelTest {
                     is NotificationPermission -> count++
                     is DoNotDisturbOff -> count++
                     is UnrestrictedOptimizationEnabled -> count++
+                    is ExactAlarmPermission -> count++
                 }
             }
-            assertThat(count, equalTo(3))
+            assertThat(count, equalTo(4))
         }
 
     private fun mockRepository(
         notificationPermission: Boolean = true,
         doNotDisturb: Boolean = true,
         batteryOptimization: BatteryOptimizationState = BatteryOptimizationState.Unrestricted,
+        exactAlarmPermission: Boolean = true,
     ): ReminderTroubleshootingRepository =
         mockk {
             every { isNotificationPermissionGranted() } returns notificationPermission
             every { isDoNotDisturbOff() } returns doNotDisturb
             every { getBatteryOptimizationState() } returns batteryOptimization
+            every { isExactAlarmPermissionGranted() } returns exactAlarmPermission
         }
 
     private fun withViewModel(
         notificationPermission: Boolean = true,
         doNotDisturb: Boolean = true,
         batteryOptimization: BatteryOptimizationState = BatteryOptimizationState.Unrestricted,
+        exactAlarmPermission: Boolean = true,
         block: ReminderTroubleshootingViewModel.() -> Unit,
     ) {
-        val repo = mockRepository(notificationPermission, doNotDisturb, batteryOptimization)
+        val repo = mockRepository(notificationPermission, doNotDisturb, batteryOptimization, exactAlarmPermission)
         ReminderTroubleshootingViewModel(repo).block()
     }
 }
@@ -171,3 +203,6 @@ private val ReminderTroubleshootingViewModel.doNotDisturbResult: CheckResult
 
 private val ReminderTroubleshootingViewModel.batteryOptimizationResult: CheckResult
     get() = state.value.batteryOptimizationDisabled.result
+
+private val ReminderTroubleshootingViewModel.exactAlarmPermissionResult: CheckResult
+    get() = state.value.exactAlarmPermission.result

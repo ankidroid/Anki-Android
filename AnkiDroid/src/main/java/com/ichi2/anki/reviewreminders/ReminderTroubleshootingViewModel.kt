@@ -93,7 +93,19 @@ sealed class TroubleshootingCheck {
         override val result: CheckResult = CheckResult.Loading,
     ) : TroubleshootingCheck()
 
-    // TODO: Exact alarm permission
+    /**
+     * A user can request [android.Manifest.permission.SCHEDULE_EXACT_ALARM] on API 31+
+     * which allows scheduling of exact alarms.
+     *
+     * TODO: We do not currently support this in the manifest, but we should do
+     * before launch
+     *
+     * https://developer.android.com/about/versions/14/changes/schedule-exact-alarms
+     */
+    data class ExactAlarmPermission(
+        override val result: CheckResult = CheckResult.Loading,
+    ) : TroubleshootingCheck()
+
     // TODO: Power saving mode
 
     // Potential future indicators:
@@ -112,9 +124,11 @@ data class ReminderTroubleshootingState(
         TroubleshootingCheck.DoNotDisturbOff(),
     val batteryOptimizationDisabled: TroubleshootingCheck.UnrestrictedOptimizationEnabled =
         TroubleshootingCheck.UnrestrictedOptimizationEnabled(),
+    val exactAlarmPermission: TroubleshootingCheck.ExactAlarmPermission =
+        TroubleshootingCheck.ExactAlarmPermission(),
 ) {
     val checks: List<TroubleshootingCheck>
-        get() = listOf(notificationPermission, doNotDisturbOff, batteryOptimizationDisabled)
+        get() = listOf(notificationPermission, doNotDisturbOff, batteryOptimizationDisabled, exactAlarmPermission)
 }
 
 class ReminderTroubleshootingViewModel(
@@ -141,6 +155,10 @@ class ReminderTroubleshootingViewModel(
                 batteryOptimizationDisabled =
                     state.value.batteryOptimizationDisabled.copy(
                         result = refreshBatteryOptimization(),
+                    ),
+                exactAlarmPermission =
+                    state.value.exactAlarmPermission.copy(
+                        result = CheckResult.from(repository::isExactAlarmPermissionGranted, onFailure = CheckResult.Warning),
                     ),
             )
     }
