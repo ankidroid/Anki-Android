@@ -94,6 +94,20 @@ sealed class TroubleshootingCheck {
     ) : TroubleshootingCheck()
 
     /**
+     * Power saving can delay notifications being fired.
+     *
+     * OEMs have different restrictions on Android when this feature is enabled
+     *
+     * In addition: Doze mode can defer AlarmManager calls unless
+     * a `set...AndAllowWhenIdle` call is made.
+     *
+     * [developer.android.com: Optimize for Doze and App Standby](https://developer.android.com/training/monitoring-device-state/doze-standby)
+     */
+    data class PowerSavingModeOff(
+        override val result: CheckResult = CheckResult.Loading,
+    ) : TroubleshootingCheck()
+
+    /**
      * A user can request [android.Manifest.permission.SCHEDULE_EXACT_ALARM] on API 31+
      * which allows scheduling of exact alarms.
      *
@@ -105,8 +119,6 @@ sealed class TroubleshootingCheck {
     data class ExactAlarmPermission(
         override val result: CheckResult = CheckResult.Loading,
     ) : TroubleshootingCheck()
-
-    // TODO: Power saving mode
 
     // Potential future indicators:
     // - Check if 'BootService' executed
@@ -124,11 +136,13 @@ data class ReminderTroubleshootingState(
         TroubleshootingCheck.DoNotDisturbOff(),
     val batteryOptimizationDisabled: TroubleshootingCheck.UnrestrictedOptimizationEnabled =
         TroubleshootingCheck.UnrestrictedOptimizationEnabled(),
+    val powerSavingModeOff: TroubleshootingCheck.PowerSavingModeOff =
+        TroubleshootingCheck.PowerSavingModeOff(),
     val exactAlarmPermission: TroubleshootingCheck.ExactAlarmPermission =
         TroubleshootingCheck.ExactAlarmPermission(),
 ) {
     val checks: List<TroubleshootingCheck>
-        get() = listOf(notificationPermission, doNotDisturbOff, batteryOptimizationDisabled, exactAlarmPermission)
+        get() = listOf(notificationPermission, doNotDisturbOff, batteryOptimizationDisabled, powerSavingModeOff, exactAlarmPermission)
 }
 
 class ReminderTroubleshootingViewModel(
@@ -155,6 +169,10 @@ class ReminderTroubleshootingViewModel(
                 batteryOptimizationDisabled =
                     state.value.batteryOptimizationDisabled.copy(
                         result = refreshBatteryOptimization(),
+                    ),
+                powerSavingModeOff =
+                    state.value.powerSavingModeOff.copy(
+                        result = CheckResult.from(repository::isPowerSavingModeOff, onFailure = CheckResult.Warning),
                     ),
                 exactAlarmPermission =
                     state.value.exactAlarmPermission.copy(

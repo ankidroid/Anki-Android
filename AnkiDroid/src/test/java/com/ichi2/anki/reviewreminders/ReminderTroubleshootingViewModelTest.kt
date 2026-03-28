@@ -19,6 +19,7 @@ package com.ichi2.anki.reviewreminders
 import com.ichi2.anki.reviewreminders.TroubleshootingCheck.DoNotDisturbOff
 import com.ichi2.anki.reviewreminders.TroubleshootingCheck.ExactAlarmPermission
 import com.ichi2.anki.reviewreminders.TroubleshootingCheck.NotificationPermission
+import com.ichi2.anki.reviewreminders.TroubleshootingCheck.PowerSavingModeOff
 import com.ichi2.anki.reviewreminders.TroubleshootingCheck.UnrestrictedOptimizationEnabled
 import com.ichi2.testutils.TestException
 import io.mockk.every
@@ -127,6 +128,22 @@ class ReminderTroubleshootingViewModelTest {
     }
 
     @Test
+    fun `power saving mode passed when off`() {
+        val repo = mockRepository(powerSavingModeOff = true)
+        val viewModel = ReminderTroubleshootingViewModel(repo)
+
+        assertThat(viewModel.powerSavingModeResult, equalTo(CheckResult.Passed))
+    }
+
+    @Test
+    fun `power saving mode warning when on`() {
+        val repo = mockRepository(powerSavingModeOff = false)
+        val viewModel = ReminderTroubleshootingViewModel(repo)
+
+        assertThat(viewModel.powerSavingModeResult, equalTo(CheckResult.Warning))
+    }
+
+    @Test
     fun `exact alarm permission passed when granted`() {
         val repo = mockRepository(exactAlarmPermission = true)
         val viewModel = ReminderTroubleshootingViewModel(repo)
@@ -164,22 +181,25 @@ class ReminderTroubleshootingViewModelTest {
                     is NotificationPermission -> count++
                     is DoNotDisturbOff -> count++
                     is UnrestrictedOptimizationEnabled -> count++
+                    is PowerSavingModeOff -> count++
                     is ExactAlarmPermission -> count++
                 }
             }
-            assertThat(count, equalTo(4))
+            assertThat(count, equalTo(5))
         }
 
     private fun mockRepository(
         notificationPermission: Boolean = true,
         doNotDisturb: Boolean = true,
         batteryOptimization: BatteryOptimizationState = BatteryOptimizationState.Unrestricted,
+        powerSavingModeOff: Boolean = true,
         exactAlarmPermission: Boolean = true,
     ): ReminderTroubleshootingRepository =
         mockk {
             every { isNotificationPermissionGranted() } returns notificationPermission
             every { isDoNotDisturbOff() } returns doNotDisturb
             every { getBatteryOptimizationState() } returns batteryOptimization
+            every { isPowerSavingModeOff() } returns powerSavingModeOff
             every { isExactAlarmPermissionGranted() } returns exactAlarmPermission
         }
 
@@ -187,10 +207,11 @@ class ReminderTroubleshootingViewModelTest {
         notificationPermission: Boolean = true,
         doNotDisturb: Boolean = true,
         batteryOptimization: BatteryOptimizationState = BatteryOptimizationState.Unrestricted,
+        powerSavingModeOff: Boolean = true,
         exactAlarmPermission: Boolean = true,
         block: ReminderTroubleshootingViewModel.() -> Unit,
     ) {
-        val repo = mockRepository(notificationPermission, doNotDisturb, batteryOptimization, exactAlarmPermission)
+        val repo = mockRepository(notificationPermission, doNotDisturb, batteryOptimization, powerSavingModeOff, exactAlarmPermission)
         ReminderTroubleshootingViewModel(repo).block()
     }
 }
@@ -203,6 +224,9 @@ private val ReminderTroubleshootingViewModel.doNotDisturbResult: CheckResult
 
 private val ReminderTroubleshootingViewModel.batteryOptimizationResult: CheckResult
     get() = state.value.batteryOptimizationDisabled.result
+
+private val ReminderTroubleshootingViewModel.powerSavingModeResult: CheckResult
+    get() = state.value.powerSavingModeOff.result
 
 private val ReminderTroubleshootingViewModel.exactAlarmPermissionResult: CheckResult
     get() = state.value.exactAlarmPermission.result

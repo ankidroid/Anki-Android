@@ -72,6 +72,11 @@ class ReminderTroubleshootingRepository(
         return BatteryOptimizationState.Optimized
     }
 
+    fun isPowerSavingModeOff(): Boolean? {
+        val powerManager = context.getSystemService<PowerManager>() ?: return null
+        return !powerManager.isPowerSaveMode
+    }
+
     fun isExactAlarmPermissionGranted(): Boolean? {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) return null
         if (!context.arePermissionsDefinedInAnkiDroidManifest(Manifest.permission.SCHEDULE_EXACT_ALARM)) return null
