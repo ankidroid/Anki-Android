@@ -295,7 +295,6 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
         @SuppressLint("InflateParams")
         binding = FragmentCustomStudyBinding.inflate(requireActivity().layoutInflater)
 
-        binding.detailsText1.text = text1
         binding.detailsText2.text = text2
 
         binding.cardsStateSelectorLayout.isVisible = contextMenuOption == STUDY_TAGS
@@ -318,6 +317,8 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
                 AdapterView.OnItemClickListener { _, _, position, _ ->
                     viewModel.selectedCardStateIndex = position
                     setAdapterAndSelection(cardStates, viewModel.selectedCardStateIndex)
+                    binding.warningText.visibility = android.view.View.GONE
+                    binding.detailsEditText2.text = binding.detailsEditText2.text
                 }
             // set the first item as automatically selected if we don't already have a valid
             // position stored in the ViewModel
@@ -340,7 +341,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
             if (contextMenuOption == STUDY_TAGS) {
                 TR.customStudyChooseTags().toSentenceCase(R.string.sentence_choose_tags)
             } else {
-                getString(R.string.dialog_ok)
+                getString(R.string.dialog_positive_create)
             }
 
         // Set material dialog parameters
@@ -350,7 +351,11 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
         val dialog =
             AlertDialog
                 .Builder(requireActivity())
-                .customView(
+                .apply {
+                    if (contextMenuOption == STUDY_TAGS) {
+                        title(R.string.custom_study_tags_title)
+                    }
+                }.customView(
                     view = binding.root,
                     paddingStart = horizontalPadding,
                     paddingEnd = horizontalPadding,
@@ -403,7 +408,10 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
                             }
                         // skip tag selection if there's no tags to select
                         if (nids.isEmpty()) {
-                            launchCustomStudy(contextMenuOption, n)
+                            binding.warningText.visibility = android.view.View.VISIBLE
+                            binding.warningText.text = getString(R.string.custom_study_no_cards_matched)
+                            dialog.positiveButton.isEnabled = false
+                            allowSubmit = true
                             return@launchCatchingTask
                         }
                         if (isAdded) {
@@ -422,6 +430,19 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
         }
 
         binding.detailsEditText2.doAfterTextChanged {
+            if (contextMenuOption == STUDY_TAGS) {
+                val count =
+                    binding.detailsEditText2.text
+                        ?.toString()
+                        ?.toIntOrNull() ?: 0
+                binding.detailsEditText2Layout.suffixText =
+                    resources.getQuantityString(
+                        R.plurals.custom_study_tags_unit,
+                        count,
+                        count,
+                    )
+                binding.warningText.visibility = android.view.View.GONE
+            }
             dialog.positiveButton.isEnabled = userInputValue != null && userInputValue != 0
         }
 

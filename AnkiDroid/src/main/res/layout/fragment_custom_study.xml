@@ -28,16 +28,7 @@
     android:gravity="start"
     android:orientation="vertical" >
 
-    <com.ichi2.ui.FixedTextView
-        android:id="@+id/details_text_1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="start"
-        android:layout_marginLeft="4dip"
-        android:layout_marginRight="4dip"
-        android:gravity="start"
-        android:text=""
-        android:textSize="16sp" />
+
 
     <com.ichi2.ui.FixedTextView
         android:id="@+id/details_text_2"
@@ -55,15 +46,18 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/details_edit_text_2_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+        android:hint="@string/custom_study_tags">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/details_edit_text_2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:inputType="number|numberSigned"
-            tools:text="1"
+            android:inputType="number"
+            android:selectAllOnFocus="true"
+            tools:text="100"
             />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -88,4 +82,13 @@
             tools:text="New cards only"
             />
     </com.google.android.material.textfield.TextInputLayout>
+
+        <com.ichi2.ui.FixedTextView
+            android:id="@+id/warning_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/holo_red_dark"
+            android:visibility="gone"
+            tools:text="@string/custom_study_no_cards_matched"
+            />
 </LinearLayout>

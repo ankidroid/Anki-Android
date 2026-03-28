@@ -49,7 +49,13 @@
     <string name="custom_study_forgotten">Review cards forgotten in last x days:</string>
     <string name="custom_study_ahead">Review ahead by x days:</string>
     <string name="custom_study_preview">Preview new cards added in the last x days:</string>
-    <string name="custom_study_tags">Select x cards from the deck:</string>
+    <string name="custom_study_tags">Number of cards</string>
+    <plurals name="custom_study_tags_unit">
+        <item quantity="one">card</item>
+        <item quantity="other">cards</item>
+    </plurals>
+    <string name="custom_study_tags_title">Study by card state or tag</string>
+    <string name="custom_study_no_cards_matched">No cards matched the criteria you provided.</string>
 
     <string name="storage_full_title">Storage full</string>
     <string name="storage_almost_full_title">Storage almost full</string>
