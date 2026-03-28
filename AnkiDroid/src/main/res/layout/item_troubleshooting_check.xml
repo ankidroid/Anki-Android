@@ -4,6 +4,10 @@
     android:id="@+id/item_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:foreground="?attr/selectableItemBackground"
+    android:clipToOutline="true"
+    android:clickable="true"
+    android:focusable="true"
     android:gravity="center_vertical"
     android:minHeight="72dp"
     android:orientation="horizontal"
@@ -68,6 +72,19 @@
             android:textColor="?android:attr/textColorSecondary"
             android:visibility="gone"
             tools:text="Background usage is disabled. Reminders may not be delivered"
+            tools:visibility="visible" />
+
+        <!-- Widget.Material3.Button.TextButton, but without the vertical padding -->
+        <TextView
+            android:id="@+id/action_link"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:textAppearance="?attr/textAppearanceLabelLarge"
+            android:textColor="?attr/colorPrimary"
+            android:textFontWeight="500"
+            android:visibility="gone"
+            tools:text="Open battery settings"
             tools:visibility="visible" />
 
     </LinearLayout>

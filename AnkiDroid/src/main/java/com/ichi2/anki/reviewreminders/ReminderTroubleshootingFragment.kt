@@ -16,11 +16,18 @@
 
 package com.ichi2.anki.reviewreminders
 
+import android.Manifest
 import android.content.Context
+import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.net.toUri
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -33,12 +40,30 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ichi2.anki.R
 import com.ichi2.anki.databinding.FragmentReminderTroubleshootingBinding
 import com.ichi2.anki.databinding.ItemTroubleshootingCheckBinding
+import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.utils.ext.launchCollectionInLifecycleScope
 import com.ichi2.anki.utils.ext.onWindowFocusChanged
 import com.ichi2.anki.utils.ext.setBackgroundTint
 import com.ichi2.themes.Themes
+import com.ichi2.utils.Permissions.requestPermissionThroughDialogOrSettings
 import com.ichi2.utils.dp
 import dev.androidbroadcast.vbpd.viewBinding
+import timber.log.Timber
+
+/**
+ * An action which a user can take to resolve a [check][TroubleshootingCheck].
+ *
+ * Example: Disabling power saving mode.
+ *
+ * `null` for checks which are not immediately resolvable: we should not offer to turn
+ * 'Do not disturb' off, as this is a user preference.
+ */
+private data class ResolveCheckAction(
+    val label: String,
+    /** A hardcoded (non-translatable) description of the action for logging purposes. */
+    val logDescription: String,
+    val action: () -> Unit,
+)
 
 /** %alpha to use for the circular background of icons */
 private const val BACKGROUND_ALPHA = 0.12f
@@ -49,6 +74,11 @@ class ReminderTroubleshootingFragment : Fragment(R.layout.fragment_reminder_trou
     }
 
     private val binding by viewBinding(FragmentReminderTroubleshootingBinding::bind)
+
+    internal val notificationPermissionLauncher: ActivityResultLauncher<String> =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) {
+            viewModel.refreshChecks()
+        }
 
     override fun onViewCreated(
         view: View,
@@ -99,7 +129,10 @@ class ReminderTroubleshootingFragment : Fragment(R.layout.fragment_reminder_trou
     }
 
     private fun setupTroubleshootingChecks() {
-        val checksAdapter = TroubleshootingChecksAdapter()
+        val checksAdapter =
+            TroubleshootingChecksAdapter { check ->
+                with(this) { check.resolveAction() }
+            }
         binding.checksList.adapter = checksAdapter
         viewModel.state.launchCollectionInLifecycleScope { state ->
             val visibleChecks = state.checks.filter { it.result !is CheckResult.Unavailable }
@@ -134,7 +167,9 @@ internal fun reminderTroubleshootingViewModelFactory(context: Context): ViewMode
     }
 }
 
-private class TroubleshootingChecksAdapter : ListAdapter<TroubleshootingCheck, TroubleshootingChecksAdapter.ViewHolder>(DIFF_CALLBACK) {
+private class TroubleshootingChecksAdapter(
+    private val getResolveAction: (TroubleshootingCheck) -> ResolveCheckAction?,
+) : ListAdapter<TroubleshootingCheck, TroubleshootingChecksAdapter.ViewHolder>(DIFF_CALLBACK) {
     class ViewHolder(
         val binding: ItemTroubleshootingCheckBinding,
     ) : RecyclerView.ViewHolder(binding.root)
@@ -183,6 +218,24 @@ private class TroubleshootingChecksAdapter : ListAdapter<TroubleshootingCheck, T
                 else -> R.drawable.bg_troubleshooting_item_middle
             }
         holder.binding.itemContainer.setBackgroundResource(backgroundRes)
+
+        // Action link + item click: only actionable for failed/warning checks
+        val needsFix = check.result.hasIssue
+        val resolveAction = if (needsFix) getResolveAction(check) else null
+        holder.binding.actionLink.isVisible = resolveAction != null
+        if (resolveAction != null) {
+            holder.binding.actionLink.text = resolveAction.label
+            val clickListener =
+                View.OnClickListener {
+                    Timber.i("Launching fix for '%s': %s", check.title(), resolveAction.logDescription)
+                    resolveAction.action()
+                }
+            holder.binding.itemContainer.setOnClickListener(clickListener)
+            holder.binding.actionLink.setOnClickListener(clickListener)
+        } else {
+            holder.binding.itemContainer.setOnClickListener(null)
+            holder.binding.itemContainer.isClickable = false
+        }
 
         val gap = if (position < lastIndex) 2.dp.toPx(context) else 0
         val lp = holder.itemView.layoutParams as? ViewGroup.MarginLayoutParams
@@ -269,3 +322,60 @@ private fun CheckResult.tintColor(context: Context): Int =
         is CheckResult.Unavailable -> context.getColor(android.R.color.darker_gray)
         is CheckResult.Error -> context.getColor(android.R.color.holo_red_dark)
     }
+
+/**
+ * Returns a [ResolveCheckAction] for the check.
+ */
+context(fragment: ReminderTroubleshootingFragment)
+private fun TroubleshootingCheck.resolveAction(): ResolveCheckAction? {
+    val context = fragment.requireContext()
+
+    // TODO: move labels to string resources
+    fun requestNotificationPermission(): ResolveCheckAction? {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) return null
+        return ResolveCheckAction(
+            label = "Grant permission",
+            logDescription = "requesting POST_NOTIFICATIONS via system dialog or app settings",
+        ) {
+            fragment.requestPermissionThroughDialogOrSettings(
+                activity = fragment.requireActivity(),
+                permission = Manifest.permission.POST_NOTIFICATIONS,
+                permissionRequestedFlag = Prefs::notificationsPermissionRequested,
+                permissionRequestLauncher = fragment.notificationPermissionLauncher,
+            )
+        }
+    }
+
+    // Opens the full battery optimization list. The user must manually find the app.
+    // For 'full' (non-Play) builds, ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS could be used
+    // with the REQUEST_IGNORE_BATTERY_OPTIMIZATIONS manifest permission for a direct dialog,
+    // but Google Play restricts that permission.
+    fun requestUnrestrictedBackgroundUsage() =
+        ResolveCheckAction(label = "Open battery settings", logDescription = "opening ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS") {
+            context.startActivity(Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS))
+        }
+
+    fun openBatterySaverSettings() =
+        ResolveCheckAction(label = "Open battery settings", logDescription = "opening ACTION_BATTERY_SAVER_SETTINGS") {
+            context.startActivity(Intent(Settings.ACTION_BATTERY_SAVER_SETTINGS))
+        }
+
+    fun openExactAlarmSettings(): ResolveCheckAction? {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) return null
+        return ResolveCheckAction(label = "Grant permission", logDescription = "opening ACTION_REQUEST_SCHEDULE_EXACT_ALARM") {
+            context.startActivity(
+                Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM).apply {
+                    data = "package:${context.packageName}".toUri()
+                },
+            )
+        }
+    }
+
+    return when (this) {
+        is TroubleshootingCheck.NotificationPermission -> requestNotificationPermission()
+        is TroubleshootingCheck.DoNotDisturbOff -> null
+        is TroubleshootingCheck.UnrestrictedOptimizationEnabled -> requestUnrestrictedBackgroundUsage()
+        is TroubleshootingCheck.PowerSavingModeOff -> openBatterySaverSettings()
+        is TroubleshootingCheck.ExactAlarmPermission -> openExactAlarmSettings()
+    }
+}
