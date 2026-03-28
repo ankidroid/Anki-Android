@@ -129,6 +129,20 @@ sealed class TroubleshootingCheck {
     //    notifications, this should be obvious, and it dilutes the actionable checks.
 }
 
+/**
+ * The overall status of the troubleshooting checks
+ */
+enum class SummaryStatus {
+    /** All visible checks are passing. */
+    Ok,
+
+    /** Other checks have warnings or failures — reminders may not work correctly. */
+    Warning,
+
+    /** Notification permission is denied or errored — reminders cannot work. */
+    Error,
+}
+
 data class ReminderTroubleshootingState(
     val notificationPermission: TroubleshootingCheck.NotificationPermission =
         TroubleshootingCheck.NotificationPermission(),
@@ -142,7 +156,35 @@ data class ReminderTroubleshootingState(
         TroubleshootingCheck.ExactAlarmPermission(),
 ) {
     val checks: List<TroubleshootingCheck>
-        get() = listOf(notificationPermission, doNotDisturbOff, batteryOptimizationDisabled, powerSavingModeOff, exactAlarmPermission)
+        get() =
+            listOf(
+                notificationPermission,
+                doNotDisturbOff,
+                batteryOptimizationDisabled,
+                powerSavingModeOff,
+                exactAlarmPermission,
+            )
+
+    /**
+     * The overall status of troubleshooting checks
+     *
+     * @see SummaryStatus
+     */
+    val summaryStatus: SummaryStatus
+        get() {
+            // If the notification permission is defined, notifications cannot be shown.
+            val permissionCheck = notificationPermission.result
+            if (permissionCheck is CheckResult.Failed || permissionCheck is CheckResult.Error) {
+                return SummaryStatus.Error
+            }
+
+            // Any other 'Failed' check is a warning:
+            // UnrestrictedOptimizationEnabled has 'Background usage is disabled.' => 'Failure'
+            // But this is designed to warn the user prominently about a mistake, rather than
+            // appear as a fatal error for the reminders.
+            val hasIssues = checks.any { it.result.hasIssue }
+            return if (hasIssues) SummaryStatus.Warning else SummaryStatus.Ok
+        }
 }
 
 class ReminderTroubleshootingViewModel(

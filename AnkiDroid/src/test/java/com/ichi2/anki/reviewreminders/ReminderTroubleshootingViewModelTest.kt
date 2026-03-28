@@ -170,6 +170,47 @@ class ReminderTroubleshootingViewModelTest {
         assertThat(viewModel.exactAlarmPermissionResult, equalTo(CheckResult.Unavailable))
     }
 
+    @Test
+    fun `summary status is Ok when all checks pass`() =
+        withViewModel {
+            assertThat(state.value.summaryStatus, equalTo(SummaryStatus.Ok))
+        }
+
+    @Test
+    fun `summary status is Warning when non-critical check fails`() =
+        withViewModel(batteryOptimization = BatteryOptimizationState.Optimized) {
+            assertThat(state.value.summaryStatus, equalTo(SummaryStatus.Warning))
+        }
+
+    @Test
+    fun `summary status is Warning when DND is on`() =
+        withViewModel(doNotDisturb = false) {
+            assertThat(state.value.summaryStatus, equalTo(SummaryStatus.Warning))
+        }
+
+    @Test
+    fun `summary status is Error when notification permission denied`() =
+        withViewModel(notificationPermission = false) {
+            assertThat(state.value.summaryStatus, equalTo(SummaryStatus.Error))
+        }
+
+    @Test
+    fun `summary status is Error when notification permission throws`() {
+        val repo =
+            mockRepository().also {
+                every { it.isNotificationPermissionGranted() } throws TestException("test")
+            }
+        val viewModel = ReminderTroubleshootingViewModel(repo)
+
+        assertThat(viewModel.state.value.summaryStatus, equalTo(SummaryStatus.Error))
+    }
+
+    @Test
+    fun `summary status Error takes priority over other warnings`() =
+        withViewModel(notificationPermission = false, doNotDisturb = false) {
+            assertThat(state.value.summaryStatus, equalTo(SummaryStatus.Error))
+        }
+
     // The `when` below will fail to compile if a new TroubleshootingCheck is added,
     // reminding you to add it to this test and to ReminderTroubleshootingState.checks
     @Test
