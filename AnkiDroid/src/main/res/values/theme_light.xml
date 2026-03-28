@@ -165,6 +165,10 @@
         <item name="clozeColor">#0000FF</item>
 
         <item name="incrementerButtonBackground">@color/material_light_blue_500</item>
+
+        <!-- Reminder troubleshooting - check contrast before changing -->
+        <item name="reminderTroubleshootingOk">@color/google_green_700</item>
+        <item name="reminderTroubleshootingWarning">@color/warning_orange</item>
     </style>
 
     <style name="Theme_Light" parent="Base.Theme.Light"/>

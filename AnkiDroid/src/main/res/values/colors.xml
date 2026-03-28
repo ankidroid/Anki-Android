@@ -106,6 +106,13 @@
 
     <color name="material_theme_grey">#303030</color>
 
+    <!-- Green from the system 'Battery health' screen -->
+    <color name="google_green_300">#81c995</color>
+    <color name="google_green_700">#388E3C</color>
+
+    <color name="google_yellow_300">#fdd633</color>
+    <color name="warning_orange">#DE4900</color>
+
     <color name="note_editor_selected_item_background">#D1D0CE</color>
     <color name="note_editor_selected_item_text">#000000</color>
 

@@ -233,4 +233,8 @@
     <attr name="checkMediaListForeground" format="color" />
 
     <attr name="progressDialogButtonTextColor" format="color"/>
+
+    <!-- Reminder troubleshooting -->
+    <attr name="reminderTroubleshootingOk" format="color"/>
+    <attr name="reminderTroubleshootingWarning" format="color"/>
 </resources>
