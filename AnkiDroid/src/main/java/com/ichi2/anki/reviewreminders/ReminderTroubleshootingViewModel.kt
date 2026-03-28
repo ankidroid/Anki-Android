@@ -71,7 +71,17 @@ sealed class TroubleshootingCheck {
         override val result: CheckResult = CheckResult.Loading,
     ) : TroubleshootingCheck()
 
-    // TODO: Do Not disturb
+    /**
+     * Checks whether Do Not Disturb is off.
+     *
+     * This is a [warning][CheckResult.Warning], not a failure, because DND may be
+     * intentionally enabled and can silently mute notifications depending on the
+     * user's DND filter settings.
+     */
+    data class DoNotDisturbOff(
+        override val result: CheckResult = CheckResult.Loading,
+    ) : TroubleshootingCheck()
+
     // TODO: Battery Optimization
     // TODO: Exact alarm permission
     // TODO: Power saving mode
@@ -88,9 +98,11 @@ sealed class TroubleshootingCheck {
 data class ReminderTroubleshootingState(
     val notificationPermission: TroubleshootingCheck.NotificationPermission =
         TroubleshootingCheck.NotificationPermission(),
+    val doNotDisturbOff: TroubleshootingCheck.DoNotDisturbOff =
+        TroubleshootingCheck.DoNotDisturbOff(),
 ) {
     val checks: List<TroubleshootingCheck>
-        get() = listOf(notificationPermission)
+        get() = listOf(notificationPermission, doNotDisturbOff)
 }
 
 class ReminderTroubleshootingViewModel(
@@ -109,6 +121,10 @@ class ReminderTroubleshootingViewModel(
                 notificationPermission =
                     state.value.notificationPermission.copy(
                         result = CheckResult.from(repository::isNotificationPermissionGranted, onFailure = CheckResult.Failed),
+                    ),
+                doNotDisturbOff =
+                    state.value.doNotDisturbOff.copy(
+                        result = CheckResult.from(repository::isDoNotDisturbOff, onFailure = CheckResult.Warning),
                     ),
             )
     }

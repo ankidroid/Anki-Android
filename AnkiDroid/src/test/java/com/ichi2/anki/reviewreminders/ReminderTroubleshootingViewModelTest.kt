@@ -16,6 +16,7 @@
 
 package com.ichi2.anki.reviewreminders
 
+import com.ichi2.anki.reviewreminders.TroubleshootingCheck.DoNotDisturbOff
 import com.ichi2.anki.reviewreminders.TroubleshootingCheck.NotificationPermission
 import com.ichi2.testutils.TestException
 import io.mockk.every
@@ -27,10 +28,7 @@ import org.junit.Test
 class ReminderTroubleshootingViewModelTest {
     @Test
     fun `notification permission passed when granted`() {
-        val repo =
-            mockk<ReminderTroubleshootingRepository> {
-                every { isNotificationPermissionGranted() } returns true
-            }
+        val repo = mockRepository(notificationPermission = true)
         val viewModel = ReminderTroubleshootingViewModel(repo)
 
         assertThat(viewModel.notificationPermissionResult, equalTo(CheckResult.Passed))
@@ -38,10 +36,7 @@ class ReminderTroubleshootingViewModelTest {
 
     @Test
     fun `notification permission failed when not granted`() {
-        val repo =
-            mockk<ReminderTroubleshootingRepository> {
-                every { isNotificationPermissionGranted() } returns false
-            }
+        val repo = mockRepository(notificationPermission = false)
         val viewModel = ReminderTroubleshootingViewModel(repo)
 
         assertThat(viewModel.notificationPermissionResult, equalTo(CheckResult.Failed))
@@ -50,8 +45,8 @@ class ReminderTroubleshootingViewModelTest {
     @Test
     fun `notification permission error on exception`() {
         val repo =
-            mockk<ReminderTroubleshootingRepository> {
-                every { isNotificationPermissionGranted() } throws TestException("test")
+            mockRepository().also {
+                every { it.isNotificationPermissionGranted() } throws TestException("test")
             }
         val viewModel = ReminderTroubleshootingViewModel(repo)
 
@@ -60,10 +55,7 @@ class ReminderTroubleshootingViewModelTest {
 
     @Test
     fun `refreshChecks updates state`() {
-        val repo =
-            mockk<ReminderTroubleshootingRepository> {
-                every { isNotificationPermissionGranted() } returns false
-            }
+        val repo = mockRepository(notificationPermission = false)
         val viewModel = ReminderTroubleshootingViewModel(repo)
 
         assertThat(viewModel.notificationPermissionResult, equalTo(CheckResult.Failed))
@@ -92,6 +84,22 @@ class ReminderTroubleshootingViewModelTest {
     @Test
     fun `Error hasIssue is true`() = assertThat(CheckResult.Error(TestException("")).hasIssue, equalTo(true))
 
+    @Test
+    fun `do not disturb passed when off`() {
+        val repo = mockRepository(doNotDisturb = true)
+        val viewModel = ReminderTroubleshootingViewModel(repo)
+
+        assertThat(viewModel.doNotDisturbResult, equalTo(CheckResult.Passed))
+    }
+
+    @Test
+    fun `do not disturb warning when on`() {
+        val repo = mockRepository(doNotDisturb = false)
+        val viewModel = ReminderTroubleshootingViewModel(repo)
+
+        assertThat(viewModel.doNotDisturbResult, equalTo(CheckResult.Warning))
+    }
+
     // The `when` below will fail to compile if a new TroubleshootingCheck is added,
     // reminding you to add it to this test and to ReminderTroubleshootingState.checks
     @Test
@@ -101,22 +109,33 @@ class ReminderTroubleshootingViewModelTest {
             for (check in state.value.checks) {
                 when (check) {
                     is NotificationPermission -> count++
+                    is DoNotDisturbOff -> count++
                 }
             }
-            assertThat(count, equalTo(1))
+            assertThat(count, equalTo(2))
+        }
+
+    private fun mockRepository(
+        notificationPermission: Boolean = true,
+        doNotDisturb: Boolean = true,
+    ): ReminderTroubleshootingRepository =
+        mockk {
+            every { isNotificationPermissionGranted() } returns notificationPermission
+            every { isDoNotDisturbOff() } returns doNotDisturb
         }
 
     private fun withViewModel(
         notificationPermission: Boolean = true,
+        doNotDisturb: Boolean = true,
         block: ReminderTroubleshootingViewModel.() -> Unit,
     ) {
-        val repo =
-            mockk<ReminderTroubleshootingRepository> {
-                every { isNotificationPermissionGranted() } returns notificationPermission
-            }
+        val repo = mockRepository(notificationPermission, doNotDisturb)
         ReminderTroubleshootingViewModel(repo).block()
     }
 }
 
 private val ReminderTroubleshootingViewModel.notificationPermissionResult: CheckResult
     get() = state.value.notificationPermission.result
+
+private val ReminderTroubleshootingViewModel.doNotDisturbResult: CheckResult
+    get() = state.value.doNotDisturbOff.result

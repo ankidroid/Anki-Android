@@ -16,11 +16,18 @@
 
 package com.ichi2.anki.reviewreminders
 
+import android.app.NotificationManager
 import android.content.Context
+import androidx.core.content.getSystemService
 import com.ichi2.utils.Permissions
 
 class ReminderTroubleshootingRepository(
     private val context: Context,
 ) {
     fun isNotificationPermissionGranted(): Boolean = Permissions.canPostNotifications(context)
+
+    fun isDoNotDisturbOff(): Boolean? {
+        val notificationManager = context.getSystemService<NotificationManager>() ?: return null
+        return notificationManager.currentInterruptionFilter == NotificationManager.INTERRUPTION_FILTER_ALL
+    }
 }
