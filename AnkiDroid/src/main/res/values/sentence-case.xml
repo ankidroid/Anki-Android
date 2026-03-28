@@ -47,6 +47,7 @@ undoActionUndone()
     <string name="sentence_all_fields">All fields</string>
     <string name="sentence_check_media_delete_unused">Delete unused</string>
     <string name="sentence_choose_tags">Choose tags</string>
+    <string name="sentence_study_by_card_state_or_tag">Study by card state or tag</string>
     <string name="sentence_selective_study">Selective study</string>
     <string name="sentence_sync_media_log">Media sync log</string>
     <string name="sentence_empty_trash">Empty trash</string>

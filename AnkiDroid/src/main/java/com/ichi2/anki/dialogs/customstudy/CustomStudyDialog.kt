@@ -353,7 +353,12 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
                 .Builder(requireActivity())
                 .apply {
                     if (contextMenuOption == STUDY_TAGS) {
-                        title(R.string.custom_study_tags_title)
+                        title(
+                            text =
+                                TR
+                                    .customStudyStudyByCardStateOrTag()
+                                    .toSentenceCase(R.string.sentence_study_by_card_state_or_tag),
+                        )
                     }
                 }.customView(
                     view = binding.root,
@@ -409,7 +414,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
                         // skip tag selection if there's no tags to select
                         if (nids.isEmpty()) {
                             binding.warningText.visibility = android.view.View.VISIBLE
-                            binding.warningText.text = getString(R.string.custom_study_no_cards_matched)
+                            binding.warningText.text = TR.customStudyNoCardsMatchedTheCriteriaYou()
                             dialog.positiveButton.isEnabled = false
                             allowSubmit = true
                             return@launchCatchingTask
