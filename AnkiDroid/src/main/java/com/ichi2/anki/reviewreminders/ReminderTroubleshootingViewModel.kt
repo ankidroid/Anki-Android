@@ -1,0 +1,115 @@
+/*
+ *  Copyright (c) 2025 David Allison <davidallisongithub@gmail.com>
+ *
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 3 of the License, or (at your option) any later
+ *  version.
+ *
+ *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
+ *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+package com.ichi2.anki.reviewreminders
+
+import androidx.lifecycle.ViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+
+/**
+ * The result of a troubleshooting check
+ */
+sealed class CheckResult {
+    data object Loading : CheckResult()
+
+    data object Passed : CheckResult()
+
+    data object Failed : CheckResult()
+
+    data object Warning : CheckResult()
+
+    data object Unavailable : CheckResult()
+
+    data class Error(
+        val exception: Exception,
+    ) : CheckResult()
+
+    /** Whether this result indicates a problem (failed, warning, or error). */
+    val hasIssue: Boolean
+        get() = this is Failed || this is Warning || this is Error
+
+    companion object {
+        fun from(
+            check: () -> Boolean?,
+            onFailure: CheckResult,
+        ): CheckResult =
+            try {
+                when (check()) {
+                    true -> Passed
+                    false -> onFailure
+                    null -> Unavailable
+                }
+            } catch (e: Exception) {
+                Error(e)
+            }
+    }
+}
+
+/**
+ * A potential issue which could cause issues receiving reminders.
+ *
+ * The sealed class ensures that all cases are handled.
+ */
+sealed class TroubleshootingCheck {
+    abstract val result: CheckResult
+
+    data class NotificationPermission(
+        override val result: CheckResult = CheckResult.Loading,
+    ) : TroubleshootingCheck()
+
+    // TODO: Do Not disturb
+    // TODO: Battery Optimization
+    // TODO: Exact alarm permission
+    // TODO: Power saving mode
+
+    // Potential future indicators:
+    // - Check if 'BootService' executed
+    // - Daylio uses 'Last System Reboot Time', but the rationale/heuristics are unknown
+
+    // Other indicators which are currently out of scope:
+    // - Notification cap warning: `MAX_PACKAGE_NOTIFICATIONS` - If a user has too many visible
+    //    notifications, this should be obvious, and it dilutes the actionable checks.
+}
+
+data class ReminderTroubleshootingState(
+    val notificationPermission: TroubleshootingCheck.NotificationPermission =
+        TroubleshootingCheck.NotificationPermission(),
+) {
+    val checks: List<TroubleshootingCheck>
+        get() = listOf(notificationPermission)
+}
+
+class ReminderTroubleshootingViewModel(
+    private val repository: ReminderTroubleshootingRepository,
+) : ViewModel() {
+    val state: StateFlow<ReminderTroubleshootingState>
+        field = MutableStateFlow(ReminderTroubleshootingState())
+
+    init {
+        refreshChecks()
+    }
+
+    fun refreshChecks() {
+        state.value =
+            state.value.copy(
+                notificationPermission =
+                    state.value.notificationPermission.copy(
+                        result = CheckResult.from(repository::isNotificationPermissionGranted, onFailure = CheckResult.Failed),
+                    ),
+            )
+    }
+}
