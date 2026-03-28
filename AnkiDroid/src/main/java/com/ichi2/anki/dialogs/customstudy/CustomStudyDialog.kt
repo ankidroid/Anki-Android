@@ -295,7 +295,11 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
         @SuppressLint("InflateParams")
         binding = FragmentCustomStudyBinding.inflate(requireActivity().layoutInflater)
 
-        binding.detailsText2.text = text2
+        if (contextMenuOption == STUDY_TAGS) {
+            binding.detailsText2.isVisible = false
+        } else {
+            binding.detailsText2.text = text2
+        }
 
         binding.cardsStateSelectorLayout.isVisible = contextMenuOption == STUDY_TAGS
         binding.cardsStateSelector.apply {
@@ -337,6 +341,12 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
                 inputType = EditorInfo.TYPE_CLASS_NUMBER or EditorInfo.TYPE_NUMBER_FLAG_SIGNED
             }
         }
+        binding.detailsEditText2Layout.hint =
+            if (contextMenuOption == STUDY_TAGS) {
+                getString(R.string.custom_study_tags)
+            } else {
+                null
+            }
         val positiveBtnLabel =
             if (contextMenuOption == STUDY_TAGS) {
                 TR.customStudyChooseTags().toSentenceCase(R.string.sentence_choose_tags)
@@ -436,16 +446,6 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
 
         binding.detailsEditText2.doAfterTextChanged {
             if (contextMenuOption == STUDY_TAGS) {
-                val count =
-                    binding.detailsEditText2.text
-                        ?.toString()
-                        ?.toIntOrNull() ?: 0
-                binding.detailsEditText2Layout.suffixText =
-                    resources.getQuantityString(
-                        R.plurals.custom_study_tags_unit,
-                        count,
-                        count,
-                    )
                 binding.warningText.visibility = android.view.View.GONE
             }
             dialog.positiveButton.isEnabled = userInputValue != null && userInputValue != 0

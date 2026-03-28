@@ -47,14 +47,12 @@
         android:id="@+id/details_edit_text_2_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-        android:hint="@string/custom_study_tags">
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/details_edit_text_2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
             android:inputType="number"
             android:selectAllOnFocus="true"
             tools:text="100"
@@ -87,8 +85,9 @@
             android:id="@+id/warning_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@android:color/holo_red_dark"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:textColor="?attr/colorError"
             android:visibility="gone"
-            tools:text="@string/custom_study_no_cards_matched"
             />
 </LinearLayout>
