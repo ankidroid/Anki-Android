@@ -62,8 +62,16 @@
                 android:textColor="?android:attr/textColorSecondary"
                 tools:text="Everything looks good! Your reminders should work as expected." />
 
-
-            <!-- TODO: Display checks -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/checks_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:nestedScrollingEnabled="false"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_troubleshooting_check" />
 
             <LinearLayout
                 android:layout_width="match_parent"
