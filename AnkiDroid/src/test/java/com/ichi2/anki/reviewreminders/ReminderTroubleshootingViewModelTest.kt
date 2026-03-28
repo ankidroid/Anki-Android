@@ -18,6 +18,7 @@ package com.ichi2.anki.reviewreminders
 
 import com.ichi2.anki.reviewreminders.TroubleshootingCheck.DoNotDisturbOff
 import com.ichi2.anki.reviewreminders.TroubleshootingCheck.NotificationPermission
+import com.ichi2.anki.reviewreminders.TroubleshootingCheck.UnrestrictedOptimizationEnabled
 import com.ichi2.testutils.TestException
 import io.mockk.every
 import io.mockk.mockk
@@ -100,6 +101,30 @@ class ReminderTroubleshootingViewModelTest {
         assertThat(viewModel.doNotDisturbResult, equalTo(CheckResult.Warning))
     }
 
+    @Test
+    fun `battery optimization passed when unrestricted`() {
+        val repo = mockRepository(batteryOptimization = BatteryOptimizationState.Unrestricted)
+        val viewModel = ReminderTroubleshootingViewModel(repo)
+
+        assertThat(viewModel.batteryOptimizationResult, equalTo(CheckResult.Passed))
+    }
+
+    @Test
+    fun `battery optimization warning when optimized`() {
+        val repo = mockRepository(batteryOptimization = BatteryOptimizationState.Optimized)
+        val viewModel = ReminderTroubleshootingViewModel(repo)
+
+        assertThat(viewModel.batteryOptimizationResult, equalTo(CheckResult.Warning))
+    }
+
+    @Test
+    fun `battery optimization failed when restricted`() {
+        val repo = mockRepository(batteryOptimization = BatteryOptimizationState.Restricted)
+        val viewModel = ReminderTroubleshootingViewModel(repo)
+
+        assertThat(viewModel.batteryOptimizationResult, equalTo(CheckResult.Failed))
+    }
+
     // The `when` below will fail to compile if a new TroubleshootingCheck is added,
     // reminding you to add it to this test and to ReminderTroubleshootingState.checks
     @Test
@@ -110,26 +135,30 @@ class ReminderTroubleshootingViewModelTest {
                 when (check) {
                     is NotificationPermission -> count++
                     is DoNotDisturbOff -> count++
+                    is UnrestrictedOptimizationEnabled -> count++
                 }
             }
-            assertThat(count, equalTo(2))
+            assertThat(count, equalTo(3))
         }
 
     private fun mockRepository(
         notificationPermission: Boolean = true,
         doNotDisturb: Boolean = true,
+        batteryOptimization: BatteryOptimizationState = BatteryOptimizationState.Unrestricted,
     ): ReminderTroubleshootingRepository =
         mockk {
             every { isNotificationPermissionGranted() } returns notificationPermission
             every { isDoNotDisturbOff() } returns doNotDisturb
+            every { getBatteryOptimizationState() } returns batteryOptimization
         }
 
     private fun withViewModel(
         notificationPermission: Boolean = true,
         doNotDisturb: Boolean = true,
+        batteryOptimization: BatteryOptimizationState = BatteryOptimizationState.Unrestricted,
         block: ReminderTroubleshootingViewModel.() -> Unit,
     ) {
-        val repo = mockRepository(notificationPermission, doNotDisturb)
+        val repo = mockRepository(notificationPermission, doNotDisturb, batteryOptimization)
         ReminderTroubleshootingViewModel(repo).block()
     }
 }
@@ -139,3 +168,6 @@ private val ReminderTroubleshootingViewModel.notificationPermissionResult: Check
 
 private val ReminderTroubleshootingViewModel.doNotDisturbResult: CheckResult
     get() = state.value.doNotDisturbOff.result
+
+private val ReminderTroubleshootingViewModel.batteryOptimizationResult: CheckResult
+    get() = state.value.batteryOptimizationDisabled.result

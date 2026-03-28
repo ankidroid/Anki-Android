@@ -16,10 +16,29 @@
 
 package com.ichi2.anki.reviewreminders
 
+import android.app.ActivityManager
 import android.app.NotificationManager
 import android.content.Context
+import android.os.Build
+import android.os.PowerManager
 import androidx.core.content.getSystemService
 import com.ichi2.utils.Permissions
+
+/**
+ * The battery optimization state applied to the app.
+ *
+ * @see ReminderTroubleshootingRepository.getBatteryOptimizationState
+ */
+enum class BatteryOptimizationState {
+    /** App is exempt from battery optimization */
+    Unrestricted,
+
+    /** Default, may delay background work */
+    Optimized,
+
+    /** Background usage is disabled (API 28+) */
+    Restricted,
+}
 
 class ReminderTroubleshootingRepository(
     private val context: Context,
@@ -29,5 +48,24 @@ class ReminderTroubleshootingRepository(
     fun isDoNotDisturbOff(): Boolean? {
         val notificationManager = context.getSystemService<NotificationManager>() ?: return null
         return notificationManager.currentInterruptionFilter == NotificationManager.INTERRUPTION_FILTER_ALL
+    }
+
+    /**
+     * Returns the battery optimization state applied to the app.
+     *
+     * @see BatteryOptimizationState
+     */
+    fun getBatteryOptimizationState(): BatteryOptimizationState? {
+        val powerManager = context.getSystemService<PowerManager>() ?: return null
+        if (powerManager.isIgnoringBatteryOptimizations(context.packageName)) {
+            return BatteryOptimizationState.Unrestricted
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            val activityManager = context.getSystemService<ActivityManager>() ?: return null
+            if (activityManager.isBackgroundRestricted) {
+                return BatteryOptimizationState.Restricted
+            }
+        }
+        return BatteryOptimizationState.Optimized
     }
 }

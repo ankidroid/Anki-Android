@@ -82,7 +82,17 @@ sealed class TroubleshootingCheck {
         override val result: CheckResult = CheckResult.Loading,
     ) : TroubleshootingCheck()
 
-    // TODO: Battery Optimization
+    /**
+     * App Info - App battery usage - Allow background usage -
+     *
+     * - 'Disabled' → [CheckResult.Failed] - Background usage is disabled.
+     * - 'Optimized' → [CheckResult.Warning] - Optimized based on your usage.
+     * - 'Unrestricted' → [CheckResult.Passed] - Allow battery usage in the background.
+     */
+    data class UnrestrictedOptimizationEnabled(
+        override val result: CheckResult = CheckResult.Loading,
+    ) : TroubleshootingCheck()
+
     // TODO: Exact alarm permission
     // TODO: Power saving mode
 
@@ -100,9 +110,11 @@ data class ReminderTroubleshootingState(
         TroubleshootingCheck.NotificationPermission(),
     val doNotDisturbOff: TroubleshootingCheck.DoNotDisturbOff =
         TroubleshootingCheck.DoNotDisturbOff(),
+    val batteryOptimizationDisabled: TroubleshootingCheck.UnrestrictedOptimizationEnabled =
+        TroubleshootingCheck.UnrestrictedOptimizationEnabled(),
 ) {
     val checks: List<TroubleshootingCheck>
-        get() = listOf(notificationPermission, doNotDisturbOff)
+        get() = listOf(notificationPermission, doNotDisturbOff, batteryOptimizationDisabled)
 }
 
 class ReminderTroubleshootingViewModel(
@@ -126,6 +138,27 @@ class ReminderTroubleshootingViewModel(
                     state.value.doNotDisturbOff.copy(
                         result = CheckResult.from(repository::isDoNotDisturbOff, onFailure = CheckResult.Warning),
                     ),
+                batteryOptimizationDisabled =
+                    state.value.batteryOptimizationDisabled.copy(
+                        result = refreshBatteryOptimization(),
+                    ),
             )
     }
+
+    private fun refreshBatteryOptimization(): CheckResult =
+        try {
+            val batteryState =
+                repository.getBatteryOptimizationState()
+                    ?: return CheckResult.Unavailable
+            when (batteryState) {
+                BatteryOptimizationState.Unrestricted -> CheckResult.Passed
+                BatteryOptimizationState.Optimized -> CheckResult.Warning
+                // Optimized is the default, but the Android UI encourages a user to select
+                // 'Restricted', rather than tap into the option and select 'Unrestricted'
+                // Setting this check to 'Failed' informs the user that they have made things worse.
+                BatteryOptimizationState.Restricted -> CheckResult.Failed
+            }
+        } catch (e: Exception) {
+            CheckResult.Error(e)
+        }
 }
