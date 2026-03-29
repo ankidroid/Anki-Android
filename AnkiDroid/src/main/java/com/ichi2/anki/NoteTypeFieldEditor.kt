@@ -379,7 +379,7 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.activity_note_type_field_edito
             AlertDialog
                 .Builder(this)
                 .show {
-                    positiveButton(R.string.dialog_ok) {
+                    positiveButton(R.string.dialog_move) {
                         val input = (it as AlertDialog).getInputField()
                         result(input.text.toString().toInt())
                     }
