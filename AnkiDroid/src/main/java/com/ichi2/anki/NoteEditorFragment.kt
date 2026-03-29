@@ -79,6 +79,7 @@ import androidx.lifecycle.lifecycleScope
 import anki.config.ConfigKey
 import anki.notes.NoteFieldsCheckResponse
 import com.google.android.material.color.MaterialColors
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.CollectionManager.TR
@@ -98,6 +99,8 @@ import com.ichi2.anki.dialogs.IntegerDialog
 import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
+import com.ichi2.anki.exception.MediaSizeLimitExceededException
+import com.ichi2.anki.exception.toBytesShortString
 import com.ichi2.anki.libanki.Card
 import com.ichi2.anki.libanki.CardOrdinal
 import com.ichi2.anki.libanki.Collection
@@ -177,6 +180,7 @@ import com.ichi2.utils.KeyUtils
 import com.ichi2.utils.NoteFieldDecorator
 import com.ichi2.utils.TextViewUtil
 import com.ichi2.utils.configureView
+import com.ichi2.utils.iconAttr
 import com.ichi2.utils.message
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.neutralButton
@@ -187,6 +191,7 @@ import com.ichi2.utils.title
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import net.ankiweb.rsdroid.Backend
 import org.json.JSONArray
 import timber.log.Timber
 import java.io.File
@@ -2109,7 +2114,7 @@ class NoteEditorFragment :
 
         // Process successful result only if field has data
         if (field.type != EFieldType.TEXT || field.mediaFile != null) {
-            addMediaFileToField(index, field)
+            performAddMedia(index, field, skipSizeCheck = false)
         } else {
             Timber.i("field imagePath and audioPath are both null")
         }
@@ -2120,36 +2125,66 @@ class NoteEditorFragment :
      *
      * @param index The index of the field within the note to update.
      * @param field The `IField` object representing the media file and its details.
+     * @param skipSizeCheck Whether to bypass the AnkiWeb media size limit check.
      */
-    private fun addMediaFileToField(
+
+    private fun performAddMedia(
         index: Int,
         field: IField,
+        skipSizeCheck: Boolean,
     ) {
         launchCatchingTask {
-            val note = getCurrentMultimediaEditableNote()
-            note.setField(index, field)
-            val fieldEditText = editFields!![index]
-
             // Import field media
             // This goes before setting formattedValue to update
             // media paths with the checksum when they have the same name
-            withCol {
-                try {
-                    NoteService.importMediaToDirectory(this, field)
-                } catch (oomError: OutOfMemoryError) {
-                    // TODO: a 'retry' flow would be possible here
-                    throw Exception(oomError)
+            try {
+                withCol {
+                    NoteService.importMediaToDirectory(this, field, skipSizeCheck = skipSizeCheck)
                 }
-            }
 
-            // Completely replace text for text fields (because current text was passed in)
-            val formattedValue = field.formattedValue
-            if (field.type === EFieldType.TEXT) {
-                fieldEditText.setText(formattedValue)
-            } else if (fieldEditText.text != null) {
-                insertStringInField(fieldEditText, formattedValue)
+                // Update UI
+                val fieldEditText = editFields!![index]
+                // Completely replace text for text fields (because current text was passed in)
+                val formattedValue = field.formattedValue
+                if (field.type === EFieldType.TEXT) {
+                    fieldEditText.setText(formattedValue)
+                } else if (fieldEditText.text != null) {
+                    insertStringInField(fieldEditText, formattedValue)
+                }
+                changed = true
+            } catch (e: MediaSizeLimitExceededException) {
+                showLargeMediaFileWarning(
+                    e.fileName,
+                    e.fileSize,
+                    onForceAdd = {
+                        // Recursive call to bypass the size check if the user wants to add anyway
+                        performAddMedia(index, field, skipSizeCheck = true)
+                    },
+                )
+            } catch (oomError: OutOfMemoryError) {
+                // TODO: a 'retry' flow would be possible here
+                throw Exception(oomError)
             }
-            changed = true
+        }
+    }
+
+    private fun showLargeMediaFileWarning(
+        fileName: String,
+        fileSize: Long,
+        onForceAdd: () -> Unit,
+    ) {
+        val context = requireContext()
+        val fileSizeStr = fileSize.toBytesShortString(context)
+        val limitStr = Backend.MAX_INDIVIDUAL_MEDIA_FILE_SIZE.toBytesShortString(context)
+
+        MaterialAlertDialogBuilder(context).show {
+            title(R.string.media_file_size_warning_title)
+            iconAttr(R.drawable.ic_warning)
+            message(text = getString(R.string.media_file_size_warning_message, fileName, fileSizeStr, limitStr))
+            positiveButton(R.string.dialog_cancel)
+            negativeButton(R.string.media_file_size_add_anyway) {
+                onForceAdd()
+            }
         }
     }
 
