@@ -11,11 +11,20 @@
     android:paddingHorizontal="24dp">
 
     <!-- toggle feature switch -->
-    <androidx.appcompat.widget.SwitchCompat
-        android:id="@+id/toggle_enable"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/enable_feature" />
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <com.google.android.material.materialswitch.MaterialSwitch
+            android:id="@+id/toggle_enable"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="16dp"
+            android:background="@null"
+            android:text="@string/enable_feature" />
+    </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/input_container"
