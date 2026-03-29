@@ -35,23 +35,17 @@
             android:title="@string/day_offset_with_description"
             app:persistent="false"
             app:summaryFormat="@plurals/day_offset_summ"/>
-        <m.ichi2.preferences.ToggleableNumberRangePreferenceCompat
+        <com.ichi2.preferences.ToggleableNumberRangePreferenceCompat
             android:key="@string/learn_cutoff_preference"
-            android:title="@string/learn_ahead_limit_toggle"
-            android:dialogTitle="@string/learn_ahead_limit_toggle"
-            android:summary="@string/learn_ahead_limit_description"
-            android:defaultValue="20"
+            android:title="@string/learn_cutoff"
             app:max="999"
-            app:min="1"
+            app:min="0"
             app:summaryFormat="@plurals/pref_summ_minutes"/>
-        <m.ichi2.preferences.ToggleableNumberRangePreferenceCompat
+        <com.ichi2.preferences.ToggleableNumberRangePreferenceCompat
             android:key="@string/time_limit_preference"
-            android:title="@string/timebox_time_limit_toggle"
-            android:dialogTitle="@string/timebox_time_limit_toggle"
-            android:summary="@string/timebox_time_limit_description"
-            android:defaultValue="60"
+            android:title="@string/time_limit"
             app:max="999"
-            app:min="1"
+            app:min="0"
             app:summaryFormat="@plurals/pref_summ_minutes"/>
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/pref_cat_advanced">
