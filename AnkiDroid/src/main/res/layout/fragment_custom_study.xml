@@ -37,7 +37,7 @@
         android:layout_marginRight="4dip"
         android:gravity="start"
         android:text=""
-        android:textSize="20sp"
+        android:textSize="18sp"
         android:textStyle="bold"/>
 
     <com.ichi2.ui.FixedTextView

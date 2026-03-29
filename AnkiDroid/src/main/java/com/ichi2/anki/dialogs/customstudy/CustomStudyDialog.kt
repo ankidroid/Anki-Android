@@ -22,6 +22,7 @@ import android.app.Dialog
 import android.content.res.Resources
 import android.os.Bundle
 import android.os.Parcelable
+import android.text.Editable
 import android.text.InputFilter
 import android.text.Spanned
 import android.util.TypedValue
@@ -436,14 +437,16 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
             dialog.positiveButton.isEnabled = userInputValue != null && userInputValue != 0
             val value = text?.toString()?.toIntOrNull()
 
+            if (replaceZeroWithNextNumber(text)) return@doAfterTextChanged
+
             if (contextMenuOption == STUDY_FORGOT) {
                 if (userInputValue == null) {
                     dialog.positiveButton.isEnabled = false
-                    binding.detailsEditText2Layout.error = "Invalid number"
+                    binding.detailsEditText2Layout.error = getString(R.string.invalid_value)
                     return@doAfterTextChanged
                 }
                 if (userInputValue == 0) {
-                    binding.detailsEditText2Layout.error = "leading zeros is not allowed"
+                    binding.detailsEditText2Layout.error = getString(R.string.custom_study_ahead_prevent_leading_zeros)
                     dialog.positiveButton.isEnabled = false
                     return@doAfterTextChanged
                 }
@@ -462,7 +465,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
                         binding.detailsEditText2Layout.error = null
                         dialog.positiveButton.isEnabled = true
                     } else {
-                        binding.detailsEditText2Layout.error = "No cards matched the criteria"
+                        binding.detailsEditText2Layout.error = TR.customStudyNoCardsMatchedTheCriteriaYou()
                         dialog.positiveButton.isEnabled = false
                     }
                 }
@@ -472,6 +475,21 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
         // Show soft keyboard
         dialog.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
         return dialog
+    }
+
+    private fun replaceZeroWithNextNumber(text: Editable?): Boolean {
+        val text = text?.toString() ?: return true
+
+        if (text.length > 1 && text.startsWith("0")) {
+            val newText = text.trimStart('0')
+
+            val finalText = newText.ifEmpty { "0" }
+
+            binding.detailsEditText2.setText(finalText)
+            binding.detailsEditText2.setSelection(finalText.length)
+            return true
+        }
+        return false
     }
 
     // TODO cram kind and the included/excluded tags lists are only relevant for STUDY_TAGS and
@@ -575,7 +593,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
             when (selectedSubDialog) {
                 EXTEND_NEW -> deferredDefaults.getCompleted().labelForNewQueueAvailable()
                 EXTEND_REV -> deferredDefaults.getCompleted().labelForReviewQueueAvailable()
-                STUDY_FORGOT -> resources.getString(R.string.custom_study_review_forgotten_cards)
+                STUDY_FORGOT -> TR.customStudyReviewForgottenCards()
                 STUDY_AHEAD,
                 STUDY_PREVIEW,
                 STUDY_TAGS,
@@ -642,7 +660,13 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
         ): CharSequence? {
             val newText = dest?.replaceRange(dstart, dend, source?.subSequence(start, end) ?: "")
 
-            return if (newText != null && newText.length > 1 && newText.startsWith("0")) {
+            if (dest?.toString() == "0") return null
+
+            return if (
+                newText != null &&
+                newText.length > 1 &&
+                newText.startsWith("0")
+            ) {
                 ""
             } else {
                 null

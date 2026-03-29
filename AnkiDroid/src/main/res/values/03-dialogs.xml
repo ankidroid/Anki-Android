@@ -48,6 +48,7 @@
     <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
     <string name="custom_study_forgotten">Review cards forgotten in last:</string>
     <string name="custom_study_ahead">Review ahead by x days:</string>
+    <string name="custom_study_ahead_prevent_leading_zeros">Value must be greater than 0</string>
     <string name="custom_study_preview">Preview new cards added in the last x days:</string>
     <string name="custom_study_tags">Select x cards from the deck:</string>
 
@@ -301,5 +302,4 @@ also changes the interval of the card"
     <string name="special_field_card_id_help" comment="%s: either blank or ' %s'">The ID of the card%s</string>
     <string name="special_field_card_help" comment="%s: either blank or ' %s'">The name of the card template%s</string>
     <string name="special_field_type_help" comment="%s: either blank or ' %s'">The name of the note type%s</string>
-    <string name="custom_study_review_forgotten_cards">Review forgotten cards</string>
 </resources>
