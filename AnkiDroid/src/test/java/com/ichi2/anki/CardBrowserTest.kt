@@ -20,6 +20,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.Menu
+import android.view.View
 import android.widget.Spinner
 import android.widget.SpinnerAdapter
 import android.widget.TextView
@@ -105,6 +106,7 @@ import com.ichi2.testutils.common.OS
 import com.ichi2.testutils.ext.menu
 import com.ichi2.testutils.getSharedPrefs
 import com.ichi2.testutils.withSplitPaneUiAsync
+import com.ichi2.utils.LanguageUtil
 import io.mockk.every
 import io.mockk.mockkObject
 import io.mockk.mockkStatic
@@ -1184,6 +1186,28 @@ class CardBrowserTest : RobolectricTest() {
                 assertThat("deselect row: tap", viewModel.selectedRowCount(), equalTo(1))
             }
         }
+
+    @Test
+    fun `selecting rows changes the toolbar title`() {
+        val cardBrowser = getBrowserWithNotes(2)
+        val toolbarTitle =
+            assertNotNull(
+                cardBrowser.findViewById<TextView>(R.id.toolbar_title),
+                "toolbar title view should exist",
+            )
+        val locale = LanguageUtil.getLocaleCompat(cardBrowser.resources)
+
+        assertEquals(View.GONE, toolbarTitle.visibility, "toolbar title should be hidden initially")
+
+        cardBrowser.viewModel.selectRowAtPosition(0)
+        advanceRobolectricLooper()
+        assertEquals(View.VISIBLE, toolbarTitle.visibility, "toolbar title should be visible")
+        assertEquals(String.format(locale, "%d", 1), toolbarTitle.text, "selecting one row should count 1")
+
+        cardBrowser.viewModel.selectRowAtPosition(1)
+        advanceRobolectricLooper()
+        assertEquals(String.format(locale, "%d", 2), toolbarTitle.text, "selecting two rows should count 2")
+    }
 
     @Test
     fun `deck id is remembered - issue 15072`() =

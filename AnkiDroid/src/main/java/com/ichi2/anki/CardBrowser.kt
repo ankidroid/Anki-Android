@@ -981,7 +981,6 @@ open class CardBrowser :
         invalidateOptionsMenu()
     }
 
-    @NeedsTest("select 1, check title, select 2, check title")
     private fun onSelectionChanged() {
         Timber.d("onSelectionChanged")
         invalidateOptionsMenu()
