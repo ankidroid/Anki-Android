@@ -209,7 +209,7 @@
     <string name="background_image_title" maxLength="41">Orqa fon</string>
     <string name="choose_an_image" maxLength="41">Rasm tanlash</string>
     <string name="remove_wallpaper_image" maxLength="41">Orqa fonni olib tashlash</string>
-    <string name="remove_background_image">Are you sure you wish to remove the background?</string>
+    <string name="remove_background_image">Rostan ham orqa fonni oʻchirmoqchimisiz?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default" maxLength="28">Birlamchiga qaytarish</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Boʻshliq</string>
@@ -387,5 +387,5 @@
     <string name="list_separator" comment="The character and spacing to display between elements of a list, for example \', \' in \'Apple, Banana, Cherry" tools:ignore="TranslationTypo">, </string>
     <!-- Other errors -->
     <!-- Similar to TR.qtMiscNameExists(): "Name exists." -->
-    <string name="error_name_exists">Name already exists</string>
+    <string name="error_name_exists">Ushbu nom allaqachon mavjud</string>
 </resources>

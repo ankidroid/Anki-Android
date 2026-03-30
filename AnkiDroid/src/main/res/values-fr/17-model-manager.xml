@@ -74,9 +74,9 @@
     <string name="model_browser_add_clone">Dupliquer : %1$s</string>
     <!--Browser Appearance-->
     <string name="card_template_browser_appearance_summary">Entrez le modèle que le navigateur de cartes utilisera pour afficher vos cartes. Utilisez ceci pour afficher une réponse plus concise.\n\nUn modèle comme\n« La capitale de {{Country}} est : »\npourrait être compressé dans le navigateur de cartes en\n« Capitale : {{Country}} »</string>
-    <string name="card_template_browser_appearance_question_format">Question format</string>
-    <string name="card_template_browser_appearance_answer_format">Answer format</string>
-    <string name="card_template_browser_appearance_restore_default_dialog">Are you sure you want to restore the browser appearance to default?</string>
+    <string name="card_template_browser_appearance_question_format">Format des questions</string>
+    <string name="card_template_browser_appearance_answer_format">Format des réponses</string>
+    <string name="card_template_browser_appearance_restore_default_dialog">Êtes-vous sûr de vouloir restaurer l\'apparence du navigateur par défaut ?</string>
     <string name="card_template_browser_appearance_saving_note">Ces modifications sont appliquées quand le modèle de carte est sauvegardé</string>
     <!-- Deck Override -->
     <string name="card_template_editor_deck_override_on">Substitution du paquet (activé)</string>

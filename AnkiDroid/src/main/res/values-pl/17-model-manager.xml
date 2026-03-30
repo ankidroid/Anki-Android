@@ -78,9 +78,9 @@
     <string name="model_browser_add_clone">Sklonuj: %1$s</string>
     <!--Browser Appearance-->
     <string name="card_template_browser_appearance_summary">Wprowadź szablon, który przeglądarka kart będzie używała do wyświetlania twoich kart. Możesz użyć tego, by wyświetlać bardziej zwięzłe odpowiedzi.\n\nSzablon \n\"Stolicą kraju {{Country}} jest:\"\nmoże być skrócony w przeglądarce kart do\n\"Stolica: {{Country}}\"</string>
-    <string name="card_template_browser_appearance_question_format">Question format</string>
-    <string name="card_template_browser_appearance_answer_format">Answer format</string>
-    <string name="card_template_browser_appearance_restore_default_dialog">Are you sure you want to restore the browser appearance to default?</string>
+    <string name="card_template_browser_appearance_question_format">Format pytania</string>
+    <string name="card_template_browser_appearance_answer_format">Format odpowiedzi</string>
+    <string name="card_template_browser_appearance_restore_default_dialog">Czy na pewno chcesz przywrócić domyślny wygląd przeglądarki?</string>
     <string name="card_template_browser_appearance_saving_note">Zmiany zostaną zastosowane po zapisaniu szablonu karty</string>
     <!-- Deck Override -->
     <string name="card_template_editor_deck_override_on">Nadpisywanie talii (włączone)</string>

@@ -54,7 +54,7 @@
     <string name="CardEditorModel">Tür:</string>
     <string name="CardEditorTags">Etiketler: %1$s</string>
     <string name="CardEditorCards">Kartlar: %1$s</string>
-    <string name="edit_occlusions">Edit occlusions</string>
+    <string name="edit_occlusions">Örtüleri düzenle</string>
     <string name="paste_from_clipboard" maxLength="28">Panodan yapıştır</string>
     <string name="add_new_filter_tags">Etiket ekle/filtrele</string>
     <string name="add_tag" maxLength="28">Etiket ekle</string>
@@ -99,9 +99,9 @@
     <string name="slide_to_cancel" comment="Message shown when pressing the record button">İptal etmek için kaydır</string>
     <string name="filter_by_flags" maxLength="41">Bayraklar</string>
     <!-- filtered deck options -->
-    <string name="filtered_option_delay_again">Delay for again</string>
-    <string name="filtered_option_delay_hard">Delay for hard</string>
-    <string name="filtered_option_delay_good">Delay for good</string>
+    <string name="filtered_option_delay_again">Tekrar için ertele</string>
+    <string name="filtered_option_delay_hard">Zor için ertele</string>
+    <string name="filtered_option_delay_good">İyi için ertele</string>
     <!-- Custom study options -->
     <string name="custom_study_loading_tags">Etiket listesi oluşturuluyor&#8230;</string>
     <!-- Study options -->
@@ -209,7 +209,7 @@
     <string name="background_image_title" maxLength="41">Arkaplan</string>
     <string name="choose_an_image" maxLength="41">Bir resim seç</string>
     <string name="remove_wallpaper_image" maxLength="41">Arkaplanı kaldır</string>
-    <string name="remove_background_image">Are you sure you wish to remove the background?</string>
+    <string name="remove_background_image">Arkaplanı kaldırmak istediğinize emin misiniz?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default" maxLength="28">Varsayılana döndür</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Boş</string>
@@ -387,5 +387,5 @@
     <string name="list_separator" comment="The character and spacing to display between elements of a list, for example \', \' in \'Apple, Banana, Cherry" tools:ignore="TranslationTypo">, </string>
     <!-- Other errors -->
     <!-- Similar to TR.qtMiscNameExists(): "Name exists." -->
-    <string name="error_name_exists">Name already exists</string>
+    <string name="error_name_exists">İsim zaten var</string>
 </resources>

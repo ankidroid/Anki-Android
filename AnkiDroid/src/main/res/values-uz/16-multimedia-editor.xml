@@ -75,7 +75,7 @@
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Maydon tarkibi</string>
     <string name="crop_image_size_notice">Rasm kesish muharriri bilan ishlash uchun juda katta. Iltimos, rasm oʻlchamini oʻzgartiring va qayta urinib koʻring!</string>
     <string name="reselect" maxLength="28">Qayta tanlash</string>
-    <string name="waveform_button_description">Show audio waveform</string>
-    <string name="field_content_description">Show field content</string>
-    <string name="delete_audio_button_description">Delete recording</string>
+    <string name="waveform_button_description">Audio toʻlqin shaklini koʻrsatish</string>
+    <string name="field_content_description">Maydon tarkibini koʻrsatish</string>
+    <string name="delete_audio_button_description">Ovoz yozuvini oʻchirish</string>
 </resources>

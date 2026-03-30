@@ -76,6 +76,6 @@
     <string name="crop_image_size_notice">Рэдактар не можа апрацаваць відарыс, бо ён занадта вялікі. Змяніце памер відарыса і паспрабуйце яшчэ раз!</string>
     <string name="reselect" maxLength="28">Выбраць зноў</string>
     <string name="waveform_button_description">Show audio waveform</string>
-    <string name="field_content_description">Show field content</string>
-    <string name="delete_audio_button_description">Delete recording</string>
+    <string name="field_content_description">Паказаць змесціва поля</string>
+    <string name="delete_audio_button_description">Выдаліць запіс</string>
 </resources>

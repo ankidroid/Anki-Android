@@ -83,8 +83,8 @@
     <string name="restore_backup_choose_another">Escoller outro</string>
     <string name="dialog_cancel">Cancelar</string>
     <string name="dialog_ok">Aceptar</string>
-    <string name="dialog_add" comment="Positive dialog action button label to add \'something\'">Add</string>
-    <string name="restore">Restore</string>
+    <string name="dialog_add" comment="Positive dialog action button label to add \'something\'">Engadir</string>
+    <string name="restore">Restaurar</string>
     <string name="dialog_confirm" tools:ignore="UnusedResources">Confirmar</string>
     <string name="dialog_no">Non</string>
     <string name="dialog_yes">Si</string>

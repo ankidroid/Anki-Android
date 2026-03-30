@@ -91,14 +91,14 @@
     <string name="restore_backup_choose_another">اختيار نسخة أخرى</string>
     <string name="dialog_cancel">إلغاء</string>
     <string name="dialog_ok">حسنًا</string>
-    <string name="dialog_add" comment="Positive dialog action button label to add \'something\'">Add</string>
-    <string name="restore">Restore</string>
+    <string name="dialog_add" comment="Positive dialog action button label to add \'something\'">إضافة</string>
+    <string name="restore">استعادة</string>
     <string name="dialog_confirm" tools:ignore="UnusedResources">تأكيد</string>
     <string name="dialog_no">لا</string>
     <string name="dialog_yes">نعم</string>
     <string name="dialog_keep">إبقاء</string>
     <string name="dialog_remove">إزالة</string>
-    <string name="dialog_exit" comment="Label for a button which will exit/finish the current screen">Exit</string>
+    <string name="dialog_exit" comment="Label for a button which will exit/finish the current screen">خروج</string>
     <string name="dialog_continue">استمرار</string>
     <string name="dialog_processing">تجري المعالجة&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">إنشاء</string>
@@ -311,7 +311,7 @@
     <string name="special_field_front_side_help">محتوى القالب الأمامي. لا يُشغل الصوت تلقائيا</string>
     <string name="special_field_deck_help" comment="%s: either blank or \' %s\'">رِزمة البطاقة كاملةً، بما في ذلك الرِزم الحاوية لها%s</string>
     <string name="special_field_subdeck_help" comment="%s: either blank or \' %s\'">رِزمة البطاقة، ما عدا الرِزم الحاوية لها%s</string>
-    <string name="special_field_flag_help">Outputs ‘%1$s’, where %2$s is the flag code (%3$s\–%4$s\)</string>
+    <string name="special_field_flag_help">يُنتج «%1$s»، حيث إن %2$s هو رمز العلم (%3$s\–%4$s\)</string>
     <string name="special_field_tags_help" comment="%s: either blank or \' %s\'">وسوم الملحوظة%s</string>
     <string name="special_field_card_id_help" comment="%s: either blank or \' %s\'">معرف البطاقة%s</string>
     <string name="special_field_card_help" comment="%s: either blank or \' %s\'">اسم قالب البطاقة%s</string>

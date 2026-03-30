@@ -41,13 +41,13 @@
 <resources>
     <!-- Main editor popup menu items -->
     <string name="multimedia_editor_popup_image">Engadir imaxe</string>
-    <string name="multimedia_editor_popup_audio_clip">Engadir clip de audio</string>
+    <string name="multimedia_editor_popup_audio_clip">Engadir clip de son</string>
     <string name="multimedia_editor_popup_video_clip">Engadir clip de vídeo</string>
-    <string name="multimedia_editor_popup_audio">Gravar audio</string>
+    <string name="multimedia_editor_popup_audio">Gravar son</string>
     <string name="multimedia_editor_popup_cloze">Ocos por encher</string>
     <!-- Field editing general -->
     <!-- these are button names to convert field type -->
-    <string name="multimedia_editor_field_editing_audio">Gravación de audio</string>
+    <string name="multimedia_editor_field_editing_audio">Gravación de son</string>
     <string name="multimedia_editor_field_editing_done" maxLength="28" comment="Label of a button to tell the app that the current action is \'Done\'.">Feito</string>
     <!-- Multimedia card editor activity -->
     <!-- for buttons -->
@@ -75,7 +75,7 @@
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Contido do campo</string>
     <string name="crop_image_size_notice">A imaxe é demasiado grande para ser manexada polo editor de recortes. Redimensiónaa e téntao de novo!</string>
     <string name="reselect" maxLength="28">Seleccionar de novo</string>
-    <string name="waveform_button_description">Show audio waveform</string>
-    <string name="field_content_description">Show field content</string>
-    <string name="delete_audio_button_description">Delete recording</string>
+    <string name="waveform_button_description">Amosar a forma de onda do son</string>
+    <string name="field_content_description">Amosar o contido do campo</string>
+    <string name="delete_audio_button_description">Eliminar gravación</string>
 </resources>
