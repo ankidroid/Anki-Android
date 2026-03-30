@@ -74,6 +74,7 @@ import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.core.net.toFile
 import androidx.core.net.toUri
+import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.children
@@ -1028,6 +1029,16 @@ abstract class AbstractFlashcardViewer :
         whiteboardContainer.layoutParams = whiteboardContainerParams
         cardFrame!!.layoutParams = flashcardContainerParams
         touchLayer!!.layoutParams = touchLayerContainerParams
+
+        // Fix for issue #14201: Apply inset handling for hollow stripe bug
+        // Only override padding when answer buttons are at top AND fullscreen mode is active
+        val answerOptionsLayout = findViewById<FrameLayout>(R.id.answer_options_layout)
+        ViewCompat.setOnApplyWindowInsetsListener(answerOptionsLayout) { view, insets ->
+            if (answerButtonsPosition == "top" && fullscreenMode.isFullScreenReview()) {
+                view.setPadding(0, 0, 0, 0)
+            }
+            insets
+        }
     }
 
     protected open fun createWebView(): WebView {
