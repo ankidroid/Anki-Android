@@ -77,7 +77,6 @@
     <string name="one_way_sync_title" maxLength="41">Tek yönlü senkronizasyon</string>
     <string name="one_way_sync_confirmation">Tek yönlü senkronizasyon talep edildi</string>
     <string name="full_sync_confirmation">İstenen değişiklik koleksiyonunuzu bir sonraki senkronize edişinizde veritabanının toptan karşıya yüklenmesini gerektirecek. Başka bir cihazda bekleyen, burada henüz senkronize edilmemiş çalışmalarınız veya başka değişiklikleriniz varsa kaybolacaklar. Devam edilsin mi?</string>
-    <string name="full_sync_confirmation_upgrade">AnkiDroid\'in daha önce yüklü sürümündeki bir hata nedeniyle, bir tam senkronizasyon zorlamanız tavsiye edilir.</string>
     <!-- Deck Picker Sync Icon -->
     <string name="sync_menu_title_one_way_sync">Senkronize et (tek yönlü)</string>
     <string name="sync_menu_title_no_account">Senkronizasyon (giriş yap)</string>

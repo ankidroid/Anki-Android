@@ -77,7 +77,6 @@
     <string name="one_way_sync_title" maxLength="41">סנכרון בכיוון אחד</string>
     <string name="one_way_sync_confirmation">נדרש סנכרון בכיוון אחד</string>
     <string name="full_sync_confirmation">השינוי שביקשת לבצע יחייב העלאה של כל מסד הנתונים בסנכרון הבא של אוסף החפיסות. אם יש שינונים או שינויים אחרים במכשיר אחר שלא סונכרנו עדיין, הם יאבדו. להמשיך?</string>
-    <string name="full_sync_confirmation_upgrade">עקב באג בגרסת AnkiDroid קודמת שהותקנה מומלץ לבצע סינכרון מלא.</string>
     <!-- Deck Picker Sync Icon -->
     <string name="sync_menu_title_one_way_sync">סנכרון (בכיוון אחד)</string>
     <string name="sync_menu_title_no_account">סנכרון (מתחבר)</string>

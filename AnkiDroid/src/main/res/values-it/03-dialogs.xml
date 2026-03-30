@@ -130,8 +130,6 @@
     <string name="permission_denied">Permesso rifiutato</string>
     <string name="recording_permission_denied_message">Autorizzazione di accesso al microfono necessaria per la funzione \"registrazione vocale\"</string>
     <!-- Database Integrity Check -->
-    <string name="integrity_check_startup_title">AnkiDroid aggiornato</string>
-    <string name="integrity_check_startup_content">AnkiDroid è stato aggiornato. Questo aggiornamento include correzioni per eventuali problemi nella banca dati e ti consigliamo di eseguire ora il controllo della banca dati.</string>
     <string name="integrity_check_continue_anyway">Continua comunque</string>
     <string name="integrity_check_insufficient_space">Il controllo banca dati utilizza una grande quantità di memoria temporanea.\n\nSi raccomanda vivamente di avere almeno %s spazio libero sul dispositivo prima di continuare.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nAttualmente hai %s liberi.</string>

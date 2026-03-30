@@ -77,7 +77,6 @@
     <string name="one_way_sync_title" maxLength="41">Synchronizacja jednokierunkowa</string>
     <string name="one_way_sync_confirmation">Synchronizacja jednokierunkowa zostanie przeprowadzona przy następnym uruchomieniu aplikacji</string>
     <string name="full_sync_confirmation">Żądana zmiana wymagać będzie pełnego wysłania bazy danych przy następnej synchronizacji Twojej kolekcji. Jeżeli posiadasz powtórki lub inne oczekujące zmiany na innym urządzeniu, które nie zostały jeszcze zsynchronizowane, zostaną one utracone. Kontynuować?</string>
-    <string name="full_sync_confirmation_upgrade">Z powodu błędu w poprzednio zainstalowanej wersji AnkiDroid zalecane jest wymuszenie pełnej synchronizacji.</string>
     <!-- Deck Picker Sync Icon -->
     <string name="sync_menu_title_one_way_sync">Synchronizacja (jednokierunkowa)</string>
     <string name="sync_menu_title_no_account">Synchronizacja (logowanie)</string>

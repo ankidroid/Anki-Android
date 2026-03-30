@@ -77,7 +77,6 @@
     <string name="one_way_sync_title" maxLength="41">Einweg-Synchronisierung</string>
     <string name="one_way_sync_confirmation">Einweg-Synchronisierung angefordert</string>
     <string name="full_sync_confirmation">Diese Änderungen erfordern eine Einweg-Synchronisierung. Änderungen, die auf einem anderen Gerät vorgenommen, aber noch nicht synchronisiert wurden, gehen dabei verloren. Möchten Sie fortfahren?</string>
-    <string name="full_sync_confirmation_upgrade">Wegen eines Fehlers in einer früheren Version von AnkiDroid sollten Sie eine Vollsynchronisation erzwingen.</string>
     <!-- Deck Picker Sync Icon -->
     <string name="sync_menu_title_one_way_sync">Synchronisierung (Einweg)</string>
     <string name="sync_menu_title_no_account">Sync (Anmelden)</string>

@@ -130,8 +130,6 @@
     <string name="permission_denied">Permission denied</string>
     <string name="recording_permission_denied_message">Microphone permission is necessary for the “Record voice” feature. Please grant it in the app settings.</string>
     <!-- Database Integrity Check -->
-    <string name="integrity_check_startup_title">AnkiDroid ᱦᱟᱹᱞᱤ ᱦᱚᱪᱚᱭᱮᱱᱟ</string>
-    <string name="integrity_check_startup_content">AnkiDroid ᱦᱟᱹᱞᱤᱦᱚᱪᱚᱭᱮᱵᱟ ᱾ ᱱᱚᱶᱟ ᱦᱟᱹᱞᱤᱦᱚᱪᱚ ᱨᱮ  ᱰᱤᱜᱟᱹᱣ ᱠᱚ ᱨᱮᱭᱟᱜ ᱜᱚᱴᱟᱣ ᱢᱮᱱᱟᱜᱼᱟ , ᱟᱞᱮ ᱦᱤᱥᱟᱹᱵ ᱛᱮ ᱟᱢ ᱥᱟᱫᱽᱠᱷᱤᱭᱟᱹ ᱵᱟᱹᱭᱥᱟᱣ ᱧᱮᱞ ᱵᱤᱰᱟᱣᱜ ᱢᱮ</string>
     <string name="integrity_check_continue_anyway">ᱡᱟᱦᱟᱸ ᱞᱮᱠᱟᱛᱮ ᱞᱮᱛᱟᱲ ᱢᱮ</string>
     <string name="integrity_check_insufficient_space">ᱧᱮᱞ ᱵᱤᱰᱟᱣᱜ ᱥᱟᱫᱽᱠᱷᱤᱭᱟᱹ ᱵᱟᱹᱭᱥᱟᱣ ᱫᱚ ᱟᱰᱤᱜᱟᱱ ᱥᱩᱭᱫᱚᱢᱟᱠ ᱡᱟᱭᱜᱟ ᱤᱫᱤᱟᱭ ᱾\n\n ᱞᱮᱛᱟᱲ ᱢᱟᱲᱟᱝ ᱨᱮ ᱟᱢ ᱴᱷᱮᱱ %s ᱠᱷᱟᱹᱞᱤ ᱡᱟᱭᱜᱟ ᱛᱟᱦᱮᱱ ᱠᱟᱛᱷᱟ ᱾</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nᱟᱢ ᱴᱷᱮᱱ %s ᱠᱷᱟᱞᱤ ᱡᱟᱭᱜᱟ ᱢᱮᱱᱟᱜᱼᱟ.</string>

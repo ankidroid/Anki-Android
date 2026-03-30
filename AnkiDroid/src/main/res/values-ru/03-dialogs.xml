@@ -137,8 +137,6 @@
     <string name="permission_denied">Доступ запрещен</string>
     <string name="recording_permission_denied_message">Доступ к микрофону необходим для \"Записи голоса\". Предоставьте доступ в настройках приложения.</string>
     <!-- Database Integrity Check -->
-    <string name="integrity_check_startup_title">AnkiDroid обновлён</string>
-    <string name="integrity_check_startup_content">AnkiDroid был обновлён. Это обновление включает в себя исправления возможных проблем с базой данных, и мы рекомендуем вам запустить проверку базы данных.</string>
     <string name="integrity_check_continue_anyway">Всё равно продолжить</string>
     <string name="integrity_check_insufficient_space">Проверка базы данных использует большое количество временного хранилища.\n\nЖелательно иметь по крайней мере %s свободного места на вашем устройстве, прежде чем продолжить.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nСейчас свободно %s.</string>

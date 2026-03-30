@@ -127,8 +127,6 @@
     <string name="permission_denied">权限被拒绝</string>
     <string name="recording_permission_denied_message">麦克风权限是\"录制声音\"功能所必需的。请在应用程序设置中授予它。</string>
     <!-- Database Integrity Check -->
-    <string name="integrity_check_startup_title">AnkiDroid 已升级</string>
-    <string name="integrity_check_startup_content">AnkiDroid 已升级。此升级可能修复了一些数据库问题，我们建议您现在开始检查数据库。</string>
     <string name="integrity_check_continue_anyway">仍要继续</string>
     <string name="integrity_check_insufficient_space">检查数据库使用大量临时存储。\n\n强烈建议您在继续之前在设备上至少有 %s 可用空间。</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\n您当前有 %s 可用。</string>

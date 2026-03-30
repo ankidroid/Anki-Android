@@ -127,8 +127,6 @@
     <string name="permission_denied">權限被拒</string>
     <string name="recording_permission_denied_message">“錄音”功能需開啟麥克風，請在程式設定裏批准權限。</string>
     <!-- Database Integrity Check -->
-    <string name="integrity_check_startup_title">AnkiDroid 已更新</string>
-    <string name="integrity_check_startup_content">AnkiDroid 已更新，此更新包含修復潛在的資料庫問題，而我們建議您現在執行檢查資料庫。</string>
     <string name="integrity_check_continue_anyway">仍要繼續</string>
     <string name="integrity_check_insufficient_space">檢查資料庫將使用大量暫存。\n\n強烈推薦您在繼續前保證裝置上至少擁有 %s 閒置空間。</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\n你當前擁有 %s 閒置空間。</string>

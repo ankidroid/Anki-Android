@@ -130,8 +130,6 @@
     <string name="permission_denied">Pemeso rifuzita</string>
     <string name="recording_permission_denied_message">La permeso por aliri mikrofonon estas necesa por la eblo “Registri voĉon”. Donu la permeson en agordoj pri la aplikaĵo.</string>
     <!-- Database Integrity Check -->
-    <string name="integrity_check_startup_title">AnkiDroid aktualigita</string>
-    <string name="integrity_check_startup_content">AnkiDroid estis aktualigita. Tiu ĉi aktualigo liveras riparojn al eblaj problemoj pri datumbazo, estas konsilinde kontroli la datumbazon nun.</string>
     <string name="integrity_check_continue_anyway">Pluigi malgraŭ tio</string>
     <string name="integrity_check_insufficient_space">Kontrolado de datumbazo uzos multon da provizora memoro.\n\nEstas tre konsilinde por ke vi havu almenaŭ %s da libera spaco en via aparato antaŭ ol pluigi.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nLibera spaco: %s.</string>

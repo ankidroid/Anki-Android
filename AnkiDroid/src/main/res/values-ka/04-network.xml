@@ -77,7 +77,6 @@
     <string name="one_way_sync_title" maxLength="41">ცალმხრივი სინქრონიზაცია</string>
     <string name="one_way_sync_confirmation">ცალმხრივი სინქრონიზაციის მოთხოვნა მიღებულია</string>
     <string name="full_sync_confirmation">მოთხოვნილი ცვლილება კოლექციის შემდეგი სინქრონიზაციის დროს შექმნის მონაცემთა ბაზის სრულად ატვირთვის საჭიროებას. იმ შემთხვევაში თუ სხვა მოწყობილობაზე გაქვთ გადახედვები ან სხვა ცვლილებები, რომლებიც აქ არაა სინქრონიზებული, მოხსენებული ცვლილებები დაიკარგება. გსურთ გაგრძელება?</string>
-    <string name="full_sync_confirmation_upgrade">წინათ დაყენებული AnkiDroid-ის ვერსიაში არსებული ხარვეზის გამო რეკომენდებულია სრული სინქრონიზაციის დაძალება.</string>
     <!-- Deck Picker Sync Icon -->
     <string name="sync_menu_title_one_way_sync">სინქრონიზაცია (ცალმხრივი)</string>
     <string name="sync_menu_title_no_account">სინქრონიზაცია (ავტორიზაცია)</string>

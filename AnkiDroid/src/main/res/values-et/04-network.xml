@@ -77,7 +77,6 @@
     <string name="one_way_sync_title" maxLength="41">Ühesuunaline sünkroonimine</string>
     <string name="one_way_sync_confirmation">Küsiti ühesuunalist sünkroonimist</string>
     <string name="full_sync_confirmation">Nõutud muudatus nõuab sinu andmebaase täielikku üleslaadimist sinu kogu järgmise sünkroonimise ajal. Kui sul on kontrollimisi või muid muudatusi, mis ootavad teisest seadmest sünkroonimist, siis need muudatused lähevad kasuma. Kas jätkan?</string>
-    <string name="full_sync_confirmation_upgrade">Kuna eelmises paigaldatud AnkiDroidi versioonis oli viga, siis soovitame teha jõuga kogu sünkroonimine.</string>
     <!-- Deck Picker Sync Icon -->
     <string name="sync_menu_title_one_way_sync">Sünk (ühesuunaline)</string>
     <string name="sync_menu_title_no_account">Sünk (logi sisse)</string>

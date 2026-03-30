@@ -77,7 +77,6 @@
     <string name="one_way_sync_title" maxLength="41">ওয়ান ওয়ে সিঙ্ক</string>
     <string name="one_way_sync_confirmation">এক উপায় সিঙ্ক অনুরোধ করা হয়</string>
     <string name="full_sync_confirmation">অনুরোধ করা পরিবর্তনগুলির জন্য ডাটাবেসে একটি সম্পূর্ণ আপলোড প্রয়োজন হবে যখন আপনি পরবর্তীতে আপনার সংগ্রহটি সিঙ্ক্রোনাইজ করবেন৷ আপনি যদি এখনও এখানে সিঙ্ক করা হয়নি এমন অন্যান্য ডিভাইসে পর্যালোচনা বা অন্যান্য পরিবর্তনের অপেক্ষায় থাকেন, তাহলে সেগুলি হারিয়ে যাবে৷ চালিয়ে যেতে?</string>
-    <string name="full_sync_confirmation_upgrade">AnkiDroid এর আগে থেকে ইনস্টল করা সংস্করণে একটি বাগ থাকার কারণে, এটি একটি সম্পূর্ণ সিঙ্ক জোরপূর্বক করার সুপারিশ করা হয়।</string>
     <!-- Deck Picker Sync Icon -->
     <string name="sync_menu_title_one_way_sync">সিঙ্ক (এক উপায়)</string>
     <string name="sync_menu_title_no_account">সিঙ্ক (লগ ইন)</string>

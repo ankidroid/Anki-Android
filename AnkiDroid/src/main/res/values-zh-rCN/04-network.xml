@@ -77,7 +77,6 @@
     <string name="one_way_sync_title" maxLength="41">单向同步</string>
     <string name="one_way_sync_confirmation">请求进行一次同步</string>
     <string name="full_sync_confirmation">所做的修改要求在下次同步集合时完整上传数据库。若其他设备存在尚未同步至此的复习记录或其他更改，那些数据将会丢失。是否继续？</string>
-    <string name="full_sync_confirmation_upgrade">因先前安装的旧版 AnkiDroid 中存在 bug，我们建议进行一次强制完全同步。</string>
     <!-- Deck Picker Sync Icon -->
     <string name="sync_menu_title_one_way_sync">同步 (单向)</string>
     <string name="sync_menu_title_no_account">同步（登录）</string>

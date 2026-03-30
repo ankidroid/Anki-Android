@@ -130,8 +130,6 @@
     <string name="permission_denied">Zugriff verweigert</string>
     <string name="recording_permission_denied_message">Mikrofon-Berechtigung ist für die Funktion „Stimme aufnehmen“ notwendig. Bitte erteilen Sie diese in den App-Einstellungen.</string>
     <!-- Database Integrity Check -->
-    <string name="integrity_check_startup_title">AnkiDroid aktualisiert</string>
-    <string name="integrity_check_startup_content">AnkiDroid wurde aktualisiert. Dieses Upgrade enthält Korrekturen für mögliche Datenbankprobleme und wir empfehlen Ihnen, die Datenbank jetzt zu überprüfen.</string>
     <string name="integrity_check_continue_anyway">Trotzdem fortfahren</string>
     <string name="integrity_check_insufficient_space">»Datenbank überprüfen« verwendet eine große Menge an temporärem Speicher.\n\nMindestens %s freien Speicherplatzes auf Ihrem Gerät werden daher dringend empfohlen, bevor Sie fortfahren.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nAktuell sind %s frei.</string>

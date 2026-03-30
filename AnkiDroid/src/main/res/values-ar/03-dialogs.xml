@@ -142,8 +142,6 @@
     <string name="permission_denied">رُفِضَ الإذن</string>
     <string name="recording_permission_denied_message">إذن الميكروفون ضروري لميزة «تسجيل الصوت». امنحه من إعدادات التطبيق رجاءًا.</string>
     <!-- Database Integrity Check -->
-    <string name="integrity_check_startup_title">تم تحديث آنكي درويد</string>
-    <string name="integrity_check_startup_content">تم تحديث آنكي درويد. يتضمن هذا التحديث إصلاحًا لأعطال ممكنة في قاعدة البيانات، لذلك ننصح باستخدام ميزة فحص قاعدة البيانات الآن.</string>
     <string name="integrity_check_continue_anyway">استمرار في كل حال</string>
     <string name="integrity_check_insufficient_space">تستخدم ميزة فحص قاعدة البيانات مساحة كبيرة من التخزين المؤقت.\n\nينصح بشدة أن يكون لديك مساحة %s خالية على الأقل في جهازك قبل الاستمرار.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nلديك حاليًا مساحة %s خالية.</string>

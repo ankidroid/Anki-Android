@@ -130,8 +130,6 @@
     <string name="permission_denied">مجوز رد شد.</string>
     <string name="recording_permission_denied_message">مجوز میکروفون برای قابلیت «ضبط صدا» ضروری است. لطفاً آن را در تنظیمات برنامه فعال کنید.</string>
     <!-- Database Integrity Check -->
-    <string name="integrity_check_startup_title">آنکی‌دروید به روز‌رسانی شد</string>
-    <string name="integrity_check_startup_content">آنکی دروید به‌روزرسانی شده است. این نسخۀ شامل تعمیراتی برای مشکلات محتمل دیتابیس است، بنابراین ما به شما پیشنهاد می‌کنیم که اکنون از گزینۀ بررسی دیتابیس استفاده کنید.</string>
     <string name="integrity_check_continue_anyway">ادامه بده</string>
     <string name="integrity_check_insufficient_space">بررسی دیتابیس حجم زیادی از حافظۀ موقت را اشغال خواهد کرد.\n\nبه شدت پیشنهاد می‌کنیم قبل از اجرای بررسی دیتابیس از خالی بودن حداقل %s از حافظۀ موقت دستگاهتان اطمینان حاصل کنید.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\n%sاز حافظۀ موقت شما خالی است.</string>

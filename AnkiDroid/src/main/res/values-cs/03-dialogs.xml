@@ -136,8 +136,6 @@
     <string name="permission_denied">Oprávnění zamítnuto</string>
     <string name="recording_permission_denied_message">Oprávnění k mikrofonu je nezbytné pro funkci „Nahrávat hlas“. Prosím, povolte jej v nastavení aplikace.</string>
     <!-- Database Integrity Check -->
-    <string name="integrity_check_startup_title">AnkiDroid aktualizován</string>
-    <string name="integrity_check_startup_content">AnkiDroid byl aktualizován. Tato aktualizace obsahuje opravy možných problémů databáze, a doporučuje se nyní spustit kontrolu databáze.</string>
     <string name="integrity_check_continue_anyway">Přesto pokračovat</string>
     <string name="integrity_check_insufficient_space">Kontrola databáze používá velké množství dočasného úložiště.\n\nDůrazně se doporučuje, abyste předtím, než budete pokračovat, měli v zařízení alespoň %s volného místa.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nMomentálně máte %s volného místa.</string>

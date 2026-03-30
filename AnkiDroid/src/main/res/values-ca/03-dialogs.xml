@@ -130,8 +130,6 @@
     <string name="permission_denied">Permission denied</string>
     <string name="recording_permission_denied_message">Microphone permission is necessary for the “Record voice” feature. Please grant it in the app settings.</string>
     <!-- Database Integrity Check -->
-    <string name="integrity_check_startup_title">S\'ha actualitzat l\'AnkiDroid</string>
-    <string name="integrity_check_startup_content">AnkiDroid s\'ha actualitzat. Aquesta actualització inclou solucions per a possibles problemes de bases de dades i us recomanem que executeu ara la comprovació de la base de dades.</string>
     <string name="integrity_check_continue_anyway">Continua igualment</string>
     <string name="integrity_check_insufficient_space">La comprovació de la base de dades utilitza una gran quantitat d\'emmagatzematge temporal.\n\nEs recomana tenir almenys %s d\'espai lliure al dispositiu abans de continuar.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nActualment teniu %s lliures.</string>

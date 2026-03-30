@@ -130,8 +130,6 @@
     <string name="permission_denied">Lupa kielletty</string>
     <string name="recording_permission_denied_message">\"Nauhoita ääntä\" -ominaisuus vaatii mikin käyttöoikeutta. Voit sallia sen sovellusasetuksissa.</string>
     <!-- Database Integrity Check -->
-    <string name="integrity_check_startup_title">AnkiDroid on päivitetty</string>
-    <string name="integrity_check_startup_content">AnkiDroid on päivitetty. Tämä päivitys sisältää korjauksia mahdollisiin tietokantaongelmiin, ja suosittelemme, että tarkistat tietokannan nyt.</string>
     <string name="integrity_check_continue_anyway">Jatka silti</string>
     <string name="integrity_check_insufficient_space">Tarkista tietokanta -toiminto käyttää paljon väliaikaista tallennustilaa.\n\nOn erittäin suositeltavaa, että laitteessasi on vähintään %s vapaata tilaa, ennen kuin jatkat.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\Laitteellasi on tällä hetkellä %s vapaana.</string>

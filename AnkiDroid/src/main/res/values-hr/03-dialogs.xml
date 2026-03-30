@@ -133,8 +133,6 @@
     <string name="permission_denied">Dopuštenje odbijeno</string>
     <string name="recording_permission_denied_message">Dopuštenje mikrofona je potrebno za funkcionalnost \"Snimi glas\". Odobrite ga u postavkama.</string>
     <!-- Database Integrity Check -->
-    <string name="integrity_check_startup_title">AnkiDroid ažuriran</string>
-    <string name="integrity_check_startup_content">AnkiDroid je ažuriran. Ovo ažuriranje uključuje popravke mogućih problema s bazom podataka, preporučamo da sad pokrenete provjeru baze podataka.</string>
     <string name="integrity_check_continue_anyway">Svejedno nastavi</string>
     <string name="integrity_check_insufficient_space">Provjera baze podataka koristi veliku količinu privremenog prostora za prohranu.\n\nSnažno preporučamo da osigurate barem %s slobodnog prostora na uređaju prije nastavka.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nTrenutno imate %s slobodno.</string>

@@ -130,8 +130,6 @@
     <string name="permission_denied">ئىجازەت رەت قىلىندى</string>
     <string name="recording_permission_denied_message">مىكروفون ئىجازىتى «ئاۋاز خاتىرىلەش» ئىقتىدارى ئۈچۈن زۆرۈر. ئەپ تەڭشىكىدە ئىجازەت بېرىڭ.</string>
     <!-- Database Integrity Check -->
-    <string name="integrity_check_startup_title">AnkiDroid يېڭىلاندى</string>
-    <string name="integrity_check_startup_content">AnkiDroid يېڭىلانغان. بۇ يۈكسەلتىش بەلكىم ساندان مەسىلىلىرىنى ھەل قىلىشنى ئۆز ئىچىگە ئالىدۇ، ھازىر «ساندان تەكشۈر» نى ئىجرا قىلىشىڭىزنى تەۋسىيە قىلىمىز.</string>
     <string name="integrity_check_continue_anyway">داۋاملاشتۇرۇۋەر</string>
     <string name="integrity_check_insufficient_space">ساندان تەكشۈرۈشكە ئىشلىتىدىغان ۋاقىتلىق بوشلۇق چوڭ.\n\nداۋاملاشتۇرۇشتىن ئىلگىرى ئۈسكۈنىڭىزدە كەم دېگەندە %s ئەركىن بوشلۇق بولۇشىنى كۈچلۈك تەۋسىيە قىلىمىز.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nھازىر %s ئەركىن بوشلۇقىڭىز بار.</string>

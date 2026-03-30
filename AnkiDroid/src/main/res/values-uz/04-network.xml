@@ -77,7 +77,6 @@
     <string name="one_way_sync_title" maxLength="41">Bir tomonlama sinxronlash</string>
     <string name="one_way_sync_confirmation">Bir tomonlama sinxronlash soʻraldi</string>
     <string name="full_sync_confirmation">Soʻralgan oʻzgartirish kolleksiyangizni keyingi sinxronlashda maʼlumotlar bazasini toʻliq yuklashni talab qiladi. Agar boshqa qurilmangizda takrorlashlar yoki boshqa oʻzgarishlar boʻlsa va bu qurilma bilan sinxronlanmagan boʻlsa, ular yoʻqoladi. Davom ettirilsinmi?</string>
-    <string name="full_sync_confirmation_upgrade">AnkiDroidʼni oldingi oʻrnatilgan versiyasidagi xatolik tufayli majburiy toʻliq sinxronlash tavsiya etiladi.</string>
     <!-- Deck Picker Sync Icon -->
     <string name="sync_menu_title_one_way_sync">Sinxronlash (bir tomonlama)</string>
     <string name="sync_menu_title_no_account">Sinxronlash (tizimga kirish)</string>

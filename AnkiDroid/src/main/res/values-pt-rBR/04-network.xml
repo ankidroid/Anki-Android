@@ -77,7 +77,6 @@
     <string name="one_way_sync_title" maxLength="41">Sincronização unidirecional</string>
     <string name="one_way_sync_confirmation">Sincronização unidirecional solicitada</string>
     <string name="full_sync_confirmation">A alteração solicitada exigirá um envio completo do banco de dados na próxima vez que você sincronizar sua coleção. Todas as revisões e demais alterações realizadas em outro dispositivo que ainda não foram sincronizadas aqui serão perdidas. Continuar?</string>
-    <string name="full_sync_confirmation_upgrade">Devido a um bug na versão anteriormente instalada do AnkiDroid, é recomendado forçar uma sincronização completa.</string>
     <!-- Deck Picker Sync Icon -->
     <string name="sync_menu_title_one_way_sync">Sincronização (unidirecional)</string>
     <string name="sync_menu_title_no_account">Sincronizar (entrar)</string>

@@ -130,8 +130,6 @@
     <string name="permission_denied">İzin reddedildi</string>
     <string name="recording_permission_denied_message">\"Ses kaydetme\" özelliği için mikrofon izni gereklidir. Lütfen uygulama ayarlarından erişim izni verin.</string>
     <!-- Database Integrity Check -->
-    <string name="integrity_check_startup_title">AnkiDroid Güncellendi</string>
-    <string name="integrity_check_startup_content">AnkiDroid yükseltildi. Bu yükseltme, olası veritabanı sorunları için düzeltmeleri içerir ve veritabanını şimdi kontrol etmenizi öneririz.</string>
     <string name="integrity_check_continue_anyway">Yine de devam et</string>
     <string name="integrity_check_insufficient_space">Veritabanı Kontrolü büyük miktarda geçici depolama alanı kullanıyor.\n\nDevam etmeden önce cihazınızda en az %s boş alanın olması şiddetle önerilir.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nŞu anda %s boş alanınız var.</string>

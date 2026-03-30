@@ -137,8 +137,6 @@
     <string name="permission_denied">הרשאה נדחתה</string>
     <string name="recording_permission_denied_message">נדרשת הרשאת מיקרופון עבור התכונה \"הקלטת קול\". אנא אשר אותה בהגדרות האפליקציה.</string>
     <!-- Database Integrity Check -->
-    <string name="integrity_check_startup_title">שדרוג ל־AnkiDroid</string>
-    <string name="integrity_check_startup_content">AnkiDroid שודרג. שדרוג זה כולל תיקונים לבעיות אפשריות במסד הנתונים, ואנו ממליצים לך להפעיל את מסד הנתונים לבדוק כעת.</string>
     <string name="integrity_check_continue_anyway">המשך בכל זאת</string>
     <string name="integrity_check_insufficient_space">״בדוק מסד נתונים״ משתמש בכמות גדולה של אחסון זמני.\n\nמומלץ מאוד שיהיה לך לפחות %s שטח פנוי במכשיר שלך לפני שתמשיך.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\n כרגע יש לך %s פנוי.</string>

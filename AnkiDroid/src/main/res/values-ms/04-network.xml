@@ -77,7 +77,6 @@
     <string name="one_way_sync_title" maxLength="41">One-way sync</string>
     <string name="one_way_sync_confirmation">One way sync requested</string>
     <string name="full_sync_confirmation">perubahan diminta akan memerlukan muat naik penuh pangkalan data apabila anda menyegerakkan koleksi anda. Jika anda mempunyai semakan atau perubahan pada peranti lain yang belum disegerakkan ke sini, maka mereka akan dibuang. Teruskan?</string>
-    <string name="full_sync_confirmation_upgrade">Akibat pepijat dalam versi yang dipasang sebelum ini, disarankan anda memaksa penyegerakan penuh.</string>
     <!-- Deck Picker Sync Icon -->
     <string name="sync_menu_title_one_way_sync">Sync (one-way)</string>
     <string name="sync_menu_title_no_account">Segerak (log in)</string>

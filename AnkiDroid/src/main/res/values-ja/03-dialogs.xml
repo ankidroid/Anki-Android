@@ -127,8 +127,6 @@
     <string name="permission_denied">権限が許可されていません</string>
     <string name="recording_permission_denied_message">「音声を録音」オプションを使用するにはマイクの権限が必要です。システムの、このアプリに関する設定画面でマイクの権限を許可してください。</string>
     <!-- Database Integrity Check -->
-    <string name="integrity_check_startup_title">AnkiDroidをアップグレードしました</string>
-    <string name="integrity_check_startup_content">AnkiDroidをアップグレードしました。このアップグレードには、データベースに関する不具合の修正が含まれています。今すぐ「データベースをチェック」を実行することをおすすめします。</string>
     <string name="integrity_check_continue_anyway">続ける</string>
     <string name="integrity_check_insufficient_space">データベースのチェックには一時ファイル用のデータ領域が必要です。\n\n続行する前に、お使いのデバイスに少なくとも %s の空き領域を確保してください。</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\n現在の空き容量は %s です。</string>

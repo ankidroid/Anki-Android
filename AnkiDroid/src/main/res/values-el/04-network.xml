@@ -77,7 +77,6 @@
     <string name="one_way_sync_title" maxLength="41">Συγχρονισμός μίας κατεύθυνσης</string>
     <string name="one_way_sync_confirmation">Ζητήθηκε συγχρονισμός μίας κατεύθυνσης</string>
     <string name="full_sync_confirmation">Η ζητούμενη αλλαγή θα απαιτήσει μια πλήρη μεταφόρτωση της βάσης δεδομένων την επόμενη φορά που θα συγχρονίσετε την συλλογή σας. Αν έχετε επαναλήψεις ή άλλες αλλαγές που περιμένουν σε μια άλλη συσκευή που δεν έχουν συγχρονιστεί ακόμα, θα χαθούν. Συνέχεια;</string>
-    <string name="full_sync_confirmation_upgrade">Λόγω ενός σφάλματος στην προηγούμενη εγκατεστημένη έκδοση του AnkiDroid, συνιστάται να εξαναγκάσετε έναν πλήρη συγχρονισμό.</string>
     <!-- Deck Picker Sync Icon -->
     <string name="sync_menu_title_one_way_sync">Συγχρονισμός (μίας κατεύθυνσης)</string>
     <string name="sync_menu_title_no_account">Συγχρονισμός (σύνδεση)</string>
