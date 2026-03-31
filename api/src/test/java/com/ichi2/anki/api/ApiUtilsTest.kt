@@ -57,6 +57,12 @@ internal class ApiUtilsTest {
     }
 
     @Test
+    fun joinTagsShouldReplaceSpacesWithUnderscores() {
+        val tags = linkedSetOf("hello world", "foo bar")
+        assertEquals("hello_world foo_bar", Utils.joinTags(tags))
+    }
+
+    @Test
     fun splitTagsShouldReturnNullWhenStringIsValid() {
         val tags = "A B C"
         val output = Utils.splitTags(tags)
