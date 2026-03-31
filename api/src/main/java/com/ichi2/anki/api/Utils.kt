@@ -45,10 +45,7 @@ internal object Utils {
         if (tags.isNullOrEmpty()) {
             return ""
         }
-        for (t in tags) {
-            t!!.replace(" ".toRegex(), "_")
-        }
-        return tags.joinToString(" ")
+        return tags.joinToString(" ") { it!!.replace(" ", "_") }
     }
 
     fun splitTags(tags: String): Array<String> = tags.trim().split("\\s+".toRegex()).toTypedArray()
