@@ -510,10 +510,12 @@ class InstantNoteEditorActivity :
     private fun savingErrorDialog(message: String) {
         AlertDialog.Builder(this).show {
             message(text = message)
-            positiveButton(R.string.dialog_cancel) {
+            positiveButton(R.string.try_again) {
+                checkAndSave()
+            }
+            negativeButton(R.string.dialog_cancel) {
                 instantAlertDialog.dismiss()
             }
-            negativeButton(R.string.try_again)
         }
     }
 
