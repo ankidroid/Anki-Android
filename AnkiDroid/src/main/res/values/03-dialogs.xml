@@ -18,6 +18,8 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 --><resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="review_ahead_title">Review ahead</string>
+    <string name="days_unit">days</string>
     <string name="study_by_state_title">Study by card state or tag</string>
     <string name="cards_unit">cards</string>
     <string name="check_db_title">Check database?</string>
@@ -49,7 +51,7 @@
     <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
     <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
     <string name="custom_study_forgotten">Review cards forgotten in last x days:</string>
-    <string name="custom_study_ahead">Review ahead by x days:</string>
+    <string name="custom_study_ahead">Review cards due in the next::</string>
     <string name="custom_study_preview">Preview new cards added in the last x days:</string>
     <string name="custom_study_tags">Number of cards</string>
 
