@@ -116,6 +116,7 @@
     <string name="menu_unmark_note">Ապանշել գրառումը</string>
     <string name="menu_enable_voice_playback" maxLength="28">Միացնել ձայնի նվագարկումը</string>
     <string name="menu_disable_voice_playback">Անջատել ձայնի նվագարկումը</string>
+    <string name="menu_create_backup" maxLength="28">Create backup</string>
     <string name="new_deck">Ստեղծել կապուկ</string>
     <string name="new_dynamic_deck">Ստեղծել զտված կապուկ</string>
     <string name="directory_inaccessible">AnkiDroid-ի պանակը անհասանելի է</string>

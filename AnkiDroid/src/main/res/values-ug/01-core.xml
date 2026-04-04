@@ -116,6 +116,7 @@
     <string name="menu_unmark_note">خاتىرەگە بەلگە سالما</string>
     <string name="menu_enable_voice_playback" maxLength="28">ئاۋاز قويۇشنى قوزغات</string>
     <string name="menu_disable_voice_playback">ئاۋاز قويۇشنى چەكلە</string>
+    <string name="menu_create_backup" maxLength="28">Create backup</string>
     <string name="new_deck">دەستە قۇر</string>
     <string name="new_dynamic_deck">سۈزۈلگەن دەستە قۇر</string>
     <string name="directory_inaccessible">AnkiDroid مۇندەرىجىسىنى زىيارەت قىلغىلى بولمايدۇ</string>
