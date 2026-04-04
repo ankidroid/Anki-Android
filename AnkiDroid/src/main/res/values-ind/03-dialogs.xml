@@ -51,7 +51,7 @@
     <plurals name="delete_deck_message">
         <item quantity="other">Hapus semua kartu di %1$s? Terdapat kartu %2$d didalamnya</item>
     </plurals>
-    <string name="delete_cram_deck_message">Delete filtered deck %s and send all cards back to their original decks?</string>
+    <string name="delete_cram_deck_message">Hapus deck yang difilter %s and kirim seluruh kartu kembali ke deck aslinya?</string>
     <string name="no_tts_available_message">Tidak ada bahasa teks-ke-ucapan tersedia</string>
     <string name="tts_no_tts">Jangan bicara</string>
     <string name="reposition_card_not_new_error">Hanya kartu baru yang dapat pindah posisi</string>
@@ -62,7 +62,7 @@
     <string name="answering_error_title">Galat basisdata</string>
     <string name="answering_error_message">Menulis ke koleksi gagal. Basisdata mungkin korup atau tidak cukup ruang pada penyimpanan. \ n \ n Jika ini sering terjadi, cobalah periksa database, perbaiki koleksi atau mengembalikan dari cadangan. Sentuh \"pengaturan\" untuk ini. \ n \ Atau bisa juga bug dari AnkiDroid; harap laporkan galatnya agar kami bisa mengeceknya.</string>
     <string name="answering_error_report">Laporkan galat</string>
-    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue.</string>
+    <string name="storage_full_message">Tidak ada ruang penyimpanan yang cukup untuk membuka AnkiDroid. Bebaskan sedikit ruang untuk melanjutkan.</string>
     <string name="repair_deck_dialog">Apakah Anda benar-benar ingin memperbaiki basis data?\n\nSebelum memulai, salinan akan dibuat ke dalam subfolder \'%s\'.</string>
     <string name="intent_aedict_empty">Kategori \'awalan\' kosong</string>
     <string name="intent_aedict_category">Untuk menambah kartu ke AnkiDroid hapus semua kategori catatan atau tambahkan satu bernama \"bawaan\"</string>
@@ -81,14 +81,14 @@
     <string name="restore_backup_choose_another">Pilih yang lain</string>
     <string name="dialog_cancel">Batal</string>
     <string name="dialog_ok">OK</string>
-    <string name="dialog_add" comment="Positive dialog action button label to add \'something\'">Add</string>
-    <string name="restore">Restore</string>
+    <string name="dialog_add" comment="Positive dialog action button label to add \'something\'">Tambahkan</string>
+    <string name="restore">Pulihkan</string>
     <string name="dialog_confirm" tools:ignore="UnusedResources">Konfirmasi</string>
     <string name="dialog_no">Tidak</string>
     <string name="dialog_yes">Ya</string>
     <string name="dialog_keep">Simpan</string>
     <string name="dialog_remove">Hapus</string>
-    <string name="dialog_exit" comment="Label for a button which will exit/finish the current screen">Exit</string>
+    <string name="dialog_exit" comment="Label for a button which will exit/finish the current screen">Keluar</string>
     <string name="dialog_continue">Lanjut</string>
     <string name="dialog_processing">Memproses&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Buat</string>
@@ -99,8 +99,8 @@
     <string name="dialog_positive_repair">Perbaiki</string>
     <string name="dialog_positive_replace">Ganti</string>
     <string name="dialog_collection_path_not_dir">Jalur yang dipilih bukan direktori yang valid</string>
-    <string name="dialog_invalid_custom_certificate">The provided text does not resolve to a valid PEM-encoded X509 certificate</string>
-    <string name="dialog_invalid_custom_certificate_title">Error parsing certificate</string>
+    <string name="dialog_invalid_custom_certificate">Teks yang diberikan tidak menghasilkan sertifikat PEM-encoded X509 yang valid</string>
+    <string name="dialog_invalid_custom_certificate_title">Error penguraian sertifikat</string>
     <string name="dialog_updated_custom_certificate">Sertifikat diperbarui</string>
     <!-- Media checking -->
     <string name="check_media_title">Periksa media?</string>
@@ -125,7 +125,7 @@
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Izin merekam audio ditolak</string>
     <string name="permission_denied">Izin ditolak</string>
-    <string name="recording_permission_denied_message">Microphone permission is necessary for the “Record voice” feature. Please grant it in the app settings.</string>
+    <string name="recording_permission_denied_message">Izin mikrofon diperlukan untuk fitur \"Rekam suara\". Mohon izinkan pada pengaturan aplikasi</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_continue_anyway">Tetap lanjutkan</string>
     <string name="integrity_check_insufficient_space">Memeriksa Basisdata memerlukan jumlah penyimpanan sementara yang besar.\n\nSangat disarankan untuk memiliki setidaknya %s ruang kosong sebelum melanjutkan.</string>
@@ -147,7 +147,7 @@
     <string name="error_deleting_image">Galat menghapus gambar</string>
     <string name="failed_to_apply_background_image">Gagal menerapkan gambar latar belakang %s</string>
     <string name="background_image_too_large">Latar Pemilih Dek terlalu besar</string>
-    <string name="image_max_size_allowed" comment="Consider keeping the unbreakable space after the digit">Maximum image size %d MB allowed</string>
+    <string name="image_max_size_allowed" comment="Consider keeping the unbreakable space after the digit">Ukuran gambar maksimal %d MB</string>
     <string name="image_dimensions_too_large">Dimensi gambar terlalu besar (%1$d × %2$d)</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
@@ -217,7 +217,7 @@
         <item quantity="other">Tunjukkan kartu pada</item>
     </plurals>
     <plurals name="set_due_date_range_label" comment="a date control is provided afterwards">
-        <item quantity="other">Show cards in range</item>
+        <item quantity="other">Tampilkan kartu dalam rentang</item>
     </plurals>
     <plurals name="set_due_date_label_suffix" comment="a suffix on a text field allowing a user to enter a number of days">
         <item quantity="other">hari</item>

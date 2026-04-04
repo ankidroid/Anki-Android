@@ -81,8 +81,8 @@
     <string name="restore_backup_choose_another">选择另一个</string>
     <string name="dialog_cancel">取消</string>
     <string name="dialog_ok">确定</string>
-    <string name="dialog_add" comment="Positive dialog action button label to add \'something\'">Add</string>
-    <string name="restore">Restore</string>
+    <string name="dialog_add" comment="Positive dialog action button label to add \'something\'">添加</string>
+    <string name="restore">恢复</string>
     <string name="dialog_confirm" tools:ignore="UnusedResources">确认</string>
     <string name="dialog_no">否</string>
     <string name="dialog_yes">是</string>
