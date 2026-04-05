@@ -124,6 +124,7 @@ class ControlsSettingsFragment :
         setControlPreferencesDefaultValues(screen)
         setDynamicTitle()
         setupNewStudyScreenSettings()
+        setupAnswerCommands()
     }
 
     @NeedsTest("Only the tab elements are removed")
