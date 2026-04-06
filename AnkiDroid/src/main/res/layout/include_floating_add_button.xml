@@ -39,7 +39,7 @@
                 >
                 <TextView
                     android:layout_width="wrap_content"
-                    android:background="@color/material_grey_600"
+                    android:background="@drawable/fab_label_background"
                     android:id="@+id/add_shared_label"
                     android:paddingBottom="5dp"
                     android:paddingTop="5dp"
@@ -80,7 +80,7 @@
                 >
                 <TextView
                     android:layout_width="wrap_content"
-                    android:background="@color/material_grey_600"
+                    android:background="@drawable/fab_label_background"
                     android:id="@+id/add_filtered_deck_label"
                     android:paddingBottom="5dp"
                     android:paddingTop="5dp"
@@ -121,7 +121,7 @@
                 >
                 <TextView
                     android:layout_width="wrap_content"
-                    android:background="@color/material_grey_600"
+                    android:background="@drawable/fab_label_background"
                     android:id="@+id/add_deck_label"
                     android:paddingBottom="5dp"
                     android:paddingTop="5dp"
@@ -157,7 +157,7 @@
                 >
                 <TextView
                     android:layout_width="wrap_content"
-                    android:background="@color/material_grey_600"
+                    android:background="@drawable/fab_label_background"
                     android:id="@+id/add_note_label"
                     android:paddingBottom="5dp"
                     android:paddingTop="5dp"
