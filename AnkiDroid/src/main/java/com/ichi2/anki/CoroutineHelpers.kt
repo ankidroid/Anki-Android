@@ -565,7 +565,7 @@ data class ProgressContext(
                     // replace spaces with NBSP so newlines are handled better
                     val curStr = Formatter.formatShortFileSize(context, current).replace(' ', '\u00A0')
                     val maxStr = Formatter.formatShortFileSize(context, max).replace(' ', '\u00A0')
-                    "$curStr/$maxStr"
+                    context.getString(R.string.progress_amount_bytes, curStr, maxStr)
                 },
             )
     }
