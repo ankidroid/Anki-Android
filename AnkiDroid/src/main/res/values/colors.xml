@@ -130,7 +130,7 @@
     <color name="badge_error">#f45000</color>
     <color name="badge_warning">#ff5e13</color>
 
-    <color name="fab_background">#777</color>
+    <color name="fab_background">#ff757575</color>
 
     <color name="theme_light_drawer_row_current">#E8E8E8</color>
     <color name="popup_background_theme_dark">#434343</color>
