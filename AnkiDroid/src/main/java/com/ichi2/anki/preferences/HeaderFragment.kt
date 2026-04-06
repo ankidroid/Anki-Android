@@ -31,7 +31,7 @@ import com.ichi2.anki.preferences.reviewer.ReviewerMenuSettingsFragment
 import com.ichi2.anki.reviewreminders.ReviewReminderScope
 import com.ichi2.anki.reviewreminders.ScheduleReminders
 import com.ichi2.anki.settings.Prefs
-import com.ichi2.anki.ui.internationalization.toSentenceCase
+import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.compat.CompatHelper
 import com.ichi2.preferences.HeaderPreference
 import com.ichi2.utils.AdaptionUtil
@@ -100,7 +100,7 @@ class HeaderFragment : SettingsFragment() {
             activity: AppCompatActivity,
             searchConfiguration: SearchConfiguration,
         ) {
-            val setDuePreferenceTitle = TR.actionsSetDueDate().toSentenceCase(activity, R.string.sentence_set_due_date)
+            val setDuePreferenceTitle = with(activity) { TR.sentenceCase.setDueDate }
             with(searchConfiguration) {
                 setActivity(activity)
                 setBreadcrumbsEnabled(true)

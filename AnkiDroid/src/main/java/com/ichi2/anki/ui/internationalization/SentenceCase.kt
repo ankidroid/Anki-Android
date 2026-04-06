@@ -72,6 +72,12 @@ fun String.toSentenceCase(
 // TODO: Expand for all past properties
 object SentenceCase {
     context(_: Context)
+    val addNoteType get() = TR.notetypesAddNoteType().toSentenceCase(R.string.sentence_add_note_type)
+
+    context(_: Fragment)
+    val changeNoteType get() = TR.browsingChangeNotetype().toSentenceCase(R.string.sentence_change_note_type)
+
+    context(_: Context)
     val checkDatabase get() = TR.databaseCheckTitle().toSentenceCase(R.string.sentence_check_db)
 
     context(_: Fragment)
@@ -87,6 +93,40 @@ object SentenceCase {
     val checkMediaAction get() = TR.mediaCheckCheckMediaAction().toSentenceCase(R.string.sentence_check_media)
     context(_: Fragment)
     val checkMediaAction get() = TR.mediaCheckCheckMediaAction().toSentenceCase(R.string.sentence_check_media)
+
+    context(_: Fragment)
+    val customStudy get() = TR.actionsCustomStudy().toSentenceCase(R.string.sentence_custom_study)
+
+    context(_: Fragment)
+    val emptyCards get() = TR.emptyCardsWindowTitle().toSentenceCase(R.string.sentence_empty_cards)
+    context(_: Fragment)
+    val emptyTrash get() = TR.mediaCheckEmptyTrash().toSentenceCase(R.string.sentence_empty_trash)
+
+    context(_: Fragment)
+    val gradeNow get() = TR.actionsGradeNow().toSentenceCase(R.string.sentence_grade_now)
+
+    context(_: Context)
+    val mediaSyncLog get() = TR.syncMediaLogTitle().toSentenceCase(R.string.sentence_sync_media_log)
+
+    context(_: Fragment)
+    val restoreDeleted get() = TR.mediaCheckRestoreTrash().toSentenceCase(R.string.sentence_restore_deleted)
+
+    context(_: Fragment)
+    val restoreToDefault get() = TR.cardTemplatesRestoreToDefault().toSentenceCase(R.string.sentence_restore_to_default)
+    context(_: Context)
+    val restoreToDefault get() = TR.cardTemplatesRestoreToDefault().toSentenceCase(R.string.sentence_restore_to_default)
+
+    context(_: Context)
+    val setDueDate get() = TR.actionsSetDueDate().toSentenceCase(R.string.sentence_set_due_date)
+
+    context(_: Fragment)
+    val setDueDate get() = TR.actionsSetDueDate().toSentenceCase(R.string.sentence_set_due_date)
+
+    context(_: Fragment)
+    val toggleBury get() = TR.browsingToggleBury().toSentenceCase(R.string.sentence_toggle_bury)
+
+    context(_: Fragment)
+    val toggleSuspend get() = TR.browsingToggleSuspend().toSentenceCase(R.string.sentence_toggle_suspend)
 }
 
 /**

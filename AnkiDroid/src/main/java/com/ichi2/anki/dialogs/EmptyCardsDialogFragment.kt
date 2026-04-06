@@ -57,7 +57,7 @@ import com.ichi2.anki.dialogs.EmptyCardsUiState.SearchingForEmptyCards
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.NoteId
 import com.ichi2.anki.libanki.emptyCids
-import com.ichi2.anki.ui.internationalization.toSentenceCase
+import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.withProgress
 import com.ichi2.utils.message
 import com.ichi2.utils.negativeButton
@@ -86,7 +86,7 @@ class EmptyCardsDialogFragment : DialogFragment() {
         return AlertDialog
             .Builder(requireContext())
             .show {
-                setTitle(TR.emptyCardsWindowTitle().toSentenceCase(R.string.sentence_empty_cards))
+                setTitle(TR.sentenceCase.emptyCards)
                 setPositiveButton(R.string.dialog_ok) { _, _ ->
                     val state = viewModel.uiState.value
                     if (state is EmptyCardsSearchResult) {

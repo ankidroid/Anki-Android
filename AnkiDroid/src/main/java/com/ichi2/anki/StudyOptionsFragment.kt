@@ -51,7 +51,7 @@ import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.reviewreminders.ReviewReminderScope
 import com.ichi2.anki.reviewreminders.ScheduleReminders
 import com.ichi2.anki.settings.Prefs
-import com.ichi2.anki.ui.internationalization.toSentenceCase
+import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.ui.CollectionMediaImageGetter
 import kotlinx.coroutines.Job
@@ -432,7 +432,7 @@ class StudyOptionsFragment :
             if (!isDynamic) {
                 deckInfoLayout.visibility = View.GONE
                 buttonStart.visibility = View.VISIBLE
-                buttonStart.text = TR.actionsCustomStudy().toSentenceCase(R.string.sentence_custom_study)
+                buttonStart.text = TR.sentenceCase.customStudy
             } else {
                 buttonStart.visibility = View.GONE
             }

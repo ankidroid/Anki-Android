@@ -70,7 +70,7 @@ import com.ichi2.anki.showError
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.sync.launchCatchingRequiringOneWaySync
 import com.ichi2.anki.ui.BasicItemSelectedListener
-import com.ichi2.anki.ui.internationalization.toSentenceCase
+import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.utils.InitStatus
 import com.ichi2.anki.withProgress
 import com.ichi2.utils.LanguageUtil
@@ -114,9 +114,7 @@ class ChangeNoteTypeDialog : AnalyticsDialogFragment() {
 
         return MaterialAlertDialogBuilder(requireContext())
             .create {
-                title(
-                    text = TR.browsingChangeNotetype().toSentenceCase(R.string.sentence_change_note_type),
-                )
+                title(text = TR.sentenceCase.changeNoteType)
                 positiveButton(R.string.dialog_ok)
                 negativeButton(R.string.dialog_cancel)
                 setView(binding.root)

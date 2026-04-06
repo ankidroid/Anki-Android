@@ -37,7 +37,7 @@ import com.ichi2.anki.libanki.backend.BackendUtils
 import com.ichi2.anki.libanki.getNotetype
 import com.ichi2.anki.libanki.getNotetypeNames
 import com.ichi2.anki.libanki.getStockNotetype
-import com.ichi2.anki.ui.internationalization.toSentenceCase
+import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.withProgress
 import com.ichi2.utils.customView
 import com.ichi2.utils.dp
@@ -79,7 +79,7 @@ class AddNewNotesType(
             AlertDialog
                 .Builder(activity)
                 .apply {
-                    setTitle(TR.notetypesAddNoteType().toSentenceCase(activity, R.string.sentence_add_note_type))
+                    setTitle(with(activity) { TR.sentenceCase.addNoteType })
                     customView(
                         binding.root,
                         paddingStart = 24.dp.toPx(activity),

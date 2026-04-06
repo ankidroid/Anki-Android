@@ -35,6 +35,7 @@ import com.ichi2.anki.reviewer.Binding.ModifierKeys.Companion.shift
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.reviewer.MappableAction
 import com.ichi2.anki.reviewer.ReviewerBinding
+import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.ui.internationalization.toSentenceCase
 
 /**
@@ -259,7 +260,7 @@ enum class ViewerAction(
         when (this) {
             BROWSE -> TR.qtMiscBrowse()
             STATISTICS -> TR.statisticsTitle()
-            RESCHEDULE_NOTE -> TR.actionsSetDueDate().toSentenceCase(context, R.string.sentence_set_due_date)
+            RESCHEDULE_NOTE -> with(context) { TR.sentenceCase.setDueDate }
             PREVIOUS_CARD_INFO -> TR.actionsPreviousCardInfo().toSentenceCase(context, R.string.sentence_actions_previous_card_info)
             else -> context.getString(titleRes)
         }

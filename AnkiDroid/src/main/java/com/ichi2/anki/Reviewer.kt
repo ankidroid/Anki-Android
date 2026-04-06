@@ -115,7 +115,7 @@ import com.ichi2.anki.servicelayer.NoteService.toggleMark
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.settings.enums.DayTheme
 import com.ichi2.anki.snackbar.showSnackbar
-import com.ichi2.anki.ui.internationalization.toSentenceCase
+import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.ui.windows.reviewer.ReviewerFragment
 import com.ichi2.anki.utils.ext.cardStatsNoCardClean
 import com.ichi2.anki.utils.ext.currentCardStudy
@@ -858,8 +858,7 @@ open class Reviewer :
         }
 
         // Anki Desktop Translations
-        menu.findItem(R.id.action_reschedule_card).title =
-            CollectionManager.TR.actionsSetDueDate().toSentenceCase(R.string.sentence_set_due_date)
+        menu.findItem(R.id.action_reschedule_card).title = TR.sentenceCase.setDueDate
 
         // Undo button
         @DrawableRes val undoIconId: Int

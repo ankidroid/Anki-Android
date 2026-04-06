@@ -111,6 +111,7 @@ import com.ichi2.anki.scheduling.ForgetCardsDialog
 import com.ichi2.anki.scheduling.SetDueDateDialog
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.attachFastScroller
+import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.ui.internationalization.toSentenceCase
 import com.ichi2.anki.undoAndShowSnackbar
 import com.ichi2.anki.utils.ext.getCurrentDialogFragment
@@ -522,11 +523,8 @@ class CardBrowserFragment :
                 override fun onPrepareMenu(menu: Menu) {
                     if (!vm.isInMultiSelectMode) return
 
-                    menu.findItem(R.id.action_reschedule_cards).title =
-                        TR.actionsSetDueDate().toSentenceCase(R.string.sentence_set_due_date)
-
-                    menu.findItem(R.id.action_grade_now).title =
-                        TR.actionsGradeNow().toSentenceCase(R.string.sentence_grade_now)
+                    menu.findItem(R.id.action_reschedule_cards).title = TR.sentenceCase.setDueDate
+                    menu.findItem(R.id.action_grade_now).title = TR.sentenceCase.gradeNow
 
                     val isFindReplaceEnabled = sharedPrefs().getBoolean(getString(R.string.pref_browser_find_replace), false)
                     menu.findItem(R.id.action_find_replace).apply {
@@ -538,13 +536,13 @@ class CardBrowserFragment :
 
                     menu.findItem(R.id.action_flag).isVisible = vm.hasSelectedAnyRows()
                     menu.findItem(R.id.action_suspend_card).apply {
-                        title = TR.browsingToggleSuspend().toSentenceCase(R.string.sentence_toggle_suspend)
+                        title = TR.sentenceCase.toggleSuspend
                         // TODO: I don't think this icon is necessary
                         setIcon(R.drawable.ic_suspend)
                         isVisible = vm.hasSelectedAnyRows()
                     }
                     menu.findItem(R.id.action_toggle_bury).apply {
-                        title = TR.browsingToggleBury().toSentenceCase(R.string.sentence_toggle_bury)
+                        title = TR.sentenceCase.toggleBury
                         isVisible = vm.hasSelectedAnyRows()
                     }
                     menu.findItem(R.id.action_mark_card).apply {

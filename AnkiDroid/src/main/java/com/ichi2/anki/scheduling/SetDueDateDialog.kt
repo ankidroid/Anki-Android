@@ -57,7 +57,7 @@ import com.ichi2.anki.scheduling.SetDueDateViewModel.Tab
 import com.ichi2.anki.servicelayer.getFSRSStatus
 import com.ichi2.anki.showThemedToast
 import com.ichi2.anki.snackbar.showSnackbar
-import com.ichi2.anki.ui.internationalization.toSentenceCase
+import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.utils.doOnImeHidden
 import com.ichi2.anki.utils.ext.requireBoolean
 import com.ichi2.anki.utils.openUrl
@@ -140,12 +140,7 @@ class SetDueDateDialog : DialogFragment() {
         binding = DialogSetDueDateBinding.inflate(layoutInflater)
         return MaterialAlertDialogBuilder(requireContext())
             .create {
-                title(
-                    text =
-                        TR
-                            .actionsSetDueDate()
-                            .toSentenceCase(R.string.sentence_set_due_date),
-                )
+                title(text = TR.sentenceCase.setDueDate)
                 positiveButton(R.string.dialog_ok) { launchUpdateDueDate() }
                 negativeButton(R.string.dialog_cancel)
                 neutralButton(R.string.help)

@@ -71,6 +71,7 @@ import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.ui.internationalization.toSentenceCase
 import com.ichi2.anki.utils.ext.bundleOfNotNull
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
@@ -273,7 +274,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
 
         return AlertDialog
             .Builder(requireActivity())
-            .title(text = TR.actionsCustomStudy().toSentenceCase(R.string.sentence_custom_study))
+            .title(text = TR.sentenceCase.customStudy)
             .cancelable(true)
             .customView(customMenuView)
             .create()

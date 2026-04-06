@@ -98,7 +98,7 @@ import com.ichi2.anki.previewer.TemplatePreviewerPage
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.ResizablePaneManager
-import com.ichi2.anki.ui.internationalization.toSentenceCase
+import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.anki.utils.ext.doOnTabSelected
 import com.ichi2.anki.utils.ext.showDialogFragment
@@ -1126,7 +1126,7 @@ open class CardTemplateEditor :
 
                     fun askUser(kind: StockNotetype.Kind? = null) {
                         AlertDialog.Builder(requireContext()).show {
-                            setTitle(TR.cardTemplatesRestoreToDefault().toSentenceCase(R.string.sentence_restore_to_default))
+                            setTitle(TR.sentenceCase.restoreToDefault)
                             setMessage(TR.cardTemplatesRestoreToDefaultConfirmation())
                             setPositiveButton(R.string.restore) { _, _ ->
                                 launchCatchingTask {
