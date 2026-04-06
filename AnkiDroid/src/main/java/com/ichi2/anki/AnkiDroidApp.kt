@@ -190,8 +190,8 @@ open class AnkiDroidApp :
 
         makeBackendUsable(this)
 
-        // Configure WebView to allow file scheme pages to access cookies.
-        if (!acceptFileSchemeCookies()) {
+        // Probe WebView availability before any other init touches it (#5794).
+        if (!checkWebViewAvailable()) {
             return
         }
 
@@ -331,18 +331,20 @@ open class AnkiDroidApp :
         notifications.postValue(null)
     }
 
-    @Suppress("deprecation") // 7109: setAcceptFileSchemeCookies
-    protected fun acceptFileSchemeCookies(): Boolean =
+    /**
+     * Checks that [android.webkit.WebView] is usable.
+     */
+    protected fun checkWebViewAvailable(): Boolean =
         try {
-            CookieManager.setAcceptFileSchemeCookies(true)
+            CookieManager.getInstance()
             true
         } catch (e: Throwable) {
             // 5794: Errors occur if the WebView fails to load
             // android.webkit.WebViewFactory.MissingWebViewPackageException.MissingWebViewPackageException
             // Error may be excessive, but I expect a UnsatisfiedLinkError to be possible here.
             fatalInitializationError = FatalInitializationError.WebViewError(e)
-            sendExceptionReport(e, "setAcceptFileSchemeCookies")
-            Timber.e(e, "setAcceptFileSchemeCookies")
+            sendExceptionReport(e, "checkWebViewAvailable")
+            Timber.e(e, "checkWebViewAvailable")
             false
         }
 
