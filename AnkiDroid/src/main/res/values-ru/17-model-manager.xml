@@ -78,9 +78,9 @@
     <string name="model_browser_add_clone">Клонировать: %1$s</string>
     <!--Browser Appearance-->
     <string name="card_template_browser_appearance_summary">Введите шаблон, который будет использоваться в списке карточек. Например, так можно показывать ответ более сжать.\n\nШаблон лица\n«Столицей {{Country}} является:»\n в списке карточке можно ужать до \n«Столица: {{Country}}»</string>
-    <string name="card_template_browser_appearance_question_format">Question format</string>
-    <string name="card_template_browser_appearance_answer_format">Answer format</string>
-    <string name="card_template_browser_appearance_restore_default_dialog">Are you sure you want to restore the browser appearance to default?</string>
+    <string name="card_template_browser_appearance_question_format">Формат вопроса</string>
+    <string name="card_template_browser_appearance_answer_format">Формат ответа</string>
+    <string name="card_template_browser_appearance_restore_default_dialog">Вы действительно хотите сбросить внешний вид списка карточек?</string>
     <string name="card_template_browser_appearance_saving_note">Изменения применяются при сохранении шаблона</string>
     <!-- Deck Override -->
     <string name="card_template_editor_deck_override_on">Переопределение колоды (вкл.)</string>

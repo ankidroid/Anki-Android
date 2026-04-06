@@ -87,14 +87,14 @@
     <string name="restore_backup_choose_another">Выбрать другой</string>
     <string name="dialog_cancel">Отменить</string>
     <string name="dialog_ok">OK</string>
-    <string name="dialog_add" comment="Positive dialog action button label to add \'something\'">Add</string>
-    <string name="restore">Restore</string>
+    <string name="dialog_add" comment="Positive dialog action button label to add \'something\'">Добавить</string>
+    <string name="restore">Восстановить</string>
     <string name="dialog_confirm" tools:ignore="UnusedResources">Подтвердить</string>
     <string name="dialog_no">Нет</string>
     <string name="dialog_yes">Да</string>
     <string name="dialog_keep">Оставить</string>
     <string name="dialog_remove">Удалить</string>
-    <string name="dialog_exit" comment="Label for a button which will exit/finish the current screen">Exit</string>
+    <string name="dialog_exit" comment="Label for a button which will exit/finish the current screen">Выйти</string>
     <string name="dialog_continue">Продолжить</string>
     <string name="dialog_processing">Обработка&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Создать</string>
@@ -148,7 +148,7 @@
     <string name="database_locked_title">База данных заблокирована</string>
     <string name="database_locked_summary">База данных AnkiDroid используется другим приложением. Закройте другое приложение, а затем снова откройте AnkiDroid.</string>
     <string name="incompatible_database_version_title">Несовместимая версия базы данных</string>
-    <string name="incompatible_database_version_summary">Эта база данных современнее той, с которой может работать эта версия AnkiDroid. Обновите AnkiDroid или понизите базу данных, чтобы открыть ее\n\nПоддерживаемая версия: %1$d\nВерсия базы данных: %2$d\n\nСледующие параметры восстановления перезапишут вашу текущую коллекцию, возможно с совместимой версией базы данных:</string>
+    <string name="incompatible_database_version_summary">Эта база данных современнее той, с которой может работать эта версия AnkiDroid. Обновите AnkiDroid или понизите версию базы данных, чтобы открыть её\n\nПоддерживаемая версия: %1$d\nВерсия базы данных: %2$d\n\nСледующие параметры восстановления перезапишут вашу текущую коллекцию, возможно, с совместимой версией базы данных:</string>
     <!-- Deck Picker Background-->
     <string name="background_image_applied">Фоновое изображение установлено</string>
     <string name="background_image_removed">Фоновое изображение убрано</string>
@@ -173,7 +173,7 @@
     <string name="help_item_ankidroid_manual">Руководство AnkiDroid</string>
     <string name="help_item_anki_manual">Руководство Anki</string>
     <string name="help_item_ankidroid_faq">Частые вопросы об AnkiDroid</string>
-    <string name="help_title_get_help">Обратиться за помощью</string>
+    <string name="help_title_get_help">Поддержка</string>
     <string name="help_item_mailing_list">Список рассылки</string>
     <string name="help_item_reddit">Reddit</string>
     <string name="help_item_report_bug">Сообщить об ошибке</string>
@@ -209,7 +209,7 @@
     <!-- This description is valid fos
     sched V2. For V1, it was counting the number of repetitions of cards in learning. This approximation is acceptable
     for the sake of simplicity and because V1 will leave.-->
-    <string name="deck_picker_counts">Откройте страницу предварительного просмотра колоды, содержащую количество карточек для просмотра сегодня.</string>
+    <string name="deck_picker_counts">Открыть предпросмотр колоды с количеством карточек для просмотра сегодня.</string>
     <string name="import_deck_package">Пакет колоды (.apkg)</string>
     <string name="import_collection_package">Пакет коллекции (.colpkg)</string>
     <string name="import_csv">Текстовый файл (.txt, .csv)</string>
@@ -259,7 +259,7 @@
     <string name="open">Открыть</string>
     <string name="change_cloze_number">Количество пропусков</string>
     <string name="cloze_number">Количество пропусков:</string>
-    <string name="change_editor_mode">Режим редактирования</string>
+    <string name="change_editor_mode">Изменить режим редактора</string>
     <string name="open_note_editor">Открыть редактор записей</string>
     <string name="change_cloze_mode">Режим пропусков</string>
     <!-- Outdated WebView dialog -->
@@ -282,20 +282,20 @@
     <!--Change Note Type Dialog Fragment-->
     <string name="card_numbers_unchanged">Номера карт останутся без изменений</string>
     <!-- Subset of TR.changeNotetypeToFromCloze -->
-    <string name="extra_cloze_deletions_removed">If changing to a regular note type, and there are more cloze deletions than available card templates, any extra cards will be removed.</string>
+    <string name="extra_cloze_deletions_removed">Если при смене на обычный тип записи есть больше пропусков, чем шаблонов карточек, то лишние карточки будут удалены.</string>
     <string name="different_note_types_selected">Пожалуйста, выберите записи только одного типа.</string>
     <string name="error_no_changes_to_save">Нет изменений для сохранения</string>
     <string name="choose_color">Выберите цвет</string>
     <!-- Special Fields -->
-    <string name="standard_fields_tab_header" comment="Tab header for inserting non-special fields: {{Front}}">Fields</string>
-    <string name="special_fields_tab_header" comment="Tab header for inserting special fields: {{Deck}}">Special</string>
+    <string name="standard_fields_tab_header" comment="Tab header for inserting non-special fields: {{Front}}">Поля</string>
+    <string name="special_fields_tab_header" comment="Tab header for inserting special fields: {{Deck}}">Особые</string>
     <string name="special_field_example_suffix"><![CDATA[: ‘<b>%1$s</b>’]]></string>
-    <string name="special_field_front_side_help">The front template content. Audio is not automatically played</string>
-    <string name="special_field_deck_help" comment="%s: either blank or \' %s\'">The full deck of the card, including parent decks%s</string>
-    <string name="special_field_subdeck_help" comment="%s: either blank or \' %s\'">The current deck of the card, excluding parent decks%s</string>
+    <string name="special_field_front_side_help">Содержимое лица. Аудио не проигрывается автоматически</string>
+    <string name="special_field_deck_help" comment="%s: either blank or \' %s\'">Колода карточки, включая родительские колоды%s</string>
+    <string name="special_field_subdeck_help" comment="%s: either blank or \' %s\'">Текущая колода карточки, исключая родительские колоды%s</string>
     <string name="special_field_flag_help">Outputs ‘%1$s’, where %2$s is the flag code (%3$s\–%4$s\)</string>
-    <string name="special_field_tags_help" comment="%s: either blank or \' %s\'">The tags of the note%s</string>
-    <string name="special_field_card_id_help" comment="%s: either blank or \' %s\'">The ID of the card%s</string>
-    <string name="special_field_card_help" comment="%s: either blank or \' %s\'">The name of the card template%s</string>
-    <string name="special_field_type_help" comment="%s: either blank or \' %s\'">The name of the note type%s</string>
+    <string name="special_field_tags_help" comment="%s: either blank or \' %s\'">Метки записи%s</string>
+    <string name="special_field_card_id_help" comment="%s: either blank or \' %s\'">ID карточки%s</string>
+    <string name="special_field_card_help" comment="%s: either blank or \' %s\'">Название шаблона карточки%s</string>
+    <string name="special_field_type_help" comment="%s: either blank or \' %s\'">Название типа записи%s</string>
 </resources>

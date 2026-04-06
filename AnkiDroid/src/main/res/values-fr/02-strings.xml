@@ -99,7 +99,7 @@
     <string name="slide_to_cancel" comment="Message shown when pressing the record button">Glissez pour annuler</string>
     <string name="filter_by_flags" maxLength="41">Marqueurs</string>
     <!-- filtered deck options -->
-    <string name="filtered_option_delay_again">Delay for again</string>
+    <string name="filtered_option_delay_again">Retarder encore pour</string>
     <string name="filtered_option_delay_hard">Delay for hard</string>
     <string name="filtered_option_delay_good">Delay for good</string>
     <!-- Custom study options -->

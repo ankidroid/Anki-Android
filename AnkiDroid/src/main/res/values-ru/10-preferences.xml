@@ -47,10 +47,10 @@
     <!-- generic strings -->
     <string name="disabled">Выкл.</string>
     <plurals name="pref_summ_minutes">
-        <item quantity="one">%d мин</item>
-        <item quantity="few">%d мин</item>
-        <item quantity="many">%d мин</item>
-        <item quantity="other">%d мин</item>
+        <item quantity="one">%d мин.</item>
+        <item quantity="few">%d мин.</item>
+        <item quantity="many">%d мин.</item>
+        <item quantity="other">%d мин.</item>
     </plurals>
     <string name="pref_milliseconds">%s мс</string>
     <!-- TODO: move to 20-search-preference so we can contribute upstream (searchpreference_no_results)-->
@@ -116,8 +116,8 @@
     <string name="gestures_corner_tap_top_left" maxLength="41">Касание вверху в левом углу</string>
     <string name="gestures_corner_tap_top_right" maxLength="41">Касание вверху в правом углу</string>
     <string name="gestures_corner_tap_middle_center" maxLength="41">Касание в центре экрана</string>
-    <string name="gestures_corner_tap_bottom_left" maxLength="41">Касание внизу в левом углу</string>
-    <string name="gestures_corner_tap_bottom_right" maxLength="41">Касание внизу в правом углу</string>
+    <string name="gestures_corner_tap_bottom_left" maxLength="41">Касание внизу слева</string>
+    <string name="gestures_corner_tap_bottom_right" maxLength="41">Касание внизу справа</string>
     <string name="gestures_two_finger_tap" maxLength="41">Касание двумя пальцами</string>
     <string name="gestures_three_finger_tap" maxLength="41">Касание тремя пальцами</string>
     <string name="gestures_four_finger_tap" maxLength="41">Касание четырьмя пальцами</string>
@@ -201,7 +201,7 @@
     <string name="custom_buttons_setting_menu_only">Только меню</string>
     <string name="reset_custom_buttons" maxLength="41">Сбросить</string>
     <string name="reset_settings_to_default">Сброс настроек</string>
-    <string name="reset">Сброс</string>
+    <string name="reset">Сбросить</string>
     <string name="thirdparty_apps_title" maxLength="41">Сторонние приложения</string>
     <string name="thirdparty_apps_summary">Покажет список приложений, которые используют API AnkiDroid, например, словари</string>
     <string name="pref_controls_reviews_tab" maxLength="41" comment="Name of the tab to configure controls for the reviews screen">Просмотр</string>
@@ -293,7 +293,7 @@
     <string name="bindings_already_bound">Уже назначено на «%s»</string>
     <!-- Advanced -->
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Экспериментальная</string>
-    <string name="readtext_deprecation_warn">У AnkiDroid появился более совершенный механизм TTS, который совместим с другими клиентами Anki и содержит больше голосов и улучшения в воспроизведении языков.\n\nПожалуйста, обновитесь как можно скорее, так как эта настройка скоро будет удалена.</string>
+    <string name="readtext_deprecation_warn">У AnkiDroid появился более совершенный механизм синтеза речи, который совместим с другими клиентами Anki и содержит больше голосов и улучшения в воспроизведении языков.\n\nПожалуйста, обновитесь как можно скорее, так как эта настройка скоро будет удалена.</string>
     <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">Пожалуйста, обновитесь до нового формата преобразования текста в речь</string>
     <string name="pref_fixed_port_title" maxLength="41">localStorage на экране обучения</string>
     <string name="pref_fixed_port_summary">Включить локальное хранилище JavaScript с помощью фиксированного порта сервера на экране обучения</string>
@@ -373,10 +373,10 @@
     <string name="hide_hard_and_easy" maxLength="41">Скрывать кнопки «Трудно» и «Легко»</string>
     <string name="reviewer_frame_style" maxLength="41">Стиль рамки</string>
     <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Study Screen">Карточка</string>
-    <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Study Screen">Квадратная</string>
+    <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Study Screen">Рамка</string>
     <string name="reviewer_toolbar_top" maxLength="41" comment="Setting to put the toolbar on the top of the study screen">Наверх</string>
-    <string name="reviewer_toolbar_bottom" maxLength="41" comment="Setting to put the toolbar on the bottom of the study screen">Вниз</string>
-    <string name="reviewer_toolbar_none" maxLength="41" comment="Setting to remove the toolbar from the study screen">Удалить</string>
+    <string name="reviewer_toolbar_bottom" maxLength="41" comment="Setting to put the toolbar on the bottom of the study screen">Внизу</string>
+    <string name="reviewer_toolbar_none" maxLength="41" comment="Setting to remove the toolbar from the study screen">Скрыть</string>
     <string name="toolbar" maxLength="41">Панель инструментов</string>
     <string name="toolbar_actions" maxLength="41">Действия на панели</string>
     <string name="toolbar_position" maxLength="28">Расположение панели</string>

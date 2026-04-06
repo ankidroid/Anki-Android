@@ -97,7 +97,7 @@
         <item>По забытым</item>
         <item>По названию колоды</item>
     </string-array>
-    <string name="manage_browser_column">Управление столбцами</string>
+    <string name="manage_browser_column">Настроить столбец</string>
     <string name="no_columns_available">Нет доступных столбцов</string>
     <string name="card_browser_select_all" maxLength="28">Выбрать все</string>
     <string name="card_browser_select_none" maxLength="28">Снять выделение</string>

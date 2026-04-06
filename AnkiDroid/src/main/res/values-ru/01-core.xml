@@ -89,12 +89,12 @@
     <string name="ease_button_hard" maxLength="41" comment="In the reviewer, in the answer side. Label of the button that used by the user to state finding the correct answer was hard.">Трудно</string>
     <string name="ease_button_good" maxLength="41" comment="In the reviewer, in the answer side. Label of the button that used by the user to state their answer was good.">Хорошо</string>
     <string name="ease_button_easy" maxLength="41" comment="In the reviewer, in the answer side. Label of the button that used by the user to state that finding the answer to the question was easy.">Легко</string>
-    <string name="show_answer_hint_long_press" comment="In the reviewer, hint is shown when touching the show answer button and the user has the long-press accessibility setting enabled">Включено %s</string>
+    <string name="show_answer_hint_long_press" comment="In the reviewer, hint is shown when touching the show answer button and the user has the long-press accessibility setting enabled">\'%s\' включено</string>
     <!-- General -->
     <string name="undo" maxLength="28" comment="When tapping on this text, the last action is undone.">Отменить</string>
     <string name="redo" maxLength="28" comment="Menu entry that allows to redo action that was just undone.">Вернуть</string>
     <!-- flashcard_portrait.xml -->
-    <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in the Study Screen. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)" maxLength="28">Отменить штрих</string>
+    <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in the Study Screen. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)" maxLength="28">Отменить черту</string>
     <string name="move_all_to_deck">Переместить всё в колоду</string>
     <string name="unbury" maxLength="28">Вернуть</string>
     <string name="rename_deck" maxLength="28">Переименовать колоду</string>
@@ -121,8 +121,8 @@
     <string name="menu_mark_note" maxLength="28">Отметить запись</string>
     <string name="menu_unmark_note">Снять отметку</string>
     <string name="menu_enable_voice_playback" maxLength="28">Включить воспроизведение голоса</string>
-    <string name="menu_disable_voice_playback">Выключить проигрывание голоса</string>
-    <string name="menu_create_backup" maxLength="28">Create backup</string>
+    <string name="menu_disable_voice_playback">Выключить воспроизведение голоса</string>
+    <string name="menu_create_backup" maxLength="28">Создать резервную копию</string>
     <string name="new_deck">Создать колоду</string>
     <string name="new_dynamic_deck">Создать фильтрованную колоду</string>
     <string name="directory_inaccessible">Папка AnkiDroid недоступна</string>
@@ -136,7 +136,7 @@
     <string name="empty_cram_label" maxLength="28">Очистить</string>
     <string name="create_subdeck">Создать подколоду</string>
     <string name="empty_filtered_deck">Фильтрованная колода очищается&#8230;</string>
-    <string name="search_deck" comment="Deck search for selecting it">Deck search</string>
+    <string name="search_deck" comment="Deck search for selecting it">Поиск колод</string>
     <string name="empty_deck">Эта колода пуста</string>
     <string name="invalid_deck_name">Недопустимое название колоды</string>
     <string name="studyoptions_congrats_finished">Ура! На сегодня всё.</string>
@@ -148,7 +148,7 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Продолжить синхронизацию</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Синхронизация отменена</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Отмена&#8230;\nЭто может занять некоторое время.</string>
-    <string name="syncing_media">Синхронизация медиафайлов</string>
+    <string name="syncing_media">Медиафайлы синхронизируются</string>
     <string name="export_deck" maxLength="28">Экспортировать колоду</string>
     <string name="export_collection">Экспортировать коллекцию</string>
     <!-- Card template editor -->
@@ -216,16 +216,16 @@
     <string name="microphone_permission_explanation" comment="Description explaining why AnkiDroid needs the microphone permission, shown on the permissions explanation screen.">Позволяет добавлять звуки к карточкам и включать воспроизведение голоса во время повторения</string>
     <string name="notifications_permission_explanation" comment="Description explaining why AnkiDroid needs the notification permission.">Включает фоновую синхронизацию медиафайлов и позволяет создавать уведомления о повторении</string>
     <string name="heading_required_permissions" comment="Heading for the section of required permissions that the app needs to function, shown in the permissions explanation screen.">Обязательные</string>
-    <string name="heading_optional_permissions" comment="Heading for the section of optional permissions that the app needs to function, shown in the permissions explanation screen.">Дополнительные</string>
+    <string name="heading_optional_permissions" comment="Heading for the section of optional permissions that the app needs to function, shown in the permissions explanation screen.">Необязательные</string>
     <string name="manually_grant_permissions" comment="Pop-up message that is shown to the user when they want to grant an app permission that must be granted via the OS settings screen.">Это разрешение должно быть предоставлено вручную в настройках</string>
     <string name="revoke_permissions" comment="Pop-up message that is shown to the user when they are revoking an app permission.">Это разрешение должно быть отозвано вручную в настройках</string>
-    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Удалить аккаунт</string>
+    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Удалить учетную запись</string>
     <!-- Instant Note Editor -->
     <string name="instant_card" comment="Used in the Android system context menu/share dialog to quickly create a note. This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. ">Тест с пропусками</string>
     <!-- Internet Permissions -->
-    <string name="internet_access_title" comment="used for notifying user to unable internet access">Internet</string>
-    <string name="permission_access_summary">Required for the app to work</string>
-    <string name="permission_required_message">Please grant AnkiDroid the ‘%s’ permission to continue</string>
+    <string name="internet_access_title" comment="used for notifying user to unable internet access">Интернет</string>
+    <string name="permission_access_summary">Требуется для работы приложения</string>
+    <string name="permission_required_message">Чтобы продолжить, предоставьте AnkiDroid разрешение \"%s\"</string>
     <!-- Multiple profile -->
     <string name="add_profile">Добавить профиль</string>
 </resources>
