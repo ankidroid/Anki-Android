@@ -51,6 +51,7 @@
     <string name="backup_del_collection">𐌷𐌿𐌶𐌳𐌰 𐌿𐍃𐌵𐌹𐍃𐍄𐌾𐌰𐌽 𐌾𐌰𐌷 𐌽𐌹𐍅𐌹 𐍃𐌺𐌰𐍀𐌾𐌰𐌽</string>
     <string name="backup_del_collection_question">𐌷𐌿𐌶𐌳𐌰 𐌿𐍃𐌵𐌹𐍃𐍄𐌾𐌰𐌽 𐌾𐌰𐌷 𐌽𐌹𐍅𐌹 𐍃𐌺𐌰𐍀𐌾𐌰𐌽? 𐌸𐌰𐌽𐌿𐌷 𐌸𐌰𐌽 𐍆𐍂𐌰𐌻𐌹𐌿𐍃𐌰𐌳𐌰 𐌻𐌰𐌹𐍃𐌴𐌹𐌽𐌹𐍆𐍂𐌰𐌼𐌲𐌰𐌷𐍄𐌰𐌹 𐌸𐌴𐌹𐌽𐌰𐌹 𐌾𐌰𐌷 𐌿𐍃𐌵𐌹𐍃𐍄𐌾𐌰𐌽𐌳𐌰 𐌰𐌻𐌻𐌰𐌹𐌼 𐌺𐌰𐍂𐍄𐍉𐍃.</string>
     <string name="backup_one_way_sync_from_server">One-way sync from server</string>
+    <string name="backup_use_default_folder">Use default collection folder</string>
     <string name="backup_full_sync_from_server_question">Overwrite your collection with the one from AnkiWeb? This will drop all your learning progress and added information since your last sync.</string>
     <string name="error_handling_title">𐌰𐌹𐍂𐌶𐌴𐌹𐌽𐍉 𐌷𐌰𐌽𐌳𐌻𐌴𐌹𐌽𐍃</string>
     <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">𐌼𐌰𐌷𐍄𐌴𐌹𐍃</string>

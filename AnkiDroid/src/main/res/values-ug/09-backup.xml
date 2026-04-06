@@ -51,6 +51,7 @@
     <string name="backup_del_collection">توپلامنى ئۆچۈرۈپ، يېڭىسىنى قۇرىدۇ</string>
     <string name="backup_del_collection_question">توپلامنى ئۆچۈرۈپ، يېڭىدىن بىرنى قۇرامدۇ؟ بۇنداق بولغاندا بارلىق ئۆگىنىش جەريانىنى تاشلىۋېتىپ، ھەممە كارتىنى ئۆچۈرىدۇ.</string>
     <string name="backup_one_way_sync_from_server">مۇلازىمېتىردىن تاق يۆنىلىشلىك قەدەمداشلايدۇ</string>
+    <string name="backup_use_default_folder">Use default collection folder</string>
     <string name="backup_full_sync_from_server_question">AnkiWeb تىن چۈشۈرۈپ توپلىمىڭىزنى قاپلىۋەتسۇنمۇ؟ بۇنداق بولغاندا بارلىق ئۆگىنىش جەريانى ۋە ئاخىرقى قېتىم قەدەمداشلىغۇچە قوشقان ئۇچۇرنى تاشلىۋېتىدۇ.</string>
     <string name="error_handling_title">خاتالىقنى بىر تەرەپ قىلىش</string>
     <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">تاللانما</string>

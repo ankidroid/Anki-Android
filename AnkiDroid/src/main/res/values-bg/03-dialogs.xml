@@ -44,8 +44,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="check_db_title">Да се провери ли базата данни?</string>
-    <string name="check_db_warning">Това може да отнеме дълго време</string>
+    <string name="check_db_warning">This may take a long time. Proceed?</string>
     <string name="contextmenu_deckpicker_delete_deck" maxLength="28">Изтрий колода</string>
     <string name="delete_deck_title">Изтрий колода</string>
     <plurals name="delete_deck_message">
@@ -105,8 +104,7 @@
     <string name="dialog_invalid_custom_certificate_title">Error parsing certificate</string>
     <string name="dialog_updated_custom_certificate">Certificate updated</string>
     <!-- Media checking -->
-    <string name="check_media_title">Проверка на медия?</string>
-    <string name="check_media_warning">Това може да отнеме дълго време при големи мултимедийни колекции</string>
+    <string name="check_media_warning">This may take a long time with large media collections. Proceed?</string>
     <string name="check_media_message">Проверка на медия&#8230;</string>
     <string name="check_media_adding_missing_tag">Adding tags&#8230;</string>
     <string name="check_media_tags_added">Tags added</string>

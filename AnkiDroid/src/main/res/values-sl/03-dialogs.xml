@@ -44,8 +44,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="check_db_title">Preveri podatkovno zbirko?</string>
-    <string name="check_db_warning">To lahko traja dolgo časa</string>
+    <string name="check_db_warning">This may take a long time. Proceed?</string>
     <string name="contextmenu_deckpicker_delete_deck" maxLength="28">Izbriši komplet</string>
     <string name="delete_deck_title">Izbriši komplet?</string>
     <plurals name="delete_deck_message">
@@ -109,8 +108,7 @@
     <string name="dialog_invalid_custom_certificate_title">Error parsing certificate</string>
     <string name="dialog_updated_custom_certificate">Certificate updated</string>
     <!-- Media checking -->
-    <string name="check_media_title">Preveri predstavnost?</string>
-    <string name="check_media_warning">To lahko traja dolgo časa z velikimi zbirkami predstavnosti</string>
+    <string name="check_media_warning">This may take a long time with large media collections. Proceed?</string>
     <string name="check_media_message">Preverjanje predstavnosti &#8230;</string>
     <string name="check_media_adding_missing_tag">Adding tags&#8230;</string>
     <string name="check_media_tags_added">Tags added</string>

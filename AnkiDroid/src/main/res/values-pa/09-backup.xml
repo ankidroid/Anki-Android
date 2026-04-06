@@ -51,6 +51,7 @@
     <string name="backup_del_collection">ਸੰਗ੍ਰਹਿ ਨੂੰ ਮਿਟਾਓ ਅਤੇ ਇੱਕ ਨਵਾਂ ਬਣਾਓ</string>
     <string name="backup_del_collection_question">ਕੀ ਮੈਨੂੰ ਸੰਗ੍ਰਹਿ ਨੂੰ ਮਿਟਾਉਣਾ ਚਾਹੀਦਾ ਹੈ ਅਤੇ ਇੱਕ ਨਵਾਂ ਬਣਾਉਣਾ ਚਾਹੀਦਾ ਹੈ? ਇਹ ਤੁਹਾਡੀ ਸਾਰੀ ਸਿੱਖਣ ਦੀ ਪ੍ਰਗਤੀ ਨੂੰ ਰੱਦ ਕਰ ਦੇਵੇਗਾ ਅਤੇ ਸਾਰੇ ਕਾਰਡ ਮਿਟਾ ਦੇਵੇਗਾ।</string>
     <string name="backup_one_way_sync_from_server">ਸਰਵਰ ਤੋਂ ਵਨ-ਵੇ ਸਿੰਕ</string>
+    <string name="backup_use_default_folder">Use default collection folder</string>
     <string name="backup_full_sync_from_server_question">AnkiWeb ਤੋਂ ਆਪਣੇ ਸੰਗ੍ਰਹਿ ਨੂੰ ਓਵਰਰਾਈਟ ਕਰਨਾ ਹੈ? ਇਹ ਤੁਹਾਡੇ ਆਖਰੀ ਸਮਕਾਲੀਕਰਨ ਤੋਂ ਬਾਅਦ ਤੁਹਾਡੀ ਸਾਰੀ ਸਿੱਖਣ ਦੀ ਪ੍ਰਗਤੀ ਅਤੇ ਸ਼ਾਮਲ ਕੀਤੀ ਜਾਣਕਾਰੀ ਨੂੰ ਛੱਡ ਦੇਵੇਗਾ।</string>
     <string name="error_handling_title">ਅਸ਼ੁੱਧੀ ਨੂੰ ਸੰਭਾਲਣਾ</string>
     <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">ਵਿਕਲਪ</string>

@@ -151,8 +151,6 @@
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d el %2$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed." maxLength="28">Renomi</string>
     <string name="checks_action" maxLength="28">Kontroli</string>
-    <string name="check_db" maxLength="28">Kontroli datumbazon</string>
-    <string name="check_media" maxLength="28">Kontroli aŭdvidaĵojn</string>
     <string name="empty_cards" maxLength="28">Malplenaj kartoj</string>
     <string name="unknown_type_field_warning">Enigu respondon: nekonata kampo %s</string>
     <string name="delete_deck" comment="Message on a progress bar starting a deck is being deleted.">Forigado de kartaro&#8230;</string>
@@ -216,6 +214,9 @@
     <!-- Whiteboard eraser mode toggle message in Reviewer -->
     <string name="white_board_eraser_enabled">Reĝimo “forviŝilo” aktiva</string>
     <string name="white_board_eraser_disabled">Reĝimo “forviŝilo” malaktiva</string>
+    <string name="media_file_size_warning_title">Media too large</string>
+    <string name="media_file_size_warning_message" comment="1$s: File name, 2$s: File size, 3$s: The size limit (e.g. 100MB)">The file \"%1$s\" (%2$s) exceeds the AnkiWeb limit of %3$s and cannot be synced. Add anyway?</string>
+    <string name="media_file_size_add_anyway">Add anyway</string>
     <!-- Whiteboard save image message in the Study Screen -->
     <string name="white_board_image_save_failed">Malsukcesis konservi bildon de skribtabulo. %s</string>
     <string name="white_board_image_saved">Konservis bildon de skribtabulo al %s</string>

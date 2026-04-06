@@ -51,6 +51,7 @@
     <string name="backup_del_collection">ശേഖരം ഇല്ലാതാക്കി പുതിയതൊന്ന് സൃഷ്‌ടിക്കുക</string>
     <string name="backup_del_collection_question">ശേഖരം ഇല്ലാതാക്കി പുതിയൊരെണ്ണം സൃഷ്ടിക്കണോ? ഇത് നിങ്ങളുടെ എല്ലാ പഠന പുരോഗതിയും ഇല്ലാതാക്കുകയും എല്ലാ കാർഡുകളും ഇല്ലാതാക്കുകയും ചെയ്യും.</string>
     <string name="backup_one_way_sync_from_server">സെർവറിൽ നിന്നുള്ള വൺ-വേ സമന്വയം</string>
+    <string name="backup_use_default_folder">Use default collection folder</string>
     <string name="backup_full_sync_from_server_question">AnkiWeb-ൽ നിന്നുള്ള ഒരു ശേഖരം ഉപയോഗിച്ച് നിങ്ങളുടെ ശേഖരം തിരുത്തിയെഴുതണോ? ഇത് നിങ്ങളുടെ അവസാന സമന്വയത്തിന് ശേഷമുള്ള നിങ്ങളുടെ എല്ലാ പഠന പുരോഗതിയും ചേർത്ത വിവരങ്ങളും കുറയ്ക്കും.</string>
     <string name="error_handling_title">കൈകാര്യം ചെയ്യുന്നതിൽ പിശക്</string>
     <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">ഓപ്ഷനുകൾ</string>

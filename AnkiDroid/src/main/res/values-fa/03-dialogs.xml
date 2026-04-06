@@ -44,8 +44,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="check_db_title">بررسی پایگاه داده</string>
-    <string name="check_db_warning">این عملیات ممکن است مدت زیادی طول بکشد</string>
+    <string name="check_db_warning">This may take a long time. Proceed?</string>
     <string name="contextmenu_deckpicker_delete_deck" maxLength="28">حذف دسته</string>
     <string name="delete_deck_title">حذف دسته؟</string>
     <plurals name="delete_deck_message">
@@ -105,8 +104,7 @@
     <string name="dialog_invalid_custom_certificate_title">خطا در تجزیه گواهی</string>
     <string name="dialog_updated_custom_certificate">گواهی به‌روزرسانی شد</string>
     <!-- Media checking -->
-    <string name="check_media_title">رسانه بررسی شود؟</string>
-    <string name="check_media_warning">در صورت حجیم بودن رسانه مجموعه،این ممکن است طول بکشد</string>
+    <string name="check_media_warning">This may take a long time with large media collections. Proceed?</string>
     <string name="check_media_message">در حال بررسی رسانه&#8230;</string>
     <string name="check_media_adding_missing_tag">در حال اضافه کردن تگ ها&#8230;</string>
     <string name="check_media_tags_added">تگ ها اضافه شدند</string>

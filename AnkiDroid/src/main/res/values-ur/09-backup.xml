@@ -51,6 +51,7 @@
     <string name="backup_del_collection">مجموعہ کو حذف کریں اور نیا بنائیں</string>
     <string name="backup_del_collection_question">مجموعہ کو حذف کریں اور ایک نیا بنائیں؟ اس سے آپ کی تمام سیکھنے کی پیشرفت ختم ہو جائے گی اور تمام کارڈز حذف ہو جائیں گے۔</string>
     <string name="backup_one_way_sync_from_server">سرور سے یک طرفہ مطابقت پذیری</string>
+    <string name="backup_use_default_folder">Use default collection folder</string>
     <string name="backup_full_sync_from_server_question">AnkiWeb سے اپنے مجموعہ کو اوور رائٹ کریں؟ یہ آپ کی آخری مطابقت پذیری کے بعد سے آپ کی تمام سیکھنے کی پیشرفت اور اضافی معلومات کو چھوڑ دے گا</string>
     <string name="error_handling_title">اغلاط کی درستگی</string>
     <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">اختیارات</string>

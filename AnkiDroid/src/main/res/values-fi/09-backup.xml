@@ -52,6 +52,7 @@
     <string name="backup_del_collection_question">Haluatko varmasti poistaa kokoelman ja luoda uuden?
 Tämä nollaa edistymisesi ja poistaa kaikki kortit!</string>
     <string name="backup_one_way_sync_from_server">Yhdensuuntainen synkronointi palvelimelta</string>
+    <string name="backup_use_default_folder">Use default collection folder</string>
     <string name="backup_full_sync_from_server_question">Haluatko todella korvata kokoelmasi AnkiWebin kokoelmalla? Kaikki edellisen synkronoinnin jälkeen tapahtunyt opiskelu ja lisätyt tiedot unohdetaan!</string>
     <string name="error_handling_title">Virheiden käsittely</string>
     <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">Asetukset</string>

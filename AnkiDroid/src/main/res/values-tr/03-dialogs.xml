@@ -44,8 +44,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="check_db_title">Veritabanını denetle?</string>
-    <string name="check_db_warning">Bu uzun sürebilir</string>
+    <string name="check_db_warning">This may take a long time. Proceed?</string>
     <string name="contextmenu_deckpicker_delete_deck" maxLength="28">Desteyi sil</string>
     <string name="delete_deck_title">Deste silinsin mi?</string>
     <plurals name="delete_deck_message">
@@ -105,8 +104,7 @@
     <string name="dialog_invalid_custom_certificate_title">Sertifika çözümlemesinde hata</string>
     <string name="dialog_updated_custom_certificate">Sertifika güncellendi</string>
     <!-- Media checking -->
-    <string name="check_media_title">Medya kontrol edilsin mi?</string>
-    <string name="check_media_warning">Bu, büyük medya koleksiyonlarıyla uzun sürebilir.</string>
+    <string name="check_media_warning">This may take a long time with large media collections. Proceed?</string>
     <string name="check_media_message">Medya kontrol ediliyor&#8230;</string>
     <string name="check_media_adding_missing_tag">Etiketler ekleniyor&#8230;</string>
     <string name="check_media_tags_added">Etiketler eklendi</string>

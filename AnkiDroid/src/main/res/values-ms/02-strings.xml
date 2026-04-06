@@ -148,8 +148,6 @@
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d daripada %2$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed." maxLength="28">Nama semula</string>
     <string name="checks_action" maxLength="28">Check</string>
-    <string name="check_db" maxLength="28">Periksa pangkalan data</string>
-    <string name="check_media" maxLength="28">Periksa media</string>
     <string name="empty_cards" maxLength="28">Kad kosong</string>
     <string name="unknown_type_field_warning">Taip jawapan: medan %s tidak diketahui</string>
     <string name="delete_deck" comment="Message on a progress bar starting a deck is being deleted.">Memadam dek&#8230;</string>
@@ -213,6 +211,9 @@
     <!-- Whiteboard eraser mode toggle message in Reviewer -->
     <string name="white_board_eraser_enabled">Eraser mode activated</string>
     <string name="white_board_eraser_disabled">Eraser mode deactivated</string>
+    <string name="media_file_size_warning_title">Media too large</string>
+    <string name="media_file_size_warning_message" comment="1$s: File name, 2$s: File size, 3$s: The size limit (e.g. 100MB)">The file \"%1$s\" (%2$s) exceeds the AnkiWeb limit of %3$s and cannot be synced. Add anyway?</string>
+    <string name="media_file_size_add_anyway">Add anyway</string>
     <!-- Whiteboard save image message in the Study Screen -->
     <string name="white_board_image_save_failed">Gagal menyimpan gambar papan putih. %s</string>
     <string name="white_board_image_saved">Gambar papan putih simpan di %s</string>

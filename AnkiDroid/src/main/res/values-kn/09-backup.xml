@@ -51,6 +51,7 @@
     <string name="backup_del_collection">ಸಂಗ್ರಹವನ್ನು ಅಳಿಸಿ ಮತ್ತು ಹೊಸದನ್ನು ರಚಿಸಿ</string>
     <string name="backup_del_collection_question">ಸಂಗ್ರಹವನ್ನು ಅಳಿಸಿ ಮತ್ತು ಹೊಸದನ್ನು ರಚಿಸುವುದೇ? ಇದು ನಿಮ್ಮ ಎಲ್ಲಾ ಕಲಿಕೆಯ ಪ್ರಗತಿಯನ್ನು ಕೈಬಿಡುತ್ತದೆ ಮತ್ತು ಎಲ್ಲಾ ಕಾರ್ಡ್‌ಗಳನ್ನು ಅಳಿಸುತ್ತದೆ.</string>
     <string name="backup_one_way_sync_from_server">ಸರ್ವರ್‌ನಿಂದ ಏಕಮುಖ ಸಿಂಕ್</string>
+    <string name="backup_use_default_folder">Use default collection folder</string>
     <string name="backup_full_sync_from_server_question">AnkiWeb ನಿಂದ ನಿಮ್ಮ ಸಂಗ್ರಹಣೆಯನ್ನು ಓವರ್‌ರೈಟ್ ಮಾಡುವುದೇ? ಇದು ನಿಮ್ಮ ಎಲ್ಲಾ ಕಲಿಕೆಯ ಪ್ರಗತಿಯನ್ನು ಮತ್ತು ನಿಮ್ಮ ಕೊನೆಯ ಸಿಂಕ್‌ನಿಂದ ಸೇರಿಸಲಾದ ಮಾಹಿತಿಯನ್ನು ಕೈಬಿಡುತ್ತದೆ.</string>
     <string name="error_handling_title">ನಿರ್ವಹಣೆ ದೋಷ</string>
     <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">ಆಯ್ಕೆಗಳು</string>

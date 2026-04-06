@@ -51,6 +51,7 @@
     <string name="backup_del_collection">Izbriši kolekciju i napravi novu</string>
     <string name="backup_del_collection_question">Izbrisati kolekciju i napraviti novu? Ovo će odbaciti sav Vaš napredak učenja i izbrisati sve kartice.</string>
     <string name="backup_one_way_sync_from_server">Sinkronizacija u jednom smjeru s poslužitelja</string>
+    <string name="backup_use_default_folder">Use default collection folder</string>
     <string name="backup_full_sync_from_server_question">Zamijeniti vašu kolekciju s onom s AnkiWeba? Ovo će odbaciti vaš napredak učenja i informacije dodane od zadnje sinkronizacije.</string>
     <string name="error_handling_title">Rukovanje pogreškom</string>
     <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">Opcije</string>

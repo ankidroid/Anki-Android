@@ -44,8 +44,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="check_db_title">𐌳𐌰𐍄𐌰𐌷𐌿𐌶𐌳 𐌿𐍃𐍃𐍉𐌺𐌾𐌰𐌽?</string>
-    <string name="check_db_warning">𐌼𐌰𐌲 𐌻𐌰𐌲𐌲 𐌼𐌴𐌻 𐍅𐌰𐌹𐍂𐌸𐌰𐌽</string>
+    <string name="check_db_warning">This may take a long time. Proceed?</string>
     <string name="contextmenu_deckpicker_delete_deck" maxLength="28">𐌺𐌰𐍂𐍄𐌰𐌷𐌿𐌶𐌳𐌰 𐌿𐍃𐌵𐌹𐍃𐍄𐌾𐌰𐌽</string>
     <string name="delete_deck_title">𐌺𐌰𐍂𐍄𐌰𐌷𐌿𐌶𐌳𐌰 𐌿𐍃𐌵𐌹𐍃𐍄𐌾𐌰𐌽?</string>
     <plurals name="delete_deck_message">
@@ -105,8 +104,7 @@
     <string name="dialog_invalid_custom_certificate_title">Error parsing certificate</string>
     <string name="dialog_updated_custom_certificate">Certificate updated</string>
     <!-- Media checking -->
-    <string name="check_media_title">𐌼𐌰𐌹𐌳𐌾𐌰 𐌿𐍃𐍃𐍉𐌺𐌾𐌰𐌽?</string>
-    <string name="check_media_warning">𐌸𐌰𐍄𐌰 𐌼𐌰𐌲 𐌻𐌰𐌲𐌲 𐌼𐌴𐌻 𐍅𐌹𐍃𐌰𐌽 𐌷𐌿𐌶𐌳𐌰𐌼 𐌼𐌰𐌹𐌳𐌾𐌴 𐌼𐌹𐌺𐌹𐌻𐌰𐌹𐌶𐌴</string>
+    <string name="check_media_warning">This may take a long time with large media collections. Proceed?</string>
     <string name="check_media_message">𐌿𐍃𐍃𐍉𐌺𐌾𐌰𐌽𐌳𐌰 𐌼𐌰𐌹𐌳𐌾𐌰&#8230;</string>
     <string name="check_media_adding_missing_tag">𐌱𐌹𐌰𐌿𐌺𐌰𐌽𐌳𐌰 𐍃𐍉𐌺𐌽𐌹𐍅𐌰𐌿𐍂𐌳𐌰&#8230;</string>
     <string name="check_media_tags_added">𐍃𐍉𐌺𐌽𐌹𐍅𐌰𐌿𐍂𐌳𐌰 𐌱𐌹𐌰𐌿𐌺𐌰𐌽𐌰</string>

@@ -51,6 +51,7 @@
     <string name="backup_del_collection">સંગ્રહ કાઢી નાખો અને એક નવું બનાવો</string>
     <string name="backup_del_collection_question">தொகுப்பை நீக்கிவிட்டு புதியதை உருவாக்கவா? இது உங்கள் கற்றல் முன்னேற்றம் அனைத்தையும் கைவிடும் மற்றும் அனைத்து கார்டுகளையும் நீக்கும்.</string>
     <string name="backup_one_way_sync_from_server">સર્વરથી વન-વે સિંક</string>
+    <string name="backup_use_default_folder">Use default collection folder</string>
     <string name="backup_full_sync_from_server_question">AnkiWeb இலிருந்து உங்கள் தொகுப்பை மேலெழுதவா? இது உங்கள் கற்றல் முன்னேற்றம் மற்றும் உங்கள் கடைசி ஒத்திசைவுக்குப் பிறகு சேர்க்கப்பட்ட தகவலைக் குறைக்கும்.</string>
     <string name="error_handling_title">હેન્ડલિંગમાં ભૂલ</string>
     <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">વિકલ્પો</string>

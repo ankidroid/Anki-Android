@@ -51,6 +51,7 @@
     <string name="backup_del_collection">حذف المجموعة وإنشاء واحدة جديدة</string>
     <string name="backup_del_collection_question">هل أنت متأكد من حذف المجموعة وإنشاء واحدة جديدة؟ سيحذف هذا تقدمك كله وجميع البطاقات.</string>
     <string name="backup_one_way_sync_from_server">مزامنة من الخادم باتجاه واحد</string>
+    <string name="backup_use_default_folder">Use default collection folder</string>
     <string name="backup_full_sync_from_server_question">أتستبدل مجموعتك في آنكي ويب بجموعتك في آنكي درويد؟ سيحذف هذا كل تقدمك والمعلومات المضافة منذ آخر مزامنة.</string>
     <string name="error_handling_title">معالجة الأخطاء</string>
     <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">الخيارات</string>

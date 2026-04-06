@@ -51,6 +51,7 @@
     <string name="backup_del_collection">Eliminar coleção e criar uma nova</string>
     <string name="backup_del_collection_question">Eliminar a coleção e criar uma nova? Isto irá eliminar todo o seu progresso de aprendizagem e eliminar todas as fichas.</string>
     <string name="backup_one_way_sync_from_server">Sincronização a partir do servidor</string>
+    <string name="backup_use_default_folder">Use default collection folder</string>
     <string name="backup_full_sync_from_server_question">Substituir a sua coleção pela da AnkiWeb? Isto irá eliminar todo o seu progresso de aprendizagem e informação adicionada, desde a sua última sincronização.</string>
     <string name="error_handling_title">Erro ao manipular</string>
     <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">Opções</string>

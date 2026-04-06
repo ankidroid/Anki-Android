@@ -44,8 +44,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="check_db_title">Kontrolli andmebaasi?</string>
-    <string name="check_db_warning">See võib võtta kaua aega</string>
+    <string name="check_db_warning">This may take a long time. Proceed?</string>
     <string name="contextmenu_deckpicker_delete_deck" maxLength="28">Kustuta kaardipakk</string>
     <string name="delete_deck_title">Kustuta kaardipakk?</string>
     <plurals name="delete_deck_message">
@@ -105,8 +104,7 @@
     <string name="dialog_invalid_custom_certificate_title">Error parsing certificate</string>
     <string name="dialog_updated_custom_certificate">Sertifikaat on uuendatud</string>
     <!-- Media checking -->
-    <string name="check_media_title">Kontrollida meediat?</string>
-    <string name="check_media_warning">This may take a long time with large media collections</string>
+    <string name="check_media_warning">This may take a long time with large media collections. Proceed?</string>
     <string name="check_media_message">Meedia kontrollimine&#8230;</string>
     <string name="check_media_adding_missing_tag">Siltide lisamine&#8230;</string>
     <string name="check_media_tags_added">Sildid on lisatud</string>

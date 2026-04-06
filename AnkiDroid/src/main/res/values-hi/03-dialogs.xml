@@ -44,8 +44,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="check_db_title">डेटाबेस की जाँच करें?</string>
-    <string name="check_db_warning">इसमें बहुत समय लग सकता है</string>
+    <string name="check_db_warning">This may take a long time. Proceed?</string>
     <string name="contextmenu_deckpicker_delete_deck" maxLength="28">डेक मिटाएँ</string>
     <string name="delete_deck_title">डेक मिटाएँ?</string>
     <plurals name="delete_deck_message">
@@ -105,8 +104,7 @@
     <string name="dialog_invalid_custom_certificate_title">प्रमाणपत्र पार्स करने में त्रुटि</string>
     <string name="dialog_updated_custom_certificate">प्रमाणपत्र अद्यतन किया गया</string>
     <!-- Media checking -->
-    <string name="check_media_title">मीडिया की जांच करें?</string>
-    <string name="check_media_warning">यह बड़े मीडिया संग्रह के साथ एक लंबा समय लग सकता है</string>
+    <string name="check_media_warning">This may take a long time with large media collections. Proceed?</string>
     <string name="check_media_message">मीडिया जांच कर रहा है.. ।</string>
     <string name="check_media_adding_missing_tag">Adding tags&#8230;</string>
     <string name="check_media_tags_added">Tags added</string>

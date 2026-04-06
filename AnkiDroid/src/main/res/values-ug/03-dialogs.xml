@@ -44,8 +44,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="check_db_title">ساندان تەكشۈرەمدۇ؟</string>
-    <string name="check_db_warning">بۇنىڭغا ئۇزۇن ۋاقىت كېتىشى مۇمكىن</string>
+    <string name="check_db_warning">This may take a long time. Proceed?</string>
     <string name="contextmenu_deckpicker_delete_deck" maxLength="28">دەستە ئۆچۈر</string>
     <string name="delete_deck_title">دەستە ئۆچۈرەمدۇ؟</string>
     <plurals name="delete_deck_message">
@@ -105,8 +104,7 @@
     <string name="dialog_invalid_custom_certificate_title">گۇۋاھنامە يېشىش خاتالىقى</string>
     <string name="dialog_updated_custom_certificate">گۇۋاھنامە يېڭىلاندى</string>
     <!-- Media checking -->
-    <string name="check_media_title">ۋاسىتە تەكشۈرەمدۇ؟</string>
-    <string name="check_media_warning">چوڭ ۋاسىتە توپلىمىغا ئۇزۇن ۋاقىت كېتىشى مۇمكىن</string>
+    <string name="check_media_warning">This may take a long time with large media collections. Proceed?</string>
     <string name="check_media_message">ۋاسىتە تەكشۈرۈۋاتىدۇ&#8230;</string>
     <string name="check_media_adding_missing_tag">بەلگە قوش&#8230;</string>
     <string name="check_media_tags_added">بەلگە قوشۇلدى</string>

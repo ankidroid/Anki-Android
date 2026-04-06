@@ -151,8 +151,6 @@
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d 𐍆𐍂𐌰𐌼 %2$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed." maxLength="28">𐌽𐌹𐌿𐌾𐌰𐍄𐌰 𐌽𐌰𐌼𐍉 𐌲𐌹𐌱𐌰𐌽</string>
     <string name="checks_action" maxLength="28">𐌿𐍃𐍃𐍉𐌺𐌾𐌰𐌽</string>
-    <string name="check_db" maxLength="28">𐌳𐌰𐍄𐌰𐌷𐌿𐌶𐌳 𐌿𐍃𐍃𐍉𐌺𐌾𐌰𐌽</string>
-    <string name="check_media" maxLength="28">𐌼𐌰𐌹𐌳𐌾𐌰 𐌿𐍃𐍃𐍉𐌺𐌾𐌰𐌽</string>
     <string name="empty_cards" maxLength="28">𐌺𐌰𐍂𐍄𐍉𐍃 𐌻𐌰𐌿𐍃𐍉𐍃</string>
     <string name="unknown_type_field_warning">𐌰𐌽𐌳𐌰𐌷𐌰𐍆𐍄 𐌼𐌴𐌻𐌾𐌰𐌽: 𐌿𐌽𐌺𐌿𐌽𐌸𐍃 𐍃𐍄𐌰𐌸𐍃 %s</string>
     <string name="delete_deck" comment="Message on a progress bar starting a deck is being deleted.">𐍅𐌹𐌺𐍉 𐌿𐍃𐌽𐌹𐌼𐌰𐌳𐌰&#8230;</string>
@@ -216,6 +214,9 @@
     <!-- Whiteboard eraser mode toggle message in Reviewer -->
     <string name="white_board_eraser_enabled">𐌰𐍆𐍈𐌰𐌹𐍂𐌱𐌰𐌽𐌳𐌹𐍃 𐌼𐍉𐌳𐌿𐍃 𐌹𐌽𐌻𐌰𐌲𐌹𐌸𐍃</string>
     <string name="white_board_eraser_disabled">𐌰𐍆𐍈𐌰𐌹𐍂𐌱𐌰𐌽𐌳𐌹𐍃 𐌼𐍉𐌳𐌿𐍃 𐌿𐌽𐌻𐌰𐌲𐌹𐌸𐍃</string>
+    <string name="media_file_size_warning_title">Media too large</string>
+    <string name="media_file_size_warning_message" comment="1$s: File name, 2$s: File size, 3$s: The size limit (e.g. 100MB)">The file \"%1$s\" (%2$s) exceeds the AnkiWeb limit of %3$s and cannot be synced. Add anyway?</string>
+    <string name="media_file_size_add_anyway">Add anyway</string>
     <!-- Whiteboard save image message in the Study Screen -->
     <string name="white_board_image_save_failed">𐌽𐌹 𐌼𐌰𐌷𐍄𐌰 𐌲𐌰𐍆𐌰𐍃𐍄𐌰𐌽 𐍆𐍂𐌹𐍃𐌰𐌷𐍄 𐍈𐌴𐌹𐍄𐌰𐌱𐌰𐌿𐍂𐌳𐌹𐍃. %s</string>
     <string name="white_board_image_saved">𐍆𐍂𐌹𐍃𐌰𐌷𐍄𐍃 𐍈𐌴𐌹𐍄𐌰𐌱𐌰𐌿𐍂𐌳𐌹𐍃 𐌲𐌰𐍆𐌰𐍃𐍄𐌰𐌽𐌰 𐌳𐌿 %s</string>

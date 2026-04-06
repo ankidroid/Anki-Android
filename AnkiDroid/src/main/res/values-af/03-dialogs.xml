@@ -44,8 +44,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="check_db_title">Kontroleer databasis?</string>
-    <string name="check_db_warning">Dit kan lank neem</string>
+    <string name="check_db_warning">This may take a long time. Proceed?</string>
     <string name="contextmenu_deckpicker_delete_deck" maxLength="28">Verwyder pak</string>
     <string name="delete_deck_title">Verwyder pak?</string>
     <plurals name="delete_deck_message">
@@ -105,8 +104,7 @@
     <string name="dialog_invalid_custom_certificate_title">Fout met die ontleding van sertifikaat</string>
     <string name="dialog_updated_custom_certificate">Sertifikaat opgedateer</string>
     <!-- Media checking -->
-    <string name="check_media_title">Kontroleer media?</string>
-    <string name="check_media_warning">Dit kan lank neem met groot mediaversamelings</string>
+    <string name="check_media_warning">This may take a long time with large media collections. Proceed?</string>
     <string name="check_media_message">Media word nagegaan&#8230;</string>
     <string name="check_media_adding_missing_tag">Adding tags&#8230;</string>
     <string name="check_media_tags_added">Tags added</string>

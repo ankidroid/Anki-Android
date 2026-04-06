@@ -44,8 +44,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="check_db_title">檢查資料庫？</string>
-    <string name="check_db_warning">這可能會花上好一段時間</string>
+    <string name="check_db_warning">This may take a long time. Proceed?</string>
     <string name="contextmenu_deckpicker_delete_deck" maxLength="28">刪除牌組</string>
     <string name="delete_deck_title">刪除牌組？</string>
     <plurals name="delete_deck_message">
@@ -103,8 +102,7 @@
     <string name="dialog_invalid_custom_certificate_title">證書解析錯誤</string>
     <string name="dialog_updated_custom_certificate">證書已更新</string>
     <!-- Media checking -->
-    <string name="check_media_title">檢查媒體嗎？</string>
-    <string name="check_media_warning">因爲大量的媒體集合，這可能會花上好一段時間</string>
+    <string name="check_media_warning">This may take a long time with large media collections. Proceed?</string>
     <string name="check_media_message">正在檢查媒體&#8230;</string>
     <string name="check_media_adding_missing_tag">添加標籤&#8230;</string>
     <string name="check_media_tags_added">標籤已添加</string>

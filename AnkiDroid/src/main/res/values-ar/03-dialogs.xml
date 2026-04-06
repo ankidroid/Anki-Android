@@ -44,8 +44,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="check_db_title">أتريد فحص قاعدة البيانات؟</string>
-    <string name="check_db_warning">قد يستغرق هذا وقتًا طويلاً</string>
+    <string name="check_db_warning">This may take a long time. Proceed?</string>
     <string name="contextmenu_deckpicker_delete_deck" maxLength="28">حذف الرزمة</string>
     <string name="delete_deck_title">هل تريد حذف الرزمة؟</string>
     <plurals name="delete_deck_message">
@@ -113,8 +112,7 @@
     <string name="dialog_invalid_custom_certificate_title">حدث خطأ في تحليل الشهادة</string>
     <string name="dialog_updated_custom_certificate">تم تحديث الشهادة</string>
     <!-- Media checking -->
-    <string name="check_media_title">أتريد فحص الوسائط؟</string>
-    <string name="check_media_warning">قد يأخذ هذا وقتًا طويلًا لمجموعات الوسائط الكبيرة</string>
+    <string name="check_media_warning">This may take a long time with large media collections. Proceed?</string>
     <string name="check_media_message">يتم فحص الوسائط&#8230;</string>
     <string name="check_media_adding_missing_tag">تجري إضافة الوسوم&#8230;</string>
     <string name="check_media_tags_added">أضيفت الوسوم</string>

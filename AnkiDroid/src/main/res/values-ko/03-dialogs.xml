@@ -44,8 +44,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="check_db_title">데이터베이스를 점검할까요?</string>
-    <string name="check_db_warning">시간이 오래 걸릴 수 있습니다</string>
+    <string name="check_db_warning">This may take a long time. Proceed?</string>
     <string name="contextmenu_deckpicker_delete_deck" maxLength="28">덱 삭제하기</string>
     <string name="delete_deck_title">덱을 삭제할까요?</string>
     <plurals name="delete_deck_message">
@@ -103,8 +102,7 @@
     <string name="dialog_invalid_custom_certificate_title">인증서 인식 오류</string>
     <string name="dialog_updated_custom_certificate">인증서 업데이트됨</string>
     <!-- Media checking -->
-    <string name="check_media_title">미디어를 점검할까요?</string>
-    <string name="check_media_warning">큰 미디어 컬렉션은 시간이 오래 걸릴 수 있습니다</string>
+    <string name="check_media_warning">This may take a long time with large media collections. Proceed?</string>
     <string name="check_media_message">미디어 점검 중&#8230;</string>
     <string name="check_media_adding_missing_tag">태그 추가 중&#8230;</string>
     <string name="check_media_tags_added">태그 추가됨</string>

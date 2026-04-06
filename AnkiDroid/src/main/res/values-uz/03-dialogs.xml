@@ -44,8 +44,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="check_db_title">Maʼlumotlar bazasi tekshirilsinmi?</string>
-    <string name="check_db_warning">Bu biroz vaqt olishi mumkin</string>
+    <string name="check_db_warning">This may take a long time. Proceed?</string>
     <string name="contextmenu_deckpicker_delete_deck" maxLength="28">Dastani oʻchirish</string>
     <string name="delete_deck_title">Dasta oʻchirilsinmi?</string>
     <plurals name="delete_deck_message">
@@ -105,8 +104,7 @@
     <string name="dialog_invalid_custom_certificate_title">Sertifikatni tekshirishda xatolik</string>
     <string name="dialog_updated_custom_certificate">Sertifikat yangilandi</string>
     <!-- Media checking -->
-    <string name="check_media_title">Media fayllar tekshirilsinmi?</string>
-    <string name="check_media_warning">Katta media fayllar toʻplamlari uchun uzoq vaqt olishi mumkin</string>
+    <string name="check_media_warning">This may take a long time with large media collections. Proceed?</string>
     <string name="check_media_message">Media fayllar tekshirilmoqda&#8230;</string>
     <string name="check_media_adding_missing_tag">Teglar qoʻshilmoqda</string>
     <string name="check_media_tags_added">Teglar qoʻshildi</string>
