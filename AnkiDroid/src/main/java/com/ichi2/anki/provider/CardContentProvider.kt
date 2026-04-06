@@ -1187,6 +1187,12 @@ class CardContentProvider : ContentProvider() {
                 FlashCardsContract.Card.QUESTION_SIMPLE -> rb.add(currentCard.renderOutput(col).questionText)
                 FlashCardsContract.Card.ANSWER_SIMPLE -> rb.add(currentCard.renderOutput(col, false).answerText)
                 FlashCardsContract.Card.ANSWER_PURE -> rb.add(currentCard.pureAnswer(col))
+                FlashCardsContract.Card.RAW_QUEUE -> rb.add(currentCard.queue.code)
+                FlashCardsContract.Card.RAW_DUE -> rb.add(currentCard.due)
+                FlashCardsContract.Card.RAW_ORIGINAL_DUE -> rb.add(currentCard.oDue)
+                FlashCardsContract.Card.INTERVAL -> rb.add(currentCard.ivl)
+                FlashCardsContract.Card.RAW_SM2_FACTOR -> rb.add(currentCard.factor)
+                FlashCardsContract.Card.RAW_LEFT -> rb.add(currentCard.left)
                 else -> throw UnsupportedOperationException("Queue \"$column\" is unknown")
             }
         }

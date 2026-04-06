@@ -689,6 +689,104 @@ public object FlashCardsContract {
         public const val ANSWER_PURE: String = "answer_pure"
 
         /**
+         * The stored Anki queue code for this card: how Anki decides whether the card can be shown.
+         *
+         * See [AnkiDroid's cards table docs](https://github.com/ankidroid/Anki-Android/wiki/Database-Structure/#cards).
+         *
+         * Unlike [TYPE], queue also includes temporary display states such as buried, suspended,
+         * and preview.
+         *
+         * * `-3` = manually buried
+         * * `-2` = sibling buried
+         * * `-1` = suspended
+         * * `0` = new
+         * * `1` = learning
+         * * `2` = review
+         * * `3` = day-learning / relearning; next review is at least one day after the previous
+         *   review
+         * * `4` = preview
+         *
+         * Negative values indicate cards that are not currently schedulable. Non-negative values
+         * indicate active scheduler queues.
+         *
+         * Other values should be treated as unknown.
+         */
+        public const val RAW_QUEUE: String = "queue"
+
+        /**
+         * The stored Anki due value for this card.
+         *
+         * This is raw scheduler state, not a single normalized timestamp or day number.
+         *
+         * See [AnkiDroid's cards table docs](https://github.com/ankidroid/Anki-Android/wiki/Database-Structure/#cards).
+         *
+         * This value is state-dependent:
+         *
+         * * new queue: the order in which cards are to be studied; starts from 1
+         * * learning / relearning queue: Unix timestamp in seconds
+         * * review queue: the collection scheduler day number when the card is due for review.
+         *   This is not a calendar date; converting it to one requires collection
+         *   creation/day-cutoff metadata not currently exposed by this API.
+         * * filtered deck: the position of the card inside the filtered deck
+         *
+         * Consumers must read this together with [RAW_QUEUE], and with [RAW_ORIGINAL_DUE] when
+         * filtered-deck behavior matters.
+         */
+        public const val RAW_DUE: String = "due"
+
+        /**
+         * The stored original due value for this card.
+         *
+         * For cards in filtered decks, this stores the due value from before the card entered the
+         * filtered deck. If the card is not currently in a filtered deck, this value is `0`.
+         *
+         * @see RAW_DUE for the state-dependent meaning of the current due value
+         */
+        public const val RAW_ORIGINAL_DUE: String = "original_due"
+
+        /**
+         * The stored Anki interval (`ivl`) for this card, in days.
+         *
+         * See [AnkiDroid's cards table docs](https://github.com/ankidroid/Anki-Android/wiki/Database-Structure/#cards).
+         *
+         * For review cards, this is the scheduled number of days between reviews. For relearning
+         * cards, this retains the review interval that will apply when the card returns to the
+         * review queue.
+         *
+         * Learning cards store `0`; their active learning due value is stored in [RAW_DUE].
+         */
+        public const val INTERVAL: String = "interval"
+
+        /**
+         * The stored SM-2 ease factor for this card.
+         *
+         * This factor helps determine the next review interval for cards using SM-2 scheduling.
+         * It is not used by FSRS.
+         *
+         * This is an integer scaled by 10, so `2500` means `250%`.
+         * New SM-2 cards typically start at `2500`.
+         */
+        public const val RAW_SM2_FACTOR: String = "sm2_factor"
+
+        /**
+         * The stored Anki `left` value for this card.
+         *
+         * This is relevant for learning and relearning cards.
+         *
+         * Anki uses this as an internal scheduler counter. The stored value is encoded as:
+         *
+         * * `left % 1000`: learning or relearning reps left before graduation
+         * * `left / 1000`: reps that can still be completed before the day cutoff
+         *
+         * For example, `left = 2003` means 3 reps left before graduation, with 2 of
+         * them still completable before the day cutoff.
+         *
+         * This provider exposes the backend value as-is, so consumers should not depend on a
+         * normalized encoding.
+         */
+        public const val RAW_LEFT: String = "left"
+
+        /**
          * The content:// style URI for cards. Can be used to search for cards or access specific cards.
          * For examples on how to use the URI for queries see the overview in [FlashCardsContract].
          */
