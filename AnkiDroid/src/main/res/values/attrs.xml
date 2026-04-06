@@ -36,6 +36,8 @@
              The placeholder is replaced by the preference value, and it must be only one placeholder.
              If the preference value is updated, the summary is automatically updated as well. -->
         <attr name="summaryFormat" format="string"/>
+        <!-- Floating label displayed on the dialog text field border. -->
+        <attr name="dialogHint" format="string|reference"/>
     </declare-styleable>
 
     <declare-styleable name="NumberRangePreference">

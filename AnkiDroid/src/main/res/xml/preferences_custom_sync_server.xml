@@ -16,9 +16,11 @@
         android:key="@string/custom_sync_server_collection_url_key"
         android:title="@string/custom_sync_server_base_url_title"
         android:inputType="textUri"
+        app:dialogHint="@string/dialog_hint_url"
         app:useSimpleSummaryProvider="true" />
     <com.ichi2.preferences.VersatileTextPreference
         android:key="@string/custom_sync_certificate_key"
         android:title="@string/custom_sync_certificate_title"
-        android:inputType="textMultiLine" />
+        android:inputType="textMultiLine"
+        app:dialogHint="@string/dialog_hint_certificate" />
 </PreferenceScreen>
