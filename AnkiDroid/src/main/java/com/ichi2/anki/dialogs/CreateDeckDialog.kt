@@ -26,7 +26,6 @@ import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
-import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.Decks
@@ -49,7 +48,6 @@ import timber.log.Timber
  *
  * required property: [onNewDeckCreated]. Called on successful creation of a deck
  */
-@NeedsTest("Ensure a toast is shown on a successful action")
 class CreateDeckDialog(
     private val context: Context,
     private val title: Int,
