@@ -1632,6 +1632,44 @@ class CardBrowserTest : RobolectricTest() {
         }
 
     @Test
+    fun `options menu test - mutliselect with no selection`() =
+        withOptionsMenu(
+            OptionsMenuType(
+                fragmented = false,
+                mutliselect = true,
+            ),
+        ) {
+            viewModel.selectNone()
+            advanceRobolectricLooper()
+            assertEquals(true, viewModel.isInMultiSelectMode, "still in multi-select mode")
+            assertEquals(0, viewModel.selectedRowCount(), "no rows selected")
+
+            val expectedMenuItems =
+                listOf(
+                    R.id.action_edit_note to false,
+                    R.id.action_delete_card to false,
+                    R.id.action_view_card_info to false,
+                    R.id.action_flag to false,
+                    R.id.action_mark_card to false,
+                    R.id.action_suspend_card to false,
+                    R.id.action_toggle_bury to false,
+                    R.id.action_change_note_type to false,
+                    R.id.action_change_deck to false,
+                    R.id.action_reposition_cards to false,
+                    R.id.action_reschedule_cards to false,
+                    R.id.action_edit_tags to false,
+                    R.id.action_grade_now to false,
+                    R.id.action_reset_cards_progress to false,
+                    R.id.action_preview_many to true,
+                    R.id.action_export_selected to false,
+                    R.id.action_undo to true,
+                    R.id.action_find_replace to false,
+                )
+
+            assertMenusEqual(expectedMenuItems, menu)
+        }
+
+    @Test
     fun `options menu test - fragmented`() =
         withOptionsMenu(
             OptionsMenuType(

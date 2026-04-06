@@ -550,6 +550,10 @@ class CardBrowserFragment :
                         setIcon(R.drawable.ic_star_border_white)
                         isVisible = vm.hasSelectedAnyRows()
                     }
+                    menu.findItem(R.id.action_change_note_type).apply {
+                        title = TR.sentenceCase.changeNoteType
+                        isVisible = vm.hasSelectedAnyRows()
+                    }
                     menu.findItem(R.id.action_change_deck).isVisible = vm.hasSelectedAnyRows()
                     menu.findItem(R.id.action_reposition_cards).isVisible = vm.hasSelectedAnyRows()
                     menu.findItem(R.id.action_grade_now).isVisible = vm.hasSelectedAnyRows()
