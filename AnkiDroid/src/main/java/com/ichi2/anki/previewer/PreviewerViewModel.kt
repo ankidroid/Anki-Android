@@ -38,7 +38,6 @@ import com.ichi2.anki.utils.ext.require
 import com.ichi2.anki.utils.ext.setUserFlagForCards
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.update
 import timber.log.Timber
@@ -88,8 +87,8 @@ class PreviewerViewModel(
     @NeedsTest("16302 - a sound-only card on the back/flipped with 'don't keep activities'")
     @NeedsTest("16302 - on config changes, sound continues to play")
     override fun onPageFinished(isAfterRecreation: Boolean) {
-        if (isAfterRecreation) {
-            launchCatchingIO {
+        launchCatchingIO {
+            if (isAfterRecreation) {
                 showCard(showAnswerOnReload)
                 // isAfterRecreation can either mean:
                 // * after config change (ViewModel exists)
@@ -97,13 +96,9 @@ class PreviewerViewModel(
                 // if the ViewModel existed, we want to continue playing audio
                 // if not, we want to setup the sound player
                 cardMediaPlayer.ensureAvTagsLoaded(currentCard.await())
-            }
-            return
-        }
-        launchCatchingIO {
-            currentIndex.collectLatest {
-                showCard(showAnswer = backSideOnly.value)
-                loadAndPlaySounds()
+            } else {
+                // re-render the current card
+                updateCurrentIndex { it }
             }
         }
     }
@@ -159,7 +154,7 @@ class PreviewerViewModel(
                 showAnswer()
                 cardMediaPlayer.autoplayAllForSide(CardSide.ANSWER)
             } else {
-                currentIndex.update { it + 1 }
+                updateCurrentIndex { it + 1 }
             }
         }
     }
@@ -171,7 +166,7 @@ class PreviewerViewModel(
     fun onPreviousButtonClick() {
         launchCatchingIO {
             if (currentIndex.value > 0) {
-                currentIndex.update { it - 1 }
+                updateCurrentIndex { it - 1 }
             } else if (showingAnswer.value && !backSideOnly.value) {
                 showQuestion()
             }
@@ -196,13 +191,20 @@ class PreviewerViewModel(
         val index = sliderPosition - 1
         if (index !in selectedCardIds.indices) return
         launchCatchingIO {
-            currentIndex.emit(index)
+            updateCurrentIndex { index }
         }
     }
 
     /* *********************************************************************************************
      *************************************** Internal methods ***************************************
      ********************************************************************************************* */
+
+    /** Applies [update] to [currentIndex] and re-renders the resulting card. */
+    private suspend fun updateCurrentIndex(update: (Int) -> Int) {
+        currentIndex.update(update)
+        showCard(showAnswer = backSideOnly.value)
+        loadAndPlaySounds()
+    }
 
     private suspend fun showCard(showAnswer: Boolean) {
         currentCard =

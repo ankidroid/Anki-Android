@@ -22,8 +22,6 @@ import com.ichi2.anki.browser.IdsFile
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.anki.utils.ext.flag
 import com.ichi2.testutils.JvmTest
-import com.ichi2.testutils.common.Flaky
-import com.ichi2.testutils.common.OS
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
@@ -103,7 +101,6 @@ class PreviewerViewModelTest : JvmTest() {
         }
 
     @Test
-    @Flaky(OS.ALL)
     fun `previous button`() =
         runTest {
             // Start at Index 1
@@ -122,7 +119,6 @@ class PreviewerViewModelTest : JvmTest() {
         }
 
     @Test
-    @Flaky(OS.ALL)
     fun `toggle back side only`() =
         runTest {
             assertFalse(viewModel.backSideOnly.value) // initial state should be false
