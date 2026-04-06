@@ -538,7 +538,7 @@ private suspend fun ProgressContext.monitorProgress(
  */
 data class ProgressContext(
     var progress: Progress = Progress.getDefaultInstance(),
-    var text: String = "",
+    var text: String? = null,
     /** If set, shows a progress bar with `current` of `max` complete. */
     var amount: Amount? = null,
     val formatAmount: (Amount) -> String = { (current, max) -> "$current/$max" },
