@@ -232,7 +232,7 @@ private suspend fun handleDownload(
 ) {
     Timber.i("Sync: Full collection download requested")
     deckPicker.withProgress(
-        progressContext = ProgressContext.ofBytes(context = deckPicker),
+        progressContext = ProgressContext.ofBytes(context = deckPicker).copy(separator = "\n"),
         extractProgress = fullDownloadProgress(TR.syncDownloadingFromAnkiweb()),
         onCancel = ::cancelSync,
         manualCancelButton = R.string.dialog_cancel,
@@ -267,7 +267,7 @@ private suspend fun handleUpload(
 ) {
     Timber.i("Sync: Full collection upload requested")
     deckPicker.withProgress(
-        progressContext = ProgressContext.ofBytes(context = deckPicker),
+        progressContext = ProgressContext.ofBytes(context = deckPicker).copy(separator = "\n"),
         extractProgress = fullDownloadProgress(TR.syncUploadingToAnkiweb()),
         onCancel = ::cancelSync,
         manualCancelButton = R.string.dialog_cancel,

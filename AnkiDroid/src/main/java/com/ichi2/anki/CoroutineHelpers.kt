@@ -542,6 +542,8 @@ data class ProgressContext(
     /** If set, shows a progress bar with `current` of `max` complete. */
     var amount: Amount? = null,
     val formatAmount: (Amount) -> String = { (current, max) -> "$current/$max" },
+    /** Separator between [text] and [amount] */
+    val separator: String = " ",
 ) {
     @Suppress("Deprecation") // ProgressDialog deprecation
     fun updateDialog(dialog: android.app.ProgressDialog) {
@@ -549,7 +551,7 @@ data class ProgressContext(
             listOfNotNull(
                 text,
                 amount?.let { formatAmount(it) },
-            ).joinToString(" ")
+            ).joinToString(separator)
         dialog.setMessage(message)
     }
 
