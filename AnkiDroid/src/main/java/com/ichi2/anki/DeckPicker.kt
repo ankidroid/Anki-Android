@@ -161,6 +161,7 @@ import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.sync.MeteredSyncPolicy
 import com.ichi2.anki.sync.launchCatchingRequiringOneWaySyncDiscardUndo
 import com.ichi2.anki.ui.ResizablePaneManager
 import com.ichi2.anki.ui.animations.fadeIn
@@ -187,7 +188,6 @@ import com.ichi2.utils.ClipboardUtil.IMPORT_MIME_TYPES
 import com.ichi2.utils.ImportResult
 import com.ichi2.utils.ImportUtils
 import com.ichi2.utils.NetworkUtils
-import com.ichi2.utils.NetworkUtils.isActiveNetworkMetered
 import com.ichi2.utils.Permissions
 import com.ichi2.utils.VersionUtils
 import com.ichi2.utils.checkBoxPrompt
@@ -1535,11 +1535,9 @@ open class DeckPicker :
             return TimeManager.time.intTimeMS() - Prefs.lastSyncTime > automaticSyncIntervalInMS
         }
 
-        val isBlockedByMeteredConnection = !Prefs.allowSyncOnMeteredConnections && isActiveNetworkMetered()
-
         when {
             !Prefs.isAutoSyncEnabled -> Timber.d("autoSync: not enabled")
-            isBlockedByMeteredConnection -> Timber.d("autoSync: blocked by metered connection")
+            MeteredSyncPolicy.shouldBlock() -> Timber.d("autoSync: blocked by metered connection")
             !NetworkUtils.isOnline -> Timber.d("autoSync: offline")
             !runInBackground && !syncIntervalPassed() -> Timber.d("autoSync: interval not passed")
             !isLoggedIn() -> Timber.d("autoSync: not logged in")
@@ -1965,13 +1963,13 @@ open class DeckPicker :
             handleNewSync(conflict, shouldFetchMedia())
         }
         // Warn the user in case the connection is metered
-        if (!Prefs.allowSyncOnMeteredConnections && isActiveNetworkMetered()) {
+        if (MeteredSyncPolicy.shouldBlock()) {
             AlertDialog.Builder(this).show {
                 message(R.string.metered_sync_data_warning)
                 positiveButton(R.string.dialog_continue) { doSync() }
                 negativeButton(R.string.dialog_cancel)
                 checkBoxPrompt(R.string.button_do_not_show_again) { isCheckboxChecked ->
-                    Prefs.allowSyncOnMeteredConnections = isCheckboxChecked
+                    MeteredSyncPolicy.setAlwaysAllow(isCheckboxChecked)
                 }
             }
             refreshState()
