@@ -440,10 +440,9 @@ open class DeckPicker :
 
     private fun showDeckPickerContextMenu(deckId: DeckId) =
         launchCatchingTask {
-            withCol { decks.select(deckId) }
+            viewModel.selectDeck(deckId).join()
             val menu = DeckPickerContextMenu.newInstance(deckId)
             CardBrowser.clearLastDeckId()
-            updateDeckList()
             showDialogFragment(menu)
         }
 
@@ -452,8 +451,7 @@ open class DeckPicker :
         x: Float,
         y: Float,
     ) = launchCatchingTask {
-        withCol { decks.select(deckId) }
-        updateDeckList()
+        viewModel.selectDeck(deckId).join()
         DeckPickerMenuContentProvider.show(
             deckPicker = this@DeckPicker,
             deckId = deckId,

@@ -277,6 +277,17 @@ class DeckPickerViewModel :
             flowOfDeckCountsChanged.emit(Unit)
         }
 
+    /**
+     * Marks [deckId] as the currently selected deck and updates the selection in the deck list.
+     */
+    fun selectDeck(deckId: DeckId) =
+        viewModelScope.launch {
+            // TODO: should we always reset the Card Browser default deck here?
+            withCol { decks.select(deckId) }
+            focusedDeck = deckId
+            flowOfRefreshDeckList.emit(Unit)
+        }
+
     fun browseCards(deckId: DeckId) =
         launchCatchingIO {
             withCol { decks.select(deckId) }
