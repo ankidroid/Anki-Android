@@ -53,7 +53,7 @@ class DeckPickerViewModelTest : RobolectricTest() {
                 viewModel.deleteEmptyCards(cardsToEmpty).join()
 
                 expectMostRecentItem().also {
-                    assertThat("cards deleted", it.result.cardsDeleted, equalTo(EXPECTED_CARDS))
+                    assertThat("cards deleted", it.cardsDeleted, equalTo(EXPECTED_CARDS))
                 }
 
                 // ensure a duplicate output is displayed to the user
@@ -61,14 +61,14 @@ class DeckPickerViewModelTest : RobolectricTest() {
                 viewModel.deleteEmptyCards(newCardsToEmpty).join()
 
                 expectMostRecentItem().also {
-                    assertThat("cards deleted: duplicate output", it.result.cardsDeleted, equalTo(EXPECTED_CARDS))
+                    assertThat("cards deleted: duplicate output", it.cardsDeleted, equalTo(EXPECTED_CARDS))
                 }
 
                 // test an empty list: a no-op should inform the user, rather than do nothing
                 viewModel.deleteEmptyCards(emptyCardsReport { }).join()
 
                 expectMostRecentItem().also {
-                    assertThat("'no cards deleted' is notified", it.result.cardsDeleted, equalTo(0))
+                    assertThat("'no cards deleted' is notified", it.cardsDeleted, equalTo(0))
                 }
             }
         }
@@ -96,13 +96,13 @@ class DeckPickerViewModelTest : RobolectricTest() {
                 viewModel.deleteEmptyCards(emptyCardsReport, preserveNotes = true).join()
 
                 expectMostRecentItem().also {
-                    assertThat("note is retained", it.result.cardsDeleted, equalTo(EXPECTED_CARDS - 1))
+                    assertThat("note is retained", it.cardsDeleted, equalTo(EXPECTED_CARDS - 1))
                 }
 
                 viewModel.deleteEmptyCards(emptyCardsReport, preserveNotes = false).join()
 
                 expectMostRecentItem().also {
-                    assertThat("note is deleted", it.result.cardsDeleted, equalTo(1))
+                    assertThat("note is deleted", it.cardsDeleted, equalTo(1))
                 }
             }
         }

@@ -25,7 +25,6 @@ import androidx.lifecycle.viewModelScope
 import anki.card_rendering.EmptyCardsReport
 import anki.collection.OpChanges
 import anki.decks.SetDeckCollapsedRequest
-import anki.i18n.GeneratedTranslations
 import anki.sync.SyncStatusResponse
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.TR
@@ -207,11 +206,7 @@ class DeckPickerViewModel :
             // to match and avoid unnecessary scrolls in `renderPage()`.
             focusedDeck = Consts.DEFAULT_DECK_ID
 
-            events.emit(
-                UiEvent.DeckDeleted(
-                    DeckDeletionResult(deckName = deckName, cardsDeleted = changes.count),
-                ),
-            )
+            events.emit(UiEvent.DeckDeleted(deckName = deckName, cardsDeleted = changes.count))
         }
 
     /**
@@ -249,7 +244,7 @@ class DeckPickerViewModel :
             }
         }
         val result = undoableOp { removeCardsAndOrphanedNotes(toDelete) }
-        events.emit(UiEvent.EmptyCardsDeleted(EmptyCardsResult(cardsDeleted = result.count)))
+        events.emit(UiEvent.EmptyCardsDeleted(cardsDeleted = result.count))
     }
 
     // TODO: move withProgress to the ViewModel, so we don't return 'Job'
@@ -462,11 +457,9 @@ class DeckPickerViewModel :
                 }
             events.emit(
                 UiEvent.CreateShortcut(
-                    ShortcutData(
-                        deckId = deckId,
-                        shortLabel = shortLabel,
-                        longLabel = longLabel,
-                    ),
+                    deckId = deckId,
+                    shortLabel = shortLabel,
+                    longLabel = longLabel,
                 ),
             )
         }
@@ -647,45 +640,7 @@ class DeckPickerViewModel :
     }
 }
 
-/** Result of [DeckPickerViewModel.deleteDeck] */
-data class DeckDeletionResult(
-    val deckName: String,
-    val cardsDeleted: Int,
-) {
-    /**
-     * @see GeneratedTranslations.browsingCardsDeletedWithDeckname
-     */
-    // TODO: Somewhat questionable meaning: {count} cards deleted from {deck_name}.
-    @CheckResult
-    fun toHumanReadableString() =
-        TR.browsingCardsDeletedWithDeckname(
-            count = cardsDeleted,
-            deckName = deckName,
-        )
-}
-
-/** Result of [DeckPickerViewModel.deleteEmptyCards] */
-data class EmptyCardsResult(
-    val cardsDeleted: Int,
-) {
-    /**
-     * @see GeneratedTranslations.emptyCardsDeletedCount */
-    @CheckResult
-    fun toHumanReadableString() = TR.emptyCardsDeletedCount(cardsDeleted)
-}
-
 fun DeckNode.onlyHasDefaultDeck() = children.singleOrNull()?.did == DEFAULT_DECK_ID
-
-/**
- * Data for creating a deck shortcut
- * @param shortLabel the basename of the deck (e.g., "Verbs" for "Language::English::Verbs")
- * @param longLabel the full deck name (e.g., "Language::English::Verbs")
- */
-data class ShortcutData(
-    val deckId: DeckId,
-    val shortLabel: String,
-    val longLabel: String,
-)
 
 enum class SyncIconState {
     Normal,
@@ -695,18 +650,36 @@ enum class SyncIconState {
 }
 
 /**
- * One-shot UI events emitted by [DeckPickerViewModel].
- *
- * @see com.ichi2.anki.ui.UiEventHost
+ * One-shot UI events emitted by [DeckPickerViewModel] over a single channel and
+ * collected by [DeckPicker]. Use for navigation, snackbars, dialogs, errors —
+ * not for ongoing state (use a `StateFlow` for that).
  */
 sealed interface UiEvent {
+    /** A deck (and possibly child decks) was deleted. @see DeckPickerViewModel.deleteDeck */
     data class DeckDeleted(
-        val result: DeckDeletionResult,
-    ) : UiEvent
+        val deckName: String,
+        val cardsDeleted: Int,
+    ) : UiEvent {
+        /**
+         * @see anki.i18n.GeneratedTranslations.browsingCardsDeletedWithDeckname
+         */
+        // TODO: Somewhat questionable meaning: {count} cards deleted from {deck_name}.
+        @CheckResult
+        fun toHumanReadableString() =
+            TR.browsingCardsDeletedWithDeckname(
+                count = cardsDeleted,
+                deckName = deckName,
+            )
+    }
 
+    /** Empty cards were removed. @see DeckPickerViewModel.deleteEmptyCards */
     data class EmptyCardsDeleted(
-        val result: EmptyCardsResult,
-    ) : UiEvent
+        val cardsDeleted: Int,
+    ) : UiEvent {
+        /** @see anki.i18n.GeneratedTranslations.emptyCardsDeletedCount */
+        @CheckResult
+        fun toHumanReadableString() = TR.emptyCardsDeletedCount(cardsDeleted)
+    }
 
     data class Navigate(
         val destination: Destination,
@@ -720,8 +693,15 @@ sealed interface UiEvent {
         val deckId: DeckId,
     ) : UiEvent
 
+    /**
+     * Request to create a launcher shortcut for a deck.
+     * @param shortLabel the basename of the deck (e.g., "Verbs" for "Language::English::Verbs")
+     * @param longLabel the full deck name (e.g., "Language::English::Verbs")
+     */
     data class CreateShortcut(
-        val data: ShortcutData,
+        val deckId: DeckId,
+        val shortLabel: String,
+        val longLabel: String,
     ) : UiEvent
 
     data class DisableShortcuts(

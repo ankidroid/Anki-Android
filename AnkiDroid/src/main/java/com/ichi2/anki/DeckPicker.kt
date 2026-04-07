@@ -102,14 +102,11 @@ import com.ichi2.anki.databinding.ActivityHomescreenBinding
 import com.ichi2.anki.databinding.IncludeDeckPickerBinding
 import com.ichi2.anki.databinding.IncludeFloatingAddButtonBinding
 import com.ichi2.anki.deckpicker.BackgroundImage
-import com.ichi2.anki.deckpicker.DeckDeletionResult
 import com.ichi2.anki.deckpicker.DeckPickerViewModel
 import com.ichi2.anki.deckpicker.DeckPickerViewModel.AnkiDroidEnvironment
 import com.ichi2.anki.deckpicker.DeckPickerViewModel.FlattenedDeckList
 import com.ichi2.anki.deckpicker.DeckPickerViewModel.StartupResponse
-import com.ichi2.anki.deckpicker.EmptyCardsResult
 import com.ichi2.anki.deckpicker.OptionsMenuState
-import com.ichi2.anki.deckpicker.ShortcutData
 import com.ichi2.anki.deckpicker.SyncIconState
 import com.ichi2.anki.deckpicker.UiEvent
 import com.ichi2.anki.dialogs.AsyncDialogFragment
@@ -610,15 +607,15 @@ open class DeckPicker :
 
     @Suppress("UNUSED_PARAMETER")
     private fun setupFlows() {
-        fun onDeckDeleted(result: DeckDeletionResult) {
+        fun onDeckDeleted(event: UiEvent.DeckDeleted) {
             floatingActionButtonBinding.fabMain.isVisible = true
-            showSnackbar(result.toHumanReadableString(), Snackbar.LENGTH_SHORT) {
+            showSnackbar(event.toHumanReadableString(), Snackbar.LENGTH_SHORT) {
                 setAction(R.string.undo) { undo() }
             }
         }
 
-        fun onCardsEmptied(result: EmptyCardsResult) {
-            showSnackbar(result.toHumanReadableString(), Snackbar.LENGTH_SHORT) {
+        fun onCardsEmptied(event: UiEvent.EmptyCardsDeleted) {
+            showSnackbar(event.toHumanReadableString(), Snackbar.LENGTH_SHORT) {
                 setAction(R.string.undo) { undo() }
             }
         }
@@ -782,12 +779,12 @@ open class DeckPicker :
 
         viewModel.uiEvents.launchCollectionInLifecycleScope { event ->
             when (event) {
-                is UiEvent.DeckDeleted -> onDeckDeleted(event.result)
-                is UiEvent.EmptyCardsDeleted -> onCardsEmptied(event.result)
+                is UiEvent.DeckDeleted -> onDeckDeleted(event)
+                is UiEvent.EmptyCardsDeleted -> onCardsEmptied(event)
                 is UiEvent.Navigate -> onDestinationChanged(event.destination)
                 is UiEvent.ShowError -> onError(event.message)
                 is UiEvent.ExportDeck -> onExportDeck(event.deckId)
-                is UiEvent.CreateShortcut -> createIcon(event.data)
+                is UiEvent.CreateShortcut -> createIcon(event)
                 is UiEvent.DisableShortcuts -> disableDeckAndChildrenShortcuts(event.deckIds)
                 UiEvent.PromptUpdateScheduler -> onPromptUserToUpdateScheduler(Unit)
                 UiEvent.DecksReloaded -> onDecksReloaded(Unit)
@@ -1988,16 +1985,16 @@ open class DeckPicker :
         }
     }
 
-    private fun createIcon(shortcutData: ShortcutData) {
+    private fun createIcon(event: UiEvent.CreateShortcut) {
         // This code should not be reachable with lower versions
         val shortcut =
             ShortcutInfoCompat
-                .Builder(this, shortcutData.deckId.toString())
+                .Builder(this, event.deckId.toString())
                 .setIntent(
-                    intentToReviewDeckFromShortcuts(this, shortcutData.deckId),
+                    intentToReviewDeckFromShortcuts(this, event.deckId),
                 ).setIcon(IconCompat.createWithResource(this, R.mipmap.ic_launcher))
-                .setShortLabel(shortcutData.shortLabel)
-                .setLongLabel(shortcutData.longLabel)
+                .setShortLabel(event.shortLabel)
+                .setLongLabel(event.longLabel)
                 .build()
         try {
             val success = ShortcutManagerCompat.requestPinShortcut(this, shortcut, null)
