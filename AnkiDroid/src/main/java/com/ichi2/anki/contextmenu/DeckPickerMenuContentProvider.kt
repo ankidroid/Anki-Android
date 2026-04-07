@@ -63,21 +63,30 @@ class DeckPickerMenuContentProvider(
 
     companion object {
         /**
-         * Builds a [DeckPickerMenuContentProvider] for [deckId], reading the dynamic /
-         * has-buried flags from the collection.
+         * Builds a [DeckPickerMenuContentProvider] for [deckId] (reading the dynamic /
+         * has-buried flags from the collection) and shows it as a popup anchored at
+         * ([x], [y]) on the deck picker's recycler view.
          */
-        suspend fun newInstance(
-            deckId: DeckId,
+        suspend fun show(
             deckPicker: DeckPicker,
-        ): DeckPickerMenuContentProvider =
-            withCol {
-                DeckPickerMenuContentProvider(
-                    id = deckId,
-                    isDynamic = decks.isFiltered(deckId),
-                    hasBuriedInDeck = sched.haveBuried(),
-                    deckPicker = deckPicker,
-                )
-            }
+            deckId: DeckId,
+            x: Float,
+            y: Float,
+        ) {
+            val provider =
+                withCol {
+                    DeckPickerMenuContentProvider(
+                        id = deckId,
+                        isDynamic = decks.isFiltered(deckId),
+                        hasBuriedInDeck = sched.haveBuried(),
+                        deckPicker = deckPicker,
+                    )
+                }
+            val anchorParent = deckPicker.deckPickerBinding.deckPickerContent
+            val target = deckPicker.deckPickerBinding.decks
+            MouseContextMenuHandler(viewGroup = anchorParent, menuContentProvider = provider)
+                .showContextMenu(view = target, x = x, y = y)
+        }
 
         fun createOptionsList(
             isDynamic: Boolean,

@@ -97,7 +97,6 @@ import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.anki.contextmenu.DeckPickerMenuContentProvider
-import com.ichi2.anki.contextmenu.MouseContextMenuHandler
 import com.ichi2.anki.databinding.ActivityHomescreenBinding
 import com.ichi2.anki.databinding.IncludeDeckPickerBinding
 import com.ichi2.anki.databinding.IncludeFloatingAddButtonBinding
@@ -267,9 +266,6 @@ open class DeckPicker :
     private lateinit var decksLayoutManager: LinearLayoutManager
     private lateinit var deckListAdapter: DeckAdapter
     private lateinit var pullToSyncWrapper: SwipeRefreshLayout
-
-    // Right-click context menu handler using decoupled menu system
-    private lateinit var mouseContextMenuHandler: MouseContextMenuHandler
 
     private lateinit var floatingActionMenu: DeckPickerFloatingActionMenu
 
@@ -457,10 +453,13 @@ open class DeckPicker :
         y: Float,
     ) = launchCatchingTask {
         withCol { decks.select(deckId) }
-        val menuContentProvider = DeckPickerMenuContentProvider.newInstance(deckId, this@DeckPicker)
         updateDeckList()
-        mouseContextMenuHandler = MouseContextMenuHandler(deckPickerBinding.deckPickerContent, menuContentProvider)
-        mouseContextMenuHandler.showContextMenu(deckPickerBinding.decks, x, y)
+        DeckPickerMenuContentProvider.show(
+            deckPicker = this@DeckPicker,
+            deckId = deckId,
+            x = x,
+            y = y,
+        )
     }
 
     // ----------------------------------------------------------------------------
