@@ -442,49 +442,25 @@ open class DeckPicker :
         }
     }
 
-    private fun showDeckPickerContextMenu(deckId: DeckId) {
+    private fun showDeckPickerContextMenu(deckId: DeckId) =
         launchCatchingTask {
-            val (deckName, isDynamic, hasBuriedInDeck) =
-                withCol {
-                    decks.select(deckId)
-                    Triple(
-                        decks.name(deckId),
-                        decks.isFiltered(deckId),
-                        sched.haveBuried(),
-                    )
-                }
+            withCol { decks.select(deckId) }
+            val menu = DeckPickerContextMenu.newInstance(deckId)
             CardBrowser.clearLastDeckId()
             updateDeckList()
-            showDialogFragment(
-                DeckPickerContextMenu.newInstance(
-                    id = deckId,
-                    name = deckName,
-                    isDynamic = isDynamic,
-                    hasBuriedInDeck = hasBuriedInDeck,
-                ),
-            )
+            showDialogFragment(menu)
         }
-    }
 
     private fun showDeckPickerRightClickContextMenu(
         deckId: DeckId,
         x: Float,
         y: Float,
-    ) {
-        launchCatchingTask {
-            val (isDynamic, hasBuriedInDeck) =
-                withCol {
-                    decks.select(deckId)
-                    Pair(
-                        decks.isFiltered(deckId),
-                        sched.haveBuried(),
-                    )
-                }
-            updateDeckList()
-            val menuContentProvider = DeckPickerMenuContentProvider(deckId, isDynamic, hasBuriedInDeck, this@DeckPicker)
-            mouseContextMenuHandler = MouseContextMenuHandler(deckPickerBinding.deckPickerContent, menuContentProvider)
-            mouseContextMenuHandler.showContextMenu(deckPickerBinding.decks, x, y)
-        }
+    ) = launchCatchingTask {
+        withCol { decks.select(deckId) }
+        val menuContentProvider = DeckPickerMenuContentProvider.newInstance(deckId, this@DeckPicker)
+        updateDeckList()
+        mouseContextMenuHandler = MouseContextMenuHandler(deckPickerBinding.deckPickerContent, menuContentProvider)
+        mouseContextMenuHandler.showContextMenu(deckPickerBinding.decks, x, y)
     }
 
     // ----------------------------------------------------------------------------

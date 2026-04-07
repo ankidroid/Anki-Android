@@ -18,6 +18,7 @@ package com.ichi2.anki.contextmenu
 
 import android.view.Menu
 import android.view.MenuItem
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.dialogs.DeckPickerContextMenu
 import com.ichi2.anki.dialogs.DeckPickerContextMenuResult
@@ -61,6 +62,23 @@ class DeckPickerMenuContentProvider(
     private fun createOptionsList(): List<DeckPickerContextMenu.DeckPickerContextMenuOption> = createOptionsList(isDynamic, hasBuriedInDeck)
 
     companion object {
+        /**
+         * Builds a [DeckPickerMenuContentProvider] for [deckId], reading the dynamic /
+         * has-buried flags from the collection.
+         */
+        suspend fun newInstance(
+            deckId: DeckId,
+            deckPicker: DeckPicker,
+        ): DeckPickerMenuContentProvider =
+            withCol {
+                DeckPickerMenuContentProvider(
+                    id = deckId,
+                    isDynamic = decks.isFiltered(deckId),
+                    hasBuriedInDeck = sched.haveBuried(),
+                    deckPicker = deckPicker,
+                )
+            }
+
         fun createOptionsList(
             isDynamic: Boolean,
             hasBuriedInDeck: Boolean,

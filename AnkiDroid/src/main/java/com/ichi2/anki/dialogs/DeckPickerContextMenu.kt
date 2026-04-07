@@ -20,9 +20,9 @@ import android.os.Bundle
 import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
-import androidx.core.os.bundleOf
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.anki.compat.requireSerializableCompat
@@ -82,6 +82,23 @@ class DeckPickerContextMenu : AnalyticsDialogFragment() {
     }
 
     companion object {
+        /**
+         * Builds a [DeckPickerContextMenu] for [deckId], reading the deck's name and
+         * the dynamic / has-buried flags from the collection.
+         */
+        suspend fun newInstance(deckId: DeckId): DeckPickerContextMenu =
+            withCol {
+                DeckPickerContextMenu().apply {
+                    arguments =
+                        Bundle().apply {
+                            putLong(ARG_DECK_ID, deckId)
+                            putString(ARG_DECK_NAME, decks.name(deckId))
+                            putBoolean(ARG_DECK_IS_DYN, decks.isFiltered(deckId))
+                            putBoolean(ARG_DECK_HAS_BURIED_IN_DECK, sched.haveBuried())
+                        }
+                }
+            }
+
         @VisibleForTesting
         const val ARG_DECK_ID = "arg_deck_id"
 
@@ -93,22 +110,6 @@ class DeckPickerContextMenu : AnalyticsDialogFragment() {
 
         @VisibleForTesting
         const val ARG_DECK_HAS_BURIED_IN_DECK = "arg_deck_has_buried_in_deck"
-
-        fun newInstance(
-            id: DeckId,
-            name: String,
-            isDynamic: Boolean,
-            hasBuriedInDeck: Boolean,
-        ): DeckPickerContextMenu =
-            DeckPickerContextMenu().apply {
-                arguments =
-                    bundleOf(
-                        ARG_DECK_ID to id,
-                        ARG_DECK_NAME to name,
-                        ARG_DECK_IS_DYN to isDynamic,
-                        ARG_DECK_HAS_BURIED_IN_DECK to hasBuriedInDeck,
-                    )
-            }
     }
 }
 
