@@ -17,7 +17,6 @@
 package com.ichi2.testutils
 
 import androidx.annotation.CheckResult
-import org.acra.util.IOUtils
 import org.hamcrest.CoreMatchers
 import org.hamcrest.MatcherAssert
 import timber.log.Timber
@@ -129,7 +128,7 @@ fun createTransientFile(
             .pathString,
     ).also {
         it.deleteOnExit()
-        IOUtils.writeStringToFile(it, content)
+        it.writeText(content)
     }
 
 /** Creates a sub-directory with the given name which is deleted on exit */

@@ -10,6 +10,7 @@ android {
     // but we can define files in 'com.ichi2.anki' inside 'common'
     // even with this namespace
     namespace = "com.ichi2.anki.common"
+    testFixtures.enable = true
     compileSdk =
         libs.versions.compileSdk
             .get()
@@ -61,4 +62,11 @@ dependencies {
     androidTestImplementation(libs.androidx.test.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     testImplementation(kotlin("test"))
+
+    testFixturesImplementation(libs.hamcrest)
+    testFixturesImplementation(libs.jakewharton.timber)
+    testFixturesImplementation(libs.androidx.annotation)
+    // Required so the ExperimentalCoroutinesApi opt-in (applied globally) doesn't cause
+    // an "unresolved" warning, which is treated as an error due to allWarningsAsErrors
+    testFixturesImplementation(libs.kotlinx.coroutines.core)
 }

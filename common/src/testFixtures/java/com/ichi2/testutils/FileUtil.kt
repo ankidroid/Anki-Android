@@ -17,7 +17,6 @@
 package com.ichi2.testutils
 
 import com.ichi2.anki.model.Directory
-import org.acra.util.IOUtils
 import java.io.File
 import java.util.Scanner
 
@@ -74,7 +73,7 @@ fun File.addTempFile(
     content: String = "default content",
 ): File =
     File(this, fileName).also {
-        IOUtils.writeStringToFile(it, content)
+        it.writeText(content)
         it.deleteOnExit()
     }
 

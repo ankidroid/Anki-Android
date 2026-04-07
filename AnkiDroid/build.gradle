@@ -458,6 +458,8 @@ dependencies {
     implementation libs.leakcanary.android
 
     testImplementation project(":libanki:testutils")
+    testImplementation testFixtures(project(":common"))
+    testImplementation testFixtures(project(":compat"))
 
     // A path for a testing library which provide Parameterized Test
     testImplementation libs.junit.jupiter

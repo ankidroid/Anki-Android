@@ -129,7 +129,7 @@ tasks.register('jacocoTestReport', JacocoReport) {
 }
 
 // modules do not yet support flavors (play/full)
-def modulesToUnitTest = [":common", ":libanki"]
+def modulesToUnitTest = [":common", ":libanki", ":compat"]
 
 // A unit-test only report task
 tasks.register('jacocoUnitTestReport', JacocoReport) {report ->

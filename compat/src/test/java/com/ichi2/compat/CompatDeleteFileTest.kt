@@ -34,7 +34,7 @@ import java.io.FileNotFoundException
 import java.io.IOException
 import kotlin.test.assertFailsWith
 
-/** Tests for [com.ichi2.anki.compat.Compat.deleteFile] */
+/** Tests for [Compat.deleteFile] */
 @RunWith(Parameterized::class)
 class CompatDeleteFileTest(
     val compat: Compat,

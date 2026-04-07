@@ -20,7 +20,6 @@ import com.ichi2.anki.compat.hasFiles
 import com.ichi2.compat.Test21And26
 import com.ichi2.testutils.HamcrestUtils.containsInAnyOrder
 import com.ichi2.testutils.withTempFile
-import org.acra.util.IOUtils
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.CoreMatchers.not
 import org.hamcrest.CoreMatchers.nullValue
@@ -106,7 +105,7 @@ class DirectoryTest : Test21And26() {
     @Test
     fun has_files_is_true_if_file() {
         val dir = createValidTempDir()
-        IOUtils.writeStringToFile(File(dir.directory, "aa.txt"), "aa")
+        File(dir.directory, "aa.txt").writeText("aa")
         MatcherAssert.assertThat(
             "non-empty directory should have files",
             dir.hasFiles(),
