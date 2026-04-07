@@ -29,6 +29,7 @@ import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.Note
 import com.ichi2.anki.libanki.emptyCids
 import com.ichi2.testutils.ensureOpsExecuted
+import kotlinx.coroutines.flow.filterIsInstance
 import org.hamcrest.CoreMatchers.not
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
@@ -47,12 +48,12 @@ class DeckPickerViewModelTest : RobolectricTest() {
         runTest {
             val cardsToEmpty = createEmptyCards()
 
-            viewModel.emptyCardsNotification.test {
+            viewModel.uiEvents.filterIsInstance<UiEvent.EmptyCardsDeleted>().test {
                 // test a 'normal' deletion
                 viewModel.deleteEmptyCards(cardsToEmpty).join()
 
                 expectMostRecentItem().also {
-                    assertThat("cards deleted", it.cardsDeleted, equalTo(EXPECTED_CARDS))
+                    assertThat("cards deleted", it.result.cardsDeleted, equalTo(EXPECTED_CARDS))
                 }
 
                 // ensure a duplicate output is displayed to the user
@@ -60,14 +61,14 @@ class DeckPickerViewModelTest : RobolectricTest() {
                 viewModel.deleteEmptyCards(newCardsToEmpty).join()
 
                 expectMostRecentItem().also {
-                    assertThat("cards deleted: duplicate output", it.cardsDeleted, equalTo(EXPECTED_CARDS))
+                    assertThat("cards deleted: duplicate output", it.result.cardsDeleted, equalTo(EXPECTED_CARDS))
                 }
 
                 // test an empty list: a no-op should inform the user, rather than do nothing
                 viewModel.deleteEmptyCards(emptyCardsReport { }).join()
 
                 expectMostRecentItem().also {
-                    assertThat("'no cards deleted' is notified", it.cardsDeleted, equalTo(0))
+                    assertThat("'no cards deleted' is notified", it.result.cardsDeleted, equalTo(0))
                 }
             }
         }
@@ -91,17 +92,17 @@ class DeckPickerViewModelTest : RobolectricTest() {
         runTest {
             val emptyCardsReport = createEmptyCards()
 
-            viewModel.emptyCardsNotification.test {
+            viewModel.uiEvents.filterIsInstance<UiEvent.EmptyCardsDeleted>().test {
                 viewModel.deleteEmptyCards(emptyCardsReport, preserveNotes = true).join()
 
                 expectMostRecentItem().also {
-                    assertThat("note is retained", it.cardsDeleted, equalTo(EXPECTED_CARDS - 1))
+                    assertThat("note is retained", it.result.cardsDeleted, equalTo(EXPECTED_CARDS - 1))
                 }
 
                 viewModel.deleteEmptyCards(emptyCardsReport, preserveNotes = false).join()
 
                 expectMostRecentItem().also {
-                    assertThat("note is deleted", it.cardsDeleted, equalTo(1))
+                    assertThat("note is deleted", it.result.cardsDeleted, equalTo(1))
                 }
             }
         }
@@ -121,7 +122,7 @@ class DeckPickerViewModelTest : RobolectricTest() {
     @Test
     fun `empty filtered - flows`() {
         runTest {
-            viewModel.flowOfDeckCountsChanged.test {
+            viewModel.uiEvents.filterIsInstance<UiEvent.DeckCountsChanged>().test {
                 val filteredDeckId = moveAllCardsToFilteredDeck()
                 expectNoEvents()
                 viewModel.emptyFilteredDeck(filteredDeckId).join()
@@ -194,10 +195,10 @@ class DeckPickerViewModelTest : RobolectricTest() {
             // add other decks as well as control
             addDeck("B")
             addDeck("B:B1")
-            viewModel.flowOfDisableShortcuts.test {
+            viewModel.uiEvents.filterIsInstance<UiEvent.DisableShortcuts>().test {
                 viewModel.reloadDeckCounts().join()
                 viewModel.disableDeckAndChildrenShortcuts(deckIdA)
-                val actual = awaitItem()
+                val actual = awaitItem().deckIds
                 val expected =
                     listOf(
                         deckIdA.toString(),

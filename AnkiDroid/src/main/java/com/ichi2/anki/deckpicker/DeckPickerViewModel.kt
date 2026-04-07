@@ -55,6 +55,7 @@ import com.ichi2.anki.performBackupInBackground
 import com.ichi2.anki.reviewreminders.ScheduleRemindersDestination
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.syncAuth
+import com.ichi2.anki.ui.ChannelUiEventHost
 import com.ichi2.anki.utils.Destination
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -129,22 +130,22 @@ class DeckPickerViewModel :
         }.stateIn(viewModelScope, SharingStarted.Eagerly, initialValue = FlattenedDeckList.empty)
 
     /**
-     * @see deleteDeck
-     * @see DeckDeletionResult
+     * Single channel of one-shot UI events for [DeckPicker].
+     *
+     * Use this for navigation, snackbars, dialogs, error messages, and other
+     * fire-once events. Do *not* use it for ongoing state — keep that as `StateFlow`.
      */
-    val deckDeletedNotification = MutableSharedFlow<DeckDeletionResult>(extraBufferCapacity = 1)
-    val emptyCardsNotification = MutableSharedFlow<EmptyCardsResult>(extraBufferCapacity = 1)
-    val flowOfDestination = MutableSharedFlow<Destination>(extraBufferCapacity = 1)
-    override val onError = MutableSharedFlow<String>(extraBufferCapacity = 1)
-    val flowOfExportDeck = MutableSharedFlow<DeckId>()
-    val flowOfCreateShortcut = MutableSharedFlow<ShortcutData>()
-    val flowOfDisableShortcuts = MutableSharedFlow<List<String>>()
+    private val events = ChannelUiEventHost<UiEvent>()
+    val uiEvents = events.uiEvents
 
     /**
-     * A notification that the study counts have changed
+     * Errors emitted via the standard `launchCatchingIO { }` machinery.
+     *
+     * This satisfies [OnErrorListener] (which `launchCatchingIO` depends on) and is
+     * forwarded into [uiEvents] as [UiEvent.ShowError] in [init].
+     * Prefer collecting [uiEvents] in the UI rather than this flow directly.
      */
-    // TODO: most of the recalculation should be moved inside the ViewModel
-    val flowOfDeckCountsChanged = MutableSharedFlow<Unit>(extraBufferCapacity = 1)
+    override val onError = MutableSharedFlow<String>(extraBufferCapacity = 1)
 
     var loadDeckCounts: Job? = null
         private set
@@ -154,8 +155,6 @@ class DeckPickerViewModel :
      * to avoid repeatedly prompting the user for the same collection version.
      */
     private var schedulerUpgradeDialogShownForVersion: Long? = null
-
-    val flowOfPromptUserToUpdateScheduler = MutableSharedFlow<Unit>(extraBufferCapacity = 1)
 
     val flowOfCollectionHasNoCards = MutableStateFlow(true)
 
@@ -181,16 +180,13 @@ class DeckPickerViewModel :
             !(isInInitialState == true || hasNoCards)
         }
 
-    // HACK: dismiss a legacy progress bar
-    // TODO: Replace with better progress handling for first load/corrupt collections
-    // This MutableSharedFlow has replay=1 due to a race condition between its collector being started
-    // and a possible early emission that occurs when the user is on a metered network and a dialog has to show up
-    // to ask the user if they want to trigger a sync. Normally, the spinning progress indicator is
-    // dismissed via an emission to this flow after the sync is completed, but if the metered network
-    // warning dialog appears, we should immediately refresh the UI in case the user decides not to sync.
-    // Otherwise, the progress indicator remains indefinitely. This replay=1 ensures that the collector will
-    // receive the dismissal event even if it starts after the emission.
-    val flowOfDecksReloaded = MutableSharedFlow<Unit>(extraBufferCapacity = 1, replay = 1)
+    init {
+        // Bridge `OnErrorListener.onError` (driven by `launchCatchingIO { }`) into the
+        // unified side-effects channel so the UI only needs one collector.
+        viewModelScope.launch {
+            onError.collect { events.emit(UiEvent.ShowError(it)) }
+        }
+    }
 
     // TODO: Use a sensible default rather than null
     val flowOfOptionsMenuState = MutableStateFlow<OptionsMenuState?>(null)
@@ -211,8 +207,10 @@ class DeckPickerViewModel :
             // to match and avoid unnecessary scrolls in `renderPage()`.
             focusedDeck = Consts.DEFAULT_DECK_ID
 
-            deckDeletedNotification.emit(
-                DeckDeletionResult(deckName = deckName, cardsDeleted = changes.count),
+            events.emit(
+                UiEvent.DeckDeleted(
+                    DeckDeletionResult(deckName = deckName, cardsDeleted = changes.count),
+                ),
             )
         }
 
@@ -251,7 +249,7 @@ class DeckPickerViewModel :
             }
         }
         val result = undoableOp { removeCardsAndOrphanedNotes(toDelete) }
-        emptyCardsNotification.emit(EmptyCardsResult(cardsDeleted = result.count))
+        events.emit(UiEvent.EmptyCardsDeleted(EmptyCardsResult(cardsDeleted = result.count)))
     }
 
     // TODO: move withProgress to the ViewModel, so we don't return 'Job'
@@ -260,7 +258,7 @@ class DeckPickerViewModel :
             Timber.i("empty filtered deck %s", deckId)
             withCol { decks.select(deckId) }
             undoableOp { sched.emptyFilteredDeck(decks.selected()) }
-            flowOfDeckCountsChanged.emit(Unit)
+            events.emit(UiEvent.DeckCountsChanged)
         }
 
     /**
@@ -274,7 +272,7 @@ class DeckPickerViewModel :
                 decks.select(deckId)
                 sched.rebuildFilteredDeck(decks.selected())
             }
-            flowOfDeckCountsChanged.emit(Unit)
+            events.emit(UiEvent.DeckCountsChanged)
         }
 
     /**
@@ -291,7 +289,7 @@ class DeckPickerViewModel :
     fun browseCards(deckId: DeckId) =
         launchCatchingIO {
             withCol { decks.select(deckId) }
-            flowOfDestination.emit(BrowserDestination.ToDeck(deckId))
+            events.emit(UiEvent.Navigate(BrowserDestination.ToDeck(deckId)))
         }
 
     fun addNote(
@@ -301,13 +299,13 @@ class DeckPickerViewModel :
         if (deckId != null && setAsCurrent) {
             withCol { decks.select(deckId) }
         }
-        flowOfDestination.emit(NoteEditorLauncher.AddNote(deckId))
+        events.emit(UiEvent.Navigate(NoteEditorLauncher.AddNote(deckId)))
     }
 
     /**
      * Opens the Manage Note Types screen.
      */
-    fun openManageNoteTypes() = launchCatchingIO { flowOfDestination.emit(ManageNoteTypesDestination()) }
+    fun openManageNoteTypes() = launchCatchingIO { events.emit(UiEvent.Navigate(ManageNoteTypesDestination())) }
 
     /**
      * Opens study options for the provided deck
@@ -321,7 +319,7 @@ class DeckPickerViewModel :
     ) = launchCatchingIO {
         // open cram options if filtered deck, otherwise open regular options
         val filtered = isFiltered ?: withCol { decks.isFiltered(deckId) }
-        flowOfDestination.emit(DeckOptionsDestination(deckId = deckId, isFiltered = filtered))
+        events.emit(UiEvent.Navigate(DeckOptionsDestination(deckId = deckId, isFiltered = filtered)))
     }
 
     fun unburyDeck(deckId: DeckId) =
@@ -331,7 +329,7 @@ class DeckPickerViewModel :
 
     fun scheduleReviewReminders(deckId: DeckId) =
         viewModelScope.launch {
-            flowOfDestination.emit(ScheduleRemindersDestination(deckId))
+            events.emit(UiEvent.Navigate(ScheduleRemindersDestination(deckId)))
         }
 
     /**
@@ -384,7 +382,7 @@ class DeckPickerViewModel :
 
                 if (currentSchedulerVersion == 1L && schedulerUpgradeDialogShownForVersion != 1L) {
                     schedulerUpgradeDialogShownForVersion = 1L
-                    flowOfPromptUserToUpdateScheduler.emit(Unit)
+                    events.emit(UiEvent.PromptUpdateScheduler)
                 } else {
                     schedulerUpgradeDialogShownForVersion = currentSchedulerVersion
                 }
@@ -394,7 +392,7 @@ class DeckPickerViewModel :
                 focusedDeck = withCol { decks.current().id }
                 refreshUndoMenuState()
 
-                flowOfDecksReloaded.emit(Unit)
+                events.emit(UiEvent.DecksReloaded)
             }
         this.loadDeckCounts = loadDeckCounts
         return loadDeckCounts
@@ -427,7 +425,7 @@ class DeckPickerViewModel :
      */
     fun exportDeck(deckId: DeckId) =
         launchCatchingIO {
-            flowOfExportDeck.emit(deckId)
+            events.emit(UiEvent.ExportDeck(deckId))
         }
 
     /**
@@ -462,11 +460,13 @@ class DeckPickerViewModel :
                         fullName,
                     )
                 }
-            flowOfCreateShortcut.emit(
-                ShortcutData(
-                    deckId = deckId,
-                    shortLabel = shortLabel,
-                    longLabel = longLabel,
+            events.emit(
+                UiEvent.CreateShortcut(
+                    ShortcutData(
+                        deckId = deckId,
+                        shortLabel = shortLabel,
+                        longLabel = longLabel,
+                    ),
                 ),
             )
         }
@@ -475,7 +475,7 @@ class DeckPickerViewModel :
     fun disableDeckAndChildrenShortcuts(deckId: DeckId) =
         launchCatchingIO {
             val deckTreeDids = dueTree?.find(deckId)?.map { it.did.toString() } ?: emptyList()
-            flowOfDisableShortcuts.emit(deckTreeDids)
+            events.emit(UiEvent.DisableShortcuts(deckTreeDids))
         }
 
     sealed class StartupResponse {
@@ -692,6 +692,47 @@ enum class SyncIconState {
     PendingChanges,
     OneWay,
     NotLoggedIn,
+}
+
+/**
+ * One-shot UI events emitted by [DeckPickerViewModel].
+ *
+ * @see com.ichi2.anki.ui.UiEventHost
+ */
+sealed interface UiEvent {
+    data class DeckDeleted(
+        val result: DeckDeletionResult,
+    ) : UiEvent
+
+    data class EmptyCardsDeleted(
+        val result: EmptyCardsResult,
+    ) : UiEvent
+
+    data class Navigate(
+        val destination: Destination,
+    ) : UiEvent
+
+    data class ShowError(
+        val message: String,
+    ) : UiEvent
+
+    data class ExportDeck(
+        val deckId: DeckId,
+    ) : UiEvent
+
+    data class CreateShortcut(
+        val data: ShortcutData,
+    ) : UiEvent
+
+    data class DisableShortcuts(
+        val deckIds: List<String>,
+    ) : UiEvent
+
+    data object PromptUpdateScheduler : UiEvent
+
+    data object DecksReloaded : UiEvent
+
+    data object DeckCountsChanged : UiEvent
 }
 
 /** Menu state data for the options menu */

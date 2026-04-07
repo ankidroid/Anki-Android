@@ -18,7 +18,6 @@ import androidx.core.view.children
 import androidx.test.core.app.ActivityScenario
 import anki.collection.opChanges
 import anki.scheduler.CardAnswer.Rating
-import app.cash.turbine.test
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.deckpicker.DeckPickerViewModel
@@ -35,7 +34,6 @@ import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.windows.permissions.PermissionsActivity
 import com.ichi2.anki.ui.windows.permissions.PermissionsActivity.Companion.PERMISSIONS_SET_EXTRA
-import com.ichi2.anki.utils.Destination
 import com.ichi2.anki.utils.ext.defaultConfig
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.testutils.BackendEmulatingOpenConflict
@@ -72,13 +70,13 @@ import org.robolectric.Robolectric
 import org.robolectric.RuntimeEnvironment
 import org.robolectric.Shadows
 import org.robolectric.Shadows.shadowOf
+import org.robolectric.shadows.ShadowActivity
 import org.robolectric.shadows.ShadowDialog
 import org.robolectric.shadows.ShadowLooper
 import timber.log.Timber
 import kotlin.test.assertFailsWith
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
-import kotlin.time.Duration.Companion.seconds
 
 typealias ContextMenuOption = DeckPickerContextMenuOption
 
@@ -422,16 +420,19 @@ class DeckPickerTest : RobolectricTest() {
     @Test
     fun `ContextMenu starts expected activities when specific options are selected`() =
         deckPicker {
-            suspend fun DeckPicker.selectContextMenuOptionForActivity(
+            fun DeckPicker.selectContextMenuOptionForActivity(
                 option: ContextMenuOption,
                 deckId: DeckId,
             ): Intent {
-                var result: Destination? = null
-                viewModel.flowOfDestination.test(1.seconds) {
-                    selectContextMenuOption(option, deckId)
-                    result = awaitItem()
-                }
-                return result!!.toIntent(this)
+                shadowOf(this).drainStartedActivities()
+
+                selectContextMenuOption(option, deckId)
+                advanceRobolectricLooper()
+
+                return assertNotNull(
+                    shadowOf(this).nextStartedActivity,
+                    "no activity was started for $option",
+                )
             }
 
             val didA = addDeck("Deck 1")
@@ -795,6 +796,15 @@ class DeckPickerTest : RobolectricTest() {
             return super.onPrepareOptionsMenu(menu)
         }
     }
+}
+
+/**
+ * Ensures `ShadowActivity.nextStartedActivity` does not return past values.
+ *
+ * @see ShadowActivity.nextStartedActivity
+ */
+private fun ShadowActivity.drainStartedActivities() {
+    while (nextStartedActivity != null) { /* drain */ }
 }
 
 fun RobolectricTest.setIntroductionSlidesShown(shown: Boolean) {

@@ -111,6 +111,7 @@ import com.ichi2.anki.deckpicker.EmptyCardsResult
 import com.ichi2.anki.deckpicker.OptionsMenuState
 import com.ichi2.anki.deckpicker.ShortcutData
 import com.ichi2.anki.deckpicker.SyncIconState
+import com.ichi2.anki.deckpicker.UiEvent
 import com.ichi2.anki.dialogs.AsyncDialogFragment
 import com.ichi2.anki.dialogs.BackupPromptDialog
 import com.ichi2.anki.dialogs.CreateDeckDialog
@@ -779,15 +780,20 @@ open class DeckPicker :
                 .show()
         }
 
-        viewModel.deckDeletedNotification.launchCollectionInLifecycleScope(::onDeckDeleted)
-        viewModel.emptyCardsNotification.launchCollectionInLifecycleScope(::onCardsEmptied)
-        viewModel.flowOfDeckCountsChanged.launchCollectionInLifecycleScope(::onDeckCountsChanged)
-        viewModel.flowOfDestination.launchCollectionInLifecycleScope(::onDestinationChanged)
-        viewModel.flowOfExportDeck.launchCollectionInLifecycleScope(::onExportDeck)
-        viewModel.flowOfCreateShortcut.launchCollectionInLifecycleScope(::createIcon)
-        viewModel.flowOfDisableShortcuts.launchCollectionInLifecycleScope(::disableDeckAndChildrenShortcuts)
-        viewModel.onError.launchCollectionInLifecycleScope(::onError)
-        viewModel.flowOfPromptUserToUpdateScheduler.launchCollectionInLifecycleScope(::onPromptUserToUpdateScheduler)
+        viewModel.uiEvents.launchCollectionInLifecycleScope { event ->
+            when (event) {
+                is UiEvent.DeckDeleted -> onDeckDeleted(event.result)
+                is UiEvent.EmptyCardsDeleted -> onCardsEmptied(event.result)
+                is UiEvent.Navigate -> onDestinationChanged(event.destination)
+                is UiEvent.ShowError -> onError(event.message)
+                is UiEvent.ExportDeck -> onExportDeck(event.deckId)
+                is UiEvent.CreateShortcut -> createIcon(event.data)
+                is UiEvent.DisableShortcuts -> disableDeckAndChildrenShortcuts(event.deckIds)
+                UiEvent.PromptUpdateScheduler -> onPromptUserToUpdateScheduler(Unit)
+                UiEvent.DecksReloaded -> onDecksReloaded(Unit)
+                UiEvent.DeckCountsChanged -> onDeckCountsChanged(Unit)
+            }
+        }
         viewModel.flowOfOptionsMenuState.filterNotNull().launchCollectionInLifecycleScope(::onOptionsMenuUpdated)
         viewModel.flowOfStudiedTodayStats.launchCollectionInLifecycleScope(::onStudiedTodayChanged)
         viewModel.flowOfDeckListInInitialState.filterNotNull().launchCollectionInLifecycleScope(::onCollectionStatusChanged)
@@ -796,7 +802,6 @@ open class DeckPicker :
         viewModel.flowOfDeckList.launchCollectionInLifecycleScope(::onDeckListChanged)
         viewModel.flowOfFocusedDeck.launchCollectionInLifecycleScope(::onFocusedDeckChanged)
         viewModel.flowOfResizingDividerVisible.launchCollectionInLifecycleScope(::onResizingDividerVisibilityChanged)
-        viewModel.flowOfDecksReloaded.launchCollectionInLifecycleScope(::onDecksReloaded)
         viewModel.flowOfStartupResponse.filterNotNull().launchCollectionInLifecycleScope(::onStartupResponse)
     }
 
