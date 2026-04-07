@@ -27,6 +27,7 @@ import io.mockk.unmockkObject
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.notNullValue
+import org.hamcrest.Matchers.nullValue
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -58,7 +59,7 @@ class MeteredSyncPolicyTest : RobolectricTest() {
 
         assertThat("onDialogShown not called", result.dialogShown, equalTo(false))
         assertThat("onConfirm ran", result.onConfirmCalled, equalTo(true))
-        assertThat("no dialog shown", result.dialog, org.hamcrest.Matchers.nullValue())
+        assertThat("no dialog shown", result.dialog, nullValue())
     }
 
     @Test
@@ -97,6 +98,28 @@ class MeteredSyncPolicyTest : RobolectricTest() {
     }
 
     @Test
+    fun `skipPrompt skips prompt even when metered`() {
+        // Issue 20674
+        every { MeteredSyncPolicy.shouldBlock() } returns true
+
+        val result = attemptMeteredSync(skipPrompt = true)
+
+        assertThat("onConfirm ran immediately", result.onConfirmCalled, equalTo(true))
+        assertThat("no dialog shown", result.dialog, nullValue())
+        assertThat("onDialogShown not called", result.dialogShown, equalTo(false))
+    }
+
+    @Test
+    fun `skipPrompt on unmetered network runs directly`() {
+        every { MeteredSyncPolicy.shouldBlock() } returns false
+
+        val result = attemptMeteredSync(skipPrompt = true)
+
+        assertThat("onConfirm ran immediately", result.onConfirmCalled, equalTo(true))
+        assertThat("no dialog shown", result.dialog, nullValue())
+    }
+
+    @Test
     fun `setAlwaysAllow persists choice`() {
         unmockkObject(MeteredSyncPolicy)
         Prefs.allowSyncOnMeteredConnections = false
@@ -105,11 +128,12 @@ class MeteredSyncPolicyTest : RobolectricTest() {
     }
 
     /** Invokes [MeteredSyncPolicy.confirmThen] from a freshly-built activity. */
-    private fun attemptMeteredSync(): MeteredSyncAttemptResult {
+    private fun attemptMeteredSync(skipPrompt: Boolean = false): MeteredSyncAttemptResult {
         var dialogShown = false
         var confirmed = false
         with(startRegularActivity<EmptyAnkiActivity>()) {
             MeteredSyncPolicy.confirmThen(
+                skipPrompt = skipPrompt,
                 onDialogShown = { dialogShown = true },
             ) { confirmed = true }
         }

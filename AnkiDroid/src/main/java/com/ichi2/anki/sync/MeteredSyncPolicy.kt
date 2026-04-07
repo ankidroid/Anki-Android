@@ -42,17 +42,21 @@ object MeteredSyncPolicy {
     }
 
     /**
-     * Run [onConfirm] immediately if the network is unmetered, or metered-network sync is
-     * allowed, otherwise shows a warning dialog and runs [onConfirm] when 'Continue' is pressed.
+     * Run [onConfirm] immediately if the network is unmetered, metered-network sync is
+     * allowed, or [skipPrompt] is set; otherwise show a warning dialog and run [onConfirm] when
+     * 'Continue' is pressed.
      *
+     * @param skipPrompt `true` if the user has already accepted a metered sync earlier in this
+     *   attempt (e.g. retry after conflict resolution); skips the warning.
      * @param onDialogShown invoked only if the warning dialog is displayed
      */
     context(context: Context)
     fun confirmThen(
+        skipPrompt: Boolean = false,
         onDialogShown: () -> Unit,
         onConfirm: () -> Unit,
     ) {
-        if (!shouldBlock()) {
+        if (skipPrompt || !shouldBlock()) {
             onConfirm()
             return
         }

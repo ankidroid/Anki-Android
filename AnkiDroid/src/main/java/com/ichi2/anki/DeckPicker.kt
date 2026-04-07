@@ -1956,7 +1956,12 @@ open class DeckPicker :
             return
         }
 
-        MeteredSyncPolicy.confirmThen(onDialogShown = { refreshState() }) {
+        MeteredSyncPolicy.confirmThen(
+            // After selecting 'upload/download', the user has already accepted the metered warning.
+            skipPrompt = conflict != null,
+            // TODO: why is this needed? 1f91b2868d
+            onDialogShown = ::refreshState,
+        ) {
             handleNewSync(conflict, shouldFetchMedia())
         }
     }
