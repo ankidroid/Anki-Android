@@ -16,8 +16,16 @@
 
 package com.ichi2.anki.sync
 
+import android.content.Context
+import androidx.appcompat.app.AlertDialog
+import com.ichi2.anki.R
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.utils.NetworkUtils.isActiveNetworkMetered
+import com.ichi2.utils.checkBoxPrompt
+import com.ichi2.utils.message
+import com.ichi2.utils.negativeButton
+import com.ichi2.utils.positiveButton
+import com.ichi2.utils.show
 
 /**
  * Single source of truth for the "warn the user before syncing on a metered connection"
@@ -31,5 +39,31 @@ object MeteredSyncPolicy {
     /** Persist the user's "don't ask again" choice from the warning dialog. */
     fun setAlwaysAllow(allow: Boolean) {
         Prefs.allowSyncOnMeteredConnections = allow
+    }
+
+    /**
+     * Run [onConfirm] immediately if the network is unmetered, or metered-network sync is
+     * allowed, otherwise shows a warning dialog and runs [onConfirm] when 'Continue' is pressed.
+     *
+     * @param onDialogShown invoked only if the warning dialog is displayed
+     */
+    context(context: Context)
+    fun confirmThen(
+        onDialogShown: () -> Unit,
+        onConfirm: () -> Unit,
+    ) {
+        if (!shouldBlock()) {
+            onConfirm()
+            return
+        }
+        AlertDialog.Builder(context).show {
+            message(R.string.metered_sync_data_warning)
+            positiveButton(R.string.dialog_continue) { onConfirm() }
+            negativeButton(R.string.dialog_cancel)
+            checkBoxPrompt(R.string.button_do_not_show_again) { checked ->
+                setAlwaysAllow(checked)
+            }
+        }
+        onDialogShown()
     }
 }

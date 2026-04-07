@@ -190,7 +190,6 @@ import com.ichi2.utils.ImportUtils
 import com.ichi2.utils.NetworkUtils
 import com.ichi2.utils.Permissions
 import com.ichi2.utils.VersionUtils
-import com.ichi2.utils.checkBoxPrompt
 import com.ichi2.utils.checkWebviewVersion
 import com.ichi2.utils.configureView
 import com.ichi2.utils.customView
@@ -1957,24 +1956,8 @@ open class DeckPicker :
             return
         }
 
-        /** Nested function that makes the connection to
-         * the sync server and starts syncing the data */
-        fun doSync() {
+        MeteredSyncPolicy.confirmThen(onDialogShown = { refreshState() }) {
             handleNewSync(conflict, shouldFetchMedia())
-        }
-        // Warn the user in case the connection is metered
-        if (MeteredSyncPolicy.shouldBlock()) {
-            AlertDialog.Builder(this).show {
-                message(R.string.metered_sync_data_warning)
-                positiveButton(R.string.dialog_continue) { doSync() }
-                negativeButton(R.string.dialog_cancel)
-                checkBoxPrompt(R.string.button_do_not_show_again) { isCheckboxChecked ->
-                    MeteredSyncPolicy.setAlwaysAllow(isCheckboxChecked)
-                }
-            }
-            refreshState()
-        } else {
-            doSync()
         }
     }
 
