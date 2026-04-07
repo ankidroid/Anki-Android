@@ -326,10 +326,10 @@ class DeckPickerTest : RobolectricTest() {
     fun doNotShowOptionsMenuWhenCollectionInaccessible() =
         withNullCollection {
             deckPicker {
-                updateMenuState()
+                viewModel.refreshMenuState()
                 assertThat(
                     "Options menu not displayed when collection is inaccessible",
-                    optionsMenuState,
+                    viewModel.optionsMenuState,
                     equalTo(null),
                 )
             }
@@ -339,10 +339,10 @@ class DeckPickerTest : RobolectricTest() {
     fun showOptionsMenuWhenCollectionAccessible() =
         withWritePermissions {
             deckPicker {
-                updateMenuState()
+                viewModel.refreshMenuState()
                 assertThat(
                     "Options menu displayed when collection is accessible",
-                    optionsMenuState,
+                    viewModel.optionsMenuState,
                     notNullValue(),
                 )
             }
