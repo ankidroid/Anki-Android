@@ -136,6 +136,7 @@ import com.ichi2.anki.dialogs.SyncErrorDialog.SyncErrorDialogListener
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyAction
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyAction.Companion.REQUEST_KEY
+import com.ichi2.anki.dialogs.setDeckPickerContextMenuResultListener
 import com.ichi2.anki.export.ExportDialogFragment
 import com.ichi2.anki.filtered.FilteredDeckOptionsFragment
 import com.ichi2.anki.introduction.CollectionPermissionScreenLauncher
@@ -602,20 +603,8 @@ open class DeckPicker :
             }
         }
 
-        setFragmentResultListener(DeckPickerContextMenu.REQUEST_KEY_CONTEXT_MENU) { _, bundle ->
-            handleContextMenuSelection(
-                bundle.getSerializableCompat<DeckPickerContextMenuOption>(DeckPickerContextMenu.CONTEXT_MENU_DECK_OPTION)
-                    ?: error("Unable to retrieve selected context menu option"),
-                bundle.getLong(DeckPickerContextMenu.CONTEXT_MENU_DECK_ID, -1),
-            )
-        }
-
-        setFragmentResultListener(DeckPickerMenuContentProvider.REQUEST_KEY_CONTEXT_MENU) { _, bundle ->
-            handleContextMenuSelection(
-                bundle.getSerializableCompat<DeckPickerContextMenuOption>(DeckPickerMenuContentProvider.CONTEXT_MENU_DECK_OPTION)
-                    ?: error("Unable to retrieve selected context menu option"),
-                bundle.getLong(DeckPickerMenuContentProvider.CONTEXT_MENU_DECK_ID, -1),
-            )
+        setDeckPickerContextMenuResultListener { result ->
+            handleContextMenuSelection(result.option, result.deckId)
         }
 
         setFragmentResultListener(StudyOptionsFragment.REQUEST_STUDY_OPTIONS_STUDY) { _, _ ->

@@ -21,10 +21,16 @@ import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
+import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentManager
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
+import com.ichi2.anki.compat.requireSerializableCompat
 import com.ichi2.anki.contextmenu.DeckPickerMenuContentProvider
+import com.ichi2.anki.dialogs.DeckPickerContextMenu.DeckPickerContextMenuOption
 import com.ichi2.anki.libanki.DeckId
+import com.ichi2.anki.utils.ext.requireLong
+import com.ichi2.anki.utils.ext.setFragmentResultListener
 import com.ichi2.utils.title
 
 class DeckPickerContextMenu : AnalyticsDialogFragment() {
@@ -41,11 +47,10 @@ class DeckPickerContextMenu : AnalyticsDialogFragment() {
             .setItems(
                 options.map { resources.getString(it.optionName) }.toTypedArray(),
             ) { _, index: Int ->
-                parentFragmentManager.setFragmentResult(
-                    REQUEST_KEY_CONTEXT_MENU,
-                    bundleOf(
-                        CONTEXT_MENU_DECK_ID to requireArguments().getLong(ARG_DECK_ID),
-                        CONTEXT_MENU_DECK_OPTION to options[index],
+                parentFragmentManager.setDeckPickerContextMenuResult(
+                    DeckPickerContextMenuResult(
+                        deckId = requireArguments().getLong(ARG_DECK_ID),
+                        option = options[index],
                     ),
                 )
             }.create()
@@ -77,10 +82,6 @@ class DeckPickerContextMenu : AnalyticsDialogFragment() {
     }
 
     companion object {
-        const val REQUEST_KEY_CONTEXT_MENU = "request_key_context_menu"
-        const val CONTEXT_MENU_DECK_OPTION = "context_menu_deck_option"
-        const val CONTEXT_MENU_DECK_ID = "context_menu_deck_id"
-
         @VisibleForTesting
         const val ARG_DECK_ID = "arg_deck_id"
 
@@ -108,5 +109,45 @@ class DeckPickerContextMenu : AnalyticsDialogFragment() {
                         ARG_DECK_HAS_BURIED_IN_DECK to hasBuriedInDeck,
                     )
             }
+    }
+}
+
+/**
+ * Result delivered by the deck-picker context menus
+ *
+ * @see DeckPickerContextMenuOption
+ * @see DeckPickerContextMenu
+ * @see DeckPickerMenuContentProvider
+ */
+data class DeckPickerContextMenuResult(
+    val deckId: DeckId,
+    val option: DeckPickerContextMenuOption,
+) {
+    fun toBundle(): Bundle =
+        Bundle().apply {
+            putLong(ARG_DECK_ID, deckId)
+            putSerializable(ARG_OPTION, option)
+        }
+
+    companion object {
+        const val REQUEST_KEY = "request_key_deck_picker_context_menu"
+        private const val ARG_DECK_ID = "deck_id"
+        private const val ARG_OPTION = "option"
+
+        fun fromBundle(bundle: Bundle) =
+            DeckPickerContextMenuResult(
+                deckId = bundle.requireLong(ARG_DECK_ID),
+                option = bundle.requireSerializableCompat<DeckPickerContextMenuOption>(ARG_OPTION),
+            )
+    }
+}
+
+fun FragmentManager.setDeckPickerContextMenuResult(result: DeckPickerContextMenuResult) {
+    setFragmentResult(DeckPickerContextMenuResult.REQUEST_KEY, result.toBundle())
+}
+
+fun FragmentActivity.setDeckPickerContextMenuResultListener(listener: (DeckPickerContextMenuResult) -> Unit) {
+    setFragmentResultListener(DeckPickerContextMenuResult.REQUEST_KEY) { _, bundle ->
+        listener(DeckPickerContextMenuResult.fromBundle(bundle))
     }
 }
